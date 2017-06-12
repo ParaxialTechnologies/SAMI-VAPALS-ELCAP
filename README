@@ -1,7 +1,33 @@
 This project uses a git submodule for the docs/ directory, which is why it
 doesn't seem like it works the same way as before.
 
-You should use the following commands to help configure this properly:
+Because docs/ is actually a separate repository than the main
+repository, any changes to any files in docs/ should be committed and
+pushed from that directory.
 
-git config push.recurseSubmodules check
+You will also have to commit those commits from the main repository.
+
+    $ git status
+    On branch master
+    Your branch is up-to-date with 'origin/master'.
+    Changes not staged for commit:
+      (use "git add <file>..." to update what will be committed)
+      (use "git checkout -- <file>..." to discard changes in working directory)
+
+            modified:   docs (new commits)
+
+    no changes added to commit (use "git add" and/or "git commit -a")
+    $ _
+
+You can see that the docs directory has "new commits,"
+
+    $ git diff
+    diff --git a/docs b/docs
+    index f3d8538..bd28b1f 160000
+    --- a/docs
+    +++ b/docs
+    @@ -1 +1 @@
+    -Subproject commit f3d853878ef17eda2ed888b8363bcf53e7675d69
+    +Subproject commit bd28b1f5e93a521f70a283dd91da9367108e39ac
+    $ _
 

@@ -3,9 +3,11 @@ doesn't seem like it works the same way as before.
 
 Because docs/ is actually a separate repository than the main
 repository, any changes to any files in docs/ should be committed and
-pushed from that directory.
+pushed from the docs/ directory.
 
 You will also have to commit those commits from the main repository.
+From the main repository, this will appear if you have modified files
+in the docs/ repository:
 
     $ git status
     On branch master
@@ -19,7 +21,9 @@ You will also have to commit those commits from the main repository.
     no changes added to commit (use "git add" and/or "git commit -a")
     $ _
 
-You can see that the docs directory has "new commits,"
+You can see that the docs directory has "new commits," and it's these
+that must be committed in the main project. If you use `git diff` to
+see what those look like, it'll be something like this:
 
     $ git diff
     diff --git a/docs b/docs
@@ -31,3 +35,6 @@ You can see that the docs directory has "new commits,"
     +Subproject commit bd28b1f5e93a521f70a283dd91da9367108e39ac
     $ _
 
+Just use `git add docs`, `git commit` and `git push` as you might
+otherwise do, and the notice on the docs/ directory in `git status`
+will go away.

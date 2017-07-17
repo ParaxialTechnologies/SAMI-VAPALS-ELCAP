@@ -5,6 +5,7 @@ copy_binaries(
   survival-with-screening.png
   nsclc-distribution.png
   every-mm-matters.png
+  hub-and-spoke.png
   )
 
 adoc_to_html(

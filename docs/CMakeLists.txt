@@ -1,7 +1,8 @@
-copy_binaries(
-  bmsf-bcc-logo.png
+adoc_to_html(
+  index.adoc
   )
 
-adoc_to_html(
-  va-pals-bmsf-proposal-2017
+do_subdir(
+  bmsf-proposal-2017
   )
+

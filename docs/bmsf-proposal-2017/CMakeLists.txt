@@ -6,6 +6,8 @@ copy_binaries(
   nsclc-distribution.png
   every-mm-matters.png
   hub-and-spoke.png
+  project-overview.png
+  logic-model.png
   )
 
 adoc_to_html(

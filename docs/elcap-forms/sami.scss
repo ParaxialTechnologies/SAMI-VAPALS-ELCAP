@@ -1,0 +1,280 @@
+$th-width: 25em;
+$section-padding: 0.33em 0px;
+
+body.background-form, body.background-form-2 {
+    font-family: Verdana, sans-serif, sans;
+    margin: 1em 0.25in 1em 0.25in;
+    border: 1px solid grey;
+    input { font-size: 1em; border: 1px dotted grey; }
+    input[type="text"], input[type="number"] {
+        font-family: inherit;
+        font-size: inherit;
+    }
+    input.date { width: 12ch; }
+    input[type=date] { width: 10em; font-family: inherit; font-size: inherit; }
+    select { font-size: 0.9em; }
+    th, span.th {
+        font-weight: bold;
+        text-align: right;
+        padding-right: 1em;
+        vertical-align: middle;
+    }
+    td { vertical-align: middle; }
+    span.th { padding-left: 2em; }
+    span.alert {
+        padding-left: 2em;
+        color: hsl( 0, 100%, 75% );
+        font-style: italic;
+    }
+    span.thnote { padding-left: 1em; font-weight: normal; }
+    span.tdnote { padding-left: 2em; }
+    a.info {
+        display: inline-block;
+        text-decoration: none;
+        color: hsl( 210, 50%, 90% );
+        background: hsl( 210, 50%, 50% );
+        border: 1px solid white;
+        border-radius: 0.33em;
+        width: 1em;
+        margin: 0px 0.2em;
+        text-align: center;
+    }
+    table {
+        width: 100%;
+        padding: 0.67em 0px;
+        &.header-id {
+            border-bottom: none;
+            padding: 0em;
+            td.study {
+                width: 20em;
+                text-align: left;
+                padding-left: 0.5em;
+            }
+            td.name {
+                text-align: center;
+            }
+            td.med-rec {
+                width: 20em;
+                text-align: right;
+                padding-right: 0.5em;
+            }
+            span.data {
+                font-weight: bold;
+            }
+        }
+        &.banner-head {
+            background: hsl( 210, 50%, 50% );
+            color: white;
+            font-weight: bold;
+            font-size: 1.5em;
+            td { padding-left: 0.25em; }
+            a.info {
+                display: inline-block;
+                text-decoration: none;
+                color: white;
+                border: 1px solid white;
+                border-radius: 10px;
+                width: 1em;
+                text-align: center;
+            }
+        }
+        &.visit-info {
+            padding: $section-padding;
+            border-bottom: 1px solid grey;
+            th { width: $th-width; }
+        }
+        &.patient-base {
+            padding: $section-padding;
+            border-bottom: 1px solid grey;
+            tr th, tr td {
+                padding-bottom: 0.67em;
+            }
+            tr.gender-stats {
+                height: 2em;
+            }
+            th {
+                text-align: right;
+                padding-right: 1em;
+                &.dob { width: $th-width; }
+            }
+            tr.gender-stats td {
+                position: relative;
+                top: 0.45em;
+            }
+            span.th.age { width: 10em; }
+            span.th.height { width: 10em; }
+            span.th.weight { width: 10em; }
+            span.th.branch { font-weight: normal; }
+            input[name=sbage] { width: 5ch; }
+            input[name=sbph] { width: 5ch; }
+            input[name=sbpw] { width: 5ch; }
+            input[name=sbbmi] { width: 6ch; }
+            input[name=sbrcs] { width: 15ch; }
+            input[name=sbmlyo] { width: 10ch; }
+            table.sbphu, table.spbwu {
+                width: 0%;
+                height: 0%;
+                display: inline-table;
+                position: relative;
+                bottom: 0.8em;
+                font-size: 0.7em;
+                tr { margin: 0px; padding: 0px; }
+                td { margin: 0px; padding: 0px; border: none; }
+            }
+        }
+        &.ordering-header {
+            margin-bottom: 0px;
+            th {
+                font-size: 1.3em;
+                text-align: left;
+                padding-left: 0.5em;
+                white-space: nowrap;
+            }
+            td {
+                padding: 0.67em 0px 1em 2em;
+                border-bottom: 1px dotted #d0d0d0;
+            }
+        }
+        &.ordering-ordered {
+            margin-top: -1em;
+            th, td {
+                border-bottom: 1px dotted #d0d0d0;
+            }
+            th { padding: 0px 1em 1em 0px; }
+            td { padding: 0px 0px 1em 0px; }
+        }
+        &.ordering-info {
+            margin-top: -0.5em;
+            border-bottom: 1px solid grey;
+            th, td {
+                padding-bottom: 0.67em;
+            }
+            th { width: $th-width; padding-right: 1em; }
+            th.oprep { width: 0em; text-align: left; padding-left: 1em; padding-top: 1em; }
+            tr.shared-doc, tr.sbnoidea3 {
+                th, td {
+                    border-bottom: 1px dotted #d0d0d0;
+                    padding-bottom: 1em;
+                }
+            }
+            tr.sbnoidea4 {
+                th, td {
+                    vertical-align: top;
+                    padding-bottom: 1em;
+                    padding-top: 1em;
+                    line-height: 1.3em;
+                }
+                textarea { font-size: 0.9em; font-family: inherit; }
+            }
+            input[name=sbopn] { width: 30ch; }
+            input[name=sbopnpi] { width: 10ch; }
+            input[name=sboppy] { width: 5ch; }
+            input[name=sbnoidea2] { width: 5ch; }
+        }
+        &.medical-conditions-header {
+            th {
+                font-size: 1.3em;
+                text-align: left;
+                padding-left: 0.5em;
+                white-space: nowrap;
+            }
+        }
+        &.medical-conditions {
+            margin-top: -0.5em;
+            tr th, tr td {
+                padding-bottom: 0.67em;
+            }
+            span.who {
+                margin: 0px 0px 0px 3em;
+            }
+            input[name=sbhcdod] { width: 6ch; }
+            input[name=sbhcpbo] { width: 30ch; }
+            input[name=sbmpcw] { width: 6ch; }
+            input[name=sbmphtsw] { width: 6ch; }
+            input[name=sbmphthv] { width: 7ch; }
+            input[name=sbmpasw] { width: 6ch; }
+            input[name=sbmpast] { width: 30ch; }
+            input[name=noidea6] { width: 6ch; }
+            input[name=noidea8] { width: 6ch; }
+            input[name=sbmpdw] { width: 6ch; }
+            span.thsub {
+                font-size: 0.8em;
+                line-height: 1em;
+                height: 0px;
+                font-weight: normal;
+            }
+            span[id$="switch"] {
+                &.disabled { color: lightgrey; }
+                &.enabled  { color: inherit; }
+            }
+            tr.noidea12 {
+                th, td {
+                    vertical-align: top;
+                    border-bottom: 1px dotted #d0d0d0;
+                    padding-bottom: 1em;
+                    line-height: 1.3em;
+                }
+            }
+        }
+        &.lc-symptoms {
+            margin-top: -0.5em;
+            border-bottom: 1px dotted #d0d0d0;
+            tr th, tr td {
+                padding-bottom: 0.67em;
+            }
+            input[name="sbwcos"] { width: 30ch; margin-left: 1em; }
+            input[name="noidea16"] { width: 15ch; }
+            input[name="noidea16a"] { width: 30ch; }
+        }
+        &.pulfunc {
+            border-bottom: 1px solid grey;
+            padding-bottom: 1em;
+            th.h3 {
+                font-size: 1.2em;
+                text-align: left;
+                padding-left: 0.5em;
+                padding-bottom: 0.5em;
+            }
+            tr.pulfunc {
+                th, td {
+                    padding-bottom: 0.67em;
+                }
+            }
+            input[type="text"] { width: 8ch; }
+        }
+        &.occupational-header {
+            margin-top: -0.5em;
+            th {
+                font-size: 1.3em;
+                text-align: left;
+                padding-left: 0.5em;
+                white-space: nowrap;
+            }
+        }
+        &.occupational {
+            margin-top: -0.5em;
+            tr th, tr td {
+                padding-bottom: 0.67em;
+            }
+            span.who {
+                margin: 0px 0px 0px 3em;
+            }
+            input[type="checkbox"] { white-space: nowrap; }
+            span.thsub {
+                font-size: 0.8em;
+                line-height: 1em;
+                height: 0px;
+                font-weight: normal;
+            }
+            span.nowrap { white-space: nowrap; }
+            tr.noidea12 {
+                th, td {
+                    vertical-align: top;
+                    border-bottom: 1px dotted #d0d0d0;
+                    padding-bottom: 1em;
+                    line-height: 1.3em;
+                }
+            }
+        }
+    }
+}

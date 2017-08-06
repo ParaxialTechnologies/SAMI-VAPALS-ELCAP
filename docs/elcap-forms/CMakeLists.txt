@@ -2,8 +2,14 @@ adoc_to_html(
   index.adoc
   )
 
+scss_to_css(
+  sami.scss
+  )
+
 copy_binaries(
   elcap-background-form.pdf
+  elcap-background-form.html
+  elcap-background-form-2.html
   elcap-biopsy-form.pdf
   elcap-case-review-form.pdf
   elcap-ct-evaluation-form.pdf
@@ -15,4 +21,5 @@ copy_binaries(
   elcap-intervention-form.pdf
   elcap-pet-scan-form.pdf
   elcap-schedule-form.pdf
+  sami.js
   )

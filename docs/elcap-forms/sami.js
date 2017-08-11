@@ -16,7 +16,7 @@ document.addEventListener( "DOMContentLoaded", function(){
 
   // If this is the background form . . .
 
-  if (bgform && bgform.newform) {
+  if (bgform) {
     bgform.sbph.onchange = function(){
       var ht = bgform.sbph.value * (bgform.sbphu.value == "i" ? 0.0254 : 0.01),
           wt = bgform.sbpw.value * (bgform.sbpwu.value == "p" ? 0.4535 : 1),
@@ -26,6 +26,7 @@ document.addEventListener( "DOMContentLoaded", function(){
       } else {
         bgform.sbbmi.value = "";
       }
+      bgform.sbbmivis.value = bgform.sbbmi.value;
     };
     // Assign the same onchange to the weight box.
     bgform.sbpw.onchange = bgform.sbph.onchange;
@@ -36,6 +37,8 @@ document.addEventListener( "DOMContentLoaded", function(){
     for (var i = 0, len = bgform.sbpwu.length; i < len; i++) {
       bgform.sbpwu[i].onclick = bgform.sbph.onchange;
     }
+  }
+  if (bgform && bgform.newform) {
     var make_abler = function( thingy, y_element, disable_array ){
       console.log("Setting up '" + thingy + "'");
       var f = function(){
@@ -67,7 +70,7 @@ document.addEventListener( "DOMContentLoaded", function(){
     make_abler( "sbmpht", bgform.sbmpht, ["sbmphtt", "sbmphtsw", "sbmphthv"] );
     make_abler( "sbmphc", bgform.sbmphc, ["sbmphct"] );
     make_abler( "sbmpas", bgform.sbmpas, ["sbmpasw", "sbmpast"] );
-    make_abler( "noidea5", bgform.noidea5, ["noidea6"] );
+    make_abler( "sbmpmi", bgform.sbmpmi, ["sbmpmid", "sbmpmiw"] );
     make_abler( "noidea7", bgform.noidea7, ["noidea8"] );
     make_abler( "sbmpd", bgform.sbmpd, ["sbmpdw", "sbmpdt"] );
     make_abler( "noidea10", bgform.noidea10, ["noidea11"] );

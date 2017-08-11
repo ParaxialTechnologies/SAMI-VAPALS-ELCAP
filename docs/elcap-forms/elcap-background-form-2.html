@@ -78,7 +78,8 @@
               </tr>
             </table>
             <span class="th bmi">BMI<a class="info" href="#">&#x2139;</a></span>
-            <input type="text" name="sbbmi" min="6" max="220"></input>
+            <input type="text" name="sbbmivis" disabled="disabled"/>
+            <input type="hidden" name="sbbmi"/>
             <span class="alert" style="font-size: 0.9em;">← auto-calculates from height and weight</span>
           </td>
         </tr>
@@ -93,12 +94,12 @@
             <span class="th race">Race<a class="info" href="#">&#x2139;</a></span>
             <select name="sbrc">
               <option value="-" selected><i>unspecified</i></option>
+              <option value="w">White</option>
+              <option value="b">Black or African American</option>
               <option value="i">American Indian</option>
               <option value="k">Alaska Native</option>
               <option value="a">Asian</option>
               <option value="p">Native Hawaiian or Other Pacific Islander</option>
-              <option value="b">Black or African American</option>
-              <option value="w">White</option>
               <option value="t">Two or more</option>
               <option value="o">Other (specify)</option>
             </select>
@@ -117,7 +118,7 @@
               <option value="ts">completed trade school</option>
               <option value="ad">completed 2-year college degree</option>
               <option value="bd">completed 4-year college degree</option>
-              <option value="gd">advanced degree (e.g., Masters, J.D., M.D., Ph.D.)</option>
+              <option value="gd">advanced degree (e.g., Master’s, J.D., M.D., Ph.D.)</option>
             </select>
             <span class="th serv">Served in the military?</span>
             <input type="radio" name="sbmly" value="n">no</input>
@@ -146,10 +147,10 @@
       </table>
       <table class="ordering-info">
         <tr>
-          <th class="oprac">Ordering Practitioner Name</th>
+          <th class="oprac">Ordering Practitioner Name (Last, First)</th>
           <td>
-            <input type="text" name="sbopn" value=""></input>
-            <span class="alert">form had two fields, data dictionary only one field</span>
+            <input type="text" name="sbopln" value=""></input>
+            <input type="text" name="sbopfn" value=""></input>
           </td>
         </tr>
         <tr>
@@ -192,12 +193,11 @@
             <span class="alert">not in the data dictionary</span>
           </td>
         </tr>
-        <tr class="sbnoidea3">
-          <th class="sbnoidea3">&mdash;asymptomatic for lung cancer</th>
+        <tr class="sboas">
+          <th class="sboas">&mdash;asymptomatic for lung cancer</th>
           <td>
-            <input type="radio" name="sbnoidea3" value="n">no</input>
-            <input type="radio" name="sbnoidea3" value="y">yes</input>
-            <span class="alert">not in the data dictionary</span>
+            <input type="radio" name="sboas" value="n">no</input>
+            <input type="radio" name="sboas" value="y">yes</input>
           </td>
         </tr>
         <tr class="sbnoidea4">
@@ -399,7 +399,7 @@
           <td>
             <input type="checkbox" name="sbwcb" value="b">cough producing bloody material</input><br/>
             <input type="checkbox" name="sbwcl" value="l">unexplained weight loss greater than 20 lbs.</input><br/>
-            <input type="checkbox" name="noidea14" value="-">unexplained hoarseness</input><span class="alert">not in data dictionary</span><br/>
+            <input type="checkbox" name="sbwch" value="-">unexplained hoarseness</input><br/>
             <input type="checkbox" name="sbwco" value="l">other (specify)</input><input type="text" name="sbwcos" value="">
           </td>
         </tr>

@@ -1,5 +1,7 @@
 adoc_to_html(
   index.adoc
+  elcap-background-form-dd.adoc
+  elcap-background-form-dd2.adoc
   )
 
 scss_to_css(

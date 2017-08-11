@@ -27,7 +27,7 @@
       </table>
       <table class="visit-info">
         <tr class="visit-date">
-          <th>Visit Date (DD/Mmm/YYYY)</th>
+          <th>Visit Date (DD/Mmm/YYYY)</th><!-- "Intake date," then "Patient date of baseline CT", but no longer required -->
           <td><input type="text" name="sbdop" class="date" value="04/Aug/2017"></input></td>
       </table>
       <table class="patient-base">
@@ -73,7 +73,8 @@
               </tr>
             </table>
             <span class="th bmi">BMI<a class="info" href="#">&#x2139;</a></span>
-            <input type="text" name="sbbmi" value=""></input>
+            <input type="text" name="sbbmivis" value="" disabled="disabled"></input>
+            <input type="hidden" name="sbbmi" value""/>
           </td>
         </tr>
         <tr class="ethnos">
@@ -87,12 +88,12 @@
             <span class="th race">Race<a class="info" href="#">&#x2139;</a></span>
             <select name="sbrc">
               <option value="-" selected><i>unspecified</i></option>
+              <option value="w">White</option>
+              <option value="b">Black or African American</option>
               <option value="i">American Indian</option>
               <option value="k">Alaska Native</option>
               <option value="a">Asian</option>
               <option value="p">Native Hawaiian or Other Pacific Islander</option>
-              <option value="b">Black or African American</option>
-              <option value="w">White</option>
               <option value="t">Two or more</option>
               <option value="o">Other (specify)</option>
             </select>
@@ -111,7 +112,7 @@
               <option value="ts">completed trade school</option>
               <option value="ad">completed 2-year college degree</option>
               <option value="bd">completed 4-year college degree</option>
-              <option value="gd">advanced degree (e.g., Masters, J.D., M.D., Ph.D.)</option>
+              <option value="gd">advanced degree (e.g., Master’s, J.D., M.D., Ph.D.)</option>
             </select>
             <span class="th serv">Served in the military?</span>
             <input type="radio" name="sbmly" value="n">no</input>
@@ -133,18 +134,18 @@
         <tr>
           <th>Was a CT lung screening scan ordered for this patient (CPT code G0297)?</th>
           <td>
-            <input type="radio" name="sbmly" value="n">no</input>
-            <input type="radio" name="sbmly" value="y">yes</input>
+            <input type="radio" name="sbmeq" value="n">no</input>
+            <input type="radio" name="sbmeq" value="y">yes</input>
             <span class="tdnote">(If no, the rest of the questions in this section are optional.)</span>
           </td>
         </tr>
       </table>
       <table class="ordering-info">
         <tr>
-          <th class="oprac">Ordering Practitioner Name</th>
+          <th class="oprac">Ordering Practitioner Name (Last, First)</th>
           <td>
-            <input type="text" name="sbopn" value=""></input>
-            <span class="alert">form had two fields, data dictionary only one field</span>
+            <input type="text" name="sbopln" value=""></input>
+            <input type="text" name="sbopfn" value=""></input>
           </td>
         </tr>
         <tr>
@@ -164,11 +165,10 @@
           </td>
         </tr>
         <tr>
-          <th class="sbnoidea">Ordering practitioner reported smoking status</th>
+          <th class="sbopss">Ordering practitioner reported smoking status</th>
           <td>
-            <input type="radio" name="sbnoidea" value="c">current</input>
-            <input type="radio" name="sbnoidea" value="f">former</input>
-            <span class="alert">not in the data dictionary</span>
+            <input type="radio" name="sbopss" value="c">current</input>
+            <input type="radio" name="sbopss" value="f">former</input>
           </td>
         </tr>
         <tr>
@@ -178,25 +178,22 @@
           </td>
         </tr>
         <tr>
-          <th class="sbnoidea2">Ordering practitioner reported years since quit</th>
+          <th class="sbopqy">Ordering practitioner reported years since quit</th>
           <td>
-            <input type="text" name="sbnoidea2" value=""></input>
-            <span class="alert">not in the data dictionary</span>
+            <input type="text" name="sbopqy" value=""></input>
           </td>
         </tr>
         <tr>
           <th class="sbnoidea3">Ordering practitioner reported asymptomatic for lung cancer</th>
           <td>
-            <input type="radio" name="sbnoidea3" value="n">no</input>
-            <input type="radio" name="sbnoidea3" value="y">yes</input>
-            <span class="alert">not in the data dictionary</span>
+            <input type="radio" name="sboas" value="n">no</input>
+            <input type="radio" name="sboas" value="y">yes</input>
           </td>
         </tr>
-        <tr class="sbnoidea4">
-          <th class="sbnoidea4">Clinical information<br/><span class="thnote">(information will be copied to CT report)</span></th>
+        <tr class="sbopci">
+          <th class="sbopci">Clinical information<br/><span class="thnote">(information will be copied to CT report)</span></th>
           <td>
-            <textarea name="sbnoidea4" placeholder="" rows="10" cols="80" value=""></textarea>
-            <span class="alert">not in the data dictionary</span>
+            <textarea name="sbopci" placeholder="" rows="10" cols="80" value=""></textarea>
           </td>
         </tr>
       </table>
@@ -297,14 +294,17 @@
           </td>
         </tr>
         <tr>
-          <th>MI</th>
+          <th>MI?</th>
           <td>
-            <input type="radio" name="noidea5" value="n" checked="checked">no</input>
-            <input type="radio" name="noidea5" value="y">yes</input>
-            <input type="radio" name="noidea5" value="q">?</input>
-            <span class="th">When? (YYYY)</span>
-            <input type="text" name="noidea6" value=""></input>
-            <span class="alert">not in the data dictionary</span>
+            <input type="radio" name="sbmpmi" value="n" checked="checked">no</input>
+            <input type="radio" name="sbmpmi" value="y">yes</input>
+            <input type="radio" name="sbmpmi" value="q">?</input>
+            <span id="sbmpmiswitch">
+              <span class="th">When? (YYYY)</span>
+              <input type="number" name="sbmpmid" value="" min="1900" max="2017"></input>
+              <span class="th">Where treated?</span>
+              <input type="text" name="sbmpmiw" value=""></input>
+            </span>
           </td>
         </tr>
         <tr>
@@ -315,7 +315,6 @@
             <input type="radio" name="noidea7" value="q">?</input>
             <span class="th">When? (YYYY)</span>
             <input type="text" name="noidea8" value=""></input>
-            <span class="alert">not in the data dictionary</span>
           </td>
         </tr>
         <tr>
@@ -379,7 +378,7 @@
           <td>
             <input type="checkbox" name="sbwcb" value="b">cough producing bloody material</input><br/>
             <input type="checkbox" name="sbwcl" value="l">unexplained weight loss greater than 20 lbs.</input><br/>
-            <input type="checkbox" name="noidea14" value="-">unexplained hoarseness</input><span class="alert">not in data dictionary</span><br/>
+            <input type="checkbox" name="sbwch" value="-">unexplained hoarseness</input><br/>
             <input type="checkbox" name="sbwco" value="l">other (specify)</input><input type="text" name="sbwcos" value="">
           </td>
         </tr>

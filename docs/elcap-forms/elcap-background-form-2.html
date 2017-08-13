@@ -311,36 +311,33 @@
         <tr>
           <th>MI?</th>
           <td>
-            <input type="radio" name="noidea5" value="n" checked="checked">no</input>
-            <input type="radio" name="noidea5" value="y">yes</input>
-            <input type="radio" name="noidea5" value="q">?</input>
-            <span id="noidea5switch">
+            <input type="radio" name="sbmpmi" value="n" checked="checked">no</input>
+            <input type="radio" name="sbmpmi" value="y">yes</input>
+            <input type="radio" name="sbmpmi" value="q">?</input>
+            <span id="sbmpmiswitch">
               <span class="th">When? (YYYY)</span>
-              <input type="number" name="noidea6" value="" min="1900" max="2017"></input>
+              <input type="number" name="sbmpmid" value="" min="1900" max="2017"></input>
+              <span class="th">Where treated?</span>
+              <input type="text" name="sbmpmiw" value=""></input>
             </span>
-            <span class="alert">not in the data dictionary</span>
           </td>
         </tr>
         <tr>
           <th>Stroke?</th>
           <td>
-            <input type="radio" name="noidea7" value="n" checked="checked">no</input>
-            <input type="radio" name="noidea7" value="y">yes</input>
-            <input type="radio" name="noidea7" value="q">?</input>
-            <span id="noidea7switch">
-              <span class="th">When? (YYYY)</span>
-              <input type="number" name="noidea8" value="" min="1900" max="2017"></input>
-            </span>
-            <span class="alert">not in the data dictionary</span>
+            <input type="radio" name="sbmps" value="n" checked="checked">no</input>
+            <input type="radio" name="sbmps" value="y">yes</input>
+            <input type="radio" name="sbmps" value="q">?</input>
+            <span class="th">When? (YYYY)</span>
+            <input type="text" name="sbmpsd" value=""></input>
           </td>
         </tr>
         <tr>
           <th>Peripheral vascular disease (poor circulation)?</th>
           <td>
-            <input type="radio" name="noidea9" value="n" checked="checked">no</input>
-            <input type="radio" name="noidea9" value="y">yes</input>
-            <input type="radio" name="noidea9" value="q">?</input>
-            <span class="alert">not in the data dictionary</span>
+            <input type="radio" name="sbmppv" value="n" checked="checked">no</input>
+            <input type="radio" name="sbmppv" value="y">yes</input>
+            <input type="radio" name="sbmppv" value="q">?</input>
           </td>
         </tr>
         <tr>
@@ -360,29 +357,23 @@
         <tr>
           <th>Liver disease?</th>
           <td>
-            <input type="radio" name="noidea10" value="n" checked="checked">no</input>
-            <input type="radio" name="noidea10" value="y">yes</input>
-            <input type="radio" name="noidea10" value="q">?</input>
-            <span id="noidea10switch">
-              <span class="th">Severity</span>
-              <input type="radio" name="noidea11" value="n">Mild</input>
-              <input type="radio" name="noidea11" value="y">Moderate/Severe</input>
-            </span>
-            <span class="alert">not in the data dictionary</span>
+            <input type="radio" name="sbmpld" value="n" checked="checked">no</input>
+            <input type="radio" name="sbmpld" value="y">yes</input>
+            <input type="radio" name="sbmpld" value="q">?</input>
+            <span class="th"></span>
+            <input type="radio" name="sbmplds" value="n">Mild</input>
+            <input type="radio" name="sbmplds" value="y">Moderate/Severe</input>
           </td>
         </tr>
-        <tr class="noidea12">
+        <tr class="sbmprd">
           <th>Kidney (renal) disease?</th>
           <td>
-            <input type="radio" name="noidea12" value="n" checked="checked">no</input>
-            <input type="radio" name="noidea12" value="y">yes</input>
-            <input type="radio" name="noidea12" value="q">?</input>
-            <span id="noidea12switch">
-              <span class="th">Severity</span>
-              <input type="radio" name="noidea13" value="n">Mild</input>
-              <input type="radio" name="noidea13" value="y">Moderate/Severe</input>
-            </span>
-            <span class="alert">not in the data dictionary</span>
+            <input type="radio" name="sbmprd" value="n" checked="checked">no</input>
+            <input type="radio" name="sbmprd" value="y">yes</input>
+            <input type="radio" name="sbmprd" value="q">?</input>
+            <span class="th"></span>
+            <input type="radio" name="sbmprds" value="n">Mild</input>
+            <input type="radio" name="sbmprds" value="y">Moderate/Severe</input>
           </td>
         </tr>
       </table>
@@ -406,15 +397,17 @@
         <tr>
           <th>When did you most recently have a chest CT?</th>
           <td>
-            <input type="text" name="noidea15" value="" class="date">
-            <span class="alert">not in data dictionary</span>
-          </td>
-        </tr>
-        <tr>
-          <th>If so, where was the test done?</th>
-          <td>
-            <input type="text" name="noidea16a" value="">
-            <span class="alert">not in data dictionary</span>
+            <select name="sbact">
+              <option value="-" selected><i>unspecified</i></option>
+              <option value="a">less than 6 months ago</option>
+              <option value="b">6–18 months ago</option>
+              <option value="f">18 months to 3 years ago</option>
+              <option value="c">3 years to 5 years ago</option>
+              <option value="d">over 5 years ago</option>
+              <option value="e">never</option>
+            </select>
+            <span class="th">If so, where was the test done?</span>
+            <input type="text" name="sbahcl" value="">
           </td>
         </tr>
       </table>

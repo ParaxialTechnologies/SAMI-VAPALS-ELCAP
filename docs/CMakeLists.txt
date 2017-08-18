@@ -1,6 +1,7 @@
 adoc_to_html(
   index.adoc
   va-facility-alpha-codes.adoc
+  using-avicenna.adoc
   )
 
 copy_binaries(

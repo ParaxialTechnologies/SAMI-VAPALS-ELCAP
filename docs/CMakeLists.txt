@@ -1,7 +1,8 @@
 adoc_to_html(
+  docker.adoc
   index.adoc
-  va-facility-alpha-codes.adoc
   using-avicenna.adoc
+  va-facility-alpha-codes.adoc
   )
 
 copy_binaries(

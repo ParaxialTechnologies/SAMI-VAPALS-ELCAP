@@ -1,0 +1,213 @@
+:doctitle:    VA-PALS – Projects – Vista Expertise Network
+:mastimg:     aboutvista
+:mastcaption: Vista consultants
+:mastdesc:    Real-time patient information means real care
+
+== VA-PALS — Background form data dictionary
+
+Last updated 2017-08-07 from the spreadsheet.
+
+[cols=">.<0,>.<0,<.<0,<.<0v,<.<0,<.<0,<.<0,<.<0,<.<0,<.<1"]
+|==============================================================================
+| Fld # | Sub # | Field Name | Title                                                     | Data Type | Req. | Indx. | Edit. | Value | Definition/Comments
+|     1 |     1 | sbsid      | Study ID                                                  | TEXT      | Y    | Y     |       |       | [Internal use only]
+|     2 |     1 | sbdop      | Intake Date                                               | DATE      | Y    |       |       |       | 
+|     3 |     1 | sbage      | Patient Age                                               | PNUM      |      |       |       |       | 
+|     4 |     1 | sbdob      | Date of Birth                                             | DATE      | Y    |       |       |       | 
+|     5 |     1 | sbocc      | Occupation                                                | TEXT      |      |       |       |       | 
+.9+|     6 |     1 | sboccc     | Occupation code                                           | PULLDOWN  |      |       |       |     - | -
+|     2 |            |                                                           |           |      |       |       |     1 | Higher executives
+|     3 |            |                                                           |           |      |       |       |     2 | Business managers
+|     4 |            |                                                           |           |      |       |       |     3 | Administrative Personnel
+|     5 |            |                                                           |           |      |       |       |     4 | Clerical/Sales workers
+|     6 |            |                                                           |           |      |       |       |     5 | Skilled Manual Employees
+|     7 |            |                                                           |           |      |       |       |     6 | Machine Operators
+|     8 |            |                                                           |           |      |       |       |     7 | Unskilled Employees
+|     9 |            |                                                           |           |      |       |       |     8 | Unemployed
+|     5 |     1 | sbsex      | Patient Sex                                               | RADIO     |      |       |       |     m | Male
+|     5 |     2 |            |                                                           |           |      |       |       |     f | Female
+|     5 |     1 | g          | Patient Height                                            | REAL      |      |       |       |       | 
+|     5 |     1 | sbphu      | Patient Height (Units)                                    | RADIO     |      |       |       |     i | in
+|     5 |     2 |            |                                                           |           |      |       |       |     c | cm
+|     5 |     1 | sbpw       | Patient Weight                                            | REAL      |      |       |       |       | 
+|     5 |     1 | sbpwu      | Patient Weight (Units)                                    | RADIO     |      |       |       |     p | lbs
+|     5 |     2 |            |                                                           |           |      |       |       |     k | kg
+|     5 |     1 | sbbmi      | Patient BMI                                               | REAL      |      |       |       |       | 
+|     5 |     1 | sbet       | Ethnicity                                                 | PULLDOWN  |      |       |       |     - | -
+|     5 |     2 |            |                                                           |           |      |       |       |     y | Hispanic or Latino
+|     5 |     3 |            |                                                           |           |      |       |       |     n | Not Hispanic or Latino
+|     5 |     1 | sbrc       | Patient Race                                              | PULLDOWN  |      |       |       |     - | -
+|     5 |     2 |            |                                                           |           |      |       |       |     i | American Indian
+|     5 |     3 |            |                                                           |           |      |       |       |     k | Alaska Native
+|     5 |     4 |            |                                                           |           |      |       |       |     a | Asian
+|     5 |     5 |            |                                                           |           |      |       |       |     p | Native Hawaiian or Other Pacific Islander
+|     5 |      6 |            |                                                           |           |      |       |       |     b | Black or African American
+|     5 |      7 |            |                                                           |           |      |       |       |     w | White
+|     5 |      8 |            |                                                           |           |      |       |       |     t | Two or more
+|     5 |      9 |            |                                                           |           |      |       |       |     o | Other (specify)
+|     5 |      1 | sbrcs      | Patient Race (Specify)                                    | TEXT      |      |       |       |       | 
+|     5 |      1 | sbed       | Level of Education                                        | PULLDOWN  |      |       |       |     - | -
+|     5 |      2 |            |                                                           |           |      |       |       |     n | did not complete high school
+|     5 |      3 |            |                                                           |           |      |       |       |    hs | completed high school
+|     5 |      4 |            |                                                           |           |      |       |       |    sc | started college
+|     5 |      5 |            |                                                           |           |      |       |       |    ts | completed trade school
+|     5 |      6 |            |                                                           |           |      |       |       |    ad | completed 2-year college degree
+|     5 |      7 |            |                                                           |           |      |       |       |    bd | completed 4-year college degree
+|     5 |      8 |            |                                                           |           |      |       |       |    gd | advanced degree (e.g. Masters, J.D., M.D., Ph.D.)
+|     5 |      1 | sbmly      | Served in the military?                                   | RADIO     |      |       |       |     n | no
+|     5 |      2 |            |                                                           |           |      |       |       |     y | yes
+|     5 |      1 | sbmlyo     | What branch of the military?                              | TEXT      |      |       |       |       | 
+|     5 |      1 | sbopn      | Ordering practioner name                                  | TEXT      |      |       |       |       | 
+|     5 |      1 | sbopnpi    | Ordering practioner NPI                                   | INTEGER   | Y    |       |       |       | 
+|     5 |      1 | sbdsd      | Documentation of shared decision making                   | RADIO     | Y    |       |       |     n | no
+|     5 |      2 |            |                                                           |           |      |       |       |     y | yes
+|     5 |      3 |            |                                                           |           |      |       |       |     q | n/a
+|     5 |      1 | sboppy     | Ordering practitioner reported pack years                 | REAL      |      |       |       |       | 
+|     5 |      1 | sbfc       | Family History of Lung Cancer                             | RADIO     |      |       |       |     n | no
+|     5 |      2 |            |                                                           |           |      |       |       |     y | yes
+|     5 |      3 |            |                                                           |           |      |       |       |     q | ?
+|     5 |      1 | sbfcf      | Family History of Lung Cancer - Father                    | RADIO     |      |       |       |     n | no
+|     5 |      2 |            |                                                           |           |      |       |       |     y | yes
+|     5 |      1 | sbfcm      | Family History of Lung Cancer - Mother                    | RADIO     |      |       |       |     n | no
+|     5 |      2 |            |                                                           |           |      |       |       |     y | yes
+|     5 |      1 | sbfcs      | Family History of Lung Cancer - Sibling                   | RADIO     |      |       |       |     n | no
+|     5 |      2 |            |                                                           |           |      |       |       |     y | yes
+|     5 |      1 | sbhco      | All other Cancers                                         | RADIO     |      |       |       |     n | no
+|     5 |      2 |            |                                                           |           |      |       |       |     y | yes
+|     5 |      3 |            |                                                           |           |      |       |       |     q | ?
+|     5 |      1 | sbhcdod    | Other Cancers When                                        | YEAR      |      |       |       |       | 
+|     5 |      1 | sbhcpbo    | Other Cancer Primary Site                                 | TEXT      |      |       |       |       | 
+|     5 |      1 | sbmpa      | Asthma                                                    | RADIO     |      |       |       |     n | no
+|     5 |      2 |            |                                                           |           |      |       |       |     y | yes
+|     5 |      3 |            |                                                           |           |      |       |       |     q | ?
+|     5 |      1 | sbmpat     | Asthma Treated                                            | RADIO     |      |       |       |     n | no
+|     5 |      2 |            |                                                           |           |      |       |       |     y | yes
+|     5 |      1 | sbmpc      | Emphysema or Chronic Bronchitis (COPD)                    | RADIO     |      |       |       |     n | no
+|     5 |      2 |            |                                                           |           |      |       |       |     y | yes
+|     5 |      3 |            |                                                           |           |      |       |       |     q | ?
+|     5 |      1 | sbmpcw     | Emphysema or Chronic Bronchitis (COPD) - When?            | DATE      |      |       |       |       | 
+|     5 |      1 | sbmpht     | Hypertension?                                             | RADIO     |      |       |       |     n | no
+|     5 |      2 |            |                                                           |           |      |       |       |     y | yes
+|     5 |      3 |            |                                                           |           |      |       |       |     q | ?
+|     5 |      1 | sbmphtt    | Hypertension treated?                                     | RADIO     |      |       |       |     n | no
+|     5 |      2 |            |                                                           |           |      |       |       |     y | yes
+|     5 |      1 | sbmphtsw   | Hypertension treated since when?                          | INTEGER   |      |       |       |       | 
+|     5 |      1 | sbmphthv   | Hypertension - highest value                              | INTEGER   |      |       |       |       | 
+|     5 |      1 | sbmphc     | High cholesterol                                          | RADIO     |      |       |       |     n | no
+|     5 |      2 |            |                                                           |           |      |       |       |     y | yes
+|     5 |      3 |            |                                                           |           |      |       |       |     q | ?
+|     5 |      1 | sbmpct     | High cholesterol treated?                                 | RADIO     |      |       |       |     n | no
+|     5 |      2 |            |                                                           |           |      |       |       |     y | yes
+|     5 |      1 | sbmpas     | Angioplasty or stent?                                     | RADIO     |      |       |       |     n | no
+|     5 |      2 |            |                                                           |           |      |       |       |     y | yes
+|     5 |      3 |            |                                                           |           |      |       |       |     q | ?
+|     5 |      1 | sbmpasw    | Angioplasty or stent - when?                              | INTEGER   |      |       |       |       | 
+|     5 |      2 | sbmpast    | Angioplasty or stent - where treated?                     | TEXT      |      |       |       |       | 
+|     5 |      1 | sbmpd      | Diabetes                                                  | RADIO     |      |       |       |     n | no
+|     5 |      2 |            |                                                           |           |      |       |       |     y | yes
+|     5 |      3 |            |                                                           |           |      |       |       |     q | ?
+|     5 |      1 | sbmpdw     | Diabetes - starting at what age?                          | INTEGER   |      |       |       |       | 
+|     5 |      1 | sbmpdt     | Diabetes - treated?                                       | RADIO     |      |       |       |     n | no
+|     5 |      2 |            |                                                           |           |      |       |       |     y | yes
+|     5 |      1 | sbnbacs    | Any surgery?                                              | RADIO     |      |       |       |     n | no
+|     5 |      2 |            |                                                           |           |      |       |       |     y | yes
+|     5 |      1 | sbnbacso   | Any surgery - specify                                     | TEXT      |      |       |       |       | 
+|     5 |      1 | sblcs      | Symptoms indicative of lung cancer?                       | RADIO     |      |       |       |     n | no
+|     5 |      2 |            |                                                           |           |      |       |       |     y | yes
+|     5 |      1 | sbwcb      | Symptom: cough producing bloody material                  | CHECKBOX  |      |       |       |     b | cough producing bloody material
+|     5 |      1 | sbwcl      | Symptom: unexplained weight loss                          | CHECKBOX  |      |       |       |     l | unexplained weight loss
+|     5 |      1 | sbwco      | Symptom: other                                            | CHECKBOX  |      |       |       |     o | other
+|     5 |      1 | sbwcos     | Symptom: other, specify                                   | TEXT      |      |       |       |       | 
+|     5 |      1 | sbaha      | Asbestos Exposure                                         | RADIO     |      |       |       |     n | no
+|     5 |      2 |            |                                                           |           |      |       |       |     y | yes
+|     5 |      1 | sbahaoi    | asbestos product manufacturing                            | CHECKBOX  |      |       |       |     i | 
+|     5 |      1 | sbahaoj    | auto repair                                               | CHECKBOX  |      |       |       |     j | 
+|     5 |      1 | sbahaoh    | building maintenance                                      | CHECKBOX  |      |       |       |     h | 
+|     5 |      1 | sbahaof    | chemical industry/foundary/refinery                       | CHECKBOX  |      |       |       |     f | 
+|     5 |      1 | sbahaoa    | construction/demolition                                   | CHECKBOX  |      |       |       |     a | 
+|     5 |      1 | sbahaoe    | mining                                                    | CHECKBOX  |      |       |       |     e | 
+|     5 |      1 | sbahaog    | nuclear industry                                          | CHECKBOX  |      |       |       |     g | 
+|     5 |      1 | sbahaoc    | ship construction/repair                                  | CHECKBOX  |      |       |       |     c | 
+|     5 |      1 | sbahaoo    | other                                                     | CHECKBOX  |      |       |       |     o | 
+|     5 |      1 | sbahas     | Asbestos Occupation Other (Specify)                       | TEXT      |      |       |       |       | 
+|     5 |      1 | sbsru      | Have you smoked at least 100 cigarettes in your lifetime  | RADIO     |      |       |       |     n | no
+|     5 |      2 |            |                                                           |           |      |       |       |     y | Yes
+|     5 |      1 | sbsruy     | If no, years of secondhand smoke exposure                 | REAL      |      |       |       |       | 
+|     5 |      1 | sbsas      | Age when started smoking cigarettes regularly             | INTEGER   |      |       |       |       | 
+|     5 |      1 | sbshsa     | Over the past month, have you smoked at all               | RADIO     |      |       |       |     n | no
+|     5 |      2 |            |                                                           |           |      |       |       |     y | Yes
+|     5 |      1 | sbswppd    | packs of cigarettes currently smoked per day (PPD)        | REAL      |      |       |       |       | 
+|     5 |      1 | sbsdlcd    | date of your last cigarette (DAY)                         | PULLDOWN  |      |       |       |     - | -
+|     5 |      2 |            |                                                           |           |      |       |       |     1 | 1
+|     5 |      3 |            |                                                           |           |      |       |       |     2 | 2
+|     5 |      4 |            |                                                           |           |      |       |       |     3 | 3
+|     5 |      5 |            |                                                           |           |      |       |       |     4 | 4
+|     5 |      6 |            |                                                           |           |      |       |       |     5 | 5
+|     5 |      7 |            |                                                           |           |      |       |       |     6 | 6
+|     5 |      8 |            |                                                           |           |      |       |       |     7 | 7
+|     5 |      9 |            |                                                           |           |      |       |       |     8 | 8
+|     5 |     10 |            |                                                           |           |      |       |       |     9 | 9
+|     5 |     11 |            |                                                           |           |      |       |       |    10 | 10
+|     5 |     12 |            |                                                           |           |      |       |       |    11 | 11
+|     5 |     13 |            |                                                           |           |      |       |       |    12 | 12
+|     5 |     14 |            |                                                           |           |      |       |       |    13 | 13
+|     5 |     15 |            |                                                           |           |      |       |       |    14 | 14
+|     5 |     16 |            |                                                           |           |      |       |       |    15 | 15
+|     5 |     17 |            |                                                           |           |      |       |       |    16 | 16
+|     5 |     18 |            |                                                           |           |      |       |       |    17 | 17
+|     5 |     19 |            |                                                           |           |      |       |       |    18 | 18
+|     5 |     20 |            |                                                           |           |      |       |       |    19 | 19
+|     5 |     21 |            |                                                           |           |      |       |       |    20 | 20
+|     5 |     22 |            |                                                           |           |      |       |       |    21 | 21
+|     5 |     23 |            |                                                           |           |      |       |       |    22 | 22
+|     5 |     24 |            |                                                           |           |      |       |       |    23 | 23
+|     5 |     25 |            |                                                           |           |      |       |       |    24 | 24
+|     5 |     26 |            |                                                           |           |      |       |       |    25 | 25
+|     5 |     27 |            |                                                           |           |      |       |       |    26 | 26
+|     5 |     28 |            |                                                           |           |      |       |       |    27 | 27
+|     5 |     29 |            |                                                           |           |      |       |       |    28 | 28
+|     5 |     30 |            |                                                           |           |      |       |       |    29 | 29
+|     5 |     31 |            |                                                           |           |      |       |       |    30 | 30
+|     5 |     32 |            |                                                           |           |      |       |       |    31 | 31
+|     5 |      1 | sbsdlcm    | date of your last cigarette (MONTH)                       | PULLDOWN  |      |       |       |     - | -
+|     5 |      2 |            |                                                           |           |      |       |       |     1 | Jan
+|     5 |      3 |            |                                                           |           |      |       |       |     2 | Feb
+|     5 |      4 |            |                                                           |           |      |       |       |     3 | Mar
+|     5 |      5 |            |                                                           |           |      |       |       |     4 | Apr
+|     5 |      6 |            |                                                           |           |      |       |       |     5 | May
+|     5 |      7 |            |                                                           |           |      |       |       |     6 | Jun
+|     5 |      8 |            |                                                           |           |      |       |       |     7 | Jul
+|     5 |      9 |            |                                                           |           |      |       |       |     8 | Aug
+|     5 |     10 |            |                                                           |           |      |       |       |     9 | Sep
+|     5 |     11 |            |                                                           |           |      |       |       |    10 | Oct
+|     5 |     12 |            |                                                           |           |      |       |       |    11 | Nov
+|     5 |     13 |            |                                                           |           |      |       |       |    12 | Dec
+|     5 |      1 | sbsdlcy    | date of your last cigarette (YEAR)                        | YEAR      |      |       |       |       | 
+|     5 |      1 | sbsdysq    | Quit Years                                                | INTEGER   |      |       |       |       | 
+|     5 |      1 | sbfdpw     | Former Smoker Days Per Week                               | PNUM      |      |       |       |       | 
+|     5 |      1 | sbfppd     | Former Smoker PPD                                         | PNUM      |      |       |       |       | 
+|     5 |      1 | sbfdur     | Former Smoker Duration                                    | PNUM      |      |       |       |       | 
+|     5 |      1 | sbcdpw     | Current Smoker Days Per Week                              | PNUM      |      |       |       |       | 
+|     5 |      1 | sbcppd     | Current Smoker PPD                                        | PNUM      |      |       |       |       | 
+|     5 |      1 | sbcdur     | Current Smoker Duration                                   | PNUM      |      |       |       |       | 
+|     5 |      1 | sbqttq     | ever tried to quit smoking?                               | RADIO     |      |       |       |     n | no
+|     5 |      2 |            |                                                           |           |      |       |       |     y | Yes
+|     5 |      1 | sbqttqtb   | how many times?                                           | PULLDOWN  |      |       |       |     - | -
+|     5 |      2 |            |                                                           |           |      |       |       |     a | 1
+|     5 |      3 |            |                                                           |           |      |       |       |     b | 5-Feb
+|     5 |      4 |            |                                                           |           |      |       |       |     c | 10-Jun
+|     5 |      5 |            |                                                           |           |      |       |       |     d | 10+
+|     5 |      1 | sbqly2     | last 12 months, number of times quit for 24 hours         | PULLDOWN  |      |       |       |     - | -
+|     5 |      2 |            |                                                           |           |      |       |       |     e | 0
+|     5 |      3 |            |                                                           |           |      |       |       |     a | 1
+|     5 |      4 |            |                                                           |           |      |       |       |     b | 5-Feb
+|     5 |      5 |            |                                                           |           |      |       |       |     c | 10-Jun
+|     5 |      6 |            |                                                           |           |      |       |       |     d | 10+
+|     5 |      1 | sbqst      | seriously thinking of quitting                            | PULLDOWN  |      |       |       |     - | -
+|     5 |      2 |            |                                                           |           |      |       |       |     y | yes, within the next 30 days
+|     5 |      3 |            |                                                           |           |      |       |       |     m | yes, within the next 6 months
+|     5 |      4 |            |                                                           |           |      |       |       |     n | no, not thinking of quitting
+|     5 |      1 | sbcpd      | Smoking cessation packet distributed                      | RADIO     |      |       |       |     n | no
+|     5 |      2 |            |                                                           |           |      |       |       |     y | Yes
+|     5 |      1 | sbntpy     | Total Pack-Years                                          | REAL      |      |       | NO    |       | 
+|==============================================================================

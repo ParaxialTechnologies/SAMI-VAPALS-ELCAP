@@ -8,7 +8,12 @@
     <meta name="format-detection" content="telephone=no"/><!-- Mobile Safari -->
     <title>Background form for *mocklast, mockfirst*</title>
     <link rel="stylesheet" href="sami.css" type="text/css" />
-    <script type="text/javascript" src="sami.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="sami2.js"></script>
     </script>
   </head>
   <body class="sami background-form-2">
@@ -30,17 +35,17 @@
         <tr class="visit-date">
           <th>Visit Date</th>
           <td>
-            <input type="date" name="sbdop" min="1900-01-01" max="2017-08-04" value="2017-08-04"></input>
-            <span class="alert" style="font-size: 0.9em;">default HTML5 datepicker that supports ISO date standard; doesn't work in some browsers (but can in JavaScript)</span>
+            <input type="text" name="sbdop" value="" class="yyyymmdd"></input>
+            <span class="alert" style="font-size: 0.9em;">jQuery datepicker using ISO date standard</span>
           </td>
       </table>
       <table class="patient-base">
         <tr class="age">
           <th class="dob">Date of Birth</th>
           <td>
-            <input type="date" name="sbdob" min="1900-01-01" max="2017-08-04" value="1900-01-01"></input>
+            <input type="text" name="sbdob" value="" class="yyyymmdd"></input>
             <span class="th age">Age</span>
-            <input type="number" name="sbage" min="0" max="200" value="107"></input>
+            <input type="number" name="sbage" class="f3d"></input>
             <span class="alert" style="font-size: 0.9em;">← should be autocalculated from birthdate, but not implemented for this example</span>
           </td>
         </tr>
@@ -50,7 +55,7 @@
             <input type="radio" name="sbsex" value="m">M</input>
             <input type="radio" name="sbsex" value="f">F</input>
             <span class="th height">Height<a class="info" href="#">&#x2139;</a></span>
-            <input type="number" name="sbph" min="12" max="300"></input>
+            <input type="text" name="sbph" class="f3d"></input>
             <table class="sbphu">
               <tr>
                 <td>
@@ -64,7 +69,7 @@
               </tr>
             </table>
             <span class="th weight">Weight</span>
-            <input type="number" name="sbpw" min="1" max="2000"></input>
+            <input type="number" name="sbpw" value="" class="f3d"></input>
             <table class="sbphu">
               <tr>
                 <td>
@@ -78,9 +83,8 @@
               </tr>
             </table>
             <span class="th bmi">BMI<a class="info" href="#">&#x2139;</a></span>
-            <input type="text" name="sbbmivis" disabled="disabled"/>
+            <input type="text" name="sbbmivis" disabled="disabled" value="" class="f3-1f"/>
             <input type="hidden" name="sbbmi"/>
-            <span class="alert" style="font-size: 0.9em;">← auto-calculates from height and weight</span>
           </td>
         </tr>
         <tr class="ethnos">
@@ -173,11 +177,10 @@
           <th class="oprep">Ordering practitioner reported&mdash;</th>
         </tr>
         <tr>
-          <th class="sbnoidea">&mdash;smoking status</th>
+          <th class="nowrap">&mdash;smoking status</th>
           <td>
-            <input type="radio" name="sbnoidea" value="c">current</input>
-            <input type="radio" name="sbnoidea" value="f">former</input>
-            <span class="alert">not in the data dictionary</span>
+            <input type="radio" name="sbopss" value="c">current</input>
+            <input type="radio" name="sbopss" value="f">former</input>
           </td>
         </tr>
         <tr>
@@ -187,10 +190,9 @@
           </td>
         </tr>
         <tr>
-          <th class="sbnoidea2">&mdash;years since quit</th>
+          <th class="nowrap">&mdash;years since quit</th>
           <td>
-            <input type="number" name="sbnoidea2" min="0" max="200"></input>
-            <span class="alert">not in the data dictionary</span>
+            <input type="number" name="sbopqy" min="0" max="200"></input>
           </td>
         </tr>
         <tr class="sboas">
@@ -200,11 +202,10 @@
             <input type="radio" name="sboas" value="y">yes</input>
           </td>
         </tr>
-        <tr class="sbnoidea4">
-          <th class="sbnoidea4">Clinical information<br/><span class="thnote">(information will be copied to CT report)</span></th>
+        <tr class="sbopci">
+          <th class="sbopci">Clinical information<br/><span class="thnote">(information will be copied to CT report)</span></th>
           <td>
-            <textarea name="sbnoidea4" placeholder="" rows="10" cols="80"></textarea>
-            <span class="alert">not in the data dictionary</span>
+            <textarea name="sbopci" placeholder="" rows="10" cols="80"></textarea>
           </td>
         </tr>
       </table>

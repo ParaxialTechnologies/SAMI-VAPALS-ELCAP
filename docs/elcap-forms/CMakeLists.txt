@@ -1,7 +1,7 @@
 adoc_to_html(
   index.adoc
   elcap-background-form-dd.adoc
-  elcap-background-form-dd2.adoc
+#  elcap-background-form-dd2.adoc
   )
 
 scss_to_css(
@@ -9,6 +9,7 @@ scss_to_css(
   )
 
 copy_binaries(
+  calendar.png
   elcap-background-form.pdf
   elcap-background-form.html
   elcap-background-form-2.html
@@ -24,4 +25,5 @@ copy_binaries(
   elcap-pet-scan-form.pdf
   elcap-schedule-form.pdf
   sami.js
+  sami2.js
   )

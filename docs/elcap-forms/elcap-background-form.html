@@ -28,15 +28,15 @@
       <table class="visit-info">
         <tr class="visit-date">
           <th>Visit Date (DD/Mmm/YYYY)</th><!-- "Intake date," then "Patient date of baseline CT", but no longer required -->
-          <td><input type="text" name="sbdop" class="date" value="04/Aug/2017"></input></td>
+          <td><input type="text" name="sbdop" class="ddmmmyyyy" value=""></input></td>
       </table>
       <table class="patient-base">
         <tr class="age">
           <th class="dob">Date of Birth (DD/Mmm/YYYY)</th>
           <td>
-            <input type="text" name="sbdob" class="date" value="01/Jan/1900"></input>
+            <input type="text" name="sbdob" class="ddmmmyyyy" value=""></input>
             <span class="th age">Age</span>
-            <input type="text" name="sbage" value="107"></input>
+            <input type="text" class="f3d" name="sbage" value=""></input>
           </td>
         </tr>
         <tr class="gender-stats">
@@ -45,7 +45,7 @@
             <input type="radio" name="sbsex" value="m">M</input>
             <input type="radio" name="sbsex" value="f">F</input>
             <span class="th height">Height<a class="info" href="#">&#x2139;</a></span>
-            <input type="text" name="sbph" value=""></input>
+            <input type="text" name="sbph" class="f3d" value=""></input>
             <table class="sbphu">
               <tr>
                 <td>
@@ -59,7 +59,7 @@
               </tr>
             </table>
             <span class="th weight">Weight</span>
-            <input type="text" name="sbpw" value=""></input>
+            <input type="text" name="sbpw" class="f3d" value=""></input>
             <table class="sbphu">
               <tr>
                 <td>
@@ -73,7 +73,7 @@
               </tr>
             </table>
             <span class="th bmi">BMI<a class="info" href="#">&#x2139;</a></span>
-            <input type="text" name="sbbmivis" value="" disabled="disabled"></input>
+            <input type="text" name="sbbmivis" value="" disabled="disabled" class="f3-1f"></input>
             <input type="hidden" name="sbbmi" value""/>
           </td>
         </tr>
@@ -165,26 +165,26 @@
           </td>
         </tr>
         <tr>
-          <th class="sbopss">Ordering practitioner reported smoking status</th>
+          <th class="nowrap">Ordering practitioner reported smoking status</th>
           <td>
             <input type="radio" name="sbopss" value="c">current</input>
             <input type="radio" name="sbopss" value="f">former</input>
           </td>
         </tr>
         <tr>
-          <th class="sboppy">Ordering practitioner reported pack years</th>
+          <th class="nowrap">Ordering practitioner reported pack years</th>
           <td>
             <input type="text" name="sboppy" value=""></input>
           </td>
         </tr>
         <tr>
-          <th class="sbopqy">Ordering practitioner reported years since quit</th>
+          <th class="nowrap">Ordering practitioner reported years since quit</th>
           <td>
             <input type="text" name="sbopqy" value=""></input>
           </td>
         </tr>
         <tr>
-          <th class="sbnoidea3">Ordering practitioner reported asymptomatic for lung cancer</th>
+          <th class="nowrap">Ordering practitioner reported asymptomatic for lung cancer</th>
           <td>
             <input type="radio" name="sboas" value="n">no</input>
             <input type="radio" name="sboas" value="y">yes</input>
@@ -229,9 +229,9 @@
             <input type="radio" name="sbhco" value="y">yes</input>
             <input type="radio" name="sbhco" value="q">?</input>
             <span class="th">When? (YYYY)</span>
-            <input type="text" name="sbhcdod" value=""></input>
+            <input type="text" name="sbhcdod" value="" class="yyyy"></input>
             <span class="th">Primary site?</span>
-            <input type="text" name="sbhcpbo" value=""></input>
+            <input type="text" name="sbhcpbo" value="" class="f15s"></input>
           </td>
         </tr>
         <tr>
@@ -252,7 +252,7 @@
             <input type="radio" name="sbmpc" value="y">yes</input>
             <input type="radio" name="sbmpc" value="q">?</input>
             <span class="th">When? (YYYY)</span>
-            <input type="text" name="sbmpcw" value=""></input>
+            <input type="text" name="sbmpcw" value="" class="yyyy"></input>
           </td>
         </tr>
         <tr>
@@ -265,9 +265,9 @@
             <input type="radio" name="sbmphtt" value="n">no</input>
             <input type="radio" name="sbmphtt" value="y">yes</input>
             <span class="th">Since When? (YYYY)</span>
-            <input type="text" name="sbmphtsw" value=""></input>
+            <input type="text" name="sbmphtsw" value="" class="yyyy"></input>
             <span class="th">Highest Value?</span>
-            <input type="text" name="sbmphthv" value=""></input>
+            <input type="text" name="sbmphthv" value="" class="f8s"></input>
           </td>
         </tr>
         <tr>
@@ -288,9 +288,9 @@
             <input type="radio" name="sbmpas" value="y">yes</input>
             <input type="radio" name="sbmpas" value="q">?</input>
             <span class="th">When? (YYYY)</span>
-            <input type="text" name="sbmpasw" value=""></input>
+            <input type="text" name="sbmpasw" value="" class="yyyy"></input>
             <span class="th">Where treated?</span>
-            <input type="text" name="sbmpast" value=""></input>
+            <input type="text" name="sbmpast" value="" class="f15s"></input>
           </td>
         </tr>
         <tr>
@@ -301,9 +301,9 @@
             <input type="radio" name="sbmpmi" value="q">?</input>
             <span id="sbmpmiswitch">
               <span class="th">When? (YYYY)</span>
-              <input type="number" name="sbmpmid" value="" min="1900" max="2017"></input>
+              <input type="text" name="sbmpmid" value="" class="yyyy"></input>
               <span class="th">Where treated?</span>
-              <input type="text" name="sbmpmiw" value=""></input>
+              <input type="text" name="sbmpmiw" value="" class="f15s"></input>
             </span>
           </td>
         </tr>
@@ -314,7 +314,7 @@
             <input type="radio" name="sbmps" value="y">yes</input>
             <input type="radio" name="sbmps" value="q">?</input>
             <span class="th">When? (YYYY)</span>
-            <input type="text" name="sbmpsd" value=""></input>
+            <input type="text" name="sbmpsd" value="" class="yyyy"></input>
           </td>
         </tr>
         <tr>
@@ -429,14 +429,14 @@
       </table>
       <table class="occupational">
         <tr>
-          <th>To your knowledge, have you been exposed to asbestos? <a class="info" href="#">&#x2139;</a></th>
+          <th class="nowrap">To your knowledge, have you been exposed to asbestos? <a class="info" href="#">&#x2139;</a></th>
           <td>
             <input type="radio" name="sbaha" value="n" checked="checked">no</input>
             <input type="radio" name="sbaha" value="y">yes</input>
           </td>
         </tr>
-        <tr>
-          <th>Have you ever worked in any of the following? <a class="info" href="#">&#x2139;</a></th>
+        <tr class="sbahao">
+          <th class="nowrap">Have you ever worked in any of the following? <a class="info" href="#">&#x2139;</a></th>
           <td>
             <span class="nowrap"><input type="checkbox" name="sbahaoi" value="i">asbestos product manufacturing</input></span>
             <span class="nowrap"><input type="checkbox" name="sbahaoj" value="j">auto repair</input></span>
@@ -446,7 +446,7 @@
             <span class="nowrap"><input type="checkbox" name="sbahaoe" value="e">mining</input></span>
             <span class="nowrap"><input type="checkbox" name="sbahaog" value="g">nuclear industry</input></span>
             <span class="nowrap"><input type="checkbox" name="sbahaoc" value="c">ship construction/repair</input></span>
-            <span class="nowrap"><input type="checkbox" name="sbahaoo" value="o">other</input></span>
+            <span class="nowrap"><input type="checkbox" name="sbahaoo" value="o">other (e.g.,&nbsp;clean up, toxic waste, chemical/radiation exposure)</input></span>
           </td>
         </tr>
       </table>

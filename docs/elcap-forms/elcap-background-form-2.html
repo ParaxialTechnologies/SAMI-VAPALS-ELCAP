@@ -33,7 +33,7 @@
       </table>
       <table class="visit-info">
         <tr class="visit-date">
-          <th>Visit Date</th>
+          <th>Visit Date (YYYY-MM-DD)</th>
           <td>
             <input type="text" name="sbdop" value="" class="yyyymmdd"></input>
             <span class="alert" style="font-size: 0.9em;">jQuery datepicker using ISO date standard</span>
@@ -41,21 +41,38 @@
       </table>
       <table class="patient-base">
         <tr class="age">
-          <th class="dob">Date of Birth</th>
+          <th class="dob">Date of Birth (YYYY-MM-DD)</th>
           <td>
-            <input type="text" name="sbdob" value="" class="yyyymmdd"></input>
+            <input type="text" name="sbdob" class="yyyymmdd" value=""></input>
             <span class="th age">Age</span>
-            <input type="number" name="sbage" class="f3d"></input>
-            <span class="alert" style="font-size: 0.9em;">← should be autocalculated from birthdate, but not implemented for this example</span>
+            <input type="text" class="f3d" name="sbage" value=""></input>
+          </td>
+        </tr>
+        <tr class="occupation">
+          <th>Occupation<a class="info" href="#">&#x2139;</a><br/><span class="thnote">(If retired, also indicate previous occupation.)</span></th>
+          <td>
+            <input type="text" name="sbocc" class="f20s" value=""></input>
+            <span class="th">Occupation Code<a class="info" href="#">&#x2139;</a></th>
+            <select name="sboccc">
+              <option value="-" selected>&mdash;</option>
+              <option value="1">Higher executives</option>
+              <option value="2">Business managers</option>
+              <option value="3">Administrative Personnel</option>
+              <option value="4">Clerical/Sales workers</option>
+              <option value="5">Skilled manual Employees</option>
+              <option value="6">Machine Operators</option>
+              <option value="7">Unskilled Employees</option>
+              <option value="8">Unemployed</option>
+            </select>
           </td>
         </tr>
         <tr class="gender-stats">
-          <th class="sbsex">Sex</th>
+          <th>Sex</th>
           <td>
             <input type="radio" name="sbsex" value="m">M</input>
             <input type="radio" name="sbsex" value="f">F</input>
             <span class="th height">Height<a class="info" href="#">&#x2139;</a></span>
-            <input type="text" name="sbph" class="f3d"></input>
+            <input type="text" name="sbph" class="f3d" value=""></input>
             <table class="sbphu">
               <tr>
                 <td>
@@ -69,7 +86,7 @@
               </tr>
             </table>
             <span class="th weight">Weight</span>
-            <input type="number" name="sbpw" value="" class="f3d"></input>
+            <input type="text" name="sbpw" class="f3d" value=""></input>
             <table class="sbphu">
               <tr>
                 <td>
@@ -83,21 +100,21 @@
               </tr>
             </table>
             <span class="th bmi">BMI<a class="info" href="#">&#x2139;</a></span>
-            <input type="text" name="sbbmivis" disabled="disabled" value="" class="f3-1f"/>
-            <input type="hidden" name="sbbmi"/>
+            <input type="text" name="sbbmivis" value="" disabled="disabled" class="f3-1f"></input>
+            <input type="hidden" name="sbbmi" value""/>
           </td>
         </tr>
         <tr class="ethnos">
           <th class="eth">Ethnicity</th>
           <td>
             <select name="sbet">
-              <option value="-" selected><i>unspecified</i></option>
+              <option value="-" selected>&mdash;</option>
               <option value="y">Hispanic or Latino</option>
               <option value="n">Not Hispanic or Latino</option>
             </select>
             <span class="th race">Race<a class="info" href="#">&#x2139;</a></span>
             <select name="sbrc">
-              <option value="-" selected><i>unspecified</i></option>
+              <option value="-" selected>&mdash;</option>
               <option value="w">White</option>
               <option value="b">Black or African American</option>
               <option value="i">American Indian</option>
@@ -111,11 +128,11 @@
             <input type="text" name="sbrcs" value=""></input>
           </td>
         </tr>
-        <tr class="educserv">
+        <tr class="educ">
           <th class="edu">Level of Education</th>
           <td>
             <select name="sbed">
-              <option value="-" selected><i>unspecified</i></option>
+              <option value="-" selected>&mdash;</option>
               <option value="n">did not complete high school</option>
               <option value="hs">completed high school</option>
               <option value="sc">started college</option>
@@ -124,7 +141,11 @@
               <option value="bd">completed 4-year college degree</option>
               <option value="gd">advanced degree (e.g., Master’s, J.D., M.D., Ph.D.)</option>
             </select>
-            <span class="th serv">Served in the military?</span>
+          </td>
+        </tr>
+        <tr class+"serv">
+          <th>Served in the military?</th>
+          <td>
             <input type="radio" name="sbmly" value="n">no</input>
             <input type="radio" name="sbmly" value="y">yes</input>
             <span class="th branch">If yes, what branch?</span>

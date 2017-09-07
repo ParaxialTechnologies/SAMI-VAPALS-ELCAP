@@ -3,32 +3,42 @@
 :mastcaption: Vista consultants
 :mastdesc:    Real-time patient information means real care
 
-== VA-PALS — Background form data dictionary
+== VA-PALS — Background form (++sbform++) data dictionary
 
-Last updated 2017-09-05 from the spreadsheet.
+Last updated 2017-09-06 from the spreadsheet.
 
 [options="compact"]
-* The R column indicates whether or not the field is required.
-* The X column indicates whether or not the field is indexed.
-* The E column indicates whether or not the field is _not_ editable.
+* The R column indicates whether or not the field is required. The default is
+  ``not required.''
+* The X column indicates whether or not the field is indexed. The default is
+  ``not indexed.''
+* The E column indicates whether or not the field is editable. The default is
+  ``editable.''
 * The # column indicates the field number and subfield number, delimited by the
   decimal point.
-* The field name for ``Patient Height'' (8.1) should be +sbph+.
 * In 16.8, ``e.g.'' should have a comma after it.
-* In 80.3, 80.4, 81.4, and 81.5, some spreadsheet shenanigans occurred in the
-  descriptions.
-* None of the fields from Page 3 of the Background Form appear (everything
-  after ``Secondhand Tobacco Smoke Exposure / Occupation'').
+* The +sbfcs+ fields (32.*) have an erroneous subfield numbers in the
+  spreadsheet (5 and 6 instead of 1 and 2).
+* In 135.3, 135.4, 136.4 and 136.5, some spreadsheet shenanigans occurred in
+  the descriptions. This is due to automatic date translation because the
+  fields weren't specified as strings with an initial quote mark.
+* In 148.1, the data type is RDATE; I don't actually know what that is.
+
+Here's the link:elcap-background-form-dd.csv[data dictionary in CSV format],
+which you can open in OpenOffice or Excel.
+
+Here's the link:elcap-background-form-ddr.csv[corrected version in CSV
+format].
 
 [cols="<.<0m,<.<0v,<.<0v,^.<0v,^.<0v,^.<0v,>.<0v,>.<0m,<.<1v",options="header",role="small"]
 |==============================================================================
 | Field name | Title                                                     | Data type | R    | X     | E     |      # | Value | Definition/Comments
-| sbsid      | Study ID                                                  | TEXT      | Y    | Y     |       |    1.1 |       | [Internal use only]
-| sbdop      | Intake Date                                               | DATE      | Y    |       |       |    2.1 |       | 
+| sbsid      | Study ID                                                  | TEXT      | Y    | Y     |       |    1.1 |       | 
+| sbdop      | Patient Date of Baseline CT                               | DATE      |      |       |       |    2.1 |       | 
 | sbage      | Patient Age                                               | PNUM      |      |       |       |    3.1 |       | 
-| sbdob      | Date of Birth                                             | DATE      | Y    |       |       |    4.1 |       | 
-| sbocc      | Occupation                                                | TEXT      |      |       |       |    5.1 |       | 
-.9+| sboccc     .9+| Occupation code                                           .9+| PULLDOWN  .9+|      .9+|       .9+|       |    6.1 v|     - v| ---
+| sbdob      | Patient Date of Birth                                     | DATE      |      |       |       |    4.1 |       | [DEPRECATED]
+| sbocc      | Patient Occupation                                        | TEXT      |      |       |       |    5.1 |       | 
+.9+| sboccc     .9+| Occupation Code                                           .9+| PULLDOWN  .9+|      .9+|       .9+|       |    6.1 v|     - v| ---
 |    6.2 |     1 | Higher executives
 |    6.3 |     2 | Business managers
 |    6.4 |     3 | Administrative Personnel
@@ -39,25 +49,26 @@ Last updated 2017-09-05 from the spreadsheet.
 |    6.9 |     8 | Unemployed
 .2+| sbsex      .2+| Patient Sex                                               .2+| RADIO     .2+|      .2+|       .2+|       |    7.1 |     m | Male
 |    7.2 |     f | Female
-| g          | Patient Height                                            | REAL      |      |       |       |    8.1 |       | 
+| sbph       | Patient Height                                            | REAL      |      |       |       |    8.1 |       | 
 .2+| sbphu      .2+| Patient Height (Units)                                    .2+| RADIO     .2+|      .2+|       .2+|       |    9.1 |     i | in
 |    9.2 |     c | cm
 | sbpw       | Patient Weight                                            | REAL      |      |       |       |   10.1 |       | 
 .2+| sbpwu      .2+| Patient Weight (Units)                                    .2+| RADIO     .2+|      .2+|       .2+|       |   11.1 |     p | lbs
 |   11.2 |     k | kg
-| sbbmi      | Patient BMI                                               | REAL      |      |       |       |   12.1 |       | 
+| sbbmi      | Patient BMI                                               | REAL      |      |       | N     |   12.1 |       | 
 .3+| sbet       .3+| Ethnicity                                                 .3+| PULLDOWN  .3+|      .3+|       .3+|       |   13.1 v|     - v| ---
 |   13.2 |     y | Hispanic or Latino
 |   13.3 |     n | Not Hispanic or Latino
-.9+| sbrc       .9+| Patient Race                                              .9+| PULLDOWN  .9+|      .9+|       .9+|       |   14.1 v|     - v| ---
-|   14.2 |     i | American Indian
-|   14.3 |     k | Alaska Native
-|   14.4 |     a | Asian
-|   14.5 |     p | Native Hawaiian or Other Pacific Islander
-|   14.6 |     b | Black or African American
-|   14.7 |     w | White
-|   14.8 |     t | Two or more
-|   14.9 |     o | Other (specify)
+.10+| sbrc       .10+| Patient Race                                              .10+| PULLDOWN  .10+|      .10+|       .10+|       |  14.01 v|     - v| ---
+|  14.02 |     w | White [Previously 'Caucasian']
+|  14.03 |     h | Spanish / Hispanic / Latino (N/A 10/2007) [DEPRECATED 10/2007]
+|  14.04 |     b | Black or African American [Previously 'African American / West Indian / Caribbean']
+|  14.05 |     i | American Indian
+|  14.06 |     k | Alaska Native
+|  14.07 |     a | Asian
+|  14.08 |     p | Native Hawaiian or Other Pacific Islander [Previously 'Pacific Islander']
+|  14.09 |     t | Two or more
+|  14.10 |     o | Other (specify) (N/A 10/2007) [DEPRECATED 10/2007]
 | sbrcs      | Patient Race (Specify)                                    | TEXT      |      |       |       |   15.1 |       | 
 .8+| sbed       .8+| Level of Education                                        .8+| PULLDOWN  .8+|      .8+|       .8+|       |   16.1 v|     - v| ---
 |   16.2 |     n | did not complete high school
@@ -66,161 +77,323 @@ Last updated 2017-09-05 from the spreadsheet.
 |   16.5 |    ts | completed trade school
 |   16.6 |    ad | completed 2-year college degree
 |   16.7 |    bd | completed 4-year college degree
-|   16.8 |    gd | advanced degree (e.g. Masters, J.D., M.D., Ph.D.)
+|   16.8 |    gd | advanced degree (e.g. Master's, J.D., M.D., Ph.D.)
 .2+| sbmly      .2+| Served in the military?                                   .2+| RADIO     .2+|      .2+|       .2+|       |   17.1 |     n | no
 |   17.2 |     y | yes
-| sbmlyo     | What branch of the military?                              | TEXT      |      |       |       |   18.1 |       | 
-| sbopn      | Ordering practioner name                                  | TEXT      |      |       |       |   19.1 |       | 
-| sbopnpi    | Ordering practioner NPI                                   | INTEGER   | Y    |       |       |   20.1 |       | 
-.3+| sbdsd      .3+| Documentation of shared decision making                   .3+| RADIO     .3+| Y    .3+|       .3+|       |   21.1 |     n | no
-|   21.2 |     y | yes
-|   21.3 |     q | n/a
-| sboppy     | Ordering practitioner reported pack years                 | REAL      |      |       |       |   22.1 |       | 
-.3+| sbfc       .3+| Family History of Lung Cancer                             .3+| RADIO     .3+|      .3+|       .3+|       |   23.1 |     n | no
+| sbmlyo     | Served in the military, branch                            | TEXT      |      |       |       |   18.1 |       | 
+.2+| sbmeq      .2+| Lung screening scan ordered (G0297)                       .2+| RADIO     .2+|      .2+|       .2+|       |   19.1 |     n | no
+|   19.2 |     y | yes
+| sbopfn     | Ordering practitioner first name                          | TEXT      |      |       |       |   20.1 |       | 
+| sbopln     | Ordering practitioner last name                           | TEXT      |      |       |       |   21.1 |       | 
+| sbopnpi    | Ordering practitioner NPI                                 | PNUM      |      |       |       |   22.1 |       | 
+.2+| sbdsd      .2+| Documentation of shared decision making                   .2+| RADIO     .2+|      .2+|       .2+|       |   23.1 |     n | no
 |   23.2 |     y | yes
-|   23.3 |     q | ?
-.2+| sbfcf      .2+| Family History of Lung Cancer - Father                    .2+| RADIO     .2+|      .2+|       .2+|       |   24.1 |     n | no
-|   24.2 |     y | yes
-.2+| sbfcm      .2+| Family History of Lung Cancer - Mother                    .2+| RADIO     .2+|      .2+|       .2+|       |   25.1 |     n | no
-|   25.2 |     y | yes
-.2+| sbfcs      .2+| Family History of Lung Cancer - Sibling                   .2+| RADIO     .2+|      .2+|       .2+|       |   26.1 |     n | no
-|   26.2 |     y | yes
-.3+| sbhco      .3+| All other Cancers                                         .3+| RADIO     .3+|      .3+|       .3+|       |   27.1 |     n | no
+.2+| sbopss     .2+| Ordering practitioner reported smoking status             .2+| RADIO     .2+|      .2+|       .2+|       |   24.1 |     c | current
+|   24.2 |     f | former
+| sboppy     | Ordering practitioner reported pack years                 | PNUM      |      |       |       |   25.1 |       | 
+| sbopqy     | Ordering practitioner reported quit years                 | PNUM      |      |       |       |   26.1 |       | 
+.2+| sboas      .2+| Ordering practitioner reported asympotomatic for lung cancer .2+| RADIO     .2+|      .2+|       .2+|       |   27.1 |     n | no
 |   27.2 |     y | yes
-|   27.3 |     q | ?
-| sbhcdod    | Other Cancers When                                        | YEAR      |      |       |       |   28.1 |       | 
-| sbhcpbo    | Other Cancer Primary Site                                 | TEXT      |      |       |       |   29.1 |       | 
-.3+| sbmpa      .3+| Asthma                                                    .3+| RADIO     .3+|      .3+|       .3+|       |   30.1 |     n | no
+| sbopci     | Clinical information                                      | TEXT      |      |       |       |   28.1 |       | 
+.3+| sbfc       .3+| Family History of Lung Cancer                             .3+| RADIO     .3+|      .3+|       .3+|       |   29.1 |     n | no
+|   29.2 |     y | yes
+|   29.3 |     q | ?
+.2+| sbfcf      .2+| Family History of Lung Cancer: Father                     .2+| RADIO     .2+|      .2+|       .2+|       |   30.1 |     n | no
 |   30.2 |     y | yes
-|   30.3 |     q | ?
-.2+| sbmpat     .2+| Asthma Treated                                            .2+| RADIO     .2+|      .2+|       .2+|       |   31.1 |     n | no
+.2+| sbfcm      .2+| Family History of Lung Cancer: Mother                     .2+| RADIO     .2+|      .2+|       .2+|       |   31.1 |     n | no
 |   31.2 |     y | yes
-.3+| sbmpc      .3+| Emphysema or Chronic Bronchitis (COPD)                    .3+| RADIO     .3+|      .3+|       .3+|       |   32.1 |     n | no
+.2+| sbfcs      .2+| Family History of Lung Cancer: Siblings                   .2+| RADIO     .2+|      .2+|       .2+|       |   32.1 |     n | no
 |   32.2 |     y | yes
-|   32.3 |     q | ?
-| sbmpcw     | Emphysema or Chronic Bronchitis (COPD) - When?            | DATE      |      |       |       |   33.1 |       | 
-.3+| sbmpht     .3+| Hypertension?                                             .3+| RADIO     .3+|      .3+|       .3+|       |   34.1 |     n | no
-|   34.2 |     y | yes
-|   34.3 |     q | ?
-.2+| sbmphtt    .2+| Hypertension treated?                                     .2+| RADIO     .2+|      .2+|       .2+|       |   35.1 |     n | no
-|   35.2 |     y | yes
-| sbmphtsw   | Hypertension treated since when?                          | INTEGER   |      |       |       |   36.1 |       | 
-| sbmphthv   | Hypertension - highest value                              | INTEGER   |      |       |       |   37.1 |       | 
-.3+| sbmphc     .3+| High cholesterol                                          .3+| RADIO     .3+|      .3+|       .3+|       |   38.1 |     n | no
+.3+| sbhco      .3+| All other Cancers                                         .3+| RADIO     .3+|      .3+|       .3+|       |   33.1 |     n | no
+|   33.2 |     y | yes
+|   33.3 |     q | ?
+| sbhcdod    | Other Cancer Diagnosis Date                               | YEAR      |      |       |       |   34.1 |       | 
+| sbhcpbo    | Other Cancer Primary Site                                 | TEXT      |      |       |       |   35.1 |       | 
+.3+| sbmpa      .3+| Asthma                                                    .3+| RADIO     .3+|      .3+|       .3+|       |   36.1 |     n | no
+|   36.2 |     y | yes
+|   36.3 |     q | ?
+.2+| sbmpat     .2+| Asthma Treated                                            .2+| RADIO     .2+|      .2+|       .2+|       |   37.1 |     n | no
+|   37.2 |     y | yes
+.3+| sbmpc      .3+| Emphysema or Chronic Bronchitis (COPD)                    .3+| RADIO     .3+|      .3+|       .3+|       |   38.1 |     n | no
 |   38.2 |     y | yes
 |   38.3 |     q | ?
-.2+| sbmpct     .2+| High cholesterol treated?                                 .2+| RADIO     .2+|      .2+|       .2+|       |   39.1 |     n | no
+.3+| sbmpht     .3+| Hypertension                                              .3+| RADIO     .3+|      .3+|       .3+|       |   39.1 |     n | no
 |   39.2 |     y | yes
-.3+| sbmpas     .3+| Angioplasty or stent?                                     .3+| RADIO     .3+|      .3+|       .3+|       |   40.1 |     n | no
+|   39.3 |     q | ?
+.2+| sbmphtt    .2+| Hypertension Treated                                      .2+| RADIO     .2+|      .2+|       .2+|       |   40.1 |     n | no
 |   40.2 |     y | yes
-|   40.3 |     q | ?
-| sbmpasw    | Angioplasty or stent - when?                              | INTEGER   |      |       |       |   41.1 |       | 
-| sbmpast    | Angioplasty or stent - where treated?                     | TEXT      |      |       |       |   42.1 |       | 
-.3+| sbmpd      .3+| Diabetes                                                  .3+| RADIO     .3+|      .3+|       .3+|       |   43.1 |     n | no
+| sbmphtsw   | Hypertension Since When                                   | YEAR      |      |       |       |   41.1 |       | 
+| sbmphthv   | Hypertension Highest Value                                | INTEGER   |      |       |       |   42.1 |       | 
+.3+| sbmphc     .3+| High Cholesterol                                          .3+| RADIO     .3+|      .3+|       .3+|       |   43.1 |     n | no
 |   43.2 |     y | yes
 |   43.3 |     q | ?
-| sbmpdw     | Diabetes - starting at what age?                          | INTEGER   |      |       |       |   44.1 |       | 
-.2+| sbmpdt     .2+| Diabetes - treated?                                       .2+| RADIO     .2+|      .2+|       .2+|       |   45.1 |     n | no
+.2+| sbmpct     .2+| High Cholesterol Treated                                  .2+| RADIO     .2+|      .2+|       .2+|       |   44.1 |     n | no
+|   44.2 |     y | yes
+.3+| sbmpmi     .3+| MI                                                        .3+| RADIO     .3+|      .3+|       .3+|       |   45.1 |     n | no
 |   45.2 |     y | yes
-.2+| sbnbacs    .2+| Any surgery?                                              .2+| RADIO     .2+|      .2+|       .2+|       |   46.1 |     n | no
-|   46.2 |     y | yes
-| sbnbacso   | Any surgery - specify                                     | TEXT      |      |       |       |   47.1 |       | 
-.2+| sblcs      .2+| Symptoms indicative of lung cancer?                       .2+| RADIO     .2+|      .2+|       .2+|       |   48.1 |     n | no
+|   45.3 |     q | ?
+| sbmpmid    | MI Diagnosis Date                                         | YEAR      |      |       |       |   46.1 |       | 
+| sbmpmiw    | MI Treated Location                                       | TEXT      |      |       |       |   47.1 |       | 
+.3+| sbmpas     .3+| Had an angioplasty or Stent?                              .3+| RADIO     .3+|      .3+|       .3+|       |   48.1 |     n | no
 |   48.2 |     y | yes
-| sbwcb      | Symptom: cough producing bloody material                  | CHECKBOX  |      |       |       |   49.1 |     b | cough producing bloody material
-| sbwcl      | Symptom: unexplained weight loss                          | CHECKBOX  |      |       |       |   50.1 |     l | unexplained weight loss
-| sbwco      | Symptom: other                                            | CHECKBOX  |      |       |       |   51.1 |     o | other
-| sbwcos     | Symptom: other, specify                                   | TEXT      |      |       |       |   52.1 |       | 
-.2+| sbaha      .2+| Asbestos Exposure                                         .2+| RADIO     .2+|      .2+|       .2+|       |   53.1 |     n | no
-|   53.2 |     y | yes
-| sbahaoi    | asbestos product manufacturing                            | CHECKBOX  |      |       |       |   54.1 |     i | 
-| sbahaoj    | auto repair                                               | CHECKBOX  |      |       |       |   55.1 |     j | 
-| sbahaoh    | building maintenance                                      | CHECKBOX  |      |       |       |   56.1 |     h | 
-| sbahaof    | chemical industry/foundary/refinery                       | CHECKBOX  |      |       |       |   57.1 |     f | 
-| sbahaoa    | construction/demolition                                   | CHECKBOX  |      |       |       |   58.1 |     a | 
-| sbahaoe    | mining                                                    | CHECKBOX  |      |       |       |   59.1 |     e | 
-| sbahaog    | nuclear industry                                          | CHECKBOX  |      |       |       |   60.1 |     g | 
-| sbahaoc    | ship construction/repair                                  | CHECKBOX  |      |       |       |   61.1 |     c | 
-| sbahaoo    | other                                                     | CHECKBOX  |      |       |       |   62.1 |     o | 
-| sbahas     | Asbestos Occupation Other (Specify)                       | TEXT      |      |       |       |   63.1 |       | 
-.2+| sbsru      .2+| Have you smoked at least 100 cigarettes in your lifetime  .2+| RADIO     .2+|      .2+|       .2+|       |   64.1 |     n | no
-|   64.2 |     y | Yes
-| sbsruy     | If no, years of secondhand smoke exposure                 | REAL      |      |       |       |   65.1 |       | 
-| sbsas      | Age when started smoking cigarettes regularly             | INTEGER   |      |       |       |   66.1 |       | 
-.2+| sbshsa     .2+| Over the past month, have you smoked at all               .2+| RADIO     .2+|      .2+|       .2+|       |   67.1 |     n | no
-|   67.2 |     y | Yes
-| sbswppd    | packs of cigarettes currently smoked per day (PPD)        | REAL      |      |       |       |   68.1 |       | 
-.32+| sbsdlcd    .32+| date of your last cigarette (DAY)                         .32+| PULLDOWN  .32+|      .32+|       .32+|       |  69.01 v|     - v| ---
-|  69.02 |     1 | 1
-|  69.03 |     2 | 2
-|  69.04 |     3 | 3
-|  69.05 |     4 | 4
-|  69.06 |     5 | 5
-|  69.07 |     6 | 6
-|  69.08 |     7 | 7
-|  69.09 |     8 | 8
-|  69.10 |     9 | 9
-|  69.11 |    10 | 10
-|  69.12 |    11 | 11
-|  69.13 |    12 | 12
-|  69.14 |    13 | 13
-|  69.15 |    14 | 14
-|  69.16 |    15 | 15
-|  69.17 |    16 | 16
-|  69.18 |    17 | 17
-|  69.19 |    18 | 18
-|  69.20 |    19 | 19
-|  69.21 |    20 | 20
-|  69.22 |    21 | 21
-|  69.23 |    22 | 22
-|  69.24 |    23 | 23
-|  69.25 |    24 | 24
-|  69.26 |    25 | 25
-|  69.27 |    26 | 26
-|  69.28 |    27 | 27
-|  69.29 |    28 | 28
-|  69.30 |    29 | 29
-|  69.31 |    30 | 30
-|  69.32 |    31 | 31
-.13+| sbsdlcm    .13+| date of your last cigarette (MONTH)                       .13+| PULLDOWN  .13+|      .13+|       .13+|       |  70.01 v|     - v| ---
-|  70.02 |     1 | Jan
-|  70.03 |     2 | Feb
-|  70.04 |     3 | Mar
-|  70.05 |     4 | Apr
-|  70.06 |     5 | May
-|  70.07 |     6 | Jun
-|  70.08 |     7 | Jul
-|  70.09 |     8 | Aug
-|  70.10 |     9 | Sep
-|  70.11 |    10 | Oct
-|  70.12 |    11 | Nov
-|  70.13 |    12 | Dec
-| sbsdlcy    | date of your last cigarette (YEAR)                        | YEAR      |      |       |       |   71.1 |       | 
-| sbsdysq    | Quit Years                                                | INTEGER   |      |       |       |   72.1 |       | 
-| sbfdpw     | Former Smoker Days Per Week                               | PNUM      |      |       |       |   73.1 |       | 
-| sbfppd     | Former Smoker PPD                                         | PNUM      |      |       |       |   74.1 |       | 
-| sbfdur     | Former Smoker Duration                                    | PNUM      |      |       |       |   75.1 |       | 
-| sbcdpw     | Current Smoker Days Per Week                              | PNUM      |      |       |       |   76.1 |       | 
-| sbcppd     | Current Smoker PPD                                        | PNUM      |      |       |       |   77.1 |       | 
-| sbcdur     | Current Smoker Duration                                   | PNUM      |      |       |       |   78.1 |       | 
-.2+| sbqttq     .2+| ever tried to quit smoking?                               .2+| RADIO     .2+|      .2+|       .2+|       |   79.1 |     n | no
-|   79.2 |     y | Yes
-.5+| sbqttqtb   .5+| how many times?                                           .5+| PULLDOWN  .5+|      .5+|       .5+|       |   80.1 v|     - v| ---
-|   80.2 |     a | 1
-|   80.3 |     b | 5-Feb
-|   80.4 |     c | 10-Jun
-|   80.5 |     d | 10+
-.6+| sbqly2     .6+| last 12 months, number of times quit for 24 hours         .6+| PULLDOWN  .6+|      .6+|       .6+|       |   81.1 v|     - v| ---
-|   81.2 |     e | 0
-|   81.3 |     a | 1
-|   81.4 |     b | 5-Feb
-|   81.5 |     c | 10-Jun
-|   81.6 |     d | 10+
-.4+| sbqst      .4+| seriously thinking of quitting                            .4+| PULLDOWN  .4+|      .4+|       .4+|       |   82.1 v|     - v| ---
-|   82.2 |     y | yes, within the next 30 days
-|   82.3 |     m | yes, within the next 6 months
-|   82.4 |     n | no, not thinking of quitting
-.2+| sbcpd      .2+| Smoking cessation packet distributed                      .2+| RADIO     .2+|      .2+|       .2+|       |   83.1 |     n | no
-|   83.2 |     y | Yes
-| sbntpy     | Total Pack-Years                                          | REAL      |      |       | NO    |   84.1 |       | 
+|   48.3 |     q | ?
+| sbmpasw    | When (Angioplasty/Stent)? (YYYY)                          | YEAR      |      |       |       |   49.1 |       | 
+| sbmpast    | Where Treated (Angioplasty/Stent)?                        | TEXT      |      |       |       |   50.1 |       | 
+.3+| sbmps      .3+| Stroke                                                    .3+| RADIO     .3+|      .3+|       .3+|       |   51.1 |     n | no
+|   51.2 |     y | yes
+|   51.3 |     q | ?
+| sbmpsd     | Stroke Diagnosis Date                                     | YEAR      |      |       |       |   52.1 |       | 
+| sbmpsw     | Stroke Treated Location                                   | TEXT      |      |       |       |   53.1 |       | 
+.3+| sbmppv     .3+| Peripheral Vascular Disease                               .3+| RADIO     .3+|      .3+|       .3+|       |   54.1 |     n | no
+|   54.2 |     y | yes
+|   54.3 |     q | ?
+.3+| sbmpd      .3+| Diabetes                                                  .3+| RADIO     .3+|      .3+|       .3+|       |   55.1 |     n | no
+|   55.2 |     y | yes
+|   55.3 |     q | ?
+| sbmpdw     | Diabetes started at age                                   | INTEGER   |      |       |       |   56.1 |       | 
+.2+| sbmpdt     .2+| Diabetes Treated                                          .2+| RADIO     .2+|      .2+|       .2+|       |   57.1 |     n | no
+|   57.2 |     y | yes
+.3+| sbmpld     .3+| Liver Disease                                             .3+| RADIO     .3+|      .3+|       .3+|       |   58.1 |     n | no
+|   58.2 |     y | yes
+|   58.3 |     q | ?
+.2+| sbmplds    .2+| Liver Disease Severity                                    .2+| RADIO     .2+|      .2+|       .2+|       |   59.1 |     m | Mild
+|   59.2 |     s | Moderate/Severe
+.3+| sbmprd     .3+| Renal Disease                                             .3+| RADIO     .3+|      .3+|       .3+|       |   60.1 |     n | no
+|   60.2 |     y | yes
+|   60.3 |     q | ?
+.2+| sbmprds    .2+| Renal Disease Severity                                    .2+| RADIO     .2+|      .2+|       .2+|       |   61.1 |     m | Mild
+|   61.2 |     s | Moderate/Severe
+.2+| sbwc       .2+| During past year symptoms?                                .2+| RADIO     .2+|      .2+|       .2+|       |   62.1 |     n | no
+|   62.2 |     y | yes
+| sbwcb      | cough producing bloody material                           | CHECKBOX  |      |       |       |   63.1 |     b | Yes
+| sbwch      | persistent hoarseness                                     | CHECKBOX  |      |       |       |   64.1 |     h | Yes
+| sbwcl      | unexplained weight loss                                   | CHECKBOX  |      |       |       |   65.1 |     l | Yes
+| sbwco      | other                                                     | CHECKBOX  |      |       |       |   66.1 |     o | Yes
+| sbwcos     | other (specify)                                           | TEXT      |      |       |       |   67.1 |       | 
+.7+| sbact      .7+| most recent chest CT?                                     .7+| PULLDOWN  .7+|      .7+|       .7+|       |   68.1 v|     - v| ---
+|   68.2 |     a | less than 6 months ago
+|   68.3 |     b | 6-18 months ago
+|   68.4 |     f | 18 months to 3 years ago [1.44b - New category]
+|   68.5 |     c | 3 years to 5 years ago [1.44b - Previously '18 months to 5 years ago']
+|   68.6 |     d | over 5 years ago
+|   68.7 |     e | never
+| sbahcl     | where was the test done? (Chest CT)                       | TEXT      |      |       |       |   69.1 |       | 
+.2+| sbahpft    .2+| pulmonary function test                                   .2+| RADIO     .2+|      .2+|       .2+|       |   70.1 |     n | no
+|   70.2 |     y | yes
+| sbfev1     | FEV1 (L/s)                                                | REAL      |      |       |       |   71.1 |       | 
+| sbfvc      | FVC (L)                                                   | REAL      |      |       |       |   72.1 |       | 
+| sbffr      | FEV1/FVC Ratio                                            | REAL      |      |       | N     |   73.1 |       | 
+| sbcop      | Diffusion Capacity (mL/min/mm Hg)                         | REAL      |      |       |       |   74.1 |       | [Previously 'Carbon Monoxide (ppm)']
+.2+| sbaha      .2+| Asbestos Exposure                                         .2+| RADIO     .2+|      .2+|       .2+|       |   75.1 |     n | no
+|   75.2 |     y | yes
+| sbahaoi    | asbestos product manufacturing                            | CHECKBOX  |      |       |       |   76.1 |     i | 
+| sbahaoj    | auto repair                                               | CHECKBOX  |      |       |       |   77.1 |     j | 
+| sbahaoh    | building maintenance                                      | CHECKBOX  |      |       |       |   78.1 |     h | 
+| sbahaof    | chemical industry/foundary/refinery                       | CHECKBOX  |      |       |       |   79.1 |     f | 
+| sbahaoa    | construction/demolition                                   | CHECKBOX  |      |       |       |   80.1 |     a | 
+| sbahaoe    | mining                                                    | CHECKBOX  |      |       |       |   81.1 |     e | 
+| sbahaog    | nuclear industry                                          | CHECKBOX  |      |       |       |   82.1 |     g | 
+| sbahaoc    | ship construction/repair                                  | CHECKBOX  |      |       |       |   83.1 |     c | 
+| sbahaoo    | other                                                     | CHECKBOX  |      |       |       |   84.1 |     o | 
+| sbahas     | Asbestos Occupation Other (Specify)                       | TEXT      |      |       |       |   85.1 |       | 
+.2+| sbsews     .2+| After 18, working in smoking worksite                     .2+| RADIO     .2+|      .2+|       .2+|       |   86.1 |     n | no
+|   86.2 |     y | yes
+.2+| sbsehs     .2+| Work 1+ year in job heavily exposed to smoke              .2+| RADIO     .2+|      .2+|       .2+|       |   87.1 |     n | no
+|   87.2 |     y | yes
+| sbsehsa1   | Work - Age Range - 1                                      | TEXT      |      |       |       |   88.1 |       | 
+| sbsehsj1   | Work - Job - 1                                            | TEXT      |      |       |       |   89.1 |       | 
+.3+| sbsehsr1   .3+| Work - Smoking - 1                                        .3+| RADIO     .3+|      .3+|       .3+|       |   90.1 |     n | not permitted
+|   90.2 |     r | restricted
+|   90.3 |     y | allowed anywhere
+| sbsehsa2   | Work - Age Range - 2                                      | TEXT      |      |       |       |   91.1 |       | 
+| sbsehsj2   | Work - Job - 2                                            | TEXT      |      |       |       |   92.1 |       | 
+.3+| sbsehsr2   .3+| Work - Smoking - 2                                        .3+| RADIO     .3+|      .3+|       .3+|       |   93.1 |     n | not permitted
+|   93.2 |     r | restricted
+|   93.3 |     y | allowed anywhere
+| sbsehsa3   | Work - Age Range - 3                                      | TEXT      |      |       |       |   94.1 |       | 
+| sbsehsj3   | Work - Job - 3                                            | TEXT      |      |       |       |   95.1 |       | 
+.3+| sbsehsr3   .3+| Work - Smoking - 3                                        .3+| RADIO     .3+|      .3+|       .3+|       |   96.1 |     n | not permitted
+|   96.2 |     r | restricted
+|   96.3 |     y | allowed anywhere
+| sbsehsa4   | Work - Age Range - 4                                      | TEXT      |      |       |       |   97.1 |       | 
+| sbsehsj4   | Work - Job - 4                                            | TEXT      |      |       |       |   98.1 |       | 
+.3+| sbsehsr4   .3+| Work - Smoking - 4                                        .3+| RADIO     .3+|      .3+|       .3+|       |   99.1 |     n | not permitted
+|   99.2 |     r | restricted
+|   99.3 |     y | allowed anywhere
+.2+| sbhsy      .2+| House member smoke when you were under 18?                .2+| RADIO     .2+|      .2+|       .2+|       |  100.1 |     n | no
+|  100.2 |     y | Yes
+.3+| sbhsyh     .3+| Smoking allowed in house                                  .3+| RADIO     .3+|      .3+|       .3+|       |  101.1 |     n | not permitted
+|  101.2 |     r | restricted
+|  101.3 |     y | allowed anywhere
+.2+| sbmsy      .2+| Did your primary caregiver smoke when you were under 7?   .2+| RADIO     .2+|      .2+|       .2+|       |  102.1 |     n | no
+|  102.2 |     y | Yes
+.2+| sbmst      .2+| Did your primary care giver smoke when you were ages 7-18? .2+| RADIO     .2+|      .2+|       .2+|       |  103.1 |     n | no
+|  103.2 |     y | Yes
+.2+| sbosy      .2+| Did other smoke in the home when you were under 18?       .2+| RADIO     .2+|      .2+|       .2+|       |  104.1 |     n | no
+|  104.2 |     y | Yes
+.2+| sbslws     .2+| Do you currently live with a smoker?                      .2+| RADIO     .2+|      .2+|       .2+|       |  105.1 |     n | no [DEPRECATED v1.41]
+|  105.2 |     y | Yes
+.2+| sbhso      .2+| House member smoke when you were over 18?                 .2+| RADIO     .2+|      .2+|       .2+|       |  106.1 |     n | no
+|  106.2 |     y | Yes
+| sbhsa1     | Live with smoker - Age - 1                                | TEXT      |      |       |       |  107.1 |       | 
+.5+| sbhsas1    .5+| Live with smoker - Amount - 1                             .5+| PULLDOWN  .5+|      .5+|       .5+|       |  108.1 v|     - v| ---
+|  108.2 |     a | 1-14 Cigarettes per day
+|  108.3 |     b | 15-24 Cigarettes per day
+|  108.4 |     c | 25+ Cigarettes per day
+|  108.5 |     d | Don't Know
+.3+| sbhsasr1   .3+| House - Smoking - 1                                       .3+| RADIO     .3+|      .3+|       .3+|       |  109.1 |     n | not permitted
+|  109.2 |     r | restricted
+|  109.3 |     y | allowed anywhere
+| sbhsa2     | Live with smoker - Age - 2                                | TEXT      |      |       |       |  110.1 |       | 
+.5+| sbhsas2    .5+| Live with smoker - Amount - 2                             .5+| PULLDOWN  .5+|      .5+|       .5+|       |  111.1 v|     - v| ---
+|  111.2 |     a | 1-14 Cigarettes per day
+|  111.3 |     b | 15-24 Cigarettes per day
+|  111.4 |     c | 25+ Cigarettes per day
+|  111.5 |     d | Don't Know
+.3+| sbhsasr2   .3+| House - Smoking - 2                                       .3+| RADIO     .3+|      .3+|       .3+|       |  112.1 |     n | not permitted
+|  112.2 |     r | restricted
+|  112.3 |     y | allowed anywhere
+| sbhsa3     | Live with smoker - Age - 3                                | TEXT      |      |       |       |  113.1 |       | 
+.5+| sbhsas3    .5+| Live with smoker - Amount - 3                             .5+| PULLDOWN  .5+|      .5+|       .5+|       |  114.1 v|     - v| ---
+|  114.2 |     a | 1-14 Cigarettes per day
+|  114.3 |     b | 15-24 Cigarettes per day
+|  114.4 |     c | 25+ Cigarettes per day
+|  114.5 |     d | Don't Know
+.3+| sbhsasr3   .3+| House - Smoking - 3                                       .3+| RADIO     .3+|      .3+|       .3+|       |  115.1 |     n | not permitted
+|  115.2 |     r | restricted
+|  115.3 |     y | allowed anywhere
+| sbhsa4     | Live with smoker - Age - 4                                | TEXT      |      |       |       |  116.1 |       | 
+.5+| sbhsas4    .5+| Live with smoker - Amount - 4                             .5+| PULLDOWN  .5+|      .5+|       .5+|       |  117.1 v|     - v| ---
+|  117.2 |     a | 1-14 Cigarettes per day
+|  117.3 |     b | 15-24 Cigarettes per day
+|  117.4 |     c | 25+ Cigarettes per day
+|  117.5 |     d | Don't Know
+.3+| sbhsasr4   .3+| House - Smoking - 4                                       .3+| RADIO     .3+|      .3+|       .3+|       |  118.1 |     n | not permitted
+|  118.2 |     r | restricted
+|  118.3 |     y | allowed anywhere
+.2+| sbsru      .2+| Have you smoked at least 100 cigarettes in your lifetime  .2+| RADIO     .2+|      .2+|       .2+|       |  119.1 |     n | no
+|  119.2 |     y | Yes
+.2+| sbsruyn    .2+| Never smoker, exposed to second hand smoke?               .2+| RADIO     .2+|      .2+|       .2+|       |  120.1 |     n | no
+|  120.2 |     y | yes
+| sbsas      | Age when started smoking cigarettes regularly             | INTEGER   |      |       |       |  121.1 |       | 
+| sbntpy     | Total Pack-Years                                          | REAL      |      |       | N     |  122.1 |       | 
+.2+| sbshsa     .2+| Over the past month, have you smoked at all               .2+| RADIO     .2+|      .2+|       .2+|       |  123.1 |     n | no
+|  123.2 |     y | Yes
+| sbswppd    | packs of cigarettes currently smoked per day (PPD)        | REAL      |      |       |       |  124.1 |       | 
+.32+| sbsdlcd    .32+| date of your last cigarette (DAY)                         .32+| PULLDOWN  .32+|      .32+|       .32+|       | 125.01 v|     - v| ---
+| 125.02 |     1 | 1
+| 125.03 |     2 | 2
+| 125.04 |     3 | 3
+| 125.05 |     4 | 4
+| 125.06 |     5 | 5
+| 125.07 |     6 | 6
+| 125.08 |     7 | 7
+| 125.09 |     8 | 8
+| 125.10 |     9 | 9
+| 125.11 |    10 | 10
+| 125.12 |    11 | 11
+| 125.13 |    12 | 12
+| 125.14 |    13 | 13
+| 125.15 |    14 | 14
+| 125.16 |    15 | 15
+| 125.17 |    16 | 16
+| 125.18 |    17 | 17
+| 125.19 |    18 | 18
+| 125.20 |    19 | 19
+| 125.21 |    20 | 20
+| 125.22 |    21 | 21
+| 125.23 |    22 | 22
+| 125.24 |    23 | 23
+| 125.25 |    24 | 24
+| 125.26 |    25 | 25
+| 125.27 |    26 | 26
+| 125.28 |    27 | 27
+| 125.29 |    28 | 28
+| 125.30 |    29 | 29
+| 125.31 |    30 | 30
+| 125.32 |    31 | 31
+.13+| sbsdlcm    .13+| date of your last cigarette (MONTH)                       .13+| PULLDOWN  .13+|      .13+|       .13+|       | 126.01 v|     - v| ---
+| 126.02 |     1 | Jan
+| 126.03 |     2 | Feb
+| 126.04 |     3 | Mar
+| 126.05 |     4 | Apr
+| 126.06 |     5 | May
+| 126.07 |     6 | Jun
+| 126.08 |     7 | Jul
+| 126.09 |     8 | Aug
+| 126.10 |     9 | Sep
+| 126.11 |    10 | Oct
+| 126.12 |    11 | Nov
+| 126.13 |    12 | Dec
+| sbsdlcy    | date of your last cigarette (YEAR)                        | YEAR      |      |       |       |  127.1 |       | 
+| sbfdpw     | Former Smoker Days Per Week                               | PNUM      |      |       |       |  128.1 |       | 
+| sbfppd     | Former Smoker PPD                                         | PNUM      |      |       |       |  129.1 |       | 
+| sbfdur     | Former Smoker Duration                                    | PNUM      |      |       |       |  130.1 |       | 
+| sbcdpw     | Current Smoker Days Per Week                              | PNUM      |      |       |       |  131.1 |       | 
+| sbcppd     | Current Smoker PPD                                        | PNUM      |      |       |       |  132.1 |       | 
+| sbcdur     | Current Smoker Duration                                   | PNUM      |      |       |       |  133.1 |       | 
+.2+| sbqttq     .2+| ever tried to quit smoking?                               .2+| RADIO     .2+|      .2+|       .2+|       |  134.1 |     n | no
+|  134.2 |     y | Yes
+.5+| sbqttqtb   .5+| how many times?                                           .5+| PULLDOWN  .5+|      .5+|       .5+|       |  135.1 v|     - v| ---
+|  135.2 |     a | 1
+|  135.3 |     b | 5-Feb
+|  135.4 |     c | 10-Jun
+|  135.5 |     d | 10+
+.6+| sbqly2     .6+| last 12 months, number of times quit for 24 hours         .6+| PULLDOWN  .6+|      .6+|       .6+|       |  136.1 v|     - v| ---
+|  136.2 |     e | 0
+|  136.3 |     a | 1
+|  136.4 |     b | 5-Feb
+|  136.5 |     c | 10-Jun
+|  136.6 |     d | 10+
+.4+| sbqst      .4+| seriously thinking of quitting                            .4+| PULLDOWN  .4+|      .4+|       .4+|       |  137.1 v|     - v| ---
+|  137.2 |     y | yes, within the next 30 days
+|  137.3 |     m | yes, within the next 6 months
+|  137.4 |     n | no, not thinking of quitting
+.2+| sbcpd      .2+| Smoking cessation packet distributed                      .2+| RADIO     .2+|      .2+|       .2+|       |  138.1 |     n | no
+|  138.2 |     y | Yes
+.5+| sbsfb1     .5+| SF-8#1 - health is                                        .5+| RADIO     .5+|      .5+|       .5+|       |  139.1 |     1 | Excellent
+|  139.2 |     2 | Very good
+|  139.3 |     3 | Good
+|  139.4 |     4 | Fair
+|  139.5 |     5 | Poor
+.5+| sbsfb2     .5+| SF-8 #2 - limit usual activities                          .5+| RADIO     .5+|      .5+|       .5+|       |  140.1 |     1 | Not at all
+|  140.2 |     2 | Very little
+|  140.3 |     3 | Somewhat
+|  140.4 |     4 | Quite a lot
+|  140.5 |     5 | Could not do physical activities
+.5+| sbsfb3     .5+| SF-8 #3 - difficulty with daily work                      .5+| RADIO     .5+|      .5+|       .5+|       |  141.1 |     1 | Not at all
+|  141.2 |     2 | A little bit
+|  141.3 |     3 | Some
+|  141.4 |     4 | Quite a lot
+|  141.5 |     5 | Could not do daily work
+.6+| sbsfb4     .6+| SF-8 #4 - bodily pain                                     .6+| RADIO     .6+|      .6+|       .6+|       |  142.1 |     1 | None of the time
+|  142.2 |     2 | Very Mild
+|  142.3 |     3 | Mild
+|  142.4 |     4 | Moderately
+|  142.5 |     5 | Severe
+|  142.6 |     6 | Very severe
+.5+| sbsfb5     .5+| SF-8 #5 - energy                                          .5+| RADIO     .5+|      .5+|       .5+|       |  143.1 |     1 | Very much
+|  143.2 |     2 | Quite a lot
+|  143.3 |     3 | Some
+|  143.4 |     4 | A little
+|  143.5 |     5 | None
+.5+| sbsfb6     .5+| SF-8 #6 - limited social activities                       .5+| RADIO     .5+|      .5+|       .5+|       |  144.1 |     1 | None at all
+|  144.2 |     2 | Very little
+|  144.3 |     3 | Somewhat
+|  144.4 |     4 | Quite a lot
+|  144.5 |     5 | Could not do social actitivites
+.5+| sbsfb7     .5+| SF-8 #7 - emotional problems                              .5+| RADIO     .5+|      .5+|       .5+|       |  145.1 |     1 | Not at all
+|  145.2 |     2 | Slightly
+|  145.3 |     3 | Moderately
+|  145.4 |     4 | Quite a lot
+|  145.5 |     5 | Extremely
+.5+| sbsfb8     .5+| SF-8 #8 - problems keeping from usual activities          .5+| RADIO     .5+|      .5+|       .5+|       |  146.1 |     1 | Not at all
+|  146.2 |     2 | Very little
+|  146.3 |     3 | Somewhat
+|  146.4 |     4 | Quite a lot
+|  146.5 |     5 | Could not do daily activities
+.2+| sbcfs      .2+| Has the participant signed the consent form?              .2+| RADIO     .2+|      .2+|       .2+|       |  147.1 |     n | no
+|  147.2 |     y | Yes
+| sbdoc      | Date informed consent signed                              | RDATE     |      |       |       |  148.1 |       | 
+| sbioc      | Name of individual obtaining consent                      | TEXT      |      |       |       |  149.1 |       | 
 |==============================================================================

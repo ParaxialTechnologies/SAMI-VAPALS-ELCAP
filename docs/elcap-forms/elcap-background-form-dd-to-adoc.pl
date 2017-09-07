@@ -51,6 +51,9 @@ for my $fn (@ARGV) {
             ++$fldnum;
             $subnum = 1;
         }
+        $req = ($req =~ /^Y/i ? 'Y' : '');
+        $indx = ($indx =~ /^Y/i ? 'Y' : '');
+        $edit = ($edit =~ /^N/i ? 'N' : '');
         # print "Fld/Subnum now $fldnum/$subnum\n";
         my $cmpnum = sprintf( "%05d.%05d", $fldnum, $subnum );
         if ($subnum != $subn) {
@@ -180,22 +183,32 @@ for my $fn (@ARGV) {
 :mastcaption: Vista consultants
 :mastdesc:    Real-time patient information means real care
 
-== VA-PALS — Background form data dictionary
+== VA-PALS — Background form (++sbform++) data dictionary
 
 Last updated $today from the spreadsheet.
 
 [options="compact"]
-* The R column indicates whether or not the field is required.
-* The X column indicates whether or not the field is indexed.
-* The E column indicates whether or not the field is _not_ editable.
+* The R column indicates whether or not the field is required. The default is
+  ``not required.''
+* The X column indicates whether or not the field is indexed. The default is
+  ``not indexed.''
+* The E column indicates whether or not the field is editable. The default is
+  ``editable.''
 * The # column indicates the field number and subfield number, delimited by the
   decimal point.
-* The field name for ``Patient Height'' (8.1) should be +sbph+.
 * In 16.8, ``e.g.'' should have a comma after it.
-* In 80.3, 80.4, 81.4, and 81.5, some spreadsheet shenanigans occurred in the
-  descriptions.
-* None of the fields from Page 3 of the Background Form appear (everything
-  after ``Secondhand Tobacco Smoke Exposure / Occupation'').
+* The +sbfcs+ fields (32.*) have an erroneous subfield numbers in the
+  spreadsheet (5 and 6 instead of 1 and 2).
+* In 135.3, 135.4, 136.4 and 136.5, some spreadsheet shenanigans occurred in
+  the descriptions. This is due to automatic date translation because the
+  fields weren't specified as strings with an initial quote mark.
+* In 148.1, the data type is RDATE; I don't actually know what that is.
+
+Here's the link:elcap-background-form-dd.csv[data dictionary in CSV format],
+which you can open in OpenOffice or Excel.
+
+Here's the link:elcap-background-form-ddr.csv[corrected version in CSV
+format].
 
 [cols="$cols",options="header",role="small"]
 EOT

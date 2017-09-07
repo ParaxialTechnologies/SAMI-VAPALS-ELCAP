@@ -13,6 +13,8 @@ copy_binaries(
   elcap-background-form.pdf
   elcap-background-form.html
   elcap-background-form-2.html
+  elcap-background-form-dd.csv
+  elcap-background-form-ddr.csv
   elcap-biopsy-form.pdf
   elcap-case-review-form.pdf
   elcap-ct-evaluation-form.pdf

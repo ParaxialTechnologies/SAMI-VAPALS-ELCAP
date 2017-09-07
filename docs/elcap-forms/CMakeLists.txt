@@ -5,14 +5,10 @@ adoc_to_html(
   )
 
 scss_to_css(
-  sami.scss
   )
 
 copy_binaries(
-  calendar.png
   elcap-background-form.pdf
-  elcap-background-form.html
-  elcap-background-form-2.html
   elcap-background-form-dd.csv
   elcap-background-form-ddr.csv
   elcap-biopsy-form.pdf
@@ -26,6 +22,4 @@ copy_binaries(
   elcap-intervention-form.pdf
   elcap-pet-scan-form.pdf
   elcap-schedule-form.pdf
-  sami.js
-  sami2.js
   )

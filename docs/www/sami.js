@@ -41,43 +41,5 @@ document.addEventListener( "DOMContentLoaded", function(){
     // Oh. Yeah. And execute it since we have the form loaded.
     changeFunc();
   }
-  if (bgform && bgform.newform) {
-    var make_abler = function( thingy, y_element, disable_array ){
-      console.log("Setting up '" + thingy + "'");
-      var f = function(){
-        var sect = document.getElementById( thingy + "switch" ),
-            state = (y_element.value == "y");
-        sect.classList.add( state ? "enabled" : "disabled" );
-        sect.classList.remove( state ? "disabled" : "enabled" );
-        for (var i = 0, len = disable_array.length; i < len; i++) {
-          var element = bgform[disable_array[i]];
-          if( typeof( element[0] ) == "undefined" ) {
-            element.disabled = !state;
-          } else {
-            for (var j = 0, jlen = element.length; j < jlen; j++) {
-              element[j].disabled = !state;
-            }
-          }
-        }
-      };
-      f();
-      for (var i = 0, ilen = bgform[thingy].length; i < ilen; i++) {
-        bgform[thingy][i].onclick = f;
-      }
-    };
-    // Set up some enablers.
-    make_abler( "sbfc", bgform.sbfc, ["sbfcf", "sbfcm", "sbfcs"] );
-    make_abler( "sbhco", bgform.sbhco, ["sbhcdod", "sbhcpbo"] );
-    make_abler( "sbmpa", bgform.sbmpa, ["sbmpat"] );
-    make_abler( "sbmpc", bgform.sbmpc, ["sbmpcw"] );
-    make_abler( "sbmpht", bgform.sbmpht, ["sbmphtt", "sbmphtsw", "sbmphthv"] );
-    make_abler( "sbmphc", bgform.sbmphc, ["sbmphct"] );
-    make_abler( "sbmpas", bgform.sbmpas, ["sbmpasw", "sbmpast"] );
-    make_abler( "sbmpmi", bgform.sbmpmi, ["sbmpmid", "sbmpmiw"] );
-    make_abler( "noidea7", bgform.noidea7, ["noidea8"] );
-    make_abler( "sbmpd", bgform.sbmpd, ["sbmpdw", "sbmpdt"] );
-    make_abler( "noidea10", bgform.noidea10, ["noidea11"] );
-    make_abler( "noidea12", bgform.noidea12, ["noidea13"] );
-  }
 
 } );

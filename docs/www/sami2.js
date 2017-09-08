@@ -37,14 +37,19 @@ $jQ( document ).ready( function() {
             flatInput("sbbmi").val( "" );
           }
           flatInput("sbbmivis").val( flatInput("sbbmi").val() );
+        },
+        sbffrCalc = function(){
+          var sbffr;
+          if( flatInput("sbfvc").val() > 0.1 ) {
+            sbffr = (
+              flatInput("sbfev1").val() / flatInput("sbfvc").val() * 100.0
+            );
+            flatInput("sbffr").val( sbffr.toFixed(2) );
+            flatInput("sbffrvis").val( sbffr.toFixed(1) + '%' );
+          } else {
+            flatInput("sbffrvis").val( "" );
+          }
         };
-    flatInput("sbph").on( "change", bmiCalc );
-    flatInput("sbpw").on( "change", bmiCalc );
-    flatInput("sbphu").on( "change", bmiCalc );
-    flatInput("sbpwu").on( "change", bmiCalc );
-    bmiCalc();
-  }
-  if (bgform && bgform.newform) {
     $jQ( "input.yyyymmdd" ).datepicker( {
       showOn: "button",
       buttonImage: "calendar.png",
@@ -54,6 +59,14 @@ $jQ( document ).ready( function() {
       prevText: "Previous",
       nextText: "Next"
     } );
+    flatInput("sbph").on( "change", bmiCalc );
+    flatInput("sbpw").on( "change", bmiCalc );
+    flatInput("sbphu").on( "change", bmiCalc );
+    flatInput("sbpwu").on( "change", bmiCalc );
+    bmiCalc();
+    flatInput("sbfev1").on( "change", sbffrCalc );
+    flatInput("sbfvc").on( "change", sbffrCalc );
+    sbffrCalc();
     // var make_abler = function( thingy ){
     //   console.log("Setting up '" + thingy + "'");
     //   var f = function(){

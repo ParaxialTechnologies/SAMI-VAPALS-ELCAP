@@ -169,16 +169,18 @@
       </table>
       <table class="ordering-info">
         <tr>
-          <th class="oprac">Ordering Practitioner Name (Last, First)</th>
+          <th class="oprac">Ordering Practitioner Name</th>
           <td>
-            <input type="text" name="sbopln" value=""></input>
-            <input type="text" name="sbopfn" value=""></input>
+            <span class="thnn">Last</span>
+            <input type="text" name="sbopln" value="" class="f20s"></input>
+            <span class="thn">First</span>
+            <input type="text" name="sbopfn" value="" class="f15s"></input>
           </td>
         </tr>
         <tr>
           <th class="npi">NPI</th>
           <td>
-            <input type="text" name="sbopnpi" value=""></input>
+            <input type="text" name="sbopnpi" value="" class="f10s"></input>
             <span class="tdnote"><a href="#">Search</a></span>
           </td>
         </tr>
@@ -442,21 +444,23 @@
           <td>
             <input type="checkbox" name="sblcs" value="y"/>
             <span class="tdnote">(Values below are not required)</span>
-            <span class="alert">none of this in data dictionary</span>
           </td>
         </tr>
-        <tr>
+        <tr class="sblcsswitch">
           <th>FEV1 (L/s)</th>
-          <td><input type="text" name="noidea17" value=""></td>
-        </tr><tr>
+          <td><input type="text" name="sbfev1" value="" class="f6-2f"></td>
+        </tr><tr class="sblcsswitch">
           <th>FVC (L)</th>
-          <td><input type="text" name="noidea18" value=""></td>
-        </tr><tr>
-          <th>FEV1/FVC (%)</th>
-          <td><input type="text" name="noidea19" value=""></td>
-        </tr><tr>
+          <td><input type="text" name="sbfvc" value="" class="f6-2f"></td>
+        </tr><tr class="sblcsswitch">
+          <th>FEV1/FVC</th>
+          <td>
+            <input type="text" name="sbffrvis" value="" disabled="disabled" class="f6-2f"></input>
+            <input type="hidden" name="sbffr" value""/>
+          </td>
+        </tr><tr class="sblcsswitch">
           <th>Diffusion Capacity (mL/min/mm Hg)</th>
-          <td><input type="text" name="noidea20" value=""></td>
+          <td><input type="text" name="sbcop" value="" class="f6-2f"></td>
         </tr>
       </table>
       <table class="occupational-header">
@@ -466,35 +470,25 @@
       </table>
       <table class="occupational">
         <tr>
-          <th>To your knowledge, have you been exposed to asbestos? <a class="info" href="#">&#x2139;</a></th>
+          <th class="nowrap">To your knowledge, have you been exposed to asbestos? <a class="info" href="#">&#x2139;</a></th>
           <td>
             <input type="radio" name="sbaha" value="n" checked="checked">no</input>
             <input type="radio" name="sbaha" value="y">yes</input>
           </td>
         </tr>
-      </table>
-      <table class="occupational">
-        <tr>
-          <th>To your knowledge, have you been exposed to asbestos? <a class="info" href="#">&#x2139;</a></th>
+        <tr class="sbahao">
+          <th class="nowrap">Have you ever worked in any of the following? <a class="info" href="#">&#x2139;</a></th>
           <td>
-            <input type="radio" name="sbaha" value="n" checked="checked">no</input>
-            <input type="radio" name="sbaha" value="y">yes</input>
-          </td>
-        </tr>
-        <tr>
-          <th>Have you ever worked in any of the following? <a class="info" href="#">&#x2139;</a></th>
-          <td><table><tr><td>
-                  <span class="nowrap"><input type="checkbox" name="sbahaoi" value="i">asbestos product manufacturing</input></span>
-                  <span class="nowrap"><input type="checkbox" name="sbahaoj" value="j">auto repair</input></span>
-                  <span class="nowrap"><input type="checkbox" name="sbahaoh" value="h">building maintenance</input></span>
-              </td></tr><tr><td>
-                  <span class="nowrap"><input type="checkbox" name="sbahaof" value="f">chemical industry/foundary/refinery</input></span><br/>
-                  <span class="nowrap"><input type="checkbox" name="sbahaoa" value="a">construction/demolition</input></span>
-                  <span class="nowrap"><input type="checkbox" name="sbahaoe" value="e">mining</input></span>
-              </td></tr><tr><td>
-                  <span class="nowrap"><input type="checkbox" name="sbahaog" value="g">nuclear industry</input></span>
-                  <span class="nowrap"><input type="checkbox" name="sbahaoc" value="c">ship construction/repair</input></span>
-                  <span class="nowrap"><input type="checkbox" name="sbahaoo" value="o">other</input></span>
+            <span class="nowrap"><input type="checkbox" name="sbahaoi" value="i">asbestos product manufacturing</input></span>
+            <span class="nowrap"><input type="checkbox" name="sbahaoj" value="j">auto repair</input></span>
+            <span class="nowrap"><input type="checkbox" name="sbahaoh" value="h">building maintenance</input></span><br/>
+            <span class="nowrap"><input type="checkbox" name="sbahaof" value="f">chemical industry/foundary/refinery</input></span>
+            <span class="nowrap"><input type="checkbox" name="sbahaoa" value="a">construction/demolition</input></span>
+            <span class="nowrap"><input type="checkbox" name="sbahaoe" value="e">mining</input></span>
+            <span class="nowrap"><input type="checkbox" name="sbahaog" value="g">nuclear industry</input></span>
+            <span class="nowrap"><input type="checkbox" name="sbahaoc" value="c">ship construction/repair</input></span>
+            <span class="nowrap"><input type="checkbox" name="sbahaoo" value="o">other</input></span>
+            <span class="nowrap shahaooswitch"><span class="thn">If other, please specify</span><input type="text" class="f15s" value=""></input></span>
           </td>
         </tr>
       </table>

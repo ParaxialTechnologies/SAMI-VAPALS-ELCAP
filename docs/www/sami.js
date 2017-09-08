@@ -27,17 +27,17 @@ document.addEventListener( "DOMContentLoaded", function(){
         bgform.sbbmi.value = "";
       }
       bgform.sbbmivis.value = bgform.sbbmi.value;
-    };
-    var sbffrCalc = function(){
-      var sbffr;
-      if( bgform.sbfvc.value > 0.1 ) {
-        sbffr = bgform.sbfev1.value / bgform.sbfvc.value * 100.0;
-        bgform.sbffr.value = sbffr.toFixed(2);
-        bgform.sbffrvis.value = sbffr.toFixed(1) + '%';
-      } else {
-        bgform.sbffrvis.value = "";
-      }
-    };
+    },
+        sbffrCalc = function(){
+          var sbffr;
+          if( bgform.sbfvc.value > 0.1 ) {
+            sbffr = bgform.sbfev1.value / bgform.sbfvc.value * 100.0;
+            bgform.sbffr.value = sbffr.toFixed(2);
+            bgform.sbffrvis.value = sbffr.toFixed(1) + '%';
+          } else {
+            bgform.sbffrvis.value = "";
+          }
+        };
     // Assign the same onchange to the weight box.
     bgform.sbph.onchange = bmiCalc;
     bgform.sbpw.onchange = bmiCalc;

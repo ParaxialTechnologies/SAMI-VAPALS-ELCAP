@@ -25,7 +25,7 @@ $jQ( document ).ready( function() {
             "form#backgroundForm input[name='" + name + "']:checked"
           )[0];
         },
-        changeFunc = function(){
+        bmiCalc = function(){
           var htm = (radioSelected("sbphu").value == "i" ? 0.0254 : 0.01),
               wtm = (radioSelected("sbpwu").value == "p" ? 0.4535 : 1),
               ht = flatInput("sbph").val() * htm,
@@ -38,10 +38,11 @@ $jQ( document ).ready( function() {
           }
           flatInput("sbbmivis").val( flatInput("sbbmi").val() );
         };
-    flatInput("sbph").on( "change", changeFunc );
-    flatInput("sbpw").on( "change", changeFunc );
-    flatInput("sbphu").on( "change", changeFunc );
-    flatInput("sbpwu").on( "change", changeFunc );
+    flatInput("sbph").on( "change", bmiCalc );
+    flatInput("sbpw").on( "change", bmiCalc );
+    flatInput("sbphu").on( "change", bmiCalc );
+    flatInput("sbpwu").on( "change", bmiCalc );
+    bmiCalc();
   }
   if (bgform && bgform.newform) {
     $jQ( "input.yyyymmdd" ).datepicker( {

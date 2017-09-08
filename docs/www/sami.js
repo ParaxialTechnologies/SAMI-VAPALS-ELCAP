@@ -17,7 +17,7 @@ document.addEventListener( "DOMContentLoaded", function(){
   // If this is the background form . . .
 
   if (bgform) {
-    bgform.sbph.onchange = function(){
+    var changeFunc = function(){
       var ht = bgform.sbph.value * (bgform.sbphu.value == "i" ? 0.0254 : 0.01),
           wt = bgform.sbpw.value * (bgform.sbpwu.value == "p" ? 0.4535 : 1),
           bmi = wt / (ht * ht);
@@ -29,14 +29,17 @@ document.addEventListener( "DOMContentLoaded", function(){
       bgform.sbbmivis.value = bgform.sbbmi.value;
     };
     // Assign the same onchange to the weight box.
-    bgform.sbpw.onchange = bgform.sbph.onchange;
+    bgform.sbph.onchange = changeFunc;
+    bgform.sbpw.onchange = changeFunc;
     // And to each of the radio buttons.
     for (var i = 0, len = bgform.sbphu.length; i < len; i++) {
-      bgform.sbphu[i].onclick = bgform.sbph.onchange;
+      bgform.sbphu[i].onclick = changeFunc;
     }
     for (var i = 0, len = bgform.sbpwu.length; i < len; i++) {
-      bgform.sbpwu[i].onclick = bgform.sbph.onchange;
+      bgform.sbpwu[i].onclick = changeFunc;
     }
+    // Oh. Yeah. And execute it since we have the form loaded.
+    changeFunc();
   }
   if (bgform && bgform.newform) {
     var make_abler = function( thingy, y_element, disable_array ){

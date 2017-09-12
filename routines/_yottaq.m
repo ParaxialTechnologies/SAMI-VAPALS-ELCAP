@@ -184,23 +184,29 @@ wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
  d getVals("vals",id,sid)
  n fn
  i id="sbform" s fn="elcap-background-form.html"
+ i fn="" s fn="elcap-background-form.html"
  n zhtml
  d getThis("zhtml",fn)
  i '$d(zhtml) q  ;
- n name,value
+ n name,value,selectnm
+ s selectnm="" ; name of select variable, which spans options
  n %j s %j=""
  f  s %j=$o(zhtml(%j)) q:%j=""  d  ;
  . n tln s tln=zhtml(%j)
  . i tln["submit" q  ;
  . i tln["hidden" q  ;
+ . s (name,value)=""
  . i zhtml(%j)["name=" d  ;
  . . s name=$p($p(zhtml(%j),"name=""",2),"""",1)
  . . ;w !,"found name ",name
+ . i zhtml(%j)["value=" d  ;
+ . . s value=$p($p(zhtml(%j),"value=""",2),"""",1)
  . i zhtml(%j)["*sbsid*" d  ;
  . . s zhtml(%j)=$p(tln,"*sbsid*",1)_sid_$p(tln,"*sbsid*",2)
  . i zhtml(%j)["action=" d  ;
  . . ;s zhtml(%j)="<form action=""http://vendev.vistaplex.org:9080/postform?form="_id_"&studyId="_sid_""" method=""POST"" id=""backgroundForm"">"
  . . s zhtml(%j)="<form action=""postform?form="_id_"&studyId="_sid_""" method=""POST"" id=""backgroundForm"">"
+ . i $$replaceHref(.tln) s zhtml(%j)=tln ; fix the css and js href values
  . i zhtml(%j)["input" d  ;
  . . i $g(name)="" q  ;
  . . n val 
@@ -208,17 +214,46 @@ wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
  . . n type s type=""
  . . i tln["type=" s type=$p($p(tln,"type=""",2),"""",1)
  . . i ((type="radio")!(type="checkbox")) d  q  ;
- . . . q  ; skip these for now
+ . . . ;q  ; skip these for now
  . . . d uncheck(.tln)
- . . . i $g(val)'="" d check(.tln)
+ . . . i $g(val)=$g(value) d check(.tln,type)
  . . . s zhtml(%j)=tln
  . . d unvalue(.tln)
  . . d value(.tln,val)
  . . ;w !,tln,!,zhtml(%j),! b
  . . s zhtml(%j)=tln
+ . i zhtml(%j)["<select" d  ;
+ . . s selectnm=$g(name)
+ . i zhtml(%j)["</select" d  ;
+ . . s selectnm=""
+ . i zhtml(%j)["<option" d  ;
+ . . q:selectnm=""
+ . . s val=$g(vals(selectnm))
+ . . d replace(.tln," selected","") ; unselect
+ . . i $g(val)=$g(value) d replace(.tln,">"," selected>")
+ . . s zhtml(%j)=tln
  D ADDCRLF^VPRJRUT(.zhtml)
  m @rtn=zhtml
  s HTTPRSP("mime")="text/html"
+ q
+ ;
+replaceHref(ln) ; do replacements on html lines for href values; extrinsic returns true if 
+ ; replacement was done
+ n conds,done
+ s done=0
+ s conds("""sami.css""")="""resources/sami/sami.css"""
+ s conds("""sami.js""")="""resources/sami/sami.js"""
+ n %ig s %ig=""
+ f  s %ig=$o(conds(%ig)) q:%ig=""  d  ;
+ . i ln[%ig d  ;
+ . . d replace(.ln,%ig,$g(conds(%ig)))
+ . . s done=1
+ q done
+ ;
+replace(ln,cur,repl) ; replace current with replacment in line ln
+ n where s where=$f(ln,cur)
+ q:where=0 ; this might not work for cur at the end of ln, please test
+ s ln=$e(ln,1,where-$l(cur)-1)_repl_$e(ln,where,$l(ln))
  q
  ;
 unvalue(ln) ; sets value=""
@@ -242,15 +277,17 @@ value(ln,val) ; sets value="@val"
  ;
 uncheck(ln) ; removes 'check="checked"' from ln, passed by reference
  i ln["checked=" d  ;
- . n loc s loc=$f(ln,"checked=""checked""")
- . s ln=$p(ln,"checked=",1)_">"_$e(ln,loc,$l(ln))
+ . d replace(.ln,"checked=""checked""","")
+ . ;n loc s loc=$f(ln,"checked=""checked""")
+ . ;s ln=$p(ln,"checked=",1)_">"_$e(ln,loc,$l(ln))
  q
  ;
-check(line) ;
+check(line,type) ; for radio buttons and checkbox
  n ln s ln=line
- n end
- s end=">"_$e(ln,$f(ln,">"),$l(ln))
- i ln'["checked" s line=$p(ln,">",1)_" checked=""checked"""_end
+ d replace(.line,"type="""_type_"""","type="""_type_"""  checked=""checked""")
+ ;n end
+ ;s end=">"_$e(ln,$f(ln,">"),$l(ln))
+ ;i ln'["checked" s line=$p(ln,">",1)_" checked=""checked"""_end
  q
  ;
 wsPostForm(ARGS,BODY,RESULT) ; recieve from form
@@ -281,17 +318,14 @@ wsPostForm(ARGS,BODY,RESULT) ; recieve from form
 parseBody(rtn,body) ; parse the variables sent by a form
  ; rtn is passed by name
  n ii s ii=""
- ;i '$d(body) s body=$g(^gpl("sami","body",1))
+ i '$d(body) s body=$g(^gpl("sami","body",1))
  q:'$d(body)
  n tmp s tmp=body
- s tmp=$tr(tmp,"%2F","/")
  k @rtn
  f ii=1:1:$l(tmp,"&") d  ;
  . n ij
  . s ij=$p(tmp,"&",ii)
  . s @rtn@($p(ij,"=",1))=$p(ij,"=",2)
- . ;w !,$p(tmp,"&",ii)
- ;zwr @rtn
  q
  ;
 getVals(vrtn,zid,zsid) ; get the values for the form from the graph

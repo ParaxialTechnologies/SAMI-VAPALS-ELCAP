@@ -4,11 +4,18 @@ yottagr	;gpl - agile web server ; 2/27/17 4:33pm
  ;
  q
  ;
-setroot() ; root of working storage
- n graph s graph="seeGraph"
+setroot(graph) ; root of working storage
+ i '$d(graph) s graph="seeGraph"
  n %y s %y=$o(^%wd(17.040801,"B",graph,""))
+ i %y="" s %y=$$addgraph(graph) ; if graph is not present, add it
  q $na(^%wd(17.040801,%y)) ; root for graph
  ;
+addgraph(graph) ; makes a place in the graph file for a new graph
+ n fda s fda(17.040801,"?+1,",.01)=graph
+ n %yerr
+ d UPDATE^DIE("","fda","","%yerr")
+ n %y s %y=$o(^%wd(17.040801,"B",graph,""))
+ q %y
  ;
 homedir() ; extrinsic which return the document home
  n kbaihd s kbaihd=$g(^%WHOME)
@@ -58,7 +65,7 @@ bldgraph ; build the graph in xtmp
  . q:zln=""
  . i zln[":" d  q  ;
  . . s %cnt=%cnt+1
- . . i %cnt>100000 d counts(groot) s %cnt=1
+ . . ;i %cnt>100000 d counts(groot) s %cnt=1 ; this is for watching progress on big builds
  . . s zien=zien+1
  . . i $e(zln,$l(zln))=":" s zln=$e(zln,1,$l(zln)-1) ; strip off the :
  . . i $g(distdir)="" s distdir="root"  ;
@@ -98,6 +105,12 @@ bldgraph ; build the graph in xtmp
  . s @groot@(zien,zien2,"tag",zln)=""
  . s @groot@("pos","tag",zln,zien,zien2)=""
  . s @groot@("ops",zln,"tag",zien,zien2)=""
+ . ; added to tag qrda cqm names
+ . i $e(zln,1,3)="CMS" d  ;
+ . . n cqm
+ . . s cqm=$p(zln,"_",1)
+ . . d addtag(cqm,zien,zien2)
+ . ;
  . ; set the file id
  . n zid s zid=distdir_"/"_zln
  . i distdir="root" s zid=zln
@@ -127,7 +140,8 @@ bldgraph ; build the graph in xtmp
  . . . s @groot@("pos","tag",zfn2,zien,zien2)=""
  . . . s @groot@("ops",zfn2,"tag",zien,zien2)=""
  . . . n contents
- . . . ;i zftyp["xml" d scan(.contents,zid,zien,zien2) ; not scanning right now
+ . . . i zftyp["xml" d  ;
+ . . . . d scan(.contents,zid,zien,zien2) ; not scanning right now
  . s @groot@(zien,zien2,"localdir",localdir)=""
  . s @groot@("pos","localdir",localdir,zien,zien2)=""
  . s @groot@("ops",localdir,"localdir",zien,zien2)=""
@@ -153,9 +167,11 @@ counts(groot) ;
  s ztag=""
  f  s ztag=$o(@groot@("pos","tag",ztag)) q:ztag=""  d  ;
  . i ztag="" q  ;
- . d match("#"_ztag,"zary")
+ . k zary
+ . d match("#tag:"_ztag,"zary")
+ . ;w !,ztag," ",$d(zary)
  . s zcnt=$$count("zary")
- . i zcnt<2 q  ;
+ . i zcnt<1 q  ;
  . s @groot@("countbytag",ztag,zcnt)=""
  . s @groot@("tagbycount",zcnt,ztag)=""
  q
@@ -177,8 +193,12 @@ scan(rtn,zid,zien,zien2) ; scan the file contents for new tags
  s zcmd=$na(^tmp("kbaicmd",$j))
  s zcmd1=$na(@zcmd@(1))
  s @zcmd@(1)="rm "_tmpdir_"/"_tmpfile
- s @zcmd@(2)="grep code "_tmpdir_"/"_zid_" > "_tmpdir_"/"_tmpfile
- s @zcmd@(3)="grep originaltext "_tmpdir_"/"_zid_" >> "_tmpdir_"/"_tmpfile
+ n g2 s g2=""
+ f i=1:1:$l(zid) s g2=g2_$s($e(zid,i)=" ":"\ ",1:$e(zid,i))
+ ;s @zcmd@(2)="grep code "_tmpdir_"/"_zid_" > "_tmpdir_"/"_tmpfile
+ s @zcmd@(2)="grep code "_tmpdir_g2_" > "_tmpdir_tmpfile
+ ;s @zcmd@(3)="grep originaltext "_tmpdir_"/"_zid_" >> "_tmpdir_"/"_tmpfile
+ s @zcmd@(3)="grep originaltext "_tmpdir_g2_" >> "_tmpdir_tmpfile
  n ok
  s ok=$$GTF^%ZISH(zcmd1,3,tmpdir,cmdfile)
  zsy "bash ../www/scan.sh"
@@ -235,7 +255,10 @@ wssee(rtn,filter) ; web service for browsing files using the graph
  . ;i $$stat(arg)'["regular file" s zdest=$$locate(arg)
  . ;i zdest'=arg s filter("*")=zdest
  . i $e(arg,$l(arg))="/" d dir(.rtn,arg) q  ; it's a directory
- . i $re($p($re(arg),"."))="xml" d style(.rtn,arg) q  ;
+ . ;i $re($p($re(arg),"."))="xml" d style(.rtn,arg) q  ;
+ . i $re($p($re(arg),"."))="xml" d  q  ;
+ . . d style(.rtn,arg)
+ . . d ADDCRLF^VPRJRUT(.rtn)
  . s filter("*")=arg
  . d FILESYS^%W0(.rtn,.filter)
  ; request is not an id in the graph, so try and find the file if any
@@ -243,7 +266,9 @@ wssee(rtn,filter) ; web service for browsing files using the graph
  s zuri=$$useuri($$isfile(arg),arg)
  i zuri=-1 s zuri=$$useuri($$altfile($$isfile(arg)),arg)
  i zuri'=-1 d  q  ;
- . i $re($p($re(zuri),"."))="xml" d style(.rtn,zuri) q  ;
+ . i $re($p($re(zuri),"."))="xml" d  q  ;
+ . . d style(.rtn,zuri)
+ . . d ADDCRLF^VPRJRUT(.rtn)
  . s filter("*")=zuri
  . d filesys^%w0(.rtn,.filter) 
  ;s zf=$$isfile(arg)
@@ -255,7 +280,7 @@ wssee(rtn,filter) ; web service for browsing files using the graph
  ;. s filter("*")=zuri
  ;. d filesys^%w0(.rtn,.filter)
  n matches
- ;i arg["%20" s arg=$tr(arg,"%20")
+ ;i arg["%20" s arg=$tr(arg,"%20"," ")
  d match("#"_arg,"matches")
  ;m ^gpl("matches")=matches
  ;i $d(matches) s rtn=$q(matches)
@@ -437,6 +462,12 @@ count(ary) ; count the number of entries in the array ary pased by name
  f  s %=$q(@%) q:%=""  s zcnt=zcnt+1
  q zcnt
  ;
+recount ; recount the tags
+ n groot s groot=$$setroot
+ s groot=$na(@groot@("graph"))
+ d counts(groot)
+ q
+ ;
 hashpars(input,pairs)
  n kbaii
  i input'["#" q  ;
@@ -447,7 +478,9 @@ hashpars(input,pairs)
  . s zo=zp
  . i zp[":" d  ;
  . . s pred=$p(zp,":",1)
- . . s zo=$p(zp,":",2)
+ . . s zo=$e(zp,$f(zp,":"),$l(zp))
+ . . ;w !,zo
+ . . ;s zo=$p(zp,":",2)
  . i $g(pred)="" q  ;
  . i $g(zo)="" q  ;
  . s @pairs@(kbaii-1,pred,zo)=""

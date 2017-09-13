@@ -12,6 +12,23 @@
     </script>
   </head>
   <body class="sami background-form">
+    <noscript>You have JavaScript disabled in your browser; there are a few fields on this form that are automatically calculated using JavaScript. Please reenable.</noscript>
+    <div id="sbform-help" class="infobox">
+      <div class="infobox">
+        <a class="close" href="#"><img src="close.svg"/></a>
+        <div class="content">
+          <p>This is <tt>sbform</tt>, the patient background form.</p>
+        </div>
+      </div>
+    </div>
+    <div id="sbocc-help" class="infobox">
+      <div class="infobox">
+        <a class="close" href="#"><img src="close.svg"/></a>
+        <div class="content">
+          <p>Note that if the patient is retired, you should fill in their previous occupation, and note “(ret.)” in this field.</p>
+        </div>
+      </div>
+    </div>
     <form action="http://foia201606.vistaplex.org:9080/sami/intake" method="POST" id="backgroundForm">
       <table class="header-id">
         <tr>
@@ -22,7 +39,7 @@
       </table>
       <table class="banner-head">
         <tr>
-          <td>Background Form <a class="info" href="#">&#x2139;</a></td>
+          <td>Background Form <a class="info" href="#sbform-help"><img src="info-banner.svg"/></a></td>
         </tr>
       </table>
       <table class="visit-info">
@@ -40,10 +57,10 @@
           </td>
         </tr>
         <tr class="occupation">
-          <th>Occupation<a class="info" href="#">&#x2139;</a><br/><span class="thnote">(If retired, also indicate previous occupation.)</span></th>
+          <th>Occupation<a class="info" href="#sbocc-help"><img src="info.svg"/></a><br/><span class="thnote">(If retired, also indicate previous occupation.)</span></th>
           <td>
             <input type="text" name="sbocc" class="f20s" value=""></input>
-            <span class="th">Occupation Code<a class="info" href="#">&#x2139;</a></th>
+            <span class="th">Occupation Code <a class="info" id="sboccc-help" href="#" value="Note that if the patient is retired, you should use their previous occupation in this field."><img src="info.svg"/></a></th>
             <select name="sboccc">
               <option value="-" selected>&mdash;</option>
               <option value="1">Higher executives</option>
@@ -62,7 +79,7 @@
           <td>
             <input type="radio" name="sbsex" value="m">M</input>
             <input type="radio" name="sbsex" value="f">F</input>
-            <span class="th height">Height<a class="info" href="#">&#x2139;</a></span>
+            <span class="th height">Height <a class="info" href="#" id="sbph-help" value="Mixed values (5'10&quot;, for example) may not be used"><img src="info.svg"/></a></span>
             <input type="text" name="sbph" class="f3d" value=""></input>
             <table class="sbphu">
               <tr>
@@ -90,7 +107,7 @@
                 </td>
               </tr>
             </table>
-            <span class="th bmi">BMI<a class="info" href="#">&#x2139;</a></span>
+            <span class="th bmi">BMI <a class="info" href="#" id="sbbmi-help" value="This is automatically calculated from Height and Weight."><img src="info.svg"/></a></span>
             <input type="text" name="sbbmivis" value="" disabled="disabled" class="f3-1f"></input>
             <input type="hidden" name="sbbmi" value""/>
           </td>
@@ -103,7 +120,7 @@
               <option value="y">Hispanic or Latino</option>
               <option value="n">Not Hispanic or Latino</option>
             </select>
-            <span class="th race">Race<a class="info" href="#">&#x2139;</a></span>
+            <span class="th race">Race<a class="info" href="#"><img src="info.svg"/></a></span>
             <select name="sbrc">
               <option value="-" selected>&mdash;</option>
               <option value="w">White</option>
@@ -217,7 +234,7 @@
       </table>
       <table class="medical-conditions-header">
         <tr>
-          <th colspan="2">Medical Conditions <a class="info" href="#">&#x2139;</a></th>
+          <th colspan="2">Medical Conditions <a class="info" href="#"><img src="info.svg"/></a></th>
         </tr>
       </table>
       <table class="medical-conditions">
@@ -381,7 +398,7 @@
       </table>
       <table class="lc-symptoms">
         <tr>
-          <th>Have you experienced any symptoms indicative of lung cancer? <a class="info" href="#">&#x2139;</a></th>
+          <th>Have you experienced any symptoms indicative of lung cancer? <a class="info" href="#"><img src="info.svg"/></a></th>
           <td>
             <input type="radio" name="sblcs" value="n" checked="checked">no</input>
             <input type="radio" name="sblcs" value="y">yes</input>
@@ -419,7 +436,7 @@
           <th colspan="2" class="h3">Pulmonary Function Test Data</th>
         </tr>
         <tr class="pulfunc">
-          <th>Have you had a pulmonary function test within the last five years? <a class="info" href="#">&#x2139;</a></th>
+          <th>Have you had a pulmonary function test within the last five years? <a class="info" href="#"><img src="info.svg"/></a></th>
           <td>
             <input type="radio" name="sbahpft" value="n" checked="checked">no</input>
             <input type="radio" name="sbahpft" value="y">yes</input>
@@ -450,14 +467,14 @@
       </table>
       <table class="occupational">
         <tr>
-          <th class="nowrap">To your knowledge, have you been exposed to asbestos? <a class="info" href="#">&#x2139;</a></th>
+          <th class="nowrap">To your knowledge, have you been exposed to asbestos? <a class="info" href="#"><img src="info.svg"/></a></th>
           <td>
             <input type="radio" name="sbaha" value="n" checked="checked">no</input>
             <input type="radio" name="sbaha" value="y">yes</input>
           </td>
         </tr>
         <tr class="sbahao">
-          <th class="nowrap">Have you ever worked in any of the following? <a class="info" href="#">&#x2139;</a></th>
+          <th class="nowrap">Have you ever worked in any of the following? <a class="info" href="#"><img src="info.svg"/></a></th>
           <td>
             <span class="nowrap"><input type="checkbox" name="sbahaoi" value="i">asbestos product manufacturing</input></span>
             <span class="nowrap"><input type="checkbox" name="sbahaoj" value="j">auto repair</input></span>
@@ -469,6 +486,42 @@
             <span class="nowrap"><input type="checkbox" name="sbahaoc" value="c">ship construction/repair</input></span>
             <span class="nowrap"><input type="checkbox" name="sbahaoo" value="o">other</input></span>
             <span class="nowrap shahaooswitch"><span class="thn">If other, please specify</span><input type="text" class="f15s" value=""></input></span>
+          </td>
+        </tr>
+      </table>
+      <table class="tobacco-header">
+        <tr>
+          <th colspan="2">Tobacco Use <a class="info" href="#"><img src="info.svg"/></a></th>
+        </tr>
+      </table>
+      <table class="tobacco">
+        <tr>
+          <th class="nowrap">Have you smoked at least 100 cigarettes in your lifetime? (100 cigarettes = 5 packs) <a class="info" href="#"><img src="info.svg"/></a></th>
+          <td>
+            <input type="radio" name="sbsru" value="n">no</input>
+            <input type="radio" name="sbsru" value="y">yes</input>
+          </td>
+        </tr>
+        <tr>
+          <th class="nowrap nobold">If no, were you exposed to secondhand smoke?</th>
+          <td>
+            <input type="radio" name="sbsruyn" value="n">no</input>
+            <input type="radio" name="sbsruyn" value="y">yes</input>
+            <span class="tdnote">If yes, skip to the “Secondhand Tobacco Smoke Exposure” section.</span>
+          </td>
+        </tr>
+        <tr>
+          <th class="nowrap">About how old were you when you first started smoking cigarettes regularly?</th>
+          <td>
+            <input type="text" name="sbsas" value="" class="f3d"></input>
+          </td>
+        </tr>
+        <tr>
+          <th class="nowrap">Over the past month, have you smoked at all, even one cigarette? <a class="info" href="#"><img src="info.svg"/></a></th>
+          <td>
+            <input type="radio" name="sbshsa" value="n">no</input>
+            <input type="radio" name="sbshsa" value="y">yes</input>
+            <span class="tdnote">If yes, skip to the “Current Cigarette Smoker” section.</span>
           </td>
         </tr>
       </table>

@@ -21,6 +21,7 @@ body {
         background-color: hsl( 0, 0%, 92% );
     }
     .nowrap { white-space: nowrap; }
+    .nobold { font-weight: normal; }
     input {
         font-family: inherit;
         font-size: inherit;
@@ -71,14 +72,19 @@ body {
     }
     a.info {
         display: inline-block;
-        text-decoration: none;
-        color: hsl( 210, 50%, 90% );
-        background: hsl( 210, 50%, 50% );
-        border: 1px solid white;
-        border-radius: 0.33em;
-        width: 1em;
-        margin: 0px 0.2em;
-        text-align: center;
+        margin: 0px 0px 0px 0.333em;
+        img {
+            height: 1.1em;
+            position: relative;
+            top: 0.2em;
+        }
+        &:hover {
+            img {
+                svg.outline {
+                    fill: hsl( 210, 50%, 33% );
+                }
+            }
+        }
     }
     table {
         width: 100%;
@@ -114,15 +120,6 @@ body.background-form, body.background-form-2 {
             font-weight: bold;
             font-size: 1.5em;
             td { padding-left: 0.25em; }
-            a.info {
-                display: inline-block;
-                text-decoration: none;
-                color: white;
-                border: 1px solid white;
-                border-radius: 10px;
-                width: 1em;
-                text-align: center;
-            }
         }
         &.visit-info {
             padding: $section-padding;
@@ -299,6 +296,15 @@ body.background-form, body.background-form-2 {
                     padding-bottom: 1em;
                     line-height: 1.3em;
                 }
+            }
+        }
+        &.tobacco-header {
+            margin-top: -0.5em;
+            th {
+                font-size: 1.3em;
+                text-align: left;
+                padding-left: 0.5em;
+                white-space: nowrap;
             }
         }
     }

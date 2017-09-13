@@ -1,6 +1,8 @@
 adoc_to_html(
   docker.adoc
   index.adoc
+  meetings.adoc
+  rick-and-domenic-q-and-a.adoc
   using-avicenna.adoc
   va-facility-alpha-codes.adoc
   )

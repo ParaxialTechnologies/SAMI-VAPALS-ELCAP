@@ -204,11 +204,16 @@ Last updated $today from the spreadsheet.
   fields weren't specified as strings with an initial quote mark.
 * In 148.1, the data type is RDATE; I don't actually know what that is.
 
-Here's the link:elcap-background-form-dd.csv[data dictionary in CSV format],
-which you can open in OpenOffice or Excel.
+Here's the link:background-dd.csv[data dictionary in CSV format], which you can
+open in OpenOffice or Excel. (Tab and quote delimited.)
 
-Here's the link:elcap-background-form-ddr.csv[corrected version in CSV
-format].
+Here's the link:background-ddr.csv[corrected version in CSV format]. (Tab and
+quote delimited.)
+
+And here's link:background-dd-m.csv[Rick's Mumpsified version in CSV format],
+kinda. (Caret and quote delimited, with no doubled quotes to escape a quote
+mark.) It doesn't have the same information as the data dictionaries supplied
+to use from the ELCAP team; this is much more application specific.
 
 [cols="$cols",options="header",role="small"]
 EOT

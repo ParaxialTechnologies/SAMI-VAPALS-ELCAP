@@ -1,16 +1,16 @@
 adoc_to_html(
   index.adoc
-  elcap-background-form-dd.adoc
-#  elcap-background-form-dd2.adoc
+  background-dd.adoc
   )
 
 scss_to_css(
   )
 
 copy_binaries(
-  elcap-background-form.pdf
-  elcap-background-form-dd.csv
-  elcap-background-form-ddr.csv
+  background-form.pdf
+  background-dd.csv
+  background-ddr.csv
+  background-dd-m.csv
   elcap-biopsy-form.pdf
   elcap-case-review-form.pdf
   elcap-ct-evaluation-form.pdf

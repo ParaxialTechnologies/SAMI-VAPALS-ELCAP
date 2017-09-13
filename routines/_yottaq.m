@@ -222,6 +222,11 @@ wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
  . . d value(.tln,val)
  . . ;w !,tln,!,zhtml(%j),! b
  . . s zhtml(%j)=tln
+ . i zhtml(%j)["<textarea" d  ;
+ . . n val
+ . . s val=$g(vals(name))
+ . . i val'="" d replace(.tln,"</textarea>",val_"</textarea>")
+ . . s zhtml(%j)=tln
  . i zhtml(%j)["<select" d  ;
  . . s selectnm=$g(name)
  . i zhtml(%j)["</select" d  ;
@@ -321,6 +326,7 @@ parseBody(rtn,body) ; parse the variables sent by a form
  i '$d(body) s body=$g(^gpl("sami","body",1))
  q:'$d(body)
  n tmp s tmp=body
+ s tmp=$$URLDEC^VPRJRUT(tmp)
  k @rtn
  f ii=1:1:$l(tmp,"&") d  ;
  . n ij

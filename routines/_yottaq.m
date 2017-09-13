@@ -311,7 +311,9 @@ wsPostForm(ARGS,BODY,RESULT) ; recieve from form
  m %json(sid,form)=tbdy
  n gr s gr=$$setroot("elcap-patients")
  m @gr@("graph")=%json
- d ENCODE^VPRJSON("%json","RESULT")
+ n tjson
+ d ENCODE^VPRJSON("%json","tjson")
+ d beautify("tjson","RESULT")
  D ADDCRLF^VPRJRUT(.RESULT)
  s HTTPRSP("mime")="application/json"
  k ^gpl("sami")
@@ -363,5 +365,38 @@ scanall ;
  . w !,"scanning ",zid
  . d scan^%yottagr(.contents,zid,zi,zj)
  . d addtag^%yottagr("scanned",zi,zj)
+ q
+ ;
+beautify(inary,outary) ; pretty print a line of json
+ ;d ary2file(inary,^%WHOME,"json.json")
+ n zg,zi s (zg,zi)=""
+ f  s zi=$o(@inary@(zi)) q:zi=""  s zg=zg_@inary@(zi)
+ d ary2file("zg",^%WHOME,"json.json")
+ zsy "python -m json.tool "_^%WHOME_"json.json > "_^%WHOME_"pretty-json.json"
+ d file2ary(outary,^%WHOME,"pretty-json.json")
+ q
+ ;
+ary2file(ary,dir,file) ;
+ n tmp s tmp=$na(^TMP("yottawrk",$J))
+ k @tmp
+ i '$d(@ary@(1)) d  ; not really an array
+ . i $g(@ary)="" q ; not a string either
+ . m @tmp@(1)=@ary ; input was a string
+ e   m @tmp=@ary
+ n tmp1 s tmp1=$na(@tmp@(1))
+ n ok s ok=$$GTF^%ZISH(tmp1,3,dir,file)
+ i 'ok d  q  ;
+ . w !,"error saving file ",dir_file
+ q
+ ;
+file2ary(ary,dir,file)
+ n tmp s tmp=$na(^TMP("yottawrk",$J))
+ k @tmp
+ n tmp1 s tmp1=$na(@tmp@(1))
+ n ok s ok=$$FTG^%ZISH(dir,file,tmp1,3)
+ i 'ok d  q  ;
+ . w !,"error loading file ",dir_file
+ m @ary=@tmp
+ k @tmp
  q
  ;

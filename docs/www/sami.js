@@ -53,6 +53,40 @@ document.addEventListener( "DOMContentLoaded", function(){
     bgform.sbfev1.onchange = sbffrCalc;
     bgform.sbfvc.onchange = sbffrCalc;
     sbffrCalc();
+    // Get all the links, and go through them one by one.
+    var tt = document.getElementsByTagName( "a" );
+    for (var i = 0; i < tt.length; ++i) {
+      // Check the class; we're looking for info-class links.
+      var tt1 = tt[i].attributes.class;
+      if (tt1 && tt1.value == "info") {
+        // Grab the value.
+        tt1 = tt[i].attributes.value;
+        var html = tt1
+            ? tt1.value
+            : "<p><i>No information text specified.</i></p>";
+        html = "<a href="#" class=\"closebox\"><img src=\"close.svg\"/></div>" + html;
+        console.log( html );
+        var newDiv = document.createElement( "div" );
+        newDiv.setAttribute( "class", "infobox" );
+        var boxid = tt[i].attributes.id + "box";
+        newDiv.setAttribute( "id", boxid );
+        newDiv.innerHTML = html;
+        newDiv.onclick = function(){
+          this.setAttribute( "display", "none" );
+        }
+        tt[i].parentNode.insertBefore( newDiv, tt[i] );
+        tt[i].targetdiv = boxid;
+        tt[i].onclick = function(e){
+          var x = document.getElementById( this.targetdiv );
+          console.log( e );
+          x.style.left = e.pageX + "px";
+          x.style.top = e.pageY + "px";
+          x.style.display = "block";
+          console.log( "x = " + x.style.left );
+          console.log( "y = " + x.style.top );
+        }
+      }
+    }
   }
 
 } );

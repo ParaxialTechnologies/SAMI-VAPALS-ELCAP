@@ -11,15 +11,15 @@ copy_binaries(
   background-dd.csv
   background-ddr.csv
   background-dd-m.csv
-  elcap-biopsy-form.pdf
-  elcap-case-review-form.pdf
-  elcap-ct-evaluation-form.pdf
-  elcap-ct-structured-report.pdf
-  elcap-enrollment-report.pdf
-  elcap-follow-up-form.pdf
-  elcap-follow-up-list.pdf
-  elcap-intake-form.pdf
-  elcap-intervention-form.pdf
-  elcap-pet-scan-form.pdf
-  elcap-schedule-form.pdf
+  biopsy-form.pdf
+  case-review-form.pdf
+  ct-evaluation-form.pdf
+  ct-structured-report.pdf
+  enrollment-report.pdf
+  follow-up-form.pdf
+  follow-up-list.pdf
+  intake-form.pdf
+  intervention-form.pdf
+  pet-scan-form.pdf
+  schedule-form.pdf
   )

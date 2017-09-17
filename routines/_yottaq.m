@@ -328,12 +328,13 @@ parseBody(rtn,body) ; parse the variables sent by a form
  i '$d(body) s body=$g(^gpl("sami","body",1))
  q:'$d(body)
  n tmp s tmp=body
- s tmp=$$URLDEC^VPRJRUT(tmp)
+ ;s tmp=$$URLDEC^VPRJRUT(tmp)
  k @rtn
  f ii=1:1:$l(tmp,"&") d  ;
  . n ij
  . s ij=$p(tmp,"&",ii)
- . s @rtn@($p(ij,"=",1))=$p(ij,"=",2)
+ . q:ij=""
+ . s @rtn@($p(ij,"=",1))=$$URLDEC^VPRJRUT($p(ij,"=",2))
  q
  ;
 getVals(vrtn,zid,zsid) ; get the values for the form from the graph

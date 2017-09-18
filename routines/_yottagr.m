@@ -284,7 +284,7 @@ wssee(rtn,filter) ; web service for browsing files using the graph
  d match("#"_arg,"matches")
  ;m ^gpl("matches")=matches
  ;i $d(matches) s rtn=$q(matches)
- i $$count("matches")>1 d  q  ; more than one match
+ i $$count("matches")>0 d  q  ; more than one match
  . d multout(.rtn,"matches")
  q
  ;
@@ -479,6 +479,7 @@ hashpars(input,pairs)
  . i zp[":" d  ;
  . . s pred=$p(zp,":",1)
  . . s zo=$e(zp,$f(zp,":"),$l(zp))
+ . . i zo["%" s zo=$$URLDEC^VPRJRUT(.zo)
  . . ;w !,zo
  . . ;s zo=$p(zp,":",2)
  . i $g(pred)="" q  ;

@@ -1,4 +1,4 @@
-SAMIDOUT ;ven/toad - ielcap dd output ;Sep 18,2017@17:52
+SAMIDOUT ;ven/toad - ielcap dd output ;Sep 18,2017@18:01
  ;;18.0;SAM;;
  ;
  ; Routine SAMIDOUT contains subroutines for outputing the data
@@ -14,7 +14,7 @@ SAMIDOUT ;ven/toad - ielcap dd output ;Sep 18,2017@17:52
  ; @license: Apache 2.0
  ;   https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ; @last-updated: 2017-09-18T17:52Z
+ ; @last-updated: 2017-09-18T11:01Z
  ; @application: Screening Applications Management (SAM)
  ; @module: Screening Applications Management - IELCAP (SAMI)
  ; @suite-of-files: SAMI Forms (311.101-311.199)
@@ -82,10 +82,10 @@ ALL(SAMILOG) ; export all SAMI dds
  . ; retrieve fields *Lowest File Number, *Highest File Number, &
  . ; Silver Output Path
  . do GETS^DIQ(9.4,SAMIPKG,"10.6;11;310.03","I","SAMIFDA","SAMIMSG")
- . set SAMIPATH=$get(SAMIFDA(9.4,SAMIPKG,10.6))
+ . set SAMIPATH=$get(SAMIFDA(9.4,SAMIPKG,310.03,"I"))
  . set SAMIPKG("PATH")=SAMIPATH ; copy for input to ONE
- . set SAMIMIN=$get(SAMIFDA(9.4,SAMIPKG,11))
- . set SAMIMAX=$get(SAMIFDA(9.4,SAMIPKG,310.03))
+ . set SAMIMIN=$get(SAMIFDA(9.4,SAMIPKG,10.6,"I"))
+ . set SAMIMAX=$get(SAMIFDA(9.4,SAMIPKG,11,"I"))
  . set:SAMIMAX SAMIMAX=SAMIMAX_"999999" ; extend decimal depth of max
  . quit
  quit:SAMIPATH=""  ; done if no path to git repository

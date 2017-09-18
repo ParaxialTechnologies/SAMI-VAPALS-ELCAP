@@ -1,4 +1,4 @@
-SAMIDOUT ;ven/toad - ielcap dd output ;Sep 18,2017@14:30
+SAMIDOUT ;ven/toad - ielcap dd output ;Sep 18,2017@16:05
  ;;18.0;SAM;;
  ;
  ; Routine SAMIDOUT contains subroutines for outputing the data
@@ -14,7 +14,7 @@ SAMIDOUT ;ven/toad - ielcap dd output ;Sep 18,2017@14:30
  ; @license: Apache 2.0
  ;   https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ; @last-updated: 2017-09-18T14:30Z
+ ; @last-updated: 2017-09-18T16:05Z
  ; @application: Screening Applications Management (SAM)
  ; @module: Screening Applications Management - IELCAP (SAMI)
  ; @suite-of-files: SAMI Forms (311.101-311.199)
@@ -94,8 +94,11 @@ ONE(SAMIDD,SAMIPKG,SAMILOG) ; export SAMI dd
  quit:SAMIPATH=""  ; can't export w/o path
  set SAMIPATH=SAMIPATH_"elements/dd/" ; extend path to dd elements dir
  ;
+ break  ; ***DEBUG***
+ ;
  ; export dd
  new PSEUDO set PSEUDO=$$GTF^%ZISH(SAMIROOT,3,SAMIPATH,SAMINAME)
+ kill ^TMP("SAMIDOUT",$job) ; clear loading dock
  ;
  ; 5. termination
  ;

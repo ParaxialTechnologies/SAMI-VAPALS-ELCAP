@@ -1,4 +1,4 @@
-SAMIDOUT ;ven/toad - ielcap dd output ;Sep 18,2017@17:41
+SAMIDOUT ;ven/toad - ielcap dd output ;Sep 18,2017@17:52
  ;;18.0;SAM;;
  ;
  ; Routine SAMIDOUT contains subroutines for outputing the data
@@ -14,7 +14,7 @@ SAMIDOUT ;ven/toad - ielcap dd output ;Sep 18,2017@17:41
  ; @license: Apache 2.0
  ;   https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ; @last-updated: 2017-09-18T17:41Z
+ ; @last-updated: 2017-09-18T17:52Z
  ; @application: Screening Applications Management (SAM)
  ; @module: Screening Applications Management - IELCAP (SAMI)
  ; @suite-of-files: SAMI Forms (311.101-311.199)
@@ -86,7 +86,7 @@ ALL(SAMILOG) ; export all SAMI dds
  . set SAMIPKG("PATH")=SAMIPATH ; copy for input to ONE
  . set SAMIMIN=$get(SAMIFDA(9.4,SAMIPKG,11))
  . set SAMIMAX=$get(SAMIFDA(9.4,SAMIPKG,310.03))
- . set:SAMIMAX SAMIMAX_"999999" ; extend decimal depth of max
+ . set:SAMIMAX SAMIMAX=SAMIMAX_"999999" ; extend decimal depth of max
  . quit
  quit:SAMIPATH=""  ; done if no path to git repository
  quit:SAMIMIN=""  ; done if no minimum file#

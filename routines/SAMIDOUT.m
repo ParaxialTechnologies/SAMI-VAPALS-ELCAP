@@ -1,4 +1,4 @@
-SAMIDOUT ;ven/toad - ielcap dd output ;Sep 18,2017@16:05
+SAMIDOUT ;ven/toad - ielcap dd output ;Sep 18,2017@16:14
  ;;18.0;SAM;;
  ;
  ; Routine SAMIDOUT contains subroutines for outputing the data
@@ -14,7 +14,7 @@ SAMIDOUT ;ven/toad - ielcap dd output ;Sep 18,2017@16:05
  ; @license: Apache 2.0
  ;   https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ; @last-updated: 2017-09-18T16:05Z
+ ; @last-updated: 2017-09-18T16:14Z
  ; @application: Screening Applications Management (SAM)
  ; @module: Screening Applications Management - IELCAP (SAMI)
  ; @suite-of-files: SAMI Forms (311.101-311.199)
@@ -76,6 +76,8 @@ ONE(SAMIDD,SAMIPKG,SAMILOG) ; export SAMI dd
  new SAMIFILE set SAMIFILE=$get(SAMIATT("NAME")) ; file name
  quit:SAMIFILE=""  ; done if no file retrieved
  ;
+ ; start with export-file name = fileman-file name
+ new SAMINAME set SAMINAME=SAMIATT("NAME") ; fileman-file name
  ; clear package prefix from file name
  set:$extract(SAMINAME,1,5)="SAMI " $extract(SAMINAME,1,5)=""
  set SAMINAME=$$lowcase^%ts(SAMINAME) ; convert to lowercase
@@ -93,8 +95,6 @@ ONE(SAMIDD,SAMIPKG,SAMILOG) ; export SAMI dd
  new SAMIPATH set SAMIPATH=$get(SAMIPKG("PATH")) ; path to repository
  quit:SAMIPATH=""  ; can't export w/o path
  set SAMIPATH=SAMIPATH_"elements/dd/" ; extend path to dd elements dir
- ;
- break  ; ***DEBUG***
  ;
  ; export dd
  new PSEUDO set PSEUDO=$$GTF^%ZISH(SAMIROOT,3,SAMIPATH,SAMINAME)

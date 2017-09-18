@@ -219,12 +219,15 @@ wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
  . . . i $g(val)=$g(value) d check(.tln,type)
  . . . s zhtml(%j)=tln
  . . d unvalue(.tln)
+ . . ;s val=$$URLENC^VPRJRUT(val)
+ . . f  d replace^%yottaq(.val,"""","&quot;") q:val'[""""
  . . d value(.tln,val)
  . . ;w !,tln,!,zhtml(%j),! b
  . . s zhtml(%j)=tln
  . i zhtml(%j)["<textarea" d  ;
  . . n val
  . . s val=$g(vals(name))
+ . . ;s val=$$URLENC^VPRJRUT(val)
  . . i val'="" d replace(.tln,"</textarea>",val_"</textarea>")
  . . s zhtml(%j)=tln
  . i zhtml(%j)["<select" d  ;

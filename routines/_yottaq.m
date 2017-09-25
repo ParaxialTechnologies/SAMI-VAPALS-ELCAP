@@ -208,6 +208,12 @@ wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
  . . s zhtml(%j)="<form action=""postform?form="_id_"&studyId="_sid_""" method=""POST"" id=""backgroundForm"">"
  . i $$replaceHref(.tln) s zhtml(%j)=tln ; fix the css and js href values
  . i zhtml(%j)["input" d  ;
+ . . i $l(zhtml(%j),"<input")>2 d  ; got to split the lines
+ . . . n zgt,zgn s zgt=zhtml(%j)
+ . . . s zgn=$f(zgt,"<input",$f(zgt,"<input"))
+ . . . s zhtml(%j+.5)=$e(zgt,zgn-6,$l(zgt))
+ . . . s zhtml(%j)=$e(zgt,1,zgn-7)
+ . . . s tln=zhtml(%j)
  . . i $g(name)="" q  ;
  . . n val 
  . . s val=$g(vals(name))

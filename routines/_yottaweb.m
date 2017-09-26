@@ -13,8 +13,8 @@ fmrec(file,ien) ; extrinsic which returns the json version of the fmx return
  d encode^vprjson("%g","%gj")
  q %gj
  ;
-fmx(rtn,file,ien,camel) ; return an array of a fileman record for external 
- ; use in rtn, which is passed by name. 
+fmx(rtn,file,ien,camel) ; return an array of a fileman record for external
+ ; use in rtn, which is passed by name.
  ;
  k @rtn
  n trec,filenm
@@ -80,8 +80,8 @@ gpltest(rtn,filter) ;
  s ary("title")="test html"
  s ary(1,1)=gary("patient","name")
  s ary(1,2)=gary("patient","date_of_birth")
- s ary(1,3)=gary("patient","age")          
- d genhtml2^kbaiutil(rtn,"ary")
+ s ary(1,3)=gary("patient","age")
+ d genhtml2^%yottautl(rtn,"ary")
  s @rtn@($o(@rtn@(""),-1)+1)=gbot
  k @rtn@(0)
  s HTTPRSP("mime")="text/html"

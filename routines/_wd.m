@@ -6,7 +6,7 @@
  ;
  ; All the public entry points for handling in mash data are in this routine
  ;
- ; 
+ ;
  ; graph handling routines
  ;
 setroot(graph) ; root of working storage
@@ -25,15 +25,15 @@ insert2graph(ary,graph,replace) ; insert a new entry to a graph
  quit
  ;
 nameThis(altname) ; returns the id to be used for altname
- ; this will eventually use the context graph and the 
+ ; this will eventually use the context graph and the
  ; local variable context to query the altname and obtain an id
  quit $$nameThis^%wdgraph(altname)
  ;
-getThis(rary,fn,nocache) ; find a file and read it into rary array  
+getThis(rary,fn,nocache) ; find a file and read it into rary array
  do getThis^%wdgraph(rary,fn,$get(nocache))
  quit
  ;
-queryContext(context,locator,property) ; look up project specific 
+queryContext(context,locator,property) ; look up project specific
  ; names and values from the context graph
  ; tbd
  quit $$queryContext^%wdgraph(context,locator,property)
@@ -75,5 +75,5 @@ wellformed(ary,delim) ; extrinsic returns 1 if ary is well formed
  ; on every line
  ; ary is passed by reference
  ;
- quit $$wellformed(.ary,delim)
+ quit $$wellformed^%wdcsv(.ary,delim)
  ;

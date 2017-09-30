@@ -1,0 +1,28 @@
+#!/bin/sh
+
+ENV='/usr/bin/env'
+WHICH="$ENV which"
+
+SASS=`$WHICH sass-1.9`
+BASENAME=`$WHICH basename`
+DIRNAME=`$WHICH dirname`
+
+if [ -z "$SASS" ]; then
+   echo "You don't have Sass installed on your system."
+   exit
+fi
+
+WHEREISWE=`$DIRNAME $0`
+cd "$WHEREISWE/www"
+
+for I in *.scss; do
+    O=`$BASENAME $I .scss`
+    O="$O.css"
+    $SASS \
+        --no-cache \
+        --unix-newlines \
+        --sourcemap=none \
+        --style=compressed \
+        $I $O
+done
+

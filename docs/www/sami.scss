@@ -1,0 +1,342 @@
+$th-width: 25em;
+$section-padding: 0.33em 0px;
+
+body {
+    font-family: Verdana, sans-serif, sans;
+    min-width: 92em;
+    max-width: 110em;
+    margin: 1em 0.25in 1em 0.25in;
+    border: 1px solid grey;
+    line-height: 1.3em;
+    input { font-size: 1em; border: 1px dotted grey; }
+    input[type="text"], input[type="number"] {
+        font-family: inherit;
+        font-size: inherit;
+    }
+    span[id$="switch"] {
+        &.disabled { color: lightgrey; }
+        &.enabled  { color: inherit; }
+    }
+    input[name$="vis"] {
+        background-color: hsl( 0, 0%, 92% );
+    }
+    .nowrap { white-space: nowrap; }
+    .nobold { font-weight: normal; }
+    input {
+        font-family: inherit;
+        font-size: inherit;
+        vertical-align: middle;
+        &.ddmmmyyyy { width: 12ch; }
+        &.yyyymmdd { width: 10ch; }
+        &.yyyy { width: 5ch; }
+        &.f3d { width: 4ch; text-align: right; }
+        &.f4d { width: 5ch; text-align: right; }
+        &.f3-1f { width: 4ch; text-align: right; }
+        &.f6-2f { width: 7ch; text-align: right; }
+        &.f8s { width: 8ch; }
+        &.f10s { width: 10ch; }
+        &.f15s { width: 15ch; }
+        &.f20s { width: 20ch; }
+    }
+    select { font-size: 0.9em; }
+    th, span.th {
+        font-weight: bold;
+        text-align: right;
+        padding-right: 1em;
+        padding-left: 1em;
+        vertical-align: middle;
+        line-height: inherit;
+    }
+    span.thnn {
+        text-align: right;
+        padding-right: 1em;
+        vertical-align: middle;
+    }
+    span.thn {
+        text-align: right;
+        padding-right: 1em;
+        padding-left: 1em;
+        vertical-align: middle;
+    }
+    td { vertical-align: middle; line-height: inherit; }
+    span {
+        &.th { padding-left: 2em; }
+        &.alert {
+            padding-left: 2em;
+            color: hsl( 0, 100%, 75% );
+            font-style: italic;
+        }
+        &.thnote { padding-left: 1em; font-weight: normal; }
+        &.tdnote { padding-left: 2em; font-size: 0.9em; }
+        &.tdnote-nopad { font-size: 0.9em; }
+    }
+    a.info {
+        display: inline-block;
+        margin: 0px 0px 0px 0.333em;
+        img {
+            height: 1.1em;
+            position: relative;
+            top: 0.2em;
+        }
+        &:hover {
+            img {
+                svg.outline {
+                    fill: hsl( 210, 50%, 33% );
+                }
+            }
+        }
+    }
+    table {
+        width: 100%;
+        padding: 0.67em 0px;
+    }
+}
+
+body.background-form, body.background-form-2 {
+    table {
+        &.header-id {
+            border-bottom: none;
+            padding: 0em;
+            td.study {
+                width: 20em;
+                text-align: left;
+                padding-left: 0.5em;
+            }
+            td.name {
+                text-align: center;
+            }
+            td.med-rec {
+                width: 20em;
+                text-align: right;
+                padding-right: 0.5em;
+            }
+            span.data {
+                font-weight: bold;
+            }
+        }
+        &.banner-head {
+            background: hsl( 210, 50%, 50% );
+            color: white;
+            font-weight: bold;
+            font-size: 1.5em;
+            td { padding-left: 0.25em; }
+        }
+        &.visit-info {
+            padding: $section-padding;
+            border-bottom: 1px solid grey;
+            th { width: $th-width; }
+        }
+        &.patient-base {
+            padding: $section-padding;
+            border-bottom: 1px solid grey;
+            tr th, tr td {
+                padding-bottom: 0.67em;
+            }
+            tr.gender-stats {
+                height: 2em;
+            }
+            th {
+                text-align: right;
+                padding-right: 1em;
+                &.dob { width: $th-width; }
+            }
+            tr.gender-stats td {
+                position: relative;
+                top: 0.45em;
+            }
+            span.th.age { width: 10em; }
+            span.th.height { width: 10em; }
+            span.th.weight { width: 10em; }
+            span.th.branch { font-weight: normal; }
+            table.sbphu, table.spbwu {
+                width: 0%;
+                height: 0%;
+                display: inline-table;
+                position: relative;
+                bottom: 0.8em;
+                font-size: 0.7em;
+                tr { margin: 0px; padding: 0px; }
+                td { margin: 0px; padding: 0px; border: none; }
+            }
+        }
+        &.ordering-header {
+            margin-bottom: 0px;
+            th {
+                font-size: 1.3em;
+                text-align: left;
+                padding-left: 0.5em;
+                white-space: nowrap;
+            }
+            td {
+                padding: 0.67em 0px 1em 2em;
+                border-bottom: 1px dotted #d0d0d0;
+            }
+        }
+        &.ordering-ordered {
+            margin-top: -1em;
+            th, td {
+                border-bottom: 1px dotted #d0d0d0;
+            }
+            th { padding: 0px 1em 1em 0px; }
+            td { padding: 0px 0px 1em 0px; }
+        }
+        &.ordering-info {
+            margin-top: -0.5em;
+            border-bottom: 1px solid grey;
+            th, td {
+                padding-bottom: 0.67em;
+            }
+            th { width: $th-width; padding-right: 1em; }
+            th.oprep { width: 0em; text-align: left; padding-left: 1em; padding-top: 1em; }
+            tr.shared-doc, tr.sboas {
+                th, td {
+                    border-bottom: 1px dotted #d0d0d0;
+                    padding-bottom: 1em;
+                }
+            }
+            tr.sbopci {
+                th, td {
+                    vertical-align: top;
+                    padding-bottom: 1em;
+                    padding-top: 1em;
+                    line-height: 1.3em;
+                }
+                textarea { font-size: 0.9em; font-family: inherit; }
+            }
+        }
+        &.medical-conditions-header {
+            th {
+                font-size: 1.3em;
+                text-align: left;
+                padding-left: 0.5em;
+                white-space: nowrap;
+            }
+        }
+        &.medical-conditions {
+            margin-top: -0.5em;
+            tr th, tr td {
+                padding-bottom: 0.67em;
+            }
+            span.thsub {
+                font-size: 0.8em;
+                line-height: 1em;
+                height: 0px;
+                font-weight: normal;
+            }
+            tr.sbmprd {
+                th, td {
+                    vertical-align: top;
+                    border-bottom: 1px dotted #d0d0d0;
+                    padding-bottom: 1em;
+                    line-height: 1.3em;
+                }
+            }
+        }
+        &.lc-symptoms {
+            margin-top: -0.5em;
+            border-bottom: 1px dotted #d0d0d0;
+            tr th, tr td {
+                padding-bottom: 0.67em;
+            }
+            input[name="sbwcos"] { margin-left: 1em; }
+        }
+        &.pulfunc {
+            border-bottom: 1px solid grey;
+            padding-bottom: 1em;
+            th.h3 {
+                font-size: 1.2em;
+                text-align: left;
+                padding-left: 0.5em;
+                padding-bottom: 0.5em;
+            }
+            tr.pulfunc {
+                th, td {
+                    padding-bottom: 0.67em;
+                }
+            }
+        }
+        &.occupational-header {
+            margin-top: -0.5em;
+            th {
+                font-size: 1.3em;
+                text-align: left;
+                padding-left: 0.5em;
+                white-space: nowrap;
+            }
+        }
+        &.occupational {
+            margin-top: -0.5em;
+            border-bottom: 1px solid grey;
+            padding-bottom: 1em;
+            tr th, tr td {
+                padding-bottom: 0.67em;
+            }
+            tr.sbahao {
+                td {
+                    line-height: 1.5em;
+                    span.nowrap {
+                        margin-right: 1em;
+                        vertical-align: middle;
+                    }
+                    input[type="checkbox"] {
+                        white-space: nowrap;
+                    }
+                }
+            }
+            span.thsub {
+                font-size: 0.8em;
+                line-height: 1em;
+                height: 0px;
+                font-weight: normal;
+            }
+            tr.noidea12 {
+                th, td {
+                    vertical-align: top;
+                    border-bottom: 1px dotted #d0d0d0;
+                    padding-bottom: 1em;
+                    line-height: 1.3em;
+                }
+            }
+        }
+        &.tobacco-header {
+            margin-top: -0.5em;
+            th {
+                font-size: 1.3em;
+                text-align: left;
+                padding-left: 0.5em;
+                white-space: nowrap;
+            }
+        }
+    }
+}
+
+img.ui-datepicker-trigger {
+    height: 24px;
+    position: relative;
+    vertical-align: middle;
+    bottom: 3px;
+}
+div#ui-datepicker-div {
+    background: hsl( 210, 50%, 95% );
+    border: 1px solid black;
+    font-size: 0.9em;
+    div.ui-datepicker-header {
+        background: hsl( 210, 50%, 90% );
+        border-bottom: 1px dotted black;
+        a.ui-datepicker-next {
+            float: right;
+            padding-right: 1em;
+            span { content: "▶︎"; }
+        }
+        a.ui-datepicker-prev {
+            float: left;
+            padding-left: 1em;
+            span { content: "◀︎"; }
+        }
+        div.ui-datepicker-title {
+            text-align: center;
+            font-weight: bold;
+        }
+    }
+}
+

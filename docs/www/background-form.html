@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html" />
+    <meta name="generator" content="SAMI/ven/mcglk" />
+    <meta name="description" content="SAMI background form" />
+    <meta name="format-detection" content="telephone=no"/><!-- Mobile Safari -->
+    <title>Background form for *mocklast, mockfirst*</title>
+    <link rel="stylesheet" href="sami.css" type="text/css" />
+    <script type="text/javascript" src="sami.js"></script>
+    </script>
+  </head>
+  <body class="sami background-form">
+    <noscript>You have JavaScript disabled in your browser; there are a few fields on this form that are automatically calculated using JavaScript. Please reenable.</noscript>
+    <div id="sbform-help" class="infobox">
+      <div class="infobox">
+        <a class="close" href="#"><img src="close.svg"/></a>
+        <div class="content">
+          <p>This is <tt>sbform</tt>, the patient background form.</p>
+        </div>
+      </div>
+    </div>
+    <div id="sbocc-help" class="infobox">
+      <div class="infobox">
+        <a class="close" href="#"><img src="close.svg"/></a>
+        <div class="content">
+          <p>Note that if the patient is retired, you should fill in their previous occupation, and note “(ret.)” in this field.</p>
+        </div>
+      </div>
+    </div>
+    <form action="http://foia201606.vistaplex.org:9080/sami/intake" method="POST" id="backgroundForm">
+      <table class="header-id">
+        <tr>
+          <td class="study"><span class="head">Study ID:</span> <span id="sbsid" class="data">*sbsid*</span></td>
+          <td class="name"><span class="head">Name (Last, First):</span> <span id="lname", class="data">*Last*</span>, <span class="fname data">*First*</span></td>
+          <td class="med-rec"><span class="head">Medical Record Number:</span> <span id="mrn" class="data">*MRN*</span></td>
+        </tr>
+      </table>
+      <table class="banner-head">
+        <tr>
+          <td>Background Form <a class="info" href="#sbform-help"><img src="info-banner.svg"/></a></td>
+        </tr>
+      </table>
+      <table class="visit-info">
+        <tr class="visit-date">
+          <th>Visit Date (DD/Mmm/YYYY)</th><!-- "Intake date," then "Patient date of baseline CT", but no longer required -->
+          <td><input type="text" name="sbdop" class="ddmmmyyyy" value=""></input></td>
+      </table>
+      <table class="patient-base">
+        <tr class="age">
+          <th class="dob">Date of Birth (DD/Mmm/YYYY)</th>
+          <td>
+            <input type="text" name="sbdob" class="ddmmmyyyy" value=""></input>
+            <span class="th age">Age</span>
+            <input type="text" class="f3d" name="sbage" value=""></input>
+          </td>
+        </tr>
+        <tr class="occupation">
+          <th>Occupation<a class="info" href="#sbocc-help"><img src="info.svg"/></a><br/><span class="thnote">(If retired, also indicate previous occupation.)</span></th>
+          <td>
+            <input type="text" name="sbocc" class="f20s" value=""></input>
+            <span class="th">Occupation Code <a class="info" id="sboccc-help" href="#" value="Note that if the patient is retired, you should use their previous occupation in this field."><img src="info.svg"/></a></th>
+            <select name="sboccc">
+              <option value="-" selected>&mdash;</option>
+              <option value="1">Higher executives</option>
+              <option value="2">Business managers</option>
+              <option value="3">Administrative Personnel</option>
+              <option value="4">Clerical/Sales workers</option>
+              <option value="5">Skilled manual Employees</option>
+              <option value="6">Machine Operators</option>
+              <option value="7">Unskilled Employees</option>
+              <option value="8">Unemployed</option>
+            </select>
+          </td>
+        </tr>
+        <tr class="gender-stats">
+          <th>Sex</th>
+          <td>
+            <input type="radio" name="sbsex" value="m">M</input>
+            <input type="radio" name="sbsex" value="f">F</input>
+            <span class="th height">Height <a class="info" href="#" id="sbph-help" value="Mixed values (5'10&quot;, for example) may not be used"><img src="info.svg"/></a></span>
+            <input type="text" name="sbph" class="f3d" value=""></input>
+            <table class="sbphu">
+              <tr>
+                <td>
+                  <input type="radio" name="sbphu" value="i" checked="checked">in</input>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="radio" name="sbphu" value="c">cm</input>
+                </td>
+              </tr>
+            </table>
+            <span class="th weight">Weight</span>
+            <input type="text" name="sbpw" class="f3d" value=""></input>
+            <table class="sbphu">
+              <tr>
+                <td>
+                  <input type="radio" name="sbpwu" value="p" checked="checked">lbs</input>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="radio" name="sbpwu" value="k">kg</input>
+                </td>
+              </tr>
+            </table>
+            <span class="th bmi">BMI <a class="info" href="#" id="sbbmi-help" value="This is automatically calculated from Height and Weight."><img src="info.svg"/></a></span>
+            <input type="text" name="sbbmivis" value="" disabled="disabled" class="f3-1f"></input>
+            <input type="hidden" name="sbbmi" value""/>
+          </td>
+        </tr>
+        <tr class="ethnos">
+          <th class="eth">Ethnicity</th>
+          <td>
+            <select name="sbet">
+              <option value="-" selected>&mdash;</option>
+              <option value="y">Hispanic or Latino</option>
+              <option value="n">Not Hispanic or Latino</option>
+            </select>
+            <span class="th race">Race<a class="info" href="#"><img src="info.svg"/></a></span>
+            <select name="sbrc">
+              <option value="-" selected>&mdash;</option>
+              <option value="w">White</option>
+              <option value="b">Black or African American</option>
+              <option value="i">American Indian</option>
+              <option value="k">Alaska Native</option>
+              <option value="a">Asian</option>
+              <option value="p">Native Hawaiian or Other Pacific Islander</option>
+              <option value="t">Two or more</option>
+              <option value="o">Other (specify)</option>
+            </select>
+            <span class="th other">Other (specify)</span>
+            <input type="text" name="sbrcs" value=""></input>
+          </td>
+        </tr>
+        <tr class="educserv">
+          <th class="edu">Level of Education</th>
+          <td>
+            <select name="sbed">
+              <option value="-" selected>&mdash;</option>
+              <option value="n">did not complete high school</option>
+              <option value="hs">completed high school</option>
+              <option value="sc">started college</option>
+              <option value="ts">completed trade school</option>
+              <option value="ad">completed 2-year college degree</option>
+              <option value="bd">completed 4-year college degree</option>
+              <option value="gd">advanced degree (e.g. Master’s, J.D., M.D., Ph.D.)</option>
+            </select>
+            <span class="th serv">Served in the military?</span>
+            <input type="radio" name="sbmly" value="n">no</input>
+            <input type="radio" name="sbmly" value="y">yes</input>
+            <span class="th branch">If yes, what branch?</span>
+            <input type="text" name="sbmlyo" value=""></input>
+          </td>
+        </tr>
+      </table>
+      <table class="ordering-header">
+        <tr>
+          <th colspan="2">Ordering Information</th>
+        </tr>
+        <tr>
+          <td>Ordering information is <i>required</i> for all patients undergoing a screening exam using the G0297 code.</td>
+        </tr>
+      </table>
+      <table class="ordering-ordered">
+        <tr>
+          <th>Was a CT lung screening scan ordered for this patient (CPT code G0297)?</th>
+          <td>
+            <input type="radio" name="sbmeq" value="n">no</input>
+            <input type="radio" name="sbmeq" value="y">yes</input>
+            <span class="tdnote">(If no, the rest of the questions in this section are optional.)</span>
+          </td>
+        </tr>
+      </table>
+      <table class="ordering-info">
+        <tr>
+          <th class="oprac">Ordering Practitioner Name (Last, First)</th>
+          <td>
+            <input type="text" name="sbopln" value="" class="f20s"></input>
+            <input type="text" name="sbopfn" value="" class="f15s"></input>
+          </td>
+        </tr>
+        <tr>
+          <th class="npi">NPI</th>
+          <td>
+            <input type="text" name="sbopnpi" value="" class="f10s"></input>
+            <span class="tdnote"><a href="#">Search</a></span>
+          </td>
+        </tr>
+        <tr>
+          <th class="sbdsd">Documentation of shared decision making</th>
+          <td>
+            <input type="radio" name="sbdsd" value="n">no</input>
+            <input type="radio" name="sbdsd" value="y">yes</input>
+            <input type="radio" name="sbdsd" value="q">n/a</input>
+            <span class="tdnote">(shared decision-making is required for reimbursement for G0297 examples on baseline <i>only</i>)</span>
+          </td>
+        </tr>
+        <tr>
+          <th class="nowrap">Ordering practitioner reported smoking status</th>
+          <td>
+            <input type="radio" name="sbopss" value="c">current</input>
+            <input type="radio" name="sbopss" value="f">former</input>
+          </td>
+        </tr>
+        <tr>
+          <th class="nowrap">Ordering practitioner reported pack years</th>
+          <td>
+            <input type="text" name="sboppy" value="" class="f3d"></input>
+          </td>
+        </tr>
+        <tr>
+          <th class="nowrap">Ordering practitioner reported years since quit</th>
+          <td>
+            <input type="text" name="sbopqy" value="" class="f3d"></input>
+          </td>
+        </tr>
+        <tr>
+          <th class="nowrap">Ordering practitioner reported asymptomatic for lung cancer</th>
+          <td>
+            <input type="radio" name="sboas" value="n">no</input>
+            <input type="radio" name="sboas" value="y">yes</input>
+          </td>
+        </tr>
+        <tr class="sbopci">
+          <th class="sbopci">Clinical information<br/><span class="thnote">(information will be copied to CT report)</span></th>
+          <td>
+            <textarea name="sbopci" placeholder="" rows="10" cols="80" value=""></textarea>
+          </td>
+        </tr>
+      </table>
+      <table class="medical-conditions-header">
+        <tr>
+          <th colspan="2">Medical Conditions <a class="info" href="#"><img src="info.svg"/></a></th>
+        </tr>
+      </table>
+      <table class="medical-conditions">
+        <tr>
+          <th>Family history of lung cancer?</th>
+          <td>
+            <input type="radio" name="sbfc" value="n" checked="checked">no</input>
+            <input type="radio" name="sbfc" value="y">yes</input>
+            <input type="radio" name="sbfc" value="q">?</input>
+            <span id="sbfcswitch">
+              <span class="th">Father?</span>
+              <input type="radio" name="sbfcf" value="n" checked="checked">no</input>
+              <input type="radio" name="sbfcf" value="y">yes</input>
+              <span class="th">Mother?</span>
+              <input type="radio" name="sbfcm" value="n" checked="checked">no</input>
+              <input type="radio" name="sbfcm" value="y">yes</input>
+              <span class="th">Sibling?</span>
+              <input type="radio" name="sbfcs" value="n" checked="checked">no</input>
+              <input type="radio" name="sbfcs" value="y">yes</input>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <th>Any Cancer</th>
+          <td>
+            <input type="radio" name="sbhco" value="n" checked="checked">no</input>
+            <input type="radio" name="sbhco" value="y">yes</input>
+            <input type="radio" name="sbhco" value="q">?</input>
+            <span class="th">When? (YYYY)</span>
+            <input type="text" name="sbhcdod" value="" class="yyyy"></input>
+            <span class="th">Primary site?</span>
+            <input type="text" name="sbhcpbo" value="" class="f15s"></input>
+          </td>
+        </tr>
+        <tr>
+          <th>Asthma</th>
+          <td>
+            <input type="radio" name="sbmpa" value="n" checked="checked">no</input>
+            <input type="radio" name="sbmpa" value="y">yes</input>
+            <input type="radio" name="sbmpa" value="q">?</input>
+            <span class="th">Under current treatment?</span>
+            <input type="radio" name="sbmpat" value="n">no</input>
+            <input type="radio" name="sbmpat" value="y">yes</input>
+          </td>
+        </tr>
+        <tr>
+          <th>Emphysema or Chronic Bronchitis (COPD)?</th>
+          <td>
+            <input type="radio" name="sbmpc" value="n" checked="checked">no</input>
+            <input type="radio" name="sbmpc" value="y">yes</input>
+            <input type="radio" name="sbmpc" value="q">?</input>
+            <span class="th">When? (YYYY)</span>
+            <input type="text" name="sbmpcw" value="" class="yyyy"></input>
+          </td>
+        </tr>
+        <tr>
+          <th>High Blood Pressure</th>
+          <td>
+            <input type="radio" name="sbmpht" value="n" checked="checked">no</input>
+            <input type="radio" name="sbmpht" value="y">yes</input>
+            <input type="radio" name="sbmpht" value="q">?</input>
+            <span class="th">Treated?</span>
+            <input type="radio" name="sbmphtt" value="n">no</input>
+            <input type="radio" name="sbmphtt" value="y">yes</input>
+            <span class="th">Since When? (YYYY)</span>
+            <input type="text" name="sbmphtsw" value="" class="yyyy"></input>
+            <span class="th">Highest Value?</span>
+            <input type="text" name="sbmphthv" value="" class="f8s"></input>
+          </td>
+        </tr>
+        <tr>
+          <th>High Cholesterol</th>
+          <td>
+            <input type="radio" name="sbmphc" value="n" checked="checked">no</input>
+            <input type="radio" name="sbmphc" value="y">yes</input>
+            <input type="radio" name="sbmphc" value="q">?</input>
+            <span class="th">Treated?</span>
+            <input type="radio" name="sbmphct" value="n">no</input>
+            <input type="radio" name="sbmphct" value="y">yes</input>
+          </td>
+        </tr>
+        <tr>
+          <th>Had an angioplasty or Stent?</th>
+          <td>
+            <input type="radio" name="sbmpas" value="n" checked="checked">no</input>
+            <input type="radio" name="sbmpas" value="y">yes</input>
+            <input type="radio" name="sbmpas" value="q">?</input>
+            <span class="th">When? (YYYY)</span>
+            <input type="text" name="sbmpasw" value="" class="yyyy"></input>
+            <span class="th">Where treated?</span>
+            <input type="text" name="sbmpast" value="" class="f15s"></input>
+          </td>
+        </tr>
+        <tr>
+          <th>MI?</th>
+          <td>
+            <input type="radio" name="sbmpmi" value="n" checked="checked">no</input>
+            <input type="radio" name="sbmpmi" value="y">yes</input>
+            <input type="radio" name="sbmpmi" value="q">?</input>
+            <span id="sbmpmiswitch">
+              <span class="th">When? (YYYY)</span>
+              <input type="text" name="sbmpmid" value="" class="yyyy"></input>
+              <span class="th">Where treated?</span>
+              <input type="text" name="sbmpmiw" value="" class="f15s"></input>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <th>Stroke</th>
+          <td>
+            <input type="radio" name="sbmps" value="n" checked="checked">no</input>
+            <input type="radio" name="sbmps" value="y">yes</input>
+            <input type="radio" name="sbmps" value="q">?</input>
+            <span class="th">When? (YYYY)</span>
+            <input type="text" name="sbmpsd" value="" class="yyyy"></input>
+          </td>
+        </tr>
+        <tr>
+          <th>Peripheral Vascular Disease (Poor Circulation)</th>
+          <td>
+            <input type="radio" name="sbmppv" value="n" checked="checked">no</input>
+            <input type="radio" name="sbmppv" value="y">yes</input>
+            <input type="radio" name="sbmppv" value="q">?</input>
+          </td>
+        </tr>
+        <tr>
+          <th>Diabetes</th>
+          <td>
+            <input type="radio" name="sbmpd" value="n" checked="checked">no</input>
+            <input type="radio" name="sbmpd" value="y">yes</input>
+            <input type="radio" name="sbmpd" value="q">?</input>
+            <span class="th">Starting at what age?</span>
+            <input type="text" name="sbmpdw" value="" min="0" max="120" value=""></input>
+            <span class="th">Treated?</span>
+            <input type="radio" name="sbmpdt" value="n">no</input>
+            <input type="radio" name="sbmpdt" value="y">yes</input>
+          </td>
+        </tr>
+        <tr>
+          <th>Liver Disease</th>
+          <td>
+            <input type="radio" name="sbmpld" value="n" checked="checked">no</input>
+            <input type="radio" name="sbmpld" value="y">yes</input>
+            <input type="radio" name="sbmpld" value="q">?</input>
+            <span class="th"></span>
+            <input type="radio" name="sbmplds" value="n">Mild</input>
+            <input type="radio" name="sbmplds" value="y">Moderate/Severe</input>
+          </td>
+        </tr>
+        <tr class="sbmprd">
+          <th>Kidney (Renal) Disease</th>
+          <td>
+            <input type="radio" name="sbmprd" value="n" checked="checked">no</input>
+            <input type="radio" name="sbmprd" value="y">yes</input>
+            <input type="radio" name="sbmprd" value="q">?</input>
+            <span class="th"></span>
+            <input type="radio" name="sbmprds" value="n">Mild</input>
+            <input type="radio" name="sbmprds" value="y">Moderate/Severe</input>
+          </td>
+        </tr>
+      </table>
+      <table class="lc-symptoms">
+        <tr>
+          <th>Have you experienced any symptoms indicative of lung cancer? <a class="info" href="#"><img src="info.svg"/></a></th>
+          <td>
+            <input type="radio" name="sblcs" value="n" checked="checked">no</input>
+            <input type="radio" name="sblcs" value="y">yes</input>
+            <span class="tdnote">(check all that apply)</span>
+          </td>
+        </tr>
+        <tr>
+          <th>&nbsp;</th>
+          <td>
+            <input type="checkbox" name="sbwcb" value="b">cough producing bloody material</input><br/>
+            <input type="checkbox" name="sbwcl" value="l">unexplained weight loss greater than 20 lbs.</input><br/>
+            <input type="checkbox" name="sbwch" value="h">unexplained hoarseness</input><br/>
+            <input type="checkbox" name="sbwco" value="o">other (specify)</input><input type="text" name="sbwcos" value="">
+          </td>
+        </tr>
+        <tr>
+          <th>When did you most recently have a chest CT?</th>
+          <td>
+            <select name="sbact">
+              <option value="-" selected>&mdash;</option>
+              <option value="a">less than 6 months ago</option>
+              <option value="b">6–18 months ago</option>
+              <option value="f">18 months to 3 years ago</option>
+              <option value="c">3 years to 5 years ago</option>
+              <option value="d">over 5 years ago</option>
+              <option value="e">never</option>
+            </select>
+            <span class="th">If so, where was the test done?</span>
+            <input type="text" name="sbahcl" value="">
+          </td>
+        </tr>
+      </table>
+      <table class="pulfunc">
+        <tr>
+          <th colspan="2" class="h3">Pulmonary Function Test Data</th>
+        </tr>
+        <tr class="pulfunc">
+          <th>Have you had a pulmonary function test within the last five years? <a class="info" href="#"><img src="info.svg"/></a></th>
+          <td>
+            <input type="radio" name="sbahpft" value="n" checked="checked">no</input>
+            <input type="radio" name="sbahpft" value="y">yes</input>
+            <span class="tdnote">(Values are not required)</span>
+          </td>
+        </tr>
+        <tr>
+          <th>FEV1 (L/s)</th>
+          <td><input type="text" name="sbfev1" class="f6-2f" value=""></td>
+        </tr><tr>
+          <th>FVC (L)</th>
+          <td><input type="text" name="sbfvc" value="" class="f6-2f" value=""></td>
+        </tr><tr>
+          <th>FEV1/FVC (%)</th>
+          <td>
+            <input type="text" name="sbffrvis" value="" disabled="disabled" class="f6-2f"></input>
+            <input type="hidden" name="sbffr" value""/>
+          </td>
+        </tr><tr>
+          <th>Diffusion Capacity (mL/min/mm Hg)</th>
+          <td><input type="text" name="sbcop" value="" class="f6-2f"></td>
+        </tr>
+      </table>
+      <table class="occupational-header">
+        <tr>
+          <th colspan="2">Occupational Exposure</th>
+        </tr>
+      </table>
+      <table class="occupational">
+        <tr>
+          <th class="nowrap">To your knowledge, have you been exposed to asbestos? <a class="info" href="#"><img src="info.svg"/></a></th>
+          <td>
+            <input type="radio" name="sbaha" value="n" checked="checked">no</input>
+            <input type="radio" name="sbaha" value="y">yes</input>
+          </td>
+        </tr>
+        <tr class="sbahao">
+          <th class="nowrap">Have you ever worked in any of the following? <a class="info" href="#"><img src="info.svg"/></a></th>
+          <td>
+            <span class="nowrap"><input type="checkbox" name="sbahaoi" value="i">asbestos product manufacturing</input></span>
+            <span class="nowrap"><input type="checkbox" name="sbahaoj" value="j">auto repair</input></span>
+            <span class="nowrap"><input type="checkbox" name="sbahaoh" value="h">building maintenance</input></span><br/>
+            <span class="nowrap"><input type="checkbox" name="sbahaof" value="f">chemical industry/foundary/refinery</input></span>
+            <span class="nowrap"><input type="checkbox" name="sbahaoa" value="a">construction/demolition</input></span>
+            <span class="nowrap"><input type="checkbox" name="sbahaoe" value="e">mining</input></span>
+            <span class="nowrap"><input type="checkbox" name="sbahaog" value="g">nuclear industry</input></span>
+            <span class="nowrap"><input type="checkbox" name="sbahaoc" value="c">ship construction/repair</input></span>
+            <span class="nowrap"><input type="checkbox" name="sbahaoo" value="o">other</input></span>
+            <span class="nowrap shahaooswitch"><span class="thn">If other, please specify</span><input type="text" class="f15s" value=""></input></span>
+          </td>
+        </tr>
+      </table>
+      <table class="tobacco-header">
+        <tr>
+          <th colspan="2">Tobacco Use <a class="info" href="#"><img src="info.svg"/></a></th>
+        </tr>
+      </table>
+      <table class="tobacco">
+        <tr>
+          <th class="nowrap">Have you smoked at least 100 cigarettes in your lifetime? (100 cigarettes = 5 packs) <a class="info" href="#"><img src="info.svg"/></a></th>
+          <td>
+            <input type="radio" name="sbsru" value="n">no</input>
+            <input type="radio" name="sbsru" value="y">yes</input>
+          </td>
+        </tr>
+        <tr>
+          <th class="nowrap nobold">If no, were you exposed to secondhand smoke?</th>
+          <td>
+            <input type="radio" name="sbsruyn" value="n">no</input>
+            <input type="radio" name="sbsruyn" value="y">yes</input>
+            <span class="tdnote">If yes, skip to the “Secondhand Tobacco Smoke Exposure” section.</span>
+          </td>
+        </tr>
+        <tr>
+          <th class="nowrap">About how old were you when you first started smoking cigarettes regularly?</th>
+          <td>
+            <input type="text" name="sbsas" value="" class="f3d"></input>
+          </td>
+        </tr>
+        <tr>
+          <th class="nowrap">Over the past month, have you smoked at all, even one cigarette? <a class="info" href="#"><img src="info.svg"/></a></th>
+          <td>
+            <input type="radio" name="sbshsa" value="n">no</input>
+            <input type="radio" name="sbshsa" value="y">yes</input>
+            <span class="tdnote">If yes, skip to the “Current Cigarette Smoker” section.</span>
+          </td>
+        </tr>
+      </table>
+      <input type="submit" value="Test submission"/>
+    </form>
+  </body>
+</html>

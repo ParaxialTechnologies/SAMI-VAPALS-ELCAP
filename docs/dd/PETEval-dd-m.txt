@@ -1,0 +1,340 @@
+STANDARD DATA DICTIONARY #311.106 -- SAMI PET EVALUATION FILE   10/2/17    PAGE 
+1
+STORED IN ^SAMI(311.106,  *** NO DATA STORED YET ***   SITE: AVICENNA.VISTAEXPER
+TISE.NET   UCI: VAH,ROU                                    (VERSION 18.0T03)   
+
+DATA          NAME                  GLOBAL        DATA
+ELEMENT       TITLE                 LOCATION      TYPE
+-------------------------------------------------------------------------------
+
+
+              DD ACCESS: @
+              RD ACCESS: @
+              WR ACCESS: @
+             DEL ACCESS: @
+           LAYGO ACCESS: @
+           AUDIT ACCESS: @
+
+CROSS
+REFERENCED BY: STUDY ID(B)
+
+    LAST MODIFIED: OCT 2,2017@12:32:32
+
+311.106,.01   STUDY ID               0;1 POINTER TO SAMI INTAKE FILE (#311.101)
+                                 (Required)
+
+              Study ID   
+              LAST EDITED:      SEP 15, 2017 
+              HELP-PROMPT:      Enter the patient's study ID. 
+              CROSS-REFERENCE:  311.106^B 
+                                1)= S ^SAMI(311.106,"B",$E(X,1,30),DA)=""
+                                2)= K ^SAMI(311.106,"B",$E(X,1,30),DA)
+
+
+311.106,.02   PROCEDURE DATE         0;2 DATE (Required)
+
+              INPUT TRANSFORM:  S %DT="EX" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      SEP 14, 2017 
+              HELP-PROMPT:      Enter the date of the PET, in any format. 
+
+311.106,.05   RADIOLOGIST            0;3 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 14, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      Name of the radiologist performing the PET
+                                evaluation.  
+
+
+311.106,.06   RADIOLOGIST NPI        0;4 FREE TEXT (Required)
+
+              INPUT TRANSFORM:  K:$L(X)>15!($L(X)<1) X
+              MAXIMUM LENGTH:   15
+              LAST EDITED:      SEP 14, 2017 
+              HELP-PROMPT:      Answer must be 1-15 characters in length. 
+              DESCRIPTION:      The NPI of the radiologist performing the PET
+                                evaluation.  
+
+
+311.106,.07   PERFORMED OUTSIDE      0;5 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      SEP 14, 2017 
+              HELP-PROMPT:      Was the PET performed outside this institution? 
+
+311.106,1     DATE OF BASELINE CT    0;6 DATE (Required)
+
+              INPUT TRANSFORM:  S %DT="EX" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      SEP 14, 2017 
+              HELP-PROMPT:      Enter the date of this patient's baseline CT 
+                                scan. 
+
+311.106,1.1   MOST RECENT STUDY      0;7 DATE
+
+              INPUT TRANSFORM:  S %DT="EX" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      SEP 14, 2017 
+              HELP-PROMPT:      Enter the date of the most recent comparative 
+                                study. 
+              DESCRIPTION:      Enter the date of the most recent comparative
+                                study for this patient (if applicable).  
+
+
+311.106,1.2   NODULES NOTED IN CT    0;8 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      SEP 14, 2017 
+              HELP-PROMPT:      Are there any nodules noted in the CT scan? 
+
+311.106,1.3   NON-CALCIFIED LESS THAN 6 MM 0;9 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      SEP 14, 2017 
+              HELP-PROMPT:      Are non-calcified nodules noted, all less than 
+                                6 mm? 
+
+311.106,1.4   NODULE GRID            1;0 Multiple #311.10611
+
+              DESCRIPTION:      This is the nodule grid from the PET Evaluation
+                                form. You may enter as many nodules as you
+                                need. Enter the Nodule Uptake values and update 
+                                the Nodule Status to reflect the results of the
+                                PET study, and update the necessary actions for
+                                each nodule, as indicated. Enter any details 
+                                given in the PET report in the PET DETAILS
+                                field. Update the Follow-up section.  
+
+
+311.10611,.01   NODULE ID              0;1 FREE TEXT (Multiply asked)
+
+                Nodule ID   
+                INPUT TRANSFORM:  K:$L(X)>10!($L(X)<5) X
+                MAXIMUM LENGTH:   10
+                LAST EDITED:      SEP 15, 2017 
+                HELP-PROMPT:      Answer must be 5-10 characters in length. 
+                DESCRIPTION:
+                                  For example: Nodule 1, Nodule 2, etc.  
+
+                CROSS-REFERENCE:  311.10611^B 
+                                1)= S ^SAMI(311.106,DA(1),1,"B",$E(X,1,30),DA)=
+                                ""
+
+                                2)= K ^SAMI(311.106,DA(1),1,"B",$E(X,1,30),DA)
+
+
+311.10611,1     NEW                  0;2 POINTER TO SAMI NODULE NEW FILE (#311.
+                                10612)
+
+                Is it new?   
+                LAST EDITED:    SEP 15, 2017 
+                HELP-PROMPT:    Is the nodule new? 
+                DESCRIPTION:
+                                 
+
+
+311.10611,1.1   LIKELY LOCATION      0;3 SET
+
+                                'end' FOR Endobr; 
+                                'lul' FOR LUL; 
+                                'lll' FOR LLL; 
+                                'rul' FOR RUL; 
+                                'rml' FOR RML; 
+                                'rll' FOR RLL; 
+                LAST EDITED:    SEP 15, 2017 
+                HELP-PROMPT:    What is the most likely location of the current 
+                                nodule? 
+
+311.10611,1.2   MAXIMUM UPTAKE       0;4 NUMBER
+
+                INPUT TRANSFORM:K:+X'=X!(X>9)!(X<0)!(X?.E1"."5N.N) X
+                LAST EDITED:    SEP 15, 2017 
+                HELP-PROMPT:    Type a number between 0 and 9, 4 decimal 
+                                digits. 
+                DESCRIPTION:    What is the maxiumum nodule uptake (SUV) for
+                                the current nodule? 
+
+
+311.10611,1.3   NODULE STATUS        0;5 POINTER TO SAMI NODULE STATUS FILE (#3
+                                11.10316)
+
+                LAST EDITED:    SEP 15, 2017 
+                HELP-PROMPT:    What is the status of the current nodule? 
+
+311.10611,1.4   PATHOLOGIC DIAGNOSIS 0;6 POINTER TO SAMI PATH DIAGNOSIS FILE (#
+                                311.10317)
+
+                LAST EDITED:    SEP 15, 2017 
+                HELP-PROMPT:    What is the pathologic diagnosis for the 
+                                current nodule? 
+
+
+
+311.106,1.5   INDEX NODULE           2;1 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>10!($L(X)<1) X
+              MAXIMUM LENGTH:   10
+              LAST EDITED:      SEP 15, 2017 
+              HELP-PROMPT:      Answer must be 1-10 characters in length. 
+              DESCRIPTION:
+                                Indicate the index nodule driving follow-up.  
+
+
+311.106,1.6   LUNGRADS CATEGORY      2;2 SET
+
+                                '0' FOR 0; 
+                                '1' FOR 1; 
+                                '2' FOR 2; 
+                                '3' FOR 3; 
+              LAST EDITED:      SEP 15, 2017 
+              HELP-PROMPT:      What is the LungRADS category for this patient? 
+
+311.106,1.7   LUNGRADS MODIFIER      2;3 SET
+
+                                'S' FOR S; 
+                                'C' FOR C; 
+              LAST EDITED:      SEP 15, 2017 
+              HELP-PROMPT:      What is the LungRADS modifier for this patient? 
+                                (Enter S or C) 
+
+311.106,2     PET DETAILS LUNG AND NODULES 3;0   WORD-PROCESSING #311.10613
+                     (IGNORE "|")
+
+
+311.106,3     PET DETAILS LYMPH NODES 4;0   WORD-PROCESSING #311.10614
+                     (IGNORE "|")
+
+
+311.106,4     OTHER SIGNIFICANT FINDINGS 5;1 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      SEP 15, 2017 
+              HELP-PROMPT:      Are there other clinically significant 
+                                ancillary findings? 
+
+311.106,4.1   ANCILLARY FINDING      6;0 SET Multiple #311.10615
+
+
+311.10615,.01   ANCILLARY FINDING LOCATION 0;1 SET (Multiply asked)
+
+                Ancillary finding location   
+                                  'b' FOR breast; 
+                                  'a' FOR abdomen; 
+                                  'h' FOR head; 
+                                  'n' FOR neck; 
+                LAST EDITED:      SEP 15, 2017 
+                HELP-PROMPT:      What is the location of the current ancillary 
+                                  finding? 
+                CROSS-REFERENCE:  311.10615^B 
+                                1)= S ^SAMI(311.106,DA(1),6,"B",$E(X,1,30),DA)=
+                                ""
+
+                                2)= K ^SAMI(311.106,DA(1),6,"B",$E(X,1,30),DA)
+
+
+311.10615,.02   DESCRIPTION          0;2 FREE TEXT
+
+                INPUT TRANSFORM:K:$L(X)>50!($L(X)<5) X
+                MAXIMUM LENGTH:   50
+                LAST EDITED:    SEP 15, 2017 
+                HELP-PROMPT:    Answer must be 5-50 characters in length. 
+                DESCRIPTION:    Describe the current ancillary finding. If more
+                                description is needed, please use the ANCILLARY
+                                FINDINGS COMMENTS field.  
+
+
+
+
+311.106,4.2   ANCILLARY FINDINGS COMMENTS 7;0   WORD-PROCESSING #311.10616
+                     (IGNORE "|")
+
+
+311.106,5     ANY OTHER FINDINGS     8;0   WORD-PROCESSING #311.10617
+                     (IGNORE "|")
+
+
+311.106,6     FOLLOW UP              9;1 SET
+
+                                'rs' FOR annual repeat CT; 
+                                'dx' FOR f/u CT; 
+                                'af' FOR Abx + f/u CT; 
+                                'pe' FOR PET; 
+                                'cc' FOR CT w contrast; 
+                                'fn' FOR CT-guided biopsy; 
+                                'br' FOR bronchoscopy; 
+                                'va' FOR VAT; 
+                                'su' FOR resection; 
+              LAST EDITED:      SEP 15, 2017 
+              HELP-PROMPT:      What type of follow-up is indicated for the 
+                                patient? 
+
+311.106,6.1   FOLLOW UP WHEN         9;2 SET
+
+                                'nw' FOR now; 
+                                '1m' FOR 1 month; 
+                                '3m' FOR 3 months; 
+                                '6m' FOR 6 months; 
+                                '1y' FOR 1 year; 
+                                'os' FOR other; 
+              LAST EDITED:      SEP 15, 2017 
+              HELP-PROMPT:      In what time frame should the patient follow 
+                                up? 
+              DESCRIPTION:      In what time frame should the patient follow
+                                up? If you would prefer to indicate a specific
+                                date, please use the next field.  
+
+
+311.106,6.2   FOLLOW UP DATE         9;3 DATE
+
+              INPUT TRANSFORM:  S %DT="EX" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      SEP 15, 2017 
+              HELP-PROMPT:      Use this field if you would like the patient to 
+                                follow up on a specific date. 
+
+311.106,7     IMPRESSION NODULES     9;4 SET
+
+                                'rs' FOR No evidence of nodules. Follow-up as r
+                                ecommended.; 
+                                'ro' FOR Nodule(s) consistent with old granulom
+                                atous disease.; 
+                                'ru' FOR Nodule(s) unchanged. Follow-up as reco
+                                mmended.; 
+                                'nf' FOR Nodule(s) as described. Follow-up as r
+                                ecommended.; 
+              LAST EDITED:      SEP 15, 2017 
+
+311.106,7.1   IMPRESSION OTHER FINDINGS 9;5 SET
+
+                                'no' FOR No other abnormalities; 
+                                'oa' FOR Other abnormalities and suggested foll
+                                ow-up as described.; 
+                                'da' FOR Diffuse abnormalities.; 
+              LAST EDITED:      SEP 15, 2017 
+
+311.106,7.3   IMPRESSION REMARKS     10;0   WORD-PROCESSING #311.10618
+                     (IGNORE "|")
+
+
+
+      FILES POINTED TO                      FIELDS
+
+SAMI INTAKE (#311.101)            STUDY ID (#.01)
+
+SAMI NODULE NEW (#311.10612)      NODULE GRID:NEW (#1)
+
+SAMI NODULE STATUS (#311.10316)   NODULE GRID:NODULE STATUS (#1.3)
+
+SAMI PATH DIAGNOSIS (#311.10317)  NODULE GRID:PATHOLOGIC DIAGNOSIS (#1.4)
+
+
+
+INPUT TEMPLATE(S):
+
+PRINT TEMPLATE(S):
+
+SORT TEMPLATE(S):
+
+FORM(S)/BLOCK(S):

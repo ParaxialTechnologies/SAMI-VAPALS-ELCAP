@@ -1,0 +1,693 @@
+STANDARD DATA DICTIONARY #311.104 -- SAMI FOLLOWUP FILE       10/2/17    PAGE 1
+STORED IN ^SAMI(311.104,  *** NO DATA STORED YET ***   SITE: AVICENNA.VISTAEXPER
+TISE.NET   UCI: VAH,ROU                                    (VERSION 18.0T02)   
+
+DATA          NAME                  GLOBAL        DATA
+ELEMENT       TITLE                 LOCATION      TYPE
+-------------------------------------------------------------------------------
+
+
+              DD ACCESS: @
+              RD ACCESS: @
+              WR ACCESS: @
+             DEL ACCESS: @
+           LAYGO ACCESS: @
+           AUDIT ACCESS: @
+
+CROSS
+REFERENCED BY: STUDY ID(B)
+
+    LAST MODIFIED: SEP 29,2017@09:50:49
+
+311.104,.01   STUDY ID               0;1 FREE TEXT (Required)
+
+              Study ID   
+              INPUT TRANSFORM:  K:$L(X)>20!($L(X)<3) X
+              MAXIMUM LENGTH:   20
+              LAST EDITED:      AUG 21, 2017 
+              HELP-PROMPT:      Answer must be 3-20 characters in length. 
+              DESCRIPTION:
+                                The unique Study ID for this patient.  
+
+              CROSS-REFERENCE:  311.104^B 
+                                1)= S ^SAMI(311.104,"B",$E(X,1,30),DA)=""
+                                2)= K ^SAMI(311.104,"B",$E(X,1,30),DA)
+
+
+311.104,.02   BASELINE DATE          0;2 DATE
+
+              INPUT TRANSFORM:  S %DT="EX" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      Date of the patient's baseline CT scan. 
+              DESCRIPTION:      Enter the date of the patient's baseline CT
+                                scan, in any format.  
+
+
+311.104,1     FOLLOWUP DATE          0;3 DATE (Required)
+
+              INPUT TRANSFORM:  S %DT="EX" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      Enter the date for the current follow-up. 
+              DESCRIPTION:      Enter the date for the current follow-up, in
+                                any format. You may enter T for today, or T-1D
+                                for one day ago (yesterday).  
+
+
+311.104,1.1   TIME SINCE BASELINE    0;4 NUMBER
+
+              Time since baseline (months)   
+              INPUT TRANSFORM:  K:+X'=X!(X>999)!(X<1)!(X?.E1"."1N.N) X
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      Type a number between 1 and 999, 0 decimal 
+                                digits. 
+              DESCRIPTION:      The time elapsed since the baseline CT scan (in
+                                months) 
+
+
+311.104,1.2   NURSE                  0;5 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<3) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      Answer must be 3-30 characters in length. 
+              DESCRIPTION:      The name of the nurse, navigator, or
+                                coordinator managing this followup appointment. 
+ 
+
+
+311.104,2     SCREENING SCAN ORDERED 0;6 SET
+
+              Annual CT scan   
+                                'y' FOR Yes; 
+                                'n' FOR No; 
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      Was a CT lung screening scan ordered for this 
+                                patient? 
+              DESCRIPTION:      Was a CT lung screening scan ordered for this
+                                patient (CPT code G0297)? 
+
+
+311.104,2.1   PRACTITIONER NAME      0;7 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      The name of the practitioner ordering the
+                                screening CT scan.  
+
+
+311.104,2.2   PRACTITIONER NPI       0;8 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>10!($L(X)<5) X
+              MAXIMUM LENGTH:   10
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      Answer must be 5-10 characters in length. 
+              DESCRIPTION:      The NPI of the practitioner ordering the
+                                screening CT scan.  
+
+
+311.104,2.3   SHARED DECISION MAKING 0;9 SET
+
+                                'y' FOR Yes; 
+                                'n' FOR No; 
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      Documentation of shared decision-making. 
+              DESCRIPTION:      Is there documentation of shared
+                                decision-making for the CT scan? (Only required
+                                for reimbursement for G0297 exams) 
+
+
+311.104,2.4   REPORTED SMOKING       0;10 SET
+
+                                'c' FOR Current; 
+                                'f' FOR Former; 
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      Ordering practitioner reported smoking status. 
+              DESCRIPTION:      Ordering practitioner reported smoking status.
+                                Enter c for Current smoker or f for Former
+                                smoker.  
+
+
+311.104,2.5   REPORTED PACK YEARS    0;11 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>99)!(X<1)!(X?.E1"."3N.N) X
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      Type a number between 1 and 99, 2 decimal 
+                                digits. 
+              DESCRIPTION:
+                                Ordering practitioner reported pack years 
+
+
+311.104,2.6   REPORTED YEARS SINCE QUIT 0;12 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>99)!(X<1)!(X?.E1"."3N.N) X
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      Type a number between 1 and 99, 2 decimal 
+                                digits. 
+              DESCRIPTION:      Ordering practitioner reported years since
+                                quit. Leave blank if the patient is a current
+                                smoker.  
+
+
+311.104,2.7   REPORTED ASYMPTOMATIC  0;13 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      Ordering practitioner reported asymptomatic for 
+                                lung cancer. 
+              DESCRIPTION:      Ordering practitioner reported asymptimatic for
+                                lung cancer.  
+
+
+311.104,2.8   CLINICAL INFO          1;0   WORD-PROCESSING #311.114
+                     (IGNORE "|")
+
+
+311.104,3     ANTIBIOTICS            2;1 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      Has the patient taken antibiotics since last CT 
+                                scan? 
+              DESCRIPTION:      Has the patient taken antibiotics since their
+                                last CT scan? If so, use the next field to
+                                specify when.  
+
+
+311.104,3.1   ANTIBIOTICS WHEN       2;2 DATE
+
+              INPUT TRANSFORM:  S %DT="E" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      When did the patient take antibiotics? 
+              DESCRIPTION:      When did the patient take antibiotics? Enter a
+                                date in any format.  
+
+
+311.104,3.2   ANNUAL CT SCAN         2;3 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      Is this an annual CT scan? 
+              DESCRIPTION:
+                                Is this an annual CT scan? 
+
+
+311.104,3.3   SECONDHAND YEAR        2;4 DATE
+
+              INPUT TRANSFORM:  S %DT="E" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      When was the patient last exposed to secondhand 
+                                smoke? 
+              DESCRIPTION:      Which year did the patient last have a
+                                prolonged exposure to secondhand tobacco smoke?
+                                If the patient cannot remember precisely, use
+                                the next field to enter an estimate.  
+
+
+311.104,3.4   SECONDHAND IMPRECISE   2;5 SET
+
+                                'a' FOR less than 5 years ago; 
+                                'b' FOR more than 5 years ago; 
+                                'c' FOR more than 10 years ago; 
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      Approximately when was the patient last exposed 
+                                to secondhand smoke? 
+              DESCRIPTION:      Approximately when was the patient last exposed
+                                to secondhand smoke? Enter a for less than 5
+                                years ago; b for more than 5 years ago; or c
+                                for more than 10 years ago. Leave this field
+                                blank if you were able to get an exact year in
+                                the previous field.  
+
+
+311.104,4     SYMPTOMS               2;6 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      Has the patient experienced symptoms in the 
+                                past year? 
+              DESCRIPTION:      During the past year, has the patient
+                                experienced any of the symptoms listed? Use the
+                                next field to select specific symptoms.  
+
+
+311.104,4.1   SYMPTOMS SELECT        3;0 SET Multiple #311.124
+
+
+311.124,.01     SYMPTOMS SELECT        0;1 SET (Multiply asked)
+
+                                  'b' FOR cough producing bloody material; 
+                                  'l' FOR unexplained weight loss; 
+                                  'h' FOR unexplained hoarseness; 
+                                  'o' FOR other (specify); 
+                LAST EDITED:      AUG 17, 2017 
+                HELP-PROMPT:      Enter the code for the patient's symptoms. 
+                DESCRIPTION:      Enter the code for the patient's symptoms.
+                                  You may enter more than one.  Use b for cough
+                                  producing bloody material, l for unexplained
+                                  weight loss, h for unexplained hoarseness,
+                                  and o for other. If you select other, please
+                                  specify the symptom in the next field.  
+
+                CROSS-REFERENCE:  311.124^B 
+                                1)= S ^SAMI(311.104,DA(1),3,"B",$E(X,1,30),DA)=
+                                ""
+
+                                2)= K ^SAMI(311.104,DA(1),3,"B",$E(X,1,30),DA)
+
+
+
+
+311.104,4.2   OTHER SYMPTOM SPECIFY  4;1 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      If you selected "other" in the previous field,
+                                specify the symptoms here.  
+
+
+311.104,4.3   SYMPTOMS TREATED       4;2 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      Has the patient seen a physician for these 
+                                symptoms? 
+              DESCRIPTION:      Has the patient seen a physician for the
+                                symptoms listed in the previous fields? 
+
+
+311.104,4.4   SYMPTOMS CURRENT       4;3 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      Is the patient currently experiencing symptoms? 
+              DESCRIPTION:      Is the patient currently experiencing these
+                                symptoms? 
+
+
+311.104,4.5   MOST RECENT CHEST CT   4;4 DATE
+
+              INPUT TRANSFORM:  S %DT="E" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      When did the patient most recently have a chest 
+                                CT? 
+              DESCRIPTION:      When did the patient most recently have a chest
+                                CT? Enter a date, in any format.  
+
+
+311.104,4.6   CHEST CT WHERE         4;5 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      Where was the patient's most recent chest CT
+                                done? 
+
+
+311.104,5     HOSPITALIZED           4;6 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      Has the patient been hospitalized in the past 
+                                year? 
+              DESCRIPTION:      Has the patient been hospitalized in the past
+                                year? 
+
+
+311.104,5.1   HOSPITALIZED FOR WHAT  4;7 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:
+                                What was the patient hospitalized for? 
+
+
+311.104,5.2   HOSPITAL WHEN          4;8 DATE
+
+              INPUT TRANSFORM:  S %DT="E" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      When was the patient hospitalized? 
+              DESCRIPTION:      When was the patient hospitalized? Enter a date
+                                in any format.  
+
+
+311.104,5.3   HOSPITAL WHERE         4;9 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:
+                                Where was the patient hospitalized? 
+
+
+311.104,6     CANCER DIAGNOSIS       4;10 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      Has the patient been diagnosed with cancer in 
+                                the past year? 
+              DESCRIPTION:      Has the patient had a diagnosis of cancer in
+                                the past year? 
+
+
+311.104,6.1   CANCER WHERE           4;11 SET
+
+                                'br' FOR breast; 
+                                'co' FOR colon/rectum; 
+                                'li' FOR liver; 
+                                'lu' FOR lung/bronchus; 
+                                'ov' FOR ovary; 
+                                'pa' FOR pancreas; 
+                                'pr' FOR prostate; 
+                                'sk' FOR skin; 
+                                'st' FOR stomach; 
+                                'ut' FOR uterus; 
+                                'os' FOR other (specify); 
+              LAST EDITED:      AUG 17, 2017 
+              HELP-PROMPT:      What part of the body was the patient's cancer? 
+              DESCRIPTION:      If the patient had a diagnosis of cancer, on
+                                what part of the body? 
+
+
+311.104,6.2   CANCER WHEN            4;12 DATE
+
+              INPUT TRANSFORM:  S %DT="E" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      AUG 18, 2017 
+              HELP-PROMPT:      When was the patient's cancer diagnosis? 
+              DESCRIPTION:      When was the patient's cancer diagnosis? Enter
+                                a date, in any format.  
+
+
+311.104,6.3   LUNG CANCER SURGERY    4;13 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      AUG 18, 2017 
+              HELP-PROMPT:      Has the patient had surgery for lung cancer? 
+              DESCRIPTION:      If lung cancer has been diagnosed, has the
+                                patient had surgery? 
+
+
+311.104,6.4   LUNG SURGERY WHEN      4;14 DATE
+
+              INPUT TRANSFORM:  S %DT="E" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      AUG 18, 2017 
+              HELP-PROMPT:      When did the patient have surgery for lung 
+                                cancer? 
+              DESCRIPTION:      When did the patient have surgery for lung
+                                cancer? Enter a date, in any format.  
+
+
+311.104,6.5   LUNG SURGERY WHERE     4;15 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      AUG 18, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      Where did the patient have surgery for lung
+                                cancer? 
+
+
+311.104,6.6   LUNG CANCER RECURRENCE 4;16 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      AUG 18, 2017 
+              HELP-PROMPT:      Is there evidence of lung cancer recurrence? 
+              DESCRIPTION:      If a lung cancer has been removed, is there
+                                evidence of recurrence? 
+
+
+311.104,6.7   RECURRENCE DESCRIBE    5;0   WORD-PROCESSING #311.134
+                     (IGNORE "|")
+
+
+311.104,7     SMOKED IN PAST MONTH   6;1 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'o' FOR Never smoked; 
+              LAST EDITED:      AUG 18, 2017 
+              HELP-PROMPT:      Has the patient smoked at all in the past 
+                                month? 
+              DESCRIPTION:      Over the past month, has the patient smoked
+                                cigarettes at all, even a puff? Enter n for no,
+                                y for yes, or o of the patient has never
+                                smoked.  
+
+
+311.104,7.1   SMOKING DAYS PER WEEK  6;2 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>7)!(X<1)!(X?.E1"."1N.N) X
+              LAST EDITED:      AUG 18, 2017 
+              HELP-PROMPT:      Type a number between 1 and 7, 0 decimal 
+                                digits. 
+              DESCRIPTION:      On how many days per week is the patient
+                                currently smoking cigarettes? 
+
+
+311.104,7.2   SMOKING PACKS PER DAY  6;3 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>9)!(X<0)!(X?.E1"."3N.N) X
+              LAST EDITED:      AUG 18, 2017 
+              HELP-PROMPT:      Type a number between 0 and 9, 2 decimal 
+                                digits. 
+              DESCRIPTION:      On average, on the days that the patient is
+                                smoking cigarettes, how many packs of
+                                cigarettes is he or she currently smoking per
+                                day (PPD)? 
+
+
+311.104,7.3   LAST CIGARETTE DATE    6;4 DATE
+
+              INPUT TRANSFORM:  S %DT="E" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      AUG 18, 2017 
+              HELP-PROMPT:      When was the date of the patient's last 
+                                cigarette? 
+              DESCRIPTION:      When was the patient's last cigarette? Enter a
+                                date, in any format.  
+
+
+311.104,7.4   TRIED TO QUIT          6;5 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'o' FOR N/A; 
+              LAST EDITED:      AUG 18, 2017 
+              HELP-PROMPT:      Has the patient tried to quit smoking since 
+                                prior CT scan? 
+              DESCRIPTION:      Since the patient's prior CT scan, has he or
+                                she ever tried to quit smoking? Enter n for no,
+                                y for yes, or o for N/A (the patient had 
+                                already quit).  
+
+
+311.104,7.5   QUIT NUMBER            6;6 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>99)!(X<1)!(X?.E1"."1N.N) X
+              LAST EDITED:      AUG 18, 2017 
+              HELP-PROMPT:      Type a number between 1 and 99, 0 decimal 
+                                digits. 
+              DESCRIPTION:      If the patient has tried to quit, how many
+                                times has he or she quit smoking for at least
+                                24 hours? 
+
+
+311.104,7.6   METHODS USED           7;0 POINTER Multiple #311.144
+                                 (Add New Entry without Asking)
+
+
+311.144,.01     METHODS USED           0;1 POINTER
+                                  ***** TO AN UNDEFINED FILE (#231.10211), STOR
+                                ED IN ^SAMI(231.10211) ******* (Multiply asked)
+
+                LAST EDITED:    AUG 21, 2017 
+                HELP-PROMPT:    Enther the method(s) the patient used to try to 
+                                quit. 
+                DESCRIPTION:    Enter the method(s) the patient used to try to
+                                quit. You may enter more than one. 
+
+                CROSS-REFERENCE:311.144^B 
+                                1)= S ^SAMI(311.104,DA(1),7,"B",$E(X,1,30),DA)=
+                                ""
+
+                                2)= K ^SAMI(311.104,DA(1),7,"B",$E(X,1,30),DA)
+
+
+
+
+311.104,7.7   OTHER METHOD SPECIFY   8;1 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      AUG 21, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      If you chose "other" as a cessation method in
+                                the previous field, specify the other method
+                                here.  
+
+
+311.104,7.8   THINKING OF QUITTING   8;2 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      AUG 21, 2017 
+              HELP-PROMPT:      Is the patient seriously thinking of quitting 
+                                smoking? 
+              DESCRIPTION:      Is the patient seriously thinking of quitting
+                                smoking? 
+
+
+311.104,7.9   CESSATION MATERIALS    8;3 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      AUG 21, 2017 
+              HELP-PROMPT:      Smoking cessation materials distributed? 
+              DESCRIPTION:      Smoking cessation materials were distributed to
+                                subject.  
+
+
+311.104,8     OVERALL HEALTH         8;4 SET
+
+                                'a' FOR Excellent; 
+                                'b' FOR Very good; 
+                                'c' FOR Good; 
+                                'd' FOR Fair; 
+                                'e' FOR Poor; 
+                                'f' FOR Very poor; 
+              LAST EDITED:      AUG 21, 2017 
+              HELP-PROMPT:      Patient's health during the past 4 weeks. 
+              DESCRIPTION:      Overall, how would the patient rate his or her
+                                health during the past 4 weeks? 
+
+
+311.104,8.1   PHYSICAL LIMITS        8;5 SET
+
+                                'a' FOR Not at all; 
+                                'b' FOR Very little; 
+                                'c' FOR Somewhat; 
+                                'd' FOR Quite a lot; 
+                                'e' FOR Could not do; 
+              LAST EDITED:      AUG 21, 2017 
+              HELP-PROMPT:      How much did physical health problems limit 
+                                physical activities? 
+              DESCRIPTION:      During the past 4 weeks, how much did physical
+                                health problems limit the patient's usual
+                                physical activities (such as walking or
+                                climbing stairs)? 
+
+
+311.104,8.2   HEALTH WORK            8;6 SET
+
+                                'a' FOR None at all; 
+                                'b' FOR A little bit; 
+                                'c' FOR Some; 
+                                'd' FOR Quite a lot; 
+                                'e' FOR Could not do; 
+              LAST EDITED:      AUG 21, 2017 
+              HELP-PROMPT:      How much difficulty did the patient have at 
+                                daily work? 
+              DESCRIPTION:      During the past 4 weeks, how much difficulty
+                                did the patient have doing his or her daily
+                                work, both at home and away from home, because
+                                of physical health? 
+
+
+311.104,8.3   BODILY PAIN            8;7 SET
+
+                                'a' FOR None; 
+                                'b' FOR Very mild; 
+                                'c' FOR Mild; 
+                                'd' FOR Moderate; 
+                                'e' FOR Severe; 
+                                'f' FOR Very severe; 
+              LAST EDITED:      AUG 21, 2017 
+              HELP-PROMPT:      How much bodily pain has the patient had? 
+              DESCRIPTION:      How much bodily pain has the patient had during
+                                the past 4 weeks? 
+
+
+311.104,8.4   HEALTH ENERGY          8;8 SET
+
+                                'a' FOR Very much; 
+                                'b' FOR Quite a lot; 
+                                'c' FOR Some; 
+                                'd' FOR A little; 
+                                'e' FOR None; 
+              LAST EDITED:      AUG 21, 2017 
+              HELP-PROMPT:      During the past 4 weeks, how much energy did 
+                                the patient have? 
+              DESCRIPTION:      During the past 4 weeks, how much energy did
+                                the patient have? 
+
+
+311.104,8.5   HEALTH SOCIAL          8;9 SET
+
+                                'a' FOR None at all; 
+                                'b' FOR Very little; 
+                                'c' FOR Somewhat; 
+                                'd' FOR Quite a lot; 
+                                'e' FOR Could not do; 
+              LAST EDITED:      AUG 21, 2017 
+              HELP-PROMPT:      How much did physical health or emotional 
+                                problems limit social activities? 
+              DESCRIPTION:      During the past 4 weeks, how much did the
+                                patient's physical health or emotional problems
+                                limit his or her ususal social activities with 
+                                family or friends? 
+
+
+311.104,8.6   HEALTH EMOTIONAL       8;10 SET
+
+                                'a' FOR Not at all; 
+                                'b' FOR Slightly; 
+                                'c' FOR Moderately; 
+                                'd' FOR Quite a lot; 
+                                'e' FOR Extremely; 
+              LAST EDITED:      AUG 21, 2017 
+              HELP-PROMPT:      How much as the patient been bothered by 
+                                emotional problems? 
+              DESCRIPTION:      During the past 4 weeks, how much has the
+                                patient been bothered by emotional problems
+                                (such as feeling anxious, depressed or
+                                irritable)? 
+
+
+311.104,8.7   HEALTH DAILY           8;11 SET
+
+                                'a' FOR Not at all; 
+                                'b' FOR Very little; 
+                                'c' FOR Somewhat; 
+                                'd' FOR Quite a lot; 
+                                'e' FOR Could not do; 
+              LAST EDITED:      AUG 21, 2017 
+              HELP-PROMPT:      How much did personal or emotional problems 
+                                keep the patient from daily activities? 
+              DESCRIPTION:      During the past 4 weeks, how much did personal
+                                or emotional problems keep the patient from
+                                doing his or her usual work, school or other
+                                daily activities? 
+
+
+
+ FILES POINTED TO                      FIELDS
+
+SAMI CESSATION METHODS (#231.10211)  METHODS USED:METHODS USED (#.01)
+
+

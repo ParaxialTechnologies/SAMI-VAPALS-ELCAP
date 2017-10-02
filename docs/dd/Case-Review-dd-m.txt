@@ -1,0 +1,73 @@
+STANDARD DATA DICTIONARY #311 -- SAMI CASE REVIEW FILE        10/2/17    PAGE 1
+STORED IN ^SAMI(311,  *** NO DATA STORED YET ***   SITE: AVICENNA.VISTAEXPERTISE
+.NET   UCI: VAH,ROU                                        (VERSION 18.0T03)   
+
+DATA          NAME                  GLOBAL        DATA
+ELEMENT       TITLE                 LOCATION      TYPE
+-------------------------------------------------------------------------------
+
+
+              DD ACCESS: @
+              RD ACCESS: @
+              WR ACCESS: @
+             DEL ACCESS: @
+           LAYGO ACCESS: @
+           AUDIT ACCESS: @
+
+CROSS
+REFERENCED BY: CASE ID(B)
+
+    LAST MODIFIED: OCT 2,2017@12:32:31
+
+311,.01       CASE ID                0;1 FREE TEXT (Required)
+
+              Case ID   
+              INPUT TRANSFORM:  K:$L(X)>20!($L(X)<3) X
+              MAXIMUM LENGTH:   20
+              LAST EDITED:      SEP 11, 2017 
+              HELP-PROMPT:      Answer must be 3-20 characters in length. 
+              CROSS-REFERENCE:  311^B 
+                                1)= S ^SAMI(311,"B",$E(X,1,30),DA)=""
+                                2)= K ^SAMI(311,"B",$E(X,1,30),DA)
+
+
+311,.02       LAST NAME              0;2 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>20!($L(X)<2) X
+              MAXIMUM LENGTH:   20
+              LAST EDITED:      SEP 11, 2017 
+              HELP-PROMPT:      Answer must be 2-20 characters in length. 
+
+311,.03       FIRST NAME             0;3 FREE TEXT
+
+              First name   
+              INPUT TRANSFORM:  K:$L(X)>20!($L(X)<2) X
+              MAXIMUM LENGTH:   20
+              LAST EDITED:      SEP 12, 2017 
+              HELP-PROMPT:      Answer must be 2-20 characters in length. 
+
+311,1         MRN                    0;4 FREE TEXT (Required)
+
+              INPUT TRANSFORM:  K:$L(X)>15!($L(X)<5) X
+              MAXIMUM LENGTH:   15
+              LAST EDITED:      SEP 11, 2017 
+              HELP-PROMPT:      Answer must be 5-15 characters in length. 
+
+311,2         FORM TYPE              0;5 POINTER TO SAMI FORM FILE (#311.1)
+
+              LAST EDITED:      SEP 12, 2017 
+
+
+      FILES POINTED TO                      FIELDS
+
+SAMI FORM (#311.1)                FORM TYPE (#2)
+
+
+
+INPUT TEMPLATE(S):
+
+PRINT TEMPLATE(S):
+
+SORT TEMPLATE(S):
+
+FORM(S)/BLOCK(S):

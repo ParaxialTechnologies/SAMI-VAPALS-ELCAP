@@ -6,11 +6,14 @@
  ;
  ; All the public entry points for handling in mash data are in this routine
  ;
- ;
+ ; 
  ; graph handling routines
  ;
 setroot(graph) ; root of working storage
  quit $$setroot^%wdgraph(graph)
+ ;
+rootOf(graph) ; return the root of graph named graph
+ quit $$rootOf^%wdgraph(graph)
  ;
 addgraph(graph) ; makes a place in the graph file for a new graph
  do addgraph^%wdgraph(graph)
@@ -25,15 +28,15 @@ insert2graph(ary,graph,replace) ; insert a new entry to a graph
  quit
  ;
 nameThis(altname) ; returns the id to be used for altname
- ; this will eventually use the context graph and the
+ ; this will eventually use the context graph and the 
  ; local variable context to query the altname and obtain an id
  quit $$nameThis^%wdgraph(altname)
  ;
-getThis(rary,fn,nocache) ; find a file and read it into rary array
+getThis(rary,fn,nocache) ; find a file and read it into rary array  
  do getThis^%wdgraph(rary,fn,$get(nocache))
  quit
  ;
-queryContext(context,locator,property) ; look up project specific
+queryContext(context,locator,property) ; look up project specific 
  ; names and values from the context graph
  ; tbd
  quit $$queryContext^%wdgraph(context,locator,property)
@@ -49,6 +52,19 @@ fromCache(rary,name,graph) ; return a file from the cache
 toCache(arry,name,graph) ; put a file in the cache
  do toCache^%wdgraph(arry,name,graph)
  quit
+ ;
+beautify(inary,outary) ; pretty print a line of json
+ do beautify^%wdgraph(inary,outary)
+ quit
+ ;
+ary2file(ary,dir,file) ;
+ do ary2file^%wdgraph(.ary,dir,file)
+ quit
+ ;
+file2ary(ary,dir,file)
+ do file2ary^%wdgraph(.ary,dir,file)
+ quit
+ ;
  ;
  ;
  ; csv handling routines

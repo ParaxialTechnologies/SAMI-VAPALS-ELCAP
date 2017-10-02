@@ -23,7 +23,7 @@ csv2graph(source,graph) ; import a csv file to a graph
  ; %wcol contains the column names in order
  set %wid=$$nameThis^%wdgraph(source) ; get the id from the context
  ; first get the column names from row 1
- for %wi=1:1:$length(%wary(1),delim) set %wcol(%wi)=$translate($$prune($piece(%wary(1),delim,%wi))," ","_")
+ for %wi=1:1:$length(%wary(1),delim) set %wcol(%wi)=$$rename($translate($$prune($piece(%wary(1),delim,%wi))," ","_"))
  set %wi=1
  for  set %wi=$order(%wary(%wi)) q:+%wi=0  do  ;
  . new %wj
@@ -57,6 +57,28 @@ delim(ary) ; figures out the cvs delimiter
  . if $data(ary(4)) if $length(ary(4),%wdlim)='%count s %wfound=0 kill %return
  if %wfound=0 q -1
  q %return
+ ;
+rename(name) ; extrinsic returns new name or old name if not found
+ ; this is a temporary routine until the csv files are updated
+ n nam
+ s nam("Sub._#")="sub#"
+ s nam("Field_Name")="fieldName"
+ s nam("Title")="fieldTitle"
+ s nam("Data_Type")="dataType"
+ s nam("Value")="value"
+ s nam("Definition")="definition"
+ s nam("m-class-#")="mClass#"
+ s nam("m-prop-#")="mProp#"
+ s nam("m-prop-name")="mPropName"
+ s nam("m-prop-title")="mPropTitle"
+ s nam("m-prop-loc")="mPropLoc"
+ s nam("m-prop-type")="mPropType"
+ s nam("m-prop-det")="mPropDet"
+ s nam("m-delim-check")="mDlimCheck"
+ n namtmp
+ s namtmp=$g(nam(name))
+ i namtmp="" s namtmp=name
+ q namtmp
  ;
 wellformed(ary,delim) ; extrinsic returns 1 if csv ary is well formed
  ; checks to see that the count of the delimiter is the same

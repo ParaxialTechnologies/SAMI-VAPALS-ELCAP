@@ -9,7 +9,12 @@
 setroot(graph) ; root of working storage
  new %y set %y=$order(^%wd(17.040801,"B",graph,""))
  if %y="" set %y=$$addgraph(graph) ; if graph is not present, add it
- quit $na(^%wd(17.040801,%y)) ; root for graph
+ quit $name(^%wd(17.040801,%y)) ; root for graph
+ ;
+rootOf(graph) ; return the root of graph named graph
+ new %x1 set %x1=$order(^%wd(17.040801,"B",graph,""))
+ if %x1="" quit -1
+ quit $name(^%wd(17.040801,%x1,"graph"))
  ;
 addgraph(graph) ; makes a place in the graph file for a new graph
  new fda set fda(17.040801,"?+1,",.01)=graph
@@ -107,5 +112,37 @@ toCache(arry,name,graph) ; put a file in the cache
  . set zien=$order(@zgn@("graph"," "),-1)+1
  merge @zgn@("graph",zien)=@arry
  set @zgn@("graph","B",name,zien)=""
+ quit
+ ;
+beautify(inary,outary) ; pretty print a line of json
+ new zg,zi set (zg,zi)=""
+ for  set zi=$order(@inary@(zi)) quit:zi=""  set zg=zg_@inary@(zi)
+ do ary2file("zg",^%WHOME,"json.json")
+ zsy "python -m json.tool "_^%WHOME_"json.json > "_^%WHOME_"pretty-json.json"
+ do file2ary(outary,^%WHOME,"pretty-json.json")
+ q
+ ;
+ary2file(ary,dir,file) ;
+ new tmp set tmp=$name(^TMP("yottawrk",$J))
+ kill @tmp
+ if '$data(@ary@(1)) do  ; not really an array
+ . if $get(@ary)="" quit ; not a string either
+ . merge @tmp@(1)=@ary ; input was a string
+ else   merge @tmp=@ary
+ new tmp1 set tmp1=$name(@tmp@(1))
+ new ok set ok=$$GTF^%ZISH(tmp1,3,dir,file)
+ if 'ok do  quit  ;
+ . write !,"error saving file ",dir_file
+ quit
+ ;
+file2ary(ary,dir,file)
+ new tmp set tmp=$name(^TMP("yottawrk",$J))
+ kill @tmp
+ new tmp1 set tmp1=$name(@tmp@(1))
+ new ok set ok=$$FTG^%ZISH(dir,file,tmp1,3)
+ if 'ok do  quit  ;
+ . write !,"error loading file ",dir_file
+ merge @ary=@tmp
+ kill @tmp
  quit
  ;

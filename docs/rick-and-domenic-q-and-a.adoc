@@ -1,0 +1,613 @@
+:doctitle:    VA-PALS – Projects – Vista Expertise Network
+:mastimg:     aboutvista
+:mastcaption: Vista consultants
+:mastdesc:    Real-time patient information means real care
+
+== Q&A Session 1
+
+This is excerpted from an email exchange on 2017-09-11 and 2017-09-12 between
+Domenic DiNatale and Rick Marshall. A few changes have been made:
+
+[quote]
+_______________________________________________________________________________
+Good morning team, 
+
+As mentioned in the ††Hello World†† Skype group, I have a few questions I’m
+hoping you could help answer. These are basically a collection of items I’ve
+been mulling over the last few weeks being on this project. Although I have
+many years of technical background, please keep in mind I am new to
+VistA. Please don’t take offense to any of the below comments---I am truly just
+trying to understand where we are, where we’re going with this project. Of
+course if I misspeak or mix up any terminology here, feel free to correct me!
+
+First, could you share any architectural documentation or data flow diagrams
+you might have? I’m just looking to understand the system as a whole from a
+technical standpoint.
+_______________________________________________________________________________
+
+There are two different answers to this, an ELCAP-centric one and a Vista-centric one, and I'll give you both.
+
+First the ELCAP-centric one.
+
+This project is being developed from a working prototype that has been
+developed and used over the past seventeen years by the I{nbhy}ELCAP team at
+Mt.{nbsp}Sinai and Phoenix{nbsp}VA. That prototype has been developed in turn
+from the research of the I{nbhy}ELCAP consortium's experiences trying out
+different protocols for the screening, identification, and treatment of
+early-stage lung cancer. It is a research system that has been incrementally
+evolving into a production system but is still at its core research-focused.
+
+Accordingly, so far as we know, that ELCAP prototype has no architectural
+documentation or data-flow diagrams. We have been provided with data
+dictionaries, forms, and a few demos---and we'll need to get some more of those
+when we're ready---but generally speaking the prototype has no traditional
+system-analysis documentation.
+
+Our task is to create a production-quality Vista application using this
+prototype as our model, using the I{nbhy}ELCAP team as our repository of
+medical expertise, and using the Vista architecture and lifecycle as the idioms
+into which we are translating this architecture and medical lore.
+
+Thus, as an empirically-driven, prototype-driven software project, the
+traditional waterfall software-lifecycle model in which we begin with
+specifications and produce software to match them does not apply. Likewise the
+various popular ``agile'' processes that translate waterfall into the language
+of Agile. What we are left with is an iterative software-lifecycle model in
+which the architectural documentation and data-flow diagrams will be among the
+many products we iteratively develop. By the time the project is complete, we
+will have crisp documentation of how this all works, but until then we will
+remain in a process of iterative discovery and annotation, which is where we
+are now.
+
+Now the Vista-centric answer.
+
+Where the ELCAP software is a mature working prototype without traditional
+software-analysis documentation, Vista is a hybrid. It too was developed
+primarily through the kinds of Golden Pair processes introduced in our book
+Vista Mastery, through rapid prototyping driven by the shared expertise of
+medical and software experts. Over four decades, it has been production-tested
+repeatedly in a wide variety of platforms, conditions, and settings, and it is
+among the most documented bodies of software in the world---a bookcase
+containing all the Vista documentation would cover the wall of an enormous room
+floor to ceiling, and you would not want to be standing near it if an
+earthquake caused the bookcase to tip over.
+
+Nevertheless, it is among the most complex things human beings have ever
+created, as an attempt to model medicine as a whole as applied within any
+setting ranging from individual practice or clinic up to national health
+systems---one of the most complex human endeavors ever. It is just not possible
+to document it all, because it---and computer science and medicine---keep
+changing. VA's focus used to be on documenting what users need to know to use
+the system to support their medical and organizational practices, and for the
+past two decades they've focused on documenting contracting requirements and
+process compliance. This has come at the expense of traditional architectural
+and data-flow diagrams, which is among the many, many things missing from that
+ginormous wall of Vista documentation.
+
+As it happens, the Vista Expertise Network is one of the Vista community
+leaders in pushing for a more rigorous approach to documenting and testing
+Vista's architecture and lifecycle, and we're known for our public
+presentations, documentation, and vocabulary- and concept-building pushes in
+the community to make it easier to think about, discuss, and document this
+architecture. But even we don't have the kinds of architectural or data-flow
+diagrams you would reasonably expect, because we're coming at this in medias
+res.
+
+So you're going to find yourself in an interesting position in this project, in
+which we have very precise and picky standards about what we want to
+accomplish, and yet it's still largely oral culture. The way computer science
+(and modern history) is taught, that should be impossible. It's supposed to be
+written cultures that are precise and detailed, while oral cultures are vague
+and sloppy.
+
+Accordingly, the best way to bring you up to speed is to resume our regular
+class/working-meeting schedule, to invite you to participate, so we can discuss
+all this stuff, and record our sessions and file them on our private YouTube
+channel for future reference, as is our practice. We'll be building
+documentation for both this new ELCAP version set in Vista, a new Vista
+application we're calling SAMI, and for the elements of Vista's architecture
+and lifecycle we're most depending on. But given the pace of development and
+innovation, by the end of this project, despite having documentation that
+exceeds VA's requirements, we still won't have as much as we would prefer. It's
+the nature of the beast.
+
+[quote]
+_______________________________________________________________________________
+Second, is there a particular tool you use to unit and/or integration test
+VistA? Rick, I know you mentioned last Friday that the VA does not do
+much{nbsp}QA, but I’m hopeful that the core VistA application does. Really what
+I’m looking for is to determine if we can leverage any tools and procedures you
+may already have in place when it comes time to test the end product(s) of this
+project.
+_______________________________________________________________________________
+
+Yes. Our tool of choice is M{nbhy}Unit, a Mumps application developed by Joel
+Ivey, extended by Dr.{nbsp}Sam Habiel, and certified by OSEHRA, and that we're
+currently refactoring to bring up to our new programming standards. He based it
+on J{nbhy}Unit for Java. It gives us a framework for running unit tests written
+in Mumps and calculating the percentage of code covered by those tests. In
+addition to refactoring M{nbhy}Unit, we will also be extending it and
+documenting it.
+
+We won't be waiting to test the project end products, however. Pretty soon
+we'll start writing unit tests for our prototypes, and we'll keep developing
+and expanding the library of unit tests as we go. Although
+https://www.alibris.com/search/books/isbn/9780070341999[__The Elements of
+Programming Style__] and
+https://www.alibris.com/search/books/isbn/9780201835953[__The Mythical
+Man-Month__] both discuss throwing away the first version, we usually adopt a
+more evolutionary approach that preserves more---and in this case, the ``first
+version'' would have been the original ELCAP work back in{nbsp}2000, so we're
+working on version{nbsp}18, by which point in the software lifecycle things are
+definitely in a more evolutionary pattern.
+
+We'll do another round of classes on M{nbhy}Unit to kick off this work.
+
+[quote]
+_______________________________________________________________________________
+Third, is there any way to view VistA data without using Vista itself? This may
+lead into a discussion on Fileman, and if so don’t bother answering; I have not
+yet stared reading the manual you sent on Friday.
+_______________________________________________________________________________
+
+Yes and no. Mumps uses a completely different data idiom than any other
+programming system. That idiom was developed specifically to represent medical
+data, and it's one of the reasons why Mumps dominates medical software.
+
+Mumps-based data---including Vista data---can be and is represented using many
+different traditional data models, and that's as far as most users get in
+comprehending it, but for your and my purposes there is no way around also
+mastering the data models of Mumps and Fileman and other Vista applications so
+when we pop the hood we are able to comprehend what we are seeing as more than
+just a bunch of tubes and wires.
+
+[quote]
+_______________________________________________________________________________
+Fourth, understandably, the new web application is in its infancy. However some
+thoughts/questions as it progresses:
+
+{zwj}a. Will this form be part of a larger application or is it the first of
+its kind? Can users expect a common and familiar UI/UX?
+_______________________________________________________________________________
+
+Due to Congressional meddling in VA's IT initiatives over the past decades,
+VA's rate of innovation has slowed dramatically from the Golden Age of the
+1970s, '80s, and '90s. We were discussing what Vista's web architecture should
+look like and running experiments in the 1990s, but Congress's corrupt,
+lobbyist-driven philosophy that government is evil and inefficient and should
+be dismantled led to policies that paralyzed VA and slowed down its progress
+for enough decades to give industry a chance to catch up and get a chance at
+those juicy tax dollars. Ergo, there is still to this day in VA, decades later,
+no standard web UI/UX.
+
+VA users are familiar with Vista's dialog-mode and CPRS/GUI UI/UX, and of
+course from the rest of the modern world they're familiar with web idioms. So
+long as we create a parallel UI/UX to those two, a blending of the best, most
+usable qualities of each, we should be able to please the users and satisfy
+VA's various standards and QA offices.
+
+Eventually, we plan to implement some of this work---as much as the
+architecture will support---within CPRS itself, which is Vista clinical users'
+familiar and preferred UI. Increasingly, though, I'm coming to the position
+that will not replace the web UI but augment it. We'll explore this empirically
+and make the decision that way rather than by fiat or too-early design.
+
+[quote]
+_______________________________________________________________________________
+{zwj}b. How will users get to this form? I presume a logon (SSL?) will be
+necessary. Where will the link come from?
+_______________________________________________________________________________
+
+CPRS already has signon and security built into it, so that will cover the CPRS
+extensions to support SAMI.
+
+For the web, there are at least three avenues.
+
+First, CPRS has a Tools menu that can be easily extended to include other
+non-CPRS applications. Although largely intended for RPC Broker--driven
+applications, I understand it can also support web applications. For
+Broker-driven applications (like Vista's Mental Health Assistant), those apps
+inherit the current user signon and patient selection, to streamline the UX. I
+believe it is possible to emulate this even with web apps, by passing in the
+right encrypted information in the URL. We'll be exploring that to make sure.
+
+As for stand-alone web access, the Javascript-first-HTML-second approach that
+Alexis will be exploring, based on a Mumps architectural extension called EWD
+(among a lot of other names; it keeps getting renamed) already has Vista signon
+infrastructure developed by the community (including Sam Habiel and Alexis,
+among others) that emulates the look and feel of the CPRS logon and preserves
+its security standards.
+
+As for the HTML-first-Javascript-second approach that George is currently
+exploring, I can't remember whether all of that infrastructure has been
+developed yet (including changing verify codes when they expire), but I've seen
+at least some of it prototyped, and the rest can be added readily enough.
+
+All three approaches rest upon a common framework of security tools on the
+Vista server, to ensure they follow the same requirements and encryption.
+
+Since VA has still not fully embraced web UIs, we'll have to produce the
+answers to questions like which URL to use and where it comes from
+collaboratively, working with the appropriate VA standards groups to find the
+most natural, least invasive infrastructure from their perspective.
+
+[quote]
+_______________________________________________________________________________
+{zwj}c. Have you considered or are there any plans to use any kind of web
+container to allow for a more sophisticated application (i.e., Tomcat, IIS,
+etc)?
+_______________________________________________________________________________
+
+The Javascript-first approach Alexis will be exploring is built upon EWD, with
+which a wide variety of frameworks have been successfully tried out over the
+years. Deciding whether and which ones to use is yet another thing we'll have
+to answer empirically.
+
+Traditionally, web development in the Vista community has been done by
+passionate advocates rather than computer scientists, and the results have
+proven more or less that almost any approach works, though of course each
+advocate mainly remembers that their own preferred approach worked. It is
+unusual to do what we're doing and try out multiple approaches, but this gives
+us the best chance to evaluate how speed and ease of development and execution
+balance with UI power and flexibility. We hope to come out of this project not
+just with a successful SAMI application but with empirical data about the
+alternatives that might help other such projects make their own strategic
+decisions. After decades of participating in and following these alternative
+approaches, we strongly suspect in the end we will conclude that contrary to
+all the partisans' advocacy there is no single right answer, that each project
+must choose their approach based on the specifics of their requirements, so
+long as they all use the same underlying Vista infrastructure to unite them.
+
+[quote]
+_______________________________________________________________________________
+{zwj}d. There should be some basic input validations at the browser level
+(field length, type, required, etc); the backend should have those as well as
+any data-related or non-trivial validations. According to the VA standards, it
+should also utilize HTML5 and be Section 508 compliant. FYI, the latter can be
+difficult to implement as an afterthought, so it’s best to keep this in mind
+while designing the pages now.
+_______________________________________________________________________________
+
+Yes, 508 compliance is a major consideration. As soon as we get a reasonable
+rough approximation of ELCAP's main forms prototyped---soon---we'll start
+grappling seriously with 508{nbsp}compliance. Generally speaking, text-based
+solutions like the HTML-first approach are easier to get 508{nbhy}compliant
+than graphics- and widget-heavy approaches. We have access to the eHMP
+project's UI standards, which have already been approved and are already
+508{nbhy}compliant, to guide us, among many other resources.
+
+The preferred approach to data validation in Vista environments is to have
+mature, sophisticated data definitions that can be shared by the server with
+the clients to guide their validation, but in practice most Vista applications
+fall short of this and hand-code their UI validation. Some Vista
+applications---I'm looking at you, Pharmacy---are especially egregious in this
+department for historical reasons.
+
+ELCAP's existing software has extremely loose data definitions in its
+dictionary, which means they're probably using a combination of hand-coded UI
+validation plus user training to avoid bad data. That's one of the things we'll
+be changing in SAMI; we're big fans of rigorous data dictionaries, in no small
+part because Vista's architecture ``likes'' data-driven---nearly
+object-oriented---approaches to organizing the software.
+
+[quote]
+_______________________________________________________________________________
+{zwj}e. I think it was George who mentioned the data was to be stored in JSON.
+Although this is typically a format of choice for portability, I’m curious why
+you chose this over a data model that Mumps/Vista can understand natively?
+Maybe you’re planning to convert it back and forth?
+_______________________________________________________________________________
+
+We are planning to do data conversions as part of the marshaling process.
+
+Mumps has no single native logical data model, and its physical data model is
+not one most web standards can easily represent. On the other hand, it easily
+represents all or any of them. It is polymorphic in that way, which means we
+can't use its limitations to constrain us toward a specific solution.
+
+Vista's data model is Fileman, which is designed to use the Mumps data model in
+one particular way, optimized toward database representation. Fileman, however,
+despite being deliberately more limited than Mumps---to allow its powerful
+abstract engines to process any file---is still polymorphic. That is, from a
+database-paradigm perspective, Fileman enforces no specific database
+paradigm. You can do relational, hierarchical, network, entity-relationship, or
+even object-oriented in Fileman. It's up to you.
+
+However, some of the standard formats popular on the web do not lend themselves
+well to Fileman's underlying data model---just as they don't to most
+traditional database models, however much the computing world might insist on
+pounding those square pegs into those round holes. Despite decades of marketing
+and training to the contrary, in the deep metaphors of their respective
+architectures, databases and the web are still at best arms-length allies
+rather than a happily married couple.
+
+Mumps, however, loves all those web formats, as George has spent years
+demonstrating. And VA and Vista generally are standards-loving communities.
+
+Therefore, rather than distort the web by insisting it use some idiosyncratic
+Fileman-optimized format, we decided to use web-friendly formats, store them in
+loading docks within Mumps (which is perfectly happy with those formats), and
+load them from there into Fileman---and the converse of course when going the
+other direction. This general philosophy of how to integrate the web with Vista
+is one we've been cooking up for most of the past decade, so we're both excited
+and confident about proceeding with it on this project, not so much as a proof
+of concept but as a culmination of so many other past proofs of concept.
+
+[quote]
+_______________________________________________________________________________
+{zwj}f. At what point, and how often can we expect updates? In other words,
+will we be able to install this in our EC2 environment to perform additional
+testing without interfering with development?
+_______________________________________________________________________________
+
+For this project, our development cycle, which we're still bringing up to
+speed, will involve daily updates to a private Git repository you'll have
+access to, weekly updates (or maybe more often) to a public repository the
+open-source Vista community (including you) will have access to, and updates
+every three weeks to the suite of formal distribution products VA will someday
+use to install in their test and production environments.
+
+The daily updates are our project lifeblood. They are the main way we will be
+moving the software between our separate development environments (some of
+which have not yet been stood up) and our shared team development environment,
+Andronicus. At present, much of our development is happening directly on
+Andronicus, from which we're pushing updates to the private repository and then
+pulling them to our other environments, but we've already begun the processes
+that will eventually lead to reversing that flow. At present, this private Git
+repository, named ++va-pals++, already exists and we've been pushing some
+things to it, but we're just now getting Andronicus subscribed to it, so some
+of our development is currently on Andronicus but not yet in the repository,
+and some is in our private development environments but not yet in the
+repository. I expect to have that sorted out this week. By sending Ken
+McGlothlen your public key so you can get access to the private repository,
+you'll be able to tap into that core software circulation and update your own
+environments as often as you like.
+
+The weekly updates will become our main distribution interface to the
+open-source community, just as the weekly OSEHRA Working Group calls on
+Wednesdays at 10:00{nbsp}a.m.{nbsp}PDT, starting next week, will become our
+main dialog interface to them. We will be doing weekly demos for the community,
+and they will be based on what's in that public repository, so we'll have a
+keen interest in keeping it updated so we can show our progress. When we stand
+that up, we'll be announcing to our working group where it is and how to get
+access, so our community members can follow along and thereby better guide us
+about issues they see in the software, documentation, or architecture. You'll
+want to join that OSEHRA Working Group and follow along, which will include
+getting access to that public repository when we set it up.
+
+The every-three-weeks updates will start out as KIDS distributions and
+associated distributions saved off in the kids subdirectory of our public
+repository. Eventually, this will become the mechanism by which Phoenix and
+Houston{nbsp}VA, then the other eight or nine VAs will get our
+software. VA{nbsp}is not yet Git-friendly, but they understand KIDS
+distributions. Eventually, this stream of distribution updates will get
+rerouted to VA's various QA folks to get approval for release, and at some
+point to VA's native release-and-patching systems, including VA Forum, which is
+the source of all released distributions within VA. You'll have plenty of time
+to learn about all that, including the course of transition; we'll have a lot
+of classes on this topic, to ensure everyone on the team understands how it all
+works. For now, we'll keep things much simpler, so think of these distribution
+updates as a parallel track, an alternative way of bundling up what's in the
+public repository, prototyping the kinds of packaging VA prefers.
+
+To coordinate with you, ideally we need to plug you both into our communication
+stream.
+
+Part of that involves adding you to our Skype chat threads, which are our
+primary medium of communication on the project. That way you won't be missing
+anything. You can just skim what doesn't interest you and pay attention to or
+ask questions about what does.
+
+Our secondary medium of communication is our 10:00{nbsp}a.m.{nbsp}PDT daily
+classes/project meetings, which we have not yet launched for this project.
+That's where we really explore together the kinds of topics you're asking
+about. I'm thinking about launching those this week, perhaps tomorrow. On days
+when we have the OSEHRA Working Group meetings at that time---or any other
+disruption, like travel---we just skip them, but otherwise they give us a
+baseline of mutual brainstorming, prototyping, and joint problem-solving that
+helps us all get in sync architecturally and culturally. And as I mentioned in
+my first response, we record them all and save them on our private YouTube
+channel so people who aren't available at that time can watch them later and
+any of us can go back to them for reference when we need to review a topic. We
+keep an index of topics on a Google Drive spreadsheet. I think you'll find
+these calls and recordings an invaluable resource for coming up to speed.
+
+[quote]
+_______________________________________________________________________________
+{zwj}g. You mentioned on the Friday call that there were three different
+versions of the web form. Is the one demoed over the last couple of weeks the
+likely choice? Will we know for sure by the end of this month (according to the
+project plan) and I am curious what your selection criteria is to come to that
+conclusion?
+_______________________________________________________________________________
+
+When we began this project, I believed our approach would be to pit three or
+four UIs against each other during the first quarter, then make a decision
+about which to use.
+
+It has taken longer than I expected to find out from the Mt.{nbsp}Sinai folks
+how their design works, partly because of the lack of architectural
+documentation, partly because Artit is an introvert. In addition, we had an
+unexpected system crash that forced us to reset, which kept Alexis busy, and
+there have been the usual project-launch meetings and other disruptions getting
+in the way of smooth progress.
+
+However, during that time the most progress has been made on George's
+HTML-first approach, which I take as nontrivial evidence about the advantages
+of that architecture. With Kathy creating data dictionaries, Ken creating HTML
+forms and styles, and George creating the code to implement it, they've
+developed a nontrivial amount of the ELCAP architecture so far. In the process,
+we've learned a _lot_ about the ELCAP architecture that has never been
+documented or explained, that we could only learn by reverse engineering their
+work, so this has been extremely valuable work.
+
+From this, I deduce we need to alter our project outline. Instead of a bake-off
+followed by a commitment---which would still be in its deep foundations an
+excessively waterfall-oriented approach, just with three months of empiricism
+at the outset---I think we have discovered that the HTML-first UI gives us the
+easiest, lightest, quickest way to get into the ELCAP-prototyping work deeply
+enough to understand it. The other UI experiments, which we can and should
+still do, can follow along at their own respective paces.
+
+It seems to me what we have discovered is that just the process of fully
+recreating the ELCAP work in a way that lets it run within a Vista server as a
+comparatively stand-alone application is a significant amount of work,
+especially as we're adding in the production-level testing, version-control,
+documentation, performance-metering, and other requirements that ELCAP never
+had to meet and that is still surprisingly underdeveloped in VA's own Vista
+infrastructure; we have to develop that infrastructure along with our core SAMI
+application. If that's all we developed and delivered for version{nbsp}1---a
+working SAMI application that runs on the Vista server, does everything ELCAP
+does, meets all of VA's standards and conventions, and also meets our own
+higher standards for production code---I suspect everyone would be pretty happy
+with the results from both the medical and the software perspectives.
+
+However, I believe we will deliver a lot more than that, that our
+investigations into the alternative UIs as well as our work on integrating SAMI
+into the rest of the Vista infrastructure, so it is not a strictly stand-alone
+application, will bear significant fruit in the first year, so that SAMI
+version{nbsp}18 (what we're calling this first version that follows the
+seventeen years of ELCAP development) will end up with a hybrid UI that
+includes a lot more than the complete web interface George is developing.
+
+Ultimately, the criteria come down to (1){nbsp}implementing ELCAP's feature
+set, (2){nbsp}satisfying the I{nbhy}ELCAP group's medical requirements to
+support these new forms of treatment, (3){nbsp}satisfying our clinical VA users
+likewise, and (4){nbsp}satisfying VA's and our IT standards and conventions,
+(5){nbsp}within the time and budget available. Every other selection criteria I
+might care to apply beyond that is just gravy.
+
+In conclusion, we were looking at two different web UIs (the HTML-first one and
+the Javascript-first one), a CPRS-extensions UI, a terminal-based UI, and a
+silent API and PPI library for unit testing and other future UIs.
+
+So far, the HTML-first approach is the clear winner in terms of progress and
+bang-for-buck, which is why I'm pretty confident that some version of it will
+be part of our core deliverables for version{nbsp}18.
+
+Likewise, we must have the API and PPI library to meet our unit-test goals,
+which are essential not just for VEN's own in-house development standards but
+also to achieve OSEHRA Certification Level Four, which will help us gain
+open-source community and VA IT acceptance, so they too will be part of
+version{nbsp}18.
+
+With good DDs, which we're working on now, it's so easy to develop a
+terminal-based UI that it will be hard not to have a terminal-based UI in
+version{nbsp}18.
+
+The main unknowns right now, to be explored and decided empirically, is how
+much of the Javascript-first web UI and the CPRS-extensions UI to include in
+version{nbsp}18. We'll find out, but I can sketch in a few notes about the
+CPRS-extensions work here:
+
+. ELCAP includes features to perform participant registration and
+  scheduling. In{nbsp}VA, this is done through Vista's Registration and
+  Scheduling applications. Despite many attempts to modernize those{nbsp}UIs,
+  as far as I know the old terminal-based UIs for both are what's still
+  primarily in use in the field. Confirming whether this is the case is part of
+  our work in the month ahead, by talking to our VA{nbsp}friends. Regardless of
+  the{nbsp}UI, it is a Vista architectural requirement that patients be
+  registered through the Vista Registration application and scheduled through
+  the Vista Scheduling application. For version{nbsp}18, then, unless I am
+  mistaken, we will probably need to interface SAMI with Vista Registration and
+  Scheduling{nbsp}APIs, if they have them, or develop missing APIs for them if
+  they don't. Almost certainly, in the course of those negotiations, we will
+  find{nbsp}VA pushing back on the{nbsp}ELCAP{nbsp}UI and dictionary designs
+  for patient registration and scheduling, insisting that more of the Vista
+  Registration & Scheduling capabilities be included. (Probably, they will
+  initially just insist we use those applications directly, and then it becomes
+  clear that we can't use roll-and-scroll UIs for those steps in what is
+  otherwise a lovely web interface, they will concede that maybe we can do our
+  own UI but it still ha to provide all their required functionality, which
+  will shift the discussion to which APIs do or don't yet exist for those two
+  Vista applications.) Either way, getting VA-ELCAP participants properly
+  registered and scheduled as Vista patients is going to be a major chunk of
+  work.
+
+. There are three possible top priorities for CPRS integration. One is to
+  convert first the essential and eventually as many as possible of the key
+  diagnostic fields in the ELCAP dictionaries from whatever they are now
+  (usually text or ad hoc codes) into standardized codes or values. This is
+  vital for data aggregation, and we've confirmed no work has yet been done in
+  this area by the{nbsp}I{nbhy}ELCAP folks. This will involve a lot of
+  different activities on our part, including plugging SAMI's data validation
+  and storage processes into the various Vista files and applications that
+  specialize in this area, as well as working with terminology standards groups
+  to extend their codesets and value sets to include new standard terminology
+  for early lung cancer screening. Regardless of the UI under discussion, we'll
+  need to change and/or add fields to support this work, and probably we'll
+  have to perform API calls and maybe get Database Integration Agreements to
+  permit looking at the reference files we need to look at to make this
+  work. This aligns us with the future CPRS is moving to, in which
+  site-specific, idiosyncratic medical values are gradually phased out in favor
+  of universal, standardized values that support aggregation and big-data
+  analysis.
+
+. The second major CPRS priority is to adjust our SAMI/ELCAP workflow so that
+  it periodically submits notes into Vista's{nbsp}TIU{nbsp}database, so they
+  appear within CPRS as results. These notes will generally consist of finished
+  forms, from which test-only documents will be generated and signed. This will
+  make the ELCAP processes visible within{nbsp}CPRS, which is VA clinicians'
+  main{nbsp}UI. In addition, the architectural standard for Vista applications
+  to interface with CPRS is that they should also identify clinically
+  significant events (such as prescribing a drug, or returning a lab result)
+  and for each one create a Vista event that other Vista applications can
+  subscribe to if they want to add processing to that event. This
+  publish-subscribe model is at the heart of the clinical architecture within
+  Vista, and among other things it's how CPRS learns about clinical updates
+  from the ancillary applications. At least at first, with our focus on the
+  HTML{nbhy}first{nbsp}UI, and maybe always, SAMI{nbsp}is an ancillary
+  application, so it has a responsibility to contribute its events to Vista's
+  publish-subscribe clinical architecture. It's difficult to predict in the
+  long run where all that will lead, but it allows for the possibility of UI
+  impacts in any Vista application that decides it has a reason to tie its
+  logic into our processes.
+
+. The Clinical Reminders architecture within CPRS is where all the hot CPRS
+  innovation has been in the past decade, so the third major CPRS priority is
+  to see how much of the ELCAP{nbsp}UI can be recreated within the Clinical
+  Reminders framework. Since Clinical Reminders still has a living, breathing
+  software lifecycle within{nbsp}VA, it means there's a rich opportunity for
+  back-and-forth collaboration between their team and ours. We can try out
+  their latest ideas that seem to hold promise for our needs, and if we need
+  things they don't yet handle, they might be able to change Clinical Reminders
+  to support us. Lifecycles like that, back before Congress strangled
+  VA's{nbsp}IT{nbsp}community, are what build Vista, and they offer the richest
+  possible degree of integration into Vista. We can't afford not to explore
+  this. Once we get through the initial launch period---when we have the
+  version control and unit testing and performance monitoring and so on firing
+  on all cylinders---that's where I'm turning my attention personally, while
+  most of the rest of the team continues developing, refining, and supporting
+  the web{nbsp}UIs. I'm going to get to know Clinical Reminders up close and
+  personal, so I can evaluate as clearly as possible how fully its architecture
+  will support ours and what to do about the deltas.
+
+What is clear to me now is that some of this Javascript-first and CPRS work
+will not be finished in time to ship with version{nbsp}18 but some will. The
+remainder will make up much of the development of version{nbsp}19. The
+specifics of what ends up in which version we probably won't know until the
+eight-month mark or thereabouts, when we prepare for OSEHRA certification and
+for beginning alpha testing at Phoenix{nbsp}VA, which is when we'll separate
+what's ready for version{nbsp}18 from what's not ready and therefore scheduled
+for version{nbsp}19.
+
+That last big unknown at the moment is ELCAP's imaging feature-set. How it will
+work in{nbsp}SAMI, including its{nbsp}UI, are not even on our radar at the
+moment. We've put them on a shelf for version{nbsp}19, unless something we
+learn between now and then causes us to reevaluate. A big part of that is
+because of the potential of large-image transfers to swamp VA's network, which
+is one of the big red flags VA{nbsp}OI&T can use to stop a project from
+national release. We're all still learning how VA's current network
+architecture works, what it can handle, and what the likely impact would be of
+transferring images around, and that education is at too early a stage for us
+to be able to predict anything yet about any deliverables we might want to
+produce in that area, other than ``Here there be dragons.'' If we end up
+postponing image-handling until version{nbsp}19, it might mean that in
+version{nbsp}18 we have to interface the new Vista SAMI application with the
+I{nbhy}ELCAP prototype servers, since they do handle images. At present, this
+whole imaging area of the project is in a big box tied up with a big red ribbon
+with a tag that reads ``Ask Rick Avila how he'd prefer to proceed.''  ++:)++
+
+But being the landmine sweeper by nature I am, I'm keeping a mystery item
+listed in my mental inventory of project tasks labeled ``Imaging will probably
+create some kind of work for SAMI{nbsp}version{nbsp}18,{nbsp}TBD.''

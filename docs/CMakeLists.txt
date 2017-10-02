@@ -1,4 +1,5 @@
 adoc_to_html(
+  contacts.adoc
   docker.adoc
   index.adoc
   meetings.adoc

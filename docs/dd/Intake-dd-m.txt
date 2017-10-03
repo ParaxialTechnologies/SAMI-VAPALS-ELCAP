@@ -1,0 +1,1286 @@
+STANDARD DATA DICTIONARY #311.101 -- SAMI INTAKE FILE         10/2/17    PAGE 1
+STORED IN ^SAMI(311.101,  *** NO DATA STORED YET ***   SITE: AVICENNA.VISTAEXPER
+TISE.NET   UCI: VAH,ROU                                    (VERSION 18.0T02)   
+
+DATA          NAME                  GLOBAL        DATA
+ELEMENT       TITLE                 LOCATION      TYPE
+-------------------------------------------------------------------------------
+This file records SAMI Intake Form fields. The purpose of this form is to 
+record the demographic and contact information needed to register participants
+in the International Early Lung Cancer Action Program (I-ELCAP), as well as the
+physician's information.  
+ 
+This form is created each time the site's ELCAP coordinator receives an inquiry
+regarding the ELCAP study, when they click the button "Create New Case" on the
+ELCAP Main Screen. They can then fill out the form with the participant's help,
+including detailed notes, and submit it to create a record in this file.  
+ 
+Records in file SAMI Intake are never deleted. They include everyone who was
+evaluated for possible enrollment into the ELCAP program.  
+ 
+I-ELCAP is an evidence-based collection of protocols for screening for, 
+detecting, and treating lung cancer while it's still at Stage I, with much
+better survival and wellness outcomes (http://ielcap.org/ielcap).  
+ 
+File SAMI Intake is part of the SAMI Forms suite of files (311.101-311.199),
+one file per form. Together, they define the main data-entry user interface for
+Vista module Screening Applications Management - IELCAP (SAMI), the first in a
+collection of screening-and-registry modules that make up Vista application
+SAM. SAM is version 18 of the ELCAP application, which has been under
+development, refinement, and production use by Mt. Sinai and the other I-ELCAP
+member organizations since 2000.  
+ 
+Primary Development History 
+ 
+ @primary-dev: Frederick D. S. Marshall (toad) 
+ @primary-dev-org: Vista Expertise Network (ven) 
+   http://vistaexpertise.net 
+ @copyright: 2017, Vista Expertise Network (ven), all rights reserved 
+ @license: Apache 2.0 
+   https://www.apache.org/licenses/LICENSE-2.0.html 
+ @last-updated: 2017-05-25T20:25Z 
+ @application: Screening Applications Management (SAM) 
+ @module: Screening Applications Management - IELCAP (SAMI) 
+ @suite-of-files: SAMI Forms (311.101-311.199) 
+ @version: 18.0T01 (first development version) 
+ @release-date: not yet released 
+ @patch-list: none yet 
+ 
+ @funding-org: 2017-2018,Bristol-Myers Squibb Foundation (bmsf) 
+   
+https://www.bms.com/about-us/responsibility/bristol-myers-squibb-foundatio 
+n.html 
+ 
+ @original-table: I-ELCAP Intake Dictionary, 2000-2017 
+ @original-dev: Artit Jirapatnakil (aj) 
+ @original-dev-org: International Early Lung Cancer Action Program (ielcap) 
+ 
+ @med-expert: Claudia Ingrid Henschke, MD (cih) 
+ @med-expert-org: Mt. Sinai Health System (mshs) 
+ 
+2000/2017 ielcap/aj versions 1-17: develop original non-Vista I-ELCAP Intake
+Dictionary and Intake Form.  
+ 
+2018-08-03/16 ven/toad 18.0T01: develop draft 1 of Vista file SAMI Intake 
+(311.101) based on version 17 Intake Form and Intake Dictionary, w/guidance
+from ielcap/aj & mshs/cih.  
+
+
+              DD ACCESS: @
+              RD ACCESS: @
+              WR ACCESS: @
+             DEL ACCESS: @
+           LAYGO ACCESS: @
+           AUDIT ACCESS: @
+
+PRIMARY KEY:        A (#123)
+  Uniqueness Index: B (#1374)
+       File, Field: 1) Study ID (311.101,.01)
+
+POINTED TO BY: STUDY ID field (#.01) of the SAMI BIOPSY File (#311.105) 
+               STUDY ID field (#.01) of the SAMI PET EVALUATION File (#311.106) 
+               STUDY ID field (#.01) of the SAMI INTERVENTION File (#311.107) 
+               
+
+
+INDEXED BY:    Permanent ID (ASIVSIDP), Study ID (B)
+
+
+    LAST MODIFIED: SEP 29,2017@09:50:49
+
+311.101,.01   Study ID               0;1 FREE TEXT (Required) (audited)
+                                 (Key field)
+
+              sisid   
+              INPUT TRANSFORM:  K:$L(X)>15!($L(X)<3)!'(X?2.6U1.9N) X
+              MAXIMUM LENGTH:   15
+              LAST EDITED:      SEP 25, 2017 
+              HELP-PROMPT:      Answer must be 3-15 characters in length, two 
+                                to six letters followed by one to nine digits. 
+                                Enter ?? for more help. 
+              DESCRIPTION:      This is the primary key field for SAMI Intake
+                                records. Every I-ELCAP participant will have a
+                                record with this field filled in. It is
+                                assigned automatically by the SAMI application
+                                according to the I-ELCAP protocol. During the
+                                enrollment process, this field will equal field
+                                Temporary ID (.02), for example, TM1 or TM42 or
+                                TM4321. After the enrollment process - once the
+                                participant and the ELCAP Coordinator have
+                                filled out the participant's SAMI Background
+                                record and the participant has undergone their
+                                initial low-dose CT scan, this field will equal
+                                field Permanent ID (.03), for example, VA7 or
+                                VA64 or VA1234.  
+
+              TECHNICAL DESCR:
+                                No equivalent field in Vista.  
+
+              AUDIT:            YES, ALWAYS
+              SOURCE OF DATA:   SAMI Intake Form, I-ELCAP
+              FIELD INDEX:      B (#1374)    REGULAR    IR    LOOKUP & SORTING
+                   Unique for:  Key A (#123), File #311.101
+                  Short Descr:  Select Intake Forms by Study ID
+                  Description:  Cross-reference B creates index B, which is
+                                file SAMI Intake's uniqueness index for its
+                                primary key, A. It lets SAMI Intake Form
+                                records be selected by field Study ID (.01).  
+                    Set Logic:  S ^SAMI(311.101,"B",X,DA)=""
+                   Kill Logic:  K ^SAMI(311.101,"B",X,DA)
+                   Whole Kill:  K ^SAMI(311.101,"B")
+                         X(1):  Study ID  (311.101,.01)  (Subscr 1)  (forwards)
+
+
+311.101,.02   Temporary ID           0;2 FREE TEXT (Required) (audited)
+
+              sivsidt   
+              INPUT TRANSFORM:  K:$L(X)>15!($L(X)<3)!'(X?2.6U1.9N) X
+              MAXIMUM LENGTH:   15
+              LAST EDITED:      AUG 16, 2017 
+              HELP-PROMPT:      Answer must be 3-15 characters in length, two 
+                                to six letters followed by one to nine digits. 
+                                Enter ?? for more help. 
+              DESCRIPTION:      This is a hidden field that helps temporarily
+                                define the Study ID field (.01) and thus the
+                                primary key for SAMI Intake records. Every
+                                I-ELCAP participant's record will include this
+                                field value. It is assigned automatically by
+                                the SAMI application according to the I-ELCAP
+                                protocol, equal to the record number prepended
+                                by the letters TM, for example, TM1 or TM42 or
+                                TM4321. During the enrollment process, field
+                                Study ID (.01) equals this field, so it is used
+                                as the record's primary key value. After the
+                                enrollment process, Study ID is reassigned to
+                                the value of field Primary ID (.03), so the
+                                Temporary ID value stops being the primary key. 
+ 
+
+              TECHNICAL DESCR:
+                                No equivalent field in Vista.  
+
+              AUDIT:            YES, ALWAYS
+
+311.101,.03   Permanent ID           0;3 FREE TEXT (audited)
+
+              sivsidp   
+              INPUT TRANSFORM:  K:$L(X)>15!($L(X)<3)!'(X?2.6U1.9N) X
+              MAXIMUM LENGTH:   15
+              LAST EDITED:      AUG 16, 2017 
+              HELP-PROMPT:      Answer must be 3-15 characters in length, two 
+                                to six letters followed by one to nine digits. 
+                                Enter ?? for more help. 
+              DESCRIPTION:      Patients who enroll are assigned a permanent
+                                Study ID. The study coordinator changes the
+                                temporary ID into a permanent ID once the
+                                patient has visited for their study appointment
+                                and completed the background questionnaire and
+                                CT scan. The coordinator must assign a unique
+                                Study identifier (Study ID) to the participant
+                                by clicking on the "Assign ID" button on the
+                                Intake System. The Intake System will
+                                automatically assign the next available Study
+                                ID. Each site is assigned a two-letter code for 
+                                their site to be used for Study ID assignments.
+                                Each site assigns its permanent Study IDs using
+                                this special code, beginning with XX0001, then 
+                                XX0002, and so on. IDs should be assigned in
+                                chronological order according to the date of
+                                the CT scan.  
+
+              TECHNICAL DESCR:
+                                No equivalent field in Vista.  
+
+              AUDIT:            YES, ALWAYS
+              FIELD INDEX:      ASIVSIDP (#1373)    REGULAR    IR
+                                SORTING ONLY
+                  Short Descr:  Identify Largest Permanent ID So Far
+                    Set Logic:  S ^SAMI(311.101,"ASIVSIDP",X,DA)=""
+                   Kill Logic:  K ^SAMI(311.101,"ASIVSIDP",X,DA)
+                   Whole Kill:  K ^SAMI(311.101,"ASIVSIDP")
+                         X(1):  Permanent ID  (311.101,.03)  (Subscr 1)
+                                (forwards)
+
+
+311.101,.04   Former Study ID        0;4 FREE TEXT (audited)
+
+              sifsid   
+              INPUT TRANSFORM:  K:$L(X)>15!($L(X)<3)!'(X?2.6U1.9N) X
+              MAXIMUM LENGTH:   15
+              LAST EDITED:      AUG 16, 2017 
+              HELP-PROMPT:      Answer must be 3-11 characters in length, two 
+                                to six letters followed by one to nine digits. 
+                                Enter ?? for more help. 
+              DESCRIPTION:      If the participant has changed Study IDs, enter
+                                their former ID here. This can happen, for
+                                example, if a participant moves from one site
+                                to another.  
+
+              TECHNICAL DESCR:
+                                No equivalent field in Vista.  
+
+              AUDIT:            YES, ALWAYS
+              SOURCE OF DATA:   SAMI Intake Form, I-ELCAP
+
+311.101,.05   Patient Name           0;5 FREE TEXT (Required) (audited)
+
+              sivname   
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<3) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      AUG 16, 2017 
+              HELP-PROMPT:      Answer must be 3-30 characters in length. 
+              DESCRIPTION:
+                                The name of the patient: LASTNAME,FIRSTNAME MI. 
+ 
+
+              TECHNICAL DESCR:  Equivalent field in Vista is field Name (.01)
+                                in file Patient (2) [node 0; piece 1].  
+
+              AUDIT:            YES, ALWAYS
+
+311.101,.06   Patient Name (Last)    0;6 FREE TEXT (Required) (audited)
+
+              sinamel   
+              INPUT TRANSFORM:  K:$L(X)>35!($L(X)<1)!'(X?1U.UNP)!(X["`") X
+              MAXIMUM LENGTH:   35
+              LAST EDITED:      AUG 16, 2017 
+              HELP-PROMPT:      Answer must be 1-35 characters in length. 
+                                Answer ?? for more help. 
+              DESCRIPTION:      Answer with the person's family (last) name. It
+                                must begin with an upper-case letter and can
+                                contain only upper-case letters, numbers, and 
+                                punctuation, excluding circumflexes (^) and
+                                grave accents (`).  
+
+              TECHNICAL DESCR:  Equivalent field in Vista is field Family
+                                (Last) Name (1) in file Name Components (20)
+                                [node 1; piece 1].  
+
+              AUDIT:            YES, ALWAYS
+              SOURCE OF DATA:   SAMI Intake Form, I-ELCAP
+              NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+
+
+311.101,.07   Patient Name (First)   0;7 FREE TEXT (Required) (audited)
+
+              sinamef   
+              INPUT TRANSFORM:  K:$L(X)>25!($L(X)<1)!'(X?1U.UNP)!(X["`") X
+              MAXIMUM LENGTH:   25
+              LAST EDITED:      AUG 16, 2017 
+              HELP-PROMPT:      Answer must be 1-25 characters in length. 
+                                Answer ?? for more help. 
+              DESCRIPTION:      Answer with the person's given (first) name. It
+                                must begin with an upper-case letter and can
+                                contain only upper-case letters, numbers, and 
+                                punctuation, excluding circumflexes (^) and
+                                grave accents (`).  
+
+              TECHNICAL DESCR:  Equivalent field in Vista is field Given
+                                (First) Name (2) in file Name Components (20)
+                                [node 1; piece 2].  
+
+              AUDIT:            YES, ALWAYS
+              SOURCE OF DATA:   SAMI Intake Form, I-ELCAP
+              NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+
+
+311.101,.08   Date of Birth          0;8 DATE (audited)
+
+              sidob   
+              INPUT TRANSFORM:  S %DT="E" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      SEP 21, 2017 
+              HELP-PROMPT:      Type a date after 1/1/1871. You may use any 
+                                date format you choose. 
+              DESCRIPTION:      Enter the patient's DATE OF BIRTH which must be
+                                later than 12/31/1870. DATE OF BIRTH cannot be
+                                a date after the beneficiary 'Ineligible Date'
+                                or a date after the 'Enrollment Application
+                                Date'.  
+
+              TECHNICAL DESCR:  Equivalent field in Vista is field Date of
+                                Birth (.03) in file Patient (2) [node 0; piece
+                                3].  
+
+              AUDIT:            YES, ALWAYS
+              SOURCE OF DATA:   SAMI Intake Form, I-ELCAP
+
+311.101,.09   Social Security Number 0;9 FREE TEXT (Required) (audited)
+
+              sissn   
+              INPUT TRANSFORM:  K:$L(X)>10!($L(X)<9) X
+              MAXIMUM LENGTH:   10
+              LAST EDITED:      AUG 16, 2017 
+              HELP-PROMPT:      Enter 9-digit SSN or 'P' for pseudo-SSN. 
+              DESCRIPTION:      Answer with the individual's social security
+                                number. Answer must be 9 numbers in length. The
+                                SSN will be sent to the SSA for verification.
+                                This will be displayed next to the SSN. Once an
+                                SSN has received a status of Verified, it is
+                                locked from user updating and a "VERIFIED" will
+                                be displayed by the SSN field. Only the
+                                Identity Management Data QUality Team are able
+                                to change a beneficiary's (veteran/non veteran)
+                                SSN. If an Invalid per SSA status is received
+                                for the SSN, then an "INVALID" will appear next
+                                to the invalid SSN of the individual.
+                                Facilities should make every effort to obtain
+                                the accurate SSN from the individual for any 
+                                invalid or pseudo SSN entry.  
+                                 
+                                If a valid SSN is not known, then a "P" will be
+                                entered at the SSN prompt for the system to
+                                automatically assign a Pseudo-SSN. If a Pseudo
+                                SSN is entered, a Reason for entering it will
+                                be required.  
+
+              AUDIT:            YES, ALWAYS
+              SOURCE OF DATA:   SAMI Intake Form, I-ELCAP
+
+311.101,.1    Pseudo SSN Reason      0;10 SET (audited)
+
+              sivssnp   
+                                'R' FOR REFUSED TO PROVIDE; 
+                                'S' FOR SSN UNKNOWN/FOLLOW-UP REQUIRED; 
+                                'N' FOR NO SSN ASSIGNED; 
+                                'T' FOR TEST PATIENT; 
+              LAST EDITED:      SEP 21, 2017 
+              HELP-PROMPT:      Enter the code for the reason you needed a 
+                                Pseudo SSN. Enter ?? for more information. 
+              DESCRIPTION:      This field is used to document the reason the
+                                individual was assigned a pseudo SSN. Based on
+                                your selection, the Pseudo SSN Report (Patient) 
+                                option located in the Registration Menu can
+                                provide you a current report of the reasons
+                                entered at this prompt. The following reasons
+                                are available for selection: 
+                                 
+                                Refused to Provide - use this reason when the
+                                individual was asked for his/her SSN and
+                                refused to provide the number.  
+                                 
+                                SSN Unknown/Follow-up required - use this
+                                reason when the individual is not available to
+                                ask/answer the request for SSN. The facility
+                                should initiate Follow-up activity to obtain
+                                the SSN.  
+                                 
+                                No SSN Assigned - use this reason when the
+                                individual has not been assigned an SSN. This
+                                generally applies to spouse or dependents of 
+                                veterans who are not US citizens and
+                                infrequently, non-citizen beneficiaries.  
+                                 
+                                Test Patient - use this reason when the
+                                individual is not a real person, is only a
+                                patient record created to test system behavior. 
+ 
+
+              AUDIT:            YES, ALWAYS
+
+311.101,.11   Medical Record Number  0;11 FREE TEXT (audited)
+
+              simrn   
+              INPUT TRANSFORM:  K:$L(X)>12!($L(X)<1) X
+              MAXIMUM LENGTH:   12
+              LAST EDITED:      AUG 16, 2017 
+              HELP-PROMPT:      Answer must be 1-12 characters in length. 
+              DESCRIPTION:      Enter the participant's medical record number,
+                                if available. You may leave this field blank.  
+
+              AUDIT:            YES, ALWAYS
+              SOURCE OF DATA:   SAMI Intake Form, I-ELCAP
+
+311.101,.1101 Patient Street Address .11;1 FREE TEXT
+
+              sipsa   
+              INPUT TRANSFORM:  K:$L(X)>35!($L(X)<5) X
+              MAXIMUM LENGTH:   35
+              LAST EDITED:      SEP 21, 2017 
+              HELP-PROMPT:      Answer must be 5-35 characters in length. 
+              DESCRIPTION:      Enter the patient's street address (ex: 123
+                                Main St.). Information on city, state, and
+                                postal code can be entered in the next fields.  
+
+              SOURCE OF DATA:   SAMI Intake Form, I-ELCAP
+
+311.101,.1102 Patient Apartment Number .11;2 FREE TEXT
+
+              sipan   
+              INPUT TRANSFORM:  K:$L(X)>6!($L(X)<1) X
+              MAXIMUM LENGTH:   6
+              LAST EDITED:      SEP 21, 2017 
+              HELP-PROMPT:      Answer must be 1-6 characters in length. 
+              DESCRIPTION:      If the patient lives in an apartment, enter the
+                                number here. You may leave this field blank if
+                                the patient does not have an apartment number.  
+
+              SOURCE OF DATA:   SAMI Intake Form, I-ELCAP
+
+311.101,.1103 Patient City           .11;3 FREE TEXT
+
+              sipc   
+              INPUT TRANSFORM:  K:$L(X)>15!($L(X)<3) X
+              MAXIMUM LENGTH:   15
+              LAST EDITED:      SEP 21, 2017 
+              HELP-PROMPT:      Answer must be 3-15 characters in length. 
+              DESCRIPTION:
+                                Enter the city or town where the patient lives. 
+ 
+
+              SOURCE OF DATA:   SAMI Intake Form, I-ELCAP
+
+311.101,.1104 Patient State          .11;4 FREE TEXT
+
+              sips   
+              INPUT TRANSFORM:  K:$L(X)>3!($L(X)<1) X
+              MAXIMUM LENGTH:   3
+              LAST EDITED:      SEP 21, 2017 
+              HELP-PROMPT:      Answer must be 1-3 characters in length. 
+              DESCRIPTION:      Enter the postal abbreviation for the state or
+                                province where the patient lives (ex: AZ for
+                                Arizona). If there is no state or province (for
+                                example, for a non-US address), you may leave
+                                this field blank.  
+
+              SOURCE OF DATA:   SAMI Intake Form, I-ELCAP
+
+311.101,.1105 Patient Zip Code       .11;5 FREE TEXT
+
+              sipz   
+              INPUT TRANSFORM:  K:$L(X)>10!($L(X)<3) X
+              MAXIMUM LENGTH:   10
+              LAST EDITED:      SEP 21, 2017 
+              HELP-PROMPT:      Answer must be 3-10 characters in length. 
+              DESCRIPTION:
+                                Enter the patient's zip code (or postal code).  
+
+              SOURCE OF DATA:   SAMI Intake Form, I-ELCAP
+
+311.101,.1106 Patient County         .11;6 FREE TEXT
+
+              sipcn   
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 21, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      In what county does the patient live? You may
+                                leave this field blank.  
+
+              SOURCE OF DATA:   SAMI Intake Form, I-ELCAP
+
+311.101,.1107 Patient Country        .11;7 FREE TEXT
+
+              sipcr   
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<2) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 21, 2017 
+              HELP-PROMPT:      Answer must be 2-30 characters in length. 
+              DESCRIPTION:      In what country does the patient live? You may
+                                leave this field blank.  
+
+              SOURCE OF DATA:   SAMI Intake Form, I-ELCAP
+
+311.101,.1108 Patient Home Phone     .11;8 FREE TEXT
+
+              siph   
+              INPUT TRANSFORM:  K:$L(X)>20!($L(X)<5) X
+              MAXIMUM LENGTH:   20
+              LAST EDITED:      SEP 21, 2017 
+              HELP-PROMPT:      Answer must be 5-20 characters in length. 
+              DESCRIPTION:
+                                What is the patient's home telephone number? 
+
+              SOURCE OF DATA:   SAMI Intake Form, I-ELCAP
+
+311.101,.1109 Patient Work Phone     .11;9 FREE TEXT
+
+              sipw   
+              INPUT TRANSFORM:  K:$L(X)>20!($L(X)<5) X
+              MAXIMUM LENGTH:   20
+              LAST EDITED:      SEP 21, 2017 
+              HELP-PROMPT:      Answer must be 5-20 characters in length. 
+              DESCRIPTION:      What is the patient's work telephone number? If
+                                not applicable, leave this field blank.  
+
+              SOURCE OF DATA:   SAMI Intake Form, I-ELCAP
+
+311.101,.111  Patient Email Address  .11;10 FREE TEXT
+
+              sipem   
+              INPUT TRANSFORM:  K:$L(X)>50!($L(X)<4) X
+              MAXIMUM LENGTH:   50
+              LAST EDITED:      SEP 21, 2017 
+              HELP-PROMPT:      Answer must be 4-50 characters in length. 
+              DESCRIPTION:      Enter the patient's email address. If the
+                                patient does not have email, leave this field
+                                blank.  
+
+              SOURCE OF DATA:   SAMI Intake Form, I-ELCAP
+
+311.101,.12   Primary Long ID        0;12 FREE TEXT (audited)
+
+              sivpidl   
+              INPUT TRANSFORM:  K:$L(X)>15!($L(X)<1) X
+              MAXIMUM LENGTH:   15
+              LAST EDITED:      AUG 16, 2017 
+              HELP-PROMPT:      Answer must be 1-15 characters in length. 
+              DESCRIPTION:      This field contains the patient's long ID
+                                associated with the patient's PRIMARY
+                                ELIGIBILITY CODE. For most patients this is the
+                                Social Security Number.  
+                                 
+                                No user input is needed for this field. It is
+                                automatically updated when the PRIMARY
+                                ELIGIBILITY CODE field is entered and edited.  
+
+              AUDIT:            YES, ALWAYS
+
+311.101,.13   Primary Short ID       0;13 FREE TEXT (audited)
+
+              sivpids   
+              INPUT TRANSFORM:  K:$L(X)>7!($L(X)<1) X
+              MAXIMUM LENGTH:   7
+              LAST EDITED:      AUG 16, 2017 
+              HELP-PROMPT:      Answer must be 1-7 characters in length. 
+              DESCRIPTION:      This field contains the patient's short ID
+                                associated with the patient's PRIMARY
+                                ELIGIBILITY CODE. For most patients this is the
+                                last four digits of the Social Security Number. 
+                                 
+                                No user input is needed for this field. It is
+                                automatically updated when the PRIMARY
+                                ELIGIBILITY CODE field is entered and edited.  
+
+              AUDIT:            YES, ALWAYS
+
+311.101,.14   Integration Control Number 0;14 NUMBER
+
+              sivicn   
+              INPUT TRANSFORM:  K:+X'=X!(X>999999999999)!(X<0)!(X?.E1"."1N.N) X
+              LAST EDITED:      SEP 21, 2017 
+              HELP-PROMPT:      Type a number between 0 and 999999999999, 0 
+                                decimal digits. 
+
+311.101,.2401 FATHER'S FIRST NAME    .24;1 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>20!($L(X)<2) X
+              MAXIMUM LENGTH:   20
+              LAST EDITED:      SEP 25, 2017 
+              HELP-PROMPT:      Answer must be 2-20 characters in length. 
+
+311.101,.2402 MOTHER'S FIRST NAME    .24;2 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>20!($L(X)<2) X
+              MAXIMUM LENGTH:   20
+              LAST EDITED:      SEP 25, 2017 
+              HELP-PROMPT:      Answer must be 2-20 characters in length. 
+
+311.101,.31201Medicare               .312;1 SET
+
+              siinm   
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      SEP 25, 2017 
+              HELP-PROMPT:      Does this patient have Medicare? 
+
+311.101,.31202Insurance 1 Name       .312;2 FREE TEXT
+
+              siin1   
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<3) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 25, 2017 
+              HELP-PROMPT:      Answer must be 3-30 characters in length. 
+              DESCRIPTION:      What is the name of the patient's primary
+                                insurance? (ex: Cigna) 
+
+
+311.101,.31203Insurance 1 Member ID  .312;3 FREE TEXT
+
+              siinmid1   
+              INPUT TRANSFORM:  K:$L(X)>20!($L(X)<1) X
+              MAXIMUM LENGTH:   20
+              LAST EDITED:      SEP 25, 2017 
+              HELP-PROMPT:      Answer must be 1-20 characters in length. 
+              DESCRIPTION:      Enter the member ID for the patient's primary
+                                insurance.  
+
+
+311.101,.31204Insurance 1 Group Num  .312;4 FREE TEXT
+
+              siingn1   
+              INPUT TRANSFORM:  K:$L(X)>20!($L(X)<1) X
+              MAXIMUM LENGTH:   20
+              LAST EDITED:      SEP 25, 2017 
+              HELP-PROMPT:      Answer must be 1-20 characters in length. 
+              DESCRIPTION:      Enter the Group Number of the patient's primary
+                                insurance.  
+
+
+311.101,.31205Insurance 2 Name       .312;5 FREE TEXT
+
+              siin2   
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<3) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 25, 2017 
+              HELP-PROMPT:      Answer must be 3-30 characters in length. 
+              DESCRIPTION:      What is the name of the patient's secondary
+                                insurance? (ex: Cigna) 
+
+
+311.101,.31206Insurance 2 Member ID  .312;6 FREE TEXT
+
+              siinmid2   
+              INPUT TRANSFORM:  K:$L(X)>20!($L(X)<1) X
+              MAXIMUM LENGTH:   20
+              LAST EDITED:      SEP 25, 2017 
+              HELP-PROMPT:      Answer must be 1-20 characters in length. 
+              DESCRIPTION:      Enter the Member ID for the patient's secondary
+                                insurance.  
+
+
+311.101,.31207Insurance 2 Group Num  .312;7 FREE TEXT
+
+              siingn2   
+              INPUT TRANSFORM:  K:$L(X)>20!($L(X)<1) X
+              MAXIMUM LENGTH:   20
+              LAST EDITED:      SEP 25, 2017 
+              HELP-PROMPT:      Answer must be 1-20 characters in length. 
+              DESCRIPTION:      Enter the Group Number for the patient's
+                                secondary insurance.  
+
+
+311.101,.31301Insurance Comments     .313;1 FREE TEXT
+
+              siinc   
+              INPUT TRANSFORM:  K:$L(X)>200!($L(X)<3) X
+              MAXIMUM LENGTH:   200
+              LAST EDITED:      SEP 25, 2017 
+              HELP-PROMPT:      Answer must be 3-200 characters in length. 
+              DESCRIPTION:      Enter any comments about the patient's
+                                insurance. You may leave this field blank.  
+
+
+311.101,.3301 Emergency Contact 1 Name .33;1 FREE TEXT
+
+              sikn   
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 25, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      The name of the patient's primary emergency
+                                contact. It is important to identify two
+                                emergency contacts. At least one needs to be at
+                                another address.  
+
+
+311.101,.3302 Emergency Contact 1 Relation .33;2 FREE TEXT
+
+              sikr   
+              INPUT TRANSFORM:  K:$L(X)>20!($L(X)<2) X
+              MAXIMUM LENGTH:   20
+              LAST EDITED:      SEP 25, 2017 
+              HELP-PROMPT:      Answer must be 2-20 characters in length. 
+              DESCRIPTION:      What is the primary contact's relationship to
+                                the patient? (ex: Daughter) 
+
+
+311.101,.3303 Emergency Contact 1 Address .33;3 FREE TEXT
+
+              sika   
+              INPUT TRANSFORM:  K:$L(X)>70!($L(X)<3) X
+              MAXIMUM LENGTH:   70
+              LAST EDITED:      SEP 25, 2017 
+              HELP-PROMPT:      Answer must be 3-70 characters in length. 
+              DESCRIPTION:      The complete address of the patient's primary
+                                emergency contact.  
+
+
+311.101,.3304 Emergency Contact 1 Phone .33;4 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>20!($L(X)<5) X
+              MAXIMUM LENGTH:   20
+              LAST EDITED:      SEP 25, 2017 
+              HELP-PROMPT:      Answer must be 5-20 characters in length. 
+              DESCRIPTION:      Enter the phone number for the patient's
+                                primary emergency contact.  
+
+
+311.101,.33101Emergency Contact 2 Name .331;1 FREE TEXT
+
+              siknb   
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<3) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 25, 2017 
+              HELP-PROMPT:      Answer must be 3-30 characters in length. 
+              DESCRIPTION:      The name of the patient's second emergency
+                                contact. It is important to identify two
+                                contacts. At least one needs to be at another
+                                address.  
+
+
+311.101,.33102Emergency Contact 2 Relation .331;2 FREE TEXT
+
+              sikrb   
+              INPUT TRANSFORM:  K:$L(X)>20!($L(X)<2) X
+              MAXIMUM LENGTH:   20
+              LAST EDITED:      SEP 25, 2017 
+              HELP-PROMPT:      Answer must be 2-20 characters in length. 
+              DESCRIPTION:      What is this contact's relationship to the
+                                patient? (ex: Daughter) 
+
+
+311.101,.33103Emergency Contact 2 Address .331;3 FREE TEXT
+
+              sikab   
+              INPUT TRANSFORM:  K:$L(X)>70!($L(X)<5) X
+              MAXIMUM LENGTH:   70
+              LAST EDITED:      SEP 25, 2017 
+              HELP-PROMPT:      Answer must be 5-70 characters in length. 
+              DESCRIPTION:      Enter the complete address for the patient's
+                                second emergency contact.  
+
+
+311.101,.33104Emergency Contact 2 Phone .331;4 FREE TEXT
+
+              sikpb   
+              INPUT TRANSFORM:  K:$L(X)>20!($L(X)<5) X
+              MAXIMUM LENGTH:   20
+              LAST EDITED:      SEP 25, 2017 
+              HELP-PROMPT:      Answer must be 5-20 characters in length. 
+              DESCRIPTION:      Enter the phone number for the patient's second
+                                emergency contact.  
+
+
+311.101,1.01  Date of First Contact  1;1 DATE
+
+              sidfc   
+              INPUT TRANSFORM:  S %DT="EX" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      SEP 25, 2017 
+              HELP-PROMPT:      On what date was this patient first contacted? 
+
+311.101,1.02  Date of Baseline CT    1;2 DATE
+
+              sidoe   
+              INPUT TRANSFORM:  S %DT="EX" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      SEP 25, 2017 
+              HELP-PROMPT:      Enter the date of the patient's baseline CT, in 
+                                any format. 
+
+311.101,1.03  Research Protocol      1;3 SET
+
+              sirp   
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      SEP 25, 2017 
+              HELP-PROMPT:      Enter y if the patient qualifies for the study, 
+                                or n if they do not. 
+              DESCRIPTION:      An Intake form is generated for every call
+                                received for the ELCAP study, even when the
+                                potential enrollee does not qualify.  
+                                 
+                                If the potential enrollee does not qualify,
+                                answer n or No in this field.  The coordinator
+                                can then enter comments in the "Additional
+                                Information" field as to why the caller did not
+                                qualify.  
+                                 
+                                If the potential enrollee does meet the
+                                qualifications, enter y or Yes in this field.  
+
+
+311.101,1.04  Cancellation           1;4 SET
+
+              sica   
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      SEP 26, 2017 
+              HELP-PROMPT:      Enter y if there was a cancellation. 
+
+311.101,1.05  Special Attention      1;5 SET
+
+              sisa   
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      SEP 26, 2017 
+              HELP-PROMPT:      Enter y if this patient requires special 
+                                attention. 
+
+311.101,1.06  How Heard about Program 1;6 SET
+
+              sihap   
+                                'br' FOR brochure; 
+                                'md' FOR doctor referral; 
+                                'fp' FOR friend in program; 
+                                'in' FOR internet; 
+                                'ar' FOR medical journal articles; 
+                                'np' FOR newspaper; 
+                                'ra' FOR radio; 
+                                'at' FOR TV; 
+                                'wm' FOR word of mouth; 
+                                'ot' FOR other; 
+              LAST EDITED:      SEP 26, 2017 
+              HELP-PROMPT:      How did the patient hear about this program? 
+              DESCRIPTION:      How did the patient hear about this program? If
+                                there is more than one answer, choose the most
+                                important to the patient. If you choose "other" 
+                                use the next field to specify.  
+
+
+311.101,1.07  How Heard Other Specify 1;7 FREE TEXT
+
+              sihapo   
+              INPUT TRANSFORM:  K:$L(X)>70!($L(X)<5) X
+              MAXIMUM LENGTH:   70
+              LAST EDITED:      SEP 26, 2017 
+              HELP-PROMPT:      Answer must be 5-70 characters in length. 
+              DESCRIPTION:      If you chose "other" for how the patient heard
+                                about this program, please specify their answer
+                                here.  
+
+
+311.101,2     Patient Information    2;0   WORD-PROCESSING #311.10111
+                     (IGNORE "|")
+
+
+311.101,3.01  Physician Name         3;1 FREE TEXT
+
+              simdn   
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 26, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      A Sponsoring Physician (usually the patient's
+                                primary care MD) must be given for each
+                                patient. The physician's address, phone number
+                                and fax number must all be entered in the
+                                intake data form for several reasons.  
+                                 
+                                First, the reports must be sent to a doctor
+                                involved in the enrolee's care.  
+                                 
+                                Second, the physician information can be
+                                helpful in tracking down where a patient may
+                                have moved and/or patient health status
+                                (particularly if the patient may have expired
+                                since their initial screening CT scan).  
+                                 
+                                Third, if follow-up procedures are necessary,
+                                the study radiologists need to collaborate with
+                                the enrollee's physician to ensure that they
+                                are still having an active role in their
+                                patient's care.  
+                                 
+                                Finally, it may be necessary to have their
+                                doctor order follow-up diagnostic procedures
+                                (particularly when pre-certifications are
+                                needed by certain insurance companies) and
+                                developing rapport with the patient's physician
+                                office is important in this regard.  
+
+
+311.101,3.02  Physician Street Address 3;2 FREE TEXT
+
+              simdsa   
+              INPUT TRANSFORM:  K:$L(X)>35!($L(X)<5) X
+              MAXIMUM LENGTH:   35
+              LAST EDITED:      SEP 26, 2017 
+              HELP-PROMPT:      Answer must be 5-35 characters in length. 
+              DESCRIPTION:      Enter the street address of the patient's
+                                Sponsoring Physician (usually their primary
+                                care MD). Information on city, state, and zip
+                                code can be entered in the next fields.  
+
+
+311.101,3.03  Physician City         3;3 FREE TEXT
+
+              simdc   
+              INPUT TRANSFORM:  K:$L(X)>15!($L(X)<2) X
+              MAXIMUM LENGTH:   15
+              LAST EDITED:      SEP 26, 2017 
+              HELP-PROMPT:      Answer must be 2-15 characters in length. 
+              DESCRIPTION:      Enter the city or town of the Sponsoring
+                                Physician's address.  
+
+
+311.101,3.04  Physician State        3;4 FREE TEXT
+
+              simds   
+              INPUT TRANSFORM:  K:$L(X)>3!($L(X)<1) X
+              MAXIMUM LENGTH:   3
+              LAST EDITED:      SEP 26, 2017 
+              HELP-PROMPT:      Answer must be 1-3 characters in length. 
+              DESCRIPTION:      Enter the postal abbreviation for the state in
+                                the Sponsoring Physician's address.  
+
+
+311.101,3.05  Physician Zip Code     3;5 FREE TEXT
+
+              simdz   
+              INPUT TRANSFORM:  K:$L(X)>10!($L(X)<3) X
+              MAXIMUM LENGTH:   10
+              LAST EDITED:      SEP 26, 2017 
+              HELP-PROMPT:      Answer must be 3-10 characters in length. 
+              DESCRIPTION:      Enter the zip code or postal code for the
+                                Sponsoring Physician's address.  A complete
+                                address is needed so that reports and other
+                                correspondence can be sent.  
+
+
+311.101,3.06  Physician County       3;6 FREE TEXT
+
+              simdcn   
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<2) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 26, 2017 
+              HELP-PROMPT:      Answer must be 2-30 characters in length. 
+              DESCRIPTION:      Enter the county for the patient's Sponsoring
+                                Physician.  
+
+
+311.101,3.07  Physician Country      3;7 FREE TEXT
+
+              simdcr   
+              INPUT TRANSFORM:  K:$L(X)>3!($L(X)<2) X
+              MAXIMUM LENGTH:   3
+              LAST EDITED:      SEP 26, 2017 
+              HELP-PROMPT:      Answer must be 2-3 characters in length. 
+              DESCRIPTION:      Enter the abbreviation for the country of the
+                                patient's Sponsoring Physician.  
+
+
+311.101,3.08  Physician Phone        3;8 FREE TEXT
+
+              simdp   
+              INPUT TRANSFORM:  K:$L(X)>20!($L(X)<5) X
+              MAXIMUM LENGTH:   20
+              LAST EDITED:      SEP 26, 2017 
+              HELP-PROMPT:      Answer must be 5-20 characters in length. 
+              DESCRIPTION:      Enter the phone number for the patient's
+                                Sponsoring Physician. If there is more than one
+                                phone number listed, enter the primary office
+                                phone number.  
+
+
+311.101,3.09  Physician Fax          3;9 FREE TEXT
+
+              simdf   
+              INPUT TRANSFORM:  K:$L(X)>20!($L(X)<5) X
+              MAXIMUM LENGTH:   20
+              LAST EDITED:      SEP 26, 2017 
+              HELP-PROMPT:      Answer must be 5-20 characters in length. 
+              DESCRIPTION:      Enter the fax number for the patient's
+                                Sponsoring Physician. 
+
+
+311.101,4.01  Number of Phone Calls  4;1 SET
+
+              sicnc   
+                                '0' FOR 0; 
+                                '1' FOR 1; 
+                                '2' FOR 2; 
+                                '3' FOR 3; 
+                                'x' FOR X; 
+              LAST EDITED:      SEP 26, 2017 
+              HELP-PROMPT:      Each attempt to call the participant for follow 
+                                up is recorded here. 
+              DESCRIPTION:      Each attempt to call the participant for
+                                follow-up is recorded here. For example, if an
+                                attemt has already been made, and you make a
+                                second attempt, change this field from 1 to 2.  
+
+
+311.101,4.02  Number of Letters      4;2 SET
+
+              sicnl   
+                                '0' FOR 0; 
+                                '1' FOR 1; 
+                                '2' FOR 2; 
+                                '3' FOR 3; 
+                                'x' FOR X; 
+              LAST EDITED:      SEP 27, 2017 
+              HELP-PROMPT:      Each attempt to contact the participant by mail 
+                                is recorded here. 
+              DESCRIPTION:      Each attempt to contact the participant by mail
+                                for follow up is recorded here. For example, if
+                                a letter has already been sent, and you are
+                                sending a second letter, change this field from
+                                1 to 2.  
+
+
+311.101,4.03  Patient Status         4;3 POINTER TO SAMI PATIENT STATUS FILE (#
+                                311.10112)
+
+              sies   
+              LAST EDITED:      SEP 27, 2017 
+              HELP-PROMPT:      Select the appropriate status for this patient. 
+              DESCRIPTION:      If the participant drops out of the study for
+                                any reason, or does not respond to reminders to
+                                schedule, they are considered "inactive." When 
+                                this occurs, change the Status from Active to
+                                indicate their reason for discontinuing, and
+                                enter the Date of Exit. Several statuses
+                                require additional specification; use the next
+                                field to specify. If the participant died,
+                                change the status to Expired, and fill in the
+                                Date of Death (DOD) and Cause of Death (COD)
+                                fields.  
+
+
+311.101,4.04  Patient Status (Specify) 4;4 FREE TEXT
+
+              sieso   
+              INPUT TRANSFORM:  K:$L(X)>70!($L(X)<5) X
+              MAXIMUM LENGTH:   70
+              LAST EDITED:      SEP 27, 2017 
+              HELP-PROMPT:      Answer must be 5-70 characters in length. 
+              DESCRIPTION:      If you selected a patient status that requires
+                                specification, use this field to specify.  
+
+
+311.101,4.05  Date of Exit           4;5 DATE
+
+              sixdate   
+              INPUT TRANSFORM:  S %DT="EX" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      SEP 27, 2017 
+              HELP-PROMPT:      Enter the date on which the participant left 
+                                the study, in any format. 
+              DESCRIPTION:      The Date of Exit should be recorded for all
+                                subjects who are no longer active in the study.
+                                It signifies the date on which they change to a 
+                                non-active status.  
+
+
+311.101,4.06  Date of Death          4;6 DATE
+
+              sidod   
+              INPUT TRANSFORM:  S %DT="E" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      SEP 27, 2017 
+              HELP-PROMPT:      If the patient expired, enter their date of 
+                                death, in any format. 
+              DESCRIPTION:      If the patient expired, set their status to
+                                Expired, enter the date of death in this field,
+                                and enter the cause of death in the next field. 
+ 
+
+
+311.101,4.07  Cause of Death         4;7 FREE TEXT
+
+              sicod   
+              INPUT TRANSFORM:  K:$L(X)>70!($L(X)<3) X
+              MAXIMUM LENGTH:   70
+              LAST EDITED:      SEP 27, 2017 
+              HELP-PROMPT:      Answer must be 3-70 characters in length. 
+              DESCRIPTION:      If the participant expired, change their status
+                                to Expired, enter the date of death in the
+                                previous field, and enter the cause of death
+                                here.  
+
+
+311.101,5.01  Correspondence Date    5;1 DATE
+
+              sircd   
+              INPUT TRANSFORM:  S %DT="EX" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      SEP 27, 2017 
+              HELP-PROMPT:      Enter the date of the correspondence with the 
+                                patient or physician. 
+              DESCRIPTION:      These fields should be used to record
+                                correspondence or communication with the
+                                patient or physician. This field holds the
+                                date; the next fields will contain the
+                                recipient, nature of communication, and so on.  
+
+
+311.101,5.02  Correspondence Date of Exam 5;2 DATE
+
+              sired   
+              INPUT TRANSFORM:  S %DT="EX" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      SEP 27, 2017 
+              HELP-PROMPT:      Enter the date of the exam this correspondence 
+                                is about. 
+              DESCRIPTION:      These fields should be used to record
+                                correspondence or communication with the
+                                patient or physician. This field holds the date
+                                of the exam you are communicating about. The
+                                previous field should contain the date of the
+                                communication. The next fields will contain the
+                                recipient and nature of the communication.  
+
+
+311.101,5.03  Correspondence Recipient 5;3 SET
+
+              sirr   
+                                's' FOR patient; 
+                                'm' FOR physician; 
+              LAST EDITED:      SEP 27, 2017 
+              HELP-PROMPT:      Enter s if this correspondence is with a 
+                                patient; enter m if it is with a physician. 
+              DESCRIPTION:      These fields should be used to record
+                                correspondence or communication with the
+                                patient or physician. This field holds the
+                                recipient of the communication (s for patient
+                                or m for physician). The previous fields should
+                                contain the date of the exam and the date of
+                                the correspondence.  The next fields will
+                                contain the name of the physician, the nature
+                                of the correspondence and the correspondence
+                                coordinator.  
+
+
+311.101,5.04  Correspondence Physician Name 5;4 FREE TEXT
+
+              sirmd   
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 27, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      If this correspondence is with a physician (and
+                                not the patient), enter the physician's name
+                                here.  
+                                 
+                                These fields should be used to record
+                                correspondence or communication with the
+                                patient or physician. Previous fields should
+                                contain the date and recipient of the
+                                communication. The next fields will hold the 
+                                nature of the correspondence and the
+                                correspondence coordinator.  
+
+
+311.101,5.05  Correspondence Nature  5;5 SET
+
+              sirn   
+                                'fr' FOR faxed report; 
+                                'mr' FOR mailed report; 
+                                'pr' FOR called to give results; 
+                                'ab' FOR Abx discussed with physician; 
+                                'bx' FOR Bx discussed with physician; 
+                                'os' FOR other (specify); 
+              LAST EDITED:      SEP 27, 2017 
+              HELP-PROMPT:      What kind of correspondence was this? 
+              DESCRIPTION:      This section should be used to record
+                                correspondence or communication with the
+                                patient or physician. This field holds the
+                                nature of the correspondence. Previous fields
+                                should contain the recipient and date.  The
+                                next fields will include the correspondence
+                                coordinator.  
+
+
+311.101,5.06  Correspondence Other (Specify) 5;6 FREE TEXT
+
+              sirns   
+              INPUT TRANSFORM:  K:$L(X)>70!($L(X)<5) X
+              MAXIMUM LENGTH:   70
+              LAST EDITED:      SEP 27, 2017 
+              HELP-PROMPT:      Answer must be 5-70 characters in length. 
+              DESCRIPTION:      If you chose "other" as the nature of the
+                                correspondence, please specify the nature here. 
+                                 
+                                These fields should be used to record
+                                correspondence or communication with the
+                                patient or physician. Previous fields should
+                                contain the date, recipient and nature of the
+                                correspondence. The next field will contain the
+                                correspondence coordinator.  
+
+
+311.101,5.07  Correspondence Coordinator 5;7 FREE TEXT
+
+              sirc   
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 27, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      The name of the person managing this
+                                correspondence or communication.  
+
+
+311.101,6.01  Has Patient Signed Consent 6;1 SET
+
+              sicfs   
+                                'n' FOR No ; 
+                                'y' FOR Yes; 
+              LAST EDITED:      SEP 28, 2017 
+              HELP-PROMPT:      Has the patient signed the consent form? 
+              DESCRIPTION:      Has the patient signed the consent form? If no,
+                                the patient is ineligible for the study.  
+
+
+311.101,6.02  Date Informed Consent Signed 6;2 DATE
+
+              sidoc   
+              INPUT TRANSFORM:  S %DT="EX" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      SEP 28, 2017 
+              HELP-PROMPT:      Enter the date on which the patient signed 
+                                consent, in any format. 
+
+311.101,6.03  Who Obtained Consent   6;3 FREE TEXT
+
+              siioc   
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 28, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      Enter the name of the staff person who obtained
+                                consent from the patient.  
+
+
+311.101,6.04  Consent Given to Patient 6;4 SET
+
+              sicfp   
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      SEP 28, 2017 
+              HELP-PROMPT:      Has the patient been given a copy of the 
+                                consent form? 
+
+311.101,6.05  Store for Future Studies 6;5 SET
+
+              sicrd   
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      SEP 28, 2017 
+              HELP-PROMPT:      Can this patient's information be stored for 
+                                future studies? 
+
+311.101,6.06  For Directly Related Studies 6;6 SET
+
+              sicrdd   
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      SEP 28, 2017 
+              HELP-PROMPT:      Can this patient's information be used for 
+                                directly related studies? 
+
+311.101,6.07  For Unrelated Studies  6;7 SET
+
+              sicrdn   
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      SEP 28, 2017 
+              HELP-PROMPT:      Can the patient's information be used for 
+                                unrelated studies? 
+
+311.101,6.08  Contact for Future Studies 6;8 SET
+
+              sicrs   
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      SEP 28, 2017 
+              HELP-PROMPT:      Should this patient be contacted for future 
+                                studies? 
+
+
+      FILES POINTED TO                      FIELDS
+
+SAMI PATIENT STATUS (#311.10112)  Patient Status (#4.03)
+
+
+
+INPUT TEMPLATE(S):
+
+PRINT TEMPLATE(S):
+
+SORT TEMPLATE(S):
+
+FORM(S)/BLOCK(S):

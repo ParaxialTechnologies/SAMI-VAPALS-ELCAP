@@ -1,0 +1,1657 @@
+STANDARD DATA DICTIONARY #311.103 -- SAMI CT EVAL FILE        10/2/17    PAGE 1
+STORED IN ^SAMI(311.103,  *** NO DATA STORED YET ***   SITE: AVICENNA.VISTAEXPER
+TISE.NET   UCI: VAH,ROU                                    (VERSION 18.0T03)   
+
+DATA          NAME                  GLOBAL        DATA
+ELEMENT       TITLE                 LOCATION      TYPE
+-------------------------------------------------------------------------------
+
+
+              DD ACCESS: @
+              RD ACCESS: @
+              WR ACCESS: @
+             DEL ACCESS: @
+           LAYGO ACCESS: @
+           AUDIT ACCESS: @
+
+CROSS
+REFERENCED BY: STUDY ID(B)
+
+    LAST MODIFIED: OCT 2,2017@12:32:32
+
+311.103,.01   STUDY ID               0;1 FREE TEXT (Required)
+
+              Study ID   
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<3) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 07, 2017 
+              HELP-PROMPT:      Answer must be 3-30 characters in length. 
+              DESCRIPTION:
+                                The unique study ID for this patient.  
+
+              CROSS-REFERENCE:  311.103^B 
+                                1)= S ^SAMI(311.103,"B",$E(X,1,30),DA)=""
+                                2)= K ^SAMI(311.103,"B",$E(X,1,30),DA)
+
+
+311.103,.02   PATIENT NAME           0;2 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      AUG 22, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+
+311.103,.03   STUDY DATE             0;3 DATE (Required)
+
+              INPUT TRANSFORM:  S %DT="EX" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      AUG 22, 2017 
+              HELP-PROMPT:      Enter the study date, in any format. 
+              DESCRIPTION:      Enter the study date, in any format. You may
+                                use T for today.  
+
+
+311.103,.04   EXAM NUMBER            0;4 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>20!($L(X)<1) X
+              MAXIMUM LENGTH:   20
+              LAST EDITED:      AUG 22, 2017 
+              HELP-PROMPT:      Answer must be 1-20 characters in length. 
+
+311.103,.05   MEDICAL RECORD NUMBER  0;5 FREE TEXT (Required)
+
+              Medical record number   
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<1) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      AUG 22, 2017 
+              HELP-PROMPT:      Answer must be 1-30 characters in length. 
+
+311.103,.06   RADIOLOGIST            0;6 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      AUG 22, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      The name of the radiologist performing the CT
+                                Evaluation.  
+
+
+311.103,.07   SIGNING RADIOLOGIST    0;7 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      AUG 22, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      The name of the radiologist signing off on the
+                                evaluation, if applicable.  You may leave this
+                                field blank.  
+
+
+311.103,.08   CLINICAL INFORMATION   1;0   WORD-PROCESSING #311.10311
+                     (IGNORE "|")
+
+
+311.103,1     FINAL READING          2;1 SET
+
+              Final Reading   
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      AUG 22, 2017 
+              HELP-PROMPT:      Is this the final reading? 
+              DESCRIPTION:
+                                Is this the final reading? 
+
+
+311.103,1.1   OUTSIDE INSTITUTION    2;2 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      AUG 22, 2017 
+              HELP-PROMPT:      Was the CT scan performed at an outside 
+                                institution? 
+              DESCRIPTION:      Was the CT scan performed at an outside
+                                institution? 
+
+
+311.103,1.2   EXAM TYPE              2;3 SET (Required)
+
+              Type of exam   
+                                'b' FOR Baseline; 
+                                'a' FOR Annual repeat; 
+                                'd' FOR Follow-up (not annual); 
+              LAST EDITED:      AUG 22, 2017 
+              HELP-PROMPT:      Enter the code for the type of CT exam being 
+                                performed. 
+              DESCRIPTION:      Enter the code for the type of CT exam being
+                                performed.  
+                                 
+                                b  Baseline a  Annual repeat d  Follow-up (not
+                                annual repeat) 
+
+
+311.103,1.3   CT PROTOCOL            2;4 SET (Required)
+
+              CT Protocol   
+                                'l' FOR Low-Dose CT; 
+                                'd' FOR Standard Dx CT/HRCT; 
+                                'i' FOR Limited Dx CT/HRCT; 
+              LAST EDITED:      AUG 22, 2017 
+              HELP-PROMPT:      Enter the code for the protocol being used. 
+              DESCRIPTION:      Enter the code for the protocol being used.  
+                                 
+                                l Low-Dose CT d Standard Dx CT/HRCT i Limited
+                                Dx CT/HRCT 
+
+
+311.103,1.4   DATE OF BASELINE CT    2;5 DATE (Required)
+
+              INPUT TRANSFORM:  S %DT="EX" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      AUG 22, 2017 
+              HELP-PROMPT:      Enter the date of the patient's baseline CT. 
+              DESCRIPTION:      Enter the dae of the patient's baseline CT. If
+                                this is the baseline CT, you may enter T for
+                                today.  
+
+
+311.103,1.5   DATE OF MOST RECENT STUDY 2;6 DATE
+
+              Date of most recent comparative study (if applicable)   
+              INPUT TRANSFORM:  S %DT="E" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      AUG 22, 2017 
+              HELP-PROMPT:      Enter the date of the most recent comparative 
+                                study. 
+              DESCRIPTION:      Enter the date of the most recent comparative
+                                study (if applicable).  You may leave this
+                                field blank.  
+
+
+311.103,1.6   TIME SINCE BASELINE    2;7 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>99)!(X<1)!(X?.E1"."1N.N) X
+              LAST EDITED:      AUG 22, 2017 
+              HELP-PROMPT:      Type a number between 1 and 99, 0 decimal 
+                                digits. 
+              DESCRIPTION:      Enter the time since the baseline CT scan, in
+                                months.  
+
+
+311.103,2     NORMAL SHORTCUT        2;8 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      AUG 22, 2017 
+              HELP-PROMPT:      Enter "yes" to fill in "no abnormalities." 
+              DESCRIPTION:      Enter "yes" to fill in "no abnormalities" in
+                                all the subsequent data values. You can input
+                                data values for those which are not negative.  
+
+
+311.103,3     NON-CALCIFIED NODULES  2;9 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>99)!(X<0)!(X?.E1"."1N.N) X
+              LAST EDITED:      AUG 22, 2017 
+              HELP-PROMPT:      Type a number between 0 and 99, 0 decimal 
+                                digits. 
+              DESCRIPTION:      Enter the total number of non-calcified
+                                nodules.  
+
+
+311.103,3.1   TOTAL NODULES          2;10 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>99)!(X<0)!(X?.E1"."1N.N) X
+              LAST EDITED:      AUG 22, 2017 
+              HELP-PROMPT:      Type a number between 0 and 99, 0 decimal 
+                                digits. 
+              DESCRIPTION:      Enter the total number of nodules (parenchymal
+                                and endobronchial).  
+
+
+311.103,3.3   NODULE                 3;0 Multiple #311.10312
+
+              DESCRIPTION:      This is the nodule grid from the CT Evaluation
+                                form.  
+
+
+311.10312,.01   NODULE                 0;1 FREE TEXT (Multiply asked)
+
+                Nodule ID   
+                INPUT TRANSFORM:  K:$L(X)>10!($L(X)<5) X
+                MAXIMUM LENGTH:   10
+                LAST EDITED:      AUG 28, 2017 
+                HELP-PROMPT:      Answer must be 5-10 characters in length. 
+                DESCRIPTION:      Enter the Nodule ID for the current nodule
+                                  (for example, Nodule 1).  
+
+                CROSS-REFERENCE:  311.10312^B 
+                                1)= S ^SAMI(311.103,DA(1),3,"B",$E(X,1,30),DA)=
+                                ""
+
+                                2)= K ^SAMI(311.103,DA(1),3,"B",$E(X,1,30),DA)
+
+
+311.10312,.02   NODULE NEW           0;2 POINTER TO SAMI CT NODULE NEW FILE (#3
+                                11.10313)
+
+                LAST EDITED:    AUG 22, 2017 
+                HELP-PROMPT:    Select the appropriate description for the 
+                                current nodule. 
+                DESCRIPTION:    Select the appropriate description for the
+                                current nodule.  
+
+
+311.10312,.03   ENDOBRONCHIAL        0;3 SET
+
+                                'no' FOR No; 
+                                'tr' FOR Trachea; 
+                                'rm' FOR Right Main; 
+                                'lm' FOR Left Main; 
+                                'bi' FOR Bi; 
+                                'rul' FOR RUL; 
+                                'rml' FOR RML; 
+                                'rll' FOR RLL; 
+                                'lul' FOR LUL; 
+                                'lll' FOR LLL; 
+                LAST EDITED:    AUG 22, 2017 
+                HELP-PROMPT:    Is the current nodule endobronchial? Select the 
+                                correct code. 
+                DESCRIPTION:    Is the current nodule endobronchial? Select the
+                                correct code.  
+
+
+311.10312,1     LIKELY LOCATION      0;4 SET
+
+                Most Likely Location   
+                                'end' FOR Endobr; 
+                                'lul' FOR LUL; 
+                                'lll' FOR LLL; 
+                                'rul' FOR RUL; 
+                                'rml' FOR RML; 
+                                'rll' FOR RLL; 
+                LAST EDITED:    AUG 22, 2017 
+                HELP-PROMPT:    Enter the likely location of the current 
+                                nodule. 
+
+311.10312,1.1   DISTANCE             0;5 NUMBER
+
+                Distance from the Costal Pleura (mm)   
+                INPUT TRANSFORM:K:+X'=X!(X>999)!(X<1)!(X?.E1"."1N.N) X
+                LAST EDITED:    AUG 22, 2017 
+                HELP-PROMPT:    Type a number between 1 and 999, 0 decimal 
+                                digits. 
+                DESCRIPTION:    Enter the distance from the Costal Pleura, in
+                                millimeters.  
+
+
+311.10312,1.2   LENGTH               0;6 NUMBER
+
+                Length   
+                INPUT TRANSFORM:K:+X'=X!(X>99)!(X<0)!(X?.E1"."5N.N) X
+                LAST EDITED:    AUG 23, 2017 
+                HELP-PROMPT:    Type a number between 0 and 99, 4 decimal 
+                                digits. 
+                DESCRIPTION:
+                                Length of the current nodule, in millimeters.  
+
+
+311.10312,1.3   MAX WIDTH            0;7 NUMBER
+
+                Maximum Width   
+                INPUT TRANSFORM:K:+X'=X!(X>99)!(X<0)!(X?.E1"."5N.N) X
+                LAST EDITED:    AUG 23, 2017 
+                HELP-PROMPT:    Type a number between 0 and 99, 4 decimal 
+                                digits. 
+                DESCRIPTION:    Maximum width of the current nodule, in
+                                millimeters.  
+
+
+311.10312,1.4   SOLID COMP LENGTH    0;10 NUMBER
+
+                INPUT TRANSFORM:K:+X'=X!(X>99)!(X<0)!(X?.E1"."5N.N) X
+                LAST EDITED:    AUG 23, 2017 
+                HELP-PROMPT:    Type a number between 0 and 99, 4 decimal 
+                                digits. 
+
+311.10312,1.5   SOLID COMP WIDTH     0;11 NUMBER
+
+                INPUT TRANSFORM:K:+X'=X!(X>99)!(X<0)!(X?.E1"."5N.N) X
+                LAST EDITED:    AUG 23, 2017 
+                HELP-PROMPT:    Type a number between 0 and 99, 4 decimal 
+                                digits. 
+
+311.10312,2     CONSISTENCY          0;8 SET
+
+                Nodule Consistency   
+                                's' FOR solid; 
+                                'm' FOR part-solid; 
+                                'g' FOR non-solid; 
+                                'o' FOR other (see comment); 
+                LAST EDITED:    AUG 23, 2017 
+                HELP-PROMPT:    Enter the code for the current nodule's 
+                                consistency. 
+                DESCRIPTION:    Enter the code for the current nodule's
+                                consistencey.  
+                                 
+                                s  solid m  part-solid g  non-solid o  other
+                                (see comment) 
+
+
+311.10312,2.1   SMOOTH EDGES         0;9 SET
+
+                Smooth Edges   
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'q' FOR ?; 
+                LAST EDITED:    AUG 23, 2017 
+                HELP-PROMPT:    Does the current nodule have smooth edges? 
+
+311.10312,2.2   CALCIFICATIONS       0;12 SET
+
+                Calcifications consistent with Benignity   
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'q' FOR ?; 
+                LAST EDITED:    AUG 25, 2017 
+                HELP-PROMPT:    Are there calcifications NOT consistent with 
+                                benignity? 
+                DESCRIPTION:    Does the current nodule have calcifications NOT
+                                consistent with benignity? 
+
+
+311.10312,2.3   SPICULATIONS         0;13 SET
+
+                Spiculations/Pleural Tags   
+                                'n' FOR Absent; 
+                                'y' FOR Present; 
+                LAST EDITED:    AUG 25, 2017 
+                HELP-PROMPT:    For the current nodule, are spiculations 
+                                present? 
+
+311.10312,2.4   PLEURAL TAGS         0;14 SET
+
+                                'n' FOR Absent; 
+                                'y' FOR Present; 
+                LAST EDITED:    AUG 25, 2017 
+                HELP-PROMPT:    For the current nodule, are pleural tags 
+                                present? 
+
+311.10312,2.5   PARENCHYMAL ABNORMALITY 0;15 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'q' FOR ?; 
+                LAST EDITED:    AUG 25, 2017 
+                HELP-PROMPT:    For the current nodule, is there parenchymal 
+                                abnormality within 1 cm? 
+
+311.10312,3     SEEN IN SERIES       0;16 NUMBER
+
+                Nodule seen in series   
+                INPUT TRANSFORM:K:+X'=X!(X>99)!(X<0)!(X?.E1"."1N.N) X
+                LAST EDITED:    AUG 25, 2017 
+                HELP-PROMPT:    Type a number between 0 and 99, 0 decimal 
+                                digits. 
+                DESCRIPTION:
+                                Nodule seen in series.  
+
+
+311.10312,3.1   SEEN IN IMAGES START 0;17 NUMBER
+
+                Nodule seen in images, start   
+                INPUT TRANSFORM:K:+X'=X!(X>99)!(X<1)!(X?.E1"."1N.N) X
+                LAST EDITED:    AUG 25, 2017 
+                HELP-PROMPT:    Type a number between 1 and 99, 0 decimal 
+                                digits. 
+                DESCRIPTION:    Nodule seen in images (beginning of range). Use
+                                the next field to indicate the end of the
+                                range.  
+
+
+311.10312,3.2   SEEN IN IMAGES END   0;18 NUMBER
+
+                INPUT TRANSFORM:K:+X'=X!(X>99)!(X<1)!(X?.E1"."1N.N) X
+                LAST EDITED:    AUG 25, 2017 
+                HELP-PROMPT:    Type a number between 1 and 99, 0 decimal 
+                                digits. 
+                DESCRIPTION:
+                                Nodule seen in images (end of range). 
+
+
+311.10312,3.3   NODULE STATUS        0;19 POINTER TO SAMI NODULE STATUS FILE (#
+                                311.10316)
+
+                Nodule Status   
+                LAST EDITED:    AUG 28, 2017 
+                HELP-PROMPT:    Select the appropriate status for the current 
+                                nodule. 
+
+311.10312,3.4   ACTION               0;20 SET
+
+                Action   
+                                's' FOR annual repeat CT; 
+                                'f' FOR f/u CT; 
+                                'a' FOR Abx + f/u CT; 
+                                'e' FOR PET; 
+                                'c' FOR CT w contrast; 
+                                'b' FOR CT-guided biopsy; 
+                                'p' FOR bronchoscopy; 
+                                'v' FOR VAT; 
+                                'r' FOR resection; 
+                LAST EDITED:    AUG 28, 2017 
+                HELP-PROMPT:    Select the code for the appropriate action for 
+                                this nodule. 
+
+311.10312,3.5   PATH DIAGNOSIS       0;21 POINTER TO SAMI PATH DIAGNOSIS FILE (
+                                #311.10317)
+
+                LAST EDITED:    AUG 28, 2017 
+                HELP-PROMPT:    Select the pathologic diagnosis for the current 
+                                nodule. 
+
+311.10312,3.6   COMMENT              1;0   WORD-PROCESSING #311.10318
+                     (IGNORE "|")
+
+
+
+
+311.103,4     EMPHYSEMA              4;1 SET
+
+              Emphysema   
+                                'nv' FOR n/v; 
+                                'no' FOR none; 
+                                'mi' FOR mild; 
+                                'mo' FOR moderate; 
+                                'se' FOR severe; 
+              LAST EDITED:      AUG 23, 2017 
+              HELP-PROMPT:      Enter the code describing the patient's 
+                                emphysema. 
+              DESCRIPTION:      Enter the code describing the patient's
+                                emphysema.  
+                                 
+                                nv  n/v no  none mi  mild mo  moderate se 
+                                severe 
+
+
+311.103,4.1   CYSTS                  4;2 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      AUG 23, 2017 
+              HELP-PROMPT:      Are cysts present? 
+
+311.103,4.2   CYSTS LOCATION         4;3 SET
+
+                                'rul' FOR RUL; 
+                                'rml' FOR RML; 
+                                'rll' FOR RLL; 
+                                'lul' FOR LUL; 
+                                'lll' FOR LLL; 
+              LAST EDITED:      AUG 23, 2017 
+              HELP-PROMPT:      If cysts are present, enter their location. 
+
+311.103,4.3   BLEBS/BULLAE           4;4 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      AUG 23, 2017 
+              HELP-PROMPT:      Are Blebs/Bullae present? 
+
+311.103,4.4   BLEBS/BULLAE LOCATION  4;5 SET
+
+                                'rul' FOR RUL; 
+                                'rml' FOR RML; 
+                                'rll' FOR RLL; 
+                                'lul' FOR LUL; 
+                                'lll' FOR LLL; 
+              LAST EDITED:      AUG 23, 2017 
+              HELP-PROMPT:      If Blebs/Bullae are present, what is their 
+                                location? 
+
+311.103,4.5   REGIONAL OR DIFFUSE    4;6 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      AUG 23, 2017 
+              HELP-PROMPT:      Is there regional or diffuse consolidation? 
+              DESCRIPTION:      Is there regional or diffuse consolidation? (If
+                                consolidation is focal, include it in the
+                                nodule grid.) 
+
+
+311.103,4.6   REGIONAL OR DIFFUSE LOCATION 4;7 SET
+
+                                'rul' FOR RUL; 
+                                'rml' FOR RML; 
+                                'rll' FOR RLL; 
+                                'lul' FOR LUL; 
+                                'lll' FOR LLL; 
+              LAST EDITED:      AUG 23, 2017 
+              HELP-PROMPT:      Location of the regional or diffuse 
+                                consolidation. 
+
+311.103,4.7   SCARRING               4;8 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      AUG 23, 2017 
+              HELP-PROMPT:      Is scarring present? 
+
+311.103,4.8   SCARRING LOCATION      5;0 SET Multiple #311.10314
+
+
+311.10314,.01   SCARRING LOCATION      0;1 SET (Multiply asked)
+
+                                  'rul' FOR RUL; 
+                                  'rml' FOR RML; 
+                                  'rll' FOR RLL; 
+                                  'lul' FOR LUL; 
+                                  'lll' FOR LLL; 
+                                  'au' FOR Apical Unilateral; 
+                                  'ab' FOR Apical Bilateral; 
+                LAST EDITED:      AUG 23, 2017 
+                HELP-PROMPT:      Enter the location(s) of the scarring. 
+                DESCRIPTION:      Enter the location(s) of the scarring. You
+                                  may enter more than one.  
+
+                CROSS-REFERENCE:  311.10314^B 
+                                1)= S ^SAMI(311.103,DA(1),5,"B",$E(X,1,30),DA)=
+                                ""
+
+                                2)= K ^SAMI(311.103,DA(1),5,"B",$E(X,1,30),DA)
+
+
+
+
+311.103,5     BRONCHIECTASIS         6;1 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      AUG 23, 2017 
+              HELP-PROMPT:      Is bronchiectasis present? 
+
+311.103,5.1   BRONCHIECTASIS LOCATION 6;2 SET
+
+              Bronchiectasis location   
+                                'rul' FOR RUL; 
+                                'rml' FOR RML; 
+                                'rll' FOR RLL; 
+                                'lul' FOR LUL; 
+                                'lll' FOR LLL; 
+              LAST EDITED:      AUG 23, 2017 
+              HELP-PROMPT:      If bronchiectasis is present, what is its 
+                                location? 
+
+311.103,5.2   SMALL AIRWAYS          6;3 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      AUG 23, 2017 
+              HELP-PROMPT:      Is small airways disease present? 
+
+311.103,5.3   SMALL AIRWAYS LOCATION 6;4 SET
+
+                                'rul' FOR RUL; 
+                                'rml' FOR RML; 
+                                'rll' FOR RLL; 
+                                'lul' FOR LUL; 
+                                'lll' FOR LLL; 
+              LAST EDITED:      AUG 23, 2017 
+              HELP-PROMPT:      If small airways disease is present, what is 
+                                its location? 
+
+311.103,5.4   POST SURGICAL          6;5 SET
+
+              Post-surgial findings   
+                                'na' FOR N/A; 
+                                'no' FOR Normal; 
+                                'ab' FOR Abnormal; 
+                                'nv' FOR n/v; 
+              LAST EDITED:      AUG 24, 2017 
+              HELP-PROMPT:      Post-surgial findings (i.e., bronchial 
+                                resection margin). 
+
+311.103,5.5   POST SURGICAL LOCATION 6;6 SET
+
+                                'r' FOR Right; 
+                                'l' FOR Left; 
+              LAST EDITED:      AUG 24, 2017 
+              HELP-PROMPT:      Enter r for Right or l for Left. 
+
+311.103,6     INTERSTITIAL LUNG DISEASE 6;7 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      AUG 24, 2017 
+              HELP-PROMPT:      Is interstitial lung disease present? 
+
+311.103,6.1   INTERSTITIAL LOCATION  6;8 SET
+
+                                'rul' FOR RUL; 
+                                'rml' FOR RML; 
+                                'rll' FOR RLL; 
+                                'lul' FOR LUL; 
+                                'lll' FOR LLL; 
+              LAST EDITED:      AUG 24, 2017 
+              HELP-PROMPT:      What is the location of the interstitial lung 
+                                disease? 
+              DESCRIPTION:      If interstitial lung disease is present, what
+                                is its location? 
+
+
+311.103,6.8   HONEYCOMBING           6;9 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      AUG 24, 2017 
+              HELP-PROMPT:      Is there honeycombing present? 
+
+311.103,6.9   HONEYCOMBING LOCATION  6;10 SET
+
+                                'rul' FOR RUL; 
+                                'rml' FOR RML; 
+                                'rll' FOR RLL; 
+                                'lul' FOR LUL; 
+                                'lll' FOR LLL; 
+              LAST EDITED:      AUG 24, 2017 
+              HELP-PROMPT:      If honeycombing is present, what is its 
+                                location? 
+
+311.103,7     ADDITIONAL PARENCHYMAL 7;0   WORD-PROCESSING #311.10315
+                     (IGNORE "|")
+
+
+311.103,8     ROUNDED ATELECTASIS    8;1 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      AUG 28, 2017 
+              HELP-PROMPT:      Is there rounded atelectasis present? 
+
+311.103,8.1   ROUNDED ATELECTASIS LOCATION 9;0 SET Multiple #311.10319
+
+
+311.10319,.01   ROUNDED ATELECTASIS LOCATION 0;1 SET (Multiply asked)
+
+                                  'r' FOR Right; 
+                                  'l' FOR Left; 
+                                  'rul' FOR RUL; 
+                                  'rml' FOR RML; 
+                                  'rll' FOR RLL; 
+                                  'lul' FOR LUL; 
+                                  'lll' FOR LLL; 
+                LAST EDITED:      AUG 28, 2017 
+                HELP-PROMPT:      Select the location of the rounded 
+                                  atelectasis.  
+                DESCRIPTION:      Select the location of the rounded
+                                  atelectasis. You may select more than one.  
+
+                CROSS-REFERENCE:  311.10319^B 
+                                1)= S ^SAMI(311.103,DA(1),9,"B",$E(X,1,30),DA)=
+                                ""
+
+                                2)= K ^SAMI(311.103,DA(1),9,"B",$E(X,1,30),DA)
+
+
+
+
+311.103,8.2   OTHER ATELECTASIS      10;1 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      AUG 28, 2017 
+              HELP-PROMPT:      Is there other atelectasis present? 
+
+311.103,8.3   OTHER ATELECTASIS LOCATION 10;2 SET
+
+                                'rul' FOR RUL; 
+                                'rml' FOR RML; 
+                                'rll' FOR RLL; 
+                                'lul' FOR LUL; 
+                                'lll' FOR LLL; 
+              LAST EDITED:      AUG 28, 2017 
+              HELP-PROMPT:      If other atelectasis is present, what is its 
+                                location? 
+
+311.103,8.4   BRONCHIAL RESECTION MARGIN 10;3 SET
+
+                                'n' FOR N/A; 
+                                'o' FOR Normal; 
+                                'y' FOR Abnormal; 
+                                'e' FOR n/v; 
+              LAST EDITED:      AUG 28, 2017 
+
+311.103,8.5   BRONCHIAL RESECTION LOCATION 10;4 SET
+
+                                'r' FOR Right; 
+                                'l' FOR Left; 
+              LAST EDITED:      AUG 28, 2017 
+
+311.103,8.6   PLEURAL EFFUSION LEFT  10;5 SET
+
+                                'e' FOR n/v; 
+                                'no' FOR none; 
+                                'sm' FOR small; 
+                                'mo' FOR moderate; 
+                                'lg' FOR large; 
+              LAST EDITED:      AUG 28, 2017 
+              HELP-PROMPT:      Select the code that describes pleural effusion 
+                                in the left lung. 
+              DESCRIPTION:      Select the code that describes pleural effusion
+                                in the left lung. e for n/v is one of your
+                                options.  
+
+
+311.103,8.7   PLEURAL EFFUSION RIGHT 10;6 SET
+
+                                'e' FOR n/v; 
+                                'no' FOR none; 
+                                'sm' FOR small; 
+                                'mo' FOR moderate; 
+                                'lg' FOR large; 
+              LAST EDITED:      AUG 28, 2017 
+              HELP-PROMPT:      Select the code that describes pleural effusion 
+                                in the right lung. 
+              DESCRIPTION:      Select the code that describes pleural effusion
+                                in the right lung.  e for n/v is one of your
+                                options.  
+
+
+311.103,9     PLEURAL PLAQUES        10;7 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      AUG 29, 2017 
+              HELP-PROMPT:      Are pleural plaques present? 
+
+311.103,9.1   PLEURAL PLAQUES (CALC) 10;8 SET
+
+              Pleural Plaques (Calcifications)   
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      AUG 29, 2017 
+
+311.103,9.2   PLEURAL PLAQUES LOC    10;9 SET
+
+                                'r' FOR Right; 
+                                'l' FOR Left; 
+              LAST EDITED:      AUG 29, 2017 
+
+311.103,9.3   PLEURAL THICKENING     10;10 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      AUG 29, 2017 
+
+311.103,9.4   PLEURAL THICK R/L/CALC 10;11 SET
+
+                                'r' FOR Right; 
+                                'l' FOR Left; 
+                                'c' FOR Calcification; 
+              LAST EDITED:      AUG 30, 2017 
+
+311.103,9.5   PLEURAL CALCIFICATIONS 10;12 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      AUG 30, 2017 
+              HELP-PROMPT:      Are pleural calcifications present? 
+
+311.103,9.6   PLEURAL CALC LOC       10;13 SET
+
+                                'l' FOR Left; 
+                                'r' FOR Right; 
+              LAST EDITED:      AUG 30, 2017 
+              HELP-PROMPT:      What is the location (l or r) of the pleural 
+                                calcifications? 
+
+311.103,9.7   PLEURAL TUMOR          10;14 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      AUG 30, 2017 
+              HELP-PROMPT:      Is there a pleural tumor present? 
+              DESCRIPTION:      Is there a pleural tumor present? (If yes, you
+                                can use the next field to describe.) 
+
+
+311.103,9.8   PLEURAL TUMOR DESC     11;0   WORD-PROCESSING #311.113
+                     (IGNORE "|")
+
+
+311.103,10    CARDIAC ABNORMALITIES  12;1 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      SEP 05, 2017 
+              HELP-PROMPT:      Are there cardiac abnormalities present? 
+
+311.103,10.1  CORONARY CALC (LEFT MAIN) 12;2 SET
+
+                                'no' FOR none; 
+                                'mi' FOR minimal; 
+                                'mo' FOR moderate; 
+                                'ex' FOR extensive; 
+              LAST EDITED:      SEP 05, 2017 
+              HELP-PROMPT:      Describe the left main coronary calcification. 
+
+311.103,10.2  CORONARY CALC (LAD)    12;3 SET
+
+                                'no' FOR none; 
+                                'mi' FOR minimal; 
+                                'mo' FOR moderate; 
+                                'ex' FOR extensive; 
+              LAST EDITED:      SEP 05, 2017 
+              HELP-PROMPT:      Describe the LAD coronary calcification. 
+
+311.103,10.3  CORONARY CALC (CIRCUMFLEX) 12;4 SET
+
+                                'no' FOR none; 
+                                'mi' FOR minimal; 
+                                'mo' FOR moderate; 
+                                'ex' FOR extensive; 
+              LAST EDITED:      SEP 05, 2017 
+              HELP-PROMPT:      Describe the circumflex coronary 
+                                calicification. 
+
+311.103,10.4  CORONARY CALC (RCA)    12;5 SET
+
+                                'no' FOR none; 
+                                'mi' FOR minimal; 
+                                'mo' FOR moderate; 
+                                'ex' FOR extensive; 
+              LAST EDITED:      SEP 05, 2017 
+              HELP-PROMPT:      Describe the RCA coronary calcification. 
+
+311.103,10.5  VISUAL CAC SCORE       12;6 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>99)!(X<0)!(X?.E1"."1N.N) X
+              LAST EDITED:      SEP 05, 2017 
+              HELP-PROMPT:      Type a number between 0 and 99, 0 decimal 
+                                digits. 
+              DESCRIPTION:
+                                Visual CAC (Coronary Artery Calcium) score.  
+
+
+311.103,10.6  PERECARDIAL EFFUSION   12;7 SET
+
+                                'no' FOR none; 
+                                'mi' FOR minimal; 
+                                'mo' FOR moderate; 
+                                'ex' FOR marked; 
+                                'e' FOR n/v; 
+              LAST EDITED:      SEP 05, 2017 
+              HELP-PROMPT:      Describe the severity of perecardial effusion. 
+              DESCRIPTION:      Describe the severity of perecardial effusion.
+                                You may select e for n/v.  
+
+
+311.103,10.7  PULMONARY ARTERY WIDTH 12;8 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>99)!(X<0)!(X?.E1"."3N.N) X
+              LAST EDITED:      SEP 05, 2017 
+              HELP-PROMPT:      Type a number between 0 and 99, 2 decimal 
+                                digits. 
+              DESCRIPTION:      Enter the pulmonary artery width, in
+                                millimeters.  
+
+
+311.103,10.8  ASCENDING AORTA WIDTH  12;9 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>99)!(X<0)!(X?.E1"."3N.N) X
+              LAST EDITED:      SEP 05, 2017 
+              HELP-PROMPT:      Type a number between 0 and 99, 2 decimal 
+                                digits. 
+              DESCRIPTION:      Enter the ascending aorta width, in
+                                millimeters.  
+
+
+311.103,11    NECK ABNORMALITIES     12;10 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      SEP 05, 2017 
+              HELP-PROMPT:      Are there neck and/or mediastinal abnormalities 
+                                present? 
+
+311.103,11.1  THYROID                12;11 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      SEP 05, 2017 
+              HELP-PROMPT:      Are there any thyroid abnormalities present? 
+
+311.103,11.2  THYROID CONDITION      12;12 SET
+
+              Thyroid condition specify   
+                                'c' FOR Calcification; 
+                                'y' FOR Cyst; 
+                                'm' FOR Mass; 
+                                'o' FOR Other; 
+              LAST EDITED:      SEP 05, 2017 
+              HELP-PROMPT:      Enter the type of thyroid abnormality. 
+              DESCRIPTION:      Enter the type of thyroid abnormality. You may
+                                leave this field blank if no abnormalities are
+                                present. If you select "other, please use the 
+                                next field to specify.  
+
+
+311.103,11.3  THYROID SPECIFY        12;13 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 05, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      If you chose "other" in the previous field,
+                                please specify here.  
+
+
+311.103,11.4  THYMUS                 12;14 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      SEP 05, 2017 
+              HELP-PROMPT:      Are there thymus abnormalities present? 
+
+311.103,11.5  THYMUS CONDITION       12;15 SET
+
+                                'c' FOR Calcification; 
+                                'y' FOR Cyst; 
+                                'm' FOR Mass; 
+                                'o' FOR Other; 
+              LAST EDITED:      SEP 05, 2017 
+              HELP-PROMPT:      Enter the type of thymus abnormality. 
+              DESCRIPTION:      Enter the type of thymus abnormality. You may
+                                leave this field blank if no abnormalities are
+                                present. If you choose "other," please use the
+                                next field to specify.  
+
+
+311.103,11.6  THYMUS OTHER SPECIFY   12;16 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 05, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      If you chose "other" in the previous field,
+                                please specify the type of thymus abnormality
+                                here.  
+
+
+311.103,11.7  LYMPH NODES            12;17 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Are there abnormalities present in the lymph 
+                                nodes? 
+
+311.103,11.8  ENLARGED HILAR OR MEDIASTINAL 12;18 POINTER TO SAMI LYMPH NODES F
+                                ILE (#311.10321)
+
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Any enlarged or growing hilar or mediastinal 
+                                lymph nodes. 
+              DESCRIPTION:      Any enlarged or growing hilar or mediastinal
+                                lymph nodes (short axis > 10 mm) (any size for
+                                para-esophageal) 
+
+
+311.103,11.9  CALCIFIED LYMPH NODES  12;19 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Are there calcified lymph nodes present? 
+
+311.103,12    AXILLARY LYMPH NODES   12;20 SET
+
+                                'n' FOR No; 
+                                'r' FOR Right; 
+                                'l' FOR Left; 
+                                'e' FOR n/v; 
+              LAST EDITED:      SEP 06, 2017 
+
+311.103,12.1  OTHER VASCULAR ABNORMALITIES 12;21 SET
+
+              Other vascular abnormalities   
+                                'n' FOR N; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Are there any other vascular abnormalities 
+                                present? 
+              DESCRIPTION:      Are there any other vascular abnormalities
+                                present? If yes, use the next field to specify
+                                the type of abnormality..  
+
+
+311.103,12.2  OTHER VASCULAR TYPE    12;22 SET
+
+                                'a' FOR Aorta; 
+                                'p' FOR Pulmonary Arteries; 
+                                'o' FOR Other; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Enter the type of other vascular abnormality 
+                                present. 
+              DESCRIPTION:      Enter the type of other vascular abnormality
+                                present. If you select "other," please use the
+                                next field to specify.  
+
+
+311.103,12.3  OTHER VASCULAR SPECIFY 12;23 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      If you chose "other" as the type of other
+                                vascular abnormality, please specify here.  
+
+
+311.103,12.4  ESOPHAGEAL             12;24 SET
+
+              Esophageal abnormalities   
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Are esophageal abnormalities present? 
+              DESCRIPTION:      Are esophageal abnormalities present? If yes,
+                                use the next fielt to specify the type of
+                                abnormality.  
+
+
+311.103,12.5  ESOPHAGEAL TYPE        12;25 SET
+
+                                'a' FOR Air-Fluid Level; 
+                                'w' FOR Wall Thickening; 
+                                'm' FOR Mass; 
+                                'o' FOR Other; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      What type of esophageal abnormality is present? 
+              DESCRIPTION:      What type of esophageal abnormality is present?
+                                If you select "other," please use the next
+                                field to specify.  
+
+
+311.103,12.6  ESOPHAGEAL OTHER SPECIFY 12;26 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      If you selected "other" as the type of
+                                esophageal abnormality, please specify here.  
+
+
+311.103,12.7  HIATAL HERNIA          12;27 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Is there a hiatal hernia present? 
+              DESCRIPTION:      Is there a hiatal hernia present. If yes, use
+                                the next fielt to specify.  
+
+
+311.103,12.8  HIATAL HERNIA SPECIFY  12;28 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      If there is a hiatal hernia present, specify it
+                                here.  
+
+
+311.103,12.9  OTHER MEDIASTINAL      12;29 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Are there other mediastinal masses present? 
+              DESCRIPTION:      Are there other mediastinal masses present? If
+                                yes, use the next field to specify the type.  
+
+
+311.103,13    OTHER MEDIASTINAL TYPE 12;30 SET
+
+                                'c' FOR Calcification; 
+                                'y' FOR Cyst; 
+                                'm' FOR Mass; 
+                                'o' FOR Other; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Specify the type of other mediastinal mass 
+                                present. 
+              DESCRIPTION:      Specify the type of other medistinal mass
+                                present. If you select "other," please use the
+                                next field to specify.  
+
+
+311.103,13.1  OTHER MEDIASTINAL SPECIFY 13;1 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      If you selected "other" as the type of other
+                                mediastinal masses, please specify it here.  
+
+
+311.103,13.2  NECK AND MEDIASTINAL COMMENTS 14;0   WORD-PROCESSING #311.123
+                     (IGNORE "|")
+
+
+311.103,14    BREAST ABNORMALITIES   15;1 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Are there breast abnormalities present? 
+
+311.103,14.1  RIGHT BREAST ABNORMALITY 15;2 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Is there abnormality present in the right 
+                                breast? 
+
+311.103,14.3  RIGHT BREAST TYPE      15;3 SET
+
+                                'c' FOR Calcification; 
+                                'y' FOR Cyst; 
+                                'm' FOR Mass; 
+                                'o' FOR Other; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      What type of abnormality is present in the 
+                                right breast? 
+              DESCRIPTION:      What type of abnormality is present in the
+                                right breast? If you select "other," please use
+                                the next field to specify.  
+
+
+311.103,14.4  RIGHT BREAST OTHER SPECIFY 15;4 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      If you chose "other" as the type of right
+                                breast abnormality, please specify here.  
+
+
+311.103,14.5  LEFT BREAST ABNORMALITY 15;5 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Is there abnormality present in the left 
+                                breast? 
+
+311.103,14.6  LEFT BREAST TYPE       15;6 SET
+
+              Left breast abnormality type   
+                                'c' FOR Calcification; 
+                                'y' FOR Cyst; 
+                                'm' FOR Mass; 
+                                'o' FOR Other; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      What type of abnormality is present in the left 
+                                breast? 
+              DESCRIPTION:      What type of abnormality is present in the left
+                                breast? If you select "other," please use the
+                                next field to specify.  
+
+
+311.103,14.7  LEFT BREAST OTHER SPECIFY 15;7 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      If you chose "other" as the type of abnormality
+                                in the left breast, please specify here.  
+
+
+311.103,14.8  BREAST ABNORMALITY COMMENTS 16;0   WORD-PROCESSING #311.133
+                     (IGNORE "|")
+
+
+311.103,15    ABDOMINAL ABNORMALITIES 17;1 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Are there abdominal abnormalities present? 
+
+311.103,15.1  GALL BLADDER ABNORMALITY 17;2 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Are there gall bladder abnormalities present? 
+
+311.103,15.2  GALL BLADDER TYPE      17;3 SET
+
+                                'h' FOR Cholecystectomy; 
+                                's' FOR Stones; 
+                                'l' FOR Sludge; 
+                                'y' FOR Other; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      What type of gall bladder abnormality is 
+                                present? 
+              DESCRIPTION:      What type of gall bladder abnormality is
+                                present? If you select "other," please use the
+                                next field to specify.  
+
+
+311.103,15.4  GALL BLADDER OTHER SPECIFY 17;4 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      If you chose "other" as the type of gall
+                                bladder abnormality present, please specify
+                                here.  
+
+
+311.103,15.5  SPLEEN ABNORMALITY     17;5 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Are there spleen abnormalities present? 
+
+311.103,15.6  SPLEEN ABNORMALITY TYPE 17;6 SET
+
+              Spleen abnormality type   
+                                'c' FOR Calcification; 
+                                'y' FOR Cyst; 
+                                'm' FOR Mass; 
+                                'o' FOR Other; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      What type of spleen abnormality is present? 
+              DESCRIPTION:      What type of spleen abnormality is present? If
+                                you select "other," please use the next field
+                                to specify.  
+
+
+311.103,15.7  SPLEEN OTHER SPECIFY   17;7 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      If you chose "other" as the type of spleen
+                                abnormality, please specify here.  
+
+
+311.103,15.8  LIVER ABNORMALITY      17;8 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Are there liver abnormalities present? 
+
+311.103,15.9  LIVER ABNORMALITY TYPE 17;9 SET
+
+                                'c' FOR Calcification; 
+                                'y' FOR Cyst; 
+                                'm' FOR Mass; 
+                                'o' FOR Other; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      What type of liver abnormality is present? 
+              DESCRIPTION:      What type of liver abnormality is present? If
+                                you select "other," please use the next field
+                                to specify.  
+
+
+311.103,16    LIVER OTHER SPECIFY    17;10 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      If you chose "other" as the type of liver
+                                abnormality, please specify it here.  
+
+
+311.103,16.1  PANCREAS ABNORMALITY   17;11 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Are there pancreas abnormalities present? 
+
+311.103,16.2  PANCREAS TYPE          17;12 SET
+
+                                'c' FOR Calcification; 
+                                'y' FOR Cyst; 
+                                'm' FOR Mass; 
+                                'o' FOR Other; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      What type of pancreas abnormality is present? 
+              DESCRIPTION:      What type of pancreas abnormality is present?
+                                If you select "other," please use the next
+                                field to specify.  
+
+
+311.103,16.3  PANCREAS OTHER SPECIFY 17;13 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      If you chose "other" as the type of pancreas
+                                abnormality, please specify it here.  
+
+
+311.103,16.4  ADRENALS ABNORMALITY   17;14 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Are abnormalities present in the adrenals? 
+
+311.103,16.5  ADRENALS TYPE          17;15 SET
+
+                                'c' FOR Calcification; 
+                                'y' FOR Cyst; 
+                                'm' FOR Mass; 
+                                'o' FOR Other; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      What type of abnormality is present in the 
+                                adrenals? 
+              DESCRIPTION:      What type of abnormality is present in the
+                                adrenals? If you select "other," please use the
+                                next field to specify.  
+
+
+311.103,16.6  ADRENALS OTHER SPECIFY 17;16 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      If you chose "other" as the type of adrenal
+                                abnormality, please specify it here.  
+
+
+311.103,16.7  KIDNEY ABNORMALITIES   17;17 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Are kidney abnormalities present? 
+
+311.103,16.8  KIDNEY ABNORMALITIES TYPE 17;18 SET
+
+              Kidney abnormalities type   
+                                'c' FOR Calcification; 
+                                'y' FOR Cyst; 
+                                'm' FOR Mass; 
+                                'o' FOR Other; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      What type of kidney abnormality is present? 
+              DESCRIPTION:      What type of kidney abnormality is present? If
+                                you select "other," please use the next field
+                                to specify.  
+
+
+311.103,16.9  KIDNEY OTHER SPECIFY   17;19 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      If you chose "other" as the type of kidney
+                                abnormality, please specify it here.  
+
+
+311.103,17    COMMENTS ON ABDOMINAL  18;0   WORD-PROCESSING #311.143
+                     (IGNORE "|")
+
+
+311.103,18    BONE ABNORMALITIES     19;1 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+                                'e' FOR n/v; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Are bone abnormalities present? 
+
+311.103,18.1  BONE SPECIFY           19;2 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>99!($L(X)<5) X
+              MAXIMUM LENGTH:   99
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Answer must be 5-99 characters in length. 
+              DESCRIPTION:
+                                Specify any bone abnormalities present.  
+
+
+311.103,19    FOLLOWUP TYPE          19;3 POINTER TO SAMI FOLLOWUP TYPE FILE (#
+                                311.10322)
+
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      What type of follow-up is indicated for this 
+                                patient? 
+
+311.103,19.1  FOLLOWUP WHEN          19;4 SET
+
+              Followup general time frame   
+                                'nw' FOR now; 
+                                '1m' FOR 1 month; 
+                                '3m' FOR 3 months; 
+                                '6m' FOR 6 months; 
+                                '1y' FOR 1 year; 
+                                'os' FOR other; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      When should the follow-up appointment be for 
+                                this patient? 
+              DESCRIPTION:      When should the follow-up appointment be for
+                                this patient? If you would prefer to enter a
+                                specific date, please use the next field. You
+                                may leave this field blank.  
+
+
+311.103,19.2  FOLLOWUP DATE          19;5 DATE
+
+              INPUT TRANSFORM:  S %DT="EX" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      On what specific date should the patient follow 
+                                up? 
+              DESCRIPTION:      On what specific date should the patient follow
+                                up? If you prefer a more general answer such as
+                                "in six months," please use the previous field.
+                                You may leave this field blank.  
+
+
+311.103,19.4  SPECIAL ATTENTION      19;6 SET
+
+                                'n' FOR No; 
+                                'y' FOR Yes; 
+              LAST EDITED:      SEP 06, 2017 
+              HELP-PROMPT:      Does this patient's follow-up require special 
+                                attention? 
+
+311.103,20    IMPRESSION NODULES     19;7 SET
+
+              Impression: nodules   
+                                'rs' FOR No evidence of nodules; 
+                                'ro' FOR Nodules consistent with old granulomat
+                                ous disease; 
+                                'ru' FOR Nodules unchanged. Follow-up as recomm
+                                ended; 
+                                'nf' FOR Nodules as described above. Follow-up 
+                                as recommended; 
+              LAST EDITED:      SEP 06, 2017 
+
+311.103,20.1  IMPRESSIONS OTHER      19;8 SET
+
+                                'no' FOR No other abnormalities; 
+                                'oa' FOR Other abnormalities and suggested foll
+                                ow-up as described; 
+              LAST EDITED:      SEP 06, 2017 
+
+311.103,20.2  IMPRESSION REMARKS     20;0   WORD-PROCESSING #311.153
+                     (IGNORE "|")
+
+
+311.103,21    IMAGE QUALITY PARENCHYMA 21;1 SET
+
+                                '1' FOR Satisfactory; 
+                                '2' FOR Minor problem(s) not affecting the read
+                                ing; 
+                                '3' FOR Quality affects the reading but is acce
+                                ptable; 
+                                '4' FOR Not acceptable (Unreadable, may need to
+                                 be redone); 
+              LAST EDITED:      SEP 07, 2017 
+              HELP-PROMPT:      Please rate the image quality for lung 
+                                parenchyma. 
+
+311.103,21.1  IMAGE CAUSES PARENCHYMA 22;0 SET Multiple #311.163
+
+
+311.163,.01     IMAGE CAUSES PARENCHYMA 0;1 SET (Multiply asked)
+
+                                  'h' FOR Patent Body Habitus; 
+                                  'm' FOR Patient Movement; 
+                                  'i' FOR Insufficient Inhalation; 
+                                  'o' FOR Other; 
+                LAST EDITED:      SEP 07, 2017 
+                HELP-PROMPT:      If images were not satisfactory, please 
+                                  indicate the cause(s). 
+                DESCRIPTION:      If images of the lung parenchyma were not
+                                  satsifactory, please indicate the cause(s).
+                                  You may select more than one. If you select
+                                  "other," please use the next field to
+                                  specify.  
+
+                CROSS-REFERENCE:  311.163^B 
+                                1)= S ^SAMI(311.103,DA(1),22,"B",$E(X,1,30),DA)
+                                =""
+
+                                2)= K ^SAMI(311.103,DA(1),22,"B",$E(X,1,30),DA)
+
+
+
+
+311.103,21.2  PARENCHYMA OTHER SPECIFY 23;1 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 07, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      If you chose "other" as a reason for poor image
+                                quality of the lung parenchyma, please specify
+                                the reason here.  
+
+
+311.103,21.4  IMAGE QUALITY MEDIASTINUM 23;2 SET
+
+                                '1' FOR Satisfactory; 
+                                '2' FOR Minor problem(s) not affecting the read
+                                ing; 
+                                '3' FOR Quality affects the reading but is acce
+                                ptable; 
+                                '4' FOR Not acceptable (Unreadable, may need to
+                                 be redone); 
+              LAST EDITED:      SEP 07, 2017 
+              HELP-PROMPT:      Please rate the image quality for the 
+                                mediastinum/abdomen. 
+
+311.103,21.5  IMAGE CAUSES MEDIASTINUM 24;0 SET Multiple #311.173
+
+
+311.173,.01     IMAGE CAUSES MEDIASTINUM 0;1 SET (Multiply asked)
+
+                                  'h' FOR Patient Body Habitus; 
+                                  'm' FOR Patient Movement; 
+                                  'i' FOR Insufficient Inhalation; 
+                                  'o' FOR Other; 
+                LAST EDITED:      SEP 07, 2017 
+                HELP-PROMPT:      If the images were not satisfactory, plese 
+                                  indicate the cause(s). 
+                DESCRIPTION:      If the images for the mediastinum/abdomen
+                                  were not satisfactory, please indicate the
+                                  cause(s). You may select more than one. If
+                                  you select "other," please use the next field
+                                  to specify the cause.  
+
+                CROSS-REFERENCE:  311.173^B 
+                                1)= S ^SAMI(311.103,DA(1),24,"B",$E(X,1,30),DA)
+                                =""
+
+                                2)= K ^SAMI(311.103,DA(1),24,"B",$E(X,1,30),DA)
+
+
+
+
+311.103,21.6  MEDIASTINUM OTHER SPECIFY 25;1 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 07, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      If you selected "other" as a cause of poor
+                                image quality for the mediastinum/abdomen,
+                                specify the cause here.  
+
+
+
+      FILES POINTED TO                      FIELDS
+
+SAMI CT NODULE NEW (#311.10313)   NODULE:NODULE NEW (#.02)
+
+SAMI FOLLOWUP TYPE (#311.10322)   FOLLOWUP TYPE (#19)
+
+SAMI LYMPH NODES (#311.10321)     ENLARGED HILAR OR MEDIASTINAL (#11.8)
+
+SAMI NODULE STATUS (#311.10316)   NODULE:NODULE STATUS (#3.3)
+
+SAMI PATH DIAGNOSIS (#311.10317)  NODULE:PATH DIAGNOSIS (#3.5)
+
+
+
+INPUT TEMPLATE(S):
+
+PRINT TEMPLATE(S):
+
+SORT TEMPLATE(S):
+
+FORM(S)/BLOCK(S):
+

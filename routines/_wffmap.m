@@ -46,6 +46,14 @@ importfmap(csvname,form) ; import form mapping definitions from csv
  for  set %w1=$order(fmap(%w1)) quit:+%w1=0  do  ; process each field
  . quit:$get(fmap(%w1,"fieldName"))=""  ; must have a field name
  . write !,"processing field ",fmap(%w1,"fieldName")
+ . kill fda
+ . set fda($$formVarFn(),"?+1,"_formien_",",.01)=fmap(%w1,"fieldName")
+ . set fda($$formVarFn(),"?+1,"_formien_",",.02)=$get(fmap(%w1,"fieldTitle"))
+ . set fda($$formVarFn(),"?+1,"_formien_",",.5)=$get(fmap(%w1,"mClass#"))
+ . set fda($$formVarFn(),"?+1,"_formien_",",1)=$get(fmap(%w1,"mProp#"))
+ . set fda($$formVarFn(),"?+1,"_formien_",",2)=$get(fmap(%w1,"mPropType"))
+ . zwr fda
+ . d updie(.fda)
  quit
  ;
 formien(form) ; extrinsic returns the record number of the form

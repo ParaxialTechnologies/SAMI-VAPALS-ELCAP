@@ -178,51 +178,88 @@ getVals(vrtn,zid,zsid) ; get the values for the form from the graph
  quit
  ;
 setVals(vary,zid,zsid) ; set the values returned from form id for patient zsid
- new root set root=$$setroot("elcap-patients")
+ new root set root=$$setroot^%wd("elcap-patients")
  if zsid="XXXX01" do  quit  ; the sample set
- . new src set src=$$setroot("elcapSampleJson")
+ . new src set src=$$setroot^%wd("elcapSampleJson")
  . if '$data(@src@(zid)) quit  ; no such form
  . merge @root@("graph",zsid,zid)=@src@(zid)
  merge @root@("graph",zsid,zid)=@vary
  quit
  ;
-initforms ; initialize sami forms
- n root s root=$$setroot("elcapSampleJson")
- n %i s %i=""
- f  s %i=$o(@root@(%i)) q:%i=""  d  ;
- . i %i="B" q
- . i %i=0 q
- . n vars
- . m vars=@root@(%i)
- . ;b
- . d initform1(%i,"vars") 
- q
+validate(value,spec,map) ; extrinsic returns 1 if valid 0 if not valid
+ ; value is passed by value and is the string being validated
+ ; spec is passed by value and is the fileman spec which defines the validation
+ ;   examples include: FJ30  D  N5.2
+ ; map is passed by name and is the field mapping entry for the variable
+ ; map is optional
  ;
-initform1(id,ary) ; initialize one form named id from ary passed by name
- n fn s fn=17.040201 ; file number
- n sfn s sfn=17.402011 ; subfile number for variables
- n fmroot s fmroot=$na(^%wf(17.040201))
- n fda,%yerr
- s fda(fn,"?+1,",.01)=id
- w !,"creating form ",id
- d UPDATE^DIE("","fda","","%yerr")
- i $d(%yerr) d  q  ;
- . w !,"error creating form record ",id,!
- . zwr %yerr
- n %ien s %ien=$o(@fmroot@("B",id,""))
- i %ien="" d  q  ;
- . w !,"error locating form record ",id
- n %j s %j=""
- n vcnt s vcnt=0
- k fda
- f  s %j=$o(@ary@(%j)) q:%j=""  d  ;
- . s vcnt=vcnt+1
- . s fda(sfn,"?+"_vcnt_","_%ien_",",.01)=%j
- d CLEAN^DILF
- w !,"creating variables for form ",%ien
- d UPDATE^DIE("","fda","","%yerr")
- i $d(%yerr) d  q  ;
- . w !,"error creating variable record ",%j,!
- . zwr %yerr
- q
+ if $g(spec)="" quit 0  ; everything is invalid with no spec
+ ;
+ ;new valrtn s valrtn
+ ;if $g(@map@("VALIDATOR"))'="" d  q valrtn  ; call a custom validator
+ ;. add code to call the custom validator here
+ ;
+ if spec["S" quit 1  ; all set of codes are valid - let fileman check them
+ ;
+ if spec["D" quit $$dateValid(value,spec,$get(map)) ; validate a date
+ ;
+ if spec["F" quit $$textValid(value,spec,$get(map)) ; validate free text field
+ ;
+ if spec["N" quit $$numValid(value,spec,$get(map)) ; validate a numeric value
+ ;
+ quit 0  ; what else is there? assume it is invalid
+ ;
+dateValid(value,spec,map) ; extrinsic which validates a date
+ ; returns 1 if valid 0 if invalid
+ ; uses fileman date validation routines
+ ;
+ n X,Y
+ set X=value
+ do ^%DT
+ if Y=-1 quit 0
+ quit 1
+ ;
+textValid(value,spec,map) ; validate a free text field
+ ; returns 1 if valid 0 if invalid
+ ; uses mumps pattern matching
+ ;
+ if spec'["F" quit 0  ; not a text field
+ ;
+ new min,max,x,specn
+ set specn=+$translate(spec,"FJX ","") ; gets rid of the alphabetics 
+ if specn["." d  ; there is a minimum and maximum
+ . set min=$piece(specn,".",1)
+ . set max=$piece(specn,".",2)
+ . set x="value?"_min_"."_max_"LUNP"
+ else  d  ; no minimum
+ . set x="value?."_specn_"LUNP"
+ ;w !,x
+ if @x quit 1
+ quit 0
+ ;
+numValid(value,spec,map) ; validate a numeric field
+ ; returns 1 if valid 0 if invalid
+ ; uses mumps pattern matching, handles decimal points
+ ;
+ if spec'["N" quit 0  ; not a numeric field
+ new left,right,x,specn
+ set specn=$translate(spec,"NJX ","") ; gets rid of the alphabetics 
+ n result s result=1 ; assume valid
+ if specn["," do  quit result  ; there is a left and right
+ . set left=$piece(specn,",",1) ; digits left of the decimal
+ . new valleft set valleft=$piece(value,".",1)
+ . set x="valleft?."_left_"N"
+ . if @x s result=1
+ . else  set result=0 quit  ;
+ . ; now test the number of digits right of the decimal 
+ . set right=$piece(specn,",",2)
+ . new valright set valright=$piece(value,".",2) ; digits right of the decimal
+ . set x="valright?."_right_"N"
+ . if @x set result=1
+ . else  set result=0
+ else  d  ; no right of decimal point
+ . set x="value?."_specn_"N"
+ w !,x
+ if @x quit 1
+ quit 0
  ;

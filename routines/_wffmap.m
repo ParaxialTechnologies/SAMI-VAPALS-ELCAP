@@ -78,4 +78,20 @@ updie(fda) ; update a fileman file
  kill fda
  quit
  ;
-
+initFmap(form) ; initializes the form-map graph for form
+ ;
+ new fglb set fglb=$$formGlb()
+ new formien set formien=$order(@fglb@("B",form,""))
+ if formien="" do  quit  ;
+ . write !,"Error initializing form-map for form: ",form
+ new mapglb set mapglb=$$setroot^%wd("form-map")
+ new fmapglb set fmapglb=$name(@mapglb@("graph",form))
+ if $data(@fmapglb) kill @fmapglb
+ ;b
+ do fmx^%yottaweb(fmapglb,$$formFn,formien)
+ q
+ ;
+getFmap(arry,form) ; get the fieldmap for the form
+ ;
+ q
+ ;

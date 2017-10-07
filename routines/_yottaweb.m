@@ -10,16 +10,16 @@
 fmrec(file,ien) ; extrinsic which returns the json version of the fmx return
  n %g,%gj
  d fmx("%g",file,ien)
- d encode^vprjson("%g","%gj")
+ d ENCODE^VPRJSON("%g","%gj")
  q %gj
  ;
-fmx(rtn,file,ien,camel) ; return an array of a fileman record for external
- ; use in rtn, which is passed by name.
+fmx(rtn,file,ien,camel) ; return an array of a fileman record for external 
+ ; use in rtn, which is passed by name. 
  ;
  k @rtn
  n trec,filenm
- d GETS^DIQ(file,ien_",","**","enr","trec")
- s filenm=$o(^dd(file,0,"nm",""))
+ d GETS^DIQ(file,ien_",","**","ENR","trec")
+ s filenm=$o(^DD(file,0,"NM",""))
  s filenm=$tr(filenm," ","_")
  ;zwr trec
  i $g(debug)=1 b
@@ -27,8 +27,8 @@ fmx(rtn,file,ien,camel) ; return an array of a fileman record for external
  f  d  q:%=""  ;
  . n fnum,fname,iens,field,val
  . s fnum=$qs(%,1)
- . i $d(^dd(fnum,0,"nm")) d  ;
- . . s fname=$o(^dd(fnum,0,"nm",""))
+ . i $d(^DD(fnum,0,"NM")) d  ;
+ . . s fname=$o(^DD(fnum,0,"NM",""))
  . . s fname=$tr(fname," ","_")
  . e  s fname=fnum
  . s iens=$qs(%,2)
@@ -80,8 +80,8 @@ gpltest(rtn,filter) ;
  s ary("title")="test html"
  s ary(1,1)=gary("patient","name")
  s ary(1,2)=gary("patient","date_of_birth")
- s ary(1,3)=gary("patient","age")
- d genhtml2^%yottautl(rtn,"ary")
+ s ary(1,3)=gary("patient","age")          
+ d genhtml2^kbaiutil(rtn,"ary")
  s @rtn@($o(@rtn@(""),-1)+1)=gbot
  k @rtn@(0)
  s HTTPRSP("mime")="text/html"

@@ -88,7 +88,7 @@ initFmap(form) ; initializes the form-map graph for form
  new fmapglb set fmapglb=$name(@mapglb@("graph",form))
  if $data(@fmapglb) kill @fmapglb
  ;b
- do fmx^%yottaweb(fmapglb,$$formFn,formien)
+ do fmx^%sfv2g(fmapglb,$$formFn,formien)
  q
  ;
 getFmap(arry,form) ; get the fieldmap for the form

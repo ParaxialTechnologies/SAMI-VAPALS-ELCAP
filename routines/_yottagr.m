@@ -270,7 +270,7 @@ wssee(rtn,filter) ; web service for browsing files using the graph
  . . d style(.rtn,zuri)
  . . d ADDCRLF^VPRJRUT(.rtn)
  . s filter("*")=zuri
- . d filesys^%w0(.rtn,.filter) 
+ . d FILESYS^%W0(.rtn,.filter) 
  ;s zf=$$isfile(arg)
  ;i zf'=-1 s zuri=$$useuri(zf) ;
  ;e  d  ;
@@ -278,7 +278,7 @@ wssee(rtn,filter) ; web service for browsing files using the graph
  ;. i zf'=-1 s zuri=$$useuri(zf)
  ;i zuri'=1 d  q  ;
  ;. s filter("*")=zuri
- ;. d filesys^%w0(.rtn,.filter)
+ ;. d FILESYS^%W0(.rtn,.filter)
  n matches
  ;i arg["%20" s arg=$tr(arg,"%20"," ")
  d match("#"_arg,"matches")
@@ -385,7 +385,7 @@ multout(rtn,zary,title) ; return and html page with multiple selections
  . s @rtn@($o(@rtn@(""),-1)+1)=gbot
  ;i $e(arg,$l(arg))="/" d  q  ; it's a directory
  ;. s rtn="it's a directory"
- ;d filesys^%w0(.rtn,.filter)
+ ;d FILESYS^%W0(.rtn,.filter)
  q
  ;
 dir(rtn,zpar)

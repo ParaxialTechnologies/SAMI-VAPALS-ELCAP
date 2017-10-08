@@ -40,13 +40,13 @@ wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
  . . s zhtml(%j)=$p(tln,"*sbsid*",1)_sid_$p(tln,"*sbsid*",2)
  . i zhtml(%j)["action=" d  ;
  . . ;s zhtml(%j)="<form action=""http://vendev.vistaplex.org:9080/postform?form="_id_"&studyId="_sid_""" method=""POST"" id=""backgroundForm"">"
- . . s zhtml(%j)="<form action=""postform?form="_id_"&studyId="_sid_""" method=""POST"" id=""backgroundForm"">"
+ . . s zhtml(%j)="<form action=""form?form="_id_"&studyId="_sid_""" method=""POST"" id=""backgroundForm"">"
  . i $$replaceHref(.tln) s zhtml(%j)=tln ; fix the css and js href values
  . i zhtml(%j)["input" d  ;
  . . i $l(zhtml(%j),"<input")>2 d  ; got to split the lines
  . . . n zgt,zgn s zgt=zhtml(%j)
  . . . s zgn=$f(zgt,"<input",$f(zgt,"<input"))
- . . . s zhtml(%j+.5)=$e(zgt,zgn-6,$l(zgt))
+ . . . s zhtml(%j+.001)=$e(zgt,zgn-6,$l(zgt))
  . . . s zhtml(%j)=$e(zgt,1,zgn-7)
  . . . s tln=zhtml(%j)
  . . i $g(name)="" q  ;
@@ -63,7 +63,20 @@ wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
  . . ;s val=$$URLENC^VPRJRUT(val)
  . . f  d replace^%yottaq(.val,"""","&quot;") q:val'[""""
  . . d value(.tln,val)
+ . . ;
+ . . ; validation starts here
+ . . ;
+ . . new spec,errmsg set spec=$$getFieldSpec^%wffmap(id,name)
+ . . set errmsg="Input invalid"
+ . . if val'="" do  ;
+ . . . if $$validate(val,spec,,.errmsg)<1 do  ;
+ . . . . set errflag=1
+ . . . . do insError(.tln,.errmsg)
+ . . ;
+ . . ; end validation
+ . . ;
  . . ;w !,tln,!,zhtml(%j),! b
+ . . if $get(filter("debug"))=1 do insError(.tln,"field="_name)
  . . s zhtml(%j)=tln
  . i zhtml(%j)["<textarea" d  ;
  . . n val
@@ -104,6 +117,12 @@ replace(ln,cur,repl) ; replace current with replacment in line ln
  quit:where=0 ; this might not work for cur at the end of ln, please test
  set ln=$extract(ln,1,where-$length(cur)-1)_repl_$extract(ln,where,$length(ln))
  quit
+ ;
+insError(ln,msg) ; inserts an error message into ln, passed by reference
+ ;
+ new errins set errins="<span class=""alert"" style=""font-size: 0.9em;"">"_msg_"</span>"
+ do replace(.ln,"</input>","</input>"_errins)
+ q
  ;
 unvalue(ln) ; sets value=""
  new l1,l2,l3,t1,t2
@@ -146,6 +165,17 @@ wsPostForm(ARGS,BODY,RESULT) ; recieve from form
  merge %json(sid,form)=tbdy
  new gr set gr=$$setroot^%wd("elcap-patients")
  merge @gr@("graph")=%json
+ ;
+ ; validation process
+ ;
+ new errflag set errflag=0
+ new revise
+ do wsGetForm(.revise,.ARGS)
+ if errflag'=0 do  quit  ;
+ . merge RESULT=revise
+ ;
+ ; end validation process
+ ;
  new tjson
  do ENCODE^VPRJSON("%json","tjson")
  do beautify^%wd("tjson","RESULT")
@@ -186,12 +216,13 @@ setVals(vary,zid,zsid) ; set the values returned from form id for patient zsid
  merge @root@("graph",zsid,zid)=@vary
  quit
  ;
-validate(value,spec,map) ; extrinsic returns 1 if valid 0 if not valid
+validate(value,spec,map,msg) ; extrinsic returns 1 if valid 0 if not valid
  ; value is passed by value and is the string being validated
  ; spec is passed by value and is the fileman spec which defines the validation
  ;   examples include: FJ30  D  N5.2
  ; map is passed by name and is the field mapping entry for the variable
  ; map is optional
+ ; msg is passed by reference and can contain on return a custom error message
  ;
  if $g(spec)="" quit 0  ; everything is invalid with no spec
  ;
@@ -201,7 +232,7 @@ validate(value,spec,map) ; extrinsic returns 1 if valid 0 if not valid
  ;
  if spec["S" quit 1  ; all set of codes are valid - let fileman check them
  ;
- if spec["D" quit $$dateValid(value,spec,$get(map)) ; validate a date
+ if spec["D" quit $$dateValid(value,spec,$get(map),.msg) ; validate a date
  ;
  if spec["F" quit $$textValid(value,spec,$get(map)) ; validate free text field
  ;
@@ -209,7 +240,7 @@ validate(value,spec,map) ; extrinsic returns 1 if valid 0 if not valid
  ;
  quit 0  ; what else is there? assume it is invalid
  ;
-dateValid(value,spec,map) ; extrinsic which validates a date
+dateValid(value,spec,map,msg) ; extrinsic which validates a date
  ; returns 1 if valid 0 if invalid
  ; uses fileman date validation routines
  ;

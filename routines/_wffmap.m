@@ -54,6 +54,9 @@ importfmap(csvname,form) ; import form mapping definitions from csv
  . set fda($$formVarFn(),"?+1,"_formien_",",2)=$get(fmap(%w1,"mPropType"))
  . zwr fda
  . d updie(.fda)
+ . ;
+ . do initFmap(form)
+ . ;
  quit
  ;
 formien(form) ; extrinsic returns the record number of the form
@@ -89,9 +92,60 @@ initFmap(form) ; initializes the form-map graph for form
  if $data(@fmapglb) kill @fmapglb
  ;b
  do fmx^%sfv2g(fmapglb,$$formFn,formien)
+ ;
+ ; sample fieldmap graph entry
+ ;
+ ;^%wd(17.040801,7,"graph","sbform","VARIABLE",148,"DATA_TYPE")="D"
+ ;^%wd(17.040801,7,"graph","sbform","VARIABLE",148,"FILEMAN_FIELD")=34.1
+ ;^%wd(17.040801,7,"graph","sbform","VARIABLE",148,"FILEMAN_FILE")="SAMI BACKGROUND"
+ ;^%wd(17.040801,7,"graph","sbform","VARIABLE",148,"TITLE")="Date informed consent signed"
+ ;^%wd(17.040801,7,"graph","sbform","VARIABLE",148,"VARIABLE")="sbdoc"
+ ;
+ ; index the graph
+ new %wi s %wi=0
+ for  set %wi=$order(@fmapglb@("VARIABLE",%wi)) quit:+%wi=0  do  ;
+ . new %wvar set %wvar=$get(@fmapglb@("VARIABLE",%wi,"VARIABLE"))
+ . quit:%wvar=""
+ . set @fmapglb@("VARIABLE","B",%wvar,%wi)=""
+ . new %wfield set %wfield=$get(@fmapglb@("VARIABLE",%wi,"FILEMAN_FIELD"))
+ . quit:%wfield=""
+ . set @fmapglb@("VARIABLE","FIELD",%wfield,%wvar,%wi)=""
  q
  ;
-getFmap(arry,form) ; get the fieldmap for the form
+getFmapGlb(form) ; get the location of the fieldmap for the form
+ new mapglb set mapglb=$$setroot^%wd("form-map")
+ new fmapglb set fmapglb=$name(@mapglb@("graph",form,"VARIABLE"))
  ;
- q
+ q fmapglb
  ;
+getFieldSpec(form,field,fmapglb) ; extrinsic returns the format specification
+ ; for field in form. fmapglb is optional but will speed up the lookup
+ ;
+ if $get(fmapglb)="" s fmapglb=$$getFmapGlb(form)
+ ;
+ new %wien s %wien=$o(@fmapglb@("B",field,""))
+ ;
+ if %wien="" do  quit  ;
+ . ;write !,"Error field map not found"
+ . ;d ^ZTER
+ ;
+ quit $get(@fmapglb@(%wien,"DATA_TYPE"))
+ ;
+getFieldMap(array,form,field,fmapglb) ; array is passed by name and returns the file map
+ ; for the field in the form
+ ; fmapglb is passed by name and is optional, but will speed up processing
+ ;
+ if $get(fmapglb)="" s fmapglb=$$getFmapGlb(form)
+ ;
+ new %wien s %wien=$o(@fmapglb@("B",field,""))
+ ;
+ if %wien="" do  quit  ;
+ . ;write !,"Error field map not found"
+ . ;d ^ZTER
+ ;
+ merge @array=@fmapglb@(%wien)
+ ;
+ quit
+ ;
+ 
+ 

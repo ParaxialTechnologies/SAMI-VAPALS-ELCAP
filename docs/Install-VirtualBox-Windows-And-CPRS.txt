@@ -27,4 +27,16 @@ Build a Windows 10 virtual machine
     Restart your virtual machine. I use the power options in the Windows Menu, but you can also use the controls provided in the VirtualBox Manager. The Guest Additions should produce a much more well-behaved virtual machine whose window can be resized and that doesn't capture your mouse.
     
 Install CPRS
+    CPRS must be installed on your virtual machine; it only runs on Windows.
     
+    Paste the following links into a browser to download the ZIP files:
+        http://foia-vista.osehra.org/Patches_By_Application/CPRS%20GUI%20FILES/CPRS%20VERSION%2030c/OR_30_423_scrubbed.zip
+        http://foia-vista.osehra.org/Patches_By_Application/CPRS%20GUI%20FILES/CPRS%20VERSION%2030c/OR_30_423_SRC_scrubbed.zip
+    
+    Expand both ZIP archives. OR_30_423_scrubbed contains CPRSChart.exe; copy it to your desktop. OR_30_423_SRC_scrubbed includes the directory CPRS-chart, which includes the file borlndmm.dll; copy it to your desktop as well.
+    
+    Next you need to determine what IP address to use when connecting CPRS to Vista. In the Windows search field type "cmd" and select Command Prompt. At the prompt (C:\Users\IEUser>) type "ipconfig". Copy or remember the ethernet adapter default gateway IP address.
+    
+    Double-click CPRSChart.exe to start CPRS. On the Connect To panel, click New. Enter the IP address from the previous step and port 9430. Use the following credentials or those of your own CPRS-enabled Vista user:
+        Access Code: FakeDoc1
+        Verify Code: 1Doc!@#$

@@ -1,0 +1,50 @@
+﻿== Some user-interface comments on the link:background-form.html[Background Form]
+
+. In general, we've followed https://www.edwardtufte.com/[Edward Tufte's]
+https://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=00003h#responses[guidelines
+on noise-reduction and signal improvement]. This currently includes greying out
+and deactivating elements that are not currently relevant (Tufte would
+recommend hiding them entirely, but we feel that this would be disruptive for
+the study at the present time---users currently expect to see spatial form
+consistency, and we want to preserve that for now).
+
+. In general, many two-choice radio buttons can be replaced with a
+checkmark (with the question rephrased). Here, this would apply to the
+following:
+
+[options="compact"]
+.. ††__Was a CT lung screening scan ordered for this patient (CPT code G0297)__?††
+.. ††__Have you experienced any symptoms indicative of lung cancer?__††
+.. ††__Have you had a pulmonary function test within the last five years?__††
+.. ††__To your knowledge, have you been exposed to asbestos?__††
+.. ††__Have you smoked at least 100 cigarettes in your lifetime? (100 cigarettes = 5 packs)__††
+.. ††__If no, were you exposed to secondhand smoke?__††
+.. ††__Over the past month, have you smoked at all, even one cigarette?__††
+
+. In the ††__Was a CT lung screening scan ordered for this patient (CPT code
+G0297)?__†† question, there is a notation: ††__(If no, the rest of the
+questions in this section are optional.)__†† We are current unclear what
+``optional'' means here; if this is _no_, then should the person filling out
+the form still be able to answer any of the questions in the following section?
+From the phrasing, I would say yes and reenable this section, but other team
+members aren't sure.
+
+. In the ``Tobacco Use'' section, things could change a bit given how we're
+manipulating the form. For example, ††__If yes, skip to the ``Secondhand
+Tobacco Smoke Exposure'' section__†† could be removed, because if the ``yes''
+radio button is selected, that section would be enabled.
+
+. Is question ††__About how old were you when you first started smoking
+cigarettes regularly?__†† to be answered even if they've smoked less than 100
+cigarettes?
+
+. The questions ††__If no, when was the date of your last cigarette?__†† and
+††__If no, number of years since quit__†† should probably be moved into the
+``Former Cigarette Smoker'' section.
+
+. The question ††__If no, when was the date of your last cigarette?__†† uses
+three separate input elements; it could just use a date selector field, such as
+used for ††Visit Date††. Vista can handle fragmentary date information if
+that's the reason for this odd date input.
+
+

@@ -35,7 +35,10 @@ $jQ( document ).ready( function() {
         var obj = $jQ(container);
         obj.removeClass("disabled");
         obj.find(".disabled").removeClass("disabled");
-        obj.find("input, select, textarea").prop("disabled", false);
+        obj.find("input, select, textarea").each( function(){
+          if (this.name.match(/-vis$/)) { return; }
+          $jQ(this).prop("disabled", false);
+        });
       },
       switchoff = function(container){
         var obj = $jQ(container);
@@ -46,17 +49,41 @@ $jQ( document ).ready( function() {
       switcher = function(){
         var control = $jQ(this).attr("switch");
         var container = $jQ("[id^='" + this.name + "-switch']");
-        if (control == "y") {
+        if (container.length > 0 && control == "y") {
+          switchon( container );
+        } else {
+          switchoff( container );
+        }
+        container = $jQ("[id^='" + this.name + "-nswitch']");
+        if (container.length > 0 && control != "y") {
           switchon( container );
         } else {
           switchoff( container );
         }
       },
-      bgform = $jQ( "form#backgroundForm" )[0];
+      bgform = $jQ( "form#backgroundForm" )[0],
+      msinyear = 31557600000.0; // Milliseconds in one year.
+
+    // The I-ELCAP data format.
+    $jQ( "input.ddmmmyyyy" ).datepicker( {
+      showOn: "button",
+      buttonImage: "calendar.png",
+      buttonImageOnly: true,
+      buttonText: "Select date",
+      dateFormat: "dd/M/yy"
+    } );
+    // ISO date format, when we get around to that.
+    $jQ( "input.yyyymmdd" ).datepicker( {
+      showOn: "button",
+      buttonImage: "calendar.png",
+      buttonImageOnly: true,
+      buttonText: "Select date",
+      dateFormat: "yy-mm-dd"
+    } );
 
   if (bgform) {
     var flatInput = function( name ){
-          return $jQ( "form#backgroundForm input[name='" + name + "']" );
+          return $jQ( "form#backgroundForm [name='" + name + "']" );
         },
         radioSelected = function( name ){
           return $jQ(
@@ -96,23 +123,52 @@ $jQ( document ).ready( function() {
           } else {
             flatInput("sbffrvis").val( "" );
           }
+        },
+        sbsdlcyyThing = function(field){
+          var x = parseInt(flatInput(field).val());
+          if (x) {
+            return x.toFixed(0);
+          } else {
+            return 0;
+          }
+        },
+        sbsdlcyyCalc = function(){
+          var today = new Date(),
+              quitYear, quitMonth, quitDay, quitDate, since;
+          quitYear = sbsdlcyyThing("sbsdlcy");
+          quitMonth = sbsdlcyyThing("sbsdlcm");
+          quitDay = sbsdlcyyThing("sbsdlcd");
+          if (quitYear && quitMonth && quitDay) {
+            quitMonth--;
+          } else if (quitYear && quitMonth && !quitDay) {
+            quitMonth--;
+            quitDay = 1;
+          } else if (quitYear && !quitMonth && quitDay) {
+            quitMonth = today.getMonth();
+          } else if (!quitYear && quitMonth && quitDay) {
+            quitYear = today.getFullYear();
+          } else if (quitYear && !quitMonth && !quitDay) {
+            quitMonth = today.getMonth();
+            quitDay = today.getDate();
+          } else if (!quitYear && !quitMonth && quitDay) {
+            quitYear = today.getFullYear();
+            quitMonth = today.getMonth();
+          } else if (!quitYear && quitMonth && !quitDay) {
+            quitYear = today.getFullYear();
+            quitDay = 1;
+          } else if (!quitYear && !quitMonth && !quitDay) {
+            flatInput("sbsdlcy-vis").val("");
+            return;
+          }
+          quitDate = new Date(quitYear, quitMonth, quitDay);
+          since = today - quitDate;
+          if (since < 0) {
+            flatInput("sbsdlcy-vis").val("");
+            return;
+          }            
+          since /= msinyear;
+          flatInput("sbsdlcy-vis").val( since.toFixed(1) );
         };
-    // The I-ELCAP data format.
-    $jQ( "input.ddmmmyyyy" ).datepicker( {
-      showOn: "button",
-      buttonImage: "calendar.png",
-      buttonImageOnly: true,
-      buttonText: "Select date",
-      dateFormat: "dd/M/yy"
-    } );
-    // ISO date format, when we get around to that.
-    $jQ( "input.yyyymmdd" ).datepicker( {
-      showOn: "button",
-      buttonImage: "calendar.png",
-      buttonImageOnly: true,
-      buttonText: "Select date",
-      dateFormat: "yy-mm-dd"
-    } );
     flatInput("sbph").on( "change", bmiCalc );
     flatInput("sbpw").on( "change", bmiCalc );
     flatInput("sbphu").on( "change", bmiCalc );
@@ -121,6 +177,10 @@ $jQ( document ).ready( function() {
     flatInput("sbfev1").on( "change", sbffrCalc );
     flatInput("sbfvc").on( "change", sbffrCalc );
     sbffrCalc();
+    flatInput("sbsdlcd").on( "change", sbsdlcyyCalc );
+    flatInput("sbsdlcm").on( "change", sbsdlcyyCalc );
+    flatInput("sbsdlcy").on( "change", sbsdlcyyCalc );
+    sbsdlcyyCalc();
     // Set up switch triggers.
     $jQ("form [switch]").on("change", switcher);
     // Deactivate all the switch regions. (Note: We could just leave them all
@@ -129,11 +189,17 @@ $jQ( document ).ready( function() {
     $jQ("form [switch]").each(function(){
       var sname = "[id^='" + this.name + "-switch']";
       switchoff(sname);
+      sname = "[id^='" + this.name + "-nswitch']";
+      switchoff(sname);
     });
     // Now turn on all the ones whose triggers are switched on.
     $jQ("form [switch]").each(function(){
       var sname = "[id^='" + this.name + "-switch']";
       if ($jQ(this).prop("checked") && $jQ(this).val() == "y") {
+        switchon(sname);
+      }
+      sname = "[id^='" + this.name + "-nswitch']";
+      if ($jQ(this).prop("checked") && $jQ(this).val() != "y") {
         switchon(sname);
       }
     });

@@ -1,6 +1,7 @@
 adoc_to_html(
   contacts.adoc
   docker.adoc
+  help-text-for-va-elcap.adoc
   index.adoc
   meetings.adoc
   rick-and-domenic-q-and-a.adoc

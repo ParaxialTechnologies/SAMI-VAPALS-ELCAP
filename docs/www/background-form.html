@@ -37,7 +37,7 @@
       </div>
       <table class="banner-head">
         <tr>
-          <td>Background Form <a class="info" href="#sbform-help"><img src="info-banner.svg"/></a></td>
+          <td>Background Form<a class="info" href="#sbform-help"><img src="info-banner.svg"/></a></td>
         </tr>
       </table>
       <table class="visit-info">
@@ -59,7 +59,7 @@
           <th>Occupation<a class="info" href="#sbocc-help"><img src="info.svg"/></a><span id="sbocc-fielderror"></span><br/><span class="thnote">(If retired, also indicate previous occupation.)</span></th>
           <td>
             <input type="text" name="sbocc" class="f20s" value=""></input>
-            <span class="th">Occupation Code <a class="info" id="sboccc-help" href="#" value="Note that if the patient is retired, you should use their previous occupation in this field."><img src="info.svg"/></a><span id="sboccc-fielderror"></span></span>
+            <span class="th">Occupation Code<a class="info" id="sboccc-help" href="#" value="Note that if the patient is retired, you should use their previous occupation in this field."><img src="info.svg"/></a><span id="sboccc-fielderror"></span></span>
             <select name="sboccc">
               <option value="-" selected>&mdash;</option>
               <option value="1">Higher executives</option>
@@ -78,7 +78,7 @@
           <td>
             <input type="radio" name="sbsex" value="m">M</input>
             <input type="radio" name="sbsex" value="f">F</input>
-            <span class="th height">Height <a class="info" href="#" id="sbph-help" value="Mixed values (5'10&quot;, for example) may not be used"><img src="info.svg"/></a><span id="sbph-fielderror"><a name="err-1" href="#err-1e"><img src="error.png"/>1</a></span></span>
+            <span class="th height">Height<a class="info" href="#" id="sbph-help" value="Mixed values (5'10&quot;, for example) may not be used"><img src="info.svg"/></a><span id="sbph-fielderror"><a name="err-1" href="#err-1e"><img src="error.png"/>1</a></span></span>
             <input type="text" name="sbph" class="f3d" value=""></input>
             <table class="sbphu">
               <tr>
@@ -106,7 +106,7 @@
                 </td>
               </tr>
             </table>
-            <span class="th bmi">BMI <a class="info" href="#" id="sbbmi-help" value="This is automatically calculated from Height and Weight."><img src="info.svg"/></a></span>
+            <span class="th bmi">BMI<a class="info" href="#" id="sbbmi-help" value="This is automatically calculated from Height and Weight."><img src="info.svg"/></a></span>
             <input type="text" name="sbbmivis" value="" disabled="disabled" class="f4-1f"></input>
             <input type="hidden" name="sbbmi" value""/>
           </td>
@@ -174,13 +174,13 @@
         <tr>
           <th>Was a CT lung screening scan ordered for this patient (CPT code G0297)?</th>
           <td>
-            <input type="radio" name="sbmeq" value="n">no</input>
-            <input type="radio" name="sbmeq" value="y">yes</input>
-            <span class="tdnote">(If no, the rest of the questions in this section are optional.)</span>
+            <input type="radio" name="sbmeq" value="n" switch="n">no</input>
+            <input type="radio" name="sbmeq" value="y" switch="y">yes</input>
+            <span class="tdnote" id="sbmeq-nswitch">(If no, the rest of the questions in this section are optional.)</span>
           </td>
         </tr>
       </table>
-      <table class="ordering-info">
+      <table class="ordering-info" id="sbmeq-switch">
         <tr>
           <th class="oprac">Ordering Practitioner Name (Last, First)<span id="sbopln-fielderror"></span></th>
           <td>
@@ -239,7 +239,7 @@
       </table>
       <table class="medical-conditions-header">
         <tr>
-          <th colspan="2">Medical Conditions <a class="info" href="#"><img src="info.svg"/></a></th>
+          <th colspan="2">Medical Conditions<a class="info" href="#"><img src="info.svg"/></a></th>
         </tr>
       </table>
       <table class="medical-conditions">
@@ -425,7 +425,7 @@
       </table>
       <table class="lc-symptoms">
         <tr>
-          <th>Have you experienced any symptoms indicative of lung cancer? <a class="info" href="#"><img src="info.svg"/></a></th>
+          <th>Have you experienced any symptoms indicative of lung cancer?<a class="info" href="#"><img src="info.svg"/></a></th>
           <td>
             <input type="radio" name="sblcs" value="n" checked="checked" switch="n">no</input>
             <input type="radio" name="sblcs" value="y" switch="y">yes</input>
@@ -467,7 +467,7 @@
           <th colspan="2" class="h3">Pulmonary Function Test Data</th>
         </tr>
         <tr class="pulfunc">
-          <th>Have you had a pulmonary function test within the last five years? <a class="info" href="#"><img src="info.svg"/></a></th>
+          <th>Have you had a pulmonary function test within the last five years?<a class="info" href="#"><img src="info.svg"/></a></th>
           <td>
             <input type="radio" name="sbahpft" value="n" checked="checked" switch="n">no</input>
             <input type="radio" name="sbahpft" value="y" switch="y">yes</input>
@@ -498,14 +498,14 @@
       </table>
       <table class="occupational">
         <tr>
-          <th class="nowrap">To your knowledge, have you been exposed to asbestos? <a class="info" href="#"><img src="info.svg"/></a></th>
+          <th class="nowrap">To your knowledge, have you been exposed to asbestos?<a class="info" href="#"><img src="info.svg"/></a></th>
           <td>
             <input type="radio" name="sbaha" value="n" checked="checked">no</input>
             <input type="radio" name="sbaha" value="y">yes</input>
           </td>
         </tr>
         <tr class="sbahao">
-          <th class="nowrap">Have you ever worked in any of the following? <a class="info" href="#"><img src="info.svg"/></a></th>
+          <th class="nowrap">Have you ever worked in any of the following?<a class="info" href="#"><img src="info.svg"/></a></th>
           <td>
             <span class="nowrap"><input type="checkbox" name="sbahaoi" value="i">asbestos product manufacturing</input></span>
             <span class="nowrap"><input type="checkbox" name="sbahaoj" value="j">auto repair</input></span>
@@ -522,12 +522,12 @@
       </table>
       <table class="tobacco-header">
         <tr>
-          <th colspan="2">Tobacco Use <a class="info" href="#"><img src="info.svg"/></a></th>
+          <th colspan="2">Tobacco Use<a class="info" href="#"><img src="info.svg"/></a></th>
         </tr>
       </table>
       <table class="tobacco">
         <tr>
-          <th class="nowrap">Have you smoked at least 100 cigarettes in your lifetime? (100 cigarettes = 5 packs) <a class="info" href="#"><img src="info.svg"/></a></th>
+          <th class="nowrap">Have you smoked at least 100 cigarettes in your lifetime? (100 cigarettes = 5 packs)<a class="info" href="#"><img src="info.svg"/></a></th>
           <td>
             <input type="radio" name="sbsru" value="n" switch="y">no</input>
             <input type="radio" name="sbsru" value="y" switch="n">yes</input>
@@ -548,16 +548,124 @@
           </td>
         </tr>
         <tr>
-          <th class="nowrap">Over the past month, have you smoked at all, even one cigarette? <a class="info" href="#"><img src="info.svg"/></a></th>
+          <th class="nowrap">Over the past month, have you smoked at all, even one cigarette?<a class="info" href="#"><img src="info.svg"/></a></th>
           <td>
             <input type="radio" name="sbshsa" value="n" switch="n">no</input>
             <input type="radio" name="sbshsa" value="y" switch="y">yes</input>
-            <span class="tdnote" id="sbshsa-switch">If yes, skip to the “Current Cigarette Smoker” section.</span>
+            <span class="tdnote" id="sbshsa-switch">If yes, skip to the “<a href="#ccs">Current Cigarette Smoker</a>” section.</span>
+          </td>
+        </tr>
+        <tr id="sbshsa-nswitch0">
+          <th class="nowrap">If no, when was the date of your last cigarette (DD/Mmm/YYYY)?<a class="info" href="#"><img src="info.svg"/></a><span id="sbsdlcd-fielderror"></span></th>
+          <td>
+            <span class="thnn">Day</span>
+            <select name="sbsdlcd">
+              <option value="-" selected>&mdash;</option>
+              <option value="1">01</option>
+              <option value="2">02</option>
+              <option value="3">03</option>
+              <option value="4">04</option>
+              <option value="5">05</option>
+              <option value="6">06</option>
+              <option value="7">07</option>
+              <option value="8">08</option>
+              <option value="9">09</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+              <option value="17">17</option>
+              <option value="18">18</option>
+              <option value="19">19</option>
+              <option value="20">20</option>
+              <option value="21">21</option>
+              <option value="22">22</option>
+              <option value="23">23</option>
+              <option value="24">24</option>
+              <option value="25">25</option>
+              <option value="26">26</option>
+              <option value="27">27</option>
+              <option value="28">28</option>
+              <option value="29">29</option>
+              <option value="30">30</option>
+              <option value="31">31</option>
+            </select>
+            <span class="thn">Month</span>
+            <select name="sbsdlcm">
+              <option value="-" selected>&mdash;</option>
+              <option value="1">Jan</option>
+              <option value="2">Feb</option>
+              <option value="3">Mar</option>
+              <option value="4">Apr</option>
+              <option value="5">May</option>
+              <option value="6">Jun</option>
+              <option value="7">Jul</option>
+              <option value="8">Aug</option>
+              <option value="9">Sep</option>
+              <option value="10">Oct</option>
+              <option value="11">Nov</option>
+              <option value="12">Dec</option>
+            </select>
+            <span class="thn">Year (YYYY)<span id="sbsdlcy-fielderror"></span></span>
+            <input type="text" name="sbsdlcy" value="" class="yyyy"></input>
+          </td>
+        </tr>
+        <tr id="sbshsa-nswitch1">
+          <!-- This doesn't have a corresponding field in the data dictionary;
+               it's calculated from sbsdlc*. -->
+          <th class="nowrap">If no, number of years since quit (computed from quit date) <span id="sbsdlcd-fielderror"></span></th>
+          <td>
+            <input type="text" name="sbsdlcy-vis" value="" disabled="disabled" class="f3-1f"></input>
+          </td>
+        </tr>
+      </table>
+      <table class="former-cig-smoker"  id="sbshsa-nswitch2">
+        <tr>
+          <th colspan="2" class="h4">Former Cigarette Smoker<a class="info" href="#"><img src="info.svg"/></a></th>
+        </tr>
+        <tr>
+          <th>When you were a smoker, on approximately how many days per week did you smoke cigarettes?</th>
+          <td>
+            <input type="text" name="sbfdpw" value="" class="f3d"></input>
           </td>
         </tr>
         <tr>
-          <th class="nowrap">If no, when was the date of your last cigarette (DD/Mmm/YYYY)? <a class="info" href="#"><img src="info.svg"/></a></th>
-          <td></td>
+          <th>On the days that you did smoke, approximately how many packs of cigarettes did you smoke per day (PPD)?<a class="info" href="#"><img src="info.svg"/></a></th>
+          <td>
+            <input type="text" name="sbfppd" value="" class="f3d"></input>
+          </td>
+        </tr>
+        <tr>
+          <th>For approximately how many years did you smoke this amount?<a class="info" href="#"><img src="info.svg"/></a></th>
+          <td>
+            <input type="text" name="sbfdur" value="" class="f3d"></input>
+          </td>
+        </tr>
+      </table>
+      <table class="current-cig-smoker" id="sbshsa-switch1">
+        <tr>
+          <th colspan="2" class="h4"><a name="ccs">Current Cigarette Smoker</a><a class="info" href="#"><img src="info.svg"/></a></th>
+        </tr>
+        <tr>
+          <th>On average, on how many days per week do you (or did you) smoke cigarettes?</th>
+          <td>
+            <input type="text" name="sbcdpw" value="" class="f3d"></input>
+          </td>
+        </tr>
+        <tr>
+          <th>On average, how many packs of cigarettes do you (or did you) smoke per day (PPD)?<a class="info" href="#"><img src="info.svg"/></a></th>
+          <td>
+            <input type="text" name="sbcppd" value="" class="f3d"></input>
+          </td>
+        </tr>
+        <tr>
+          <th>For approximately how many years have you smoked this amount?<a class="info" href="#"><img src="info.svg"/></a></th>
+          <td>
+            <input type="text" name="sbfdur" value="" class="f3d"></input>
+          </td>
         </tr>
       </table>
       <input type="submit" value="Test submission"/>

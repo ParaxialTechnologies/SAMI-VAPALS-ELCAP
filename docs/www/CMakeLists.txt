@@ -1,3 +1,7 @@
+adoc_to_html(
+  background-form-stuff.adoc
+  )
+
 scss_to_css(
   sami.scss
   )

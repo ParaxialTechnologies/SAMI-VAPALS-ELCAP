@@ -41,7 +41,8 @@ wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
  . i zhtml(%j)["action=" d  ;
  . . ;s zhtml(%j)="<form action=""http://vendev.vistaplex.org:9080/postform?form="_id_"&studyId="_sid_""" method=""POST"" id=""backgroundForm"">"
  . . s zhtml(%j)="<form action=""form?form="_id_"&studyId="_sid_""" method=""POST"" id=""backgroundForm"">"
- . i $$replaceHref(.tln) s zhtml(%j)=tln ; fix the css and js href values
+ . if $$replaceSrc(.tln) s zhtml(%j)=tln ; fix the css and js href values
+ . ;i $$replaceHref(.tln) s zhtml(%j)=tln ; fix the css and js href values
  . i zhtml(%j)["input" d  ;
  . . i $l(zhtml(%j),"<input")>2 d  ; got to split the lines
  . . . n zgt,zgn s zgt=zhtml(%j)
@@ -98,6 +99,18 @@ wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
  m @rtn=zhtml
  s HTTPRSP("mime")="text/html"
  q
+ ;
+replaceSrc(ln) ; do replacements on lines for src= to use the see service to locate
+ ; the resource. extrinsic returns true if replacement was done
+ new done set done=0
+ if ln["src=" do  ; 
+ . do replace(.ln,"src=""","src=""see/")
+ . set done=1
+ if ln["href=" do  ; 
+ . if ln["href=""#" quit  ;
+ . do replace(.ln,"href=""","href=""see/")
+ . set done=1
+ quit done
  ;
 replaceHref(ln) ; do replacements on html lines for href values; extrinsic returns true if 
  ; replacement was done

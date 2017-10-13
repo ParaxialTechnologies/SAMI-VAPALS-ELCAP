@@ -34,7 +34,10 @@ $jQ( document ).ready( function() {
   var switchon = function(container){
         var obj = $jQ(container);
         obj.removeClass("disabled");
-        obj.find(".disabled").removeClass("disabled");
+        obj.find(".disabled").each( function(){
+          if (this.id.match(/-n?switch/)) { return; }
+          $jQ(this).removeClass("disabled");
+        });
         obj.find("input, select, textarea").each( function(){
           if (this.name.match(/-vis$/)) { return; }
           $jQ(this).prop("disabled", false);
@@ -168,6 +171,16 @@ $jQ( document ).ready( function() {
           }            
           since /= msinyear;
           flatInput("sbsdlcy-vis").val( since.toFixed(1) );
+        },
+        sbntpyCalc = function(){
+          var dpw = flatInput("sbcdpw").val(),
+              ppd = flatInput("sbcppd").val(),
+              yrs = flatInput("sbfdur").val();
+          if (dpw && ppd && yrs) {
+            flatInput("sbntpy").val(dpw * ppd * 52 * yrs);
+          } else {
+            flatInput("sbntpy").val("");
+          }
         };
     flatInput("sbph").on( "change", bmiCalc );
     flatInput("sbpw").on( "change", bmiCalc );
@@ -181,6 +194,10 @@ $jQ( document ).ready( function() {
     flatInput("sbsdlcm").on( "change", sbsdlcyyCalc );
     flatInput("sbsdlcy").on( "change", sbsdlcyyCalc );
     sbsdlcyyCalc();
+    flatInput("sbcdpw").on( "change", sbntpyCalc );
+    flatInput("sbcppd").on( "change", sbntpyCalc );
+    flatInput("sbfdur").on( "change", sbntpyCalc );
+    sbntpyCalc();
     // Set up switch triggers.
     $jQ("form [switch]").on("change", switcher);
     // Deactivate all the switch regions. (Note: We could just leave them all

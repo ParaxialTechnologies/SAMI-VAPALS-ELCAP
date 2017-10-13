@@ -58,7 +58,7 @@
         <tr class="occupation">
           <th>Occupation<a class="info" href="#sbocc-help"><img src="info.svg"/></a><span id="sbocc-fielderror"></span><br/><span class="thnote">(If retired, also indicate previous occupation.)</span></th>
           <td>
-            <input type="text" name="sbocc" class="f20s" value=""></input>
+            <input type="text" name="sbocc" class="f20s" value=""/>
             <span class="th">Occupation Code<a class="info" id="sboccc-help" href="#" value="Note that if the patient is retired, you should use their previous occupation in this field."><img src="info.svg"/></a><span id="sboccc-fielderror"></span></span>
             <select name="sboccc">
               <option value="-" selected>&mdash;</option>
@@ -389,7 +389,7 @@
             <input type="radio" name="sbmpd" value="q" switch="y">?</input>
             <span id="sbmpd-switch">
               <span class="th">Starting at what age?<span id="sbmpdw-fielderror"></span></span>
-              <input class="f3d" value=""></input>
+              <input name="sbmpdw" class="f3d" value=""></input>
               <span class="th">Treated?</span>
               <input type="radio" name="sbmpdt" value="n">no</input>
               <input type="radio" name="sbmpdt" value="y">yes</input>
@@ -441,7 +441,7 @@
               <input type="checkbox" name="sbwcb" value="b">cough producing bloody material</input><br/>
               <input type="checkbox" name="sbwcl" value="l">unexplained weight loss greater than 20 lbs.</input><br/>
               <input type="checkbox" name="sbwch" value="h">unexplained hoarseness</input><br/>
-              <span id="sbwcos-fielderror"></span><input type="checkbox" name="sbwco" value="o">other (specify)</input><input type="text" name="sbwcos" value="">
+              <span id="sbwcos-fielderror"></span><input type="checkbox" name="sbwco" value="o">other (specify)</input><input type="text" name="sbwcos" value=""></input>
             </span>
           </td>
         </tr>
@@ -458,7 +458,7 @@
               <option value="e">never</option>
             </select>
             <span class="th">If so, where was the test done?<span id="sbahcl-fielderror"></span></span>
-            <input type="text" name="sbahcl" value="">
+            <input type="text" name="sbahcl" value=""></input>
           </td>
         </tr>
       </table>
@@ -476,10 +476,10 @@
         </tr>
         <tr id="sbahpft-switch1">
           <th>FEV1 (L/s)<span id="sbfev1-fielderror"></span></th>
-          <td><input type="text" name="sbfev1" class="f6-2f" value=""></td>
+          <td><input type="text" name="sbfev1" class="f6-2f" value=""></input></td>
         </tr><tr id="sbahpft-switch2">
           <th>FVC (L)<span id="sbfvc-fielderror"></span></th>
-          <td><input type="text" name="sbfvc" value="" class="f6-2f" value=""></td>
+          <td><input type="text" name="sbfvc" value="" class="f6-2f" value=""></input></td>
         </tr><tr id="sbahpft-switch3">
           <th>FEV1/FVC (%)</th>
           <td>
@@ -488,7 +488,7 @@
           </td>
         </tr><tr id="sbahpft-switch4">
           <th>Diffusion Capacity (mL/min/mm Hg)<span id="sbcop-fielderror"></span></th>
-          <td><input type="text" name="sbcop" value="" class="f6-2f"></td>
+          <td><input type="text" name="sbcop" value="" class="f6-2f"></input></td>
         </tr>
       </table>
       <table class="occupational-header">
@@ -665,6 +665,76 @@
           <th>For approximately how many years have you smoked this amount?<a class="info" href="#"><img src="info.svg"/></a></th>
           <td>
             <input type="text" name="sbfdur" value="" class="f3d"></input>
+          </td>
+        </tr>
+        <tr>
+          <th>Have you ever tried to quit smoking?<a class="info" href="#"><img src="info.svg"/></a></th>
+          <td>
+            <input type="radio" name="sbqttq" value="n" switch="n">no</input>
+            <input type="radio" name="sbqttq" value="y" switch="y">yes</input>
+            <span id="sbqttq-switch0">
+              <span class="th">If yes, how many times?</span>
+              <select name="sbqttqtb">
+                <option value="-" selected>&mdash;</option>
+                <option value="a">1</option>
+                <option value="b">2–5</option>
+                <option value="c">6–10</option>
+                <option value="d">10+</option>
+              </select>
+            </span>
+          </td>
+        </tr>
+        <tr id="sbqttq-switch">
+          <th>In the last 12 months, how many times have you quit smoking for at least 24 hours?<a class="info" href="#"><img src="info.svg"/></a></th>
+          <td>
+            <select name="sbqly2">
+              <option value="-" selected>&mdash;</option>
+              <option value="a">1</option>
+              <option value="b">2–5</option>
+              <option value="c">6–10</option>
+              <option value="d">10+</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>Are you seriously thinking of quitting smoking?<a class="info" href="#"><img src="info.svg"/></a></th>
+          <td>
+            <select name="sbqst">
+              <option value="-" selected>&mdash;</option>
+              <option value="y">yes, within the next 30 days</option>
+              <option value="m">yes, within the next six months</option>
+              <option value="n">no, not thinking of quitting</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>Smoking cessation information or counseling was offered to subject<a class="info" href="#"><img src="info.svg"/></a></th>
+          <td>
+            <input type="radio" name="sbcpd" value="n">no</input>
+            <input type="radio" name="sbcpd" value="y">yes</input>
+          </td>
+        </tr>
+        <tr>
+          <th></th>
+          <td>
+            <table class="total-pack-years">
+              <tr>
+                <th>Packs/Day (PPD)<a class="info" href="#"><img src="info-banner.svg"/></a></th>
+                <th>Total Pack-Years</th>
+              </tr>
+              <tr>
+                <td class="chart">1 cig/day = 0.05<br/>
+                  2–3 cig/day = 0.10<br/>
+                  4 cig/day = 0.20<br/>
+                  5 cig/day = 0.25<br/>
+                  10 cig/day = 0.50<br/>
+                  15 cig/day = 0.75<br/>
+                  20 cig/day = 1.00</td>
+                <td class="ppd">
+                  <input type="text" name="sbntpy" value="" class="f3-1f"></input>
+                </td>
+              </tr>
+            </table>
           </td>
         </tr>
       </table>

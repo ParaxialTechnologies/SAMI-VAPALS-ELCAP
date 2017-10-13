@@ -5,7 +5,7 @@ body {
     font-family: Verdana, sans-serif, sans;
     min-width: 92em;
     max-width: 110em;
-    margin: 1em 0.25in 1em 0.25in;
+    margin: 1em 0.25in 90vh 0.25in;
     border: 1px solid grey;
     line-height: 1.3em;
     input { font-size: 1em; border: 1px dotted grey; }
@@ -153,7 +153,14 @@ body {
             top: 0.2em;
         }
     }
-    .disabled { color: lightgrey; }
+    .disabled {
+        color: lightgrey;
+        a {
+            color: lightgrey;
+            pointer-events: none;
+            cursor: default;
+        }
+    }
 }
 
 body.background-form, body.background-form-2 {
@@ -329,7 +336,7 @@ body.background-form, body.background-form-2 {
             }
         }
         &.occupational {
-            margin-top: -0.5em;
+//            margin-top: -0.5em;
             border-bottom: 1px solid grey;
             padding-bottom: 1em;
             tr th, tr td {
@@ -369,6 +376,39 @@ body.background-form, body.background-form-2 {
                 text-align: left;
                 padding-left: 0.5em;
                 white-space: nowrap;
+            }
+        }
+        &.tobacco {
+            border-bottom: 1px dotted #d0d0d0;
+        }
+        &.former-cig-smoker {
+            border-bottom: 1px dotted #d0d0d0;
+            padding-bottom: 1em;
+            th.h4 {
+                font-size: 1.1em;
+                text-align: left;
+                padding-left: 1em;
+                padding-bottom: 0.5em;
+            }
+            tr.pulfunc {
+                th, td {
+                    padding-bottom: 0.67em;
+                }
+            }
+        }
+        &.current-cig-smoker {
+            border-bottom: 1px solid grey;
+            padding-bottom: 1em;
+            th.h4 {
+                font-size: 1.1em;
+                text-align: left;
+                padding-left: 1em;
+                padding-bottom: 0.5em;
+            }
+            tr.pulfunc {
+                th, td {
+                    padding-bottom: 0.67em;
+                }
             }
         }
     }

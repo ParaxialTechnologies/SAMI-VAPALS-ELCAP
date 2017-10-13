@@ -18,8 +18,8 @@ wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
  n vals
  d getVals("vals",id,sid)
  n fn
- i id="sbform" s fn="elcap-background-form.html"
- i fn="" s fn="elcap-background-form.html"
+ i id="sbform" s fn="background-form.html"
+ i fn="" s fn="background-form.html"
  n zhtml
  d getThis^%wd("zhtml",fn)
  i '$d(zhtml) q  ;
@@ -105,6 +105,9 @@ replaceHref(ln) ; do replacements on html lines for href values; extrinsic retur
  s done=0
  s conds("""sami.css""")="""resources/sami/sami.css"""
  s conds("""sami.js""")="""resources/sami/sami.js"""
+ s conds("""sami2.js""")="""resources/sami/sami2.js"""
+ s conds("""jquery-3.2.1.min.js""")="""resources/sami/jquery-3.2.1.min.js"""
+ s conds("""jquery-ui.min.js""")="""resources/sami/jquery-ui.min.js"""
  n %ig s %ig=""
  f  s %ig=$o(conds(%ig)) q:%ig=""  d  ;
  . i ln[%ig d  ;
@@ -121,7 +124,8 @@ replace(ln,cur,repl) ; replace current with replacment in line ln
 insError(ln,msg) ; inserts an error message into ln, passed by reference
  ;
  new errins set errins="<span class=""alert"" style=""font-size: 0.9em;"">"_msg_"</span>"
- do replace(.ln,"</input>","</input>"_errins)
+ if ln["</input>" do replace(.ln,"</input>","</input>"_errins)  quit  ;
+ if ln["/>" do replace(.ln,"/>","/>"_errins)  quit  ;
  q
  ;
 unvalue(ln) ; sets value=""

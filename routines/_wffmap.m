@@ -137,6 +137,7 @@ getFieldMap(array,form,field,fmapglb) ; array is passed by name and returns the 
  ;
  if $get(fmapglb)="" s fmapglb=$$getFmapGlb(form)
  ;
+ if $g(field)="" q  ;
  new %wien s %wien=$o(@fmapglb@("B",field,""))
  ;
  if %wien="" do  quit  ;

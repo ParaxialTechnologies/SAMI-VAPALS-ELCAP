@@ -59,6 +59,7 @@ wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
  . . . ;q  ; skip these for now
  . . . d uncheck(.tln)
  . . . i $g(val)=$g(value) d check(.tln,type)
+ . . . if $get(filter("debug"))=2 do debugFld(.tln,id,name)
  . . . s zhtml(%j)=tln
  . . d unvalue(.tln)
  . . ;s val=$$URLENC^VPRJRUT(val)
@@ -77,7 +78,7 @@ wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
  . . ; end validation
  . . ;
  . . ;w !,tln,!,zhtml(%j),! b
- . . if $get(filter("debug"))=1 do insError(.tln,"field="_name)
+ . . if $get(filter("debug"))>0 do debugFld(.tln,id,name)
  . . s zhtml(%j)=tln
  . i zhtml(%j)["<textarea" d  ;
  . . n val
@@ -94,21 +95,33 @@ wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
  . . s val=$g(vals(selectnm))
  . . d replace(.tln," selected","") ; unselect
  . . i $g(val)=$g(value) d replace(.tln,">"," selected>")
+ . . if $get(filter("debug"))=2 do debugFld(.tln,id,name)
  . . s zhtml(%j)=tln
  D ADDCRLF^VPRJRUT(.zhtml)
  m @rtn=zhtml
  s HTTPRSP("mime")="text/html"
  q
  ;
+debugFld(ln,form,name) ;
+ n dtxt
+ s dtxt="field="_name
+ n fary
+ d getFieldMap^%wffmap("fary",form,name)
+ s dtxt=dtxt_" fmFld="_$g(fary("FILEMAN_FIELD"))
+ s dtxt=dtxt_" "_$g(fary("DATA_TYPE"))
+ s dtxt=dtxt_" fmTitle: "_$g(fary("TITLE"))
+ d insError(.ln,dtxt)
+ q
+ ;
 replaceSrc(ln) ; do replacements on lines for src= to use the see service to locate
  ; the resource. extrinsic returns true if replacement was done
  new done set done=0
  if ln["src=" do  ; 
- . do replace(.ln,"src=""","src=""see/")
+ . do replaceAll(.ln,"src=""","src=""see/")
  . set done=1
  if ln["href=" do  ; 
  . if ln["href=""#" quit  ;
- . do replace(.ln,"href=""","href=""see/")
+ . do replaceAll(.ln,"href=""","href=""see/")
  . set done=1
  quit done
  ;
@@ -127,6 +140,16 @@ replaceHref(ln) ; do replacements on html lines for href values; extrinsic retur
  . . d replace(.ln,%ig,$g(conds(%ig)))
  . . s done=1
  q done
+ ;
+replaceAll(ln,cur,repl) ; replace all occurances of cur with repl in ln, passed by reference
+ new i,t1,t2 s t1=""
+ f i=1:1:$l(ln,cur) d  ;
+ . s t2(i)=$p(ln,cur,i)
+ . if i>1 set t2(i)=repl_$e(t2(i),1,$l(t2(i)))
+ ;zwr t2
+ f i=1:1:$o(t2(""),-1) set t1=t1_t2(i)
+ set ln=t1
+ quit
  ;
 replace(ln,cur,repl) ; replace current with replacment in line ln
  new where set where=$find(ln,cur)

@@ -1,6 +1,6 @@
-STANDARD DATA DICTIONARY #311.104 -- SAMI FOLLOWUP FILE       10/2/17    PAGE 1
+STANDARD DATA DICTIONARY #311.104 -- SAMI FOLLOWUP FILE      10/24/17    PAGE 1
 STORED IN ^SAMI(311.104,  *** NO DATA STORED YET ***   SITE: AVICENNA.VISTAEXPER
-TISE.NET   UCI: VAH,ROU                                    (VERSION 18.0T02)   
+TISE.NET   UCI: VAH,ROU                                    (VERSION 18.0T03)   
 
 DATA          NAME                  GLOBAL        DATA
 ELEMENT       TITLE                 LOCATION      TYPE
@@ -17,7 +17,7 @@ ELEMENT       TITLE                 LOCATION      TYPE
 CROSS
 REFERENCED BY: STUDY ID(B)
 
-    LAST MODIFIED: SEP 29,2017@09:50:49
+    LAST MODIFIED: OCT 23,2017@14:54:19
 
 311.104,.01   STUDY ID               0;1 FREE TEXT (Required)
 
@@ -152,12 +152,13 @@ REFERENCED BY: STUDY ID(B)
 
 311.104,2.7   REPORTED ASYMPTOMATIC  0;13 SET
 
+              Ordering practitioner reported asymptomatic for lung cancer   
                                 'n' FOR No; 
                                 'y' FOR Yes; 
-              LAST EDITED:      AUG 17, 2017 
+              LAST EDITED:      OCT 09, 2017 
               HELP-PROMPT:      Ordering practitioner reported asymptomatic for 
                                 lung cancer. 
-              DESCRIPTION:      Ordering practitioner reported asymptimatic for
+              DESCRIPTION:      Ordering practitioner reported asymptomatic for
                                 lung cancer.  
 
 
@@ -224,6 +225,29 @@ REFERENCED BY: STUDY ID(B)
                                 the previous field.  
 
 
+311.104,3.5   MOST RECENT CHEST X-RAY 8;13 SET
+
+              Most recent chest X-ray   
+                                'a' FOR less than 6 months ago; 
+                                'b' FOR 6-18 months ago; 
+                                'c' FOR 3 years to 5 years ago; 
+                                'd' FOR over 5 years ago; 
+                                'e' FOR never; 
+                                'f' FOR 18 months to 3 years ago; 
+              LAST EDITED:      OCT 23, 2017 
+              HELP-PROMPT:      Approximately when was the patient's most 
+                                recent chest X-ray? 
+
+311.104,3.6   CHEST X-RAY WHERE      8;14 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<3) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      OCT 23, 2017 
+              HELP-PROMPT:      Answer must be 3-30 characters in length. 
+              DESCRIPTION:      Where was the patient's most recent chest X-ray
+                                done? 
+
+
 311.104,4     SYMPTOMS               2;6 SET
 
                                 'n' FOR No; 
@@ -284,6 +308,17 @@ REFERENCED BY: STUDY ID(B)
                                 symptoms listed in the previous fields? 
 
 
+311.104,4.31  TREATING PHYSICIAN     8;12 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      OCT 23, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      If the patient has seen a physician for the
+                                symptoms listed above, enter the name of the
+                                physician here.  
+
+
 311.104,4.4   SYMPTOMS CURRENT       4;3 SET
 
                                 'n' FOR No; 
@@ -294,14 +329,19 @@ REFERENCED BY: STUDY ID(B)
                                 symptoms? 
 
 
-311.104,4.5   MOST RECENT CHEST CT   4;4 DATE
+311.104,4.5   MOST RECENT CHEST CT   4;4 SET
 
-              INPUT TRANSFORM:  S %DT="E" D ^%DT S X=Y K:Y<1 X
-              LAST EDITED:      AUG 17, 2017 
-              HELP-PROMPT:      When did the patient most recently have a chest 
-                                CT? 
+              Most recent chest CT   
+                                'a' FOR less than 6 months ago; 
+                                'b' FOR 6-18 months ago; 
+                                'f' FOR 18 months to 3 years ago; 
+                                'c' FOR 3 years to 5 years ago; 
+                                'd' FOR over 5 years ago; 
+                                'e' FOR never; 
+              LAST EDITED:      OCT 23, 2017 
+              HELP-PROMPT:      When was the patient's most recent chest CT? 
               DESCRIPTION:      When did the patient most recently have a chest
-                                CT? Enter a date, in any format.  
+                                CT? Select the appropriate time frame.  
 
 
 311.104,4.6   CHEST CT WHERE         4;5 FREE TEXT
@@ -382,6 +422,17 @@ REFERENCED BY: STUDY ID(B)
               HELP-PROMPT:      What part of the body was the patient's cancer? 
               DESCRIPTION:      If the patient had a diagnosis of cancer, on
                                 what part of the body? 
+
+
+311.104,6.11  CANCER WHERE SPECIFY   8;15 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<3) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      OCT 23, 2017 
+              HELP-PROMPT:      Answer must be 3-30 characters in length. 
+              DESCRIPTION:      If you chose "other" as the location of the
+                                patient's cancer, please specify the location
+                                here.  
 
 
 311.104,6.2   CANCER WHEN            4;12 DATE
@@ -512,17 +563,17 @@ REFERENCED BY: STUDY ID(B)
                                  (Add New Entry without Asking)
 
 
-311.144,.01     METHODS USED           0;1 POINTER
-                                  ***** TO AN UNDEFINED FILE (#231.10211), STOR
-                                ED IN ^SAMI(231.10211) ******* (Multiply asked)
+311.144,.01     METHODS USED           0;1 POINTER TO SAMI CESSATION METHODS FI
+                                  LE (#231.10211) (Multiply asked)
 
-                LAST EDITED:    AUG 21, 2017 
-                HELP-PROMPT:    Enther the method(s) the patient used to try to 
-                                quit. 
-                DESCRIPTION:    Enter the method(s) the patient used to try to
-                                quit. You may enter more than one. 
+                Cessation methods used   
+                LAST EDITED:      OCT 09, 2017 
+                HELP-PROMPT:      Enter the method(s) the patient used to try 
+                                  to quit. 
+                DESCRIPTION:      Enter the method(s) the patient used to try
+                                  to quit. You may enter more than one. 
 
-                CROSS-REFERENCE:311.144^B 
+                CROSS-REFERENCE:  311.144^B 
                                 1)= S ^SAMI(311.104,DA(1),7,"B",$E(X,1,30),DA)=
                                 ""
 
@@ -639,17 +690,18 @@ REFERENCED BY: STUDY ID(B)
 
 311.104,8.5   HEALTH SOCIAL          8;9 SET
 
+              Health problems limited social activity   
                                 'a' FOR None at all; 
                                 'b' FOR Very little; 
                                 'c' FOR Somewhat; 
                                 'd' FOR Quite a lot; 
                                 'e' FOR Could not do; 
-              LAST EDITED:      AUG 21, 2017 
+              LAST EDITED:      OCT 09, 2017 
               HELP-PROMPT:      How much did physical health or emotional 
                                 problems limit social activities? 
               DESCRIPTION:      During the past 4 weeks, how much did the
                                 patient's physical health or emotional problems
-                                limit his or her ususal social activities with 
+                                limit his or her usual social activities with 
                                 family or friends? 
 
 
@@ -685,9 +737,26 @@ REFERENCED BY: STUDY ID(B)
                                 daily activities? 
 
 
+311.104,9     CESSATION IN PAST YEAR 8;16 SET
 
- FILES POINTED TO                      FIELDS
+                                'n' FOR no; 
+                                'y' FOR yes; 
+                                'o' FOR did not want to participate; 
+              LAST EDITED:      OCT 23, 2017 
+              HELP-PROMPT:      Did the patient participate in a cessation 
+                                program in the past year? 
+
+
+      FILES POINTED TO                      FIELDS
 
 SAMI CESSATION METHODS (#231.10211)  METHODS USED:METHODS USED (#.01)
 
 
+
+INPUT TEMPLATE(S):
+
+PRINT TEMPLATE(S):
+
+SORT TEMPLATE(S):
+
+FORM(S)/BLOCK(S):

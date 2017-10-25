@@ -7,18 +7,22 @@
  ; All the public entry points for forms are in %wf
  ;
 wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
- ; filter("form")=id
+ ; filter("form")=form
  ; filter("studyId")=studyId
  s rtn=$na(^TMP("yottaForm",$J))
  k @rtn
- n id s id=$g(filter("form"))
- i id="" s id="sbform"
+ n form s form=$g(filter("form"))
+ i form="" s form="sbform"
  n sid s sid=$g(filter("studyid"))
  i sid="" s sid="XXXX01"
  n vals
- d getVals("vals",id,sid)
+ d getVals("vals",form,sid)
  n fn
- i id="sbform" s fn="background-form.html"
+ i form="sbform" do  
+ . s fn="background-form.html"
+ . new tmpvals
+ . do retrieve^%wffiler("tmpvals",form,311.102,sid)
+ . if $data(tmpvals) kill vals merge vals=tmpvals
  i fn="" s fn="background-form.html"
  n zhtml
  d getThis^%wd("zhtml",fn)
@@ -39,8 +43,8 @@ wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
  . i zhtml(%j)["*sbsid*" d  ;
  . . s zhtml(%j)=$p(tln,"*sbsid*",1)_sid_$p(tln,"*sbsid*",2)
  . i zhtml(%j)["action=" d  ;
- . . ;s zhtml(%j)="<form action=""http://vendev.vistaplex.org:9080/postform?form="_id_"&studyId="_sid_""" method=""POST"" id=""backgroundForm"">"
- . . s zhtml(%j)="<form action=""form?form="_id_"&studyId="_sid_""" method=""POST"" id=""backgroundForm"">"
+ . . ;s zhtml(%j)="<form action=""http://vendev.vistaplex.org:9080/postform?form="_form_"&studyId="_sid_""" method=""POST"" id=""backgroundForm"">"
+ . . s zhtml(%j)="<form action=""form?form="_form_"&studyId="_sid_""" method=""POST"" id=""backgroundForm"">"
  . if $$replaceSrc(.tln) s zhtml(%j)=tln ; fix the css and js href values
  . ;i $$replaceHref(.tln) s zhtml(%j)=tln ; fix the css and js href values
  . i zhtml(%j)["input" d  ;
@@ -59,7 +63,7 @@ wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
  . . . ;q  ; skip these for now
  . . . d uncheck(.tln)
  . . . i $g(val)=$g(value) d check(.tln,type)
- . . . if $get(filter("debug"))=2 do debugFld(.tln,id,name)
+ . . . if $get(filter("debug"))=2 do debugFld(.tln,form,name)
  . . . s zhtml(%j)=tln
  . . d unvalue(.tln)
  . . ;s val=$$URLENC^VPRJRUT(val)
@@ -68,7 +72,7 @@ wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
  . . ;
  . . ; validation starts here
  . . ;
- . . new spec,errmsg set spec=$$getFieldSpec^%wffmap(id,name)
+ . . new spec,errmsg set spec=$$getFieldSpec^%wffmap(form,name)
  . . set errmsg="Input invalid"
  . . if val'="" do  ;
  . . . if $$validate(val,spec,,.errmsg)<1 do  ;
@@ -78,7 +82,7 @@ wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
  . . ; end validation
  . . ;
  . . ;w !,tln,!,zhtml(%j),! b
- . . if $get(filter("debug"))>0 do debugFld(.tln,id,name)
+ . . if $get(filter("debug"))>0 do debugFld(.tln,form,name)
  . . s zhtml(%j)=tln
  . i zhtml(%j)["<textarea" d  ;
  . . n val
@@ -95,7 +99,7 @@ wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
  . . s val=$g(vals(selectnm))
  . . d replace(.tln," selected","") ; unselect
  . . i $g(val)=$g(value) d replace(.tln,">"," selected>")
- . . if $get(filter("debug"))=2 do debugFld(.tln,id,name)
+ . . if $get(filter("debug"))=2 do debugFld(.tln,form,name)
  . . s zhtml(%j)=tln
  D ADDCRLF^VPRJRUT(.zhtml)
  m @rtn=zhtml
@@ -253,6 +257,7 @@ setVals(vary,zid,zsid) ; set the values returned from form id for patient zsid
  . new src set src=$$setroot^%wd("elcapSampleJson")
  . if '$data(@src@(zid)) quit  ; no such form
  . merge @root@("graph",zsid,zid)=@src@(zid)
+ kill @root@("graph",zsid,zid)
  merge @root@("graph",zsid,zid)=@vary
  quit
  ;

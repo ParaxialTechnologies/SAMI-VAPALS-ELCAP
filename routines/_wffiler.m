@@ -49,13 +49,17 @@ retrieve(ary,form,file,sid) ; retrieve all form variables from the fileman file 
  new tary
  new ien set ien=$order(^SAMI(file,"B",sid,""))
  if ien="" quit
- d GETS^DIQ(file,ien_",","**",,"tary")
+ d GETS^DIQ(file,ien_",","**","IE","tary")
  new tary2 set tary2=$name(tary(file,ien_","))
  new %wi set %wi=""
  for  set %wi=$order(@tary2@(%wi)) quit:%wi=""  do  ;
  . new var
  . set var=$$field2var(form,file,%wi)
+ . if var="" quit  ;
  . ;w !,"var= ",var," field= ",%wi
- . if var'="" set @ary@(var)=@tary2@(%wi)
+ . new usevar
+ . if $$getFieldSpec^%wffmap(form,var)["D" set usevar=$get(@tary2@(%wi,"E"))
+ . else  set usevar=$get(@tary2@(%wi,"I"))
+ . if usevar'="" set @ary@(var)=usevar
  quit
  ;

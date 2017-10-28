@@ -4,6 +4,7 @@ adoc_to_html(
   help-text-for-va-elcap.adoc
   index.adoc
   meetings.adoc
+  Move-files-from-host-into-docker-20171027-lmry.adoc
   rick-and-domenic-q-and-a.adoc
   using-avicenna.adoc
   va-facility-alpha-codes.adoc

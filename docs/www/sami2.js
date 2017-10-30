@@ -31,8 +31,11 @@ $jQ( document ).ready( function() {
   // Get the first form element; for the SAMI forms, this will always be the
   // first form.
 
-  var switchon = function(container){
+  var bgform = $jQ( "form#backgroundForm" )[0],
+      msinyear = 31557600000.0, // Milliseconds in one year.
+      switchon = function(container){
         var obj = $jQ(container);
+        // console.log( "enabling %o", container );
         obj.removeClass("disabled");
         obj.find(".disabled").each( function(){
           if (this.id.match(/-n?switch/)) { return; }
@@ -45,29 +48,35 @@ $jQ( document ).ready( function() {
       },
       switchoff = function(container){
         var obj = $jQ(container);
+        // console.log( "disabling %o", container );
         obj.addClass("disabled");
         obj.find().addClass("disabled");
         obj.find("input, select, textarea").prop("disabled", true);
       },
       switcher = function(){
         var control = $jQ(this).attr("switch");
-        var container = $jQ("[id^='" + this.name + "-switch']");
-        if (container.length > 0 && control == "y") {
-          switchon( container );
-        } else {
-          switchoff( container );
+        var ischecked = $jQ(this).is(":checked");
+        var containername = "[id^='" + this.name + "-switch']"
+        var container = $jQ(containername);
+        var ncontainername = "[id^='" + this.name + "-nswitch']";
+        var ncontainer = $jQ(ncontainername);
+        if (container.length > 0) {
+          if (control == "y" && ischecked) {
+            switchon( container );
+          } else {
+            switchoff( container );
+          }
         }
-        container = $jQ("[id^='" + this.name + "-nswitch']");
-        if (container.length > 0 && control != "y") {
-          switchon( container );
-        } else {
-          switchoff( container );
+        if (ncontainer.length > 0) {
+          if (control != "y" && ischecked) {
+            switchon( ncontainer );
+          } else {
+            switchoff( ncontainer );
+          }
         }
-      },
-      bgform = $jQ( "form#backgroundForm" )[0],
-      msinyear = 31557600000.0; // Milliseconds in one year.
+      };
 
-    // The I-ELCAP data format.
+    // The I-ELCAP date format.
     $jQ( "input.ddmmmyyyy" ).datepicker( {
       showOn: "button",
       buttonImage: "calendar.png",
@@ -85,15 +94,7 @@ $jQ( document ).ready( function() {
     } );
 
   if (bgform) {
-    var flatInput = function( name ){
-          return $jQ( "form#backgroundForm [name='" + name + "']" );
-        },
-        radioSelected = function( name ){
-          return $jQ(
-            "form#backgroundForm input[name='" + name + "']:checked"
-          )[0];
-        },
-        calculateBMI = function( htInMeters, wtInKilograms ) {
+    var calculateBMI = function( htInMeters, wtInKilograms ) {
           if( htInMeters > 0 && wtInKilograms > 0 ) {
             var areaInSquareMeters = htInMeters * htInMeters,
                 bmi = wtInKilograms / areaInSquareMeters;
@@ -103,44 +104,41 @@ $jQ( document ).ready( function() {
           }
         },
         bmiCalc = function(){
-          var htm = (radioSelected("sbphu").value == "i" ? 0.0254 : 0.01),
-              wtm = (radioSelected("sbpwu").value == "p" ? 0.4535 : 1),
-              ht = flatInput("sbph").val() * htm,
-              wt = flatInput("sbpw").val() * wtm,
+          var uin = 0.0254, // unit: one inch expressed in meters
+              ucm = 0.01,   // unit: one centimeter expressed in meters
+              ulb = 0.4535, // unit: one pound expresssed in kilograms
+              ukg = 1,      // unit: one kilogram expressed in kilograms
+              htm = ($jQ("[name='sbphu']:checked").val() == "i" ? uin : ucm),
+              wtm = ($jQ("[name='sbpwu']:checked").val() == "p" ? ulb : ukg),
+              ht = $jQ("[name='sbph']").val() * htm,
+              wt = $jQ("[name='sbpw']").val() * wtm,
               bmi = calculateBMI(ht,wt);
           if( bmi ) {
-            flatInput("sbbmi").val( bmi.toFixed(1) );
+            $jQ("[name='sbbmi']").val( bmi.toFixed(1) );
           } else {
-            flatInput("sbbmi").val( "" );
+            $jQ("[name='sbbmi']").val( "" );
           }
-          flatInput("sbbmivis").val( flatInput("sbbmi").val() );
+          $jQ("[name='sbbmivis']").val( $jQ("[name='sbbmi']").val() );
         },
         sbffrCalc = function(){
           var sbffr;
-          if( flatInput("sbfvc").val() > 0.1 ) {
+          if( $jQ("[name='sbfvc']").val() > 0.1 ) {
             sbffr = (
-              flatInput("sbfev1").val() / flatInput("sbfvc").val() * 100.0
+              $jQ("[name='sbfev1']").val() / $jQ("[name='sbfvc']").val()
+                * 100.0
             );
-            flatInput("sbffr").val( sbffr.toFixed(2) );
-            flatInput("sbffrvis").val( sbffr.toFixed(1) + '%' );
+            $jQ("[name='sbffr']").val( sbffr.toFixed(2) );
+            $jQ("[name='sbffrvis']").val( sbffr.toFixed(1) + '%' );
           } else {
-            flatInput("sbffrvis").val( "" );
-          }
-        },
-        sbsdlcyyThing = function(field){
-          var x = parseInt(flatInput(field).val());
-          if (x) {
-            return x.toFixed(0);
-          } else {
-            return 0;
+            $jQ("[name='sbffrvis']").val( "" );
           }
         },
         sbsdlcyyCalc = function(){
           var today = new Date(),
               quitYear, quitMonth, quitDay, quitDate, since;
-          quitYear = sbsdlcyyThing("sbsdlcy");
-          quitMonth = sbsdlcyyThing("sbsdlcm");
-          quitDay = sbsdlcyyThing("sbsdlcd");
+          quitYear = parseInt($jQ("[name='sbsdlcy']").val());
+          quitMonth = parseInt($jQ("[name='sbsdlcm']").val());
+          quitDay = parseInt($jQ("[name='sbsdlcd']").val());
           if (quitYear && quitMonth && quitDay) {
             quitMonth--;
           } else if (quitYear && quitMonth && !quitDay) {
@@ -160,43 +158,47 @@ $jQ( document ).ready( function() {
             quitYear = today.getFullYear();
             quitDay = 1;
           } else if (!quitYear && !quitMonth && !quitDay) {
-            flatInput("sbsdlcy-vis").val("");
+            $jQ("[name='sbsdlcy-vis']").val("");
             return;
           }
           quitDate = new Date(quitYear, quitMonth, quitDay);
           since = today - quitDate;
           if (since < 0) {
-            flatInput("sbsdlcy-vis").val("");
+            $jQ("[name='sbsdlcy-vis']").val("");
             return;
           }            
           since /= msinyear;
-          flatInput("sbsdlcy-vis").val( since.toFixed(1) );
+          $jQ("[name='sbsdlcy-vis']").val( since.toFixed(1) );
         },
         sbntpyCalc = function(){
-          var dpw = flatInput("sbcdpw").val(),
-              ppd = flatInput("sbcppd").val(),
-              yrs = flatInput("sbfdur").val();
+          var dpw = $jQ("[name='sbcdpw']").val(),
+              ppd = $jQ("[name='sbcppd']").val(),
+              yrs = $jQ("[name='sbcdur']").val(),
+              tpy;
           if (dpw && ppd && yrs) {
-            flatInput("sbntpy").val(dpw * ppd * 52 * yrs);
+            tpy = (ppd * dpw / 7.0) * yrs;
+            $jQ("[name='sbntpy-vis']").val(tpy.toFixed(1));
+            $jQ("[name='sbntpy']").val(tpy.toFixed(1));
           } else {
-            flatInput("sbntpy").val("");
+            $jQ("[name='sbntpy-vis']").val("");
+            $jQ("[name='sbntpy']").val("");
           }
         };
-    flatInput("sbph").on( "change", bmiCalc );
-    flatInput("sbpw").on( "change", bmiCalc );
-    flatInput("sbphu").on( "change", bmiCalc );
-    flatInput("sbpwu").on( "change", bmiCalc );
+    $jQ("[name='sbph']").on( "change", bmiCalc );
+    $jQ("[name='sbpw']").on( "change", bmiCalc );
+    $jQ("[name='sbphu']").on( "change", bmiCalc );
+    $jQ("[name='sbpwu']").on( "change", bmiCalc );
     bmiCalc();
-    flatInput("sbfev1").on( "change", sbffrCalc );
-    flatInput("sbfvc").on( "change", sbffrCalc );
+    $jQ("[name='sbfev1']").on( "change", sbffrCalc );
+    $jQ("[name='sbfvc']").on( "change", sbffrCalc );
     sbffrCalc();
-    flatInput("sbsdlcd").on( "change", sbsdlcyyCalc );
-    flatInput("sbsdlcm").on( "change", sbsdlcyyCalc );
-    flatInput("sbsdlcy").on( "change", sbsdlcyyCalc );
+    $jQ("[name='sbsdlcd']").on( "change", sbsdlcyyCalc );
+    $jQ("[name='sbsdlcm']").on( "change", sbsdlcyyCalc );
+    $jQ("[name='sbsdlcy']").on( "change", sbsdlcyyCalc );
     sbsdlcyyCalc();
-    flatInput("sbcdpw").on( "change", sbntpyCalc );
-    flatInput("sbcppd").on( "change", sbntpyCalc );
-    flatInput("sbfdur").on( "change", sbntpyCalc );
+    $jQ("[name='sbcdpw']").on( "change", sbntpyCalc );
+    $jQ("[name='sbcppd']").on( "change", sbntpyCalc );
+    $jQ("[name='sbcdur']").on( "change", sbntpyCalc );
     sbntpyCalc();
     // Set up switch triggers.
     $jQ("form [switch]").on("change", switcher);

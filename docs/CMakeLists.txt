@@ -8,6 +8,7 @@ adoc_to_html(
   rick-and-domenic-q-and-a.adoc
   using-avicenna.adoc
   va-facility-alpha-codes.adoc
+  install-docker-and-vista.adoc
   )
 
 copy_binaries(

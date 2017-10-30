@@ -6,7 +6,7 @@
  ;
  ; All the public entry points for forms are in %wf
  ;
-wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
+wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  ; filter("form")=form
  ; filter("studyId")=studyId
  s rtn=$na(^TMP("yottaForm",$J))
@@ -21,6 +21,7 @@ wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
  i form="sbform" do  
  . s fn="background-form.html"
  . new tmpvals
+ . if $g(post)=1 quit  ;
  . do retrieve^%wffiler("tmpvals",form,311.102,sid)
  . if $data(tmpvals) kill vals merge vals=tmpvals
  i fn="" s fn="background-form.html"
@@ -214,14 +215,22 @@ wsPostForm(ARGS,BODY,RESULT) ; recieve from form
  ;
  new errflag set errflag=0
  new revise
- do wsGetForm(.revise,.ARGS)
+ do wsGetForm(.revise,.ARGS,1)
  if errflag'=0 do  quit  ;
  . merge RESULT=revise
  ;
  ; end validation process
  ;
+ ; no errors, file it into fileman
+ do fileForm^%wffiler("tbdy",form,sid)
+ ;
+ ; now return the fileman record that was created
+ new fman,fien
+ s fien=$order(^SAMI(311.102,"B",sid,""))
+ q:fien=""
+ d fmx^%sfv2g("fman",311.102,fien)
  new tjson
- do ENCODE^VPRJSON("%json","tjson")
+ do ENCODE^VPRJSON("fman","tjson")
  do beautify^%wd("tjson","RESULT")
  DO ADDCRLF^VPRJRUT(.RESULT)
  set HTTPRSP("mime")="application/json"
@@ -229,6 +238,7 @@ wsPostForm(ARGS,BODY,RESULT) ; recieve from form
  merge ^gpl("sami","args")=ARGS
  merge ^gpl("sami","body")=BODY
  merge ^gpl("sami","json")=%json
+ merge ^gpl("sami","fman")=fman
  quit
  ;
 parseBody(rtn,body) ; parse the variables sent by a form

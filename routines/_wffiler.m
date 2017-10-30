@@ -19,11 +19,33 @@ fileForm(ary,form,sid) ; ary is the input data, which has been validated
  ;  more quickly than with the former approach.  gpl
  ;
  ;
+ new fda,fdaentry
+ s fda(311.102,"?+1,",.01)=sid
  new %wi set %wi=""
- zwr @ary
- ;for  s %wi
- new map
- ;do getFieldMap^%wf("map",form,fieldname)
+ ;zwr @ary
+ for  s %wi=$order(@ary@(%wi)) quit:%wi=""  d  ;
+ . new fln,fld,combo
+ . set combo=$$var2field(form,%wi)
+ . ;w !,combo
+ . set fln=$piece(combo,"^",1)
+ . quit:fln'["SAMI BACKGROUND"
+ . set fld=$piece(combo,"^",2)
+ . quit:fld=""
+ . quit:fld=.01
+ . if fld["*" do exception("fdaentry",form,fld) quit  ;
+ . if fld["+" do exception("fdaentry",form,fld) quit  ;
+ . if fld=12.4 quit  ; field causes errors... need to fix it
+ . if $$getFieldSpec^%wffmap(form,%wi)["D" do  ;
+ . . new X,Y
+ . . S X=$get(@ary@(%wi))
+ . . D ^%DT
+ . . set @ary@(%wi)=Y
+ . set fda(311.102,"?+1,",fld)=$get(@ary@(%wi))
+ ;zwr fda
+ d updie^%wffmap(.fda)
+ quit
+ ;
+exception(rtn,form,field) ; handle exceptions
  quit
  ;
 testFiler ; test driver for the filer
@@ -34,8 +56,13 @@ testFiler ; test driver for the filer
  ;
 var2field(form,var) ; extrinsic returns the fileman file and field number for the var in form form
  ; format file^field
- new fld
- q fld
+ new map
+ d getFieldMap^%wffmap("map",form,var)
+ new fld,file,rtn
+ set fld=$get(map("FILEMAN_FIELD"))
+ set file=$get(map("FILEMAN_FILE"))
+ s rtn=file_"^"_fld
+ q rtn
  ;
 field2var(form,file,field) ; extrinsic returns the var in form form for the fileman field in file file
  new root set root=$$setroot^%wd("form-map")

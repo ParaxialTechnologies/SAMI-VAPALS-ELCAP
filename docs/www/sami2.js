@@ -79,7 +79,7 @@ $jQ( document ).ready( function() {
     // The I-ELCAP date format.
     $jQ( "input.ddmmmyyyy" ).datepicker( {
       showOn: "button",
-      buttonImage: "calendar.png",
+      buttonImage: "see/calendar.png",
       buttonImageOnly: true,
       buttonText: "Select date",
       dateFormat: "dd/M/yy"
@@ -87,7 +87,7 @@ $jQ( document ).ready( function() {
     // ISO date format, when we get around to that.
     $jQ( "input.yyyymmdd" ).datepicker( {
       showOn: "button",
-      buttonImage: "calendar.png",
+      buttonImage: "see/calendar.png",
       buttonImageOnly: true,
       buttonText: "Select date",
       dateFormat: "yy-mm-dd"

@@ -46,7 +46,7 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  . i zhtml(%j)["action=" d  ;
  . . ;s zhtml(%j)="<form action=""http://vendev.vistaplex.org:9080/postform?form="_form_"&studyId="_sid_""" method=""POST"" id=""backgroundForm"">"
  . . s zhtml(%j)="<form action=""form?form="_form_"&studyId="_sid_""" method=""POST"" id=""backgroundForm"">"
- . if $$replaceSrc(.tln) s zhtml(%j)=tln ; fix the css and js href values
+ . ;if $$replaceSrc(.tln) s zhtml(%j)=tln ; fix the css and js href values
  . ;i $$replaceHref(.tln) s zhtml(%j)=tln ; fix the css and js href values
  . i zhtml(%j)["input" d  ;
  . . i $l(zhtml(%j),"<input")>2 d  ; got to split the lines
@@ -69,6 +69,7 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  . . d unvalue(.tln)
  . . ;s val=$$URLENC^VPRJRUT(val)
  . . f  d replace^%yottaq(.val,"""","&quot;") q:val'[""""
+ . . d dateFormat(.val,form,name) ; reformat if date
  . . d value(.tln,val)
  . . ;
  . . ; validation starts here
@@ -105,6 +106,17 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  D ADDCRLF^VPRJRUT(.zhtml)
  m @rtn=zhtml
  s HTTPRSP("mime")="text/html"
+ q
+ ;
+dateFormat(val,form,name)
+ new spec s spec=$$getFieldSpec^%wffmap(form,name)
+ i spec'["D" q  ; not a date field
+ n X,Y
+ s X=val
+ d ^%DT
+ i Y=-1 q  ; invalid date, can't reformat
+ n dtmp S dtmp=$$FMTE^XLFDT(Y,"D") ; default exteral date format
+ s val=$e(dtmp,5,6)_"/"_$e(dtmp,1,3)_"/"_$e(dtmp,9,12)
  q
  ;
 debugFld(ln,form,name) ;

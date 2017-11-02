@@ -1,16 +1,16 @@
 $th-width: 25em;
 $section-padding: 0.33em 0px;
 
-body {
+body.sami-form {
     font-family: Verdana, sans-serif, sans;
+    p.copyright { font-size: 0.8em; text-align: center; }
     min-width: 92em;
     max-width: 110em;
     margin: 1em 0.25in 90vh 0.25in;
     border: 1px solid grey;
     line-height: 1.3em;
-    input { font-size: 1em; border: 1px dotted grey; }
     tt { font-family: Courier, monospace; }
-    a { outline: 0; }
+    input { font-size: 1em; border: 1px dotted grey; }
     input[type="text"], input[type="number"] {
         font-family: inherit;
         font-size: inherit;
@@ -32,6 +32,7 @@ body {
         &.f4d { width: 5ch; text-align: right; }
         &.f3-1f { width: 4ch; text-align: right; }
         &.f4-1f { width: 5ch; text-align: right; }
+        &.f6-1f { width: 7ch; text-align: right; }
         &.f6-2f { width: 7ch; text-align: right; }
         &.f8s { width: 8ch; }
         &.f10s { width: 10ch; }
@@ -47,12 +48,12 @@ body {
         vertical-align: middle;
         line-height: inherit;
     }
-    span.thnn {
+    span.thnn { // th, no pad left, no bold
         text-align: right;
         padding-right: 1em;
         vertical-align: middle;
     }
-    span.thn {
+    span.thn { // th, no pad left
         text-align: right;
         padding-right: 1em;
         padding-left: 1em;
@@ -68,46 +69,50 @@ body {
         }
         &.thnote { padding-left: 1em; font-weight: normal; }
         &.tdnote { padding-left: 2em; font-size: 0.9em; }
-        &.tdnote-nopad { font-size: 0.9em; }
     }
-    a.info {
-        display: inline-block;
-        margin: 0px 0px 0px 0.333em;
-        img {
-            height: 1.1em;
-            position: relative;
-            top: 0.2em;
-            opacity: 0.666;
-        }
-        &:hover {
+    a {
+        outline: 0;
+        &.info {
+            display: inline-block;
+            margin: 0px 0px 0px 0.333em;
             img {
-                opacity: 1;
-                svg.outline {
-                    fill: hsl( 210, 50%, 33% );
+                height: 1.1em;
+                position: relative;
+                top: 0.2em;
+                opacity: 0.666;
+            }
+            &:hover {
+                img {
+                    opacity: 1;
+                    svg.outline {
+                        // Was an experiment with SVGs; will be removed.
+                        fill: hsl( 210, 50%, 33% );
+                    }
+                }
+            }
+            &.error {
+                display: inline-block;
+                margin: 0px 0px 0px 0.333em;
+                img {
+                    height: 1.1em;
+                    position: relative;
+                    top: 0.2em;
+                    opacity: 0.666;
+                }
+                &:hover {
+                    img {
+                        opacity: 1;
+                        svg.outline {
+                            // Was an experiment with SVGs; will be removed.
+                            fill: hsl( 210, 50%, 33% );
+                        }
+                    }
                 }
             }
         }
     }
     div[id$="-help"] {
         display: none;
-    }
-    a.error {
-        display: inline-block;
-        margin: 0px 0px 0px 0.333em;
-        img {
-            height: 1.1em;
-            position: relative;
-            top: 0.2em;
-            opacity: 0.666;
-        }
-        &:hover {
-            img {
-                opacity: 1;
-                svg.outline {
-                    fill: hsl( 210, 50%, 33% );
-                }
-            }
-        }
     }
     table {
         width: 100%;
@@ -163,21 +168,45 @@ body {
     }
 }
 
-body.background-form, body.background-form-2 {
+body.background-form {
     table {
+        padding-top: 0.67em;
+        tr th, tr td {
+            padding-top: 0.33em;
+            padding-bottom: 0.33em;
+        }
+        &.newsection {
+            border-top: 1px solid grey;
+//            tr {
+//                td::first-of-type { padding-top: 0.67em; }
+//                td::last-of-type { padding-bottom: 0.67em; }
+//            }
+        }
+        &.newsection-noborder {
+//            tr {
+//                td::first-of-type { padding-top: 0.67em; }
+//                td::last-of-type { padding-bottom: 0.67em; }
+//            }
+        }
+        &.subsection {
+            border-top: 1px dotted #d0d0d0;
+//            tr {
+//                td::first-of-type { padding-top: 0.67em; }
+//                td::last-of-type { padding-bottom: 0.67em; }
+//            }
+        }
         &.header-id {
-            border-bottom: none;
             padding: 0em;
-            td.study {
-                width: 20em;
+            td.sbsid {
+                width: 25%;
                 text-align: left;
                 padding-left: 0.5em;
             }
             td.name {
                 text-align: center;
             }
-            td.med-rec {
-                width: 20em;
+            td.mrn {
+                width: 25%;
                 text-align: right;
                 padding-right: 0.5em;
             }
@@ -190,19 +219,12 @@ body.background-form, body.background-form-2 {
             color: white;
             font-weight: bold;
             font-size: 1.5em;
-            td { padding-left: 0.25em; }
+            td { padding-left: 0.5em; padding-top: 0em; }
         }
         &.visit-info {
-            padding: $section-padding;
-            border-bottom: 1px solid grey;
             th { width: $th-width; }
         }
         &.patient-base {
-            padding: $section-padding;
-            border-bottom: 1px solid grey;
-            tr th, tr td {
-                padding-bottom: 0.67em;
-            }
             tr.gender-stats {
                 height: 2em;
             }
@@ -240,20 +262,15 @@ body.background-form, body.background-form-2 {
             }
             td {
                 padding: 0.67em 0px 1em 2em;
-                border-bottom: 1px dotted #d0d0d0;
             }
         }
         &.ordering-ordered {
             margin-top: -1em;
-            th, td {
-                border-bottom: 1px dotted #d0d0d0;
-            }
             th { padding: 0px 1em 1em 0px; }
             td { padding: 0px 0px 1em 0px; }
         }
         &.ordering-info {
             margin-top: -0.5em;
-            border-bottom: 1px solid grey;
             th, td {
                 padding-bottom: 0.67em;
             }
@@ -416,6 +433,9 @@ body.background-form, body.background-form-2 {
                 padding: 0px;
                 margin-right: 1em;
                 width: 0%;
+                &.disabled {
+                    border: 1px solid hsla( 210, 50%, 50%, 0.2 );
+                }
                 th {
                     height: 1.2em;
                     background: hsl( 210, 50%, 50% );
@@ -423,6 +443,7 @@ body.background-form, body.background-form-2 {
                     border: 1px solid hsl( 210, 50%, 50% );
                     &.chart {
                         text-align: right;
+                        padding-right: 0.8em;
                     }
                     &.disabled {
                         background: hsla( 210, 50%, 50%, 0.2 );
@@ -436,13 +457,63 @@ body.background-form, body.background-form-2 {
                     border: 1px solid hsl( 210, 50%, 50% );
                 }
                 td.ppd {
-                    font-weight: bold;
                     font-size: 2em;
                     text-align: center;
                     border: 1px solid hsl( 210, 50%, 50% );
                 }
-                &.disabled {
-                    border: 1px solid hsla( 210, 50%, 50%, 0.2 );
+            }
+        }
+        &.secondhand-occupation, &.secondhand-household {
+            border-bottom: 1px solid grey;
+            padding-bottom: 1em;
+            th.h4 {
+                font-size: 1.1em;
+                text-align: left;
+                padding-left: 1em;
+                padding-bottom: 0.5em;
+            }
+            p.h { margin-left: 3em; font-style: italic; margin-bottom: 0em; }
+            table {
+                width: 0%;
+                margin-left: 5em;
+                td { width: 0%; white-space: nowrap; }
+                .c { text-align: center; }
+                .l { text-align: left; padding-left: 0px; }
+            }
+        }
+        &.health-general {
+            border-bottom: 1px solid grey;
+            padding-bottom: 1em;
+            th {
+                text-align: left;
+                padding-left: 3em;
+                &.h4 {
+                    font-size: 1.1em;
+                    padding-left: 1em;
+                    padding-bottom: 0.5em;
+                }
+            }
+            td {
+                text-align: right;
+            }
+            table.general-radios-6 {
+                width: 80%;
+                margin-left: 5em;
+                th { font-weight: normal; }
+                td {
+                    width: 16%;
+                    text-align: center;
+                    vertical-align: bottom;
+                }
+            }
+            table.general-radios-5 {
+                width: 80%;
+                margin-left: 5em;
+                th { font-weight: normal; }
+                td {
+                    width: 20%;
+                    text-align: center;
+                    vertical-align: bottom;
                 }
             }
         }

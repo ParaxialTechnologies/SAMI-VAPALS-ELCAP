@@ -6,7 +6,7 @@
  ;
  ; All the public entry points for forms are in %wf
  ;
-wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
+wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  ; filter("form")=form
  ; filter("studyId")=studyId
  s rtn=$na(^TMP("yottaForm",$J))
@@ -21,6 +21,7 @@ wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
  i form="sbform" do  
  . s fn="background-form.html"
  . new tmpvals
+ . if $g(post)=1 quit  ;
  . do retrieve^%wffiler("tmpvals",form,311.102,sid)
  . if $data(tmpvals) kill vals merge vals=tmpvals
  i fn="" s fn="background-form.html"
@@ -45,7 +46,7 @@ wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
  . i zhtml(%j)["action=" d  ;
  . . ;s zhtml(%j)="<form action=""http://vendev.vistaplex.org:9080/postform?form="_form_"&studyId="_sid_""" method=""POST"" id=""backgroundForm"">"
  . . s zhtml(%j)="<form action=""form?form="_form_"&studyId="_sid_""" method=""POST"" id=""backgroundForm"">"
- . if $$replaceSrc(.tln) s zhtml(%j)=tln ; fix the css and js href values
+ . ;if $$replaceSrc(.tln) s zhtml(%j)=tln ; fix the css and js href values
  . ;i $$replaceHref(.tln) s zhtml(%j)=tln ; fix the css and js href values
  . i zhtml(%j)["input" d  ;
  . . i $l(zhtml(%j),"<input")>2 d  ; got to split the lines
@@ -68,6 +69,7 @@ wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
  . . d unvalue(.tln)
  . . ;s val=$$URLENC^VPRJRUT(val)
  . . f  d replace^%yottaq(.val,"""","&quot;") q:val'[""""
+ . . d dateFormat(.val,form,name) ; reformat if date
  . . d value(.tln,val)
  . . ;
  . . ; validation starts here
@@ -104,6 +106,17 @@ wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
  D ADDCRLF^VPRJRUT(.zhtml)
  m @rtn=zhtml
  s HTTPRSP("mime")="text/html"
+ q
+ ;
+dateFormat(val,form,name)
+ new spec s spec=$$getFieldSpec^%wffmap(form,name)
+ i spec'["D" q  ; not a date field
+ n X,Y
+ s X=val
+ d ^%DT
+ i Y=-1 q  ; invalid date, can't reformat
+ n dtmp S dtmp=$$FMTE^XLFDT(Y,"D") ; default exteral date format
+ s val=$e(dtmp,5,6)_"/"_$e(dtmp,1,3)_"/"_$e(dtmp,9,12)
  q
  ;
 debugFld(ln,form,name) ;
@@ -214,14 +227,22 @@ wsPostForm(ARGS,BODY,RESULT) ; recieve from form
  ;
  new errflag set errflag=0
  new revise
- do wsGetForm(.revise,.ARGS)
+ do wsGetForm(.revise,.ARGS,1)
  if errflag'=0 do  quit  ;
  . merge RESULT=revise
  ;
  ; end validation process
  ;
+ ; no errors, file it into fileman
+ do fileForm^%wffiler("tbdy",form,sid)
+ ;
+ ; now return the fileman record that was created
+ new fman,fien
+ s fien=$order(^SAMI(311.102,"B",sid,""))
+ q:fien=""
+ d fmx^%sfv2g("fman",311.102,fien)
  new tjson
- do ENCODE^VPRJSON("%json","tjson")
+ do ENCODE^VPRJSON("fman","tjson")
  do beautify^%wd("tjson","RESULT")
  DO ADDCRLF^VPRJRUT(.RESULT)
  set HTTPRSP("mime")="application/json"
@@ -229,6 +250,7 @@ wsPostForm(ARGS,BODY,RESULT) ; recieve from form
  merge ^gpl("sami","args")=ARGS
  merge ^gpl("sami","body")=BODY
  merge ^gpl("sami","json")=%json
+ merge ^gpl("sami","fman")=fman
  quit
  ;
 parseBody(rtn,body) ; parse the variables sent by a form

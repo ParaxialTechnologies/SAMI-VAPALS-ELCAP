@@ -17,17 +17,27 @@ document.addEventListener( "DOMContentLoaded", function(){
   // If this is the background form . . .
 
   if (bgform) {
-    var bmiCalc = function(){
-      var ht = bgform.sbph.value * (bgform.sbphu.value == "i" ? 0.0254 : 0.01),
-          wt = bgform.sbpw.value * (bgform.sbpwu.value == "p" ? 0.4535 : 1),
-          bmi = wt / (ht * ht);
-      if( ht > 0 && wt > 0 ) {
-        bgform.sbbmi.value = bmi.toFixed(1);
-      } else {
-        bgform.sbbmi.value = "";
-      }
-      bgform.sbbmivis.value = bgform.sbbmi.value;
-    },
+    // Autocalculated fields.
+    var calculateBMI = function(htInMeters,wtInKilograms) {
+          if( htInMeters > 0 && wtInKilograms > 0 ) {
+            var areaInSquareMeters = htInMeters * htInMeters,
+                bmi = wtInKilograms / areaInSquareMeters;
+            return bmi;
+          } else {
+            return undefined;
+          }
+        },
+        bmiCalc = function(){
+          var ht = bgform.sbph.value * (bgform.sbphu.value == "i" ? 0.0254 : 0.01),
+              wt = bgform.sbpw.value * (bgform.sbpwu.value == "p" ? 0.4535 : 1),
+              bmi = calculateBMI(ht,wt),
+          if( bmi ) {
+            bgform.sbbmi.value = bmi.toFixed(1);
+          } else {
+            bgform.sbbmi.value = "";
+          }
+          bgform.sbbmivis.value = bgform.sbbmi.value;
+        },
         sbffrCalc = function(){
           var sbffr;
           if( bgform.sbfvc.value > 0.1 ) {
@@ -38,7 +48,6 @@ document.addEventListener( "DOMContentLoaded", function(){
             bgform.sbffrvis.value = "";
           }
         };
-    // Assign the same onchange to the weight box.
     bgform.sbph.onchange = bmiCalc;
     bgform.sbpw.onchange = bmiCalc;
     // And to each of the radio buttons.

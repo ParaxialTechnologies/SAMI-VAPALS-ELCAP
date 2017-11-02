@@ -1,12 +1,11 @@
-﻿== Some user-interface comments on the link:background-form.html[Background Form]
+﻿:mathjax:
+
+== Some user-interface comments on the link:background-form.html[Background Form]
 
 . In general, we've followed https://www.edwardtufte.com/[Edward Tufte's]
 https://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=00003h#responses[guidelines
 on noise-reduction and signal improvement]. This currently includes greying out
-and deactivating elements that are not currently relevant (Tufte would
-recommend hiding them entirely, but we feel that this would be disruptive for
-the study at the present time---users currently expect to see spatial form
-consistency, and we want to preserve that for now).
+and deactivating elements that are not currently relevant.
 
 . In general, many two-choice radio buttons can be replaced with a
 checkmark (with the question rephrased). Here, this would apply to the
@@ -50,5 +49,21 @@ that's the reason for this odd date input.
 . The question ††__On average, how many packs of cigarettes do you (or did you)
 smoke per day (PPD)?__†† could also have a radio button next to it (per the
 Height and Weight fields) that had the option of ``packs per day'' or
-``cigarettes per day.'' That would take out that ugly table on the ††__Total
-Pack-Years__†† field.
+``cigarettes per day.'' That would allow us to take out that table on the
+††__Total Pack-Years__†† field.
+
+. Total pack-years is currently calculated as:
++
+latexmath:[\[\eqalign{
+d &= \hbox{smoking days per week}\cr
+p &= \hbox{packs per day (one cigarette = \(1/20\) pack)}\cr
+y &= \hbox{years smoked}\cr
+t &= \hbox{total pack-years}\cr
+t &= (d/7)py
+}\\]]
+
+. In the ``Your Health in General'' section, question 1 (††Overall, how would
+you rate your health during the __past 4 weeks__?††) has a ``Very poor'' option
+which is reflected in the form source we've been referring to, but it isn't in
+the data dictionary.
+

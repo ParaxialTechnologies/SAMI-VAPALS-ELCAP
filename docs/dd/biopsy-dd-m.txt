@@ -1,4 +1,4 @@
-STANDARD DATA DICTIONARY #311.105 -- SAMI BIOPSY FILE         10/2/17    PAGE 1
+STANDARD DATA DICTIONARY #311.105 -- SAMI BIOPSY FILE         11/2/17    PAGE 1
 STORED IN ^SAMI(311.105,  *** NO DATA STORED YET ***   SITE: AVICENNA.VISTAEXPER
 TISE.NET   UCI: VAH,ROU                                    (VERSION 18.0T03)   
 
@@ -17,7 +17,7 @@ ELEMENT       TITLE                 LOCATION      TYPE
 CROSS
 REFERENCED BY: STUDY ID(B)
 
-    LAST MODIFIED: OCT 2,2017@12:32:32
+    LAST MODIFIED: NOV 2,2017@09:32:03
 
 311.105,.01   STUDY ID               0;1 POINTER TO SAMI INTAKE FILE (#311.101)
                                  (Required)
@@ -131,6 +131,16 @@ REFERENCED BY: STUDY ID(B)
                                 procedure, please specify the procedure here.  
 
 
+311.105,1.9   LESION SITE OTHER SPECIFY 2;13 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      NOV 02, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      If you chose "other" as the lesion site, please
+                                specify the site here.  
+
+
 311.105,2     BIOPSY COMPLICATIONS   0;12 SET
 
               Complications during biopsy   
@@ -220,6 +230,16 @@ REFERENCED BY: STUDY ID(B)
                                 here.  
 
 
+311.105,4.6   MEDIASTINOSCOPY SITE SPECIFY 2;14 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      NOV 02, 2017 
+              HELP-PROMPT:      Answer must be 5-30 characters in length. 
+              DESCRIPTION:      If you chose "other" as the mediastinoscopy
+                                lesion site, please specify the site here.  
+
+
 311.105,5     MOLECULAR TESTING      2;7 SET
 
                                 'n' FOR no; 
@@ -293,3 +313,4 @@ PRINT TEMPLATE(S):
 SORT TEMPLATE(S):
 
 FORM(S)/BLOCK(S):
+

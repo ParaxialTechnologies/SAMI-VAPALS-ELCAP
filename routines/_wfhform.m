@@ -23,9 +23,10 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  . new tmpvals
  . if $g(post)=1 quit  ;
  . do retrieve^%wffiler("tmpvals",form,311.102,sid)
- . if $data(tmpvals) kill vals merge vals=tmpvals
+ . ;if $data(tmpvals) kill vals merge vals=tmpvals
+ . if $data(tmpvals) merge vals=tmpvals ; maintain graph vars not saved in fileman
  i fn="" s fn="background-form.html"
- n zhtml
+ n zhtml,errctrl ; holders of the html template and the error control array
  d getThis^%wd("zhtml",fn)
  i '$d(zhtml) q  ;
  n name,value,selectnm
@@ -35,6 +36,8 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  . n tln s tln=zhtml(%j)
  . i tln["submit" q  ;
  . i tln["hidden" q  ;
+ . i tln["class=""errormsg"">" d redactErr("zhtml","errctrl",.%j)  quit  ; remove error section
+ . i tln["fielderr" d redactErr2("zhtml",.%j)
  . s (name,value)=""
  . i zhtml(%j)["name=" d  ;
  . . s name=$p($p(zhtml(%j),"name=""",2),"""",1)
@@ -45,7 +48,9 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  . . s zhtml(%j)=$p(tln,"*sbsid*",1)_sid_$p(tln,"*sbsid*",2)
  . i zhtml(%j)["action=" d  ;
  . . ;s zhtml(%j)="<form action=""http://vendev.vistaplex.org:9080/postform?form="_form_"&studyId="_sid_""" method=""POST"" id=""backgroundForm"">"
- . . s zhtml(%j)="<form action=""form?form="_form_"&studyId="_sid_""" method=""POST"" id=""backgroundForm"">"
+ . . n dbg s dbg=$g(filter("debug"))
+ . . i dbg'="" s dbg="&debug="_dbg
+ . . s zhtml(%j)="<form action=""form?form="_form_"&studyId="_sid_dbg_""" method=""POST"" id=""backgroundForm"">"
  . ;if $$replaceSrc(.tln) s zhtml(%j)=tln ; fix the css and js href values
  . ;i $$replaceHref(.tln) s zhtml(%j)=tln ; fix the css and js href values
  . i zhtml(%j)["input" d  ;
@@ -79,7 +84,19 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  . . if val'="" do  ;
  . . . if $$validate(val,spec,,.errmsg)<1 do  ;
  . . . . set errflag=1
- . . . . do insError(.tln,.errmsg)
+ . . . . new errmethod set errmethod=2
+ . . . . ;s errmethod=$g(filter("errormessagestyle"))
+ . . . . ;i errmethod="" s errmethod=$g(errctrl("errorMessageStyle"))
+ . . . . ;i errmethod="" set errmethod=1
+ . . . . s errmethod=2
+ . . . . if errmethod=2 do  ;
+ . . . . . n tprevln,uln
+ . . . . . s uln=(%j-1)
+ . . . . . s tprevln=zhtml(uln)
+ . . . . . if tprevln'["fielderror" s tprevln=zhtml(%j-2) s uln=%j-2
+ . . . . . do putErrMsg2("zhtml",.tprevln,.errmsg,"errctrl")
+ . . . . . set zhtml(uln)=tprevln
+ . . . . if errmethod=1 do insError(.tln,.errmsg)
  . . ;
  . . ; end validation
  . . ;
@@ -108,6 +125,76 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  s HTTPRSP("mime")="text/html"
  q
  ;
+redactErr(html,err,indx) ; redact an error message section found
+ ; in the html. err is the error control array. indx is the current
+ ; line in the html
+ ; also sets up the error control array
+ ;
+ new done set done=0
+ s @err@("errorSectionBeginLine")=indx
+ s @err@("errorMessageStyle")=2 ; errors to the top of page
+ f i=indx:1,indx+20 q:done  d  ;
+ . i @html@(i)["</div>" s done=1
+ . s @html@(i)=""
+ . s @err@("errorSectionEndLine")=i
+ . i @html@(i)["<tr>" s @err@("currentErrorLine")=i
+ . s indx=i
+ s @err@("errorCount")=0
+ q
+ ;
+testRedactErr2 ;
+ n g s g="<th class=""serv"">Served in the military?<span id=""sbmly-fielderror""><a name=""err-2"" href=""#err-2e""><img src=""see/error.png""/>2</a></span></th>"
+ n gg s gg(1)=g
+ d redactErr2("gg",1)
+ w !,gg(1)
+ q
+ ;
+redactErr2(html,indx) ; redact the error symbol on a field
+ i @html@(indx)'["fielderror" quit  ; nothing to replace
+ i @html@(indx)["fielderror""></span>" quit  ; nothing to replace
+ new ln
+ set ln=@html@(indx)
+ if $$delText(.ln,"fielderror"">","</span>") s @html@(indx)=ln
+ q
+ ; 
+putErrMsg2(html,lin,msg,err) ; style 2 of error messages - top of screen
+ ;
+ i $g(err)="" s err="errctrl"
+ ;m ^gpl("err")=@err
+ n errno s errno=$get(@err@("errorCount"))+1
+ s @err@("errorCount")=errno
+ n uline s uline=$get(@err@("currentErrorLine"))
+ i errno=1 d  ;
+ . n bline,eline
+ . s bline=$get(@err@("errorSectionBeginLine"))
+ . i bline="" quit  ; don't know where to put the section
+ . s @html@(bline)="<div class=""errormsg"">"
+ . s @html@(bline+1)="<h1>Errors:<h1>"
+ . s @html@(bline+2)="<table>"
+ . s eline=$get(@err@("errorSectionEndLine"))
+ . i eline="" quit  ;
+ . s @html@(eline-1)="</table>"
+ . s @html@(eline)="</div>"
+ . i uline="" s uline=bline+3
+ n inserttxt
+ s inserttxt="<a name=""err-"_errno_""" href=""#err-"_errno_"e""><img src=""see/error.png""/>"_errno_"</a>"
+ d replace(.lin,"fielderror"">","fielderror"">"_inserttxt)
+ i $g(uline)="" s uline=32
+ s @html@(uline)=@html@(uline)_"<tr><td class=""icon""><a name=""err-"_errno_"e"" href=""#err-"_errno_"""><img src=""see/error.png""/>"_errno_"</a></td><td>"_msg_"</td></tr>"
+ q
+ ;
+delText(ln,begin,end,ins) ; delete text between begin and end
+ ; and optionally insert ins
+ ; ln is passed by reference
+ ; begin and end passed by value and are not deleted
+ new loc1 s loc1=$find(ln,begin)
+ new loc2 s loc2=$find(ln,end)
+ new haveins s haveins=0
+ if $g(ins)'="" s haveins=1
+ else  s ins=""
+ s ln=$extract(ln,1,loc1-1)_ins_$extract(ln,loc2-$length(end),$length(ln))
+ q 1
+ ;
 dateFormat(val,form,name)
  new spec s spec=$$getFieldSpec^%wffmap(form,name)
  i spec'["D" q  ; not a date field
@@ -116,7 +203,9 @@ dateFormat(val,form,name)
  d ^%DT
  i Y=-1 q  ; invalid date, can't reformat
  n dtmp S dtmp=$$FMTE^XLFDT(Y,"D") ; default exteral date format
- s val=$e(dtmp,5,6)_"/"_$e(dtmp,1,3)_"/"_$e(dtmp,9,12)
+ if $l(dtmp)=12 s val=$e(dtmp,5,6)_"/"_$e(dtmp,1,3)_"/"_$e(dtmp,9,12) ; jan 01,1987
+ e  s val=dtmp
+ i $l(val)=8 s val=$e(val,5,8)
  q
  ;
 debugFld(ln,form,name) ;
@@ -129,34 +218,6 @@ debugFld(ln,form,name) ;
  s dtxt=dtxt_" fmTitle: "_$g(fary("TITLE"))
  d insError(.ln,dtxt)
  q
- ;
-replaceSrc(ln) ; do replacements on lines for src= to use the see service to locate
- ; the resource. extrinsic returns true if replacement was done
- new done set done=0
- if ln["src=" do  ; 
- . do replaceAll(.ln,"src=""","src=""see/")
- . set done=1
- if ln["href=" do  ; 
- . if ln["href=""#" quit  ;
- . do replaceAll(.ln,"href=""","href=""see/")
- . set done=1
- quit done
- ;
-replaceHref(ln) ; do replacements on html lines for href values; extrinsic returns true if 
- ; replacement was done
- n conds,done
- s done=0
- s conds("""sami.css""")="""resources/sami/sami.css"""
- s conds("""sami.js""")="""resources/sami/sami.js"""
- s conds("""sami2.js""")="""resources/sami/sami2.js"""
- s conds("""jquery-3.2.1.min.js""")="""resources/sami/jquery-3.2.1.min.js"""
- s conds("""jquery-ui.min.js""")="""resources/sami/jquery-ui.min.js"""
- n %ig s %ig=""
- f  s %ig=$o(conds(%ig)) q:%ig=""  d  ;
- . i ln[%ig d  ;
- . . d replace(.ln,%ig,$g(conds(%ig)))
- . . s done=1
- q done
  ;
 replaceAll(ln,cur,repl) ; replace all occurances of cur with repl in ln, passed by reference
  new i,t1,t2 s t1=""
@@ -234,13 +295,16 @@ wsPostForm(ARGS,BODY,RESULT) ; recieve from form
  ; end validation process
  ;
  ; no errors, file it into fileman
- do fileForm^%wffiler("tbdy",form,sid)
+ new status
+ do fileForm^%wffiler("tbdy",form,sid,"status")
  ;
  ; now return the fileman record that was created
  new fman,fien
  s fien=$order(^SAMI(311.102,"B",sid,""))
  q:fien=""
  d fmx^%sfv2g("fman",311.102,fien)
+ m fman=status
+ m fman(form)=tbdy
  new tjson
  do ENCODE^VPRJSON("fman","tjson")
  do beautify^%wd("tjson","RESULT")
@@ -291,7 +355,9 @@ validate(value,spec,map,msg) ; extrinsic returns 1 if valid 0 if not valid
  ; map is optional
  ; msg is passed by reference and can contain on return a custom error message
  ;
- if $g(spec)="" quit 0  ; everything is invalid with no spec
+ ;if $g(spec)="" quit 0  ; everything is invalid with no spec
+ ;if $g(spec)="" quit 1  ; everything is valid with no spec
+ if $g(spec)="" s spec="FJ30" ; make it free text to weed out bad characters
  ;
  ;new valrtn s valrtn
  ;if $g(@map@("VALIDATOR"))'="" d  q valrtn  ; call a custom validator
@@ -360,4 +426,33 @@ numValid(value,spec,map) ; validate a numeric field
  w !,x
  if @x quit 1
  quit 0
+ ;
+replaceSrc(ln) ; do replacements on lines for src= to use the see service to locate
+ ; the resource. extrinsic returns true if replacement was done
+ ; not currently used - the changes are included in the template
+ new done set done=0
+ if ln["src=" do  ; 
+ . do replaceAll(.ln,"src=""","src=""see/")
+ . set done=1
+ if ln["href=" do  ; 
+ . if ln["href=""#" quit  ;
+ . do replaceAll(.ln,"href=""","href=""see/")
+ . set done=1
+ quit done
+ ;
+replaceHref(ln) ; do replacements on html lines for href values; extrinsic returns true if 
+ ; replacement was done - depricated, use replaceSrc instead, if needed
+ n conds,done
+ s done=0
+ s conds("""sami.css""")="""resources/sami/sami.css"""
+ s conds("""sami.js""")="""resources/sami/sami.js"""
+ s conds("""sami2.js""")="""resources/sami/sami2.js"""
+ s conds("""jquery-3.2.1.min.js""")="""resources/sami/jquery-3.2.1.min.js"""
+ s conds("""jquery-ui.min.js""")="""resources/sami/jquery-ui.min.js"""
+ n %ig s %ig=""
+ f  s %ig=$o(conds(%ig)) q:%ig=""  d  ;
+ . i ln[%ig d  ;
+ . . d replace(.ln,%ig,$g(conds(%ig)))
+ . . s done=1
+ q done
  ;

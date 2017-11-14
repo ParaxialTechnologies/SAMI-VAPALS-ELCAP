@@ -1,6 +1,6 @@
 ## VA-PALS Tests
 
-This is a sub-module of the VA-PALS project that aims to test all functionality. Mosts tests are integration tests and 
+This is a sub-module of the VA-PALS project that aims to test all functionality. Most tests are integration tests and 
 require a running VistA instance.
 
 To execute the test, simply run `gradle test`. Without setting additional properties, some defaults will be used.

@@ -1,17 +1,28 @@
 package com.paraxialtech.vapals;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
-import com.jcraft.jsch.Channel;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
-import io.github.bonigarcia.wdm.ChromeDriverManager;
-import net.sf.expectit.Expect;
-import net.sf.expectit.ExpectBuilder;
-import net.sf.expectit.Result;
-import net.sf.expectit.matcher.Matcher;
-import net.sf.expectit.matcher.Matchers;
+import static com.google.common.collect.Lists.newArrayList;
+import static com.paraxialtech.vapals.BackgroundConstants.FIELDS;
+import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import java.awt.GraphicsEnvironment;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Properties;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -36,23 +47,25 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
-import java.awt.*;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
+import com.jcraft.jsch.Channel;
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
+import com.paraxialtech.vapals.filemanbot.FilemanField;
+import com.paraxialtech.vapals.filemanbot.FilemanFile;
+import com.paraxialtech.vapals.filemanbot.FilemanFile.FileDefinition;
+import com.paraxialtech.vapals.filemanbot.FilemanServer;
+import com.paraxialtech.vapals.filemanbot.FilemanServers;
+import com.paraxialtech.vapals.filemanbot.ProgrammerBot;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static com.paraxialtech.vapals.BackgroundConstants.FIELDS;
-import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
+import io.github.bonigarcia.wdm.ChromeDriverManager;
+import net.sf.expectit.Expect;
+import net.sf.expectit.ExpectBuilder;
+import net.sf.expectit.Result;
+import net.sf.expectit.matcher.Matcher;
+import net.sf.expectit.matcher.Matchers;
 
 
 /**
@@ -66,10 +79,12 @@ class SamiBackgroundTest {
     private static final String SSH_USER = defaultIfNull(System.getProperty("user"), System.getProperty("user.name"));
     private static final String SERVER = defaultIfNull(System.getProperty("server"), "localhost");
     private static final String PORT = defaultIfNull(System.getProperty("port"), "9080");
-    private static final String STUDY_ID = defaultIfNull(System.getProperty("studyId"), "PA0001");
-    private static final String BASE_URL = "http://" + SERVER + ":" + PORT + "/form?form=sbform&studyid=" + STUDY_ID;
+    private static final String STUDY_IDS = defaultIfNull(System.getProperty("studyId"), "PA0001");
+    private static final String BASE_URL = getUrl(STUDY_IDS.split(",")[0].trim());
     private static final Set<String> ignoreFields = ImmutableSet.of(); //Temporarily ignore these fields so remaining tests can run. "sbwcos"
     private static WebDriver driver = new HtmlUnitDriver();
+    private static final FileDefinition BACKGROUND_FILE_DEF =
+        new FileDefinition("SAMI BACKGROUND", "../../docs/dd/background-dd-map.csv");
 
     /**
      * Setup the Selenium driver to use an actual Chrome instance or a headless one.
@@ -103,7 +118,7 @@ class SamiBackgroundTest {
     @BeforeEach
     void beforeEach() {
         Properties p = System.getProperties();
-        driver.get(BASE_URL);
+        driver.get(BASE_URL);   // TODO: make this get the right page for the study being tested in each fileman/web equality test. Or does this even run for each item in that list?
     }
 
     @Test
@@ -143,23 +158,39 @@ class SamiBackgroundTest {
 
     @TestFactory
     Iterator<DynamicTest> testFilemanEqualsWeb() {
-
-        final Map<String, String> filemanValues = createFilemanRecord(STUDY_ID);
-        assertThat(filemanValues.size(), greaterThan(0));
-//        assertThat("Not all fileman fields were updated", filemanValues.size(), is(FIELDS.size()));
-
-        driver.navigate().to(BASE_URL);
-
         List<DynamicTest> tests = newArrayList();
 
-        for (Map.Entry<String, String> entry : filemanValues.entrySet()) {
-            tests.add(DynamicTest.dynamicTest(entry.getKey(), () -> {
-                assertFieldValueEquals(driver.getPageSource(), entry.getKey(), entry.getValue());
-            }));
+        for (final String studyId : STUDY_IDS.split(",")) {
+            tests.addAll(testFilemanEqualsWeb(studyId.trim()));
         }
+
         return tests.iterator();
     }
 
+    private List<DynamicTest> testFilemanEqualsWeb(final String studyId) {
+
+        List<DynamicTest> tests = newArrayList();
+
+        try {
+//            final Map<String, String> filemanValues = createFilemanRecord(studyId);
+            final Map<FilemanField, String> filemanValues = readFilemanRecord(studyId);
+            assertThat(filemanValues.size(), greaterThan(0));
+//            assertThat("Not all fileman fields were updated", filemanValues.size(), is(FIELDS.size()));
+
+//            driver.navigate().to(getUrl(studyId));    TODO, see #beforeEach()
+
+            for (Map.Entry<FilemanField, String> entry : filemanValues.entrySet()) {
+                tests.add(DynamicTest.dynamicTest("Study=" + studyId + ":" + entry.getKey(), () -> {
+                    assertFieldValueEquals(driver.getPageSource(), entry.getKey().webName, entry.getValue());
+                }));
+            }
+        } catch (IOException e) {
+            tests.add(rethrow("Error communicating with SERVER.", e));
+        } catch (JSchException e) {
+            tests.add(rethrow(String.format("Failed to connect to SERVER='%s' with cert='%s' and user='%s'", SERVER, SSH_PRIVATE_KEY, SSH_USER), e));
+        }
+        return tests;
+    }
 
     @TestFactory
     Iterator<DynamicTest> testBasicAccessibility() {
@@ -480,6 +511,18 @@ class SamiBackgroundTest {
         assertThat("Expected element indicating " + fieldName + " field was invalid", elements.size(), is(1));
     }
 
+    private Map<FilemanField, String> readFilemanRecord(final String studyId) throws IOException, JSchException {
+        final FilemanServer server = FilemanServers.getOsehraDockerServer(SERVER);
+
+        final Map<FilemanField, String> values =
+            new ProgrammerBot(server.getFilemanExpectObject(SSH_PRIVATE_KEY, SSH_USER, "~$", System.out, System.err))
+                .readRecord(new FilemanFile(BACKGROUND_FILE_DEF), studyId);
+
+        server.close();
+
+        return values;
+    }
+
     private Map<String, String> createFilemanRecord(final String studyId) {
         Map<String, String> filemanValues = new HashMap<>();
 
@@ -598,5 +641,13 @@ class SamiBackgroundTest {
         }
 
         return filemanValues;
+    }
+
+    private static DynamicTest rethrow(String message, Throwable e) {
+        return DynamicTest.dynamicTest(message, () -> { throw e; });
+    }
+
+    private static final String getUrl(final String studyId) {
+        return "http://" + SERVER + ":" + PORT + "/form?form=sbform&studyid=" + studyId;
     }
 }

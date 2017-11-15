@@ -177,9 +177,6 @@ class SamiBackgroundTest {
                 server.connect(SSH_PRIVATE_KEY, SSH_USER);
                 assertThat(server.getCurrentState(), is(VistaServer.StateEnum.CONNECTED));
 
-                server.startMumps();
-                assertThat(server.getCurrentState(), is(VistaServer.StateEnum.MUMPS));
-
                 //Startup Fileman
                 try(final FilemanInterface filemanInterface = server.startFileman()){
                     assertThat(server.getCurrentState(), is(VistaServer.StateEnum.FILEMAN));
@@ -547,8 +544,8 @@ class SamiBackgroundTest {
             final Expect expect = new ExpectBuilder()
                     .withOutput(channel.getOutputStream())
                     .withInputs(channel.getInputStream(), channel.getExtInputStream())
-                    .withEchoOutput(System.out)
-                    .withEchoInput(System.err)
+//                    .withEchoOutput(System.err)
+                    .withEchoInput(System.out)
 //                    .withInputFilters(removeColors(), removeNonPrintable())
                     .withExceptionOnFailure()
                     .withTimeout(1, TimeUnit.SECONDS)

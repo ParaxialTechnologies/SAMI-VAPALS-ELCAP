@@ -6,7 +6,7 @@ import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.List;
 
-public class BackgroundConstants {
+final class BackgroundConstants {
 
     //TODO: Generate this list using the CSV /docs/elements/dd/background-dd-map.csv.
     public static final List<Triple<String, String, String>> FIELDS = new ImmutableList.Builder<Triple<String, String, String>>()

@@ -6,11 +6,13 @@
  ;
  ; All the public entry points for forms are in %wf
  ;
-fileForm(ary,form,sid) ; ary is the input data, which has been validated
+fileForm(ary,form,sid,report) ; ary is the input data, which has been validated
  ; ary is passed by name
  ; form is the form identifier which must be found in the form mapping file
  ; id should be the key of the targeted fileman file, for example studyid for
  ; the SAMI background file.
+ ; report is optional and will contain the processing results. it is passed by
+ ;  name
  ;
  ;  We must make a choice whether to process the file looking for fields for
  ;  which we have data or to process the data first, then looking for the 
@@ -19,6 +21,7 @@ fileForm(ary,form,sid) ; ary is the input data, which has been validated
  ;  more quickly than with the former approach.  gpl
  ;
  ;
+ i $g(report)="" s report="report"
  new fda,fdaentry
  s fda(311.102,"?+1,",.01)=sid
  new %wi set %wi=""
@@ -32,8 +35,8 @@ fileForm(ary,form,sid) ; ary is the input data, which has been validated
  . set fld=$piece(combo,"^",2)
  . quit:fld=""
  . quit:fld=.01
- . if fld["*" do exception("fdaentry",form,fld) quit  ;
- . if fld["+" do exception("fdaentry",form,fld) quit  ;
+ . if fld["*" do exception("fdaentry",form,fld,report) quit  ;
+ . if fld["+" do exception("fdaentry",form,fld,report) quit  ;
  . if fld=12.4 quit  ; field causes errors... need to fix it
  . if $$getFieldSpec^%wffmap(form,%wi)["D" do  ;
  . . new X,Y
@@ -41,11 +44,18 @@ fileForm(ary,form,sid) ; ary is the input data, which has been validated
  . . D ^%DT
  . . set @ary@(%wi)=Y
  . set fda(311.102,"?+1,",fld)=$get(@ary@(%wi))
+ . set @report@("processed",%wi)=fld_"^"_"311.102"
  ;zwr fda
  d updie^%wffmap(.fda)
+ ;
+ s %wi=""
+ for  s %wi=$order(@ary@(%wi)) quit:%wi=""  d  ;
+ . i $d(@report@("processed",%wi)) q  ;
+ . s @report@("notprocessed",%wi)=$$var2field(form,%wi)
  quit
  ;
-exception(rtn,form,field) ; handle exceptions
+exception(rtn,form,field,report) ; handle exceptions
+ s @report@("notprocessed",field)=$$var2field(form,field)
  quit
  ;
 testFiler ; test driver for the filer

@@ -7,49 +7,67 @@
     <meta name="description" content="SAMI background form" />
     <meta name="format-detection" content="telephone=no"/><!-- Mobile Safari -->
     <title>Background form for *mocklast, mockfirst*</title>
-    <link rel="stylesheet" href="sami.css" type="text/css" />
-    <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="jquery-ui.min.js"></script>
-    <script type="text/javascript" src="sami2.js"></script>
-    </script>
+    <link rel="stylesheet" href="see/sami.css" type="text/css" />
+    <script type="text/javascript" src="see/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="see/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="see/sami2.js"></script>
   </head>
-  <body class="sami background-form-2">
+  <body class="sami-form background-form-2">
+    <noscript>You have JavaScript disabled in your browser; there are a few fields on this form that must be automatically calculated using JavaScript. Please reenable.</noscript>
     <form action="http://foia201606.vistaplex.org:9080/sami/intake" method="POST" id="backgroundForm">
-      <input type="hidden" name="newform" value=""/>
-      <table class="header-id">
+      <div class="id-header">
+        <div class="sbsid">
+          <span class="hdr">Study ID:</span>
+          <span id="sbsid" class="data">*sbsid*</span>
+        </div>
+        <div class="name">
+          <span class="hdr">Name (Last, First):</span>
+          <span id="lname" class="data">*Last*</span>,
+          <span id="fname" class="data">*First*</span>
+        </div>
+        <div class="mrn">
+          <span class="hdr">Medical Record Number:</span>
+          <span id="mrn" class="data">*MRN*</span>
+        </div>
+      </div>
+      <div class="errormsg">
+        <h1>Errors:</h1>
+        <table>
+          <tr>
+            <td class="icon"><a name="err-1e" href="#err-1"><img src="see/error.png"/>1</a></td>
+            <td>First error.</td>
+          </tr>
+          <tr>
+            <td class="icon"><a name="err-2e" href="#err-2"><img src="see/error.png"/>2</a></td>
+            <td>Second error, with a somewhat longer error message. Most text fields in this form have something like <tt>&lt;span</tt> <tt>id=&quot;<i>name</i>-fielderror&quot;&gt;&lt;/span&gt;</tt> at an appropriate location; in order to indicate an error, the proper information (with link) should be set in this table, and then the error icon and error number inserted into the appropriate <tt>fielderror</tt> span.</td>
+          </tr>
+        </table>
+      </div>
+      <div class="banner-head">
         <tr>
-          <td class="study"><span class="head">Study ID:</span> <span id="sbsid" class="data">*sbsid*</span></td>
-          <td class="name"><span class="head">Name (Last, First):</span> <span id="lname", class="data">*Last*</span>, <span class="fname data">*First*</span></td>
-          <td class="med-rec"><span class="head">Medical Record Number:</span> <span id="mrn" class="data">*MRN*</span></td>
+          <td>Background Form<a class="info" href="#sbform-help"><img src="see/info-banner.svg"/></a></td>
         </tr>
       </table>
-      <table class="banner-head">
-        <tr>
-          <td>Background Form <a class="info" href="#">&#x2139;</a></td>
-        </tr>
-      </table>
-      <table class="visit-info">
+      <table class="visit-info newsection-noborder">
         <tr class="visit-date">
-          <th>Visit Date (YYYY-MM-DD)</th>
-          <td>
-            <input type="text" name="sbdop" value="" class="yyyymmdd"></input>
-            <span class="alert" style="font-size: 0.9em;">jQuery datepicker using ISO date standard</span>
-          </td>
+          <th>Visit Date (DD/Mmm/YYYY)<span id="sbdop-fielderror"></span></th><!-- "Intake date," then "Patient date of baseline CT", but no longer required -->
+          <td><input type="text" name="sbdop" class="ddmmmyyyy" value=""/></td>
+        </tr>
       </table>
-      <table class="patient-base">
+      <table class="patient-base newsection">
         <tr class="age">
-          <th class="dob">Date of Birth (YYYY-MM-DD)</th>
+          <th class="dob">Date of Birth (DD/Mmm/YYYY)<span id="sbdob-fielderror"></span></th>
           <td>
-            <input type="text" name="sbdob" class="yyyymmdd" value=""></input>
+            <input type="text" name="sbdob" class="ddmmmyyyy" value=""/>
             <span class="th age">Age</span>
-            <input type="text" class="f3d" name="sbage" value=""></input>
+            <input type="text" class="f3d" name="sbage" value=""/>
           </td>
         </tr>
         <tr class="occupation">
-          <th>Occupation<a class="info" href="#">&#x2139;</a><br/><span class="thnote">(If retired, also indicate previous occupation.)</span></th>
+          <th>Occupation<a class="info" href="#sbocc-help"><img src="see/info.svg"/></a><span id="sbocc-fielderror"></span><br/><span class="thnote">(If retired, also indicate previous occupation.)</span></th>
           <td>
-            <input type="text" name="sbocc" class="f20s" value=""></input>
-            <span class="th">Occupation Code<a class="info" href="#">&#x2139;</a></th>
+            <input type="text" name="sbocc" class="f20s" value=""/>
+            <span class="th">Occupation Code<a class="info" id="sboccc-help" href="#" value="Note that if the patient is retired, you should use their previous occupation in this field."><img src="see/info.svg"/></a><span id="sboccc-fielderror"></span></span>
             <select name="sboccc">
               <option value="-" selected>&mdash;</option>
               <option value="1">Higher executives</option>
@@ -66,39 +84,39 @@
         <tr class="gender-stats">
           <th>Sex</th>
           <td>
-            <input type="radio" name="sbsex" value="m">M</input>
-            <input type="radio" name="sbsex" value="f">F</input>
-            <span class="th height">Height<a class="info" href="#">&#x2139;</a></span>
-            <input type="text" name="sbph" class="f3d" value=""></input>
+            <label for="sbsex-m"><input type="radio" id="sbsex-m" name="sbsex" value="m">M</input></label>
+            <label for="sbsex-f"><input type="radio" id="sbsex-f" name="sbsex" value="f">F</input></label>
+            <span class="th height">Height<a class="info" href="#" id="sbph-help" value="Mixed values (5'10&quot;, for example) may not be used"><img src="see/info.svg"/></a><span id="sbph-fielderror"><a name="err-1" href="#err-1e"><img src="see/error.png"/>1</a></span></span>
+            <input type="text" name="sbph" class="f3d" value=""/>
             <table class="sbphu">
               <tr>
                 <td>
-                  <input type="radio" name="sbphu" value="i" checked="checked">in</input>
+                  <label for="sbphu-i"><input type="radio" id="sbphu-i" name="sbphu" value="i" checked="checked">in</input></label>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <input type="radio" name="sbphu" value="c">cm</input>
+                  <label for="sbphu-c"><input type="radio" id="sbphu-c" name="sbphu" value="c">cm</input></label>
                 </td>
               </tr>
             </table>
-            <span class="th weight">Weight</span>
-            <input type="text" name="sbpw" class="f3d" value=""></input>
+            <span class="th weight">Weight<span id="sbpw-fielderror"></span></span>
+            <input type="text" name="sbpw" class="f3d" value=""/>
             <table class="sbphu">
               <tr>
                 <td>
-                  <input type="radio" name="sbpwu" value="p" checked="checked">lbs</input>
+                  <label for="sbpwu-p"><input type="radio" id="sbpwu-p" name="sbpwu" value="p" checked="checked">lbs</input></label>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <input type="radio" name="sbpwu" value="k">kg</input>
+                  <label for="sbpwu-k"><input type="radio" id="sbpwu-k" name="sbpwu" value="k">kg</input></label>
                 </td>
               </tr>
             </table>
-            <span class="th bmi">BMI<a class="info" href="#">&#x2139;</a></span>
-            <input type="text" name="sbbmivis" value="" disabled="disabled" class="f3-1f"></input>
-            <input type="hidden" name="sbbmi" value""/>
+            <span class="th bmi">BMI<a class="info" href="#" id="sbbmi-help" value="This is automatically calculated from Height and Weight."><img src="see/info.svg"/></a></span>
+            <input type="text" name="sbbmivis" value="" disabled="disabled" class="f4-1f"/>
+            <input type="hidden" name="sbbmi" value=""/>
           </td>
         </tr>
         <tr class="ethnos">
@@ -109,7 +127,7 @@
               <option value="y">Hispanic or Latino</option>
               <option value="n">Not Hispanic or Latino</option>
             </select>
-            <span class="th race">Race<a class="info" href="#">&#x2139;</a></span>
+            <span class="th race">Race<a class="info" href="#"><img src="see/info.svg"/></a></span>
             <select name="sbrc">
               <option value="-" selected>&mdash;</option>
               <option value="w">White</option>
@@ -122,10 +140,10 @@
               <option value="o">Other (specify)</option>
             </select>
             <span class="th other">Other (specify)</span>
-            <input type="text" name="sbrcs" value=""></input>
+            <input type="text" name="sbrcs" value=""/>
           </td>
         </tr>
-        <tr class="educ">
+        <tr class="educserv">
           <th class="edu">Level of Education</th>
           <td>
             <select name="sbed">
@@ -136,21 +154,23 @@
               <option value="ts">completed trade school</option>
               <option value="ad">completed 2-year college degree</option>
               <option value="bd">completed 4-year college degree</option>
-              <option value="gd">advanced degree (e.g., Master’s, J.D., M.D., Ph.D.)</option>
+              <option value="gd">advanced degree (e.g. Master’s, J.D., M.D., Ph.D.)</option>
             </select>
           </td>
         </tr>
-        <tr class+"serv">
-          <th>Served in the military?</th>
+        <tr class="miliserv">
+          <th class="serv">Served in the military?<span id="sbmly-fielderror"><a name="err-2" href="#err-2e"><img src="see/error.png"/>2</a></span></th>
           <td>
-            <input type="radio" name="sbmly" value="n">no</input>
-            <input type="radio" name="sbmly" value="y">yes</input>
-            <span class="th branch">If yes, what branch?</span>
-            <input type="text" name="sbmlyo" value=""></input>
+            <label for="sbmly-n"><input type="radio" id="sbmly-n" name="sbmly" value="n" switch="n">no</input></label>
+            <label for="sbmly-y"><input type="radio" id="sbmly-y" name="sbmly" value="y" switch="y">yes</input></label>
+            <span id="sbmly-switch">
+              <span class="th branch">If yes, what branch?</span>
+              <input type="text" name="sbmlyo" value=""/>
+            </span>
           </td>
         </tr>
       </table>
-      <table class="ordering-header">
+      <table class="ordering-header newsection">
         <tr>
           <th colspan="2">Ordering Information</th>
         </tr>
@@ -158,271 +178,286 @@
           <td>Ordering information is <i>required</i> for all patients undergoing a screening exam using the G0297 code.</td>
         </tr>
       </table>
-      <table class="ordering-ordered">
+      <table class="ordering-ordered subsection">
         <tr>
           <th>Was a CT lung screening scan ordered for this patient (CPT code G0297)?</th>
           <td>
-            <input type="checkbox" name="sbmly" value="y"></input>
-            <span class="tdnote">(If unchecked, the rest of the questions in this section are optional.)</span>
+            <label for="sbmeq-n"><input type="radio" id="sbmeq-n" name="sbmeq" value="n" switch="n">no</input></label>
+            <label for="sbmeq-y"><input type="radio" id="sbmeq-y" name="sbmeq" value="y" switch="y">yes</input></label>
+            <span class="tdnote" id="sbmeq-nswitch">(If no, the rest of the questions in this section are optional.)</span>
           </td>
         </tr>
       </table>
-      <table class="ordering-info">
+      <table class="ordering-info subsection" id="sbmeq-switch">
         <tr>
-          <th class="oprac">Ordering Practitioner Name</th>
+          <th class="oprac">Ordering Practitioner Name (Last, First)<span id="sbopln-fielderror"></span></th>
           <td>
-            <span class="thnn">Last</span>
-            <input type="text" name="sbopln" value="" class="f20s"></input>
-            <span class="thn">First</span>
-            <input type="text" name="sbopfn" value="" class="f15s"></input>
+            <input type="text" name="sbopln" value="" class="f20s"/>
+            <input type="text" name="sbopfn" value="" class="f15s"/>
           </td>
         </tr>
         <tr>
-          <th class="npi">NPI</th>
+          <th class="npi">NPI<span id="sbopnpi-fielderror"></span></th>
           <td>
-            <input type="text" name="sbopnpi" value="" class="f10s"></input>
+            <input type="text" name="sbopnpi" value="" class="f10s"/>
             <span class="tdnote"><a href="#">Search</a></span>
           </td>
         </tr>
-        <tr class="shared-doc">
+        <tr>
           <th class="sbdsd">Documentation of shared decision making</th>
           <td>
-            <input type="radio" name="sbdsd" value="n">no</input>
-            <input type="radio" name="sbdsd" value="y">yes</input>
-            <input type="radio" name="sbdsd" value="q">n/a</input>
+            <label for="sbdsd-n"><input type="radio" id="sbdsd-n" name="sbdsd" value="n">no</input></label>
+            <label for="sbdsd-y"><input type="radio" id="sbdsd-y" name="sbdsd" value="y">yes</input></label>
+            <label for="sbdsd-q"><input type="radio" id="sbdsd-q" name="sbdsd" value="q">n/a</input></label>
             <span class="tdnote">(shared decision-making is required for reimbursement for G0297 examples on baseline <i>only</i>)</span>
           </td>
         </tr>
         <tr>
-          <th class="oprep">Ordering practitioner reported&mdash;</th>
-        </tr>
-        <tr>
-          <th class="nowrap">&mdash;smoking status</th>
+          <th class="nowrap">Ordering practitioner reported smoking status</th>
           <td>
-            <input type="radio" name="sbopss" value="c">current</input>
-            <input type="radio" name="sbopss" value="f">former</input>
+            <label for="sbopss-c"><input type="radio" id="sbopss-c" name="sbopss" value="c">current</input></label>
+            <label for="sbopss-f"><input type="radio" id="sbopss-f" name="sbopss" value="f">former</input></label>
           </td>
         </tr>
         <tr>
-          <th class="sboppy">&mdash;pack years</th>
+          <th class="nowrap">Ordering practitioner reported pack years<span id="sboppy-fielderror"></span></th>
           <td>
-            <input type="number" name="sboppy" min="0" max="200"></input>
+            <input type="text" name="sboppy" value="" class="f3d"/>
           </td>
         </tr>
         <tr>
-          <th class="nowrap">&mdash;years since quit</th>
+          <th class="nowrap">Ordering practitioner reported years since quit<span id="sbopqy-fielderror"></span></th>
           <td>
-            <input type="number" name="sbopqy" min="0" max="200"></input>
+            <input type="text" name="sbopqy" value="" class="f3d"/>
           </td>
         </tr>
-        <tr class="sboas">
-          <th class="sboas">&mdash;asymptomatic for lung cancer</th>
+        <tr>
+          <th class="nowrap">Ordering practitioner reported asymptomatic for lung cancer</th>
           <td>
-            <input type="radio" name="sboas" value="n">no</input>
-            <input type="radio" name="sboas" value="y">yes</input>
+            <label for="sboas-n"><input type="radio" id="sboas-n" name="sboas" value="n">no</input></label>
+            <label for="sboas-y"><input type="radio" id="sboas-y" name="sboas" value="y">yes</input></label>
           </td>
         </tr>
         <tr class="sbopci">
           <th class="sbopci">Clinical information<br/><span class="thnote">(information will be copied to CT report)</span></th>
           <td>
-            <textarea name="sbopci" placeholder="" rows="10" cols="80"></textarea>
+            <textarea name="sbopci" placeholder="" rows="10" cols="80" value=""></textarea>
           </td>
         </tr>
       </table>
-      <table class="medical-conditions-header">
+      <table class="medical-conditions-header newsection">
         <tr>
-          <th colspan="2">Medical Conditions <a class="info" href="#">&#x2139;</a></th>
+          <th colspan="2">Medical Conditions<a class="info" href="#"><img src="see/info.svg"/></a></th>
         </tr>
       </table>
       <table class="medical-conditions">
         <tr>
           <th>Family history of lung cancer?</th>
           <td>
-            <input type="radio" name="sbfc" value="n" checked="checked">no</input>
-            <input type="radio" name="sbfc" value="y">yes</input>
-            <input type="radio" name="sbfc" value="q">?</input>
-            <span id="sbfcswitch">
-              <span class="th">Who?</span>
-              <input type="checkbox" name="sbfcf" value="y">Father</input>
-              <input type="checkbox" name="sbfcm" value="y">Mother</input>
-              <input type="checkbox" name="sbfcs" value="y">Sibling</input>
+            <label for="sbfc-n"><input type="radio" id="sbfc-n" name="sbfc" value="n" checked="checked" switch="n">no</input></label>
+            <label for="sbfc-y"><input type="radio" id="sbfc-y" name="sbfc" value="y" switch="y">yes</input></label>
+            <label for="sbfc-q"><input type="radio" id="sbfc-q" name="sbfc" value="q" switch="y">?</input></label>
+            <span id="sbfc-switch">
+              <span class="th">Father?</span>
+              <label for="sbfcf-n"><input type="radio" id="sbfcf-n" name="sbfcf" value="n" checked="checked">no</input></label>
+              <label for="sbfcf-y"><input type="radio" id="sbfcf-y" name="sbfcf" value="y">yes</input></label>
+              <span class="th">Mother?</span>
+              <label for="sbfcm-n"><input type="radio" id="sbfcm-n" name="sbfcm" value="n" checked="checked">no</input></label>
+              <label for="sbfcm-y"><input type="radio" id="sbfcm-y" name="sbfcm" value="y">yes</input></label>
+              <span class="th">Sibling?</span>
+              <label for="sbfcs-n"><input type="radio" id="sbfcs-n" name="sbfcs" value="n" checked="checked">no</input></label>
+              <label for="sbfcs-y"><input type="radio" id="sbfcs-y" name="sbfcs" value="y">yes</input></label>
             </span>
           </td>
         </tr>
         <tr>
-          <th>Any cancer?</th>
+          <th>Any Cancer</th>
           <td>
-            <input type="radio" name="sbhco" value="n" checked="checked">no</input>
-            <input type="radio" name="sbhco" value="y">yes</input>
-            <input type="radio" name="sbhco" value="q">?</input>
-            <span id="sbhcoswitch">
-              <span class="th">When? (YYYY)</span>
-              <input type="number" name="sbhcdod" value="" min="1900" max="2017"></input>
-              <span class="th">Primary site?</span>
-              <input type="text" name="sbhcpbo" value=""></input>
+            <label for="sbhco-n"><input type="radio" id="sbhco-n" name="sbhco" value="n" checked="checked" switch="n">no</input></label>
+            <label for="sbhco-y"><input type="radio" id="sbhco-y" name="sbhco" value="y" switch="y">yes</input></label>
+            <label for="sbhco-q"><input type="radio" id="sbhco-q" name="sbhco" value="q" switch="y">?</input></label>
+            <span id="sbhco-switch">
+              <span class="th">When? (YYYY)<span id="sbhcdod-fielderror"></span></span>
+              <input type="text" name="sbhcdod" value="" class="yyyy"/>
+              <span class="th">Primary site?<span id="sbhcpbo-fielderror"></span></span>
+              <input type="text" name="sbhcpbo" value="" class="f15s"/>
             </span>
           </td>
         </tr>
         <tr>
-          <th>Asthma?</th>
+          <th>Asthma</th>
           <td>
-            <input type="radio" name="sbmpa" value="n" checked="checked">no</input>
-            <input type="radio" name="sbmpa" value="y">yes</input>
-            <input type="radio" name="sbmpa" value="q">?</input>
-            <span id="sbmpaswitch">
-              <span class="th">
-                <input type="checkbox" name="sbmpat" value="y">Under current treatment</input>
+            <label for="sbmpa-n"><input type="radio" id="sbmpa-n" name="sbmpa" value="n" checked="checked" switch="n">no</input></label>
+            <label for="sbmpa-y"><input type="radio" id="sbmpa-y" name="sbmpa" value="y" switch="y">yes</input></label>
+            <label for="sbmpa-q"><input type="radio" id="sbmpa-q" name="sbmpa" value="q" switch="y">?</input></label>
+            <span id="sbmpa-switch">
+              <span class="th">Under current treatment?</span>
+              <label for="sbmpat-n"><input type="radio" id="sbmpat-n" name="sbmpat" value="n">no</input></label>
+              <label for="sbmpat-y"><input type="radio" id="sbmpat-y" name="sbmpat" value="y">yes</input>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <th>Emphysema or Chronic Bronchitis (COPD)?</th>
+          <td>
+            <label for="sbmpc-n"><input type="radio" id="sbmpc-n" name="sbmpc" value="n" checked="checked" switch="n">no</input></label>
+            <label for="sbmpc-y"><input type="radio" id="sbmpc-y" name="sbmpc" value="y" switch="y">yes</input></label>
+            <label for="sbmpc-q"><input type="radio" id="sbmpc-q" name="sbmpc" value="q" switch="y">?</input></label>
+            <span id="sbmpc-switch">
+              <span class="th">When? (YYYY)<span id="sbmpcw-fielderror"></span></span>
+              <input type="text" name="sbmpcw" value="" class="yyyy"/>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <th>High Blood Pressure</th>
+          <td>
+            <label for="sbmpht-n"><input type="radio" id="sbmpht-n" name="sbmpht" value="n" checked="checked" switch="n">no</input></label>
+            <label for="sbmpht-y"><input type="radio" id="sbmpht-y" name="sbmpht" value="y" switch="y">yes</input></label>
+            <label for="sbmpht-q"><input type="radio" id="sbmpht-q" name="sbmpht" value="q" switch="y">?</input></label>
+            <span id="sbmpht-switch">
+              <span class="th">Treated?</span>
+              <label for="sbmphtt-n"><input type="radio" id="sbmphtt-n" name="sbmphtt" value="n" switch="n">no</input></label>
+              <label for="sbmphtt-y"><input type="radio" id="sbmphtt-y" name="sbmphtt" value="y" switch="y">yes</input></label>
+              <span id="sbmphtt-switch">
+                <span class="th">Since When? (YYYY)<span id="sbmphtsw-fielderror"></span></span>
+                <input type="text" name="sbmphtsw" value="" class="yyyy"/>
               </span>
+              <span class="th">Highest Value?<span id="sbmphthv-fielderror"></span></span>
+              <input type="text" name="sbmphthv" value="" class="f8s"/>
             </span>
           </td>
         </tr>
         <tr>
-          <th>Emphysema or chronic bronchitis (COPD)?</th>
+          <th>High Cholesterol</th>
           <td>
-            <input type="radio" name="sbmpc" value="n" checked="checked">no</input>
-            <input type="radio" name="sbmpc" value="y">yes</input>
-            <input type="radio" name="sbmpc" value="q">?</input>
-            <span id="sbmpcswitch">
-              <span class="th">When? (YYYY)</span>
-              <input type="number" name="sbmpcw" value="" min="1900" max="2017"></input>
+            <label for="sbmphc-n"><input type="radio" id="sbmphc-n" name="sbmphc" value="n" checked="checked" switch="n">no</input></label>
+            <label for="sbmphc-y"><input type="radio" id="sbmphc-y" name="sbmphc" value="y" switch="y">yes</input></label>
+            <label for="sbmphc-q"><input type="radio" id="sbmphc-q" name="sbmphc" value="q" switch="y">?</input></label>
+            <span id="sbmphc-switch">
+              <span class="th">Treated?</span>
+              <label for="sbmphct-n"><input type="radio" id="sbmphct-n" name="sbmphct" value="n">no</input></label>
+              <label for="sbmphct-y"><input type="radio" id="sbmphct-y" name="sbmphct" value="y">yes</input></label>
             </span>
           </td>
         </tr>
         <tr>
-          <th>High blood pressure?</th>
+          <th>Had an angioplasty or Stent?</th>
           <td>
-            <input type="radio" name="sbmpht" value="n" checked="checked">no</input>
-            <input type="radio" name="sbmpht" value="y">yes</input>
-            <input type="radio" name="sbmpht" value="q">?</input>
-            <span id="sbmphtswitch">
-              <span class="th">
-                <input type="checkbox" name="sbmphtt" value="y">Treated</input>
-              </span>
-              <span class="th">Since When? (YYYY)</span>
-              <input type="number" name="sbmphtsw" value="" min="1900" max="2017"></input>
-              <span class="th">Highest Value?</span>
-              <input type="text" name="sbmphthv" value=""></input>
-            </span>
-          </td>
-        </tr>
-        <tr>
-          <th>High cholesterol?</th>
-          <td>
-            <input type="radio" name="sbmphc" value="n" checked="checked">no</input>
-            <input type="radio" name="sbmphc" value="y">yes</input>
-            <input type="radio" name="sbmphc" value="q">?</input>
-            <span id="sbmphcswitch">
-              <span class="th">
-                <input type="checkbox" name="sbmphct" value="y">Treated</input>
-              </span>
-            </span>
-          </td>
-        </tr>
-        <tr>
-          <th>Had an angioplasty or stent?</th>
-          <td>
-            <input type="radio" name="sbmpas" value="n" checked="checked">no</input>
-            <input type="radio" name="sbmpas" value="y">yes</input>
-            <input type="radio" name="sbmpas" value="q">?</input>
-            <span id="sbmpasswitch">
-              <span class="th">When? (YYYY)</span>
-              <input type="number" name="sbmpasw" value="" min="1900" max="2017"></input>
-              <span class="th">Where treated?</span>
-              <input type="text" name="sbmpast" value=""></input>
+            <label for="sbmpas-n"><input type="radio" id="sbmpas-n" name="sbmpas" value="n" checked="checked" switch="n">no</input></label>
+            <label for="sbmpas-y"><input type="radio" id="sbmpas-y" name="sbmpas" value="y" switch="y">yes</input></label>
+            <label for="sbmpas-q"><input type="radio" id="sbmpas-q" name="sbmpas" value="q" switch="y">?</input></label>
+            <span id="sbmpas-switch">
+              <span class="th">When? (YYYY)<span id="sbmpasw-fielderror"></span></span>
+              <input type="text" name="sbmpasw" value="" class="yyyy"/>
+              <span class="th">Where treated?<span id="sbmpast-fielderror"></span></span>
+              <input type="text" name="sbmpast" value="" class="f15s"/>
             </span>
           </td>
         </tr>
         <tr>
           <th>MI?</th>
           <td>
-            <input type="radio" name="sbmpmi" value="n" checked="checked">no</input>
-            <input type="radio" name="sbmpmi" value="y">yes</input>
-            <input type="radio" name="sbmpmi" value="q">?</input>
-            <span id="sbmpmiswitch">
-              <span class="th">When? (YYYY)</span>
-              <input type="number" name="sbmpmid" value="" min="1900" max="2017"></input>
-              <span class="th">Where treated?</span>
-              <input type="text" name="sbmpmiw" value=""></input>
+            <label for="sbmpmi-n"><input type="radio" id="sbmpmi-n" name="sbmpmi" value="n" checked="checked" switch="n">no</input></label>
+            <label for="sbmpmi-y"><input type="radio" id="sbmpmi-y" name="sbmpmi" value="y" switch="y">yes</input></label>
+            <label for="sbmpmi-q"><input type="radio" id="sbmpmi-q" name="sbmpmi" value="q" switch="y">?</input></label>
+            <span id="sbmpmi-switch">
+              <span class="th">When? (YYYY)<span id="sbmpmid-fielderror"></span></span>
+              <input type="text" name="sbmpmid" value="" class="yyyy"/>
+              <span class="th">Where treated?<span id="sbmpmiw-fielderror"></span></span>
+              <input type="text" name="sbmpmiw" value="" class="f15s"/>
             </span>
           </td>
         </tr>
         <tr>
-          <th>Stroke?</th>
+          <th>Stroke</th>
           <td>
-            <input type="radio" name="sbmps" value="n" checked="checked">no</input>
-            <input type="radio" name="sbmps" value="y">yes</input>
-            <input type="radio" name="sbmps" value="q">?</input>
-            <span class="th">When? (YYYY)</span>
-            <input type="text" name="sbmpsd" value=""></input>
+            <label for="sbmps-n"><input type="radio" id="sbmps-n" name="sbmps" value="n" checked="checked" switch="n">no</input></label>
+            <label for="sbmps-y"><input type="radio" id="sbmps-y" name="sbmps" value="y" switch="y">yes</input></label>
+            <label for="sbmps-q"><input type="radio" id="sbmps-q" name="sbmps" value="q" switch="y">?</input></label>
+            <span id="sbmps-switch">
+              <span class="th">When? (YYYY)<span id="sbmpsd-fielderror"></span></span>
+              <input type="text" name="sbmpsd" value="" class="yyyy"/>
+            </span>
           </td>
         </tr>
         <tr>
-          <th>Peripheral vascular disease (poor circulation)?</th>
+          <th>Peripheral Vascular Disease (Poor Circulation)</th>
           <td>
-            <input type="radio" name="sbmppv" value="n" checked="checked">no</input>
-            <input type="radio" name="sbmppv" value="y">yes</input>
-            <input type="radio" name="sbmppv" value="q">?</input>
+            <label for="sbmppv-n"><input type="radio" id="sbmppv-n" name="sbmppv" value="n" checked="checked">no</input></label>
+            <label for="sbmppv-y"><input type="radio" id="sbmppv-y" name="sbmppv" value="y">yes</input></label>
+            <label for="sbmppv-q"><input type="radio" id="sbmppv-q" name="sbmppv" value="q">?</input></label>
           </td>
         </tr>
         <tr>
-          <th>Diabetes?</th>
+          <th>Diabetes</th>
           <td>
-            <input type="radio" name="sbmpd" value="n" checked="checked">no</input>
-            <input type="radio" name="sbmpd" value="y">yes</input>
-            <input type="radio" name="sbmpd" value="q">?</input>
-            <span id="sbmpdswitch">
-              <span class="th">Starting at what age?</span>
-              <input type="text" name="sbmpdw" value="" min="0" max="120" value=""></input>
+            <label for="sbmpd-n"><input type="radio" id="sbmpd-n" name="sbmpd" value="n" checked="checked" switch="n">no</input></label>
+            <label for="sbmpd-y"><input type="radio" id="sbmpd-y" name="sbmpd" value="y" switch="y">yes</input></label>
+            <label for="sbmpd-q"><input type="radio" id="sbmpd-q" name="sbmpd" value="q" switch="y">?</input></label>
+            <span id="sbmpd-switch">
+              <span class="th">Starting at what age?<span id="sbmpdw-fielderror"></span></span>
+              <input name="sbmpdw" class="f3d" value=""/>
               <span class="th">Treated?</span>
-              <input type="checkbox" name="sbmpdt" value="y"></input>
+              <label for="sbmpdt-n"><input type="radio" id="sbmpdt-n" name="sbmpdt" value="n">no</input></label>
+              <label for="sbmpdt-y"><input type="radio" id="sbmpdt-y" name="sbmpdt" value="y">yes</input></label>
             </span>
           </td>
         </tr>
         <tr>
-          <th>Liver disease?</th>
+          <th>Liver Disease</th>
           <td>
-            <input type="radio" name="sbmpld" value="n" checked="checked">no</input>
-            <input type="radio" name="sbmpld" value="y">yes</input>
-            <input type="radio" name="sbmpld" value="q">?</input>
-            <span class="th">How serious?</span>
-            <input type="radio" name="sbmplds" value="n">Mild</input>
-            <input type="radio" name="sbmplds" value="y">Moderate/Severe</input>
+            <label for="sbmpld-n"><input type="radio" id="sbmpld-n" name="sbmpld" value="n" checked="checked" switch="n">no</input></label>
+            <label for="sbmpld-y"><input type="radio" id="sbmpld-y" name="sbmpld" value="y" switch="y">yes</input></label>
+            <label for="sbmpld-q"><input type="radio" id="sbmpld-q" name="sbmpld" value="q" switch="y">?</input></label>
+            <span id="sbmpld-switch">
+              <span class="th">Severity</span>
+              <label for="sbmplds-m"><input type="radio" id="sbmplds-m" name="sbmplds" value="m">Mild</input></label>
+              <label for="sbmplds-s"><input type="radio" id="sbmplds-s" name="sbmplds" value="s">Moderate/Severe</input></label>
+            </span>
           </td>
         </tr>
         <tr class="sbmprd">
-          <th>Kidney (renal) disease?</th>
+          <th>Kidney (Renal) Disease</th>
           <td>
-            <input type="radio" name="sbmprd" value="n" checked="checked">no</input>
-            <input type="radio" name="sbmprd" value="y">yes</input>
-            <input type="radio" name="sbmprd" value="q">?</input>
-            <span class="th">How serious?</span>
-            <input type="radio" name="sbmprds" value="n">Mild</input>
-            <input type="radio" name="sbmprds" value="y">Moderate/Severe</input>
+            <label for="sbmprd-n"><input type="radio" id="sbmprd-n" name="sbmprd" value="n" checked="checked" switch="n">no</input></label>
+            <label for="sbmprd-y"><input type="radio" id="sbmprd-y" name="sbmprd" value="y" switch="y">yes</input></label>
+            <label for="sbmprd-q"><input type="radio" id="sbmprd-q" name="sbmprd" value="q" switch="y">?</input></label>
+            <span id="sbmprd-switch">
+              <span class="th">Severity</span>
+              <label for="sbmprds-m"><input type="radio" id="sbmprds-m" name="sbmprds" value="m">Mild</input></label>
+              <label for="sbmprds-s"><input type="radio" id="sbmprds-s" name="sbmprds" value="s">Moderate/Severe</input></label>
+            </span>
           </td>
         </tr>
       </table>
       <table class="lc-symptoms">
         <tr>
-          <th>Have you experienced any symptoms indicative of lung cancer? <a class="info" href="#">&#x2139;</a></th>
+          <th>Have you experienced any symptoms indicative of lung cancer?<a class="info" href="#"><img src="see/info.svg"/></a></th>
           <td>
-            <input type="checkbox" name="sblcs" value="y"/>
-            <span class="tdnote">(check all that apply)</span>
+            <label for="sblcs-n"><input type="radio" id="sblcs-n" name="sblcs" value="n" checked="checked" switch="n">no</input></label>
+            <label for="sblcs-y"><input type="radio" id="sblcs-y" name="sblcs" value="y" switch="y">yes</input></label>
+            <span id="sblcs-switch0">
+              <span class="tdnote">(check all that apply)</span>
+            </span>
           </td>
         </tr>
         <tr>
           <th>&nbsp;</th>
           <td>
-            <input type="checkbox" name="sbwcb" value="b">cough producing bloody material</input><br/>
-            <input type="checkbox" name="sbwcl" value="l">unexplained weight loss greater than 20 lbs.</input><br/>
-            <input type="checkbox" name="sbwch" value="-">unexplained hoarseness</input><br/>
-            <input type="checkbox" name="sbwco" value="l">other (specify)</input><input type="text" name="sbwcos" value="">
+            <span id="sblcs-switch1">
+              <label for="sbwcb"><input type="checkbox" id="sbwcb" name="sbwcb" value="b">cough producing bloody material</input></label><br/>
+              <label for="sbwcl"><input type="checkbox" id="sbwcl" name="sbwcl" value="l">unexplained weight loss greater than 20 lbs.</input></label><br/>
+              <label for="sbwch"><input type="checkbox" id="sbwch" name="sbwch" value="h">unexplained hoarseness</input></label><br/>
+              <span id="sbwcos-fielderror"></span><label for="sbwco"><input type="checkbox" id="sbwco" name="sbwco" value="o">other (specify)</input></label><input type="text" name="sbwcos" value=""/>
+            </span>
           </td>
         </tr>
-        <tr>
+        <tr id="sblcs-switch2">
           <th>When did you most recently have a chest CT?</th>
           <td>
             <select name="sbact">
-              <option value="-" selected><i>unspecified</i></option>
+              <option value="-" selected>&mdash;</option>
               <option value="a">less than 6 months ago</option>
               <option value="b">6–18 months ago</option>
               <option value="f">18 months to 3 years ago</option>
@@ -430,8 +465,8 @@
               <option value="d">over 5 years ago</option>
               <option value="e">never</option>
             </select>
-            <span class="th">If so, where was the test done?</span>
-            <input type="text" name="sbahcl" value="">
+            <span class="th">If so, where was the test done?<span id="sbahcl-fielderror"></span></span>
+            <input type="text" name="sbahcl" value=""/>
           </td>
         </tr>
       </table>
@@ -440,27 +475,28 @@
           <th colspan="2" class="h3">Pulmonary Function Test Data</th>
         </tr>
         <tr class="pulfunc">
-          <th>Have you had a pulmonary function test within the last five years? <a class="info" href="#">&#x2139;</a></th>
+          <th>Have you had a pulmonary function test within the last five years?<a class="info" href="#"><img src="see/info.svg"/></a></th>
           <td>
-            <input type="checkbox" name="sblcs" value="y"/>
-            <span class="tdnote">(Values below are not required)</span>
+            <label for="sbahpft-n"><input type="radio" id="sbahpft-n" name="sbahpft" value="n" checked="checked" switch="n">no</input></label>
+            <label for="sbahpft-y"><input type="radio" id="sbahpft-y" name="sbahpft" value="y" switch="y">yes</input></label>
+            <span id="sbahpft-switch0" class="tdnote">(Values are not required)</span>
           </td>
         </tr>
-        <tr class="sblcsswitch">
-          <th>FEV1 (L/s)</th>
-          <td><input type="text" name="sbfev1" value="" class="f6-2f"></td>
-        </tr><tr class="sblcsswitch">
-          <th>FVC (L)</th>
-          <td><input type="text" name="sbfvc" value="" class="f6-2f"></td>
-        </tr><tr class="sblcsswitch">
-          <th>FEV1/FVC</th>
+        <tr id="sbahpft-switch1">
+          <th>FEV1 (L/s)<span id="sbfev1-fielderror"></span></th>
+          <td><input type="text" name="sbfev1" class="f6-2f" value=""/></td>
+        </tr><tr id="sbahpft-switch2">
+          <th>FVC (L)<span id="sbfvc-fielderror"></span></th>
+          <td><input type="text" name="sbfvc" value="" class="f6-2f" value=""/></input></td>
+        </tr><tr id="sbahpft-switch3">
+          <th>FEV1/FVC (%)</th>
           <td>
-            <input type="text" name="sbffrvis" value="" disabled="disabled" class="f6-2f"></input>
-            <input type="hidden" name="sbffr" value""/>
+            <input type="text" name="sbffrvis" value="" disabled="disabled" class="f6-2f"/>
+            <input type="hidden" name="sbffr" value=""/>
           </td>
-        </tr><tr class="sblcsswitch">
-          <th>Diffusion Capacity (mL/min/mm Hg)</th>
-          <td><input type="text" name="sbcop" value="" class="f6-2f"></td>
+        </tr><tr id="sbahpft-switch4">
+          <th>Diffusion Capacity (mL/min/mm Hg)<span id="sbcop-fielderror"></span></th>
+          <td><input type="text" name="sbcop" value="" class="f6-2f"/></td>
         </tr>
       </table>
       <table class="occupational-header">
@@ -470,43 +506,630 @@
       </table>
       <table class="occupational">
         <tr>
-          <th class="nowrap">To your knowledge, have you been exposed to asbestos? <a class="info" href="#">&#x2139;</a></th>
+          <th class="nowrap">To your knowledge, have you been exposed to asbestos?<a class="info" href="#"><img src="see/info.svg"/></a></th>
           <td>
-            <input type="radio" name="sbaha" value="n" checked="checked">no</input>
-            <input type="radio" name="sbaha" value="y">yes</input>
+            <label for="sbaha-n"><input type="radio" id="sbaha-n" name="sbaha" value="n" checked="checked">no</input></label>
+            <label for="sbaha-y"><input type="radio" id="sbaha-y" name="sbaha" value="y">yes</input></label>
           </td>
         </tr>
         <tr class="sbahao">
-          <th class="nowrap">Have you ever worked in any of the following? <a class="info" href="#">&#x2139;</a></th>
+          <th class="nowrap">Have you ever worked in any of the following?<a class="info" href="#"><img src="see/info.svg"/></a></th>
           <td>
-            <span class="nowrap"><input type="checkbox" name="sbahaoi" value="i">asbestos product manufacturing</input></span>
-            <span class="nowrap"><input type="checkbox" name="sbahaoj" value="j">auto repair</input></span>
-            <span class="nowrap"><input type="checkbox" name="sbahaoh" value="h">building maintenance</input></span><br/>
-            <span class="nowrap"><input type="checkbox" name="sbahaof" value="f">chemical industry/foundary/refinery</input></span>
-            <span class="nowrap"><input type="checkbox" name="sbahaoa" value="a">construction/demolition</input></span>
-            <span class="nowrap"><input type="checkbox" name="sbahaoe" value="e">mining</input></span>
-            <span class="nowrap"><input type="checkbox" name="sbahaog" value="g">nuclear industry</input></span>
-            <span class="nowrap"><input type="checkbox" name="sbahaoc" value="c">ship construction/repair</input></span>
-            <span class="nowrap"><input type="checkbox" name="sbahaoo" value="o">other</input></span>
-            <span class="nowrap shahaooswitch"><span class="thn">If other, please specify</span><input type="text" class="f15s" value=""></input></span>
+            <span class="nowrap"><label for="sbahaoi"><input type="checkbox" id="sbahaoi" name="sbahaoi" value="i">asbestos product manufacturing</input></span></label>
+            <span class="nowrap"><label for="sbahaoj"><input type="checkbox" id="sbahaoj" name="sbahaoj" value="j">auto repair</input></label></span>
+            <span class="nowrap"><label for="sbahaoh"><input type="checkbox" id="sbahaoh" name="sbahaoh" value="h">building maintenance</input></label></span><br/>
+            <span class="nowrap"><label for="sbahaof"><input type="checkbox" id="sbahaof" name="sbahaof" value="f">chemical industry/foundary/refinery</input></label></span>
+            <span class="nowrap"><label for="sbahaoa"><input type="checkbox" id="sbahaoa" name="sbahaoa" value="a">construction/demolition</input></label></span>
+            <span class="nowrap"><label for="sbahaoe"><input type="checkbox" id="sbahaoe" name="sbahaoe" value="e">mining</input></label></span>
+            <span class="nowrap"><label for="sbahaog"><input type="checkbox" id="sbahaog" name="sbahaog" value="g">nuclear industry</input></label></span>
+            <span class="nowrap"><label for="sbahaoc"><input type="checkbox" id="sbahaoc" name="sbahaoc" value="c">ship construction/repair</input></label></span>
+            <span class="nowrap">
+              <label for="sbahaoo"><input type="checkbox" id="sbahaoo" name="sbahaoo" value="o" switch="y">other</input></label>
+              <span id="sbahaoo-switch"><span class="thn">If other, please specify</span><input type="text" class="f15s" value=""/></span>
+            </span>
           </td>
         </tr>
       </table>
       <table class="tobacco-header">
         <tr>
-          <th colspan="2">Tobacco Use <a class="info" href="#">&#x2139;</a></th>
+          <th colspan="2">Tobacco Use<a class="info" href="#"><img src="see/info.svg"/></a></th>
         </tr>
       </table>
       <table class="tobacco">
         <tr>
-          <th class="nowrap">To your knowledge, have you been exposed to asbestos? <a class="info" href="#">&#x2139;</a></th>
+          <th class="nowrap">Have you smoked at least 100 cigarettes in your lifetime? (100 cigarettes = 5 packs)<a class="info" href="#"><img src="see/info.svg"/></a></th>
           <td>
-            <input type="radio" name="sbaha" value="n" checked="checked">no</input>
-            <input type="radio" name="sbaha" value="y">yes</input>
+            <label for="sbsru-n"><input type="radio" id="sbsru-n" name="sbsru" value="n" switch="y">no</input></label>
+            <label for="sbsru-y"><input type="radio" id="sbsru-y" name="sbsru" value="y" switch="n">yes</input></label>
+          </td>
+        </tr>
+        <tr id="sbsru-switch">
+          <th class="nowrap nobold">If no, were you exposed to secondhand smoke?</th>
+          <td>
+            <label for="sbsruyn-n"><input type="radio" id="sbsruyn-n" name="sbsruyn" value="n" switch="n">no</input></label>
+            <label for="sbsruyn-y"><input type="radio" id="sbsruyn-y" name="sbsruyn" value="y" switch="y">yes</input></label>
+            <span class="tdnote" id="sbsruyn-switch">If yes, skip to the “<a href="#shtse">Secondhand Tobacco Smoke Exposure</a>” section.</span>
+          </td>
+        </tr>
+        <tr>
+          <th class="nowrap">About how old were you when you first started smoking cigarettes regularly?<span id="sbsas-fielderror"></span></th>
+          <td>
+            <input type="text" name="sbsas" value="" class="f3d"/>
+          </td>
+        </tr>
+        <tr>
+          <th class="nowrap">Over the past month, have you smoked at all, even one cigarette?<a class="info" href="#"><img src="see/info.svg"/></a></th>
+          <td>
+            <label for="sbshsa-n"><input type="radio" id="sbshsa-n" name="sbshsa" value="n" switch="n">no</input></label>
+            <label for="sbshsa-y"><input type="radio" id="sbshsa-y" name="sbshsa" value="y" switch="y">yes</input></label>
+            <span class="tdnote" id="sbshsa-switch">If yes, skip to the “<a href="#ccs">Current Cigarette Smoker</a>” section.</span>
+          </td>
+        </tr>
+        <tr id="sbshsa-nswitch0">
+          <th class="nowrap">If no, when was the date of your last cigarette (DD/Mmm/YYYY)?<a class="info" href="#"><img src="see/info.svg"/></a><span id="sbsdlcd-fielderror"></span></th>
+          <td>
+            <span class="thnn">Day</span>
+            <select name="sbsdlcd">
+              <option value="-" selected>&mdash;</option>
+              <option value="1">01</option>
+              <option value="2">02</option>
+              <option value="3">03</option>
+              <option value="4">04</option>
+              <option value="5">05</option>
+              <option value="6">06</option>
+              <option value="7">07</option>
+              <option value="8">08</option>
+              <option value="9">09</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+              <option value="17">17</option>
+              <option value="18">18</option>
+              <option value="19">19</option>
+              <option value="20">20</option>
+              <option value="21">21</option>
+              <option value="22">22</option>
+              <option value="23">23</option>
+              <option value="24">24</option>
+              <option value="25">25</option>
+              <option value="26">26</option>
+              <option value="27">27</option>
+              <option value="28">28</option>
+              <option value="29">29</option>
+              <option value="30">30</option>
+              <option value="31">31</option>
+            </select>
+            <span class="thn">Month</span>
+            <select name="sbsdlcm">
+              <option value="-" selected>&mdash;</option>
+              <option value="1">Jan</option>
+              <option value="2">Feb</option>
+              <option value="3">Mar</option>
+              <option value="4">Apr</option>
+              <option value="5">May</option>
+              <option value="6">Jun</option>
+              <option value="7">Jul</option>
+              <option value="8">Aug</option>
+              <option value="9">Sep</option>
+              <option value="10">Oct</option>
+              <option value="11">Nov</option>
+              <option value="12">Dec</option>
+            </select>
+            <span class="thn">Year (YYYY)<span id="sbsdlcy-fielderror"></span></span>
+            <input type="text" name="sbsdlcy" value="" class="yyyy"/>
+          </td>
+        </tr>
+        <tr id="sbshsa-nswitch1">
+          <!-- This doesn't have a corresponding field in the data dictionary;
+               it's calculated from sbsdlc*. -->
+          <th class="nowrap">If no, number of years since quit (computed from quit date) <span id="sbsdlcd-fielderror"></span></th>
+          <td>
+            <input type="text" name="sbsdlcy-vis" value="" disabled="disabled" class="f3-1f"/>
+          </td>
+        </tr>
+      </table>
+      <table class="former-cig-smoker"  id="sbshsa-nswitch2">
+        <tr>
+          <th colspan="2" class="h4">Former Cigarette Smoker<a class="info" href="#"><img src="see/info.svg"/></a></th>
+        </tr>
+        <tr>
+          <th>When you were a smoker, on approximately how many days per week did you smoke cigarettes?</th>
+          <td>
+            <input type="text" name="sbfdpw" value="" class="f3d"/>
+          </td>
+        </tr>
+        <tr>
+          <th>On the days that you did smoke, approximately how many packs of cigarettes did you smoke per day (PPD)?<a class="info" href="#"><img src="see/info.svg"/></a></th>
+          <td>
+            <input type="text" name="sbfppd" value="" class="f3d"/>
+          </td>
+        </tr>
+        <tr>
+          <th>For approximately how many years did you smoke this amount?<a class="info" href="#"><img src="see/info.svg"/></a></th>
+          <td>
+            <input type="text" name="sbfdur" value="" class="f3d"/>
+          </td>
+        </tr>
+      </table>
+      <table class="current-cig-smoker" id="sbshsa-switch1">
+        <tr>
+          <th colspan="2" class="h4"><a name="ccs">Current Cigarette Smoker</a><a class="info" href="#"><img src="see/info.svg"/></a></th>
+        </tr>
+        <tr>
+          <th>On average, on how many days per week do you (or did you) smoke cigarettes?</th>
+          <td>
+            <input type="text" name="sbcdpw" value="" class="f3d"/>
+          </td>
+        </tr>
+        <tr>
+          <th>On average, how many packs of cigarettes do you (or did you) smoke per day (PPD)?<a class="info" href="#"><img src="see/info.svg"/></a></th>
+          <td>
+            <input type="text" name="sbcppd" value="" class="f3d"/>
+          </td>
+        </tr>
+        <tr>
+          <th>For approximately how many years have you smoked this amount?<a class="info" href="#"><img src="see/info.svg"/></a></th>
+          <td>
+            <input type="text" name="sbcdur" value="" class="f3d"/>
+          </td>
+        </tr>
+        <tr>
+          <th>Have you ever tried to quit smoking?<a class="info" href="#"><img src="see/info.svg"/></a></th>
+          <td>
+            <label for="sbqttq-n"><input type="radio" id="sbqttq-n" name="sbqttq" value="n" switch="n">no</input></label>
+            <label for="sbqttq-y"><input type="radio" id="sbqttq-y" name="sbqttq" value="y" switch="y">yes</input></label>
+            <span id="sbqttq-switch0">
+              <span class="th">If yes, how many times?</span>
+              <select name="sbqttqtb">
+                <option value="-" selected>&mdash;</option>
+                <option value="a">1</option>
+                <option value="b">2–5</option>
+                <option value="c">6–10</option>
+                <option value="d">10+</option>
+              </select>
+            </span>
+          </td>
+        </tr>
+        <tr id="sbqttq-switch1">
+          <th>In the last 12 months, how many times have you quit smoking for at least 24 hours?<a class="info" href="#"><img src="see/info.svg"/></a></th>
+          <td>
+            <select name="sbqly2">
+              <option value="-" selected>&mdash;</option>
+              <option value="a">1</option>
+              <option value="b">2–5</option>
+              <option value="c">6–10</option>
+              <option value="d">10+</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>Are you seriously thinking of quitting smoking?<a class="info" href="#"><img src="see/info.svg"/></a></th>
+          <td>
+            <select name="sbqst">
+              <option value="-" selected>&mdash;</option>
+              <option value="y">yes, within the next 30 days</option>
+              <option value="m">yes, within the next six months</option>
+              <option value="n">no, not thinking of quitting</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>Smoking cessation information or counseling was offered to subject<a class="info" href="#"><img src="see/info.svg"/></a></th>
+          <td>
+            <label for="sbcpd-n"><input type="radio" id="sbcpd-n" name="sbcpd" value="n">no</input></label>
+            <label for="sbcpd-y"><input type="radio" id="sbcpd-y" name="sbcpd" value="y">yes</input></label>
+          </td>
+        </tr>
+        <tr>
+          <th></th>
+          <td>
+            <table class="total-pack-years">
+              <tr>
+                <th class="chart">Packs/Day (PPD)<a class="info" href="#"><img src="info-banner.svg"/></a></th>
+                <th>Total Pack-Years</th>
+              </tr>
+              <tr>
+                <td class="chart">1 cig/day = 0.05<br/>
+                  2–3 cig/day = 0.10<br/>
+                  4 cig/day = 0.20<br/>
+                  5 cig/day = 0.25<br/>
+                  10 cig/day = 0.50<br/>
+                  15 cig/day = 0.75<br/>
+                  20 cig/day = 1.00</td>
+                <td class="ppd">
+                  <input type="text" name="sbntpy-vis" value="" class="f4-1f" disabled="disabled"/>
+                  <input type="hidden" name="sbntpy" value=""/>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <table class="secondhand-occupation" id="sbsruyn-switch0">
+        <tr>
+          <th colspan="2" class="h4"><a name="shtse">Secondhand Tobacco Smoke Exposure / Occupation</a></th>
+        </tr>
+        <tr>
+          <th>After age 18, did you work for more than one year in a worksite where smoking was allowed?</th>
+          <td>
+            <label for="sbsews-n"><input type="radio" id="sbsews-n" name="sbsews" value="n">no</input></label>
+            <label for="sbsews-y"><input type="radio" id="sbsews-y" name="sbsews" value="y">yes</input></label>
+          </td>
+        </tr>
+        <tr>
+          <th>Did you ever work for more than one year in a job where you were exposed to other people’s tobacco smoke?</th>
+          <td>
+            <label for="sbsehs-n"><input type="radio" id="sbsehs-n" name="sbsehs" value="n" switch="n">no</input></label>
+            <label for="sbsehs-y"><input type="radio" id="sbsehs-y" name="sbsehs" value="y" switch="y">yes</input></label>
+          </td>
+        </tr>
+        <tr id="sbsehs-switch">
+          <td colspan="2">
+            <p class="h"><b>List the occasions from the most recent:</b></p>
+            <table>
+              <tr>
+                <th class="c">Age Range</th>
+                <th class="c">Job</th>
+                <th class="l">Smoking</th>
+              </tr>
+              <tr>
+                <td class="c">
+                  <input type="text" name="sbsehsa1" value="" class="f10s"/>
+                </td>
+                <td class="c">
+                  <input type="text" name="sbsehsj1" value="" class="f15s"/>
+                </td>
+                <td class="l">
+                  <label for="sbsehsr1-n"><input type="radio" id="sbsehsr1-n" name="sbsehsr1" value="n">not permitted</input></label>
+                  <label for="sbsehsr1-r"><input type="radio" id="sbsehsr1-r" name="sbsehsr1" value="r">restricted</input></label>
+                  <label for="sbsehsr1-y"><input type="radio" id="sbsehsr1-y" name="sbsehsr1" value="y">allowed anywhere</input></label>
+                </td>
+              </tr>
+              <tr>
+                <td class="c">
+                  <input type="text" name="sbsehsa2" value="" class="f10s"/>
+                </td>
+                <td class="c">
+                  <input type="text" name="sbsehsj2" value="" class="f15s"/>
+                </td>
+                <td class="l">
+                  <label for="sbsehsr2-n"><input type="radio" id="sbsehsr2-n" name="sbsehsr2" value="n">not permitted</input></label>
+                  <label for="sbsehsr2-r"><input type="radio" id="sbsehsr2-r" name="sbsehsr2" value="r">restricted</input></label>
+                  <label for="sbsehsr2-y"><input type="radio" id="sbsehsr2-y" name="sbsehsr2" value="y">allowed anywhere</input></label>
+                </td>
+              </tr>
+              <tr>
+                <td class="c">
+                  <input type="text" name="sbsehsa3" value="" class="f10s"/>
+                </td>
+                <td class="c">
+                  <input type="text" name="sbsehsj3" value="" class="f15s"/>
+                </td>
+                <td class="l">
+                  <label for="sbsehsr3-n"><input type="radio" id="sbsehsr3-n" name="sbsehsr3" value="n">not permitted</input></label>
+                  <label for="sbsehsr3-r"><input type="radio" id="sbsehsr3-r" name="sbsehsr3" value="r">restricted</input></label>
+                  <label for="sbsehsr3-y"><input type="radio" id="sbsehsr3-y" name="sbsehsr3" value="y">allowed anywhere</input></label>
+                </td>
+              </tr>
+              <tr>
+                <td class="c">
+                  <input type="text" name="sbsehsa4" value="" class="f10s"/>
+                </td>
+                <td class="c">
+                  <input type="text" name="sbsehsj4" value="" class="f15s"/>
+                </td>
+                <td class="l">
+                  <label for="sbsehsr4-n"><input type="radio" id="sbsehsr4-n" name="sbsehsr4" value="n">not permitted</input></label>
+                  <label for="sbsehsr4-r"><input type="radio" id="sbsehsr4-r" name="sbsehsr4" value="r">restricted</input></label>
+                  <label for="sbsehsr4-y"><input type="radio" id="sbsehsr4-y" name="sbsehsr4" value="y">allowed anywhere</input></label>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <table class="secondhand-household" id="sbsruyn-switch1">
+        <tr>
+          <th colspan="2" class="h4">Secondhand Tobacco Smoke Exposure / Household</th>
+        </tr>
+        <tr>
+          <th>Did anyone in your house smoke in the home while you were under 18?</th>
+          <td>
+            <label for="sbhsy-n"><input type="radio" id="sbhsy-n" name="sbhsy" value="n">no</input></label>
+            <label for="sbhsy-y"><input type="radio" id="sbhsy-y" name="sbhsy" value="y">yes</input></label>
+          </td>
+        </tr>
+        <tr>
+          <th>Was smoking allowed inside the house?</th>
+          <td>
+            <label for="sbhsyh-n"><input type="radio" id="sbhsyh-n" name="sbhsyh" value="n">not permitted</input></label>
+            <label for="sbhsyh-r"><input type="radio" id="sbhsyh-r" name="sbhsyh" value="r">restricted</input></label>
+            <label for="sbhsyh-y"><input type="radio" id="sbhsyh-y" name="sbhsyh" value="y">allowed anywhere</input></label>
+          </td>
+        </tr>
+        <tr>
+          <th>Did your mother/primary caregiver smoke when you were under age 7?</th>
+          <td>
+            <label for="sbmsy-n"><input type="radio" id="sbmsy-n" name="sbmsy" value="n">no</input></label>
+            <label for="sbmsy-y"><input type="radio" id="sbmsy-y" name="sbmsy" value="y">yes</input></label>
+          </td>
+        </tr>
+        <tr>
+          <th>Did your mother/primary caregiver smoke when you were ages 7–18?</th>
+          <td>
+            <label for="sbmst-n"><input type="radio" id="sbmst-n" name="sbmst" value="n">no</input></label>
+            <label for="sbmst-y"><input type="radio" id="sbmst-y" name="sbmst" value="y">yes</input></label>
+          </td>
+        </tr>
+        <tr>
+          <th>Did anyone else beside your mother/primary caregiver smoke in the home when you were under 18?</th>
+          <td>
+            <label for="sbosy-n"><input type="radio" id="sbosy-n" name="sbosy" value="n">no</input></label>
+            <label for="sbosy-y"><input type="radio" id="sbosy-y" name="sbosy" value="y">yes</input></label>
+          </td>
+        </tr>
+        <tr>
+          <th>Do you currently live with a smoker?</th>
+          <td>
+            <label for="sbslws-n"><input type="radio" id="sbslws-n" name="sbslws" value="n">no</input></label>
+            <label for="sbslws-y"><input type="radio" id="sbslws-y" name="sbslws" value="y">yes</input></label>
+          </td>
+        </tr>
+        <tr>
+          <th>After age 18, did you live with someone for more than one year who smoked in your presence?</th>
+          <td>
+            <label for="sbhso-n"><input type="radio" id="sbhso-n" name="sbhso" value="n" switch="n">no</input></label>
+            <label for="sbhso-y"><input type="radio" id="sbhso-y" name="sbhso" value="y" switch="y">yes</input></label>
+          </td>
+        </tr>
+        <tr id="sbhso-switch">
+          <td colspan="2">
+            <p class="h"><b>If yes, at what ages did you live with someone who smoked around you and how much did they smoke?</b> (List the occasions from the most recent.)</p>
+            <table>
+              <tr>
+              </tr>
+              <tr>
+                <th class="c">Age Range</th>
+                <th class="c">Amount</th>
+                <th class="l">Smoking</th>
+              </tr>
+              <tr>
+                <td class="c">
+                  <input type="text" name="sbhsa1" value="" class="f10s"/>
+                </td>
+                <td class="c">
+                  <select name="sbhsas1">
+                    <option value="-" selected>&mdash;</option>
+                    <option value="a">1–14 cigarettes a day</option>
+                    <option value="b">15–24 cigarettes a day</option>
+                    <option value="c">25+ cigarettes a day</option>
+                    <option value="d">Don’t know</option>
+                  </select>
+                </td>
+                <td class="l">
+                  <label for="sbhsasr1-n"><input type="radio" id="sbhsasr1-n" name="sbhsasr1" value="n">not permitted</input></label>
+                  <label for="sbhsasr1-r"><input type="radio" id="sbhsasr1-r" name="sbhsasr1" value="r">restricted</input></label>
+                  <label for="sbhsasr1-y"><input type="radio" id="sbhsasr1-y" name="sbhsasr1" value="y">allowed anywhere</input></label>
+                </td>
+              </tr>
+              <tr>
+                <td class="c">
+                  <input type="text" name="sbhsa2" value="" class="f10s"/>
+                </td>
+                <td class="c">
+                  <select name="sbhsas2">
+                    <option value="-" selected>&mdash;</option>
+                    <option value="a">1–14 cigarettes a day</option>
+                    <option value="b">15–24 cigarettes a day</option>
+                    <option value="c">25+ cigarettes a day</option>
+                    <option value="d">Don’t know</option>
+                  </select>
+                </td>
+                <td class="l">
+                  <label for="sbhsasr2-n"><input type="radio" id="sbhsasr2-n" name="sbhsasr2" value="n">not permitted</input></label>
+                  <label for="sbhsasr2-r"><input type="radio" id="sbhsasr2-r" name="sbhsasr2" value="r">restricted</input></label>
+                  <label for="sbhsasr2-y"><input type="radio" id="sbhsasr2-y" name="sbhsasr2" value="y">allowed anywhere</input></label>
+                </td>
+                <td class="filler"></td>
+              </tr>
+              <tr>
+                <td class="c">
+                  <input type="text" name="sbhsa3" value="" class="f10s"/>
+                </td>
+                <td class="c">
+                  <select name="sbhsas3">
+                    <option value="-" selected>&mdash;</option>
+                    <option value="a">1–14 cigarettes a day</option>
+                    <option value="b">15–24 cigarettes a day</option>
+                    <option value="c">25+ cigarettes a day</option>
+                    <option value="d">Don’t know</option>
+                  </select>
+                </td>
+                <td class="l">
+                  <label for="sbhsasr3-n"><input type="radio" id="sbhsasr3-n" name="sbhsasr3" value="n">not permitted</input></label>
+                  <label for="sbhsasr3-r"><input type="radio" id="sbhsasr3-r" name="sbhsasr3" value="r">restricted</input></label>
+                  <label for="sbhsasr3-y"><input type="radio" id="sbhsasr3-y" name="sbhsasr3" value="y">allowed anywhere</input></label>
+                </td>
+              </tr>
+              <tr>
+                <td class="c">
+                  <input type="text" name="sbhsa4" value="" class="f10s"/>
+                </td>
+                <td class="c">
+                  <select name="sbhsas4">
+                    <option value="-" selected>&mdash;</option>
+                    <option value="a">1–14 cigarettes a day</option>
+                    <option value="b">15–24 cigarettes a day</option>
+                    <option value="c">25+ cigarettes a day</option>
+                    <option value="d">Don’t know</option>
+                  </select>
+                </td>
+                <td class="l">
+                  <label for="sbhsasr4-n"><input type="radio" id="sbhsasr4-n" name="sbhsasr4" value="n">not permitted</input></label>
+                  <label for="sbhsasr4-r"><input type="radio" id="sbhsasr4-r" name="sbhsasr4" value="r">restricted</input></label>
+                  <label for="sbhsasr4-y"><input type="radio" id="sbhsasr4-y" name="sbhsasr4" value="y">allowed anywhere</input></label>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <table class="health-general">
+        <tr>
+          <th colspan="2" class="h4">Your Health in General</th>
+        </tr>
+        <tr>
+          <th colspan="2">1. Overall, how would you rate your health during the <i>past 4 weeks</i>?</th>
+        </tr>
+        <tr>
+          <th></th>
+          <td>
+            <table class="general-radios-6">
+              <tr>
+                <td><label for="sbsfb1-1">Excellent<br/><input type="radio" id="sbsfb1-1" name="sbsfb1" value="1"></input></label></td>
+                <td><label for="sbsfb1-2">Very good<br/><input type="radio" id="sbsfb1-2" name="sbsfb1" value="2"></input></label></td>
+                <td><label for="sbsfb1-3">Good<br/><input type="radio" id="sbsfb1-3" name="sbsfb1" value="3"></input></label></td>
+                <td><label for="sbsfb1-4">Fair<br/><input type="radio" id="sbsfb1-4" name="sbsfb1" value="4"></input></label></td>
+                <td><label for="sbsfb1-5">Poor<br/><input type="radio" id="sbsfb1-5" name="sbsfb1" value="5"></input></label></td>
+                <td><label for="sbsfb1-6">Very poor<br/><input type="radio" id="sbsfb1-6" name="sbsfb1" value="6"></input></label></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <th colspan="2">2. During the <i>past 4 weeks</i>, how much did physical health problems limit your usual physical activities (such as walking or climbing stairs)?</th>
+        </tr>
+        <tr>
+          <th></th>
+          <td>
+            <table class="general-radios-5">
+              <tr>
+                <td><label for="sbsfb2-1">Not at all<br/><input type="radio" id="sbsfb2-1" name="sbsfb2" value="1"></input></label></td>
+                <td><label for="sbsfb2-2">Very little<br/><input type="radio" id="sbsfb2-2" name="sbsfb2" value="2"></input></label></td>
+                <td><label for="sbsfb2-3">Somewhat<br/><input type="radio" id="sbsfb2-3" name="sbsfb2" value="3"></input></label></td>
+                <td><label for="sbsfb2-4">Quite a lot<br/><input type="radio" id="sbsfb2-4" name="sbsfb2" value="4"></input></label></td>
+                <td><label for="sbsfb2-5">Could not do physical activities<br/><input type="radio" id="sbsfb2-5" name="sbsfb2" value="5"></input></label></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <th colspan="2">3. During the <i>past 4 weeks</i>, how much difficult did you have doing your daily work, both at home and away from home, because of your physical health?</th>
+        </tr>
+        <tr>
+          <th></th>
+          <td>
+            <table class="general-radios-5">
+              <tr>
+                <td><label for="sbsfb3-1">Not at all<br/><input type="radio" id="sbsfb3-1" name="sbsfb3" value="1"></input></label></td>
+                <td><label for="sbsfb3-2">Very little<br/><input type="radio" id="sbsfb3-2" name="sbsfb3" value="2"></input></label></td>
+                <td><label for="sbsfb3-3">Somewhat<br/><input type="radio" id="sbsfb3-3" name="sbsfb3" value="3"></input></label></td>
+                <td><label for="sbsfb3-4">Quite a lot<br/><input type="radio" id="sbsfb3-4" name="sbsfb3" value="4"></input></label></td>
+                <td><label for="sbsfb3-5">Could not do daily work<br/><input type="radio" id="sbsfb3-5" name="sbsfb3" value="5"></input></label></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <th colspan="2">4. How much <i>bodily</i> pain have you had during the <i>past 4 weeks</i>?</th>
+        </tr>
+        <tr>
+          <th></th>
+          <td>
+            <table class="general-radios-6">
+              <tr>
+                <td><label for="sbsfb4-1">None of the time<br/><input type="radio" id="sbsfb4-1" name="sbsfb4" value="1"></input></label></td>
+                <td><label for="sbsfb4-2">Very Mild<br/><input type="radio" id="sbsfb4-2" name="sbsfb4" value="2"></input></label></td>
+                <td><label for="sbsfb4-3">Mild<br/><input type="radio" id="sbsfb4-3" name="sbsfb4" value="3"></input></label></td>
+                <td><label for="sbsfb4-4">Moderately<br/><input type="radio" id="sbsfb4-4" name="sbsfb4" value="4"></input></label></td>
+                <td><label for="sbsfb4-5">Severe<br/><input type="radio" id="sbsfb4-5" name="sbsfb4" value="5"></input></label></td>
+                <td><label for="sbsfb4-6">Very severe<br/><input type="radio" id="sbsfb4-5" name="sbsfb4" value="6"></input></label></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <th colspan="2">5. During the <i>past 4 weeks</i>, how much energy did you have?</th>
+        </tr>
+        <tr>
+          <th></th>
+          <td>
+            <table class="general-radios-5">
+              <tr>
+                <td><label for="sbsfb5-1">Very much<br/><input type="radio" id="sbsfb5-1" name="sbsfb5" value="1"></input></label></td>
+                <td><label for="sbsfb5-2">Quite a lot<br/><input type="radio" id="sbsfb5-2" name="sbsfb5" value="2"></input></label></td>
+                <td><label for="sbsfb5-3">Some<br/><input type="radio" id="sbsfb5-3" name="sbsfb5" value="3"></input></label></td>
+                <td><label for="sbsfb5-4">A little<br/><input type="radio" id="sbsfb5-4" name="sbsfb5" value="4"></input></label></td>
+                <td><label for="sbsfb5-5">None<br/><input type="radio" id="sbsfb5-5" name="sbsfb5" value="5"></input></label></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <th colspan="2">6. During the <i>past 4 weeks</i>, how much did your physical health or emotional problems limit your usual social activities with family or friends?</th>
+        </tr>
+        <tr>
+          <th></th>
+          <td>
+            <table class="general-radios-5">
+              <tr>
+                <td><label for="sbsfb6-1">None at all<br/><input type="radio" id="sbsfb6-1" name="sbsfb6" value="1"></input></label></td>
+                <td><label for="sbsfb6-2">Very little<br/><input type="radio" id="sbsfb6-2" name="sbsfb6" value="2"></input></label></td>
+                <td><label for="sbsfb6-3">Somewhat<br/><input type="radio" id="sbsfb6-3" name="sbsfb6" value="3"></input></label></td>
+                <td><label for="sbsfb6-4">Quite a lot<br/><input type="radio" id="sbsfb6-4" name="sbsfb6" value="4"></input></label></td>
+                <td><label for="sbsfb6-5">Could not do social activities<br/><input type="radio" id="sbsfb6-5" name="sbsfb6" value="5"></input></label></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <th colspan="2">7. During the <i>past 4 weeks</i>, how much have you been bothered by <i>emotional problems</i> (such as feeling anxious, depressed or irritable)?</th>
+        </tr>
+        <tr>
+          <th></th>
+          <td>
+            <table class="general-radios-5">
+              <tr>
+                <td><label for="sbsfb7-1">None at all<br/><input type="radio" id="sbsfb7-1" name="sbsfb7" value="1"></input></label></td>
+                <td><label for="sbsfb7-2">Slightly<br/><input type="radio" id="sbsfb7-2" name="sbsfb7" value="2"></input></label></td>
+                <td><label for="sbsfb7-3">Moderately<br/><input type="radio" id="sbsfb7-3" name="sbsfb7" value="3"></input></label></td>
+                <td><label for="sbsfb7-4">Quite a lot<br/><input type="radio" id="sbsfb7-4" name="sbsfb7" value="4"></input></label></td>
+                <td><label for="sbsfb7-5">Extremely<br/><input type="radio" id="sbsfb7-5" name="sbsfb7" value="5"></input></label></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <th colspan="2">8. During the <i>past 4 weeks</i>, how much did personal or emotional problems keep you from doing your usual work, school or other daily activities?</th>
+        </tr>
+        <tr>
+          <th></th>
+          <td>
+            <table class="general-radios-5">
+              <tr>
+                <td><label for="sbsfb8-1">None at all<br/><input type="radio" id="sbsfb8-1" name="sbsfb8" value="1"></input></label></td>
+                <td><label for="sbsfb8-2">Very little<br/><input type="radio" id="sbsfb8-2" name="sbsfb8" value="2"></input></label></td>
+                <td><label for="sbsfb8-3">Somewhat<br/><input type="radio" id="sbsfb8-3" name="sbsfb8" value="3"></input></label></td>
+                <td><label for="sbsfb8-4">Quite a lot<br/><input type="radio" id="sbsfb8-4" name="sbsfb8" value="4"></input></label></td>
+                <td><label for="sbsfb8-5">Could not do daily activities<br/><input type="radio" id="sbsfb8-5" name="sbsfb8" value="5"></input></label></td>
+              </tr>
+            </table>
           </td>
         </tr>
       </table>
       <input type="submit" value="Test submission"/>
     </form>
+    <p class="copyright">Copyright © 2016, The Early Diagnosis and Treatment Research Foundation. All rights reserved.</p>
+    <!-- -----------end of form----------- -->
+    <div id="sbform-help" class="infobox">
+      <p>This is <tt>sbform</tt>, the patient background form.</p>
+    </div>
+    <div id="sbocc-help" class="infobox">
+      <p>Note that if the patient is retired, you should fill in their previous occupation, and note “(ret.)” in this field.</p>
+    </div>
   </body>
 </html>

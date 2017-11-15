@@ -101,7 +101,7 @@ public final class FilemanInterface implements Closeable {
             if (filemanField != null) {
                 fieldValues.put(filemanField, result.groupCount() == 1 ? "" : normalizeValue(result.group(2)));
             } else {
-                System.out.println("ProgrammerBot.readFieldValues() -> There is no definition for a field called " + promptName); //TODO throw an exception so a unit test would fail on this field.
+                System.err.println("FilemanInterface.readFieldValues() -> There is no definition for a field called " + promptName); //TODO throw an exception so a unit test would fail on this field.
             }
             expect.sendLine();
         }

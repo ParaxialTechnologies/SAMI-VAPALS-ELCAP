@@ -70,6 +70,9 @@ public class VistaServer implements Closeable {
         if (currentState == StateEnum.MUMPS) {
             exitMumps();
         }
+        if (currentState == StateEnum.SHELL) {
+            exitShell();
+        }
         if (currentState == StateEnum.CONNECTED) {
             disconnect();
         }
@@ -109,15 +112,32 @@ public class VistaServer implements Closeable {
     }
 
     /**
-     * Spawn a shellExpect on the remote host and wait for the specified text to appear
-     * (as is standard from the "shellExpect" utility) which indicates that the shellExpect
-     * spawned successfully.
      *
-     * @return This {@linkplain VistaServer} object.
-     * @throws JSchException if unable to connect to the servers' shell
      * @throws IOException if shell expectations fail
      */
-    public Expect startMumps() throws JSchException, IOException {
+    public void startMumps() throws IOException, JSchException {
+        if (currentState != StateEnum.SHELL) {
+            startShell();
+        }
+
+        checkState(this.currentState == StateEnum.SHELL, "Current state not SHELL, is " + this.currentState);
+
+        //enter the world of MUMPS!
+        shellExpect.sendLine("osehra");
+        shellExpect.sendLine("mumps -dir");
+
+        shellExpect.expect(Matchers.contains(MUMPS_PROMPT));
+
+        currentState = StateEnum.MUMPS;
+    }
+
+    /**
+     * Gets us from a connected state to a Shell prompt that utilizes an Expect utility to continue interacting with.
+     *
+     * @throws JSchException if unable to connect to the servers' shell
+     * @throws IOException   if shell expectations fail
+     */
+    public Expect startShell() throws JSchException, IOException {
         checkState(this.currentState == StateEnum.CONNECTED, "Current state not CONNECTED, is " + this.currentState);
 
         channel = session.openChannel("shell");
@@ -126,27 +146,18 @@ public class VistaServer implements Closeable {
         shellExpect = new ExpectBuilder()
                 .withOutput(channel.getOutputStream())
                 .withInputs(channel.getInputStream(), channel.getExtInputStream())
-                //.withEchoOutput(System.out)
-                .withEchoInput(System.err)
+                //.withEchoOutput(System.err)
+                .withEchoInput(System.out)
                 //.withInputFilters(removeColors(), removeNonPrintable())
                 .withExceptionOnFailure()
                 .withTimeout(10, TimeUnit.SECONDS)
                 .build();
 
-        //basic shell
         shellExpect.expect(Matchers.contains(SHELL_PROMPT));
-
-        //enter the world of MUMPS!
-        shellExpect.sendLine("osehra");
-
-        shellExpect.sendLine("mumps -dir");
-        shellExpect.expect(Matchers.contains(MUMPS_PROMPT));
-
-        currentState = StateEnum.MUMPS;
+        currentState = StateEnum.SHELL;
 
         return shellExpect;
     }
-
     /**
      * Exit from the remote shellExpect.
      *
@@ -155,9 +166,13 @@ public class VistaServer implements Closeable {
     private void exitMumps() throws IOException {
         checkState(this.currentState == StateEnum.MUMPS, "Current state not MUMPS, is " + this.currentState);
 
-        shellExpect.sendLine("HALT");
-        shellExpect.expect(Matchers.eof());
+        shellExpect.sendLine("HALT"); //exit mumps
+        shellExpect.expect(Matchers.contains(SHELL_PROMPT));
 
+        currentState = StateEnum.SHELL;
+    }
+
+    private void exitShell() throws IOException {
         shellExpect.close();
         shellExpect = null;
 
@@ -165,7 +180,6 @@ public class VistaServer implements Closeable {
         channel = null;
 
         currentState = StateEnum.CONNECTED;
-
     }
 
     /**
@@ -174,8 +188,10 @@ public class VistaServer implements Closeable {
      * @return This {@linkplain VistaServer} object.
      * @throws IOException if shell expectations fail
      */
-    public FilemanInterface startFileman() throws IOException {
-        checkState(this.currentState == StateEnum.MUMPS, "Current state not MUMPS, is " + this.currentState);
+    public FilemanInterface startFileman() throws IOException, JSchException {
+        if (currentState !=StateEnum.MUMPS){
+            startMumps();
+        }
 
         shellExpect.sendLine("SET DUZ=1");
 
@@ -204,6 +220,7 @@ public class VistaServer implements Closeable {
     public enum StateEnum {
         DISCONNECTED,
         CONNECTED,
+        SHELL,
         MUMPS,
         FILEMAN
     }

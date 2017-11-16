@@ -74,7 +74,10 @@ public class VistaServer implements Closeable {
             exitShell();
         }
         if (currentState == StateEnum.CONNECTED) {
-            disconnect();
+            session.disconnect();
+            session = null;
+
+            currentState = StateEnum.DISCONNECTED;
         }
 
     }
@@ -97,18 +100,6 @@ public class VistaServer implements Closeable {
         session.setConfig(config);
         session.connect();
         currentState = StateEnum.CONNECTED;
-    }
-
-    /**
-     * Disconnect from the remote host.
-     */
-    private void disconnect() {
-        checkState(this.currentState == StateEnum.CONNECTED, "Current state not CONNECTED, is " + this.currentState);
-
-        session.disconnect();
-        session = null;
-
-        currentState = StateEnum.DISCONNECTED;
     }
 
     /**

@@ -10,7 +10,6 @@ import com.paraxialtech.vapals.vista.FilemanDataDictionary;
 import com.paraxialtech.vapals.vista.FilemanField;
 import com.paraxialtech.vapals.vista.FilemanInterface;
 import com.paraxialtech.vapals.vista.VistaServer;
-import io.github.bonigarcia.wdm.ChromeDriverManager;
 import net.sf.expectit.Expect;
 import net.sf.expectit.ExpectBuilder;
 import net.sf.expectit.Result;
@@ -24,29 +23,21 @@ import org.hamcrest.CoreMatchers;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
-import java.awt.*;
+import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -54,7 +45,6 @@ import java.util.stream.Stream;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
 import static com.paraxialtech.vapals.BackgroundConstants.FIELDS;
-import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -65,43 +55,12 @@ import static org.junit.jupiter.api.Assertions.fail;
 /**
  * Tests background forms persistence by using a browser to load the form, submit data, re-navigate to the page and validate input.
  */
-@RunWith(JUnitPlatform.class)
-class SamiBackgroundTest {
+
+class SamiBackgroundTest extends AbstractFormTest {
     private static final String ASCII_VALUE = "a Z  0!\\\"#$%^&*()-./<>=?@[]_`{}~";
     private static final String EXTENDED_ASCII_VALUE = "È\u0089q§Òú_" + (char) 138;
-    private static final String SSH_PRIVATE_KEY = defaultIfNull(System.getProperty("privateKey"), "~/.ssh/id_rsa");
-    private static final String SSH_USER = defaultIfNull(System.getProperty("user"), System.getProperty("user.name"));
-    private static final String SERVER = defaultIfNull(System.getProperty("server"), "localhost");
-    private static final String PORT = defaultIfNull(System.getProperty("port"), "9080");
-    private static final String STUDY_IDS = defaultIfNull(System.getProperty("studyId"), "PA0001");
     private static final String BASE_URL = getUrl(STUDY_IDS.split(",")[0].trim());
     private static final Set<String> ignoreFields = ImmutableSet.of(); //Temporarily ignore these fields so remaining tests can run. "sbwcos"
-    private static WebDriver driver = new HtmlUnitDriver();
-
-    /**
-     * Setup the Selenium driver to use an actual Chrome instance or a headless one.
-     */
-    @BeforeClass
-    static void beforeClass() {
-        ChromeDriverManager.getInstance().setup();
-        if (System.getProperty("headless") != null || GraphicsEnvironment.isHeadless()) {
-            final ChromeOptions o = new ChromeOptions();
-            o.addArguments("headless");
-            driver = new ChromeDriver(o);
-        }
-        else {
-            driver = new ChromeDriver();
-        }
-    }
-
-    /**
-     * Cleanup/destroy our web driver
-     *
-     */
-    @AfterClass
-    static void afterClass() {
-        driver.quit();
-    }
 
     /**
      * Establish our base URL and navigate to it.
@@ -164,7 +123,7 @@ class SamiBackgroundTest {
         try {
 
             //Load the data dictionary for the BACKGROUND form
-            final FilemanDataDictionary filemanDataDictionary = new FilemanDataDictionary("SAMI BACKGROUND", Paths.get("../../docs/dd/background-dd-map.csv"));
+            final FilemanDataDictionary filemanDataDictionary = new FilemanDataDictionary("SAMI BACKGROUND", Paths.get(getDataDictionaryFile()));
 
             //Store read values from VistA FileMan
             final Map<FilemanField, String> filemanValues = newHashMap();
@@ -186,7 +145,6 @@ class SamiBackgroundTest {
                 }
 
             }
-
 
             // final Map<String, String> filemanValues = createFilemanRecord(studyId);
             // assertThat("Not all fileman fields were updated", filemanValues.size(), is(FIELDS.size()));
@@ -644,5 +602,11 @@ class SamiBackgroundTest {
 
     private static String getUrl(final String studyId) {
         return "http://" + SERVER + ":" + PORT + "/form?form=sbform&studyid=" + studyId;
+    }
+
+    @Nonnull
+    @Override
+    public String getDataDictionaryFile() {
+        return "../../docs/dd/background-dd-map.csv";
     }
 }

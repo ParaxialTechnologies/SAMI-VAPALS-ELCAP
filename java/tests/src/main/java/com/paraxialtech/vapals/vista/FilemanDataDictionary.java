@@ -26,6 +26,7 @@ public class FilemanDataDictionary {
     private static final Pattern DOUBLE_QUOTE_TRIM_REGEX = Pattern.compile("^\"?(.*?)\"?$");
     private final String fileName;
     private final List<FilemanField> fields;
+    private int finderIndex = 0;
 
     /**
      * Parses a CSV file into an object representing the data dictionary
@@ -94,43 +95,102 @@ public class FilemanDataDictionary {
         }
 
         // 5) Sort and be done with it
+        return sortFields(fields);
+    }
+
+    /**
+     * Sort the fields on their class nums &amp; prop nums. The data dictionary
+     * files, for some reason, do NOT necessarily show these fields in the same
+     * order they appear when editing in Fileman, so it is up to us to do the
+     * sorting.
+     * <p>
+     * This code is brittle and may break in the future if there are ever more or
+     * less than 2 parts of the class num.
+     *
+     * @param fields
+     * @see #findField(String)
+     * @see #resetFieldFinder()
+     */
+    private static List<FilemanField> sortFields(final List<FilemanField> fields) {
+        fields.sort((lhs,rhs) -> { int val = lhs.getClassNum()[0].compareTo(rhs.getClassNum()[0]);
+                                   if (val != 0) {
+                                       return val;
+                                   }
+
+                                   val = lhs.getClassNum()[1].compareTo(rhs.getClassNum()[1]);
+                                   if (val != 0) {
+                                       return val;
+                                   }
+
+                                   return lhs.getPropNum().compareTo(rhs.getPropNum()); }); // TODO: what about the other class #s?
+
         return fields;
     }
 
     /**
-     * TODO udpate javadoc
-     * When iterating through the record in Fileman, we need to find the next field
-     * by name, but there may be duplicate string identifiers. Use this method to
-     * find the next field, starting with the field after the previously-found field.
-     * <p>
-     * It also loops around to the 0th element in case the element was not found, but now that we sort hopefully this is no longer necessary
-     * <p>
-     * Also does some basic look-ahead in case the expected
-     * order doesn't quite match up with what we actually encounter.
+     * Call this method before iterating through a list in Fileman, so that calls to
+     * {@linkplain #findField(String)} get the most likely field when there are
+     * multiple with the same name.
      *
-     * @param filemanPrompt the name of the prompt FileMan
+     * @see #findField(String)
+     * @see #sortFields(List)
+     */
+    public void resetFieldFinder() {
+        finderIndex = 0;
+    }
+
+    /**
+     * TODO update javadoc
+     * <p>
+     * When iterating through the record in Fileman, we need to find the next field
+     * by name, but there may be duplicate string identifiers.
+     * <p>
+     * When starting to iterate through a file in Fileman, first call the
+     * {@linkplain #resetFieldFinder()} method to reset the internal counter to the
+     * 0th field. Alternatively, change this method to take a second parameter that
+     * indicates which matching field (if > 1) to return. The downside with this
+     * approach is that the calling code needs to keep track of how many it has
+     * seen.
+     * <p>
+     * Use this method to find the next field, starting with the field after the
+     * previously-found field.
+     * <p>
+     * If the element is not found, start the search over from 0. This should only
+     * be needed if we iterate through the fields in Fileman out-of-order (TODO:
+     * check if this happens when editing <i>some,/i> fields as opposed to
+     * <i>ALL</i> fields?)
+     * <p>
+     * Also does some basic look-ahead in case the expected order doesn't quite
+     * match up with what we actually encounter.
+     *
+     * @param filemanPrompt
+     *            the name of the prompt in FileMan
      * @return the field
+     * @see #resetFieldFinder()
+     * @see #sortFields(List)
      */
     @CheckForNull
     public FilemanField findField(final String filemanPrompt) {
 
-        return fields.stream().filter(filemanField -> filemanField.getFilemanName().equalsIgnoreCase(filemanPrompt)).findFirst().orElse(null);
+//        return fields.stream().filter(filemanField -> filemanField.getFilemanName().equalsIgnoreCase(filemanPrompt)).findFirst().orElse(null);
 
         //TODO: determine if this really necessary?
+        // Yes it is, unfortunately. See how Fileman handles "AGE RANGE" (sbsehsa1/2/3/4, sbhsa1/2/3/4).
+        // This is also why we need to sort the fields when building from the data dictionary.
 
-//        for (int index = finderIndex; index < fields.size(); index++) {
-//            if (fields.get(index).filemanPrompt.equals(filemanPrompt)) {
-//                finderIndex = index + 1;
-//                return fields.get(index);
-//            }
-//        }
-//        for (int index = 0; index < finderIndex; index++) {
-//            if (fields.get(index).filemanPrompt.equals(filemanPrompt)) {
-//                finderIndex = index + 1;
-//                return fields.get(index);
-//            }
-//        }
-//        return null;
+        for (int index = finderIndex; index < fields.size(); index++) {
+            if (fields.get(index).getFilemanName().equals(filemanPrompt)) {
+                finderIndex = index + 1;
+                return fields.get(index);
+            }
+        }
+        for (int index = 0; index < finderIndex; index++) {
+            if (fields.get(index).getFilemanName().equals(filemanPrompt)) {
+                finderIndex = index + 1;
+                return fields.get(index);
+            }
+        }
+        return null;
     }
 
 

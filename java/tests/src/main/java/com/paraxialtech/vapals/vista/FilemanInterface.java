@@ -87,7 +87,7 @@ public final class FilemanInterface implements Closeable {
 
         // Set up the file to look for fields sequentially
 
-
+        dataDictionary.resetFieldFinder();
         while (true) {
             final Result result = expect.expect(Matchers.anyOf(selectFilePrompt, MATCHER_ITEM));
             if (selectFilePrompt.matches(result.group(), false).isSuccessful()) {
@@ -146,6 +146,7 @@ public final class FilemanInterface implements Closeable {
         expect.expect(selectFilePrompt);
         expect.sendLine(studyId);
 
+        dataDictionary.resetFieldFinder();
         while (true) {
             final Result result = expect.expect(Matchers.anyOf(selectFilePrompt, MATCHER_ITEM));
             if (selectFilePrompt.matches(result.group(), false).isSuccessful()) {

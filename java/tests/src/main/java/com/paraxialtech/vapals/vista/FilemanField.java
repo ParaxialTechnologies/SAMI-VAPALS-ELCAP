@@ -32,7 +32,7 @@ public final class FilemanField {
         return classNum;
     }
 
-    public double getPropNum() {
+    public Double getPropNum() {
         return propNum;
     }
 

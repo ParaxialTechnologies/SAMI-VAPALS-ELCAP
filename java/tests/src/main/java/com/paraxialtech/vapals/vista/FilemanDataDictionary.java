@@ -1,6 +1,9 @@
 package com.paraxialtech.vapals.vista;
 
 import javax.annotation.CheckForNull;
+
+import com.google.common.base.Preconditions;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -67,6 +70,7 @@ public class FilemanDataDictionary {
         final List<String> lines = Files.readAllLines(definitionFilePath);
         final String delimeter = "\t";  // TODO: determine if this is a CSV or a TSV file. For now we know (assume) it's a TSV file
 
+        FilemanField priorField = null;
         for (int lineNum = 1; lineNum <= lines.size(); lineNum++) {
             final String line = lines.get(lineNum - 1);
 
@@ -87,10 +91,13 @@ public class FilemanDataDictionary {
             }
             // 4) The rest of the lines contain the fields we will (should) find in the file
             else if (items.get(0).equals("1")) {
-                fields.add(FilemanField.constructFromArray(items, fieldTitles));
+                priorField = FilemanField.constructFromArray(items, fieldTitles);
+                fields.add(priorField);
             }
+            // 5) The rest of the lines contain (additional?) possible values for enumerated types
             else {
-                // TODO: input the various possible values for radio/pulldown fields
+                Preconditions.checkNotNull(priorField);
+                priorField.mergeWithWebFieldValue(FilemanValueEnumeration.constructValueFromArray(items, fieldTitles));
             }
         }
 
@@ -192,6 +199,4 @@ public class FilemanDataDictionary {
         }
         return null;
     }
-
-
 }

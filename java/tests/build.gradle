@@ -52,6 +52,11 @@ dependencies {
 }
 
 tasks.withType(JavaExec) {
-    // Assign all Java system properties from the command line to the JavaExec task.
-    systemProperties System.properties
+    // Assign select Java system properties from the command line to the JavaExec task.
+    // Be sure to keep this list in sync with any calls to 'System.getProperty(String)'
+    systemProperty 'privateKey', System.getProperty('privateKey')
+    systemProperty 'user',       System.getProperty('user')
+    systemProperty 'server',     System.getProperty('server')
+    systemProperty 'port',       System.getProperty('port')
+    systemProperty 'studyIds',   System.getProperty('studyIds')
 }

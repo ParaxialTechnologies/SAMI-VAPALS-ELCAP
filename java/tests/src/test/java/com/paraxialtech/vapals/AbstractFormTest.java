@@ -17,6 +17,7 @@ import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
 
 @RunWith(JUnitPlatform.class)
 public abstract class AbstractFormTest {
+    // Note, if you add any other properties, be sure to add the property name to the list in build.gradle so that Gradle knows to pass the value along.
     protected static final String SSH_PRIVATE_KEY = defaultIfNull(System.getProperty("privateKey"), "~/.ssh/id_rsa");
     protected static final String SSH_USER = defaultIfNull(System.getProperty("user"), System.getProperty("user.name"));
     protected static final String SERVER = defaultIfNull(System.getProperty("server"), "localhost");

@@ -199,4 +199,9 @@ public class FilemanDataDictionary {
         }
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "FilemanDataDictionary [fileName=" + fileName + ", fields=" + fields + "]";
+    }
 }

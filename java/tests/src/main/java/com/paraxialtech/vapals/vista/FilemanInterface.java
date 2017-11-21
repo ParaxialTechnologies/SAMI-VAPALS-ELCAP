@@ -51,9 +51,9 @@ public final class FilemanInterface implements Closeable {
      * @return Map of fields and corresponding values
      * @throws IOException if expectations fail
      */
-    public Map<FilemanField, String> readRecord(final FilemanDataDictionary dataDictionary, final String studyID) throws IOException {
+    public Map<FilemanField, FilemanValue> readRecord(final FilemanDataDictionary dataDictionary, final String studyID) throws IOException {
         checkState(vistaServer.getCurrentState() == VistaServer.StateEnum.FILEMAN);
-        final Map<FilemanField, String> fieldValues = new LinkedHashMap<>();
+        final Map<FilemanField, FilemanValue> fieldValues = new LinkedHashMap<>();
 
         //TODO There is a better way to output all values of a study...
 //        Select OPTION: 2  PRINT FILE ENTRIES
@@ -99,9 +99,15 @@ public final class FilemanInterface implements Closeable {
             final FilemanField filemanField = dataDictionary.findField(promptName);
 
             if (filemanField != null) {
-                fieldValues.put(filemanField, result.groupCount() == 1 ? "" : normalizeValue(result.group(2)));
+                final FilemanValue value;
+                if (result.groupCount() == 1) {
+                    value = FilemanValue.NO_VALUE;
+                } else {
+                    value = filemanField.getValueFromFileman(result.group(2));
+                }
+                fieldValues.put(filemanField, value);
             } else {
-                System.err.println("FilemanInterface.readFieldValues() -> There is no definition for a field called " + promptName); //TODO throw an exception so a unit test would fail on this field.
+                System.err.println("FilemanInterface.readRecord() -> There is no definition for a field called " + promptName); //TODO throw an exception so a unit test would fail on this field.
             }
             expect.sendLine();
         }

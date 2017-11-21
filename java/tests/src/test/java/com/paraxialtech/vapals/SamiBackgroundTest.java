@@ -8,13 +8,17 @@ import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.paraxialtech.vapals.vista.FilemanDataDictionary;
 import com.paraxialtech.vapals.vista.FilemanField;
+import com.paraxialtech.vapals.vista.FilemanField.DataTypeEnum;
 import com.paraxialtech.vapals.vista.FilemanInterface;
+import com.paraxialtech.vapals.vista.FilemanValue;
 import com.paraxialtech.vapals.vista.VistaServer;
+
 import net.sf.expectit.Expect;
 import net.sf.expectit.ExpectBuilder;
 import net.sf.expectit.Result;
 import net.sf.expectit.matcher.Matcher;
 import net.sf.expectit.matcher.Matchers;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -33,11 +37,19 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import javax.annotation.Nonnull;
+
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -45,6 +57,7 @@ import java.util.stream.Stream;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
 import static com.paraxialtech.vapals.BackgroundConstants.FIELDS;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -126,7 +139,7 @@ class SamiBackgroundTest extends AbstractFormTest {
             final FilemanDataDictionary filemanDataDictionary = new FilemanDataDictionary("SAMI BACKGROUND", Paths.get(getDataDictionaryFile()));
 
             //Store read values from VistA FileMan
-            final Map<FilemanField, String> filemanValues = newHashMap();
+            final Map<FilemanField, FilemanValue> filemanValues = newHashMap();
 
             //Connect to a VISTA server and read in all values of the studyId
             try (final VistaServer server = new VistaServer(SERVER)) { // Auto Closeable
@@ -154,8 +167,9 @@ class SamiBackgroundTest extends AbstractFormTest {
             driver.navigate().to(getUrl(studyId));
 
             //Assert that all web values are equivalent to what we just pulled out of Fileman.
-            for (final Map.Entry<FilemanField, String> entry : filemanValues.entrySet()) {
-                tests.add(DynamicTest.dynamicTest("Study=" + studyId + ":" + entry.getKey(), () -> assertFieldValueEquals(driver.getPageSource(), entry.getKey().getWebName(), entry.getValue())));
+            for (final Map.Entry<FilemanField, FilemanValue> entry : filemanValues.entrySet()) {
+                tests.add(DynamicTest.dynamicTest("Study=" + studyId + ":" + entry.getKey(),
+                                                  () -> assertFieldValueEquals(driver.getPageSource(), entry.getKey(), entry.getValue())));
             }
         } catch (final IOException e) {
             fail("Unable to start shell or invoke Fileman on VistA server", e);
@@ -473,11 +487,42 @@ class SamiBackgroundTest extends AbstractFormTest {
         assertThat("Incorrect value for field " + fieldName, elements.get(0).val(), is(fieldValue));
     }
 
+    private void assertFieldValueEquals(final String pageSource, final FilemanField filemanField, final FilemanValue filemanValue) {
+        final String fieldName = filemanField.getWebName();
+        final Elements elements = getElements(pageSource, filemanField, fieldName);
+        assertThat("Wrong number of fields '" + fieldName + "' on webpage", elements.size(), is(getExpectedWebCount(filemanField)));
+        assertThat("Incorrect value for field " + fieldName, filemanField.getValueFromWeb(elements), is(filemanValue));
+    }
+
     private void assertFieldValueIsNotValid(final String fieldName) {
         final Elements elements = Jsoup.parse(driver.getPageSource()).getElementsByAttributeValue("name", fieldName);
         assertThat(elements.size(), is(1));
         elements.get(0).parent().getElementsContainingText("Input invalid");
         assertThat("Expected element indicating " + fieldName + " field was invalid", elements.size(), is(1));
+    }
+
+    private Elements getElements(final String pageSource, final FilemanField filemanField, final String fieldName) {
+        Elements elements = Jsoup.parse(pageSource).getElementsByAttributeValue("name", fieldName);
+        if (filemanField.getDataType() == DataTypeEnum.PULLDOWN) {
+            elements = Jsoup.parse(elements.html()).getElementsByTag("option");
+        }
+        return elements;
+    }
+
+    private int getExpectedWebCount(final FilemanField filemanField) {
+        if (!filemanField.getDataType().isEnumeration()) {
+            return 1;
+        }
+
+        if (filemanField.getDataType() == DataTypeEnum.RADIO) {
+            return filemanField.getPossibleValues().size();
+        }
+
+        if (filemanField.getDataType() == DataTypeEnum.PULLDOWN) {
+            return filemanField.getPossibleValues().size();
+        }
+
+        return 1;
     }
 
     Map<String, String> createFilemanRecord(final String studyId) {

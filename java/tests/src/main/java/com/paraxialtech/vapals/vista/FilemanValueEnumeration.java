@@ -8,12 +8,10 @@ import com.google.common.base.Preconditions;
 
 /**
  * Represent a (possible or actual) value of an enumerated field in a Fileman file.
- * <p/>
- * An instance of this class represents the actual enumerated value.
  *
  * @author Keith Powers
  */
-public final class FilemanValueEnumeration {
+public final class FilemanValueEnumeration implements FilemanValue {
     private String filemanValue;
     private String webValue;
     private String shortcut;
@@ -119,5 +117,50 @@ public final class FilemanValueEnumeration {
         }
 
         return value;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("FilemanValueEnumeration [filemanValue=").append(filemanValue).append(", webValue=")
+                .append(webValue).append(", shortcut=").append(shortcut).append("]");
+        return builder.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((filemanValue == null) ? 0 : filemanValue.hashCode());
+        result = prime * result + ((shortcut == null) ? 0 : shortcut.hashCode());
+        result = prime * result + ((webValue == null) ? 0 : webValue.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        FilemanValueEnumeration other = (FilemanValueEnumeration) obj;
+        if (filemanValue == null) {
+            if (other.filemanValue != null)
+                return false;
+        } else if (!filemanValue.equals(other.filemanValue))
+            return false;
+        if (shortcut == null) {
+            if (other.shortcut != null)
+                return false;
+        } else if (!shortcut.equals(other.shortcut))
+            return false;
+        if (webValue == null) {
+            if (other.webValue != null)
+                return false;
+        } else if (!webValue.equals(other.webValue))
+            return false;
+        return true;
     }
 }

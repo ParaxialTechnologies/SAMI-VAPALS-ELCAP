@@ -1,9 +1,17 @@
 package com.paraxialtech.vapals.vista;
 
+import com.google.common.base.Preconditions;
+
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import com.google.common.base.Preconditions;
+import java.util.stream.Collectors;
 
 /**
  * Represent a Field in a Fileman file.
@@ -18,6 +26,9 @@ public final class FilemanField {
     private String[] classNum;
     private double propNum;
     private DataTypeEnum dataType;
+    /**
+     * A map of the shortcut to the possible value (eg: "f"->"female")
+     */
     private Map<String, FilemanValueEnumeration> possibleValues;
 
     private FilemanField() {
@@ -116,6 +127,156 @@ public final class FilemanField {
         }
     }
 
+    /**
+     * Get a {@linkplain FilemanValue} object representing the given string.
+     *
+     * TODO: pass along the expect object for multiSelect types.
+     *
+     * @param value
+     *            The value as seen in Fileman.
+     * @return A concrete object
+     */
+    public final FilemanValue getValueFromFileman(@Nullable final String value) {
+        if (value == null || value.trim().length() == 0) {
+            return FilemanValue.NO_VALUE;
+        }
+
+        if (dataType.isEnumeration()) {
+            if (dataType.isMultiSelect()) {
+                // TODO
+                // if multiple are selected, add each to a FilemanValueMulti
+                // else, fall through
+            }
+
+            return possibleValues.values().stream()
+                .filter(enumeratedValue -> value.equals(enumeratedValue.getFilemanValue()))
+                .map(enumeratedValue -> (FilemanValue)enumeratedValue)
+                .findFirst()
+                .orElse(FilemanValue.NO_VALUE); // TODO: what SHOULD we do here?
+//                .get();
+        }
+
+        switch (dataType) {
+//            case CHECKBOX:
+//                break;
+            case DATE:
+                return FilemanValueDate.fromFileman(value);
+            case INTEGER:
+                return new FilemanValueNumber(value);
+            case PNUM:
+                return new FilemanValueNumber(value);
+//            case PULLDOWN:
+//                break;
+//            case RADIO:
+//                break;
+            case RDATE:
+                return FilemanValueDate.fromFileman(value);
+            case REAL:
+                return new FilemanValueNumber(value);
+            case TEXT:
+                return new FilemanValueString(value);
+            case YEAR:
+                return new FilemanValueNumber(value);
+            default:
+                // Fall-through
+        }
+
+        // This should never happen
+        return new FilemanValueString(value);
+    }
+
+    /**
+     *
+     *
+     * @param elements
+     * @return
+     */
+    public final FilemanValue getValueFromWeb(@Nonnull final Elements elements) {
+        if (elements.size() == 0) {
+            return FilemanValue.NO_VALUE;
+        }
+
+        if (dataType.isEnumeration()) {
+            final List<Element> selectedElements = getSelectedElements(elements);
+
+            if (selectedElements.isEmpty()) {
+                return FilemanValue.NO_VALUE;
+            }
+
+            if (dataType.isMultiSelect()) {
+                if (selectedElements.size() > 1) {
+                    final List<FilemanValue> selectedValues = selectedElements.stream()
+                        .map(element -> possibleValues.values().stream()
+                                            .filter(enumeratedValue -> enumeratedValue.getWebValue().equals(element.val()))
+                                            .map(enumeratedValue -> (FilemanValue)enumeratedValue)
+                                            .findFirst()
+                                            .orElse(FilemanValue.NO_VALUE)) // TODO: what SHOULD we do here?
+                        .collect(Collectors.toList());
+
+                    return new FilemanValueMulti(selectedValues);
+                }
+            }
+
+            final Element selectedElement = selectedElements.get(0);
+
+            if (possibleValues.containsKey(selectedElement.val())) {
+                return possibleValues.get(selectedElement.val());
+            }
+
+            return possibleValues.values().stream()
+                .filter(enumeratedValue -> enumeratedValue.getWebValue().equals(selectedElement.val()))
+                .map(enumeratedValue -> (FilemanValue)enumeratedValue)
+                .findFirst()
+                .orElse(FilemanValue.NO_VALUE);    // TODO: what SHOULD we do here?
+
+        }
+
+        final String value = elements.get(0).val();
+
+        if (value == null || value.trim().length() == 0) {
+            return FilemanValue.NO_VALUE;
+        }
+
+        switch (dataType) {
+//            case CHECKBOX:
+//                break;
+            case DATE:
+                return FilemanValueDate.fromWeb(value);
+            case INTEGER:
+                return new FilemanValueNumber(value);
+            case PNUM:
+                return new FilemanValueNumber(value);
+//            case PULLDOWN:
+//                break;
+//            case RADIO:
+//                break;
+            case RDATE:
+                FilemanValueDate.fromWeb(value);
+            case REAL:
+                return new FilemanValueNumber(value);
+            case TEXT:
+                return new FilemanValueString(value);
+            case YEAR:
+                return new FilemanValueNumber(value);
+            default:
+                // Fall-through
+        }
+
+        // This should never happen
+        return new FilemanValueString(value);
+    }
+
+    private List<Element> getSelectedElements(Elements elements) {
+        if (dataType == DataTypeEnum.PULLDOWN) {
+            return elements.stream()
+                .filter(element -> element.hasAttr("selected"))
+                .collect(Collectors.toList());
+        }
+        return elements.stream()
+            .filter(element -> element.hasAttr("checked"))
+            .collect(Collectors.toList());
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -159,25 +320,35 @@ public final class FilemanField {
         sb.append(", webName='").append(webName).append('\'');
         sb.append(", classNum=").append(Arrays.toString(classNum));
         sb.append(", propNum=").append(propNum);
+        sb.append(", dataType=").append(dataType);
+        sb.append(", possibleValues=").append(possibleValues);
         sb.append('}');
         return sb.toString();
     }
 
     public enum DataTypeEnum {
-        CHECKBOX (true),
+        CHECKBOX (true,  true),
         DATE     (false),
         INTEGER  (false),
-        PNUM     (false),   // What is this? a calculated number?
-        PULLDOWN (true),
-        RADIO    (true),
+        PNUM     (false),           // What is this? a calculated number?
+        PULLDOWN (true,  false),
+        RADIO    (true,  false),
         RDATE    (false),
         REAL     (false),
         TEXT     (false),
         YEAR     (false);
 
         private boolean enumeratedValues;
+        private boolean multiSelect;
         private DataTypeEnum(final boolean enumeratedValues) {
+            this(enumeratedValues, false);
+        }
+        private DataTypeEnum(final boolean enumeratedValues, final boolean multiSelect) {
             this.enumeratedValues = enumeratedValues;
+            this.multiSelect = multiSelect;
+            if (this.multiSelect && !enumeratedValues) {
+                throw new IllegalArgumentException("multiSelect is only possible when enumeratedValues=true");
+            }
         }
 
         /**
@@ -189,6 +360,19 @@ public final class FilemanField {
          */
         public boolean isEnumeration() {
             return enumeratedValues;
+        }
+
+        /**
+         * Whether there may be multiple selected values for this data enumerated type,
+         * or whether there may be only one.
+         * <p/>
+         * This value is always <code>false</code> when [{@linkplain #isEnumeration()} is false.
+         *
+         * @return <code>true</code> if there may be multiple selected value,
+         *         <code>false</code> if there may be only one selected value.
+         */
+        public boolean isMultiSelect() {
+            return multiSelect;
         }
     }
 }

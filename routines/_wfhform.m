@@ -92,8 +92,8 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  . . . . if errmethod=2 do  ;
  . . . . . n tprevln,uln
  . . . . . s uln=(%j-1)
- . . . . . s tprevln=zhtml(uln)
- . . . . . if tprevln'["fielderror" s tprevln=zhtml(%j-2) s uln=%j-2
+ . . . . . s tprevln=$g(zhtml(uln))
+ . . . . . if tprevln'["fielderror" s tprevln=$g(zhtml(%j-2)) s uln=%j-2
  . . . . . do putErrMsg2("zhtml",.tprevln,.errmsg,"errctrl")
  . . . . . set zhtml(uln)=tprevln
  . . . . if errmethod=1 do insError(.tln,.errmsg)

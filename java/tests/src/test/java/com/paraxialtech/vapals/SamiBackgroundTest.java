@@ -1,27 +1,23 @@
 package com.paraxialtech.vapals;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static com.paraxialtech.vapals.BackgroundConstants.FIELDS;
-import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
+import com.jcraft.jsch.Channel;
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
+import com.paraxialtech.vapals.vista.FilemanDataDictionary;
+import com.paraxialtech.vapals.vista.FilemanField;
+import com.paraxialtech.vapals.vista.FilemanField.DataTypeEnum;
+import com.paraxialtech.vapals.vista.FilemanInterface;
+import com.paraxialtech.vapals.vista.FilemanValue;
+import com.paraxialtech.vapals.vista.VistaServer;
 
-import java.awt.GraphicsEnvironment;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Properties;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
+import net.sf.expectit.Expect;
+import net.sf.expectit.ExpectBuilder;
+import net.sf.expectit.Result;
+import net.sf.expectit.matcher.Matcher;
+import net.sf.expectit.matcher.Matchers;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -31,98 +27,65 @@ import org.hamcrest.CoreMatchers;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
-import com.jcraft.jsch.Channel;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
-import com.paraxialtech.vapals.filemanbot.FilemanField;
-import com.paraxialtech.vapals.filemanbot.FilemanFile;
-import com.paraxialtech.vapals.filemanbot.FilemanFile.FileDefinition;
-import com.paraxialtech.vapals.filemanbot.FilemanServer;
-import com.paraxialtech.vapals.filemanbot.FilemanServers;
-import com.paraxialtech.vapals.filemanbot.ProgrammerBot;
+import javax.annotation.Nonnull;
 
-import io.github.bonigarcia.wdm.ChromeDriverManager;
-import net.sf.expectit.Expect;
-import net.sf.expectit.ExpectBuilder;
-import net.sf.expectit.Result;
-import net.sf.expectit.matcher.Matcher;
-import net.sf.expectit.matcher.Matchers;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Properties;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Maps.newHashMap;
+import static com.paraxialtech.vapals.BackgroundConstants.FIELDS;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 
 /**
- * Tests background form persistency by using a browser to load the form, submit data, re-navigate to the page and validate input.
+ * Tests background forms persistence by using a browser to load the form, submit data, re-navigate to the page and validate input.
  */
-@RunWith(JUnitPlatform.class)
-class SamiBackgroundTest {
+
+class SamiBackgroundTest extends AbstractFormTest {
     private static final String ASCII_VALUE = "a Z  0!\\\"#$%^&*()-./<>=?@[]_`{}~";
     private static final String EXTENDED_ASCII_VALUE = "È\u0089q§Òú_" + (char) 138;
-    private static final String SSH_PRIVATE_KEY = defaultIfNull(System.getProperty("privateKey"), "~/.ssh/id_rsa");
-    private static final String SSH_USER = defaultIfNull(System.getProperty("user"), System.getProperty("user.name"));
-    private static final String SERVER = defaultIfNull(System.getProperty("server"), "localhost");
-    private static final String PORT = defaultIfNull(System.getProperty("port"), "9080");
-    private static final String STUDY_IDS = defaultIfNull(System.getProperty("studyId"), "PA0001");
     private static final String BASE_URL = getUrl(STUDY_IDS.split(",")[0].trim());
     private static final Set<String> ignoreFields = ImmutableSet.of(); //Temporarily ignore these fields so remaining tests can run. "sbwcos"
-    private static WebDriver driver = new HtmlUnitDriver();
-    private static final FileDefinition BACKGROUND_FILE_DEF =
-        new FileDefinition("SAMI BACKGROUND", "../../docs/dd/background-dd-map.csv");
-
-    /**
-     * Setup the Selenium driver to use an actual Chrome instance or a headless one.
-     */
-    @BeforeClass
-    public static void beforeClass() {
-        ChromeDriverManager.getInstance().setup();
-        if (System.getProperty("headless") != null || GraphicsEnvironment.isHeadless()) {
-            ChromeOptions o = new ChromeOptions();
-            o.addArguments("headless");
-            driver = new ChromeDriver(o);
-        }
-        else {
-            driver = new ChromeDriver();
-        }
-    }
-
-    /**
-     * Cleanup/destroy our web driver
-     *
-     * @throws Exception
-     */
-    @AfterClass
-    public static void afterClass() throws Exception {
-        driver.quit();
-    }
 
     /**
      * Establish our base URL and navigate to it.
      */
     @BeforeEach
     void beforeEach() {
-        Properties p = System.getProperties();
+        final Properties p = System.getProperties();
         driver.get(BASE_URL);   // TODO: make this get the right page for the study being tested in each fileman/web equality test. Or does this even run for each item in that list?
     }
 
     @Test
-    public void testVisitDate() {
+    void testVisitDate() {
         final String fieldName = "sbdop";
 
         submitField(fieldName, "foobar");
@@ -133,7 +96,7 @@ class SamiBackgroundTest {
     }
 
     @Test
-    public void testDateOfBirth() {
+    void testDateOfBirth() {
         final String fieldName = "sbdob";
 
         submitField(fieldName, "foobar");
@@ -144,7 +107,7 @@ class SamiBackgroundTest {
     }
 
     @Test
-    public void testAge() {
+    void testAge() {
 
         final String fieldName = "sbage";
 
@@ -157,37 +120,61 @@ class SamiBackgroundTest {
 
 
     @TestFactory
-    Iterator<DynamicTest> testFilemanEqualsWeb() {
-        List<DynamicTest> tests = newArrayList();
+    Iterator<DynamicTest> testFilemanWebEquality() {
+        return Stream.of(STUDY_IDS.split(",")) //for each study id we have
+                .map(StringUtils::trim) //trim them
+                .map(this::generateFilemanWebEqualityTests) //list of tests
+                .flatMap(Collection::stream) //merge the lists
+                .collect(Collectors.toList()).iterator(); //return iterator
 
-        for (final String studyId : STUDY_IDS.split(",")) {
-            tests.addAll(testFilemanEqualsWeb(studyId.trim()));
-        }
-
-        return tests.iterator();
     }
 
-    private List<DynamicTest> testFilemanEqualsWeb(final String studyId) {
+    private List<DynamicTest> generateFilemanWebEqualityTests(final String studyId) {
 
-        List<DynamicTest> tests = newArrayList();
+        final List<DynamicTest> tests = newArrayList();
 
         try {
-//            final Map<String, String> filemanValues = createFilemanRecord(studyId);
-            final Map<FilemanField, String> filemanValues = readFilemanRecord(studyId);
-            assertThat(filemanValues.size(), greaterThan(0));
-//            assertThat("Not all fileman fields were updated", filemanValues.size(), is(FIELDS.size()));
 
-//            driver.navigate().to(getUrl(studyId));    TODO, see #beforeEach()
+            //Load the data dictionary for the BACKGROUND form
+            final FilemanDataDictionary filemanDataDictionary = new FilemanDataDictionary("SAMI BACKGROUND", Paths.get(getDataDictionaryFile()));
 
-            for (Map.Entry<FilemanField, String> entry : filemanValues.entrySet()) {
-                tests.add(DynamicTest.dynamicTest("Study=" + studyId + ":" + entry.getKey(), () -> {
-                    assertFieldValueEquals(driver.getPageSource(), entry.getKey().webName, entry.getValue());
-                }));
+            //Store read values from VistA FileMan
+            final Map<FilemanField, FilemanValue> filemanValues = newHashMap();
+
+            //Connect to a VISTA server and read in all values of the studyId
+            try (final VistaServer server = new VistaServer(SERVER)) { // Auto Closeable
+
+                assertThat(server.getCurrentState(), is(VistaServer.StateEnum.DISCONNECTED));
+
+                server.connect(SSH_PRIVATE_KEY, SSH_USER);
+                assertThat(server.getCurrentState(), is(VistaServer.StateEnum.CONNECTED));
+
+                //Startup Fileman
+                try(final FilemanInterface filemanInterface = server.startFileman()){
+                    assertThat(server.getCurrentState(), is(VistaServer.StateEnum.FILEMAN));
+
+                    //Read the record (TODO: assumes that it exists)
+                    filemanValues.putAll(filemanInterface.readRecord(filemanDataDictionary, studyId));
+                }
+
             }
-        } catch (IOException e) {
-            tests.add(rethrow("Error communicating with SERVER.", e));
-        } catch (JSchException e) {
-            tests.add(rethrow(String.format("Failed to connect to SERVER='%s' with cert='%s' and user='%s'", SERVER, SSH_PRIVATE_KEY, SSH_USER), e));
+
+            // final Map<String, String> filemanValues = createFilemanRecord(studyId);
+            // assertThat("Not all fileman fields were updated", filemanValues.size(), is(FIELDS.size()));
+            assertThat(filemanValues.size(), greaterThan(0)); //make sure we did something
+
+            //refresh the page so we have up-to-date values
+            driver.navigate().to(getUrl(studyId));
+
+            //Assert that all web values are equivalent to what we just pulled out of Fileman.
+            for (final Map.Entry<FilemanField, FilemanValue> entry : filemanValues.entrySet()) {
+                tests.add(DynamicTest.dynamicTest("Study=" + studyId + ":" + entry.getKey(),
+                                                  () -> assertFieldValueEquals(driver.getPageSource(), entry.getKey(), entry.getValue())));
+            }
+        } catch (final IOException e) {
+            fail("Unable to start shell or invoke Fileman on VistA server", e);
+        } catch (final JSchException e) {
+            fail(String.format("Failed to connect to SERVER='%s' with cert='%s' and user='%s'", SERVER, SSH_PRIVATE_KEY, SSH_USER), e);
         }
         return tests;
     }
@@ -198,18 +185,14 @@ class SamiBackgroundTest {
         final Document doc = Jsoup.parse(pageSource);
 
         // 1) Get all <input>, <select>, and <textarea> elements
-        Elements inputElements = doc.select("input,select,textarea");
-        List<DynamicTest> tests = newArrayList();
+        final Elements inputElements = doc.select("input,select,textarea");
+        final List<DynamicTest> tests = newArrayList();
 
         // 2) For each element from step 1, add a test to ensure it has a non-empty "name" attribute
-        tests.addAll(inputElements.stream().map(element -> DynamicTest.dynamicTest("has name attribute: " + element.toString(), () -> {
-            assertThat("name attribute is missing or empty: " + element.toString(), element.attr("name"), CoreMatchers.not(""));
-        })).collect(Collectors.toList()));
+        tests.addAll(inputElements.stream().map(element -> DynamicTest.dynamicTest("has name attribute: " + element.toString(), () -> assertThat("name attribute is missing or empty: " + element.toString(), element.attr("name"), CoreMatchers.not("")))).collect(Collectors.toList()));
 
         // 3) For each element from step 1, add a test to ensure it has a non-empty "id" attribute
-        tests.addAll(inputElements.stream().map(element -> DynamicTest.dynamicTest("has id attribute: " + element.toString(), () -> {
-            assertThat("id attribute is missing or empty: " + element.toString(), element.attr("id"), CoreMatchers.not(""));
-        })).collect(Collectors.toList()));
+        tests.addAll(inputElements.stream().map(element -> DynamicTest.dynamicTest("has id attribute: " + element.toString(), () -> assertThat("id attribute is missing or empty: " + element.toString(), element.attr("id"), CoreMatchers.not("")))).collect(Collectors.toList()));
 
         // 4) For each element from step 1, add a test to ensure it has exactly one label
         tests.addAll(inputElements.stream().map(element -> DynamicTest.dynamicTest("has label: " + element.toString(), () -> {
@@ -229,7 +212,7 @@ class SamiBackgroundTest {
     @TestFactory
     Iterator<DynamicTest> testDateFields() {
 
-        Document doc = Jsoup.parse(driver.getPageSource());
+        final Document doc = Jsoup.parse(driver.getPageSource());
 
         // 1) Parse the page with jsoup, find the elements with class "ddmmmyyyy", and collect into a list their name attributes
         final List<String> fieldNames = doc.getElementsByClass("ddmmmyyyy").stream().map(element -> element.attr("name")).collect(Collectors.toList());
@@ -459,7 +442,7 @@ class SamiBackgroundTest {
 
     @Test
     void testElementsHaveUniqueName() {
-        String[] duplicateNames =
+        final String[] duplicateNames =
                 // 1) Get all <select>, <textarea>, and <input> elements - provided the <input> elements are NOT radio or submit buttons
                 findElements(driver, "input:not([type='radio']):not([type='submit']),select,textarea").stream()
                         // 2) Reduce the elements to their names
@@ -484,7 +467,7 @@ class SamiBackgroundTest {
     }
 
     private void submitField(final String fieldName, final String fieldValue) {
-        WebElement element = driver.findElement(By.name(fieldName));
+        final WebElement element = driver.findElement(By.name(fieldName));
         Assert.assertNotNull("element " + fieldName + " not found", element);
 
         element.clear();
@@ -499,42 +482,61 @@ class SamiBackgroundTest {
     }
 
     private void assertFieldValueEquals(final String pageSource, final String fieldName, final String fieldValue) {
-        Elements elements = Jsoup.parse(pageSource).getElementsByAttributeValue("name", fieldName);
-        assertThat(elements.size(), is(1));
+        final Elements elements = Jsoup.parse(pageSource).getElementsByAttributeValue("name", fieldName);
+        assertThat("Could not find field " + fieldName + " on webpage", elements.size(), is(1));
         assertThat("Incorrect value for field " + fieldName, elements.get(0).val(), is(fieldValue));
     }
 
+    private void assertFieldValueEquals(final String pageSource, final FilemanField filemanField, final FilemanValue filemanValue) {
+        final String fieldName = filemanField.getWebName();
+        final Elements elements = getElements(pageSource, filemanField, fieldName);
+        assertThat("Wrong number of fields '" + fieldName + "' on webpage", elements.size(), is(getExpectedWebCount(filemanField)));
+        assertThat("Incorrect value for field " + fieldName, filemanField.getValueFromWeb(elements), is(filemanValue));
+    }
+
     private void assertFieldValueIsNotValid(final String fieldName) {
-        Elements elements = Jsoup.parse(driver.getPageSource()).getElementsByAttributeValue("name", fieldName);
+        final Elements elements = Jsoup.parse(driver.getPageSource()).getElementsByAttributeValue("name", fieldName);
         assertThat(elements.size(), is(1));
         elements.get(0).parent().getElementsContainingText("Input invalid");
         assertThat("Expected element indicating " + fieldName + " field was invalid", elements.size(), is(1));
     }
 
-    private Map<FilemanField, String> readFilemanRecord(final String studyId) throws IOException, JSchException {
-        final FilemanServer server = FilemanServers.getOsehraDockerServer(SERVER);
-
-        final Map<FilemanField, String> values =
-            new ProgrammerBot(server.getFilemanExpectObject(SSH_PRIVATE_KEY, SSH_USER, "~$", System.out, System.err))
-                .readRecord(new FilemanFile(BACKGROUND_FILE_DEF), studyId);
-
-        server.close();
-
-        return values;
+    private Elements getElements(final String pageSource, final FilemanField filemanField, final String fieldName) {
+        Elements elements = Jsoup.parse(pageSource).getElementsByAttributeValue("name", fieldName);
+        if (filemanField.getDataType() == DataTypeEnum.PULLDOWN) {
+            elements = Jsoup.parse(elements.html()).getElementsByTag("option");
+        }
+        return elements;
     }
 
-    private Map<String, String> createFilemanRecord(final String studyId) {
-        Map<String, String> filemanValues = new HashMap<>();
+    private int getExpectedWebCount(final FilemanField filemanField) {
+        if (!filemanField.getDataType().isEnumeration()) {
+            return 1;
+        }
+
+        if (filemanField.getDataType() == DataTypeEnum.RADIO) {
+            return filemanField.getPossibleValues().size();
+        }
+
+        if (filemanField.getDataType() == DataTypeEnum.PULLDOWN) {
+            return filemanField.getPossibleValues().size();
+        }
+
+        return 1;
+    }
+
+    Map<String, String> createFilemanRecord(final String studyId) {
+        final Map<String, String> filemanValues = new HashMap<>();
 
         Session session = null;
         Channel channel = null;
 
         try {
             // 1) Login
-            JSch jSch = new JSch();
+            final JSch jSch = new JSch();
             jSch.addIdentity(SSH_PRIVATE_KEY);
             session = jSch.getSession(SSH_USER, SERVER);
-            Properties config = new Properties();
+            final Properties config = new Properties();
             config.put("StrictHostKeyChecking", "no");
             session.setConfig(config);
             session.connect();
@@ -542,11 +544,11 @@ class SamiBackgroundTest {
             channel.connect();
 
             // 2) Set up the Expect object
-            Expect expect = new ExpectBuilder()
+            final Expect expect = new ExpectBuilder()
                     .withOutput(channel.getOutputStream())
                     .withInputs(channel.getInputStream(), channel.getExtInputStream())
-                    .withEchoOutput(System.out)
-                    .withEchoInput(System.err)
+//                    .withEchoOutput(System.err)
+                    .withEchoInput(System.out)
 //                    .withInputFilters(removeColors(), removeNonPrintable())
                     .withExceptionOnFailure()
                     .withTimeout(1, TimeUnit.SECONDS)
@@ -583,25 +585,25 @@ class SamiBackgroundTest {
                 expect.expect(Matchers.contains("Are you adding"));
                 expect.sendLine("Yes");
             }
-            catch (Exception ex) {
+            catch (final Exception ex) {
                 //intentionally ignore
             }
 
             // 5) Loop through each entry
-            Matcher<Result> matcherDone = Matchers.contains("Select SAMI BACKGROUND STUDY ID:"); //finished input of record
-            Matcher<Result> matcherItem = Matchers.regexp("[\r\n]+([^:]+):(?: (.+)//)?"); //requesting input
+            final Matcher<Result> matcherDone = Matchers.contains("Select SAMI BACKGROUND STUDY ID:"); //finished input of record
+            final Matcher<Result> matcherItem = Matchers.regexp("[\r\n]+([^:]+):(?: (.+)//)?"); //requesting input
             while (true) {
-                Result result = expect.expect(Matchers.anyOf(matcherDone, matcherItem));
+                final Result result = expect.expect(Matchers.anyOf(matcherDone, matcherItem));
                 if (matcherDone.matches(result.group(), false).isSuccessful()) {
                     break;
                 }
 
                 //found an input request. Look at the first part (before the ":") and see if we can find a match
-                String key = result.group(1);
-                Optional<Triple<String, String, String>> triple = FIELDS.stream().filter(t -> t.getMiddle().contains(key)).findFirst();
+                final String key = result.group(1);
+                final Optional<Triple<String, String, String>> triple = FIELDS.stream().filter(t -> t.getMiddle().contains(key)).findFirst();
                 String value = "";
                 if (triple.isPresent()) {
-                    String filemanKey = triple.get().getLeft();
+                    final String filemanKey = triple.get().getLeft();
                     value = triple.get().getRight();
                     filemanValues.put(filemanKey, value);
                 }
@@ -625,10 +627,10 @@ class SamiBackgroundTest {
 
             expect.close();
         }
-        catch (JSchException e) {
+        catch (final JSchException e) {
             fail(String.format("Failed to connect to SERVER='%s' with cert='%s' and user='%s'", SERVER, SSH_PRIVATE_KEY, SSH_USER), e);
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             fail("Error communicating with SERVER.", e);
         }
         finally {
@@ -643,11 +645,13 @@ class SamiBackgroundTest {
         return filemanValues;
     }
 
-    private static DynamicTest rethrow(String message, Throwable e) {
-        return DynamicTest.dynamicTest(message, () -> { throw e; });
+    private static String getUrl(final String studyId) {
+        return "http://" + SERVER + ":" + PORT + "/form?form=sbform&studyid=" + studyId;
     }
 
-    private static final String getUrl(final String studyId) {
-        return "http://" + SERVER + ":" + PORT + "/form?form=sbform&studyid=" + studyId;
+    @Nonnull
+    @Override
+    public String getDataDictionaryFile() {
+        return "../../docs/dd/background-dd-map.csv";
     }
 }

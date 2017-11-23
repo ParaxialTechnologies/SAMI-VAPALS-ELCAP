@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkState;
  * @author Keith Powers
  */
 public final class FilemanInterface implements Closeable {
-    private static final Matcher<Result> MATCHER_ITEM = Matchers.regexp("[\r\n]+([^:]+):(?: (.+)//)?");
+    private static final Matcher<Result> MATCHER_ITEM = Matchers.regexp("[\r\n]+([^:\r\n]+):(?: (.+)//)?");
     private final Expect expect;
     private final VistaServer vistaServer;
 
@@ -31,20 +31,79 @@ public final class FilemanInterface implements Closeable {
         this.vistaServer = checkNotNull(vistaServer);
     }
 
-    private String normalizeValue(final String value) {
-        if (value == null) {
-            return "";
+    /**
+     * Create the given record in VistA, with the given values. Will throw an error
+     * if the record already exists.
+     *
+     * @param dataDictionary
+     *            the fileman data dictionary
+     * @param studyID
+     *            study id
+     * @param values
+     *            the values to insert into the record
+     * @throws IOException
+     *             if expectations fail
+     */
+    public void createRecord(final FilemanDataDictionary dataDictionary,
+                             final String studyID,
+                             final Map<FilemanField, FilemanValue> values) throws IOException {
+        checkState(vistaServer.getCurrentState() == VistaServer.StateEnum.FILEMAN);
+
+        expect.expect(Matchers.contains("Select OPTION:")); //ensure we're at the main menu
+        expect.sendLine("1"); //ENTER OR EDIT FILE ENTRIES
+
+        expect.expect(Matchers.contains("Input to what File:"));
+        expect.sendLine(dataDictionary.getFileName());
+
+        expect.expect(Matchers.contains("EDIT WHICH FIELD:"));
+        expect.sendLine("ALL");
+
+        final Matcher<Result> selectFilePrompt = Matchers.contains("Select " + dataDictionary.getFileName());
+
+        expect.expect(selectFilePrompt);
+        expect.sendLine(studyID);
+
+        expect.expect(Matchers.contains("Are you adding '" + studyID + "' as a new " + dataDictionary.getFileName()));
+        expect.sendLine("Yes");
+
+        // Set up the file to look for fields sequentially
+        dataDictionary.resetFieldFinder();
+
+        while (true) {
+            final Result result = expect.expect(Matchers.anyOf(selectFilePrompt, MATCHER_ITEM));
+            if (selectFilePrompt.matches(result.group(), false).isSuccessful()) {
+                break;
+            }
+
+            final String promptName = result.group(1);
+            final FilemanField filemanField = dataDictionary.findField(promptName);
+
+            // Field not found, no further processing possible
+            if (filemanField == null) {
+                System.err.println("FilemanInterface.createRecord() -> There is no definition for a field called " + promptName); //TODO throw an exception so a unit test would fail on this field.
+                expect.sendLine();
+                continue;
+            }
+
+            // Find the new value, or skip it if not found
+            final FilemanValue newValue = values.get(filemanField);
+            if (newValue == null) {
+                System.err.println("FilemanInterface.createRecord() -> No value for field '" + filemanField + "'");
+                expect.sendLine();
+                continue;
+            }
+
+            // Write the new value
+            expect.sendLine(newValue.toFileman());
         }
 
-        // TODO: dates, etc
-
-
-        return value;
+        expect.sendLine(); //exit back to Fileman Main Menu
+        expect.expect(Matchers.contains("Select OPTION:"));
     }
 
     /**
      * Step through the fields in the given Fileman File and return their values in
-     * a map of fields to {@link #normalizeValue(String) normalized} Strings.
+     * a map of fields to {@linkplain FilemanValue} objects.
      *
      * @param dataDictionary the fileman data dictionary
      * @param studyID study id
@@ -53,7 +112,7 @@ public final class FilemanInterface implements Closeable {
      */
     public Map<FilemanField, FilemanValue> readRecord(final FilemanDataDictionary dataDictionary, final String studyID) throws IOException {
         checkState(vistaServer.getCurrentState() == VistaServer.StateEnum.FILEMAN);
-        final Map<FilemanField, FilemanValue> fieldValues = new LinkedHashMap<>();
+        final Map<FilemanField, FilemanValue> fieldValues;
 
         //TODO There is a better way to output all values of a study...
 //        Select OPTION: 2  PRINT FILE ENTRIES
@@ -86,31 +145,9 @@ public final class FilemanInterface implements Closeable {
         expect.sendLine(studyID);
 
         // Set up the file to look for fields sequentially
-
         dataDictionary.resetFieldFinder();
-        while (true) {
-            final Result result = expect.expect(Matchers.anyOf(selectFilePrompt, MATCHER_ITEM));
-            if (selectFilePrompt.matches(result.group(), false).isSuccessful()) {
-                break;
-            }
 
-            final String promptName = result.group(1);
-
-            final FilemanField filemanField = dataDictionary.findField(promptName);
-
-            if (filemanField != null) {
-                final FilemanValue value;
-                if (result.groupCount() == 1) {
-                    value = FilemanValue.NO_VALUE;
-                } else {
-                    value = filemanField.getValueFromFileman(result.group(2));
-                }
-                fieldValues.put(filemanField, value);
-            } else {
-                System.err.println("FilemanInterface.readRecord() -> There is no definition for a field called " + promptName); //TODO throw an exception so a unit test would fail on this field.
-            }
-            expect.sendLine();
-        }
+        fieldValues = readRecord(expect, selectFilePrompt, dataDictionary);
 
         expect.sendLine(); //exit back to Fileman Main Menu
         expect.expect(Matchers.contains("Select OPTION:"));
@@ -134,7 +171,7 @@ public final class FilemanInterface implements Closeable {
      */
     public void updateRecord(final FilemanDataDictionary dataDictionary,
                              final String studyId,
-                             final Map<FilemanField, String> newValues) throws IOException {
+                             final Map<FilemanField, FilemanValue> newValues) throws IOException {
         checkState(vistaServer.getCurrentState() == VistaServer.StateEnum.FILEMAN);
 
         expect.expect(Matchers.contains("Select OPTION:")); //ensure at main menu
@@ -152,23 +189,145 @@ public final class FilemanInterface implements Closeable {
         expect.expect(selectFilePrompt);
         expect.sendLine(studyId);
 
+        // Set up the file to look for fields sequentially
         dataDictionary.resetFieldFinder();
+
         while (true) {
             final Result result = expect.expect(Matchers.anyOf(selectFilePrompt, MATCHER_ITEM));
             if (selectFilePrompt.matches(result.group(), false).isSuccessful()) {
                 break;
             }
 
-            // Find the next FilemanField
-            final FilemanField filemanField = dataDictionary.findField(result.group(1));
-            //TODO: determine a good value and set it
+            final String promptName = result.group(1);
+            final FilemanField filemanField = dataDictionary.findField(promptName);
 
+            // Field not found, no further processing possible
+            if (filemanField == null) {
+                System.err.println("FilemanInterface.updateRecord() -> There is no definition for a field called " + promptName); //TODO throw an exception so a unit test would fail on this field.
+                expect.sendLine();
+                continue;
+            }
 
-//            fieldValues.put(filemanField, result.groupCount() == 1 ? "" : normalize(result.group(2)));  TODO
+            // Find the current value
+            final FilemanValue value = getFilemanValue(result, filemanField);
+
+            // Find the new value, or skip it if not found
+            final FilemanValue newValue = newValues.get(filemanField);
+            if (newValue == null) {
+                System.err.println("FilemanInterface.updateRecord() -> No new value for field '" + filemanField + "'");
+                expect.sendLine();
+                continue;
+            }
+
+            // If the value isn't changing, just move on
+            if (value.equals(newValue)) {
+                expect.sendLine();
+                continue;
+            }
+
+            // Write the new value
+            if (newValue != FilemanValue.NO_VALUE) {
+                expect.sendLine(newValue.toFileman());
+            } else {
+                // If the new value is to be blank, handle this differently
+                expect.sendLine("@");
+                expect.expect(Matchers.contains("SURE YOU WANT TO DELETE?"));
+                expect.sendLine("Yes");
+            }
         }
-//      expect.expect(Matchers.contains("Select OPTION:")); Found by MATCHER_DONE
-        expect.sendLine("^");
+
+        expect.sendLine(); //exit back to Fileman Main Menu
+        expect.expect(Matchers.contains("Select OPTION:"));
     }
 
+    /**
+     * Delete the given study from Vista. Exit gracefully if if it does not exist.
+     *
+     * @param dataDictionary
+     *            the fileman data dictionary
+     * @param studyID
+     *            study id
+     * @throws IOException
+     *             if expectations fail
+     */
+    public void deleteRecord(final FilemanDataDictionary dataDictionary, final String studyID) throws IOException {
+        checkState(vistaServer.getCurrentState() == VistaServer.StateEnum.FILEMAN);
 
+        expect.expect(Matchers.contains("Select OPTION:")); //ensure we're at the main menu
+        expect.sendLine("1"); //ENTER OR EDIT FILE ENTRIES
+
+        expect.expect(Matchers.contains("Input to what File:"));
+        expect.sendLine(dataDictionary.getFileName());
+
+        expect.expect(Matchers.contains("EDIT WHICH FIELD:"));
+        expect.sendLine("ALL");
+
+        final Matcher<Result> selectFilePrompt = Matchers.contains("Select " + dataDictionary.getFileName());
+
+        expect.expect(selectFilePrompt);
+        expect.sendLine(studyID);
+
+        final Matcher<Result> addingNew = Matchers.contains("Are you adding '" + studyID + "' as a new " + dataDictionary.getFileName());
+        // It might not exist yet...
+        final Result result = expect.expect(Matchers.anyOf(addingNew, Matchers.contains("STUDY ID: " + studyID + "//")));
+
+        // If the record doesn't exist yet, we are done
+        if (addingNew.matches(result.group(), false).isSuccessful()) {
+            expect.sendLine("No");
+        } else {
+            expect.sendLine("@");
+
+            expect.expect(Matchers.contains("SURE YOU WANT TO DELETE THE ENTIRE '" + studyID + "' " + dataDictionary.getFileName() + "?"));
+            expect.sendLine("Yes");
+        }
+
+        expect.expect(Matchers.contains("Select " + dataDictionary.getFileName()));
+        expect.sendLine(); //exit back to Fileman Main Menu
+
+        expect.expect(Matchers.contains("Select OPTION:"));
+    }
+
+    private static FilemanValue getFilemanValue(final Result result, final FilemanField filemanField) {
+        if (result.groupCount() == 1) {
+            return FilemanValue.NO_VALUE;
+        }
+
+        return filemanField.getValueFromFileman(result.group(2));
+    }
+
+    /**
+     * Static method to read from Fileman and build a map of fields to values.
+     *
+     * @param expect
+     * @param dataDictionary
+     * @param fieldValues
+     * @param selectFilePrompt
+     * @throws IOException
+     */
+    public static Map<FilemanField, FilemanValue> readRecord(final Expect expect,
+                                                             final Matcher<Result> selectFilePrompt,
+                                                             final FilemanDataDictionary dataDictionary) throws IOException {
+        final Map<FilemanField, FilemanValue> fieldValues = new LinkedHashMap<>();
+        while (true) {
+            final Result result = expect.expect(Matchers.anyOf(selectFilePrompt, MATCHER_ITEM));
+            if (selectFilePrompt.matches(result.group(), false).isSuccessful()) {
+                break;
+            }
+
+            final String promptName = result.group(1);
+            final FilemanField filemanField = dataDictionary.findField(promptName);
+
+            // Field not found, no further processing possible
+            if (filemanField == null) {
+                System.err.println("FilemanInterface.readRecord() -> There is no definition for a field called " + promptName); //TODO throw an exception so a unit test would fail on this field.
+                expect.sendLine();
+                continue;
+            }
+
+            // Find the value, store it in our map, and move on
+            fieldValues.put(filemanField, getFilemanValue(result, filemanField));
+            expect.sendLine();
+        }
+        return fieldValues;
+    }
 }

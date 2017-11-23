@@ -176,7 +176,11 @@ public final class FilemanField {
             case TEXT:
                 return new FilemanValueString(value);
             case YEAR:
-                return new FilemanValueNumber(value);
+                try {
+                    return new FilemanValueNumber(value);
+                } catch (final NumberFormatException e) {
+                    break;
+                }
             default:
                 // Fall-through
         }

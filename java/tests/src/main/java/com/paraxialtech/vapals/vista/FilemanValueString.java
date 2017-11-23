@@ -14,7 +14,19 @@ public final class FilemanValueString implements FilemanValue {
         this.value = value;
     }
 
-    public String getValue() {
+    // Package-private getters / setters.
+
+    String getValue() {
+        return value;
+    }
+
+    @Override
+    public String toFileman() {
+        return value;
+    }
+
+    @Override
+    public String toWeb() {
         return value;
     }
 

@@ -15,8 +15,9 @@ import java.time.format.DateTimeFormatterBuilder;
  * @author Keith Powers
  */
 public final class FilemanValueDate implements FilemanValue {
-    private static final DateTimeFormatter WEB_DATE_FORMAT = new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern("dd/MMM/yyyy").toFormatter();
     private static final DateTimeFormatter FILEMAN_DATE_FORMAT = new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern("MMM d[d],yyyy").toFormatter();
+    private static final DateTimeFormatter FILEMAN_DATE_FORMAT_OUT = new DateTimeFormatterBuilder().appendPattern("MMM dd, yyyy").toFormatter();
+    private static final DateTimeFormatter WEB_DATE_FORMAT = new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern("dd/MMM/yyyy").toFormatter();
 
     private final LocalDate value;
 
@@ -24,7 +25,9 @@ public final class FilemanValueDate implements FilemanValue {
         this.value = value;
     }
 
-    public LocalDate getValue() {
+    // Package-private getters / setters.
+
+    LocalDate getValue() {
         return value;
     }
 
@@ -34,6 +37,16 @@ public final class FilemanValueDate implements FilemanValue {
 
     public static FilemanValueDate fromWeb(final String value) {
         return new FilemanValueDate(LocalDate.parse(value, WEB_DATE_FORMAT));
+    }
+
+    @Override
+    public String toFileman() {
+        return FILEMAN_DATE_FORMAT_OUT.format(value);
+    }
+
+    @Override
+    public String toWeb() {
+        return WEB_DATE_FORMAT.format(value);
     }
 
     @Override

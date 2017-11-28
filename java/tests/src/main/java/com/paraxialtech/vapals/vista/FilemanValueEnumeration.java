@@ -20,19 +20,21 @@ public final class FilemanValueEnumeration implements FilemanValue {
         //prevent public instantiation
     }
 
-    public String getFilemanValue() {
+    // Package-private getters / setters.
+
+    String getFilemanValue() {
         return filemanValue;
     }
 
-    public String getWebValue() {
+    String getWebValue() {
         return webValue;
     }
 
-    public void setWebValue(final String webValue) {
+    void setWebValue(final String webValue) {
         this.webValue = webValue;
     }
 
-    public String getShortcut() {
+    String getShortcut() {
         return shortcut;
     }
 
@@ -117,6 +119,16 @@ public final class FilemanValueEnumeration implements FilemanValue {
         }
 
         return value;
+    }
+
+    @Override
+    public String toFileman() {
+        return filemanValue;
+    }
+
+    @Override
+    public String toWeb() {
+        return webValue;
     }
 
     @Override

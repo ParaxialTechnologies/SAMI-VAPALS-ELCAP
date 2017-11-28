@@ -200,7 +200,7 @@ public class VistaServer implements Closeable {
      *
      * @throws IOException if shell expectations fail
      */
-    void exitFileman() throws IOException {
+    public void exitFileman() throws IOException {
         checkState(this.currentState == StateEnum.FILEMAN, "Current state not FILEMAN, is " + this.currentState);
 
         shellExpect.sendLine(); //exit from Fileman itself

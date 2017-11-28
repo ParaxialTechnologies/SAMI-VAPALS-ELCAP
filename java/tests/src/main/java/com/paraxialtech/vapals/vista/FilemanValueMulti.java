@@ -16,8 +16,20 @@ public final class FilemanValueMulti implements FilemanValue {
         values.addAll(values);
     }
 
-    public Set<FilemanValue> getValues() {
+    // Package-private getters / setters.
+
+    Set<FilemanValue> getValues() {
         return values;
+    }
+
+    @Override
+    public String toFileman() {
+        return null;    // TODO
+    }
+
+    @Override
+    public String toWeb() {
+        return null;    // TODO
     }
 
     @Override

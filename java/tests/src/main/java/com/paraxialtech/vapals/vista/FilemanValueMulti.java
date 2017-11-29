@@ -12,8 +12,8 @@ import java.util.Set;
 public final class FilemanValueMulti implements FilemanValue {
     private final Set<FilemanValue> values = new HashSet<>();
 
-    public FilemanValueMulti(final Collection<FilemanValue> values) {
-        values.addAll(values);
+    public FilemanValueMulti(final Collection<? extends FilemanValue> values) {
+        this.values.addAll(values);
     }
 
     // Package-private getters / setters.

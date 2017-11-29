@@ -3,6 +3,7 @@ package com.paraxialtech.vapals.vista;
 import javax.annotation.CheckForNull;
 
 import com.google.common.base.Preconditions;
+import com.paraxialtech.vapals.vista.FilemanField.DataTypeEnum;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -91,8 +92,17 @@ public class FilemanDataDictionary {
             }
             // 4) The rest of the lines contain the fields we will (should) find in the file
             else if (items.get(0).equals("1")) {
-                priorField = FilemanField.constructFromArray(items, fieldTitles);
-                fields.add(priorField);
+                FilemanField field = FilemanField.constructFromArray(items, fieldTitles);
+                // The CHECKBOX fields are fully defined on each line, with the only difference being the web info
+                if (priorField != null
+                 && priorField.getDataType() == DataTypeEnum.CHECKBOX
+                 && field.getDataType() == DataTypeEnum.CHECKBOX
+                 && priorField.getFilemanName().equals(field.getFilemanName())) {
+                    priorField.mergeWithWebFieldValue(FilemanValueEnumeration.constructValueFromArray(items, fieldTitles));
+                } else {
+                    priorField = field;
+                    fields.add(priorField);
+                }
             }
             // 5) The rest of the lines contain (additional?) possible values for enumerated types
             else {
@@ -184,15 +194,22 @@ public class FilemanDataDictionary {
         //TODO: determine if this really necessary?
         // Yes it is, unfortunately. See how Fileman handles "AGE RANGE" (sbsehsa1/2/3/4, sbhsa1/2/3/4).
         // This is also why we need to sort the fields when building from the data dictionary.
-
         for (int index = finderIndex; index < fields.size(); index++) {
             if (fields.get(index).getFilemanName().equals(filemanPrompt)) {
+                finderIndex = index + 1;
+                return fields.get(index);
+            } else if (fields.get(index).getDataType().isMultiSelect() &&
+                       filemanPrompt.endsWith(fields.get(index).getFilemanName())) {
                 finderIndex = index + 1;
                 return fields.get(index);
             }
         }
         for (int index = 0; index < finderIndex; index++) {
             if (fields.get(index).getFilemanName().equals(filemanPrompt)) {
+                finderIndex = index + 1;
+                return fields.get(index);
+            } else if (fields.get(index).getDataType().isMultiSelect() &&
+                       filemanPrompt.endsWith(fields.get(index).getFilemanName())) {
                 finderIndex = index + 1;
                 return fields.get(index);
             }

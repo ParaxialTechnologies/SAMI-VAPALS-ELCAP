@@ -1,14 +1,14 @@
 package com.paraxialtech.vapals.vista;
 
-import javax.annotation.CheckForNull;
-
 import com.google.common.base.Preconditions;
-import com.paraxialtech.vapals.vista.FilemanField.DataTypeEnum;
+
+import javax.annotation.CheckForNull;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,7 +30,7 @@ public class FilemanDataDictionary {
     private static final Pattern DOUBLE_QUOTE_TRIM_REGEX = Pattern.compile("^\"?(.*?)\"?$");
     private final String fileName;
     private final List<FilemanField> fields;
-    private int finderIndex = 0;
+    private FilemanField prevSubrecordField = null;
 
     /**
      * Parses a CSV file into an object representing the data dictionary
@@ -58,7 +58,7 @@ public class FilemanDataDictionary {
     }
 
     /**
-     * Static constructor generated from a definition file.
+     * Get the fields from a definition file.
      *
      * @param definitionFilePath path to the data dictionary definition file
      * @return List of fields
@@ -69,9 +69,9 @@ public class FilemanDataDictionary {
         final List<FilemanField> fields = new ArrayList<>();
 
         final List<String> lines = Files.readAllLines(definitionFilePath);
-        final String delimeter = "\t";  // TODO: determine if this is a CSV or a TSV file. For now we know (assume) it's a TSV file
+        final String delimeter = "\t";  // TODO: determine if this is a CSV or a TSV file. For now we assume it's a TSV file
 
-        FilemanField priorField = null;
+        FilemanField field = null;
         for (int lineNum = 1; lineNum <= lines.size(); lineNum++) {
             final String line = lines.get(lineNum - 1);
 
@@ -90,130 +90,201 @@ public class FilemanDataDictionary {
             if (lineNum == 1) {
                 fieldTitles.addAll(items);
             }
-            // 4) The rest of the lines contain the fields we will (should) find in the file
+            // 4) The lines beginning with "1" contain the fields we will find in the file
             else if (items.get(0).equals("1")) {
-                final FilemanField field = FilemanField.constructFromArray(items, fieldTitles);
-                // The CHECKBOX fields are fully defined on each line, with the only difference being the web info
-                if (priorField != null
-                 && priorField.getDataType() == DataTypeEnum.CHECKBOX
-                 && field.getDataType() == DataTypeEnum.CHECKBOX
-                 && priorField.getFilemanName().equals(field.getFilemanName())) {
-                    priorField.mergeWithWebFieldValue(FilemanValueEnumeration.constructValueFromArray(items, fieldTitles));
-                } else {
-                    priorField = field;
-                    fields.add(priorField);
-                }
+                field = FilemanField.constructFromArray(items, fieldTitles);
+                fields.add(field);
             }
             // 5) The rest of the lines contain (additional?) possible values for enumerated types
             else {
-                Preconditions.checkNotNull(priorField);
-                priorField.mergeWithWebFieldValue(FilemanValueEnumeration.constructValueFromArray(items, fieldTitles));
+                Preconditions.checkNotNull(field);
+                field.mergeWithWebFieldValue(FilemanValueEnumeration.constructValueFromArray(items, fieldTitles));
             }
         }
 
-        // 5) Sort and be done with it
-        return sortFields(fields);
-    }
-
-    /**
-     * Sort the fields on their class nums &amp; prop nums. The data dictionary
-     * files, for some reason, do NOT necessarily show these fields in the same
-     * order they appear when editing in Fileman, so it is up to us to do the
-     * sorting.
-     * <p>
-     * This code is brittle and may break in the future if there are ever more or
-     * less than 2 parts of the class num.
-     *
-     * @param fields
-     * @see #findField(String)
-     * @see #resetFieldFinder()
-     */
-    private static List<FilemanField> sortFields(final List<FilemanField> fields) {
-        fields.sort((lhs,rhs) -> { int val = lhs.getClassNum()[0].compareTo(rhs.getClassNum()[0]);
-                                   if (val != 0) {
-                                       return val;
-                                   }
-
-                                   val = lhs.getClassNum()[1].compareTo(rhs.getClassNum()[1]);
-                                   if (val != 0) {
-                                       return val;
-                                   }
-
-                                   return lhs.getPropNum().compareTo(rhs.getPropNum()); }); // TODO: what about the other class #s?
+        // 6) Sort and be done with it
+        fields.sort(getFieldComparator());
 
         return fields;
     }
 
     /**
-     * Call this method before iterating through a list in Fileman, so that calls to
-     * {@linkplain #findField(String)} get the most likely field when there are
-     * multiple with the same name.
+     * Get a comparator that sorts the fields on their class nums &amp; prop nums.
+     * The data dictionary files, for some reason, do NOT necessarily show these
+     * fields in the same order they appear when editing in Fileman, so it is up to
+     * us to do the sorting.
+     * <p>
+     * This code is brittle and may break in the future if there are ever more or
+     * less than 2 parts of the class num.
      *
      * @see #findField(String)
-     * @see #sortFields(List)
+     * @see #resetFieldFinder()
      */
-    public void resetFieldFinder() {
-        finderIndex = 0;
+    private static Comparator<FilemanField> getFieldComparator() {
+        return (lhs, rhs) -> {
+            int val = lhs.getClassNum()[0].compareTo(rhs.getClassNum()[0]);
+            if (val != 0) {
+                return val;
+            }
+
+            val = lhs.getClassNum()[1].compareTo(rhs.getClassNum()[1]);
+            if (val != 0) {
+                return val;
+            }
+
+            return lhs.getPropNum().compareTo(rhs.getPropNum());    // TODO: what about the other class #s?
+        };
     }
 
     /**
-     * TODO update javadoc
+     * Because of the way VistA stores its data and the order that Fileman accesses
+     * it, {@linkplain FilemanDataDictionary} maintains a pointer to the last
+     * subrecord field that was returned by a <code>findField...</code> method
+     * (except for {@linkplain #findNextSubrecordFieldSameSubKey(String)}) so that
+     * subsequent calls to a <code>findField...</code> method return the correct
+     * field.
      * <p>
-     * When iterating through the record in Fileman, we need to find the next field
-     * by name, but there may be duplicate string identifiers.
-     * <p>
-     * When starting to iterate through a file in Fileman, first call the
-     * {@linkplain #resetFieldFinder()} method to reset the internal counter to the
-     * 0th field. Alternatively, change this method to take a second parameter that
-     * indicates which matching field (if > 1) to return. The downside with this
-     * approach is that the calling code needs to keep track of how many it has
-     * seen.
-     * <p>
-     * Use this method to find the next field, starting with the field after the
-     * previously-found field.
-     * <p>
-     * If the element is not found, start the search over from 0. This should only
-     * be needed if we iterate through the fields in Fileman out-of-order (TODO:
-     * check if this happens when editing <i>some,/i> fields as opposed to
-     * <i>ALL</i> fields?)
-     * <p>
-     * Also does some basic look-ahead in case the expected order doesn't quite
-     * match up with what we actually encounter.
+     * Call this method before iterating through a list in Fileman to reset this
+     * subrecord pointer, so that calls to the <code>findField...</code> methods do
+     * not inadvertently retrieve the incorrect sub-field.
+     *
+     * @see #findField(String)
+     * @see #findNextSubrecordField(String)
+     * @see #findNextSubrecordFieldSameClass(String)
+     * @see #findNextSubrecordFieldSameSubKey(String)
+     * @see #sortFields(List)
+     */
+    public void resetFieldFinder() {
+        prevSubrecordField = null;
+    }
+
+    /**
+     * Find the first (by class number) field whose
+     * {@linkplain FilemanField#getFilemanName()} method matches the given prompt.
      *
      * @param filemanPrompt
-     *            the name of the prompt in FileMan
-     * @return the field
+     *            The name of the prompt in FileMan, {@linkplain String#trim()
+     *            trimmed} and pruned of any extraneous characters (eg: "SYMPTOMS"
+     *            rather than "Select SYMPTOMS ").
+     * @return The first matching field, or <code>null</code> if no fields match.
      * @see #resetFieldFinder()
+     * @see #findNextSubrecordField(String)
+     * @see #findNextSubrecordFieldSameClass(String)
+     * @see #findNextSubrecordFieldSameSubKey(String)
      * @see #sortFields(List)
      */
     @CheckForNull
     public FilemanField findField(final String filemanPrompt) {
-
-//        return fields.stream().filter(filemanField -> filemanField.getFilemanName().equalsIgnoreCase(filemanPrompt)).findFirst().orElse(null);
-
-        //TODO: determine if this really necessary?
-        // Yes it is, unfortunately. See how Fileman handles "AGE RANGE" (sbsehsa1/2/3/4, sbhsa1/2/3/4).
-        // This is also why we need to sort the fields when building from the data dictionary.
-        for (int index = finderIndex; index < fields.size(); index++) {
-            if (fields.get(index).getFilemanName().equals(filemanPrompt)) {
-                finderIndex = index + 1;
-                return fields.get(index);
-            } else if (fields.get(index).getDataType().isMultiSelect() &&
-                       filemanPrompt.endsWith(fields.get(index).getFilemanName())) {
-                finderIndex = index + 1;
-                return fields.get(index);
+        // Step through each field to find the matching one
+        for (final FilemanField field : fields) {
+            // Find the field
+            if (field.getFilemanName().equals(filemanPrompt)) {
+                if (field.isSubRecordField()) {
+                    prevSubrecordField = field;
+                }
+                return field;
             }
         }
-        for (int index = 0; index < finderIndex; index++) {
-            if (fields.get(index).getFilemanName().equals(filemanPrompt)) {
-                finderIndex = index + 1;
-                return fields.get(index);
-            } else if (fields.get(index).getDataType().isMultiSelect() &&
-                       filemanPrompt.endsWith(fields.get(index).getFilemanName())) {
-                finderIndex = index + 1;
-                return fields.get(index);
+
+        return null;
+    }
+
+    /**
+     * Find the next (starting from the previously-returned subrecord field) field
+     * whose {@linkplain FilemanField#getFilemanName()} method matches the given
+     * prompt.
+     *
+     * @param filemanPrompt
+     *            The name of the prompt in FileMan, {@linkplain String#trim()
+     *            trimmed} and pruned of any extraneous characters (eg: "SYMPTOMS"
+     *            rather than "Select SYMPTOMS ").
+     * @return The next matching subrecord field, or <code>null</code> if no fields match.
+     * @see #resetFieldFinder()
+     * @see #findField(String)
+     * @see #findNextSubrecordFieldSameClass(String)
+     * @see #findNextSubrecordFieldSameSubKey(String)
+     * @see #sortFields(List)
+     */
+    public FilemanField findNextSubrecordField(final String filemanPrompt) {
+        for (int idx = fields.indexOf(prevSubrecordField) + 1; idx < fields.size(); idx++) {
+            final FilemanField field = fields.get(idx);
+            if (field.isSubRecordField()
+             && field.getFilemanName().equals(filemanPrompt)) {
+                prevSubrecordField = field;
+                return field;
             }
         }
+
+        return null;
+    }
+
+    /**
+     * Find the next (starting from the previously-returned subrecord field) field
+     * whose {@linkplain FilemanField#getFilemanName()} method matches the given
+     * prompt, and whose class number matches that of the previously-returned field
+     * (or if no subrecord field has yet been returned).
+     *
+     * @param filemanPrompt
+     *            The name of the prompt in FileMan, {@linkplain String#trim()
+     *            trimmed} and pruned of any extraneous characters (eg: "SYMPTOMS"
+     *            rather than "Select SYMPTOMS ").
+     * @return The next matching subrecord field, or <code>null</code> if no fields
+     *         match.
+     * @see #resetFieldFinder()
+     * @see #findField(String)
+     * @see #findNextSubrecordField(String)
+     * @see #findNextSubrecordFieldSameSubKey(String)
+     * @see #sortFields(List)
+     */
+    public FilemanField findNextSubrecordFieldSameClass(final String filemanPrompt) {
+        for (int idx = fields.indexOf(prevSubrecordField) + 1; idx < fields.size(); idx++) {
+            final FilemanField field = fields.get(idx);
+            if (field.isSubRecordField()
+             && ( filemanPrompt == null || field.getFilemanName().equals(filemanPrompt))
+             && ( prevSubrecordField == null || field.isSameClassNum(prevSubrecordField))) {
+                prevSubrecordField = field;
+                return field;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Find the next (starting from the previously-returned subrecord field) field
+     * matching all of the following:
+     * <ol>
+     * <li>whose {@linkplain FilemanField#getFilemanName()} method matches the given
+     * prompt
+     * <li>whose class number matches that of the previously-returned field.
+     * <li>whose subrecord key matches that of the previously-returned field.
+     * </ol>
+     * This method is also noteworthy because it does NOT update the internal record
+     * of the previously-returned subrecord field.
+     *
+     * @param filemanPrompt
+     *            The name of the prompt in FileMan, {@linkplain String#trim()
+     *            trimmed} and pruned of any extraneous characters (eg: "SYMPTOMS"
+     *            rather than "Select SYMPTOMS ").
+     * @return The next matching subrecord field, or <code>null</code> if no fields
+     *         match.
+     * @see #resetFieldFinder()
+     * @see #findField(String)
+     * @see #findNextSubrecordField(String)
+     * @see #findNextSubrecordFieldSameClass(String)
+     * @see #sortFields(List)
+     */
+    public FilemanField findNextSubrecordFieldSameSubKey(final String filemanPrompt) {
+        for (int idx = fields.indexOf(prevSubrecordField) + 1; idx < fields.size(); idx++) {
+            final FilemanField field = fields.get(idx);
+            if (field.isSubRecordField()
+             && field.getFilemanName().equals(filemanPrompt)
+             && field.isSameClassNum(prevSubrecordField)
+             && field.isSameSubrecordKey(prevSubrecordField)) {
+                return field;
+            }
+        }
+
         return null;
     }
 

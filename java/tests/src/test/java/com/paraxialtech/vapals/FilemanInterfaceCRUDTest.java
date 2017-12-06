@@ -152,7 +152,7 @@ class FilemanInterfaceCRUDTest extends AbstractVistaTest {
 
         try (final Expect expect = new ExpectBuilder()
                  .withOutput(ByteStreams.nullOutputStream())
-                .withInputs(this.getClass().getResourceAsStream(inputFile))
+                 .withInputs(this.getClass().getResourceAsStream(inputFile))
                  .withEchoInput(System.err)
                  .withExceptionOnFailure()
                  .withTimeout(1, TimeUnit.SECONDS)

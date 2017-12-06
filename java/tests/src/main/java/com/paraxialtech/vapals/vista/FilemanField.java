@@ -1,7 +1,6 @@
 package com.paraxialtech.vapals.vista;
 
 import com.google.common.base.Preconditions;
-
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -26,6 +25,7 @@ public final class FilemanField {
     private String[] classNum;
     private double propNum;
     private DataTypeEnum dataType;
+    private String subrecordKey;
     /**
      * A map of the shortcut to the possible value (eg: "f"->"female")
      */
@@ -41,6 +41,10 @@ public final class FilemanField {
 
     public String getWebName() {
         return webName;
+    }
+
+    public String getSubrecordKey() {
+        return subrecordKey;
     }
 
     public String[] getClassNum() {
@@ -80,6 +84,11 @@ public final class FilemanField {
                 case "Field Name":
                     field.webName = item;
                     break;
+                case "Subrecord":
+                    if (item.trim().length() > 0) {
+                        field.subrecordKey = item;
+                    }
+                    break;
                 case "m-class-#":
                     field.classNum = item.split("\\.");
                     break;
@@ -91,16 +100,66 @@ public final class FilemanField {
                     break;
                 case "m-prop-det":  // This value comes after "Data Type" so we can assume a non-null dataType value, but we don't
                     Preconditions.checkNotNull(field.dataType);
-                    if (Preconditions.checkNotNull(field.dataType).isEnumeration()) {
+                    if (field.dataType == DataTypeEnum.CHECKBOX || field.dataType.isEnumeration()) {
                         field.possibleValues = FilemanValueEnumeration.constructMapFromValueList(item);
                         field.mergeWithWebFieldValue(FilemanValueEnumeration.constructValueFromArray(items, fieldTitles));
                     }
                     break;
-                // TODO more
             }
         }
 
+        // There is one possible field per enumerated value
+        if (field.dataType == DataTypeEnum.CHECKBOX) {
+            final FilemanValueEnumeration value = field.possibleValues.get(field.subrecordKey);
+            field.possibleValues.clear();
+            field.possibleValues.put(field.subrecordKey, value);
+        }
+
         return field;
+    }
+
+    /**
+     * Whether or not this field may have sub-fields, either standalone (ie:
+     * checkboxes) or where each sub-field is its own thing (eg: each
+     * <code>person</code> field has an associated name field and birthday field).
+     *
+     * @return <code>true</code> if this field has sub-records, <code>false</code>
+     *         otherwise.
+     */
+    public boolean isSubRecordField() {
+        return this.subrecordKey != null;
+    }
+
+    /**
+     * Check if two {@linkplain FilemanField} objects have the same class number.
+     *
+     * @param that
+     *            The other (potentially null) FilemanField object.
+     * @return <code>True</code> if <code>that</code> is not null and has the same
+     *         class number as <code>this</code>, <code>false</code> otherwise.
+     */
+    public boolean isSameClassNum(final FilemanField that) {
+        if (that == null) {
+            return false;
+        }
+
+        return Arrays.equals(this.classNum, that.classNum);
+    }
+
+    /**
+     * Check if two {@linkplain FilemanField} objects have the same subrecord key.
+     *
+     * @param that
+     *            The other (potentially null) FilemanField object.
+     * @return <code>True</code> if <code>that</code> is not null and has the same
+     *         subrecord key as <code>this</code>, <code>false</code> otherwise.
+     */
+    public boolean isSameSubrecordKey(final FilemanField that) {
+        if (that == null) {
+            return false;
+        }
+
+        return this.subrecordKey == null ? that.subrecordKey == null : this.subrecordKey.equals(that.subrecordKey);
     }
 
     /**
@@ -129,8 +188,6 @@ public final class FilemanField {
     /**
      * Get a {@linkplain FilemanValue} object representing the given string.
      *
-     * TODO: pass along the expect object for multiSelect types.
-     *
      * @param value
      *            The value as seen in Fileman.
      * @return A concrete object
@@ -141,18 +198,11 @@ public final class FilemanField {
         }
 
         if (dataType.isEnumeration()) {
-            if (dataType.isMultiSelect()) {
-                // TODO
-                // if multiple are selected, add each to a FilemanValueMulti
-                // else, fall through
-            }
-
             return possibleValues.values().stream()
                 .filter(enumeratedValue -> value.equals(enumeratedValue.getFilemanValue()))
                 .map(enumeratedValue -> (FilemanValue)enumeratedValue)
                 .findFirst()
                 .orElse(FilemanValue.NO_VALUE); // TODO: what SHOULD we do here?
-//                .get();
         }
 
         switch (dataType) {
@@ -189,13 +239,27 @@ public final class FilemanField {
     }
 
     /**
-     *
+     * TODO: This method is not yet complete
      *
      * @param elements
      * @return
      */
     public final FilemanValue getValueFromWeb(@Nonnull final Elements elements) {
         if (elements.size() == 0) {
+            return FilemanValue.NO_VALUE;
+        }
+
+        if (isSubRecordField()) {
+            ;
+        }
+
+        if (dataType == DataTypeEnum.CHECKBOX) {
+            // TODO
+            final List<Element> selectedElements = getSelectedElements(elements);
+
+            if (selectedElements.size() > 1) {
+//              final List<FilemanValue> selectedValues = selectedElements.stream();
+            }
             return FilemanValue.NO_VALUE;
         }
 
@@ -206,19 +270,19 @@ public final class FilemanField {
                 return FilemanValue.NO_VALUE;
             }
 
-            if (dataType.isMultiSelect()) {
-                if (selectedElements.size() > 1) {
-                    final List<FilemanValue> selectedValues = selectedElements.stream()
-                        .map(element -> possibleValues.values().stream()
-                                            .filter(enumeratedValue -> enumeratedValue.getWebValue().equals(element.val()))
-                                            .map(enumeratedValue -> (FilemanValue)enumeratedValue)
-                                            .findFirst()
-                                            .orElse(FilemanValue.NO_VALUE)) // TODO: what SHOULD we do here?
-                        .collect(Collectors.toList());
-
-                    return new FilemanValueMulti(selectedValues);
-                }
-            }
+//            if (dataType.isMultiSelect()) {
+//                if (selectedElements.size() > 1) {
+//                    final List<FilemanValue> selectedValues = selectedElements.stream()
+//                        .map(element -> possibleValues.values().stream()
+//                                            .filter(enumeratedValue -> enumeratedValue.getWebValue().equals(element.val()))
+//                                            .map(enumeratedValue -> (FilemanValue)enumeratedValue)
+//                                            .findFirst()
+//                                            .orElse(FilemanValue.NO_VALUE)) // TODO: what SHOULD we do here?
+//                        .collect(Collectors.toList());
+//
+//                    return new FilemanValueMulti(selectedValues);
+//                }
+//            }
 
             final Element selectedElement = selectedElements.get(0);
 
@@ -329,28 +393,20 @@ public final class FilemanField {
     }
 
     public enum DataTypeEnum {
-        CHECKBOX (true,  true),
+        CHECKBOX (false),
         DATE     (false),
         INTEGER  (false),
-        PNUM     (false),           // What is this? a calculated number?
-        PULLDOWN (true,  false),
-        RADIO    (true,  false),
+        PNUM     (false),   // What is this? a calculated number?
+        PULLDOWN (true),
+        RADIO    (true),
         RDATE    (false),
         REAL     (false),
         TEXT     (false),
         YEAR     (false);
 
         private final boolean enumeratedValues;
-        private final boolean multiSelect;
         DataTypeEnum(final boolean enumeratedValues) {
-            this(enumeratedValues, false);
-        }
-        DataTypeEnum(final boolean enumeratedValues, final boolean multiSelect) {
             this.enumeratedValues = enumeratedValues;
-            this.multiSelect = multiSelect;
-            if (this.multiSelect && !enumeratedValues) {
-                throw new IllegalArgumentException("multiSelect is only possible when enumeratedValues=true");
-            }
         }
 
         /**
@@ -362,19 +418,6 @@ public final class FilemanField {
          */
         public boolean isEnumeration() {
             return enumeratedValues;
-        }
-
-        /**
-         * Whether there may be multiple selected values for this data enumerated type,
-         * or whether there may be only one.
-         * <p/>
-         * This value is always <code>false</code> when [{@linkplain #isEnumeration()} is false.
-         *
-         * @return <code>true</code> if there may be multiple selected value,
-         *         <code>false</code> if there may be only one selected value.
-         */
-        public boolean isMultiSelect() {
-            return multiSelect;
         }
     }
 }

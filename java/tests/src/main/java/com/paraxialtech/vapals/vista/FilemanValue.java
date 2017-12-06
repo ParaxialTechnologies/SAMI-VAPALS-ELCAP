@@ -6,7 +6,7 @@ package com.paraxialtech.vapals.vista;
  * @author Keith Powers
  */
 public interface FilemanValue {
-    FilemanValue NO_VALUE = new FilemanValueNothing();
+    public static FilemanValue NO_VALUE = new FilemanValueNothing();
 
     /**
      * Get a String that, if typed into Fileman's Roll N Scroll interface, would

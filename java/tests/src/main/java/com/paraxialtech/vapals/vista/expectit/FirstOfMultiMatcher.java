@@ -25,16 +25,16 @@ public class FirstOfMultiMatcher implements Matcher<MultiResult> {
         this((Matcher<?>[]) matchers2.toArray());
     }
 
-    public FirstOfMultiMatcher(Matcher<?>... matchers) {
+    public FirstOfMultiMatcher(final Matcher<?>... matchers) {
         this.matchers = matchers;
     }
 
     @Override
-    public MultiResult matches(String input, boolean isEof) {
-        List<Result> results = new ArrayList<Result>();
+    public MultiResult matches(final String input, final boolean isEof) {
+        final List<Result> results = new ArrayList<>();
         Result successResult = null;
-        for (Matcher<?> matcher : matchers) {
-            Result result = matcher.matches(input, isEof);
+        for (final Matcher<?> matcher : matchers) {
+            final Result result = matcher.matches(input, isEof);
             if (successResult == null && result.isSuccessful()) {
                 successResult = result;
             }
@@ -50,13 +50,13 @@ public class FirstOfMultiMatcher implements Matcher<MultiResult> {
 
     @Override
     public String toString() {
-        StringBuilder matchersString = matchersToString(matchers);
+        final StringBuilder matchersString = matchersToString(matchers);
         return String.format("firstOf(%s)", matchersString);
     }
 
-    static StringBuilder matchersToString(final Matcher<?> ... matchers) {
-        StringBuilder matchersString = new StringBuilder();
-        for (Matcher<?> matcher : matchers) {
+    private static StringBuilder matchersToString(final Matcher<?>... matchers) {
+        final StringBuilder matchersString = new StringBuilder();
+        for (final Matcher<?> matcher : matchers) {
             if (matchersString.length() > 0) {
                 matchersString.append(',');
             }

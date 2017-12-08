@@ -21,7 +21,7 @@ public final class FilemanValueDate implements FilemanValue {
 
     private final LocalDate value;
 
-    public FilemanValueDate(final LocalDate value) {
+    private FilemanValueDate(final LocalDate value) {
         this.value = value;
     }
 
@@ -51,33 +51,27 @@ public final class FilemanValueDate implements FilemanValue {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("FilemanValueString [value=").append(value).append("]");
-        return builder.toString();
+        return "FilemanValueDate{" +
+                "value=" + value +
+                '}';
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof FilemanValueDate)) {
+            return false;
+        }
+
+        final FilemanValueDate that = (FilemanValueDate) o;
+
+        return value != null ? value.equals(that.value) : that.value == null;
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((value == null) ? 0 : value.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        FilemanValueDate other = (FilemanValueDate) obj;
-        if (value == null) {
-            if (other.value != null)
-                return false;
-        } else if (!value.equals(other.value))
-            return false;
-        return true;
+        return value != null ? value.hashCode() : 0;
     }
 }

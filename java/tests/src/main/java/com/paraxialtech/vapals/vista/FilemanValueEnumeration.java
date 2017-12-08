@@ -71,7 +71,7 @@ public final class FilemanValueEnumeration implements FilemanValue {
      *            a definition of the value in "shortcut:fileman value" format.
      * @return a value for
      */
-    public static FilemanValueEnumeration constructValueFromValue(final String valueDefinition) {
+    private static FilemanValueEnumeration constructValueFromValue(final String valueDefinition) {
         Preconditions.checkNotNull(valueDefinition);
 
         final FilemanValueEnumeration value = new FilemanValueEnumeration();
@@ -133,46 +133,38 @@ public final class FilemanValueEnumeration implements FilemanValue {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("FilemanValueEnumeration [filemanValue=").append(filemanValue).append(", webValue=")
-                .append(webValue).append(", shortcut=").append(shortcut).append("]");
-        return builder.toString();
+        return "FilemanValueEnumeration{" +
+                "filemanValue='" + filemanValue + '\'' +
+                ", webValue='" + webValue + '\'' +
+                ", shortcut='" + shortcut + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof FilemanValueEnumeration)) {
+            return false;
+        }
+
+        final FilemanValueEnumeration that = (FilemanValueEnumeration) o;
+
+        if (filemanValue != null ? !filemanValue.equals(that.filemanValue) : that.filemanValue != null) {
+            return false;
+        }
+        if (webValue != null ? !webValue.equals(that.webValue) : that.webValue != null) {
+            return false;
+        }
+        return shortcut != null ? shortcut.equals(that.shortcut) : that.shortcut == null;
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((filemanValue == null) ? 0 : filemanValue.hashCode());
-        result = prime * result + ((shortcut == null) ? 0 : shortcut.hashCode());
-        result = prime * result + ((webValue == null) ? 0 : webValue.hashCode());
+        int result = filemanValue != null ? filemanValue.hashCode() : 0;
+        result = 31 * result + (webValue != null ? webValue.hashCode() : 0);
+        result = 31 * result + (shortcut != null ? shortcut.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        FilemanValueEnumeration other = (FilemanValueEnumeration) obj;
-        if (filemanValue == null) {
-            if (other.filemanValue != null)
-                return false;
-        } else if (!filemanValue.equals(other.filemanValue))
-            return false;
-        if (shortcut == null) {
-            if (other.shortcut != null)
-                return false;
-        } else if (!shortcut.equals(other.shortcut))
-            return false;
-        if (webValue == null) {
-            if (other.webValue != null)
-                return false;
-        } else if (!webValue.equals(other.webValue))
-            return false;
-        return true;
     }
 }

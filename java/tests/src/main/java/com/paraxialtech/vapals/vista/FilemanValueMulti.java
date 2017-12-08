@@ -34,34 +34,27 @@ public final class FilemanValueMulti implements FilemanValue {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("FilemanValueMulti [values=").append(values).append("]");
-        return builder.toString();
+        return "FilemanValueMulti{" +
+                "values=" + values +
+                '}';
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof FilemanValueMulti)) {
+            return false;
+        }
+
+        final FilemanValueMulti that = (FilemanValueMulti) o;
+
+        return values != null ? values.equals(that.values) : that.values == null;
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((values == null) ? 0 : values.hashCode());
-        return result;
+        return values != null ? values.hashCode() : 0;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        FilemanValueMulti other = (FilemanValueMulti) obj;
-        if (values == null) {
-            if (other.values != null)
-                return false;
-        } else if (!values.equals(other.values))
-            return false;
-        return true;
-    }
-
 }

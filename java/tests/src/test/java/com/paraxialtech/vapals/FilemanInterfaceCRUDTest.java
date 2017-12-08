@@ -3,26 +3,18 @@ package com.paraxialtech.vapals;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.io.ByteStreams;
 import com.jcraft.jsch.JSchException;
-import com.paraxialtech.vapals.vista.FilemanDataDictionary;
-import com.paraxialtech.vapals.vista.FilemanField;
-import com.paraxialtech.vapals.vista.FilemanInterface;
-import com.paraxialtech.vapals.vista.FilemanValue;
-import com.paraxialtech.vapals.vista.VistaServer;
-
+import com.paraxialtech.vapals.vista.*;
 import net.sf.expectit.Expect;
 import net.sf.expectit.ExpectBuilder;
 import net.sf.expectit.Result;
 import net.sf.expectit.matcher.Matcher;
 import net.sf.expectit.matcher.Matchers;
-
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,14 +31,9 @@ import static org.junit.jupiter.api.Assertions.fail;
  * Tests {@link FilemanInterface} against a real server. Connects to the given
  * VistA server, reads/updates the given study, and compares the results against what is expected.
  */
-class FilemanInterfaceCRUDTest {
-    private static final String SSH_PRIVATE_KEY = System.getProperty("privateKey", "~/.ssh/id_rsa");
-    private static final String SSH_USER = System.getProperty("user", System.getProperty("user.name"));
-    private static final String SERVER = System.getProperty("server", "localhost");
-    private static final Map<String, String> FORMS = ImmutableMap.of("SAMI BACKGROUND",
-                                                                     "../../docs/dd/background-dd-map.csv");
-    private static final String STUDY_IDS = System.getProperty("studyIds", "PARAXL001");
-    private static final String RESOURCE_DIR = "src/test/resources/";
+class FilemanInterfaceCRUDTest extends AbstractVistaTest {
+    private static final String STUDY_IDS = "PARAXL001";
+    private static final Map<String, String> FORMS = ImmutableMap.of("SAMI BACKGROUND", "../../docs/dd/background-dd-map.csv");
 
     @TestFactory
     List<DynamicTest> testUpdateViaFileman() {
@@ -161,12 +148,11 @@ class FilemanInterfaceCRUDTest {
                                                                final int idx) throws IOException {
         final Matcher<Result> selectFilePrompt = Matchers.contains("Select " + dataDictionary.getFileName());
 
-        final Path path = Paths.get(RESOURCE_DIR,
-                                    dataDictionary.getFileName().replaceAll(" ", "_") + "-" + studyId + "-" + idx + ".fman");
+        final String inputFile = "/" + dataDictionary.getFileName().replaceAll(" ", "_") + "-" + studyId + "-" + idx + ".fman";
 
         try (final Expect expect = new ExpectBuilder()
                  .withOutput(ByteStreams.nullOutputStream())
-                 .withInputs(new FileInputStream(path.toFile()))
+                .withInputs(this.getClass().getResourceAsStream(inputFile))
                  .withEchoInput(System.err)
                  .withExceptionOnFailure()
                  .withTimeout(1, TimeUnit.SECONDS)
@@ -174,7 +160,7 @@ class FilemanInterfaceCRUDTest {
 
             return FilemanInterface.readRecord(expect, selectFilePrompt, dataDictionary);
         } catch (FileNotFoundException e) {
-            fail("Unable to read from file: " + path.toString(), e);
+            fail("Unable to read from file: " + inputFile, e);
             throw e;
         }
     }

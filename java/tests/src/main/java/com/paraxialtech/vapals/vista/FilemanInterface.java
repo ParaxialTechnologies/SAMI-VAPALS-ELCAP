@@ -325,7 +325,7 @@ public final class FilemanInterface implements Closeable {
      * @throws IOException
      *             If something goes wrong communicating with the Fileman server.
      */
-    private void clearCheckboxValue(final FilemanField filemanField, FilemanValueMulti values) throws IOException {
+    private void clearCheckboxValue(final FilemanField filemanField, final FilemanValueMulti values) throws IOException {
         for (final FilemanValue value : values.getValues()) {
             final String filemanValue = ((FilemanValueEnumeration)value).getFilemanValue();
             expect.sendLine(filemanValue);

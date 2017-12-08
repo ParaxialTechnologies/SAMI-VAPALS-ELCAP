@@ -106,7 +106,7 @@ public class VistaServer implements Closeable {
      *
      * @throws IOException if shell expectations fail
      */
-    public void startMumps() throws IOException, JSchException {
+    private void startMumps() throws IOException, JSchException {
         if (currentState != StateEnum.SHELL) {
             startShell();
         }
@@ -128,7 +128,7 @@ public class VistaServer implements Closeable {
      * @throws JSchException if unable to connect to the servers' shell
      * @throws IOException   if shell expectations fail
      */
-    public Expect startShell() throws JSchException, IOException {
+    private Expect startShell() throws JSchException, IOException {
         checkState(this.currentState == StateEnum.CONNECTED, "Current state not CONNECTED, is " + this.currentState);
 
         channel = session.openChannel("shell");

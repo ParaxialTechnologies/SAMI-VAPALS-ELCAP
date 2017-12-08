@@ -43,7 +43,7 @@ class MultiResultImpl2 implements MultiResult {
     private final Result delegate;
     private final boolean canStopMatching;
 
-    MultiResultImpl2(Result delegate, List<Result> results) {
+    MultiResultImpl2(final Result delegate, final List<Result> results) {
         this.delegate = delegate;
         this.results = results;
         this.canStopMatching = canStopMatching(results);
@@ -75,7 +75,7 @@ class MultiResultImpl2 implements MultiResult {
     }
 
     @Override
-    public int start(int group) {
+    public int start(final int group) {
         return delegate.start(group);
     }
 
@@ -85,7 +85,7 @@ class MultiResultImpl2 implements MultiResult {
     }
 
     @Override
-    public int end(int group) {
+    public int end(final int group) {
         return delegate.end(group);
     }
 
@@ -95,7 +95,7 @@ class MultiResultImpl2 implements MultiResult {
     }
 
     @Override
-    public String group(int group) {
+    public String group(final int group) {
         return delegate.group(group);
     }
 
@@ -109,9 +109,9 @@ class MultiResultImpl2 implements MultiResult {
         return Collections.unmodifiableList(results);
     }
 
-    static boolean canStopMatching(List<Result> results) {
+    private static boolean canStopMatching(final List<Result> results) {
         boolean canStopMatching = false;
-        for (Result r : results) {
+        for (final Result r : results) {
             if (!r.canStopMatching()) {
                 return false;
             }

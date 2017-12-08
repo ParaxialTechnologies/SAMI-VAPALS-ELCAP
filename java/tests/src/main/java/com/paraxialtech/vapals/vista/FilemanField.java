@@ -70,7 +70,6 @@ public final class FilemanField {
     public static FilemanField constructFromArray(final List<String> items,
                                                   final List<String> fieldTitles) {
         final FilemanField field = new FilemanField();
-
         String item;
         for (int index = 0; index < items.size(); index++) {
             item = items.get(index);
@@ -270,7 +269,7 @@ public final class FilemanField {
         return new FilemanValueString(value);
     }
 
-    private List<Element> getSelectedElements(Elements elements) {
+    private List<Element> getSelectedElements(final Elements elements) {
         if (dataType == DataTypeEnum.PULLDOWN) {
             return elements.stream()
                 .filter(element -> element.hasAttr("selected"))
@@ -308,7 +307,7 @@ public final class FilemanField {
     @Override
     public int hashCode() {
         int result;
-        long temp;
+        final long temp;
         result = filemanName != null ? filemanName.hashCode() : 0;
         result = 31 * result + (webName != null ? webName.hashCode() : 0);
         result = 31 * result + Arrays.hashCode(classNum);
@@ -319,15 +318,14 @@ public final class FilemanField {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("FilemanField{");
-        sb.append("filemanName='").append(filemanName).append('\'');
-        sb.append(", webName='").append(webName).append('\'');
-        sb.append(", classNum=").append(Arrays.toString(classNum));
-        sb.append(", propNum=").append(propNum);
-        sb.append(", dataType=").append(dataType);
-        sb.append(", possibleValues=").append(possibleValues);
-        sb.append('}');
-        return sb.toString();
+        return "FilemanField{" +
+                "filemanName='" + filemanName + '\'' +
+                ", webName='" + webName + '\'' +
+                ", classNum=" + Arrays.toString(classNum) +
+                ", propNum=" + propNum +
+                ", dataType=" + dataType +
+                ", possibleValues=" + possibleValues +
+                '}';
     }
 
     public enum DataTypeEnum {
@@ -342,12 +340,12 @@ public final class FilemanField {
         TEXT     (false),
         YEAR     (false);
 
-        private boolean enumeratedValues;
-        private boolean multiSelect;
-        private DataTypeEnum(final boolean enumeratedValues) {
+        private final boolean enumeratedValues;
+        private final boolean multiSelect;
+        DataTypeEnum(final boolean enumeratedValues) {
             this(enumeratedValues, false);
         }
-        private DataTypeEnum(final boolean enumeratedValues, final boolean multiSelect) {
+        DataTypeEnum(final boolean enumeratedValues, final boolean multiSelect) {
             this.enumeratedValues = enumeratedValues;
             this.multiSelect = multiSelect;
             if (this.multiSelect && !enumeratedValues) {

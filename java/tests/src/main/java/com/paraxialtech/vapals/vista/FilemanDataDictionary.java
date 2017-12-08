@@ -92,7 +92,7 @@ public class FilemanDataDictionary {
             }
             // 4) The rest of the lines contain the fields we will (should) find in the file
             else if (items.get(0).equals("1")) {
-                FilemanField field = FilemanField.constructFromArray(items, fieldTitles);
+                final FilemanField field = FilemanField.constructFromArray(items, fieldTitles);
                 // The CHECKBOX fields are fully defined on each line, with the only difference being the web info
                 if (priorField != null
                  && priorField.getDataType() == DataTypeEnum.CHECKBOX

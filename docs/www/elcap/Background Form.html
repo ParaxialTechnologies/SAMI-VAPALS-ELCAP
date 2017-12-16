@@ -1,0 +1,5415 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>Background Form</title>
+    <script src="Background%20Form_files/jquery-1.html" defer="defer"></script>
+	<script src="Background%20Form_files/mgtsys.html" defer="defer"></script>
+	<link rel="stylesheet" href="Background%20Form_files/mgtsys2.html">
+	<link rel="stylesheet" href="Background%20Form_files/index.html">
+	<link rel="stylesheet" href="Background%20Form_files/identity.html">
+	<link type="text/css" rel="stylesheet" media="all" href="Background%20Form_files/mgtsys.css">
+	<link type="text/css" rel="stylesheet" media="print" href="Background%20Form_files/mgtsys-print.css">
+
+<script type="text/javascript" language="JavaScript">
+<!-- Code after this will be ignored by older browsers
+
+var FNAME = "sback";
+var ESP = false;
+var DATEC = false;
+var HSC = false;
+var PCH = false;
+var FVER = "1.44k"
+
+var mtt = [ ["---", "---", "---", "---"],
+            ["Jan", "Jan", "jan", "JAN"],
+            ["Feb", "Feb", "feb", "FEB"],
+            ["Mar", "Mar", "mar", "MAR"],
+            ["Apr", "Apr", "apr", "APR"],
+            ["May", "May", "may", "MAY"],
+            ["Jun", "Jun", "jun", "JUN"],
+            ["Jul", "Jul", "jul", "JUL"],
+            ["Aug", "Aug", "aug", "AUG"],
+            ["Sep", "Sep", "sep", "SEP"],
+            ["Oct", "Oct", "oct", "OCT"],
+            ["Nov", "Nov", "nov", "NOV"],
+            ["Dec", "Dec", "dec", "DEC"] ];
+
+function openPopUpWindow(){
+        var inst = document.getElementsByName('fginst')[0].value;
+        var token_id = document.getElementsByName('fguid')[0].value;
+        var w = window.open('https://' + window.location.hostname + '/physicians/search?source=sbform'+'&fginst='+inst+'&fguid='+token_id,'search_popup','width=400,height=400,scrollbars=1');
+        // pass the targetField to the pop up window
+//        w.nameField = nameField;
+//        w.npiField = npiField;
+        w.focus();
+    }
+
+    // this function is called by the pop up window
+    function setSearchResult(firstName, lastName, npiValue){
+        document.forms[FNAME].elements['sbopfn'].value = firstName;
+        document.forms[FNAME].elements['sbopln'].value = lastName;
+        document.forms[FNAME].elements['sbopnpi'].value = npiValue;
+//        targetField.value = returnValue;
+        window.focus();
+    }
+function expandDropdowns()
+{
+  var dropDowns = document.getElementsByTagName('select');
+  for (var ii = 0; ii < dropDowns.length; ii++) {
+    dropDowns[ii].size = dropDowns[ii].options.length;
+  }
+}
+
+function errorCheck()
+{
+    var aMsg = "";
+    var rfMsg = "";
+    var confa;
+    var confs;
+    var currsm = -1;
+    var regsm = -1;
+    var ahtmp;
+    var mptmp;
+
+    radioFixup();
+    cbFixup();
+
+    // Patient Identity
+    if (!document.forms[FNAME].elements['sbsid'].value)
+       { rfMsg += " - General: Patient Study ID\n"; }
+
+    // Patient Other Information
+    if (!document.forms[FNAME].elements['sbdop'].value)
+       { rfMsg += " - General: Patient Date of Baseline CT\n"; }
+    /*
+    if (!document.forms[FNAME].elements['sbocc'].value)
+       { rfMsg += " - General: Patient Occupation\n"; }
+    */
+
+    if (!document.forms[FNAME].elements['hvsbsex'].value)
+       { rfMsg += " - General: Patient Sex\n"; }
+
+    hwp = 0;
+
+    if (!document.forms[FNAME].elements['sbph'].value) {
+       rfMsg += " - General: Patient Height\n";
+       hwp = 1;
+    }
+    else if (!document.forms[FNAME].elements['hvsbphu'].value) {
+       rfMsg += " - General: Patient Height (Units)\n";
+       hwp = 1;
+    }
+
+    if (!document.forms[FNAME].elements['sbpw'].value) {
+       rfMsg += " - General: Patient Weight\n";
+       hwp = 1;
+    }
+    else if (!document.forms[FNAME].elements['hvsbpwu'].value) {
+       rfMsg += " - General: Patient Weight (Units)\n";
+       hwp = 1;
+    }
+
+    if (hwp == 0) {
+       calcBMI();
+    }
+
+	// Ordering information: Required only for G0297 screening exams
+	if (!document.forms[FNAME].elements['hvsbmeq'].value) {
+		rfMsg += " - Ordering information: CT lung screening exam code?\n";
+	} else {
+		// If patient is having a G0297 scan...
+		if (document.forms[FNAME].elements['hvsbmeq'].value == 'y') {
+			
+			// Information below is required
+			if (!document.forms[FNAME].elements['sbopnpi'].value) {
+				rfMsg += " - Ordering information: NPI\n";
+			}
+			if (!document.forms[FNAME].elements['hvsbdsd'].value) {
+				rfMsg += " - Ordering information: Documentation of shared decision making\n";
+			}
+			if (!document.forms[FNAME].elements['hvsbopss'].value) {
+				rfMsg += " - Ordering information: Smoking status\n";
+			} else if (document.forms[FNAME].elements['hvsbopss'].value == 'f') {
+				// former smoker needs quit years
+				if (!document.forms[FNAME].elements['sbopqy'].value) {
+					rfMsg += " - Ordering information: Ordering practitioner reported quit years\n";
+				}
+			}
+			if (!document.forms[FNAME].elements['sboppy'].value) {
+				rfMsg += " - Ordering information: Ordering practitioner reported pack years\n";
+			}
+			if (!document.forms[FNAME].elements['hvsboas'].value) {
+				rfMsg += " - Ordering information: Ordering practitioner reported asymptomatic patient.\n";
+			}
+
+		}
+	}
+	
+	// Clinical Information must be entered for Mount Sinai patients
+    if (!document.forms[FNAME].elements['sbopci'].value) {
+       rfMsg += " - Ordering information: Clinical Information\n";
+	}
+
+    prsi = document.forms[FNAME].elements['sbrc'].selectedIndex;
+    if ( prsi == 0)
+       { rfMsg += " - General: Patient Race\n"; }
+    else if ((prsi == 7) && !(document.forms[FNAME].elements['sbrcs'].value))
+       { rfMsg += " - General: Patient Race: Other (specify)\n"; }
+
+    histo = document.forms[FNAME].elements['hvsbhco'].value;
+    /*
+    if (document.forms[FNAME].elements['sbed'].selectedIndex == 0)
+       { rfMsg += " - General: Patient Level of Education\n"; }
+
+    // Patient History
+    hists = document.forms[FNAME].elements['hvsbhcs'].value;
+
+    // Medical Conditions
+    if (!hists)
+       { rfMsg += " - Medical Conditions: Skin Cancer - Basal or Squamous Cell\n"; }
+
+    if (!document.forms[FNAME].elements['hvsbhcsm'].value)
+       { rfMsg += " - Medical Conditions: Melanoma\n"; }
+
+    // 20061122 - Diagnosis Date/Location No Longer Mandatory
+
+    if (!document.forms[FNAME].elements['hvsbmple'].value)
+       { rfMsg += " - Medical Conditions: Leukemia\n"; }
+
+    if (!document.forms[FNAME].elements['hvsbmply'].value)
+       { rfMsg += " - Medical Conditions: Lymphoma\n"; }
+    */
+
+    if (!histo)
+       { rfMsg += " - Medical Conditions: Other Cancer\n"; }
+    else {
+	  if (histo == 'y') {
+	     if (!document.forms[FNAME].elements['sbhcdod'].value)
+	        { rfMsg += " - Medical Conditions: Other Cancer Diagnosis Date\n"; }
+	     if (!document.forms[FNAME].elements['sbhcpbo'].value)
+	        { rfMsg += " - Medical Conditions: Other Cancer Part of Body\n"; }
+	  }
+    }
+
+    /*
+    if (!document.forms[FNAME].elements['hvsbmpa'].value)
+       { rfMsg += " - Medical Conditions: Asthma\n"; }
+
+    if (!document.forms[FNAME].elements['hvsbmpcp'].value)
+       { rfMsg += " - Medical Conditions: Pneumonia in childhood\n"; }
+    */
+
+    if (!document.forms[FNAME].elements['hvsbmpc'].value)
+       { rfMsg += " - Medical Conditions: COPD\n"; }
+
+    /*
+    if (!document.forms[FNAME].elements['hvsbmpmi'].value)
+       { rfMsg += " - Medical Conditions: MI\n"; }
+
+    if (!document.forms[FNAME].elements['hvsbmpan'].value)
+       { rfMsg += " - Medical Conditions: Angina\n"; }
+
+    if (!document.forms[FNAME].elements['hvsbmps'].value)
+       { rfMsg += " - Medical Conditions: Stroke\n"; }
+
+    if (!document.forms[FNAME].elements['hvsbmpcf'].value)
+       { rfMsg += " - Medical Conditions: Heart Failure\n"; }
+
+    if (!document.forms[FNAME].elements['hvsbmppv'].value)
+       { rfMsg += " - Medical Conditions: Peripheral Vascular Disease\n"; }
+
+    if (!document.forms[FNAME].elements['hvsbmpd'].value)
+       { rfMsg += " - Medical Conditions: Diabetes\n"; }
+
+    if (!document.forms[FNAME].elements['hvsbmpul'].value)
+       { rfMsg += " - Medical Conditions: Ulcer\n"; }
+
+    if (!document.forms[FNAME].elements['hvsbmpld'].value)
+       { rfMsg += " - Medical Conditions: Liver Disease\n"; }
+
+    if (!document.forms[FNAME].elements['hvsbmprd'].value)
+       { rfMsg += " - Medical Conditions: Renal Disease\n"; }
+
+    if (!document.forms[FNAME].elements['hvsbmptd'].value)
+       { rfMsg += " - Medical Conditions: Connective Tissue Disease\n"; }
+
+    omp = document.forms[FNAME].elements['hvsbmpo'].value
+    if (!omp)
+       { rfMsg += " - Medical Conditions: Other\n"; }
+    else if ((omp == 'y') && !(document.forms[FNAME].elements['sbmpos'].value))
+       { rfMsg += " - Medical Conditions: Other (specify)\n"; }
+
+    */
+    mptmp = document.forms[FNAME].elements['hvsblcs'].value
+    if (!mptmp)
+       { rfMsg += " - Experienced Cough or Weight Loss\n"; }
+
+    /*
+    // Additional History
+    ahtmp = document.forms[FNAME].elements['sbacx'].selectedIndex;
+    if (ahtmp == 0)
+       { rfMsg += " - Additional History: Prior CXR\n"; }
+    else if ((ahtmp != (document.forms[FNAME].elements['sbacx'].length - 1))
+                && (!document.forms[FNAME].elements['sbahxl'].value))
+       { rfMsg += " - Additional History: Prior CXR (Where)\n"; }
+
+    ahtmp = document.forms[FNAME].elements['sbact'].selectedIndex;
+    if (ahtmp == 0)
+       { rfMsg += " - Additional History: Prior CT\n"; }
+    else if ((ahtmp != (document.forms[FNAME].elements['sbact'].length - 1))
+                && (!document.forms[FNAME].elements['sbahcl'].value))
+       { rfMsg += " - Additional History: Prior CT (Where)\n"; }
+
+    */
+    // Family History
+    fhlc = document.forms[FNAME].elements['hvsbfc'].value
+    if (!fhlc)
+       { rfMsg += " - Family History of Cancer\n"; }
+
+    // Asbestos Exposure
+    asbtmp = document.forms[FNAME].elements['hvsbaha'].value
+    if (!asbtmp)
+       { rfMsg += " - Asbestos Exposure\n"; }
+
+    /*
+    else if (asbtmp == 'y') {
+       if (!(document.forms[FNAME].elements['hvsbahaoa'].value
+              || document.forms[FNAME].elements['hvsbahaoc'].value
+              || document.forms[FNAME].elements['hvsbahaoe'].value
+              || document.forms[FNAME].elements['hvsbahaof'].value
+              || document.forms[FNAME].elements['hvsbahaog'].value
+              || document.forms[FNAME].elements['hvsbahaoh'].value
+              || document.forms[FNAME].elements['hvsbahaoi'].value
+              || document.forms[FNAME].elements['hvsbahaoj'].value
+              || document.forms[FNAME].elements['hvsbahaoo'].value))
+          { rfMsg += " - Asbestos Occupation\n"; }
+
+       if ((document.forms[FNAME].elements['hvsbahaoo'].value == "o")
+              && (!document.forms[FNAME].elements['sbahas'].value))
+          { rfMsg += " - Asbestos Occupation (specify)\n"; }
+       // if (!document.forms[FNAME].elements['sbahada'].value)
+       //   { rfMsg += " - Asbestos First Year Exposed\n"; }
+    }
+    */
+
+    /*
+    // Secondhand Tobacco Smoke Exposure 0ccupational
+    /*
+    if (!document.forms[FNAME].elements['hvsbsews'].value)
+       { rfMsg += " - Secondhand Tobacco Smoke: Worksite allowed smoking\n"; }
+       */
+
+    /*
+    if (!document.forms[FNAME].elements['hvsbsehs'].value)
+       { rfMsg += " - Secondhand Tobacco Smoke: In job one year\n"; }
+
+    if (!document.forms[FNAME].elements['hvsbahfa'].value)
+       { rfMsg += " - Secondhand Tobacco Smoke: Flight Attendant\n"; }
+
+    // Secondhand Tobacco Smoke Exposure Household
+    if (!document.forms[FNAME].elements['hvsbhsy'].value)
+       { rfMsg += " - Secondhand Tobacco Smoke: Smoker at home\n"; }
+
+    if (!document.forms[FNAME].elements['hvsbhsyh'].value)
+       { rfMsg += " - Secondhand Tobacco Smoke: Smoking allowed at home\n"; }
+
+    if (!document.forms[FNAME].elements['hvsbmsy'].value)
+       { rfMsg += " - Secondhand Tobacco Smoke: Mother Smoked - under 7\n"; }
+
+    if (!document.forms[FNAME].elements['hvsbmst'].value)
+       { rfMsg += " - Secondhand Tobacco Smoke: Mother smoked - 7-18\n"; }
+
+    if (!document.forms[FNAME].elements['hvsbosy'].value)
+       { rfMsg += " - Secondhand Tobacco Smoke: Other smoked - under 18\n"; }
+
+    if (!document.forms[FNAME].elements['hvsbhso'].value)
+       { rfMsg += " - Secondhand Tobacco Smoke: Other smoked - over 18\n"; }
+    */
+
+    // Health Opinions
+    /*
+    if (!document.forms[FNAME].elements['sbhamr'].value)
+       { rfMsg += " - Main Reason for Seeking Screening\n"; }
+
+       if (!(document.forms[FNAME].elements['hvsbhamra'].value
+              || document.forms[FNAME].elements['hvsbhamry'].value
+              || document.forms[FNAME].elements['hvsbhamrb'].value
+              || document.forms[FNAME].elements['hvsbhamrc'].value
+              || document.forms[FNAME].elements['hvsbhamrd'].value
+              || document.forms[FNAME].elements['hvsbhamre'].value
+              || document.forms[FNAME].elements['hvsbhamrf'].value
+              || document.forms[FNAME].elements['hvsbhamrh'].value
+              || document.forms[FNAME].elements['hvsbhamri'].value
+              || document.forms[FNAME].elements['hvsbhamrm'].value
+              || document.forms[FNAME].elements['hvsbhamro'].value
+              || document.forms[FNAME].elements['hvsbhamrp'].value
+              || document.forms[FNAME].elements['hvsbhamrr'].value
+              || document.forms[FNAME].elements['hvsbhamrs'].value
+              || document.forms[FNAME].elements['hvsbhamru'].value
+              || document.forms[FNAME].elements['hvsbhamrv'].value
+              || document.forms[FNAME].elements['hvsbhamrw'].value))
+          { rfMsg += " - Reasons for Seeking Screening\n"; }
+    */
+
+    // Smoking History
+    var shtmp;
+
+
+   //  if (!document.forms[FNAME].elements['hvsbsps'].value)
+   //   { rfMsg += " - Smoking History: Parents Smoke\n"; }
+
+    //if (!document.forms[FNAME].elements['hvsbslws'].value)
+    //   { rfMsg += " - Smoking History: Live With Smoker\n"; }
+
+   // if (!document.forms[FNAME].elements['hvsbshcua'].value)
+   //    { rfMsg += " - Smoking History: Now smoke cigars\n"; }
+
+    //if (!document.forms[FNAME].elements['hvsbshcup'].value)
+     //  { rfMsg += " - Smoking History: Now smoke pipe\n"; }
+
+    // if (!document.forms[FNAME].elements['hvsbshcum'].value)
+    //   { rfMsg += " - Smoking History: Now smoke marijuana\n"; }
+
+    //if (!document.forms[FNAME].elements['hvsbshcuc'].value)
+    //   { rfMsg += " - Smoking History: Now use chewing tobacco\n"; }
+
+    shtmp = document.forms[FNAME].elements['hvsbsru'].value;
+
+    if (!shtmp)
+       { rfMsg += " - Smoking History: Regular User\n"; }
+    else if (shtmp == 'y') {
+       regsm = 1;
+    }
+    else if (shtmp == 'n') {
+       regsm = 0;
+    }
+
+    if (regsm == 1) {
+
+       if (!document.forms[FNAME].elements['sbsas'].value)
+          { rfMsg += " - Smoking History: Age Started\n"; }
+
+       shtmp = document.forms[FNAME].elements['hvsbshsa'].value;
+
+       if (!shtmp)
+          { rfMsg += " - Smoking History: Smoked This Month\n"; }
+       else if (shtmp == 'y') {
+          currsm = 1;
+          /*
+          if (!document.forms[FNAME].elements['sbswppd'].value)
+             { rfMsg += " - Current Smoker: Current Habit\n"; }
+          */
+          if (!document.forms[FNAME].elements['sbcppd'].value)
+             { rfMsg += " - Current Smoker: Average Habit in Past Year\n"; }
+
+          if (!document.forms[FNAME].elements['sbcdur'].value)
+             { rfMsg += " - Current Smoker: Average Habit - Duration\n"; }
+
+       }
+       else if (shtmp == 'n') {
+          currsm = 0;
+          if (!document.forms[FNAME].elements['sbsdlcy'].value)
+             { rfMsg += " - Former Smoker: Date of Last Cigarette\n"; }
+
+          if (!document.forms[FNAME].elements['sbfppd'].value)
+             { rfMsg += " - Former Smoker: Average Habit When Smoker\n"; }
+
+          if (!document.forms[FNAME].elements['sbfdur'].value)
+             { rfMsg += " - Former Smoker: Average Habit - Duration\n"; }
+       }
+
+       if (document.forms[FNAME].elements['sbcppd'].value) {
+          currsm = 1;
+       }
+
+       // calcNPY below
+
+       if (currsm == 1) {
+          /*
+	  if (document.forms[FNAME].elements['sbswu'].selectedIndex == 0)
+             { rfMsg += " - Current Smoker: How Soon After You Wake\n"; }
+
+          if (!document.forms[FNAME].elements['hvsbsqcd'].value)
+             { rfMsg += " - Current Smoker: Quit/Cut Down Since Appt\n"; }
+	  */
+
+          shtmp = document.forms[FNAME].elements['hvsbqttq'].value;
+
+          if (!shtmp)
+             { rfMsg += " - Current Smoker: Ever Tried To Quit\n"; }
+          else if (shtmp == 'y') {
+             if (!document.forms[FNAME].elements['sbqttqtb'].selectedIndex)
+                { rfMsg += " - Current Smoker: Ever Tried To Quit (Times)\n"; }
+          }
+
+          // if (!document.forms[FNAME].elements['sbqly'].value)
+          //   { rfMsg += " - Current Smoker: Quit Attempts in Last Year\n"; }
+
+          if (document.forms[FNAME].elements['sbqst'].selectedIndex == 0)
+             { rfMsg += " - Current Smoker: Seriously Thinking\n"; }
+
+          //if (!document.forms[FNAME].elements['hvsbqpa'].value)
+          //   { rfMsg += " - Current Smoker: Physician Advised\n"; }
+
+          if (!document.forms[FNAME].elements['hvsbcpd'].value)
+             { rfMsg += " - Current Smoker: Cessation Information Distributed\n"; }
+       }
+
+    /*
+    if ( !document.forms[FNAME].elements['hvsbqrc'].value)
+          { rfMsg += " - Quitting Reduces Chances\n"; }
+    */
+    }
+
+    /*
+    if (!document.forms[FNAME].elements['hvsbhawc'].value)
+       { rfMsg += " - Health Opinions: Cancer Worry\n"; }
+
+    if (!document.forms[FNAME].elements['hvsbhagr'].value)
+       { rfMsg += " - Health Opinions: Generic Risk Comparison\n"; }
+
+    if (!document.forms[FNAME].elements['hvsbhasr'].value)
+       { rfMsg += " - Health Opinions: Smoker Risk Comparison\n"; }
+    */
+
+	
+    if (HSC) {
+		/* Disable SF8 requirement per discussion with CH (See https://helios.mountsinai.org/redmine/issues/461)
+       if ((!document.forms[FNAME].elements['hvsbsfr'].value)
+              || (document.forms[FNAME].elements['hvsbsfr'].value != "r")) {
+          for (var i = 1; i <= 12; i++) {
+             if (eval("!document.forms[FNAME].elements['hvsbsf" + i + "'].value"))
+                { rfMsg += (" - Health Survey: Response " + i + "\n"); }
+          }
+
+    if (regsm == 1) {
+          for (var i = 1; i <= 4; i++) {
+	     a = i + 12;
+             if (eval("!document.forms[FNAME].elements['hvsbpsf" + i + "'].value"))
+                { rfMsg += (" - Health Survey: Response " + a + "\n"); }
+          }
+     }
+
+       }
+	   */
+
+       var ctmp = document.forms[FNAME].elements['hvsbcfs'].value;
+       if (!ctmp) { rfMsg += " - Consent Form signed by Participant?\n"; }
+       if (ctmp == "n") {
+          alert("The consent form MUST be signed for the patient!\n\nIf the patient is ineligible please cancel the form.");
+	  return;
+       }
+       if (ctmp == "y") {
+          if (!document.forms[FNAME].elements['sbdoc'].value)
+             { rfMsg += " - Date consent form signed\n"; }
+          if (!document.forms[FNAME].elements['sbioc'].value)
+             { rfMsg += " - Name of Individual obtaining consent\n"; }
+       }
+    }
+
+    // Compose Error Message
+    if (rfMsg)
+    {
+       aMsg = "The following required fields have not been entered:\n";
+       aMsg += rfMsg;
+       aMsg +=
+       "Please complete these fields and submit the form again.\n";
+       alert(aMsg);
+    }
+    else
+    {
+       confa = chkAge('sbdop', 'sbdob');
+       if (confa > -1) {
+         var age = confa;
+         // Fill in the age field (90 means 90+)
+         if (age > 89) age = 90;
+         document.forms[FNAME].elements['sbage'].value = age;
+		 synChk('sbage','age');
+       }
+       // Clear Date of Birth Field
+       //document.forms[FNAME].elements['sbdob'].value = "";
+
+       if (regsm == 1) {
+          // Recompute total pack-years
+          confs = calcNPY(-1);
+       }
+       else {
+          confs = 1;
+       }
+
+       // alert("calcNPY's conf was " + conf);
+       if (confa && confs) {
+          document.forms[FNAME].elements['fppend'].value = "0";
+          document.forms[FNAME].submit();
+       }
+       else {
+          return;
+       }
+    }
+}
+
+function zpy()
+{
+   document.forms[FNAME].elements['sbshtpy'].value = 0.0;
+}
+
+function radioFixup()
+{
+    fixRVal('sbsex');
+    fixRVal('sbphu');
+    fixRVal('sbpwu');
+	// Ordering information
+	//fixRVal('sbim');
+	fixRVal('sbmeq');
+	fixRVal('sbdsd');
+	fixRVal('sbopss');
+	fixRVal('sboas');
+	
+    //fixRVal('sbhcs');
+    //fixRVal('sbhcsm');
+    fixRVal('sbhco');
+    fixRVal('sbmpc');
+    fixRVal('sbmly');
+    fixRVal('sbmpht');
+    fixRVal('sbmphc');
+    //fixRVal('sbmpcs');
+    //fixRVal('sbmps');
+    //fixRVal('sbmpmi');
+    fixRVal('sbmpas');
+    //fixRVal('sbmpca')
+    fixRVal('sbmpa');
+    //fixRVal('sbmpcp');
+    //fixRVal('sbmpan');
+    //fixRVal('sbmpcf');
+    //fixRVal('sbmppv');
+    //fixRVal('sbmptd');
+    fixRVal('sbfc');
+    fixRVal('sbfcf');
+    fixRVal('sbfcm');
+    fixRVal('sbfcs');
+    fixRVal('sbaha');
+    fixRVal('sblcs');
+    //fixRVal('sbwcp');
+    //fixRVal('sbwcn');
+    //fixRVal('sbsews');
+    fixRVal('sbsru');
+    fixRVal('sbshsa');
+    fixRVal('sbmpat');
+    fixRVal('sbmpct');
+    fixRVal('sbmpdt');
+    fixRVal('sbmphtt');
+    fixRVal('sbmpmi');
+    fixRVal('sbmps');
+    fixRVal('sbmppv');
+    fixRVal('sbmpld');
+    fixRVal('sbmplds');
+    fixRVal('sbmprd');
+    fixRVal('sbmprds');
+
+	fixRVal('sbmpd');
+	//fixRVal('sbnbacs');
+
+	fixRVal('sbsruyn');
+    /*
+    fixRVal('sbmprd');
+    fixRVal('sbmpld');
+    fixRVal('sbmple');
+    fixRVal('sbmply');
+    fixRVal('sbmpul');
+
+    fixRVal('sbmpo');
+    fixRVal('sbsehs');
+    // fixRVal('sbahfa');
+    // fixRVal('sbsps');
+    fixRVal('sbhsy');
+    fixRVal('sbhsyh');
+    fixRVal('sbmsy');
+    fixRVal('sbmst');
+    fixRVal('sbosy');
+    fixRVal('sbslws');
+    fixRVal('sbhso');
+    */
+    //fixRVal('sbshcua');
+   // fixRVal('sbshcup');
+    /*
+    fixRVal('sbshcum');
+    fixRVal('sbshcuc');
+    fixRVal('sbsqcd');
+    fixRVal('sbqpa');
+    */
+    fixRVal('sbqttq');
+    fixRVal('sbcpd');
+    /*
+    fixRVal('sbqrc');
+    fixRVal('sbhagr');
+    fixRVal('sbhasr');
+    fixRVal('sbhawc');
+    fixRVal('sbsf0a');
+    fixRVal('sbsf0b');
+    fixRVal('sbsf1');
+    fixRVal('sbsf2');
+    fixRVal('sbsf3');
+    fixRVal('sbsf4');
+    fixRVal('sbsf5');
+    fixRVal('sbsf6');
+    fixRVal('sbsf7');
+    fixRVal('sbsf8');
+    fixRVal('sbsf9');
+    fixRVal('sbsf10');
+    fixRVal('sbsf11');
+    fixRVal('sbsf12');
+    fixRVal('sbpsf1');
+    fixRVal('sbpsf2');
+    fixRVal('sbpsf3');
+    fixRVal('sbpsf4');
+    fixRVal('sbcfs');
+    */
+
+    // PFT
+    fixRVal('sbahpft');
+}
+
+function cbFixup()
+{
+    //fixCVal('sbwcc');
+    fixCVal('sbwcb');
+    //fixCVal('sbwch');
+    fixCVal('sbwcl');
+    fixCVal('sbwco');
+    //fixCVal('sbshsue');
+    //fixCVal('sbshsua');
+   // fixCVal('sbshsum');
+    //fixCVal('sbshsup');
+    //fixCVal('sbshsuc');
+    fixCVal('sbahaoa');
+    fixCVal('sbahaoc');
+    fixCVal('sbahaoe');
+    fixCVal('sbahaof');
+    fixCVal('sbahaog');
+    fixCVal('sbahaoh');
+    fixCVal('sbahaoi');
+    fixCVal('sbahaoj');
+    fixCVal('sbahaoo');
+    /*
+    fixCVal('sbsfr');
+    fixCVal('sbhamra');
+    fixCVal('sbhamry');
+    fixCVal('sbhamrb');
+    fixCVal('sbhamrc');
+    fixCVal('sbhamrd');
+    fixCVal('sbhamre');
+    fixCVal('sbhamrf');
+    fixCVal('sbhamrh');
+    fixCVal('sbhamri');
+    fixCVal('sbhamrm');
+    fixCVal('sbhamro');
+    fixCVal('sbhamrp');
+    fixCVal('sbhamrr');
+    fixCVal('sbhamrs');
+    fixCVal('sbhamru');
+    fixCVal('sbhamrv');
+    */
+}
+
+function fixRVal(arg)
+{
+    var hval = "";
+    var arghv = "hv" + arg;
+    if (typeof document.forms[FNAME].elements[arghv] == "undefined") {
+	alert("UNDEFINED: " + arghv);
+	return;
+    }
+    var len = document.forms[FNAME].elements[arg].length;
+
+    for (var i = 0; i < len; i++) {
+       if (document.forms[FNAME].elements[arg][i].checked)
+          hval = document.forms[FNAME].elements[arg][i].value;
+    }
+
+    document.forms[FNAME].elements[arghv].value = hval;
+}
+
+function fixCVal(arg)
+{
+    var hval = "";
+    var arghv = "hv" + arg;
+    if (typeof document.forms[FNAME].elements[arghv] == "undefined") {
+	alert("UNDEFINED in CVAL: " + arghv + " was " + arg);
+	return;
+    }
+    var len = document.forms[FNAME].elements[arg].length;
+
+    if (document.forms[FNAME].elements[arg].checked) {
+       hval = document.forms[FNAME].elements[arg].value;
+       document.forms[FNAME].elements[arghv].value = hval;
+    }
+    else {
+       document.forms[FNAME].elements[arghv].value = "";
+    }
+}
+
+function clearRVal(arg)
+{
+    var arghv = "hv" + arg;
+    var len = document.forms[FNAME].elements[arg].length;
+
+    for (var i = 0; i < len; i++) {
+       document.forms[FNAME].elements[arg][i].checked = false;
+    }
+
+    document.forms[FNAME].elements[arghv].value = "";
+}
+
+function clearN(arg)
+{
+   if (arg == 1) {
+      document.forms[FNAME].elements["sbahas"].value = "";
+      //document.forms[FNAME].elements["sbahad"].value = "";
+      //document.forms[FNAME].elements["sbahada"].value = "";
+      document.forms[FNAME].elements['sbahaoa'].checked = false;
+      document.forms[FNAME].elements['sbahaoc'].checked = false;
+      document.forms[FNAME].elements['sbahaoe'].checked = false;
+      document.forms[FNAME].elements['sbahaof'].checked = false;
+      document.forms[FNAME].elements['sbahaog'].checked = false;
+      document.forms[FNAME].elements['sbahaoh'].checked = false;
+      document.forms[FNAME].elements['sbahaoi'].checked = false;
+      document.forms[FNAME].elements['sbahaoj'].checked = false;
+      document.forms[FNAME].elements['sbahaoo'].checked = false;
+   }
+   if (arg == 2) {
+      //document.forms[FNAME].elements['sbwcc'].checked = false;
+      document.forms[FNAME].elements['sbwcb'].checked = false;
+      //document.forms[FNAME].elements['sbwch'].checked = false;
+      document.forms[FNAME].elements['sbwcl'].checked = false;
+      document.forms[FNAME].elements['sbwco'].checked = false;
+   }
+   cbFixup();
+}
+
+function subPend()
+{
+   document.forms[FNAME].elements['fppend'].value = "1";
+   document.forms[FNAME].submit();
+}
+
+function calcNPY(mode)
+{
+   var mesg = "";
+   var nval;
+   var py = 0.0;
+   var maxppd = 4.0;
+   var maxtpy = 200;
+   var confMsg = "";
+   var confflag = 0;
+   var confval;
+   var vr = true;
+
+   if (mode == 0) {
+      tppd = document.forms[FNAME].elements['sbfppd'].value
+      tdur = document.forms[FNAME].elements['sbfdur'].value
+
+      if (!(tppd && tdur)) {
+         vr = false;
+      }
+
+      confMsg = "Smoking History: Please verify the following entry/entries"
+         + " before submission:\n\n";
+   }
+   else if (mode == 1) {
+      tppd = document.forms[FNAME].elements['sbcppd'].value
+      tdur = document.forms[FNAME].elements['sbcdur'].value
+
+      if (!(tppd && tdur)) {
+         vr = false;
+      }
+   }
+   else if (mode == -1) {
+      tppd = document.forms[FNAME].elements['sbfppd'].value
+      tdur = document.forms[FNAME].elements['sbfdur'].value
+
+      if (!(tppd && tdur)) {
+         tppd = document.forms[FNAME].elements['sbcppd'].value
+         tdur = document.forms[FNAME].elements['sbcdur'].value
+      }
+
+      if (!(tppd && tdur)) {
+         mesg = "Please complete smoking history for pack-year calculation.\n"
+         alert(mesg);
+         return;
+      }
+   }
+
+   if (vr) {
+      py = (tppd * tdur);
+      py = (Math.round(100.0 * py) / 100.0);
+
+      if ((py > 0.0) && (py < 1.0))
+         document.forms[FNAME].elements['sbntpy'].value = "0" + py.toString();
+      else
+         document.forms[FNAME].elements['sbntpy'].value = py.toString();
+
+      if (py > maxtpy) {
+         confMsg += ("  - The total number of pack-years (" + py
+                    + ") exceeds " + maxtpy);
+         confflag = 1;
+      }
+
+      if (confflag) {
+         if (mode == -1) {
+            confMsg += ("\n\nClick OK to submit the form or Cancel to return for"
+   	            + " corrections.\n");
+            confval = confirm(confMsg);
+         }
+         else {
+            alert(confMsg);
+         }
+      }
+      else {
+         confval = true;
+      }
+   }
+   return(confval);
+}
+
+function chkAge(da, db)
+{
+   var cV = new Array();
+   var mval = new Array();
+   var dval = new Array();
+   var yval = new Array();
+   var mstr, dstr, ystr;
+   var exp = /^(\d{1,2}\/\D{3}\/\d{4})$/;
+   var wrong = false;
+
+   cV[0] = document.forms[FNAME].elements[da].value;
+   cV[0] = cV[0].replace(/^\s+/g, '').replace(/\s+$/g, '');
+
+   cV[1] = document.forms[FNAME].elements[db].value;
+   cV[1] = cV[1].replace(/^\s+/g, '').replace(/\s+$/g, '');
+
+   for (var i = 0; i < 2; i++) {
+      if (!exp.test(cV[i])) {
+         wrong = true;
+      }
+      else {
+         var pd = new RegExp("\\/", "g");
+         var dfa = cV[i].split(pd);
+
+         if (dfa.length == 3) {
+            dstr = dfa[0];
+            if (dstr.length == 1) {
+               dstr = "0" + dstr;
+            }
+            mstr = dfa[1];
+            if (dfa[1].length == 3) {
+               mstr = fixMonth(dfa[1]);
+            }
+            else {
+               mstr = dfa[1];
+            }
+
+            ystr = dfa[2];
+            if (ystr.length == 4)
+               syear = false;
+            else
+               wrong = true;
+
+            mval[i] = parseInt(mstr, 10);
+            dval[i] = parseInt(dstr, 10);
+            yval[i] = parseInt(ystr, 10);
+         }
+         else {
+            wrong = true;
+         }
+      }
+
+      if (wrong) {
+         mval[0] = 0;
+         dval[0] = 0;
+         yval[0] = 0;
+      }
+   }
+
+   if (wrong) {
+      return -1;
+   }
+   else {
+      return (yval[0] - yval[1]);
+   }
+}
+
+// CHD Table - Male
+var mchd = [ 1, 2, 2, 3, 4, 4, 6, 7, 9 , 11, 14, 18, 22, 27, 33, 40, 47, 56 ];
+
+// CHD Table - Female
+var fchd = [ 1, 2, 2, 2, 3, 3, 4, 5, 6, 7, 8, 9, 11, 13, 15, 17, 20, 24, 27, 32];
+
+// Age Table - Male
+var amm = [ [30, -1],
+            [35, 0],
+            [40, 1],
+            [45, 2],
+            [50, 3],
+            [55, 4],
+            [60, 5],
+            [65, 6],
+            [70, 7] ];
+
+// Age Table - Female
+var amf = [ [30, -9],
+            [35, -4],
+            [40, 0],
+            [45, 3],
+            [50, 6],
+            [55, 7],
+            [60, 8],
+            [65, 8],
+            [70, 8] ];
+
+function calcFI()
+{
+   var g, diab, smoke, syst, dias, age;
+   var total, agep, tx;
+
+   radioFixup();
+   //expandDropdowns();
+
+   g     = document.forms[FNAME].elements['hvsbsex'].value;
+//   diab  = document.forms[FNAME].elements['hvsbmpd'].value;
+   smoke = document.forms[FNAME].elements['hvsbsru'].value;
+//   syst  = document.forms[FNAME].elements['sbbps'].value;
+//   dias  = document.forms[FNAME].elements['sbbpd'].value;
+   confa = 0;
+   total = 0;
+   agep  = 0;
+   // Explain source of index value with text comment
+   tx = "";
+
+   var age1 = chkAge('sbdop', 'sbdob');
+   if (age1 < 0) {
+      age = document.forms[FNAME].elements['sbage'].value;
+   } else {
+      if (age1 > 89) age1 = 90;
+      age = age1;
+      document.forms[FNAME].elements['sbage'].value = age;
+   }
+
+   if (age > -1) {
+      tx = age + " y.o.";
+      if (age < 30) { age = 30; }
+      if (age > 70) { age = 70; }
+      if (g == "m") {
+         for (var i = 0; i < amm.length; i++) {
+            if ( age >= amm[i][0] ) { agep = amm[i][1]; }
+         }
+      }
+      if (g == "f") {
+         for (var i = 0; i < amf.length; i++) {
+            if ( age >= amf[i][0] ) { agep = amf[i][1]; }
+         }
+      }
+      total = total + agep;
+   }
+
+   // Add gender to text
+   tx = tx + " " + g;
+
+   // If the subject has diabetes: Male +2, Female +4
+   /*
+   if (diab == "y") {
+      tx = tx + " Diabetic"
+      total = total + 2;
+      if (g == "f") {
+         total = total + 2;
+      }
+   }
+   */
+
+   // If the subject is (or has been a smoker): +2
+   if (smoke == "y") {
+      tx = tx + " Smoker"
+      total = total + 2;
+   }
+
+   // Blood Pressure Handling
+   /*
+   if (( syst != "" ) && (dias != "")) {
+      if (g == "m") {
+         if ((syst >= 130) || (dias >= 85)) { total = total + 1; }
+         if ((syst >= 140) || (dias >= 90)) { total = total + 1; }
+         if ((syst >= 160) || (dias >= 100)) { total = total + 1; }
+      }
+      if (g == "f") {
+         if ((syst < 120) || (dias < 80)) { total = total - 3; }
+         if ((syst >= 140) || (dias >= 90)) { total = total + 2; }
+         if ((syst >= 160) || (dias >= 100)) { total = total + 1; }
+      }
+      tx = tx + " BP: " + syst + "/" + dias;
+   }
+   */
+
+   var chdval = "-";
+   var chdindex;
+   if (g == "m") {
+      chdindex  = total + 3;
+      if (chdindex < 0) { chdindex = 0; }
+      if (chdindex > 17) { chdindex = 17; }
+      chdval = mchd[chdindex];
+   }
+   if (g == "f") {
+      chdindex  = total + 2;
+      if (chdindex < 0) { chdindex = 0; }
+      if (chdindex > 19) { chdindex = 19; }
+      chdval = fchd[chdindex];
+   }
+
+   //document.forms[FNAME].elements['sbcrfichd'].value = chdval.toString();
+
+   //document.forms[FNAME].elements['sbcrfi'].value = total.toString();
+   //document.forms[FNAME].elements['sbcrfico'].value = tx;
+}
+
+
+function calcBMI()
+{
+   var fht, ht;
+   var fwt, wt;
+   var bmi;
+
+   radioFixup();
+
+   var da = 0;
+
+   fht = document.forms[FNAME].elements['sbph'].value;
+   fwt = document.forms[FNAME].elements['sbpw'].value;
+
+   if ((!fht) || (!fwt)) {
+      da = 1;
+   }
+
+   if (document.forms[FNAME].elements['hvsbphu'].value == "i") {
+      ht = (0.0254 * fht);
+   }
+   else if (document.forms[FNAME].elements['hvsbphu'].value == "c") {
+      ht = (0.01 * fht);
+   }
+   else {
+      da = 1;
+   }
+
+   if (document.forms[FNAME].elements['hvsbpwu'].value == "p") {
+      wt = (0.4536 * fwt);
+   }
+   else if (document.forms[FNAME].elements['hvsbpwu'].value == "k") {
+      wt = fwt;
+   }
+   else {
+      da = 1;
+   }
+
+   if (da == 1) {
+      alert("Please complete height and weight (with units) for BMI calculation.\n");
+      return;
+   }
+
+   bmi = wt / (ht * ht);
+   bmi = (Math.round(10.0 * bmi) / 10.0);
+
+   document.forms[FNAME].elements['sbbmi'].value = bmi.toString();
+}
+
+function calcFFR()
+{
+   var fev1, fvc;
+   var ffr;
+   var da = 0;
+// vcode
+   var vs = "sb";
+
+   var cv = vs + "fvc";
+   var av = vs + "fev1";
+   var bv = vs + "fvc";
+   var ov = vs + "ffr";
+
+   synChk(cv,'pnum')
+
+   fev1 = document.forms[FNAME].elements[av].value;
+   fvc = document.forms[FNAME].elements[bv].value;
+
+   if ((!fev1) || (!fvc)) {
+      da = 1;
+   }
+
+   if (da == 1) {
+      alert("Please complete FEV1 and FVC for FEV1/FVC ratio calculation.\n");
+      return;
+   }
+
+   ffr = Math.round(100.0 * fev1 / fvc);
+
+   document.forms[FNAME].elements[ov].value = ffr.toString();
+}
+
+function calcQuitYears()
+{
+  var quitYear = document.forms[FNAME].elements['sbsdlcy'].value;
+  var quitMonth = document.forms[FNAME].elements['sbsdlcm'].value;
+  var quitDay = document.forms[FNAME].elements['sbsdlcd'].value;
+
+  var todayDate = new Date();
+  var todayYear = todayDate.getFullYear();
+  var todayMonth = todayDate.getMonth();
+  var todayDay = todayDate.getDate();
+  age = todayYear - quitYear;
+
+  if (quitYear.length > 0) {
+    if (quitMonth.length > 0) {
+      if (todayMonth < quitMonth - 1)
+      {
+        age--;
+      }
+
+      if (quitDay.length > 0) {
+        if (quitMonth - 1 == todayMonth && todayDay < quitDay)
+        {
+          age--;
+        }
+      }
+    }
+
+    document.forms[FNAME].elements['sbsdysq'].value = age;
+  }
+}
+
+function synChk(arg, etype)
+{
+   var chVal = "";
+   var chNum = 0;
+   chVal = document.forms[FNAME].elements[arg].value;
+   chVal = chVal.replace(/^\s+/g, '').replace(/\s+$/g, '');
+   chNum = parseFloat(chVal, 10);
+
+   if ((!isNaN(chVal)) && (chVal.charAt(chVal.length-1) == '.')) {
+      chVal = chVal.substr(0,chVal.length-1);
+   }
+
+   if (etype == 'cws') {
+      document.forms[FNAME].elements[arg].value = chVal;
+   }
+   else if (etype == 'phone') {
+      if (!(PCH || ESP)) {
+         document.forms[FNAME].elements[arg].value = chVal;
+         return;
+      }
+
+      var exp = /^(\d{10}|\d{3}-\d{3}-\d{4}|\(\d{3}\)\d{3}-\d{4})$/;
+      if (!exp.test(chVal)) {
+         altfx(arg, chVal, "phone", "valid phone number");
+      }
+      else {
+	 var pd = new RegExp("[-()]", "g");
+	 var tstr=chVal.replace(pd, "");
+	 var newstr = "(" + tstr.substring(0,3) + ")" + tstr.substring(3,6)
+	 newstr += "-" + tstr.substring(6,10)
+         document.forms[FNAME].elements[arg].value = newstr;
+      }
+   }
+   else if (etype == 'ssn') {
+      if (!ESP) {
+         document.forms[FNAME].elements[arg].value = chVal; return; } var exp = /^(\d{9}|\d{3}-\d{2}-\d{4})$/;
+      if (!exp.test(chVal)) {
+         altfx(arg, chVal, "SSN", "valid SSN");
+      }
+      else {
+	 var pd = new RegExp("-", "g");
+	 var tstr=chVal.replace(pd, "");
+	 var newstr = tstr.substring(0,3) + "-" + tstr.substring(3,5)
+	 newstr += "-" + tstr.substring(5,9)
+         document.forms[FNAME].elements[arg].value = newstr;
+      }
+   }
+   else if ((etype == 'rdate') || (etype == 'adate') || (etype == 'rsdate') || (etype == 'asdate')) {
+      var mstr, dstr, ystr;
+
+      if ((etype == 'rdate') || (etype == 'rsdate')) {
+         var y4min = 1990;
+	 var y4max = 2019;
+	 var y2min = 90;
+	 var y2max = 19;
+      }
+      else if ((etype == 'adate') || (etype == 'asdate')) {
+         var y4min = 1900;
+	 var y4max = 2048;
+	 var y2min = 90;
+	 var y2max = 19;
+      }
+
+      if ((etype == 'rdate') || (etype == 'adate')) {
+         if (DATEC) {
+	    var exp = /^(\d{6}|\d{8}|\d{1,2}\/\D{3}\/\d{4}|\d{1,2}\/\D{3}\/\d{2}|\d{1,2}\/\d{1,2}\/\d{4}|\d{1,2}\/\d{1,2}\/\d{2})$/;
+	 }
+	 else {
+	    var exp = /^(\d{1,2}\/\D{3}\/\d{4})$/;
+	 }
+	 var sdt = false;
+      }
+      else if ((etype == 'rsdate') || (etype == 'asdate')) {
+         if (DATEC) {
+            var exp = /^(\d{4}|\d{6}|\D{3}\/\d{4}|\D{3}\/\d{2}|\d{1,2}\/\d{4}|\d{1,2}\/\d{2})$/;
+	 }
+	 else {
+            var exp = /^(\D{3}\/\d{4})$/;
+	 }
+	 var sdt = true;
+      }
+
+      var wrong = false;
+
+      if (!exp.test(chVal)) {
+         wrong = true;
+      }
+      else {
+	 var pd = new RegExp("\\/", "g");
+	 var dfa = chVal.split(pd);
+
+	 if ((dfa.length == 1) &&
+            ((dfa[0].length == 4) || (dfa[0].length == 6) || (dfa[0].length == 8))) {
+	       // monolithic 4, 6 or 8
+	       var tstr = dfa[0];
+
+	       if (!sdt) { // mono full date
+	          if (tstr.length == 6) {
+	             dstr = tstr.substring(0,2);
+		     mstr = tstr.substring(2,4);
+		     ystr = tstr.substring(4,6);
+		     syear = true;
+	          }
+	          else if (tstr.length == 8) {
+	             dstr = tstr.substring(0,2);
+	             mstr = tstr.substring(2,4);
+		     ystr = tstr.substring(4,8);
+		     syear = false;
+                  }
+		  mval = parseInt(mstr, 10);
+		  dval = parseInt(dstr, 10);
+		  yval = parseInt(ystr, 10);
+	       }
+	       else { // mono short date (mmyy or mmyyyy)
+	          if (tstr.length == 4) {
+	             mstr = tstr.substring(0,2);
+		     ystr = tstr.substring(2,4);
+		     syear = true;
+	          }
+	          else if (tstr.length == 6) {
+	             mstr = tstr.substring(0,2);
+	             ystr = tstr.substring(2,6);
+		     syear = false;
+	          }
+	          mval = parseInt(mstr, 10);
+	          yval = parseInt(ystr, 10);
+	       }
+	 }
+	 else if ((dfa.length == 2) && sdt) { // split short date
+	    mstr = dfa[0];
+	    if (dfa[0].length == 3) {
+	       mstr = fixMonth(dfa[0]);
+	    }
+	    else {
+	       mstr = dfa[0];
+	    }
+	    ystr = dfa[1];
+	    if (ystr.length == 4)
+	       syear = false;
+	    else if (ystr.length == 2)
+	       syear = true;
+	    else
+	       wrong = true;
+
+	    mval = parseInt(mstr, 10);
+	    yval = parseInt(ystr, 10);
+	 }
+	 else if (dfa.length == 3) { // split full date
+	    dstr = dfa[0];
+	    if (dstr.length == 1) {
+	       dstr = "0" + dstr;
+            }
+	    mstr = dfa[1];
+	    if (dfa[1].length == 3) {
+	       mstr = fixMonth(dfa[1]);
+	    }
+	    else {
+	       mstr = dfa[1];
+	    }
+
+	    ystr = dfa[2];
+	    if (ystr.length == 4)
+	       syear = false;
+	    else if (ystr.length == 2)
+	       syear = true;
+	    else
+	       wrong = true;
+
+	    mval = parseInt(mstr, 10);
+	    dval = parseInt(dstr, 10);
+	    yval = parseInt(ystr, 10);
+	 }
+	 else {
+	    wrong = true;
+	 }
+
+	 if (!wrong) {
+	    // check month
+	    if (!sdt) {
+	       if (isNaN(mval) || (mval < 1) || (mval > 12)) {
+	          wrong = true;
+	       }
+	    }
+	    else {
+	       // allow zero for month in short date form
+	       if (isNaN(mval) || (mval < 0) || (mval > 12)) {
+	          wrong = true;
+	       }
+	    }
+
+	    // check year
+	    if (syear) {
+	       if (yval <= y2max) {
+		  yval += 2000;
+	       }
+	       else if (yval >= y2min) {
+	          yval += 1900;
+	       }
+	       else { // y2max > yval < y2min
+	          wrong = true;
+	       }
+	    }
+
+	    if (isNaN(yval) || (yval < y4min) || (yval > y4max)) {
+	       wrong = true;
+	    }
+
+	    // check day
+	    if (!sdt) {
+	       maxd = 31;
+               if ((mval == 4) || (mval == 6) || (mval == 9) || (mval == 11)) {
+                  maxd = 30;
+               }
+               else if (mval == 2) {
+                  if ((yval % 4) != 0) {
+                     maxd = 28;
+                  }
+                  else {
+                     maxd = 29;
+                  }
+               }
+               else {
+                  maxd = 31;
+               }
+	       if (isNaN(dval) || (dval < 1) || (dval > maxd)) {
+	          wrong = true;
+	       }
+	    }
+
+            mstr = unfixMonth(mval);
+
+	    if (!sdt) {
+	       var newstr = dstr + "/" + mstr + "/" + yval.toString();
+	    }
+            else {
+	       var newstr = mstr + "/" + yval.toString();
+	    }
+
+	    document.forms[FNAME].elements[arg].value = newstr;
+         }
+      }
+
+      if (wrong) {
+         altfx(arg, chVal, "date", "valid date");
+      }
+   }
+   else if (etype == 'month') {
+      if (isNaN(chVal) || isNaN(chNum) || (chNum > 12) || (chNum < 1)) {
+         altfx(arg, chVal, "month", "number in the range 1 to 12");
+      }
+      else {
+         document.forms[FNAME].elements[arg].value = chVal;
+      }
+   }
+   else if (etype == 'day') {
+      if (isNaN(chVal) || isNaN(chNum) || (chNum > 31) || (chNum < 1)) {
+         altfx(arg, chVal, "day", "number in the range 1 to 31");
+      }
+      else {
+         document.forms[FNAME].elements[arg].value = chVal;
+      }
+   }
+   else if (etype == 'year') {
+      if ((!isNaN(chVal) || isNaN(chNum)) && ((chNum == 9) || (chNum == 99))) {
+         document.forms[FNAME].elements[arg].value = "1999"
+         chNum = 1999
+      }
+      if ((!isNaN(chVal) || isNaN(chNum)) && ((chVal == "0") || (chVal == "00"))) {
+	 document.forms[FNAME].elements[arg].value = "2000"
+	 chNum = 2000
+      }
+      if (isNaN(chVal) || isNaN(chNum) || (chNum > 2019) || (chNum < 1990)) {
+         altfx(arg, chVal, "year", "number in the range 1990 to 2019");
+      }
+      else {
+         document.forms[FNAME].elements[arg].value = chVal;
+      }
+   }
+   else if (etype == 'ayear') {
+      if (isNaN(chVal) || isNaN(chNum) || (chNum > 2019) || (chNum < 1800)) {
+         altfx(arg, chVal, "year", "four-digit year");
+      }
+      else {
+         document.forms[FNAME].elements[arg].value = chVal;
+      }
+   }
+   else if (etype == 'age') {
+      if (isNaN(chVal) || isNaN(chNum) || (chNum > 150) || (chNum < 1)) {
+         altfx(arg, chVal, "age", "valid age in years");
+      }
+      else {
+         document.forms[FNAME].elements[arg].value = chVal;
+      }
+   }
+   else if (etype == 'pnum') {
+      if ((chNum >= 0) && (chVal.charAt(0) == '.')) {
+         chVal = '0' + chVal;
+      }
+
+      if (isNaN(chVal) || isNaN(chNum) || (chNum < 0)) {
+         altfx(arg, chVal, "number", "valid positive number");
+      }
+      else {
+         document.forms[FNAME].elements[arg].value = chVal;
+      }
+   }
+   else if (etype == 'anum') {
+      if ((chNum < 0) && (chVal.charAt(1) == '.')) {
+         chVal = '-0' + chVal.substr(1,chVal.length - 1);
+      }
+      else if ((chNum >= 0) && (chVal.charAt(0) == '.')) {
+         chVal = '0' + chVal;
+      }
+
+      if (isNaN(chVal) || isNaN(chNum)) {
+         altfx(arg, chVal, "number", "valid numeric argument");
+      }
+      else {
+         document.forms[FNAME].elements[arg].value = chVal;
+      }
+   }
+}
+
+function altfx(arg, val, msg1, msg2)
+{
+   alert("Incorrect " + msg1 + " entry!\n    " + val
+      + "\nPlease enter a " + msg2 + ".\n");
+   document.forms[FNAME].elements[arg].value = "";
+   document.forms[FNAME].elements[arg].select();
+   document.forms[FNAME].elements[arg].focus();
+}
+
+function fixMonth(str)
+{
+   for (var i = 0; i < mtt.length; i++) {
+      for (var j = 1; j < mtt[0].length; j++) {
+         if(str == mtt[i][j]) {
+            return i;
+         }
+      }
+   }
+
+   return "-1";
+}
+
+function unfixMonth(num)
+{
+   if ((num < 0) || (num > 12))
+      return "Xxx";
+   else
+      return(mtt[num][1]);
+}
+
+function jshp(arg)
+{
+   alert(sb_hsl_100(arg));
+}
+
+function sb_hsl_100(arg)
+{
+   if (arg == "dop") {
+      return(
+"The visit date should be the actual date of the patient's\n"
++ "baseline CT exam. ");
+   }
+   else if (arg == "occ") {
+      return(
+"If retired, please include the previous occupation along with the\n"
++ "retired status (e.g. \"retired, teacher\").");
+   }
+   else if (arg == "occc") {
+      return(
+"Please code the participant's occupation by matching it to one\n"
++ "of the categories below and selecting the code from the pulldown\n"
++ "menu.\n"
++ "\n"
++ "  - Higher executives, large proprietor, major professionals (e.g. \n"
++ "    Judges, CEOs, Accountants (CPA), Architects, Engineers, Lawyers\n"
++ "    Physicians, University professors).\n"
++ "\n"
++ "  - Business managers. proprietors of medium sized businesses, lesser\n"
++ "    professionals (e.g. Advertising directors, Office managers, Police\n"
++ "    Chief. Sales Managers, Accountants (not CPA), Chiropractors,\n"
++ "    Correction Officers, Librarians, Military/Comissioned Officers,\n"
++ "    Musicians (Symphony Orchestra), Nurses, Pharmacists, Social Workers,\n"
++ "    Teachers (Elementary/High)).\n"
++ "\n"
++ "  - Administrative personnel, small independant businesses, and minor\n"
++ "    professionals (e.g. Insurance adjusters, Advertising agents. Credit\n"
++ "    Managers. Insurance Agents, Sales representatives, store managers,\n"
++ "    actors, Appraisers, Interior decorators, Court Interpreters,\n"
++ "    Landscape planners, Photographers, Piano Teachers, Radio/TV/Newspaper\n"
++ "    reporters, Oral hygienists, Travel Agents).\n"
++ "\n"
++ "  - Clerical/Sales workers, Technicians, and Owners of Little Businesses\n"
++ "    (e.g. Bank Clerks and Tellers, Bill Collectors, Bookkeepers, \n"
++ "    Clerical, Storekeeper Factory Supervision, Sales Clerksm Shipping\n"
++ "    Clerks, Dental Technicians, Lab Technicians, Truck Dispatchers).\n"
++ "\n"
++ "  - Skilled Manual Employees (e.g. Bakers, Barbers, Blacksmiths, \n"
++ "    Boilermakers, Carpenters, Chefs, Electricians, Exterminators,\n"
++ "    Firemen, Gardeners, Trained Machinists, Masons, Painters, Piano\n"
++ "    Tuners, Plumbers, Policemen, Postmen, Printers).\n"
++ "\n"
++ "  - Machine Operators and Semi-Skilled Employees (e.g. Hospital Aides,\n"
++ "    Apprentices, Bartenders, Building Superintendents, Bus Drivers, \n"
++ "    Dressmakers, Elevator Operators, Garage/Gas Station Assistants, \n"
++ "    Guard/Doorkeepers/Watchmen, Hairdressers, Housekeepers, Roofers,\n"
++ "    Unskilled Steelworkers, Taxi Drivers, Waiters).\n"
++ "\n"
++ "  - Unskilled Employees (e.g. Parking Lot Attendants, Cafeteria Workers,\n"
++ "    Dairy Workers, Deck hands, Domestics, Fishermen, Garbage Collectors,\n"
++ "    Janitors, Construction Laborers, Laundry Workers, Messengers, \n"
++ "    Peddlers, Porters, Shoe Shiners, Street Cleaners, Unskilled Factory\n"
++ "    Workers).\n"
++ "\n"
++ "  - Unemployed\n");
+   }
+   else if (arg == "htwt") {
+      return(
+"The height and weight are those values self-reported by the subject\n"
++ "and may be entered in imperial or metric units.");
+   }
+   else if (arg == "bmi") {
+      return(
+"The body mass index (BMI) is automatically calculated once the height\n"
++ "and weight are entered.");
+   }
+   else if (arg == "rc") {
+      return(
+"The race of the subject should be selected from one of the following:\n"
++ "\n"
++ "  - American Indian: A person having origins in any\n"
++ "    of the original peoples of North America, and who maintains\n"
++ "    cultural identification through tribal affiliation or community\n"
++ "    recognition.\n"
++ "\n"
++ "  - Alaskan Native: A person having origins in any of the indigenous\n"
++ "    peoples of Alaska, and who maintains cultural identification\n"
++ "    through tribal affiliation or community recognition.\n"
++ "\n"
++ "  - Asian: A person having origins in any of the original peoples\n"
++ "    original peoples of the Far East, Southeast Asia, or the Indian\n"
++ "    subcontinent.  This area includes, for example, China, India,\n"
++ "     Japan, Korea, and the Philippine Islands.\n"
++ "\n"
++ "  - Native Hawaiian or Other Pacific Islander: A person having origins\n"
++ "    in any of the original peoples of Hawaii or the Pacific Islands.\n"
++ "    This area includes, for example, Hawaii, Polynesia, Melanesia,\n"
++ "    and Micronesia.\n"
++ "\n"
++ "  - Black or African American: A person having origins in any of\n"
++ "    the black racial groups of Africa.\n"
++ "\n"
++ "  - White: A person having origins in any of the original peoples\n"
++ "    of Europe, North Africa, or the Middle East.\n"
++ "\n"
++ "  - Two or more: A person self-identifying as multiracial.\n"
++ "\n"
++ "  - Other (specify): Any other race reported that doesn't fit the above\n"
++ "    categories.  If this category is chosen, a specification must be\n"
++ "    made in the Other (specify) field to the right of the pull-down\n"
++ "    menu.");
+   }
+   else if (arg == "pc") {
+      return(
+"The NY-ELCAP subjects are only eligible with a prior basal or squamous\n"
++ "cell skin cancer, enrollees with any other cancers including melanoma\n"
++ "will not qualify.\n"
++ "\n"
++ "In all other ELCAP studies, the protocol must be checked.");
+   }
+   else if (arg == "mp") {
+      return(
+"Please ask these questions to obtain the subject's general medical\n"
++ "history.");
+   }
+   else if (arg == "wlc") {
+      return(
+"Answer \"yes\" or \"no\" to the question, and then check the box for\n"
++ "any symptoms experienced by the participant\n");
+   }
+   else if (arg == "pft") {
+      return(
+"Indicate whether or not the participant has had one of these tests.  If\n"
++ "they know the values please fill them in, however answers to these\n"
++ "questions are not required.\n");
+   }
+   else if (arg == "fhlc") {
+      return(
+"A) Select from the pulldown the relative of the participant that was \n"
++ "diagnosed with lung cancer.\n"
++ "B) Indicate the age of the relative, the year they were diagnoses\n"
++ "   (if known) and whether or not the relative died of cancer.\n"
++ "C) Repeat steps A and B for any relative of the participant that has \n"
++ "   been diagnosed with lung cancer.\n");
+   }
+   else if (arg == "asb") {
+      return(
+"It is known that asbestos increases one's risk of development of lung\n"
++ "cancer.  Thus, it is important to obtain this information.  A \"yes\"\n"
++ "response (exposure to asbestos) most likely would refer to one of the\n"
++ "occupations listed in the next question.  Please check all occupations\n"
++ "that apply and enter the year the person was first exposed.");
+   }
+   else if (arg == "asbo") {
+      return(
+"Please check all occupations in which the subject has had exposure to\n"
++ "asbestos.");
+   }
+   else if (arg == "asbt") {
+      return(
+"Please enter the cumulative time in years.");
+   }
+   else if (arg == "sh") {
+      return(
+"The smoking history and quitting history is critical.  This\n"
++ "information must be asked very carefully and the subject should be\n"
++ "made aware that their cooperation in answering the questions as\n"
++ "truthfully as possible is very important.");
+   }
+   else if (arg == "shs") {
+      return(
+"These questions aim to discover the level of second hand smoke to\n"
++ "which the participant has been exposed.");
+   }
+   else if (arg == "sru") {
+      return(
+"Is this a smoker or non-smoker: A \"no\" response indicates that this\n"
++ "person is either a non-smoker or very light smoker and would not meet\n"
++ "the 30 pack-year requirement for Medicare reimbursement.");
+   }
+   else if (arg == "ppd") {
+      return(
+"All PPD (packs per day) values must be entered in whole number or\n"
++ "decimal fraction form.  This table is to assist you in converting\n"
++ "numbers of cigarettes smoked per day into fractional PPD values.");
+   }
+   else if (arg == "shsa") {
+      return(
+"This question determines if the participant is a current or former\n"
++ "smoker.  If they are a current smoker, proceed to the question\n"
++ "starting \"If yes, ...\".  If they have not smoked in the past month,\n"
++ "proceed to the next question starting with \"If no, ...\".");
+   }
+   else if (arg == "dlc") {
+      return(
+"For this question, please use the pull-down menus for DD (date) and\n"
++ "Mmm (month) if the subject knows the exact date and month they quit\n"
++ "smoking cigarettes.  If they cannot remember exactly the date and/or\n"
++ "month in which they quit, a \"-\" (dash) may be inserted for the DD\n"
++ "(date) and/or Mmm (month) only.  The YYYY (year) is a required field\n"
++ "and must be entered.");
+   }
+   else if (arg == "fs") {
+      return(
+"Former smokers are defined as anyone who has not smoked cigarettes in\n"
++ "the past month.  Omit these questions if the patient has smoked in\n"
++ "the past month.");
+   }
+   else if (arg == "fsp") {
+      return(
+"Enter the average daily consumption in PPD (packs of cigarettes per\n"
++ "day) during the time the former smoker smoked.");
+   }
+   else if (arg == "fsd") {
+      return(
+"Enter the approximate number of years the patient smoked ciagrettes.");
+   }
+   else if (arg == "cs") {
+      return(
+"Current smokers are defined as anyone who has smoked cigarettes in\n"
++ "the past month.  Omit these questions if the patient has not smoked\n"
++ "in the past month.");
+   }
+   else if (arg == "csp") {
+      return(
+"This question refers to the average number of PPD (packs of\n"
++ "cigarettes per day) that were smoked during the time the subject\n"
++ "smoked.");
+   }
+   else if (arg == "csd") {
+      return(
+"Enter the approximate number of years the patient has smoked.");
+   }
+   else if (arg == "swu") {
+      return(
+"This question is asked to determine the level of nicotine dependence.\n"
++ "Use the pull-down menu to select the time interval that best fits.");
+   }
+   else if (arg == "qcd") {
+      return(
+"This question is asked to determine if the scheduling of a lung cancer\n"
++ "screening prompts a serious effort to quit or cut down cigarette\n"
++ "smoking.  It is important that they only answer \"yes\" if a serious\n"
++ "attempt has been made (quit for at least 24 hours).");
+   }
+   else if (arg == "ttq") {
+      return(
+"This question refers to the lifetime smoking history of the patient.\n"
++ "If they have tried to quit smoking at all during the time they smoked,\n"
++ "answer \"yes\"; if they NEVER tried, answer \"no\".  If they did try to\n"
++ "quit at least one time, please select the total number of times they\n"
++ "can remember trying to quit from the pull-down menu.");
+   }
+   else if (arg == "qly") {
+      return(
+"This question asks only how many times the participant has quit for 24\n"
++ "HOURS over the PAST YEAR.");
+   }
+   else if (arg == "qst") {
+      return(
+"This question is to determine at what stage of quitting the\n"
++ "participant is.  Please ask if they are seriously thinking of quitting\n"
++ "smoking and if yes, find out exactly when they plan to do so.  Select\n"
++ "the value in the pull-down menu that best matches the participant's\n"
++ "response.");
+   }
+   else if (arg == "cpd") {
+      return(
+"This question is to record whether smoking cessation information\n"
++ "has been given to the participant. If your institution does not\n"
++ "distribute such information to patients, click \"no\".");
+   }
+   else if (arg == "qrc") {
+      return(
+"This question is to determine the participant's perceived benefit of\n"
++ "quitting smoking.  Click the button that matches their response.  If\n"
++ "the participant refuses to answer the question, click the button\n"
++ "labeled \"RTA\" to indicate their refusal.");
+   }
+   else if (arg == "shc") {
+      return(
+"Using the space provided, you may enter any additional comments the\n"
++ "participant wishes to mention.  For example, he/she might mention that\n"
++ "they believe smoking non-filtered cigarettes for 20 years makes them\n"
++ "more at risk than others who may have smoked cigarettes with filters.\n"
++ "The space here is virtually unlimited.");
+   }
+   else if (arg == "ho") {
+      return(
+"This next series of questions relate to the participants' opinions of\n"
++ "their own health and how they believe their health compares to that of\n"
++ "others.  This section also asks why the participant was interested in\n"
++ "being screened for lung cancer.  These questions should be asked\n"
++ "face-to-face and, if necessary, explained in greater detail.");
+   }
+   else if (arg == "hamr") {
+      return(
+"Please type the specific main reason that the participant has decided\n"
++ "to have lung cancer screening in the text box.  Then, look at the choices\n"
++ "below and CODE/select which reason fits with their candid response.\n");
+   }
+   else if (arg == "hagr") {
+      return(
+"This question may be a bit confusing to the participant.  In order to\n"
++ "provide a more comprehensive explanation, we suggest telling them:\n"
++ "\"Compare your chances of getting lung cancer with other people in the\n"
++ "general population (smokers and non-smokers) that are the same age as\n"
++ "you and are the same sex as you.  Would you say that your risk is\n"
++ "'Much less than theirs, slightly less than theirs...or much more than\n"
++ "theirs?'\" Please answer the question by clicking on the button that\n"
++ "most closely matches their response.  If the participant refuses to\n"
++ "answer the question, click the button labeled \"RTA\" to indicate\n"
++ "their refusal.");
+   }
+   else if (arg == "hasr") {
+      return(
+"To explain this question better, tell them that this question is\n"
++ "identical to the last one, EXCEPT that now they are to compare their\n"
++ "chances of getting lung cancer to OTHER SMOKERS who are the SAME AGE\n"
++ "and SEX as they.  To answer, just click the button that most closely\n"
++ "reflects their response.  If the participant refuses to answer the\n"
++ "question, click the button labeled \"RTA\" to indicate their refusal.");
+   }
+   else if (arg == "hawc") {
+      return(
+"Please have the subject answer the above question expressing the\n"
++ "number of times (if at all) that they have thought of the possibility\n"
++ "of getting lung cancer over the past month.  This question may show\n"
++ "the degree of anxiety this person has about having lung cancer.  If\n"
++ "the participant refuses to answer the question, click the button\n"
++ "labeled \"RTA\" to indicate their refusal.");
+   }
+   else if (arg == "sf") {
+      return(
+"This is an abbreviated version of the SF-36(tm) Health Survey.  The\n"
++ "ELCAP has received permission to use it as part of our data\n"
++ "collection.  It is a short, 1-page, 2-minute survey form that has been\n"
++ "shown to yield summary physical and mental health outcome scores that\n"
++ "are inter-changeable with those from the SF-36(r) in both general and\n"
++ "specific populations.  This short-form, the SF-12(r), which was\n"
++ "published in early 1995, is already one of the most widely used\n"
++ "surveys of its kind.\n"
++ "\n"
++ "The coordinator may choose to ask these questions face-to-face, or\n"
++ "give the participant a copy to complete after they have signed consent\n"
++ "and answered all questions preceding this section.\n"
++ "\n"
++ "If you allow the participant to complete the form on their own, please\n"
++ "make sure they have filled in a bubble for each item.\n"
++ "\n"
++ "If the participant refuses to answer the survey, click the checkbox\n"
++ "labeled \"RTA\" following the instructions to indicate their refusal.");
+   }
+}
+
+
+// Stop hiding the code here -->
+</script>
+</head>
+
+<body onload="calcFI();" alink="#ff0000" text="#000000" vlink="#ff0000" link="#0000ff" bgcolor="#bfffbf">
+<table width="100%" bgcolor="#ffffcc"><form name="banner"></form><tbody><tr><th align="left"><font bold="" size="+2">VEP VA ELCAP Phoenix (VAPALS): </font></th><td align="right">Accessed by: <i>Administrator</i></td></tr></tbody></table><table width="100%" border="0" bgcolor="#ffffcc"><tbody><tr><td><input value="Return to Case Review" onclick="javascript:subS1( )" type="button"> 
+<input value="Return Home" onclick="javascript:subS2( )" type="button"> 
+<input value="Submit Form" onclick="javascript:errorCheck( )" type="button"> 
+<input value="Submit Form (PENDING)" onclick="javascript:subPend( )" type="button"> 
+</td><td align="right">08:18 AM MST November 21, 2017</td></tr></tbody></table><table width="100%" bgcolor="black"><tbody><tr><td><table width="100%" cellpadding="2" bgcolor="white"><tbody><tr><td width="33%">Study ID: <font size="+1"><b> VEP0001 </b></font></td><td align="center" width="33%"> Name (Last, First): <font size="+1"><b>Doe, Jane</b></font></td><td align="right" width="33%"> Medical Record Number: <font size="+1"><b>12345</b></font></td></tr></tbody></table></td></tr></tbody></table><form method="POST" action="/cgi-bin/datac/cform.cgi" name="cform"><input name="field" value="sid" type="hidden"> <input name="fguid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden"><input name="fginst" value="VEP" type="hidden"><input name="fvalue" value="VEP0001" type="hidden"></form>
+<form method="POST" action="/cgi-bin/datac/home.cgi" name="home"><input name="inst" value="VEP" type="hidden"><input name="uid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden"><input name="msg" value="Case Review Complete" type="hidden"></form>
+<script language="JavaScript">
+<!-- Code after this will be ignored by older browsers
+function subS1() { document.forms['cform'].submit() }
+function subS2() { document.forms['home'].submit() }
+// Stop hiding the code here -->
+</script>
+
+
+<form method="POST" action="/cgi-bin/datac/helper.cgi">
+<h1>Background Form<input src="Background%20Form_files/help.png" type="image">
+<input name="help" value="sbhelp" type="hidden">
+<input name="fgakey" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+<input name="fpfname" value="84@deAoCYzQAAF6ufdYAAAAM" type="hidden">
+<input name="fpinst" value="VEP" type="hidden">
+<input name="fpform" value="sbform" type="hidden">
+<input name="fpctime" value="Mon Jan 28 14:04:50 2013" type="hidden">
+<input name="fpmtime" value="Tue Aug 08 13:48:57 2017" type="hidden">
+<input name="fprhost" value="10.5.49.148" type="hidden">
+<input name="fpcname" value="AA" type="hidden">
+<input name="fpmname" value="Administrator" type="hidden">
+<input name="fpsbsid" value="VEP0001" type="hidden">
+</h1></form>
+<form method="POST" action="/cgi-bin/datac/datae.cgi" name="sback">
+
+<input name="sbsid" value="VEP0001" type="hidden">
+<input name="sbmph" type="hidden">
+<input name="sbqttqt" type="hidden">
+<input name="sbshsuo" type="hidden">
+<input name="sbhamrg" type="hidden">
+<input name="sbhamrj" type="hidden">
+<input name="sbhamrk" type="hidden">
+<input name="sbhamrl" type="hidden">
+<input name="sbhamrn" type="hidden">
+<input name="sbhamrq" type="hidden">
+<input name="sbhamrt" type="hidden">
+<input name="sbhamrw" type="hidden">
+<input name="sbhamrx" type="hidden">
+<input name="sbsps" type="hidden">
+<input name="sbahad" type="hidden">
+<input name="sbqly" type="hidden">
+<input name="sbahaob" type="hidden">
+<input name="sbahaod" type="hidden">
+<input name="sbssn" type="hidden">
+
+<input name="sbbps" value="" type="hidden">
+<input name="sbbpd" value="" type="hidden">
+<input name="sbbpp" value="" type="hidden">
+<input name="sbcrfi" value="10" type="hidden">
+<input name="sbcrfichd" value="11" type="hidden">
+<input name="sbcrfico" value="69 y.o. f Smoker" type="hidden">
+<input name="sbhcs" value="n" type="hidden">
+<input name="sbhcdsd" value="" type="hidden">
+<input name="sbhcpbs" value="" type="hidden">
+
+<input name="sbhcsm" value="n" type="hidden">
+<input name="sbhcdsdm" value="" type="hidden">
+<input name="sbmple" value="n" type="hidden">
+<input name="sbmpled" value="" type="hidden">
+<input name="sbmply" value="n" type="hidden">
+<input name="sbmplyd" value="" type="hidden">
+<input name="sbmpcp" value="n" type="hidden">
+<input name="sbmpcpc" value="Not in childhood, but a few yrs ago - maybe 2007 or 2008" type="hidden">
+<input name="sbmpcs" value="n" type="hidden">
+<input name="sbmpcsd" value="" type="hidden">
+<input name="sbmpcsw" value="" type="hidden">
+<input name="sbmpcsn" value="" type="hidden">
+<input name="sbmphcap" value="d" type="hidden">
+
+<input name="sbmpca" value="n" type="hidden">
+<input name="sbmpcaw" value="" type="hidden">
+
+<input name="sbmpcat" value="" type="hidden">
+<input name="sbmpan" value="n" type="hidden">
+<input name="sbmpand" value="" type="hidden">
+<input name="sbmpanw" value="" type="hidden">
+<input name="sbmpcf" value="n" type="hidden">
+<input name="sbmpcfd" value="" type="hidden">
+<input name="sbmpcfw" value="" type="hidden">
+<input name="sbmpul" value="n" type="hidden">
+<input name="sbmptd" value="n" type="hidden">
+<input name="sbmpos" value="" type="hidden">
+<input name="sbmpo" value="q" type="hidden">
+
+<input name="sbme" value="y" type="hidden">
+<input name="sbmeos" value="" type="hidden">
+<input name="sbmep" value="q" type="hidden">
+<input name="sbmepos" value="" type="hidden">
+<input name="sbwcc" value="" type="hidden">
+<input name="sbwcp" value="" type="hidden">
+<input name="sbwcw" value="" type="hidden">
+<input name="sbwcn" value="" type="hidden">
+<input name="sbacx" value="c" type="hidden">
+<input name="sbahxl" value="" type="hidden">
+
+<input name="sbfcwl1" value="bf" type="hidden">
+<input name="sbfcw1" value="" type="hidden">
+<input name="sbfca1" value="76" type="hidden">
+<input name="sbfcay1" value="1986" type="hidden">
+<input name="sbfcad1" value="y" type="hidden">
+<input name="sbfcwl2" value="-" type="hidden">
+<input name="sbfcw2" value="" type="hidden">
+<input name="sbfca2" value="" type="hidden">
+<input name="sbfcay2" value="" type="hidden">
+<input name="sbfcad2" value="" type="hidden">
+<input name="sbfcwl3" value="-" type="hidden">
+<input name="sbfcw3" value="" type="hidden">
+<input name="sbfca3" value="" type="hidden">
+<input name="sbfcay3" value="" type="hidden">
+<input name="sbfcad3" value="" type="hidden">
+
+<input name="sbahhd" value="" type="hidden">
+<input name="sbahada" value="" type="hidden">
+<input name="sbahfa" value="n" type="hidden">
+<input name="sbahfay" value="" type="hidden">
+<input name="sbahfaal" value="" type="hidden">
+<input name="sbahfaa" value="" type="hidden">
+<input name="sbahfaat" value="" type="hidden">
+<input name="sbahfafh" value="" type="hidden">
+
+<input name="sbshsue" value="e" type="hidden">
+<input name="sbshsua" value="" type="hidden">
+<input name="sbshsum" value="" type="hidden">
+<input name="sbshsup" value="" type="hidden">
+<input name="sbshsuc" value="" type="hidden">
+<input name="sbshcua" value="c" type="hidden">
+<input name="sbshcup" value="c" type="hidden">
+<input name="sbshcum" value="c" type="hidden">
+<input name="sbshcuc" value="c" type="hidden">
+
+<input name="sbswu" value="-" type="hidden">
+<input name="sbsqcd" value="" type="hidden">
+<input name="sbqpa" value="" type="hidden">
+<input name="sbshco" value="" type="hidden">
+<input name="sbhamr" value="" type="hidden">
+
+<input name="sbhamra" value="" type="hidden">
+<input name="sbhamry" value="" type="hidden">
+<input name="sbhamrb" value="" type="hidden">
+<input name="sbhamrc" value="" type="hidden">
+<input name="sbhamrd" value="" type="hidden">
+<input name="sbhamre" value="e" type="hidden">
+<input name="sbhamrf" value="" type="hidden">
+<input name="sbhamrh" value="" type="hidden">
+<input name="sbhamri" value="" type="hidden">
+<input name="sbhamrm" value="" type="hidden">
+<input name="sbhamro" value="" type="hidden">
+<input name="sbhamrp" value="" type="hidden">
+<input name="sbhamrr" value="" type="hidden">
+<input name="sbhamrs" value="" type="hidden">
+<input name="sbhamru" value="" type="hidden">
+<input name="sbhamrv" value="" type="hidden">
+<input name="sbhamrw" value="" type="hidden">
+
+<input name="sbmphcma" value="a" type="hidden">
+<input name="sbmphcmb" value="-" type="hidden">
+<input name="sbmphcmc" value="-" type="hidden">
+<input name="sbmphcmd" value="-" type="hidden">
+<input name="sbmphcme" value="-" type="hidden">
+<input name="sbmphcmos" value="" type="hidden">
+
+
+
+
+<input name="sbqrc" value="2" type="hidden">
+<input name="sbhawc" value="4" type="hidden">
+<input name="sbhagr" value="5" type="hidden">
+<input name="sbhasr" value="3" type="hidden">
+<input name="sbsf1" value="3" type="hidden">
+<input name="sbsf2" value="2" type="hidden">
+<input name="sbsf3" value="2" type="hidden">
+<input name="sbsf4" value="4" type="hidden">
+<input name="sbsf5" value="4" type="hidden">
+<input name="sbsf6" value="3" type="hidden">
+<input name="sbsf7" value="3" type="hidden">
+<input name="sbsf8" value="2" type="hidden">
+<input name="sbsf9" value="3" type="hidden">
+<input name="sbsf10" value="4" type="hidden">
+<input name="sbsf11" value="3" type="hidden">
+<input name="sbsf12" value="4" type="hidden">
+<input name="sbpsf1" value="7" type="hidden">
+<input name="sbpsf2" value="7" type="hidden">
+<input name="sbpsf3" value="7" type="hidden">
+<input name="sbpsf4" value="6" type="hidden">
+
+<input name="sbswppd" value="" type="hidden">
+<input name="sbqlyb" value="-" type="hidden">
+<input name="sbsf0a" value="2" type="hidden">
+<input name="sbsf0b" value="1" type="hidden">
+<input name="sbwc" value="n" type="hidden">
+
+<input name="sbim" value="" type="hidden">
+
+
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+
+<td><b>Visit date</b>
+<a href="javascript:jshp('dop')"><img src="Background%20Form_files/help.png" alt="Help" width="16" height="16" border="0"></a>
+<br>(DD/Mmm/YYYY)</td>
+<td><input name="sbdop" onchange="synChk('sbdop','rdate'); calcFI();" size="11" value="01/Jan/2013" type="text"></td>
+
+<td align="left"> &nbsp;</td>
+<td> &nbsp; </td>
+</tr>
+
+<tr>
+<td><b>Date of Birth</b> (DD/Mmm/YYYY)</td>
+<td>
+<input name="sbdob" onchange="synChk('sbdob','adate'); calcFI();" size="11" value="01/Jan/1950" type="text">
+</td>
+<td><b>Age</b>&nbsp;<input name="sbage" onfocus="this.blur()" size="4" value="63" type="text"></td>
+<td>&nbsp;</td>
+
+
+<!--
+<TD align=left><B>SSN</B>
+<A HREF="javascript:jshp('ssn')"><img src="/images/help.png" alt="Help" height=10 width=5 border=0></A></TD>
+<TD><input type=text name="sbssn" onChange="synChk('sbssn','ssn')" size=12></TD>
+-->
+</tr>
+<tr>
+
+<td><b>Occupation</b>
+<a href="javascript:jshp('occ')"><img src="Background%20Form_files/help.png" alt="Help" width="16" height="16" border="0"></a><br>(If retired, also indicate previous occupation)</td>
+<td><input name="sbocc" onchange="synChk('sbocc','cws')" size="32" value="Retired " type="text"></td>
+<td>Occupation Code&nbsp;
+<a href="javascript:jshp('occc')"><img src="Background%20Form_files/help.png" alt="Help" width="16" height="16" border="0"></a>
+<select name="sboccc">
+<option value="-" selected="selected"> -
+</option><option value="1"> Higher executives
+</option><option value="2"> Business managers
+</option><option value="3"> Administrative Personnel
+</option><option value="4"> Clerical/Sales workers
+</option><option value="5"> Skilled Manual Employees
+</option><option value="6"> Machine Operators
+</option><option value="7"> Unskilled Employees
+</option><option value="8"> Unemployed
+</option></select></td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td><b>Sex</b></td>
+<td>
+<input name="hvsbsex" value="f" type="hidden">
+<label>
+<input name="sbsex" value="m" onclick="calcFI()" type="radio"> M
+</label>
+<label>
+<input name="sbsex" value="f" onclick="calcFI()" checked="checked" type="radio"> F
+</label>
+</td>
+
+<td>
+<table cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td>
+<b>Height</b> <a href="javascript:jshp('htwt')"><img src="Background%20Form_files/help.png" alt="Help" width="16" height="16" border="0"></a>
+ &nbsp;
+<input name="sbph" onchange="synChk('sbph','pnum')" size="3" value="60" type="text"></td>
+<td>
+<input name="hvsbphu" value="i" type="hidden">
+<label>
+<input name="sbphu" value="i" checked="checked" type="radio"> in
+</label>
+<br>
+<label>
+<input name="sbphu" value="c" type="radio"> cm
+</label>
+</td>
+<td><b>Weight</b> &nbsp;
+<input name="sbpw" onchange="synChk('sbpw','pnum')" size="3" value="200" type="text"></td>
+<td>
+<input name="hvsbpwu" value="p" type="hidden">
+<label>
+<input name="sbpwu" value="p" onclick="calcBMI()" checked="checked" type="radio"> lbs
+</label>
+<br>
+<label>
+<input name="sbpwu" value="k" onclick="calcBMI()" type="radio"> kg
+</label>
+</td>
+</tr>
+</tbody></table>
+</td>
+<td><b>BMI</b>
+<a href="javascript:jshp('bmi')"><img src="Background%20Form_files/help.png" alt="Help" width="16" height="16" border="0"></a>
+<input name="sbbmi" size="5" onfocus="document.forms[FNAME].elements['sbrcs'].focus()" value="39.1" type="text">
+</td></tr>
+
+<!--
+<TR>
+<TD><B>Blood Pressure<BR>(systolic/diastolic)</B></TD>
+
+<TD colspan=3>
+<TABLE>
+<TD><input type=text name="sbbps" onChange="synChk('sbbps','pnum'); calcFI();" size=5> /</TD>
+<TD><input type=text name="sbbpd" onChange="synChk('sbbpd','pnum'); calcFI();" size=5></TD>
+<TD>
+<B>&nbsp; Pulse</B>
+<input type=text name="sbbpp" onChange="synChk('sbbpp','pnum')" size=5>
+</TD></TR></TABLE>
+</TD>
+</TR>
+
+<TR>
+<TD><B>Framingham Index<BR>(Partial)</B></TD>
+<TD>
+<input type=text name="sbcrfi" onFocus="this.blur()" size=5 value="10">
+<B>10 Year CHD Risk</B>
+<input type=text name="sbcrfichd" onFocus="this.blur()" size=3 value="11">
+%
+</TD>
+<TD colspan=2>
+<input type=text name="sbcrfico" onFocus="this.blur()" size=40 value="69 y.o. f Smoker">
+</TD>
+</TR>
+-->
+
+<tr>
+<td><b>Ethnicity</b></td>
+<td align="left"><select name="sbet">
+<option value="-"> -
+</option><option value="y"> Hispanic or Latino
+</option><option value="n" selected="selected"> Not Hispanic or Latino
+</option></select></td>
+<td><b>Race</b>&nbsp;
+<a href="javascript:jshp('rc')"><img src="Background%20Form_files/help.png" alt="Help" width="16" height="16" border="0"></a>&nbsp;
+<select name="sbrc">
+<option value="-"> -
+</option><option value="i"> American Indian
+</option><option value="k"> Alaska Native
+</option><option value="a"> Asian
+</option><option value="p"> Native Hawaiian or Other Pacific Islander
+</option><option value="b"> Black or African American
+</option><option value="w" selected="selected"> White
+</option><option value="t"> Two or more
+</option><option value="o"> Other (Specify)
+</option></select>
+</td>
+<td>
+<b>Other (specify)</b>
+<font size="+0"><input name="sbrcs" onchange="synChk('sbrcs','cws')" size="24" type="text"></font>
+</td>
+</tr>
+
+<tr>
+<td><b>Level of Education</b>
+</td><td align="left"><select name="sbed">
+<option value="-"> -
+</option><option value="n"> did not complete high school
+</option><option value="hs"> completed high school
+</option><option value="sc"> started college
+</option><option value="ts"> completed trade school
+</option><option value="ad"> completed 2-year college degree
+</option><option value="bd"> completed 4-year college degree
+</option><option value="gd" selected="selected"> advanced degree (e.g. Master's, J.D., M.D., Ph.D.)
+</option></select>
+</td>
+<td colspan="2"><b>Served in the military?</b>
+<input name="hvsbmly" value="n" type="hidden">
+<input name="sbmly" value="n" checked="checked" type="radio">
+&nbsp;no&nbsp;
+<input name="sbmly" value="y" type="radio">
+&nbsp;yes.
+If yes, what branch:
+<input name="sbmlyo" size="20" type="text">
+</td>
+</tr>
+</tbody></table>
+
+<!--
+<HR>
+-->
+<br>
+
+<h2>Ordering Information</h2>
+<table cellspacing="4" cellpadding="2">
+<tbody><tr>
+<td colspan="4" align="left" valign="top">
+<p>Ordering information is <b>required</b> for all patients undergoing a screening exam using the G0297 code.</p>
+</td>
+</tr>
+<!--
+<TR>
+<TD colspan=2><B>Is this patient using Medicare/Medicaid insurance for this visit?</B></TD>
+<TD>
+<input type=hidden name="hvsbim" value="">
+<label>
+<input type=radio name="sbim" value="n">&nbsp;no
+</label>
+<label>
+<input type=radio name="sbim" value="y">&nbsp;yes
+</label>
+</TD>
+<TD>(if no, the rest of the questions in this section are optional)</TD>
+</TR>
+-->
+<!--
+<TR>
+<TD colspan=2><B>If yes, does this patient meet the screening eligibility requirements for Medicare/Medicaid?</TD>
+<TD>
+<input type=hidden name="hvsbmeq" value="n">
+<label>
+<input type=radio name="sbmeq" value="n" CHECKED>&nbsp;no
+</label>
+<label>
+<input type=radio name="sbmeq" value="y">&nbsp;yes
+</label>
+</TD>
+<TD>(if no, the rest of the questions in this section are optional)</TD>
+</TR>
+-->
+<tr>
+<td><b>Was a CT lung screening scan ordered for this patient (CPT code G0297)?</b></td>
+<td>
+<input name="hvsbmeq" value="n" type="hidden">
+<label>
+<input name="sbmeq" value="n" checked="checked" type="radio">&nbsp;no
+</label>
+<label>
+<input name="sbmeq" value="y" type="radio">&nbsp;yes
+</label>
+</td>
+<td colspan="2">(if no, the rest of the questions in this section are optional)</td>
+</tr>
+<tr>
+<td><b>Ordered by: First Name</b></td>
+<td>
+<input name="sbopfn" size="24" type="text">
+</td>
+<td><b>Last name</b></td>
+<td>
+<input name="sbopln" size="24" type="text">
+</td>
+</tr>
+<tr>
+<td><b>National Provider ID (NPI)</b></td>
+<td>
+<input name="sbopnpi" size="12" onchange="synChk('sbopnpi','pnum')" type="text">
+</td>
+<td colspan="2"><a href="#" onclick="openPopUpWindow()">Search</a>
+</td>
+</tr>
+<tr>
+<td align="left"><b>Documentation of shared decision making</b></td>
+<td colspan="3">
+<input name="hvsbdsd" value="" type="hidden">
+<label>
+<input name="sbdsd" value="n" type="radio">&nbsp;no
+</label>
+<label>
+<input name="sbdsd" value="y" type="radio">&nbsp;yes
+</label>
+&nbsp;&nbsp;(shared decision making is required for reimbursement for G0297 exams on baseline <b>only</b>)
+</td>
+<td colspan="2">&nbsp;</td>
+</tr>
+<tr>
+<td><b>Reported smoking status at time of order: </b></td>
+<td>
+<input name="hvsbopss" value="" type="hidden">
+<label>
+<input name="sbopss" value="c" type="radio">
+&nbsp;current
+</label>
+<label>
+<input name="sbopss" value="f" type="radio">
+&nbsp;former
+</label>
+</td>
+<td colspan="2"></td>
+</tr>
+<tr>
+<td><b>Reported pack years at time of order:</b></td>
+<td>
+<input name="sboppy" onchange="synChk('sboppy','pnum')" size="8" type="text">
+</td>
+<td colspan="2">&nbsp;</td>
+</tr>
+<tr>
+<td><b>Reported years since quit at time of order</b></td>
+<td colspan="2">
+<input name="sbopqy" onchange="synChk('sbopqy','pnum')" size="8" type="text">
+(only required for former smokers)
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td><b>Reported asymptomatic for lung cancer at time of order:</b></td>
+<td>
+<input name="hvsboas" value="" type="hidden">
+<label>
+<input name="sboas" value="n" type="radio">&nbsp;no
+</label>
+<label>
+<input name="sboas" value="y" type="radio">&nbsp;yes
+</label>
+</td>
+<td colspan="2">&nbsp;</td>
+</tr>
+<tr>
+<td><b>Clinical information</b> <br>
+(information will be copied to CT report)</td>
+<td colspan="4">
+<textarea name="sbopci" cols="40" rows="4">Annual scan
+</textarea>
+</td>
+</tr>
+</tbody></table>
+
+<br>
+
+
+<!--<span class="sectionhead">Medical Conditions</span>-->
+<h2>Medical Conditions
+<a href="javascript:jshp('mp')"><img src="Background%20Form_files/help.png" alt="Help" width="16" height="16" border="0"></a></h2>
+
+<!--
+<TR><TD><B>Please indicate if you have been diagnosed with any of the following conditions:</B>
+<BR>
+</TD></TR>
+-->
+
+
+
+<table class="uxassist noheading" cellspacing="0">
+
+<!--
+<TR><TD align=left>
+<B>Skin Cancer<br> &nbsp; &nbsp; Basal or Squamous Cell</B>
+</TD>
+<TD align=left valign=top width="20%">
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvsbhcs" value="n">
+<input type=radio name="sbhcs" value="n" CHECKED> no
+</TD><TD align=left valign=top>
+<input type=radio name="sbhcs" value="y"> yes
+</TD><TD align=left valign=top>
+<input type=radio name="sbhcs" value="q"> ?
+</TD></TR>
+</TABLE>
+</TD>
+<TD>
+<B>When diagnosed? (YYYY)</B>
+<input type=text name="sbhcdsd" onChange="synChk('sbhcdsd','ayear')" size=4>
+</TD>
+<TD>
+<B>What part of body?</B>
+<input type=text name="sbhcpbs" onChange="synChk('sbhcpbs','cws')" size=12>
+</TD>
+</TR>
+
+<TR><TD align=left>
+<B>&nbsp; &nbsp; Melanoma</B>
+</TD>
+<TD align=left valign=top width="20%">
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvsbhcsm" value="n">
+<input type=radio name="sbhcsm" value="n" CHECKED> no
+</TD><TD align=left valign=top>
+<input type=radio name="sbhcsm" value="y"> yes
+</TD><TD align=left valign=top>
+<input type=radio name="sbhcsm" value="q"> ?
+</TD></TR>
+</TABLE>
+</TD>
+<TD COLSPAN=2>
+<B>When diagnosed? (YYYY)</B>
+<input type=text name="sbhcdsdm" onChange="synChk('sbhcdsdm','ayear')" size=4>
+</TD>
+</TR>
+
+<TR><TD align=left><B>Leukemia</B></TD>
+<TD width="20%">
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvsbmple" value="n">
+<input type=radio name="sbmple" value="n" CHECKED> no
+</TD><TD align=left valign=top>
+<input type=radio name="sbmple" value="y"> yes
+</TD><TD align=left valign=top>
+<input type=radio name="sbmple" value="q"> ?
+</TD></TR></TABLE>
+</TD><TD COLSPAN=2>
+<B>When diagnosed? (YYYY)</B>
+<input type=text name="sbmpled" onChange="synChk('sbmpled','ayear')" size=4>
+</TD></TR>
+<TR><TD align=left><B>Lymphoma</B></TD>
+<TD>
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvsbmply" value="n">
+<input type=radio name="sbmply" value="n" CHECKED> no
+</TD><TD align=left valign=top>
+<input type=radio name="sbmply" value="y"> yes
+</TD><TD align=left valign=top>
+<input type=radio name="sbmply" value="q"> ?
+</TD></TR></TABLE>
+</TD><TD COLSPAN=2>
+<B>When diagnosed? (YYYY)</B>
+<input type=text name="sbmplyd" onChange="synChk('sbmplyd','ayear')" size=4>
+</TD></TR>
+-->
+
+<tbody><tr>
+<td align="left" width="15%">
+<!--
+<A HREF="javascript:jshp('fhlc')"><img src="/images/help.png" alt="Help" height=10 width=5 border=0></A>
+-->
+<b>Family history of lung cancer?</b>
+</td><td>
+<input name="hvsbfc" value="n" type="hidden">
+<label>
+<input name="sbfc" value="n" checked="checked" type="radio"> no
+</label>
+<label>
+<input name="sbfc" value="y" type="radio"> yes
+</label>
+<label>
+<input name="sbfc" value="q" type="radio"> ?
+</label>
+</td>
+
+<td>
+Father?
+<input name="hvsbfcf" value="" type="hidden">
+<label>
+<input name="sbfcf" value="n" type="radio"> no
+</label>
+<label>
+<input name="sbfcf" value="y" type="radio"> yes
+</label>
+<br>
+Mother?
+<input name="hvsbfcm" value="" type="hidden">
+<label>
+<input name="sbfcm" value="n" type="radio"> no
+</label>
+<label>
+<input name="sbfcm" value="y" type="radio"> yes
+</label>
+<br>
+Siblings?
+<input name="hvsbfcs" value="" type="hidden">
+<label>
+<input name="sbfcs" value="n" type="radio"> no
+</label>
+<label>
+<input name="sbfcs" value="y" type="radio"> yes
+</label>
+</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr><td align="left" width="15%"><b>Any Cancer</b></td>
+<td align="left" width="20%" valign="top">
+<table cellspacing="0" cellpadding="0">
+<tbody><tr><td align="left" valign="top">
+<input name="hvsbhco" value="n" type="hidden">
+<label>
+<input name="sbhco" value="n" checked="checked" type="radio"> no
+</label>
+</td><td align="left" valign="top">
+<label>
+<input name="sbhco" value="y" type="radio"> yes
+</label>
+</td><td align="left" valign="top">
+<label>
+<input name="sbhco" value="q" type="radio"> ?
+</label>
+</td></tr>
+</tbody></table>
+</td>
+<td>
+<b>When? (YYYY)</b>
+<input name="sbhcdod" onchange="synChk('sbhcdod','ayear')" size="4" type="text">
+</td>
+<td>
+<b>Primary site?</b>
+<input name="sbhcpbo" onchange="synChk('sbhcpbo','cws')" size="12" type="text">
+</td>
+</tr>
+<tr><td align="left" width="15%"><b>Asthma</b></td>
+<td align="left" width="20%" valign="top">
+<table cellspacing="0" cellpadding="0">
+<tbody><tr><td align="left" valign="top">
+<input name="hvsbmpa" value="n" type="hidden">
+<label>
+<input name="sbmpa" value="n" checked="checked" type="radio"> no
+</label>
+</td><td align="left" valign="top">
+<label>
+<input name="sbmpa" value="y" type="radio"> yes
+</label>
+</td><td align="left" valign="top">
+<label>
+<input name="sbmpa" value="q" type="radio"> ?
+</label>
+</td></tr>
+</tbody></table>
+</td><td colspan="2">
+<b>Under current treatment?</b>
+<input name="hvsbmpat" value="" type="hidden">
+<label>
+<input name="sbmpat" value="n" type="radio"> no
+</label>
+<label>
+<input name="sbmpat" value="y" type="radio"> yes
+</label>
+</td>
+</tr>
+<!--
+<TR><TD align=left width="15%"><B>Pneumonia in childhood?</B></TD>
+<TD align=left valign=top width="20%">
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvsbmpcp" value="n">
+<input type=radio name="sbmpcp" value="n" CHECKED> no
+</TD><TD align=left valign=top>
+<input type=radio name="sbmpcp" value="y"> yes
+</TD><TD align=left valign=top>
+<input type=radio name="sbmpcp" value="q"> ?
+</TD></TR></TABLE>
+<TD colspan=2><B>Comments:</B>
+<input type=text name="sbmpcpc" onChange="synChk('sbmpcpc','cws')" size=60 value="Not in childhood, but a few yrs ago - maybe 2007 or 2008">
+</TD></TR>
+-->
+<tr><td align="left" valign="top"><b>Emphysema or Chronic Bronchitis(COPD)?</b></td>
+<td width="20%">
+<table cellspacing="0" cellpadding="0">
+<tbody><tr><td align="left" valign="top">
+<input name="hvsbmpc" value="y" type="hidden">
+<label>
+<input name="sbmpc" value="n" type="radio"> no
+</label>
+</td><td align="left" valign="top">
+<label>
+<input name="sbmpc" value="y" checked="checked" type="radio"> yes
+</label>
+</td><td align="left" valign="top">
+<label>
+<input name="sbmpc" value="q" type="radio"> ?
+</label>
+</td></tr></tbody></table>
+</td><td>
+<b>When? (YYYY)</b>
+<input name="sbmpcw" onchange="synChk('sbmpcw','ayear')" size="4" value="2010" type="text">
+</td>
+<td> &nbsp;</td></tr>
+
+<tr><td align="left" width="15%"><b>High Blood Pressure</b></td>
+<td width="20%">
+<table cellspacing="0" cellpadding="0">
+<tbody><tr><td align="left" valign="top">
+<input name="hvsbmpht" value="n" type="hidden">
+<label>
+<input name="sbmpht" value="n" checked="checked" type="radio"> no
+</label>
+</td><td align="left" valign="top">
+<label>
+<input name="sbmpht" value="y" type="radio"> yes
+</label>
+</td><td align="left" valign="top">
+<label>
+<input name="sbmpht" value="q" type="radio"> ?
+</label>
+</td></tr></tbody></table>
+</td><td colspan="2">
+<table cellspacing="0" cellpadding="0"><tbody><tr>
+<td><b>Treated?</b>
+<input name="hvsbmphtt" value="" type="hidden">
+<label>
+<input name="sbmphtt" value="n" type="radio"> no
+</label>
+<label>
+<input name="sbmphtt" value="y" type="radio"> yes
+</label>
+</td><td>
+<b>&nbsp; &nbsp; Since When? (YYYY)</b>
+<input name="sbmphtsw" onchange="synChk('sbmphtsw','ayear')" size="4" type="text">
+</td><td>
+<b>&nbsp; &nbsp;  Highest Value?</b>
+<input name="sbmphthv" onchange="synChk('sbmphthv','cws')" size="4" type="text">
+</td>
+</tr>
+</tbody></table>
+</td></tr>
+
+<tr><td align="left" width="15%"><b>High Cholesterol</b></td>
+<td width="20%">
+<table cellspacing="0" cellpadding="0">
+<tbody><tr><td align="left" valign="top">
+<input name="hvsbmphc" value="y" type="hidden">
+<label>
+<input name="sbmphc" value="n" type="radio"> no
+</label>
+</td><td align="left" valign="top">
+<label>
+<input name="sbmphc" value="y" checked="checked" type="radio"> yes
+</label>
+</td><td align="left" valign="top">
+<label>
+<input name="sbmphc" value="q" type="radio"> ?
+</label>
+</td></tr></tbody></table>
+</td><td colspan="2">
+<table cellspacing="0" cellpadding="0"><tbody><tr>
+<td><b>Treated?</b>
+<input name="hvsbmpct" value="y" type="hidden">
+<label>
+<input name="sbmpct" value="n" type="radio"> no
+</label>
+</td><td align="left" valign="top">
+<label>
+<input name="sbmpct" value="y" checked="checked" type="radio"> yes
+</label>
+</td></tr></tbody></table>
+<!--
+<B>Medications:</B>
+&nbsp;<table cellpadding="1" cellspacing="0">
+<tr>
+<td><b>HMG CoA Reductase Inhibitors&nbsp;</b>
+</td>
+<td><select name="sbmphcma">
+<option value="-"> -
+<option value="x"> ----------- None -----------
+<option value="a" SELECTED> Lipitor (atorvastatin)
+<option value="b"> Lescol (fluvastatin)
+<option value="c"> Mevacor (lovastatin)
+<option value="d"> Pravachol (pravastatin)
+<option value="e"> Zocor (simvastatin)
+<option value="f"> Crestor (rosuvastatin)
+</select></td></tr>
+<tr><td><b>Fibrates</b></td>
+<td>
+<select name="sbmphcmb">
+<option value="-" SELECTED> -
+<option value="x"> ----------- None -----------
+<option value="g"> Atromid (clofibrate)
+<option value="h"> Tricor (fenofibrate)
+<option value="i"> Lopid (gemifibrozil)
+</select></td></tr>
+<tr><td><b>Nicotinic Acid</b>
+</td><td>
+<select name="sbmphcmc">
+<option value="-" SELECTED> -
+<option value="x"> ----------- None -----------
+<option value="j"> Niaspan (niacin)
+</select></td></tr>
+<tr><td><b>Bile Acid Sequestrants</b></td><td>
+<select name="sbmphcmd">
+<option value="-" SELECTED> -
+<option value="x"> ----------- None -----------
+<option value="k"> Welcol (colesevelam)
+<option value="l"> Colestid (colestid)
+<option value="m"> Questran (cholestyramine)
+</select></td></tr>
+<tr><td><b>Cholesterol absorption inhibitor</b></td>
+<td><select name="sbmphcme">
+<option value="-" SELECTED> -
+<option value="x"> ----------- None -----------
+<option value="n"> Zetia (ezetimibe)
+</select>
+</td></tr>
+<tr><td><b>Other (specify):</b></td><td>
+<input type=text name="sbmphcmos" onChange="synChk('sbmphcmos','cws')" size=24>
+</td></tr>
+</TABLE>
+</TD></TR>
+-->
+<!--
+<TR><TD align=left width="15%"><B>Have you had a cholesterol screening?</B></TD>
+<TD width="20%">
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvsbmpcs" value="n">
+<input type=radio name="sbmpcs" value="n" CHECKED> no
+</TD><TD align=left valign=top>
+<input type=radio name="sbmpcs" value="y"> yes
+</TD><TD align=left valign=top>
+<input type=radio name="sbmpcs" value="q"> ?
+</TD></TR></TABLE>
+</TD><TD>
+<B>When? (YYYY)</B>
+<input type=text name="sbmpcsd" onChange="synChk('sbmpcsd','ayear')" size=4>
+</TD><TD>
+<B>Where?</B>
+<input type=text name="sbmpcsw" onChange="synChk('sbmpcsw','cws')" size=18>
+<br> <B>Doctor's Name?</B>
+<input type=text name="sbmpcsn" onChange="synChk('sbmpcsn','cws')" size=18>
+</TD>
+</TR>
+
+<TR><TD align=left width="15%"><B>How often do you take aspirin?</B></TD>
+<TD> &nbsp; </TD>
+<TD colspan=2><select name="sbmphcap">
+<option value="-"> -
+<option value="d" SELECTED> Daily
+<option value="w"> More than once a week
+<option value="l"> Less than once a week
+<option value="r"> Rarely, but less than once a month
+<option value="n"> Never
+</select>
+</TD></TR>
+
+<TR><TD align=left width="15%"><B>MI</B></TD>
+<TD width="20%">
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvsbmpmi" value="n">
+<input type=radio name="sbmpmi" value="n" CHECKED> no
+</TD><TD align=left valign=top>
+<input type=radio name="sbmpmi" value="y"> yes
+</TD><TD align=left valign=top>
+<input type=radio name="sbmpmi" value="q"> ?
+</TD></TR></TABLE>
+</TD><TD>
+<B>When? (YYYY)</B>
+<input type=text name="sbmpmid" onChange="synChk('sbmpmid','ayear')" size=4>
+</TD><TD>
+<B>Where treated?</B>
+<input type=text name="sbmpmiw" onChange="synChk('sbmpmiw','cws')" size=12>
+</TD>
+</TR>
+-->
+</td></tr><tr><td align="left" width="15%"><b>Had an angioplasty or Stent?</b></td>
+<td width="20%">
+<table cellspacing="0" cellpadding="0">
+<tbody><tr><td align="left" valign="top">
+<input name="hvsbmpas" value="n" type="hidden">
+<label>
+<input name="sbmpas" value="n" checked="checked" type="radio"> no
+</label>
+</td><td align="left" valign="top">
+<label>
+<input name="sbmpas" value="y" type="radio"> yes
+</label>
+</td><td align="left" valign="top">
+<label>
+<input name="sbmpas" value="q" type="radio"> ?
+</label>
+</td></tr></tbody></table>
+</td><td>
+<b>When? (YYYY)</b>
+<input name="sbmpasw" onchange="synChk('sbmpasw','ayear')" size="4" type="text">
+</td><td>
+<b>Where treated?</b>
+<input name="sbmpast" onchange="synChk('sbmpast','cws')" size="12" type="text">
+</td>
+</tr>
+<!--
+<TR><TD align=left width="15%"><B>Had a CABG?</B></TD>
+<TD width="20%">
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvsbmpca" value="n">
+<input type=radio name="sbmpca" value="n" CHECKED> no
+</TD><TD align=left valign=top>
+<input type=radio name="sbmpca" value="y"> yes
+</TD><TD align=left valign=top>
+<input type=radio name="sbmpca" value="q"> ?
+</TD></TR></TABLE>
+</TD><TD>
+<B>When? (YYYY)</B>
+<input type=text name="sbmpcaw" onChange="synChk('sbmpasw','ayear')" size=4>
+</TD><TD>
+<B>Where treated?</B>
+<input type=text name="sbmpcat" onChange="synChk('sbmpast','cws')" size=12>
+</TD>
+</TR>
+
+<TR><TD align=left width="15%"><B>Angina</B></TD>
+<TD width="20%">
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvsbmpan" value="n">
+<input type=radio name="sbmpan" value="n" CHECKED> no
+</TD><TD align=left valign=top>
+<input type=radio name="sbmpan" value="y"> yes
+</TD><TD align=left valign=top>
+<input type=radio name="sbmpan" value="q"> ?
+</TD></TR></TABLE>
+</TD><TD>
+<B>When? (YYYY)</B>
+<input type=text name="sbmpand" onChange="synChk('sbmpand','ayear')" size=4>
+</TD><TD>
+<B>Where treated?</B>
+<input type=text name="sbmpanw" onChange="synChk('sbmpanw','cws')" size=12>
+</TD></TR>
+<TR><TD align=left><B>Stroke</B></TD>
+<TD width="20%">
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvsbmps" value="n">
+<input type=radio name="sbmps" value="n" CHECKED> no
+</TD><TD align=left valign=top>
+<input type=radio name="sbmps" value="y"> yes
+</TD><TD align=left valign=top>
+<input type=radio name="sbmps" value="q"> ?
+</TD></TR></TABLE>
+</TD><TD>
+<B>When? (YYYY)</B>
+<input type=text name="sbmpsd" onChange="synChk('sbmpsd','ayear')" size=4>
+</TD><TD>
+<B>Where treated?</B>
+<input type=text name="sbmpsw" onChange="synChk('sbmps','cws')" size=12>
+</TD></TR>
+<TR><TD align=left width="15%"><B>Heart Failure</B></TD>
+<TD width="20%">
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvsbmpcf" value="n">
+<input type=radio name="sbmpcf" value="n" CHECKED> no
+</TD><TD align=left valign=top>
+<input type=radio name="sbmpcf" value="y"> yes
+</TD><TD align=left valign=top>
+<input type=radio name="sbmpcf" value="q"> ?
+</TD></TR></TABLE>
+</TD><TD>
+<B>When? (YYYY)</B>
+<input type=text name="sbmpcfd" onChange="synChk('sbmphcfd','ayear')" size=4>
+</TD><TD>
+<B>Where treated?</B>
+<input type=text name="sbmpcfw" onChange="synChk('sbmpcfw','cws')" size=12>
+</TD></TR>
+<TR><TD align=left width="15%"><B>Peripheral Vascular Disease</B> (Poor Circulation)</TD>
+<TD width="20%">
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvsbmppv" value="n">
+<input type=radio name="sbmppv" value="n" CHECKED> no
+</TD><TD align=left valign=top>
+<input type=radio name="sbmppv" value="y"> yes
+</TD><TD align=left valign=top>
+<input type=radio name="sbmppv" value="q"> ?
+</TD></TR></TABLE>
+</TD>
+<TD COLSPAN=2>&nbsp;</TD>
+</TR>
+-->
+<tr><td align="left" width="15%"><b>MI</b></td>
+<td width="20%">
+<table cellspacing="0" cellpadding="0">
+<tbody><tr><td align="left" valign="top">
+<input name="hvsbmpmi" value="n" type="hidden">
+<input name="sbmpmi" value="n" checked="checked" type="radio"> no
+</td><td align="left" valign="top">
+<input name="sbmpmi" value="y" type="radio"> yes
+</td><td align="left" valign="top">
+<input name="sbmpmi" value="q" type="radio"> ?
+</td></tr></tbody></table>
+</td><td>
+<b>When? (YYYY)</b>
+<input name="sbmpmid" onchange="synChk('sbmpmid','ayear')" size="4" type="text">
+</td><td>
+<b>Where treated?</b>
+<input name="sbmpmiw" onchange="synChk('sbmpmiw','cws')" size="12" type="text">
+</td>
+</tr>
+
+<tr><td align="left"><b>Stroke</b></td>
+<td width="20%">
+<table cellspacing="0" cellpadding="0">
+<tbody><tr><td align="left" valign="top">
+<input name="hvsbmps" value="n" type="hidden">
+<input name="sbmps" value="n" checked="checked" type="radio"> no
+</td><td align="left" valign="top">
+<input name="sbmps" value="y" type="radio"> yes
+</td><td align="left" valign="top">
+<input name="sbmps" value="q" type="radio"> ?
+</td></tr></tbody></table>
+</td><td>
+<b>When? (YYYY)</b>
+<input name="sbmpsd" onchange="synChk('sbmpsd','ayear')" size="4" type="text">
+</td><td>
+<b>Where treated?</b>
+<input name="sbmpsw" onchange="synChk('sbmps','cws')" size="12" type="text">
+</td></tr>
+
+<tr><td align="left" width="15%"><b>Peripheral Vascular Disease</b> (Poor Circulation)</td>
+<td width="20%">
+<table cellspacing="0" cellpadding="0">
+<tbody><tr><td align="left" valign="top">
+<input name="hvsbmppv" value="n" type="hidden">
+<input name="sbmppv" value="n" checked="checked" type="radio"> no
+</td><td align="left" valign="top">
+<input name="sbmppv" value="y" type="radio"> yes
+</td><td align="left" valign="top">
+<input name="sbmppv" value="q" type="radio"> ?
+</td></tr></tbody></table>
+</td>
+<td colspan="2">&nbsp;</td>
+</tr>
+
+
+<tr><td align="left"><b>Diabetes</b></td>
+<td width="20%">
+<table cellspacing="0" cellpadding="0">
+<tbody><tr><td align="left" valign="top">
+<input name="hvsbmpd" value="n" type="hidden">
+<input name="sbmpd" value="n" onclick="calcFI()" checked="checked" type="radio"> no
+</td><td align="left" valign="top">
+<input name="sbmpd" value="y" onclick="calcFI()" type="radio"> yes
+</td><td align="left" valign="top">
+<input name="sbmpd" value="q" onclick="calcFI()" type="radio"> ?
+</td></tr></tbody></table>
+</td><td>
+<b>Starting at what age?</b>
+<input name="sbmpdw" onchange="synChk('sbmpdw','cws')" size="4" type="text">
+</td><td>
+<b>Treated?</b>
+<input name="hvsbmpdt" value="" type="hidden">
+<input name="sbmpdt" value="n" type="radio"> no
+<input name="sbmpdt" value="y" type="radio"> yes
+</td>
+</tr>
+
+<tr><td align="left"><b>Liver Disease</b></td>
+<td width="20%">
+<table cellspacing="0" cellpadding="0">
+<tbody><tr><td align="left" valign="top">
+<input name="hvsbmpld" value="n" type="hidden">
+<input name="sbmpld" value="n" checked="checked" type="radio"> no
+</td><td align="left" valign="top">
+<input name="sbmpld" value="y" type="radio"> yes
+</td><td align="left" valign="top">
+<input name="sbmpld" value="q" type="radio"> ?
+</td></tr></tbody></table>
+</td><td colspan="2">
+<input name="hvsbmplds" value="" type="hidden">
+<input name="sbmplds" value="m" type="radio"> Mild
+<input name="sbmplds" value="s" type="radio"> Moderate/Severe
+</td></tr>
+<tr><td align="left"><b>Kidney (Renal) Disease</b></td>
+<td width="20%">
+<table cellspacing="0" cellpadding="0">
+<tbody><tr><td align="left" valign="top">
+<input name="hvsbmprd" value="n" type="hidden">
+<input name="sbmprd" value="n" checked="checked" type="radio"> no</td>
+<td align="left" valign="top">
+<input name="sbmprd" value="y" type="radio"> yes
+</td><td align="left" valign="top">
+<input name="sbmprd" value="q" type="radio"> ?
+</td></tr></tbody></table>
+</td>
+<td colspan="2">
+<input name="hvsbmprds" value="" type="hidden">
+<input name="sbmprds" value="m" type="radio"> Mild
+<input name="sbmprds" value="s" type="radio"> Moderate/Severe</td></tr>
+
+<!--
+<TR><TD align=left><B>Any surgery?</B></TD>
+<TD width="20%">
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvsbnbacs" value="">
+<input type=radio name=sbnbacs value="n">
+&nbsp;no&nbsp;
+<input type=radio name=sbnbacs value="y">
+&nbsp;yes,&nbsp;
+</TD></TR></TABLE>
+</TD><TD>
+If yes, specify:
+<input type=text name=sbnbacso size=20>
+</TD><TD>
+</TD>
+</TR>
+-->
+
+
+
+<!--
+<TR><TD align=left><B>Ulcer</B></TD>
+<TD width="20%">
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvsbmpul" value="n">
+<input type=radio name="sbmpul" value="n" CHECKED> no
+</TD><TD align=left valign=top>
+<input type=radio name="sbmpul" value="y"> yes
+</TD><TD align=left valign=top>
+<input type=radio name="sbmpul" value="q"> ?
+</TD></TR></TABLE>
+</TD>
+<TD COLSPAN=2>&nbsp;</TD>
+</TR>
+<TR><TD align=left><B>Liver Disease</B></TD>
+<TD width="20%">
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvsbmpld" value="n">
+<input type=radio name="sbmpld" value="n" CHECKED> no
+</TD><TD align=left valign=top>
+<input type=radio name="sbmpld" value="y"> yes
+</TD><TD align=left valign=top>
+<input type=radio name="sbmpld" value="q"> ?
+</TD></TR></TABLE>
+</TD><TD COLSPAN=2>
+<input type=hidden name="hvsbmplds" value="">
+<input type=radio name="sbmplds" value="m"> Mild
+<input type=radio name="sbmplds" value="s"> Moderate/Severe
+</TD></TR>
+<TR><TD align=left><B>Renal Disease</B></TD>
+<TD width="20%">
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvsbmprd" value="n">
+<input type=radio name="sbmprd" value="n" CHECKED> no</TD>
+<TD align=left valign=top>
+<input type=radio name="sbmprd" value="y"> yes
+</TD><TD align=left valign=top>
+<input type=radio name="sbmprd" value="q"> ?
+</TD></TR></TABLE>
+</TD>
+<TD COLSPAN=2>
+<input type=hidden name="hvsbmprds" value="">
+<input type=radio name="sbmprds" value="m"> Mild
+<input type=radio name="sbmprds" value="s"> Moderate/Severe</TD></TR>
+<TR><TD align=left><B>Connective Tissue Disease</B></TD>
+<TD width="20%">
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvsbmptd" value="n">
+<input type=radio name="sbmptd" value="n" CHECKED> no
+</TD><TD align=left valign=top>
+<input type=radio name="sbmptd" value="y"> yes
+</TD><TD align=left valign=top>
+<input type=radio name="sbmptd" value="q"> ?
+</TD></TR></TABLE>
+</TD>
+<TD COLSPAN=2>&nbsp;</TD>
+</TR>
+<TR><TD align=left valign=top><B>Other (specify)</B><BR>
+<input type=text name="sbmpos" onChange="synChk('sbmpos','cws')" size=24></TD>
+<TD>
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvsbmpo" value="q">
+<input type=radio name="sbmpo" value="n"> no
+</TD><TD align=left valign=top>
+<input type=radio name="sbmpo" value="y"> yes
+</TD><TD align=left valign=top>
+<input type=radio name="sbmpo" value="q" CHECKED> ?
+</TD></TR></TABLE>
+</TD>
+<TD COLSPAN=2>&nbsp;
+</TD></TR></TABLE>
+</TD></TR>
+-->
+</tbody></table>
+<!--
+<HR>
+-->
+<table cellspacing="0" cellpadding="1">
+<tbody><tr>
+<td><b>Have you experienced any symptoms indicative of lung cancer?
+<a href="javascript:jshp('wlc')"><img src="Background%20Form_files/help.png" alt="Help" width="16" height="16" border="0"></a>
+<input name="hvsblcs" value="n" type="hidden">
+<input name="sblcs" value="n" onclick="clearN(2)" checked="checked" type="radio"> no
+<input name="sblcs" value="y" type="radio"> yes
+(check all that apply)<br></b>
+<input name="hvsbwcb" value="" type="hidden">
+<label>
+<input name="sbwcb" value="b" type="checkbox"> cough producing bloody material
+</label>
+<br>
+<input name="hvsbwcl" value="" type="hidden">
+<label>
+<input name="sbwcl" value="l" type="checkbox"> unexplained weight loss greater than 20 lbs.
+</label>
+<br>
+<input name="hvsbwch" value="" type="hidden">
+<label>
+<input name="sbwch" value="h" type="checkbox"> unexplained hoarseness,
+</label>
+<br>
+<input name="hvsbwco" value="" type="hidden">
+<label>
+<input name="sbwco" value="o" type="checkbox"> other (specify)
+</label>
+<input name="sbwcos" onchange="synChk('sbwcos','cws')" size="60" type="text">
+</td></tr>
+
+<!--
+<TR>
+<TD>Have you taken any antibiotics within the past 6 months?
+<input type=hidden name="hvsbau" value="">
+<input type=radio name=sbau value="n">
+&nbsp;no&nbsp;
+<input type=radio name=sbau value="y">
+&nbsp;yes&nbsp;<br>
+If yes, when? (Mmm/YYYY)
+<input type=text name=sbaud size=10>
+&nbsp;For what?
+<input type=text name=sbaur size=20>
+</TD>
+</TR>
+<TR>
+<TD>Have you had any neck, back, abdominal, or chest surgeries?
+<input type=hidden name="hvsbnbacs" value="">
+<input type=radio name=sbnbacs value="n">
+&nbsp;no&nbsp;
+<input type=radio name=sbnbacs value="y">
+&nbsp;yes,&nbsp;
+if yes, specify:
+<input type=text name=sbnbacso size=20>
+</TD>
+</TR>
+-->
+</tbody></table>
+
+<table cellspacing="0" cellpadding="2">
+
+<tbody><tr>
+<td><b>When did you most recently have a chest CT?</b></td>
+<td>
+<select name="sbact">
+<option value="-" selected="selected"> -
+</option><option value="a"> less than 6 months ago
+</option><option value="b"> 6-18 months ago
+</option><option value="f"> 18 months to 3 years ago
+</option><option value="c"> 3 years to 5 years ago
+</option><option value="d"> over 5 years ago
+</option><option value="e"> never
+</option></select></td>
+<td align="right"><b>If so, where was the test done?</b></td>
+<td>
+<input name="sbahcl" onchange="synChk('sbahcl','cws')" size="32" type="text">
+</td></tr>
+</tbody></table>
+
+<!--
+<TABLE CELLSPACING=0 CELLPADDING=1>
+<TR><TD align=right width="50%"><B>If yes, have you seen a physician for this?</B></TD>
+<TD>
+<input type=hidden name="hvsbwcp" value="">
+<input type=radio name="sbwcp" value="n"> no
+<input type=radio name="sbwcp" value="y"> yes
+&nbsp; <B>Whom?</B>
+<input type=text name="sbwcw" onChange="synChk('sbwcw','cws')" size=24>
+</TD></TR>
+<TR><TD align=right><B>If yes, are you now experiencing them?</B></TD>
+<TD>
+<input type=hidden name="hvsbwcn" value="">
+<input type=radio name="sbwcn" value="n"> no
+<input type=radio name="sbwcn" value="y"> yes
+</TD></TR>
+</TABLE>
+<TABLE CELLSPACING=0 CELLPADDING=1>
+<TR>
+<TD><B>When did you most recently have a chest X-ray?</B></TD>
+<TD>
+<select name="sbacx">
+<option value="-"> -
+<option value="a"> less than 6 months ago
+<option value="b"> 6-18 months ago
+<option value="f"> 18 months to 3 years ago
+<option value="c" SELECTED> 3 years to 5 years ago
+<option value="d"> over 5 years ago
+<option value="e"> never
+</select></TD>
+</TR>
+<TR><TD align=right><B>If so, where was the test done?</B></TD>
+<TD><input type=text name="sbahxl" onChange="synChk('sbahxl','cws')" size=32>
+</TD></TR>
+<TR>
+<TD><B>When did you most recently have a chest CT?</B></TD>
+<TD>
+<select name="sbact">
+<option value="-" SELECTED> -
+<option value="a"> less than 6 months ago
+<option value="b"> 6-18 months ago
+<option value="f"> 18 months to 3 years ago
+<option value="c"> 3 years to 5 years ago
+<option value="d"> over 5 years ago
+<option value="e"> never
+</select></TD>
+</TR>
+<TR><TD align=right><B>If so, where was the test done?</B></TD>
+<TD><input type=text name="sbahcl" onChange="synChk('sbahcl','cws')" size=32>
+</TD></TR>
+</TABLE>
+-->
+<hr>
+<div class="question">
+<h3>Pulmonary Function Test Data</h3>
+
+<table cellspacing="0" cellpadding="4">
+<tbody><tr>
+<td align="left" width="50%">
+<a href="javascript:jshp('pft')"><img src="Background%20Form_files/help.png" alt="Help" width="16" height="16" border="0"></a>
+<b>Have you had a pulmonary function test within the last five years?</b>
+</td>
+<td>
+<input name="hvsbahpft" value="n" type="hidden">
+<input name="sbahpft" value="n" checked="checked" type="radio"> no
+<input name="sbahpft" value="y" type="radio"> yes
+</td>
+<td>&nbsp;&nbsp;if yes, date of PFT (DD/Mmm/YYYY)&nbsp;
+<input name="sbpftd" onchange="synChk('sbpftd','rdate');" size="11" type="text">
+</td>
+</tr>
+<tr><td>(Values are not required)</td></tr>
+</tbody></table>
+
+<table cellspacing="0" cellpadding="4">
+<tbody><tr>
+<td>FEV1 (L/s) &nbsp;
+<input name="sbfev1" onchange="synChk('sbfev1','pnum')" size="3" type="text"></td>
+<td></td>
+<td>FVC (L) &nbsp;
+<input name="sbfvc" onchange="calcFFR()" size="3" type="text"></td>
+<td></td>
+<td>FEV1/FVC (%)
+</td>
+<td><input name="sbffr" size="3" onfocus="document.forms[FNAME].elements['sbcop'].focus()" type="text">
+</td>
+<td>Diffusion Capacity (mL/min/mm Hg) &nbsp;
+<input name="sbcop" onchange="synChk('sbcop','pnum')" size="3" type="text"></td>
+</tr>
+</tbody></table>
+<hr>
+</div>
+
+<!--
+<FONT SIZE="+2">
+<B>Family History</B></FONT>
+
+<TABLE CELLSPACING=0 CELLPADDING=4 BORDER=1>
+<TR> <TD>
+-->
+<!--
+<span class="sectionhead">Family History</span>
+
+<TABLE CELLSPACING=0 CELLPADDING=2>
+<TR>
+<TD colspan=6>
+<A HREF="javascript:jshp('fhlc')"><img src="/images/help.png" alt="Help" height=16 width=16 border=0></A>
+<B>Family history of lung cancer?</B>
+<input type=hidden name="hvsbfc" value="n">
+<input type=radio name="sbfc" value="n" CHECKED> no
+<input type=radio name="sbfc" value="y"> yes
+<input type=radio name="sbfc" value="q"> ?
+</TD></TR>
+<TR>
+<TD> &nbsp; </TD>
+<TD><B>Which relative?</B></TD>
+<TD>Specify</TD>
+<TD align=center><B>Age <br>diagnosed</B></TD>
+<TD align=center><B>Year<br></B>(If Known)</TD>
+<TD align=center><B>Died from <br>the cancer?</B></TD>
+</TR>
+<TR><TD align=right><B>(1)</B>
+</TD><TD align=left>
+<select name="sbfcwl1">
+<option value="-"> -
+<option value="bm"> Biological Mother
+<option value="bf" SELECTED> Biological Father
+<option value="nm"> Non-Biological Mother
+<option value="nf"> Non-Biological Father
+<option value="si"> Sister
+<option value="br"> Brother
+<option value="ch"> Children
+<option value="mm"> Maternal Grandmother
+<option value="mf"> Maternal Grandfather
+<option value="pm"> Paternal Grandmother
+<option value="pf"> Paternal Grandfather
+<option value="ma"> Maternal Aunt
+<option value="pa"> Paternal Aunt
+<option value="mu"> Maternal Uncle
+<option value="pu"> Paternal Uncle
+<option value="os"> Other (specify)
+</select></TD>
+<TD align=left>
+<input type=text name="sbfcw1" onChange="synChk('sbfcw1','cws')" size=24>
+</TD><TD align=left>&nbsp;&nbsp;
+<input type=text name="sbfca1" onChange="synChk('sbfca1','age')" size=3 value="76">
+</TD><TD align=left>&nbsp;&nbsp;
+<input type=text name="sbfcay1" size=4 value="1986">
+</TD><TD>
+<input type=hidden name="hvsbfcad1" value="y">
+<input type=radio name="sbfcad1" value="n"> no
+<input type=radio name="sbfcad1" value="y" CHECKED> yes
+</TD></TR>
+<TR><TD align=right><B>(2)</B>
+</TD><TD align=left>
+<select name="sbfcwl2">
+<option value="-" SELECTED> -
+<option value="bm"> Biological Mother
+<option value="bf"> Biological Father
+<option value="nm"> Non-Biological Mother
+<option value="nf"> Non-Biological Father
+<option value="si"> Sister
+<option value="br"> Brother
+<option value="ch"> Children
+<option value="mm"> Maternal Grandmother
+<option value="mf"> Maternal Grandfather
+<option value="pm"> Paternal Grandmother
+<option value="pf"> Paternal Grandfather
+<option value="ma"> Maternal Aunt
+<option value="pa"> Paternal Aunt
+<option value="mu"> Maternal Uncle
+<option value="pu"> Paternal Uncle
+<option value="os"> Other (specify)
+</select></TD>
+<TD align=left>
+<input type=text name="sbfcw2" onChange="synChk('sbfcw1','cws')" size=24>
+</TD><TD align=left>&nbsp;&nbsp;
+<input type=text name="sbfca2" onChange="synChk('sbfca1','age')" size=3>
+</TD><TD align=left>&nbsp;&nbsp;
+<input type=text name="sbfcay2" size=4>
+</TD><TD>
+<input type=hidden name="hvsbfcad2" value="">
+<input type=radio name="sbfcad2" value="n"> no
+<input type=radio name="sbfcad2" value="y"> yes
+</TD></TR>
+<TR><TD align=right><B>(3)</B>
+</TD><TD align=left>
+<select name="sbfcwl3">
+<option value="-" SELECTED> -
+<option value="bm"> Biological Mother
+<option value="bf"> Biological Father
+<option value="nm"> Non-Biological Mother
+<option value="nf"> Non-Biological Father
+<option value="si"> Sister
+<option value="br"> Brother
+<option value="ch"> Children
+<option value="mm"> Maternal Grandmother
+<option value="mf"> Maternal Grandfather
+<option value="pm"> Paternal Grandmother
+<option value="pf"> Paternal Grandfather
+<option value="ma"> Maternal Aunt
+<option value="pa"> Paternal Aunt
+<option value="mu"> Maternal Uncle
+<option value="pu"> Paternal Uncle
+<option value="os"> Other (specify)
+</select></TD>
+<TD align=left>
+<input type=text name="sbfcw3" onChange="synChk('sbfcw3','cws')" size=24>
+</TD><TD align=left>&nbsp;&nbsp;
+<input type=text name="sbfca3" onChange="synChk('sbfca3','age')" size=3>
+</TD><TD align=left>&nbsp;&nbsp;
+<input type=text name="sbfcay3" size=4>
+</TD><TD>
+<input type=hidden name="hvsbfcad3" value="">
+<input type=radio name="sbfcad3" value="n"> no
+<input type=radio name="sbfcad3" value="y"> yes
+</TD></TR></TABLE>
+-->
+<!--
+</TD></TR>
+-->
+<!--
+<TR>
+<TD align=left><B>Have any of your children, brothers, sisters, or parents been diagnosed<BR>with heart disease when younger than 55 (for men) or 65 (for women)?</B>
+<A HREF="javascript:jshp('asb')"><img src="/images/help.png" alt="Help" height=10 width=5 border=0></A>
+<input type=hidden name="hvsbahhd" value="">
+<input type=radio name="sbahhd" value="n"> no
+<input type=radio name="sbahhd" value="y"> yes
+<input type=radio name="sbahhd" value="q"> ?
+</TD>
+</TR>
+
+
+
+-->
+<div class="question">
+<table class="question" cellpadding="2">
+<tbody><tr><td>
+<!--
+<span class="sectionhead">Occupational Exposure</span>
+-->
+<h2>Occupational Exposure</h2>
+</td></tr>
+
+<tr>
+<td align="left"><b>To your knowledge, have you been exposed to asbestos?</b>
+<a href="javascript:jshp('asb')"><img src="Background%20Form_files/help.png" alt="Help" width="16" height="16" border="0"></a></td><td>
+<input name="hvsbaha" value="n" type="hidden">
+<label>
+<input name="sbaha" value="n" onclick="clearN(1)" checked="checked" type="radio"> no
+</label>
+<label>
+<input name="sbaha" value="y" type="radio"> yes
+</label>
+</td>
+</tr>
+
+<!--
+<TD align=left><B>Cumulative time spent in these occupations</B>
+<A HREF="javascript:jshp('asbt')"><img src="/images/help.png" alt="Help" height=10 width=5 border=0></A></TD><TD>
+<input type=text name="sbahad" onChange="synChk('sbahad','cws')" size=24>
+</TD>
+
+<TD align=left><B>Year when first exposed to asbestos</B></TD>
+<TD>
+<input type=text name="sbahada" onChange="synChk('sbahada','cws')" size=24>
+</TD>
+</TR>
+-->
+
+<tr><td>
+<b>Have you ever worked in any of the following?</b>
+<a href="javascript:jshp('asbo')"><img src="Background%20Form_files/help.png" alt="Help" width="5" height="10" border="0"></a></td><td>
+<input name="hvsbahaoi" value="" type="hidden">
+<label>
+<input name="sbahaoi" value="i" type="checkbox"> asbestos product manufacturing
+</label>
+<input name="hvsbahaoj" value="" type="hidden">
+<label>
+<input name="sbahaoj" value="j" type="checkbox"> auto repair
+</label>
+<br>
+<input name="hvsbahaoh" value="" type="hidden">
+<label>
+<input name="sbahaoh" value="h" type="checkbox"> building maintenance
+</label>
+<input name="hvsbahaof" value="" type="hidden">
+<label>
+<input name="sbahaof" value="f" type="checkbox"> chemical industry/foundary/refinery
+</label>
+<br>
+<input name="hvsbahaoa" value="" type="hidden">
+<label>
+<input name="sbahaoa" value="a" type="checkbox"> construction/demolition
+</label>
+<input name="hvsbahaoe" value="" type="hidden">
+<label>
+<input name="sbahaoe" value="e" type="checkbox"> mining
+</label>
+<input name="hvsbahaog" value="" type="hidden">
+<label>
+<input name="sbahaog" value="g" type="checkbox"> nuclear industry
+</label>
+<br>
+<input name="hvsbahaoc" value="" type="hidden">
+<label>
+<input name="sbahaoc" value="c" type="checkbox"> ship construction/repair
+</label>
+<input name="hvsbahaoo" value="" type="hidden">
+<label>
+<input name="sbahaoo" value="o" type="checkbox"> other (e.g. clean up, toxic waste, chemical/radiation exposure)
+</label>
+</td></tr>
+
+<tr><td>&nbsp;</td>
+<td align="left"><b>If other, specify</b>
+<input name="sbahas" onchange="synChk('sbahas','cws')" size="32" type="text"></td>
+</tr>
+
+</tbody></table>
+</div>
+<!--
+</TABLE></TD></TR>
+-->
+
+<!--
+<TR>
+<TD align=left colspan=2>
+<FONT size="+2">
+<B>Secondhand Tobacco Smoke Exposure </B></FONT>
+
+<BR>
+
+-->
+<!--
+<TABLE CELLSPACING=0 CELLPADDING=3 border=0 width=100%>
+
+<TR>
+<TD align=left colspan=2>
+<TABLE cellpadding=0 border=1>
+<TABLE cellpadding=4>
+<TR><TD>
+<B>After age 18, did you work for more than one year in a worksite where smoking was allowed?</B></td><td>
+<input type=hidden name="hvsbsews" value="y">
+<input type=radio name="sbsews" value="n"> no
+<input type=radio name="sbsews" value="y" CHECKED> yes
+</TD></TR>
+-->
+<!--
+<TR>
+<TD align=left colspan=2><B>Did you ever work for more than one year in a job where you were exposed to other people's tobacco smoke?</B>
+<input type=hidden name="hvsbsehs" value="y">
+<input type=radio name="sbsehs" value="n"> no
+<input type=radio name="sbsehs" value="y" CHECKED> yes
+</TD></TR>
+
+<TR><TD colspan=2>
+<TABLE cellpadding=4 border=1>
+<TR>
+<TD align=center><B>Age Range</B> <I>(from Most Recent)</I> </TD>
+<TD align=center><B>Job</B></TD>
+<TD align=left><B>Smoking</B></TD>
+</TR>
+<TR>
+<TD><input type=text name="sbsehsa1" onChange="synChk('sbsehsa1','cws')" size=24 value="30-39"></TD>
+<TD><input type=text name="sbsehsj1" onChange="synChk('sbsehsj1','cws')" size=24 value="office"></TD>
+<TD><input type=hidden name="hvsbsehsr1" value="y">
+<input type=radio name="sbsehsr1" value="n"> not permitted
+<input type=radio name="sbsehsr1" value="r"> restricted
+<input type=radio name="sbsehsr1" value="y" CHECKED> allowed anywhere
+</TD>
+</TR>
+<TR>
+<TD><input type=text name="sbsehsa2" onChange="synChk('sbsehsa2','cws')" size=24 value="27-31"></TD>
+<TD><input type=text name="sbsehsj2" onChange="synChk('sbsehsj2','cws')" size=24 value="office"></TD>
+<TD><input type=hidden name="hvsbsehsr2" value="r">
+<input type=radio name="sbsehsr2" value="n"> not permitted
+<input type=radio name="sbsehsr2" value="r" CHECKED> restricted
+<input type=radio name="sbsehsr2" value="y"> allowed anywhere
+</TD>
+</TR>
+<TR>
+<TD><input type=text name="sbsehsa3" onChange="synChk('sbsehsa3','cws')" size=24 value="22-26"></TD>
+<TD><input type=text name="sbsehsj3" onChange="synChk('sbsehsj3','cws')" size=24 value="office"></TD>
+<TD><input type=hidden name="hvsbsehsr3" value="y">
+<input type=radio name="sbsehsr3" value="n"> not permitted
+<input type=radio name="sbsehsr3" value="r"> restricted
+<input type=radio name="sbsehsr3" value="y" CHECKED> allowed anywhere
+</TD>
+</TR>
+<TR>
+<TD><input type=text name="sbsehsa4" onChange="synChk('sbsehsa4','cws')" size=24></TD>
+<TD><input type=text name="sbsehsj4" onChange="synChk('sbsehsj4','cws')" size=24></TD>
+<TD><input type=hidden name="hvsbsehsr4" value="">
+<input type=radio name="sbsehsr4" value="n"> not permitted
+<input type=radio name="sbsehsr4" value="r"> restricted
+<input type=radio name="sbsehsr4" value="y"> allowed anywhere
+</TD>
+</TR>
+
+</TABLE>
+</TR></TD></TABLE>
+
+<TR><TD>
+<TABLE CELLPADDING=4 CELLSPACING=2 BORDER=0>
+<TR>
+<TD><B>Did you ever work as a flight attendant?</B></TD>
+<TD>
+<input type=hidden name="hvsbahfa" value="n">
+<input type=radio name="sbahfa" value="n" CHECKED> no
+<input type=radio name="sbahfa" value="y"> yes
+</TD></TR>
+<TR><TD><B>If yes, during what years?</B></TD>
+<TD><input type=text name="sbahfay" onChange="synChk('sbahfay','cws')" size=32></TD>
+</TR>
+<TR><TD><B>What airline(s)?</B></TD>
+<TD><input type=text name="sbahfaal" onChange="synChk('sbahfaal','cws')" size=32></TD>
+</TR>
+<TR>
+<TD><B>What ages did you fly different aircraft?</B> </TD>
+<TD>
+<TABLE>
+<TR>
+<TD>Age<input type=text name="sbahfaa" onChange="synChk('sbahfaa','cws')" size=24></TD>
+<TD>Aircraft Type<input type=text name="sbahfaat" onChange="synChk('sbahfaat','cws')" size=24></TD>
+<TD>How many flight hours per month<input type=text name="sbahfafh" onChange="synChk('sbahfafh','cws')" size=24></TD>
+</TR></TD></TABLE>
+</TD></TR></TABLE>
+</TABLE>
+
+</TD></TR></TABLE>
+-->
+<!--
+<FONT size="+2">
+<B>Smoking History</B></FONT>
+<FONT SIZE="+1"><B>(Pack-year calculation refers only to cigarettes.)</B></FONT>
+<B>Secondhand Tobacco Smoke Exposure / Household</B></FONT>
+
+<BR>
+-->
+<!--
+<TABLE CELLSPACING=0 CELLPADDING=3 border=1 width=100%>
+<TR><TD align=left><B>Did either of your parents smoke?</B>
+<A HREF="javascript:jshp('shs')"><img src="/images/help.png" alt="Help" height=16 width=16 border=0></A>
+<input type=hidden name="hvsbsps" value="">
+<input type=radio name="sbsps" value="n"> no
+<input type=radio name="sbsps" value="y"> yes
+</TD></TR>
+
+<TR><TD align=left><B>Did anyone in your house smoke in the home when you were under 18?</B>
+<A HREF="javascript:jshp('shs')"><img src="/images/help.png" alt="Help" height=16 width=16 border=0></A>
+<input type=hidden name="hvsbhsy" value="y">
+<input type=radio name="sbhsy" value="n"> no
+<input type=radio name="sbhsy" value="y" CHECKED> yes
+</TD></TR>
+
+<TR><TD align=left><B>Was smoking allowed inside the house?</B>
+<A HREF="javascript:jshp('shs')"><img src="/images/help.png" alt="Help" height=16 width=16 border=0></A>
+<input type=hidden name="hvsbhsyh" value="y">
+<input type=radio name="sbhsyh" value="n"> not permitted
+<input type=radio name="sbhsyh" value="r"> restricted
+<input type=radio name="sbhsyh" value="y" CHECKED> allowed anywhere
+</TD></TR>
+
+<TR><TD align=left><B>Did your mother/primary care giver smoke when you were under age 7?</B>
+<A HREF="javascript:jshp('shs')"><img src="/images/help.png" alt="Help" height=16 width=16 border=0></A>
+<input type=hidden name="hvsbmsy" value="y">
+<input type=radio name="sbmsy" value="n"> no
+<input type=radio name="sbmsy" value="y" CHECKED> yes
+</TD></TR>
+<TR><TD align=left><B>Did your mother/primary care giver smoke when you were ages 7-18?</B>
+<A HREF="javascript:jshp('shs')"><img src="/images/help.png" alt="Help" height=16 width=16 border=0></A>
+<input type=hidden name="hvsbmst" value="y">
+<input type=radio name="sbmst" value="n"> no
+<input type=radio name="sbmst" value="y" CHECKED> yes
+</TD></TR>
+<TR><TD align=left colspan=2><B>Did anyone else beside your mother/primary care giver smoke in the home when you were under 18?</B>
+ <A HREF="javascript:jshp('shs')"><img src="/images/help.png" alt="Help" height=16 width=16 border=0></A>
+<input type=hidden name="hvsbosy" value="n">
+<input type=radio name="sbosy" value="n" CHECKED> no
+<input type=radio name="sbosy" value="y"> yes
+</TD></TR>
+
+<TR><TD align=left><B>Do you currently live with a smoker?</B>
+<A HREF="javascript:jshp('shs')"><img src="/images/help.png" alt="Help" height=16 width=16 border=0></A>
+<input type=hidden name="hvsbslws" value="n">
+<input type=radio name="sbslws" value="n" CHECKED> no
+<input type=radio name="sbslws" value="y"> yes
+</TD></TR>
+
+<TR><TD align=left><B>After age 18, did you live with someone for more than one year who smoked in your presence?</B>
+<A HREF="javascript:jshp('shs')"><img src="/images/help.png" alt="Help" height=16 width=16 border=0></A>
+<input type=hidden name="hvsbhso" value="n">
+<input type=radio name="sbhso" value="n" CHECKED> no
+<input type=radio name="sbhso" value="y"> yes
+</TD></TR>
+<TR><TD>If yes,<B> at what ages  did you live with someone who smoked around you and how much did they smoke?</B> &nbsp; <I>(Most Recent First)</I></TD></TR>
+
+<TR><TD>
+<TABLE cellpadding=4 border=1>
+<TR>
+<TD align=center><B>Age Range</B></TD>
+<TD align=center><B>Amount</B></TD>
+<TD align=left><B>Smoking</B></TD>
+</TR>
+<TR>
+<TD><input type=text name="sbhsa1" onChange="synChk('sbhsa1','cws')" size=24></TD>
+<TD><select name="sbhsas1">
+<option value="-" SELECTED> -
+<option value="a"> 1-14 Cigarettes per day
+<option value="b"> 15-24 Cigarettes per day
+<option value="c"> 25+ Cigarettes per day
+<option value="d"> Don't Know
+</select>
+</TD>
+<TD><input type=hidden name="hvsbhsasr1" value="">
+<input type=radio name="sbhsasr1" value="n"> not permitted
+<input type=radio name="sbhsasr1" value="r"> restricted
+<input type=radio name="sbhsasr1" value="y"> allowed anywhere
+</TD>
+</TR>
+<TR>
+<TD><input type=text name="sbhsa2" onChange="synChk('sbhsa2','cws')" size=24></TD>
+<TD><select name="sbhsas2">
+<option value="-" SELECTED> -
+<option value="a"> 1-14 Cigarettes per day
+<option value="b"> 15-24 Cigarettes per day
+<option value="c"> 25+ Cigarettes per day
+<option value="d"> Don't Know
+</select>
+</TD>
+<TD><input type=hidden name="hvsbhsasr2" value="">
+<input type=radio name="sbhsasr2" value="n"> not permitted
+<input type=radio name="sbhsasr2" value="r"> restricted
+<input type=radio name="sbhsasr2" value="y"> allowed anywhere
+</TD>
+</TR>
+<TR>
+<TD><input type=text name="sbhsa3" onChange="synChk('sbhsa3','cws')" size=24></TD>
+<TD><select name="sbhsas3">
+<option value="-" SELECTED> -
+<option value="a"> 1-14 Cigarettes per day
+<option value="b"> 15-24 Cigarettes per day
+<option value="c"> 25+ Cigarettes per day
+<option value="d"> Don't Know
+</select>
+</TD>
+<TD><input type=hidden name="hvsbhsasr3" value="">
+<input type=radio name="sbhsasr3" value="n"> not permitted
+<input type=radio name="sbhsasr3" value="r"> restricted
+<input type=radio name="sbhsasr3" value="y"> allowed anywhere
+</TD>
+</TR>
+<TR>
+<TD><input type=text name="sbhsa4" onChange="synChk('sbhsa4','cws')" size=24></TD>
+<TD><select name="sbhsas4">
+<option value="-" SELECTED> -
+<option value="a"> 1-14 Cigarettes per day
+<option value="b"> 15-24 Cigarettes per day
+<option value="c"> 25+ Cigarettes per day
+<option value="d"> Don't Know
+</select>
+</TD>
+<TD><input type=hidden name="hvsbhsasr4" value="">
+<input type=radio name="sbhsasr4" value="n"> not permitted
+<input type=radio name="sbhsasr4" value="r"> restricted
+<input type=radio name="sbhsasr4" value="y"> allowed anywhere
+</TD>
+</TR>
+</TABLE></TD></TR>
+
+</TD></TR></TABLE>
+-->
+
+<div id="smoking-history">
+
+<section id="tobacco-use">
+<h2>
+<!--<span class="sectionhead">Tobacco Use</span>-->
+Tobacco Use
+<a href="javascript:jshp('sh')"><img src="Background%20Form_files/help.png" alt="Help" width="16" height="16" border="0"></a>
+</h2>
+
+<br>
+
+<table>
+<tbody><tr>
+<td align="left"><b>Have you smoked at least 100 cigarettes
+in your lifetime? (100 cigarettes = 5 packs)</b>
+<a href="javascript:jshp('sru')"><img src="Background%20Form_files/help.png" alt="Help" width="16" height="16" border="0"></a></td>
+<td><input name="hvsbsru" value="y" type="hidden">
+<input name="sbsru" value="n" onclick="calcFI()" type="radio"> no
+<input name="sbsru" value="y" onclick="calcFI()" checked="checked" type="radio"> yes
+</td></tr>
+
+<tr><td align="right">If no, were you exposed to secondhand smoke?</td>
+<td><input name="hvsbsruyn" value="" type="hidden">
+<input name="sbsruyn" value="n" type="radio"> no
+<input name="sbsruyn" value="y" type="radio"> yes
+</td></tr>
+<tr><td colspan="2" align="right">If yes, skip to the "Secondhand Tobacco Smoke Exposure" section.</td></tr>
+<!--
+<TR><TD align=left colspan=2>
+<B>What type of tobacco or other
+substances have you used/smoked? (click all that apply)</B>
+</TD><TR>
+<TR><TD colspan=2>
+<input type=hidden name="hvsbshsue" value="e">
+<input type=checkbox name="sbshsue" value="e" CHECKED> cigarettes
+<input type=hidden name="hvsbshsua" value="">
+<input type=checkbox name="sbshsua" value="a"> cigars
+<input type=hidden name="hvsbshsum" value="">
+<input type=checkbox name="sbshsum" value="m"> marijuana
+<input type=hidden name="hvsbshsup" value="">
+<input type=checkbox name="sbshsup" value="p"> pipes
+<input type=hidden name="hvsbshsuc" value="">
+<input type=checkbox name="sbshsuc" value="c"> smokeless tobacco (i.e. chewing tobacco, snuff, "dip")
+</TD></TR>
+
+<TR><TD align=left colspan=2><B>Do you now smoke cigars </B>
+<input type=hidden name="hvsbshcua" value="c">
+<input type=radio name="sbshcua" value="a"> every day,
+<input type=radio name="sbshcua" value="b"> some days,
+or
+<input type=radio name="sbshcua" value="c" CHECKED> not at all?
+</TD></TR>
+
+<TR><TD align=left colspan=2><B>Do you now smoke a pipe </B>
+<input type=hidden name="hvsbshcup" value="c">
+<input type=radio name="sbshcup" value="a"> every day,
+<input type=radio name="sbshcup" value="b"> some days,
+or
+<input type=radio name="sbshcup" value="c" CHECKED> not at all?
+</TD></TR>
+-->
+<!--
+<TR><TD align=left><B>Do you now smoke marijuana </B>
+<input type=hidden name="hvsbshcum" value="c">
+<input type=radio name="sbshcum" value="a"> every day,
+<input type=radio name="sbshcum" value="b"> some days,
+or
+<input type=radio name="sbshcum" value="c" CHECKED> not at all?
+</TD></TR>
+
+<TR><TD align=left><B>Do you now use chewing tobacco or snuff </B>
+<input type=hidden name="hvsbshcuc" value="c">
+<input type=radio name="sbshcuc" value="a"> every day,
+<input type=radio name="sbshcuc" value="b"> some days,
+or
+<input type=radio name="sbshcuc" value="c" CHECKED> not at all?
+</TD></TR>
+-->
+
+
+<!--
+<TR><TD>
+<FONT SIZE="+0" color="#ff2244">
+<B>If non-smoker &mdash;&gt; Go to Health Opinions</B></FONT>
+</TD></TR>
+
+<TR><TD align=left>&nbsp; &nbsp;</TD></TR>
+-->
+
+<tr><td align="left" valign="top">
+<b>About how old were you when you first started smoking cigarettes regularly?</b></td>
+<td>
+<input name="sbsas" onchange="synChk('sbsas','age')" size="6" value="18" type="text">
+</td>
+</tr>
+
+<tr><td>
+<b>Over the past month, have you smoked at all, even one cigarette?</b>
+<a href="javascript:jshp('shsa')"><img src="Background%20Form_files/help.png" alt="Help" width="16" height="16" border="0"></a></td>
+<td>
+<input name="hvsbshsa" value="n" type="hidden">
+<input name="sbshsa" value="n" checked="checked" type="radio"> no
+<input name="sbshsa" value="y" type="radio"> yes
+
+</td></tr>
+<!-- <TR><TD>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+<B>If yes, how many packs of cigarettes are you
+smoking per day (PPD)?</B>
+<BR>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (Use .05 for occasional smokers)</TD>
+<TD>
+<input type=text name="sbswppd" onChange="synChk('sbswppd','pnum')" size=6>
+</TD></TR>
+ -->
+
+<!--
+<TR><TD colspan=2>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;
+<TABLE BORDER=1>
+
+<TR><TD>
+<FONT SIZE="+0" color="#ff2244">
+<B>&mdash;&gt; Go to Current Cigarette Smoker</B></FONT></TD></TR></TABLE>
+</TD></TR>
+-->
+<tr><td colspan="2">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;If yes, skip to "Current Cigarette Smoker".</td></tr>
+<tr>
+<td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+<b>If no, when was the date of your last cigarette (DD/Mmm/YYYY)?</b><a href="javascript:jshp('dlc')"><img src="Background%20Form_files/help.png" alt="Help" width="16" height="16" border="0"></a>
+</td>
+<td>
+<select name="sbsdlcd" onchange="calcQuitYears()">
+<option value="-" selected="selected"> -
+</option><option value="1"> 1
+</option><option value="2"> 2
+</option><option value="3"> 3
+</option><option value="4"> 4
+</option><option value="5"> 5
+</option><option value="6"> 6
+</option><option value="7"> 7
+</option><option value="8"> 8
+</option><option value="9"> 9
+</option><option value="10"> 10
+</option><option value="11"> 11
+</option><option value="12"> 12
+</option><option value="13"> 13
+</option><option value="14"> 14
+</option><option value="15"> 15
+</option><option value="16"> 16
+</option><option value="17"> 17
+</option><option value="18"> 18
+</option><option value="19"> 19
+</option><option value="20"> 20
+</option><option value="21"> 21
+</option><option value="22"> 22
+</option><option value="23"> 23
+</option><option value="24"> 24
+</option><option value="25"> 25
+</option><option value="26"> 26
+</option><option value="27"> 27
+</option><option value="28"> 28
+</option><option value="29"> 29
+</option><option value="30"> 30
+</option><option value="31"> 31
+</option></select>
+<select name="sbsdlcm" onchange="calcQuitYears()">
+<option value="-"> -
+</option><option value="1"> Jan
+</option><option value="2"> Feb
+</option><option value="3"> Mar
+</option><option value="4"> Apr
+</option><option value="5"> May
+</option><option value="6"> Jun
+</option><option value="7"> Jul
+</option><option value="8" selected="selected"> Aug
+</option><option value="9"> Sep
+</option><option value="10"> Oct
+</option><option value="11"> Nov
+</option><option value="12"> Dec
+</option></select>
+<input name="sbsdlcy" onchange="synChk('sbsdlcy','ayear')" size="4" onblur="calcQuitYears()" value="2012" type="text"></td>
+</tr>
+
+<tr>
+<td align="right">
+<b>If no, number of years since quit (computed from quit date):</b>
+</td>
+<td>
+<input name="sbsdysq" size="4" readonly="readonly" type="text">
+</td>
+</tr>
+
+<tr><td colspan="2">
+<table border="2">
+<tbody><tr>
+<td colspan="2"><h3>Former Cigarette Smoker
+<a href="javascript:jshp('fs')"><img src="Background%20Form_files/help.png" alt="Help" width="16" height="16" border="0"></a></h3></td>
+</tr>
+
+
+<tr>
+<td><b>When you were a smoker, on approximately how many days per week did you smoke cigarettes?</b>
+</td>
+<td><input name="sbfdpw" size="6" value="7" type="text"></td>
+</tr>
+<tr><td><b>On the days that you did smoke, approximately how many packs
+of cigarettes did you smoke per day (PPD)?</b>
+<a href="javascript:jshp('fsp')"><img src="Background%20Form_files/help.png" alt="Help" width="16" height="16" border="0"></a></td>
+<td><input name="sbfppd" onchange="synChk('sbfppd','pnum')" size="6" value="0.6" type="text"></td>
+</tr>
+<tr><td><b>For approximately how many years did you smoke this amount?</b>
+<a href="javascript:jshp('fsd')"><img src="Background%20Form_files/help.png" alt="Help" width="16" height="16" border="0"></a></td>
+<td><input name="sbfdur" onchange="synChk('sbfdur','pnum')" onblur="calcNPY(0)" size="6" value="45" type="text"></td>
+</tr>
+
+</tbody></table>
+
+</td></tr>
+<!--
+<TR><TD colspan=2>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;
+<TABLE BORDER=1><TR><TD>
+<FONT SIZE="+0" color="#ff2244">
+<B>&mdash;&gt; Go to Health Opinions</B></FONT></TD>
+</TR></TABLE>
+</TD></TR>
+
+<TR><TD><BR></TD></TR>
+-->
+<tr><td colspan="2">
+<table border="2">
+<tbody><tr>
+<td colspan="2"><h3>Current Cigarette Smoker
+<a href="javascript:jshp('cs')"><img src="Background%20Form_files/help.png" alt="Help" width="16" height="16" border="0"></a></h3></td>
+</tr>
+
+<tr><td><b>On average, on how many days per week do you (or did you) smoke cigarettes?</b></td>
+<td><input name="sbcdpw" onchange="synChk('sbcdpw','pnum')" size="6" type="text"></td>
+</tr>
+<tr><td><b>On average, how many packs of cigarettes do you (or did you) smoke per day (PPD)?</b>
+<a href="javascript:jshp('csp')"><img src="Background%20Form_files/help.png" alt="Help" width="16" height="16" border="0"></a></td>
+<td><input name="sbcppd" onchange="synChk('sbcppd','pnum')" size="6" type="text"></td>
+</tr>
+<tr><td><b>For approximately how many years have you smoked this amount?</b>
+<a href="javascript:jshp('csd')"><img src="Background%20Form_files/help.png" alt="Help" width="16" height="16" border="0"></a></td>
+<td><input name="sbcdur" onchange="synChk('sbcdur','pnum')" onblur="calcNPY(1)" size="6" type="text"></td>
+</tr>
+<!--
+</TABLE>
+</TD></TR>
+
+<TR><TD><B>How soon after you wake up do you
+smoke your first cigarette?</B>
+<A HREF="javascript:jshp('swu')"><img src="/images/help.png" alt="Help" height=16 width=16 border=0></A>
+<select name="sbswu">
+<option value="-" SELECTED> -
+<option value="a"> within 5 minutes
+<option value="b"> 6-30 minutes
+<option value="c"> 31-60 minutes
+<option value="d"> after 60 minutes
+</select></TD>
+</TR>
+
+<TR><TD align=left><B>Since you made an appointment for this CT scan,
+have you made a serious effort to quit or cut down<BR>your smoking?</B>
+<A HREF="javascript:jshp('qcd')"><img src="/images/help.png" alt="Help" height=16 width=16 border=0></A>
+<input type=hidden name="hvsbsqcd" value="">
+<input type=radio name="sbsqcd" value="n"> no
+<input type=radio name="sbsqcd" value="y"> yes
+</TD></TR>
+-->
+
+<tr><td colspan="2" align="left"><b>Have you ever tried to quit smoking?</b>
+<a href="javascript:jshp('ttq')"><img src="Background%20Form_files/help.png" alt="Help" width="16" height="16" border="0"></a>
+<input name="hvsbqttq" value="" type="hidden">
+<input name="sbqttq" value="n" type="radio"> no
+<input name="sbqttq" value="y" type="radio"> yes
+&nbsp; &nbsp;
+<b>If yes, how many times?</b> &nbsp;
+<select name="sbqttqtb">
+<option value="-" selected="selected"> -
+</option><option value="a"> 1
+</option><option value="b"> 2-5
+</option><option value="c"> 6-10
+</option><option value="d"> 10+
+</option></select>
+</td>
+</tr>
+
+<tr><td><b>In the last 12 months, how many times have you quit smoking for
+at least 24 hours?</b>
+<a href="javascript:jshp('qly')"><img src="Background%20Form_files/help.png" alt="Help" width="16" height="16" border="0"></a>
+</td>
+<td>
+<select name="sbqly2">
+<option value="-" selected="selected"> -
+</option><option value="e"> 0
+</option><option value="a"> 1
+</option><option value="b"> 2-5
+</option><option value="c"> 6-10
+</option><option value="d"> 10+
+</option></select>
+
+<!--<input type=text name="sbqly" onChange="synChk('sbqly','pnum')" size=6></TD>-->
+</td>
+
+</tr>
+
+<tr><td><b>Are you seriously thinking of quitting smoking?</b>
+<a href="javascript:jshp('qst')"><img src="Background%20Form_files/help.png" alt="Help" width="16" height="16" border="0"></a>
+</td>
+<td>
+<select name="sbqst">
+<option value="-" selected="selected"> -
+</option><option value="y"> yes, within the next 30 days
+</option><option value="m"> yes, within the next 6 months
+</option><option value="n"> no, not thinking of quitting
+</option></select>
+</td>
+</tr>
+<!--
+<TR><TD align=left><B>Has your physician ever advised you to stop smoking?</B>
+<input type=hidden name="hvsbqpa" value="">
+<input type=radio name="sbqpa" value="n"> no
+<input type=radio name="sbqpa" value="y"> yes
+</TD></TR>
+-->
+
+<tr><td align="left"><b>Smoking cessation information or counselling was offered to subject</b>
+<a href="javascript:jshp('cpd')"><img src="Background%20Form_files/help.png" alt="Help" width="16" height="16" border="0"></a>
+</td>
+<td>
+<input name="hvsbcpd" value="" type="hidden">
+<input name="sbcpd" value="n" type="radio"> no
+<input name="sbcpd" value="y" type="radio"> yes
+</td>
+</tr>
+
+<!--
+
+</TD></TR></TABLE>
+</TD></TR>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD><B>Smoking History Comments</B>
+<A HREF="javascript:jshp('shc')"><img src="/images/help.png" alt="Help" height=16 width=16 border=0></A>
+<BR>
+<textarea name="sbshco" rows=3 cols=64 wrap=physical>
+
+</textarea>
+</TD></TR>
+-->
+</tbody></table>
+</td></tr>
+</tbody></table>
+</section>
+
+<table class="uxassist" id="ppdcalc" cellspacing="0">
+<tbody><tr><td align="center">packs/day (PPD) <a href="javascript:jshp('ppd')"><img src="Background%20Form_files/help.png" alt="Help" width="16" height="16" border="0"></a></td>
+  <td>Total Pack-Years</td></tr>
+<tr valign="top"><td align="center">
+1 cig / day = 0.05<br>
+2-3 cig / day = 0.10<br>
+4 cig / day = 0.20<br>
+5 cig / day = 0.25<br>
+10 cig / day = 0.50<br>
+15 cig / day = 0.75<br>
+20 cig / day = 1.00<br>
+</td><td align="center" valign="middle">
+<input name="sbntpy" size="6" onfocus="document.forms[FNAME].elements['sbswppd'].focus()" value="27" type="text">
+</td></tr></tbody></table>
+
+</div>
+
+
+<h2>Secondhand Tobacco Smoke Exposure / Occupation</h2>
+
+<table width="100%" cellspacing="0" cellpadding="3" border="0">
+
+<tbody><tr>
+<td colspan="2" align="left">
+<table cellpadding="0" border="1">
+</table><table cellpadding="4">
+<tbody><tr><td colspan="2">
+<b>After age 18, did you work for more than one year in a worksite where smoking was allowed?</b>
+<input name="hvsbsews" value="y" type="hidden">
+<input name="sbsews" value="n" type="radio"> no
+<input name="sbsews" value="y" checked="checked" type="radio"> yes
+</td></tr>
+<tr>
+<td colspan="2" align="left"><b>Did you ever work for more than one year in a job where you were exposed to other people's tobacco smoke?</b>
+<input name="hvsbsehs" value="y" type="hidden">
+<input name="sbsehs" value="n" type="radio"> no
+<input name="sbsehs" value="y" checked="checked" type="radio"> yes
+</td></tr>
+
+<tr><td colspan="2">
+<table cellpadding="4" border="1">
+<tbody><tr>
+<td align="center"><b>Age Range</b> <i>(from Most Recent)</i> </td>
+<td align="center"><b>Job</b></td>
+<td align="left"><b>Smoking</b></td>
+</tr>
+<tr>
+<td><input name="sbsehsa1" onchange="synChk('sbsehsa1','cws')" size="24" value="30-39" type="text"></td>
+<td><input name="sbsehsj1" onchange="synChk('sbsehsj1','cws')" size="24" value="office" type="text"></td>
+<td><input name="hvsbsehsr1" value="y" type="hidden">
+<input name="sbsehsr1" value="n" type="radio"> not permitted
+<input name="sbsehsr1" value="r" type="radio"> restricted
+<input name="sbsehsr1" value="y" checked="checked" type="radio"> allowed anywhere
+</td>
+</tr>
+<tr>
+<td><input name="sbsehsa2" onchange="synChk('sbsehsa2','cws')" size="24" value="27-31" type="text"></td>
+<td><input name="sbsehsj2" onchange="synChk('sbsehsj2','cws')" size="24" value="office" type="text"></td>
+<td><input name="hvsbsehsr2" value="r" type="hidden">
+<input name="sbsehsr2" value="n" type="radio"> not permitted
+<input name="sbsehsr2" value="r" checked="checked" type="radio"> restricted
+<input name="sbsehsr2" value="y" type="radio"> allowed anywhere
+</td>
+</tr>
+<tr>
+<td><input name="sbsehsa3" onchange="synChk('sbsehsa3','cws')" size="24" value="22-26" type="text"></td>
+<td><input name="sbsehsj3" onchange="synChk('sbsehsj3','cws')" size="24" value="office" type="text"></td>
+<td><input name="hvsbsehsr3" value="y" type="hidden">
+<input name="sbsehsr3" value="n" type="radio"> not permitted
+<input name="sbsehsr3" value="r" type="radio"> restricted
+<input name="sbsehsr3" value="y" checked="checked" type="radio"> allowed anywhere
+</td>
+</tr>
+<tr>
+<td><input name="sbsehsa4" onchange="synChk('sbsehsa4','cws')" size="24" type="text"></td>
+<td><input name="sbsehsj4" onchange="synChk('sbsehsj4','cws')" size="24" type="text"></td>
+<td><input name="hvsbsehsr4" value="" type="hidden">
+<input name="sbsehsr4" value="n" type="radio"> not permitted
+<input name="sbsehsr4" value="r" type="radio"> restricted
+<input name="sbsehsr4" value="y" type="radio"> allowed anywhere
+</td>
+</tr>
+
+</tbody></table>
+</td></tr></tbody></table>
+<!--
+<TR><TD>
+<TABLE CELLPADDING=4 CELLSPACING=2 BORDER=0>
+<TR>
+<TD><B>Did you ever work as a flight attendant?</B></TD>
+<TD>
+<input type=hidden name="hvsbahfa" value="n">
+<input type=radio name="sbahfa" value="n" CHECKED> no
+<input type=radio name="sbahfa" value="y"> yes
+</TD></TR>
+<TR><TD><B>If yes, during what years?</B></TD>
+<TD><input type=text name="sbahfay" onChange="synChk('sbahfay','cws')" size=32></TD>
+</TR>
+<TR><TD><B>What airline(s)?</B></TD>
+<TD><input type=text name="sbahfaal" onChange="synChk('sbahfaal','cws')" size=32></TD>
+</TR>
+<TR>
+<TD><B>What ages did you fly different aircraft?</B> </TD>
+<TD>
+<TABLE>
+<TR>
+<TD>Age<input type=text name="sbahfaa" onChange="synChk('sbahfaa','cws')" size=24></TD>
+<TD>Aircraft Type<input type=text name="sbahfaat" onChange="synChk('sbahfaat','cws')" size=24></TD>
+<TD>How many flight hours per month<input type=text name="sbahfafh" onChange="synChk('sbahfafh','cws')" size=24></TD>
+</TR></TD></TABLE>
+</TD></TR>
+--> </td></tr></tbody></table>
+<!-- </TABLE>
+
+</TD></TR></TABLE> -->
+<div class="question">
+<h2>Secondhand Tobacco Smoke Exposure / Household</h2>
+
+<br>
+
+<table width="100%" cellspacing="0" cellpadding="3" border="0">
+<!--
+<TR><TD align=left><B>Did either of your parents smoke?</B>
+<A HREF="javascript:jshp('shs')"><img src="/images/hb.gif" alt="Help" height=10 width=5 border=0></A>
+<input type=hidden name="hvsbsps" value="">
+<input type=radio name="sbsps" value="n"> no
+<input type=radio name="sbsps" value="y"> yes
+</TD></TR>
+-->
+<tbody><tr><td align="left"><b>Did anyone in your house smoke in the home when you were under 18?</b>
+<!-- <A HREF="javascript:jshp('shs')"><img src="/images/hb.gif" alt="Help" height=10 width=5 border=0></A> -->
+<input name="hvsbhsy" value="y" type="hidden">
+<input name="sbhsy" value="n" type="radio"> no
+<input name="sbhsy" value="y" checked="checked" type="radio"> yes
+</td></tr>
+
+<tr><td align="left"><b>Was smoking allowed inside the house?</b>
+<!-- <A HREF="javascript:jshp('shs')"><img src="/images/hb.gif" alt="Help" height=10 width=5 border=0></A> -->
+<input name="hvsbhsyh" value="y" type="hidden">
+<input name="sbhsyh" value="n" type="radio"> not permitted
+<input name="sbhsyh" value="r" type="radio"> restricted
+<input name="sbhsyh" value="y" checked="checked" type="radio"> allowed anywhere
+</td></tr>
+
+<tr><td align="left"><b>Did your mother/primary care giver smoke when you were under age 7?</b>
+<!-- <A HREF="javascript:jshp('shs')"><img src="/images/hb.gif" alt="Help" height=10 width=5 border=0></A> -->
+<input name="hvsbmsy" value="y" type="hidden">
+<input name="sbmsy" value="n" type="radio"> no
+<input name="sbmsy" value="y" checked="checked" type="radio"> yes
+</td></tr>
+<tr><td align="left"><b>Did your mother/primary care giver smoke when you were ages 7-18?</b>
+<!-- <A HREF="javascript:jshp('shs')"><img src="/images/hb.gif" alt="Help" height=10 width=5 border=0></A> -->
+<input name="hvsbmst" value="y" type="hidden">
+<input name="sbmst" value="n" type="radio"> no
+<input name="sbmst" value="y" checked="checked" type="radio"> yes
+</td></tr>
+<tr><td colspan="2" align="left"><b>Did anyone else beside your mother/primary care giver smoke in the home when you were under 18?</b>
+<!-- <A HREF="javascript:jshp('shs')"><img src="/images/hb.gif" alt="Help" height=10 width=5 border=0></A> -->
+<input name="hvsbosy" value="n" type="hidden">
+<input name="sbosy" value="n" checked="checked" type="radio"> no
+<input name="sbosy" value="y" type="radio"> yes
+</td></tr>
+
+<tr><td align="left"><b>Do you currently live with a smoker?</b>
+<a href="javascript:jshp('shs')"><img src="Background%20Form_files/hb.gif" alt="Help" width="5" height="10" border="0"></a>
+<input name="hvsbslws" value="n" type="hidden">
+<input name="sbslws" value="n" checked="checked" type="radio"> no
+<input name="sbslws" value="y" type="radio"> yes
+</td></tr>
+
+<tr><td align="left"><b>After age 18, did you live with someone for more than one year who smoked in your presence?</b>
+<!-- <A HREF="javascript:jshp('shs')"><img src="/images/hb.gif" alt="Help" height=10 width=5 border=0></A> -->
+<input name="hvsbhso" value="n" type="hidden">
+<input name="sbhso" value="n" checked="checked" type="radio"> no
+<input name="sbhso" value="y" type="radio"> yes
+</td></tr>
+<tr><td>If yes,<b> at what ages  did you live with someone who smoked around you and how much did they smoke?</b> &nbsp; <i>(Most Recent First)</i></td></tr>
+
+<tr><td>
+<table cellpadding="4" border="1">
+<tbody><tr>
+<td align="center"><b>Age Range</b></td>
+<td align="center"><b>Amount</b></td>
+<td align="left"><b>Smoking</b></td>
+</tr>
+<tr>
+<td><input name="sbhsa1" onchange="synChk('sbhsa1','cws')" size="24" type="text"></td>
+<td><select name="sbhsas1">
+<option value="-" selected="selected"> -
+</option><option value="a"> 1-14 Cigarettes per day
+</option><option value="b"> 15-24 Cigarettes per day
+</option><option value="c"> 25+ Cigarettes per day
+</option><option value="d"> Don't Know
+</option></select>
+</td>
+<td><input name="hvsbhsasr1" value="" type="hidden">
+<input name="sbhsasr1" value="n" type="radio"> not permitted
+<input name="sbhsasr1" value="r" type="radio"> restricted
+<input name="sbhsasr1" value="y" type="radio"> allowed anywhere
+</td>
+</tr>
+<tr>
+<td><input name="sbhsa2" onchange="synChk('sbhsa2','cws')" size="24" type="text"></td>
+<td><select name="sbhsas2">
+<option value="-" selected="selected"> -
+</option><option value="a"> 1-14 Cigarettes per day
+</option><option value="b"> 15-24 Cigarettes per day
+</option><option value="c"> 25+ Cigarettes per day
+</option><option value="d"> Don't Know
+</option></select>
+</td>
+<td><input name="hvsbhsasr2" value="" type="hidden">
+<input name="sbhsasr2" value="n" type="radio"> not permitted
+<input name="sbhsasr2" value="r" type="radio"> restricted
+<input name="sbhsasr2" value="y" type="radio"> allowed anywhere
+</td>
+</tr>
+<tr>
+<td><input name="sbhsa3" onchange="synChk('sbhsa3','cws')" size="24" type="text"></td>
+<td><select name="sbhsas3">
+<option value="-" selected="selected"> -
+</option><option value="a"> 1-14 Cigarettes per day
+</option><option value="b"> 15-24 Cigarettes per day
+</option><option value="c"> 25+ Cigarettes per day
+</option><option value="d"> Don't Know
+</option></select>
+</td>
+<td><input name="hvsbhsasr3" value="" type="hidden">
+<input name="sbhsasr3" value="n" type="radio"> not permitted
+<input name="sbhsasr3" value="r" type="radio"> restricted
+<input name="sbhsasr3" value="y" type="radio"> allowed anywhere
+</td>
+</tr>
+<tr>
+<td><input name="sbhsa4" onchange="synChk('sbhsa4','cws')" size="24" type="text"></td>
+<td><select name="sbhsas4">
+<option value="-" selected="selected"> -
+</option><option value="a"> 1-14 Cigarettes per day
+</option><option value="b"> 15-24 Cigarettes per day
+</option><option value="c"> 25+ Cigarettes per day
+</option><option value="d"> Don't Know
+</option></select>
+</td>
+<td><input name="hvsbhsasr4" value="" type="hidden">
+<input name="sbhsasr4" value="n" type="radio"> not permitted
+<input name="sbhsasr4" value="r" type="radio"> restricted
+<input name="sbhsasr4" value="y" type="radio"> allowed anywhere
+</td>
+</tr>
+</tbody></table></td></tr>
+</tbody></table>
+</div>
+<!--
+<HR>
+
+<FONT SIZE="+2">
+<B>Main reason for seeking lung cancer screening.</B>
+</FONT>
+<A HREF="javascript:jshp('hamr')"><img src="/images/help.png" alt="Help" height=16 width=16 border=0></A>
+<BR>
+<textarea name="sbhamr" rows=4 cols=64 wrap=physical>
+
+</textarea>
+
+<TABLE CELLSPACING=0 CELLPADDING=4>
+<TR>
+<TD>
+<BR><B>Note to Study Coordinator:</B> Please choose as many reasons below
+that correspond to the participant's candid response for their man reason
+for seeking lung cancer screening:</B><BR>
+</TD></TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=4>
+<TR><TD>
+<input type=hidden name="hvsbhamra" value="">
+<input type=checkbox name="sbhamra" value="a"> Curiosity
+</TD><TD>
+<input type=hidden name="hvsbhamry" value="">
+<input type=checkbox name="sbhamry" value="y"> Pursuing CT screening a good idea
+</TD><TD>
+<input type=hidden name="hvsbhamrb" value="">
+<input type=checkbox name="sbhamrb" value="b"> Altruism / Help medical science
+</TD><TD>
+<input type=hidden name="hvsbhamrc" value="">
+<input type=checkbox name="sbhamrc" value="c"> New and Improved Screening Technology
+</TD></TR>
+<TR><TD>
+<input type=hidden name="hvsbhamrd" value="">
+<input type=checkbox name="sbhamrd" value="d"> Free / No cost
+</TD><TD>
+<input type=hidden name="hvsbhamre" value="e">
+<input type=checkbox name="sbhamre" value="e" CHECKED> Physician Recommendation
+</TD><TD>
+<input type=hidden name="hvsbhamrf" value="">
+<input type=checkbox name="sbhamrf" value="f"> Social Influence / family and friends
+</TD><TD>
+<input type=hidden name="hvsbhamrh" value="">
+<input type=checkbox name="sbhamrh" value="h"> Response to recruitment / outreach efforts
+</TD></TR>
+<TR><TD>
+<input type=hidden name="hvsbhamri" value="">
+<input type=checkbox name="sbhamri" value="i"> Family member or friend with history of lung cancer or other cancers
+</TD><TD>
+<input type=hidden name="hvsbhamrm" value="">
+<input type=checkbox name="sbhamrm" value="m"> Have tobacco-related symptoms or other health problems
+</TD><TD>
+<input type=hidden name="hvsbhamro" value="">
+<input type=checkbox name="sbhamro" value="o"> Present or former Tobacco use
+</TD><TD>
+<input type=hidden name="hvsbhamrp" value="">
+<input type=checkbox name="sbhamrp" value="p"> Other risk factors
+</TD></TR>
+<TR><TD>
+<input type=hidden name="hvsbhamrr" value="">
+<input type=checkbox name="sbhamrr" value="r"> To Promote smoking cessation motivation
+</TD><TD>
+<input type=hidden name="hvsbhamrs" value="">
+<input type=checkbox name="sbhamrs" value="s"> For prevention and early detection of cancer
+</TD><TD>
+<input type=hidden name="hvsbhamru" value="">
+<input type=checkbox name="sbhamru" value="u"> To acquire information about health status of lungs
+</TD><TD>
+<input type=hidden name="hvsbhamrv" value="">
+<input type=checkbox name="sbhamrv" value="v"> Concerned about cancer risk and to seek reassurance that one is cancer-free
+</TD></TR>
+<TR><TD>
+<input type=hidden name="hvsbhamrw" value="">
+<input type=checkbox name="sbhamrw" value="w"> Invited to be part of government sponsored program
+</TD><TD colspan=3>
+&nbsp;
+</TD></TR>
+</TABLE>
+</TD></TR>
+</TABLE>
+
+<HR>
+-->
+<!--
+
+<TABLE CELLSPACING=0 CELLPADDING=2>
+
+<TR><TD><FONT size="+2">
+<A HREF="javascript:jshp('ho')"><img src="/images/help.png" alt="Help" height=16 width=16 border=0></A>
+<B>Health Opinions</B></FONT></TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2>
+<TR><TD><B>In your opinion, how much would (or did) quitting smoking reduce
+your chances of getting lung cancer?</B>
+<A HREF="javascript:jshp('qrc')"><img src="/images/help.png" alt="Help" height=16 width=16 border=0></A>
+<input type=hidden name="hvsbqrc" value="2">
+&nbsp;
+<input type=radio name="sbqrc" value="r"> RTA
+</TD></TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=4 BORDER=1>
+<TR><TD align=center><B>NOT AT ALL</B></TD>
+<TD align=center><B>SOMEWHAT</B></TD>
+<TD align=center><B>MODERATELY</B></TD>
+<TD align=center><B>VERY MUCH</B></TD></TR>
+<TR>
+<TD align=center>
+<input type=radio name="sbqrc" value="1"> 1</TD>
+<TD align=center><input type=radio name="sbqrc" value="2" CHECKED> 2</TD>
+<TD align=center><input type=radio name="sbqrc" value="3"> 3</TD>
+<TD align=center><input type=radio name="sbqrc" value="4"> 4</TD>
+</TR>
+</TABLE>
+</TD></TR>
+</TABLE></TD></TR>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 BORDER=1>
+<TR><TD align=center width="25%"><I>During the past month</I></TD>
+<TD align=center width="15%"><B>Never</B></TD>
+<TD align=center width="15%"><B>Rarely</B></TD>
+<TD align=center width="15%"><B>Sometimes</B></TD>
+<TD align=center width="15%"><B>Often</B></TD>
+<TD align=center width="15%"><B>All the Time</B></TD>
+<TR>
+<TD>If at all, how often have you worried about the possibility of getting lung cancer?
+<A HREF="javascript:jshp('hawc')"><img src="/images/help.png" alt="Help" height=16 width=16 border=0></A>
+&nbsp;
+<input type=radio name="sbhawc" value="r"> RTA
+</TD>
+<TD align=center><input type=hidden name="hvsbhawc" value="4">
+<input type=radio name="sbhawc" value="1"> 1</TD>
+<TD align=center><input type=radio name="sbhawc" value="2"> 2</TD>
+<TD align=center><input type=radio name="sbhawc" value="3"> 3</TD>
+<TD align=center><input type=radio name="sbhawc" value="4" CHECKED> 4</TD>
+<TD align=center><input type=radio name="sbhawc" value="5"> 5</TD>
+</TR>
+</TABLE>
+</TD></TR>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2>
+<TR><TD>It is common for people to have different ideas
+about their own chances of getting lung cancer.  Please compare your
+chances of getting lung cancer to other people who are the same age
+and sex as you are.  Compared to these people, is your risk of getting
+cancer <I>much less than</I>, <I>about the same as</I>, or <I>much
+more than</I> the risk that these people face?
+<A HREF="javascript:jshp('hagr')"><img src="/images/help.png" alt="Help" height=16 width=16 border=0></A>
+&nbsp;
+<input type=radio name="sbhagr" value="r"> RTA
+</TD></TR>
+</TABLE>
+</TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 BORDER=1>
+<TR><TD align=center width="20%"><B>MUCH LESS THAN</B> others my same age and sex</TD>
+<TD align=center width="20%"><B>SLIGHTLY LESS THAN</B> others my same age and sex</TD>
+<TD align=center width="20%"><B>ABOUT THE SAME AS</B> others my same age and sex</TD>
+<TD align=center width="20%"><B>SLIGHTLY MORE THAN</B> others my same age and sex</TD>
+<TD align=center width="20%"><B>MUCH MORE THAN</B> others my same age and sex</TD></TR>
+<TR>
+<TD align=center><input type=hidden name="hvsbhagr" value="5">
+<input type=radio name="sbhagr" value="1"> 1</TD>
+<TD align=center><input type=radio name="sbhagr" value="2"> 2</TD>
+<TD align=center><input type=radio name="sbhagr" value="3"> 3</TD>
+<TD align=center><input type=radio name="sbhagr" value="4"> 4</TD>
+<TD align=center><input type=radio name="sbhagr" value="5" CHECKED> 5</TD>
+</TR>
+</TABLE>
+</TD></TR>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2>
+<TR><TD>Now compare your chances of getting lung cancer to OTHER
+SMOKERS.  Think about smokers who are the same age and sex as you are.
+Compared to OTHER SMOKERS, is your risk of getting cancer <I>much less
+than</I>, <I>about the same as</I>, or <I>much more than</I> the risk
+that these people face?
+<A HREF="javascript:jshp('hasr')"><img src="/images/help.png" alt="Help" height=16 width=16 border=0></A>
+&nbsp;
+<input type=radio name="sbhasr" value="r"> RTA
+</TD></TR>
+</TABLE>
+</TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 BORDER=1>
+<TR><TD align=center width="20%"><B>MUCH LESS THAN</B> other smokers</TD>
+<TD align=center width="20%"><B>SLIGHTLY LESS THAN</B> other smokers</TD>
+<TD align=center width="20%"><B>ABOUT THE SAME AS</B> other smokers</TD>
+<TD align=center width="20%"><B>SLIGHTLY MORE THAN</B> other smokers</TD>
+<TD align=center width="20%"><B>MUCH MORE THAN</B> other smokers</TD></TR>
+<TR>
+<TD align=center><input type=hidden name="hvsbhasr" value="3">
+<input type=radio name="sbhasr" value="1"> 1</TD>
+<TD align=center><input type=radio name="sbhasr" value="2"> 2</TD>
+<TD align=center><input type=radio name="sbhasr" value="3" CHECKED> 3</TD>
+<TD align=center><input type=radio name="sbhasr" value="4"> 4</TD>
+<TD align=center><input type=radio name="sbhasr" value="5"> 5</TD>
+</TR>
+</TABLE>
+</TD></TR>
+
+<TR><TD><BR></TD></TR>
+
+</TABLE>
+
+<HR>
+
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left><FONT size="+2">
+<A HREF="javascript:jshp('sf')"><img src="/images/help.png" alt="Help" height=16 width=16 border=0></A>
+<B>Health Survey</B></FONT></TD></TR>
+<TR><TD><HR></TD></TR>
+
+<TR><TD><U>Instructions for Completing the Questionnaire</U><BR>
+Please answer every question.  Some questions may look like others, but each
+one is different.  Please take the time to read and answer each question
+carefully by filling in the bubble that best represents your response.
+<input type=hidden name="hvsbsfr" value="">
+&nbsp;
+<input type=checkbox name="sbsfr" value="r"> RTA
+<BR><BR>
+</TD></TR>
+
+<TR><TD><FONT SIZE="+1"><B><U>EXAMPLE</U></B></FONT><BR><BR></TD></TR>
+
+<TR><TD><B>This is for your review.</B>  Do not answer this question.  The
+questionnaire begins with the section <B><I>Your Health in General</I></B>
+below.<BR>
+<BR>
+For each question you will be asked to fill in a bubble in each line:<BR>
+<BR>
+</TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2>
+<TR>
+<TD>0. How strongly do you agree or disagree with each of the
+following statements?</TD>
+</TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 BORDER=1>
+<TR><TD></TD>
+<TD align=center width="15%"><B>Strongly agree</B></TD>
+<TD align=center width="15%"><B>Agree</B></TD>
+<TD align=center width="15%"><B>Uncertain</B></TD>
+<TD align=center width="15%"><B>Disagree</B></TD>
+<TD align=center width="15%"><B>Strongly disagree</B>
+</TD></TR>
+<TR><TD>a) I enjoy listening to music</TD>
+<TD align=center><input type=hidden name="hvsbsf0a" value="2">
+<input type=radio name="sbsf0a" value="1"></TD>
+<TD align=center><input type=radio name="sbsf0a" value="2" CHECKED CHECKED></TD>
+<TD align=center><input type=radio name="sbsf0a" value="3"></TD>
+<TD align=center><input type=radio name="sbsf0a" value="4"></TD>
+<TD align=center><input type=radio name="sbsf0a" value="5"></TD>
+</TR>
+<TR><TD>b) I enjoy reading magazines</TD>
+<TD align=center><input type=hidden name="hvsbsf0b" value="1">
+<input type=radio name="sbsf0b" value="1" CHECKED CHECKED></TD>
+<TD align=center><input type=radio name="sbsf0b" value="2"></TD>
+<TD align=center><input type=radio name="sbsf0b" value="3"></TD>
+<TD align=center><input type=radio name="sbsf0b" value="4"></TD>
+<TD align=center><input type=radio name="sbsf0b" value="5"></TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR>
+
+<TR><TD><BR>Please begin answering the questions now.<BR><BR></TD></TR>
+
+<TR><TD align=center>
+<TABLE CELLSPACING=0 CELLPADDING=0 BORDER=2 WIDTH="80%">
+<TR><TD align=center><FONT size="+2">Your Health in General</FONT></TD></TR></TABLE>
+</TD></TR>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 width="100%">
+<TR>
+<TD>1. In general, would you say your health is:</TD>
+</TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 width="100%">
+<TR>
+<TD align=center width="20%"><B>Excellent</B></TD>
+<TD align=center width="20%"><B>Very good</B></TD>
+<TD align=center width="20%"><B>Good</B></TD>
+<TD align=center width="20%"><B>Fair</B></TD>
+<TD align=center width="20%"><B>Poor</B>
+</TD></TR>
+<TR>
+<TD align=center><input type=hidden name="hvsbsf1" value="3">
+<input type=radio name="sbsf1" value="1"></TD>
+<TD align=center><input type=radio name="sbsf1" value="2"></TD>
+<TD align=center><input type=radio name="sbsf1" value="3" CHECKED></TD>
+<TD align=center><input type=radio name="sbsf1" value="4"></TD>
+<TD align=center><input type=radio name="sbsf1" value="5"></TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2>
+<TR>
+<TD>2. The following questions are about activities you might do during a
+typical day.  Does <B>your health now limit you</B> in these activities?  If so,
+how much?</TD>
+</TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 BORDER=1>
+<TR><TD></TD>
+<TD align=center width="15%"><B>Yes, limited a lot</B></TD>
+<TD align=center width="15%"><B>Yes, limited a little</B></TD>
+<TD align=center width="15%"><B>No, not limited at all</B>
+</TD></TR>
+<TR><TD>a) <B>Moderate activities</B>, such as moving a table, pushing a
+vacuum cleaner, bowling, or playing golf</TD>
+<TD align=center><input type=hidden name="hvsbsf2" value="2">
+<input type=radio name="sbsf2" value="1"></TD>
+<TD align=center><input type=radio name="sbsf2" value="2" CHECKED></TD>
+<TD align=center><input type=radio name="sbsf2" value="3"></TD>
+</TR>
+<TR><TD>b) Climbing <B>several</B> flights of stairs</TD>
+<TD align=center><input type=hidden name="hvsbsf3" value="2">
+<input type=radio name="sbsf3" value="1"></TD>
+<TD align=center><input type=radio name="sbsf3" value="2" CHECKED></TD>
+<TD align=center><input type=radio name="sbsf3" value="3"></TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2>
+<TR>
+<TD>3. During the <B>past 4 weeks</B>, how much of the time have you had
+any of the following problems with your work or other regular daily
+activities <U>as a result of your physical health</U>?</TD>
+</TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 BORDER=1>
+<TR><TD></TD>
+<TD align=center width="10%"><B>All of the time</B></TD>
+<TD align=center width="10%"><B>Most of the time</B></TD>
+<TD align=center width="10%"><B>Some of the time</B></TD>
+<TD align=center width="10%"><B>A little of the time</B></TD>
+<TD align=center width="10%"><B>None of the time</B>
+</TD></TR>
+<TR><TD>a) <B>Accomplished less</B> than you would like</TD>
+<TD align=center><input type=hidden name="hvsbsf4" value="4">
+<input type=radio name="sbsf4" value="1"></TD>
+<TD align=center><input type=radio name="sbsf4" value="2"></TD>
+<TD align=center><input type=radio name="sbsf4" value="3"></TD>
+<TD align=center><input type=radio name="sbsf4" value="4" CHECKED></TD>
+<TD align=center><input type=radio name="sbsf4" value="5"></TD>
+</TR>
+<TR><TD>b) Were limited in the <B>kind</B> of work or other activities</TD>
+<TD align=center><input type=hidden name="hvsbsf5" value="4">
+<input type=radio name="sbsf5" value="1"></TD>
+<TD align=center><input type=radio name="sbsf5" value="2"></TD>
+<TD align=center><input type=radio name="sbsf5" value="3"></TD>
+<TD align=center><input type=radio name="sbsf5" value="4" CHECKED></TD>
+<TD align=center><input type=radio name="sbsf5" value="5"></TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2>
+<TR>
+<TD>4. During the <B>past 4 weeks</B>, how much of the time have you had
+any of the following problems with your work or other regular daily
+activities <U>as a result of any emotional problems</U> (such as feeling
+depressed or anxious)?</TD>
+</TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 BORDER=1>
+<TR><TD></TD>
+<TD align=center width="10%"><B>All of the time</B></TD>
+<TD align=center width="10%"><B>Most of the time</B></TD>
+<TD align=center width="10%"><B>Some of the time</B></TD>
+<TD align=center width="10%"><B>A little of the time</B></TD>
+<TD align=center width="10%"><B>None of the time</B>
+</TD></TR>
+<TR><TD>a) <B>Accomplished less</B> than you would like</TD>
+<TD align=center><input type=hidden name="hvsbsf6" value="3">
+<input type=radio name="sbsf6" value="1"></TD>
+<TD align=center><input type=radio name="sbsf6" value="2"></TD>
+<TD align=center><input type=radio name="sbsf6" value="3" CHECKED></TD>
+<TD align=center><input type=radio name="sbsf6" value="4"></TD>
+<TD align=center><input type=radio name="sbsf6" value="5"></TD>
+</TR>
+<TR><TD>b) Did work or other activities <B>less carefully than usual</B></TD>
+<TD align=center><input type=hidden name="hvsbsf7" value="3">
+<input type=radio name="sbsf7" value="1"></TD>
+<TD align=center><input type=radio name="sbsf7" value="2"></TD>
+<TD align=center><input type=radio name="sbsf7" value="3" CHECKED></TD>
+<TD align=center><input type=radio name="sbsf7" value="4"></TD>
+<TD align=center><input type=radio name="sbsf7" value="5"></TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 width="100%">
+<TR>
+<TD>5. During the <B>past 4 weeks</B>, how much did <U>pain</U> interfere
+with your normal work (including both work outside the home and housework)?</TD>
+</TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 width="100%">
+<TR>
+<TD align=center width="20%"><B>Not at all</B></TD>
+<TD align=center width="20%"><B>A little bit</B></TD>
+<TD align=center width="20%"><B>Moderately</B></TD>
+<TD align=center width="20%"><B>Quite a bit</B></TD>
+<TD align=center width="20%"><B>Extremely</B></TD>
+</TR>
+<TR>
+<TD align=center><input type=hidden name="hvsbsf8" value="2">
+<input type=radio name="sbsf8" value="1"></TD>
+<TD align=center><input type=radio name="sbsf8" value="2" CHECKED></TD>
+<TD align=center><input type=radio name="sbsf8" value="3"></TD>
+<TD align=center><input type=radio name="sbsf8" value="4"></TD>
+<TD align=center><input type=radio name="sbsf8" value="5"></TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2>
+<TR>
+<TD>6. These questions are about how you feel and how things have been with
+you during the <B>past 4 weeks</B>.  For each question, please give the one
+answer that comes closest to the way you have been feeling.  How much of the
+time during the <B>past 4 weeks</B>...</TD>
+</TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 BORDER=1>
+<TR><TD></TD>
+<TD align=center width="10%"><B>All of the time</B></TD>
+<TD align=center width="10%"><B>Most of the time</B></TD>
+<TD align=center width="10%"><B>Some of the time</B></TD>
+<TD align=center width="10%"><B>A little of the time</B></TD>
+<TD align=center width="10%"><B>None of the time</B></TD>
+</TR>
+<TR><TD>a) have you felt calm and peaceful?</TD>
+<TD align=center><input type=hidden name="hvsbsf9" value="3">
+<input type=radio name="sbsf9" value="1"></TD>
+<TD align=center><input type=radio name="sbsf9" value="2"></TD>
+<TD align=center><input type=radio name="sbsf9" value="3" CHECKED></TD>
+<TD align=center><input type=radio name="sbsf9" value="4"></TD>
+<TD align=center><input type=radio name="sbsf9" value="5"></TD>
+</TR>
+<TR><TD>b) did you have a lot of energy?</TD>
+<TD align=center><input type=hidden name="hvsbsf10" value="4">
+<input type=radio name="sbsf10" value="1"></TD>
+<TD align=center><input type=radio name="sbsf10" value="2"></TD>
+<TD align=center><input type=radio name="sbsf10" value="3"></TD>
+<TD align=center><input type=radio name="sbsf10" value="4" CHECKED></TD>
+<TD align=center><input type=radio name="sbsf10" value="5"></TD>
+</TR>
+<TR><TD>c) have you felt downhearted and depressed?</TD>
+<TD align=center><input type=hidden name="hvsbsf11" value="3">
+<input type=radio name="sbsf11" value="1"></TD>
+<TD align=center><input type=radio name="sbsf11" value="2"></TD>
+<TD align=center><input type=radio name="sbsf11" value="3" CHECKED></TD>
+<TD align=center><input type=radio name="sbsf11" value="4"></TD>
+<TD align=center><input type=radio name="sbsf11" value="5"></TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 width="100%">
+<TR>
+<TD>7. During the <B>past 4 weeks</B>, how much of the time has your
+<U>physical health or emotional problems</U> interfered
+with your social activities (like visiting friends, relatives, etc.)?</TD>
+</TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 width="100%">
+<TR>
+<TD align=center width="20%"><B>All of the time</B></TD>
+<TD align=center width="20%"><B>Most of the time</B></TD>
+<TD align=center width="20%"><B>Some of the time</B></TD>
+<TD align=center width="20%"><B>A little of the time</B></TD>
+<TD align=center width="20%"><B>None of the time</B></TD>
+</TR>
+<TR>
+<TD align=center><input type=hidden name="hvsbsf12" value="4">
+<input type=radio name="sbsf12" value="1"></TD>
+<TD align=center><input type=radio name="sbsf12" value="2"></TD>
+<TD align=center><input type=radio name="sbsf12" value="3"></TD>
+<TD align=center><input type=radio name="sbsf12" value="4" CHECKED></TD>
+<TD align=center><input type=radio name="sbsf12" value="5"></TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD>
+<FONT SIZE="+1">Please answer the next four questions only if you are
+a current or former smoker.</FONT>
+</TD><TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 width="100%">
+<TR>
+<TD>8. In the <U><B>past four weeks</B></U>, I have been afraid of the physical consequences of my smoking.</TD>
+</TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 width="100%" BORDER=1>
+<TR>
+<TD align=center width="12%"><I>Not at all afraid</I></TD>
+<TD COLSPAN=5 align=center width="60%">&nbsp;</TD>
+<TD align=center width="12%"><I>Very afraid</I></TD>
+</TR>
+<TR>
+<TD align=center width="12%"><input type=hidden name="hvsbpsf1" value="7">
+<input type=radio name="sbpsf1" value="1">1</TD>
+<TD align=center width="12%"><input type=radio name="sbpsf1" value="2">2</TD>
+<TD align=center width="12%"><input type=radio name="sbpsf1" value="3">3</TD>
+<TD align=center width="12%"><input type=radio name="sbpsf1" value="4">4</TD>
+<TD align=center width="12%"><input type=radio name="sbpsf1" value="5">5</TD>
+<TD align=center width="12%"><input type=radio name="sbpsf1" value="6">6</TD>
+<TD align=center width="12%"><input type=radio name="sbpsf1" value="7" CHECKED>7</TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 width="100%">
+<TR>
+<TD>9. In the <U><B>past four weeks</B></U>, I have worried about my health because of my smoking.</TD>
+</TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 width="100%" BORDER=1>
+<TR>
+<TD align=center width="12%"><I>Not worried at all</I></TD>
+<TD COLSPAN=5 align=center width="60%">&nbsp;</TD>
+<TD align=center width="12%"><I>Worried very much</I></TD>
+</TR>
+<TR>
+<TD align=center width="12%"><input type=hidden name="hvsbpsf2" value="7">
+<input type=radio name="sbpsf2" value="1">1</TD>
+<TD align=center width="12%"><input type=radio name="sbpsf2" value="2">2</TD>
+<TD align=center width="12%"><input type=radio name="sbpsf2" value="3">3</TD>
+<TD align=center width="12%"><input type=radio name="sbpsf2" value="4">4</TD>
+<TD align=center width="12%"><input type=radio name="sbpsf2" value="5">5</TD>
+<TD align=center width="12%"><input type=radio name="sbpsf2" value="6">6</TD>
+<TD align=center width="12%"><input type=radio name="sbpsf2" value="7" CHECKED>7</TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 width="100%">
+<TR>
+<TD>10. In the <U><B>past four weeks</B></U>, I have felt anxiety when I thought of the possible consequences of my smoking.</TD>
+</TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 width="100%" BORDER=1>
+<TR>
+<TD align=center width="12%"><I>Not anxious at all</I></TD>
+<TD COLSPAN=5 align=center width="60%">&nbsp;</TD>
+<TD align=center width="12%"><I>Very much anxious</I></TD>
+</TR>
+<TR>
+<TD align=center width="12%"><input type=hidden name="hvsbpsf3" value="7">
+<input type=radio name="sbpsf3" value="1">1</TD>
+<TD align=center width="12%"><input type=radio name="sbpsf3" value="2">2</TD>
+<TD align=center width="12%"><input type=radio name="sbpsf3" value="3">3</TD>
+<TD align=center width="12%"><input type=radio name="sbpsf3" value="4">4</TD>
+<TD align=center width="12%"><input type=radio name="sbpsf3" value="5">5</TD>
+<TD align=center width="12%"><input type=radio name="sbpsf3" value="6">6</TD>
+<TD align=center width="12%"><input type=radio name="sbpsf3" value="7" CHECKED>7</TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 width="100%">
+<TR>
+<TD>11. In the <U><B>past four weeks</B></U>, I have brooded about the possible consequences of my smoking.</TD>
+</TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 width="100%" BORDER=1>
+<TR>
+<TD align=center width="12%"><I>Not brooded at all</I></TD>
+<TD COLSPAN=5 align=center width="60%">&nbsp;</TD>
+<TD align=center width="12%"><I>Brooded very much</I></TD>
+</TR>
+<TR>
+<TD align=center width="12%"><input type=hidden name="hvsbpsf4" value="6">
+<input type=radio name="sbpsf4" value="1">1</TD>
+<TD align=center width="12%"><input type=radio name="sbpsf4" value="2">2</TD>
+<TD align=center width="12%"><input type=radio name="sbpsf4" value="3">3</TD>
+<TD align=center width="12%"><input type=radio name="sbpsf4" value="4">4</TD>
+<TD align=center width="12%"><input type=radio name="sbpsf4" value="5">5</TD>
+<TD align=center width="12%"><input type=radio name="sbpsf4" value="6" CHECKED>6</TD>
+<TD align=center width="12%"><input type=radio name="sbpsf4" value="7">7</TD>
+</TR>
+</TABLE>
+
+<TR><TD>SF12-v2 &copy; 1999, QualityMetric, Inc.</TD></TR>
+
+</TD></TR></TABLE>
+</TD></TR></TABLE>
+
+<HR>
+
+<TABLE>
+<TR><TD align=left><B>Has the participant signed the consent form?</B> &nbsp; &nbsp;</TD>
+<TD>
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvsbcfs" value="">
+<label for="sbfcs_n">
+<input type=radio name="sbcfs" id="sbfcs_n" value="n"> no [INELIGIBLE]
+</label>
+&nbsp; &nbsp;
+</TD><TD align=left valign=top>
+<label for="sbfcs_y">
+<input type=radio name="sbcfs" id="sbfcs_y" value="y"> yes
+</label>
+</TD></TR></TABLE>
+</TD></TR>
+
+<TR><TD align=left><B>Date informed consent signed (DD/Mmm/YYYY):</B>
+</TD>
+<TD>
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=text name="sbdoc" onChange="synChk('sbdoc','rdate');" size=11>
+</TD></TR>
+</TABLE>
+</TD>
+</TR>
+
+<TR><TD align=left><B>Name of individual obtaining consent:</B>
+</TD>
+<TD>
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=text name="sbioc" onChange="synChk('sbioc','cws')" size=32>
+</TD></TR></TABLE>
+</TD></TR>
+</TABLE>
+
+-->
+
+
+<!--
+<TR>
+<TD>
+<table>
+<tr>
+<td><h2>Medicare Eligibility Summary</h2></td>
+</tr>
+<tr>
+<td>Age (55-77)</td>
+<td>
+<input type=text name="sbeage" size=3>
+</td>
+</tr>
+<tr>
+<td>Pack years &ge; 30</td>
+<td>
+<input type=text name="sbepy" size=4>
+</td>
+</tr>
+<tr>
+<td>Years since quit &lt; 15</td>
+<td>
+<input type=text name="sbeyq" size=3>
+</td>
+</tr>
+<tr>
+<td>Asymptomatic for lung cancer</td>
+<td>
+<input type=text name="sbeasym" size=2>
+</td>
+</tr>
+<tr>
+<td>Documentation of shared decision making</td>
+<td>
+<input type=text name="sbedsd" size=2>
+</td>
+</tr>
+</table>
+</TD>
+</TR>
+-->
+<br>
+<table cellspacing="0" cellpadding="0">
+<tbody><tr><td><h2>Your Health in General</h2></td></tr>
+
+
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td>1. Overall, how would you rate your health during the <b><u>past 4 weeks</u></b>?</td>
+</tr>
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td align="center" width="15%"><b>Excellent</b></td>
+<td align="center" width="15%"><b>Very good</b></td>
+<td align="center" width="15%"><b>Good</b></td>
+<td align="center" width="15%"><b>Fair</b></td>
+<td align="center" width="15%"><b>Poor</b></td>
+<td align="center" width="15%"><b>Very Poor</b>
+</td></tr>
+<tr>
+<td align="center"><input name="hvsbsfb1" value="2" type="hidden">
+<input name="sbsfb1" value="1" type="radio"></td>
+<td align="center"><input name="sbsfb1" value="2" checked="checked" type="radio"></td>
+<td align="center"><input name="sbsfb1" value="3" type="radio"></td>
+<td align="center"><input name="sbsfb1" value="4" type="radio"></td>
+<td align="center"><input name="sbsfb1" value="5" type="radio"></td>
+<td align="center"><input name="sbsfb1" value="6" type="radio"></td>
+</tr>
+</tbody></table>
+</td></tr></tbody></table>
+</td></tr>
+
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td>2. During the <b><u>past 4 weeks</u></b>, how much did physical health problems limit your usual physical activities (such as walking or climbing stairs)?</td>
+</tr>
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td align="center" width="20%"><b>Not at all</b></td>
+<td align="center" width="20%"><b>Very little</b></td>
+<td align="center" width="20%"><b>Somewhat</b></td>
+<td align="center" width="20%"><b>Quite a lot</b></td>
+<td align="center" width="20%"><b>Could not do physical activities</b></td>
+</tr>
+<tr>
+<td align="center"><input name="hvsbsfb2" value="2" type="hidden">
+<input name="sbsfb2" value="1" type="radio"></td>
+<td align="center"><input name="sbsfb2" value="2" checked="checked" type="radio"></td>
+<td align="center"><input name="sbsfb2" value="3" type="radio"></td>
+<td align="center"><input name="sbsfb2" value="4" type="radio"></td>
+<td align="center"><input name="sbsfb2" value="5" type="radio"></td>
+</tr>
+</tbody></table>
+</td></tr></tbody></table>
+</td></tr>
+
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td>3.During the <b><u>past 4 weeks</u></b>, how much difficulty did you have doing your daily work, both at home and away from home, because of your physical health?</td>
+</tr>
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td align="center" width="20%"><b>None at all</b></td>
+<td align="center" width="20%"><b>A little bit</b></td>
+<td align="center" width="20%"><b>Some</b></td>
+<td align="center" width="20%"><b>Quite a lot</b></td>
+<td align="center" width="20%"><b>Could not do daily work</b></td>
+</tr>
+<tr>
+<td align="center"><input name="hvsbsfb3" value="2" type="hidden">
+<input name="sbsfb3" value="1" type="radio"></td>
+<td align="center"><input name="sbsfb3" value="2" checked="checked" type="radio"></td>
+<td align="center"><input name="sbsfb3" value="3" type="radio"></td>
+<td align="center"><input name="sbsfb3" value="4" type="radio"></td>
+<td align="center"><input name="sbsfb3" value="5" type="radio"></td>
+</tr>
+</tbody></table>
+</td></tr></tbody></table>
+</td></tr>
+
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td>4. How much <u>bodily</u> pain have you had during the <b><u>past 4 weeks</u></b>?</td>
+</tr>
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td align="center" width="15%"><b>None</b></td>
+<td align="center" width="15%"><b>Very mild</b></td>
+<td align="center" width="15%"><b>Mild</b></td>
+<td align="center" width="15%"><b>Moderate</b></td>
+<td align="center" width="15%"><b>Severe</b></td>
+<td align="center" width="15%"><b>Very Severe</b>
+</td></tr>
+<tr>
+<td align="center"><input name="hvsbsfb4" value="3" type="hidden">
+<input name="sbsfb4" value="1" type="radio"></td>
+<td align="center"><input name="sbsfb4" value="2" type="radio"></td>
+<td align="center"><input name="sbsfb4" value="3" checked="checked" type="radio"></td>
+<td align="center"><input name="sbsfb4" value="4" type="radio"></td>
+<td align="center"><input name="sbsfb4" value="5" type="radio"></td>
+<td align="center"><input name="sbsfb4" value="6" type="radio"></td>
+</tr>
+</tbody></table>
+</td></tr></tbody></table>
+</td></tr>
+
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td>5. During the <b><u>past 4 weeks</u></b>, how much energy did you have?</td>
+</tr>
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td align="center" width="20%"><b>Very much</b></td>
+<td align="center" width="20%"><b>Quite a lot</b></td>
+<td align="center" width="20%"><b>Some</b></td>
+<td align="center" width="20%"><b>A little</b></td>
+<td align="center" width="20%"><b>None</b></td>
+</tr>
+<tr>
+<td align="center"><input name="hvsbsfb5" value="2" type="hidden">
+<input name="sbsfb5" value="1" type="radio"></td>
+<td align="center"><input name="sbsfb5" value="2" checked="checked" type="radio"></td>
+<td align="center"><input name="sbsfb5" value="3" type="radio"></td>
+<td align="center"><input name="sbsfb5" value="4" type="radio"></td>
+<td align="center"><input name="sbsfb5" value="5" type="radio"></td>
+</tr>
+</tbody></table>
+</td></tr></tbody></table>
+</td></tr>
+
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td>6. During the <b><u>past 4 weeks</u></b>, how much did your physical health or emotional problems limit your usual social activities with family or friends?
+</td>
+</tr>
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td align="center" width="20%"><b>None at all</b></td>
+<td align="center" width="20%"><b>Very little</b></td>
+<td align="center" width="20%"><b>Somewhat</b></td>
+<td align="center" width="20%"><b>Quite a lot</b></td>
+<td align="center" width="20%"><b>Could not do social activities</b></td>
+</tr>
+<tr>
+<td align="center"><input name="hvsbsfb6" value="4" type="hidden">
+<input name="sbsfb6" value="1" type="radio"></td>
+<td align="center"><input name="sbsfb6" value="2" type="radio"></td>
+<td align="center"><input name="sbsfb6" value="3" type="radio"></td>
+<td align="center"><input name="sbsfb6" value="4" checked="checked" type="radio"></td>
+<td align="center"><input name="sbsfb6" value="5" type="radio"></td>
+</tr>
+</tbody></table>
+</td></tr></tbody></table>
+</td></tr>
+
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td>7. During the <b><u>past 4 weeks</u></b>, how much have you been bothered by <b><u>emotional problems</u></b> (such as feeling anxious, depressed or irritable)?</td>
+</tr>
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td align="center" width="20%"><b>Not at all</b></td>
+<td align="center" width="20%"><b>Slightly</b></td>
+<td align="center" width="20%"><b>Moderately</b></td>
+<td align="center" width="20%"><b>Quite a lot</b></td>
+<td align="center" width="20%"><b>Extremely</b></td>
+</tr>
+<tr>
+<td align="center"><input name="hvsbsfb7" value="1" type="hidden">
+<input name="sbsfb7" value="1" checked="checked" type="radio"></td>
+<td align="center"><input name="sbsfb7" value="2" type="radio"></td>
+<td align="center"><input name="sbsfb7" value="3" type="radio"></td>
+<td align="center"><input name="sbsfb7" value="4" type="radio"></td>
+<td align="center"><input name="sbsfb7" value="5" type="radio"></td>
+</tr>
+</tbody></table>
+</td></tr></tbody></table>
+</td></tr>
+
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td>8. During the <b><u>past 4 weeks</u></b>, how much did personal or emotional problems keep you from doing your usual work, school or other daily activities?</td>
+</tr>
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td align="center" width="20%">
+<input name="hvsbsfb8" value="1" type="hidden">
+<label><b>Not at all</b>
+<br>
+<input name="sbsfb8" value="1" checked="checked" type="radio">
+</label>
+</td>
+<td align="center" width="20%">
+<label><b>Very little</b>
+<br>
+<input name="sbsfb8" value="2" type="radio">
+</label>
+</td>
+<td align="center" width="20%">
+<label><b>Somewhat</b>
+<br>
+<input name="sbsfb8" value="3" type="radio">
+</label>
+</td>
+<td align="center" width="20%">
+<label><b>Quite a lot</b>
+<br>
+<input name="sbsfb8" value="4" type="radio">
+</label>
+</td>
+<td align="center" width="20%">
+<label><b>Could not do daily activities</b>
+<br>
+<input name="sbsfb8" value="5" type="radio">
+</label>
+</td>
+</tr>
+
+</tbody></table>
+</td></tr></tbody></table>
+</td></tr>
+</tbody></table>
+
+
+<br>
+<small>Copyright © 2016, The Early Diagnosis and Treatment Research Foundation. All rights reserved.</small>
+<input name="fppend" value="" type="hidden">
+<input name="fgakey" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+<input name="fpfname" value="84@deAoCYzQAAF6ufdYAAAAM" type="hidden">
+<input name="fpinst" value="VEP" type="hidden">
+<input name="fpform" value="sbform" type="hidden">
+<input name="fpctime" value="Mon Jan 28 14:04:50 2013" type="hidden">
+<input name="fpmtime" value="Tue Aug 08 13:48:57 2017" type="hidden">
+<input name="fprhost" value="10.5.49.148" type="hidden">
+<input name="fpcname" value="AA" type="hidden">
+<input name="fpmname" value="Administrator" type="hidden">
+<input name="fpsbsid" value="VEP0001" type="hidden">
+</form>
+
+<table width="100%" border="0" bgcolor="#ffffcc"><tbody><tr><td align="left"><input value="Return to Case Review" onclick="javascript:subS1( )" type="button"> 
+<input value="Return Home" onclick="javascript:subS2( )" type="button"> 
+<input value="Submit Form" onclick="javascript:errorCheck( )" type="button"> 
+<input value="Submit Form (PENDING)" onclick="javascript:subPend( )" type="button"> 
+</td></tr></tbody></table>
+
+</body></html>

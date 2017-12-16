@@ -1,0 +1,2723 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Follow-up Form</title>
+<link type="text/css" rel="stylesheet" media="print" href="Follow-up%20Form_files/mgtsys-print.css">
+<script language="JavaScript">
+<!-- Code after this will be ignored by older browsers
+
+var FNAME = "followup";
+var ESP = false;
+var NDW = false;
+var CCH = false;
+var DATEC = false;
+var WJKD = false;
+var WCS = true;
+var PCH = false;
+var FVER = "1.45g"
+
+
+var mtt = [ ["---", "---", "---", "---"],
+            ["Jan", "Jan", "jan", "JAN"],
+            ["Feb", "Feb", "feb", "FEB"],
+            ["Mar", "Mar", "mar", "MAR"],
+            ["Apr", "Apr", "apr", "APR"],
+            ["May", "May", "may", "MAY"],
+            ["Jun", "Jun", "jun", "JUN"],
+            ["Jul", "Jul", "jul", "JUL"],
+            ["Aug", "Aug", "aug", "AUG"],
+            ["Sep", "Sep", "sep", "SEP"],
+            ["Oct", "Oct", "oct", "OCT"],
+            ["Nov", "Nov", "nov", "NOV"],
+            ["Dec", "Dec", "dec", "DEC"] ];
+function openPopUpWindow(){
+        var inst = document.getElementsByName('fginst')[0].value;
+        var token_id = document.getElementsByName('fguid')[0].value;
+        var w = window.open('https://' + window.location.hostname + '/physicians/search?source=sbform'+'&fginst='+inst+'&fguid='+token_id,'search_popup','width=400,height=400,scrollbars=1');
+        // pass the targetField to the pop up window
+//        w.nameField = nameField;
+//        w.npiField = npiField;
+        w.focus();
+    }
+
+function errorCheck()
+{
+    var aMsg = "";
+    var rfMsg = "";
+    var dosf;
+    var isnew = 0;
+    var fppend;
+
+function QueryString(key)
+{
+  var value = null;
+  for (var i=0;i<QueryString.keys.length;i++) {
+    if (QueryString.keys[i]==key) {
+      value = QueryString.values[i];
+      break;
+    }
+  }
+  return value;
+}
+
+function QueryString_Parse()
+{
+  var query = window.location.search.substring(1);
+  var pairs = query.split("&");
+
+  for (var i=0;i<pairs.length;i++) {
+     var pos = pairs[i].indexOf('=');
+     if (pos >= 0) {
+       var argname = pairs[i].substring(0,pos);
+       var value = pairs[i].substring(pos+1);
+       QueryString.keys[QueryString.keys.length] = argname;
+       QueryString.values[QueryString.values.length] = value;
+     }
+  }
+}
+
+    QueryString.keys = new Array();
+    QueryString.values = new Array();
+    QueryString_Parse(); 
+
+    // Only check for new forms (fpfname is empty or fppend is not)
+    fppend = QueryString("fppend");
+    if (!document.forms[FNAME].elements['fpfname']) {
+       isnew = 1;
+    }
+    if (fppend == 1) {
+       isnew = 1;
+    }
+
+    radioFixup();
+    cbFixup();
+
+    // Patient Identity
+    if (!document.forms[FNAME].elements['sisid'].value)
+       { rfMsg += " - General: Patient Study ID\n"; }
+
+    if (!document.forms[FNAME].elements['sidof'].value)
+       { rfMsg += " - Follow-up Date\n"; }
+
+    if (!document.forms[FNAME].elements['sidoe'].value)
+       { rfMsg += " - Date of Baseline CT\n"; }
+
+    if (!document.forms[FNAME].elements['sico'].value)
+       { rfMsg += " - Coordinator\n"; }
+	   
+	// Ordering information: Required only for G0297 scans
+	if (!document.forms[FNAME].elements['hvsimeq'].value) {
+		rfMsg += " - Ordering information: CT lung screening exam code?\n";
+	} else {
+		// If G0297 scan...
+		if (document.forms[FNAME].elements['hvsimeq'].value == 'y') {
+			// patient meets eligibility
+			if (!document.forms[FNAME].elements['siopnpi'].value) {
+				rfMsg += " - Ordering information: NPI\n";
+			}
+			if (!document.forms[FNAME].elements['hvsidsd'].value) {
+				rfMsg += " - Ordering information: Documentation of shared decision making\n";
+			}
+			if (!document.forms[FNAME].elements['hvsiopss'].value) {
+				rfMsg += " - Ordering information: Smoking status\n";
+			} else if (document.forms[FNAME].elements['hvsiopss'].value == 'f') {
+				// former smoker needs quit years
+				if (!document.forms[FNAME].elements['siopqy'].value) {
+					rfMsg += " - Ordering information: Ordering practitioner reported quit years\n";
+				}
+			}
+			if (!document.forms[FNAME].elements['sioppy'].value) {
+				rfMsg += " - Ordering information: Ordering practitioner reported pack years\n";
+			}
+			if (!document.forms[FNAME].elements['hvsioas'].value) {
+				rfMsg += " - Ordering information: Ordering practitioner reported asymptomatic patient.\n";
+			}
+
+		}
+	}
+
+	// Clinical Information must be entered for Mount Sinai patients
+    if (!document.forms[FNAME].elements['siopci'].value) {
+       rfMsg += " - Ordering information: Clinical Information\n";
+	}
+
+    var atmp = document.forms[FNAME].elements['hvsiabx'].value
+    if (!atmp)
+       { rfMsg += " - Antibiotics\n"; }
+    else if (atmp == 'y') {
+       if (!document.forms[FNAME].elements['siabxd'].value)
+          { rfMsg += " - Antibiotics: When\n"; }
+    }
+
+    atmp = document.forms[FNAME].elements['hvsiaex'].value
+    if (!atmp)
+       { rfMsg += " - Annual CT Scan\n"; }
+    else if (atmp == 'y') {
+       dosf = 1;
+    }
+    else {
+       dosf = 0;
+    }
+/*
+    var cps = chkPS();
+    if (cps & 1) {
+       if (!document.forms[FNAME].elements['sieso'].value)
+          { rfMsg += " - Patient: Patient Status (Specify)\n"; }
+    }
+    if (cps & 2) {
+       if (!document.forms[FNAME].elements['sixdate'].value)
+          { rfMsg += " - Patient: Date of Exit\n"; }
+    }
+*/
+/*
+    if (cps & 4) {
+       if (!document.forms[FNAME].elements['sidod'].value)
+          { rfMsg += " - Patient: Date of Death\n"; }
+       if (!document.forms[FNAME].elements['sicod'].value)
+          { rfMsg += " - Patient: Cause of Death\n"; }
+    }
+*/
+
+    if (CCH) {
+       // Patient Address Information
+       if (!document.forms[FNAME].elements['sipsa'].value)
+          { rfMsg += " - Patient: Address: Street Address\n"; }
+       if (!document.forms[FNAME].elements['sipc'].value)
+          { rfMsg += " - Patient: Address: City\n"; }
+       if ((!document.forms[FNAME].elements['sips'].value) &&
+             (!document.forms[FNAME].elements['sipcr'].value))
+          { rfMsg += " - Patient: Address: State or Country\n"; }
+       // require one of two phone #'s
+       if (!(document.forms[FNAME].elements['sipw'].value ||
+             document.forms[FNAME].elements['siph'].value))
+          { rfMsg += " - Patient: Phone Number\n"; }
+
+       // required Physician's information
+       if (!document.forms[FNAME].elements['simdn'].value)
+          { rfMsg += " - Physician: Name\n"; }
+
+       // Physician Address Information
+       if (!document.forms[FNAME].elements['simdsa'].value)
+          { rfMsg += " - Physician: Address: Street Address\n"; }
+       if (!document.forms[FNAME].elements['simdc'].value)
+          { rfMsg += " - Physician: Address: City\n"; }
+       if (!document.forms[FNAME].elements['simds'].value)
+          { rfMsg += " - Physician: Address: State\n"; }
+       if (!document.forms[FNAME].elements['simdp'].value)
+          { rfMsg += " - Physician: Phone Number\n"; }
+       // Don't require physician fax number at this time
+    }
+
+    var remcheck = 0;
+
+    if (!(document.forms[FNAME].elements['hvsiwc'].value
+        || document.forms[FNAME].elements['hvsisa'].value)) {
+       remcheck = 0;
+    }
+    else {
+       remcheck = 1;
+    }
+
+    if (remcheck) {
+       var mptmp = document.forms[FNAME].elements['hvsiwc'].value
+       if (!mptmp)
+          { rfMsg += " - Experienced Cough or Weight Loss\n"; }
+       else if (mptmp == 'y') {
+          if (!document.forms[FNAME].elements['hvsiwcp'].value)
+             { rfMsg += " - Cough/Weight Loss: Seen MD\n"; }
+          else if (document.forms[FNAME].elements['hvsiwcp'].value == 'y') {
+             if (!document.forms[FNAME].elements['siwcw'].value)
+                { rfMsg += " - Cough/Weight Loss: Seen MD (Whom)\n"; }
+          }
+          if (!document.forms[FNAME].elements['hvsiwcn'].value)
+             { rfMsg += " - Cough/Weight Loss: Experiencing Now\n"; }
+       }
+	   /* Removed X-ray */
+	   /*
+       var idtmp = document.forms[FNAME].elements['siacx'].selectedIndex;
+       if (idtmp == 0)
+          { rfMsg += " - Interim Diagnostic Tests: Prior CXR\n"; }
+       else if ((idtmp != (document.forms[FNAME].elements['siacx'].length - 1))
+                   && (!document.forms[FNAME].elements['siahxl'].value))
+          { rfMsg += " - Interim Diagnostic Tests: Prior CXR (Where)\n"; }
+	   */
+	   
+       idtmp = document.forms[FNAME].elements['siact'].selectedIndex;
+       if (idtmp == 0)
+          { rfMsg += " - Interim Diagnostic Tests: Prior CT\n"; }
+       else if ((idtmp != (document.forms[FNAME].elements['siact'].length - 1))
+                   && (!document.forms[FNAME].elements['siahcl'].value))
+          { rfMsg += " - Interim Diagnostic Tests: Prior CT (Where)\n"; }
+   
+       var hxtmp = document.forms[FNAME].elements['hvsiho'].value;
+       if (!hxtmp)
+          { rfMsg += " - Hospitalization\n"; }
+       else if (hxtmp == 'y') {
+          if (!document.forms[FNAME].elements['sihow'].value)
+             { rfMsg += " - Hospitalization Reason\n"; }
+          if (!document.forms[FNAME].elements['sihod'].value)
+             { rfMsg += " - Hospitalization Date\n"; }
+          if (!document.forms[FNAME].elements['sihol'].value)
+             { rfMsg += " - Hospitalization Location\n"; }
+       }
+
+       var dxtmp = document.forms[FNAME].elements['hvsicd'].value;
+       if (!dxtmp)
+          { rfMsg += " - Cancer Diagnosis\n"; }
+       else if (dxtmp == 'y') {
+          var dxi = document.forms[FNAME].elements['sicdl'].selectedIndex;
+          if (dxi == 0)
+             { rfMsg += " - Cancer Diagnosis Site\n"; }
+          else if ((dxi == (document.forms[FNAME].elements['sicdl'].length - 1))
+             && (!document.forms[FNAME].elements['sicdls'].value))
+             { rfMsg += " - Cancer Diagnosis Site (Specify)\n"; }
+          if (!document.forms[FNAME].elements['sicdd'].value)
+             { rfMsg += " - Cancer Diagnosis Date\n"; }
+   
+          if(document.forms[FNAME].elements['sicdl'].options[dxi].value == "lu") {
+             var lctmp = document.forms[FNAME].elements['hvsilcs'].value;
+             if(!lctmp)
+                { rfMsg += " - Lung Cancer Surgery\n"; }
+             else if (lctmp == 'y') {
+                if (!document.forms[FNAME].elements['silcsd'].value)
+                   { rfMsg += " - Lung Cancer Surgery Date\n"; }
+                if (!document.forms[FNAME].elements['silcsl'].value)
+                   { rfMsg += " - Lung Cancer Surgery Location\n"; }
+   
+                var txtmp = document.forms[FNAME].elements['hvsier'].value;
+                if (!txtmp)
+                   { rfMsg += " - Evidence of Recurrence\n"; }
+                else if (txtmp == 'y') {
+                   if (!document.forms[FNAME].elements['sierd'].value)
+                      { rfMsg += " - Evidence of Recurrence (Description)\n"; }
+                }
+             }
+          }
+       }
+   
+       var shtmp = document.forms[FNAME].elements['hvsisa'].value;
+       if (!shtmp)
+          { rfMsg += " - Smoking: Smoked This Month\n"; }
+       else if (shtmp == 'y') {
+          if (!document.forms[FNAME].elements['sippd'].value)
+             { rfMsg += " - Smoking: Smoking Habit (PPD)\n"; }
+       }
+       else if (shtmp == 'n') {
+          if (!document.forms[FNAME].elements['sidlcy'].value)
+             { rfMsg += " - Smoking: Date of Last Cigarette\n"; }
+       }
+
+    //if ( isnew == 1 ) {
+    //if (!document.forms[FNAME].elements['hvsishcua'].value)
+    //   { rfMsg += " - Smoking: Now smoke cigars\n"; }
+
+    //if (!document.forms[FNAME].elements['hvsishcup'].value)
+    //   { rfMsg += " - Smoking: Now smoke pipe\n"; }
+
+    // if (!document.forms[FNAME].elements['hvsishcum'].value)
+    //   { rfMsg += " - Smoking: Now smoke marijuana\n"; }
+
+    //if (!document.forms[FNAME].elements['hvsishcuc'].value)
+    //   { rfMsg += " - Smoking: Now use chewing tobacco\n"; }
+   //}
+
+       var shtmp = document.forms[FNAME].elements['hvsittq'].value;
+       if (!shtmp)
+          { rfMsg += " - Smoking: Tried to Quit\n"; }
+       else if (shtmp == 'y') {
+          if (!document.forms[FNAME].elements['sittqt'].value)
+             { rfMsg += " - Smoking: Times Tried to Quit\n"; }
+       }
+   
+       if (document.forms[FNAME].elements['siscl'].checked
+          && (!document.forms[FNAME].elements['siscos'].value))
+             { rfMsg += " - Smoking: Other Cessation Method (Specify)\n"; }
+   
+       if (document.forms[FNAME].elements['siqst'].selectedIndex == 0)
+          { rfMsg += " - Smoking: Seriously Thinking of Quitting\n"; }
+
+       if (!document.forms[FNAME].elements['hvsicpd'].value)
+          { rfMsg += " - Smoking: Cessation Packet Distributed\n"; }
+
+       if (dosf == 1) {
+          if ((!document.forms[FNAME].elements['hvsisfr'].value)
+                 || (document.forms[FNAME].elements['hvsisfr'].value != "r")) {
+             for (var i = 1; i <= 8; i++) {
+                 if (eval("!document.forms[FNAME].elements['hvsisfb" + i + "'].value"))
+                    { rfMsg += (" - Health Survey: Response " + i + "\n"); }
+             }
+          if ( isnew == 1 ) {
+          var shtmp = document.forms[FNAME].elements['hvsisa'].value;
+          if (shtmp != 'o') {
+          //for (var i = 1; i <= 4; i++) {
+	     //a = i + 12;
+           //  if (eval("!document.forms[FNAME].elements['hvsipsf" + i + "'].value"))
+            //    { rfMsg += (" - Health Survey: Response " + a + "\n"); }
+          // }
+}
+}
+          }
+       }
+    } // remcheck
+
+    // Compose Error Message
+    if (rfMsg)
+    {
+       aMsg = "The following required fields have not been entered:\n";
+       aMsg += rfMsg;
+       aMsg += 
+       "Please complete these fields and submit the form again.\n";
+       alert(aMsg);
+    }
+    else
+    {
+       propComm();
+       document.forms[FNAME].elements['fppend'].value = "0";
+       document.forms[FNAME].submit();
+    }
+}
+
+function radioFixup()
+{
+    fixRVal('siabx');
+    fixRVal('siaex');
+    // fixRVal('sicnc');
+    // fixRVal('sicnl');
+	
+	// Ordering information
+	//fixRVal('siim');
+	fixRVal('simeq');
+	fixRVal('sidsd');
+	fixRVal('siopss');
+	fixRVal('sioas');
+	
+    fixRVal('siwc');
+    fixRVal('siwcp');
+    fixRVal('siwcn');
+    fixRVal('siho');
+    fixRVal('sicd');
+    fixRVal('silcs');
+    fixRVal('sier');
+    fixRVal('sisa');
+    fixRVal('sittq');
+    fixRVal('sicpd');
+    //fixRVal('sishcua');
+    //fixRVal('sishcup');
+    //fixRVal('sishcum');
+    //fixRVal('sishcuc');
+    //fixRVal('sisf0a');
+    //fixRVal('sisf0b');
+    fixRVal('sisfb1');
+    fixRVal('sisfb2');
+    fixRVal('sisfb3');
+    fixRVal('sisfb4');
+    fixRVal('sisfb5');
+    fixRVal('sisfb6');
+    fixRVal('sisfb7');
+    fixRVal('sisfb8');
+    // fixRVal('sidsd');
+    // fixRVal('sisf9');
+    // fixRVal('sisf10');
+    // fixRVal('sisf11');
+    // fixRVal('sisf12');
+    // fixRVal('sipsf1');
+    // fixRVal('sipsf2');
+    // fixRVal('sipsf3');
+    // fixRVal('sipsf4');
+}
+
+function cbFixup()
+{
+    fixCVal('sisca');
+    fixCVal('siscb');
+    fixCVal('siscc');
+    fixCVal('siscd');
+    fixCVal('sisce');
+    fixCVal('siscf');
+    fixCVal('siscg');
+    fixCVal('sisch');
+    fixCVal('sisci');
+    fixCVal('siscj');
+    fixCVal('sisck');
+    fixCVal('siscl');
+    fixCVal('sisfr');
+  
+    // symptoms
+    fixCVal('siwcb');
+    fixCVal('siwcl');
+    fixCVal('siwch');
+    fixCVal('siwco');
+}
+
+function fixRVal(arg)
+{
+    var hval = "";
+    var arghv = "hv" + arg;
+    var len = document.forms[FNAME].elements[arg].length;
+
+    for (var i = 0; i < len; i++) {
+       if (document.forms[FNAME].elements[arg][i].checked)
+          hval = document.forms[FNAME].elements[arg][i].value;
+    }
+
+    document.forms[FNAME].elements[arghv].value = hval;
+}
+
+function setRVal(arg, val)
+{
+    var hval = "";
+    var arghv = "hv" + arg;
+    var len = document.forms[FNAME].elements[arg].length;
+
+    for (var i = 0; i < len; i++) {
+       if (document.forms[FNAME].elements[arg][i].value == val) {
+          document.forms[FNAME].elements[arg][i].checked = true;
+       }
+       else {
+          document.forms[FNAME].elements[arg][i].checked = false;
+       }
+    }
+
+    document.forms[FNAME].elements[arghv].value = val;
+}
+
+function clearRVal(arg)
+{
+    var hval = "";
+    var arghv = "hv" + arg;
+    var len = document.forms[FNAME].elements[arg].length;
+
+    for (var i = 0; i < len; i++) {
+       document.forms[FNAME].elements[arg][i].checked = false;
+    }
+
+    document.forms[FNAME].elements[arghv].value = "";
+}
+
+function fixCVal(arg)
+{
+    var hval = "";
+    var arghv = "hv" + arg;
+    var len = document.forms[FNAME].elements[arg].length;
+
+    if (document.forms[FNAME].elements[arg].checked) {
+       hval = document.forms[FNAME].elements[arg].value;
+       document.forms[FNAME].elements[arghv].value = hval;
+    }
+    else {
+       document.forms[FNAME].elements[arghv].value = "";
+    }
+}
+
+function clearN(arg)
+{
+   if (arg == 1) {
+      //document.forms[FNAME].elements['siwcc'].checked = false;
+      document.forms[FNAME].elements['siwcb'].checked = false;
+      document.forms[FNAME].elements['siwch'].checked = false;
+      document.forms[FNAME].elements['siwcl'].checked = false;
+      document.forms[FNAME].elements['siwco'].checked = false;
+   }
+   cbFixup();
+}
+
+
+function genD()
+{
+   var td = new Date();
+
+   var dstr = td.getDate().toString();
+   if (dstr.length == 1) {
+      dstr = "0" + dstr;
+   }
+   var hstr = td.getHours().toString();
+   if (hstr.length == 1) {
+      hstr = "0" + hstr;
+   }
+   var minstr = td.getMinutes().toString();
+   if (minstr.length == 1) {
+      minstr = "0" + minstr;
+   }
+   var secstr = td.getSeconds().toString();
+   if (secstr.length == 1) {
+      secstr = "0" + secstr;
+   }
+   var os = unfixMonth(td.getMonth()+1) + "/" + dstr + "/"
+   + (td.getYear() + 1900) + ":" + hstr + ":" + minstr + ":" + secstr + ": ";
+
+   return(os);
+}
+
+function propComm()
+{
+//   propCF('siadcom');
+//   corrCF('siadcom');
+}
+
+function propCF(arg)
+{
+   var ts = genD();
+   var ovn = arg;
+   var nvn = arg + "na";
+   var nval = document.forms[FNAME].elements[nvn].value;
+   var oval = document.forms[FNAME].elements[ovn].value;
+
+   while ((nval.charAt(nval.length - 1) == '\n')
+   || (nval.charAt(nval.length - 1) == '\r')) {
+      nval = nval.substr(0, nval.length - 1)
+   }
+
+   if (nval.length > 0) {
+      if (((nval.length == 1) && (nval.charAt(0) != '\n'))
+      || (nval.length > 1)) {
+         if ((oval.length == 1) && (oval.charAt(0) != '\n')) {
+            oval = "";
+            document.forms[FNAME].elements[ovn].value = "";
+         }
+         if (oval.length == 0) {
+            if (nval.charAt(nval.length - 1) == '\n') {
+               nval = nval.substr(0, nval.length-1);
+            }
+         }
+         else {
+            if (nval.charAt(nval.length - 1) != '\n') {
+               nval += "\n";
+            }
+         }
+
+         while ((oval.charAt(oval.length - 1) == '\n')
+	 || (oval.charAt(oval.length - 1) == '\r')) {
+            oval = oval.substr(0, oval.length - 1)
+         }
+         if ((oval.length == 1) && ((oval.charAt(oval.length - 1) == '\n')
+         || (oval.charAt(oval.length - 1) == '\r'))) {
+            oval = "";
+            document.forms[FNAME].elements[ovn].value = "";
+         }
+
+         document.forms[FNAME].elements[ovn].value = ts + nval + oval;
+      }
+   }
+   document.forms[FNAME].elements[nvn].value = "";
+}
+
+function corrCF(arg)
+{
+   var ts = genD();
+   var ovn = arg;
+   var nval = "";
+   var oval = document.forms[FNAME].elements[ovn].value;
+   var osp;
+
+   var asi = document.forms[FNAME].elements['sirn'].selectedIndex;
+   var av = document.forms[FNAME].elements['sirn'].options[asi].text;
+   var bv;
+
+   nval += (document.forms[FNAME].elements['sircd'].value + ": ");
+
+   if (document.forms[FNAME].elements['sirr'][0].checked) {
+      bv = "patient";
+   }
+   else {
+      bv = ("physician ("
+         + document.forms[FNAME].elements['sirmd'].value + ")");
+   }
+
+   if (asi != (document.forms[FNAME].elements['sirn'].length - 1)) {
+      nval += (av + ": ");
+   }
+
+   if (document.forms[FNAME].elements['sirns'].value != "") {
+      nval += (document.forms[FNAME].elements['sirns'].value + ": ");
+   }
+
+   nval += (bv + ": ");
+   nval += (document.forms[FNAME].elements['sired'].value + " exam: ");
+   nval += document.forms[FNAME].elements['sirc'].value;
+   nval += "\n";
+
+   document.forms[FNAME].elements[ovn].value = ts + nval + oval;;
+}
+
+function tsCA(arg)
+{
+   var ts = genD();
+   var ovn = "siadcom"
+   var oval = document.forms[FNAME].elements[ovn].value;
+   var istr;
+
+   radioFixup();
+
+   var arghv = "hv" + arg;
+
+   var aval = document.forms[FNAME].elements[arghv].value;
+
+   if (arg == "sicnc") {
+      if (aval == "0")
+         istr = "patient scheduled (p)\n";
+      else if (aval == "x")
+         istr = "patient unreachable by phone\n";
+      else
+         istr = "phone call " + aval + " made\n";
+   }
+   else if (arg == "sicnl") {
+      if (aval == "0")
+         istr = "patient scheduled (m)\n";
+      else if (aval == "x")
+         istr = "patient unreachable by mail\n";
+      else
+         istr = "letter " + aval + " sent\n";
+   }
+
+   document.forms[FNAME].elements[ovn].value = ts + istr + oval;
+}
+
+function uptCI()
+{
+   var ts = genD();
+   var ovn = "siadcom";
+   var oval = document.forms[FNAME].elements[ovn].value;
+   var tval = "Patient Contact Info (prior to update):\n";
+
+   var confMsg = (
+"This will copy the patient contact information into the additional\n"
++ "patient information log and clear the section so that you may record\n"
++ "a new set (e.g. after a change of address or phone).  Click OK to\n"
++ "proceed or Cancel to do nothing.");
+
+   var confval = confirm(confMsg);
+
+   if (confval == false)
+      return;
+
+   if (document.forms[FNAME].elements['sipsa'].value)
+      tval += (document.forms[FNAME].elements['sipsa'].value);
+
+   if (document.forms[FNAME].elements['sipan'].value)
+      tval += (", Apt. " + document.forms[FNAME].elements['sipan'].value);
+
+   tval += "\n";
+
+   if (document.forms[FNAME].elements['sipc'].value)
+      tval += (document.forms[FNAME].elements['sipc'].value + ", ");
+   if (document.forms[FNAME].elements['sips'].value)
+      tval += (document.forms[FNAME].elements['sips'].value + " ");
+   if (document.forms[FNAME].elements['sipz'].value)
+      tval += (document.forms[FNAME].elements['sipz'].value + " ");
+   if (WCS) {
+      if (document.forms[FNAME].elements['sipcr'].value)
+         tval += (document.forms[FNAME].elements['sipcr'].value);
+      if (document.forms[FNAME].elements['sipcn'].value) {
+         tval += (" (" + document.forms[FNAME].elements['sipcn'].value
+         + " county)");
+      }
+   }
+
+   tval += "\n";
+
+   if (document.forms[FNAME].elements['sipw'].value) {
+      tval += ("Work: " + document.forms[FNAME].elements['sipw'].value + "\n");
+   }
+   if (document.forms[FNAME].elements['siph'].value) {
+      tval += ("Home: " + document.forms[FNAME].elements['siph'].value + "\n");
+   }
+   if (document.forms[FNAME].elements['sipem'].value) {
+      tval += ("Email: " + document.forms[FNAME].elements['sipem'].value + "\n");
+   }
+
+   document.forms[FNAME].elements[ovn].value = ts + tval + oval;
+
+   document.forms[FNAME].elements['sipsa'].value = "";
+   document.forms[FNAME].elements['sipan'].value = "";
+   document.forms[FNAME].elements['sipc'].value = "";
+   document.forms[FNAME].elements['sips'].value = "";
+   document.forms[FNAME].elements['sipz'].value = "";
+   if (WCS) {
+      document.forms[FNAME].elements['sipcr'].value = "";
+      document.forms[FNAME].elements['sipcn'].value = "";
+   }
+   document.forms[FNAME].elements['sipw'].value = "";
+   document.forms[FNAME].elements['siph'].value = "";
+   document.forms[FNAME].elements['sipem'].value = "";
+}
+
+function umdCI()
+{
+   var ts = genD();
+   var ovn = "siadcom";
+   var oval = document.forms[FNAME].elements[ovn].value;
+   var tval = "Physician Contact Info (prior to update):\n";
+
+   var confMsg = (
+"This will copy the physician contact information into the additional\n"
++ "patient information log and clear the section so that you may record\n"
++ "a new set (e.g. after a change of address or phone).  Click OK to\n"
++ "proceed or Cancel to do nothing.");
+
+   var confval = confirm(confMsg);
+
+   if (confval == false)
+      return;
+
+   if (document.forms[FNAME].elements['simdn'].value)
+      tval += (document.forms[FNAME].elements['simdn'].value + "\n");
+
+   if (document.forms[FNAME].elements['simdsa'].value)
+      tval += (document.forms[FNAME].elements['simdsa'].value);
+
+   tval += "\n";
+
+   if (document.forms[FNAME].elements['simdc'].value)
+      tval += (document.forms[FNAME].elements['simdc'].value + ", ");
+   if (document.forms[FNAME].elements['simds'].value)
+      tval += (document.forms[FNAME].elements['simds'].value + " ");
+   if (document.forms[FNAME].elements['simdz'].value)
+      tval += (document.forms[FNAME].elements['simdz'].value + " ");
+
+   if (WCS) {
+      if (document.forms[FNAME].elements['simdcr'].value)
+         tval += (document.forms[FNAME].elements['simdcr'].value);
+
+      if (document.forms[FNAME].elements['simdcn'].value) {
+         tval += (" (" + document.forms[FNAME].elements['simdcn'].value
+         + " county)");
+      }
+   }
+
+   tval += "\n";
+
+   if (document.forms[FNAME].elements['simdp'].value) {
+      tval += ("Phone: " + document.forms[FNAME].elements['simdp'].value + "\n");
+   }
+   if (document.forms[FNAME].elements['simdf'].value) {
+      tval += ("Fax: " + document.forms[FNAME].elements['simdf'].value + "\n");
+   }
+
+   document.forms[FNAME].elements[ovn].value = ts + tval + oval;
+
+   document.forms[FNAME].elements['simdn'].value = "";
+   document.forms[FNAME].elements['simdsa'].value = "";
+   document.forms[FNAME].elements['simdc'].value = "";
+   document.forms[FNAME].elements['simds'].value = "";
+   document.forms[FNAME].elements['simdz'].value = "";
+   if (WCS) {
+      document.forms[FNAME].elements['simdcr'].value = "";
+      document.forms[FNAME].elements['simdcn'].value = "";
+   }
+   document.forms[FNAME].elements['simdp'].value = "";
+   document.forms[FNAME].elements['simdf'].value = "";
+}
+
+function chkPS()
+{
+   var ras = new Array("ac", "pa", "in", "fe");
+   var sfs = new Array("mr", "pr", "os", "es");
+   var ni = document.forms[FNAME].elements['sies'].selectedIndex;  
+   var chv = document.forms[FNAME].elements['sies'].options[ni].value
+   var fac = 0;
+   var fsf = 0;
+   var rval = 0;
+
+   for (var i = 0; i < ras.length; i++) {
+      if (chv == ras[i]) {
+	 fac = 1;
+      }
+   }
+
+   for (var i = 0; i < sfs.length; i++) {
+      if (chv == sfs[i]) {
+	 fsf = 1;
+      }
+   }
+
+   if (chv == "ex") {
+      rval += 4;
+   }
+   if (!fac) {
+      rval += 2;
+   }
+   if (fsf == 1) {
+      rval += 1;
+   }
+
+   return(rval);
+}
+
+function subPend()
+{
+   propComm();
+   document.forms[FNAME].elements['fppend'].value = "1";
+   document.forms[FNAME].submit();
+}
+
+function fprep()
+{
+   // hsv();
+}
+
+function calcTSB()
+{
+// vcode
+   var doe = "sidoe";
+   var dof = "sidof";
+   var tsb = "sitsb";
+   synChk(dof,'rdate')
+
+   if (!document.forms[FNAME].elements[dof].value) {
+      document.forms[FNAME].elements[tsb].value = "";
+      return;
+   }
+
+   var dm = ddt(dof, doe)
+   document.forms[FNAME].elements[tsb].value = dm;
+}
+
+function ddt(da, db)
+{
+   var cV = new Array();
+   var mval = new Array();
+   var dval = new Array();
+   var yval = new Array();
+   var mstr, dstr, ystr;
+   var exp = /^(\d{1,2}\/\D{3}\/\d{4})$/;
+   var wrong = false;
+   var dn = -1;
+   var dy, dm, dd, ddm, dmc;
+
+   cV[0] = document.forms[FNAME].elements[da].value;
+   cV[0] = cV[0].replace(/^\s+/g, '').replace(/\s+$/g, '');
+
+   cV[1] = document.forms[FNAME].elements[db].value;
+   cV[1] = cV[1].replace(/^\s+/g, '').replace(/\s+$/g, '');
+
+   for (var i = 0; i < 2; i++) {
+      if (!exp.test(cV[i])) {
+         wrong = true;
+      }
+      else {
+         var pd = new RegExp("\\/", "g");
+         var dfa = cV[i].split(pd);
+   
+         if (dfa.length == 3) {
+            dstr = dfa[0];
+            if (dstr.length == 1) {
+               dstr = "0" + dstr;
+            }
+            mstr = dfa[1];
+            if (dfa[1].length == 3) {
+               mstr = fixMonth(dfa[1]);
+            }
+            else {
+               mstr = dfa[1];
+            }
+
+            ystr = dfa[2];
+            if (ystr.length == 4)
+               syear = false;
+            else
+               wrong = true;
+
+            mval[i] = parseInt(mstr, 10);
+            dval[i] = parseInt(dstr, 10);
+            yval[i] = parseInt(ystr, 10);
+         }
+         else {
+            wrong = true;
+         }
+      }
+   
+      if (wrong) {
+         mval[0] = 0;
+         dval[0] = 0;
+         yval[0] = 0;
+      }
+   }
+
+   dmc = 0;
+   dy = yval[0] - yval[1];
+   dmc += (12 * dy);
+   dm = mval[0] - mval[1];
+   dmc += dm;
+   dd = dval[0] - dval[1];
+
+   if (dd < 0) {
+      if (dd < -15) {
+         ddm = -1;
+      }      
+      else {
+         ddm = 0;
+      }
+   }
+   else {
+      if (dd > 15) {
+         ddm = 1;
+      }      
+      else {
+         ddm = 0;
+      }
+   }
+
+   dmc += ddm;
+
+   return(dmc);
+}
+
+function synChk(arg, etype)
+{
+   var chVal = "";
+   var chNum = 0;
+   chVal = document.forms[FNAME].elements[arg].value;
+   chVal = chVal.replace(/^\s+/g, '').replace(/\s+$/g, '');
+   chNum = parseFloat(chVal, 10);
+
+   if ((!isNaN(chVal)) && (chVal.charAt(chVal.length-1) == '.')) {
+      chVal = chVal.substr(0,chVal.length-1);
+   }
+
+   if (etype == 'cws') {
+      document.forms[FNAME].elements[arg].value = chVal;
+   }
+   else if (etype == 'phone') {
+      if (!(PCH || ESP)) {
+         document.forms[FNAME].elements[arg].value = chVal;
+         return;
+      }
+
+      var exp = /^(\d{10}|\d{3}-\d{3}-\d{4}|\(\d{3}\)\d{3}-\d{4})$/;
+      if (!exp.test(chVal)) {
+         altfx(arg, chVal, "phone", "valid phone number");
+      }
+      else {
+	 var pd = new RegExp("[-()]", "g");
+	 var tstr=chVal.replace(pd, "");
+	 var newstr = "(" + tstr.substring(0,3) + ")" + tstr.substring(3,6)
+	 newstr += "-" + tstr.substring(6,10)
+         document.forms[FNAME].elements[arg].value = newstr;
+      }
+   }
+   else if (etype == 'ssn') {
+      if (!ESP) {
+         document.forms[FNAME].elements[arg].value = chVal;
+         return;
+      }
+
+      var exp = /^(\d{9}|\d{3}-\d{2}-\d{4})$/;
+      if (!exp.test(chVal)) {
+         altfx(arg, chVal, "SSN", "valid SSN");
+      }
+      else {
+	 var pd = new RegExp("-", "g");
+	 var tstr=chVal.replace(pd, "");
+	 var newstr = tstr.substring(0,3) + "-" + tstr.substring(3,5)
+	 newstr += "-" + tstr.substring(5,9)
+         document.forms[FNAME].elements[arg].value = newstr;
+      }
+   }
+   else if ((etype == 'rdate') || (etype == 'adate') || (etype == 'rsdate') || (etype == 'asdate')) {
+      var mstr, dstr, ystr;
+
+      if ((etype == 'rdate') || (etype == 'rsdate')) {
+         var y4min = 1990;
+	 // Increase MAX year from 2009 to 2019, since 2009 has arrived
+	 var y4max = 2019;
+	 var y2min = 90;
+	 var y2max = 19;
+      }
+      else if ((etype == 'adate') || (etype == 'asdate')) {
+         var y4min = 1800;
+	 var y4max = 2048;
+	 var y2min = 90;
+	 var y2max = 19;
+      }
+
+      if ((etype == 'rdate') || (etype == 'adate')) {
+         if (DATEC) {
+	    var exp = /^(\d{6}|\d{8}|\d{1,2}\/\D{3}\/\d{4}|\d{1,2}\/\D{3}\/\d{2}|\d{1,2}\/\d{1,2}\/\d{4}|\d{1,2}\/\d{1,2}\/\d{2})$/;
+	 }
+	 else {
+	    var exp = /^(\d{1,2}\/\D{3}\/\d{4})$/;
+	 }
+	 var sdt = false;
+      }
+      else if ((etype == 'rsdate') || (etype == 'asdate')) {
+         if (DATEC) {
+            var exp = /^(\d{4}|\d{6}|\D{3}\/\d{4}|\D{3}\/\d{2}|\d{1,2}\/\d{4}|\d{1,2}\/\d{2})$/;
+	 }
+	 else {
+            var exp = /^(\D{3}\/\d{4})$/;
+	 }
+	 var sdt = true;
+      }
+
+      var wrong = false;
+
+      if (!exp.test(chVal)) {
+         wrong = true;
+      }
+      else {
+	 var pd = new RegExp("\\/", "g");
+	 var dfa = chVal.split(pd);
+
+	 if ((dfa.length == 1) &&
+            ((dfa[0].length == 4) || (dfa[0].length == 6) || (dfa[0].length == 8))) {
+	       // monolithic 4, 6 or 8
+	       var tstr = dfa[0];
+
+	       if (!sdt) { // mono full date
+	          if (tstr.length == 6) {
+	             dstr = tstr.substring(0,2);
+		     mstr = tstr.substring(2,4);
+		     ystr = tstr.substring(4,6);
+		     syear = true;
+	          }
+	          else if (tstr.length == 8) {
+	             dstr = tstr.substring(0,2);
+	             mstr = tstr.substring(2,4);
+		     ystr = tstr.substring(4,8);
+		     syear = false;
+                  }
+		  mval = parseInt(mstr, 10);
+		  dval = parseInt(dstr, 10);
+		  yval = parseInt(ystr, 10);
+	       }
+	       else { // mono short date (mmyy or mmyyyy)
+	          if (tstr.length == 4) {
+	             mstr = tstr.substring(0,2);
+		     ystr = tstr.substring(2,4);
+		     syear = true;
+	          }
+	          else if (tstr.length == 6) {
+	             mstr = tstr.substring(0,2);
+	             ystr = tstr.substring(2,6);
+		     syear = false;
+	          }
+	          mval = parseInt(mstr, 10);
+	          yval = parseInt(ystr, 10);
+	       }
+	 }
+	 else if ((dfa.length == 2) && sdt) { // split short date
+	    mstr = dfa[0];
+	    if (dfa[0].length == 3) {
+	       mstr = fixMonth(dfa[0]);
+	    }
+	    else {
+	       mstr = dfa[0];
+	    }
+	    ystr = dfa[1];
+	    if (ystr.length == 4)
+	       syear = false;
+	    else if (ystr.length == 2)
+	       syear = true;
+	    else
+	       wrong = true;
+
+	    mval = parseInt(mstr, 10);
+	    yval = parseInt(ystr, 10);
+	 }
+	 else if (dfa.length == 3) { // split full date
+	    dstr = dfa[0];
+	    if (dstr.length == 1) {
+	       dstr = "0" + dstr;
+            }
+	    mstr = dfa[1];
+	    if (dfa[1].length == 3) {
+	       mstr = fixMonth(dfa[1]);
+	    }
+	    else {
+	       mstr = dfa[1];
+	    }
+
+	    ystr = dfa[2];
+	    if (ystr.length == 4)
+	       syear = false;
+	    else if (ystr.length == 2)
+	       syear = true;
+	    else
+	       wrong = true;
+
+	    mval = parseInt(mstr, 10);
+	    dval = parseInt(dstr, 10);
+	    yval = parseInt(ystr, 10);
+	 }
+	 else {
+	    wrong = true;
+	 }
+
+	 if (!wrong) {
+	    // check month
+	    if (!sdt) {
+	       if (isNaN(mval) || (mval < 1) || (mval > 12)) {
+	          wrong = true;
+	       }
+	    }
+	    else {
+	       // allow zero for month in short date form
+	       if (isNaN(mval) || (mval < 0) || (mval > 12)) {
+	          wrong = true;
+	       }
+	    }
+
+	    // check year
+	    if (syear) {
+	       if (yval <= y2max) {
+		  yval += 2000;
+	       }
+	       else if (yval >= y2min) {
+	          yval += 1900;
+	       }
+	       else { // y2max > yval < y2min
+	          wrong = true;
+	       }
+	    }
+
+	    if (isNaN(yval) || (yval < y4min) || (yval > y4max)) {
+	       wrong = true;
+	    }
+	 
+	    // check day
+	    if (!sdt) {
+	       maxd = 31;
+               if ((mval == 4) || (mval == 6) || (mval == 9) || (mval == 11)) {
+                  maxd = 30;
+               }
+               else if (mval == 2) {
+                  if ((yval % 4) != 0) {
+                     maxd = 28;
+                  }
+                  else {
+                     maxd = 29;
+                  }
+               }
+               else {
+                  maxd = 31;
+               }
+	       if (isNaN(dval) || (dval < 1) || (dval > maxd)) {
+	          wrong = true;
+	       }
+	    }
+
+            mstr = unfixMonth(mval);
+
+	    if (!sdt) {
+	       var newstr = dstr + "/" + mstr + "/" + yval.toString();
+	    }
+            else {
+	       var newstr = mstr + "/" + yval.toString();
+	    }
+
+	    document.forms[FNAME].elements[arg].value = newstr;
+         }
+      }
+
+      if (wrong) {
+         altfx(arg, chVal, "date", "valid date");
+      }
+   }
+   else if (etype == 'month') {
+      if (isNaN(chVal) || isNaN(chNum) || (chNum > 12) || (chNum < 1)) {
+         altfx(arg, chVal, "month", "number in the range 1 to 12");
+      }
+      else {
+         document.forms[FNAME].elements[arg].value = chVal;
+      }
+   }
+   else if (etype == 'day') {
+      if (isNaN(chVal) || isNaN(chNum) || (chNum > 31) || (chNum < 1)) {
+         altfx(arg, chVal, "day", "number in the range 1 to 31");
+      }
+      else {
+         document.forms[FNAME].elements[arg].value = chVal;
+      }
+   }
+   else if (etype == 'year') {
+      if ((!isNaN(chVal) || isNaN(chNum)) && ((chNum == 9) || (chNum == 99))) {
+         document.forms[FNAME].elements[arg].value = "1999"
+         chNum = 1999
+      }
+      if ((!isNaN(chVal) || isNaN(chNum)) && ((chVal == "0") || (chVal == "00"))) {
+	 document.forms[FNAME].elements[arg].value = "2000"
+	 chNum = 2000
+      }
+      if (isNaN(chVal) || isNaN(chNum) || (chNum > 2019) || (chNum < 1990)) {
+         altfx(arg, chVal, "year", "number in the range 1990 to 2019");
+      }
+      else {
+         document.forms[FNAME].elements[arg].value = chVal;
+      }
+   }
+   else if (etype == 'ayear') {
+      if (isNaN(chVal) || isNaN(chNum) || (chNum > 2019) || (chNum < 1800)) {
+         altfx(arg, chVal, "year", "four-digit year");
+      }
+      else {
+         document.forms[FNAME].elements[arg].value = chVal;
+      }
+   }
+   else if (etype == 'age') {
+      if (isNaN(chVal) || isNaN(chNum) || (chNum > 150) || (chNum < 1)) {
+         altfx(arg, chVal, "age", "valid age in years");
+      }
+      else {
+         document.forms[FNAME].elements[arg].value = chVal;
+      }
+   }
+   else if (etype == 'pnum') {
+      if ((chNum >= 0) && (chVal.charAt(0) == '.')) {
+         chVal = '0' + chVal;
+      }
+
+      if (isNaN(chVal) || isNaN(chNum) || (chNum < 0)) {
+         altfx(arg, chVal, "number", "valid positive number");
+      }
+      else {
+         document.forms[FNAME].elements[arg].value = chVal;
+      }
+   }
+   else if (etype == 'anum') {
+      if ((chNum < 0) && (chVal.charAt(1) == '.')) {
+         chVal = '-0' + chVal.substr(1,chVal.length - 1);
+      }
+      else if ((chNum >= 0) && (chVal.charAt(0) == '.')) {
+         chVal = '0' + chVal;
+      }
+
+      if (isNaN(chVal) || isNaN(chNum)) {
+         altfx(arg, chVal, "number", "valid numeric argument");
+      }
+      else {
+         document.forms[FNAME].elements[arg].value = chVal;
+      }
+   }
+}
+
+function altfx(arg, val, msg1, msg2)
+{
+   alert("Incorrect " + msg1 + " entry!\n    " + val
+      + "\nPlease enter a " + msg2 + ".\n");
+   document.forms[FNAME].elements[arg].value = "";
+   document.forms[FNAME].elements[arg].select();
+   document.forms[FNAME].elements[arg].focus();
+}
+
+function fixMonth(str)
+{
+   for (var i = 0; i < mtt.length; i++) {
+      for (var j = 1; j < mtt[0].length; j++) {
+         if(str == mtt[i][j]) {
+            return i;
+         }
+      }
+   }
+
+   return "-1";
+}
+
+function unfixMonth(num)
+{
+   if ((num < 0) || (num > 12))
+      return "Xxx";
+   else
+      return(mtt[num][1]);
+}
+
+function hsv()
+{
+   if(!document.forms[FNAME].elements['hvsicnc'].value) {
+      setRVal('sicnc', '0');
+   }
+
+   if(!document.forms[FNAME].elements['hvsicnl'].value) {
+      setRVal('sicnl', '0');
+   }
+}
+
+function jshp(arg)
+{
+   alert(fu_hsl_100(arg));
+}
+
+function fu_hsl_100(arg)
+{
+   if (arg == "aex") {
+      return(
+"If the subject is returning for an annual CT scan (low-dose or\n"
++ "annual repeat DxCT), answer \"yes\".  If the follow-up form is being\n"
++ "administered for an interim diagnostic scan or over the phone\n"
++ "because the subject will not be returning for an exam, answer \"no\".");
+   }
+   else if (arg == "dex") {
+      return(
+"The Date of Exit should be recorded for all subjects who are no longer\n"
++ "active in the study.  It signifies the date on which they change to\n"
++ "a non-active status.");
+   }
+   else if (arg == "dod") {
+      return(
+"The Date of Death (DOD) should be recorded for all subjects who have\n"
++ "expired.");
+   }
+   else if (arg == "cod") {
+      return(
+"The Cause of Death (COD) should be recorded for all subjects who have\n"
++ "expired.");
+   }
+   else if (arg == "corr") {
+      return(
+"This section should be used to record correspondence or communication\n"
++ "with the patient or physician.  This includes the date, recipient\n"
++ "and nature of the communication, the date of the relevant CT exam,\n"
++ "and the identity of the coordinator.");
+   }
+   else if (arg == "upt") {
+      return(
+"Use the Update button when the patient's contact information changes.\n"
++ "It will save a copy of the information into the Additional Patient\n"
++ "Information and clear the appropriate fields so that you may enter\n"
++ "the new contact information.");
+   }
+   else if (arg == "umd") {
+      return(
+"Use the Update button when the physician's contact information\n"
++ "changes.  It will save a copy of the information into the Additional\n"
++ "Patient Information and clear the appropriate fields so that you may\n"
++ "enter the new contact information.");
+   }
+   else if (arg == "shsa") {
+      return(
+"This question determines if they are a current or former smoker.  If\n"
++ "they are a current smoker, proceed to the question starting \"If yes,\n"
++ "...\".  If they have not smoked in the past month, proceed to the next\n"
++ "question starting with \"If no, ...\".");
+   }
+   else if (arg == "dlc") {
+      return(
+"For this question, please use the pull-down menus for DD (date) and\n"
++ "Mmm (month) if the subject knows the exact date and month they quit\n"
++ "smoking cigarettes.  If they cannot remember exactly the date and/or\n"
++ "month in which they quit, a \"-\" (dash) may be inserted for the DD\n"
++ "(date) and/or Mmm (month) only.  The YYYY (year) is a required field\n"
++ "and must be entered.");
+   }
+   else if (arg == "ttq") {
+      return(
+"This question refers to the smoking history of the enrollee since baseline\n"
++ "CT.  If they have tried to quit smoking at all during the study period,\n"
++ "answer \"yes\"; if they NEVER tried, answer \"no\".  If they did try to quit\n"
++ "at least one time, please type in the total number of times they can\n"
++ "remember trying to quit.\n"
++ "\n"
++ "If the last date of cigarette was more than one month prior to baseline\n"
++ "CT, select \"n/a\".");
+   }
+   else if (arg == "qst") {
+      return(
+"This question is to determine at what stage of quitting the enrollee\n"
++ "is.  Please ask them if they are seriously thinking of quitting\n"
++ "smoking and if yes, find out exactly when they plan to do so.  Select\n"
++ "the value in the pull-down menu that best matches the enrolee's\n"
++ "response.\n"
++ "\n"
++ "If the last date of cigarette was more than one month prior to baseline\n"
++ "CT, select \"n/a\".");
+   }
+   else if (arg == "cpd") {
+      return(
+"This question is to record whether a packet of smoking cessation\n"
++ "information has been given to the participant.  If your institution\n"
++ "does not distribute such information to the participants, click \"no\".");
+   }
+   else if (arg == "sf") {
+      return(
+"This is an abbreviated version of the SF-36(tm) Health Survey.  The\n"
++ "ELCAP has received permission to use it as part of our data\n"
++ "collection.  It is a short, 1-page, 2-minute survey form that has been\n"
++ "shown to yield summary physical and mental health outcome scores that\n"
++ "are inter-changeable with those from the SF-36(r) in both general and\n"
++ "specific populations.  This short-form, the SF-12(r), which was\n"
++ "published in early 1995, is already one of the most widely used\n"
++ "surveys of its kind.\n"
++ "\n"
++ "The coordinator may choose to ask these questions face-to-face, or\n"
++ "give the participant a copy to complete after they have signed consent\n"
++ "and answered all questions preceding this section.\n"
++ "\n"
++ "If you allow the participant to complete the form on their own, please\n"
++ "make sure they have filled in a bubble for each item.");
+   }
+}
+
+
+// Stop hiding the code here -->
+</script>
+</head>
+
+<body onload="fprep()" alink="#ff0000" text="#000000" vlink="#ff0000" link="#0000ff" bgcolor="#bfffbf">
+<table width="100%" bgcolor="#ffffcc"><form name="banner"></form><tbody><tr><th align="left"><font bold="" size="+2">VEP VA ELCAP Phoenix (VAPALS): </font></th><td align="right">Accessed by: <i>Administrator</i></td></tr></tbody></table><table width="100%" border="0" bgcolor="#ffffcc"><tbody><tr><td><input value="Return to Case Review" onclick="javascript:subS1( )" type="button"> 
+<input value="Return Home" onclick="javascript:subS2( )" type="button"> 
+<input value="Submit Form" onclick="javascript:errorCheck( )" type="button"> 
+<input value="Submit Form (PENDING)" onclick="javascript:subPend( )" type="button"> 
+</td><td align="right">08:18 AM MST November 21, 2017</td></tr></tbody></table><table width="100%" bgcolor="black"><tbody><tr><td><table width="100%" cellpadding="2" bgcolor="white"><tbody><tr><td width="33%">Study ID: <font size="+1"><b> VEP0001 </b></font></td><td align="center" width="33%"> Name (Last, First): <font size="+1"><b>Doe, Jane</b></font></td><td align="right" width="33%"> Medical Record Number: <font size="+1"><b>12345</b></font></td></tr></tbody></table></td></tr></tbody></table><form method="POST" action="/cgi-bin/datac/cform.cgi" name="cform"><input name="field" value="sid" type="hidden"> <input name="fguid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden"><input name="fginst" value="VEP" type="hidden"><input name="fvalue" value="VEP0001" type="hidden"></form>
+<form method="POST" action="/cgi-bin/datac/home.cgi" name="home"><input name="inst" value="VEP" type="hidden"><input name="uid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden"><input name="msg" value="Case Review Complete" type="hidden"></form>
+<script language="JavaScript">
+<!-- Code after this will be ignored by older browsers
+function subS1() { document.forms['cform'].submit() }
+function subS2() { document.forms['home'].submit() }
+// Stop hiding the code here -->
+</script>
+
+
+<h1>Follow-Up Form</h1>
+<form method="POST" action="/cgi-bin/datac/datae.cgi" name="followup">
+
+<input name="sisid" value="VEP0001" type="hidden">
+
+<input name="siscin" type="hidden">
+<input name="sifnm" type="hidden">
+<input name="sifnf" type="hidden">
+
+<input name="sicnc" type="hidden">
+<input name="sicnl" type="hidden">
+<input name="sies" type="hidden">
+<input name="sieso" type="hidden">
+<input name="sixdate" type="hidden">
+<input name="sidod" type="hidden">
+<input name="sicod" type="hidden">
+<input name="sircd" type="hidden">
+<input name="sired" type="hidden">
+<input name="sirr" type="hidden">
+<input name="sirmd" type="hidden">
+<input name="sirn" type="hidden">
+<input name="sirns" type="hidden">
+<input name="sirc" type="hidden">
+<input name="siadcom" type="hidden">
+<input name="sipsa" type="hidden">
+<input name="sipan" type="hidden">
+<input name="sipc" type="hidden">
+<input name="sips" type="hidden">
+<input name="sipz" type="hidden">
+<input name="sipcn" type="hidden">
+<input name="sipcr" type="hidden">
+<input name="sipw" type="hidden">
+<input name="siph" type="hidden">
+<input name="sipem" type="hidden">
+<input name="simdn" type="hidden">
+<input name="simdsa" type="hidden">
+<input name="simdc" type="hidden">
+<input name="simds" type="hidden">
+<input name="simdz" type="hidden">
+<input name="simdcn" type="hidden">
+<input name="simdcr" type="hidden">
+<input name="simdp" type="hidden">
+<input name="simdf" type="hidden">
+<input name="sisf1" value="" type="hidden">
+<input name="sisf2" value="" type="hidden">
+<input name="sisf3" value="" type="hidden">
+<input name="sisf4" value="" type="hidden">
+<input name="sisf5" value="" type="hidden">
+<input name="sisf6" value="" type="hidden">
+<input name="sisf7" value="" type="hidden">
+<input name="sisf8" value="" type="hidden">
+<input name="sisf9" value="" type="hidden">
+<input name="sisf10" value="" type="hidden">
+<input name="sisf11" value="" type="hidden">
+<input name="sisf12" value="" type="hidden">
+<input name="sipsf1" value="" type="hidden">
+<input name="sipsf2" value="" type="hidden">
+<input name="sipsf3" value="" type="hidden">
+<input name="sipsf4" value="" type="hidden">
+<input name="siwcc" value="" type="hidden">
+<input name="siacx" value="b" type="hidden">
+<input name="siahxl" value="MSH" type="hidden">
+<input name="sishcua" value="c" type="hidden">
+<input name="sishcup" value="c" type="hidden">
+<input name="sishcum" value="c" type="hidden">
+<input name="sishcuc" value="c" type="hidden">
+<input name="siim" value="" type="hidden">
+
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td width="20%"><b>Follow-up Date</b><br>(DD/Mmm/YYYY)</td>
+<td><input name="sidof" onchange="calcTSB()" size="11" value="21/May/2014" type="text"></td>
+<td align="left"> &nbsp; </td>
+<td align="left"> &nbsp; </td>
+</tr>
+<tr>
+<td><b>Date of Baseline CT</b><br>(DD/Mmm/YYYY)</td>
+<td><input name="sidoe" onfocus="this.blur()" size="11" value="01/Jan/2013" type="text"></td>
+<td align="left"> &nbsp; </td>
+<td align="left"> &nbsp; </td>
+</tr>
+<tr>
+<td><b>Time Since Baseline (Months)</b></td>
+<td><input name="sitsb" onfocus="this.blur()" size="3" value="16" type="text"></td>
+<td><b>Coordinator</b></td>
+<td><input name="sico" onchange="synChk('sico','cws')" size="24" value="KT" type="text"></td>
+</tr>
+<tr>
+<td colspan="4"><hr></td>
+</tr>
+</tbody></table>
+
+<h2>Ordering Information</h2>
+<table cellspacing="4" cellpadding="2">
+<tbody><tr>
+<td colspan="4" align="left" valign="top">
+<p>Ordering information is required <b>ONLY</b> for Medicare/Medicaid patients.</p>
+</td>
+</tr>
+
+<tr>
+<td><b>Was a CT lung screening scan ordered for this patient (CPT code G0297)?</b></td>
+<td colspan="3">
+<input name="hvsimeq" value="n" type="hidden">
+<label>
+<input name="simeq" value="n" checked="checked" type="radio">&nbsp;no
+</label>
+<label>
+<input name="simeq" value="y" type="radio">&nbsp;yes
+</label>
+(if no, the rest of the questions in this section are optional)</td>
+</tr><tr>
+<td><b>Ordered by: First Name</b></td>
+<td>
+<input name="siopfn" size="24" type="text">
+</td>
+<td><b>Last name</b></td>
+<td>
+<input name="siopln" size="24" type="text">
+</td>
+</tr>
+<tr>
+<td><b>National Provider ID (NPI)</b></td>
+<td>
+<input name="siopnpi" size="12" onchange="synChk('siopnpi','pnum')" type="text">
+</td>
+<td colspan="2"><a href="#" onclick="openPopUpWindow()">Search</a>
+</td>
+</tr>
+<tr>
+<td align="left"><b>Documentation of shared decision making</b></td>
+<td colspan="3">
+<input name="hvsidsd" value="" type="hidden">
+<label>
+<input name="sidsd" value="n" type="radio">&nbsp;no
+</label>
+<label>
+<input name="sidsd" value="y" type="radio">&nbsp;yes
+</label>
+&nbsp;&nbsp;(shared decision making is required for reimbursement for G0297 exams on baseline <b>only</b>)
+</td>
+<td colspan="2">&nbsp;</td>
+</tr>
+<tr>
+<td><b>Reported smoking status at time of order: </b></td>
+<td>
+<input name="hvsiopss" type="hidden">
+<label>
+<input name="siopss" value="c" type="radio">&nbsp;current
+</label>
+<label>
+<input name="siopss" value="f" type="radio">&nbsp;former
+</label>
+</td>
+<td colspan="2"></td>
+</tr>
+<tr>
+<td><b>Reported pack years at time of order:</b></td>
+<td>
+<input name="sioppy" size="8" type="text">
+</td>
+<td colspan="2">&nbsp;</td>
+</tr>
+<tr>
+<td><b>Reported years since quit at time of order:</b></td>
+<td>
+<input name="siopqy" size="8" type="text">
+&nbsp;(only required for former smokers)
+</td>
+<td colspan="2">&nbsp;</td>
+</tr>
+<tr>
+<td><b>Reported asymptomatic for lung cancer at time of order:</b></td>
+<td>
+<input name="hvsioas" value="" type="hidden">
+<label>
+<input name="sioas" value="n" type="radio">&nbsp;no
+</label>
+<label>
+<input name="sioas" value="y" type="radio">&nbsp;yes
+</label>
+</td>
+<td colspan="2">&nbsp;</td>
+</tr>
+<tr>
+<td><b>Clinical information</b> <br>
+(information will be copied to CT report)</td>
+<td colspan="4">
+<textarea name="siopci" cols="40" rows="4">Follow-up
+</textarea>
+</td>
+</tr>
+</tbody></table>
+
+<hr>
+
+<table>
+<tbody><tr>
+<td><b>Have you taken antibiotics since your last CT scan?</b></td>
+<td align="left" valign="top">
+<input name="hvsiabx" value="n" type="hidden">
+<input name="siabx" value="n" checked="checked" type="radio"> no
+<input name="siabx" value="y" type="radio"> yes
+</td>
+<td align="left"><b>If so, when?</b><br>(Mmm/YYYY)</td>
+<td><input name="siabxd" onchange="synChk('siabxd','rsdate')" size="8" type="text"></td>
+</tr>
+<tr>
+<td><b>Is this an annual CT scan?</b>
+<a href="javascript:jshp('aex')"><img src="Follow-up%20Form_files/hb.gif" width="5" height="10" border="0"></a></td>
+
+<td align="left" valign="top">
+<input name="hvsiaex" value="n" type="hidden">
+<input name="siaex" value="n" checked="checked" type="radio"> no
+<input name="siaex" value="y" type="radio"> yes
+</td></tr>
+</tbody></table>
+
+<hr>
+
+<table cellspacing="0" cellpadding="1">
+<tbody><tr>
+<td><b>Which year did you last have a prolonged exposure to secondhand tobacco smoke?</b>&nbsp;
+<input name="sisseo" size="5" type="text">
+</td></tr>
+<tr><td style="padding-left:3em;"><b>If you cannot remember, was it</b>&nbsp;
+<input name="hvsisse" value="1" type="hidden">
+<input name="sisse" value="1" checked="checked" type="radio">
+less than 5 years ago,&nbsp;&nbsp;
+<input name="sisse" value="5" type="radio">
+more than 5 years ago,&nbsp;or&nbsp;&nbsp;
+<input name="sisse" value="10" type="radio">
+more than 10 years ago?
+</td></tr>
+</tbody></table>
+
+<hr>
+
+<table cellspacing="0" cellpadding="1">
+<tbody><tr>
+<td colspan="2"><b>During the past year, have you experienced any of the symptoms
+listed below? 
+<input name="hvsiwc" value="n" type="hidden">
+<input name="siwc" value="n" onclick="clearN(1)" checked="checked" type="radio"> no
+<input name="siwc" value="y" type="radio"> yes
+(check all that apply)<br></b>
+<input name="hvsiwcb" value="" type="hidden">
+<input name="siwcb" value="b" type="checkbox"> cough producing bloody material,
+<input name="hvsiwcl" value="" type="hidden">
+<input name="siwcl" value="l" type="checkbox"> unexplained weight loss greater than 20 lbs,
+<input name="hvsiwch" value="" type="hidden">
+<input name="siwch" value="h" type="checkbox"> unexplained hoarseness
+<br>
+<input name="hvsiwco" value="" type="hidden">
+<label>
+<input name="siwco" value="o" type="checkbox"> other (specify)
+</label>
+<input name="siwcos" onchange="synChk('siwcos','cws')" size="60" type="text">
+</td></tr>
+</tbody></table>
+
+<table cellspacing="0" cellpadding="1">
+<tbody><tr><td align="right" width="50%"><b>If yes, have you seen a physician for this?</b></td>
+<td>
+<input name="hvsiwcp" value="" type="hidden">
+<input name="siwcp" value="n" type="radio"> no
+<input name="siwcp" value="y" type="radio"> yes
+&nbsp; <b>Whom?</b>
+<input name="siwcw" onchange="synChk('siwcw','cws')" size="24" type="text"></td>
+</tr>
+<tr><td align="right"><b>If yes, are you now experiencing them?</b></td>
+<td>
+<input name="hvsiwcn" value="" type="hidden">
+<input name="siwcn" value="n" type="radio"> no
+<input name="siwcn" value="y" type="radio"> yes
+</td></tr>
+</tbody></table>
+
+<br>
+
+<table cellspacing="0" cellpadding="1">
+<!--
+<TR>
+<TD><B>When did you most recently have a chest X-ray?</B></TD>
+<TD>
+<select name="siacx">
+<option value="-"> -
+<option value="a"> less than 6 months ago
+<option value="b" SELECTED> 6-18 months ago
+<option value="f"> 18 months to 3 years ago
+<option value="c"> 3 years to 5 years ago
+<option value="d"> over 5 years ago
+<option value="e"> never
+</select></TD>
+</TR>
+<TR><TD align=right><B>If so, where was the test done?</B></TD>
+<TD><input type=text name="siahxl" onChange="synChk('siahxl','cws')" size=32 value="MSH">
+</TD></TR>
+-->
+<tbody><tr>
+<td><b>When did you most recently have a chest CT?</b></td>
+<td>
+<select name="siact">
+<option value="-"> -
+</option><option value="a"> less than 6 months ago
+</option><option value="b" selected="selected"> 6-18 months ago
+</option><option value="f"> 18 months to 3 years ago
+</option><option value="c"> 3 years to 5 years ago
+</option><option value="d"> over 5 years ago
+</option><option value="e"> never
+</option></select></td>
+</tr>
+<tr><td align="right"><b>If so, where was the test done?</b></td>
+<td><input name="siahcl" onchange="synChk('siahcl','cws')" size="32" value="With us" type="text">
+</td></tr>
+</tbody></table>
+
+<hr>
+
+<table cellspacing="0" cellpadding="1" border="0">
+<tbody><tr>
+<td><b>Have you been hospitalized in the past year?</b></td>
+<td align="right" width="20%"><input name="hvsiho" value="y" type="hidden">
+<input name="siho" value="n" type="radio"> no
+<input name="siho" value="y" checked="checked" type="radio"> yes
+</td></tr>
+<tr><td colspan="2" align="right"><b>If yes, for what?</b></td>
+<td><input name="sihow" onchange="synChk('sihow','cws')" size="24" value="Lung surgery" type="text"></td>
+</tr>
+<tr><td colspan="2" align="right"><b>When?</b><br>(Mmm/YYYY)</td>
+<td><input name="sihod" onchange="synChk('sihod','rsdate')" size="8" value="Apr/2014" type="text"></td>
+</tr>
+<tr><td colspan="2" align="right"><b>Where?</b></td>
+<td><input name="sihol" onchange="synChk('sihol','cws')" size="24" value="MSH" type="text"></td>
+</tr>
+<tr><td colspan="4"><br></td></tr>
+<tr>
+<td><b>Have you had a diagnosis of cancer in the past year?</b></td>
+<td align="right" width="20%"><input name="hvsicd" value="y" type="hidden">
+<input name="sicd" value="n" type="radio"> no
+<input name="sicd" value="y" checked="checked" type="radio"> yes
+</td></tr>
+<tr><td colspan="2" align="right"><b>If yes, what part of body?</b></td>
+<td>
+<select name="sicdl">
+<option value="-"> -
+</option><option value="br"> breast
+</option><option value="co"> colon / rectum
+</option><option value="li"> liver
+</option><option value="lu" selected="selected"> lung / bronchus
+</option><option value="ov"> ovary
+</option><option value="pa"> pancreas
+</option><option value="pr"> prostate
+</option><option value="sk"> skin
+</option><option value="st"> stomach
+</option><option value="ut"> uterus
+</option><option value="os"> other (specify)
+</option></select></td>
+
+</tr>
+<tr><td colspan="2" align="right"><b>Other (specify)</b></td>
+<td><input name="sicdls" onchange="synChk('sicdls','cws')" size="24" type="text"></td>
+</tr>
+<tr><td colspan="2" align="right"><b>When were you diagnosed?</b><br>(Mmm/YYYY)</td>
+<td><input name="sicdd" onchange="synChk('sicdd','rsdate')" size="8" value="Feb/2014" type="text"></td>
+</tr>
+<tr><td colspan="4"><br></td></tr>
+<tr>
+<td><b>If lung cancer has been diagnosed, have
+you had surgery?</b></td>
+<td align="right" width="20%"><input name="hvsilcs" value="y" type="hidden">
+<input name="silcs" value="n" type="radio"> no
+<input name="silcs" value="y" checked="checked" type="radio"> yes
+</td></tr><tr><td colspan="2" align="right"><b>When?</b><br>(DD/Mmm/YYYY)</td>
+<td><input name="silcsd" onchange="synChk('silcsd','rdate')" size="11" value="02/Apr/2014" type="text"></td>
+</tr>
+<tr><td colspan="2" align="right"><b>Where?</b></td>
+<td><input name="silcsl" onchange="synChk('silcsl','cws')" size="24" value="MSH" type="text"></td>
+</tr>
+<tr><td colspan="4"><br></td></tr>
+<tr><td><b>If a lung cancer has been removed, is there evidence of recurrence?</b></td>
+<td align="right" width="20%"><input name="hvsier" value="y" type="hidden">
+<input name="sier" value="n" type="radio"> no
+<input name="sier" value="y" checked="checked" type="radio"> yes
+</td></tr>
+<tr><td colspan="2" align="right" width="35%"><b>If yes, describe:</b></td>
+<td><input name="sierd" onchange="synChk('sierd','cws')" size="24" value="Don't know" type="text"></td>
+</tr>
+</tbody></table>
+
+<hr>
+
+<table cellspacing="0" cellpadding="0">
+<tbody><tr><td><font size="+2"><b>Smoking</b></font></td></tr>
+</tbody></table>
+
+<table cellspacing="0" cellpadding="2">
+<tbody><tr><td align="left">
+<table cellspacing="0" cellpadding="2">
+<tbody><tr><td>
+<b>Over the past month, have you smoked cigarettes at
+all, even a puff?</b>
+<a href="javascript:jshp('shsa')"><img src="Follow-up%20Form_files/hb.gif" width="5" height="10" border="0"></a>
+<input name="hvsisa" value="n" type="hidden">
+<input name="sisa" value="n" checked="checked" type="radio"> no
+<input name="sisa" value="y" type="radio"> yes
+<input name="sisa" value="o" type="radio"> never smoked
+</td></tr></tbody></table>
+</td></tr>
+<tr><td><b>If yes, on average, on how many days per week are you currently smoking cigarettes?</b></td>
+<td><input name="sidpw" onchange="synChk('sidpw','pnum')" size="6" type="text"></td>
+</tr>
+<tr><td colspan="2">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+<b>On average, on the days that you are smoking cigarettes, how many packs of cigarettes are you currently smoking per day (PPD)?</b> &nbsp;
+<input name="sippd" onchange="synChk('sippd','pnum')" size="6" type="text"></td>
+</tr>
+<tr><td colspan="2">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+<b>If no, when was the date of your last cigarette (DD/Mmm/YYYY)?</b>
+<a href="javascript:jshp('dlc')"><img src="Follow-up%20Form_files/hb.gif" width="5" height="10" border="0"></a>
+&nbsp;
+<select name="sidlcd">
+<option value="-" selected="selected"> -
+</option><option value="1"> 1
+</option><option value="2"> 2
+</option><option value="3"> 3
+</option><option value="4"> 4
+</option><option value="5"> 5
+</option><option value="6"> 6
+</option><option value="7"> 7
+</option><option value="8"> 8
+</option><option value="9"> 9
+</option><option value="10"> 10
+</option><option value="11"> 11
+</option><option value="12"> 12
+</option><option value="13"> 13
+</option><option value="14"> 14
+</option><option value="15"> 15
+</option><option value="16"> 16
+</option><option value="17"> 17
+</option><option value="18"> 18
+</option><option value="19"> 19
+</option><option value="20"> 20
+</option><option value="21"> 21
+</option><option value="22"> 22
+</option><option value="23"> 23
+</option><option value="24"> 24
+</option><option value="25"> 25
+</option><option value="26"> 26
+</option><option value="27"> 27
+</option><option value="28"> 28
+</option><option value="29"> 29
+</option><option value="30"> 30
+</option><option value="31"> 31
+</option></select>
+<select name="sidlcm">
+<option value="-" selected="selected"> -
+</option><option value="1"> Jan
+</option><option value="2"> Feb
+</option><option value="3"> Mar
+</option><option value="4"> Apr
+</option><option value="5"> May
+</option><option value="6"> Jun
+</option><option value="7"> Jul
+</option><option value="8"> Aug
+</option><option value="9"> Sep
+</option><option value="10"> Oct
+</option><option value="11"> Nov
+</option><option value="12"> Dec
+</option></select>
+<input name="sidlcy" onchange="synChk('sidlcy','ayear')" size="4" value="2012" type="text"></td>
+</tr>
+</tbody></table>
+
+<table cellspacing="0" cellpadding="2">
+<tbody><tr><td>
+<b>Since your prior CT scan, have you ever tried to quit smoking?</b>
+<a href="javascript:jshp('ttq')"><img src="Follow-up%20Form_files/hb.gif" width="5" height="10" border="0"></a>
+<input name="hvsittq" value="o" type="hidden">
+<input name="sittq" value="n" type="radio"> no
+<input name="sittq" value="y" type="radio"> yes
+<input name="sittq" value="o" checked="checked" type="radio"> n/a
+</td></tr>
+<tr><td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+<b>If yes, how many times have you quit smoking for at least 24 hours?</b> &nbsp;
+<input name="sittqt" onchange="synChk('sittqt','pnum')" size="6" type="text"></td>
+</tr>
+<tr><td>
+<b>Since your prior CT scan, what, if any, smoking cessation
+methods have you used? (check all that apply)</b>
+</td></tr>
+<tr><td>
+<input name="hvsisca" value="" type="hidden">
+<input name="sisca" value="a" type="checkbox"> Have not tried to quit
+</td></tr>
+<tr><td>
+<input name="hvsiscb" value="" type="hidden">
+<input name="siscb" value="b" type="checkbox"> "Cold Turkey" by completely stopping
+on your own with no other assistance
+</td></tr>
+<tr><td>
+<input name="hvsiscc" value="" type="hidden">
+<input name="siscc" value="c" type="checkbox"> Tapering or reducing number of cigarettes smoked per day
+</td></tr>
+<tr><td>
+<input name="hvsiscd" value="" type="hidden">
+<input name="siscd" value="d" type="checkbox"> Self-help material (e.g., brochure, cessation website)
+</td></tr>
+<tr><td>
+<input name="hvsisce" value="" type="hidden">
+<input name="sisce" value="e" type="checkbox"> Individual consultation or cessation counseling
+</td></tr>
+<tr><td>
+<input name="hvsiscf" value="" type="hidden">
+<input name="siscf" value="f" type="checkbox"> Telephone cessation counseling hotline (e.g., NY Smokers' Quitline)
+</td></tr>
+<tr><td>
+<input name="hvsiscg" value="" type="hidden">
+<input name="siscg" value="g" type="checkbox"> Peer support (e.g., Nicotine Anonymous)
+</td></tr>
+<tr><td>
+<input name="hvsisch" value="" type="hidden">
+<input name="sisch" value="h" type="checkbox"> Nicotine replacement therapy (e.g., patch, gum, inhaler, nasal spray, lozenge)
+</td></tr>
+<tr><td>
+<input name="hvsisci" value="" type="hidden">
+<input name="sisci" value="i" type="checkbox"> Zyban
+</td></tr>
+<tr><td>
+<input name="hvsiscj" value="" type="hidden">
+<input name="siscj" value="j" type="checkbox"> Hypnosis
+</td></tr>
+<tr><td>
+<input name="hvsisck" value="" type="hidden">
+<input name="sisck" value="k" type="checkbox"> Acupuncture / acupressure
+</td></tr>
+<tr><td>
+<input name="hvsiscl" value="" type="hidden">
+<input name="siscl" value="l" type="checkbox"> Other (specify)
+</td></tr>
+<tr><td><b>Other (specify)</b> &nbsp;
+<input name="siscos" onchange="synChk('siscos','cws')" size="24" type="text"></td>
+</tr>
+<tr><td><b>Are you seriously thinking of quitting smoking?</b>
+<a href="javascript:jshp('qst')"><img src="Follow-up%20Form_files/hb.gif" width="5" height="10" border="0"></a>
+<select name="siqst">
+<option value="-"> -
+</option><option value="y"> yes, within the next 30 days
+</option><option value="m"> yes, within the next 6 months
+</option><option value="n"> no, not thinking of quitting
+</option><option value="o" selected="selected"> n/a
+</option></select></td>
+</tr>
+<tr><td align="left"><b>Smoking cessation materials were distributed to subject</b>
+<a href="javascript:jshp('cpd')"><img src="Follow-up%20Form_files/hb.gif" width="5" height="10" border="0"></a>
+<input name="hvsicpd" value="n" type="hidden">
+<input name="sicpd" value="n" checked="checked" type="radio"> no
+<input name="sicpd" value="y" type="radio"> yes
+</td></tr>
+</tbody></table>
+
+<hr>
+
+<font size="+0">
+<table cellspacing="0" cellpadding="0">
+<tbody><tr><td align="left"><font size="+2">
+<a href="javascript:jshp('sf')"><img src="Follow-up%20Form_files/hb.gif" width="5" height="16" border="0"></a>
+<b>Health Survey</b></font></td></tr>
+
+<!--
+<TR><TD><U>Instructions for Completing the Questionnaire</U><BR>
+Please answer every question.  Some questions may look like others, but each
+one is different.  Please take the time to read and answer each question
+carefully by filling in the bubble that best represents your response.
+-->
+
+<tr><td>
+This survey asks for your views about your health. This information will help you keep track of how you 
+feel and how well you are able to do your usual activities. <br>
+Answer every question by selecting the answer as indicated. If you are unsure about how to answer a 
+question, please give the best answer you can. <br>
+For each of the following questions, please choose the one option that best describes your answer.
+
+<!-- For each of the following questions, please mark an [x] 
+in the one box that best describes your answer. -->
+
+<input name="hvsisfr" value="" type="hidden">
+&nbsp; 
+<input name="sisfr" value="r" type="checkbox"> RTA
+<br><br>
+</td></tr>
+<!--
+<TR><TD><FONT SIZE=+1><B><U>EXAMPLE</U></B><BR><BR></TD></TR>
+
+<TR><TD><B>This is for your review.</B>  Do not answer this question.  The
+questionnaire begins with the section <B><I>Your Health in General</I></B>
+below.<BR>
+<BR>
+For each question you will be asked to fill in a bubble in each line:<BR>
+<BR>
+</TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2>
+<TR>
+<TD>0. How strongly do you agree or disagree with each of the
+following statements?</TD>
+</TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 BORDER=1>
+<TR><TD></TD>
+<TD align=center width=15%><B>Strongly agree</B></TD>
+<TD align=center width=15%><B>Agree</B></TD>
+<TD align=center width=15%><B>Uncertain</B></TD>
+<TD align=center width=15%><B>Disagree</B></TD>
+<TD align=center width=15%><B>Strongly disagree</B></TD>
+</TD>
+<TR><TD>a) I enjoy listening to music</TD>
+<input type=hidden name="hvsisf0a" value="">
+<TD align=center><input type=radio name="sisf0a" value="1"></TD>
+<TD align=center><input type=radio name="sisf0a" value="2" CHECKED></TD>
+<TD align=center><input type=radio name="sisf0a" value="3"></TD>
+<TD align=center><input type=radio name="sisf0a" value="4"></TD>
+<TD align=center><input type=radio name="sisf0a" value="5"></TD>
+</TR>
+<TR><TD>b) I enjoy reading magazines</TD>
+<input type=hidden name="hvsisf0b" value="">
+<TD align=center><input type=radio name="sisf0b" value="1" CHECKED></TD>
+<TD align=center><input type=radio name="sisf0b" value="2"></TD>
+<TD align=center><input type=radio name="sisf0b" value="3"></TD>
+<TD align=center><input type=radio name="sisf0b" value="4"></TD>
+<TD align=center><input type=radio name="sisf0b" value="5"></TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR>
+
+<TR><TD><BR>Please begin answering the questions now.<BR><BR></TD></TR>
+-->
+</tbody></table><table cellspacing="0" cellpadding="0">
+<!-- <TR><TD><h2>Your Health in General</h2></TD></TR>
+</TD></TR>
+-->
+
+<!-- <TR><TD><HR></TD></TR> -->
+
+<tbody><tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td>1. Overall, how would you rate your health during the <b><u>past 4 weeks</u></b>?</td>
+</tr>
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td align="center" width="15%"><b>Excellent</b></td>
+<td align="center" width="15%"><b>Very good</b></td>
+<td align="center" width="15%"><b>Good</b></td>
+<td align="center" width="15%"><b>Fair</b></td>
+<td align="center" width="15%"><b>Poor</b></td>
+<td align="center" width="15%"><b>Very Poor</b>
+</td></tr>
+<tr>
+<td align="center"><input name="hvsisfb1" value="3" type="hidden">
+<input name="sisfb1" value="1" type="radio"></td>
+<td align="center"><input name="sisfb1" value="2" type="radio"></td>
+<td align="center"><input name="sisfb1" value="3" checked="checked" type="radio"></td>
+<td align="center"><input name="sisfb1" value="4" type="radio"></td>
+<td align="center"><input name="sisfb1" value="5" type="radio"></td>
+<td align="center"><input name="sisfb1" value="6" type="radio"></td>
+</tr>
+</tbody></table>
+</td></tr></tbody></table>
+</td></tr>
+
+<tr><td><hr></td></tr>
+
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td>2. During the <b><u>past 4 weeks</u></b>, how much did physical health problems limit your usual physical activities(such as walking or climbing stairs)</td>
+</tr>
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td align="center" width="20%"><b>Not at all</b></td>
+<td align="center" width="20%"><b>Very little</b></td>
+<td align="center" width="20%"><b>Somewhat</b></td>
+<td align="center" width="20%"><b>Quite a lot</b></td>
+<td align="center" width="20%"><b>Could not do physical activities</b></td>
+</tr>
+<tr>
+<td align="center"><input name="hvsisfb2" value="3" type="hidden">
+<input name="sisfb2" value="1" type="radio"></td>
+<td align="center"><input name="sisfb2" value="2" type="radio"></td>
+<td align="center"><input name="sisfb2" value="3" checked="checked" type="radio"></td>
+<td align="center"><input name="sisfb2" value="4" type="radio"></td>
+<td align="center"><input name="sisfb2" value="5" type="radio"></td>
+</tr>
+</tbody></table>
+</td></tr></tbody></table>
+</td></tr>
+
+<tr><td><hr></td></tr>
+
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td>3.During the <b><u>past 4 weeks</u></b>, how much difficulty did you have doing your daily work, both at home and away from home, because of your physical health?</td>
+</tr>
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td align="center" width="20%"><b>None at all</b></td>
+<td align="center" width="20%"><b>A little bit</b></td>
+<td align="center" width="20%"><b>Some</b></td>
+<td align="center" width="20%"><b>Quite a lot</b></td>
+<td align="center" width="20%"><b>Could not do daily work</b></td>
+</tr>
+<tr>
+<td align="center"><input name="hvsisfb3" value="2" type="hidden">
+<input name="sisfb3" value="1" type="radio"></td>
+<td align="center"><input name="sisfb3" value="2" checked="checked" type="radio"></td>
+<td align="center"><input name="sisfb3" value="3" type="radio"></td>
+<td align="center"><input name="sisfb3" value="4" type="radio"></td>
+<td align="center"><input name="sisfb3" value="5" type="radio"></td>
+</tr>
+</tbody></table>
+</td></tr></tbody></table>
+</td></tr>
+
+<tr><td><hr></td></tr>
+
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td>4. How much <u>bodily</u> pain have you had during the <b><u>past 4 weeks</u></b>?</td>
+</tr>
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td align="center" width="15%"><b>None</b></td>
+<td align="center" width="15%"><b>Very mild</b></td>
+<td align="center" width="15%"><b>Mild</b></td>
+<td align="center" width="15%"><b>Moderate</b></td>
+<td align="center" width="15%"><b>Severe</b></td>
+<td align="center" width="15%"><b>Very Severe</b>
+</td></tr>
+<tr>
+<td align="center"><input name="hvsisfb4" value="2" type="hidden">
+<input name="sisfb4" value="1" type="radio"></td>
+<td align="center"><input name="sisfb4" value="2" checked="checked" type="radio"></td>
+<td align="center"><input name="sisfb4" value="3" type="radio"></td>
+<td align="center"><input name="sisfb4" value="4" type="radio"></td>
+<td align="center"><input name="sisfb4" value="5" type="radio"></td>
+<td align="center"><input name="sisfb4" value="6" type="radio"></td>
+</tr>
+</tbody></table>
+</td></tr></tbody></table>
+</td></tr>
+
+<tr><td><hr></td></tr>
+
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td>5. During the <b><u>past 4 weeks</u></b>, how much energy did you have?</td>
+</tr>
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td align="center" width="20%"><b>Very much</b></td>
+<td align="center" width="20%"><b>Quite a lot</b></td>
+<td align="center" width="20%"><b>Some</b></td>
+<td align="center" width="20%"><b>A little</b></td>
+<td align="center" width="20%"><b>None</b></td>
+</tr>
+<tr>
+<td align="center"><input name="hvsisfb5" value="3" type="hidden">
+<input name="sisfb5" value="1" type="radio"></td>
+<td align="center"><input name="sisfb5" value="2" type="radio"></td>
+<td align="center"><input name="sisfb5" value="3" checked="checked" type="radio"></td>
+<td align="center"><input name="sisfb5" value="4" type="radio"></td>
+<td align="center"><input name="sisfb5" value="5" type="radio"></td>
+</tr>
+</tbody></table>
+</td></tr></tbody></table>
+</td></tr>
+
+<tr><td><hr></td></tr>
+
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td>6. During the <b><u>past 4 weeks</u></b>, how much did your physical health or emotional problems limit your usual social activities with family or friends?
+</td>
+</tr>
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td align="center" width="20%"><b>None at all</b></td>
+<td align="center" width="20%"><b>Very little</b></td>
+<td align="center" width="20%"><b>Somewhat</b></td>
+<td align="center" width="20%"><b>Quite a lot</b></td>
+<td align="center" width="20%"><b>Could not do social activities</b></td>
+</tr>
+<tr>
+<td align="center"><input name="hvsisfb6" value="3" type="hidden">
+<input name="sisfb6" value="1" type="radio"></td>
+<td align="center"><input name="sisfb6" value="2" type="radio"></td>
+<td align="center"><input name="sisfb6" value="3" checked="checked" type="radio"></td>
+<td align="center"><input name="sisfb6" value="4" type="radio"></td>
+<td align="center"><input name="sisfb6" value="5" type="radio"></td>
+</tr>
+</tbody></table>
+</td></tr></tbody></table>
+</td></tr>
+
+<tr><td><hr></td></tr>
+
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td>7. During the <b><u>past 4 weeks</u></b>, how much have you been bothered by <b><u>emotional problems</u></b>(such as feeling anxious, depressed or irritable)?</td>
+</tr>
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td align="center" width="20%"><b>Not at all</b></td>
+<td align="center" width="20%"><b>Slightly</b></td>
+<td align="center" width="20%"><b>Moderately</b></td>
+<td align="center" width="20%"><b>Quite a lot</b></td>
+<td align="center" width="20%"><b>Extremely</b></td>
+</tr>
+<tr>
+<td align="center"><input name="hvsisfb7" value="5" type="hidden">
+<input name="sisfb7" value="1" type="radio"></td>
+<td align="center"><input name="sisfb7" value="2" type="radio"></td>
+<td align="center"><input name="sisfb7" value="3" type="radio"></td>
+<td align="center"><input name="sisfb7" value="4" type="radio"></td>
+<td align="center"><input name="sisfb7" value="5" checked="checked" type="radio"></td>
+</tr>
+</tbody></table>
+</td></tr></tbody></table>
+</td></tr>
+
+<tr><td><hr></td></tr>
+
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td>8. During the <b><u>past 4 weeks</u></b>, how much did personal or emotional problems keep you from doing your usual work, school or other daily activities?</td>
+</tr>
+<tr><td>
+<table width="100%" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td align="center" width="20%"><b>Not at all</b></td>
+<td align="center" width="20%"><b>Very little</b></td>
+<td align="center" width="20%"><b>Somewhat</b></td>
+<td align="center" width="20%"><b>Quite a lot</b></td>
+<td align="center" width="20%"><b>Could not do daily activities</b></td>
+</tr>
+<tr>
+<td align="center"><input name="hvsisfb8" value="3" type="hidden">
+<input name="sisfb8" value="1" type="radio"></td>
+<td align="center"><input name="sisfb8" value="2" type="radio"></td>
+<td align="center"><input name="sisfb8" value="3" checked="checked" type="radio"></td>
+<td align="center"><input name="sisfb8" value="4" type="radio"></td>
+<td align="center"><input name="sisfb8" value="5" type="radio"></td>
+</tr>
+</tbody></table>
+</td></tr></tbody></table>
+</td></tr>
+</tbody></table>
+<!-- <TR><TD align=center>
+<TABLE CELLSPACING=0 CELLPADDING=0 BORDER=2 WIDTH=80%>
+<TR><TD align=center><FONT SIZE=+2>Your Health in General</TD></TR></TABLE>
+</TD></TR>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 WIDTH=100%>
+<TR>
+<TD>1. In general, would you say your health is:</TD>
+</TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 WIDTH=100%>
+<TR>
+<TD align=center width=20%><B>Excellent</B></TD>
+<TD align=center width=20%><B>Very good</B></TD>
+<TD align=center width=20%><B>Good</B></TD>
+<TD align=center width=20%><B>Fair</B></TD>
+<TD align=center width=20%><B>Poor</B></TD>
+</TD>
+<TR>
+<input type=hidden name="hvsisf1" value="">
+<TD align=center><input type=radio name="sisf1" value="1"></TD>
+<TD align=center><input type=radio name="sisf1" value="2"></TD>
+<TD align=center><input type=radio name="sisf1" value="3"></TD>
+<TD align=center><input type=radio name="sisf1" value="4"></TD>
+<TD align=center><input type=radio name="sisf1" value="5"></TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2>
+<TR>
+<TD>2. The following questions are about activities you might do during a
+typical day.  Does <B>your health now limit you</B> in these activities?  If so,
+how much?</TD>
+</TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 BORDER=1>
+<TR><TD></TD>
+<TD align=center width=15%><B>Yes, limited a lot</B></TD>
+<TD align=center width=15%><B>Yes, limited a little</B></TD>
+<TD align=center width=15%><B>No, not limited at all</B></TD>
+</TD>
+<TR><TD>a) <B>Moderate activities</B>, such as moving a table, pushing a
+vacuum cleaner, bowling, or playing golf</TD>
+<input type=hidden name="hvsisf2" value="">
+<TD align=center><input type=radio name="sisf2" value="1"></TD>
+<TD align=center><input type=radio name="sisf2" value="2"></TD>
+<TD align=center><input type=radio name="sisf2" value="3"></TD>
+</TR>
+<TR><TD>b) Climbing <B>several</B> flights of stairs</TD>
+<input type=hidden name="hvsisf3" value="">
+<TD align=center><input type=radio name="sisf3" value="1"></TD>
+<TD align=center><input type=radio name="sisf3" value="2"></TD>
+<TD align=center><input type=radio name="sisf3" value="3"></TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2>
+<TR>
+<TD>3. During the <B>past 4 weeks</B>, how much of the time have you had
+any of the following problems with your work or other regular daily
+activities <U>as a result of your physical health</U>?</TD>
+</TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 BORDER=1>
+<TR><TD></TD>
+<TD align=center width=10%><B>All of the time</B></TD>
+<TD align=center width=10%><B>Most of the time</B></TD>
+<TD align=center width=10%><B>Some of the time</B></TD>
+<TD align=center width=10%><B>A little of the time</B></TD>
+<TD align=center width=10%><B>None of the time</B></TD>
+</TD>
+<TR><TD>a) <B>Accomplished less</B> than you would like</TD>
+<input type=hidden name="hvsisf4" value="">
+<TD align=center><input type=radio name="sisf4" value="1"></TD>
+<TD align=center><input type=radio name="sisf4" value="2"></TD>
+<TD align=center><input type=radio name="sisf4" value="3"></TD>
+<TD align=center><input type=radio name="sisf4" value="4"></TD>
+<TD align=center><input type=radio name="sisf4" value="5"></TD>
+</TR>
+<TR><TD>b) Were limited in the <B>kind</B> of work or other activities</TD>
+<input type=hidden name="hvsisf5" value="">
+<TD align=center><input type=radio name="sisf5" value="1"></TD>
+<TD align=center><input type=radio name="sisf5" value="2"></TD>
+<TD align=center><input type=radio name="sisf5" value="3"></TD>
+<TD align=center><input type=radio name="sisf5" value="4"></TD>
+<TD align=center><input type=radio name="sisf5" value="5"></TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2>
+<TR>
+<TD>4. During the <B>past 4 weeks</B>, how much of the time have you had
+any of the following problems with your work or other regular daily
+activities <U>as a result of any emotional problems</U> (such as feeling
+depressed or anxious)?</TD>
+</TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 BORDER=1>
+<TR><TD></TD>
+<TD align=center width=10%><B>All of the time</B></TD>
+<TD align=center width=10%><B>Most of the time</B></TD>
+<TD align=center width=10%><B>Some of the time</B></TD>
+<TD align=center width=10%><B>A little of the time</B></TD>
+<TD align=center width=10%><B>None of the time</B></TD>
+</TD>
+<TR><TD>a) <B>Accomplished less</B> than you would like</TD>
+<input type=hidden name="hvsisf6" value="">
+<TD align=center><input type=radio name="sisf6" value="1"></TD>
+<TD align=center><input type=radio name="sisf6" value="2"></TD>
+<TD align=center><input type=radio name="sisf6" value="3"></TD>
+<TD align=center><input type=radio name="sisf6" value="4"></TD>
+<TD align=center><input type=radio name="sisf6" value="5"></TD>
+</TR>
+<TR><TD>b) Did work or other activities <B>less carefully than usual</B></TD>
+<input type=hidden name="hvsisf7" value="">
+<TD align=center><input type=radio name="sisf7" value="1"></TD>
+<TD align=center><input type=radio name="sisf7" value="2"></TD>
+<TD align=center><input type=radio name="sisf7" value="3"></TD>
+<TD align=center><input type=radio name="sisf7" value="4"></TD>
+<TD align=center><input type=radio name="sisf7" value="5"></TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 WIDTH=100%>
+<TR>
+<TD>5. During the <B>past 4 weeks</B>, how much did <U>pain</U> interfere
+with your normal work (including both work outside the home and housework)?</TD>
+</TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 WIDTH=100%>
+<TR>
+<TD align=center width=20%><B>Not at all</B></TD>
+<TD align=center width=20%><B>A little bit</B></TD>
+<TD align=center width=20%><B>Moderately</B></TD>
+<TD align=center width=20%><B>Quite a bit</B></TD>
+<TD align=center width=20%><B>Extremely</B></TD>
+</TD>
+<TR>
+<input type=hidden name="hvsisf8" value="">
+<TD align=center><input type=radio name="sisf8" value="1"></TD>
+<TD align=center><input type=radio name="sisf8" value="2"></TD>
+<TD align=center><input type=radio name="sisf8" value="3"></TD>
+<TD align=center><input type=radio name="sisf8" value="4"></TD>
+<TD align=center><input type=radio name="sisf8" value="5"></TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2>
+<TR>
+<TD>6. These questions are about how you feel and how things have been with
+you during the <B>past 4 weeks</B>.  For each question, please give the one
+answer that comes closest to the way you have been feeling.  How much of the
+time during the <B>past 4 weeks</B>...</TD>
+</TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 BORDER=1>
+<TR><TD></TD>
+<TD align=center width=10%><B>All of the time</B></TD>
+<TD align=center width=10%><B>Most of the time</B></TD>
+<TD align=center width=10%><B>Some of the time</B></TD>
+<TD align=center width=10%><B>A little of the time</B></TD>
+<TD align=center width=10%><B>None of the time</B></TD>
+</TD>
+<TR><TD>a) have you felt calm and peaceful?</TD>
+<input type=hidden name="hvsisf9" value="">
+<TD align=center><input type=radio name="sisf9" value="1"></TD>
+<TD align=center><input type=radio name="sisf9" value="2"></TD>
+<TD align=center><input type=radio name="sisf9" value="3"></TD>
+<TD align=center><input type=radio name="sisf9" value="4"></TD>
+<TD align=center><input type=radio name="sisf9" value="5"></TD>
+</TR>
+<TR><TD>b) did you have a lot of energy?</TD>
+<input type=hidden name="hvsisf10" value="">
+<TD align=center><input type=radio name="sisf10" value="1"></TD>
+<TD align=center><input type=radio name="sisf10" value="2"></TD>
+<TD align=center><input type=radio name="sisf10" value="3"></TD>
+<TD align=center><input type=radio name="sisf10" value="4"></TD>
+<TD align=center><input type=radio name="sisf10" value="5"></TD>
+</TR>
+<TR><TD>c) have you felt downhearted and depressed?</TD>
+<input type=hidden name="hvsisf11" value="">
+<TD align=center><input type=radio name="sisf11" value="1"></TD>
+<TD align=center><input type=radio name="sisf11" value="2"></TD>
+<TD align=center><input type=radio name="sisf11" value="3"></TD>
+<TD align=center><input type=radio name="sisf11" value="4"></TD>
+<TD align=center><input type=radio name="sisf11" value="5"></TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 WIDTH=100%>
+<TR>
+<TD>7. During the <B>past 4 weeks</B>, how much of the time has your
+<U>physical health or emotional problems</U> interfered
+with your social activities (like visiting friends, relatives, etc.)?</TD>
+</TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 WIDTH=100%>
+<TR>
+<TD align=center width=20%><B>All of the time</B></TD>
+<TD align=center width=20%><B>Most of the time</B></TD>
+<TD align=center width=20%><B>Some of the time</B></TD>
+<TD align=center width=20%><B>A little of the time</B></TD>
+<TD align=center width=20%><B>None of the time</B></TD>
+</TD>
+<TR>
+<input type=hidden name="hvsisf12" value="">
+<TD align=center><input type=radio name="sisf12" value="1"></TD>
+<TD align=center><input type=radio name="sisf12" value="2"></TD>
+<TD align=center><input type=radio name="sisf12" value="3"></TD>
+<TD align=center><input type=radio name="sisf12" value="4"></TD>
+<TD align=center><input type=radio name="sisf12" value="5"></TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD>
+<FONT SIZE="+1">Please answer the next four questions only if you are 
+a current or former smoker.</FONT>
+</TD><TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 width="100%">
+<TR>
+<TD>8. In the <U><B>past four weeks</B></U>, I have been afraid of the physical consequences of my smoking.</TD>
+</TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 width="100%" BORDER=1>
+<TR>
+<TD align=center width="12%"><I>Not at all afraid</I></TD>
+<TD COLSPAN=5 align=center width="60%">&nbsp;</TD>
+<TD align=center width="12%"><I>Very afraid</I></TD>
+</TR>
+<TR>
+<TD align=center width="12%"><input type=hidden name="hvsipsf1" value="">
+<input type=radio name="sipsf1" value="1">1</TD>
+<TD align=center width="12%"><input type=radio name="sipsf1" value="2">2</TD>
+<TD align=center width="12%"><input type=radio name="sipsf1" value="3">3</TD>
+<TD align=center width="12%"><input type=radio name="sipsf1" value="4">4</TD>
+<TD align=center width="12%"><input type=radio name="sipsf1" value="5">5</TD>
+<TD align=center width="12%"><input type=radio name="sipsf1" value="6">6</TD>
+<TD align=center width="12%"><input type=radio name="sipsf1" value="7">7</TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 width="100%">
+<TR>
+<TD>9. In the <U><B>past four weeks</B></U>, I have worried about my health because of my smoking.</TD>
+</TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 width="100%" BORDER=1>
+<TR>
+<TD align=center width="12%"><I>Not worried at all</I></TD>
+<TD COLSPAN=5 align=center width="60%">&nbsp;</TD>
+<TD align=center width="12%"><I>Worried very much</I></TD>
+</TR>
+<TR>
+<TD align=center width="12%"><input type=hidden name="hvsipsf2" value="">
+<input type=radio name="sipsf2" value="1">1</TD>
+<TD align=center width="12%"><input type=radio name="sipsf2" value="2">2</TD>
+<TD align=center width="12%"><input type=radio name="sipsf2" value="3">3</TD>
+<TD align=center width="12%"><input type=radio name="sipsf2" value="4">4</TD>
+<TD align=center width="12%"><input type=radio name="sipsf2" value="5">5</TD>
+<TD align=center width="12%"><input type=radio name="sipsf2" value="6">6</TD>
+<TD align=center width="12%"><input type=radio name="sipsf2" value="7">7</TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 width="100%">
+<TR>
+<TD>10. In the <U><B>past four weeks</B></U>, I have felt anxiety when I thought of the possible consequences of my smoking.</TD>
+</TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 width="100%" BORDER=1>
+<TR>
+<TD align=center width="12%"><I>Not anxious at all</I></TD>
+<TD COLSPAN=5 align=center width="60%">&nbsp;</TD>
+<TD align=center width="12%"><I>Very much anxious</I></TD>
+</TR>
+<TR>
+<TD align=center width="12%"><input type=hidden name="hvsipsf3" value="">
+<input type=radio name="sipsf3" value="1">1</TD>
+<TD align=center width="12%"><input type=radio name="sipsf3" value="2">2</TD>
+<TD align=center width="12%"><input type=radio name="sipsf3" value="3">3</TD>
+<TD align=center width="12%"><input type=radio name="sipsf3" value="4">4</TD>
+<TD align=center width="12%"><input type=radio name="sipsf3" value="5">5</TD>
+<TD align=center width="12%"><input type=radio name="sipsf3" value="6">6</TD>
+<TD align=center width="12%"><input type=radio name="sipsf3" value="7">7</TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>
+</TD></TR>
+
+<TR><TD><HR></TD></TR>
+
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 width="100%">
+<TR>
+<TD>11. In the <U><B>past four weeks</B></U>, I have brooded about the possible consequences of my smoking.</TD>
+</TR>
+<TR><TD>
+<TABLE CELLSPACING=0 CELLPADDING=2 width="100%" BORDER=1>
+<TR>
+<TD align=center width="12%"><I>Not brooded at all</I></TD>
+<TD COLSPAN=5 align=center width="60%">&nbsp;</TD>
+<TD align=center width="12%"><I>Brooded very much</I></TD>
+</TR>
+<TR>
+<TD align=center width="12%"><input type=hidden name="hvsipsf4" value="">
+<input type=radio name="sipsf4" value="1">1</TD>
+<TD align=center width="12%"><input type=radio name="sipsf4" value="2">2</TD>
+<TD align=center width="12%"><input type=radio name="sipsf4" value="3">3</TD>
+<TD align=center width="12%"><input type=radio name="sipsf4" value="4">4</TD>
+<TD align=center width="12%"><input type=radio name="sipsf4" value="5">5</TD>
+<TD align=center width="12%"><input type=radio name="sipsf4" value="6">6</TD>
+<TD align=center width="12%"><input type=radio name="sipsf4" value="7">7</TD>
+</TR>
+</TABLE>
+</TD></TR></TABLE>
+
+</TD></TR></TABLE> -->
+
+<br>
+© 1999-2016, I-ELCAP<br>
+SF-8 © Optum Inc.
+<input name="fppend" value="" type="hidden">
+<input name="fgakey" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+<input name="fpfname" value="U4d04goCYzcAADLZLGwAAAAA" type="hidden">
+<input name="fpinst" value="VEP" type="hidden">
+<input name="fpform" value="fuform" type="hidden">
+<input name="fpctime" value="Thu May 29 13:56:50 2014" type="hidden">
+<input name="fpmtime" value="Tue Aug 08 13:50:35 2017" type="hidden">
+<input name="fprhost" value="10.125.162.231" type="hidden">
+<input name="fpcname" value="Kathleen Tam" type="hidden">
+<input name="fpmname" value="Administrator" type="hidden">
+<input name="fpsisid" value="VEP0001" type="hidden">
+
+
+<table width="100%" border="0" bgcolor="#ffffcc"><tbody><tr><td align="left"><input value="Return to Case Review" onclick="javascript:subS1( )" type="button"> 
+<input value="Return Home" onclick="javascript:subS2( )" type="button"> 
+<input value="Submit Form" onclick="javascript:errorCheck( )" type="button"> 
+<input value="Submit Form (PENDING)" onclick="javascript:subPend( )" type="button"> 
+</td></tr></tbody></table>
+
+</font></form></body></html>

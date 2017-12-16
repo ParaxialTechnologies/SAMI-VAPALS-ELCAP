@@ -1,0 +1,183 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>ELCAP Management System</title>
+<script language="JavaScript">
+<!-- Code after this will be ignored by older browsers
+
+function subppend()    { document.forms["ppend"].submit() }
+function subncase()    { document.forms["ncase"].submit() }
+function subadmin()    { document.forms["admin"].submit() }
+function sublogoff()   { document.forms["logoff"].submit() }
+function subpassk()    { document.forms["passk"].submit() }
+function subsyshelp()  { document.forms["syshelp"].submit() }
+function subvmessage() { document.forms["vmessage"].submit() }
+function subnmessage() { document.forms["nmessage"].submit() }
+function subhelp( hcode ) {
+      document.forms["ghelp"].elements['help'].value = hcode;
+      document.forms["ghelp"].submit() }
+function subrcase( )   { document.forms["fmain"].submit() }
+function submanu( )    { document.forms["xhelp"].submit() }
+function subslist( )   { document.forms["slist"].submit() }
+function subsched( )   { document.forms["sched"].submit() }
+function subgrowth( )   { document.forms["growth"].submit() }
+
+// Stop hiding the code here -->
+</script>
+</head>
+<body alink="#ff0000" text="#000000" vlink="#ff0000" link="#0000ff" bgcolor="#bfffbf">
+ <table width="100%"><tbody><tr align="left" bgcolor="#ffffcc"><th><font bold="" size="+2"> VEP VA ELCAP Phoenix (VAPALS) </font><br> <font bold="" size="+2">Home</font></th></tr></tbody></table><h1><br> Data Entry System </h1><p></p><h2> Hello. Welcome to the ELCAP Management System. </h2><hr> 
+<script type="text/javascript">  var utype='a'; </script>
+
+<form method="POST" action="/cgi-bin/datac/logoff.cgi" name="logoff">
+<input name="fginst" value="VEP" type="hidden"><input name="fguid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+</form>
+<form method="POST" action="/cgi-bin/datac/helper.cgi" name="syshelp">
+<input name="help" value="update" type="hidden">
+<input name="fginst" value="VEP" type="hidden"><input name="fguid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+</form>
+<form method="POST" action="/cgi-bin/datac/qaform.cgi" name="vmessage">
+<input name="fginst" value="VEP" type="hidden"><input name="fguid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+</form>
+<form method="POST" action="/cgi-bin/datac/qaform.cgi" name="nmessage">
+                         <input name="mode" value="new" type="hidden">
+<input name="fginst" value="VEP" type="hidden"><input name="fguid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+</form>
+<form method="POST" action="/cgi-bin/datac/helper.cgi" name="ghelp">
+<input name="help" value="qahelp" type="hidden">
+<input name="fginst" value="VEP" type="hidden"><input name="fguid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+</form>
+<form method="POST" action="/cgi-bin/datac/ppend.cgi" name="ppend">
+<input name="fginst" value="VEP" type="hidden"><input name="fguid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+</form> 
+<form method="POST" action="/cgi-bin/datac/nuform.cgi" name="ncase">
+<input name="fginst" value="VEP" type="hidden"><input name="fguid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+</form>
+<form method="POST" action="/cgi-bin/datac/admin.cgi" name="admin">
+<input name="fginst" value="VEP" type="hidden"><input name="fguid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+</form>
+<form method="POST" action="/cgi-bin/datac/sched.cgi" name="sched">
+<input name="fginst" value="VEP" type="hidden"><input name="fguid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+</form>
+<form method="POST" action="/cgi-bin/datac/passkey.cgi" name="passk">
+<input name="fginst" value="VEP" type="hidden"><input name="fguid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+</form>
+<form method="POST" action="/cgi-bin/datac/growth.cgi" name="growth">
+<input name="fginst" value="VEP" type="hidden"><input name="fguid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+</form>
+
+<table cellspacing="0" border="">
+<tbody><tr bgcolor="#990000">
+<th colspan="2"><font color="#ffffff"> Case Review and Data Entry</font></th>
+<th><font color="#ffffff"> Scheduling </font></th>
+</tr>
+<form method="POST" action="/cgi-bin/datac/cform.cgi" name="fmain"></form>
+<tr valign="top">
+<!-- Case Review Column -->
+<td>
+<a href="javascript:subhelp('creview'%20)"><img src="Home_files/help.gif"></a>
+Locate by: <br>
+   <select name="field"> 
+   <option value="sid" selected="selected"> Study ID
+   </option><option value="mrn"> Medical Record Number 
+   </option><option value="name"> Last Name
+   </option></select><br>
+Search Key:<br>
+<input name="fvalue" size="20" type="text"><br>
+<input value="Request Case" onclick="javascript:subrcase( )" type="button"> 
+<hr>
+<input value="Review Pending Forms" onclick="javascript:subppend( )" type="button"> 
+<hr>
+<input value="Growth Assessment" onclick="javascript:subgrowth( )" type="button"> 
+<input name="fginst" value="VEP" type="hidden"><input name="fguid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+
+</td>
+<!-- Case Review Column 2 -->
+<td>
+<form method="POST" action="/cgi-bin/datac/uprefs.cgi" name="flang">
+<a href="javascript:subhelp('newcase'%20)"><img src="Home_files/help.gif"></a>
+<br>
+<input value="Create New Case" onclick="javascript:subncase( )" type="button"> 
+<hr>
+<a href="javascript:subhelp('admin'%20)"><img src="Home_files/help.gif"></a>
+<br>
+<input value="Reports" onclick="javascript:subadmin( )" type="button"> 
+<br>
+<input value="Administration" onclick="javascript:subadmin( )" type="button"> 
+<br>
+<select name="lang" onchange="javascript:this.form.submit();">
+<option value="en" selected="selected"> English
+</option><option value="fr"> French
+</option><option value="it"> Italian
+</option></select>
+<input name="active" value="1" type="hidden">
+<input name="change" value="do" type="hidden">
+<input name="fginst" value="VEP" type="hidden"><input name="fguid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+</form>
+</td>
+<!-- Scheduling Column -->
+<td>
+<form method="POST" action="/cgi-bin/datac/slist.cgi" name="slist">
+<a href="javascript:subhelp('other'%20)"><img src="Home_files/help.gif"></a>
+<br>
+<input value="View Schedule" onclick="javascript:subsched( )" type="button"> 
+<hr>
+Followup List for:
+<input name="fdays" value="30" size="4"> days <br>
+showing: 
+   <select name="proced"> 
+   <option value="a" selected="selected"> all
+   </option><option value="s"> Screening
+   </option><option value="d"> Diagnostic
+   </option><option value="b"> Antibiotic
+   </option><option value="i"> Intervention
+</option></select><br>
+<input value="View List" onclick="javascript:subslist( )" type="button"> 
+<input name="fginst" value="VEP" type="hidden"><input name="fguid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+</form></td></tr>
+<tr bgcolor="#990000">
+<th colspan="3"><font color="#ffffff"> Project Information and Messaging </font></th>
+</tr>
+<!-- Messaging Section -->
+<form method="POST" action="/cgi-bin/datac/helper.cgi" name="xhelp"></form>
+<tr><td colspan="3">
+<table><tbody><tr><td>
+Questions and answers 
+<input value="View Messages" onclick="javascript:subvmessage( )" type="button"> 
+<input value="Create New  Message" onclick="javascript:subnmessage( )" type="button"> 
+
+<a href="javascript:subhelp('qahelp'%20)"><img src="Home_files/help.gif"></a>
+</td></tr>
+</tbody></table>
+</td></tr><tr>
+<!-- Information Section -->
+<td colspan="2">
+<table>
+<tbody><tr><td colspan="2">
+<input value="View ELCAP Management System Updates" onclick="javascript:subsyshelp( )" type="button"> 
+</td></tr><tr><td>
+<input name="ppdf" value="1" type="hidden">
+<select name="help"> 
+   <option value="IELCAPProceduresManual.pdf" selected="selected"> I-ELCAP Site Procedures
+   </option><option value="I-ELCAP-Protocol.pdf"> I-ELCAP Protocol
+   </option><option value="I-ELCAP-Flowchart.pdf"> I-ELCAP Flowchart
+   </option><option value="pathology_protocol.pdf"> ELCAP Pathology Protocol
+</option></select>
+<input value="View" onclick="javascript:submanu( )" type="button"> <br>
+<font size="-1">(Above manuals require <a href="http://www.adobe.com/products/acrobat/readstep2.html">
+Acrobat Reader</a>)</font>
+</td></tr></tbody></table>
+</td><td align="center">
+<font color="#ff0020" size="+2"> Security </font>
+<a href="javascript:subhelp('secure'%20)"><img src="Home_files/help.gif"></a>
+<br>
+<input value="Change Password" onclick="javascript:subpassk( )" type="button"> 
+<br>
+<input value="Log Off" onclick="javascript:sublogoff( )" type="button"> 
+<input name="fginst" value="VEP" type="hidden"><input name="fguid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+
+</td>
+</tr>
+
+</tbody></table>
+
+</body></html>

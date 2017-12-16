@@ -1,0 +1,1583 @@
+<HTML><HEAD>
+    <TITLE>Intake Form</TITLE>
+    
+    <SCRIPT LANGUAGE = "JavaScript">
+    <!-- Code after this will be ignored by older browsers
+    
+    var FNAME = "sintake";
+    var ESP = false;
+    var STDCH = false;
+    var ADCH = false;
+    var DATEC = false;
+    var PCH = false;
+    var FVER = "1.50h"
+    
+    var mtt = [ ["---", "---", "---", "---"],
+                ["Jan", "Jan", "jan", "JAN"],
+                ["Feb", "Feb", "feb", "FEB"],
+                ["Mar", "Mar", "mar", "MAR"],
+                ["Apr", "Apr", "apr", "APR"],
+                ["May", "May", "may", "MAY"],
+                ["Jun", "Jun", "jun", "JUN"],
+                ["Jul", "Jul", "jul", "JUL"],
+                ["Aug", "Aug", "aug", "AUG"],
+                ["Sep", "Sep", "sep", "SEP"],
+                ["Oct", "Oct", "oct", "OCT"],
+                ["Nov", "Nov", "nov", "NOV"],
+                ["Dec", "Dec", "dec", "DEC"] ];
+    
+    function errorCheck()
+    {
+        var aMsg = "";
+        var rfMsg = "";
+    
+        radioFixup();
+        cbFixup();
+    
+        // Patient Identity
+        if (!document.forms[FNAME].elements['sinamel'].value)
+           { rfMsg += " - Patient: Last Name\n"; }
+        if (!document.forms[FNAME].elements['sinamef'].value)
+           { rfMsg += " - Patient: First Name\n"; }
+    
+        if (STDCH) {
+           if (!document.forms[FNAME].elements['sisid'].value)
+              { rfMsg += " - Patient: Study ID\n"; }
+           if (!document.forms[FNAME].elements['simrn'].value)
+              { rfMsg += " - Patient: Medical Record Number\n"; }
+           if (!document.forms[FNAME].elements['sidfc'].value)
+              { rfMsg += " - Patient: Date of First Contact\n"; }
+           if (!document.forms[FNAME].elements['sidoe'].value)
+              { rfMsg += " - Patient: Date of Baseline CT\n"; }
+          /* VA ELCAP disable
+           if (!document.forms[FNAME].elements['hvsirp'].value)
+              { rfMsg += " - Patient: Research Protocol\n"; }
+           if (!document.forms[FNAME].elements['hvsica'].value)
+              { rfMsg += " - Patient: Cancellation\n"; }
+          */
+        }
+    
+        var cps = chkPS();
+        if (cps & 1) {
+           if (!document.forms[FNAME].elements['sieso'].value)
+              { rfMsg += " - Patient: Patient Status (Specify)\n"; }
+        }
+        if (cps & 2) {
+           if (!document.forms[FNAME].elements['sixdate'].value)
+              { rfMsg += " - Patient: Date of Exit\n"; }
+        }
+    /*
+        if (cps & 4) {
+           if (!document.forms[FNAME].elements['sidod'].value)
+              { rfMsg += " - Patient: Date of Death\n"; }
+           if (!document.forms[FNAME].elements['sicod'].value)
+              { rfMsg += " - Patient: Cause of Death\n"; }
+        }
+    */
+    
+        if (ADCH) {
+           // Patient Address Information
+           if (!document.forms[FNAME].elements['sipsa'].value)
+              { rfMsg += " - Patient: Address: Street Address\n"; }
+           if (!document.forms[FNAME].elements['sipc'].value)
+              { rfMsg += " - Patient: Address: City\n"; }
+           if ((!document.forms[FNAME].elements['sips'].value) &&
+                 (!document.forms[FNAME].elements['sipcr'].value))
+              { rfMsg += " - Patient: Address: State or Country\n"; }
+           // require one of two phone #'s
+           if (!(document.forms[FNAME].elements['sipw'].value ||
+                 document.forms[FNAME].elements['siph'].value))
+              { rfMsg += " - Patient: Phone Number\n"; }
+        }
+    
+        if (STDCH) {
+           // Physician Address Information
+           if (!document.forms[FNAME].elements['simdsa'].value)
+              { rfMsg += " - Physician: Address: Street Address\n"; }
+           if (!document.forms[FNAME].elements['simdc'].value)
+              { rfMsg += " - Physician: Address: City\n"; }
+           if (!document.forms[FNAME].elements['simds'].value)
+              { rfMsg += " - Physician: Address: State\n"; }
+           if (!document.forms[FNAME].elements['simdp'].value)
+              { rfMsg += " - Physician: Phone Number\n"; }
+           // Don't require physician fax number at this time
+    
+           // Patient Other Information
+           if (!document.forms[FNAME].elements['sidob'].value)
+              { rfMsg += " - Patient: Date of Birth\n"; }
+           if (!document.forms[FNAME].elements['sifnm'].value)
+              { rfMsg += " - Patient: Mother's Name\n"; }
+           if (!document.forms[FNAME].elements['sifnf'].value)
+              { rfMsg += " - Patient: Father's Name\n"; }
+           // required Physician's information
+           if (!document.forms[FNAME].elements['simdn'].value)
+              { rfMsg += " - Physician: Name\n"; }
+        }
+    
+        // Compose Error Message
+        if (rfMsg)
+        {
+           aMsg = "The following required fields have not been entered:\n";
+           aMsg += rfMsg;
+           aMsg += 
+           "Please complete these fields and submit the form again.\n";
+           alert(aMsg);
+        }
+        else
+        {
+           if (document.forms[FNAME].elements['sidfc'].value
+               && document.forms[FNAME].elements['sidob'].value) {
+              confa = chkAge('sidfc', 'sidob');
+              if (confa < 20) {
+                 alert("Please correct Date of Birth (age < 20).\n");
+                 return;
+              }
+              else if (confa > 150) {
+                 alert("Please correct Date of Birth (age > 150).\n");
+                 return;
+              }
+           }
+           else {
+              confa = 1;
+           }
+    
+           if (confa) {
+              propComm();
+              document.forms[FNAME].elements['fppend'].value = "0";
+              document.forms[FNAME].submit();
+           }
+           else {
+              alert("Please check the Date of First Contact and \nDate of Birth fields.\n");
+              return;
+           }
+        }
+    }
+    
+    function toggle(toggleId, e)
+    {
+     if (!e) {
+      e = window.event;
+     }
+     if (!document.getElementById) {
+      return false;
+     }
+     var body = document.getElementById(toggleId);
+     if (!body) {
+      return false;
+     }
+     if (body.style.display == 'none') {
+      body.style.display = 'block';
+     } else {
+      body.style.display = 'none';
+     }
+     if (e) {
+      // Stop the event from propagating, which
+      // would cause the regular HREF link to
+      // be followed, ruining our hard work.
+      e.cancelBubble = true;
+      if (e.stopPropagation) {
+       e.stopPropagation();
+      }
+     }
+    }
+    
+    
+    function radioFixup()
+    {
+        //fixRVal('sirp');
+        //fixRVal('sica');
+        fixRVal('sicnc');
+        fixRVal('sicnl');
+        fixRVal('sirr');
+        //fixRVal('sicrd');
+        //fixRVal('sicrdd');
+        //fixRVal('sicrdn');
+        //fixRVal('sicrs');
+        //fixRVal('sicfs');
+        //fixRVal('sicfp');
+        //fixRVal('siinm');
+        // fixRVal('sicbs');
+    }
+    
+    function cbFixup()
+    {
+        fixCVal('sisa');
+    }
+    
+    function fixRVal(arg)
+    {
+        var hval = "";
+        var arghv = "hv" + arg;
+        var len = document.forms[FNAME].elements[arg].length;
+    
+        for (var i = 0; i < len; i++) {
+           if (document.forms[FNAME].elements[arg][i].checked)
+              hval = document.forms[FNAME].elements[arg][i].value;
+        }
+    
+        document.forms[FNAME].elements[arghv].value = hval;
+    }
+    
+    function setRVal(arg, val)
+    {
+        var hval = "";
+        var arghv = "hv" + arg;
+        var len = document.forms[FNAME].elements[arg].length;
+    
+        for (var i = 0; i < len; i++) {
+           if (document.forms[FNAME].elements[arg][i].value == val) {
+              document.forms[FNAME].elements[arg][i].checked = true;
+           }
+           else {
+              document.forms[FNAME].elements[arg][i].checked = false;
+           }
+        }
+    
+        document.forms[FNAME].elements[arghv].value = val;
+    }
+    
+    function fixCVal(arg)
+    {
+        var hval = "";
+        var arghv = "hv" + arg;
+        var len = document.forms[FNAME].elements[arg].length;
+    
+        if (document.forms[FNAME].elements[arg].checked) {
+           hval = document.forms[FNAME].elements[arg].value;
+           document.forms[FNAME].elements[arghv].value = hval;
+        }
+        else {
+           document.forms[FNAME].elements[arghv].value = "";
+        }
+    }
+    
+    function genD()
+    {
+       var td = new Date();
+    
+       var dstr = td.getDate().toString();
+       if (dstr.length == 1) {
+          dstr = "0" + dstr;
+       }
+       var hstr = td.getHours().toString();
+       if (hstr.length == 1) {
+          hstr = "0" + hstr;
+       }
+       var minstr = td.getMinutes().toString();
+       if (minstr.length == 1) {
+          minstr = "0" + minstr;
+       }
+       var secstr = td.getSeconds().toString();
+       if (secstr.length == 1) {
+          secstr = "0" + secstr;
+       }
+       var os = unfixMonth(td.getMonth()+1) + "/" + dstr + "/"
+       + td.getFullYear() + ":" + hstr + ":" + minstr + ":" + secstr + ": ";
+    
+       return(os);
+    }
+    
+    function propComm()
+    {
+       propCF('siadcom');
+    //   corrCF('siadcom');
+    }
+    
+    function propCF(arg)
+    {
+       var ts = genD();
+       var ovn = arg;
+       var nvn = arg + "na";
+       var nval = document.forms[FNAME].elements[nvn].value;
+       var oval = document.forms[FNAME].elements[ovn].value;
+    
+       while ((nval.charAt(nval.length - 1) == '\n')
+       || (nval.charAt(nval.length - 1) == '\r')) {
+          nval = nval.substr(0, nval.length - 1)
+       }
+    
+       if (nval.length > 0) {
+          if (((nval.length == 1) && (nval.charAt(0) != '\n'))
+          || (nval.length > 1)) {
+             if ((oval.length == 1) && (oval.charAt(0) != '\n')) {
+                oval = "";
+                document.forms[FNAME].elements[ovn].value = "";
+             }
+             if (oval.length == 0) {
+                if (nval.charAt(nval.length - 1) == '\n') {
+                   nval = nval.substr(0, nval.length-1);
+                }
+             }
+             else {
+                if (nval.charAt(nval.length - 1) != '\n') {
+                   nval += "\n";
+                }
+             }
+    
+             while ((oval.charAt(oval.length - 1) == '\n')
+         || (oval.charAt(oval.length - 1) == '\r')) {
+                oval = oval.substr(0, oval.length - 1)
+             }
+             if ((oval.length == 1) && ((oval.charAt(oval.length - 1) == '\n')
+             || (oval.charAt(oval.length - 1) == '\r'))) {
+                oval = "";
+                document.forms[FNAME].elements[ovn].value = "";
+             }
+    
+             document.forms[FNAME].elements[ovn].value = ts + nval + oval;
+          }
+       }
+       document.forms[FNAME].elements[nvn].value = "";
+    }
+    
+    function corrCF(arg)
+    {
+       var ts = genD();
+       var ovn = arg;
+       var nval = "";
+       var oval = document.forms[FNAME].elements[ovn].value;
+       var osp;
+    
+       var asi = document.forms[FNAME].elements['sirn'].selectedIndex;
+       var av = document.forms[FNAME].elements['sirn'].options[asi].text;
+       var bv;
+    
+       if ((document.forms[FNAME].elements['sircd'].value == "")
+          && (asi == 0)) {
+          return;
+       }
+    
+       nval += (document.forms[FNAME].elements['sircd'].value + ": ");
+    
+       if (document.forms[FNAME].elements['sirr'][0].checked) {
+          bv = "patient";
+       }
+       else {
+          bv = ("physician ("
+             + document.forms[FNAME].elements['sirmd'].value + ")");
+       }
+    
+       if (asi != (document.forms[FNAME].elements['sirn'].length - 1)) {
+          nval += (av + ": ");
+       }
+    
+       if (document.forms[FNAME].elements['sirns'].value != "") {
+          nval += (document.forms[FNAME].elements['sirns'].value + ": ");
+       }
+    
+       nval += (bv + ": ");
+       nval += (document.forms[FNAME].elements['sired'].value + " exam: ");
+       nval += document.forms[FNAME].elements['sirc'].value;
+       nval += "\n";
+    
+       document.forms[FNAME].elements[ovn].value = ts + nval + oval;;
+    }
+    
+    function tsCA(arg)
+    {
+       var ts = genD();
+       var ovn = "siadcom"
+       var oval = document.forms[FNAME].elements[ovn].value;
+       var istr;
+    
+       radioFixup();
+    
+       var arghv = "hv" + arg;
+    
+       var aval = document.forms[FNAME].elements[arghv].value;
+    
+       if (arg == "sicnc") {
+          if (aval == "0")
+             istr = "contact made\n";
+          else if (aval == "x")
+             istr = "phone call 4 made\n";
+          else
+             istr = "phone call " + aval + " made\n";
+       }
+       else if (arg == "sicnl") {
+          if (aval == "0")
+             istr = "contact made\n";
+          else if (aval == "x")
+             istr = "certified letter mailed\n";
+          else
+             istr = "letter " + aval + " sent\n";
+       }
+    
+       document.forms[FNAME].elements[ovn].value = ts + istr + oval;
+    }
+    
+    function uptCI()
+    {
+       var ts = genD();
+       var ovn = "siadcom";
+       var oval = document.forms[FNAME].elements[ovn].value;
+       var tval = "Patient Contact Info (prior to update):\n";
+    
+       var confMsg = (
+    "This will copy the patient contact information into the additional\n"
+    + "patient information log and clear the section so that you may record\n"
+    + "a new set (e.g. after a change of address or phone).  Click OK to\n"
+    + "proceed or Cancel to do nothing.");
+    
+       var confval = confirm(confMsg);
+    
+       if (confval == false)
+          return;
+    
+       if (document.forms[FNAME].elements['sipsa'].value)
+          tval += (document.forms[FNAME].elements['sipsa'].value);
+    
+       if (document.forms[FNAME].elements['sipan'].value)
+          tval += (", Apt. " + document.forms[FNAME].elements['sipan'].value);
+    
+       tval += "\n";
+    
+       if (document.forms[FNAME].elements['sipc'].value)
+          tval += (document.forms[FNAME].elements['sipc'].value + ", ");
+       if (document.forms[FNAME].elements['sips'].value)
+          tval += (document.forms[FNAME].elements['sips'].value + " ");
+       if (document.forms[FNAME].elements['sipz'].value)
+          tval += (document.forms[FNAME].elements['sipz'].value + " ");
+    
+          if (document.forms[FNAME].elements['sipcr'].value)
+             tval += (document.forms[FNAME].elements['sipcr'].value);
+          if (document.forms[FNAME].elements['sipcn'].value) {
+             tval += (" (" + document.forms[FNAME].elements['sipcn'].value
+             + " county)");
+          }
+    
+       tval += "\n";
+    
+       if (document.forms[FNAME].elements['sipw'].value) {
+          tval += ("Work: " + document.forms[FNAME].elements['sipw'].value + "\n");
+       }
+       if (document.forms[FNAME].elements['siph'].value) {
+          tval += ("Home: " + document.forms[FNAME].elements['siph'].value + "\n");
+       }
+       if (document.forms[FNAME].elements['sipem'].value) {
+          tval += ("Email: " + document.forms[FNAME].elements['sipem'].value + "\n");
+       }
+    
+       document.forms[FNAME].elements[ovn].value = ts + tval + oval;
+    
+       document.forms[FNAME].elements['sipsa'].value = "";
+       document.forms[FNAME].elements['sipan'].value = "";
+       document.forms[FNAME].elements['sipc'].value = "";
+       document.forms[FNAME].elements['sips'].value = "";
+       document.forms[FNAME].elements['sipz'].value = "";
+          document.forms[FNAME].elements['sipcr'].value = "";
+          document.forms[FNAME].elements['sipcn'].value = "";
+       document.forms[FNAME].elements['sipw'].value = "";
+       document.forms[FNAME].elements['siph'].value = "";
+       document.forms[FNAME].elements['sipem'].value = "";
+    }
+    
+    function umdCI()
+    {
+       var ts = genD();
+       var ovn = "siadcom";
+       var oval = document.forms[FNAME].elements[ovn].value;
+       var tval = "Physician Contact Info (prior to update):\n";
+    
+       var confMsg = (
+    "This will copy the physician contact information into the additional\n"
+    + "patient information log and clear the section so that you may record\n"
+    + "a new set (e.g. after a change of address or phone).  Click OK to\n"
+    + "proceed or Cancel to do nothing.");
+    
+       var confval = confirm(confMsg);
+    
+       if (confval == false)
+          return;
+    
+       if (document.forms[FNAME].elements['simdn'].value)
+          tval += (document.forms[FNAME].elements['simdn'].value + "\n");
+    
+       if (document.forms[FNAME].elements['simdsa'].value)
+          tval += (document.forms[FNAME].elements['simdsa'].value);
+    
+       tval += "\n";
+    
+       if (document.forms[FNAME].elements['simdc'].value)
+          tval += (document.forms[FNAME].elements['simdc'].value + ", ");
+       if (document.forms[FNAME].elements['simds'].value)
+          tval += (document.forms[FNAME].elements['simds'].value + " ");
+       if (document.forms[FNAME].elements['simdz'].value)
+          tval += (document.forms[FNAME].elements['simdz'].value + " ");
+    
+          if (document.forms[FNAME].elements['simdcr'].value)
+             tval += (document.forms[FNAME].elements['simdcr'].value);
+    
+          if (document.forms[FNAME].elements['simdcn'].value) {
+             tval += (" (" + document.forms[FNAME].elements['simdcn'].value
+             + " county)");
+          }
+    
+       tval += "\n";
+    
+       if (document.forms[FNAME].elements['simdp'].value) {
+          tval += ("Phone: " + document.forms[FNAME].elements['simdp'].value + "\n");
+       }
+       if (document.forms[FNAME].elements['simdf'].value) {
+          tval += ("Fax: " + document.forms[FNAME].elements['simdf'].value + "\n");
+       }
+    
+       document.forms[FNAME].elements[ovn].value = ts + tval + oval;
+    
+       document.forms[FNAME].elements['simdn'].value = "";
+       document.forms[FNAME].elements['simdsa'].value = "";
+       document.forms[FNAME].elements['simdc'].value = "";
+       document.forms[FNAME].elements['simds'].value = "";
+       document.forms[FNAME].elements['simdz'].value = "";
+          document.forms[FNAME].elements['simdcr'].value = "";
+          document.forms[FNAME].elements['simdcn'].value = "";
+       document.forms[FNAME].elements['simdp'].value = "";
+       document.forms[FNAME].elements['simdf'].value = "";
+    }
+    
+    function uinCI()
+    {
+       var ts = genD();
+       var ovn = "siadcom";
+       var oval = document.forms[FNAME].elements[ovn].value;
+       var tval = "Insurance Info (prior to update):\n";
+    
+       var confMsg = (
+    "This will copy the insurance information into the additional\n"
+    + "patient information log and clear the section so that you may record\n"
+    + "a new set.  Click OK to proceed or Cancel to do nothing.");
+    
+       var confval = confirm(confMsg);
+    
+       if (confval == false)
+          return;
+    
+       if (document.forms[FNAME].elements['siin1'].value)
+          tval += ("Insurance 1: " + document.forms[FNAME].elements['siin1'].value + "\n");
+    
+       if (document.forms[FNAME].elements['siinmid1'].value)
+          tval += ("Insurance 1 Member ID: " + document.forms[FNAME].elements['siinmid1'].value + "\n");
+    
+       if (document.forms[FNAME].elements['siingn1'].value)
+          tval += ("Insurance 1 Group Num: " + document.forms[FNAME].elements['siingn1'].value + "\n");
+    
+       if (document.forms[FNAME].elements['siin2'].value)
+          tval += ("Insurance 2: " + document.forms[FNAME].elements['siin2'].value + "\n");
+    
+       if (document.forms[FNAME].elements['siinmid2'].value)
+          tval += ("Insurance 2 Member ID: " + document.forms[FNAME].elements['siinmid2'].value + "\n");
+    
+       if (document.forms[FNAME].elements['siingn2'].value)
+          tval += ("Insurance 2 Group Num: " + document.forms[FNAME].elements['siingn2'].value + "\n");
+    
+       if (document.forms[FNAME].elements['siinc'].value)
+          tval += ("Insurance Comments: " + document.forms[FNAME].elements['siinc'].value + "\n");
+       tval += "\n";
+    
+       document.forms[FNAME].elements[ovn].value = ts + tval + oval;
+    
+       document.forms[FNAME].elements['siin1'].value = "";
+       document.forms[FNAME].elements['siinmid1'].value = "";
+       document.forms[FNAME].elements['siingn1'].value = "";
+       document.forms[FNAME].elements['siin2'].value = "";
+       document.forms[FNAME].elements['siinmid2'].value = "";
+       document.forms[FNAME].elements['siingn2'].value = "";
+       document.forms[FNAME].elements['siinc'].value = "";
+    }
+    
+    
+    function chkPS()
+    {
+       var ras = new Array("ac", "pa", "in", "fe");
+       var sfs = new Array("mr", "pr", "os", "es");
+       var ni = document.forms[FNAME].elements['sies'].selectedIndex;  
+       var chv = document.forms[FNAME].elements['sies'].options[ni].value
+       var fac = 0;
+       var fsf = 0;
+       var rval = 0;
+    
+       for (var i = 0; i < ras.length; i++) {
+          if (chv == ras[i]) {
+         fac = 1;
+          }
+       }
+    
+       for (var i = 0; i < sfs.length; i++) {
+          if (chv == sfs[i]) {
+         fsf = 1;
+          }
+       }
+    
+       if (chv == "ex") {
+          rval += 4;
+       }
+       if (!fac) {
+          rval += 2;
+       }
+       if (fsf == 1) {
+          rval += 1;
+       }
+    
+       return(rval);
+    }
+    
+    function subPend()
+    {
+       propComm();
+       document.forms[FNAME].elements['fppend'].value = "1";
+       document.forms[FNAME].submit();
+    }
+    
+    function ddt(da, db)
+    {
+       var cV = new Array();
+       var mval = new Array();
+       var dval = new Array();
+       var yval = new Array();
+       var mstr, dstr, ystr;
+       var exp = /^(\d{1,2}\/\D{3}\/\d{4})$/;
+       var wrong = false;
+       var dn = -1;
+       var dy, dm, dd, ddm, dmc;
+    
+       cV[0] = document.forms[FNAME].elements[da].value;
+       cV[0] = cV[0].replace(/^\s+/g, '').replace(/\s+$/g, '');
+    
+       cV[1] = document.forms[FNAME].elements[db].value;
+       cV[1] = cV[1].replace(/^\s+/g, '').replace(/\s+$/g, '');
+    
+       for (var i = 0; i < 2; i++) {
+          if (!exp.test(cV[i])) {
+             wrong = true;
+          }
+          else {
+             var pd = new RegExp("\\/", "g");
+             var dfa = cV[i].split(pd);
+       
+             if (dfa.length == 3) {
+                dstr = dfa[0];
+                if (dstr.length == 1) {
+                   dstr = "0" + dstr;
+                }
+                mstr = dfa[1];
+                if (dfa[1].length == 3) {
+                   mstr = fixMonth(dfa[1]);
+                }
+                else {
+                   mstr = dfa[1];
+                }
+    
+                ystr = dfa[2];
+                if (ystr.length == 4)
+                   syear = false;
+                else
+                   wrong = true;
+    
+                mval[i] = parseInt(mstr, 10);
+                dval[i] = parseInt(dstr, 10);
+                yval[i] = parseInt(ystr, 10);
+             }
+             else {
+                wrong = true;
+             }
+          }
+       
+          if (wrong) {
+             mval[0] = 0;
+             dval[0] = 0;
+             yval[0] = 0;
+          }
+       }
+    
+       dmc = 0;
+       dy = yval[0] - yval[1];
+       dmc += (12 * dy);
+       dm = mval[0] - mval[1];
+       dmc += dm;
+       dd = dval[0] - dval[1];
+    
+       if (dd < 0) {
+          if (dd < -15) {
+             ddm = -1;
+          }      
+          else {
+             ddm = 0;
+          }
+       }
+       else {
+          if (dd > 15) {
+             ddm = 1;
+          }      
+          else {
+             ddm = 0;
+          }
+       }
+    
+       dmc += ddm;
+    
+       return(dmc);
+    }
+    
+    function chkAge(da, db)
+    {
+       return(Math.round(ddt(da, db) / 12.0));
+    }
+    
+    function synChk(arg, etype)
+    {
+       var chVal = "";
+       var chNum = 0;
+       chVal = document.forms[FNAME].elements[arg].value;
+       chVal = chVal.replace(/^\s+/g, '').replace(/\s+$/g, '');
+       chNum = parseFloat(chVal, 10);
+    
+       if ((!isNaN(chVal)) && (chVal.charAt(chVal.length-1) == '.')) {
+          chVal = chVal.substr(0,chVal.length-1);
+       }
+    
+       if (etype == 'cws') {
+          document.forms[FNAME].elements[arg].value = chVal;
+       }
+       else if (etype == 'phone') {
+          if (!(PCH || ESP)) {
+             document.forms[FNAME].elements[arg].value = chVal;
+             return;
+          }
+    
+          var exp = /^(\d{10}|\d{3}-\d{3}-\d{4}|\(\d{3}\)\d{3}-\d{4})$/;
+          if (!exp.test(chVal)) {
+             altfx(arg, chVal, "phone", "valid phone number");
+          }
+          else {
+         var pd = new RegExp("[-()]", "g");
+         var tstr=chVal.replace(pd, "");
+         var newstr = "(" + tstr.substring(0,3) + ")" + tstr.substring(3,6)
+         newstr += "-" + tstr.substring(6,10)
+             document.forms[FNAME].elements[arg].value = newstr;
+          }
+       }
+       else if (etype == 'ssn') {
+          if (!ESP) {
+             document.forms[FNAME].elements[arg].value = chVal;
+             return;
+          }
+    
+          var exp = /^(\d{9}|\d{3}-\d{2}-\d{4})$/;
+          if (!exp.test(chVal)) {
+             altfx(arg, chVal, "SSN", "valid SSN");
+          }
+          else {
+         var pd = new RegExp("-", "g");
+         var tstr=chVal.replace(pd, "");
+         var newstr = tstr.substring(0,3) + "-" + tstr.substring(3,5)
+         newstr += "-" + tstr.substring(5,9)
+             document.forms[FNAME].elements[arg].value = newstr;
+          }
+       }
+       else if ((etype == 'rdate') || (etype == 'adate') || (etype == 'rsdate') || (etype == 'asdate')) {
+          var mstr, dstr, ystr;
+    
+          if ((etype == 'rdate') || (etype == 'rsdate')) {
+             var y4min = 1990;
+         // Increase MAX year from 2009 to 2019, since 2009 has arrived
+         var y4max = 2019;
+         var y2min = 90;
+         var y2max = 19;
+          }
+          else if ((etype == 'adate') || (etype == 'asdate')) {
+             var y4min = 1800;
+         var y4max = 2048;
+         var y2min = 90;
+         var y2max = 19;
+          }
+    
+          if ((etype == 'rdate') || (etype == 'adate')) {
+             if (DATEC) {
+            var exp = /^(\d{6}|\d{8}|\d{1,2}\/\D{3}\/\d{4}|\d{1,2}\/\D{3}\/\d{2}|\d{1,2}\/\d{1,2}\/\d{4}|\d{1,2}\/\d{1,2}\/\d{2})$/;
+         }
+         else {
+            var exp = /^(\d{1,2}\/\D{3}\/\d{4})$/;
+         }
+         var sdt = false;
+          }
+          else if ((etype == 'rsdate') || (etype == 'asdate')) {
+             if (DATEC) {
+                var exp = /^(\d{4}|\d{6}|\D{3}\/\d{4}|\D{3}\/\d{2}|\d{1,2}\/\d{4}|\d{1,2}\/\d{2})$/;
+         }
+         else {
+                var exp = /^(\D{3}\/\d{4})$/;
+         }
+         var sdt = true;
+          }
+    
+          var wrong = false;
+    
+          if (!exp.test(chVal)) {
+             wrong = true;
+          }
+          else {
+         var pd = new RegExp("\\/", "g");
+         var dfa = chVal.split(pd);
+    
+         if ((dfa.length == 1) &&
+                ((dfa[0].length == 4) || (dfa[0].length == 6) || (dfa[0].length == 8))) {
+               // monolithic 4, 6 or 8
+               var tstr = dfa[0];
+    
+               if (!sdt) { // mono full date
+                  if (tstr.length == 6) {
+                     dstr = tstr.substring(0,2);
+                 mstr = tstr.substring(2,4);
+                 ystr = tstr.substring(4,6);
+                 syear = true;
+                  }
+                  else if (tstr.length == 8) {
+                     dstr = tstr.substring(0,2);
+                     mstr = tstr.substring(2,4);
+                 ystr = tstr.substring(4,8);
+                 syear = false;
+                      }
+              mval = parseInt(mstr, 10);
+              dval = parseInt(dstr, 10);
+              yval = parseInt(ystr, 10);
+               }
+               else { // mono short date (mmyy or mmyyyy)
+                  if (tstr.length == 4) {
+                     mstr = tstr.substring(0,2);
+                 ystr = tstr.substring(2,4);
+                 syear = true;
+                  }
+                  else if (tstr.length == 6) {
+                     mstr = tstr.substring(0,2);
+                     ystr = tstr.substring(2,6);
+                 syear = false;
+                  }
+                  mval = parseInt(mstr, 10);
+                  yval = parseInt(ystr, 10);
+               }
+         }
+         else if ((dfa.length == 2) && sdt) { // split short date
+            mstr = dfa[0];
+            if (dfa[0].length == 3) {
+               mstr = fixMonth(dfa[0]);
+            }
+            else {
+               mstr = dfa[0];
+            }
+            ystr = dfa[1];
+            if (ystr.length == 4)
+               syear = false;
+            else if (ystr.length == 2)
+               syear = true;
+            else
+               wrong = true;
+    
+            mval = parseInt(mstr, 10);
+            yval = parseInt(ystr, 10);
+         }
+         else if (dfa.length == 3) { // split full date
+            dstr = dfa[0];
+            if (dstr.length == 1) {
+               dstr = "0" + dstr;
+                }
+            mstr = dfa[1];
+            if (dfa[1].length == 3) {
+               mstr = fixMonth(dfa[1]);
+            }
+            else {
+               mstr = dfa[1];
+            }
+    
+            ystr = dfa[2];
+            if (ystr.length == 4)
+               syear = false;
+            else if (ystr.length == 2)
+               syear = true;
+            else
+               wrong = true;
+    
+            mval = parseInt(mstr, 10);
+            dval = parseInt(dstr, 10);
+            yval = parseInt(ystr, 10);
+         }
+         else {
+            wrong = true;
+         }
+    
+         if (!wrong) {
+            // check month
+            if (!sdt) {
+               if (isNaN(mval) || (mval < 1) || (mval > 12)) {
+                  wrong = true;
+               }
+            }
+            else {
+               // allow zero for month in short date form
+               if (isNaN(mval) || (mval < 0) || (mval > 12)) {
+                  wrong = true;
+               }
+            }
+    
+            // check year
+            if (syear) {
+               if (yval <= y2max) {
+              yval += 2000;
+               }
+               else if (yval >= y2min) {
+                  yval += 1900;
+               }
+               else { // y2max > yval < y2min
+                  wrong = true;
+               }
+            }
+    
+            if (isNaN(yval) || (yval < y4min) || (yval > y4max)) {
+               wrong = true;
+            }
+         
+            // check day
+            if (!sdt) {
+               maxd = 31;
+                   if ((mval == 4) || (mval == 6) || (mval == 9) || (mval == 11)) {
+                      maxd = 30;
+                   }
+                   else if (mval == 2) {
+                      if ((yval % 4) != 0) {
+                         maxd = 28;
+                      }
+                      else {
+                         maxd = 29;
+                      }
+                   }
+                   else {
+                      maxd = 31;
+                   }
+               if (isNaN(dval) || (dval < 1) || (dval > maxd)) {
+                  wrong = true;
+               }
+            }
+    
+                mstr = unfixMonth(mval);
+    
+            if (!sdt) {
+               var newstr = dstr + "/" + mstr + "/" + yval.toString();
+            }
+                else {
+               var newstr = mstr + "/" + yval.toString();
+            }
+    
+            document.forms[FNAME].elements[arg].value = newstr;
+             }
+          }
+    
+          if (wrong) {
+             altfx(arg, chVal, "date", "valid date");
+          }
+       }
+       else if (etype == 'month') {
+          if (isNaN(chVal) || isNaN(chNum) || (chNum > 12) || (chNum < 1)) {
+             altfx(arg, chVal, "month", "number in the range 1 to 12");
+          }
+          else {
+             document.forms[FNAME].elements[arg].value = chVal;
+          }
+       }
+       else if (etype == 'day') {
+          if (isNaN(chVal) || isNaN(chNum) || (chNum > 31) || (chNum < 1)) {
+             altfx(arg, chVal, "day", "number in the range 1 to 31");
+          }
+          else {
+             document.forms[FNAME].elements[arg].value = chVal;
+          }
+       }
+       else if (etype == 'year') {
+          if ((!isNaN(chVal) || isNaN(chNum)) && ((chNum == 9) || (chNum == 99))) {
+             document.forms[FNAME].elements[arg].value = "1999"
+             chNum = 1999
+          }
+          if ((!isNaN(chVal) || isNaN(chNum)) && ((chVal == "0") || (chVal == "00"))) {
+         document.forms[FNAME].elements[arg].value = "2000"
+         chNum = 2000
+          }
+          if (isNaN(chVal) || isNaN(chNum) || (chNum > 2019) || (chNum < 1990)) {
+             altfx(arg, chVal, "year", "number in the range 1990 to 2019");
+          }
+          else {
+             document.forms[FNAME].elements[arg].value = chVal;
+          }
+       }
+       else if (etype == 'ayear') {
+          if (isNaN(chVal) || isNaN(chNum) || (chNum > 2019) || (chNum < 1800)) {
+             altfx(arg, chVal, "year", "four-digit year");
+          }
+          else {
+             document.forms[FNAME].elements[arg].value = chVal;
+          }
+       }
+       else if (etype == 'age') {
+          if (isNaN(chVal) || isNaN(chNum) || (chNum > 150) || (chNum < 1)) {
+             altfx(arg, chVal, "age", "valid age in years");
+          }
+          else {
+             document.forms[FNAME].elements[arg].value = chVal;
+          }
+       }
+       else if (etype == 'pnum') {
+          if ((chNum >= 0) && (chVal.charAt(0) == '.')) {
+             chVal = '0' + chVal;
+          }
+    
+          if (isNaN(chVal) || isNaN(chNum) || (chNum < 0)) {
+             altfx(arg, chVal, "number", "valid positive number");
+          }
+          else {
+             document.forms[FNAME].elements[arg].value = chVal;
+          }
+       }
+       else if (etype == 'anum') {
+          if ((chNum < 0) && (chVal.charAt(1) == '.')) {
+             chVal = '-0' + chVal.substr(1,chVal.length - 1);
+          }
+          else if ((chNum >= 0) && (chVal.charAt(0) == '.')) {
+             chVal = '0' + chVal;
+          }
+    
+          if (isNaN(chVal) || isNaN(chNum)) {
+             altfx(arg, chVal, "number", "valid numeric argument");
+          }
+          else {
+             document.forms[FNAME].elements[arg].value = chVal;
+          }
+       }
+    }
+    
+    function altfx(arg, val, msg1, msg2)
+    {
+       alert("Incorrect " + msg1 + " entry!\n    " + val
+          + "\nPlease enter a " + msg2 + ".\n");
+       document.forms[FNAME].elements[arg].value = "";
+       document.forms[FNAME].elements[arg].select();
+       document.forms[FNAME].elements[arg].focus();
+    }
+    
+    function fixMonth(str)
+    {
+       for (var i = 0; i < mtt.length; i++) {
+          for (var j = 1; j < mtt[0].length; j++) {
+             if(str == mtt[i][j]) {
+                return i;
+             }
+          }
+       }
+    
+       return "-1";
+    }
+    
+    function unfixMonth(num)
+    {
+       if ((num < 0) || (num > 12))
+          return "Xxx";
+       else
+          return(mtt[num][1]);
+    }
+    
+    function sicrdChk(arg)
+    {
+       if ( arg == 1 ) {
+           document.forms[FNAME].elements["sicrdd"][0].disabled = false;
+           document.forms[FNAME].elements["sicrdd"][1].disabled = false;
+           document.forms[FNAME].elements["sicrdn"][0].disabled = false;
+           document.forms[FNAME].elements["sicrdn"][1].disabled = false;
+       } else {
+           setRVal ('sicrdd','');
+           setRVal ('sicrdn','');
+           document.forms[FNAME].elements["sicrdd"][0].disabled="disabled";
+           document.forms[FNAME].elements["sicrdd"][1].disabled="disabled";
+           document.forms[FNAME].elements["sicrdn"][0].disabled="disabled";
+           document.forms[FNAME].elements["sicrdn"][1].disabled="disabled";
+       }
+       radioFixup();
+    }
+    
+    function hsv()
+    {
+       if(!document.forms[FNAME].elements['hvsicnc'].value) {
+          setRVal('sicnc', '0');
+       }
+    
+       if(!document.forms[FNAME].elements['hvsicnl'].value) {
+          setRVal('sicnl', '0');
+       }
+    
+       var event = "";
+       var doe = document.forms[FNAME].elements['sisid'].value;
+       var sidinst = doe.substr(0,2);
+       var sidnum = doe.substr(2,4);
+    
+    }
+    
+    function jshp(arg)
+    {
+       alert(si_hsl_100(arg));
+    }
+    
+    function si_hsl_100(arg)
+    {
+       if (arg == "ssn") {
+          return(
+    "Please enter the social security number of the subject.");
+       }
+       else if (arg == "dex") {
+          return(
+    "The Date of Exit should be recorded for all subjects who are no longer\n"
+    + "active in the study.  It signifies the date on which they change to\n"
+    + "a non-active status.");
+       }
+       else if (arg == "dod") {
+          return(
+    "The Date of Death (DOD) should be recorded for all subjects who have\n"
+    + "expired.");
+       }
+       else if (arg == "cod") {
+          return(
+    "The Cause of Death (COD) should be recorded for all subjects who have\n"
+    + "expired.");
+       }
+       else if (arg == "corr") {
+          return(
+    "This section should be used to record correspondence or communication\n"
+    + "with the patient or physician.  This includes the date, recipient\n"
+    + "and nature of the communication, the date of the relevant CT exam,\n"
+    + "and the identity of the coordinator.");
+       }
+       else if (arg == "upt") {
+          return(
+    "Use the Update button when the patient's contact information changes.\n"
+    + "It will save a copy of the information into the Additional Patient\n"
+    + "Information and clear the appropriate fields so that you may enter\n"
+    + "the new contact information.");
+       }
+       else if (arg == "umd") {
+          return(
+    "Use the Update button when the physician's contact information\n"
+    + "changes.  It will save a copy of the information into the Additional\n"
+    + "Patient Information and clear the appropriate fields so that you may\n"
+    + "enter the new contact information.");
+       }
+    }
+    
+    function savesid()
+    {
+       var oval = document.forms[FNAME].elements['sisid'].value;
+       if (document.forms[FNAME].elements['hvsisid'].value == "") {
+          document.forms[FNAME].elements['hvsisid'].value = oval;
+       }
+    }
+    
+    function savefsid()
+    {
+       var oval = document.forms[FNAME].elements['sifsid'].value;
+       document.forms[FNAME].elements['hvsifsid'].value = oval;
+    }
+    
+    function confirmfsid()
+    {
+       synChk('sifsid','cws');
+       var cval = prompt("You are about to link to another StudyID. Please re-enter the former Study ID for confirmation.");
+       var oval = document.forms[FNAME].elements['sifsid'].value;
+       if (oval == cval) alert ("Ok.");
+       else {
+          alert ("Mismatch")
+          var sval = document.forms[FNAME].elements['hvsifsid'].value;
+          document.forms[FNAME].elements['sifsid'].value = sval;
+       }
+    }
+    
+    // Stop hiding the code here -->
+    </SCRIPT>
+    </HEAD>
+    
+    <BODY BGCOLOR="#bfffbf" LINK="#0000ff" VLINK="#ff0000" ALINK="#ff0000" TEXT="#000000" onLoad="hsv()">
+    <table width=100% bgcolor=#ffffcc><form name=banner><tr><th align=left><font size=+2 bold>VEP VA ELCAP Phoenix (VAPALS): </font></th><TD align=right>Accessed by: <i>Administrator</i></TD><table border=0 width=100% bgcolor=#ffffcc><tr><td><INPUT TYPE="button" VALUE="Return to Case Review" onClick="javascript:subS1( )"> 
+    <INPUT TYPE="button" VALUE="Return Home" onClick="javascript:subS2( )"> 
+    <INPUT TYPE="button" VALUE="Submit Form" onClick="javascript:errorCheck( )"> 
+    </td><TD align=right>11:23 AM MST December 13, 2017</TD></tr></table></form></td></tr></table><table bgcolor=black width=100%><TR><TD><table bgcolor=white width=100% cellpadding=2><TR><TD width=33%>Study ID: <font size=+1><b> VEP0001 </b></font></td><td align=center width=33%> Name (Last, First): <font size=+1><b>Doe, Jane</b></font></td><td align=right width=33%> Medical Record Number: <font size=+1><b>12345</b></font></td></TR></TABLE></TD></TR></TABLE><FORM METHOD="POST" ACTION="/cgi-bin/datac/cform.cgi" NAME="cform"><input type=hidden name="field" value="sid" > <input type=hidden name="fguid" value="WjFvL38AAAEAAG19Cx0AAAAG" ><input type=hidden name="fginst" value="VEP" ><input type=hidden name="fvalue" value="VEP0001" ></form>
+    <FORM METHOD="POST" ACTION="/cgi-bin/datac/home.cgi" NAME="home"><input type=hidden name="inst" value="VEP"><input type=hidden name="uid" value="WjFvL38AAAEAAG19Cx0AAAAG"><input type=hidden name="msg" value="Case Review Complete"></FORM>
+    <SCRIPT LANGUAGE = "JavaScript">
+    <!-- Code after this will be ignored by older browsers
+    function subS1() { document.forms['cform'].submit() }
+    function subS2() { document.forms['home'].submit() }
+    // Stop hiding the code here -->
+    </SCRIPT>
+    
+    
+    <FORM METHOD="POST" ACTION="/cgi-bin/datac/helper.cgi">
+    <FONT SIZE=+1><B>Intake Form</B>&nbsp
+    <FONT SIZE=+0><input type="image" src="/images/help.gif">
+    <input type=hidden name="help" value="sihelp">
+    <input type=hidden name="fgakey" value="WjFvL38AAAEAAG19Cx0AAAAG" >
+    <input type=hidden name="fpfname" value="QIhuSAoCYzQAAAtHza8AAAAM">
+    <input type=hidden name="fpinst" value="VEP">
+    <input type=hidden name="fpform" value="siform">
+    <input type=hidden name="fpctime" value="Fri Aug 24 11:04:43 2012">
+    <input type=hidden name="fpmtime" value="Tue Aug 08 13:47:20 2017">
+    <input type=hidden name="fprhost" value="10.5.49.148">
+    <input type=hidden name="fpcname" value="AA">
+    <input type=hidden name="fpmname" value="Administrator">
+    <input type=hidden name="fpsisid" value="VEP0001">
+    </FORM>
+    <FORM METHOD="POST" ACTION="/cgi-bin/datac/datae.cgi" NAME="sintake">
+    
+    <input type=hidden name="sicbs" value="">
+    
+    <TABLE CELLSPACING=0 CELLPADDING=0 WIDTH="100%">
+    <TR>
+    <TD align=left><B>Patient Name (Last)</B></TD>
+    <TD><input type=text name="sinamel" onChange="synChk('sinamel','cws')" size=24 value="Doe"></TD>
+    <TD align=left><B>(First)</B></TD>
+    <TD><input type=text name="sinamef" onChange="synChk('sinamef','cws')" size=24 value="Jane"></TD>
+    </TR>
+    <TR>
+    <TD width=25% align=left><B>Date of First Contact</B><BR>(DD/Mmm/YYYY)</TD>
+    <TD><input type=text name="sidfc" onChange="synChk('sidfc','rdate')" size=11></TD>
+    <TD align=left><B>Study ID</B></TD>
+    <TD>
+    <input type=hidden name="hvsisid" value="VEP0001">
+    <input type=text name="sisid" onFocus="savesid()" onChange="synChk('sisid','cws')" size=10 value="VEP0001"></TD>
+    </TR>
+    <TR>
+    <TD>&nbsp; </TD><TD>&nbsp; </TD>
+    <TD align=left><B>Former Study ID</B></TD>
+    <TD>
+    <input type=hidden name="hvsifsid" value="">
+    <input type=text name="sifsid" onFocus="savefsid()" onChange="confirmfsid()" size=12></TD>
+    </TR>
+    <TR>
+    <TD width=25% align=left><B>Date of Baseline CT</B><BR>(DD/Mmm/YYYY)</TD>
+    <TD><input type=text name="sidoe" onChange="synChk('sidoe','rdate')" size=11></TD>
+    <TD align=left><B>SSN</B></TD>
+    <TD><input type=text name="simrn" onChange="synChk('simrn','cws')" size=7 value="12345"></TD>
+    </TR>
+    
+    <TR>
+    <TD align=left valign=top><B>Special Attention</B>
+    </TD>
+    <TD align=left valign=top>
+    <input type=hidden name="hvsisa" value="y">
+    <input type=checkbox name="sisa" value="y" CHECKED>
+    </TD>
+    <td colspan="2"></td>
+    </TR>
+    </TABLE>
+    <!--
+    <TABLE CELLSPACING=0 CELLPADDING=1>
+    <TR>
+    <TD><B>How did you hear about our program?</B>
+    <TD align=center><select name="sihap">
+    <option value="-" SELECTED> -
+    <option value="br"> brochure
+    <option value="md"> doctor referral
+    <option value="fp"> friend in program
+    <option value="in"> internet
+    <option value="ls"> lung screening program
+    <option value="ar"> medical journal articles
+    <option value="np"> newspaper
+    <option value="ra"> radio
+    <option value="at"> TV
+    <option value="wm"> word of mouth
+    <option value="ot"> other
+    </select></TD>
+    <TD align=left><B>Specify</B>
+    <input type=text name="sihapo" onChange="synChk('sihapo','cws')" size=40></TD>
+    </TR>
+    </TABLE>
+    -->
+    <HR>
+    
+    <TABLE CELLSPACING=0 CELLPADDING=0 WIDTH="100%">
+    <TR><TD>
+    <B>Patient Information</B><BR>
+    <textarea name="siadcomna" rows=2 cols=65 wrap=physical>
+    
+    </textarea>
+    <BR>
+    <textarea name="siadcom" rows=4 cols=65 wrap=physical onFocus="this.blur()">
+    
+    </textarea>
+    </TD></TR>
+    </TABLE>
+    
+    <HR>
+    
+    <TABLE CELLSPACING=0 CELLPADDING=2>
+    <TR><TD colspan=4>
+    <A HREF="javascript:jshp('upt')"><img src=/images/hb.gif height=16 width=5 border=0></A>
+    <FONT SIZE=+2><B>Patient Contact Information</B><FONT SIZE=+0>
+    <A HREF="javascript:uptCI()"><img src=/images/update.gif></A>
+    </TD></TR>
+    <TR>
+    <TD><B>Patient Street Address</B></TD>
+    <TD align=left><input type=text name="sipsa" onChange="synChk('sipsa','cws')" size=40></TD>
+    <TD align=right width=20%><B>Apt # </B>
+    <input type=text name="sipan" onChange="synChk('sipan','cws')" size=4></TD>
+    <TD align=right><B>County </B>
+    <input type=text name="sipcn" onChange="synChk('sipcn','cws')" size=12></TD>
+    </TR>
+    </TABLE>
+    <TABLE CELLSPACING=0 CELLPADDING=2 WIDTH="100%">
+    <TR>
+    <TD align=right><B>City </B>
+    <input type=text name="sipc" onChange="synChk('sipc','cws')" size=32></TD>
+    <TD><B>State </B><input type=text name="sips" onChange="synChk('sips','cws')" size=2></TD>
+    <TD><B>Zip </B><input type=text name="sipz" onChange="synChk('sipz','cws')" size=5></TD>
+    <TD align=right><B>Country </B>
+    <input type=text name="sipcr" onChange="synChk('sipcr','cws')" size=16></TD>
+    </TR>
+    </TABLE>
+    <TABLE CELLSPACING=0 CELLPADDING=2>
+    <TR>
+    <TD><B>Phone (Work)</B></TD>
+    <TD><input type=text name="sipw" onChange="synChk('sipw','phone')" size=24></TD>
+    <TD><B>Phone (Home)</B></TD>
+    <TD><input type=text name="siph" onChange="synChk('siph','phone')" size=24></TD>
+    </TR>
+    </TABLE>
+    <TABLE CELLSPACING=0 CELLPADDING=2>
+    <TR>
+    <TD align=left><B>Email Address</B></TD>
+    <TD><input type=text name="sipem" onChange="synChk('sipem','cws')" size=32></TD>
+    </TR>
+    </TABLE>
+    
+    <HR>
+    
+    <TABLE CELLSPACING=0 CELLPADDING=2 WIDTH="60%">
+    <TR><TD colspan=4>
+    <A HREF="javascript:jshp('umd')"><img src=/images/hb.gif height=16 width=5 border=0></A>
+    <FONT SIZE=+2><B>Physician Contact Information</B><FONT SIZE=+0>
+    <A HREF="javascript:umdCI()"><img src=/images/update.gif></A>
+    </TD></TR>
+    <TR>
+    <TD><B>Physician's Name</B></TD>
+    <TD><input type=text name="simdn" onChange="synChk('simdn','cws')" size=32></TD>
+    </TR>
+    </TABLE>
+    <h3>Physician Address - only required for non-VA physicians</h3>
+    <TABLE CELLSPACING=0 CELLPADDING=2 WIDTH="100%">
+    <TR>
+    <TD><B>Physician Street Address</B></TD>
+    <TD align=left><input type=text name="simdsa" onChange="synChk('simdsa','cws')" size=40></TD>
+    <TD align=right width=20%></TD>
+    <TD align=right><B>County </B>
+    <input type=text name="simdcn" onChange="synChk('simdcn','cws')" size=12></TD>
+    </TR>
+    </TABLE>
+    <TABLE CELLSPACING=0 CELLPADDING=2 WIDTH="100%">
+    <TR>
+    <TD align=right><B>City </B>
+    <input type=text name="simdc" onChange="synChk('simdc','cws')" size=32></TD>
+    <TD><B>State </B><input type=text name="simds" onChange="synChk('simds','cws')" size=2></TD>
+    <TD><B>Zip </B><input type=text name="simdz" onChange="synChk('simdz','cws')" size=5></TD>
+    <TD align=right><B>Country </B>
+    <input type=text name="simdcr" onChange="synChk('simdcr','cws')" size=16></TD>
+    </TR>
+    </TABLE>
+    <TABLE CELLSPACING=0 CELLPADDING=2>
+    <TR>
+    <TD><B>Physician's Phone</B></TD>
+    <TD><input type=text name="simdp" onChange="synChk('simdp','phone')" size=24></TD>
+    <TD><B>Physician's Fax</B></TD>
+    <TD><input type=text name="simdf" onChange="synChk('simdf','phone')" size=24></TD>
+    </TR>
+    </TABLE>
+    
+    <HR>
+    
+    <TABLE CELLSPACING=0 CELLPADDING=2>
+    <TR>
+    <TD><B>Date of Birth</B><BR>(DD/Mmm/YYYY)</TD>
+    <TD></TD>
+    <TD><input type=text name="sidob" onChange="synChk('sidob','adate')" size=11 value="01/Jan/1950"></TD>
+    </TR>
+    <TR>
+    <TD align=left><B>SSN</B>
+    <A HREF="javascript:jshp('ssn')"><img src="/images/hb.gif" alt="Help" height=10 width=5 border=0></A></TD>
+    <TD></TD>
+    <TD align=left><input type=text name="sissn" onChange="synChk('sissn','ssn')" size=12></TD>
+    </TR>
+    </TABLE>
+    
+    <TABLE CELLSPACING=0 CELLPADDING=0 WIDTH="100%">
+    <TR>
+    <TD><B>Parents' First Names</B></TD>
+    <TD><B>Mother</B></TD>
+    <TD><input type=text name="sifnm" onChange="synChk('sifnm','cws')" size=20></TD>
+    <TD><B>Father</B></TD>
+    <TD><input type=text name="sifnf" onChange="synChk('sifnf','cws')" size=20></TD>
+    </TR>
+    </TABLE>
+    <TABLE CELLSPACING=0 CELLPADDING=2 WIDTH="100%">
+    <TR><TD colspan=5>
+    <FONT SIZE=+0 color="#ff2244">It is important to identify two contacts.
+    At least one needs to be at another address.
+    </FONT>
+    </TD></TR>
+    <TR>
+    <TD><B>Emergency Contact (1)</B></TD>
+    <TD><B>Name</B></TD>
+    <TD><input type=text name="sikn" onChange="synChk('sikn','cws')" size=32></TD>
+    <TD><B>Relation</B></TD>
+    <TD><input type=text name="sikr" onChange="synChk('sikr','cws')" size=14></TD>
+    </TR>
+    <TR>
+    <TD></TD>
+    <TD><B>Address</B></TD>
+    <TD><input type=text name="sika" onChange="synChk('sika','cws')" size=32></TD>
+    <TD><B>Phone</B></TD>
+    <TD><input type=text name="sikp" onChange="synChk('sikp','phone')" size=16></TD>
+    </TR>
+    <TR>
+    <TD><B>Emergency Contact (2)</B></TD>
+    <TD><B>Name</B></TD>
+    <TD><input type=text name="siknb" onChange="synChk('siknb','cws')" size=32></TD>
+    <TD><B>Relation</B></TD>
+    <TD><input type=text name="sikrb" onChange="synChk('sikrb','cws')" size=14></TD>
+    </TR>
+    <TR>
+    <TD></TD>
+    <TD><B>Address</B></TD>
+    <TD><input type=text name="sikab" onChange="synChk('sikab','cws')" size=32></TD>
+    <TD><B>Phone</B></TD>
+    <TD><input type=text name="sikpb" onChange="synChk('sikpb','phone')" size=16></TD>
+    </TR>
+    </TABLE>
+    
+    <HR>
+    
+    <TABLE CELLSPACING=0 CELLPADDING=1>
+    <TR><TD colspan=2><B>Phone Calls</B>
+    <input type=hidden name="hvsicnc" value="0">
+    <input type=radio name="sicnc" value="0" onClick="tsCA('sicnc')" CHECKED> 0
+    <input type=radio name="sicnc" value="1" onClick="tsCA('sicnc')"> 1
+    <input type=radio name="sicnc" value="2" onClick="tsCA('sicnc')"> 2
+    <input type=radio name="sicnc" value="3" onClick="tsCA('sicnc')"> 3
+    <input type=radio name="sicnc" value="x" onClick="tsCA('sicnc')"> X
+    </TD>
+    <TD>&nbsp &nbsp</TD>
+    <TD><B>Letters</B>
+    <input type=hidden name="hvsicnl" value="0">
+    <input type=radio name="sicnl" value="0" onClick="tsCA('sicnl')" CHECKED> 0
+    <input type=radio name="sicnl" value="1" onClick="tsCA('sicnl')"> 1
+    <input type=radio name="sicnl" value="2" onClick="tsCA('sicnl')"> 2
+    <input type=radio name="sicnl" value="3" onClick="tsCA('sicnl')"> 3
+    <input type=radio name="sicnl" value="x" onClick="tsCA('sicnl')"> X
+    </TD></TR>
+    </TABLE>
+    <TABLE CELLSPACING=0 CELLPADDING=1>
+    <TR><TD><B>Patient Status</B></TD>
+    <TD colspan=4>
+    <select name="sies">
+    <option value="ac" SELECTED> active
+    <option value="tr"> transferred to another institution (specify)
+    <option value="mr"> unable due to medical reason (specify)
+    <option value="pr"> unwilling due to personal reason (specify)
+    <option value="rf"> refused to continue
+    <option value="pa"> physician advised against
+    <option value="ra"> concern about radiation
+    <option value="mv"> moved and unable to return
+    <option value="in"> no insurance, can't have Dx CT
+    <option value="bc"> burden of cost
+    <option value="os"> other (specify)
+    <option value="es"> excluded (specify)
+    <option value="sc"> study complete
+    <option value="nr"> no response to 3 calls + 3 letters
+    <option value="nc"> unable to contact
+    <option value="fe"> being followed elsewhere (get results)
+    <option value="ex"> expired (record date / cause)
+    </select></TD>
+    <TD><B>Specify</B></TD>
+    <TD><input type=text name="sieso" onChange="synChk('sieso','cws')" size=24></TD>
+    </TR>
+    <TR><TD><B>Date of Exit</B>
+    <A HREF="javascript:jshp('dex')"><img src=/images/hb.gif height=10 width=5 border=0></A>
+    &nbsp
+    <BR>(DD/Mmm/YYYY)</TD>
+    <TD><input type=text name="sixdate" onChange="synChk('sixdate','rdate')" size=11></TD>
+    <TD colspan=5></TD>
+    </TR>
+    <TR><TD><B>DOD</B>
+    <A HREF="javascript:jshp('dod')"><img src=/images/hb.gif height=10 width=5 border=0></A>
+    &nbsp
+    <BR>(DD/Mmm/YYYY)</TD>
+    <TD><input type=text name="sidod" onChange="synChk('sidod','rdate')" size=11></TD>
+    <TD colspan=3></TD>
+    <TD><B>COD</B>
+    <A HREF="javascript:jshp('cod')"><img src=/images/hb.gif height=10 width=5 border=0></A>
+    &nbsp
+    </TD>
+    <TD><input type=text name="sicod" onChange="synChk('sicod','cws')" size=24></TD>
+    </TR>
+    
+    <TR><TD colspan=7><HR></TD></TR>
+    
+    <TR><TD>
+    <A HREF="javascript:jshp('corr')"><img src=/images/hb.gif height=12 width=5 border=0></A>
+    <FONT SIZE=+1><B>Correspondence</B><FONT SIZE=+0>
+    <A HREF="javascript:corrCF('siadcom')"><img src=/images/record.gif></A>
+    </TD></TR>
+    <TR><TD><B>Correspondence Date</B>
+    <BR>(DD/Mmm/YYYY)</TD>
+    <TD colspan=4><input type=text name="sircd" onChange="synChk('sircd','rdate')" size=11></TD>
+    <TD><B>Date of Exam</B>
+    <BR>(DD/Mmm/YYYY)</TD>
+    <TD><input type=text name="sired" onChange="synChk('sired','rdate')" size=11></TD>
+    </TR>
+    <TR><TD><B>Recipient</B></TD>
+    <TD colspan=4><input type=hidden name="hvsirr" value="">
+    <input type=radio name="sirr" value="s"> patient
+    <input type=radio name="sirr" value="m"> physician
+    </TD>
+    <TD colspan=1><B>VA Providers co-signed</B></TD>
+    <TD><input type=text name="sirmd" onChange="synChk('sirmd','cws')" size=24></TD>
+    </TD></TR>
+    <TR><TD><B>Nature</B></TD>
+    <TD colspan=4>
+    <select name="sirn">
+    <option value="-" SELECTED> -
+    <option value="fr"> faxed report
+    <option value="mr"> mailed report
+    <option value="pr"> called to give results
+    <option value="ab"> Abx discussed with physician
+    <option value="bx"> Bx discussed with physician
+    <option value="os"> other (specify)
+    </select></TD>
+    <TD><B>Specify</B></TD>
+    <TD><input type=text name="sirns" onChange="synChk('sirns','cws')" size=24></TD>
+    </TR>
+    <TR>
+    <TD colspan=5></TD>
+    <TD><B>Coordinator</B></TD>
+    <TD><input type=text name="sirc" onChange="synChk('sirc','cws')" size=24></TD>
+    </TR>
+    </TABLE>
+    
+    
+    <input type=hidden name="fppend" value="">
+    <input type=hidden name="fgakey" value="WjFvL38AAAEAAG19Cx0AAAAG" >
+    <input type=hidden name="fpfname" value="QIhuSAoCYzQAAAtHza8AAAAM">
+    <input type=hidden name="fpinst" value="VEP">
+    <input type=hidden name="fpform" value="siform">
+    <input type=hidden name="fpctime" value="Fri Aug 24 11:04:43 2012">
+    <input type=hidden name="fpmtime" value="Tue Aug 08 13:47:20 2017">
+    <input type=hidden name="fprhost" value="10.5.49.148">
+    <input type=hidden name="fpcname" value="AA">
+    <input type=hidden name="fpmname" value="Administrator">
+    <input type=hidden name="fpsisid" value="VEP0001">
+    </FORM>
+    
+    <table border=0 width=100% bgcolor=#ffffcc><tr><td align=left><INPUT TYPE="button" VALUE="Return to Case Review" onClick="javascript:subS1( )"> 
+    <INPUT TYPE="button" VALUE="Return Home" onClick="javascript:subS2( )"> 
+    <INPUT TYPE="button" VALUE="Submit Form" onClick="javascript:errorCheck( )"> 
+    </td></tr></table>
+    </BODY></HTML>
+    

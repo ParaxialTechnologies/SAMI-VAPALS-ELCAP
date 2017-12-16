@@ -1,0 +1,391 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><title> Day Schedule</title>
+
+<script language="JavaScript">
+<!-- Code after this will be ignored by older browsers
+var FNAME = "act";
+var mtt = [ ["---", "---", "---", "---"],
+["Jan", "Jan", "jan", "JAN"],
+["Feb", "Feb", "feb", "FEB"],
+["Mar", "Mar", "mar", "MAR"],
+["Apr", "Apr", "apr", "APR"],
+["May", "May", "may", "MAY"],
+["Jun", "Jun", "jun", "JUN"],
+["Jul", "Jul", "jul", "JUL"],
+["Aug", "Aug", "aug", "AUG"],
+["Sep", "Sep", "sep", "SEP"],
+["Oct", "Oct", "oct", "OCT"],
+["Nov", "Nov", "nov", "NOV"],
+["Dec", "Dec", "dec", "DEC"] ];
+function errorCheck()
+{
+if (!document.forms[FNAME].elements['date'].value)
+alert("Please enter a valid date");
+else
+document.forms[FNAME].submit()
+}
+function synCheck(arg,etype)
+{
+var alertMessage = "";
+var checkValue = "";
+checkValue = document.forms[FNAME].elements[arg].value
+if (etype == 'phone')
+{
+if (!ESP) return;
+var exp = /^(\d{10}|\d{3}-\d{3}-\d{4}|\(\d{3}\)\d{3}-\d{4})$/;
+if(!exp.test(checkValue)) {
+alertMessage = "Incorrect phone entry!\n";
+alertMessage += "   " + checkValue
+alertMessage += "\nPlease enter a valid phone number\n"
+alert (alertMessage)
+document.forms[FNAME].elements[arg].value = ""
+document.forms[FNAME].elements[arg].select()
+document.forms[FNAME].elements[arg].focus()
+}
+else {
+alertMessage = "Correct phone entry!\n";
+alertMessage += "   " + checkValue
+var pd = new RegExp("[-()]", "g");
+var tstr=checkValue.replace(pd, "");
+var newstr = "(" + tstr.substring(0,3) + ")" + tstr.substring(3,6)
+newstr += "-" + tstr.substring(6,10)
+document.forms[FNAME].elements[arg].value = newstr;
+}
+}
+else if (etype == 'ssn')
+{
+if (!ESP) return;
+var exp = /^(\d{9}|\d{3}-\d{2}-\d{4})$/;
+if(!exp.test(checkValue)) {
+alertMessage = "Incorrect SSN entry!\n";
+alertMessage += "   " + checkValue
+alertMessage += "\nPlease enter a valid SSN\n"
+alert (alertMessage)
+document.forms[FNAME].elements[arg].value = ""
+document.forms[FNAME].elements[arg].select()
+document.forms[FNAME].elements[arg].focus()
+}
+else {
+alertMessage = "Correct SSN entry!\n";
+alertMessage += "   " + checkValue
+var pd = new RegExp("-", "g");
+var tstr=checkValue.replace(pd, "");
+var newstr = tstr.substring(0,3) + "-" + tstr.substring(3,5)
+newstr += "-" + tstr.substring(5,9)
+document.forms[FNAME].elements[arg].value = newstr;
+}
+}
+else if ((etype == 'rdate') || (etype == 'adate') || (etype == 'rsdate') || (etype == 'asdate'))
+{
+var mstr, dstr, ystr;
+if ((etype == 'rdate') || (etype == 'rsdate')) {
+var y4min = 1990;
+var y4max = 2019;
+var y2min = 90;
+var y2max = 19;
+}
+else if ((etype == 'adate') || (etype == 'asdate')) {
+var y4min = 1800;
+var y4max = 2048;
+var y2min = 90;
+var y2max = 19;
+}
+// new int ver
+if ((etype == 'rdate') || (etype == 'adate')) {
+var exp = /^(\d{6}|\d{8}|\d{1,2}\/\D{3}\/\d{4}|\d{1,2}\/\D{3}\/\d{2}|\d{1,2}\/\d{1,2}\/\d{4}|\d{1,2}\/\d{1,2}\/\d{2})$/;
+var sdt = false;
+}
+else if ((etype == 'rsdate') || (etype == 'asdate')) {
+var exp = /^(\d{4}|\d{6}|\D{3}\/\d{4}|\D{3}\/\d{2}|\d{1,2}\/\d{4}|\d{1,2}\/\d{2})$/;
+var sdt = true;
+}
+var wrong = false;
+if(!exp.test(checkValue)) {
+wrong = true;
+}
+else {
+var pd = new RegExp("\\/", "g");
+var dfa = checkValue.split(pd);
+if ((dfa.length == 1) &&
+((dfa[0].length == 4) || (dfa[0].length == 6) || (dfa[0].length == 8))) {
+// monolithic 4, 6 or 8
+var tstr = dfa[0];
+if (!sdt) { // mono full date
+if (tstr.length == 6) {
+dstr = tstr.substring(0,2);
+mstr = tstr.substring(2,4);
+ystr = tstr.substring(4,6);
+syear = true;
+}
+else if (tstr.length == 8) {
+dstr = tstr.substring(0,2);
+mstr = tstr.substring(2,4);
+ystr = tstr.substring(4,8);
+syear = false;
+}
+mval = parseInt(mstr, 10);
+dval = parseInt(dstr, 10);
+yval = parseInt(ystr, 10);
+}
+else { // mono short date (mmyy or mmyyyy)
+if (tstr.length == 4) {
+mstr = tstr.substring(0,2);
+ystr = tstr.substring(2,4);
+syear = true;
+}
+else if (tstr.length == 6) {
+mstr = tstr.substring(0,2);
+ystr = tstr.substring(2,6);
+syear = false;
+}
+mval = parseInt(mstr, 10);
+yval = parseInt(ystr, 10);
+}
+}
+else if ((dfa.length == 2) && sdt) { // split short date
+mstr = dfa[0];
+if (dfa[0].length == 3) {
+mstr = fixMonth(dfa[0]);
+}
+else {
+mstr = dfa[0];
+}
+ystr = dfa[1];
+if (ystr.length == 4)
+syear = false;
+else if (ystr.length == 2)
+syear = true;
+else
+wrong = true;
+mval = parseInt(mstr, 10);
+yval = parseInt(ystr, 10);
+}
+else if (dfa.length == 3) { // split full date
+dstr = dfa[0];
+if (dstr.length == 1) {
+dstr = "0" + dstr;
+}
+mstr = dfa[1];
+if (dfa[1].length == 3) {
+mstr = fixMonth(dfa[1]);
+}
+else {
+mstr = dfa[1];
+}
+ystr = dfa[2];
+if (ystr.length == 4)
+syear = false;
+else if (ystr.length == 2)
+syear = true;
+else
+wrong = true;
+mval = parseInt(mstr, 10);
+dval = parseInt(dstr, 10);
+yval = parseInt(ystr, 10);
+}
+else {
+wrong = true;
+}
+if (!wrong) {
+// check month
+if (!sdt) {
+if (isNaN(mval) || (mval < 1) || (mval > 12)) {
+wrong = true;
+}
+}
+else {
+// allow zero for month in short date form
+if (isNaN(mval) || (mval < 0) || (mval > 12)) {
+wrong = true;
+}
+}
+// check year
+if (syear) {
+if (yval <= y2max) {
+yval += 2000;
+}
+else if (yval >= y2min) {
+yval += 1900;
+}
+else { // y2max > yval < y2min
+wrong = true;
+}
+}
+if (isNaN(yval) || (yval < y4min) || (yval > y4max)) {
+wrong = true;
+}
+// check day
+if (!sdt) {
+maxd = 31;
+if ((mval == 4) || (mval == 6) || (mval == 9) || (mval == 11)) {
+maxd = 30;
+}
+else if (mval == 2) {
+if ((yval % 4) != 0) {
+maxd = 28;
+}
+else {
+maxd = 29;
+}
+}
+else {
+maxd = 31;
+}
+if (isNaN(dval) || (dval < 1) || (dval > maxd)) {
+wrong = true;
+}
+}
+mstr = unfixMonth(mval);
+if (!sdt) {
+var newstr = dstr + "/" + mstr + "/" + yval.toString();
+}
+else {
+var newstr = mstr + "/" + yval.toString();
+}
+document.forms[FNAME].elements[arg].value = newstr;
+}
+}
+if(wrong) {
+alertMessage = "Incorrect date entry!\n";
+alertMessage += "   " + checkValue
+alertMessage += "\nPlease enter a valid date\n"
+alert (alertMessage)
+document.forms[FNAME].elements[arg].value = ""
+document.forms[FNAME].elements[arg].select()
+document.forms[FNAME].elements[arg].focus()
+}
+}
+}
+function fixMonth(str)
+{
+for (var i = 0; i < mtt.length; i++) {
+for (var j = 1; j < mtt[0].length; j++) {
+if(str == mtt[i][j]) {
+return i;
+}
+}
+}
+return "-1";
+}
+function unfixMonth(num)
+{
+if ((num < 0) || (num > 12))
+return "Xxx";
+else
+return(mtt[num][1]);
+}
+//This submits a sched rwq
+function postit(dtime)
+{
+document.forms['act'].elements['dtime'].value = dtime;
+// submit the form
+document.forms['act'].submit()
+}
+function postitr(dtime)
+{
+document.forms['act'].elements['dtime'].value = dtime;
+document.forms['act'].elements['sidl'].value = 'reserve';
+// submit the form
+document.forms['act'].submit()
+}
+//This submits a date req
+function postd(dte,se)
+{
+document.forms['act'].elements['date'].value = dte;
+document.forms['act'].elements['showext'].value = se;
+// submit the form
+document.forms['act'].submit()
+}
+function postSch(sidl)
+{
+document.forms['act'].elements['sidl'].value = sidl;
+document.forms['act'].submit()
+}
+function postCan(sidl)
+{
+document.forms['act'].elements['dtime'].value = 'cancel';
+document.forms['act'].elements['sidl'].value = sidl;
+document.forms['act'].submit()
+}
+
+// Stop hiding the code here -->
+</script>
+</head>
+<body alink="#ff0000" text="#000000" vlink="#ff0000" link="#0000ff" bgcolor="#bfffbf">
+<table width="100%"> <form name="banner"></form>
+<tbody><tr bgcolor="#ffffcc"><th align="left">
+<font bold="" size="+2">VEP VA ELCAP Phoenix (VAPALS): </font>
+<font bold="" size="+2">  </font> 
+<table><tbody><tr bgcolor="#ffcccc"><th><input value="Return Home" onclick="javascript:postit('done')" type="button"> 
+</th></tr></tbody></table>
+</th></tr></tbody></table>
+<h2> Schedule for Tuesday November 21, 2017 </h2>
+ <form method="POST" action="/cgi-bin/datac/sched.cgi" name="act"> 
+New Schedule date 
+<input name="date" value="21/Nov/2017" onchange="synCheck('date','rdate')" size="11" type="text">
+<input name="showext" value="n" type="hidden">
+<input value="Request" onclick="errorCheck()" type="button"> 
+<input value="Previous Day" onclick="postd('20/Nov/2017','n')" type="button">
+<input value="Next Day" onclick="postd('22/Nov/2017','n')" type="button">
+<table cellspacing="0" cellpadding="2" border="">
+<tbody><tr><th> Time </th><th> Study Id</th><th> Name </th><th> MRN</th>
+<th>Exam Type</th><th> Made By </th><th>When Made </th><th>Action</th></tr> 
+<tr><td> 16:00   </td>
+<td colspan="6" align="center">-- Available --</td> 
+<td><a href="javascript:postitr('960')"><img src="Day%20Schedule_files/reserve.gif"></a></td> </tr>
+<tr><td> 16:01   </td>
+<td colspan="6" align="center">-- Available --</td> 
+<td><a href="javascript:postitr('961')"><img src="Day%20Schedule_files/reserve.gif"></a></td> </tr>
+<tr><td> 16:02   </td>
+<td colspan="6" align="center">-- Available --</td> 
+<td><a href="javascript:postitr('962')"><img src="Day%20Schedule_files/reserve.gif"></a></td> </tr>
+<tr><td> 16:30   </td>
+<td colspan="6" align="center">-- Available --</td> 
+<td><a href="javascript:postitr('990')"><img src="Day%20Schedule_files/reserve.gif"></a></td> </tr>
+<tr><td> 16:31   </td>
+<td colspan="6" align="center">-- Available --</td> 
+<td><a href="javascript:postitr('991')"><img src="Day%20Schedule_files/reserve.gif"></a></td> </tr>
+<tr><td> 17:00   </td>
+<td colspan="6" align="center">-- Available --</td> 
+<td><a href="javascript:postitr('1020')"><img src="Day%20Schedule_files/reserve.gif"></a></td> </tr>
+<tr><td> 17:01   </td>
+<td colspan="6" align="center">-- Available --</td> 
+<td><a href="javascript:postitr('1021')"><img src="Day%20Schedule_files/reserve.gif"></a></td> </tr>
+<tr><td> 17:02   </td>
+<td colspan="6" align="center">-- Available --</td> 
+<td><a href="javascript:postitr('1022')"><img src="Day%20Schedule_files/reserve.gif"></a></td> </tr>
+<tr><td> 17:30   </td>
+<td colspan="6" align="center">-- Available --</td> 
+<td><a href="javascript:postitr('1050')"><img src="Day%20Schedule_files/reserve.gif"></a></td> </tr>
+<tr><td> 17:31   </td>
+<td colspan="6" align="center">-- Available --</td> 
+<td><a href="javascript:postitr('1051')"><img src="Day%20Schedule_files/reserve.gif"></a></td> </tr>
+</tbody></table>
+ Reservation Comment: 
+<input name="rcom" size="26" type="text"><br>
+<input name="dtime" value="" type="hidden">
+<input name="sidl" value="" type="hidden">
+<input name="fginst" value="VEP" type="hidden">
+<input name="fguid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+<input name="sid" value="" type="hidden">
+<input value="Return to Home Page" onclick="postit('done')" type="button"> 
+ </form>
+ <table> <tbody><tr><td>
+ <form method="POST" action="/cgi-bin/datac/rsched.cgi" name="mat"> 
+<input name="dtime" value="" type="hidden">
+<input name="fginst" value="VEP" type="hidden">
+<input name="fguid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+<input name="date" value="21/Nov/2017" type="hidden">
+<input value="Day Report" type="submit">
+</form>
+ </td><td>
+ <form method="POST" action="/cgi-bin/datac/rsched.cgi" name="mat2"> 
+<input name="dtime" value="" type="hidden">
+<input name="fginst" value="VEP" type="hidden">
+<input name="fguid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+<input name="date" value="21/Nov/2017" type="hidden">
+<input value="Week Report" type="submit">
+<input name="week" value="1" type="hidden">
+</form>
+</td></tr> </tbody></table>
+</body></html>

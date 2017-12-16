@@ -1,0 +1,268 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Case Review List</title>
+<script language="JavaScript">
+<!-- Code after this will be ignored by older browsers
+
+function subClear()
+{
+   document.forms['preview'].elements['report'].value = "";
+   document.forms['preview'].elements['rcate'].value = "";
+   document.forms['preview'].elements['dupe'].value = "";
+   document.forms['preview'].elements['form'].value = "";
+   document.forms['preview'].elements['fileid'].value = "";
+   document.forms['preview'].elements['fppend'].value = "";
+}
+
+function subPr(ftype, fname)
+{
+   subClear();
+   // set hidden value
+   document.forms['preview'].elements['report'].value = 0;
+   document.forms['preview'].elements['form'].value = ftype;
+   document.forms['preview'].elements['fileid'].value = fname;
+   // submit the form
+   document.forms['preview'].submit()
+}
+function subRp(ftype, fname)
+{
+   subClear();
+   document.forms['preview'].elements['report'].value = 1;
+   document.forms['preview'].elements['form'].value = ftype;
+   document.forms['preview'].elements['fileid'].value = fname;
+   document.forms['preview'].submit()
+}
+function subRpT(ftype, fname)
+{
+   subClear();
+   document.forms['preview'].elements['report'].value = 2;
+   document.forms['preview'].elements['form'].value = ftype;
+   document.forms['preview'].elements['fileid'].value = fname;
+   document.forms['preview'].submit()
+}
+function subRpP(ftype, fname)
+{
+   subClear();
+   // For PDF Handling
+   document.forms['preview'].elements['report'].value = 3;
+   document.forms['preview'].elements['form'].value = ftype;
+   document.forms['preview'].elements['fileid'].value = fname;
+   document.forms['preview'].submit()
+}
+function subPDF(fname, sid)
+{
+   document.forms['xpdf'].elements['fpfname'].value = fname;
+   document.forms['xpdf'].elements['fppdsid'].value = sid;
+   document.forms['xpdf'].submit()
+}
+function subFr(fname, sid)
+{
+   document.forms['frequest'].elements['fileid'].value = fname;
+   document.forms['frequest'].elements['sid'].value = sid;
+   document.forms['frequest'].submit()
+}
+function subSc(sid)
+{
+   document.forms['sched'].elements['sid'].value = sid;
+   document.forms['sched'].submit()
+}
+function subGa(sid)
+{
+   document.forms['growth'].elements['sid'].value = sid;
+   document.forms['growth'].submit()
+}
+
+function subIp(fname, sid)
+{
+   document.forms['iprev'].elements['fileid'].value = fname;
+   document.forms['iprev'].elements['sid'].value = sid;
+   document.forms['iprev'].submit()
+}
+function subNa(fname, sid)
+{
+   document.forms['nprev'].elements['fileid'].value = fname;
+   document.forms['nprev'].elements['sid'].value = sid;
+   document.forms['nprev'].submit()
+}
+function subNx(fname, sid)
+{
+   document.forms['nprev'].elements['fileid'].value = fname;
+   document.forms['nprev'].elements['sid'].value = sid;
+   document.forms['nprev'].elements['xdb'].value = 1;
+   document.forms['nprev'].submit()
+}
+function subNg(fname, sid)
+{
+   document.forms['gprev'].elements['fileid'].value = fname;
+   document.forms['gprev'].elements['sid'].value = sid;
+   document.forms['gprev'].elements['xdb'].value = 1;
+   document.forms['gprev'].submit()
+}
+function subLu(fname, sid)
+{
+   document.forms['lprev'].elements['sid'].value = sid;
+   document.forms['lprev'].submit()
+}
+
+function subUl(sid)
+{
+document.forms['ulist'].elements['fvalue'].value = sid;
+document.forms['ulist'].submit()
+}
+
+function subDu(ftype, fname)
+{
+   subClear();
+   // set hidden value
+   document.forms['preview'].elements['dupe'].value = 1;
+   document.forms['preview'].elements['form'].value = ftype;
+   document.forms['preview'].elements['fileid'].value = fname;
+   // submit the form
+   document.forms['preview'].submit()
+}
+
+// Stop hiding the code here -->
+
+</script>
+</head>
+<body alink="#ff0000" text="#000000" vlink="#ff0000" link="#0000ff" bgcolor="#bfffbf">
+<form name="banner">
+<table width="100%">
+<tbody><tr bgcolor="#ffffcc"><th align="left">
+<font bold="" size="+2">VEP VA ELCAP Phoenix (VAPALS): </font>
+<font bold="" size="+2"> Case Review List </font> 
+<table><tbody><tr bgcolor="#ffcccc"><th><input value="Return Home" onclick="javascript:document.forms['home'].submit()" type="button"> 
+<a href="javascript:document.forms['act'].submit()"><img src="Case%20Review%20List_files/help.gif" align="bottom"></a>
+</th></tr></tbody></table>
+</th></tr></tbody></table></form>
+<form method="POST" action="/cgi-bin/datac/helper.cgi" name="act">
+<input name="help" value="casehelp" type="hidden">
+<input name="fginst" value="VEP" type="hidden">
+<input name="fguid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+</form>
+
+ <form method="POST" action="/cgi-bin/datac/pgform.cgi" name="preview"> 
+<input name="inst" value="VEP" type="hidden">
+<input name="uid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+ <input name="form" value="" type="hidden">
+<input name="fileid" value="" type="hidden">
+<input name="report" value="" type="hidden">
+<input name="dupe" value="" type="hidden">
+<input name="rcate" value="" type="hidden">
+<input name="fppend" value="" type="hidden">
+</form>
+
+ <form method="POST" action="/cgi-bin/datac/nuform.cgi" name="frequest"> 
+<input name="inst" value="VEP" type="hidden">
+<input name="uid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+ <input name="fileid" value="" type="hidden">
+<input name="sid" value="" type="hidden">
+</form>
+
+<form method="POST" action="/cgi-bin/datac/showpdf.cgi" name="xpdf">
+<input name="inst" value="VEP" type="hidden">
+<input name="uid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+<input name="pdfname" value="" type="hidden">
+<input name="fpfname" value="" type="hidden">
+<input name="fppdsid" value="" type="hidden">
+</form>
+
+ <form method="POST" action="/cgi-bin/datac/slist.cgi" name="sched"> 
+<input name="fginst" value="VEP" type="hidden">
+<input name="fguid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+ <input name="sid" value="" type="hidden">
+</form>
+
+ <form method="POST" action="/cgi-bin/datac/growth.cgi" name="growth"> 
+<input name="fginst" value="VEP" type="hidden">
+<input name="fguid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+ <input name="sid" value="" type="hidden">
+</form>
+
+ <form method="POST" action="/cgi-bin/datac/ipreview.cgi" name="iprev"> 
+<input name="inst" value="VEP" type="hidden">
+<input name="uid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+ <input name="form" value="" type="hidden">
+<input name="fileid" value="" type="hidden">
+<input name="sid" value="" type="hidden">
+</form>
+
+ <form method="POST" action="/cgi-bin/datac/npreview.cgi" name="nprev"> 
+<input name="inst" value="VEP" type="hidden">
+<input name="uid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+ <input name="form" value="" type="hidden">
+<input name="fileid" value="" type="hidden">
+<input name="sid" value="" type="hidden">
+<input name="xdb" value="" type="hidden">
+</form>
+
+ <form method="POST" action="/cgi-bin/datac/giview.cgi" name="gprev"> 
+<input name="inst" value="VEP" type="hidden">
+<input name="uid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+ <input name="form" value="" type="hidden">
+<input name="fileid" value="" type="hidden">
+<input name="sid" value="" type="hidden">
+<input name="xdb" value="" type="hidden">
+</form>
+
+ <form method="POST" action="/cgi-bin/datac/liview.cgi" name="lprev"> 
+<input name="inst" value="VEP" type="hidden">
+<input name="uid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+ <input name="sid" value="" type="hidden">
+</form>
+
+ <form method="POST" action="/cgi-bin/datac/cform.cgi" name="ulist"> 
+<input name="fginst" value="VEP" type="hidden">
+<input name="fguid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+<input name="fsvc" value="" type="hidden">
+ <input name="fvalue" value="" type="hidden">
+<input name="field" value="sid" type="hidden">
+<input name="imode" value="1" type="hidden">
+</form>
+
+<table cellspacing="0" cellpadding="2" border="" bgcolor="#ffffcc">
+<tbody><tr bgcolor="#990000"><th><font color="#ffffff">
+Case ID </font></th>
+ <th> <font color="#ffffff"> Last Name </font></th>
+<th> <font color="#ffffff"> First Name</font></th>
+<th><font color="#ffffff"> MRN</font></th>
+ <th><font color="#ffffff"> Date</font></th> <th>
+<font color="#ffffff"> Type </font></th>
+<th><font color="#ffffff"> Action </font></th></tr> 
+<tr bgcolor="#bffbff"><td> VEP0001 </td><td> Doe </td><td> Jane </td><td> 12345 </td><td>24/Aug/2012</td><td>Intake </td>
+<td> <a href="javascript:subPr('siform','QIhuSAoCYzQAAAtHza8AAAAM')"><img src="Case%20Review%20List_files/preview.gif"></a>
+<a href="javascript:subFr('QIhuSAoCYzQAAAtHza8AAAAM','VEP0001')"><img src="Case%20Review%20List_files/nform.gif"></a>
+<a href="javascript:subSc('VEP0001')"><img src="Case%20Review%20List_files/schedule.gif"></a></td></tr> 
+<tr><td> VEP0001 </td><td align="center"> - </td><td align="center"> - </td><td align="center"> - </td><td>01/Jan/2013</td><td>Background </td>
+<td> <a href="javascript:subPr('sbform','84@deAoCYzQAAF6ufdYAAAAM')"><img src="Case%20Review%20List_files/preview.gif"></a></td></tr>
+<tr><td> VEP0001 </td><td align="center"> - </td><td align="center"> - </td><td align="center"> - </td><td>01/Jan/2013</td><td>CT Evaluation </td>
+<td> <a href="javascript:subPr('ceform','WUAzMwoCYzQAAF6nfPYAAAAK')"><img src="Case%20Review%20List_files/preview.gif"></a>
+<a href="javascript:subRp('ceform','WUAzMwoCYzQAAF6nfPYAAAAK')"><img src="Case%20Review%20List_files/report.gif"></a></td></tr>
+<tr><td> VEP0001 </td><td align="center"> - </td><td align="center"> - </td><td align="center"> - </td><td>08/Feb/2013</td><td>PET Evaluation </td>
+<td> <a href="javascript:subPr('ptform','WYomqX8AAAEAABVWIxgAAAAM')"><img src="Case%20Review%20List_files/preview.gif"></a></td></tr>
+<tr><td> VEP0001 </td><td align="center"> - </td><td align="center"> - </td><td align="center"> - </td><td>28/Feb/2013</td><td>Biopsy  </td>
+<td> <a href="javascript:subPr('bxform','WYoo6X8AAAEAACRqB3AAAAAA')"><img src="Case%20Review%20List_files/preview.gif"></a></td></tr>
+<tr><td> VEP0001 </td><td align="center"> - </td><td align="center"> - </td><td align="center"> - </td><td>01/Apr/2013</td><td>Intervention </td>
+<td> <a href="javascript:subPr('rbform','WYopZ38AAAEAADtcOXgAAAAK')"><img src="Case%20Review%20List_files/preview.gif"></a></td></tr>
+<tr><td> VEP0001 </td><td align="center"> - </td><td align="center"> - </td><td align="center"> - </td><td>15/Oct/2013</td><td>CT Evaluation </td>
+<td> <a href="javascript:subPr('ceform','j-R7EgoCYzQAACPVBuEAAAAC')"><img src="Case%20Review%20List_files/preview.gif"></a>
+<a href="javascript:subRp('ceform','j-R7EgoCYzQAACPVBuEAAAAC')"><img src="Case%20Review%20List_files/report.gif"></a></td></tr>
+<tr><td> VEP0001 </td><td align="center"> - </td><td align="center"> - </td><td align="center"> - </td><td>21/May/2014</td><td>Follow Up  </td>
+<td> <a href="javascript:subPr('fuform','U4d04goCYzcAADLZLGwAAAAA')"><img src="Case%20Review%20List_files/preview.gif"></a></td></tr>
+<tr><td> VEP0001 </td><td align="center"> - </td><td align="center"> - </td><td align="center"> - </td><td>21/May/2014</td><td>CT Evaluation </td>
+<td> <a href="javascript:subPr('ceform','U4eU4AoCYzcAADLdLJkAAAAE')"><img src="Case%20Review%20List_files/preview.gif"></a>
+<a href="javascript:subRp('ceform','U4eU4AoCYzcAADLdLJkAAAAE')"><img src="Case%20Review%20List_files/report.gif"></a></td></tr>
+</tbody>
+</table>
+ <form method="POST" action="/cgi-bin/datac/home.cgi" name="home"> 
+<input name="inst" value="VEP" type="hidden">
+<input name="uid" value="WhRBYH8AAAEAAGf9B4sAAAAH" type="hidden">
+<input name="sid" value="1" type="hidden">
+ <input name="msg" value="Case Review Complete" type="hidden">
+<input value="Return Home" type="submit">
+</form> 
+
+
+
+
+</body></html>

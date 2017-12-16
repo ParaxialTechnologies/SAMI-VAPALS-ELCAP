@@ -25,7 +25,16 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  . do retrieve^%wffiler("tmpvals",form,311.102,sid)
  . ;if $data(tmpvals) kill vals merge vals=tmpvals
  . if $data(tmpvals) merge vals=tmpvals ; maintain graph vars not saved in fileman
- i fn="" s fn="background-form.html"
+ i form="sbform2" do  
+ . s fn="Background Form.html"
+ . new tmpvals
+ . if $g(post)=1 quit  ;
+ . do retrieve^%wffiler("tmpvals",form,311.102,sid)
+ . ;if $data(tmpvals) kill vals merge vals=tmpvals
+ . if $data(tmpvals) merge vals=tmpvals ; maintain graph vars not saved in fileman
+ ;i fn="" s fn="background-form.html"
+ i $get(fn)="" s fn=$$getTemplate(form)
+ i fn="" quit  ;
  n zhtml,errctrl ; holders of the html template and the error control array
  d getThis^%wd("zhtml",fn)
  i '$d(zhtml) q  ;
@@ -36,6 +45,14 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  . n tln s tln=zhtml(%j)
  . i tln["submit" q  ;
  . i tln["hidden" q  ;
+ . ; hack for elcap forms - temporary - gpl
+ . i tln["jquery-1.html" s zhtml(%j)="" quit  ; 
+ . i tln["mgtsys.html" s zhtml(%j)="" quit  ; 
+ . i tln["mgtsys2.html" s zhtml(%j)="" quit  ; 
+ . i tln["index.html" s zhtml(%j)="" quit  ; 
+ . i tln["identity.html" s zhtml(%j)="" quit  ; 
+ . i tln["jquery-1.html" s zhtml(%j)="" quit  ; 
+ . ; end hack
  . i tln["class=""errormsg"">" d redactErr("zhtml","errctrl",.%j)  quit  ; remove error section
  . i tln["fielderr" d redactErr2("zhtml",.%j)
  . s (name,value)=""
@@ -48,11 +65,16 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  . . s zhtml(%j)=$p(tln,"*sbsid*",1)_sid_$p(tln,"*sbsid*",2)
  . i zhtml(%j)["action=" d  ;
  . . ;s zhtml(%j)="<form action=""http://vendev.vistaplex.org:9080/postform?form="_form_"&studyId="_sid_""" method=""POST"" id=""backgroundForm"">"
+ . . n sublbl s sublbl=$$formLabel(form)
  . . n dbg s dbg=$g(filter("debug"))
  . . i dbg'="" s dbg="&debug="_dbg
- . . s zhtml(%j)="<form action=""form?form="_form_"&studyId="_sid_dbg_""" method=""POST"" id=""backgroundForm"">"
- . ;if $$replaceSrc(.tln) s zhtml(%j)=tln ; fix the css and js href values
- . ;i $$replaceHref(.tln) s zhtml(%j)=tln ; fix the css and js href values
+ . . i form'="sbform" d  quit  ;
+ . . . i zhtml(%j)["datae" s zhtml(%j)="<form action=""form?form="_form_"&studyId="_sid_dbg_""" method=""POST"" name="""_sublbl_""">"
+ . . s zhtml(%j)="<form action=""form?form="_form_"&studyId="_sid_dbg_""" method=""POST"" name="""_sublbl_""">"
+ . if form'="sbform" do  ;
+ . . if $$replaceSrc(.tln) s zhtml(%j)=tln ; fix the css and js href values
+ . . if $$replaceHref(.tln) s zhtml(%j)=tln ; fix the css and js href values
+ . i tln["table" quit  ;
  . i zhtml(%j)["input" d  ;
  . . i $l(zhtml(%j),"<input")>2 d  ; got to split the lines
  . . . n zgt,zgn s zgt=zhtml(%j)
@@ -71,6 +93,7 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  . . . i $g(val)=$g(value) d check(.tln,type)
  . . . if $get(filter("debug"))=2 do debugFld(.tln,form,name)
  . . . s zhtml(%j)=tln
+ . . ;b
  . . d unvalue(.tln)
  . . ;s val=$$URLENC^VPRJRUT(val)
  . . f  d replace^%yottaq(.val,"""","&quot;") q:val'[""""
@@ -92,8 +115,8 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  . . . . if errmethod=2 do  ;
  . . . . . n tprevln,uln
  . . . . . s uln=(%j-1)
- . . . . . s tprevln=$g(zhtml(uln))
- . . . . . if tprevln'["fielderror" s tprevln=$g(zhtml(%j-2)) s uln=%j-2
+ . . . . . s tprevln=zhtml(uln)
+ . . . . . if tprevln'["fielderror" s tprevln=zhtml(%j-2) s uln=%j-2
  . . . . . do putErrMsg2("zhtml",.tprevln,.errmsg,"errctrl")
  . . . . . set zhtml(uln)=tprevln
  . . . . if errmethod=1 do insError(.tln,.errmsg)
@@ -117,13 +140,30 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  . . q:selectnm=""
  . . s val=$g(vals(selectnm))
  . . d replace(.tln," selected","") ; unselect
- . . i $g(val)=$g(value) d replace(.tln,">"," selected>")
+ . . i $g(val)=$g(value) d replace(.tln,"<option ","<option selected ")
  . . if $get(filter("debug"))=2 do debugFld(.tln,form,name)
  . . s zhtml(%j)=tln
- D ADDCRLF^VPRJRUT(.zhtml)
+ ;D ADDCRLF^VPRJRUT(.zhtml)
  m @rtn=zhtml
  s HTTPRSP("mime")="text/html"
  q
+ ;
+formLabel(form) ; extrinsic return the label to use for the post url for the form
+ new fglb set fglb=$name(^SAMI(311.11))
+ new fn set fn=311.11
+ new fien set fien=$order(@fglb@("B",form,""))
+ q:fien="" ""
+ new lbl set lbl=$$GET1^DIQ(fn,fien_",",2.1) ; label to use
+ q lbl
+ ;
+getTemplate(form) ; extrinsic returns the name of the template file
+ ;
+ new fglb set fglb=$name(^SAMI(311.11))
+ new fn set fn=311.11
+ new fien set fien=$order(@fglb@("B",form,""))
+ q:fien="" ""
+ new tnm set tnm=$$GET1^DIQ(fn,fien_",",2) ; name of template
+ q tnm
  ;
 redactErr(html,err,indx) ; redact an error message section found
  ; in the html. err is the error control array. indx is the current
@@ -179,7 +219,7 @@ putErrMsg2(html,lin,msg,err) ; style 2 of error messages - top of screen
  n inserttxt
  s inserttxt="<a name=""err-"_errno_""" href=""#err-"_errno_"e""><img src=""see/error.png""/>"_errno_"</a>"
  d replace(.lin,"fielderror"">","fielderror"">"_inserttxt)
- i $g(uline)="" s uline=32
+ i $g(uline)="" quit  ; s uline=32 - no uline is found, so nowhere to put the errors
  s @html@(uline)=@html@(uline)_"<tr><td class=""icon""><a name=""err-"_errno_"e"" href=""#err-"_errno_"""><img src=""see/error.png""/>"_errno_"</a></td><td>"_msg_"</td></tr>"
  q
  ;
@@ -240,11 +280,13 @@ insError(ln,msg) ; inserts an error message into ln, passed by reference
  new errins set errins="<span class=""alert"" style=""font-size: 0.9em;"">"_msg_"</span>"
  if ln["</input>" do replace(.ln,"</input>","</input>"_errins)  quit  ;
  if ln["/>" do replace(.ln,"/>","/>"_errins)  quit  ;
+ if ln[">" s ln=ln_"</input>"_errins
  q
  ;
 unvalue(ln) ; sets value=""
  new l1,l2,l3,t1,t2
  set l1=$find(ln,"value=""")
+ q:l1=0
  set t1=$extract(ln,1,l1-1)
  set t2=$extract(ln,l1,$l(ln))
  set l3=$find(t2,"""")
@@ -255,6 +297,9 @@ unvalue(ln) ; sets value=""
 value(ln,val) ; sets value="@val"
  new loc,end
  set loc=$find(ln,"value=""""")
+ if loc=0 do  quit  ;
+ . ;if $e(ln,$l(ln))=">" s ln=$e(ln,1,$l(ln)-1)_" value="""_val_""""_">"
+ . do replace(.ln,"<input ","<input value="""_val_""" ")
  set end=$extract(ln,loc,$l(ln))
  set ln=$piece(ln,"value=""",1)_"value="""_val_""""_end
  quit
@@ -289,12 +334,13 @@ wsPostForm(ARGS,BODY,RESULT) ; recieve from form
  new errflag set errflag=0
  new revise
  do wsGetForm(.revise,.ARGS,1)
- if errflag'=0 do  quit  ;
+ if form'="sbform2" if errflag'=0 do  quit  ;
  . merge RESULT=revise
  ;
  ; end validation process
  ;
  ; no errors, file it into fileman
+
  new status
  do fileForm^%wffiler("tbdy",form,sid,"status")
  ;
@@ -436,6 +482,7 @@ replaceSrc(ln) ; do replacements on lines for src= to use the see service to loc
  . set done=1
  if ln["href=" do  ; 
  . if ln["href=""#" quit  ;
+ . if ln["href=""javascript" quit  ;
  . do replaceAll(.ln,"href=""","href=""see/")
  . set done=1
  quit done

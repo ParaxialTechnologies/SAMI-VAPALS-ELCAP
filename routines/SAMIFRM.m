@@ -82,3 +82,37 @@ INIT1FRM(form,ary) ; initialize one form named form from ary passed by name
  . zwr %yerr
  q
  ;
+REGFORMS() ; register elcap forms in the form mapping file
+ n fn s fn=311.11 ; file number
+ n sfn s sfn=311.11001 ; subfile number for variables
+ n fmroot s fmroot=$na(^SAMI(311.11))
+ ;
+ ; table of forms
+ ;
+ n ftbl
+ s ftbl("bxform","Biopsy_Mediastinoscopy Form.html")=""
+ s ftbl("ceform","CT Evaluation Form.html")=""
+ s ftbl("sbform2","Background Form.html")=""
+ s ftbl("fuform","Follow-up Form.html")=""
+ s ftbl("siform","Intake Form.html")=""
+ s ftbl("rbform","Intervention and Treatment Form.html")=""
+ s ftbl("ptform","PET Evaluation Form.html")=""
+ s ftbl("sintake","Schedule Contact.html")=""
+ ;
+ n zi s zi=""
+ f  s zi=$o(ftbl(zi)) q:zi=""  d  ;
+ . n fda,%yerr
+ . s fda(fn,"?+1,",.01)=zi
+ . s fda(fn,"?+1,",2)=$o(ftbl(zi,""))
+ . w !,"creating form ",zi," named: ",$o(ftbl(zi,""))
+ . d UPDATE^DIE("","fda","","%yerr")
+ . i $d(%yerr) d  q  ;
+ . . w !,"error creating form record ",id,!
+ . . zwr %yerr
+ . n %ien s %ien=$o(@fmroot@("B",form,""))
+ . i %ien="" d  q  ;
+ . . w !,"error locating form record ",form
+ ;
+ q
+ ;
+ 

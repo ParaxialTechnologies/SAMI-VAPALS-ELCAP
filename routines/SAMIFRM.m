@@ -107,12 +107,70 @@ REGFORMS() ; register elcap forms in the form mapping file
  . w !,"creating form ",zi," named: ",$o(ftbl(zi,""))
  . d UPDATE^DIE("","fda","","%yerr")
  . i $d(%yerr) d  q  ;
- . . w !,"error creating form record ",id,!
+ . . w !,"error creating form record ",zi,!
  . . zwr %yerr
- . n %ien s %ien=$o(@fmroot@("B",form,""))
+ . n %ien s %ien=$o(@fmroot@("B",zi,""))
  . i %ien="" d  q  ;
- . . w !,"error locating form record ",form
+ . . w !,"error locating form record ",zi
  ;
  q
+ ;
+loadData() ; import a directory full of json data into the elcap-patient graph
+ ;
+ n dir
+ i '$$GETDIR(.dir,"/home/osehra/www/sample-data-20171129/") q  ; user exited
+ n cmd
+ s cmd="""ls "_dir_" > /home/osehra/www/sample-list.txt"""
+ zsy @cmd
+ n zlist
+ d file2ary^%wd("zlist","/home/osehra/www/","sample-list.txt")
+ ;
+ n root s root=$$setroot^%wd("elcap-patients")
+ n json,ary,studyid,form,filename
+ n zi s zi=""
+ ;
+ f  s zi=$o(zlist(zi)) q:zi=""  d  ;
+ . s filename=$g(zlist(zi))
+ . q:filename=""
+ . i $l(filename,"-")'=5 w !,"file "_filename_" rejected" q  ;
+ . i filename'[".json" w !,"file "_filename_" rejected" q  ;
+ . k json,ary
+ . d file2ary^%wd("json",dir,filename)
+ . d DECODE^VPRJSON("json","ary")
+ . d parseFileName(filename,.studyid,.form)
+ . q:'$d(ary)
+ . m @root@("graph",studyid,form)=ary
+ q
+ ;
+parseFileName(fn,zid,zform) ; parse the filename extracting the studyid and form
+ ; ie  XXX0001-bxform-2004-02-01 yields studyid=XXX0001 and form=bxform-2004-02-01
+ s zid=$p(fn,"-",1)
+ n loc s loc=$f(fn,"-")
+ s zform=$e(fn,loc,$l(fn))
+ s zform=$p(zform,".",1)
+ q
+ ;
+GETDIR(KBAIDIR,KBAIDEF) ; extrinsic which prompts for directory
+ ; returns true if the user gave values
+ S DIR(0)="F^3:240"
+ S DIR("A")="File Directory"
+ I '$D(KBAIDEF) S KBAIDEF="/home/osehra/www/"
+ S DIR("B")=KBAIDEF
+ D ^DIR
+ I Y="^" Q 0 ;
+ S KBAIDIR=Y
+ Q 1
+ ;
+GETFN(KBAIFN,KBAIDEF) ; extrinsic which prompts for filename
+ ; returns true if the user gave values
+ S DIR(0)="F^3:240"
+ S DIR("A")="File Name"
+ I '$D(KBAIDEF) S KBAIDEF="outpatient-list.txt"
+ S DIR("B")=KBAIDEF
+ D ^DIR
+ I Y="" Q 0 ;
+ I Y="^" Q 0 ;
+ S KBAIFN=Y
+ Q 1
  ;
  

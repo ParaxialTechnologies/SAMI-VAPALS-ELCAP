@@ -160,6 +160,7 @@ getTemplate(form) ; extrinsic returns the name of the template file
  ;
  new fglb set fglb=$name(^SAMI(311.11))
  new fn set fn=311.11
+ if form["-" s form=$p(form,"-",1)
  new fien set fien=$order(@fglb@("B",form,""))
  q:fien="" ""
  new tnm set tnm=$$GET1^DIQ(fn,fien_",",2) ; name of template

@@ -43,6 +43,8 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  n %j s %j=""
  f  s %j=$o(zhtml(%j)) q:%j=""  d  ;
  . n tln s tln=zhtml(%j)
+ . d SAMISUBS^SAMIFRM(.tln,form,sid,.filter)
+ . s zhtml(%j)=tln
  . i tln["submit" q  ;
  . i tln["hidden" q  ;
  . ; hack for elcap forms - temporary - gpl
@@ -70,7 +72,7 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  . . i dbg'="" s dbg="&debug="_dbg
  . . i form'="sbform" d  quit  ;
  . . . i zhtml(%j)["datae" s zhtml(%j)="<form action=""form?form="_form_"&studyId="_sid_dbg_""" method=""POST"" name="""_sublbl_""">"
- . . s zhtml(%j)="<form action=""form?form="_form_"&studyId="_sid_dbg_""" method=""POST"" name="""_sublbl_""">"
+ . . ;s zhtml(%j)="<form action=""form?form="_form_"&studyId="_sid_dbg_""" method=""POST"" name="""_sublbl_""">"
  . if form'="sbform" do  ;
  . . if $$replaceSrc(.tln) s zhtml(%j)=tln ; fix the css and js href values
  . . if $$replaceHref(.tln) s zhtml(%j)=tln ; fix the css and js href values
@@ -343,15 +345,15 @@ wsPostForm(ARGS,BODY,RESULT) ; recieve from form
  ; end validation process
  ;
  ; no errors, file it into fileman
-
- new status
- do fileForm^%wffiler("tbdy",form,sid,"status")
- ;
- ; now return the fileman record that was created
- new fman,fien
- s fien=$order(^SAMI(311.102,"B",sid,""))
- q:fien=""
- d fmx^%sfv2g("fman",311.102,fien)
+ new status s status=""
+ if form="sbform" do  ;
+ . do fileForm^%wffiler("tbdy",form,sid,"status")
+ . ;
+ . ; now return the fileman record that was created
+ . new fman,fien
+ . s fien=$order(^SAMI(311.102,"B",sid,""))
+ . q:fien=""
+ . d fmx^%sfv2g("fman",311.102,fien)
  m fman=status
  m fman(form)=tbdy
  new tjson

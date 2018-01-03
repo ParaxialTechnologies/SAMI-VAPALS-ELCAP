@@ -1,4 +1,4 @@
-SAMIDOUT ;ven/toad - dd: output ;2018-01-03T11:40Z
+SAMIDOUT ;ven/toad - dd: output ;2018-01-03T12:19Z
  ;;18.0;SAMI;;
  ;
  ; Routine SAMIDOUT contains subroutines for outputing the data
@@ -21,11 +21,11 @@ SAMIDOUT ;ven/toad - dd: output ;2018-01-03T11:40Z
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-01-03T11:40Z
+ ;@last-updated: 2018-01-03T12:19Z
  ;@application: Screening Applications Management (SAM)
  ;@module: Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files: SAMI Forms (311.101-311.199)
- ;@version: 18.0T01 (first development version)
+ ;@version: 18.0T04
  ;@release-date: not yet released
  ;@patch-list: none yet
  ;
@@ -35,14 +35,17 @@ SAMIDOUT ;ven/toad - dd: output ;2018-01-03T11:40Z
  ; 2017-09-18 ven/toad v18.0t01 SAMIDOUT: create, building on Mash
  ; tools in %cp & %sfo; ONE,ALL.
  ;
- ; 2018-01-03 ven/toad v18.0t04 SAMIDOUT: convert DMIs to PPIs; stanza
+ ; 2018-01-03 ven/toad v18.0t04 SAMIDOUT: convert dmis to ppis; stanza
  ; terminology; ONE,ALL.
  ;
+ ;@to-do
+ ; annotate more fully
+ ; develop examples, tests, mini-meter calls, and timers
  ;
  ;@contents
  ;
- ; ALL: code for PPI ALL^SAMID, export all sami dds
- ; ONE: code for PPI ONE^SAMID, export sami dd
+ ; ALL: code for ppi ALL^SAMID, export all sami dds
+ ; ONE: code for ppi ONE^SAMID, export sami dd
  ;
  ;
  ;
@@ -50,7 +53,7 @@ SAMIDOUT ;ven/toad - dd: output ;2018-01-03T11:40Z
  ;
  ;
  ;
-ALL(SAMILOG) ; code for PPI ALL^SAMID, export all sami dds
+ALL(SAMILOG) ; code for ppi ALL^SAMID, export all sami dds
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -133,7 +136,7 @@ ALL(SAMILOG) ; code for PPI ALL^SAMID, export all sami dds
  ;
  ;
  ;
-ONE(SAMIDD,SAMIPKG,SAMILOG) ; code for PPI ONE^SAMID, export sami dd
+ONE(SAMIDD,SAMIPKG,SAMILOG) ; code for ppi ONE^SAMID, export sami dd
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -141,7 +144,7 @@ ONE(SAMIDD,SAMIPKG,SAMILOG) ; code for PPI ONE^SAMID, export sami dd
  ; 1. [tied to unix file name syntax]
  ; 2. lowercase calls: mini^%u,$$lowcase^%ts,properties^%sfo
  ;@signature
- ; do ONE^SAMID(SAMIDD)
+ ; do ONE^SAMID(SAMIDD,.SAMIPKG)
  ;@branches-from
  ; ALL^SAMID
  ;@calls:

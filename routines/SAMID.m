@@ -1,8 +1,8 @@
-SAMID ;ven/toad - dd: ppis ;2018-01-03T11:40Z
+SAMID ;ven/toad - dd: ppis & ddis ;2018-01-03T12:00Z
  ;;18.0;SAMI;
  ;
- ; SAMID contains the SAMI data-dictionary PPIs.
- ; CURRENTLY UNTESTED AND IN PROGRESS
+ ; SAMID contains the SAMI data-dictionary PPIs & DDIs.
+ ; CURRENTLY UNTESTED & IN PROGRESS
  ;
  quit  ; no entry from top
  ;
@@ -20,7 +20,7 @@ SAMID ;ven/toad - dd: ppis ;2018-01-03T11:40Z
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-01-03T11:40Z
+ ;@last-updated: 2018-01-03T12:00Z
  ;@application: Screening Applications Management - IELCAP (SAMI)
  ;@module: Data Dictionary Support - SAMID
  ;@version: 18.0T04
@@ -34,31 +34,40 @@ SAMID ;ven/toad - dd: ppis ;2018-01-03T11:40Z
  ; 2017-11-09 ven/toad v18.0T04 SAMID: create routine; includes
  ; VAL^SAMID stub.
  ;
- ; 2018-01-02 ven/toad v18.0T04 SAMID: add history, ALL, ONE.
+ ; 2018-01-03 ven/toad v18.0T04 SAMID: add history, ALL, ONE, SSNIN.
  ;
  ;@contents
- ; all private programming interfaces
+ ; all data dictionary interfaces & private programming interfaces
  ;
  ;
  ;
- ;@section 1 SAMIDO dd-output library procedures
+ ;@section 1 SAMID data dictionary interfaces
  ;
  ;
  ;
- ;@PPI ALL^SAMID, export all sami dds
+ ;@ddi SSNIN^SAMID, input xform for .09 in 311.101
+SSNIN(X,SAMIUPDATE) goto SSNIN^SAMIDSSN
+ ;
+ ;
+ ;
+ ;@section 2 SAMIDO dd-output library procedures
+ ;
+ ;
+ ;
+ ;@ppi ALL^SAMID, export all sami dds
 ALL(SAMILOG) goto ALL^SAMIDOUT
  ;
  ;
- ;@PPI ONE^SAMID, export sami dd
+ ;@ppi ONE^SAMID, export sami dd
 ONE(SAMIDD,SAMIPKG,SAMILOG) goto ONE^SAMIDOUT
  ;
  ;
  ;
- ;@section 2 SAMIDV validation library procedures
+ ;@section 3 SAMIDV validation library procedures
  ;
  ;
  ;
- ;@PPI VAL^SAMID, validate form field against dd field
+ ;@ppi VAL^SAMID, validate form field against dd field
 VAL(%prec,%plimit) goto VAL^SAMIDV
  ;
  ;

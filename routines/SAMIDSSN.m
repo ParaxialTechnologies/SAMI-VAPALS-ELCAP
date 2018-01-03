@@ -1,32 +1,38 @@
-SAMIDSSN ;ven/toad - ielcap dd ssn in sami intake ;Aug 17,2017@14:42
- ;;18.0;SAM;;
+SAMIDSSN ;ven/toad - dd: ssn in sami intake ;2018-01-03T12:28Z
+ ;;18.0;SAMI;;
  ;
- ; Routine SAMIDSSN contains subroutines that support the data
- ; dictionary of field Social Security Number (.09) in file SAMI Intake
- ; (311.101).
+ ; Routine SAMIDSSN contains code that supports the data dictionary
+ ; of field Social Security Number (.09) in file SAMI Intake (311.101).
  ;
- ; Primary Development History
+ quit  ; no entry from top
  ;
- ; @primary-dev: Frederick D. S. Marshall (toad)
- ; @primary-dev-org: Vista Expertise Network (ven)
- ;   http://vistaexpertise.net
- ; @copyright: 2017, Vista Expertise Network (ven), all rights reserved
- ; @license: Apache 2.0
- ;   https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ; @last-updated: 2017-08-17T14:43Z
- ; @application: Screening Applications Management (SAM)
- ; @module: Screening Applications Management - IELCAP (SAMI)
- ; @suite-of-files: SAMI Forms (311.101-311.199)
- ; @version: 18.0T01 (first development version)
- ; @release-date: not yet released
- ; @patch-list: none yet
  ;
- ; @funding-org: 2017-2018,Bristol-Myers Squibb Foundation (bmsf)
- ;   https://www.bms.com/about-us/responsibility/bristol-myers-squibb-foundation.html
+ ;@section 0 primary development
  ;
- ; @original-dev: ALB/JDS
- ; @original-dev: ALB/LBD
+ ;
+ ;
+ ;@primary-dev: Frederick D. S. Marshall (toad)
+ ; toad@vistaexpertise.net
+ ;@primary-dev-org: Vista Expertise Network (ven)
+ ; http://vistaexpertise.net
+ ;@copyright: 2017-2018, ven, all rights reserved
+ ;@license: Apache 2.0
+ ; https://www.apache.org/licenses/LICENSE-2.0.html
+ ;
+ ;@last-updated: 2018-01-03T12:28Z
+ ;@application: Screening Applications Management (SAM)
+ ;@module: Screening Applications Management - IELCAP (SAMI)
+ ;@suite-of-files: SAMI Forms (311.101-311.199)
+ ;@version: 18.0T04 (fourth development version)
+ ;@release-date: not yet released
+ ;@patch-list: none yet
+ ;
+ ;@funding-org: 2017-2018,Bristol-Myers Squibb Foundation (bmsf)
+ ; https://www.bms.com/about-us/responsibility/bristol-myers-squibb-foundation.html
+ ;
+ ;@original-dev: ALB/JDS
+ ;@original-dev: ALB/LBD
  ;
  ; 2017-08-16 ven/toad v18.0t01 SAMIDD1: create from routine DGRPDD1
  ; for input transform for field Social Security Number (.09) in file
@@ -37,43 +43,55 @@ SAMIDSSN ;ven/toad - ielcap dd ssn in sami intake ;Aug 17,2017@14:42
  ; replacing PSEU with $$PSEUDO, rename SSN => SSNIN & repurpose as the
  ; code to implement ddi SSNIN^SAMIDD.
  ;
+ ; 2018-01-03 ven/toad v18.0t04 SAMIDSSN: shift ddi to SSNIN^SAMID,
+ ; section & stanza terminology; passim.
  ;
- ; contents
+ ;@to-do
+ ; annotate fully & split routine if needed
+ ; develop examples, tests, mini-meter calls, and timers
  ;
- ; SSNIN: input transform for field Social Security Number (.09)
+ ;@contents
+ ; SSNIN: code for ddi SSNIN^SAMID, input xform for .09 in 311.101
  ; PSEU: generate pseudo-ssn
  ; $$HASH: hash letter to digit
  ; $$FINDFREE = find next free pseudo-ssn to avoid duplicates
  ;
  ;
  ;
-SSNIN ; code for ddi SSNIN^SAMIDD, input xform for .09 in 311.101
+ ;@section 1 SSN input-transform ddi code & subroutines
  ;
- ;;{contract};procedure;clean;silent;portable;0% tests
  ;
- ; 1. invocation, binding, & branching
  ;
- ; @signature:
- ;   do SSNIN^SAMIDD(.X,SAMIUPDATE)
- ; @branches-from:
- ;   SSNIN^SAMIDD
- ; @calls:
- ;   $$PSEUDO: generate pseudo-ssn
- ; @throughput:
- ;   X = in as proposed external value for field Social Security Number
- ;          (.09) in file SAMI Intake (311.101)
- ;       out as validated internal value for field
- ;          undefined if X was not a valid external value for field
- ; @input:
- ;  ]ZTQUEUED = [optional] set if taskman is running this code
- ;  ]SAMIZNV = [optional] controls handling of X = pseudo ssn
- ;      either way, will recalculate to see what pseudo ssn should be
- ;      if not defined, SSN will reject pseudo if it doesn't match
- ;      if defined, SSN will update the pseudo ssn to new value
- ;  ]DIUTIL = [optional] defined if running Fileman Utility Options
- ;      if running VERIFY FIELDS, won't reject ssn for being in use
- ;  ^SAMI(311.101,"SSN") = index of assigned ssns
- ;  ^SAMI(311.101,#,0) = sami intake record for an assigned ssn
+SSNIN ; code for ddi SSNIN^SAMID, input xform for .09 in 311.101
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/toad;private;procedure;clean;silent;0% tests;sac
+ ;@signature:
+ ; do SSNIN^SAMID(.X,SAMIUPDATE)
+ ;@branches-from:
+ ; SSNIN^SAMID
+ ;@calls:
+ ; $$PSEUDO: generate pseudo-ssn
+ ;@throughput:
+ ; X = in as proposed external value for field Social Security Number
+ ;   (.09) in file SAMI Intake (311.101)
+ ;  out as validated internal value for field
+ ;   undefined if X was not a valid external value for field
+ ;@input:
+ ;]ZTQUEUED = [optional] set if taskman is running this code
+ ;]SAMIZNV = [optional] controls handling of X = pseudo ssn
+ ;  either way, will recalculate to see what pseudo ssn should be
+ ;  if not defined, SSN will reject pseudo if it doesn't match
+ ;  if defined, SSN will update the pseudo ssn to new value
+ ;]DIUTIL = [optional] defined if running Fileman Utility Options
+ ;  if running VERIFY FIELDS, won't reject ssn for being in use
+ ;^SAMI(311.101,"SSN") = index of assigned ssns
+ ;^SAMI(311.101,#,0) = sami intake record for an assigned ssn
+ ;@examples: [tbd]
+ ;@tests: [tbd]
+ ;
+ ;@stanza 2 strip punctuation
  ;
  if X'?.AN do  ; if we have punctuation, probably dashes
  . new pos
@@ -83,6 +101,8 @@ SSNIN ; code for ddi SSNIN^SAMIDD, input xform for .09 in 311.101
  . . set pos=pos-1 ; so back up to check next character
  . . quit
  . quit
+ ;
+ ;@stanza 3 handle pseudo-ssn
  ;
  if X="P"!(X="p") do  quit  ; if asked to generate a pseudo ssn
  . set X=$$PSEUDO(X) ; replace P/p w/pseudo ssn
@@ -107,9 +127,13 @@ SSNIN ; code for ddi SSNIN^SAMIDD, input xform for .09 in 311.101
  . write !
  . quit
  ;
+ ;@stanza 4 reject invalid syntax
+ ;
  if X'?9N do  quit  ; at this point, it better be 9 digits
  . kill X
  . quit
+ ;
+ ;@stanza 5 prevent duplicate ssn
  ;
  if $get(DIUTIL)'="VERIFY FIELDS" do  quit:'$data(X)
  . new record set record=$order(^SAMI(311.101,"SSN",X,0))
@@ -118,6 +142,8 @@ SSNIN ; code for ddi SSNIN^SAMIDD, input xform for .09 in 311.101
  . . write $char(7),"  Already used by patient '",$piece(^(0),U),"'."
  . . quit
  . quit
+ ;
+ ;@stanza 6 reject ssn special invalid cases
  ;
  if $data(X),$extract(X)=9 do  quit
  . kill X
@@ -130,6 +156,8 @@ SSNIN ; code for ddi SSNIN^SAMIDD, input xform for .09 in 311.101
  . quit:$data(ZTQUEUED)
  . write !,$char(7),"   First three digits cannot be zeros."
  . quit
+ ;
+ ;@stanza 7 note ssn special valid cases
  ;
  if $data(X) do
  . new first3 set first3=$extract(X,1,3)
@@ -144,27 +172,34 @@ SSNIN ; code for ddi SSNIN^SAMIDD, input xform for .09 in 311.101
  . write !!,$char(7),"      Note: This is a Test Patient SSN."
  . quit
  ;
- quit  ; end of SSN
+ ;@stanza 8 termination
+ ;
+ quit  ; end of SSNIN^SAMID
  ;
  ;
  ;
 PSEUDO ; generate pseudo-ssn
  ;
- ;;private;function;clean;silent;portable;0% tests
+ ;@stanza 1 invocation, binding, & branching
  ;
- ; @called-by:
- ;   SSNIN
- ; @calls:
- ;   CON: 
- ;   $$FINDFREE = find next free pseudo-ssn to avoid duplicates
- ; @input:
- ;   DA = record number
- ;  ]SAMIX = [optional] name to make a pseudo ssn for
- ;  ]SAMIDS(.08) = [optional] dob to make a pseudo ssn for
- ;  ^SAMI(311.101,DA,0) = sami intake header node
- ;  ^SAMI(311.101,"SSN") = index of assigned ssns
- ; @output:
- ;   L = new pseudo ssn for this sami intake record
+ ;ven/toad;private;function;clean;silent;0% tests;sac
+ ;@called-by:
+ ; SSNIN
+ ;@calls:
+ ; CON: 
+ ; $$FINDFREE = find next free pseudo-ssn to avoid duplicates
+ ;@input:
+ ; DA = record number
+ ;]SAMIX = [optional] name to make a pseudo ssn for
+ ;]SAMIDS(.08) = [optional] dob to make a pseudo ssn for
+ ;^SAMI(311.101,DA,0) = sami intake header node
+ ;^SAMI(311.101,"SSN") = index of assigned ssns
+ ;@output:
+ ; L = new pseudo ssn for this sami intake record
+ ;@examples: [tbd]
+ ;@tests: [tbd]
+ ;
+ ;@stanza 2 calculate preferred hash
  ;
  new name,dob
  if $data(DPTIDS(.03)),$data(DPTX) do
@@ -189,9 +224,13 @@ PSEUDO ; generate pseudo-ssn
  new pseudo
  set pseudo=init3_init2_init1_$extract(dob,4,7)_$extract(dob,2,3)_"P"
  ;
+ ;@stanza 3 find free hash if necessary
+ ;
  if $data(^SAMI(311.101,"SSN",pseudo)) do
  . set pseudo=$$FINDFREE(pseudo)
  . quit
+ ;
+ ;@stanza 4 termination
  ;
  quit pseudo ; return pseudo ssn ; end of $$PSEUDO
  ;
@@ -199,13 +238,18 @@ PSEUDO ; generate pseudo-ssn
  ;
 HASH(char) ; hash letter to digit
  ;
- ;;private;function;clean;silent;portable;0% tests
+ ;@stanza 1 invocation, binding, & branching
  ;
- ; @called-by:
- ;   $$PSEUDO: generate pseudo-ssn
- ; @input:
- ;   char = letter, initial of first, middle, or last name
- ; @output = digit from 0 to 9
+ ;ven/toad;private;function;clean;silent;0% tests;sac
+ ;@called-by:
+ ; $$PSEUDO: generate pseudo-ssn
+ ;@input:
+ ; char = letter, initial of first, middle, or last name
+ ;@output = digit from 0 to 9
+ ;@examples: [tbd]
+ ;@tests: [tbd]
+ ;
+ ;@stanza 2 hash letter to digit
  ;
  ; hash a letter to a digit from 1 to 9
  new digit set digit=$ascii(char)-65\3+1
@@ -213,26 +257,36 @@ HASH(char) ; hash letter to digit
  ; if char was the empty string, digit will be negative; change to 0
  set:digit<0 digit=0
  ;
+ ;@stanza 3 termination
+ ;
  quit digit ; return hash ; end of $$HASH
  ;
  ;
  ;
 FINDFREE(PSSN) ; find next free pseudo-ssn to avoid duplicates
  ;
- ;;private;function;clean;silent;portable;0% tests
+ ;@stanza 1 invocation, binding, & branching
  ;
- ; @called-by:
- ;   $$PSEUDO: generate pseudo-ssn
- ; @input:
- ;   PSSN = original pseudo-ssn that was already assigned
- ;   ^SAMI(311.101,"SSN") = index of assigned ssns
- ; @output = new pseudo-ssn that has not yet been assigned
+ ;ven/toad;private;function;clean;silent;0% tests;sac
+ ;@called-by:
+ ; $$PSEUDO: generate pseudo-ssn
+ ;@input:
+ ; PSSN = original pseudo-ssn that was already assigned
+ ;^SAMI(311.101,"SSN") = index of assigned ssns
+ ;@output = new pseudo-ssn that has not yet been assigned
+ ;@examples: [tbd]
+ ;@tests: [tbd]
  ;
  ; patch DG*5.3*866 no duplicate pseudo ssns
  ;
+ ;@stanza 2 use ssn index to find next free pseudo-ssn
+ ;
  for  set PSSN=PSSN+1_"P" quit:'$data(^SAMI(311.101,"SSN",PSSN))
  ;
+ ;@stanza 3 termination
+ ;
  quit PSSN ; return pseudo-ssn ; end of $$FINDFREE
+ ;
  ;
  ;
 eor ; end of routine 

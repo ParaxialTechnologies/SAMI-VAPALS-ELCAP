@@ -1,9 +1,9 @@
-SAMIDD1 ;ven/toad - dd support for file sami intake ; 8/16/2017 14:12
+SAMIDSSN ;ven/toad - ielcap dd ssn in sami intake ;Aug 17,2017@14:42
  ;;18.0;SAM;;
  ;
- ; Routine SAMIDD1 contains subroutines that support the data
- ; dictionary of file SAMI Intake (311.101), like SSN, which the code
- ; for the input transform of field Social Security Number (.09).
+ ; Routine SAMIDSSN contains subroutines that support the data
+ ; dictionary of field Social Security Number (.09) in file SAMI Intake
+ ; (311.101).
  ;
  ; Primary Development History
  ;
@@ -14,7 +14,7 @@ SAMIDD1 ;ven/toad - dd support for file sami intake ; 8/16/2017 14:12
  ; @license: Apache 2.0
  ;   https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ; @last-updated: 2017-08-16T18:15Z
+ ; @last-updated: 2017-08-17T14:43Z
  ; @application: Screening Applications Management (SAM)
  ; @module: Screening Applications Management - IELCAP (SAMI)
  ; @suite-of-files: SAMI Forms (311.101-311.199)
@@ -33,26 +33,37 @@ SAMIDD1 ;ven/toad - dd support for file sami intake ; 8/16/2017 14:12
  ; SAMI Intake (311.101); copy over ssn-related subroutines & apply
  ; mdc pattern-language style for sustainability.
  ;
+ ; 2017-08-17 ven/toad v18.0t01 SAMIDSSN: rename routine, finish
+ ; replacing PSEU with $$PSEUDO, rename SSN => SSNIN & repurpose as the
+ ; code to implement ddi SSNIN^SAMIDD.
+ ;
  ;
  ; contents
  ;
- ; SSN: input transform for field Social Security Number (.09)
+ ; SSNIN: input transform for field Social Security Number (.09)
  ; PSEU: generate pseudo-ssn
  ; $$HASH: hash letter to digit
  ; $$FINDFREE = find next free pseudo-ssn to avoid duplicates
  ;
  ;
  ;
-SSN ; input transform for field Social Security Number (.09)
+SSNIN ; code for ddi SSNIN^SAMIDD, input xform for .09 in 311.101
  ;
- ;;{contract};variable;clean;silent;portable;0% tests
+ ;;{contract};procedure;clean;silent;portable;0% tests
  ;
+ ; 1. invocation, binding, & branching
+ ;
+ ; @signature:
+ ;   do SSNIN^SAMIDD(.X,SAMIUPDATE)
+ ; @branches-from:
+ ;   SSNIN^SAMIDD
  ; @calls:
  ;   $$PSEUDO: generate pseudo-ssn
- ; @branches-to:
- ;   SSNQ
  ; @throughput:
- ;   X = 
+ ;   X = in as proposed external value for field Social Security Number
+ ;          (.09) in file SAMI Intake (311.101)
+ ;       out as validated internal value for field
+ ;          undefined if X was not a valid external value for field
  ; @input:
  ;  ]ZTQUEUED = [optional] set if taskman is running this code
  ;  ]SAMIZNV = [optional] controls handling of X = pseudo ssn
@@ -142,7 +153,7 @@ PSEUDO ; generate pseudo-ssn
  ;;private;function;clean;silent;portable;0% tests
  ;
  ; @called-by:
- ;   SSN
+ ;   SSNIN
  ; @calls:
  ;   CON: 
  ;   $$FINDFREE = find next free pseudo-ssn to avoid duplicates

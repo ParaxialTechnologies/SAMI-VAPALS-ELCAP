@@ -1,61 +1,81 @@
-SAMIDOUT ;ven/toad - ielcap dd output ;Sep 18,2017@18:01
- ;;18.0;SAM;;
+SAMIDOUT ;ven/toad - dd: output ;2018-01-03T11:40Z
+ ;;18.0;SAMI;;
  ;
  ; Routine SAMIDOUT contains subroutines for outputing the data
  ; dictionary of SAMI fields to the va-pals repository in tab-delimited
  ; format
  ;
- ; Primary Development History
+ quit  ; no entry from top
  ;
- ; @primary-dev: Frederick D. S. Marshall (toad)
- ; @primary-dev-org: Vista Expertise Network (ven)
- ;   http://vistaexpertise.net
- ; @copyright: 2017, Vista Expertise Network (ven), all rights reserved
- ; @license: Apache 2.0
- ;   https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ; @last-updated: 2017-09-18T11:01Z
- ; @application: Screening Applications Management (SAM)
- ; @module: Screening Applications Management - IELCAP (SAMI)
- ; @suite-of-files: SAMI Forms (311.101-311.199)
- ; @version: 18.0T01 (first development version)
- ; @release-date: not yet released
- ; @patch-list: none yet
  ;
- ; @funding-org: 2017-2018,Bristol-Myers Squibb Foundation (bmsf)
- ;   https://www.bms.com/about-us/responsibility/bristol-myers-squibb-foundation.html
+ ;@section 0 primary development
+ ;
+ ;
+ ;
+ ;@primary-dev: Frederick D. S. Marshall (toad)
+ ; toad@vistaexpertise.net
+ ;@primary-dev-org: Vista Expertise Network (ven)
+ ; http://vistaexpertise.net
+ ;@copyright: 2017-2018, ven, all rights reserved
+ ;@license: Apache 2.0
+ ; https://www.apache.org/licenses/LICENSE-2.0.html
+ ;
+ ;@last-updated: 2018-01-03T11:40Z
+ ;@application: Screening Applications Management (SAM)
+ ;@module: Screening Applications Management - IELCAP (SAMI)
+ ;@suite-of-files: SAMI Forms (311.101-311.199)
+ ;@version: 18.0T01 (first development version)
+ ;@release-date: not yet released
+ ;@patch-list: none yet
+ ;
+ ;@funding-org: 2017-2018,Bristol-Myers Squibb Foundation (bmsf)
+ ; https://www.bms.com/about-us/responsibility/bristol-myers-squibb-foundation.html
  ;
  ; 2017-09-18 ven/toad v18.0t01 SAMIDOUT: create, building on Mash
  ; tools in %cp & %sfo; ONE,ALL.
  ;
- ;
- ; contents
- ;
- ; ALL: export all SAMI dds
- ; ONE: export SAMI dd
+ ; 2018-01-03 ven/toad v18.0t04 SAMIDOUT: convert DMIs to PPIs; stanza
+ ; terminology; ONE,ALL.
  ;
  ;
+ ;@contents
  ;
-ALL(SAMILOG) ; export all SAMI dds
+ ; ALL: code for PPI ALL^SAMID, export all sami dds
+ ; ONE: code for PPI ONE^SAMID, export sami dd
  ;
- ; 1. invocation, binding, & branching
  ;
- ;ven/toad;private;procedure;clean;silent;NOT portable;0% tests
- ; @signature:
- ;   do ALL^SAMIDOUT()
- ; @calls:
- ;   mini^%u: performance mini-meter
- ;   $$FIND1^DIC = find package by name
- ;   GETS^DIQ: retrieve package git-repository path & file range
- ;   ONE: export SAMI dd
- ; @input:
- ;   ^DIC(9.4) = file Package
- ; @output:
- ;   file path/name-dd-m.csv created/updated for each file
+ ;
+ ;@section 1 ppis
+ ;
+ ;
+ ;
+ALL(SAMILOG) ; code for PPI ALL^SAMID, export all sami dds
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/toad;private;procedure;clean;silent;0% tests;SAC VIOLATIONS:
+ ; 1. [tied to unix file name syntax]
+ ; 2. lowercase calls: mini^%u
+ ;@signature
+ ; do ALL^SAMID()
+ ;@branches-from
+ ; ALL^SAMID
+ ;@calls:
+ ; mini^%u: performance mini-meter
+ ; $$FIND1^DIC = find package by name
+ ; GETS^DIQ: retrieve package git-repository path & file range
+ ; ONE^SAMID: export SAMI dd
+ ;@input:
+ ; ^DIC(9.4) = file Package
+ ;@output:
+ ; file path/name-dd-m.csv created/updated for each file
+ ;@examples: [tbd]
+ ;@tests: [tbd]
  ;
  ; export is in quoted, tab-delimited format
  ;
- ; 2. fetch SAMI package#
+ ;@stanza 2 fetch SAMI package#
  ;
  set:$get(SAMILOG)="" SAMILOG=0 ; default to no mini-meter
  do:SAMILOG mini^%u(2,.SAMILOG)
@@ -69,7 +89,7 @@ ALL(SAMILOG) ; export all SAMI dds
  . quit
  quit:'SAMIPKG  ; done if could not find package#
  ;
- ; 3. fetch git-repository path & file range
+ ;@stanza 3 fetch git-repository path & file range
  ;
  do:SAMILOG mini^%u(3,.SAMILOG)
  ;
@@ -92,7 +112,7 @@ ALL(SAMILOG) ; export all SAMI dds
  quit:SAMIMIN=""  ; done if no minimum file#
  quit:SAMIMAX=""  ; done if no maximum file#
  ;
- ; 4. export SAMI files
+ ;@stanza 4 export SAMI files
  ;
  do:SAMILOG mini^%u(4,.SAMILOG)
  ;
@@ -102,10 +122,10 @@ ALL(SAMILOG) ; export all SAMI dds
  . quit:SAMIFILE>SAMIMAX  ; done if run out of SAMI file dds
  . quit:SAMIFILE=""  ; also done if run out of all files
  . ;
- . do ONE(SAMIFILE,.SAMIPKG) ; export this SAMI dd
+ . do ONE^SAMID(SAMIFILE,.SAMIPKG) ; export this SAMI dd
  . quit
  ;
- ; 5. termination
+ ;@stanza 5 termination
  ;
  do:SAMILOG mini^%u(5,.SAMILOG)
  ;
@@ -113,29 +133,35 @@ ALL(SAMILOG) ; export all SAMI dds
  ;
  ;
  ;
-ONE(SAMIDD,SAMIPKG,SAMILOG) ; export SAMI dd
+ONE(SAMIDD,SAMIPKG,SAMILOG) ; code for PPI ONE^SAMID, export sami dd
  ;
- ; 1. invocation, binding, & branching
+ ;@stanza 1 invocation, binding, & branching
  ;
- ;ven/toad;private;procedure;clean;silent;NOT portable;0% tests
- ; @signature:
- ;   do ONE^SAMIDOUT(SAMIDD)
- ; @calls:
- ;   mini^%u: performance mini-meter
- ;   FILE^DID: retrieve file name
- ;   $$lowcase^%ts = convert string to lowercase
- ;   properties^%sfo: build field table
- ;   $$GTF^%ZISH: pseudo-function to copy array to host file
- ; @input:
- ;   SAMIDD = dd# of file definition to output
- ;  .SAMIPKG = package#
- ;   SAMIPKG("PATH") = directory path to dd-output repository
- ; @output:
- ;   file path/name-dd-m.csv created/updated
+ ;ven/toad;private;procedure;clean;silent;0% tests;SAC VIOLATIONS:
+ ; 1. [tied to unix file name syntax]
+ ; 2. lowercase calls: mini^%u,$$lowcase^%ts,properties^%sfo
+ ;@signature
+ ; do ONE^SAMID(SAMIDD)
+ ;@branches-from
+ ; ALL^SAMID
+ ;@calls:
+ ; mini^%u: performance mini-meter
+ ; FILE^DID: retrieve file name
+ ; $$lowcase^%ts = convert string to lowercase
+ ; properties^%sfo: build field table
+ ; $$GTF^%ZISH: pseudo-function to copy array to host file
+ ;@input:
+ ; SAMIDD = dd# of file definition to output
+ ;.SAMIPKG = package#
+ ; SAMIPKG("PATH") = directory path to dd-output repository
+ ;@output:
+ ; file path/name-dd-m.csv created/updated
+ ;@examples: [tbd]
+ ;@tests: [tbd]
  ;
  ; export is in quoted, tab-delimited format
  ;
- ; 2. calculate export-file name
+ ;@stanza 2 calculate export-file name
  ;
  set:$get(SAMILOG)="" SAMILOG=0 ; default to no mini-meter
  do:SAMILOG mini^%u(2,.SAMILOG)
@@ -157,7 +183,7 @@ ONE(SAMIDD,SAMIPKG,SAMILOG) ; export SAMI dd
  set SAMINAME=$translate(SAMINAME," _/.","---") ; normalize punctuation
  set SAMINAME=SAMINAME_"-dd-m.csv" ; append std export-file suffix
  ;
- ; 3. generate dd-export array
+ ;@stanza 3 generate dd-export array
  ;
  do:SAMILOG mini^%u(3,.SAMILOG)
  ;
@@ -171,7 +197,7 @@ ONE(SAMIDD,SAMIPKG,SAMILOG) ; export SAMI dd
  . quit
  quit:'$data(^TMP("SAMIDOUT",$job))  ; done if loading dock empty
  ;
- ; 4. set new dd-export file
+ ;@stanza 4 set new dd-export file
  ;
  do:SAMILOG mini^%u(4,.SAMILOG)
  ;
@@ -187,11 +213,12 @@ ONE(SAMIDD,SAMIPKG,SAMILOG) ; export SAMI dd
  . kill ^TMP("SAMIDOUT",$job) ; clear loading dock
  . quit
  ;
- ; 5. termination
+ ;@stanza 5 termination
  ;
  do:SAMILOG mini^%u(5,.SAMILOG)
  ;
  quit  ; end of ONE
+ ;
  ;
  ;
 eor ; end of routine SAMIDOUT

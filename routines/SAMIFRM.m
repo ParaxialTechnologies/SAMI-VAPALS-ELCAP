@@ -173,4 +173,15 @@ GETFN(KBAIFN,KBAIDEF) ; extrinsic which prompts for filename
  S KBAIFN=Y
  Q 1
  ;
- 
+SAMISUBS(ln,form,sid,filter) ; ln is passed by reference; filter is passed by reference
+ ; changes line ln by doing replacements needed for all SAMI forms
+ ;
+ n dbg s dbg=$g(filter("debug"))
+ i dbg'="" s dbg="&debug="_dbg
+ n target s target="form?form="_form_"&studyId="_sid_dbg
+ i ln["datae.cgi" d replaceAll^%wfhform(.ln,"/cgi-bin/datac/datae.cgi",target)
+ ;. . s zhtml(%j)="<form action=""form?form="_form_"&studyId="_sid_dbg_""" method=""POST"" name="""_sublbl_""">"
+ ;n subs
+ ;s subs(" 
+ q
+ ;

@@ -1,0 +1,3170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD>
+<TITLE>PET Evaluation Form</TITLE>
+<link type="text/css" rel="stylesheet" media="all" href="/css/mgtsys.css">
+<link type="text/css" rel="stylesheet" media="print" href="/css/mgtsys-print.css">
+
+<SCRIPT type="text/javascript" LANGUAGE = "JavaScript">
+<!-- Code after this will be ignored by older browsers
+
+var FNAME = "peteval";
+var ESP = false;
+var NDW = false;
+var DATEC = false;
+var WJKD = false;
+var PCH = false;
+var FVER = "2.00"
+
+var nfnod = 0;
+var pctn = 6;
+var cctn = 6;
+var TNGC = 5;
+var gac = 0;
+
+var actch = new Array();
+var acten = new Array();
+var actll = new Array();
+var actst = new Array();
+var actac = new Array();
+var actco = new Array();
+var actpd = new Array();
+// vcode
+var actup = new Array();
+
+var pdd = [ ["-", "-For Pathology Use Only-"],
+            ["aa", "AAH"],
+            ["ap", "atyp bronch prolif"],
+            ["ba", "BAC"],
+            ["ns", "unspec. non-small cell"],
+            ["ad", "adenocarcinoma"],
+            ["as", "adenosquamous"],
+            ["la", "large cell"],
+            ["sq", "squamous cell"],
+            ["sm", "small cell"],
+            ["ct", "carcinoid - typical"],
+            ["ca", "carcinoid - atypical"],
+            ["be", "not malignant"],
+            ["bs", "benign specific"],
+            ["os", "other (specify)"] ];
+
+
+var mtt = [ ["---", "---", "---", "---"],
+            ["Jan", "Jan", "jan", "JAN"],
+            ["Feb", "Feb", "feb", "FEB"],
+            ["Mar", "Mar", "mar", "MAR"],
+            ["Apr", "Apr", "apr", "APR"],
+            ["May", "May", "may", "MAY"],
+            ["Jun", "Jun", "jun", "JUN"],
+            ["Jul", "Jul", "jul", "JUL"],
+            ["Aug", "Aug", "aug", "AUG"],
+            ["Sep", "Sep", "sep", "SEP"],
+            ["Oct", "Oct", "oct", "OCT"],
+            ["Nov", "Nov", "nov", "NOV"],
+            ["Dec", "Dec", "dec", "DEC"] ];
+
+
+function errorCheck()
+{
+    var aMsg = "";
+    var rfMsg = "";
+    var ceChkMsg = "";
+    var abChkMsg = "";
+    var nnod = 0;
+    var nncn = 0;
+
+    radioFixup();
+    cbFixup();
+    jtoha();
+
+    // Patient Identity
+    if (!document.forms[FNAME].elements['ptsid'].value)
+       { rfMsg += " - Patient: Study ID\n"; }
+
+    if (!document.forms[FNAME].elements['ptdos'].value)
+       { rfMsg += " - Study Date\n"; }
+    else
+       { fudCalc(1); }
+
+    if (!document.forms[FNAME].elements['ptrad'].value)
+       { rfMsg += " - Radiologist\n"; }
+
+    /*
+    nnod = document.forms[FNAME].elements['cennod'].value;
+
+    if (!nnod) {
+       rfMsg += " - Number of Nodules (Overall)\n";
+       // document.forms[FNAME].elements['cennod'].value = 0;
+       nnod = 0;
+       nns = 0;
+    }
+
+    nfnod = 0;
+    for (var i = 1; i <= 1; i++) {
+       rstr = ceChk(i);
+       if (rstr)
+          ceChkMsg += rstr;
+    }
+    for (var i = 2; i <= TNGC; i++) {
+       rstr = ceCJ(i);
+       if (rstr)
+          ceChkMsg += rstr;
+    }
+
+    // no check for >= 7
+    if (nnod <= 6) {
+       var nci = 0;
+       var ncstr = "";
+// vcode
+       if (nfnod != nnod) {
+	  if (nci)
+	     ncstr += "\n\n";
+	  ncstr += "The overall number of nodules entered in the";
+	  ncstr += (" evaluation grid (" + nfnod + ")\n");
+	  ncstr += "does not match the reported overall total number of";
+	  ncstr += " nodules (";
+	  ncstr += (nnod + ").");
+	  nci = 1;
+       }
+
+       if (nci == 1) {
+	  alert(ncstr);
+          return;
+       }
+       else {
+          if (ceChkMsg)
+             rfMsg += ceChkMsg;
+       }
+    }
+    */
+
+    // Check PET Variables 
+    /*
+    abChkMsg = petChk();
+    if (abChkMsg) rfMsg += abChkMsg;
+    */
+
+    // Follow-up
+    if(document.forms[FNAME].elements['cefu'].selectedIndex == 0)
+       { rfMsg += " - Follow-up\n"; }
+    if(!(document.forms[FNAME].elements['hvcefuw'].value
+       && document.forms[FNAME].elements['cefud'].value))
+       { rfMsg += " - Follow-up Date\n"; }
+
+    // Impression
+    if(!document.forms[FNAME].elements['hvceimn'].value)
+       { rfMsg += " - Impression: Nodules\n"; }
+    if(!document.forms[FNAME].elements['hvceimo'].value)
+       { rfMsg += " - Impression: Other Findings\n"; }
+
+
+    // Compose Error Message
+    if (rfMsg)
+    {
+       aMsg = "The following required fields have not been entered:\n";
+       aMsg += rfMsg;
+       aMsg += 
+       "Please complete these fields and submit the form again.\n";
+       alert(aMsg);
+    }
+    else
+    {
+       document.forms[FNAME].elements['fppend'].value = "0";
+       document.forms[FNAME].submit();
+    }
+}
+
+function nnodChk(arg)
+{
+   var chVal = "";
+   var chNum = 0;
+   chVal = document.forms[FNAME].elements[arg].value;
+   chVal = chVal.replace(/^\s+/g, '').replace(/\s+$/g, '');
+   chNum = parseInt(chVal, 10);
+
+   if (isNaN(chVal) || isNaN(chNum) || (chNum > 99) || (chNum < 0)) {
+      altfx(arg, chVal, "number", "number in the range 0 to 99");
+   }
+   else {
+      document.forms[FNAME].elements[arg].value = chVal;
+   }
+}
+
+function petChk()
+{
+   var aMsg = "";
+   var ab  = [ "x", "a", "l", "s", "b", "n", "t", "y", "e", "m", "br", "bl", "g", "p", "k" ];
+   var abx = [ "Axillae", "Adrenals", "Liver", "Spleen", "Bones", "Lymph Nodes", "Thyroid", "Thymus", "Esophageal", "Mediastinal", "Right Breast", "Left Breast", "Gall Bladder", "Pancreas", "Kidneys" ]
+   for (var i = 0; i < ab.length; i++) {
+       var a = "hvptmp" + ab[i];
+       var oa = document.forms[FNAME].elements[a].value;
+       if (!oa) { 
+          aMsg += (" - PET Findings: " + abx[i]+ "\n");
+       }
+   }
+   return aMsg;
+}
+
+// Neck and Mediastinal Abnormalities
+// var nm = [ "ceata", "ceaya", "cemln",  "cemlncab", "cemva", "cemeln", "ceomm" ]
+
+// Abdominal Abnormalities
+// var abd = [ "ceaga", "ceasa", "ceala", "ceapa", "ceaaa", "ceaka"];
+
+// Breast Abnormalities
+// var brab = [ "ceara", "ceafa", "ceagaln" ];
+
+// Abdominal Abnormalities (checkboxes)
+/*
+var abdo = [ 
+"ceagh", "ceags", "ceagl", "ceago",
+"ceasc", "ceasy", "ceasm", "ceaso",
+"cealc", "cealy", "cealm", "cealo",
+"ceapc", "ceapy", "ceapm", "ceapo",
+"ceaac", "ceaay", "ceaam", "ceaao",
+"ceakc", "ceaky", "ceakm", "ceako" ];
+
+var levelcb = [
+"cemlnl1", "cemlnl2r", "cemlnl2l", "cemlnl3", "cemlnl4r", "cemlnl4l",
+"cemlnl5", "cemlnl6", "cemlnl7", "cemlnl8", "cemlnl9", "cemlnl10r",
+"cemlnl10l" ];
+*/
+
+// ag = Abnormality Group, ah = Abnormality Header
+function gChk(ag,ah,arg)
+{
+  var alln = true;
+  for (var i = 0; i < ag.length; i++) {
+    var a1 = "hv" +  ag[i];
+    if (document.forms[FNAME].elements[a1].value != arg) {
+      alln = false;
+    }
+  }
+  if (alln == true) {
+    setRVal(ah,arg);
+  }
+}
+
+function gChkr(ag,v)
+{
+  var alln = true;
+  for (var i = 0; i < ag.length; i++) {
+    var a1 = "hv" +  ag[i];
+    var a2 = document.forms[FNAME].elements[a1].value;
+    if (document.forms[FNAME].elements[a1].value != v) {
+      alln = false;
+    }
+  }
+  return (alln);
+}
+
+function nmaChk(arg)
+{
+  var lc = gChkr(nm,arg);
+  if (lc == false) {
+      setRVal ('ceoma','y');
+  } else {
+     if (document.forms[FNAME].elements['hvceoma'].value == 'y') {
+        setRVal ('ceoma','n');
+     }
+  }
+  cbFixup();
+  radioFixup();
+}
+
+function clearG(ag)
+{
+  for (var i = 0; i < ag.length; i++) {
+      eval ("clearRValB('" + ag[i] + "');");
+  }
+  gChk(abd,'ceoaa','n');
+}
+
+function levelChk(arg)
+{
+  if ( arg == 1 ) {
+     clearG(levelcb);
+  }
+  cbFixup();
+  radioFixup();
+  var lc = gChkr(levelcb,'');
+  if (lc == false) {
+      setRVal ('cemln','y');
+  } else {
+     if (document.forms[FNAME].elements['hvcemln'].value == 'y') {
+        setRVal ('cemln','n');
+     }
+  }
+  cbFixup();
+  radioFixup();
+  nmaChk(arg);
+}
+
+function aaChk(r)
+{
+  cbFixup();
+  radioFixup();
+  var allclear = true;
+  var ab = [ "c", "y", "m", "o" ];
+  if ( r == 'g' ) {
+     ab = [ "h", "s", "l", "o" ];
+  }
+  for (var i = 0; i < ab.length; i++) {
+      var a = "hvcea" + r + ab[i];
+      var oa = document.forms[FNAME].elements[a].value;
+      if (oa) { allclear = false; }
+  }
+  var a1 = "cea" + r + "a";
+  if ( allclear == false ) {
+     setRVal(a1, 'y');
+     setRVal('ceoaa', 'y');
+  } else {
+      var a2 = "hvcea" + r + "a";
+      var oa2 = document.forms[FNAME].elements[a2].value;
+      if ( oa2 == 'y' ) {
+        setRVal(a1,'n');
+      }
+      radioFixup();
+      gChk(abd,'ceoaa','n');
+  }
+  cbFixup();
+  radioFixup();
+}
+
+function brChk(r)
+{
+  cbFixup();
+  radioFixup();
+  var allclear = true;
+  var ab = [ "c", "y", "m", "o" ];
+  for (var i = 0; i < ab.length; i++) {
+      var a = "hvceoba" + r + ab[i];
+      var oa = document.forms[FNAME].elements[a].value;
+      if (oa) { allclear = false; }
+  }
+  var a1 = "cea" + r + "a";
+  if ( allclear == false ) {
+     setRVal(a1, 'y');
+     setRVal('ceoba', 'y');
+  } else {
+      var a2 = "hvcea" + r + "a";
+      var oa2 = document.forms[FNAME].elements[a2].value;
+      if ( oa2 == 'y' ) {
+        setRVal(a1,'n');
+      }
+      radioFixup();
+      gChk(brab,'ceoba','n');
+  }
+  cbFixup();
+  radioFixup();
+}
+
+function nmChk(r)
+{
+  cbFixup();
+  radioFixup();
+  var allclear = true;
+  var ab = [ "c", "y", "m", "o" ];
+  var pfix = "cea";
+  var a1 = "cea" + r + "a";
+  if ( r == 'v' ) {
+     ab = [ "aa", "ap", "ao" ];
+     pfix = "cem";
+     a1 = "cemva";
+  }
+  if ( r == 'e' ) {
+     ab = [ "lna", "lnw", "lnm", "lno" ];
+     pfix = "cem";
+     a1 = "cemeln";
+  }
+  if ( r == 'm' ) {
+     a1 = "ceomm";
+  }
+  for (var i = 0; i < ab.length; i++) {
+      var a = "hv" + pfix + r + ab[i];
+      var oa = document.forms[FNAME].elements[a].value;
+      if (oa) { allclear = false; }
+  }
+  if ( allclear == false ) {
+     setRVal(a1, 'y');
+     setRVal('ceoma', 'y');
+  } else {
+      var a2 = "hv" + a1;
+      var oa2 = document.forms[FNAME].elements[a2].value;
+      if ( oa2 == 'y' ) {
+        setRVal(a1,'n');
+      }
+      radioFixup();
+      gChk(nm,'ceoma','n');
+  }
+  cbFixup();
+  radioFixup();
+  nmaChk(arg);
+}
+
+function clearba(r)
+{
+  var ab = [ "c", "y", "m", "o" ];
+  for (var i = 0; i < ab.length; i++) {
+      eval ("clearRValB('ceoba" + r + ab[i] + "');");
+  }
+  radioFixup();
+  gChk(brab,'ceoba','n');
+  radioFixup();
+  cbFixup();
+}
+
+function clearnm(r)
+{
+  var ab;
+  if ( r == 'v' ) {
+     ab = [ "aa", "ap", "ao" ];
+  }
+  if ( r == 'e' ) {
+     ab = [ "lna", "lnw", "lnm", "lno" ];
+  }
+  for (var i = 0; i < ab.length; i++) {
+      eval ("clearRValB('cem" + r + ab[i] + "');");
+  }
+  radioFixup();
+  gChk(nm,'ceoma','n');
+  radioFixup();
+  cbFixup();
+}
+
+function clearabd(r)
+{
+  var ab = [ "c", "y", "m", "o" ];
+  if ( r == 'g' ) {
+     ab = [ "h", "s", "l", "o" ];
+  }
+  for (var i = 0; i < ab.length; i++) {
+      eval ("clearRValB('cea" + r + ab[i] + "');");
+  }
+  radioFixup();
+  gChk(abd,'ceoaa','n');
+  gChk(nm,'ceoma','n');
+  radioFixup();
+  cbFixup();
+}
+
+function clearaabd(arg)
+{
+  var ab = [ "g", "s", "l", "p", "k", "a" ];
+  for (var i = 0; i < ab.length; i++) {
+      clearabd (ab[i]);
+  }
+  for (var i = 0; i < abd.length; i++) {
+     eval ("setRVal('" + abd[i] + "',arg);");
+  }
+  gChk(abd,'ceoaa',arg);
+   radioFixup();
+   cbFixup();
+}
+
+function clearanm(arg)
+{
+   for (var i = 0; i < nm.length; i++) {
+      eval ("setRVal('" + nm[i] + "',arg);");
+   }
+   clearabd ('t');
+   clearabd ('y');
+   clearG(levelcb);
+   clearnm('v');
+   clearnm('e');
+   clearabd ('m');
+   nmaChk(arg);
+}
+
+/*
+function ptclear(arg)
+{
+  var ptradio = [
+    "ptmpx", "ptmpa", "ptmpl",  "ptmps",  "ptmpb", "ptmpn", "ptmpt", "ptmpy", 
+    "ptmpe", "ptmpm", "ptmpbr", "ptmpbl", "ptmpg", "ptmpp", "ptmpk"
+  ];
+  if (document.forms[FNAME].elements[arg].checked == true) {
+    for (var i = 0; i < ptradio.length; i++) {
+       eval ("setRVal('" + ptradio[i] + "','n');");
+    }
+  } 
+}
+*/
+
+var otherradio = [ "ceaf",
+"cefuw", "ceimn", "ceimo"];
+
+function radioFixup()
+{
+   for (var i = 0; i < otherradio.length; i++) {
+      eval ("fixRVal('" + otherradio[i] + "');");
+   }
+}
+
+var allcb = [ "celrads", "celradc" ];
+
+function cbFixup()
+{
+   for (var i = 0; i < allcb.length; i++) {
+      eval ("fixCVal('" + allcb[i] + "');");
+   }
+   /*
+   for (var i = 0; i < abd.length; i++) {
+      eval ("fixRVal('" + abd[i] + "');");
+   }
+   for (var i = 0; i < abdo.length; i++) {
+      eval ("fixCVal('" + abdo[i] + "');");
+   }
+   */
+}
+
+function fixRVal(arg)
+{
+    var hval = "";
+    var arghv = "hv" + arg;
+    var len = document.forms[FNAME].elements[arg].length;
+
+    for (var i = 0; i < len; i++) {
+       if (document.forms[FNAME].elements[arg][i].checked)
+          hval = document.forms[FNAME].elements[arg][i].value;
+    }
+
+    document.forms[FNAME].elements[arghv].value = hval;
+}
+
+function setRVal(arg, val)
+{
+    var arghv = "hv" + arg;
+    var len = document.forms[FNAME].elements[arg].length;
+
+    for (var i = 0; i < len; i++) {
+       if (document.forms[FNAME].elements[arg][i].value == val) {
+          document.forms[FNAME].elements[arg][i].checked = true;
+       }
+       else {
+          document.forms[FNAME].elements[arg][i].checked = false;
+       }
+    }
+
+    document.forms[FNAME].elements[arghv].value = val;
+}
+
+function pna() {
+    clearRValB('ptmnn');
+}
+
+function clearRValB(arg)
+{
+    var arghv = "hv" + arg;
+    document.forms[FNAME].elements[arg].checked = false;
+    document.forms[FNAME].elements[arghv].value = "";
+}
+
+function clearRVal(arg)
+{
+    var arghv = "hv" + arg;
+    var len = document.forms[FNAME].elements[arg].length;
+
+    for (var i = 0; i < len; i++) {
+       document.forms[FNAME].elements[arg][i].checked = false;
+    }
+
+    document.forms[FNAME].elements[arghv].value = "";
+}
+
+function fixCVal(arg)
+{
+    var hval = "";
+    var arghv = "hv" + arg;
+    var len = document.forms[FNAME].elements[arg].length;
+
+    if (document.forms[FNAME].elements[arg].checked) {
+       hval = document.forms[FNAME].elements[arg].value;
+       document.forms[FNAME].elements[arghv].value = hval;
+    }
+    else {
+       document.forms[FNAME].elements[arghv].value = "";
+    }
+}
+
+function subPend()
+{
+   jtoha();
+   document.forms[FNAME].elements['fppend'].value = "1";
+   document.forms[FNAME].submit();
+}
+
+function ceChk(ind)
+{
+   var aMsg = "";
+   var sMsg = "";
+   var fn = "";
+   var ns = ind.toString();
+   var simplewarn = false;
+   var clevel = 0;
+   var nls, nws;
+   var nlen, nwid;
+
+   nn = "cect" + ns + "ch";
+   ni = document.forms[FNAME].elements[nn].selectedIndex;  
+   sn = "cect" + ns + "st";
+   si = document.forms[FNAME].elements[sn].selectedIndex;
+
+   if ((document.forms[FNAME].elements[nn].options[ni].value == "pr")
+      || (document.forms[FNAME].elements[nn].options[ni].value == "px")
+      || (document.forms[FNAME].elements[nn].options[ni].value == "pw")) {
+      	 clevel = 2;
+   }
+   else if (document.forms[FNAME].elements[nn].options[ni].value == "pv") {
+      clevel = 1;
+   }
+   else if (document.forms[FNAME].elements[nn].options[ni].value == "pk") {
+      clevel = 1;
+   }
+
+   if (ni == 0)
+      clevel = 3;
+
+   if (!((ni == 0)
+      || (document.forms[FNAME].elements[nn].options[ni].value == "pr")
+      || (document.forms[FNAME].elements[nn].options[ni].value == "pw")
+      || (document.forms[FNAME].elements[nn].options[ni].value == "px"))) {
+         nfnod += 1;
+   }
+
+   if (clevel != 3) {
+      fn = "cect" + ns + "ch";
+      if (document.forms[FNAME].elements[fn].selectedIndex == 0) {
+         if (NDW)
+            { aMsg += " - Nodule " + ind + ": Is it new?\n"; }
+         else
+            simplewarn = true;
+      }
+
+      fn = "cect" + ns + "en";
+      if (document.forms[FNAME].elements[fn].selectedIndex == 0) {
+         if (NDW)
+            { aMsg += " - Nodule " + ind + ": Endobronchial\n"; }
+         else
+            simplewarn = true;
+      }
+
+      fn = "cect" + ns + "ll";
+      if (document.forms[FNAME].elements[fn].selectedIndex == 0) {
+         if (NDW || (clevel == 2))
+            { aMsg += " - Nodule " + ind + ": Most Likely Location\n"; }
+         else
+            simplewarn = true;
+      }
+   }
+
+// vcode
+/*
+   if (clevel < 2) {
+      fn = "cect" + ns + "up";
+      if (!document.forms[FNAME].elements[fn].value) {
+         if (NDW)
+            { aMsg += " - Nodule " + ind + ": Maximum Nodule Uptake (SUV)\n"; }
+	 else
+	    simplewarn = true;
+         }
+   }
+*/
+
+   if (clevel != 3) {
+      fn = "cect" + ns + "st";
+      if (document.forms[FNAME].elements[fn].selectedIndex == 0) {
+         if (NDW)
+            { aMsg += " - Nodule " + ind + ": Nodule Status\n"; }
+         else
+            simplewarn = true;
+      }
+      else {
+         // unknown
+         if (document.forms[FNAME].elements[fn].selectedIndex == 1) {
+            fn = "cect" + ns + "ac";
+            if (document.forms[FNAME].elements[fn].selectedIndex == 0) {
+               if (NDW)
+                  { aMsg += " - Nodule " + ind + ": Nodule Action\n"; }
+               else
+                  simplewarn = true;
+            }
+         }
+      }
+   }
+
+   if ((clevel < 2) && (simplewarn == true)) {
+      aMsg = " - Nodule " + ind + ": Nodule Details\n";
+   }
+   
+   aMsg += sMsg;
+   return aMsg;
+}
+
+function ceCJ(ind)
+{
+   var aMsg = "";
+   var fn = "";
+   var ns = ind.toString();
+   var simplewarn = false;
+   var clevel = 0;
+
+   nn = "cect" + ns + "ch";
+   nis = document.forms[FNAME].elements[nn].value;
+   sn = "cect" + ns + "st";
+   si = document.forms[FNAME].elements[sn].selectedIndex;
+
+   if((nis == "-") || (nis == "")
+      || (typeof(nis) == "undefined") || (nis == "undefined")) {
+      var ni = 0;
+      nis = "-";
+      document.forms[FNAME].elements[nn].value = "-";
+   }
+   else {
+      var ni = 100;
+   }
+
+   if ((document.forms[FNAME].elements[nn].value == "pr")
+      || (document.forms[FNAME].elements[nn].value == "px")
+      || (document.forms[FNAME].elements[nn].value == "pw")) {
+      	 clevel = 2;
+   }
+   else if (document.forms[FNAME].elements[nn].value == "pv") {
+      clevel = 1;
+   }
+
+   if (ni == 0)
+      clevel = 3;
+
+   if (!((ni == 0)
+      || (document.forms[FNAME].elements[nn].value == "pr")
+      || (document.forms[FNAME].elements[nn].value == "pw")
+      || (document.forms[FNAME].elements[nn].value == "px"))) {
+         nfnod += 1;
+   }
+
+   if (clevel != 3) {
+      fn = "cect" + ns + "ch";
+      if (document.forms[FNAME].elements[fn].value == "-") {
+         if (NDW)
+            { aMsg += " - Nodule " + ind + ": Is it new?\n"; }
+         else
+            simplewarn = true;
+      }
+
+      fn = "cect" + ns + "ll";
+      if (document.forms[FNAME].elements[fn].value == "-") {
+         if (NDW || (clevel == 1))
+            { aMsg += " - Nodule " + ind + ": Most Likely Location\n"; }
+         else
+            simplewarn = true;
+      }
+   }
+
+// vcode
+/*
+   if (clevel < 2) {
+      fn = "cect" + ns + "up";
+      if (!document.forms[FNAME].elements[fn].value) {
+         if (NDW)
+            { aMsg += " - Nodule " + ind + ": Maximum Nodule Uptake (SUV)\n"; }
+	 else
+	    simplewarn = true;
+         }
+   }
+*/
+
+   if (clevel != 3) {
+      fn = "cect" + ns + "st";
+      if (document.forms[FNAME].elements[fn].value == "-") {
+         if (NDW)
+            { aMsg += " - Nodule " + ind + ": Nodule Status\n"; }
+         else
+            simplewarn = true;
+      }
+      else {
+         // unknown
+         if (document.forms[FNAME].elements[fn].value == "un") {
+            fn = "cect" + ns + "ac";
+            if (document.forms[FNAME].elements[fn].value == "-") {
+               if (NDW)
+                  { aMsg += " - Nodule " + ind + ": Nodule Action\n"; }
+               else
+                  simplewarn = true;
+            }
+         }
+      }
+   }
+
+   if ((clevel < 2) && (simplewarn == true)) {
+      aMsg = " - Nodule " + ind + ": Nodule Details\n";
+   }
+   
+   return aMsg;
+}
+
+function ceClear(ind, mode)
+{
+   var fn = "";
+   var ns = ind.toString();
+
+   if (mode > 0) {
+      fn = "cect" + ns + "en";
+      document.forms[FNAME].elements[fn].selectedIndex = 0;
+   }
+
+   if (mode == 2) {
+      fn = "cect" + ns + "ll";
+      document.forms[FNAME].elements[fn].selectedIndex = 0;
+// vcode
+      fn = "cect" + ns + "up";
+      document.forms[FNAME].elements[fn].selectedIndex = 0;
+      fn = "cect" + ns + "ac";
+      document.forms[FNAME].elements[fn].selectedIndex = 0;
+      fn = "cect" + ns + "co";
+      document.forms[FNAME].elements[fn].value = "";
+// vcode
+/* no pd */
+   }
+
+}
+
+function mBrAb(arg)
+{
+   for (var i = 0; i < brab.length; i++) {
+      eval ("setRVal('" + brab[i] + "',arg);");
+   }
+   document.forms[FNAME].elements['ceobaros'].value = "";
+   document.forms[FNAME].elements['ceobafos'].value = "";
+   clearba('r');
+   clearba('f');
+}
+
+function synChk(arg, etype)
+{
+   var chVal = "";
+   var chNum = 0;
+   chVal = document.forms[FNAME].elements[arg].value;
+   chVal = chVal.replace(/^\s+/g, '').replace(/\s+$/g, '');
+   chNum = parseFloat(chVal, 10);
+
+   if ((!isNaN(chVal)) && (chVal.charAt(chVal.length-1) == '.')) {
+      chVal = chVal.substr(0,chVal.length-1);
+   }
+
+   if (etype == 'cws') {
+      document.forms[FNAME].elements[arg].value = chVal;
+   }
+   else if (etype == 'phone') {
+      if (!(PCH || ESP)) {
+         document.forms[FNAME].elements[arg].value = chVal;
+         return;
+      }
+
+      var exp = /^(\d{10}|\d{3}-\d{3}-\d{4}|\(\d{3}\)\d{3}-\d{4})$/;
+      if (!exp.test(chVal)) {
+         altfx(arg, chVal, "phone", "valid phone number");
+      }
+      else {
+	 var pd = new RegExp("[-()]", "g");
+	 var tstr=chVal.replace(pd, "");
+	 var newstr = "(" + tstr.substring(0,3) + ")" + tstr.substring(3,6)
+	 newstr += "-" + tstr.substring(6,10)
+         document.forms[FNAME].elements[arg].value = newstr;
+      }
+   }
+   else if (etype == 'ssn') {
+      if (!ESP) {
+         document.forms[FNAME].elements[arg].value = chVal;
+         return;
+      }
+
+      var exp = /^(\d{9}|\d{3}-\d{2}-\d{4})$/;
+      if (!exp.test(chVal)) {
+         altfx(arg, chVal, "SSN", "valid SSN");
+      }
+      else {
+	 var pd = new RegExp("-", "g");
+	 var tstr=chVal.replace(pd, "");
+	 var newstr = tstr.substring(0,3) + "-" + tstr.substring(3,5)
+	 newstr += "-" + tstr.substring(5,9)
+         document.forms[FNAME].elements[arg].value = newstr;
+      }
+   }
+   else if ((etype == 'rdate') || (etype == 'adate') || (etype == 'rsdate') || (etype == 'asdate')) {
+      var mstr, dstr, ystr;
+
+      if ((etype == 'rdate') || (etype == 'rsdate')) {
+         var y4min = 1990;
+	 var y4max = 2019;
+	 var y2min = 90;
+	 var y2max = 19;
+      }
+      else if ((etype == 'adate') || (etype == 'asdate')) {
+         var y4min = 1800;
+	 var y4max = 2048;
+	 var y2min = 90;
+	 var y2max = 19;
+      }
+
+      if ((etype == 'rdate') || (etype == 'adate')) {
+         if (DATEC) {
+	    var exp = /^(\d{6}|\d{8}|\d{1,2}\/\D{3}\/\d{4}|\d{1,2}\/\D{3}\/\d{2}|\d{1,2}\/\d{1,2}\/\d{4}|\d{1,2}\/\d{1,2}\/\d{2})$/;
+	 }
+	 else {
+	    var exp = /^(\d{1,2}\/\D{3}\/\d{4})$/;
+	 }
+	 var sdt = false;
+      }
+      else if ((etype == 'rsdate') || (etype == 'asdate')) {
+         if (DATEC) {
+            var exp = /^(\d{4}|\d{6}|\D{3}\/\d{4}|\D{3}\/\d{2}|\d{1,2}\/\d{4}|\d{1,2}\/\d{2})$/;
+	 }
+	 else {
+            var exp = /^(\D{3}\/\d{4})$/;
+	 }
+	 var sdt = true;
+      }
+
+      var wrong = false;
+
+      if (!exp.test(chVal)) {
+         wrong = true;
+      }
+      else {
+	 var pd = new RegExp("\\/", "g");
+	 var dfa = chVal.split(pd);
+
+	 if ((dfa.length == 1) &&
+            ((dfa[0].length == 4) || (dfa[0].length == 6) || (dfa[0].length == 8))) {
+	       // monolithic 4, 6 or 8
+	       var tstr = dfa[0];
+
+	       if (!sdt) { // mono full date
+	          if (tstr.length == 6) {
+	             dstr = tstr.substring(0,2);
+		     mstr = tstr.substring(2,4);
+		     ystr = tstr.substring(4,6);
+		     syear = true;
+	          }
+	          else if (tstr.length == 8) {
+	             dstr = tstr.substring(0,2);
+	             mstr = tstr.substring(2,4);
+		     ystr = tstr.substring(4,8);
+		     syear = false;
+                  }
+		  mval = parseInt(mstr, 10);
+		  dval = parseInt(dstr, 10);
+		  yval = parseInt(ystr, 10);
+	       }
+	       else { // mono short date (mmyy or mmyyyy)
+	          if (tstr.length == 4) {
+	             mstr = tstr.substring(0,2);
+		     ystr = tstr.substring(2,4);
+		     syear = true;
+	          }
+	          else if (tstr.length == 6) {
+	             mstr = tstr.substring(0,2);
+	             ystr = tstr.substring(2,6);
+		     syear = false;
+	          }
+	          mval = parseInt(mstr, 10);
+	          yval = parseInt(ystr, 10);
+	       }
+	 }
+	 else if ((dfa.length == 2) && sdt) { // split short date
+	    mstr = dfa[0];
+	    if (dfa[0].length == 3) {
+	       mstr = fixMonth(dfa[0]);
+	    }
+	    else {
+	       mstr = dfa[0];
+	    }
+	    ystr = dfa[1];
+	    if (ystr.length == 4)
+	       syear = false;
+	    else if (ystr.length == 2)
+	       syear = true;
+	    else
+	       wrong = true;
+
+	    mval = parseInt(mstr, 10);
+	    yval = parseInt(ystr, 10);
+	 }
+	 else if (dfa.length == 3) { // split full date
+	    dstr = dfa[0];
+	    if (dstr.length == 1) {
+	       dstr = "0" + dstr;
+            }
+	    mstr = dfa[1];
+	    if (dfa[1].length == 3) {
+	       mstr = fixMonth(dfa[1]);
+	    }
+	    else {
+	       mstr = dfa[1];
+	    }
+
+	    ystr = dfa[2];
+	    if (ystr.length == 4)
+	       syear = false;
+	    else if (ystr.length == 2)
+	       syear = true;
+	    else
+	       wrong = true;
+
+	    mval = parseInt(mstr, 10);
+	    dval = parseInt(dstr, 10);
+	    yval = parseInt(ystr, 10);
+	 }
+	 else {
+	    wrong = true;
+	 }
+
+	 if (!wrong) {
+	    // check month
+	    if (!sdt) {
+	       if (isNaN(mval) || (mval < 1) || (mval > 12)) {
+	          wrong = true;
+	       }
+	    }
+	    else {
+	       // allow zero for month in short date form
+	       if (isNaN(mval) || (mval < 0) || (mval > 12)) {
+	          wrong = true;
+	       }
+	    }
+
+	    // check year
+	    if (syear) {
+	       if (yval <= y2max) {
+		  yval += 2000;
+	       }
+	       else if (yval >= y2min) {
+	          yval += 1900;
+	       }
+	       else { // y2max > yval < y2min
+	          wrong = true;
+	       }
+	    }
+
+	    if (isNaN(yval) || (yval < y4min) || (yval > y4max)) {
+	       wrong = true;
+	    }
+	 
+	    // check day
+	    if (!sdt) {
+	       maxd = 31;
+               if ((mval == 4) || (mval == 6) || (mval == 9) || (mval == 11)) {
+                  maxd = 30;
+               }
+               else if (mval == 2) {
+                  if ((yval % 4) != 0) {
+                     maxd = 28;
+                  }
+                  else {
+                     maxd = 29;
+                  }
+               }
+               else {
+                  maxd = 31;
+               }
+	       if (isNaN(dval) || (dval < 1) || (dval > maxd)) {
+	          wrong = true;
+	       }
+	    }
+
+            mstr = unfixMonth(mval);
+
+	    if (!sdt) {
+	       var newstr = dstr + "/" + mstr + "/" + yval.toString();
+	    }
+            else {
+	       var newstr = mstr + "/" + yval.toString();
+	    }
+
+	    document.forms[FNAME].elements[arg].value = newstr;
+         }
+      }
+
+      if (wrong) {
+         altfx(arg, chVal, "date", "valid date");
+      }
+   }
+   else if (etype == 'month') {
+      if (isNaN(chVal) || isNaN(chNum) || (chNum > 12) || (chNum < 1)) {
+         altfx(arg, chVal, "month", "number in the range 1 to 12");
+      }
+      else {
+         document.forms[FNAME].elements[arg].value = chVal;
+      }
+   }
+   else if (etype == 'day') {
+      if (isNaN(chVal) || isNaN(chNum) || (chNum > 31) || (chNum < 1)) {
+         altfx(arg, chVal, "day", "number in the range 1 to 31");
+      }
+      else {
+         document.forms[FNAME].elements[arg].value = chVal;
+      }
+   }
+   else if (etype == 'year') {
+      if ((!isNaN(chVal) || isNaN(chNum)) && ((chNum == 9) || (chNum == 99))) {
+         document.forms[FNAME].elements[arg].value = "1999"
+         chNum = 1999
+      }
+      if ((!isNaN(chVal) || isNaN(chNum)) && ((chVal == "0") || (chVal == "00"))) {
+	 document.forms[FNAME].elements[arg].value = "2000"
+	 chNum = 2000
+      }
+      if (isNaN(chVal) || isNaN(chNum) || (chNum > 2019) || (chNum < 1990)) {
+         altfx(arg, chVal, "year", "number in the range 1990 to 2019");
+      }
+      else {
+         document.forms[FNAME].elements[arg].value = chVal;
+      }
+   }
+   else if (etype == 'ayear') {
+      if (isNaN(chVal) || isNaN(chNum) || (chNum > 2019) || (chNum < 1800)) {
+         altfx(arg, chVal, "year", "four-digit year");
+      }
+      else {
+         document.forms[FNAME].elements[arg].value = chVal;
+      }
+   }
+   else if (etype == 'age') {
+      if (isNaN(chVal) || isNaN(chNum) || (chNum > 150) || (chNum < 1)) {
+         altfx(arg, chVal, "age", "valid age in years");
+      }
+      else {
+         document.forms[FNAME].elements[arg].value = chVal;
+      }
+   }
+   else if (etype == 'pnum') {
+      if ((chNum >= 0) && (chVal.charAt(0) == '.')) {
+         chVal = '0' + chVal;
+      }
+
+      if (isNaN(chVal) || isNaN(chNum) || (chNum < 0)) {
+         altfx(arg, chVal, "number", "valid positive number");
+      }
+      else {
+         document.forms[FNAME].elements[arg].value = chVal;
+      }
+   }
+   else if (etype == 'anum') {
+      if ((chNum < 0) && (chVal.charAt(1) == '.')) {
+         chVal = '-0' + chVal.substr(1,chVal.length - 1);
+      }
+      else if ((chNum >= 0) && (chVal.charAt(0) == '.')) {
+         chVal = '0' + chVal;
+      }
+
+      if (isNaN(chVal) || isNaN(chNum)) {
+         altfx(arg, chVal, "number", "valid numeric argument");
+      }
+      else {
+         document.forms[FNAME].elements[arg].value = chVal;
+      }
+   }
+}
+
+function altfx(arg, val, msg1, msg2)
+{
+   alert("Incorrect " + msg1 + " entry!\n    " + val
+      + "\nPlease enter a " + msg2 + ".\n");
+   document.forms[FNAME].elements[arg].value = "";
+   document.forms[FNAME].elements[arg].select();
+   document.forms[FNAME].elements[arg].focus();
+}
+
+function fixMonth(str)
+{
+   for (var i = 0; i < mtt.length; i++) {
+      for (var j = 1; j < mtt[0].length; j++) {
+         if(str == mtt[i][j]) {
+            return i;
+         }
+      }
+   }
+
+   return "-1";
+}
+
+function unfixMonth(num)
+{
+   if ((num < 0) || (num > 12))
+      return "Xxx";
+   else
+      return(mtt[num][1]);
+}
+
+function sst(ind, val)
+{
+   var ns = ind.toString();
+
+   sn = "cect" + ns + "st";
+   
+   for (var i = 0; i < document.forms[FNAME].elements[sn].length; i++) {
+      if (document.forms[FNAME].elements[sn].options[i].value == val) {
+         document.forms[FNAME].elements[sn].selectedIndex = i;
+      }
+   }
+}
+
+function newStat(ind)
+{
+   var fn = "";
+   var ns = ind.toString();
+   var nn = "cect" + ns + "ch";
+   var ni = document.forms[FNAME].elements[nn].selectedIndex;  
+   var chv = document.forms[FNAME].elements[nn].options[ni].value
+
+   if(chv == "-") {
+      sst(ind, "-")
+      ceClear(ind, 2);
+   }
+   else if(chv == "pw") {
+      sst(ind, "re")
+      ceClear(ind, 1);
+   }
+   else if(chv == "pv") {
+      ceClear(ind, 0);
+   }
+   else if(chv == "pk") {
+      ceClear(ind, 0);
+   }
+   else if(chv == "pr") {
+      sst(ind, "mr")
+      ceClear(ind, 1);
+   }
+   else if(chv == "px") {
+      sst(ind, "-")
+      ceClear(ind, 1);
+   }
+}
+
+function fudClear()
+{
+   document.forms[FNAME].elements['cefud'].value = "";
+   document.forms[FNAME].elements['cefud'].focus();
+}
+
+function fudCalc(mode)
+{
+   var aMsg = "";
+// vcode
+   var base='ptdos';
+   var hvinc='hvcefuw';
+   var dest='cefud';
+
+   var baseValue = document.forms[FNAME].elements[base].value;
+   var incStr;
+   var minc = 0;
+   var dinc = 0;
+   var yinc = 0;
+   var newm = 0;
+   var newd = 0;
+   var newy = 0;
+   var chg = 1;
+
+   // one radio fixup
+   for (var i = 0; i < document.forms[FNAME].cefuw.length; i++) {
+      if (document.forms[FNAME].cefuw[i].checked)
+         document.forms[FNAME].elements[hvinc].value
+            = document.forms[FNAME].cefuw[i].value;
+   }
+
+   incStr = document.forms[FNAME].elements[hvinc].value;
+
+// vcode
+   if(!baseValue) {
+      alert("Current study date must be entered first\n");
+      return;
+   }
+
+   if(!incStr) {
+      // alert("Follow-up date must be entered\n");
+      return;
+   }
+
+   if (incStr == "os") {
+      if (mode != 1) {
+         document.forms[FNAME].elements['cefud'].value = "";
+         document.forms[FNAME].elements['cefud'].focus();
+      }
+      return;
+   }
+   else if (incStr == "nw") {
+      minc = 0;
+      dinc = 1;
+      yinc = 0;
+   }
+   else if (incStr == "1m") {
+      minc = 1;
+      dinc = 0;
+      yinc = 0;
+   }
+   else if (incStr == "3m") {
+      minc = 3;
+      dinc = 0;
+      yinc = 0;
+   }
+   else if (incStr == "6m") {
+      minc = 6;
+      dinc = 0;
+      yinc = 0;
+   }
+   else if (incStr == "1y") {
+      minc = 0;
+      dinc = 0;
+      yinc = 1;
+   }
+
+   var exp = /^\d{2}\/\D{3}\/\d{4}$/;
+   var wrong = false;
+   var pd = new RegExp("\\/", "g");
+   var tstr=baseValue.replace(pd, "");
+
+   if(!exp.test(baseValue)) {
+      wrong = true;
+   }
+   else {
+      if (tstr.length != 9) {
+         wrong = true;
+      }      
+
+      if (!wrong) {
+	 var dval = parseInt(tstr.substring(0, 2), 10);
+         var mstr = tstr.substring(2, 5);
+	 var mval = parseInt(fixMonth(mstr), 10);
+	 var yval = parseInt(tstr.substring(5, 9), 10);
+      }
+
+      newm = mval + minc;
+      newd = dval + dinc;
+      newy = yval + yinc;
+
+      while (chg == 1) {
+         maxd = 31;
+         if ((newm == 4) || (newm == 6) || (newm == 9) || (newm == 11)) {
+	    maxd = 30;
+	 }
+	 else if (newm == 2) {
+	    if ((newy % 4) != 0) {
+	       maxd = 28;
+	    }
+	    else {
+	       maxd = 29;
+	    }
+         }
+	 else {
+	    maxd = 31;
+	 }
+
+	 chg = 0;
+
+         if (newd > maxd) {
+	    newd = newd - maxd;
+            newm = newm + 1;
+            chg = 1;
+         }
+
+	 if (newm > 12) {
+	    newm -= 12;
+	    newy += 1;
+	    chg = 1;
+	 }
+      } // while
+
+      var nmstr = unfixMonth(newm);
+      var ndstr = newd.toString();
+
+      if (ndstr.length == 1) {
+         ndstr = "0" + ndstr;
+      }
+
+      var newstr = ndstr + "/" + nmstr + "/" + newy.toString();
+      document.forms[FNAME].elements[dest].value = newstr;
+  } // else
+
+  if(wrong) {
+      aMsg = "Incorrect follow-up date calculation!\n";
+      alert(aMsg);
+  }
+}
+
+function bm()
+{
+   var ci = document.forms[FNAME].elements['cefctn'].selectedIndex;
+   var pn = "";
+   var cn = "";
+   var vn = "";
+
+   cctn = ci + 6;
+   if (WJKD) {
+      alert("pctn is " + pctn + "\n"
+        + "cctn is " + cctn);
+   }
+   cctd("ch", 1);
+   cctd("ll", 1);
+   cctd("st", 1);
+   //cctd("ac", 1);
+   //cctd("co", 0);
+// vcode
+   cctd("pd", 3);
+   cctd("up", 0);
+
+   pctn = cctn;
+}
+
+function cctd(en, t)
+{
+   var anm = "act" + en;
+   var vn = "cect0" + en;
+   var hvn = "hvcect0" + en;
+
+   if (t == 0) {
+      eval(anm + "[" + pctn + "] = document.forms[FNAME].elements[vn].value;");
+      eval("document.forms[FNAME].elements[vn].value = " + anm + "[" + cctn + "];");
+   }
+   else if (t == 1) {
+      var vsi = document.forms[FNAME].elements[vn].selectedIndex;
+      eval(anm + "[" + pctn + "] = document.forms[FNAME].elements[vn].options[vsi].value;");
+
+      var match = 0;
+      for (var i = 0; i < document.forms[FNAME].elements[vn].length; i++) {
+         eval("if(document.forms[FNAME].elements[vn].options[i].value == "
+                 + anm + "[" + cctn + "]) {\
+                  match = 1;\
+                  document.forms[FNAME].elements[vn].selectedIndex = i;\
+               }");
+	 if (!match)
+            document.forms[FNAME].elements[vn].selectedIndex = 0;
+      }
+   }
+   else if (t == 2) {
+      var nrv = 0;
+      for (var i = 0; i < document.forms[FNAME].elements[vn].length; i++) {
+         eval("if(document.forms[FNAME].elements[vn][i].checked) {"
+                 + anm + "[" + pctn + "] = document.forms[FNAME].elements[vn][i].value;\
+                  nrv = 1;\
+               }");
+      }
+
+      if (nrv == 0)
+         eval(anm + "[" + pctn + "] = \"\";");
+
+      for (var i = 0; i < document.forms[FNAME].elements[vn].length; i++) {
+         eval("if(document.forms[FNAME].elements[vn][i].value == "
+                 + anm + "[" + cctn + "]) {\
+                  document.forms[FNAME].elements[vn][i].checked = true;\
+               }\
+               else {\
+                  document.forms[FNAME].elements[vn][i].checked = false;\
+               }");
+      }
+   }
+   else if (t == 3) {
+      var vsi = document.forms[FNAME].elements[vn].selectedIndex;
+      var vsv = document.forms[FNAME].elements[vn].options[vsi].value;
+      var vst = document.forms[FNAME].elements[vn].options[vsi].text;
+//    eval(anm + "[" + pctn + "] = document.forms[FNAME].elements[vn].options[vsi].value;");
+      eval("var nsv = " + anm + "[" + cctn + "];");
+      var nst = pdlup(nsv);
+
+      pdset(0, nsv, nst);
+   }
+}
+
+function htoja()
+{
+   htoj("ch");
+   //htoj("en");
+   htoj("ll");
+   htoj("st");
+   //htoj("ac");
+   //htoj("co");
+   htoj("pd");
+// vcode
+   htoj("up");
+}
+
+function htoj(ns)
+{
+   for (var i = 2; i <= TNGC; i++) {
+      eval("act" + ns + "[" + i + "] = document.forms[FNAME].elements['cect"
+         + i + ns + "'].value;");
+   }
+}
+
+function ljvec(ns)
+{
+   var bstr ="";
+   bstr += ("act" + ns + "\n");
+   for (var i = 0; i <= TNGC; i++) {
+      bstr += "act" + ns + "[" + i + "] = "
+      eval("bstr += act" + ns + "[" + i + "];");
+      bstr += "\n";
+   }
+   alert(bstr);
+}
+
+function lsixa()
+{
+   lsix("ch", 1);
+   //lsix("en", 1);
+   lsix("ll", 1);
+   lsix("st", 1);
+   //lsix("ac", 1);
+   //lsix("co", 0);
+   lsix("pd", 1);
+// vcode
+   lsix("up", 0);
+   document.forms[FNAME].elements['cefctn'].selectedIndex = 0;
+}
+
+function lsix(en, t)
+{
+   if (t == 0) {
+      eval("document.forms[FNAME].elements['cect0" + en + "'].value\
+           = document.forms[FNAME].elements['cect2" + en + "'].value;");
+   }
+   else if (t == 1) {
+      eval("for (var i = 0; i < document.forms[FNAME].elements['cect0" + en + "'].length; i++) {\
+               if(document.forms[FNAME].elements['cect0" + en + "'].options[i].value == \
+                  document.forms[FNAME].elements['cect2" + en + "'].value) {\
+                     document.forms[FNAME].elements['cect0" + en + "'].selectedIndex = i;\
+               }\
+            }");
+   }
+   else if (t == 2) {
+      eval("for (var i = 0; i < document.forms[FNAME].elements['cect0" + en + "'].length; i++) {\
+               if(document.forms[FNAME].elements['cect0" + en + "'][i].value == \
+                  document.forms[FNAME].elements['cect2" + en + "'].value) {\
+                     document.forms[FNAME].elements['cect0" + en + "'][i].checked = true;\
+               }\
+            }");
+   }
+}
+
+function prep()
+{
+   iava();
+   htoja();
+   lsixa();
+   pdca();
+}
+
+function jtoha()
+{
+   bm();
+   jtoh("ch");
+   //jtoh("en");
+   jtoh("ll");
+   jtoh("st");
+   //jtoh("ac");
+   //jtoh("co");
+   jtoh("pd");
+// vcode
+   jtoh("up");
+}
+
+function jtoh(ns)
+{
+   for (var i = 2; i <= TNGC; i++) {
+      eval("document.forms[FNAME].elements['cect" + i + ns + "'].value = act"
+              + ns + "[" + i + "];");
+   }
+}
+
+function jtohr(ns)
+{
+   for (var i = 2; i <= TNGC; i++) {
+      eval("document.forms[FNAME].elements['cect" + i + ns + "'].value = act"
+              + ns + "[" + i + "];\
+            document.forms[FNAME].elements['hvcect" + i + ns + "'].value = act"
+              + ns + "[" + i + "];");
+   }
+}
+
+function iava()
+{
+   iav(actch);
+   iav(acten);
+   iav(actll);
+   iav(actst);
+   iav(actac);
+   iav(actco);
+   iav(actpd);
+// vcode
+   iav(actup);
+}
+
+function iav(arg)
+{
+   for (var i = 0; i <= TNGC; i++)
+      arg[i] = "";
+}
+
+function pdadd(arg, val, txt)
+{
+   var nn = "cect" + arg + "pd";
+   var len = document.forms[FNAME].elements[nn].length;
+   var nopt = new Option(txt, val);
+
+   document.forms[FNAME].elements[nn].options[len] = nopt;
+   document.forms[FNAME].elements[nn].selectedIndex = len;
+}
+
+function pdclip(arg)
+{
+   var nn = "cect" + arg + "pd";
+   var len = document.forms[FNAME].elements[nn].length;
+   var si = document.forms[FNAME].elements[nn].selectedIndex;
+   var val, txt;
+
+   for (var i = (len-1); i >= 0; i--) {
+      if (i == si) {
+        val = document.forms[FNAME].elements[nn].options[i].value;
+        txt = document.forms[FNAME].elements[nn].options[i].text;
+      }
+
+      document.forms[FNAME].elements[nn].options[i] = null;
+   }
+
+   pdadd(arg, val, txt);
+}
+
+function pdset(arg, val, txt)
+{
+   var nn = "cect" + arg + "pd";
+   var len = document.forms[FNAME].elements[nn].length;
+   var si = document.forms[FNAME].elements[nn].selectedIndex;
+   var sv = document.forms[FNAME].elements[nn].options[si].value;
+   var st = document.forms[FNAME].elements[nn].options[si].text;
+
+   found = 0;
+   for (var i = 0; i < len; i++) {
+      if (document.forms[FNAME].elements[nn].options[i].value == val) {
+         found = 1;
+         document.forms[FNAME].elements[nn].selectedIndex = i;
+      }
+   }
+
+   if (!found) {
+      pdadd(arg, val, txt);
+   }
+
+   pdclip(arg);
+}
+
+function pdlup(sv)
+{
+   if (sv == "")
+      return pdd[0][1];
+
+   for (var i = 0; i < pdd.length; i++) {
+      if (pdd[i][0] == sv)
+         return pdd[i][1];
+   }
+   return "---";
+}
+
+function pdca()
+{
+   for (var i = 0; i <= 1; i++) {
+      pdclip(i);
+   }
+}
+
+function jshp(arg)
+{
+   alert(pt_hsl_100(arg));
+}
+
+function pt_hsl_100(arg)
+{
+   if (arg == "ofr") {
+      return(
+"The \"yes\" radio button should be checked if the PET evaluation form\n"
++ "is being completed based on films or a radiology report received\n"
++ "from an outside institution.");
+   }
+   else if (arg == "ch") {
+      return(
+"A pull-down menu allows us to note whether a nodule is newly seen,\n"
++ "previously seen, or seen in retrospect, as well as any change in\n"
++ "size.  Note that size on PET is not recorded, due to lack of\n"
++ "resolution.");
+   }
+   else if (arg == "en") {
+      return(
+"It is required that both \"Endobronchial?\" and \"Most likely location\"\n"
++ "be answered.  If the nodule has both a bronchial and parenchymal\n"
++ "component, answer both to indicate such.\n");
+   }
+   else if (arg == "ll") {
+      return(
+"If a nodule location is different from where it was described to be\n"
++ "previously, do not go back and change the location on the previous\n"
++ "exams but make sure to make a note of the previously mentioned\n"
++ "location in the Comment field (see description below).");
+   }
+   else if (arg == "suv") {
+      return(
+"Enter the maximum Standard Uptake Values for each nodule.\n");
+   }
+   else if (arg == "st") {
+      return(
+"Modify the nodule status to indicate the PET findings of each nodule\n");
+   }
+   else if (arg == "ac") {
+      return(
+"This field becomes very important when different nodules require\n"
++ "different follow-up.  A pull-down menu allows us to choose among six\n"
++ "different follow-up actions -\n"
++ "   \"repeat SCT\" (repeat screening CT),\n"
++ "   \"f/u\ Dx CT\" (follow-up Diagnostic CT),\n"
++ "   \"Abx + f/u Dx CT\" (Antibiotic + follow-up Diagnostic CT),\n"
++ "   \"biopsy\",\n"
++ "   \"bronchoscopy\",\n"
++ "      or\n"
++ "   \"resection\".");
+   }
+   else if (arg == "co") {
+      return(
+"This field is for additional comments about the nodule.  If a\n"
++ "previously seen nodule is found to be something other than a nodule,\n"
++ "note it here.");
+   }
+   else if (arg == "pd") {
+      return(
+"If a biopsy was previously performed, the diagnosis was chosen from a\n"
++ "pull-down menu on the Biopsy form.  When CT evaluation forms are\n"
++ "created after the biopsy was done, the \"Pathologic Diagnosis\" selected\n"
++ "on the Biopsy Form is transferred onto the new CT evaluation Form.  Once a\n"
++ "diagnosis has been assigned on the Biopsy Form and it pops up on the\n"
++ "CT evaluation form, it CANNOT be changed.");
+   }
+   else if (arg == "fu") {
+      return(
+"This section refers to the most immediate action that needs to be\n"
++ "taken with respect to the patient, including any nodules or other\n"
++ "abnormalities.\n"
++ "\n"
++ "It is important that on subsequent forms, the physician take care\n"
++ "to update the status and action fields corresponding to each\n"
++ "abnormality and select the most important follow-up of the\n"
++ "remaining recommended actions.");
+   }
+   else if (arg == "im") {
+      return(
+"The impression refers to the findings on the nodules and other\n"
++ "abnormalities previously mentioned.");
+   }
+}
+
+
+// Stop hiding the code here -->
+</SCRIPT>
+</HEAD>
+
+<BODY BGCOLOR="#bfffbf" LINK="#0000ff" VLINK="#ff0000" ALINK="#ff0000" TEXT="#000000" onLoad="prep()">
+<form name=banner><table width=100% bgcolor=#ffffcc cellspacing=0 cellpadding=0><tr><th align=left><font size=+2><b>VEP VA ELCAP Phoenix (VAPALS): </b></font></th><TD align=right>Accessed by: <i>Administrator</i></TD></TR><TR><TD colspan=2><table border=0 width=100% bgcolor=#ffffcc cellpadding=0 cellspacing=0><tr><td><INPUT TYPE="button" VALUE="Return to Case Review" onClick="javascript:subS1( )"> 
+<INPUT TYPE="button" VALUE="Return Home" onClick="javascript:subS2( )"> 
+<INPUT TYPE="button" VALUE="Submit Form" onClick="javascript:errorCheck( )"> 
+<INPUT TYPE="button" VALUE="Submit Form (PENDING)" onClick="javascript:subPend( )"> 
+</td><TD align=right>11:28 AM MST January  3, 2018</TD></tr></table></td></tr></table></form><table bgcolor=black width=100%><TR><TD><table bgcolor=white width=100% cellpadding=2><TR><TD width=33%>Study ID: <font size=+1><b> VEP0001 </b></font></td><td align=center width=33%> Name (Last, First): <font size=+1><b>Doe, Jane</b></font></td><td align=right width=33%> Medical Record Number: <font size=+1><b>12345</b></font></td></TR></TABLE></TD></TR></TABLE><FORM METHOD="POST" ACTION="/cgi-bin/datac/cform.cgi" NAME="cform"><input type=hidden name="field" value="sid" > <input type=hidden name="fguid" value="Wk0eiX8AAAEAAHqJcnMAAAAJ" ><input type=hidden name="fginst" value="VEP" ><input type=hidden name="fvalue" value="VEP0001" ></form>
+<FORM METHOD="POST" ACTION="/cgi-bin/datac/home.cgi" NAME="home"><input type=hidden name="inst" value="VEP"><input type=hidden name="uid" value="Wk0eiX8AAAEAAHqJcnMAAAAJ"><input type=hidden name="msg" value="Canceled Creation of New Form"></FORM>
+<SCRIPT type="application/javascript" LANGUAGE = "JavaScript">
+<!-- Code after this will be ignored by older browsers
+function subS1() { document.forms['cform'].submit() }
+function subS2() { document.forms['home'].submit() }
+// Stop hiding the code here -->
+</SCRIPT>
+
+
+<FONT SIZE=+1><B>PET Evaluation Form</B>&nbsp
+<FORM METHOD="POST" ACTION="/cgi-bin/datac/datae.cgi" NAME="peteval">
+
+<input type=hidden name="ptsid" value="VEP0001">
+
+<input type=hidden name="cect2ch" value="pn">
+<input type=hidden name="cect2ll" value="lul">
+<input type=hidden name="cect2up" value="">
+<input type=hidden name="cect2st" value="un">
+<input type=hidden name="cect2pd" value="-">
+
+<input type=hidden name="cect3ch" value="pr">
+<input type=hidden name="cect3ll" value="lul">
+<input type=hidden name="cect3up" value="2.2">
+<input type=hidden name="cect3st" value="mr">
+<input type=hidden name="cect3pd" value="ad">
+
+<input type=hidden name="cect4ch" value="pn">
+<input type=hidden name="cect4ll" value="rll">
+<input type=hidden name="cect4up" value="1.7">
+<input type=hidden name="cect4st" value="un">
+<input type=hidden name="cect4pd" value="-">
+
+<input type=hidden name="cect5ch" value="pw">
+<input type=hidden name="cect5ll" value="rll">
+<input type=hidden name="cect5up" value="">
+<input type=hidden name="cect5st" value="re">
+<input type=hidden name="cect5pd" value="-">
+
+<input type=hidden name="cect1pld" value="0">
+<input type=hidden name="cect1sl" value="10">
+<input type=hidden name="cect1sw" value="5">
+<input type=hidden name="cect1nt" value="s">
+<input type=hidden name="cect1se" value="n">
+<input type=hidden name="hvcect1se" value="n">
+<input type=hidden name="cect1ca" value="n">
+<input type=hidden name="hvcect1ca" value="n">
+<input type=hidden name="cect1sp" value="n">
+<input type=hidden name="hvcect1sp" value="n">
+<input type=hidden name="cect1pa" value="n">
+<input type=hidden name="hvcect1pa" value="n">
+<input type=hidden name="cect1sn" value="8">
+<input type=hidden name="cect1inl" value="109">
+<input type=hidden name="cect1inh" value="109">
+
+<input type=hidden name="cect2pld" value="0">
+<input type=hidden name="cect2sl" value="7">
+<input type=hidden name="cect2sw" value="6">
+<input type=hidden name="cect2nt" value="g">
+<input type=hidden name="cect2se" value="n">
+<input type=hidden name="hvcect2se" value="n">
+<input type=hidden name="cect2ca" value="n">
+<input type=hidden name="hvcect2ca" value="n">
+<input type=hidden name="cect2sp" value="n">
+<input type=hidden name="hvcect2sp" value="n">
+<input type=hidden name="cect2pa" value="n">
+<input type=hidden name="hvcect2pa" value="n">
+<input type=hidden name="cect2sn" value="8">
+<input type=hidden name="cect2inl" value="318">
+<input type=hidden name="cect2inh" value="318">
+
+<input type=hidden name="cect3pld" value="">
+<input type=hidden name="cect3sl" value="">
+<input type=hidden name="cect3sw" value="">
+<input type=hidden name="cect3nt" value="-">
+<input type=hidden name="cect3se" value="">
+<input type=hidden name="hvcect3se" value="">
+<input type=hidden name="cect3ca" value="">
+<input type=hidden name="hvcect3ca" value="">
+<input type=hidden name="cect3sp" value="">
+<input type=hidden name="hvcect3sp" value="">
+<input type=hidden name="cect3pa" value="">
+<input type=hidden name="hvcect3pa" value="">
+<input type=hidden name="cect3sn" value="">
+<input type=hidden name="cect3inl" value="">
+<input type=hidden name="cect3inh" value="">
+
+<input type=hidden name="cect4pld" value="0">
+<input type=hidden name="cect4sl" value="25">
+<input type=hidden name="cect4sw" value="18">
+<input type=hidden name="cect4nt" value="g">
+<input type=hidden name="cect4se" value="y">
+<input type=hidden name="hvcect4se" value="y">
+<input type=hidden name="cect4ca" value="n">
+<input type=hidden name="hvcect4ca" value="n">
+<input type=hidden name="cect4sp" value="n">
+<input type=hidden name="hvcect4sp" value="n">
+<input type=hidden name="cect4pa" value="n">
+<input type=hidden name="hvcect4pa" value="n">
+<input type=hidden name="cect4sn" value="8">
+<input type=hidden name="cect4inl" value="318">
+<input type=hidden name="cect4inh" value="318">
+
+<input type=hidden name="cect5pld" value="">
+<input type=hidden name="cect5sl" value="">
+<input type=hidden name="cect5sw" value="">
+<input type=hidden name="cect5nt" value="-">
+<input type=hidden name="cect5se" value="">
+<input type=hidden name="hvcect5se" value="">
+<input type=hidden name="cect5ca" value="">
+<input type=hidden name="hvcect5ca" value="">
+<input type=hidden name="cect5sp" value="">
+<input type=hidden name="hvcect5sp" value="">
+<input type=hidden name="cect5pa" value="">
+<input type=hidden name="hvcect5pa" value="">
+<input type=hidden name="cect5sn" value="">
+<input type=hidden name="cect5inl" value="">
+<input type=hidden name="cect5inh" value="">
+
+<input type=hidden name="ceha" value="">
+<input type=hidden name="cehal" value="">
+<input type=hidden name="cehaw" value="">
+<input type=hidden name="cehas" value="">
+<input type=hidden name="cehast" value="">
+<input type=hidden name="cehap" value="">
+<input type=hidden name="cehaa" value="">
+<input type=hidden name="cehaas" value="">
+
+<input type=hidden name="ceem" value="no">
+<input type=hidden name="ceemv" value="">
+<input type=hidden name="cebrs" value="n">
+<input type=hidden name="cebrsl" value="">
+<input type=hidden name="ceccv" value="">
+<input type=hidden name="cecclm" value="no">
+<input type=hidden name="ceccld" value="mo">
+<input type=hidden name="cecccf" value="mi">
+<input type=hidden name="ceccrc" value="mo">
+<input type=hidden name="ceeba" value="">
+<input type=hidden name="ceebal" value="">
+<input type=hidden name="ceebaw" value="">
+<input type=hidden name="ceebas" value="">
+<input type=hidden name="ceebast" value="">
+<input type=hidden name="ceebap" value="">
+<input type=hidden name="ceebaa" value="">
+<input type=hidden name="ceebaas" value="">
+<input type=hidden name="cefcp" value="">
+<input type=hidden name="cefcpl" value="">
+<input type=hidden name="cefcpw" value="">
+<input type=hidden name="cefcps" value="">
+<input type=hidden name="cefcpst" value="">
+<input type=hidden name="cefcpp" value="">
+<input type=hidden name="cefcpa" value="">
+<input type=hidden name="cefcpas" value="">
+<input type=hidden name="cepev" value="">
+<input type=hidden name="cepel" value="no">
+<input type=hidden name="ceper" value="no">
+<input type=hidden name="ceasc" value="">
+<input type=hidden name="cealc" value="">
+<input type=hidden name="ceagc" value="">
+<input type=hidden name="ceapc" value="">
+<input type=hidden name="ceaac" value="">
+<input type=hidden name="ceakc" value="">
+
+<input type=hidden name="hvceoma" value="n">
+<input type=hidden name="ceoma" value="n">
+<input type=hidden name="ceomal" value="">
+<input type=hidden name="ceomaw" value="">
+<input type=hidden name="ceomas" value="">
+<input type=hidden name="ceomast" value="">
+<input type=hidden name="ceomap" value="">
+<input type=hidden name="ceomaa" value="">
+<input type=hidden name="ceomaas" value="">
+
+<input type=hidden name="cemln" value="n">
+<input type=hidden name="cemlnl" value="">
+<input type=hidden name="cemlnc" value="">
+<input type=hidden name="cemlncab" value="n">
+<input type=hidden name="cemlnca" value="">
+
+<input type=hidden name="ceprev" value="">
+<input type=hidden name="ceprevm" value="no">
+
+<input type=hidden name="ceopp" value="y">
+<input type=hidden name="cebat" value="">
+<input type=hidden name="cebatl1" value="">
+<input type=hidden name="cebatl2" value="">
+<input type=hidden name="cebatl3" value="">
+<input type=hidden name="cebatl4" value="">
+<input type=hidden name="cebatl5" value="">
+
+<input type=hidden name="cebrsl1" value="">
+<input type=hidden name="cebrsl2" value="">
+<input type=hidden name="cebrsl3" value="">
+<input type=hidden name="cebrsl4" value="">
+<input type=hidden name="cebrsl5" value="">
+
+<input type=hidden name="cecbb" value="n">
+<input type=hidden name="cecbbl1" value="">
+<input type=hidden name="cecbbl2" value="">
+<input type=hidden name="cecbbl3" value="">
+<input type=hidden name="cecbbl4" value="">
+<input type=hidden name="cecbbl5" value="">
+
+<input type=hidden name="cephc" value="n">
+<input type=hidden name="cephcl1" value="">
+<input type=hidden name="cephcl2" value="">
+<input type=hidden name="cephcl3" value="">
+<input type=hidden name="cephcl4" value="">
+<input type=hidden name="cephcl5" value="">
+
+<input type=hidden name="cescr" value="y">
+<input type=hidden name="cescrl1" value="rul">
+<input type=hidden name="cescrl2" value="">
+<input type=hidden name="cescrl3" value="">
+<input type=hidden name="cescrl4" value="lul">
+<input type=hidden name="cescrl5" value="">
+<input type=hidden name="cescrl6" value="">
+<input type=hidden name="cescrl7" value="ab">
+
+<input type=hidden name="cepp" value="n">
+<input type=hidden name="ceppca" value="">
+<input type=hidden name="cepprt" value="">
+<input type=hidden name="cepplt" value="">
+
+<input type=hidden name="cept" value="n">
+<input type=hidden name="ceptrt" value="">
+<input type=hidden name="ceptlt" value="">
+
+<input type=hidden name="cebs" value="n">
+<input type=hidden name="cebsrt" value="">
+<input type=hidden name="cebslt" value="">
+
+<input type=hidden name="ceoppa" value="">
+
+<input type=hidden name="ceata" value="n">
+<input type=hidden name="ceatc" value="">
+<input type=hidden name="ceaty" value="">
+<input type=hidden name="ceatm" value="">
+<input type=hidden name="ceato" value="">
+<input type=hidden name="ceatos" value="">
+
+<input type=hidden name="ceaya" value="n">
+<input type=hidden name="ceayc" value="">
+<input type=hidden name="ceayy" value="">
+<input type=hidden name="ceaym" value="">
+<input type=hidden name="ceayo" value="">
+<input type=hidden name="ceayos" value="">
+
+<input type=hidden name="cemlnl1" value="">
+<input type=hidden name="cemlnl2r" value="">
+<input type=hidden name="cemlnl2l" value="">
+<input type=hidden name="cemlnl3" value="">
+<input type=hidden name="cemlnl4r" value="">
+<input type=hidden name="cemlnl4l" value="">
+<input type=hidden name="cemlnl5" value="">
+<input type=hidden name="cemlnl6" value="">
+<input type=hidden name="cemlnl7" value="">
+<input type=hidden name="cemlnl8" value="">
+<input type=hidden name="cemlnl9" value="">
+<input type=hidden name="cemlnl10r" value="">
+<input type=hidden name="cemlnl10l" value="">
+
+<input type=hidden name="cemva" value="n">
+<input type=hidden name="cemvaa" value="">
+<input type=hidden name="cemvap" value="">
+<input type=hidden name="cemvao" value="">
+<input type=hidden name="cemvaos" value="">
+
+<input type=hidden name="cemeln" value="n">
+<input type=hidden name="cemelna" value="">
+<input type=hidden name="cemelnw" value="">
+<input type=hidden name="cemelnm" value="">
+<input type=hidden name="cemelno" value="">
+<input type=hidden name="cemelnos" value="">
+
+<input type=hidden name="ceomm" value="n">
+<input type=hidden name="ceamc" value="">
+<input type=hidden name="ceamy" value="">
+<input type=hidden name="ceamm" value="">
+<input type=hidden name="ceamo" value="">
+<input type=hidden name="ceamos" value="">
+
+<input type=hidden name="ceotab" value="">
+<input type=hidden name="ceotabnm" value="">
+
+<TABLE CELLSPACING=0 CELLPADDING=2 WIDTH="100%">
+<TR>
+<TD align=left><B>Study Date</B><BR>(DD/Mmm/YYYY)</TD>
+<TD>
+<input type=text name="ptdos" onChange="synChk('ptdos','rdate')" size=11>
+</TD>
+<TD colspan=2>&nbsp;</TD>
+</TR><TR>
+<TR>
+<TD><B>Radiologist</B></TD>
+<TD>
+<input type=text name="ptrad" onChange="synChk('ptrad','cws')" size=24>
+</TD>
+<TD><B>Radiologist NPI</B></TD>
+<TD>
+<input type=text name="ptradnpi" onChange="synChk('ptradnpi','cws')" size=24>
+</TD>
+</TR>
+</TABLE>
+
+<FONT SIZE=+0>
+<TABLE CELLSPACING=0 CELLPADDING=2 WIDTH="100%">
+<TR>
+<TD colspan=2><B>PET Scan Performed at Outside Institution</B>
+<A HREF="javascript:jshp('ofr')"><img src=/images/hb.gif height=10 width=5 border=0></A>
+&nbsp;
+<input type=hidden name="hvptofr" value="">
+<input type=radio name="ptofr" align=left value="n"> no
+<input type=radio name="ptofr" align=left value="y"> yes
+</TD></TR>
+</TABLE>
+
+<TABLE CELLSPACING=0 CELLPADDING=2>
+<TR>
+<TD align=left><B>Date of Baseline CT</B></TD>
+<TD><input type=text name="sidoe" onFocus="this.blur()" size=11 value="01/Jan/2013"></TD>
+<TD>&nbsp; &nbsp;</TD>
+<TD align=left><B>Date of Most Recent Comparative Study (if applicable)</B></TD>
+<TD><input type=text name="cedos" onChange="synChk('cedos','rdate')" size=11 value="21/May/2014"></TD>
+</TR>
+</TABLE>
+
+<TABLE CELLSPACING=0 CELLPADDING=2>
+<TR>
+<TD colspan=3><B>Are there any nodules noted in the CT scan?</B>&nbsp;
+<input type=radio name="ceanod" value="n">
+&nbsp;no&nbsp;
+<input type=radio name="ceanod" value="y">
+&nbsp;yes&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#ff2244">If no, skip to "Emphysema" below</font>
+</TD>
+</TR>
+
+<TR>
+<TD colspan=3><B>Are non-calcified nodules noted, all less than 6 mm?</B>&nbsp;
+<input type=radio name="cenncnlt" value="n">
+&nbsp;no&nbsp;
+<input type=radio name="cenncnlt" value="y">
+&nbsp;yes&nbsp;&nbsp;
+</TD>
+</TR>
+<TR>
+<TD colspan=3>&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR valign="top">
+<TD>List any nodule(s) of concern* in the table below.</TD>
+<TD><B>* If baseline, &gt;= 6 mm<BR>
+If repeat, &gt;= 3 mm </B>
+</TD>
+<TD>&nbsp;</TD>
+</TR>
+</TABLE>
+
+<TABLE CELLSPACING=0 CELLPADDING=2>
+
+<TR><TD><FONT SIZE=+0 color="#ff2244">Enter the Nodule Uptake values and
+update the Nodule Status to reflect the results of the PET study, and update<BR>
+the neccesary actions for each nodule, as indicated.  Enter any details
+given in the PET report in the PET Details field.
+<BR>Update the Follow-up section.
+</FONT></TD></TR>
+</TR>
+</TABLE>
+
+
+
+<TABLE CELLSPACING=0 CELLPADDING=2 BORDER=2 id="ntable">
+<TR><TD></TD>
+<TD><B>Nodule ID</B></TD>
+<TD align=center><B>Nodule 1</B></TD>
+<TD align=center>
+<B>
+Additional Nodules<BR>
+<select name="cefctn" onChange="bm()">
+<option value="2"> Nodule 2
+<option value="3"> Nodule 3
+<option value="4"> Nodule 4
+<option value="5"> Nodule 5
+</select>
+</B>
+</TD>
+</TR>
+<TR><TD><A HREF="javascript:jshp('ch')"><img src="/images/hb.gif" alt="Help"  height=32 width=5 border=0></A></TD>
+<TD><B>Is it new?</B></TD>
+<TD align=center><select name="cect1ch" onChange="newStat(1)">
+<option value="-"> -
+<option value="n"> newly seen
+<option value="pn" SELECTED> prev seen, no change
+<option value="pd"> prev seen, slight decr
+<option value="pe"> prev seen, marked decr
+<option value="pi"> prev seen, slight incr
+<option value="pj"> prev seen, marked incr
+<option value="po"> prev seen, obscured
+<option value="pw"> prev seen, resolved
+<option value="px"> prev seen, not a nodule
+<option value="pr"> prev seen, resected
+<option value="rn"> retrospect, no chg
+<option value="rd"> retrospect, decrease
+<option value="ri"> retrospect, slight incr
+<option value="rj"> retrospect, marked incr
+<option value="pk"> not in outside report
+<option value="pv"> not included in scan
+</select></TD>
+
+<TD align=center><select name="cect0ch" onChange="newStat(0)">
+<option value="-"> -
+<option value="n"> newly seen
+<option value="pn"> prev seen, no change
+<option value="pd"> prev seen, slight decr
+<option value="pe"> prev seen, marked decr
+<option value="pi"> prev seen, slight incr
+<option value="pj"> prev seen, marked incr
+<option value="po"> prev seen, obscured
+<option value="pw"> prev seen, resolved
+<option value="px"> prev seen, not a nodule
+<option value="pr"> prev seen, resected
+<option value="rn"> retrospect, no chg
+<option value="rd"> retrospect, decrease
+<option value="ri"> retrospect, slight incr
+<option value="rj"> retrospect, marked incr
+<option value="pk"> not in outside report
+<option value="pv"> not included in scan
+</select></TD>
+</TR>
+
+
+<TR><TD><A HREF="javascript:jshp('ll')"><img src="/images/hb.gif" alt="Help"  height=32 width=5 border=0></A></TD>
+<TD><B>Most Likely Location</B></TD>
+<TD align=center><select name="cect1ll">
+<option value="-"> -
+<option value="end"> Endobr
+<option value="lul"> LUL
+<option value="lll"> LLL
+<option value="rul" SELECTED> RUL
+<option value="rml"> RML
+<option value="rll"> RLL
+</select></TD>
+<TD align=center><select name="cect0ll">
+<option value="-"> -
+<option value="end"> Endobr
+<option value="lul"> LUL
+<option value="lll"> LLL
+<option value="rul"> RUL
+<option value="rml"> RML
+<option value="rll"> RLL
+</select></TD>
+</TR>
+
+<TR><TD><A HREF="javascript:jshp('suv')"><img src=/images/hb.gif height=32 width=5 border=0></A></TD>
+<TD><B>Maximum Nodule Uptake (SUV)</B></TD>
+<TD align=center><input type=text name="cect1up" onChange="synChk('cect1up','pnum')" size=3 value="1.5"></TD>
+<TD align=center><input type=text name="cect0up" onChange="synChk('cect0up','pnum')" size=3></TD>
+</TR>
+
+<TR><TD><A HREF="javascript:jshp('st')"><img src="/images/hb.gif" alt="Help"  height=32 width=5 border=0></A></TD>
+<TD><B>Nodule Status</B></TD>
+<TD align=center>
+<select name="cect1st">
+<option value="-"> -
+<option value="un" SELECTED> unknown
+<option value="bc"> benign (Ca++)
+<option value="pc"> prob benign, prob Ca++
+<option value="re"> resolved
+<option value="rg"> resolving
+<option value="tn"> no change - 2 yrs
+<option value="pp"> PET - positive
+<option value="pn"> PET - negative
+<option value="pi"> PET - indeterminate
+<option value="ub"> Biopsy - unknown
+<option value="bb"> Biopsy - benign
+<option value="mb"> Biopsy - malignant
+<option value="ab"> Biopsy - atyp bronch prolif
+<option value="om"> Biopsy - metastatic
+<option value="mr"> Resected - malignant
+<option value="br"> Resected - benign
+</select>
+</TD>
+
+<TD align=center>
+<select name="cect0st">
+<option value="-"> -
+<option value="un"> unknown
+<option value="bc"> benign (Ca++)
+<option value="pc"> prob benign, prob Ca++
+<option value="re"> resolved
+<option value="rg"> resolving
+<option value="tn"> no change - 2 yrs
+<option value="pp"> PET - positive
+<option value="pn"> PET - negative
+<option value="pi"> PET - indeterminate
+<option value="ub"> Biopsy - unknown
+<option value="bb"> Biopsy - benign
+<option value="mb"> Biopsy - malignant
+<option value="ab"> Biopsy - atyp bronch prolif
+<option value="om"> Biopsy - metastatic
+<option value="mr"> Resected - malignant
+<option value="br"> Resected - benign
+</select>
+</TD>
+</TR>
+
+<TR><TD><A HREF="javascript:jshp('pd')"><img src="/images/hb.gif" alt="Help"  height=32 width=5 border=0></A></TD>
+<TD><B>Pathologic Diagnosis</B></TD>
+<TD align=center><select name="cect1pd">
+<option value="-" SELECTED> -For Pathology Use Only-
+<option value="aa"> AAH
+<option value="ap"> atyp bronch prolif
+<option value="ba"> BAC
+<option value="ns"> unspec. non-small cell
+<option value="ad"> adenocarcinoma
+<option value="as"> adenosquamous
+<option value="la"> large cell
+<option value="sq"> squamous cell
+<option value="sm"> small cell
+<option value="ct"> carcinoid - typical
+<option value="ca"> carcinoid - atypical
+<option value="be"> not malignant
+<option value="bs"> benign specific
+<option value="os"> other (specify)
+</select></TD>
+
+<TD align=center><select name="cect0pd">
+<option value="-"> -For Pathology Use Only-
+<option value="aa"> AAH
+<option value="ap"> atyp bronch prolif
+<option value="ba"> BAC
+<option value="ns"> unspec. non-small cell
+<option value="ad"> adenocarcinoma
+<option value="as"> adenosquamous
+<option value="la"> large cell
+<option value="sq"> squamous cell
+<option value="sm"> small cell
+<option value="ct"> carcinoid - typical
+<option value="ca"> carcinoid - atypical
+<option value="be"> not malignant
+<option value="bs"> benign specific
+<option value="os"> other (specify)
+</select></TD>
+</TR>
+
+</TABLE>
+<TABLE>
+<TR>
+<TD><B>Indicate the index nodule driving follow up:</B></TD>
+<TD align=left colspan=3>
+<select name="ceinod">
+<option value="-"> -
+<option value="1"> 1
+<option value="2"> 2
+<option value="3"> 3
+<option value="4"> 4
+<option value="5"> 5
+</select>
+</TD>
+</TR>
+<!-- ADDED LUNG RADS -->
+<TR><TD>
+<B>LungRADS category</B></TD>
+<TD align=center>
+<select name="celrad">
+<option value="-"> -
+<option value="0"> 0
+<option value="1"> 1
+<option value="2"> 2
+<option value="3"> 3
+<option value="4A"> 4A
+<option value="4B"> 4B
+<option value="4X"> 4X
+</select>
+</TD>
+<TD><B>LungRADS modifier</B></TD>
+<TD align=center>
+<input type=hidden name=hvcelrads value="">
+<label>
+<input type=checkbox name=celrads value="S"> S
+</label>
+<input type=hidden name=hvcelradc value="">
+<label>
+<input type=checkbox name=celradc value="C"> C
+</label>
+</TD>
+</TR>
+</TABLE>
+
+<HR>
+
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD><B>PET Details - Lung and nodules</B><BR>
+<textarea name="ptpdt" rows=3 cols=64 wrap=physical>
+</textarea>
+</TD></TR>
+
+<TR><TD><B>PET Details - Lymph nodes</B><BR>
+<textarea name="ptpdtln" rows=3 cols=64 wrap=physical>
+</textarea>
+</TD></TR>
+</TABLE>
+
+<!--
+<TABLE CELLSPACING=0 CELLPADDING=2 BORDER=0 WIDTH=90%>
+<TR>
+<TD colspan=6><HR></TD>
+</TR>
+
+<TR>
+<TD align=left colspan=6><FONT SIZE="+1"><B>Neck and Mediastinal Abnormalities</B></FONT>
+</TD></TR>
+
+<TR><TD colspan=6>
+
+<TABLE CELLSPACING=0 CELLPADDING=2 BORDER=1>
+
+<TR>
+<TD colspan=4 align=left><B>CT Findings</B>
+<input type=hidden name="hvceoma" value="n">
+<input type=radio name="ceoma" value="n"  onClick="clearanm('n')" CHECKED> no
+<input type=radio name="ceoma" value="y"> yes
+<input type=radio name="ceoma" value="e" onClick="clearanm('e')"> n/v
+&nbsp; &nbsp;
+</TD>
+<TD align=left WIDTH=12%><B>PET Findings</B>
+<BR>
+Negative
+<input type=hidden name="hvptmnn" value="">
+<input type=checkbox name="ptmnn" value="n" onclick="ptclear('ptmnn')">
+</TD>
+</TR>
+<TR>
+<TD align=left><B>Thyroid</B></TD>
+<TD align=left width="22%">
+<input type=hidden name="hvceata" value="n">
+<input type=radio name="ceata" value="n" onclick="clearabd('t')" CHECKED> no
+<input type=radio name="ceata" value="y" onclick="setRVal('ceoma','y')"> yes
+<input type=radio name="ceata" value="e"> n/v
+</TD>
+<TD align=left width="25%">
+<input type=hidden name="hvceatc" value="">
+<input type=checkbox name="ceatc" value="c" onclick="nmChk('t')"> Calcification
+<input type=hidden name="hvceaty" value="">
+<input type=checkbox name="ceaty" value="y" onclick="nmChk('t')"> Cyst
+<input type=hidden name="hvceatm" value="">
+<input type=checkbox name="ceatm" value="m" onclick="nmChk('t')"> Mass
+<input type=hidden name="hvceato" value="">
+<input type=checkbox name="ceato" value="o" onclick="nmChk('t')"> Other
+</TD>
+<TD align=right width="20%"><B>Specify:</B><input type=text name="ceatos" onChange="synChk('ceatos','cws')" size=28></TD>
+<TD align=center width="10%">
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvptmpt" value="">
+<input type=radio name="ptmpt" value="n"> <FONT SIZE=+1>-</FONT>
+<input type=radio name="ptmpt" value="y" onclick="pna()"><FONT SIZE=+1>+</FONT>
+<input type=radio name="ptmpt" value="q" onclick="pna()"><FONT SIZE=+1>?</FONT>
+</TD></TR></TABLE>
+</TD>
+</TR>
+
+<TR>
+<TD align=left><B>Thymus</B><br>(abnormal if ovoid &gt; 7 mm or <br>if thymic
+shape with width &gt; 1.3cm)</TD>
+<TD align=left>
+<input type=hidden name="hvceaya" value="n">
+<input type=radio name="ceaya" value="n" onclick="clearabd('y')" CHECKED> no
+<input type=radio name="ceaya" value="y" onclick="setRVal('ceoma','y')"> yes
+<input type=radio name="ceaya" value="e"> n/v
+</TD>
+<TD align=left>
+<input type=hidden name="hvceayc" value="">
+<input type=checkbox name="ceayc" value="c" onclick="nmChk('y')"> Calcification
+<input type=hidden name="hvceayy" value="">
+<input type=checkbox name="ceayy" value="y" onclick="nmChk('y')"> Cyst
+<input type=hidden name="hvceaym" value="">
+<input type=checkbox name="ceaym" value="m" onclick="nmChk('y')"> Mass
+<input type=hidden name="hvceayo" value="">
+<input type=checkbox name="ceayo" value="o" onclick="nmChk('y')"> Other
+</TD>
+<TD align=right><B>Specify:</B><input type=text name="ceayos" onChange="synChk('ceayos','cws')" size=28></TD>
+<TD align=center>
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvptmpy" value="">
+<input type=radio name="ptmpy" value="n"> <FONT SIZE=+1>-</FONT>
+<input type=radio name="ptmpy" value="y" onclick="pna()"><FONT SIZE=+1>+</FONT>
+<input type=radio name="ptmpy" value="q" onclick="pna()"><FONT SIZE=+1>?</FONT>
+</TD></TR></TABLE>
+</TD>
+</TR>
+
+<TR>
+<TD colspan=4>
+<B>Lymph Nodes</B>
+</TD>
+<TD align=center>
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvptmpn" value="">
+<input type=radio name="ptmpn" value="n"> <FONT SIZE=+1>-</FONT>
+<input type=radio name="ptmpn" value="y" onclick="pna()"><FONT SIZE=+1>+</FONT>
+<input type=radio name="ptmpn" value="q" onclick="pna()"><FONT SIZE=+1>?</FONT>
+</TD></TR></TABLE>
+</TD>
+</TR>
+
+<TR>
+<TD align=left>Any enlarged or growing hilar <br> or mediastinal lymph nodes<br> (short axis &gt; 10mm)<br>
+<B>(any size for para-esophageal)</B>
+</TD>
+<TD align=left>
+<input type=hidden name="hvcemln" value="n">
+<input type=radio name="cemln" value="n" onclick="levelChk(1)" CHECKED> no
+<input type=radio name="cemln" value="y" onclick="setRVal('ceoma','y')"> yes
+<input type=radio name="cemln" value="e"> n/v
+</TD>
+
+<TD align=left colspan=2>
+<B>Level</B><br>
+<input type=hidden name="hvcemlnl1" value="">
+<input type=checkbox name="cemlnl1" value="N1" onClick="levelChk(0)"> N1 (high mediastinal)
+<br>
+<input type=hidden name="hvcemlnl2r" value="">
+<input type=checkbox name="cemlnl2r" value="N2R" onClick="levelChk(0)"> N2R
+<input type=hidden name="hvcemlnl2l" value="">
+<input type=checkbox name="cemlnl2l" value="N2L" onClick="levelChk(0)"> N2L (upper paratracheal)
+<br>
+<input type=hidden name="hvcemlnl3" value="">
+<input type=checkbox name="cemlnl3" value="N3" onClick="levelChk(0)"> N3 (prevascular,retrotracheal)
+<input type=hidden name="hvcemlnl4r" value="">
+<br>
+<input type=checkbox name="cemlnl4r" value="N4R" onClick="levelChk(0)"> N4R
+<input type=hidden name="hvcemlnl4l" value="">
+<input type=checkbox name="cemlnl4l" value="N4L" onClick="levelChk(0)"> N4L (lower paratracheal)
+<br>
+<input type=hidden name="hvcemlnl5" value="">
+<input type=checkbox name="cemlnl5" value="N5" onClick="levelChk(0)"> N5 (subaortic (A-P window))
+<br>
+<input type=hidden name="hvcemlnl6" value="">
+<input type=checkbox name="cemlnl6" value="N6" onClick="levelChk(0)"> N6 (para-aortic)
+<br>
+<input type=hidden name="hvcemlnl7" value="">
+<input type=checkbox name="cemlnl7" value="N7" onClick="levelChk(0)"> N7 (subcarinal)
+<br>
+<input type=hidden name="hvcemlnl8" value="">
+<input type=checkbox name="cemlnl8" value="N8" onClick="levelChk(0)"> N8 (para-esophageal) <B>(any size)</B>
+<br>
+<input type=hidden name="hvcemlnl9" value="">
+<input type=checkbox name="cemlnl9" value="N9" onClick="levelChk(0)"> N9 (pulmonary ligament)
+<br>
+<input type=hidden name="hvcemlnl10r" value="">
+<input type=checkbox name="cemlnl10r" value="N10R" onClick="levelChk(0)"> N10R
+<input type=hidden name="hvcemlnl10l" value="">
+<input type=checkbox name="cemlnl10l" value="N10L" onClick="levelChk(0)"> N10L (hilar)
+</TD>
+<TD>&nbsp; </TD>
+</TR>
+
+<TR>
+<TD align=left>Any calcified hilar or <br> mediastinal lymph nodes
+</TD>
+<TD align=left colspan=3>
+<input type=hidden name="hvcemlncab" value="n">
+<input type=radio name="cemlncab" value="n" CHECKED> no
+<input type=radio name="cemlncab" value="y" onclick="setRVal('ceoma','y')"> yes
+<input type=radio name="cemlncab" value="e"> n/v
+</TD>
+<TD>&nbsp; </TD>
+</TR>
+
+<TR>
+<TD colspan=5>
+&nbsp;
+</TD>
+</TR>
+
+<TR>
+<TD align=left><B>Other Vascular Abnormalities</B></TD>
+<TD align=left>
+<input type=hidden name="hvcemva" value="n">
+<input type=radio name="cemva" value="n" onclick="clearnm('v')" CHECKED> no
+<input type=radio name="cemva" value="y" onclick="setRVal('ceoma','y')"> yes
+<input type=radio name="cemva" value="e"> n/v
+&nbsp; &nbsp;
+</TD>
+<TD align=left>
+<input type=hidden name="hvcemvaa" value="">
+<input type=checkbox name="cemvaa" value="a" onclick="nmChk('v')"> Aorta
+<input type=hidden name="hvcemvap" value="">
+<input type=checkbox name="cemvap" value="w" onclick="nmChk('v')"> Pulmonary arteries
+<input type=hidden name="hvcemvao" value="">
+<input type=checkbox name="cemvao" value="o" onclick="nmChk('v')"> Other
+</TD>
+<TD align=right><B>Specify:</B><input type=text name="cemvaos" onChange="synChk('cemvaos','cws')" size=28></TD>
+<TD>&nbsp; </TD>
+</TR>
+
+
+<TR>
+<TD align=left><B>Esophageal</B></TD>
+<TD align=left>
+<input type=hidden name="hvcemeln" value="n">
+<input type=radio name="cemeln" value="n" onclick="clearnm('e')" CHECKED> no
+<input type=radio name="cemeln" value="y" onclick="setRVal('ceoma','y')"> yes
+<input type=radio name="cemeln" value="e"> n/v
+&nbsp; &nbsp;
+</TD>
+<TD align=left>
+<input type=hidden name="hvcemelna" value="">
+<input type=checkbox name="cemelna" value="a" onclick="nmChk('e')"> Air-fluid level
+<input type=hidden name="hvcemelnw" value="">
+<input type=checkbox name="cemelnw" value="w" onclick="nmChk('e')"> Wall thickening
+<input type=hidden name="hvcemelnm" value="">
+<input type=checkbox name="cemelnm" value="m" onclick="nmChk('e')"> Mass
+<input type=hidden name="hvcemelno" value="">
+<input type=checkbox name="cemelno" value="o" onclick="nmChk('e')"> Other
+</TD>
+<TD align=right><B>Specify:</B><input type=text name="cemelnos" onChange="synChk('cemelnos','cws')" size=28></TD>
+<TD align=center>
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvptmpe" value="">
+<input type=radio name="ptmpe" value="n"> <FONT SIZE=+1>-</FONT>
+<input type=radio name="ptmpe" value="y" onclick="pna()"><FONT SIZE=+1>+</FONT>
+<input type=radio name="ptmpe" value="q" onclick="pna()"><FONT SIZE=+1>?</FONT>
+</TD></TR></TABLE>
+</TD>
+</TR>
+
+<TR>
+<TD align=left><B>Other Mediastinal Masses</B></TD>
+<TD align=left>
+<input type=hidden name="hvceomm" value="n">
+<input type=radio name="ceomm" value="n" onclick="clearabd('m')" CHECKED> no
+<input type=radio name="ceomm" value="y" onclick="setRVal('ceoma','y')"> yes
+<input type=radio name="ceomm" value="e"> n/v
+&nbsp; &nbsp;
+</TD>
+<TD align=left>
+<input type=hidden name="hvceamc" value="">
+<input type=checkbox name="ceamc" value="c" onclick="nmChk('m')"> Calcification
+<input type=hidden name="hvceamy" value="">
+<input type=checkbox name="ceamy" value="y" onclick="nmChk('m')"> Cyst
+<input type=hidden name="hvceamm" value="">
+<input type=checkbox name="ceamm" value="m" onclick="nmChk('m')"> Mass
+<input type=hidden name="hvceamo" value="">
+<input type=checkbox name="ceamo" value="o" onclick="nmChk('m')"> Other
+</TD>
+<TD align=right><B>Specify:</B><input type=text name="ceommos" onChange="synChk('ceommos','cws')" size=28></TD>
+<TD align=center>
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvptmpm" value="">
+<input type=radio name="ptmpm" value="n"> <FONT SIZE=+1>-</FONT>
+<input type=radio name="ptmpm" value="y" onclick="pna()"><FONT SIZE=+1>+</FONT>
+<input type=radio name="ptmpm" value="q" onclick="pna()"><FONT SIZE=+1>?</FONT>
+</TD></TR></TABLE>
+</TD>
+</TR>
+
+</TABLE></TD></TR>
+
+<TR>
+<TD colspan=3><B>Additional Comments on Neck and Mediastinal Abnormalities</B><br></TD>
+</TR><TR>
+<TD colspan=3><textarea name="ceotabnm" rows=6 cols=64 wrap=physical>
+
+</textarea></TD>
+</TR>
+
+<TR>
+<TD colspan=6><HR></TD>
+</TR>
+
+
+<TR>
+<TD colspan=6>
+<FONT SIZE="+1">
+<B>Breast Abnormalities</B></FONT>
+</TD></TR>
+
+<TR>
+<TD colspan=6>
+<TABLE CELLSPACING=0 CELLPADDING=2 BORDER=1>
+<TR><TD><B>&nbsp;</B></TD><TD align=left colspan=3><B>CT Findings</B>
+&nbsp; &nbsp;
+<input type=hidden name="hvceoba" value="y">
+<input type=radio name="ceoba" value="n" onClick="mBrAb('n')"> no
+<input type=radio name="ceoba" value="y" CHECKED> yes
+<input type=radio name="ceoba" value="e" onClick="mBrAb('e')"> n/v
+</TD><TD><B>Specify</B></TD><TD><B>PET Findings</B></TD></TR>
+<TR>
+<TD align=left><B>Right Breast</B></TD>
+<TD>
+<input type=hidden name="hvceara" value="y">
+<input type=radio name="ceara" value="n" onclick="clearba('r')"> no
+<input type=radio name="ceara" value="y" onclick="setRVal('ceoba','y')" CHECKED> yes
+<input type=radio name="ceara" value="e"> n/v
+</TD>
+<TD align=left colspan=2>
+<input type=hidden name="hvceobarc" value="c">
+<input type=checkbox name="ceobarc" value="c" onclick="brChk('r')" CHECKED> Calcification
+<input type=hidden name="hvceobary" value="">
+<input type=checkbox name="ceobary" value="y" onclick="brChk('r')"> Cyst
+<input type=hidden name="hvceobarm" value="">
+<input type=checkbox name="ceobarm" value="m" onclick="brChk('r')"> Mass
+<input type=hidden name="hvceobaro" value="">
+<input type=checkbox name="ceobaro" value="o" onclick="brChk('r')"> Other
+</TD>
+<TD align=left><input type=text name="ceobaros" onChange="synChk('ceobaros','cws')" size=32></TD>
+<TD align=center>
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvptmpbr" value="">
+<input type=radio name="ptmpbr" value="n"> <FONT SIZE=+1>-</FONT>
+<input type=radio name="ptmpbr" value="y" onclick="pna()"><FONT SIZE=+1>+</FONT>
+<input type=radio name="ptmpbr" value="q" onclick="pna()"><FONT SIZE=+1>?</FONT>
+</TD></TR></TABLE>
+</TD>
+</TR>
+<TR>
+<TD align=left><B>Left Breast</B></TD>
+<TD>
+<input type=hidden name="hvceafa" value="n">
+<input type=radio name="ceafa" value="n" onclick="clearba('f')" CHECKED> no
+<input type=radio name="ceafa" value="y" onclick="setRVal('ceoba','y')"> yes
+<input type=radio name="ceafa" value="e"> n/v
+</TD>
+<TD align=left colspan=2>
+<input type=hidden name="hvceobafc" value="">
+<input type=checkbox name="ceobafc" value="c" onclick="brChk('f')"> Calcification
+<input type=hidden name="hvceobafy" value="">
+<input type=checkbox name="ceobafy" value="y" onclick="brChk('f')"> Cyst
+<input type=hidden name="hvceobafm" value="">
+<input type=checkbox name="ceobafm" value="m" onclick="brChk('f')"> Mass
+<input type=hidden name="hvceobafo" value="">
+<input type=checkbox name="ceobafo" value="o" onclick="brChk('f')"> Other
+</TD>
+<TD align=left><input type=text name="ceobafos" onChange="synChk('ceobafos','cws')" size=32></TD>
+<TD align=center>
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvptmpbl" value="">
+<input type=radio name="ptmpbl" value="n"> <FONT SIZE=+1>-</FONT>
+<input type=radio name="ptmpbl" value="y" onclick="pna()"><FONT SIZE=+1>+</FONT>
+<input type=radio name="ptmpbl" value="q" onclick="pna()"><FONT SIZE=+1>?</FONT>
+</TD></TR></TABLE>
+</TD>
+</TR>
+</TD></TR>
+
+<TR>
+<TD align=left colspan=1>
+<B>Lymph Node</B></TD>
+<TD align=left colspan=1><TABLE CELLSPACING=0 CELLPADDING=0><TR><TD>
+<input type=hidden name="hvceagaln" value="n">
+<input type=radio name="ceagaln" value="n" CHECKED> no
+<input type=radio name="ceagaln" value="y"> yes
+<input type=radio name="ceagaln" value="e"> n/v
+</TD><TD>
+</TD></TR></TABLE>
+</TD>
+<TD align=left colspan=2>Enlarged, growing axillary lymph nodes w/o central fat</TD>
+<TD align=left><input type=text name="ceagalns" onChange="synChk('ceagalns','cws')" size=32></TD>
+<TD align=center>
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvptmpx" value="">
+<input type=radio name="ptmpx" value="n"> <FONT SIZE=+1>-</FONT>
+<input type=radio name="ptmpx" value="y" onclick="pna()"><FONT SIZE=+1>+</FONT>
+<input type=radio name="ptmpx" value="q" onclick="pna()"><FONT SIZE=+1>?</FONT>
+</TD></TR></TABLE>
+</TD>
+</TR>
+</TABLE></TD></TR>
+
+<TR>
+<TD colspan=3><B>Additional Comments on Breast Abnormalities</B><br></TD>
+</TR><TR>
+<TD colspan=3><textarea name="ceobrc" rows=6 cols=64 wrap=physical>
+
+</textarea></TD>
+</TR>
+
+<TR>
+<TD colspan=6><HR></TD>
+</TR>
+
+<TR>
+<TD colspan=6>
+<FONT SIZE="+1"><B>Abdominal Abnormalities</B></FONT>
+</TD></TR>
+<TR>
+<TD colspan=6>
+<TABLE CELLSPACING=0 CELLPADDING=2 BORDER=1>
+<TR><TD>&nbsp;</TD><TD align=left colspan=3><B>CT Findings</B>
+&nbsp; &nbsp;
+<input type=hidden name="hvceoaa" value="n">
+<input type=radio name="ceoaa" value="n" onClick="clearaabd('n')" CHECKED> no
+<input type=radio name="ceoaa" value="y"> yes
+<input type=radio name="ceoaa" value="e" onClick="clearaabd('e')"> n/v
+</TD><TD><B>Specify</B></TD><TD><B>PET Findings</B></TD></TR>
+<TR><TD><B>Gall Bladder</B></TD><TD>
+<input type=hidden name="hvceaga" value="n">
+<input type=radio name="ceaga" value="n" onclick="clearabd('g')" CHECKED> no
+<input type=radio name="ceaga" value="y" onclick="setRVal('ceoaa','y')"> yes
+<input type=radio name="ceaga" value="e"> n/v
+</TD><TD colspan=2>
+<input type=hidden name="hvceagh" value="">
+<input type=checkbox name="ceagh" value="h" onclick="aaChk('g')"> Cholecystectomy
+<input type=hidden name="hvceags" value="">
+<input type=checkbox name="ceags" value="s" onclick="aaChk('g')"> Stones
+<input type=hidden name="hvceagl" value="">
+<input type=checkbox name="ceagl" value="l" onclick="aaChk('g')"> Sludge
+<input type=hidden name="hvceago" value="">
+<input type=checkbox name="ceago" value="y" onclick="aaChk('g')"> Other
+</TD><TD align=left><input type=text name="ceagos" onChange="synChk('ceagos','cws')" size=32></TD>
+<TD align=center>
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvptmpg" value="">
+<input type=radio name="ptmpg" value="n"> <FONT SIZE=+1>-</FONT>
+<input type=radio name="ptmpg" value="y" onclick="pna()"><FONT SIZE=+1>+</FONT>
+<input type=radio name="ptmpg" value="q" onclick="pna()"><FONT SIZE=+1>?</FONT>
+</TD></TR></TABLE>
+</TD>
+</TR>
+<TR><TD><B>Spleen</B></TD><TD>
+<input type=hidden name="hvceasa" value="n">
+<input type=radio name="ceasa" value="n" onclick="clearabd('s')" CHECKED> no
+<input type=radio name="ceasa" value="y" onclick="setRVal('ceoaa','y')"> yes
+<input type=radio name="ceasa" value="e"> n/v
+</TD><TD align=left colspan=2>
+<input type=hidden name="hvceasc" value="">
+<input type=checkbox name="ceasc" value="y" onclick="aaChk('s')"> Calcification
+<input type=hidden name="hvceasy" value="">
+<input type=checkbox name="ceasy" value="y" onclick="aaChk('s')"> Cyst
+<input type=hidden name="hvceasm" value="">
+<input type=checkbox name="ceasm" value="m" onclick="aaChk('s')"> Mass
+<input type=hidden name="hvceaso" value="">
+<input type=checkbox name="ceaso" value="y" onclick="aaChk('s')"> Other
+</TD><TD align=left><input type=text name="ceasos" onChange="synChk('ceasos','cws')" size=32></TD>
+<TD align=center>
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvptmps" value="">
+<input type=radio name="ptmps" value="n"> <FONT SIZE=+1>-</FONT>
+<input type=radio name="ptmps" value="y" onclick="pna()"><FONT SIZE=+1>+</FONT>
+<input type=radio name="ptmps" value="q" onclick="pna()"><FONT SIZE=+1>?</FONT>
+</TD></TR></TABLE>
+</TD>
+</TR>
+<TR><TD><B>Liver</B></TD><TD>
+<input type=hidden name="hvceala" value="n">
+<input type=radio name="ceala" value="n" onclick="clearabd('l')" CHECKED> no
+<input type=radio name="ceala" value="y" onclick="setRVal('ceoaa','y')"> yes
+<input type=radio name="ceala" value="e"> n/v
+</TD><TD align=left colspan=2>
+<input type=hidden name="hvcealc" value="">
+<input type=checkbox name="cealc" value="y" onclick="aaChk('l')"> Calcification
+<input type=hidden name="hvcealy" value="">
+<input type=checkbox name="cealy" value="y" onclick="aaChk('l')"> Cyst
+<input type=hidden name="hvcealm" value="">
+<input type=checkbox name="cealm" value="m" onclick="aaChk('l')"> Mass
+<input type=hidden name="hvcealo" value="">
+<input type=checkbox name="cealo" value="y" onclick="aaChk('l')"> Other
+</TD><TD align=left><input type=text name="cealos" onChange="synChk('cealos','cws')" size=32></TD>
+<TD align=center>
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvptmpl" value="">
+<input type=radio name="ptmpl" value="n"> <FONT SIZE=+1>-</FONT>
+<input type=radio name="ptmpl" value="y" onclick="pna()"><FONT SIZE=+1>+</FONT>
+<input type=radio name="ptmpl" value="q" onclick="pna()"><FONT SIZE=+1>?</FONT>
+</TD></TR></TABLE>
+</TD>
+</TR>
+<TR><TD><B>Pancreas</B></TD><TD>
+<input type=hidden name="hvceapa" value="n">
+<input type=radio name="ceapa" value="n" onclick="clearabd('p')" CHECKED> no
+<input type=radio name="ceapa" value="y" onclick="setRVal('ceoaa','y')"> yes
+<input type=radio name="ceapa" value="e"> n/v
+</TD><TD align=left colspan=2>
+<input type=hidden name="hvceapc" value="">
+<input type=checkbox name="ceapc" value="y" onclick="aaChk('p')"> Calcification
+<input type=hidden name="hvceapy" value="">
+<input type=checkbox name="ceapy" value="y" onclick="aaChk('p')"> Cyst
+<input type=hidden name="hvceapm" value="">
+<input type=checkbox name="ceapm" value="m" onclick="aaChk('p')"> Mass
+<input type=hidden name="hvceapo" value="">
+<input type=checkbox name="ceapo" value="y" onclick="aaChk('p')"> Other
+</TD><TD align=left><input type=text name="ceapos" onChange="synChk('ceapos','cws')" size=32></TD>
+<TD align=center>
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvptmpp" value="">
+<input type=radio name="ptmpp" value="n"> <FONT SIZE=+1>-</FONT>
+<input type=radio name="ptmpp" value="y" onclick="pna()"><FONT SIZE=+1>+</FONT>
+<input type=radio name="ptmpp" value="q" onclick="pna()"><FONT SIZE=+1>?</FONT>
+</TD></TR></TABLE>
+</TD>
+
+</TR>
+<TR><TD><B>Adrenals</B></TD><TD>
+<input type=hidden name="hvceaaa" value="n">
+<input type=radio name="ceaaa" value="n" onclick="clearabd('a')" CHECKED> no
+<input type=radio name="ceaaa" value="y" onclick="setRVal('ceoaa','y')"> yes
+<input type=radio name="ceaaa" value="e"> n/v
+</TD><TD align=left colspan=2>
+<input type=hidden name="hvceaac" value="">
+<input type=checkbox name="ceaac" value="y" onclick="aaChk('a')"> Calcification
+<input type=hidden name="hvceaay" value="">
+<input type=checkbox name="ceaay" value="y" onclick="aaChk('a')"> Cyst
+<input type=hidden name="hvceaam" value="">
+<input type=checkbox name="ceaam" value="m" onclick="aaChk('a')"> Mass
+<input type=hidden name="hvceaao" value="">
+<input type=checkbox name="ceaao" value="y" onclick="aaChk('a')"> Other
+</TD><TD align=left><input type=text name="ceaaos" onChange="synChk('ceaaos','cws')" size=32></TD>
+<TD align=center>
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvptmpa" value="">
+<input type=radio name="ptmpa" value="n"> <FONT SIZE=+1>-</FONT>
+<input type=radio name="ptmpa" value="y" onclick="pna()"><FONT SIZE=+1>+</FONT>
+<input type=radio name="ptmpa" value="q" onclick="pna()"><FONT SIZE=+1>?</FONT>
+</TD></TR></TABLE>
+</TD>
+</TR>
+<TR><TD><B>Kidneys</B></TD><TD>
+<input type=hidden name="hvceaka" value="n">
+<input type=radio name="ceaka" value="n" onclick="clearabd('k')" CHECKED> no
+<input type=radio name="ceaka" value="y" onclick="setRVal('ceoaa','y')"> yes
+<input type=radio name="ceaka" value="e"> n/v
+</TD><TD align=left colspan=2>
+<input type=hidden name="hvceakc" value="">
+<input type=checkbox name="ceakc" value="y" onclick="aaChk('k')"> Calcification
+<input type=hidden name="hvceaky" value="">
+<input type=checkbox name="ceaky" value="y" onclick="aaChk('k')"> Cyst
+<input type=hidden name="hvceakm" value="">
+<input type=checkbox name="ceakm" value="m" onclick="aaChk('k')"> Mass
+<input type=hidden name="hvceako" value="">
+<input type=checkbox name="ceako" value="y" onclick="aaChk('k')"> Other
+</TD><TD align=left><input type=text name="ceakos" onChange="synChk('ceakos','cws')" size=32></TD>
+<TD align=center>
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvptmpk" value="">
+<input type=radio name="ptmpk" value="n"> <FONT SIZE=+1>-</FONT>
+<input type=radio name="ptmpk" value="y" onclick="pna()"><FONT SIZE=+1>+</FONT>
+<input type=radio name="ptmpk" value="q" onclick="pna()"><FONT SIZE=+1>?</FONT>
+</TD></TR></TABLE>
+</TD>
+</TR>
+</TABLE>
+</TD></TR>
+<TR>
+<TD colspan=3><B>Additional Comments on Abdominal Abnormalities</B><br></TD>
+</TR><TR>
+<TD colspan=3><textarea name="ceaoab" rows=6 cols=64 wrap=physical>
+
+</textarea></TD>
+</TR>
+</TABLE>
+<TR>
+<TD colspan=6><HR></TD>
+</TR>
+
+<TR>
+<TD colspan=6>
+<FONT SIZE="+1"><B>Bone Abnormalities</B></FONT>
+</TD></TR>
+
+<TR>
+<TD colspan=6>
+<TABLE CELLSPACING=0 CELLPADDING=2 BORDER=1>
+<TR>
+<TD align=left width=20%>&nbsp;</TD>
+<TD align=left width=55%><B>CT Findings</B></TD>
+<TD><B>PET Findings</B></TD></TR>
+
+<TR><TD><B>Bones</B> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</TD>
+<TD align=left>
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvceaba" value="n">
+<input type=radio name="ceaba" value="n" CHECKED> no
+<input type=radio name="ceaba" value="y"> yes
+<input type=radio name="ceaba" value="e"> n/v
+</TD></TR></TABLE>
+</TD>
+<TD align=center>
+<TABLE CELLSPACING=0 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvptmpb" value="">
+<input type=radio name="ptmpb" value="n" onclick="pna()"><FONT SIZE=+1>-</FONT>
+<input type=radio name="ptmpb" value="y" onclick="pna()"><FONT SIZE=+1>+</FONT>
+<input type=radio name="ptmpb" value="q" onclick="pna()"><FONT SIZE=+1>?</FONT>
+</TD></TR></TABLE>
+</TD>
+</TR>
+</TABLE>
+</TD></TR>
+<TR>
+<TD colspan=3><B>Specify Bone Abnormalities</B><br></TD>
+</TR><TR>
+<TD colspan=3><textarea name="ceaoabb" rows=6 cols=64 wrap=physical>
+
+</textarea></TD>
+</TR>
+</TABLE>
+-->
+<HR>
+<TABLE CELLPADDING=2>
+<TR>
+<TD>
+<B>Other clinically significant ancillary finding</B>
+</TD>
+<TD colspan=2>
+<input type=hidden name="hvceaf" value="">
+<input type=radio name="ceaf" value="n">
+&nbsp;no&nbsp;
+<input type=radio name="ceaf" value="y">
+&nbsp;yes&nbsp;
+</TD>
+</TR>
+<TR>
+<TD align="right">
+If yes, please specify&nbsp;
+</TD>
+<TD>
+organ/location
+<select name="ceafl1">
+<option value="-">-
+<option value="b">Breast
+<option value="a">Abdomen
+<option value="h">Head
+<option value="n">Neck
+</select>
+</TD>
+<TD>
+Describe:
+<input type=text name="ceafo1" size=32>
+</TD>
+</TR>
+<TR>
+<TD align="right">
+&nbsp;
+</TD>
+<TD>
+organ/location
+<select name="ceafl2">
+<option value="-">-
+<option value="b">Breast
+<option value="a">Abdomen
+<option value="h">Head
+<option value="n">Neck
+</select>
+</TD>
+<TD>
+Describe:
+<input type=text name="ceafo2" size=32>
+</TD>
+</TR>
+<TR>
+<TD>&nbsp;</TD>
+<TD>&nbsp;</TD>
+<TD>Comments:<BR>
+<textarea name="ceafmc" rows=5 cols=40>
+</textarea>
+</TD>
+</TR>
+</TABLE>
+
+<HR>
+<TABLE width="100%">
+<TR>
+<TD colspan=5>
+<b>Any Other Findings:</b><br />
+<textarea name="ceofo" rows=6 cols=64 wrap=physical>
+</textarea>
+</TD>
+</TR>
+</TABLE>
+
+<HR>
+<A HREF="javascript:jshp('fu')"><img src="/images/hb.gif" alt="Help"  height=16 width=5 border=0></A>
+<FONT SIZE="+2"><B>Follow-up</B></FONT>
+<TABLE CELLSPACING=0 CELLPADDING=2>
+<TR><TD><B>Follow-up:</B></TD>
+<TD align=left>
+<select name="cefu">
+<option value="-"> -
+<option value="rs"> annual repeat CT
+<option value="dx"> f/u CT
+<option value="af"> Abx + f/u CT
+<option value="pe"> PET
+<option value="cc"> CT w contrast
+<option value="fn"> CT-guided biopsy
+<option value="br"> bronchoscopy
+<option value="va"> VAT
+<option value="su"> resection
+</select>
+</TD></TR>
+<TR><TD><B>When:</B></TD>
+<TD align=left><TABLE CELLSPACING=10 CELLPADDING=0>
+<TR><TD align=left valign=top>
+<input type=hidden name="hvcefuw" value="">
+<TD align=left valign=top>
+<input type=radio name="cefuw" value="nw" onClick="fudCalc(0)"> now
+</TD><TD align=left valign=top>
+<input type=radio name="cefuw" value="1m" onClick="fudCalc(0)"> 1 month
+</TD><TD align=left valign=top>
+<input type=radio name="cefuw" value="3m" onClick="fudCalc(0)"> 3 months
+</TD><TD align=left valign=top>
+<input type=radio name="cefuw" value="6m" onClick="fudCalc(0)"> 6 months
+</TD><TD align=left valign=top>
+<input type=radio name="cefuw" value="1y" onClick="fudCalc(0)"> 1 year
+</TD><TD align=left valign=top>
+<input type=radio name="cefuw" value="os" onClick="fudCalc(0)"> other
+</TD></TR>
+</TABLE></TD>
+</TR>
+<TR><TD width=20%><B>Follow-up Date</B><BR>(DD/Mmm/YYYY)</TD>
+<TD><input type=text name="cefud" onChange="synChk('cefud','rdate')" size=11></TD>
+</TR>
+</TABLE>
+
+<HR>
+<FONT SIZE="+2">
+<A HREF="javascript:jshp('im')"><img src="/images/hb.gif" alt="Help"  height=16 width=5 border=0></A>
+<B>Impression</B><BR>
+</FONT>
+
+<TABLE CELLSPACING=0 CELLPADDING=2 WIDTH="100%">
+<TR><TD><FONT SIZE="+0"><B>Nodules</B></FONT></TD>
+</TR>
+<TR>
+<TD align=left valign=top>
+<input type=hidden name="hvceimn" value="">
+<input type=radio name="ceimn" align=left value="rs"> No evidence of
+abnormal uptake. Follow-up as recommended above.
+</TD></TR>
+<TR><TD align=left valign=top>
+<input type=radio name="ceimn" align=left value="ro"> Uptake as
+described above. Follow-up as recommended above.
+</TD></TR>
+<TR><TD align=left valign=top>
+<input type=radio name="ceimn" align=left value="ru"> Nodule(s)
+unchanged, as described above. Follow-up as recommended above.
+</TD></TR>
+<TR><TD></TD></TR>
+<TR><TD><B>Other Findings</B></TD>
+</TR>
+<TR>
+<TD align=left valign=top>
+<input type=hidden name="hvceimo" value="">
+<input type=radio name="ceimo" value="no"> No other abnormalities.
+</TD></TR>
+<TR><TD align=left valign=top>
+<input type=radio name="ceimo" value="oa"> Other abnormalities
+and suggested follow-up as described above.
+</TD></TR>
+<TR><TD align=left valign=top>
+<input type=radio name="ceimo" value="da"> Diffuse abnormalities.
+</TD></TR>
+<TR><TD></TD></TR>
+<TR>
+<TD><B>Impression Remarks</B></TD></TR>
+<TR>
+<TD colspan=3><textarea name="ceimre" rows=6 cols=64 wrap=physical>
+</textarea></TD>
+</TR>
+</TABLE>
+
+<BR>
+
+</FONT>
+<input type=hidden name="fppend" value="">
+<input type=hidden name="fpxauth" value="">
+<input type=hidden name="fpinst" value="VEP" >  
+<input type=hidden name="fgakey" value="Wk0eiX8AAAEAAHqJcnMAAAAJ" >  
+<input type=hidden name="fpform" value="ptform" >
+<input type=hidden name="fpfname" value="">
+<input type=hidden name="fpptsid" value="VEP0001">
+</FORM>
+
+<small>Copyright &copy; 2015, The Early Diagnosis and Treatment Research Foundation. All rights reserved.</small>
+
+<table border=0 width=100% bgcolor=#ffffcc><tr><td align=left><INPUT TYPE="button" VALUE="Return to Case Review" onClick="javascript:subS1( )"> 
+<INPUT TYPE="button" VALUE="Return Home" onClick="javascript:subS2( )"> 
+<INPUT TYPE="button" VALUE="Submit Form" onClick="javascript:errorCheck( )"> 
+<INPUT TYPE="button" VALUE="Submit Form (PENDING)" onClick="javascript:subPend( )"> 
+</td></tr></table>
+</BODY></HTML>

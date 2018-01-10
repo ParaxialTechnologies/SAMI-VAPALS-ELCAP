@@ -48,12 +48,12 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  . i tln["submit" q  ;
  . i tln["hidden" q  ;
  . ; hack for elcap forms - temporary - gpl
- . i tln["jquery-1.html" s zhtml(%j)="" quit  ; 
- . i tln["mgtsys.html" s zhtml(%j)="" quit  ; 
- . i tln["mgtsys2.html" s zhtml(%j)="" quit  ; 
- . i tln["index.html" s zhtml(%j)="" quit  ; 
- . i tln["identity.html" s zhtml(%j)="" quit  ; 
- . i tln["jquery-1.html" s zhtml(%j)="" quit  ; 
+ . ;i tln["jquery-1.html" s zhtml(%j)="" quit  ; 
+ . ;i tln["mgtsys.html" s zhtml(%j)="" quit  ; 
+ . ;i tln["mgtsys2.html" s zhtml(%j)="" quit  ; 
+ . ;i tln["index.html" s zhtml(%j)="" quit  ; 
+ . ;i tln["identity.html" s zhtml(%j)="" quit  ; 
+ . ;i tln["jquery-1.html" s zhtml(%j)="" quit  ; 
  . ; end hack
  . i tln["class=""errormsg"">" d redactErr("zhtml","errctrl",.%j)  quit  ; remove error section
  . i tln["fielderr" d redactErr2("zhtml",.%j)
@@ -482,10 +482,28 @@ replaceSrc(ln) ; do replacements on lines for src= to use the see service to loc
  ; the resource. extrinsic returns true if replacement was done
  ; not currently used - the changes are included in the template
  new done set done=0
+ if ln["src='/" do  ;
+ . do replaceAll(.ln,"src='/","src='see/")
+ . set done=1
+ if ln["src=""/" do  ;
+ . q:done
+ . do replaceAll(.ln,"src=""/","src=""see/")
+ . set done=1
  if ln["src=" do  ; 
+ . q:done
  . do replaceAll(.ln,"src=""","src=""see/")
  . set done=1
+ if ln["href='/" do  ;
+ . do replaceAll(.ln,"href='/","href='see/")
+ . set done=1 
+ if ln["href='" do  ;
+ . q:done
+ . if ln["href=""#" quit  ;
+ . if ln["href=""javascript" quit  ;
+ . do replaceAll(.ln,"href='","href='see/")
+ . set done=1 
  if ln["href=" do  ; 
+ . q:done
  . if ln["href=""#" quit  ;
  . if ln["href=""javascript" quit  ;
  . do replaceAll(.ln,"href=""","href=""see/")

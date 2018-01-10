@@ -180,8 +180,10 @@ SAMISUBS(ln,form,sid,filter) ; ln is passed by reference; filter is passed by re
  i dbg'="" s dbg="&debug="_dbg
  n target s target="form?form="_form_"&studyId="_sid_dbg
  i ln["datae.cgi" d replaceAll^%wfhform(.ln,"/cgi-bin/datac/datae.cgi",target)
- ;. . s zhtml(%j)="<form action=""form?form="_form_"&studyId="_sid_dbg_""" method=""POST"" name="""_sublbl_""">"
- ;n subs
- ;s subs(" 
+ ;
+ i form="bxform" d  ; 
+ . i ln["mgtsys." s ln="<link type=""text/css"" rel=""stylesheet"" media=""all"" href=""Biopsy_Mediastinoscopy%20Form_files/mgtsys.css"">"
+ . i ln["mgtsys-print.css" s ln="<link type=""text/css"" rel=""stylesheet"" media=""print"" href=""Biopsy_Mediastinoscopy%20Form_files/mgtsys-print.css"">"
+ ;
  q
  ;

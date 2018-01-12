@@ -14,6 +14,7 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  n form s form=$g(filter("form"))
  i form="" s form="sbform"
  n sid s sid=$g(filter("studyid"))
+ i sid="" s sid=$g(filter("fvalue"))
  i sid="" s sid="XXXX01"
  n vals
  d getVals("vals",form,sid)

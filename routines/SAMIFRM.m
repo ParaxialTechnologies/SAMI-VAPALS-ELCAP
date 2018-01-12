@@ -185,5 +185,9 @@ SAMISUBS(ln,form,sid,filter) ; ln is passed by reference; filter is passed by re
  . i ln["mgtsys." s ln="<link type=""text/css"" rel=""stylesheet"" media=""all"" href=""Biopsy_Mediastinoscopy%20Form_files/mgtsys.css"">"
  . i ln["mgtsys-print.css" s ln="<link type=""text/css"" rel=""stylesheet"" media=""print"" href=""Biopsy_Mediastinoscopy%20Form_files/mgtsys-print.css"">"
  ;
- q
+ i ln["/cgi-bin/datac/cform.cgi" d  
+ . d replaceAll^%wfhform(.ln,"/cgi-bin/datac/cform.cgi","cform.cgi?studyid="_sid)
+ . d replaceAll^%wfhform(.ln,"POST","GET")
+ ;
+ i ln["VEP0001" d replaceAll^%wfhform(.ln,"VEP0001",sid)
  ;

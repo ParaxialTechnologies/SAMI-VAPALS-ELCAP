@@ -191,3 +191,7 @@ SAMISUBS(ln,form,sid,filter) ; ln is passed by reference; filter is passed by re
  ;
  i ln["VEP0001" d replaceAll^%wfhform(.ln,"VEP0001",sid)
  ;
+ i ln["home.cgi" d replaceAll^%wfhform(.ln,"POST","GET")
+ ;
+ q
+ ;

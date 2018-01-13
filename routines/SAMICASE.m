@@ -56,13 +56,19 @@ wsCASE(rtn,filter) ; generates the case review page
  ;
  n zi s zi=0
  f  s zi=$o(temp(zi)) q:+zi=0  q:temp(zi)["VEP0001"  d  ;
+ . i temp(zi)["/images/" d  ;
+ . . n ln s ln=temp(zi)
+ . . d replaceAll^%wfhform(.ln,"/images/","see/")
+ . . s temp(zi)=ln
  . s rtn(zi)=temp(zi)
  ;
  ; ready to insert rows for selection
  ;
  ; first, the intake form
  ;
- n geturl s geturl="form?form=siform&studyid="_sid
+ n sikey s sikey=$o(items("sifor"))
+ i sikey="" s sikey="siform"
+ n geturl s geturl="form?form="_sikey_"&studyid="_sid
  n posturl s posturl="javascript:subPr('siform','QIhuSAoCYzQAAAtHza8AAAAM')"
  s rtn(zi)="<tr  bgcolor=#bffbff><td> "_sid_" </td><td> Doe </td><td> Jane </td><td> 12345 </td><td>24/Aug/2012</td><td>Intake </td>"_$C(13)
  s zi=zi+1
@@ -70,7 +76,9 @@ wsCASE(rtn,filter) ; generates the case review page
  ;
  ; second, the background form
  ;
- n geturl s geturl="form?form=sbform2&studyid="_sid
+ n sbkey s sbkey=$o(items("sbfor"))
+ if sbkey="" s sbkey="sbform2"
+ n geturl s geturl="form?form="_sbkey_"&studyid="_sid
  n posturl s posturl="javascript:subPr('sbform','QIhuSAoCYzQAAAtHza8AAAAM')"
  s zi=zi+1
  s rtn(zi)="<tr  bgcolor=#bffbff><td> "_sid_" </td><td> - </td><td> - </td><td> 12345 </td><td>24/Aug/2012</td><td>Background </td>"_$C(13)
@@ -87,6 +95,10 @@ wsCASE(rtn,filter) ; generates the case review page
  ;
  f  s zi=$o(temp(zi)) q:+zi=0  d  ;
  . s loc=loc+1
+ . i temp(zi)["home.cgi" d  
+ . n ln s ln=temp(zi)
+ . d replaceAll^%wfhform(.ln,"POST","GET")
+ . s temp(zi)=ln
  . s rtn(loc)=temp(zi)
  ;
  q

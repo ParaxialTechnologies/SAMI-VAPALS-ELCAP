@@ -23,7 +23,7 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  . ;s fn="background-form.html"
  . new tmpvals
  . if $g(post)=1 quit  ;
- . do retrieve^%wffiler("tmpvals",form,311.102,sid)
+ . do retrieve^%wffiler("tmpvals","sbform",311.102,sid)
  . ;if $data(tmpvals) kill vals merge vals=tmpvals
  . if $data(tmpvals) merge vals=tmpvals ; maintain graph vars not saved in fileman
  i $get(fn)="" s fn=$$getTemplate(form)
@@ -65,7 +65,8 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  . . i dbg'="" s dbg="&debug="_dbg
  . . ;i form'="sbform" d  quit  ;
  . . ;. i zhtml(%j)["datae" s zhtml(%j)="<form action=""form?form="_form_"&studyId="_sid_dbg_""" method=""POST"" name="""_sublbl_""">"
- . . ;s zhtml(%j)="<form action=""form?form="_form_"&studyId="_sid_dbg_""" method=""POST"" name="""_sublbl_""">"
+ . . i zhtml(%j)["http://foia201606.vistaplex.org:9080/sami/intake" d  q  ; 
+ . . . s zhtml(%j)="<form action=""form?form="_form_"&studyId="_sid_dbg_""" method=""POST"" name="""_sublbl_""">"
  . ;if form'="sbform" do  ;
  . ;. if $$replaceSrc(.tln) s zhtml(%j)=tln ; fix the css and js href values
  . ;. if $$replaceHref(.tln) s zhtml(%j)=tln ; fix the css and js href values
@@ -339,8 +340,8 @@ wsPostForm(ARGS,BODY,RESULT) ; recieve from form
  ;
  ; no errors, file it into fileman
  new status s status=""
- if form="sbform" do  ;
- . do fileForm^%wffiler("tbdy",form,sid,"status")
+ if form["sbform" do  ;
+ . do fileForm^%wffiler("tbdy","sbform",sid,"status")
  . ;
  . ; now return the fileman record that was created
  . new fman,fien

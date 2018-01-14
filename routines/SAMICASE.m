@@ -77,7 +77,7 @@ wsCASE(rtn,filter) ; generates the case review page
  ; second, the background form
  ;
  n sbkey s sbkey=$o(items("sbfor"))
- if sbkey="" s sbkey="sbform2"
+ if sbkey="" s sbkey="sbform"
  n geturl s geturl="form?form="_sbkey_"&studyid="_sid
  n posturl s posturl="javascript:subPr('sbform','QIhuSAoCYzQAAAtHza8AAAAM')"
  s zi=zi+1

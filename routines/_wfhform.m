@@ -19,21 +19,13 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  n vals
  d getVals("vals",form,sid)
  n fn
- i form="sbform" do  
- . s fn="background-form.html"
+ i form["sbform" do  
+ . ;s fn="background-form.html"
  . new tmpvals
  . if $g(post)=1 quit  ;
  . do retrieve^%wffiler("tmpvals",form,311.102,sid)
  . ;if $data(tmpvals) kill vals merge vals=tmpvals
  . if $data(tmpvals) merge vals=tmpvals ; maintain graph vars not saved in fileman
- i form="sbform2" do  
- . s fn="Background Form.html"
- . new tmpvals
- . if $g(post)=1 quit  ;
- . do retrieve^%wffiler("tmpvals",form,311.102,sid)
- . ;if $data(tmpvals) kill vals merge vals=tmpvals
- . if $data(tmpvals) merge vals=tmpvals ; maintain graph vars not saved in fileman
- ;i fn="" s fn="background-form.html"
  i $get(fn)="" s fn=$$getTemplate(form)
  i fn="" quit  ;
  n zhtml,errctrl ; holders of the html template and the error control array
@@ -71,12 +63,12 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  . . n sublbl s sublbl=$$formLabel(form)
  . . n dbg s dbg=$g(filter("debug"))
  . . i dbg'="" s dbg="&debug="_dbg
- . . i form'="sbform" d  quit  ;
- . . . i zhtml(%j)["datae" s zhtml(%j)="<form action=""form?form="_form_"&studyId="_sid_dbg_""" method=""POST"" name="""_sublbl_""">"
+ . . ;i form'="sbform" d  quit  ;
+ . . ;. i zhtml(%j)["datae" s zhtml(%j)="<form action=""form?form="_form_"&studyId="_sid_dbg_""" method=""POST"" name="""_sublbl_""">"
  . . ;s zhtml(%j)="<form action=""form?form="_form_"&studyId="_sid_dbg_""" method=""POST"" name="""_sublbl_""">"
- . if form'="sbform" do  ;
- . . if $$replaceSrc(.tln) s zhtml(%j)=tln ; fix the css and js href values
- . . if $$replaceHref(.tln) s zhtml(%j)=tln ; fix the css and js href values
+ . ;if form'="sbform" do  ;
+ . ;. if $$replaceSrc(.tln) s zhtml(%j)=tln ; fix the css and js href values
+ . ;. if $$replaceHref(.tln) s zhtml(%j)=tln ; fix the css and js href values
  . i tln["table" quit  ;
  . i zhtml(%j)["input" d  ;
  . . i $l(zhtml(%j),"<input")>2 d  ; got to split the lines
@@ -165,7 +157,7 @@ getTemplate(form) ; extrinsic returns the name of the template file
  new fn set fn=311.11
  if form["-" d  ;
  . s form=$p(form,"-",1)
- . if form="sbform" s form="sbform2"
+ . ;if form="sbform" s form="sbform2"
  new fien set fien=$order(@fglb@("B",form,""))
  q:fien="" ""
  new tnm set tnm=$$GET1^DIQ(fn,fien_",",2) ; name of template

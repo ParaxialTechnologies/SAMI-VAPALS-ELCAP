@@ -193,5 +193,9 @@ SAMISUBS(ln,form,sid,filter) ; ln is passed by reference; filter is passed by re
  ;
  i ln["home.cgi" d replaceAll^%wfhform(.ln,"POST","GET")
  ;
+ i ln["/css/" d replaceAll^%wfhform(.ln,"/css/","see/")
+ i ln["/js/" d replaceAll^%wfhform(.ln,"/js/","see/")
+ i ln["/images/" d replaceAll^%wfhform(.ln,"/images/","see/")
+ ;
  q
  ;

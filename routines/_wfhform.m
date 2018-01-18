@@ -82,7 +82,8 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  . . n val 
  . . s val=$g(vals(name))
  . . n type s type=""
- . . i tln["type=" s type=$p($p(tln,"type=""",2),"""",1)
+ . . ;i tln["type=" s type=$p($p(tln,"type=""",2),"""",1)
+ . . i tln["type=" s type=$p($p(tln,"type=",2)," ",1)
  . . i ((type="radio")!(type="checkbox")) d  q  ;
  . . . ;q  ; skip these for now
  . . . d uncheck(.tln)
@@ -306,11 +307,13 @@ value(ln,val) ; sets value="@val"
 uncheck(ln) ; removes 'check="checked"' from ln, passed by reference
  if ln["checked=" do  ;
  . do replace(.ln,"checked=""checked""","")
+ . i ln["checked=checked" d replace(.ln,"checked=checked","")
  quit
  ;
 check(line,type) ; for radio buttons and checkbox
  new ln set ln=line
- do replace(.line,"type="""_type_"""","type="""_type_"""  checked=""checked""")
+ i line["type=""" do replace(.line,"type="""_type_"""","type="""_type_"""  checked=""checked""")
+ e  do replace(.line,"type="_type,"type="_type_"  checked=""checked""")
  quit
  ;
 wsPostForm(ARGS,BODY,RESULT) ; recieve from form
@@ -333,7 +336,7 @@ wsPostForm(ARGS,BODY,RESULT) ; recieve from form
  new errflag set errflag=0
  new revise
  do wsGetForm(.revise,.ARGS,1)
- if form'="sbform2" if errflag'=0 do  quit  ;
+ if form="sbform2" if errflag'=0 do  quit  ;
  . merge RESULT=revise
  ;
  ; end validation process

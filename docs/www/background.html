@@ -1,0 +1,2226 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Background form for *mocklast, mockfirst*</title>
+    <link rel="stylesheet" href="lib/bootstrap-4.0.0-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="lib/formvalidation/dist/css/formValidation.min.css">
+    <link rel="stylesheet" href="vapals.css">
+</head>
+<body>
+<script src="lib/jquery-3.2.1.slim.min.js"></script>
+<script src="lib/popper.min.js"></script>
+<script src="lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+<script src="lib/moment.js"></script>
+<script src="lib/formvalidation/dist/js/formValidation.min.js"></script>
+<script src="lib/formvalidation/dist/js/framework/bootstrap4.min.js"></script>
+<script src="vapals.js"></script>
+
+<!--Debug information for viewport-->
+<span class="badge badge-secondary d-block d-sm-none">extra small</span>
+<span class="badge badge-secondary d-none d-sm-block d-md-none">small</span>
+<span class="badge badge-secondary d-none d-md-block d-lg-none">medium</span>
+<span class="badge badge-secondary d-none d-lg-block d-xl-none">large</span>
+<span class="badge badge-secondary d-none d-xl-block">extra large</span>
+
+<!--System Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#"><img src="img/new-logo.png"
+                                          title="VA-PALS" height="50"/></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Patient
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Background</a>
+                    <a class="dropdown-item" href="#">Intake</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">CT Evaluation</a>
+                </div>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
+<div class="container-fluid" style="max-width:1550px">
+    <h1>
+        Sample, Sammy G
+        <small class="text-muted" title="Study ID">ST0001</small>
+    </h1>
+    <h2>Background
+        <small class="text-muted" title="Medical Record Number">1234567890</small>
+    </h2>
+
+    <hr class="my-4">
+
+    <form method="post" class="validated"
+          data-fv-icon-valid="fa fa-check"
+          data-fv-icon-invalid="fa fa-times"
+          data-fv-icon-validating="fa fa-refresh">
+        <!--Background Tabs-->
+        <nav role="navigation">
+            <ul class="nav nav-tabs" id="myTab">
+                <li class="nav-item">
+                    <a class="nav-link active" id="visit-tab" data-toggle="tab" href="#visit" aria-controls="visit"
+                       aria-selected="true">Visit <i class="fa fa-check-circle-o complete-mark"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="scan-order-tab" data-toggle="tab" href="#scan-order"
+                       aria-controls="scan-order" aria-selected="false">CT Order <i
+                            class="fa fa-check-circle-o complete-mark"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="history-tab" data-toggle="tab" href="#history" aria-controls="history"
+                       aria-selected="false">Medical History <i class="fa fa-check-circle-o complete-mark"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="smoking-tab" data-toggle="tab" href="#smoking"
+                       aria-controls="smoking"
+                       aria-selected="false">Smoking History <i class="fa fa-check-circle-o complete-mark"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="health-tab" data-toggle="tab" href="#health" aria-controls="health"
+                       aria-selected="false">Health Survey <i class="fa fa-check-circle-o complete-mark"></i></a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="tab-content mt-2" id="myTabContent">
+            <div class="tab-pane fade show active" id="visit" role="tabpanel" aria-labelledby="visit-tab">
+                <div class="row">
+                    <div class="col-sm-4 col-md-3 col-xl-2 form-group">
+                        <label for="sbdop" class="col-form-label">Visit Date</label>
+                        <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
+                           title="Visit Date"
+                           data-content="And here's some amazing content. It's very engaging. Right?"></i>
+                        <div class="input-group">
+                            <input class="form-control" id="sbdop" name="sbdop" aria-describedby="sbdop-addon"
+                                   required="required"
+                                   data-fv-notempty="true" data-fv-notempty-message="Visit date is required"
+                                   data-fv-date="true">
+                            <div class="input-group-append">
+                                <div class="input-group-text" id="sbdop-addon">
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <small class="form-text text-muted">MM/DD/YYYY</small>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 col-md-3 col-xl-2 form-group">
+                        <label for="sbdob" class="col-form-label">Date of Birth</label>
+                        <div class="input-group">
+                            <!--TODO: inject max date as "today"-->
+                            <input class="form-control" id="sbdob" name="sbdob" aria-describedby="sbdob-addon"
+                                   required="required"
+                                   data-fv-notempty="true" data-fv-notempty-message="Date of birth is required"
+                                   data-fv-date="true" data-fv-max="01/25/2018">
+                            <div class="input-group-append">
+                                <div class="input-group-text" id="sbdob-addon">
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <small class="form-text text-muted">MM/DD/YYYY</small>
+                    </div>
+                    <div class="col-sm-2 col-md-1 form-group">
+                        <label for="sbage" class="col-form-label">Age</label>
+                        <input type="text" readonly class="form-control-plaintext" id="sbage" name="sbage" value="-">
+                    </div>
+
+                    <div class="col-sm-3 col-md-3 form-group">
+                        <label for="sbage" class="col-form-label">Sex</label>
+                        <div class="form-check form-check">
+                            <input class="form-check-input" type="radio" name="sbsex" id="sbsex-m" value="m">
+                            <label class="form-check-label" for="sbsex-m">Male</label>
+                        </div>
+                        <div class="form-check form-check">
+                            <input class="form-check-input" type="radio" name="sbsex" id="sbsex-f" value="f">
+                            <label class="form-check-label" for="sbsex-f">Female</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3 col-lg-2 form-group">
+                        <label for="sbph" class="col-form-label">Height</label>
+                        <div class="input-group">
+                            <input class="form-control numeric" name="sbph" id="sbph" data-fv-numeric="true"
+                                   data-fv-numeric-decimalseparator="."
+                                   data-fv-numeric-message="Value must be a valid decimal number" min="1">
+                            <input type="hidden" name="sbphu" id="sbphu" value="i"/>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sbphu-btn"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">in
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#"
+                                       onclick="$('#sbphu').val('i').trigger('change');$('#sbphu-btn').text('in')">in</a>
+                                    <a class="dropdown-item" href="#"
+                                       onclick="$('#sbphu').val('c').trigger('change');$('#sbphu-btn').text('cm')">cm</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-lg-2 form-group">
+                        <label for="sbpw" class="col-form-label">Weight</label>
+                        <div class="input-group">
+                            <input class="form-control numeric" name="sbpw" id="sbpw" data-fv-numeric="true"
+                                   data-fv-numeric-decimalseparator="."
+                                   data-fv-numeric-message="Value must be a valid decimal number" min="1">
+                            <input type="hidden" name="sbpwu" id="sbpwu" value="p"/>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sbpwu-btn"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">lbs
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#"
+                                       onclick="$('#sbpwu').val('p').trigger('change');$('#sbpwu-btn').text('lbs')">lbs</a>
+                                    <a class="dropdown-item" href="#"
+                                       onclick="$('#sbpwu').val('k').trigger('change');$('#sbpwu-btn').text('kg')">kg</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="sbbmi" id="sbbmi"/>
+                </div>
+
+                <div class="col-md-12 alert alert-info" id="bmi-message" style="display:none;">
+                    The patients calculated BMI (<strong><span id="bmi-value"></span></strong>) is considered
+                    <strong>
+                        <span id="bmi-descriptor"></span></strong>.
+                </div>
+
+                <div class="row">
+                    <div class="col form-group">
+                        <label for="sbocc" class="col-form-label">Occupation</label>
+                        <input type="text" class="form-control" id="sbocc" name="sbocc"/>
+                        <small class="form-text text-muted">If retired, indicate previous occupation.</small>
+                    </div>
+
+                    <div class="col form-group">
+                        <label for="sboccc" class="col-form-label">Occupation Code</label>
+                        <select class="form-control" id="sboccc" name="sboccc">
+                            <option value="-" selected>&mdash;</option>
+                            <option value="1">Higher executives</option>
+                            <option value="2">Business managers</option>
+                            <option value="3">Administrative Personnel</option>
+                            <option value="4">Clerical/Sales workers</option>
+                            <option value="5">Skilled manual Employees</option>
+                            <option value="6">Machine Operators</option>
+                            <option value="7">Unskilled Employees</option>
+                            <option value="8">Unemployed</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col form-group">
+                        <label for="sbet" class="col-form-label">Ethnicity</label>
+                        <select class="form-control" id="sbet" name="sbet">
+                            <option value="-" selected>&mdash;</option>
+                            <option value="y">Hispanic or Latino</option>
+                            <option value="n">Not Hispanic or Latino</option>
+                        </select>
+                    </div>
+                    <div class="col form-group">
+                        <label for="sbrc" class="col-form-label">Race</label>
+                        <select class="form-control" id="sbrc" name="sbet">
+                            <option value="-" selected>&mdash;</option>
+                            <option value="w">White</option>
+                            <option value="b">Black or African American</option>
+                            <option value="i">American Indian</option>
+                            <option value="k">Alaska Native</option>
+                            <option value="a">Asian</option>
+                            <option value="p">Native Hawaiian or Other Pacific Islander</option>
+                            <option value="t">Two or more</option>
+                            <option value="o">Other (specify)</option>
+                        </select>
+                    </div>
+                    <div class="col form-group" id="sbrcs-container">
+                        <label for="sbrcs" class="col-form-label">Other</label>
+                        <input type="text" class="form-control" id="sbrcs" name="sbrcs" data-fv-notempty="true"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col form-group">
+                        <label for="sbed" class="col-form-label">Level of Education</label>
+                        <select class="form-control" id="sbed" name="sbed">
+                            <option value="-" selected>&mdash;</option>
+                            <option value="n">did not complete high school</option>
+                            <option value="hs">completed high school</option>
+                            <option value="sc">started college</option>
+                            <option value="ts">completed trade school</option>
+                            <option value="ad">completed 2-year college degree</option>
+                            <option value="bd">completed 4-year college degree</option>
+                            <option value="gd">advanced degree (e.g. Master’s, J.D., M.D., Ph.D.)</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 form-group">
+                        <label for="sbmly-y" class="col-form-label">Served in the military?</label>
+                        <div class="form-check form-check">
+                            <input class="form-check-input" type="radio" name="sbmly" id="sbmly-y" value="y"
+                                   data-fv-notempty="true"
+                                   data-fv-notempty-message="This question must be answered">
+                            <label class="form-check-label" for="sbmly-y">Yes</label>
+                        </div>
+                        <div class="form-check form-check">
+                            <input class="form-check-input" type="radio" name="sbmly" id="sbmly-n" value="n">
+                            <label class="form-check-label" for="sbmly-n">No</label>
+                        </div>
+                    </div>
+                    <div class="col form-group" id="sbmlyo-container">
+                        <label for="sbrcs" class="col-form-label">Branch</label>
+                        <input type="text" class="form-control" id="sbmlyo" name="sbmlyo"/>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-primary btn-next">Next</button>
+            </div>
+            <div class="tab-pane fade" id="scan-order" role="tabpanel" aria-labelledby="scan-order-tab">
+                <p class="lead">
+                    Ordering information is <em>required</em> for all patients undergoing a screening exam using the
+                    G0297 code.
+                </p>
+
+                <div class="row">
+                    <div class="col form-group">
+                        <label for="sbmeq-y" class="col-form-label">Was a CT lung screening scan ordered for this
+                            patient (CPT code G0297)?</label>
+
+                        <div class="form-check form-check">
+                            <input class="form-check-input" type="radio" name="sbmeq" id="sbmeq-n" value="n"
+                                   required="required">
+                            <label class="form-check-label" for="sbmeq-n">No (remaining questions in this section are
+                                optional)</label>
+                        </div>
+                        <div class="form-check form-check">
+                            <input class="form-check-input" type="radio" name="sbmeq" id="sbmeq-y" value="y"
+                                   required="required">
+                            <label class="form-check-label" for="sbmeq-y">Yes</label>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div id="sbmeq-container">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-5 text-lg-right">
+                            <label for="sbopln" class="col-form-label">Ordering Practitioner</label>
+                        </div>
+                        <div class="col-sm-6 col-md-4 col-lg-3 form-group">
+                            <input type="text" class="form-control" id="sbopln" name="sbopln" placeholder="Last Name"/>
+
+                        </div>
+                        <div class="col-sm-6 col-md-4 form-group">
+                            <input type="text" class="form-control" id="sbopfn" name="sbopfn" placeholder="First Name"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-lg-5 text-lg-right">
+                            <label for="sbopnpi" class="col-form-label">NPI</label>
+                        </div>
+                        <div class="col form-group">
+                            <input type="text" class="form-control numeric" id="sbopnpi" name="sbonpi"
+                                   data-fv-numeric="true"
+                                   data-fv-numeric-decimalseparator="."
+                                   data-fv-numeric-message="Value must be a valid decimal number" min="1"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-lg-5 text-lg-right">
+                            <label for="sbdsd-n" class="col-form-label pt-0">Documentation of shared decision
+                                making</label>
+                        </div>
+                        <div class="col form-group">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbdsd" id="sbdsd-n" value="n">
+                                <label class="form-check-label" for="sbdsd-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbdsd" id="sbdsd-y" value="y">
+                                <label class="form-check-label" for="sbdsd-y">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbdsd" id="sbdsd-q" value="q">
+                                <label class="form-check-label" for="sbdsd-q">n/a</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <small class="form-text text-muted">required for reimbursement for G0297 examples on
+                                    baseline <em>only</em></small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-lg-5 text-lg-right">
+                            <label for="sbopss-c" class="col-form-label pt-0">Reported smoking
+                                status</label>
+                        </div>
+                        <div class="col form-group">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbopss" id="sbopss-c" value="c">
+                                <label class="form-check-label" for="sbopss-c">Current</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbopss" id="sbopss-f" value="f">
+                                <label class="form-check-label" for="sbopss-f">Former</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 col-lg-5 text-lg-right">
+                            <label for="sboppy" class="col-form-label">Reported pack years</label>
+                        </div>
+                        <div class="col-md-1 form-group">
+                            <input class="form-control" type="text" name="sboppy" id="sboppy">
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 col-lg-5 text-lg-right">
+                            <label for="sbopqy" class="col-form-label">Reported years since
+                                quit</label>
+                        </div>
+                        <div class="col-md-1 form-group">
+                            <input class="form-control" type="text" name="sbopqy" id="sbopqy">
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 col-lg-5 text-lg-right">
+                            <label for="sboas-n" class="col-form-label pt-0">Reported asymptomatic for
+                                lung cancer</label>
+                        </div>
+                        <div class="col form-group">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sboas" id="sboas-n" value="n">
+                                <label class="form-check-label" for="sboas-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sboas" id="sboas-y" value="y">
+                                <label class="form-check-label" for="sboas-y">Yes</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 col-lg-5 text-lg-right">
+                            <label for="sboas-n" class="col-form-label pt-0">Clinical Information</label>
+                        </div>
+                        <div class="col form-group">
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <small class="form-text text-muted">information will be copied to CT report</small>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary btn-next">Next</button>
+            </div>
+            <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 text-lg-right">
+                        <label for="sbfc-n" class="col-form-label">Family history of lung cancer?</label>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-xl-2 mt-2">
+                        <div class="form-group align-top">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbfc" id="sbfc-n" value="n">
+                                <label class="form-check-label" for="sbfc-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbfc" id="sbfc-y" value="y">
+                                <label class="form-check-label" for="sbfc-y">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbfc" id="sbfc-q" value="q">
+                                <label class="form-check-label" for="sbfc-q">?</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col" id="sbfc-container">
+
+                        <!--TODO: figure out where validation icons should be rendered-->
+                        <div class="form-group ml-3 form-check-inline">
+                            <label class="col-form-label" for="sbfcf-n">Father?</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="sbfcf" id="sbfcf-n" value="n"
+                                       required="required">
+                                <label class="form-check-label" for="sbfcf-n">No</label>
+                            </div>
+                            <div class="form-check ">
+                                <input class="form-check-input" type="radio" name="sbfcf" id="sbfcf-y" value="y"
+                                       required="required">
+                                <label class="form-check-label" for="sbfcf-y">Yes</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group ml-3 form-check-inline">
+                            <label class="form-check-label" for="sbfcm-n">Mother?</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="sbfcm" id="sbfcm-n" value="n"
+                                       required="required">
+                                <label class="form-check-label" for="sbfcm-n">No</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="sbfcm" id="sbfcm-y" value="y"
+                                       required="required">
+                                <label class="form-check-label" for="sbfcm-y">Yes</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group ml-3 form-check-inline">
+                            <label class="form-check-label" for="sbfcs-n">Siblings?</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="sbfcs" id="sbfcs-n" value="n"
+                                       required="required">
+                                <label class="form-check-label" for="sbfcs-n">No</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="sbfcs" id="sbfcs-y" value="y"
+                                       required="required">
+                                <label class="form-check-label" for="sbfcs-y">Yes</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 text-lg-right">
+                        <label for="sbhco-n" class="col-form-label">Any Cancer?</label>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-xl-2 mt-2">
+                        <div class="form-group align-top">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbhco" id="sbhco-n" value="n">
+                                <label class="form-check-label" for="sbhco-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbhco" id="sbhco-y" value="y">
+                                <label class="form-check-label" for="sbhco-y">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbhco" id="sbhco-q" value="q">
+                                <label class="form-check-label" for="sbhco-q">?</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col form-inline" id="sbhco-container">
+                        <div class="form-group ml-3">
+                            <input class="form-control form-control-sm numeric" type="text" name="sbhcdod" id="sbhcdod"
+                                   placeholder="When?"
+                                   size="5" required="required" data-fv-integer="true" maxlength="4">
+                            <small class="form-text text-muted ml-sm-1">YYYY</small>
+
+                        </div>
+                        <div class="ml-3">
+                            <input class="form-control form-control-sm" type="text" name="sbhcpbo" id="sbhcpbo"
+                                   placeholder="Primary site?">
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 text-lg-right">
+                        <label for="sbmpa-n" class="col-form-label">Asthma?</label>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-xl-2 mt-2">
+                        <div class="form-group align-top">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpa" id="sbmpa-n" value="n">
+                                <label class="form-check-label" for="sbmpa-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpa" id="sbmpa-y" value="y">
+                                <label class="form-check-label" for="sbmpa-y">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpa" id="sbmpa-q" value="q">
+                                <label class="form-check-label" for="sbmpa-q">?</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col form-inline" id="sbmpa-container">
+                        <div class="form-group ml-3">
+                            <label class="form-check-label form-check-inline" for="sbmpat-n">Under current
+                                treatment?</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpat" id="sbmpat-n"
+                                       value="n" required="required">
+                                <label class="form-check-label" for="sbmpat-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpat" id="sbmpat-y"
+                                       value="y">
+                                <label class="form-check-label" for="sbmpat-y">Yes</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 text-lg-right">
+                        <label for="sbmpc-n" class="col-form-label">Emphysema or Chronic Bronchitis (COPD)?</label>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-xl-2 mt-2">
+                        <div class="form-group align-top">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpc" id="sbmpc-n" value="n">
+                                <label class="form-check-label" for="sbmpc-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpc" id="sbmpc-y" value="y">
+                                <label class="form-check-label" for="sbmpc-y">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpc" id="sbmpc-q" value="q">
+                                <label class="form-check-label" for="sbmpc-q">?</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col form-inline" id="sbmpc-container">
+                        <div class="form-group ml-3">
+                            <input class="form-control form-control-sm numeric" type="text" name="sbhcdod" id="sbmpcw"
+                                   placeholder="When?"
+                                   size="5" required="required" data-fv-integer="true" maxlength="4">
+                            <small class="form-text text-muted ml-sm-1">YYYY</small>
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 text-lg-right">
+                        <label for="sbmpht-n" class="col-form-label">High Blood Pressure</label>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-xl-2 mt-2">
+                        <div class="form-group align-top">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpht" id="sbmpht-n" value="n">
+                                <label class="form-check-label" for="sbmpht-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpht" id="sbmpht-y" value="y">
+                                <label class="form-check-label" for="sbmpht-y">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpht" id="sbmpht-q" value="q">
+                                <label class="form-check-label" for="sbmpht-q">?</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col form-inline" id="sbmpht-container">
+                        <div class="form-group ml-3">
+                            <label class="col-form-label form-check-inline" for="sbmphtt-n">Treated?</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmphtt" id="sbmphtt-n" value="n">
+                                <label class="form-check-label" for="sbmphtt-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmphtt" id="sbmphtt-y"
+                                       value="y">
+                                <label class="form-check-label" for="sbmphtt-y">Yes</label>
+                            </div>
+                        </div>
+                        <div class="form-group ml-3">
+                            <input class="form-control form-control-sm numeric" type="text" name="sbmphtsw"
+                                   id="sbmphtsw"
+                                   placeholder="Since?" size="5" required="required" data-fv-integer="true"
+                                   maxlength="4">
+                            <small class="form-text text-muted ml-sm-1">YYYY</small>
+                        </div>
+                        <div class="form-group ml-3">
+                            <input class="form-control form-control-sm" type="text" name="sbmphthv" id="sbmphthv"
+                                   placeholder="Highest Value?">
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 text-lg-right">
+                        <label for="sbmphc-n" class="col-form-label">High Cholesterol</label>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-xl-2 mt-2">
+                        <div class="form-group align-top">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmphc" id="sbmphc-n" value="n">
+                                <label class="form-check-label" for="sbmphc-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmphc" id="sbmphc-y" value="y">
+                                <label class="form-check-label" for="sbmphc-y">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmphc" id="sbmphc-q" value="q">
+                                <label class="form-check-label" for="sbmphc-q">?</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col form-inline" id="sbmphc-container">
+                        <div class="form-group ml-3">
+                            <label class="col-form-label form-check-inline" for="sbmphct-n">Treated?</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmphct" id="sbmphct-n" value="n">
+                                <label class="form-check-label" for="sbmphct-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmphct" id="sbmphct-y"
+                                       value="y">
+                                <label class="form-check-label" for="sbmphct-y">Yes</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 text-lg-right">
+                        <label for="sbmpas-n" class="col-form-label">Had an angioplasty or Stent?</label>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-xl-2 mt-2">
+                        <div class="form-group align-top">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpas" id="sbmpas-n" value="n">
+                                <label class="form-check-label" for="sbmpas-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpas" id="sbmpas-y" value="y">
+                                <label class="form-check-label" for="sbmpas-y">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpas" id="sbmpas-q" value="q">
+                                <label class="form-check-label" for="sbmpas-q">?</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col form-inline" id="sbmpas-container">
+                        <div class="form-group ml-3">
+                            <input class="form-control form-control-sm numeric" type="text" name="sbmpasw" id="sbmpasw"
+                                   placeholder="When?"
+                                   size="5" required="required" data-fv-integer="true" maxlength="4">
+                            <small class="form-text text-muted ml-sm-1">YYYY</small>
+
+                        </div>
+                        <div class="ml-3">
+                            <input class="form-control form-control-sm" type="text" name="sbmpast" id="sbmpast"
+                                   placeholder="Where treated?">
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 text-lg-right">
+                        <label for="sbmpmi-n" class="col-form-label">MI?</label>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-xl-2 mt-2">
+                        <div class="form-group align-top">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpmi" id="sbmpmi-n" value="n">
+                                <label class="form-check-label" for="sbmpmi-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpmi" id="sbmpmi-y" value="y">
+                                <label class="form-check-label" for="sbmpmi-y">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpmi" id="sbmpmi-q" value="q">
+                                <label class="form-check-label" for="sbmpmi-q">?</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col form-inline" id="sbmpmi-container">
+                        <div class="form-group ml-3">
+                            <input class="form-control form-control-sm numeric" type="text" name="sbmpmid" id="sbmpmid"
+                                   placeholder="When?"
+                                   size="5" required="required" data-fv-integer="true" maxlength="4">
+                            <small class="form-text text-muted ml-sm-1">YYYY</small>
+
+                        </div>
+                        <div class="ml-3">
+                            <input class="form-control form-control-sm" type="text" name="sbmpmiw" id="sbmpmiw"
+                                   placeholder="Where treated?">
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 text-lg-right">
+                        <label for="sbmps-n" class="col-form-label">Stroke?</label>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-xl-2 mt-2">
+                        <div class="form-group align-top">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmps" id="sbmps-n" value="n">
+                                <label class="form-check-label" for="sbmps-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmps" id="sbmps-y" value="y">
+                                <label class="form-check-label" for="sbmps-y">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmps" id="sbmps-q" value="q">
+                                <label class="form-check-label" for="sbmps-q">?</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col form-inline" id="sbmps-container">
+                        <div class="form-group ml-3">
+                            <input class="form-control form-control-sm numeric" type="text" name="sbmpsd" id="sbmpsd"
+                                   placeholder="When?"
+                                   size="5" required="required" data-fv-integer="true" maxlength="4">
+                            <small class="form-text text-muted ml-sm-1">YYYY</small>
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 text-lg-right">
+                        <label for="sbmppv-n" class="col-form-label">Peripheral Vascular Disease (Poor
+                            Circulation)</label>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-xl-2 mt-2">
+                        <div class="form-group align-top">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmppv" id="sbmppv-n" value="n">
+                                <label class="form-check-label" for="sbmppv-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmppv" id="sbmppv-y" value="y">
+                                <label class="form-check-label" for="sbmppv-y">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmppv" id="sbmppv-q" value="q">
+                                <label class="form-check-label" for="sbmppv-q">?</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col form-inline" id="sbmppv-container">
+                        <div class="form-group ml-3">
+                            <input class="form-control form-control-sm" type="text" name="sbmppvd" id="sbmppvd"
+                                   placeholder="When?"
+                                   size="5">
+                            <small class="form-text text-muted ml-sm-1">YYYY</small>
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 text-lg-right">
+                        <label for="sbmpd-n" class="col-form-label">Diabetes</label>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-xl-2 mt-2">
+                        <div class="form-group align-top">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpd" id="sbmpd-n" value="n">
+                                <label class="form-check-label" for="sbmpd-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpd" id="sbmpd-y" value="y">
+                                <label class="form-check-label" for="sbmpd-y">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpd" id="sbmpd-q" value="q">
+                                <label class="form-check-label" for="sbmpd-q">?</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col form-inline" id="sbmpd-container">
+                        <div class="form-group ml-3">
+                            <label class="col-form-label form-check-inline" for="sbmpdw">Starting at what age?</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-control form-control-sm numeric" type="text" name="sbmpdw"
+                                       id="sbmpdw"
+                                       size="4" data-fv-integer="true" maxlength="4">
+                            </div>
+                        </div>
+
+                        <div class="form-group ml-3">
+                            <label class="col-form-label form-check-inline" for="sbmpdt-n">Treated?</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpdt" id="sbmpdt-n">
+                                <label class="form-check-label" for="sbmpdt-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpdt" id="sbmpdt-y"
+                                       value="y">
+                                <label class="form-check-label" for="sbmpdt-y">Yes</label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 text-lg-right">
+                        <label for="sbmpld-n" class="col-form-label">Liver Disease</label>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-xl-2 mt-2">
+                        <div class="form-group align-top">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpld" id="sbmpld-n" value="n">
+                                <label class="form-check-label" for="sbmpld-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpld" id="sbmpld-y" value="y">
+                                <label class="form-check-label" for="sbmpld-y">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpld" id="sbmpld-q" value="q">
+                                <label class="form-check-label" for="sbmpld-q">?</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col form-inline" id="sbmpld-container">
+                        <div class="form-group ml-3">
+                            <label class="col-form-label form-check-inline" for="sbmpldt-m">Severity</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpldt" id="sbmpldt-m" value="m">
+                                <label class="form-check-label" for="sbmpldt-m">Mild</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmpldt" id="sbmpldt-s"
+                                       value="s">
+                                <label class="form-check-label" for="sbmpldt-s">Severe</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 text-lg-right">
+                        <label for="sbmprd-n" class="col-form-label">Kidney (Renal) Disease</label>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-xl-2 mt-2">
+                        <div class="form-group align-top">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmprd" id="sbmprd-n" value="n">
+                                <label class="form-check-label" for="sbmprd-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmprd" id="sbmprd-y" value="y">
+                                <label class="form-check-label" for="sbmprd-y">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmprd" id="sbmprd-q" value="q">
+                                <label class="form-check-label" for="sbmprd-q">?</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col form-inline" id="sbmprd-container">
+                        <div class="form-group ml-3">
+                            <label class="col-form-label form-check-inline" for="sbmprdt-m">Severity</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmprdt" id="sbmprdt-m" value="m">
+                                <label class="form-check-label" for="sbmprdt-m">Mild</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmprdt" id="sbmprdt-s"
+                                       value="s">
+                                <label class="form-check-label" for="sbmprdt-s">Severe</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3 text-lg-right">
+                        <label for="sblcs-n" class="col-form-label">Have you experienced any symptoms indicative of lung
+                            cancer?</label>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-xl-2">
+                        <div class="form-group mt-2">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sblcs" id="sblcs-n" value="n">
+                                <label class="form-check-label" for="sblcs-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sblcs" id="sblcs-y" value="y">
+                                <label class="form-check-label" for="sblcs-y">Yes</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col" id="sblcs-container">
+                        <div class="form-group ml-3">
+                            <label><em>Check all that apply</em></label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="b" id="sbwcb">
+                                <label class="form-check-label" for="sbwcb">
+                                    cough producing bloody material
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="l" id="sbwcl">
+                                <label class="form-check-label" for="sbwcl">
+                                    unexplained weight loss greater than 20 lbs.
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="h" id="sbwch">
+                                <label class="form-check-label" for="sbwch">
+                                    unexplained hoarseness
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="o" id="sbwco">
+                                <label class="form-check-label" for="sbwco">
+                                    other
+                                </label>
+                                <input class="form-control form-control-sm" type="text" name="sbwcos" id="sbwcos">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3 text-lg-right">
+                        <label for="sbact" class="col-form-label">When did you most recently have a chest CT?</label>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-xl-2">
+                        <div class="form-group mt-2">
+                            <select id="sbact" name="sbact" class="form-control form-control-sm">
+                                <option value="-" selected>&mdash;</option>
+                                <option value="a">less than 6 months ago</option>
+                                <option value="b">6–18 months ago</option>
+                                <option value="f">18 months to 3 years ago</option>
+                                <option value="c">3 years to 5 years ago</option>
+                                <option value="d">over 5 years ago</option>
+                                <option value="e">never</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col" id="sbact-container">
+                        <div class="form-group ml-3">
+                            <label for="sbahcl">If so, where was the test done?</label>
+                            <input type="text" name="sbahcl" id="sbahcl" class="form-control form-control-sm"/>
+                        </div>
+
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3 text-lg-right">
+                        <label for="sbahpft-n" class="col-form-label">Have you had a pulmonary function test within the
+                            last five years?</label>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-xl-2">
+                        <div class="form-group mt-2">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbahpft" id="sbahpft-n" value="n">
+                                <label class="form-check-label" for="sbahpft-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbahpft" id="sbahpft-y" value="y">
+                                <label class="form-check-label" for="sbahpft-y">Yes</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col form-inline" id="sbahpft-container">
+                        <div class="form-group ml-3">
+                            <label for="sbfev1">FEV1 (L/s)</label>
+                            <input class="form-control form-control-sm ml-2" type="text" name="sbfev1" id="sbfev1"
+                                   size="4">
+                        </div>
+                        <div class="form-group ml-3">
+                            <label for="sbfvc">FVC (L)</label>
+                            <input class="form-control form-control-sm ml-2" type="text" name="sbfvc" id="sbfvc"
+                                   size="4">
+                        </div>
+                        <div class="form-group ml-3">
+                            <label for="sbcop">Diffusion Capacity (mL/min/mm Hg)</label>
+                            <input class="form-control form-control-sm ml-2" type="text" name="sbcop" id="sbcop"
+                                   size="4">
+                        </div>
+                        <div class="alert alert-info ml-3 mt-1" id="ffr-message" style="display: none;">
+                            FEV1/FVC (%) is <strong><span id="ffr-value"></span></strong>
+                        </div>
+                        <input type="hidden" name="sbffr" id="sbffr"/>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3 text-lg-right">
+                        <label for="sbaha-n" class="col-form-label">To your knowledge, have you been exposed to
+                            asbestos?</label>
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-xl-2">
+                        <div class="form-group mt-2">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbaha" id="sbaha-n" value="n">
+                                <label class="form-check-label" for="sbaha-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbaha" id="sbaha-y" value="y">
+                                <label class="form-check-label" for="sbaha-y">Yes</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3 text-lg-right">
+                        <label for="sblcs-n" class="col-form-label">Have you ever worked in any of the
+                            following?</label>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="i" id="sbahaoi">
+                                <label class="form-check-label" for="sbahaoi">
+                                    asbestos product manufacturing
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="j" id="sbahaoj">
+                                <label class="form-check-label" for="sbahaoj">
+                                    auto repair
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="h" id="sbahaoh">
+                                <label class="form-check-label" for="sbahaoh">
+                                    building maintenance
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="f" id="sbahaof">
+                                <label class="form-check-label" for="sbahaof">
+                                    chemical industry/foundary/refinery
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="a" id="sbahaoa">
+                                <label class="form-check-label" for="sbahaoa">
+                                    construction/demolition
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="e" id="sbahaoe">
+                                <label class="form-check-label" for="sbahaoe">
+                                    mining
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="g" id="sbahaog">
+                                <label class="form-check-label" for="sbahaog">
+                                    nuclear industry
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="c" id="sbahaoc">
+                                <label class="form-check-label" for="sbahaoc">
+                                    ship construction/repair
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="o" id="sbahaoo">
+                                <label class="form-check-label" for="sbahaoo">
+                                    other
+                                </label>
+                                <input class="form-control form-control-sm" type="text" name="sbahas" id="sbahas">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+
+                <button type="button" class="btn btn-primary btn-next">Next</button>
+            </div>
+            <div class="tab-pane fade" id="smoking" role="tabpanel" aria-labelledby="smoking-tab">
+                <div class="row">
+                    <div class="col-sm-6 col-xl-8 text-lg-right">
+                        <label for="sbsru-n" class="col-form-label">Have you smoked at least 100 cigarettes in your
+                            lifetime? (100 cigarettes = 5 packs)</label>
+                    </div>
+                    <div class="col mt-2">
+                        <div class="form-group align-top">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbsru" id="sbsru-n" value="n">
+                                <label class="form-check-label" for="sbsru-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbsru" id="sbsru-y" value="y">
+                                <label class="form-check-label" for="sbsru-y">Yes</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group align-top" id="sbsru-container">
+                            <label for="sbsru-n" class="col-form-label">Were you exposed to secondhand smoke?</label>
+                            <div class="form-check form-check-inline ml-2">
+                                <input class="form-check-input" type="radio" name="sbsruyn" id="sbsruyn-n" value="n">
+                                <label class="form-check-label" for="sbsruyn-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbsruyn" id="sbsruyn-y"
+                                       value="y">
+                                <label class="form-check-label" for="sbsruyn-y">Yes</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <hr class="d-md-none"/>
+
+
+                <div class="row">
+                    <div class="col-sm-6 col-xl-8 text-lg-right">
+                        <label for="sbsas" class="col-form-label">About how old were you when you first started smoking
+                            cigarettes regularly?</label>
+                    </div>
+                    <div class="col form-inline">
+                        <div class="form-group">
+                            <input class="form-control form-control-sm" type="text" name="sbsas" id="sbsas" size="5">
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-xl-8 text-lg-right">
+                        <label for="sbshsa-n" class="col-form-label">Over the past month, have you smoked at all, even
+                            one cigarette?</label>
+                    </div>
+                    <div class="col form-inline">
+                        <div class="form-group align-top">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbshsa" id="sbshsa-n" value="n">
+                                <label class="form-check-label" for="sbshsa-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbshsa" id="sbshsa-y"
+                                       value="y">
+                                <label class="form-check-label" for="sbshsa-y">Yes</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div id="non-smoking-container">
+                    <div class="row">
+                        <div class="col-sm-6 col-xl-8 text-lg-right">
+                            <label for="sbsdlcd" class="col-form-label">If no, when was the date of your last
+                                cigarette?</label>
+                        </div>
+                        <div class="col">
+                            <div class="form-group align-top" style="float:left;">
+                                <select class="form-control form-control-sm" id="sbsdlcm" name="sbsdlcm">
+                                    <option value="-" selected>&mdash;</option>
+                                    <option value="1">Jan</option>
+                                    <option value="2">Feb</option>
+                                    <option value="3">Mar</option>
+                                    <option value="4">Apr</option>
+                                    <option value="5">May</option>
+                                    <option value="6">Jun</option>
+                                    <option value="7">Jul</option>
+                                    <option value="8">Aug</option>
+                                    <option value="9">Sep</option>
+                                    <option value="10">Oct</option>
+                                    <option value="11">Nov</option>
+                                    <option value="12">Dec</option>
+                                </select>
+                                <span class="small text-muted">Month</span>
+                            </div>
+
+                            <div class="form-group ml-2" style="float:left;">
+                                <select class="form-control form-control-sm" id="sbsdlcd" name="sbsdlcd">
+                                    <option value="-" selected>&mdash;</option>
+                                    <option value="1">01</option>
+                                    <option value="2">02</option>
+                                    <option value="3">03</option>
+                                    <option value="4">04</option>
+                                    <option value="5">05</option>
+                                    <option value="6">06</option>
+                                    <option value="7">07</option>
+                                    <option value="8">08</option>
+                                    <option value="9">09</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                    <option value="24">24</option>
+                                    <option value="25">25</option>
+                                    <option value="26">26</option>
+                                    <option value="27">27</option>
+                                    <option value="28">28</option>
+                                    <option value="29">29</option>
+                                    <option value="30">30</option>
+                                    <option value="31">31</option>
+                                </select>
+                                <span class="small text-muted">Day</span>
+                            </div>
+
+                            <div class="form-group ml-2" style="float:left;">
+                                <input class="form-control form-control-sm numeric" type="text" name="sbsdlcy"
+                                       id="sbsdlcy"
+                                       size="5" required="required" data-fv-integer="true" maxlength="4"
+                                       placeholder="YYYY">
+                                <small class="form-text text-muted ml-sm-1">Year</small>
+                            </div>
+                            <div class="alert alert-info ml-3 mt-1" id="sbsdlc-message"
+                                 style="display: none; float:left;">
+                                Number of years since quit: <strong><span id="sbsdlc-value"></span></strong>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="d-md-none"/>
+
+                    <div class="row">
+                        <div class="col-sm-6 col-xl-8 text-lg-right">
+                            <label for="sbfdpw" class="col-form-label">When you were a smoker, on approximately how many
+                                days per week did you smoke cigarettes?</label>
+                        </div>
+                        <div class="col form-inline">
+                            <div class="form-group">
+                                <input class="form-control form-control-sm" type="text" name="sbfdpw" id="sbfdpw"
+                                       size="5" data-fv-lessthan="true" data-fv-lessthan-value="7">
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="d-md-none"/>
+
+                    <div class="row">
+                        <div class="col-sm-6 col-xl-8 text-lg-right">
+                            <label for="sbfppd" class="col-form-label">On the days that you did smoke, approximately how
+                                many packs of cigarettes did you smoke per day (PPD)?</label>
+                        </div>
+                        <div class="col form-inline">
+                            <div class="form-group">
+                                <input class="form-control form-control-sm" type="text" name="sbfppd" id="sbfppd"
+                                       size="5">
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="d-md-none"/>
+
+                    <div class="row">
+                        <div class="col-sm-6 col-xl-8 text-lg-right">
+                            <label for="sbfdur" class="col-form-label">For approximately how many years did you smoke
+                                this amount?</label>
+                        </div>
+                        <div class="col form-inline">
+                            <div class="form-group">
+                                <input class="form-control form-control-sm" type="text" name="sbfdur" id="sbfdur"
+                                       size="5">
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="d-md-none"/>
+                </div>
+
+                <div id="smoking-container">
+                    <div class="row">
+                        <div class="col-sm-6 col-xl-8 text-lg-right">
+                            <label for="sbcdpw" class="col-form-label">On average, on how many days per week do you (or
+                                did you) smoke cigarettes?</label>
+                        </div>
+                        <div class="col form-inline">
+                            <div class="form-group">
+                                <input class="form-control form-control-sm" type="text" name="sbcdpw" id="sbcdpw"
+                                       size="5" data-fv-lessthan="true" data-fv-lessthan-value="7">
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="d-md-none"/>
+
+                    <div class="row">
+                        <div class="col-sm-6 col-xl-8 text-lg-right">
+                            <label for="sbcppd" class="col-form-label">On average, how many packs of cigarettes do you
+                                (or did you) smoke per day (PPD)?</label>
+                        </div>
+                        <div class="col form-inline">
+                            <div class="form-group">
+                                <input class="form-control form-control-sm" type="text" name="sbcppd" id="sbcppd"
+                                       size="5">
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="d-md-none"/>
+
+                    <div class="row">
+                        <div class="col-sm-6 col-xl-8 text-lg-right">
+                            <label for="sbcdur" class="col-form-label">For approximately how many years have you smoked
+                                this amount?</label>
+                        </div>
+                        <div class="col form-inline">
+                            <div class="form-group">
+                                <input class="form-control form-control-sm" type="text" name="sbcdur" id="sbcdur"
+                                       size="5">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col offset-sm-6 offset-xl-8">
+                            <input type="hidden" name="sbntpy" value=""/>
+                            <div class="alert alert-info" id="sbntpy-message" style="display: none;">
+                                <strong><span id="sbntpy-value"></span> total pack-years</strong>
+                                <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
+                                   title="Pack-Years calculation"
+                                   data-content="Pack-Years is calculated by multiplying the average number of packs per day by
+                                the number of years smoking. For example: a person who has smoked 15 cigarettes a day for 40 years has a (15/20) x 40 = 30 pack-year smoking history."></i>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="d-md-none"/>
+
+
+                    <div class="row">
+                        <div class="col-sm-6 col-xl-8 text-lg-right">
+                            <label for="sbqttq-n" class="col-form-label">Have you ever tried to quit smoking?</label>
+                        </div>
+                        <div class="col form-inline">
+                            <div class="form-group align-top">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="sbqttq" id="sbqttq-n" value="n">
+                                    <label class="form-check-label" for="sbqttq-n">No</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="sbqttq" id="sbqttq-y"
+                                           value="y">
+                                    <label class="form-check-label" for="sbqttq-y">Yes</label>
+                                </div>
+                            </div>
+                            <div class="form-group align-top" id="sbqttq-container">
+                                <label for="sbqttqtb" class="col-form-label">How many times?</label>
+                                <select id="sbqttqtb" name="sbqttqtb" class="form-control form-control-sm ml-2">
+                                    <option value="-" selected>&mdash;</option>
+                                    <option value="a">1</option>
+                                    <option value="b">2–5</option>
+                                    <option value="c">6–10</option>
+                                    <option value="d">10+</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="d-md-none"/>
+
+                    <div class="row" id="sbqly2-container">
+                        <div class="col-sm-6 col-xl-8 text-lg-right">
+                            <label for="sbqly2" class="col-form-label">In the last 12 months, how many times have you
+                                quit smoking for at least 24 hours?</label>
+                        </div>
+                        <div class="form-group col form-inline">
+                            <select id="sbqly2" name="sbqly2" class="form-control form-control-sm">
+                                <option value="-" selected>&mdash;</option>
+                                <option value="a">1</option>
+                                <option value="b">2–5</option>
+                                <option value="c">6–10</option>
+                                <option value="d">10+</option>
+                            </select>
+                        </div>
+                    </div>
+                    <hr class="d-md-none"/>
+
+                    <div class="row">
+                        <div class="col-sm-6 col-xl-8 text-lg-right">
+                            <label for="sbqst" class="col-form-label">Are you seriously thinking of quitting
+                                smoking?</label>
+                        </div>
+                        <div class="form-group col form-inline">
+                            <select id="sbqst" name="sbqst" class="form-control form-control-sm">
+                                <option value="-" selected>&mdash;</option>
+                                <option value="y">yes, within the next 30 days</option>
+                                <option value="m">yes, within the next six months</option>
+                                <option value="n">no, not thinking of quitting</option>
+                            </select>
+                        </div>
+                    </div>
+                    <hr class="d-md-none"/>
+
+                    <div class="row">
+                        <div class="col-sm-6 col-xl-8 text-lg-right">
+                            <label for="sbcpd-n" class="col-form-label">Smoking cessation information or counseling was
+                                offered to subject</label>
+                        </div>
+                        <div class="col form-inline">
+                            <div class="form-group align-top">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="sbcpd" id="sbcpd-n" value="n">
+                                    <label class="form-check-label" for="sbcpd-n">No</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="sbcpd" id="sbcpd-y"
+                                           value="y">
+                                    <label class="form-check-label" for="sbcpd-y">Yes</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="d-md-none"/>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-6 col-xl-8 text-lg-right">
+                        <label for="sbsews-n" class="col-form-label">After age 18, did you work for more than one year
+                            in a worksite where smoking was allowed?</label>
+                    </div>
+                    <div class="col form-inline">
+                        <div class="form-group align-top">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbsews" id="sbsews-n" value="n">
+                                <label class="form-check-label" for="sbsews-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbsews" id="sbsews-y"
+                                       value="y">
+                                <label class="form-check-label" for="sbsews-y">Yes</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-xl-8 text-lg-right">
+                        <label for="sbsehs-n" class="col-form-label">Did you ever work for more than one year in a job
+                            where you were exposed to other people’s tobacco smoke?</label>
+                    </div>
+                    <div class="col form-inline">
+                        <div class="form-group align-top">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbsehs" id="sbsehs-n" value="n">
+                                <label class="form-check-label" for="sbsehs-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbsehs" id="sbsehs-y"
+                                       value="y">
+                                <label class="form-check-label" for="sbsehs-y">Yes</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row" id="sbsehs-container">
+                    <div class="col">
+                        <label for="sbsehs-n" class="col-form-label">List the occasions from the most
+                            recent:</label>
+                        <table class="table">
+                            <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Age Range</th>
+                                <th scope="col">Job</th>
+                                <th scope="col">Smoking</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!--TODO: Repeat N times-->
+                            <tr>
+                                <td><input type="text" name="sbsehsa1" class="form-control"/></td>
+                                <td><input type="text" name="sbsehsj1" class="form-control"/></td>
+                                <td>
+                                    <div class="form-group align-top">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="sbsehsr1"
+                                                   id="sbsehsr1-n" value="n">
+                                            <label class="form-check-label" for="sbsehsr1-n">not permitted</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="sbsehsr1"
+                                                   id="sbsehsr1-r" value="r">
+                                            <label class="form-check-label" for="sbsehsr1-r">restricted</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="sbsehsr1"
+                                                   id="sbsehsr1-y" value="y">
+                                            <label class="form-check-label" for="sbsehsr1-y">allowed
+                                                anywhere</label>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" name="sbsehsa2" class="form-control"/></td>
+                                <td><input type="text" name="sbsehsj2" class="form-control"/></td>
+                                <td>
+                                    <div class="form-group align-top">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="sbsehsr2"
+                                                   id="sbsehsr2-n" value="n">
+                                            <label class="form-check-label" for="sbsehsr2-n">not permitted</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="sbsehsr2"
+                                                   id="sbsehsr2-r" value="r">
+                                            <label class="form-check-label" for="sbsehsr2-r">restricted</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="sbsehsr2"
+                                                   id="sbsehsr2-y" value="y">
+                                            <label class="form-check-label" for="sbsehsr2-y">allowed
+                                                anywhere</label>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-xl-8 text-lg-right">
+                        <label for="sbhsy-n" class="col-form-label">Did anyone in your house smoke in the home while you
+                            were under 18?</label>
+                    </div>
+                    <div class="col form-inline">
+                        <div class="form-group align-top">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbhsy" id="sbhsy-n" value="n">
+                                <label class="form-check-label" for="sbhsy-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbhsy" id="sbhsy-y"
+                                       value="y">
+                                <label class="form-check-label" for="sbhsy-y">Yes</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-xl-8 text-lg-right">
+                        <label for="sbhsyh-n" class="col-form-label">Was smoking allowed inside the house?</label>
+                    </div>
+                    <div class="col form-inline">
+                        <div class="form-group align-top">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbhsyh" id="sbhsyh-n" value="n">
+                                <label class="form-check-label" for="sbhsyh-n">Not permitted</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbhsyh" id="sbhsyh-r"
+                                       value="y">
+                                <label class="form-check-label" for="sbhsyh-r">restricted</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbhsyh" id="sbhsyh-y"
+                                       value="y">
+                                <label class="form-check-label" for="sbhsyh-y">allowed anywhere</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-xl-8 text-lg-right">
+                        <label for="sbmsy-n" class="col-form-label">Did your mother/primary caregiver smoke when you
+                            were under age 7?</label>
+                    </div>
+                    <div class="col form-inline">
+                        <div class="form-group align-top">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmsy" id="sbmsy-n" value="n">
+                                <label class="form-check-label" for="sbmsy-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmsy" id="sbmsy-y"
+                                       value="y">
+                                <label class="form-check-label" for="sbmsy-y">Yes</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-xl-8 text-lg-right">
+                        <label for="sbmst-n" class="col-form-label">Did your mother/primary caregiver smoke when you
+                            were ages 7–18?</label>
+                    </div>
+                    <div class="col form-inline">
+                        <div class="form-group align-top">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmst" id="sbmst-n" value="n">
+                                <label class="form-check-label" for="sbmst-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbmst" id="sbmst-y"
+                                       value="y">
+                                <label class="form-check-label" for="sbmst-y">Yes</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-xl-8 text-lg-right">
+                        <label for="sbosy-n" class="col-form-label">Did anyone else beside your mother/primary caregiver
+                            smoke in the home when you were under 18?</label>
+                    </div>
+                    <div class="col form-inline">
+                        <div class="form-group align-top">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbosy" id="sbosy-n" value="n">
+                                <label class="form-check-label" for="sbosy-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbosy" id="sbosy-y"
+                                       value="y">
+                                <label class="form-check-label" for="sbosy-y">Yes</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-xl-8 text-lg-right">
+                        <label for="sbslws-n" class="col-form-label">Do you currently live with a smoker?</label>
+                    </div>
+                    <div class="col form-inline">
+                        <div class="form-group align-top">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbslws" id="sbslws-n" value="n">
+                                <label class="form-check-label" for="sbslws-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbslws" id="sbslws-y"
+                                       value="y">
+                                <label class="form-check-label" for="sbslws-y">Yes</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-xl-8 text-lg-right">
+                        <label for="sbhso-n" class="col-form-label">After age 18, did you live with someone for more
+                            than one year who smoked in your presence?</label>
+                    </div>
+                    <div class="col form-inline">
+                        <div class="form-group align-top">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbhso" id="sbhso-n" value="n">
+                                <label class="form-check-label" for="sbhso-n">No</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sbhso" id="sbhso-y"
+                                       value="y">
+                                <label class="form-check-label" for="sbhso-y">Yes</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <div class="row" id="sbhso-container">
+                    <div class="col">
+                        <label for="sbsehs-n" class="col-form-label">If yes, at what ages did you live with someone who
+                            smoked around you and how much did they smoke? (List the occasions from the most
+                            recent)</label>
+                        <table class="table ">
+                            <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Age Range</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Smoking</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!--TODO: Repeat N times-->
+                            <tr>
+                                <td><input type="text" name="sbhsa1" class="form-control"/></td>
+                                <td>
+                                    <select name="sbhsas1" class="form-control">
+                                        <option value="-">&mdash;</option>
+                                        <option value="a">1–14 cigarettes a day</option>
+                                        <option value="b">15–24 cigarettes a day</option>
+                                        <option value="c">25+ cigarettes a day</option>
+                                        <option value="d">Don’t know</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="form-group align-top">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="sbhsasr1"
+                                                   id="sbhsasr1-n" value="n">
+                                            <label class="form-check-label" for="sbhsasr1-n">not permitted</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="sbhsasr1"
+                                                   id="sbhsasr1-r" value="r">
+                                            <label class="form-check-label" for="sbhsasr1-r">restricted</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="sbhsasr1"
+                                                   id="sbhsasr1-y" value="y">
+                                            <label class="form-check-label" for="sbhsasr1-y">allowed
+                                                anywhere</label>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" name="sbhsa2" class="form-control"/></td>
+                                <td>
+                                    <select name="sbhsas2" class="form-control">
+                                        <option value="-">&mdash;</option>
+                                        <option value="a">1–14 cigarettes a day</option>
+                                        <option value="b">15–24 cigarettes a day</option>
+                                        <option value="c">25+ cigarettes a day</option>
+                                        <option value="d">Don’t know</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="form-group align-top">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="sbhsasr2"
+                                                   id="sbhsasr2-n" value="n">
+                                            <label class="form-check-label" for="sbhsasr2-n">not permitted</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="sbhsasr2"
+                                                   id="sbhsasr2-r" value="r">
+                                            <label class="form-check-label" for="sbhsasr2-r">restricted</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="sbhsasr2"
+                                                   id="sbhsasr2-y" value="y">
+                                            <label class="form-check-label" for="sbhsasr2-y">allowed
+                                                anywhere</label>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                <hr class="d-md-none"/>
+
+                <button type="button" class="btn btn-primary btn-next">Next</button>
+            </div>
+            <div class="tab-pane fade" id="health" role="tabpanel" aria-labelledby="health-tab">
+                <div class="row">
+                    <div class="col">
+                        <p>1. Overall, how would you rate your health during the <em>past 4 weeks</em>?</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="1" name="sbsfb1" id="sbsfb1-1">
+                            <label class="form-check-label" for="sbsfb1-1">
+                                Excellent
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="2" name="sbsfb1" id="sbsfb1-2">
+                            <label class="form-check-label" for="sbsfb1-2">
+                                Very Good
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="3" name="sbsfb1" id="sbsfb1-3">
+                            <label class="form-check-label" for="sbsfb1-3">
+                                Good
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="4" name="sbsfb1" id="sbsfb1-4">
+                            <label class="form-check-label" for="sbsfb1-4">
+                                Fair
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="5" name="sbsfb1" id="sbsfb1-5">
+                            <label class="form-check-label" for="sbsfb1-5">
+                                Poor
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="6" name="sbsfb1" id="sbsfb1-6">
+                            <label class="form-check-label" for="sbsfb1-6">
+                                Very Poor
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col alert alert-warning">SF-12 Questions...</div>
+                </div>
+            </div>
+            <hr class="d-md-none"/>
+
+        </div>
+    </form>
+</div>
+
+<script language="JavaScript">
+    /**
+     * Enable/Disable fields based on if the source's value is equivalent to a a particular value or values.
+     * Supports field value restoration.
+     *
+     * @todo consider converting to a jQuery plugin.
+     *
+     * @param {string|object} source - triggering field
+     * @param {string|function} sourceValues - values to assert against the actual. When the source field value equals one of these,
+     * the fields will become enabled. This argument can also be a callback function that determines disablement. function(actualValue)
+     * A return of "true" means they should be enabled.
+     * @param {string|object} fields - fields to toggle when source value is equal to one of the sourceValues (delimited by ",")
+     * @param {string} additionalDisabledClasses - additional classes to append to each field in fields when it is disabled
+     */
+    function conditionallyEnable(source, sourceValues, fields, additionalDisabledClasses) {
+        var $source = (typeof source === 'string') ? $(source) : source;
+
+        var enableCallback = (typeof sourceValues === 'function') ? sourceValues : function (actualValue) {
+            var sourceValuesArray = $.map(sourceValues.split(","), $.trim);
+            var response = $.inArray(actualValue, sourceValuesArray) > -1;
+            return response;
+        };
+
+        $source.on('change', function () {
+            var $el = $(this);
+            var actualValue = $el.is(":checkbox") ? ($el.is(":checked") ? $el.val() : "") : $el.val();
+
+            var enabled = enableCallback(actualValue);
+
+            console.log("conditionallyEnable::change() triggered. id=" + $el.prop("id") + ", enabled=" + enabled);
+
+            //toggle input fields within the container.
+            var $container = (typeof fields === 'string') ? $(fields) : fields;
+            if (enabled) {
+                enableContainer($container, additionalDisabledClasses);
+            }
+            else {
+                disableContainer($container, additionalDisabledClasses);
+            }
+
+        });
+
+        if ($source.first().is(":radio")) {
+            //trigger the change event on the first checked or non-matching radio button
+            $.merge(
+                $source.filter(":checked"),
+                $source.filter(":not(':checked')")
+            ).first().trigger("change");
+        }
+        else {
+            $source.trigger("change");
+        }
+    }
+
+    function enableContainer($container, additionalDisabledClasses) {
+        $container.find("input, select, textarea")
+            .addBack('input, select, textarea') //include container object if it's actually an input.
+            .prop("disabled", function (i, currentlyDisabled) {
+                if (true == currentlyDisabled) { //if value has changed
+                    if ($(this).is(":checkbox")) {
+                        $(this).prop("checked", $(this).data("previous-value") == "checked");
+                    }
+                    else { //other types of controls
+                        $(this).val($(this).data("previous-value")); //restore old value
+                    }
+                    $(this).trigger("change");
+                }
+                return false;
+            });
+
+        // make labels appear disabled.
+        $container.find("label")
+            .addBack("label") //add the $field itself if is a label.
+            .toggleClass("text-muted", false);
+
+        //when the value matches, always display the container, otherwise hide it on screens smaller than md.
+        if (additionalDisabledClasses) {
+            $container.toggleClass(additionalDisabledClasses, false);
+        }
+
+    }
+
+    function disableContainer($container, additionalDisabledClasses) {
+        $container.find("input, select, textarea")
+            .addBack('input, select, textarea') //include container object if it's actually an input.
+            .prop("disabled", function (i, currentlyDisabled) {
+                if (false == currentlyDisabled) { //if value has changed
+                    if ($(this).is(":checkbox")) {
+                        //save the old value
+                        $(this).data("previous-value", $(this).is(":checked") ? "checked" : "");
+                        $(this).prop("checked", false);
+
+                    }
+                    else { //other types of controls
+                        $(this).data("previous-value", $(this).val()); //save the old value
+                        $(this).val("");
+                    }
+                    $(this).trigger("change");
+                }
+                return true;
+            });
+
+        // make labels appear disabled.
+        $container.find("label")
+            .addBack("label") //add the $field itself if is a label.
+            .toggleClass("text-muted", true);
+
+        //when the value matches, always display the container, otherwise hide it on screens smaller than md.
+        if (additionalDisabledClasses) {
+            $container.toggleClass(additionalDisabledClasses, true);
+        }
+
+    }
+
+    $(function () {
+        //temporarily (debugging form development), jump to specific tab
+        $('#scan-order-tab').tab('show');
+
+        //hooks for calculating BMI on fields that would affect it (height, weight, units of each)
+        $("input[id^='sbpw'],input[id^='sbph']").on('change', function (e) {
+            var height = $("#sbph").val(), heightUnits = $("#sbphu").val();
+            var weight = $("#sbpw").val(), weightUnits = $("#sbpwu").val();
+            if (height > 0 && weight > 0) {
+                var bmi = VAPALS.computeBMI(parseInt(height), heightUnits, parseInt(weight), weightUnits);
+                if (bmi > 0) {
+                    $("#sbbmi").val(bmi);
+                    $("#bmi-value").text(bmi);
+                    $("#bmi-descriptor").text(VAPALS.computeBmiDescriptor(bmi));
+                    $("#bmi-message").show();
+                }
+                else {
+                    $("#sbbmi").val("");
+                    $("#bmi-message").hide();
+                }
+            }
+        }).first().trigger("change"); //trigger on page load for existing data
+
+        //hook onto DOB field to calculate age.
+        $("#sbdob").on('change', function (e) {
+            var dateString = $("#sbdob").val();
+            if (dateString) {
+                var m = moment(dateString, ["MM-DD-YYYY", "DD-MM", "DD-MM-YYYY", "YYYY-MM-DD", "DD/MMM/YYYY"]);
+                if (m.isValid()) {
+                    $("#sbage").val(VAPALS.computeAge(m.toDate()))
+                }
+            }
+        }).trigger("change"); //trigger on page load for existing data
+
+        //hook for calculating Pulmonary function test percentage (FFR)
+        $("#sbfev1, #sbfvc").on('change', function (e) {
+            var fev1 = $("#sbfev1").val();
+            var fvc = $("#sbfvc").val();
+            if (fev1 > 0 && fvc > 0) {
+                var ffr = Math.round(100.0 * fev1 / fvc);
+                if (ffr > 0) {
+                    $("#sbffr").val(ffr);
+                    $("#ffr-value").text(ffr);
+                    $("#ffr-message").show();
+                }
+                else {
+                    $("#sbffr").val("");
+                    $("#ffr-message").hide();
+                }
+            }
+            else {
+                $("#ffr-message").hide();
+            }
+        }).first().trigger('change');
+
+        //hook for years since quit
+        $("[name^=sbsdlc]").on('change', function (e) {
+            var now = moment();
+            var m = (parseInt($("#sbsdlcm").val()) - 1) || now.month();
+            var d = parseInt($("#sbsdlcd").val()) || now.date();
+            var y = parseInt($("#sbsdlcy").val()) || now.year();
+            var quitDate = moment({month: m, date: d, year: y});
+            var durationYears = now.diff(quitDate, 'years', true).toFixed(1);
+            if (durationYears > 0) {
+                $("#sbsdlc-value").text(durationYears);
+                $("#sbsdlc-message").show();
+            }
+            else {
+                $("#sbsdlc-value").text("");
+                $("#sbsdlc-message").hide();
+            }
+        }).first().trigger('change');
+
+        //hook for pack years calculation
+        $("[name='sbcdpw'],[name='sbcppd'],[name='sbcdur']").on('change', function (e) {
+            var daysPerWeek = $("[name='sbcdpw']").val(),
+                packsPerDay = $("[name='sbcppd']").val(),
+                years = $("[name='sbcdur']").val(),
+                totalPackYears;
+            if (daysPerWeek && packsPerDay && years) {
+                var packsPerYear = packsPerDay * (daysPerWeek / 7.0);
+                totalPackYears = (packsPerYear * years).toFixed(1);
+                $("[name='sbntpy']").val(totalPackYears);
+                $("#sbntpy-value").text(totalPackYears);
+                $("#sbntpy-message").show();
+            } else {
+                $("[name='sbntpy']").val("");
+                $("#sbntpy-value").text("");
+                $("#sbntpy-message").hide();
+            }
+        }).first().trigger('change');
+
+        //conditionally enabled fields
+        var hideWhenSmall = "d-none d-md-flex"; //hide at all screen widths, except when MD or larger
+        conditionallyEnable("#sbrc", "o", "#sbrcs-container", "d-none d-md-inline"); // when race is "other", enable "race other"
+        conditionallyEnable("[name=sbmly]", "y", "#sbmlyo-container", "d-none d-md-inline"); //military service
+        conditionallyEnable("[name=sbmeq]", "y", "#sbmeq-container", "d-none d-md-block"); //entire CT scan page
+        conditionallyEnable("[name=sbfc]", "y", "#sbfc-container", hideWhenSmall);
+        conditionallyEnable("[name=sbhco]", "y", "#sbhco-container", hideWhenSmall);
+        conditionallyEnable("[name=sbmpa]", "y", "#sbmpa-container", hideWhenSmall);
+        conditionallyEnable("[name=sbmpc]", "y", "#sbmpc-container", hideWhenSmall);
+        conditionallyEnable("[name=sbmpht]", "y", "#sbmpht-container", hideWhenSmall);
+        conditionallyEnable("[name=sbmphc]", "y", "#sbmphc-container", hideWhenSmall);
+        conditionallyEnable("[name=sbmpas]", "y", "#sbmpas-container", hideWhenSmall);
+        conditionallyEnable("[name=sbmpmi]", "y", "#sbmpmi-container", hideWhenSmall);
+        conditionallyEnable("[name=sbmps]", "y", "#sbmps-container", hideWhenSmall);
+        conditionallyEnable("[name=sbmppv]", "y", "#sbmppv-container", hideWhenSmall);
+        conditionallyEnable("[name=sbmpd]", "y", "#sbmpd-container", hideWhenSmall);
+        conditionallyEnable("[name=sbmpld]", "y", "#sbmpld-container", hideWhenSmall);
+        conditionallyEnable("[name=sbmprd]", "y", "#sbmprd-container", hideWhenSmall);
+        conditionallyEnable("[name=sblcs]", "y", $("#sblcs-container").find("label, input[id!=sbwcos]"), hideWhenSmall);
+        conditionallyEnable("#sbwco", "o", "#sbwcos", hideWhenSmall);
+        conditionallyEnable("[name=sbact]", function (actualValue) {
+            return actualValue != '-' && actualValue != 'e';
+        }, "#sbact-container", "d-none d-md-inline");
+        conditionallyEnable("[name=sbahpft]", "y", "#sbahpft-container", hideWhenSmall);
+        conditionallyEnable("#sbahaoo", "o", "#sbahas", hideWhenSmall); // when race is "other", enable "race other"
+        conditionallyEnable("[name=sbsru]", "n", "#sbsru-container", hideWhenSmall);
+        conditionallyEnable("[name=sbqttq]", "y", "#sbqttq-container, #sbqly2-container", hideWhenSmall);
+        $("[name=sbshsa]").on('change', function (e) {
+            var v = $("[name=sbshsa]:checked").val();
+            if (v == "n") {
+                disableContainer($("#smoking-container"), "d-none d-md-inline");
+                enableContainer($("#non-smoking-container"), "d-none d-md-inline");
+            }
+            else if (v == "y") {
+                disableContainer($("#non-smoking-container"), "d-none d-md-inline");
+                enableContainer($("#smoking-container"), "d-none d-md-inline");
+            }
+        }).first().trigger('change');
+        conditionallyEnable("[name=sbsehs]", "y", "#sbsehs-container", hideWhenSmall);
+
+
+        // after toggling all the fields, review completeness of required fields on each tab.
+        $.each($("[data-toggle=tab]"), function (index, tabLink) {
+            var $tab = $(tabLink),
+                $container = $($tab.attr("href")),
+                $requiredFields = $container.find("[required], [data-fv-notempty=true]").filter(":enabled");
+
+            var emptyRequiredFields = $requiredFields.filter(function () {
+                var $c = $(this);
+                var value = $c.val();
+                if ($c.is(":radio")) {
+                    var radioName = $c.attr("name")
+                    value = $("input[type='radio'][name='" + radioName + "']:checked").val();
+                }
+                return typeof value === "undefined" || value === "";
+            });
+            if (emptyRequiredFields.length == 0) {
+                $tab.addClass("complete");
+            }
+        });
+
+        //setup tab navigation next buttons
+        $(".btn-next").on("click", function () {
+            var $currentTab = $("#myTabContent").find("> div:visible");
+            var $nextTab = $currentTab.next();
+            var nextTabId = $nextTab.attr("id");
+            // CB: form validation occurs on tab hide event
+            $("#myTab").find("a[href='#" + nextTabId + "']").tab('show');
+        });
+
+        //Initialize Form Validation
+        $("form").formValidation({framework: 'bootstrap4'});
+
+        // run validation on section before tab switching
+        $('a[data-toggle="tab"]').on('hide.bs.tab', function (e) {
+            var currentTab = e.target;
+            var tabContentSelector = $(currentTab).attr("href");
+            var fv = $("form.validated").data('formValidation');
+            var valid = fv.validateContainer(tabContentSelector).isValid();
+            if (!valid) {
+                e.preventDefault() // to cancel the navigation
+            }
+        });
+
+        //Globally enabled popovers for things like help text.
+        $('[data-toggle="popover"]').popover({trigger: 'hover'});
+    });
+
+</script>
+
+
+<footer>
+    <div class="container-fluid" style="max-width:1550px">
+        <hr/>
+        <a href="https://issues.osehra.org/browse/VAP" target="_blank">Submit feedback</a>
+    </div>
+</footer>
+</body>
+</html>

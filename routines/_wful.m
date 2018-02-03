@@ -1,4 +1,4 @@
-%wful ;ven/toad-write form: development log ;2018-01-31T20:03Z
+%wful ;ven/toad-write form: development log ;2018-02-03T17:01Z
  ;;1.8;Mash;
  ;
  ; %wful is the Write Form Library's primary-development log.
@@ -12,28 +12,42 @@
  ;
  ;
  ;
- ;@primary-dev: George P. Lilly (gpl)
- ;   gpl@vistaexpertise.net
+ ;@routine-credits
+ ;@primary-dev: Frederick D. S. Marshall (toad)
+ ; toad@vistaexpertise.net
  ;@primary-dev-org: Vista Expertise Network (ven)
- ;   http://vistaexpertise.net
- ;@copyright: 2017/2018, mdc, all rights reserved
+ ; http://vistaexpertise.net
+ ;@copyright: 2017/2018, toad, all rights reserved
  ;@license: Apache 2.0
- ;   https://www.apache.org/licenses/LICENSE-2.0.html
+ ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-01-31T20:03Z
+ ;@last-updated: 2018-02-03T17:01Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Write Form - %wf
  ;@version: 1.8T04
  ;@release-date: not yet released
  ;@patch-list: none yet
  ;
+ ;@module-credits
+ ;@primary-dev: George P. Lilly (gpl)
+ ; gpl@vistaexpertise.net
  ;@project: VA Partnership to Increase Access to Lung Screening
  ; (VA-PALS)
- ;@funding-org: 2017/2018, Bristol-Myers Squibb Foundation (bmsf)
- ;   https://www.bms.com/about-us/responsibility/bristol-myers-squibb-foundation.html
+ ; http://va-pals.org/
+ ;@funding: 2017, gpl
+ ;@funding: 2017, ven
+ ;@funding: 2017/2018, Bristol-Myers Squibb Foundation (bmsf)
+ ; https://www.bms.com/about-us/responsibility/bristol-myers-squibb-foundation.html
+ ;@partner-org: Veterans Affairs Office of Rural health
+ ; https://www.ruralhealth.va.gov/
+ ;@partner-org: International Early Lung Cancer Action Program (I-ELCAP)
+ ; http://ielcap.com/
+ ;@partner-org: Paraxial Technologies
+ ; http://paraxialtech.com/
+ ;@partner-org: Open Source Electronic Health Record Alliance (OSEHRA)
+ ; https://www.osehra.org/groups/va-pals-open-source-project-group
  ;
- ;@additional-dev: Frederick D. S. Marshall (toad)
- ;
+ ;@module-log
  ; 2017-02-27/09-18 ven/gpl %*1.7t03 %yottaq: original routine developed
  ;
  ; 2017-09-25 ven/gpl %*1.7t03 %yottaq: split lines containing >1
@@ -99,16 +113,16 @@
  ; handle quotes.
  ;
  ; 2018-01-22 ven/toad %1.8t04 %wful: create development-log routine.
- ; %wf: convert entry points to ppi/api style & routine to mash style,
- ;   rearrange subroutines.
- ; %wfhform: passim add header comments, r/all local calls w/calls through
- ;   ^%wf, spell out mumps language elements, add do-dot quits, white space,
- ; rearrange subroutines.
+ ;  %wf: passim hdr comments, mash style, rearrange subroutines.
+ ;  %wfhform: passim hdr comments, spell out mumps language elements,
+ ; add do-dot quits, white space, rearrange subroutines.
  ;
- ; 2018-01-31 ven/toad %1.8t04 %wful: expand hdr comments to include
- ; project & partner-org & refine copyright.
+ ; 2018-01-31/02-03 ven/toad %1.8t04 %wful: hdr comments include project
+ ; & partner-org & refine copyright.
+ ;  %wf & %wfhform: hdr comments refine credits, add to-do; finish laying
+ ; out sections & rearranging subroutines.
  ;
- ;@contents
+ ;@module-contents
  ; %wf: write form ppi & api library
  ; %wffiler: fileman-to-form interfaces
  ; %wffmap: fileman-to-form maps

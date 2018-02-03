@@ -1,7 +1,8 @@
-%wfhform	;ven/gpl-write form: html form get & post ;2018-01-22T23:51Z
+%wfhform ;ven/gpl-write form: html form get & post ;2018-02-03T17:16Z
  ;;1.8;Mash;
  ;
- ; %wfhform implements the Write Form Library's html form get & post web services.
+ ; %wfhform implements the Write Form Library's html form get & post web
+ ; services. It will be broken up into many routines & further annotated.
  ; It is currently untested & in progress.
  ;
  quit  ; no entry from top
@@ -12,27 +13,36 @@
  ;
  ;
  ;
+ ;@routine-credits
  ;@primary-dev: George P. Lilly (gpl)
  ;   gpl@vistaexpertise.net
  ;@primary-dev-org: Vista Expertise Network (ven)
  ;   http://vistaexpertise.net
- ;@copyright: 2017/2018, ven, all rights reserved
+ ;@copyright: 2017/2018, gpl, all rights reserved
  ;@license: Apache 2.0
  ;   https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-01-22T23:51Z
+ ;@last-updated: 2018-02-03T17:16Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Write Form - %wf
  ;@version: 1.8T04
  ;@release-date: not yet released
  ;@patch-list: none yet
  ;
+ ;@additional-dev: Frederick D. S. Marshall (toad)
+ ; toad@vistaexpertise.net
+ ;
+ ;@to-do
+ ; %wf: convert entry points to ppi/api style
+ ; r/all local calls w/calls through ^%wf
+ ; break up into smaller routines & change branches from %wf
+ ;
  ;@contents
- ; [too big, break up into smaller routines & change branches from %wf]
+ ; [too big, break up]
  ;
  ;
  ;
- ;@section 1 all the subroutines, in need of breaking up
+ ;@section 1 wsGetForm^%wf web service & ppis
  ;
  ;
  ;
@@ -266,6 +276,10 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  ;
  ;
  ;
+ ;@section 2 wsGetForm^%wf support subroutines
+ ;
+ ;
+ ;
 formLabel(form) ; label to use for form's post url
  ;
  ;@stanza 1 invocation, binding, & branching
@@ -344,6 +358,10 @@ getTemplate(form) ; extrinsic returns the name of the template file
  ;
  ;
  ;
+ ;@section 3 wsGetForm^%wf error handling
+ ;
+ ;
+ ;
 redactErr(html,err,indx) ; redact error message section in html & clear error array
  ;
  ;@stanza 1 invocation, binding, & branching
@@ -388,35 +406,6 @@ redactErr(html,err,indx) ; redact error message section in html & clear error ar
  ;
  ;
  ;
-testRedactErr2 ; test redactErr2^%wf
- ;
- ;@stanza 1 invocation, binding, & branching
- ;
- ;ven/gpl;private;procedure;
- ;@signature
- ; do testRedactErr2^%wf
- ;@called-by: none
- ;@calls
- ; redactErr2^%wf
- ;@input: none
- ;@output
- ; report to screen results of removing error from field
- ;
- ; [description tbd]
- ;
- ;@stanza 2 do replacements
- ;
- new g set g="<th class=""serv"">Served in the military?<span id=""sbmly-fielderror""><a name=""err-2"" href=""#err-2e""><img src=""see/error.png""/>2</a></span></th>"
- new gg set gg(1)=g
- do redactErr2^%wf("gg",1)
- write !,gg(1)
- ;
- ;@stanza 3 termination
- ;
- quit  ; end of testRedactErr2^%wf
- ;
- ;
- ;
 redactErr2(html,indx) ; redact the error symbol on a field
  ;
  ;@stanza 1 invocation, binding, & branching
@@ -452,6 +441,35 @@ redactErr2(html,indx) ; redact the error symbol on a field
  ;@stanza 3 termination
  ;
  quit  ; end of redactErr2^%wf
+ ;
+ ;
+ ;
+testRedactErr2 ; test redactErr2^%wf
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;
+ ;@signature
+ ; do testRedactErr2^%wf
+ ;@called-by: none
+ ;@calls
+ ; redactErr2^%wf
+ ;@input: none
+ ;@output
+ ; report to screen results of removing error from field
+ ;
+ ; [description tbd]
+ ;
+ ;@stanza 2 do replacements
+ ;
+ new g set g="<th class=""serv"">Served in the military?<span id=""sbmly-fielderror""><a name=""err-2"" href=""#err-2e""><img src=""see/error.png""/>2</a></span></th>"
+ new gg set gg(1)=g
+ do redactErr2^%wf("gg",1)
+ write !,gg(1)
+ ;
+ ;@stanza 3 termination
+ ;
+ quit  ; end of testRedactErr2^%wf
  ;
  ;
  ;
@@ -513,85 +531,39 @@ putErrMsg2(html,lin,msg,err) ; style 2 of error messages - top of screen
  ;
  ;
  ;
-delText(ln,begin,end,ins) ; delete text between begin & end
- ;
- ;@stanza 1 invocation, binding, & branching
- ;
- ;ven/gpl;private;function;
- ;@signature
- ; $$delText^%wf(.ln,begin,end,ins)
- ;@branches-from
- ; $$delText^%wf
- ;@called-by
- ; redactErr2^%wf
- ;@calls: none
- ;@input
- ; begin = substring preceding text to delete
- ; end = substring following text to delete
- ; ins = [optional] text to insert
- ;@throughput
- ;.ln = line of html to change
- ;@examples [tbd]
- ;@tests [tbd]
- ;
- ; [description tbd]
- ;
- ;@stanza 2 delete/insert text
- ;
- new loc1 set loc1=$find(ln,begin)
- new loc2 set loc2=$find(ln,end)
- new haveins set haveins=0
- if $get(ins)'="" set haveins=1
- else  set ins=""
- set ln=$extract(ln,1,loc1-1)_ins_$extract(ln,loc2-$length(end),$length(ln))
- ;
- ;@stanza 3 termination
- ;
- quit 1 ; end of $$delText^%wf
- ;
- ;
- ;
-dateFormat(val,form,name) ; reformat date in elcap format
+insError(ln,msg) ; inserts an error message into ln, passed by reference
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
  ;ven/gpl;private;procedure;
  ;@signature
- ; do dateFormat^%wf(.val,form,name)
+ ; do insError^%wf(.ln,.msg)
  ;@branches-from
- ; dateFormat^%wf
+ ; insError^%wf
  ;@called-by
- ; wsGetForm
+ ; wsGetForm^%wf
+ ; debugFld^%wf
  ;@calls
- ; $$getFieldSpec^%wffmap
- ; ^%DT
- ; $$FMTE^XLFDT
+ ; replace^%wf
  ;@input
- ; form = 
- ; name = 
+ ;.msg = error message to insert
  ;@throughput
- ;.val = date
+ ;.ln = line to change by inserting error message
  ;@examples [tbd]
  ;@tests [tbd]
  ;
  ; [description tbd]
  ;
- ;@stanza 2 reformat date
+ ;@stanza 2 insert error message
  ;
- new spec set spec=$$getFieldSpec^%wffmap(form,name)
- if spec'["D" quit  ; not a date field
- new X,Y
- set X=val
- do ^%DT
- if Y=-1 quit  ; invalid date, can't reformat
- new dtmp set dtmp=$$FMTE^XLFDT(Y,"D") ; default exteral date format
- if $length(dtmp)=12 set val=$extract(dtmp,5,6)_"/"_$extract(dtmp,1,3)_"/"_$extract(dtmp,9,12) ; jan 01,1987
- else  set val=dtmp
- if $length(val)=8 set val=$extract(val,5,8)
+ new errins set errins="<span class=""alert"" style=""font-size: 0.9em;"">"_msg_"</span>"
+ if ln["</input>" do replace^%wf(.ln,"</input>","</input>"_errins)  quit  ;
+ if ln["/>" do replace^%wf(.ln,"/>","/>"_errins)  quit  ;
+ if ln[">" set ln=ln_"</input>"_errins
  ;
  ;@stanza 3 termination
  ;
- quit  ; end of dateFormat^%wf
+ quit  ; end of insError^%wf
  ;
  ;
  ;
@@ -636,6 +608,48 @@ debugFld(ln,form,name) ; insert debugging info re field
  ;
  ;
  ;
+ ;@section 4 wsGetForm^%wf text manipulation
+ ;
+ ;
+ ;
+delText(ln,begin,end,ins) ; delete text between begin & end
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;function;
+ ;@signature
+ ; $$delText^%wf(.ln,begin,end,ins)
+ ;@branches-from
+ ; $$delText^%wf
+ ;@called-by
+ ; redactErr2^%wf
+ ;@calls: none
+ ;@input
+ ; begin = substring preceding text to delete
+ ; end = substring following text to delete
+ ; ins = [optional] text to insert
+ ;@throughput
+ ;.ln = line of html to change
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ; [description tbd]
+ ;
+ ;@stanza 2 delete/insert text
+ ;
+ new loc1 set loc1=$find(ln,begin)
+ new loc2 set loc2=$find(ln,end)
+ new haveins set haveins=0
+ if $get(ins)'="" set haveins=1
+ else  set ins=""
+ set ln=$extract(ln,1,loc1-1)_ins_$extract(ln,loc2-$length(end),$length(ln))
+ ;
+ ;@stanza 3 termination
+ ;
+ quit 1 ; end of $$delText^%wf
+ ;
+ ;
+ ;
 replace(ln,cur,repl) ; replace current with replacment in line ln
  ;
  ;@stanza 1 invocation, binding, & branching
@@ -676,39 +690,7 @@ replace(ln,cur,repl) ; replace current with replacment in line ln
  ;
  ;
  ;
-insError(ln,msg) ; inserts an error message into ln, passed by reference
- ;
- ;@stanza 1 invocation, binding, & branching
- ;
- ;ven/gpl;private;procedure;
- ;@signature
- ; do insError^%wf(.ln,.msg)
- ;@branches-from
- ; insError^%wf
- ;@called-by
- ; wsGetForm^%wf
- ; debugFld^%wf
- ;@calls
- ; replace^%wf
- ;@input
- ;.msg = error message to insert
- ;@throughput
- ;.ln = line to change by inserting error message
- ;@examples [tbd]
- ;@tests [tbd]
- ;
- ; [description tbd]
- ;
- ;@stanza 2 insert error message
- ;
- new errins set errins="<span class=""alert"" style=""font-size: 0.9em;"">"_msg_"</span>"
- if ln["</input>" do replace^%wf(.ln,"</input>","</input>"_errins)  quit  ;
- if ln["/>" do replace^%wf(.ln,"/>","/>"_errins)  quit  ;
- if ln[">" set ln=ln_"</input>"_errins
- ;
- ;@stanza 3 termination
- ;
- quit  ; end of insError^%wf
+ ;@section 5 wsGetForm^%wf field value manipulation
  ;
  ;
  ;
@@ -784,73 +766,6 @@ value(ln,val) ; sets value="@val"
  ;@stanza 3 termination
  ;
  quit  ; end of value^%wf
- ;
- ;
- ;
-uncheck(ln) ; removes 'check="checked"' from ln, passed by reference
- ;
- ;@stanza 1 invocation, binding, & branching
- ;
- ;ven/gpl;private;procedure;
- ;@signature
- ; do uncheck^%wf(.ln)
- ;@branches-from
- ; uncheck^%wf
- ;@called-by
- ; wsGetForm^%wf
- ;@calls
- ; replace^%wf
- ;@throughput
- ;.ln =
- ;@examples [tbd]
- ;@tests [tbd]
- ;
- ; [description tbd]
- ;
- ;@stanza 2 uncheck box or button
- ;
- if ln["checked=" do  ;
- . do replace^%wf(.ln,"checked=""checked""","")
- . if ln["checked=checked" do replace^%wf(.ln,"checked=checked","")
- . quit
- ;
- ;@stanza 3 termination
- ;
- quit  ; end of uncheck^%wf
- ;
- ;
- ;
-check(line,type) ; for radio buttons & checkbox
- ;
- ;@stanza 1 invocation, binding, & branching
- ;
- ;ven/gpl;private;procedure;
- ;@signature
- ; do check^%wf(.line,type)
- ;@branches-from
- ; check^%wf
- ;@called-by
- ; wsGetForm^%wf
- ;@calls
- ; replace^%wf
- ;@input
- ; type = 
- ;@throughput
- ;.line = 
- ;@examples [tbd]
- ;@tests [tbd]
- ;
- ; [description tbd]
- ;
- ;@stanza 2 check box or button
- ;
- new ln set ln=line
- if line["type=""" do replace^%wf(.line,"type="""_type_"""","type="""_type_"""  checked=""checked""")
- else  do replace^%wf(.line,"type="_type,"type="_type_"  checked=""checked""")
- ;
- ;@stanza 3 termination
- ;
- quit  ; end of check^%wf
  ;
  ;
  ;
@@ -930,6 +845,81 @@ setVals(vary,zid,zsid) ; set the values returned from form id for patient zsid
  ;@stanza 3 termination
  ;
  quit  ; end of setVals^%wf
+ ;
+ ;
+ ;
+ ;@section 6 wsGetForm^%wf radio/checkbox manipulation
+ ;
+ ;
+ ;
+uncheck(ln) ; removes 'check="checked"' from ln, passed by reference
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;
+ ;@signature
+ ; do uncheck^%wf(.ln)
+ ;@branches-from
+ ; uncheck^%wf
+ ;@called-by
+ ; wsGetForm^%wf
+ ;@calls
+ ; replace^%wf
+ ;@throughput
+ ;.ln =
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ; [description tbd]
+ ;
+ ;@stanza 2 uncheck box or button
+ ;
+ if ln["checked=" do  ;
+ . do replace^%wf(.ln,"checked=""checked""","")
+ . if ln["checked=checked" do replace^%wf(.ln,"checked=checked","")
+ . quit
+ ;
+ ;@stanza 3 termination
+ ;
+ quit  ; end of uncheck^%wf
+ ;
+ ;
+ ;
+check(line,type) ; for radio buttons & checkbox
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;
+ ;@signature
+ ; do check^%wf(.line,type)
+ ;@branches-from
+ ; check^%wf
+ ;@called-by
+ ; wsGetForm^%wf
+ ;@calls
+ ; replace^%wf
+ ;@input
+ ; type = 
+ ;@throughput
+ ;.line = 
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ; [description tbd]
+ ;
+ ;@stanza 2 check box or button
+ ;
+ new ln set ln=line
+ if line["type=""" do replace^%wf(.line,"type="""_type_"""","type="""_type_"""  checked=""checked""")
+ else  do replace^%wf(.line,"type="_type,"type="_type_"  checked=""checked""")
+ ;
+ ;@stanza 3 termination
+ ;
+ quit  ; end of check^%wf
+ ;
+ ;
+ ;
+ ;@section 7 wsGetForm^%wf field validation
  ;
  ;
  ;
@@ -1130,7 +1120,51 @@ numValid(value,spec,map) ; validate a numeric field
  ;
  ;
  ;
- ;@section ? wsPostForm & parseBody
+dateFormat(val,form,name) ; reformat date in elcap format
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;
+ ;@signature
+ ; do dateFormat^%wf(.val,form,name)
+ ;@branches-from
+ ; dateFormat^%wf
+ ;@called-by
+ ; wsGetForm
+ ;@calls
+ ; $$getFieldSpec^%wffmap
+ ; ^%DT
+ ; $$FMTE^XLFDT
+ ;@input
+ ; form = 
+ ; name = 
+ ;@throughput
+ ;.val = date
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ; [description tbd]
+ ;
+ ;@stanza 2 reformat date
+ ;
+ new spec set spec=$$getFieldSpec^%wffmap(form,name)
+ if spec'["D" quit  ; not a date field
+ new X,Y
+ set X=val
+ do ^%DT
+ if Y=-1 quit  ; invalid date, can't reformat
+ new dtmp set dtmp=$$FMTE^XLFDT(Y,"D") ; default exteral date format
+ if $length(dtmp)=12 set val=$extract(dtmp,5,6)_"/"_$extract(dtmp,1,3)_"/"_$extract(dtmp,9,12) ; jan 01,1987
+ else  set val=dtmp
+ if $length(val)=8 set val=$extract(val,5,8)
+ ;
+ ;@stanza 3 termination
+ ;
+ quit  ; end of dateFormat^%wf
+ ;
+ ;
+ ;
+ ;@section 8 wsPostForm^%wf web service & parseBody ppi
  ;
  ;
  ;
@@ -1266,7 +1300,7 @@ parseBody(rtn,body) ; parse the variables sent by a form
  ;
  ;
  ;
- ;@section ? replaceSrc, replaceAll, & replaceHref, all commented out
+ ;@section 9 commented-out procedures
  ;
  ;
  ;

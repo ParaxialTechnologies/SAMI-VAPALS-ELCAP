@@ -1,4 +1,4 @@
-%wful ;ven/toad-write form: development log ;2018-01-22T23:51Z
+%wful ;ven/toad-write form: development log ;2018-01-31T20:03Z
  ;;1.8;Mash;
  ;
  ; %wful is the Write Form Library's primary-development log.
@@ -16,17 +16,19 @@
  ;   gpl@vistaexpertise.net
  ;@primary-dev-org: Vista Expertise Network (ven)
  ;   http://vistaexpertise.net
- ;@copyright: 2017/2018, ven, all rights reserved
+ ;@copyright: 2017/2018, mdc, all rights reserved
  ;@license: Apache 2.0
  ;   https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-01-22T23:51Z
+ ;@last-updated: 2018-01-31T20:03Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Write Form - %wf
  ;@version: 1.8T04
  ;@release-date: not yet released
  ;@patch-list: none yet
  ;
+ ;@project: VA Partnership to Increase Access to Lung Screening
+ ; (VA-PALS)
  ;@funding-org: 2017/2018, Bristol-Myers Squibb Foundation (bmsf)
  ;   https://www.bms.com/about-us/responsibility/bristol-myers-squibb-foundation.html
  ;
@@ -102,6 +104,9 @@
  ; %wfhform: passim add header comments, r/all local calls w/calls through
  ;   ^%wf, spell out mumps language elements, add do-dot quits, white space,
  ; rearrange subroutines.
+ ;
+ ; 2018-01-31 ven/toad %1.8t04 %wful: expand hdr comments to include
+ ; project & partner-org & refine copyright.
  ;
  ;@contents
  ; %wf: write form ppi & api library

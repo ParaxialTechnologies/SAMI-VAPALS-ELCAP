@@ -130,7 +130,19 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  new %j set %j=""
  for  set %j=$order(zhtml(%j)) quit:%j=""  do  ;
  . new tln set tln=zhtml(%j)
- . do SAMISUBS^SAMIFRM(.tln,form,sid,.filter)
+ . new customscan s customscan=""
+ . ;d  ; i can't get this to work... need help with x indirection
+ . ;. new fglb set fglb=$name(^SAMI(311.11))
+ . ;. new fn set fn=311.11
+ . ;. new fien set fien=$order(@fglb@("B",form,""))
+ . ;. quit:fien="" ""
+ . ;. set customscan=$$GET1^DIQ(fn,fien_",",3) ; custom scan routine
+ . ;. i $l(customscan)>0 s customscan=$tr(customscan,"@","^") ; fix for ^
+ . ;. q:$l(customscan)>0
+ . ;. i $e(form,3,6)["form" s customscan="do SAMISUBS^SAMIFRM(.tln,form,sid,.filter)"
+ . ;i customscan'="" x @customscan
+ . i form="sbform3" D SAMISUB2^SAMIFRM(.tln,form,sid,.filter,.%j,.zhtml)
+ . e  do SAMISUBS^SAMIFRM(.tln,form,sid,.filter)
  . ;
  . set zhtml(%j)=tln
  . if tln["submit" quit  ;
@@ -190,8 +202,9 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  . . . set tln=zhtml(%j)
  . . . quit
  . . if $get(name)="" quit  ;
- . . new val 
- . . set val=$get(vals(name))
+ . . new val
+ . . if $d(vals(name)) set val=$get(vals(name))
+ . . i $g(val)="" s val="" ; weird that we need this
  . . new type set type=""
  . . ;if tln["type=" set type=$piece($piece(tln,"type=""",2),"""",1)
  . . if tln["type=" set type=$piece($piece(tln,"type=",2)," ",1)
@@ -680,6 +693,7 @@ replace(ln,cur,repl) ; replace current with replacment in line ln
  ;
  ;@stanza 2 do replacements
  ;
+ q:'$d(ln)
  new where set where=$find(ln,cur)
  quit:where=0 ; this might not work for cur at the end of ln, please test
  set ln=$extract(ln,1,where-$length(cur)-1)_repl_$extract(ln,where,$length(ln))
@@ -798,7 +812,8 @@ getVals(vrtn,zid,zsid) ; get the values for the form from the graph
  ;@stanza 2 get values from graph
  ;
  new root set root=$$setroot^%wd("elcap-patients")
- if '$data(@root@("graph",zsid,zid)) quit  ;
+ if '$data(@root@("graph",zsid,zid)) d  quit  ;
+ . s @vrtn=""
  merge @vrtn=@root@("graph",zsid,zid)
  ;
  ;@stanza 3 termination

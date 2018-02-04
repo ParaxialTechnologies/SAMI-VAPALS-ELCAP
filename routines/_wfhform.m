@@ -254,8 +254,10 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  . . quit
  . ;
  . if zhtml(%j)["<textarea" do  ;
- . . new val
+ . . new val s val=""
+ . . q:$g(name)=""
  . . set val=$get(vals(name))
+ . . ;set val=$get(vals(name))
  . . ;set val=$$URLENC^VPRJRUT(val)
  . . if val'="" do replace^%wf(.tln,"</textarea>",val_"</textarea>")
  . . set zhtml(%j)=tln
@@ -813,7 +815,7 @@ getVals(vrtn,zid,zsid) ; get the values for the form from the graph
  ;
  new root set root=$$setroot^%wd("elcap-patients")
  if '$data(@root@("graph",zsid,zid)) d  quit  ;
- . s @vrtn=""
+ . s @vrtn@(0)="values for patient: "_zsid_" in graph: "_zsid
  merge @vrtn=@root@("graph",zsid,zid)
  ;
  ;@stanza 3 termination

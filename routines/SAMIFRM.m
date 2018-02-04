@@ -173,7 +173,7 @@ GETFN(KBAIFN,KBAIDEF) ; extrinsic which prompts for filename
  S KBAIFN=Y
  Q 1
  ;
-SAMISUBS(ln,form,sid,filter) ; ln is passed by reference; filter is passed by reference
+SAMISUBS(ln,form,sid,filter,%j,zhtml) ; ln is passed by reference; filter is passed by reference
  ; changes line ln by doing replacements needed for all SAMI forms
  ;
  n dbg s dbg=$g(filter("debug"))
@@ -196,6 +196,47 @@ SAMISUBS(ln,form,sid,filter) ; ln is passed by reference; filter is passed by re
  i ln["/css/" d replaceAll^%wfhform(.ln,"/css/","see/")
  i ln["/js/" d replaceAll^%wfhform(.ln,"/js/","see/")
  i ln["/images/" d replaceAll^%wfhform(.ln,"/images/","see/")
+ ;
+ q
+SAMISUB2(ln,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
+ ; ln is passed by reference; filter is passed by reference
+ ; can modify any line in the html as needed
+ ;
+ ; the following didn't work so is commented out. fix to handle javascript separately
+ ; caution: the following might modify %j to skip over javascript
+ ;i ln["<script" d  ;
+ ;. i ln["</script" q  ;
+ ;. n zi s zi=%j
+ ;. n max s max=$o(zhtml(" "),-1)
+ ;. f zi=%j,1,max q:zhtml(zi)["</script"  d  ;
+ ;. . s ln=zhtml(zi)
+ ;. . i ln["src=" d fixSrc(.ln)
+ ;. . i ln["href=" d fixHref(.ln) 
+ ;. . s ln=ln_$C(13,10)
+ ;. . s zhtml(zi)=ln
+ ;. s %j=zi+1
+ ;. s ln=zhtml(%j)
+ ;
+ s ln=ln_$C(13,10) ; insert CRLF at the end of every line for readability in browser
+ ;
+ i ln["src=" d fixSrc(.ln) ; insert the see/ processor on src= references
+ i ln["href=" d fixHref(.ln) ; insert the see/ processor on href= references
+ ;
+ q
+ ;
+fixSrc(ln) ;
+ i ln["src=" d  ;
+ . i ln["src=""/" d replaceAll^%wfhform(.ln,"src=""/","src=""see/") q  ;
+ . i ln["src=""" d replaceAll^%wfhform(.ln,"src=""","src=""see/") q  ;
+ . i ln["src=" d replaceAll^%wfhform(.ln,"src=","src=see/")
+ ;
+ q
+ ;
+fixHref(ln) ;
+ i ln["href=" d  ;
+ . i ln["href=""/" d replaceAll^%wfhform(.ln,"href=""/","href=""/","href=""see/") q  ;
+ . i ln["href=""" d replaceAll^%wfhform(.ln,"href=""","href=""see/") q  ;
+ . i ln["href=" d replaceAll^%wfhform(.ln,"href=","href=see/") q  ;
  ;
  q
  ;

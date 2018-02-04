@@ -47,10 +47,10 @@
  ;
  ;
  ;
-wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
+wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  ; filter("form")=id
  ; filter("studyId")=studyId
- do wsGetForm^%wfhform(.rtn,.filter)
+ do wsGetForm^%wfhform(.rtn,.filter,$g(post))
  quit
  ;
  ;
@@ -64,6 +64,8 @@ wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
  ;
  ; $$getTemplate^%wf, extrinsic returns the name of the template file
  ;
+getTemplate(form) ; get the name of the template to use for this form
+ q $$getTemplate^%wfhform(form)
  ;
  ;
  ;@section 3 wsGetForm^%wf error handling
@@ -81,6 +83,9 @@ wsGetForm(rtn,filter) ; return the html for the form id, passed in filter
  ;
  ; putErrMsg2^%wf, style 2 of error messages - top of screen
  ;
+putErrMsg2(html,lin,msg,err) ; style 2 of error messages - top of screen
+ d putErrMsg2^%wfhform(html,lin,msg,err) ; style 2 of error messages - top of screen
+ q
  ;
  ; insError^%wf, inserts an error message into ln, passed by reference
  ;
@@ -148,18 +153,28 @@ check(line,type) ; for radio buttons and checkbox
  ;
  ; $$validate^%wf, extrinsic returns 1 if valid 0 if not valid
  ;
+validate(value,spec,map,msg) ; extrinsic returns 1 if valid 0 if not valid
+ q $$validate^%wfhform(value,spec,$g(map),msg)
  ;
  ; $$dateValid^%wf, extrinsic which validates a date
  ;
+dateValid(value,spec,map,msg) ; extrinsic which validates a date
+ q $$dateValid^%wfhform(value,spec,$g(map),msg)
  ;
  ; $$textValid^%wf, validate a free text field
  ;
+textValid(value,spec,map) ; validate a free text field
+ q $$textValid^%wfhform(value,spec,$g(map))
  ;
  ; $$numValid^%wf, validate a numeric field
  ;
+numValid(value,spec,map) ; validate a numeric field
+ q $$numValid^%wfhform(value,spec,$g(map)) ; validate a numeric field
  ;
  ; dateFormat^%wf, reformat date in elcap format
  ;
+dateFormat(val,form,name) ; reformat date in elcap format
+ q $$dateFormat^%wfhform(val,form,name)
  ;
  ;
  ;@section 8 wsPostForm^%wf web service & parseBody ppi
@@ -188,7 +203,7 @@ replaceSrc(ln) ; do replacements on lines for src= to use see service to locate 
  ;
  ;
 replaceAll(ln,cur,repl) ; replace all occurances of cur with repl in ln, passed by reference
- dp replaceAll^%wfhform(.ln,cur,repl)
+ do replaceAll^%wfhform(.ln,cur,repl)
  quit
  ;
  ;

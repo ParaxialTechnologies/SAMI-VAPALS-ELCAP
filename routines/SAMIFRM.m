@@ -234,6 +234,8 @@ fixSrc(ln) ;
  ;
 fixHref(ln) ;
  i ln["href=" d  ;
+ . i ln["href=""#" q  ;
+ . i ln["href='#" q  ;
  . i ln["href=""/" d replaceAll^%wfhform(.ln,"href=""/","href=""/","href=""see/") q  ;
  . i ln["href=""" d replaceAll^%wfhform(.ln,"href=""","href=""see/") q  ;
  . i ln["href=" d replaceAll^%wfhform(.ln,"href=","href=see/") q  ;

@@ -1,4 +1,4 @@
-%wful ;ven/toad-write form: development log ;2018-02-03T17:01Z
+%wful ;ven/toad-write form: development log ;2018-02-05T16:52Z
  ;;1.8;Mash;
  ;
  ; %wful is the Write Form Library's primary-development log.
@@ -21,7 +21,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-03T17:01Z
+ ;@last-updated: 2018-02-05T16:52Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Write Form - %wf
  ;@version: 1.8T04
@@ -121,6 +121,14 @@
  ; & partner-org & refine copyright.
  ;  %wf & %wfhform: hdr comments refine credits, add to-do; finish laying
  ; out sections & rearranging subroutines.
+ ;
+ ; 2018-02-04 ven/toad %1.8t04 %wfhform: in wsGetForm work on customScan
+ ; logic, add special handling for form sbform3, protect vs undef val in
+ ; two places; in replace protect vs undef ln; in getVals ensure if
+ ; graph undef for this patient return 0 node.
+ ;  %wf: in wsGetForm add optional param post; add ppi $$getTemplate^%wf,
+ ; putErrMsg2^%wf, $$validate^%wf, $$dateValid^%wf, $$textValid^%wf,
+ ; $$numValid^%wf, dateFormat^%wf; in replaceAll fix toad's dp typo.
  ;
  ;@module-contents
  ; %wf: write form ppi & api library

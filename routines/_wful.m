@@ -1,4 +1,4 @@
-%wful ;ven/toad-write form: development log ;2018-02-05T18:27Z
+%wful ;ven/toad-write form: development log ;2018-02-05T20:08Z
  ;;1.8;Mash;
  ;
  ; %wful is the Write Form Library's primary-development log.
@@ -21,7 +21,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-05T18:27Z
+ ;@last-updated: 2018-02-05T20:08Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Write Form - %wf
  ;@version: 1.8T04
@@ -136,6 +136,10 @@
  ; param passing to match %wfhform protections, remove my old ppi comments,
  ; spell out language elements, refine ppi comments.
  ;  %wfhform: refine ppi comments, spell out language elements.
+ ;  %wffiler: apply hdr comments, white space, spell out language elements,
+ ; r/getVals^%wfhform w/getVals^%wf, add do-dot quits.
+ ;  %wffmap: apply hdr comments, white space, spell out language elements,
+ ; add do-dot quits; in importfmap synch ppi comments.
  ;
  ;@module-contents
  ; %wf: write form ppi & api library

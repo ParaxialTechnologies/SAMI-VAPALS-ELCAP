@@ -1,4 +1,4 @@
-%wf	;ven/gpl-write form: development log ;2018-02-03T17:16Z
+%wf	;ven/gpl-write form: development log ;2018-02-05T18:27Z
  ;;1.8;Mash;
  ;
  ; %wful is the Write Form Library's ppi & api routine. It supports getting
@@ -23,7 +23,7 @@
  ;@license: Apache 2.0
  ;   https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-03T17:16Z
+ ;@last-updated: 2018-02-05T18:27Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Write Form - %wf
  ;@version: 1.8T04
@@ -47,10 +47,8 @@
  ;
  ;
  ;
-wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
- ; filter("form")=id
- ; filter("studyId")=studyId
- do wsGetForm^%wfhform(.rtn,.filter,$g(post))
+wsGetForm(rtn,filter,post) ; web service wsGetForm^%wf, get html form
+ do wsGetForm^%wfhform(.rtn,.filter,$get(post))
  quit
  ;
  ;
@@ -59,38 +57,47 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  ;
  ;
  ;
- ; $$formLabel^%wf, label to use for form's post url
+formLabel(form) ; ppi $$formLabel^%wf, label to use for form's post url
+ quit $$formLabel^%wfhform(form)
  ;
  ;
- ; $$getTemplate^%wf, extrinsic returns the name of the template file
+getTemplate(form) ; ppi $$getTemplate^%wf, get name of form's template
+ quit $$getTemplate^%wfhform(form)
  ;
-getTemplate(form) ; get the name of the template to use for this form
- q $$getTemplate^%wfhform(form)
  ;
  ;
  ;@section 3 wsGetForm^%wf error handling
  ;
  ;
  ;
- ; redactErr^%wf, redact error message section in html & clear error array
+redactErr(html,err,indx) ; ppi redactErr^%wf, clear errors from form
+ do redactErr^%wfhform(html,err,.indx)
+ quit
  ;
  ;
- ; redactErr2^%wf, redact the error symbol on a field
+redactErr2(html,indx) ; ppi redactErr2^%wf, redact field's error symbol
+ do redactErr2^%wfhform(html,.indx)
+ quit
  ;
  ;
- ; testRedactErr2^%wf, test redactErr2^%wf
+testRedactErr2 ; test redactErr2^%wf [move to %wfut]
+ do testRedactErr2^%wfhform
+ quit
  ;
  ;
- ; putErrMsg2^%wf, style 2 of error messages - top of screen
- ;
-putErrMsg2(html,lin,msg,err) ; style 2 of error messages - top of screen
- d putErrMsg2^%wfhform(html,lin,msg,err) ; style 2 of error messages - top of screen
- q
- ;
- ; insError^%wf, inserts an error message into ln, passed by reference
+putErrMsg2(html,lin,msg,err) ; ppi putErrMsg2^%wf, insert error msgs
+ do putErrMsg2^%wfhform(html,.lin,msg,$get(err))
+ quit
  ;
  ;
- ; debugFld^%wf, insert debugging info re field
+insError(ln,msg) ; ppi insError^%wf, insert error msg into html line
+ do insError^%wfhform(.ln,.msg)
+ quit
+ ;
+ ;
+debugFld(ln,form,name) ; ppi debugFld^%wf, insert field debugging info
+ do debugFld^%wfhform(.ln,form,name)
+ quit
  ;
  ;
  ;
@@ -98,35 +105,36 @@ putErrMsg2(html,lin,msg,err) ; style 2 of error messages - top of screen
  ;
  ;
  ;
- ; $$delText^%wf, delete text between begin & end
+delText(ln,begin,end,ins) ; ppi $$delText^%wf, delete text from html line
+ quit $$delText^%wfhform(.ln,begin,end,$get(ins))
  ;
  ;
-replace(ln,cur,repl) ; replace current with replacment in line ln
+replace(ln,cur,repl) ; ppi replace^%wf, replace test in html line
  do replace^%wfhform(.ln,cur,repl)
  quit
  ;
  ;
  ;
- ;@section 5 wsGetForm^%wf field value manipulation
+ ;@section 5 wsGetForm^%wf input value manipulation
  ;
  ;
  ;
-unvalue(ln) ; sets value=""
+unvalue(ln) ; ppi unvalue^%wf, clear input value in html line
  do unvalue^%wfhform(.ln)
  quit
  ;
  ;
-value(ln,val) ; sets value="@val"
+value(ln,val) ; ppi value^%wf, set input value in html line
  do value^%wfhform(.ln,val)
  quit
  ;
  ;
-getVals(vrtn,zid,zsid) ; get the values for the form from the graph
+getVals(vrtn,zid,zsid) ; ppi getVals^%wf, get form's values from graph
  do getVals^%wfhform(.vrtn,zid,zsid)
  quit
  ;
  ;
-setVals(vary,zid,zsid) ; set the values returned from form id for patient zsid
+setVals(vary,zid,zsid) ; ppi setVals^%wf, set graph's values from form
  do setVals^%wfhform(.vary,zid,zsid)
  quit
  ;
@@ -136,12 +144,12 @@ setVals(vary,zid,zsid) ; set the values returned from form id for patient zsid
  ;
  ;
  ;
-uncheck(ln) ; removes 'check="checked"' from ln, passed by reference
+uncheck(ln) ; ppi uncheck^%wf, uncheck radio button or checkbox
  do uncheck^%wfhform(.ln)
  quit
  ;
  ;
-check(line,type) ; for radio buttons and checkbox
+check(line,type) ; ppi check^%wf, check radio button or checkbox
  do check^%wfhform(.line,type)
  quit
  ;
@@ -151,43 +159,37 @@ check(line,type) ; for radio buttons and checkbox
  ;
  ;
  ;
- ; $$validate^%wf, extrinsic returns 1 if valid 0 if not valid
+validate(value,spec,map,msg) ; ppi $$validate^%wf, validate value
+ quit $$validate^%wfhform(value,spec,$get(map),.msg)
  ;
-validate(value,spec,map,msg) ; extrinsic returns 1 if valid 0 if not valid
- q $$validate^%wfhform(value,spec,$g(map),msg)
  ;
- ; $$dateValid^%wf, extrinsic which validates a date
+dateValid(value,spec,map,msg) ; ppi $$dateValid^%wf, validate date
+ quit $$dateValid^%wfhform(value,spec,$get(map),.msg)
  ;
-dateValid(value,spec,map,msg) ; extrinsic which validates a date
- q $$dateValid^%wfhform(value,spec,$g(map),msg)
  ;
- ; $$textValid^%wf, validate a free text field
+textValid(value,spec,map) ; ppi $$textValid^%wf, validate free-text field
+ quit $$textValid^%wfhform(value,spec,$get(map))
  ;
-textValid(value,spec,map) ; validate a free text field
- q $$textValid^%wfhform(value,spec,$g(map))
  ;
- ; $$numValid^%wf, validate a numeric field
+numValid(value,spec,map) ; ppi $$numValid^%wf, validate numeric field
+ quit $$numValid^%wfhform(value,spec,$get(map)) ; validate a numeric field
  ;
-numValid(value,spec,map) ; validate a numeric field
- q $$numValid^%wfhform(value,spec,$g(map)) ; validate a numeric field
  ;
- ; dateFormat^%wf, reformat date in elcap format
+dateFormat(val,form,name) ; ppi $$dateFormat^%wf, reformat date in elcap format
+ quit $$dateFormat^%wfhform(.val,form,name)
  ;
-dateFormat(val,form,name) ; reformat date in elcap format
- q $$dateFormat^%wfhform(val,form,name)
  ;
  ;
  ;@section 8 wsPostForm^%wf web service & parseBody ppi
  ;
  ;
  ;
-wsPostForm(ARGS,BODY,RESULT) ; receive from form
+wsPostForm(ARGS,BODY,RESULT) ; web service wsPostForm^%wf, submit HTML form
  do wsPostForm^%wfhform(.ARGS,.BODY,.RESULT)
  quit
  ;
  ;
-parseBody(rtn,body) ; parse the variables sent by a form
- ; rtn is passed by name
+parseBody(rtn,body) ; ppi parseBody^%wf, get form's values from submitted form
  do parseBody^%wfhform(.rtn,.body)
  quit
  ;
@@ -197,18 +199,17 @@ parseBody(rtn,body) ; parse the variables sent by a form
  ;
  ;
  ;
-replaceSrc(ln) ; do replacements on lines for src= to use see service to locate resource
+replaceSrc(ln) ; ppi replaceSrc^%wf, chg src & href lines to find resources
  do replaceSrc^%wfhform(.ln)
  quit
  ;
  ;
-replaceAll(ln,cur,repl) ; replace all occurances of cur with repl in ln, passed by reference
+replaceAll(ln,cur,repl) ; ppi replaceAll^%wf, replace text in html line
  do replaceAll^%wfhform(.ln,cur,repl)
  quit
  ;
  ;
-replaceHref(ln) ; do replacements on html lines for href values; extrinsic returns true if 
- ; replacement was done
+replaceHref(ln) ; ppi replaceHref^%wf, chg href lines to find resources
  do replaceHref^%wfhform(.ln)
  quit
  ;
@@ -218,9 +219,10 @@ replaceHref(ln) ; do replacements on html lines for href values; extrinsic retur
  ;
  ;
  ;
-importfmap(csvname,form) ; import form mapping definitions from csv
- ; csvname is the name of the csv file
- ; form is the name of the form
+importfmap(csvname,form) ; ppi importfmap^%wf, import map from csv
+ ; import form-mapping definitions from csv file
+ ; csvname is csv file's name
+ ; form is form's name
  ;
  do importfmap^%wffmap(csvname,form)
  quit

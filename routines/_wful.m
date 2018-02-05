@@ -1,4 +1,4 @@
-%wful ;ven/toad-write form: development log ;2018-02-05T16:52Z
+%wful ;ven/toad-write form: development log ;2018-02-05T18:27Z
  ;;1.8;Mash;
  ;
  ; %wful is the Write Form Library's primary-development log.
@@ -21,7 +21,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-05T16:52Z
+ ;@last-updated: 2018-02-05T18:27Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Write Form - %wf
  ;@version: 1.8T04
@@ -122,13 +122,20 @@
  ;  %wf & %wfhform: hdr comments refine credits, add to-do; finish laying
  ; out sections & rearranging subroutines.
  ;
- ; 2018-02-04 ven/toad %1.8t04 %wfhform: in wsGetForm work on customScan
+ ; 2018-02-04 ven/gpl %1.8t04 %wfhform: in wsGetForm work on customScan
  ; logic, add special handling for form sbform3, protect vs undef val in
  ; two places; in replace protect vs undef ln; in getVals ensure if
  ; graph undef for this patient return 0 node.
  ;  %wf: in wsGetForm add optional param post; add ppi $$getTemplate^%wf,
  ; putErrMsg2^%wf, $$validate^%wf, $$dateValid^%wf, $$textValid^%wf,
  ; $$numValid^%wf, dateFormat^%wf; in replaceAll fix toad's dp typo.
+ ;
+ ; 2018-02-05 ven/toad %1.8t04 %wf: passim finish creating remaining ppis
+ ; $$formLabel^%wf, redactErr^%wf, redactErr2^%wf, insError^%wf,
+ ; debugFld^%wf, $$delText^%wf, & test testRedactErr2^%wfhform, adjust
+ ; param passing to match %wfhform protections, remove my old ppi comments,
+ ; spell out language elements, refine ppi comments.
+ ;  %wfhform: refine ppi comments, spell out language elements.
  ;
  ;@module-contents
  ; %wf: write form ppi & api library

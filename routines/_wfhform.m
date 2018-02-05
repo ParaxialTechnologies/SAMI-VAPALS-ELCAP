@@ -1,4 +1,4 @@
-%wfhform ;ven/gpl-write form: html form get & post ;2018-02-03T17:16Z
+%wfhform ;ven/gpl-write form: html form get & post ;2018-02-05T18:34Z
  ;;1.8;Mash;
  ;
  ; %wfhform implements the Write Form Library's html form get & post web
@@ -22,7 +22,7 @@
  ;@license: Apache 2.0
  ;   https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-03T17:16Z
+ ;@last-updated: 2018-02-05T18:34Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Write Form - %wf
  ;@version: 1.8T04
@@ -46,7 +46,7 @@
  ;
  ;
  ;
-wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
+wsGetForm(rtn,filter,post) ; web service wsGetForm^%wf, get html form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -81,8 +81,8 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  ; insError^%wf
  ;@input
  ;.filter = 
- ; filter("form")=form
- ; filter("studyId")=studyId
+ ; filter("form")=form id
+ ; filter("studyId")=study id
  ; post = 1 if ...
  ;@output
  ; ??
@@ -92,6 +92,7 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  ;@tests [tbd]
  ;
  ; [description tbd]
+ ; return the html for the form id, passed in filter
  ;
  ;@stanza 2 do replacements
  ;
@@ -131,18 +132,20 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  for  set %j=$order(zhtml(%j)) quit:%j=""  do  ;
  . new tln set tln=zhtml(%j)
  . new customscan s customscan=""
- . ;d  ; i can't get this to work... need help with x indirection
- . ;. new fglb set fglb=$name(^SAMI(311.11))
- . ;. new fn set fn=311.11
- . ;. new fien set fien=$order(@fglb@("B",form,""))
- . ;. quit:fien="" ""
- . ;. set customscan=$$GET1^DIQ(fn,fien_",",3) ; custom scan routine
- . ;. i $l(customscan)>0 s customscan=$tr(customscan,"@","^") ; fix for ^
- . ;. q:$l(customscan)>0
- . ;. i $e(form,3,6)["form" s customscan="do SAMISUBS^SAMIFRM(.tln,form,sid,.filter)"
- . ;i customscan'="" x @customscan
- . i form="sbform3" D SAMISUB2^SAMIFRM(.tln,form,sid,.filter,.%j,.zhtml)
- . e  do SAMISUBS^SAMIFRM(.tln,form,sid,.filter)
+ . ;
+ . ; do  ; i can't get this to work... need help with x indirection
+ . ; . new fglb set fglb=$name(^SAMI(311.11))
+ . ; . new fn set fn=311.11
+ . ; . new fien set fien=$order(@fglb@("B",form,""))
+ . ; . quit:fien="" ""
+ . ; . set customscan=$$GET1^DIQ(fn,fien_",",3) ; custom scan routine
+ . ; . if $length(customscan)>0 set customscan=$translate(customscan,"@","^") ; fix for ^
+ . ; . quit:$length(customscan)>0
+ . ; . if $extract(form,3,6)["form" set customscan="do SAMISUBS^SAMIFRM(.tln,form,sid,.filter)"
+ . ; if customscan'="" xecute @customscan
+ . ;
+ . if form="sbform3" do SAMISUB2^SAMIFRM(.tln,form,sid,.filter,.%j,.zhtml)
+ . else  do SAMISUBS^SAMIFRM(.tln,form,sid,.filter)
  . ;
  . set zhtml(%j)=tln
  . if tln["submit" quit  ;
@@ -202,9 +205,8 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  . . . set tln=zhtml(%j)
  . . . quit
  . . if $get(name)="" quit  ;
- . . new val
- . . if $d(vals(name)) set val=$get(vals(name))
- . . i $g(val)="" s val="" ; weird that we need this
+ . . new val set vals=""
+ . . if $data(vals(name)) set val=$get(vals(name))
  . . new type set type=""
  . . ;if tln["type=" set type=$piece($piece(tln,"type=""",2),"""",1)
  . . if tln["type=" set type=$piece($piece(tln,"type=",2)," ",1)
@@ -254,11 +256,11 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  . . quit
  . ;
  . if zhtml(%j)["<textarea" do  ;
- . . new val s val=""
- . . q:$g(name)=""
+ . . new val set val=""
+ . . quit:$get(name)=""
  . . set val=$get(vals(name))
- . . ;set val=$get(vals(name))
- . . ;set val=$$URLENC^VPRJRUT(val)
+ . . ; set val=$get(vals(name))
+ . . ; set val=$$URLENC^VPRJRUT(val)
  . . if val'="" do replace^%wf(.tln,"</textarea>",val_"</textarea>")
  . . set zhtml(%j)=tln
  . . quit
@@ -295,7 +297,7 @@ wsGetForm(rtn,filter,post) ; return the html for the form id, passed in filter
  ;
  ;
  ;
-formLabel(form) ; label to use for form's post url
+formLabel(form) ; ppi $$formLabel^%wf, label to use for form's post url
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -332,7 +334,7 @@ formLabel(form) ; label to use for form's post url
  ;
  ;
  ;
-getTemplate(form) ; extrinsic returns the name of the template file
+getTemplate(form) ; ppi $$getTemplate^%wf, get name of form's template
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -377,7 +379,7 @@ getTemplate(form) ; extrinsic returns the name of the template file
  ;
  ;
  ;
-redactErr(html,err,indx) ; redact error message section in html & clear error array
+redactErr(html,err,indx) ; ppi redactErr^%wf, clear errors from form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -400,6 +402,7 @@ redactErr(html,err,indx) ; redact error message section in html & clear error ar
  ;@tests [tbd]
  ;
  ; [description tbd]
+ ; redact error message section in html & clear error array
  ;
  ;@stanza 2 clear error messages
  ;
@@ -421,7 +424,7 @@ redactErr(html,err,indx) ; redact error message section in html & clear error ar
  ;
  ;
  ;
-redactErr2(html,indx) ; redact the error symbol on a field
+redactErr2(html,indx) ; ppi redactErr2^%wf, redact field's error symbol
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -459,7 +462,7 @@ redactErr2(html,indx) ; redact the error symbol on a field
  ;
  ;
  ;
-testRedactErr2 ; test redactErr2^%wf
+testRedactErr2 ; test redactErr2^%wf [move to %wfut]
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -488,7 +491,7 @@ testRedactErr2 ; test redactErr2^%wf
  ;
  ;
  ;
-putErrMsg2(html,lin,msg,err) ; style 2 of error messages - top of screen
+putErrMsg2(html,lin,msg,err) ; ppi putErrMsg2^%wf, insert error msgs
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -513,6 +516,7 @@ putErrMsg2(html,lin,msg,err) ; style 2 of error messages - top of screen
  ;@tests [tbd]
  ;
  ; [description tbd]
+ ; style 2 of error messages - top of screen
  ;
  ;@stanza 2 insert error messages
  ;
@@ -546,7 +550,7 @@ putErrMsg2(html,lin,msg,err) ; style 2 of error messages - top of screen
  ;
  ;
  ;
-insError(ln,msg) ; inserts an error message into ln, passed by reference
+insError(ln,msg) ; ppi insError^%wf, insert error msg into html line
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -568,6 +572,7 @@ insError(ln,msg) ; inserts an error message into ln, passed by reference
  ;@tests [tbd]
  ;
  ; [description tbd]
+ ; inserts an error message into ln, passed by reference
  ;
  ;@stanza 2 insert error message
  ;
@@ -582,7 +587,7 @@ insError(ln,msg) ; inserts an error message into ln, passed by reference
  ;
  ;
  ;
-debugFld(ln,form,name) ; insert debugging info re field
+debugFld(ln,form,name) ; ppi debugFld^%wf, insert field debugging info
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -627,7 +632,7 @@ debugFld(ln,form,name) ; insert debugging info re field
  ;
  ;
  ;
-delText(ln,begin,end,ins) ; delete text between begin & end
+delText(ln,begin,end,ins) ; ppi $$delText^%wf, delete text from html line
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -649,6 +654,7 @@ delText(ln,begin,end,ins) ; delete text between begin & end
  ;@tests [tbd]
  ;
  ; [description tbd]
+ ; delete text between begin & end, optionally inserts text
  ;
  ;@stanza 2 delete/insert text
  ;
@@ -665,7 +671,7 @@ delText(ln,begin,end,ins) ; delete text between begin & end
  ;
  ;
  ;
-replace(ln,cur,repl) ; replace current with replacment in line ln
+replace(ln,cur,repl) ; ppi replace^%wf, replace test in html line
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -692,10 +698,11 @@ replace(ln,cur,repl) ; replace current with replacment in line ln
  ;@tests [tbd]
  ;
  ; [description tbd]
+ ; replace current with replacment in line ln
  ;
  ;@stanza 2 do replacements
  ;
- q:'$d(ln)
+ quit:'$data(ln)
  new where set where=$find(ln,cur)
  quit:where=0 ; this might not work for cur at the end of ln, please test
  set ln=$extract(ln,1,where-$length(cur)-1)_repl_$extract(ln,where,$length(ln))
@@ -710,7 +717,7 @@ replace(ln,cur,repl) ; replace current with replacment in line ln
  ;
  ;
  ;
-unvalue(ln) ; sets value=""
+unvalue(ln) ; ppi unvalue^%wf, clear input value in html line
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -728,6 +735,7 @@ unvalue(ln) ; sets value=""
  ;@tests [tbd]
  ;
  ; [description tbd]
+ ; sets value=""
  ;
  ;@stanza 2 clear value
  ;
@@ -746,7 +754,7 @@ unvalue(ln) ; sets value=""
  ;
  ;
  ;
-value(ln,val) ; sets value="@val"
+value(ln,val) ; ppi value^%wf, set input value in html line
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -767,6 +775,7 @@ value(ln,val) ; sets value="@val"
  ;@tests [tbd]
  ;
  ; [description tbd]
+ ; sets value="@val"
  ;
  ;@stanza 2 set value
  ;
@@ -785,7 +794,7 @@ value(ln,val) ; sets value="@val"
  ;
  ;
  ;
-getVals(vrtn,zid,zsid) ; get the values for the form from the graph
+getVals(vrtn,zid,zsid) ; ppi getVals^%wf, get form's values from graph
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -810,12 +819,14 @@ getVals(vrtn,zid,zsid) ; get the values for the form from the graph
  ;@tests [tbd]
  ;
  ; [description tbd]
+ ; get the values for the form from the graph
  ;
  ;@stanza 2 get values from graph
  ;
  new root set root=$$setroot^%wd("elcap-patients")
- if '$data(@root@("graph",zsid,zid)) d  quit  ;
- . s @vrtn@(0)="values for patient: "_zsid_" in graph: "_zsid
+ if '$data(@root@("graph",zsid,zid)) do  quit  ;
+ . set @vrtn@(0)="values for patient: "_zsid_" in graph: "_zsid
+ . quit
  merge @vrtn=@root@("graph",zsid,zid)
  ;
  ;@stanza 3 termination
@@ -824,7 +835,7 @@ getVals(vrtn,zid,zsid) ; get the values for the form from the graph
  ;
  ;
  ;
-setVals(vary,zid,zsid) ; set the values returned from form id for patient zsid
+setVals(vary,zid,zsid) ; ppi setVals^%wf, set graph's values from form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -847,6 +858,7 @@ setVals(vary,zid,zsid) ; set the values returned from form id for patient zsid
  ;@tests [tbd]
  ;
  ; [description tbd]
+ ; set the values returned from form id for patient zsid
  ;
  ;@stanza 2 set values
  ;
@@ -869,7 +881,7 @@ setVals(vary,zid,zsid) ; set the values returned from form id for patient zsid
  ;
  ;
  ;
-uncheck(ln) ; removes 'check="checked"' from ln, passed by reference
+uncheck(ln) ; ppi uncheck^%wf, uncheck radio button or checkbox
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -888,6 +900,7 @@ uncheck(ln) ; removes 'check="checked"' from ln, passed by reference
  ;@tests [tbd]
  ;
  ; [description tbd]
+ ; removes 'check="checked"' from ln, passed by reference
  ;
  ;@stanza 2 uncheck box or button
  ;
@@ -902,7 +915,7 @@ uncheck(ln) ; removes 'check="checked"' from ln, passed by reference
  ;
  ;
  ;
-check(line,type) ; for radio buttons & checkbox
+check(line,type) ; ppi check^%wf, check radio button or checkbox
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -923,6 +936,7 @@ check(line,type) ; for radio buttons & checkbox
  ;@tests [tbd]
  ;
  ; [description tbd]
+ ; for radio buttons & checkbox
  ;
  ;@stanza 2 check box or button
  ;
@@ -940,7 +954,7 @@ check(line,type) ; for radio buttons & checkbox
  ;
  ;
  ;
-validate(value,spec,map,msg) ; extrinsic returns 1 if valid 0 if not valid
+validate(value,spec,map,msg) ; ppi $$validate^%wf, validate value
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -966,6 +980,7 @@ validate(value,spec,map,msg) ; extrinsic returns 1 if valid 0 if not valid
  ;@tests [tbd]
  ;
  ; [description tbd]
+ ; extrinsic returns 1 if valid 0 if not valid
  ;
  ;@stanza 2 validate value
  ;
@@ -991,7 +1006,7 @@ validate(value,spec,map,msg) ; extrinsic returns 1 if valid 0 if not valid
  ;
  ;
  ;
-dateValid(value,spec,map,msg) ; extrinsic which validates a date
+dateValid(value,spec,map,msg) ; ppi $$dateValid^%wf, validate date
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1017,6 +1032,7 @@ dateValid(value,spec,map,msg) ; extrinsic which validates a date
  ;@tests [tbd]
  ;
  ; [description tbd]
+ ; extrinsic which validates a date
  ;
  ;@stanza 2 validate date
  ;
@@ -1031,7 +1047,7 @@ dateValid(value,spec,map,msg) ; extrinsic which validates a date
  ;
  ;
  ;
-textValid(value,spec,map) ; validate a free text field
+textValid(value,spec,map) ; ppi $$textValid^%wf, validate free-text field
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1055,6 +1071,7 @@ textValid(value,spec,map) ; validate a free text field
  ;@tests [tbd]
  ;
  ; [description tbd]
+ ; validate a free text field
  ; uses mumps pattern matching
  ;
  ;@stanza 2 validate text
@@ -1080,7 +1097,7 @@ textValid(value,spec,map) ; validate a free text field
  ;
  ;
  ;
-numValid(value,spec,map) ; validate a numeric field
+numValid(value,spec,map) ; ppi $$numValid^%wf, validate numeric field
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1104,6 +1121,7 @@ numValid(value,spec,map) ; validate a numeric field
  ;@tests [tbd]
  ;
  ; [description tbd]
+ ; validate a numeric field
  ; uses mumps pattern matching, handles decimal points
  ;
  ;@stanza 2 validate number
@@ -1137,7 +1155,7 @@ numValid(value,spec,map) ; validate a numeric field
  ;
  ;
  ;
-dateFormat(val,form,name) ; reformat date in elcap format
+dateFormat(val,form,name) ; ppi $$dateFormat^%wf, reformat date in elcap format
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1161,6 +1179,7 @@ dateFormat(val,form,name) ; reformat date in elcap format
  ;@tests [tbd]
  ;
  ; [description tbd]
+ ; reformat date in elcap format
  ;
  ;@stanza 2 reformat date
  ;
@@ -1185,7 +1204,7 @@ dateFormat(val,form,name) ; reformat date in elcap format
  ;
  ;
  ;
-wsPostForm(ARGS,BODY,RESULT) ; receive from form
+wsPostForm(ARGS,BODY,RESULT) ; web service wsPostForm^%wf, submit HTML form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1215,6 +1234,7 @@ wsPostForm(ARGS,BODY,RESULT) ; receive from form
  ;@tests [tbd]
  ;
  ; [description tbd]
+ ; receive from form
  ;
  ;@stanza 2 receive from form
  ;
@@ -1272,8 +1292,7 @@ wsPostForm(ARGS,BODY,RESULT) ; receive from form
  ;
  ;
  ;
-parseBody(rtn,body) ; parse the variables sent by a form
- ; rtn is passed by name
+parseBody(rtn,body) ; ppi parseBody^%wf, get form's values from submitted form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1296,6 +1315,8 @@ parseBody(rtn,body) ; parse the variables sent by a form
  ;@tests [tbd]
  ;
  ; [description tbd]
+ ; parse the variables sent by a form
+ ; rtn is passed by name
  ;
  ;@stanza 2 parse variables from form
  ;
@@ -1321,8 +1342,7 @@ parseBody(rtn,body) ; parse the variables sent by a form
  ;
  ;
  ;
-replaceSrc(ln) ; do replacements on lines for src= to use see service to locate resource
- ; not currently used - the changes are included in the template
+replaceSrc(ln) ; ppi replaceSrc^%wf, chg src & href lines to find resources
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1345,6 +1365,8 @@ replaceSrc(ln) ; do replacements on lines for src= to use see service to locate 
  ;@tests [tbd]
  ;
  ; [description tbd]
+ ; do replacements on lines for src= to use see service to locate resource
+ ; deprecated, needed changes are in template now.
  ;
  ;@stanza 2 insert see service in src & href lines
  ;
@@ -1388,7 +1410,7 @@ replaceSrc(ln) ; do replacements on lines for src= to use see service to locate 
  ;
  ;
  ;
-replaceAll(ln,cur,repl) ; replace all occurances of cur with repl in ln, passed by reference
+replaceAll(ln,cur,repl) ; ppi replaceAll^%wf, replace text in html line
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1409,6 +1431,8 @@ replaceAll(ln,cur,repl) ; replace all occurances of cur with repl in ln, passed 
  ;@tests [tbd]
  ;
  ; [description tbd]
+ ; replace all occurances of cur with repl in ln, passed by reference
+ ; deprecated, was only used by replaceSrc^%wf
  ;
  ;@stanza 2 do replacements
  ;
@@ -1427,8 +1451,7 @@ replaceAll(ln,cur,repl) ; replace all occurances of cur with repl in ln, passed 
  ;
  ;
  ;
-replaceHref(ln) ; do replacements on html lines for href values
- ; depricated, use replaceSrc instead, if needed
+replaceHref(ln) ; ppi replaceHref^%wf, chg href lines to find resources
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1451,6 +1474,9 @@ replaceHref(ln) ; do replacements on html lines for href values
  ;@tests [tbd]
  ;
  ; [description tbd]
+ ; do replacements on html lines for href values ; extrinsic returns true if
+ ; replacement was done
+ ; deprecated, use replaceSrc instead, if needed
  ;
  ;@stanza 2 process href lines
  ;

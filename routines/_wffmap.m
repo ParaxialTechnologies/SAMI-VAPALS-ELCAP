@@ -1,23 +1,68 @@
-%wffmap	;ven/gpl - mash forms utilities ; 9/24/17 4:33pm
- ;;1.0;norelease;;feb 27, 2017;build 2
+%wffmap	;ven/gpl-write form: mapper ;2018-02-05T20:04Z
+ ;;1.8;Mash;
+ ;
+ ; %wffmap implements the Write Form Library's importfmap^%wf ppi.
+ ; It is currently untested & in progress.
+ ;
+ quit  ; no entry from top
  ;
  ;
- q
  ;
- ; All the public entry points for forms are in %wf
+ ;@section 0 primary development: see routine %wful
+ ;
+ ;
+ ;
+ ;@routine-credits
+ ;@primary-dev: George P. Lilly (gpl)
+ ;   gpl@vistaexpertise.net
+ ;@primary-dev-org: Vista Expertise Network (ven)
+ ;   http://vistaexpertise.net
+ ;@copyright: 2017/2018, gpl, all rights reserved
+ ;@license: Apache 2.0
+ ;   https://www.apache.org/licenses/LICENSE-2.0.html
+ ;
+ ;@last-updated: 2018-02-05T20:04Z
+ ;@application: Mumps Advanced Shell (Mash)
+ ;@module: Write Form - %wf
+ ;@version: 1.8T04
+ ;@release-date: not yet released
+ ;@patch-list: none yet
+ ;
+ ;@additional-dev: Frederick D. S. Marshall (toad)
+ ; toad@vistaexpertise.net
+ ;
+ ;@to-do
+ ; %wf: convert entry points to ppi/api style
+ ; r/all local calls w/calls through ^%wf
+ ; change branches from %wf
+ ;
+ ;@contents
+ ;
+ ;
+ ;
+ ;@section 1 importfmap^%wf ppi & subroutines
+ ;
+ ;
  ;
 formFn() ; form file number
- quit 311.11
+ ;
+ quit 311.11 ; end of $$formFn
+ ;
+ ;
  ;
 formVarFn() ; variable subfile number
- quit 311.11001
+ ;
+ quit 311.11001 ; end of $$formVarFn
+ ;
+ ;
  ;
 formGlb() ; form global
- quit $name(^SAMI(311.11))
  ;
-importfmap(csvname,form) ; import form mapping definitions from csv
- ; csvname is the name of the csv file
- ; form is the name of the form
+ quit $name(^SAMI(311.11)) ; end of $$formGlb
+ ;
+ ;
+ ;
+importfmap(csvname,form) ; ppi importfmap^%wf, import map from csv
  ;
  ; sample graph from the csv form mapping file
  ;^%wd(17.040801,7,"graph","sbform",365,"dataType")="RDATE"
@@ -31,6 +76,11 @@ importfmap(csvname,form) ; import form mapping definitions from csv
  ;^%wd(17.040801,7,"graph","sbform",365,"mPropType")="D"
  ;^%wd(17.040801,7,"graph","sbform",365,"sub#")=""
  ;
+ ; [description tbd]
+ ; import form mapping definitions from csv
+ ; csvname is the name of the csv file
+ ; form is the name of the form
+ ;
  do csv2graph^%wd(csvname,form)
  ;
  new groot set groot=$$rootOf^%wd("csvGraph")
@@ -38,7 +88,7 @@ importfmap(csvname,form) ; import form mapping definitions from csv
  . write !,"csvGraph not found for form ",form
  new fmap
  merge fmap=@groot@(form)
- ;zwr fmap
+ ; zwrite fmap
  new formien s formien=$$formien(form) ; laygo form record number
  write:$get(%wform) !,"form: ",form," has ien: ",formien
  ;
@@ -56,11 +106,16 @@ importfmap(csvname,form) ; import form mapping definitions from csv
  . d updie(.fda)
  . ;
  . do initFmap(form)
- . ;
- quit
+ . quit
+ ;
+ quit  ; end of importfmap
+ ;
+ ;
  ;
 formien(form) ; extrinsic returns the record number of the form
+ ;
  ; creates one if not found
+ ;
  new %ien
  set %ien=$order(@$$formGlb()@("B",form,""))
  if %ien'="" quit %ien
@@ -68,9 +123,13 @@ formien(form) ; extrinsic returns the record number of the form
  set fda($$formFn,"?+1,",.01)=form
  do updie(.fda)
  set %ien=$order(@$$formGlb()@("B",form,""))
- quit %ien
+ ;
+ quit %ien ; end of $$formien
+ ;
+ ;
  ;
 updie(fda) ; update a fileman file
+ ;
  new %yerr
  do UPDATE^DIE("","fda","","%yerr")
  if $data(%yerr) do  quit  ;
@@ -78,8 +137,12 @@ updie(fda) ; update a fileman file
  . zwr %yerr
  . zwr fda
  . kill fda
+ . quit
  kill fda
- quit
+ ;
+ quit  ; end of updie
+ ;
+ ;
  ;
 initFmap(form) ; initializes the form-map graph for form
  ;
@@ -87,10 +150,11 @@ initFmap(form) ; initializes the form-map graph for form
  new formien set formien=$order(@fglb@("B",form,""))
  if formien="" do  quit  ;
  . write !,"Error initializing form-map for form: ",form
+ . quit
  new mapglb set mapglb=$$setroot^%wd("form-map")
  new fmapglb set fmapglb=$name(@mapglb@("graph",form))
  if $data(@fmapglb) kill @fmapglb
- ;b
+ ; break
  do fmx^%sfv2g(fmapglb,$$formFn,formien)
  ;
  ; sample fieldmap graph entry
@@ -110,43 +174,57 @@ initFmap(form) ; initializes the form-map graph for form
  . new %wfield set %wfield=$get(@fmapglb@("VARIABLE",%wi,"FILEMAN_FIELD"))
  . quit:%wfield=""
  . set @fmapglb@("VARIABLE","FIELD",%wfield,%wvar,%wi)=""
- q
+ . quit
+ ;
+ quit  ; end of initFmap
+ ;
+ ;
  ;
 getFmapGlb(form) ; get the location of the fieldmap for the form
+ ;
  new mapglb set mapglb=$$setroot^%wd("form-map")
  new fmapglb set fmapglb=$name(@mapglb@("graph",form,"VARIABLE"))
  ;
- q fmapglb
+ quit fmapglb ; end of $$getFmapGlb
+ ;
+ ;
  ;
 getFieldSpec(form,field,fmapglb) ; extrinsic returns the format specification
+ ;
  ; for field in form. fmapglb is optional but will speed up the lookup
  ;
- if $get(fmapglb)="" s fmapglb=$$getFmapGlb(form)
+ if $get(fmapglb)="" set fmapglb=$$getFmapGlb(form)
  ;
- new %wien s %wien=$o(@fmapglb@("B",field,""))
+ new %wien set %wien=$o(@fmapglb@("B",field,""))
  ;
  if %wien="" do  quit  ;
- . ;write !,"Error field map not found"
- . ;d ^ZTER
+ . ; write !,"Error field map not found"
+ . ; do ^%ZTER
+ . quit
  ;
- quit $get(@fmapglb@(%wien,"DATA_TYPE"))
+ quit $get(@fmapglb@(%wien,"DATA_TYPE")) ; end of $$getFieldSpec
+ ;
+ ;
  ;
 getFieldMap(array,form,field,fmapglb) ; array is passed by name and returns the file map
+ ;
  ; for the field in the form
  ; fmapglb is passed by name and is optional, but will speed up processing
  ;
- if $get(fmapglb)="" s fmapglb=$$getFmapGlb(form)
+ if $get(fmapglb)="" set fmapglb=$$getFmapGlb(form)
  ;
- if $g(field)="" q  ;
+ if $g(field)="" quit  ;
  new %wien s %wien=$o(@fmapglb@("B",field,""))
  ;
  if %wien="" do  quit  ;
- . ;write !,"Error field map not found"
- . ;d ^ZTER
+ . ; write !,"Error field map not found"
+ . ; do ^%ZTER
+ . quit
  ;
  merge @array=@fmapglb@(%wien)
  ;
- quit
+ quit  ; end of getFieldMap
  ;
- 
- 
+ ;
+ ;
+eor ; end of routine %wffmap

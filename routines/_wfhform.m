@@ -1,4 +1,4 @@
-%wfhform ;ven/gpl-write form: html form get & post ;2018-02-05T18:34Z
+%wfhform ;ven/gpl-write form: html form get & post ;2018-02-05T19:08Z
  ;;1.8;Mash;
  ;
  ; %wfhform implements the Write Form Library's html form get & post web
@@ -22,7 +22,7 @@
  ;@license: Apache 2.0
  ;   https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-05T18:34Z
+ ;@last-updated: 2018-02-05T19:08Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Write Form - %wf
  ;@version: 1.8T04
@@ -205,7 +205,7 @@ wsGetForm(rtn,filter,post) ; web service wsGetForm^%wf, get html form
  . . . set tln=zhtml(%j)
  . . . quit
  . . if $get(name)="" quit  ;
- . . new val set vals=""
+ . . new val set val=""
  . . if $data(vals(name)) set val=$get(vals(name))
  . . new type set type=""
  . . ;if tln["type=" set type=$piece($piece(tln,"type=""",2),"""",1)

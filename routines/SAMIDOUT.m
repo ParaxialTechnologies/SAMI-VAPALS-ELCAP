@@ -1,9 +1,10 @@
-SAMIDOUT ;ven/toad - dd: output ;2018-01-03T12:19Z
+SAMIDOUT ;ven/toad - dd: output ;2018-02-06T00:00Z
  ;;18.0;SAMI;;
  ;
  ; Routine SAMIDOUT contains subroutines for outputing the data
  ; dictionary of SAMI fields to the va-pals repository in tab-delimited
  ; format
+ ; CURRENTLY UNTESTED & IN PROGRESS
  ;
  quit  ; no entry from top
  ;
@@ -13,15 +14,16 @@ SAMIDOUT ;ven/toad - dd: output ;2018-01-03T12:19Z
  ;
  ;
  ;
+ ;@routine-credits
  ;@primary-dev: Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
  ;@primary-dev-org: Vista Expertise Network (ven)
  ; http://vistaexpertise.net
- ;@copyright: 2017-2018, ven, all rights reserved
+ ;@copyright: 2017-2018, toad, all rights reserved
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-01-03T12:19Z
+ ;@last-updated: 2018-02-06T00:00Z
  ;@application: Screening Applications Management (SAM)
  ;@module: Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files: SAMI Forms (311.101-311.199)
@@ -29,14 +31,29 @@ SAMIDOUT ;ven/toad - dd: output ;2018-01-03T12:19Z
  ;@release-date: not yet released
  ;@patch-list: none yet
  ;
- ;@funding-org: 2017-2018,Bristol-Myers Squibb Foundation (bmsf)
+ ;@module-credits
+ ;@project: VA Partnership to Increase Access to Lung Screening
+ ; (VA-PALS)
+ ; http://va-pals.org/
+ ;@funding: 2017/2018, Bristol-Myers Squibb Foundation (bmsf)
  ; https://www.bms.com/about-us/responsibility/bristol-myers-squibb-foundation.html
+ ;@partner-org: Veterans Affairs Office of Rural health
+ ; https://www.ruralhealth.va.gov/
+ ;@partner-org: International Early Lung Cancer Action Program (I-ELCAP)
+ ; http://ielcap.com/
+ ;@partner-org: Paraxial Technologies
+ ; http://paraxialtech.com/
+ ;@partner-org: Open Source Electronic Health Record Alliance (OSEHRA)
+ ; https://www.osehra.org/groups/va-pals-open-source-project-group
  ;
+ ;@module-log
  ; 2017-09-18 ven/toad v18.0t01 SAMIDOUT: create, building on Mash
  ; tools in %cp & %sfo; ONE,ALL.
  ;
  ; 2018-01-03 ven/toad v18.0t04 SAMIDOUT: convert dmis to ppis; stanza
  ; terminology; ONE,ALL.
+ ;
+ ; 2018-02-05 ven/toad v18.0t04 SAMIDOUT: upgrade license & attribution.
  ;
  ;@to-do
  ; annotate more fully
@@ -224,4 +241,4 @@ ONE(SAMIDD,SAMIPKG,SAMILOG) ; code for ppi ONE^SAMID, export sami dd
  ;
  ;
  ;
-eor ; end of routine SAMIDOUT
+EOR ; end of routine SAMIDOUT

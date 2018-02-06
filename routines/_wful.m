@@ -1,4 +1,4 @@
-%wful ;ven/toad-write form: development log ;2018-02-05T20:08Z
+%wful ;ven/toad-write form: development log ;2018-02-06T02:00Z
  ;;1.8;Mash;
  ;
  ; %wful is the Write Form Library's primary-development log.
@@ -21,7 +21,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-05T20:08Z
+ ;@last-updated: 2018-02-06T02:00Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Write Form - %wf
  ;@version: 1.8T04
@@ -134,8 +134,11 @@
  ; $$formLabel^%wf, redactErr^%wf, redactErr2^%wf, insError^%wf,
  ; debugFld^%wf, $$delText^%wf, & test testRedactErr2^%wfhform, adjust
  ; param passing to match %wfhform protections, remove my old ppi comments,
- ; spell out language elements, refine ppi comments.
- ;  %wfhform: refine ppi comments, spell out language elements.
+ ; spell out language elements, refine ppi comments, move replaceAll up
+ ; to section 4.
+ ;  %wfhform: refine ppi comments, spell out language elements, note calls
+ ; from outside routine; move replaceAll up to section 4, add calls from
+ ; outside routine.
  ;  %wffiler: apply hdr comments, white space, spell out language elements,
  ; r/getVals^%wfhform w/getVals^%wf, add do-dot quits.
  ;  %wffmap: apply hdr comments, white space, spell out language elements,

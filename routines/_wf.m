@@ -1,4 +1,4 @@
-%wf	;ven/gpl-write form: development log ;2018-02-05T18:27Z
+%wf ;ven/gpl-write form: development log ;2018-02-06T02:00Z
  ;;1.8;Mash;
  ;
  ; %wful is the Write Form Library's ppi & api routine. It supports getting
@@ -16,14 +16,14 @@
  ;
  ;@routine-credits
  ;@primary-dev: George P. Lilly (gpl)
- ;   gpl@vistaexpertise.net
+ ; gpl@vistaexpertise.net
  ;@primary-dev-org: Vista Expertise Network (ven)
- ;   http://vistaexpertise.net
+ ; http://vistaexpertise.net
  ;@copyright: 2017/2018, gpl, all rights reserved
  ;@license: Apache 2.0
- ;   https://www.apache.org/licenses/LICENSE-2.0.html
+ ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-05T18:27Z
+ ;@last-updated: 2018-02-06T02:00Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Write Form - %wf
  ;@version: 1.8T04
@@ -111,6 +111,11 @@ delText(ln,begin,end,ins) ; ppi $$delText^%wf, delete text from html line
  ;
 replace(ln,cur,repl) ; ppi replace^%wf, replace test in html line
  do replace^%wfhform(.ln,cur,repl)
+ quit
+ ;
+ ;
+replaceAll(ln,cur,repl) ; ppi replaceAll^%wf, replace text in html line
+ do replaceAll^%wfhform(.ln,cur,repl)
  quit
  ;
  ;
@@ -204,11 +209,6 @@ replaceSrc(ln) ; ppi replaceSrc^%wf, chg src & href lines to find resources
  quit
  ;
  ;
-replaceAll(ln,cur,repl) ; ppi replaceAll^%wf, replace text in html line
- do replaceAll^%wfhform(.ln,cur,repl)
- quit
- ;
- ;
 replaceHref(ln) ; ppi replaceHref^%wf, chg href lines to find resources
  do replaceHref^%wfhform(.ln)
  quit
@@ -220,10 +220,6 @@ replaceHref(ln) ; ppi replaceHref^%wf, chg href lines to find resources
  ;
  ;
 importfmap(csvname,form) ; ppi importfmap^%wf, import map from csv
- ; import form-mapping definitions from csv file
- ; csvname is csv file's name
- ; form is form's name
- ;
  do importfmap^%wffmap(csvname,form)
  quit
  ;

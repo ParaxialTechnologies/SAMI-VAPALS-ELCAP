@@ -1,4 +1,4 @@
-%wfhform ;ven/gpl-write form: html form get & post ;2018-02-05T19:08Z
+%wfhform ;ven/gpl-write form: html form get & post ;2018-02-06T02:08Z
  ;;1.8;Mash;
  ;
  ; %wfhform implements the Write Form Library's html form get & post web
@@ -15,14 +15,14 @@
  ;
  ;@routine-credits
  ;@primary-dev: George P. Lilly (gpl)
- ;   gpl@vistaexpertise.net
+ ; gpl@vistaexpertise.net
  ;@primary-dev-org: Vista Expertise Network (ven)
- ;   http://vistaexpertise.net
+ ; http://vistaexpertise.net
  ;@copyright: 2017/2018, gpl, all rights reserved
  ;@license: Apache 2.0
- ;   https://www.apache.org/licenses/LICENSE-2.0.html
+ ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-05T19:08Z
+ ;@last-updated: 2018-02-06T02:08Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Write Form - %wf
  ;@version: 1.8T04
@@ -57,7 +57,7 @@ wsGetForm(rtn,filter,post) ; web service wsGetForm^%wf, get html form
  ; wsGetForm^%wf
  ;@called-by: none
  ;@calls
- ; do getVals^%wf
+ ; getVals^%wf
  ; retrieve^%wffiler
  ; $$getTemplate^%wf
  ; getThis^%wd
@@ -345,6 +345,7 @@ getTemplate(form) ; ppi $$getTemplate^%wf, get name of form's template
  ; $$getTemplate^%wf
  ;@called-by
  ; wsGetForm^%wf
+ ; getTemplate^SAMICASE
  ;@calls
  ; $$GET1^DIQ
  ;@input
@@ -713,6 +714,50 @@ replace(ln,cur,repl) ; ppi replace^%wf, replace test in html line
  ;
  ;
  ;
+replaceAll(ln,cur,repl) ; ppi replaceAll^%wf, replace text in html line
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;
+ ;@signature
+ ; dp replaceAll^%wf(.ln,cur,repl)
+ ;@branches-from
+ ; replaceAll^%wf
+ ;@called-by
+ ; $$replaceSrc^%wf [deprecated]
+ ; wsCASE^SAMICASE
+ ; SAMISUBS^SAMIFRM
+ ; fixSrc^SAMIFRM
+ ; fixHref^SAMIFRM
+ ;@calls: none
+ ;@input
+ ; cur = 
+ ; repl = 
+ ;@throughput
+ ;.ln = 
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ; [description tbd]
+ ; replace all occurances of cur with repl in ln, passed by reference
+ ;
+ ;@stanza 2 do replacements
+ ;
+ new i,t1,t2 set t1=""
+ for i=1:1:$length(ln,cur) do  ;
+ . set t2(i)=$piece(ln,cur,i)
+ . if i>1 set t2(i)=repl_$extract(t2(i),1,$length(t2(i)))
+ . quit
+ ;zwr t2
+ for i=1:1:$order(t2(""),-1) set t1=t1_t2(i)
+ set ln=t1
+ ;
+ ;@stanza 3 termination
+ ;
+ quit  ; end of replaceAll^%wf
+ ;
+ ;
+ ;
  ;@section 5 wsGetForm^%wf field value manipulation
  ;
  ;
@@ -805,6 +850,7 @@ getVals(vrtn,zid,zsid) ; ppi getVals^%wf, get form's values from graph
  ; getVals^%wf
  ;@called-by
  ; wsGetForm^%wf
+ ; testFiler^%wffiler
  ;@calls
  ; $$setroot^%wd
  ;@input
@@ -1407,47 +1453,6 @@ replaceSrc(ln) ; ppi replaceSrc^%wf, chg src & href lines to find resources
  ;@stanza 3 termination
  ;
  quit done ; end of $$replaceSrc^%wf
- ;
- ;
- ;
-replaceAll(ln,cur,repl) ; ppi replaceAll^%wf, replace text in html line
- ;
- ;@stanza 1 invocation, binding, & branching
- ;
- ;ven/gpl;private;procedure;
- ;@signature
- ; dp replaceAll^%wf(.ln,cur,repl)
- ;@branches-from
- ; replaceAll^%wf
- ;@called-by
- ; $$replaceSrc^%wf
- ;@calls: none
- ;@input
- ; cur = 
- ; repl = 
- ;@throughput
- ;.ln = 
- ;@examples [tbd]
- ;@tests [tbd]
- ;
- ; [description tbd]
- ; replace all occurances of cur with repl in ln, passed by reference
- ; deprecated, was only used by replaceSrc^%wf
- ;
- ;@stanza 2 do replacements
- ;
- new i,t1,t2 set t1=""
- for i=1:1:$length(ln,cur) do  ;
- . set t2(i)=$piece(ln,cur,i)
- . if i>1 set t2(i)=repl_$extract(t2(i),1,$length(t2(i)))
- . quit
- ;zwr t2
- for i=1:1:$order(t2(""),-1) set t1=t1_t2(i)
- set ln=t1
- ;
- ;@stanza 3 termination
- ;
- quit  ; end of replaceAll^%wf
  ;
  ;
  ;

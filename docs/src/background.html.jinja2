@@ -1,67 +1,7 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% extends 'layout.jinja2' %}
+{% block title %}{{ title | escape }}{% endblock %}
 
-    <title>Background Form</title>
-    <link rel="stylesheet" href="lib/bootstrap-4.0.0-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="lib/formvalidation/dist/css/formValidation.min.css">
-    <link rel="stylesheet" href="vapals.css">
-</head>
-<body>
-    <script src="lib/jquery-3.2.1.slim.min.js"></script>
-    <script src="lib/popper.min.js"></script>
-    <script src="lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
-    <script src="lib/moment.js"></script>
-    <script src="lib/formvalidation/dist/js/formValidation.min.js"></script>
-    <script src="lib/formvalidation/dist/js/framework/bootstrap4.min.js"></script>
-    <script src="vapals.js"></script>
-
-    <!--Debug information for viewport-->
-    <span class="badge badge-secondary d-block d-sm-none">extra small</span>
-    <span class="badge badge-secondary d-none d-sm-block d-md-none">small</span>
-    <span class="badge badge-secondary d-none d-md-block d-lg-none">medium</span>
-    <span class="badge badge-secondary d-none d-lg-block d-xl-none">large</span>
-    <span class="badge badge-secondary d-none d-xl-block">extra large</span>
-
-    <!--System Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#"><img src="img/new-logo.png"
-                                              title="VA-PALS" height="50"/></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
-                        Patient
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Background</a>
-                        <a class="dropdown-item" href="#">Intake</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">CT Evaluation</a>
-                    </div>
-                </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-        </div>
-    </nav>
-
-    
+{% block body %}
     <div class="container-fluid" style="max-width:1550px">
         <h1>
             Sample, Sammy G
@@ -226,16 +166,9 @@
                         <div class="col form-group">
                             <label for="sboccc" class="col-form-label">Occupation Code</label>
                             <select class="form-control" id="sboccc" name="sboccc">
-                                <option value="-">-</option>
-                                <option value="1">Higher executives</option>
-                                <option value="2">Business managers</option>
-                                <option value="3">Administrative Personnel</option>
-                                <option value="4">Clerical / Sales workers</option>
-                                <option value="5">Skilled manual Employees</option>
-                                <option value="6">Machine Operators</option>
-                                <option value="7">Unskilled Employees</option>
-                                <option value="8">Unemployed</option>
-                                
+                                {% for key,value in occupations.items() -%}
+                                    <option value="{{ key }}">{{ value }}</option>
+                                {% endfor %}
                             </select>
                         </div>
                     </div>
@@ -1599,119 +1532,35 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                
-                                    
+                                {% for i in range(0,4) %}
+                                    {% set j = i + 1 %}
                                     <tr>
-                                        <td><input type="text" name="sbsehsa1" class="form-control"/></td>
-                                        <td><input type="text" name="sbsehsj1" class="form-control"/></td>
+                                        <td><input type="text" name="sbsehsa{{ j }}" class="form-control"/></td>
+                                        <td><input type="text" name="sbsehsj{{ j }}" class="form-control"/></td>
                                         <td>
                                             <div class="form-group align-top">
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sbsehsr1"
-                                                           id="sbsehsr1-n" value="n">
-                                                    <label class="form-check-label" for="sbsehsr1-n">not
+                                                    <input class="form-check-input" type="radio" name="sbsehsr{{ j }}"
+                                                           id="sbsehsr{{ j }}-n" value="n">
+                                                    <label class="form-check-label" for="sbsehsr{{ j }}-n">not
                                                         permitted</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sbsehsr1"
-                                                           id="sbsehsr1-r" value="r">
+                                                    <input class="form-check-input" type="radio" name="sbsehsr{{ j }}"
+                                                           id="sbsehsr{{ j }}-r" value="r">
                                                     <label class="form-check-label"
-                                                           for="sbsehsr1-r">restricted</label>
+                                                           for="sbsehsr{{ j }}-r">restricted</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sbsehsr1"
-                                                           id="sbsehsr1-y" value="y">
-                                                    <label class="form-check-label" for="sbsehsr1-y">allowed
+                                                    <input class="form-check-input" type="radio" name="sbsehsr{{ j }}"
+                                                           id="sbsehsr{{ j }}-y" value="y">
+                                                    <label class="form-check-label" for="sbsehsr{{ j }}-y">allowed
                                                         anywhere</label>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
-                                
-                                    
-                                    <tr>
-                                        <td><input type="text" name="sbsehsa2" class="form-control"/></td>
-                                        <td><input type="text" name="sbsehsj2" class="form-control"/></td>
-                                        <td>
-                                            <div class="form-group align-top">
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sbsehsr2"
-                                                           id="sbsehsr2-n" value="n">
-                                                    <label class="form-check-label" for="sbsehsr2-n">not
-                                                        permitted</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sbsehsr2"
-                                                           id="sbsehsr2-r" value="r">
-                                                    <label class="form-check-label"
-                                                           for="sbsehsr2-r">restricted</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sbsehsr2"
-                                                           id="sbsehsr2-y" value="y">
-                                                    <label class="form-check-label" for="sbsehsr2-y">allowed
-                                                        anywhere</label>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                
-                                    
-                                    <tr>
-                                        <td><input type="text" name="sbsehsa3" class="form-control"/></td>
-                                        <td><input type="text" name="sbsehsj3" class="form-control"/></td>
-                                        <td>
-                                            <div class="form-group align-top">
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sbsehsr3"
-                                                           id="sbsehsr3-n" value="n">
-                                                    <label class="form-check-label" for="sbsehsr3-n">not
-                                                        permitted</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sbsehsr3"
-                                                           id="sbsehsr3-r" value="r">
-                                                    <label class="form-check-label"
-                                                           for="sbsehsr3-r">restricted</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sbsehsr3"
-                                                           id="sbsehsr3-y" value="y">
-                                                    <label class="form-check-label" for="sbsehsr3-y">allowed
-                                                        anywhere</label>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                
-                                    
-                                    <tr>
-                                        <td><input type="text" name="sbsehsa4" class="form-control"/></td>
-                                        <td><input type="text" name="sbsehsj4" class="form-control"/></td>
-                                        <td>
-                                            <div class="form-group align-top">
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sbsehsr4"
-                                                           id="sbsehsr4-n" value="n">
-                                                    <label class="form-check-label" for="sbsehsr4-n">not
-                                                        permitted</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sbsehsr4"
-                                                           id="sbsehsr4-r" value="r">
-                                                    <label class="form-check-label"
-                                                           for="sbsehsr4-r">restricted</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sbsehsr4"
-                                                           id="sbsehsr4-y" value="y">
-                                                    <label class="form-check-label" for="sbsehsr4-y">allowed
-                                                        anywhere</label>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                
+                                {% endfor %}
                                 </tbody>
                             </table>
 
@@ -1886,12 +1735,12 @@
                                 </thead>
                                 <tbody>
 
-                                
-                                    
+                                {% for i in range(0,4) %}
+                                    {% set j = i + 1 %}
                                     <tr>
-                                        <td><input type="text" name="sbhsa1" class="form-control"/></td>
+                                        <td><input type="text" name="sbhsa{{ j }}" class="form-control"/></td>
                                         <td>
-                                            <select name="sbhsas1" class="form-control">
+                                            <select name="sbhsas{{ j }}" class="form-control">
                                                 <option value="-">&mdash;</option>
                                                 <option value="a">1–14 cigarettes a day</option>
                                                 <option value="b">15–24 cigarettes a day</option>
@@ -1902,135 +1751,27 @@
                                         <td>
                                             <div class="form-group align-top">
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sbhsasr1"
-                                                           id="sbhsasr1-n" value="n">
-                                                    <label class="form-check-label" for="sbhsasr1-n">not
+                                                    <input class="form-check-input" type="radio" name="sbhsasr{{ j }}"
+                                                           id="sbhsasr{{ j }}-n" value="n">
+                                                    <label class="form-check-label" for="sbhsasr{{ j }}-n">not
                                                         permitted</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sbhsasr1"
-                                                           id="sbhsasr1-r" value="r">
+                                                    <input class="form-check-input" type="radio" name="sbhsasr{{ j }}"
+                                                           id="sbhsasr{{ j }}-r" value="r">
                                                     <label class="form-check-label"
-                                                           for="sbhsasr1-r">restricted</label>
+                                                           for="sbhsasr{{ j }}-r">restricted</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sbhsasr1"
-                                                           id="sbhsasr1-y" value="y">
-                                                    <label class="form-check-label" for="sbhsasr1-y">allowed
+                                                    <input class="form-check-input" type="radio" name="sbhsasr{{ j }}"
+                                                           id="sbhsasr{{ j }}-y" value="y">
+                                                    <label class="form-check-label" for="sbhsasr{{ j }}-y">allowed
                                                         anywhere</label>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
-                                
-                                    
-                                    <tr>
-                                        <td><input type="text" name="sbhsa2" class="form-control"/></td>
-                                        <td>
-                                            <select name="sbhsas2" class="form-control">
-                                                <option value="-">&mdash;</option>
-                                                <option value="a">1–14 cigarettes a day</option>
-                                                <option value="b">15–24 cigarettes a day</option>
-                                                <option value="c">25+ cigarettes a day</option>
-                                                <option value="d">Don’t know</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <div class="form-group align-top">
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sbhsasr2"
-                                                           id="sbhsasr2-n" value="n">
-                                                    <label class="form-check-label" for="sbhsasr2-n">not
-                                                        permitted</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sbhsasr2"
-                                                           id="sbhsasr2-r" value="r">
-                                                    <label class="form-check-label"
-                                                           for="sbhsasr2-r">restricted</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sbhsasr2"
-                                                           id="sbhsasr2-y" value="y">
-                                                    <label class="form-check-label" for="sbhsasr2-y">allowed
-                                                        anywhere</label>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                
-                                    
-                                    <tr>
-                                        <td><input type="text" name="sbhsa3" class="form-control"/></td>
-                                        <td>
-                                            <select name="sbhsas3" class="form-control">
-                                                <option value="-">&mdash;</option>
-                                                <option value="a">1–14 cigarettes a day</option>
-                                                <option value="b">15–24 cigarettes a day</option>
-                                                <option value="c">25+ cigarettes a day</option>
-                                                <option value="d">Don’t know</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <div class="form-group align-top">
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sbhsasr3"
-                                                           id="sbhsasr3-n" value="n">
-                                                    <label class="form-check-label" for="sbhsasr3-n">not
-                                                        permitted</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sbhsasr3"
-                                                           id="sbhsasr3-r" value="r">
-                                                    <label class="form-check-label"
-                                                           for="sbhsasr3-r">restricted</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sbhsasr3"
-                                                           id="sbhsasr3-y" value="y">
-                                                    <label class="form-check-label" for="sbhsasr3-y">allowed
-                                                        anywhere</label>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                
-                                    
-                                    <tr>
-                                        <td><input type="text" name="sbhsa4" class="form-control"/></td>
-                                        <td>
-                                            <select name="sbhsas4" class="form-control">
-                                                <option value="-">&mdash;</option>
-                                                <option value="a">1–14 cigarettes a day</option>
-                                                <option value="b">15–24 cigarettes a day</option>
-                                                <option value="c">25+ cigarettes a day</option>
-                                                <option value="d">Don’t know</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <div class="form-group align-top">
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sbhsasr4"
-                                                           id="sbhsasr4-n" value="n">
-                                                    <label class="form-check-label" for="sbhsasr4-n">not
-                                                        permitted</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sbhsasr4"
-                                                           id="sbhsasr4-r" value="r">
-                                                    <label class="form-check-label"
-                                                           for="sbhsasr4-r">restricted</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="sbhsasr4"
-                                                           id="sbhsasr4-y" value="y">
-                                                    <label class="form-check-label" for="sbhsasr4-y">allowed
-                                                        anywhere</label>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                
+                                {% endfor %}
                                 </tbody>
                             </table>
 
@@ -2401,15 +2142,4 @@
 
     </script>
 
-
-
-    
-    <footer>
-        <div class="container-fluid" style="max-width:1550px">
-            <hr/>
-            <a href="https://issues.osehra.org/browse/VAP" target="_blank">Submit feedback</a>
-        </div>
-    </footer>
-    
-</body>
-</html>
+{% endblock %}

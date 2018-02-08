@@ -1,4 +1,4 @@
-SAMICASE ;ven/gpl - ielcap: case review page ;2018-02-05T23:25Z
+SAMICASE ;ven/gpl - ielcap: case review page ;2018-02-08T20:11Z
  ;;18.0;SAM;;
  ;
  ; SAMICASE contains subroutines for producing the ELCAP Case Review Page.
@@ -21,7 +21,7 @@ SAMICASE ;ven/gpl - ielcap: case review page ;2018-02-05T23:25Z
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-05T23:25Z
+ ;@last-updated: 2018-02-08T20:11Z
  ;@application: Screening Applications Management (SAM)
  ;@module: Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files: SAMI Forms (311.101-311.199)
@@ -48,11 +48,12 @@ SAMICASE ;ven/gpl - ielcap: case review page ;2018-02-05T23:25Z
  ; https://www.osehra.org/groups/va-pals-open-source-project-group
  ;
  ;@module-log
- ; 2018-01-14 ven/gpl v18.0t04 SAMICASE: split from routine SAMIFRM, include wsCASE, getTemplate,
- ; getItems, casetbl.
+ ; 2018-01-14 ven/gpl v18.0t04 SAMICASE: split from routine SAMIFRM,
+ ; include wsCASE, getTemplate, getItems, casetbl.
  ;
- ; 2018-02-05 ven/toad v18.0t04 SAMICASE: update style, license, & attribution, spell out
- ; language elements, add white space & do-dot quits, r/replaceAll^%wfhfrom w/replaceAll^%wf,
+ ; 2018-02-05/08 ven/toad v18.0t04 SAMICASE: update style, license, &
+ ; attribution, spell out language elements, add white space & do-dot
+ ; quits, r/replaceAll^%wfhfrom w/replaceAll^%wf, 
  ; r/$$getTemplate^%wfhform w/$$getTemplate^%wf.
  ;
  ;@contents

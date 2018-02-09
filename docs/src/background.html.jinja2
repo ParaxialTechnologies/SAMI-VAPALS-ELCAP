@@ -2098,27 +2098,6 @@
             }).first().trigger('change');
             conditionallyEnable("[name=sbsehs]", "y", "#sbsehs-container", hideWhenSmall);
 
-
-            // after toggling all the fields, review completeness of required fields on each tab.
-            $.each($("[data-toggle=tab]"), function (index, tabLink) {
-                var $tab = $(tabLink),
-                    $container = $($tab.attr("href")),
-                    $requiredFields = $container.find("[required], [data-fv-notempty=true]").filter(":enabled");
-
-                var emptyRequiredFields = $requiredFields.filter(function () {
-                    var $c = $(this);
-                    var value = $c.val();
-                    if ($c.is(":radio")) {
-                        var radioName = $c.attr("name")
-                        value = $("input[type='radio'][name='" + radioName + "']:checked").val();
-                    }
-                    return typeof value === "undefined" || value === "";
-                });
-                if (emptyRequiredFields.length == 0) {
-                    $tab.addClass("complete");
-                }
-            });
-
             //setup tab navigation next buttons
             $(".btn-next").on("click", function () {
                 var $currentTab = $("#myTabContent").find("> div:visible");
@@ -2137,9 +2116,41 @@
                 var tabContentSelector = $(currentTab).attr("href");
                 var fv = $("form.validated").data('formValidation');
                 var valid = fv.validateContainer(tabContentSelector).isValid();
+                $(tabContentSelector).find("input, select").first().trigger('change');
                 if (!valid) {
-                    e.preventDefault() // to cancel the navigation
+                    console.log("tab " + tabContentSelector + " is not valid");
+                    // e.preventDefault() // to cancel the navigation
                 }
+            });
+
+            function checkCompleteness($container) {
+                console.log("checkCompleteness() container=" + $container);
+                var $requiredFields = $container.find("[required], [data-fv-notempty=true]").filter(":enabled"),
+                    $tab = $(".nav-tabs").find("a[href='#" + $container.attr("id") + "']");
+                var emptyRequiredFields = $requiredFields.filter(function () {
+                    var $c = $(this);
+                    var value = $c.val();
+                    if ($c.is(":radio")) {
+                        var radioName = $c.attr("name");
+                        value = $("input[type='radio'][name='" + radioName + "']:checked").val();
+                    }
+                    return typeof value === "undefined" || value === "";
+                });
+                // check tab container validity
+                var fv = $("form.validated").data('formValidation');
+                var valid = fv.isValidContainer($container);
+                var reallyValid = valid == null || valid === true; //consider unvalidated (null) as "valid".
+
+                //add completeness flag to tab if all required fields are filled in and form is likely valid.
+                $tab.toggleClass("complete", emptyRequiredFields.length === 0 && reallyValid);
+            }
+
+            // trigger a check of completeness of each tab at page load and also any time an input changes.
+            $(".tab-pane").each(function () {
+                checkCompleteness($(this))
+            }).on("keyup change", function () {
+                var $container = $(this).closest(".tab-pane");
+                checkCompleteness($container);
             });
 
             //Globally enabled popovers for things like help text.

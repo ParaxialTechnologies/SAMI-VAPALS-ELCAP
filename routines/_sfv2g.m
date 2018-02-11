@@ -1,4 +1,4 @@
-%sfv2g	;ven/gpl-dataset format: vista to graph ;2018-02-06T02:50Z
+%sfv2g	;ven/gpl-dataset format: vista to graph ;2018-02-11T14:06Z
  ;;1.8;Mash;
  ;
  ; %sfv2g implements the Dataset Format Library's apis for converting
@@ -22,7 +22,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-06T02:50Z
+ ;@last-updated: 2018-02-11T14:06Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Dataset Format - %sf
  ;@version: 1.8T04
@@ -52,8 +52,9 @@
  ;@module-log
  ; 2017-09-24 ven/gpl %*1.8t04 %sfv2g: create routine w/$$fmrec & fmx.
  ;
- ; 2018-02-05 ven/toad %*1.8t04 %sfv2g: passim hdr comments, spell out mumps
- ; language elements, add do-dot quits & white space, license & attribution.
+ ; 2018-02-05/11 ven/toad %*1.8t04 %sfv2g: passim hdr comments, spell out
+ ; mumps language elements, add do-dot quits & white space, license &
+ ; attribution.
  ;
  ;@to-do
  ; convert entry points to ppi/api style & put in %sf
@@ -115,7 +116,7 @@ fmx(rtn,file,ien,camel) ; return an array of a fileman record for external
  . . ; set @rtn@(fname,i2,"iens")=iens
  . . quit
  . write:$get(debug)=1 !,%,"=",@%
- . set %=$quit(@%)
+ . set %=$query(@%)
  . quit
  ;
  quit  ; end of fmx

@@ -1,4 +1,4 @@
-%wfhform ;ven/gpl-write form: html radio & checkbox ;2018-02-11T13:44Z
+%wfhinput ;ven/gpl-write form: html input tag ;2018-02-11T15:12Z
  ;;1.8;Mash;
  ;
  ; %wfhradio implements the Write Form Library's html radio button
@@ -22,7 +22,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-11T13:44Z
+ ;@last-updated: 2018-02-11T15:12Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Write Form - %wf
  ;@version: 1.8T04
@@ -36,11 +36,12 @@
  ; write unit tests
  ;
  ;@contents
- ; [too big, break up]
+ ; uncheck: code for ppi uncheck^%wf, uncheck radio button or checkbox
+ ; check: code for ppi check^%wf, check radio button or checkbox
  ;
  ;
  ;
- ;@section 1 wsGetForm^%wf radio/checkbox manipulation
+ ;@section 1 radio/checkbox manipulation
  ;
  ;
  ;
@@ -115,4 +116,4 @@ check ; code for ppi check^%wf, check radio button or checkbox
  ;
  ;
  ;
-eor ; end of routine %wfhradio
+eor ; end of routine %wfhinput

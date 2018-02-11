@@ -1,4 +1,4 @@
-%wf ;ven/gpl-write form: development log ;2018-02-11T13:48Z
+%wf ;ven/gpl-write form: development log ;2018-02-11T15:12Z
  ;;1.8;Mash;
  ;
  ; %wful is the Write Form Library's ppi & api routine. It supports getting
@@ -23,7 +23,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-11T13:48Z
+ ;@last-updated: 2018-02-11T15:12Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Write Form - %wf
  ;@version: 1.8T04
@@ -132,16 +132,16 @@ setVals(vary,zid,zsid) goto setVals^%wfhform
  ;
  ;
  ;
- ;@section 6 wsGetForm^%wf radio/checkbox manipulation
+ ;@section 6 input tag processing
  ;
  ;
  ;
  ;@ppi uncheck^%wf, uncheck radio button or checkbox
-uncheck(ln) goto uncheck^%wfhradio
+uncheck(ln) goto uncheck^%wfhinput
  ;
  ;
  ;@ppi check^%wf, check radio button or checkbox
-check(line,type) goto check^%wfhradio
+check(line,type) goto check^%wfhinput
  ;
  ;
  ;

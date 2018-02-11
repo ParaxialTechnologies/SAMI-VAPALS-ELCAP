@@ -1,4 +1,4 @@
-%wfhform ;ven/gpl-write form: html form get & post ;2018-02-11T13:35Z
+%wfhform ;ven/gpl-write form: html form get & post ;2018-02-11T13:49Z
  ;;1.8;Mash;
  ;
  ; %wfhform implements the Write Form Library's html form get & post web
@@ -22,7 +22,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-11T13:35Z
+ ;@last-updated: 2018-02-11T13:49Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Write Form - %wf
  ;@version: 1.8T04
@@ -33,7 +33,6 @@
  ; toad@vistaexpertise.net
  ;
  ;@to-do
- ; %wf: convert entry points to ppi/api style
  ; break up into smaller routines & change branches from %wf
  ;
  ;@contents
@@ -935,81 +934,6 @@ setVals ; code for ppi setVals^%wf, set field values into graph
  ;@stanza 3 termination
  ;
  quit  ; end of setVals^%wf
- ;
- ;
- ;
- ;@section 6 wsGetForm^%wf radio/checkbox manipulation
- ;
- ;
- ;
-uncheck ; code for ppi uncheck^%wf, uncheck radio button or checkbox
- ;
- ;@stanza 1 invocation, binding, & branching
- ;
- ;ven/gpl;private;procedure;
- ;@signature
- ; do uncheck^%wf(.ln)
- ;@branches-from
- ; uncheck^%wf
- ;@ppi-called-by
- ; wsGetForm^%wf
- ;@called-by: none
- ;@calls
- ; replace^%wf
- ;@throughput
- ;.ln =
- ;@examples [tbd]
- ;@tests [tbd]
- ;
- ; [description tbd]
- ; removes 'check="checked"' from ln, passed by reference
- ;
- ;@stanza 2 uncheck box or button
- ;
- if ln["checked=" do  ;
- . do replace^%wf(.ln,"checked=""checked""","")
- . if ln["checked=checked" do replace^%wf(.ln,"checked=checked","")
- . quit
- ;
- ;@stanza 3 termination
- ;
- quit  ; end of uncheck^%wf
- ;
- ;
- ;
-check ; code for ppi check^%wf, check radio button or checkbox
- ;
- ;@stanza 1 invocation, binding, & branching
- ;
- ;ven/gpl;private;procedure;
- ;@signature
- ; do check^%wf(.line,type)
- ;@branches-from
- ; check^%wf
- ;@ppi-called-by
- ; wsGetForm^%wf
- ;@called-by: none
- ;@calls
- ; replace^%wf
- ;@input
- ; type = 
- ;@throughput
- ;.line = 
- ;@examples [tbd]
- ;@tests [tbd]
- ;
- ; [description tbd]
- ; for radio buttons & checkbox
- ;
- ;@stanza 2 check box or button
- ;
- new ln set ln=line
- if line["type=""" do replace^%wf(.line,"type="""_type_"""","type="""_type_"""  checked=""checked""")
- else  do replace^%wf(.line,"type="_type,"type="_type_"  checked=""checked""")
- ;
- ;@stanza 3 termination
- ;
- quit  ; end of check^%wf
  ;
  ;
  ;

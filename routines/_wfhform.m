@@ -1,4 +1,4 @@
-%wfhform ;ven/gpl-write form: html form get & post ;2018-02-06T02:08Z
+%wfhform ;ven/gpl-write form: html form get & post ;2018-02-11T13:35Z
  ;;1.8;Mash;
  ;
  ; %wfhform implements the Write Form Library's html form get & post web
@@ -22,7 +22,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-06T02:08Z
+ ;@last-updated: 2018-02-11T13:35Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Write Form - %wf
  ;@version: 1.8T04
@@ -34,7 +34,6 @@
  ;
  ;@to-do
  ; %wf: convert entry points to ppi/api style
- ; r/all local calls w/calls through ^%wf
  ; break up into smaller routines & change branches from %wf
  ;
  ;@contents
@@ -46,7 +45,7 @@
  ;
  ;
  ;
-wsGetForm(rtn,filter,post) ; web service wsGetForm^%wf, get html form
+wsGetForm ; code for wsGetForm^%wf, get html form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -55,6 +54,8 @@ wsGetForm(rtn,filter,post) ; web service wsGetForm^%wf, get html form
  ; do wsGetForm^%wf(.rtn,.filter,post)
  ;@branches-from
  ; wsGetForm^%wf
+ ;@ws-called-by
+ ; web service GET:form/*
  ;@called-by: none
  ;@calls
  ; getVals^%wf
@@ -297,7 +298,7 @@ wsGetForm(rtn,filter,post) ; web service wsGetForm^%wf, get html form
  ;
  ;
  ;
-formLabel(form) ; ppi $$formLabel^%wf, label to use for form's post url
+formLabel ; code for ppi $$formLabel^%wf, form's post url label
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -306,8 +307,9 @@ formLabel(form) ; ppi $$formLabel^%wf, label to use for form's post url
  ; $$formLabel^%wf(form)
  ;@branches-from
  ; $$formLabel^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm^%wf
+ ;@called-by: none
  ;@calls
  ; $$GET1^DIQ
  ;@input
@@ -334,7 +336,7 @@ formLabel(form) ; ppi $$formLabel^%wf, label to use for form's post url
  ;
  ;
  ;
-getTemplate(form) ; ppi $$getTemplate^%wf, get name of form's template
+getTemplate ; code for API $$getTemplate^%wf, form's template name
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -343,9 +345,10 @@ getTemplate(form) ; ppi $$getTemplate^%wf, get name of form's template
  ; $$getTemplate^%wf(form)
  ;@branches-from
  ; $$getTemplate^%wf
- ;@called-by
+ ;@api-called-by
  ; wsGetForm^%wf
  ; getTemplate^SAMICASE
+ ;@called-by: none
  ;@calls
  ; $$GET1^DIQ
  ;@input
@@ -380,7 +383,7 @@ getTemplate(form) ; ppi $$getTemplate^%wf, get name of form's template
  ;
  ;
  ;
-redactErr(html,err,indx) ; ppi redactErr^%wf, clear errors from form
+redactErr ; code for ppi redactErr^%wf, clear errors from form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -389,8 +392,9 @@ redactErr(html,err,indx) ; ppi redactErr^%wf, clear errors from form
  ; do redactErr^%wf(html,err,indx)
  ;@branches-from
  ; redactErr^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm^%wf
+ ;@called-by: none
  ;@calls: none
  ;@input
  ; html = name of html form array
@@ -425,7 +429,7 @@ redactErr(html,err,indx) ; ppi redactErr^%wf, clear errors from form
  ;
  ;
  ;
-redactErr2(html,indx) ; ppi redactErr2^%wf, redact field's error symbol
+redactErr2 ; code for ppi redactErr2^%wf, redact field's error symbol
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -434,8 +438,9 @@ redactErr2(html,indx) ; ppi redactErr2^%wf, redact field's error symbol
  ; do redactErr2^%wf(html,.indx)
  ;@branches-from
  ; redactErr2^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm^%wf
+ ;@called-by: none
  ;@calls
  ; $$delText^%wf
  ;@input
@@ -463,13 +468,14 @@ redactErr2(html,indx) ; ppi redactErr2^%wf, redact field's error symbol
  ;
  ;
  ;
-testRedactErr2 ; test redactErr2^%wf [move to %wfut]
+testRedactErr2 ; code for test redactErr2^%wf [move to %wfut]
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
  ;ven/gpl;private;procedure;
  ;@signature
  ; do testRedactErr2^%wf
+ ;@ppi-called-by: none
  ;@called-by: none
  ;@calls
  ; redactErr2^%wf
@@ -492,7 +498,7 @@ testRedactErr2 ; test redactErr2^%wf [move to %wfut]
  ;
  ;
  ;
-putErrMsg2(html,lin,msg,err) ; ppi putErrMsg2^%wf, insert error msgs
+putErrMsg2 ; code for ppi putErrMsg2^%wf, insert error msgs
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -501,8 +507,9 @@ putErrMsg2(html,lin,msg,err) ; ppi putErrMsg2^%wf, insert error msgs
  ; do putErrMsg2^%wf(html,.lin,.msg,err)
  ;@branches-from
  ; putErrMsg2^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm
+ ;@called-by: none
  ;@calls
  ; replace^%wf
  ;@input
@@ -551,7 +558,7 @@ putErrMsg2(html,lin,msg,err) ; ppi putErrMsg2^%wf, insert error msgs
  ;
  ;
  ;
-insError(ln,msg) ; ppi insError^%wf, insert error msg into html line
+insError ; code for ppi insError^%wf, insert error msg into html line
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -560,9 +567,10 @@ insError(ln,msg) ; ppi insError^%wf, insert error msg into html line
  ; do insError^%wf(.ln,.msg)
  ;@branches-from
  ; insError^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm^%wf
  ; debugFld^%wf
+ ;@called-by: none
  ;@calls
  ; replace^%wf
  ;@input
@@ -588,7 +596,7 @@ insError(ln,msg) ; ppi insError^%wf, insert error msg into html line
  ;
  ;
  ;
-debugFld(ln,form,name) ; ppi debugFld^%wf, insert field debugging info
+debugFld ; code for ppi debugFld^%wf, insert field debugging info
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -597,8 +605,9 @@ debugFld(ln,form,name) ; ppi debugFld^%wf, insert field debugging info
  ; do debugFld^%wf(ln,form,name)
  ;@branches-from
  ; debugFld^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetFld^%wf
+ ;@called-by: none
  ;@calls
  ; getFieldMap^%wffmap
  ; insError^%wf
@@ -633,7 +642,7 @@ debugFld(ln,form,name) ; ppi debugFld^%wf, insert field debugging info
  ;
  ;
  ;
-delText(ln,begin,end,ins) ; ppi $$delText^%wf, delete text from html line
+delText ; code for ppi $$delText^%wf, delete text from html line
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -642,8 +651,9 @@ delText(ln,begin,end,ins) ; ppi $$delText^%wf, delete text from html line
  ; $$delText^%wf(.ln,begin,end,ins)
  ;@branches-from
  ; $$delText^%wf
- ;@called-by
+ ;@ppi-called-by
  ; redactErr2^%wf
+ ;@called-by: none
  ;@calls: none
  ;@input
  ; begin = substring preceding text to delete
@@ -672,7 +682,7 @@ delText(ln,begin,end,ins) ; ppi $$delText^%wf, delete text from html line
  ;
  ;
  ;
-replace(ln,cur,repl) ; ppi replace^%wf, replace test in html line
+replace ; code for ppi replace^%wf, replace test in html line
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -681,14 +691,15 @@ replace(ln,cur,repl) ; ppi replace^%wf, replace test in html line
  ; do replace^%wf(.ln,cur,repl)
  ;@branches-from
  ; replace^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm^%wf
  ; putErrMsg2^%wf
  ; insError^%wf
  ; value^%wf
  ; uncheck^%wf
  ; check^%wf
- ; $$replaceHref [deprecated subroutine]
+ ; $$replaceHref^%wf [deprecated subroutine]
+ ;@called-by: none
  ;@calls: none
  ;@input
  ; cur = 
@@ -714,7 +725,7 @@ replace(ln,cur,repl) ; ppi replace^%wf, replace test in html line
  ;
  ;
  ;
-replaceAll(ln,cur,repl) ; ppi replaceAll^%wf, replace text in html line
+replaceAll ; code for API replaceAll^%wf, replace text in html line
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -723,12 +734,13 @@ replaceAll(ln,cur,repl) ; ppi replaceAll^%wf, replace text in html line
  ; dp replaceAll^%wf(.ln,cur,repl)
  ;@branches-from
  ; replaceAll^%wf
- ;@called-by
+ ;@ppi-called-by
  ; $$replaceSrc^%wf [deprecated]
  ; wsCASE^SAMICASE
  ; SAMISUBS^SAMIFRM
  ; fixSrc^SAMIFRM
  ; fixHref^SAMIFRM
+ ;@called-by: none
  ;@calls: none
  ;@input
  ; cur = 
@@ -762,7 +774,7 @@ replaceAll(ln,cur,repl) ; ppi replaceAll^%wf, replace text in html line
  ;
  ;
  ;
-unvalue(ln) ; ppi unvalue^%wf, clear input value in html line
+unvalue ; code for ppi unvalue^%wf, clear input value in html line
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -771,8 +783,9 @@ unvalue(ln) ; ppi unvalue^%wf, clear input value in html line
  ; do unvalue^%wf(.ln)
  ;@branches-from
  ; unvalue^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm^%wf
+ ;@called-by: none
  ;@calls: none
  ;@throughput
  ;.ln
@@ -799,7 +812,7 @@ unvalue(ln) ; ppi unvalue^%wf, clear input value in html line
  ;
  ;
  ;
-value(ln,val) ; ppi value^%wf, set input value in html line
+value ; code for ppi value^%wf, set input value in html line
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -808,8 +821,9 @@ value(ln,val) ; ppi value^%wf, set input value in html line
  ; do value^%wf(.ln,val)
  ;@branches-from
  ; value^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm^%wf
+ ;@called-by: none
  ;@calls
  ; replace^%wf
  ;@input
@@ -839,7 +853,7 @@ value(ln,val) ; ppi value^%wf, set input value in html line
  ;
  ;
  ;
-getVals(vrtn,zid,zsid) ; ppi getVals^%wf, get form's values from graph
+getVals ; code for ppi getVals^%wf, get field values from graph
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -848,9 +862,10 @@ getVals(vrtn,zid,zsid) ; ppi getVals^%wf, get form's values from graph
  ; d getVals^%wf(vary,zid,zsid)
  ;@branches-from
  ; getVals^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm^%wf
  ; testFiler^%wffiler
+ ;@called-by: none
  ;@calls
  ; $$setroot^%wd
  ;@input
@@ -881,7 +896,7 @@ getVals(vrtn,zid,zsid) ; ppi getVals^%wf, get form's values from graph
  ;
  ;
  ;
-setVals(vary,zid,zsid) ; ppi setVals^%wf, set graph's values from form
+setVals ; code for ppi setVals^%wf, set field values into graph
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -927,7 +942,7 @@ setVals(vary,zid,zsid) ; ppi setVals^%wf, set graph's values from form
  ;
  ;
  ;
-uncheck(ln) ; ppi uncheck^%wf, uncheck radio button or checkbox
+uncheck ; code for ppi uncheck^%wf, uncheck radio button or checkbox
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -936,8 +951,9 @@ uncheck(ln) ; ppi uncheck^%wf, uncheck radio button or checkbox
  ; do uncheck^%wf(.ln)
  ;@branches-from
  ; uncheck^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm^%wf
+ ;@called-by: none
  ;@calls
  ; replace^%wf
  ;@throughput
@@ -961,7 +977,7 @@ uncheck(ln) ; ppi uncheck^%wf, uncheck radio button or checkbox
  ;
  ;
  ;
-check(line,type) ; ppi check^%wf, check radio button or checkbox
+check ; code for ppi check^%wf, check radio button or checkbox
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -970,8 +986,9 @@ check(line,type) ; ppi check^%wf, check radio button or checkbox
  ; do check^%wf(.line,type)
  ;@branches-from
  ; check^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm^%wf
+ ;@called-by: none
  ;@calls
  ; replace^%wf
  ;@input
@@ -1000,7 +1017,7 @@ check(line,type) ; ppi check^%wf, check radio button or checkbox
  ;
  ;
  ;
-validate(value,spec,map,msg) ; ppi $$validate^%wf, validate value
+validate ; code for ppi $$validate^%wf, validate value
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1009,8 +1026,9 @@ validate(value,spec,map,msg) ; ppi $$validate^%wf, validate value
  ; $$validate^%wf(value,spec,map,.msg)
  ;@branches-from
  ; $$validate^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm^%wf
+ ;@called-by: none
  ;@calls
  ; $$dateValid^%wf
  ; $$textValid^%wf
@@ -1052,7 +1070,7 @@ validate(value,spec,map,msg) ; ppi $$validate^%wf, validate value
  ;
  ;
  ;
-dateValid(value,spec,map,msg) ; ppi $$dateValid^%wf, validate date
+dateValid ; code for ppi $$dateValid^%wf, validate date
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1061,8 +1079,9 @@ dateValid(value,spec,map,msg) ; ppi $$dateValid^%wf, validate date
  ; $$dateValid^%wf(value,spec,map,msg)
  ;@branches-from
  ; $$dateValid^%wf
- ;@called-by
+ ;@ppi-called-by
  ; $$validate^%wf
+ ;@called-by: none
  ;@calls
  ; ^%DT: Vista Fileman date-time input/validation
  ;@input
@@ -1093,7 +1112,7 @@ dateValid(value,spec,map,msg) ; ppi $$dateValid^%wf, validate date
  ;
  ;
  ;
-textValid(value,spec,map) ; ppi $$textValid^%wf, validate free-text field
+textValid ; code for ppi $$textValid^%wf, validate free-text field
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1102,8 +1121,9 @@ textValid(value,spec,map) ; ppi $$textValid^%wf, validate free-text field
  ; $$textValid^%wf(value,spec,map)
  ;@branches-from
  ; $$textValid^%wf
- ;@called-by
+ ;@ppi-called-by
  ; $$validate^%wf
+ ;@called-by: none
  ;@calls: none
  ;@input
  ; value = text being validated
@@ -1143,7 +1163,7 @@ textValid(value,spec,map) ; ppi $$textValid^%wf, validate free-text field
  ;
  ;
  ;
-numValid(value,spec,map) ; ppi $$numValid^%wf, validate numeric field
+numValid ; code for ppi $$numValid^%wf, validate numeric field
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1152,8 +1172,9 @@ numValid(value,spec,map) ; ppi $$numValid^%wf, validate numeric field
  ; $$numValid^%wf(value,spec,map)
  ;@branches-from
  ; $$numValid^%wf
- ;@called-by
+ ;@ppi-called-by
  ; $$validate^%wf
+ ;@called-by: none
  ;@calls: none
  ;@input
  ; value = number being validated
@@ -1201,7 +1222,7 @@ numValid(value,spec,map) ; ppi $$numValid^%wf, validate numeric field
  ;
  ;
  ;
-dateFormat(val,form,name) ; ppi $$dateFormat^%wf, reformat date in elcap format
+dateFormat ; code for ppi $$dateFormat^%wf, date in elcap format
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1210,8 +1231,9 @@ dateFormat(val,form,name) ; ppi $$dateFormat^%wf, reformat date in elcap format
  ; do dateFormat^%wf(.val,form,name)
  ;@branches-from
  ; dateFormat^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm
+ ;@called-by: none
  ;@calls
  ; $$getFieldSpec^%wffmap
  ; ^%DT
@@ -1250,7 +1272,7 @@ dateFormat(val,form,name) ; ppi $$dateFormat^%wf, reformat date in elcap format
  ;
  ;
  ;
-wsPostForm(ARGS,BODY,RESULT) ; web service wsPostForm^%wf, submit HTML form
+wsPostForm ; code for ws wsPostForm^%wf, submit HTML form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1259,8 +1281,9 @@ wsPostForm(ARGS,BODY,RESULT) ; web service wsPostForm^%wf, submit HTML form
  ; do wsPostForm^%wf(.ARGS,BODY,RESULT)
  ;@branches-from
  ; wsPostForm^%wf
- ;@called-by
- ; [special, web service]
+ ;@ppi-called-by
+ ; web service POST:form/*
+ ;@called-by: none
  ;@calls
  ; parseBody^%wf
  ; $$setroot^%wd
@@ -1338,7 +1361,7 @@ wsPostForm(ARGS,BODY,RESULT) ; web service wsPostForm^%wf, submit HTML form
  ;
  ;
  ;
-parseBody(rtn,body) ; ppi parseBody^%wf, get form's values from submitted form
+parseBody ; code for ppi parseBody^%wf, get field values from form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1347,8 +1370,9 @@ parseBody(rtn,body) ; ppi parseBody^%wf, get form's values from submitted form
  ; do parseBody^%wf(rtn,body)
  ;@branches-from
  ; parseBody^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsPostForm^%wf
+ ;@called-by: none
  ;@calls
  ; $$URLDEC^VPRJRUT
  ;@input
@@ -1388,7 +1412,7 @@ parseBody(rtn,body) ; ppi parseBody^%wf, get form's values from submitted form
  ;
  ;
  ;
-replaceSrc(ln) ; ppi replaceSrc^%wf, chg src & href lines to find resources
+replaceSrc ; code for ppi replaceSrc^%wf, chg resources in src & href
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1397,8 +1421,9 @@ replaceSrc(ln) ; ppi replaceSrc^%wf, chg src & href lines to find resources
  ; $$replaceSrc^%wf(.ln)
  ;@branches-from
  ; $$replaceSrc^%wf
- ;@called-by
- ; wsGetForm^%wf [commented ut]
+ ;@ppi-called-by
+ ; wsGetForm^%wf [commented out]
+ ;@called-by: none
  ;@calls
  ; replaceAll^%wf
  ;@input
@@ -1456,7 +1481,7 @@ replaceSrc(ln) ; ppi replaceSrc^%wf, chg src & href lines to find resources
  ;
  ;
  ;
-replaceHref(ln) ; ppi replaceHref^%wf, chg href lines to find resources
+replaceHref ; code for ppi replaceHref^%wf, chg resources in href
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1465,8 +1490,9 @@ replaceHref(ln) ; ppi replaceHref^%wf, chg href lines to find resources
  ; $$replaceHref^%wf(.ln)
  ;@branches-from
  ; $$replaceHref^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm^%wf [commented out]
+ ;@called-by: none
  ;@calls
  ; replace^%wf
  ;@input

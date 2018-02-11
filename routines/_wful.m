@@ -1,4 +1,4 @@
-%wful ;ven/toad-write form: development log ;2018-02-06T02:00Z
+%wful ;ven/toad-write form: development log ;2018-02-11T13:35Z
  ;;1.8;Mash;
  ;
  ; %wful is the Write Form Library's primary-development log.
@@ -21,7 +21,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-06T02:00Z
+ ;@last-updated: 2018-02-11T13:35Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Write Form - %wf
  ;@version: 1.8T04
@@ -143,6 +143,11 @@
  ; r/getVals^%wfhform w/getVals^%wf, add do-dot quits.
  ;  %wffmap: apply hdr comments, white space, spell out language elements,
  ; add do-dot quits; in importfmap synch ppi comments.
+ ;
+ ; 2018-02-11 ven/toad %1.8t04 %wf & %wfhform: passim update calls &
+ ; called-by tags & add ppi-called-by, standardize API, ppi, ws tags &
+ ; comments, convert %wf's calls to %wfhform to gotos, convert %wfhform
+ ; labels to receive gotos.
  ;
  ;@module-contents
  ; %wf: write form ppi & api library

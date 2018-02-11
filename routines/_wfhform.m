@@ -1,4 +1,4 @@
-%wfhform ;ven/gpl-write form: html form get & post ;2018-02-11T13:49Z
+%wfhform ;ven/gpl-write form: html form get & post ;2018-02-11T15:12Z
  ;;1.8;Mash;
  ;
  ; %wfhform implements the Write Form Library's html form get & post web
@@ -22,7 +22,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-11T13:49Z
+ ;@last-updated: 2018-02-11T15:12Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Write Form - %wf
  ;@version: 1.8T04
@@ -85,30 +85,29 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  ; filter("studyId")=study id
  ; post = 1 if ...
  ;@output
- ; ??
- ;@throughput
- ;.rtn = 
+ ;.rtn = name of root containing returned html (the prepared form)
+ ;@throughput: none
  ;@examples [tbd]
  ;@tests [tbd]
  ;
  ; [description tbd]
  ; return the html for the form id, passed in filter
  ;
- ;@stanza 2 do replacements
+ ;@stanza 2 load saved field values from graph
  ;
- set rtn=$na(^TMP("yottaForm",$job))
- kill @rtn
- ;
- new form set form=$get(filter("form"))
+ new form set form=$get(filter("form")) ; id form
  if form="" set form="sbform"
  ;
- new sid set sid=$get(filter("studyid"))
+ new sid set sid=$get(filter("studyid")) ; id patient by study id
  if sid="" set sid=$get(filter("fvalue"))
  if sid="" set sid="XXXX01"
  ;
  new vals
- do getVals^%wf("vals",form,sid)
+ do getVals^%wf("vals",form,sid) ; load saved field values
  ;
+ ;@stanza 3 load html template
+ ;
+ ; get field values saved in fileman file, preserve graph values
  new fn
  if form["sbform" do  
  . ;set fn="background-form.html"
@@ -116,15 +115,24 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . if $g(post)=1 quit  ;
  . do retrieve^%wffiler("tmpvals","sbform",311.102,sid)
  . ;if $data(tmpvals) kill vals merge vals=tmpvals
- . if $data(tmpvals) merge vals=tmpvals ; maintain graph vars not saved in fileman
+ . ; maintain graph vars not saved in fileman:
+ . if $data(tmpvals) merge vals=tmpvals
  . quit
  ;
+ ; clear return html array
+ set rtn=$name(^TMP("yottaForm",$job))
+ kill @rtn
+ ;
+ ; lookup template name
  if $get(fn)="" set fn=$$getTemplate^%wf(form)
  if fn="" quit  ;
  ;
- new zhtml,errctrl ; holders of the html template and the error control array
+ ; load template html
+ new zhtml,errctrl ; holders of html template & error control array
  do getThis^%wd("zhtml",fn)
  if '$data(zhtml) quit  ;
+ ;
+ ;@stanza 4 traverse html lines in template, for each ...
  ;
  new name,value,selectnm
  set selectnm="" ; name of select variable, which spans options
@@ -133,15 +141,21 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . new tln set tln=zhtml(%j)
  . new customscan s customscan=""
  . ;
+ . ;@stanza 5 special handling of SAMI forms
+ . ;
  . ; do  ; i can't get this to work... need help with x indirection
  . ; . new fglb set fglb=$name(^SAMI(311.11))
  . ; . new fn set fn=311.11
  . ; . new fien set fien=$order(@fglb@("B",form,""))
  . ; . quit:fien="" ""
  . ; . set customscan=$$GET1^DIQ(fn,fien_",",3) ; custom scan routine
- . ; . if $length(customscan)>0 set customscan=$translate(customscan,"@","^") ; fix for ^
+ . ; . if $length(customscan)>0 do
+ . ; . . set customscan=$translate(customscan,"@","^") ; fix for ^
+ . ; . . quit
  . ; . quit:$length(customscan)>0
- . ; . if $extract(form,3,6)["form" set customscan="do SAMISUBS^SAMIFRM(.tln,form,sid,.filter)"
+ . ; . if $extract(form,3,6)["form" do
+ . ; . . set customscan="do SAMISUBS^SAMIFRM(.tln,form,sid,.filter)"
+ . ; . . quit
  . ; if customscan'="" xecute @customscan
  . ;
  . if form="sbform3" do SAMISUB2^SAMIFRM(.tln,form,sid,.filter,.%j,.zhtml)
@@ -152,16 +166,25 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . if tln["hidden" quit  ;
  . ;
  . ; hack for elcap forms - temporary - gpl
- . ;if tln["jquery-1.html" set zhtml(%j)="" quit  ; 
- . ;if tln["mgtsys.html" set zhtml(%j)="" quit  ; 
- . ;if tln["mgtsys2.html" set zhtml(%j)="" quit  ; 
- . ;if tln["index.html" set zhtml(%j)="" quit  ; 
- . ;if tln["identity.html" set zhtml(%j)="" quit  ; 
- . ;if tln["jquery-1.html" set zhtml(%j)="" quit  ; 
+ . ; if tln["jquery-1.html" set zhtml(%j)="" quit  ; 
+ . ; if tln["mgtsys.html" set zhtml(%j)="" quit  ; 
+ . ; if tln["mgtsys2.html" set zhtml(%j)="" quit  ; 
+ . ; if tln["index.html" set zhtml(%j)="" quit  ; 
+ . ; if tln["identity.html" set zhtml(%j)="" quit  ; 
+ . ; if tln["jquery-1.html" set zhtml(%j)="" quit  ; 
  . ; end hack
  . ;
- . if tln["class=""errormsg"">" do redactErr^%wf("zhtml","errctrl",.%j) quit  ; remove error section
- . if tln["fielderr" do redactErr2^%wf("zhtml",.%j)
+ . ;@stanza 6 process errors
+ . ;
+ . if tln["class=""errormsg"">" do  quit  ; error block at top of form
+ . . do redactErr^%wf("zhtml","errctrl",.%j) ; remove error section
+ . . quit
+ . ;
+ . if tln["fielderr" do  ; error messages w/fields
+ . . do redactErr2^%wf("zhtml",.%j)
+ . . quit
+ . ;
+ . ;@stanza 7 process field name or value
  . ;
  . set (name,value)=""
  . ;
@@ -174,29 +197,46 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . . set value=$piece($piece(zhtml(%j),"value=""",2),"""",1)
  . . quit
  . ;
+ . ;@stanza 8 process study id [why the asterisks?]
+ . ;
  . if zhtml(%j)["*sbsid*" do  ;
  . . set zhtml(%j)=$piece(tln,"*sbsid*",1)_sid_$piece(tln,"*sbsid*",2)
  . . quit
  . ;
+ . ;@stanza 9 process action
+ . ;
  . if zhtml(%j)["action=" do  ;
- . . ;set zhtml(%j)="<form action=""http://vendev.vistaplex.org:9080/postform?form="_form_"&studyId="_sid_""" method=""POST"" id=""backgroundForm"">"
+ . . ; set zhtml(%j)="<form action=""http://vendev.vistaplex.org:9080/postform?form="_form_"&studyId="_sid_""" method=""POST"" id=""backgroundForm"">"
  . . new sublbl set sublbl=$$formLabel^%wf(form)
  . . new dbg set dbg=$get(filter("debug"))
  . . if dbg'="" set dbg="&debug="_dbg
- . . ;if form'="sbform" do  quit  ;
- . . ;. if zhtml(%j)["datae" set zhtml(%j)="<form action=""form?form="_form_"&studyId="_sid_dbg_""" method=""POST"" name="""_sublbl_""">"
+ . . ;
+ . . ; if form'="sbform" do  quit  ;
+ . . ; . if zhtml(%j)["datae" do
+ . . ; . . set zhtml(%j)="<form action=""form?form="_form_"&studyId="_sid_dbg_""" method=""POST"" name="""_sublbl_""">"
+ . . ; . . quit
+ . . ;
  . . if zhtml(%j)["http://foia201606.vistaplex.org:9080/sami/intake" do  quit  ; 
  . . . set zhtml(%j)="<form action=""form?form="_form_"&studyId="_sid_dbg_""" method=""POST"" name="""_sublbl_""">"
  . . . quit
+ . . quit
+ . ;
+ . ;@stanza 10 fix css & js href values [disabled]
  . ;
  . ;if form'="sbform" do  ;
- . ;. if $$replaceSrc^%wf(.tln) set zhtml(%j)=tln ; fix the css and js href values
- . ;. if $$replaceHref^%wf(.tln) set zhtml(%j)=tln ; fix the css and js href values
+ . ;. if $$replaceSrc^%wf(.tln) set zhtml(%j)=tln
+ . ;. if $$replaceHref^%wf(.tln) set zhtml(%j)=tlnvalues
  . ;. quit
+ . ;
+ . ;@stanza 11 skip table declarations
  . ;
  . if tln["table" quit  ;
  . ;
+ . ;@stanza 12 process input tags
+ . ;
  . if zhtml(%j)["input" do  ;
+ . . ;
+ . . ; handle long lines
  . . if $length(zhtml(%j),"<input")>2 do  ; got to split the lines
  . . . new zgt,zgn set zgt=zhtml(%j)
  . . . set zgn=$find(zgt,"<input",$find(zgt,"<input"))
@@ -204,9 +244,13 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . . . set zhtml(%j)=$extract(zgt,1,zgn-7)
  . . . set tln=zhtml(%j)
  . . . quit
- . . if $get(name)="" quit  ;
+ . . ;
+ . . ; save field value
+ . . quit:$get(name)=""
  . . new val set val=""
- . . if $data(vals(name)) set val=$get(vals(name))
+ . . if $data(vals(name)) set val=vals(name)
+ . . ;
+ . . ; handle radio buttons & checkboxes
  . . new type set type=""
  . . ;if tln["type=" set type=$piece($piece(tln,"type=""",2),"""",1)
  . . if tln["type=" set type=$piece($piece(tln,"type=",2)," ",1)
@@ -217,24 +261,25 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . . . if $get(filter("debug"))=2 do debugFld^%wf(.tln,form,name)
  . . . set zhtml(%j)=tln
  . . . quit
- . . ;break
- . . do unvalue^%wf(.tln)
- . . ;set val=$$URLENC^VPRJRUT(val)
- . . for  do replace^%wf(.val,"""","&quot;") quit:val'[""""
- . . do dateFormat^%wf(.val,form,name) ; reformat if date
- . . do value^%wf(.tln,val)
+ . . ; break
  . . ;
- . . ; validation starts here
+ . . ; clear value, normalize quotes & dates, restore value
+ . . do unvalue^%wf(.tln) ; clear input-field value
+ . . ; set val=$$URLENC^VPRJRUT(val)
+ . . for  do replace^%wf(.val,"""","&quot;") quit:val'[""""  ; quotes
+ . . do dateFormat^%wf(.val,form,name) ; ensure elcap date format
+ . . do value^%wf(.tln,val) ; restore normalized value
  . . ;
+ . . ; input-field validation
  . . new spec,errmsg set spec=$$getFieldSpec^%wffmap(form,name)
  . . set errmsg="Input invalid"
  . . if val'="" do  ;
  . . . if $$validate^%wf(val,spec,,.errmsg)<1 do  ;
  . . . . set errflag=1
  . . . . new errmethod set errmethod=2
- . . . . ;set errmethod=$get(filter("errormessagestyle"))
- . . . . ;if errmethod="" set errmethod=$get(errctrl("errorMessageStyle"))
- . . . . ;if errmethod="" set errmethod=1
+ . . . . ; set errmethod=$get(filter("errormessagestyle"))
+ . . . . ; if errmethod="" set errmethod=$get(errctrl("errorMessageStyle"))
+ . . . . ; if errmethod="" set errmethod=1
  . . . . set errmethod=2
  . . . . if errmethod=2 do  ;
  . . . . . new tprevln,uln
@@ -248,12 +293,13 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . . . . quit
  . . . quit
  . . ;
- . . ; end validation
- . . ;
- . . ;write !,tln,!,zhtml(%j),! break
+ . . ; [optionally debug & r/html template line w/processed line
+ . . ; write !,tln,!,zhtml(%j),! break
  . . if $get(filter("debug"))>0 do debugFld^%wf(.tln,form,name)
  . . set zhtml(%j)=tln
  . . quit
+ . ;
+ . ;@stanza 13 process text areas
  . ;
  . if zhtml(%j)["<textarea" do  ;
  . . new val set val=""
@@ -264,6 +310,8 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . . if val'="" do replace^%wf(.tln,"</textarea>",val_"</textarea>")
  . . set zhtml(%j)=tln
  . . quit
+ . ;
+ . ;@stanza 14 process option selections
  . ;
  . if zhtml(%j)["<select" do  ;
  . . set selectnm=$get(name)
@@ -281,11 +329,13 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . . quit
  . quit
  ;
- ;D ADDCRLF^VPRJRUT(.zhtml)
+ ;@stanza 15 return form prepared fr/template
  ;
- merge @rtn=zhtml
+ ; do ADDCRLF^VPRJRUT(.zhtml)
  ;
- set HTTPRSP("mime")="text/html"
+ merge @rtn=zhtml ; copy processed template to return array
+ ;
+ set HTTPRSP("mime")="text/html" ; set mime type
  ;
  ;@stanza 3 termination
  ;

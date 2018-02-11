@@ -1,4 +1,4 @@
-yottagr ;ven/gpl-yottadb extension: graphstore ;2018-02-07T17:27Z
+yottagr ;ven/gpl-yottadb extension: graphstore ;2018-02-11T12:09Z
  ;;1.8;Mash;
  ;
  ; %yottagr implements the Yottadb Extension Library's graphstore
@@ -24,7 +24,7 @@ yottagr ;ven/gpl-yottadb extension: graphstore ;2018-02-07T17:27Z
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-07T17:27Z
+ ;@last-updated: 2018-02-11T12:09Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Yottadb Extension - %yotta
  ;@version: 1.8T04
@@ -63,9 +63,9 @@ yottagr ;ven/gpl-yottadb extension: graphstore ;2018-02-07T17:27Z
  ;
  ; 2017-10-07 ven/gpl %*1.8t01 %yottagr: update
  ;
- ; 2018-02-07 ven/toad %*1.8t04 %yottagr: passim add white space &
+ ; 2018-02-07/11 ven/toad %*1.8t04 %yottagr: passim add white space &
  ; hdr comments & do-dot quits, tag w/Apache license & attribution
- ; & to-do to shift namespace later, break up a few long lines.
+ ; & to-do to shift namespace later, break up a few long line. debug.
  ;
  ;@to-do
  ; %yotta: create entry points in ppi/api style
@@ -681,7 +681,7 @@ match(input,outary) ; extrinsic which returns the count of matches, 0 if none
  . new pred,obj
  . set pred=$order(po(1,""))
  . set obj=$order(po(1,pred,""))
- . if '$data(@posroot@(pred,obj),$data(@posroot@(pred,obj_" "))) do
+ . if '$data(@posroot@(pred,obj),$data(@posroot@(pred,obj_" ")) do
  . . set obj=obj_" "
  . . quit
  . if $order(@posroot@(pred,obj,""))="" quit  ;

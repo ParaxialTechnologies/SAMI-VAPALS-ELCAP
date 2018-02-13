@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="lib/formvalidation/dist/css/formValidation.min.css">
+    <link rel="stylesheet" href="lib/bootstrap-datetimepicker-4.17.47/css/bootstrap-datetimepicker.css">
     <link rel="stylesheet" href="vapals.css">
 </head>
 <body>
@@ -18,6 +19,7 @@
 <script src="lib/moment.js"></script>
 <script src="lib/formvalidation/dist/js/formValidation.min.js"></script>
 <script src="lib/formvalidation/dist/js/framework/bootstrap.min.js"></script>
+<script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 <script src="vapals.js"></script>
 
 <!--Debug information for viewport-->
@@ -75,6 +77,25 @@
         </div>
     </footer>
 {% endblock %}
+
+<script language="JavaScript">
+    $(function () {
+        $.each($(".datepicker"), function (i, el) {
+            $(el).datetimepicker({
+                format: 'MM/DD/YYYY',
+                maxDate: moment()
+            });
+        });
+
+        $.each($(".yearpicker"), function (i, el) {
+            $(el).datetimepicker({
+                format: 'YYYY',
+                maxDate: moment(),
+                minDate: moment().subtract(100, 'y')
+            });
+        });
+    });
+</script>
 </body>
 </html>
 

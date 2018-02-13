@@ -62,15 +62,13 @@
                                 <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
                                    title="Visit Date"
                                    data-content="And here's some amazing content. It's very engaging. Right?"></i>
-                                <div class="input-group">
+                                <div class="input-group datepicker">
                                     <input class="form-control" id="sbdop" name="sbdop" aria-describedby="sbdop-addon"
                                            required="required"
                                            data-fv-notempty-message="Visit date is required"
                                            data-fv-date="true">
-                                    <div class="input-group-addon">
-                                        <div class="input-group-text" id="sbdop-addon">
+                                    <div class="input-group-addon" id="sbdop-addon">
                                             <i class="fa fa-calendar" aria-hidden="true"></i>
-                                        </div>
                                     </div>
                                 </div>
                                 <small class="form-text text-muted">MM/DD/YYYY</small>
@@ -80,7 +78,7 @@
                         <div class="row">
                             <div class="col-sm-4 col-md-3 col-lg-2 form-group">
                                 <label for="sbdob" class="control-label">Date of Birth</label>
-                                <div class="input-group">
+                                <div class="input-group datepicker">
                                     <!--TODO: inject max date as "today"-->
                                     <input class="form-control" id="sbdob" name="sbdob" aria-describedby="sbdob-addon"
                                            required="required" data-fv-notempty-message="Date of birth is required"
@@ -450,11 +448,9 @@
                             <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbhco-container">
                                 <div class="form-group">
                                     {# TODO: set max year#}
-                                    <input class="form-control input-sm numeric" type="text" name="sbhcdod"
+                                    <input class="form-control input-sm numeric yearpicker" type="text" name="sbhcdod"
                                            id="sbhcdod" placeholder="Year?" size="5" required="required"
                                            data-fv-integer="true" maxlength="4">
-
-
                                 </div>
                                 <div class="form-group" style="vertical-align: top;">
                                     <input class="form-control input-sm" type="text" name="sbhcpbo"
@@ -496,7 +492,7 @@
                             <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpc-container">
                                 <div class="form-group">
                                     {# TODO: set max year#}
-                                    <input class="form-control input-sm numeric" type="text" name="sbhcdod"
+                                    <input class="form-control input-sm numeric yearpicker" type="text" name="sbhcdod"
                                            id="sbmpcw" placeholder="Year?" size="5" required="required"
                                            data-fv-integer="true" maxlength="4">
 
@@ -568,7 +564,7 @@
                             <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpas-container">
                                 <div class="form-group">
                                     {# TODO: set max year#}
-                                    <input class="form-control input-sm numeric" type="text" name="sbmpasw"
+                                    <input class="form-control input-sm numeric yearpicker" type="text" name="sbmpasw"
                                            id="sbmpasw" placeholder="Year?" size="5" required="required"
                                            data-fv-integer="true" maxlength="4">
                                 </div>
@@ -592,7 +588,7 @@
                             <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpmi-container">
                                 <div class="form-group">
                                     {# TODO: set max year#}
-                                    <input class="form-control input-sm numeric" type="text" name="sbmpmid"
+                                    <input class="form-control input-sm numeric yearpicker" type="text" name="sbmpmid"
                                            id="sbmpmid" placeholder="Year?" size="5" required="required"
                                            data-fv-integer="true" maxlength="4">
 
@@ -618,7 +614,7 @@
                             <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmps-container">
                                 <div class="form-group">
                                     {# TODO: set max year#}
-                                    <input class="form-control input-sm numeric" type="text" name="sbmpsd"
+                                    <input class="form-control input-sm numeric yearpicker" type="text" name="sbmpsd"
                                            id="sbmpsd" placeholder="Year?" size="5" required="required"
                                            data-fv-integer="true" maxlength="4">
                                 </div>
@@ -637,7 +633,7 @@
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmppv-container">
                                 <div class="form-group">
-                                    <input class="form-control input-sm" type="text" name="sbmppvd" id="sbmppvd"
+                                    <input class="form-control input-sm yearpicker" type="text" name="sbmppvd" id="sbmppvd"
                                            placeholder="Year?"
                                            size="5">
 
@@ -929,7 +925,7 @@
 
                                     <div class="form-group" style="float:left;">
                                         {# TODO: set max year#}
-                                        <input class="form-control input-sm numeric" type="text" name="sbsdlcy"
+                                        <input class="form-control input-sm numeric yearpicker" type="text" name="sbsdlcy"
                                                id="sbsdlcy"
                                                size="5" required="required" data-fv-integer="true" maxlength="4"
                                                placeholder="YYYY" title="Last cigarette year">
@@ -1433,6 +1429,7 @@
                     }
                 }
             }
+
             function disableContainer($container, disablementClasses) {
                 if (typeof $container !== 'undefined') {
                     //include container object if it's actually an input.
@@ -1725,8 +1722,7 @@
             //Globally enabled popovers for things like help text.
             $('[data-toggle="popover"]').popover({trigger: 'hover'});
 
-        })
-        ;
+        });
 
     </script>
 

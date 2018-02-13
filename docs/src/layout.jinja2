@@ -83,14 +83,14 @@
         $.each($(".datepicker"), function (i, el) {
             $(el).datetimepicker({
                 format: 'MM/DD/YYYY',
-                maxDate: moment()
+                maxDate: moment().add(1,'h') //hack to not select today
             });
         });
 
         $.each($(".yearpicker"), function (i, el) {
             $(el).datetimepicker({
                 format: 'YYYY',
-                maxDate: moment(),
+                maxDate: moment().add(1,'h'), //hack to not select today
                 minDate: moment().subtract(100, 'y')
             });
         });

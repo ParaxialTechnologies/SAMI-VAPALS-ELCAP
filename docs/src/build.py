@@ -1,6 +1,8 @@
+import datetime
 import sys
-from jinja2 import Environment, FileSystemLoader, Template
 from collections import OrderedDict
+
+from jinja2 import Environment, FileSystemLoader
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -9,6 +11,7 @@ env = Environment()
 env.loader = FileSystemLoader('.')
 
 # background form
+# TODO: can we write a function to extract from background-dd-map.csv?
 with open("../www/background.html", "wb") as fh:
     fh.write(env.get_template('background.html.jinja2').render(
         title='Background Form',
@@ -21,6 +24,8 @@ with open("../www/background.html", "wb") as fh:
             ("5", "Skilled manual Employees"),
             ("6", "Machine Operators"),
             ("7", "Unskilled Employees"),
-            ("8", "Unemployed") #TODO: can we write a function to extract from background-dd-map.csv?
+            ("8", "Unemployed")
         ])
     ))
+
+print "Finished compiling HTML at " + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')

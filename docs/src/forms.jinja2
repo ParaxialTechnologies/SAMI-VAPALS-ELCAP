@@ -1,0 +1,29 @@
+{% macro floatingLabel(for, text) -%}
+    <label for="{{ for }}" class="visible-xs visible-sm">{{ text }}</label>
+    <label for="{{ for }}" class="text-right pull-right hidden-xs hidden-sm">{{ text }}</label>
+{%- endmacro %}
+
+{% macro inlineRadio(groupName, id, value, labelText, required) -%}
+    <label class="radio-inline">
+        <input type="radio" name="{{ groupName }}" id="{{ id }}"
+               value="{{ value }}" {{ " required=\"required\"" if required else "" }}>
+        {{ labelText }}
+    </label>
+{%- endmacro %}
+
+{% macro inlineRadioNYQ(groupName) -%}
+    {{ inlineRadio(groupName, groupName+"-n","n","No",true) }}
+    {{ inlineRadio(groupName, groupName+"-y","y","Yes",true) }}
+    {{ inlineRadio(groupName, groupName+"-q","q","?",true) }}
+{%- endmacro %}
+
+{% macro checkbox(name, value, labelText) -%}
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" name="{{ name }}" id="{{ name }}" value="{{ value }}">
+            {{ labelText }}
+        </label>
+    </div>
+{%- endmacro %}
+
+

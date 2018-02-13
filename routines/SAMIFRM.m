@@ -1,4 +1,4 @@
-SAMIFRM ;ven/gpl - ielcap: forms ;2018-02-06T02:11Z
+SAMIFRM ;ven/gpl - ielcap: forms ;2018-02-07T20:45Z
  ;;18.0;SAM;;
  ;
  ; Routine SAMIFRM contains subroutines for managing the ELCAP forms,
@@ -22,7 +22,7 @@ SAMIFRM ;ven/gpl - ielcap: forms ;2018-02-06T02:11Z
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-06T02:11Z
+ ;@last-updated: 2018-02-07T20:45Z
  ;@application: Screening Applications Management (SAM)
  ;@module: Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files: SAMI Forms (311.101-311.199)
@@ -49,8 +49,8 @@ SAMIFRM ;ven/gpl - ielcap: forms ;2018-02-06T02:11Z
  ; https://www.osehra.org/groups/va-pals-open-source-project-group
  ;
  ;@module-log
- ; 2017-09-19 ven/gpl v18.0t01 SAMIFRM: initialize the SAMI FORM file from elcap-patient graphs,
- ; using mash tools and graphs (%yottaq,^%wd)
+ ; 2017-09-19 ven/gpl v18.0t01 SAMIFRM: initialize the SAMI FORM file
+ ; from elcap-patient graphs, using mash tools and graphs (%yottaq,^%wd)
  ;
  ; 2017-09-18 ven/gpl v18.0t01 SAMIFRM: update
  ;
@@ -62,16 +62,18 @@ SAMIFRM ;ven/gpl - ielcap: forms ;2018-02-06T02:11Z
  ;
  ; 2018-02-04 ven/gpl v18.0t01 SAMIFRM: update
  ;
- ; 2018-02-05 ven/toad v18.0t04 SAMIFRM: update license & attribution & hdr
- ; comments, add white space & do-dot quits, spell out language elements;
- ; in SAMISUBS r/replaceAll^%wfhform w/replaceAll^%wf.
+ ; 2018-02-05/07 ven/toad v18.0t04 SAMIFRM: update license & attribution
+ ; & hdr comments, add white space & do-dot quits, spell out language
+ ; elements; in SAMISUBS r/replaceAll^%wfhform w/replaceAll^%wf.
+ ; r/calls to $$setroot^%yottaq & getVals^%yottaq w/$$setroot^%wdgraph
+ ; & getVals^%wf.
  ;
  ;@contents
  ; INITFRMS: initial all available forms
- ; INITFRM: initialize one form from elcap-patient graph (field names only)
- ; REGFORMS: register elcap forms in the form mapping file
- ; loadData: import a directory full of json data into the elcap-patient graph
- ; parseFileName: parse the filename extracting the studyid and form
+ ; INITFRM: initialize 1 form from elcap-patient graph (field names only)
+ ; REGFORMS: register elcap forms in form mapping file
+ ; loadData: import directory full of json data into elcap-patient graph
+ ; parseFileName: parse filename extracting studyid and form
  ; $$GETDIR: extrinsic which prompts for directory
  ; $$GETFN: extrinsic which prompts for filename
  ; SAMISUBS: ln is passed by reference; filter is passed by reference
@@ -87,7 +89,7 @@ SAMIFRM ;ven/gpl - ielcap: forms ;2018-02-06T02:11Z
  ;
 INITFRMS ; initilize form file from elcap-patient graphs
  ;
- new root set root=$$setroot^%yottaq("elcap-patients")
+ new root set root=$$setroot^%wdgraph("elcap-patients")
  quit:root=""
  new groot set groot=$name(@root@("graph"))
  new patient set patient=$order(@groot@(""),-1) ; use last patient in graph
@@ -95,7 +97,7 @@ INITFRMS ; initilize form file from elcap-patient graphs
  new form set form=""
  for  set form=$order(@groot@(patient,form)) quit:form=""  do  ; for each form patient has
  . new array
- . do getVals^%yottaq("array",form,patient) ; get array of fields & values
+ . do getVals^%wf("array",form,patient) ; get array of fields & values
  . write !,"using patient: ",patient
  . do INIT1FRM(form,"array") ; initialize form & its fields
  ;

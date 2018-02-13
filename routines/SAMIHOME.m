@@ -1,7 +1,8 @@
-SAMIHOME ;ven/gpl - ielcap: forms ;2018-02-06T02:12Z
+SAMIHOME ;ven/gpl - ielcap: forms ;2018-02-08T20:13Z
  ;;18.0;SAM;;
  ;
- ; Routine SAMIHOME contains subroutines for implementing the ELCAP Home Page.
+ ; Routine SAMIHOME contains subroutines for implementing the ELCAP Home
+ ; Page.
  ; CURRENTLY UNTESTED & IN PROGRESS
  ;
  quit  ; no entry from top
@@ -21,7 +22,7 @@ SAMIHOME ;ven/gpl - ielcap: forms ;2018-02-06T02:12Z
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-06T02:12Z
+ ;@last-updated: 2018-02-08T20:13Z
  ;@application: Screening Applications Management (SAM)
  ;@module: Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files: SAMI Forms (311.101-311.199)
@@ -48,11 +49,12 @@ SAMIHOME ;ven/gpl - ielcap: forms ;2018-02-06T02:12Z
  ; https://www.osehra.org/groups/va-pals-open-source-project-group
  ;
  ;@module-log
- ; 2018-01-13 ven/gpl v18.0t04 SAMIHOME: create routine from SAMIFRM to implement
- ; ELCAP Home Page.
+ ; 2018-01-13 ven/gpl v18.0t04 SAMIHOME: create routine from SAMIFRM to
+ ; implement ELCAP Home Page.
  ;
- ; 2018-02-05 ven/toad v18.0t04 SAMIHOME: update license & attribution & hdr
- ; comments, add white space & do-dot quits, spell out language elements.
+ ; 2018-02-05 ven/toad v18.0t04 SAMIHOME: update license & attribution &
+ ; hdr comments, add white space & do-dot quits, spell out language
+ ; elements.
  ;
  ;@contents
  ; wsHOME: web service entry point for the SAMI home page

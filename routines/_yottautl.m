@@ -1,45 +1,150 @@
-%yottautl ; gpl - utilities for c0ts; 7/4/15 6:03pm
- ;;1.0;no package;;mar 21, 2016;build 1
+%yottautl ;ven/gpl-yottadb extension: utilities ;2018-02-08T19:18Z
+ ;;1.8;Mash;
  ;
- q
+ ; %yottaq implements the Yottadb Extension Library's utilities
+ ; ppis & apis. This will eventually be reorganized into topics &
+ ; migrated to other Mash namespaces. In the meantime, they will be
+ ; added to the new %yotta ppi library.
+ ; It is currently untested & in progress.
+ ;
+ quit  ; no entry from top
+ ;
+ ;
+ ;
+ ;@section 0 primary development
+ ;
+ ;
+ ;
+ ;@routine-credits
+ ;@primary-dev: George P. Lilly (gpl)
+ ; gpl@vistaexpertise.net
+ ;@primary-dev-org: Vista Expertise Network (ven)
+ ; http://vistaexpertise.net
+ ;@copyright: 2017/2018, gpl, all rights reserved
+ ;@license: Apache 2.0
+ ; https://www.apache.org/licenses/LICENSE-2.0.html
+ ;
+ ;@last-updated: 2018-02-08T19:18Z
+ ;@application: Mumps Advanced Shell (Mash)
+ ;@module: Yottadb Extension - %yotta
+ ;@version: 1.8T04
+ ;@release-date: not yet released
+ ;@patch-list: none yet
+ ;
+ ;@additional-dev: Frederick D. S. Marshall (toad)
+ ; toad@vistaexpertise.net
+ ;
+ ;@module-credits
+ ;@primary-dev: George P. Lilly (gpl)
+ ; gpl@vistaexpertise.net
+ ;@project: VA Partnership to Increase Access to Lung Screening
+ ; (VA-PALS)
+ ; http://va-pals.org/
+ ;@funding: 2017, gpl
+ ;@funding: 2017, ven
+ ;@funding: 2017/2018, Bristol-Myers Squibb Foundation (bmsf)
+ ; https://www.bms.com/about-us/responsibility/bristol-myers-squibb-foundation.html
+ ;@partner-org: Veterans Affairs Office of Rural health
+ ; https://www.ruralhealth.va.gov/
+ ;@partner-org: International Early Lung Cancer Action Program (I-ELCAP)
+ ; http://ielcap.com/
+ ;@partner-org: Paraxial Technologies
+ ; http://paraxialtech.com/
+ ;@partner-org: Open Source Electronic Health Record Alliance (OSEHRA)
+ ; https://www.osehra.org/groups/va-pals-open-source-project-group
+ ;
+ ;@module-log
+ ; 2017-07-04 ven/gpl %*1.8t01 %yottautl: create routine to hold
+ ; yottadb utility methods.
+ ;
+ ; 2017-09-12 ven/gpl %*1.8t01 %yottautl: update
+ ;
+ ; 2017-09-18 ven/gpl %*1.8t01 %yottautl: update
+ ;
+ ; 2018-02-07/08 ven/toad %*1.8t04 %yottautl: passim add white space
+ ; & hdr comments & do-dot quits, tag w/Apache license & attribution
+ ; & to-do to shift namespace later.
+ ;
+ ;@to-do
+ ; %yotta: create entry points in ppi/api style
+ ; r/all local calls w/calls through ^%yotta
+ ; organize by topic & renamespace variously
+ ;
+ ;@contents
+ ; [too big, organize & break up]
+ ;
+ ;
+ ;
+ ;@section 1 code to implement ppis & apis
+ ;
+ ;
  ;
 starttm(ary) ; timestamp the start time
- s @ary@("starttimefm")=$$timei
- s @ary@("starttime")=$$timee(@ary@("starttimefm"))
- q
+ ;
+ set @ary@("starttimefm")=$$timei
+ set @ary@("starttime")=$$timee(@ary@("starttimefm"))
+ ;
+ quit  ; end of starttm
+ ;
+ ;
  ;
 endtm(ary) ; timestamp the start time
- s @ary@("endtimefm")=$$timei
- s @ary@("endtime")=$$timee(@ary@("endtimefm"))
- s @ary@("elapsedtime")=$$elapsed(@ary@("endtimefm"),@ary@("starttimefm")) ;
+ ;
+ set @ary@("endtimefm")=$$timei
+ set @ary@("endtime")=$$timee(@ary@("endtimefm"))
+ set @ary@("elapsedtime")=$$elapsed(@ary@("endtimefm"),@ary@("starttimefm")) ;
  ; in seconds
- q
+ ;
+ quit  ; end of endtm
+ ;
+ ;
  ;
 elapsed(end,start) ; elapsed time in seconds. end and start are fm format
- q $$fmdiff^xlfdt(end,start,2)
+ ;
+ quit $$fmdiff^xlfdt(end,start,2) ; end of $$elapsed
+ ;
+ ;
+ ;
 timei() ; internal time
- q $$now^xlfdt
+ ;
+ quit $$now^xlfdt ; end of $$timei
+ ;
+ ;
  ;
 timee(fmtime) ; external time
- q $$fmte^xlfdt(fmtime)
+ ;
+ quit $$FMTE^XLFDT(fmtime) ; end of $$timee
+ ;
+ ;
  ;
 addat(outary,inary,tag) ; both passed by name..
+ ;
  ;  inary("attr")="xx" is converted to outary("tag@attr")="xx"
  ;   to make better xml - only works with simple arrays
- i '$d(tag) s tag="item"
- n zi s zi=""
- f  s zi=$o(@inary@(zi)) q:zi=""  d  ;
- . s @outary@(tag_"@"_zi)=@inary@(zi)
- q
+ ;
+ if '$data(tag) set tag="item"
+ new zi set zi=""
+ for  set zi=$order(@inary@(zi)) quit:zi=""  do  ;
+ . set @outary@(tag_"@"_zi)=@inary@(zi)
+ . quit
+ ;
+ quit  ; end of addat
+ ;
+ ;
  ;
 testadd ; test of addat routine
- n gn s gn=$na(^xtmp("ehexpat",1))
- n gpl
- d addat("gpl",gn,"patient")
- zwr gpl
- q
+ ;
+ new gn set gn=$name(^xtmp("ehexpat",1))
+ new gpl
+ do addat("gpl",gn,"patient")
+ zwrite gpl
+ ;
+ quit  ; end of testadd
+ ;
+ ;
  ;
 genhtml2(hout,hary) ; generate an html table from array hary
+ ;
  ; hout and hary are passed by name
  ;
  ;  hary("title")="problem list"
@@ -50,43 +155,55 @@ genhtml2(hout,hary) ; generate an html table from array hary
  ;  hary(1,2,"id")="the id of the element" 
  ;  etc...
  ;
- n c0i,c0j
- d addto(hout,"<div align=""center"">")
- ;i $d(@hary@("title")) d  ;
- ;. n x
- ;. s x="<title>"_@hary@("title")_"</title>"
- ;. d addto(hout,x)
- d addto(hout,"<text>")
- d addto(hout,"<table border=""1"" style=""width:80%"">")
- i $d(@hary@("title")) d  ;
- . n x
- . s x="<caption><b>"_@hary@("title")_"</b></caption>"
- . d addto(hout,x)
- i $d(@hary@("header")) d  ;
- . d addto(hout,"<thead>")
- . d addto(hout,"<tr>")
- . s c0i=0
- . f  s c0i=$o(@hary@("header",c0i)) q:+c0i=0  d  ;
- . . d addto(hout,"<th>"_@hary@("header",c0i)_"</th>")
- . d addto(hout,"</tr>")
- . d addto(hout,"</thead>")
- d addto(hout,"<tbody>")
- i $d(@hary@(1)) d  ;
- . s c0i=0 s c0j=0
- . f  s c0i=$o(@hary@(c0i)) q:+c0i=0  d  ;
- . . d addto(hout,"<tr>")
- . . f  s c0j=$o(@hary@(c0i,c0j)) q:+c0j=0  d  ;
- . . . n uid s uid=$g(@hary@(c0i,c0j,"id"))
- . . . i uid'="" d addto(hout,"<td style=""padding:5px;"" id="""_uid_""">"_@hary@(c0i,c0j)_"</td>")
- . . . e  d addto(hout,"<td style=""padding:5px;"">"_@hary@(c0i,c0j)_"</td>")
- . . d addto(hout,"</tr>")
- d addto(hout,"</tbody>")
- d addto(hout,"</table>")
- d addto(hout,"</text>")
- d addto(hout,"</div>")
- q
+ new c0i,c0j
+ do addto(hout,"<div align=""center"">")
+ ;
+ ; if $data(@hary@("title")) do  ;
+ ; . new x
+ ; . set x="<title>"_@hary@("title")_"</title>"
+ ; . do addto(hout,x)
+ ; . quit
+ ;
+ do addto(hout,"<text>")
+ do addto(hout,"<table border=""1"" style=""width:80%"">")
+ if $data(@hary@("title")) do  ;
+ . new x
+ . set x="<caption><b>"_@hary@("title")_"</b></caption>"
+ . do addto(hout,x)
+ . quit
+ if $data(@hary@("header")) do  ;
+ . do addto(hout,"<thead>")
+ . do addto(hout,"<tr>")
+ . set c0i=0
+ . for  set c0i=$order(@hary@("header",c0i)) quit:+c0i=0  do  ;
+ . . do addto(hout,"<th>"_@hary@("header",c0i)_"</th>")
+ . . quit
+ . do addto(hout,"</tr>")
+ . do addto(hout,"</thead>")
+ . quit
+ do addto(hout,"<tbody>")
+ if $data(@hary@(1)) do  ;
+ . set c0i=0 set c0j=0
+ . for  set c0i=$order(@hary@(c0i)) quit:+c0i=0  do  ;
+ . . do addto(hout,"<tr>")
+ . . for  set c0j=$order(@hary@(c0i,c0j)) quit:+c0j=0  do  ;
+ . . . new uid set uid=$get(@hary@(c0i,c0j,"id"))
+ . . . if uid'="" do addto(hout,"<td style=""padding:5px;"" id="""_uid_""">"_@hary@(c0i,c0j)_"</td>")
+ . . . else  do addto(hout,"<td style=""padding:5px;"">"_@hary@(c0i,c0j)_"</td>")
+ . . do addto(hout,"</tr>")
+ . . quit
+ . quit
+ do addto(hout,"</tbody>")
+ do addto(hout,"</table>")
+ do addto(hout,"</text>")
+ do addto(hout,"</div>")
+ ;
+ quit  ; end of genhtml2
+ ;
+ ;
  ;
 genhtml(hout,hary) ; generate an html table from array hary
+ ;
  ; hout and hary are passed by name
  ;
  ;  hary("title")="problem list"
@@ -97,53 +214,66 @@ genhtml(hout,hary) ; generate an html table from array hary
  ;  hary(1,2,"id")="the id of the element" 
  ;  etc...
  ;
- n divclass,tblclass
- s divclass=$g(@hary@("divclass"))
- s tblclass=$g(@hary@("tableclass"))
- i divclass="" s divclass="tables"
- i tblclass="" s tblclass="patient"
- n c0i,c0j
- d addto(hout,"<div class=""tables"">")
- ;i $d(@hary@("title")) d  ;
- ;. n x
- ;. s x="<title>"_@hary@("title")_"</title>"
- ;. d addto(hout,x)
- ;d addto(hout,"<text>")
- n zwidth s zwidth=$g(@hary@("width"))
- i zwidth="" s zwidth="80%"
- d addto(hout,"<table class=""summary"" style=""width:"_zwidth_""">")
- i $d(@hary@("title")) d  ;
- . n x
- . s x="<caption>"_@hary@("title")_"</caption>"
- . d addto(hout,x)
- i $d(@hary@("header")) d  ;
- . d addto(hout,"<thead>")
- . d addto(hout,"<tr>")
- . n numcol s numcol=$o(@hary@("header",""),-1)
- . s c0i=0
- . f  s c0i=$o(@hary@("header",c0i)) q:+c0i=0  d  ;
- . . ;n th s th="<th colspan="""_numcol_""">"_@hary@("header",c0i)_"</th>"
- . . n th s th="<th>"_@hary@("header",c0i)_"</th>"
- . . d addto(hout,th)
- . d addto(hout,"</tr>")
- . d addto(hout,"</thead>")
- d addto(hout,"<tbody>")
- i $d(@hary@(1)) d  ;
- . s c0i=0 s c0j=0
- . f  s c0i=$o(@hary@(c0i)) q:+c0i=0  d  ;
- . . d addto(hout,"<tr>")
- . . f  s c0j=$o(@hary@(c0i,c0j)) q:+c0j=0  d  ;
- . . . n uid s uid=$g(@hary@(c0i,c0j,"id"))
- . . . i uid'="" d addto(hout,"<td id="""_uid_""">"_@hary@(c0i,c0j)_"</td>")
- . . . e  d addto(hout,"<td>"_@hary@(c0i,c0j)_"</td>")
- . . d addto(hout,"</tr>")
- d addto(hout,"</tbody>")
- d addto(hout,"</table>")
- ;d addto(hout,"</text>")
- d addto(hout,"</div>")
- q
+ new divclass,tblclass
+ set divclass=$get(@hary@("divclass"))
+ set tblclass=$get(@hary@("tableclass"))
+ if divclass="" set divclass="tables"
+ if tblclass="" set tblclass="patient"
+ new c0i,c0j
+ do addto(hout,"<div class=""tables"">")
+ ;
+ ; if $data(@hary@("title")) do  ;
+ ; . new x
+ ; . set x="<title>"_@hary@("title")_"</title>"
+ ; . do addto(hout,x)
+ ; . quit
+ ; do addto(hout,"<text>")
+ ;
+ new zwidth set zwidth=$get(@hary@("width"))
+ if zwidth="" set zwidth="80%"
+ do addto(hout,"<table class=""summary"" style=""width:"_zwidth_""">")
+ if $data(@hary@("title")) do  ;
+ . new x
+ . set x="<caption>"_@hary@("title")_"</caption>"
+ . do addto(hout,x)
+ . quit
+ if $data(@hary@("header")) do  ;
+ . do addto(hout,"<thead>")
+ . do addto(hout,"<tr>")
+ . new numcol set numcol=$order(@hary@("header",""),-1)
+ . set c0i=0
+ . for  set c0i=$order(@hary@("header",c0i)) quit:+c0i=0  do  ;
+ . . ; new th set th="<th colspan="""_numcol_""">"_@hary@("header",c0i)_"</th>"
+ . . new th set th="<th>"_@hary@("header",c0i)_"</th>"
+ . . do addto(hout,th)
+ . . quit
+ . do addto(hout,"</tr>")
+ . do addto(hout,"</thead>")
+ . quit
+ do addto(hout,"<tbody>")
+ if $data(@hary@(1)) do  ;
+ . set c0i=0 set c0j=0
+ . for  set c0i=$order(@hary@(c0i)) quit:+c0i=0  do  ;
+ . . do addto(hout,"<tr>")
+ . . for  set c0j=$order(@hary@(c0i,c0j)) quit:+c0j=0  do  ;
+ . . . new uid set uid=$get(@hary@(c0i,c0j,"id"))
+ . . . if uid'="" do addto(hout,"<td id="""_uid_""">"_@hary@(c0i,c0j)_"</td>")
+ . . . else  do addto(hout,"<td>"_@hary@(c0i,c0j)_"</td>")
+ . . . quit
+ . . do addto(hout,"</tr>")
+ . . quit
+ . quit
+ do addto(hout,"</tbody>")
+ do addto(hout,"</table>")
+ ; do addto(hout,"</text>")
+ do addto(hout,"</div>")
+ ;
+ quit  ; end of genhtml
+ ;
+ ;
  ;
 genvhtml(hout,hary) ; generate a vertical html table from array hary
+ ;
  ; headers are in the first row
  ; hout and hary are passed by name
  ;
@@ -155,36 +285,42 @@ genvhtml(hout,hary) ; generate a vertical html table from array hary
  ;  hary(2,1)="row 2 col2 value"
  ;  etc...
  ;
- n divclass,tblclass
- s divclass=$g(@hary@("divclass"))
- s tblclass=$g(@hary@("tableclass"))
- i divclass="" s divclass="tables"
- i tblclass="" s tblclass="patient"
- n c0i,c0j
- d addto(hout,"<div class=""tables"">")
- ;d addto(hout,"<div align=""center"">")
- n zwidth s zwidth=$g(@hary@("width"))
- i zwidth="" s zwidth="80%"
- d addto(hout,"<table class=""summary"" style=""width:"_zwidth_""">")
- ;d addto(hout,"<text>")
- ;d addto(hout,"<table border=""1"" style=""width:40%"">")
- i $d(@hary@("title")) d  ;
- . n x
- . s x="<caption><b>"_@hary@("title")_"</b></caption>"
- . d addto(hout,x)
- i $d(@hary@("header")) d  ;
- . d addto(hout,"<thead>")
- . d addto(hout,"<tr>")
- . n numcol s numcol=$o(@hary@("header",""),-1)
- . s c0i=0
- . f  s c0i=$o(@hary@("header",c0i)) q:+c0i=0  d  ;
- . . d addto(hout,"<th style=""padding:5px;"">"_@hary@("header",c0i)_"</th>")
- . . d addto(hout,"<td style=""padding:5px;"">"_@hary@(c0i,1)_"</td>")
- . d addto(hout,"</tr>")
- d addto(hout,"</table>")
- d addto(hout,"</text>")
- d addto(hout,"</div>")
- q
+ new divclass,tblclass
+ set divclass=$get(@hary@("divclass"))
+ set tblclass=$get(@hary@("tableclass"))
+ if divclass="" set divclass="tables"
+ if tblclass="" set tblclass="patient"
+ new c0i,c0j
+ do addto(hout,"<div class=""tables"">")
+ ; do addto(hout,"<div align=""center"">")
+ new zwidth set zwidth=$get(@hary@("width"))
+ if zwidth="" set zwidth="80%"
+ do addto(hout,"<table class=""summary"" style=""width:"_zwidth_""">")
+ ; do addto(hout,"<text>")
+ ; do addto(hout,"<table border=""1"" style=""width:40%"">")
+ if $d(@hary@("title")) do  ;
+ . new x
+ . set x="<caption><b>"_@hary@("title")_"</b></caption>"
+ . do addto(hout,x)
+ . quit
+ if $data(@hary@("header")) do  ;
+ . do addto(hout,"<thead>")
+ . do addto(hout,"<tr>")
+ . new numcol set numcol=$order(@hary@("header",""),-1)
+ . set c0i=0
+ . for  set c0i=$order(@hary@("header",c0i)) quit:+c0i=0  do  ;
+ . . do addto(hout,"<th style=""padding:5px;"">"_@hary@("header",c0i)_"</th>")
+ . . do addto(hout,"<td style=""padding:5px;"">"_@hary@(c0i,1)_"</td>")
+ . . quit
+ . do addto(hout,"</tr>")
+ . quit
+ do addto(hout,"</table>")
+ do addto(hout,"</text>")
+ do addto(hout,"</div>")
+ ;
+ quit  ; end of genvhtml
+ ;
+ ;
  ;
 tstyle1 ; table style template
  ;;<style>
@@ -198,209 +334,308 @@ tstyle1 ; table style template
  ;;padding:5px;
  ;;}
  ;;</style>
- q
+ quit  ; end of tstyle1
+ ;
+ ;
  ;
 testhtml ;
- n html
- s html("title")="problem list"
- s html("header",1)="column 1 header"
- s html("header",2)="col 2 header"
- s html(1,1)="row 1 col1 value"
- s html(1,2)="row 1 col2 value"
- n ghtml
- d genhtml("ghtml","html")
- zwr ghtml
- q
+ ;
+ new html
+ set html("title")="problem list"
+ set html("header",1)="column 1 header"
+ set html("header",2)="col 2 header"
+ set html(1,1)="row 1 col1 value"
+ set html(1,2)="row 1 col2 value"
+ new ghtml
+ do genhtml("ghtml","html")
+ zwrite ghtml
+ ;
+ quit  ; end of testhtml
+ ;
+ ;
  ;
 test2 ;
- n html
- s html("title")="problem list"
- s html("header",1)="column 1 header"
- s html("header",2)="col 2 header"
- s html(1,1)="row 1 col1 value"
- s html(1,2)="row 1 col2 value"
- n ghtml
- d genhtml2("ghtml","html")
- zwr ghtml
- q
+ ;
+ new html
+ set html("title")="problem list"
+ set html("header",1)="column 1 header"
+ set html("header",2)="col 2 header"
+ set html(1,1)="row 1 col1 value"
+ set html(1,2)="row 1 col2 value"
+ new ghtml
+ do genhtml2("ghtml","html")
+ zwrite ghtml
+ ;
+ quit  ; end of test2
+ ;
+ ;
  ;
 addto(dest,what) ; adds string what to list dest 
+ ;
  ; dest is passed by name
- n gn
- s gn=$o(@dest@("aaaaaa"),-1)+1
- s @dest@(gn)=what
- s @dest@(0)=gn ; count
- q
+ ;
+ new gn
+ set gn=$o(@dest@("aaaaaa"),-1)+1
+ set @dest@(gn)=what
+ set @dest@(0)=gn ; count
+ ;
+ quit  ; end of addto
+ ;
+ ;
  ;
 addary(dest,what) ; adds array what to list dest 
+ ;
  ; dest and what are passed by name
- n gn
- s gn=$o(@dest@("aaaaaa"),-1)+1
- n zzi s zzi=0
- f  s zzi=$o(@what@(zzi)) q:'zzi  d  ;
- . s @dest@(gn)=$g(@what@(zzi))
- . s @dest@(0)=gn ; count
- . s gn=gn+1
- q
+ ;
+ new gn
+ set gn=$order(@dest@("aaaaaa"),-1)+1
+ new zzi set zzi=0
+ for  set zzi=$order(@what@(zzi)) quit:'zzi  do  ;
+ . set @dest@(gn)=$get(@what@(zzi))
+ . set @dest@(0)=gn ; count
+ . set gn=gn+1
+ . quit
+ ;
+ quit  ; end of addary
+ ;
+ ;
  ;
 orgoid() ; extrinsic which returns the organization oid
- q "2.16.840.1.113883.5.83" ; worldvista hl7 oid - 
+ ;
+ quit "2.16.840.1.113883.5.83" ; worldvista hl7 oid - 
+ ;
  ; replace with oid lookup from institution file
  ;
+ ;
+ ;
 tree(where,prefix,docid,zout) ; show a tree starting at a node in mxml. 
+ ;
  ; node is passed by name
  ; 
- i $g(prefix)="" s prefix="|--" ; starting prefix
- i '$d(kbaijob) s kbaijob=$j
- n node s node=$na(^TMP("MXMLDOM",kbaijob,docid,where))
- n txt s txt=$$clean($$alltxt(node))
- w:'$g(diquiet) !,prefix_@node_" "_txt
- d oneout(zout,prefix_@node_" "_txt)
- n zi s zi=""
- f  s zi=$o(@node@("a",zi)) q:zi=""  d  ;
- . w:'$g(diquiet) !,prefix_"  : "_zi_"^"_$g(@node@("a",zi))
- . d oneout(zout,prefix_"  : "_zi_"^"_$g(@node@("a",zi)))
- f  s zi=$o(@node@("c",zi)) q:zi=""  d  ;
- . d tree(zi,"|  "_prefix,docid,zout)
- q
+ if $get(prefix)="" set prefix="|--" ; starting prefix
+ if '$data(kbaijob) set kbaijob=$job
+ new node set node=$name(^TMP("MXMLDOM",kbaijob,docid,where))
+ new txt set txt=$$clean($$alltxt(node))
+ write:'$get(diquiet) !,prefix_@node_" "_txt
+ do oneout(zout,prefix_@node_" "_txt)
+ new zi set zi=""
+ for  set zi=$order(@node@("a",zi)) quit:zi=""  do  ;
+ . write:'$get(diquiet) !,prefix_"  : "_zi_"^"_$get(@node@("a",zi))
+ . do oneout(zout,prefix_"  : "_zi_"^"_$get(@node@("a",zi)))
+ . quit
+ for  set zi=$order(@node@("c",zi)) quit:zi=""  do  ;
+ . do tree(zi,"|  "_prefix,docid,zout)
+ . quit
+ ;
+ quit  ; end of tree
+ ;
+ ;
  ;
 oneout(zbuf,ztxt) ; adds a line to zbuf
- n zi s zi=$o(@zbuf@(""),-1)+1
- s @zbuf@(zi)=ztxt
- q
+ ;
+ new zi set zi=$order(@zbuf@(""),-1)+1
+ set @zbuf@(zi)=ztxt
+ ;
+ quit  ; end of oneout
+ ;
+ ;
  ;
 alltxt(where) ; extrinsic which returns all text lines from the node .. concatinated 
+ ;
  ; together
- n zti s zti=""
- n ztr s ztr=""
- f  s zti=$o(@where@("t",zti)) q:zti=""  d  ;
- . s ztr=ztr_$g(@where@("t",zti))
- q ztr
+ ;
+ new zti set zti=""
+ new ztr set ztr=""
+ for  s zti=$order(@where@("t",zti)) quit:zti=""  do  ;
+ . set ztr=ztr_$get(@where@("t",zti))
+ . quit
+ ;
+ quit ztr ; end of $$alltxt
+ ;
+ ;
  ;
 clean(str) ; extrinsic function; returns string - gpl borrowed from the ccr package
+ ;
  ;; removes all non printable characters from a string.
  ;; str by value
- n tr,i
- f i=0:1:31 s tr=$g(tr)_$c(i)
- s tr=tr_$c(127)
- n zr s zr=$tr(str,tr)
- s zr=$$ldblnks(zr) ; get rid of leading blanks
- quit zr
+ ;
+ new tr,i
+ for i=0:1:31 s tr=$get(tr)_$char(i)
+ set tr=tr_$char(127)
+ new zr set zr=$translate(str,tr)
+ set zr=$$ldblnks(zr) ; get rid of leading blanks
+ ;
+ quit zr ; end of $$clean
+ ;
+ ;
  ;
 ldblnks(st) ; extrinsic which removes leading blanks from a string
- n pos f pos=1:1:$l(st)  q:$e(st,pos)'=" "
- q $e(st,pos,$l(st))
+ ;
+ new pos for pos=1:1:$length(st)  quit:$extract(st,pos)'=" "
+ ;
+ quit $extract(st,pos,$length(st)) ; end of $$ldblnks
+ ;
+ ;
  ;
 show(what,docid,zout) ;
- i '$d(c0xjob) s c0xjob=$j
- d tree(what,,docid,zout)
- q
- ; 
+ ;
+ if '$data(c0xjob) set c0xjob=$job
+ do tree(what,,docid,zout)
+ ;
+ quit  ; end of show
+ ;
+ ;
+ ;
 listm(out,in) ; out is passed by name in is passed by reference
- n i s i=$q(@in@(""))
- f  s i=$q(@i) q:i=""  d oneout(out,i_"="_@i)
- q
+ ;
+ new i set i=$query(@in@(""))
+ for  set i=$query(@i) quit:i=""  do oneout(out,i_"="_@i)
+ ;
+ quit  ; end of listm
+ ;
+ ;
  ;
 peel(out,in) ; compress a complex global into something simpler
- n i s i=$q(@in@(""))
- f  s i=$q(@i) q:i=""  d  ;
- . n j,k,l,m,n,m1
- . s (l,m)=""
- . s n=$$shrink($qs(i,$ql(i)))
- . s k=$qs(i,0)_"("""
- . f j=1:1:$ql(i)-1  d  ;
- . . i +$qs(i,j)>0 d  ;
- . . . i m'="" q
- . . . s m=$qs(i,j)
- . . . s m1=j
- . . . i j>1 s l=$qs(i,j-1)
- . . . e  s l=$qs(i,j)
- . . . i l["substanceadministration" s l=$p(l,"substanceadministration",2)
- . . s k=k_$qs(i,j)_""","""
- . . w:$g(debug) !,j," ",k
- . s k=k_$qs(i,$ql(i))_""")"
- . w:$g(debug) !,k,"=",@k
- . i l'="" d  q  ;
- . . d:$g(@out@(l,m,n))'=""
- . . . ;n jj,n2
- . . . ;f jj=2:1  w !,jj s n2=$qs(i,$ql(i)-1)_"["_jj_"]"_n q:$g(@out@(l,m,n2))=""  w !,n2
- . . . ;s n=n2
- . . . ;s n=$$shrink($qs(i,$ql(i)-1))_"_"_n
- . . . s n=$$mkxpath(i,m1)
- . . . b:$g(@out@(l,m,n))'=""
- . . s @out@(l,m,n)=@k
- . i @k'="" d  ;
- . . i $ql(i)>1 d  q  ;
- . . . s l=$$shrink($qs(i,$ql(i)-1))
- . . . d:$g(@out@(l,n))'=""
- . . . . ;n jj,n2
- . . . . ;f jj=2:1  s n2=$qs(i,$ql(i)-1)_"["_jj_"]"_"_"_n q:$g(@out@(l,n2))=""
- . . . . ;s n=n2
- . . . . ;b:$g(@out@(l,n))'=""
- . . . . s n=$$shrink($qs(i,$ql(i)-1))_"_"_n
- . . . s @out@(l,n)=@k
- . . s @out@(n)=@k
- q
+ ;
+ new i set i=$query(@in@(""))
+ for  s i=$query(@i) quit:i=""  do  ;
+ . new j,k,l,m,n,m1
+ . set (l,m)=""
+ . set n=$$shrink($qsubscript(i,$qlength(i)))
+ . set k=$qsubscript(i,0)_"("""
+ . for j=1:1:$qlength(i)-1  do  ;
+ . . if +$qsubscript(i,j)>0 do  ;
+ . . . if m'="" quit
+ . . . set m=$qsubscript(i,j)
+ . . . set m1=j
+ . . . if j>1 set l=$qsubscript(i,j-1)
+ . . . else  set l=$qsubscript(i,j)
+ . . . if l["substanceadministration" set l=$p(l,"substanceadministration",2)
+ . . . quit
+ . . set k=k_$qsubscript(i,j)_""","""
+ . . write:$get(debug) !,j," ",k
+ . . quit
+ . set k=k_$qsubscript(i,$qlength(i))_""")"
+ . write:$get(debug) !,k,"=",@k
+ . if l'="" do  quit  ;
+ . . do:$get(@out@(l,m,n))'=""
+ . . . ; new jj,n2
+ . . . ; for jj=2:1 write !,jj set n2=$qsubscript(i,$qlength(i)-1)_"["_jj_"]"_n quit:$get(@out@(l,m,n2))=""  write !,n2
+ . . . ; set n=n2
+ . . . ; set n=$$shrink($qsubscript(i,$qlength(i)-1))_"_"_n
+ . . . set n=$$mkxpath(i,m1)
+ . . . break:$get(@out@(l,m,n))'=""
+ . . . quit
+ . . set @out@(l,m,n)=@k
+ . . quit
+ . if @k'="" do  ;
+ . . if $qlength(i)>1 do  quit  ;
+ . . . set l=$$shrink($qsubscript(i,$qlength(i)-1))
+ . . . do:$get(@out@(l,n))'=""
+ . . . . ; new jj,n2
+ . . . . ; for jj=2:1 set n2=$qsubscript(i,$qlength(i)-1)_"["_jj_"]"_"_"_n quit:$get(@out@(l,n2))=""
+ . . . . ; set n=n2
+ . . . . ; break:$get(@out@(l,n))'=""
+ . . . . set n=$$shrink($qsubscript(i,$qlength(i)-1))_"_"_n
+ . . . . quit
+ . . . set @out@(l,n)=@k
+ . . . quit
+ . . set @out@(n)=@k
+ . . quit
+ . quit
+ ;
+ quit  ; end of peel
+ ;
+ ;
  ;
 shrink(x) ; reduce strings 
- n y,z
- s y=x
- s z="substanceadministration"
- i x[z s y=$p(x,z,2)
- q y
+ ;
+ new y,z
+ set y=x
+ set z="substanceadministration"
+ if x[z set y=$piece(x,z,2)
+ ;
+ quit y ; end of $$shrink
+ ;
+ ;
  ;
 mkxpath(zq,zm) ; extrinsic which returns the xpath derived from the $query value 
+ ;
  ;passed by value. zm is the index to begin with
  ;
- n zr s zr=""
- n zi s zi=""
- f zi=1:1:$ql(zq) s zr=zr_"/"_$qs(zq,zi)
- q zr
+ new zr set zr=""
+ new zi set zi=""
+ for zi=1:1:$qlength(zq) set zr=zr_"/"_$qsubscript(zq,zi)
+ ;
+ quit zr ; end of $$mkxpath
+ ;
+ ;
  ;
  ; todo: make this work for regular xml files - only works now with 
  ;   attributes to a single tag per entry
  ;
+ ;
+ ;
 ary2xml(outxml,inary,stk,child) ; convert an array to xml
- i '$d(@outxml@(1)) s @outxml@(1)="<?xml version=""1.0"" encoding=""utf-8"" ?>"
- n ii s ii=""
- n dattr s dattr="" ; deffered attributes
- f  s ii=$o(@inary@(ii),-1) q:ii=""  d  ;
- . n attr,tag
- . s attr="" s tag=""
- . i ii["@" d  ;
- . . i tag="" s tag=$p(ii,"@",1) s attr=$p(ii,"@",2)_"="""_@inary@(ii)_""""
- . . w:$g(debug) !,"tag="_tag_" attr="_attr
- . . ;i $o(@inary@(ii))["@" d  ;
- . . ;f  s ii=$o(@inary@(ii),-1) q:ii=""  q:$o(@inary@(ii),-1)'[(tag_"@")  d  ;
- . . f  s ii=$o(@inary@(ii),-1) q:ii=""  q:ii'[(tag_"@")  d  ;
- . . . s attr=attr_" "_$p(ii,"@",2)_"="""_@inary@(ii)_""""
- . . . w:$g(debug) !,"attr= ",attr
- . . . w:$g(debug) !,"ii= ",ii
- . . s ii=$o(@inary@(ii)) ; reset to previous
- . . n ending s ending="/"
- . . i ii["@" d  ;
- . . . i $o(@inary@(ii),-1)=tag s dattr=" "_attr q  ; deffered attributes
- . . . i $d(@inary@(tag)) s ending=""
- . . . d oneout(outxml,"<"_tag_" "_attr_ending_">")
- . . . i ending="" d push("stk","</"_tag_">")
- . i ii'["@" d  ;
- . . i +ii=0 d  ;
- . . . d oneout(outxml,"<"_ii_dattr_">")
- . . . s dattr="" ; reinitialize after use
- . . . d push("stk","</"_ii_">")
- . i $d(@inary@(ii)) d ary2xml(outxml,$na(@inary@(ii)))
- i $d(stk) f  d oneout(outxml,$$pop("stk")) q:'$d(stk)
- q
+ ;
+ if '$data(@outxml@(1)) set @outxml@(1)="<?xml version=""1.0"" encoding=""utf-8"" ?>"
+ new ii set ii=""
+ new dattr set dattr="" ; deffered attributes
+ for  set ii=$order(@inary@(ii),-1) quit:ii=""  do  ;
+ . new attr,tag
+ . set attr="" set tag=""
+ . if ii["@" do  ;
+ . . if tag="" set tag=$piece(ii,"@",1) set attr=$piece(ii,"@",2)_"="""_@inary@(ii)_""""
+ . . write:$get(debug) !,"tag="_tag_" attr="_attr
+ . . ; if $order(@inary@(ii))["@" do  ;
+ . . ; for  set ii=$order(@inary@(ii),-1) quit:ii=""  quit:$order(@inary@(ii),-1)'[(tag_"@")  do  ;
+ . . for  set ii=$order(@inary@(ii),-1) quit:ii=""  quit:ii'[(tag_"@")  do  ;
+ . . . set attr=attr_" "_$piece(ii,"@",2)_"="""_@inary@(ii)_""""
+ . . . write:$get(debug) !,"attr= ",attr
+ . . . write:$get(debug) !,"ii= ",ii
+ . . . quit
+ . . set ii=$order(@inary@(ii)) ; reset to previous
+ . . new ending set ending="/"
+ . . if ii["@" do  ;
+ . . . if $order(@inary@(ii),-1)=tag set dattr=" "_attr quit  ; deffered attributes
+ . . . if $data(@inary@(tag)) set ending=""
+ . . . do oneout(outxml,"<"_tag_" "_attr_ending_">")
+ . . . if ending="" do push("stk","</"_tag_">")
+ . . . quit
+ . . quit
+ . if ii'["@" do  ;
+ . . if +ii=0 do  ;
+ . . . do oneout(outxml,"<"_ii_dattr_">")
+ . . . set dattr="" ; reinitialize after use
+ . . . do push("stk","</"_ii_">")
+ . . . quit
+ . . quit
+ . if $data(@inary@(ii)) do ary2xml(outxml,$name(@inary@(ii)))
+ . quit
+ if $data(stk) for  do oneout(outxml,$$pop("stk")) quit:'$data(stk)
+ ;
+ quit  ; end of ary2xml
+ ;
+ ;
  ;
 push(buf,str) ;
- d oneout(buf,str)
- q
+ ;
+ do oneout(buf,str)
+ ;
+ quit  ; end of push
+ ;
+ ;
  ;
 pop(buf) ; extrinsic returns the last element and then deletes it
- n nm,tx
- s nm=$o(@buf@(""),-1)
- q:nm="" nm
- s tx=@buf@(nm)
- k @buf@(nm)
- q tx
  ;
+ new nm,tx
+ set nm=$order(@buf@(""),-1)
+ quit:nm="" nm
+ set tx=@buf@(nm)
+ kill @buf@(nm)
+ ;
+ quit tx ; end of $$pop
+ ;
+ ;
+ ;
+eor ; end of routine %yottautl

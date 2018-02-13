@@ -1,4 +1,4 @@
-%wf ;ven/gpl-write form: development log ;2018-02-06T02:00Z
+%wf ;ven/gpl-write form: development log ;2018-02-11T15:12Z
  ;;1.8;Mash;
  ;
  ; %wful is the Write Form Library's ppi & api routine. It supports getting
@@ -23,7 +23,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-06T02:00Z
+ ;@last-updated: 2018-02-11T15:12Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Write Form - %wf
  ;@version: 1.8T04
@@ -34,12 +34,12 @@
  ; toad@vistaexpertise.net
  ;
  ;@to-do
- ; convert entry points to ppi/api style
- ; %wfhform: r/all local calls w/calls through ^%wf
+ ; reroute %wfhform calls to other routines as it is broken up
  ;
  ;@contents
- ; all private web services & programming interfaces for now
- ; some public web services & apis later
+ ; API = application program interface, supported reference for SAMI
+ ; ppi = private program interface for Mash
+ ; ws = web service for Mash
  ;
  ;
  ;
@@ -47,9 +47,8 @@
  ;
  ;
  ;
-wsGetForm(rtn,filter,post) ; web service wsGetForm^%wf, get html form
- do wsGetForm^%wfhform(.rtn,.filter,$get(post))
- quit
+ ;@ws GET form/*, get html form
+wsGetForm(rtn,filter,post) goto wsGetForm^%wfhform
  ;
  ;
  ;
@@ -57,12 +56,12 @@ wsGetForm(rtn,filter,post) ; web service wsGetForm^%wf, get html form
  ;
  ;
  ;
-formLabel(form) ; ppi $$formLabel^%wf, label to use for form's post url
- quit $$formLabel^%wfhform(form)
+ ;@ppi $$formLabel^%wf, label to use for form's post url
+formLabel(form) goto formLabel^%wfhform
  ;
  ;
-getTemplate(form) ; ppi $$getTemplate^%wf, get name of form's template
- quit $$getTemplate^%wfhform(form)
+ ;@API $$getTemplate^%wf, get name of form's template
+getTemplate(form) goto getTemplate^%wfhform
  ;
  ;
  ;
@@ -70,34 +69,28 @@ getTemplate(form) ; ppi $$getTemplate^%wf, get name of form's template
  ;
  ;
  ;
-redactErr(html,err,indx) ; ppi redactErr^%wf, clear errors from form
- do redactErr^%wfhform(html,err,.indx)
- quit
+ ;@ppi redactErr^%wf, clear errors from form
+redactErr(html,err,indx) goto redactErr^%wfhform
  ;
  ;
-redactErr2(html,indx) ; ppi redactErr2^%wf, redact field's error symbol
- do redactErr2^%wfhform(html,.indx)
- quit
+ ;@ppi redactErr2^%wf, redact field's error symbol
+redactErr2(html,indx) goto redactErr2^%wfhform
  ;
  ;
-testRedactErr2 ; test redactErr2^%wf [move to %wfut]
- do testRedactErr2^%wfhform
- quit
+ ;>test redactErr2^%wf [move to %wfut]
+testRedactErr2 goto testRedactErr2^%wfhform
  ;
  ;
-putErrMsg2(html,lin,msg,err) ; ppi putErrMsg2^%wf, insert error msgs
- do putErrMsg2^%wfhform(html,.lin,msg,$get(err))
- quit
+ ;@ppi putErrMsg2^%wf, insert error msgs
+putErrMsg2(html,lin,msg,err) goto putErrMsg2^%wfhform
  ;
  ;
-insError(ln,msg) ; ppi insError^%wf, insert error msg into html line
- do insError^%wfhform(.ln,.msg)
- quit
+ ;@ppi insError^%wf, insert error msg into html line
+insError(ln,msg) goto insError^%wfhform
  ;
  ;
-debugFld(ln,form,name) ; ppi debugFld^%wf, insert field debugging info
- do debugFld^%wfhform(.ln,form,name)
- quit
+ ;@ppi debugFld^%wf, insert field debugging info
+debugFld(ln,form,name) goto debugFld^%wfhform
  ;
  ;
  ;
@@ -105,18 +98,16 @@ debugFld(ln,form,name) ; ppi debugFld^%wf, insert field debugging info
  ;
  ;
  ;
-delText(ln,begin,end,ins) ; ppi $$delText^%wf, delete text from html line
- quit $$delText^%wfhform(.ln,begin,end,$get(ins))
+ ;@ppi $$delText^%wf, delete text from html line
+delText(ln,begin,end,ins) goto delText^%wfhform
  ;
  ;
-replace(ln,cur,repl) ; ppi replace^%wf, replace test in html line
- do replace^%wfhform(.ln,cur,repl)
- quit
+ ;@ppi replace^%wf, replace test in html line
+replace(ln,cur,repl) goto replace^%wfhform
  ;
  ;
-replaceAll(ln,cur,repl) ; ppi replaceAll^%wf, replace text in html line
- do replaceAll^%wfhform(.ln,cur,repl)
- quit
+ ;@API replaceAll^%wf, replace text in html line
+replaceAll(ln,cur,repl) goto replaceAll^%wfhform
  ;
  ;
  ;
@@ -124,39 +115,33 @@ replaceAll(ln,cur,repl) ; ppi replaceAll^%wf, replace text in html line
  ;
  ;
  ;
-unvalue(ln) ; ppi unvalue^%wf, clear input value in html line
- do unvalue^%wfhform(.ln)
- quit
+ ;@ppi unvalue^%wf, clear input value in html line
+unvalue(ln) goto unvalue^%wfhform
  ;
  ;
-value(ln,val) ; ppi value^%wf, set input value in html line
- do value^%wfhform(.ln,val)
- quit
+ ;@ppi value^%wf, set input value in html line
+value(ln,val) goto value^%wfhform
  ;
  ;
-getVals(vrtn,zid,zsid) ; ppi getVals^%wf, get form's values from graph
- do getVals^%wfhform(.vrtn,zid,zsid)
- quit
+ ;@ppi getVals^%wf, get field values from graph
+getVals(vrtn,zid,zsid) goto getVals^%wfhform
  ;
  ;
-setVals(vary,zid,zsid) ; ppi setVals^%wf, set graph's values from form
- do setVals^%wfhform(.vary,zid,zsid)
- quit
+ ;@ppi setVals^%wf, set field values into graph
+setVals(vary,zid,zsid) goto setVals^%wfhform
  ;
  ;
  ;
- ;@section 6 wsGetForm^%wf radio/checkbox manipulation
+ ;@section 6 input tag processing
  ;
  ;
  ;
-uncheck(ln) ; ppi uncheck^%wf, uncheck radio button or checkbox
- do uncheck^%wfhform(.ln)
- quit
+ ;@ppi uncheck^%wf, uncheck radio button or checkbox
+uncheck(ln) goto uncheck^%wfhinput
  ;
  ;
-check(line,type) ; ppi check^%wf, check radio button or checkbox
- do check^%wfhform(.line,type)
- quit
+ ;@ppi check^%wf, check radio button or checkbox
+check(line,type) goto check^%wfhinput
  ;
  ;
  ;
@@ -164,24 +149,24 @@ check(line,type) ; ppi check^%wf, check radio button or checkbox
  ;
  ;
  ;
-validate(value,spec,map,msg) ; ppi $$validate^%wf, validate value
- quit $$validate^%wfhform(value,spec,$get(map),.msg)
+ ;@ppi $$validate^%wf, validate value
+validate(value,spec,map,msg) goto validate^%wfhform
  ;
  ;
-dateValid(value,spec,map,msg) ; ppi $$dateValid^%wf, validate date
- quit $$dateValid^%wfhform(value,spec,$get(map),.msg)
+ ;@ppi $$dateValid^%wf, validate date
+dateValid(value,spec,map,msg) goto dateValid^%wfhform
  ;
  ;
-textValid(value,spec,map) ; ppi $$textValid^%wf, validate free-text field
- quit $$textValid^%wfhform(value,spec,$get(map))
+ ;@ppi $$textValid^%wf, validate free-text field
+textValid(value,spec,map) goto textValid^%wfhform
  ;
  ;
-numValid(value,spec,map) ; ppi $$numValid^%wf, validate numeric field
- quit $$numValid^%wfhform(value,spec,$get(map)) ; validate a numeric field
+ ;@ppi $$numValid^%wf, validate numeric field
+numValid(value,spec,map) goto numValid^%wfhform
  ;
  ;
-dateFormat(val,form,name) ; ppi $$dateFormat^%wf, reformat date in elcap format
- quit $$dateFormat^%wfhform(.val,form,name)
+ ;@ppi $$dateFormat^%wf, date in elcap format
+dateFormat(val,form,name) goto dateFormat^%wfhform
  ;
  ;
  ;
@@ -189,14 +174,12 @@ dateFormat(val,form,name) ; ppi $$dateFormat^%wf, reformat date in elcap format
  ;
  ;
  ;
-wsPostForm(ARGS,BODY,RESULT) ; web service wsPostForm^%wf, submit HTML form
- do wsPostForm^%wfhform(.ARGS,.BODY,.RESULT)
- quit
+ ;@ws POST form/*, submit HTML form
+wsPostForm(ARGS,BODY,RESULT) goto wsPostForm^%wfhform
  ;
  ;
-parseBody(rtn,body) ; ppi parseBody^%wf, get form's values from submitted form
- do parseBody^%wfhform(.rtn,.body)
- quit
+ ;@ppi parseBody^%wf, get field values from form
+parseBody(rtn,body) goto parseBody^%wfhform
  ;
  ;
  ;
@@ -204,14 +187,12 @@ parseBody(rtn,body) ; ppi parseBody^%wf, get form's values from submitted form
  ;
  ;
  ;
-replaceSrc(ln) ; ppi replaceSrc^%wf, chg src & href lines to find resources
- do replaceSrc^%wfhform(.ln)
- quit
+ ;@ppi replaceSrc^%wf, chg resources in src & href
+replaceSrc(ln) goto replaceSrc^%wfhform
  ;
  ;
-replaceHref(ln) ; ppi replaceHref^%wf, chg href lines to find resources
- do replaceHref^%wfhform(.ln)
- quit
+ ;@ppi replaceHref^%wf, chg resources in href
+replaceHref(ln) goto replaceHref^%wfhform
  ;
  ;
  ;
@@ -219,9 +200,8 @@ replaceHref(ln) ; ppi replaceHref^%wf, chg href lines to find resources
  ;
  ;
  ;
-importfmap(csvname,form) ; ppi importfmap^%wf, import map from csv
- do importfmap^%wffmap(csvname,form)
- quit
+ ;@ppi importfmap^%wf, import map from csv
+importfmap(csvname,form) goto importfmap^%wffmap
  ;
  ;
  ;

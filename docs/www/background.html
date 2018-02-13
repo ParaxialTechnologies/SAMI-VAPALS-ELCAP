@@ -1,0 +1,2608 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Background Form</title>
+    <link rel="stylesheet" href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="lib/formvalidation/dist/css/formValidation.min.css">
+    <link rel="stylesheet" href="lib/bootstrap-datetimepicker-4.17.47/css/bootstrap-datetimepicker.css">
+    <link rel="stylesheet" href="vapals.css">
+</head>
+<body>
+<script src="lib/jquery-3.2.1.slim.min.js"></script>
+<script src="lib/popper.min.js"></script>
+<script src="lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="lib/moment.js"></script>
+<script src="lib/formvalidation/dist/js/formValidation.min.js"></script>
+<script src="lib/formvalidation/dist/js/framework/bootstrap.min.js"></script>
+<script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script src="vapals.js"></script>
+
+<!--Debug information for viewport-->
+<span class="badge badge-secondary visible-xs-block">extra small</span>
+<span class="badge badge-secondary visible-sm-block">small</span>
+<span class="badge badge-secondary visible-md-block">medium</span>
+<span class="badge badge-secondary visible-lg-block">large</span>
+
+
+<!--System Navigation-->
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+            <a href="/">
+                <img src="img/new-logo.png" title="VA-PALS" height="50"/>
+            </a>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+            <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        Patient
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+
+                            <a href="#" class="navbar-link">Background</a>
+                            <a href="#" class="navbar-link">Intake</a>
+                            <div class="nav-divider"></div>
+                            <a href="#" class="navbar-link">CT Evaluation</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+    <div class="container-fluid" style="max-width:1550px">
+        <h1>
+            Sample, Sammy G
+            <small class="text-muted" title="Study ID">ST0001</small>
+        </h1>
+        <h2>Background
+            <small class="text-muted" title="Medical Record Number">1234567890</small>
+        </h2>
+
+        <hr>
+        
+        <form method="post" action="form?form=????&studyId=????" class="validated"
+              data-fv-icon-valid="glyphicon glyphicon-ok"
+              data-fv-icon-invalid="glyphicon glyphicon-remove"
+              data-fv-icon-validating="glyphicon glyphicon-refresh"
+              data-fv-button-selector="#submit-button">
+            <div>
+                <!--TABS-->
+                <ul class="nav nav-tabs" id="myTabs" role="tablist" style="margin-bottom: 15px;">
+                    <li role="presentation" class="active">
+                        <a class="nav-link" id="visit-tab" data-toggle="tab" role="tab" href="#visit"
+                           aria-controls="visit" aria-expanded="true"
+                           aria-selected="true">Visit <i class="fa fa-check-circle-o complete-mark"
+                                                         title="This tab is complete"></i></a>
+                    </li>
+                    <li role="presentation">
+                        <a class="nav-link" id="scan-order-tab" data-toggle="tab" role="tab" href="#scan-order"
+                           aria-controls="scan-order" aria-selected="false">CT Order <i
+                                class="fa fa-check-circle-o complete-mark" title="This tab is complete"></i></a>
+                    </li>
+                    <li role="presentation">
+                        <a class="nav-link" id="history-tab" data-toggle="tab" role="tab" href="#history"
+                           aria-controls="history"
+                           aria-selected="false">Medical History <i class="fa fa-check-circle-o complete-mark"
+                                                                    title="This tab is complete"></i></a>
+                    </li>
+                    <li role="presentation">
+                        <a class="nav-link" id="smoking-tab" data-toggle="tab" role="tab" href="#smoking"
+                           aria-controls="smoking"
+                           aria-selected="false">Smoking History <i class="fa fa-check-circle-o complete-mark"
+                                                                    title="This tab is complete"></i></a>
+                    </li>
+                    <li role="presentation">
+                        <a class="nav-link" id="health-tab" data-toggle="tab" role="tab" href="#health"
+                           aria-controls="health"
+                           aria-selected="false">Health Survey <i class="fa fa-check-circle-o complete-mark"
+                                                                  title="This tab is complete"></i></a>
+                    </li>
+                </ul>
+
+
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane active" id="visit" role="tabpanel" aria-labelledby="visit-tab">
+                        <div class="row">
+                            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                                <label for="sbdop" class="control-label">Visit Date</label>
+                                <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
+                                   title="Visit Date"
+                                   data-content="And here's some amazing content. It's very engaging. Right?"></i>
+                                <div class="input-group datepicker">
+                                    <input class="form-control" id="sbdop" name="sbdop" aria-describedby="sbdop-addon"
+                                           required="required"
+                                           data-fv-notempty-message="Visit date is required"
+                                           data-fv-date="true">
+                                    <div class="input-group-addon" id="sbdop-addon">
+                                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <small class="form-text text-muted">MM/DD/YYYY</small>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                                <label for="sbdob" class="control-label">Date of Birth</label>
+                                <div class="input-group datepicker">
+                                    <!--TODO: inject max date as "today"-->
+                                    <input class="form-control" id="sbdob" name="sbdob" aria-describedby="sbdob-addon"
+                                           required="required" data-fv-notempty-message="Date of birth is required"
+                                           data-fv-date="true" data-fv-max="01/25/2018">
+                                    <div class="input-group-addon">
+                                        <div class="input-group-text" id="sbdob-addon">
+                                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <small class="form-text text-muted">MM/DD/YYYY</small>
+                            </div>
+                            <div class="col-sm-2 col-md-1 form-group">
+                                <label class="control-label">Age</label>
+                                <p class="form-control-static" id="sbage">-</p>
+                            </div>
+
+                            <div class="col-sm-3 col-md-3 form-group">
+                                <label for="sbsex-m" class="control-label">Sex</label>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="sbsex" id="sbsex-m" value="m" required="required">
+                                        Male
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="sbsex" id="sbsex-f" value="f" required="required">
+                                        Female
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-3 col-lg-2 form-group">
+                                <label for="sbph" class="control-label">Height</label>
+                                <div class="input-group">
+                                    <input class="form-control numeric" name="sbph" id="sbph" data-fv-numeric="true"
+                                           data-fv-numeric-decimalseparator="."
+                                           data-fv-numeric-message="Value must be a valid decimal number" min="1"
+                                           required="required">
+                                    <input type="hidden" name="sbphu" id="sbphu" value="i"/>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-default dropdown-toggle" type="button"
+                                                id="sbphu-btn"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">in
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li><a class="dropdown-item" href="#"
+                                                   onclick="$('#sbphu').val('i').trigger('change');$('#sbphu-btn').text('in')">in</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="#"
+                                                   onclick="$('#sbphu').val('c').trigger('change');$('#sbphu-btn').text('cm')">cm</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-lg-2 form-group">
+                                <label for="sbpw" class="control-label">Weight</label>
+                                <div class="input-group">
+                                    <input class="form-control numeric" name="sbpw" id="sbpw" data-fv-numeric="true"
+                                           data-fv-numeric-decimalseparator="."
+                                           data-fv-numeric-message="Value must be a valid decimal number" min="1"
+                                           required="required">
+                                    <input type="hidden" name="sbpwu" id="sbpwu" value="p"/>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-default dropdown-toggle" type="button"
+                                                id="sbpwu-btn"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">lbs
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li><a class="dropdown-item" href="#"
+                                                   onclick="$('#sbpwu').val('p').trigger('change');$('#sbpwu-btn').text('lbs')">lbs</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="#"
+                                                   onclick="$('#sbpwu').val('k').trigger('change');$('#sbpwu-btn').text('kg')">kg</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="sbbmi" id="sbbmi"/>
+                        </div>
+
+                        <div class="col-md-12 alert alert-info" id="bmi-message" style="display:none;">
+                            The patients calculated BMI (<strong><span id="bmi-value"></span></strong>) is considered
+                            <strong>
+                                <span id="bmi-descriptor"></span></strong>.
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label for="sbocc" class="control-label">Occupation</label>
+                                <input type="text" class="form-control" id="sbocc" name="sbocc" required="required"/>
+                                <small class="form-text text-muted">If retired, indicate previous occupation.</small>
+                            </div>
+
+                            <div class="col-md-6 form-group">
+                                <label for="sboccc" class="control-label">Occupation Code</label>
+                                <select class="form-control" id="sboccc" name="sboccc">
+                                    <option value="-">-</option>
+                                    <option value="1">Higher executives</option>
+                                    <option value="2">Business managers</option>
+                                    <option value="3">Administrative Personnel</option>
+                                    <option value="4">Clerical / Sales workers</option>
+                                    <option value="5">Skilled manual Employees</option>
+                                    <option value="6">Machine Operators</option>
+                                    <option value="7">Unskilled Employees</option>
+                                    <option value="8">Unemployed</option>
+                                    
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label for="sbet" class="control-label">Ethnicity</label>
+                                <select class="form-control" id="sbet" name="sbet">
+                                    <option value="-" selected>&mdash;</option>
+                                    <option value="y">Hispanic or Latino</option>
+                                    <option value="n">Not Hispanic or Latino</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="sbrc" class="control-label">Race</label>
+                                <select class="form-control" id="sbrc" name="sbet">
+                                    <option value="-" selected>&mdash;</option>
+                                    <option value="w">White</option>
+                                    <option value="b">Black or African American</option>
+                                    <option value="i">American Indian</option>
+                                    <option value="k">Alaska Native</option>
+                                    <option value="a">Asian</option>
+                                    <option value="p">Native Hawaiian or Other Pacific Islander</option>
+                                    <option value="t">Two or more</option>
+                                    <option value="o">Other (specify)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 form-group" id="sbrcs-container">
+                                <label for="sbrcs" class="control-label">Other</label>
+                                <input type="text" class="form-control" id="sbrcs" name="sbrcs" required="required"/>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label for="sbed" class="control-label">Level of Education</label>
+                                <select class="form-control" id="sbed" name="sbed">
+                                    <option value="-" selected>&mdash;</option>
+                                    <option value="n">did not complete high school</option>
+                                    <option value="hs">completed high school</option>
+                                    <option value="sc">started college</option>
+                                    <option value="ts">completed trade school</option>
+                                    <option value="ad">completed 2-year college degree</option>
+                                    <option value="bd">completed 4-year college degree</option>
+                                    <option value="gd">advanced degree (e.g. Master’s, J.D., M.D., Ph.D.)</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2 form-group">
+                                <label for="sbmly-y" class="control-label">Served in the military?</label>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="sbmly" id="sbmly-y" value="y" required="required"> Yes
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="sbmly" id="sbmly-n" value="n" required="required"> No
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-9 form-group" id="sbmlyo-container">
+                                <label for="sbmlyo" class="control-label">Branch</label>
+                                <input type="text" class="form-control" id="sbmlyo" name="sbmlyo" required="required"/>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="tab-pane " id="scan-order" role="tabpanel" aria-labelledby="scan-order-tab">
+                        <p class="lead">
+                            Ordering information is <em>required</em> for all patients undergoing a screening exam using
+                            the
+                            G0297 code.
+                        </p>
+
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label for="sbmeq-y" class="control-label">Was a CT lung screening scan ordered for
+                                    this
+                                    patient (CPT code G0297)?</label>
+
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="sbmeq" id="sbmeq-n" value="n" required="required"> No
+                                        (remaining questions in this section
+                                        are
+                                        optional)
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="sbmeq" id="sbmeq-y" value="y" required="required"> Yes
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div id="sbmeq-container">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="sbopln" class="visible-xs visible-sm">Ordering Practitioner</label>
+    <label for="sbopln" class="text-right pull-right hidden-xs hidden-sm">Ordering Practitioner</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-inline form-group">
+                                        <div class="form-group">
+                                            <label class="sr-only" for="sbopln">Last Name</label>
+                                            <input type="text" class="form-control" id="sbopln" name="sbopln"
+                                                   placeholder="Last Name" required="required"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="sr-only" for="sbopfn">First Name</label>
+                                            <input type="text" class="form-control" id="sbopfn" name="sbopfn"
+                                                   placeholder="First Name" required="required"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="sbopnpi" class="visible-xs visible-sm">NPI</label>
+    <label for="sbopnpi" class="text-right pull-right hidden-xs hidden-sm">NPI</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <input type="text" class="form-control numeric" id="sbopnpi" name="sbonpi"
+                                           data-fv-numeric="true" data-fv-numeric-decimalseparator="."
+                                           data-fv-numeric-message="Value must be a valid decimal number" min="1"
+                                           required="required"/>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 ">
+                                    <label for="sbdsd-n" class="visible-xs visible-sm">Documentation of shared decision making</label>
+    <label for="sbdsd-n" class="text-right pull-right hidden-xs hidden-sm">Documentation of shared decision making</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="sbdsd" id="sbdsd-n" value="n"> No
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="sbdsd" id="sbdsd-y" value="y"> Yes
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="sbdsd" id="sbdsd-q" value="?"> ?
+                                    </label>
+                                    <small class="form-text text-muted">required for reimbursement for G0297 examples on
+                                        baseline <em>only</em></small>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="sbopss-c" class="visible-xs visible-sm">Reported smoking status</label>
+    <label for="sbopss-c" class="text-right pull-right hidden-xs hidden-sm">Reported smoking status</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="sbopss" id="sbopss-c" value="c" required="required">
+                                        Current
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="sbopss" id="sbopss-f" value="f" required="required">
+                                        Former
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="sboppy" class="visible-xs visible-sm">Reported pack years</label>
+    <label for="sboppy" class="text-right pull-right hidden-xs hidden-sm">Reported pack years</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <input class="form-control" type="text" name="sboppy" id="sboppy"
+                                           required="required">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="sbopqy" class="visible-xs visible-sm">Reported years since quit</label>
+    <label for="sbopqy" class="text-right pull-right hidden-xs hidden-sm">Reported years since quit</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <input class="form-control" type="text" name="sbopqy" id="sbopqy"
+                                           required="required">
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="sboas-n" class="visible-xs visible-sm">Reported asymptomatic for lung cancer</label>
+    <label for="sboas-n" class="text-right pull-right hidden-xs hidden-sm">Reported asymptomatic for lung cancer</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="sboas" id="sboas-n" value="n" required="required">
+                                        No
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="sboas" id="sboas-y" value="y" required="required">
+                                        Yes
+                                    </label>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="sbopci" class="visible-xs visible-sm">Clinical Information</label>
+    <label for="sbopci" class="text-right pull-right hidden-xs hidden-sm">Clinical Information</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <textarea class="form-control" id="sbopci" name="sbopci" rows="3"></textarea>
+                                    <small class="form-text text-muted">information will be copied to CT report</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane " id="history" role="tabpanel" aria-labelledby="history-tab">
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                <label for="sbfc-n" class="visible-xs visible-sm">Family history of lung cancer?</label>
+    <label for="sbfc-n" class="text-right pull-right hidden-xs hidden-sm">Family history of lung cancer?</label>
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbfc" id="sbfc-n"
+               value="n"  required="required">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbfc" id="sbfc-y"
+               value="y"  required="required">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbfc" id="sbfc-q"
+               value="q"  required="required">
+        ?
+    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbfc-container">
+                                <div class="form-group">
+                                    <label class="control-label" for="sbfcf-n">Father?</label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbfcf" id="sbfcf-n"
+               value="n" >
+        No
+    </label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbfcf" id="sbfcf-y"
+               value="y" >
+        Yes
+    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="sbfcm-n"
+                                           style="padding-left:15px;">Mother?</label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbfcm" id="sbfcm-n"
+               value="n" >
+        No
+    </label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbfcm" id="sbfcm-y"
+               value="y" >
+        Yes
+    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="sbfcs-n"
+                                           style="padding-left:15px;">Siblings?</label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbfcs" id="sbfcs-n"
+               value="n" >
+        No
+    </label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbfcs" id="sbfcs-y"
+               value="y" >
+        Yes
+    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                <label for="sbhco-n" class="visible-xs visible-sm">Any Cancer?</label>
+    <label for="sbhco-n" class="text-right pull-right hidden-xs hidden-sm">Any Cancer?</label>
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbhco" id="sbhco-n"
+               value="n"  required="required">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbhco" id="sbhco-y"
+               value="y"  required="required">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbhco" id="sbhco-q"
+               value="q"  required="required">
+        ?
+    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbhco-container">
+                                <div class="form-group">
+                                    
+                                    <input class="form-control input-sm numeric yearpicker" type="text" name="sbhcdod"
+                                           id="sbhcdod" placeholder="Year?" size="5" required="required"
+                                           data-fv-integer="true" maxlength="4">
+                                </div>
+                                <div class="form-group" style="vertical-align: top;">
+                                    <input class="form-control input-sm" type="text" name="sbhcpbo"
+                                           id="sbhcpbo"
+                                           placeholder="Primary site?" required="required">
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                <label for="sbmpa-n" class="visible-xs visible-sm">Asthma?</label>
+    <label for="sbmpa-n" class="text-right pull-right hidden-xs hidden-sm">Asthma?</label>
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmpa" id="sbmpa-n"
+               value="n"  required="required">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbmpa" id="sbmpa-y"
+               value="y"  required="required">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbmpa" id="sbmpa-q"
+               value="q"  required="required">
+        ?
+    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpa-container">
+                                <div class="form-group">
+                                    <label for="sbmpat-n" class="">Under current treatment?</label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmpat" id="sbmpat-n"
+               value="n"  required="required">
+        No
+    </label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmpat" id="sbmpat-y"
+               value="y"  required="required">
+        Yes
+    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                <label for="sbmpc-n" class="visible-xs visible-sm">Emphysema or Chronic Bronchitis (COPD)?</label>
+    <label for="sbmpc-n" class="text-right pull-right hidden-xs hidden-sm">Emphysema or Chronic Bronchitis (COPD)?</label>
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmpc" id="sbmpc-n"
+               value="n"  required="required">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbmpc" id="sbmpc-y"
+               value="y"  required="required">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbmpc" id="sbmpc-q"
+               value="q"  required="required">
+        ?
+    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpc-container">
+                                <div class="form-group">
+                                    
+                                    <input class="form-control input-sm numeric yearpicker" type="text" name="sbhcdod"
+                                           id="sbmpcw" placeholder="Year?" size="5" required="required"
+                                           data-fv-integer="true" maxlength="4">
+
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                <label for="sbmpht-n" class="visible-xs visible-sm">High Blood Pressure?</label>
+    <label for="sbmpht-n" class="text-right pull-right hidden-xs hidden-sm">High Blood Pressure?</label>
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmpht" id="sbmpht-n"
+               value="n"  required="required">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbmpht" id="sbmpht-y"
+               value="y"  required="required">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbmpht" id="sbmpht-q"
+               value="q"  required="required">
+        ?
+    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpht-container">
+                                <div class="form-group" style="vertical-align: top;">
+                                    <label class="form-check-inline" for="sbmphtt-n">Treated?</label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmphtt" id="sbmphtt-n"
+               value="n" >
+        No
+    </label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmphtt" id="sbmphtt-y"
+               value="y" >
+        Yes
+    </label>
+                                </div>
+                                <div class="form-group" style="vertical-align: top;margin-left:10px;">
+                                    
+                                    <input class="form-control input-sm numeric" type="text" name="sbmphtsw"
+                                           id="sbmphtsw" placeholder="Since (year)?" size="" required="required"
+                                           data-fv-integer="true" maxlength="4">
+
+                                </div>
+                                <div class="form-group" style="vertical-align: top;">
+                                    <input class="form-control input-sm" type="text" name="sbmphthv"
+                                           id="sbmphthv"
+                                           placeholder="Highest Value?">
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                <label for="sbmphc-n" class="visible-xs visible-sm">High Cholesterol?</label>
+    <label for="sbmphc-n" class="text-right pull-right hidden-xs hidden-sm">High Cholesterol?</label>
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmphc" id="sbmphc-n"
+               value="n"  required="required">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbmphc" id="sbmphc-y"
+               value="y"  required="required">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbmphc" id="sbmphc-q"
+               value="q"  required="required">
+        ?
+    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmphc-container">
+                                <div class="form-group">
+                                    <label class="control-label" for="sbmphct-n">Treated?</label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmphct" id="sbmphct-n"
+               value="n" >
+        No
+    </label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmphct" id="sbmphct-y"
+               value="y" >
+        Yes
+    </label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                <label for="sbmpas-n" class="visible-xs visible-sm">Had an angioplasty or Stent?</label>
+    <label for="sbmpas-n" class="text-right pull-right hidden-xs hidden-sm">Had an angioplasty or Stent?</label>
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmpas" id="sbmpas-n"
+               value="n"  required="required">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbmpas" id="sbmpas-y"
+               value="y"  required="required">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbmpas" id="sbmpas-q"
+               value="q"  required="required">
+        ?
+    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpas-container">
+                                <div class="form-group">
+                                    
+                                    <input class="form-control input-sm numeric yearpicker" type="text" name="sbmpasw"
+                                           id="sbmpasw" placeholder="Year?" size="5" required="required"
+                                           data-fv-integer="true" maxlength="4">
+                                </div>
+                                <div class="form-group" style="vertical-align: top;">
+                                    <input class="form-control input-sm" type="text" name="sbmpast" id="sbmpast"
+                                           placeholder="Where treated?" required="required">
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                <label for="sbmpmi-n" class="visible-xs visible-sm">MI?</label>
+    <label for="sbmpmi-n" class="text-right pull-right hidden-xs hidden-sm">MI?</label>
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmpmi" id="sbmpmi-n"
+               value="n"  required="required">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbmpmi" id="sbmpmi-y"
+               value="y"  required="required">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbmpmi" id="sbmpmi-q"
+               value="q"  required="required">
+        ?
+    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpmi-container">
+                                <div class="form-group">
+                                    
+                                    <input class="form-control input-sm numeric yearpicker" type="text" name="sbmpmid"
+                                           id="sbmpmid" placeholder="Year?" size="5" required="required"
+                                           data-fv-integer="true" maxlength="4">
+
+
+                                </div>
+                                <div class="">
+                                    <input class="form-control input-sm" type="text" name="sbmpmiw" id="sbmpmiw"
+                                           placeholder="Where treated?">
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                <label for="sbmps-n" class="visible-xs visible-sm">Stroke?</label>
+    <label for="sbmps-n" class="text-right pull-right hidden-xs hidden-sm">Stroke?</label>
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmps" id="sbmps-n"
+               value="n"  required="required">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbmps" id="sbmps-y"
+               value="y"  required="required">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbmps" id="sbmps-q"
+               value="q"  required="required">
+        ?
+    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmps-container">
+                                <div class="form-group">
+                                    
+                                    <input class="form-control input-sm numeric yearpicker" type="text" name="sbmpsd"
+                                           id="sbmpsd" placeholder="Year?" size="5" required="required"
+                                           data-fv-integer="true" maxlength="4">
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                <label for="sbmppv-n" class="visible-xs visible-sm">Peripheral Vascular Disease (Poor Circulation)?</label>
+    <label for="sbmppv-n" class="text-right pull-right hidden-xs hidden-sm">Peripheral Vascular Disease (Poor Circulation)?</label>
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmppv" id="sbmppv-n"
+               value="n"  required="required">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbmppv" id="sbmppv-y"
+               value="y"  required="required">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbmppv" id="sbmppv-q"
+               value="q"  required="required">
+        ?
+    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmppv-container">
+                                <div class="form-group">
+                                    <input class="form-control input-sm yearpicker" type="text" name="sbmppvd" id="sbmppvd"
+                                           placeholder="Year?"
+                                           size="5">
+
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                <label for="sbmpd-n" class="visible-xs visible-sm">Diabetes?</label>
+    <label for="sbmpd-n" class="text-right pull-right hidden-xs hidden-sm">Diabetes?</label>
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmpd" id="sbmpd-n"
+               value="n"  required="required">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbmpd" id="sbmpd-y"
+               value="y"  required="required">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbmpd" id="sbmpd-q"
+               value="q"  required="required">
+        ?
+    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpd-container">
+                                <div class="form-group form-inline">
+                                    <label class="control-label" for="sbmpdw">Starting at what age?</label>
+                                    <input class="form-control input-sm numeric" type="text" name="sbmpdw"
+                                           id="sbmpdw" size="4" data-fv-integer="true" maxlength="4">
+                                </div>
+
+                                <div class="form-group" style="padding-left:10px;">
+                                    <label class="control-label" for="sbmpdt-n">Treated?</label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmpdt" id="sbmpdt-n"
+               value="n" >
+        No
+    </label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmpdt" id="sbmpdt-y"
+               value="y" >
+        Yes
+    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                <label for="sbmpld-n" class="visible-xs visible-sm">Liver Disease?</label>
+    <label for="sbmpld-n" class="text-right pull-right hidden-xs hidden-sm">Liver Disease?</label>
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmpld" id="sbmpld-n"
+               value="n"  required="required">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbmpld" id="sbmpld-y"
+               value="y"  required="required">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbmpld" id="sbmpld-q"
+               value="q"  required="required">
+        ?
+    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpld-container">
+                                <div class="form-group">
+                                    <label class="control-label" for="sbmpldt-m">Severity?</label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmpldt" id="sbmpldt-m"
+               value="m" >
+        Mild
+    </label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmpldt" id="sbmpldt-s"
+               value="s" >
+        Severe
+    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                <label for="sbmprd-n" class="visible-xs visible-sm">Kidney (Renal) Disease?</label>
+    <label for="sbmprd-n" class="text-right pull-right hidden-xs hidden-sm">Kidney (Renal) Disease?</label>
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmprd" id="sbmprd-n"
+               value="n"  required="required">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbmprd" id="sbmprd-y"
+               value="y"  required="required">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sbmprd" id="sbmprd-q"
+               value="q"  required="required">
+        ?
+    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmprd-container">
+                                <div class="form-group">
+                                    <label class="control-label" for="sbmprdt-m">Severity?</label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmprdt" id="sbmprdt-m"
+               value="m" >
+        Mild
+    </label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmprdt" id="sbmprdt-s"
+               value="s" >
+        Severe
+    </label>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                <label for="sblcs-n" class="visible-xs visible-sm">Have you experienced any symptoms indicative of lung cancer?</label>
+    <label for="sblcs-n" class="text-right pull-right hidden-xs hidden-sm">Have you experienced any symptoms indicative of lung cancer?</label>
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sblcs" id="sblcs-n"
+               value="n" >
+        No
+    </label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sblcs" id="sblcs-y"
+               value="y" >
+        Yes
+    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-7" id="sblcs-container">
+                                <div class="form-group">
+                                    <p><em>Check all that apply</em></p>
+                                    <div class="checkbox">
+        <label>
+            <input type="checkbox" name="sbwcb" id="sbwcb" value="b">
+            cough producing bloody material
+        </label>
+    </div>
+                                    <div class="checkbox">
+        <label>
+            <input type="checkbox" name="sbwcl" id="sbwcl" value="l">
+            unexplained weight loss greater than 20 lbs.
+        </label>
+    </div>
+                                    <div class="checkbox">
+        <label>
+            <input type="checkbox" name="sbwch" id="sbwch" value="h">
+            unexplained hoarseness
+        </label>
+    </div>
+                                    <div class="checkbox">
+        <label>
+            <input type="checkbox" name="sbwco" id="sbwco" value="o">
+            other
+        </label>
+    </div>
+                                    <input class="form-control input-sm" type="text" name="sbwcos"
+                                           id="sbwcos" title="Other symptom" required="required">
+
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                <label for="sbact" class="control-label">When did you most recently have a chest
+                                    CT?</label>
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    <select id="sbact" name="sbact" class="form-control input-sm">
+                                        <option value="-" selected>&mdash;</option>
+                                        <option value="a">less than 6 months ago</option>
+                                        <option value="b">6–18 months ago</option>
+                                        <option value="f">18 months to 3 years ago</option>
+                                        <option value="c">3 years to 5 years ago</option>
+                                        <option value="d">over 5 years ago</option>
+                                        <option value="e">never</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbact-container">
+                                <div class="form-group">
+                                    <label for="sbahcl">If so, where was the test done?</label>
+                                    <input type="text" name="sbahcl" id="sbahcl" class="form-control input-sm"/>
+                                </div>
+
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                <label for="sbahpft-n" class="control-label">Have you had a pulmonary function test
+                                    within the last five years?</label>
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbahpft" id="sbahpft-n"
+               value="n" >
+        No
+    </label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbahpft" id="sbahpft-y"
+               value="y" >
+        Yes
+    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbahpft-container">
+                                <div class="form-group">
+                                    <label for="sbfev1">FEV1 (L/s)</label>
+                                    <input class="form-control input-sm" type="text" name="sbfev1"
+                                           id="sbfev1" size="4">
+                                </div>
+                                <div class="form-group">
+                                    <label for="sbfvc">FVC (L)</label>
+                                    <input class="form-control input-sm" type="text" name="sbfvc" id="sbfvc"
+                                           size="4">
+                                </div>
+                                <div class="form-group">
+                                    <label for="sbcop">Diffusion Capacity (mL/min/mm Hg)</label>
+                                    <input class="form-control input-sm" type="text" name="sbcop" id="sbcop"
+                                           size="4">
+                                </div>
+                                <div class="alert alert-info" id="ffr-message" style="display: none;">
+                                    FEV1/FVC (%) is <strong><span id="ffr-value"></span></strong>
+                                </div>
+                                <input type="hidden" name="sbffr" id="sbffr"/>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                <label for="sbaha-n" class="control-label">To your knowledge, have you been exposed
+                                    to asbestos?</label>
+                            </div>
+                            <div class="col-sm-6 col-md-3 col-lg-2">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbaha" id="sbaha-n"
+               value="n" >
+        No
+    </label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbaha" id="sbaha-y"
+               value="y" >
+        Yes
+    </label>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3">
+                                <label for="sblcs-n" class="control-label">Have you ever worked in any of the
+                                    following?</label>
+                            </div>
+                            <div class="col-sm-6 col-md-9">
+                                <div class="form-group">
+                                    <div class="checkbox">
+        <label>
+            <input type="checkbox" name="sbahaoi" id="sbahaoi" value="i">
+            asbestos product manufacturing
+        </label>
+    </div>
+                                    <div class="checkbox">
+        <label>
+            <input type="checkbox" name="sbahaoj" id="sbahaoj" value="j">
+            auto repair
+        </label>
+    </div>
+                                    <div class="checkbox">
+        <label>
+            <input type="checkbox" name="sbahaoh" id="sbahaoh" value="h">
+            building maintenance
+        </label>
+    </div>
+                                    <div class="checkbox">
+        <label>
+            <input type="checkbox" name="sbahaof" id="sbahaof" value="f">
+            chemical industry/foundary/refinery
+        </label>
+    </div>
+                                    <div class="checkbox">
+        <label>
+            <input type="checkbox" name="sbahaoa" id="sbahaoa" value="a">
+            construction/demolition
+        </label>
+    </div>
+                                    <div class="checkbox">
+        <label>
+            <input type="checkbox" name="sbahaoe" id="sbahaoe" value="e">
+            mining
+        </label>
+    </div>
+                                    <div class="checkbox">
+        <label>
+            <input type="checkbox" name="sbahaog" id="sbahaog" value="g">
+            nuclear industry
+        </label>
+    </div>
+                                    <div class="checkbox">
+        <label>
+            <input type="checkbox" name="sbahaoc" id="sbahaoc" value="c">
+            ship construction/repair
+        </label>
+    </div>
+                                    <div class="checkbox">
+        <label>
+            <input type="checkbox" name="sbahaoo" id="sbahaoo" value="o">
+            other
+        </label>
+    </div>
+                                    <input class="form-control input-sm" type="text" name="sbahas" id="sbahas"
+                                           title="Other work" required="required">
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                    </div>
+                    <div class="tab-pane " id="smoking" role="tabpanel" aria-labelledby="smoking-tab">
+                        <div class="row">
+                            <div class="col-sm-6 col-lg-8">
+                                <label for="sbsru-n" class="visible-xs visible-sm">Have you smoked at least 100 cigarettes in your lifetime? (100 cigarettes = 5 packs)</label>
+    <label for="sbsru-n" class="text-right pull-right hidden-xs hidden-sm">Have you smoked at least 100 cigarettes in your lifetime? (100 cigarettes = 5 packs)</label>
+                            </div>
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbsru" id="sbsru-n"
+               value="n"  required="required">
+        No
+    </label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbsru" id="sbsru-y"
+               value="y"  required="required">
+        Yes
+    </label>
+                                </div>
+
+                                <div class="form-group" id="sbsru-container">
+                                    <label for="sbsru-n" class="control-label">Were you exposed to secondhand
+                                        smoke?</label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbsruyn" id="sbsruyn-n"
+               value="n"  required="required">
+        No
+    </label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbsruyn" id="sbsruyn-y"
+               value="y"  required="required">
+        Yes
+    </label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+
+                        <div class="row">
+                            <div class="col-sm-6 col-lg-8">
+                                <label for="sbsas" class="visible-xs visible-sm">About how old were you when you first started smoking cigarettes regularly?</label>
+    <label for="sbsas" class="text-right pull-right hidden-xs hidden-sm">About how old were you when you first started smoking cigarettes regularly?</label>
+                            </div>
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="form-group form-inline">
+                                    <input class="form-control input-sm" type="text" name="sbsas" id="sbsas"
+                                           size="5">
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-lg-8">
+                                <label for="sbshsa-n" class="visible-xs visible-sm">Over the past month, have you smoked at all, even one cigarette?</label>
+    <label for="sbshsa-n" class="text-right pull-right hidden-xs hidden-sm">Over the past month, have you smoked at all, even one cigarette?</label>
+                            </div>
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbshsa" id="sbshsa-n"
+               value="n"  required="required">
+        No
+    </label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbshsa" id="sbshsa-y"
+               value="y"  required="required">
+        Yes
+    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div id="non-smoking-container">
+                            <div class="row">
+                                <div class="col-sm-6 col-lg-8">
+                                    <label for="sbsdlcd" class="visible-xs visible-sm">If no, when was the date of your last cigarette?</label>
+    <label for="sbsdlcd" class="text-right pull-right hidden-xs hidden-sm">If no, when was the date of your last cigarette?</label>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="form-group" style="float:left;">
+                                        <select class="form-control input-sm" id="sbsdlcm" name="sbsdlcm"
+                                                title="Last cigarette month">
+                                            <option value="-" selected>&mdash;</option>
+                                            <option value="1">Jan</option>
+                                            <option value="2">Feb</option>
+                                            <option value="3">Mar</option>
+                                            <option value="4">Apr</option>
+                                            <option value="5">May</option>
+                                            <option value="6">Jun</option>
+                                            <option value="7">Jul</option>
+                                            <option value="8">Aug</option>
+                                            <option value="9">Sep</option>
+                                            <option value="10">Oct</option>
+                                            <option value="11">Nov</option>
+                                            <option value="12">Dec</option>
+                                        </select>
+                                        <span class="small text-muted">Month</span>
+                                    </div>
+
+                                    <div class="form-group" style="float:left;">
+                                        <select class="form-control input-sm" id="sbsdlcd" name="sbsdlcd"
+                                                title="Last cigarette day">
+                                            <option value="-" selected>&mdash;</option>
+                                            
+                                                <option value="1">1</option>
+                                            
+                                                <option value="2">2</option>
+                                            
+                                                <option value="3">3</option>
+                                            
+                                                <option value="4">4</option>
+                                            
+                                                <option value="5">5</option>
+                                            
+                                                <option value="6">6</option>
+                                            
+                                                <option value="7">7</option>
+                                            
+                                                <option value="8">8</option>
+                                            
+                                                <option value="9">9</option>
+                                            
+                                                <option value="10">10</option>
+                                            
+                                                <option value="11">11</option>
+                                            
+                                                <option value="12">12</option>
+                                            
+                                                <option value="13">13</option>
+                                            
+                                                <option value="14">14</option>
+                                            
+                                                <option value="15">15</option>
+                                            
+                                                <option value="16">16</option>
+                                            
+                                                <option value="17">17</option>
+                                            
+                                                <option value="18">18</option>
+                                            
+                                                <option value="19">19</option>
+                                            
+                                                <option value="20">20</option>
+                                            
+                                                <option value="21">21</option>
+                                            
+                                                <option value="22">22</option>
+                                            
+                                                <option value="23">23</option>
+                                            
+                                                <option value="24">24</option>
+                                            
+                                                <option value="25">25</option>
+                                            
+                                                <option value="26">26</option>
+                                            
+                                                <option value="27">27</option>
+                                            
+                                                <option value="28">28</option>
+                                            
+                                                <option value="29">29</option>
+                                            
+                                                <option value="30">30</option>
+                                            
+                                                <option value="31">31</option>
+                                            
+                                        </select>
+                                        <span class="small text-muted">Day</span>
+                                    </div>
+
+                                    <div class="form-group" style="float:left;">
+                                        
+                                        <input class="form-control input-sm numeric yearpicker" type="text" name="sbsdlcy"
+                                               id="sbsdlcy"
+                                               size="5" required="required" data-fv-integer="true" maxlength="4"
+                                               placeholder="YYYY" title="Last cigarette year">
+                                        <small class="help-block">Year</small>
+                                    </div>
+                                    <div class="alert alert-info" id="sbsdlc-message"
+                                         style="display: none; float:left;margin-left: 5px;">
+                                        Number of years since quit: <strong><span id="sbsdlc-value"></span></strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="visible-xs-block visible-sm-block"/>
+
+                            <div class="row">
+                                <div class="col-sm-6 col-lg-8">
+                                    <label for="sbfdpw" class="visible-xs visible-sm">When you were a smoker, on approximately how many days per week did you smoke cigarettes?</label>
+    <label for="sbfdpw" class="text-right pull-right hidden-xs hidden-sm">When you were a smoker, on approximately how many days per week did you smoke cigarettes?</label>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="form-group form-inline">
+                                        <input class="form-control input-sm" type="text" name="sbfdpw"
+                                               id="sbfdpw" size="5" data-fv-lessthan="true" data-fv-lessthan-value="7">
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="visible-xs-block visible-sm-block"/>
+
+                            <div class="row">
+                                <div class="col-sm-6 col-lg-8">
+                                    <label for="sbfppd" class="visible-xs visible-sm">On the days that you did smoke, approximately how many packs of cigarettes did you smoke per day (PPD)?</label>
+    <label for="sbfppd" class="text-right pull-right hidden-xs hidden-sm">On the days that you did smoke, approximately how many packs of cigarettes did you smoke per day (PPD)?</label>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="form-group form-inline">
+                                        <input class="form-control input-sm" type="text" name="sbfppd"
+                                               id="sbfppd" size="5">
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="visible-xs-block visible-sm-block"/>
+
+                            <div class="row">
+                                <div class="col-sm-6 col-lg-8">
+                                    <label for="sbfdur" class="visible-xs visible-sm">For approximately how many years did you smoke this amount?</label>
+    <label for="sbfdur" class="text-right pull-right hidden-xs hidden-sm">For approximately how many years did you smoke this amount?</label>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="form-group form-inline">
+                                        <input class="form-control input-sm" type="text" name="sbfdur"
+                                               id="sbfdur" size="5">
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="visible-xs-block visible-sm-block"/>
+                        </div>
+
+                        <div id="smoking-container">
+                            <div class="row">
+                                <div class="col-sm-6 col-lg-8">
+                                    <label for="sbcdpw" class="visible-xs visible-sm">On average, on how many days per week do you (or did you) smoke cigarettes?</label>
+    <label for="sbcdpw" class="text-right pull-right hidden-xs hidden-sm">On average, on how many days per week do you (or did you) smoke cigarettes?</label>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="form-group form-inline">
+                                        <input class="form-control input-sm" type="text" name="sbcdpw"
+                                               id="sbcdpw" size="5" data-fv-lessthan="true" data-fv-lessthan-value="7">
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="visible-xs-block visible-sm-block"/>
+
+                            <div class="row">
+                                <div class="col-sm-6 col-lg-8">
+                                    <label for="sbcppd" class="visible-xs visible-sm">On average, how many packs ofcigarettes do you (or did you) smoke per day (PPD)?</label>
+    <label for="sbcppd" class="text-right pull-right hidden-xs hidden-sm">On average, how many packs ofcigarettes do you (or did you) smoke per day (PPD)?</label>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="form-group form-inline">
+                                        <input class="form-control input-sm" type="text" name="sbcppd"
+                                               id="sbcppd" size="5">
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="visible-xs-block visible-sm-block"/>
+
+                            <div class="row">
+                                <div class="col-sm-6 col-lg-8">
+                                    <label for="sbcdur" class="visible-xs visible-sm">For approximately how many years have you smoked this amount?</label>
+    <label for="sbcdur" class="text-right pull-right hidden-xs hidden-sm">For approximately how many years have you smoked this amount?</label>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="form-group form-inline">
+                                        <input class="form-control input-sm" type="text" name="sbcdur" id="sbcdur"
+                                               size="5">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6 col-lg-4 col-sm-offset-6 col-lg-offset-">
+                                    <input type="hidden" name="sbntpy" value=""/>
+                                    <div class="alert alert-info" id="sbntpy-message" style="display: none;">
+                                        <strong><span id="sbntpy-value"></span> total pack-years</strong>
+                                        <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
+                                           title="Pack-Years calculation"
+                                           data-content="Pack-Years is calculated by multiplying the average number of packs per day by
+                            the number of years smoking. For example: a person who has smoked 15 cigarettes a day for 40 years has a (15/20) x 40 = 30 pack-year smoking history."></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="visible-xs-block visible-sm-block"/>
+
+                            <div class="row">
+                                <div class="col-sm-6 col-lg-8">
+                                    <label for="sbqttq-n" class="visible-xs visible-sm">Have you ever tried to quit smoking?</label>
+    <label for="sbqttq-n" class="text-right pull-right hidden-xs hidden-sm">Have you ever tried to quit smoking?</label>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="form-group">
+                                        <label class="radio-inline">
+        <input type="radio" name="sbqttq" id="sbqttq-n"
+               value="n"  required="required">
+        No
+    </label>
+                                        <label class="radio-inline">
+        <input type="radio" name="sbqttq" id="sbqttq-y"
+               value="y"  required="required">
+        Yes
+    </label>
+                                    </div>
+                                    <div class="form-group" id="sbqttq-container">
+                                        <label for="sbqttqtb" class="control-label">How many times?</label>
+                                        <select id="sbqttqtb" name="sbqttqtb" class="form-control input-sm">
+                                            <option value="-" selected>&mdash;</option>
+                                            <option value="a">1</option>
+                                            <option value="b">2–5</option>
+                                            <option value="c">6–10</option>
+                                            <option value="d">10+</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="visible-xs-block visible-sm-block"/>
+
+                            <div class="row" id="sbqly2-container">
+                                <div class="col-sm-6 col-lg-8">
+                                    <label for="sbqly2" class="visible-xs visible-sm">In the last 12 months, how many times have you quit smoking for at least 24 hours?</label>
+    <label for="sbqly2" class="text-right pull-right hidden-xs hidden-sm">In the last 12 months, how many times have you quit smoking for at least 24 hours?</label>
+                                </div>
+                                <div class="form-group col-sm-6 col-lg-4">
+                                    <select id="sbqly2" name="sbqly2" class="form-control input-sm">
+                                        <option value="-" selected>&mdash;</option>
+                                        <option value="a">1</option>
+                                        <option value="b">2–5</option>
+                                        <option value="c">6–10</option>
+                                        <option value="d">10+</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr class="visible-xs-block visible-sm-block"/>
+
+                            <div class="row">
+                                <div class="col-sm-6 col-lg-8">
+                                    <label for="sbqst" class="visible-xs visible-sm">Are you seriously thinking of quitting smoking?</label>
+    <label for="sbqst" class="text-right pull-right hidden-xs hidden-sm">Are you seriously thinking of quitting smoking?</label>
+                                </div>
+                                <div class="form-group col-sm-6 col-lg-4">
+                                    <select id="sbqst" name="sbqst" class="form-control input-sm">
+                                        <option value="-" selected>&mdash;</option>
+                                        <option value="y">yes, within the next 30 days</option>
+                                        <option value="m">yes, within the next six months</option>
+                                        <option value="n">no, not thinking of quitting</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr class="visible-xs-block visible-sm-block"/>
+
+                            <div class="row">
+                                <div class="col-sm-6 col-lg-8">
+                                    <label for="sbcpd-n" class="visible-xs visible-sm">Smoking cessation information or counseling was offered to subject</label>
+    <label for="sbcpd-n" class="text-right pull-right hidden-xs hidden-sm">Smoking cessation information or counseling was offered to subject</label>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="form-group">
+                                        <label class="radio-inline">
+        <input type="radio" name="sbcpd" id="sbcpd-n"
+               value="n"  required="required">
+        No
+    </label>
+                                        <label class="radio-inline">
+        <input type="radio" name="sbcpd" id="sbcpd-y"
+               value="y"  required="required">
+        Yes
+    </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="visible-xs-block visible-sm-block"/>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-sm-6 col-lg-8">
+                                <label for="sbsews-n" class="visible-xs visible-sm">After age 18, did you work for more than one year in a worksite where smoking was allowed?</label>
+    <label for="sbsews-n" class="text-right pull-right hidden-xs hidden-sm">After age 18, did you work for more than one year in a worksite where smoking was allowed?</label>
+                            </div>
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbsews" id="sbsews-n"
+               value="n"  required="required">
+        No
+    </label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbsews" id="sbsews-y"
+               value="y"  required="required">
+        Yes
+    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-lg-8">
+                                <label for="sbsehs-n" class="visible-xs visible-sm">Did you ever work for more than one year in a job where you were exposed to other people’s tobacco smoke?</label>
+    <label for="sbsehs-n" class="text-right pull-right hidden-xs hidden-sm">Did you ever work for more than one year in a job where you were exposed to other people’s tobacco smoke?</label>
+                            </div>
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbsehs" id="sbsehs-n"
+               value="n"  required="required">
+        No
+    </label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbsehs" id="sbsehs-y"
+               value="y"  required="required">
+        Yes
+    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" id="sbsehs-container">
+                            <hr class="visible-xs-block visible-sm-block"/>
+                            <div class="col-md-12">
+                                <label>List the occasions from the most recent:</label>
+                                <table class="table">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Age Range</th>
+                                        <th scope="col">Job</th>
+                                        <th scope="col">Smoking</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    
+                                        
+                                        <tr>
+                                            <td><input type="text" name="sbsehsa1" class="form-control"
+                                                       title="Age Range 1"/>
+                                            </td>
+                                            <td><input type="text" name="sbsehsj1" class="form-control"
+                                                       title="Job 1"/></td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <label class="radio-inline">
+        <input type="radio" name="sbsehsr1" id="sbsehsr1-n"
+               value="n"  required="required">
+        not permitted
+    </label>
+                                                    <label class="radio-inline">
+        <input type="radio" name="sbhsasr1" id="sbhsasr1-r"
+               value="r"  required="required">
+        restricted
+    </label>
+                                                    <label class="radio-inline">
+        <input type="radio" name="sbhsasr1" id="sbhsasr1-y"
+               value="y"  required="required">
+        allowed anywhere
+    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    
+                                        
+                                        <tr>
+                                            <td><input type="text" name="sbsehsa2" class="form-control"
+                                                       title="Age Range 2"/>
+                                            </td>
+                                            <td><input type="text" name="sbsehsj2" class="form-control"
+                                                       title="Job 2"/></td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <label class="radio-inline">
+        <input type="radio" name="sbsehsr2" id="sbsehsr2-n"
+               value="n"  required="required">
+        not permitted
+    </label>
+                                                    <label class="radio-inline">
+        <input type="radio" name="sbhsasr2" id="sbhsasr2-r"
+               value="r"  required="required">
+        restricted
+    </label>
+                                                    <label class="radio-inline">
+        <input type="radio" name="sbhsasr2" id="sbhsasr2-y"
+               value="y"  required="required">
+        allowed anywhere
+    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    
+                                        
+                                        <tr>
+                                            <td><input type="text" name="sbsehsa3" class="form-control"
+                                                       title="Age Range 3"/>
+                                            </td>
+                                            <td><input type="text" name="sbsehsj3" class="form-control"
+                                                       title="Job 3"/></td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <label class="radio-inline">
+        <input type="radio" name="sbsehsr3" id="sbsehsr3-n"
+               value="n"  required="required">
+        not permitted
+    </label>
+                                                    <label class="radio-inline">
+        <input type="radio" name="sbhsasr3" id="sbhsasr3-r"
+               value="r"  required="required">
+        restricted
+    </label>
+                                                    <label class="radio-inline">
+        <input type="radio" name="sbhsasr3" id="sbhsasr3-y"
+               value="y"  required="required">
+        allowed anywhere
+    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    
+                                        
+                                        <tr>
+                                            <td><input type="text" name="sbsehsa4" class="form-control"
+                                                       title="Age Range 4"/>
+                                            </td>
+                                            <td><input type="text" name="sbsehsj4" class="form-control"
+                                                       title="Job 4"/></td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <label class="radio-inline">
+        <input type="radio" name="sbsehsr4" id="sbsehsr4-n"
+               value="n"  required="required">
+        not permitted
+    </label>
+                                                    <label class="radio-inline">
+        <input type="radio" name="sbhsasr4" id="sbhsasr4-r"
+               value="r"  required="required">
+        restricted
+    </label>
+                                                    <label class="radio-inline">
+        <input type="radio" name="sbhsasr4" id="sbhsasr4-y"
+               value="y"  required="required">
+        allowed anywhere
+    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-lg-8">
+                                <label for="sbhsy-n" class="visible-xs visible-sm">Did anyone in your house smoke in the home while you were under 18?</label>
+    <label for="sbhsy-n" class="text-right pull-right hidden-xs hidden-sm">Did anyone in your house smoke in the home while you were under 18?</label>
+                            </div>
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbhsy" id="sbhsy-n"
+               value="n"  required="required">
+        No
+    </label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbhsy" id="sbhsy-y"
+               value="y"  required="required">
+        Yes
+    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-lg-8">
+                                <label for="sbhsyh-n" class="visible-xs visible-sm">Was smoking allowed inside the house?</label>
+    <label for="sbhsyh-n" class="text-right pull-right hidden-xs hidden-sm">Was smoking allowed inside the house?</label>
+                            </div>
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbhsyh" id="sbhsyh-n"
+               value="n"  required="required">
+        Not permitted
+    </label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbhsyh" id="sbhsyh-r"
+               value="r"  required="required">
+        Resticted
+    </label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbhsyh" id="sbhsyh-y"
+               value="y"  required="required">
+        Yes
+    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-lg-8">
+                                <label for="sbmsy-n" class="visible-xs visible-sm">Did your mother/primary caregiver smoke when you were under age 7?</label>
+    <label for="sbmsy-n" class="text-right pull-right hidden-xs hidden-sm">Did your mother/primary caregiver smoke when you were under age 7?</label>
+                            </div>
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmsy" id="sbmsy-n"
+               value="n"  required="required">
+        No
+    </label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmsy" id="sbmsy-y"
+               value="y"  required="required">
+        Yes
+    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-lg-8">
+                                <label for="sbmst-n" class="visible-xs visible-sm">Did your mother/primary caregiver smoke when you were ages 7–18?</label>
+    <label for="sbmst-n" class="text-right pull-right hidden-xs hidden-sm">Did your mother/primary caregiver smoke when you were ages 7–18?</label>
+                            </div>
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmst" id="sbmst-n"
+               value="n"  required="required">
+        No
+    </label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbmst" id="sbmst-y"
+               value="y"  required="required">
+        Yes
+    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-lg-8">
+                                <label for="sbosy-n" class="visible-xs visible-sm">Did anyone else beside your mother/primary caregiver smoke in the home when you were under 18?</label>
+    <label for="sbosy-n" class="text-right pull-right hidden-xs hidden-sm">Did anyone else beside your mother/primary caregiver smoke in the home when you were under 18?</label>
+                            </div>
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbosy" id="sbosy-n"
+               value="n"  required="required">
+        No
+    </label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbosy" id="sbosy-y"
+               value="y"  required="required">
+        Yes
+    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-lg-8">
+                                <label for="sbslws-n" class="visible-xs visible-sm">Do you currently live with a smoker?</label>
+    <label for="sbslws-n" class="text-right pull-right hidden-xs hidden-sm">Do you currently live with a smoker?</label>
+                            </div>
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbslws" id="sbslws-n"
+               value="n"  required="required">
+        No
+    </label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbslws" id="sbslws-y"
+               value="y"  required="required">
+        Yes
+    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-lg-8">
+                                <label for="sbhso-n" class="visible-xs visible-sm">After age 18, did you live with someone for more than one year who smoked in your presence?</label>
+    <label for="sbhso-n" class="text-right pull-right hidden-xs hidden-sm">After age 18, did you live with someone for more than one year who smoked in your presence?</label>
+                            </div>
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="form-group">
+                                    <label class="radio-inline">
+        <input type="radio" name="sbhso" id="sbhso-n"
+               value="n"  required="required">
+        No
+    </label>
+                                    <label class="radio-inline">
+        <input type="radio" name="sbhso" id="sbhso-y"
+               value="y"  required="required">
+        Yes
+    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" id="sbhso-container">
+                            <hr class="visible-xs-block visible-sm-block"/>
+                            <div class="col-md-12">
+                                <label>
+                                    If yes, at what ages did you live with someone who smoked around you and how much
+                                    did they smoke? (List the occasions from the most recent)
+                                </label>
+                                <table class="table ">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Age Range</th>
+                                        <th scope="col">Amount</th>
+                                        <th scope="col">Smoking</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    
+                                        
+                                        <tr>
+                                            <td><input type="text" name="sbhsa1" class="form-control"
+                                                       title="Age Range 1"/></td>
+                                            <td>
+                                                <select name="sbhsas1" class="form-control"
+                                                        title="Amount 1">
+                                                    <option value="-">&mdash;</option>
+                                                    <option value="a">1–14 cigarettes a day</option>
+                                                    <option value="b">15–24 cigarettes a day</option>
+                                                    <option value="c">25+ cigarettes a day</option>
+                                                    <option value="d">Don’t know</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <label class="radio-inline">
+        <input type="radio" name="sbhsasr1" id="sbhsasr1-n"
+               value="n"  required="required">
+        not permitted
+    </label>
+                                                    <label class="radio-inline">
+        <input type="radio" name="sbhsasr1" id="sbhsasr1-r"
+               value="r"  required="required">
+        restricted
+    </label>
+                                                    <label class="radio-inline">
+        <input type="radio" name="sbhsasr1" id="sbhsasr1-y"
+               value="y"  required="required">
+        allowed anywhere
+    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    
+                                        
+                                        <tr>
+                                            <td><input type="text" name="sbhsa2" class="form-control"
+                                                       title="Age Range 2"/></td>
+                                            <td>
+                                                <select name="sbhsas2" class="form-control"
+                                                        title="Amount 2">
+                                                    <option value="-">&mdash;</option>
+                                                    <option value="a">1–14 cigarettes a day</option>
+                                                    <option value="b">15–24 cigarettes a day</option>
+                                                    <option value="c">25+ cigarettes a day</option>
+                                                    <option value="d">Don’t know</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <label class="radio-inline">
+        <input type="radio" name="sbhsasr2" id="sbhsasr2-n"
+               value="n"  required="required">
+        not permitted
+    </label>
+                                                    <label class="radio-inline">
+        <input type="radio" name="sbhsasr2" id="sbhsasr2-r"
+               value="r"  required="required">
+        restricted
+    </label>
+                                                    <label class="radio-inline">
+        <input type="radio" name="sbhsasr2" id="sbhsasr2-y"
+               value="y"  required="required">
+        allowed anywhere
+    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    
+                                        
+                                        <tr>
+                                            <td><input type="text" name="sbhsa3" class="form-control"
+                                                       title="Age Range 3"/></td>
+                                            <td>
+                                                <select name="sbhsas3" class="form-control"
+                                                        title="Amount 3">
+                                                    <option value="-">&mdash;</option>
+                                                    <option value="a">1–14 cigarettes a day</option>
+                                                    <option value="b">15–24 cigarettes a day</option>
+                                                    <option value="c">25+ cigarettes a day</option>
+                                                    <option value="d">Don’t know</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <label class="radio-inline">
+        <input type="radio" name="sbhsasr3" id="sbhsasr3-n"
+               value="n"  required="required">
+        not permitted
+    </label>
+                                                    <label class="radio-inline">
+        <input type="radio" name="sbhsasr3" id="sbhsasr3-r"
+               value="r"  required="required">
+        restricted
+    </label>
+                                                    <label class="radio-inline">
+        <input type="radio" name="sbhsasr3" id="sbhsasr3-y"
+               value="y"  required="required">
+        allowed anywhere
+    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    
+                                        
+                                        <tr>
+                                            <td><input type="text" name="sbhsa4" class="form-control"
+                                                       title="Age Range 4"/></td>
+                                            <td>
+                                                <select name="sbhsas4" class="form-control"
+                                                        title="Amount 4">
+                                                    <option value="-">&mdash;</option>
+                                                    <option value="a">1–14 cigarettes a day</option>
+                                                    <option value="b">15–24 cigarettes a day</option>
+                                                    <option value="c">25+ cigarettes a day</option>
+                                                    <option value="d">Don’t know</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <label class="radio-inline">
+        <input type="radio" name="sbhsasr4" id="sbhsasr4-n"
+               value="n"  required="required">
+        not permitted
+    </label>
+                                                    <label class="radio-inline">
+        <input type="radio" name="sbhsasr4" id="sbhsasr4-r"
+               value="r"  required="required">
+        restricted
+    </label>
+                                                    <label class="radio-inline">
+        <input type="radio" name="sbhsasr4" id="sbhsasr4-y"
+               value="y"  required="required">
+        allowed anywhere
+    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                        <hr class="visible-xs-block visible-sm-block"/>
+
+
+                    </div>
+                    <div class="tab-pane " id="health" role="tabpanel" aria-labelledby="health-tab">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>1. Overall, how would you rate your health during the <em>past 4 weeks</em>?</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="1" name="sbsfb1"
+                                           id="sbsfb1-1">
+                                    <label class="form-check-label" for="sbsfb1-1">
+                                        Excellent
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="2" name="sbsfb1"
+                                           id="sbsfb1-2">
+                                    <label class="form-check-label" for="sbsfb1-2">
+                                        Very Good
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="3" name="sbsfb1"
+                                           id="sbsfb1-3">
+                                    <label class="form-check-label" for="sbsfb1-3">
+                                        Good
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="4" name="sbsfb1"
+                                           id="sbsfb1-4">
+                                    <label class="form-check-label" for="sbsfb1-4">
+                                        Fair
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="5" name="sbsfb1"
+                                           id="sbsfb1-5">
+                                    <label class="form-check-label" for="sbsfb1-5">
+                                        Poor
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="6" name="sbsfb1"
+                                           id="sbsfb1-6">
+                                    <label class="form-check-label" for="sbsfb1-6">
+                                        Very Poor
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col alert alert-warning">SF-12 Questions...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default btn-prev">Previous</button>
+                <button type="button" class="btn btn-default btn-next">Next</button>
+            </div>
+            <div class="pull-right">
+                <input type="submit" value="Save for Later" class="btn btn-default">
+                <input type="submit" value="Submit" class="btn btn-primary" id="submit-button">
+            </div>
+
+        </form>
+    </div>
+
+    <script language="JavaScript">
+        /**
+         * Enable/Disable fields based on if the source's value is equivalent to a a particular value or values.
+         * Supports field value restoration.
+         *
+         * @todo consider converting to a jQuery plugin.
+         *
+         * @param {string|object} source - triggering field
+         * @param {string|function} sourceValues - values to assert against the actual. When the source field value equals one of these,
+         * the fields will become enabled. This argument can also be a callback function that determines disablement. function(actualValue)
+         * A return of "true" means they should be enabled.
+         * @param {string|object} enableFields - fields to toggle when source value is equal to one of the sourceValues (delimited by ",")
+         * @param {string|object} disableFields - fields to toggle when source value is NOT equal the sourceValues (delimited by ",")
+         * @param {string} [additionalDisabledClasses=visible-md-block visible-lg-block]- additional classes to append to each field in fields when it is disabled
+         */
+        function conditionallyEnable(source, sourceValues, enableFields, disableFields, additionalDisabledClasses) {
+
+            function enableContainer($container, disablementClasses) {
+                if (typeof $container !== 'undefined') {
+                    $container.find("input, select, textarea")
+                        .addBack('input, select, textarea') //include container object if it's actually an input.
+                        .prop("disabled", function (i, currentlyDisabled) {
+                            if (true === currentlyDisabled) { //if value has changed
+                                if ($(this).is(":checkbox")) {
+                                    $(this).prop("checked", $(this).data("previous-value") === "checked");
+                                }
+                                else { //other types of controls
+                                    $(this).val($(this).data("previous-value")); //restore old value
+                                }
+                                $(this).trigger("change");
+                            }
+                            return false;
+                        });
+
+                    // make labels appear disabled.
+                    $container.find("label")
+                        .addBack("label") //add the $field itself if is a label.
+                        .toggleClass("text-muted", false);
+
+                    //when the value matches, always display the container, otherwise hide it on screens smaller than md.
+                    if (disablementClasses) {
+                        $container.toggleClass(disablementClasses, false);
+                    }
+                }
+            }
+
+            function disableContainer($container, disablementClasses) {
+                if (typeof $container !== 'undefined') {
+                    //include container object if it's actually an input.
+                    $fields = $container.find("input, select, textarea").addBack('input, select, textarea');
+
+                    //reset form validations for the fields we're about to disable
+                    var fv = $("form.validated").data('formValidation');
+                    if (fv) {
+                        $.each($fields, function (i, t) {
+                            fv.resetField($(t));
+                        });
+                    }
+
+                    $fields.prop("disabled", function (i, currentlyDisabled) {
+                        if (false === currentlyDisabled) { //if value has changed
+                            if ($(this).is(":checkbox")) {
+                                //save the old value
+                                $(this).data("previous-value", $(this).is(":checked") ? "checked" : "");
+                                $(this).prop("checked", false);
+
+                            }
+                            else { //other types of controls
+                                $(this).data("previous-value", $(this).val()); //save the old value
+                                $(this).val("");
+                            }
+                            $(this).trigger("change");
+                        }
+                        return true;
+                    });
+
+                    // make labels appear disabled.
+                    $container.find("label")
+                        .addBack("label") //add the $field itself if is a label.
+                        .toggleClass("text-muted", true);
+
+                    //when the value matches, always display the container, otherwise hide it on screens smaller than md.
+                    if (disablementClasses) {
+                        $container.toggleClass(disablementClasses, true);
+                    }
+                }
+            }
+
+            var $source = (typeof source === 'string') ? $(source) : source;
+
+            //hide at all screen widths, except when MD or larger
+            var disablementClasses = (typeof additionalDisabledClasses !== 'undefined') ? additionalDisabledClasses : "visible-md-block visible-lg-block";
+
+
+            var enableCallback = (typeof sourceValues === 'function') ? sourceValues : function (actualValue) {
+                var sourceValuesArray = $.map(sourceValues.split(","), $.trim);
+                return $.inArray(actualValue, sourceValuesArray) > -1;
+            };
+
+            $source.on('change', function () {
+                var $el = $(this);
+                var actualValue = $el.is(":checkbox") ? ($el.is(":checked") ? $el.val() : "") : $el.val();
+
+                var enabled = enableCallback(actualValue);
+
+                console.log("conditionallyEnable::change() triggered. id=" + $el.prop("id") + ", enabled=" + enabled);
+
+                //toggle input fields within the container.
+                var $enableContainer = (typeof enableFields === 'string') ? $(enableFields) : enableFields;
+                var $disableContainer = (typeof disableFields === 'string') ? $(disableFields) : disableFields;
+                if (enabled) {
+                    enableContainer($enableContainer, disablementClasses);
+                    disableContainer($disableContainer, disablementClasses);
+                }
+                else {
+                    disableContainer($enableContainer, disablementClasses);
+                    enableContainer($disableContainer, disablementClasses);
+                }
+
+            });
+
+            if ($source.first().is(":radio")) {
+                //trigger the change event on the first checked or non-matching radio button
+                $.merge(
+                    $source.filter(":checked"),
+                    $source.filter(":not(':checked')")
+                ).first().trigger("change");
+            }
+            else {
+                $source.trigger("change");
+            }
+        }
+
+
+        $(function () {
+            // $('#scan-order-tab').tab('show'); //TODO: remove utility to set the initial tab (debugging form development)
+            
+
+            //hooks for calculating BMI on fields that would affect it (height, weight, units of each)
+            $("input[id^='sbpw'],input[id^='sbph']").on('change', function () {
+                var height = $("#sbph").val(), heightUnits = $("#sbphu").val();
+                var weight = $("#sbpw").val(), weightUnits = $("#sbpwu").val();
+                if (height > 0 && weight > 0) {
+                    var bmi = VAPALS.computeBMI(parseInt(height), heightUnits, parseInt(weight), weightUnits);
+                    if (bmi > 0) {
+                        $("#sbbmi").val(bmi);
+                        $("#bmi-value").text(bmi);
+                        $("#bmi-descriptor").text(VAPALS.computeBmiDescriptor(bmi));
+                        $("#bmi-message").show();
+                    }
+                    else {
+                        $("#sbbmi").val("");
+                        $("#bmi-message").hide();
+                    }
+                }
+            }).first().trigger("change"); //trigger on page load for existing data
+
+            //hook onto DOB field to calculate age.
+            $("#sbdob").on('change', function () {
+                var dateString = $("#sbdob").val();
+                if (dateString) {
+                    var m = moment(dateString, ["MM-DD-YYYY", "DD-MM", "DD-MM-YYYY", "YYYY-MM-DD", "DD/MMM/YYYY"]);
+                    if (m.isValid()) {
+                        $("#sbage").text(VAPALS.computeAge(m.toDate()))
+                    }
+                }
+            }).trigger("change"); //trigger on page load for existing data
+
+            //hook for calculating Pulmonary function test percentage (FFR)
+            $("#sbfev1, #sbfvc").on('change', function () {
+                var fev1 = $("#sbfev1").val();
+                var fvc = $("#sbfvc").val();
+                if (fev1 > 0 && fvc > 0) {
+                    var ffr = Math.round(100.0 * fev1 / fvc);
+                    if (ffr > 0) {
+                        $("#sbffr").val(ffr);
+                        $("#ffr-value").text(ffr);
+                        $("#ffr-message").show();
+                    }
+                    else {
+                        $("#sbffr").val("");
+                        $("#ffr-message").hide();
+                    }
+                }
+                else {
+                    $("#ffr-message").hide();
+                }
+            }).first().trigger('change');
+
+            //hook for years since quit
+            $("[name^=sbsdlc]").on('change', function () {
+                var now = moment();
+                var m = (parseInt($("#sbsdlcm").val()) - 1) || now.month();
+                var d = parseInt($("#sbsdlcd").val()) || now.date();
+                var y = parseInt($("#sbsdlcy").val()) || now.year();
+                var quitDate = moment({month: m, date: d, year: y});
+                var durationYears = now.diff(quitDate, 'years', true).toFixed(1);
+                if (durationYears > 0) {
+                    $("#sbsdlc-value").text(durationYears);
+                    $("#sbsdlc-message").show();
+                }
+                else {
+                    $("#sbsdlc-value").text("");
+                    $("#sbsdlc-message").hide();
+                }
+            }).first().trigger('change');
+
+            //hook for pack years calculation
+            $("[name='sbcdpw'],[name='sbcppd'],[name='sbcdur']").on('change', function () {
+                var daysPerWeek = $("[name='sbcdpw']").val(),
+                    packsPerDay = $("[name='sbcppd']").val(),
+                    years = $("[name='sbcdur']").val(),
+                    totalPackYears;
+                if (daysPerWeek && packsPerDay && years) {
+                    var packsPerYear = packsPerDay * (daysPerWeek / 7.0);
+                    totalPackYears = (packsPerYear * years).toFixed(1);
+                    $("[name='sbntpy']").val(totalPackYears);
+                    $("#sbntpy-value").text(totalPackYears);
+                    $("#sbntpy-message").show();
+                } else {
+                    $("[name='sbntpy']").val("");
+                    $("#sbntpy-value").text("");
+                    $("#sbntpy-message").hide();
+                }
+            }).first().trigger('change');
+
+            //conditionally enabled fields
+            conditionallyEnable("#sbrc", "o", "#sbrcs-container"); // when race is "other", enable "race other"
+            conditionallyEnable("[name=sbmly]", "y", "#sbmlyo-container"); //military service
+            conditionallyEnable("[name=sbmeq]", "y", "#sbmeq-container"); //entire CT scan page
+            conditionallyEnable("[name=sbfc]", "y", "#sbfc-container");
+            conditionallyEnable("[name=sbhco]", "y", "#sbhco-container");
+            conditionallyEnable("[name=sbmpa]", "y", "#sbmpa-container");
+            conditionallyEnable("[name=sbmpc]", "y", "#sbmpc-container");
+            conditionallyEnable("[name=sbmpht]", "y", "#sbmpht-container");
+            conditionallyEnable("[name=sbmphc]", "y", "#sbmphc-container");
+            conditionallyEnable("[name=sbmpas]", "y", "#sbmpas-container");
+            conditionallyEnable("[name=sbmpmi]", "y", "#sbmpmi-container");
+            conditionallyEnable("[name=sbmps]", "y", "#sbmps-container");
+            conditionallyEnable("[name=sbmppv]", "y", "#sbmppv-container");
+            conditionallyEnable("[name=sbmpd]", "y", "#sbmpd-container");
+            conditionallyEnable("[name=sbmpld]", "y", "#sbmpld-container");
+            conditionallyEnable("[name=sbmprd]", "y", "#sbmprd-container");
+            conditionallyEnable("[name=sblcs]", "y", $("#sblcs-container").find("label, input[id!=sbwcos]"));
+            conditionallyEnable("#sbwco", "o", "#sbwcos");
+            conditionallyEnable("[name=sbact]", function (actualValue) {
+                return actualValue !== '-' && actualValue !== 'e';
+            }, "#sbact-container");
+            conditionallyEnable("[name=sbahpft]", "y", "#sbahpft-container");
+            conditionallyEnable("#sbahaoo", "o", "#sbahas");
+            conditionallyEnable("[name=sbsru]", "n", "#sbsru-container");
+            conditionallyEnable("[name=sbqttq]", "y", "#sbqttq-container, #sbqly2-container");
+            conditionallyEnable("[name=sbhso]", "y", "#sbhso-container");
+            conditionallyEnable("[name=sbshsa]", "y", "#smoking-container", "#non-smoking-container");
+            conditionallyEnable("[name=sbsehs]", "y", "#sbsehs-container");
+
+
+            //setup tab navigation prev/next buttons
+            function getCurrentTab() {
+                return $("#myTabContent").find("> div:visible");
+            }
+
+            function getNextTabId() {
+                return getCurrentTab().next().attr("id");
+            }
+
+            function getPrevTabId() {
+                return getCurrentTab().prev().attr("id");
+            }
+
+            $(".btn-next").on("click", function () {
+                var nextTabId = getNextTabId();
+                // CB: form validation occurs on tab hide event
+                $("#myTabs").find("a[href='#" + nextTabId + "']").tab('show');
+
+            }).toggleClass("disabled", !getNextTabId());
+
+            $(".btn-prev").on("click", function () {
+                var prevTabId = getPrevTabId();
+                // CB: form validation occurs on tab hide event
+                $("#myTabs").find("a[href='#" + prevTabId + "']").tab('show');
+            }).toggleClass("disabled", !getPrevTabId());
+
+            //Initialize Form Validation
+            $("form").formValidation({framework: 'bootstrap'});
+
+            $('a[data-toggle="tab"]').on('hide.bs.tab', function (e) {
+                var currentTab = e.target;
+                var tabContentSelector = $(currentTab).attr("href");
+                var fv = $("form.validated").data('formValidation');
+                var valid = fv.validateContainer(tabContentSelector).isValid();
+                $(tabContentSelector).find("input, select").first().trigger('change');
+                if (!valid) {
+                    console.log("tab " + tabContentSelector + " is not valid");
+                    // e.preventDefault() // to cancel the navigation
+                }
+
+            })
+                .on("shown.bs.tab", function () {
+                    $(".btn-next").toggleClass("disabled", !getNextTabId());
+                    $(".btn-prev").toggleClass("disabled", !getPrevTabId());
+                })
+            ;
+
+
+            function checkCompleteness($container) {
+                console.log("checkCompleteness() container=" + $container);
+                var $requiredFields = $container.find("[required], [data-fv-notempty=true]").filter(":enabled"),
+                    $tab = $(".nav-tabs").find("a[href='#" + $container.attr("id") + "']");
+                var emptyRequiredFields = $requiredFields.filter(function () {
+                    var $c = $(this);
+                    var value = $c.val();
+                    if ($c.is(":radio")) {
+                        var radioName = $c.attr("name");
+                        value = $("input[type='radio'][name='" + radioName + "']:checked").val();
+                    }
+                    return typeof value === "undefined" || value === "";
+                });
+                // check tab container validity
+                var fv = $("form.validated").data('formValidation');
+                var valid = fv.isValidContainer($container);
+                var reallyValid = valid == null || valid === true; //consider unvalidated (null) as "valid".
+
+                //add completeness flag to tab if all required fields are filled in and form is likely valid.
+                $tab.toggleClass("complete", emptyRequiredFields.length === 0 && reallyValid);
+            }
+
+            // trigger a check of completeness of each tab at page load and also any time an input changes.
+            $(".tab-pane").each(function () {
+                checkCompleteness($(this))
+            }).on("keyup change", function () {
+                var $container = $(this).closest(".tab-pane");
+                checkCompleteness($container);
+            });
+
+            //Globally enabled popovers for things like help text.
+            $('[data-toggle="popover"]').popover({trigger: 'hover'});
+
+        });
+
+    </script>
+
+
+
+
+    <footer>
+        <div class="container-fluid" style="max-width:1550px">
+            <hr/>
+            <a href="https://issues.osehra.org/browse/VAP" target="_blank">Submit feedback</a>
+        </div>
+    </footer>
+
+
+<script language="JavaScript">
+    $(function () {
+        $.each($(".datepicker"), function (i, el) {
+            $(el).datetimepicker({
+                format: 'MM/DD/YYYY',
+                maxDate: moment().add(1,'h') //hack to not select today
+            });
+        });
+
+        $.each($(".yearpicker"), function (i, el) {
+            $(el).datetimepicker({
+                format: 'YYYY',
+                maxDate: moment().add(1,'h'), //hack to not select today
+                minDate: moment().subtract(100, 'y')
+            });
+        });
+    });
+</script>
+</body>
+</html>

@@ -1399,10 +1399,82 @@
          * @param {string|function} sourceValues - values to assert against the actual. When the source field value equals one of these,
          * the fields will become enabled. This argument can also be a callback function that determines disablement. function(actualValue)
          * A return of "true" means they should be enabled.
-         * @param {string|object} fields - fields to toggle when source value is equal to one of the sourceValues (delimited by ",")
+         * @param {string|object} enableFields - fields to toggle when source value is equal to one of the sourceValues (delimited by ",")
+         * @param {string|object} disableFields - fields to toggle when source value is NOT equal the sourceValues (delimited by ",")
          * @param {string} [additionalDisabledClasses=visible-md-block visible-lg-block]- additional classes to append to each field in fields when it is disabled
          */
-        function conditionallyEnable(source, sourceValues, fields, additionalDisabledClasses) {
+        function conditionallyEnable(source, sourceValues, enableFields, disableFields, additionalDisabledClasses) {
+
+            function enableContainer($container, disablementClasses) {
+                if (typeof $container !== 'undefined') {
+                    $container.find("input, select, textarea")
+                        .addBack('input, select, textarea') //include container object if it's actually an input.
+                        .prop("disabled", function (i, currentlyDisabled) {
+                            if (true === currentlyDisabled) { //if value has changed
+                                if ($(this).is(":checkbox")) {
+                                    $(this).prop("checked", $(this).data("previous-value") === "checked");
+                                }
+                                else { //other types of controls
+                                    $(this).val($(this).data("previous-value")); //restore old value
+                                }
+                                $(this).trigger("change");
+                            }
+                            return false;
+                        });
+
+                    // make labels appear disabled.
+                    $container.find("label")
+                        .addBack("label") //add the $field itself if is a label.
+                        .toggleClass("text-muted", false);
+
+                    //when the value matches, always display the container, otherwise hide it on screens smaller than md.
+                    if (disablementClasses) {
+                        $container.toggleClass(disablementClasses, false);
+                    }
+                }
+            }
+            function disableContainer($container, disablementClasses) {
+                if (typeof $container !== 'undefined') {
+                    //include container object if it's actually an input.
+                    $fields = $container.find("input, select, textarea").addBack('input, select, textarea');
+
+                    //reset form validations for the fields we're about to disable
+                    var fv = $("form.validated").data('formValidation');
+                    if (fv) {
+                        $.each($fields, function (i, t) {
+                            fv.resetField($(t));
+                        });
+                    }
+
+                    $fields.prop("disabled", function (i, currentlyDisabled) {
+                        if (false === currentlyDisabled) { //if value has changed
+                            if ($(this).is(":checkbox")) {
+                                //save the old value
+                                $(this).data("previous-value", $(this).is(":checked") ? "checked" : "");
+                                $(this).prop("checked", false);
+
+                            }
+                            else { //other types of controls
+                                $(this).data("previous-value", $(this).val()); //save the old value
+                                $(this).val("");
+                            }
+                            $(this).trigger("change");
+                        }
+                        return true;
+                    });
+
+                    // make labels appear disabled.
+                    $container.find("label")
+                        .addBack("label") //add the $field itself if is a label.
+                        .toggleClass("text-muted", true);
+
+                    //when the value matches, always display the container, otherwise hide it on screens smaller than md.
+                    if (disablementClasses) {
+                        $container.toggleClass(disablementClasses, true);
+                    }
+                }
+            }
+
             var $source = (typeof source === 'string') ? $(source) : source;
 
             //hide at all screen widths, except when MD or larger
@@ -1423,12 +1495,15 @@
                 console.log("conditionallyEnable::change() triggered. id=" + $el.prop("id") + ", enabled=" + enabled);
 
                 //toggle input fields within the container.
-                var $container = (typeof fields === 'string') ? $(fields) : fields;
+                var $enableContainer = (typeof enableFields === 'string') ? $(enableFields) : enableFields;
+                var $disableContainer = (typeof disableFields === 'string') ? $(disableFields) : disableFields;
                 if (enabled) {
-                    enableContainer($container, disablementClasses);
+                    enableContainer($enableContainer, disablementClasses);
+                    disableContainer($disableContainer, disablementClasses);
                 }
                 else {
-                    disableContainer($container, disablementClasses);
+                    disableContainer($enableContainer, disablementClasses);
+                    enableContainer($disableContainer, disablementClasses);
                 }
 
             });
@@ -1445,65 +1520,6 @@
             }
         }
 
-        function enableContainer($container, additionalDisabledClasses) {
-            $container.find("input, select, textarea")
-                .addBack('input, select, textarea') //include container object if it's actually an input.
-                .prop("disabled", function (i, currentlyDisabled) {
-                    if (true === currentlyDisabled) { //if value has changed
-                        if ($(this).is(":checkbox")) {
-                            $(this).prop("checked", $(this).data("previous-value") === "checked");
-                        }
-                        else { //other types of controls
-                            $(this).val($(this).data("previous-value")); //restore old value
-                        }
-                        $(this).trigger("change");
-                    }
-                    return false;
-                });
-
-            // make labels appear disabled.
-            $container.find("label")
-                .addBack("label") //add the $field itself if is a label.
-                .toggleClass("text-muted", false);
-
-            //when the value matches, always display the container, otherwise hide it on screens smaller than md.
-            if (additionalDisabledClasses) {
-                $container.toggleClass(additionalDisabledClasses, false);
-            }
-
-        }
-
-        function disableContainer($container, additionalDisabledClasses) {
-            $container.find("input, select, textarea")
-                .addBack('input, select, textarea') //include container object if it's actually an input.
-                .prop("disabled", function (i, currentlyDisabled) {
-                    if (false === currentlyDisabled) { //if value has changed
-                        if ($(this).is(":checkbox")) {
-                            //save the old value
-                            $(this).data("previous-value", $(this).is(":checked") ? "checked" : "");
-                            $(this).prop("checked", false);
-
-                        }
-                        else { //other types of controls
-                            $(this).data("previous-value", $(this).val()); //save the old value
-                            $(this).val("");
-                        }
-                        $(this).trigger("change");
-                    }
-                    return true;
-                });
-
-            // make labels appear disabled.
-            $container.find("label")
-                .addBack("label") //add the $field itself if is a label.
-                .toggleClass("text-muted", true);
-
-            //when the value matches, always display the container, otherwise hide it on screens smaller than md.
-            if (additionalDisabledClasses) {
-                $container.toggleClass(additionalDisabledClasses, true);
-            }
-
-        }
 
         $(function () {
             // $('#scan-order-tab').tab('show'); //TODO: remove utility to set the initial tab (debugging form development)
@@ -1618,23 +1634,13 @@
             conditionallyEnable("#sbwco", "o", "#sbwcos");
             conditionallyEnable("[name=sbact]", function (actualValue) {
                 return actualValue !== '-' && actualValue !== 'e';
-            }, "#sbact-container", "d-none d-md-inline");
+            }, "#sbact-container");
             conditionallyEnable("[name=sbahpft]", "y", "#sbahpft-container");
             conditionallyEnable("#sbahaoo", "o", "#sbahas");
             conditionallyEnable("[name=sbsru]", "n", "#sbsru-container");
             conditionallyEnable("[name=sbqttq]", "y", "#sbqttq-container, #sbqly2-container");
             conditionallyEnable("[name=sbhso]", "y", "#sbhso-container");
-            $("[name=sbshsa]").on('change', function () {
-                var v = $("[name=sbshsa]:checked").val();
-                if (v === "n") {
-                    disableContainer($("#smoking-container"), "d-none d-md-inline");
-                    enableContainer($("#non-smoking-container"), "d-none d-md-inline");
-                }
-                else if (v === "y") {
-                    disableContainer($("#non-smoking-container"), "d-none d-md-inline");
-                    enableContainer($("#smoking-container"), "d-none d-md-inline");
-                }
-            }).first().trigger('change');
+            conditionallyEnable("[name=sbshsa]", "y", "#smoking-container", "#non-smoking-container");
             conditionallyEnable("[name=sbsehs]", "y", "#sbsehs-container");
 
 
@@ -1719,7 +1725,8 @@
             //Globally enabled popovers for things like help text.
             $('[data-toggle="popover"]').popover({trigger: 'hover'});
 
-        });
+        })
+        ;
 
     </script>
 

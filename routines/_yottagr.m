@@ -1,529 +1,799 @@
-yottagr	;gpl - agile web server ; 2/27/17 4:33pm
- ;;1.0;norelease;;feb 27, 2017;build 2
+yottagr ;ven/gpl-yottadb extension: graphstore ;2018-02-11T12:15Z
+ ;;1.8;Mash;
+ ;
+ ; %yottagr implements the Yottadb Extension Library's graphstore
+ ; ppis & apis. These may eventually migrate to another Mash
+ ; namespace, tbd. In the meantime, they will get a %yotta ppi &
+ ; api library built.
+ ; It is currently untested & in progress.
+ ;
+ quit  ; no entry from top
  ;
  ;
- q
+ ;
+ ;@section 0 primary development
+ ;
+ ;
+ ;
+ ;@routine-credits
+ ;@primary-dev: George P. Lilly (gpl)
+ ; gpl@vistaexpertise.net
+ ;@primary-dev-org: Vista Expertise Network (ven)
+ ; http://vistaexpertise.net
+ ;@copyright: 2017/2018, gpl, all rights reserved
+ ;@license: Apache 2.0
+ ; https://www.apache.org/licenses/LICENSE-2.0.html
+ ;
+ ;@last-updated: 2018-02-11T12:15Z
+ ;@application: Mumps Advanced Shell (Mash)
+ ;@module: Yottadb Extension - %yotta
+ ;@version: 1.8T04
+ ;@release-date: not yet released
+ ;@patch-list: none yet
+ ;
+ ;@additional-dev: Frederick D. S. Marshall (toad)
+ ; toad@vistaexpertise.net
+ ;
+ ;@module-credits
+ ;@primary-dev: George P. Lilly (gpl)
+ ; gpl@vistaexpertise.net
+ ;@project: VA Partnership to Increase Access to Lung Screening
+ ; (VA-PALS)
+ ; http://va-pals.org/
+ ;@funding: 2017, gpl
+ ;@funding: 2017, ven
+ ;@funding: 2017/2018, Bristol-Myers Squibb Foundation (bmsf)
+ ; https://www.bms.com/about-us/responsibility/bristol-myers-squibb-foundation.html
+ ;@partner-org: Veterans Affairs Office of Rural health
+ ; https://www.ruralhealth.va.gov/
+ ;@partner-org: International Early Lung Cancer Action Program (I-ELCAP)
+ ; http://ielcap.com/
+ ;@partner-org: Paraxial Technologies
+ ; http://paraxialtech.com/
+ ;@partner-org: Open Source Electronic Health Record Alliance (OSEHRA)
+ ; https://www.osehra.org/groups/va-pals-open-source-project-group
+ ;
+ ;@module-log
+ ; 2017-02-17 ven/gpl %*1.8t01 %yottagr: create routine to hold
+ ; all yottadb graph methods.
+ ;
+ ; 2017-09-16 ven/gpl %*1.8t01 %yottagr: update
+ ;
+ ; 2017-09-18 ven/gpl %*1.8t01 %yottagr: update
+ ;
+ ; 2017-10-07 ven/gpl %*1.8t01 %yottagr: update
+ ;
+ ; 2018-02-07/11 ven/toad %*1.8t04 %yottagr: passim add white space &
+ ; hdr comments & do-dot quits, tag w/Apache license & attribution
+ ; & to-do to shift namespace later, break up a few long line. debug.
+ ;
+ ;@to-do
+ ; %yotta: create entry points in ppi/api style
+ ; r/all local calls w/calls through ^%yotta
+ ; break up into smaller routines & change branches from %yotta
+ ; renamespace elsewhere, research best choice
+ ;
+ ;@contents
+ ; [too big, break up]
+ ;
+ ;
+ ;
+ ;@section 1 code to implement ppis & apis
+ ;
+ ;
  ;
 setroot(graph) ; root of working storage
- i '$d(graph) s graph="seeGraph"
- n %y s %y=$o(^%wd(17.040801,"B",graph,""))
- i %y="" s %y=$$addgraph(graph) ; if graph is not present, add it
- q $na(^%wd(17.040801,%y)) ; root for graph
+ ;
+ if '$data(graph) set graph="seeGraph"
+ new %y set %y=$order(^%wd(17.040801,"B",graph,""))
+ if %y="" set %y=$$addgraph(graph) ; if graph is not present, add it
+ ;
+ quit $na(^%wd(17.040801,%y)) ; root for graph ; end of $$setroot
+ ;
+ ;
  ;
 addgraph(graph) ; makes a place in the graph file for a new graph
- n fda s fda(17.040801,"?+1,",.01)=graph
- n %yerr
- d UPDATE^DIE("","fda","","%yerr")
- n %y s %y=$o(^%wd(17.040801,"B",graph,""))
- q %y
+ ;
+ new fda set fda(17.040801,"?+1,",.01)=graph
+ new %yerr
+ do UPDATE^DIE("","fda","","%yerr")
+ new %y set %y=$order(^%wd(17.040801,"B",graph,""))
+ ;
+ quit %y ; end of $$addgraph
+ ;
+ ;
  ;
 homedir() ; extrinsic which return the document home
- n kbaihd s kbaihd=$g(^%WHOME)
- i kbaihd="" d  b  ;
- . w !,"error, home directory not set"
- i $e(kbaihd,$l(kbaihd))="/" s kbaihd=$e(kbaihd,1,$l(kbaihd)-1) 
- q kbaihd
+ ;
+ new kbaihd set kbaihd=$get(^%WHOME)
+ if kbaihd="" do  break  ;
+ . write !,"error, home directory not set"
+ . quit
+ if $extract(kbaihd,$length(kbaihd))="/" do
+ . set kbaihd=$extract(kbaihd,1,$length(kbaihd)-1)
+ . quit
+ ;
+ quit kbaihd ; end of $$homedir
+ ;
+ ;
  ;
 build ; retrieve directory structure and build into xtmp
  ;
- n kbairoot
- s kbairoot=$$setroot()
- ;k @kbairoot
- ;i '$d(@kbairoot@(0)) d  q  ; work area doesn't exist
- ;. w !,"error, work area not found ",kbairoot
- ;. q
- ;. n X,Y
- ;. s X="T+999" ; a long time from now
- ;. d ^%DT ; covert to fm date format
- ;. s @kbairoot@(0)=Y_"^"_$$NOW^XLFDT_"^kbaiwsai graph"
+ new kbairoot
+ set kbairoot=$$setroot()
  ;
- zsy "ls -DRL --file-type ~/www > ~/www/dirconfig.txt"
- n zdir s zdir=^%WHOME
- n kbails,kbails1,ok
- s kbails=$na(@kbairoot@("ls"))
- s kbails1=$na(@kbails@(1))
- s ok=$$FTG^%ZISH(zdir,"dirconfig.txt",kbails1,4)
- d bldgraph
- q
+ ; kill @kbairoot
+ ; if '$data(@kbairoot@(0)) do  quit  ; work area doesn't exist
+ ; . write !,"error, work area not found ",kbairoot
+ ; . quit
+ ; . new X,Y
+ ; . set X="T+999" ; a long time from now
+ ; . do ^%DT ; covert to fm date format
+ ; . set @kbairoot@(0)=Y_"^"_$$NOW^XLFDT_"^kbaiwsai graph"
+ ; . quit
+ ;
+ zsystem "ls -DRL --file-type ~/www > ~/www/dirconfig.txt"
+ new zdir set zdir=^%WHOME
+ new kbails,kbails1,ok
+ set kbails=$na(@kbairoot@("ls"))
+ set kbails1=$name(@kbails@(1))
+ set ok=$$FTG^%ZISH(zdir,"dirconfig.txt",kbails1,4)
+ do bldgraph
+ ;
+ quit  ; end of build
+ ;
+ ;
  ;
 bldgraph ; build the graph in xtmp
  ;
- n kbairoot s kbairoot=$$setroot()
- n hmdir s hmdir=$$homedir()
- n groot s groot=$na(@kbairoot@("graph"))
- ;k @groot
- n gsrc s gsrc=$na(@kbairoot@("ls"))
- n zi,zj,zln,zien,zien2,uriary,distdir,localdir
- s distdir="root"  ;
- s zien=0
- s zien2=0 ; subfile ien
- s zi=0
- n %cnt s %cnt=0
- f  s zi=$o(@gsrc@(zi)) q:+zi=0  d  ;
- . n zln,zdir,zpar,ztag
- . s zln=@gsrc@(zi)
- . q:zln=""
- . i zln[":" d  q  ;
- . . s %cnt=%cnt+1
- . . ;i %cnt>100000 d counts(groot) s %cnt=1 ; this is for watching progress on big builds
- . . s zien=zien+1
- . . i $e(zln,$l(zln))=":" s zln=$e(zln,1,$l(zln)-1) ; strip off the :
- . . i $g(distdir)="" s distdir="root"  ;
- . . s @groot@(zien,"parent",distdir)=""
- . . s @groot@("pos","parent",distdir,zien)=""
- . . s @groot@("ops",distdir,"parent",zien)=""
- . . s localdir=zln
- . . s @groot@(zien,"localdir",localdir)=""
- . . s @groot@("pos","localdir",localdir,zien)=""
- . . s @groot@("ops",localdir,"localdir",zien)=""
+ new kbairoot set kbairoot=$$setroot()
+ new hmdir set hmdir=$$homedir()
+ new groot set groot=$name(@kbairoot@("graph"))
+ ; kill @groot
+ new gsrc set gsrc=$name(@kbairoot@("ls"))
+ new zi,zj,zln,zien,zien2,uriary,distdir,localdir
+ set distdir="root"  ;
+ set zien=0
+ set zien2=0 ; subfile ien
+ set zi=0
+ new %cnt set %cnt=0
+ for  set zi=$order(@gsrc@(zi)) quit:+zi=0  do  ;
+ . new zln,zdir,zpar,ztag
+ . set zln=@gsrc@(zi)
+ . quit:zln=""
+ . if zln[":" do  quit  ;
+ . . set %cnt=%cnt+1
+ . . ; if %cnt>100000 do counts(groot) set %cnt=1 ; this is for watching progress on big builds
+ . . set zien=zien+1
+ . . if $extract(zln,$length(zln))=":" set zln=$extract(zln,1,$length(zln)-1) ; strip off the :
+ . . if $get(distdir)="" set distdir="root"  ;
+ . . set @groot@(zien,"parent",distdir)=""
+ . . set @groot@("pos","parent",distdir,zien)=""
+ . . set @groot@("ops",distdir,"parent",zien)=""
+ . . set localdir=zln
+ . . set @groot@(zien,"localdir",localdir)=""
+ . . set @groot@("pos","localdir",localdir,zien)=""
+ . . set @groot@("ops",localdir,"localdir",zien)=""
  . . ; set graph type
- . . s @groot@(zien,"type","directory")=""
- . . s @groot@("pos","type","directory",zien)=""
- . . s @groot@("ops","directory","type",zien)=""
- . . s distdir=$p(localdir,$$homedir,2)
- . . i distdir'="" d  ;
- . . . s @groot@(zien,"distdir",distdir)=""
- . . . s @groot@("pos","distdir",distdir,zien)=""
- . . . s @groot@("ops",distdir,"distdir",zien)=""
- . . . s @groot@(zien,"id",distdir)=""
- . . . s @groot@("pos","id",distdir,zien)=""
- . . . s @groot@("ops",distdir,"id",zien)=""
- . . . k uriary d deuri(distdir,"uriary")
- . . s zien2=0
+ . . set @groot@(zien,"type","directory")=""
+ . . set @groot@("pos","type","directory",zien)=""
+ . . set @groot@("ops","directory","type",zien)=""
+ . . set distdir=$piece(localdir,$$homedir,2)
+ . . if distdir'="" do  ;
+ . . . set @groot@(zien,"distdir",distdir)=""
+ . . . set @groot@("pos","distdir",distdir,zien)=""
+ . . . set @groot@("ops",distdir,"distdir",zien)=""
+ . . . set @groot@(zien,"id",distdir)=""
+ . . . set @groot@("pos","id",distdir,zien)=""
+ . . . set @groot@("ops",distdir,"id",zien)=""
+ . . . kill uriary do deuri(distdir,"uriary")
+ . . . quit
+ . . set zien2=0
+ . . quit
  . ; process file names as a subfile to the directory
- . s zien2=zien2+1
+ . set zien2=zien2+1
  . ; set parent pointer
- . i $g(distdir)="" s distdir="root"  ;
- . s @groot@(zien,zien2,"parent",distdir)=""
- . s @groot@("pos","parent",distdir,zien,zien2)=""
- . s @groot@("ops",distdir,"parent",zien,zien2)=""
+ . if $get(distdir)="" set distdir="root"  ;
+ . set @groot@(zien,zien2,"parent",distdir)=""
+ . set @groot@("pos","parent",distdir,zien,zien2)=""
+ . set @groot@("ops",distdir,"parent",zien,zien2)=""
  . ; set file name attribute
- . s @groot@(zien,zien2,"file",zln)=""
- . s @groot@("pos","file",zln,zien,zien2)=""
- . s @groot@("ops",zln,"file",zien,zien2)=""
+ . set @groot@(zien,zien2,"file",zln)=""
+ . set @groot@("pos","file",zln,zien,zien2)=""
+ . set @groot@("ops",zln,"file",zien,zien2)=""
  . ; tag the file name
- . s @groot@(zien,zien2,"tag",zln)=""
- . s @groot@("pos","tag",zln,zien,zien2)=""
- . s @groot@("ops",zln,"tag",zien,zien2)=""
+ . set @groot@(zien,zien2,"tag",zln)=""
+ . set @groot@("pos","tag",zln,zien,zien2)=""
+ . set @groot@("ops",zln,"tag",zien,zien2)=""
  . ; added to tag qrda cqm names
- . i $e(zln,1,3)="CMS" d  ;
- . . n cqm
- . . s cqm=$p(zln,"_",1)
- . . d addtag(cqm,zien,zien2)
+ . if $extract(zln,1,3)="CMS" do  ;
+ . . new cqm
+ . . set cqm=$piece(zln,"_",1)
+ . . do addtag(cqm,zien,zien2)
+ . . quit
  . ;
  . ; set the file id
- . n zid s zid=distdir_"/"_zln
- . i distdir="root" s zid=zln
- . s @groot@(zien,zien2,"id",zid)=""
- . s @groot@("pos","id",zid,zien,zien2)=""
- . s @groot@("ops",zid,"id",zien,zien2)=""
- . n ztyp ; graph type
- . i $e(zln,$l(zln))="/" s ztyp="directory"
- . e  s ztyp="file"
- . s @groot@(zien,zien2,"type",ztyp)=""
- . s @groot@("pos","type",ztyp,zien,zien2)=""
- . s @groot@("ops",ztyp,"type",zien,zien2)=""
- . n zftyp
- . s zftyp=$re($p($re(zln),".",1))
- . i zftyp'="" d  ;
- . . s @groot@(zien,zien2,"filetype",zftyp)=""
- . . s @groot@("pos","filetype",zftyp,zien,zien2)=""
- . . s @groot@("ops",zftyp,"filetype",zien,zien2)=""
- . . s @groot@(zien,zien2,"tag",zftyp)=""
- . . s @groot@("pos","tag",zftyp,zien,zien2)=""
- . . s @groot@("ops",zftyp,"tag",zien,zien2)=""
+ . new zid set zid=distdir_"/"_zln
+ . if distdir="root" set zid=zln
+ . set @groot@(zien,zien2,"id",zid)=""
+ . set @groot@("pos","id",zid,zien,zien2)=""
+ . set @groot@("ops",zid,"id",zien,zien2)=""
+ . new ztyp ; graph type
+ . if $extract(zln,$length(zln))="/" set ztyp="directory"
+ . else  set ztyp="file"
+ . set @groot@(zien,zien2,"type",ztyp)=""
+ . set @groot@("pos","type",ztyp,zien,zien2)=""
+ . set @groot@("ops",ztyp,"type",zien,zien2)=""
+ . new zftyp
+ . set zftyp=$reverse($piece($reverse(zln),".",1))
+ . if zftyp'="" do  ;
+ . . set @groot@(zien,zien2,"filetype",zftyp)=""
+ . . set @groot@("pos","filetype",zftyp,zien,zien2)=""
+ . . set @groot@("ops",zftyp,"filetype",zien,zien2)=""
+ . . set @groot@(zien,zien2,"tag",zftyp)=""
+ . . set @groot@("pos","tag",zftyp,zien,zien2)=""
+ . . set @groot@("ops",zftyp,"tag",zien,zien2)=""
  . . ; tag the name without the filetype
- . . n zfn2
- . . s zfn2=$re($p($re(zln),$re(zftyp)_".",2))
- . . i zfn2'="" d  ;
- . . . s @groot@(zien,zien2,"tag",zfn2)=""
- . . . s @groot@("pos","tag",zfn2,zien,zien2)=""
- . . . s @groot@("ops",zfn2,"tag",zien,zien2)=""
- . . . n contents
- . . . i zftyp["xml" d  ;
- . . . . d scan(.contents,zid,zien,zien2) ; not scanning right now
- . s @groot@(zien,zien2,"localdir",localdir)=""
- . s @groot@("pos","localdir",localdir,zien,zien2)=""
- . s @groot@("ops",localdir,"localdir",zien,zien2)=""
- . i $g(distdir)'="" d  ;
- . . s @groot@(zien,zien2,"distdir",distdir)=""
- . . s @groot@("pos","distdir",distdir,zien,zien2)=""
- . . s @groot@("ops",distdir,"distdir",zien,zien2)="" 
+ . . new zfn2
+ . . set zfn2=$reverse($piece($reverse(zln),$reverse(zftyp)_".",2))
+ . . if zfn2'="" do  ;
+ . . . set @groot@(zien,zien2,"tag",zfn2)=""
+ . . . set @groot@("pos","tag",zfn2,zien,zien2)=""
+ . . . set @groot@("ops",zfn2,"tag",zien,zien2)=""
+ . . . new contents
+ . . . if zftyp["xml" do  ;
+ . . . . do scan(.contents,zid,zien,zien2) ; not scanning right now
+ . . . . quit
+ . . . quit
+ . . quit
+ . set @groot@(zien,zien2,"localdir",localdir)=""
+ . set @groot@("pos","localdir",localdir,zien,zien2)=""
+ . set @groot@("ops",localdir,"localdir",zien,zien2)=""
+ . if $get(distdir)'="" do  ;
+ . . set @groot@(zien,zien2,"distdir",distdir)=""
+ . . set @groot@("pos","distdir",distdir,zien,zien2)=""
+ . . set @groot@("ops",distdir,"distdir",zien,zien2)=""
+ . . quit
  . ; add the tags from the directory
- . n zj s zj=""
- . f  s zj=$o(uriary(zj)) q:zj=""  d  ;
- . . s @groot@(zien,zien2,"tag",uriary(zj))=""
- . . s @groot@("pos","tag",uriary(zj),zien,zien2)=""
- . . s @groot@("ops",uriary(zj),"tag",zien,zien2)=""
- . ;i zien=3344 b
+ . new zj set zj=""
+ . for  set zj=$order(uriary(zj)) quit:zj=""  do  ;
+ . . set @groot@(zien,zien2,"tag",uriary(zj))=""
+ . . set @groot@("pos","tag",uriary(zj),zien,zien2)=""
+ . . set @groot@("ops",uriary(zj),"tag",zien,zien2)=""
+ . . quit
+ . ; if zien=3344 break
+ . quit
  ; compute the counts
- d counts(groot) ; 
- q
+ do counts(groot) ;
  ;
-counts(groot) ; 
- n ztag,zary,zcnt
- k @groot@("countbytag")
- k @groot@("tagbycount")
- s ztag=""
- f  s ztag=$o(@groot@("pos","tag",ztag)) q:ztag=""  d  ;
- . i ztag="" q  ;
- . k zary
- . d match("#tag:"_ztag,"zary")
- . ;w !,ztag," ",$d(zary)
- . s zcnt=$$count("zary")
- . i zcnt<1 q  ;
- . s @groot@("countbytag",ztag,zcnt)=""
- . s @groot@("tagbycount",zcnt,ztag)=""
- q
+ quit  ; end of bldgraph
+ ;
+ ;
+ ;
+counts(groot) ;
+ ;
+ new ztag,zary,zcnt
+ kill @groot@("countbytag")
+ kill @groot@("tagbycount")
+ set ztag=""
+ for  set ztag=$order(@groot@("pos","tag",ztag)) quit:ztag=""  do  ;
+ . if ztag="" quit  ;
+ . kill zary
+ . do match("#tag:"_ztag,"zary")
+ . ; write !,ztag," ",$data(zary)
+ . set zcnt=$$count("zary")
+ . if zcnt<1 quit  ;
+ . set @groot@("countbytag",ztag,zcnt)=""
+ . set @groot@("tagbycount",zcnt,ztag)=""
+ . quit
+ ;
+ quit  ; end of counts
+ ;
+ ;
  ;
 testscan ;
- s zien=4
- s zien2=1
- ;s zid=$o(^xtmp("kbaiweb","graph",4,1,"id",""))
- s zid=$o(@$$setroot@("graph",4,1,"id",""))
- d scan(.g,zid,zien,zien2)
- q
+ ;
+ set zien=4
+ set zien2=1
+ ; set zid=$order(^xtmp("kbaiweb","graph",4,1,"id",""))
+ set zid=$order(@$$setroot@("graph",4,1,"id",""))
+ do scan(.g,zid,zien,zien2)
+ ;
+ quit  ; end of testscan
+ ;
+ ;
  ;
 scan(rtn,zid,zien,zien2) ; scan the file contents for new tags
+ ;
  ; and add them to the graph
- n zcmd,tmpfile,tmpdir,cmdfile
- s tmpfile="scan.txt"
- s cmdfile="scan.sh"
- s tmpdir=^%WHOME
- s zcmd=$na(^tmp("kbaicmd",$j))
- s zcmd1=$na(@zcmd@(1))
- s @zcmd@(1)="rm "_tmpdir_"/"_tmpfile
- n g2 s g2=""
- f i=1:1:$l(zid) s g2=g2_$s($e(zid,i)=" ":"\ ",1:$e(zid,i))
- ;s @zcmd@(2)="grep code "_tmpdir_"/"_zid_" > "_tmpdir_"/"_tmpfile
- s @zcmd@(2)="grep code "_tmpdir_g2_" > "_tmpdir_tmpfile
- ;s @zcmd@(3)="grep originaltext "_tmpdir_"/"_zid_" >> "_tmpdir_"/"_tmpfile
- s @zcmd@(3)="grep originaltext "_tmpdir_g2_" >> "_tmpdir_tmpfile
- n ok
- s ok=$$GTF^%ZISH(zcmd1,3,tmpdir,cmdfile)
- zsy "bash ../www/scan.sh"
- n where s where=$na(^tmp("kbaiscan",$j))
- k @where
- n where1 s where1=$na(@where@(1))
- s ok=$$FTG^%ZISH(tmpdir,tmpfile,where1,3)
- i ok d  ;
- . n zi s zi=0
- . f  s zi=$o(@where@(zi)) q:+zi=0  d  ;
- . . n zl s zl=@where@(zi)
- . . i zl["code" d  ;
- . . . n code
- . . . s code=$p($p(zl,"code=""",2),""" ")
- . . . i code[">" q  ;
- . . . i code["""" q  ;
- . . . ;b
- . . . n name
- . . . s name=$p($p(zl,"displayName=""",2),"""")
- . . . i name["[&quot;" s name=$p($p(name,"[&quot;",2),"&quot;]")
- . . . i name="" d  ;
- . . . . i zl["<originalText" d  ;
- . . . . . s name=$p($p(zl,"<originalText>",2),"</originalText>")
- . . . q:code=""
- . . . d addtag(code_" "_name,zien,zien2)
- . . . ;d addtag(code,zien,zien2)
- ;zwr ^tmp("kbaiscan",$j,*)
- q
+ ;
+ new zcmd,tmpfile,tmpdir,cmdfile
+ set tmpfile="scan.txt"
+ set cmdfile="scan.sh"
+ set tmpdir=^%WHOME
+ set zcmd=$name(^tmp("kbaicmd",$job))
+ set zcmd1=$name(@zcmd@(1))
+ set @zcmd@(1)="rm "_tmpdir_"/"_tmpfile
+ new g2 set g2=""
+ for i=1:1:$length(zid) set g2=g2_$select($extract(zid,i)=" ":"\ ",1:$extract(zid,i))
+ ; set @zcmd@(2)="grep code "_tmpdir_"/"_zid_" > "_tmpdir_"/"_tmpfile
+ set @zcmd@(2)="grep code "_tmpdir_g2_" > "_tmpdir_tmpfile
+ ; set @zcmd@(3)="grep originaltext "_tmpdir_"/"_zid_" >> "_tmpdir_"/"_tmpfile
+ set @zcmd@(3)="grep originaltext "_tmpdir_g2_" >> "_tmpdir_tmpfile
+ new ok
+ set ok=$$GTF^%ZISH(zcmd1,3,tmpdir,cmdfile)
+ zsystem "bash ../www/scan.sh"
+ new where set where=$name(^tmp("kbaiscan",$job))
+ kill @where
+ new where1 set where1=$name(@where@(1))
+ set ok=$$FTG^%ZISH(tmpdir,tmpfile,where1,3)
+ if ok do  ;
+ . new zi set zi=0
+ . for  set zi=$order(@where@(zi)) quit:+zi=0  do  ;
+ . . new zl set zl=@where@(zi)
+ . . if zl["code" do  ;
+ . . . new code
+ . . . set code=$piece($piece(zl,"code=""",2),""" ")
+ . . . if code[">" quit  ;
+ . . . if code["""" quit  ;
+ . . . ; break
+ . . . new name
+ . . . set name=$piece($piece(zl,"displayName=""",2),"""")
+ . . . if name["[&quot;" set name=$piece($piece(name,"[&quot;",2),"&quot;]")
+ . . . if name="" do  ;
+ . . . . if zl["<originalText" do  ;
+ . . . . . set name=$piece($piece(zl,"<originalText>",2),"</originalText>")
+ . . . . . quit
+ . . . . quit
+ . . . quit:code=""
+ . . . do addtag(code_" "_name,zien,zien2)
+ . . . ; do addtag(code,zien,zien2)
+ . . . quit
+ . . quit
+ . quit
+ ;
+ ; zwrite ^tmp("kbaiscan",$job,*)
+ ;
+ quit  ; end of scan
+ ;
+ ;
  ;
 addtag(tag,zien,zien2) ; add a tag to a graph
- ;w !,"adding ",tag," at ",zien," ",zien2 
- n gn s gn=$na(@$$setroot@("graph"))
- s @gn@(zien,zien2,"tag",tag)=""
- s @gn@("pos","tag",tag,zien,zien2)=""
- s @gn@("ops",tag,"tag",zien,zien2)=""
- ;zwr @$$setroot@("graph",:,:,tag,zien,zien2) 
- q
+ ;
+ ; write !,"adding ",tag," at ",zien," ",zien2 
+ ;
+ new gn set gn=$na(@$$setroot@("graph"))
+ set @gn@(zien,zien2,"tag",tag)=""
+ set @gn@("pos","tag",tag,zien,zien2)=""
+ set @gn@("ops",tag,"tag",zien,zien2)=""
+ ; zwrite @$$setroot@("graph",:,:,tag,zien,zien2)
+ ;
+ quit  ; end of addtag
+ ;
+ ;
  ;
 wssee(rtn,filter) ; web service for browsing files using the graph
- m ^gpl("filter")=filter
- n arg s arg=$g(filter("*"))
- i arg="" d toppage^%yottahtm(.rtn,.filter) q  ;
- ;i arg="@rewrite" d rewrite(.rtn) q  ;
- i arg]"%" s arg=$$URLDEC^VPRJRUT(arg)
- n ptrary ; pointer array for result
- n groot s groot=$na(@$$setroot@("graph"))
- ;i $$lookup(arg,"id",.ptrary)= d  q  ; id arg is found
- ;. i $$count(.ptrary)=1 d  ; just one match
- ;. . ;
- ;i $o(@$$setroot@("graph","pos","id","/"_arg,""))'="" d  q  ;
- ;i $o(@groot@("pos","id","/"_arg,""))'=""&(arg'="ehmp") d  q  ;
- i $o(@groot@("pos","id","/"_arg,""))'="" d  q  ;
- . ;n zdest s zdest="/"_arg
- . ;i $$stat(arg)'["regular file" s zdest=$$locate(arg)
- . ;i zdest'=arg s filter("*")=zdest
- . i $e(arg,$l(arg))="/" d dir(.rtn,arg) q  ; it's a directory
- . ;i $re($p($re(arg),"."))="xml" d style(.rtn,arg) q  ;
- . i $re($p($re(arg),"."))="xml" d  q  ;
- . . d style(.rtn,arg)
- . . d ADDCRLF^VPRJRUT(.rtn)
- . s filter("*")=arg
- . d FILESYS^%W0(.rtn,.filter)
+ ;
+ merge ^gpl("filter")=filter
+ new arg set arg=$get(filter("*"))
+ if arg="" do toppage^%yottahtm(.rtn,.filter) quit  ;
+ ;
+ ; if arg="@rewrite" do rewrite(.rtn) quit  ;
+ ;
+ if arg]"%" set arg=$$URLDEC^VPRJRUT(arg)
+ new ptrary ; pointer array for result
+ new groot set groot=$name(@$$setroot@("graph"))
+ ;
+ ; if $$lookup(arg,"id",.ptrary)= do  quit  ; id arg is found
+ ; . if $$count(.ptrary)=1 do  ; just one match
+ ; . . ;
+ ; . . quit
+ ; . quit
+ ; if $order(@$$setroot@("graph","pos","id","/"_arg,""))'="" do  quit  ;
+ ; if $order(@groot@("pos","id","/"_arg,""))'="",arg'="ehmp" do  quit  ;
+ ;
+ if $order(@groot@("pos","id","/"_arg,""))'="" do  quit  ;
+ . ; new zdest set zdest="/"_arg
+ . ; if $$stat(arg)'["regular file" set zdest=$$locate(arg)
+ . ; if zdest'=arg set filter("*")=zdest
+ . if $extract(arg,$length(arg))="/" do dir(.rtn,arg) quit  ; it's a directory
+ . ; if $reverse($piece($reverse(arg),"."))="xml" do style(.rtn,arg) quit  ;
+ . if $reverse($piece($reverse(arg),"."))="xml" do  quit  ;
+ . . do style(.rtn,arg)
+ . . do ADDCRLF^VPRJRUT(.rtn)
+ . . quit
+ . set filter("*")=arg
+ . do FILESYS^%W0(.rtn,.filter)
+ . quit
+ ;
  ; request is not an id in the graph, so try and find the file if any
- n zf,zuri
- s zuri=$$useuri($$isfile(arg),arg)
- i zuri=-1 s zuri=$$useuri($$altfile($$isfile(arg)),arg)
- i zuri'=-1 d  q  ;
- . i $re($p($re(zuri),"."))="xml" d  q  ;
- . . d style(.rtn,zuri)
- . . d ADDCRLF^VPRJRUT(.rtn)
- . s filter("*")=zuri
- . d FILESYS^%W0(.rtn,.filter) 
- ;s zf=$$isfile(arg)
- ;i zf'=-1 s zuri=$$useuri(zf) ;
- ;e  d  ;
- ;. s zf=$$altfile(zf)
- ;. i zf'=-1 s zuri=$$useuri(zf)
- ;i zuri'=1 d  q  ;
- ;. s filter("*")=zuri
- ;. d FILESYS^%W0(.rtn,.filter)
- n matches
- ;i arg["%20" s arg=$tr(arg,"%20"," ")
- d match("#"_arg,"matches")
- ;m ^gpl("matches")=matches
- ;i $d(matches) s rtn=$q(matches)
- i $$count("matches")>0 d  q  ; more than one match
- . d multout(.rtn,"matches")
- q
+ new zf,zuri
+ set zuri=$$useuri($$isfile(arg),arg)
+ if zuri=-1 set zuri=$$useuri($$altfile($$isfile(arg)),arg)
+ if zuri'=-1 do  quit  ;
+ . if $reverse($piece($reverse(zuri),"."))="xml" do  quit  ;
+ . . do style(.rtn,zuri)
+ . . do ADDCRLF^VPRJRUT(.rtn)
+ . . quit
+ . set filter("*")=zuri
+ . do FILESYS^%W0(.rtn,.filter)
+ . quit
+ ;
+ ; set zf=$$isfile(arg)
+ ; if zf'=-1 set zuri=$$useuri(zf) ;
+ ; else  do  ;
+ ; . set zf=$$altfile(zf)
+ ; . if zf'=-1 set zuri=$$useuri(zf)
+ ; . quit
+ ; if zuri'=1 do  quit  ;
+ ; . set filter("*")=zuri
+ ; . do FILESYS^%W0(.rtn,.filter)
+ ; . quit
+ ;
+ new matches
+ ;
+ ; if arg["%20" s arg=$translate(arg,"%20"," ")
+ ;
+ do match("#"_arg,"matches")
+ ;
+ ; merge ^gpl("matches")=matches
+ ; if $data(matches) set rtn=$query(matches)
+ ;
+ if $$count("matches")>0 do  quit  ; more than one match
+ . do multout(.rtn,"matches")
+ . quit
+ ;
+ quit  ; end of wssee
+ ;
+ ;
  ;
 style(rtn,zuri) ;
- n gn s gn=$na(^tmp("kbaiout",$j))
- n gn1 s gn1=$na(@gn@(1))
- k @gn
- n ok
- s ok=$$FTG^%ZISH($$dirpart(zuri),$$isfile(zuri),gn1,3)
- i 'ok d  q  ;
- . ;b
- . s filter("*")=zuri
- . d FILESYS^%W0(.rtn,.filter) 
- s HTTPRSP("mime")="text/xml"
- ;n gt1
- ;s gt1="<?xml-stylesheet type=""text/xsl"" href=""/resources/css/cda.xslt""?>"
- ;i $g(@gn@(1))["?>" d  ;
- ;. n gt s gt=$p(@gn@(1),"?>",1)_"?>"_gt1_$p(@gn@(1),"?>",2)
- ;. s @gn@(1)=gt
- ;s @gn@(1)=@gn@(1)_"<?xml-stylesheet type=""text/xml"" href=""/resources/css/cda.xsl""?>"
- s @gn@(1.5)="<?xml-stylesheet type=""text/xml"" href=""/resources/css/cda.xsl""?>"
- s rtn=gn
- q
+ ;
+ new gn set gn=$name(^tmp("kbaiout",$job))
+ new gn1 set gn1=$name(@gn@(1))
+ kill @gn
+ new ok
+ set ok=$$FTG^%ZISH($$dirpart(zuri),$$isfile(zuri),gn1,3)
+ if 'ok do  quit  ;
+ . ; break
+ . set filter("*")=zuri
+ . do FILESYS^%W0(.rtn,.filter)
+ . quit
+ set HTTPRSP("mime")="text/xml"
+ ;
+ ; new gt1
+ ; set gt1="<?xml-stylesheet type=""text/xsl"" href=""/resources/css/cda.xslt""?>"
+ ; if $get(@gn@(1))["?>" do  ;
+ ; . new gt set gt=$piece(@gn@(1),"?>",1)_"?>"_gt1_$piece(@gn@(1),"?>",2)
+ ; . set @gn@(1)=gt
+ ; . quit
+ ; set @gn@(1)=@gn@(1)_"<?xml-stylesheet type=""text/xml"" href=""/resources/css/cda.xsl""?>"
+ ;
+ set @gn@(1.5)="<?xml-stylesheet type=""text/xml"" href=""/resources/css/cda.xsl""?>"
+ set rtn=gn
+ ;
+ quit  ; end of style
+ ;
+ ;
  ;
 parent(zarg) ; extrinsic which returns the parent of the zarg
  ;
- n groot s groot=$na(@$$setroot@("graph"))
- n zien
- s zien=$o(@groot@("pos","id","/"_zarg,""))
- i zien="" q ""
- q $o(@groot@(zien,"parent",""))
+ new groot set groot=$name(@$$setroot@("graph"))
+ new zien
+ set zien=$order(@groot@("pos","id","/"_zarg,""))
+ if zien="" quit ""
+ ;
+ quit $order(@groot@(zien,"parent",""))
+ ;
+ ;
  ;
 isfile(zarg) ; extrinsic to return the file name from a uri
+ ;
  ; -1 if it's not a file
- n rslt
- s rslt=$re($p($re(zarg),"/"))
- i rslt="" s rslt=-1
- q rslt
+ ;
+ new rslt
+ set rslt=$reverse($piece($reverse(zarg),"/"))
+ if rslt="" set rslt=-1
+ ;
+ quit rslt ; end of $$isFile
+ ;
+ ;
  ;
 dirpart(zuri) ; extrinsic which returns the directory part of the file uri
- n rslt
- s rslt=$p(zuri,$$isfile(zuri),1)
- i rslt="" s rslt=-1
- q ^%WHOME_rslt
+ ;
+ new rslt
+ set rslt=$piece(zuri,$$isfile(zuri),1)
+ if rslt="" set rslt=-1
+ ;
+ quit ^%WHOME_rslt ; end of $$dirpart
+ ;
+ ;
  ;
 altfile(zfile) ; extrinsic which tries to take the version number out of
+ ;
  ; the filename ie jasmine-1.3.1.js becomes jasmine.js
- n z1,z2,z3,z4,z5
- s z1=$re(zfile) ; sj.1.3.1-enimsaj
- s z2=$p(z1,".",4) ; 1-enimsaj
- ;w:$g(debug) !,"z2=",z2
- ;s z3=$p(z2,"-",2) ; enimsaj
- s z3=$e(z2,3,$l(z2))
- ;w:$g(debug) !,"z3=",z3,!
- s z4="."_$re($p(z1,".",1)) ; .js
- ;w:$g(debug) !,"z4=",z4,!
- s z5=$re(z3)_z4
- q z5
+ ;
+ new z1,z2,z3,z4,z5
+ set z1=$reverse(zfile) ; sj.1.3.1-enimsaj
+ set z2=$piece(z1,".",4) ; 1-enimsaj
+ ; write:$get(debug) !,"z2=",z2
+ ; set z3=$piece(z2,"-",2) ; enimsaj
+ set z3=$extract(z2,3,$length(z2))
+ ; write:$get(debug) !,"z3=",z3,!
+ set z4="."_$reverse($piece(z1,".",1)) ; .js
+ ; write:$get(debug) !,"z4=",z4,!
+ set z5=$reverse(z3)_z4
+ ;
+ quit z5 ; end of $$altfile
+ ;
+ ;
  ;
 useuri(zfile,zarg) ; extrinsic which returns the uri to use for a filename
+ ;
  ; -1 if none found
- n z1,z2,groot,zr
- s groot=$na(@$$setroot@("graph"))
- s z1=$o(@groot@("pos","file",zfile,""))
- i z1="" q -1
- s z2=$o(@groot@("pos","file",zfile,z1,""))
- s zr=$o(@groot@(z1,z2,"id",""))
- i zr="" s zr=-1
- ;i zr'=-1 d logrewr(zarg,zr)
- q zr
+ ;
+ new z1,z2,groot,zr
+ set groot=$name(@$$setroot@("graph"))
+ set z1=$order(@groot@("pos","file",zfile,""))
+ if z1="" quit -1
+ set z2=$order(@groot@("pos","file",zfile,z1,""))
+ set zr=$order(@groot@(z1,z2,"id",""))
+ if zr="" set zr=-1
+ ; if zr'=-1 do logrewr(zarg,zr)
+ ;
+ quit zr ; end of $$useuri
+ ;
+ ;
  ;
 multout(rtn,zary,title) ; return and html page with multiple selections
+ ;
  ; zary is passed by name and is usually a "match" array
- d  ;
- . s rtn=$na(^tmp("kbaiwsai",$j))
- . k @rtn
- . n gtop,gbot
- . d htmltb2^%yottaweb(.gtop,.gbot,"search results for #"_arg)
- . m @rtn=gtop
- . i $d(title) d addto^%yottautl(rtn,"<p>"_title_"</p>")
- . d addto^%yottautl(rtn,"<ul>")
- . n zcnt,zstop s (zcnt,zstop)=0
- . n zi s zi=zary
- . f  s zi=$q(@zi) q:((zi="")!(zstop))  d  ;
- . . s zcnt=zcnt+1
- . . i zcnt>1000 s zstop=1
- . . n zptr s zptr=$$fmtptr(zi)
- . . n zd,zf,zref
- . . s zd=$o(@zptr@("localdir",""))
- . . s zd=$p(zd,$$homedir,2)
- . . ;i $e(zd,$l(zd))="/" d  q  ; it's a directory
- . . s zf=$o(@zptr@("file",""))
- . . s zref="<a href=""/see"_zd_"/"_zf_""">"_zd_"/"_zf_"</a>"
- . . d addto^%yottautl(rtn,"<li>"_zref_"</li>")
- . d addto^%yottautl(rtn,"</ul>")
- . k @rtn@(0)
- . s HTTPRSP("mime")="text/html"
- . s @rtn@($o(@rtn@(""),-1)+1)=gbot
- ;i $e(arg,$l(arg))="/" d  q  ; it's a directory
- ;. s rtn="it's a directory"
- ;d FILESYS^%W0(.rtn,.filter)
- q
+ ;
+ do  ;
+ . set rtn=$namew(^tmp("kbaiwsai",$j))
+ . kill @rtn
+ . new gtop,gbot
+ . do htmltb2^%yottaweb(.gtop,.gbot,"search results for #"_arg)
+ . merge @rtn=gtop
+ . if $data(title) do addto^%yottautl(rtn,"<p>"_title_"</p>")
+ . do addto^%yottautl(rtn,"<ul>")
+ . new zcnt,zstop set (zcnt,zstop)=0
+ . new zi set zi=zary
+ . for  set zi=$query(@zi) quit:((zi="")!(zstop))  do  ;
+ . . set zcnt=zcnt+1
+ . . if zcnt>1000 set zstop=1
+ . . new zptr set zptr=$$fmtptr(zi)
+ . . new zd,zf,zref
+ . . set zd=$order(@zptr@("localdir",""))
+ . . set zd=$piece(zd,$$homedir,2)
+ . . ; if $extract(zd,$length(zd))="/" do  quit  ; it's a directory
+ . . set zf=$order(@zptr@("file",""))
+ . . set zref="<a href=""/see"_zd_"/"_zf_""">"_zd_"/"_zf_"</a>"
+ . . do addto^%yottautl(rtn,"<li>"_zref_"</li>")
+ . . quit
+ . do addto^%yottautl(rtn,"</ul>")
+ . kill @rtn@(0)
+ . set HTTPRSP("mime")="text/html"
+ . set @rtn@($order(@rtn@(""),-1)+1)=gbot
+ . quit
+ ;
+ ; if $extract(arg,$length(arg))="/" do  quit  ; it's a directory
+ ; . set rtn="it's a directory"
+ ; . quit
+ ; do FILESYS^%W0(.rtn,.filter)
+ ;
+ quit  ; end of multout
+ ;
+ ;
  ;
 dir(rtn,zpar)
- n zi,dirary
- n groot s groot=$na(@$$setroot@("graph"))
- n adj s adj="/"_$e(zpar,1,$l(zpar)-1)
- m dirary=@groot@("pos","parent",adj)
- ;s dirary("up")=$g(@groot@("
- ;b
- i '$d(dirary) q  ;
- d multout(.rtn,"dirary")
- q
+ ;
+ new zi,dirary
+ new groot set groot=$name(@$$setroot@("graph"))
+ new adj set adj="/"_$extract(zpar,1,$length(zpar)-1)
+ merge dirary=@groot@("pos","parent",adj)
+ ; set dirary("up")=$get(@groot@("
+ ; break
+ if '$data(dirary) quit  ;
+ do multout(.rtn,"dirary")
+ ;
+ quit  ; end of dir
+ ;
+ ;
  ;
 deuri(in,out) ; deconstruct a uri. in passed by value out passed by name
- n zzi
- f zzi=2:1:$l(in,"/") s @out@(zzi-1)=$p(in,"/",zzi)
- q
+ ;
+ new zzi
+ for zzi=2:1:$length(in,"/") set @out@(zzi-1)=$piece(in,"/",zzi)
+ ;
+ quit  ; end of deuri
+ ;
+ ;
  ;
 reuri(in) ; extrinsic which reconstructs a uri from an array
- q
+ ;
+ quit  ; end of reuri
+ ;
+ ;
  ;
 repar(in) ; extrinsic which reconstructs a parent uri from an array
- q
+ ;
+ quit  ; end of repar
+ ;
+ ;
  ;
 show(zien,zien2) ;
- i $g(zien)="" s zien=1
- i $g(zien2)="" zwr @$$setroot@("graph",zien,*) q  ;
- zwr @$$setroot@("graph",zien,zien2,*)
- q
+ ;
+ if $get(zien)="" set zien=1
+ if $get(zien2)="" zwrite @$$setroot@("graph",zien,*) quit  ;
+ zwrite @$$setroot@("graph",zien,zien2,*)
+ ;
+ quit  ; end of show
+ ;
+ ;
  ;
 fmtptr(inref) ; extrinsic forms a closed global reference to the graph
+ ;
  ; inref is passed by value and looks like g(2897,3)
  ; returns ^xtmp("kbaiweb","graph",3297,3) based on setroot
- n %1,%2 s %1=$na(@$$setroot@("graph"))
- s %1=$p(%1,")",1)
- s %2=$p(inref,"(",2)
- q %1_","_%2
+ ;
+ new %1,%2 set %1=$name(@$$setroot@("graph"))
+ set %1=$piece(%1,")",1)
+ set %2=$piece(inref,"(",2)
+ ;
+ quit %1_","_%2 ; end of fmtptr
+ ;
+ ;
  ;
 gshow(inary) ; show the location and file names pointed to by inary
+ ;
  ; inary is passed by name
- n %
- n z1 s z1=inary
- f  s z1=$q(@z1) q:z1=""  d  ;
- . n z2,z3
- . s %=$$fmtptr(z1)
- . s z2=$na(@%@("file"))
- . w !,z2,"   ",$o(@z2@(""))
- . s z3=$na(@%@("distdir"))
- . w !,"   ",$o(@z3@(""))
- q
+ ;
+ new %
+ new z1 set z1=inary
+ for  set z1=$query(@z1) quit:z1=""  do  ;
+ . new z2,z3
+ . set %=$$fmtptr(z1)
+ . set z2=$name(@%@("file"))
+ . write !,z2,"   ",$order(@z2@(""))
+ . set z3=$name(@%@("distdir"))
+ . write !,"   ",$order(@z3@(""))
+ . quit
+ ;
+ quit  ; end of gshow
+ ;
+ ;
  ;
 match(input,outary) ; extrinsic which returns the count of matches, 0 if none
- ; input is a string eg.. #ehmp#applets.  outary is passed by name and returns
- ; the iens of the graph elements that match ie.. outary(1,2)="" and outary(3)
- n po ; predicate object array
- d hashpars(input,"po")
- i '$d(po) q 0 ;
- n groot s groot=$$setroot()
- n posroot s posroot=$na(@groot@("graph","pos"))
- i $o(po(""),-1)=1 d  q  ;$$count(outary) ; only one hash tag to search for
- . n pred,obj
- . s pred=$o(po(1,""))
- . s obj=$o(po(1,pred,""))
- . i ('$d(@posroot@(pred,obj))&($d(@posroot@(pred,obj_" ")))) s obj=obj_" "
- . i $o(@posroot@(pred,obj,""))="" q  ;
- . k @outary
- . m @outary=@posroot@(pred,obj)
- q
+ ;
+ ; input is a string eg.. #ehmp#applets.
+ ; outary is passed by name and returns
+ ; the iens of the graph elements that match
+ ; ie.. outary(1,2)="" and outary(3)
+ ;
+ new po ; predicate object array
+ do hashpars(input,"po")
+ if '$data(po) quit 0 ;
+ new groot set groot=$$setroot()
+ new posroot set posroot=$name(@groot@("graph","pos"))
+ if $order(po(""),-1)=1 do  quit  ; $$count(outary)
+ . ; only one hash tag to search for
+ . new pred,obj
+ . set pred=$order(po(1,""))
+ . set obj=$order(po(1,pred,""))
+ . if '$data(@posroot@(pred,obj)),$data(@posroot@(pred,obj_" ")) do
+ . . set obj=obj_" "
+ . . quit
+ . if $order(@posroot@(pred,obj,""))="" quit  ;
+ . kill @outary
+ . merge @outary=@posroot@(pred,obj)
+ . quit
+ ;
+ quit  ; end of match
+ ;
+ ;
  ;
 count(ary) ; count the number of entries in the array ary pased by name
- n zcnt s zcnt=0
- i '$d(@ary) q zcnt
- n % s %=ary
- f  s %=$q(@%) q:%=""  s zcnt=zcnt+1
- q zcnt
+ ;
+ new zcnt set zcnt=0
+ if '$data(@ary) quit zcnt
+ new % set %=ary
+ for  set %=$query(@%) quit:%=""  set zcnt=zcnt+1
+ ;
+ quit zcnt ; end of $$count
+ ;
+ ;
  ;
 recount ; recount the tags
- n groot s groot=$$setroot
- s groot=$na(@groot@("graph"))
- d counts(groot)
- q
+ ;
+ new groot set groot=$$setroot
+ set groot=$name(@groot@("graph"))
+ do counts(groot)
+ ;
+ quit  ; end of recount
+ ;
+ ;
  ;
 hashpars(input,pairs)
- n kbaii
- i input'["#" q  ;
- f kbaii=2:1:$l(input,"#") d  ;
- . n zp,zo,pred
- . s zp=$p(input,"#",kbaii)
- . s pred="tag"
- . s zo=zp
- . i zp[":" d  ;
- . . s pred=$p(zp,":",1)
- . . s zo=$e(zp,$f(zp,":"),$l(zp))
- . . i zo["%" s zo=$$URLDEC^VPRJRUT(.zo)
- . . ;w !,zo
- . . ;s zo=$p(zp,":",2)
- . i $g(pred)="" q  ;
- . i $g(zo)="" q  ;
- . s @pairs@(kbaii-1,pred,zo)=""
- q
+ ;
+ new kbaii
+ if input'["#" quit  ;
+ for kbaii=2:1:$length(input,"#") do  ;
+ . new zp,zo,pred
+ . set zp=$piece(input,"#",kbaii)
+ . set pred="tag"
+ . set zo=zp
+ . if zp[":" do  ;
+ . . set pred=$piece(zp,":",1)
+ . . set zo=$extract(zp,$find(zp,":"),$length(zp))
+ . . if zo["%" set zo=$$URLDEC^VPRJRUT(.zo)
+ . . ; write !,zo
+ . . ; set zo=$piece(zp,":",2)
+ . . quit
+ . if $get(pred)="" quit  ;
+ . if $get(zo)="" quit  ;
+ . set @pairs@(kbaii-1,pred,zo)=""
+ . quit
+ ;
+ quit  ; end of hashpars
+ ;
+ ;
  ;
 stat(zf) ;
- n zstat,zcmd,zwhere
- s zcmd="""stat --format %f "_zf_" >./stat.txt"""
- zsy @zcmd
- s zwhere=$na(^tmp("kbaiweb","stat",1))
- n zok s zok=$$FTG^%ZISH("./","stat.txt",zwhere,3)
- q @zwhere
+ ;
+ new zstat,zcmd,zwhere
+ set zcmd="""stat --format %f "_zf_" >./stat.txt"""
+ zsystem @zcmd
+ set zwhere=$name(^tmp("kbaiweb","stat",1))
+ new zok set zok=$$FTG^%ZISH("./","stat.txt",zwhere,3)
+ ;
+ quit @zwhere ; end of $$stat
+ ;
+ ;
  ;
 locate(zarg) ;
- q zarg
+ ;
+ quit zarg ; end of $$locate
+ ;
+ ;
  ;
 logrewr(from,to) ; log uri rewrite
- n dt,id,ln
- s dt=httplog("dt"),id=httplog("id")
- s ln=$g(^vprhttp("log",dt,$j,id,"rewrite","from"),0)+1
- s ^vprhttp("log",dt,$j,id,"rewrite","from",0)=ln
- s ^vprhttp("log",dt,$j,id,"rewrite",ln,"from")=$g(from)
- s ^vprhttp("log",dt,$j,id,"rewrite",ln,"to")=$g(to)
- q
-rewrite(rtn) ; show all the rewrites in the log
- n zr,zrary
- n gtop,gbot
- d htmltb^%yottaweb(.gtop,.gbot,"search results for #"_arg)
- m @rtn=gtop
- d addto^%yottautl(rtn,"<h1>items not found</h1>") 
- s zr=$na(^vprhttp("log"))
- f  s zr=$q(@zr) q:zr=""  d  ;
- . i zr'["rewrite" q  ;
- . i zr'["from" q  ;
- . ;w !,zr
- . i $l(@zr)=1 q  ; the count
- . n title s title="not found - "_@zr
- . d match(@zr,"zrary")
- . d addto^%yottautl(rtn,"<p>"_@zr_"</p>")
- . ;d multout(.rtn,"zrary",title)
- k @rtn@(0)
- s HTTPRSP("mime")="text/html"
- s @rtn@($o(@rtn@(""),-1)+1)=gbot
- q
  ;
+ new dt,id,ln
+ set dt=httplog("dt"),id=httplog("id")
+ set ln=$g(^vprhttp("log",dt,$job,id,"rewrite","from"),0)+1
+ set ^vprhttp("log",dt,$job,id,"rewrite","from",0)=ln
+ set ^vprhttp("log",dt,$job,id,"rewrite",ln,"from")=$get(from)
+ set ^vprhttp("log",dt,$job,id,"rewrite",ln,"to")=$get(to)
+ ;
+ quit  ; end of logrewr
+ ;
+ ;
+ ;
+rewrite(rtn) ; show all the rewrites in the log
+ ;
+ new zr,zrary
+ new gtop,gbot
+ do htmltb^%yottaweb(.gtop,.gbot,"search results for #"_arg)
+ merge @rtn=gtop
+ do addto^%yottautl(rtn,"<h1>items not found</h1>") 
+ set zr=$name(^vprhttp("log"))
+ for  set zr=$query(@zr) quit:zr=""  do  ;
+ . if zr'["rewrite" quit  ;
+ . if zr'["from" quit  ;
+ . ; write !,zr
+ . if $length(@zr)=1 quit  ; the count
+ . new title set title="not found - "_@zr
+ . do match(@zr,"zrary")
+ . do addto^%yottautl(rtn,"<p>"_@zr_"</p>")
+ . ; do multout(.rtn,"zrary",title)
+ . quit
+ kill @rtn@(0)
+ set HTTPRSP("mime")="text/html"
+ set @rtn@($order(@rtn@(""),-1)+1)=gbot
+ ;
+ quit  ; end of rewrite
+ ;
+ ;
+ ;
+eor ; end of routine %yottagr

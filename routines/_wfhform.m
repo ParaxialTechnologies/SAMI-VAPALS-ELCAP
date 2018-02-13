@@ -1,4 +1,4 @@
-%wfhform ;ven/gpl-write form: html form get & post ;2018-02-06T02:08Z
+%wfhform ;ven/gpl-write form: html form get & post ;2018-02-11T15:12Z
  ;;1.8;Mash;
  ;
  ; %wfhform implements the Write Form Library's html form get & post web
@@ -22,7 +22,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-06T02:08Z
+ ;@last-updated: 2018-02-11T15:12Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Write Form - %wf
  ;@version: 1.8T04
@@ -33,8 +33,6 @@
  ; toad@vistaexpertise.net
  ;
  ;@to-do
- ; %wf: convert entry points to ppi/api style
- ; r/all local calls w/calls through ^%wf
  ; break up into smaller routines & change branches from %wf
  ;
  ;@contents
@@ -46,7 +44,7 @@
  ;
  ;
  ;
-wsGetForm(rtn,filter,post) ; web service wsGetForm^%wf, get html form
+wsGetForm ; code for wsGetForm^%wf, get html form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -55,6 +53,8 @@ wsGetForm(rtn,filter,post) ; web service wsGetForm^%wf, get html form
  ; do wsGetForm^%wf(.rtn,.filter,post)
  ;@branches-from
  ; wsGetForm^%wf
+ ;@ws-called-by
+ ; web service GET:form/*
  ;@called-by: none
  ;@calls
  ; getVals^%wf
@@ -85,30 +85,29 @@ wsGetForm(rtn,filter,post) ; web service wsGetForm^%wf, get html form
  ; filter("studyId")=study id
  ; post = 1 if ...
  ;@output
- ; ??
- ;@throughput
- ;.rtn = 
+ ;.rtn = name of root containing returned html (the prepared form)
+ ;@throughput: none
  ;@examples [tbd]
  ;@tests [tbd]
  ;
  ; [description tbd]
  ; return the html for the form id, passed in filter
  ;
- ;@stanza 2 do replacements
+ ;@stanza 2 load saved field values from graph
  ;
- set rtn=$na(^TMP("yottaForm",$job))
- kill @rtn
- ;
- new form set form=$get(filter("form"))
+ new form set form=$get(filter("form")) ; id form
  if form="" set form="sbform"
  ;
- new sid set sid=$get(filter("studyid"))
+ new sid set sid=$get(filter("studyid")) ; id patient by study id
  if sid="" set sid=$get(filter("fvalue"))
  if sid="" set sid="XXXX01"
  ;
  new vals
- do getVals^%wf("vals",form,sid)
+ do getVals^%wf("vals",form,sid) ; load saved field values
  ;
+ ;@stanza 3 load html template
+ ;
+ ; get field values saved in fileman file, preserve graph values
  new fn
  if form["sbform" do  
  . ;set fn="background-form.html"
@@ -116,15 +115,24 @@ wsGetForm(rtn,filter,post) ; web service wsGetForm^%wf, get html form
  . if $g(post)=1 quit  ;
  . do retrieve^%wffiler("tmpvals","sbform",311.102,sid)
  . ;if $data(tmpvals) kill vals merge vals=tmpvals
- . if $data(tmpvals) merge vals=tmpvals ; maintain graph vars not saved in fileman
+ . ; maintain graph vars not saved in fileman:
+ . if $data(tmpvals) merge vals=tmpvals
  . quit
  ;
+ ; clear return html array
+ set rtn=$name(^TMP("yottaForm",$job))
+ kill @rtn
+ ;
+ ; lookup template name
  if $get(fn)="" set fn=$$getTemplate^%wf(form)
  if fn="" quit  ;
  ;
- new zhtml,errctrl ; holders of the html template and the error control array
+ ; load template html
+ new zhtml,errctrl ; holders of html template & error control array
  do getThis^%wd("zhtml",fn)
  if '$data(zhtml) quit  ;
+ ;
+ ;@stanza 4 traverse html lines in template, for each ...
  ;
  new name,value,selectnm
  set selectnm="" ; name of select variable, which spans options
@@ -133,15 +141,21 @@ wsGetForm(rtn,filter,post) ; web service wsGetForm^%wf, get html form
  . new tln set tln=zhtml(%j)
  . new customscan s customscan=""
  . ;
+ . ;@stanza 5 special handling of SAMI forms
+ . ;
  . ; do  ; i can't get this to work... need help with x indirection
  . ; . new fglb set fglb=$name(^SAMI(311.11))
  . ; . new fn set fn=311.11
  . ; . new fien set fien=$order(@fglb@("B",form,""))
  . ; . quit:fien="" ""
  . ; . set customscan=$$GET1^DIQ(fn,fien_",",3) ; custom scan routine
- . ; . if $length(customscan)>0 set customscan=$translate(customscan,"@","^") ; fix for ^
+ . ; . if $length(customscan)>0 do
+ . ; . . set customscan=$translate(customscan,"@","^") ; fix for ^
+ . ; . . quit
  . ; . quit:$length(customscan)>0
- . ; . if $extract(form,3,6)["form" set customscan="do SAMISUBS^SAMIFRM(.tln,form,sid,.filter)"
+ . ; . if $extract(form,3,6)["form" do
+ . ; . . set customscan="do SAMISUBS^SAMIFRM(.tln,form,sid,.filter)"
+ . ; . . quit
  . ; if customscan'="" xecute @customscan
  . ;
  . if form="sbform3" do SAMISUB2^SAMIFRM(.tln,form,sid,.filter,.%j,.zhtml)
@@ -152,16 +166,25 @@ wsGetForm(rtn,filter,post) ; web service wsGetForm^%wf, get html form
  . if tln["hidden" quit  ;
  . ;
  . ; hack for elcap forms - temporary - gpl
- . ;if tln["jquery-1.html" set zhtml(%j)="" quit  ; 
- . ;if tln["mgtsys.html" set zhtml(%j)="" quit  ; 
- . ;if tln["mgtsys2.html" set zhtml(%j)="" quit  ; 
- . ;if tln["index.html" set zhtml(%j)="" quit  ; 
- . ;if tln["identity.html" set zhtml(%j)="" quit  ; 
- . ;if tln["jquery-1.html" set zhtml(%j)="" quit  ; 
+ . ; if tln["jquery-1.html" set zhtml(%j)="" quit  ; 
+ . ; if tln["mgtsys.html" set zhtml(%j)="" quit  ; 
+ . ; if tln["mgtsys2.html" set zhtml(%j)="" quit  ; 
+ . ; if tln["index.html" set zhtml(%j)="" quit  ; 
+ . ; if tln["identity.html" set zhtml(%j)="" quit  ; 
+ . ; if tln["jquery-1.html" set zhtml(%j)="" quit  ; 
  . ; end hack
  . ;
- . if tln["class=""errormsg"">" do redactErr^%wf("zhtml","errctrl",.%j) quit  ; remove error section
- . if tln["fielderr" do redactErr2^%wf("zhtml",.%j)
+ . ;@stanza 6 process errors
+ . ;
+ . if tln["class=""errormsg"">" do  quit  ; error block at top of form
+ . . do redactErr^%wf("zhtml","errctrl",.%j) ; remove error section
+ . . quit
+ . ;
+ . if tln["fielderr" do  ; error messages w/fields
+ . . do redactErr2^%wf("zhtml",.%j)
+ . . quit
+ . ;
+ . ;@stanza 7 process field name or value
  . ;
  . set (name,value)=""
  . ;
@@ -174,29 +197,46 @@ wsGetForm(rtn,filter,post) ; web service wsGetForm^%wf, get html form
  . . set value=$piece($piece(zhtml(%j),"value=""",2),"""",1)
  . . quit
  . ;
+ . ;@stanza 8 process study id [why the asterisks?]
+ . ;
  . if zhtml(%j)["*sbsid*" do  ;
  . . set zhtml(%j)=$piece(tln,"*sbsid*",1)_sid_$piece(tln,"*sbsid*",2)
  . . quit
  . ;
+ . ;@stanza 9 process action
+ . ;
  . if zhtml(%j)["action=" do  ;
- . . ;set zhtml(%j)="<form action=""http://vendev.vistaplex.org:9080/postform?form="_form_"&studyId="_sid_""" method=""POST"" id=""backgroundForm"">"
+ . . ; set zhtml(%j)="<form action=""http://vendev.vistaplex.org:9080/postform?form="_form_"&studyId="_sid_""" method=""POST"" id=""backgroundForm"">"
  . . new sublbl set sublbl=$$formLabel^%wf(form)
  . . new dbg set dbg=$get(filter("debug"))
  . . if dbg'="" set dbg="&debug="_dbg
- . . ;if form'="sbform" do  quit  ;
- . . ;. if zhtml(%j)["datae" set zhtml(%j)="<form action=""form?form="_form_"&studyId="_sid_dbg_""" method=""POST"" name="""_sublbl_""">"
+ . . ;
+ . . ; if form'="sbform" do  quit  ;
+ . . ; . if zhtml(%j)["datae" do
+ . . ; . . set zhtml(%j)="<form action=""form?form="_form_"&studyId="_sid_dbg_""" method=""POST"" name="""_sublbl_""">"
+ . . ; . . quit
+ . . ;
  . . if zhtml(%j)["http://foia201606.vistaplex.org:9080/sami/intake" do  quit  ; 
  . . . set zhtml(%j)="<form action=""form?form="_form_"&studyId="_sid_dbg_""" method=""POST"" name="""_sublbl_""">"
  . . . quit
+ . . quit
+ . ;
+ . ;@stanza 10 fix css & js href values [disabled]
  . ;
  . ;if form'="sbform" do  ;
- . ;. if $$replaceSrc^%wf(.tln) set zhtml(%j)=tln ; fix the css and js href values
- . ;. if $$replaceHref^%wf(.tln) set zhtml(%j)=tln ; fix the css and js href values
+ . ;. if $$replaceSrc^%wf(.tln) set zhtml(%j)=tln
+ . ;. if $$replaceHref^%wf(.tln) set zhtml(%j)=tlnvalues
  . ;. quit
+ . ;
+ . ;@stanza 11 skip table declarations
  . ;
  . if tln["table" quit  ;
  . ;
+ . ;@stanza 12 process input tags
+ . ;
  . if zhtml(%j)["input" do  ;
+ . . ;
+ . . ; handle long lines
  . . if $length(zhtml(%j),"<input")>2 do  ; got to split the lines
  . . . new zgt,zgn set zgt=zhtml(%j)
  . . . set zgn=$find(zgt,"<input",$find(zgt,"<input"))
@@ -204,9 +244,13 @@ wsGetForm(rtn,filter,post) ; web service wsGetForm^%wf, get html form
  . . . set zhtml(%j)=$extract(zgt,1,zgn-7)
  . . . set tln=zhtml(%j)
  . . . quit
- . . if $get(name)="" quit  ;
+ . . ;
+ . . ; save field value
+ . . quit:$get(name)=""
  . . new val set val=""
- . . if $data(vals(name)) set val=$get(vals(name))
+ . . if $data(vals(name)) set val=vals(name)
+ . . ;
+ . . ; handle radio buttons & checkboxes
  . . new type set type=""
  . . ;if tln["type=" set type=$piece($piece(tln,"type=""",2),"""",1)
  . . if tln["type=" set type=$piece($piece(tln,"type=",2)," ",1)
@@ -217,24 +261,25 @@ wsGetForm(rtn,filter,post) ; web service wsGetForm^%wf, get html form
  . . . if $get(filter("debug"))=2 do debugFld^%wf(.tln,form,name)
  . . . set zhtml(%j)=tln
  . . . quit
- . . ;break
- . . do unvalue^%wf(.tln)
- . . ;set val=$$URLENC^VPRJRUT(val)
- . . for  do replace^%wf(.val,"""","&quot;") quit:val'[""""
- . . do dateFormat^%wf(.val,form,name) ; reformat if date
- . . do value^%wf(.tln,val)
+ . . ; break
  . . ;
- . . ; validation starts here
+ . . ; clear value, normalize quotes & dates, restore value
+ . . do unvalue^%wf(.tln) ; clear input-field value
+ . . ; set val=$$URLENC^VPRJRUT(val)
+ . . for  do replace^%wf(.val,"""","&quot;") quit:val'[""""  ; quotes
+ . . do dateFormat^%wf(.val,form,name) ; ensure elcap date format
+ . . do value^%wf(.tln,val) ; restore normalized value
  . . ;
+ . . ; input-field validation
  . . new spec,errmsg set spec=$$getFieldSpec^%wffmap(form,name)
  . . set errmsg="Input invalid"
  . . if val'="" do  ;
  . . . if $$validate^%wf(val,spec,,.errmsg)<1 do  ;
  . . . . set errflag=1
  . . . . new errmethod set errmethod=2
- . . . . ;set errmethod=$get(filter("errormessagestyle"))
- . . . . ;if errmethod="" set errmethod=$get(errctrl("errorMessageStyle"))
- . . . . ;if errmethod="" set errmethod=1
+ . . . . ; set errmethod=$get(filter("errormessagestyle"))
+ . . . . ; if errmethod="" set errmethod=$get(errctrl("errorMessageStyle"))
+ . . . . ; if errmethod="" set errmethod=1
  . . . . set errmethod=2
  . . . . if errmethod=2 do  ;
  . . . . . new tprevln,uln
@@ -248,12 +293,13 @@ wsGetForm(rtn,filter,post) ; web service wsGetForm^%wf, get html form
  . . . . quit
  . . . quit
  . . ;
- . . ; end validation
- . . ;
- . . ;write !,tln,!,zhtml(%j),! break
+ . . ; [optionally debug & r/html template line w/processed line
+ . . ; write !,tln,!,zhtml(%j),! break
  . . if $get(filter("debug"))>0 do debugFld^%wf(.tln,form,name)
  . . set zhtml(%j)=tln
  . . quit
+ . ;
+ . ;@stanza 13 process text areas
  . ;
  . if zhtml(%j)["<textarea" do  ;
  . . new val set val=""
@@ -264,6 +310,8 @@ wsGetForm(rtn,filter,post) ; web service wsGetForm^%wf, get html form
  . . if val'="" do replace^%wf(.tln,"</textarea>",val_"</textarea>")
  . . set zhtml(%j)=tln
  . . quit
+ . ;
+ . ;@stanza 14 process option selections
  . ;
  . if zhtml(%j)["<select" do  ;
  . . set selectnm=$get(name)
@@ -281,11 +329,13 @@ wsGetForm(rtn,filter,post) ; web service wsGetForm^%wf, get html form
  . . quit
  . quit
  ;
- ;D ADDCRLF^VPRJRUT(.zhtml)
+ ;@stanza 15 return form prepared fr/template
  ;
- merge @rtn=zhtml
+ ; do ADDCRLF^VPRJRUT(.zhtml)
  ;
- set HTTPRSP("mime")="text/html"
+ merge @rtn=zhtml ; copy processed template to return array
+ ;
+ set HTTPRSP("mime")="text/html" ; set mime type
  ;
  ;@stanza 3 termination
  ;
@@ -297,7 +347,7 @@ wsGetForm(rtn,filter,post) ; web service wsGetForm^%wf, get html form
  ;
  ;
  ;
-formLabel(form) ; ppi $$formLabel^%wf, label to use for form's post url
+formLabel ; code for ppi $$formLabel^%wf, form's post url label
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -306,8 +356,9 @@ formLabel(form) ; ppi $$formLabel^%wf, label to use for form's post url
  ; $$formLabel^%wf(form)
  ;@branches-from
  ; $$formLabel^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm^%wf
+ ;@called-by: none
  ;@calls
  ; $$GET1^DIQ
  ;@input
@@ -334,7 +385,7 @@ formLabel(form) ; ppi $$formLabel^%wf, label to use for form's post url
  ;
  ;
  ;
-getTemplate(form) ; ppi $$getTemplate^%wf, get name of form's template
+getTemplate ; code for API $$getTemplate^%wf, form's template name
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -343,9 +394,10 @@ getTemplate(form) ; ppi $$getTemplate^%wf, get name of form's template
  ; $$getTemplate^%wf(form)
  ;@branches-from
  ; $$getTemplate^%wf
- ;@called-by
+ ;@api-called-by
  ; wsGetForm^%wf
  ; getTemplate^SAMICASE
+ ;@called-by: none
  ;@calls
  ; $$GET1^DIQ
  ;@input
@@ -380,7 +432,7 @@ getTemplate(form) ; ppi $$getTemplate^%wf, get name of form's template
  ;
  ;
  ;
-redactErr(html,err,indx) ; ppi redactErr^%wf, clear errors from form
+redactErr ; code for ppi redactErr^%wf, clear errors from form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -389,8 +441,9 @@ redactErr(html,err,indx) ; ppi redactErr^%wf, clear errors from form
  ; do redactErr^%wf(html,err,indx)
  ;@branches-from
  ; redactErr^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm^%wf
+ ;@called-by: none
  ;@calls: none
  ;@input
  ; html = name of html form array
@@ -425,7 +478,7 @@ redactErr(html,err,indx) ; ppi redactErr^%wf, clear errors from form
  ;
  ;
  ;
-redactErr2(html,indx) ; ppi redactErr2^%wf, redact field's error symbol
+redactErr2 ; code for ppi redactErr2^%wf, redact field's error symbol
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -434,8 +487,9 @@ redactErr2(html,indx) ; ppi redactErr2^%wf, redact field's error symbol
  ; do redactErr2^%wf(html,.indx)
  ;@branches-from
  ; redactErr2^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm^%wf
+ ;@called-by: none
  ;@calls
  ; $$delText^%wf
  ;@input
@@ -463,13 +517,14 @@ redactErr2(html,indx) ; ppi redactErr2^%wf, redact field's error symbol
  ;
  ;
  ;
-testRedactErr2 ; test redactErr2^%wf [move to %wfut]
+testRedactErr2 ; code for test redactErr2^%wf [move to %wfut]
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
  ;ven/gpl;private;procedure;
  ;@signature
  ; do testRedactErr2^%wf
+ ;@ppi-called-by: none
  ;@called-by: none
  ;@calls
  ; redactErr2^%wf
@@ -492,7 +547,7 @@ testRedactErr2 ; test redactErr2^%wf [move to %wfut]
  ;
  ;
  ;
-putErrMsg2(html,lin,msg,err) ; ppi putErrMsg2^%wf, insert error msgs
+putErrMsg2 ; code for ppi putErrMsg2^%wf, insert error msgs
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -501,8 +556,9 @@ putErrMsg2(html,lin,msg,err) ; ppi putErrMsg2^%wf, insert error msgs
  ; do putErrMsg2^%wf(html,.lin,.msg,err)
  ;@branches-from
  ; putErrMsg2^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm
+ ;@called-by: none
  ;@calls
  ; replace^%wf
  ;@input
@@ -551,7 +607,7 @@ putErrMsg2(html,lin,msg,err) ; ppi putErrMsg2^%wf, insert error msgs
  ;
  ;
  ;
-insError(ln,msg) ; ppi insError^%wf, insert error msg into html line
+insError ; code for ppi insError^%wf, insert error msg into html line
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -560,9 +616,10 @@ insError(ln,msg) ; ppi insError^%wf, insert error msg into html line
  ; do insError^%wf(.ln,.msg)
  ;@branches-from
  ; insError^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm^%wf
  ; debugFld^%wf
+ ;@called-by: none
  ;@calls
  ; replace^%wf
  ;@input
@@ -588,7 +645,7 @@ insError(ln,msg) ; ppi insError^%wf, insert error msg into html line
  ;
  ;
  ;
-debugFld(ln,form,name) ; ppi debugFld^%wf, insert field debugging info
+debugFld ; code for ppi debugFld^%wf, insert field debugging info
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -597,8 +654,9 @@ debugFld(ln,form,name) ; ppi debugFld^%wf, insert field debugging info
  ; do debugFld^%wf(ln,form,name)
  ;@branches-from
  ; debugFld^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetFld^%wf
+ ;@called-by: none
  ;@calls
  ; getFieldMap^%wffmap
  ; insError^%wf
@@ -633,7 +691,7 @@ debugFld(ln,form,name) ; ppi debugFld^%wf, insert field debugging info
  ;
  ;
  ;
-delText(ln,begin,end,ins) ; ppi $$delText^%wf, delete text from html line
+delText ; code for ppi $$delText^%wf, delete text from html line
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -642,8 +700,9 @@ delText(ln,begin,end,ins) ; ppi $$delText^%wf, delete text from html line
  ; $$delText^%wf(.ln,begin,end,ins)
  ;@branches-from
  ; $$delText^%wf
- ;@called-by
+ ;@ppi-called-by
  ; redactErr2^%wf
+ ;@called-by: none
  ;@calls: none
  ;@input
  ; begin = substring preceding text to delete
@@ -672,7 +731,7 @@ delText(ln,begin,end,ins) ; ppi $$delText^%wf, delete text from html line
  ;
  ;
  ;
-replace(ln,cur,repl) ; ppi replace^%wf, replace test in html line
+replace ; code for ppi replace^%wf, replace test in html line
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -681,14 +740,15 @@ replace(ln,cur,repl) ; ppi replace^%wf, replace test in html line
  ; do replace^%wf(.ln,cur,repl)
  ;@branches-from
  ; replace^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm^%wf
  ; putErrMsg2^%wf
  ; insError^%wf
  ; value^%wf
  ; uncheck^%wf
  ; check^%wf
- ; $$replaceHref [deprecated subroutine]
+ ; $$replaceHref^%wf [deprecated subroutine]
+ ;@called-by: none
  ;@calls: none
  ;@input
  ; cur = 
@@ -714,7 +774,7 @@ replace(ln,cur,repl) ; ppi replace^%wf, replace test in html line
  ;
  ;
  ;
-replaceAll(ln,cur,repl) ; ppi replaceAll^%wf, replace text in html line
+replaceAll ; code for API replaceAll^%wf, replace text in html line
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -723,12 +783,13 @@ replaceAll(ln,cur,repl) ; ppi replaceAll^%wf, replace text in html line
  ; dp replaceAll^%wf(.ln,cur,repl)
  ;@branches-from
  ; replaceAll^%wf
- ;@called-by
+ ;@ppi-called-by
  ; $$replaceSrc^%wf [deprecated]
  ; wsCASE^SAMICASE
  ; SAMISUBS^SAMIFRM
  ; fixSrc^SAMIFRM
  ; fixHref^SAMIFRM
+ ;@called-by: none
  ;@calls: none
  ;@input
  ; cur = 
@@ -762,7 +823,7 @@ replaceAll(ln,cur,repl) ; ppi replaceAll^%wf, replace text in html line
  ;
  ;
  ;
-unvalue(ln) ; ppi unvalue^%wf, clear input value in html line
+unvalue ; code for ppi unvalue^%wf, clear input value in html line
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -771,8 +832,9 @@ unvalue(ln) ; ppi unvalue^%wf, clear input value in html line
  ; do unvalue^%wf(.ln)
  ;@branches-from
  ; unvalue^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm^%wf
+ ;@called-by: none
  ;@calls: none
  ;@throughput
  ;.ln
@@ -799,7 +861,7 @@ unvalue(ln) ; ppi unvalue^%wf, clear input value in html line
  ;
  ;
  ;
-value(ln,val) ; ppi value^%wf, set input value in html line
+value ; code for ppi value^%wf, set input value in html line
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -808,8 +870,9 @@ value(ln,val) ; ppi value^%wf, set input value in html line
  ; do value^%wf(.ln,val)
  ;@branches-from
  ; value^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm^%wf
+ ;@called-by: none
  ;@calls
  ; replace^%wf
  ;@input
@@ -839,7 +902,7 @@ value(ln,val) ; ppi value^%wf, set input value in html line
  ;
  ;
  ;
-getVals(vrtn,zid,zsid) ; ppi getVals^%wf, get form's values from graph
+getVals ; code for ppi getVals^%wf, get field values from graph
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -848,9 +911,10 @@ getVals(vrtn,zid,zsid) ; ppi getVals^%wf, get form's values from graph
  ; d getVals^%wf(vary,zid,zsid)
  ;@branches-from
  ; getVals^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm^%wf
  ; testFiler^%wffiler
+ ;@called-by: none
  ;@calls
  ; $$setroot^%wd
  ;@input
@@ -881,7 +945,7 @@ getVals(vrtn,zid,zsid) ; ppi getVals^%wf, get form's values from graph
  ;
  ;
  ;
-setVals(vary,zid,zsid) ; ppi setVals^%wf, set graph's values from form
+setVals ; code for ppi setVals^%wf, set field values into graph
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -923,84 +987,11 @@ setVals(vary,zid,zsid) ; ppi setVals^%wf, set graph's values from form
  ;
  ;
  ;
- ;@section 6 wsGetForm^%wf radio/checkbox manipulation
- ;
- ;
- ;
-uncheck(ln) ; ppi uncheck^%wf, uncheck radio button or checkbox
- ;
- ;@stanza 1 invocation, binding, & branching
- ;
- ;ven/gpl;private;procedure;
- ;@signature
- ; do uncheck^%wf(.ln)
- ;@branches-from
- ; uncheck^%wf
- ;@called-by
- ; wsGetForm^%wf
- ;@calls
- ; replace^%wf
- ;@throughput
- ;.ln =
- ;@examples [tbd]
- ;@tests [tbd]
- ;
- ; [description tbd]
- ; removes 'check="checked"' from ln, passed by reference
- ;
- ;@stanza 2 uncheck box or button
- ;
- if ln["checked=" do  ;
- . do replace^%wf(.ln,"checked=""checked""","")
- . if ln["checked=checked" do replace^%wf(.ln,"checked=checked","")
- . quit
- ;
- ;@stanza 3 termination
- ;
- quit  ; end of uncheck^%wf
- ;
- ;
- ;
-check(line,type) ; ppi check^%wf, check radio button or checkbox
- ;
- ;@stanza 1 invocation, binding, & branching
- ;
- ;ven/gpl;private;procedure;
- ;@signature
- ; do check^%wf(.line,type)
- ;@branches-from
- ; check^%wf
- ;@called-by
- ; wsGetForm^%wf
- ;@calls
- ; replace^%wf
- ;@input
- ; type = 
- ;@throughput
- ;.line = 
- ;@examples [tbd]
- ;@tests [tbd]
- ;
- ; [description tbd]
- ; for radio buttons & checkbox
- ;
- ;@stanza 2 check box or button
- ;
- new ln set ln=line
- if line["type=""" do replace^%wf(.line,"type="""_type_"""","type="""_type_"""  checked=""checked""")
- else  do replace^%wf(.line,"type="_type,"type="_type_"  checked=""checked""")
- ;
- ;@stanza 3 termination
- ;
- quit  ; end of check^%wf
- ;
- ;
- ;
  ;@section 7 wsGetForm^%wf field validation
  ;
  ;
  ;
-validate(value,spec,map,msg) ; ppi $$validate^%wf, validate value
+validate ; code for ppi $$validate^%wf, validate value
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1009,8 +1000,9 @@ validate(value,spec,map,msg) ; ppi $$validate^%wf, validate value
  ; $$validate^%wf(value,spec,map,.msg)
  ;@branches-from
  ; $$validate^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm^%wf
+ ;@called-by: none
  ;@calls
  ; $$dateValid^%wf
  ; $$textValid^%wf
@@ -1052,7 +1044,7 @@ validate(value,spec,map,msg) ; ppi $$validate^%wf, validate value
  ;
  ;
  ;
-dateValid(value,spec,map,msg) ; ppi $$dateValid^%wf, validate date
+dateValid ; code for ppi $$dateValid^%wf, validate date
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1061,8 +1053,9 @@ dateValid(value,spec,map,msg) ; ppi $$dateValid^%wf, validate date
  ; $$dateValid^%wf(value,spec,map,msg)
  ;@branches-from
  ; $$dateValid^%wf
- ;@called-by
+ ;@ppi-called-by
  ; $$validate^%wf
+ ;@called-by: none
  ;@calls
  ; ^%DT: Vista Fileman date-time input/validation
  ;@input
@@ -1093,7 +1086,7 @@ dateValid(value,spec,map,msg) ; ppi $$dateValid^%wf, validate date
  ;
  ;
  ;
-textValid(value,spec,map) ; ppi $$textValid^%wf, validate free-text field
+textValid ; code for ppi $$textValid^%wf, validate free-text field
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1102,8 +1095,9 @@ textValid(value,spec,map) ; ppi $$textValid^%wf, validate free-text field
  ; $$textValid^%wf(value,spec,map)
  ;@branches-from
  ; $$textValid^%wf
- ;@called-by
+ ;@ppi-called-by
  ; $$validate^%wf
+ ;@called-by: none
  ;@calls: none
  ;@input
  ; value = text being validated
@@ -1143,7 +1137,7 @@ textValid(value,spec,map) ; ppi $$textValid^%wf, validate free-text field
  ;
  ;
  ;
-numValid(value,spec,map) ; ppi $$numValid^%wf, validate numeric field
+numValid ; code for ppi $$numValid^%wf, validate numeric field
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1152,8 +1146,9 @@ numValid(value,spec,map) ; ppi $$numValid^%wf, validate numeric field
  ; $$numValid^%wf(value,spec,map)
  ;@branches-from
  ; $$numValid^%wf
- ;@called-by
+ ;@ppi-called-by
  ; $$validate^%wf
+ ;@called-by: none
  ;@calls: none
  ;@input
  ; value = number being validated
@@ -1201,7 +1196,7 @@ numValid(value,spec,map) ; ppi $$numValid^%wf, validate numeric field
  ;
  ;
  ;
-dateFormat(val,form,name) ; ppi $$dateFormat^%wf, reformat date in elcap format
+dateFormat ; code for ppi $$dateFormat^%wf, date in elcap format
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1210,8 +1205,9 @@ dateFormat(val,form,name) ; ppi $$dateFormat^%wf, reformat date in elcap format
  ; do dateFormat^%wf(.val,form,name)
  ;@branches-from
  ; dateFormat^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm
+ ;@called-by: none
  ;@calls
  ; $$getFieldSpec^%wffmap
  ; ^%DT
@@ -1250,7 +1246,7 @@ dateFormat(val,form,name) ; ppi $$dateFormat^%wf, reformat date in elcap format
  ;
  ;
  ;
-wsPostForm(ARGS,BODY,RESULT) ; web service wsPostForm^%wf, submit HTML form
+wsPostForm ; code for ws wsPostForm^%wf, submit HTML form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1259,8 +1255,9 @@ wsPostForm(ARGS,BODY,RESULT) ; web service wsPostForm^%wf, submit HTML form
  ; do wsPostForm^%wf(.ARGS,BODY,RESULT)
  ;@branches-from
  ; wsPostForm^%wf
- ;@called-by
- ; [special, web service]
+ ;@ppi-called-by
+ ; web service POST:form/*
+ ;@called-by: none
  ;@calls
  ; parseBody^%wf
  ; $$setroot^%wd
@@ -1338,7 +1335,7 @@ wsPostForm(ARGS,BODY,RESULT) ; web service wsPostForm^%wf, submit HTML form
  ;
  ;
  ;
-parseBody(rtn,body) ; ppi parseBody^%wf, get form's values from submitted form
+parseBody ; code for ppi parseBody^%wf, get field values from form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1347,8 +1344,9 @@ parseBody(rtn,body) ; ppi parseBody^%wf, get form's values from submitted form
  ; do parseBody^%wf(rtn,body)
  ;@branches-from
  ; parseBody^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsPostForm^%wf
+ ;@called-by: none
  ;@calls
  ; $$URLDEC^VPRJRUT
  ;@input
@@ -1388,7 +1386,7 @@ parseBody(rtn,body) ; ppi parseBody^%wf, get form's values from submitted form
  ;
  ;
  ;
-replaceSrc(ln) ; ppi replaceSrc^%wf, chg src & href lines to find resources
+replaceSrc ; code for ppi replaceSrc^%wf, chg resources in src & href
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1397,8 +1395,9 @@ replaceSrc(ln) ; ppi replaceSrc^%wf, chg src & href lines to find resources
  ; $$replaceSrc^%wf(.ln)
  ;@branches-from
  ; $$replaceSrc^%wf
- ;@called-by
- ; wsGetForm^%wf [commented ut]
+ ;@ppi-called-by
+ ; wsGetForm^%wf [commented out]
+ ;@called-by: none
  ;@calls
  ; replaceAll^%wf
  ;@input
@@ -1456,7 +1455,7 @@ replaceSrc(ln) ; ppi replaceSrc^%wf, chg src & href lines to find resources
  ;
  ;
  ;
-replaceHref(ln) ; ppi replaceHref^%wf, chg href lines to find resources
+replaceHref ; code for ppi replaceHref^%wf, chg resources in href
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -1465,8 +1464,9 @@ replaceHref(ln) ; ppi replaceHref^%wf, chg href lines to find resources
  ; $$replaceHref^%wf(.ln)
  ;@branches-from
  ; $$replaceHref^%wf
- ;@called-by
+ ;@ppi-called-by
  ; wsGetForm^%wf [commented out]
+ ;@called-by: none
  ;@calls
  ; replace^%wf
  ;@input

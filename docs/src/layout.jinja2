@@ -6,70 +6,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="lib/bootstrap-4.0.0-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="lib/formvalidation/dist/css/formValidation.min.css">
     <link rel="stylesheet" href="vapals.css">
 </head>
 <body>
-    <script src="lib/jquery-3.2.1.slim.min.js"></script>
-    <script src="lib/popper.min.js"></script>
-    <script src="lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
-    <script src="lib/moment.js"></script>
-    <script src="lib/formvalidation/dist/js/formValidation.min.js"></script>
-    <script src="lib/formvalidation/dist/js/framework/bootstrap4.min.js"></script>
-    <script src="vapals.js"></script>
+<script src="lib/jquery-3.2.1.slim.min.js"></script>
+<script src="lib/popper.min.js"></script>
+<script src="lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="lib/moment.js"></script>
+<script src="lib/formvalidation/dist/js/formValidation.min.js"></script>
+<script src="lib/formvalidation/dist/js/framework/bootstrap.min.js"></script>
+<script src="vapals.js"></script>
 
-    <!--Debug information for viewport-->
-    <span class="badge badge-secondary d-block d-sm-none">extra small</span>
-    <span class="badge badge-secondary d-none d-sm-block d-md-none">small</span>
-    <span class="badge badge-secondary d-none d-md-block d-lg-none">medium</span>
-    <span class="badge badge-secondary d-none d-lg-block d-xl-none">large</span>
-    <span class="badge badge-secondary d-none d-xl-block">extra large</span>
+<!--Debug information for viewport-->
+<span class="badge badge-secondary visible-xs-block">extra small</span>
+<span class="badge badge-secondary visible-sm-block">small</span>
+<span class="badge badge-secondary visible-md-block">medium</span>
+<span class="badge badge-secondary visible-lg-block">large</span>
 
-    <!--System Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#"><img src="img/new-logo.png"
-                                              title="VA-PALS" height="50"/></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
+<!--System Navigation-->
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            {#TODO: need better image and acutal link to "home"#}
+            <a href="/">
+                <img src="img/new-logo.png" title="VA-PALS" height="50"/>
+            </a>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+            <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         Patient
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Background</a>
-                        <a class="dropdown-item" href="#">Intake</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">CT Evaluation</a>
-                    </div>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+
+                            <a href="#" class="navbar-link">Background</a>
+                            <a href="#" class="navbar-link">Intake</a>
+                            <div class="nav-divider"></div>
+                            <a href="#" class="navbar-link">CT Evaluation</a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    {% block body%}{% endblock %}
+{% block body %}{% endblock %}
 
-    {% block footer %}
+{% block footer %}
     <footer>
         <div class="container-fluid" style="max-width:1550px">
             <hr/>
             <a href="https://issues.osehra.org/browse/VAP" target="_blank">Submit feedback</a>
         </div>
     </footer>
-    {% endblock %}
+{% endblock %}
 </body>
 </html>
+

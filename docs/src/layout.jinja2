@@ -20,6 +20,7 @@
 <script src="lib/formvalidation/dist/js/formValidation.min.js"></script>
 <script src="lib/formvalidation/dist/js/framework/bootstrap.min.js"></script>
 <script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script src="jquery-conditonally-enable.js"></script>
 <script src="vapals.js"></script>
 
 <!--Debug information for viewport-->
@@ -83,14 +84,14 @@
         $.each($(".datepicker"), function (i, el) {
             $(el).datetimepicker({
                 format: 'MM/DD/YYYY',
-                maxDate: moment().add(1,'h') //hack to not select today
+                maxDate: moment().add(1, 'h') //hack to not select today
             });
         });
 
         $.each($(".yearpicker"), function (i, el) {
             $(el).datetimepicker({
                 format: 'YYYY',
-                maxDate: moment().add(1,'h'), //hack to not select today
+                maxDate: moment().add(1, 'h'), //hack to not select today
                 minDate: moment().subtract(100, 'y')
             });
         });

@@ -20,6 +20,7 @@
 <script src="lib/formvalidation/dist/js/formValidation.min.js"></script>
 <script src="lib/formvalidation/dist/js/framework/bootstrap.min.js"></script>
 <script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script src="jquery-conditonally-enable.js"></script>
 <script src="vapals.js"></script>
 
 <!--Debug information for viewport-->
@@ -127,34 +128,40 @@
                                 <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
                                    title="Visit Date"
                                    data-content="And here's some amazing content. It's very engaging. Right?"></i>
+                                
                                 <div class="input-group datepicker">
-                                    <input class="form-control" id="sbdop" name="sbdop" aria-describedby="sbdop-addon"
-                                           required="required"
-                                           data-fv-notempty-message="Visit date is required"
-                                           data-fv-date="true">
-                                    <div class="input-group-addon" id="sbdop-addon">
-                                        <i class="fa fa-calendar" aria-hidden="true"></i>
-                                    </div>
-                                </div>
-                                <small class="form-text text-muted">MM/DD/YYYY</small>
+        <!--TODO: inject max date as "today"-->
+        <input class="form-control" id="sbdop" name="sbdop" aria-describedby="sbdop-addon"
+                 required="required"
+                 data-fv-notempty-message="Visit date is required"
+               data-fv-date="true" data-fv-max="1/25/2018">
+        <div class="input-group-addon">
+            <div class="input-group-text" id="sbdop-addon">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+            </div>
+        </div>
+    </div>
+    <small class="form-text text-muted">MM/DD/YYYY</small>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-sm-4 col-md-3 col-lg-2 form-group">
                                 <label for="sbdob" class="control-label">Date of Birth</label>
+                                
                                 <div class="input-group datepicker">
-                                    <!--TODO: inject max date as "today"-->
-                                    <input class="form-control" id="sbdob" name="sbdob" aria-describedby="sbdob-addon"
-                                           required="required" data-fv-notempty-message="Date of birth is required"
-                                           data-fv-date="true" data-fv-max="01/25/2018">
-                                    <div class="input-group-addon">
-                                        <div class="input-group-text" id="sbdob-addon">
-                                            <i class="fa fa-calendar" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <small class="form-text text-muted">MM/DD/YYYY</small>
+        <!--TODO: inject max date as "today"-->
+        <input class="form-control" id="sbdob" name="sbdob" aria-describedby="sbdob-addon"
+                 required="required"
+                 data-fv-notempty-message="Date of birth is required"
+               data-fv-date="true" data-fv-max="1/25/2018">
+        <div class="input-group-addon">
+            <div class="input-group-text" id="sbdob-addon">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+            </div>
+        </div>
+    </div>
+    <small class="form-text text-muted">MM/DD/YYYY</small>
                             </div>
                             <div class="col-sm-2 col-md-1 form-group">
                                 <label class="control-label">Age</label>
@@ -2202,139 +2209,6 @@
     </div>
 
     <script language="JavaScript">
-        /**
-         * Enable/Disable fields based on if the source's value is equivalent to a a particular value or values.
-         * Supports field value restoration.
-         *
-         * @todo consider converting to a jQuery plugin.
-         *
-         * @param {string|object} source - triggering field
-         * @param {string|function} sourceValues - values to assert against the actual. When the source field value equals one of these,
-         * the fields will become enabled. This argument can also be a callback function that determines disablement. function(actualValue)
-         * A return of "true" means they should be enabled.
-         * @param {string|object} enableFields - fields to toggle when source value is equal to one of the sourceValues (delimited by ",")
-         * @param {string|object} disableFields - fields to toggle when source value is NOT equal the sourceValues (delimited by ",")
-         * @param {string} [additionalDisabledClasses=visible-md-block visible-lg-block]- additional classes to append to each field in fields when it is disabled
-         */
-        function conditionallyEnable(source, sourceValues, enableFields, disableFields, additionalDisabledClasses) {
-
-            function enableContainer($container, disablementClasses) {
-                if (typeof $container !== 'undefined') {
-                    $container.find("input, select, textarea")
-                        .addBack('input, select, textarea') //include container object if it's actually an input.
-                        .prop("disabled", function (i, currentlyDisabled) {
-                            if (true === currentlyDisabled) { //if value has changed
-                                if ($(this).is(":checkbox")) {
-                                    $(this).prop("checked", $(this).data("previous-value") === "checked");
-                                }
-                                else { //other types of controls
-                                    $(this).val($(this).data("previous-value")); //restore old value
-                                }
-                                $(this).trigger("change");
-                            }
-                            return false;
-                        });
-
-                    // make labels appear disabled.
-                    $container.find("label")
-                        .addBack("label") //add the $field itself if is a label.
-                        .toggleClass("text-muted", false);
-
-                    //when the value matches, always display the container, otherwise hide it on screens smaller than md.
-                    if (disablementClasses) {
-                        $container.toggleClass(disablementClasses, false);
-                    }
-                }
-            }
-
-            function disableContainer($container, disablementClasses) {
-                if (typeof $container !== 'undefined') {
-                    //include container object if it's actually an input.
-                    var $fields = $container.find("input, select, textarea").addBack('input, select, textarea');
-
-                    //reset form validations for the fields we're about to disable
-                    var fv = $("form.validated").data('formValidation');
-                    if (fv) {
-                        $.each($fields, function (i, t) {
-                            fv.resetField($(t));
-                        });
-                    }
-
-                    $fields.prop("disabled", function (i, currentlyDisabled) {
-                        if (false === currentlyDisabled) { //if value has changed
-                            if ($(this).is(":checkbox")) {
-                                //save the old value
-                                $(this).data("previous-value", $(this).is(":checked") ? "checked" : "");
-                                $(this).prop("checked", false);
-
-                            }
-                            else { //other types of controls
-                                $(this).data("previous-value", $(this).val()); //save the old value
-                                $(this).val("");
-                            }
-                            $(this).trigger("change");
-                        }
-                        return true;
-                    });
-
-                    // make labels appear disabled.
-                    $container.find("label")
-                        .addBack("label") //add the $field itself if is a label.
-                        .toggleClass("text-muted", true);
-
-                    //when the value matches, always display the container, otherwise hide it on screens smaller than md.
-                    if (disablementClasses) {
-                        $container.toggleClass(disablementClasses, true);
-                    }
-                }
-            }
-
-            var $source = (typeof source === 'string') ? $(source) : source;
-
-            //hide at all screen widths, except when MD or larger
-            var disablementClasses = (typeof additionalDisabledClasses !== 'undefined') ? additionalDisabledClasses : "visible-md-block visible-lg-block";
-
-
-            var enableCallback = (typeof sourceValues === 'function') ? sourceValues : function (actualValue) {
-                var sourceValuesArray = $.map(sourceValues.split(","), $.trim);
-                return $.inArray(actualValue, sourceValuesArray) > -1;
-            };
-
-            $source.on('change', function () {
-                var $el = $(this);
-                var actualValue = $el.is(":checkbox") ? ($el.is(":checked") ? $el.val() : "") : $el.val();
-
-                var enabled = enableCallback(actualValue);
-
-                console.log("conditionallyEnable::change() triggered. id=" + $el.prop("id") + ", enabled=" + enabled);
-
-                //toggle input fields within the container.
-                var $enableContainer = (typeof enableFields === 'string') ? $(enableFields) : enableFields;
-                var $disableContainer = (typeof disableFields === 'string') ? $(disableFields) : disableFields;
-                if (enabled) {
-                    enableContainer($enableContainer, disablementClasses);
-                    disableContainer($disableContainer, disablementClasses);
-                }
-                else {
-                    disableContainer($enableContainer, disablementClasses);
-                    enableContainer($disableContainer, disablementClasses);
-                }
-
-            });
-
-            if ($source.first().is(":radio")) {
-                //trigger the change event on the first checked or non-matching radio button
-                $.merge(
-                    $source.filter(":checked"),
-                    $source.filter(":not(':checked')")
-                ).first().trigger("change");
-            }
-            else {
-                $source.trigger("change");
-            }
-        }
-
-
         $(function () {
             // $('#scan-order-tab').tab('show'); //TODO: remove utility to set the initial tab (debugging form development)
             
@@ -2428,34 +2302,43 @@
             }).first().trigger('change');
 
             //conditionally enabled fields
-            conditionallyEnable("#sbrc", "o", "#sbrcs-container"); // when race is "other", enable "race other"
-            conditionallyEnable("[name=sbmly]", "y", "#sbmlyo-container"); //military service
-            conditionallyEnable("[name=sbmeq]", "y", "#sbmeq-container"); //entire CT scan page
-            conditionallyEnable("[name=sbfc]", "y", "#sbfc-container");
-            conditionallyEnable("[name=sbhco]", "y", "#sbhco-container");
-            conditionallyEnable("[name=sbmpa]", "y", "#sbmpa-container");
-            conditionallyEnable("[name=sbmpc]", "y", "#sbmpc-container");
-            conditionallyEnable("[name=sbmpht]", "y", "#sbmpht-container");
-            conditionallyEnable("[name=sbmphc]", "y", "#sbmphc-container");
-            conditionallyEnable("[name=sbmpas]", "y", "#sbmpas-container");
-            conditionallyEnable("[name=sbmpmi]", "y", "#sbmpmi-container");
-            conditionallyEnable("[name=sbmps]", "y", "#sbmps-container");
-            conditionallyEnable("[name=sbmppv]", "y", "#sbmppv-container");
-            conditionallyEnable("[name=sbmpd]", "y", "#sbmpd-container");
-            conditionallyEnable("[name=sbmpld]", "y", "#sbmpld-container");
-            conditionallyEnable("[name=sbmprd]", "y", "#sbmprd-container");
-            conditionallyEnable("[name=sblcs]", "y", $("#sblcs-container").find("label, input[id!=sbwcos]"));
-            conditionallyEnable("#sbwco", "o", "#sbwcos");
-            conditionallyEnable("[name=sbact]", function (actualValue) {
-                return actualValue !== '-' && actualValue !== 'e';
-            }, "#sbact-container");
-            conditionallyEnable("[name=sbahpft]", "y", "#sbahpft-container");
-            conditionallyEnable("#sbahaoo", "o", "#sbahas");
-            conditionallyEnable("[name=sbsru]", "n", "#sbsru-container");
-            conditionallyEnable("[name=sbqttq]", "y", "#sbqttq-container, #sbqly2-container");
-            conditionallyEnable("[name=sbhso]", "y", "#sbhso-container");
-            conditionallyEnable("[name=sbshsa]", "y", "#smoking-container", "#non-smoking-container");
-            conditionallyEnable("[name=sbsehs]", "y", "#sbsehs-container");
+            $("#sbrc").conditionallyEnable({sourceValues: "o", enable: "#sbrcs-container"}); // when race is "other", enable "race other"
+            $("[name=sbmly]").conditionallyEnable({enable: "#sbmlyo-container"}); //military service
+            $("[name=sbmeq]").conditionallyEnable({enable: "#sbmeq-container"}); //entire CT scan page
+            $("[name=sbfc]").conditionallyEnable({enable: "#sbfc-container"});
+            $("[name=sbhco]").conditionallyEnable({enable: "#sbhco-container"});
+            $("[name=sbmpa]").conditionallyEnable({enable: "#sbmpa-container"});
+            $("[name=sbmpc]").conditionallyEnable({enable: "#sbmpc-container"});
+            $("[name=sbmpht]").conditionallyEnable({enable: "#sbmpht-container"});
+            $("[name=sbmphc]").conditionallyEnable({enable: "#sbmphc-container"});
+            $("[name=sbmpas]").conditionallyEnable({enable: "#sbmpas-container"});
+            $("[name=sbmpmi]").conditionallyEnable({enable: "#sbmpmi-container"});
+            $("[name=sbmps]").conditionallyEnable({enable: "#sbmps-container"});
+            $("[name=sbmppv]").conditionallyEnable({enable: "#sbmppv-container"});
+            $("[name=sbmpd]").conditionallyEnable({enable: "#sbmpd-container"});
+            $("[name=sbmpld]").conditionallyEnable({enable: "#sbmpld-container"});
+            $("[name=sbmprd]").conditionallyEnable({enable: "#sbmprd-container"});
+            $("[name=sblcs]").conditionallyEnable({
+                enable: $("#sblcs-container").find("label, input[id!=sbwcos]")
+            });
+            $("#sbwco").conditionallyEnable({sourceValues: "o", enable: "#sbwcos"});
+            $("[name=sbact]").conditionallyEnable({
+                sourceValues: function (actualValue) {
+                    return actualValue !== '-' && actualValue !== 'e';
+                }, enable: "#sbact-container"
+            });
+            $("[name=sbahpft]").conditionallyEnable({enable: "#sbahpft-container"});
+            $("#sbahaoo").conditionallyEnable({sourceValues: "o", enable: "#sbahas"});
+            $("[name=sbsru]").conditionallyEnable({sourceValues: "n", enable: "#sbsru-container"});
+            $("[name=sbqttq]").conditionallyEnable({
+                enable: "#sbqttq-container, #sbqly2-container"
+            });
+            $("[name=sbhso]").conditionallyEnable({enable: "#sbhso-container"});
+            $("[name=sbshsa]").conditionallyEnable({
+                enable: "#smoking-container",
+                disable: "#non-smoking-container"
+            });
+            $("[name=sbsehs]").conditionallyEnable({enable: "#sbsehs-container"});
 
 
             //setup tab navigation prev/next buttons

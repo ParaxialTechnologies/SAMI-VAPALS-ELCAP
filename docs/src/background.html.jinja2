@@ -62,34 +62,16 @@
                                 <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
                                    title="Visit Date"
                                    data-content="And here's some amazing content. It's very engaging. Right?"></i>
-                                <div class="input-group datepicker">
-                                    <input class="form-control" id="sbdop" name="sbdop" aria-describedby="sbdop-addon"
-                                           required="required"
-                                           data-fv-notempty-message="Visit date is required"
-                                           data-fv-date="true">
-                                    <div class="input-group-addon" id="sbdop-addon">
-                                        <i class="fa fa-calendar" aria-hidden="true"></i>
-                                    </div>
-                                </div>
-                                <small class="form-text text-muted">MM/DD/YYYY</small>
+                                {# TODO: inject max date as "today"#}
+                                {{ f.datepicker("sbdop", "1/25/2018", "Visit date is required") }}
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-sm-4 col-md-3 col-lg-2 form-group">
                                 <label for="sbdob" class="control-label">Date of Birth</label>
-                                <div class="input-group datepicker">
-                                    <!--TODO: inject max date as "today"-->
-                                    <input class="form-control" id="sbdob" name="sbdob" aria-describedby="sbdob-addon"
-                                           required="required" data-fv-notempty-message="Date of birth is required"
-                                           data-fv-date="true" data-fv-max="01/25/2018">
-                                    <div class="input-group-addon">
-                                        <div class="input-group-text" id="sbdob-addon">
-                                            <i class="fa fa-calendar" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <small class="form-text text-muted">MM/DD/YYYY</small>
+                                {# TODO: inject max date as "today"#}
+                                {{ f.datepicker("sbdob", "1/25/2018", "Date of birth is required") }}
                             </div>
                             <div class="col-sm-2 col-md-1 form-group">
                                 <label class="control-label">Age</label>

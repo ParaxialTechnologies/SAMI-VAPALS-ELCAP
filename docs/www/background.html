@@ -2250,7 +2250,7 @@
             function disableContainer($container, disablementClasses) {
                 if (typeof $container !== 'undefined') {
                     //include container object if it's actually an input.
-                    $fields = $container.find("input, select, textarea").addBack('input, select, textarea');
+                    var $fields = $container.find("input, select, textarea").addBack('input, select, textarea');
 
                     //reset form validations for the fields we're about to disable
                     var fv = $("form.validated").data('formValidation');
@@ -2539,6 +2539,10 @@
             //Globally enabled popovers for things like help text.
             $('[data-toggle="popover"]').popover({trigger: 'hover'});
 
+            //trigger age calculation when date picker is used to select a date.
+            $("#sbdob").closest(".datepicker").on("dp.change", function () {
+                $("#sbdob").trigger("change");
+            })
         });
 
     </script>
@@ -2559,14 +2563,14 @@
         $.each($(".datepicker"), function (i, el) {
             $(el).datetimepicker({
                 format: 'MM/DD/YYYY',
-                maxDate: moment().add(1,'h') //hack to not select today
+                maxDate: moment().add(1, 'h') //hack to not select today
             });
         });
 
         $.each($(".yearpicker"), function (i, el) {
             $(el).datetimepicker({
                 format: 'YYYY',
-                maxDate: moment().add(1,'h'), //hack to not select today
+                maxDate: moment().add(1, 'h'), //hack to not select today
                 minDate: moment().subtract(100, 'y')
             });
         });

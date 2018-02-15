@@ -120,7 +120,6 @@
             var $el = $(this);
             var actualValue = $el.is(":checkbox") ? ($el.is(":checked") ? $el.val() : "") : $el.val();
 
-            console.log("conditionallyEnable::change() triggered. id=" + $el.prop("id") + ", enabled=" + enabled);
             var matches = matchCallback(actualValue);
 
             //toggle input fields within the container.
@@ -128,6 +127,8 @@
             var $disableContainer = disableFieldsCallback(actualValue, matches);
             var enableSize = $enableContainer == null ? 0 : $enableContainer.length
             var disableSize = $disableContainer == null ? 0 : $disableContainer.length
+
+            console.log("conditionallyEnable(): change event triggered on field. id=" + $el.prop("id") + ", matches=" + matches + ", enable=" + enableSize + ", disable=" + disableSize);
 
             if (matches) {
                 enableContainer($enableContainer);

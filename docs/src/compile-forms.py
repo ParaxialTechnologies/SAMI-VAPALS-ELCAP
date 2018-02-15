@@ -10,8 +10,9 @@ sys.setdefaultencoding('utf-8')
 env = Environment()
 env.loader = FileSystemLoader('.')
 
+# TODO: can we write a function to extract from *-dd-map.csv?
+
 # background form
-# TODO: can we write a function to extract from background-dd-map.csv?
 with open("../www/background.html", "wb") as fh:
     fh.write(env.get_template('background.html.jinja2').render(
         title='Background Form',

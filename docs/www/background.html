@@ -49,20 +49,28 @@
         <div class="navbar-collapse collapse" id="navbar-main">
             <ul class="nav navbar-nav">
                 <li><a href="/">Home</a></li>
-                <li class="dropdown">
+                <li class="dropdown" id="studyIdMenu" style="display:none;">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        Patient
+                        <span id="studyIdMenuItem"></span><span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
+                        <li class="disabled">
+                            <a href="#" class="navbar-link">Case Review</a></li>
                         <li>
-
-                            <a href="#" class="navbar-link">Background</a>
-                            <a href="#" class="navbar-link">Intake</a>
                             <div class="nav-divider"></div>
-                            <a href="#" class="navbar-link">CT Evaluation</a>
+                        </li>
+                        <li><a href="background.html" class="navbar-link">Background</a></li>
+                        <li class="disabled"><a class="navbar-link">CT Evaluation</a></li>
+                        <li class="disabled"><a>Followup</a></li>
+                        <li class="disabled"><a class="navbar-link">Biopsy</a></li>
+                        <li class="disabled"><a class="navbar-link">Pre-Intervention</a></li>
+                        <li class="disabled"><a class="navbar-link">Intervention</a></li>
+                        <li class="disabled"><a class="navbar-link">PET Evaluation</a></li>
+
                         </li>
                     </ul>
                 </li>
+                <li><a href="intake.html">Intake</a></li>
             </ul>
         </div>
     </div>
@@ -2701,6 +2709,14 @@
 
 
     });
+
+    //TODO: insert studyId here.
+    var studyId = "XX0002";
+
+    if (studyId) {
+        $("#studyIdMenuItem").text(studyId);
+        $("#studyIdMenu").show();
+    }
 </script>
 </body>
 </html>

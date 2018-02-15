@@ -81,11 +81,20 @@
 
 <script language="JavaScript">
     $(function () {
+        function validateDatePickerOnChange(e) {
+            var $datePicker = $(e.target)
+            var fv = $datePicker.closest(".validated").data("formValidation");
+            if (fv) {
+                var f = $datePicker.find("input").addBack("input");
+                fv.revalidateField(f);
+            }
+        }
+
         $.each($(".datepicker"), function (i, el) {
             $(el).datetimepicker({
                 format: 'MM/DD/YYYY',
                 maxDate: moment().add(1, 'h') //hack to not select today
-            });
+            }).on("dp.change", validateDatePickerOnChange);
         });
 
         $.each($(".yearpicker"), function (i, el) {
@@ -93,8 +102,16 @@
                 format: 'YYYY',
                 maxDate: moment().add(1, 'h'), //hack to not select today
                 minDate: moment().subtract(100, 'y')
-            });
+            }).on("dp.change", validateDatePickerOnChange);
         });
+
+        //Globally enabled popovers for things like help text.
+        $('[data-toggle="popover"]').popover();
+
+        //Initialize Form Validation
+        $(".validated").formValidation({framework: 'bootstrap'});
+
+
     });
 </script>
 </body>

@@ -1,0 +1,679 @@
+{% extends 'layout.jinja2' %}
+{% import 'forms.jinja2' as f %}
+{% block title %}{{ title | escape }}{% endblock %}
+
+{% block body %}
+    <div class="container-fluid" style="max-width:1550px">
+        <h1>
+            Sample, Sammy G
+            <small class="text-muted" title="Study ID">ST0001</small>
+        </h1>
+        <h2>{{ title | escape }}
+            <small class="text-muted" title="Medical Record Number">1234567890</small>
+        </h2>
+
+        <hr/>
+        {#TODO: fill in POST URL #}
+        <form method="post" action="form?form=????&studyId=????" class="validated"
+              data-fv-icon-valid="glyphicon glyphicon-ok"
+              data-fv-icon-invalid="glyphicon glyphicon-remove"
+              data-fv-icon-validating="glyphicon glyphicon-refresh"
+              data-fv-button-selector="#submit-button">
+
+            <div class="row">
+                <div class="col-sm-6 col-md-3 form-group">
+                    <label for="sinamel">Patient Last Name</label>
+                    <input type=text name="sinamel" id="sinamel" class="form-control" required="required">
+                </div>
+                <div class="col-sm-6 col-md-3 form-group">
+                    <label for="sinamef">First Name</label>
+                    <input type=text name="sinamef" id="sinamef" class="form-control" required="required">
+                </div>
+
+                <div class="col-sm-4 col-md-3 form-group">
+                    <label for="sidfc">Date of First Contact</label>
+                    <!--TODO: inject max date as "today"-->
+                    {{ f.datepicker("sidfc", "1/25/2018", "First contact date is required") }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-sm-3 col-md-2">
+                    <label for="sisid">Study ID</label>
+                    {# TODO insert current studyID into both of these fields#}
+                    <input type=hidden name="hvsisid" value="VEP0001">
+                    <input type=text name="sisid" id="sisid" onFocus="savesid()" value="VEP0001" class="form-control"
+                           required="required">
+                </div>
+                <div class="form-group col-sm-3 col-md-2">
+
+                    <label for="sifsid">Former Study ID</label>
+                    <input type=text name="sifsid" id="sifsid" onFocus="savefsid()" onChange="confirmfsid()"
+                           class="form-control">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-sm-3 col-md-3 col-lg-2">
+                    <label for="sidoe">Date of Baseline CT</label>
+                    <!--TODO: inject max date as "today"-->
+                    {{ f.datepicker("sidoe", "1/25/2018", "Baseline CT date is required") }}
+                </div>
+                <div class="form-group col-sm-3 col-md-3 col-lg-2">
+                    <label for="simrn">MRN</label>
+                    <input type=text name="simrn" id="simrn" value="12345" class="form-control" required="required">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-sm-12">
+                    {{ f.checkbox( "sisa", "y", "Requires Special Attention") }}
+                </div>
+            </div>
+
+            <hr/>
+
+            {# TODO: rewrite these notes so they are more structured instead of a giant textarea of mutable data (with developer tools help) #}
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="siadcomna">Note</label>
+                    <textarea name="siadcomna" id="siadcomna" rows=2 cols=65
+                              class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="siadcom">Notes & Correspondence</label>
+                    <textarea name="siadcom" id="siadcom" rows=4 cols=65 wrap=physical disabled="disabled"
+                              class="form-control" style="font-family: monospace;">
+                    </textarea>
+                    <button type="button" class="btn-link" data-toggle="modal" data-target="#correspondenceModal">
+                        Add Correspondence
+                    </button>
+                </div>
+            </div>
+
+            <hr/>
+
+            <h3>Patient Contact Information
+                <i class="small fa fa-question-circle-o" aria-hidden="true"
+                   data-toggle="popover"
+                   title="Update Patient Contact Information"
+                   data-html="true"
+                   data-trigger="click"
+                   data-content="Use the Update button when the patient's contact information changes. It will save a
+                                 copy of the information into the Additional Patient Information and clear the
+                                 appropriate fields so that you may enter the new contact information.
+                                 <button class='btn btn-sm btn-default' onclick='updatePatientContactInfo();'>Update</button>"></i>
+            </h3>
+            <div class="row">
+                <div class="form-group col-sm-6 ">
+                    <label for="sipsa">Street Address</label>
+                    <input type=text name="sipsa" id="sipsa" class="form-control">
+                </div>
+                <div class="form-group col-sm-2">
+                    <label for="sipan">Apt # </label>
+                    <input type=text name="sipan" id="sipan" class="form-control">
+                </div>
+                <div class="form-group col-sm-4">
+                    <label for="sipcn">County </label>
+                    <input type=text name="sipcn" id="sipcn" class="form-control">
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="sipc">City </label>
+                    <input type=text name="sipc" id="sipc" class="form-control">
+                </div>
+                <div class="form-group col-md-1">
+                    <label for="sips">State </label>
+                    <input type=text name="sips" id="sips" class="form-control">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="sipz">Zip </label>
+                    <input type=text name="sipz" id="sipz" class="form-control">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="sipcr">Country </label>
+                    <input type=text name="sipcr" id="sipcr" class="form-control">
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="form-group col-sm-6 col-md-4 col-lg-3">
+                    <label for="sipw">Phone (Work)</label>
+                    <input type=text name="sipw" id="sipw" onChange="synChk('sipw','phone')" class="form-control"
+                           data-fv-phone="true" data-fv-phone-country="US">
+                </div>
+                <div class="form-group col-sm-6 col-md-4 col-lg-3">
+                    <label for="siph">Phone (Home)</label>
+                    <input type=text name="siph" id="siph" onChange="synChk('siph','phone')" class="form-control"
+                           data-fv-phone="true" data-fv-phone-country="US">
+                </div>
+                <div class="form-group col-md-4 col-lg-6">
+                    <label for="sipem">Email Address</label>
+                    <input type=text name="sipem" id="sipem" class="form-control" data-fv-emailaddress="true">
+                </div>
+            </div>
+
+            <hr/>
+
+            <h3>Physician Contact Information <i class="small fa fa-question-circle-o" aria-hidden="true"
+                                                 data-toggle="popover"
+                                                 title="Update Physician Contact Information"
+                                                 data-html="true"
+                                                 data-trigger="click"
+                                                 data-content="Use the Update button when the physician's contact
+                                               information changes.  It will save a copy of the information into the
+                                               Additional Patient Information and clear the appropriate fields so that
+                                               you may enter the new contact information.
+                                               <button class='btn btn-sm btn-default' onclick='updatePhysicianContactInfo();'>Update</button>"></i>
+            </h3>
+
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="simdn">Physician's Name</label>
+                    <input type=text name="simdn" id="simdn" class="form-control">
+                </div>
+            </div>
+
+            <h4>Address
+                <small>only required for non-VA physicians</small>
+            </h4>
+
+            <div class="row">
+                <div class="form-group col-md-8">
+                    <label for="simdsa">Street Address</label>
+                    <input type=text name="simdsa" id="simdsa" class="form-control">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="simdcn">County </label>
+                    <input type=text name="simdcn" id="simdcn" class="form-control">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="simdc">City </label>
+                    <input type=text name="simdc" id="simdc" class="form-control">
+                </div>
+                <div class="form-group col-md-1">
+                    <label for="simds">State </label>
+                    <input type=text name="simds" id="simds" class="form-control">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="simdz">Zip </label>
+                    <input type=text name="simdz" id="simdz" class="form-control">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="simdcr">Country </label>
+                    <input type=text name="simdcr" id="simdcr" class="form-control">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6 col-md-4 col-lg-3">
+                    <label for="simdp">Physician's Phone</label>
+                    <input type=text name="simdp" id="simdp" onChange="synChk('simdp','phone')" class="form-control"
+                           data-fv-phone="true" data-fv-phone-country="US">
+                </div>
+                <div class="form-group col-sm-6 col-md-4 col-lg-3">
+                    <label for="simdf">Physician's Fax</label>
+                    <input type=text name="simdf" id="simdf" onChange="synChk('simdf','phone')" class="form-control"
+                           data-fv-phone="true" data-fv-phone-country="US">
+                </div>
+            </div>
+
+            <hr/>
+
+            <div class="row">
+                <div class="form-group col-sm-3 col-lg-2">
+                    <label for="sidob">Date of Birth</label>
+                    <!--TODO: inject max date as "today"-->
+                    {{ f.datepicker("sidob", "1/25/2018", "Date of birth is required") }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="sissn">SSN</label>
+                    <i class="small fa fa-question-circle-o" aria-hidden="true"
+                       data-toggle="popover"
+                       data-content="Please enter the social security number of the subject."></i>
+                    <input type=text name="sissn" id="sissn" onChange="synChk('sissn','ssn')" class="form-control"
+                           pattern="^(?!000|666)(?:[0-6][0-9]{2}|7(?:[0-6][0-9]|7[0-2]))-(?!00)[0-9]{2}-(?!0000)[0-9]{4}$"
+                           data-fv-regexp-message="SSN should be in XXX-XX-XXXX format">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="sifnm">Mother's First Name</label>
+                    <input type=text name="sifnm" id="sifnm" class="form-control">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="sifnf">Father's First Name</label>
+                    <input type=text name="sifnf" id="sifnf" class="form-control">
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                It is important to identify two contacts.
+                At least one needs to be at another address.
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-3">
+                    <label for="sikn">Emergency Contact (1)</label>
+                    <label for="sikn">Name</label>
+                    <input type=text name="sikn" id="sikn" class="form-control">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="sikr">Relation</label>
+                    <input type=text name="sikr" id="sikr" class="form-control">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="sika">Address</label>
+                    <input type=text name="sika" id="sika" class="form-control">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="sikp">Phone</label>
+                    <input type=text name="sikp" id="sikp" onChange="synChk('sikp','phone')" class="form-control"
+                           data-fv-phone="true" data-fv-phone-country="US">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-3">
+                    <label for="siknb">Emergency Contact (2)</label>
+                    <label for="siknb">Name</label>
+                    <input type=text name="siknb" id="siknb" class="form-control">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="sikrb">Relation</label>
+                    <input type=text name="sikrb" id="sikrb" class="form-control">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="sikab">Address</label>
+                    <input type=text name="sikab" id="sikab" class="form-control">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="sikpb">Phone</label>
+                    <input type=text name="sikpb" id="sikpb" onChange="synChk('sikpb','phone')" class="form-control"
+                           data-fv-phone="true" data-fv-phone-country="US">
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="sicnc-0">Phone Calls</label>
+                    {{ f.inlineRadio("sicnc","sicnc-0","0","0",false,"insertPatientCorrespondence('sicnc')") }}
+                    {{ f.inlineRadio("sicnc","sicnc-1","1","1",false,"insertPatientCorrespondence('sicnc')") }}
+                    {{ f.inlineRadio("sicnc","sicnc-2","2","2",false,"insertPatientCorrespondence('sicnc')") }}
+                    {{ f.inlineRadio("sicnc","sicnc-3","3","3",false,"insertPatientCorrespondence('sicnc')") }}
+                    {{ f.inlineRadio("sicnc","sicnc-x","x","X",false,"insertPatientCorrespondence('sicnc')") }}
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="sicnc-0">Letters</label>
+                    {{ f.inlineRadio("sicnl","sicnl-0","0","0",false,"insertPatientCorrespondence('sicnl')") }}
+                    {{ f.inlineRadio("sicnl","sicnl-1","1","1",false,"insertPatientCorrespondence('sicnl')") }}
+                    {{ f.inlineRadio("sicnl","sicnl-2","2","2",false,"insertPatientCorrespondence('sicnl')") }}
+                    {{ f.inlineRadio("sicnl","sicnl-3","3","3",false,"insertPatientCorrespondence('sicnl')") }}
+                    {{ f.inlineRadio("sicnl","sicnl-x","x","X",false,"insertPatientCorrespondence('sicnl')") }}
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="sies">Patient Status</label>
+
+                    <select name="sies" id="sies" class="form-control">
+                        <option value="ac"> active
+                        <option value="tr"> transferred to another institution (specify)
+                        <option value="mr"> unable due to medical reason (specify)
+                        <option value="pr"> unwilling due to personal reason (specify)
+                        <option value="rf"> refused to continue
+                        <option value="pa"> physician advised against
+                        <option value="ra"> concern about radiation
+                        <option value="mv"> moved and unable to return
+                        <option value="in"> no insurance, can't have Dx CT
+                        <option value="bc"> burden of cost
+                        <option value="os"> other (specify)
+                        <option value="es"> excluded (specify)
+                        <option value="sc"> study complete
+                        <option value="nr"> no response to 3 calls + 3 letters
+                        <option value="nc"> unable to contact
+                        <option value="fe"> being followed elsewhere (get results)
+                        <option value="ex"> expired (record date / cause)
+                    </select>
+                </div>
+                <div class="form-group col-md-8">
+                    <label for="sieso">Specify</label>
+                    <input type=text name="sieso" id="sieso" class="form-control" required="required">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="sixdate">Date of Exit</label>
+                    <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
+                       data-content="The Date of Exit should be recorded for all subjects who are no longer active in
+                       the study.  It signifies the date on which they change to a non-active status."></i>
+                    <!--TODO: inject max date as "today"-->
+                    {{ f.datepicker("sixdate", "1/25/2018") }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-3 col-md-3 col-lg-2">
+                    <label for="">DOD</label>
+                    <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
+                       data-content="The Date of Death (DOD) should be recorded for all subjects who have expired."></i>
+                    <!--TODO: inject max date as "today"-->
+                    {{ f.datepicker("sidod", "1/25/2018", "Date of death is required") }}
+                </div>
+                <div class="form-group col-sm-9 col-md-9 col-lg-10">
+                    <label for="sicod">COD</label>
+                    <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
+                       data-content="The Cause of Death (COD) should be recorded for all subjects who have expired."></i>
+                    <input type=text name="sicod" id="sicod" class="form-control" class="form-control"
+                           required="required">
+                </div>
+            </div>
+
+            <hr/>
+
+            <div class="pull-right">
+                <input type="submit" value="Submit" class="btn btn-primary" id="submit-button">
+            </div>
+        </form>
+    </div>
+
+    <div class="modal fade validated" id="correspondenceModal" tabindex="-1" role="dialog"
+         data-fv-icon-valid="glyphicon glyphicon-ok"
+         data-fv-icon-invalid="glyphicon glyphicon-remove"
+         data-fv-icon-validating="glyphicon glyphicon-refresh"
+         data-fv-button-selector="#add-correspondence-btn">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Record Correspondence
+                        <i class="small fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
+                           data-content="This section should be used to record correspondence or communication
+                                   with the patient or physician.  This includes the date, recipient and nature of the
+                                   communication, the date of the relevant CT exam, and the identity of the
+                                   coordinator."></i>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            <label for="sircd">Correspondence Date</label>
+                            {# TODO: inject max date as "today"#}
+                            {{ f.datepicker("sircd", "1/25/2018", "Corresponance date is required") }}
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="sired">Date of Exam</label>
+                            {# TODO: inject max date as "today"#}
+                            {{ f.datepicker("sired", "1/25/2018") }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            <label for="sirr">Recipient</label><br/>
+                            {{ f.inlineRadio("sirr", "sirr-s", "s", "patient", true) }}
+                            {{ f.inlineRadio("sirr", "sirr-m", "m", "physican", true) }}
+                        </div>
+
+                        <div class="form-group col-sm-6">
+                            <label for="sirmd">VA Providers co-signed</label>
+                            <input type=text name="sirmd" id="sirmd" class="form-control" required="required">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-4">
+                            <label for="sirn">Nature</label>
+                            <select name="sirn" id="sirn" class="form-control" required="required">
+                                <option value="" SELECTED> -
+                                <option value="faxed report"> faxed report
+                                <option value="mailed report"> mailed report
+                                <option value="called to give results"> called to give results
+                                <option value="Abx discussed with physician"> Abx discussed with physician
+                                <option value="Bx discussed with physician"> Bx discussed with physician
+                                <option value="other"> other (specify)
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="sirns">Specify</label>
+                            <input type=text name="sirns" id="sirns" class="form-control">
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="sirc">Coordinator</label>
+                            <input type=text name="sirc" id="sirc" class="form-control">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="add-correspondence-btn">Add</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <script language="JavaScript">
+
+        //TODO: rename this function
+        function genD() {
+            return moment().format('MMM/DD/YYYY hh:mm:ss');
+        }
+
+        //TODO: updated from ELCAP uptCI() but could use some refining
+        function updatePatientContactInfo() {
+            var ts = genD();
+            var ovn = "siadcom";
+            var oval = $("#siadcom").val();
+            var tval = "Patient Contact Info (prior to update):\n";
+
+            var confMsg = (
+                "This will copy the patient contact information into the additional\n"
+                + "patient information log and clear the section so that you may record\n"
+                + "a new set (e.g. after a change of address or phone).  Click OK to\n"
+                + "proceed or Cancel to do nothing.");
+
+            var confval = confirm(confMsg);
+
+            if (confval == false)
+                return;
+
+            if ($("#sipsa").val())
+                tval += ($("#sipsa").val());
+
+            if ($("#sipan").val())
+                tval += (", Apt. " + $("#sipan").val());
+
+            tval += "\n";
+
+            if ($("#sipc").val())
+                tval += ($("#sipc").val() + ", ");
+            if ($("#sips").val())
+                tval += ($("#sips").val() + " ");
+            if ($("#sipz").val())
+                tval += ($("#sipz").val() + " ");
+
+            if ($("#sipcr").val())
+                tval += ($("#sipcr").val());
+            if ($("#sipcn").val()) {
+                tval += (" (" + $("#sipcn").val() + " county)");
+            }
+
+            tval += "\n";
+
+            if ($("#sipw").val()) {
+                tval += ("Work: " + $("#sipw").val() + "\n");
+            }
+            if ($("#siph").val()) {
+                tval += ("Home: " + $("#siph").val() + "\n");
+            }
+            if ($("#sipem").val()) {
+                tval += ("Email: " + $("#sipem").val() + "\n");
+            }
+            $("#siadcom").val(ts + tval + oval);
+
+            $("[name^=sip]").clear();
+        }
+
+        //TODO cleanup; was ELCAP tsCA()
+        function insertPatientCorrespondence(arg) {
+            var ts = genD();
+            var $textarea = $("#siadcom");
+            var currentValue = $textarea.val();
+            var text;
+
+            var selectedValue = $("[name=" + arg + "]:checked").val();
+
+            if (arg == "sicnc") {
+                if (selectedValue == "0")
+                    text = "contact made\n";
+                else if (selectedValue == "x")
+                    text = "phone call 4 made\n";
+                else
+                    text = "phone call " + selectedValue + " made\n";
+            }
+            else if (arg == "sicnl") {
+                if (selectedValue == "0")
+                    text = "contact made\n";
+                else if (selectedValue == "x")
+                    text = "certified letter mailed\n";
+                else
+                    text = "letter " + selectedValue + " sent\n";
+            }
+
+            $textarea.val(ts + " " + text + currentValue);
+        }
+
+        //TODO: updated from ELCAP umdCI() but could use some refining
+        function updatePhysicianContactInfo() {
+            var ts = genD();
+            var ovn = "siadcom";
+            var oval = $("#siadcom").val()
+            var tval = "Physician Contact Info (prior to update):\n";
+
+            var confMsg = (
+                "This will copy the physician contact information into the additional\n"
+                + "patient information log and clear the section so that you may record\n"
+                + "a new set (e.g. after a change of address or phone).  Click OK to\n"
+                + "proceed or Cancel to do nothing.");
+
+            var confval = confirm(confMsg);
+
+            if (confval == false)
+                return;
+
+            if ($("#simdn").val())
+                tval += ($("#simdn").val() + "\n");
+
+            if ($("#simdsa").val())
+                tval += ($("#simdsa").val());
+
+            tval += "\n";
+
+            if ($("#simdc").val())
+                tval += ($("#simdc").val() + ", ");
+            if ($("#simds").val())
+                tval += ($("#simds").val() + " ");
+            if ($("#simdz").val())
+                tval += ($("#simdz").val() + " ");
+
+            if ($("#simdcr").val())
+                tval += ($("#simdcr").val());
+
+            if ($("#simdcn").val()) {
+                tval += (" (" + $("#simdcn").val()
+                    + " county)");
+            }
+
+            tval += "\n";
+
+            if ($("#simdp").val()) {
+                tval += ("Phone: " + $("#simdp").val() + "\n");
+            }
+            if ($("#simdf").val()) {
+                tval += ("Fax: " + $("#simdf").val() + "\n");
+            }
+
+            $("#siadcom").val(ts + tval + oval);
+            $("[name^=simd]").clear();
+        }
+
+        $(function () {
+
+            //Initialize Form Validation
+            $(".validated").formValidation({framework: 'bootstrap'});
+
+            //Correspondence modal
+            $("#add-correspondence-btn").on("click", function (e) {
+                var fv = $("#correspondenceModal").data("formValidation");
+                fv.validate();
+                if (fv.isValid()) {
+                    var $textarea = $("#siadcom");
+                    var originalValue = $textarea.val();
+                    var correspondenceDate = $("#sircd").val(),
+                        examDate = $("#sired").val(),
+                        recipient = $("[name=sirr]:checked").val() === "s" ? "patient" : "physician", //TODO: just use words instead of codes?
+                        physicianCoSigned = $("#sirmd").val(),
+                        nature = $("#sirn").val(),
+                        specify = $("#sirns").val(),
+                        coordinator = $("#sirc").val();
+
+                    var text = correspondenceDate + ": " + nature + ": " + specify + ": " + recipient;
+
+                    if (recipient === "physician") {
+                        text += " (" + physicianCoSigned + ")";
+                    }
+                    text += ": " + examDate + " exam: " + coordinator;
+                    $textarea.val(genD() + ": " + text + "\n" + originalValue);
+
+                    $("#correspondenceModal").modal('hide');
+                    $("#correspondenceModal").data("formValidation").resetForm(true);
+                }
+            });
+
+            $("#sirn").conditionallyEnable({sourceValues: "other", enable: "#sirns"});
+            $("[name=sirr]").conditionallyEnable({sourceValues: "m", enable: "#sirmd"});
+
+            //Conditional fields on main form
+            var requiresSpecificity = function (actualValue) {
+                return $.inArray(actualValue, ["tr", "mr", "pr", "os", "es"]) > -1
+            };
+            $("#sies").conditionallyEnable({
+                    sourceValues: function () {
+                        return true
+                    }, //match on all values
+                    enable: function (actualValue) {
+                        if (actualValue === "ex") {
+                            return $("#sidod, #sicod"); //enable date of death and cause of death
+                        }
+                        else if (requiresSpecificity(actualValue)) {
+                            return $("#sieso"); //enable specify field
+                        }
+                        return null; // don't do anything
+                    },
+                    disable: function (actualValue) { //return fields to disable when value does not match one of the above.
+                        if (actualValue === "ex") {
+                            return $("#sieso"); //disable the specify field
+                        }
+                        else if (requiresSpecificity(actualValue)) {
+                            return $("#sidod, #sicod"); //disable date of death/cause of death
+                        }
+                        return $("#sieso, #sidod, #sicod"); //disable all three fields
+                    }
+                }
+            );
+        });
+
+    </script>
+
+{% endblock %}

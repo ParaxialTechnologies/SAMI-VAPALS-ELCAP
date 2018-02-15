@@ -1,18 +1,22 @@
-/*
- * jQuery Conditionally Enable Plugin
- *
- * Enable and disable fields based on if the source's value is equivalent to a a particular value or values.
- * Supports field value restoration.
- *
+/**
+ * The jQuery plugin namespace.
+ * @external "jQuery.fn"
+ * @see {@link http://learn.jquery.com/plugins/|jQuery Plugins}
+ */
+
+/**
+ * A jQuery plugin to conditionally enable and disable fields based on the source's value. Supports field value restoration.
+ * @link https://github.com/OSEHRA/VA-PALS
+ * @author Domenic DiNatale <domenic.dinatale@paraxialtech.com>
+ * @license [Apache-2.0]{@link https://www.apache.org/licenses/LICENSE-2.0.html}
+ * @copyright 2018 [VA-PALS]{@link http://va-pals.org/}
+ * @param {string|function} [options.sourceValues="y"] - a comma separated list of values that must match to trigger enabling fields, or a function that returns a true/false value for if the actual value is considered a match
+ * @param {string|function|object} [options.enable=null] - jQuery selector of fields to enable when source value is equal to one of the <code>sourceValues</code>
+ * @param {string|function|object} [options.disable=null] - jQuery selector of fields to disable when source value is NOT equal the <code>sourceValues</code>
+ * @param {string} [options.additionalDisabledClasses=visible-md-block visible-lg-block]- additional classes to append to each field in fields when it is disabled
  * @todo add github link, author, copyright, license information
- *
- * Options:
- * {string|function} sourceValues - values to assert against the actual. When the source field value equals one of these,
- * the fields will become enabled. This argument can also be a callback function that determines disablement. function(actualValue)
- * A return of "true" means they should be enabled.
- * {string|object} enableFields - fields to toggle when source value is equal to one of the sourceValues (delimited by ",")
- * {string|object} disableFields - fields to toggle when source value is NOT equal the sourceValues (delimited by ",")
- * {string} [additionalDisabledClasses=visible-md-block visible-lg-block]- additional classes to append to each field in fields when it is disabled
+ * @class conditionallyEnable
+ * @memberof jQuery.fn
  */
 (function ($) {
 
@@ -25,8 +29,7 @@
             additionalDisabledClasses: "visible-md-block visible-lg-block" //hide at all screen widths, except when MD or larger
         }, options);
 
-
-        function enableContainer($container, disablementClasses) {
+        function enableContainer($container) {
             if ($container != null && typeof $container !== 'undefined') {
                 $container.find("input, select, textarea")
                     .addBack('input, select, textarea') //include container object if it's actually an input.
@@ -49,13 +52,13 @@
                     .toggleClass("text-muted", false);
 
                 //when the value matches, always display the container, otherwise hide it on screens smaller than md.
-                if (disablementClasses) {
-                    $container.toggleClass(disablementClasses, false);
+                if (settings.additionalDisabledClasses) {
+                    $container.toggleClass(settings.additionalDisabledClasses, false);
                 }
             }
         }
 
-        function disableContainer($container, disablementClasses) {
+        function disableContainer($container) {
             if ($container != null && typeof $container !== 'undefined') {
                 //include container object if it's actually an input.
                 var $fields = $container.find("input, select, textarea").addBack('input, select, textarea');
@@ -91,37 +94,48 @@
                     .toggleClass("text-muted", true);
 
                 //when the value matches, always display the container, otherwise hide it on screens smaller than md.
-                if (disablementClasses) {
-                    $container.toggleClass(disablementClasses, true);
+                if (settings.additionalDisabledClasses) {
+                    $container.toggleClass(settings.additionalDisabledClasses, true);
                 }
             }
         }
 
-        var enableFields = settings.enable, disableFields = settings.disable;
+        var disableFields = settings.disable;
 
-        var enableCallback = (typeof settings.sourceValues === 'function') ? settings.sourceValues : function (actualValue) {
+        var matchCallback = (typeof settings.sourceValues === 'function') ? settings.sourceValues : function (actualValue) {
             var sourceValuesArray = $.map(settings.sourceValues.split(","), $.trim);
             return $.inArray(actualValue, sourceValuesArray) > -1;
         };
+
+        var enableFieldsCallback = (typeof settings.enable === 'function') ? settings.enable : function (actualValue, matches) {
+            return (typeof settings.enable === 'string') ? $(settings.enable) : settings.enable
+        };
+
+        var disableFieldsCallback = (typeof settings.disable === 'function') ? settings.disable : function (actualValue, matches) {
+            return (typeof settings.disable === 'string') ? $(settings.disable) : settings.disable
+        };
+
 
         this.on('change', function () {
             var $el = $(this);
             var actualValue = $el.is(":checkbox") ? ($el.is(":checked") ? $el.val() : "") : $el.val();
 
-            var enabled = enableCallback(actualValue);
-
             console.log("conditionallyEnable::change() triggered. id=" + $el.prop("id") + ", enabled=" + enabled);
+            var matches = matchCallback(actualValue);
 
             //toggle input fields within the container.
-            var $enableContainer = (typeof enableFields === 'string') ? $(enableFields) : enableFields;
-            var $disableContainer = (typeof disableFields === 'string') ? $(disableFields) : disableFields;
-            if (enabled) {
-                enableContainer($enableContainer, settings.additionalDisabledClasses);
-                disableContainer($disableContainer, settings.additionalDisabledClasses);
+            var $enableContainer = enableFieldsCallback(actualValue, matches);
+            var $disableContainer = disableFieldsCallback(actualValue, matches);
+            var enableSize = $enableContainer == null ? 0 : $enableContainer.length
+            var disableSize = $disableContainer == null ? 0 : $disableContainer.length
+
+            if (matches) {
+                enableContainer($enableContainer);
+                disableContainer($disableContainer);
             }
             else {
-                disableContainer($enableContainer, settings.additionalDisabledClasses);
-                enableContainer($disableContainer, settings.additionalDisabledClasses);
+                disableContainer($enableContainer);
+                enableContainer($disableContainer);
             }
         });
 

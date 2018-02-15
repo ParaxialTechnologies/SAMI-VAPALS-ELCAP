@@ -1,14 +1,18 @@
 /**
  * VA-PALS Project Utility class.
- * Requires JQuery.
+ * @link https://github.com/OSEHRA/VA-PALS
+ * @author Domenic DiNatale <domenic.dinatale@paraxialtech.com>
+ * @license [Apache-2.0]{@link https://www.apache.org/licenses/LICENSE-2.0.html}
+ * @copyright 2018 [VA-PALS]{@link http://va-pals.org/}
+ * @class
  */
 var VAPALS = new function () {
     /**
      * Calculates the Body Mass Index
-     * @param height the height
-     * @param heightunits the height units, must start with "i" (for inches) or assumed centimeters.
-     * @param weight the weight
-     * @param weightunits the weight units, must start with "p" (for pounds) or assumed kilograms
+     * @param {number} height the height
+     * @param {string} heightunits the height units, must start with "i" (for inches) or assumed centimeters.
+     * @param {number} weight the weight
+     * @param {string} weightunits the weight units, must start with "p" (for pounds) or assumed kilograms
      * @returns {number} the calculated Body Mass Index as a decimal with 2 digit precision
      */
     this.computeBMI = function (height, heightunits, weight, weightunits) {
@@ -42,7 +46,7 @@ var VAPALS = new function () {
 
     /**
      * Determines the descriptive text used to represent a BMI value.
-     * @param bmi the calculated BMI
+     * @param {number} bmi the calculated BMI
      * @returns {string} The human-readable text indicating how overweight the given BMI is.
      * @throws error if input is not a number
      */
@@ -63,7 +67,7 @@ var VAPALS = new function () {
 
     /**
      * Computes the number of years from {date} to now
-     * @param date the date
+     * @param {date} date the date to compute age from
      * @returns {(number)} number of years rounded down to the nearest integer, or null if input is not a date.
      */
     this.computeAge = function (date) {

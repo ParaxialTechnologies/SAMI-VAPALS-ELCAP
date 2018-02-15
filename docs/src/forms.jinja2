@@ -3,10 +3,12 @@
     <label for="{{ for }}" class="text-right pull-right hidden-xs hidden-sm">{{ text }}</label>
 {%- endmacro %}
 
-{% macro inlineRadio(groupName, id, value, labelText, required) -%}
+{% macro inlineRadio(groupName, id, value, labelText, required, onclick) -%}
     <label class="radio-inline">
         <input type="radio" name="{{ groupName }}" id="{{ id }}"
-               value="{{ value }}" {{ " required=\"required\"" if required else "" }}>
+                {{ " onclick=\""+ onclick + "\"" if onclick else "" }}
+                {{ " required=\"required\"" if required else "" }}
+               value="{{ value }}">
         {{ labelText }}
     </label>
 {%- endmacro %}

@@ -1493,13 +1493,10 @@
                 $("#myTabs").find("a[href='#" + prevTabId + "']").tab('show');
             }).toggleClass("disabled", !getPrevTabId());
 
-            //Initialize Form Validation
-            $("form").formValidation({framework: 'bootstrap'});
-
             $('a[data-toggle="tab"]').on('hide.bs.tab', function (e) {
                 var currentTab = e.target;
                 var tabContentSelector = $(currentTab).attr("href");
-                var fv = $("form.validated").data('formValidation');
+                var fv = $(".validated").data('formValidation');
                 var valid = fv.validateContainer(tabContentSelector).isValid();
                 $(tabContentSelector).find("input, select").first().trigger('change');
                 if (!valid) {
@@ -1529,7 +1526,7 @@
                     return typeof value === "undefined" || value === "";
                 });
                 // check tab container validity
-                var fv = $("form.validated").data('formValidation');
+                var fv = $(".validated").data('formValidation');
                 var valid = fv.isValidContainer($container);
                 var reallyValid = valid == null || valid === true; //consider unvalidated (null) as "valid".
 
@@ -1545,13 +1542,10 @@
                 checkCompleteness($container);
             });
 
-            //Globally enabled popovers for things like help text.
-            $('[data-toggle="popover"]').popover({trigger: 'hover'});
-
             //trigger age calculation when date picker is used to select a date.
             $("#sbdob").closest(".datepicker").on("dp.change", function () {
                 $("#sbdob").trigger("change");
-            })
+            });
         });
 
     </script>

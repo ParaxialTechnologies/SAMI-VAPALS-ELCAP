@@ -3,8 +3,9 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 pip install Jinja2
+python "${DIR}/compile-forms.py"
 
-python ./build.py#Check for Node.js installation
+#Check for Node.js installation
 command -v npm >/dev/null 2>&1 || {
     >&2 echo "ERROR: Go install Node.js. It's required for generating documentation using jsdoc";
     >&2 echo "ERROR: https://docs.npmjs.com/getting-started/installing-node";

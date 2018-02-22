@@ -189,6 +189,7 @@ cover07 ; @TEST ^%tsutrs: no entry from top
 XTROU ; routines containing unit tests for ^%ts apis
  ;;%tsutrs; $$strip^%ts
  ;;%tsutrt; $$trim^%ts
+ ;;%tsutc; $$alphabet^%ts, $$ALPHABET^%ts, $$upcase^%ts
  ;
  ;
  ;

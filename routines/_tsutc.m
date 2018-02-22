@@ -1,4 +1,4 @@
-%tsutc ;ven/lmry&mcglk&toad-type string-case: test $$case^%tsc ;2018-02-22T02:58Z
+%tsutc ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-02-22T11:33Z
  ;;1.7;Mash;
  ;
  ; This Mumps Advanced Shell (mash) routine implements unit tests for
@@ -14,7 +14,7 @@
  ;@copyright: 2016/2017/2018, ven, all rights reserved
  ;@license: Apache 2.0
  ;
- ;@last-updated: 2018-02-22T02:58Z
+ ;@last-updated: 2018-02-22T11:33Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.7T03
@@ -23,7 +23,10 @@
  ;
  ;
  ;
- ; strip* = unit tests for $$strip^%ts
+ ; alpha01 = unit test for $$alphabet^%ts
+ ; ALPHA01 = unit test for $$alphabet^%ts
+ ; upcase* = unit tests for $$upcase^%ts
+ ; 
  ;@called-by:
  ;   M-Unit
  ;
@@ -44,76 +47,71 @@ ALPHA01 ; @TEST $$ALPHABET^%ts(%s,%c): Return upper case English alphabet
  ;
  ;ven/lmry;test;procedure;clean;silent;sac
  ;
- new %s set %s="In a hole in the ground, there lived a hobbit."
- new %c set %c="h"
- new result set result="In a ole in te ground, tere lived a obbit."
- do CHKEQ^%ut($$strip^%ts(%s,%c),result)
+ new result set result=""ABCDEFGHIJKLMNOPQRSTUVWXYZ""
+ do CHKEQ^%ut($$ALPHABET^%ts,result)
  ;
- quit  ; end of strip02
+ quit  ; end of ALPHA01
  ;
  ;
  ;
-strip03 ; @TEST $$strip^%ts(%s,%c): strip multiple characters
+upcase01 ; @TEST $$upcase^%ts(%s): Convert string to uppercase
  ;
- ;ven/mcglk&toad;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;sac
  ;
- new %s set %s="In a hole in the ground, there lived a hobbit."
- new %c set %c="hd"
- new result set result="In a ole in te groun, tere live a obbit."
- do CHKEQ^%ut($$strip^%ts(%s,%c),result)
+ new %s set %s="Terrarium"                     
+ new result set result="TERRARIUM"
+ do CHKEQ^%ut($$upcase^%ts(%s),result)
  ;
- quit  ; end of strip03
- ;
- ;
- ;
-strip04 ; @TEST $$strip^%ts(%s): strip non-existent characters
- ;
- ;ven/mcglk&toad;test;procedure;clean;silent;sac
- ;
- new %s set %s="Inaholeintheground,therelivedahobbit."
- new result set result=%s
- do CHKEQ^%ut($$strip^%ts(%s),result)
- ;
- quit  ; end of strip04
+ quit  ; end of upcase01
  ;
  ;
  ;
-strip05 ; @TEST $$strip^%ts(%s,%c): strip non-existent characters
+upcase02 ; @TEST $$upcase^%ts(%s): Convert phrase string to uppercase
  ;
- ;ven/mcglk&toad;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;sac
  ;
- new %s set %s="In a hole in the ground, there lived a hobbit."
- new %c set %c="qx"
- new result set result=%s
- do CHKEQ^%ut($$strip^%ts(%s,%c),result)
+ new %s set %s="Snow falls on the trees."
+ new result set result="SNOW FALLS ON THE TREES."
+ do CHKEQ^%ut($$upcase^%ts(%s),result)
  ;
- quit  ; end of strip05
- ;
+ quit  ; end of upcase02
  ;
  ;
-strip06 ; @TEST $$strip^%ts(%s): strip from empty string
  ;
- ;ven/mcglk&toad;test;procedure;clean;silent;sac
+upcase03 ; @TEST $$upcase^%ts(%s): See what happens with the empty string
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
  ;
  new %s set %s=""
  new result set result=%s
- do CHKEQ^%ut($$strip^%ts(%s),result)
+ do CHKEQ^%ut($$upcase^%ts(%s),result)
  ;
- quit  ; end of strip06
+ quit  ; end of upcase03
  ;
  ;
  ;
-strip07 ; @TEST $$strip^%ts(%s,%c): strip from empty string
+upcase04 ; @TEST $$upcase^%ts(%s): what happens with non-alpha characters
  ;
  ;ven/mcglk&toad;test;procedure;clean;silent;sac
  ;
- new %s set %s=""
- new %c set %c="qx"
+ new %s set %s="23,980"
  new result set result=%s
- do CHKEQ^%ut($$strip^%ts(%s,%c),result)
+ do CHKEQ^%ut($$upcase^%ts(%s),result)
  ;
- quit  ; end of strip07
+ quit  ; end of upcase04
  ;
  ;
  ;
-eor ; end of routine %tsurs
+upcase05 ; @TEST $$upcase^%ts(%s): mixed alpha and non-alpha characters
+ ;
+ ;ven/mcglk&toad;test;procedure;clean;silent;sac
+ ;
+ new %s set %s="34 trucks, 53 tractors"
+ new result set result="34 TRUCKS, 53 TRACTORS"
+ do CHKEQ^%ut($$upcase^%ts(%s),result)
+ ;
+ quit  ; end of upcase05
+ ;
+ ;
+ ;
+eor ; end of routine %tsutc

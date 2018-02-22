@@ -7,7 +7,7 @@
  ;
  ; primary development: see routine %tslog
  ;
- @primary-dev: Linda M. R. Yaw (lmry)
+ ;@primary-dev: Linda M. R. Yaw (lmry)
  ;@additional-dev: Ken McGlothlen (mcglk)
  ;@additional-dev: Frederick D. S. Marshall (toad)
  ;@primary-dev-org: Vista Expertise Network (ven)

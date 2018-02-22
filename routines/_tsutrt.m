@@ -1,4 +1,4 @@
-%tsutrt ;ven/mcglk&toad-type string: test $$trim ;2018-02-22T18:29Z
+%tsutrt ;ven/mcglk&toad-type string: test $$trim ;2018-02-22T19:46Z
  ;;1.8;Mash;
  ;
  ; %tsutrt implements eleven unit tests for api $$trim^%ts.
@@ -9,6 +9,8 @@
  ; See %tsul for the module's primary-development log.
  ; See %ts for the module's ppis & apis.
  ; %tsutrt contains no public entry points.
+ ;
+ quit  ; no entry from top
  ;
  ;
  ;
@@ -27,7 +29,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-22T18:29Z
+ ;@last-updated: 2018-02-22T19:46Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04

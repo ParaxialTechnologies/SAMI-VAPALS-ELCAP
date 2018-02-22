@@ -1,4 +1,4 @@
-%tsutc ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-02-22T11:33Z
+%tsutc ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-02-22T11:59Z
  ;;1.7;Mash;
  ;
  ; This Mumps Advanced Shell (mash) routine implements unit tests for
@@ -14,7 +14,7 @@
  ;@copyright: 2016/2017/2018, ven, all rights reserved
  ;@license: Apache 2.0
  ;
- ;@last-updated: 2018-02-22T11:33Z
+ ;@last-updated: 2018-02-22T11:59Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.7T03
@@ -47,7 +47,7 @@ ALPHA01 ; @TEST $$ALPHABET^%ts(%s,%c): Return upper case English alphabet
  ;
  ;ven/lmry;test;procedure;clean;silent;sac
  ;
- new result set result=""ABCDEFGHIJKLMNOPQRSTUVWXYZ""
+ new result set result="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
  do CHKEQ^%ut($$ALPHABET^%ts,result)
  ;
  quit  ; end of ALPHA01

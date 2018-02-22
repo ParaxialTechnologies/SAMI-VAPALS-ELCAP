@@ -1,4 +1,4 @@
-%tsut ;ven/mcglk&toad-type string: unit tests ;2018-02-22T19:54Z
+%tsut ;ven/mcglk&toad-type string: unit tests ;2018-02-22T23:15Z
  ;;1.8;Mash;
  ;
  ; %tsut implements unit tests for the Mash String Library.
@@ -29,7 +29,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-22T19:54Z
+ ;@last-updated: 2018-02-22T23:15Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -127,44 +127,44 @@ cover02 ; @TEST ^%tsud: no entry from top
  ;
  ;
  ;
-cover03 ; @TEST ^%tsul: no entry from top
+cover03 ; @TEST ^%tsudr: no entry from top
  ;
  ;ven/toad;test;procedure;clean?;silent?;sac
  ;
- do ^%tsul ; for 100% code coverage
+ do ^%tsudr ; for 100% code coverage
  do CHKEQ^%ut(1,1)
  ;
  quit  ; end of cover03
  ;
  ;
  ;
-cover04 ; @TEST ^%tsrt: no entry from top
+cover04 ; @TEST ^%tsul: no entry from top
  ;
  ;ven/toad;test;procedure;clean?;silent?;sac
  ;
- do ^%tsrt ; for 100% code coverage
+ do ^%tsul ; for 100% code coverage
  do CHKEQ^%ut(1,1)
  ;
  quit  ; end of cover04
  ;
  ;
  ;
-cover05 ; @TEST ^%tsutrt: no entry from top
+cover05 ; @TEST ^%tsrs: no entry from top
  ;
- ;ven/mcglk&toad;test;procedure;clean?;silent?;sac
+ ;ven/toad;test;procedure;clean?;silent?;sac
  ;
- do ^%tsutrt ; for 100% code coverag
+ do ^%tsrs ; for 100% code coverage
  do CHKEQ^%ut(1,1)
  ;
  quit  ; end of cover05
  ;
  ;
  ;
-cover06 ; @TEST ^%tsrs: no entry from top
+cover06 ; @TEST ^%tsrt: no entry from top
  ;
  ;ven/toad;test;procedure;clean?;silent?;sac
  ;
- do ^%tsrs ; for 100% code coverage
+ do ^%tsrt ; for 100% code coverage
  do CHKEQ^%ut(1,1)
  ;
  quit  ; end of cover06
@@ -179,6 +179,17 @@ cover07 ; @TEST ^%tsutrs: no entry from top
  do CHKEQ^%ut(1,1)
  ;
  quit  ; end of cover07
+ ;
+ ;
+ ;
+cover08 ; @TEST ^%tsutrt: no entry from top
+ ;
+ ;ven/mcglk&toad;test;procedure;clean?;silent?;sac
+ ;
+ do ^%tsutrt ; for 100% code coverag
+ do CHKEQ^%ut(1,1)
+ ;
+ quit  ; end of cover08
  ;
  ;
  ;

@@ -1,4 +1,4 @@
-%tsul ;ven/toad-type string: development log ;2018-02-22T19:55Z
+%tsul ;ven/toad-type string: development log ;2018-02-22T23:17Z
  ;;1.8;Mash;
  ;
  ; %tsul is the Mumps String Library's primary-development log.
@@ -23,7 +23,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-22T19:55Z
+ ;@last-updated: 2018-02-22T23:17Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -266,15 +266,17 @@
  ;  %tsudr: move %tsr => %tsudr, update style, cut redundant, add to
  ; notes.
  ;  %tsrt: update style, clearer variable names, protect vs. undef
- ; string.
+ ; string, stanza notation.
  ;  %ts: reset w/no apis, restore $$trim, $$strip, case-conversion
  ; apis.
  ;  %tsut: rename %tsu => %tsut, update style, chg cover^%tsut to use
  ; new unit-test routine, add cover## tests for no-entry-at-top quits.
  ;  %tsurt: rename %tsurt => %tsutrt, update style.
- ;  $tsrs: update style, clearer variable names.
+ ;  $tsrs: update style, clearer variable names, stanza notation.
  ;  %tsutrs: rename %tsurs => %tsutrs, update style.
- ;  %tsc: update style, clearer variable names.
+ ;  %tsc: update style, clearer variable names, stanza notation.
+ ;  %tses: move from place^%wfhfind & finish to be code for
+ ; setextract^%ts.
  ;
  ;
  ;

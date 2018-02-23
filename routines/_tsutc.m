@@ -130,24 +130,24 @@ u01 ; @TEST $$u^%ts(%s): Convert string to uppercase
  ;
  ;
  ;
-lowcase01 ; @TEST $$lowcase^%ts(%s): Convert string to uppercase
+lowcase01 ; @TEST $$lowcase^%ts(%s): Convert string to lowercase
  ;
  ;ven/lmry;test;procedure;clean;silent;sac
  ;
  new %s set %s="TERRARIUM"                     
- new result set result="Terrarium"
+ new result set result="terrarium"
  do CHKEQ^%ut($$lowcase^%ts(%s),result)
  ;
  quit  ; end of lowcase01
  ;
  ;
  ;
-lowcase02 ; @TEST $$lowcase^%ts(%s): Convert phrase string to uppercase
+lowcase02 ; @TEST $$lowcase^%ts(%s): Convert phrase string to lowercase
  ;
  ;ven/lmry;test;procedure;clean;silent;sac
  ;
  new %s set %s="SNOW FALLS ON THE TREES."
- new result set result="Snow falls on the trees."
+ new result set result="snow falls on the trees."
  do CHKEQ^%ut($$lowcase^%ts(%s),result)
  ;
  quit  ; end of lowcase02
@@ -190,12 +190,12 @@ lowcase05 ; @TEST $$lowcase^%ts(%s): mixed alpha and non-alpha characters
  ;
  ;
  ;
-l01 ; @TEST $$l^%ts(%s): Convert string to uppercase
+l01 ; @TEST $$l^%ts(%s): Convert string to lowercase
  ;
  ;ven/lmry;test;procedure;clean;silent;sac
  ;
  new %s set %s="TERRARIUM"                     
- new result set result="Terrarium"
+ new result set result="terrarium"
  do CHKEQ^%ut($$l^%ts(%s),result)
  ;
  quit  ; end of l01

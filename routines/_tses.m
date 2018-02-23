@@ -1,4 +1,4 @@
-%tses ;ven/toad-type string: code for $$setextract ;2018-02-23T21:04Z
+%tses ;ven/toad-type string: code for $$setextract ;2018-02-23T22:02Z
  ;;1.8;Mash;
  ;
  ; %tses implements MASH String Library API $$setextract^%ts, change
@@ -28,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-23T21:04Z
+ ;@last-updated: 2018-02-23T22:02Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -403,7 +403,8 @@ setextract ; change value of positional substring
  ; = the 1st & last character positions of replace w/in the resulting
  ; string. This feature is important to combining setextract^%ts
  ; smoothly w/find^%ts to create find-replace loops that include Find
- ; Next operations.
+ ; Next operations. When replace is empty, it has no specific
+ ; location, so from & to are set = 0.
  ;
  ; IV. about string("low")
  ;
@@ -469,12 +470,14 @@ setextract ; change value of positional substring
  . set prepad=-from+1 ; prepend absolute value plus one spaces
  . set from=1
  . set to=replacelen
+ . set:to=0 to=1 ; to place empty string, ensure to > 0
  . quit
  ;
  else  if from="b" do  ; place substring before string (prepend)
  . set prepad=replacelen ; prepend length of replace spaces
  . set from=1
  . set to=replacelen
+ . set:to=0 to=1 ; to place empty string, ensure to > 0
  . quit
  ;
  else  if from="a" do  ; place substring after string (append)
@@ -489,6 +492,7 @@ setextract ; change value of positional substring
  ;
  else  if from="l" do  ; place substring last in string
  . set from=stringlen-replacelen+1
+ . set:from<1 from=1
  . set to=stringlen
  . quit
  ;
@@ -501,11 +505,17 @@ setextract ; change value of positional substring
  . set string("low")=pad_string("low") ; case-insensitive
  . quit
  ;
- do
+ do  ; so long as not inserting the empty string
  . set $extract(string,from,to)=replace ; place substring in string
  . set to=from+replacelen-1 ; update to location
  . quit:'lower
  . set $extract(string("low"),from,to)=lowrep ; case-insensitive
+ . quit
+ ;
+ if replace="" do  ; empty-string replace has no position
+ . ; it is used to delete characters
+ . set (from,to)=from-1 ; so back up to just before the deletion
+ . set:from<1 (from,to)=0 ; but not into negatives
  . quit
  ;
  ;@stanza 6 termination

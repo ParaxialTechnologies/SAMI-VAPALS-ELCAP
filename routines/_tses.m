@@ -1,4 +1,4 @@
-%tses ;ven/toad-type string: code for $$setextract ;2018-02-23T22:02Z
+%tses ;ven/toad-type string: code for setextract^%ts ;2018-02-23T22:31Z
  ;;1.8;Mash;
  ;
  ; %tses implements MASH String Library API $$setextract^%ts, change
@@ -28,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-23T22:02Z
+ ;@last-updated: 2018-02-23T22:31Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -171,7 +171,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="Tehanu"
  ;  do setextract^%ts(.string,"",-4)
- ; produces string="     Tehanu"
+ ; produces string="    Tehanu"
  ;
  ;  new string set string="Another Wind"
  ;  do setextract^%ts(.string,"The O",-1)
@@ -199,8 +199,8 @@ setextract ; change value of positional substring
  ;  do setextract^%ts(.string,"is to unmake power",$length(string)+2)
  ; produces string="to make love is to unmake power"
  ;
- ;  new string set string="The solution waits"
- ;  do setextract^%ts(.string,"lies in secrecy",$length(string)-4)
+ ;  new string set string="The solution lies in secret"
+ ;  do setextract^%ts(.string,"cy",$length(string))
  ; produces string="The solution lies in secrecy"
  ;
  ; group 5: three-argument, relative addressing

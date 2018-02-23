@@ -286,11 +286,12 @@
  ;  This may be desired behavior but I'm going to check with toad
  ;  to make sure.
  ;
- ; 2018-02-23 ven/lmry %*1.8T04 %tsutc, %tsut: change sencase06 to not use a 
+ ; 2018-02-23 ven/lmry %*1.8T04 %tsutc, %tsut, %tses: change sencase06 to not use a 
  ;  proper noun since the expected behavior is for all non first letter
  ;  words should be lowercased. Added cover09 to %tsut for %tsc. Broke %tsutc
  ;  into sections, updated subroutine header lines in %tsc. Update contents
- ;  listing and fix a few non-significant types in %tsut.
+ ;  listing and fix a few non-significant typos in %tsut. Fixed type, added to
+ ;  to-do list in %tses.
  ;
  ;
 eor ; end of routine %tsul

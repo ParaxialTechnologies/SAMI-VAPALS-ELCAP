@@ -1,4 +1,4 @@
-%ts ;ven/toad-type string: api/ppi library ;2018-02-22T19:14Z
+%ts ;ven/toad-type string: api/ppi library ;2018-02-23T16:52Z
  ;;1.8;Mash;
  ;
  ; %ts is the Mumps String Library, an element of the Mumps
@@ -27,7 +27,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-22T19:14Z
+ ;@last-updated: 2018-02-23T16:52Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -43,50 +43,62 @@
  ;
  ;
  ;
- ; @API $$alphabet^%ts, abcdefghijklmnopqrstuvwxyz
+ ;@API $$alphabet^%ts, abcdefghijklmnopqrstuvwxyz
 alphabet() goto alphabet^%tsc
  ;
- ; @API $$ALPHABET^%ts, ABCDEFGHIJKLMNOPQRSTUVWXYZ
+ ;@API $$ALPHABET^%ts, ABCDEFGHIJKLMNOPQRSTUVWXYZ
 ALPHABET() goto ALPHABET^%tsc
  ;
  ;
- ; @API $$upcase^%ts, CONVERT STRING TO UPPERCASE
+ ;@API $$upcase^%ts, CONVERT STRING TO UPPERCASE
 upcase(string) goto upcase^%tsc
  ;
- ; @API $$u^%ts, CONVERT STRING TO UPPERCASE
+ ;@API $$u^%ts, CONVERT STRING TO UPPERCASE
 u(string) goto upcase^%tsc
  ;
  ;
- ; @API $$lowcase^%ts, convert string to lowercase
+ ;@API $$lowcase^%ts, convert string to lowercase
 lowcase(string) goto lowcase^%tsc
  ;
- ; @API $$l^%ts, convert string to lowercase
+ ;@API $$l^%ts, convert string to lowercase
 l(string) goto lowcase^%tsc
  ;
  ;
- ; @API $$capcase^%ts, Convert String To Capitalized Case
+ ;@API $$capcase^%ts, Convert String To Capitalized Case
 capcase(string) goto capcase^%tsc
  ;
- ; @API $$c^%ts, Convert String To Capitalized Case
+ ;@API $$c^%ts, Convert String To Capitalized Case
 c(string) goto capcase^%tsc
  ;
  ;
- ; @API $$invcase^%ts, iNVERT cASE (uPPERS TO lOWERS & lOWERS TO uPPERS)
+ ;@API $$invcase^%ts, iNVERT cASE (uPPERS TO lOWERS & lOWERS TO uPPERS)
 invcase(string) goto invcase^%tsc
  ;
- ; @API $$i^%ts, iNVERT cASE (uPPERS TO lOWERS & lOWERS TO uPPERS)
+ ;@API $$i^%ts, iNVERT cASE (uPPERS TO lOWERS & lOWERS TO uPPERS)
 i(string) goto invcase^%tsc
  ;
  ;
- ; @API $$sencase^%ts, Convert string to sentence-case
+ ;@API $$sencase^%ts, Convert string to sentence-case
 sencase(string) goto sencase^%tsc
  ;
- ; @API $$s^%ts, Convert string to sentence-case
+ ;@API $$s^%ts, Convert string to sentence-case
 s(string) goto sencase^%tsc
  ;
  ;
  ;
  ;@section 2 %tsr: string-replace tools
+ ;
+ ;
+ ;
+ ;@API setextract^%ts, change value of positional substring
+setextract(string,replace,from,to) goto setextract^%tses
+ ;
+ ;@API se^%ts, change value of positional substring
+se(string,replace,from,to) goto setextract^%tses
+ ;
+ ;
+ ;
+ ;@section 3 %tsr: string-replace tools
  ;
  ;
  ;

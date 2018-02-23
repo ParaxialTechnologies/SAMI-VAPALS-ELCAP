@@ -1,4 +1,4 @@
-%tses ;ven/toad-type string: code for setextract^%ts ;2018-02-23T22:31Z
+%tses ;ven/toad-type string: code for setextract^%ts ;2018-02-23T22:49Z
  ;;1.8;Mash;
  ;
  ; %tses implements MASH String Library API $$setextract^%ts, change
@@ -28,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-23T22:31Z
+ ;@last-updated: 2018-02-23T22:49Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -470,14 +470,14 @@ setextract ; change value of positional substring
  . set prepad=-from+1 ; prepend absolute value plus one spaces
  . set from=1
  . set to=replacelen
- . set:to=0 to=1 ; to place empty string, ensure to > 0
+ . set:replace="" to=1 ; to place empty string, ensure to > 0
  . quit
  ;
  else  if from="b" do  ; place substring before string (prepend)
  . set prepad=replacelen ; prepend length of replace spaces
  . set from=1
  . set to=replacelen
- . set:to=0 to=1 ; to place empty string, ensure to > 0
+ . set:replace="" (prepad,to)=1 ; to place empty string, pad & remove
  . quit
  ;
  else  if from="a" do  ; place substring after string (append)
@@ -488,12 +488,14 @@ setextract ; change value of positional substring
  else  if from="f" do  ; place substring first in string
  . set from=1
  . set to=replacelen
+ . set:replace="" (prepad,to)=1 ; to place empty string, pad & remove
  . quit
  ;
  else  if from="l" do  ; place substring last in string
  . set from=stringlen-replacelen+1
  . set:from<1 from=1
  . set to=stringlen
+ . set:replace="" (from,to)=stringlen+1 ; to place empty string
  . quit
  ;
  ;@stanza 5 place substring within string

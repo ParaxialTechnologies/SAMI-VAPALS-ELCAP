@@ -1,5 +1,5 @@
-%tsutc ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-02-23T03:09Z
- ;;1.7;Mash;
+%tsutc ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-02-23T19:31Z
+ ;;1.8;Mash;
  ;
  ; This Mumps Advanced Shell (mash) routine implements unit tests for
  ; Mash String Library string-case apis in %ts. It contains no public entry
@@ -14,7 +14,7 @@
  ;@copyright: 2016/2017/2018, ven, all rights reserved
  ;@license: Apache 2.0
  ;
- ;@last-updated: 2018-02-23T03:09Z
+ ;@last-updated: 2018-02-23T19:31Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.7T03
@@ -403,8 +403,8 @@ sencase06 ; @TEST $$capcase^%ts(%s): more than one Sentence, different puncuatio
  ;
  ;ven/lmry;test;procedure;clean;silent;sac
  ;
- new %s set %s="hello from France. wish you were here! what are you doing now? nothing?"
- new result set result="Hello from France. Wish you were here! What are you doing now? Nothing?"
+ new %s set %s="hello from outer space. wish you were here! what are you doing now? nothing?"
+ new result set result="Hello from outer space. Wish you were here! What are you doing now? Nothing?"
  do CHKEQ^%ut($$sencase^%ts(%s),result)
  ;
  quit  ; end of sencase06

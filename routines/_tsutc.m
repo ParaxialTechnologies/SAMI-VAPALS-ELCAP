@@ -404,7 +404,7 @@ sencase06 ; @TEST $$capcase^%ts(%s): more than one Sentence, different puncuatio
  ;ven/lmry;test;procedure;clean;silent;sac
  ;
  new %s set %s="hello from France. wish you were here! what are you doing now? nothing?"
- new result set result="hello from France. wish you were here! what are you doing now? nothing?"
+ new result set result="Hello from France. Wish you were here! What are you doing now? Nothing?"
  do CHKEQ^%ut($$sencase^%ts(%s),result)
  ;
  quit  ; end of sencase06

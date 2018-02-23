@@ -11,10 +11,8 @@ copy_binaries(
 do_subdir(
   blogposts
   bmsf-proposal-2017
-  ch-aj-talk-2017-07-18
   elcap-forms
-  login-page-mini-presentation
-  sec-1-sc-training-2013-updated
+  slideshow
   va-pals-form-design-bible
   www
   )

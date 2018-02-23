@@ -193,6 +193,15 @@ cover08 ; @TEST ^%tsutrt: no entry from top
  ;
  ;
  ;
+cover09 ; @TEST ^%tsc: no entry from top
+ ;
+ ;ven/lmry;test;procedure;clean?;silent?;sac
+ ;
+ do ^%tsc ; for 100% code coverag
+ do CHKEQ^%ut(1,1)
+ ;
+ quit  ; end of cover09
+ ;
  ;@section 4 unit-test routines for the String library
  ;
  ;

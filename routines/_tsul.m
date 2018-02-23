@@ -286,6 +286,9 @@
  ;  This may be desired behavior but I'm going to check with toad
  ;  to make sure.
  ;
+ ; 2018-02-23 ven/lmry %*1.8T04 %tsutc, %tsut: change sencase06 to not use a 
+ ;  proper noun since the expected behavior is for all non first letter
+ ;  words should be lowercased. Added cover09 to %tsut for %tsc.
  ;
  ;
 eor ; end of routine %tsul

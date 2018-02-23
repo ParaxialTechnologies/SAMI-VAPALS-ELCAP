@@ -1,4 +1,4 @@
-%tsc ;ven/toad-type string: case conversion ;2018-02-22T19:13Z
+%tsc ;ven/toad-type string: case conversion ;2018-02-23T22:06Z
  ;;1.8;Mash;
  ;
  ; %tsc implements MASH String Library Case Conversion APIs.
@@ -25,7 +25,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-22T19:13Z
+ ;@last-updated: 2018-02-23T22:06Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -66,7 +66,7 @@
  ;
 alphabet ; code for API $$alphabet^%ts, abcdefghijklmnopqrstuvwxyz
  ;
- ;ven/toad;private;variable;clean;silent;sac;NO tests
+ ;ven/toad;private;variable;clean;silent;sac;NO tests;;100% tests
  ;@signature
  ; $$alphabet^%ts
  ;@branches-from
@@ -85,7 +85,7 @@ alphabet ; code for API $$alphabet^%ts, abcdefghijklmnopqrstuvwxyz
  ;
 ALPHABET ; code for API $$ALPHABET^%ts, ABCDEFGHIJKLMNOPQRSTUVWXYZ
  ;
- ;ven/toad;private;variable;clean;silent;sac;NO tests
+ ;ven/toad;private;variable;clean;silent;sac;NO tests;100% tests
  ;@signature
  ;  $$ALPHABET^%ts
  ;@branches-from
@@ -104,7 +104,7 @@ ALPHABET ; code for API $$ALPHABET^%ts, ABCDEFGHIJKLMNOPQRSTUVWXYZ
  ;
 upcase ; code for API $$upcase^%ts, CONVERT STRING TO UPPERCASE
  ;
- ;isf/rwf,ven/toad;private;function;clean;silent;sac;NO tests
+ ;isf/rwf,ven/toad;private;function;clean;silent;sac;;100% tests
  ;@signature
  ; $$upcase^%ts(string)
  ;@branches-from
@@ -128,7 +128,7 @@ upcase ; code for API $$upcase^%ts, CONVERT STRING TO UPPERCASE
  ;
 lowcase ; code for API $$lowcase^%ts, convert string to lowercase
  ;
- ;isf/rwf,ven/toad;private;function;clean;silent;sac;NO tests
+ ;isf/rwf,ven/toad;private;function;clean;silent;sac;100% tests
  ;@signature
  ; $$lowcase^%ts(string)
  ;@branches-from
@@ -152,7 +152,7 @@ lowcase ; code for API $$lowcase^%ts, convert string to lowercase
  ;
 capcase ; code for API $$capcase^%ts, Convert String To Capitalized
  ;
- ;isf/rwf,ven/toad;private;function;clean;silent;sac;NO tests
+ ;isf/rwf,ven/toad;private;function;clean;silent;sac;;100% tests
  ;@signature
  ; $$capcase^%ts(string)
  ;@branches-from
@@ -197,7 +197,7 @@ capcase ; code for API $$capcase^%ts, Convert String To Capitalized
  ;
 invcase ; code for API $$invcase^%ts, iNVERT cASE (uPPERS TO lOWERS...
  ;
- ;kbaz/zag,ven/toad;private;function;clean;silent;sac;NO tests
+ ;kbaz/zag,ven/toad;private;function;clean;silent;sac;;100% tests
  ;@signature
  ; $$invcase^%ts(string)
  ;@branches-from
@@ -229,7 +229,7 @@ invcase ; code for API $$invcase^%ts, iNVERT cASE (uPPERS TO lOWERS...
  ;
 sencase ; code for API $$sencase^%ts, Convert string to sentence case
  ;
- ;isf/rwf,ven/toad;private;function;clean;silent;sac;NO tests
+ ;isf/rwf,ven/toad;private;function;clean;silent;sac;100% tests
  ;@signature
  ; $$sencase^%ts(string)
  ;@branches-from

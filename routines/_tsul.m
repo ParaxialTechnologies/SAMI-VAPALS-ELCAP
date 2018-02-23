@@ -1,4 +1,4 @@
-%tsul ;ven/toad-type string: development log ;2018-02-23T18:09Z
+%tsul ;ven/toad-type string: development log ;2018-02-23T20:21Z
  ;;1.8;Mash;
  ;
  ; %tsul is the Mumps String Library's primary-development log.
@@ -23,7 +23,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-23T18:09Z
+ ;@last-updated: 2018-02-23T20:21Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -288,7 +288,9 @@
  ;
  ; 2018-02-23 ven/lmry %*1.8T04 %tsutc, %tsut: change sencase06 to not use a 
  ;  proper noun since the expected behavior is for all non first letter
- ;  words should be lowercased. Added cover09 to %tsut for %tsc.
+ ;  words should be lowercased. Added cover09 to %tsut for %tsc. Broke %tsutc
+ ;  into sections, updated subroutine header lines in %tsc. Update contents
+ ;  listing and fix a few non-significant types in %tsut.
  ;
  ;
 eor ; end of routine %tsul

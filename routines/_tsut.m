@@ -1,4 +1,4 @@
-%tsut ;ven/mcglk&toad-type string: unit tests ;2018-02-23T00:32Z
+%tsut ;ven/mcglk&toad-type string: unit tests ;2018-02-23T20:19Z
  ;;1.8;Mash;
  ;
  ; %tsut implements unit tests for the Mash String Library.
@@ -29,7 +29,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-23T00:32Z
+ ;@last-updated: 2018-02-23T20:19Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -42,7 +42,8 @@
  ;@contents
  ; ^%tsut: dmi to run Mash String Datatype library unit-test suite
  ; cover^%tsut: dmi to run tests & calculate code coverage
- ;
+ ; no-entry-from-top code-coverage tests
+ ; listing of unit-test routines for the String library
  ;
  ;
  ;@section 1 dmi to run Mash String Datatype library unit-test suite
@@ -175,7 +176,7 @@ cover07 ; @TEST ^%tsutrs: no entry from top
  ;
  ;ven/mcglk&toad;test;procedure;clean?;silent?;sac
  ;
- do ^%tsutrs ; for 100% code coverag
+ do ^%tsutrs ; for 100% code coverage
  do CHKEQ^%ut(1,1)
  ;
  quit  ; end of cover07
@@ -186,7 +187,7 @@ cover08 ; @TEST ^%tsutrt: no entry from top
  ;
  ;ven/mcglk&toad;test;procedure;clean?;silent?;sac
  ;
- do ^%tsutrt ; for 100% code coverag
+ do ^%tsutrt ; for 100% code coverage
  do CHKEQ^%ut(1,1)
  ;
  quit  ; end of cover08
@@ -197,7 +198,7 @@ cover09 ; @TEST ^%tsc: no entry from top
  ;
  ;ven/lmry;test;procedure;clean?;silent?;sac
  ;
- do ^%tsc ; for 100% code coverag
+ do ^%tsc ; for 100% code coverage
  do CHKEQ^%ut(1,1)
  ;
  quit  ; end of cover09
@@ -209,7 +210,7 @@ cover09 ; @TEST ^%tsc: no entry from top
 XTROU ; routines containing unit tests for ^%ts apis
  ;;%tsutrs; $$strip^%ts
  ;;%tsutrt; $$trim^%ts
- ;;%tsutc; $$alphabet^%ts, $$ALPHABET^%ts, $$upcase^%ts
+ ;;%tsutc; all string-case tests 
  ;
  ;
  ;

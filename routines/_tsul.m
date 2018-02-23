@@ -1,4 +1,4 @@
-%tsul ;ven/toad-type string: development log ;2018-02-22T23:17Z
+%tsul ;ven/toad-type string: development log ;2018-02-22T24:00Z
  ;;1.8;Mash;
  ;
  ; %tsul is the Mumps String Library's primary-development log.
@@ -23,7 +23,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-22T23:17Z
+ ;@last-updated: 2018-02-22T24:00Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -277,6 +277,10 @@
  ;  %tsc: update style, clearer variable names, stanza notation.
  ;  %tses: move from place^%wfhfind & finish to be code for
  ; setextract^%ts.
+ ;
+ ; 2018-02-22 ven/lmry %*1.8T04 %tsutc: start %tsutc, wrote 20 unit 
+ ;  tests for string-case functions. Added to %tsut list for M-unit
+ ;  coverage testing.
  ;
  ;
  ;

@@ -26,6 +26,10 @@
  ; alpha01 = unit test for $$alphabet^%ts
  ; ALPHA01 = unit test for $$alphabet^%ts
  ; upcase* = unit tests for $$upcase^%ts
+ ; u01 = unit test for $$u^%ts
+ ; lowcase* = unit tests for $$lowcase^%ts
+ ; l01 = unit tests for $$l^%ts
+ ; capcase* = unit tests for $$capcase^%ts
  ; 
  ;@called-by:
  ;   M-Unit
@@ -36,7 +40,7 @@ alpha01 ; @TEST $$alphabet^%ts(): return lower case English alphabet
  ;
  ;ven/lmry;test;procedure;clean;silent;sac
  ;
- new result set result="abcdefghijklmnopqrstuvwxyz."
+ new result set result="abcdefghijklmnopqrstuvwxyz"
  do CHKEQ^%ut($$alphabet^%ts,result)
  ;
  quit  ; end of alpha01
@@ -92,7 +96,7 @@ upcase03 ; @TEST $$upcase^%ts(%s): See what happens with the empty string
  ;
 upcase04 ; @TEST $$upcase^%ts(%s): what happens with non-alpha characters
  ;
- ;ven/mcglk&toad;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;sac
  ;
  new %s set %s="23,980"
  new result set result=%s
@@ -104,13 +108,169 @@ upcase04 ; @TEST $$upcase^%ts(%s): what happens with non-alpha characters
  ;
 upcase05 ; @TEST $$upcase^%ts(%s): mixed alpha and non-alpha characters
  ;
- ;ven/mcglk&toad;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;sac
  ;
  new %s set %s="34 trucks, 53 tractors"
  new result set result="34 TRUCKS, 53 TRACTORS"
  do CHKEQ^%ut($$upcase^%ts(%s),result)
  ;
  quit  ; end of upcase05
+ ;
+ ;
+ ;
+u01 ; @TEST $$u^%ts(%s): Convert string to uppercase
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
+ ;
+ new %s set %s="Terrarium"                     
+ new result set result="TERRARIUM"
+ do CHKEQ^%ut($$u^%ts(%s),result)
+ ;
+ quit  ; end of u01
+ ;
+ ;
+ ;
+lowcase01 ; @TEST $$lowcase^%ts(%s): Convert string to uppercase
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
+ ;
+ new %s set %s="TERRARIUM"                     
+ new result set result="Terrarium"
+ do CHKEQ^%ut($$lowcase^%ts(%s),result)
+ ;
+ quit  ; end of lowcase01
+ ;
+ ;
+ ;
+lowcase02 ; @TEST $$lowcase^%ts(%s): Convert phrase string to uppercase
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
+ ;
+ new %s set %s="SNOW FALLS ON THE TREES."
+ new result set result="Snow falls on the trees."
+ do CHKEQ^%ut($$lowcase^%ts(%s),result)
+ ;
+ quit  ; end of lowcase02
+ ;
+ ;
+ ;
+lowcase03 ; @TEST $$lowcase^%ts(%s): See what happens with the empty string
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
+ ;
+ new %s set %s=""
+ new result set result=%s
+ do CHKEQ^%ut($$lowcase^%ts(%s),result)
+ ;
+ quit  ; end of lowcase03
+ ;
+ ;
+ ;
+lowcase04 ; @TEST $$lowcase^%ts(%s): what happens with non-alpha characters
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
+ ;
+ new %s set %s="23,980"
+ new result set result=%s
+ do CHKEQ^%ut($$lowcase^%ts(%s),result)
+ ;
+ quit  ; end of lowcase04
+ ;
+ ;
+ ;
+lowcase05 ; @TEST $$lowcase^%ts(%s): mixed alpha and non-alpha characters
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
+ ;
+ new %s set %s="34 TRUCKS, 53 TRACTORS"
+ new result set result="34 trucks, 53 tractors"
+ do CHKEQ^%ut($$lowcase^%ts(%s),result)
+ ;
+ quit  ; end of lowcase05
+ ;
+ ;
+ ;
+l01 ; @TEST $$l^%ts(%s): Convert string to uppercase
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
+ ;
+ new %s set %s="TERRARIUM"                     
+ new result set result="Terrarium"
+ do CHKEQ^%ut($$l^%ts(%s),result)
+ ;
+ quit  ; end of l01
+ ;
+ ;
+ ;
+capcase01 ; @TEST $$capcase^%ts(%s): Convert uppercase string to Capitalized
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
+ ;
+ new %s set %s="TERRARIUM"                     
+ new result set result="Terrarium"
+ do CHKEQ^%ut($$capcase^%ts(%s),result)
+ ;
+ quit  ; end of capcase01
+ ;
+ ;
+ ;
+capcase02 ; @TEST $$capcase^%ts(%s): Convert lowercase phrase to Capitalized
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
+ ;
+ new %s set %s="snow falls on the trees."
+ new result set result="Snow Falls On The Trees."
+ do CHKEQ^%ut($$capcase^%ts(%s),result)
+ ;
+ quit  ; end of capcase02
+ ;
+ ;
+ ;
+capcase03 ; @TEST $$capcase^%ts(%s): See what happens with the empty string
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
+ ;
+ new %s set %s=""
+ new result set result=%s
+ do CHKEQ^%ut($$capcase^%ts(%s),result)
+ ;
+ quit  ; end of capcase03
+ ;
+ ;
+ ;
+capcase04 ; @TEST $$capcase^%ts(%s): what happens with non-alpha characters
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
+ ;
+ new %s set %s="23,980"
+ new result set result=%s
+ do CHKEQ^%ut($$capcase^%ts(%s),result)
+ ;
+ quit  ; end of capcase04
+ ;
+ ;
+ ;
+capcase05 ; @TEST $$capcase^%ts(%s): mixed upper and lowercase characters
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
+ ;
+ new %s set %s="JeNNifer siTs in ThE WinDow Seat."
+ new result set result="Jennifer Sits In The Window Seat"
+ do CHKEQ^%ut($$capcase^%ts(%s),result)
+ ;
+ quit  ; end of capcase05
+ ;
+ ;
+ ;
+c01 ; @TEST $$c^%ts(%s): mixed upper and lowercase characters
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
+ ;
+ new %s set %s="JeNNifer siTs in ThE WinDow Seat."
+ new result set result="Jennifer Sits In The Window Seat"
+ do CHKEQ^%ut($$c^%ts(%s),result)
+ ;
+ quit  ; end of c01
  ;
  ;
  ;

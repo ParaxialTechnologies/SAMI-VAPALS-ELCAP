@@ -255,7 +255,7 @@ capcase05 ; @TEST $$capcase^%ts(%s): mixed upper and lowercase characters
  ;ven/lmry;test;procedure;clean;silent;sac
  ;
  new %s set %s="JeNNifer siTs in ThE WinDow Seat."
- new result set result="Jennifer Sits In The Window Seat"
+ new result set result="Jennifer Sits In The Window Seat."
  do CHKEQ^%ut($$capcase^%ts(%s),result)
  ;
  quit  ; end of capcase05
@@ -267,7 +267,7 @@ c01 ; @TEST $$c^%ts(%s): mixed upper and lowercase characters
  ;ven/lmry;test;procedure;clean;silent;sac
  ;
  new %s set %s="JeNNifer siTs in ThE WinDow Seat."
- new result set result="Jennifer Sits In The Window Seat"
+ new result set result="Jennifer Sits In The Window Seat."
  do CHKEQ^%ut($$c^%ts(%s),result)
  ;
  quit  ; end of c01

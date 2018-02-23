@@ -1,4 +1,4 @@
-%tsul ;ven/toad-type string: development log ;2018-02-22T24:00Z
+%tsul ;ven/toad-type string: development log ;2018-02-23T00:34Z
  ;;1.8;Mash;
  ;
  ; %tsul is the Mumps String Library's primary-development log.
@@ -23,7 +23,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-22T24:00Z
+ ;@last-updated: 2018-02-23T00:34Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -270,7 +270,8 @@
  ;  %ts: reset w/no apis, restore $$trim, $$strip, case-conversion
  ; apis.
  ;  %tsut: rename %tsu => %tsut, update style, chg cover^%tsut to use
- ; new unit-test routine, add cover## tests for no-entry-at-top quits.
+ ; new unit-test routine, add cover## tests for no-entry-at-top quits,
+ ; exclude cover^%tsut from coverage.
  ;  %tsurt: rename %tsurt => %tsutrt, update style.
  ;  $tsrs: update style, clearer variable names, stanza notation.
  ;  %tsutrs: rename %tsurs => %tsutrs, update style.

@@ -1,4 +1,4 @@
-%tsul ;ven/toad-type string: development log ;2018-02-23T00:34Z
+%tsul ;ven/toad-type string: development log ;2018-02-23T18:09Z
  ;;1.8;Mash;
  ;
  ; %tsul is the Mumps String Library's primary-development log.
@@ -23,7 +23,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-23T00:34Z
+ ;@last-updated: 2018-02-23T18:09Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -279,9 +279,12 @@
  ;  %tses: move from place^%wfhfind & finish to be code for
  ; setextract^%ts.
  ;
- ; 2018-02-22 ven/lmry %*1.8T04 %tsutc: start %tsutc, wrote 20 unit 
- ;  tests for string-case functions. Added to %tsut list for M-unit
- ;  coverage testing.
+ ; 2018-02-22 ven/lmry %*1.8T04 %tsutc: start %tsutc, wrote 32 unit 
+ ;  tests for string-case functions. Added to %tsut XTROU list for M-unit
+ ;  testing. One test fails for sencase06, but it's because I
+ ;  used a proper noun (France) which was de-capitalized in the process. 
+ ;  This may be desired behavior but I'm going to check with toad
+ ;  to make sure.
  ;
  ;
  ;

@@ -1,4 +1,4 @@
-%tsutc ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-02-22T11:59Z
+%tsutc ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-02-23T03:09Z
  ;;1.7;Mash;
  ;
  ; This Mumps Advanced Shell (mash) routine implements unit tests for
@@ -14,7 +14,7 @@
  ;@copyright: 2016/2017/2018, ven, all rights reserved
  ;@license: Apache 2.0
  ;
- ;@last-updated: 2018-02-22T11:59Z
+ ;@last-updated: 2018-02-23T03:09Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.7T03
@@ -28,8 +28,13 @@
  ; upcase* = unit tests for $$upcase^%ts
  ; u01 = unit test for $$u^%ts
  ; lowcase* = unit tests for $$lowcase^%ts
- ; l01 = unit tests for $$l^%ts
+ ; l01 = unit test for $$l^%ts
  ; capcase* = unit tests for $$capcase^%ts
+ ; c01 = unit test for $$c^%ts
+ ; invcase* = unit tests for $$invcase^%ts
+ ; i01 = unit test for $$i^%ts
+ ; sencase* = unit tests for $$sencase^%ts
+ ; s01 = unit test for $$s^%ts
  ; 
  ;@called-by:
  ;   M-Unit
@@ -271,6 +276,150 @@ c01 ; @TEST $$c^%ts(%s): mixed upper and lowercase characters
  do CHKEQ^%ut($$c^%ts(%s),result)
  ;
  quit  ; end of c01
+ ;
+ ;
+ ;
+invcase01 ; @TEST $$invcase^%ts(%s): Invert uppercase and lowercase string
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
+ ;
+ new %s set %s="tERRARIUM"                     
+ new result set result="Terrarium"
+ do CHKEQ^%ut($$invcase^%ts(%s),result)
+ ;
+ quit  ; end of invcase01
+ ;
+ ;
+ ;
+invcase02 ; @TEST $$invcase^%ts(%s): Invert mixed case phrase.
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
+ ;
+ new %s set %s="sNOW fALLS oN tHE tREES."
+ new result set result="Snow Falls On The Trees."
+ do CHKEQ^%ut($$invcase^%ts(%s),result)
+ ;
+ quit  ; end of invcase02
+ ;
+ ;
+ ;
+invcase03 ; @TEST $$invcase^%ts(%s): See what happens with the empty string
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
+ ;
+ new %s set %s=""
+ new result set result=%s
+ do CHKEQ^%ut($$invcase^%ts(%s),result)
+ ;
+ quit  ; end of invcase03
+ ;
+ ;
+ ;
+invcase04 ; @TEST $$invcase^%ts(%s): what happens with non-alpha characters
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
+ ;
+ new %s set %s="23,980"
+ new result set result=%s
+ do CHKEQ^%ut($$invcase^%ts(%s),result)
+ ;
+ quit  ; end of invcase04
+ ;
+ ;
+ ;
+i01 ; @TEST $$i^%ts(%s): Invert mixed case phrase.
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
+ ;
+ new %s set %s="sNOW fALLS oN tHE tREES."
+ new result set result="Snow Falls On The Trees."
+ do CHKEQ^%ut($$i^%ts(%s),result)
+ ;
+ quit  ; end of i01
+ ;
+ ;
+ ;
+sencase01 ; @TEST $$sencase^%ts(%s): Convert uppercase string to Sentence case
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
+ ;
+ new %s set %s="TERRARIUM"                     
+ new result set result="Terrarium"
+ do CHKEQ^%ut($$sencase^%ts(%s),result)
+ ;
+ quit  ; end of sencase01
+ ;
+ ;
+ ;
+sencase02 ; @TEST $$sencase^%ts(%s): Convert lowercase phrase to Sentence case
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
+ ;
+ new %s set %s="snow falls on the trees."
+ new result set result="Snow falls on the trees."
+ do CHKEQ^%ut($$sencase^%ts(%s),result)
+ ;
+ quit  ; end of sencase02
+ ;
+ ;
+ ;
+sencase03 ; @TEST $$sencase^%ts(%s): See what happens with the empty string
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
+ ;
+ new %s set %s=""
+ new result set result=%s
+ do CHKEQ^%ut($$sencase^%ts(%s),result)
+ ;
+ quit  ; end of sencase03
+ ;
+ ;
+ ;
+sencase04 ; @TEST $$sencase^%ts(%s): what happens with non-alpha characters
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
+ ;
+ new %s set %s="23,980"
+ new result set result=%s
+ do CHKEQ^%ut($$sencase^%ts(%s),result)
+ ;
+ quit  ; end of sencase04
+ ;
+ ;
+ ;
+sencase05 ; @TEST $$capcase^%ts(%s): mixed upper and lowercase characters to Sentence.
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
+ ;
+ new %s set %s="JeNNifer siTs in ThE WinDow Seat."
+ new result set result="Jennifer sits in the window seat."
+ do CHKEQ^%ut($$sencase^%ts(%s),result)
+ ;
+ quit  ; end of sencase05
+ ;
+ ;
+ ;
+sencase06 ; @TEST $$capcase^%ts(%s): more than one Sentence, different puncuation
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
+ ;
+ new %s set %s="hello from France. wish you were here! what are you doing now? nothing?"
+ new result set result="hello from France. wish you were here! what are you doing now? nothing?"
+ do CHKEQ^%ut($$sencase^%ts(%s),result)
+ ;
+ quit  ; end of sencase06
+ ;
+ ;
+ ;
+s01 ; @TEST $$s^%ts(%s): mixed upper and lowercase characters to Sentence
+ ;
+ ;ven/lmry;test;procedure;clean;silent;sac
+ ;
+ new %s set %s="JeNNifer siTs in ThE WinDow Seat."
+ new result set result="Jennifer sits in the window seat."
+ do CHKEQ^%ut($$s^%ts(%s),result)
+ ;
+ quit  ; end of s01
  ;
  ;
  ;

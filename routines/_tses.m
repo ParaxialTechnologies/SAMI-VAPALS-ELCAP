@@ -1,10 +1,10 @@
-%tses ;ven/toad-type string: code for setextract^%ts ;2018-02-23T23:03Z
+%tses ;ven/toad-type string: code for setextract^%ts ;2018-02-23T23:55Z
  ;;1.8;Mash;
  ;
- ; %tses implements MASH String Library API $$setextract^%ts, change
+ ; %tses implements MASH String Library API setextract^%ts, change
  ; (or create) value of positional substring; it is part of the
  ; String Extract sublibrary.
- ; See %tsutes for unit tests for $$setextract^%ts.
+ ; See %tsutes for unit tests for setextract^%ts.
  ; See %tsud for an introduction to the String library, including an
  ; intro to the String Replace library.
  ; See %tsul for the module's primary-development log.
@@ -28,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-23T23:03Z
+ ;@last-updated: 2018-02-23T23:55Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -50,7 +50,7 @@ setextract ; change value of positional substring
  ;@stanza 1 invocation, binding, & branching
  ;
  ;ven/toad;private;procedure;clean;silent;sac;NO tests
- ;@signature
+ ;@signatures
  ; setextract^%ts(.string,replace)
  ; setextract^%ts(.string,replace,.from)
  ; setextract^%ts(.string,replace,.from,.to)

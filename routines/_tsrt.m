@@ -1,7 +1,7 @@
-%tsrt ;ven/toad-type string: code for $$trim ;2018-02-22T18:35Z
+%tsrt ;ven/toad-type string: $$trim^%ts ;2018-02-24T15:59Z
  ;;1.8;Mash;
  ;
- ; %tsrt implements MASH String Library API $$trim^%ts, trim character
+ ; %tsrt implements MASH String Library ppi $$trim^%ts, trim character
  ; from end(s) of string; it is part of the String Replace sublibrary.
  ; See %tsutrt for unit tests for $$trim^%ts.
  ; See %tsudr for notes on the String Replace sublibrary.
@@ -28,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-22T18:35Z
+ ;@last-updated: 2018-02-24T15:59Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -49,7 +49,10 @@
  ;
  ;
  ;
-trim ; code for API $$trim^%ts, Trim Character from End(s) of String
+ ;@ppi-code $$trim^%ts
+trim ; trim character from end(s) of string
+ ;
+ ;@stanza 1 invocation, binding, & branching
  ;
  ;isf/rwf,ven/toad;private;function;clean;silent;sac;100% tests
  ;@signatures
@@ -89,6 +92,8 @@ trim ; code for API $$trim^%ts, Trim Character from End(s) of String
  ; trim10: missing second argument
  ; trim11: trim to nothing
  ;
+ ;@stanza 2 calculate trim characters from ends
+ ;
  ; trim space (or other char) from left, right, or both ends of string
  ;
  set string=$get(string) ; ensure string defined
@@ -107,6 +112,8 @@ trim ; code for API $$trim^%ts, Trim Character from End(s) of String
  . quit
  ;
  set string=$extract(string,%nl,%nr) ; trim string
+ ;
+ ;@stanza 3 return & termination
  ;
  quit string ; return trimmed string; end of $$trim^%ts
  ;

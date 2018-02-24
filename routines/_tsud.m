@@ -1,4 +1,4 @@
-%tsud ;ven/toad-type string: documentation ;2018-02-22T17:46Z
+%tsud ;ven/toad-type string: documentation ;2018-02-24T15:36Z
  ;;1.8;Mash;
  ;
  ; %tsud is the Mumps String Library's inroductory documentation.
@@ -23,7 +23,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-22T17:46Z
+ ;@last-updated: 2018-02-24T15:36Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -319,17 +319,17 @@
  ; been etended to included character set profiles and localization,
  ; they will become more complex later.
  ;
- ; 3.2. The Extract library does not yet exist, but it will follow
- ; the abbreviated component-based naming schema:
+ ; 3.2. The Extract library follows the abbreviated component-based
+ ; naming schema:
  ;
  ; $$ge^%ts = get extract, copy value of positional substring
- ;   se^%ts = set extract, change (or create) value of positional substring
+ ;   se^%ts = set extract, change value of positional substring
  ;   me^%ts = mat extract, change value of positional substring to spaces
  ;   ce^%ts = cut extract, remove positional substring
  ;   pe^%ts = put extract, insert new positional substring
  ;   ne^%ts = net extract, remove positional substring & assign to variable
  ;
- ; And the longer, clearer one:
+ ; and the longer, clearer one:
  ;
  ; $$getextract^%ts
  ;   setextract^%ts
@@ -344,6 +344,10 @@
  ; $$left^%ts = get extract, first n characters
  ; $$right^%ts = get extract, last n characters
  ; $$mid^%ts = get extract, n characters starting at position p
+ ;
+ ; As well as this necessary companion piece to setextract:
+ ;
+ ; find^%ts = find position of substring
  ;
  ; 3.3. For the string-format conversions, again we need both short
  ; & long names. For the short names, we adopt the convention of
@@ -515,11 +519,21 @@
  ; include methods with 90% or better coverage by unit tests.
  ;
  ;@module-contents
- ; %ts: mumps string library apis [larger shelved version]
- ; %tsu: utilities for the string datatype library
+ ; %ts: mumps string library apis
+ ; %tsc: string-case tools
+ ;[%tse: string-extract tools]
+ ;  %tsef: find position of substring
+ ;  $tses: set extract, change value of positional substring
+ ;[%tsr: string-replace tools]
+ ;  %tsrs: strip character(s) from string
+ ;  $tsrt: trim character from end(s) of string
+ ;[%tsu: utilities for the string datatype library]
  ;  %tsud: documentation
  ;   %tsudr: replace notes
  ;  %tsul: primary development log
+ ;  %tsut: nunit (unit tests & code coverage for string methods)
+ ;   %tsutrs: unit tests for $$strip^%ts
+ ;   %tsutrt: unit tests for $$trim^%ts
  ;
  ;@to-do
  ; bring over methods & create unit tests for them
@@ -544,7 +558,6 @@
  ;
  ;@module-contents [on shelf]
  ; %ts: mumps string library apis [larger shelved version]
- ; %tsc: string-case tools
  ; %tsf: string-format tools
  ;  %tsfhs: format html string as normal string
  ;  %tsfls: format string literal as normal string
@@ -566,8 +579,6 @@
  ;  %tsro: only keep character(s) in string
  ;  %tsrp: repeat find & replace substrings
  ;  %tsrr: find & replace substrings
- ;  %tsrs: strip character(s) from string
- ;  $tsrt: trim character from end(s) of string
  ; %tss: string-slice tools
  ;  %tssc: cut slice(s) from string
  ;  %tssg: get slice(s) of string
@@ -582,12 +593,7 @@
  ;  %tstsc: set column into table row
  ; %tsv: string-validation tools
  ; %tsu: utilities for the string datatype library
- ;  %tsud: documentation
- ;  %tsul: primary development log
  ;  %tsum: meters (timers for string methods)
- ;  %tsut: nunit (unit tests & code coverage for string methods)
- ;   %tsutrs: unit tests for $$strip^%ts
- ;   %tsutrt: unit tests for $$trim^%ts
  ;
  ;
  ;

@@ -1,7 +1,7 @@
-%tsrs ;ven/toad-type string: code for $$strip ;2018-02-22T18:47Z
+%tsrs ;ven/toad-type string: $$strip^%ts ;2018-02-24T15:54Z
  ;;1.8;Mash;
  ;
- ; %tsrs implements MASH String Library API $$strip^%ts, strip
+ ; %tsrs implements MASH String Library ppi $$strip^%ts, strip
  ; character(s) from string; it is part of the String Replace
  ; sublibrary.
  ; See %tsutrs for unit tests for $$strip^%ts.
@@ -29,7 +29,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-22T18:47Z
+ ;@last-updated: 2018-02-24T15:54Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -50,7 +50,10 @@
  ;
  ;
  ;
-strip ; code for API $$strip^%ts, strip character(s) from string
+ ;@ppi-code $$strip^%ts
+strip ; strip character(s) from string
+ ;
+ ;@stanza 1 invocation, binding, & branching
  ;
  ;isf/rwf,ven/toad;private;function;clean;silent;sac;100% tests
  ;@signatures
@@ -80,9 +83,13 @@ strip ; code for API $$strip^%ts, strip character(s) from string
  ; strip06: strip from empty string
  ; strip07: strip from empty string
  ;
+ ;@stanza 2 strip characters from string
+ ;
  set string=$get(string) ; avoid undefined error
  set char=$get(char," ") ; default to stripping spaces
  set string=$translate(string,char,"")
+ ;
+ ;@stanza 3 return & termination
  ;
  quit string ; return stripped string; end of $$strip^%ts
  ;

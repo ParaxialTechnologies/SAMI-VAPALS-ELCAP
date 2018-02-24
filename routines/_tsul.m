@@ -1,4 +1,4 @@
-%tsul ;ven/toad-type string: development log ;2018-02-23T20:21Z
+%tsul ;ven/toad-type string: development log ;2018-02-24T15:26Z
  ;;1.8;Mash;
  ;
  ; %tsul is the Mumps String Library's primary-development log.
@@ -23,7 +23,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-23T20:21Z
+ ;@last-updated: 2018-02-24T15:26Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -257,7 +257,7 @@
  ; $$trim^%ts, change %tsu into a unit-test shell routine, & add
  ; cover^%tsu to run code-coverage.
  ;
- ; 2018-02-21/22 ven/toad %*1.8T04 %tsul,%tsud: rename %tslog => %tsul;
+ ; 2018-02-21/24 ven/toad %*1.8T04 %tsul,%tsud: rename %tslog => %tsul;
  ; create %tsud; bump version to 1.8T04; update to more modern mash
  ; style; expand history to include rest of mdc string library &
  ; function extensions; move to-do to %tsul; list Javascript string
@@ -267,8 +267,8 @@
  ; notes.
  ;  %tsrt: update style, clearer variable names, protect vs. undef
  ; string, stanza notation.
- ;  %ts: reset w/no apis, restore $$trim, $$strip, case-conversion
- ; apis.
+ ;  %ts: reset w/no apis, restore $$trim,$$strip, case-conversion
+ ; apis. add setextract,find.
  ;  %tsut: rename %tsu => %tsut, update style, chg cover^%tsut to use
  ; new unit-test routine, add cover## tests for no-entry-at-top quits,
  ; exclude cover^%tsut from coverage.
@@ -276,22 +276,23 @@
  ;  $tsrs: update style, clearer variable names, stanza notation.
  ;  %tsutrs: rename %tsurs => %tsutrs, update style.
  ;  %tsc: update style, clearer variable names, stanza notation.
- ;  %tses: move from place^%wfhfind & finish to be code for
+ ;  %tses: move fr/place^%wfhfind & finish to be code for
  ; setextract^%ts.
+ ;  %tsef: move fr/find^%wfhfind & finish to be code for find^%ts.
  ;
  ; 2018-02-22 ven/lmry %*1.8T04 %tsutc: start %tsutc, wrote 32 unit 
- ;  tests for string-case functions. Added to %tsut XTROU list for M-unit
- ;  testing. One test fails for sencase06, but it's because I
- ;  used a proper noun (France) which was de-capitalized in the process. 
- ;  This may be desired behavior but I'm going to check with toad
- ;  to make sure.
+ ; tests for string-case functions. Added to %tsut XTROU list for M-unit
+ ; testing. One test fails for sencase06, but it's because I used a
+ ; proper noun (France) which was de-capitalized in the process. This
+ ; may be desired behavior but I'm going to check with toad to make
+ ; sure.
  ;
- ; 2018-02-23 ven/lmry %*1.8T04 %tsutc, %tsut, %tses: change sencase06 to not use a 
- ;  proper noun since the expected behavior is for all non first letter
- ;  words should be lowercased. Added cover09 to %tsut for %tsc. Broke %tsutc
- ;  into sections, updated subroutine header lines in %tsc. Update contents
- ;  listing and fix a few non-significant typos in %tsut. Fixed type, added to
- ;  to-do list in %tses.
+ ; 2018-02-23 ven/lmry %*1.8T04 %tsutc, %tsut, %tses: change sencase06
+ ; to not use a proper noun since the expected behavior is for all non
+ ; first letter words should be lowercased. Added cover09 to %tsut for
+ ; %tsc. Broke %tsutc into sections, updated subroutine header lines in
+ ; %tsc. Update contents listing and fix a few non-significant typos in
+ ; %tsut. Fixed type, added to to-do list in %tses.
  ;
  ;
 eor ; end of routine %tsul

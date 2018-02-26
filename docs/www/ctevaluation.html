@@ -1,0 +1,2460 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>CT Evaluation Form</title>
+    <link rel="stylesheet" href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="lib/formvalidation/dist/css/formValidation.min.css">
+    <link rel="stylesheet" href="lib/bootstrap-datetimepicker-4.17.47/css/bootstrap-datetimepicker.css">
+    <link rel="stylesheet" href="vapals.css">
+</head>
+<body>
+<script src="lib/jquery-3.2.1.slim.min.js"></script>
+<script src="lib/popper.min.js"></script>
+<script src="lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="lib/moment.js"></script>
+<script src="lib/formvalidation/dist/js/formValidation.min.js"></script>
+<script src="lib/formvalidation/dist/js/framework/bootstrap.min.js"></script>
+<script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script src="jquery-conditonally-enable.js"></script>
+<script src="vapals.js"></script>
+
+<!--Debug information for viewport-->
+<span class="badge badge-secondary visible-xs-block">extra small</span>
+<span class="badge badge-secondary visible-sm-block">small</span>
+<span class="badge badge-secondary visible-md-block">medium</span>
+<span class="badge badge-secondary visible-lg-block">large</span>
+
+
+<!--System Navigation-->
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+            <a href="/">
+                <img src="img/new-logo.png" title="VA-PALS" height="50"/>
+            </a>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+            <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+                <li class="dropdown" id="studyIdMenu" style="display:none;">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span id="studyIdMenuItem"></span><span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="disabled">
+                            <a href="#" class="navbar-link">Case Review</a></li>
+                        <li>
+                            <div class="nav-divider"></div>
+                        </li>
+                        <li><a href="background.html" class="navbar-link">Background</a></li>
+                        <li><a href="ctevaluation.html" class="navbar-link">CT Evaluation</a></li>
+                        <li class="disabled"><a>Followup</a></li>
+                        <li class="disabled"><a class="navbar-link">Biopsy</a></li>
+                        <li class="disabled"><a class="navbar-link">Pre-Intervention</a></li>
+                        <li class="disabled"><a class="navbar-link">Intervention</a></li>
+                        <li class="disabled"><a class="navbar-link">PET Evaluation</a></li>
+
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="intake.html">Intake</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+    <div class="container-fluid" style="max-width:1550px">
+        <h1>
+            Sample, Sammy G
+            <small class="text-muted" title="Study ID">ST0001</small>
+        </h1>
+        <h2>CT Evaluation Form
+            <small class="text-muted" title="Medical Record Number">1234567890</small>
+        </h2>
+
+        <hr>
+        
+        <form method="post" action="form?form=????&studyId=????" class="validated"
+              data-fv-icon-valid="glyphicon glyphicon-ok"
+              data-fv-icon-invalid="glyphicon glyphicon-remove"
+              data-fv-icon-validating="glyphicon glyphicon-refresh"
+              data-fv-button-selector="#submit-button">
+            <div>
+                <div class="row">
+                    <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                        <label for="cedos" class="control-label">Study Date</label>
+                        
+                        <div class="input-group datepicker">
+        <!--TODO: inject max date as "today"-->
+        <input class="form-control" id="cedos" name="cedos" aria-describedby="cedos-addon"
+                 required="required"
+                 data-fv-notempty-message="Study date is required"
+               data-fv-date="true" data-fv-max="1/25/2018">
+        <div class="input-group-addon">
+            <div class="input-group-text" id="cedos-addon">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+            </div>
+        </div>
+    </div>
+    <small class="form-text text-muted">MM/DD/YYYY</small>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                        <label for="cemrn">Center Verification Code</label>
+                        <input type="text" class="form-control" id="cemrn" name="cemrn" required="required"/>
+                    </div>
+                    <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                        <label for="ceen">Exam Number</label>
+                        <input type="text" class="form-control" id="ceen" name="ceen" required="required"/>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                        <label for="cerad">Radiologist</label>
+                        <input type="text" class="form-control" id="cerad" name="cerad" required="required"/>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+        <label>
+            <input type="checkbox" name="cecon" id="cecon" value="y">
+            Final Reading
+        </label>
+    </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 form-group">
+                        <label>Signing Radiologist</label>
+                        <select class="form-control" id="cerads" name="cerads">
+                            <option value="-" selected>&mdash;</option>
+                            
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label for="ceclin">Clinical Information</label>
+                        <textarea class="form-control" id="ceclin" name="ceclin" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        <div class="checkbox">
+        <label>
+            <input type="checkbox" name="ceofr" id="ceofr" value="y">
+            CT Scan Performed at Outside Institution
+        </label>
+    </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 form-group">
+                        <label for="sbdsd-b">Type of Exam</label>
+
+                        <label class="radio-inline">
+                            <input type="radio" name="cetex" id="cetex-b" value="b"> Baseline
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="cetex" id="cetex-a" value="a"> Annual Repeat
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="cetex" id="cetex-d" value="d"> Follow-up (not annual repeat)
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 form-group">
+                        <label for="cectp-l">CT Protocol</label>
+
+                        <label class="radio-inline">
+                            <input type="radio" name="cectp" id="cectp-l" value="l"> Low-Dose CT
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="cectp" id="cectp-d" value="d"> Standard CT
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="cectp" id="cectp-i" value="i"> Limited CT
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 form-group">
+                        <label for="cectrst">Reconstructed slice thickness (mm)</label>
+                        <input type="text" class="form-control" id="cectrst" name="cectrst" required="required"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 col-md-3 form-group">
+                        <label for="sidoe" class="control-label">Date of Baseline CT</label>
+                        
+                        <div class="input-group datepicker">
+        <!--TODO: inject max date as "today"-->
+        <input class="form-control" id="sidoe" name="sidoe" aria-describedby="sidoe-addon"
+                 required="required"
+                 data-fv-notempty-message="Study date is required"
+               data-fv-date="true" data-fv-max="1/25/2018">
+        <div class="input-group-addon">
+            <div class="input-group-text" id="sidoe-addon">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+            </div>
+        </div>
+    </div>
+    <small class="form-text text-muted">MM/DD/YYYY</small>
+                    </div>
+                    <div class="col-sm-4 col-md-3 form-group">
+                        <label for="cedcs" class="control-label">Date of Most Recent Comparative Study</label>
+                        
+                        <div class="input-group datepicker">
+        <!--TODO: inject max date as "today"-->
+        <input class="form-control" id="cedcs" name="cedcs" aria-describedby="cedcs-addon"
+                 required="required"
+                 data-fv-notempty-message="Study date is required"
+               data-fv-date="true" data-fv-max="1/25/2018">
+        <div class="input-group-addon">
+            <div class="input-group-text" id="cedcs-addon">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+            </div>
+        </div>
+    </div>
+    <small class="form-text text-muted">MM/DD/YYYY</small>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 col-md-3 form-group">
+                        <label for="cetsb" class="control-label">Time Since Baseline (Months)</label>
+                        <input type="text" class="form-control" id="cetsb" name="cetsb" required="required"/>
+                    </div>
+                    <div class="col-sm-4 col-md-3 form-group">
+                        <label for="cedps" class="control-label">Prior Scans</label>
+                        <input type="text" class="form-control" id="cedps" name="cedps" required="required"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="censb" id="censb" value="y">
+                                Normal Shortcut</label> <i class="fa fa-question-circle-o" aria-hidden="true"
+                                                           data-toggle="popover"
+                                                           title="Normal Shortcut"
+                                                           data-content="This checkbox provides a quick shortcut for normal or
+                                                   near-normal studies.  When the checkbox is checked, the majority of
+                                                   the form is automatically completed to indicate the absence of
+                                                   abnormal findings. Once checked, the radiologist may modify the form
+                                                   to indicate the presence of any abnormalities, without having to
+                                                   complete the majority of the form for a near-normal study.
+                                                   Note that checking this box may delete values from a partially
+                                                   completed form or one that contains pre-existing values (as on a
+                                                   repeat study)."></i>
+
+                            <span class="help-block">Short-cut to fill in "no abnormalities" in all the subsequent data
+                                values. You can input data values for those which are not negative. See the yellow help button for details.</span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-warning">
+                            <h4>READ before completing the Nodule Grid</h4>
+                            <ul>
+
+                                <li> Include all Parenchymal and Endobronchial Nodules.</li>
+                                <li> If # nodules > 20, estimate the correct number and state this is an estimate in the
+                                    nodule comment field.
+                                </li>
+                                <li> Note: hilar masses and focal consolidation are considered to be nodules and should
+                                    be included in the nodule grid.
+                                </li>
+                                <li> For BASELINE CT, the nodules will automatically be sorted with the largest
+                                    non-calcified nodule coming first.
+                                </li>
+                                <li> The same nodule ID will be used on all subsequent CT and other forms. NEW nodules,
+                                    even if LARGER, must follow nodules already listed.
+                                </li>
+                                <li> If there are more than 6 nodules, please fill in the grid for any nodule that is 5
+                                    mm or larger.
+                                </li>
+                                <li> Nodules classified as probably calcified will not be counted toward the number of
+                                    non-calcified nodules.
+                                </li>
+                                <li> For nodules recommended for biopsy or antibiotics, list the reason in the comments
+                                    field in the corresponding column.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label for="cenncn" class="visible-xs visible-sm">Total Number of Non-Calcified Nodules</label>
+    <label for="cenncn" class="text-right pull-right hidden-xs hidden-sm">Total Number of Non-Calcified Nodules</label>
+                    </div>
+                    <div class="col-sm-3 form-group">
+                        <input type="text" class="form-control" id="cenncn" name="cenncn" required="required"/>
+                        <span class="small help-block">list nodules >= 3 mm</span>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label for="cennod" class="visible-xs visible-sm">Total Number of Nodules</label>
+    <label for="cennod" class="text-right pull-right hidden-xs hidden-sm">Total Number of Nodules</label>
+                    </div>
+
+                    <div class="col-sm-3 form-group">
+                        <input type="text" class="form-control" id="cennod" name="cennod" required="required"/>
+                        <span class="small help-block">parenchymal and endobronchial</span>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Nodule ID</th>
+                                    <th>Nodule 1</th>
+                                    <th>Nodule 2</th>
+                                    <th>Nodule 3</th>
+                                    <th>Nodule 4</th>
+                                    <th>Nodule 5</th>
+                                    <th>Additional Nodules <select name="cefctn" onChange="bm()" class="form-control">
+                                        <option value="6"> Nodule 6
+                                        <option value="7"> Nodule 7
+                                        <option value="8"> Nodule 8
+                                        <option value="9"> Nodule 9
+                                        <option value="10"> Nodule 10
+                                    </select></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                
+                                <tr>
+                                    <td>
+                                        Is it new? <i class="fa fa-question-circle-o" aria-hidden="true"
+                                                      data-toggle="popover" title="Help" data-content="A pull-down menu
+                                                      allows us to note whether a nodule is newly seen, previously seen,
+                                                      or seen in retrospect, as well as any change in size. Change
+                                                      (increase or decrease) refers to a change in the size of a nodule
+                                                      or a change in the solid component of a part-solid nodule. There
+                                                      is also an option for nodules that are not included in the scan."></i>
+                                    </td>
+                                    
+                                        <td>
+                                            <select name="cect1ch" onChange="newStat(1)">
+                                                <option value="-"> -
+                                                <option value="n"> newly seen
+                                                <option value="pn"> prev seen, no change
+                                                <option value="pd"> prev seen, slight decr
+                                                <option value="pe"> prev seen, marked decr
+                                                <option value="pi"> prev seen, slight incr
+                                                <option value="pj"> prev seen, marked incr
+                                                <option value="po"> prev seen, obscured
+                                                <option value="pw"> prev seen, resolved
+                                                <option value="px"> prev seen, not a nodule
+                                                <option value="pr"> prev seen, resected
+                                                <option value="rn"> retrospect, no chg
+                                                <option value="rd"> retrospect, decrease
+                                                <option value="ri"> retrospect, slight incr
+                                                <option value="rj"> retrospect, marked incr
+                                                <option value="pk"> not in outside report
+                                                <option value="pv"> not included in scan
+                                            </select>
+                                        </td>
+                                    
+                                        <td>
+                                            <select name="cect2ch" onChange="newStat(2)">
+                                                <option value="-"> -
+                                                <option value="n"> newly seen
+                                                <option value="pn"> prev seen, no change
+                                                <option value="pd"> prev seen, slight decr
+                                                <option value="pe"> prev seen, marked decr
+                                                <option value="pi"> prev seen, slight incr
+                                                <option value="pj"> prev seen, marked incr
+                                                <option value="po"> prev seen, obscured
+                                                <option value="pw"> prev seen, resolved
+                                                <option value="px"> prev seen, not a nodule
+                                                <option value="pr"> prev seen, resected
+                                                <option value="rn"> retrospect, no chg
+                                                <option value="rd"> retrospect, decrease
+                                                <option value="ri"> retrospect, slight incr
+                                                <option value="rj"> retrospect, marked incr
+                                                <option value="pk"> not in outside report
+                                                <option value="pv"> not included in scan
+                                            </select>
+                                        </td>
+                                    
+                                        <td>
+                                            <select name="cect3ch" onChange="newStat(3)">
+                                                <option value="-"> -
+                                                <option value="n"> newly seen
+                                                <option value="pn"> prev seen, no change
+                                                <option value="pd"> prev seen, slight decr
+                                                <option value="pe"> prev seen, marked decr
+                                                <option value="pi"> prev seen, slight incr
+                                                <option value="pj"> prev seen, marked incr
+                                                <option value="po"> prev seen, obscured
+                                                <option value="pw"> prev seen, resolved
+                                                <option value="px"> prev seen, not a nodule
+                                                <option value="pr"> prev seen, resected
+                                                <option value="rn"> retrospect, no chg
+                                                <option value="rd"> retrospect, decrease
+                                                <option value="ri"> retrospect, slight incr
+                                                <option value="rj"> retrospect, marked incr
+                                                <option value="pk"> not in outside report
+                                                <option value="pv"> not included in scan
+                                            </select>
+                                        </td>
+                                    
+                                        <td>
+                                            <select name="cect4ch" onChange="newStat(4)">
+                                                <option value="-"> -
+                                                <option value="n"> newly seen
+                                                <option value="pn"> prev seen, no change
+                                                <option value="pd"> prev seen, slight decr
+                                                <option value="pe"> prev seen, marked decr
+                                                <option value="pi"> prev seen, slight incr
+                                                <option value="pj"> prev seen, marked incr
+                                                <option value="po"> prev seen, obscured
+                                                <option value="pw"> prev seen, resolved
+                                                <option value="px"> prev seen, not a nodule
+                                                <option value="pr"> prev seen, resected
+                                                <option value="rn"> retrospect, no chg
+                                                <option value="rd"> retrospect, decrease
+                                                <option value="ri"> retrospect, slight incr
+                                                <option value="rj"> retrospect, marked incr
+                                                <option value="pk"> not in outside report
+                                                <option value="pv"> not included in scan
+                                            </select>
+                                        </td>
+                                    
+                                        <td>
+                                            <select name="cect5ch" onChange="newStat(5)">
+                                                <option value="-"> -
+                                                <option value="n"> newly seen
+                                                <option value="pn"> prev seen, no change
+                                                <option value="pd"> prev seen, slight decr
+                                                <option value="pe"> prev seen, marked decr
+                                                <option value="pi"> prev seen, slight incr
+                                                <option value="pj"> prev seen, marked incr
+                                                <option value="po"> prev seen, obscured
+                                                <option value="pw"> prev seen, resolved
+                                                <option value="px"> prev seen, not a nodule
+                                                <option value="pr"> prev seen, resected
+                                                <option value="rn"> retrospect, no chg
+                                                <option value="rd"> retrospect, decrease
+                                                <option value="ri"> retrospect, slight incr
+                                                <option value="rj"> retrospect, marked incr
+                                                <option value="pk"> not in outside report
+                                                <option value="pv"> not included in scan
+                                            </select>
+                                        </td>
+                                    
+                                        <td>
+                                            <select name="cect0ch" onChange="newStat(0)">
+                                                <option value="-"> -
+                                                <option value="n"> newly seen
+                                                <option value="pn"> prev seen, no change
+                                                <option value="pd"> prev seen, slight decr
+                                                <option value="pe"> prev seen, marked decr
+                                                <option value="pi"> prev seen, slight incr
+                                                <option value="pj"> prev seen, marked incr
+                                                <option value="po"> prev seen, obscured
+                                                <option value="pw"> prev seen, resolved
+                                                <option value="px"> prev seen, not a nodule
+                                                <option value="pr"> prev seen, resected
+                                                <option value="rn"> retrospect, no chg
+                                                <option value="rd"> retrospect, decrease
+                                                <option value="ri"> retrospect, slight incr
+                                                <option value="rj"> retrospect, marked incr
+                                                <option value="pk"> not in outside report
+                                                <option value="pv"> not included in scan
+                                            </select>
+                                        </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Endobronchial? <i class="fa fa-question-circle-o" aria-hidden="true"
+                                                          data-toggle="popover" title="Help"
+                                                          data-content="It is required that both Endobronchial and Most
+                                                          likely location be answered.  If the nodule has both a
+                                                          bronchial and parenchymal component, answer both to indicate
+                                                          such."></i>
+                                    </td>
+                                    
+                                        <td>
+                                            <select name="cect1en">
+                                                <option value="-"> -
+                                                <option value="no"> No
+                                                <option value="tr"> Trachea
+                                                <option value="rm"> Rt. Main
+                                                <option value="lm"> Lt. Main
+                                                <option value="bi"> BI
+                                                <option value="rul"> RUL
+                                                <option value="rml"> RML
+                                                <option value="rll"> RLL
+                                                <option value="lul"> LUL
+                                                <option value="lll"> LLL
+                                            </select>
+                                        </td>
+                                    
+                                        <td>
+                                            <select name="cect2en">
+                                                <option value="-"> -
+                                                <option value="no"> No
+                                                <option value="tr"> Trachea
+                                                <option value="rm"> Rt. Main
+                                                <option value="lm"> Lt. Main
+                                                <option value="bi"> BI
+                                                <option value="rul"> RUL
+                                                <option value="rml"> RML
+                                                <option value="rll"> RLL
+                                                <option value="lul"> LUL
+                                                <option value="lll"> LLL
+                                            </select>
+                                        </td>
+                                    
+                                        <td>
+                                            <select name="cect3en">
+                                                <option value="-"> -
+                                                <option value="no"> No
+                                                <option value="tr"> Trachea
+                                                <option value="rm"> Rt. Main
+                                                <option value="lm"> Lt. Main
+                                                <option value="bi"> BI
+                                                <option value="rul"> RUL
+                                                <option value="rml"> RML
+                                                <option value="rll"> RLL
+                                                <option value="lul"> LUL
+                                                <option value="lll"> LLL
+                                            </select>
+                                        </td>
+                                    
+                                        <td>
+                                            <select name="cect4en">
+                                                <option value="-"> -
+                                                <option value="no"> No
+                                                <option value="tr"> Trachea
+                                                <option value="rm"> Rt. Main
+                                                <option value="lm"> Lt. Main
+                                                <option value="bi"> BI
+                                                <option value="rul"> RUL
+                                                <option value="rml"> RML
+                                                <option value="rll"> RLL
+                                                <option value="lul"> LUL
+                                                <option value="lll"> LLL
+                                            </select>
+                                        </td>
+                                    
+                                        <td>
+                                            <select name="cect5en">
+                                                <option value="-"> -
+                                                <option value="no"> No
+                                                <option value="tr"> Trachea
+                                                <option value="rm"> Rt. Main
+                                                <option value="lm"> Lt. Main
+                                                <option value="bi"> BI
+                                                <option value="rul"> RUL
+                                                <option value="rml"> RML
+                                                <option value="rll"> RLL
+                                                <option value="lul"> LUL
+                                                <option value="lll"> LLL
+                                            </select>
+                                        </td>
+                                    
+                                        <td>
+                                            <select name="cect0en">
+                                                <option value="-"> -
+                                                <option value="no"> No
+                                                <option value="tr"> Trachea
+                                                <option value="rm"> Rt. Main
+                                                <option value="lm"> Lt. Main
+                                                <option value="bi"> BI
+                                                <option value="rul"> RUL
+                                                <option value="rml"> RML
+                                                <option value="rll"> RLL
+                                                <option value="lul"> LUL
+                                                <option value="lll"> LLL
+                                            </select>
+                                        </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Most Likely Location? <i class="fa fa-question-circle-o" aria-hidden="true"
+                                                                 data-toggle="popover" title="Help"
+                                                                 data-content="If a nodule location is different from where it was described to be previously, do not go back and change the location on the previous exams but make sure to make a note of the previously mentioned location in the Comment field (see description below)."></i>
+                                    </td>
+                                    
+                                        <td>
+                                            <select name="cect1ll">
+                                                <option value="-"> -
+                                                <option value="end"> Endobr
+                                                <option value="lul"> LUL
+                                                <option value="lll"> LLL
+                                                <option value="rul"> RUL
+                                                <option value="rml"> RML
+                                                <option value="rll"> RLL
+                                            </select>
+                                        </td>
+                                    
+                                        <td>
+                                            <select name="cect2ll">
+                                                <option value="-"> -
+                                                <option value="end"> Endobr
+                                                <option value="lul"> LUL
+                                                <option value="lll"> LLL
+                                                <option value="rul"> RUL
+                                                <option value="rml"> RML
+                                                <option value="rll"> RLL
+                                            </select>
+                                        </td>
+                                    
+                                        <td>
+                                            <select name="cect3ll">
+                                                <option value="-"> -
+                                                <option value="end"> Endobr
+                                                <option value="lul"> LUL
+                                                <option value="lll"> LLL
+                                                <option value="rul"> RUL
+                                                <option value="rml"> RML
+                                                <option value="rll"> RLL
+                                            </select>
+                                        </td>
+                                    
+                                        <td>
+                                            <select name="cect4ll">
+                                                <option value="-"> -
+                                                <option value="end"> Endobr
+                                                <option value="lul"> LUL
+                                                <option value="lll"> LLL
+                                                <option value="rul"> RUL
+                                                <option value="rml"> RML
+                                                <option value="rll"> RLL
+                                            </select>
+                                        </td>
+                                    
+                                        <td>
+                                            <select name="cect5ll">
+                                                <option value="-"> -
+                                                <option value="end"> Endobr
+                                                <option value="lul"> LUL
+                                                <option value="lll"> LLL
+                                                <option value="rul"> RUL
+                                                <option value="rml"> RML
+                                                <option value="rll"> RLL
+                                            </select>
+                                        </td>
+                                    
+                                        <td>
+                                            <select name="cect0ll">
+                                                <option value="-"> -
+                                                <option value="end"> Endobr
+                                                <option value="lul"> LUL
+                                                <option value="lll"> LLL
+                                                <option value="rul"> RUL
+                                                <option value="rml"> RML
+                                                <option value="rll"> RLL
+                                            </select>
+                                        </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Distance from the costal pleura (mm)? <i class="fa fa-question-circle-o"
+                                                                                 aria-hidden="true"
+                                                                                 data-toggle="popover" title="Help"
+                                                                                 data-content="The shortest distance from the nodule to the costal pleura should be measured in millimeters."></i>
+                                    </td>
+                                    
+                                        <td>
+                                            <input type=text name="cect1pld"
+                                                   onChange="synChk('cect1pld','anum')" size=4>
+                                        </td>
+                                    
+                                        <td>
+                                            <input type=text name="cect2pld"
+                                                   onChange="synChk('cect2pld','anum')" size=4>
+                                        </td>
+                                    
+                                        <td>
+                                            <input type=text name="cect3pld"
+                                                   onChange="synChk('cect3pld','anum')" size=4>
+                                        </td>
+                                    
+                                        <td>
+                                            <input type=text name="cect4pld"
+                                                   onChange="synChk('cect4pld','anum')" size=4>
+                                        </td>
+                                    
+                                        <td>
+                                            <input type=text name="cect5pld"
+                                                   onChange="synChk('cect5pld','anum')" size=4>
+                                        </td>
+                                    
+                                        <td>
+                                            <input type=text name="cect0pld"
+                                                   onChange="synChk('cect0pld','anum')" size=4>
+                                        </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Length (mm) <i class="fa fa-question-circle-o" aria-hidden="true"
+                                                       data-toggle="popover" title="Help"
+                                                       data-content="Indicate the length (largest dimension) of the nodule.  The unit of measurement is always millimeters."></i>
+                                    </td>
+                                    
+                                        <td>
+                                            <input type=text name="cect1sl"
+                                                   onChange="synChk('cect1sl','pnum')" size=4>
+                                        </td>
+                                    
+                                        <td>
+                                            <input type=text name="cect2sl"
+                                                   onChange="synChk('cect2sl','pnum')" size=4>
+                                        </td>
+                                    
+                                        <td>
+                                            <input type=text name="cect3sl"
+                                                   onChange="synChk('cect3sl','pnum')" size=4>
+                                        </td>
+                                    
+                                        <td>
+                                            <input type=text name="cect4sl"
+                                                   onChange="synChk('cect4sl','pnum')" size=4>
+                                        </td>
+                                    
+                                        <td>
+                                            <input type=text name="cect5sl"
+                                                   onChange="synChk('cect5sl','pnum')" size=4>
+                                        </td>
+                                    
+                                        <td>
+                                            <input type=text name="cect0sl"
+                                                   onChange="synChk('cect0sl','pnum')" size=4>
+                                        </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Maximum Width (mm) <i class="fa fa-question-circle-o" aria-hidden="true"
+                                                              data-toggle="popover" title="Help"
+                                                              data-content="Indicate the maximum width (largest perpendicular dimension to the length) of the nodule.  The unit of measurement is always millimeters."></i>
+                                    </td>
+                                    
+                                        <td>
+                                            <input type=text name="cect1sw"
+                                                   onChange="synChk('cect1sw','pnum')" size=4>
+                                        </td>
+                                    
+                                        <td>
+                                            <input type=text name="cect2sw"
+                                                   onChange="synChk('cect2sw','pnum')" size=4>
+                                        </td>
+                                    
+                                        <td>
+                                            <input type=text name="cect3sw"
+                                                   onChange="synChk('cect3sw','pnum')" size=4>
+                                        </td>
+                                    
+                                        <td>
+                                            <input type=text name="cect4sw"
+                                                   onChange="synChk('cect4sw','pnum')" size=4>
+                                        </td>
+                                    
+                                        <td>
+                                            <input type=text name="cect5sw"
+                                                   onChange="synChk('cect5sw','pnum')" size=4>
+                                        </td>
+                                    
+                                        <td>
+                                            <input type=text name="cect0sw"
+                                                   onChange="synChk('cect0sw','pnum')" size=4>
+                                        </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Nodule Consistency <i class="fa fa-question-circle-o" aria-hidden="true"
+                                                              data-toggle="popover" title="Help"
+                                                              data-content="Nodules may be classified into three types by attenuation characteristics: solid - nodule is uniformly solid in appearance; non-solid - nodule is uniformly non-solid (except for blood vessels) in appearance; part-solid - nodule has both solid and non-solid components"></i>
+                                    </td>
+                                    
+                                        <td>
+                                            <select name="cect1nt" onChange="newTexture(1)">
+                                                <option value="-"> -
+                                                <option value="s"> solid
+                                                <option value="m"> part-solid
+                                                <option value="g"> non-solid
+                                                <option value="o"> other (see comment)
+                                            </select>
+                                        </td>
+                                    
+                                        <td>
+                                            <select name="cect2nt" onChange="newTexture(2)">
+                                                <option value="-"> -
+                                                <option value="s"> solid
+                                                <option value="m"> part-solid
+                                                <option value="g"> non-solid
+                                                <option value="o"> other (see comment)
+                                            </select>
+                                        </td>
+                                    
+                                        <td>
+                                            <select name="cect3nt" onChange="newTexture(3)">
+                                                <option value="-"> -
+                                                <option value="s"> solid
+                                                <option value="m"> part-solid
+                                                <option value="g"> non-solid
+                                                <option value="o"> other (see comment)
+                                            </select>
+                                        </td>
+                                    
+                                        <td>
+                                            <select name="cect4nt" onChange="newTexture(4)">
+                                                <option value="-"> -
+                                                <option value="s"> solid
+                                                <option value="m"> part-solid
+                                                <option value="g"> non-solid
+                                                <option value="o"> other (see comment)
+                                            </select>
+                                        </td>
+                                    
+                                        <td>
+                                            <select name="cect5nt" onChange="newTexture(5)">
+                                                <option value="-"> -
+                                                <option value="s"> solid
+                                                <option value="m"> part-solid
+                                                <option value="g"> non-solid
+                                                <option value="o"> other (see comment)
+                                            </select>
+                                        </td>
+                                    
+                                        <td>
+                                            <select name="cect0nt" onChange="newTexture(0)">
+                                                <option value="-"> -
+                                                <option value="s"> solid
+                                                <option value="m"> part-solid
+                                                <option value="g"> non-solid
+                                                <option value="o"> other (see comment)
+                                            </select>
+                                        </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Solid Comp. Length x Width <i class="fa fa-question-circle-o" aria-hidden="true"
+                                                                      data-toggle="popover" title="Help"
+                                                                      data-content="TODO: ELCAP missing"></i>
+                                    </td>
+                                    
+                                        <td>
+                                            <input type=text name="cect1ssl"
+                                                   onChange="synChk('cect1ssl','pnum')" disabled="true" size=4>
+                                            &nbsp; x &nbsp;
+                                            <input type=text name="cect1ssw"
+                                                   onChange="synChk('cect1ssw','pnum')" disabled="true" size=4>
+
+                                        </td>
+                                    
+                                        <td>
+                                            <input type=text name="cect2ssl"
+                                                   onChange="synChk('cect2ssl','pnum')" disabled="true" size=4>
+                                            &nbsp; x &nbsp;
+                                            <input type=text name="cect2ssw"
+                                                   onChange="synChk('cect2ssw','pnum')" disabled="true" size=4>
+
+                                        </td>
+                                    
+                                        <td>
+                                            <input type=text name="cect3ssl"
+                                                   onChange="synChk('cect3ssl','pnum')" disabled="true" size=4>
+                                            &nbsp; x &nbsp;
+                                            <input type=text name="cect3ssw"
+                                                   onChange="synChk('cect3ssw','pnum')" disabled="true" size=4>
+
+                                        </td>
+                                    
+                                        <td>
+                                            <input type=text name="cect4ssl"
+                                                   onChange="synChk('cect4ssl','pnum')" disabled="true" size=4>
+                                            &nbsp; x &nbsp;
+                                            <input type=text name="cect4ssw"
+                                                   onChange="synChk('cect4ssw','pnum')" disabled="true" size=4>
+
+                                        </td>
+                                    
+                                        <td>
+                                            <input type=text name="cect5ssl"
+                                                   onChange="synChk('cect5ssl','pnum')" disabled="true" size=4>
+                                            &nbsp; x &nbsp;
+                                            <input type=text name="cect5ssw"
+                                                   onChange="synChk('cect5ssw','pnum')" disabled="true" size=4>
+
+                                        </td>
+                                    
+                                        <td>
+                                            <input type=text name="cect0ssl"
+                                                   onChange="synChk('cect0ssl','pnum')" disabled="true" size=4>
+                                            &nbsp; x &nbsp;
+                                            <input type=text name="cect0ssw"
+                                                   onChange="synChk('cect0ssw','pnum')" disabled="true" size=4>
+
+                                        </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Smooth Edges <i class="fa fa-question-circle-o" aria-hidden="true"
+                                                        data-toggle="popover" title="Help"
+                                                        data-content="Indicate whether the nodule has a smooth-appearing margin."></i>
+                                    </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect1se" id="cect1se-n"
+                
+                 required="required"
+               value="n">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect1se" id="cect1se-y"
+                
+                 required="required"
+               value="y">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect1se" id="cect1se-q"
+                
+                 required="required"
+               value="q">
+        ?
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect2se" id="cect2se-n"
+                
+                 required="required"
+               value="n">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect2se" id="cect2se-y"
+                
+                 required="required"
+               value="y">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect2se" id="cect2se-q"
+                
+                 required="required"
+               value="q">
+        ?
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect3se" id="cect3se-n"
+                
+                 required="required"
+               value="n">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect3se" id="cect3se-y"
+                
+                 required="required"
+               value="y">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect3se" id="cect3se-q"
+                
+                 required="required"
+               value="q">
+        ?
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect4se" id="cect4se-n"
+                
+                 required="required"
+               value="n">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect4se" id="cect4se-y"
+                
+                 required="required"
+               value="y">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect4se" id="cect4se-q"
+                
+                 required="required"
+               value="q">
+        ?
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect5se" id="cect5se-n"
+                
+                 required="required"
+               value="n">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect5se" id="cect5se-y"
+                
+                 required="required"
+               value="y">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect5se" id="cect5se-q"
+                
+                 required="required"
+               value="q">
+        ?
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect0se" id="cect0se-n"
+                
+                 required="required"
+               value="n">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect0se" id="cect0se-y"
+                
+                 required="required"
+               value="y">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect0se" id="cect0se-q"
+                
+                 required="required"
+               value="q">
+        ?
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Calcifications NOT c/w Benignity <i class="fa fa-question-circle-o"
+                                                                            aria-hidden="true"
+                                                                            data-toggle="popover" title="Help"
+                                                                            data-content="Indicate whether the nodule has regions of calcification that are consistent with benignity.  Nodules that are considered calcified or probably calcified (?), are NOT COUNTED toward the total number of non-calcified nodules, only toward the total number of nodules."></i>
+                                    </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect1ca" id="cect1ca-n"
+                
+                 required="required"
+               value="n">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect1ca" id="cect1ca-y"
+                
+                 required="required"
+               value="y">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect1ca" id="cect1ca-q"
+                
+                 required="required"
+               value="q">
+        ?
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect2ca" id="cect2ca-n"
+                
+                 required="required"
+               value="n">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect2ca" id="cect2ca-y"
+                
+                 required="required"
+               value="y">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect2ca" id="cect2ca-q"
+                
+                 required="required"
+               value="q">
+        ?
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect3ca" id="cect3ca-n"
+                
+                 required="required"
+               value="n">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect3ca" id="cect3ca-y"
+                
+                 required="required"
+               value="y">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect3ca" id="cect3ca-q"
+                
+                 required="required"
+               value="q">
+        ?
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect4ca" id="cect4ca-n"
+                
+                 required="required"
+               value="n">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect4ca" id="cect4ca-y"
+                
+                 required="required"
+               value="y">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect4ca" id="cect4ca-q"
+                
+                 required="required"
+               value="q">
+        ?
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect5ca" id="cect5ca-n"
+                
+                 required="required"
+               value="n">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect5ca" id="cect5ca-y"
+                
+                 required="required"
+               value="y">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect5ca" id="cect5ca-q"
+                
+                 required="required"
+               value="q">
+        ?
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect0ca" id="cect0ca-n"
+                
+                 required="required"
+               value="n">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect0ca" id="cect0ca-y"
+                
+                 required="required"
+               value="y">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect0ca" id="cect0ca-q"
+                
+                 required="required"
+               value="q">
+        ?
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Spiculations <i class="fa fa-question-circle-o" aria-hidden="true"
+                                                        data-toggle="popover" title="Help"
+                                                        data-content="Indicate whether the nodule has spiculations or 'pleural tags' connecting it to the pleural surface."></i>
+                                    </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect1sp" id="cect1sp-n"
+                
+                 required="required"
+               value="n">
+        absent
+    </label>
+                                                <label class="radio-inline">
+        <input type="radio" name="cect1sp" id="cect1sp-y"
+                
+                 required="required"
+               value="y">
+        present
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect2sp" id="cect2sp-n"
+                
+                 required="required"
+               value="n">
+        absent
+    </label>
+                                                <label class="radio-inline">
+        <input type="radio" name="cect2sp" id="cect2sp-y"
+                
+                 required="required"
+               value="y">
+        present
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect3sp" id="cect3sp-n"
+                
+                 required="required"
+               value="n">
+        absent
+    </label>
+                                                <label class="radio-inline">
+        <input type="radio" name="cect3sp" id="cect3sp-y"
+                
+                 required="required"
+               value="y">
+        present
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect4sp" id="cect4sp-n"
+                
+                 required="required"
+               value="n">
+        absent
+    </label>
+                                                <label class="radio-inline">
+        <input type="radio" name="cect4sp" id="cect4sp-y"
+                
+                 required="required"
+               value="y">
+        present
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect5sp" id="cect5sp-n"
+                
+                 required="required"
+               value="n">
+        absent
+    </label>
+                                                <label class="radio-inline">
+        <input type="radio" name="cect5sp" id="cect5sp-y"
+                
+                 required="required"
+               value="y">
+        present
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect0sp" id="cect0sp-n"
+                
+                 required="required"
+               value="n">
+        absent
+    </label>
+                                                <label class="radio-inline">
+        <input type="radio" name="cect0sp" id="cect0sp-y"
+                
+                 required="required"
+               value="y">
+        present
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Pleural Tags <i class="fa fa-question-circle-o" aria-hidden="true"
+                                                        data-toggle="popover" title="Help"
+                                                        data-content="Indicate whether the nodule has spiculations or 'pleural tags' connecting it to the pleural surface."></i>
+                                    </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect1pt" id="cect1pt-n"
+                
+                 required="required"
+               value="n">
+        absent
+    </label>
+                                                <label class="radio-inline">
+        <input type="radio" name="cect1pt" id="cect1pt-y"
+                
+                 required="required"
+               value="y">
+        present
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect2pt" id="cect2pt-n"
+                
+                 required="required"
+               value="n">
+        absent
+    </label>
+                                                <label class="radio-inline">
+        <input type="radio" name="cect2pt" id="cect2pt-y"
+                
+                 required="required"
+               value="y">
+        present
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect3pt" id="cect3pt-n"
+                
+                 required="required"
+               value="n">
+        absent
+    </label>
+                                                <label class="radio-inline">
+        <input type="radio" name="cect3pt" id="cect3pt-y"
+                
+                 required="required"
+               value="y">
+        present
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect4pt" id="cect4pt-n"
+                
+                 required="required"
+               value="n">
+        absent
+    </label>
+                                                <label class="radio-inline">
+        <input type="radio" name="cect4pt" id="cect4pt-y"
+                
+                 required="required"
+               value="y">
+        present
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect5pt" id="cect5pt-n"
+                
+                 required="required"
+               value="n">
+        absent
+    </label>
+                                                <label class="radio-inline">
+        <input type="radio" name="cect5pt" id="cect5pt-y"
+                
+                 required="required"
+               value="y">
+        present
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect0pt" id="cect0pt-n"
+                
+                 required="required"
+               value="n">
+        absent
+    </label>
+                                                <label class="radio-inline">
+        <input type="radio" name="cect0pt" id="cect0pt-y"
+                
+                 required="required"
+               value="y">
+        present
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Parenchymal Abnormality within 1 cm <i class="fa fa-question-circle-o"
+                                                                               aria-hidden="true"
+                                                                               data-toggle="popover" title="Help"
+                                                                               data-content="Emphysema or other abnormalities (i.e. cysts, scarring, atelectasis, fibrosis, etc.) seen in and throughout the lung parenchyma does not necessarily indicate that 'yes' should be answered here.  Only answer 'yes' if these abnormalities occur in the lung parenchyma within 1 cm of the nodule of interest."></i>
+                                    </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect1pa" id="cect1pa-n"
+                
+                 required="required"
+               value="n">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect1pa" id="cect1pa-y"
+                
+                 required="required"
+               value="y">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect1pa" id="cect1pa-q"
+                
+                 required="required"
+               value="q">
+        ?
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect2pa" id="cect2pa-n"
+                
+                 required="required"
+               value="n">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect2pa" id="cect2pa-y"
+                
+                 required="required"
+               value="y">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect2pa" id="cect2pa-q"
+                
+                 required="required"
+               value="q">
+        ?
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect3pa" id="cect3pa-n"
+                
+                 required="required"
+               value="n">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect3pa" id="cect3pa-y"
+                
+                 required="required"
+               value="y">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect3pa" id="cect3pa-q"
+                
+                 required="required"
+               value="q">
+        ?
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect4pa" id="cect4pa-n"
+                
+                 required="required"
+               value="n">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect4pa" id="cect4pa-y"
+                
+                 required="required"
+               value="y">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect4pa" id="cect4pa-q"
+                
+                 required="required"
+               value="q">
+        ?
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect5pa" id="cect5pa-n"
+                
+                 required="required"
+               value="n">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect5pa" id="cect5pa-y"
+                
+                 required="required"
+               value="y">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect5pa" id="cect5pa-q"
+                
+                 required="required"
+               value="q">
+        ?
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <label class="radio-inline">
+        <input type="radio" name="cect0pa" id="cect0pa-n"
+                
+                 required="required"
+               value="n">
+        No
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect0pa" id="cect0pa-y"
+                
+                 required="required"
+               value="y">
+        Yes
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="cect0pa" id="cect0pa-q"
+                
+                 required="required"
+               value="q">
+        ?
+    </label>
+                                            </div>
+                                        </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Nodule seen in series <i class="fa fa-question-circle-o"
+                                                                 aria-hidden="true"
+                                                                 data-toggle="popover" title="Help"
+                                                                 data-content="Indicate the CT series number in which the nodule appears."></i>
+                                    </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <input type=text name="cect1sn"
+                                                       onChange="synChk('cect1sn','cws')" size=3>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <input type=text name="cect2sn"
+                                                       onChange="synChk('cect2sn','cws')" size=3>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <input type=text name="cect3sn"
+                                                       onChange="synChk('cect3sn','cws')" size=3>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <input type=text name="cect4sn"
+                                                       onChange="synChk('cect4sn','cws')" size=3>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <input type=text name="cect5sn"
+                                                       onChange="synChk('cect5sn','cws')" size=3>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <input type=text name="cect0sn"
+                                                       onChange="synChk('cect0sn','cws')" size=3>
+                                            </div>
+                                        </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Nodule seen in images <i class="fa fa-question-circle-o"
+                                                                 aria-hidden="true"
+                                                                 data-toggle="popover" title="Help"
+                                                                 data-content="Indicate the CT image numbers in which the nodule appears."></i>
+                                    </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <input type=text name="cect1inl"
+                                                       onChange="synChk('cect1inl','pnum')" size=3>
+                                                -
+                                                <input type=text name="cect1inh"
+                                                       onChange="synChk('cect1inh','pnum')" size=3>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <input type=text name="cect2inl"
+                                                       onChange="synChk('cect2inl','pnum')" size=3>
+                                                -
+                                                <input type=text name="cect2inh"
+                                                       onChange="synChk('cect2inh','pnum')" size=3>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <input type=text name="cect3inl"
+                                                       onChange="synChk('cect3inl','pnum')" size=3>
+                                                -
+                                                <input type=text name="cect3inh"
+                                                       onChange="synChk('cect3inh','pnum')" size=3>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <input type=text name="cect4inl"
+                                                       onChange="synChk('cect4inl','pnum')" size=3>
+                                                -
+                                                <input type=text name="cect4inh"
+                                                       onChange="synChk('cect4inh','pnum')" size=3>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <input type=text name="cect5inl"
+                                                       onChange="synChk('cect5inl','pnum')" size=3>
+                                                -
+                                                <input type=text name="cect5inh"
+                                                       onChange="synChk('cect5inh','pnum')" size=3>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <input type=text name="cect0inl"
+                                                       onChange="synChk('cect0inl','pnum')" size=3>
+                                                -
+                                                <input type=text name="cect0inh"
+                                                       onChange="synChk('cect0inh','pnum')" size=3>
+                                            </div>
+                                        </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Nodule Status <i class="fa fa-question-circle-o"
+                                                         aria-hidden="true"
+                                                         data-toggle="popover" title="Help"
+                                                         data-content="If nodule calcifications are seen ('yes' is selected for Calcifications), 'benign (Ca++)' will automatically appear under Nodule Status.<li> When '?' is selected under Calcifications, Nodule Status will read 'prob benign, prob Ca++' (probably benign, probably calcified).  If the nodule is 'prev seen, resolved,' as noted in the 'Is it new' field, then Nodule Status will automatically read 'resolved.'  When 'prev seen, resected' is selected for 'Is it new', 'Resected-malignant' appears under Nodule Status.  If under 'Is it new' it reads 'not included in scan,' Nodule Status will also read 'not included in scan.'  These automatic entries help to maintain a level of consistency for data entry across institutions."></i>
+                                    </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <select name="cect1st">
+                                                    <option value="-"> -
+                                                    <option value="un"> unknown
+                                                    <option value="bc"> benign (Ca++)
+                                                    <option value="pc"> prob benign, prob Ca++
+                                                    <option value="re"> resolved
+                                                    <option value="rg"> resolving
+                                                    <option value="tn"> no change - 2 yrs
+                                                    <option value="pp"> PET - positive
+                                                    <option value="pn"> PET - negative
+                                                    <option value="pi"> PET - indeterminate
+                                                    <option value="ub"> Biopsy - unknown
+                                                    <option value="bb"> Biopsy - benign
+                                                    <option value="mb"> Biopsy - malignant
+                                                    <option value="ab"> Biopsy - atyp bronch prolif
+                                                    <option value="om"> Biopsy - metastatic
+                                                    <option value="mr"> Resected - malignant
+                                                    <option value="br"> Resected - benign
+                                                </select>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <select name="cect2st">
+                                                    <option value="-"> -
+                                                    <option value="un"> unknown
+                                                    <option value="bc"> benign (Ca++)
+                                                    <option value="pc"> prob benign, prob Ca++
+                                                    <option value="re"> resolved
+                                                    <option value="rg"> resolving
+                                                    <option value="tn"> no change - 2 yrs
+                                                    <option value="pp"> PET - positive
+                                                    <option value="pn"> PET - negative
+                                                    <option value="pi"> PET - indeterminate
+                                                    <option value="ub"> Biopsy - unknown
+                                                    <option value="bb"> Biopsy - benign
+                                                    <option value="mb"> Biopsy - malignant
+                                                    <option value="ab"> Biopsy - atyp bronch prolif
+                                                    <option value="om"> Biopsy - metastatic
+                                                    <option value="mr"> Resected - malignant
+                                                    <option value="br"> Resected - benign
+                                                </select>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <select name="cect3st">
+                                                    <option value="-"> -
+                                                    <option value="un"> unknown
+                                                    <option value="bc"> benign (Ca++)
+                                                    <option value="pc"> prob benign, prob Ca++
+                                                    <option value="re"> resolved
+                                                    <option value="rg"> resolving
+                                                    <option value="tn"> no change - 2 yrs
+                                                    <option value="pp"> PET - positive
+                                                    <option value="pn"> PET - negative
+                                                    <option value="pi"> PET - indeterminate
+                                                    <option value="ub"> Biopsy - unknown
+                                                    <option value="bb"> Biopsy - benign
+                                                    <option value="mb"> Biopsy - malignant
+                                                    <option value="ab"> Biopsy - atyp bronch prolif
+                                                    <option value="om"> Biopsy - metastatic
+                                                    <option value="mr"> Resected - malignant
+                                                    <option value="br"> Resected - benign
+                                                </select>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <select name="cect4st">
+                                                    <option value="-"> -
+                                                    <option value="un"> unknown
+                                                    <option value="bc"> benign (Ca++)
+                                                    <option value="pc"> prob benign, prob Ca++
+                                                    <option value="re"> resolved
+                                                    <option value="rg"> resolving
+                                                    <option value="tn"> no change - 2 yrs
+                                                    <option value="pp"> PET - positive
+                                                    <option value="pn"> PET - negative
+                                                    <option value="pi"> PET - indeterminate
+                                                    <option value="ub"> Biopsy - unknown
+                                                    <option value="bb"> Biopsy - benign
+                                                    <option value="mb"> Biopsy - malignant
+                                                    <option value="ab"> Biopsy - atyp bronch prolif
+                                                    <option value="om"> Biopsy - metastatic
+                                                    <option value="mr"> Resected - malignant
+                                                    <option value="br"> Resected - benign
+                                                </select>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <select name="cect5st">
+                                                    <option value="-"> -
+                                                    <option value="un"> unknown
+                                                    <option value="bc"> benign (Ca++)
+                                                    <option value="pc"> prob benign, prob Ca++
+                                                    <option value="re"> resolved
+                                                    <option value="rg"> resolving
+                                                    <option value="tn"> no change - 2 yrs
+                                                    <option value="pp"> PET - positive
+                                                    <option value="pn"> PET - negative
+                                                    <option value="pi"> PET - indeterminate
+                                                    <option value="ub"> Biopsy - unknown
+                                                    <option value="bb"> Biopsy - benign
+                                                    <option value="mb"> Biopsy - malignant
+                                                    <option value="ab"> Biopsy - atyp bronch prolif
+                                                    <option value="om"> Biopsy - metastatic
+                                                    <option value="mr"> Resected - malignant
+                                                    <option value="br"> Resected - benign
+                                                </select>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <select name="cect0st">
+                                                    <option value="-"> -
+                                                    <option value="un"> unknown
+                                                    <option value="bc"> benign (Ca++)
+                                                    <option value="pc"> prob benign, prob Ca++
+                                                    <option value="re"> resolved
+                                                    <option value="rg"> resolving
+                                                    <option value="tn"> no change - 2 yrs
+                                                    <option value="pp"> PET - positive
+                                                    <option value="pn"> PET - negative
+                                                    <option value="pi"> PET - indeterminate
+                                                    <option value="ub"> Biopsy - unknown
+                                                    <option value="bb"> Biopsy - benign
+                                                    <option value="mb"> Biopsy - malignant
+                                                    <option value="ab"> Biopsy - atyp bronch prolif
+                                                    <option value="om"> Biopsy - metastatic
+                                                    <option value="mr"> Resected - malignant
+                                                    <option value="br"> Resected - benign
+                                                </select>
+                                            </div>
+                                        </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Action <i class="fa fa-question-circle-o"
+                                                  aria-hidden="true"
+                                                  data-toggle="popover" title="Help"
+                                                  data-content="This field becomes very important when different nodules require different follow-up.  A pull-down menu allows us to choose among six different follow-up actions -    'repeat SCT' (repeat screening CT),    'f/u\ Dx CT' (follow-up Diagnostic CT),    'Abx + f/u Dx CT' (Antibiotic + follow-up Diagnostic CT),    'biopsy',    'bronchoscopy',       or    'resection'."></i>
+                                    </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <select name="cect1ac">
+                                                    <option value="-"> -
+                                                    <option value="s"> annual repeat CT
+                                                    <option value="f"> f/u CT
+                                                    <option value="a"> Abx + f/u CT
+                                                    <option value="e"> PET
+                                                    <option value="c"> CT w contrast
+                                                    <option value="b"> CT-guided biopsy
+                                                    <option value="p"> bronchoscopy
+                                                    <option value="v"> VAT
+                                                    <option value="r"> resection
+                                                </select>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <select name="cect2ac">
+                                                    <option value="-"> -
+                                                    <option value="s"> annual repeat CT
+                                                    <option value="f"> f/u CT
+                                                    <option value="a"> Abx + f/u CT
+                                                    <option value="e"> PET
+                                                    <option value="c"> CT w contrast
+                                                    <option value="b"> CT-guided biopsy
+                                                    <option value="p"> bronchoscopy
+                                                    <option value="v"> VAT
+                                                    <option value="r"> resection
+                                                </select>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <select name="cect3ac">
+                                                    <option value="-"> -
+                                                    <option value="s"> annual repeat CT
+                                                    <option value="f"> f/u CT
+                                                    <option value="a"> Abx + f/u CT
+                                                    <option value="e"> PET
+                                                    <option value="c"> CT w contrast
+                                                    <option value="b"> CT-guided biopsy
+                                                    <option value="p"> bronchoscopy
+                                                    <option value="v"> VAT
+                                                    <option value="r"> resection
+                                                </select>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <select name="cect4ac">
+                                                    <option value="-"> -
+                                                    <option value="s"> annual repeat CT
+                                                    <option value="f"> f/u CT
+                                                    <option value="a"> Abx + f/u CT
+                                                    <option value="e"> PET
+                                                    <option value="c"> CT w contrast
+                                                    <option value="b"> CT-guided biopsy
+                                                    <option value="p"> bronchoscopy
+                                                    <option value="v"> VAT
+                                                    <option value="r"> resection
+                                                </select>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <select name="cect5ac">
+                                                    <option value="-"> -
+                                                    <option value="s"> annual repeat CT
+                                                    <option value="f"> f/u CT
+                                                    <option value="a"> Abx + f/u CT
+                                                    <option value="e"> PET
+                                                    <option value="c"> CT w contrast
+                                                    <option value="b"> CT-guided biopsy
+                                                    <option value="p"> bronchoscopy
+                                                    <option value="v"> VAT
+                                                    <option value="r"> resection
+                                                </select>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <select name="cect0ac">
+                                                    <option value="-"> -
+                                                    <option value="s"> annual repeat CT
+                                                    <option value="f"> f/u CT
+                                                    <option value="a"> Abx + f/u CT
+                                                    <option value="e"> PET
+                                                    <option value="c"> CT w contrast
+                                                    <option value="b"> CT-guided biopsy
+                                                    <option value="p"> bronchoscopy
+                                                    <option value="v"> VAT
+                                                    <option value="r"> resection
+                                                </select>
+                                            </div>
+                                        </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Comment <i class="fa fa-question-circle-o"
+                                                   aria-hidden="true"
+                                                   data-toggle="popover" title="Help"
+                                                   data-content="This field is for additional comments about the nodule.  If a previously seen nodule is found to be something other than a nodule, note it here."></i>
+                                    </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <input type=text name="cect1co"
+                                                       onChange="synChk('cect1co','cws')" size=20>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <input type=text name="cect2co"
+                                                       onChange="synChk('cect2co','cws')" size=20>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <input type=text name="cect3co"
+                                                       onChange="synChk('cect3co','cws')" size=20>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <input type=text name="cect4co"
+                                                       onChange="synChk('cect4co','cws')" size=20>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <input type=text name="cect5co"
+                                                       onChange="synChk('cect5co','cws')" size=20>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <input type=text name="cect0co"
+                                                       onChange="synChk('cect0co','cws')" size=20>
+                                            </div>
+                                        </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Pathologic Diagnosis <i class="fa fa-question-circle-o"
+                                                                aria-hidden="true"
+                                                                data-toggle="popover" title="Help"
+                                                                data-content="If a biopsy was previously performed, the diagnosis was chosen from a pull-down menu on the Biopsy form.  When CT evaluation forms are created after the biopsy was done, the 'Pathologic Diagnosis' selected on the Biopsy Form is transferred onto the new CT evaluation Form.  Once a diagnosis has been assigned on the Biopsy Form and it pops up on the CT evaluation form, it CANNOT be changed."></i>
+                                    </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <select name="cect1pd">
+                                                    <option value="-"> -For Pathology Use Only-
+                                                    <option value="aa"> AAH
+                                                    <option value="ap"> atyp bronch prolif
+                                                    <option value="ba"> BAC
+                                                    <option value="ns"> unspec. non-small cell
+                                                    <option value="ad"> adenocarcinoma
+                                                    <option value="as"> adenosquamous
+                                                    <option value="la"> large cell
+                                                    <option value="sq"> squamous cell
+                                                    <option value="sm"> small cell
+                                                    <option value="ct"> carcinoid - typical
+                                                    <option value="ca"> carcinoid - atypical
+                                                    <option value="be"> not malignant
+                                                    <option value="bs"> benign specific
+                                                    <option value="os"> other (specify)
+                                                </select>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <select name="cect2pd">
+                                                    <option value="-"> -For Pathology Use Only-
+                                                    <option value="aa"> AAH
+                                                    <option value="ap"> atyp bronch prolif
+                                                    <option value="ba"> BAC
+                                                    <option value="ns"> unspec. non-small cell
+                                                    <option value="ad"> adenocarcinoma
+                                                    <option value="as"> adenosquamous
+                                                    <option value="la"> large cell
+                                                    <option value="sq"> squamous cell
+                                                    <option value="sm"> small cell
+                                                    <option value="ct"> carcinoid - typical
+                                                    <option value="ca"> carcinoid - atypical
+                                                    <option value="be"> not malignant
+                                                    <option value="bs"> benign specific
+                                                    <option value="os"> other (specify)
+                                                </select>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <select name="cect3pd">
+                                                    <option value="-"> -For Pathology Use Only-
+                                                    <option value="aa"> AAH
+                                                    <option value="ap"> atyp bronch prolif
+                                                    <option value="ba"> BAC
+                                                    <option value="ns"> unspec. non-small cell
+                                                    <option value="ad"> adenocarcinoma
+                                                    <option value="as"> adenosquamous
+                                                    <option value="la"> large cell
+                                                    <option value="sq"> squamous cell
+                                                    <option value="sm"> small cell
+                                                    <option value="ct"> carcinoid - typical
+                                                    <option value="ca"> carcinoid - atypical
+                                                    <option value="be"> not malignant
+                                                    <option value="bs"> benign specific
+                                                    <option value="os"> other (specify)
+                                                </select>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <select name="cect4pd">
+                                                    <option value="-"> -For Pathology Use Only-
+                                                    <option value="aa"> AAH
+                                                    <option value="ap"> atyp bronch prolif
+                                                    <option value="ba"> BAC
+                                                    <option value="ns"> unspec. non-small cell
+                                                    <option value="ad"> adenocarcinoma
+                                                    <option value="as"> adenosquamous
+                                                    <option value="la"> large cell
+                                                    <option value="sq"> squamous cell
+                                                    <option value="sm"> small cell
+                                                    <option value="ct"> carcinoid - typical
+                                                    <option value="ca"> carcinoid - atypical
+                                                    <option value="be"> not malignant
+                                                    <option value="bs"> benign specific
+                                                    <option value="os"> other (specify)
+                                                </select>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <select name="cect5pd">
+                                                    <option value="-"> -For Pathology Use Only-
+                                                    <option value="aa"> AAH
+                                                    <option value="ap"> atyp bronch prolif
+                                                    <option value="ba"> BAC
+                                                    <option value="ns"> unspec. non-small cell
+                                                    <option value="ad"> adenocarcinoma
+                                                    <option value="as"> adenosquamous
+                                                    <option value="la"> large cell
+                                                    <option value="sq"> squamous cell
+                                                    <option value="sm"> small cell
+                                                    <option value="ct"> carcinoid - typical
+                                                    <option value="ca"> carcinoid - atypical
+                                                    <option value="be"> not malignant
+                                                    <option value="bs"> benign specific
+                                                    <option value="os"> other (specify)
+                                                </select>
+                                            </div>
+                                        </td>
+                                    
+                                        <td>
+                                            <div class="form-group">
+                                                <select name="cect0pd">
+                                                    <option value="-"> -For Pathology Use Only-
+                                                    <option value="aa"> AAH
+                                                    <option value="ap"> atyp bronch prolif
+                                                    <option value="ba"> BAC
+                                                    <option value="ns"> unspec. non-small cell
+                                                    <option value="ad"> adenocarcinoma
+                                                    <option value="as"> adenosquamous
+                                                    <option value="la"> large cell
+                                                    <option value="sq"> squamous cell
+                                                    <option value="sm"> small cell
+                                                    <option value="ct"> carcinoid - typical
+                                                    <option value="ca"> carcinoid - atypical
+                                                    <option value="be"> not malignant
+                                                    <option value="bs"> benign specific
+                                                    <option value="os"> other (specify)
+                                                </select>
+                                            </div>
+                                        </td>
+                                    
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="pull-right">
+                <input type="submit" value="Submit" class="btn btn-primary" id="submit-button">
+            </div>
+
+        </form>
+    </div>
+
+    <script language="JavaScript">
+        $(function () {
+            // $('#scan-order-tab').tab('show'); //TODO: remove utility to set the initial tab (debugging form development)
+            
+
+            //hooks for calculating BMI on fields that would affect it (height, weight, units of each)
+            $("input[id^='sbpw'],input[id^='sbph']").on('change', function () {
+                var height = $("#sbph").val(), heightUnits = $("#sbphu").val();
+                var weight = $("#sbpw").val(), weightUnits = $("#sbpwu").val();
+                if (height > 0 && weight > 0) {
+                    var bmi = VAPALS.computeBMI(parseInt(height), heightUnits, parseInt(weight), weightUnits);
+                    if (bmi > 0) {
+                        $("#sbbmi").val(bmi);
+                        $("#bmi-value").text(bmi);
+                        $("#bmi-descriptor").text(VAPALS.computeBmiDescriptor(bmi));
+                        $("#bmi-message").show();
+                    }
+                    else {
+                        $("#sbbmi").val("");
+                        $("#bmi-message").hide();
+                    }
+                }
+            }).first().trigger("change"); //trigger on page load for existing data
+
+            //hook onto DOB field to calculate age.
+            $("#sbdob").on('change', function () {
+                var dateString = $("#sbdob").val();
+                if (dateString) {
+                    var m = moment(dateString, ["MM-DD-YYYY", "DD-MM", "DD-MM-YYYY", "YYYY-MM-DD", "DD/MMM/YYYY"]);
+                    if (m.isValid()) {
+                        $("#sbage").text(VAPALS.computeAge(m.toDate()))
+                    }
+                }
+            }).trigger("change"); //trigger on page load for existing data
+
+            //hook for calculating Pulmonary function test percentage (FFR)
+            $("#sbfev1, #sbfvc").on('change', function () {
+                var fev1 = $("#sbfev1").val();
+                var fvc = $("#sbfvc").val();
+                if (fev1 > 0 && fvc > 0) {
+                    var ffr = Math.round(100.0 * fev1 / fvc);
+                    if (ffr > 0) {
+                        $("#sbffr").val(ffr);
+                        $("#ffr-value").text(ffr);
+                        $("#ffr-message").show();
+                    }
+                    else {
+                        $("#sbffr").val("");
+                        $("#ffr-message").hide();
+                    }
+                }
+                else {
+                    $("#ffr-message").hide();
+                }
+            }).first().trigger('change');
+
+            //hook for years since quit
+            $("[name^=sbsdlc]").on('change', function () {
+                var now = moment();
+                var m = (parseInt($("#sbsdlcm").val()) - 1) || now.month();
+                var d = parseInt($("#sbsdlcd").val()) || now.date();
+                var y = parseInt($("#sbsdlcy").val()) || now.year();
+                var quitDate = moment({month: m, date: d, year: y});
+                var durationYears = now.diff(quitDate, 'years', true).toFixed(1);
+                if (durationYears > 0) {
+                    $("#sbsdlc-value").text(durationYears);
+                    $("#sbsdlc-message").show();
+                }
+                else {
+                    $("#sbsdlc-value").text("");
+                    $("#sbsdlc-message").hide();
+                }
+            }).first().trigger('change');
+
+            //hook for pack years calculation
+            $("[name='sbcdpw'],[name='sbcppd'],[name='sbcdur']").on('change', function () {
+                var daysPerWeek = $("[name='sbcdpw']").val(),
+                    packsPerDay = $("[name='sbcppd']").val(),
+                    years = $("[name='sbcdur']").val(),
+                    totalPackYears;
+                if (daysPerWeek && packsPerDay && years) {
+                    var packsPerYear = packsPerDay * (daysPerWeek / 7.0);
+                    totalPackYears = (packsPerYear * years).toFixed(1);
+                    $("[name='sbntpy']").val(totalPackYears);
+                    $("#sbntpy-value").text(totalPackYears);
+                    $("#sbntpy-message").show();
+                } else {
+                    $("[name='sbntpy']").val("");
+                    $("#sbntpy-value").text("");
+                    $("#sbntpy-message").hide();
+                }
+            }).first().trigger('change');
+
+            //conditionally enabled fields
+            $("#sbrc").conditionallyEnable({sourceValues: "o", enable: "#sbrcs-container"}); // when race is "other", enable "race other"
+            $("[name=sbmly]").conditionallyEnable({enable: "#sbmlyo-container"}); //military service
+            $("[name=sbmeq]").conditionallyEnable({enable: "#sbmeq-container"}); //entire CT scan page
+            $("[name=sbfc]").conditionallyEnable({enable: "#sbfc-container"});
+            $("[name=sbhco]").conditionallyEnable({enable: "#sbhco-container"});
+            $("[name=sbmpa]").conditionallyEnable({enable: "#sbmpa-container"});
+            $("[name=sbmpc]").conditionallyEnable({enable: "#sbmpc-container"});
+            $("[name=sbmpht]").conditionallyEnable({enable: "#sbmpht-container"});
+            $("[name=sbmphc]").conditionallyEnable({enable: "#sbmphc-container"});
+            $("[name=sbmpas]").conditionallyEnable({enable: "#sbmpas-container"});
+            $("[name=sbmpmi]").conditionallyEnable({enable: "#sbmpmi-container"});
+            $("[name=sbmps]").conditionallyEnable({enable: "#sbmps-container"});
+            $("[name=sbmppv]").conditionallyEnable({enable: "#sbmppv-container"});
+            $("[name=sbmpd]").conditionallyEnable({enable: "#sbmpd-container"});
+            $("[name=sbmpld]").conditionallyEnable({enable: "#sbmpld-container"});
+            $("[name=sbmprd]").conditionallyEnable({enable: "#sbmprd-container"});
+            $("[name=sblcs]").conditionallyEnable({
+                enable: $("#sblcs-container").find("label, input[id!=sbwcos]")
+            });
+            $("#sbwco").conditionallyEnable({sourceValues: "o", enable: "#sbwcos"});
+            $("[name=sbact]").conditionallyEnable({
+                sourceValues: function (actualValue) {
+                    return actualValue !== '-' && actualValue !== 'e';
+                }, enable: "#sbact-container"
+            });
+            $("[name=sbahpft]").conditionallyEnable({enable: "#sbahpft-container"});
+            $("#sbahaoo").conditionallyEnable({sourceValues: "o", enable: "#sbahas"});
+            $("[name=sbsru]").conditionallyEnable({sourceValues: "n", enable: "#sbsru-container"});
+            $("[name=sbqttq]").conditionallyEnable({
+                enable: "#sbqttq-container, #sbqly2-container"
+            });
+            $("[name=sbhso]").conditionallyEnable({enable: "#sbhso-container"});
+            $("[name=sbshsa]").conditionallyEnable({
+                enable: "#smoking-container",
+                disable: "#non-smoking-container"
+            });
+            $("[name=sbsehs]").conditionallyEnable({enable: "#sbsehs-container"});
+
+
+        });
+
+    </script>
+
+
+
+
+    <footer>
+        <div class="container-fluid" style="max-width:1550px">
+            <hr/>
+            <a href="https://issues.osehra.org/browse/VAP" target="_blank">Submit feedback</a>
+        </div>
+    </footer>
+
+
+<script language="JavaScript">
+    $(function () {
+        function validateDatePickerOnChange(e) {
+            var $datePicker = $(e.target)
+            var fv = $datePicker.closest(".validated").data("formValidation");
+            if (fv) {
+                var f = $datePicker.find("input").addBack("input");
+                fv.revalidateField(f);
+            }
+        }
+
+        $.each($(".datepicker"), function (i, el) {
+            $(el).datetimepicker({
+                format: 'MM/DD/YYYY',
+                maxDate: moment().add(1, 'h') //hack to not select today
+            }).on("dp.change", validateDatePickerOnChange);
+        });
+
+        $.each($(".yearpicker"), function (i, el) {
+            $(el).datetimepicker({
+                format: 'YYYY',
+                maxDate: moment().add(1, 'h'), //hack to not select today
+                minDate: moment().subtract(100, 'y')
+            }).on("dp.change", validateDatePickerOnChange);
+        });
+
+        //Globally enabled popovers for things like help text.
+        $('[data-toggle="popover"]').popover();
+
+        //Initialize Form Validation
+        $(".validated").formValidation({framework: 'bootstrap'});
+
+
+    });
+
+    //TODO: insert studyId here.
+    var studyId = "XX0002";
+
+    if (studyId) {
+        $("#studyIdMenuItem").text(studyId);
+        $("#studyIdMenu").show();
+    }
+</script>
+</body>
+</html>

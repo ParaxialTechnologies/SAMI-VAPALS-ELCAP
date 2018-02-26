@@ -35,5 +35,9 @@ with open("../www/intake.html", "wb") as fh:
         title='Intake Form'
     ))
 
+with open("../www/ctevaluation.html", "wb") as fh:
+    fh.write(env.get_template('ctevaluation.html.jinja2').render(
+        title='CT Evaluation Form'
+    ))
 
 print "Finished compiling HTML at " + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')

@@ -1,0 +1,3 @@
+copy_binaries(
+  *.png
+  )

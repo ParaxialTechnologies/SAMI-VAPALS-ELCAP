@@ -1,4 +1,4 @@
-%tsef ;ven/toad-type string: find^%ts ;2018-02-27T20:11Z
+%tsef ;ven/toad-type string: find^%ts ;2018-02-27T20:15Z
  ;;1.8;Mash;
  ;
  ; %tsef implements MASH String Library ppi find^%ts, find substring;
@@ -27,7 +27,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-27T20:11Z
+ ;@last-updated: 2018-02-27T20:15Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -383,7 +383,10 @@ find ; find position of substring
  ;
  else  if way=1 do  ; forward scan
  . set found=$find(scanme,lookfor,begin) ; find substring
- . quit:'found  ; done if couldn't find it
+ . if 'found do  quit  ; done if couldn't find it
+ . . set found("from")=0
+ . . set found("to")=0
+ . . quit
  . set found("to")=found-1 ; otherwise remember where
  . set found("from")=found-findlen
  . set found=1

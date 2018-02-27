@@ -1,4 +1,4 @@
-%tsef ;ven/toad-type string: find^%ts ;2018-02-27T19:38Z
+%tsef ;ven/toad-type string: find^%ts ;2018-02-27T20:11Z
  ;;1.8;Mash;
  ;
  ; %tsef implements MASH String Library ppi find^%ts, find substring;
@@ -27,7 +27,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-27T19:38Z
+ ;@last-updated: 2018-02-27T20:11Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -110,7 +110,60 @@ find ; find position of substring
  ;.string("extract","to") = pos of last char of substring found
  ;.string("low","find") = lowercase find value [if i flag]
  ;.string("low","string") = lowercase string value [if i flag]
- ;@examples [tbd]
+ ;
+ ;@examples
+ ;
+ ; group 1: Find First & Find Next
+ ;
+ ;  new string set string="totototo"
+ ;  do find^%ts(.string,"Kansas")
+ ; produces
+ ;  string("extract","from")=0
+ ;  string("extract","to")=0
+ ;
+ ;  new string set string="totototo"
+ ;  do find^%ts(.string,"toto")
+ ; produces
+ ;  string("extract","from")=1
+ ;  string("extract","to")=4
+ ;
+ ; followed by
+ ;  do find^%ts(.string,"toto")
+ ; produces
+ ;  string("extract","from")=5
+ ;  string("extract","to")=8
+ ;
+ ; followed by
+ ;  do find^%ts(.string,"toto")
+ ; produces
+ ;  string("extract","from")=0
+ ;  string("extract","to")=0
+ ;
+ ;  new string set string="totototo"
+ ;  set string("from")=1
+ ;  set string("to")=2
+ ;  do find^%ts(.string,"toto")
+ ; produces
+ ;  string("extract","from")=3
+ ;  string("extract","to")=6
+ ;
+ ;  new string set string="totototo"
+ ;  set string("from")=6
+ ;  set string("to")=7
+ ;  do find^%ts(.string,"toto")
+ ; produces
+ ;  string("extract","from")=0
+ ;  string("extract","to")=0
+ ;
+ ; group 2: Find Last & Find Previous
+ ;
+ ;
+ ; group 3: Find Case-Insensitive
+ ;
+ ;
+ ; group 4: Boundary Cases
+ ;
+ ;
  ;@tests [tbd]
  ;
  ;
@@ -290,7 +343,7 @@ find ; find position of substring
  else  do  ; if scanning backward
  . set way=-1 ; reverse direction
  . set begin=from-1 ; begin before previously found substring
- . set:<1 begin=0 ; no scan, ran out of string
+ . set:begin<1 begin=0 ; no scan, ran out of string
  . quit
  ;
  ;

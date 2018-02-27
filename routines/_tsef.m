@@ -1,4 +1,4 @@
-%tsef ;ven/toad-type string: find^%ts ;2018-02-27T20:15Z
+%tsef ;ven/toad-type string: find^%ts ;2018-02-27T20:30Z
  ;;1.8;Mash;
  ;
  ; %tsef implements MASH String Library ppi find^%ts, find substring;
@@ -27,7 +27,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-27T20:15Z
+ ;@last-updated: 2018-02-27T20:30Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -140,16 +140,16 @@ find ; find position of substring
  ;  string("extract","to")=0
  ;
  ;  new string set string="totototo"
- ;  set string("from")=1
- ;  set string("to")=2
+ ;  set string("extract","from")=1
+ ;  set string("extract","to")=2
  ;  do find^%ts(.string,"toto")
  ; produces
  ;  string("extract","from")=3
  ;  string("extract","to")=6
  ;
  ;  new string set string="totototo"
- ;  set string("from")=6
- ;  set string("to")=7
+ ;  set string("extract","from")=6
+ ;  set string("extract","to")=7
  ;  do find^%ts(.string,"toto")
  ; produces
  ;  string("extract","from")=0
@@ -157,6 +157,45 @@ find ; find position of substring
  ;
  ; group 2: Find Last & Find Previous
  ;
+ ;  new string set string="totototo"
+ ;  do find^%ts(.string,"Kansas","b")
+ ; produces
+ ;  string("extract","from")=0
+ ;  string("extract","to")=0
+ ;
+ ;  new string set string="totototo"
+ ;  do find^%ts(.string,"toto","b")
+ ; produces
+ ;  string("extract","from")=5
+ ;  string("extract","to")=8
+ ;
+ ; followed by
+ ;  do find^%ts(.string,"toto","b")
+ ; produces
+ ;  string("extract","from")=1
+ ;  string("extract","to")=4
+ ;
+ ; followed by
+ ;  do find^%ts(.string,"toto","b")
+ ; produces
+ ;  string("extract","from")=0
+ ;  string("extract","to")=0
+ ;
+ ;  new string set string="totototo"
+ ;  set string("extract","from")=7
+ ;  set string("extract","to")=8
+ ;  do find^%ts(.string,"toto","b")
+ ; produces
+ ;  string("extract","from")=3
+ ;  string("extract","to")=6
+ ;
+ ;  new string set string="totototo"
+ ;  set string("extract","from")=1
+ ;  set string("extract","to")=2
+ ;  do find^%ts(.string,"toto","b")
+ ; produces
+ ;  string("extract","from")=0
+ ;  string("extract","to")=0
  ;
  ; group 3: Find Case-Insensitive
  ;
@@ -254,6 +293,12 @@ find ; find position of substring
  ; (Note: a future version of find^%ts will introduce new parameters
  ; for controlling where a scan begins & ends, though if they are not
  ; passed, the current behavior will continue to work.)
+ ;
+ ; The Find Next capability need not be used to search for the same
+ ; find value each time; scanning a structured string might involve
+ ; searching for one find value & then another. There is no requirement
+ ; that the size of the window between from & to match the length of
+ ; find on input.
  ;
  ;
  ; IV. Find Last: two-argument find^%ts + b flag
@@ -372,27 +417,22 @@ find ; find position of substring
  ;@stanza 6 perform scan
  ;
  new found set found=0 ; where did our scan find the substring
+ set found("from")=0
+ set found("to")=0
  ;
  ; if empty string, empty find, or ran out of string, then no scan
  new findlen set findlen=$length(find)
- if 'stringlen!'findlen!'begin do  ; if nothing can be found
- . set found=0
- . set found("from")=0
- . set found("to")=0
- . quit
+ if 'stringlen!'findlen!'begin ; if nothing can be found
  ;
  else  if way=1 do  ; forward scan
  . set found=$find(scanme,lookfor,begin) ; find substring
- . if 'found do  quit  ; done if couldn't find it
- . . set found("from")=0
- . . set found("to")=0
- . . quit
+ . if 'found quit  ; done if couldn't find it
  . set found("to")=found-1 ; otherwise remember where
  . set found("from")=found-findlen
  . set found=1
  . quit
  ;
- else  do  ; backward scan
+ break  else  do  ; backward scan
  . new winto set winto=begin ; end position of window into string
  . new winfrom,window
  . for  do  quit:found!'winfrom  ; traverse until found or done

@@ -1,4 +1,4 @@
-%ts ;ven/toad-type string: api/ppi library ;2018-02-23T16:52Z
+%ts ;ven/toad-type string: api/ppi library ;2018-02-27T17:47Z
  ;;1.8;Mash;
  ;
  ; %ts is the Mumps String Library, an element of the Mumps
@@ -27,7 +27,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-23T16:52Z
+ ;@last-updated: 2018-02-27T17:47Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -86,8 +86,12 @@ s(string) goto sencase^%tsc
  ;
  ;
  ;
- ;@section 2 %tsr: string-replace tools
+ ;@section 2 %tse: string-extract tools
  ;
+ ;
+ ;
+ ;@API find^%ts, find position of substring
+find(string,find,flags) goto find^%tsef
  ;
  ;
  ;@API setextract^%ts, change value of positional substring
@@ -95,6 +99,9 @@ setextract(string,replace,from,to) goto setextract^%tses
  ;
  ;@API se^%ts, change value of positional substring
 se(string,replace,from,to) goto setextract^%tses
+ ;
+ ;@API place^%ts, change value of positional substring
+place(string,replace,from,to) goto setextract^%tses
  ;
  ;
  ;

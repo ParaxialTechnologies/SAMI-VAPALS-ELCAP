@@ -1,4 +1,4 @@
-%tses ;ven/toad-type string: setextract^%ts ;2018-02-27T22:35Z
+%tses ;ven/toad-type string: setextract^%ts ;2018-02-27T22:48Z
  ;;1.8;Mash;
  ;
  ; %tses implements MASH String Library ppi setextract^%ts, change
@@ -28,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-27T22:35Z
+ ;@last-updated: 2018-02-27T22:48Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -36,6 +36,7 @@
  ;@patch-list: none yet
  ;
  ;@to-do
+ ; put back from and to parameters
  ; apply standard string-length protection consistently
  ; add ability to call by passing object
  ;  s or S = case-sensitive replace

@@ -12,6 +12,7 @@ do_subdir(
   blogposts
   bmsf-proposal-2017
   elcap-forms
+  logos
   slideshow
   va-pals-form-design-bible
   www

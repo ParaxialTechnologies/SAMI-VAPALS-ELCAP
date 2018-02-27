@@ -1,4 +1,4 @@
-%tsef ;ven/toad-type string: find^%ts ;2018-02-27T20:38Z
+%tsef ;ven/toad-type string: find^%ts ;2018-02-27T20:44Z
  ;;1.8;Mash;
  ;
  ; %tsef implements MASH String Library ppi find^%ts, find substring;
@@ -27,7 +27,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-27T20:38Z
+ ;@last-updated: 2018-02-27T20:44Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -199,6 +199,25 @@ find ; find position of substring
  ;
  ; group 3: Find Case-Insensitive
  ;
+ ;  new string set string="totototo"
+ ;  do find^%ts(.string,"Toto")
+ ; produces
+ ;  string("extract","from")=0
+ ;  string("extract","to")=0
+ ;
+ ; followed by
+ ;  do find^%ts(.string,"Toto","i")
+ ; produces
+ ;  string("extract","from")=1
+ ;  string("extract","to")=4
+ ;
+ ; followed by
+ ;  do find^%ts(.string,"Toto","i")
+ ; produces
+ ;  string("extract","from")=5
+ ;  string("extract","to")=8
+ ;
+ ;  
  ;
  ; group 4: Boundary Cases
  ;
@@ -458,7 +477,7 @@ find ; find position of substring
  merge string("extract")=found
  ;
  ;
- ;@stanza 5 termination
+ ;@stanza 8 termination
  ;
  quit  ; end of ppi find^%ts
  ;

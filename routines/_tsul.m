@@ -1,4 +1,4 @@
-%tsul ;ven/toad-type string: development log ;2018-02-24T15:26Z
+%tsul ;ven/toad-type string: development log ;2018-02-27T20:47Z
  ;;1.8;Mash;
  ;
  ; %tsul is the Mumps String Library's primary-development log.
@@ -23,7 +23,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-24T15:26Z
+ ;@last-updated: 2018-02-27T20:47Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -257,7 +257,7 @@
  ; $$trim^%ts, change %tsu into a unit-test shell routine, & add
  ; cover^%tsu to run code-coverage.
  ;
- ; 2018-02-21/24 ven/toad %*1.8T04 %tsul,%tsud: rename %tslog => %tsul;
+ ; 2018-02-21/27 ven/toad %*1.8T04 %tsul,%tsud: rename %tslog => %tsul;
  ; create %tsud; bump version to 1.8T04; update to more modern mash
  ; style; expand history to include rest of mdc string library &
  ; function extensions; move to-do to %tsul; list Javascript string
@@ -268,7 +268,7 @@
  ;  %tsrt: update style, clearer variable names, protect vs. undef
  ; string, stanza notation.
  ;  %ts: reset w/no apis, restore $$trim,$$strip, case-conversion
- ; apis. add setextract,find.
+ ; apis. add setextract,se,place,find.
  ;  %tsut: rename %tsu => %tsut, update style, chg cover^%tsut to use
  ; new unit-test routine, add cover## tests for no-entry-at-top quits,
  ; exclude cover^%tsut from coverage.

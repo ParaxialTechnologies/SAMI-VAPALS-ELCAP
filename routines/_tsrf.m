@@ -1,4 +1,4 @@
-%tsrf ;ven/toad-type string: findrep^%ts ;2018-02-28T19:56Z
+%tsrf ;ven/toad-type string: findrep^%ts ;2018-02-28T20:37Z
  ;;1.8;Mash;
  ;
  ; %tsrf implements MASH String Library ppi findrep^%ts, find &
@@ -29,7 +29,7 @@
  ;@original-dev: George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
  ;
- ;@last-updated: 2018-02-28T18:56Z
+ ;@last-updated: 2018-02-28T20:37Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -150,6 +150,7 @@ findrep ; find & replace a substring
  ;  do findrep^%ts(.string,"Kansas","Dorothy","b")
  ; produces
  ;  string="totototo"
+ ;  string("extract")=0
  ;  string("extract","from")=0
  ;  string("extract","to")=0
  ;
@@ -157,6 +158,7 @@ findrep ; find & replace a substring
  ;  do findrep^%ts(.string,"toto","Dorothy","b")
  ; produces
  ;  string="totoDorothy"
+ ;  string("extract")=1
  ;  string("extract","from")=5
  ;  string("extract","to")=11
  ;
@@ -164,6 +166,7 @@ findrep ; find & replace a substring
  ;  do findrep^%ts(.string,"toto","Dorothy","b")
  ; produces
  ;  string="DorothyDorothy"
+ ;  string("extract")=1
  ;  string("extract","from")=1
  ;  string("extract","to")=7
  ;
@@ -171,6 +174,7 @@ findrep ; find & replace a substring
  ;  do findrep^%ts(.string,"toto","Dorothy","b")
  ; produces
  ;  string="DorothyDorothy"
+ ;  string("extract")=0
  ;  string("extract","from")=0
  ;  string("extract","to")=0
  ;
@@ -180,6 +184,7 @@ findrep ; find & replace a substring
  ;  do findrep^%ts(.string,"toto","Dorothy","b")
  ; produces
  ;  string="toDorothyto"
+ ;  string("extract")=1
  ;  string("extract","from")=3
  ;  string("extract","to")=9
  ;
@@ -189,6 +194,7 @@ findrep ; find & replace a substring
  ;  do findrep^%ts(.string,"toto","Dorothy","b")
  ; produces
  ;  string="totototo"
+ ;  string("extract")=0
  ;  string("extract","from")=0
  ;  string("extract","to")=0
  ;

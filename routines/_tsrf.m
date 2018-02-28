@@ -1,4 +1,4 @@
-%tsrf ;ven/toad-type string: findrep^%ts ;2018-02-28T20:37Z
+%tsrf ;ven/toad-type string: findrep^%ts ;2018-02-28T20:59Z
  ;;1.8;Mash;
  ;
  ; %tsrf implements MASH String Library ppi findrep^%ts, find &
@@ -29,7 +29,7 @@
  ;@original-dev: George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
  ;
- ;@last-updated: 2018-02-28T20:37Z
+ ;@last-updated: 2018-02-28T20:59Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -204,6 +204,7 @@ findrep ; find & replace a substring
  ;  do findrep^%ts(.string,"Toto","Dorothy")
  ; produces
  ;  string="totototo"
+ ;  string("extract")=0
  ;  string("extract","from")=0
  ;  string("extract","to")=0
  ;
@@ -211,6 +212,7 @@ findrep ; find & replace a substring
  ;  do findrep^%ts(.string,"Toto","Dorothy","i")
  ; produces
  ;  string="Dorothytoto"
+ ;  string("extract")=1
  ;  string("extract","from")=1
  ;  string("extract","to")=7
  ;
@@ -218,6 +220,7 @@ findrep ; find & replace a substring
  ;  do findrep^%ts(.string,"Toto","Dorothy","i")
  ; produces
  ;  string="DorothyDorothy"
+ ;  string("extract")=1
  ;  string("extract","from")=8
  ;  string("extract","to")=14
  ;
@@ -227,6 +230,7 @@ findrep ; find & replace a substring
  ;  do findrep^%ts(.string,"Toto","Dorothy")
  ; produces
  ;  string=""
+ ;  string("extract")=0
  ;  string("extract","from")=0
  ;  string("extract","to")=0
  ;
@@ -234,6 +238,7 @@ findrep ; find & replace a substring
  ;  do findrep^%ts(.string,"Toto","Dorothy")
  ; produces
  ;  string=""
+ ;  string("extract")=0
  ;  string("extract","from")=0
  ;  string("extract","to")=0
  ;
@@ -241,6 +246,7 @@ findrep ; find & replace a substring
  ;  do findrep^%ts(.string,"","Dorothy")
  ; produces
  ;  string="totototo"
+ ;  string("extract")=0
  ;  string("extract","from")=0
  ;  string("extract","to")=0
  ;
@@ -248,6 +254,7 @@ findrep ; find & replace a substring
  ;  do findrep^%ts(.string,"","Dorothy")
  ; produces
  ;  string="totototo"
+ ;  string("extract")=0
  ;  string("extract","from")=0
  ;  string("extract","to")=0
  ;
@@ -255,6 +262,7 @@ findrep ; find & replace a substring
  ;  do findrep^%ts(.string,"toto")
  ; produces
  ;  string="toto"
+ ;  string("extract")=1
  ;  string("extract","from")=0
  ;  string("extract","to")=0
  ;
@@ -262,6 +270,7 @@ findrep ; find & replace a substring
  ;  do findrep^%ts(.string,"toto","","b")
  ; produces
  ;  string="toto"
+ ;  string("extract")=1
  ;  string("extract","from")=0
  ;  string("extract","to")=0
  ;
@@ -269,13 +278,15 @@ findrep ; find & replace a substring
  ;  do findrep^%ts(.string)
  ; produces
  ;  string="totototo"
+ ;  string("extract")=0
  ;  string("extract","from")=0
  ;  string("extract","to")=0
  ;
  ;  new string
  ;  do findrep^%ts(.string)
  ; produces
- ;  string="totototo"
+ ;  string=""
+ ;  string("extract")=0
  ;  string("extract","from")=0
  ;  string("extract","to")=0
  ;
@@ -283,9 +294,35 @@ findrep ; find & replace a substring
  ;  do findrep^%ts(.string,"toto","Dorothy","badflag")
  ; produces
  ;  string="totototo"
+ ;  string("extract")=0
  ;  string("extract","from")=0
  ;  string("extract","to")=0
  ;
+ ; group 5: Alternate Signatures
+ ;
+ ;  new string set string="totototo"
+ ;  do fr^%ts(.string,"toto","Dorothy")
+ ; produces
+ ;  string="Dorothytoto"
+ ;  string("extract")=1
+ ;  string("extract","from")=1
+ ;  string("extract","to")=7
+ ;
+ ; followed by
+ ;  do findReplace^%ts(.string,"toto","Dorothy")
+ ; produces
+ ;  string="DorothyDorothy"
+ ;  string("extract")=1
+ ;  string("extract","from")=8
+ ;  string("extract","to")=14
+ ;
+ ; followed by
+ ;  do find^%ts(.string,"toto","Dorothy")
+ ; produces
+ ;  string="DorothyDorothy"
+ ;  string("extract")=0
+ ;  string("extract","from")=0
+ ;  string("extract","to")=0
  ;
  ;@tests [tbd]
  ;

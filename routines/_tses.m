@@ -1,10 +1,10 @@
-%tses ;ven/toad-type string: setextract^%ts ;2018-02-27T22:48Z
+%tses ;ven/toad-type string: setex^%ts ;2018-02-28T19:33Z
  ;;1.8;Mash;
  ;
- ; %tses implements MASH String Library ppi setextract^%ts, change
+ ; %tses implements MASH String Library ppi setex^%ts, change
  ; (or create) value of positional substring; it is part of the
  ; String Extract sublibrary.
- ; See %tsutes for unit tests for setextract^%ts.
+ ; See %tsutes for unit tests for setex^%ts.
  ; See %tsud for an introduction to the String library, including an
  ; intro to the String Replace library.
  ; See %tsul for the module's primary-development log.
@@ -28,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-27T22:48Z
+ ;@last-updated: 2018-02-28T19:33Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -56,18 +56,22 @@
  ;
  ;
  ;
- ;@ppi-code setextract^%ts
-setextract ; change value of positional substring
+ ;@ppi-code setex^%ts
+setex ; change value of positional substring
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
  ;ven/toad;private;procedure;clean;silent;sac;NO tests
  ;@signatures
- ; setextract^%ts(.string,replace)
- ; setextract^%ts(.string,replace,flags)
- ; setextract^%ts(.string,replace,flags)
+ ; setex^%ts(.string,replace)
+ ; setex^%ts(.string,replace,flags)
+ ; setex^%ts(.string,replace,flags)
+ ;@synonyms
+ ; se^%ts
+ ; setExtract^%ts
+ ; place^%ts
  ;@branches-from
- ; setextract^%ts
+ ; setex^%ts
  ;@ppi-called-by: none yet, but just wait an hour or two
  ;@called-by: none
  ;@calls
@@ -88,7 +92,7 @@ setextract ; change value of positional substring
  ; group 1: default addressing
  ;
  ;  new string,replace
- ;  do setextract^%ts(.string,.replace)
+ ;  do setex^%ts(.string,.replace)
  ; produces
  ;  string=""
  ;  replace=""
@@ -96,7 +100,7 @@ setextract ; change value of positional substring
  ;  string("extract","to")=0
  ;
  ;  new string
- ;  do setextract^%ts(.string,"")
+ ;  do setex^%ts(.string,"")
  ; produces
  ;  string=""
  ;  string("extract","from")=0
@@ -104,7 +108,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string=""
  ;  new replace
- ;  do setextract^%ts(.string,.replace)
+ ;  do setex^%ts(.string,.replace)
  ; produces
  ;  string=""
  ;  replace=""
@@ -112,42 +116,42 @@ setextract ; change value of positional substring
  ;  string("extract","to")=0
  ;
  ;  new string set string=""
- ;  do setextract^%ts(.string,"")
+ ;  do setex^%ts(.string,"")
  ; produces
  ;  string=""
  ;  string("extract","from")=0
  ;  string("extract","to")=0
  ;
  ;  new string set string=""
- ;  do setextract^%ts(.string,"*")
+ ;  do setex^%ts(.string,"*")
  ; produces
  ;  string="*"
  ;  string("extract","from")=0
  ;  string("extract","to")=0
  ;
  ;  new string set string=""
- ;  do setextract^%ts(.string,"Sparrowhawk")
+ ;  do setex^%ts(.string,"Sparrowhawk")
  ; produces
  ;  string="Sparrowhawk"
  ;  string("extract","from")=1
  ;  string("extract","to")=11
  ;
  ;  new string set string="Never the way he can follow grows narrower"
- ;  do setextract^%ts(.string,"")
+ ;  do setex^%ts(.string,"")
  ; produces
  ;  string="ever the way he can follow grows narrower"
  ;  string("extract","from")=0
  ;  string("extract","to")=0
  ;
  ;  new string set string="In the empty sky."
- ;  do setextract^%ts(.string,"o")
+ ;  do setex^%ts(.string,"o")
  ; produces
  ;  string="on the empty sky."
  ;  string("extract","from")=1
  ;  string("extract","to")=1
  ;
  ;  new string set string="O the hawk's flight"
- ;  do setextract^%ts(.string,"bright")
+ ;  do setex^%ts(.string,"bright")
  ; produces
  ;  string="bright the hawk's flight"
  ;  string("extract","from")=1
@@ -157,7 +161,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="She lay thus dark and dumb"
  ;  set string("from")=1
- ;  do setextract^%ts(.string,"")
+ ;  do setex^%ts(.string,"")
  ; produces
  ;  string="he lay thus dark and dumb"
  ;  string("extract","from")=0
@@ -165,7 +169,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="O Wizard of Earthsea"
  ;  set string("extract","from")=1
- ;  do setextract^%ts(.string,"A")
+ ;  do setex^%ts(.string,"A")
  ; produces
  ;  string="A Wizard of Earthsea"
  ;  string("extract","from")=1
@@ -173,7 +177,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="I hear, one must be silent."
  ;  set string("extract","from")=1
- ;  do setextract^%ts(.string,"To")
+ ;  do setex^%ts(.string,"To")
  ; produces
  ;  string="To hear, one must be silent."
  ;  string("extract","from")=1
@@ -181,7 +185,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="until at lEast he chooses nothing"
  ;  set string("extract","from")=11
- ;  do setextract^%ts(.string,"")
+ ;  do setex^%ts(.string,"")
  ; produces
  ;  string="until at last he chooses nothing"
  ;  string("extract","from")=10
@@ -189,7 +193,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="To light a Sandle is to cast a shadow."
  ;  set string("extract","from")=12
- ;  do setextract^%ts(.string,"c")
+ ;  do setex^%ts(.string,"c")
  ; produces
  ;  string="To light a candle is to cast a shadow."
  ;  string("extract","from")=12
@@ -197,7 +201,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="does onlY what he must do"
  ;  set string("extract","from")=9
- ;  do setextract^%ts(.string,"y and wholly")
+ ;  do setex^%ts(.string,"y and wholly")
  ; produces
  ;  string="does only and wholly what he must do"
  ;  string("extract","from")=9
@@ -205,7 +209,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="For a word to be spoken there must be silenceS"
  ;  set string("extract","from")=46
- ;  do setextract^%ts(.string,"")
+ ;  do setex^%ts(.string,"")
  ; produces
  ;  string="For a word to be spoken there must be silence"
  ;  string("extract","from")=45
@@ -213,7 +217,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="there must be darkness to see the starT"
  ;  set string("extract","from")=39
- ;  do setextract^%ts(.string,"s")
+ ;  do setex^%ts(.string,"s")
  ; produces
  ;  string="there must be darkness to see the stars"
  ;  string("extract","from")=39
@@ -221,7 +225,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="only men do"
  ;  set string("extract","from")=11
- ;  do setextract^%ts(.string,"o evil")
+ ;  do setex^%ts(.string,"o evil")
  ; produces
  ;  string="only men do evil"
  ;  string("extract","from")=11
@@ -231,7 +235,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="She wept in pain, because she was free"
  ;  set string("extract","from")=0
- ;  do setextract^%ts(.string,"")
+ ;  do setex^%ts(.string,"")
  ; produces
  ;  string="She wept in pain, because she was free"
  ;  string("extract","from")=0
@@ -239,7 +243,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="eight of liberty"
  ;  set string("extract","from")=0
- ;  do setextract^%ts(.string,"w")
+ ;  do setex^%ts(.string,"w")
  ; produces
  ;  string="weight of liberty"
  ;  string("extract","from")=1
@@ -247,7 +251,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="Wizard of Earthsea"
  ;  set string("extract","from")=-1
- ;  do setextract^%ts(.string,"A")
+ ;  do setex^%ts(.string,"A")
  ; produces
  ;  string="A Wizard of Earthsea"
  ;  string("extract","from")=1
@@ -255,7 +259,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="Tombs of Atuan"
  ;  set string("extract","from")=-3
- ;  do setextract^%ts(.string,"The")
+ ;  do setex^%ts(.string,"The")
  ; produces
  ;  string="The Tombs of Atuan"
  ;  string("extract","from")=1
@@ -263,7 +267,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="Farthest Shore"
  ;  set string("extract","from")=-5
- ;  do setextract^%ts(.string,"The")
+ ;  do setex^%ts(.string,"The")
  ; produces
  ;  string="The   Farthest Shore"
  ;  string("extract","from")=1
@@ -271,7 +275,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="Tehanu"
  ;  set string("extract","from")=-4
- ;  do setextract^%ts(.string,"")
+ ;  do setex^%ts(.string,"")
  ; produces
  ;  string="    Tehanu"
  ;  string("extract","from")=0
@@ -279,7 +283,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="Another Wind"
  ;  set string("extract","from")=-1
- ;  do setextract^%ts(.string,"The O")
+ ;  do setex^%ts(.string,"The O")
  ; produces
  ;  string="The Other Wind"
  ;  string("extract","from")=1
@@ -289,7 +293,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="muddle, mystery, mumbling"
  ;  set string("extract","from")=26
- ;  do setextract^%ts(.string,"")
+ ;  do setex^%ts(.string,"")
  ; produces
  ;  string="muddle, mystery, mumbling"
  ;  string("extract","from")=25
@@ -297,7 +301,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="There's no way to use power for good."
  ;  set string("extract","from")=39
- ;  do setextract^%ts(.string,"")
+ ;  do setex^%ts(.string,"")
  ; produces
  ;  string="There's no way to use power for good. "
  ;  string("extract","from")=38
@@ -305,14 +309,14 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="All times are changing times"
  ;  set string("extract","from")=32
- ;  do setextract^%ts(.string,"")
+ ;  do setex^%ts(.string,"")
  ; produces string="All times are changing times   "
  ;  string("extract","from")=31
  ;  string("extract","to")=31
  ;
  ;  new string set string="Tales"
  ;  set string("extract","from")=6
- ;  do setextract^%ts(.string," from Earthsea")
+ ;  do setex^%ts(.string," from Earthsea")
  ; produces
  ;  string="Tales from Earthsea"
  ;  string("extract","from")=6
@@ -320,7 +324,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="to make love"
  ;  set string("extract","from")=14
- ;  do setextract^%ts(.string,"is to unmake power")
+ ;  do setex^%ts(.string,"is to unmake power")
  ; produces
  ;  string="to make love is to unmake power"
  ;  string("extract","from")=14
@@ -328,7 +332,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="The solution lies in secret"
  ;  set string("extract","from")=27
- ;  do setextract^%ts(.string,"cy")
+ ;  do setex^%ts(.string,"cy")
  ; produces
  ;  string="The solution lies in secrecy"
  ;  string("extract","from")=27
@@ -338,7 +342,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="The road goes upward towards the light"
  ;  set string("extract","from")="b"
- ;  do setextract^%ts(.string,"")
+ ;  do setex^%ts(.string,"")
  ; produces
  ;  string="The road goes upward towards the light"
  ;  string("extract","from")=0
@@ -346,14 +350,14 @@ setextract ; change value of positional substring
  ;
  ;  new string set string=" dark hand had let go its lifelong hold"
  ;  set string("extract","from")="b"
- ;  do setextract^%ts(.string,"A")
+ ;  do setex^%ts(.string,"A")
  ; produces string="A dark hand had let go its lifelong hold"
  ;  string("extract","from")=1
  ;  string("extract","to")=1
  ;
  ;  new string set string="a gift given, but a choice made"
  ;  set string("extract","from")="b"
- ;  do setextract^%ts(.string,"It is not ")
+ ;  do setex^%ts(.string,"It is not ")
  ; produces
  ;  string="It is not a gift given, but a choice made"
  ;  string("extract","from")=1
@@ -361,7 +365,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="courage breaks them."
  ;  set string("extract","from")="B"
- ;  do setextract^%ts(.string,"Injustice makes the rules, and ")
+ ;  do setex^%ts(.string,"Injustice makes the rules, and ")
  ; produces
  ;  string="Injustice makes the rules, and courage breaks them."
  ;  string("extract","from")=1
@@ -369,7 +373,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="when you eat illusions you end up hungrier"
  ;  set string("extract","from")="a"
- ;  do setextract^%ts(.string,"")
+ ;  do setex^%ts(.string,"")
  ; produces
  ;  string="when you eat illusions you end up hungrier"
  ;  string("extract","from")=51
@@ -377,7 +381,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="Manipulated, one manipulates others"
  ;  set string("extract","from")="a"
- ;  do setextract^%ts(.string,".")
+ ;  do setex^%ts(.string,".")
  ; produces
  ;  string="Manipulated, one manipulates others."
  ;  string("extract","from")=36
@@ -385,7 +389,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="Statesmen remember things"
  ;  set string("extract","from")="a"
- ;  do setextract^%ts(.string," selectively")
+ ;  do setex^%ts(.string," selectively")
  ; produces
  ;  string="Statesmen remember things selectively"
  ;  string("extract","from")=26
@@ -393,14 +397,14 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="I can breathe back the breath"
  ;  set string("extract","from")="A"
- ;  do setextract^%ts(.string," that made me live")
+ ;  do setex^%ts(.string," that made me live")
  ; produces string="I can breathe back the breath that made me live"
  ;  string("extract","from")=30
  ;  string("extract","to")=47
  ;
  ;  new string set string="Ignorant power is a bane!"
  ;  set string("extract","from")="f"
- ;  do setextract^%ts(.string,"")
+ ;  do setex^%ts(.string,"")
  ; produces
  ;  string="Ignorant power is a bane!"
  ;  string("extract","from")=0
@@ -408,7 +412,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="U can give them back to the world"
  ;  set string("extract","from")="f"
- ;  do setextract^%ts(.string,"I")
+ ;  do setex^%ts(.string,"I")
  ; produces
  ;  string="I can give them back to the world"
  ;  string("extract","from")=1
@@ -416,7 +420,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="MANHOOD speaks evenly, in a quiet voice"
  ;  set string("extract","from")="f"
- ;  do setextract^%ts(.string,"Despair")
+ ;  do setex^%ts(.string,"Despair")
  ; produces
  ;  string="Despair speaks evenly, in a quiet voice"
  ;  string("extract","from")=1
@@ -424,14 +428,14 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="AUTHORITY makes the rules"
  ;  set string("extract","from")="F"
- ;  do setextract^%ts(.string,"Injustice")
+ ;  do setex^%ts(.string,"Injustice")
  ; produces string="Injustice makes the rules"
  ;  string("extract","from")=1
  ;  string("extract","to")=9
  ;
  ;  new string set string="To which Silence of course made no reply"
  ;  set string("extract","from")="l"
- ;  do setextract^%ts(.string,"")
+ ;  do setex^%ts(.string,"")
  ; produces
  ;  string="To which Silence of course made no reply"
  ;  string("extract","from")=40
@@ -439,7 +443,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="Greed puts out the suM"
  ;  set string("extract","from")="l"
- ;  do setextract^%ts(.string,"n")
+ ;  do setex^%ts(.string,"n")
  ; produces
  ;  string="Greed puts out the sun"
  ;  string("extract","from")=22
@@ -447,14 +451,14 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="The world's vast and ANCIENT"
  ;  set string("extract","from")="l"
- ;  do setextract^%ts(.string,"strange")
+ ;  do setex^%ts(.string,"strange")
  ; produces string="The world’s vast and strange"
  ;  string("extract","from")=22
  ;  string("extract","to")=28
  ;
  ;  new string set string="To refuse death is to refuse DOOM"
  ;  set string("extract","from")="L"
- ;  do setextract^%ts(.string,"life")
+ ;  do setex^%ts(.string,"life")
  ; produces string="To refuse death is to refuse life"
  ;  string("extract","from")=30
  ;  string("extract","to")=33
@@ -463,7 +467,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="the terrible pain"
  ;  set string("extract","from")=13
- ;  do setextract^%ts(.string," boredom of ")
+ ;  do setex^%ts(.string," boredom of ")
  ; produces
  ;  string="the terrible boredom of pain"
  ;  string("extract","from")=13
@@ -472,7 +476,7 @@ setextract ; change value of positional substring
  ;  new string set string="admit the ATTRACTION of evil"
  ;  set string("extract","from")=11
  ;  set string("extract","to")=20
- ;  do setextract^%ts(.string,"banality")
+ ;  do setex^%ts(.string,"banality")
  ; produces
  ;  string="admit the banality of evil"
  ;  string("extract","from")=11
@@ -480,7 +484,7 @@ setextract ; change value of positional substring
  ;
  ;  new string set string="the victory they celebrate is WAR WON WELL"
  ;  set string("extract","from")="L"
- ;  do setextract^%ts(.string,"that of life")
+ ;  do setex^%ts(.string,"that of life")
  ; produces
  ;  string="the victory they celebrate is that of life"
  ;  string("extract","from")=31
@@ -515,10 +519,10 @@ setextract ; change value of positional substring
  ;
  ;@stanza 2 detailed description
  ;
- ; setextract^%ts is an enhanced version of the Mumps set $extract.
+ ; setex^%ts is an enhanced version of the Mumps set $extract.
  ; It will place characters w/in a string at the specified position.
  ;
- ; (Note: a future version of setextract^%ts will support a new call-
+ ; (Note: a future version of setex^%ts will support a new call-
  ; message system of passing parameters. For now, the embryonic form
  ; is the behavior of the string array, which find^%ts &
  ; setextract%ts manage.)
@@ -531,7 +535,7 @@ setextract ; change value of positional substring
  ;
  ; If either string or replace is passed undefined or = the empty
  ; string (""), it is said to be empty, because it contains no
- ; characters & no positions. When setextract^%ts sets a value to
+ ; characters & no positions. When setex^%ts sets a value to
  ; empty, it sets it = the empty string. Placing a substring into a
  ; string will never leave that string undefined; canonically, even
  ; the minimal case will leave string empty instead of undefined.
@@ -546,7 +550,7 @@ setextract ; change value of positional substring
  ; string will be altered to overwrite the characters at positions
  ; from through to (see below) w/substring replace.
  ;
- ; 2. Create Substring: if string is empty, setextract^%ts will create
+ ; 2. Create Substring: if string is empty, setex^%ts will create
  ; a string of spaces & place substring replace w/in that.
  ;
  ; 3. Delete Substring: if replace is empty, then the overwritten
@@ -570,13 +574,13 @@ setextract ; change value of positional substring
  ; ii. Relative Addressing: from may be passed as one of four codes:
  ; b, a, f, l (or their uppercase equivalents). In this case, to is
  ; ignored. Other code values are reserved for future versions of
- ; setextract^%ts:
+ ; setex^%ts:
  ; a. B-1, B-2, etc., b-1, b-2, etc.
  ; b. A+1, A+2, etc., a+1, a+2, etc.
  ; c. F+1, F+2, etc., f+1, f+2, etc.
  ; d. L-1, L-2, etc., l-1, l-2, etc.
  ; e. all other string values.
- ; For now, if any of these values is used for from, setextract^%ts will
+ ; For now, if any of these values is used for from, setex^%ts will
  ; set string = empty, but this behavior may not be relied upon in future
  ; versions.
  ;
@@ -614,16 +618,16 @@ setextract ; change value of positional substring
  ;
  ; III. about from & to as output
  ;
- ; setextract^%ts will set from & to = the 1st & last character
+ ; setex^%ts will set from & to = the 1st & last character
  ; positions of replace w/in the resulting string. This feature is
- ; important to combining setextract^%ts smoothly w/find^%ts to create
+ ; important to combining setex^%ts smoothly w/find^%ts to create
  ; find-replace loops that include Find Next operations.
  ;
  ;
  ; IV. about from & to & the b flag
  ;
  ; When replace is empty, it has no specific location, but any ongoing
- ; scans being performed by find^%ts in concert with setextract^%ts do,
+ ; scans being performed by find^%ts in concert with setex^%ts do,
  ; so from & to are set to the character before the deleted substring.
  ; If the b or B flag is passed, it means the associated find^%ts
  ; calls are performing a backward scan, so from & to will instead be
@@ -631,7 +635,7 @@ setextract ; change value of positional substring
  ; cases, from & to are set so a subsequent call to find^%ts will
  ; neither miss nor repeat any of string's characters in its scan.
  ;
- ; If you are doing stand-alone calls to setextract^%ts that are not
+ ; If you are doing stand-alone calls to setex^%ts that are not
  ; being coordinated with calls to find^%ts, feel free to omit the b
  ; flag.
  ;
@@ -642,16 +646,16 @@ setextract ; change value of positional substring
  ; calls, to avoid having to recalculate lowercase versions of them each
  ; time find^%ts is called.
  ;
- ; Because setextract^%ts manipulates string, it supports the same
+ ; Because setex^%ts manipulates string, it supports the same
  ; case-insensitive flag to instruct it to perform the same changes
  ; on string("low","string") that it does on string, to keep the node in
  ; synch with string. If you change string & plan to call find^%ts again
- ; without killing or newing it, pass setextract^%ts the r flag, which
+ ; without killing or newing it, pass setex^%ts the r flag, which
  ; will make it refresh string("low","string") to keep it in synch with
  ; your changes.
  ;
- ; If the i flag is not passed, setextract^%ts will only update string.
- ; If you are doing stand-alone calls to setextract^%ts that are not
+ ; If the i flag is not passed, setex^%ts will only update string.
+ ; If you are doing stand-alone calls to setex^%ts that are not
  ; being coordinated with calls to find^%ts, feel free to omit the i & r
  ; flags.
  ;
@@ -780,9 +784,8 @@ setextract ; change value of positional substring
  ;
  do  ; so long as not inserting the empty string
  . set $extract(string,from,to)=replace ; place substring in string
+ . set:lower $extract(string("low","string"),from,to)=lowrep
  . set to=from+replacelen-1 ; update to location
- . quit:'lower  ; quit if not for a case-insensitive scan
- . set $extract(string("low","string"),from,to)=lowrep
  . quit
  ;
  if replace="" do  ; empty-string replace has no position
@@ -802,7 +805,7 @@ setextract ; change value of positional substring
  ;
  ;@stanza 7 termination
  ;
- quit  ; end of setextract^%ts
+ quit  ; end of setex^%ts
  ;
  ;
  ;

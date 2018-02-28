@@ -1,4 +1,4 @@
-%tsudr ;ven/toad-type string: documentation, replace ;2018-02-22T18:14Z
+%tsudr ;ven/toad-type string: documentation, replace ;2018-02-28T15:51Z
  ;;1.8;Mash;
  ;
  ; %tsud introduces the public string datatype Replace library,
@@ -26,12 +26,23 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-22T18:14Z
+ ;@last-updated: 2018-02-28T15:51Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
  ;@release-date: not yet released
  ;@patch-list: none yet
+ ;
+ ;@contents
+ ;
+ ; $$strip^%ts, strip character(s) from string
+ ;  code = %tsrs
+ ;  tests = %tsutrs
+ ;
+ ; $$trim^%ts, trim character from end(s) of string
+ ;  code = %tsrt
+ ;  tests = %tsutrt
+ ; 
  ;
  ;
  ;
@@ -39,17 +50,78 @@
  ;
  ;
  ;
+ ;@alphabet
+ ;
+ ; a = ? [all replace?, ar]
+ ; b = ? [between replace?, br]
+ ; c = ?
+ ; d = delete [dr?]
+ ;     db = deleteBetween
+ ; e = ?
+ ; f = ? [find replace, fr]
+ ;     fr = findReplace
+ ;     frs = findReplaceAll
+ ; g = ?
+ ; h = ?
+ ; i = ?
+ ; j = ?
+ ; k = ?
+ ; l = ?
+ ; m = ?
+ ; n = ?
+ ; o = only [or?]
+ ; p = produce [pr]
+ ; r = replace [rr]
+ ;     re = repeat
+ ; s = strip [sr]
+ ; t = trim [tr]
+ ; u = utilities
+ ; v = ?
+ ; w = ?
+ ; x = ?
+ ; y = user extensions
+ ; z = implementor extensions
+ ;
+ ;@contents
+ ;
+ ; deleteBetween^%ts
+ ;  code = %tsrdb
+ ;  tests = %tsutdb
+ ;
+ ; findReplace^%ts
+ ;  code = %tsrfr
+ ;  tests = %tsutfr
+ ;
+ ; findReplaceAll^%ts
+ ;  code = %tsrfra
+ ;  tests = %tsutfra
+ ;
+ ; $$only^%ts
+ ;  code = %tsro
+ ;  tests = %tsuto
+ ;
+ ; $$produce^%ts
+ ;  code = %tsrp
+ ;  tests = %tsutp
+ ;
+ ; $$repeat^%ts
+ ;  code = %tsrre
+ ;  tests = %tsutre
+ ;
+ ; $$replace^%ts
+ ;  code = %tsrr
+ ;  tests = %tsutr
+ ;
  ;@to-do
  ;
  ; bring over & write unit tests for:
- ;   $$strip^%ts
- ;   $$trim^%ts
- ;   $$place^%ts
- ;   $$find^%ts
+ ;   deleteBetween^%ts
+ ;   findReplace^%ts
+ ;   findReplaceAll^%ts
  ;   $$only^%ts
  ;   $$produce^%ts
- ;   $$replace^%ts
  ;   $$repeat^%ts
+ ;   $$replace^%ts
  ; develop schema for long & short names, keep above as mnemonic names
  ; revise $$replace to accept multiple strings
  ; revise $$produce to accept multiple strings

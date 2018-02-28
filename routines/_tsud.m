@@ -1,4 +1,4 @@
-%tsud ;ven/toad-type string: documentation ;2018-02-24T15:36Z
+%tsud ;ven/toad-type string: documentation ;2018-02-28T15:42Z
  ;;1.8;Mash;
  ;
  ; %tsud is the Mumps String Library's inroductory documentation.
@@ -23,7 +23,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-24T15:36Z
+ ;@last-updated: 2018-02-28T15:42Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -349,6 +349,13 @@
  ;
  ; find^%ts = find position of substring
  ;
+ ; place^%ts has been added as an alternate name for setextract. We may
+ ; wish to create a series of getex, setex, etc. names, & rename the
+ ; longer ones above by capitalizing Extract, following the pattern of
+ ; the new Replace Library methods. We will also be developing this:
+ ;
+ ; findBetween^%ts = find a substring between 2 other substrings
+ ;
  ; 3.3. For the string-format conversions, again we need both short
  ; & long names. For the short names, we adopt the convention of
  ; identifying the format in question with a secondary alphabet:
@@ -466,6 +473,17 @@
  ;
  ; As mentioned above, perhaps $$repeat^%ts belongs here.
  ;
+ ; Three new methods are being brought over from the Write Form
+ ; library:
+ ;
+ ;  deleteBetween^%ts = delete a substring found between 2 substrings
+ ;    findReplace^%ts = find a substring & replace it
+ ; findReplaceAll^%ts = find every instance of a substring & replace
+ ;
+ ; Several other new methods should logically be developed be developed
+ ; from these ideas. Also, note the new naming schema, which might
+ ; catch on & spread.
+ ;
  ; 3.9. The Slice library follows the component-method naming schema:
  ;
  ; $$gs^%ts = get slice(s) of string
@@ -532,6 +550,8 @@
  ;   %tsudr: replace notes
  ;  %tsul: primary development log
  ;  %tsut: nunit (unit tests & code coverage for string methods)
+ ;   %tsutef: unit tests for find^%ts
+ ;   $tsutes: unit tests for setextract^%ts
  ;   %tsutrs: unit tests for $$strip^%ts
  ;   %tsutrt: unit tests for $$trim^%ts
  ;
@@ -577,8 +597,8 @@
  ; %tspm: string-pattern-match tools
  ; %tsr: string-replace tools
  ;  %tsro: only keep character(s) in string
- ;  %tsrp: repeat find & replace substrings
- ;  %tsrr: find & replace substrings
+ ;  %tsrp: produce, repeat find & replace substrings
+ ;  %tsrr: replace, find & replace substrings
  ; %tss: string-slice tools
  ;  %tssc: cut slice(s) from string
  ;  %tssg: get slice(s) of string

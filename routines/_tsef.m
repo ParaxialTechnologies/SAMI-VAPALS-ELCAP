@@ -1,11 +1,12 @@
-%tsef ;ven/toad-type string: find^%ts ;2018-02-27T23:19Z
+%tsef ;ven/toad-type string: findex^%ts ;2018-02-28T19:08Z
  ;;1.8;Mash;
  ;
- ; %tsef implements MASH String Library ppi find^%ts, find substring;
- ; it is part of the String Extract sublibrary.
- ; See %tsutef for unit tests for find^%ts.
- ; See %tsud for an introduction to the String library, including an
- ; intro to the String Replace library.
+ ; %tsef implements MASH String Library ppi findex^%ts, find substring;
+ ; it is part of the String Extract Library.
+ ; See %tsutef for unit tests for findex^%ts.
+ ; Compare %tses to see how setex^%ts works with findex^%ts
+ ; See %tsud for an introduction to the String Library, including an
+ ; intro to the String Extract Library.
  ; See %tsul for the module's primary-development log.
  ; See %ts for the module's ppis & apis.
  ; %tsef contains no public entry points.
@@ -27,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-27T23:19Z
+ ;@last-updated: 2018-02-28T19:00Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -65,14 +66,14 @@
  ; The caller passes in a call message describing the scan to be
  ; performed. This can either be entirely passed as array nodes under
  ; the first parameter, or the caller may set other parameters in the
- ; list to ask find^%ts to initialize the call message for the caller
+ ; list to ask findex^%ts to initialize the call message for the caller
  ; based on those values. Where the call message and listed parameters
  ; disagree, the parameters will override the call message, giving
  ; callers a simple mechanism for revising the call message on
- ; subsequent calls to find^%ts.
+ ; subsequent calls to findex^%ts.
  ;
  ; This new call-message system gives callers nuanced control over how
- ; find^%ts performs the scan, via the call message, for complex scans,
+ ; findex^%ts performs the scan, via the call message, for complex scans,
  ; but it also gives one-time callers who want simple scans an easy-to-
  ; use multi-parameter format that can request most typical scans. Some
  ; more mature version of this system will spread to the rest of Mash.
@@ -83,18 +84,22 @@
  ;
  ;
  ;
- ;@ppi-code find^%ts
-find ; find position of substring
+ ;@ppi-code findex^%ts
+findex ; find position of substring
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
  ;ven/toad;private;procedure;clean;silent;sac;NO tests
  ;@signatures
- ; do find^%ts(.string)
- ; do find^%ts(.string,find)
- ; do find^%ts(.string,find,flags)
- ;@branches-from
+ ; do findex^%ts(.string)
+ ; do findex^%ts(.string,find)
+ ; do findex^%ts(.string,find,flags)
+ ;@synonyms
+ ; fe^%ts
+ ; findExtract^%ts
  ; find^%ts
+ ;@branches-from
+ ; findex^%ts
  ;@ppi-called-by: none yet, but just wait an hour or two
  ;@called-by: none
  ;@calls: $$lowcase^%ts
@@ -116,25 +121,25 @@ find ; find position of substring
  ; group 1: Find First & Find Next
  ;
  ;  new string set string="totototo"
- ;  do find^%ts(.string,"Kansas")
+ ;  do findex^%ts(.string,"Kansas")
  ; produces
  ;  string("extract","from")=0
  ;  string("extract","to")=0
  ;
  ;  new string set string="totototo"
- ;  do find^%ts(.string,"toto")
+ ;  do findex^%ts(.string,"toto")
  ; produces
  ;  string("extract","from")=1
  ;  string("extract","to")=4
  ;
  ; followed by
- ;  do find^%ts(.string,"toto")
+ ;  do findex^%ts(.string,"toto")
  ; produces
  ;  string("extract","from")=5
  ;  string("extract","to")=8
  ;
  ; followed by
- ;  do find^%ts(.string,"toto")
+ ;  do findex^%ts(.string,"toto")
  ; produces
  ;  string("extract","from")=0
  ;  string("extract","to")=0
@@ -142,7 +147,7 @@ find ; find position of substring
  ;  new string set string="totototo"
  ;  set string("extract","from")=1
  ;  set string("extract","to")=2
- ;  do find^%ts(.string,"toto")
+ ;  do findex^%ts(.string,"toto")
  ; produces
  ;  string("extract","from")=3
  ;  string("extract","to")=6
@@ -150,7 +155,7 @@ find ; find position of substring
  ;  new string set string="totototo"
  ;  set string("extract","from")=6
  ;  set string("extract","to")=7
- ;  do find^%ts(.string,"toto")
+ ;  do findex^%ts(.string,"toto")
  ; produces
  ;  string("extract","from")=0
  ;  string("extract","to")=0
@@ -158,25 +163,25 @@ find ; find position of substring
  ; group 2: Find Last & Find Previous
  ;
  ;  new string set string="totototo"
- ;  do find^%ts(.string,"Kansas","b")
+ ;  do findex^%ts(.string,"Kansas","b")
  ; produces
  ;  string("extract","from")=0
  ;  string("extract","to")=0
  ;
  ;  new string set string="totototo"
- ;  do find^%ts(.string,"toto","b")
+ ;  do findex^%ts(.string,"toto","b")
  ; produces
  ;  string("extract","from")=5
  ;  string("extract","to")=8
  ;
  ; followed by
- ;  do find^%ts(.string,"toto","b")
+ ;  do findex^%ts(.string,"toto","b")
  ; produces
  ;  string("extract","from")=1
  ;  string("extract","to")=4
  ;
  ; followed by
- ;  do find^%ts(.string,"toto","b")
+ ;  do findex^%ts(.string,"toto","b")
  ; produces
  ;  string("extract","from")=0
  ;  string("extract","to")=0
@@ -184,7 +189,7 @@ find ; find position of substring
  ;  new string set string="totototo"
  ;  set string("extract","from")=7
  ;  set string("extract","to")=8
- ;  do find^%ts(.string,"toto","b")
+ ;  do findex^%ts(.string,"toto","b")
  ; produces
  ;  string("extract","from")=3
  ;  string("extract","to")=6
@@ -192,7 +197,7 @@ find ; find position of substring
  ;  new string set string="totototo"
  ;  set string("extract","from")=1
  ;  set string("extract","to")=2
- ;  do find^%ts(.string,"toto","b")
+ ;  do findex^%ts(.string,"toto","b")
  ; produces
  ;  string("extract","from")=0
  ;  string("extract","to")=0
@@ -200,19 +205,19 @@ find ; find position of substring
  ; group 3: Find Case-Insensitive
  ;
  ;  new string set string="totototo"
- ;  do find^%ts(.string,"Toto")
+ ;  do findex^%ts(.string,"Toto")
  ; produces
  ;  string("extract","from")=0
  ;  string("extract","to")=0
  ;
  ; followed by
- ;  do find^%ts(.string,"Toto","i")
+ ;  do findex^%ts(.string,"Toto","i")
  ; produces
  ;  string("extract","from")=1
  ;  string("extract","to")=4
  ;
  ; followed by
- ;  do find^%ts(.string,"Toto","i")
+ ;  do findex^%ts(.string,"Toto","i")
  ; produces
  ;  string("extract","from")=5
  ;  string("extract","to")=8
@@ -228,12 +233,12 @@ find ; find position of substring
  ;@stanza 2 detailed description
  ;
  ;
- ; find^%ts is an enhanced version of the Mumps $find function. It will
- ; find the position of a substring (find) w/in a string.
+ ; findex^%ts is an enhanced version of the Mumps $find function. It
+ ; will find the position of a substring (find) w/in a string.
  ;
- ; (Note: a future version of find^%ts will support a new call-message
+ ; (Note: a future findex^%ts will support a new call-message
  ; system of passing parameters. For now, the embryonic form is the
- ; behavior of the string array, which find^%ts & place%ts manage.)
+ ; behavior of the string array, which findex^%ts & setex^%ts manage.)
  ;
  ; In the discussion that follows, string("extract","from") will be
  ; referred to as from, & string("extract","to") as to.
@@ -241,7 +246,7 @@ find ; find position of substring
  ;
  ; I. about string & find
  ;
- ; So long as string and find are both non-empty, find^%ts will scan
+ ; So long as string and find are both non-empty, findex^%ts will scan
  ; string looking for find.
  ;
  ; If either string or find is passed undefined or = the empty
@@ -250,22 +255,23 @@ find ; find position of substring
  ; every string but at no position, so it cannot be found. If string
  ; is empty, it contains no string but the empty string, and that at
  ; no position, so no string can be found in it. If string or find
- ; is empty, find^%ts will set from & to = 0 to indicate a failed
+ ; is empty, findex^%ts will set from & to = 0 to indicate a failed
  ; scan.
  ;
  ; string must be passed by reference = the string to scan; if it is
- ; passed by value, find^%ts is a no-op, because it returns its results
- ; as nodes in from & to in the string array (see below). If string
- ; is passed undefined, find^%ts will set it = the empty string ("").
+ ; passed by value, findex^%ts is a no-op, because it returns its
+ ; results as nodes in from & to in the string array (see below). If
+ ; string is passed undefined, findex^%ts will set it = the empty
+ ; string ("").
  ;
  ; find is passed by value. It = the substring to look for in string.
- ; If find is passed by reference undefined, find^%ts will set it =
+ ; If find is passed by reference undefined, findex^%ts will set it =
  ; the empty string ("").
  ;
  ;
- ; II. Find First: two-argument find^%ts
+ ; II. Find First: two-argument findex^%ts
  ;
- ; If from & to are not set, then two-argument find^%ts finds the first
+ ; If from & to are not set, then two-argument findex^%ts finds the 1st
  ; occurrence of find within string. It sets from = the position within
  ; string of the 1st character of the found substring & to = the
  ; position of the last character of the found substring. Together they
@@ -274,17 +280,17 @@ find ; find position of substring
  ; If the scan does not find the substring in string, then from & to
  ; are set = 0.
  ;
- ; The other Extract calls in the String Library, such as place^%ts are
+ ; The other Extract calls in the String Library, such as setex^%ts are
  ; designed to update these same two nodes if they use them to alter
- ; the string, so that a subsequent call to find^%ts will resume at the
- ; correct location (see below).
+ ; the string, so that a subsequent call to findex^%ts will resume at
+ ; the correct location (see below).
  ;
  ;
- ; III. Find Next: two-argument find^%ts
+ ; III. Find Next: two-argument findex^%ts
  ;
- ; After a call to find^%ts, if its scan found the substring & set
- ; from & to, another call to find^%ts with the string array & find
- ; parameter set just the way find^%ts left them will locate the next
+ ; After a call to findex^%ts, if its scan found the substring & set
+ ; from & to, another call to findex^%ts with the string array & find
+ ; parameter set just the way findex^%ts left them will locate the next
  ; instance of substring & update from & to = the new location or set
  ; them = 0 if there was only the one instance of substring to be
  ; found.
@@ -294,7 +300,7 @@ find ; find position of substring
  ; beginning, you need to kill string("extract") to clear the prior
  ; results.
  ;
- ; Conversely, you can set from & to manually before calling find^%ts
+ ; Conversely, you can set from & to manually before calling findex^%ts
  ; to control where the scan begins. The scan will begin (or resume)
  ; at character position to+1.
  ;
@@ -309,7 +315,7 @@ find ; find position of substring
  ; are passed empty (undefined or = the empty string), they will be
  ; set = 0, meaning start at the beginning (see Find First above).
  ;
- ; (Note: a future version of find^%ts will introduce new parameters
+ ; (Note: a future version of findex^%ts will introduce new parameters
  ; for controlling where a scan begins & ends, though if they are not
  ; passed, the current behavior will continue to work.)
  ;
@@ -320,21 +326,21 @@ find ; find position of substring
  ; find on input.
  ;
  ;
- ; IV. Find Last: two-argument find^%ts + b flag
+ ; IV. Find Last: two-argument findex^%ts + b flag
  ;
- ; If we set up a Find First call to find^%ts but also include a b or B
- ; in the flags parameter, it will scan backward instead of forward &
+ ; If we set up a Find First call to findex^%ts but also include a b or
+ ; B in the flags parameter, it will scan backward instead of forward &
  ; so find the last instance of substring within string instead of the
  ; first. As usual, if substring is not found, from & to will be set
  ; = 0.
  ;
- ; If the b flag is not passed, find^%ts defaults to scanning forward.
+ ; If the b flag is not passed, findex^%ts defaults to scanning forward.
  ;
  ;
- ; V. Find Previous: two-argument find^%ts + b flag
+ ; V. Find Previous: two-argument findex^%ts + b flag
  ;
  ; Likewise, if we set up a Find Next call but include b or B in flags,
- ; find^%ts will continue its backward scan from where it left off &
+ ; findex^%ts will continue its backward scan from where it left off &
  ; find the previous instance of substring in string, setting its output
  ; nodes to the result.
  ;
@@ -346,24 +352,24 @@ find ; find position of substring
  ; scanning forward.
  ;
  ;
- ; VI. Case-insensitive Find: two-argument find^%ts + i flag
+ ; VI. Case-insensitive Find: two-argument findex^%ts + i flag
  ;
  ; If flags includes i or I, the scan will be case-insensitive, so for
  ; example substring "Toto" would be found in string "totototo".
  ;
- ; To help make scans more efficient, find^%ts will save a lowercase
+ ; To help make scans more efficient, findex^%ts will save a lowercase
  ; version of string in string("low","string") & of find in
  ; string("low","find") to use in subsequent calls, to avoid having to
- ; recalculate lowercase versions of them each time find^%ts is called.
+ ; recalculate lowercase versions of them each time findex^%ts is called.
  ;
  ; Other Extract calls in the String Library that manipulate string &
  ; support the case-insensitive flag will perform the same changes on
  ; string("low") to keeps nodes in synch with string. If you change
- ; string or find & plan to call find^%ts again without killing or
- ; newing them, pass the r flag, which will make find^%ts refresh the
+ ; string or find & plan to call findex^%ts again without killing or
+ ; newing them, pass the r flag, which will make findex^%ts refresh the
  ; string("low") nodes to keep them in synch with your changes.
  ;
- ; If the i flag is not passed, find^%ts defaults to a case-sensitive
+ ; If the i flag is not passed, findex^%ts defaults to a case-sensitive
  ; scan. No flags other than b, i, or r are currently supported. All
  ; other values are reserved. Including any other value in flags will
  ; cause the scan to fail & set from & to = 0.
@@ -458,7 +464,7 @@ find ; find position of substring
  . new winto set winto=begin ; end position of window into string
  . new winfrom,window
  . for  do  quit:found!'winfrom  ; traverse until found or done
- . . set winfrom=begin-findlen+1 ; start position of window
+ . . set winfrom=winto-findlen+1 ; start position of window
  . . if winfrom<1 do  quit  ; window has backed past start of string
  . . . set winfrom=0 ; no more substring instances to be found
  . . . quit
@@ -481,7 +487,7 @@ find ; find position of substring
  ;
  ;@stanza 8 termination
  ;
- quit  ; end of ppi find^%ts
+ quit  ; end of ppi findex^%ts
  ;
  ;
  ;

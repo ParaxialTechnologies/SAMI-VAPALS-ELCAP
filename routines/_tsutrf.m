@@ -1,4 +1,4 @@
-%tsutrf ;ven/toad-type string: test findrep^%ts ;2018-02-28T20:20Z
+%tsutrf ;ven/toad-type string: test findrep^%ts ;2018-02-28T20:30Z
  ;;1.8;Mash;
  ;
  ; %tsutrf implements unit tests for ppi findrep^%ts.
@@ -27,7 +27,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-28T20:20Z
+ ;@last-updated: 2018-02-28T20:30Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -50,6 +50,32 @@
  ;@calls
  ; CHKEQ^%ut
  ; findrep^%ts
+ ;
+ ;
+ ;
+ ; group 0: cover tests
+ ;
+ ;
+ ;
+cover10 ; @TEST ^%tsutrf: no entry from top
+ ;
+ ;ven/lmry;test;procedure;clean?;silent?;sac
+ ;
+ do ^%tsutrf ; for 100% code coverage
+ do CHKEQ^%ut(1,1)
+ ;
+ quit  ; end of cover10
+ ;
+ ;
+ ;
+cover11 ; @TEST ^%tsrf: no entry from top
+ ;
+ ;ven/lmry;test;procedure;clean?;silent?;sac
+ ;
+ do ^%tsrf ; for 100% code coverage
+ do CHKEQ^%ut(1,1)
+ ;
+ quit  ; end of cover11
  ;
  ;
  ;

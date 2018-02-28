@@ -1,4 +1,4 @@
-%tsutrf ;ven/toad-type string: test findrep^%ts ;2018-02-28T20:36Z
+%tsutrf ;ven/toad-type string: test findrep^%ts ;2018-02-28T20:59Z
  ;;1.8;Mash;
  ;
  ; %tsutrf implements unit tests for ppi findrep^%ts.
@@ -27,7 +27,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-28T20:36Z
+ ;@last-updated: 2018-02-28T20:59Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -236,6 +236,207 @@ findrep08 ; @TEST findrep^%ts: No Match Previous From
  do CHKEQ^%ut(string("extract","to"),0)
  ;
  quit  ; end of findrep08
+ ;
+ ;
+ ;
+ ; group 3: Find Case-Insensitive
+ ;
+ ;
+ ;
+findrep09 ; @TEST findrep^%ts: Find Case-insensitive
+ ;
+ ;ven/toad;test;procedure;clean;silent;sac
+ ;
+ new string set string="totototo"
+ do findrep^%ts(.string,"Toto","Dorothy")
+ do CHKEQ^%ut(string,"Dorothytoto")
+ do CHKEQ^%ut(string("extract"),0)
+ do CHKEQ^%ut(string("extract","from"),0)
+ do CHKEQ^%ut(string("extract","to"),0)
+ ;
+ do findrep^%ts(.string,"Toto","Dorothy","i")
+ do CHKEQ^%ut(string,"DorothyDorothy")
+ do CHKEQ^%ut(string("extract"),1)
+ do CHKEQ^%ut(string("extract","from"),1)
+ do CHKEQ^%ut(string("extract","to"),7)
+ ;
+ do findrep^%ts(.string,"toto","Dorothy","i")
+ do CHKEQ^%ut(string,"DorothyDorothy")
+ do CHKEQ^%ut(string("extract"),1)
+ do CHKEQ^%ut(string("extract","from"),8)
+ do CHKEQ^%ut(string("extract","to"),14)
+ ;
+ quit  ; end of findrep09
+ ;
+ ;
+ ;
+ ; group 4: Boundary Cases
+ ;
+ ;
+ ;
+findrep10 ; @TEST findrep^%ts: Undefined String
+ ;
+ ;ven/toad;test;procedure;clean;silent;sac
+ ;
+ new string
+ do findrep^%ts(.string,"toto","Dorothy")
+ do CHKEQ^%ut(string,"")
+ do CHKEQ^%ut(string("extract"),0)
+ do CHKEQ^%ut(string("extract","from"),0)
+ do CHKEQ^%ut(string("extract","to"),0)
+ ;
+ quit  ; end of findrep10
+ ;
+ ;
+ ;
+findrep11 ; @TEST findrep^%ts: Empty String
+ ;
+ ;ven/toad;test;procedure;clean;silent;sac
+ ;
+ new string set string=""
+ do findrep^%ts(.string,"toto","Dorothy")
+ do CHKEQ^%ut(string,"")
+ do CHKEQ^%ut(string("extract"),0)
+ do CHKEQ^%ut(string("extract","from"),0)
+ do CHKEQ^%ut(string("extract","to"),0)
+ ;
+ quit  ; end of findrep11
+ ;
+ ;
+ ;
+findrep12 ; @TEST findrep^%ts: Empty Find
+ ;
+ ;ven/toad;test;procedure;clean;silent;sac
+ ;
+ new string set string="totototo"
+ do findrep^%ts(.string,"","Dorothy")
+ do CHKEQ^%ut(string,"totototo")
+ do CHKEQ^%ut(string("extract"),0)
+ do CHKEQ^%ut(string("extract","from"),0)
+ do CHKEQ^%ut(string("extract","to"),0)
+ ;
+ quit  ; end of findrep12
+ ;
+ ;
+ ;
+findrep13 ; @TEST findrep^%ts: Empty Find & String
+ ;
+ ;ven/toad;test;procedure;clean;silent;sac
+ ;
+ new string set string=""
+ do findrep^%ts(.string,"","Dorothy")
+ do CHKEQ^%ut(string,"totototo")
+ do CHKEQ^%ut(string("extract"),0)
+ do CHKEQ^%ut(string("extract","from"),0)
+ do CHKEQ^%ut(string("extract","to"),0)
+ ;
+ quit  ; end of findrep13
+ ;
+ ;
+ ;
+findrep14 ; @TEST findrep^%ts: Empty Replace
+ ;
+ ;ven/toad;test;procedure;clean;silent;sac
+ ;
+ new string set string="totototo"
+ do findrep^%ts(.string,"toto")
+ do CHKEQ^%ut(string,"toto")
+ do CHKEQ^%ut(string("extract"),1)
+ do CHKEQ^%ut(string("extract","from"),0)
+ do CHKEQ^%ut(string("extract","to"),0)
+ ;
+ quit  ; end of findrep14
+ ;
+ ;
+ ;
+findrep15 ; @TEST findrep^%ts: Empty Replace Backward
+ ;
+ ;ven/toad;test;procedure;clean;silent;sac
+ ;
+ new string set string="totototo"
+ do findrep^%ts(.string,"toto","","b")
+ do CHKEQ^%ut(string,"toto")
+ do CHKEQ^%ut(string("extract"),1)
+ do CHKEQ^%ut(string("extract","from"),0)
+ do CHKEQ^%ut(string("extract","to"),0)
+ ;
+ quit  ; end of findrep15
+ ;
+ ;
+ ;
+findrep16 ; @TEST findrep^%ts: Empty Find & Replace
+ ;
+ ;ven/toad;test;procedure;clean;silent;sac
+ ;
+ new string set string="totototo"
+ do findrep^%ts(.string)
+ do CHKEQ^%ut(string,"totototo")
+ do CHKEQ^%ut(string("extract"),0)
+ do CHKEQ^%ut(string("extract","from"),0)
+ do CHKEQ^%ut(string("extract","to"),0)
+ ;
+ quit  ; end of findrep16
+ ;
+ ;
+ ;
+findrep17 ; @TEST findrep^%ts: Empty String, Find, & Replace
+ ;
+ ;ven/toad;test;procedure;clean;silent;sac
+ ;
+ new string
+ do findrep^%ts(.string)
+ do CHKEQ^%ut(string,"")
+ do CHKEQ^%ut(string("extract"),0)
+ do CHKEQ^%ut(string("extract","from"),0)
+ do CHKEQ^%ut(string("extract","to"),0)
+ ;
+ quit  ; end of findrep17
+ ;
+ ;
+ ;
+findrep18 ; @TEST findrep^%ts: Bad Flag
+ ;
+ ;ven/toad;test;procedure;clean;silent;sac
+ ;
+ new string set string="totototo"
+ do findrep^%ts(.string,"toto","Dorothy","badflag")
+ do CHKEQ^%ut(string,"totototo")
+ do CHKEQ^%ut(string("extract"),0)
+ do CHKEQ^%ut(string("extract","from"),0)
+ do CHKEQ^%ut(string("extract","to"),0)
+ ;
+ quit  ; end of findrep18
+ ;
+ ;
+ ;
+ ; group 5: Alternate Signatures
+ ;
+ ;
+ ;
+findrep19 ; @TEST findrep^%ts: Alternate Signatures
+ ;
+ ;ven/toad;test;procedure;clean;silent;sac
+ ;
+ new string set string="totototo"
+ do fr^%ts(.string,"toto","Dorothy")
+ do CHKEQ^%ut(string,"Dorothytoto")
+ do CHKEQ^%ut(string("extract"),1)
+ do CHKEQ^%ut(string("extract","from"),1)
+ do CHKEQ^%ut(string("extract","to"),7)
+ ;
+ do findReplace^%ts(.string,"toto","Dorothy")
+ do CHKEQ^%ut(string,"DorothyDorothy")
+ do CHKEQ^%ut(string("extract"),1)
+ do CHKEQ^%ut(string("extract","from"),8)
+ do CHKEQ^%ut(string("extract","to"),14)
+ ;
+ do find^%ts(.string,"toto","Dorothy")
+ do CHKEQ^%ut(string,"DorothyDorothy")
+ do CHKEQ^%ut(string("extract"),0)
+ do CHKEQ^%ut(string("extract","from"),0)
+ do CHKEQ^%ut(string("extract","to"),0)
+ ;
+ quit  ; end of findrep19
  ;
  ;
  ;

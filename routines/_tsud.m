@@ -1,4 +1,4 @@
-%tsud ;ven/toad-type string: documentation ;2018-02-28T15:42Z
+%tsud ;ven/toad-type string: documentation ;2018-02-28T22:05Z
  ;;1.8;Mash;
  ;
  ; %tsud is the Mumps String Library's inroductory documentation.
@@ -23,7 +23,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-28T15:42Z
+ ;@last-updated: 2018-02-28T22:05Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -328,31 +328,44 @@
  ;   ce^%ts = cut extract, remove positional substring
  ;   pe^%ts = put extract, insert new positional substring
  ;   ne^%ts = net extract, remove positional substring & assign to variable
+ ;   fe^%ts = find extract, find position of substring
  ;
- ; and the longer, clearer one:
+ ; a longer, clearer one that fits the 1995 Mumps standard:
  ;
- ; $$getextract^%ts
- ;   setextract^%ts
- ;   matextract^%ts
- ;   cutextract^%ts
- ;   putextract^%ts
- ;   netextract^%ts
+ ; $$getex^%ts
+ ;   setex^%ts
+ ;   matex^%ts
+ ;   cutex^%ts
+ ;   putex^%ts
+ ;   netex^%ts
+ ;  findex^%ts
  ;
- ; In addition, there will be at least three extract functions that
- ; use the old BASIC and C string-library names:
+ ; & a long, camelcase name as one might expect from another language
+ ; like Javascript:
+ ;
+ ; $$getExtract^%ts
+ ;   setExtract^%ts
+ ;   matExtract^%ts
+ ;   cutExtract^%ts
+ ;   putExtract^%ts
+ ;   netExtract^%ts
+ ;  findExtract^%ts
+ ;
+ ; as well as this industry-convention names, where appropriate:
+ ;
+ ; find^%ts = findex^%ts
+ ; place^%ts = setex^%ts
+ ;
+ ; In addition, there will be at least three new extract functions,
+ ; for which so far we only have the old BASIC and C string-library
+ ; names:
  ;
  ; $$left^%ts = get extract, first n characters
  ; $$right^%ts = get extract, last n characters
  ; $$mid^%ts = get extract, n characters starting at position p
  ;
- ; As well as this necessary companion piece to setextract:
- ;
- ; find^%ts = find position of substring
- ;
- ; place^%ts has been added as an alternate name for setextract. We may
- ; wish to create a series of getex, setex, etc. names, & rename the
- ; longer ones above by capitalizing Extract, following the pattern of
- ; the new Replace Library methods. We will also be developing this:
+ ; We will also be developing this, which will need a set of
+ ; standard Mash names:
  ;
  ; findBetween^%ts = find a substring between 2 other substrings
  ;
@@ -459,30 +472,35 @@
  ;      $$pm^%ts = get pattern mask
  ; $$patmask^%ts
  ;
- ; 3.8. The Replace library so far has ad hoc names that do not follow
- ; any particular pattern. These should be interpreted as the third
- ; category of names, names that fit people expectations rather than
- ; follow any system, so they should be supplemented by systematic
- ; names and abbreviations:
+ ; 3.8. The Replace library started out with ad hoc names, but is
+ ; developing its naming pattern, as shown by the example of findrep
+ ; below:
  ;
- ;    $$only^%ts = only keep character(s) in string
- ; $$produce^%ts = repeat find & replace substrings
- ; $$replace^%ts = find & replace substrings
- ;   $$strip^%ts = strip character(s) from string
- ;    $$trim^%ts = trim character from end(s) of string
+ ;          fr^%ts
+ ;     findrep^%ts = find & replace a substring
+ ; findReplace^%ts
+ ;
+ ;        $$or^%ts
+ ;      $$only^%ts = only keep character(s) in string
+ ;
+ ;        $$pr^%ts
+ ;   $$produce^%ts = repeat find & replace substrings
+ ;
+ ;        $$rr^%ts
+ ;   $$replace^%ts = find & replace substrings
+ ;
+ ;        $$sr^%ts
+ ;     $$strip^%ts = strip character(s) from string
+ ;
+ ;        $$tr^%ts
+ ;      $$trim^%ts = trim character from end(s) of string
  ;
  ; As mentioned above, perhaps $$repeat^%ts belongs here.
  ;
- ; Three new methods are being brought over from the Write Form
+ ; Another new method is being brought over from the Write Form
  ; library:
  ;
  ;  deleteBetween^%ts = delete a substring found between 2 substrings
- ;    findReplace^%ts = find a substring & replace it
- ; findReplaceAll^%ts = find every instance of a substring & replace
- ;
- ; Several other new methods should logically be developed be developed
- ; from these ideas. Also, note the new naming schema, which might
- ; catch on & spread.
  ;
  ; 3.9. The Slice library follows the component-method naming schema:
  ;
@@ -543,6 +561,7 @@
  ;  %tsef: find position of substring
  ;  $tses: set extract, change value of positional substring
  ;[%tsr: string-replace tools]
+ ;  %tsrf: find & replace substring
  ;  %tsrs: strip character(s) from string
  ;  $tsrt: trim character from end(s) of string
  ;[%tsu: utilities for the string datatype library]
@@ -552,6 +571,7 @@
  ;  %tsut: nunit (unit tests & code coverage for string methods)
  ;   %tsutef: unit tests for find^%ts
  ;   $tsutes: unit tests for setextract^%ts
+ ;   %tsutrf: unit tests for findrep^%ts
  ;   %tsutrs: unit tests for $$strip^%ts
  ;   %tsutrt: unit tests for $$trim^%ts
  ;

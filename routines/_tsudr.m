@@ -1,4 +1,4 @@
-%tsudr ;ven/toad-type string: documentation, replace ;2018-02-28T15:51Z
+%tsudr ;ven/toad-type string: documentation, replace ;2018-02-28T21:45Z
  ;;1.8;Mash;
  ;
  ; %tsud introduces the public string datatype Replace library,
@@ -26,7 +26,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-28T15:51Z
+ ;@last-updated: 2018-02-28T21:45Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -52,15 +52,13 @@
  ;
  ;@alphabet
  ;
- ; a = ? [all replace?, ar]
+ ; a = ?
  ; b = ? [between replace?, br]
  ; c = ?
  ; d = delete [dr?]
  ;     db = deleteBetween
  ; e = ?
- ; f = ? [find replace, fr]
- ;     fr = findReplace
- ;     frs = findReplaceAll
+ ; f = find replace, includes findReplaceAll [fr]
  ; g = ?
  ; h = ?
  ; i = ?
@@ -88,13 +86,11 @@
  ;  code = %tsrdb
  ;  tests = %tsutdb
  ;
+ ; fr^%ts
+ ; findrep^%ts
  ; findReplace^%ts
  ;  code = %tsrfr
  ;  tests = %tsutfr
- ;
- ; findReplaceAll^%ts
- ;  code = %tsrfra
- ;  tests = %tsutfra
  ;
  ; $$only^%ts
  ;  code = %tsro
@@ -116,8 +112,6 @@
  ;
  ; bring over & write unit tests for:
  ;   deleteBetween^%ts
- ;   findReplace^%ts
- ;   findReplaceAll^%ts
  ;   $$only^%ts
  ;   $$produce^%ts
  ;   $$repeat^%ts

@@ -1,4 +1,4 @@
-%tsul ;ven/toad-type string: development log ;2018-02-28T16:02Z
+%tsul ;ven/toad-type string: development log ;2018-02-28T21:43Z
  ;;1.8;Mash;
  ;
  ; %tsul is the Mumps String Library's primary-development log.
@@ -23,7 +23,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-28T16:02Z
+ ;@last-updated: 2018-02-28T21:43Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -279,7 +279,8 @@
  ;  %tses: move fr/place^%wfhfind & finish to be code for
  ; setextract^%ts.
  ;  %tsef: move fr/find^%wfhfind & finish to be code for find^%ts.
- ;  %tsrf: create from findReplace^%wfhfind.
+ ;  %tsrf: create from findReplace^%wfhfind, merge findReplaceAll
+ ; features into findReplace.
  ;
  ; 2018-02-22 ven/lmry %*1.8T04 %tsutc: start %tsutc, wrote 32 unit 
  ; tests for string-case functions. Added to %tsut XTROU list for M-unit

@@ -1,4 +1,4 @@
-%tsrf ;ven/toad-type string: findrep^%ts ;2018-02-28T18:46Z
+%tsrf ;ven/toad-type string: findrep^%ts ;2018-02-28T19:56Z
  ;;1.8;Mash;
  ;
  ; %tsrf implements MASH String Library ppi findrep^%ts, find &
@@ -29,7 +29,7 @@
  ;@original-dev: George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
  ;
- ;@last-updated: 2018-02-28T18:46Z
+ ;@last-updated: 2018-02-28T18:56Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -243,15 +243,15 @@ findrep ; find & replace a substring
  ;  do findrep^%ts(.string,"toto")
  ; produces
  ;  string="toto"
- ;  string("extract","from")=2
- ;  string("extract","to")=2
+ ;  string("extract","from")=0
+ ;  string("extract","to")=0
  ;
  ;  new string set string="totototo"
  ;  do findrep^%ts(.string,"toto","","b")
  ; produces
  ;  string="toto"
- ;  string("extract","from")=3
- ;  string("extract","to")=3
+ ;  string("extract","from")=0
+ ;  string("extract","to")=0
  ;
  ;  new string set string="totototo"
  ;  do findrep^%ts(.string)

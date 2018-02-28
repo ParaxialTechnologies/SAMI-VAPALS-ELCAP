@@ -1,4 +1,4 @@
-%tses ;ven/toad-type string: setex^%ts ;2018-02-28T19:33Z
+%tses ;ven/toad-type string: setex^%ts ;2018-02-28T19:54Z
  ;;1.8;Mash;
  ;
  ; %tses implements MASH String Library ppi setex^%ts, change
@@ -28,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-28T19:33Z
+ ;@last-updated: 2018-02-28T19:54Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -778,14 +778,16 @@ setex ; change value of positional substring
  if prepad do  ; if placing replace before string
  . new pad set $extract(pad,prepad+1)="" ; create pad of spaces
  . set string=pad_string ; prepend pad
+ . set stringlen=stringlen+prepad ; update string length
  . quit:'lower  ; quit if not for a case-insensitive scan
  . set string("low","string")=pad_string("low","string")
  . quit
  ;
- do  ; so long as not inserting the empty string
+ do  ; place it
  . set $extract(string,from,to)=replace ; place substring in string
  . set:lower $extract(string("low","string"),from,to)=lowrep
  . set to=from+replacelen-1 ; update to location
+ . set stringlen=$length(string) ; update string length
  . quit
  ;
  if replace="" do  ; empty-string replace has no position

@@ -1,4 +1,4 @@
-%tsutrf ;ven/toad-type string: test findrep^%ts ;2018-02-28T20:30Z
+%tsutrf ;ven/toad-type string: test findrep^%ts ;2018-02-28T20:36Z
  ;;1.8;Mash;
  ;
  ; %tsutrf implements unit tests for ppi findrep^%ts.
@@ -27,7 +27,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-28T20:30Z
+ ;@last-updated: 2018-02-28T20:36Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -83,7 +83,7 @@ cover11 ; @TEST ^%tsrf: no entry from top
  ;
  ;
  ;
-findrep01 ; @TEST findrep^%ts: No Match
+findrep01 ; @TEST findrep^%ts: No Next Match
  ;
  ;ven/toad;test;procedure;clean;silent;sac
  ;
@@ -125,7 +125,7 @@ findrep02 ; @TEST findrep^%ts: Find First & Next
  ;
  ;
  ;
-findrep03 ; @TEST findrep^%ts: Find From
+findrep03 ; @TEST findrep^%ts: Find Next From
  ;
  ;ven/toad;test;procedure;clean;silent;sac
  ;
@@ -134,6 +134,7 @@ findrep03 ; @TEST findrep^%ts: Find From
  set string("extract","to")=2
  do findrep^%ts(.string,"toto","Dorothy")
  do CHKEQ^%ut(string,"toDorothyto")
+ do CHKEQ^%ut(string("extract"),1)
  do CHKEQ^%ut(string("extract","from"),3)
  do CHKEQ^%ut(string("extract","to"),9)
  ;
@@ -141,7 +142,7 @@ findrep03 ; @TEST findrep^%ts: Find From
  ;
  ;
  ;
-findrep04 ; @TEST findrep^%ts: No Match From
+findrep04 ; @TEST findrep^%ts: No Match Next From
  ;
  ;ven/toad;test;procedure;clean;silent;sac
  ;
@@ -150,10 +151,91 @@ findrep04 ; @TEST findrep^%ts: No Match From
  set string("extract","to")=7
  do findrep^%ts(.string,"toto","Dorothy")
  do CHKEQ^%ut(string,"totototo")
+ do CHKEQ^%ut(string("extract"),0)
  do CHKEQ^%ut(string("extract","from"),0)
  do CHKEQ^%ut(string("extract","to"),0)
  ;
  quit  ; end of findrep04
+ ;
+ ;
+ ;
+ ; group 2: Find Last & Find Previous
+ ;
+ ;
+ ;
+findrep05 ; @TEST findrep^%ts: No Previous Match
+ ;
+ ;ven/toad;test;procedure;clean;silent;sac
+ ;
+ new string set string="totototo"
+ do findrep^%ts(.string,"Kansas","Dorothy","b")
+ do CHKEQ^%ut(string,"totototo")
+ do CHKEQ^%ut(string("extract"),0)
+ do CHKEQ^%ut(string("extract","from"),0)
+ do CHKEQ^%ut(string("extract","to"),0)
+ ;
+ quit  ; end of findrep05
+ ;
+ ;
+ ;
+findrep06 ; @TEST findrep^%ts: Find Last & Previous
+ ;
+ ;ven/toad;test;procedure;clean;silent;sac
+ ;
+ new string set string="totototo"
+ do findrep^%ts(.string,"toto","Dorothy","b")
+ do CHKEQ^%ut(string,"Dorothytoto")
+ do CHKEQ^%ut(string("extract"),1)
+ do CHKEQ^%ut(string("extract","from"),5)
+ do CHKEQ^%ut(string("extract","to"),11)
+ ;
+ do findrep^%ts(.string,"toto","Dorothy","b")
+ do CHKEQ^%ut(string,"DorothyDorothy")
+ do CHKEQ^%ut(string("extract"),1)
+ do CHKEQ^%ut(string("extract","from"),1)
+ do CHKEQ^%ut(string("extract","to"),7)
+ ;
+ do findrep^%ts(.string,"toto","Dorothy","b")
+ do CHKEQ^%ut(string,"DorothyDorothy")
+ do CHKEQ^%ut(string("extract"),0)
+ do CHKEQ^%ut(string("extract","from"),0)
+ do CHKEQ^%ut(string("extract","to"),0)
+ ;
+ quit  ; end of findrep06
+ ;
+ ;
+ ;
+findrep07 ; @TEST findrep^%ts: Find Previous From
+ ;
+ ;ven/toad;test;procedure;clean;silent;sac
+ ;
+ new string set string="totototo"
+ set string("extract","from")=7
+ set string("extract","to")=8
+ do findrep^%ts(.string,"toto","Dorothy","b")
+ do CHKEQ^%ut(string,"toDorothyto")
+ do CHKEQ^%ut(string("extract"),1)
+ do CHKEQ^%ut(string("extract","from"),3)
+ do CHKEQ^%ut(string("extract","to"),9)
+ ;
+ quit  ; end of findrep07
+ ;
+ ;
+ ;
+findrep08 ; @TEST findrep^%ts: No Match Previous From
+ ;
+ ;ven/toad;test;procedure;clean;silent;sac
+ ;
+ new string set string="totototo"
+ set string("extract","from")=1
+ set string("extract","to")=2
+ do findrep^%ts(.string,"toto","Dorothy","b")
+ do CHKEQ^%ut(string,"totototo")
+ do CHKEQ^%ut(string("extract"),0)
+ do CHKEQ^%ut(string("extract","from"),0)
+ do CHKEQ^%ut(string("extract","to"),0)
+ ;
+ quit  ; end of findrep08
  ;
  ;
  ;

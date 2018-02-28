@@ -96,6 +96,7 @@ findrep ; find & replace a substring
  ;  do findrep^%ts(.string,"Kansas","Dorothy")
  ; produces
  ;  string="totototo"
+ ;  string("extract")=0
  ;  string("extract","from")=0
  ;  string("extract","to")=0
  ;
@@ -103,6 +104,7 @@ findrep ; find & replace a substring
  ;  do findrep^%ts(.string,"toto","Dorothy")
  ; produces
  ;  string="Dorothytoto"
+ ;  string("extract")=1
  ;  string("extract","from")=1
  ;  string("extract","to")=7
  ;
@@ -110,6 +112,7 @@ findrep ; find & replace a substring
  ;  do findrep^%ts(.string,"toto","Dorothy")
  ; produces
  ;  string="DorothyDorothy"
+ ;  string("extract")=1
  ;  string("extract","from")=8
  ;  string("extract","to")=14
  ;
@@ -117,6 +120,7 @@ findrep ; find & replace a substring
  ;  do findrep^%ts(.string,"toto","Dorothy")
  ; produces
  ;  string="DorothyDorothy"
+ ;  string("extract")=0
  ;  string("extract","from")=0
  ;  string("extract","to")=0
  ;
@@ -126,6 +130,7 @@ findrep ; find & replace a substring
  ;  do findrep^%ts(.string,"toto","Dorothy")
  ; produces
  ;  string="toDorothyto"
+ ;  string("extract")=1
  ;  string("extract","from")=3
  ;  string("extract","to")=9
  ;
@@ -135,6 +140,7 @@ findrep ; find & replace a substring
  ;  do findrep^%ts(.string,"toto","Dorothy")
  ; produces
  ;  string="totototo"
+ ;  string("extract")=0
  ;  string("extract","from")=0
  ;  string("extract","to")=0
  ;

@@ -1,4 +1,4 @@
-%tsrf ;ven/toad-type string: findrep^%ts ;2018-03-01T20:58Z
+%tsrf ;ven/toad-type string: findrep^%ts ;2018-03-01T21:18Z
  ;;1.8;Mash;
  ;
  ; %tsrf implements MASH String Library ppi findrep^%ts, find &
@@ -29,7 +29,7 @@
  ;@original-dev: George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
  ;
- ;@last-updated: 2018-03-01T20:58Z
+ ;@last-updated: 2018-03-01T21:18Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -382,10 +382,10 @@ findrep ; find & replace a substring
  new done set done=0
  for  do  quit:done
  . do findex^%ts(.string,$get(find),$get(flags))
- . set done=$get(string("extract")=0 ; failed to find substring?
+ . set done=$get(string("extract"))=0 ; failed to find substring?
  . quit:done  ; if not found, can't replace
  . do setex^%ts(.string,$get(replace),$get(flags)) ; replace
- . set done=$get(string("extract")=0 ; failed to replace substring?
+ . set done=$get(string("extract"))=0 ; failed to replace substring?
  . quit:done  ; if failed to replace, can't continue
  . set success=1 ; at least one successful find + replace = success
  . set done='all ; if not replacing all, done after first pass

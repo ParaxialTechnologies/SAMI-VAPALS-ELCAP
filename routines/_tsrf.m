@@ -1,4 +1,4 @@
-%tsrf ;ven/toad-type string: findrep^%ts ;2018-02-28T20:59Z
+%tsrf ;ven/toad-type string: findrep^%ts ;2018-03-01T20:58Z
  ;;1.8;Mash;
  ;
  ; %tsrf implements MASH String Library ppi findrep^%ts, find &
@@ -29,7 +29,7 @@
  ;@original-dev: George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
  ;
- ;@last-updated: 2018-02-28T20:59Z
+ ;@last-updated: 2018-03-01T20:58Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -37,6 +37,7 @@
  ;@patch-list: none yet
  ;
  ;@to-do
+ ; convert to standardized success or failure flag
  ; apply standard string-length protection consistently
  ; add ability to call by passing object
  ; add feature to load object w/parameters for shorter calls
@@ -79,12 +80,17 @@ findrep ; find & replace a substring
  ;@throughput
  ;.string = string to scan & change
  ;.string("low","string") = lowercase version of string to scan & change
+ ;.string("extract") = 1 if find & replace succeeded; otherwise 0
+ ;  if "a" flag, passed, =1 if succeeded at least once
+ ;.string("extract","from") = pos of 1st char of substring set
+ ;.string("extract","to") = pos of last char of substring set
  ;@input
  ;.string("extract","from") = pos of 1st char of substring to set
  ;.string("extract","to") = pos of last char of substring to set
  ; find = substring to find in string
  ; replace = substring to replace it with
  ; flags = characters that control how find & replace are done
+ ;  a or A = find & replace all instances of find in string
  ;  b or B = set for a backward scan
  ;  i or I = case-insensitive scan
  ;  r or R = refresh lower-case versions of string & replace
@@ -324,6 +330,25 @@ findrep ; find & replace a substring
  ;  string("extract","from")=0
  ;  string("extract","to")=0
  ;
+ ; group 6: Find & Replace All
+ ;
+ ;  new string set string="totototo"
+ ;  do findrep^%ts(.string,"Toto","Dorothy","abir")
+ ; produces
+ ;  string="DorothyDorothy"
+ ;  string("extract")=1
+ ;  string("extract","from")=0
+ ;  string("extract","to")=0
+ ;
+ ;  new string set string="totototo"
+ ;  do findrep^%ts(.string,"Kansas","Dorothy","a")
+ ; produces
+ ;  string="totototo"
+ ;  string("extract")=0
+ ;  string("extract","from")=0
+ ;  string("extract","to")=0
+ ;
+ ;
  ;@tests [tbd]
  ;
  ; [description tbd]
@@ -340,11 +365,35 @@ findrep ; find & replace a substring
  ; See find^%tsef & setextract^%tses for complete descriptions of how
  ; the parameters control the scan & replacement.
  ;
+ ; Find & Replace All: findrep^%ts supports an "a" flag that will repeat
+ ; the find & replace until the entire string has been scanned. It
+ ; returns string("extract")=1 if at least one successful find+replace
+ ; was done, otherwise 0. from & to nodes will always be returned = 0
+ ; after Find & Replace All.
+ ;
  ;@stanza 2 find & replace
  ;
- do findex^%ts(.string,$get(find),$get(flags))
- quit:$get(string("extract","from"))=0  ; if not found, can't replace
- do setex^%ts(.string,$get(replace),$get(flags)) ; replace
+ set flags=$get(flags)
+ new all set all=flags["a"!(flags["A") ; find & replace all?
+ set:all flags=$translate(flags,"aA") ; findex & setex don't use A flag
+ ;
+ new success set success=0 ; did we succeed at least once? not yet
+ ;
+ new done set done=0
+ for  do  quit:done
+ . do findex^%ts(.string,$get(find),$get(flags))
+ . set done=$get(string("extract")=0 ; failed to find substring?
+ . quit:done  ; if not found, can't replace
+ . do setex^%ts(.string,$get(replace),$get(flags)) ; replace
+ . set done=$get(string("extract")=0 ; failed to replace substring?
+ . quit:done  ; if failed to replace, can't continue
+ . set success=1 ; at least one successful find + replace = success
+ . set done='all ; if not replacing all, done after first pass
+ . quit
+ ;
+ set string("extract")=success ; return success or failure
+ ;
+ set:all flags="a"_flags ; restore A flag when done
  ;
  ;@stanza 3 termination
  ;

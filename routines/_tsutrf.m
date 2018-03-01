@@ -1,4 +1,4 @@
-%tsutrf ;ven/toad-type string: test findrep^%ts ;2018-03-01T21:10Z
+%tsutrf ;ven/toad-type string: test findrep^%ts ;2018-03-01T21:24Z
  ;;1.8;Mash;
  ;
  ; %tsutrf implements unit tests for ppi findrep^%ts.
@@ -27,7 +27,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-01T21:10Z
+ ;@last-updated: 2018-03-01T21:24Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -184,7 +184,7 @@ findrep06 ; @TEST findrep^%ts: Find Last & Previous
  ;
  new string set string="totototo"
  do findrep^%ts(.string,"toto","Dorothy","b")
- do CHKEQ^%ut(string,"Dorothytoto")
+ do CHKEQ^%ut(string,"totoDorothy")
  do CHKEQ^%ut(string("extract"),1)
  do CHKEQ^%ut(string("extract","from"),5)
  do CHKEQ^%ut(string("extract","to"),11)
@@ -249,13 +249,13 @@ findrep09 ; @TEST findrep^%ts: Find Case-insensitive
  ;
  new string set string="totototo"
  do findrep^%ts(.string,"Toto","Dorothy")
- do CHKEQ^%ut(string,"Dorothytoto")
+ do CHKEQ^%ut(string,"totototo")
  do CHKEQ^%ut(string("extract"),0)
  do CHKEQ^%ut(string("extract","from"),0)
  do CHKEQ^%ut(string("extract","to"),0)
  ;
  do findrep^%ts(.string,"Toto","Dorothy","i")
- do CHKEQ^%ut(string,"DorothyDorothy")
+ do CHKEQ^%ut(string,"Dorothytoto")
  do CHKEQ^%ut(string("extract"),1)
  do CHKEQ^%ut(string("extract","from"),1)
  do CHKEQ^%ut(string("extract","to"),7)
@@ -325,7 +325,7 @@ findrep13 ; @TEST findrep^%ts: Empty Find & String
  ;
  new string set string=""
  do findrep^%ts(.string,"","Dorothy")
- do CHKEQ^%ut(string,"totototo")
+ do CHKEQ^%ut(string,"")
  do CHKEQ^%ut(string("extract"),0)
  do CHKEQ^%ut(string("extract","from"),0)
  do CHKEQ^%ut(string("extract","to"),0)

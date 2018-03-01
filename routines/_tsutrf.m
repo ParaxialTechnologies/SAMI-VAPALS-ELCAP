@@ -1,4 +1,4 @@
-%tsutrf ;ven/toad-type string: test findrep^%ts ;2018-02-28T20:59Z
+%tsutrf ;ven/toad-type string: test findrep^%ts ;2018-03-01T21:10Z
  ;;1.8;Mash;
  ;
  ; %tsutrf implements unit tests for ppi findrep^%ts.
@@ -27,7 +27,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-28T20:59Z
+ ;@last-updated: 2018-03-01T21:10Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -437,6 +437,40 @@ findrep19 ; @TEST findrep^%ts: Alternate Signatures
  do CHKEQ^%ut(string("extract","to"),0)
  ;
  quit  ; end of findrep19
+ ;
+ ;
+ ;
+ ; group 6: Find & Replace All
+ ;
+ ;
+ ;
+findrep20 ; @TEST findrep^%ts: Alternate Signatures
+ ;
+ ;ven/toad;test;procedure;clean;silent;sac
+ ;
+ new string set string="totototo"
+ do fr^%ts(.string,"toto","Dorothy","abir")
+ do CHKEQ^%ut(string,"DorothyDorothy")
+ do CHKEQ^%ut(string("extract"),1)
+ do CHKEQ^%ut(string("extract","from"),0)
+ do CHKEQ^%ut(string("extract","to"),0)
+ ;
+ quit  ; end of findrep20
+ ;
+ ;
+ ;
+findrep21 ; @TEST findrep^%ts: No Next Match
+ ;
+ ;ven/toad;test;procedure;clean;silent;sac
+ ;
+ new string set string="totototo"
+ do findrep^%ts(.string,"Kansas","Dorothy","a")
+ do CHKEQ^%ut(string,"totototo")
+ do CHKEQ^%ut(string("extract"),0)
+ do CHKEQ^%ut(string("extract","from"),0)
+ do CHKEQ^%ut(string("extract","to"),0)
+ ;
+ quit  ; end of findrep21
  ;
  ;
  ;

@@ -1,4 +1,4 @@
-%tsul ;ven/toad-type string: development log ;2018-02-28T21:43Z
+%tsul ;ven/toad-type string: development log ;2018-03-01T20:38Z
  ;;1.8;Mash;
  ;
  ; %tsul is the Mumps String Library's primary-development log.
@@ -23,7 +23,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-28T21:43Z
+ ;@last-updated: 2018-03-01T20:38Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -257,9 +257,9 @@
  ; $$trim^%ts, change %tsu into a unit-test shell routine, & add
  ; cover^%tsu to run code-coverage.
  ;
- ; 2018-02-21/28 ven/toad %*1.8T04 %tsul,%tsud: rename %tslog => %tsul;
- ; create %tsud; bump version to 1.8T04; update to more modern mash
- ; style; expand history to include rest of mdc string library &
+ ; 2018-02-21/03-01 ven/toad %*1.8T04 %tsul,%tsud: rename %tslog =>
+ ; %tsul; create %tsud; bump version to 1.8T04; update to more modern
+ ; mash style; expand history to include rest of mdc string library &
  ; function extensions; move to-do to %tsul; list Javascript string
  ; methods. Reset String library to only include methods that have
  ; unit tests. Move to-do & module-contents to %tsud.
@@ -281,6 +281,7 @@
  ;  %tsef: move fr/find^%wfhfind & finish to be code for find^%ts.
  ;  %tsrf: create from findReplace^%wfhfind, merge findReplaceAll
  ; features into findReplace.
+ ;  %tsutrf: create w/unit tests for %tsrf.
  ;
  ; 2018-02-22 ven/lmry %*1.8T04 %tsutc: start %tsutc, wrote 32 unit 
  ; tests for string-case functions. Added to %tsut XTROU list for M-unit

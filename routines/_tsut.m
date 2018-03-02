@@ -211,6 +211,7 @@ XTROU ; routines containing unit tests for ^%ts apis
  ;;%tsutrf; findrep^%ts
  ;;%tsutrs; $$strip^%ts
  ;;%tsutrt; $$trim^%ts
+ ;;%tsutes; setex^%ts
  ;
  ;
  ;

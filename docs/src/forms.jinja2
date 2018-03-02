@@ -19,6 +19,13 @@
     {{ inlineRadio(groupName, groupName+"-q","q","?",true) }}
 {%- endmacro %}
 
+{% macro inlineRadioNYE(groupName) -%}
+    {{ inlineRadio(groupName, groupName+"-n","n","No",true) }}
+    {{ inlineRadio(groupName, groupName+"-y","y","Yes",true) }}
+    {{ inlineRadio(groupName, groupName+"-e","e","n/v",true) }}
+{%- endmacro %}
+
+
 {% macro checkbox(name, value, labelText) -%}
     <div class="checkbox">
         <label>
@@ -34,7 +41,8 @@
         <input class="form-control" id="{{ name }}" name="{{ name }}" aria-describedby="{{ name }}-addon"
                 {{ " required=\"required\"" if requiredMessage else "" }}
                 {{ " data-fv-notempty-message=\"" + requiredMessage + "\"" if requiredMessage else "" }}
-               data-fv-date="true" data-fv-max="{{ max }}">
+               data-fv-date="true"
+                {{ " data-fv-max=\""+ max + "\"" if max else "" }}>
         <div class="input-group-addon">
             <div class="input-group-text" id="{{ name }}-addon">
                 <i class="fa fa-calendar" aria-hidden="true"></i>

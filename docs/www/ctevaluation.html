@@ -93,6 +93,9 @@
               data-fv-icon-validating="glyphicon glyphicon-refresh"
               data-fv-button-selector="#submit-button">
 
+            
+            <input type=hidden name="cesid" value="VEP0001" required="required">
+
             <div class="row">
                 <div class="col-sm-4 col-md-3 col-lg-2 form-group">
                     <label for="cedos" class="control-label">Study Date</label>
@@ -172,13 +175,14 @@
                     <label for="sbdsd-b">Type of Exam</label>
 
                     <label class="radio-inline">
-                        <input type="radio" name="cetex" id="cetex-b" value="b"> Baseline
+                        <input type="radio" name="cetex" id="cetex-b" value="b" required="required"> Baseline
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="cetex" id="cetex-a" value="a"> Annual Repeat
+                        <input type="radio" name="cetex" id="cetex-a" value="a" required="required"> Annual Repeat
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="cetex" id="cetex-d" value="d"> Follow-up (not annual repeat)
+                        <input type="radio" name="cetex" id="cetex-d" value="d" required="required"> Follow-up (not
+                        annual repeat)
                     </label>
                 </div>
             </div>
@@ -188,13 +192,13 @@
                     <label for="cectp-l">CT Protocol</label>
 
                     <label class="radio-inline">
-                        <input type="radio" name="cectp" id="cectp-l" value="l"> Low-Dose CT
+                        <input type="radio" name="cectp" id="cectp-l" value="l" required="required"> Low-Dose CT
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="cectp" id="cectp-d" value="d"> Standard CT
+                        <input type="radio" name="cectp" id="cectp-d" value="d" required="required"> Standard CT
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="cectp" id="cectp-i" value="i"> Limited CT
+                        <input type="radio" name="cectp" id="cectp-i" value="i" required="required"> Limited CT
                     </label>
                 </div>
             </div>
@@ -214,7 +218,7 @@
         <!--TODO: inject max date as "today"-->
         <input class="form-control" id="sidoe" name="sidoe" aria-describedby="sidoe-addon"
                  required="required"
-                 data-fv-notempty-message="Study date is required"
+                 data-fv-notempty-message="Baseline CT date is required"
                data-fv-date="true"
                  data-fv-max="1/25/2018">
         <div class="input-group-addon">
@@ -232,7 +236,7 @@
         <!--TODO: inject max date as "today"-->
         <input class="form-control" id="cedcs" name="cedcs" aria-describedby="cedcs-addon"
                  required="required"
-                 data-fv-notempty-message="Study date is required"
+                 data-fv-notempty-message="Date is required"
                data-fv-date="true"
                  data-fv-max="1/25/2018">
         <div class="input-group-addon">
@@ -247,8 +251,10 @@
 
             <div class="row">
                 <div class="col-sm-4 col-md-3 form-group">
-                    <label for="cetsb" class="control-label">Time Since Baseline (Months)</label>
-                    <input type="text" class="form-control" id="cetsb" name="cetsb" required="required"/>
+                    <div id="cetsb-alert" class="alert alert-info">
+                        Time since baseline: <span id="cetsb-text">0</span> months
+                    </div>
+                    <input type="hidden" class="form-control" id="cetsb" name="cetsb"/>
                 </div>
                 <div class="col-sm-4 col-md-3 form-group">
                     <label for="cedps" class="control-label">Prior Scans</label>
@@ -3461,7 +3467,8 @@
                         </td>
                         <td colspan="5">
                             
-                            <input type=text name="cecccac" onFocus="this.blur()" size=4 class="form-control">
+                            <span id="cecccac-text"></span>
+                            <input type="hidden" name="cecccac" id="cecccac">
                         </td>
                     </tr>
 
@@ -5051,7 +5058,60 @@
     </div>
 
     <script language="JavaScript">
+
+        //calculate Time Since Baseline (TSB)
+        function calculateTimeSinceBaseline() {
+            var baselineDateString = $("#sidoe").val();
+            var studyDateString = $("#cedos").val();
+            if (baselineDateString && studyDateString) {
+                var baselineDate = moment(baselineDateString, ["MM-DD-YYYY", "DD-MM", "DD-MM-YYYY", "YYYY-MM-DD", "DD/MMM/YYYY"]);
+                var studyDate = moment(studyDateString, ["MM-DD-YYYY", "DD-MM", "DD-MM-YYYY", "YYYY-MM-DD", "DD/MMM/YYYY"]);
+                if (baselineDate.isValid() && studyDate.isValid()) {
+                    var months = parseInt(studyDate.diff(baselineDate, "months", true))
+                    $("#cetsb-text").text(months)
+                    $("#cetsb").val(months);
+                }
+                else {
+                    $("#cetsb-text").text("error")
+                }
+            }
+        }
+
+        function calculateVisualCacScore() {
+            var res = 0;
+            console.log("calculateVisualCacScore")
+
+            var coronaryCalcification = $("#ceca").val() == "y";
+            if (coronaryCalcification) {
+                cal1 = $("#cecclm")[0].selectedIndex;
+                cal2 = $("#ceccld")[0].selectedIndex;
+                cal3 = $("#cecccf")[0].selectedIndex;
+                cal4 = $("#ceccrc")[0].selectedIndex;
+                if (cal1 > 0) cal1 = cal1 - 1;
+                if (cal2 > 0) cal2 = cal2 - 1;
+                if (cal3 > 0) cal3 = cal3 - 1;
+                if (cal4 > 0) cal4 = cal4 - 1;
+                res = cal1 + cal2 + cal3 + cal4;
+                console.log(res)
+                $("#cecccac").val(res);
+                $("#cecccac-text").text(res);
+            }
+            if (res > 0) {
+                $("ceca").val("y");
+            }
+            else {
+                $("ceca").val("n");
+            }
+        }
+
         $(function () {
+            // bind to change events on study date and baseline date to calculate "time since baseline"
+            var $tsbFields = $("#sidoe, #cedos");
+            $tsbFields.closest(".datepicker").on("dp.change", calculateTimeSinceBaseline); //latch onto datetimepicker change events
+            $tsbFields.first().trigger("change"); //trigger on page load for existing data;
+
+            //bind CAC Score
+            
 
         });
 

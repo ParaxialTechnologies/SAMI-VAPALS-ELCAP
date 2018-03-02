@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title></title>
+    <link rel="stylesheet" href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="lib/formvalidation/dist/css/formValidation.min.css">
+    <link rel="stylesheet" href="lib/bootstrap-datetimepicker-4.17.47/css/bootstrap-datetimepicker.css">
+    <link rel="stylesheet" href="vapals.css">
+</head>
+<body>
+<script src="lib/jquery-3.2.1.slim.min.js"></script>
+<script src="lib/popper.min.js"></script>
+<script src="lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="lib/moment.js"></script>
+<script src="lib/formvalidation/dist/js/formValidation.min.js"></script>
+<script src="lib/formvalidation/dist/js/framework/bootstrap.min.js"></script>
+<script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script src="jquery-conditonally-enable.js"></script>
+<script src="vapals.js"></script>
+
+<!--Debug information for viewport-->
+<span class="badge badge-secondary visible-xs-block">extra small</span>
+<span class="badge badge-secondary visible-sm-block">small</span>
+<span class="badge badge-secondary visible-md-block">medium</span>
+<span class="badge badge-secondary visible-lg-block">large</span>
+
+
+<!--System Navigation-->
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+            <a href="home.html">
+                <img src="img/new-logo.png" title="VA-PALS" height="50"/>
+            </a>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+            <ul class="nav navbar-nav">
+                <li><a href="home.html">Home</a></li>
+                <li class="dropdown" id="studyIdMenu" style="display:none;">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span id="studyIdMenuItem"></span><span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="casereview.html" class="navbar-link">Case Review</a></li>
+                        <li>
+                            <div class="nav-divider"></div>
+                        </li>
+                        <li><a href="background.html" class="navbar-link">Background</a></li>
+                        <li><a href="ctevaluation.html" class="navbar-link">CT Evaluation</a></li>
+                        <li class="disabled"><a>Followup</a></li>
+                        <li class="disabled"><a class="navbar-link">Biopsy</a></li>
+                        <li class="disabled"><a class="navbar-link">Pre-Intervention</a></li>
+                        <li class="disabled"><a class="navbar-link">Intervention</a></li>
+                        <li class="disabled"><a class="navbar-link">PET Evaluation</a></li>
+
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+    <div class="container-fluid" style="max-width:1550px">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Case ID</th>
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>MRN</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>VEP0001</td>
+                    <td>Doe</td>
+                    <td>Jane</td>
+                    <td>12345</td>
+                    <td>03/02/2018</td>
+                    <td><a href="intake.html">Intake</a></td>
+                    <td>
+                        <a href="newform.html"><span class="label label-warning">New Form</span></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>VEP0001</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>03/02/2018</td>
+                    <td><a href="background.html">Background</a></td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>VEP0001</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>03/02/2018</td>
+                    <td><a href="ctevaluation.html">CT Evaluation</a></td>
+                    <td>
+                        <a href=""><span class="label label-primary">Report</span></a>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+
+    <footer>
+        <div class="container-fluid" style="max-width:1550px">
+            <hr/>
+            <a href="https://issues.osehra.org/browse/VAP" target="_blank">Submit feedback</a>
+        </div>
+    </footer>
+
+
+<script language="JavaScript">
+    $(function () {
+        function validateDatePickerOnChange(e) {
+            var $datePicker = $(e.target)
+            var fv = $datePicker.closest(".validated").data("formValidation");
+            if (fv) {
+                var f = $datePicker.find("input").addBack("input");
+                fv.revalidateField(f);
+            }
+        }
+
+        $.each($(".datepicker"), function (i, el) {
+            $(el).datetimepicker({
+                format: 'MM/DD/YYYY',
+                maxDate: moment().add(1, 'h') //hack to not select today
+            }).on("dp.change", validateDatePickerOnChange);
+        });
+
+        $.each($(".yearpicker"), function (i, el) {
+            $(el).datetimepicker({
+                format: 'YYYY',
+                maxDate: moment().add(1, 'h'), //hack to not select today
+                minDate: moment().subtract(100, 'y')
+            }).on("dp.change", validateDatePickerOnChange);
+        });
+
+        //Globally enabled popovers for things like help text.
+        $('[data-toggle="popover"]').popover();
+
+        //Initialize Form Validation
+        $(".validated").formValidation({framework: 'bootstrap'});
+
+
+    });
+
+    //TODO: insert studyId here.
+    var studyId = "XX0002";
+
+    if (studyId) {
+        $("#studyIdMenuItem").text(studyId);
+        $("#studyIdMenu").show();
+    }
+</script>
+</body>
+</html>

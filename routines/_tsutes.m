@@ -27,7 +27,7 @@
  ;@contents
  ; group 1: default addressing
  ; group 2: absolute addressing w/in string
- ;
+ ; group 3: absolute addressing before string
  ;
  ;
  ;@called-by
@@ -50,11 +50,11 @@
  ;  string("extract","from")=0
  ;  string("extract","to")=0
  ;
- setex101 ; @TEST setex^%ts(.string,""): setex test
+setex101 ; @TEST setex^%ts(.string,""): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
- new string,replace                     
+ new string,replace
  do setex^%ts(.string,.replace)
  do CHKEQ^%ut(string,"")
  do CHKEQ^%ut(replace,"")
@@ -63,7 +63,7 @@
  ;
  quit  ; end of setex101
  ;
- setex102 ; @TEST setex^%ts(.string,""): setex test
+setex102 ; @TEST setex^%ts(.string,""): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -75,7 +75,7 @@
  ;
  quit  ; end of setex102
  ;
- setex103 ; @TEST setex^%ts(.string,""): setex test
+setex103 ; @TEST setex^%ts(.string,""): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -89,7 +89,7 @@
  ;
  quit  ; end of setex103
  ;
- setex104 ; @TEST setex^%ts(.string,""): setex test
+setex104 ; @TEST setex^%ts(.string,""): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -101,7 +101,7 @@
  ;
  quit  ; end of setex104
  ;
- setex105 ; @TEST setex^%ts(.string,"*"): setex test
+setex105 ; @TEST setex^%ts(.string,"*"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -113,7 +113,7 @@
  ;
  quit  ; end of setex105
  ;
- setex106 ; @TEST setex^%ts(.string,"Sparrowhawk"): setex test
+setex106 ; @TEST setex^%ts(.string,"Sparrowhawk"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -125,7 +125,7 @@
  ;
  quit  ; end of setex106
  ;
- setex107 ; @TEST setex^%ts(.string,""): setex test
+setex107 ; @TEST setex^%ts(.string,""): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -137,7 +137,7 @@
  ;
  quit  ; end of setex107
  ;
- setex108 ; @TEST setex^%ts(.string,"o"): setex test
+setex108 ; @TEST setex^%ts(.string,"o"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -149,7 +149,7 @@
  ;
  quit  ; end of setex108
  ;
- setex109 ; @TEST setex^%ts(.string,"bright"): setex test
+setex109 ; @TEST setex^%ts(.string,"bright"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -161,9 +161,11 @@
  ;
  quit  ; end of setex109
  ;
+ ;
+ ;
  ; group 2: absolute addressing w/in string
  ;
- setex201 ; @TEST setex^%ts(.string,""): setex test
+setex201 ; @TEST setex^%ts(.string,""): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -176,7 +178,7 @@
  ;
  quit  ; end of setex201
  ;
- setex202 ; @TEST setex^%ts(.string,"A"): setex test
+setex202 ; @TEST setex^%ts(.string,"A"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -189,7 +191,7 @@
  ;
  quit  ; end of setex202
  ;
- setex203 ; @TEST setex^%ts(.string,"To"): setex test
+setex203 ; @TEST setex^%ts(.string,"To"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -202,7 +204,7 @@
  ;
  quit  ; end of setex203
  ;
- setex204 ; @TEST setex^%ts(.string,""): setex test
+setex204 ; @TEST setex^%ts(.string,""): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -215,7 +217,7 @@
  ;
  quit  ; end of setex204
  ;
- setex205 ; @TEST setex^%ts(.string,"c"): setex test
+setex205 ; @TEST setex^%ts(.string,"c"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -228,7 +230,7 @@
  ;
  quit  ; end of setex205
  ;
- setex206 ; @TEST setex^%ts(.string,"y and wholly"): setex test
+setex206 ; @TEST setex^%ts(.string,"y and wholly"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -241,7 +243,7 @@
  ;
  quit  ; end of setex206
  ;
- setex207 ; @TEST setex^%ts(.string,""): setex test
+setex207 ; @TEST setex^%ts(.string,""): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -254,7 +256,7 @@
  ;
  quit  ; end of setex207
  ;
- setex208 ; @TEST setex^%ts(.string,"s"): setex test
+setex208 ; @TEST setex^%ts(.string,"s"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -267,7 +269,7 @@
  ;
  quit  ; end of setex208
  ;
- setex209 ; @TEST setex^%ts(.string,"o evil"): setex test
+setex209 ; @TEST setex^%ts(.string,"o evil"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -280,9 +282,11 @@
  ;
  quit  ; end of setex209
  ;
+ ;
+ ;
  ; group 3: absolute addressing before string
  ;
- setex301 ; @TEST setex^%ts(.string,""): setex test
+setex301 ; @TEST setex^%ts(.string,""): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -295,7 +299,7 @@
  ;
  quit  ; end of setex301
  ;
- setex302 ; @TEST setex^%ts(.string,"w"): setex test
+setex302 ; @TEST setex^%ts(.string,"w"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -308,7 +312,7 @@
  ;
  quit  ; end of setex302
  ;
- setex303 ; @TEST setex^%ts(.string,"A"): setex test
+setex303 ; @TEST setex^%ts(.string,"A"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -321,7 +325,7 @@
  ;
  quit  ; end of setex303
  ;
- setex304 ; @TEST setex^%ts(.string,"The"): setex test
+setex304 ; @TEST setex^%ts(.string,"The"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -334,7 +338,7 @@
  ;
  quit  ; end of setex304
  ;
- setex305 ; @TEST setex^%ts(.string,"The"): setex test
+setex305 ; @TEST setex^%ts(.string,"The"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -347,7 +351,7 @@
  ;
  quit  ; end of setex305
  ;
- setex306 ; @TEST setex^%ts(.string,""): setex test
+setex306 ; @TEST setex^%ts(.string,""): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -360,7 +364,7 @@
  ;
  quit  ; end of setex306
  ;
- setex307 ; @TEST setex^%ts(.string,"The O"): setex test
+setex307 ; @TEST setex^%ts(.string,"The O"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -373,7 +377,7 @@
  ;
  ; group 4: absolute addressing after string
  ;
- setex401 ; @TEST setex^%ts(.string,""): setex test
+setex401 ; @TEST setex^%ts(.string,""): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -386,7 +390,7 @@
  ;
  quit  ; end of setex401
  ;
- setex402 ; @TEST setex^%ts(.string,""): setex test
+setex402 ; @TEST setex^%ts(.string,""): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -399,7 +403,7 @@
  ;
  quit  ; end of setex402
  ;
- setex403 ; @TEST setex^%ts(.string,""): setex test
+setex403 ; @TEST setex^%ts(.string,""): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -411,7 +415,7 @@
  ;
  quit  ; end of setex403
  ;
- setex404 ; @TEST setex^%ts(.string," from Earthsea"): setex test
+setex404 ; @TEST setex^%ts(.string," from Earthsea"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -424,7 +428,7 @@
  ;
  quit  ; end of setex404
  ;
- setex405 ; @TEST setex^%ts(.string,"is to unmake power"): setex test
+setex405 ; @TEST setex^%ts(.string,"is to unmake power"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac 
  ;
@@ -437,7 +441,7 @@
  ;
  quit  ; end of setex405
  ;
- setex406 ; @TEST setex^%ts(.string,"cy"): setex test
+setex406 ; @TEST setex^%ts(.string,"cy"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac 
  ;
@@ -452,7 +456,7 @@
  ;
  ; group 5: relative addressing
  ;
- setex501 ; @TEST setex^%ts(.string,""): setex test
+setex501 ; @TEST setex^%ts(.string,""): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -465,7 +469,7 @@
  ;
  quit  ; end of setex501
  ;
- setex502 ; @TEST setex^%ts(.string,"A"): setex test
+setex502 ; @TEST setex^%ts(.string,"A"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -477,7 +481,7 @@
  ;
  quit  ; end of setex502
  ;
- setex503 ; @TEST setex^%ts(.string,"It is not "): setex test
+setex503 ; @TEST setex^%ts(.string,"It is not "): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -490,7 +494,7 @@
  ;
  quit  ; end of setex503
  ;
- setex504 ; @TEST setex^%ts(.string,"Injustice makes the rules, and "): setex test
+setex504 ; @TEST setex^%ts(.string,"Injustice makes the rules, and "): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac 
  ;
@@ -503,7 +507,7 @@
  ;
  quit  ; end of setex504
  ;
- setex505 ; @TEST setex^%ts(.string,""): setex test
+setex505 ; @TEST setex^%ts(.string,""): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac 
  ;
@@ -516,7 +520,7 @@
  ;
  quit  ; end of setex505
  ;
- setex506 ; @TEST setex^%ts(.string,"."): setex test
+setex506 ; @TEST setex^%ts(.string,"."): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac 
  ;
@@ -529,7 +533,7 @@
  ;
  quit  ; end of setex506
  ;
- setex507 ; @TEST setex^%ts(.string," selectively"): setex test
+setex507 ; @TEST setex^%ts(.string," selectively"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac 
  ;
@@ -542,7 +546,7 @@
  ;
  quit  ; end of setex507
  ;
- setex508 ; @TEST setex^%ts(.string," that made me live"): setex test
+setex508 ; @TEST setex^%ts(.string," that made me live"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -554,7 +558,7 @@
  ;
  quit  ; end of setex508
  ;
- setex509 ; @TEST setex^%ts(.string,""): setex test
+setex509 ; @TEST setex^%ts(.string,""): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -567,7 +571,7 @@
  ;
  quit  ; end of setex509
  ;
- setex510 ; @TEST setex^%ts(.string,"I"): setex test
+setex510 ; @TEST setex^%ts(.string,"I"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -580,7 +584,7 @@
  ;
  quit  ; end of setex510
  ;
- setex511 ; @TEST setex^%ts(.string,"Despair"): setex test
+setex511 ; @TEST setex^%ts(.string,"Despair"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -593,7 +597,7 @@
  ;
  quit  ; end of setex511
  ;
- setex512 ; @TEST setex^%ts(.string,"Injustice"): setex test
+setex512 ; @TEST setex^%ts(.string,"Injustice"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -605,7 +609,7 @@
  ;
  quit  ; end of setex512
  ;
- setex513 ; @TEST setex^%ts(.string,""): setex test
+setex513 ; @TEST setex^%ts(.string,""): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac 
  ;
@@ -618,7 +622,7 @@
  ;
  quit  ; end of setex513
  ;
- setex514 ; @TEST setex^%ts(.string,"n"): setex test
+setex514 ; @TEST setex^%ts(.string,"n"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -631,7 +635,7 @@
  ;
  quit  ; end of setex514
  ;
- setex515 ; @TEST setex^%ts(.string,"strange"): setex test
+setex515 ; @TEST setex^%ts(.string,"strange"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac 
  ;
@@ -643,7 +647,7 @@
  ;
  quit  ; end of setex515
  ;
- setex516 ; @TEST setex^%ts(.string,"life"): setex test
+setex516 ; @TEST setex^%ts(.string,"life"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -657,7 +661,7 @@
  ;
  ; group 6: from & to, absolute addressing w/in string [tbd]
  ;
- setex601 ; @TEST setex^%ts(.string," boredom of "): setex test
+setex601 ; @TEST setex^%ts(.string," boredom of "): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -670,7 +674,7 @@
  ;
  quit  ; end of setex601
  ;
- setex602 ; @TEST setex^%ts(.string,"banality"): setex test
+setex602 ; @TEST setex^%ts(.string,"banality"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -684,7 +688,7 @@
  ;
  quit  ; end of setex602
  ;
- setex603 ; @TEST setex^%ts(.string,"that of life"): setex test
+setex603 ; @TEST setex^%ts(.string,"that of life"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;

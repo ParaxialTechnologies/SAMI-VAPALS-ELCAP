@@ -40,4 +40,13 @@ with open("../www/ctevaluation.html", "wb") as fh:
         title='CT Evaluation Form'
     ))
 
+with open("../www/home.html", "wb") as fh:
+    fh.write(env.get_template('home.html.jinja2').render())
+
+with open("../www/casereview.html", "wb") as fh:
+    fh.write(env.get_template('casereview.html.jinja2').render())
+
+with open("../www/newform.html", "wb") as fh:
+    fh.write(env.get_template('newform.html.jinja2').render())
+
 print "Finished compiling HTML at " + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')

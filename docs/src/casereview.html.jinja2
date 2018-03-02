@@ -1,0 +1,61 @@
+{% extends 'layout.jinja2' %}
+{% import 'forms.jinja2' as f %}
+{% block title %}{{ title | escape }}{% endblock %}
+
+{% block body %}
+    <div class="container-fluid" style="max-width:1550px">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Case ID</th>
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>MRN</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>VEP0001</td>
+                    <td>Doe</td>
+                    <td>Jane</td>
+                    <td>12345</td>
+                    <td>03/02/2018</td>
+                    <td><a href="intake.html">Intake</a></td>
+                    <td>
+                        <a href="newform.html"><span class="label label-warning">New Form</span></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>VEP0001</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>03/02/2018</td>
+                    <td><a href="background.html">Background</a></td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>VEP0001</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>03/02/2018</td>
+                    <td><a href="ctevaluation.html">CT Evaluation</a></td>
+                    <td>
+                        <a href=""><span class="label label-primary">Report</span></a>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+{% endblock %}

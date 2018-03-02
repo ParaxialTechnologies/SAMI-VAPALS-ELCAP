@@ -1,0 +1,55 @@
+{% extends 'layout.jinja2' %}
+{% import 'forms.jinja2' as f %}
+{% block title %}{{ title | escape }}{% endblock %}
+
+{% block body %}
+    <div class="container-fluid" style="max-width:1550px">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Case Review</h3>
+                    </div>
+                    <div class="panel-body">
+                        {# TODO: add method=post and proper action #}
+                        <form action="todo">
+                            <div class="form-group">
+
+
+                                <label>
+                                    Please select the type of form to create
+                                </label>
+                                <select name="form" id="form" class="form-control">
+                                    <option value="background"> Screening Background
+                                    <option value="ctevaluation"> CT Evaluation
+                                    <option value="newform"> Follow-up
+                                    <option value="newform"> Biopsy
+                                    <option value="newform"> Pre-Intervention
+                                    <option value="newform"> Intervention
+                                    <option value="newform"> PET Evaluation
+                                </select>
+
+                            </div>
+                            <div class="pull-right">
+                                <input type="submit" value="Create New Form" class="btn btn-primary" id="submit-button">
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <script language="JavaScript">
+        $(function () {
+            $("#form").on('change', function (e) {
+                $("form").prop("action", $("#form").val() + ".html");
+            }).trigger("change");
+        });
+
+    </script>
+
+{% endblock %}

@@ -12,6 +12,8 @@ env.loader = FileSystemLoader('.')
 
 # TODO: can we write a function to extract from *-dd-map.csv?
 
+start = datetime.datetime.now()
+
 # background form
 with open("../www/background.html", "wb") as fh:
     fh.write(env.get_template('background.html.jinja2').render(
@@ -41,12 +43,21 @@ with open("../www/ctevaluation.html", "wb") as fh:
     ))
 
 with open("../www/home.html", "wb") as fh:
-    fh.write(env.get_template('home.html.jinja2').render())
+    fh.write(env.get_template('home.html.jinja2').render(
+        title="Home"
+    ))
 
 with open("../www/casereview.html", "wb") as fh:
-    fh.write(env.get_template('casereview.html.jinja2').render())
+    fh.write(env.get_template('casereview.html.jinja2').render(
+        title="Case Review"
+    ))
 
 with open("../www/newform.html", "wb") as fh:
-    fh.write(env.get_template('newform.html.jinja2').render())
+    fh.write(env.get_template('newform.html.jinja2').render(
+        title="New Form"
+    ))
 
-print "Finished compiling HTML at " + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+elapsedMs = (datetime.datetime.now() - start).microseconds / 1000
+
+print "Finished compiling HTML at " + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " in " + str(
+    elapsedMs) + "ms"

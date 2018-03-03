@@ -1,4 +1,4 @@
-%tsutc ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-02-23T23:51Z
+%tsutes ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-03T06:22Z
  ;;1.8;Mash;
  ;
  ; This Mumps Advanced Shell (mash) routine implements unit tests for
@@ -15,7 +15,7 @@
  ;@copyright: 2016/2017/2018, ven, all rights reserved
  ;@license: Apache 2.0
  ;
- ;@last-updated: 2018-03-02T23:51Z
+ ;@last-updated: 2018-03-03T06:22Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -28,6 +28,9 @@
  ; group 1: default addressing
  ; group 2: absolute addressing w/in string
  ; group 3: absolute addressing before string
+ ; group 4: absolute addressing after string
+ ; group 5: relative addressing
+ ; group 6: from & to, absolute addressing w/in string [tbd]
  ;
  ;
  ;@called-by
@@ -42,13 +45,6 @@
  ;
  ; group 1: default addressing
  ;
- ;  new string,replace
- ;  do setext^%ts(.string,.replace)
- ; produces
- ;  string=""
- ;  replace=""
- ;  string("extract","from")=0
- ;  string("extract","to")=0
  ;
 setex101 ; @TEST setex^%ts(.string,""): setex test
  ;
@@ -81,7 +77,7 @@ setex103 ; @TEST setex^%ts(.string,""): setex test
  ;
  new string set string=""
  new replace
- do setex^%ts(.string,"")
+ do setex^%ts(.string,.replace)
  do CHKEQ^%ut(string,"")
  do CHKEQ^%ut(replace,"")
  do CHKEQ^%ut(string("extract","from"),0)
@@ -108,8 +104,8 @@ setex105 ; @TEST setex^%ts(.string,"*"): setex test
  new string set string=""
  do setex^%ts(.string,"*")
  do CHKEQ^%ut(string,"*")
- do CHKEQ^%ut(string("extract","from"),0)
- do CHKEQ^%ut(string("extract","to"),0)
+ do CHKEQ^%ut(string("extract","from"),1)
+ do CHKEQ^%ut(string("extract","to"),1)
  ;
  quit  ; end of setex105
  ;
@@ -157,7 +153,7 @@ setex109 ; @TEST setex^%ts(.string,"bright"): setex test
  do setex^%ts(.string,"bright")
  do CHKEQ^%ut(string,"bright the hawk's flight")
  do CHKEQ^%ut(string("extract","from"),1)
- do CHKEQ^%ut(string("extract","to"),5)
+ do CHKEQ^%ut(string("extract","to"),6)
  ;
  quit  ; end of setex109
  ;
@@ -235,7 +231,7 @@ setex206 ; @TEST setex^%ts(.string,"y and wholly"): setex test
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
  new string set string="does onlY what he must do"
- set string("extract","from")=9)
+ set string("extract","from")=9
  do setex^%ts(.string,"y and wholly")
  do CHKEQ^%ut(string,"does only and wholly what he must do")
  do CHKEQ^%ut(string("extract","from"),9)
@@ -375,6 +371,9 @@ setex307 ; @TEST setex^%ts(.string,"The O"): setex test
  do CHKEQ^%ut(string("extract","from"),1)
  do CHKEQ^%ut(string("extract","to"),5)
  ;
+ quit  ; end of setex307
+ ;
+ ;
  ; group 4: absolute addressing after string
  ;
 setex401 ; @TEST setex^%ts(.string,""): setex test
@@ -395,7 +394,7 @@ setex402 ; @TEST setex^%ts(.string,""): setex test
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
  new string set string="There's no way to use power for good."
- set string("extract","from")=39)
+ set string("extract","from")=39
  do setex^%ts(.string,"")
  do CHKEQ^%ut(string,"There's no way to use power for good.")
  do CHKEQ^%ut(string("extract","from"),38)
@@ -408,7 +407,7 @@ setex403 ; @TEST setex^%ts(.string,""): setex test
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
  new string set string="All times are changing times"
- set string("extract","from")=32)
+ set string("extract","from")=32
  do setex^%ts(.string,"")
  do CHKEQ^%ut(string("extract","from"),31)
  do CHKEQ^%ut(string("extract","to"),31)
@@ -420,7 +419,7 @@ setex404 ; @TEST setex^%ts(.string," from Earthsea"): setex test
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
  new string set string="Tales"
- set string("extract","from")=6)
+ set string("extract","from")=6
  do setex^%ts(.string," from Earthsea")
  do CHKEQ^%ut(string,"Tales from Earthsea")
  do CHKEQ^%ut(string("extract","from"),6)
@@ -433,7 +432,7 @@ setex405 ; @TEST setex^%ts(.string,"is to unmake power"): setex test
  ;ven/toad&lmry;test;procedure;clean;silent;sac 
  ;
  new string set string="to make love"
- set string("extract","from")=14)
+ set string("extract","from")=14
  do setex^%ts(.string,"is to unmake power")
  do CHKEQ^%ut(string,"to make love is to unmake power")
  do CHKEQ^%ut(string("extract","from"),14)
@@ -446,7 +445,7 @@ setex406 ; @TEST setex^%ts(.string,"cy"): setex test
  ;ven/toad&lmry;test;procedure;clean;silent;sac 
  ;
  new string set string="The solution lies in secret"
- set string("extract","from")=27)
+ set string("extract","from")=27
  do setex^%ts(.string,"cy")
  do CHKEQ^%ut(string,"The solution lies in secrecy")
  do CHKEQ^%ut(string("extract","from"),27)
@@ -515,8 +514,8 @@ setex505 ; @TEST setex^%ts(.string,""): setex test
  set string("extract","from")="a"
  do setex^%ts(.string,"")
  do CHKEQ^%ut(string,"when you eat illusions you end up hungrier")
- do CHKEQ^%ut(string("extract","from"),51)
- do CHKEQ^%ut(string("extract","to"),51)
+ do CHKEQ^%ut(string("extract","from"),42)
+ do CHKEQ^%ut(string("extract","to"),42)
  ;
  quit  ; end of setex505
  ;

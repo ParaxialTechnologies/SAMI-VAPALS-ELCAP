@@ -1,4 +1,4 @@
-%tses ;ven/toad-type string: setex^%ts ;2018-02-28T19:54Z
+%tses ;ven/toad-type string: setex^%ts ;2018-03-03T06:27Z
  ;;1.8;Mash;
  ;
  ; %tses implements MASH String Library ppi setex^%ts, change
@@ -28,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-28T19:54Z
+ ;@last-updated: 2018-03-03T06:27Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -126,8 +126,8 @@ setex ; change value of positional substring
  ;  do setex^%ts(.string,"*")
  ; produces
  ;  string="*"
- ;  string("extract","from")=0
- ;  string("extract","to")=0
+ ;  string("extract","from")=1
+ ;  string("extract","to")=1
  ;
  ;  new string set string=""
  ;  do setex^%ts(.string,"Sparrowhawk")
@@ -155,7 +155,7 @@ setex ; change value of positional substring
  ; produces
  ;  string="bright the hawk's flight"
  ;  string("extract","from")=1
- ;  string("extract","to")=5
+ ;  string("extract","to")=6
  ;
  ; group 2: absolute addressing w/in string
  ;
@@ -376,8 +376,8 @@ setex ; change value of positional substring
  ;  do setex^%ts(.string,"")
  ; produces
  ;  string="when you eat illusions you end up hungrier"
- ;  string("extract","from")=51
- ;  string("extract","to")=51
+ ;  string("extract","from")=42
+ ;  string("extract","to")=42
  ;
  ;  new string set string="Manipulated, one manipulates others"
  ;  set string("extract","from")="a"

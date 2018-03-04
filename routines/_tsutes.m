@@ -39,14 +39,14 @@
  ;  COVERAGE^%ut (called by cover^%tsut)
  ;@calls
  ; CHKEQ^%ut
- ; setextract^%ts
+ ; setex^%ts
  ; se^%ts
  ;
  ;
  ; group 1: default addressing
  ;
  ;
-setex101 ; @TEST setex^%ts(.string,""): setex test
+setex101 ; @TEST setex^%ts(.string,.replace): string & substring undefined
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -59,7 +59,7 @@ setex101 ; @TEST setex^%ts(.string,""): setex test
  ;
  quit  ; end of setex101
  ;
-setex102 ; @TEST setex^%ts(.string,""): setex test
+setex102 ; @TEST setex^%ts(.string,""): string undefined, substring is empty string
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -71,7 +71,7 @@ setex102 ; @TEST setex^%ts(.string,""): setex test
  ;
  quit  ; end of setex102
  ;
-setex103 ; @TEST setex^%ts(.string,""): setex test
+setex103 ; @TEST setex^%ts(.string,.replace): string is empty, substring undefined
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -85,7 +85,7 @@ setex103 ; @TEST setex^%ts(.string,""): setex test
  ;
  quit  ; end of setex103
  ;
-setex104 ; @TEST setex^%ts(.string,""): setex test
+setex104 ; @TEST setex^%ts(.string,""): string and substring are empty string
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -97,7 +97,7 @@ setex104 ; @TEST setex^%ts(.string,""): setex test
  ;
  quit  ; end of setex104
  ;
-setex105 ; @TEST setex^%ts(.string,"*"): setex test
+setex105 ; @TEST setex^%ts(.string,"*"): string is empty, substring is punctuation
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -109,7 +109,7 @@ setex105 ; @TEST setex^%ts(.string,"*"): setex test
  ;
  quit  ; end of setex105
  ;
-setex106 ; @TEST setex^%ts(.string,"Sparrowhawk"): setex test
+setex106 ; @TEST setex^%ts(.string,"Sparrowhawk"): string empty, substring is word
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -121,7 +121,7 @@ setex106 ; @TEST setex^%ts(.string,"Sparrowhawk"): setex test
  ;
  quit  ; end of setex106
  ;
-setex107 ; @TEST setex^%ts(.string,""): setex test
+setex107 ; @TEST setex^%ts(.string,""): string is phrase, substring is empty
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -133,7 +133,7 @@ setex107 ; @TEST setex^%ts(.string,""): setex test
  ;
  quit  ; end of setex107
  ;
-setex108 ; @TEST setex^%ts(.string,"o"): setex test
+setex108 ; @TEST setex^%ts(.string,"o"): string is phrase, substring is letter
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -145,7 +145,7 @@ setex108 ; @TEST setex^%ts(.string,"o"): setex test
  ;
  quit  ; end of setex108
  ;
-setex109 ; @TEST setex^%ts(.string,"bright"): setex test
+setex109 ; @TEST setex^%ts(.string,"bright"): string is phrase, substring is word
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;

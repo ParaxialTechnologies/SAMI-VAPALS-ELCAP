@@ -1,4 +1,4 @@
-%tsutes ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-03T06:22Z
+%tsutes ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-04T03:49Z
  ;;1.8;Mash;
  ;
  ; This Mumps Advanced Shell (mash) routine implements unit tests for
@@ -15,7 +15,7 @@
  ;@copyright: 2016/2017/2018, ven, all rights reserved
  ;@license: Apache 2.0
  ;
- ;@last-updated: 2018-03-03T06:22Z
+ ;@last-updated: 2018-03-04T03:49Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -383,7 +383,7 @@ setex401 ; @TEST setex^%ts(.string,""): setex test
  new string set string="muddle, mystery, mumbling"
  set string("extract","from")=26
  do setex^%ts(.string,"")
- do CHKEQ^%ut(string="muddle, mystery, mumbling")
+ do CHKEQ^%ut(string,"muddle, mystery, mumbling")
  do CHKEQ^%ut(string("extract","from"),25)
  do CHKEQ^%ut(string("extract","to"),25)
  ;

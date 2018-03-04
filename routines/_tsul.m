@@ -1,4 +1,4 @@
-%tsul ;ven/toad-type string: development log ;2018-03-03T06:38Z
+%tsul ;ven/toad-type string: development log ;2018-03-04T19:52Z
  ;;1.8;Mash;
  ;
  ; %tsul is the Mumps String Library's primary-development log.
@@ -23,7 +23,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-03T06:38Z
+ ;@last-updated: 2018-03-04T19:52Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -301,6 +301,9 @@
  ; %tsutes to cover %tses. Correct errors in %tses examples found while
  ; testing new unit tests. Jennifer Hackett helped significantly in 
  ; reformatting examples into unit tests.
+ ;
+ ; 2018-03-04 ven/lmry %*1.8T04 %tsut, %tsutef: Add no-entry-from-top tests for %tses
+ ; and %tsef. Convert examples in %tsef into unit tests.
  ;
  ;
 eor ; end of routine %tsul

@@ -1,4 +1,4 @@
-%ts ;ven/toad-type string: api/ppi library ;2018-03-05T20:24Z
+%ts ;ven/toad-type string: api/ppi library ;2018-03-05T20:48Z
  ;;1.8;Mash;
  ;
  ; %ts is the Mumps String Library, an element of the Mumps
@@ -27,7 +27,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-05T20:24Z
+ ;@last-updated: 2018-03-05T20:48Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -159,12 +159,12 @@ findReplace(string,find,replace,flags) goto setfind^%tsfs
  ;
  ;
  ;
- ;@section 4 %tsr: string-replace tools
+ ;@section 4 %tsj: string-justify tools
  ;
  ;
  ;
  ;@API $$trim^%ts, trim character from end(s) of string
-trim(string,end,char) goto trim^%tsrt
+trim(string,end,char) goto trim^%tsjt
  ;
  ;
  ;

@@ -1,4 +1,4 @@
-%tsul ;ven/toad-type string: development log ;2018-03-05T19:26Z
+%tsul ;ven/toad-type string: development log ;2018-03-05T20:27Z
  ;;1.8;Mash;
  ;
  ; %tsul is the Mumps String Library's primary-development log.
@@ -23,7 +23,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-05T19:26Z
+ ;@last-updated: 2018-03-05T20:27Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -307,6 +307,11 @@
  ;
  ; 2018-03-05 ven/toad %*1.8T04 %tsud: document reorg of string methods.
  ;  %tsudr => %tsudf: document new Find Library.
+ ;  %tsrs => %tsvs
+ ;  %tsutrs => %tsutvs
+ ;  %tsrf => %tsfs
+ ;  %tsutrf => %tsutfs
+ ;  %ts: repoint to moved code, refine apis.
  ;
  ;
 eor ; end of routine %tsul

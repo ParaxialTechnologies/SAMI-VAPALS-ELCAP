@@ -1,4 +1,4 @@
-%tsut ;ven/mcglk&toad-type string: unit tests ;2018-03-05T19:47Z
+%tsut ;ven/mcglk&toad-type string: unit tests ;2018-03-05T20:28Z
  ;;1.8;Mash;
  ;
  ; %tsut implements unit tests for the Mash String Library.
@@ -28,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-05T19:47Z
+ ;@last-updated: 2018-03-05T20:28Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -226,6 +226,28 @@ cover11 ; @TEST ^%tses: no entry from top
  ;
  ;
  ;
+cover12 ; @TEST ^%tsutfs: no entry from top
+ ;
+ ;ven/lmry;test;procedure;clean?;silent?;sac
+ ;
+ do ^%tsutfs ; for 100% code coverage
+ do CHKEQ^%ut(1,1)
+ ;
+ quit  ; end of cover12
+ ;
+ ;
+ ;
+cover13 ; @TEST ^%tsfs: no entry from top
+ ;
+ ;ven/lmry;test;procedure;clean?;silent?;sac
+ ;
+ do ^%tsfs ; for 100% code coverage
+ do CHKEQ^%ut(1,1)
+ ;
+ quit  ; end of cover13
+ ;
+ ;
+ ;
  ;@section 4 unit-test routines for the String library
  ;
  ;
@@ -233,7 +255,7 @@ cover11 ; @TEST ^%tses: no entry from top
 XTROU ; routines containing unit tests for ^%ts apis
  ;;%tsutc; all string-case tests 
  ;;%tsutes; setex^%ts
- ;;%tsutrf; findrep^%ts
+ ;;%tsutfs; setfind^%ts
  ;;%tsutrt; $$trim^%ts
  ;;%tsutvs; $$strip^%ts
  ;

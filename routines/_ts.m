@@ -1,4 +1,4 @@
-%ts ;ven/toad-type string: api/ppi library ;2018-03-05T19:41Z
+%ts ;ven/toad-type string: api/ppi library ;2018-03-05T20:24Z
  ;;1.8;Mash;
  ;
  ; %ts is the Mumps String Library, an element of the Mumps
@@ -27,7 +27,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-05T19:41Z
+ ;@last-updated: 2018-03-05T20:24Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -51,57 +51,57 @@ ALPHABET() goto ALPHABET^%tsc
  ;
  ;
  ;
- ;@API $$u^%ts, CONVERT STRING TO UPPERCASE
-u(string) goto upcase^%tsc
- ;
- ;@API $$upcase^%ts, CONVERT STRING TO UPPERCASE
+ ;@API $$upcase^%ts, upper case (ALL CAPITAL LETTERS)
 upcase(string) goto upcase^%tsc
  ;
- ;@API $$upperCase^%ts, CONVERT STRING TO UPPERCASE
+ ;@API $$u^%ts, upper case
+u(string) goto upcase^%tsc
+ ;
+ ;@API $$upperCase^%ts, upper case
 upperCase(string) goto upcase^%tsc
  ;
  ;
  ;
- ;@API $$l^%ts, convert string to lowercase
-l(string) goto lowcase^%tsc
- ;
- ;@API $$lowcase^%ts, convert string to lowercase
+ ;@API $$lowcase^%ts, lower case (no capital letters)
 lowcase(string) goto lowcase^%tsc
  ;
- ;@API $$lowerCase^%ts, convert string to lowercase
+ ;@API $$l^%ts, lower case
+l(string) goto lowcase^%tsc
+ ;
+ ;@API $$lowerCase^%ts, lower case
 lowerCase(string) goto lowcase^%tsc
  ;
  ;
  ;
- ;@API $$c^%ts, Convert String To Capitalized Case
-c(string) goto capcase^%tsc
- ;
- ;@API $$capcase^%ts, Convert String To Capitalized Case
+ ;@API $$capcase^%ts, capital case (First Char Of Each Word Capital)
 capcase(string) goto capcase^%tsc
  ;
- ;@API $$capitalCase^%ts, Convert String To Capitalized Case
+ ;@API $$c^%ts, capital case
+c(string) goto capcase^%tsc
+ ;
+ ;@API $$capitalCase^%ts, capital case
 capitalCase(string) goto capcase^%tsc
  ;
  ;
  ;
- ;@API $$i^%ts, iNVERSE cASE (uPPERS TO lOWERS & lOWERS TO uPPERS)
-i(string) goto invcase^%tsc
- ;
- ;@API $$invcase^%ts, iNVERSE cASE (uPPERS TO lOWERS & lOWERS TO uPPERS)
+ ;@API $$invcase^%ts, inverse case (uPPERS TO lOWERS & vice versa)
 invcase(string) goto invcase^%tsc
  ;
- ;@API $$inverseCase^%ts, iNVERSE cASE (uPPERS TO lOWERS & lOWERS TO uPPERS)
+ ;@API $$i^%ts, inverse case
+i(string) goto invcase^%tsc
+ ;
+ ;@API $$inverseCase^%ts, inverse case
 inverseCase(string) goto invcase^%tsc
  ;
  ;
  ;
- ;@API $$s^%ts, Convert string to sentence-case
-s(string) goto sencase^%tsc
- ;
- ;@API $$sencase^%ts, Convert string to sentence-case
+ ;@API $$sencase^%ts, sentence case (1st character capital)
 sencase(string) goto sencase^%tsc
  ;
- ;@API $$sentenceCase^%ts, Convert string to sentence-case
+ ;@API $$s^%ts, sentence case
+s(string) goto sencase^%tsc
+ ;
+ ;@API $$sentenceCase^%ts, sentence case
 sentenceCase(string) goto sencase^%tsc
  ;
  ;
@@ -110,58 +110,65 @@ sentenceCase(string) goto sencase^%tsc
  ;
  ;
  ;
- ;@API fe^%ts, find position of substring
-fe(string,find,flags) goto findex^%tsef
- ;
- ;@API findex^%ts, find position of substring
+ ;@API findex^%ts, find extract (find position of substring)
 findex(string,find,flags) goto findex^%tsef
  ;
- ;@API findExtract^%ts, find position of substring
+ ;@API fe^%ts, find extract
+fe(string,find,flags) goto findex^%tsef
+ ;
+ ;@API findExtract^%ts, find extract
 findExtract(string,find,flags) goto findex^%tsef
  ;
- ;@API find^%ts, find position of substring
+ ;@API find^%ts, find extract
 find(string,find,flags) goto findex^%tsef
  ;
  ;
  ;
- ;@API se^%ts, change value of positional substring
-se(string,replace,flags) goto setex^%tses
- ;
- ;@API setex^%ts, change value of positional substring
+ ;@API setex^%ts, set extract (change value of positional substring)
 setex(string,replace,flags) goto setex^%tses
  ;
- ;@API setExtract^%ts, change value of positional substring
+ ;@API se^%ts, set extract
+se(string,replace,flags) goto setex^%tses
+ ;
+ ;@API setExtract^%ts, set extract
 setExtract(string,replace,flags) goto setex^%tses
  ;
- ;@API place^%ts, change value of positional substring
+ ;@API place^%ts, set extract
 place(string,replace,flags) goto setex^%tses
  ;
  ;
  ;
- ;@section 3 %tsr: string-replace tools
+ ;@section 3 %tsf: string-find tools
  ;
  ;
  ;
- ;@ppi fr^%ts, find & replace substring
-fr(string,find,replace,flags) goto findrep^%tsrf
+ ;@ppi setfind^%ts, set find (find & replace substring)
+setfind(string,find,replace,flags) goto setfind^%tsfs
  ;
- ;@ppi findrep^%ts, find & replace substring
-findrep(string,find,replace,flags) goto findrep^%tsrf
+ ;@ppi sf^%ts, set find
+sf(string,find,replace,flags) goto setfind^%tsfs
  ;
- ;@ppi findReplace^%ts, find & replace substring
-findReplace(string,find,replace,flags) goto findrep^%tsrf
+ ;@ppi setFind^%ts, set find
+setFind(string,find,replace,flags) goto setfind^%tsfs
+ ;
+ ;@ppi replace^%ts, set find
+replace(string,find,replace,flags) goto setfind^%tsfs
+ ;
+ ;@ppi findReplace^%ts, set find
+findReplace(string,find,replace,flags) goto setfind^%tsfs
  ;
  ;
  ;
- ;@API $$tr^%ts, trim character from end(s) of string
-tr(string,end,char) goto trim^%tsrt
+ ;@section 4 %tsr: string-replace tools
+ ;
+ ;
  ;
  ;@API $$trim^%ts, trim character from end(s) of string
 trim(string,end,char) goto trim^%tsrt
  ;
  ;
  ;
- ;@section 4 %tsv: string-validation tools
+ ;@section 5 %tsv: string-validation tools
  ;
  ;
  ;

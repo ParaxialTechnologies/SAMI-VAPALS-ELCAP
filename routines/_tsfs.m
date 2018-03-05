@@ -1,14 +1,14 @@
-%tsrf ;ven/toad-type string: findrep^%ts ;2018-03-01T21:18Z
+%tsfs ;ven/toad-type string: setfind^%ts ;2018-03-05T20:13Z
  ;;1.8;Mash;
  ;
- ; %tsrf implements MASH String Library ppi findrep^%ts, find &
- ; replace a substring; it is part of the String Replace sublibrary.
- ; See %tsutrf for unit tests for findrep^%ts.
+ ; %tsfs implements MASH String Library ppi setfind^%ts, find &
+ ; replace a substring; it is part of the String Find Library.
+ ; See %tsutfs for unit tests for setfind^%ts.
  ; See %tsud for an introduction to the String library, including an
- ; intro to the String Replace library.
+ ; intro to the String Find Library.
  ; See %tsul for the module's primary-development log.
  ; See %ts for the module's ppis & apis.
- ; %tsrf contains no public entry points.
+ ; %tsfs contains no public entry points.
  ;
  quit  ; no entry from top
  ;
@@ -29,7 +29,7 @@
  ;@original-dev: George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
  ;
- ;@last-updated: 2018-03-01T21:18Z
+ ;@last-updated: 2018-03-05T20:13Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -42,7 +42,7 @@
  ; add ability to call by passing object
  ; add feature to load object w/parameters for shorter calls
  ; if r flag passed, don't include in call to setex^%ts
- ; write detailed description of findrep^%ts
+ ; write detailed description of setfind^%ts
  ; develop more examples
  ; write unit tests
  ;
@@ -52,27 +52,34 @@
  ;
  ;
  ;
- ;@ppi-code findrep^%ts
-findrep ; find & replace a substring
+ ;@ppi-code setfind^%ts
+setfind ; set a find (find & replace a substring)
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
  ;ven/gpl&toad;private;procedure;clean;silent;sac;NO tests
  ;@signature
- ; do findrep^%ts(.string,find,replace,flags)
+ ; do setfind^%ts(.string,find,replace,flags)
  ;@synonyms
- ; fr^%ts
+ ; sf^%ts
+ ; setFind^%ts
  ; findReplace^%ts
  ;@branches-from
- ; findrep^%ts
+ ; setfind^%ts
  ;@ppi-called-by
- ; wsGetForm^%wf
- ; putErrMsg2^%wf
- ; insError^%wf
- ; value^%wf
- ; uncheck^%wf
  ; check^%wf
- ; $$replaceHref^%wf [deprecated subroutine]
+ ; insError^%wf
+ ; putErrMsg2^%wf
+ ; $$replaceHref^%wf [deprecated]
+ ; $$replaceSrc^%wf [deprecated]
+ ; uncheck^%wf
+ ; value^%wf
+ ; wsGetForm^%wf
+ ; wsCASE^SAMICASE
+ ; fixHref^SAMIFRM
+ ; fixSrc^SAMIFRM
+ ; SAMISUBS^SAMIFRM
+ ; getHome^SAMIHOME
  ;@called-by: none
  ;@calls
  ; findex^%ts
@@ -99,7 +106,7 @@ findrep ; find & replace a substring
  ; group 1: Find-and-Replace First & Find-and-Replace Next
  ;
  ;  new string set string="totototo"
- ;  do findrep^%ts(.string,"Kansas","Dorothy")
+ ;  do setfind^%ts(.string,"Kansas","Dorothy")
  ; produces
  ;  string="totototo"
  ;  string("extract")=0
@@ -107,7 +114,7 @@ findrep ; find & replace a substring
  ;  string("extract","to")=0
  ;
  ;  new string set string="totototo"
- ;  do findrep^%ts(.string,"toto","Dorothy")
+ ;  do setfind^%ts(.string,"toto","Dorothy")
  ; produces
  ;  string="Dorothytoto"
  ;  string("extract")=1
@@ -115,7 +122,7 @@ findrep ; find & replace a substring
  ;  string("extract","to")=7
  ;
  ; followed by
- ;  do findrep^%ts(.string,"toto","Dorothy")
+ ;  do setfind^%ts(.string,"toto","Dorothy")
  ; produces
  ;  string="DorothyDorothy"
  ;  string("extract")=1
@@ -123,7 +130,7 @@ findrep ; find & replace a substring
  ;  string("extract","to")=14
  ;
  ; followed by
- ;  do findrep^%ts(.string,"toto","Dorothy")
+ ;  do setfind^%ts(.string,"toto","Dorothy")
  ; produces
  ;  string="DorothyDorothy"
  ;  string("extract")=0
@@ -133,7 +140,7 @@ findrep ; find & replace a substring
  ;  new string set string="totototo"
  ;  set string("extract","from")=1
  ;  set string("extract","to")=2
- ;  do findrep^%ts(.string,"toto","Dorothy")
+ ;  do setfind^%ts(.string,"toto","Dorothy")
  ; produces
  ;  string="toDorothyto"
  ;  string("extract")=1
@@ -143,7 +150,7 @@ findrep ; find & replace a substring
  ;  new string set string="totototo"
  ;  set string("extract","from")=6
  ;  set string("extract","to")=7
- ;  do findrep^%ts(.string,"toto","Dorothy")
+ ;  do setfind^%ts(.string,"toto","Dorothy")
  ; produces
  ;  string="totototo"
  ;  string("extract")=0
@@ -153,7 +160,7 @@ findrep ; find & replace a substring
  ; group 2: Find Last & Find Previous
  ;
  ;  new string set string="totototo"
- ;  do findrep^%ts(.string,"Kansas","Dorothy","b")
+ ;  do setfind^%ts(.string,"Kansas","Dorothy","b")
  ; produces
  ;  string="totototo"
  ;  string("extract")=0
@@ -161,7 +168,7 @@ findrep ; find & replace a substring
  ;  string("extract","to")=0
  ;
  ;  new string set string="totototo"
- ;  do findrep^%ts(.string,"toto","Dorothy","b")
+ ;  do setfind^%ts(.string,"toto","Dorothy","b")
  ; produces
  ;  string="totoDorothy"
  ;  string("extract")=1
@@ -169,7 +176,7 @@ findrep ; find & replace a substring
  ;  string("extract","to")=11
  ;
  ; followed by
- ;  do findrep^%ts(.string,"toto","Dorothy","b")
+ ;  do setfind^%ts(.string,"toto","Dorothy","b")
  ; produces
  ;  string="DorothyDorothy"
  ;  string("extract")=1
@@ -177,7 +184,7 @@ findrep ; find & replace a substring
  ;  string("extract","to")=7
  ;
  ; followed by
- ;  do findrep^%ts(.string,"toto","Dorothy","b")
+ ;  do setfind^%ts(.string,"toto","Dorothy","b")
  ; produces
  ;  string="DorothyDorothy"
  ;  string("extract")=0
@@ -187,7 +194,7 @@ findrep ; find & replace a substring
  ;  new string set string="totototo"
  ;  set string("extract","from")=7
  ;  set string("extract","to")=8
- ;  do findrep^%ts(.string,"toto","Dorothy","b")
+ ;  do setfind^%ts(.string,"toto","Dorothy","b")
  ; produces
  ;  string="toDorothyto"
  ;  string("extract")=1
@@ -197,7 +204,7 @@ findrep ; find & replace a substring
  ;  new string set string="totototo"
  ;  set string("extract","from")=1
  ;  set string("extract","to")=2
- ;  do findrep^%ts(.string,"toto","Dorothy","b")
+ ;  do setfind^%ts(.string,"toto","Dorothy","b")
  ; produces
  ;  string="totototo"
  ;  string("extract")=0
@@ -207,7 +214,7 @@ findrep ; find & replace a substring
  ; group 3: Find Case-Insensitive
  ;
  ;  new string set string="totototo"
- ;  do findrep^%ts(.string,"Toto","Dorothy")
+ ;  do setfind^%ts(.string,"Toto","Dorothy")
  ; produces
  ;  string="totototo"
  ;  string("extract")=0
@@ -215,7 +222,7 @@ findrep ; find & replace a substring
  ;  string("extract","to")=0
  ;
  ; followed by
- ;  do findrep^%ts(.string,"Toto","Dorothy","i")
+ ;  do setfind^%ts(.string,"Toto","Dorothy","i")
  ; produces
  ;  string="Dorothytoto"
  ;  string("extract")=1
@@ -223,7 +230,7 @@ findrep ; find & replace a substring
  ;  string("extract","to")=7
  ;
  ; followed by
- ;  do findrep^%ts(.string,"Toto","Dorothy","i")
+ ;  do setfind^%ts(.string,"Toto","Dorothy","i")
  ; produces
  ;  string="DorothyDorothy"
  ;  string("extract")=1
@@ -233,7 +240,7 @@ findrep ; find & replace a substring
  ; group 4: Boundary Cases
  ;
  ;  new string
- ;  do findrep^%ts(.string,"Toto","Dorothy")
+ ;  do setfind^%ts(.string,"Toto","Dorothy")
  ; produces
  ;  string=""
  ;  string("extract")=0
@@ -241,7 +248,7 @@ findrep ; find & replace a substring
  ;  string("extract","to")=0
  ;
  ;  new string set string=""
- ;  do findrep^%ts(.string,"Toto","Dorothy")
+ ;  do setfind^%ts(.string,"Toto","Dorothy")
  ; produces
  ;  string=""
  ;  string("extract")=0
@@ -249,7 +256,7 @@ findrep ; find & replace a substring
  ;  string("extract","to")=0
  ;
  ;  new string set string="totototo"
- ;  do findrep^%ts(.string,"","Dorothy")
+ ;  do setfind^%ts(.string,"","Dorothy")
  ; produces
  ;  string="totototo"
  ;  string("extract")=0
@@ -257,7 +264,7 @@ findrep ; find & replace a substring
  ;  string("extract","to")=0
  ;
  ;  new string set string=""
- ;  do findrep^%ts(.string,"","Dorothy")
+ ;  do setfind^%ts(.string,"","Dorothy")
  ; produces
  ;  string="totototo"
  ;  string("extract")=0
@@ -265,7 +272,7 @@ findrep ; find & replace a substring
  ;  string("extract","to")=0
  ;
  ;  new string set string="totototo"
- ;  do findrep^%ts(.string,"toto")
+ ;  do setfind^%ts(.string,"toto")
  ; produces
  ;  string="toto"
  ;  string("extract")=1
@@ -273,7 +280,7 @@ findrep ; find & replace a substring
  ;  string("extract","to")=0
  ;
  ;  new string set string="totototo"
- ;  do findrep^%ts(.string,"toto","","b")
+ ;  do setfind^%ts(.string,"toto","","b")
  ; produces
  ;  string="toto"
  ;  string("extract")=1
@@ -281,7 +288,7 @@ findrep ; find & replace a substring
  ;  string("extract","to")=0
  ;
  ;  new string set string="totototo"
- ;  do findrep^%ts(.string)
+ ;  do setfind^%ts(.string)
  ; produces
  ;  string="totototo"
  ;  string("extract")=0
@@ -289,7 +296,7 @@ findrep ; find & replace a substring
  ;  string("extract","to")=0
  ;
  ;  new string
- ;  do findrep^%ts(.string)
+ ;  do setfind^%ts(.string)
  ; produces
  ;  string=""
  ;  string("extract")=0
@@ -297,7 +304,7 @@ findrep ; find & replace a substring
  ;  string("extract","to")=0
  ;
  ;  new string set string="totototo"
- ;  do findrep^%ts(.string,"toto","Dorothy","badflag")
+ ;  do setfind^%ts(.string,"toto","Dorothy","badflag")
  ; produces
  ;  string="totototo"
  ;  string("extract")=0
@@ -333,7 +340,7 @@ findrep ; find & replace a substring
  ; group 6: Find & Replace All
  ;
  ;  new string set string="totototo"
- ;  do findrep^%ts(.string,"Toto","Dorothy","abir")
+ ;  do setfind^%ts(.string,"Toto","Dorothy","abir")
  ; produces
  ;  string="DorothyDorothy"
  ;  string("extract")=1
@@ -341,7 +348,7 @@ findrep ; find & replace a substring
  ;  string("extract","to")=0
  ;
  ;  new string set string="totototo"
- ;  do findrep^%ts(.string,"Kansas","Dorothy","a")
+ ;  do setfind^%ts(.string,"Kansas","Dorothy","a")
  ; produces
  ;  string="totototo"
  ;  string("extract")=0
@@ -362,10 +369,10 @@ findrep ; find & replace a substring
  ; set to the character before the cut, or if the b flag was passed to
  ; the character after the cut (in support of a backward scan).
  ;
- ; See find^%tsef & setextract^%tses for complete descriptions of how
+ ; See findex^%tsef & setex^%tses for complete descriptions of how
  ; the parameters control the scan & replacement.
  ;
- ; Find & Replace All: findrep^%ts supports an "a" flag that will repeat
+ ; Find & Replace All: setfind^%ts supports an "a" flag that will repeat
  ; the find & replace until the entire string has been scanned. It
  ; returns string("extract")=1 if at least one successful find+replace
  ; was done, otherwise 0. from & to nodes will always be returned = 0
@@ -397,8 +404,8 @@ findrep ; find & replace a substring
  ;
  ;@stanza 3 termination
  ;
- quit  ; end of findrep^%ts
+ quit  ; end of setfind^%ts
  ;
  ;
  ;
-eor ; end of routine %tses
+eor ; end of routine %tsfs

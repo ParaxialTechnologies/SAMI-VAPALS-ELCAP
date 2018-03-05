@@ -1,4 +1,4 @@
-%tsudf ;ven/toad-type string: documentation, find ;2018-03-05T19:11Z
+%tsudf ;ven/toad-type string: documentation, find ;2018-03-05T10:17Z
  ;;1.8;Mash;
  ;
  ; %tsud introduces the public string datatype Find Library,
@@ -27,7 +27,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-05T19:11Z
+ ;@last-updated: 2018-03-05T20:17Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -36,10 +36,11 @@
  ;
  ;@contents
  ;
- ; setfind^%ts = set found substring (find & replace)
- ;     sf^%ts
- ; setFind^%ts
- ; replace^%ts
+ ;     setfind^%ts = set found substring (find & replace)
+ ;          sf^%ts
+ ;     setFind^%ts
+ ; findReplace^%ts
+ ;     replace^%ts
  ;  code = %tsfs
  ;  tests = %tsutfs
  ;

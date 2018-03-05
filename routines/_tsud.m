@@ -1,4 +1,4 @@
-%tsud ;ven/toad-type string: documentation ;2018-03-05T18:44Z
+%tsud ;ven/toad-type string: documentation ;2018-03-05T20:16Z
  ;;1.8;Mash;
  ;
  ; %tsud is the Mumps String Library's inroductory documentation.
@@ -23,7 +23,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-05T18:44Z
+ ;@last-updated: 2018-03-05T20:16Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -498,8 +498,9 @@
  ;
  ; Plus industry-convention names, where appropriate:
  ;
+ ;     replace^%ts = setfind^%ts
  ; findReplace^%ts = setfind^%ts
- ; findDelete^%ts = cutfind^%ts
+ ;  findDelete^%ts = cutfind^%ts
  ;
  ; In addition, there will be at least three new groups of find
  ; functions that are wrappers around the above suite:

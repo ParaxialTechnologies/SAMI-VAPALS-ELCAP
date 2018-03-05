@@ -1,16 +1,16 @@
-%tsrs ;ven/toad-type string: $$strip^%ts ;2018-02-24T15:54Z
+%tsvs ;ven/toad-type string: $$strip^%ts ;2018-03-05T19:39Z
  ;;1.8;Mash;
  ;
- ; %tsrs implements MASH String Library ppi $$strip^%ts, strip
- ; character(s) from string; it is part of the String Replace
+ ; %tsvs implements MASH String Library ppi $$strip^%ts, strip
+ ; character(s) from string; it is part of the String Validation
  ; sublibrary.
- ; See %tsutrs for unit tests for $$strip^%ts.
- ; See %tsudr for notes on the String Replace sublibrary.
+ ; See %tsutvs for unit tests for $$strip^%ts.
+ ; See %tsudv for notes on the String Validation sublibrary.
  ; See %tsud for an introduction to the String library, including an
- ; intro to the String Replace library.
+ ; intro to the String Validation library.
  ; See %tsul for the module's primary-development log.
  ; See %ts for the module's ppis & apis.
- ; %tsrs contains no public entry points.
+ ; %tsvs contains no public entry points.
  ;
  quit  ; no entry from top
  ;
@@ -29,7 +29,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-24T15:54Z
+ ;@last-updated: 2018-03-05T19:39Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -94,4 +94,4 @@ strip ; strip character(s) from string
  quit string ; return stripped string; end of $$strip^%ts
  ;
  ;
-eor ; end of routine %tsrs
+eor ; end of routine %tsvs

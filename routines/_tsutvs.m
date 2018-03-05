@@ -1,14 +1,14 @@
-%tsutrs ;ven/mcglk&toad-type string: test $$strip ;2018-02-22T19:47Z
+%tsutvs ;ven/mcglk&toad-type string: test $$strip ;2018-03-05T19:35Z
  ;;1.8;Mash;
  ;
- ; %tsutrs implements seven unit tests for api $$strip^%ts.
- ; See %tsrs for the code for $$strip^%ts.
+ ; %tsutvs implements seven unit tests for api $$strip^%ts.
+ ; See %tsvs for the code for $$strip^%ts.
  ; See %tsut for the whole unit-test library.
  ; See %tsud for documentation introducing the String library,
- ; including an intro to the String Replace library.
+ ; including an intro to the String Validation library.
  ; See %tsul for the module's primary-development log.
  ; See %ts for the module's ppis & apis.
- ; %tsutrs contains no public entry points.
+ ; %tsutvs contains no public entry points.
  ;
  quit  ; no entry from top
  ;
@@ -29,7 +29,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-22T19:47Z
+ ;@last-updated: 2018-03-05T19:35Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -142,4 +142,4 @@ strip07 ; @TEST $$strip^%ts(%s,%c): strip from empty string
  quit  ; end of strip07 ;
  ;
  ;
-eor ; end of routine %tsutrs
+eor ; end of routine %tsutvs

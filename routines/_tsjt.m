@@ -1,15 +1,15 @@
-%tsrt ;ven/toad-type string: $$trim^%ts ;2018-02-24T15:59Z
+%tsjt ;ven/toad-type string: $$trim^%ts ;2018-03-05T20:49Z
  ;;1.8;Mash;
  ;
- ; %tsrt implements MASH String Library ppi $$trim^%ts, trim character
- ; from end(s) of string; it is part of the String Replace sublibrary.
- ; See %tsutrt for unit tests for $$trim^%ts.
- ; See %tsudr for notes on the String Replace sublibrary.
+ ; %tsjt implements MASH String Library ppi $$trim^%ts, trim character
+ ; from end(s) of string; it is part of the String Justify Library.
+ ; See %tsutjt for unit tests for $$trim^%ts.
+ ; See %tsudj for notes on the String Justify Library.
  ; See %tsud for an introduction to the String library, including an
- ; intro to the String Replace library.
+ ; intro to the String Justify library.
  ; See %tsul for the module's primary-development log.
  ; See %ts for the module's ppis & apis.
- ; %tsrt contains no public entry points.
+ ; %tsjt contains no public entry points.
  ;
  quit  ; no entry from top
  ;
@@ -28,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-24T15:59Z
+ ;@last-updated: 2018-03-05T20:49Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -119,4 +119,4 @@ trim ; trim character from end(s) of string
  ;
  ;
  ;
-eor ; end of routine %tsrt
+eor ; end of routine %tsjt

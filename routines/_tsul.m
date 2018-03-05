@@ -1,4 +1,4 @@
-%tsul ;ven/toad-type string: development log ;2018-03-04T19:52Z
+%tsul ;ven/toad-type string: development log ;2018-03-05T19:26Z
  ;;1.8;Mash;
  ;
  ; %tsul is the Mumps String Library's primary-development log.
@@ -23,7 +23,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-04T19:52Z
+ ;@last-updated: 2018-03-05T19:26Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -257,7 +257,7 @@
  ; $$trim^%ts, change %tsu into a unit-test shell routine, & add
  ; cover^%tsu to run code-coverage.
  ;
- ; 2018-02-21/03-01 ven/toad %*1.8T04 %tsul,%tsud: rename %tslog =>
+ ; 2018-02-21/03-04 ven/toad %*1.8T04 %tsul,%tsud: rename %tslog =>
  ; %tsul; create %tsud; bump version to 1.8T04; update to more modern
  ; mash style; expand history to include rest of mdc string library &
  ; function extensions; move to-do to %tsul; list Javascript string
@@ -302,8 +302,11 @@
  ; testing new unit tests. Jennifer Hackett helped significantly in 
  ; reformatting examples into unit tests.
  ;
- ; 2018-03-04 ven/lmry %*1.8T04 %tsut, %tsutef: Add no-entry-from-top tests for %tses
- ; and %tsef. Convert examples in %tsef into unit tests.
+ ; 2018-03-04 ven/lmry %*1.8T04 %tsut, %tsutef: Add no-entry-from-top
+ ; tests for %tses & %tsef. Convert examples in %tsef into unit tests.
+ ;
+ ; 2018-03-05 ven/toad %*1.8T04 %tsud: document reorg of string methods.
+ ;  %tsudr => %tsudf: document new Find Library.
  ;
  ;
 eor ; end of routine %tsul

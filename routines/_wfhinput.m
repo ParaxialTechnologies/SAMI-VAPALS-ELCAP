@@ -1,4 +1,4 @@
-%wfhinput ;ven/gpl-web form: html input tag ;2018-03-06T18:43Z
+%wfhinput ;ven/gpl-web form: html input tag ;2018-03-06T18:50Z
  ;;1.8;Mash;
  ;
  ; %wfhinput implements the Web Form Library's html input tag
@@ -30,7 +30,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-06T18:43Z
+ ;@last-updated: 2018-03-06T18:50Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Web Form - %wf
  ;@version: 1.8T04
@@ -127,7 +127,7 @@ type ; code for ppi $$type^%wf, input type
  . set type=$piece($piece(linelow," type=",2)," ")
  . new length set length=$length(type)
  . new end set end=$extract(type,length)
- . set:end2=">" $extract(type,length)=""
+ . set:end=">" $extract(type,length)=""
  . quit
  ;
  quit type ; return input type, end of $$type^%wf

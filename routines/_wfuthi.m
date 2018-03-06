@@ -1,4 +1,4 @@
-%wfuthi ;ven/toad-web form: test %wfhinput ;2018-03-06T17:51Z
+%wfuthi ;ven/toad-web form: test %wfhinput ;2018-03-06T18:14Z
  ;;1.8;Mash;
  ;
  ; %wfuthi implements eleven unit tests for apis $$type^%wf,
@@ -28,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-06T17:51Z
+ ;@last-updated: 2018-03-06T18:14Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Web Form - %wf
  ;@version: 1.8T04
@@ -178,9 +178,9 @@ unchk01 ; @TEST uncheck^%wf: html compliant
  ;ven/toad;test;procedure;clean?;silent?;sac
  ;
  new before
- set before="<input type=radio name="sbhcs" value="n" checked> no"
+ set before="<input type=radio name=""sbhcs"" value=""n"" checked> no"
  new after
- set after="<input type=radio name="sbhcs" value="n"> no"
+ set after="<input type=radio name=""sbhcs"" value=""n""> no"
  new line set line=before
  ;
  do uncheck^%wf(.line)
@@ -195,9 +195,9 @@ unchk02 ; @TEST uncheck^%wf: uppercase CHECKED
  ;ven/toad;test;procedure;clean?;silent?;sac
  ;
  new before
- set before="<input type=radio name="sbphu" value="i" CHECKED> in"
+ set before="<input type=radio name=""sbphu"" value=""i"" CHECKED> in"
  new after
- set after="<input type=radio name="sbphu" value="i"> in"
+ set after="<input type=radio name=""sbphu"" value=""i""> in"
  new line set line=before
  ;
  do uncheck^%wf(.line)
@@ -212,9 +212,9 @@ unchk03 ; @TEST uncheck^%wf: not checked
  ;ven/toad;test;procedure;clean?;silent?;sac
  ;
  new before
- set before="<input type=radio name="sbphu" value="c"> cm"
+ set before="<input type=radio name=""sbphu"" value=""c""> cm"
  new after
- set after="<input type=radio name="sbphu" value="c"> cm"
+ set after="<input type=radio name=""sbphu"" value=""c""> cm"
  new line set line=before
  ;
  do uncheck^%wf(.line)
@@ -229,9 +229,9 @@ unchk04 ; @TEST uncheck^%wf: nonstandard variant 1
  ;ven/toad;test;procedure;clean?;silent?;sac
  ;
  new before
- set before="<input type="radio" name="sbmpa" value="n" checked="checked">no</input>"
+ set before="<input type=""radio"" name=""sbmpa"" value=""n"" checked=""checked"">no</input>"
  new after
- set after="<input type="radio" name="sbmpa" value="n">no</input>"
+ set after="<input type=""radio"" name=""sbmpa"" value=""n"">no</input>"
  new line set line=before
  ;
  do uncheck^%wf(.line)
@@ -246,9 +246,9 @@ unchk05 ; @TEST uncheck^%wf: nonstandard variant 2
  ;ven/toad;test;procedure;clean?;silent?;sac
  ;
  new before
- set before="<input type="radio" name="sbmpmi" value="n" checked=checked>no</input>"
+ set before="<input type=""radio"" name=""sbmpmi"" value=""n"" checked=checked>no</input>"
  new after
- set after="<input type="radio" name="sbmpmi" value="n">no</input>"
+ set after="<input type=""radio"" name=""sbmpmi"" value=""n"">no</input>"
  new line set line=before
  ;
  do uncheck^%wf(.line)
@@ -302,9 +302,9 @@ chk01 ; @TEST uncheck^%wf: html compliant
  ;ven/toad;test;procedure;clean?;silent?;sac
  ;
  new before
- set before="<input type="radio" name="sbdsd" id="sbdsd-n" value="n"> No"
+ set before="<input type=""radio"" name=""sbdsd"" id=""sbdsd-n"" value=""n""> No"
  new after
- set after="<input type="radio" checked name="sbdsd" id="sbdsd-n" value="n"> No"
+ set after="<input type=""radio"" checked name=""sbdsd"" id=""sbdsd-n"" value=""n""> No"
  new line set line=before
  ;
  do uncheck^%wf(.line)
@@ -319,9 +319,9 @@ chk02 ; @TEST uncheck^%wf: nonstandard variant
  ;ven/toad;test;procedure;clean?;silent?;sac
  ;
  new before
- set before="<input type=radio name="sbphu" value="c"> cm"
+ set before="<input type=radio name=""sbphu"" value=""c""> cm"
  new after
- set after="<input type=radio checked name="sbphu" value="c"> cm"
+ set after="<input type=radio checked name=""sbphu"" value=""c""> cm"
  new line set line=before
  ;
  do uncheck^%wf(.line)
@@ -336,9 +336,9 @@ chk03 ; @TEST uncheck^%wf: case-insensitive
  ;ven/toad;test;procedure;clean?;silent?;sac
  ;
  new before
- set before="<input TYPE=checkbox name="sbshsua" value="a"> cigars"
+ set before="<input TYPE=checkbox name=""sbshsua"" value=""a""> cigars"
  new after
- set after="<input TYPE=checkbox checked name="sbshsua" value="a"> cigars"
+ set after="<input TYPE=checkbox checked name=""sbshsua"" value=""a""> cigars"
  new line set line=before
  ;
  do uncheck^%wf(.line)
@@ -352,8 +352,8 @@ chk04 ; @TEST uncheck^%wf: no type attribute
  ;
  ;ven/toad;test;procedure;clean?;silent?;sac
  ;
- new before set before="<html lang="en">"
- new after set after="<html lang="en">"
+ new before set before="<html lang=""en"">"
+ new after set after="<html lang=""en"">"
  new line set line=before
  ;
  do uncheck^%wf(.line)

@@ -1,4 +1,4 @@
-%wfuthi ;ven/toad-web form: test %wfhinput ;2018-03-06T18:39Z
+%wfuthi ;ven/toad-web form: test %wfhinput ;2018-03-06T20:00Z
  ;;1.8;Mash;
  ;
  ; %wfuthi implements eleven unit tests for apis $$type^%wf,
@@ -28,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-06T18:39Z
+ ;@last-updated: 2018-03-06T20:00Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Web Form - %wf
  ;@version: 1.8T04
@@ -340,7 +340,7 @@ chk03 ; @TEST check^%wf: case-insensitive
  new before
  set before="<input TYPE=checkbox name=""sbshsua"" value=""a""> cigars"
  new after
- set after="<input TYPE=""checkbox"" checked name=""sbshsua"" value=""a""> cigars"
+ set after="<input type=""checkbox"" checked name=""sbshsua"" value=""a""> cigars"
  new line set line=before
  new type set type="checkbox"
  ;

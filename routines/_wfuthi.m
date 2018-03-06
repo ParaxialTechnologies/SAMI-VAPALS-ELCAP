@@ -1,4 +1,4 @@
-%wfuthi ;ven/toad-web form: test %wfhinput ;2018-03-06T18:14Z
+%wfuthi ;ven/toad-web form: test %wfhinput ;2018-03-06T18:32Z
  ;;1.8;Mash;
  ;
  ; %wfuthi implements eleven unit tests for apis $$type^%wf,
@@ -28,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-06T18:14Z
+ ;@last-updated: 2018-03-06T18:32Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Web Form - %wf
  ;@version: 1.8T04
@@ -297,7 +297,7 @@ unchk07 ; @TEST uncheck^%wf: undefined
  ;
  ;
  ;
-chk01 ; @TEST uncheck^%wf: html compliant
+chk01 ; @TEST check^%wf: html compliant
  ;
  ;ven/toad;test;procedure;clean?;silent?;sac
  ;
@@ -306,15 +306,16 @@ chk01 ; @TEST uncheck^%wf: html compliant
  new after
  set after="<input type=""radio"" checked name=""sbdsd"" id=""sbdsd-n"" value=""n""> No"
  new line set line=before
+ new type set type="radio"
  ;
- do uncheck^%wf(.line)
+ do check^%wf(.line,type)
  do CHKEQ^%ut(line,after)
  ;
  quit  ; end of chk01
  ;
  ;
  ;
-chk02 ; @TEST uncheck^%wf: nonstandard variant
+chk02 ; @TEST check^%wf: nonstandard variant
  ;
  ;ven/toad;test;procedure;clean?;silent?;sac
  ;
@@ -323,15 +324,16 @@ chk02 ; @TEST uncheck^%wf: nonstandard variant
  new after
  set after="<input type=radio checked name=""sbphu"" value=""c""> cm"
  new line set line=before
+ new type set type="radio"
  ;
- do uncheck^%wf(.line)
+ do check^%wf(.line,type)
  do CHKEQ^%ut(line,after)
  ;
  quit  ; end of chk02
  ;
  ;
  ;
-chk03 ; @TEST uncheck^%wf: case-insensitive
+chk03 ; @TEST check^%wf: case-insensitive
  ;
  ;ven/toad;test;procedure;clean?;silent?;sac
  ;
@@ -340,30 +342,32 @@ chk03 ; @TEST uncheck^%wf: case-insensitive
  new after
  set after="<input TYPE=checkbox checked name=""sbshsua"" value=""a""> cigars"
  new line set line=before
+ new type set type="checkbox"
  ;
- do uncheck^%wf(.line)
+ do check^%wf(.line,type)
  do CHKEQ^%ut(line,after)
  ;
  quit  ; end of chk03
  ;
  ;
  ;
-chk04 ; @TEST uncheck^%wf: no type attribute
+chk04 ; @TEST check^%wf: no type attribute
  ;
  ;ven/toad;test;procedure;clean?;silent?;sac
  ;
  new before set before="<html lang=""en"">"
  new after set after="<html lang=""en"">"
  new line set line=before
+ new type set type=""
  ;
- do uncheck^%wf(.line)
+ do check^%wf(.line,type)
  do CHKEQ^%ut(line,after)
  ;
  quit  ; end of chk04
  ;
  ;
  ;
-chk05 ; @TEST uncheck^%wf: empty string
+chk05 ; @TEST check^%wf: empty string
  ;
  ;ven/toad;test;procedure;clean?;silent?;sac
  ;
@@ -371,14 +375,14 @@ chk05 ; @TEST uncheck^%wf: empty string
  new after set after=""
  new line set line=before
  ;
- do uncheck^%wf(.line)
+ do check^%wf(.line)
  do CHKEQ^%ut(line,after)
  ;
  quit  ; end of chk05
  ;
  ;
  ;
-chk06 ; @TEST uncheck^%wf: undefined
+chk06 ; @TEST check^%wf: undefined
  ;
  ;ven/toad;test;procedure;clean?;silent?;sac
  ;
@@ -386,7 +390,7 @@ chk06 ; @TEST uncheck^%wf: undefined
  new after set after=""
  new line
  ;
- do uncheck^%wf(.line)
+ do check^%wf(.line)
  do CHKEQ^%ut(line,after)
  ;
  quit  ; end of chk06

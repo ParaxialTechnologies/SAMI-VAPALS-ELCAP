@@ -1,4 +1,4 @@
-%wfhinput ;ven/gpl-web form: html input tag ;2018-03-06T18:17Z
+%wfhinput ;ven/gpl-web form: html input tag ;2018-03-06T18:30Z
  ;;1.8;Mash;
  ;
  ; %wfhinput implements the Web Form Library's html input tag
@@ -30,7 +30,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-06T18:17Z
+ ;@last-updated: 2018-03-06T18:30Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Web Form - %wf
  ;@version: 1.8T04
@@ -265,24 +265,28 @@ check ; code for ppi check^%wf, check radio button or checkbox
  ;
  ;  new line
  ;  set line="<input type=""radio"" name=""sbdsd"" id=""sbdsd-n"" value=""n""> No"
- ;  do uncheck^%wf(.line)
+ ;  new type set type="radio"
+ ;  do uncheck^%wf(.line,type)
  ; produces
  ;  line="<input type=""radio"" checked name=""sbdsd"" id=""sbdsd-n"" value=""n""> No"
  ;
  ;  new line
  ;  set line="<input type=radio name=""sbphu"" value=""c""> cm"
- ;  do uncheck^%wf(.line)
+ ;  new type set type="radio"
+ ;  do uncheck^%wf(.line,type)
  ; produces
  ;  line="<input type=radio checked name=""sbphu"" value=""c""> cm"
  ;
  ;  new line
  ;  set line="<input TYPE=checkbox name=""sbshsua"" value=""a""> cigars"
- ;  do uncheck^%wf(.line)
+ ;  new type set type="checkbox"
+ ;  do uncheck^%wf(.line,type)
  ; produces
  ;  line="<input TYPE=checkbox checked name=""sbshsua"" value=""a""> cigars"
  ;
  ;  new line set line="<html lang=""en"">"
- ;  do uncheck^%wf(.line)
+ ;  new type set type=""
+ ;  do uncheck^%wf(.line,type)
  ; produces
  ;  line="<html lang=""en"">"
  ;
@@ -315,6 +319,7 @@ check ; code for ppi check^%wf, check radio button or checkbox
  ;
  set line=$get(line)
  new linelow set linelow=$$lowerCase^%ts(line) ; refresh lowercase
+ set type=$get(type)
  new doit set doit=0
  ;
  ; html standard

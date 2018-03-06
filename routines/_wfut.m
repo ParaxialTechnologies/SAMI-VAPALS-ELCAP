@@ -1,4 +1,4 @@
-%wfut ;ven/mcglk&toad-web form: unit tests ;2018-03-06T16:26Z
+%wfut ;ven/mcglk&toad-web form: unit tests ;2018-03-06T20:35Z
  ;;1.8;Mash;
  ;
  ; %wfut implements unit tests for the Mash Web Form Library.
@@ -24,7 +24,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-06T16:22Z
+ ;@last-updated: 2018-03-06T20:35Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Web Form - %wf
  ;@version: 1.8T04
@@ -106,6 +106,10 @@ cover01 ; @TEST no entry from top
  ;ven/toad;test;procedure;clean?;silent?;sac
  ;
  do ^%wf ; all of these are for 100% code coverage
+ do ^%wffiler
+ do ^%wffmap
+ do ^%wfhfind
+ do ^%wfhform
  do ^%wfhinput
  do ^%wful
  do ^%wfuthi

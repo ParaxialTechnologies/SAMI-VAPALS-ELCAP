@@ -175,6 +175,10 @@
  ; 2018-03-05 ven/toad %1.8t04 %wfhinput: in uncheck,check,type use
  ; new calls, add examples, & be cautious about lowercase, rename
  ; module => Web form Library.
+ ;  %wffiler: update headers & white space
+ ;  %wffmap: update headers & white space
+ ;  %wfhfind: update headers
+ ;  %wfhform: update headers
  ;  %wfut: create core unit-test routine.
  ;  %wfuthi: create html input unit-test routine.
  ;

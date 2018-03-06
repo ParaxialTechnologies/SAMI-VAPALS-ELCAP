@@ -1,8 +1,15 @@
-%wfhform ;ven/gpl-write form: html form get & post ;2018-03-01T21:35Z
+%wfhform ;ven/gpl-web form: html form get & post ;2018-03-06T20:31Z
  ;;1.8;Mash;
  ;
- ; %wfhform implements the Write Form Library's html form get & post web
+ ; %wfhform implements the Web Form Library's html form get & post web
  ; services. It will be broken up into many routines & further annotated.
+ ; See %wfut* for the unit tests for these methods.
+ ; See %wfut for the whole unit-test library.
+ ; See %wfud for documentation introducing the Web Form Lbrary,
+ ; including an intro to the HTML Form Library.
+ ; See %wful for the module's primary-development log.
+ ; See %wf for the module's ppis & apis.
+ ; %wfhform contains no public entry points.
  ; It is currently untested & in progress.
  ;
  quit  ; no entry from top
@@ -22,9 +29,9 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-01T21:35Z
+ ;@last-updated: 2018-03-06T20:31Z
  ;@application: Mumps Advanced Shell (Mash)
- ;@module: Write Form - %wf
+ ;@module: Web Form - %wf
  ;@version: 1.8T04
  ;@release-date: not yet released
  ;@patch-list: none yet

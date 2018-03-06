@@ -1,8 +1,15 @@
-%wffiler ;ven/gpl-write form: file graph data in Fileman file ;2018-02-05T19:41Z
+%wffiler ;ven/gpl-web form: file graph data in Fileman ;2018-03-06T20:08Z
  ;;1.8;Mash;
  ;
  ; %wffiler implements the Write Form Library's ppis for filing graph data
  ; from html forms into their Fileman files.
+ ; See %wfutf for the unit tests for these methods.
+ ; See %wfut for the whole unit-test library.
+ ; See %wfud for documentation introducing the Web Form Lbrary,
+ ; including an intro to the Filer Library.
+ ; See %wful for the module's primary-development log.
+ ; See %wf for the module's ppis & apis.
+ ; %wffiler contains no public entry points.
  ; It is currently untested & in progress.
  ;
  quit  ; no entry from top
@@ -22,9 +29,9 @@
  ;@license: Apache 2.0
  ;   https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-05T19:41Z
+ ;@last-updated: 2018-03-06T20:08Z
  ;@application: Mumps Advanced Shell (Mash)
- ;@module: Write Form - %wf
+ ;@module: Web Form - %wf
  ;@version: 1.8T04
  ;@release-date: not yet released
  ;@patch-list: none yet

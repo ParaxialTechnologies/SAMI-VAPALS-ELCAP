@@ -1,9 +1,10 @@
-%wfhfind ;ven/gpl-write form: html find/replace ;2018-03-01T21:32Z
+%wfhfind ;ven/gpl-web form: html find/replace ;2018-03-06T20:12Z
  ;;1.8;Mash;
  ;
- ; %wfhfind implements the Write Form Library's html find & replace
+ ; %wfhfind implements the Web Form Library's html find & replace
  ; methods, for finding & then removing or replacing substrings in a
- ; line of html text.
+ ; line of html text. It will be retired soon in favor of the Mash
+ ; String Find Library toolset.
  ; It is currently untested & in progress.
  ;
  quit  ; no entry from top
@@ -23,9 +24,9 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-01T21:32Z
+ ;@last-updated: 2018-03-06T20:12Z
  ;@application: Mumps Advanced Shell (Mash)
- ;@module: Write Form - %wf
+ ;@module: Web Form - %wf
  ;@version: 1.8T04
  ;@release-date: not yet released
  ;@patch-list: none yet

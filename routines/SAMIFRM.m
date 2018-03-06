@@ -1,4 +1,4 @@
-SAMIFRM ;ven/gpl - ielcap: forms ;2018-02-07T20:45Z
+SAMIFRM ;ven/gpl - ielcap: forms ;2018-03-01T21:43Z
  ;;18.0;SAM;;
  ;
  ; Routine SAMIFRM contains subroutines for managing the ELCAP forms,
@@ -22,7 +22,7 @@ SAMIFRM ;ven/gpl - ielcap: forms ;2018-02-07T20:45Z
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-07T20:45Z
+ ;@last-updated: 2018-03-01T21:43Z
  ;@application: Screening Applications Management (SAM)
  ;@module: Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files: SAMI Forms (311.101-311.199)
@@ -68,9 +68,16 @@ SAMIFRM ;ven/gpl - ielcap: forms ;2018-02-07T20:45Z
  ; r/calls to $$setroot^%yottaq & getVals^%yottaq w/$$setroot^%wdgraph
  ; & getVals^%wf.
  ;
+ ; 2018-02-14 ven/toad v18.0t04 SAMIFRM: r/replaceAll^%wf
+ ; w/findReplaceAll^%wf, r/ln w/line, add @calls & @called-by tags, break
+ ; up some long lines, scope variables in $$GETDIR & $$GETFN.
+ ;
+ ; 2018-03-01 ven/toad v18.0t04 SAMIFRM: r/findReplaceAll^%wf
+ ; w/findReplace^%ts.
+ ;
  ;@contents
  ; INITFRMS: initial all available forms
- ; INITFRM: initialize 1 form from elcap-patient graph (field names only)
+ ; INIT1FRM: initialize 1 form from elcap-patient graph (field names only)
  ; REGFORMS: register elcap forms in form mapping file
  ; loadData: import directory full of json data into elcap-patient graph
  ; parseFileName: parse filename extracting studyid and form
@@ -89,23 +96,37 @@ SAMIFRM ;ven/gpl - ielcap: forms ;2018-02-07T20:45Z
  ;
 INITFRMS ; initilize form file from elcap-patient graphs
  ;
+ ;@called-by: ???
+ ;@calls
+ ; $$setroot^%wdgraph
+ ; getVals^%wf
+ ; INIT1FRM
+ ;
  new root set root=$$setroot^%wdgraph("elcap-patients")
  quit:root=""
  new groot set groot=$name(@root@("graph"))
  new patient set patient=$order(@groot@(""),-1) ; use last patient in graph
  quit:patient=""
  new form set form=""
- for  set form=$order(@groot@(patient,form)) quit:form=""  do  ; for each form patient has
+ ; for each form patient has:
+ for  set form=$order(@groot@(patient,form)) quit:form=""  do
  . new array
  . do getVals^%wf("array",form,patient) ; get array of fields & values
  . write !,"using patient: ",patient
  . do INIT1FRM(form,"array") ; initialize form & its fields
+ . quit
  ;
  quit  ; end of INITFRMS
  ;
  ;
  ;
 INIT1FRM(form,ary) ; initialize one form named form from ary passed by name 
+ ;
+ ;@called-by
+ ; INITFRMS
+ ;@calls
+ ; UPDATE^DIE
+ ; CLEAN^DILF
  ;
  write !,form
  zwrite @ary
@@ -143,7 +164,11 @@ INIT1FRM(form,ary) ; initialize one form named form from ary passed by name
  ;
  ;
  ;
-REGFORMS() ; register elcap forms in the form mapping file
+REGFORMS() ; register elcap forms in form mapping file
+ ;
+ ;@called-by: ???
+ ;@calls
+ ; UPDATE^DIE
  ;
  new fn set fn=311.11 ; file number
  new sfn set sfn=311.11001 ; subfile number for variables
@@ -182,7 +207,15 @@ REGFORMS() ; register elcap forms in the form mapping file
  ;
  ;
  ;
-loadData() ; import a directory full of json data into the elcap-patient graph
+loadData() ; import directory full of json data into elcap-patient graph
+ ;
+ ;@called-by: ???
+ ;@calls
+ ; $$GETDIR
+ ; file2ary^%wd
+ ; $$setroot^%wd
+ ; DECODE^VPRJSON
+ ; parseFileName
  ;
  new dir
  if '$$GETDIR(.dir,"/home/osehra/www/sample-data-20171129/") quit  ; user exited
@@ -219,6 +252,10 @@ parseFileName(fn,zid,zform) ; parse filename extracting studyid & form
  ; yields studyid=XXX0001
  ;                 & form=bxform-2004-02-01
  ;
+ ;@called-by
+ ; loadData
+ ;@calls: none
+ ;
  set zid=$piece(fn,"-",1)
  new loc set loc=$find(fn,"-")
  set zform=$extract(fn,loc,$length(fn))
@@ -232,6 +269,12 @@ GETDIR(KBAIDIR,KBAIDEF) ; extrinsic which prompts for directory
  ;
  ; returns true if the user gave values
  ;
+ ;@called-by
+ ; loadData
+ ;@calls
+ ; ^DIR
+ ;
+ new DIR,DIROUT,DIRUT,DTOUT,DUOUT,X,Y
  set DIR(0)="F^3:240"
  set DIR("A")="File Directory"
  if '$data(KBAIDEF) set KBAIDEF="/home/osehra/www/"
@@ -248,6 +291,11 @@ GETFN(KBAIFN,KBAIDEF) ; extrinsic which prompts for filename
  ;
  ; returns true if the user gave values
  ;
+ ;@called-by: ???
+ ;@calls
+ ; ^DIR
+ ;
+ new DIR,DIROUT,DIRUT,DTOUT,DUOUT,X,Y
  set DIR(0)="F^3:240"
  set DIR("A")="File Name"
  if '$data(KBAIDEF) set KBAIDEF="outpatient-list.txt"
@@ -261,91 +309,144 @@ GETFN(KBAIFN,KBAIDEF) ; extrinsic which prompts for filename
  ;
  ;
  ;
-SAMISUBS(ln,form,sid,filter,%j,zhtml) ; ln is passed by reference; filter is passed by reference
+SAMISUBS(line,form,sid,filter,%j,zhtml) ; line is passed by reference; filter is passed by reference
  ;
- ; changes line ln by doing replacements needed for all SAMI forms
+ ; changes line by doing replacements needed for all SAMI forms
+ ;
+ ;@called-by
+ ; wsGetForm^%wf
+ ;@calls
+ ; findReplace^%ts
  ;
  new dbg set dbg=$get(filter("debug"))
  if dbg'="" set dbg="&debug="_dbg
  new target set target="form?form="_form_"&studyId="_sid_dbg
- if ln["datae.cgi" do replaceAll^%wf(.ln,"/cgi-bin/datac/datae.cgi",target)
+ if line["datae.cgi" do
+ . do findReplace^%ts(.line,"/cgi-bin/datac/datae.cgi",target,"a")
+ . quit
  ;
  if form="bxform" do  ; 
- . if ln["mgtsys." set ln="<link type=""text/css"" rel=""stylesheet"" media=""all"" href=""Biopsy_Mediastinoscopy%20Form_files/mgtsys.css"">"
- . if ln["mgtsys-print.css" set ln="<link type=""text/css"" rel=""stylesheet"" media=""print"" href=""Biopsy_Mediastinoscopy%20Form_files/mgtsys-print.css"">"
+ . if line["mgtsys." do
+ . . set line="<link type=""text/css"" rel=""stylesheet"" media=""all"" href=""Biopsy_Mediastinoscopy%20Form_files/mgtsys.css"">"
+ . . quit
+ . if line["mgtsys-print.css" do
+ . . set line="<link type=""text/css"" rel=""stylesheet"" media=""print"" href=""Biopsy_Mediastinoscopy%20Form_files/mgtsys-print.css"">"
+ . . quit
  . quit
  ;
- if ln["/cgi-bin/datac/cform.cgi" do
- . do replaceAll^%wf(.ln,"/cgi-bin/datac/cform.cgi","cform.cgi?studyid="_sid)
- . do replaceAll^%wf(.ln,"POST","GET")
+ if line["/cgi-bin/datac/cform.cgi" do
+ . do findReplace^%ts(.line,"/cgi-bin/datac/cform.cgi","cform.cgi?studyid="_sid,"a")
+ . do findReplace^%ts(.line,"POST","GET","a")
  . quit
  ;
- if ln["VEP0001" do replaceAll^%wf(.ln,"VEP0001",sid)
+ if line["VEP0001" do
+ . do findReplace^%ts(.line,"VEP0001",sid,"a")
+ . quit
  ;
- if ln["home.cgi" do replaceAll^%wf(.ln,"POST","GET")
+ if line["home.cgi" do
+ . do findReplace^%ts(.line,"POST","GET","a")
+ . quit
  ;
- if ln["/css/" do replaceAll^%wf(.ln,"/css/","see/")
- if ln["/js/" do replaceAll^%wf(.ln,"/js/","see/")
- if ln["/images/" do replaceAll^%wf(.ln,"/images/","see/")
+ if line["/css/" do
+ . do findReplace^%ts(.line,"/css/","see/","a")
+ . quit
+ if line["/js/" do
+ . do findReplace^%ts(.line,"/js/","see/","a")
+ . quit
+ if line["/images/" do
+ . do findReplace^%ts(.line,"/images/","see/","a")
+ . quit
  ;
  quit  ; end of SAMISUBS
  ;
  ;
  ;
-SAMISUB2(ln,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
+SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  ;
- ; ln is passed by reference; filter is passed by reference
+ ; line is passed by reference; filter is passed by reference
  ; can modify any line in the html as needed
+ ;
+ ;@called-by
+ ; wsGetForm^%wf
+ ;@calls
+ ; fixSrc
+ ; fixHref
  ;
  ; the following didn't work so is commented out.
  ; fix to handle javascript separately
  ; caution: the following might modify %j to skip over javascript
  ;
- ; if ln["<script" do  ;
- ; . if ln["</script" quit  ;
+ ; if line["<script" do  ;
+ ; . if line["</script" quit  ;
  ; . new zi set zi=%j
  ; . new max set max=$order(zhtml(" "),-1)
  ; . for zi=%j,1,max quit:zhtml(zi)["</script"  do  ;
- ; . . set ln=zhtml(zi)
- ; . . if ln["src=" do fixSrc(.ln)
- ; . . if ln["href=" do fixHref(.ln) 
- ; . . set ln=ln_$char(13,10)
- ; . . set zhtml(zi)=ln
+ ; . . set line=zhtml(zi)
+ ; . . if line["src=" do fixSrc(.line)
+ ; . . if line["href=" do fixHref(.line) 
+ ; . . set line=line_$char(13,10)
+ ; . . set zhtml(zi)=line
  ; . . quit
  ; . set %j=zi+1
- ; . set ln=zhtml(%j)
+ ; . set line=zhtml(%j)
  ; . quit
  ;
- set ln=ln_$char(13,10) ; insert CRLF at end of every line
+ set line=line_$char(13,10) ; insert CRLF at end of every line
  ; for readability in browser
  ;
- if ln["src=" do fixSrc(.ln) ; insert see/ processor on src= references
- if ln["href=" do fixHref(.ln) ; insert see/ processor on href= references
+ if line["src=" do
+ . do fixSrc(.line) ; insert see/ processor on src= references
+ . quit
+ if line["href=" do
+ . do fixHref(.line) ; insert see/ processor on href= references
+ . quit
  ;
  quit  ; end of SAMISUB2
  ;
  ;
  ;
-fixSrc(ln) ; fix html src lines to use resources in see/
+fixSrc(line) ; fix html src lines to use resources in see/
  ;
- if ln["src=" do  ;
- . if ln["src=""/" do replaceAll^%wf(.ln,"src=""/","src=""see/") quit  ;
- . if ln["src=""" do replaceAll^%wf(.ln,"src=""","src=""see/") quit  ;
- . if ln["src=" do replaceAll^%wf(.ln,"src=","src=see/")
+ ;@called-by
+ ; SAMISUB2
+ ;@calls
+ ; findReplace^%ts
+ ;
+ if line["src=" do  ;
+ . if line["src=""/" do  quit
+ . . do findReplace^%ts(.line,"src=""/","src=""see/","a")
+ . . quit
+ . if line["src=""" do  quit
+ . . do findReplace^%ts(.line,"src=""","src=""see/","a")
+ . . quit
+ . if line["src=" do
+ . . do findReplace^%ts(.line,"src=","src=see/","a")
+ . . quit
  . quit
  ;
  quit  ; end of fixSrc
  ;
  ;
  ;
-fixHref(ln) ; fix html href lines to use resources in see/
+fixHref(line) ; fix html href lines to use resources in see/
  ;
- if ln["href=" do  ;
- . if ln["href=""#" quit  ;
- . if ln["href='#" quit  ;
- . if ln["href=""/" do replaceAll^%wf(.ln,"href=""/","href=""/","href=""see/") quit  ;
- . if ln["href=""" do replaceAll^%wf(.ln,"href=""","href=""see/") quit  ;
- . if ln["href=" do replaceAll^%wf(.ln,"href=","href=see/") quit  ;
+ ;@called-by
+ ; SAMISUB2
+ ;@calls
+ ; findReplace^%ts
+ ;
+ if line["href=" do  ;
+ . quit:line["href=""#"
+ . quit:line["href='#"
+ . if line["href=""/" do  quit
+ . . do findReplace^%ts(.line,"href=""/","href=""/","href=""see/","a")
+ . . quit
+ . if line["href=""" do  quit
+ . . do findReplace^%ts(.line,"href=""","href=""see/","a")
+ . . quit
+ . if line["href=" do  quit
+ . . do findReplace^%ts(.line,"href=","href=see/","a")
+ . . quit
  . quit
  ;
  quit  ; end of fixHref

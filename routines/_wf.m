@@ -1,4 +1,4 @@
-%wf ;ven/gpl-write form: development log ;2018-02-11T15:12Z
+%wf ;ven/gpl-write form: development log ;2018-03-01T21:47Z
  ;;1.8;Mash;
  ;
  ; %wful is the Write Form Library's ppi & api routine. It supports getting
@@ -23,7 +23,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-11T15:12Z
+ ;@last-updated: 2018-03-01T21:47Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Write Form - %wf
  ;@version: 1.8T04
@@ -77,20 +77,20 @@ redactErr(html,err,indx) goto redactErr^%wfhform
 redactErr2(html,indx) goto redactErr2^%wfhform
  ;
  ;
- ;>test redactErr2^%wf [move to %wfut]
+ ;@test redactErr2^%wf [move to %wfut]
 testRedactErr2 goto testRedactErr2^%wfhform
  ;
  ;
  ;@ppi putErrMsg2^%wf, insert error msgs
-putErrMsg2(html,lin,msg,err) goto putErrMsg2^%wfhform
+putErrMsg2(html,line,msg,err) goto putErrMsg2^%wfhform
  ;
  ;
  ;@ppi insError^%wf, insert error msg into html line
-insError(ln,msg) goto insError^%wfhform
+insError(line,msg) goto insError^%wfhform
  ;
  ;
  ;@ppi debugFld^%wf, insert field debugging info
-debugFld(ln,form,name) goto debugFld^%wfhform
+debugFld(line,form,name) goto debugFld^%wfhform
  ;
  ;
  ;
@@ -98,16 +98,8 @@ debugFld(ln,form,name) goto debugFld^%wfhform
  ;
  ;
  ;
- ;@ppi $$delText^%wf, delete text from html line
-delText(ln,begin,end,ins) goto delText^%wfhform
- ;
- ;
- ;@ppi replace^%wf, replace test in html line
-replace(ln,cur,repl) goto replace^%wfhform
- ;
- ;
- ;@API replaceAll^%wf, replace text in html line
-replaceAll(ln,cur,repl) goto replaceAll^%wfhform
+ ;@ppi deleteBetween^%wf, find & delete text between 2 substrings
+deleteBetween(line,before,after,replace) goto deleteBetween^%wfhfind
  ;
  ;
  ;
@@ -116,11 +108,11 @@ replaceAll(ln,cur,repl) goto replaceAll^%wfhform
  ;
  ;
  ;@ppi unvalue^%wf, clear input value in html line
-unvalue(ln) goto unvalue^%wfhform
+unvalue(line) goto unvalue^%wfhform
  ;
  ;
  ;@ppi value^%wf, set input value in html line
-value(ln,val) goto value^%wfhform
+value(line,val) goto value^%wfhform
  ;
  ;
  ;@ppi getVals^%wf, get field values from graph
@@ -136,8 +128,12 @@ setVals(vary,zid,zsid) goto setVals^%wfhform
  ;
  ;
  ;
+ ;@ppi $$type^%wf, input type
+type(line) goto type^%wfhinput
+ ;
+ ;
  ;@ppi uncheck^%wf, uncheck radio button or checkbox
-uncheck(ln) goto uncheck^%wfhinput
+uncheck(line) goto uncheck^%wfhinput
  ;
  ;
  ;@ppi check^%wf, check radio button or checkbox
@@ -188,11 +184,11 @@ parseBody(rtn,body) goto parseBody^%wfhform
  ;
  ;
  ;@ppi replaceSrc^%wf, chg resources in src & href
-replaceSrc(ln) goto replaceSrc^%wfhform
+replaceSrc(line) goto replaceSrc^%wfhform
  ;
  ;
  ;@ppi replaceHref^%wf, chg resources in href
-replaceHref(ln) goto replaceHref^%wfhform
+replaceHref(line) goto replaceHref^%wfhform
  ;
  ;
  ;

@@ -1,7 +1,7 @@
-%wful ;ven/toad-write form: development log ;2018-02-11T15:12Z
+%wful ;ven/toad-web form: development log ;2018-03-06T16:22Z
  ;;1.8;Mash;
  ;
- ; %wful is the Write Form Library's primary-development log.
+ ; %wful is the Web Form Library's primary-development log.
  ; It contains no executable software.
  ;
  quit  ; no entry from top
@@ -21,9 +21,9 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-11T15:12Z
+ ;@last-updated: 2018-03-06T16:22Z
  ;@application: Mumps Advanced Shell (Mash)
- ;@module: Write Form - %wf
+ ;@module: Web Form - %wf
  ;@version: 1.8T04
  ;@release-date: not yet released
  ;@patch-list: none yet
@@ -150,16 +150,46 @@
  ; labels to receive gotos, repoint check & uncheck^%wf to %wfhradio
  ; then to %wfhinput, annotate wsGetForm & break into stanzas.
  ;  %wfhradio->%wfhinput: new routine fr/check & uncheck^%wfhform,
- ; rename to %wfhinput.
+ ; rename to %wfhinput, refactor check & uncheck, make check only
+ ; apply standard checked attribute.
+ ;  %wf,%wfhinput,%wfhform: add & use $$type^%wf ppi, make it & check
+ ; & uncheck read any case of INPUT or TYPE or CHECKED as per html
+ ; standard but only write lowercase, as per html convention.
+ ;
+ ; 2018-02-13/03-01 ven/toad %1.8t04 %wf,%wfhfind,%wfhform,SAMIFRM,
+ ; SAMICASE: move code for ppis $$delText^%wf,replace^%wf,replaceAll^%wf
+ ; fr/%wfhform to/%whfhfind, repoint ppis to moved code, rename
+ ; $$delText->deleteBetween (function->procedure), replace->findReplace,
+ ; replaceAll->findReplaceAll, change all calls to ppis to match, add
+ ; ppis find^%wf & replace^%wf to do case-insensitive find & replace,
+ ; rename replace => place. move replace^%wf => setextract^%ts &
+ ; replace^%wfhfind => setextract^%tses. find^%wf => find^%ts,
+ ; find^%wfhfind => find^%tsef. findReplace^%wf => findReplace^%ts &
+ ; repoint calls to it from %wfhform & %wfhinput. fold George's 02-27
+ ; mod into my %wfhform; eliminate findReplaceAll^%wfhfind in favor of
+ ; findReplace^%ts with A flag; remove findReplaceAll^%wf.
+ ;
+ ; 2018-02-27 ven/gpl 1.8t04 %wfhform: in getVals load prefill values
+ ; by calling $$sid2num^SAMIHOME.
+ ;
+ ; 2018-03-05 ven/toad %1.8t04 %wfhinput: in uncheck,check,type use
+ ; new calls, add examples, & be cautious about lowercase, rename
+ ; module => Web form Library.
+ ;  %wfut: create core unit-test routine.
+ ;  %wfuthi: create html input unit-test routine.
+ ;
+ ;@to-do
+ ; use find & place in other three ppis
  ;
  ;@module-contents
  ; %wf: write form ppi & api library
  ; %wffiler: fileman-to-form interfaces
  ; %wffmap: fileman-to-form maps
  ; %wfhform: graph-to-form interfaces
- ; %wfhradio: radio & checkbox
+ ; %wfhinput: process input tags, including radio & checkbox
  ; %wful: primary-development log
- ; %wfut: unit tests [tbd]
+ ; %wfut: unit tests
+ ; %wfuthi: unit tests for html input tags
  ;
  ;
  ;

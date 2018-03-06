@@ -1,4 +1,4 @@
-%wfhform ;ven/gpl-write form: html form get & post ;2018-02-11T15:12Z
+%wfhform ;ven/gpl-write form: html form get & post ;2018-03-01T21:35Z
  ;;1.8;Mash;
  ;
  ; %wfhform implements the Write Form Library's html form get & post web
@@ -22,7 +22,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-11T15:12Z
+ ;@last-updated: 2018-03-01T21:35Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Write Form - %wf
  ;@version: 1.8T04
@@ -54,14 +54,16 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  ;@branches-from
  ; wsGetForm^%wf
  ;@ws-called-by
- ; web service GET:form/*
+ ; web service %wf-wsGetForm
  ;@called-by: none
  ;@calls
  ; getVals^%wf
  ; retrieve^%wffiler
  ; $$getTemplate^%wf
  ; getThis^%wd
+ ; $$lowcase^%ts
  ; SAMISUBS^SAMIFRM
+ ; SAMISUB2^SAMIFRM
  ; redactErr^%wf
  ; redactErr2^%wf
  ; $$formLabel^%wf
@@ -72,7 +74,7 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  ; debugFld^%wf
  ; unvalue^%wf
  ; $$URLENC^VPRJRUT
- ; replace^%wf
+ ; findReplace^%ts
  ; dateFormat^%wf
  ; value^%wf
  ; $$getFieldSpec^%wffmap
@@ -139,6 +141,7 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  new %j set %j=""
  for  set %j=$order(zhtml(%j)) quit:%j=""  do  ;
  . new tln set tln=zhtml(%j)
+ . set tln("low")=$$lowcase^%ts(tln) ; lowercase for checks
  . new customscan s customscan=""
  . ;
  . ;@stanza 5 special handling of SAMI forms
@@ -160,8 +163,8 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . ;
  . if form="sbform3" do SAMISUB2^SAMIFRM(.tln,form,sid,.filter,.%j,.zhtml)
  . else  do SAMISUBS^SAMIFRM(.tln,form,sid,.filter)
- . ;
  . set zhtml(%j)=tln
+ . ;
  . if tln["submit" quit  ;
  . if tln["hidden" quit  ;
  . ;
@@ -189,18 +192,18 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . set (name,value)=""
  . ;
  . if zhtml(%j)["name=" do  ;
- . . set name=$piece($piece(zhtml(%j),"name=""",2),"""",1)
- . . ;write !,"found name ",name
+ . . set name=$piece($piece(zhtml(%j),"name=""",2),"""")
+ . . ; write !,"found name ",name
  . . quit
  . ;
  . if zhtml(%j)["value=" do  ;
- . . set value=$piece($piece(zhtml(%j),"value=""",2),"""",1)
+ . . set value=$piece($piece(zhtml(%j),"value=""",2),"""")
  . . quit
  . ;
- . ;@stanza 8 process study id [why the asterisks?]
+ . ;@stanza 8 process study id [asterisks in Ken's 1st draft]
  . ;
  . if zhtml(%j)["*sbsid*" do  ;
- . . set zhtml(%j)=$piece(tln,"*sbsid*",1)_sid_$piece(tln,"*sbsid*",2)
+ . . set zhtml(%j)=$piece(tln,"*sbsid*")_sid_$piece(tln,"*sbsid*",2)
  . . quit
  . ;
  . ;@stanza 9 process action
@@ -234,7 +237,7 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . ;
  . ;@stanza 12 process input tags
  . ;
- . if zhtml(%j)["input" do  ;
+ . if zhtml(%j)["<input" do  ;
  . . ;
  . . ; handle long lines
  . . if $length(zhtml(%j),"<input")>2 do  ; got to split the lines
@@ -250,30 +253,27 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . . new val set val=""
  . . if $data(vals(name)) set val=vals(name)
  . . ;
- . . ; handle radio buttons & checkboxes
- . . new type set type=""
- . . ;if tln["type=" set type=$piece($piece(tln,"type=""",2),"""",1)
- . . if tln["type=" set type=$piece($piece(tln,"type=",2)," ",1)
- . . if ((type="radio")!(type="checkbox")) do  quit  ;
- . . . ;quit  ; skip these for now
+ . . ; process radio buttons & checkboxes
+ . . new type set type=$$type^%wf(tln("low")) ; get input type
+ . . if type="radio"!(type="checkbox") do  quit  ; treat the same
  . . . do uncheck^%wf(.tln)
  . . . if $get(val)=$get(value) do check^%wf(.tln,type)
  . . . if $get(filter("debug"))=2 do debugFld^%wf(.tln,form,name)
- . . . set zhtml(%j)=tln
+ . . . set zhtml(%j)=tln ; r/template line w/processed line
  . . . quit
- . . ; break
  . . ;
  . . ; clear value, normalize quotes & dates, restore value
  . . do unvalue^%wf(.tln) ; clear input-field value
  . . ; set val=$$URLENC^VPRJRUT(val)
- . . for  do replace^%wf(.val,"""","&quot;") quit:val'[""""  ; quotes
+ . . ; replace with findReplaceAll call?:
+ . . for  do findReplace^%ts(.val,"""","&quot;") quit:val'[""""  ; quotes
  . . do dateFormat^%wf(.val,form,name) ; ensure elcap date format
  . . do value^%wf(.tln,val) ; restore normalized value
  . . ;
  . . ; input-field validation
  . . new spec,errmsg set spec=$$getFieldSpec^%wffmap(form,name)
  . . set errmsg="Input invalid"
- . . if val'="" do  ;
+ . . if val]"" do  ;
  . . . if $$validate^%wf(val,spec,,.errmsg)<1 do  ;
  . . . . set errflag=1
  . . . . new errmethod set errmethod=2
@@ -307,7 +307,9 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . . set val=$get(vals(name))
  . . ; set val=$get(vals(name))
  . . ; set val=$$URLENC^VPRJRUT(val)
- . . if val'="" do replace^%wf(.tln,"</textarea>",val_"</textarea>")
+ . . if val'="" do
+ . . . do findReplace^%ts(.tln,"</textarea>",val_"</textarea>","ir")
+ . . . quit
  . . set zhtml(%j)=tln
  . . quit
  . ;
@@ -322,8 +324,10 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . if zhtml(%j)["<option" do  ;
  . . quit:selectnm=""
  . . set val=$get(vals(selectnm))
- . . do replace^%wf(.tln," selected","") ; unselect
- . . if $g(val)=$get(value) do replace^%wf(.tln,"<option ","<option selected ")
+ . . do findReplace^%ts(.tln," selected","","ir") ; unselect
+ . . if $g(val)=$get(value) do
+ . . . do findReplace^%ts(.tln,"<option ","<option selected ","i")
+ . . . quit
  . . if $get(filter("debug"))=2 do debugFld^%wf(.tln,form,name)
  . . set zhtml(%j)=tln
  . . quit
@@ -491,7 +495,7 @@ redactErr2 ; code for ppi redactErr2^%wf, redact field's error symbol
  ; wsGetForm^%wf
  ;@called-by: none
  ;@calls
- ; $$delText^%wf
+ ; deleteBetween^%wf
  ;@input
  ; html = 
  ;.indx = 
@@ -507,9 +511,10 @@ redactErr2 ; code for ppi redactErr2^%wf, redact field's error symbol
  ;
  if @html@(indx)'["fielderror" quit  ; nothing to replace
  if @html@(indx)["fielderror""></span>" quit  ; nothing to replace
- new ln
- set ln=@html@(indx)
- if $$delText^%wf(.ln,"fielderror"">","</span>") set @html@(indx)=ln
+ new line
+ set line=@html@(indx)
+ do deleteBetween^%wf(.line,"fielderror"">","</span>")
+ set @html@(indx)=line
  ;
  ;@stanza 3 termination
  ;
@@ -553,20 +558,20 @@ putErrMsg2 ; code for ppi putErrMsg2^%wf, insert error msgs
  ;
  ;ven/gpl;private;procedure;
  ;@signature
- ; do putErrMsg2^%wf(html,.lin,.msg,err)
+ ; do putErrMsg2^%wf(html,.line,.msg,err)
  ;@branches-from
  ; putErrMsg2^%wf
  ;@ppi-called-by
  ; wsGetForm
  ;@called-by: none
  ;@calls
- ; replace^%wf
+ ; findReplace^%ts
  ;@input
  ; html = name of array containing html form
  ;.msg = error message to insert
  ;@throughput
  ; err = name of error array
- ;.lin = line to change, containing error, needs error message inserted
+ ;.line = line to change, containing error, needs error message inserted
  ; @html = form to insert error messages into
  ; @err = error array to update with error message
  ;@examples [tbd]
@@ -578,7 +583,7 @@ putErrMsg2 ; code for ppi putErrMsg2^%wf, insert error msgs
  ;@stanza 2 insert error messages
  ;
  if $g(err)="" set err="errctrl"
- ;merge ^gpl("err")=@err
+ ; merge ^gpl("err")=@err
  new errno set errno=$get(@err@("errorCount"))+1
  set @err@("errorCount")=errno
  new uline set uline=$get(@err@("currentErrorLine"))
@@ -597,7 +602,7 @@ putErrMsg2 ; code for ppi putErrMsg2^%wf, insert error msgs
  . quit
  new inserttxt
  set inserttxt="<a name=""err-"_errno_""" href=""#err-"_errno_"e""><img src=""see/error.png""/>"_errno_"</a>"
- do replace^%wf(.lin,"fielderror"">","fielderror"">"_inserttxt)
+ do findReplace^%ts(.line,"fielderror"">","fielderror"">"_inserttxt,"ir")
  if $get(uline)="" quit  ; set uline=32 - no uline is found, so nowhere to put the errors
  set @html@(uline)=@html@(uline)_"<tr><td class=""icon""><a name=""err-"_errno_"e"" href=""#err-"_errno_"""><img src=""see/error.png""/>"_errno_"</a></td><td>"_msg_"</td></tr>"
  ;
@@ -613,7 +618,7 @@ insError ; code for ppi insError^%wf, insert error msg into html line
  ;
  ;ven/gpl;private;procedure;
  ;@signature
- ; do insError^%wf(.ln,.msg)
+ ; do insError^%wf(.line,.msg)
  ;@branches-from
  ; insError^%wf
  ;@ppi-called-by
@@ -621,23 +626,29 @@ insError ; code for ppi insError^%wf, insert error msg into html line
  ; debugFld^%wf
  ;@called-by: none
  ;@calls
- ; replace^%wf
+ ; findReplace^%ts
  ;@input
  ;.msg = error message to insert
  ;@throughput
- ;.ln = line to change by inserting error message
+ ;.line = line to change by inserting error message
  ;@examples [tbd]
  ;@tests [tbd]
  ;
  ; [description tbd]
- ; inserts an error message into ln, passed by reference
+ ; inserts an error message into line, passed by reference
  ;
  ;@stanza 2 insert error message
  ;
  new errins set errins="<span class=""alert"" style=""font-size: 0.9em;"">"_msg_"</span>"
- if ln["</input>" do replace^%wf(.ln,"</input>","</input>"_errins)  quit  ;
- if ln["/>" do replace^%wf(.ln,"/>","/>"_errins)  quit  ;
- if ln[">" set ln=ln_"</input>"_errins
+ if line["</input>" do  quit
+ . do findReplace^%ts(.line,"</input>","</input>"_errins,"ir")
+ . quit
+ if line["/>" do  quit
+ . do findReplace^%ts(.line,"/>","/>"_errins,"ir")
+ . quit
+ if line[">" do
+ . set line=line_"</input>"_errins
+ . quit
  ;
  ;@stanza 3 termination
  ;
@@ -651,7 +662,7 @@ debugFld ; code for ppi debugFld^%wf, insert field debugging info
  ;
  ;ven/gpl;private;procedure;
  ;@signature
- ; do debugFld^%wf(ln,form,name)
+ ; do debugFld^%wf(line,form,name)
  ;@branches-from
  ; debugFld^%wf
  ;@ppi-called-by
@@ -664,7 +675,7 @@ debugFld ; code for ppi debugFld^%wf, insert field debugging info
  ; form = 
  ; name = 
  ;@throughput
- ;.ln = 
+ ;.line = 
  ;@examples [tbd]
  ;@tests [tbd]
  ;
@@ -679,7 +690,7 @@ debugFld ; code for ppi debugFld^%wf, insert field debugging info
  set dtxt=dtxt_" fmFld="_$get(fary("FILEMAN_FIELD"))
  set dtxt=dtxt_" "_$get(fary("DATA_TYPE"))
  set dtxt=dtxt_" fmTitle: "_$get(fary("TITLE"))
- do insError^%wf(.ln,dtxt)
+ do insError^%wf(.line,dtxt)
  ;
  ;@stanza 3 termination
  ;
@@ -687,139 +698,7 @@ debugFld ; code for ppi debugFld^%wf, insert field debugging info
  ;
  ;
  ;
- ;@section 4 wsGetForm^%wf text manipulation
- ;
- ;
- ;
-delText ; code for ppi $$delText^%wf, delete text from html line
- ;
- ;@stanza 1 invocation, binding, & branching
- ;
- ;ven/gpl;private;function;
- ;@signature
- ; $$delText^%wf(.ln,begin,end,ins)
- ;@branches-from
- ; $$delText^%wf
- ;@ppi-called-by
- ; redactErr2^%wf
- ;@called-by: none
- ;@calls: none
- ;@input
- ; begin = substring preceding text to delete
- ; end = substring following text to delete
- ; ins = [optional] text to insert
- ;@throughput
- ;.ln = line of html to change
- ;@examples [tbd]
- ;@tests [tbd]
- ;
- ; [description tbd]
- ; delete text between begin & end, optionally inserts text
- ;
- ;@stanza 2 delete/insert text
- ;
- new loc1 set loc1=$find(ln,begin)
- new loc2 set loc2=$find(ln,end)
- new haveins set haveins=0
- if $get(ins)'="" set haveins=1
- else  set ins=""
- set ln=$extract(ln,1,loc1-1)_ins_$extract(ln,loc2-$length(end),$length(ln))
- ;
- ;@stanza 3 termination
- ;
- quit 1 ; end of $$delText^%wf
- ;
- ;
- ;
-replace ; code for ppi replace^%wf, replace test in html line
- ;
- ;@stanza 1 invocation, binding, & branching
- ;
- ;ven/gpl;private;procedure;
- ;@signature
- ; do replace^%wf(.ln,cur,repl)
- ;@branches-from
- ; replace^%wf
- ;@ppi-called-by
- ; wsGetForm^%wf
- ; putErrMsg2^%wf
- ; insError^%wf
- ; value^%wf
- ; uncheck^%wf
- ; check^%wf
- ; $$replaceHref^%wf [deprecated subroutine]
- ;@called-by: none
- ;@calls: none
- ;@input
- ; cur = 
- ; repl = 
- ;@throughput
- ;.ln = 
- ;@examples [tbd]
- ;@tests [tbd]
- ;
- ; [description tbd]
- ; replace current with replacment in line ln
- ;
- ;@stanza 2 do replacements
- ;
- quit:'$data(ln)
- new where set where=$find(ln,cur)
- quit:where=0 ; this might not work for cur at the end of ln, please test
- set ln=$extract(ln,1,where-$length(cur)-1)_repl_$extract(ln,where,$length(ln))
- ;
- ;@stanza 3 termination
- ;
- quit  ; end of replace^%wf
- ;
- ;
- ;
-replaceAll ; code for API replaceAll^%wf, replace text in html line
- ;
- ;@stanza 1 invocation, binding, & branching
- ;
- ;ven/gpl;private;procedure;
- ;@signature
- ; dp replaceAll^%wf(.ln,cur,repl)
- ;@branches-from
- ; replaceAll^%wf
- ;@ppi-called-by
- ; $$replaceSrc^%wf [deprecated]
- ; wsCASE^SAMICASE
- ; SAMISUBS^SAMIFRM
- ; fixSrc^SAMIFRM
- ; fixHref^SAMIFRM
- ;@called-by: none
- ;@calls: none
- ;@input
- ; cur = 
- ; repl = 
- ;@throughput
- ;.ln = 
- ;@examples [tbd]
- ;@tests [tbd]
- ;
- ; [description tbd]
- ; replace all occurances of cur with repl in ln, passed by reference
- ;
- ;@stanza 2 do replacements
- ;
- new i,t1,t2 set t1=""
- for i=1:1:$length(ln,cur) do  ;
- . set t2(i)=$piece(ln,cur,i)
- . if i>1 set t2(i)=repl_$extract(t2(i),1,$length(t2(i)))
- . quit
- ;zwr t2
- for i=1:1:$order(t2(""),-1) set t1=t1_t2(i)
- set ln=t1
- ;
- ;@stanza 3 termination
- ;
- quit  ; end of replaceAll^%wf
- ;
- ;
- ;
- ;@section 5 wsGetForm^%wf field value manipulation
+ ;@section 4 wsGetForm^%wf field value manipulation
  ;
  ;
  ;
@@ -829,7 +708,7 @@ unvalue ; code for ppi unvalue^%wf, clear input value in html line
  ;
  ;ven/gpl;private;procedure;
  ;@signature
- ; do unvalue^%wf(.ln)
+ ; do unvalue^%wf(.line)
  ;@branches-from
  ; unvalue^%wf
  ;@ppi-called-by
@@ -837,7 +716,7 @@ unvalue ; code for ppi unvalue^%wf, clear input value in html line
  ;@called-by: none
  ;@calls: none
  ;@throughput
- ;.ln
+ ;.line
  ;@examples [tbd]
  ;@tests [tbd]
  ;
@@ -847,13 +726,13 @@ unvalue ; code for ppi unvalue^%wf, clear input value in html line
  ;@stanza 2 clear value
  ;
  new l1,l2,l3,t1,t2
- set l1=$find(ln,"value=""")
+ set l1=$find(line,"value=""")
  q:l1=0
- set t1=$extract(ln,1,l1-1)
- set t2=$extract(ln,l1,$l(ln))
+ set t1=$extract(line,1,l1-1)
+ set t2=$extract(line,l1,$length(line))
  set l3=$find(t2,"""")
- set t2=""""_$extract(t2,l3,$l(t2))
- set ln=t1_t2
+ set t2=""""_$extract(t2,l3,$length(t2))
+ set line=t1_t2
  ;
  ;@stanza 3 termination
  ;
@@ -867,18 +746,18 @@ value ; code for ppi value^%wf, set input value in html line
  ;
  ;ven/gpl;private;procedure;
  ;@signature
- ; do value^%wf(.ln,val)
+ ; do value^%wf(.line,val)
  ;@branches-from
  ; value^%wf
  ;@ppi-called-by
  ; wsGetForm^%wf
  ;@called-by: none
  ;@calls
- ; replace^%wf
+ ; findReplace^%ts
  ;@input
  ; val = 
  ;@throughput
- ;.ln = 
+ ;.line = 
  ;@examples [tbd]
  ;@tests [tbd]
  ;
@@ -888,13 +767,15 @@ value ; code for ppi value^%wf, set input value in html line
  ;@stanza 2 set value
  ;
  new loc,end
- set loc=$find(ln,"value=""""")
+ set loc=$find(line,"value=""""")
  if loc=0 do  quit  ;
- . ;if $extract(ln,$length(ln))=">" set ln=$extract(ln,1,$length(ln)-1)_" value="""_val_""""_">"
- . do replace^%wf(.ln,"<input ","<input value="""_val_""" ")
+ . ; if $extract(line,$length(line))=">" do
+ . ; . set line=$extract(line,1,$length(line)-1)_" value="""_val_""""_">"
+ . ; . quit
+ . do findReplace^%ts(.line,"<input ","<input value="""_val_""" ","ir")
  . quit
- set end=$extract(ln,loc,$length(ln))
- set ln=$piece(ln,"value=""",1)_"value="""_val_""""_end
+ set end=$extract(line,loc,$length(line))
+ set line=$piece(line,"value=""",1)_"value="""_val_""""_end
  ;
  ;@stanza 3 termination
  ;
@@ -917,6 +798,7 @@ getVals ; code for ppi getVals^%wf, get field values from graph
  ;@called-by: none
  ;@calls
  ; $$setroot^%wd
+ ; $$sid2num^SAMIHOME
  ;@input
  ; vrtn = 
  ; zid = 
@@ -939,7 +821,12 @@ getVals ; code for ppi getVals^%wf, get field values from graph
  . quit
  merge @vrtn=@root@("graph",zsid,zid)
  ;
- ;@stanza 3 termination
+ ;@stanza 3 load prefill values
+ ;
+ new gien set gien=$$sid2num^SAMIHOME(sid) ; graph ien of this patient
+ merge @vrtn=@root@(gien)
+ ;
+ ;@stanza 4 termination
  ;
  quit  ; end of getVals^%wf
  ;
@@ -987,7 +874,7 @@ setVals ; code for ppi setVals^%wf, set field values into graph
  ;
  ;
  ;
- ;@section 7 wsGetForm^%wf field validation
+ ;@section 5 wsGetForm^%wf field validation
  ;
  ;
  ;
@@ -1242,7 +1129,7 @@ dateFormat ; code for ppi $$dateFormat^%wf, date in elcap format
  ;
  ;
  ;
- ;@section 8 wsPostForm^%wf web service & parseBody ppi
+ ;@section 6 wsPostForm^%wf web service & parseBody ppi
  ;
  ;
  ;
@@ -1382,7 +1269,7 @@ parseBody ; code for ppi parseBody^%wf, get field values from form
  ;
  ;
  ;
- ;@section 9 commented-out procedures
+ ;@section 7 commented-out procedures
  ;
  ;
  ;
@@ -1392,16 +1279,16 @@ replaceSrc ; code for ppi replaceSrc^%wf, chg resources in src & href
  ;
  ;ven/gpl;private;function;
  ;@signature
- ; $$replaceSrc^%wf(.ln)
+ ; $$replaceSrc^%wf(.line)
  ;@branches-from
  ; $$replaceSrc^%wf
  ;@ppi-called-by
  ; wsGetForm^%wf [commented out]
  ;@called-by: none
  ;@calls
- ; replaceAll^%wf
+ ; findReplace^%ts
  ;@input
- ;.ln = 
+ ;.line = 
  ;@output=
  ; 1 if replacement was done
  ; 0 if not
@@ -1416,36 +1303,36 @@ replaceSrc ; code for ppi replaceSrc^%wf, chg resources in src & href
  ;@stanza 2 insert see service in src & href lines
  ;
  new done set done=0
- if ln["src='/" do  ;
- . do replaceAll^%wf(.ln,"src='/","src='see/")
+ if line["src='/" do  ;
+ . do findReplace^%ts(.line,"src='/","src='see/","a")
  . set done=1
  . quit
- if ln["src=""/" do  ;
+ if line["src=""/" do  ;
  . quit:done
- . do replaceAll^%wf(.ln,"src=""/","src=""see/")
+ . do findReplace^%ts(.line,"src=""/","src=""see/","a")
  . set done=1
  . quit
- if ln["src=" do  ; 
+ if line["src=" do  ; 
  . quit:done
- . do replaceAll^%wf(.ln,"src=""","src=""see/")
+ . do findReplace^%ts(.line,"src=""","src=""see/","a")
  . set done=1
  . quit
- if ln["href='/" do  ;
- . do replaceAll^%wf(.ln,"href='/","href='see/")
+ if line["href='/" do  ;
+ . do findReplace^%ts(.line,"href='/","href='see/","a")
+ . set done=1
+ . quit
+ if line["href='" do  ;
+ . quit:done
+ . if line["href=""#" quit  ;
+ . if line["href=""javascript" quit  ;
+ . do findReplace^%ts(.line,"href='","href='see/","a")
  . set done=1 
  . quit
- if ln["href='" do  ;
+ if line["href=" do  ; 
  . quit:done
- . if ln["href=""#" quit  ;
- . if ln["href=""javascript" quit  ;
- . do replaceAll^%wf(.ln,"href='","href='see/")
- . set done=1 
- . quit
- if ln["href=" do  ; 
- . quit:done
- . if ln["href=""#" quit  ;
- . if ln["href=""javascript" quit  ;
- . do replaceAll^%wf(.ln,"href=""","href=""see/")
+ . if line["href=""#" quit  ;
+ . if line["href=""javascript" quit  ;
+ . do findReplace^%ts(.line,"href=""","href=""see/","a")
  . set done=1
  . quit
  ;
@@ -1461,16 +1348,16 @@ replaceHref ; code for ppi replaceHref^%wf, chg resources in href
  ;
  ;ven/gpl;private;function;
  ;@signature
- ; $$replaceHref^%wf(.ln)
+ ; $$replaceHref^%wf(.line)
  ;@branches-from
  ; $$replaceHref^%wf
  ;@ppi-called-by
  ; wsGetForm^%wf [commented out]
  ;@called-by: none
  ;@calls
- ; replace^%wf
+ ; findReplace^%ts
  ;@input
- ;.ln = 
+ ;.line = 
  ;@output=
  ; 1 if replacement was done
  ; 0 if not
@@ -1495,8 +1382,8 @@ replaceHref ; code for ppi replaceHref^%wf, chg resources in href
  ;
  new %ig set %ig=""
  for  set %ig=$order(conds(%ig)) quit:%ig=""  do  ;
- . if ln[%ig do  ;
- . . do replace^%wf(.ln,%ig,$get(conds(%ig)))
+ . if line[%ig do  ;
+ . . do findReplace^%ts(.line,%ig,$get(conds(%ig)),"ir")
  . . set done=1
  . . quit
  . quit

@@ -1,4 +1,4 @@
-SAMICASE ;ven/gpl - ielcap: case review page ;2018-02-08T20:11Z
+SAMICASE ;ven/gpl - ielcap: case review page ;2018-03-01T21:38Z
  ;;18.0;SAM;;
  ;
  ; SAMICASE contains subroutines for producing the ELCAP Case Review Page.
@@ -21,7 +21,7 @@ SAMICASE ;ven/gpl - ielcap: case review page ;2018-02-08T20:11Z
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-08T20:11Z
+ ;@last-updated: 2018-03-01T21:38Z
  ;@application: Screening Applications Management (SAM)
  ;@module: Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files: SAMI Forms (311.101-311.199)
@@ -56,11 +56,25 @@ SAMICASE ;ven/gpl - ielcap: case review page ;2018-02-08T20:11Z
  ; quits, r/replaceAll^%wfhfrom w/replaceAll^%wf, 
  ; r/$$getTemplate^%wfhform w/$$getTemplate^%wf.
  ;
+ ; 2018-02-14 ven/toad v18.0t04 SAMICASE: r/replaceAll^%wf
+ ; w/findReplaceAll^%wf, r/ln w/line, add @calls & @called-by tags, break
+ ; up some long lines.
+ ;
+ ; 2018-02-27 ven/gpl v18.0t04 SAMICASE: new subroutines $$key2dispDate,
+ ; $$getDateKey; in wsCASE get 1st & last names from graph, fix paths,
+ ; key forms in graph w/date.
+ ;
+ ; 2018-03-01 ven/toad v18.0t04 SAMICASE: refactor & reorganize new code,
+ ; add header comments, r/findReplaceAll^%wf w/findReplace^%ts.
+ ;
  ;@contents
- ; wsCASE: generates the case review page
- ; getTemplate: returns the html template
- ; getItems: get the items available for studyid sid
- ; casetbl: generates the case review table
+ ; wsCASE: generate case review page
+ ; $$getDateKey = date part of form key
+ ; $$key2dispDate = date in elcap format from key date
+ ; getTemplate: return html template
+ ; getItems: get items available for studyid
+ ;
+ ; casetbl: generate case review table
  ;
  ;
  ;
@@ -68,9 +82,31 @@ SAMICASE ;ven/gpl - ielcap: case review page ;2018-02-08T20:11Z
  ;
  ;
  ;
-wsCASE(rtn,filter) ; generates the case review page
+wsCASE(rtn,filter) ; generate case review page
  ;
- ; filter("studyid")=studyid of the patient
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;web service;procedure;
+ ;@called-by
+ ; web service SAMICASE-wsCASE
+ ; wsNewCase^SAMIHOME
+ ;@calls
+ ; $$setroot^%wd
+ ; getTemplate
+ ; getItems
+ ; $$sid2num^SAMIHOME
+ ; findReplace^%ts
+ ; $$getDateKey
+ ; $$key2dispDate
+ ;@input
+ ;.filter =
+ ;.filter("studyid")=studyid of the patient
+ ;@output
+ ;.rtn =
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ;@stanza 2 initialize
  ;
  kill rtn
  ;
@@ -80,7 +116,7 @@ wsCASE(rtn,filter) ; generates the case review page
  do getTemplate("temp","casereview")
  quit:'$data(temp)
  ;
- new sid set sid=$g(filter("studyid"))
+ new sid set sid=$get(filter("studyid"))
  if sid="" set sid=$get(filter("fvalue"))
  quit:sid=""
  ;
@@ -88,39 +124,52 @@ wsCASE(rtn,filter) ; generates the case review page
  do getItems("items",sid)
  quit:'$data(items)
  ;
+ new gien set gien=$$sid2num^SAMIHOME(sid) ; graph ien
+ new name set name=$get(@groot@(gien,"saminame"))
+ quit:name=""
+ new fname set fname=$piece(name,",",2)
+ new lname set lname=$piece(name,",")
+ ;
+ ;@stanza 3 change resource paths to /see/
+ ;
  new zi set zi=0
  for  set zi=$order(temp(zi)) quit:+zi=0  quit:temp(zi)["VEP0001"  do  ;
  . if temp(zi)["/images/" do  ;
- . . new ln set ln=temp(zi)
- . . do replaceAll^%wf(.ln,"/images/","see/")
- . . set temp(zi)=ln
+ . . new line set line=temp(zi)
+ . . do findReplace^%ts(.line,"/images/","/see/","a")
+ . . set temp(zi)=line
  . . quit
  . set rtn(zi)=temp(zi)
  . quit
  ;
  ; ready to insert rows for selection
  ;
- ; first, the intake form
+ ;@stanza 4 intake form
  ;
  new sikey set sikey=$order(items("sifor"))
- if sikey="" set sikey="siform"
- new geturl set geturl="form?form="_sikey_"&studyid="_sid
+ if sikey="" set sikey="siform-2017-12-10"
+ new sidate set sidate=$$getDateKey(sikey)
+ new sidispdate set sidispdate=$$key2dispDate(sidate)
+ new geturl set geturl="/form?form="_sikey_"&studyid="_sid
  new posturl set posturl="javascript:subPr('siform','QIhuSAoCYzQAAAtHza8AAAAM')"
- set rtn(zi)="<tr  bgcolor=#bffbff><td> "_sid_" </td><td> Doe </td><td> Jane </td><td> 12345 </td><td>24/Aug/2012</td><td>Intake </td>"_$char(13)
+ set rtn(zi)="<tr  bgcolor=#bffbff><td> "_sid_" </td><td> "_lname_" </td><td> "_fname_" </td><td> - </td><td>"_sidispdate_"</td><td>Intake </td>"_$char(13)
  set zi=zi+1
- set rtn(zi)="<TD> <a href="""_geturl_"""><img src=""see/preview.gif""></a></td></tr>"_$char(13)
+ set rtn(zi)="<TD> <a href="""_geturl_"""><img src=""/see/preview.gif""></a></td></tr>"_$char(13)
  ;
- ; second, the background form
+ ;@stanza 5 background form
  ;
  new sbkey set sbkey=$order(items("sbfor"))
- if sbkey="" set sbkey="sbform"
- new geturl set geturl="form?form="_sbkey_"&studyid="_sid
+ if sbkey="" set sbkey="sbform-2017-12-10"
+ new sbdate set sbdate=$$getDateKey^SAMICASE(sbkey)
+ new sbdispdate set sbdispdate=$$key2dispDate^SAMICASE(sbdate)
+ new geturl set geturl="/form?form="_sbkey_"&studyid="_sid
  new posturl set posturl="javascript:subPr('sbform','QIhuSAoCYzQAAAtHza8AAAAM')"
  set zi=zi+1
- set rtn(zi)="<tr  bgcolor=#bffbff><td> "_sid_" </td><td> - </td><td> - </td><td> 12345 </td><td>24/Aug/2012</td><td>Background </td>"_$char(13)
+ set rtn(zi)="<tr  bgcolor=#bffbff><td> "_sid_" </td><td> - </td><td> - </td><td> - </td><td>"_sbdispdate_"</td><td>Background </td>"_$char(13)
  set zi=zi+1
- set rtn(zi)="<TD> <a href="""_geturl_"""><img src=""see/preview.gif""></a></td></tr>"_$char(13)
- ; now skip the lines in the template up to tbody
+ set rtn(zi)="<TD> <a href="""_geturl_"""><img src=""/see/preview.gif""></a></td></tr>"_$char(13)
+ ;
+ ;@stanza 6 skip ahead in template to tbody
  ; 
  new loc set loc=zi+1
  for  set zi=$order(temp(zi)) quit:+zi=0  quit:temp(zi)["/tbody"  do  ;
@@ -128,22 +177,43 @@ wsCASE(rtn,filter) ; generates the case review page
  . quit
  set zi=zi-1
  ;
- ; now add the rest of the lines
+ ;@stanza 7 rest of lines
  ;
  for  set zi=$order(temp(zi)) quit:+zi=0  do  ;
  . set loc=loc+1
  . if temp(zi)["home.cgi" do
- . new ln set ln=temp(zi)
- . do replaceAll^%wf(.ln,"POST","GET")
- . set temp(zi)=ln
+ . new line set line=temp(zi)
+ . do findReplace^%ts(.line,"POST","GET","a")
+ . set temp(zi)=line
  . set rtn(loc)=temp(zi)
  . quit
+ ;
+ ;@stanza 8 termination
  ;
  quit  ; end of wsCASE
  ;
  ;
  ;
-getTemplate(return,form) ; returns the html template
+getTemplate(return,form) ; get html template
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;
+ ;@called-by
+ ; wsCASE
+ ; getHome^SAMIHOME
+ ;@calls
+ ; $$getTemplate^%wf
+ ; getThis^%wd
+ ;@input
+ ; return = name of array to return template in
+ ; form = name of form
+ ;@output
+ ; @return = template
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ;@stanza 2 get html template
  ;
  quit:$get(form)=""
  ;
@@ -152,17 +222,33 @@ getTemplate(return,form) ; returns the html template
  ;
  set HTTPRSP("mime")="text/html"
  ;
+ ;@stanza 3 termination
+ ;
  quit  ; end of getTemplate
  ;
  ;
  ;
-getItems(ary,sid) ; get the items available for studyid sid
+getItems(ary,sid) ; get items available for studyid
  ;
- ; ary is passed by name
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;
+ ;@called-by
+ ; wsCASE
+ ;@calls
+ ; $$setroot^%wd
+ ;@input
+ ; ary = name of array to return items in (pass by name)
+ ; sid = study id
+ ;@output
+ ; @ary = array of items
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ;@stanza 2 get items
  ;
  new groot set groot=$$setroot^%wd("elcap-patients")
- ;
- if '$data(@groot@("graph",sid)) quit  ; nothing there
+ quit:'$data(@groot@("graph",sid))  ; nothing there
  ;
  kill @ary
  new zi set zi=""
@@ -170,13 +256,88 @@ getItems(ary,sid) ; get the items available for studyid sid
  . set @ary@(zi)=""
  . quit
  ;
+ ;@stanza 3 termination
+ ;
  quit  ; end of getItems
  ;
  ;
  ;
-casetbl(ary) ; generates the case review table
+getDateKey(formid) ; date portion of form key
  ;
- ; ary is passed by name and will be cleared
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;function;
+ ;@called-by
+ ; wsCASE
+ ;@calls: none
+ ;@input
+ ; formid = form key
+ ;@output = date from form key
+ ;@examples [tbd]
+ ; $$getDateKey("sbform-2018-02-26") = "2018-02-26"
+ ;@tests [tbd]
+ ;
+ ;@stanza 2 calculate date from key
+ ;
+ new frm set frm=$piece(formid,"-")
+ new date set date=$piece(formid,frm_"-",2)
+ ;
+ ;@stanza 3 return & termination
+ ;
+ quit date ; return date; end of $$getDateKey
+ ;
+ ;
+ ;
+key2dispDate(zkey) ; date in elcap format from key date
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;function;
+ ;@called-by
+ ; wsCASE
+ ;@calls
+ ; ^%DT
+ ; $$FMTE^XLFDT
+ ;@input
+ ; zkey = date in any format %DT can process
+ ;@output = date in elcap format
+ ;@examples [tbd]
+ ; date 2018-02-26 => 26/Feb/2018
+ ;@tests [tbd]
+ ;
+ ;@stanza 2 convert date to elcap display format
+ ;
+ new X set X=zkey
+ new Y
+ do ^%DT
+ new Z set Z=$$FMTE^XLFDT(Y,"9D")
+ set Z=$translate(Z," ","/")
+ ;
+ ;@stanza 3 return & termination
+ ;
+ quit Z  ; return date; end of $$keysdispDate
+ ;
+ ;
+ ;
+ ;@section 2 casetbl
+ ;
+ ;
+ ;
+casetbl(ary) ; generates case review table
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;
+ ;@called-by: ?
+ ;@calls: none
+ ;@throughput
+ ; ary = name of array (passed by name, will be cleared)
+ ;@output
+ ; @ary = ?
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ;@stanza 2 build table
  ;
  kill @ary
  ;
@@ -229,6 +390,8 @@ casetbl(ary) ; generates the case review table
  set @ary@("ceform","js")="subPr"
  set @ary@("ceform","name")="CT Evaluation"
  set @ary@("ceform","image")="preview.gif"
+ ;
+ ;@stanza 3 termination
  ;
  quit  ; end of casetbl
  ;

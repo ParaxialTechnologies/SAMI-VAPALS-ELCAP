@@ -1,4 +1,4 @@
-%wfhinput ;ven/gpl-web form: html input tag ;2018-03-06T17:51Z
+%wfhinput ;ven/gpl-web form: html input tag ;2018-03-06T18:17Z
  ;;1.8;Mash;
  ;
  ; %wfhinput implements the Web Form Library's html input tag
@@ -30,7 +30,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-06T17:51Z
+ ;@last-updated: 2018-03-06T18:17Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Web Form - %wf
  ;@version: 1.8T04
@@ -153,34 +153,34 @@ uncheck ; code for ppi uncheck^%wf, uncheck radio button or checkbox
  ;@examples
  ;
  ;  new line
- ;  set line="<input type=radio name="sbhcs" value="n" checked> no"
+ ;  set line="<input type=radio name=""sbhcs"" value=""n"" checked> no"
  ;  do uncheck^%wf(.line)
  ; produces
- ;  line="<input type=radio name="sbhcs" value="n"> no"
+ ;  line="<input type=radio name=""sbhcs"" value=""n""> no"
  ;
  ;  new line
- ;  set line="<input type=radio name="sbphu" value="i" CHECKED> in"
+ ;  set line="<input type=radio name=""sbphu"" value=""i"" CHECKED> in"
  ;  do uncheck^%wf(.line)
  ; produces
- ;  line="<input type=radio name="sbphu" value="i"> in"
+ ;  line="<input type=radio name=""sbphu"" value=""i""> in"
  ;
  ;  new line
- ;  set line="<input type=radio name="sbphu" value="c"> cm"
+ ;  set line="<input type=radio name=""sbphu"" value=""c""> cm"
  ;  do uncheck^%wf(.line)
  ; produces
- ;  line="<input type=radio name="sbphu" value="c"> cm"
+ ;  line="<input type=radio name=""sbphu"" value=""c""> cm"
  ;
  ;  new line
- ;  set line="<input type="radio" name="sbmpa" value="n" checked="checked">no</input>"
+ ;  set line="<input type=""radio"" name=""sbmpa"" value=""n"" checked=""checked"">no</input>"
  ;  do uncheck^%wf(.line)
  ; produces
- ;  line="<input type="radio" name="sbmpa" value="n">no</input>"
+ ;  line="<input type=""radio"" name=""sbmpa"" value=""n"">no</input>"
  ;
  ;  new line
- ;  set line="<input type="radio" name="sbmpmi" value="n" checked=checked>no</input>"
+ ;  set line="<input type=""radio"" name=""sbmpmi"" value=""n"" checked=checked>no</input>"
  ;  do uncheck^%wf(.line)
  ; produces
- ;  line="<input type="radio" name="sbmpmi" value="n">no</input>"
+ ;  line="<input type=""radio"" name=""sbmpmi"" value=""n"">no</input>"
  ;
  ;  new line set line=""
  ;  do uncheck^%wf(.line)
@@ -264,27 +264,27 @@ check ; code for ppi check^%wf, check radio button or checkbox
  ;@examples
  ;
  ;  new line
- ;  set line="<input type="radio" name="sbdsd" id="sbdsd-n" value="n"> No"
+ ;  set line="<input type=""radio"" name=""sbdsd"" id=""sbdsd-n"" value=""n""> No"
  ;  do uncheck^%wf(.line)
  ; produces
- ;  line="<input type="radio" checked name="sbdsd" id="sbdsd-n" value="n"> No"
+ ;  line="<input type=""radio"" checked name=""sbdsd"" id=""sbdsd-n"" value=""n""> No"
  ;
  ;  new line
- ;  set line="<input type=radio name="sbphu" value="c"> cm"
+ ;  set line="<input type=radio name=""sbphu"" value=""c""> cm"
  ;  do uncheck^%wf(.line)
  ; produces
- ;  line="<input type=radio checked name="sbphu" value="c"> cm"
+ ;  line="<input type=radio checked name=""sbphu"" value=""c""> cm"
  ;
  ;  new line
- ;  set line="<input TYPE=checkbox name="sbshsua" value="a"> cigars"
+ ;  set line="<input TYPE=checkbox name=""sbshsua"" value=""a""> cigars"
  ;  do uncheck^%wf(.line)
  ; produces
- ;  line="<input TYPE=checkbox checked name="sbshsua" value="a"> cigars"
+ ;  line="<input TYPE=checkbox checked name=""sbshsua"" value=""a""> cigars"
  ;
- ;  new line set line="<html lang="en">"
+ ;  new line set line="<html lang=""en"">"
  ;  do uncheck^%wf(.line)
  ; produces
- ;  line="<html lang="en">"
+ ;  line="<html lang=""en"">"
  ;
  ;  new line set line=""
  ;  do uncheck^%wf(.line)

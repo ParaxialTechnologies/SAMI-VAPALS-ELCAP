@@ -1,4 +1,4 @@
-%wfhform ;ven/gpl-web form: html form get & post ;2018-03-06T20:31Z
+%wfhform ;ven/gpl-web form: html form get & post ;2018-03-07T18:46Z
  ;;1.8;Mash;
  ;
  ; %wfhform implements the Web Form Library's html form get & post web
@@ -29,7 +29,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-06T20:31Z
+ ;@last-updated: 2018-03-07T18:46Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Web Form - %wf
  ;@version: 1.8T04
@@ -62,6 +62,7 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  ; wsGetForm^%wf
  ;@ws-called-by
  ; web service %wf-wsGetForm
+ ; wsNuFormPost^SAMICASE
  ;@called-by: none
  ;@calls
  ; getVals^%wf
@@ -1240,6 +1241,8 @@ parseBody ; code for ppi parseBody^%wf, get field values from form
  ; parseBody^%wf
  ;@ppi-called-by
  ; wsPostForm^%wf
+ ; wsNuFormPost^SAMICASE
+ ; wsLookup^SAMISRCH
  ;@called-by: none
  ;@calls
  ; $$URLDEC^VPRJRUT

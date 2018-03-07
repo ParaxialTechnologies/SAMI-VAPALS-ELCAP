@@ -1,4 +1,4 @@
-%wful ;ven/toad-web form: development log ;2018-03-06T16:22Z
+%wful ;ven/toad-web form: development log ;2018-03-07T17:34Z
  ;;1.8;Mash;
  ;
  ; %wful is the Web Form Library's primary-development log.
@@ -21,7 +21,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-06T16:22Z
+ ;@last-updated: 2018-03-07T17:34Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Web Form - %wf
  ;@version: 1.8T04
@@ -181,6 +181,9 @@
  ;  %wfhform: update headers
  ;  %wfut: create core unit-test routine.
  ;  %wfuthi: create html input unit-test routine.
+ ;
+ ; 2018-03-07 ven/toad %1.8t04 %wfhform: in parseBody,weGetForm update
+ ; called-by.
  ;
  ;@to-do
  ; use find & place in other three ppis

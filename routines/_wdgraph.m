@@ -1,4 +1,4 @@
-%wdgraph ;ven/gpl-write dialog: graphstore ;2018-02-06T21:41Z
+%wdgraph ;ven/gpl-write dialog: graphstore ;2018-03-07T18:47Z
  ;;1.8;Mash;
  ;
  ; %wdgraph implements the Write Document Library's ppis & apis. At
@@ -24,7 +24,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-06T21:41Z
+ ;@last-updated: 2018-03-07T18:47Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Write Dialog - %wd
  ;@version: 1.8T04
@@ -61,6 +61,8 @@
  ; hdr comments, tag w/Apache license & attribution & to-do to shift
  ; to %sf later.
  ;
+ ; 2018-03-07 ven/toad %*1.8t04 %wdgraph: in setroot add header.
+ ;
  ;@to-do
  ; %wd: convert entry points to ppi/api style
  ; r/all local calls w/calls through ^%wd
@@ -78,10 +80,49 @@
  ;
 setroot(graph) ; root of working storage
  ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;function;
+ ;@called-by
+ ; $$setroot^%wd
+ ; $$field2Var^%wffiler
+ ; initFmap^%wffmap
+ ; $$getFmapGlb^%wffmap
+ ; getVals^%wfhform
+ ; setVals^%wfhform
+ ; wsPostForm^%wfhform
+ ; queryPred^%yottaq
+ ; importsami^%yottaq
+ ; wsCASE^SAMICASE
+ ; getItems^SAMICASE
+ ; wsNuForm^SAMICASE
+ ; makeCeform^SAMICASE
+ ; INITFRMS^SAMIFRM
+ ; loadData^SAMIFRM
+ ; patlist^SAMIHOME
+ ; wsNewCase^SAMIHOME
+ ; nextNum^SAMIHOME
+ ; prefill^SAMIHOME
+ ; makeSbform^SAMIHOME
+ ; makeSiform^SAMIHOME
+ ; wsLookup^SAMISRCH
+ ;@calls
+ ; $$addgraph
+ ;@input
+ ; graph = name of graph
+ ;@output = root for graph's working storage
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ;@stanza 2 calculate graph's root
+ ;
  new %y set %y=$order(^%wd(17.040801,"B",graph,""))
  if %y="" set %y=$$addgraph(graph) ; if graph is not present, add it
+ new root set root=$name(^%wd(17.040801,%y)) ; root for graph
  ;
- quit $name(^%wd(17.040801,%y)) ; root for graph
+ ;@stanza 3 return & termination
+ ;
+ quit root ; return root; end of $$setroot^%wd
  ;
  ;
  ;

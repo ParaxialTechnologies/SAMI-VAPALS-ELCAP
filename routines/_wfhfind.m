@@ -1,4 +1,4 @@
-%wfhfind ;ven/gpl-web form: html find/replace ;2018-03-06T20:12Z
+%wfhfind ;ven/gpl-web form: html find/replace ;2018-03-07T21:06Z
  ;;1.8;Mash;
  ;
  ; %wfhfind implements the Web Form Library's html find & replace
@@ -24,7 +24,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-06T20:12Z
+ ;@last-updated: 2018-03-07T21:06Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Web Form - %wf
  ;@version: 1.8T04
@@ -77,16 +77,18 @@ deleteBetween ; find & delete text between 2 substrings
  ;@stanza 2 find & delete/replace text
  ;
  quit:$get(line)=""  ; can't delete or replace in an empty line
+ new linelow set linelow=$$lowerCase^%ts(line)
  ;
- new to set to=$find(line("low"),after)-$length(after) ; 1st char after
- new from set from=$find(line("low"),before)-1 ; last char before
+ new to set to=$find(linelow,after)-$length(after) ; 1st char after
+ new from set from=$find(linelow,before)-1 ; last char before
  new last set last=$length(line) ; last char in line
  ;
  set replace=$get(replace) ; get optional replacement value
  new haverep set haverep=replace]"" ; do we have one?
  ;
  set line=$extract(line,1,from)_replace_$extract(line,to,last)
- set line("low")=line ; *** NO ***
+ set line=$extract(linelow,1,from)_replace_$extract(linelow,to,last)
+ set line("extract","low")=linelow
  ;
  ;@stanza 3 termination
  ;

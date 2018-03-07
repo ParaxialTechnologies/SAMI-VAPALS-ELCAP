@@ -1,4 +1,4 @@
-SAMIHOME ;ven/gpl - ielcap: forms ;2018-03-01T21:40Z
+SAMIHOME ;ven/gpl - ielcap: forms ;2018-03-07T18:48Z
  ;;18.0;SAMI;;
  ;
  ; Routine SAMIHOME contains subroutines for implementing the ELCAP Home
@@ -22,7 +22,7 @@ SAMIHOME ;ven/gpl - ielcap: forms ;2018-03-01T21:40Z
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-01T21:40Z
+ ;@last-updated: 2018-03-07T18:48Z
  ;@application: Screening Applications Management (SAM)
  ;@module: Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files: SAMI Forms (311.101-311.199)
@@ -63,6 +63,12 @@ SAMIHOME ;ven/gpl - ielcap: forms ;2018-03-01T21:40Z
  ;
  ; 2018-03-01 ven/toad v18.0t04 SAMIHOME: refactor & reorganize new code,
  ; add header comments, r/findReplaceAll^%wf w/findReplace^%ts.
+ ;
+ ; 2018-03-06 ven/gpl v18.0t04 SAMIHOME: ?
+ ;
+ ; 2018-03-07 ven/toad v18.0t04 SAMIHOME: in $$sid2num add
+ ; wsNuForm^SAMICASE to called-by list; in keyDate,getHome update
+ ; called-by.
  ;
  ;@contents
  ;
@@ -223,6 +229,8 @@ getHome(rtn,filter) ; homepage accessed using GET (not subsequent visit)
  ;@called-by
  ; wsHOME
  ; wsNewCase
+ ; wsNuFormPost^SAMICASE
+ ; wsLookup^SAMISRCH
  ;@calls
  ; getTemplate^SAMICASE
  ; findReplace^%ts
@@ -441,6 +449,7 @@ genStudyId(num) ; studyID for number
  ;ven/gpl;private;function;
  ;@called-by
  ; wsNewCase
+ ; wsLookup^SAMISRCH
  ;@calls
  ; $$prefix
  ;@input
@@ -487,6 +496,7 @@ keyDate(fmdt) ; date in StudyId format (yyyy-mm-dd)
  ;ven/gpl;private;function;
  ;@called-by
  ; wsNewCase
+ ; wsNuFormPost^SAMICASE
  ;@calls
  ; $$FMTE^XLFDT
  ;@input
@@ -656,6 +666,8 @@ sid2num(sid) ; number part of studyid (XXX0001 -> 1)
  ;@called-by
  ; getVals^%wfhform
  ; wsCASE^SAMICASE
+ ; wsNuForm^SAMICASE
+ ; makeCeform^SAMICASE
  ;@calls: none
  ;@input
  ; sid = study id

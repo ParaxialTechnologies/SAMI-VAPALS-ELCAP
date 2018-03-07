@@ -1,4 +1,4 @@
-SAMIFRM ;ven/gpl - ielcap: forms ;2018-03-01T21:43Z
+SAMIFRM ;ven/gpl - ielcap: forms ;2018-03-07T17:18Z
  ;;18.0;SAM;;
  ;
  ; Routine SAMIFRM contains subroutines for managing the ELCAP forms,
@@ -22,7 +22,7 @@ SAMIFRM ;ven/gpl - ielcap: forms ;2018-03-01T21:43Z
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-01T21:43Z
+ ;@last-updated: 2018-03-07T17:18Z
  ;@application: Screening Applications Management (SAM)
  ;@module: Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files: SAMI Forms (311.101-311.199)
@@ -75,6 +75,9 @@ SAMIFRM ;ven/gpl - ielcap: forms ;2018-03-01T21:43Z
  ; 2018-03-01 ven/toad v18.0t04 SAMIFRM: r/findReplaceAll^%wf
  ; w/findReplace^%ts.
  ;
+ ; 2018-03-07 ven/toad v18.0t04 SAMIFRM: in SAMISUBS r/$$setroot^%wdgraph
+ ; w/$$setroot^%wf.
+ ;
  ;@contents
  ; INITFRMS: initial all available forms
  ; INIT1FRM: initialize 1 form from elcap-patient graph (field names only)
@@ -98,11 +101,11 @@ INITFRMS ; initilize form file from elcap-patient graphs
  ;
  ;@called-by: ???
  ;@calls
- ; $$setroot^%wdgraph
+ ; $$setroot^%wd
  ; getVals^%wf
  ; INIT1FRM
  ;
- new root set root=$$setroot^%wdgraph("elcap-patients")
+ new root set root=$$setroot^%wd("elcap-patients")
  quit:root=""
  new groot set groot=$name(@root@("graph"))
  new patient set patient=$order(@groot@(""),-1) ; use last patient in graph

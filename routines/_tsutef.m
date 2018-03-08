@@ -1,4 +1,4 @@
-%tsutc ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-08T20:39Z
+%tsutc ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-08T21:29Z
  ;;1.8;Mash;
  ;
  ; This Mumps Advanced Shell (mash) routine implements unit tests for
@@ -14,7 +14,7 @@
  ;@copyright: 2016/2017/2018, ven, all rights reserved
  ;@license: Apache 2.0
  ;
- ;@last-updated: 2018-03-08T20:39Z
+ ;@last-updated: 2018-03-08T21:29Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -28,7 +28,7 @@
  ; group 2: absolute addressing w/in string
  ; group 3: Find Case-Insensitive
  ; group 4: Boundary Cases
- ; group 5: Alternate Calls
+ ; group 5: Synonyms
  ;
  ;
  ;
@@ -60,7 +60,7 @@ find101 ; @TEST findex^%ts(.string,"Kansas"): missing substring
  quit  ; end of find101
  ;
  ;
-find102 ; @TEST findex^%ts(.string,"toto"): multiple substring present
+find102 ; @TEST findex^%ts(.string,"toto"): multiple substrings present
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -82,8 +82,7 @@ find102 ; @TEST findex^%ts(.string,"toto"): multiple substring present
  quit  ; end of find102
  ;
  ;
-find103 ; @TEST findex^%ts(.string,"toto"): search for substring that exists in subject
- ; string more than once but starting after start of first instance of substring
+find103 ; @TEST findex^%ts(.string,"toto"): multiple substrings present start 
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -198,12 +197,32 @@ find301 ; @TEST findex^%ts(.string,"Toto","i"): string non-cap, sub capped
  do CHKEQ^%ut(string("extract","to"),8)
  ;
  quit  ; end of 301
- ;  
+ ;
+ ;
+find302 ; @TEST findex^%ts(.string,"Toto","i"): string cap, sub non-cap
+ ;
+ ;ven/toad&lmry;test;procedure;clean;silent;sac
+ ;
+ new string set string="TotoToto"
+ do findex^%ts(.string,"toto")
+ do CHKEQ^%ut(string("extract","from"),0)
+ do CHKEQ^%ut(string("extract","to"),0)
+ ;
+ do findex^%ts(.string,"toto","i")
+ do CHKEQ^%ut(string("extract","from"),1)
+ do CHKEQ^%ut(string("extract","to"),4)
+ ;
+ do findex^%ts(.string,"toto","i")
+ do CHKEQ^%ut(string("extract","from"),5)
+ do CHKEQ^%ut(string("extract","to"),8)
+ ;
+ quit  ; end of 302
+ ; 
  ;
  ; group 4: Boundary Cases
  ;
  ;
- ; group 5: Alternate Calls
+ ; group 5: Synonyms
  ;
  ;
 find501 ; @TEST fe^%ts(.string,"toto"): test fe^%ts
@@ -227,7 +246,7 @@ find502 ; @TEST FindExtract^%ts(.string,"toto"): test FindExtract^%ts
  new string set string="totototo"
  set string("extract","from")=6
  set string("extract","to")=7
- do FindExtract^%ts(.string,"toto")
+ do findExtract^%ts(.string,"toto")
  do CHKEQ^%ut(string("extract","from"),0)
  do CHKEQ^%ut(string("extract","to"),0)
  ;

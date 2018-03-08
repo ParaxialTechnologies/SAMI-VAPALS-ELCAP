@@ -1,4 +1,4 @@
-SAMICASE ;ven/gpl - ielcap: case review page ;2018-03-07T18:48Z
+SAMICASE ;ven/gpl - ielcap: case review page ;2018-03-08T17:53Z
  ;;18.0;SAM;;
  ;
  ; SAMICASE contains subroutines for producing the ELCAP Case Review Page.
@@ -21,7 +21,7 @@ SAMICASE ;ven/gpl - ielcap: case review page ;2018-03-07T18:48Z
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-07T18:48Z
+ ;@last-updated: 2018-03-08T17:53Z
  ;@application: Screening Applications Management (SAM)
  ;@module: Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files: SAMI Forms (311.101-311.199)
@@ -71,9 +71,9 @@ SAMICASE ;ven/gpl - ielcap: case review page ;2018-03-07T18:48Z
  ; of forms for patient, add web services wsNuForm & wsNuFormPost &
  ; method makeCeform, extend getItems to get rest of forms.
  ;
- ; 2018-03-07 ven/toad v18.0t04 SAMICASE: merge George changes w/rest,
+ ; 2018-03-07/08 ven/toad v18.0t04 SAMICASE: merge George changes w/rest,
  ; add white space, spell out mumps elements, add header comments to
- ; new subroutines, r/findReplace^%wf w/findReplace^%ts.
+ ; new subroutines, r/findReplace^%wf & replaceAll^%wf w/findReplace^%ts.
  ;
  ;@contents
  ; wsCASE: generate case review page
@@ -414,14 +414,14 @@ wsNuForm(rtn,filter) ; select new form for patient (get service)
  new zi set zi=0
  for  set zi=$order(tmpl(zi)) quit:+zi=0  quit:tmpl(zi)["nuform"  do  ;
  . new ln set ln=tmpl(zi)
- . if ln["VEP0001" do replaceAll^%ts(.ln,"VEP0001",sid)
- . if ln["Doe, Jane" do replaceAll^%ts(.ln,"Doe, Jane",saminame)
+ . if ln["VEP0001" do findReplace^%ts(.ln,"VEP0001",sid,"a")
+ . if ln["Doe, Jane" do findReplace^%ts(.ln,"Doe, Jane",saminame,"a")
  . set tcnt=tcnt+1
  . set tout(tcnt)=ln
  . quit
  ;
  new ln set ln=tmpl(zi)
- do replaceAll^%ts(.ln,"/cgi-bin/datac/nuform.cgi","/nuform?studyid="_sid)
+ do findReplace^%ts(.ln,"/cgi-bin/datac/nuform.cgi","/nuform?studyid="_sid,"a")
  set tcnt=tcnt+1 set tout(tcnt)=ln
  ;
  for  set zi=$order(tmpl(zi)) quit:+zi=0  quit:tmpl(zi)["/FORM"  do  ;
@@ -429,7 +429,7 @@ wsNuForm(rtn,filter) ; select new form for patient (get service)
  . if ln["OPTION" do  ;
  . . if ln'["ceform" set ln=""
  . . quit
- . if ln["VEP0001" do replaceAll^%ts(.ln,"VEP0001",sid)
+ . if ln["VEP0001" do findReplace^%ts(.ln,"VEP0001",sid,"a")
  . set tcnt=tcnt+1
  . set tout(tcnt)=ln
  . quit

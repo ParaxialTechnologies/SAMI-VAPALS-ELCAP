@@ -1,4 +1,4 @@
-%wfhform ;ven/gpl-web form: html form get & post ;2018-03-07T18:46Z
+%wfhform ;ven/gpl-web form: html form get & post ;2018-03-08T20:28Z
  ;;1.8;Mash;
  ;
  ; %wfhform implements the Web Form Library's html form get & post web
@@ -29,7 +29,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-07T18:46Z
+ ;@last-updated: 2018-03-08T20:28Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Web Form - %wf
  ;@version: 1.8T04
@@ -343,7 +343,7 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  ;
  ;@stanza 15 return form prepared fr/template
  ;
- ; do ADDCRLF^VPRJRUT(.zhtml)
+ do ADDCRLF^VPRJRUT(.zhtml)
  ;
  merge @rtn=zhtml ; copy processed template to return array
  ;

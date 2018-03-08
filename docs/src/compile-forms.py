@@ -31,7 +31,6 @@ with open("../www/background.html", "wb") as fh:
         ])
     ))
 
-# Intake form
 with open("../www/intake.html", "wb") as fh:
     fh.write(env.get_template('intake.html.jinja2').render(
         title='Intake Form'

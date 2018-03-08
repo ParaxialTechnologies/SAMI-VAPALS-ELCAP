@@ -1,4 +1,4 @@
-%tsutc ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-08T20:36Z
+%tsutc ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-08T20:39Z
  ;;1.8;Mash;
  ;
  ; This Mumps Advanced Shell (mash) routine implements unit tests for
@@ -14,7 +14,7 @@
  ;@copyright: 2016/2017/2018, ven, all rights reserved
  ;@license: Apache 2.0
  ;
- ;@last-updated: 2018-03-08T20:36Z
+ ;@last-updated: 2018-03-08T20:39Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -206,7 +206,7 @@ find301 ; @TEST findex^%ts(.string,"Toto","i"): string non-cap, sub capped
  ; group 5: Alternate Calls
  ;
  ;
- find501 ; @TEST fe^%ts(.string,"toto"): test fe^%ts
+find501 ; @TEST fe^%ts(.string,"toto"): test fe^%ts
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -220,7 +220,7 @@ find301 ; @TEST findex^%ts(.string,"Toto","i"): string non-cap, sub capped
  quit  ; end of find501
  ;
  ;
- find502 ; @TEST FindExtract^%ts(.string,"toto"): test FindExtract^%ts
+find502 ; @TEST FindExtract^%ts(.string,"toto"): test FindExtract^%ts
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -234,7 +234,7 @@ find301 ; @TEST findex^%ts(.string,"Toto","i"): string non-cap, sub capped
  quit  ; end of find502
  ;
  ;
- find503 ; @TEST find^%ts(.string,"toto"): test find^%ts
+find503 ; @TEST find^%ts(.string,"toto"): test find^%ts
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;

@@ -1,709 +1,482 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <title>Intake Form</title>
+    <title>
+      Intake Form
+    </title>
     <link rel="stylesheet" href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="lib/formvalidation/dist/css/formValidation.min.css">
     <link rel="stylesheet" href="lib/bootstrap-datetimepicker-4.17.47/css/bootstrap-datetimepicker.css">
     <link rel="stylesheet" href="vapals.css">
-</head>
-<body>
-<script src="lib/jquery-3.2.1.slim.min.js"></script>
-<script src="lib/popper.min.js"></script>
-<script src="lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-<script src="lib/moment.js"></script>
-<script src="lib/formvalidation/dist/js/formValidation.min.js"></script>
-<script src="lib/formvalidation/dist/js/framework/bootstrap.min.js"></script>
-<script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-<script src="jquery-conditonally-enable.js"></script>
-<script src="vapals.js"></script>
-
-<!--Debug information for viewport-->
-<span class="badge badge-secondary visible-xs-block">extra small</span>
-<span class="badge badge-secondary visible-sm-block">small</span>
-<span class="badge badge-secondary visible-md-block">medium</span>
-<span class="badge badge-secondary visible-lg-block">large</span>
-
-
-<!--System Navigation-->
-<nav class="navbar navbar-default" role="navigation">
-    <div class="container-fluid">
+  </head>
+  <body>
+    <script src="lib/jquery-3.2.1.slim.min.js"></script> 
+    <script src="lib/popper.min.js"></script> 
+    <script src="lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script> 
+    <script src="lib/moment.js"></script> 
+    <script src="lib/formvalidation/dist/js/formValidation.min.js"></script> 
+    <script src="lib/formvalidation/dist/js/framework/bootstrap.min.js"></script> 
+    <script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js"></script> 
+    <script src="jquery-conditonally-enable.js"></script> 
+    <script src="vapals.js"></script> <!--Debug information for viewport-->
+    <span class="badge badge-secondary visible-xs-block">extra small</span> <span class="badge badge-secondary visible-sm-block">small</span> <span class="badge badge-secondary visible-md-block">medium</span> <span class="badge badge-secondary visible-lg-block">large</span> <!--System Navigation-->
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            
-            <a href="home.html">
-                <img src="img/new-logo.png" title="VA-PALS" height="50"/>
-            </a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button> <a href="home.html"><img src="img/new-logo.png" title="VA-PALS" height="50" alt="VA-PALS Logo"></a>
         </div>
         <div class="navbar-collapse collapse" id="navbar-main">
-            <ul class="nav navbar-nav">
-                <li><a href="home.html">Home</a></li>
-                <li class="dropdown" id="studyIdMenu" style="display:none;">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <span id="studyIdMenuItem"></span><span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="casereview.html" class="navbar-link">Case Review</a></li>
-                        <li>
-                            <div class="nav-divider"></div>
-                        </li>
-                        <li><a href="background.html" class="navbar-link">Background</a></li>
-                        <li><a href="ctevaluation.html" class="navbar-link">CT Evaluation</a></li>
-                        <li class="disabled"><a>Followup</a></li>
-                        <li class="disabled"><a class="navbar-link">Biopsy</a></li>
-                        <li class="disabled"><a class="navbar-link">Pre-Intervention</a></li>
-                        <li class="disabled"><a class="navbar-link">Intervention</a></li>
-                        <li class="disabled"><a class="navbar-link">PET Evaluation</a></li>
-
-                        </li>
-                    </ul>
+          <ul class="nav navbar-nav">
+            <li>
+              <a href="home.html">Home</a>
+            </li>
+            <li class="dropdown" id="studyIdMenu" style="display:none;">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="studyIdMenuItem"></span><span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li>
+                  <a href="casereview.html" class="navbar-link">Case Review</a>
                 </li>
-
-            </ul>
+                <li>
+                  <div class="nav-divider"></div>
+                </li>
+                <li>
+                  <a href="background.html" class="navbar-link">Background</a>
+                </li>
+                <li>
+                  <a href="ctevaluation.html" class="navbar-link">CT Evaluation</a>
+                </li>
+                <li class="disabled">
+                  <a>Followup</a>
+                </li>
+                <li class="disabled">
+                  <a class="navbar-link">Biopsy</a>
+                </li>
+                <li class="disabled">
+                  <a class="navbar-link">Pre-Intervention</a>
+                </li>
+                <li class="disabled">
+                  <a class="navbar-link">Intervention</a>
+                </li>
+                <li class="disabled">
+                  <a class="navbar-link">PET Evaluation</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
         </div>
-    </div>
-</nav>
-
-
+      </div>
+    </nav>
     <div class="container-fluid" style="max-width:1550px">
-        <h1>
-            Sample, Sammy G
-            <small class="text-muted" title="Study ID">ST0001</small>
-        </h1>
-        <h2>Intake Form
-            <small class="text-muted" title="Medical Record Number">1234567890</small>
-        </h2>
-
-        <hr/>
-        
-        <form action="intake.html" class="validated"
-              data-fv-icon-valid="glyphicon glyphicon-ok"
-              data-fv-icon-invalid="glyphicon glyphicon-remove"
-              data-fv-icon-validating="glyphicon glyphicon-refresh"
-              data-fv-button-selector="#submit-button">
-
-            <div class="row">
-                <div class="col-sm-6 col-md-3 form-group">
-                    <label for="sinamel">Patient Last Name</label>
-                    <input type=text name="sinamel" id="sinamel" class="form-control" required="required">
+      <h1>
+        Sample, Sammy G <small class="text-muted" title="Study ID">ST0001</small>
+      </h1>
+      <h2>
+        Intake Form <small class="text-muted" title="Medical Record Number">1234567890</small>
+      </h2>
+      <hr>
+      <form action="intake.html" class="validated" data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-validating="glyphicon glyphicon-refresh" data-fv-button-selector="#submit-button">
+        <div class="row">
+          <div class="col-sm-6 col-md-3 form-group">
+            <label for="sinamel">Patient Last Name</label> <input type="text" name="sinamel" id="sinamel" class="form-control" required="required">
+          </div>
+          <div class="col-sm-6 col-md-3 form-group">
+            <label for="sinamef">First Name</label> <input type="text" name="sinamef" id="sinamef" class="form-control" required="required">
+          </div>
+          <div class="col-sm-4 col-md-3 form-group">
+            <label for="sidfc">Date of First Contact</label> <!--TODO: inject max date as "today"-->
+            <div class="input-group datepicker">
+              <!--TODO: inject max date as "today"-->
+              <input class="form-control" id="sidfc" name="sidfc" aria-describedby="sidfc-addon" required="required" data-fv-notempty-message="First contact date is required" data-fv-date="true" data-fv-max="1/25/2018">
+              <div class="input-group-addon">
+                <div class="input-group-text" id="sidfc-addon">
+                  <i class="fa fa-calendar" aria-hidden="true"></i>
                 </div>
-                <div class="col-sm-6 col-md-3 form-group">
-                    <label for="sinamef">First Name</label>
-                    <input type=text name="sinamef" id="sinamef" class="form-control" required="required">
-                </div>
-
-                <div class="col-sm-4 col-md-3 form-group">
-                    <label for="sidfc">Date of First Contact</label>
-                    <!--TODO: inject max date as "today"-->
-                    <div class="input-group datepicker">
-        <!--TODO: inject max date as "today"-->
-        <input class="form-control" id="sidfc" name="sidfc" aria-describedby="sidfc-addon"
-                 required="required"
-                 data-fv-notempty-message="First contact date is required"
-               data-fv-date="true"
-                 data-fv-max="1/25/2018">
-        <div class="input-group-addon">
-            <div class="input-group-text" id="sidfc-addon">
-                <i class="fa fa-calendar" aria-hidden="true"></i>
-            </div>
+              </div>
+            </div><small class="form-text text-muted">MM/DD/YYYY</small>
+          </div>
         </div>
-    </div>
-    <small class="form-text text-muted">MM/DD/YYYY</small>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group col-sm-3 col-md-2">
-                    <label for="sisid">Study ID</label>
-                    
-                    <input type=hidden name="hvsisid" value="VEP0001">
-                    <input type=text name="sisid" id="sisid" onFocus="savesid()" value="VEP0001" class="form-control"
-                           required="required">
-                </div>
-                <div class="form-group col-sm-3 col-md-2">
-
-                    <label for="sifsid">Former Study ID</label>
-                    <input type=text name="sifsid" id="sifsid" onFocus="savefsid()" onChange="confirmfsid()"
-                           class="form-control">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group col-sm-3 col-md-3 col-lg-2">
-                    <label for="sidoe">Date of Baseline CT</label>
-                    <!--TODO: inject max date as "today"-->
-                    <div class="input-group datepicker">
-        <!--TODO: inject max date as "today"-->
-        <input class="form-control" id="sidoe" name="sidoe" aria-describedby="sidoe-addon"
-                 required="required"
-                 data-fv-notempty-message="Baseline CT date is required"
-               data-fv-date="true"
-                 data-fv-max="1/25/2018">
-        <div class="input-group-addon">
-            <div class="input-group-text" id="sidoe-addon">
-                <i class="fa fa-calendar" aria-hidden="true"></i>
-            </div>
+        <div class="row">
+          <div class="form-group col-sm-3 col-md-2">
+            <label for="sisid">Study ID</label> <input type="hidden" name="hvsisid" value="VEP0001"> <input type="text" name="sisid" id="sisid" onfocus="savesid()" value="VEP0001" class="form-control" required="required">
+          </div>
+          <div class="form-group col-sm-3 col-md-2">
+            <label for="sifsid">Former Study ID</label> <input type="text" name="sifsid" id="sifsid" onfocus="savefsid()" onchange="confirmfsid()" class="form-control">
+          </div>
         </div>
+        <div class="row">
+          <div class="form-group col-sm-3 col-md-3 col-lg-2">
+            <label for="sidoe">Date of Baseline CT</label> <!--TODO: inject max date as "today"-->
+            <div class="input-group datepicker">
+              <!--TODO: inject max date as "today"-->
+              <input class="form-control" id="sidoe" name="sidoe" aria-describedby="sidoe-addon" required="required" data-fv-notempty-message="Baseline CT date is required" data-fv-date="true" data-fv-max="1/25/2018">
+              <div class="input-group-addon">
+                <div class="input-group-text" id="sidoe-addon">
+                  <i class="fa fa-calendar" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div><small class="form-text text-muted">MM/DD/YYYY</small>
+          </div>
+          <div class="form-group col-sm-3 col-md-3 col-lg-2">
+            <label for="simrn">MRN</label> <input type="text" name="simrn" id="simrn" value="12345" class="form-control" required="required">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-sm-12">
+            <div class="checkbox">
+              <label><input type="checkbox" name="sisa" id="sisa" value="y"> Requires Special Attention</label>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="form-group col-md-12">
+            <label for="siadcomna">Note</label> 
+            <textarea name="siadcomna" id="siadcomna" rows="2" cols="65" class="form-control"></textarea>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-12">
+            <label for="siadcom">Notes & Correspondence</label> 
+            <textarea name="siadcom" id="siadcom" rows="4" cols="65" disabled="disabled" class="form-control" style="font-family: monospace;"></textarea> <button type="button" class="btn-link" data-toggle="modal" data-target="#correspondenceModal">Add Correspondence</button>
+          </div>
+        </div>
+        <hr>
+        <h3>
+          Patient Contact Information <i class="small fa fa-question-circle-o" aria-hidden="true" data-toggle="popover" title="Update Patient Contact Information" data-html="true" data-trigger="click" data-content="Use the Update button when the patient's contact information changes. It will save a copy of the information into the Additional Patient Information and clear the appropriate fields so that you may enter the new contact information. &lt;button class='btn btn-sm btn-default' onclick='updatePatientContactInfo();'&gt;Update&lt;/button&gt;"></i>
+        </h3>
+        <div class="row">
+          <div class="form-group col-sm-6">
+            <label for="sipsa">Street Address</label> <input type="text" name="sipsa" id="sipsa" class="form-control">
+          </div>
+          <div class="form-group col-sm-2">
+            <label for="sipan">Apt #</label> <input type="text" name="sipan" id="sipan" class="form-control">
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="sipcn">County</label> <input type="text" name="sipcn" id="sipcn" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="sipc">City</label> <input type="text" name="sipc" id="sipc" class="form-control">
+          </div>
+          <div class="form-group col-md-1">
+            <label for="sips">State</label> <input type="text" name="sips" id="sips" class="form-control">
+          </div>
+          <div class="form-group col-md-2">
+            <label for="sipz">Zip</label> <input type="text" name="sipz" id="sipz" class="form-control">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="sipcr">Country</label> <input type="text" name="sipcr" id="sipcr" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-sm-6 col-md-4 col-lg-3">
+            <label for="sipw">Phone (Work)</label> <input type="text" name="sipw" id="sipw" onchange="synChk('sipw','phone')" class="form-control" data-fv-phone="true" data-fv-phone-country="US">
+          </div>
+          <div class="form-group col-sm-6 col-md-4 col-lg-3">
+            <label for="siph">Phone (Home)</label> <input type="text" name="siph" id="siph" onchange="synChk('siph','phone')" class="form-control" data-fv-phone="true" data-fv-phone-country="US">
+          </div>
+          <div class="form-group col-md-4 col-lg-6">
+            <label for="sipem">Email Address</label> <input type="text" name="sipem" id="sipem" class="form-control" data-fv-emailaddress="true">
+          </div>
+        </div>
+        <hr>
+        <h3>
+          Physician Contact Information <i class="small fa fa-question-circle-o" aria-hidden="true" data-toggle="popover" title="Update Physician Contact Information" data-html="true" data-trigger="click" data-content="Use the Update button when the physician's contact information changes. It will save a copy of the information into the Additional Patient Information and clear the appropriate fields so that you may enter the new contact information. &lt;button class='btn btn-sm btn-default' onclick='updatePhysicianContactInfo();'&gt;Update&lt;/button&gt;"></i>
+        </h3>
+        <div class="row">
+          <div class="form-group col-md-12">
+            <label for="simdn">Physician's Name</label> <input type="text" name="simdn" id="simdn" class="form-control">
+          </div>
+        </div>
+        <h4>
+          Address <small>only required for non-VA physicians</small>
+        </h4>
+        <div class="row">
+          <div class="form-group col-md-8">
+            <label for="simdsa">Street Address</label> <input type="text" name="simdsa" id="simdsa" class="form-control">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="simdcn">County</label> <input type="text" name="simdcn" id="simdcn" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="simdc">City</label> <input type="text" name="simdc" id="simdc" class="form-control">
+          </div>
+          <div class="form-group col-md-1">
+            <label for="simds">State</label> <input type="text" name="simds" id="simds" class="form-control">
+          </div>
+          <div class="form-group col-md-2">
+            <label for="simdz">Zip</label> <input type="text" name="simdz" id="simdz" class="form-control">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="simdcr">Country</label> <input type="text" name="simdcr" id="simdcr" class="form-control">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-sm-6 col-md-4 col-lg-3">
+            <label for="simdp">Physician's Phone</label> <input type="text" name="simdp" id="simdp" onchange="synChk('simdp','phone')" class="form-control" data-fv-phone="true" data-fv-phone-country="US">
+          </div>
+          <div class="form-group col-sm-6 col-md-4 col-lg-3">
+            <label for="simdf">Physician's Fax</label> <input type="text" name="simdf" id="simdf" onchange="synChk('simdf','phone')" class="form-control" data-fv-phone="true" data-fv-phone-country="US">
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="form-group col-sm-3 col-lg-2">
+            <label for="sidob">Date of Birth</label> <!--TODO: inject max date as "today"-->
+            <div class="input-group datepicker">
+              <!--TODO: inject max date as "today"-->
+              <input class="form-control" id="sidob" name="sidob" aria-describedby="sidob-addon" required="required" data-fv-notempty-message="Date of birth is required" data-fv-date="true" data-fv-max="1/25/2018">
+              <div class="input-group-addon">
+                <div class="input-group-text" id="sidob-addon">
+                  <i class="fa fa-calendar" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div><small class="form-text text-muted">MM/DD/YYYY</small>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-12">
+            <label for="sissn">SSN</label> <i class="small fa fa-question-circle-o" aria-hidden="true" data-toggle="popover" data-content="Please enter the social security number of the subject."></i> <input type="text" name="sissn" id="sissn" onchange="synChk('sissn','ssn')" class="form-control" pattern="^(?!000|666)(?:[0-6][0-9]{2}|7(?:[0-6][0-9]|7[0-2]))-(?!00)[0-9]{2}-(?!0000)[0-9]{4}$" data-fv-regexp-message="SSN should be in XXX-XX-XXXX format">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label for="sifnm">Mother's First Name</label> <input type="text" name="sifnm" id="sifnm" class="form-control">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="sifnf">Father's First Name</label> <input type="text" name="sifnf" id="sifnf" class="form-control">
+          </div>
+        </div>
+        <div class="alert alert-warning">
+          It is important to identify two contacts. At least one needs to be at another address.
+        </div>
+        <div class="row">
+          <div class="form-group col-md-3">
+            <label for="sikn">Emergency Contact (1)</label> <label for="sikn">Name</label> <input type="text" name="sikn" id="sikn" class="form-control">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="sikr">Relation</label> <input type="text" name="sikr" id="sikr" class="form-control">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="sika">Address</label> <input type="text" name="sika" id="sika" class="form-control">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="sikp">Phone</label> <input type="text" name="sikp" id="sikp" onchange="synChk('sikp','phone')" class="form-control" data-fv-phone="true" data-fv-phone-country="US">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-3">
+            <label for="siknb">Emergency Contact (2)</label> <label for="siknb">Name</label> <input type="text" name="siknb" id="siknb" class="form-control">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="sikrb">Relation</label> <input type="text" name="sikrb" id="sikrb" class="form-control">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="sikab">Address</label> <input type="text" name="sikab" id="sikab" class="form-control">
+          </div>
+          <div class="form-group col-md-3">
+            <label for="sikpb">Phone</label> <input type="text" name="sikpb" id="sikpb" onchange="synChk('sikpb','phone')" class="form-control" data-fv-phone="true" data-fv-phone-country="US">
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="form-group col-md-12">
+            <label for="sicnc-0">Phone Calls</label> <label class="radio-inline"><input type="radio" name="sicnc" id="sicnc-0" onclick="insertPatientCorrespondence('sicnc')" value="0"> 0</label> <label class="radio-inline"><input type="radio" name="sicnc" id="sicnc-1" onclick="insertPatientCorrespondence('sicnc')" value="1"> 1</label> <label class="radio-inline"><input type="radio" name="sicnc" id="sicnc-2" onclick="insertPatientCorrespondence('sicnc')" value="2"> 2</label> <label class="radio-inline"><input type="radio" name="sicnc" id="sicnc-3" onclick="insertPatientCorrespondence('sicnc')" value="3"> 3</label> <label class="radio-inline"><input type="radio" name="sicnc" id="sicnc-x" onclick="insertPatientCorrespondence('sicnc')" value="x"> X</label>
+          </div>
+          <div class="form-group col-md-12">
+            <label for="sicnc-0">Letters</label> <label class="radio-inline"><input type="radio" name="sicnl" id="sicnl-0" onclick="insertPatientCorrespondence('sicnl')" value="0"> 0</label> <label class="radio-inline"><input type="radio" name="sicnl" id="sicnl-1" onclick="insertPatientCorrespondence('sicnl')" value="1"> 1</label> <label class="radio-inline"><input type="radio" name="sicnl" id="sicnl-2" onclick="insertPatientCorrespondence('sicnl')" value="2"> 2</label> <label class="radio-inline"><input type="radio" name="sicnl" id="sicnl-3" onclick="insertPatientCorrespondence('sicnl')" value="3"> 3</label> <label class="radio-inline"><input type="radio" name="sicnl" id="sicnl-x" onclick="insertPatientCorrespondence('sicnl')" value="x"> X</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label for="sies">Patient Status</label> <select name="sies" id="sies" class="form-control">
+              <option value="ac">
+                active
+              </option>
+              <option value="tr">
+                transferred to another institution (specify)
+              </option>
+              <option value="mr">
+                unable due to medical reason (specify)
+              </option>
+              <option value="pr">
+                unwilling due to personal reason (specify)
+              </option>
+              <option value="rf">
+                refused to continue
+              </option>
+              <option value="pa">
+                physician advised against
+              </option>
+              <option value="ra">
+                concern about radiation
+              </option>
+              <option value="mv">
+                moved and unable to return
+              </option>
+              <option value="in">
+                no insurance, can't have Dx CT
+              </option>
+              <option value="bc">
+                burden of cost
+              </option>
+              <option value="os">
+                other (specify)
+              </option>
+              <option value="es">
+                excluded (specify)
+              </option>
+              <option value="sc">
+                study complete
+              </option>
+              <option value="nr">
+                no response to 3 calls + 3 letters
+              </option>
+              <option value="nc">
+                unable to contact
+              </option>
+              <option value="fe">
+                being followed elsewhere (get results)
+              </option>
+              <option value="ex">
+                expired (record date / cause)
+              </option>
+            </select>
+          </div>
+          <div class="form-group col-md-8">
+            <label for="sieso">Specify</label> <input type="text" name="sieso" id="sieso" class="form-control" required="required">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label for="sixdate">Date of Exit</label> <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover" data-content="The Date of Exit should be recorded for all subjects who are no longer active in the study. It signifies the date on which they change to a non-active status."></i> <!--TODO: inject max date as "today"-->
+            <div class="input-group datepicker">
+              <!--TODO: inject max date as "today"-->
+              <input class="form-control" id="sixdate" name="sixdate" aria-describedby="sixdate-addon" data-fv-date="true" data-fv-max="1/25/2018">
+              <div class="input-group-addon">
+                <div class="input-group-text" id="sixdate-addon">
+                  <i class="fa fa-calendar" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div><small class="form-text text-muted">MM/DD/YYYY</small>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-sm-3 col-md-3 col-lg-2">
+            <label for="">DOD</label> <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover" data-content="The Date of Death (DOD) should be recorded for all subjects who have expired."></i> <!--TODO: inject max date as "today"-->
+            <div class="input-group datepicker">
+              <!--TODO: inject max date as "today"-->
+              <input class="form-control" id="sidod" name="sidod" aria-describedby="sidod-addon" required="required" data-fv-notempty-message="Date of death is required" data-fv-date="true" data-fv-max="1/25/2018">
+              <div class="input-group-addon">
+                <div class="input-group-text" id="sidod-addon">
+                  <i class="fa fa-calendar" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div><small class="form-text text-muted">MM/DD/YYYY</small>
+          </div>
+          <div class="form-group col-sm-9 col-md-9 col-lg-10">
+            <label for="sicod">COD</label> <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover" data-content="The Cause of Death (COD) should be recorded for all subjects who have expired."></i> <input type="text" name="sicod" id="sicod" class="form-control" required="required">
+          </div>
+        </div>
+        <hr>
+        <div class="pull-right">
+          <input type="submit" value="Submit" class="btn btn-primary" id="submit-button">
+        </div>
+      </form>
     </div>
-    <small class="form-text text-muted">MM/DD/YYYY</small>
-                </div>
-                <div class="form-group col-sm-3 col-md-3 col-lg-2">
-                    <label for="simrn">MRN</label>
-                    <input type=text name="simrn" id="simrn" value="12345" class="form-control" required="required">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group col-sm-12">
-                    <div class="checkbox">
-        <label>
-            <input type="checkbox" name="sisa" id="sisa" value="y">
-            Requires Special Attention
-        </label>
-    </div>
-                </div>
-            </div>
-
-            <hr/>
-
-            
-            <div class="row">
-                <div class="form-group col-md-12">
-                    <label for="siadcomna">Note</label>
-                    <textarea name="siadcomna" id="siadcomna" rows=2 cols=65
-                              class="form-control"></textarea>
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-12">
-                    <label for="siadcom">Notes & Correspondence</label>
-                    <textarea name="siadcom" id="siadcom" rows=4 cols=65 wrap=physical disabled="disabled"
-                              class="form-control" style="font-family: monospace;">
-                    </textarea>
-                    <button type="button" class="btn-link" data-toggle="modal" data-target="#correspondenceModal">
-                        Add Correspondence
-                    </button>
-                </div>
-            </div>
-
-            <hr/>
-
-            <h3>Patient Contact Information
-                <i class="small fa fa-question-circle-o" aria-hidden="true"
-                   data-toggle="popover"
-                   title="Update Patient Contact Information"
-                   data-html="true"
-                   data-trigger="click"
-                   data-content="Use the Update button when the patient's contact information changes. It will save a
-                                 copy of the information into the Additional Patient Information and clear the
-                                 appropriate fields so that you may enter the new contact information.
-                                 <button class='btn btn-sm btn-default' onclick='updatePatientContactInfo();'>Update</button>"></i>
-            </h3>
-            <div class="row">
-                <div class="form-group col-sm-6 ">
-                    <label for="sipsa">Street Address</label>
-                    <input type=text name="sipsa" id="sipsa" class="form-control">
-                </div>
-                <div class="form-group col-sm-2">
-                    <label for="sipan">Apt # </label>
-                    <input type=text name="sipan" id="sipan" class="form-control">
-                </div>
-                <div class="form-group col-sm-4">
-                    <label for="sipcn">County </label>
-                    <input type=text name="sipcn" id="sipcn" class="form-control">
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="form-group col-md-6">
-                    <label for="sipc">City </label>
-                    <input type=text name="sipc" id="sipc" class="form-control">
-                </div>
-                <div class="form-group col-md-1">
-                    <label for="sips">State </label>
-                    <input type=text name="sips" id="sips" class="form-control">
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="sipz">Zip </label>
-                    <input type=text name="sipz" id="sipz" class="form-control">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="sipcr">Country </label>
-                    <input type=text name="sipcr" id="sipcr" class="form-control">
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                    <label for="sipw">Phone (Work)</label>
-                    <input type=text name="sipw" id="sipw" onChange="synChk('sipw','phone')" class="form-control"
-                           data-fv-phone="true" data-fv-phone-country="US">
-                </div>
-                <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                    <label for="siph">Phone (Home)</label>
-                    <input type=text name="siph" id="siph" onChange="synChk('siph','phone')" class="form-control"
-                           data-fv-phone="true" data-fv-phone-country="US">
-                </div>
-                <div class="form-group col-md-4 col-lg-6">
-                    <label for="sipem">Email Address</label>
-                    <input type=text name="sipem" id="sipem" class="form-control" data-fv-emailaddress="true">
-                </div>
-            </div>
-
-            <hr/>
-
-            <h3>Physician Contact Information <i class="small fa fa-question-circle-o" aria-hidden="true"
-                                                 data-toggle="popover"
-                                                 title="Update Physician Contact Information"
-                                                 data-html="true"
-                                                 data-trigger="click"
-                                                 data-content="Use the Update button when the physician's contact
-                                               information changes.  It will save a copy of the information into the
-                                               Additional Patient Information and clear the appropriate fields so that
-                                               you may enter the new contact information.
-                                               <button class='btn btn-sm btn-default' onclick='updatePhysicianContactInfo();'>Update</button>"></i>
-            </h3>
-
-            <div class="row">
-                <div class="form-group col-md-12">
-                    <label for="simdn">Physician's Name</label>
-                    <input type=text name="simdn" id="simdn" class="form-control">
-                </div>
-            </div>
-
-            <h4>Address
-                <small>only required for non-VA physicians</small>
+    <div class="modal fade validated" id="correspondenceModal" tabindex="-1" role="dialog" data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-validating="glyphicon glyphicon-refresh" data-fv-button-selector="#add-correspondence-btn">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <h4 class="modal-title">
+              Record Correspondence <i class="small fa fa-question-circle-o" aria-hidden="true" data-toggle="popover" data-content="This section should be used to record correspondence or communication with the patient or physician. This includes the date, recipient and nature of the communication, the date of the relevant CT exam, and the identity of the coordinator."></i>
             </h4>
-
+          </div>
+          <div class="modal-body">
             <div class="row">
-                <div class="form-group col-md-8">
-                    <label for="simdsa">Street Address</label>
-                    <input type=text name="simdsa" id="simdsa" class="form-control">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="simdcn">County </label>
-                    <input type=text name="simdcn" id="simdcn" class="form-control">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group col-md-6">
-                    <label for="simdc">City </label>
-                    <input type=text name="simdc" id="simdc" class="form-control">
-                </div>
-                <div class="form-group col-md-1">
-                    <label for="simds">State </label>
-                    <input type=text name="simds" id="simds" class="form-control">
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="simdz">Zip </label>
-                    <input type=text name="simdz" id="simdz" class="form-control">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="simdcr">Country </label>
-                    <input type=text name="simdcr" id="simdcr" class="form-control">
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                    <label for="simdp">Physician's Phone</label>
-                    <input type=text name="simdp" id="simdp" onChange="synChk('simdp','phone')" class="form-control"
-                           data-fv-phone="true" data-fv-phone-country="US">
-                </div>
-                <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                    <label for="simdf">Physician's Fax</label>
-                    <input type=text name="simdf" id="simdf" onChange="synChk('simdf','phone')" class="form-control"
-                           data-fv-phone="true" data-fv-phone-country="US">
-                </div>
-            </div>
-
-            <hr/>
-
-            <div class="row">
-                <div class="form-group col-sm-3 col-lg-2">
-                    <label for="sidob">Date of Birth</label>
-                    <!--TODO: inject max date as "today"-->
-                    <div class="input-group datepicker">
-        <!--TODO: inject max date as "today"-->
-        <input class="form-control" id="sidob" name="sidob" aria-describedby="sidob-addon"
-                 required="required"
-                 data-fv-notempty-message="Date of birth is required"
-               data-fv-date="true"
-                 data-fv-max="1/25/2018">
-        <div class="input-group-addon">
-            <div class="input-group-text" id="sidob-addon">
-                <i class="fa fa-calendar" aria-hidden="true"></i>
-            </div>
-        </div>
-    </div>
-    <small class="form-text text-muted">MM/DD/YYYY</small>
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-12">
-                    <label for="sissn">SSN</label>
-                    <i class="small fa fa-question-circle-o" aria-hidden="true"
-                       data-toggle="popover"
-                       data-content="Please enter the social security number of the subject."></i>
-                    <input type=text name="sissn" id="sissn" onChange="synChk('sissn','ssn')" class="form-control"
-                           pattern="^(?!000|666)(?:[0-6][0-9]{2}|7(?:[0-6][0-9]|7[0-2]))-(?!00)[0-9]{2}-(?!0000)[0-9]{4}$"
-                           data-fv-regexp-message="SSN should be in XXX-XX-XXXX format">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group col-md-4">
-                    <label for="sifnm">Mother's First Name</label>
-                    <input type=text name="sifnm" id="sifnm" class="form-control">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="sifnf">Father's First Name</label>
-                    <input type=text name="sifnf" id="sifnf" class="form-control">
-                </div>
-            </div>
-
-            <div class="alert alert-warning">
-                It is important to identify two contacts.
-                At least one needs to be at another address.
-            </div>
-
-            <div class="row">
-                <div class="form-group col-md-3">
-                    <label for="sikn">Emergency Contact (1)</label>
-                    <label for="sikn">Name</label>
-                    <input type=text name="sikn" id="sikn" class="form-control">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="sikr">Relation</label>
-                    <input type=text name="sikr" id="sikr" class="form-control">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="sika">Address</label>
-                    <input type=text name="sika" id="sika" class="form-control">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="sikp">Phone</label>
-                    <input type=text name="sikp" id="sikp" onChange="synChk('sikp','phone')" class="form-control"
-                           data-fv-phone="true" data-fv-phone-country="US">
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-3">
-                    <label for="siknb">Emergency Contact (2)</label>
-                    <label for="siknb">Name</label>
-                    <input type=text name="siknb" id="siknb" class="form-control">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="sikrb">Relation</label>
-                    <input type=text name="sikrb" id="sikrb" class="form-control">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="sikab">Address</label>
-                    <input type=text name="sikab" id="sikab" class="form-control">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="sikpb">Phone</label>
-                    <input type=text name="sikpb" id="sikpb" onChange="synChk('sikpb','phone')" class="form-control"
-                           data-fv-phone="true" data-fv-phone-country="US">
-                </div>
-            </div>
-            <hr/>
-            <div class="row">
-                <div class="form-group col-md-12">
-                    <label for="sicnc-0">Phone Calls</label>
-                    <label class="radio-inline">
-        <input type="radio" name="sicnc" id="sicnc-0"
-                 onclick="insertPatientCorrespondence('sicnc')"
-                
-               value="0">
-        0
-    </label>
-                    <label class="radio-inline">
-        <input type="radio" name="sicnc" id="sicnc-1"
-                 onclick="insertPatientCorrespondence('sicnc')"
-                
-               value="1">
-        1
-    </label>
-                    <label class="radio-inline">
-        <input type="radio" name="sicnc" id="sicnc-2"
-                 onclick="insertPatientCorrespondence('sicnc')"
-                
-               value="2">
-        2
-    </label>
-                    <label class="radio-inline">
-        <input type="radio" name="sicnc" id="sicnc-3"
-                 onclick="insertPatientCorrespondence('sicnc')"
-                
-               value="3">
-        3
-    </label>
-                    <label class="radio-inline">
-        <input type="radio" name="sicnc" id="sicnc-x"
-                 onclick="insertPatientCorrespondence('sicnc')"
-                
-               value="x">
-        X
-    </label>
-                </div>
-                <div class="form-group col-md-12">
-                    <label for="sicnc-0">Letters</label>
-                    <label class="radio-inline">
-        <input type="radio" name="sicnl" id="sicnl-0"
-                 onclick="insertPatientCorrespondence('sicnl')"
-                
-               value="0">
-        0
-    </label>
-                    <label class="radio-inline">
-        <input type="radio" name="sicnl" id="sicnl-1"
-                 onclick="insertPatientCorrespondence('sicnl')"
-                
-               value="1">
-        1
-    </label>
-                    <label class="radio-inline">
-        <input type="radio" name="sicnl" id="sicnl-2"
-                 onclick="insertPatientCorrespondence('sicnl')"
-                
-               value="2">
-        2
-    </label>
-                    <label class="radio-inline">
-        <input type="radio" name="sicnl" id="sicnl-3"
-                 onclick="insertPatientCorrespondence('sicnl')"
-                
-               value="3">
-        3
-    </label>
-                    <label class="radio-inline">
-        <input type="radio" name="sicnl" id="sicnl-x"
-                 onclick="insertPatientCorrespondence('sicnl')"
-                
-               value="x">
-        X
-    </label>
-                </div>
-
-            </div>
-
-            <div class="row">
-                <div class="form-group col-md-4">
-                    <label for="sies">Patient Status</label>
-
-                    <select name="sies" id="sies" class="form-control">
-                        <option value="ac"> active
-                        <option value="tr"> transferred to another institution (specify)
-                        <option value="mr"> unable due to medical reason (specify)
-                        <option value="pr"> unwilling due to personal reason (specify)
-                        <option value="rf"> refused to continue
-                        <option value="pa"> physician advised against
-                        <option value="ra"> concern about radiation
-                        <option value="mv"> moved and unable to return
-                        <option value="in"> no insurance, can't have Dx CT
-                        <option value="bc"> burden of cost
-                        <option value="os"> other (specify)
-                        <option value="es"> excluded (specify)
-                        <option value="sc"> study complete
-                        <option value="nr"> no response to 3 calls + 3 letters
-                        <option value="nc"> unable to contact
-                        <option value="fe"> being followed elsewhere (get results)
-                        <option value="ex"> expired (record date / cause)
-                    </select>
-                </div>
-                <div class="form-group col-md-8">
-                    <label for="sieso">Specify</label>
-                    <input type=text name="sieso" id="sieso" class="form-control" required="required">
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-4">
-                    <label for="sixdate">Date of Exit</label>
-                    <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
-                       data-content="The Date of Exit should be recorded for all subjects who are no longer active in
-                       the study.  It signifies the date on which they change to a non-active status."></i>
-                    <!--TODO: inject max date as "today"-->
-                    <div class="input-group datepicker">
-        <!--TODO: inject max date as "today"-->
-        <input class="form-control" id="sixdate" name="sixdate" aria-describedby="sixdate-addon"
-                
-                
-               data-fv-date="true"
-                 data-fv-max="1/25/2018">
-        <div class="input-group-addon">
-            <div class="input-group-text" id="sixdate-addon">
-                <i class="fa fa-calendar" aria-hidden="true"></i>
-            </div>
-        </div>
-    </div>
-    <small class="form-text text-muted">MM/DD/YYYY</small>
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-sm-3 col-md-3 col-lg-2">
-                    <label for="">DOD</label>
-                    <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
-                       data-content="The Date of Death (DOD) should be recorded for all subjects who have expired."></i>
-                    <!--TODO: inject max date as "today"-->
-                    <div class="input-group datepicker">
-        <!--TODO: inject max date as "today"-->
-        <input class="form-control" id="sidod" name="sidod" aria-describedby="sidod-addon"
-                 required="required"
-                 data-fv-notempty-message="Date of death is required"
-               data-fv-date="true"
-                 data-fv-max="1/25/2018">
-        <div class="input-group-addon">
-            <div class="input-group-text" id="sidod-addon">
-                <i class="fa fa-calendar" aria-hidden="true"></i>
-            </div>
-        </div>
-    </div>
-    <small class="form-text text-muted">MM/DD/YYYY</small>
-                </div>
-                <div class="form-group col-sm-9 col-md-9 col-lg-10">
-                    <label for="sicod">COD</label>
-                    <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
-                       data-content="The Cause of Death (COD) should be recorded for all subjects who have expired."></i>
-                    <input type=text name="sicod" id="sicod" class="form-control" class="form-control"
-                           required="required">
-                </div>
-            </div>
-
-            <hr/>
-
-            <div class="pull-right">
-                <input type="submit" value="Submit" class="btn btn-primary" id="submit-button">
-            </div>
-        </form>
-    </div>
-
-    <div class="modal fade validated" id="correspondenceModal" tabindex="-1" role="dialog"
-         data-fv-icon-valid="glyphicon glyphicon-ok"
-         data-fv-icon-invalid="glyphicon glyphicon-remove"
-         data-fv-icon-validating="glyphicon glyphicon-refresh"
-         data-fv-button-selector="#add-correspondence-btn">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Record Correspondence
-                        <i class="small fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
-                           data-content="This section should be used to record correspondence or communication
-                                   with the patient or physician.  This includes the date, recipient and nature of the
-                                   communication, the date of the relevant CT exam, and the identity of the
-                                   coordinator."></i>
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="form-group col-sm-6">
-                            <label for="sircd">Correspondence Date</label>
-                            
-                            <div class="input-group datepicker">
-        <!--TODO: inject max date as "today"-->
-        <input class="form-control" id="sircd" name="sircd" aria-describedby="sircd-addon"
-                 required="required"
-                 data-fv-notempty-message="Corresponance date is required"
-               data-fv-date="true"
-                 data-fv-max="1/25/2018">
-        <div class="input-group-addon">
-            <div class="input-group-text" id="sircd-addon">
-                <i class="fa fa-calendar" aria-hidden="true"></i>
-            </div>
-        </div>
-    </div>
-    <small class="form-text text-muted">MM/DD/YYYY</small>
-                        </div>
-                        <div class="form-group col-sm-6">
-                            <label for="sired">Date of Exam</label>
-                            
-                            <div class="input-group datepicker">
-        <!--TODO: inject max date as "today"-->
-        <input class="form-control" id="sired" name="sired" aria-describedby="sired-addon"
-                
-                
-               data-fv-date="true"
-                 data-fv-max="1/25/2018">
-        <div class="input-group-addon">
-            <div class="input-group-text" id="sired-addon">
-                <i class="fa fa-calendar" aria-hidden="true"></i>
-            </div>
-        </div>
-    </div>
-    <small class="form-text text-muted">MM/DD/YYYY</small>
-                        </div>
+              <div class="form-group col-sm-6">
+                <label for="sircd">Correspondence Date</label>
+                <div class="input-group datepicker">
+                  <!--TODO: inject max date as "today"-->
+                  <input class="form-control" id="sircd" name="sircd" aria-describedby="sircd-addon" required="required" data-fv-notempty-message="Corresponance date is required" data-fv-date="true" data-fv-max="1/25/2018">
+                  <div class="input-group-addon">
+                    <div class="input-group-text" id="sircd-addon">
+                      <i class="fa fa-calendar" aria-hidden="true"></i>
                     </div>
-                    <div class="row">
-                        <div class="form-group col-sm-6">
-                            <label for="sirr">Recipient</label><br/>
-                            <label class="radio-inline">
-        <input type="radio" name="sirr" id="sirr-s"
-                
-                 required="required"
-               value="s">
-        patient
-    </label>
-                            <label class="radio-inline">
-        <input type="radio" name="sirr" id="sirr-m"
-                
-                 required="required"
-               value="m">
-        physican
-    </label>
-                        </div>
-
-                        <div class="form-group col-sm-6">
-                            <label for="sirmd">VA Providers co-signed</label>
-                            <input type=text name="sirmd" id="sirmd" class="form-control" required="required">
-                        </div>
+                  </div>
+                </div><small class="form-text text-muted">MM/DD/YYYY</small>
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="sired">Date of Exam</label>
+                <div class="input-group datepicker">
+                  <!--TODO: inject max date as "today"-->
+                  <input class="form-control" id="sired" name="sired" aria-describedby="sired-addon" data-fv-date="true" data-fv-max="1/25/2018">
+                  <div class="input-group-addon">
+                    <div class="input-group-text" id="sired-addon">
+                      <i class="fa fa-calendar" aria-hidden="true"></i>
                     </div>
-                    <div class="row">
-                        <div class="form-group col-sm-4">
-                            <label for="sirn">Nature</label>
-                            <select name="sirn" id="sirn" class="form-control" required="required">
-                                <option value="" SELECTED> -
-                                <option value="faxed report"> faxed report
-                                <option value="mailed report"> mailed report
-                                <option value="called to give results"> called to give results
-                                <option value="Abx discussed with physician"> Abx discussed with physician
-                                <option value="Bx discussed with physician"> Bx discussed with physician
-                                <option value="other"> other (specify)
-                            </select>
-                        </div>
-                        <div class="form-group col-sm-4">
-                            <label for="sirns">Specify</label>
-                            <input type=text name="sirns" id="sirns" class="form-control">
-                        </div>
-                        <div class="form-group col-sm-4">
-                            <label for="sirc">Coordinator</label>
-                            <input type=text name="sirc" id="sirc" class="form-control">
-                        </div>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="add-correspondence-btn">Add</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
+                  </div>
+                </div><small class="form-text text-muted">MM/DD/YYYY</small>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-sm-6">
+                <label for="sirr">Recipient</label><br>
+                <label class="radio-inline"><input type="radio" name="sirr" id="sirr-s" required="required" value="s"> patient</label> <label class="radio-inline"><input type="radio" name="sirr" id="sirr-m" required="required" value="m"> physican</label>
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="sirmd">VA Providers co-signed</label> <input type="text" name="sirmd" id="sirmd" class="form-control" required="required">
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-sm-4">
+                <label for="sirn">Nature</label> <select name="sirn" id="sirn" class="form-control" required="required">
+                  <option value="" selected>
+                    -
+                  </option>
+                  <option value="faxed report">
+                    faxed report
+                  </option>
+                  <option value="mailed report">
+                    mailed report
+                  </option>
+                  <option value="called to give results">
+                    called to give results
+                  </option>
+                  <option value="Abx discussed with physician">
+                    Abx discussed with physician
+                  </option>
+                  <option value="Bx discussed with physician">
+                    Bx discussed with physician
+                  </option>
+                  <option value="other">
+                    other (specify)
+                  </option>
+                </select>
+              </div>
+              <div class="form-group col-sm-4">
+                <label for="sirns">Specify</label> <input type="text" name="sirns" id="sirns" class="form-control">
+              </div>
+              <div class="form-group col-sm-4">
+                <label for="sirc">Coordinator</label> <input type="text" name="sirc" id="sirc" class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> <button type="button" class="btn btn-primary" id="add-correspondence-btn">Add</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-
     <script language="JavaScript">
 
         //TODO: rename this function
@@ -916,19 +689,13 @@
         });
 
     </script>
-
-
-
-
     <footer>
-        <div class="container-fluid" style="max-width:1550px">
-            <hr/>
-            <a href="https://issues.osehra.org/browse/VAP" target="_blank">Submit feedback</a>
-        </div>
+      <div class="container-fluid" style="max-width:1550px">
+        <hr>
+        <a href="https://issues.osehra.org/browse/VAP" target="_blank">Submit feedback</a>
+      </div>
     </footer>
-
-
-<script language="JavaScript">
+    <script language="JavaScript">
     $(function () {
         function validateDatePickerOnChange(e) {
             var $datePicker = $(e.target)
@@ -970,6 +737,6 @@
         $("#studyIdMenuItem").text(studyId);
         $("#studyIdMenu").show();
     }
-</script>
-</body>
+    </script>
+  </body>
 </html>

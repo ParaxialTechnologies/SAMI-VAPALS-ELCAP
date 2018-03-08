@@ -1,4 +1,4 @@
-SAMIFRM ;ven/gpl - ielcap: forms ;2018-03-07T17:18Z
+SAMIFRM ;ven/gpl - ielcap: forms ;2018-03-08T21:49Z
  ;;18.0;SAM;;
  ;
  ; Routine SAMIFRM contains subroutines for managing the ELCAP forms,
@@ -22,7 +22,7 @@ SAMIFRM ;ven/gpl - ielcap: forms ;2018-03-07T17:18Z
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-07T17:18Z
+ ;@last-updated: 2018-03-08T21:49Z
  ;@application: Screening Applications Management (SAM)
  ;@module: Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files: SAMI Forms (311.101-311.199)
@@ -75,8 +75,8 @@ SAMIFRM ;ven/gpl - ielcap: forms ;2018-03-07T17:18Z
  ; 2018-03-01 ven/toad v18.0t04 SAMIFRM: r/findReplaceAll^%wf
  ; w/findReplace^%ts.
  ;
- ; 2018-03-07 ven/toad v18.0t04 SAMIFRM: in SAMISUBS r/$$setroot^%wdgraph
- ; w/$$setroot^%wf.
+ ; 2018-03-07/08 ven/toad v18.0t04 SAMIFRM: in SAMISUBS
+ ; r/$$setroot^%wdgraph w/$$setroot^%wf, fix bug when r/css w/see.
  ;
  ;@contents
  ; INITFRMS: initial all available forms
@@ -351,13 +351,13 @@ SAMISUBS(line,form,sid,filter,%j,zhtml) ; line is passed by reference; filter is
  . quit
  ;
  if line["/css/" do
- . do findReplace^%ts(.line,"/css/","see/","a")
+ . do findReplace^%ts(.line,"/css/","/see/","a")
  . quit
  if line["/js/" do
- . do findReplace^%ts(.line,"/js/","see/","a")
+ . do findReplace^%ts(.line,"/js/","/see/","a")
  . quit
  if line["/images/" do
- . do findReplace^%ts(.line,"/images/","see/","a")
+ . do findReplace^%ts(.line,"/images/","/see/","a")
  . quit
  ;
  quit  ; end of SAMISUBS

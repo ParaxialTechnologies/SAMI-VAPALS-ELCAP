@@ -1,4 +1,4 @@
-%tsutc ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-04T19:38Z
+%tsutc ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-08T20:09Z
  ;;1.8;Mash;
  ;
  ; This Mumps Advanced Shell (mash) routine implements unit tests for
@@ -14,7 +14,7 @@
  ;@copyright: 2016/2017/2018, ven, all rights reserved
  ;@license: Apache 2.0
  ;
- ;@last-updated: 2018-03-04T19:38Z
+ ;@last-updated: 2018-03-08T20:09Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -28,6 +28,7 @@
  ; group 2: absolute addressing w/in string
  ; group 3: Find Case-Insensitive
  ; group 4: Boundary Cases
+ ; group 5: Alternate Calls
  ;
  ;
  ;
@@ -39,6 +40,8 @@
  ; CHKEQ^%ut
  ; findex^%ts
  ; fe^%ts
+ ; findExtract^%ts
+ ; find^%ts
  ;
  ;
  ;
@@ -111,7 +114,6 @@ find104 ; @TEST findex^%ts(.string,"toto"): search for substring that exists in 
  quit  ; end of find104
  ;
  ;
- ;
  ; group 2: Find Last & Find Previous
  ;
  ;
@@ -148,7 +150,7 @@ find202 ; @TEST findex^%ts(.string,"toto","b"): search for substring backwards
  quit  ; end of find202
  ;
  ;
-find203 ; @TEST findex^%ts(.string,"toto","b"): setex test
+find203 ; @TEST findex^%ts(.string,"toto","b"): findex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -162,7 +164,7 @@ find203 ; @TEST findex^%ts(.string,"toto","b"): setex test
  quit  ; end of find203
  ;
  ;
-find204 ; @TEST setextract^%ts(.string,""): setex test
+find204 ; @TEST setextract^%ts(.string,""): findex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -180,7 +182,7 @@ find204 ; @TEST setextract^%ts(.string,""): setex test
  ; group 3: Find Case-Insensitive
  ;
  ;
-find301 ; @TEST setextract^%ts(.string,""): setex test
+find301 ; @TEST setextract^%ts(.string,""): findex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -200,6 +202,52 @@ find301 ; @TEST setextract^%ts(.string,""): setex test
  ;  
  ;
  ; group 4: Boundary Cases
+ ;
+ ;
+ ; group 5: Alternate Calls
+ ;
+ ;
+ find501 ; @TEST fe^%ts(.string,"toto"): test fe^%ts
+ ;
+ ;ven/toad&lmry;test;procedure;clean;silent;sac
+ ;
+ new string set string="totototo"
+ set string("extract","from")=6
+ set string("extract","to")=7
+ do fe^%ts(.string,"toto")
+ do CHKEQ^%ut(string("extract","from")=0
+ do CHKEQ^%ut(string("extract","to")=0
+ ;
+ quit  ; end of find501
+ ;
+ ;
+ find502 ; @TEST FindExtract^%ts(.string,"toto"): test FindExtract^%ts
+ ;
+ ;ven/toad&lmry;test;procedure;clean;silent;sac
+ ;
+ new string set string="totototo"
+ set string("extract","from")=6
+ set string("extract","to")=7
+ do FindExtract^%ts(.string,"toto")
+ do CHKEQ^%ut(string("extract","from")=0
+ do CHKEQ^%ut(string("extract","to")=0
+ ;
+ quit  ; end of find502
+ ;
+ ;
+ find503 ; @TEST find^%ts(.string,"toto"): test find^%ts
+ ;
+ ;ven/toad&lmry;test;procedure;clean;silent;sac
+ ;
+ new string set string="totototo"
+ set string("extract","from")=6
+ set string("extract","to")=7
+ do find^%ts(.string,"toto")
+ do CHKEQ^%ut(string("extract","from")=0
+ do CHKEQ^%ut(string("extract","to")=0
+ ;
+ quit  ; end of find503
+ ;
  ;
  ;
 eor ; end of routine %tsutef

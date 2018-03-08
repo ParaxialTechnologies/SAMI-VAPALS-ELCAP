@@ -21,7 +21,7 @@
               data-fv-button-selector="#submit-button">
 
             {# TODO: inject studyID #}
-            <input type=hidden name="cesid" value="VEP0001" required="required">
+            <input type="hidden" name="cesid" value="VEP0001" required="required">
 
             <div class="row">
                 <div class="col-sm-4 col-md-3 col-lg-2 form-group">
@@ -332,8 +332,8 @@
                                 </td>
                                 {% for i in r %}
                                     <td>
-                                        <input type=text name="cect{{ i }}pld"
-                                               onChange="synChk('cect{{ i }}pld','anum')" size=4>
+                                        <input type="text" name="cect{{ i }}pld"
+                                               onChange="synChk('cect{{ i }}pld','anum')" size="4">
                                     </td>
                                 {% endfor %}
                             </tr>
@@ -345,8 +345,8 @@
                                 </td>
                                 {% for i in r %}
                                     <td>
-                                        <input type=text name="cect{{ i }}sl"
-                                               onChange="synChk('cect{{ i }}sl','pnum')" size=4>
+                                        <input type="text" name="cect{{ i }}sl"
+                                               onChange="synChk('cect{{ i }}sl','pnum')" size="4">
                                     </td>
                                 {% endfor %}
                             </tr>
@@ -358,8 +358,8 @@
                                 </td>
                                 {% for i in r %}
                                     <td>
-                                        <input type=text name="cect{{ i }}sw"
-                                               onChange="synChk('cect{{ i }}sw','pnum')" size=4>
+                                        <input type="text" name="cect{{ i }}sw"
+                                               onChange="synChk('cect{{ i }}sw','pnum')" size="4">
                                     </td>
                                 {% endfor %}
                             </tr>
@@ -389,11 +389,11 @@
                                 </td>
                                 {% for i in r %}
                                     <td>
-                                        <input type=text name="cect{{ i }}ssl"
-                                               onChange="synChk('cect{{ i }}ssl','pnum')" disabled="true" size=4>
+                                        <input type="text" name="cect{{ i }}ssl"
+                                               onChange="synChk('cect{{ i }}ssl','pnum')" disabled="true" size="4">
                                         &nbsp; x &nbsp;
-                                        <input type=text name="cect{{ i }}ssw"
-                                               onChange="synChk('cect{{ i }}ssw','pnum')" disabled="true" size=4>
+                                        <input type="text" name="cect{{ i }}ssw"
+                                               onChange="synChk('cect{{ i }}ssw','pnum')" disabled="true" size="4">
 
                                     </td>
                                 {% endfor %}
@@ -482,8 +482,8 @@
                                 {% for i in r %}
                                     <td>
                                         <div class="form-group">
-                                            <input type=text name="cect{{ i }}sn"
-                                                   onChange="synChk('cect{{ i }}sn','cws')" size=3>
+                                            <input type="text" name="cect{{ i }}sn"
+                                                   onChange="synChk('cect{{ i }}sn','cws')" size="3">
                                         </div>
                                     </td>
                                 {% endfor %}
@@ -498,11 +498,11 @@
                                 {% for i in r %}
                                     <td>
                                         <div class="form-group">
-                                            <input type=text name="cect{{ i }}inl"
-                                                   onChange="synChk('cect{{ i }}inl','pnum')" size=3>
+                                            <input type="text" name="cect{{ i }}inl"
+                                                   onChange="synChk('cect{{ i }}inl','pnum')" size="3">
                                             -
-                                            <input type=text name="cect{{ i }}inh"
-                                                   onChange="synChk('cect{{ i }}inh','pnum')" size=3>
+                                            <input type="text" name="cect{{ i }}inh"
+                                                   onChange="synChk('cect{{ i }}inh','pnum')" size="3">
                                         </div>
                                     </td>
                                 {% endfor %}
@@ -576,8 +576,8 @@
                                 {% for i in r %}
                                     <td>
                                         <div class="form-group">
-                                            <input type=text name="cect{{ i }}co"
-                                                   onChange="synChk('cect{{ i }}co','cws')" size=20>
+                                            <input type="text" name="cect{{ i }}co"
+                                                   onChange="synChk('cect{{ i }}co','cws')" size="20">
                                         </div>
                                     </td>
                                 {% endfor %}
@@ -697,7 +697,7 @@
                         </td>
                         {% for i in [1,2,3,4,5] %}
                             <td style="padding-top:0px;">
-                                {{ f.checkbox("cerdcl"+i|string, rf[i-1], "") }}
+                                {{ f.checkbox("cescrl"+i|string, rf[i-1], "") }}
                             </td>
                         {% endfor %}
                     </tr>
@@ -707,7 +707,7 @@
                             <div class="form-group form-inline">
                                 <label>apical</label>&nbsp;
                                 {{ f.checkbox("cescrl6","au","unilateral") }}
-                                {{ f.checkbox("cescrl6","ab","bilateral") }}
+                                {{ f.checkbox("cescrl7","ab","bilateral") }}
                             </div>
                         </td>
                     </tr>
@@ -1033,14 +1033,14 @@
                     <tr>
                         <td colspan="2">Pulmonary Artery Width (mm)</td>
                         <td colspan="5">
-                            <input type=text name="cepaw" size=4 class="form-control">
+                            <input type="text" name="cepaw" size="4" class="form-control">
                         </td>
                     </tr>
 
                     <tr>
                         <td colspan="2">Ascending Aorta Width (mm)</td>
                         <td colspan="5">
-                            <input type=text name="ceaow" size=4 class="form-control">
+                            <input type="text" name="ceaow" size="4" class="form-control">
                         </td>
                     </tr>
 
@@ -1050,7 +1050,7 @@
                         </td>
                         <td colspan="5">
                             {# TODO change field to read-only text, like Age in background form #}
-                            <input type=text name="cepar" onFocus="this.blur()" size=4 class="form-control">
+                            <input type="text" name="cepar" onFocus="this.blur()" size="4" class="form-control">
                         </td>
                     </tr>
                     <tr>
@@ -1070,7 +1070,7 @@
             <hr/>
             <div class="row">
                 <div class="col-sm-12 form-group">
-                    <label for="ceoma-n">Neck and Mediastinal Abnormalities</label>
+                    <label for="ceoba-n">Neck and Mediastinal Abnormalities</label>
                     <div>
                         {{ f.inlineRadioNYE("ceoma") }}
                     </div>
@@ -1092,8 +1092,8 @@
                                 {{ f.checkbox("ceatc","c","Calcification") }}&nbsp;&nbsp;
                                 {{ f.checkbox("ceaty","y","Cyst") }}&nbsp;&nbsp;
                                 {{ f.checkbox("ceatm","m","Mass") }}&nbsp;&nbsp;
-                                {{ f.checkbox("ceaty","o","Other") }}&nbsp;&nbsp;
-                                <input type=text name="ceatos" id="ceatos" class="form-control" required="required"
+                                {{ f.checkbox("ceato","o","Other") }}&nbsp;&nbsp;
+                                <input type="text" name="ceatos" id="ceatos" class="form-control" required="required"
                                        placeholder="Specify">
                             </div>
                         </td>
@@ -1113,8 +1113,8 @@
                                 {{ f.checkbox("ceayc","c","Calcification") }}&nbsp;&nbsp;
                                 {{ f.checkbox("ceayy","y","Cyst") }}&nbsp;&nbsp;
                                 {{ f.checkbox("ceaym","m","Mass") }}&nbsp;&nbsp;
-                                {{ f.checkbox("ceayy","o","Other") }}&nbsp;&nbsp;
-                                <input type=text name="ceayos" id="ceayos" class="form-control" required="required"
+                                {{ f.checkbox("ceayo","o","Other") }}&nbsp;&nbsp;
+                                <input type="text" name="ceayos" id="ceayos" class="form-control" required="required"
                                        placeholder="Specify">
                             </div>
                         </td>
@@ -1134,7 +1134,7 @@
                         </td>
                         <td>
                             <div class="form-group form-inline">
-                                {{ f.inlineRadioNYE("ceoma") }}
+                                {{ f.inlineRadioNYE("cemln") }}
                             </div>
                         </td>
                         <td>
@@ -1169,14 +1169,14 @@
                         <td>Axillary lymph nodes</td>
                         <td>
                             <div class="form-group">
-                                {{ f.inlineRadioNYE("cemlncab") }}
+                                {{ f.inlineRadioNYE("ceagaln") }}
                             </div>
                         </td>
                         <td style="padding-top:1px;">
                             <div class="form-group form-inline">
-                                {{ f.checkbox("hvceagalnrt","r","Right") }}&nbsp;&nbsp;
-                                {{ f.checkbox("hvceagalnlt","l","Left") }}&nbsp;&nbsp;
-                                <input type=text name="ceagalns" id="ceagalns" class="form-control"
+                                {{ f.checkbox("ceagalnrt","r","Right") }}&nbsp;&nbsp;
+                                {{ f.checkbox("ceagalnlt","l","Left") }}&nbsp;&nbsp;
+                                <input type="text" name="ceagalns" id="ceagalns" class="form-control"
                                        required="required" placeholder="Specify">
                             </div>
                         </td>
@@ -1196,7 +1196,7 @@
                                 {{ f.checkbox("cemvaa","a","Aorta") }}&nbsp;&nbsp;
                                 {{ f.checkbox("cemvap","w","Pulmonary arteries") }}&nbsp;&nbsp;
                                 {{ f.checkbox("cemvao","o","Other") }}&nbsp;&nbsp;
-                                <input type=text name="cemvaos" id="cemvaos" class="form-control"
+                                <input type="text" name="cemvaos" id="cemvaos" class="form-control"
                                        required="required" placeholder="Specify">
                             </div>
                         </td>
@@ -1215,7 +1215,7 @@
                                 {{ f.checkbox("cemelnw","w","Wall thickening") }}&nbsp;&nbsp;
                                 {{ f.checkbox("cemelnm","m","Mass") }}&nbsp;&nbsp;
                                 {{ f.checkbox("cemvlno","o","Other") }}&nbsp;&nbsp;
-                                <input type=text name="cemelnos" id="cemelnos" class="form-control"
+                                <input type="text" name="cemelnos" id="cemelnos" class="form-control"
                                        required="required" placeholder="Specify">
                             </div>
                         </td>
@@ -1230,7 +1230,7 @@
                         </td>
                         <td style="padding-top:1px;">
                             <div class="form-group form-inline">
-                                <input type=text name="cehhnos" id="cehhnos" class="form-control"
+                                <input type="text" name="cehhnos" id="cehhnos" class="form-control"
                                        required="required" placeholder="Specify">
                             </div>
                         </td>
@@ -1250,7 +1250,7 @@
                                 {{ f.checkbox("ceamy","y","Cyst") }}&nbsp;&nbsp;
                                 {{ f.checkbox("ceamm","m","Mass") }}&nbsp;&nbsp;
                                 {{ f.checkbox("ceamo","o","Other") }}&nbsp;&nbsp;
-                                <input type=text name="ceommos" id="ceommos" class="form-control"
+                                <input type="text" name="ceommos" id="ceommos" class="form-control"
                                        required="required" placeholder="Specify">
                             </div>
                         </td>
@@ -1295,7 +1295,7 @@
                                 {{ f.checkbox("ceobary","y","Cyst") }}&nbsp;&nbsp;
                                 {{ f.checkbox("ceobarm","m","Mass") }}&nbsp;&nbsp;
                                 {{ f.checkbox("ceobaro","o","Other") }}&nbsp;&nbsp;
-                                <input type=text name="ceatos" id="ceatos" class="form-control" required="required"
+                                <input type="text" name="ceobaros" id="ceobaros" class="form-control" required="required"
                                        placeholder="Specify">
                             </div>
                         </td>
@@ -1328,7 +1328,7 @@
                                 {{ f.checkbox("ceobafy","y","Cyst") }}&nbsp;&nbsp;
                                 {{ f.checkbox("ceobafm","m","Mass") }}&nbsp;&nbsp;
                                 {{ f.checkbox("ceobafo","o","Other") }}&nbsp;&nbsp;
-                                <input type=text name="ceobafos" id="ceobafos" class="form-control" required="required"
+                                <input type="text" name="ceobafos" id="ceobafos" class="form-control" required="required"
                                        placeholder="Specify">
                             </div>
                         </td>
@@ -1388,7 +1388,7 @@
                                 {{ f.checkbox("ceags","s","Stones") }}&nbsp;&nbsp;
                                 {{ f.checkbox("ceagl","l","Sludge") }}&nbsp;&nbsp;
                                 {{ f.checkbox("ceago","y","Other") }}&nbsp;&nbsp;
-                                <input type=text name="ceagos" id="ceagos" class="form-control" required="required"
+                                <input type="text" name="ceagos" id="ceagos" class="form-control" required="required"
                                        placeholder="Specify">
                             </div>
                         </td>
@@ -1407,7 +1407,7 @@
                                 {{ f.checkbox("ceasy","y","Cyst") }}&nbsp;&nbsp;
                                 {{ f.checkbox("ceasm","m","Mass") }}&nbsp;&nbsp;
                                 {{ f.checkbox("ceaso","y","Other") }}&nbsp;&nbsp;
-                                <input type=text name="ceasos" id="ceasos" class="form-control" required="required"
+                                <input type="text" name="ceasos" id="ceasos" class="form-control" required="required"
                                        placeholder="Specify">
                             </div>
                         </td>
@@ -1427,7 +1427,7 @@
                                 {{ f.checkbox("cealm","m","Mass") }}&nbsp;&nbsp;
                                 {{ f.checkbox("cealh","h","HU < 40") }}&nbsp;&nbsp;
                                 {{ f.checkbox("cealo","y","Other") }}&nbsp;&nbsp;
-                                <input type=text name="cealos" id="cealos" class="form-control" required="required"
+                                <input type="text" name="cealos" id="cealos" class="form-control" required="required"
                                        placeholder="Specify">
                             </div>
                         </td>
@@ -1447,7 +1447,7 @@
                                 {{ f.checkbox("ceapy","y","Cyst") }}&nbsp;&nbsp;
                                 {{ f.checkbox("ceapm","m","Mass") }}&nbsp;&nbsp;
                                 {{ f.checkbox("ceapo","y","Other") }}&nbsp;&nbsp;
-                                <input type=text name="ceapos" id="ceapos" class="form-control" required="required"
+                                <input type="text" name="ceapos" id="ceapos" class="form-control" required="required"
                                        placeholder="Specify">
                             </div>
                         </td>
@@ -1466,7 +1466,7 @@
                                 {{ f.checkbox("ceaay","y","Cyst") }}&nbsp;&nbsp;
                                 {{ f.checkbox("ceaam","m","Mass") }}&nbsp;&nbsp;
                                 {{ f.checkbox("ceaao","y","Other") }}&nbsp;&nbsp;
-                                <input type=text name="ceaaos" id="ceaaos" class="form-control" required="required"
+                                <input type="text" name="ceaaos" id="ceaaos" class="form-control" required="required"
                                        placeholder="Specify">
                             </div>
                         </td>
@@ -1484,7 +1484,7 @@
                                 {{ f.checkbox("ceaky","y","Cyst") }}&nbsp;&nbsp;
                                 {{ f.checkbox("ceakm","m","Mass") }}&nbsp;&nbsp;
                                 {{ f.checkbox("ceako","y","Other") }}&nbsp;&nbsp;
-                                <input type=text name="ceakos" id="ceakos" class="form-control" required="required"
+                                <input type="text" name="ceakos" id="ceakos" class="form-control" required="required"
                                        placeholder="Specify">
                             </div>
                         </td>
@@ -1495,7 +1495,7 @@
                         <td colspan="3">
                             <div class="form-group">
                                 <label for="ceaoab">Additional Comments on Abdominal Abnormalities</label>
-                                <textarea name="ceaoab" id="ceobrc" class="form-control"></textarea>
+                                <textarea name="ceaoab" id="ceaoab" class="form-control"></textarea>
                             </div>
                         </td>
                     </tr>
@@ -1711,7 +1711,7 @@
                 </div>
                 <div class="col-sm-10 form-group">
                     <label for="cecoico">Comments</label>
-                    <input type=text name="cecoico" id="cecoico" class="form-control">
+                    <input type="text" name="cecoico" id="cecoico" class="form-control">
                 </div>
             </div>
             <div class="pull-right">

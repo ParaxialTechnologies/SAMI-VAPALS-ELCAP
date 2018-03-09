@@ -1,4 +1,4 @@
-%tsutes ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-04T04:09Z
+%tsutes ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-08T21:58Z
  ;;1.8;Mash;
  ;
  ; This Mumps Advanced Shell (mash) routine implements unit tests for
@@ -15,7 +15,7 @@
  ;@copyright: 2016/2017/2018, ven, all rights reserved
  ;@license: Apache 2.0
  ;
- ;@last-updated: 2018-03-04T04:09Z
+ ;@last-updated: 2018-03-08T21:58Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -31,6 +31,7 @@
  ; group 4: absolute addressing after string
  ; group 5: relative addressing
  ; group 6: from & to, absolute addressing w/in string [tbd]
+ ; group 7: synonyms
  ;
  ;
  ;@called-by
@@ -41,6 +42,8 @@
  ; CHKEQ^%ut
  ; setex^%ts
  ; se^%ts
+ ; setExtract^%ts
+ ; place^%tst
  ;
  ;
  ; group 1: default addressing
@@ -59,6 +62,7 @@ setex101 ; @TEST setex^%ts(.string,.replace): string & substring undefined
  ;
  quit  ; end of setex101
  ;
+ ;
 setex102 ; @TEST setex^%ts(.string,""): string undefined, substring is empty string
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
@@ -70,6 +74,7 @@ setex102 ; @TEST setex^%ts(.string,""): string undefined, substring is empty str
  do CHKEQ^%ut(string("extract","to"),0)
  ;
  quit  ; end of setex102
+ ;
  ;
 setex103 ; @TEST setex^%ts(.string,.replace): string is empty, substring undefined
  ;
@@ -85,6 +90,7 @@ setex103 ; @TEST setex^%ts(.string,.replace): string is empty, substring undefin
  ;
  quit  ; end of setex103
  ;
+ ;
 setex104 ; @TEST setex^%ts(.string,""): string and substring are empty string
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
@@ -96,6 +102,7 @@ setex104 ; @TEST setex^%ts(.string,""): string and substring are empty string
  do CHKEQ^%ut(string("extract","to"),0)
  ;
  quit  ; end of setex104
+ ;
  ;
 setex105 ; @TEST setex^%ts(.string,"*"): string is empty, substring is punctuation
  ;
@@ -109,6 +116,7 @@ setex105 ; @TEST setex^%ts(.string,"*"): string is empty, substring is punctuati
  ;
  quit  ; end of setex105
  ;
+ ;
 setex106 ; @TEST setex^%ts(.string,"Sparrowhawk"): string empty, substring is word
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
@@ -120,6 +128,7 @@ setex106 ; @TEST setex^%ts(.string,"Sparrowhawk"): string empty, substring is wo
  do CHKEQ^%ut(string("extract","to"),11)
  ;
  quit  ; end of setex106
+ ;
  ;
 setex107 ; @TEST setex^%ts(.string,""): string is phrase, substring is empty
  ;
@@ -133,6 +142,7 @@ setex107 ; @TEST setex^%ts(.string,""): string is phrase, substring is empty
  ;
  quit  ; end of setex107
  ;
+ ;
 setex108 ; @TEST setex^%ts(.string,"o"): string is phrase, substring is letter
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
@@ -144,6 +154,7 @@ setex108 ; @TEST setex^%ts(.string,"o"): string is phrase, substring is letter
  do CHKEQ^%ut(string("extract","to"),1)
  ;
  quit  ; end of setex108
+ ;
  ;
 setex109 ; @TEST setex^%ts(.string,"bright"): string is phrase, substring is word
  ;
@@ -161,6 +172,7 @@ setex109 ; @TEST setex^%ts(.string,"bright"): string is phrase, substring is wor
  ;
  ; group 2: absolute addressing w/in string
  ;
+ ;
 setex201 ; @TEST setex^%ts(.string,""): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
@@ -173,6 +185,7 @@ setex201 ; @TEST setex^%ts(.string,""): setex test
  do CHKEQ^%ut(string("extract","to"),0)
  ;
  quit  ; end of setex201
+ ;
  ;
 setex202 ; @TEST setex^%ts(.string,"A"): setex test
  ;
@@ -187,6 +200,7 @@ setex202 ; @TEST setex^%ts(.string,"A"): setex test
  ;
  quit  ; end of setex202
  ;
+ ;
 setex203 ; @TEST setex^%ts(.string,"To"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
@@ -199,6 +213,7 @@ setex203 ; @TEST setex^%ts(.string,"To"): setex test
  do CHKEQ^%ut(string("extract","to"),2)
  ;
  quit  ; end of setex203
+ ;
  ;
 setex204 ; @TEST setex^%ts(.string,""): setex test
  ;
@@ -213,6 +228,7 @@ setex204 ; @TEST setex^%ts(.string,""): setex test
  ;
  quit  ; end of setex204
  ;
+ ;
 setex205 ; @TEST setex^%ts(.string,"c"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
@@ -225,6 +241,7 @@ setex205 ; @TEST setex^%ts(.string,"c"): setex test
  do CHKEQ^%ut(string("extract","to"),12)
  ;
  quit  ; end of setex205
+ ;
  ;
 setex206 ; @TEST setex^%ts(.string,"y and wholly"): setex test
  ;
@@ -239,6 +256,7 @@ setex206 ; @TEST setex^%ts(.string,"y and wholly"): setex test
  ;
  quit  ; end of setex206
  ;
+ ;
 setex207 ; @TEST setex^%ts(.string,""): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
@@ -252,6 +270,7 @@ setex207 ; @TEST setex^%ts(.string,""): setex test
  ;
  quit  ; end of setex207
  ;
+ ;
 setex208 ; @TEST setex^%ts(.string,"s"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
@@ -264,6 +283,7 @@ setex208 ; @TEST setex^%ts(.string,"s"): setex test
  do CHKEQ^%ut(string("extract","to"),39)
  ;
  quit  ; end of setex208
+ ;
  ;
 setex209 ; @TEST setex^%ts(.string,"o evil"): setex test
  ;
@@ -282,6 +302,7 @@ setex209 ; @TEST setex^%ts(.string,"o evil"): setex test
  ;
  ; group 3: absolute addressing before string
  ;
+ ;
 setex301 ; @TEST setex^%ts(.string,""): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
@@ -294,6 +315,7 @@ setex301 ; @TEST setex^%ts(.string,""): setex test
  do CHKEQ^%ut(string("extract","to"),0)
  ;
  quit  ; end of setex301
+ ;
  ;
 setex302 ; @TEST setex^%ts(.string,"w"): setex test
  ;
@@ -308,6 +330,7 @@ setex302 ; @TEST setex^%ts(.string,"w"): setex test
  ;
  quit  ; end of setex302
  ;
+ ;
 setex303 ; @TEST setex^%ts(.string,"A"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
@@ -320,6 +343,7 @@ setex303 ; @TEST setex^%ts(.string,"A"): setex test
  do CHKEQ^%ut(string("extract","to"),1)
  ;
  quit  ; end of setex303
+ ;
  ;
 setex304 ; @TEST setex^%ts(.string,"The"): setex test
  ;
@@ -334,6 +358,7 @@ setex304 ; @TEST setex^%ts(.string,"The"): setex test
  ;
  quit  ; end of setex304
  ;
+ ;
 setex305 ; @TEST setex^%ts(.string,"The"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
@@ -347,6 +372,7 @@ setex305 ; @TEST setex^%ts(.string,"The"): setex test
  ;
  quit  ; end of setex305
  ;
+ ;
 setex306 ; @TEST setex^%ts(.string,""): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
@@ -359,6 +385,7 @@ setex306 ; @TEST setex^%ts(.string,""): setex test
  do CHKEQ^%ut(string("extract","to"),0)
  ;
  quit  ; end of setex306
+ ;
  ;
 setex307 ; @TEST setex^%ts(.string,"The O"): setex test
  ;
@@ -374,7 +401,9 @@ setex307 ; @TEST setex^%ts(.string,"The O"): setex test
  quit  ; end of setex307
  ;
  ;
+ ;
  ; group 4: absolute addressing after string
+ ;
  ;
 setex401 ; @TEST setex^%ts(.string,""): setex test
  ;
@@ -389,6 +418,7 @@ setex401 ; @TEST setex^%ts(.string,""): setex test
  ;
  quit  ; end of setex401
  ;
+ ;
 setex402 ; @TEST setex^%ts(.string,""): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
@@ -402,6 +432,7 @@ setex402 ; @TEST setex^%ts(.string,""): setex test
  ;
  quit  ; end of setex402
  ;
+ ;
 setex403 ; @TEST setex^%ts(.string,""): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
@@ -413,6 +444,7 @@ setex403 ; @TEST setex^%ts(.string,""): setex test
  do CHKEQ^%ut(string("extract","to"),31)
  ;
  quit  ; end of setex403
+ ;
  ;
 setex404 ; @TEST setex^%ts(.string," from Earthsea"): setex test
  ;
@@ -427,6 +459,7 @@ setex404 ; @TEST setex^%ts(.string," from Earthsea"): setex test
  ;
  quit  ; end of setex404
  ;
+ ;
 setex405 ; @TEST setex^%ts(.string,"is to unmake power"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac 
@@ -439,6 +472,7 @@ setex405 ; @TEST setex^%ts(.string,"is to unmake power"): setex test
  do CHKEQ^%ut(string("extract","to"),31)
  ;
  quit  ; end of setex405
+ ;
  ;
 setex406 ; @TEST setex^%ts(.string,"cy"): setex test
  ;
@@ -453,7 +487,10 @@ setex406 ; @TEST setex^%ts(.string,"cy"): setex test
  ;
  quit  ; end of setex406
  ;
+ ;
+ ;
  ; group 5: relative addressing
+ ;
  ;
 setex501 ; @TEST setex^%ts(.string,""): setex test
  ;
@@ -468,6 +505,7 @@ setex501 ; @TEST setex^%ts(.string,""): setex test
  ;
  quit  ; end of setex501
  ;
+ ;
 setex502 ; @TEST setex^%ts(.string,"A"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
@@ -479,6 +517,7 @@ setex502 ; @TEST setex^%ts(.string,"A"): setex test
  do CHKEQ^%ut(string("extract","to"),1)
  ;
  quit  ; end of setex502
+ ;
  ;
 setex503 ; @TEST setex^%ts(.string,"It is not "): setex test
  ;
@@ -493,6 +532,7 @@ setex503 ; @TEST setex^%ts(.string,"It is not "): setex test
  ;
  quit  ; end of setex503
  ;
+ ;
 setex504 ; @TEST setex^%ts(.string,"Injustice makes the rules, and "): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac 
@@ -505,6 +545,7 @@ setex504 ; @TEST setex^%ts(.string,"Injustice makes the rules, and "): setex tes
  do CHKEQ^%ut(string("extract","to"),31)
  ;
  quit  ; end of setex504
+ ;
  ;
 setex505 ; @TEST setex^%ts(.string,""): setex test
  ;
@@ -519,6 +560,7 @@ setex505 ; @TEST setex^%ts(.string,""): setex test
  ;
  quit  ; end of setex505
  ;
+ ;
 setex506 ; @TEST setex^%ts(.string,"."): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac 
@@ -531,6 +573,7 @@ setex506 ; @TEST setex^%ts(.string,"."): setex test
  do CHKEQ^%ut(string("extract","to"),36)
  ;
  quit  ; end of setex506
+ ;
  ;
 setex507 ; @TEST setex^%ts(.string," selectively"): setex test
  ;
@@ -545,6 +588,7 @@ setex507 ; @TEST setex^%ts(.string," selectively"): setex test
  ;
  quit  ; end of setex507
  ;
+ ;
 setex508 ; @TEST setex^%ts(.string," that made me live"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
@@ -556,6 +600,7 @@ setex508 ; @TEST setex^%ts(.string," that made me live"): setex test
  do CHKEQ^%ut(string("extract","to"),47)
  ;
  quit  ; end of setex508
+ ;
  ;
 setex509 ; @TEST setex^%ts(.string,""): setex test
  ;
@@ -570,6 +615,7 @@ setex509 ; @TEST setex^%ts(.string,""): setex test
  ;
  quit  ; end of setex509
  ;
+ ;
 setex510 ; @TEST setex^%ts(.string,"I"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
@@ -582,6 +628,7 @@ setex510 ; @TEST setex^%ts(.string,"I"): setex test
  do CHKEQ^%ut(string("extract","to"),1)
  ;
  quit  ; end of setex510
+ ;
  ;
 setex511 ; @TEST setex^%ts(.string,"Despair"): setex test
  ;
@@ -596,6 +643,7 @@ setex511 ; @TEST setex^%ts(.string,"Despair"): setex test
  ;
  quit  ; end of setex511
  ;
+ ;
 setex512 ; @TEST setex^%ts(.string,"Injustice"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
@@ -607,6 +655,7 @@ setex512 ; @TEST setex^%ts(.string,"Injustice"): setex test
  do CHKEQ^%ut(string("extract","to"),9)
  ;
  quit  ; end of setex512
+ ;
  ;
 setex513 ; @TEST setex^%ts(.string,""): setex test
  ;
@@ -621,6 +670,7 @@ setex513 ; @TEST setex^%ts(.string,""): setex test
  ;
  quit  ; end of setex513
  ;
+ ;
 setex514 ; @TEST setex^%ts(.string,"n"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
@@ -634,6 +684,7 @@ setex514 ; @TEST setex^%ts(.string,"n"): setex test
  ;
  quit  ; end of setex514
  ;
+ ;
 setex515 ; @TEST setex^%ts(.string,"strange"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac 
@@ -645,6 +696,7 @@ setex515 ; @TEST setex^%ts(.string,"strange"): setex test
  do CHKEQ^%ut(string("extract","to"),28)
  ;
  quit  ; end of setex515
+ ;
  ;
 setex516 ; @TEST setex^%ts(.string,"life"): setex test
  ;
@@ -658,7 +710,10 @@ setex516 ; @TEST setex^%ts(.string,"life"): setex test
  ;
  quit  ; end of setex516
  ;
+ ;
+ ;
  ; group 6: from & to, absolute addressing w/in string [tbd]
+ ;
  ;
 setex601 ; @TEST setex^%ts(.string," boredom of "): setex test
  ;
@@ -672,6 +727,7 @@ setex601 ; @TEST setex^%ts(.string," boredom of "): setex test
  do CHKEQ^%ut(string("extract","to"),24)
  ;
  quit  ; end of setex601
+ ;
  ;
 setex602 ; @TEST setex^%ts(.string,"banality"): setex test
  ;
@@ -687,6 +743,7 @@ setex602 ; @TEST setex^%ts(.string,"banality"): setex test
  ;
  quit  ; end of setex602
  ;
+ ;
 setex603 ; @TEST setex^%ts(.string,"that of life"): setex test
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
@@ -699,5 +756,49 @@ setex603 ; @TEST setex^%ts(.string,"that of life"): setex test
  do CHKEQ^%ut(string("extract","to"),42)
  ;
  quit  ; end of setex603
+ ;
+ ;
+ ;
+ ; group 7: synonyms
+ ;
+ ;
+setex701 ; @TEST se^%ts(.string,"bright"): test se^%ts synonym
+ ;
+ ;ven/toad&lmry;test;procedure;clean;silent;sac
+ ;
+ new string set string="O the hawk's flight"
+ do se^%ts(.string,"bright")
+ do CHKEQ^%ut(string,"bright the hawk's flight")
+ do CHKEQ^%ut(string("extract","from"),1)
+ do CHKEQ^%ut(string("extract","to"),6)
+ ;
+ quit  ; end of setex701
+ ;
+ ;
+setex702 ; @TEST setExtract^%ts(.string,"bright"): test setExtract^%ts synonym
+ ;
+ ;ven/toad&lmry;test;procedure;clean;silent;sac
+ ;
+ new string set string="O the hawk's flight"
+ do setex^%ts(.string,"bright")
+ do CHKEQ^%ut(string,"bright the hawk's flight")
+ do CHKEQ^%ut(string("extract","from"),1)
+ do CHKEQ^%ut(string("extract","to"),6)
+ ;
+ quit  ; end of setex702
+ ;
+ ;
+setex703 ; @TEST setex^%ts(.string,"bright"): test place^%ts synonym
+ ;
+ ;ven/toad&lmry;test;procedure;clean;silent;sac
+ ;
+ new string set string="O the hawk's flight"
+ do setex^%ts(.string,"bright")
+ do CHKEQ^%ut(string,"bright the hawk's flight")
+ do CHKEQ^%ut(string("extract","from"),1)
+ do CHKEQ^%ut(string("extract","to"),6)
+ ;
+ quit  ; end of setex703
+ ;
  ;
 eor ; end of routine %tsutes

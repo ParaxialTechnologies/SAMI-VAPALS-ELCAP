@@ -36,12 +36,6 @@
  ; M-Unit
  ;  EN^%ut (called by ^%tsut)
  ;  COVERAGE^%ut (called by cover^%tsut)
- ;@calls
- ; CHKEQ^%ut
- ; findex^%ts
- ; fe^%ts
- ; findExtract^%ts
- ; find^%ts
  ;
  ;
  ;

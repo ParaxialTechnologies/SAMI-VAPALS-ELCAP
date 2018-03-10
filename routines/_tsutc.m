@@ -1,4 +1,4 @@
-%tsutc ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-09T02:38Z
+%tsutc ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-09T02:49Z
  ;;1.8;Mash;
  ;
  ; This Mumps Advanced Shell (mash) routine implements unit tests for
@@ -14,7 +14,7 @@
  ;@copyright: 2016/2017/2018, ven, all rights reserved
  ;@license: Apache 2.0
  ;
- ;@last-updated: 2018-03-09T02:38Z
+ ;@last-updated: 2018-03-09T02:49Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.7T03
@@ -23,7 +23,7 @@
  ;
  ;
  ;
- :@contents
+ ;@contents
  ; Group 1: Alphabet
  ;  alpha01 = unit test for $$alphabet^%ts
  ;  ALPHA01 = unit test for $$ALPHABET^%ts

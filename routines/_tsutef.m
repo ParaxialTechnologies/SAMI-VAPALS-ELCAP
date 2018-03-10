@@ -1,4 +1,4 @@
-%tsutc ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-08T21:29Z
+%tsutc ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-09T22:19Z
  ;;1.8;Mash;
  ;
  ; This Mumps Advanced Shell (mash) routine implements unit tests for
@@ -14,7 +14,7 @@
  ;@copyright: 2016/2017/2018, ven, all rights reserved
  ;@license: Apache 2.0
  ;
- ;@last-updated: 2018-03-08T21:29Z
+ ;@last-updated: 2018-03-09T22:19Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -36,6 +36,12 @@
  ; M-Unit
  ;  EN^%ut (called by ^%tsut)
  ;  COVERAGE^%ut (called by cover^%tsut)
+ ;@calls
+ ;  CHKEQ^%ut
+ ;  findex^%ts
+ ;  fe^%ts
+ ;  findExtract^%ts
+ ;  find^%ts
  ;
  ;
  ;

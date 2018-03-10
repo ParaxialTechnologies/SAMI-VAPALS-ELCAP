@@ -1,4 +1,4 @@
-%tsutfs ;ven/toad-type string: test setfind^%ts ;2018-03-05T20:05Z
+%tsutfs ;ven/toad-type string: test setfind^%ts ;2018-03-09T23:39Z
  ;;1.8;Mash;
  ;
  ; %tsutfs implements unit tests for ppi setfind^%ts.
@@ -21,13 +21,15 @@
  ;@routine-credits
  ;@primary-dev: Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
+ ;@additional-dev: Linda M. R. Yaw (lmry)
+ ; lmry@vistaexpertise.net
  ;@primary-dev-org: Vista Expertise Network (ven)
  ; http://vistaexpertise.net
  ;@copyright: 2016/2018, toad, all rights reserved
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-05T20:05Z
+ ;@last-updated: 2018-03-09T23:39Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -405,6 +407,12 @@ setfind19 ; @TEST setfind^%ts: Alternate Signatures
  do CHKEQ^%ut(string("extract","to"),14)
  ;
  do replace^%ts(.string,"toto","Dorothy")
+ do CHKEQ^%ut(string,"DorothyDorothy")
+ do CHKEQ^%ut(string("extract"),0)
+ do CHKEQ^%ut(string("extract","from"),0)
+ do CHKEQ^%ut(string("extract","to"),0)
+ ;
+ do findReplace^%ts(.string,"toto","Dorothy")
  do CHKEQ^%ut(string,"DorothyDorothy")
  do CHKEQ^%ut(string("extract"),0)
  do CHKEQ^%ut(string("extract","from"),0)

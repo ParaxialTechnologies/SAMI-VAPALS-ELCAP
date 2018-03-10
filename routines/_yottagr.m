@@ -1,4 +1,4 @@
-yottagr ;ven/gpl-yottadb extension: graphstore ;2018-02-11T12:15Z
+yottagr ;ven/gpl-yottadb extension: graphstore ;2018-03-10T23:11Z
  ;;1.8;Mash;
  ;
  ; %yottagr implements the Yottadb Extension Library's graphstore
@@ -24,7 +24,7 @@ yottagr ;ven/gpl-yottadb extension: graphstore ;2018-02-11T12:15Z
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-11T12:15Z
+ ;@last-updated: 2018-03-10T23:11Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Yottadb Extension - %yotta
  ;@version: 1.8T04
@@ -66,6 +66,8 @@ yottagr ;ven/gpl-yottadb extension: graphstore ;2018-02-11T12:15Z
  ; 2018-02-07/11 ven/toad %*1.8t04 %yottagr: passim add white space &
  ; hdr comments & do-dot quits, tag w/Apache license & attribution
  ; & to-do to shift namespace later, break up a few long line. debug.
+ ;
+ ; 2018-03-10 ven/toad %*1.8t04 %yottagr: fix $namew typo.
  ;
  ;@to-do
  ; %yotta: create entry points in ppi/api style

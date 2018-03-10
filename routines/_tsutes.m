@@ -1,4 +1,4 @@
-%tsutes ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-08T21:58Z
+%tsutes ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-10T00:41Z
  ;;1.8;Mash;
  ;
  ; This Mumps Advanced Shell (mash) routine implements unit tests for
@@ -15,7 +15,7 @@
  ;@copyright: 2016/2017/2018, ven, all rights reserved
  ;@license: Apache 2.0
  ;
- ;@last-updated: 2018-03-08T21:58Z
+ ;@last-updated: 2018-03-10T00:41Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -780,7 +780,7 @@ setex702 ; @TEST setExtract^%ts(.string,"bright"): test setExtract^%ts synonym
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
  new string set string="O the hawk's flight"
- do setex^%ts(.string,"bright")
+ do setExtract^%ts(.string,"bright")
  do CHKEQ^%ut(string,"bright the hawk's flight")
  do CHKEQ^%ut(string("extract","from"),1)
  do CHKEQ^%ut(string("extract","to"),6)
@@ -788,12 +788,12 @@ setex702 ; @TEST setExtract^%ts(.string,"bright"): test setExtract^%ts synonym
  quit  ; end of setex702
  ;
  ;
-setex703 ; @TEST setex^%ts(.string,"bright"): test place^%ts synonym
+setex703 ; @TEST place^%ts(.string,"bright"): test place^%ts synonym
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
  new string set string="O the hawk's flight"
- do setex^%ts(.string,"bright")
+ do place^%ts(.string,"bright")
  do CHKEQ^%ut(string,"bright the hawk's flight")
  do CHKEQ^%ut(string("extract","from"),1)
  do CHKEQ^%ut(string("extract","to"),6)

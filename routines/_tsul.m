@@ -315,7 +315,7 @@
  ; 2018-03-08 ven/lmry %*1.8T04 %tsutef, %tsutes, %tsutc: Fuss with tests,
  ; add tests for synonyms.
  ;
- ; 2018-03-09 ven/lmry %*1.8T04 %tsutfs: Add a synoym test
+ ; 2018-03-09/03-10 ven/lmry %*1.8T04 %tsutfs: Add a synoym test. %tsutes: fix test.
  ;
  ;
 eor ; end of routine %tsul

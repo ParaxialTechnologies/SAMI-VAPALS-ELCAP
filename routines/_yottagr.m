@@ -1,4 +1,4 @@
-yottagr ;ven/gpl-yottadb extension: graphstore ;2018-03-10T23:11Z
+yottagr ;ven/gpl-yottadb extension: graphstore ;2018-03-11T22:31Z
  ;;1.8;Mash;
  ;
  ; %yottagr implements the Yottadb Extension Library's graphstore
@@ -24,7 +24,7 @@ yottagr ;ven/gpl-yottadb extension: graphstore ;2018-03-10T23:11Z
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-10T23:11Z
+ ;@last-updated: 2018-03-11T22:31Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Yottadb Extension - %yotta
  ;@version: 1.8T04
@@ -67,7 +67,7 @@ yottagr ;ven/gpl-yottadb extension: graphstore ;2018-03-10T23:11Z
  ; hdr comments & do-dot quits, tag w/Apache license & attribution
  ; & to-do to shift namespace later, break up a few long line. debug.
  ;
- ; 2018-03-10 ven/toad %*1.8t04 %yottagr: fix $namew typo.
+ ; 2018-03-10/11 ven/toad %*1.8t04 %yottagr: fix $namew typo.
  ;
  ;@to-do
  ; %yotta: create entry points in ppi/api style
@@ -552,7 +552,7 @@ multout(rtn,zary,title) ; return and html page with multiple selections
  ; zary is passed by name and is usually a "match" array
  ;
  do  ;
- . set rtn=$namew(^tmp("kbaiwsai",$j))
+ . set rtn=$name(^tmp("kbaiwsai",$j))
  . kill @rtn
  . new gtop,gbot
  . do htmltb2^%yottaweb(.gtop,.gbot,"search results for #"_arg)

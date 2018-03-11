@@ -1,4 +1,4 @@
-%tsutes ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-10T00:41Z
+%tsutes ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-12T20:53Z
  ;;1.8;Mash;
  ;
  ; This Mumps Advanced Shell (mash) routine implements unit tests for
@@ -15,7 +15,7 @@
  ;@copyright: 2016/2017/2018, ven, all rights reserved
  ;@license: Apache 2.0
  ;
- ;@last-updated: 2018-03-10T00:41Z
+ ;@last-updated: 2018-03-12T20:53Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -156,7 +156,7 @@ setex108 ; @TEST setex^%ts(.string,"o"): string is phrase, substring is letter
  quit  ; end of setex108
  ;
  ;
-setex109 ; @TEST setex^%ts(.string,"bright"): string is phrase, substring is word
+setex109 ; @TEST setex^%ts(.string,"bright"): no from/to, replaces first char of string
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -173,7 +173,7 @@ setex109 ; @TEST setex^%ts(.string,"bright"): string is phrase, substring is wor
  ; group 2: absolute addressing w/in string
  ;
  ;
-setex201 ; @TEST setex^%ts(.string,""): setex test
+setex201 ; @TEST setex^%ts(.string,""): empty substring w/in string
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -187,7 +187,7 @@ setex201 ; @TEST setex^%ts(.string,""): setex test
  quit  ; end of setex201
  ;
  ;
-setex202 ; @TEST setex^%ts(.string,"A"): setex test
+setex202 ; @TEST setex^%ts(.string,"A"): from set, no to, replaces first letter
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -201,7 +201,7 @@ setex202 ; @TEST setex^%ts(.string,"A"): setex test
  quit  ; end of setex202
  ;
  ;
-setex203 ; @TEST setex^%ts(.string,"To"): setex test
+setex203 ; @TEST setex^%ts(.string,"To"): from set, no to, replaces first letter
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -215,7 +215,7 @@ setex203 ; @TEST setex^%ts(.string,"To"): setex test
  quit  ; end of setex203
  ;
  ;
-setex204 ; @TEST setex^%ts(.string,""): setex test
+setex204 ; @TEST setex^%ts(.string,""): remove letter w/in string
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -229,7 +229,7 @@ setex204 ; @TEST setex^%ts(.string,""): setex test
  quit  ; end of setex204
  ;
  ;
-setex205 ; @TEST setex^%ts(.string,"c"): setex test
+setex205 ; @TEST setex^%ts(.string,"c"): replace letter w/in string
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -243,7 +243,7 @@ setex205 ; @TEST setex^%ts(.string,"c"): setex test
  quit  ; end of setex205
  ;
  ;
-setex206 ; @TEST setex^%ts(.string,"y and wholly"): setex test
+setex206 ; @TEST setex^%ts(.string,"y and wholly"): replace letter with phrase
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -257,7 +257,7 @@ setex206 ; @TEST setex^%ts(.string,"y and wholly"): setex test
  quit  ; end of setex206
  ;
  ;
-setex207 ; @TEST setex^%ts(.string,""): setex test
+setex207 ; @TEST setex^%ts(.string,""): remove last letter
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -271,7 +271,7 @@ setex207 ; @TEST setex^%ts(.string,""): setex test
  quit  ; end of setex207
  ;
  ;
-setex208 ; @TEST setex^%ts(.string,"s"): setex test
+setex208 ; @TEST setex^%ts(.string,"s"): replace last letter
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -285,7 +285,7 @@ setex208 ; @TEST setex^%ts(.string,"s"): setex test
  quit  ; end of setex208
  ;
  ;
-setex209 ; @TEST setex^%ts(.string,"o evil"): setex test
+setex209 ; @TEST setex^%ts(.string,"o evil"): replace last letter with phrase
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -492,7 +492,7 @@ setex406 ; @TEST setex^%ts(.string,"cy"): setex test
  ; group 5: relative addressing
  ;
  ;
-setex501 ; @TEST setex^%ts(.string,""): setex test
+setex501 ; @TEST setex^%ts(.string,""): use "b" flag with empty replace
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -506,20 +506,21 @@ setex501 ; @TEST setex^%ts(.string,""): setex test
  quit  ; end of setex501
  ;
  ;
-setex502 ; @TEST setex^%ts(.string,"A"): setex test
+setex502 ; @TEST setex^%ts(.string,"A"): setex test use "b" flag to prepend character
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
  new string set string=" dark hand had let go its lifelong hold"
  set string("extract","from")="b"
  do setex^%ts(.string,"A")
+ do CHKEQ^%ut(string,"A dark hand had let go its lifelong hold)
  do CHKEQ^%ut(string("extract","from"),1)
  do CHKEQ^%ut(string("extract","to"),1)
  ;
  quit  ; end of setex502
  ;
  ;
-setex503 ; @TEST setex^%ts(.string,"It is not "): setex test
+setex503 ; @TEST setex^%ts(.string,"It is not "): use "b" flag to prepend phrase
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -533,7 +534,7 @@ setex503 ; @TEST setex^%ts(.string,"It is not "): setex test
  quit  ; end of setex503
  ;
  ;
-setex504 ; @TEST setex^%ts(.string,"Injustice makes the rules, and "): setex test
+setex504 ; @TEST setex^%ts(.string,"Injustice makes the rules, and "): "B" flag
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac 
  ;
@@ -547,7 +548,7 @@ setex504 ; @TEST setex^%ts(.string,"Injustice makes the rules, and "): setex tes
  quit  ; end of setex504
  ;
  ;
-setex505 ; @TEST setex^%ts(.string,""): setex test
+setex505 ; @TEST setex^%ts(.string,""): use "a" flag with empty string for replace
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac 
  ;
@@ -561,7 +562,7 @@ setex505 ; @TEST setex^%ts(.string,""): setex test
  quit  ; end of setex505
  ;
  ;
-setex506 ; @TEST setex^%ts(.string,"."): setex test
+setex506 ; @TEST setex^%ts(.string,"."): use "a" flag to append period
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac 
  ;
@@ -575,7 +576,7 @@ setex506 ; @TEST setex^%ts(.string,"."): setex test
  quit  ; end of setex506
  ;
  ;
-setex507 ; @TEST setex^%ts(.string," selectively"): setex test
+setex507 ; @TEST setex^%ts(.string," selectively"): use "a" flag to append word
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac 
  ;
@@ -589,20 +590,21 @@ setex507 ; @TEST setex^%ts(.string," selectively"): setex test
  quit  ; end of setex507
  ;
  ;
-setex508 ; @TEST setex^%ts(.string," that made me live"): setex test
+setex508 ; @TEST setex^%ts(.string," that made me live"): use "A" flag to append phrase
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
  new string set string="I can breathe back the breath"
  set string("extract","from")="A"
  do setex^%ts(.string," that made me live")
+ do CHKEQ^%ut(string,"I can breathe back the breath that made me live")
  do CHKEQ^%ut(string("extract","from"),30)
  do CHKEQ^%ut(string("extract","to"),47)
  ;
  quit  ; end of setex508
  ;
  ;
-setex509 ; @TEST setex^%ts(.string,""): setex test
+setex509 ; @TEST setex^%ts(.string,""): Use "f" flag with empty string to replace
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -616,7 +618,7 @@ setex509 ; @TEST setex^%ts(.string,""): setex test
  quit  ; end of setex509
  ;
  ;
-setex510 ; @TEST setex^%ts(.string,"I"): setex test
+setex510 ; @TEST setex^%ts(.string,"I"): Use "f" flag to replace beginning character
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -630,7 +632,7 @@ setex510 ; @TEST setex^%ts(.string,"I"): setex test
  quit  ; end of setex510
  ;
  ;
-setex511 ; @TEST setex^%ts(.string,"Despair"): setex test
+setex511 ; @TEST setex^%ts(.string,"Despair"): Use "f" flag to replace beginning
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -644,7 +646,7 @@ setex511 ; @TEST setex^%ts(.string,"Despair"): setex test
  quit  ; end of setex511
  ;
  ;
-setex512 ; @TEST setex^%ts(.string,"Injustice"): setex test
+setex512 ; @TEST setex^%ts(.string,"Injustice"): Use "F" flag to replace beginning
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -657,7 +659,7 @@ setex512 ; @TEST setex^%ts(.string,"Injustice"): setex test
  quit  ; end of setex512
  ;
  ;
-setex513 ; @TEST setex^%ts(.string,""): setex test
+setex513 ; @TEST setex^%ts(.string,""): use "l" flag with empty replace
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac 
  ;
@@ -671,7 +673,7 @@ setex513 ; @TEST setex^%ts(.string,""): setex test
  quit  ; end of setex513
  ;
  ;
-setex514 ; @TEST setex^%ts(.string,"n"): setex test
+setex514 ; @TEST setex^%ts(.string,"n"): use "l" flag to replace end character
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -685,20 +687,21 @@ setex514 ; @TEST setex^%ts(.string,"n"): setex test
  quit  ; end of setex514
  ;
  ;
-setex515 ; @TEST setex^%ts(.string,"strange"): setex test
+setex515 ; @TEST setex^%ts(.string,"strange"): use "l" flag to replace end of string
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac 
  ;
  new string set string="The world's vast and ANCIENT"
  set string("extract","from")="l"
  do setex^%ts(.string,"strange")
+ do CHKEQ^%ts(string,"The world's vast and strange")
  do CHKEQ^%ut(string("extract","from"),22)
  do CHKEQ^%ut(string("extract","to"),28)
  ;
  quit  ; end of setex515
  ;
  ;
-setex516 ; @TEST setex^%ts(.string,"life"): setex test
+setex516 ; @TEST setex^%ts(.string,"life"): use "L" flag to replace end of string
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -712,10 +715,10 @@ setex516 ; @TEST setex^%ts(.string,"life"): setex test
  ;
  ;
  ;
- ; group 6: from & to, absolute addressing w/in string [tbd]
+ ; group 6: from & to, absolute addressing w/in string
  ;
  ;
-setex601 ; @TEST setex^%ts(.string," boredom of "): setex test
+setex601 ; @TEST setex^%ts(.string," boredom of "): insert replace within string
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -729,7 +732,7 @@ setex601 ; @TEST setex^%ts(.string," boredom of "): setex test
  quit  ; end of setex601
  ;
  ;
-setex602 ; @TEST setex^%ts(.string,"banality"): setex test
+setex602 ; @TEST setex^%ts(.string,"banality"): set "to" to replace within string
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -744,7 +747,7 @@ setex602 ; @TEST setex^%ts(.string,"banality"): setex test
  quit  ; end of setex602
  ;
  ;
-setex603 ; @TEST setex^%ts(.string,"that of life"): setex test
+setex603 ; @TEST setex^%ts(.string,"that of life"): Use "L" flag to replace end of string
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;

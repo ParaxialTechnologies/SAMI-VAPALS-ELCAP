@@ -367,6 +367,7 @@ fixSrc(line) ; fix html src lines to use resources in see/
  ; findReplace^%ts
  ;
  if line["src=" do  ;
+ . if line["src=""http" quit
  . if line["src=""/" do  quit
  . . do findReplace^%ts(.line,"src=""/","src=""see/","a")
  . . quit

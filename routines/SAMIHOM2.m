@@ -162,6 +162,14 @@ wsVAPALS(ARG,BODY,RESULT) ; vapals post web service - all calls come through thi
  . m ARG=vars
  . d wsCASE^SAMICAS2(.RESULT,.ARG)
  ;
+ i route="nuform" d  q  ;
+ . m ARG=vars
+ . d wsNuForm^SAMICAS2(.RESULT,.ARG)
+ ;
+ i route="addform" d  q  ;
+ . m ARG=vars
+ . d wsNuFormPost^SAMICAS2(.ARG,.BODY,.RESULT)
+ ;
  q
  ;
 devhome(rtn,filter) ; temporary home page for development
@@ -295,11 +303,11 @@ getHome(rtn,filter) ; homepage accessed using GET
  . . s touched=1
  . ;
  . i ln["href" i 'touched d  ;
- . . d fixHref^SAMIFRM(.ln)
+ . . d fixHref^SAMIFRM2(.ln)
  . . s temp(zi)=ln
  . ;
  . i ln["src" d  ;
- . . d fixSrc^SAMIFRM(.ln)
+ . . d fixSrc^SAMIFRM2(.ln)
  . . s temp(zi)=ln
  . ;
  . i ln["id" i ln["studyIdMenu" d  ;

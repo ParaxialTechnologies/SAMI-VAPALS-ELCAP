@@ -112,8 +112,12 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  if sid="" set sid=$get(filter("fvalue"))
  if sid="" set sid="XXXX01"
  ;
+ new key set key=$g(filter("key")) ; graph key for the saved form
+ i key="" set key=form
+ ;
  new vals
- do getVals^%wf("vals",form,sid) ; load saved field values
+ ;do getVals^%wf("vals",form,sid) ; load saved field values
+ do getVals^%wf("vals",key,sid) ; load saved field values
  ;
  ;@stanza 3 load html template
  ;
@@ -169,7 +173,7 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . ; . . quit
  . ; if customscan'="" xecute @customscan
  . ;
- . if form="sbform3" do SAMISUB2^SAMIFRM(.tln,form,sid,.filter,.%j,.zhtml)
+ . if form["vapals:" do SAMISUB2^SAMIFRM2(.tln,form,sid,.filter,.%j,.zhtml)
  . else  do SAMISUBS^SAMIFRM(.tln,form,sid,.filter)
  . set zhtml(%j)=tln
  . ;

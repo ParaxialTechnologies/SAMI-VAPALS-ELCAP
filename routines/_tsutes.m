@@ -1,4 +1,4 @@
-%tsutes ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-12T03:45Z
+%tsutes ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-12T03:55Z
  ;;1.8;Mash;
  ;
  ; This Mumps Advanced Shell (mash) routine implements unit tests for
@@ -15,7 +15,7 @@
  ;@copyright: 2016/2017/2018, ven, all rights reserved
  ;@license: Apache 2.0
  ;
- ;@last-updated: 2018-03-12T03:45Z
+ ;@last-updated: 2018-03-12T03:55Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -804,13 +804,13 @@ setex604 ; @TEST setex^%ts(.string,"banality"): from relative, to absolute
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
- new string set string="admit the ATTRACTION of evil"
+  new string set string="to make love"
  set string("extract","from")="b"
- set string("extract","to")=20
- do setex^%ts(.string,"banality")
- do CHKEQ^%ut(string,"admit the banality of evil")
- do CHKEQ^%ut(string("extract","from"),11)
- do CHKEQ^%ut(string("extract","to"),18)
+ set string("extract","to")=3
+ do setex^%ts(.string,"is to unmake power")
+ do CHKEQ^%ut(string,"to make love is to unmake power")
+ do CHKEQ^%ut(string("extract","from"),14)
+ do CHKEQ^%ut(string("extract","to"),31)
  ;
  quit  ; end of setex604
  ;

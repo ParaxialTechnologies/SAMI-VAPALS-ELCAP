@@ -346,6 +346,12 @@ SAMISUBS(line,form,sid,filter,%j,zhtml) ; line is passed by reference; filter is
  . do findReplace^%ts(.line,"VEP0001",sid,"a")
  . quit
  ;
+ if line["Doe, Jane" do  ;
+ . do findReplace^%ts(.line,"Doe, Jane",$g(vals("saminame")))
+ ;
+ if line["Medical Record Number:" do  ;
+ . do findReplace^%ts(.line,"12345","")
+ ;
  if line["home.cgi" do
  . do findReplace^%ts(.line,"POST","GET","a")
  . quit
@@ -363,48 +369,6 @@ SAMISUBS(line,form,sid,filter,%j,zhtml) ; line is passed by reference; filter is
  quit  ; end of SAMISUBS
  ;
  ;
- ;
-SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
- ;
- ; line is passed by reference; filter is passed by reference
- ; can modify any line in the html as needed
- ;
- ;@called-by
- ; wsGetForm^%wf
- ;@calls
- ; fixSrc
- ; fixHref
- ;
- ; the following didn't work so is commented out.
- ; fix to handle javascript separately
- ; caution: the following might modify %j to skip over javascript
- ;
- ; if line["<script" do  ;
- ; . if line["</script" quit  ;
- ; . new zi set zi=%j
- ; . new max set max=$order(zhtml(" "),-1)
- ; . for zi=%j,1,max quit:zhtml(zi)["</script"  do  ;
- ; . . set line=zhtml(zi)
- ; . . if line["src=" do fixSrc(.line)
- ; . . if line["href=" do fixHref(.line) 
- ; . . set line=line_$char(13,10)
- ; . . set zhtml(zi)=line
- ; . . quit
- ; . set %j=zi+1
- ; . set line=zhtml(%j)
- ; . quit
- ;
- set line=line_$char(13,10) ; insert CRLF at end of every line
- ; for readability in browser
- ;
- if line["src=" do
- . do fixSrc(.line) ; insert see/ processor on src= references
- . quit
- if line["href=" do
- . do fixHref(.line) ; insert see/ processor on href= references
- . quit
- ;
- quit  ; end of SAMISUB2
  ;
  ;
  ;

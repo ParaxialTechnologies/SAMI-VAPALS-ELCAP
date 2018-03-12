@@ -1,4 +1,4 @@
-%tsutes ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-12T04:06Z
+%tsutes ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-12T04:26Z
  ;;1.8;Mash;
  ;
  ; This Mumps Advanced Shell (mash) routine implements unit tests for
@@ -15,7 +15,7 @@
  ;@copyright: 2016/2017/2018, ven, all rights reserved
  ;@license: Apache 2.0
  ;
- ;@last-updated: 2018-03-12T04:06Z
+ ;@last-updated: 2018-03-12T04:26Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -740,7 +740,7 @@ setex518 ; @TEST setex^%ts(.string,"life"): use uppercase bad flag
  quit  ; end of setex518
  ;
  ;
- setex519 ; @TEST setex^%ts(.string,"life"): use two flags
+setex519 ; @TEST setex^%ts(.string,"life"): use two flags
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -800,7 +800,7 @@ setex603 ; @TEST setex^%ts(.string,"that of life"): Use "L" flag to replace end 
  quit  ; end of setex603
  ;
  ;
-setex604 ; @TEST setex^%ts(.string,"banality"): from relative, to absolute
+setex604 ; @TEST setex^%ts(.string,"to make love "): from relative, to absolute
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;sac
  ;
@@ -814,6 +814,35 @@ setex604 ; @TEST setex^%ts(.string,"banality"): from relative, to absolute
  ;
  quit  ; end of setex604
  ;
+ ;
+setex605 ; @TEST setex^%ts(.string,"to make love "): put flag in from and to
+ ;
+ ;ven/toad&lmry;test;procedure;clean;silent;sac
+ ;
+  new string set string="is to unmake power"
+ set string("extract","from")="b"
+ set string("extract","to")="b"
+ do setex^%ts(.string,"to make love ")
+ do CHKEQ^%ut(string,"to make love is to unmake power")
+ do CHKEQ^%ut(string("extract","from"),1)
+ do CHKEQ^%ut(string("extract","to"),13)
+ ;
+ quit  ; end of setex605
+ ;
+ ;
+setex606 ; @TEST setex^%ts(.string,"to make love "): put flag in to
+ ;
+ ;ven/toad&lmry;test;procedure;clean;silent;sac
+ ;
+  new string set string="is to unmake power"
+ set string("extract","from")="0"
+ set string("extract","to")="b"
+ do setex^%ts(.string,"to make love ")
+ do CHKEQ^%ut(string,"to make love is to unmake power")
+ do CHKEQ^%ut(string("extract","from"),1)
+ do CHKEQ^%ut(string("extract","to"),13)
+ ;
+ quit  ; end of setex606
  ;
  ;
  ; group 7: synonyms

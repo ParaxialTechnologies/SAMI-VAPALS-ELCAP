@@ -1,4 +1,4 @@
-%tsutes ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-12T01:09Z
+%tsutes ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-12T03:45Z
  ;;1.8;Mash;
  ;
  ; This Mumps Advanced Shell (mash) routine implements unit tests for
@@ -15,7 +15,7 @@
  ;@copyright: 2016/2017/2018, ven, all rights reserved
  ;@license: Apache 2.0
  ;
- ;@last-updated: 2018-03-12T01:09Z
+ ;@last-updated: 2018-03-12T03:45Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -714,6 +714,45 @@ setex516 ; @TEST setex^%ts(.string,"life"): use "L" flag to replace end of strin
  quit  ; end of setex516
  ;
  ;
+setex517 ; @TEST setex^%ts(.string,"life"): use bad flag
+ ;
+ ;ven/toad&lmry;test;procedure;clean;silent;sac
+ ;
+ new string set string="To refuse death is to refuse DOOM"
+ set string("extract","from")="z"
+ do setex^%ts(.string,"")
+ do CHKEQ^%ut(string("extract","from"),0)
+ do CHKEQ^%ut(string("extract","to"),0)
+ ;
+ quit  ; end of setex517
+ ;
+ ;
+setex518 ; @TEST setex^%ts(.string,"life"): use uppercase bad flag
+ ;
+ ;ven/toad&lmry;test;procedure;clean;silent;sac
+ ;
+ new string set string="To refuse death is to refuse DOOM"
+ set string("extract","from")="Z"
+ do setex^%ts(.string,"")
+ do CHKEQ^%ut(string("extract","from"),0)
+ do CHKEQ^%ut(string("extract","to"),0)
+ ;
+ quit  ; end of setex518
+ ;
+ ;
+ setex519 ; @TEST setex^%ts(.string,"life"): use two flags
+ ;
+ ;ven/toad&lmry;test;procedure;clean;silent;sac
+ ;
+ new string set string="To refuse death is to refuse DOOM"
+ set string("extract","from")="li"
+ do setex^%ts(.string,"Life")
+ do CHKEQ^%ut(string("extract","from"),30)
+ do CHKEQ^%ut(string("extract","to"),33)
+ ;
+ quit  ; end of setex519
+ ;
+ ;
  ;
  ; group 6: from & to, absolute addressing w/in string
  ;
@@ -759,6 +798,21 @@ setex603 ; @TEST setex^%ts(.string,"that of life"): Use "L" flag to replace end 
  do CHKEQ^%ut(string("extract","to"),42)
  ;
  quit  ; end of setex603
+ ;
+ ;
+setex604 ; @TEST setex^%ts(.string,"banality"): from relative, to absolute
+ ;
+ ;ven/toad&lmry;test;procedure;clean;silent;sac
+ ;
+ new string set string="admit the ATTRACTION of evil"
+ set string("extract","from")="b"
+ set string("extract","to")=20
+ do setex^%ts(.string,"banality")
+ do CHKEQ^%ut(string,"admit the banality of evil")
+ do CHKEQ^%ut(string("extract","from"),11)
+ do CHKEQ^%ut(string("extract","to"),18)
+ ;
+ quit  ; end of setex604
  ;
  ;
  ;

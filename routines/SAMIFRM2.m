@@ -325,15 +325,35 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  ; fixHref
  ;
  ;
+ new touched s touched=0
+ ;
  set line=line_$char(13,10) ; insert CRLF at end of every line
  ; for readability in browser
+ ;
+ if line["home.html" do  ;
+ . do findReplace^%ts(.line,"home.html","/vapals")
+ . set touched=1
+ ;
+ if line["casereview.html" do ;
+ . do findReplace^%ts(.line,"casereview.html","/vapals?samiroute=casereview&studyid="_sid)
+ . set touched=1
  ;
  if line["src=" do
  . do fixSrc(.line) ; insert see/ processor on src= references
  . quit
- if line["href=" do
+ ;
+ if line["href=" if 'touched do
  . do fixHref(.line) ; insert see/ processor on href= references
  . quit
+ ;
+ if line["Sample, Sammy G" do  ;
+ . do findReplace^%ts(.line,"Sample, Sammy G",$g(vals("saminame")))
+ ;
+ if line["ST0001" do  ;
+ . do findReplace^%ts(.line,"ST0001",sid)
+ ;
+ if line["1234567890" do  ;
+ . do findReplace^%ts(.line,"1234567890","")
  ;
  quit  ; end of SAMISUB2
  ;

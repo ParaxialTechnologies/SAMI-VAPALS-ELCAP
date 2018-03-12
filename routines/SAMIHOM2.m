@@ -125,6 +125,10 @@ wsHOME(rtn,filter) ; web service for SAMI homepage
  . do devhome(.rtn,.filter)
  . quit
  ;
+ if $g(filter("samiroute"))'="" do  quit  ; workaround for "get" access to pages
+ . new BODY set BODY(1)=""
+ . do wsVAPALS(.filter,.BODY,.rtn) 
+ ;
  do getHome(.rtn,.filter) ; VAPALS homepage
  ;
  ;@stanza 3 termination
@@ -140,6 +144,7 @@ wsVAPALS(ARG,BODY,RESULT) ; vapals post web service - all calls come through thi
  new vars,bdy
  set bdy=$get(BODY(1))
  do parseBody^%wf("vars",.bdy)
+ m vars=ARG
  merge ^gpl("vapals","vars")=vars
  ;
  n route s route=$g(vars("samiroute"))
@@ -152,6 +157,10 @@ wsVAPALS(ARG,BODY,RESULT) ; vapals post web service - all calls come through thi
  i route="newcase" d  q  ;
  . m ARG=vars
  . d wsNewCase(.ARG,.BODY,.RESULT)
+ ;
+ i route="casereview" d  q  ;
+ . m ARG=vars
+ . d wsCASE^SAMICAS2(.RESULT,.ARG)
  ;
  q
  ;

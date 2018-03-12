@@ -1,4 +1,4 @@
-%tsutc ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-09T22:19Z
+%tsutc ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-12T01:29Z
  ;;1.8;Mash;
  ;
  ; This Mumps Advanced Shell (mash) routine implements unit tests for
@@ -14,7 +14,7 @@
  ;@copyright: 2016/2017/2018, ven, all rights reserved
  ;@license: Apache 2.0
  ;
- ;@last-updated: 2018-03-09T22:19Z
+ ;@last-updated: 2018-03-12T01:29Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -173,6 +173,20 @@ find204 ; @TEST findex^%ts(.string,"toto","b"): findex test
  do CHKEQ^%ut(string("extract","to"),0)
  ;
  quit  ; end of find204
+ ;
+ ;
+find205 ; @TEST findex^%ts(.string,"toto","B"): use "B" flag
+ ;
+ ;ven/toad&lmry;test;procedure;clean;silent;sac
+ ;
+ new string set string="totototo"
+ set string("extract","from")=1
+ set string("extract","to")=2
+ do findex^%ts(.string,"toto","B")
+ do CHKEQ^%ut(string("extract","from"),0)
+ do CHKEQ^%ut(string("extract","to"),0)
+ ;
+ quit  ; end of find205
  ;
  ;
  ;

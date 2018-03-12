@@ -1,4 +1,4 @@
-%tsutes ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-12T20:53Z
+%tsutes ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-12T01:09Z
  ;;1.8;Mash;
  ;
  ; This Mumps Advanced Shell (mash) routine implements unit tests for
@@ -15,7 +15,7 @@
  ;@copyright: 2016/2017/2018, ven, all rights reserved
  ;@license: Apache 2.0
  ;
- ;@last-updated: 2018-03-12T20:53Z
+ ;@last-updated: 2018-03-12T01:09Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -513,7 +513,7 @@ setex502 ; @TEST setex^%ts(.string,"A"): setex test use "b" flag to prepend char
  new string set string=" dark hand had let go its lifelong hold"
  set string("extract","from")="b"
  do setex^%ts(.string,"A")
- do CHKEQ^%ut(string,"A dark hand had let go its lifelong hold)
+ do CHKEQ^%ut(string,"A dark hand had let go its lifelong hold")
  do CHKEQ^%ut(string("extract","from"),1)
  do CHKEQ^%ut(string("extract","to"),1)
  ;
@@ -694,7 +694,7 @@ setex515 ; @TEST setex^%ts(.string,"strange"): use "l" flag to replace end of st
  new string set string="The world's vast and ANCIENT"
  set string("extract","from")="l"
  do setex^%ts(.string,"strange")
- do CHKEQ^%ts(string,"The world's vast and strange")
+ do CHKEQ^%ut(string,"The world's vast and strange")
  do CHKEQ^%ut(string("extract","from"),22)
  do CHKEQ^%ut(string("extract","to"),28)
  ;

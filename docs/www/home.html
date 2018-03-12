@@ -20,6 +20,8 @@
 <script src="lib/formvalidation/dist/js/formValidation.min.js"></script>
 <script src="lib/formvalidation/dist/js/framework/bootstrap.min.js"></script>
 <script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="jquery-conditonally-enable.js"></script>
 <script src="vapals.js"></script>
 
@@ -108,10 +110,17 @@
                         </form>
                     </div>
                 </div>
-
             </div>
-
         </div>
+
+        <h1>Statistics
+            <small>MOCKUPS ONLY</small>
+        </h1>
+
+        <div id="projectRural" class="col-lg-3  col-sm-6"></div>
+        <div id="siteRural" class="col-lg-3  col-sm-6"></div>
+        <div id="patientsEnrolled" class="col-lg-6  col-sm-12"></div>
+
     </div>
 
     <script language="JavaScript">
@@ -119,6 +128,82 @@
             $("#fvalue").focus();
         });
 
+        // Load google charts
+        google.charts.load('current', {'packages': ['corechart', 'bar']});
+        google.charts.setOnLoadCallback(drawCharts);
+
+        function drawProject() {
+            var projectData = google.visualization.arrayToDataTable([
+                ['Task', 'Hours per Day'],
+                ['Rural', 600],
+                ['Urban', 400]
+            ]);
+            new google.visualization.PieChart(document.getElementById('projectRural'))
+                .draw(projectData, {
+                    'title': 'Project-wide Rural Engagement',
+                    height: 300,
+                    is3D: true,
+                });
+        }
+
+        function drawSite() {
+            var siteData = google.visualization.arrayToDataTable([
+                ['Task', 'Hours per Day'],
+                ['Rural', 68],
+                ['Urban', 32]
+            ]);
+
+
+            new google.visualization.PieChart(document.getElementById('siteRural'))
+                .draw(siteData, {
+                    'title': 'Rural Engagement in Phoenix',
+                    height: 300,
+                    is3D: true,
+                });
+        }
+
+        function drawEnrollment() {
+            var data = google.visualization.arrayToDataTable([
+                ['City', 'Population'],
+                ['Brooklyn, NY', 8175],
+                ['Philadelphia, PA', 3792],
+                ['Chicago, IL', 4695],
+                ['Indianapolis, IN', 2099],
+                ['Nashville, TN', 1345],
+                ['Kansas City, KS', 1526],
+                ['Tampa Bay, FL', 1853],
+                ['Houston, TX', 3588],
+                ['Phoenix, AZ', 5844],
+                ['Los Angeles, CA', 7526]
+            ]);
+
+            var options = {
+                title: 'Enrollment by Site',
+                height: 400,
+                legend: {
+                    position: 'none'
+                },
+                hAxis: {
+                    title: 'Total Population',
+                    minValue: 0
+                },
+                vAxis: {
+                    title: 'City'
+                }
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('patientsEnrolled'));
+
+            chart.draw(data, options);
+        }
+
+        // Draw the chart and set the chart values
+        function drawCharts() {
+            drawProject();
+            drawSite();
+            drawEnrollment();
+            //TODO: redraw on window resize
+        }
     </script>
 
 

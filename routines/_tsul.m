@@ -1,4 +1,4 @@
-%tsul ;ven/toad-type string: development log ;2018-03-12T01:31Z
+%tsul ;ven/toad-type string: development log ;2018-03-12T04:40Z
  ;;1.8;Mash;
  ;
  ; %tsul is the Mumps String Library's primary-development log.
@@ -23,7 +23,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-012T01:31Z
+ ;@last-updated: 2018-03-012T04:40Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -317,8 +317,8 @@
  ;
  ; 2018-03-09/03-10 ven/lmry %*1.8T04 %tsutfs: Add a synoym test. %tsutes: fix test.
  ;
- ; 2018-03-12 ven/lmry %*1.8T04 %tsutes: Fuss with tests, add some descriptions.
- ; %tsutef: add unit test for uppercase flag
+ ; 2018-03-12 ven/lmry %*1.8T04 %tsutes: Fuss with tests, add some descriptions. Add 
+ ; tests to increase coverage. %tsutef: add unit test for uppercase flag coverage=100%
  ;
  ;
 eor ; end of routine %tsul

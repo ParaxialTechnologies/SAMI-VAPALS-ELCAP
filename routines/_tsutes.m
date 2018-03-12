@@ -1,4 +1,4 @@
-%tsutes ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-12T04:26Z
+%tsutes ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-12T04:39Z
  ;;1.8;Mash;
  ;
  ; This Mumps Advanced Shell (mash) routine implements unit tests for
@@ -15,7 +15,7 @@
  ;@copyright: 2016/2017/2018, ven, all rights reserved
  ;@license: Apache 2.0
  ;
- ;@last-updated: 2018-03-12T04:26Z
+ ;@last-updated: 2018-03-12T04:39Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -747,10 +747,36 @@ setex519 ; @TEST setex^%ts(.string,"life"): use two flags
  new string set string="To refuse death is to refuse DOOM"
  set string("extract","from")="li"
  do setex^%ts(.string,"Life")
- do CHKEQ^%ut(string("extract","from"),30)
- do CHKEQ^%ut(string("extract","to"),33)
+ do CHKEQ^%ut(string("extract","from"),0)
+ do CHKEQ^%ut(string("extract","to"),0)
  ;
  quit  ; end of setex519
+ ;
+ ;
+setex520 ; @TEST setex^%ts(.string,"life"): use two flags
+ ;
+ ;ven/toad&lmry;test;procedure;clean;silent;sac
+ ;
+ new string set string="To refuse death is to refuse DOOM"
+ set string("extract","from")="bf"
+ do setex^%ts(.string,"Life")
+ do CHKEQ^%ut(string("extract","from"),0)
+ do CHKEQ^%ut(string("extract","to"),0)
+ ;
+ quit  ; end of setex520
+ ;
+ ;
+setex521 ; @TEST setex^%ts(.string,"life"): use reserved flag
+ ;
+ ;ven/toad&lmry;test;procedure;clean;silent;sac
+ ;
+ new string set string="To refuse death is to refuse DOOM"
+ set string("extract","from")="r"
+ do setex^%ts(.string,"Life")
+ do CHKEQ^%ut(string("extract","from"),0)
+ do CHKEQ^%ut(string("extract","to"),0)
+ ;
+ quit  ; end of setex521
  ;
  ;
  ;
@@ -838,9 +864,9 @@ setex606 ; @TEST setex^%ts(.string,"to make love "): put flag in to
  set string("extract","from")="0"
  set string("extract","to")="b"
  do setex^%ts(.string,"to make love ")
- do CHKEQ^%ut(string,"to make love is to unmake power")
- do CHKEQ^%ut(string("extract","from"),1)
- do CHKEQ^%ut(string("extract","to"),13)
+ do CHKEQ^%ut(string,"")
+ do CHKEQ^%ut(string("extract","from"),0)
+ do CHKEQ^%ut(string("extract","to"),0)
  ;
  quit  ; end of setex606
  ;

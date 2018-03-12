@@ -1,4 +1,4 @@
-%tsut ;ven/mcglk&toad-type string: unit tests ;2018-03-09T03:29Z
+%tsut ;ven/mcglk&toad-type string: unit tests ;2018-03-12T01:15Z
  ;;1.8;Mash;
  ;
  ; %tsut implements unit tests for the Mash String Library.
@@ -28,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-09T03:29Z
+ ;@last-updated: 2018-03-12T01:15Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -95,7 +95,7 @@ cover ; run tests & calculate code coverage
  ; & we may have to modify namespace and/or verbosity to pare this down
  ; until we have a lot more unit tests written.
  ;
- do COVERAGE^%ut(namespace,.%tsuincl,.%tsuexcl,2)
+ do COVERAGE^%ut(namespace,.%tsuincl,.%tsuexcl,3)
  ;
  quit  ; end of cover
  ;

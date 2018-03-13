@@ -1,4 +1,4 @@
-%wfhform ;ven/gpl-web form: html form get & post ;2018-03-08T20:28Z
+wfhform ;ven/gpl-web form: html form get & post ;2018-03-08T20:28Z
  ;;1.8;Mash;
  ;
  ; %wfhform implements the Web Form Library's html form get & post web
@@ -347,7 +347,7 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  ;
  ;@stanza 15 return form prepared fr/template
  ;
- do ADDCRLF^VPRJRUT(.zhtml)
+ ;do ADDCRLF^VPRJRUT(.zhtml)
  ;
  merge @rtn=zhtml ; copy processed template to return array
  ;

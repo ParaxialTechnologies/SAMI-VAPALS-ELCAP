@@ -1,128 +1,160 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <title>Home</title>
+    <title>
+      Home
+    </title>
     <link rel="stylesheet" href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="lib/formvalidation/dist/css/formValidation.min.css">
     <link rel="stylesheet" href="lib/bootstrap-datetimepicker-4.17.47/css/bootstrap-datetimepicker.css">
     <link rel="stylesheet" href="vapals.css">
-</head>
-<body>
-<script src="lib/jquery-3.2.1.slim.min.js"></script>
-<script src="lib/popper.min.js"></script>
-<script src="lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-<script src="lib/moment.js"></script>
-<script src="lib/formvalidation/dist/js/formValidation.min.js"></script>
-<script src="lib/formvalidation/dist/js/framework/bootstrap.min.js"></script>
-<script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script src="jquery-conditonally-enable.js"></script>
-<script src="vapals.js"></script>
-
-<!--Debug information for viewport-->
-<span class="badge badge-secondary visible-xs-block">extra small</span>
-<span class="badge badge-secondary visible-sm-block">small</span>
-<span class="badge badge-secondary visible-md-block">medium</span>
-<span class="badge badge-secondary visible-lg-block">large</span>
-
-
-<!--System Navigation-->
-<nav class="navbar navbar-default" role="navigation">
-    <div class="container-fluid">
+  </head>
+  <body>
+    <script src="lib/jquery-3.2.1.slim.min.js"></script> 
+    <script src="lib/popper.min.js"></script> 
+    <script src="lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script> 
+    <script src="lib/moment.js"></script> 
+    <script src="lib/formvalidation/dist/js/formValidation.min.js"></script> 
+    <script src="lib/formvalidation/dist/js/framework/bootstrap.min.js"></script> 
+    <script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js"></script> 
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> 
+    <script src="jquery-conditonally-enable.js"></script> 
+    <script src="vapals.js"></script> <!--Debug information for viewport-->
+    <span class="badge badge-secondary visible-xs-block">extra small</span> <span class="badge badge-secondary visible-sm-block">small</span> <span class="badge badge-secondary visible-md-block">medium</span> <span class="badge badge-secondary visible-lg-block">large</span> <!--System Navigation-->
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            
-            <a href="home.html">
-                <img src="img/new-logo.png" title="VA-PALS" height="50" alt="VA-PALS Logo"/>
-            </a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button> <a href="home.html"><img src="img/new-logo.png" title="VA-PALS" height="50" alt="VA-PALS Logo"></a>
         </div>
         <div class="navbar-collapse collapse" id="navbar-main">
-            <ul class="nav navbar-nav">
-                <li><a href="home.html">Home</a></li>
-                <li class="dropdown" id="studyIdMenu" style="display:none;">
-                    <a href="casereview.html" class="navbar-link">Case Review</a>
-                </li>
-            </ul>
+          <ul class="nav navbar-nav">
+            <li>
+              <a href="home.html">Home</a>
+            </li>
+            <li class="dropdown" id="studyIdMenu" style="display:none;">
+              <a href="casereview.html" class="navbar-link">Case Review</a>
+            </li>
+          </ul>
         </div>
-    </div>
-</nav>
-
-
+      </div>
+    </nav>
     <div class="container-fluid" style="max-width:1550px">
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Case Review</h3>
-                    </div>
-                    <div class="panel-body">
-                        
-                        <form action="casereview.html" method="post">
-                            <div class="form-group">
-                                <label for="field">Locate By</label>
-                                <select name="field" id="field" class="form-control">
-                                    <option value="sid"> Study ID
-                                    <option value="mrn"> Medical Record Number
-                                    <option value="name"> Last Name
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="fvalue">Search Key</label>
-                                <input type="text" name="fvalue" id="fvalue" class="form-control"/>
-                            </div>
-                            <div class="pull-right">
-                                <input type="submit" value="Submit" class="btn btn-primary" id="submit-button">
-                            </div>
-                        </form>
-                    </div>
-                </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                Case Review
+              </h3>
             </div>
-
-            <div class="col-sm-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">New Case</h3>
-                    </div>
-                    <div class="panel-body">
-                        
-                        <form action="intake.html" method="post">
-                            <div class="form-group">
-                                <label for="saminame">Name</label>
-                                <input type="text" class="form-control" id="saminame" name="saminame"
-                                       placeholder="Last, First">
-                            </div>
-                            <div class="pull-right">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </form>
-                    </div>
+            <div class="panel-body">
+              <form action="casereview.html" method="post">
+                <div class="form-group">
+                  <label for="field">Locate By</label> <select name="field" id="field" class="form-control">
+                    <option value="sid">
+                      Study ID
+                    </option>
+                    <option value="mrn">
+                      Medical Record Number
+                    </option>
+                    <option value="name">
+                      Last Name
+                    </option>
+                  </select>
                 </div>
+                <div class="form-group">
+                  <label for="fvalue">Search Key</label> <input type="text" name="fvalue" id="fvalue" class="form-control">
+                </div>
+                <div class="pull-right">
+                  <input type="submit" value="Submit" class="btn btn-primary" id="submit-button">
+                </div>
+              </form>
             </div>
+          </div>
         </div>
-
-        <h1>Statistics
-            <small>MOCKUPS ONLY</small>
-        </h1>
-
-        <div id="projectRural" class="col-lg-3  col-sm-6"></div>
-        <div id="siteRural" class="col-lg-3  col-sm-6"></div>
-        <div id="patientsEnrolled" class="col-lg-6  col-sm-12"></div>
-
+        <div class="col-sm-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                New Case
+              </h3>
+            </div>
+            <div class="panel-body">
+              <form action="intake.html" method="post">
+                <div class="form-group">
+                  <label for="saminame">Name</label> <input type="text" class="form-control" id="saminame" name="saminame" placeholder="Last, First">
+                </div>
+                <div class="pull-right">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h1>
+        Statistics <small>MOCKUPS ONLY</small>
+      </h1>
+      <div id="projectRural" class="col-lg-3 col-sm-6"></div>
+      <div id="siteRural" class="col-lg-3 col-sm-6"></div>
+      <div id="patientsEnrolled" class="col-lg-6 col-sm-12"></div>
     </div>
-
+    <footer>
+      <div class="container-fluid" style="max-width:1550px">
+        <hr>
+        <a href="https://issues.osehra.org/browse/VAP" target="_blank">Submit feedback</a>
+      </div>
+    </footer>
     <script language="JavaScript">
+    $(function () {
+        function validateDatePickerOnChange(e) {
+            var $datePicker = $(e.target)
+            var fv = $datePicker.closest(".validated").data("formValidation");
+            if (fv) {
+                var f = $datePicker.find("input").addBack("input");
+                fv.revalidateField(f);
+            }
+        }
+
+        $.each($(".datepicker"), function (i, el) {
+            $(el).datetimepicker({
+                format: 'MM/DD/YYYY',
+                maxDate: moment().add(1, 'h') //hack to not select today
+            }).on("dp.change", validateDatePickerOnChange);
+        });
+
+        $.each($(".yearpicker"), function (i, el) {
+            $(el).datetimepicker({
+                format: 'YYYY',
+                maxDate: moment().add(1, 'h'), //hack to not select today
+                minDate: moment().subtract(100, 'y')
+            }).on("dp.change", validateDatePickerOnChange);
+        });
+
+        //Globally enabled popovers for things like help text.
+        $('[data-toggle="popover"]').popover();
+
+        //Initialize Form Validation
+        console.log("binding fv");
+        $(".validated").formValidation({framework: 'bootstrap'});
+
+
+    });
+
+    //TODO: insert studyId here.
+    var studyId = "XX0002";
+
+    if (studyId) {
+        $("#studyIdMenu").show();
+    }
+    </script> 
+    <script language="JavaScript">
+
         $(function () {
             $("#fvalue").focus();
         });
@@ -204,59 +236,5 @@
             //TODO: redraw on window resize
         }
     </script>
-
-
-
-
-    <footer>
-        <div class="container-fluid" style="max-width:1550px">
-            <hr/>
-            <a href="https://issues.osehra.org/browse/VAP" target="_blank">Submit feedback</a>
-        </div>
-    </footer>
-
-
-<script language="JavaScript">
-    $(function () {
-        function validateDatePickerOnChange(e) {
-            var $datePicker = $(e.target)
-            var fv = $datePicker.closest(".validated").data("formValidation");
-            if (fv) {
-                var f = $datePicker.find("input").addBack("input");
-                fv.revalidateField(f);
-            }
-        }
-
-        $.each($(".datepicker"), function (i, el) {
-            $(el).datetimepicker({
-                format: 'MM/DD/YYYY',
-                maxDate: moment().add(1, 'h') //hack to not select today
-            }).on("dp.change", validateDatePickerOnChange);
-        });
-
-        $.each($(".yearpicker"), function (i, el) {
-            $(el).datetimepicker({
-                format: 'YYYY',
-                maxDate: moment().add(1, 'h'), //hack to not select today
-                minDate: moment().subtract(100, 'y')
-            }).on("dp.change", validateDatePickerOnChange);
-        });
-
-        //Globally enabled popovers for things like help text.
-        $('[data-toggle="popover"]').popover();
-
-        //Initialize Form Validation
-        $(".validated").formValidation({framework: 'bootstrap'});
-
-
-    });
-
-    //TODO: insert studyId here.
-    var studyId = "XX0002";
-
-    if (studyId) {
-        $("#studyIdMenu").show();
-    }
-</script>
-</body>
+  </body>
 </html>

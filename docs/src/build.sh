@@ -40,7 +40,7 @@ for i in ${DIR}/../www/*.html; do
     if [[ $i = *"-form"* ]]; then
         echo "Ignoring non-enhanced file ${i}"
     else
-        echo "Tidying ${i}"
+        echo "*** TIDYING ${i} ***"
         tidy -config "${DIR}/htmltidy.conf" "${i}"
     fi
 done

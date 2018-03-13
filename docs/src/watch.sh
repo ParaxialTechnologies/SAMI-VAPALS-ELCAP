@@ -11,4 +11,4 @@ command -v when-changed >/dev/null 2>&1 || { sudo pip install https://github.com
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 echo "Watching ${DIR}..."
-when-changed -vrs "${DIR}/" "python ${DIR}/compile-forms.py"
+when-changed -vrs "${DIR}/" "${DIR}/build.sh"

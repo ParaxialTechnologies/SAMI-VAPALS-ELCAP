@@ -355,8 +355,61 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  if line["1234567890" do  ;
  . do findReplace^%ts(.line,"1234567890","")
  ;
+ if line["intake.html" do  ;
+ . do findReplace^%ts(.line,"intake.html","/form?form="_key_"&studyId="_sid)
+ ;
+ if line["background.html" do  ;
+ . do findReplace^%ts(.line,"background.html","/form?form="_key_"&studyId="_sid)
+ ;
+ if line["ctevaluation.html" do  ;
+ . do findReplace^%ts(.line,"ctevaluation.html","/form?form="_key_"&studyId="_sid)
+ ;
  quit  ; end of SAMISUB2
  ;
+wsSbform(rtn,filter) ; background form access
+ n sid s sid=$g(filter("studyid"))
+ i sid="" s sid=$g(filter("sid"))
+ i +sid>0 s sid=$$genStudyId^SAMIHOM2(sid)
+ ;i sid="" s sid="XXX0001"
+ n items d getItems^SAMICAS2("items",sid)
+ ;w !,"sid=",sid,!
+ ;zwr items
+ ;b
+ n key s key=$o(items("sbfor"))
+ s filter("key")=key
+ s filter("form")="vapals:sbform"
+ d wsGetForm^%wf(.rtn,.filter)
+ q
+ ;
+wsSiform(rtn,filter) ; intake form access
+ n sid s sid=$g(filter("studyid"))
+ i sid="" s sid=$g(filter("sid"))
+ i +sid>0 s sid=$$genStudyId^SAMIHOM2(sid)
+ ;i sid="" s sid="XXX0001"
+ n items d getItems^SAMICAS2("items",sid)
+ ;w !,"sid=",sid,!
+ ;zwr items
+ ;b
+ n key s key=$o(items("sifor"))
+ s filter("key")=key
+ s filter("form")="vapals:siform"
+ d wsGetForm^%wf(.rtn,.filter)
+ q
+ ;
+wsCeform(rtn,filter) ; ctevaluation form access
+ n sid s sid=$g(filter("studyid"))
+ i sid="" s sid=$g(filter("sid"))
+ i +sid>0 s sid=$$genStudyId^SAMIHOM2(sid)
+ ;i sid="" s sid="XXX0001"
+ n items d getItems^SAMICAS2("items",sid)
+ ;w !,"sid=",sid,!
+ ;zwr items
+ ;b
+ n key s key=$o(items("cefor"))
+ s filter("key")=key
+ s filter("form")="vapals:ceform"
+ d wsGetForm^%wf(.rtn,.filter)
+ q
  ;
  ;
 fixSrc(line) ; fix html src lines to use resources in see/
@@ -367,6 +420,7 @@ fixSrc(line) ; fix html src lines to use resources in see/
  ; findReplace^%ts
  ;
  if line["src=" do  ;
+ . if line["src=""http" quit
  . if line["src=""/" do  quit
  . . do findReplace^%ts(.line,"src=""/","src=""see/","a")
  . . quit

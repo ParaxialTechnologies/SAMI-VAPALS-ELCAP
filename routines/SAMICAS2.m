@@ -160,11 +160,11 @@ wsCASE(rtn,filter) ; generate case review page
  . . s touched=1
  . ;
  . i ln["href" i 'touched d  ;
- . . d fixHref^SAMIFRM(.ln)
+ . . d fixHref^SAMIFRM2(.ln)
  . . s temp(zi)=ln
  . ;
  . i ln["src" d  ;
- . . d fixSrc^SAMIFRM(.ln)
+ . . d fixSrc^SAMIFRM2(.ln)
  . . s temp(zi)=ln
  . ;
  . s cnt=cnt+1
@@ -181,7 +181,11 @@ wsCASE(rtn,filter) ; generate case review page
  new sidispdate set sidispdate=$$key2dispDate(sidate)
  new geturl set geturl="/form?form=vapals:siform&studyid="_sid_"&key="_sikey
  new posturl set posturl="javascript:subPr('siform','QIhuSAoCYzQAAAtHza8AAAAM')"
- new nuhref set nuhref="<a href=""/nuform?studyid="_sid_"""><img src=""/see/nform.gif""></a>"
+ new nuhref set nuhref="<form method=POST action=""/vapals"">"
+ set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""nuform"">"
+ set nuhref=nuhref_"<input type=hidden name=""studyid"" value="_sid_">"
+ ; set nuhref=nuhref_"<input type=button value=""New Form"">< img src=""/see/nform.gif"">"_"</form>"
+ set nuhref=nuhref_"<input type=image method=POST action=""/vapals"" value=""New Form"" src=""/see/nform.gif"">"_"</form>"
  s cnt=cnt+1
  set rtn(cnt)="<tr  bgcolor=#bffbff><td> "_sid_" </td><td> "_lname_" </td><td> "_fname_" </td><td> - </td><td>"_sidispdate_"</td><td>Intake </td>"_$char(13)
  set cnt=cnt+1
@@ -233,12 +237,14 @@ wsCASE(rtn,filter) ; generate case review page
  ;
  for  set zi=$order(temp(zi)) quit:+zi=0  do  ;
  . set loc=loc+1
- . if temp(zi)["home.cgi" do
+ . ;if temp(zi)["home.cgi" do
  . new line set line=temp(zi)
- . do findReplace^%ts(.line,"POST","GET","a")
+ . ;do findReplace^%ts(.line,"POST","GET","a")
  . set temp(zi)=line
  . set rtn(loc)=temp(zi)
  . quit
+ ;
+ ;D ADDCRLF^VPRJRUT(.rtn)
  ;
  ;@stanza 9 termination
  ;
@@ -426,37 +432,58 @@ wsNuForm(rtn,filter) ; select new form for patient (get service)
  new saminame set saminame=$get(@groot@("saminame"))
  quit:saminame=""
  ;
- new tmpl,tout
- do getTemplate("tmpl","nuform")
- quit:'$data(tmpl)
+ new temp,tout
+ do getTemplate("temp","vapals:nuform")
+ quit:'$data(temp)
  ;
- new tcnt set tcnt=0
+ n cnt s cnt=0
  new zi set zi=0
- for  set zi=$order(tmpl(zi)) quit:+zi=0  quit:tmpl(zi)["nuform"  do  ;
- . new ln set ln=tmpl(zi)
- . if ln["VEP0001" do findReplace^%ts(.ln,"VEP0001",sid,"a")
- . if ln["Doe, Jane" do findReplace^%ts(.ln,"Doe, Jane",saminame,"a")
- . set tcnt=tcnt+1
- . set tout(tcnt)=ln
- . quit
+ for  set zi=$order(temp(zi)) quit:+zi=0  do  ;
+ . n ln s ln=temp(zi)
+ . n touched s touched=0
+ . ;
+ . i ln["id" i ln["studyIdMenu" d  ;
+ . . s zi=zi+4
+ . ;
+ . i ln["home.html" d  ;
+ . . d findReplace^%ts(.ln,"home.html","/vapals")
+ . . s temp(zi)=ln
+ . . s touched=1
+ . ;
+ . i ln["href" i 'touched d  ;
+ . . d fixHref^SAMIFRM2(.ln)
+ . . s temp(zi)=ln
+ . ;
+ . i ln["src" d  ;
+ . . d fixSrc^SAMIFRM2(.ln)
+ . . s temp(zi)=ln
+ . ;
+ . i ln["form" i ln["todo" d  ;
+ . . d findReplace^%ts(.ln,"todo","/vapals")
+ . . s cnt=cnt+1
+ . . s rtn(cnt)=ln
+ . . s cnt=cnt+1
+ . . s rtn(cnt)="<input type=hidden name=""samiroute"" value=""addform"">"
+ . . s cnt=cnt+1
+ . . s rtn(cnt)="<input type=hidden name=""sid"" value="_sid_">"
+ . . s zi=zi+1
+ . ;
+ . i ln["background" s temp(zi)=""
+ . i ln["newform" s temp(zi)=""
+ . i ln["ctevaluation" d  ;
+ . . d findReplace^%ts(.ln,"ctevaluation","ceform")
+ . . s temp(zi)=ln
+ . ;
+ . i ln["<script" i temp(zi+1)["function" d  ;
+ . . s zi=$$scanFor^SAMIHOM2(.temp,zi,"</script")
+ . . s zi=zi+1
+ . ; 
+ . s cnt=cnt+1
+ . set rtn(cnt)=temp(zi)
  ;
- new ln set ln=tmpl(zi)
- do findReplace^%ts(.ln,"/cgi-bin/datac/nuform.cgi","/nuform?studyid="_sid,"a")
- set tcnt=tcnt+1 set tout(tcnt)=ln
- ;
- for  set zi=$order(tmpl(zi)) quit:+zi=0  quit:tmpl(zi)["/FORM"  do  ;
- . set ln=tmpl(zi)
- . if ln["OPTION" do  ;
- . . if ln'["ceform" set ln=""
- . . quit
- . if ln["VEP0001" do findReplace^%ts(.ln,"VEP0001",sid,"a")
- . set tcnt=tcnt+1
- . set tout(tcnt)=ln
- . quit
- set tcnt=tcnt+1
- set tout(tcnt)="</td></tr></table> </body> </html> "
- do ADDCRLF^VPRJRUT(.tout)
- merge rtn=tout
+ ;m tout=rtn
+ ;do ADDCRLF^VPRJRUT(.tout)
+ ;merge rtn=tout
  ;
  ;@stanza 3 termination
  ;
@@ -491,6 +518,7 @@ wsNuFormPost(ARGS,BODY,RESULT) ; post new form selection (post service)
  new vars,bdy
  set bdy=$get(BODY(1))
  do parseBody^%wf("vars",.bdy)
+ m vars=ARGS
  merge ^gpl("nuform","vars")=vars
  ;
  set nuform=$get(vars("form"))
@@ -505,7 +533,9 @@ wsNuFormPost(ARGS,BODY,RESULT) ; post new form selection (post service)
  ;
  if nuform="ceform" do  ;
  . new key set key="ceform-"_datekey
- . set ARGS("form")=key
+ . set ARGS("key")=key
+ . set ARGS("studyid")=sid
+ . set ARGS("form")="vapals:ceform"
  . do makeCeform(sid,key)
  . quit
  ;

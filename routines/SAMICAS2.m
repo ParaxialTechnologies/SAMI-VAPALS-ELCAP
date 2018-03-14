@@ -178,32 +178,48 @@ wsCASE(rtn,filter) ; generate case review page
  new sikey set sikey=$order(items("sifor"))
  if sikey="" set sikey="siform-2017-12-10"
  new sidate set sidate=$$getDateKey(sikey)
+ s sikey="vapals:"_sikey
  new sidispdate set sidispdate=$$key2dispDate(sidate)
- new geturl set geturl="/form?form=vapals:siform&studyid="_sid_"&key="_sikey
- new posturl set posturl="javascript:subPr('siform','QIhuSAoCYzQAAAtHza8AAAAM')"
+ ;new geturl set geturl="/form?form=vapals:siform&studyid="_sid_"&key="_sikey
  new nuhref set nuhref="<form method=POST action=""/vapals"">"
- set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""nuform"">"
+ set nuhref=nuhref_"<td><input type=hidden name=""samiroute"" value=""nuform"">"
  set nuhref=nuhref_"<input type=hidden name=""studyid"" value="_sid_">"
- ; set nuhref=nuhref_"<input type=button value=""New Form"">< img src=""/see/nform.gif"">"_"</form>"
- set nuhref=nuhref_"<input type=image method=POST action=""/vapals"" value=""New Form"" src=""/see/nform.gif"">"_"</form>"
+ set nuhref=nuhref_"<input value=""New Form"" class=""btn label label-warning"" role=""link"" type=""submit""></form></td>"
  s cnt=cnt+1
- set rtn(cnt)="<tr  bgcolor=#bffbff><td> "_sid_" </td><td> "_lname_" </td><td> "_fname_" </td><td> - </td><td>"_sidispdate_"</td><td>Intake </td>"_$char(13)
+ set rtn(cnt)="<tr><td> "_sid_" </td><td> "_lname_" </td><td> "_fname_" </td><td> - </td><td>"_sidispdate_"</td><td>"_$char(13)
+ s cnt=cnt+1
+ set rtn(cnt)="<form method=""post"" action=""/vapals"">"
  set cnt=cnt+1
- set rtn(cnt)="<TD> <a href="""_geturl_"""><img src=""/see/preview.gif""></a>"_nuhref_"</td></tr>"_$char(13)
+ set rtn(cnt)="<input name=""samiroute"" value=""form"" type=""hidden"">"
+ set rtn(cnt)=rtn(cnt)_" <input name=""studyid"" value="""_sid_""" type=""hidden"">"
+ set rtn(cnt)=rtn(cnt)_" <input name=""form"" value="""_sikey_""" type=""hidden"">"
+ set rtn(cnt)=rtn(cnt)_" <input value=""Intake"" class=""btn btn-link"" role=""link"" type=""submit"">"
+ set cnt=cnt+1
+ set rtn(cnt)="</form></td>"_$char(13)
+ set cnt=cnt+1
+ set rtn(cnt)=nuhref_"</tr>"
  ;
  ;@stanza 5 background form
  ;
  new sbkey set sbkey=$order(items("sbfor"))
  if sbkey="" set sbkey="sbform-2017-12-10"
  new sbdate set sbdate=$$getDateKey^SAMICASE(sbkey)
+ set sbkey="vapals:"_sbkey
  new sbdispdate set sbdispdate=$$key2dispDate^SAMICASE(sbdate)
- ;new geturl set geturl="/form?form="_sbkey_"&studyid="_sid
- new geturl set geturl="/form?form=vapals:sbform&studyid="_sid_"&key="_sbkey
- new posturl set posturl="javascript:subPr('sbform','QIhuSAoCYzQAAAtHza8AAAAM')"
  set cnt=cnt+1
- set rtn(cnt)="<tr  bgcolor=#bffbff><td> "_sid_" </td><td> - </td><td> - </td><td> - </td><td>"_sbdispdate_"</td><td>Background </td>"_$char(13)
+ set rtn(cnt)="<tr><td> "_sid_" </td><td> - </td><td> - </td><td> - </td><td>"_sbdispdate_"</td><td>"_$char(13)
  set cnt=cnt+1
- set rtn(cnt)="<TD> <a href="""_geturl_"""><img src=""/see/preview.gif""></a></td></tr>"_$char(13)
+ set rtn(cnt)="<form method=""post"" action=""/vapals"">"_$char(13)
+ set cnt=cnt+1
+ set rtn(cnt)="<input name=""samiroute"" value=""form"" type=""hidden"">"_$char(13)
+ set cnt=cnt+1
+ set rtn(cnt)=" <input name=""studyid"" value="""_sid_""" type=""hidden"">"_$char(13)
+ set cnt=cnt+1
+ set rtn(cnt)=" <input name=""form"" value="""_sbkey_""" type=""hidden"">"_$char(13)
+ set cnt=cnt+1
+ set rtn(cnt)=" <input value=""Background"" class=""btn btn-link"" role=""link"" type=""submit"">"_$char(13)
+ set cnt=cnt+1
+ set rtn(cnt)="</form></td><td></td></tr>"
  ;
  ;@stanza 6 rest of the forms
  ;
@@ -215,12 +231,22 @@ wsCASE(rtn,filter) ; generate case review page
  . . new zkey set zkey=$order(items("sort",cdate,zform,""))
  . . new zname set zname=$order(items("sort",cdate,zform,zkey,""))
  . . new dispdate set dispdate=$$key2dispDate(cdate)
- . . new geturl set geturl="/form?form="_zform_"&studyid="_sid_"&key="_zkey
- . . ; new posturl set posturl="javascript:subPr('"_zform_"','QIhuSAoCYzQAAAtHza8AAAAM')"
+ . . set zform="vapals:"_zkey ; all the new forms are vapals:key
+ . . ;new geturl set geturl="/form?form="_zform_"&studyid="_sid_"&key="_zkey
  . . set cnt=cnt+1
- . . set rtn(cnt)="<tr  bgcolor=#bffbff><td> "_sid_" </td><td> - </td><td> - </td><td> - </td><td>"_dispdate_"</td><td>"_zname_" </td>"_$char(13)
+ . . set rtn(cnt)="<tr><td> "_sid_" </td><td> - </td><td> - </td><td> - </td><td>"_dispdate_"</td><td>"
  . . set cnt=cnt+1
- . . set rtn(cnt)="<TD> <a href="""_geturl_"""><img src=""/see/preview.gif""></a></td></tr>"_$char(13)
+ . . set rtn(cnt)="<form method=""post"" action=""/vapals"">"_$char(13)
+ . . set cnt=cnt+1
+ . . set rtn(cnt)="<input name=""samiroute"" value=""form"" type=""hidden"">"_$char(13)
+ . . set cnt=cnt+1
+ . . set rtn(cnt)=" <input name=""studyid"" value="""_sid_""" type=""hidden"">"_$char(13)
+ . . set cnt=cnt+1
+ . . set rtn(cnt)=" <input name=""form"" value="""_zform_""" type=""hidden"">"_$char(13)
+ . . set cnt=cnt+1
+ . . set rtn(cnt)=" <input value="""_zname_""" class=""btn btn-link"" role=""link"" type=""submit"">"_$char(13)
+ . . set cnt=cnt+1
+ . . set rtn(cnt)="</form></td><td></td></tr>"
  . . quit
  . quit
  ;
@@ -236,12 +262,8 @@ wsCASE(rtn,filter) ; generate case review page
  ;@stanza 8 rest of lines
  ;
  for  set zi=$order(temp(zi)) quit:+zi=0  do  ;
- . set loc=loc+1
- . ;if temp(zi)["home.cgi" do
- . new line set line=temp(zi)
- . ;do findReplace^%ts(.line,"POST","GET","a")
- . set temp(zi)=line
- . set rtn(loc)=temp(zi)
+ . set cnt=cnt+1
+ . set rtn(cnt)=temp(zi)
  . quit
  ;
  ;D ADDCRLF^VPRJRUT(.rtn)

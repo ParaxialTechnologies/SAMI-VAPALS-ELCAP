@@ -446,6 +446,7 @@ fixHref(line) ; fix html href lines to use resources in see/
  if line["href=" do  ;
  . quit:line["href=""#"
  . quit:line["href='#"
+ . quit:line["href=""http"
  . if line["href=""/" do  quit
  . . do findReplace^%ts(.line,"href=""/","href=""/","href=""see/","a")
  . . quit

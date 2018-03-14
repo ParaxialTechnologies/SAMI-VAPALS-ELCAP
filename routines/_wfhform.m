@@ -114,6 +114,8 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  ;
  new key set key=$g(filter("key")) ; graph key for the saved form
  i key="" set key=form
+ i key["vapals:" s key=$p(key,"vapals:",2)
+ i form["vapals:" s form=$p(form,"-",1)
  ;
  new vals
  ;do getVals^%wf("vals",form,sid) ; load saved field values

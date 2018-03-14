@@ -170,6 +170,9 @@ wsVAPALS(ARG,BODY,RESULT) ; vapals post web service - all calls come through thi
  . m ARG=vars
  . d wsNuFormPost^SAMICAS2(.ARG,.BODY,.RESULT)
  ;
+ i route="form" d  q  ;
+ . m ARG=vars
+ . d wsGetForm^%wf(.RESULT,.ARG)
  q
  ;
 devhome(rtn,filter) ; temporary home page for development

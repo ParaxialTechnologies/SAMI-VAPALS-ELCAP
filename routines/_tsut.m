@@ -1,4 +1,4 @@
-%tsut ;ven/mcglk&toad-type string: unit tests ;2018-03-12T01:15Z
+%tsut ;ven/mcglk&toad-type string: unit tests ;2018-03-14T19:22Z
  ;;1.8;Mash;
  ;
  ; %tsut implements unit tests for the Mash String Library.
@@ -28,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-12T01:15Z
+ ;@last-updated: 2018-03-14T19:22Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -70,7 +70,7 @@ cover ; run tests & calculate code coverage
  ; rearrange these in whatever order we like
  ;----------------------------------------------------------------------------
  new %tsuincl
- set %tsuincl(1)="^%tsut"
+ set %tsuincl(1)=""
  ;----------------------------------------------------------------------------
  ; note that routine references may be specified as:
  ;   * routine        : calls EN^%ut with name as argument
@@ -80,7 +80,7 @@ cover ; run tests & calculate code coverage
  ;
  ; to exclude specific routines, do that here:
  ;----------------------------------------------------------------------------
- set %tsuexcl(1)="cover^%tsut"
+ set %tsuexcl(1)="%tsu*"
  ; set %tsuexcl(#)="EXCLUDEME^TESTROUTINE"
  ;----------------------------------------------------------------------------
  ;
@@ -115,15 +115,6 @@ cover01 ; @TEST no entry from top
  do ^%tses
  do ^%tsfs
  do ^%tsjt
- do ^%tsud
- do ^%tsudf
- do ^%tsul
- do ^%tsutc
- do ^%tsutef
- do ^%tsutes
- do ^%tsutfs
- do ^%tsutjt
- do ^%tsutvs
  do ^%tsvs
  do CHKEQ^%ut(1,1)
  ;

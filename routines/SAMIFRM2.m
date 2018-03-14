@@ -364,6 +364,12 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  if line["ctevaluation.html" do  ;
  . do findReplace^%ts(.line,"ctevaluation.html","/form?form="_key_"&studyId="_sid)
  ;
+ if line["XX0002" do  ;
+ . do findReplace^%ts(.line,"XX0002",sid)
+ ;
+ if line["VEP0001" do  ;
+ . do findReplace^%ts(.line,"VEP0001",sid,"a")
+ ;
  quit  ; end of SAMISUB2
  ;
 wsSbform(rtn,filter) ; background form access
@@ -422,13 +428,13 @@ fixSrc(line) ; fix html src lines to use resources in see/
  if line["src=" do  ;
  . if line["src=""http" quit
  . if line["src=""/" do  quit
- . . do findReplace^%ts(.line,"src=""/","src=""see/","a")
+ . . do findReplace^%ts(.line,"src=""/","src=""/see/sami/","a")
  . . quit
  . if line["src=""" do  quit
- . . do findReplace^%ts(.line,"src=""","src=""see/","a")
+ . . do findReplace^%ts(.line,"src=""","src=""/see/sami/","a")
  . . quit
  . if line["src=" do
- . . do findReplace^%ts(.line,"src=","src=see/","a")
+ . . do findReplace^%ts(.line,"src=","src=/see/sami/","a")
  . . quit
  . quit
  ;
@@ -448,13 +454,13 @@ fixHref(line) ; fix html href lines to use resources in see/
  . quit:line["href='#"
  . quit:line["href=""http"
  . if line["href=""/" do  quit
- . . do findReplace^%ts(.line,"href=""/","href=""/","href=""see/","a")
+ . . do findReplace^%ts(.line,"href=""/","href=""/","href=""/see/sami/","a")
  . . quit
  . if line["href=""" do  quit
- . . do findReplace^%ts(.line,"href=""","href=""see/","a")
+ . . do findReplace^%ts(.line,"href=""","href=""/see/sami/","a")
  . . quit
  . if line["href=" do  quit
- . . do findReplace^%ts(.line,"href=","href=see/","a")
+ . . do findReplace^%ts(.line,"href=","href=/see/sami/","a")
  . . quit
  . quit
  ;

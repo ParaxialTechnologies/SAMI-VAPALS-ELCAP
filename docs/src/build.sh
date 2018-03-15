@@ -42,6 +42,11 @@ for i in ${DIR}/../www/*.html; do
     else
         echo "*** TIDYING ${i} ***"
         tidy -config "${DIR}/htmltidy.conf" "${i}"
+        # match "><input" (with optional space) and insert a newline between the carets
+#        TODO capture the indentation in a group and append it
+        sed -i -e $'s/> *<\(input\)/>\\\n<\\1/g' "${i}"
+        sed -i -e $'s/> *<\(select\)/>\\\n<\\1/g' "${i}"
+        sed -i -e $'s/> *<\(textarea\)/>\\\n<\\1/g' "${i}"
     fi
 done
 

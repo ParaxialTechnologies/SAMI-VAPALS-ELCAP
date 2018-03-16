@@ -1,22 +1,22 @@
 #!/usr/bin/env bash
 
 echo "Checking dependencies..."
-#Check for Jinja2 installation
-if [ -z `pip freeze|grep Jinja2` ]; then
-    echo "Installing Jijna2..."
-    pip install Jinja2
-fi
+pips=`pip freeze`
 
-if [ -z `pip freeze|grep beautifulsoup4` ]; then
-    echo "Installing BeautifulSoup..."
-    pip install beautifulsoup4
-fi
+function pip_install {
+    printf "%20s: " "$1"
+    if [[ ${pips} == *"$1"* ]]; then
+        printf "OK\n";
+    else
+        printf "Not Installed\n"
+        echo "Installing $1..."
+        pip install $1
+    fi
+}
 
-if [ -z `pip freeze|grep html5lib` ]; then
-    echo "Installing html5lib parser..."
-    pip install html5lib
-fi
-
+pip_install "Jinja2"
+pip_install "beautifulsoup4"
+pip_install "html5lib"
 
 #Check for Node.js installation (needed to install jsdoc)
 command -v npm >/dev/null 2>&1 || {

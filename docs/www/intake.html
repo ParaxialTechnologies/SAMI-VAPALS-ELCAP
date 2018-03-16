@@ -793,7 +793,7 @@
         function validateDatePickerOnChange(e) {
             var $datePicker = $(e.target)
             var fv = $datePicker.closest(".validated").data("formValidation");
-            if (fv) {
+            if (fv && $datePicker.is(":enabled")) {
                 var f = $datePicker.find("input").addBack("input");
                 fv.revalidateField(f);
             }
@@ -1010,6 +1010,7 @@
 
             $("#sirn").conditionallyEnable({sourceValues: "other", enable: "#sirns"});
             $("[name=sirr]").conditionallyEnable({sourceValues: "m", enable: "#sirmd"});
+
 
             //Conditional fields on main form
             var requiresSpecificity = function (actualValue) {

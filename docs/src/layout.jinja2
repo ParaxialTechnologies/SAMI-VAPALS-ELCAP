@@ -75,7 +75,7 @@
         function validateDatePickerOnChange(e) {
             var $datePicker = $(e.target)
             var fv = $datePicker.closest(".validated").data("formValidation");
-            if (fv) {
+            if (fv && $datePicker.is(":enabled")) {
                 var f = $datePicker.find("input").addBack("input");
                 fv.revalidateField(f);
             }
@@ -100,10 +100,7 @@
         $('[data-toggle="popover"]').popover();
 
         //Initialize Form Validation
-        console.log("binding fv");
         $(".validated").formValidation({framework: 'bootstrap'});
-
-
     });
 
     //TODO: insert studyId here.

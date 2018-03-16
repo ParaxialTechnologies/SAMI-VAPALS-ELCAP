@@ -125,15 +125,15 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  ;
  ; get field values saved in fileman file, preserve graph values
  new fn
- if form["sbform" do  
- . ;set fn="background-form.html"
- . new tmpvals
- . if $g(post)=1 quit  ;
- . do retrieve^%wffiler("tmpvals","sbform",311.102,sid)
- . ;if $data(tmpvals) kill vals merge vals=tmpvals
- . ; maintain graph vars not saved in fileman:
- . if $data(tmpvals) merge vals=tmpvals
- . quit
+ ;if form["sbform" do  ; gpl - forget about the fileman file for this version - use the graph
+ ;. ;set fn="background-form.html"
+ ;. new tmpvals
+ ;. if $g(post)=1 quit  ;
+ ;. do retrieve^%wffiler("tmpvals","sbform",311.102,sid)
+ ;. ;if $data(tmpvals) kill vals merge vals=tmpvals
+ ;. ; maintain graph vars not saved in fileman:
+ ;. if $data(tmpvals) merge vals=tmpvals
+ ;. quit
  ;
  ; clear return html array
  set rtn=$name(^TMP("yottaForm",$job))
@@ -256,6 +256,7 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . ;@stanza 12 process input tags
  . ;
  . if zhtml(%j)["<input" do  ;
+ . . ;b
  . . ;
  . . ; handle long lines
  . . if $length(zhtml(%j),"<input")>2 do  ; got to split the lines

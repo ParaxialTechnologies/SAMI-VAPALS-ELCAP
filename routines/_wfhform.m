@@ -842,7 +842,7 @@ getVals ; code for ppi getVals^%wf, get field values from graph
  ;
  ;@stanza 3 load prefill values
  ;
- new gien set gien=$$sid2num^SAMIHOME(sid) ; graph ien of this patient
+ new gien set gien=$$sid2num^SAMIHOME(zsid) ; graph ien of this patient
  merge @vrtn=@root@(gien)
  ;
  ;@stanza 4 termination

@@ -1,4 +1,4 @@
- wfhform ;ven/gpl-web form: html form get & post ;2018-03-17T17:54Z
+%wfhform ;ven/gpl-web form: html form get & post ;2018-03-17T17:54Z
  ;;1.8;Mash;
  ;
  ; %wfhform implements the Web Form Library's html form get & post web

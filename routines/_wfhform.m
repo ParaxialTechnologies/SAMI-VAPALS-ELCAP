@@ -344,7 +344,7 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . . quit:selectnm=""
  . . set val=$get(vals(selectnm))
  . . do findReplace^%ts(.tln," selected","","ir") ; unselect
- . . if $get(toad)="*****DEBUG*****" break ; debug problem w/options
+ . . if $get(toad)="*****DEBUG*****",value=8 break ; debug problem w/options
  . . if $g(val)=$get(value) do
  . . . do findReplace^%ts(.tln,"<option ","<option selected ","i")
  . . . quit

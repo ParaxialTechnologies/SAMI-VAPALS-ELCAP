@@ -1,4 +1,4 @@
-%wfhform ;ven/gpl-web form: html form get & post ;2018-03-17T17:54Z
+%wfhform ;ven/gpl-web form: html form get & post ;2018-03-17T18:38Z
  ;;1.8;Mash;
  ;
  ; %wfhform implements the Web Form Library's html form get & post web
@@ -29,7 +29,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-17T17:54Z
+ ;@last-updated: 2018-03-17T18:38Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Web Form - %wf
  ;@version: 1.8T04
@@ -285,7 +285,7 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . . do unvalue^%wf(.tln) ; clear input-field value
  . . ; set val=$$URLENC^VPRJRUT(val)
  . . ; replace with findReplaceAll call?:
- . . for  do findReplace^%ts(.val,"""","&quot;") quit:val'[""""  ; quotes
+ . . for  do findReplace^%ts(.val,"""","&quot;","ir") quit:val'[""""  ; quotes
  . . do dateFormat^%wf(.val,form,name) ; ensure elcap date format
  . . do value^%wf(.tln,val) ; restore normalized value
  . . ;
@@ -346,7 +346,7 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . . do findReplace^%ts(.tln," selected","","ir") ; unselect
  . . if $get(toad)="*****DEBUG*****",value=8 break ; debug problem w/options
  . . if $g(val)=$get(value) do
- . . . do findReplace^%ts(.tln,"<option ","<option selected ","i")
+ . . . do findReplace^%ts(.tln,"<option ","<option selected ","ir")
  . . . quit
  . . if $get(filter("debug"))=2 do debugFld^%wf(.tln,form,name)
  . . set zhtml(%j)=tln
@@ -1326,35 +1326,35 @@ replaceSrc ; code for ppi replaceSrc^%wf, chg resources in src & href
  ;
  new done set done=0
  if line["src='/" do  ;
- . do findReplace^%ts(.line,"src='/","src='see/","a")
+ . do findReplace^%ts(.line,"src='/","src='see/","air")
  . set done=1
  . quit
  if line["src=""/" do  ;
  . quit:done
- . do findReplace^%ts(.line,"src=""/","src=""see/","a")
+ . do findReplace^%ts(.line,"src=""/","src=""see/","air")
  . set done=1
  . quit
  if line["src=" do  ; 
  . quit:done
- . do findReplace^%ts(.line,"src=""","src=""see/","a")
+ . do findReplace^%ts(.line,"src=""","src=""see/","air")
  . set done=1
  . quit
  if line["href='/" do  ;
- . do findReplace^%ts(.line,"href='/","href='see/","a")
+ . do findReplace^%ts(.line,"href='/","href='see/","air")
  . set done=1
  . quit
  if line["href='" do  ;
  . quit:done
  . if line["href=""#" quit  ;
  . if line["href=""javascript" quit  ;
- . do findReplace^%ts(.line,"href='","href='see/","a")
+ . do findReplace^%ts(.line,"href='","href='see/","air")
  . set done=1 
  . quit
  if line["href=" do  ; 
  . quit:done
  . if line["href=""#" quit  ;
  . if line["href=""javascript" quit  ;
- . do findReplace^%ts(.line,"href=""","href=""see/","a")
+ . do findReplace^%ts(.line,"href=""","href=""see/","air")
  . set done=1
  . quit
  ;

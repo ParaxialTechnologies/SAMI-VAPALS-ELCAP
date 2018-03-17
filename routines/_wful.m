@@ -1,4 +1,4 @@
-%wful ;ven/toad-web form: development log ;2018-03-17T16:43Z
+%wful ;ven/toad-web form: development log ;2018-03-17T18:38Z
  ;;1.8;Mash;
  ;
  ; %wful is the Web Form Library's primary-development log.
@@ -21,7 +21,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-17T16:43Z
+ ;@last-updated: 2018-03-17T18:38Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Web Form - %wf
  ;@version: 1.8T04
@@ -190,6 +190,7 @@
  ; variable sid is used when zsid is meant, yet because wsGetForm has sid
  ; set in the cymbol table to the correct value, we see no problem when
  ; running the Form Processor, only when testing getVals in isolation.
+ ; passim ensure r flag always used in findReplace^%ts calls.
  ;
  ;@to-do
  ; use find & place in other three ppis

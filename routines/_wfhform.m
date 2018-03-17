@@ -1,4 +1,4 @@
-%wfhform ;ven/gpl-web form: html form get & post ;2018-03-17T18:38Z
+%wfhform ;ven/gpl-web form: html form get & post ;2018-03-17T18:50Z
  ;;1.8;Mash;
  ;
  ; %wfhform implements the Web Form Library's html form get & post web
@@ -29,7 +29,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-17T18:38Z
+ ;@last-updated: 2018-03-17T18:50Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Web Form - %wf
  ;@version: 1.8T04
@@ -344,7 +344,7 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . . quit:selectnm=""
  . . set val=$get(vals(selectnm))
  . . do findReplace^%ts(.tln," selected","","ir") ; unselect
- . . if $get(toad)="*****DEBUG*****",value=8 break ; debug problem w/options
+ . . if $get(toad)="*****DEBUG*****",value="gd" break ; debug problem w/options
  . . if $g(val)=$get(value) do
  . . . do findReplace^%ts(.tln,"<option ","<option selected ","ir")
  . . . quit

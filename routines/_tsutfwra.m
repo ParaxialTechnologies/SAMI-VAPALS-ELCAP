@@ -1,4 +1,4 @@
-%tsutfwra ;ven/toad-type string: test findReplaceAll^%ts ;2018-03-18T16:27Z
+%tsutfwra ;ven/toad-type string: test findReplaceAll^%ts ;2018-03-18T17:39Z
  ;;1.8;Mash;
  ;
  ; %tsutfwra implements unit tests for ppi findReplaceAll^%ts.
@@ -30,7 +30,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-18T16:27Z
+ ;@last-updated: 2018-03-18T17:39Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -151,9 +151,6 @@ findrepa08 ; @TEST findReplaceAll^%ts: empty replace
  ;ven/toad;test;procedure;clean;silent;sac
  ;
  new string set string="totototo"
- do findReplaceAll^%ts(.string,"toto")
- do CHKEQ^%ut(string,"toto")
- ;
  do findReplaceAll^%ts(.string,"toto")
  do CHKEQ^%ut(string,"")
  ;

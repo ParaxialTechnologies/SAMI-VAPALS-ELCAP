@@ -1,4 +1,4 @@
-%wful ;ven/toad-web form: development log ;2018-03-17T18:38Z
+%wful ;ven/toad-web form: development log ;2018-03-18T17:25Z
  ;;1.8;Mash;
  ;
  ; %wful is the Web Form Library's primary-development log.
@@ -21,7 +21,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-17T18:38Z
+ ;@last-updated: 2018-03-18T17:25Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Web Form - %wf
  ;@version: 1.8T04
@@ -185,12 +185,16 @@
  ; 2018-03-07/08 ven/toad %1.8t04 %wfhform: in parseBody,wsGetForm update
  ; called-by. in wsGetForm restore CR/LF line.
  ;
- ; 2018-03-16/17 ven/toad %1.8t04 %wfhform: fix latent bug in getVals that
+ ; 2018-03-16/18 ven/toad %1.8t04 %wfhform: fix latent bug in getVals that
  ; manifests in testing but not in production, in which leftover local
  ; variable sid is used when zsid is meant, yet because wsGetForm has sid
  ; set in the cymbol table to the correct value, we see no problem when
  ; running the Form Processor, only when testing getVals in isolation.
- ; passim ensure r flag always used in findReplace^%ts calls.
+ ; passim ensure r flag always used in findReplace^%ts calls. Then
+ ; reconsider approach to findReplace^%ts, create findReplaceAll^%ts,
+ ; simplify both, & use throughout %wfhform.
+ ;  %wfhinput: in uncheck & check simplify calls to findReplace^%ts.
+ ;
  ;
  ;@to-do
  ; use find & place in other three ppis

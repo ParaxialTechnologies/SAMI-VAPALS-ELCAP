@@ -1,4 +1,4 @@
-%wfhform ;ven/gpl-web form: html form get & post ;2018-03-17T18:50Z
+%wfhform ;ven/gpl-web form: html form get & post ;2018-03-18T17:05Z
  ;;1.8;Mash;
  ;
  ; %wfhform implements the Web Form Library's html form get & post web
@@ -29,7 +29,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-17T18:50Z
+ ;@last-updated: 2018-03-18T17:05Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Web Form - %wf
  ;@version: 1.8T04
@@ -285,7 +285,7 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . . do unvalue^%wf(.tln) ; clear input-field value
  . . ; set val=$$URLENC^VPRJRUT(val)
  . . ; replace with findReplaceAll call?:
- . . for  do findReplace^%ts(.val,"""","&quot;","ir") quit:val'[""""  ; quotes
+ . . for  do findReplace^%ts(.val,"""","&quot;") quit:val'[""""  ; quotes
  . . do dateFormat^%wf(.val,form,name) ; ensure elcap date format
  . . do value^%wf(.tln,val) ; restore normalized value
  . . ;
@@ -327,7 +327,7 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . . ; set val=$get(vals(name))
  . . ; set val=$$URLENC^VPRJRUT(val)
  . . if val'="" do
- . . . do findReplace^%ts(.tln,"</textarea>",val_"</textarea>","ir")
+ . . . do findReplace^%ts(.tln,"</textarea>",val_"</textarea>")
  . . . quit
  . . set zhtml(%j)=tln
  . . quit
@@ -343,10 +343,10 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . if zhtml(%j)["<option" do  ;
  . . quit:selectnm=""
  . . set val=$get(vals(selectnm))
- . . do findReplace^%ts(.tln," selected","","ir") ; unselect
+ . . do findReplace^%ts(.tln," selected","") ; unselect
  . . if $get(toad)="*****DEBUG*****",value="gd" break ; debug problem w/options
  . . if $g(val)=$get(value) do
- . . . do findReplace^%ts(.tln,"<option ","<option selected ","ir")
+ . . . do findReplace^%ts(.tln,"<option ","<option selected ")
  . . . quit
  . . if $get(filter("debug"))=2 do debugFld^%wf(.tln,form,name)
  . . set zhtml(%j)=tln
@@ -622,7 +622,7 @@ putErrMsg2 ; code for ppi putErrMsg2^%wf, insert error msgs
  . quit
  new inserttxt
  set inserttxt="<a name=""err-"_errno_""" href=""#err-"_errno_"e""><img src=""see/error.png""/>"_errno_"</a>"
- do findReplace^%ts(.line,"fielderror"">","fielderror"">"_inserttxt,"ir")
+ do findReplace^%ts(.line,"fielderror"">","fielderror"">"_inserttxt)
  if $get(uline)="" quit  ; set uline=32 - no uline is found, so nowhere to put the errors
  set @html@(uline)=@html@(uline)_"<tr><td class=""icon""><a name=""err-"_errno_"e"" href=""#err-"_errno_"""><img src=""see/error.png""/>"_errno_"</a></td><td>"_msg_"</td></tr>"
  ;
@@ -661,10 +661,10 @@ insError ; code for ppi insError^%wf, insert error msg into html line
  ;
  new errins set errins="<span class=""alert"" style=""font-size: 0.9em;"">"_msg_"</span>"
  if line["</input>" do  quit
- . do findReplace^%ts(.line,"</input>","</input>"_errins,"ir")
+ . do findReplace^%ts(.line,"</input>","</input>"_errins)
  . quit
  if line["/>" do  quit
- . do findReplace^%ts(.line,"/>","/>"_errins,"ir")
+ . do findReplace^%ts(.line,"/>","/>"_errins)
  . quit
  if line[">" do
  . set line=line_"</input>"_errins
@@ -792,7 +792,7 @@ value ; code for ppi value^%wf, set input value in html line
  . ; if $extract(line,$length(line))=">" do
  . ; . set line=$extract(line,1,$length(line)-1)_" value="""_val_""""_">"
  . ; . quit
- . do findReplace^%ts(.line,"<input ","<input value="""_val_""" ","ir")
+ . do findReplace^%ts(.line,"<input ","<input value="""_val_""" ")
  . quit
  set end=$extract(line,loc,$length(line))
  set line=$piece(line,"value=""",1)_"value="""_val_""""_end
@@ -1308,7 +1308,7 @@ replaceSrc ; code for ppi replaceSrc^%wf, chg resources in src & href
  ; wsGetForm^%wf [commented out]
  ;@called-by: none
  ;@calls
- ; findReplace^%ts
+ ; findReplaceAll^%ts
  ;@input
  ;.line = 
  ;@output=
@@ -1326,35 +1326,35 @@ replaceSrc ; code for ppi replaceSrc^%wf, chg resources in src & href
  ;
  new done set done=0
  if line["src='/" do  ;
- . do findReplace^%ts(.line,"src='/","src='see/","air")
+ . do findReplaceAll^%ts(.line,"src='/","src='see/")
  . set done=1
  . quit
  if line["src=""/" do  ;
  . quit:done
- . do findReplace^%ts(.line,"src=""/","src=""see/","air")
+ . do findReplaceAll^%ts(.line,"src=""/","src=""see/")
  . set done=1
  . quit
  if line["src=" do  ; 
  . quit:done
- . do findReplace^%ts(.line,"src=""","src=""see/","air")
+ . do findReplaceAll^%ts(.line,"src=""","src=""see/")
  . set done=1
  . quit
  if line["href='/" do  ;
- . do findReplace^%ts(.line,"href='/","href='see/","air")
+ . do findReplaceAll^%ts(.line,"href='/","href='see/")
  . set done=1
  . quit
  if line["href='" do  ;
  . quit:done
  . if line["href=""#" quit  ;
  . if line["href=""javascript" quit  ;
- . do findReplace^%ts(.line,"href='","href='see/","air")
+ . do findReplaceAll^%ts(.line,"href='","href='see/")
  . set done=1 
  . quit
  if line["href=" do  ; 
  . quit:done
  . if line["href=""#" quit  ;
  . if line["href=""javascript" quit  ;
- . do findReplace^%ts(.line,"href=""","href=""see/","air")
+ . do findReplaceAll^%ts(.line,"href=""","href=""see/")
  . set done=1
  . quit
  ;
@@ -1405,7 +1405,7 @@ replaceHref ; code for ppi replaceHref^%wf, chg resources in href
  new %ig set %ig=""
  for  set %ig=$order(conds(%ig)) quit:%ig=""  do  ;
  . if line[%ig do  ;
- . . do findReplace^%ts(.line,%ig,$get(conds(%ig)),"ir")
+ . . do findReplace^%ts(.line,%ig,$get(conds(%ig)))
  . . set done=1
  . . quit
  . quit

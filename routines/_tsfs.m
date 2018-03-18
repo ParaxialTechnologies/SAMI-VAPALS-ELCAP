@@ -1,4 +1,4 @@
-%tsfs ;ven/toad-type string: setfind^%ts ;2018-03-07T17:25Z
+%tsfs ;ven/toad-type string: setfind^%ts ;2018-03-18T16:38Z
  ;;1.8;Mash;
  ;
  ; %tsfs implements MASH String Library ppi setfind^%ts, find &
@@ -29,7 +29,7 @@
  ;@original-dev: George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
  ;
- ;@last-updated: 2018-03-07T17:25Z
+ ;@last-updated: 2018-03-18T16:38Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -63,10 +63,11 @@ setfind ; set a find (find & replace a substring)
  ;@synonyms
  ; sf^%ts
  ; setFind^%ts
- ; findReplace^%ts
  ;@branches-from
  ; setfind^%ts
  ;@ppi-called-by
+ ; findReplace^%ts
+ ; findReplaceAll^%ts
  ; check^%wf
  ; insError^%wf
  ; putErrMsg2^%wf
@@ -100,7 +101,7 @@ setfind ; set a find (find & replace a substring)
  ; flags = characters that control how find & replace are done
  ;  a or A = find & replace all instances of find in string
  ;  b or B = set for a backward scan
- ;  i or I = case-insensitive scan
+ ;  i or I = case-insensitive scan [default]
  ;  r or R = refresh lower-case versions of string & replace
  ;@examples
  ;
@@ -315,7 +316,7 @@ setfind ; set a find (find & replace a substring)
  ; group 5: Alternate Signatures
  ;
  ;  new string set string="totototo"
- ;  do fr^%ts(.string,"toto","Dorothy")
+ ;  do sf^%ts(.string,"toto","Dorothy")
  ; produces
  ;  string="Dorothytoto"
  ;  string("extract")=1
@@ -323,20 +324,12 @@ setfind ; set a find (find & replace a substring)
  ;  string("extract","to")=7
  ;
  ; followed by
- ;  do findReplace^%ts(.string,"toto","Dorothy")
+ ;  do setFind^%ts(.string,"toto","Dorothy")
  ; produces
  ;  string="DorothyDorothy"
  ;  string("extract")=1
  ;  string("extract","from")=8
  ;  string("extract","to")=14
- ;
- ; followed by
- ;  do find^%ts(.string,"toto","Dorothy")
- ; produces
- ;  string="DorothyDorothy"
- ;  string("extract")=0
- ;  string("extract","from")=0
- ;  string("extract","to")=0
  ;
  ; group 6: Find & Replace All
  ;
@@ -356,8 +349,28 @@ setfind ; set a find (find & replace a substring)
  ;  string("extract","from")=0
  ;  string("extract","to")=0
  ;
- ;
- ;@tests [tbd]
+ ;@tests: in %tsutfs
+ ; setfind01: no next match
+ ; setfind02: find first & next
+ ; setfind03: find next from
+ ; setfind04: no match next from
+ ; setfind05: no previous match
+ ; setfind06: find last & previous
+ ; setfind07: find previous from
+ ; setfind08: no match previous from
+ ; setfind09: find case-insensitive
+ ; setfind10: undefined string
+ ; setfind11: empty string
+ ; setfind12: empty find
+ ; setfind13: empty find & string
+ ; setfind14: empty replace
+ ; setfind15: empty replace backward
+ ; setfind16: empty find & replace
+ ; setfind17: empty string, find, & replace
+ ; setfind18: bad flag
+ ; setfind19: alternate signatures
+ ; setfind20: all backward case-insensitive
+ ; setfind21: all but no next match
  ;
  ; [description tbd]
  ; find a substring w/in a string & replace w/another

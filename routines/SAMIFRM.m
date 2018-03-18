@@ -1,4 +1,4 @@
-SAMIFRM ;ven/gpl - ielcap: forms ;2018-03-08T21:49Z
+SAMIFRM ;ven/gpl - ielcap: forms ;2018-03-18T16:56Z
  ;;18.0;SAM;;
  ;
  ; Routine SAMIFRM contains subroutines for managing the ELCAP forms,
@@ -22,7 +22,7 @@ SAMIFRM ;ven/gpl - ielcap: forms ;2018-03-08T21:49Z
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-08T21:49Z
+ ;@last-updated: 2018-03-18T16:56Z
  ;@application: Screening Applications Management (SAM)
  ;@module: Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files: SAMI Forms (311.101-311.199)
@@ -77,6 +77,9 @@ SAMIFRM ;ven/gpl - ielcap: forms ;2018-03-08T21:49Z
  ;
  ; 2018-03-07/08 ven/toad v18.0t04 SAMIFRM: in SAMISUBS
  ; r/$$setroot^%wdgraph w/$$setroot^%wf, fix bug when r/css w/see.
+ ;
+ ; 2018-03-18 ven/toad SAMI*18.0t04 SAMIFRM: simplify calls to
+ ; findReplace^%ts & restore findReplaceAll^%ts,
  ;
  ;@contents
  ; INITFRMS: initial all available forms
@@ -319,13 +322,14 @@ SAMISUBS(line,form,sid,filter,%j,zhtml) ; line is passed by reference; filter is
  ;@called-by
  ; wsGetForm^%wf
  ;@calls
+ ; findReplaceAll^%ts
  ; findReplace^%ts
  ;
  new dbg set dbg=$get(filter("debug"))
  if dbg'="" set dbg="&debug="_dbg
  new target set target="form?form="_form_"&studyId="_sid_dbg
  if line["datae.cgi" do
- . do findReplace^%ts(.line,"/cgi-bin/datac/datae.cgi",target,"a")
+ . do findReplaceAll^%ts(.line,"/cgi-bin/datac/datae.cgi",target)
  . quit
  ;
  if form="bxform" do  ; 
@@ -338,12 +342,12 @@ SAMISUBS(line,form,sid,filter,%j,zhtml) ; line is passed by reference; filter is
  . quit
  ;
  if line["/cgi-bin/datac/cform.cgi" do
- . do findReplace^%ts(.line,"/cgi-bin/datac/cform.cgi","cform.cgi?studyid="_sid,"a")
- . do findReplace^%ts(.line,"POST","GET","a")
+ . do findReplaceAll^%ts(.line,"/cgi-bin/datac/cform.cgi","cform.cgi?studyid="_sid)
+ . do findReplaceAll^%ts(.line,"POST","GET")
  . quit
  ;
  if line["VEP0001" do
- . do findReplace^%ts(.line,"VEP0001",sid,"a")
+ . do findReplaceAll^%ts(.line,"VEP0001",sid)
  . quit
  ;
  if line["Doe, Jane" do  ;
@@ -353,17 +357,17 @@ SAMISUBS(line,form,sid,filter,%j,zhtml) ; line is passed by reference; filter is
  . do findReplace^%ts(.line,"12345","")
  ;
  if line["home.cgi" do
- . do findReplace^%ts(.line,"POST","GET","a")
+ . do findReplaceAll^%ts(.line,"POST","GET")
  . quit
  ;
  if line["/css/" do
- . do findReplace^%ts(.line,"/css/","/see/","a")
+ . do findReplaceAll^%ts(.line,"/css/","/see/")
  . quit
  if line["/js/" do
- . do findReplace^%ts(.line,"/js/","/see/","a")
+ . do findReplaceAll^%ts(.line,"/js/","/see/")
  . quit
  if line["/images/" do
- . do findReplace^%ts(.line,"/images/","/see/","a")
+ . do findReplaceAll^%ts(.line,"/images/","/see/")
  . quit
  ;
  quit  ; end of SAMISUBS
@@ -377,17 +381,17 @@ fixSrc(line) ; fix html src lines to use resources in see/
  ;@called-by
  ; SAMISUB2
  ;@calls
- ; findReplace^%ts
+ ; findReplaceAll^%ts
  ;
  if line["src=" do  ;
  . if line["src=""/" do  quit
- . . do findReplace^%ts(.line,"src=""/","src=""see/","a")
+ . . do findReplaceAll^%ts(.line,"src=""/","src=""see/")
  . . quit
  . if line["src=""" do  quit
- . . do findReplace^%ts(.line,"src=""","src=""see/","a")
+ . . do findReplaceAll^%ts(.line,"src=""","src=""see/")
  . . quit
  . if line["src=" do
- . . do findReplace^%ts(.line,"src=","src=see/","a")
+ . . do findReplaceAll^%ts(.line,"src=","src=see/")
  . . quit
  . quit
  ;
@@ -400,19 +404,19 @@ fixHref(line) ; fix html href lines to use resources in see/
  ;@called-by
  ; SAMISUB2
  ;@calls
- ; findReplace^%ts
+ ; findReplaceAll^%ts
  ;
  if line["href=" do  ;
  . quit:line["href=""#"
  . quit:line["href='#"
  . if line["href=""/" do  quit
- . . do findReplace^%ts(.line,"href=""/","href=""/","href=""see/","a")
+ . . do findReplaceAll^%ts(.line,"href=""/","href=""/","href=""see/")
  . . quit
  . if line["href=""" do  quit
- . . do findReplace^%ts(.line,"href=""","href=""see/","a")
+ . . do findReplaceAll^%ts(.line,"href=""","href=""see/")
  . . quit
  . if line["href=" do  quit
- . . do findReplace^%ts(.line,"href=","href=see/","a")
+ . . do findReplaceAll^%ts(.line,"href=","href=see/")
  . . quit
  . quit
  ;

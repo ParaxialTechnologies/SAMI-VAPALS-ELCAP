@@ -1,4 +1,4 @@
-SAMICASE ;ven/gpl - ielcap: case review page ;2018-03-08T17:53Z
+SAMICASE ;ven/gpl - ielcap: case review page ;2018-03-18T17:03Z
  ;;18.0;SAM;;
  ;
  ; SAMICASE contains subroutines for producing the ELCAP Case Review Page.
@@ -21,7 +21,7 @@ SAMICASE ;ven/gpl - ielcap: case review page ;2018-03-08T17:53Z
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-08T17:53Z
+ ;@last-updated: 2018-03-18T17:03Z
  ;@application: Screening Applications Management (SAM)
  ;@module: Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files: SAMI Forms (311.101-311.199)
@@ -75,6 +75,9 @@ SAMICASE ;ven/gpl - ielcap: case review page ;2018-03-08T17:53Z
  ; add white space, spell out mumps elements, add header comments to
  ; new subroutines, r/findReplace^%wf & replaceAll^%wf w/findReplace^%ts.
  ;
+ ; 2018-03-18 ven/toad SAMI*18.0t04 SAMICASE: eliminate calls to
+ ; findReplace^%ts & restore findReplaceAll^%ts calls.
+ ;
  ;@contents
  ; wsCASE: generate case review page
  ; $$getDateKey = date part of form key
@@ -108,7 +111,7 @@ wsCASE(rtn,filter) ; generate case review page
  ; getTemplate
  ; getItems
  ; $$sid2num^SAMIHOME
- ; findReplace^%ts
+ ; findReplaceAll^%ts
  ; $$getDateKey
  ; $$key2dispDate
  ;@input
@@ -149,7 +152,7 @@ wsCASE(rtn,filter) ; generate case review page
  for  set zi=$order(temp(zi)) quit:+zi=0  quit:temp(zi)["VEP0001"  do  ;
  . if temp(zi)["/images/" do  ;
  . . new line set line=temp(zi)
- . . do findReplace^%ts(.line,"/images/","/see/","a")
+ . . do findReplaceAll^%ts(.line,"/images/","/see/")
  . . set temp(zi)=line
  . . quit
  . set rtn(zi)=temp(zi)
@@ -217,7 +220,7 @@ wsCASE(rtn,filter) ; generate case review page
  . set loc=loc+1
  . if temp(zi)["home.cgi" do
  . new line set line=temp(zi)
- . do findReplace^%ts(.line,"POST","GET","a")
+ . do findReplaceAll^%ts(.line,"POST","GET")
  . set temp(zi)=line
  . set rtn(loc)=temp(zi)
  . quit
@@ -384,7 +387,7 @@ wsNuForm(rtn,filter) ; select new form for patient (get service)
  ; $$sid2num^SAMIHOME
  ; $$setroot^%wd
  ; getTemplate
- ; findReplace^%ts
+ ; findReplaceAll^%ts
  ; ADDCRLF^VPRJRUT
  ;@input
  ;.filter =
@@ -414,14 +417,14 @@ wsNuForm(rtn,filter) ; select new form for patient (get service)
  new zi set zi=0
  for  set zi=$order(tmpl(zi)) quit:+zi=0  quit:tmpl(zi)["nuform"  do  ;
  . new ln set ln=tmpl(zi)
- . if ln["VEP0001" do findReplace^%ts(.ln,"VEP0001",sid,"a")
- . if ln["Doe, Jane" do findReplace^%ts(.ln,"Doe, Jane",saminame,"a")
+ . if ln["VEP0001" do findReplaceAll^%ts(.ln,"VEP0001",sid)
+ . if ln["Doe, Jane" do findReplaceAll^%ts(.ln,"Doe, Jane",saminame)
  . set tcnt=tcnt+1
  . set tout(tcnt)=ln
  . quit
  ;
  new ln set ln=tmpl(zi)
- do findReplace^%ts(.ln,"/cgi-bin/datac/nuform.cgi","/nuform?studyid="_sid,"a")
+ do findReplaceAll^%ts(.ln,"/cgi-bin/datac/nuform.cgi","/nuform?studyid="_sid)
  set tcnt=tcnt+1 set tout(tcnt)=ln
  ;
  for  set zi=$order(tmpl(zi)) quit:+zi=0  quit:tmpl(zi)["/FORM"  do  ;
@@ -429,7 +432,7 @@ wsNuForm(rtn,filter) ; select new form for patient (get service)
  . if ln["OPTION" do  ;
  . . if ln'["ceform" set ln=""
  . . quit
- . if ln["VEP0001" do findReplace^%ts(.ln,"VEP0001",sid,"a")
+ . if ln["VEP0001" do findReplaceAll^%ts(.ln,"VEP0001",sid)
  . set tcnt=tcnt+1
  . set tout(tcnt)=ln
  . quit

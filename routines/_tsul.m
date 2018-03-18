@@ -1,4 +1,4 @@
-%tsul ;ven/toad-type string: development log ;2018-03-15T19:11Z
+%tsul ;ven/toad-type string: development log ;2018-03-18T14:30Z
  ;;1.8;Mash;
  ;
  ; %tsul is the Mumps String Library's primary-development log.
@@ -23,7 +23,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-15T19:11Z
+ ;@last-updated: 2018-03-18T14:30Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -315,13 +315,22 @@
  ; 2018-03-08 ven/lmry %*1.8T04 %tsutef, %tsutes, %tsutc: Fuss with tests,
  ; add tests for synonyms.
  ;
- ; 2018-03-09/10 ven/lmry %*1.8T04 %tsutfs: Add a synoym test. %tsutes: fix test.
+ ; 2018-03-09/10 ven/lmry %*1.8T04 %tsutfs: Add a synoym test. %tsutes: fix
+ ; test.
  ;
- ; 2018-03-12 ven/lmry %*1.8T04 %tsutes: Fuss with tests, add some descriptions. Add 
- ; tests to increase coverage. %tsutef: add unit test for uppercase flag coverage=100%
+ ; 2018-03-12 ven/lmry %*1.8T04 %tsutes: Fuss w/tests, add some
+ ; descriptions. Add tests to increase coverage. %tsutef: add unit test
+ ; for uppercase flag coverage=100%.
  ;
- ; 2018-03-14/15 ven/lmry %*1.8T04 %tsut: Exclude unit test routines from reports,
- ; make clarifications in comments. 
+ ; 2018-03-14/15 ven/lmry %*1.8T04 %tsut: Exclude unit test routines from
+ ; reports, make clarifications in comments.
+ ;
+ ; 2018-03-18 ven/toad %*1.8t04 %tsudf: map out new plan for findReplace
+ ; findReplaceAll, & deleteBetween.
+ ;  %tsfwr: create new routine with code for findReplace^%ts.
+ ;  %tsfwra: create new routine with code for findReplaceAll^%ts.
+ ;  %ts: repoint findReplace^%ts to findReplace^%tswr, create
+ ; findReplaceAll^%ts.
  ;
  ; 
  ;

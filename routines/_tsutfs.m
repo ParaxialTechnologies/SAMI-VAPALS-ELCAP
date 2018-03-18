@@ -1,4 +1,4 @@
-%tsutfs ;ven/toad-type string: test setfind^%ts ;2018-03-09T23:39Z
+%tsutfs ;ven/toad-type string: test setfind^%ts ;2018-03-18T16:38Z
  ;;1.8;Mash;
  ;
  ; %tsutfs implements unit tests for ppi setfind^%ts.
@@ -29,7 +29,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-09T23:39Z
+ ;@last-updated: 2018-03-18T16:38Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -51,7 +51,10 @@
  ;  COVERAGE^%ut (called by cover^%tsut)
  ;@calls
  ; CHKEQ^%ut
- ; findrep^%ts
+ ; setfind^%ts
+ ; sf^%ts
+ ; setFind^%ts
+ ; replace^%ts
  ;
  ;
  ;
@@ -59,7 +62,7 @@
  ;
  ;
  ;
-setfind01 ; @TEST setfind^%ts: No Next Match
+setfind01 ; @TEST setfind^%ts: no next match
  ;
  ;ven/toad;test;procedure;clean;silent;sac
  ;
@@ -74,7 +77,7 @@ setfind01 ; @TEST setfind^%ts: No Next Match
  ;
  ;
  ;
-setfind02 ; @TEST setfind^%ts: Find First & Next
+setfind02 ; @TEST setfind^%ts: find first & next
  ;
  ;ven/toad;test;procedure;clean;silent;sac
  ;
@@ -101,7 +104,7 @@ setfind02 ; @TEST setfind^%ts: Find First & Next
  ;
  ;
  ;
-setfind03 ; @TEST setfind^%ts: Find Next From
+setfind03 ; @TEST setfind^%ts: find next from
  ;
  ;ven/toad;test;procedure;clean;silent;sac
  ;
@@ -118,7 +121,7 @@ setfind03 ; @TEST setfind^%ts: Find Next From
  ;
  ;
  ;
-setfind04 ; @TEST setfind^%ts: No Match Next From
+setfind04 ; @TEST setfind^%ts: no match next from
  ;
  ;ven/toad;test;procedure;clean;silent;sac
  ;
@@ -139,7 +142,7 @@ setfind04 ; @TEST setfind^%ts: No Match Next From
  ;
  ;
  ;
-setfind05 ; @TEST setfind^%ts: No Previous Match
+setfind05 ; @TEST setfind^%ts: no previous match
  ;
  ;ven/toad;test;procedure;clean;silent;sac
  ;
@@ -154,7 +157,7 @@ setfind05 ; @TEST setfind^%ts: No Previous Match
  ;
  ;
  ;
-setfind06 ; @TEST setfind^%ts: Find Last & Previous
+setfind06 ; @TEST setfind^%ts: find last & previous
  ;
  ;ven/toad;test;procedure;clean;silent;sac
  ;
@@ -181,7 +184,7 @@ setfind06 ; @TEST setfind^%ts: Find Last & Previous
  ;
  ;
  ;
-setfind07 ; @TEST setfind^%ts: Find Previous From
+setfind07 ; @TEST setfind^%ts: find previous from
  ;
  ;ven/toad;test;procedure;clean;silent;sac
  ;
@@ -198,7 +201,7 @@ setfind07 ; @TEST setfind^%ts: Find Previous From
  ;
  ;
  ;
-setfind08 ; @TEST setfind^%ts: No Match Previous From
+setfind08 ; @TEST setfind^%ts: no match previous from
  ;
  ;ven/toad;test;procedure;clean;silent;sac
  ;
@@ -219,7 +222,7 @@ setfind08 ; @TEST setfind^%ts: No Match Previous From
  ;
  ;
  ;
-setfind09 ; @TEST setfind^%ts: Find Case-insensitive
+setfind09 ; @TEST setfind^%ts: find case-insensitive
  ;
  ;ven/toad;test;procedure;clean;silent;sac
  ;
@@ -250,7 +253,7 @@ setfind09 ; @TEST setfind^%ts: Find Case-insensitive
  ;
  ;
  ;
-setfind10 ; @TEST setfind^%ts: Undefined String
+setfind10 ; @TEST setfind^%ts: undefined string
  ;
  ;ven/toad;test;procedure;clean;silent;sac
  ;
@@ -265,7 +268,7 @@ setfind10 ; @TEST setfind^%ts: Undefined String
  ;
  ;
  ;
-setfind11 ; @TEST setfind^%ts: Empty String
+setfind11 ; @TEST setfind^%ts: empty string
  ;
  ;ven/toad;test;procedure;clean;silent;sac
  ;
@@ -280,7 +283,7 @@ setfind11 ; @TEST setfind^%ts: Empty String
  ;
  ;
  ;
-setfind12 ; @TEST setfind^%ts: Empty Find
+setfind12 ; @TEST setfind^%ts: empty find
  ;
  ;ven/toad;test;procedure;clean;silent;sac
  ;
@@ -295,7 +298,7 @@ setfind12 ; @TEST setfind^%ts: Empty Find
  ;
  ;
  ;
-setfind13 ; @TEST setfind^%ts: Empty Find & String
+setfind13 ; @TEST setfind^%ts: empty find & string
  ;
  ;ven/toad;test;procedure;clean;silent;sac
  ;
@@ -310,7 +313,7 @@ setfind13 ; @TEST setfind^%ts: Empty Find & String
  ;
  ;
  ;
-setfind14 ; @TEST setfind^%ts: Empty Replace
+setfind14 ; @TEST setfind^%ts: empty replace
  ;
  ;ven/toad;test;procedure;clean;silent;sac
  ;
@@ -325,7 +328,7 @@ setfind14 ; @TEST setfind^%ts: Empty Replace
  ;
  ;
  ;
-setfind15 ; @TEST setfind^%ts: Empty Replace Backward
+setfind15 ; @TEST setfind^%ts: empty replace backward
  ;
  ;ven/toad;test;procedure;clean;silent;sac
  ;
@@ -340,7 +343,7 @@ setfind15 ; @TEST setfind^%ts: Empty Replace Backward
  ;
  ;
  ;
-setfind16 ; @TEST setfind^%ts: Empty Find & Replace
+setfind16 ; @TEST setfind^%ts: empty find & replace
  ;
  ;ven/toad;test;procedure;clean;silent;sac
  ;
@@ -355,7 +358,7 @@ setfind16 ; @TEST setfind^%ts: Empty Find & Replace
  ;
  ;
  ;
-setfind17 ; @TEST setfind^%ts: Empty String, Find, & Replace
+setfind17 ; @TEST setfind^%ts: empty string, find, & replace
  ;
  ;ven/toad;test;procedure;clean;silent;sac
  ;
@@ -370,7 +373,7 @@ setfind17 ; @TEST setfind^%ts: Empty String, Find, & Replace
  ;
  ;
  ;
-setfind18 ; @TEST setfind^%ts: Bad Flag
+setfind18 ; @TEST setfind^%ts: bad flag
  ;
  ;ven/toad;test;procedure;clean;silent;sac
  ;
@@ -389,7 +392,7 @@ setfind18 ; @TEST setfind^%ts: Bad Flag
  ;
  ;
  ;
-setfind19 ; @TEST setfind^%ts: Alternate Signatures
+setfind19 ; @TEST setfind^%ts: alternate signatures
  ;
  ;ven/toad;test;procedure;clean;silent;sac
  ;
@@ -406,18 +409,6 @@ setfind19 ; @TEST setfind^%ts: Alternate Signatures
  do CHKEQ^%ut(string("extract","from"),8)
  do CHKEQ^%ut(string("extract","to"),14)
  ;
- do replace^%ts(.string,"toto","Dorothy")
- do CHKEQ^%ut(string,"DorothyDorothy")
- do CHKEQ^%ut(string("extract"),0)
- do CHKEQ^%ut(string("extract","from"),0)
- do CHKEQ^%ut(string("extract","to"),0)
- ;
- do findReplace^%ts(.string,"toto","Dorothy")
- do CHKEQ^%ut(string,"DorothyDorothy")
- do CHKEQ^%ut(string("extract"),0)
- do CHKEQ^%ut(string("extract","from"),0)
- do CHKEQ^%ut(string("extract","to"),0)
- ;
  quit  ; end of setfind19
  ;
  ;
@@ -426,7 +417,7 @@ setfind19 ; @TEST setfind^%ts: Alternate Signatures
  ;
  ;
  ;
-setfind20 ; @TEST setfind^%ts: All Backward Case-Insensitive
+setfind20 ; @TEST setfind^%ts: all backward case-insensitive
  ;
  ;ven/toad;test;procedure;clean;silent;sac
  ;
@@ -441,7 +432,7 @@ setfind20 ; @TEST setfind^%ts: All Backward Case-Insensitive
  ;
  ;
  ;
-setfind21 ; @TEST setfind^%ts: All But No Next Match
+setfind21 ; @TEST setfind^%ts: all but no next match
  ;
  ;ven/toad;test;procedure;clean;silent;sac
  ;

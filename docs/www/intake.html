@@ -106,7 +106,7 @@
       <!--TODO: inject max date as "today"-->
       <div class="input-group datepicker">
        <!--TODO: inject max date as "today"-->
-       <input aria-describedby="sidfc-addon" class="form-control" data-fv-date="true" data-fv-max="1/25/2018" data-fv-notempty-message="First contact date is required" id="sidfc" name="sidfc" required="required"/>
+       <input aria-describedby="sidfc-addon" class="form-control" data-fv-date="true" data-fv-max="1/25/2018" id="sidfc" name="sidfc"/>
        <div class="input-group-addon">
         <div class="input-group-text" id="sidfc-addon">
          <i aria-hidden="true" class="fa fa-calendar">
@@ -142,7 +142,7 @@
       <!--TODO: inject max date as "today"-->
       <div class="input-group datepicker">
        <!--TODO: inject max date as "today"-->
-       <input aria-describedby="sidoe-addon" class="form-control" data-fv-date="true" data-fv-max="1/25/2018" data-fv-notempty-message="Baseline CT date is required" id="sidoe" name="sidoe" required="required"/>
+       <input aria-describedby="sidoe-addon" class="form-control" data-fv-date="true" data-fv-max="1/25/2018" id="sidoe" name="sidoe"/>
        <div class="input-group-addon">
         <div class="input-group-text" id="sidoe-addon">
          <i aria-hidden="true" class="fa fa-calendar">
@@ -708,7 +708,7 @@
         <label for="sirmd">
          VA Providers co-signed
         </label>
-        <input class="form-control" id="sirmd" name="sirmd" required="required" type="text"/>
+        <input class="form-control" id="sirmd" name="sirmd" type="text"/>
        </div>
       </div>
       <div class="row">
@@ -716,7 +716,7 @@
         <label for="sirn">
          Nature
         </label>
-        <select class="form-control" id="sirn" name="sirn" required="required">
+        <select class="form-control" id="sirn" name="sirn">
          <option selected="" value="">
           -
          </option>
@@ -781,9 +781,9 @@
         function validateDatePickerOnChange(e) {
             var $datePicker = $(e.target)
             var fv = $datePicker.closest(".validated").data("formValidation");
-            if (fv && $datePicker.is(":enabled")) {
-                var f = $datePicker.find("input").addBack("input");
-                fv.revalidateField(f);
+            var $datePickerInput = $datePicker.find("input").addBack("input");
+            if (fv && $datePickerInput.is(":enabled")) {
+                fv.revalidateField($datePickerInput);
             }
         }
 

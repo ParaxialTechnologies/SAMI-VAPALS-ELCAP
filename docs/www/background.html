@@ -2634,6 +2634,7 @@
                 return getCurrentTab().prev().attr("id");
             }
 
+
             $(".btn-next").on("click", function () {
                 var nextTabId = getNextTabId();
                 // CB: form validation occurs on tab hide event
@@ -2658,12 +2659,11 @@
                     // e.preventDefault() // to cancel the navigation
                 }
 
-            })
-                .on("shown.bs.tab", function () {
+            }).on("shown.bs.tab", function () {
                     $(".btn-next").toggleClass("disabled", !getNextTabId());
                     $(".btn-prev").toggleClass("disabled", !getPrevTabId());
-                })
-            ;
+                $("#myTabContent").find("input:visible, textarea:visible, select:visible").first().focus();
+            });
 
 
             function checkCompleteness($container) {

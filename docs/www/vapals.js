@@ -85,6 +85,10 @@ var VAPALS = new function () {
     this.notCovered = function () {
         console.log("cover me!")
     }
+
+    this.DATE_FORMAT = "DD/MMM/YYYY";
+
+    this.DATE_TIME_FORMAT = "DD/MMM/YYYY hh:mm:ss";
 };
 
 
@@ -106,6 +110,31 @@ function numericHandlerKeydown(e) {
 
 }
 
+function validateInternationalDate(value, validator, $field) {
+    var enabled = $field.is(":enabled");
+    console.log("validateInternationalDate() Entered. value=" + value + ", validator=" + validator + ", field=" + $field.attr("id") + ", enabled: " + enabled)
+    if (!enabled) {
+        console.log("validateInternationalDate() field is disabled. Returning true")
+        return true;
+    }
+    var m = new moment(value, VAPALS.DATE_FORMAT, true);
+    if (!m.isValid()) {
+        console.log("validateInternationalDate() field is invalid. Returning false")
+        return false;
+    }
+    console.log("validateInternationalDate() field is valid. Returning true")
+    return true;   // return true instead of value
+}
+
+function validateDatePickerOnChange(e) {
+    var $datePicker = $(e.target)
+    var fv = $datePicker.closest(".validated").data("formValidation");
+    var $datePickerInput = $datePicker.find("input").addBack("input");
+    if (fv && $datePickerInput.is(":enabled")) {
+        fv.revalidateField($datePickerInput);
+    }
+    return true;
+}
 
 // function addNumericHandler(obj) {
 //     $(obj).keydown(numericHandlerKeydown);
@@ -114,5 +143,30 @@ function numericHandlerKeydown(e) {
 //global application handlers
 $(function () {
     $("body").on('keydown', 'input.numeric', numericHandlerKeydown);
+
+    $.each($(".datepicker"), function (i, el) {
+        var $input = $(el).find("input").addBack("input"); //find the actual input control
+        var maxDateValue = $input.data('max-date');
+        var maxDate = maxDateValue ? moment(maxDateValue, "DD/MMM/YYYY").endOf('day') : false; //false == no max
+        $(el).datetimepicker({
+            format: 'DD/MMM/YYYY',
+            useCurrent: false,
+            keepInvalid: true,
+            maxDate: maxDate //hack to not select today
+        })
+            .on("dp.change", validateDatePickerOnChange);
+    });
+
+    $.each($(".yearpicker"), function (i, el) {
+        $(el).datetimepicker({
+            format: 'YYYY',
+            maxDate: moment().add(1, 'h'), //hack to not select today
+            minDate: moment().subtract(100, 'y')
+        }).on("dp.change", validateDatePickerOnChange);
+    });
+
+    //Globally enabled popovers for things like help text.
+    $('[data-toggle="popover"]').popover();
+
 
 });

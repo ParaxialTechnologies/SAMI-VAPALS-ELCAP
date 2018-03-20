@@ -33,7 +33,7 @@
                 <div class="col-sm-4 col-md-3 form-group">
                     <label for="sidfc">Date of First Contact</label>
                     <!--TODO: inject max date as "today"-->
-                    {{ f.datepicker("sidfc", "1/25/2018") }}
+                    {{ f.datepicker("sidfc", "01/Mar/2018") }}
                 </div>
             </div>
 
@@ -57,7 +57,7 @@
                 <div class="form-group col-sm-3 col-md-3 col-lg-2">
                     <label for="sidoe">Date of Baseline CT</label>
                     <!--TODO: inject max date as "today"-->
-                    {{ f.datepicker("sidoe", "1/25/2018") }}
+                    {{ f.datepicker("sidoe", "01/Mar/2018") }}
                 </div>
                 <div class="form-group col-sm-3 col-md-3 col-lg-2">
                     <label for="simrn">MRN</label>
@@ -231,7 +231,7 @@
                 <div class="form-group col-sm-3 col-lg-2">
                     <label for="sidob">Date of Birth</label>
                     <!--TODO: inject max date as "today"-->
-                    {{ f.datepicker("sidob", "1/25/2018", "Date of birth is required") }}
+                    {{ f.datepicker("sidob", "01/Mar/2018", "Date of birth is required") }}
                 </div>
             </div>
             <div class="row">
@@ -359,7 +359,7 @@
                        data-content="The Date of Exit should be recorded for all subjects who are no longer active in
                        the study.  It signifies the date on which they change to a non-active status."></i>
                     <!--TODO: inject max date as "today"-->
-                    {{ f.datepicker("sixdate", "1/25/2018") }}
+                    {{ f.datepicker("sixdate", "01/Mar/2018") }}
                 </div>
             </div>
             <div class="row">
@@ -368,7 +368,7 @@
                     <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
                        data-content="The Date of Death (DOD) should be recorded for all subjects who have expired."></i>
                     <!--TODO: inject max date as "today"-->
-                    {{ f.datepicker("sidod", "1/25/2018", "Date of death is required") }}
+                    {{ f.datepicker("sidod", "01/Mar/2018", "Date of death is required") }}
                 </div>
                 <div class="form-group col-sm-9 col-md-9 col-lg-10">
                     <label for="sicod">COD</label>
@@ -409,12 +409,12 @@
                         <div class="form-group col-sm-6">
                             <label for="sircd">Correspondence Date</label>
                             {# TODO: inject max date as "today"#}
-                            {{ f.datepicker("sircd", "1/25/2018", "Corresponance date is required") }}
+                            {{ f.datepicker("sircd", "01/Mar/2018", "Corresponance date is required") }}
                         </div>
                         <div class="form-group col-sm-6">
                             <label for="sired">Date of Exam</label>
                             {# TODO: inject max date as "today"#}
-                            {{ f.datepicker("sired", "1/25/2018") }}
+                            {{ f.datepicker("sired", "01/Mar/2018") }}
                         </div>
                     </div>
                     <div class="row">
@@ -467,7 +467,7 @@
 
         //TODO: rename this function
         function genD() {
-            return moment().format('MMM/DD/YYYY hh:mm:ss');
+            return moment().format(VAPALS.DATE_TIME_FORMAT);
         }
 
         //TODO: updated from ELCAP uptCI() but could use some refining
@@ -609,9 +609,6 @@
         }
 
         $(function () {
-
-            //Initialize Form Validation
-            $(".validated").formValidation({framework: 'bootstrap'});
 
             //Correspondence modal
             $("#add-correspondence-btn").on("click", function (e) {

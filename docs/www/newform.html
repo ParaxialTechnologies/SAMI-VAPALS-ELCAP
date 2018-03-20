@@ -128,44 +128,16 @@
    </div>
   </footer>
   <script language="JavaScript">
-   $(function () {
-        function validateDatePickerOnChange(e) {
-            var $datePicker = $(e.target)
-            var fv = $datePicker.closest(".validated").data("formValidation");
-            var $datePickerInput = $datePicker.find("input").addBack("input");
-            if (fv && $datePickerInput.is(":enabled")) {
-                fv.revalidateField($datePickerInput);
-            }
-        }
-
-        $.each($(".datepicker"), function (i, el) {
-            $(el).datetimepicker({
-                format: 'MM/DD/YYYY',
-                maxDate: moment().add(1, 'h') //hack to not select today
-            }).on("dp.change", validateDatePickerOnChange);
-        });
-
-        $.each($(".yearpicker"), function (i, el) {
-            $(el).datetimepicker({
-                format: 'YYYY',
-                maxDate: moment().add(1, 'h'), //hack to not select today
-                minDate: moment().subtract(100, 'y')
-            }).on("dp.change", validateDatePickerOnChange);
-        });
-
-        //Globally enabled popovers for things like help text.
-        $('[data-toggle="popover"]').popover();
-
-        //Initialize Form Validation
-        $(".validated").formValidation({framework: 'bootstrap'});
-    });
-
-    //TODO: insert studyId here.
+   //TODO: insert studyId here.
     var studyId = "XX0002";
 
     if (studyId) {
         $("#studyIdMenu").show();
     }
+  </script>
+  <script language="JavaScript">
+   //Initialize Form Validation
+    $(".validated").formValidation({framework: 'bootstrap'});
   </script>
  </body>
 </html>

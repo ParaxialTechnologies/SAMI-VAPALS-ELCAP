@@ -63,7 +63,7 @@
                                    title="Visit Date"
                                    data-content="And here's some amazing content. It's very engaging. Right?"></i>
                                 {# TODO: inject max date as "today"#}
-                                {{ f.datepicker("sbdop", "1/25/2018", "Visit date is required") }}
+                                {{ f.datepicker("sbdop", "01/Mar/2018", "Visit date is required") }}
                             </div>
                         </div>
 
@@ -71,7 +71,7 @@
                             <div class="col-sm-4 col-md-3 col-lg-2 form-group">
                                 <label for="sbdob" class="control-label">Date of Birth</label>
                                 {# TODO: inject max date as "today"#}
-                                {{ f.datepicker("sbdob", "1/25/2018", "Date of birth is required") }}
+                                {{ f.datepicker("sbdob", "01/Mar/2018", "Date of birth is required") }}
                             </div>
                             <div class="col-sm-2 col-md-1 form-group">
                                 <label class="control-label">Age</label>
@@ -1361,17 +1361,6 @@
                 }
             }).first().trigger("change"); //trigger on page load for existing data
 
-            //hook onto DOB field to calculate age.
-            $("#sbdob").on('change', function () {
-                var dateString = $("#sbdob").val();
-                if (dateString) {
-                    var m = moment(dateString, ["MM-DD-YYYY", "DD-MM", "DD-MM-YYYY", "YYYY-MM-DD", "DD/MMM/YYYY"]);
-                    if (m.isValid()) {
-                        $("#sbage").text(VAPALS.computeAge(m.toDate()))
-                    }
-                }
-            }).trigger("change"); //trigger on page load for existing data
-
             //hook for calculating Pulmonary function test percentage (FFR)
             $("#sbfev1, #sbfvc").on('change', function () {
                 var fev1 = $("#sbfev1").val();
@@ -1530,12 +1519,15 @@
                 });
                 // check tab container validity
                 var fv = $(".validated").data('formValidation');
-                var valid = fv.isValidContainer($container);
-                var reallyValid = valid == null || valid === true; //consider unvalidated (null) as "valid".
+                if (fv) {
+                    var valid = fv.isValidContainer($container);
+                    var reallyValid = valid == null || valid === true; //consider unvalidated (null) as "valid".
 
-                //add completeness flag to tab if all required fields are filled in and form is likely valid.
-                $tab.toggleClass("complete", emptyRequiredFields.length === 0 && reallyValid);
+                    //add completeness flag to tab if all required fields are filled in and form is likely valid.
+                    $tab.toggleClass("complete", emptyRequiredFields.length === 0 && reallyValid);
+                }
             }
+
 
             // trigger a check of completeness of each tab at page load and also any time an input changes.
             $(".tab-pane").each(function () {
@@ -1547,8 +1539,18 @@
 
             //trigger age calculation when date picker is used to select a date.
             $("#sbdob").closest(".datepicker").on("dp.change", function () {
-                $("#sbdob").trigger("change");
+                var dateString = $("#sbdob").val();
+                if (dateString) {
+                    var m = moment(dateString, VAPALS.DATE_FORMAT);
+                    if (m.isValid()) {
+                        $("#sbage").text(VAPALS.computeAge(m.toDate()))
+                    }
+                }
             });
+
+            //Initialize Form Validation
+            $(".validated").formValidation({framework: 'bootstrap'});
+
         });
 
     </script>

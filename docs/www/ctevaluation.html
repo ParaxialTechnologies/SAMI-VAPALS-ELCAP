@@ -94,7 +94,7 @@
       </label>
       <div class="input-group datepicker">
        <!--TODO: inject max date as "today"-->
-       <input aria-describedby="cedos-addon" class="form-control" data-fv-date="true" data-fv-max="1/25/2018" data-fv-notempty-message="Study date is required" id="cedos" name="cedos" required="required"/>
+       <input aria-describedby="cedos-addon" class="form-control" data-fv-callback="true" data-fv-callback-callback="validateInternationalDate" data-fv-callback-message="Enter a valid date" data-fv-notempty-message="Study date is required" data-max-date="01/Mar/2018" id="cedos" name="cedos" required="required"/>
        <div class="input-group-addon">
         <div class="input-group-text" id="cedos-addon">
          <i aria-hidden="true" class="fa fa-calendar">
@@ -103,7 +103,7 @@
        </div>
       </div>
       <small class="form-text text-muted">
-       MM/DD/YYYY
+       DD/MMM/YYYY
       </small>
      </div>
     </div>
@@ -221,7 +221,7 @@
       </label>
       <div class="input-group datepicker">
        <!--TODO: inject max date as "today"-->
-       <input aria-describedby="sidoe-addon" class="form-control" data-fv-date="true" data-fv-max="1/25/2018" data-fv-notempty-message="Baseline CT date is required" id="sidoe" name="sidoe" required="required"/>
+       <input aria-describedby="sidoe-addon" class="form-control" data-fv-callback="true" data-fv-callback-callback="validateInternationalDate" data-fv-callback-message="Enter a valid date" data-fv-notempty-message="Baseline CT date is required" data-max-date="01/Mar/2018" id="sidoe" name="sidoe" required="required"/>
        <div class="input-group-addon">
         <div class="input-group-text" id="sidoe-addon">
          <i aria-hidden="true" class="fa fa-calendar">
@@ -230,7 +230,7 @@
        </div>
       </div>
       <small class="form-text text-muted">
-       MM/DD/YYYY
+       DD/MMM/YYYY
       </small>
      </div>
      <div class="col-sm-4 col-md-3 form-group">
@@ -239,7 +239,7 @@
       </label>
       <div class="input-group datepicker">
        <!--TODO: inject max date as "today"-->
-       <input aria-describedby="cedcs-addon" class="form-control" data-fv-date="true" data-fv-max="1/25/2018" data-fv-notempty-message="Date is required" id="cedcs" name="cedcs" required="required"/>
+       <input aria-describedby="cedcs-addon" class="form-control" data-fv-callback="true" data-fv-callback-callback="validateInternationalDate" data-fv-callback-message="Enter a valid date" data-fv-notempty-message="Date is required" data-max-date="01/Mar/2018" id="cedcs" name="cedcs" required="required"/>
        <div class="input-group-addon">
         <div class="input-group-text" id="cedcs-addon">
          <i aria-hidden="true" class="fa fa-calendar">
@@ -248,7 +248,7 @@
        </div>
       </div>
       <small class="form-text text-muted">
-       MM/DD/YYYY
+       DD/MMM/YYYY
       </small>
      </div>
     </div>
@@ -5170,7 +5170,7 @@
       <br/>
       <div class="input-group datepicker">
        <!--TODO: inject max date as "today"-->
-       <input aria-describedby="cefud-addon" class="form-control" data-fv-date="true" data-fv-max="03/01/2018" data-fv-notempty-message="Follow up date is required" id="cefud" name="cefud" required="required"/>
+       <input aria-describedby="cefud-addon" class="form-control" data-fv-callback="true" data-fv-callback-callback="validateInternationalDate" data-fv-callback-message="Enter a valid date" data-fv-notempty-message="Follow up date is required" id="cefud" name="cefud" required="required"/>
        <div class="input-group-addon">
         <div class="input-group-text" id="cefud-addon">
          <i aria-hidden="true" class="fa fa-calendar">
@@ -5179,7 +5179,7 @@
        </div>
       </div>
       <small class="form-text text-muted">
-       MM/DD/YYYY
+       DD/MMM/YYYY
       </small>
      </div>
     </div>
@@ -5443,39 +5443,7 @@
    </div>
   </footer>
   <script language="JavaScript">
-   $(function () {
-        function validateDatePickerOnChange(e) {
-            var $datePicker = $(e.target)
-            var fv = $datePicker.closest(".validated").data("formValidation");
-            var $datePickerInput = $datePicker.find("input").addBack("input");
-            if (fv && $datePickerInput.is(":enabled")) {
-                fv.revalidateField($datePickerInput);
-            }
-        }
-
-        $.each($(".datepicker"), function (i, el) {
-            $(el).datetimepicker({
-                format: 'MM/DD/YYYY',
-                maxDate: moment().add(1, 'h') //hack to not select today
-            }).on("dp.change", validateDatePickerOnChange);
-        });
-
-        $.each($(".yearpicker"), function (i, el) {
-            $(el).datetimepicker({
-                format: 'YYYY',
-                maxDate: moment().add(1, 'h'), //hack to not select today
-                minDate: moment().subtract(100, 'y')
-            }).on("dp.change", validateDatePickerOnChange);
-        });
-
-        //Globally enabled popovers for things like help text.
-        $('[data-toggle="popover"]').popover();
-
-        //Initialize Form Validation
-        $(".validated").formValidation({framework: 'bootstrap'});
-    });
-
-    //TODO: insert studyId here.
+   //TODO: insert studyId here.
     var studyId = "XX0002";
 
     if (studyId) {
@@ -5488,8 +5456,8 @@
             var baselineDateString = $("#sidoe").val();
             var studyDateString = $("#cedos").val();
             if (baselineDateString && studyDateString) {
-                var baselineDate = moment(baselineDateString, ["MM-DD-YYYY", "DD-MM", "DD-MM-YYYY", "YYYY-MM-DD", "DD/MMM/YYYY"]);
-                var studyDate = moment(studyDateString, ["MM-DD-YYYY", "DD-MM", "DD-MM-YYYY", "YYYY-MM-DD", "DD/MMM/YYYY"]);
+                var baselineDate = moment(baselineDateString, VAPALS.DATE_FORMAT);
+                var studyDate = moment(studyDateString, VAPALS.DATE_FORMAT);
                 if (baselineDate.isValid() && studyDate.isValid()) {
                     var months = parseInt(studyDate.diff(baselineDate, "months", true))
                     $("#cetsb-text").text(months)
@@ -5538,6 +5506,10 @@
             
 
         });
+  </script>
+  <script language="JavaScript">
+   //Initialize Form Validation
+    $(".validated").formValidation({framework: 'bootstrap'});
   </script>
  </body>
 </html>

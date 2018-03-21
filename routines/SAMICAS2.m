@@ -225,7 +225,7 @@ wsCASE(rtn,filter) ; generate case review page
  ;
  new zj set zj="" ; each of the rest of the forms
  if $data(items("sort")) do  ; we have more forms
- . for  set zj=$order(items("sort",zj),-1) quit:zj=""  do  ;
+ . for  set zj=$order(items("sort",zj)) quit:zj=""  do  ;
  . . new cdate set cdate=zj
  . . new zform set zform=$order(items("sort",cdate,""))
  . . new zkey set zkey=$order(items("sort",cdate,zform,""))

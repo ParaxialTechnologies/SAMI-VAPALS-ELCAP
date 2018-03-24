@@ -1,4 +1,4 @@
-%wful ;ven/toad-web form: development log ;2018-03-18T17:25Z
+%wful ;ven/toad-web form: development log ;2018-03-24T22:06Z
  ;;1.8;Mash;
  ;
  ; %wful is the Web Form Library's primary-development log.
@@ -21,7 +21,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-18T17:25Z
+ ;@last-updated: 2018-03-24T22:06Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Web Form - %wf
  ;@version: 1.8T04
@@ -195,6 +195,7 @@
  ; simplify both, & use throughout %wfhform.
  ;  %wfhinput: in uncheck & check simplify calls to findReplace^%ts.
  ;
+ ; 2018-03-24 ven/lmry %1.8t04 %wful: new %wfutexcl
  ;
  ;@to-do
  ; use find & place in other three ppis

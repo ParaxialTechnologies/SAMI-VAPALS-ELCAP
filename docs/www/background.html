@@ -136,7 +136,7 @@
          </i>
          <div class="input-group datepicker">
           <!--TODO: inject max date as "today"-->
-          <input aria-describedby="sbdop-addon" class="form-control" data-fv-date="true" data-fv-max="1/25/2018" data-fv-notempty-message="Visit date is required" id="sbdop" name="sbdop" required="required"/>
+          <input aria-describedby="sbdop-addon" class="form-control" data-fv-callback="true" data-fv-callback-callback="validateInternationalDate" data-fv-callback-message="Enter a valid date" data-fv-notempty-message="Visit date is required" data-max-date="01/Mar/2018" id="sbdop" name="sbdop" required="required"/>
           <div class="input-group-addon">
            <div class="input-group-text" id="sbdop-addon">
             <i aria-hidden="true" class="fa fa-calendar">
@@ -145,7 +145,7 @@
           </div>
          </div>
          <small class="form-text text-muted">
-          MM/DD/YYYY
+          DD/MMM/YYYY
          </small>
         </div>
        </div>
@@ -156,7 +156,7 @@
          </label>
          <div class="input-group datepicker">
           <!--TODO: inject max date as "today"-->
-          <input aria-describedby="sbdob-addon" class="form-control" data-fv-date="true" data-fv-max="1/25/2018" data-fv-notempty-message="Date of birth is required" id="sbdob" name="sbdob" required="required"/>
+          <input aria-describedby="sbdob-addon" class="form-control" data-fv-callback="true" data-fv-callback-callback="validateInternationalDate" data-fv-callback-message="Enter a valid date" data-fv-notempty-message="Date of birth is required" data-max-date="01/Mar/2018" id="sbdob" name="sbdob" required="required"/>
           <div class="input-group-addon">
            <div class="input-group-text" id="sbdob-addon">
             <i aria-hidden="true" class="fa fa-calendar">
@@ -165,7 +165,7 @@
           </div>
          </div>
          <small class="form-text text-muted">
-          MM/DD/YYYY
+          DD/MMM/YYYY
          </small>
         </div>
         <div class="col-sm-2 col-md-1 form-group">
@@ -2492,39 +2492,7 @@
    </div>
   </footer>
   <script language="JavaScript">
-   $(function () {
-        function validateDatePickerOnChange(e) {
-            var $datePicker = $(e.target)
-            var fv = $datePicker.closest(".validated").data("formValidation");
-            if (fv && $datePicker.is(":enabled")) {
-                var f = $datePicker.find("input").addBack("input");
-                fv.revalidateField(f);
-            }
-        }
-
-        $.each($(".datepicker"), function (i, el) {
-            $(el).datetimepicker({
-                format: 'MM/DD/YYYY',
-                maxDate: moment().add(1, 'h') //hack to not select today
-            }).on("dp.change", validateDatePickerOnChange);
-        });
-
-        $.each($(".yearpicker"), function (i, el) {
-            $(el).datetimepicker({
-                format: 'YYYY',
-                maxDate: moment().add(1, 'h'), //hack to not select today
-                minDate: moment().subtract(100, 'y')
-            }).on("dp.change", validateDatePickerOnChange);
-        });
-
-        //Globally enabled popovers for things like help text.
-        $('[data-toggle="popover"]').popover();
-
-        //Initialize Form Validation
-        $(".validated").formValidation({framework: 'bootstrap'});
-    });
-
-    //TODO: insert studyId here.
+   //TODO: insert studyId here.
     var studyId = "XX0002";
 
     if (studyId) {
@@ -2554,17 +2522,6 @@
                     }
                 }
             }).first().trigger("change"); //trigger on page load for existing data
-
-            //hook onto DOB field to calculate age.
-            $("#sbdob").on('change', function () {
-                var dateString = $("#sbdob").val();
-                if (dateString) {
-                    var m = moment(dateString, ["MM-DD-YYYY", "DD-MM", "DD-MM-YYYY", "YYYY-MM-DD", "DD/MMM/YYYY"]);
-                    if (m.isValid()) {
-                        $("#sbage").text(VAPALS.computeAge(m.toDate()))
-                    }
-                }
-            }).trigger("change"); //trigger on page load for existing data
 
             //hook for calculating Pulmonary function test percentage (FFR)
             $("#sbfev1, #sbfvc").on('change', function () {
@@ -2677,6 +2634,7 @@
                 return getCurrentTab().prev().attr("id");
             }
 
+
             $(".btn-next").on("click", function () {
                 var nextTabId = getNextTabId();
                 // CB: form validation occurs on tab hide event
@@ -2701,12 +2659,11 @@
                     // e.preventDefault() // to cancel the navigation
                 }
 
-            })
-                .on("shown.bs.tab", function () {
+            }).on("shown.bs.tab", function () {
                     $(".btn-next").toggleClass("disabled", !getNextTabId());
                     $(".btn-prev").toggleClass("disabled", !getPrevTabId());
-                })
-            ;
+                $("#myTabContent").find("input:visible, textarea:visible, select:visible").first().focus();
+            });
 
 
             function checkCompleteness($container) {
@@ -2724,12 +2681,15 @@
                 });
                 // check tab container validity
                 var fv = $(".validated").data('formValidation');
-                var valid = fv.isValidContainer($container);
-                var reallyValid = valid == null || valid === true; //consider unvalidated (null) as "valid".
+                if (fv) {
+                    var valid = fv.isValidContainer($container);
+                    var reallyValid = valid == null || valid === true; //consider unvalidated (null) as "valid".
 
-                //add completeness flag to tab if all required fields are filled in and form is likely valid.
-                $tab.toggleClass("complete", emptyRequiredFields.length === 0 && reallyValid);
+                    //add completeness flag to tab if all required fields are filled in and form is likely valid.
+                    $tab.toggleClass("complete", emptyRequiredFields.length === 0 && reallyValid);
+                }
             }
+
 
             // trigger a check of completeness of each tab at page load and also any time an input changes.
             $(".tab-pane").each(function () {
@@ -2741,9 +2701,23 @@
 
             //trigger age calculation when date picker is used to select a date.
             $("#sbdob").closest(".datepicker").on("dp.change", function () {
-                $("#sbdob").trigger("change");
+                var dateString = $("#sbdob").val();
+                if (dateString) {
+                    var m = moment(dateString, VAPALS.DATE_FORMAT);
+                    if (m.isValid()) {
+                        $("#sbage").text(VAPALS.computeAge(m.toDate()))
+                    }
+                }
             });
+
+            //Initialize Form Validation
+            $(".validated").formValidation({framework: 'bootstrap'});
+
         });
+  </script>
+  <script language="JavaScript">
+   //Initialize Form Validation
+    $(".validated").formValidation({framework: 'bootstrap'});
   </script>
  </body>
 </html>

@@ -1,4 +1,4 @@
-%ts ;ven/toad-type string: api/ppi library ;2018-03-05T20:48Z
+%ts ;ven/toad-type string: api/ppi library ;2018-03-13T16:36Z
  ;;1.8;Mash;
  ;
  ; %ts is the Mumps String Library, an element of the Mumps
@@ -27,7 +27,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-05T20:48Z
+ ;@last-updated: 2018-03-13T16:36Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -151,11 +151,15 @@ sf(string,find,replace,flags) goto setfind^%tsfs
  ;@ppi setFind^%ts, set find
 setFind(string,find,replace,flags) goto setfind^%tsfs
  ;
- ;@ppi replace^%ts, set find
-replace(string,find,replace,flags) goto setfind^%tsfs
  ;
- ;@ppi findReplace^%ts, set find
-findReplace(string,find,replace,flags) goto setfind^%tsfs
+ ;
+ ;@ppi findReplace^%ts, simple substring find & replace
+findReplace(string,find,replace,flags) goto findReplace^%tsfwr
+ ;
+ ;
+ ;
+ ;@ppi findReplaceAll^%ts, simple substring find & replace all
+findReplaceAll(string,find,replace,flags) goto findReplaceAll^%tsfwra
  ;
  ;
  ;

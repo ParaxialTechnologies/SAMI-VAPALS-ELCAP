@@ -1,4 +1,4 @@
-SAMIFRM2 ;ven/gpl - ielcap: forms ;2018-03-08T21:49Z
+SAMIFRM2 ;ven/gpl - ielcap: forms ;2018-03-18T17:15Z
  ;;18.0;SAM;;
  ;
  ; Routine SAMIFRM contains subroutines for managing the ELCAP forms,
@@ -22,7 +22,7 @@ SAMIFRM2 ;ven/gpl - ielcap: forms ;2018-03-08T21:49Z
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-08T21:49Z
+ ;@last-updated: 2018-03-18T17:15Z
  ;@application: Screening Applications Management (SAM)
  ;@module: Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files: SAMI Forms (311.101-311.199)
@@ -77,6 +77,9 @@ SAMIFRM2 ;ven/gpl - ielcap: forms ;2018-03-08T21:49Z
  ;
  ; 2018-03-07/08 ven/toad v18.0t04 SAMIFRM: in SAMISUBS
  ; r/$$setroot^%wdgraph w/$$setroot^%wf, fix bug when r/css w/see.
+ ;
+ ; 2018-03-18 ven/toad SAMI*18.0t04 SAMIFRM2: restore calls to
+ ; findReplaceAll^%ts.
  ;
  ;@contents
  ; INITFRMS: initial all available forms
@@ -334,8 +337,17 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  . do findReplace^%ts(.line,"home.html","/vapals")
  . set touched=1
  ;
- if line["casereview.html" do ;
- . do findReplace^%ts(.line,"casereview.html","/vapals?samiroute=casereview&studyid="_sid)
+ if line["casereview.html" do  ;
+ . n repl
+ . set repl="<form method=""post"" action=""/vapals"">"
+ . set repl=repl_"<input name=""samiroute"" value=""casereview"" type=""hidden"">"
+ . set repl=repl_" <input name=""studyid"" value="""_sid_""" type=""hidden"">"
+ . n zname s zname="Case Review"
+ . set repl=repl_" <input value="""_zname_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"_$char(13)
+ . ;do findReplace^%ts(.line,"casereview.html","/vapals?samiroute=casereview&studyid="_sid)
+ . s line=repl
+ . s zhtml(%j+1)="<? -- Redacted"
+ . s zhtml(%j+2)="<? -- Redacted" ; get rid of extra 'Case Review" label and the unneeded </a>
  . set touched=1
  ;
  if line["src=" do
@@ -365,10 +377,16 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  . do findReplace^%ts(.line,"ctevaluation.html","/form?form="_key_"&studyId="_sid)
  ;
  if line["XX0002" do  ;
+ . i line["XXX" quit  ; 
  . do findReplace^%ts(.line,"XX0002",sid)
  ;
  if line["VEP0001" do  ;
  . do findReplace^%ts(.line,"VEP0001",sid,"a")
+ ;
+ if line["01/Mar/2018" do  ;
+ . n ztoday s ztoday=$$FMTE^XLFDT($$NOW^XLFDT,"9D")
+ . s ztoday=$tr(ztoday," ","/")
+ . d findReplace^%ts(.line,"01/Mar/2018",ztoday)
  ;
  quit  ; end of SAMISUB2
  ;
@@ -423,18 +441,18 @@ fixSrc(line) ; fix html src lines to use resources in see/
  ;@called-by
  ; SAMISUB2
  ;@calls
- ; findReplace^%ts
+ ; findReplaceAll^%ts
  ;
  if line["src=" do  ;
  . if line["src=""http" quit
  . if line["src=""/" do  quit
- . . do findReplace^%ts(.line,"src=""/","src=""/see/sami/","a")
+ . . do findReplaceAll^%ts(.line,"src=""/","src=""/see/sami/")
  . . quit
  . if line["src=""" do  quit
- . . do findReplace^%ts(.line,"src=""","src=""/see/sami/","a")
+ . . do findReplaceAll^%ts(.line,"src=""","src=""/see/sami/")
  . . quit
  . if line["src=" do
- . . do findReplace^%ts(.line,"src=","src=/see/sami/","a")
+ . . do findReplaceAll^%ts(.line,"src=","src=/see/sami/")
  . . quit
  . quit
  ;
@@ -447,20 +465,20 @@ fixHref(line) ; fix html href lines to use resources in see/
  ;@called-by
  ; SAMISUB2
  ;@calls
- ; findReplace^%ts
+ ; findReplaceAll^%ts
  ;
  if line["href=" do  ;
  . quit:line["href=""#"
  . quit:line["href='#"
  . quit:line["href=""http"
  . if line["href=""/" do  quit
- . . do findReplace^%ts(.line,"href=""/","href=""/","href=""/see/sami/","a")
+ . . do findReplaceAll^%ts(.line,"href=""/","href=""/","href=""/see/sami/")
  . . quit
  . if line["href=""" do  quit
- . . do findReplace^%ts(.line,"href=""","href=""/see/sami/","a")
+ . . do findReplaceAll^%ts(.line,"href=""","href=""/see/sami/")
  . . quit
  . if line["href=" do  quit
- . . do findReplace^%ts(.line,"href=","href=/see/sami/","a")
+ . . do findReplaceAll^%ts(.line,"href=","href=/see/sami/")
  . . quit
  . quit
  ;

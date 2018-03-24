@@ -1,4 +1,4 @@
-%tsef ;ven/toad-type string: findex^%ts ;2018-02-28T19:08Z
+%tsef ;ven/toad-type string: findex^%ts ;2018-03-20T19:02Z
  ;;1.8;Mash;
  ;
  ; %tsef implements MASH String Library ppi findex^%ts, find substring;
@@ -28,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-28T19:00Z
+ ;@last-updated: 2018-03-20T19:02Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -380,6 +380,7 @@ findex ; find position of substring
  set string=$get(string)
  set find=$get(find)
  ;
+ new from,to
  set from=$get(string("extract","from"))\1 ; reduce from to integers
  set:from<0 from=0 ; negative = 0
  new stringlen set stringlen=$length(string)

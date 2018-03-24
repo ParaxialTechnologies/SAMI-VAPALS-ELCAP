@@ -1,4 +1,4 @@
-%wfut ;ven/mcglk&toad-web form: unit tests ;2018-03-06T20:35Z
+%wfut ;ven/mcglk&toad-web form: unit tests ;2018-03-24T22:03Z
  ;;1.8;Mash;
  ;
  ; %wfut implements unit tests for the Mash Web Form Library.
@@ -24,7 +24,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-06T20:35Z
+ ;@last-updated: 2018-03-24T22:03Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Web Form - %wf
  ;@version: 1.8T04
@@ -76,6 +76,7 @@ cover ; run tests & calculate code coverage
  ;
  ; to exclude specific routines, do that here:
  ;----------------------------------------------------------------------------
+ new %wfuexcl
  set %wfuexcl(1)="cover^%wfut"
  ; set %wfuexcl(#)="EXCLUDEME^TESTROUTINE"
  ;----------------------------------------------------------------------------

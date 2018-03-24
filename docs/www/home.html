@@ -146,8 +146,6 @@
    </div>
    <div class="col-lg-3 col-sm-6" id="siteRural">
    </div>
-   <div class="col-lg-6 col-sm-12" id="patientsEnrolled">
-   </div>
   </div>
   <footer>
    <div class="container-fluid" style="max-width:1550px">
@@ -158,39 +156,7 @@
    </div>
   </footer>
   <script language="JavaScript">
-   $(function () {
-        function validateDatePickerOnChange(e) {
-            var $datePicker = $(e.target)
-            var fv = $datePicker.closest(".validated").data("formValidation");
-            if (fv && $datePicker.is(":enabled")) {
-                var f = $datePicker.find("input").addBack("input");
-                fv.revalidateField(f);
-            }
-        }
-
-        $.each($(".datepicker"), function (i, el) {
-            $(el).datetimepicker({
-                format: 'MM/DD/YYYY',
-                maxDate: moment().add(1, 'h') //hack to not select today
-            }).on("dp.change", validateDatePickerOnChange);
-        });
-
-        $.each($(".yearpicker"), function (i, el) {
-            $(el).datetimepicker({
-                format: 'YYYY',
-                maxDate: moment().add(1, 'h'), //hack to not select today
-                minDate: moment().subtract(100, 'y')
-            }).on("dp.change", validateDatePickerOnChange);
-        });
-
-        //Globally enabled popovers for things like help text.
-        $('[data-toggle="popover"]').popover();
-
-        //Initialize Form Validation
-        $(".validated").formValidation({framework: 'bootstrap'});
-    });
-
-    //TODO: insert studyId here.
+   //TODO: insert studyId here.
     var studyId = "XX0002";
 
     if (studyId) {
@@ -236,48 +202,16 @@
                 });
         }
 
-        function drawEnrollment() {
-            var data = google.visualization.arrayToDataTable([
-                ['City', 'Population'],
-                ['Brooklyn, NY', 8175],
-                ['Philadelphia, PA', 3792],
-                ['Chicago, IL', 4695],
-                ['Indianapolis, IN', 2099],
-                ['Nashville, TN', 1345],
-                ['Kansas City, KS', 1526],
-                ['Tampa Bay, FL', 1853],
-                ['Houston, TX', 3588],
-                ['Phoenix, AZ', 5844],
-                ['Los Angeles, CA', 7526]
-            ]);
-
-            var options = {
-                title: 'Enrollment by Site',
-                height: 400,
-                legend: {
-                    position: 'none'
-                },
-                hAxis: {
-                    title: 'Total Population',
-                    minValue: 0
-                },
-                vAxis: {
-                    title: 'City'
-                }
-            };
-
-            var chart = new google.visualization.BarChart(document.getElementById('patientsEnrolled'));
-
-            chart.draw(data, options);
-        }
-
         // Draw the chart and set the chart values
         function drawCharts() {
             drawProject();
             drawSite();
-            drawEnrollment();
             //TODO: redraw on window resize
         }
+  </script>
+  <script language="JavaScript">
+   //Initialize Form Validation
+    $(".validated").formValidation({framework: 'bootstrap'});
   </script>
  </body>
 </html>

@@ -1,4 +1,4 @@
-SAMIHOME ;ven/gpl - ielcap: forms ;2018-03-07T18:48Z
+SAMIHOME ;ven/gpl - ielcap: forms ;2018-03-18T17:06Z
  ;;18.0;SAMI;;
  ;
  ; Routine SAMIHOME contains subroutines for implementing the ELCAP Home
@@ -22,7 +22,7 @@ SAMIHOME ;ven/gpl - ielcap: forms ;2018-03-07T18:48Z
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-07T18:48Z
+ ;@last-updated: 2018-03-18T17:06Z
  ;@application: Screening Applications Management (SAM)
  ;@module: Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files: SAMI Forms (311.101-311.199)
@@ -69,6 +69,9 @@ SAMIHOME ;ven/gpl - ielcap: forms ;2018-03-07T18:48Z
  ; 2018-03-07 ven/toad v18.0t04 SAMIHOME: in $$sid2num add
  ; wsNuForm^SAMICASE to called-by list; in keyDate,getHome update
  ; called-by.
+ ;
+ ; 2018-03-18 ven/toad SAMI*18.0t04 SAMIHOME: restore findReplaceAll^%ts
+ ; calls.
  ;
  ;@contents
  ;
@@ -233,7 +236,7 @@ getHome(rtn,filter) ; homepage accessed using GET (not subsequent visit)
  ; wsLookup^SAMISRCH
  ;@calls
  ; getTemplate^SAMICASE
- ; findReplace^%ts
+ ; findReplaceAll^%ts
  ; $$scanFor
  ; ADDCRLF^VPRJRUT
  ;@input
@@ -257,13 +260,13 @@ getHome(rtn,filter) ; homepage accessed using GET (not subsequent visit)
  . ;
  . if temp(zi)["/images/" do  ;
  . . new ln set ln=temp(zi)
- . . do findReplace^%ts(.ln,"/images/","/see/","a")
+ . . do findReplaceAll^%ts(.ln,"/images/","/see/")
  . . set temp(zi)=ln
  . . quit
  . ;
  . if temp(zi)["[""ncase""]" do  ;
  . . new ln set ln=temp(zi)
- . . do findReplace^%ts(.ln,"""ncase""","""saminucase""","a")
+ . . do findReplaceAll^%ts(.ln,"""ncase""","""saminucase""")
  . . set temp(zi)=ln
  . . quit
  . ;

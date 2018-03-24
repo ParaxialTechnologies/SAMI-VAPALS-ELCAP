@@ -1,4 +1,4 @@
-%wfhinput ;ven/gpl-web form: html input tag ;2018-03-06T18:57Z
+%wfhinput ;ven/gpl-web form: html input tag ;2018-03-18T17:24Z
  ;;1.8;Mash;
  ;
  ; %wfhinput implements the Web Form Library's html input tag
@@ -30,7 +30,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-06T18:57Z
+ ;@last-updated: 2018-03-18T17:24Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Web Form - %wf
  ;@version: 1.8T04
@@ -235,8 +235,7 @@ uncheck ; code for ppi uncheck^%wf, uncheck radio button or checkbox
  . set doit=1
  . quit
  ;
- set line("extract","low")=linelow ; set up lowercase throughput
- do:doit findReplace^%ts(.line,find,"","i") ; cut checked attribute
+ do:doit findReplace^%ts(.line,find) ; cut checked attribute
  ;
  ;@stanza 3 termination
  ;
@@ -339,8 +338,7 @@ check ; code for ppi check^%wf, check radio button or checkbox
  . set doit=1
  . quit
  ;
- set line("extract","low")=linelow ; set up lowercase throughput
- do:doit findReplace^%ts(.line,find,replace,"i")
+ do:doit findReplace^%ts(.line,find,replace)
  ;
  ;@stanza 3 termination
  ;

@@ -27,14 +27,7 @@
                 <div class="col-sm-4 col-md-3 col-lg-2 form-group">
                     <label for="cedos" class="control-label">Study Date</label>
                     {# TODO: inject max date as "today"#}
-                    {{ f.datepicker("cedos", "1/25/2018", "Study date is required") }}
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-                    <label for="cemrn">Center Verification Code</label>
-                    <input type="text" class="form-control" id="cemrn" name="cemrn" required="required"/>
+                    {{ f.datepicker("cedos", "01/Mar/2018", "Study date is required") }}
                 </div>
                 <div class="col-sm-4 col-md-3 col-lg-2 form-group">
                     <label for="ceen">Exam Number</label>
@@ -118,12 +111,12 @@
                 <div class="col-sm-4 col-md-3 form-group">
                     <label for="sidoe" class="control-label">Date of Baseline CT</label>
                     {# TODO: inject max date as "today"#}
-                    {{ f.datepicker("sidoe", "1/25/2018", "Baseline CT date is required") }}
+                    {{ f.datepicker("sidoe", "01/Mar/2018", "Baseline CT date is required") }}
                 </div>
                 <div class="col-sm-4 col-md-3 form-group">
                     <label for="cedcs" class="control-label">Date of Most Recent Comparative Study</label>
                     {# TODO: inject max date as "today"#}
-                    {{ f.datepicker("cedcs", "1/25/2018", "Date is required") }}
+                    {{ f.datepicker("cedcs", "01/Mar/2018", "Date is required") }}
                 </div>
             </div>
 
@@ -1555,7 +1548,7 @@
             <div class="row">
                 <div class="col-sm-3 col-md-2 form-group">
                     <label for="cefu">Follow-up Date:</label><br/>
-                    {{ f.datepicker("cefud", "03/01/2018", "Follow up date is required") }}
+                    {{ f.datepicker("cefud", null, "Follow up date is required") }}
                 </div>
             </div>
 
@@ -1649,7 +1642,6 @@
                         <td><label for="cetsql">Lung Parenchyma:</label></td>
                         <td>
                             <select name="cetsql" id="cetsql" class="form-control">
-                                <option value="-"> -
                                 <option value="1"> 1
                                 <option value="2"> 2
                                 <option value="3"> 3
@@ -1676,7 +1668,6 @@
                         <td><label for="cetsqm">Mediastinum/Abdomen:</label></td>
                         <td>
                             <select name="cetsqm" id="cetsqm" class="form-control">
-                                <option value="-"> -
                                 <option value="1"> 1
                                 <option value="2"> 2
                                 <option value="3"> 3
@@ -1729,8 +1720,8 @@
             var baselineDateString = $("#sidoe").val();
             var studyDateString = $("#cedos").val();
             if (baselineDateString && studyDateString) {
-                var baselineDate = moment(baselineDateString, ["MM-DD-YYYY", "DD-MM", "DD-MM-YYYY", "YYYY-MM-DD", "DD/MMM/YYYY"]);
-                var studyDate = moment(studyDateString, ["MM-DD-YYYY", "DD-MM", "DD-MM-YYYY", "YYYY-MM-DD", "DD/MMM/YYYY"]);
+                var baselineDate = moment(baselineDateString, VAPALS.DATE_FORMAT);
+                var studyDate = moment(studyDateString, VAPALS.DATE_FORMAT);
                 if (baselineDate.isValid() && studyDate.isValid()) {
                     var months = parseInt(studyDate.diff(baselineDate, "months", true))
                     $("#cetsb-text").text(months)

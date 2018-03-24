@@ -59,9 +59,8 @@
             <small>MOCKUPS ONLY</small>
         </h1>
 
-        <div id="projectRural" class="col-lg-3  col-sm-6"></div>
-        <div id="siteRural" class="col-lg-3  col-sm-6"></div>
-        <div id="patientsEnrolled" class="col-lg-6  col-sm-12"></div>
+        <div id="projectRural" class="col-lg-3 col-sm-6"></div>
+        <div id="siteRural" class="col-lg-3 col-sm-6"></div>
 
     </div>
 {% endblock %}
@@ -106,46 +105,10 @@
                 });
         }
 
-        function drawEnrollment() {
-            var data = google.visualization.arrayToDataTable([
-                ['City', 'Population'],
-                ['Brooklyn, NY', 8175],
-                ['Philadelphia, PA', 3792],
-                ['Chicago, IL', 4695],
-                ['Indianapolis, IN', 2099],
-                ['Nashville, TN', 1345],
-                ['Kansas City, KS', 1526],
-                ['Tampa Bay, FL', 1853],
-                ['Houston, TX', 3588],
-                ['Phoenix, AZ', 5844],
-                ['Los Angeles, CA', 7526]
-            ]);
-
-            var options = {
-                title: 'Enrollment by Site',
-                height: 400,
-                legend: {
-                    position: 'none'
-                },
-                hAxis: {
-                    title: 'Total Population',
-                    minValue: 0
-                },
-                vAxis: {
-                    title: 'City'
-                }
-            };
-
-            var chart = new google.visualization.BarChart(document.getElementById('patientsEnrolled'));
-
-            chart.draw(data, options);
-        }
-
         // Draw the chart and set the chart values
         function drawCharts() {
             drawProject();
             drawSite();
-            drawEnrollment();
             //TODO: redraw on window resize
         }
     </script>

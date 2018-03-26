@@ -194,8 +194,11 @@ wsCASE(rtn,filter) ; generate case review page
  set rtn(cnt)=rtn(cnt)_" <input name=""studyid"" value="""_sid_""" type=""hidden"">"
  set rtn(cnt)=rtn(cnt)_" <input name=""form"" value="""_sikey_""" type=""hidden"">"
  set rtn(cnt)=rtn(cnt)_" <input value=""Intake"" class=""btn btn-link"" role=""link"" type=""submit"">"
+ ;
+ new samistatus s samistatus=""
+ if $$getSamiStatus(sid,sikey)="incomplete" set samistatus="(incomplete)"
  set cnt=cnt+1
- set rtn(cnt)="</form></td>"_$char(13)
+ set rtn(cnt)="</form>"_samistatus_"</td>"_$char(13)
  set cnt=cnt+1
  set rtn(cnt)=nuhref_"</tr>"
  ;
@@ -218,8 +221,12 @@ wsCASE(rtn,filter) ; generate case review page
  set rtn(cnt)=" <input name=""form"" value="""_sbkey_""" type=""hidden"">"_$char(13)
  set cnt=cnt+1
  set rtn(cnt)=" <input value=""Background"" class=""btn btn-link"" role=""link"" type=""submit"">"_$char(13)
+ ;
+ new samistatus s samistatus=""
+ if $$getSamiStatus(sid,sbkey)="incomplete" set samistatus="(incomplete)"
+ ;
  set cnt=cnt+1
- set rtn(cnt)="</form></td><td></td></tr>"
+ set rtn(cnt)="</form>"_samistatus_"</td><td></td></tr>"
  ;
  ;@stanza 6 rest of the forms
  ;
@@ -245,8 +252,11 @@ wsCASE(rtn,filter) ; generate case review page
  . . set rtn(cnt)=" <input name=""form"" value="""_zform_""" type=""hidden"">"_$char(13)
  . . set cnt=cnt+1
  . . set rtn(cnt)=" <input value="""_zname_""" class=""btn btn-link"" role=""link"" type=""submit"">"_$char(13)
+ . . ;
+ . . new samistatus s samistatus=""
+ . . if $$getSamiStatus(sid,zform)="incomplete" set samistatus="(incomplete)"
  . . set cnt=cnt+1
- . . set rtn(cnt)="</form></td><td></td></tr>"
+ . . set rtn(cnt)="</form>"_samistatus_"</td><td></td></tr>"
  . . quit
  . quit
  ;
@@ -262,8 +272,12 @@ wsCASE(rtn,filter) ; generate case review page
  ;@stanza 8 rest of lines
  ;
  for  set zi=$order(temp(zi)) quit:+zi=0  do  ;
+ . n line
+ . s line=temp(zi)
+ . if line["XX0002" d  ;
+ . . do findReplace^%ts(.line,"XX0002",sid)
  . set cnt=cnt+1
- . set rtn(cnt)=temp(zi)
+ . set rtn(cnt)=line
  . quit
  ;
  ;D ADDCRLF^VPRJRUT(.rtn)
@@ -595,6 +609,7 @@ makeCeform(sid,key) ; create ct evaluation form
  new cdate set cdate=$piece(key,"ceform-",2)
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate
+ d setSamiStatus^SAMICAS2(sid,key,"incomplete")
  ;
  ;@stanza 3 termination
  ;
@@ -604,7 +619,47 @@ makeCeform(sid,key) ; create ct evaluation form
  ;
  ;@section 3 casetbl
  ;
+getSamiStatus(sid,form) ; extrinsic returns the value of 'samistatus' from the form
+ n stat,root,useform
+ s root=$$setroot^%wd("elcap-patients")
+ s useform=form
+ i form["vapals:" s useform=$p(form,"vapals:",2)
+ s stat=$g(@root@("graph",sid,useform,"samistatus"))
+ q stat
  ;
+setSamiStatus(sid,form,val) ; sets 'samistatus' to val in form
+ n root,useform
+ s root=$$setroot^%wd("elcap-patients")
+ s useform=form
+ i form["vapals:" s useform=$p(form,"vapals:",2)
+ i '$d(@root@("graph",sid,useform)) q  ; no form there
+ s @root@("graph",sid,useform,"samistatus")=val
+ q
+ ;
+deleteForm(RESULT,ARGS) ; deletes a form if it is incomplete
+ ; will not delete intake or background forms
+ n root s root=$$setroot^%wd("elcap-patients")
+ n sid,form
+ s sid=$g(ARGS("studyid"))
+ q:sid=""
+ s form=$g(ARGS("form"))
+ q:form=""
+ i form["sbform" q  ;
+ i form["siform" q  ;
+ ;i '$d(@root@("graph",sid,form)) q  ; form does not exist
+ i $$getSamiStatus^SAMICAS2(sid,form)="incomplete" d  ;
+ . kill @root@("graph",sid,form)
+ k ARGS("samiroute")
+ d wsCASE^SAMICAS2(.RESULT,.ARGS)
+ q
+ ;
+initStatus ; set all forms to 'incomplete'
+ n root s root=$$setroot^%wd("elcap-patients")
+ n zi,zj s (zi,zj)=""
+ f  s zi=$o(@root@("graph",zi)) q:zi=""  d  ;
+ . f  s zj=$o(@root@("graph",zi,zj)) q:zj=""  d  ;
+ . . d setSamiStatus^SAMICAS2(zi,zj,"incomplete")
+ q
  ;
 casetbl(ary) ; generates case review table
  ;

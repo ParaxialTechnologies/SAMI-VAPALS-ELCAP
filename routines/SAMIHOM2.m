@@ -173,6 +173,11 @@ wsVAPALS(ARG,BODY,RESULT) ; vapals post web service - all calls come through thi
  i route="form" d  q  ;
  . m ARG=vars
  . d wsGetForm^%wf(.RESULT,.ARG)
+ ;
+ i route="deleteform" d  q  ;
+ . m ARG=vars
+ . d deleteForm^SAMICAS2(.RESULT,.ARG)
+ ;
  q
  ;
 devhome(rtn,filter) ; temporary home page for development
@@ -658,6 +663,7 @@ makeSbform(num) ; create background form
  new cdate set cdate=$get(@root@(num,"samicreatedate"))
  quit:cdate=""
  merge @root@("graph",sid,"sbform-"_cdate)=@root@(num)
+ d setSamiStatus^SAMICAS2(sid,"sbform-"_cdate,"incomplete)
  ;
  ;@stanza 3 termination
  ;
@@ -691,6 +697,7 @@ makeSiform(num) ; create intake form
  new cdate set cdate=$get(@root@(num,"samicreatedate"))
  quit:cdate=""
  merge @root@("graph",sid,"siform-"_cdate)=@root@(num)
+ d setSamiStatus^SAMICAS2(sid,"siform-"_cdate,"incomplete)
  ;
  ;@stanza 3 termination
  ;

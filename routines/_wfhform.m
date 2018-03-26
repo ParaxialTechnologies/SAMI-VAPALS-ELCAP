@@ -178,7 +178,7 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . new newstyle set newstyle=0
  . if form["vapals:" set newstyle=1
  . ;if form["vapals:" do SAMISUB2^SAMIFRM2(.tln,form,sid,.filter,.%j,.zhtml)
- . if newstyle=1 do SAMISUB2^SAMIFRM2(.tln,form,sid,.filter,.%j,.zhtml)
+ . if newstyle=1 do SAMISUB2^SAMIFRM2(.tln,key,sid,.filter,.%j,.zhtml)
  . ;else  do SAMISUBS^SAMIFRM(.tln,form,sid,.filter)
  . if newstyle=0 do SAMISUBS^SAMIFRM(.tln,form,sid,.filter)
  . set zhtml(%j)=tln

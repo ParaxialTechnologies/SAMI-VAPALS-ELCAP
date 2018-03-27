@@ -41,7 +41,6 @@
 
 {% macro datepicker(name, pastDateRequired, requiredMessage) -%}
     <div class="input-group datepicker">
-        <!--TODO: inject max date as "today"-->
         <input class="form-control" id="{{ name }}" name="{{ name }}" aria-describedby="{{ name }}-addon"
                 {{ " required=\"required\"" if requiredMessage else "" }}
                 {{ " data-fv-notempty-message=\"" + requiredMessage + "\"" if requiredMessage else "" }}

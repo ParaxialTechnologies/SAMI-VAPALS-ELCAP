@@ -92,11 +92,11 @@ $(function () {
     $('[data-toggle="popover"]').popover();
 
     $("#save-for-later-button").on('click', function () {
-        $("input[name=status]").val("incomplete");
+        $("input[name=samistatus]").val("incomplete");
     });
 
     $("#submit-button").on('click', function () {
-        $("input[name=status]").val("complete");
+        $("input[name=samistatus]").val("complete");
     });
 
 });

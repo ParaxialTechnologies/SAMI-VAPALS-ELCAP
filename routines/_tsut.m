@@ -70,7 +70,7 @@ cover ; run tests & calculate code coverage
  ; rearrange these in whatever order we like
  ;----------------------------------------------------------------------------
  new %tsuincl
- set %tsuincl(1)="^%tsut"
+ set %tsuincl(1)="^%tsutc"
  ;----------------------------------------------------------------------------
  ; note that routine references may be specified as:
  ;   * routine        : calls EN^%ut with name as argument
@@ -80,8 +80,8 @@ cover ; run tests & calculate code coverage
  ;
  ; to exclude specific routines, do that here:
  ;----------------------------------------------------------------------------
- new %tsuexcl
- set %tsuexcl(1)="cover^%tsut"
+ ;new %tsuexcl
+ ;set %tsuexcl(1)="cover^%tsut"
  ; set %tsuexcl(#)="EXCLUDEME^TESTROUTINE"
  ;----------------------------------------------------------------------------
  ;
@@ -118,17 +118,6 @@ cover01 ; @TEST no entry from top
  do ^%tsfwr
  do ^%tsfwra
  do ^%tsjt
- do ^%tsud
- do ^%tsudf
- do ^%tsul
- do ^%tsutc
- do ^%tsutef
- do ^%tsutes
- do ^%tsutfs
- do ^%tsutfwr
- do ^%tsutfwra
- do ^%tsutjt
- do ^%tsutvs
  do ^%tsvs
  do CHKEQ^%ut(1,1)
  ;
@@ -139,16 +128,6 @@ cover01 ; @TEST no entry from top
  ;@section 4 unit-test routines for the String library
  ;
  ;
- ;
-XTROU ; routines containing unit tests for ^%ts apis
- ;;%tsutc; all string-case tests
- ;;%tsutef; findex^%ts
- ;;%tsutes; setex^%ts
- ;;%tsutfs; setfind^%ts
- ;;%tsutfwr; findReplace^%ts
- ;;%tsutfwra; findReplaceAll^%ts
- ;;%tsutjt; $$trim^%ts
- ;;%tsutvs; $$strip^%ts
  ;
  ;
  ;

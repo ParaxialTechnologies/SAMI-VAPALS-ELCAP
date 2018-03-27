@@ -11,6 +11,7 @@
 <script src="../lib/jquery-3.2.1.slim.min.js"></script>
 <script src="js/qunit-2.4.1.js"></script>
 <script src="js/blanket.js"></script>
+<script src="../lib/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 
 <script src="../vapals.js" data-cover></script>
 
@@ -67,13 +68,44 @@
         var zero = now.subtract(30, "days").toDate();
         var adult = moment("1977-03-01").toDate();
         assert.equal(VAPALS.computeAge(zero), 0);
-        assert.equal(VAPALS.computeAge(adult), 40);
+        assert.ok(VAPALS.computeAge(adult) > 40);
         assert.throws(function () {
             VAPALS.computeAge(null)
         }, "null");
         assert.throws(function () {
             VAPALS.computeAge("foo")
         }, "string")
+    });
+
+    QUnit.test("computeMonthsFrom", function (assert) {
+        var monthAgo = moment().subtract(32, "days").toDate();
+        assert.equal(VAPALS.computeMonthsFrom(monthAgo), 1, "month ago");
+
+        assert.ok(VAPALS.computeMonthsFrom("01/Mar/2016") > 12, "string input");
+        assert.equal(VAPALS.computeMonthsFrom(null), 0, "null");
+        assert.equal(VAPALS.computeMonthsFrom(""), 0, "empty");
+        assert.equal(VAPALS.computeMonthsFrom(" "), 0, "blank");
+        assert.equal(VAPALS.computeMonthsFrom("foobar"), 0, "invalid");
+    });
+
+    QUnit.test("computeMonthsBetween", function (assert) {
+        var monthAgo = moment().subtract(32, "days").toDate();
+        var now = moment();
+        assert.equal(VAPALS.computeMonthsBetween(monthAgo, now), 1, "month ago");
+
+        assert.ok(VAPALS.computeMonthsBetween("01/Mar/2016", now) > 12, "string input");
+        assert.equal(VAPALS.computeMonthsBetween(null, null), 0, "null");
+        assert.equal(VAPALS.computeMonthsBetween("", ""), 0, "empty");
+        assert.equal(VAPALS.computeMonthsBetween(" ", " "), 0, "blank");
+        assert.equal(VAPALS.computeMonthsBetween("foo", "bar"), 0, "invalid");
+    });
+
+    QUnit.test("toMoment", function (assert) {
+        assert.ok(VAPALS.toMoment(moment()).isValid(), "moment");
+        assert.ok(VAPALS.toMoment(new Date()).isValid(), "date");
+        assert.ok(VAPALS.toMoment("01/Mar/2018").isValid(), "string");
+        assert.ok(VAPALS.toMoment(null).isValid() === false, "null");
+        assert.ok(VAPALS.toMoment(1).isValid(), "int");
     });
 
 </script>

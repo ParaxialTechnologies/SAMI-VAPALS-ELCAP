@@ -168,5 +168,12 @@ $(function () {
     //Globally enabled popovers for things like help text.
     $('[data-toggle="popover"]').popover();
 
+    $("#save-for-later-button").on('click', function(){
+        $("input[name=status]").val("incomplete");
+    });
+
+    $("#submit-button").on('click', function(){
+        $("input[name=status]").val("complete");
+    });
 
 });

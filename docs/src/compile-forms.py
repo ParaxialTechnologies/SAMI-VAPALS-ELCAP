@@ -61,6 +61,12 @@ with open("../www/newform.html", "wb") as fh:
     )
     fh.write(BeautifulSoup(html, 'html5lib').prettify().encode('utf-8'))
 
+# with open("../www/followup.html", "wb") as fh:
+#     html = env.get_template('followup.html.jinja2').render(
+#         title="Followup Form"
+#     )
+#     fh.write(BeautifulSoup(html, 'html5lib').prettify().encode('utf-8'))
+
 elapsedMs = (datetime.datetime.now() - start).microseconds / 1000
 
 print "Finished compiling HTML at " + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " in " + str(

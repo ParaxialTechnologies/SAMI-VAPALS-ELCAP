@@ -658,6 +658,7 @@ initStatus ; set all forms to 'incomplete'
  n zi,zj s (zi,zj)=""
  f  s zi=$o(@root@("graph",zi)) q:zi=""  d  ;
  . f  s zj=$o(@root@("graph",zi,zj)) q:zj=""  d  ;
+ . . if zj["siform" d setSamiStatus^SAMICAS2(zi,zj,"complete") q  ;
  . . d setSamiStatus^SAMICAS2(zi,zj,"incomplete")
  q
  ;

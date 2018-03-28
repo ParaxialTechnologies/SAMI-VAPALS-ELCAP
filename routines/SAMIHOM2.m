@@ -663,7 +663,7 @@ makeSbform(num) ; create background form
  new cdate set cdate=$get(@root@(num,"samicreatedate"))
  quit:cdate=""
  merge @root@("graph",sid,"sbform-"_cdate)=@root@(num)
- d setSamiStatus^SAMICAS2(sid,"sbform-"_cdate,"incomplete)
+ d setSamiStatus^SAMICAS2(sid,"sbform-"_cdate,"incomplete")
  ;
  ;@stanza 3 termination
  ;
@@ -697,7 +697,7 @@ makeSiform(num) ; create intake form
  new cdate set cdate=$get(@root@(num,"samicreatedate"))
  quit:cdate=""
  merge @root@("graph",sid,"siform-"_cdate)=@root@(num)
- d setSamiStatus^SAMICAS2(sid,"siform-"_cdate,"incomplete)
+ d setSamiStatus^SAMICAS2(sid,"siform-"_cdate,"complete")
  ;
  ;@stanza 3 termination
  ;

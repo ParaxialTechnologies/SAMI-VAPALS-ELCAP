@@ -352,6 +352,7 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  ;. set touched=1
  ;
  if line["studyIdMenu" do  ;
+ . i line["#" q  ; in the javascript
  . s zhtml(%j)="<li>"
  . s %j=%j+1
  . s line=zhtml(%j)

@@ -637,6 +637,7 @@
             var requiresSpecificity = function (actualValue) {
                 return $.inArray(actualValue, ["tr", "mr", "pr", "os", "es"]) > -1
             };
+
             $("#sies").conditionallyEnable({
                     sourceValues: function () {
                         return true
@@ -646,18 +647,18 @@
                             return $("#sidod, #sicod"); //enable date of death and cause of death
                         }
                         else if (requiresSpecificity(actualValue)) {
-                            return $("#sieso"); //enable specify field
+                            return $("#sieso, #sixdate"); //enable specify field
                         }
                         return null; // don't do anything
                     },
                     disable: function (actualValue) { //return fields to disable when value does not match one of the above.
                         if (actualValue === "ex") {
-                            return $("#sieso"); //disable the specify field
+                            return $("#sieso, #sixdate"); //disable the specify field
                         }
                         else if (requiresSpecificity(actualValue)) {
                             return $("#sidod, #sicod"); //disable date of death/cause of death
                         }
-                        return $("#sieso, #sidod, #sicod"); //disable all three fields
+                        return $("#sieso, #sidod, #sicod, #sixdate"); //disable all three fields
                     }
                 }
             );

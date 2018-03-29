@@ -1261,10 +1261,13 @@
 
 {% block script %}
     <script language="JavaScript">
-        $(function () {
-            // $('#scan-order-tab').tab('show'); //TODO: remove utility to set the initial tab (debugging form development)
-            {#$("#myTabs a[href='#smoking']").tab('show')#}
 
+        // Intentionally not run after page load so tab doesn't show then dissapear.
+        if (!sf12Enabled) {
+            $("#health-tab, #health").remove();
+        }
+
+        $(function () {
             //hooks for calculating BMI on fields that would affect it (height, weight, units of each)
             $("input[id^='sbpw'],input[id^='sbph']").on('change', function () {
                 var height = $("#sbph").val(), heightUnits = $("#sbphu").val();

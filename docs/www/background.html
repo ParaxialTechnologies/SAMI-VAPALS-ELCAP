@@ -36,7 +36,6 @@
   </script>
   <script src="init.js">
   </script>
-  <!--Debug information for viewport-->
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
    <div class="container-fluid">
@@ -710,7 +709,7 @@
         </div>
         <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbhco-container">
          <div class="form-group">
-          <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbhcdod" maxlength="4" name="sbhcdod" placeholder="Year?" required="required" size="5" type="text"/>
+          <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbhcdod" maxlength="4" name="sbhcdod" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
          </div>
          <div class="form-group" style="vertical-align: top;">
           <input class="form-control input-sm" id="sbhcpbo" name="sbhcpbo" placeholder="Primary site?" required="required" type="text"/>
@@ -787,7 +786,7 @@
         </div>
         <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpc-container">
          <div class="form-group">
-          <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpcw" maxlength="4" name="sbhcdod" placeholder="Year?" required="required" size="5" type="text"/>
+          <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpcw" maxlength="4" name="sbmpcw" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
          </div>
         </div>
        </div>
@@ -909,7 +908,7 @@
         </div>
         <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpas-container">
          <div class="form-group">
-          <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpasw" maxlength="4" name="sbmpasw" placeholder="Year?" required="required" size="5" type="text"/>
+          <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpasw" maxlength="4" name="sbmpasw" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
          </div>
          <div class="form-group" style="vertical-align: top;">
           <input class="form-control input-sm" id="sbmpast" name="sbmpast" placeholder="Where treated?" required="required" type="text"/>
@@ -944,7 +943,7 @@
         </div>
         <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpmi-container">
          <div class="form-group">
-          <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpmid" maxlength="4" name="sbmpmid" placeholder="Year?" required="required" size="5" type="text"/>
+          <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpmid" maxlength="4" name="sbmpmid" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
          </div>
          <div class="">
           <input class="form-control input-sm" id="sbmpmiw" name="sbmpmiw" placeholder="Where treated?" type="text"/>
@@ -979,7 +978,7 @@
         </div>
         <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmps-container">
          <div class="form-group">
-          <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpsd" maxlength="4" name="sbmpsd" placeholder="Year?" required="required" size="5" type="text"/>
+          <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpsd" maxlength="4" name="sbmpsd" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
          </div>
         </div>
        </div>
@@ -1011,7 +1010,7 @@
         </div>
         <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmppv-container">
          <div class="form-group">
-          <input class="form-control input-sm yearpicker" id="sbmppvd" name="sbmppvd" placeholder="Year?" size="5" type="text"/>
+          <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmppvd" maxlength="4" name="sbmppvd" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
          </div>
         </div>
        </div>
@@ -1477,52 +1476,6 @@
          </div>
          <div class="col-sm-6 col-lg-4">
           <div class="form-group" style="float:left;">
-           <select class="form-control input-sm" id="sbsdlcm" name="sbsdlcm" title="Last cigarette month">
-            <option selected="" value="-">
-             —
-            </option>
-            <option value="1">
-             Jan
-            </option>
-            <option value="2">
-             Feb
-            </option>
-            <option value="3">
-             Mar
-            </option>
-            <option value="4">
-             Apr
-            </option>
-            <option value="5">
-             May
-            </option>
-            <option value="6">
-             Jun
-            </option>
-            <option value="7">
-             Jul
-            </option>
-            <option value="8">
-             Aug
-            </option>
-            <option value="9">
-             Sep
-            </option>
-            <option value="10">
-             Oct
-            </option>
-            <option value="11">
-             Nov
-            </option>
-            <option value="12">
-             Dec
-            </option>
-           </select>
-           <span class="small text-muted">
-            Month
-           </span>
-          </div>
-          <div class="form-group" style="float:left;">
            <select class="form-control input-sm" id="sbsdlcd" name="sbsdlcd" title="Last cigarette day">
             <option selected="" value="-">
              —
@@ -1623,6 +1576,52 @@
            </select>
            <span class="small text-muted">
             Day
+           </span>
+          </div>
+          <div class="form-group" style="float:left;">
+           <select class="form-control input-sm" id="sbsdlcm" name="sbsdlcm" title="Last cigarette month">
+            <option selected="" value="-">
+             —
+            </option>
+            <option value="1">
+             Jan
+            </option>
+            <option value="2">
+             Feb
+            </option>
+            <option value="3">
+             Mar
+            </option>
+            <option value="4">
+             Apr
+            </option>
+            <option value="5">
+             May
+            </option>
+            <option value="6">
+             Jun
+            </option>
+            <option value="7">
+             Jul
+            </option>
+            <option value="8">
+             Aug
+            </option>
+            <option value="9">
+             Sep
+            </option>
+            <option value="10">
+             Oct
+            </option>
+            <option value="11">
+             Nov
+            </option>
+            <option value="12">
+             Dec
+            </option>
+           </select>
+           <span class="small text-muted">
+            Month
            </span>
           </div>
           <div class="form-group" style="float:left;">
@@ -2399,7 +2398,7 @@
        </div>
        <hr class="visible-xs-block visible-sm-block"/>
       </div>
-      <div aria-labelledby="health-tab" class="tab-pane " id="health" role="tabpanel">
+      <div aria-labelledby="health-tab" class="tab-pane " id="health" role="tabpanel" style="margin-bottom: 15px;">
        <div class="row">
         <div class="col-md-12">
          <p>
@@ -2412,58 +2411,359 @@
         </div>
        </div>
        <div class="row">
-        <div class="col-md-12">
-         <div class="form-check">
-          <input class="form-check-input" id="sbsfb1-1" name="sbsfb1" type="checkbox" value="1"/>
-          <label class="form-check-label" for="sbsfb1-1">
-           Excellent
-          </label>
-         </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb1-1" name="sbsfb1" type="radio" value="1"/>
+          Excellent
+         </label>
         </div>
-        <div class="col-md-12">
-         <div class="form-check">
-          <input class="form-check-input" id="sbsfb1-2" name="sbsfb1" type="checkbox" value="2"/>
-          <label class="form-check-label" for="sbsfb1-2">
-           Very Good
-          </label>
-         </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb1-2" name="sbsfb1" type="radio" value="2"/>
+          Very good
+         </label>
         </div>
-        <div class="col-md-12">
-         <div class="form-check">
-          <input class="form-check-input" id="sbsfb1-3" name="sbsfb1" type="checkbox" value="3"/>
-          <label class="form-check-label" for="sbsfb1-3">
-           Good
-          </label>
-         </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb1-3" name="sbsfb1" type="radio" value="3"/>
+          Good
+         </label>
         </div>
-        <div class="col-md-12">
-         <div class="form-check">
-          <input class="form-check-input" id="sbsfb1-4" name="sbsfb1" type="checkbox" value="4"/>
-          <label class="form-check-label" for="sbsfb1-4">
-           Fair
-          </label>
-         </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb1-4" name="sbsfb1" type="radio" value="4"/>
+          Fair
+         </label>
         </div>
-        <div class="col-md-12">
-         <div class="form-check">
-          <input class="form-check-input" id="sbsfb1-5" name="sbsfb1" type="checkbox" value="5"/>
-          <label class="form-check-label" for="sbsfb1-5">
-           Poor
-          </label>
-         </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb1-5" name="sbsfb1" type="radio" value="5"/>
+          Poor
+         </label>
         </div>
-        <div class="col-md-12">
-         <div class="form-check">
-          <input class="form-check-input" id="sbsfb1-6" name="sbsfb1" type="checkbox" value="6"/>
-          <label class="form-check-label" for="sbsfb1-6">
-           Very Poor
-          </label>
-         </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb1-6" name="sbsfb1" type="radio" value="6"/>
+          Very Poor
+         </label>
         </div>
        </div>
        <div class="row">
-        <div class="col-md-12 alert alert-warning">
-         SF-12 Questions...
+        <div class="col-md-12">
+         <p>
+          2. During the
+          <strong style="text-decoration: underline;">
+           past 4 weeks
+          </strong>
+          how much did physical
+                health problems limit your usual physical activities(such as walking or climbing stairs)?
+         </p>
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb2-1" name="sbsfb2" type="radio" value="1"/>
+          Not at all
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb2-2" name="sbsfb2" type="radio" value="2"/>
+          Very little
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb2-3" name="sbsfb2" type="radio" value="3"/>
+          Somewhat
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb2-4" name="sbsfb2" type="radio" value="4"/>
+          Quite a lot
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb2-5" name="sbsfb2" type="radio" value="5"/>
+          Could not do physical activities
+         </label>
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-md-12">
+         <p>
+          3. During the
+          <strong style="text-decoration: underline;">
+           past 4 weeks
+          </strong>
+          how much difficulty did
+                you have doing your daily work, both at home and away from home, because of your physical health?
+         </p>
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb3-1" name="sbsfb3" type="radio" value="1"/>
+          None at all
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb3-2" name="sbsfb3" type="radio" value="2"/>
+          A little bit
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb3-3" name="sbsfb3" type="radio" value="3"/>
+          Some
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb3-4" name="sbsfb3" type="radio" value="4"/>
+          Quite a lot
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb3-5" name="sbsfb3" type="radio" value="5"/>
+          Could not do daily work
+         </label>
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-md-12">
+         <p>
+          4. How much
+          <span style="text-decoration: underline;">
+           bodily
+          </span>
+          pain have you had during the
+          <strong style="text-decoration: underline;">
+           past 4 weeks
+          </strong>
+          ?
+         </p>
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb4-1" name="sbsfb4" type="radio" value="1"/>
+          None
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb4-2" name="sbsfb4" type="radio" value="2"/>
+          Very mild
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb4-3" name="sbsfb4" type="radio" value="3"/>
+          Mild
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb4-4" name="sbsfb4" type="radio" value="4"/>
+          Moderate
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb4-5" name="sbsfb4" type="radio" value="5"/>
+          Severe
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb4-5" name="sbsfb4" type="radio" value="5"/>
+          Very Severe
+         </label>
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-md-12">
+         <p>
+          5. During the
+          <strong style="text-decoration: underline;">
+           past 4 weeks
+          </strong>
+          how much energy did you
+                have?
+         </p>
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb5-1" name="sbsfb5" type="radio" value="1"/>
+          Very much
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb5-2" name="sbsfb5" type="radio" value="2"/>
+          Quite a lot
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb5-3" name="sbsfb5" type="radio" value="3"/>
+          Some
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb5-4" name="sbsfb5" type="radio" value="4"/>
+          A little
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb5-5" name="sbsfb5" type="radio" value="5"/>
+          None
+         </label>
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-md-12">
+         <p>
+          6. During the
+          <strong style="text-decoration: underline;">
+           past 4 weeks
+          </strong>
+          how much did your physical health or emotional problems limit your usual social activities with family or friends?
+         </p>
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb6-1" name="sbsfb6" type="radio" value="1"/>
+          Not at all
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb6-2" name="sbsfb6" type="radio" value="2"/>
+          Very little
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb6-3" name="sbsfb6" type="radio" value="3"/>
+          Somewhat
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb6-4" name="sbsfb6" type="radio" value="4"/>
+          Quite a lot
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb6-5" name="sbsfb6" type="radio" value="5"/>
+          Could not do social activities
+         </label>
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-md-12">
+         <p>
+          7. During the
+          <strong style="text-decoration: underline;">
+           past 4 weeks
+          </strong>
+          how much have you been bothered by
+          <strong style="text-decoration: underline;">
+           emotional problems
+          </strong>
+          (such as feeling anxious, depressed or irritable)?
+         </p>
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb7-1" name="sbsfb7" type="radio" value="1"/>
+          Not at all
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb7-2" name="sbsfb7" type="radio" value="2"/>
+          Slightly
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb7-3" name="sbsfb7" type="radio" value="3"/>
+          Moderately
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb7-4" name="sbsfb7" type="radio" value="4"/>
+          Quite a lot
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb7-5" name="sbsfb7" type="radio" value="5"/>
+          Extremely
+         </label>
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-md-12">
+         <p>
+          8. During the
+          <strong style="text-decoration: underline;">
+           past 4 weeks
+          </strong>
+          how much did personal or emotional problems keep you from doing your usual work, school or other daily activities?
+         </p>
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb8-1" name="sbsfb8" type="radio" value="1"/>
+          Not at all
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb8-2" name="sbsfb8" type="radio" value="2"/>
+          Very little
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb8-3" name="sbsfb8" type="radio" value="3"/>
+          Somewhat
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb8-4" name="sbsfb8" type="radio" value="4"/>
+          Quite a lot
+         </label>
+        </div>
+        <div class="col-md-2 form-group">
+         <label class="radio-inline">
+          <input id="sbsfb8-5" name="sbsfb8" type="radio" value="5"/>
+          Could not do daily activities
+         </label>
         </div>
        </div>
       </div>

@@ -2802,16 +2802,19 @@
   <script language="JavaScript">
    //TODO: insert studyId here.
     var studyId = "XX0002";
+    var sf12Enabled = false;
 
     if (studyId) {
         $("#studyIdMenu").show();
     }
   </script>
   <script language="JavaScript">
-   $(function () {
-            // $('#scan-order-tab').tab('show'); //TODO: remove utility to set the initial tab (debugging form development)
-            
+   // Intentionally not run after page load so tab doesn't show then dissapear.
+        if (!sf12Enabled) {
+            $("#health-tab, #health").remove();
+        }
 
+        $(function () {
             //hooks for calculating BMI on fields that would affect it (height, weight, units of each)
             $("input[id^='sbpw'],input[id^='sbph']").on('change', function () {
                 var height = $("#sbph").val(), heightUnits = $("#sbphu").val();

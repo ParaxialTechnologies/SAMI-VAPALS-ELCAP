@@ -1513,13 +1513,19 @@
   <script language="JavaScript">
    //TODO: insert studyId here.
     var studyId = "XX0002";
+    var sf12Enabled = false;
 
     if (studyId) {
         $("#studyIdMenu").show();
     }
   </script>
   <script language="JavaScript">
-   $(function () {
+   // Intentionally not run after page load so tab doesn't show then dissapear.
+        if (!sf12Enabled) {
+            $("#sf12").remove();
+        }
+
+        $(function () {
             var $tsbFields = $("#sidof, #sidoe");
             $tsbFields.closest(".datepicker").on("dp.change", function () {
                 var baselineDate = $("#sidof").val();

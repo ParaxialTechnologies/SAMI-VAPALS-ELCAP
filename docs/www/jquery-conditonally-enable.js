@@ -128,7 +128,7 @@
             var enableSize = $enableContainer == null ? 0 : $enableContainer.length
             var disableSize = $disableContainer == null ? 0 : $disableContainer.length
 
-            console.log("conditionallyEnable(): change event triggered on field. id=" + $el.prop("id") + ", matches=" + matches + ", enable=" + enableSize + ", disable=" + disableSize);
+            console.log("conditionallyEnable(): change event triggered on field. id=" + $el.prop("id") + ", name=" + $el.prop("name") + ", matches=" + matches + ", enable=" + enableSize + ", disable=" + disableSize);
 
             if (matches) {
                 enableContainer($enableContainer);

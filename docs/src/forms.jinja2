@@ -56,4 +56,14 @@
     <small class="form-text text-muted">DD/MMM/YYYY</small>
 {%- endmacro %}
 
+{% macro yearpicker(name, pastdateRequired, required, small, helpText) -%}
+    <input class="form-control {{ "input-sm" if small else "" }} numeric yearpicker" type="text"
+           name="{{ name }}" id="{{ name }}" size="5"
+            {{ " required=\"required\"" if required else "" }}
+            {{ " data-max-date=\"" + today + "\"" if pastDateRequired else "" }}
+           data-fv-integer="true" maxlength="4"
+           placeholder="YYYY" title="Last cigarette year">
+    {{ "<small class=\"help-block\">" + helpText + "</small>" if helpText else "" }}
+
+{%- endmacro %}
 

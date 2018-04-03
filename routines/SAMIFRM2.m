@@ -408,6 +408,9 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  if line["ctevaluation.html" do  ;
  . do findReplace^%ts(.line,"ctevaluation.html","/form?form="_key_"&studyId="_sid)
  ;
+ if line["followup.html" do  ;
+ . do findReplace^%ts(.line,"followup.html","/form?form="_key_"&studyId="_sid)
+ ;
  if line["XX0002" do  ;
  . i line["XXX" quit  ; 
  . do findReplace^%ts(.line,"XX0002",sid)

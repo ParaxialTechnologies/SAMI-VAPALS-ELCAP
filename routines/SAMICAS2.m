@@ -362,6 +362,8 @@ getItems(ary,sid) ; get items available for studyid
  . if zkey1="ceform" set fname="CT Evaluation"
  . set zform=zkey1
  . if zkey1="ceform" s zform="vapals:ceform"
+ . if zkey1="fuform" s zform="vapals:ceform"
+ . if zkey1="fuform" s fname="Follow-up"
  . if $get(fname)="" set fname="unknown"
  . new zdate set zdate=$extract(zi,$length(zkey1)+2,$length(zi))
  . set tary("sort",zdate,zform,zi,fname)=""
@@ -505,7 +507,11 @@ wsNuForm(rtn,filter) ; select new form for patient (get service)
  . . s zi=zi+1
  . ;
  . i ln["background" s temp(zi)=""
- . i ln["newform" s temp(zi)=""
+ . i ln["newform" d  ;
+ . . i temp(zi+1)["Follow-up" d  q  ;
+ . . . d findReplace^%ts(.ln,"newform","fuform")
+ . . . s temp(zi)=ln
+ . . s temp(zi)=""
  . i ln["ctevaluation" d  ;
  . . d findReplace^%ts(.ln,"ctevaluation","ceform")
  . . s temp(zi)=ln
@@ -575,6 +581,14 @@ wsNuFormPost(ARGS,BODY,RESULT) ; post new form selection (post service)
  . do makeCeform(sid,key)
  . quit
  ;
+ if nuform="fuform" do  ;
+ . new key set key="fuform-"_datekey
+ . set ARGS("key")=key
+ . set ARGS("studyid")=sid
+ . set ARGS("form")="vapals:fuform"
+ . do makeFuform(sid,key)
+ . quit
+ ;
  do wsGetForm^%wf(.RESULT,.ARGS)
  ;
  ;@stanza 3 termination
@@ -614,6 +628,38 @@ makeCeform(sid,key) ; create ct evaluation form
  ;@stanza 3 termination
  ;
  quit  ; end of makeCeform
+ ;
+makeFuform(sid,key) ; create Follow-up form
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;
+ ;@called-by
+ ; wsNuFormPost
+ ;@calls
+ ; $$setroot^%wd
+ ; $$sid2num^SAMIHOM2
+ ;@input
+ ; sid = studiy id
+ ; key =
+ ;@output
+ ; @root@("graph",sid,key)
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ;@stanza 2 create ct eval form
+ ;
+ new root set root=$$setroot^%wd("elcap-patients")
+ new sien set sien=$$sid2num^SAMIHOM2(sid)
+ quit:+sien=0
+ new cdate set cdate=$piece(key,"fuform-",2)
+ merge @root@("graph",sid,key)=@root@(sien)
+ set @root@("graph",sid,key,"samicreatedate")=cdate
+ d setSamiStatus^SAMICAS2(sid,key,"incomplete")
+ ;
+ ;@stanza 3 termination
+ ;
+ quit  ; end of makeFuform
  ;
  ;
  ;

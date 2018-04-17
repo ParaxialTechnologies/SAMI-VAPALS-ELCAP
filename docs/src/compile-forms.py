@@ -14,58 +14,37 @@ env.loader = FileSystemLoader('.')
 
 start = datetime.datetime.now()
 
-# background form
-with open("../www/background.html", "wb") as fh:
-    html = env.get_template('background.html.jinja2').render(
-        title='Background Form',
-        occupations=OrderedDict([
-            ("-", "-"),
-            ("1", "Higher executives"),
-            ("2", "Business managers"),
-            ("3", "Administrative Personnel"),
-            ("4", "Clerical / Sales workers"),
-            ("5", "Skilled manual Employees"),
-            ("6", "Machine Operators"),
-            ("7", "Unskilled Employees"),
-            ("8", "Unemployed")
-        ]))
-    fh.write(BeautifulSoup(html, 'html5lib').prettify().encode('utf-8'))
+# Version should be replaced by Mumps processor to use the actual version number (i.e. SAMI 18.0T04). The "SNAPSHOT"
+# text refers to a non-KIDS distribution, such as when the code is built and deployed manually from source control.
+version = datetime.datetime.now().strftime('SNAPSHOT %Y.%m.%d')
 
-with open("../www/intake.html", "wb") as fh:
-    html = env.get_template('intake.html.jinja2').render(
-        title='Intake Form'
-    )
-    fh.write(BeautifulSoup(html, 'html5lib').prettify().encode('utf-8'))
+forms = {
+    "background": "Background Form",
+    "intake": "Intake Form",
+    "ctevaluation": "CT Evaluation Form",
+    "home": "Home",
+    "casereview": "Case Review",
+    "newform": "New Form",
+    "followup": "Followup Form",
+}
 
-with open("../www/ctevaluation.html", "wb") as fh:
-    html = env.get_template('ctevaluation.html.jinja2').render(
-        title='CT Evaluation Form'
-    )
-    fh.write(BeautifulSoup(html, 'html5lib').prettify().encode('utf-8'))
-
-with open("../www/home.html", "wb") as fh:
-    html = env.get_template('home.html.jinja2').render(
-        title="Home"
-    )
-    fh.write(BeautifulSoup(html, 'html5lib').prettify().encode('utf-8'))
-
-with open("../www/casereview.html", "wb") as fh:
-    html = env.get_template('casereview.html.jinja2').render(
-        title="Case Review"
-    )
-    fh.write(BeautifulSoup(html, 'html5lib').prettify().encode('utf-8'))
-
-with open("../www/newform.html", "wb") as fh:
-    html = env.get_template('newform.html.jinja2').render(
-        title="New Form"
-    )
-    fh.write(BeautifulSoup(html, 'html5lib').prettify().encode('utf-8'))
-
-with open("../www/followup.html", "wb") as fh:
-    html = env.get_template('followup.html.jinja2').render(
-        title="Followup Form"
-    )
-    fh.write(BeautifulSoup(html, 'html5lib').prettify().encode('utf-8'))
+for form, title in forms.items():
+    with open("../www/" + form + ".html", "wb") as fh:
+        html = env.get_template(form + ".html.jinja2").render(
+            version=version,
+            title=title,
+            occupations=OrderedDict([
+                ("-", "-"),
+                ("1", "Higher executives"),
+                ("2", "Business managers"),
+                ("3", "Administrative Personnel"),
+                ("4", "Clerical / Sales workers"),
+                ("5", "Skilled manual Employees"),
+                ("6", "Machine Operators"),
+                ("7", "Unskilled Employees"),
+                ("8", "Unemployed")
+            ]))
+        fh.write(BeautifulSoup(html, 'html5lib').prettify().encode('utf-8'))
 
 elapsedMs = (datetime.datetime.now() - start).microseconds / 1000
 

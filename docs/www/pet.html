@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+  <title>
+   PET Evaluation Form
+  </title>
+  <link href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+  <link href="lib/formvalidation/dist/css/formValidation.min.css" rel="stylesheet"/>
+  <link href="lib/bootstrap-datetimepicker-4.17.47/css/bootstrap-datetimepicker.css" rel="stylesheet"/>
+  <link href="vapals.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <script src="lib/jquery-3.2.1.slim.min.js">
+  </script>
+  <script src="lib/popper.min.js">
+  </script>
+  <script src="lib/bootstrap-3.3.7-dist/js/bootstrap.min.js">
+  </script>
+  <script src="lib/moment.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/formValidation.min.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/framework/bootstrap.min.js">
+  </script>
+  <script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js">
+  </script>
+  <script src="https://www.gstatic.com/charts/loader.js" type="text/javascript">
+  </script>
+  <script src="jquery-conditonally-enable.js">
+  </script>
+  <script src="vapals.js">
+  </script>
+  <script src="init.js">
+  </script>
+  <!--System Navigation-->
+  <nav class="navbar navbar-default" role="navigation">
+   <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+     <button class="navbar-toggle collapsed" data-target="#navbar-main" data-toggle="collapse" type="button">
+      <span class="sr-only">
+       Toggle navigation
+      </span>
+      <span class="icon-bar">
+      </span>
+      <span class="icon-bar">
+      </span>
+      <span class="icon-bar">
+      </span>
+     </button>
+     <a href="home.html">
+      <img alt="VA-PALS Logo" height="50" src="img/new-logo.png" title="VA-PALS"/>
+     </a>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar-main">
+     <ul class="nav navbar-nav">
+      <li>
+       <a href="home.html">
+        Home
+       </a>
+      </li>
+      <li class="dropdown" id="studyIdMenu" style="display:none;">
+       <a class="navbar-link" href="casereview.html">
+        Case Review
+       </a>
+      </li>
+     </ul>
+    </div>
+   </div>
+  </nav>
+  <div class="container-fluid" style="max-width:1550px">
+   <h1>
+    Sample, Sammy G
+    <small class="text-muted" title="Study ID">
+     ST0001
+    </small>
+   </h1>
+   <h2>
+    PET Evaluation Form
+    <small class="text-muted" title="Medical Record Number">
+     1234567890
+    </small>
+   </h2>
+   <hr/>
+   <form action="pet.html" class="validated" data-fv-button-selector="#submit-button" data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-validating="glyphicon glyphicon-refresh" method="post">
+    <div class="row">
+     <div class="col-sm-4 col-md-3 form-group">
+      <label class="control-label" for="bxdos">
+       Study Date
+      </label>
+      <div class="input-group datepicker">
+       <input aria-describedby="ptdos-addon" class="form-control" data-fv-callback="true" data-fv-callback-callback="validateInternationalDate" data-fv-callback-message="Enter a valid date" data-fv-notempty-message="Study Date is required" data-max-date="01/Mar/2018" id="ptdos" name="ptdos" required="required"/>
+       <div class="input-group-addon">
+        <div class="input-group-text" id="ptdos-addon">
+         <i aria-hidden="true" class="fa fa-calendar">
+         </i>
+        </div>
+       </div>
+      </div>
+      <small class="form-text text-muted">
+       DD/MMM/YYYY
+      </small>
+     </div>
+    </div>
+    <div class="row">
+     <div class="col-sm-6 form-group">
+      <label for="ptrad">
+       Radiologist
+      </label>
+      <input class="form-control" id="ptrad" name="ptrad" required="required" type="text"/>
+     </div>
+     <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+      <label for="ptradnpi">
+       Radiologist NPI
+      </label>
+      <input class="form-control" id="ptradnpi" name="ptradnpi" type="text"/>
+     </div>
+    </div>
+    <div class="row">
+     <div class="col-md-4 form-group">
+      <label class="visible-xs visible-sm" for="ptofr-n">
+       PET Scan Performed at Outside Institution
+      </label>
+      <label class="text-right pull-right hidden-xs hidden-sm" for="ptofr-n">
+       PET Scan Performed at Outside Institution
+      </label>
+     </div>
+     <div class="col-sm-3 form-group">
+      <label class="radio-inline">
+       <input id="ptofr-n" name="ptofr" type="radio" value="n"/>
+       no
+      </label>
+      <label class="radio-inline">
+       <input id="ptofr-y" name="ptofr" type="radio" value="yes"/>
+       yes
+      </label>
+     </div>
+    </div>
+    <div class="row">
+     <div class="col-md-4 form-group">
+      <label class="visible-xs visible-sm" for="sidoe">
+       Date of Baseline CT
+      </label>
+      <label class="text-right pull-right hidden-xs hidden-sm" for="sidoe">
+       Date of Baseline CT
+      </label>
+     </div>
+     <div class="col-sm-3 form-group">
+      <div class="input-group datepicker">
+       <input aria-describedby="sidoe-addon" class="form-control" data-fv-callback="true" data-fv-callback-callback="validateInternationalDate" data-fv-callback-message="Enter a valid date" data-fv-notempty-message="Baseline CT date is required" data-max-date="01/Mar/2018" id="sidoe" name="sidoe" required="required"/>
+       <div class="input-group-addon">
+        <div class="input-group-text" id="sidoe-addon">
+         <i aria-hidden="true" class="fa fa-calendar">
+         </i>
+        </div>
+       </div>
+      </div>
+      <small class="form-text text-muted">
+       DD/MMM/YYYY
+      </small>
+     </div>
+    </div>
+    <div class="row">
+     <div class="col-md-4 form-group">
+      <label class="visible-xs visible-sm" for="cedos">
+       Date of Most Recent Comparative Study
+      </label>
+      <label class="text-right pull-right hidden-xs hidden-sm" for="cedos">
+       Date of Most Recent Comparative Study
+      </label>
+     </div>
+     <div class="col-sm-3 form-group">
+      <div class="input-group datepicker">
+       <input aria-describedby="cedos-addon" class="form-control" data-fv-callback="true" data-fv-callback-callback="validateInternationalDate" data-fv-callback-message="Enter a valid date" data-fv-notempty-message="Date is required" data-max-date="01/Mar/2018" id="cedos" name="cedos" required="required"/>
+       <div class="input-group-addon">
+        <div class="input-group-text" id="cedos-addon">
+         <i aria-hidden="true" class="fa fa-calendar">
+         </i>
+        </div>
+       </div>
+      </div>
+      <small class="form-text text-muted">
+       DD/MMM/YYYY
+      </small>
+     </div>
+    </div>
+    <div class="row">
+     <div class="col-md-4 form-group">
+      <label class="visible-xs visible-sm" for="ceanod-n">
+       Are there any nodules noted in the CT scan?
+      </label>
+      <label class="text-right pull-right hidden-xs hidden-sm" for="ceanod-n">
+       Are there any nodules noted in the CT scan?
+      </label>
+     </div>
+     <div class="col-sm-3 form-group">
+      <label class="radio-inline">
+       <input id="ceanod-n" name="ceanod" type="radio" value="n"/>
+       no
+      </label>
+      <label class="radio-inline">
+       <input id="ceanod-y" name="ceanod" type="radio" value="yes"/>
+       yes
+      </label>
+     </div>
+    </div>
+    <div class="row">
+     <div class="col-md-4 form-group">
+      <label class="visible-xs visible-sm" for="cenncnlt-n">
+       Are non-calcified nodules noted, all less than 6 mm?
+      </label>
+      <label class="text-right pull-right hidden-xs hidden-sm" for="cenncnlt-n">
+       Are non-calcified nodules noted, all less than 6 mm?
+      </label>
+     </div>
+     <div class="col-sm-3 form-group">
+      <label class="radio-inline">
+       <input id="cenncnlt-n" name="cenncnlt" type="radio" value="n"/>
+       no
+      </label>
+      <label class="radio-inline">
+       <input id="cenncnlt-y" name="cenncnlt" type="radio" value="yes"/>
+       yes
+      </label>
+     </div>
+    </div>
+    <div class="alert alert-info">
+     <strong>
+      List any nodule(s) of concern* in the table below. If baseline &gt;= 6 mm or if repeat, &gt;= 3
+                    mm
+     </strong>
+     <br/>
+     Enter the Nodule Uptake values and update the Nodule Status to reflect the results of the PET
+                study, and update the neccesary actions for each nodule, as indicated. Enter any details given in
+                the PET report in the PET Details field.
+     <br/>
+     Update the Follow-up section.
+    </div>
+    <div class="table-responsive">
+     <table class="table">
+      <thead>
+       <tr>
+        <th>
+         Nodule ID
+        </th>
+        <th>
+         Nodule 1
+        </th>
+        <th>
+         Additional Nodules
+         <select id="cefctn" name="cefctn">
+          <option value="2">
+           Nodule 2
+          </option>
+          <option value="3">
+           Nodule 3
+          </option>
+          <option value="4">
+           Nodule 4
+          </option>
+          <option value="5">
+           Nodule 5
+          </option>
+         </select>
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr>
+        <td>
+         <label for="cect1ch">
+          Is it new?
+         </label>
+        </td>
+        <td>
+         <select class="form-control" id="cect1ch" name="cect1ch">
+          <option value="-">
+           -
+          </option>
+          <option value="n">
+           newly seen
+          </option>
+          <option value="pn">
+           prev seen, no change
+          </option>
+          <option value="pd">
+           prev seen, slight decr
+          </option>
+          <option value="pe">
+           prev seen, marked decr
+          </option>
+          <option value="pi">
+           prev seen, slight incr
+          </option>
+          <option value="pj">
+           prev seen, marked incr
+          </option>
+          <option value="po">
+           prev seen, obscured
+          </option>
+          <option value="pw">
+           prev seen, resolved
+          </option>
+          <option value="px">
+           prev seen, not a nodule
+          </option>
+          <option value="pr">
+           prev seen, resected
+          </option>
+          <option value="rn">
+           retrospect, no chg
+          </option>
+          <option value="rd">
+           retrospect, decrease
+          </option>
+          <option value="ri">
+           retrospect, slight incr
+          </option>
+          <option value="rj">
+           retrospect, marked incr
+          </option>
+          <option value="pk">
+           not in outside report
+          </option>
+          <option value="pv">
+           not included in scan
+          </option>
+         </select>
+        </td>
+        <td>
+         <select class="form-control" id="cect0ch" name="cect0ch">
+          <option value="-">
+           -
+          </option>
+          <option value="n">
+           newly seen
+          </option>
+          <option value="pn">
+           prev seen, no change
+          </option>
+          <option value="pd">
+           prev seen, slight decr
+          </option>
+          <option value="pe">
+           prev seen, marked decr
+          </option>
+          <option value="pi">
+           prev seen, slight incr
+          </option>
+          <option value="pj">
+           prev seen, marked incr
+          </option>
+          <option value="po">
+           prev seen, obscured
+          </option>
+          <option value="pw">
+           prev seen, resolved
+          </option>
+          <option value="px">
+           prev seen, not a nodule
+          </option>
+          <option value="pr">
+           prev seen, resected
+          </option>
+          <option value="rn">
+           retrospect, no chg
+          </option>
+          <option value="rd">
+           retrospect, decrease
+          </option>
+          <option value="ri">
+           retrospect, slight incr
+          </option>
+          <option value="rj">
+           retrospect, marked incr
+          </option>
+          <option value="pk">
+           not in outside report
+          </option>
+          <option value="pv">
+           not included in scan
+          </option>
+         </select>
+        </td>
+       </tr>
+       <tr>
+        <td>
+         <label for="cect1ll">
+          Most Likely Location
+         </label>
+        </td>
+        <td>
+         <select class="form-control" id="cect1ll" name="cect1ll">
+          <option value="-">
+           -
+          </option>
+          <option value="end">
+           Endobr
+          </option>
+          <option value="lul">
+           LUL
+          </option>
+          <option value="lll">
+           LLL
+          </option>
+          <option value="rul">
+           RUL
+          </option>
+          <option value="rml">
+           RML
+          </option>
+          <option value="rll">
+           RLL
+          </option>
+         </select>
+        </td>
+        <td>
+         <select class="form-control" id="cect0ll" name="cect0ll">
+          <option value="-">
+           -
+          </option>
+          <option value="end">
+           Endobr
+          </option>
+          <option value="lul">
+           LUL
+          </option>
+          <option value="lll">
+           LLL
+          </option>
+          <option value="rul">
+           RUL
+          </option>
+          <option value="rml">
+           RML
+          </option>
+          <option value="rll">
+           RLL
+          </option>
+         </select>
+        </td>
+       </tr>
+       <tr>
+        <td>
+         <label for="cect1up">
+          Maximum Nodule Uptake (SUV)
+         </label>
+        </td>
+        <td>
+         <input class="form-control numeric" name="cect1up" type="text"/>
+        </td>
+        <td>
+         <input class="form-control numeric" name="cect0up" type="text"/>
+        </td>
+       </tr>
+       <tr>
+        <td>
+         <label for="cect1st">
+          Nodule Status
+         </label>
+        </td>
+        <td>
+         <select class="form-control" id="cect1st" name="cect1st">
+          <option value="-">
+           -
+          </option>
+          <option value="un">
+           unknown
+          </option>
+          <option value="bc">
+           benign (Ca++)
+          </option>
+          <option value="pc">
+           prob benign, prob Ca++
+          </option>
+          <option value="re">
+           resolved
+          </option>
+          <option value="rg">
+           resolving
+          </option>
+          <option value="tn">
+           no change - 2 yrs
+          </option>
+          <option value="pp">
+           PET - positive
+          </option>
+          <option value="pn">
+           PET - negative
+          </option>
+          <option value="pi">
+           PET - indeterminate
+          </option>
+          <option value="ub">
+           Biopsy - unknown
+          </option>
+          <option value="bb">
+           Biopsy - benign
+          </option>
+          <option value="mb">
+           Biopsy - malignant
+          </option>
+          <option value="ab">
+           Biopsy - atyp bronch prolif
+          </option>
+          <option value="om">
+           Biopsy - metastatic
+          </option>
+          <option value="mr">
+           Resected - malignant
+          </option>
+          <option value="br">
+           Resected - benign
+          </option>
+         </select>
+        </td>
+        <td>
+         <select class="form-control" id="cect0st" name="cect0st">
+          <option value="-">
+           -
+          </option>
+          <option value="un">
+           unknown
+          </option>
+          <option value="bc">
+           benign (Ca++)
+          </option>
+          <option value="pc">
+           prob benign, prob Ca++
+          </option>
+          <option value="re">
+           resolved
+          </option>
+          <option value="rg">
+           resolving
+          </option>
+          <option value="tn">
+           no change - 2 yrs
+          </option>
+          <option value="pp">
+           PET - positive
+          </option>
+          <option value="pn">
+           PET - negative
+          </option>
+          <option value="pi">
+           PET - indeterminate
+          </option>
+          <option value="ub">
+           Biopsy - unknown
+          </option>
+          <option value="bb">
+           Biopsy - benign
+          </option>
+          <option value="mb">
+           Biopsy - malignant
+          </option>
+          <option value="ab">
+           Biopsy - atyp bronch prolif
+          </option>
+          <option value="om">
+           Biopsy - metastatic
+          </option>
+          <option value="mr">
+           Resected - malignant
+          </option>
+          <option value="br">
+           Resected - benign
+          </option>
+         </select>
+        </td>
+       </tr>
+       <tr>
+        <td>
+         <label for="cect1pd">
+          Pathologic Diagnosis
+         </label>
+        </td>
+        <td>
+         <select class="form-control" id="cect1pd" name="cect1pd">
+          <option value="-">
+           -For Pathology Use Only-
+          </option>
+          <option value="aa">
+           AAH
+          </option>
+          <option value="ap">
+           atyp bronch prolif
+          </option>
+          <option value="ba">
+           BAC
+          </option>
+          <option value="ns">
+           unspec. non-small cell
+          </option>
+          <option value="ad">
+           adenocarcinoma
+          </option>
+          <option value="as">
+           adenosquamous
+          </option>
+          <option value="la">
+           large cell
+          </option>
+          <option value="sq">
+           squamous cell
+          </option>
+          <option value="sm">
+           small cell
+          </option>
+          <option value="ct">
+           carcinoid - typical
+          </option>
+          <option value="ca">
+           carcinoid - atypical
+          </option>
+          <option value="be">
+           not malignant
+          </option>
+          <option value="bs">
+           benign specific
+          </option>
+          <option value="os">
+           other (specify)
+          </option>
+         </select>
+        </td>
+        <td>
+         <select class="form-control" id="cect0pd" name="cect0pd">
+          <option value="-">
+           -For Pathology Use Only-
+          </option>
+          <option value="aa">
+           AAH
+          </option>
+          <option value="ap">
+           atyp bronch prolif
+          </option>
+          <option value="ba">
+           BAC
+          </option>
+          <option value="ns">
+           unspec. non-small cell
+          </option>
+          <option value="ad">
+           adenocarcinoma
+          </option>
+          <option value="as">
+           adenosquamous
+          </option>
+          <option value="la">
+           large cell
+          </option>
+          <option value="sq">
+           squamous cell
+          </option>
+          <option value="sm">
+           small cell
+          </option>
+          <option value="ct">
+           carcinoid - typical
+          </option>
+          <option value="ca">
+           carcinoid - atypical
+          </option>
+          <option value="be">
+           not malignant
+          </option>
+          <option value="bs">
+           benign specific
+          </option>
+          <option value="os">
+           other (specify)
+          </option>
+         </select>
+        </td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+    <div class="row">
+     <div class="col-md-4 form-group">
+      <label class="visible-xs visible-sm" for="ceinod">
+       Indicate the index nodule driving follow up:
+      </label>
+      <label class="text-right pull-right hidden-xs hidden-sm" for="ceinod">
+       Indicate the index nodule driving follow up:
+      </label>
+     </div>
+     <div class="col-sm-3 form-group">
+      <select class="form-control" id="ceinod" name="ceinod">
+       <option value="-">
+        -
+       </option>
+       <option value="1">
+        1
+       </option>
+       <option value="2">
+        2
+       </option>
+       <option value="3">
+        3
+       </option>
+       <option value="4">
+        4
+       </option>
+       <option value="5">
+        5
+       </option>
+      </select>
+     </div>
+    </div>
+    <div class="row">
+     <div class="col-md-4 form-group">
+      <label class="visible-xs visible-sm" for="celrad">
+       LungRADS category
+      </label>
+      <label class="text-right pull-right hidden-xs hidden-sm" for="celrad">
+       LungRADS category
+      </label>
+     </div>
+     <div class="col-sm-3 form-group">
+      <select class="form-control" id="celrad" name="celrad">
+       <option value="-">
+        -
+       </option>
+       <option value="0">
+        0
+       </option>
+       <option value="1">
+        1
+       </option>
+       <option value="2">
+        2
+       </option>
+       <option value="3">
+        3
+       </option>
+       <option value="4A">
+        4A
+       </option>
+       <option value="4B">
+        4B
+       </option>
+       <option value="4X">
+        4X
+       </option>
+      </select>
+     </div>
+    </div>
+    <div class="row">
+     <div class="col-md-4 form-group">
+      <label class="visible-xs visible-sm" for="celrads">
+       LungRADS modifier
+      </label>
+      <label class="text-right pull-right hidden-xs hidden-sm" for="celrads">
+       LungRADS modifier
+      </label>
+     </div>
+     <div class="col-sm-3 form-group">
+      <div class="checkbox">
+       <label>
+        <input id="celrads" name="celrads" type="checkbox" value="S"/>
+        S
+       </label>
+      </div>
+      <div class="checkbox">
+       <label>
+        <input id="celradc" name="celradc" type="checkbox" value="C"/>
+        C
+       </label>
+      </div>
+     </div>
+    </div>
+    <div class="row">
+     <div class="form-group col-sm-12">
+      <label for="ptpdt">
+       PET Details - Lung and nodules
+      </label>
+      <textarea class="form-control" id="ptpdt" name="ptpdt"></textarea>
+     </div>
+    </div>
+    <div class="row">
+     <div class="form-group col-sm-12">
+      <label for="ptpdtln">
+       PET Details - Lymph nodes
+      </label>
+      <textarea class="form-control" id="ptpdtln" name="ptpdtln"></textarea>
+     </div>
+    </div>
+    <div class="row">
+     <div class="col-md-4 form-group">
+      <label class="visible-xs visible-sm" for="ceaf-n">
+       Other clinically significant ancillary finding?
+      </label>
+      <label class="text-right pull-right hidden-xs hidden-sm" for="ceaf-n">
+       Other clinically significant ancillary finding?
+      </label>
+     </div>
+     <div class="col-sm-8 form-group">
+      <label class="radio-inline">
+       <input id="ceaf-n" name="ceaf" type="radio" value="n"/>
+       no
+      </label>
+      <label class="radio-inline">
+       <input id="ceaf-y" name="ceaf" type="radio" value="yes"/>
+       yes
+      </label>
+      <div class="row">
+       <div class="col-xs-6 col-md-4 col-lg-3 form-group">
+        <label for="ceafl1">
+         Organ/Location
+        </label>
+        <select class="form-control" id="ceafl1" name="ceafl1">
+         <option value="-">
+          -
+         </option>
+         <option value="b">
+          Breast
+         </option>
+         <option value="a">
+          Abdomen
+         </option>
+         <option value="h">
+          Head
+         </option>
+         <option value="n">
+          Neck
+         </option>
+        </select>
+       </div>
+       <div class="col-xs-6 col-md-8 col-lg-9 form-group">
+        <label for="ceafo1">
+         Describe
+        </label>
+        <input class="form-control" id="ceafo1" name="ceafo1" type="text"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-xs-6 col-md-4 col-lg-3 form-group">
+        <label for="ceafl2">
+         Organ/Location
+        </label>
+        <select class="form-control" id="ceafl2" name="ceafl2">
+         <option value="-">
+          -
+         </option>
+         <option value="b">
+          Breast
+         </option>
+         <option value="a">
+          Abdomen
+         </option>
+         <option value="h">
+          Head
+         </option>
+         <option value="n">
+          Neck
+         </option>
+        </select>
+       </div>
+       <div class="col-xs-6 col-md-8 col-lg-9 form-group">
+        <label for="ceafo2">
+         Describe
+        </label>
+        <input class="form-control" id="ceafo2" name="ceafo2" type="text"/>
+       </div>
+      </div>
+      <div class="form-group">
+       <label for="ceafmc">
+        Comments
+       </label>
+       <textarea class="form-control" id="ceafmc" name="ceafmc"></textarea>
+      </div>
+     </div>
+    </div>
+    <div class="row">
+     <div class="col-md-12 form-group">
+      <label for="ceofo">
+       Any other findings
+      </label>
+      <textarea class="form-control" id="ceofo" name="ceofo"></textarea>
+     </div>
+    </div>
+    <hr/>
+    <h3>
+     Follow Up
+    </h3>
+    <div class="row">
+     <div class="col-md-6 form-group">
+      <label for="cefu">
+       Follow-up
+      </label>
+      <select class="form-control" name="cefu" required="required">
+       <option value="-">
+        -
+       </option>
+       <option value="rs">
+        annual repeat CT
+       </option>
+       <option value="dx">
+        f/u CT
+       </option>
+       <option value="af">
+        Abx + f/u CT
+       </option>
+       <option value="pe">
+        PET
+       </option>
+       <option value="cc">
+        CT w contrast
+       </option>
+       <option value="fn">
+        CT-guided biopsy
+       </option>
+       <option value="br">
+        bronchoscopy
+       </option>
+       <option value="va">
+        VAT
+       </option>
+       <option value="su">
+        resection
+       </option>
+      </select>
+     </div>
+     <div class="col-md-6 form-group">
+      <label for="cefuw-nw">
+       When
+      </label>
+      <div class="input-group datepicker">
+       <input aria-describedby="cefud-addon" class="form-control" data-fv-callback="true" data-fv-callback-callback="validateInternationalDate" data-fv-callback-message="Enter a valid date" data-fv-notempty-message="Follow up date is required" id="cefud" name="cefud" required="required"/>
+       <div class="input-group-addon">
+        <div class="input-group-text" id="cefud-addon">
+         <i aria-hidden="true" class="fa fa-calendar">
+         </i>
+        </div>
+       </div>
+      </div>
+      <small class="form-text text-muted">
+       DD/MMM/YYYY
+      </small>
+      <br/>
+      <label class="radio-inline">
+       <input id="cefuw-nw" name="cefuw" type="radio" value="nw"/>
+       now
+      </label>
+      <label class="radio-inline">
+       <input id="cefuw-nw" name="cefuw" type="radio" value="1m"/>
+       1 month
+      </label>
+      <label class="radio-inline">
+       <input id="cefuw-nw" name="cefuw" type="radio" value="3m"/>
+       3 months
+      </label>
+      <label class="radio-inline">
+       <input id="cefuw-nw" name="cefuw" type="radio" value="6m"/>
+       6 months
+      </label>
+      <label class="radio-inline">
+       <input id="cefuw-nw" name="cefuw" type="radio" value="1y"/>
+       1 year
+      </label>
+      <label class="radio-inline">
+       <input id="cefuw-nw" name="cefuw" type="radio" value="os"/>
+       other
+      </label>
+     </div>
+    </div>
+    <hr/>
+    <h3>
+     Impression
+    </h3>
+    <div class="row">
+     <div class="col-md-12 form-group">
+      <label for="ceimn-rs">
+       Nodules
+      </label>
+      <div class="radio">
+       <label>
+        <input id="ceimn-rs" name="ceimn" required="required" type="radio" value="rs"/>
+        No evidence
+                            of
+                            abnormal uptake. Follow-up as recommended above.
+       </label>
+      </div>
+      <div class="radio">
+       <label>
+        <input id="ceimn-ro" name="ceimn" required="required" type="radio" value="ro"/>
+        Uptake as
+                            described above. Follow-up as recommended above.
+       </label>
+      </div>
+      <div class="radio">
+       <label>
+        <input id="ceimn-ru" name="ceimn" required="required" type="radio" value="ru"/>
+        Nodule(s)
+                            unchanged, as described above. Follow-up as recommended above.
+       </label>
+      </div>
+     </div>
+    </div>
+    <div class="row">
+     <div class="col-md-12 form-group">
+      <label for="ceimo-no">
+       Other Findings
+      </label>
+      <div class="radio">
+       <label>
+        <input id="ceimo-rs" name="ceimo" required="required" type="radio" value="rs"/>
+        No other
+                            abnormalities.
+       </label>
+      </div>
+      <div class="radio">
+       <label>
+        <input id="ceimo-oa" name="ceimo" required="required" type="radio" value="oa"/>
+        Other
+                            abnormalities
+                            and suggested follow-up as described above.
+       </label>
+      </div>
+      <div class="radio">
+       <label>
+        <input id="ceimo-da" name="ceimo" required="required" type="radio" value="da"/>
+        Diffuse
+                            abnormalities.
+       </label>
+      </div>
+     </div>
+    </div>
+    <div class="row">
+     <div class="col-md-12 form-group">
+      <label for="ceimre">
+       Impression Remarks
+      </label>
+      <textarea class="form-control" id="ceimre" name="ceimre"></textarea>
+     </div>
+    </div>
+    <hr/>
+    <div class="pull-right">
+     <input name="samistatus" type="hidden" value=""/>
+     <button class="btn btn-default" id="save-for-later-button" type="submit">
+      Save for Later
+     </button>
+     <button class="btn btn-primary" id="submit-button" type="submit">
+      Submit
+     </button>
+    </div>
+   </form>
+  </div>
+  <footer>
+   <div class="container-fluid" style="max-width:1550px">
+    <hr/>
+    <a href="https://issues.osehra.org/browse/VAP" target="_blank">
+     Submit feedback
+    </a>
+    <span id="sami-version" style="float:right; font-family: Courier,monospace">
+     SNAPSHOT 2018.04.24
+    </span>
+   </div>
+  </footer>
+  <script language="JavaScript">
+   //TODO: insert studyId here.
+    var studyId = "XX0002";
+    var sf12Enabled = false;
+
+    if (studyId) {
+        $("#studyIdMenu").show();
+    }
+  </script>
+  <script language="JavaScript">
+   $(function () {
+
+            //follow up date calculator.
+            $("[name=cefuw]").on("change", function () {
+                switch ($(this).val()) {
+                    case "nw":
+                        $("#cefud").val(moment().format(VAPALS.DATE_FORMAT));
+                        break;
+                    case "1m":
+                        $("#cefud").val(moment().add(1, 'month').format(VAPALS.DATE_FORMAT));
+                        break;
+                    case "3m":
+                        $("#cefud").val(moment().add(3, 'month').format(VAPALS.DATE_FORMAT));
+                        break;
+                    case "6m":
+                        $("#cefud").val(moment().add(6, 'month').format(VAPALS.DATE_FORMAT));
+                        break;
+                    case "1y":
+                        $("#cefud").val(moment().add(1, 'year').format(VAPALS.DATE_FORMAT));
+                        break;
+                    default:
+                        $("#cefud").val("").focus();
+                }
+            })
+        });
+  </script>
+  <script language="JavaScript">
+   //Initialize Form Validation
+    $(".validated").formValidation({framework: 'bootstrap'});
+  </script>
+ </body>
+</html>

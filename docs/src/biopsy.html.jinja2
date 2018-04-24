@@ -1,0 +1,331 @@
+{% extends 'layout.jinja2' %}
+{% import 'forms.jinja2' as f %}
+{% import 'sf12.jinja2' as sf12 %}
+{% block title %}{{ title | escape }}{% endblock %}
+
+{% block body %}
+    <div class="container-fluid" style="max-width:1550px">
+        <h1>
+            Sample, Sammy G
+            <small class="text-muted" title="Study ID">ST0001</small>
+        </h1>
+        <h2>{{ title | escape }}
+            <small class="text-muted" title="Medical Record Number">1234567890</small>
+        </h2>
+
+        <div class="alert alert-warning">
+            If a new lesion is identified at a later point and new diagnostics are performed, please use a new form.
+        </div>
+
+        <hr/>
+        <form action="followup.html" class="validated" method="post"
+              data-fv-icon-valid="glyphicon glyphicon-ok"
+              data-fv-icon-invalid="glyphicon glyphicon-remove"
+              data-fv-icon-validating="glyphicon glyphicon-refresh"
+              data-fv-button-selector="#submit-button">
+
+            <h3>Biopsy</h3>
+            <div class="row">
+                <div class="col-md-3 form-group">
+                    <label class="control-label" for="bxp-n">Was a biopsy performed?</label>
+                    <div>
+                        {{ f.inlineRadio("bxp", "bxp-n", "n", "no", true) }}
+                        {{ f.inlineRadio("bxp", "bxp-y", "y", "yes", true) }}
+                    </div>
+                </div>
+            </div>
+            <div id="bxp-container">
+                <div class="row">
+                    <div class="col-sm-4 col-md-3 form-group">
+                        <label class="control-label" for="bxdos">Procedure Date</label>
+                        {{ f.datepicker("bxdos", true, "Procedure Date is required") }}
+
+                    </div>
+                    <div class="col-sm-8 col-md-6 form-group">
+                        <label for="bxw" class="control-label">Where was the biopsy performed?</label>
+                        <input type=text id="bxw" name="bxw" class="form-control" required="required">
+                    </div>
+                </div>
+
+                <div class="row" style="padding-bottom: 10px;">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label" for="validator-bxind">Indication for Biopsy</label>
+                            <input type="hidden" id="validator-bxind" name="validator-bxind" value="0"/>
+                        </div>
+                        {{ f.checkbox("bxinds", "s", "Size") }}
+                        {{ f.checkbox("bxindr", "r", "No resolution after abx") }}
+                        {{ f.checkbox("bxindg", "g", "Growth") }}
+                        {{ f.checkbox("bxindp", "p", "Positive PET") }}
+                        {{ f.checkbox("bxindo", "o", "Other (specify)") }}
+
+                        <div class="form-group">
+                            <input type=text id="bxind" name="bxind" class="form-control input-sm" required="required">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label" for="validator-bxloc">Lesion Site</label>
+                            <input type="hidden" id="validator-bxloc" name="validator-bxloc" value="0"/>
+                        </div>
+                        {{ f.checkbox("bxloclul", "lul", "LUL") }}
+                        {{ f.checkbox("bxloclll", "lll", "LLL") }}
+                        {{ f.checkbox("bxloclh", "lh", "L hilum") }}
+                        {{ f.checkbox("bxloclg", "lg", "L lingula") }}
+                        {{ f.checkbox("bxlocrul", "rul", "RUL") }}
+                        {{ f.checkbox("bxlocrml", "rml", "RML") }}
+                        {{ f.checkbox("bxlocrll", "rll", "RLL") }}
+                        {{ f.checkbox("bxlocrh", "rh", "R hilum") }}
+                        {{ f.checkbox("bxloce", "e", "endobronchial") }}
+                        {{ f.checkbox("bxlocm", "m", "mediastinum") }}
+                        {{ f.checkbox("bxlocp", "p", "pleura") }}
+                        {{ f.checkbox("bxloco", "o", "other (specify)") }}
+                        <div class="form-group">
+                            <input type=text id="bxlocs" name="bxlocs" class="form-control input-sm"
+                                   required="required">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="bxtosc"> Type of Specimen </label>
+                            {{ f.checkbox("bxtosc", "c", "cytology") }}
+                            {{ f.checkbox("bxtosh", "h", "histology") }}
+                        </div>
+
+                        <div class=" form-group">
+                            <label for="bxtopc"> Type of Procedure </label>
+                            {{ f.checkbox("bxtopc", "c", "needle biopsy") }}
+                            {{ f.checkbox("bxtopb", "b", "bronchoscopy") }}
+                            {{ f.checkbox("bxtopv", "v", "VAT") }}
+                            {{ f.checkbox("bxtopt", "t", "thoracotomy") }}
+                            {{ f.checkbox("bxtopo", "o", "other (specify)") }}
+                            <div class="form-group">
+                                <input type=text id="bxtopos" name="bxtopos" class="form-control" required="required">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label for="bxcp-n">Complications during biopsy?</label>
+                        <div>
+                            {{ f.inlineRadio("bxcp", "bxcp-n", "n","no",true) }}
+                            {{ f.inlineRadio("bxcp", "bxcp-y", "y","yes",true) }}
+                        </div>
+
+                    </div>
+                    <div class="col-md-8">
+                        <div id="bxcp-container">
+                            <div class="form-group">
+                                <input type="hidden" id="validator-bxcp" name="validator-bxcp" value="0"/>
+                            </div>
+                            {{ f.checkbox("bxcpct", "c", "Chest Tube") }}
+                            {{ f.checkbox("bxcppt", "pt", "Pneumothorax") }}
+                            {{ f.checkbox("bxcppn", "pn", "Pneumonectasis") }}
+                            {{ f.checkbox("bxcpo", "o", "Other (specify)") }}
+                            <div class="form-group">
+                                <input type=text id="bxcpos" name="bxcpos" class="form-control input-sm"
+                                       required="required">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="bxpdt"> Biopsy Pathology Details </label>
+                        <textarea name="bxpdt" id="bxpdt" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Mediastinoscopy</h3>
+            <div class="row">
+                <div class="col-md-3 form-group">
+                    <label class="control-label" for="rbmep-n">Was a mediastinoscopy performed?</label>
+                    <div>
+                        {{ f.inlineRadio("rbmep", "rbmep-n", "n", "no", true) }}
+                        {{ f.inlineRadio("rbmep", "rbmep-y", "y", "yes", true) }}
+                    </div>
+                </div>
+            </div>
+            <div id="rbmep-container">
+                <div class="row">
+
+                    <div class="col-md-3 form-group">
+                        <label class="control-label" for="rbmed">Procedure Date</label>
+                        {{ f.datepicker("rbmed", true) }}
+
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="rbmel" class="control-label">Where was the biopsy performed?</label>
+                        <input type=text id="rbmel" name="rbmel" class="form-control" required="required">
+                    </div>
+
+                </div>
+
+                <div class="row" style="padding-bottom: 10px;">
+                    <div class="col-md-4">
+                        <label class="control-label" for="rbmllul">Lesion Site</label>
+                        <div class="form-group">
+                            <input type="hidden" id="validator-rbml" name="validator-rbml" value="0"/>
+                        </div>
+                        {{ f.checkbox("rbmllul", "lul", "LUL") }}
+                        {{ f.checkbox("rbmllll", "lll", "LLL") }}
+                        {{ f.checkbox("rbmllh", "lh", "L hilum") }}
+                        {{ f.checkbox("rbmllg", "lg", "L lingula") }}
+                        {{ f.checkbox("rbmlrul", "rul", "RUL") }}
+                        {{ f.checkbox("rbmlrml", "rml", "RML") }}
+                        {{ f.checkbox("rbmlrll", "rll", "RLL") }}
+                        {{ f.checkbox("rbmlrh", "rh", "R hilum") }}
+                        {{ f.checkbox("rbmle", "e", "endobronchial") }}
+                        {{ f.checkbox("rbmlm", "m", "mediastinum") }}
+                        {{ f.checkbox("rbmlp", "p", "pleura") }}
+                        {{ f.checkbox("rbmlo", "o", "other (specify)") }}
+                        <div class="form-group">
+                            <input type=text id="rbmls" name="rbmls" class="form-control input-sm" required="required">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label for="rbmec-n">Complications during procedure?</label>
+                        <div>
+                            {{ f.inlineRadio("rbmec", "rbmec-n", "n","no",true) }}
+                            {{ f.inlineRadio("rbmec", "rbmec-y", "y","yes",true) }}
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label for="rbmecos">Specify</label>
+                        <input type=text id="rbmecos" name="rbmecos" class="form-control input-sm"
+                               required="required">
+                    </div>
+                </div>
+            </div>
+
+            <h3>Molecular Testing</h3>
+            <div class="row">
+                <div class="col-sm-12 form-group">
+                    <label class="control-label" for="rbmt-n">Was molecular testing performed on the pathology
+                        specimen?</label>
+                    <div>
+                        {{ f.inlineRadio("rbmt", "rbmt-n", "n", "no",true) }}
+                        {{ f.inlineRadio("rbmt", "rbmt-y", "y", "yes",true) }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 form-group" id="rbmt-container">
+                    <div class="form-group">
+                        <label class="control-label" for="rbmte-n">EGFR</label><br/>
+                        {{ f.inlineRadio("rbmte", "rbmte-n", "n", "no", true) }}
+                        {{ f.inlineRadio("rbmte", "rbmte-neg", "neg", "negative", true) }}
+                        {{ f.inlineRadio("rbmte", "rbmte-pos", "pos", "positive", true) }}
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="rbmtk-n">K-Ras</label><br/>
+                        {{ f.inlineRadio("rbmtk", "rbmtk-n", "n", "no", true) }}
+                        {{ f.inlineRadio("rbmtk", "rbmtk-neg", "neg", "negative", true) }}
+                        {{ f.inlineRadio("rbmtk", "rbmtk-pos", "pos", "positive", true) }}
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="rbmta-n">ALK</label><br/>
+                        {{ f.inlineRadio("rbmta", "rbmta-n", "n", "no", true) }}
+                        {{ f.inlineRadio("rbmta", "rbmta-neg", "neg", "negative", true) }}
+                        {{ f.inlineRadio("rbmta", "rbmta-pos", "pos", "positive", true) }}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="rbmtos">Other</label>
+                        <input type="text" name="rbmtos" id="rbmtos" class="form-control" placeholder="specify">
+                        {{ f.inlineRadio("rbmto", "rbmto-n", "n", "no", true) }}
+                        {{ f.inlineRadio("rbmto", "rbmto-neg", "neg", "negative", true) }}
+                        {{ f.inlineRadio("rbmto", "rbmto-pos", "pos", "positive", true) }}
+                    </div>
+                </div>
+            </div>
+
+            <hr/>
+
+            <div class="pull-right">
+                <input type="hidden" name="samistatus" value=""/>
+                <button type="submit" class="btn btn-default" id="save-for-later-button">Save for Later</button>
+                <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script language="JavaScript">
+
+        /**
+         * Adds a formValidation validator that ensures at least one of the checkboxes in $fields is selected.
+         * This validator is dynamically enabled/disabled based on how many of it's triggering $fields are enabled.
+         * @param $fields the checkbox fields
+         * @param $validatorControl a hidden input field used to track how many checkboxes are selected.
+         */
+        function requireOneValidator($fields, $validatorControl) {
+            var fv = $("form.validated").data("formValidation");
+            if (fv) {
+                //put the list of fields onto the validator control so we can refer back to them to determine if the
+                // validators should be enabled when triggered.
+                $validatorControl.data("fv-fields", $fields);
+
+                $fields.on('change', function () {
+                    $validatorControl.val($fields.filter(":checked").length);
+                    fv.revalidateField($validatorControl);
+                })
+                fv.addField($validatorControl.attr("name"), {
+                    excluded: function ($field, validator) {
+                        //enabled only if at least one of its controlling fields is enabled
+                        {#return $field.data("fv-fields").filter(":enabled").length == 0;#}
+                        {#return $field.closest(":disabled").length>0;#}
+                        return false;
+                    },
+                    validators: {
+                        callback: {
+                            callback: function (value, validator, $field) {
+                                return {
+                                    //valid if all $fields are disabled or if the number of checked boxes is > 0
+                                    valid: $field.data("fv-fields").filter(":enabled").length == 0 || $field.val() > 0,
+                                    message: 'At least one selection is required'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+
+        $(function () {
+            //Biopsy
+            $("[name='bxp']").conditionallyEnable({enable: $("#bxp-container")}); //entire form
+            $("#bxindo").conditionallyEnable({sourceValues: "o", enable: "#bxind"}); // other indication
+            requireOneValidator($("[name^=bxind]"), $("[name=validator-bxind]")); // at least one indication checkbox
+            $("#bxloco").conditionallyEnable({sourceValues: "o", enable: "#bxlocs"}); //other lesion
+            requireOneValidator($("[name^=bxloc]"), $("[name=validator-bxloc]")); // at least one lesion checkbox
+            requireOneValidator($("[name^=bxtos]"), $("[name=validator-bxtos]")); // at least one type of specimen
+            requireOneValidator($("[name^=bxtop]"), $("[name=validator-bxtop]")); // at least one type of procedure
+            $("#bxtopo").conditionallyEnable({sourceValues: "o", enable: "#bxtopos"}); // other type of procedure
+            $("[name='bxcp']").conditionallyEnable({enable: $("#bxcp-container")}); //procedure details
+            requireOneValidator($("#bxcp-container").find("[name^=bxcp]"), $("[name^=validator-bxcp]")); // at least one complication
+            $("#bxcpo").conditionallyEnable({sourceValues: "o", enable: "#bxcpos"}); // other complication
+
+            //Mediastinoscopy
+            $("[name='rbmep']").conditionallyEnable({enable: $("#rbmep-container")}); //entire section
+            $("#rbmlo").conditionallyEnable({sourceValues: "o", enable: "#rbmls"}); //other lesion
+            requireOneValidator($("[name^=rbml]"), $("[name^=validator-rbml]")) // at least one lesion
+            $("[name=rbmec]").conditionallyEnable({enable: "#rbmecos"}); // complication specificity
+
+            //Molecular Testing
+            $("[name='rbmt']").conditionallyEnable({enable: "#rbmt-container"}); //entire section
+        });
+
+
+    </script>
+
+{% endblock %}

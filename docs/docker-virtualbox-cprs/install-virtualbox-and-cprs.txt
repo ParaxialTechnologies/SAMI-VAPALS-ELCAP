@@ -1,0 +1,86 @@
+Install VirtualBox
+    Mac
+        Paste the following link into a browser: https://download.virtualbox.org/virtualbox/5.2.8/VirtualBox-5.2.8-121009-OSX.dmg.
+        
+        Double-click the DMG file and follow the instructions.
+        
+    Linux
+        Follow the instructions for your flavor at https://www.virtualbox.org/wiki/Linux_Downloads.
+        
+    Install the Extension Pack
+        Paste the following link into a browser: https://download.virtualbox.org/virtualbox/5.2.8/Oracle_VM_VirtualBox_Extension_Pack-5.2.8.vbox-extpack.
+        
+        Double-click the file. You must already have VirtualBox installed.
+        
+Build a Windows 10 virtual machine
+    Go to https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/. Select the MSEdge on Win10 (x64) Stable virtual machine. Select the VirtualBox platform. Download the ZIP file.
+    
+    Mac
+        The downloaded archive (ZIP file) will not open properly if you just double-click it. Install The Unarchiver (https://theunarchiver.com/) and use it to unpack the archive. After you've installed The Unarchiver, you can right-click on the archive, select Open With, and select The Unarchiver.
+    
+    Start VirtualBox. Go to Preferences > Input, and uncheck "Auto Capture Keyboard". This probably won't work until you've installed the Guest Additions, so pay attention to the messages about how to release your keyboard. The default on Macs is the left command key. From the menu bar click File, click Import Appliance, and select the file "MSEdge - Win10_preview.ova" from wherever you unpacked the ZIP file.
+    
+    I usually specify a few details in the settings for the virtual machine, but you can take the defaults and start it. If you're going to change one thing, assign 2 CPUs to the instance; Windows 10 otherwise runs like an absolute dog. The Windows login password is "Passw0rd!".
+    
+    Click the yellow, folder icon in the task bar to open Windows Explorer. Navigate to "This PC". Under "Devices and drives", you should see "CD Drive (E:) VirtualBox Guest Additions". If you don't see it, restart your virtual machine and come back to this point. Double-click the VirtualBox Guest Additions and follow the instructions.
+    
+    Restart your virtual machine. I use the power options in the Windows Menu, but you can also use the controls provided in the VirtualBox Manager. The Guest Additions should produce a much more well-behaved virtual machine whose window can be resized and that doesn't capture your keyboard.
+    
+Install CPRS
+    
+    Login to your VM. In a browser, visit https://foia-vista.osehra.org/Patches_By_Application/CPRS%20GUI%20FILES/CPRS%20VERSION%2030c/. Download and extract OR_423_scrubbed.zip. Copy or move CPRSChart.exe to your desktop. Download and extract OR_423_SRC_scrubbed.zip. Copy OR_423_SRC_scrubbed/CPRS-chart/borlndmm.dll to your desktop.
+
+    On your desktop, create a shortcut to CPRSChart.exe (also on your desktop). Rename it "CPRS Avicenna". Right-click to edit the properties of the shortcut. Set the target of the shortcut to "C:\Users\IEUser\Desktop\CPRSChart.exe s=35.164.151.93 p=9430 ccow=disable".
+    
+    You should know be able to double-click the shortcut and log in using pre-populated credentials. Use the access code FakeDoc1 and the verify code 1Doc!@#$.
+    
+    Connecting to your Docker instance is slightly trickier. You need to identify the internal IP address of your primary network interface. On a Mac or Linux computer, you can do this within a terminal session.
+    
+    $ ifconfig
+        en0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+            ether b8:f6:b1:14:47:f9 
+            inet6 fe80::18e0:c1ca:e51:f45d%en0 prefixlen 64 secured scopeid 0x7 
+            inet 10.0.1.12 netmask 0xffffff00 broadcast 10.0.1.255
+            nd6 options=201<PERFORMNUD,DAD>
+            media: autoselect
+            status: active
+    
+    The interface labelled en0 on my Mac will be eth0 on a Linux computer. In this section, I want the IP address labelled inet -- 10.0.1.12.
+    
+    On a Windows computer run "cmd" to open Command Prompt. Then use the ipconfig command.
+    
+    C:\Users\IEUser>ipconfig
+
+        Windows IP Configuration
+
+
+        Ethernet adapter Ethernet:
+
+           Connection-specific DNS Suffix  . :
+           Link-local IPv6 Address . . . . . : fe80::ed93:d881:9c62:495a%3
+           IPv4 Address. . . . . . . . . . . : 10.0.2.15
+           Subnet Mask . . . . . . . . . . . : 255.255.255.0
+           Default Gateway . . . . . . . . . : 10.0.2.2
+
+        Tunnel adapter Teredo Tunneling Pseudo-Interface:
+
+           Connection-specific DNS Suffix  . :
+           IPv6 Address. . . . . . . . . . . : 2001:0:4137:9e76:c81:f1:f5ff:fdf0
+           Link-local IPv6 Address . . . . . : fe80::c81:f1:f5ff:fdf0%4
+           Default Gateway . . . . . . . . . : ::
+
+    In this case I want the default gateway for the ethernet adapter -- 10.0.2.2.
+    
+    Create another desktop shortcut for CPRSChart.exe. Rename this "CPRS Docker". Right-click to edit the properties. Set the target to "C:\Users\IEUser\Desktop\CPRSChart.exe s=10.0.1.12 p=9430 ccow=disable", but replace 10.0.1.12 with the IP address you found previously.
+    
+    If you have recently updated Vista on your Docker instance, you should know be able to double-click the shortcut and log in using pre-populated credentials. Use the access code FakeDoc1 and the verify code 1Doc!@#$. If you have not recently updated Vista, you might be required to change the verify code for FakeDoc1.
+    
+
+
+
+
+
+
+
+
+

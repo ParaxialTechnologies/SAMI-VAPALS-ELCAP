@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+  <title>
+   Biopsy Form
+  </title>
+  <link href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+  <link href="lib/formvalidation/dist/css/formValidation.min.css" rel="stylesheet"/>
+  <link href="lib/bootstrap-datetimepicker-4.17.47/css/bootstrap-datetimepicker.css" rel="stylesheet"/>
+  <link href="vapals.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <script src="lib/jquery-3.2.1.slim.min.js">
+  </script>
+  <script src="lib/popper.min.js">
+  </script>
+  <script src="lib/bootstrap-3.3.7-dist/js/bootstrap.min.js">
+  </script>
+  <script src="lib/moment.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/formValidation.min.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/framework/bootstrap.min.js">
+  </script>
+  <script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js">
+  </script>
+  <script src="https://www.gstatic.com/charts/loader.js" type="text/javascript">
+  </script>
+  <script src="jquery-conditonally-enable.js">
+  </script>
+  <script src="vapals.js">
+  </script>
+  <script src="init.js">
+  </script>
+  <!--System Navigation-->
+  <nav class="navbar navbar-default" role="navigation">
+   <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+     <button class="navbar-toggle collapsed" data-target="#navbar-main" data-toggle="collapse" type="button">
+      <span class="sr-only">
+       Toggle navigation
+      </span>
+      <span class="icon-bar">
+      </span>
+      <span class="icon-bar">
+      </span>
+      <span class="icon-bar">
+      </span>
+     </button>
+     <a href="home.html">
+      <img alt="VA-PALS Logo" height="50" src="img/new-logo.png" title="VA-PALS"/>
+     </a>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar-main">
+     <ul class="nav navbar-nav">
+      <li>
+       <a href="home.html">
+        Home
+       </a>
+      </li>
+      <li class="dropdown" id="studyIdMenu" style="display:none;">
+       <a class="navbar-link" href="casereview.html">
+        Case Review
+       </a>
+      </li>
+     </ul>
+    </div>
+   </div>
+  </nav>
+  <div class="container-fluid" style="max-width:1550px">
+   <h1>
+    Sample, Sammy G
+    <small class="text-muted" title="Study ID">
+     ST0001
+    </small>
+   </h1>
+   <h2>
+    Biopsy Form
+    <small class="text-muted" title="Medical Record Number">
+     1234567890
+    </small>
+   </h2>
+   <div class="alert alert-warning">
+    If a new lesion is identified at a later point and new diagnostics are performed, please use a new form.
+   </div>
+   <hr/>
+   <form action="followup.html" class="validated" data-fv-button-selector="#submit-button" data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-validating="glyphicon glyphicon-refresh" method="post">
+    <h3>
+     Biopsy
+    </h3>
+    <div class="row">
+     <div class="col-md-3 form-group">
+      <label class="control-label" for="bxp-n">
+       Was a biopsy performed?
+      </label>
+      <div>
+       <label class="radio-inline">
+        <input data-fv-notempty-message="Please select a value" id="bxp-n" name="bxp" required="required" type="radio" value="n"/>
+        no
+       </label>
+       <label class="radio-inline">
+        <input data-fv-notempty-message="Please select a value" id="bxp-y" name="bxp" required="required" type="radio" value="y"/>
+        yes
+       </label>
+      </div>
+     </div>
+    </div>
+    <div id="bxp-container">
+     <div class="row">
+      <div class="col-sm-4 col-md-3 form-group">
+       <label class="control-label" for="bxdos">
+        Procedure Date
+       </label>
+       <div class="input-group datepicker">
+        <input aria-describedby="bxdos-addon" class="form-control" data-fv-callback="true" data-fv-callback-callback="validateInternationalDate" data-fv-callback-message="Enter a valid date" data-fv-notempty-message="Procedure Date is required" data-max-date="01/Mar/2018" id="bxdos" name="bxdos" required="required"/>
+        <div class="input-group-addon">
+         <div class="input-group-text" id="bxdos-addon">
+          <i aria-hidden="true" class="fa fa-calendar">
+          </i>
+         </div>
+        </div>
+       </div>
+       <small class="form-text text-muted">
+        DD/MMM/YYYY
+       </small>
+      </div>
+      <div class="col-sm-8 col-md-6 form-group">
+       <label class="control-label" for="bxw">
+        Where was the biopsy performed?
+       </label>
+       <input class="form-control" id="bxw" name="bxw" required="required" type="text"/>
+      </div>
+     </div>
+     <div class="row" style="padding-bottom: 10px;">
+      <div class="col-sm-4">
+       <div class="form-group">
+        <label class="control-label" for="validator-bxind">
+         Indication for Biopsy
+        </label>
+        <input id="validator-bxind" name="validator-bxind" type="hidden" value="0"/>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="bxinds" name="bxinds" type="checkbox" value="s"/>
+         Size
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="bxindr" name="bxindr" type="checkbox" value="r"/>
+         No resolution after abx
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="bxindg" name="bxindg" type="checkbox" value="g"/>
+         Growth
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="bxindp" name="bxindp" type="checkbox" value="p"/>
+         Positive PET
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="bxindo" name="bxindo" type="checkbox" value="o"/>
+         Other (specify)
+        </label>
+       </div>
+       <div class="form-group">
+        <input class="form-control input-sm" id="bxind" name="bxind" required="required" type="text"/>
+       </div>
+      </div>
+      <div class="col-sm-4">
+       <div class="form-group">
+        <label class="control-label" for="validator-bxloc">
+         Lesion Site
+        </label>
+        <input id="validator-bxloc" name="validator-bxloc" type="hidden" value="0"/>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="bxloclul" name="bxloclul" type="checkbox" value="lul"/>
+         LUL
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="bxloclll" name="bxloclll" type="checkbox" value="lll"/>
+         LLL
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="bxloclh" name="bxloclh" type="checkbox" value="lh"/>
+         L hilum
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="bxloclg" name="bxloclg" type="checkbox" value="lg"/>
+         L lingula
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="bxlocrul" name="bxlocrul" type="checkbox" value="rul"/>
+         RUL
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="bxlocrml" name="bxlocrml" type="checkbox" value="rml"/>
+         RML
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="bxlocrll" name="bxlocrll" type="checkbox" value="rll"/>
+         RLL
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="bxlocrh" name="bxlocrh" type="checkbox" value="rh"/>
+         R hilum
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="bxloce" name="bxloce" type="checkbox" value="e"/>
+         endobronchial
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="bxlocm" name="bxlocm" type="checkbox" value="m"/>
+         mediastinum
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="bxlocp" name="bxlocp" type="checkbox" value="p"/>
+         pleura
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="bxloco" name="bxloco" type="checkbox" value="o"/>
+         other (specify)
+        </label>
+       </div>
+       <div class="form-group">
+        <input class="form-control input-sm" id="bxlocs" name="bxlocs" required="required" type="text"/>
+       </div>
+      </div>
+      <div class="col-sm-4">
+       <div class="form-group">
+        <label for="bxtosc">
+         Type of Specimen
+        </label>
+        <div class="checkbox">
+         <label>
+          <input id="bxtosc" name="bxtosc" type="checkbox" value="c"/>
+          cytology
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input id="bxtosh" name="bxtosh" type="checkbox" value="h"/>
+          histology
+         </label>
+        </div>
+       </div>
+       <div class=" form-group">
+        <label for="bxtopc">
+         Type of Procedure
+        </label>
+        <div class="checkbox">
+         <label>
+          <input id="bxtopc" name="bxtopc" type="checkbox" value="c"/>
+          needle biopsy
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input id="bxtopb" name="bxtopb" type="checkbox" value="b"/>
+          bronchoscopy
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input id="bxtopv" name="bxtopv" type="checkbox" value="v"/>
+          VAT
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input id="bxtopt" name="bxtopt" type="checkbox" value="t"/>
+          thoracotomy
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input id="bxtopo" name="bxtopo" type="checkbox" value="o"/>
+          other (specify)
+         </label>
+        </div>
+        <div class="form-group">
+         <input class="form-control" id="bxtopos" name="bxtopos" required="required" type="text"/>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="row">
+      <div class="col-md-4 form-group">
+       <label for="bxcp-n">
+        Complications during biopsy?
+       </label>
+       <div>
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="bxcp-n" name="bxcp" required="required" type="radio" value="n"/>
+         no
+        </label>
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="bxcp-y" name="bxcp" required="required" type="radio" value="y"/>
+         yes
+        </label>
+       </div>
+      </div>
+      <div class="col-md-8">
+       <div id="bxcp-container">
+        <div class="form-group">
+         <input id="validator-bxcp" name="validator-bxcp" type="hidden" value="0"/>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input id="bxcpct" name="bxcpct" type="checkbox" value="c"/>
+          Chest Tube
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input id="bxcppt" name="bxcppt" type="checkbox" value="pt"/>
+          Pneumothorax
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input id="bxcppn" name="bxcppn" type="checkbox" value="pn"/>
+          Pneumonectasis
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input id="bxcpo" name="bxcpo" type="checkbox" value="o"/>
+          Other (specify)
+         </label>
+        </div>
+        <div class="form-group">
+         <input class="form-control input-sm" id="bxcpos" name="bxcpos" required="required" type="text"/>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="row">
+      <div class="col-md-12">
+       <label for="bxpdt">
+        Biopsy Pathology Details
+       </label>
+       <textarea class="form-control" id="bxpdt" name="bxpdt"></textarea>
+      </div>
+     </div>
+    </div>
+    <h3>
+     Mediastinoscopy
+    </h3>
+    <div class="row">
+     <div class="col-md-3 form-group">
+      <label class="control-label" for="rbmep-n">
+       Was a mediastinoscopy performed?
+      </label>
+      <div>
+       <label class="radio-inline">
+        <input data-fv-notempty-message="Please select a value" id="rbmep-n" name="rbmep" required="required" type="radio" value="n"/>
+        no
+       </label>
+       <label class="radio-inline">
+        <input data-fv-notempty-message="Please select a value" id="rbmep-y" name="rbmep" required="required" type="radio" value="y"/>
+        yes
+       </label>
+      </div>
+     </div>
+    </div>
+    <div id="rbmep-container">
+     <div class="row">
+      <div class="col-md-3 form-group">
+       <label class="control-label" for="rbmed">
+        Procedure Date
+       </label>
+       <div class="input-group datepicker">
+        <input aria-describedby="rbmed-addon" class="form-control" data-fv-callback="true" data-fv-callback-callback="validateInternationalDate" data-fv-callback-message="Enter a valid date" data-max-date="01/Mar/2018" id="rbmed" name="rbmed"/>
+        <div class="input-group-addon">
+         <div class="input-group-text" id="rbmed-addon">
+          <i aria-hidden="true" class="fa fa-calendar">
+          </i>
+         </div>
+        </div>
+       </div>
+       <small class="form-text text-muted">
+        DD/MMM/YYYY
+       </small>
+      </div>
+      <div class="col-md-6 form-group">
+       <label class="control-label" for="rbmel">
+        Where was the biopsy performed?
+       </label>
+       <input class="form-control" id="rbmel" name="rbmel" required="required" type="text"/>
+      </div>
+     </div>
+     <div class="row" style="padding-bottom: 10px;">
+      <div class="col-md-4">
+       <label class="control-label" for="rbmllul">
+        Lesion Site
+       </label>
+       <div class="form-group">
+        <input id="validator-rbml" name="validator-rbml" type="hidden" value="0"/>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="rbmllul" name="rbmllul" type="checkbox" value="lul"/>
+         LUL
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="rbmllll" name="rbmllll" type="checkbox" value="lll"/>
+         LLL
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="rbmllh" name="rbmllh" type="checkbox" value="lh"/>
+         L hilum
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="rbmllg" name="rbmllg" type="checkbox" value="lg"/>
+         L lingula
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="rbmlrul" name="rbmlrul" type="checkbox" value="rul"/>
+         RUL
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="rbmlrml" name="rbmlrml" type="checkbox" value="rml"/>
+         RML
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="rbmlrll" name="rbmlrll" type="checkbox" value="rll"/>
+         RLL
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="rbmlrh" name="rbmlrh" type="checkbox" value="rh"/>
+         R hilum
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="rbmle" name="rbmle" type="checkbox" value="e"/>
+         endobronchial
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="rbmlm" name="rbmlm" type="checkbox" value="m"/>
+         mediastinum
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="rbmlp" name="rbmlp" type="checkbox" value="p"/>
+         pleura
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input id="rbmlo" name="rbmlo" type="checkbox" value="o"/>
+         other (specify)
+        </label>
+       </div>
+       <div class="form-group">
+        <input class="form-control input-sm" id="rbmls" name="rbmls" required="required" type="text"/>
+       </div>
+      </div>
+     </div>
+     <div class="row">
+      <div class="col-md-4 form-group">
+       <label for="rbmec-n">
+        Complications during procedure?
+       </label>
+       <div>
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="rbmec-n" name="rbmec" required="required" type="radio" value="n"/>
+         no
+        </label>
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="rbmec-y" name="rbmec" required="required" type="radio" value="y"/>
+         yes
+        </label>
+       </div>
+      </div>
+      <div class="col-md-4 form-group">
+       <label for="rbmecos">
+        Specify
+       </label>
+       <input class="form-control input-sm" id="rbmecos" name="rbmecos" required="required" type="text"/>
+      </div>
+     </div>
+    </div>
+    <h3>
+     Molecular Testing
+    </h3>
+    <div class="row">
+     <div class="col-sm-12 form-group">
+      <label class="control-label" for="rbmt-n">
+       Was molecular testing performed on the pathology
+                        specimen?
+      </label>
+      <div>
+       <label class="radio-inline">
+        <input data-fv-notempty-message="Please select a value" id="rbmt-n" name="rbmt" required="required" type="radio" value="n"/>
+        no
+       </label>
+       <label class="radio-inline">
+        <input data-fv-notempty-message="Please select a value" id="rbmt-y" name="rbmt" required="required" type="radio" value="y"/>
+        yes
+       </label>
+      </div>
+     </div>
+    </div>
+    <div class="row">
+     <div class="col-sm-4 form-group" id="rbmt-container">
+      <div class="form-group">
+       <label class="control-label" for="rbmte-n">
+        EGFR
+       </label>
+       <br/>
+       <label class="radio-inline">
+        <input data-fv-notempty-message="Please select a value" id="rbmte-n" name="rbmte" required="required" type="radio" value="n"/>
+        no
+       </label>
+       <label class="radio-inline">
+        <input data-fv-notempty-message="Please select a value" id="rbmte-neg" name="rbmte" required="required" type="radio" value="neg"/>
+        negative
+       </label>
+       <label class="radio-inline">
+        <input data-fv-notempty-message="Please select a value" id="rbmte-pos" name="rbmte" required="required" type="radio" value="pos"/>
+        positive
+       </label>
+      </div>
+      <div class="form-group">
+       <label class="control-label" for="rbmtk-n">
+        K-Ras
+       </label>
+       <br/>
+       <label class="radio-inline">
+        <input data-fv-notempty-message="Please select a value" id="rbmtk-n" name="rbmtk" required="required" type="radio" value="n"/>
+        no
+       </label>
+       <label class="radio-inline">
+        <input data-fv-notempty-message="Please select a value" id="rbmtk-neg" name="rbmtk" required="required" type="radio" value="neg"/>
+        negative
+       </label>
+       <label class="radio-inline">
+        <input data-fv-notempty-message="Please select a value" id="rbmtk-pos" name="rbmtk" required="required" type="radio" value="pos"/>
+        positive
+       </label>
+      </div>
+      <div class="form-group">
+       <label class="control-label" for="rbmta-n">
+        ALK
+       </label>
+       <br/>
+       <label class="radio-inline">
+        <input data-fv-notempty-message="Please select a value" id="rbmta-n" name="rbmta" required="required" type="radio" value="n"/>
+        no
+       </label>
+       <label class="radio-inline">
+        <input data-fv-notempty-message="Please select a value" id="rbmta-neg" name="rbmta" required="required" type="radio" value="neg"/>
+        negative
+       </label>
+       <label class="radio-inline">
+        <input data-fv-notempty-message="Please select a value" id="rbmta-pos" name="rbmta" required="required" type="radio" value="pos"/>
+        positive
+       </label>
+      </div>
+      <div class="form-group">
+       <label class="control-label" for="rbmtos">
+        Other
+       </label>
+       <input class="form-control" id="rbmtos" name="rbmtos" placeholder="specify" type="text"/>
+       <label class="radio-inline">
+        <input data-fv-notempty-message="Please select a value" id="rbmto-n" name="rbmto" required="required" type="radio" value="n"/>
+        no
+       </label>
+       <label class="radio-inline">
+        <input data-fv-notempty-message="Please select a value" id="rbmto-neg" name="rbmto" required="required" type="radio" value="neg"/>
+        negative
+       </label>
+       <label class="radio-inline">
+        <input data-fv-notempty-message="Please select a value" id="rbmto-pos" name="rbmto" required="required" type="radio" value="pos"/>
+        positive
+       </label>
+      </div>
+     </div>
+    </div>
+    <hr/>
+    <div class="pull-right">
+     <input name="samistatus" type="hidden" value=""/>
+     <button class="btn btn-default" id="save-for-later-button" type="submit">
+      Save for Later
+     </button>
+     <button class="btn btn-primary" id="submit-button" type="submit">
+      Submit
+     </button>
+    </div>
+   </form>
+  </div>
+  <footer>
+   <div class="container-fluid" style="max-width:1550px">
+    <hr/>
+    <a href="https://issues.osehra.org/browse/VAP" target="_blank">
+     Submit feedback
+    </a>
+    <span id="sami-version" style="float:right; font-family: Courier,monospace">
+     SNAPSHOT 2018.04.24
+    </span>
+   </div>
+  </footer>
+  <script language="JavaScript">
+   //TODO: insert studyId here.
+    var studyId = "XX0002";
+    var sf12Enabled = false;
+
+    if (studyId) {
+        $("#studyIdMenu").show();
+    }
+  </script>
+  <script language="JavaScript">
+   /**
+         * Adds a formValidation validator that ensures at least one of the checkboxes in $fields is selected.
+         * This validator is dynamically enabled/disabled based on how many of it's triggering $fields are enabled.
+         * @param $fields the checkbox fields
+         * @param $validatorControl a hidden input field used to track how many checkboxes are selected.
+         */
+        function requireOneValidator($fields, $validatorControl) {
+            var fv = $("form.validated").data("formValidation");
+            if (fv) {
+                //put the list of fields onto the validator control so we can refer back to them to determine if the
+                // validators should be enabled when triggered.
+                $validatorControl.data("fv-fields", $fields);
+
+                $fields.on('change', function () {
+                    $validatorControl.val($fields.filter(":checked").length);
+                    fv.revalidateField($validatorControl);
+                })
+                fv.addField($validatorControl.attr("name"), {
+                    excluded: function ($field, validator) {
+                        //enabled only if at least one of its controlling fields is enabled
+                        
+                        
+                        return false;
+                    },
+                    validators: {
+                        callback: {
+                            callback: function (value, validator, $field) {
+                                return {
+                                    //valid if all $fields are disabled or if the number of checked boxes is > 0
+                                    valid: $field.data("fv-fields").filter(":enabled").length == 0 || $field.val() > 0,
+                                    message: 'At least one selection is required'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+
+        $(function () {
+            //Biopsy
+            $("[name='bxp']").conditionallyEnable({enable: $("#bxp-container")}); //entire form
+            $("#bxindo").conditionallyEnable({sourceValues: "o", enable: "#bxind"}); // other indication
+            requireOneValidator($("[name^=bxind]"), $("[name=validator-bxind]")); // at least one indication checkbox
+            $("#bxloco").conditionallyEnable({sourceValues: "o", enable: "#bxlocs"}); //other lesion
+            requireOneValidator($("[name^=bxloc]"), $("[name=validator-bxloc]")); // at least one lesion checkbox
+            requireOneValidator($("[name^=bxtos]"), $("[name=validator-bxtos]")); // at least one type of specimen
+            requireOneValidator($("[name^=bxtop]"), $("[name=validator-bxtop]")); // at least one type of procedure
+            $("#bxtopo").conditionallyEnable({sourceValues: "o", enable: "#bxtopos"}); // other type of procedure
+            $("[name='bxcp']").conditionallyEnable({enable: $("#bxcp-container")}); //procedure details
+            requireOneValidator($("#bxcp-container").find("[name^=bxcp]"), $("[name^=validator-bxcp]")); // at least one complication
+            $("#bxcpo").conditionallyEnable({sourceValues: "o", enable: "#bxcpos"}); // other complication
+
+            //Mediastinoscopy
+            $("[name='rbmep']").conditionallyEnable({enable: $("#rbmep-container")}); //entire section
+            $("#rbmlo").conditionallyEnable({sourceValues: "o", enable: "#rbmls"}); //other lesion
+            requireOneValidator($("[name^=rbml]"), $("[name^=validator-rbml]")) // at least one lesion
+            $("[name=rbmec]").conditionallyEnable({enable: "#rbmecos"}); // complication specificity
+
+            //Molecular Testing
+            $("[name='rbmt']").conditionallyEnable({enable: "#rbmt-container"}); //entire section
+        });
+  </script>
+  <script language="JavaScript">
+   //Initialize Form Validation
+    $(".validated").formValidation({framework: 'bootstrap'});
+  </script>
+ </body>
+</html>

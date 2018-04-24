@@ -30,10 +30,17 @@
 {%- endmacro %}
 
 
-{% macro checkbox(name, value, labelText) -%}
+{% macro checkbox(name, value, labelText, attributes) -%}
     <div class="checkbox">
         <label>
-            <input type="checkbox" name="{{ name }}" id="{{ name }}" value="{{ value }}">
+            <input type="checkbox" name="{{ name }}" id="{{ name }}" value="{{ value }}"
+            {% set x = "" %}
+            {% if attributes!=null %}
+                {% for k,v in attributes.items() %}
+                    {{ k }}="{{ v }}"
+                {% endfor %}
+            {% endif %}
+            >
             {{ labelText }}
         </label>
     </div>

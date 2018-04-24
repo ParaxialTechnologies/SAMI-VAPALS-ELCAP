@@ -29,6 +29,8 @@
             additionalDisabledClasses: "visible-md-block visible-lg-block" //hide at all screen widths, except when MD or larger
         }, options);
 
+        var enabledAttributeName = "data-conditionally-enabled";
+
         function enableContainer($container) {
             if ($container != null && typeof $container !== 'undefined') {
                 $container.find("input, select, textarea")
@@ -60,11 +62,12 @@
 
         function disableContainer($container) {
             if ($container != null && typeof $container !== 'undefined') {
-                //include container object if it's actually an input.
-                var $fields = $container.find("input, select, textarea").addBack('input, select, textarea');
+                // Include hidden fields as they may be used to aggregate other validators.
+                // Also include the container object itself if it's actually an input.
+                var $fields = $container.find("input, select, textarea, input[type=hidden]").addBack('input, select, textarea');
 
                 //reset form validations for the fields we're about to disable
-                var fv = $("form.validated").data('formValidation');
+                var fv = $container.closest("form.validated").data('formValidation');
                 if (fv) {
                     $.each($fields, function (i, t) {
                         fv.resetField($(t));
@@ -138,6 +141,26 @@
                 disableContainer($enableContainer);
                 enableContainer($disableContainer);
             }
+
+            // With enable/disable functions done on the container, now trigger the change event on any field within
+            // the $container that is bound to another instance of this plugin. This is necessary because the
+            // enabled/disable functions called above will enabled/disable all fields in it's context including those
+            // that are controlled by a child element within this container.
+            $.each([$enableContainer, $disableContainer], function (i, $container){
+                if ($container){
+                    $container.find("["+enabledAttributeName+"]").trigger("change");
+                }
+            });
+
+            //finally reset any validations on now-disabled fields
+            var fv = $enableContainer.closest("form.validated").data('formValidation');
+            if (fv) {
+                var disabledFields = $enableContainer.find("input:disabled, select:disabled, textarea:disabled");
+                $.each(disabledFields, function (i, t) {
+                    console.log("resetting field " + $(t).attr('name'))
+                    fv.resetField($(t));
+                });
+            }
         });
 
         if (this.first().is(":radio")) {
@@ -151,6 +174,7 @@
             this.trigger("change");
         }
 
+        $(this).attr(enabledAttributeName, 'true');
         return this;
     };
 }(jQuery));

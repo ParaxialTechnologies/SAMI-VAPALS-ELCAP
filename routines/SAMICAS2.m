@@ -234,29 +234,32 @@ wsCASE(rtn,filter) ; generate case review page
  if $data(items("sort")) do  ; we have more forms
  . for  set zj=$order(items("sort",zj)) quit:zj=""  do  ;
  . . new cdate set cdate=zj
- . . new zform set zform=$order(items("sort",cdate,""))
- . . new zkey set zkey=$order(items("sort",cdate,zform,""))
- . . new zname set zname=$order(items("sort",cdate,zform,zkey,""))
- . . new dispdate set dispdate=$$key2dispDate(cdate)
- . . set zform="vapals:"_zkey ; all the new forms are vapals:key
- . . ;new geturl set geturl="/form?form="_zform_"&studyid="_sid_"&key="_zkey
- . . set cnt=cnt+1
- . . set rtn(cnt)="<tr><td> "_sid_" </td><td> - </td><td> - </td><td> - </td><td>"_dispdate_"</td><td>"
- . . set cnt=cnt+1
- . . set rtn(cnt)="<form method=""post"" action=""/vapals"">"_$char(13)
- . . set cnt=cnt+1
- . . set rtn(cnt)="<input name=""samiroute"" value=""form"" type=""hidden"">"_$char(13)
- . . set cnt=cnt+1
- . . set rtn(cnt)=" <input name=""studyid"" value="""_sid_""" type=""hidden"">"_$char(13)
- . . set cnt=cnt+1
- . . set rtn(cnt)=" <input name=""form"" value="""_zform_""" type=""hidden"">"_$char(13)
- . . set cnt=cnt+1
- . . set rtn(cnt)=" <input value="""_zname_""" class=""btn btn-link"" role=""link"" type=""submit"">"_$char(13)
- . . ;
- . . new samistatus s samistatus=""
- . . if $$getSamiStatus(sid,zform)="incomplete" set samistatus="(incomplete)"
- . . set cnt=cnt+1
- . . set rtn(cnt)="</form>"_samistatus_"</td><td></td></tr>"
+ . . new zk s zk=""
+ . . f  s zk=$order(items("sort",cdate,zk)) q:zk=""  d  ;
+ . . . new zform set zform=zk
+ . . . new zkey set zkey=$order(items("sort",cdate,zform,""))
+ . . . new zname set zname=$order(items("sort",cdate,zform,zkey,""))
+ . . . new dispdate set dispdate=$$key2dispDate(cdate)
+ . . . set zform="vapals:"_zkey ; all the new forms are vapals:key
+ . . . ;new geturl set geturl="/form?form="_zform_"&studyid="_sid_"&key="_zkey
+ . . . set cnt=cnt+1
+ . . . set rtn(cnt)="<tr><td> "_sid_" </td><td> - </td><td> - </td><td> - </td><td>"_dispdate_"</td><td>"
+ . . . set cnt=cnt+1
+ . . . set rtn(cnt)="<form method=""post"" action=""/vapals"">"_$char(13)
+ . . . set cnt=cnt+1
+ . . . set rtn(cnt)="<input name=""samiroute"" value=""form"" type=""hidden"">"_$char(13)
+ . . . set cnt=cnt+1
+ . . . set rtn(cnt)=" <input name=""studyid"" value="""_sid_""" type=""hidden"">"_$char(13)
+ . . . set cnt=cnt+1
+ . . . set rtn(cnt)=" <input name=""form"" value="""_zform_""" type=""hidden"">"_$char(13)
+ . . . set cnt=cnt+1
+ . . . set rtn(cnt)=" <input value="""_zname_""" class=""btn btn-link"" role=""link"" type=""submit"">"_$char(13)
+ . . . ;
+ . . . new samistatus s samistatus=""
+ . . . if $$getSamiStatus(sid,zform)="incomplete" set samistatus="(incomplete)"
+ . . . set cnt=cnt+1
+ . . . set rtn(cnt)="</form>"_samistatus_"</td><td></td></tr>"
+ . . . quit
  . . quit
  . quit
  ;
@@ -364,6 +367,10 @@ getItems(ary,sid) ; get items available for studyid
  . if zkey1="ceform" s zform="vapals:ceform"
  . if zkey1="fuform" s zform="vapals:ceform"
  . if zkey1="fuform" s fname="Follow-up"
+ . if zkey1="bxform" s fname="Biopsy"
+ . if zkey1="bxform" s zform="vapals:bxform"
+ . if zkey1="ptform" s zform="vapals:ptform"
+ . if zkey1="ptform" s fname="Pet Evaluation"
  . if $get(fname)="" set fname="unknown"
  . new zdate set zdate=$extract(zi,$length(zkey1)+2,$length(zi))
  . set tary("sort",zdate,zform,zi,fname)=""
@@ -512,8 +519,15 @@ wsNuForm(rtn,filter) ; select new form for patient (get service)
  . . . d findReplace^%ts(.ln,"newform","fuform")
  . . . s temp(zi)=ln
  . . s temp(zi)=""
+ . . i temp(zi+1)["PET Evaluation" d  q  ;
+ . . . d findReplace^%ts(.ln,"newform","ptform")
+ . . . s temp(zi)=ln
+ . . s temp(zi)=""
  . i ln["ctevaluation" d  ;
  . . d findReplace^%ts(.ln,"ctevaluation","ceform")
+ . . s temp(zi)=ln
+ . i ln["biopsy" d  ;
+ . . d findReplace^%ts(.ln,"biopsy","bxform")
  . . s temp(zi)=ln
  . ;
  . i ln["<script" i temp(zi+1)["function" d  ;
@@ -589,6 +603,22 @@ wsNuFormPost(ARGS,BODY,RESULT) ; post new form selection (post service)
  . do makeFuform(sid,key)
  . quit
  ;
+ if nuform="bxform" do  ;
+ . new key set key="bxform-"_datekey
+ . set ARGS("key")=key
+ . set ARGS("studyid")=sid
+ . set ARGS("form")="vapals:bxform"
+ . do makeBxform(sid,key)
+ . quit
+ ;
+ if nuform="ptform" do  ;
+ . new key set key="ptform-"_datekey
+ . set ARGS("key")=key
+ . set ARGS("studyid")=sid
+ . set ARGS("form")="vapals:ptform"
+ . do makePtform(sid,key)
+ . quit
+ ;
  do wsGetForm^%wf(.RESULT,.ARGS)
  ;
  ;@stanza 3 termination
@@ -660,6 +690,70 @@ makeFuform(sid,key) ; create Follow-up form
  ;@stanza 3 termination
  ;
  quit  ; end of makeFuform
+ ;
+makePtform(sid,key) ; create ct evaluation form
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;
+ ;@called-by
+ ; wsNuFormPost
+ ;@calls
+ ; $$setroot^%wd
+ ; $$sid2num^SAMIHOM2
+ ;@input
+ ; sid = studiy id
+ ; key =
+ ;@output
+ ; @root@("graph",sid,key)
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ;@stanza 2 create ct eval form
+ ;
+ new root set root=$$setroot^%wd("elcap-patients")
+ new sien set sien=$$sid2num^SAMIHOM2(sid)
+ quit:+sien=0
+ new cdate set cdate=$piece(key,"ptform-",2)
+ merge @root@("graph",sid,key)=@root@(sien)
+ set @root@("graph",sid,key,"samicreatedate")=cdate
+ d setSamiStatus^SAMICAS2(sid,key,"incomplete")
+ ;
+ ;@stanza 3 termination
+ ;
+ quit  ; end of makePtform
+ ;
+makeBxform(sid,key) ; create ct evaluation form
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;
+ ;@called-by
+ ; wsNuFormPost
+ ;@calls
+ ; $$setroot^%wd
+ ; $$sid2num^SAMIHOM2
+ ;@input
+ ; sid = studiy id
+ ; key =
+ ;@output
+ ; @root@("graph",sid,key)
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ;@stanza 2 create ct eval form
+ ;
+ new root set root=$$setroot^%wd("elcap-patients")
+ new sien set sien=$$sid2num^SAMIHOM2(sid)
+ quit:+sien=0
+ new cdate set cdate=$piece(key,"bxform-",2)
+ merge @root@("graph",sid,key)=@root@(sien)
+ set @root@("graph",sid,key,"samicreatedate")=cdate
+ d setSamiStatus^SAMICAS2(sid,key,"incomplete")
+ ;
+ ;@stanza 3 termination
+ ;
+ quit  ; end of makeBxform
  ;
  ;
  ;

@@ -300,11 +300,14 @@ FILESYS(RESULT,ARGS) ; Handle filesystem/*
  ; Get mime type
  ; TODO: Really really needs to be in a file
  N EXT S EXT=$P(PATH,".",$L(PATH,"."))
+ S RESULT("cache")=300
  I $E(EXT,1,3)="htm" S RESULT("mime")="text/html"
  I EXT="js" S RESULT("mime")="application/javascript"
  I EXT="css" S RESULT("mime")="text/css"
- I EXT="pdf" S RESULT("mime")="application/pdf"
- I EXT="svg" S RESULT("mime")="image/svg+xml" ; gpl 20171031
+ I EXT="pdf" S RESULT("mime")="application/pdf",RESULT("cache")=7200
+ I EXT="gif" S RESULT("mime")="image/gif",RESULT("cache")=86400
+ I EXT="png" S RESULT("mime")="image/png",RESULT("cache")=86400
+ I EXT="svg" S RESULT("mime")="image/svg+xml",RESULT("cache")=86400 ; gpl 20171031
  ;
  ; Read operation
  U PATH

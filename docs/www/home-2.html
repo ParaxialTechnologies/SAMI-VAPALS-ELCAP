@@ -182,7 +182,7 @@
         event.preventDefault();
         
         // Patient look-up
-        let query = $('#saminame').val();
+        let query   = $('#saminame').val();
         let request = $.ajax({
           url: "/ptlookup/" + query,
           dataType: "json"
@@ -194,7 +194,7 @@
         });
 
         request.fail(function(jqXHR, textStatus) {
-          console.log(textStatus);
+          console.log('No patients match your search text');
         });
       });
     });

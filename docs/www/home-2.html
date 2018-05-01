@@ -125,19 +125,21 @@
        </h3>
       </div>
       <div class="panel-body">
-       <form action="intake.html" method="post">
-        <div class="form-group">
-         <label for="saminame">
-          Name
-         </label>
-         <input class="form-control" id="saminame" name="saminame" placeholder="Last, First" type="text"/>
-        </div>
-        <div class="pull-right">
-         <button class="btn btn-primary" id="pt-lookup" type="submit">
-          Submit
-         </button>
-        </div>
-       </form>
+        
+        <form id="pt-lookup-form" role="form" novalidate>
+          <div class="form-group">
+            <label for="saminame" class="control-label">Patient</label>
+            <input id="pt-lookup-input" class="form-control fm-autocomplete" name="saminame" 
+              type="text" placeholder="Search text">
+    
+            <div class="form-control-feedback"></div>
+          </div>
+          
+          <div class="pull-right">
+            <button id="pt-lookup-btn" class="btn btn-primary fm-btn-show" disabled>Select</button>
+          </div>
+        </form>
+        
       </div>
      </div>
     </div>
@@ -177,27 +179,137 @@
     $(function () {
       $("#fvalue").focus();
       
-      // Patient lookup
-      $('#pt-lookup').click(function(event) {
-        event.preventDefault();
-        
-        // Patient look-up
-        let query   = $('#saminame').val();
-        let request = $.ajax({
-          url: "/ptlookup/" + query,
-          dataType: "json"
-        });
+      // // Patient lookup
+      defineWidget = function() {
+        /*
+        Autocomplete & find one record
+        Extend the
+        jQuery Autocomplete Widget ~ https://api.jqueryui.com/autocomplete/
+        */
+        $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {
+          _create: function() {
+            let input = this.element;
+            let vistaData = {};
+            input.data('vista', vistaData);
+            
+            // When focus returns to this input
+            input.focus(function() {
+              input.filemanAutocomplete('search');
+            });
+            
+            this._super();
+          }, // End ~ _create()
+          _renderItem: function(ul, item) {
+            let html = '';
+            html     = html + '<li>';
+            html     = html + '<span>' + item['name'] + '</span>';
+            html     = html + '<br>';
+            html     = html + '<span class="indent">';
+            html     = html + 'Last 5: ';
+            html     = html + item['last5']
+            html     = html + '</span>';
+            html     = html + '</li>';
+            
+            return $(html).appendTo(ul);
+          }, // End ~ _renderItem()
+          _destroy: function() {
+            let input = this.element;
+            input.val('');
+            
+            this._super();
+          }, // End ~ _destroy()
+          options: {
+            minLength: 0,
+            delay: 200,
+            classes: {
+              'ui-autocomplete': 'fm-autocomplete-menu'
+            },
+            source: function(request, response) {
+              let input = this.element;
+              
+              let query = $(input).val();
+              if (query == '') { return false; }
+              
+              let ajaxRequest = $.ajax({
+                url: "/ptlookup/" + query,
+                dataType: "json"
+              });
+              
+              ajaxRequest.done(function(msg) {
+                input.data('vista').patients = msg.result;
+                
+                response(msg.result);
+              });
 
-        request.done(function(msg) {
-          console.log('These are the matching patients:');
-          console.log(msg);
-        });
+              ajaxRequest.fail(function(jqXHR, textStatus) {
+                alert('No patients match your search text');
+              });
+            }, // End ~ source
+            // Events
+            //
+            // On blur, if value has changed
+            change: function(event, ui) {
+              let input = $(this);
 
-        request.fail(function(jqXHR, textStatus) {
-          console.log('No patients match your search text');
+              // Only take action if a record has been selected
+              if (input.data('vista').patient) {
+                // Delete the saved record if the input is empty
+                if (input.val() == '') {
+                  delete input.data('vista').patient;
+                  input.val('');
+                }
+                // Treat other changes like accidents and restore the input value
+                else {
+                  let selectedPtName = input.data('vista').patient.name;
+                  
+                  if (input.val() != selectedPtName) {
+                    input.val(selectedPtName);
+                  }
+                }
+              }
+            }, // End ~ change
+            select: function(event, ui) {
+              // Attach record data to the element & show display field
+              $(this).data('vista').patient = ui.item;
+              $(this).val(ui.item['name']);
+              
+              return false;
+            } // End ~ select
+            // End ~ events
+          } // End ~ options
+        }); // End ~ $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {})
+      }; // End ~ fileman.defineWidgets()
+
+      prepAutocomplete = function() {
+        // Initialize the patient lookup input widget
+        $('#pt-lookup-input').filemanAutocomplete();
+
+        // Set up show buttons
+        $('.fm-btn-show').click(function() {
+          let data = $(this).parents('form').find('.fm-autocomplete').data('fileman').record;
+
+          console.log('Record:');
+          console.log(data);
+
+          return false;
         });
-      });
-    });
+        // Enable show buttons
+        $('#pt-lookup-input').on('autocompleteselect', function(event, ui) {
+          console.log('Mark');
+          $('#pt-lookup-btn').removeAttr('disabled');
+        });
+        // Disable show buttons
+        // $('#pt-lookup-input').on('autocompletechange', function(event, ui) {
+        //   if (!$(this).val()) {
+        //     $('#pt-lookup-btn').attr('disabled', 'disabled');
+        //   }
+        // });
+      }; // End ~ fileman.prepAutocompletes
+      
+      defineWidget();
+      prepAutocomplete();
+      
+    }); // End ~ jQuery ready()
 
         // Load google charts
         google.charts.load('current', {'packages': ['corechart', 'bar']});

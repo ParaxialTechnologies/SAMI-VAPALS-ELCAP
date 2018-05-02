@@ -242,7 +242,7 @@
               });
 
               ajaxRequest.fail(function(jqXHR, textStatus) {
-                alert('No patients match your search text');
+                input.filemanAutocomplete('close');
               });
             }, // End ~ source
             // Events
@@ -273,37 +273,30 @@
               $(this).data('vista').patient = ui.item;
               $(this).val(ui.item['name']);
               
+              alert('Selected Patient\nName: ' + ui.item['name'] + '\nLast 5: ' + ui.item['last5']);
+              
               return false;
             } // End ~ select
             // End ~ events
           } // End ~ options
         }); // End ~ $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {})
-      }; // End ~ fileman.defineWidgets()
-
+      }; // End ~ fileman.defineWidget()
+      
       prepAutocomplete = function() {
         // Initialize the patient lookup input widget
         $('#pt-lookup-input').filemanAutocomplete();
-
-        // Set up show buttons
-        $('.fm-btn-show').click(function() {
-          let data = $(this).parents('form').find('.fm-autocomplete').data('fileman').record;
-
-          console.log('Record:');
-          console.log(data);
-
-          return false;
-        });
+        
         // Enable show buttons
-        $('#pt-lookup-input').on('autocompleteselect', function(event, ui) {
-          console.log('Mark');
+        $('#pt-lookup-input').on('filemanautocompleteselect', function(event, ui) {
+          
           $('#pt-lookup-btn').removeAttr('disabled');
         });
         // Disable show buttons
-        // $('#pt-lookup-input').on('autocompletechange', function(event, ui) {
-        //   if (!$(this).val()) {
-        //     $('#pt-lookup-btn').attr('disabled', 'disabled');
-        //   }
-        // });
+        $('#pt-lookup-input').on('filemanautocompletechange', function(event, ui) {
+          if (!$(this).val()) {
+            $('#pt-lookup-btn').attr('disabled', 'disabled');
+          }
+        });
       }; // End ~ fileman.prepAutocompletes
       
       defineWidget();

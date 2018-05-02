@@ -514,21 +514,21 @@ wsNuForm(rtn,filter) ; select new form for patient (get service)
  . . s zi=zi+1
  . ;
  . i ln["background" s temp(zi)=""
- . i ln["newform" d  ;
- . . i temp(zi+1)["Follow-up" d  q  ;
- . . . d findReplace^%ts(.ln,"newform","fuform")
- . . . s temp(zi)=ln
- . . s temp(zi)=""
- . . i temp(zi+1)["PET Evaluation" d  q  ;
- . . . d findReplace^%ts(.ln,"newform","ptform")
- . . . s temp(zi)=ln
- . . s temp(zi)=""
+ . i ln["followup" d  ;
+ . . d findReplace^%ts(.ln,"followup","fuform")
+ . . s temp(zi)=ln
+ . i ln["pet" d  ;
+ . . d findReplace^%ts(.ln,"pet","ptform")
+ . . s temp(zi)=ln
  . i ln["ctevaluation" d  ;
  . . d findReplace^%ts(.ln,"ctevaluation","ceform")
  . . s temp(zi)=ln
  . i ln["biopsy" d  ;
  . . d findReplace^%ts(.ln,"biopsy","bxform")
  . . s temp(zi)=ln
+ . i ln["newform" d  ;
+ . . s temp(zi)=""
+ . . s temp(zi+1)=""
  . ;
  . i ln["<script" i temp(zi+1)["function" d  ;
  . . s zi=$$scanFor^SAMIHOM2(.temp,zi,"</script")

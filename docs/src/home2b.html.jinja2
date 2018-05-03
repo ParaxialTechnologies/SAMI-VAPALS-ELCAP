@@ -1,0 +1,99 @@
+{% extends 'layout.jinja2' %}
+{% import 'forms.jinja2' as f %}
+{% block title %}{{ title | escape }}{% endblock %}
+
+{% block body %}
+    <div class="container-fluid" style="max-width:1550px">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Patient Lookup</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form method="post">
+                            <div class="form-group">
+                                <label for="pt-lookup-input">Patient</label>
+                                <input type="text" class="form-control" id="pt-lookup-input" name="pt-lookup-input"
+                                       placeholder="Last, First">
+                            </div>
+                            <div class="pull-right">
+                                <button id="pt-lookup-btn" type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h1>Statistics
+            <small>MOCKUPS ONLY</small>
+        </h1>
+
+        <div id="projectRural" class="col-lg-3 col-sm-6"></div>
+        <div id="siteRural" class="col-lg-3 col-sm-6"></div>
+
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script language="JavaScript">
+        $(function () {
+            // Initialize the patient lookup input widget
+            var $patientLookupInput = $('#pt-lookup-input');
+            $patientLookupInput.filemanAutocomplete();
+
+            $patientLookupInput.on('filemanautocompleteselect', function (event, ui) {
+                // Enable show buttons
+                $('#pt-lookup-btn').removeAttr('disabled');
+            }).on('filemanautocompletechange', function (event, ui) {
+                if (!$(this).val()) {
+                    // Disable show buttons
+                    $('#pt-lookup-btn').attr('disabled', 'disabled');
+                }
+            }).focus();
+        });
+
+        // Load google charts
+        google.charts.load('current', {'packages': ['corechart', 'bar']});
+        google.charts.setOnLoadCallback(drawCharts);
+
+        function drawProject() {
+            var projectData = google.visualization.arrayToDataTable([
+                ['Task', 'Hours per Day'],
+                ['Rural', 600],
+                ['Urban', 400]
+            ]);
+            new google.visualization.PieChart(document.getElementById('projectRural'))
+                .draw(projectData, {
+                    'title': 'Project-wide Rural Engagement',
+                    height: 300,
+                    is3D: true,
+                });
+        }
+
+        function drawSite() {
+            var siteData = google.visualization.arrayToDataTable([
+                ['Task', 'Hours per Day'],
+                ['Rural', 68],
+                ['Urban', 32]
+            ]);
+
+
+            new google.visualization.PieChart(document.getElementById('siteRural'))
+                .draw(siteData, {
+                    'title': 'Rural Engagement in Phoenix',
+                    height: 300,
+                    is3D: true,
+                });
+        }
+
+        // Draw the chart and set the chart values
+        function drawCharts() {
+            drawProject();
+            drawSite();
+            //TODO: redraw on window resize
+        }
+    </script>
+
+{% endblock %}

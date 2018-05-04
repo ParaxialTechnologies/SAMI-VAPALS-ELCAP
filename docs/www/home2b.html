@@ -116,6 +116,31 @@
    </div>
    <div class="col-lg-3 col-sm-6" id="siteRural">
    </div>
+   
+   <div class="modal fade" id="enrollment-confirmation" role="dialog" tabindex="-1">
+    <div class="modal-dialog" role="document">
+     <div class="modal-content">
+      <div class="modal-header">
+       <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">
+         ×
+        </span>
+       </button>
+       <h4 class="modal-title">Caution</h4>
+      </div>
+      <div class="modal-body">
+       <p>
+        Are you sure you register this patient with VA-PALS?
+       </p>
+      </div>
+      <div class="modal-footer">
+       <button class="btn btn-default" data-dismiss="modal" type="button">No</button>
+       <button class="btn btn-primary" type="button">Yes</button>
+      </div>
+     </div><!-- End ~.modal-content -->
+    </div><!-- End ~.modal-dialog -->
+   </div><!-- End ~ #enrollment-confirmation -->
+   
   </div>
   <footer>
    <div class="container-fluid" style="max-width:1550px">
@@ -138,62 +163,70 @@
     }
   </script>
   <script language="JavaScript">
-   $(function () {
-            // Initialize the patient lookup input widget
-            var $patientLookupInput = $('#pt-lookup-input');
-            $patientLookupInput.filemanAutocomplete();
+      $(function () {
+          // Set up the patient lookup submit button
+          $('#pt-lookup-btn').click(event, function() {
+              event.preventDefault();
+              event.stopPropagation();
+  
+              $('#enrollment-confirmation').modal('show');
+          });
 
-            $patientLookupInput.on('filemanautocompleteselect', function (event, ui) {
-                // Enable show buttons
-                $('#pt-lookup-btn').removeAttr('disabled');
-            }).on('filemanautocompletechange', function (event, ui) {
-                if (!$(this).val()) {
-                    // Disable show buttons
-                    $('#pt-lookup-btn').attr('disabled', 'disabled');
-                }
-            }).focus();
-        });
+          // Initialize the patient lookup input widget
+          var $patientLookupInput = $('#pt-lookup-input');
+          $patientLookupInput.filemanAutocomplete();
 
-        // Load google charts
-        google.charts.load('current', {'packages': ['corechart', 'bar']});
-        google.charts.setOnLoadCallback(drawCharts);
+          $patientLookupInput.on('filemanautocompleteselect', function (event, ui) {
+              // Enable show buttons
+              $('#pt-lookup-btn').removeAttr('disabled');
+          }).on('filemanautocompletechange', function (event, ui) {
+              if (!$(this).val()) {
+                  // Disable show buttons
+                  $('#pt-lookup-btn').attr('disabled', 'disabled');
+              }
+          }).focus();
+      });
 
-        function drawProject() {
-            var projectData = google.visualization.arrayToDataTable([
-                ['Task', 'Hours per Day'],
-                ['Rural', 600],
-                ['Urban', 400]
-            ]);
-            new google.visualization.PieChart(document.getElementById('projectRural'))
-                .draw(projectData, {
-                    'title': 'Project-wide Rural Engagement',
-                    height: 300,
-                    is3D: true,
-                });
-        }
+      // Load google charts
+      google.charts.load('current', {'packages': ['corechart', 'bar']});
+      google.charts.setOnLoadCallback(drawCharts);
 
-        function drawSite() {
-            var siteData = google.visualization.arrayToDataTable([
-                ['Task', 'Hours per Day'],
-                ['Rural', 68],
-                ['Urban', 32]
-            ]);
+      function drawProject() {
+          var projectData = google.visualization.arrayToDataTable([
+              ['Task', 'Hours per Day'],
+              ['Rural', 600],
+              ['Urban', 400]
+          ]);
+          new google.visualization.PieChart(document.getElementById('projectRural'))
+              .draw(projectData, {
+                  'title': 'Project-wide Rural Engagement',
+                  height: 300,
+                  is3D: true,
+              });
+      }
+
+      function drawSite() {
+          var siteData = google.visualization.arrayToDataTable([
+              ['Task', 'Hours per Day'],
+              ['Rural', 68],
+              ['Urban', 32]
+          ]);
 
 
-            new google.visualization.PieChart(document.getElementById('siteRural'))
-                .draw(siteData, {
-                    'title': 'Rural Engagement in Phoenix',
-                    height: 300,
-                    is3D: true,
-                });
-        }
+          new google.visualization.PieChart(document.getElementById('siteRural'))
+              .draw(siteData, {
+                  'title': 'Rural Engagement in Phoenix',
+                  height: 300,
+                  is3D: true,
+              });
+      }
 
-        // Draw the chart and set the chart values
-        function drawCharts() {
-            drawProject();
-            drawSite();
-            //TODO: redraw on window resize
-        }
+      // Draw the chart and set the chart values
+      function drawCharts() {
+          drawProject();
+          drawSite();
+          //TODO: redraw on window resize
+      }
   </script>
   <script language="JavaScript">
    //Initialize Form Validation

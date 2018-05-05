@@ -38,6 +38,11 @@ function validateInternationalDate(value, validator, $field) {
         console.log("validateInternationalDate() field is disabled. Returning true")
         return true;
     }
+    var required = $field.is(":required");
+    if (!required && value == "") {
+        console.log("validateInternationalDate() field is not required and is empty. Skipping validation");
+        return true;
+    }
     var m = new moment(value, VAPALS.DATE_FORMAT, true);
     if (!m.isValid()) {
         console.log("validateInternationalDate() field is invalid. Returning false")

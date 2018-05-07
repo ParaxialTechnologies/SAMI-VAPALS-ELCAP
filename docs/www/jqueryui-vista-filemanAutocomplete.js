@@ -25,6 +25,15 @@ $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {
         html = html + 'Last 5: ';
         html = html + item['last5']
         html = html + '</span>';
+        html = html + '<br>';
+        html = html + '<span class="indent">';
+        html = html + 'Enrolled in VA-PALS: ';
+        
+        let status = item['vapals'];
+        if (status == 1) status = 'Yes'; else status = 'No';
+        
+        html = html + status;
+        html = html + '</span>';
         html = html + '</li>';
 
         return $(html).appendTo(ul);

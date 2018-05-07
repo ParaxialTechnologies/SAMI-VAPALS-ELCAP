@@ -92,8 +92,6 @@ $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {
             $(this).data('vista').patient = ui.item;
             $(this).val(ui.item['name']);
 
-            alert('Selected Patient\nName: ' + ui.item['name'] + '\nLast 5: ' + ui.item['last5']);
-
             return false;
         }
     }

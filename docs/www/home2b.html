@@ -89,7 +89,11 @@
        </h3>
       </div>
       <div class="panel-body">
-       <form method="post">
+       <form action="/vapals" id="pt-lookup-form" method="post">
+        <input id="pt-lookup-samiroute" name="samiroute" type="hidden" value=""/>
+        <input id="pt-lookup-dfn" name="dfn" type="hidden" value=""/>
+        <input id="pt-lookup-name" name="name" type="hidden" value=""/>
+        <input id="pt-lookup-studyid" name="studyid" type="hidden" value=""/>
         <div class="form-group">
          <label for="pt-lookup-input">
           Patient
@@ -97,7 +101,7 @@
          <input class="form-control" id="pt-lookup-input" name="pt-lookup-input" placeholder="Name or LAST5" type="text"/>
         </div>
         <div class="pull-right">
-         <button class="btn btn-primary" id="pt-lookup-btn" type="submit">
+         <button class="btn btn-primary" disabled="" id="pt-lookup-btn" type="submit">
           Submit
          </button>
         </div>
@@ -156,7 +160,7 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.05.05
+     SNAPSHOT 2018.05.07
     </span>
    </div>
   </footer>
@@ -177,8 +181,7 @@
                 event.stopPropagation();
                 
                 $('#pt-inclusion').modal('hide');
-                
-                alert('Replace this alert with a POST call!');
+                $('#pt-lookup-form').submit();
             });
             
             // Set up the patient lookup submit button
@@ -186,7 +189,19 @@
                 event.preventDefault();
                 event.stopPropagation();
                 
-                $('#pt-inclusion').modal('show');
+                let patient = Object.assign({}, $('#pt-lookup-input').data('vista').patient);
+                $('#pt-lookup-dfn').val(patient.dfn);
+                $('#pt-lookup-name').val(patient.name);
+                $('#pt-lookup-studyid').val(patient.studyid);
+
+                if (patient.vapals == 1) {
+                    $('#pt-lookup-samiroute').val('casereview');
+                    $('#pt-lookup-form').submit();
+                }
+                else {
+                    $('#pt-lookup-samiroute').val('newcase');
+                    $('#pt-inclusion').modal('show');
+                }
             });
             
             // Initialize the patient lookup input widget

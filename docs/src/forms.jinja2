@@ -1,7 +1,3 @@
-{# today: variable used to define what "today" is. Hardcoded in Mumps code, so do not change.#}
-
-{% set today="01/Mar/2018" %}
-
 {% macro floatingLabel(for, text) -%}
     <label for="{{ for }}" class="visible-xs visible-sm">{{ text }}</label>
     <label for="{{ for }}" class="text-right pull-right hidden-xs hidden-sm">{{ text }}</label>
@@ -50,24 +46,23 @@
     <div class="input-group datepicker">
         <input class="form-control" id="{{ name }}" name="{{ name }}" aria-describedby="{{ name }}-addon"
                 {{ " required=\"required\"" if requiredMessage else "" }}
-                {{ " data-fv-notempty-message=\"" + requiredMessage + "\"" if requiredMessage else "" }}
-                {{ " data-max-date=\"" + today + "\"" if pastDateRequired else "" }}
-                data-fv-callback="true" data-fv-callback-message="Enter a valid date"
-                data-fv-callback-callback="validateInternationalDate">
+                {{ " data-fv-notempty-message=\"" + requiredMessage + "\"" if requiredMessage else "" }}              
+                {{ " data-fv-date-max=\"VAPALS.todaysDate\"" if pastDateRequired else "" }}
+                data-fv-date="true">
         <div class="input-group-addon">
             <div class="input-group-text" id="{{ name }}-addon">
                 <i class="fa fa-calendar" aria-hidden="true"></i>
             </div>
         </div>
     </div>
-    <small class="form-text text-muted">DD/MMM/YYYY</small>
+    <small class="form-text text-muted">MM/DD/YYYY</small>
 {%- endmacro %}
 
 {% macro yearpicker(name, pastdateRequired, required, small, helpText) -%}
     <input class="form-control {{ "input-sm" if small else "" }} numeric yearpicker" type="text"
            name="{{ name }}" id="{{ name }}" size="5"
             {{ " required=\"required\"" if required else "" }}
-            {{ " data-max-date=\"" + today + "\"" if pastDateRequired else "" }}
+            {{ " data-fv-date-max=\"VAPALS.todaysDate\"" if pastDateRequired else "" }}
            data-fv-integer="true" maxlength="4"
            placeholder="YYYY" title="Last cigarette year">
     {{ "<small class=\"help-block\">" + helpText + "</small>" if helpText else "" }}

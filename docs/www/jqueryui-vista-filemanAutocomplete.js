@@ -17,25 +17,39 @@ $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {
         this._super();
     }, // End ~ _create()
     _renderItem: function (ul, item) {
-        let html = '';
-        html = html + '<li>';
-        html = html + '<span>' + item['name'] + '</span>';
-        html = html + '<br>';
-        html = html + '<span class="indent">';
-        html = html + 'Last 5: ';
-        html = html + item['last5']
-        html = html + '</span>';
-        html = html + '<br>';
-        html = html + '<span class="indent">';
-        html = html + 'Enrolled in VA-PALS: ';
+        let status = item['vapals'] || 0;
+                    
+        let html   = '';
+        if (status == 0) {
+            html   = html + '<li class="enrolled">';
+        }
+        else {
+            html   = html + '<li>';
+        }
+        html       = html + '<span>' + item['name'] + '</span>';
+        html       = html + '<br>';
+        html       = html + '<span class="indent">';
+        html       = html + 'Last 5: ';
+        html       = html + item['last5']
+        html       = html + '</span>';
+        html       = html + '<br>';
+        html       = html + '<span class="indent">';
+        html       = html + 'DOB: ';
+        html       = html + item['dob']
+        html       = html + '</span>';
+        html       = html + '<br>';
+        html       = html + '<span class="indent">';
+        html       = html + 'Gender: ';
+        html       = html + item['gender']
+        html       = html + '</span>';
+        if (status == 1) {
+            html   = html + '<br>';
+            html   = html + '<span class="indent">';
+            html   = html + 'Enrolled in VA-PALS';
+            html   = html + '</span>';
+        }
+        html       = html + '</li>';
         
-        let status = item['vapals'];
-        if (status == 1) status = 'Yes'; else status = 'No';
-        
-        html = html + status;
-        html = html + '</span>';
-        html = html + '</li>';
-
         return $(html).appendTo(ul);
     }, // End ~ _renderItem()
     _destroy: function () {

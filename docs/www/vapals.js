@@ -130,7 +130,11 @@ var VAPALS = new function () {
         }
     };
 
-    this.DATE_FORMAT = "DD/MMM/YYYY";
+    this.todaysDate = function() {
+        return new Date();
+    }
 
-    this.DATE_TIME_FORMAT = "DD/MMM/YYYY hh:mm:ss";
+    this.DATE_FORMAT = "MM/DD/YYYY";
+
+    this.DATE_TIME_FORMAT = "MM/DD/YYYY hh:mm:ss";
 };

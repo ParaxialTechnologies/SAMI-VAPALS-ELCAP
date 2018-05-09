@@ -25,34 +25,6 @@ function numericHandlerKeydown(e) {
 }
 
 /**
- * Extension of form validation framework to validate a date field in DD/MMM/YYYY fommat
- * @param value the value to validate
- * @param validator the validator name
- * @param $field object of the field being validated
- * @returns {boolean} true if valid.
- */
-function validateInternationalDate(value, validator, $field) {
-    var enabled = $field.is(":enabled");
-    console.log("validateInternationalDate() Entered. value=" + value + ", validator=" + validator + ", field=" + $field.attr("id") + ", enabled: " + enabled)
-    if (!enabled) {
-        console.log("validateInternationalDate() field is disabled. Returning true")
-        return true;
-    }
-    var required = $field.is(":required");
-    if (!required && value == "") {
-        console.log("validateInternationalDate() field is not required and is empty. Skipping validation");
-        return true;
-    }
-    var m = new moment(value, VAPALS.DATE_FORMAT, true);
-    if (!m.isValid()) {
-        console.log("validateInternationalDate() field is invalid. Returning false")
-        return false;
-    }
-    console.log("validateInternationalDate() field is valid. Returning true")
-    return true;   // return true instead of value
-}
-
-/**
  * Helper function that revalidates a date when it has changed by manual change or via the datepicker plugin
  * @param e
  * @returns {boolean}
@@ -75,9 +47,9 @@ $(function () {
     $.each($(".datepicker"), function (i, el) {
         var $input = $(el).find("input").addBack("input"); //find the actual input control
         var maxDateValue = $input.data('max-date');
-        var maxDate = maxDateValue ? moment(maxDateValue, "DD/MMM/YYYY").endOf('day') : false; //false == no max
+        var maxDate = maxDateValue ? moment(maxDateValue, "MM/DD/YYYY").endOf('day') : false; //false == no max
         $(el).datetimepicker({
-            format: 'DD/MMM/YYYY',
+            format: 'MM/DD/YYYY',
             useCurrent: false,
             keepInvalid: true,
             maxDate: maxDate //hack to not select today

@@ -20,7 +20,7 @@
               data-fv-button-selector="#submit-button">
 
             {# TODO: inject studyID #}
-            <input type="hidden" name="cesid" value="VEP0001" required="required">
+            <input type="hidden" name="cesid" value="VEP0001">
 
             <div class="row">
                 <div class="col-sm-4 col-md-3 col-lg-2 form-group">
@@ -219,13 +219,18 @@
                                 <th>Nodule 3</th>
                                 <th>Nodule 4</th>
                                 <th>Nodule 5</th>
-                                <th>Additional Nodules <select name="cefctn" onChange="bm()" class="form-control">
-                                    <option value="6"> Nodule 6</option>
-                                    <option value="7"> Nodule 7</option>
-                                    <option value="8"> Nodule 8</option>
-                                    <option value="9"> Nodule 9</option>
-                                    <option value="10"> Nodule 10</option>
-                                </select></th>
+                                <th>
+                                    <div class="form-group">
+                                        <label>Additional Nodules</label>
+                                        <select name="cefctn" onChange="bm()" class="form-control">
+                                            <option value="6"> Nodule 6</option>
+                                            <option value="7"> Nodule 7</option>
+                                            <option value="8"> Nodule 8</option>
+                                            <option value="9"> Nodule 9</option>
+                                            <option value="10"> Nodule 10</option>
+                                        </select>
+                                    </div>
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -242,25 +247,27 @@
                                 </td>
                                 {% for i in r %}
                                     <td>
-                                        <select name="cect{{ i }}ch" onChange="newStat({{ i }})">
-                                            <option value="-"> -
-                                            <option value="n"> newly seen</option>
-                                            <option value="pn"> prev seen, no change</option>
-                                            <option value="pd"> prev seen, slight decr</option>
-                                            <option value="pe"> prev seen, marked decr</option>
-                                            <option value="pi"> prev seen, slight incr</option>
-                                            <option value="pj"> prev seen, marked incr</option>
-                                            <option value="po"> prev seen, obscured</option>
-                                            <option value="pw"> prev seen, resolved</option>
-                                            <option value="px"> prev seen, not a nodule</option>
-                                            <option value="pr"> prev seen, resected</option>
-                                            <option value="rn"> retrospect, no chg</option>
-                                            <option value="rd"> retrospect, decrease</option>
-                                            <option value="ri"> retrospect, slight incr</option>
-                                            <option value="rj"> retrospect, marked incr</option>
-                                            <option value="pk"> not in outside report</option>
-                                            <option value="pv"> not included in scan</option>
-                                        </select>
+                                        <div class="form-group">
+                                            <select name="cect{{ i }}ch" onChange="newStat({{ i }})">
+                                                <option value="-"> -
+                                                <option value="n"> newly seen</option>
+                                                <option value="pn"> prev seen, no change</option>
+                                                <option value="pd"> prev seen, slight decr</option>
+                                                <option value="pe"> prev seen, marked decr</option>
+                                                <option value="pi"> prev seen, slight incr</option>
+                                                <option value="pj"> prev seen, marked incr</option>
+                                                <option value="po"> prev seen, obscured</option>
+                                                <option value="pw"> prev seen, resolved</option>
+                                                <option value="px"> prev seen, not a nodule</option>
+                                                <option value="pr"> prev seen, resected</option>
+                                                <option value="rn"> retrospect, no chg</option>
+                                                <option value="rd"> retrospect, decrease</option>
+                                                <option value="ri"> retrospect, slight incr</option>
+                                                <option value="rj"> retrospect, marked incr</option>
+                                                <option value="pk"> not in outside report</option>
+                                                <option value="pv"> not included in scan</option>
+                                            </select>
+                                        </div>
                                     </td>
                                 {% endfor %}
                             </tr>
@@ -275,19 +282,21 @@
                                 </td>
                                 {% for i in r %}
                                     <td>
-                                        <select name="cect{{ i }}en">
-                                            <option value="-"> -</option>
-                                            <option value="no"> No</option>
-                                            <option value="tr"> Trachea</option>
-                                            <option value="rm"> Rt. Main</option>
-                                            <option value="lm"> Lt. Main</option>
-                                            <option value="bi"> BI</option>
-                                            <option value="rul"> RUL</option>
-                                            <option value="rml"> RML</option>
-                                            <option value="rll"> RLL</option>
-                                            <option value="lul"> LUL</option>
-                                            <option value="lll"> LLL</option>
-                                        </select>
+                                        <div class="form-group">
+                                            <select name="cect{{ i }}en">
+                                                <option value="-"> -</option>
+                                                <option value="no"> No</option>
+                                                <option value="tr"> Trachea</option>
+                                                <option value="rm"> Rt. Main</option>
+                                                <option value="lm"> Lt. Main</option>
+                                                <option value="bi"> BI</option>
+                                                <option value="rul"> RUL</option>
+                                                <option value="rml"> RML</option>
+                                                <option value="rll"> RLL</option>
+                                                <option value="lul"> LUL</option>
+                                                <option value="lll"> LLL</option>
+                                            </select>
+                                        </div>
                                     </td>
                                 {% endfor %}
                             </tr>
@@ -299,15 +308,17 @@
                                 </td>
                                 {% for i in r %}
                                     <td>
-                                        <select name="cect{{ i }}ll">
-                                            <option value="-"> -</option>
-                                            <option value="end"> Endobr</option>
-                                            <option value="lul"> LUL</option>
-                                            <option value="lll"> LLL</option>
-                                            <option value="rul"> RUL</option>
-                                            <option value="rml"> RML</option>
-                                            <option value="rll"> RLL</option>
-                                        </select>
+                                        <div class="form-group">
+                                            <select name="cect{{ i }}ll">
+                                                <option value="-"> -</option>
+                                                <option value="end"> Endobr</option>
+                                                <option value="lul"> LUL</option>
+                                                <option value="lll"> LLL</option>
+                                                <option value="rul"> RUL</option>
+                                                <option value="rml"> RML</option>
+                                                <option value="rll"> RLL</option>
+                                            </select>
+                                        </div>
                                     </td>
                                 {% endfor %}
                             </tr>
@@ -320,7 +331,9 @@
                                 </td>
                                 {% for i in r %}
                                     <td>
-                                        <input type="text" name="cect{{ i }}pld">
+                                        <div class="form-group">
+                                            <input type="text" name="cect{{ i }}pld">
+                                        </div>
                                     </td>
                                 {% endfor %}
                             </tr>
@@ -332,7 +345,9 @@
                                 </td>
                                 {% for i in r %}
                                     <td>
-                                        <input type="text" name="cect{{ i }}sl" size="4">
+                                        <div class="form-group">
+                                            <input type="text" name="cect{{ i }}sl" size="4">
+                                        </div>
                                     </td>
                                 {% endfor %}
                             </tr>
@@ -344,7 +359,9 @@
                                 </td>
                                 {% for i in r %}
                                     <td>
-                                        <input type="text" name="cect{{ i }}sw" size="4">
+                                        <div class="form-group">
+                                            <input type="text" name="cect{{ i }}sw" size="4">
+                                        </div>
                                     </td>
                                 {% endfor %}
                             </tr>
@@ -356,13 +373,15 @@
                                 </td>
                                 {% for i in r %}
                                     <td>
-                                        <select name="cect{{ i }}nt" onChange="newTexture({{ i }})">
-                                            <option value="-"> -</option>
-                                            <option value="s"> solid</option>
-                                            <option value="m"> part-solid</option>
-                                            <option value="g"> non-solid</option>
-                                            <option value="o"> other (see comment)</option>
-                                        </select>
+                                        <div class="form-group">
+                                            <select name="cect{{ i }}nt" onChange="newTexture({{ i }})">
+                                                <option value="-"> -</option>
+                                                <option value="s"> solid</option>
+                                                <option value="m"> part-solid</option>
+                                                <option value="g"> non-solid</option>
+                                                <option value="o"> other (see comment)</option>
+                                            </select>
+                                        </div>
                                     </td>
                                 {% endfor %}
                             </tr>
@@ -374,10 +393,11 @@
                                 </td>
                                 {% for i in r %}
                                     <td>
-                                        <input type="text" name="cect{{ i }}ssl" disabled="true" size="4">
-                                        &nbsp; x &nbsp;
-                                        <input type="text" name="cect{{ i }}ssw" disabled="true" size="4">
-
+                                        <div class="form-group">
+                                            <input type="text" name="cect{{ i }}ssl" disabled="true" size="4">
+                                            &nbsp; x &nbsp;
+                                            <input type="text" name="cect{{ i }}ssw" disabled="true" size="4">
+                                        </div>
                                     </td>
                                 {% endfor %}
                             </tr>
@@ -604,9 +624,9 @@
                     <label for="cennod">Emphysema</label>
                     {{ f.checkbox("ceemv","e","n/v") }}
                     {{ f.inlineRadio("ceem", "ceem-no", "no", "none", true) }}
-                    {{ f.inlineRadio("ceem", "ceem-mi", "mi", "mild", true) }}
-                    {{ f.inlineRadio("ceem", "ceem-mo", "mo", "moderate", true) }}
-                    {{ f.inlineRadio("ceem", "ceem-se", "se", "severe", true) }}
+                    {{ f.inlineRadio("ceem", "ceem-mi", "mi", "mild", false) }}
+                    {{ f.inlineRadio("ceem", "ceem-mo", "mo", "moderate", false) }}
+                    {{ f.inlineRadio("ceem", "ceem-se", "se", "severe", false) }}
                 </div>
             </div>
 
@@ -635,7 +655,9 @@
                         </td>
                         {% for i in [1,2,3,4,5] %}
                             <td style="padding-top:0px;">
-                                {{ f.checkbox("cecbcl"+i|string, rf[i-1], "") }}
+                                <div class="form-group">
+                                    {{ f.checkbox("cecbcl"+i|string, rf[i-1], "") }}
+                                </div>
                             </td>
                         {% endfor %}
                     </tr>
@@ -648,7 +670,9 @@
                         </td>
                         {% for i in [1,2,3,4,5] %}
                             <td style="padding-top:0px;">
-                                {{ f.checkbox("cecbbl"+i|string, rf[i-1], "") }}
+                                <div class="form-group">
+                                    {{ f.checkbox("cecbbl"+i|string, rf[i-1], "") }}
+                                </div>
                             </td>
                         {% endfor %}
                     </tr>
@@ -663,7 +687,9 @@
                         </td>
                         {% for i in [1,2,3,4,5] %}
                             <td style="padding-top:0px;">
-                                {{ f.checkbox("cerdcl"+i|string, rf[i-1], "") }}
+                                <div class="form-group">
+                                    {{ f.checkbox("cerdcl"+i|string, rf[i-1], "") }}
+                                </div>
                             </td>
                         {% endfor %}
                     </tr>
@@ -676,7 +702,9 @@
                         </td>
                         {% for i in [1,2,3,4,5] %}
                             <td style="padding-top:0px;">
-                                {{ f.checkbox("cescrl"+i|string, rf[i-1], "") }}
+                                <div class="form-group">
+                                    {{ f.checkbox("cescrl"+i|string, rf[i-1], "") }}
+                                </div>
                             </td>
                         {% endfor %}
                     </tr>
@@ -700,7 +728,9 @@
                         </td>
                         {% for i in [1,2,3,4,5] %}
                             <td style="padding-top:0px;">
-                                {{ f.checkbox("cebrsbl"+i|string, rf[i-1], "") }}
+                                <div class="form-group">
+                                    {{ f.checkbox("cebrsbl"+i|string, rf[i-1], "") }}
+                                </div>
                             </td>
                         {% endfor %}
                     </tr>
@@ -714,7 +744,9 @@
                         </td>
                         {% for i in [1,2,3,4,5] %}
                             <td style="padding-top:0px;">
-                                {{ f.checkbox("cebrssl"+i|string, rf[i-1], "") }}
+                                <div class="form-group">
+                                    {{ f.checkbox("cebrssl"+i|string, rf[i-1], "") }}
+                                </div>
                             </td>
                         {% endfor %}
                     </tr>
@@ -753,7 +785,9 @@
                         </td>
                         {% for i in [1,2,3,4,5] %}
                             <td style="padding-top:0px;">
-                                {{ f.checkbox("cerbl"+i|string, rf[i-1], "") }}
+                                <div class="form-group">
+                                    {{ f.checkbox("cerbl"+i|string, rf[i-1], "") }}
+                                </div>
                             </td>
                         {% endfor %}
                     </tr>
@@ -767,7 +801,9 @@
                         </td>
                         {% for i in [1,2,3,4,5] %}
                             <td style="padding-top:0px;">
-                                {{ f.checkbox("cepgol"+i|string, rf[i-1], "") }}
+                                <div class="form-group">
+                                    {{ f.checkbox("cepgol"+i|string, rf[i-1], "") }}
+                                </div>
                             </td>
                         {% endfor %}
                     </tr>
@@ -781,7 +817,9 @@
                         </td>
                         {% for i in [1,2,3,4,5] %}
                             <td style="padding-top:0px;">
-                                {{ f.checkbox("ceretl"+i|string, rf[i-1], "") }}
+                                <div class="form-group">
+                                    {{ f.checkbox("ceretl"+i|string, rf[i-1], "") }}
+                                </div>
                             </td>
                         {% endfor %}
                     </tr>
@@ -795,7 +833,9 @@
                         </td>
                         {% for i in [1,2,3,4,5] %}
                             <td style="padding-top:0px;">
-                                {{ f.checkbox("cephcl"+i|string, rf[i-1], "") }}
+                                <div class="form-group">
+                                    {{ f.checkbox("cephcl"+i|string, rf[i-1], "") }}
+                                </div>
                             </td>
                         {% endfor %}
                     </tr>
@@ -839,7 +879,9 @@
                         </td>
                         {% for i in [1,2,3,4,5] %}
                             <td style="padding-top:0px;">
-                                {{ f.checkbox("cebatrl"+i|string, rf[i-1], "") }}
+                                <div class="form-group">
+                                    {{ f.checkbox("cebatrl"+i|string, rf[i-1], "") }}
+                                </div>
                             </td>
                         {% endfor %}
                     </tr>
@@ -913,7 +955,9 @@
                     <tbody>
                     <tr>
                         <td>Coronary Calcification</td>
-                        <td>{{ f.checkbox("ceccv","e","n/v") }}</td>
+                        <td>
+                            <div class="form-group">{{ f.checkbox("ceccv","e","n/v") }}</div>
+                        </td>
                         <td>
                             <div class="form-group">
                                 <label for="cecclm">Left Main</label>
@@ -980,21 +1024,27 @@
 
                     <tr>
                         <td>Aortic Calcification</td>
-                        <td>{{ f.checkbox("ceccav","e","n/v") }}</td>
+                        <td>
+                            <div class="form-group">{{ f.checkbox("ceccav","e","n/v") }}</div>
+                        </td>
                         <td colspan="5">
-                            <select name="cecca" class="form-control">
-                                <option value="-"> -</option>
-                                <option value="no"> none</option>
-                                <option value="mi"> minimal</option>
-                                <option value="mo"> moderate</option>
-                                <option value="ex"> extensive</option>
-                            </select>
+                            <div class="form-group">
+                                <select name="cecca" class="form-control">
+                                    <option value="-"> -</option>
+                                    <option value="no"> none</option>
+                                    <option value="mi"> minimal</option>
+                                    <option value="mo"> moderate</option>
+                                    <option value="ex"> extensive</option>
+                                </select>
+                            </div>
                         </td>
                     </tr>
 
                     <tr>
                         <td>Pericardial Effusion</td>
-                        <td>{{ f.checkbox("ceprev","e","n/v") }}</td>
+                        <td>
+                            <div class="form-group">{{ f.checkbox("ceprev","e","n/v") }}</div>
+                        </td>
                         <td colspan="5">
                             <div class="form-group">
                                 <label for="ceprevm">Severity</label>
@@ -1012,14 +1062,18 @@
                     <tr>
                         <td colspan="2">Pulmonary Artery Width (mm)</td>
                         <td colspan="5">
-                            <input type="text" name="cepaw" size="4" class="form-control">
+                            <div class="form-group">
+                                <input type="text" name="cepaw" size="4" class="form-control">
+                            </div>
                         </td>
                     </tr>
 
                     <tr>
                         <td colspan="2">Ascending Aorta Width (mm)</td>
                         <td colspan="5">
-                            <input type="text" name="ceaow" size="4" class="form-control">
+                            <div class="form-group">
+                                <input type="text" name="ceaow" size="4" class="form-control">
+                            </div>
                         </td>
                     </tr>
 
@@ -1029,7 +1083,9 @@
                         </td>
                         <td colspan="5">
                             {# TODO change field to read-only text, like Age in background form #}
-                            <input type="text" name="cepar" onFocus="this.blur()" size="4" class="form-control">
+                            <div class="form-group">
+                                <input type="text" name="cepar" onFocus="this.blur()" size="4" class="form-control">
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -1627,53 +1683,77 @@
                     <tr>
                         <td><label for="cetsql">Lung Parenchyma:</label></td>
                         <td>
-                            <select name="cetsql" id="cetsql" class="form-control">
-                                <option value="1"> 1</option>
-                                <option value="2"> 2</option>
-                                <option value="3"> 3</option>
-                                <option value="4"> 4</option>
-                            </select>
+                            <div class="form-group">
+                                <select name="cetsql" id="cetsql" class="form-control">
+                                    <option value="1"> 1</option>
+                                    <option value="2"> 2</option>
+                                    <option value="3"> 3</option>
+                                    <option value="4"> 4</option>
+                                </select>
+                            </div>
                         </td>
                         <td>
-                            {{ f.checkbox("cetdqlh","h","Patient body habitus") }}
+                            <div class="form-group">
+                                {{ f.checkbox("cetdqlh","h","Patient body habitus") }}
+                            </div>
                         </td>
                         <td>
-                            {{ f.checkbox("cetdqlm","m","Patient movement") }}
+                            <div class="form-group">
+                                {{ f.checkbox("cetdqlm","m","Patient movement") }}
+                            </div>
                         </td>
                         <td>
-                            {{ f.checkbox("cetdqli","i","Insufficient inhalation") }}
+                            <div class="form-group">
+                                {{ f.checkbox("cetdqli","i","Insufficient inhalation") }}
+                            </div>
                         </td>
                         <td>
-                            {{ f.checkbox("cetdqlo","o","Other (specify)") }}
+                            <div class="form-group">
+                                {{ f.checkbox("cetdqlo","o","Other (specify)") }}
+                            </div>
                         </td>
                         <td>
-                            <input type="text" name="cetsqlos" id="cetsqlos" class="form-control"/>
+                            <div class="form-group">
+                                <input type="text" name="cetsqlos" id="cetsqlos" class="form-control"/>
+                            </div>
                         </td>
                     </tr>
                     <tr>
                         <td><label for="cetsqm">Mediastinum/Abdomen:</label></td>
                         <td>
-                            <select name="cetsqm" id="cetsqm" class="form-control">
-                                <option value="1"> 1</option>
-                                <option value="2"> 2</option>
-                                <option value="3"> 3</option>
-                                <option value="4"> 4</option>
-                            </select>
+                            <div class="form-group">
+                                <select name="cetsqm" id="cetsqm" class="form-control">
+                                    <option value="1"> 1</option>
+                                    <option value="2"> 2</option>
+                                    <option value="3"> 3</option>
+                                    <option value="4"> 4</option>
+                                </select>
+                            </div>
                         </td>
                         <td>
-                            {{ f.checkbox("cetdqmh","h","Patient body habitus") }}
+                            <div class="form-group">
+                                {{ f.checkbox("cetdqmh","h","Patient body habitus") }}
+                            </div>
                         </td>
                         <td>
-                            {{ f.checkbox("cetdqmm","m","Patient movement") }}
+                            <div class="form-group">
+                                {{ f.checkbox("cetdqmm","m","Patient movement") }}
+                            </div>
                         </td>
                         <td>
-                            {{ f.checkbox("cetdqmi","i","Insufficient inhalation") }}
+                            <div class="form-group">
+                                {{ f.checkbox("cetdqmi","i","Insufficient inhalation") }}
+                            </div>
                         </td>
                         <td>
-                            {{ f.checkbox("cetdqmo","o","Other (specify)") }}
+                            <div class="form-group">
+                                {{ f.checkbox("cetdqmo","o","Other (specify)") }}
+                            </div>
                         </td>
                         <td>
-                            <input type="text" name="cetsqmos" id="cetsqmos" class="form-control"/>
+                            <div class="form-group">
+                                <input type="text" name="cetsqmos" id="cetsqmos" class="form-control"/>
+                            </div>
                         </td>
                     </tr>
                     </tbody>
@@ -1684,7 +1764,9 @@
 
             <div class="row">
                 <div class="col-sm-2">
-                    {{ f.checkbox("cecoi","y","Case of Interest") }}
+                    <div class="form-group">
+                        {{ f.checkbox("cecoi","y","Case of Interest") }}
+                    </div>
                 </div>
                 <div class="col-sm-10 form-group">
                     <label for="cecoico">Comments</label>
@@ -1756,7 +1838,6 @@
 
             //bind CAC Score
             {#$("#cecclm, #ceccld, #cecccf, #ceccrc").on('change', calculateVisualCacScore)#}
-
         });
 
     </script>

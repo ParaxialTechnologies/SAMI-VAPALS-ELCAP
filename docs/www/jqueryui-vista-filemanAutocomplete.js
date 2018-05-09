@@ -20,7 +20,7 @@ $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {
         let status = item['vapals'] || 0;
                     
         let html   = '';
-        if (status == 0) {
+        if (status == 1) {
             html   = html + '<li class="enrolled">';
         }
         else {

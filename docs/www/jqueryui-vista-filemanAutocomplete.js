@@ -19,8 +19,9 @@ $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {
     _renderItem: function (ul, item) {
         let status = item['vapals'] || 0;
         let dob    = item['dob'] || '';
+        if (dob) { dob = moment(dob, 'YYYY-MM-DD').format('MM/DD/YYYY'); }
         let gender = item['gender'] || '';
-        if (gender) { gender = gender.split('^')[0]; }
+        if (gender) { gender = gender.split('^')[1]; }
                     
         let html   = '';
         if (status == 1) {
@@ -35,18 +36,18 @@ $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {
         html       = html + 'Last 5: ';
         html       = html + item['last5'];
         html       = html + '</span>';
-        html       = html + '<br>';
+        // html       = html + '<br>';
         html       = html + '<span class="indent">';
         html       = html + 'DOB: ';
         html       = html + dob;
         html       = html + '</span>';
-        html       = html + '<br>';
+        // html       = html + '<br>';
         html       = html + '<span class="indent">';
         html       = html + 'Gender: ';
         html       = html + gender;
         html       = html + '</span>';
         if (status == 1) {
-            html   = html + '<br>';
+            // html   = html + '<br>';
             html   = html + '<span class="indent">';
             html   = html + 'Enrolled in VA-PALS';
             html   = html + '</span>';

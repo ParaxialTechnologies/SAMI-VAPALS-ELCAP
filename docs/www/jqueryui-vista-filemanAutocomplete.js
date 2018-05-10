@@ -30,17 +30,17 @@ $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {
         html       = html + '<br>';
         html       = html + '<span class="indent">';
         html       = html + 'Last 5: ';
-        html       = html + item['last5']
+        html       = html + item['last5'];
         html       = html + '</span>';
         html       = html + '<br>';
         html       = html + '<span class="indent">';
         html       = html + 'DOB: ';
-        html       = html + item['dob']
+        html       = html + (item['dob'] || '');
         html       = html + '</span>';
         html       = html + '<br>';
         html       = html + '<span class="indent">';
         html       = html + 'Gender: ';
-        html       = html + item['gender']
+        html       = html + (item['gender'] || '');
         html       = html + '</span>';
         if (status == 1) {
             html   = html + '<br>';

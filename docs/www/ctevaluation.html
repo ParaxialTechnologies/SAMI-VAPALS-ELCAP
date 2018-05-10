@@ -94,7 +94,7 @@
    </h2>
    <hr/>
    <form action="ctevaluation.html" class="validated" data-fv-button-selector="#submit-button" data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-validating="glyphicon glyphicon-refresh" method="post">
-    <input name="cesid" required="required" type="hidden" value="VEP0001"/>
+    <input name="cesid" type="hidden" value="VEP0001"/>
     <div class="row">
      <div class="col-sm-4 col-md-3 col-lg-2 form-group">
       <label class="control-label" for="cedos">
@@ -390,24 +390,28 @@
            Nodule 5
           </th>
           <th>
-           Additional Nodules
-           <select class="form-control" name="cefctn" onchange="bm()">
-            <option value="6">
-             Nodule 6
-            </option>
-            <option value="7">
-             Nodule 7
-            </option>
-            <option value="8">
-             Nodule 8
-            </option>
-            <option value="9">
-             Nodule 9
-            </option>
-            <option value="10">
-             Nodule 10
-            </option>
-           </select>
+           <div class="form-group">
+            <label>
+             Additional Nodules
+            </label>
+            <select class="form-control" name="cefctn" onchange="bm()">
+             <option value="6">
+              Nodule 6
+             </option>
+             <option value="7">
+              Nodule 7
+             </option>
+             <option value="8">
+              Nodule 8
+             </option>
+             <option value="9">
+              Nodule 9
+             </option>
+             <option value="10">
+              Nodule 10
+             </option>
+            </select>
+           </div>
           </th>
          </tr>
         </thead>
@@ -424,334 +428,346 @@
            </i>
           </td>
           <td>
-           <select name="cect1ch" onchange="newStat(1)">
-            <option value="-">
-             -
-            </option>
-            <option value="n">
-             newly seen
-            </option>
-            <option value="pn">
-             prev seen, no change
-            </option>
-            <option value="pd">
-             prev seen, slight decr
-            </option>
-            <option value="pe">
-             prev seen, marked decr
-            </option>
-            <option value="pi">
-             prev seen, slight incr
-            </option>
-            <option value="pj">
-             prev seen, marked incr
-            </option>
-            <option value="po">
-             prev seen, obscured
-            </option>
-            <option value="pw">
-             prev seen, resolved
-            </option>
-            <option value="px">
-             prev seen, not a nodule
-            </option>
-            <option value="pr">
-             prev seen, resected
-            </option>
-            <option value="rn">
-             retrospect, no chg
-            </option>
-            <option value="rd">
-             retrospect, decrease
-            </option>
-            <option value="ri">
-             retrospect, slight incr
-            </option>
-            <option value="rj">
-             retrospect, marked incr
-            </option>
-            <option value="pk">
-             not in outside report
-            </option>
-            <option value="pv">
-             not included in scan
-            </option>
-           </select>
+           <div class="form-group">
+            <select name="cect1ch" onchange="newStat(1)">
+             <option value="-">
+              -
+             </option>
+             <option value="n">
+              newly seen
+             </option>
+             <option value="pn">
+              prev seen, no change
+             </option>
+             <option value="pd">
+              prev seen, slight decr
+             </option>
+             <option value="pe">
+              prev seen, marked decr
+             </option>
+             <option value="pi">
+              prev seen, slight incr
+             </option>
+             <option value="pj">
+              prev seen, marked incr
+             </option>
+             <option value="po">
+              prev seen, obscured
+             </option>
+             <option value="pw">
+              prev seen, resolved
+             </option>
+             <option value="px">
+              prev seen, not a nodule
+             </option>
+             <option value="pr">
+              prev seen, resected
+             </option>
+             <option value="rn">
+              retrospect, no chg
+             </option>
+             <option value="rd">
+              retrospect, decrease
+             </option>
+             <option value="ri">
+              retrospect, slight incr
+             </option>
+             <option value="rj">
+              retrospect, marked incr
+             </option>
+             <option value="pk">
+              not in outside report
+             </option>
+             <option value="pv">
+              not included in scan
+             </option>
+            </select>
+           </div>
           </td>
           <td>
-           <select name="cect2ch" onchange="newStat(2)">
-            <option value="-">
-             -
-            </option>
-            <option value="n">
-             newly seen
-            </option>
-            <option value="pn">
-             prev seen, no change
-            </option>
-            <option value="pd">
-             prev seen, slight decr
-            </option>
-            <option value="pe">
-             prev seen, marked decr
-            </option>
-            <option value="pi">
-             prev seen, slight incr
-            </option>
-            <option value="pj">
-             prev seen, marked incr
-            </option>
-            <option value="po">
-             prev seen, obscured
-            </option>
-            <option value="pw">
-             prev seen, resolved
-            </option>
-            <option value="px">
-             prev seen, not a nodule
-            </option>
-            <option value="pr">
-             prev seen, resected
-            </option>
-            <option value="rn">
-             retrospect, no chg
-            </option>
-            <option value="rd">
-             retrospect, decrease
-            </option>
-            <option value="ri">
-             retrospect, slight incr
-            </option>
-            <option value="rj">
-             retrospect, marked incr
-            </option>
-            <option value="pk">
-             not in outside report
-            </option>
-            <option value="pv">
-             not included in scan
-            </option>
-           </select>
+           <div class="form-group">
+            <select name="cect2ch" onchange="newStat(2)">
+             <option value="-">
+              -
+             </option>
+             <option value="n">
+              newly seen
+             </option>
+             <option value="pn">
+              prev seen, no change
+             </option>
+             <option value="pd">
+              prev seen, slight decr
+             </option>
+             <option value="pe">
+              prev seen, marked decr
+             </option>
+             <option value="pi">
+              prev seen, slight incr
+             </option>
+             <option value="pj">
+              prev seen, marked incr
+             </option>
+             <option value="po">
+              prev seen, obscured
+             </option>
+             <option value="pw">
+              prev seen, resolved
+             </option>
+             <option value="px">
+              prev seen, not a nodule
+             </option>
+             <option value="pr">
+              prev seen, resected
+             </option>
+             <option value="rn">
+              retrospect, no chg
+             </option>
+             <option value="rd">
+              retrospect, decrease
+             </option>
+             <option value="ri">
+              retrospect, slight incr
+             </option>
+             <option value="rj">
+              retrospect, marked incr
+             </option>
+             <option value="pk">
+              not in outside report
+             </option>
+             <option value="pv">
+              not included in scan
+             </option>
+            </select>
+           </div>
           </td>
           <td>
-           <select name="cect3ch" onchange="newStat(3)">
-            <option value="-">
-             -
-            </option>
-            <option value="n">
-             newly seen
-            </option>
-            <option value="pn">
-             prev seen, no change
-            </option>
-            <option value="pd">
-             prev seen, slight decr
-            </option>
-            <option value="pe">
-             prev seen, marked decr
-            </option>
-            <option value="pi">
-             prev seen, slight incr
-            </option>
-            <option value="pj">
-             prev seen, marked incr
-            </option>
-            <option value="po">
-             prev seen, obscured
-            </option>
-            <option value="pw">
-             prev seen, resolved
-            </option>
-            <option value="px">
-             prev seen, not a nodule
-            </option>
-            <option value="pr">
-             prev seen, resected
-            </option>
-            <option value="rn">
-             retrospect, no chg
-            </option>
-            <option value="rd">
-             retrospect, decrease
-            </option>
-            <option value="ri">
-             retrospect, slight incr
-            </option>
-            <option value="rj">
-             retrospect, marked incr
-            </option>
-            <option value="pk">
-             not in outside report
-            </option>
-            <option value="pv">
-             not included in scan
-            </option>
-           </select>
+           <div class="form-group">
+            <select name="cect3ch" onchange="newStat(3)">
+             <option value="-">
+              -
+             </option>
+             <option value="n">
+              newly seen
+             </option>
+             <option value="pn">
+              prev seen, no change
+             </option>
+             <option value="pd">
+              prev seen, slight decr
+             </option>
+             <option value="pe">
+              prev seen, marked decr
+             </option>
+             <option value="pi">
+              prev seen, slight incr
+             </option>
+             <option value="pj">
+              prev seen, marked incr
+             </option>
+             <option value="po">
+              prev seen, obscured
+             </option>
+             <option value="pw">
+              prev seen, resolved
+             </option>
+             <option value="px">
+              prev seen, not a nodule
+             </option>
+             <option value="pr">
+              prev seen, resected
+             </option>
+             <option value="rn">
+              retrospect, no chg
+             </option>
+             <option value="rd">
+              retrospect, decrease
+             </option>
+             <option value="ri">
+              retrospect, slight incr
+             </option>
+             <option value="rj">
+              retrospect, marked incr
+             </option>
+             <option value="pk">
+              not in outside report
+             </option>
+             <option value="pv">
+              not included in scan
+             </option>
+            </select>
+           </div>
           </td>
           <td>
-           <select name="cect4ch" onchange="newStat(4)">
-            <option value="-">
-             -
-            </option>
-            <option value="n">
-             newly seen
-            </option>
-            <option value="pn">
-             prev seen, no change
-            </option>
-            <option value="pd">
-             prev seen, slight decr
-            </option>
-            <option value="pe">
-             prev seen, marked decr
-            </option>
-            <option value="pi">
-             prev seen, slight incr
-            </option>
-            <option value="pj">
-             prev seen, marked incr
-            </option>
-            <option value="po">
-             prev seen, obscured
-            </option>
-            <option value="pw">
-             prev seen, resolved
-            </option>
-            <option value="px">
-             prev seen, not a nodule
-            </option>
-            <option value="pr">
-             prev seen, resected
-            </option>
-            <option value="rn">
-             retrospect, no chg
-            </option>
-            <option value="rd">
-             retrospect, decrease
-            </option>
-            <option value="ri">
-             retrospect, slight incr
-            </option>
-            <option value="rj">
-             retrospect, marked incr
-            </option>
-            <option value="pk">
-             not in outside report
-            </option>
-            <option value="pv">
-             not included in scan
-            </option>
-           </select>
+           <div class="form-group">
+            <select name="cect4ch" onchange="newStat(4)">
+             <option value="-">
+              -
+             </option>
+             <option value="n">
+              newly seen
+             </option>
+             <option value="pn">
+              prev seen, no change
+             </option>
+             <option value="pd">
+              prev seen, slight decr
+             </option>
+             <option value="pe">
+              prev seen, marked decr
+             </option>
+             <option value="pi">
+              prev seen, slight incr
+             </option>
+             <option value="pj">
+              prev seen, marked incr
+             </option>
+             <option value="po">
+              prev seen, obscured
+             </option>
+             <option value="pw">
+              prev seen, resolved
+             </option>
+             <option value="px">
+              prev seen, not a nodule
+             </option>
+             <option value="pr">
+              prev seen, resected
+             </option>
+             <option value="rn">
+              retrospect, no chg
+             </option>
+             <option value="rd">
+              retrospect, decrease
+             </option>
+             <option value="ri">
+              retrospect, slight incr
+             </option>
+             <option value="rj">
+              retrospect, marked incr
+             </option>
+             <option value="pk">
+              not in outside report
+             </option>
+             <option value="pv">
+              not included in scan
+             </option>
+            </select>
+           </div>
           </td>
           <td>
-           <select name="cect5ch" onchange="newStat(5)">
-            <option value="-">
-             -
-            </option>
-            <option value="n">
-             newly seen
-            </option>
-            <option value="pn">
-             prev seen, no change
-            </option>
-            <option value="pd">
-             prev seen, slight decr
-            </option>
-            <option value="pe">
-             prev seen, marked decr
-            </option>
-            <option value="pi">
-             prev seen, slight incr
-            </option>
-            <option value="pj">
-             prev seen, marked incr
-            </option>
-            <option value="po">
-             prev seen, obscured
-            </option>
-            <option value="pw">
-             prev seen, resolved
-            </option>
-            <option value="px">
-             prev seen, not a nodule
-            </option>
-            <option value="pr">
-             prev seen, resected
-            </option>
-            <option value="rn">
-             retrospect, no chg
-            </option>
-            <option value="rd">
-             retrospect, decrease
-            </option>
-            <option value="ri">
-             retrospect, slight incr
-            </option>
-            <option value="rj">
-             retrospect, marked incr
-            </option>
-            <option value="pk">
-             not in outside report
-            </option>
-            <option value="pv">
-             not included in scan
-            </option>
-           </select>
+           <div class="form-group">
+            <select name="cect5ch" onchange="newStat(5)">
+             <option value="-">
+              -
+             </option>
+             <option value="n">
+              newly seen
+             </option>
+             <option value="pn">
+              prev seen, no change
+             </option>
+             <option value="pd">
+              prev seen, slight decr
+             </option>
+             <option value="pe">
+              prev seen, marked decr
+             </option>
+             <option value="pi">
+              prev seen, slight incr
+             </option>
+             <option value="pj">
+              prev seen, marked incr
+             </option>
+             <option value="po">
+              prev seen, obscured
+             </option>
+             <option value="pw">
+              prev seen, resolved
+             </option>
+             <option value="px">
+              prev seen, not a nodule
+             </option>
+             <option value="pr">
+              prev seen, resected
+             </option>
+             <option value="rn">
+              retrospect, no chg
+             </option>
+             <option value="rd">
+              retrospect, decrease
+             </option>
+             <option value="ri">
+              retrospect, slight incr
+             </option>
+             <option value="rj">
+              retrospect, marked incr
+             </option>
+             <option value="pk">
+              not in outside report
+             </option>
+             <option value="pv">
+              not included in scan
+             </option>
+            </select>
+           </div>
           </td>
           <td>
-           <select name="cect0ch" onchange="newStat(0)">
-            <option value="-">
-             -
-            </option>
-            <option value="n">
-             newly seen
-            </option>
-            <option value="pn">
-             prev seen, no change
-            </option>
-            <option value="pd">
-             prev seen, slight decr
-            </option>
-            <option value="pe">
-             prev seen, marked decr
-            </option>
-            <option value="pi">
-             prev seen, slight incr
-            </option>
-            <option value="pj">
-             prev seen, marked incr
-            </option>
-            <option value="po">
-             prev seen, obscured
-            </option>
-            <option value="pw">
-             prev seen, resolved
-            </option>
-            <option value="px">
-             prev seen, not a nodule
-            </option>
-            <option value="pr">
-             prev seen, resected
-            </option>
-            <option value="rn">
-             retrospect, no chg
-            </option>
-            <option value="rd">
-             retrospect, decrease
-            </option>
-            <option value="ri">
-             retrospect, slight incr
-            </option>
-            <option value="rj">
-             retrospect, marked incr
-            </option>
-            <option value="pk">
-             not in outside report
-            </option>
-            <option value="pv">
-             not included in scan
-            </option>
-           </select>
+           <div class="form-group">
+            <select name="cect0ch" onchange="newStat(0)">
+             <option value="-">
+              -
+             </option>
+             <option value="n">
+              newly seen
+             </option>
+             <option value="pn">
+              prev seen, no change
+             </option>
+             <option value="pd">
+              prev seen, slight decr
+             </option>
+             <option value="pe">
+              prev seen, marked decr
+             </option>
+             <option value="pi">
+              prev seen, slight incr
+             </option>
+             <option value="pj">
+              prev seen, marked incr
+             </option>
+             <option value="po">
+              prev seen, obscured
+             </option>
+             <option value="pw">
+              prev seen, resolved
+             </option>
+             <option value="px">
+              prev seen, not a nodule
+             </option>
+             <option value="pr">
+              prev seen, resected
+             </option>
+             <option value="rn">
+              retrospect, no chg
+             </option>
+             <option value="rd">
+              retrospect, decrease
+             </option>
+             <option value="ri">
+              retrospect, slight incr
+             </option>
+             <option value="rj">
+              retrospect, marked incr
+             </option>
+             <option value="pk">
+              not in outside report
+             </option>
+             <option value="pv">
+              not included in scan
+             </option>
+            </select>
+           </div>
           </td>
          </tr>
          <tr>
@@ -764,226 +780,238 @@
            </i>
           </td>
           <td>
-           <select name="cect1en">
-            <option value="-">
-             -
-            </option>
-            <option value="no">
-             No
-            </option>
-            <option value="tr">
-             Trachea
-            </option>
-            <option value="rm">
-             Rt. Main
-            </option>
-            <option value="lm">
-             Lt. Main
-            </option>
-            <option value="bi">
-             BI
-            </option>
-            <option value="rul">
-             RUL
-            </option>
-            <option value="rml">
-             RML
-            </option>
-            <option value="rll">
-             RLL
-            </option>
-            <option value="lul">
-             LUL
-            </option>
-            <option value="lll">
-             LLL
-            </option>
-           </select>
+           <div class="form-group">
+            <select name="cect1en">
+             <option value="-">
+              -
+             </option>
+             <option value="no">
+              No
+             </option>
+             <option value="tr">
+              Trachea
+             </option>
+             <option value="rm">
+              Rt. Main
+             </option>
+             <option value="lm">
+              Lt. Main
+             </option>
+             <option value="bi">
+              BI
+             </option>
+             <option value="rul">
+              RUL
+             </option>
+             <option value="rml">
+              RML
+             </option>
+             <option value="rll">
+              RLL
+             </option>
+             <option value="lul">
+              LUL
+             </option>
+             <option value="lll">
+              LLL
+             </option>
+            </select>
+           </div>
           </td>
           <td>
-           <select name="cect2en">
-            <option value="-">
-             -
-            </option>
-            <option value="no">
-             No
-            </option>
-            <option value="tr">
-             Trachea
-            </option>
-            <option value="rm">
-             Rt. Main
-            </option>
-            <option value="lm">
-             Lt. Main
-            </option>
-            <option value="bi">
-             BI
-            </option>
-            <option value="rul">
-             RUL
-            </option>
-            <option value="rml">
-             RML
-            </option>
-            <option value="rll">
-             RLL
-            </option>
-            <option value="lul">
-             LUL
-            </option>
-            <option value="lll">
-             LLL
-            </option>
-           </select>
+           <div class="form-group">
+            <select name="cect2en">
+             <option value="-">
+              -
+             </option>
+             <option value="no">
+              No
+             </option>
+             <option value="tr">
+              Trachea
+             </option>
+             <option value="rm">
+              Rt. Main
+             </option>
+             <option value="lm">
+              Lt. Main
+             </option>
+             <option value="bi">
+              BI
+             </option>
+             <option value="rul">
+              RUL
+             </option>
+             <option value="rml">
+              RML
+             </option>
+             <option value="rll">
+              RLL
+             </option>
+             <option value="lul">
+              LUL
+             </option>
+             <option value="lll">
+              LLL
+             </option>
+            </select>
+           </div>
           </td>
           <td>
-           <select name="cect3en">
-            <option value="-">
-             -
-            </option>
-            <option value="no">
-             No
-            </option>
-            <option value="tr">
-             Trachea
-            </option>
-            <option value="rm">
-             Rt. Main
-            </option>
-            <option value="lm">
-             Lt. Main
-            </option>
-            <option value="bi">
-             BI
-            </option>
-            <option value="rul">
-             RUL
-            </option>
-            <option value="rml">
-             RML
-            </option>
-            <option value="rll">
-             RLL
-            </option>
-            <option value="lul">
-             LUL
-            </option>
-            <option value="lll">
-             LLL
-            </option>
-           </select>
+           <div class="form-group">
+            <select name="cect3en">
+             <option value="-">
+              -
+             </option>
+             <option value="no">
+              No
+             </option>
+             <option value="tr">
+              Trachea
+             </option>
+             <option value="rm">
+              Rt. Main
+             </option>
+             <option value="lm">
+              Lt. Main
+             </option>
+             <option value="bi">
+              BI
+             </option>
+             <option value="rul">
+              RUL
+             </option>
+             <option value="rml">
+              RML
+             </option>
+             <option value="rll">
+              RLL
+             </option>
+             <option value="lul">
+              LUL
+             </option>
+             <option value="lll">
+              LLL
+             </option>
+            </select>
+           </div>
           </td>
           <td>
-           <select name="cect4en">
-            <option value="-">
-             -
-            </option>
-            <option value="no">
-             No
-            </option>
-            <option value="tr">
-             Trachea
-            </option>
-            <option value="rm">
-             Rt. Main
-            </option>
-            <option value="lm">
-             Lt. Main
-            </option>
-            <option value="bi">
-             BI
-            </option>
-            <option value="rul">
-             RUL
-            </option>
-            <option value="rml">
-             RML
-            </option>
-            <option value="rll">
-             RLL
-            </option>
-            <option value="lul">
-             LUL
-            </option>
-            <option value="lll">
-             LLL
-            </option>
-           </select>
+           <div class="form-group">
+            <select name="cect4en">
+             <option value="-">
+              -
+             </option>
+             <option value="no">
+              No
+             </option>
+             <option value="tr">
+              Trachea
+             </option>
+             <option value="rm">
+              Rt. Main
+             </option>
+             <option value="lm">
+              Lt. Main
+             </option>
+             <option value="bi">
+              BI
+             </option>
+             <option value="rul">
+              RUL
+             </option>
+             <option value="rml">
+              RML
+             </option>
+             <option value="rll">
+              RLL
+             </option>
+             <option value="lul">
+              LUL
+             </option>
+             <option value="lll">
+              LLL
+             </option>
+            </select>
+           </div>
           </td>
           <td>
-           <select name="cect5en">
-            <option value="-">
-             -
-            </option>
-            <option value="no">
-             No
-            </option>
-            <option value="tr">
-             Trachea
-            </option>
-            <option value="rm">
-             Rt. Main
-            </option>
-            <option value="lm">
-             Lt. Main
-            </option>
-            <option value="bi">
-             BI
-            </option>
-            <option value="rul">
-             RUL
-            </option>
-            <option value="rml">
-             RML
-            </option>
-            <option value="rll">
-             RLL
-            </option>
-            <option value="lul">
-             LUL
-            </option>
-            <option value="lll">
-             LLL
-            </option>
-           </select>
+           <div class="form-group">
+            <select name="cect5en">
+             <option value="-">
+              -
+             </option>
+             <option value="no">
+              No
+             </option>
+             <option value="tr">
+              Trachea
+             </option>
+             <option value="rm">
+              Rt. Main
+             </option>
+             <option value="lm">
+              Lt. Main
+             </option>
+             <option value="bi">
+              BI
+             </option>
+             <option value="rul">
+              RUL
+             </option>
+             <option value="rml">
+              RML
+             </option>
+             <option value="rll">
+              RLL
+             </option>
+             <option value="lul">
+              LUL
+             </option>
+             <option value="lll">
+              LLL
+             </option>
+            </select>
+           </div>
           </td>
           <td>
-           <select name="cect0en">
-            <option value="-">
-             -
-            </option>
-            <option value="no">
-             No
-            </option>
-            <option value="tr">
-             Trachea
-            </option>
-            <option value="rm">
-             Rt. Main
-            </option>
-            <option value="lm">
-             Lt. Main
-            </option>
-            <option value="bi">
-             BI
-            </option>
-            <option value="rul">
-             RUL
-            </option>
-            <option value="rml">
-             RML
-            </option>
-            <option value="rll">
-             RLL
-            </option>
-            <option value="lul">
-             LUL
-            </option>
-            <option value="lll">
-             LLL
-            </option>
-           </select>
+           <div class="form-group">
+            <select name="cect0en">
+             <option value="-">
+              -
+             </option>
+             <option value="no">
+              No
+             </option>
+             <option value="tr">
+              Trachea
+             </option>
+             <option value="rm">
+              Rt. Main
+             </option>
+             <option value="lm">
+              Lt. Main
+             </option>
+             <option value="bi">
+              BI
+             </option>
+             <option value="rul">
+              RUL
+             </option>
+             <option value="rml">
+              RML
+             </option>
+             <option value="rll">
+              RLL
+             </option>
+             <option value="lul">
+              LUL
+             </option>
+             <option value="lll">
+              LLL
+             </option>
+            </select>
+           </div>
           </td>
          </tr>
          <tr>
@@ -993,154 +1021,166 @@
            </i>
           </td>
           <td>
-           <select name="cect1ll">
-            <option value="-">
-             -
-            </option>
-            <option value="end">
-             Endobr
-            </option>
-            <option value="lul">
-             LUL
-            </option>
-            <option value="lll">
-             LLL
-            </option>
-            <option value="rul">
-             RUL
-            </option>
-            <option value="rml">
-             RML
-            </option>
-            <option value="rll">
-             RLL
-            </option>
-           </select>
+           <div class="form-group">
+            <select name="cect1ll">
+             <option value="-">
+              -
+             </option>
+             <option value="end">
+              Endobr
+             </option>
+             <option value="lul">
+              LUL
+             </option>
+             <option value="lll">
+              LLL
+             </option>
+             <option value="rul">
+              RUL
+             </option>
+             <option value="rml">
+              RML
+             </option>
+             <option value="rll">
+              RLL
+             </option>
+            </select>
+           </div>
           </td>
           <td>
-           <select name="cect2ll">
-            <option value="-">
-             -
-            </option>
-            <option value="end">
-             Endobr
-            </option>
-            <option value="lul">
-             LUL
-            </option>
-            <option value="lll">
-             LLL
-            </option>
-            <option value="rul">
-             RUL
-            </option>
-            <option value="rml">
-             RML
-            </option>
-            <option value="rll">
-             RLL
-            </option>
-           </select>
+           <div class="form-group">
+            <select name="cect2ll">
+             <option value="-">
+              -
+             </option>
+             <option value="end">
+              Endobr
+             </option>
+             <option value="lul">
+              LUL
+             </option>
+             <option value="lll">
+              LLL
+             </option>
+             <option value="rul">
+              RUL
+             </option>
+             <option value="rml">
+              RML
+             </option>
+             <option value="rll">
+              RLL
+             </option>
+            </select>
+           </div>
           </td>
           <td>
-           <select name="cect3ll">
-            <option value="-">
-             -
-            </option>
-            <option value="end">
-             Endobr
-            </option>
-            <option value="lul">
-             LUL
-            </option>
-            <option value="lll">
-             LLL
-            </option>
-            <option value="rul">
-             RUL
-            </option>
-            <option value="rml">
-             RML
-            </option>
-            <option value="rll">
-             RLL
-            </option>
-           </select>
+           <div class="form-group">
+            <select name="cect3ll">
+             <option value="-">
+              -
+             </option>
+             <option value="end">
+              Endobr
+             </option>
+             <option value="lul">
+              LUL
+             </option>
+             <option value="lll">
+              LLL
+             </option>
+             <option value="rul">
+              RUL
+             </option>
+             <option value="rml">
+              RML
+             </option>
+             <option value="rll">
+              RLL
+             </option>
+            </select>
+           </div>
           </td>
           <td>
-           <select name="cect4ll">
-            <option value="-">
-             -
-            </option>
-            <option value="end">
-             Endobr
-            </option>
-            <option value="lul">
-             LUL
-            </option>
-            <option value="lll">
-             LLL
-            </option>
-            <option value="rul">
-             RUL
-            </option>
-            <option value="rml">
-             RML
-            </option>
-            <option value="rll">
-             RLL
-            </option>
-           </select>
+           <div class="form-group">
+            <select name="cect4ll">
+             <option value="-">
+              -
+             </option>
+             <option value="end">
+              Endobr
+             </option>
+             <option value="lul">
+              LUL
+             </option>
+             <option value="lll">
+              LLL
+             </option>
+             <option value="rul">
+              RUL
+             </option>
+             <option value="rml">
+              RML
+             </option>
+             <option value="rll">
+              RLL
+             </option>
+            </select>
+           </div>
           </td>
           <td>
-           <select name="cect5ll">
-            <option value="-">
-             -
-            </option>
-            <option value="end">
-             Endobr
-            </option>
-            <option value="lul">
-             LUL
-            </option>
-            <option value="lll">
-             LLL
-            </option>
-            <option value="rul">
-             RUL
-            </option>
-            <option value="rml">
-             RML
-            </option>
-            <option value="rll">
-             RLL
-            </option>
-           </select>
+           <div class="form-group">
+            <select name="cect5ll">
+             <option value="-">
+              -
+             </option>
+             <option value="end">
+              Endobr
+             </option>
+             <option value="lul">
+              LUL
+             </option>
+             <option value="lll">
+              LLL
+             </option>
+             <option value="rul">
+              RUL
+             </option>
+             <option value="rml">
+              RML
+             </option>
+             <option value="rll">
+              RLL
+             </option>
+            </select>
+           </div>
           </td>
           <td>
-           <select name="cect0ll">
-            <option value="-">
-             -
-            </option>
-            <option value="end">
-             Endobr
-            </option>
-            <option value="lul">
-             LUL
-            </option>
-            <option value="lll">
-             LLL
-            </option>
-            <option value="rul">
-             RUL
-            </option>
-            <option value="rml">
-             RML
-            </option>
-            <option value="rll">
-             RLL
-            </option>
-           </select>
+           <div class="form-group">
+            <select name="cect0ll">
+             <option value="-">
+              -
+             </option>
+             <option value="end">
+              Endobr
+             </option>
+             <option value="lul">
+              LUL
+             </option>
+             <option value="lll">
+              LLL
+             </option>
+             <option value="rul">
+              RUL
+             </option>
+             <option value="rml">
+              RML
+             </option>
+             <option value="rll">
+              RLL
+             </option>
+            </select>
+           </div>
           </td>
          </tr>
          <tr>
@@ -1150,22 +1190,34 @@
            </i>
           </td>
           <td>
-           <input name="cect1pld" type="text"/>
+           <div class="form-group">
+            <input name="cect1pld" type="text"/>
+           </div>
           </td>
           <td>
-           <input name="cect2pld" type="text"/>
+           <div class="form-group">
+            <input name="cect2pld" type="text"/>
+           </div>
           </td>
           <td>
-           <input name="cect3pld" type="text"/>
+           <div class="form-group">
+            <input name="cect3pld" type="text"/>
+           </div>
           </td>
           <td>
-           <input name="cect4pld" type="text"/>
+           <div class="form-group">
+            <input name="cect4pld" type="text"/>
+           </div>
           </td>
           <td>
-           <input name="cect5pld" type="text"/>
+           <div class="form-group">
+            <input name="cect5pld" type="text"/>
+           </div>
           </td>
           <td>
-           <input name="cect0pld" type="text"/>
+           <div class="form-group">
+            <input name="cect0pld" type="text"/>
+           </div>
           </td>
          </tr>
          <tr>
@@ -1175,22 +1227,34 @@
            </i>
           </td>
           <td>
-           <input name="cect1sl" size="4" type="text"/>
+           <div class="form-group">
+            <input name="cect1sl" size="4" type="text"/>
+           </div>
           </td>
           <td>
-           <input name="cect2sl" size="4" type="text"/>
+           <div class="form-group">
+            <input name="cect2sl" size="4" type="text"/>
+           </div>
           </td>
           <td>
-           <input name="cect3sl" size="4" type="text"/>
+           <div class="form-group">
+            <input name="cect3sl" size="4" type="text"/>
+           </div>
           </td>
           <td>
-           <input name="cect4sl" size="4" type="text"/>
+           <div class="form-group">
+            <input name="cect4sl" size="4" type="text"/>
+           </div>
           </td>
           <td>
-           <input name="cect5sl" size="4" type="text"/>
+           <div class="form-group">
+            <input name="cect5sl" size="4" type="text"/>
+           </div>
           </td>
           <td>
-           <input name="cect0sl" size="4" type="text"/>
+           <div class="form-group">
+            <input name="cect0sl" size="4" type="text"/>
+           </div>
           </td>
          </tr>
          <tr>
@@ -1200,22 +1264,34 @@
            </i>
           </td>
           <td>
-           <input name="cect1sw" size="4" type="text"/>
+           <div class="form-group">
+            <input name="cect1sw" size="4" type="text"/>
+           </div>
           </td>
           <td>
-           <input name="cect2sw" size="4" type="text"/>
+           <div class="form-group">
+            <input name="cect2sw" size="4" type="text"/>
+           </div>
           </td>
           <td>
-           <input name="cect3sw" size="4" type="text"/>
+           <div class="form-group">
+            <input name="cect3sw" size="4" type="text"/>
+           </div>
           </td>
           <td>
-           <input name="cect4sw" size="4" type="text"/>
+           <div class="form-group">
+            <input name="cect4sw" size="4" type="text"/>
+           </div>
           </td>
           <td>
-           <input name="cect5sw" size="4" type="text"/>
+           <div class="form-group">
+            <input name="cect5sw" size="4" type="text"/>
+           </div>
           </td>
           <td>
-           <input name="cect0sw" size="4" type="text"/>
+           <div class="form-group">
+            <input name="cect0sw" size="4" type="text"/>
+           </div>
           </td>
          </tr>
          <tr>
@@ -1225,118 +1301,130 @@
            </i>
           </td>
           <td>
-           <select name="cect1nt" onchange="newTexture(1)">
-            <option value="-">
-             -
-            </option>
-            <option value="s">
-             solid
-            </option>
-            <option value="m">
-             part-solid
-            </option>
-            <option value="g">
-             non-solid
-            </option>
-            <option value="o">
-             other (see comment)
-            </option>
-           </select>
+           <div class="form-group">
+            <select name="cect1nt" onchange="newTexture(1)">
+             <option value="-">
+              -
+             </option>
+             <option value="s">
+              solid
+             </option>
+             <option value="m">
+              part-solid
+             </option>
+             <option value="g">
+              non-solid
+             </option>
+             <option value="o">
+              other (see comment)
+             </option>
+            </select>
+           </div>
           </td>
           <td>
-           <select name="cect2nt" onchange="newTexture(2)">
-            <option value="-">
-             -
-            </option>
-            <option value="s">
-             solid
-            </option>
-            <option value="m">
-             part-solid
-            </option>
-            <option value="g">
-             non-solid
-            </option>
-            <option value="o">
-             other (see comment)
-            </option>
-           </select>
+           <div class="form-group">
+            <select name="cect2nt" onchange="newTexture(2)">
+             <option value="-">
+              -
+             </option>
+             <option value="s">
+              solid
+             </option>
+             <option value="m">
+              part-solid
+             </option>
+             <option value="g">
+              non-solid
+             </option>
+             <option value="o">
+              other (see comment)
+             </option>
+            </select>
+           </div>
           </td>
           <td>
-           <select name="cect3nt" onchange="newTexture(3)">
-            <option value="-">
-             -
-            </option>
-            <option value="s">
-             solid
-            </option>
-            <option value="m">
-             part-solid
-            </option>
-            <option value="g">
-             non-solid
-            </option>
-            <option value="o">
-             other (see comment)
-            </option>
-           </select>
+           <div class="form-group">
+            <select name="cect3nt" onchange="newTexture(3)">
+             <option value="-">
+              -
+             </option>
+             <option value="s">
+              solid
+             </option>
+             <option value="m">
+              part-solid
+             </option>
+             <option value="g">
+              non-solid
+             </option>
+             <option value="o">
+              other (see comment)
+             </option>
+            </select>
+           </div>
           </td>
           <td>
-           <select name="cect4nt" onchange="newTexture(4)">
-            <option value="-">
-             -
-            </option>
-            <option value="s">
-             solid
-            </option>
-            <option value="m">
-             part-solid
-            </option>
-            <option value="g">
-             non-solid
-            </option>
-            <option value="o">
-             other (see comment)
-            </option>
-           </select>
+           <div class="form-group">
+            <select name="cect4nt" onchange="newTexture(4)">
+             <option value="-">
+              -
+             </option>
+             <option value="s">
+              solid
+             </option>
+             <option value="m">
+              part-solid
+             </option>
+             <option value="g">
+              non-solid
+             </option>
+             <option value="o">
+              other (see comment)
+             </option>
+            </select>
+           </div>
           </td>
           <td>
-           <select name="cect5nt" onchange="newTexture(5)">
-            <option value="-">
-             -
-            </option>
-            <option value="s">
-             solid
-            </option>
-            <option value="m">
-             part-solid
-            </option>
-            <option value="g">
-             non-solid
-            </option>
-            <option value="o">
-             other (see comment)
-            </option>
-           </select>
+           <div class="form-group">
+            <select name="cect5nt" onchange="newTexture(5)">
+             <option value="-">
+              -
+             </option>
+             <option value="s">
+              solid
+             </option>
+             <option value="m">
+              part-solid
+             </option>
+             <option value="g">
+              non-solid
+             </option>
+             <option value="o">
+              other (see comment)
+             </option>
+            </select>
+           </div>
           </td>
           <td>
-           <select name="cect0nt" onchange="newTexture(0)">
-            <option value="-">
-             -
-            </option>
-            <option value="s">
-             solid
-            </option>
-            <option value="m">
-             part-solid
-            </option>
-            <option value="g">
-             non-solid
-            </option>
-            <option value="o">
-             other (see comment)
-            </option>
-           </select>
+           <div class="form-group">
+            <select name="cect0nt" onchange="newTexture(0)">
+             <option value="-">
+              -
+             </option>
+             <option value="s">
+              solid
+             </option>
+             <option value="m">
+              part-solid
+             </option>
+             <option value="g">
+              non-solid
+             </option>
+             <option value="o">
+              other (see comment)
+             </option>
+            </select>
+           </div>
           </td>
          </tr>
          <tr>
@@ -1346,34 +1434,46 @@
            </i>
           </td>
           <td>
-           <input disabled="true" name="cect1ssl" size="4" type="text"/>
-           x
-           <input disabled="true" name="cect1ssw" size="4" type="text"/>
+           <div class="form-group">
+            <input disabled="true" name="cect1ssl" size="4" type="text"/>
+            x
+            <input disabled="true" name="cect1ssw" size="4" type="text"/>
+           </div>
           </td>
           <td>
-           <input disabled="true" name="cect2ssl" size="4" type="text"/>
-           x
-           <input disabled="true" name="cect2ssw" size="4" type="text"/>
+           <div class="form-group">
+            <input disabled="true" name="cect2ssl" size="4" type="text"/>
+            x
+            <input disabled="true" name="cect2ssw" size="4" type="text"/>
+           </div>
           </td>
           <td>
-           <input disabled="true" name="cect3ssl" size="4" type="text"/>
-           x
-           <input disabled="true" name="cect3ssw" size="4" type="text"/>
+           <div class="form-group">
+            <input disabled="true" name="cect3ssl" size="4" type="text"/>
+            x
+            <input disabled="true" name="cect3ssw" size="4" type="text"/>
+           </div>
           </td>
           <td>
-           <input disabled="true" name="cect4ssl" size="4" type="text"/>
-           x
-           <input disabled="true" name="cect4ssw" size="4" type="text"/>
+           <div class="form-group">
+            <input disabled="true" name="cect4ssl" size="4" type="text"/>
+            x
+            <input disabled="true" name="cect4ssw" size="4" type="text"/>
+           </div>
           </td>
           <td>
-           <input disabled="true" name="cect5ssl" size="4" type="text"/>
-           x
-           <input disabled="true" name="cect5ssw" size="4" type="text"/>
+           <div class="form-group">
+            <input disabled="true" name="cect5ssl" size="4" type="text"/>
+            x
+            <input disabled="true" name="cect5ssw" size="4" type="text"/>
+           </div>
           </td>
           <td>
-           <input disabled="true" name="cect0ssl" size="4" type="text"/>
-           x
-           <input disabled="true" name="cect0ssw" size="4" type="text"/>
+           <div class="form-group">
+            <input disabled="true" name="cect0ssl" size="4" type="text"/>
+            x
+            <input disabled="true" name="cect0ssw" size="4" type="text"/>
+           </div>
           </td>
          </tr>
          <tr>
@@ -2872,15 +2972,15 @@
        none
       </label>
       <label class="radio-inline">
-       <input data-fv-notempty-message="Please select a value" id="ceem-mi" name="ceem" required="required" type="radio" value="mi"/>
+       <input id="ceem-mi" name="ceem" type="radio" value="mi"/>
        mild
       </label>
       <label class="radio-inline">
-       <input data-fv-notempty-message="Please select a value" id="ceem-mo" name="ceem" required="required" type="radio" value="mo"/>
+       <input id="ceem-mo" name="ceem" type="radio" value="mo"/>
        moderate
       </label>
       <label class="radio-inline">
-       <input data-fv-notempty-message="Please select a value" id="ceem-se" name="ceem" required="required" type="radio" value="se"/>
+       <input id="ceem-se" name="ceem" type="radio" value="se"/>
        severe
       </label>
      </div>
@@ -2932,38 +3032,48 @@
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cecbcl1" name="cecbcl1" type="checkbox" value="rul"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cecbcl1" name="cecbcl1" type="checkbox" value="rul"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cecbcl2" name="cecbcl2" type="checkbox" value="rml"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cecbcl2" name="cecbcl2" type="checkbox" value="rml"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cecbcl3" name="cecbcl3" type="checkbox" value="rll"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cecbcl3" name="cecbcl3" type="checkbox" value="rll"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cecbcl4" name="cecbcl4" type="checkbox" value="lul"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cecbcl4" name="cecbcl4" type="checkbox" value="lul"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cecbcl5" name="cecbcl5" type="checkbox" value="lll"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cecbcl5" name="cecbcl5" type="checkbox" value="lll"/>
+           </label>
+          </div>
          </div>
         </td>
        </tr>
@@ -2988,38 +3098,48 @@
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cecbbl1" name="cecbbl1" type="checkbox" value="rul"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cecbbl1" name="cecbbl1" type="checkbox" value="rul"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cecbbl2" name="cecbbl2" type="checkbox" value="rml"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cecbbl2" name="cecbbl2" type="checkbox" value="rml"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cecbbl3" name="cecbbl3" type="checkbox" value="rll"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cecbbl3" name="cecbbl3" type="checkbox" value="rll"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cecbbl4" name="cecbbl4" type="checkbox" value="lul"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cecbbl4" name="cecbbl4" type="checkbox" value="lul"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cecbbl5" name="cecbbl5" type="checkbox" value="lll"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cecbbl5" name="cecbbl5" type="checkbox" value="lll"/>
+           </label>
+          </div>
          </div>
         </td>
        </tr>
@@ -3048,38 +3168,48 @@
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cerdcl1" name="cerdcl1" type="checkbox" value="rul"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cerdcl1" name="cerdcl1" type="checkbox" value="rul"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cerdcl2" name="cerdcl2" type="checkbox" value="rml"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cerdcl2" name="cerdcl2" type="checkbox" value="rml"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cerdcl3" name="cerdcl3" type="checkbox" value="rll"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cerdcl3" name="cerdcl3" type="checkbox" value="rll"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cerdcl4" name="cerdcl4" type="checkbox" value="lul"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cerdcl4" name="cerdcl4" type="checkbox" value="lul"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cerdcl5" name="cerdcl5" type="checkbox" value="lll"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cerdcl5" name="cerdcl5" type="checkbox" value="lll"/>
+           </label>
+          </div>
          </div>
         </td>
        </tr>
@@ -3104,38 +3234,48 @@
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cescrl1" name="cescrl1" type="checkbox" value="rul"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cescrl1" name="cescrl1" type="checkbox" value="rul"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cescrl2" name="cescrl2" type="checkbox" value="rml"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cescrl2" name="cescrl2" type="checkbox" value="rml"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cescrl3" name="cescrl3" type="checkbox" value="rll"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cescrl3" name="cescrl3" type="checkbox" value="rll"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cescrl4" name="cescrl4" type="checkbox" value="lul"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cescrl4" name="cescrl4" type="checkbox" value="lul"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cescrl5" name="cescrl5" type="checkbox" value="lll"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cescrl5" name="cescrl5" type="checkbox" value="lll"/>
+           </label>
+          </div>
          </div>
         </td>
        </tr>
@@ -3183,38 +3323,48 @@
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cebrsbl1" name="cebrsbl1" type="checkbox" value="rul"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cebrsbl1" name="cebrsbl1" type="checkbox" value="rul"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cebrsbl2" name="cebrsbl2" type="checkbox" value="rml"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cebrsbl2" name="cebrsbl2" type="checkbox" value="rml"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cebrsbl3" name="cebrsbl3" type="checkbox" value="rll"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cebrsbl3" name="cebrsbl3" type="checkbox" value="rll"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cebrsbl4" name="cebrsbl4" type="checkbox" value="lul"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cebrsbl4" name="cebrsbl4" type="checkbox" value="lul"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cebrsbl5" name="cebrsbl5" type="checkbox" value="lll"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cebrsbl5" name="cebrsbl5" type="checkbox" value="lll"/>
+           </label>
+          </div>
          </div>
         </td>
        </tr>
@@ -3239,38 +3389,48 @@
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cebrssl1" name="cebrssl1" type="checkbox" value="rul"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cebrssl1" name="cebrssl1" type="checkbox" value="rul"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cebrssl2" name="cebrssl2" type="checkbox" value="rml"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cebrssl2" name="cebrssl2" type="checkbox" value="rml"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cebrssl3" name="cebrssl3" type="checkbox" value="rll"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cebrssl3" name="cebrssl3" type="checkbox" value="rll"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cebrssl4" name="cebrssl4" type="checkbox" value="lul"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cebrssl4" name="cebrssl4" type="checkbox" value="lul"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cebrssl5" name="cebrssl5" type="checkbox" value="lll"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cebrssl5" name="cebrssl5" type="checkbox" value="lll"/>
+           </label>
+          </div>
          </div>
         </td>
        </tr>
@@ -3347,38 +3507,48 @@
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cerbl1" name="cerbl1" type="checkbox" value="rul"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cerbl1" name="cerbl1" type="checkbox" value="rul"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cerbl2" name="cerbl2" type="checkbox" value="rml"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cerbl2" name="cerbl2" type="checkbox" value="rml"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cerbl3" name="cerbl3" type="checkbox" value="rll"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cerbl3" name="cerbl3" type="checkbox" value="rll"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cerbl4" name="cerbl4" type="checkbox" value="lul"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cerbl4" name="cerbl4" type="checkbox" value="lul"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cerbl5" name="cerbl5" type="checkbox" value="lll"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cerbl5" name="cerbl5" type="checkbox" value="lll"/>
+           </label>
+          </div>
          </div>
         </td>
        </tr>
@@ -3403,38 +3573,48 @@
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cepgol1" name="cepgol1" type="checkbox" value="rul"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cepgol1" name="cepgol1" type="checkbox" value="rul"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cepgol2" name="cepgol2" type="checkbox" value="rml"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cepgol2" name="cepgol2" type="checkbox" value="rml"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cepgol3" name="cepgol3" type="checkbox" value="rll"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cepgol3" name="cepgol3" type="checkbox" value="rll"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cepgol4" name="cepgol4" type="checkbox" value="lul"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cepgol4" name="cepgol4" type="checkbox" value="lul"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cepgol5" name="cepgol5" type="checkbox" value="lll"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cepgol5" name="cepgol5" type="checkbox" value="lll"/>
+           </label>
+          </div>
          </div>
         </td>
        </tr>
@@ -3459,38 +3639,48 @@
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="ceretl1" name="ceretl1" type="checkbox" value="rul"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="ceretl1" name="ceretl1" type="checkbox" value="rul"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="ceretl2" name="ceretl2" type="checkbox" value="rml"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="ceretl2" name="ceretl2" type="checkbox" value="rml"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="ceretl3" name="ceretl3" type="checkbox" value="rll"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="ceretl3" name="ceretl3" type="checkbox" value="rll"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="ceretl4" name="ceretl4" type="checkbox" value="lul"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="ceretl4" name="ceretl4" type="checkbox" value="lul"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="ceretl5" name="ceretl5" type="checkbox" value="lll"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="ceretl5" name="ceretl5" type="checkbox" value="lll"/>
+           </label>
+          </div>
          </div>
         </td>
        </tr>
@@ -3515,38 +3705,48 @@
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cephcl1" name="cephcl1" type="checkbox" value="rul"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cephcl1" name="cephcl1" type="checkbox" value="rul"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cephcl2" name="cephcl2" type="checkbox" value="rml"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cephcl2" name="cephcl2" type="checkbox" value="rml"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cephcl3" name="cephcl3" type="checkbox" value="rll"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cephcl3" name="cephcl3" type="checkbox" value="rll"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cephcl4" name="cephcl4" type="checkbox" value="lul"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cephcl4" name="cephcl4" type="checkbox" value="lul"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cephcl5" name="cephcl5" type="checkbox" value="lll"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cephcl5" name="cephcl5" type="checkbox" value="lll"/>
+           </label>
+          </div>
          </div>
         </td>
        </tr>
@@ -3631,38 +3831,48 @@
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cebatrl1" name="cebatrl1" type="checkbox" value="rul"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cebatrl1" name="cebatrl1" type="checkbox" value="rul"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cebatrl2" name="cebatrl2" type="checkbox" value="rml"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cebatrl2" name="cebatrl2" type="checkbox" value="rml"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cebatrl3" name="cebatrl3" type="checkbox" value="rll"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cebatrl3" name="cebatrl3" type="checkbox" value="rll"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cebatrl4" name="cebatrl4" type="checkbox" value="lul"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cebatrl4" name="cebatrl4" type="checkbox" value="lul"/>
+           </label>
+          </div>
          </div>
         </td>
         <td style="padding-top:0px;">
-         <div class="checkbox">
-          <label>
-           <input id="cebatrl5" name="cebatrl5" type="checkbox" value="lll"/>
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cebatrl5" name="cebatrl5" type="checkbox" value="lll"/>
+           </label>
+          </div>
          </div>
         </td>
        </tr>
@@ -3789,11 +3999,13 @@
          Coronary Calcification
         </td>
         <td>
-         <div class="checkbox">
-          <label>
-           <input id="ceccv" name="ceccv" type="checkbox" value="e"/>
-           n/v
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="ceccv" name="ceccv" type="checkbox" value="e"/>
+            n/v
+           </label>
+          </div>
          </div>
         </td>
         <td>
@@ -3912,31 +4124,35 @@
          Aortic Calcification
         </td>
         <td>
-         <div class="checkbox">
-          <label>
-           <input id="ceccav" name="ceccav" type="checkbox" value="e"/>
-           n/v
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="ceccav" name="ceccav" type="checkbox" value="e"/>
+            n/v
+           </label>
+          </div>
          </div>
         </td>
         <td colspan="5">
-         <select class="form-control" name="cecca">
-          <option value="-">
-           -
-          </option>
-          <option value="no">
-           none
-          </option>
-          <option value="mi">
-           minimal
-          </option>
-          <option value="mo">
-           moderate
-          </option>
-          <option value="ex">
-           extensive
-          </option>
-         </select>
+         <div class="form-group">
+          <select class="form-control" name="cecca">
+           <option value="-">
+            -
+           </option>
+           <option value="no">
+            none
+           </option>
+           <option value="mi">
+            minimal
+           </option>
+           <option value="mo">
+            moderate
+           </option>
+           <option value="ex">
+            extensive
+           </option>
+          </select>
+         </div>
         </td>
        </tr>
        <tr>
@@ -3944,11 +4160,13 @@
          Pericardial Effusion
         </td>
         <td>
-         <div class="checkbox">
-          <label>
-           <input id="ceprev" name="ceprev" type="checkbox" value="e"/>
-           n/v
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="ceprev" name="ceprev" type="checkbox" value="e"/>
+            n/v
+           </label>
+          </div>
          </div>
         </td>
         <td colspan="5">
@@ -3981,7 +4199,9 @@
          Pulmonary Artery Width (mm)
         </td>
         <td colspan="5">
-         <input class="form-control" name="cepaw" size="4" type="text"/>
+         <div class="form-group">
+          <input class="form-control" name="cepaw" size="4" type="text"/>
+         </div>
         </td>
        </tr>
        <tr>
@@ -3989,7 +4209,9 @@
          Ascending Aorta Width (mm)
         </td>
         <td colspan="5">
-         <input class="form-control" name="ceaow" size="4" type="text"/>
+         <div class="form-group">
+          <input class="form-control" name="ceaow" size="4" type="text"/>
+         </div>
         </td>
        </tr>
        <tr>
@@ -4001,7 +4223,9 @@
          </small>
         </td>
         <td colspan="5">
-         <input class="form-control" name="cepar" onfocus="this.blur()" size="4" type="text"/>
+         <div class="form-group">
+          <input class="form-control" name="cepar" onfocus="this.blur()" size="4" type="text"/>
+         </div>
         </td>
        </tr>
        <tr>
@@ -5290,55 +5514,67 @@
          </label>
         </td>
         <td>
-         <select class="form-control" id="cetsql" name="cetsql">
-          <option value="1">
-           1
-          </option>
-          <option value="2">
-           2
-          </option>
-          <option value="3">
-           3
-          </option>
-          <option value="4">
-           4
-          </option>
-         </select>
-        </td>
-        <td>
-         <div class="checkbox">
-          <label>
-           <input id="cetdqlh" name="cetdqlh" type="checkbox" value="h"/>
-           Patient body habitus
-          </label>
+         <div class="form-group">
+          <select class="form-control" id="cetsql" name="cetsql">
+           <option value="1">
+            1
+           </option>
+           <option value="2">
+            2
+           </option>
+           <option value="3">
+            3
+           </option>
+           <option value="4">
+            4
+           </option>
+          </select>
          </div>
         </td>
         <td>
-         <div class="checkbox">
-          <label>
-           <input id="cetdqlm" name="cetdqlm" type="checkbox" value="m"/>
-           Patient movement
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cetdqlh" name="cetdqlh" type="checkbox" value="h"/>
+            Patient body habitus
+           </label>
+          </div>
          </div>
         </td>
         <td>
-         <div class="checkbox">
-          <label>
-           <input id="cetdqli" name="cetdqli" type="checkbox" value="i"/>
-           Insufficient inhalation
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cetdqlm" name="cetdqlm" type="checkbox" value="m"/>
+            Patient movement
+           </label>
+          </div>
          </div>
         </td>
         <td>
-         <div class="checkbox">
-          <label>
-           <input id="cetdqlo" name="cetdqlo" type="checkbox" value="o"/>
-           Other (specify)
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cetdqli" name="cetdqli" type="checkbox" value="i"/>
+            Insufficient inhalation
+           </label>
+          </div>
          </div>
         </td>
         <td>
-         <input class="form-control" id="cetsqlos" name="cetsqlos" type="text"/>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cetdqlo" name="cetdqlo" type="checkbox" value="o"/>
+            Other (specify)
+           </label>
+          </div>
+         </div>
+        </td>
+        <td>
+         <div class="form-group">
+          <input class="form-control" id="cetsqlos" name="cetsqlos" type="text"/>
+         </div>
         </td>
        </tr>
        <tr>
@@ -5348,55 +5584,67 @@
          </label>
         </td>
         <td>
-         <select class="form-control" id="cetsqm" name="cetsqm">
-          <option value="1">
-           1
-          </option>
-          <option value="2">
-           2
-          </option>
-          <option value="3">
-           3
-          </option>
-          <option value="4">
-           4
-          </option>
-         </select>
-        </td>
-        <td>
-         <div class="checkbox">
-          <label>
-           <input id="cetdqmh" name="cetdqmh" type="checkbox" value="h"/>
-           Patient body habitus
-          </label>
+         <div class="form-group">
+          <select class="form-control" id="cetsqm" name="cetsqm">
+           <option value="1">
+            1
+           </option>
+           <option value="2">
+            2
+           </option>
+           <option value="3">
+            3
+           </option>
+           <option value="4">
+            4
+           </option>
+          </select>
          </div>
         </td>
         <td>
-         <div class="checkbox">
-          <label>
-           <input id="cetdqmm" name="cetdqmm" type="checkbox" value="m"/>
-           Patient movement
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cetdqmh" name="cetdqmh" type="checkbox" value="h"/>
+            Patient body habitus
+           </label>
+          </div>
          </div>
         </td>
         <td>
-         <div class="checkbox">
-          <label>
-           <input id="cetdqmi" name="cetdqmi" type="checkbox" value="i"/>
-           Insufficient inhalation
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cetdqmm" name="cetdqmm" type="checkbox" value="m"/>
+            Patient movement
+           </label>
+          </div>
          </div>
         </td>
         <td>
-         <div class="checkbox">
-          <label>
-           <input id="cetdqmo" name="cetdqmo" type="checkbox" value="o"/>
-           Other (specify)
-          </label>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cetdqmi" name="cetdqmi" type="checkbox" value="i"/>
+            Insufficient inhalation
+           </label>
+          </div>
          </div>
         </td>
         <td>
-         <input class="form-control" id="cetsqmos" name="cetsqmos" type="text"/>
+         <div class="form-group">
+          <div class="checkbox">
+           <label>
+            <input id="cetdqmo" name="cetdqmo" type="checkbox" value="o"/>
+            Other (specify)
+           </label>
+          </div>
+         </div>
+        </td>
+        <td>
+         <div class="form-group">
+          <input class="form-control" id="cetsqmos" name="cetsqmos" type="text"/>
+         </div>
         </td>
        </tr>
       </tbody>
@@ -5405,11 +5653,13 @@
     <hr/>
     <div class="row">
      <div class="col-sm-2">
-      <div class="checkbox">
-       <label>
-        <input id="cecoi" name="cecoi" type="checkbox" value="y"/>
-        Case of Interest
-       </label>
+      <div class="form-group">
+       <div class="checkbox">
+        <label>
+         <input id="cecoi" name="cecoi" type="checkbox" value="y"/>
+         Case of Interest
+        </label>
+       </div>
       </div>
      </div>
      <div class="col-sm-10 form-group">
@@ -5449,6 +5699,24 @@
     if (studyId) {
         $("#studyIdMenu").show();
     }
+
+    $(function () {
+
+
+        //TODO: remove these debug functions.
+        // These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly.
+        $.each($("form.validated").find("select, textarea, input:visible"), function (i, o) {
+            $input = $(this);
+            if ($input.closest(".form-group").length == 0) {
+                console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
+            }
+        });
+
+        $.each($("form.validated").find("input[type=hidden][required]"), function (i, o) {
+            $input = $(this);
+            console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
+        });
+    })
   </script>
   <script language="JavaScript">
    //calculate Time Since Baseline (TSB)
@@ -5504,7 +5772,6 @@
 
             //bind CAC Score
             
-
         });
   </script>
   <script language="JavaScript">

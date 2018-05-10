@@ -18,6 +18,9 @@ $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {
     }, // End ~ _create()
     _renderItem: function (ul, item) {
         let status = item['vapals'] || 0;
+        let dob    = item['dob'] || '';
+        let gender = item['gender'] || '';
+        if (gender) { gender = gender.split('^')[0]; }
                     
         let html   = '';
         if (status == 1) {
@@ -35,12 +38,12 @@ $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {
         html       = html + '<br>';
         html       = html + '<span class="indent">';
         html       = html + 'DOB: ';
-        html       = html + (item['dob'] || '');
+        html       = html + dob;
         html       = html + '</span>';
         html       = html + '<br>';
         html       = html + '<span class="indent">';
         html       = html + 'Gender: ';
-        html       = html + (item['gender'] || '');
+        html       = html + gender;
         html       = html + '</span>';
         if (status == 1) {
             html   = html + '<br>';

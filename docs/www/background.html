@@ -2960,6 +2960,7 @@
             $("[name=sbsehs]").conditionallyEnable({enable: "#sbsehs-container"});
 
 
+            initTabbedNavigation("myTabs","myTabContent");
             //setup tab navigation prev/next buttons
             function getCurrentTab() {
                 return $("#myTabContent").find("> div:visible");
@@ -3008,7 +3009,7 @@
             function checkCompleteness($container) {
                 console.log("checkCompleteness() container=" + $container);
                 var $requiredFields = $container.find("[required], [data-fv-notempty=true]").filter(":enabled"),
-                    $tab = $(".nav-tabs").find("a[href='#" + $container.attr("id") + "']");
+                $tab = $(".nav-tabs").find("a[href='#" + $container.attr("id") + "']");
                 var emptyRequiredFields = $requiredFields.filter(function () {
                     var $c = $(this);
                     var value = $c.val();

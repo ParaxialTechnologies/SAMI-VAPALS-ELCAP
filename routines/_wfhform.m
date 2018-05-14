@@ -835,7 +835,7 @@ getVals ; code for ppi getVals^%wf, get field values from graph
  ;
  ;@stanza 2 get values from graph
  ;
- new root set root=$$setroot^%wd("elcap-patients")
+ new root set root=$$setroot^%wd("vapals-patients")
  if '$data(@root@("graph",zsid,zid)) do  quit  ;
  . set @vrtn@(0)="values for patient: "_zsid_" in graph: "_zsid
  . quit
@@ -879,7 +879,7 @@ setVals ; code for ppi setVals^%wf, set field values into graph
  ;
  ;@stanza 2 set values
  ;
- new root set root=$$setroot^%wd("elcap-patients")
+ new root set root=$$setroot^%wd("vapals-patients")
  if zsid="XXXX01" do  quit  ; the sample set
  . new src set src=$$setroot^%wd("elcapSampleJson")
  . if '$data(@src@(zid)) quit  ; no such form
@@ -1199,7 +1199,7 @@ wsPostForm ; code for ws wsPostForm^%wf, submit HTML form
  set %json(sid,form,"form")=form
  do parseBody^%wf("tbdy",.body)
  merge %json(sid,form)=tbdy
- new gr set gr=$$setroot^%wd("elcap-patients")
+ new gr set gr=$$setroot^%wd("vapals-patients")
  merge @gr@("graph")=%json
  ;
  ; validation process

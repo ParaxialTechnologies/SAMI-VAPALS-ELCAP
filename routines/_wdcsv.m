@@ -98,7 +98,8 @@ csv2graph(source,graph) ; import a csv file to a graph
  ; %wcol contains the column names in order
  set %wid=$$nameThis^%wdgraph(source) ; get the id from the context
  ; first get the column names from row 1
- for %wi=1:1:$length(%wary(1),delim) set %wcol(%wi)=$$rename($translate($$prune($piece(%wary(1),delim,%wi))," ","_"))
+ ;for %wi=1:1:$length(%wary(1),delim) set %wcol(%wi)=$$rename($translate($$prune($piece(%wary(1),delim,%wi))," ","_"))
+ for %wi=1:1:$length(%wary(1),delim) set %wcol(%wi)=$translate($$prune($piece(%wary(1),delim,%wi))," ","_")
  set %wi=1
  for  set %wi=$order(%wary(%wi)) quit:+%wi=0  do  ;
  . new %wj
@@ -119,7 +120,8 @@ csv2graph(source,graph) ; import a csv file to a graph
  ;
 prune(txt) ; extrinsic removes extra quotes
  ;
- if txt'["""" quit  ; no extra quotes
+ ;if txt'["""" quit  ; no extra quotes 
+ if txt'["""" quit txt  ; no extra quotes - fix by gpl 
  new %w1,%return set %return=""
  for %w1=1:1:$length(txt,"""") do  ;
  . set %return=%return_$piece(txt,"""",%w1)
@@ -150,6 +152,7 @@ delim(ary) ; figures out the csv delimiter
  ;
  ;
 rename(name) ; extrinsic returns new name or old name if not found
+ q  ; this routine needs to be rewritten - gpl
  ;
  ; this is a temporary routine until the csv files are updated
  ;

@@ -48,8 +48,8 @@ $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {
         html       = html + '</span>';
         if (status == 1) {
             // html   = html + '<br>';
-            html   = html + '<span class="indent">';
-            html   = html + 'Enrolled in VA-PALS';
+            html   = html + '<span class="indent" title="Enrolled in VA-PALS">';
+            html   = html + '<img src="img/vapals_icon.png" style="height:1.3em"/><em>Enrolled</em>';
             html   = html + '</span>';
         }
         html       = html + '</li>';

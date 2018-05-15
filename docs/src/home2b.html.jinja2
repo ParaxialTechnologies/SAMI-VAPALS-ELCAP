@@ -31,13 +31,6 @@
             </div>
         </div>
 
-        <h1>Statistics
-            <small>MOCKUPS ONLY</small>
-        </h1>
-
-        <div id="projectRural" class="col-lg-3 col-sm-6"></div>
-        <div id="siteRural" class="col-lg-3 col-sm-6"></div>
-        
         <div id="pt-inclusion" class="modal fade" tabindex="-1" role="dialog">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -52,9 +45,9 @@
                 <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
                 <button type="button" id="pt-inclusion-btn" class="btn btn-primary">Yes</button>
               </div>
-            </div><!-- /.modal-content -->
-          </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+            </div>
+          </div>
+        </div>
     </div>
 {% endblock %}
 
@@ -104,47 +97,6 @@
                 }
             }).focus();
         });
-
-        // Load google charts
-        google.charts.load('current', {'packages': ['corechart', 'bar']});
-        google.charts.setOnLoadCallback(drawCharts);
-
-        function drawProject() {
-            var projectData = google.visualization.arrayToDataTable([
-                ['Task', 'Hours per Day'],
-                ['Rural', 600],
-                ['Urban', 400]
-            ]);
-            new google.visualization.PieChart(document.getElementById('projectRural'))
-                .draw(projectData, {
-                    'title': 'Project-wide Rural Engagement',
-                    height: 300,
-                    is3D: true,
-                });
-        }
-
-        function drawSite() {
-            var siteData = google.visualization.arrayToDataTable([
-                ['Task', 'Hours per Day'],
-                ['Rural', 68],
-                ['Urban', 32]
-            ]);
-
-
-            new google.visualization.PieChart(document.getElementById('siteRural'))
-                .draw(siteData, {
-                    'title': 'Rural Engagement in Phoenix',
-                    height: 300,
-                    is3D: true,
-                });
-        }
-
-        // Draw the chart and set the chart values
-        function drawCharts() {
-            drawProject();
-            drawSite();
-            //TODO: redraw on window resize
-        }
     </script>
 
 {% endblock %}

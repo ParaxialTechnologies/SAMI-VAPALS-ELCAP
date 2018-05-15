@@ -93,2697 +93,1018 @@
    <hr/>
    <form action="background.html" class="validated" data-fv-button-selector="#submit-button" data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-validating="glyphicon glyphicon-refresh" method="post">
     <div>
-     <!--TABS-->
-     <ul class="nav nav-tabs" id="myTabs" role="tablist" style="margin-bottom: 15px;">
-      <li class="active" role="presentation">
-       <a aria-controls="visit" aria-expanded="true" aria-selected="true" class="nav-link" data-toggle="tab" href="#visit" id="visit-tab" role="tab">
-        Visit
-        <i class="fa fa-check-circle-o complete-mark" title="This tab is complete">
-        </i>
-       </a>
-      </li>
-      <li role="presentation">
-       <a aria-controls="scan-order" aria-selected="false" class="nav-link" data-toggle="tab" href="#scan-order" id="scan-order-tab" role="tab">
-        CT Order
-        <i class="fa fa-check-circle-o complete-mark" title="This tab is complete">
-        </i>
-       </a>
-      </li>
-      <li role="presentation">
-       <a aria-controls="history" aria-selected="false" class="nav-link" data-toggle="tab" href="#history" id="history-tab" role="tab">
-        Medical History
-        <i class="fa fa-check-circle-o complete-mark" title="This tab is complete">
-        </i>
-       </a>
-      </li>
-      <li role="presentation">
-       <a aria-controls="smoking" aria-selected="false" class="nav-link" data-toggle="tab" href="#smoking" id="smoking-tab" role="tab">
-        Smoking History
-        <i class="fa fa-check-circle-o complete-mark" title="This tab is complete">
-        </i>
-       </a>
-      </li>
-      <li role="presentation">
-       <a aria-controls="health" aria-selected="false" class="nav-link" data-toggle="tab" href="#health" id="health-tab" role="tab">
-        Health Survey
-        <i class="fa fa-check-circle-o complete-mark" title="This tab is complete">
-        </i>
-       </a>
-      </li>
-     </ul>
-     <div class="tab-content" id="myTabContent">
-      <div aria-labelledby="visit-tab" class="tab-pane active" id="visit" role="tabpanel">
-       <div class="row">
-        <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-         <label class="control-label" for="sbdop">
-          Visit Date
-         </label>
-         <i aria-hidden="true" class="fa fa-question-circle-o" data-content="And here's some amazing content. It's very engaging. Right?" data-toggle="popover" title="Visit Date">
-         </i>
-         <div class="input-group datepicker">
-          <input aria-describedby="sbdop-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" data-fv-notempty-message="Visit date is required" id="sbdop" name="sbdop" required="required"/>
-          <div class="input-group-addon">
-           <div class="input-group-text" id="sbdop-addon">
-            <i aria-hidden="true" class="fa fa-calendar">
-            </i>
-           </div>
-          </div>
-         </div>
-         <small class="form-text text-muted">
-          MM/DD/YYYY
-         </small>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-         <label class="control-label" for="sbdob">
-          Date of Birth
-         </label>
-         <div class="input-group datepicker">
-          <input aria-describedby="sbdob-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" data-fv-notempty-message="Date of birth is required" id="sbdob" name="sbdob" required="required"/>
-          <div class="input-group-addon">
-           <div class="input-group-text" id="sbdob-addon">
-            <i aria-hidden="true" class="fa fa-calendar">
-            </i>
-           </div>
-          </div>
-         </div>
-         <small class="form-text text-muted">
-          MM/DD/YYYY
-         </small>
-        </div>
-        <div class="col-sm-2 col-md-1 form-group">
-         <label class="control-label">
-          Age
-         </label>
-         <p class="form-control-static" id="sbage">
-          -
-         </p>
-        </div>
-        <div class="col-sm-3 col-md-3 form-group">
-         <label class="control-label" for="sbsex-m">
-          Sex
-         </label>
-         <div class="radio">
-          <label>
-           <input id="sbsex-m" name="sbsex" required="required" type="radio" value="m"/>
-           Male
-          </label>
-         </div>
-         <div class="radio">
-          <label>
-           <input id="sbsex-f" name="sbsex" required="required" type="radio" value="f"/>
-           Female
-          </label>
-         </div>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-sm-3 col-lg-2 form-group">
-         <label class="control-label" for="sbph">
-          Height
-         </label>
-         <div class="input-group">
-          <input class="form-control numeric" data-fv-numeric="true" data-fv-numeric-decimalseparator="." data-fv-numeric-message="Value must be a valid decimal number" id="sbph" min="1" name="sbph" required="required"/>
-          <input id="sbphu" name="sbphu" type="hidden" value="i"/>
-          <div class="input-group-btn">
-           <button aria-expanded="false" aria-haspopup="true" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="sbphu-btn" type="button">
-            in
-            <span class="caret">
-            </span>
-           </button>
-           <ul class="dropdown-menu dropdown-menu-right">
-            <li>
-             <a class="dropdown-item" href="#" onclick="$('#sbphu').val('i').trigger('change');$('#sbphu-btn').text('in')">
-              in
-             </a>
-            </li>
-            <li>
-             <a class="dropdown-item" href="#" onclick="$('#sbphu').val('c').trigger('change');$('#sbphu-btn').text('cm')">
-              cm
-             </a>
-            </li>
-           </ul>
-          </div>
-         </div>
-        </div>
-        <div class="col-sm-3 col-lg-2 form-group">
-         <label class="control-label" for="sbpw">
-          Weight
-         </label>
-         <div class="input-group">
-          <input class="form-control numeric" data-fv-numeric="true" data-fv-numeric-decimalseparator="." data-fv-numeric-message="Value must be a valid decimal number" id="sbpw" min="1" name="sbpw" required="required"/>
-          <input id="sbpwu" name="sbpwu" type="hidden" value="p"/>
-          <div class="input-group-btn">
-           <button aria-expanded="false" aria-haspopup="true" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="sbpwu-btn" type="button">
-            lbs
-            <span class="caret">
-            </span>
-           </button>
-           <ul class="dropdown-menu dropdown-menu-right">
-            <li>
-             <a class="dropdown-item" href="#" onclick="$('#sbpwu').val('p').trigger('change');$('#sbpwu-btn').text('lbs')">
-              lbs
-             </a>
-            </li>
-            <li>
-             <a class="dropdown-item" href="#" onclick="$('#sbpwu').val('k').trigger('change');$('#sbpwu-btn').text('kg')">
-              kg
-             </a>
-            </li>
-           </ul>
-          </div>
-         </div>
-        </div>
-        <input id="sbbmi" name="sbbmi" type="hidden"/>
-       </div>
-       <div class="col-md-12 alert alert-info" id="bmi-message" style="display:none;">
-        The patients calculated BMI (
-        <strong>
-         <span id="bmi-value">
-         </span>
-        </strong>
-        ) is considered
-        <strong>
-         <span id="bmi-descriptor">
-         </span>
-        </strong>
-        .
-       </div>
-       <div class="row">
-        <div class="col-md-6 form-group">
-         <label class="control-label" for="sbocc">
-          Occupation
-         </label>
-         <input class="form-control" id="sbocc" name="sbocc" required="required" type="text"/>
-         <small class="form-text text-muted">
-          If retired, indicate previous occupation.
-         </small>
-        </div>
-        <div class="col-md-6 form-group">
-         <label class="control-label" for="sboccc">
-          Occupation Code
-         </label>
-         <select class="form-control" id="sboccc" name="sboccc">
-          <option value="-">
-           -
-          </option>
-          <option value="1">
-           Higher executives
-          </option>
-          <option value="2">
-           Business managers
-          </option>
-          <option value="3">
-           Administrative Personnel
-          </option>
-          <option value="4">
-           Clerical / Sales workers
-          </option>
-          <option value="5">
-           Skilled manual Employees
-          </option>
-          <option value="6">
-           Machine Operators
-          </option>
-          <option value="7">
-           Unskilled Employees
-          </option>
-          <option value="8">
-           Unemployed
-          </option>
-         </select>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-md-4 form-group">
-         <label class="control-label" for="sbet">
-          Ethnicity
-         </label>
-         <select class="form-control" id="sbet" name="sbet">
-          <option selected="" value="-">
-           —
-          </option>
-          <option value="y">
-           Hispanic or Latino
-          </option>
-          <option value="n">
-           Not Hispanic or Latino
-          </option>
-         </select>
-        </div>
-        <div class="col-md-4 form-group">
-         <label class="control-label" for="sbrc">
-          Race
-         </label>
-         <select class="form-control" id="sbrc" name="sbrc">
-          <option selected="" value="-">
-           —
-          </option>
-          <option value="w">
-           White
-          </option>
-          <option value="b">
-           Black or African American
-          </option>
-          <option value="i">
-           American Indian
-          </option>
-          <option value="k">
-           Alaska Native
-          </option>
-          <option value="a">
-           Asian
-          </option>
-          <option value="p">
-           Native Hawaiian or Other Pacific Islander
-          </option>
-          <option value="t">
-           Two or more
-          </option>
-          <option value="o">
-           Other (specify)
-          </option>
-         </select>
-        </div>
-        <div class="col-md-4 form-group" id="sbrcs-container">
-         <label class="control-label" for="sbrcs">
-          Other
-         </label>
-         <input class="form-control" id="sbrcs" name="sbrcs" required="required" type="text"/>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-md-6 form-group">
-         <label class="control-label" for="sbed">
-          Level of Education
-         </label>
-         <select class="form-control" id="sbed" name="sbed">
-          <option selected="" value="-">
-           —
-          </option>
-          <option value="n">
-           did not complete high school
-          </option>
-          <option value="hs">
-           completed high school
-          </option>
-          <option value="sc">
-           started college
-          </option>
-          <option value="ts">
-           completed trade school
-          </option>
-          <option value="ad">
-           completed 2-year college degree
-          </option>
-          <option value="bd">
-           completed 4-year college degree
-          </option>
-          <option value="gd">
-           advanced degree (e.g. Master’s, J.D., M.D., Ph.D.)
-          </option>
-         </select>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-md-2 form-group">
-         <label class="control-label" for="sbmly-y">
-          Served in the military?
-         </label>
-         <div class="radio">
-          <label>
-           <input id="sbmly-y" name="sbmly" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
-         <div class="radio">
-          <label>
-           <input id="sbmly-n" name="sbmly" required="required" type="radio" value="n"/>
-           No
-          </label>
-         </div>
-        </div>
-        <div class="col-md-9 form-group" id="sbmlyo-container">
-         <label class="control-label" for="sbmlyo">
-          Branch
-         </label>
-         <input class="form-control" id="sbmlyo" name="sbmlyo" required="required" type="text"/>
-        </div>
-       </div>
+     <div class="row">
+      <div class="col-md-6">
+       <label class="visible-xs visible-sm" for="sbsru-n">
+        Have you smoked at least 100 cigarettes in your lifetime? (100 cigarettes = 5 packs)
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm" for="sbsru-n">
+        Have you smoked at least 100 cigarettes in your lifetime? (100 cigarettes = 5 packs)
+       </label>
       </div>
-      <div aria-labelledby="scan-order-tab" class="tab-pane " id="scan-order" role="tabpanel">
-       <p class="lead">
-        Ordering information is
-        <em>
-         required
-        </em>
-        for all patients undergoing a screening exam using
-                            the G0297 code.
-       </p>
-       <div class="row">
-        <div class="col-md-12 form-group">
-         <label class="control-label" for="sbmeq-y">
-          Was a CT lung screening scan ordered for
-                                    this patient (CPT code G0297)?
-         </label>
-         <div class="radio">
-          <label>
-           <input id="sbmeq-n" name="sbmeq" required="required" type="radio" value="n"/>
-           No
-                                        (remaining questions in this section are optional)
-          </label>
-         </div>
-         <div class="radio">
-          <label>
-           <input id="sbmeq-y" name="sbmeq" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
-        </div>
+      <div class="col-md-6">
+       <div class="form-group">
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="sbsru-n" name="sbsru" required="required" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="sbsru-y" name="sbsru" required="required" type="radio" value="y"/>
+         Yes
+        </label>
        </div>
-       <hr/>
-       <div id="sbmeq-container">
-        <div class="row">
-         <div class="col-md-4">
-          <label class="visible-xs visible-sm" for="sbopln">
-           Ordering Practitioner
-          </label>
-          <label class="text-right pull-right hidden-xs hidden-sm" for="sbopln">
-           Ordering Practitioner
-          </label>
-         </div>
-         <div class="col-md-8">
-          <div class="form-inline form-group">
-           <div class="form-group">
-            <label class="sr-only" for="sbopln">
-             Last Name
-            </label>
-            <input class="form-control" id="sbopln" name="sbopln" placeholder="Last Name" required="required" type="text"/>
-           </div>
-           <div class="form-group">
-            <label class="sr-only" for="sbopfn">
-             First Name
-            </label>
-            <input class="form-control" id="sbopfn" name="sbopfn" placeholder="First Name" required="required" type="text"/>
-           </div>
-          </div>
-         </div>
-        </div>
-        <div class="row">
-         <div class="col-md-4">
-          <label class="visible-xs visible-sm" for="sbopnpi">
-           NPI
-          </label>
-          <label class="text-right pull-right hidden-xs hidden-sm" for="sbopnpi">
-           NPI
-          </label>
-         </div>
-         <div class="col-md-8 form-group">
-          <input class="form-control numeric" data-fv-numeric="true" data-fv-numeric-decimalseparator="." data-fv-numeric-message="Value must be a valid decimal number" id="sbopnpi" min="1" name="sbonpi" required="required" type="text"/>
-         </div>
-        </div>
-        <div class="row">
-         <div class="col-md-4 ">
-          <label class="visible-xs visible-sm" for="sbdsd-n">
-           Documentation of shared decision making
-          </label>
-          <label class="text-right pull-right hidden-xs hidden-sm" for="sbdsd-n">
-           Documentation of shared decision making
-          </label>
-         </div>
-         <div class="col-md-8 form-group">
-          <label class="radio-inline">
-           <input id="sbdsd-n" name="sbdsd" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input id="sbdsd-y" name="sbdsd" type="radio" value="y"/>
-           Yes
-          </label>
-          <label class="radio-inline">
-           <input id="sbdsd-q" name="sbdsd" type="radio" value="?"/>
-           ?
-          </label>
-          <small class="form-text text-muted">
-           required for reimbursement for G0297 examples on
-                                        baseline
-           <em>
-            only
-           </em>
-          </small>
-         </div>
-        </div>
-        <div class="row">
-         <div class="col-md-4">
-          <label class="visible-xs visible-sm" for="sbopss-c">
-           Reported smoking status
-          </label>
-          <label class="text-right pull-right hidden-xs hidden-sm" for="sbopss-c">
-           Reported smoking status
-          </label>
-         </div>
-         <div class="col-md-8 form-group">
-          <label class="radio-inline">
-           <input id="sbopss-c" name="sbopss" required="required" type="radio" value="c"/>
-           Current
-          </label>
-          <label class="radio-inline">
-           <input id="sbopss-f" name="sbopss" required="required" type="radio" value="f"/>
-           Former
-          </label>
-         </div>
-        </div>
-        <div class="row">
-         <div class="col-md-4">
-          <label class="visible-xs visible-sm" for="sboppy">
-           Reported pack years
-          </label>
-          <label class="text-right pull-right hidden-xs hidden-sm" for="sboppy">
-           Reported pack years
-          </label>
-         </div>
-         <div class="col-md-8 form-group">
-          <input class="form-control" id="sboppy" name="sboppy" required="required" type="text"/>
-         </div>
-        </div>
-        <div class="row">
-         <div class="col-md-4">
-          <label class="visible-xs visible-sm" for="sbopqy">
-           Reported years since quit
-          </label>
-          <label class="text-right pull-right hidden-xs hidden-sm" for="sbopqy">
-           Reported years since quit
-          </label>
-         </div>
-         <div class="col-md-8 form-group">
-          <input class="form-control" id="sbopqy" name="sbopqy" required="required" type="text"/>
-         </div>
-        </div>
-        <div class="row">
-         <div class="col-md-4">
-          <label class="visible-xs visible-sm" for="sboas-n">
-           Reported asymptomatic for lung cancer
-          </label>
-          <label class="text-right pull-right hidden-xs hidden-sm" for="sboas-n">
-           Reported asymptomatic for lung cancer
-          </label>
-         </div>
-         <div class="col-md-8 form-group">
-          <label class="radio-inline">
-           <input id="sboas-n" name="sboas" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input id="sboas-y" name="sboas" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
-        </div>
-        <div class="row">
-         <div class="col-md-4">
-          <label class="visible-xs visible-sm" for="sbopci">
-           Clinical Information
-          </label>
-          <label class="text-right pull-right hidden-xs hidden-sm" for="sbopci">
-           Clinical Information
-          </label>
-         </div>
-         <div class="col-md-8 form-group">
-          <textarea class="form-control" id="sbopci" name="sbopci" rows="3"></textarea>
-          <small class="form-text text-muted">
-           information will be copied to CT report
-          </small>
-         </div>
-        </div>
-       </div>
-      </div>
-      <div aria-labelledby="history-tab" class="tab-pane " id="history" role="tabpanel">
-       <div class="row">
-        <div class="col-sm-6 col-md-3 col-lg-3">
-         <label class="visible-xs visible-sm" for="sbfc-n">
-          Family history of lung cancer?
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sbfc-n">
-          Family history of lung cancer?
-         </label>
-        </div>
-        <div class="col-sm-6 col-md-3 col-lg-2">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbfc-n" name="sbfc" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbfc-y" name="sbfc" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbfc-q" name="sbfc" required="required" type="radio" value="q"/>
-           ?
-          </label>
-         </div>
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbfc-container">
-         <div class="form-group">
-          <label class="control-label" for="sbfcf-n">
-           Father?
-          </label>
-          <label class="radio-inline">
-           <input id="sbfcf-n" name="sbfcf" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input id="sbfcf-y" name="sbfcf" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
-         <div class="form-group">
-          <label class="control-label" for="sbfcm-n" style="padding-left:15px;">
-           Mother?
-          </label>
-          <label class="radio-inline">
-           <input id="sbfcm-n" name="sbfcm" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input id="sbfcm-y" name="sbfcm" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
-         <div class="form-group">
-          <label class="control-label" for="sbfcs-n" style="padding-left:15px;">
-           Siblings?
-          </label>
-          <label class="radio-inline">
-           <input id="sbfcs-n" name="sbfcs" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input id="sbfcs-y" name="sbfcs" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-md-3 col-lg-3">
-         <label class="visible-xs visible-sm" for="sbhco-n">
-          Any Cancer?
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sbhco-n">
-          Any Cancer?
-         </label>
-        </div>
-        <div class="col-sm-6 col-md-3 col-lg-2">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbhco-n" name="sbhco" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbhco-y" name="sbhco" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbhco-q" name="sbhco" required="required" type="radio" value="q"/>
-           ?
-          </label>
-         </div>
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbhco-container">
-         <div class="form-group">
-          <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbhcdod" maxlength="4" name="sbhcdod" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
-         </div>
-         <div class="form-group" style="vertical-align: top;">
-          <input class="form-control input-sm" id="sbhcpbo" name="sbhcpbo" placeholder="Primary site?" required="required" type="text"/>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-md-3 col-lg-3">
-         <label class="visible-xs visible-sm" for="sbmpa-n">
-          Asthma?
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sbmpa-n">
-          Asthma?
-         </label>
-        </div>
-        <div class="col-sm-6 col-md-3 col-lg-2">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmpa-n" name="sbmpa" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmpa-y" name="sbmpa" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmpa-q" name="sbmpa" required="required" type="radio" value="q"/>
-           ?
-          </label>
-         </div>
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpa-container">
-         <div class="form-group">
-          <label class="" for="sbmpat-n">
-           Under current treatment?
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmpat-n" name="sbmpat" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmpat-y" name="sbmpat" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-md-3 col-lg-3">
-         <label class="visible-xs visible-sm" for="sbmpc-n">
-          Emphysema or Chronic Bronchitis (COPD)?
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sbmpc-n">
-          Emphysema or Chronic Bronchitis (COPD)?
-         </label>
-        </div>
-        <div class="col-sm-6 col-md-3 col-lg-2">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmpc-n" name="sbmpc" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmpc-y" name="sbmpc" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmpc-q" name="sbmpc" required="required" type="radio" value="q"/>
-           ?
-          </label>
-         </div>
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpc-container">
-         <div class="form-group">
-          <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpcw" maxlength="4" name="sbmpcw" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-md-3 col-lg-3">
-         <label class="visible-xs visible-sm" for="sbmpht-n">
-          High Blood Pressure?
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sbmpht-n">
-          High Blood Pressure?
-         </label>
-        </div>
-        <div class="col-sm-6 col-md-3 col-lg-2">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmpht-n" name="sbmpht" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmpht-y" name="sbmpht" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmpht-q" name="sbmpht" required="required" type="radio" value="q"/>
-           ?
-          </label>
-         </div>
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpht-container">
-         <div class="form-group" style="vertical-align: top;">
-          <label class="form-check-inline" for="sbmphtt-n">
-           Treated?
-          </label>
-          <label class="radio-inline">
-           <input id="sbmphtt-n" name="sbmphtt" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input id="sbmphtt-y" name="sbmphtt" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
-         <div class="form-group" style="vertical-align: top;margin-left:10px;">
-          <input class="form-control input-sm numeric" data-fv-integer="true" id="sbmphtsw" maxlength="4" name="sbmphtsw" placeholder="Since (year)?" required="required" type="text"/>
-         </div>
-         <div class="form-group" style="vertical-align: top;">
-          <input class="form-control input-sm" id="sbmphthv" name="sbmphthv" placeholder="Highest Value?" type="text"/>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-md-3 col-lg-3">
-         <label class="visible-xs visible-sm" for="sbmphc-n">
-          High Cholesterol?
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sbmphc-n">
-          High Cholesterol?
-         </label>
-        </div>
-        <div class="col-sm-6 col-md-3 col-lg-2">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmphc-n" name="sbmphc" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmphc-y" name="sbmphc" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmphc-q" name="sbmphc" required="required" type="radio" value="q"/>
-           ?
-          </label>
-         </div>
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmphc-container">
-         <div class="form-group">
-          <label class="control-label" for="sbmphct-n">
-           Treated?
-          </label>
-          <label class="radio-inline">
-           <input id="sbmphct-n" name="sbmphct" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input id="sbmphct-y" name="sbmphct" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-md-3 col-lg-3">
-         <label class="visible-xs visible-sm" for="sbmpas-n">
-          Had an angioplasty or Stent?
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sbmpas-n">
-          Had an angioplasty or Stent?
-         </label>
-        </div>
-        <div class="col-sm-6 col-md-3 col-lg-2">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmpas-n" name="sbmpas" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmpas-y" name="sbmpas" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmpas-q" name="sbmpas" required="required" type="radio" value="q"/>
-           ?
-          </label>
-         </div>
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpas-container">
-         <div class="form-group">
-          <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpasw" maxlength="4" name="sbmpasw" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
-         </div>
-         <div class="form-group" style="vertical-align: top;">
-          <input class="form-control input-sm" id="sbmpast" name="sbmpast" placeholder="Where treated?" required="required" type="text"/>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-md-3 col-lg-3">
-         <label class="visible-xs visible-sm" for="sbmpmi-n">
-          MI?
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sbmpmi-n">
-          MI?
-         </label>
-        </div>
-        <div class="col-sm-6 col-md-3 col-lg-2">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmpmi-n" name="sbmpmi" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmpmi-y" name="sbmpmi" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmpmi-q" name="sbmpmi" required="required" type="radio" value="q"/>
-           ?
-          </label>
-         </div>
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpmi-container">
-         <div class="form-group">
-          <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpmid" maxlength="4" name="sbmpmid" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
-         </div>
-         <div class="">
-          <input class="form-control input-sm" id="sbmpmiw" name="sbmpmiw" placeholder="Where treated?" type="text"/>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-md-3 col-lg-3">
-         <label class="visible-xs visible-sm" for="sbmps-n">
-          Stroke?
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sbmps-n">
-          Stroke?
-         </label>
-        </div>
-        <div class="col-sm-6 col-md-3 col-lg-2">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmps-n" name="sbmps" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmps-y" name="sbmps" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmps-q" name="sbmps" required="required" type="radio" value="q"/>
-           ?
-          </label>
-         </div>
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmps-container">
-         <div class="form-group">
-          <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpsd" maxlength="4" name="sbmpsd" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-md-3 col-lg-3">
-         <label class="visible-xs visible-sm" for="sbmppv-n">
-          Peripheral Vascular Disease (Poor Circulation)?
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sbmppv-n">
-          Peripheral Vascular Disease (Poor Circulation)?
-         </label>
-        </div>
-        <div class="col-sm-6 col-md-3 col-lg-2">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmppv-n" name="sbmppv" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmppv-y" name="sbmppv" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmppv-q" name="sbmppv" required="required" type="radio" value="q"/>
-           ?
-          </label>
-         </div>
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmppv-container">
-         <div class="form-group">
-          <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmppvd" maxlength="4" name="sbmppvd" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-md-3 col-lg-3">
-         <label class="visible-xs visible-sm" for="sbmpd-n">
-          Diabetes?
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sbmpd-n">
-          Diabetes?
-         </label>
-        </div>
-        <div class="col-sm-6 col-md-3 col-lg-2">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmpd-n" name="sbmpd" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmpd-y" name="sbmpd" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmpd-q" name="sbmpd" required="required" type="radio" value="q"/>
-           ?
-          </label>
-         </div>
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpd-container">
-         <div class="form-group form-inline">
-          <label class="control-label" for="sbmpdw">
-           Starting at what age?
-          </label>
-          <input class="form-control input-sm numeric" data-fv-integer="true" id="sbmpdw" maxlength="4" name="sbmpdw" size="4" type="text"/>
-         </div>
-         <div class="form-group" style="padding-left:10px;">
-          <label class="control-label" for="sbmpdt-n">
-           Treated?
-          </label>
-          <label class="radio-inline">
-           <input id="sbmpdt-n" name="sbmpdt" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input id="sbmpdt-y" name="sbmpdt" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-md-3 col-lg-3">
-         <label class="visible-xs visible-sm" for="sbmpld-n">
-          Liver Disease?
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sbmpld-n">
-          Liver Disease?
-         </label>
-        </div>
-        <div class="col-sm-6 col-md-3 col-lg-2">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmpld-n" name="sbmpld" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmpld-y" name="sbmpld" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmpld-q" name="sbmpld" required="required" type="radio" value="q"/>
-           ?
-          </label>
-         </div>
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpld-container">
-         <div class="form-group">
-          <label class="control-label" for="sbmpldt-m">
-           Severity?
-          </label>
-          <label class="radio-inline">
-           <input id="sbmpldt-m" name="sbmpldt" type="radio" value="m"/>
-           Mild
-          </label>
-          <label class="radio-inline">
-           <input id="sbmpldt-s" name="sbmpldt" type="radio" value="s"/>
-           Severe
-          </label>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-md-3 col-lg-3">
-         <label class="visible-xs visible-sm" for="sbmprd-n">
-          Kidney (Renal) Disease?
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sbmprd-n">
-          Kidney (Renal) Disease?
-         </label>
-        </div>
-        <div class="col-sm-6 col-md-3 col-lg-2">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmprd-n" name="sbmprd" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmprd-y" name="sbmprd" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmprd-q" name="sbmprd" required="required" type="radio" value="q"/>
-           ?
-          </label>
-         </div>
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmprd-container">
-         <div class="form-group">
-          <label class="control-label" for="sbmprdt-m">
-           Severity?
-          </label>
-          <label class="radio-inline">
-           <input id="sbmprdt-m" name="sbmprdt" type="radio" value="m"/>
-           Mild
-          </label>
-          <label class="radio-inline">
-           <input id="sbmprdt-s" name="sbmprdt" type="radio" value="s"/>
-           Severe
-          </label>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-md-3 col-lg-3">
-         <label class="visible-xs visible-sm" for="sblcs-n">
-          Have you experienced any symptoms indicative of lung cancer?
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sblcs-n">
-          Have you experienced any symptoms indicative of lung cancer?
-         </label>
-        </div>
-        <div class="col-sm-6 col-md-3 col-lg-2">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input id="sblcs-n" name="sblcs" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input id="sblcs-y" name="sblcs" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-7" id="sblcs-container">
-         <div class="form-group">
-          <p>
-           <em>
-            Check all that apply
-           </em>
-          </p>
-          <div class="checkbox">
-           <label>
-            <input id="sbwcb" name="sbwcb" type="checkbox" value="b"/>
-            cough producing bloody material
-           </label>
-          </div>
-          <div class="checkbox">
-           <label>
-            <input id="sbwcl" name="sbwcl" type="checkbox" value="l"/>
-            unexplained weight loss greater than 20 lbs.
-           </label>
-          </div>
-          <div class="checkbox">
-           <label>
-            <input id="sbwch" name="sbwch" type="checkbox" value="h"/>
-            unexplained hoarseness
-           </label>
-          </div>
-          <div class="checkbox">
-           <label>
-            <input id="sbwco" name="sbwco" type="checkbox" value="o"/>
-            other
-           </label>
-          </div>
-          <input class="form-control input-sm" id="sbwcos" name="sbwcos" required="required" title="Other symptom" type="text"/>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-md-3 col-lg-3">
-         <label class="control-label" for="sbact">
-          When did you most recently have a chest
-                                    CT?
-         </label>
-        </div>
-        <div class="col-sm-6 col-md-3 col-lg-2">
-         <div class="form-group">
-          <select class="form-control input-sm" id="sbact" name="sbact">
-           <option selected="" value="-">
-            —
-           </option>
-           <option value="a">
-            less than 6 months ago
-           </option>
-           <option value="b">
-            6–18 months ago
-           </option>
-           <option value="f">
-            18 months to 3 years ago
-           </option>
-           <option value="c">
-            3 years to 5 years ago
-           </option>
-           <option value="d">
-            over 5 years ago
-           </option>
-           <option value="e">
-            never
-           </option>
-          </select>
-         </div>
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbact-container">
-         <div class="form-group">
-          <label for="sbahcl">
-           If so, where was the test done?
-          </label>
-          <input class="form-control input-sm" id="sbahcl" name="sbahcl" type="text"/>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-md-3 col-lg-3">
-         <label class="control-label" for="sbahpft-n">
-          Have you had a pulmonary function test
-                                    within the last five years?
-         </label>
-        </div>
-        <div class="col-sm-6 col-md-3 col-lg-2">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input id="sbahpft-n" name="sbahpft" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input id="sbahpft-y" name="sbahpft" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbahpft-container">
-         <div class="form-group">
-          <label for="sbfev1">
-           FEV1 (L/s)
-          </label>
-          <input class="form-control input-sm" id="sbfev1" name="sbfev1" size="4" type="text"/>
-         </div>
-         <div class="form-group">
-          <label for="sbfvc">
-           FVC (L)
-          </label>
-          <input class="form-control input-sm" id="sbfvc" name="sbfvc" size="4" type="text"/>
-         </div>
-         <div class="form-group">
-          <label for="sbcop">
-           Diffusion Capacity (mL/min/mm Hg)
-          </label>
-          <input class="form-control input-sm" id="sbcop" name="sbcop" size="4" type="text"/>
-         </div>
-         <div class="alert alert-info" id="ffr-message" style="display: none;">
-          FEV1/FVC (%) is
-          <strong>
-           <span id="ffr-value">
-           </span>
-          </strong>
-         </div>
-         <input id="sbffr" name="sbffr" type="hidden"/>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-md-3 col-lg-3">
-         <label class="control-label" for="sbaha-n">
-          To your knowledge, have you been exposed
-                                    to asbestos?
-         </label>
-        </div>
-        <div class="col-sm-6 col-md-3 col-lg-2">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input id="sbaha-n" name="sbaha" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input id="sbaha-y" name="sbaha" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-md-3">
-         <label class="control-label" for="sblcs-n">
-          Have you ever worked in any of the
-                                    following?
-         </label>
-        </div>
-        <div class="col-sm-6 col-md-9">
-         <div class="form-group">
-          <div class="checkbox">
-           <label>
-            <input id="sbahaoi" name="sbahaoi" type="checkbox" value="i"/>
-            asbestos product manufacturing
-           </label>
-          </div>
-          <div class="checkbox">
-           <label>
-            <input id="sbahaoj" name="sbahaoj" type="checkbox" value="j"/>
-            auto repair
-           </label>
-          </div>
-          <div class="checkbox">
-           <label>
-            <input id="sbahaoh" name="sbahaoh" type="checkbox" value="h"/>
-            building maintenance
-           </label>
-          </div>
-          <div class="checkbox">
-           <label>
-            <input id="sbahaof" name="sbahaof" type="checkbox" value="f"/>
-            chemical industry/foundary/refinery
-           </label>
-          </div>
-          <div class="checkbox">
-           <label>
-            <input id="sbahaoa" name="sbahaoa" type="checkbox" value="a"/>
-            construction/demolition
-           </label>
-          </div>
-          <div class="checkbox">
-           <label>
-            <input id="sbahaoe" name="sbahaoe" type="checkbox" value="e"/>
-            mining
-           </label>
-          </div>
-          <div class="checkbox">
-           <label>
-            <input id="sbahaog" name="sbahaog" type="checkbox" value="g"/>
-            nuclear industry
-           </label>
-          </div>
-          <div class="checkbox">
-           <label>
-            <input id="sbahaoc" name="sbahaoc" type="checkbox" value="c"/>
-            ship construction/repair
-           </label>
-          </div>
-          <div class="checkbox">
-           <label>
-            <input id="sbahaoo" name="sbahaoo" type="checkbox" value="o"/>
-            other
-           </label>
-          </div>
-          <input class="form-control input-sm" id="sbahas" name="sbahas" required="required" title="Other work" type="text"/>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-      </div>
-      <div aria-labelledby="smoking-tab" class="tab-pane " id="smoking" role="tabpanel">
-       <div class="row">
-        <div class="col-sm-6 col-lg-8">
-         <label class="visible-xs visible-sm" for="sbsru-n">
-          Have you smoked at least 100 cigarettes in your lifetime? (100 cigarettes = 5 packs)
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sbsru-n">
-          Have you smoked at least 100 cigarettes in your lifetime? (100 cigarettes = 5 packs)
-         </label>
-        </div>
-        <div class="col-sm-6 col-lg-4">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbsru-n" name="sbsru" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbsru-y" name="sbsru" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
-         <div class="form-group" id="sbsru-container">
-          <label class="control-label" for="sbsru-n">
-           Were you exposed to secondhand
-                                        smoke?
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbsruyn-n" name="sbsruyn" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbsruyn-y" name="sbsruyn" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-lg-8">
-         <label class="visible-xs visible-sm" for="sbsas">
-          About how old were you when you first started smoking cigarettes regularly?
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sbsas">
-          About how old were you when you first started smoking cigarettes regularly?
-         </label>
-        </div>
-        <div class="col-sm-6 col-lg-4">
-         <div class="form-group form-inline">
-          <input class="form-control input-sm" id="sbsas" name="sbsas" size="5" type="text"/>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-lg-8">
-         <label class="visible-xs visible-sm" for="sbshsa-n">
-          Over the past month, have you smoked at all, even one cigarette?
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sbshsa-n">
-          Over the past month, have you smoked at all, even one cigarette?
-         </label>
-        </div>
-        <div class="col-sm-6 col-lg-4">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbshsa-n" name="sbshsa" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbshsa-y" name="sbshsa" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div id="non-smoking-container">
-        <div class="row">
-         <div class="col-sm-6 col-lg-8">
-          <label class="visible-xs visible-sm" for="sbsdlcd">
-           If no, when was the date of your last cigarette?
-          </label>
-          <label class="text-right pull-right hidden-xs hidden-sm" for="sbsdlcd">
-           If no, when was the date of your last cigarette?
-          </label>
-         </div>
-         <div class="col-sm-6 col-lg-4">
-          <div class="form-group" style="float:left;">
-           <select class="form-control input-sm" id="sbsdlcd" name="sbsdlcd" title="Last cigarette day">
-            <option selected="" value="-">
-             —
-            </option>
-            <option value="1">
-             1
-            </option>
-            <option value="2">
-             2
-            </option>
-            <option value="3">
-             3
-            </option>
-            <option value="4">
-             4
-            </option>
-            <option value="5">
-             5
-            </option>
-            <option value="6">
-             6
-            </option>
-            <option value="7">
-             7
-            </option>
-            <option value="8">
-             8
-            </option>
-            <option value="9">
-             9
-            </option>
-            <option value="10">
-             10
-            </option>
-            <option value="11">
-             11
-            </option>
-            <option value="12">
-             12
-            </option>
-            <option value="13">
-             13
-            </option>
-            <option value="14">
-             14
-            </option>
-            <option value="15">
-             15
-            </option>
-            <option value="16">
-             16
-            </option>
-            <option value="17">
-             17
-            </option>
-            <option value="18">
-             18
-            </option>
-            <option value="19">
-             19
-            </option>
-            <option value="20">
-             20
-            </option>
-            <option value="21">
-             21
-            </option>
-            <option value="22">
-             22
-            </option>
-            <option value="23">
-             23
-            </option>
-            <option value="24">
-             24
-            </option>
-            <option value="25">
-             25
-            </option>
-            <option value="26">
-             26
-            </option>
-            <option value="27">
-             27
-            </option>
-            <option value="28">
-             28
-            </option>
-            <option value="29">
-             29
-            </option>
-            <option value="30">
-             30
-            </option>
-            <option value="31">
-             31
-            </option>
-           </select>
-           <span class="small text-muted">
-            Day
-           </span>
-          </div>
-          <div class="form-group" style="float:left;">
-           <select class="form-control input-sm" id="sbsdlcm" name="sbsdlcm" title="Last cigarette month">
-            <option selected="" value="-">
-             —
-            </option>
-            <option value="1">
-             Jan
-            </option>
-            <option value="2">
-             Feb
-            </option>
-            <option value="3">
-             Mar
-            </option>
-            <option value="4">
-             Apr
-            </option>
-            <option value="5">
-             May
-            </option>
-            <option value="6">
-             Jun
-            </option>
-            <option value="7">
-             Jul
-            </option>
-            <option value="8">
-             Aug
-            </option>
-            <option value="9">
-             Sep
-            </option>
-            <option value="10">
-             Oct
-            </option>
-            <option value="11">
-             Nov
-            </option>
-            <option value="12">
-             Dec
-            </option>
-           </select>
-           <span class="small text-muted">
-            Month
-           </span>
-          </div>
-          <div class="form-group" style="float:left;">
-           <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbsdlcy" maxlength="4" name="sbsdlcy" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
-           <small class="help-block">
-            Year
-           </small>
-          </div>
-          <div class="alert alert-info" id="sbsdlc-message" style="display: none; float:left;margin-left: 5px;">
-           Number of years since quit:
-           <strong>
-            <span id="sbsdlc-value">
-            </span>
-           </strong>
-          </div>
-         </div>
-        </div>
-        <hr class="visible-xs-block visible-sm-block"/>
-        <div class="row">
-         <div class="col-sm-6 col-lg-8">
-          <label class="visible-xs visible-sm" for="sbfdpw">
-           When you were a smoker, on approximately how many days per week did you smoke cigarettes?
-          </label>
-          <label class="text-right pull-right hidden-xs hidden-sm" for="sbfdpw">
-           When you were a smoker, on approximately how many days per week did you smoke cigarettes?
-          </label>
-         </div>
-         <div class="col-sm-6 col-lg-4">
-          <div class="form-group form-inline">
-           <input class="form-control input-sm" data-fv-lessthan="true" data-fv-lessthan-value="7" id="sbfdpw" name="sbfdpw" size="5" type="text"/>
-          </div>
-         </div>
-        </div>
-        <hr class="visible-xs-block visible-sm-block"/>
-        <div class="row">
-         <div class="col-sm-6 col-lg-8">
-          <label class="visible-xs visible-sm" for="sbfppd">
-           On the days that you did smoke, approximately how many packs of cigarettes did you smoke per day (PPD)?
-          </label>
-          <label class="text-right pull-right hidden-xs hidden-sm" for="sbfppd">
-           On the days that you did smoke, approximately how many packs of cigarettes did you smoke per day (PPD)?
-          </label>
-         </div>
-         <div class="col-sm-6 col-lg-4">
-          <div class="form-group form-inline">
-           <input class="form-control input-sm" id="sbfppd" name="sbfppd" size="5" type="text"/>
-          </div>
-         </div>
-        </div>
-        <hr class="visible-xs-block visible-sm-block"/>
-        <div class="row">
-         <div class="col-sm-6 col-lg-8">
-          <label class="visible-xs visible-sm" for="sbfdur">
-           For approximately how many years did you smoke this amount?
-          </label>
-          <label class="text-right pull-right hidden-xs hidden-sm" for="sbfdur">
-           For approximately how many years did you smoke this amount?
-          </label>
-         </div>
-         <div class="col-sm-6 col-lg-4">
-          <div class="form-group form-inline">
-           <input class="form-control input-sm" id="sbfdur" name="sbfdur" size="5" type="text"/>
-          </div>
-         </div>
-        </div>
-        <hr class="visible-xs-block visible-sm-block"/>
-       </div>
-       <div id="smoking-container">
-        <div class="row">
-         <div class="col-sm-6 col-lg-8">
-          <label class="visible-xs visible-sm" for="sbcdpw">
-           On average, on how many days per week do you (or did you) smoke cigarettes?
-          </label>
-          <label class="text-right pull-right hidden-xs hidden-sm" for="sbcdpw">
-           On average, on how many days per week do you (or did you) smoke cigarettes?
-          </label>
-         </div>
-         <div class="col-sm-6 col-lg-4">
-          <div class="form-group form-inline">
-           <input class="form-control input-sm" data-fv-lessthan="true" data-fv-lessthan-value="7" id="sbcdpw" name="sbcdpw" size="5" type="text"/>
-          </div>
-         </div>
-        </div>
-        <hr class="visible-xs-block visible-sm-block"/>
-        <div class="row">
-         <div class="col-sm-6 col-lg-8">
-          <label class="visible-xs visible-sm" for="sbcppd">
-           On average, how many packs ofcigarettes do you (or did you) smoke per day (PPD)?
-          </label>
-          <label class="text-right pull-right hidden-xs hidden-sm" for="sbcppd">
-           On average, how many packs ofcigarettes do you (or did you) smoke per day (PPD)?
-          </label>
-         </div>
-         <div class="col-sm-6 col-lg-4">
-          <div class="form-group form-inline">
-           <input class="form-control input-sm" id="sbcppd" name="sbcppd" size="5" type="text"/>
-          </div>
-         </div>
-        </div>
-        <hr class="visible-xs-block visible-sm-block"/>
-        <div class="row">
-         <div class="col-sm-6 col-lg-8">
-          <label class="visible-xs visible-sm" for="sbcdur">
-           For approximately how many years have you smoked this amount?
-          </label>
-          <label class="text-right pull-right hidden-xs hidden-sm" for="sbcdur">
-           For approximately how many years have you smoked this amount?
-          </label>
-         </div>
-         <div class="col-sm-6 col-lg-4">
-          <div class="form-group form-inline">
-           <input class="form-control input-sm" id="sbcdur" name="sbcdur" size="5" type="text"/>
-          </div>
-         </div>
-        </div>
-        <div class="row">
-         <div class="col-sm-6 col-lg-4 col-sm-offset-6 col-lg-offset-">
-          <input name="sbntpy" type="hidden" value=""/>
-          <div class="alert alert-info" id="sbntpy-message" style="display: none;">
-           <strong>
-            <span id="sbntpy-value">
-            </span>
-            total pack-years
-           </strong>
-           <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Pack-Years is calculated by multiplying the average number of packs per day by
-                            the number of years smoking. For example: a person who has smoked 15 cigarettes a day for 40 years has a (15/20) x 40 = 30 pack-year smoking history." data-toggle="popover" title="Pack-Years calculation">
-           </i>
-          </div>
-         </div>
-        </div>
-        <hr class="visible-xs-block visible-sm-block"/>
-        <div class="row">
-         <div class="col-sm-6 col-lg-8">
-          <label class="visible-xs visible-sm" for="sbqttq-n">
-           Have you ever tried to quit smoking?
-          </label>
-          <label class="text-right pull-right hidden-xs hidden-sm" for="sbqttq-n">
-           Have you ever tried to quit smoking?
-          </label>
-         </div>
-         <div class="col-sm-6 col-lg-4">
-          <div class="form-group">
-           <label class="radio-inline">
-            <input data-fv-notempty-message="Please select a value" id="sbqttq-n" name="sbqttq" required="required" type="radio" value="n"/>
-            No
-           </label>
-           <label class="radio-inline">
-            <input data-fv-notempty-message="Please select a value" id="sbqttq-y" name="sbqttq" required="required" type="radio" value="y"/>
-            Yes
-           </label>
-          </div>
-          <div class="form-group" id="sbqttq-container">
-           <label class="control-label" for="sbqttqtb">
-            How many times?
-           </label>
-           <select class="form-control input-sm" id="sbqttqtb" name="sbqttqtb">
-            <option selected="" value="-">
-             —
-            </option>
-            <option value="a">
-             1
-            </option>
-            <option value="b">
-             2–5
-            </option>
-            <option value="c">
-             6–10
-            </option>
-            <option value="d">
-             10+
-            </option>
-           </select>
-          </div>
-         </div>
-        </div>
-        <hr class="visible-xs-block visible-sm-block"/>
-        <div class="row" id="sbqly2-container">
-         <div class="col-sm-6 col-lg-8">
-          <label class="visible-xs visible-sm" for="sbqly2">
-           In the last 12 months, how many times have you quit smoking for at least 24 hours?
-          </label>
-          <label class="text-right pull-right hidden-xs hidden-sm" for="sbqly2">
-           In the last 12 months, how many times have you quit smoking for at least 24 hours?
-          </label>
-         </div>
-         <div class="form-group col-sm-6 col-lg-4">
-          <select class="form-control input-sm" id="sbqly2" name="sbqly2">
-           <option selected="" value="-">
-            —
-           </option>
-           <option value="e">
-            0
-           </option>
-           <option value="a">
-            1
-           </option>
-           <option value="b">
-            2–5
-           </option>
-           <option value="c">
-            6–10
-           </option>
-           <option value="d">
-            10+
-           </option>
-          </select>
-         </div>
-        </div>
-        <hr class="visible-xs-block visible-sm-block"/>
-        <div class="row">
-         <div class="col-sm-6 col-lg-8">
-          <label class="visible-xs visible-sm" for="sbqst">
-           Are you seriously thinking of quitting smoking?
-          </label>
-          <label class="text-right pull-right hidden-xs hidden-sm" for="sbqst">
-           Are you seriously thinking of quitting smoking?
-          </label>
-         </div>
-         <div class="form-group col-sm-6 col-lg-4">
-          <select class="form-control input-sm" id="sbqst" name="sbqst">
-           <option selected="" value="-">
-            —
-           </option>
-           <option value="y">
-            yes, within the next 30 days
-           </option>
-           <option value="m">
-            yes, within the next six months
-           </option>
-           <option value="n">
-            no, not thinking of quitting
-           </option>
-          </select>
-         </div>
-        </div>
-        <hr class="visible-xs-block visible-sm-block"/>
-        <div class="row">
-         <div class="col-sm-6 col-lg-8">
-          <label class="visible-xs visible-sm" for="sbcpd-n">
-           Smoking cessation information or counseling was offered to subject
-          </label>
-          <label class="text-right pull-right hidden-xs hidden-sm" for="sbcpd-n">
-           Smoking cessation information or counseling was offered to subject
-          </label>
-         </div>
-         <div class="col-sm-6 col-lg-4">
-          <div class="form-group">
-           <label class="radio-inline">
-            <input data-fv-notempty-message="Please select a value" id="sbcpd-n" name="sbcpd" required="required" type="radio" value="n"/>
-            No
-           </label>
-           <label class="radio-inline">
-            <input data-fv-notempty-message="Please select a value" id="sbcpd-y" name="sbcpd" required="required" type="radio" value="y"/>
-            Yes
-           </label>
-          </div>
-         </div>
-        </div>
-        <hr class="visible-xs-block visible-sm-block"/>
-       </div>
-       <div class="row">
-        <div class="col-sm-6 col-lg-8">
-         <label class="visible-xs visible-sm" for="sbsews-n">
-          After age 18, did you work for more than one year in a worksite where smoking was allowed?
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sbsews-n">
-          After age 18, did you work for more than one year in a worksite where smoking was allowed?
-         </label>
-        </div>
-        <div class="col-sm-6 col-lg-4">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbsews-n" name="sbsews" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbsews-y" name="sbsews" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-lg-8">
-         <label class="visible-xs visible-sm" for="sbsehs-n">
-          Did you ever work for more than one year in a job where you were exposed to other people’s tobacco smoke?
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sbsehs-n">
-          Did you ever work for more than one year in a job where you were exposed to other people’s tobacco smoke?
-         </label>
-        </div>
-        <div class="col-sm-6 col-lg-4">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbsehs-n" name="sbsehs" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbsehs-y" name="sbsehs" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
-        </div>
-       </div>
-       <div class="row" id="sbsehs-container">
-        <hr class="visible-xs-block visible-sm-block"/>
-        <div class="col-md-12">
-         <label>
-          List the occasions from the most recent:
-         </label>
-         <table class="table">
-          <thead class="thead-light">
-           <tr>
-            <th scope="col">
-             Age Range
-            </th>
-            <th scope="col">
-             Job
-            </th>
-            <th scope="col">
-             Smoking
-            </th>
-           </tr>
-          </thead>
-          <tbody>
-           <tr>
-            <td>
-             <input class="form-control" name="sbsehsa1" title="Age Range 1" type="text"/>
-            </td>
-            <td>
-             <input class="form-control" name="sbsehsj1" title="Job 1" type="text"/>
-            </td>
-            <td>
-             <div class="form-group">
-              <label class="radio-inline">
-               <input data-fv-notempty-message="Please select a value" id="sbsehsr1-n" name="sbsehsr1" required="required" type="radio" value="n"/>
-               not permitted
-              </label>
-              <label class="radio-inline">
-               <input data-fv-notempty-message="Please select a value" id="sbsehsr1-r" name="sbsehsr1" required="required" type="radio" value="r"/>
-               restricted
-              </label>
-              <label class="radio-inline">
-               <input data-fv-notempty-message="Please select a value" id="sbsehsr1-y" name="sbsehsr1" required="required" type="radio" value="y"/>
-               allowed anywhere
-              </label>
-             </div>
-            </td>
-           </tr>
-           <tr>
-            <td>
-             <input class="form-control" name="sbsehsa2" title="Age Range 2" type="text"/>
-            </td>
-            <td>
-             <input class="form-control" name="sbsehsj2" title="Job 2" type="text"/>
-            </td>
-            <td>
-             <div class="form-group">
-              <label class="radio-inline">
-               <input data-fv-notempty-message="Please select a value" id="sbsehsr2-n" name="sbsehsr2" required="required" type="radio" value="n"/>
-               not permitted
-              </label>
-              <label class="radio-inline">
-               <input data-fv-notempty-message="Please select a value" id="sbsehsr2-r" name="sbsehsr2" required="required" type="radio" value="r"/>
-               restricted
-              </label>
-              <label class="radio-inline">
-               <input data-fv-notempty-message="Please select a value" id="sbsehsr2-y" name="sbsehsr2" required="required" type="radio" value="y"/>
-               allowed anywhere
-              </label>
-             </div>
-            </td>
-           </tr>
-           <tr>
-            <td>
-             <input class="form-control" name="sbsehsa3" title="Age Range 3" type="text"/>
-            </td>
-            <td>
-             <input class="form-control" name="sbsehsj3" title="Job 3" type="text"/>
-            </td>
-            <td>
-             <div class="form-group">
-              <label class="radio-inline">
-               <input data-fv-notempty-message="Please select a value" id="sbsehsr3-n" name="sbsehsr3" required="required" type="radio" value="n"/>
-               not permitted
-              </label>
-              <label class="radio-inline">
-               <input data-fv-notempty-message="Please select a value" id="sbsehsr3-r" name="sbsehsr3" required="required" type="radio" value="r"/>
-               restricted
-              </label>
-              <label class="radio-inline">
-               <input data-fv-notempty-message="Please select a value" id="sbsehsr3-y" name="sbsehsr3" required="required" type="radio" value="y"/>
-               allowed anywhere
-              </label>
-             </div>
-            </td>
-           </tr>
-           <tr>
-            <td>
-             <input class="form-control" name="sbsehsa4" title="Age Range 4" type="text"/>
-            </td>
-            <td>
-             <input class="form-control" name="sbsehsj4" title="Job 4" type="text"/>
-            </td>
-            <td>
-             <div class="form-group">
-              <label class="radio-inline">
-               <input data-fv-notempty-message="Please select a value" id="sbsehsr4-n" name="sbsehsr4" required="required" type="radio" value="n"/>
-               not permitted
-              </label>
-              <label class="radio-inline">
-               <input data-fv-notempty-message="Please select a value" id="sbsehsr4-r" name="sbsehsr4" required="required" type="radio" value="r"/>
-               restricted
-              </label>
-              <label class="radio-inline">
-               <input data-fv-notempty-message="Please select a value" id="sbsehsr4-y" name="sbsehsr4" required="required" type="radio" value="y"/>
-               allowed anywhere
-              </label>
-             </div>
-            </td>
-           </tr>
-          </tbody>
-         </table>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-lg-8">
-         <label class="visible-xs visible-sm" for="sbhsy-n">
-          Did anyone in your house smoke in the home while you were under 18?
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sbhsy-n">
-          Did anyone in your house smoke in the home while you were under 18?
-         </label>
-        </div>
-        <div class="col-sm-6 col-lg-4">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbhsy-n" name="sbhsy" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbhsy-y" name="sbhsy" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-lg-8">
-         <label class="visible-xs visible-sm" for="sbhsyh-n">
-          Was smoking allowed inside the house?
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sbhsyh-n">
-          Was smoking allowed inside the house?
-         </label>
-        </div>
-        <div class="col-sm-6 col-lg-4">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbhsyh-n" name="sbhsyh" required="required" type="radio" value="n"/>
-           Not permitted
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbhsyh-r" name="sbhsyh" required="required" type="radio" value="r"/>
-           Resticted
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbhsyh-y" name="sbhsyh" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-lg-8">
-         <label class="visible-xs visible-sm" for="sbmsy-n">
-          Did your mother/primary caregiver smoke when you were under age 7?
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sbmsy-n">
-          Did your mother/primary caregiver smoke when you were under age 7?
-         </label>
-        </div>
-        <div class="col-sm-6 col-lg-4">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmsy-n" name="sbmsy" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmsy-y" name="sbmsy" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-lg-8">
-         <label class="visible-xs visible-sm" for="sbmst-n">
-          Did your mother/primary caregiver smoke when you were ages 7–18?
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sbmst-n">
-          Did your mother/primary caregiver smoke when you were ages 7–18?
-         </label>
-        </div>
-        <div class="col-sm-6 col-lg-4">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmst-n" name="sbmst" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbmst-y" name="sbmst" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-lg-8">
-         <label class="visible-xs visible-sm" for="sbosy-n">
-          Did anyone else beside your mother/primary caregiver smoke in the home when you were under 18?
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sbosy-n">
-          Did anyone else beside your mother/primary caregiver smoke in the home when you were under 18?
-         </label>
-        </div>
-        <div class="col-sm-6 col-lg-4">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbosy-n" name="sbosy" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbosy-y" name="sbosy" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-lg-8">
-         <label class="visible-xs visible-sm" for="sbslws-n">
-          Do you currently live with a smoker?
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sbslws-n">
-          Do you currently live with a smoker?
-         </label>
-        </div>
-        <div class="col-sm-6 col-lg-4">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbslws-n" name="sbslws" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbslws-y" name="sbslws" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-       <div class="row">
-        <div class="col-sm-6 col-lg-8">
-         <label class="visible-xs visible-sm" for="sbhso-n">
-          After age 18, did you live with someone for more than one year who smoked in your presence?
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="sbhso-n">
-          After age 18, did you live with someone for more than one year who smoked in your presence?
-         </label>
-        </div>
-        <div class="col-sm-6 col-lg-4">
-         <div class="form-group">
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbhso-n" name="sbhso" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="sbhso-y" name="sbhso" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
-        </div>
-       </div>
-       <div class="row" id="sbhso-container">
-        <hr class="visible-xs-block visible-sm-block"/>
-        <div class="col-md-12">
-         <label>
-          If yes, at what ages did you live with someone who smoked around you and how much
-                                    did they smoke? (List the occasions from the most recent)
-         </label>
-         <table class="table ">
-          <thead>
-           <tr>
-            <th scope="col">
-             Age Range
-            </th>
-            <th scope="col">
-             Amount
-            </th>
-            <th scope="col">
-             Smoking
-            </th>
-           </tr>
-          </thead>
-          <tbody>
-           <tr>
-            <td>
-             <input class="form-control" name="sbhsa1" title="Age Range 1" type="text"/>
-            </td>
-            <td>
-             <select class="form-control" name="sbhsas1" title="Amount 1">
-              <option value="-">
-               —
-              </option>
-              <option value="a">
-               1–14 cigarettes a day
-              </option>
-              <option value="b">
-               15–24 cigarettes a day
-              </option>
-              <option value="c">
-               25+ cigarettes a day
-              </option>
-              <option value="d">
-               Don’t know
-              </option>
-             </select>
-            </td>
-            <td>
-             <div class="form-group">
-              <label class="radio-inline">
-               <input data-fv-notempty-message="Please select a value" id="sbhsasr1-n" name="sbhsasr1" required="required" type="radio" value="n"/>
-               not permitted
-              </label>
-              <label class="radio-inline">
-               <input data-fv-notempty-message="Please select a value" id="sbhsasr1-r" name="sbhsasr1" required="required" type="radio" value="r"/>
-               restricted
-              </label>
-              <label class="radio-inline">
-               <input data-fv-notempty-message="Please select a value" id="sbhsasr1-y" name="sbhsasr1" required="required" type="radio" value="y"/>
-               allowed anywhere
-              </label>
-             </div>
-            </td>
-           </tr>
-           <tr>
-            <td>
-             <input class="form-control" name="sbhsa2" title="Age Range 2" type="text"/>
-            </td>
-            <td>
-             <select class="form-control" name="sbhsas2" title="Amount 2">
-              <option value="-">
-               —
-              </option>
-              <option value="a">
-               1–14 cigarettes a day
-              </option>
-              <option value="b">
-               15–24 cigarettes a day
-              </option>
-              <option value="c">
-               25+ cigarettes a day
-              </option>
-              <option value="d">
-               Don’t know
-              </option>
-             </select>
-            </td>
-            <td>
-             <div class="form-group">
-              <label class="radio-inline">
-               <input data-fv-notempty-message="Please select a value" id="sbhsasr2-n" name="sbhsasr2" required="required" type="radio" value="n"/>
-               not permitted
-              </label>
-              <label class="radio-inline">
-               <input data-fv-notempty-message="Please select a value" id="sbhsasr2-r" name="sbhsasr2" required="required" type="radio" value="r"/>
-               restricted
-              </label>
-              <label class="radio-inline">
-               <input data-fv-notempty-message="Please select a value" id="sbhsasr2-y" name="sbhsasr2" required="required" type="radio" value="y"/>
-               allowed anywhere
-              </label>
-             </div>
-            </td>
-           </tr>
-           <tr>
-            <td>
-             <input class="form-control" name="sbhsa3" title="Age Range 3" type="text"/>
-            </td>
-            <td>
-             <select class="form-control" name="sbhsas3" title="Amount 3">
-              <option value="-">
-               —
-              </option>
-              <option value="a">
-               1–14 cigarettes a day
-              </option>
-              <option value="b">
-               15–24 cigarettes a day
-              </option>
-              <option value="c">
-               25+ cigarettes a day
-              </option>
-              <option value="d">
-               Don’t know
-              </option>
-             </select>
-            </td>
-            <td>
-             <div class="form-group">
-              <label class="radio-inline">
-               <input data-fv-notempty-message="Please select a value" id="sbhsasr3-n" name="sbhsasr3" required="required" type="radio" value="n"/>
-               not permitted
-              </label>
-              <label class="radio-inline">
-               <input data-fv-notempty-message="Please select a value" id="sbhsasr3-r" name="sbhsasr3" required="required" type="radio" value="r"/>
-               restricted
-              </label>
-              <label class="radio-inline">
-               <input data-fv-notempty-message="Please select a value" id="sbhsasr3-y" name="sbhsasr3" required="required" type="radio" value="y"/>
-               allowed anywhere
-              </label>
-             </div>
-            </td>
-           </tr>
-           <tr>
-            <td>
-             <input class="form-control" name="sbhsa4" title="Age Range 4" type="text"/>
-            </td>
-            <td>
-             <select class="form-control" name="sbhsas4" title="Amount 4">
-              <option value="-">
-               —
-              </option>
-              <option value="a">
-               1–14 cigarettes a day
-              </option>
-              <option value="b">
-               15–24 cigarettes a day
-              </option>
-              <option value="c">
-               25+ cigarettes a day
-              </option>
-              <option value="d">
-               Don’t know
-              </option>
-             </select>
-            </td>
-            <td>
-             <div class="form-group">
-              <label class="radio-inline">
-               <input data-fv-notempty-message="Please select a value" id="sbhsasr4-n" name="sbhsasr4" required="required" type="radio" value="n"/>
-               not permitted
-              </label>
-              <label class="radio-inline">
-               <input data-fv-notempty-message="Please select a value" id="sbhsasr4-r" name="sbhsasr4" required="required" type="radio" value="r"/>
-               restricted
-              </label>
-              <label class="radio-inline">
-               <input data-fv-notempty-message="Please select a value" id="sbhsasr4-y" name="sbhsasr4" required="required" type="radio" value="y"/>
-               allowed anywhere
-              </label>
-             </div>
-            </td>
-           </tr>
-          </tbody>
-         </table>
-        </div>
-       </div>
-       <hr class="visible-xs-block visible-sm-block"/>
-      </div>
-      <div aria-labelledby="health-tab" class="tab-pane " id="health" role="tabpanel" style="margin-bottom: 15px;">
-       <div class="row">
-        <div class="col-md-12">
-         <p>
-          1. Overall, how would you rate your health during the
-          <em>
-           past 4 weeks
-          </em>
-          ?
-         </p>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb1-1" name="sbsfb1" type="radio" value="1"/>
-          Excellent
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb1-2" name="sbsfb1" type="radio" value="2"/>
-          Very good
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb1-3" name="sbsfb1" type="radio" value="3"/>
-          Good
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb1-4" name="sbsfb1" type="radio" value="4"/>
-          Fair
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb1-5" name="sbsfb1" type="radio" value="5"/>
-          Poor
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb1-6" name="sbsfb1" type="radio" value="6"/>
-          Very Poor
-         </label>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-md-12">
-         <p>
-          2. During the
-          <strong style="text-decoration: underline;">
-           past 4 weeks
-          </strong>
-          how much did physical
-                health problems limit your usual physical activities(such as walking or climbing stairs)?
-         </p>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb2-1" name="sbsfb2" type="radio" value="1"/>
-          Not at all
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb2-2" name="sbsfb2" type="radio" value="2"/>
-          Very little
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb2-3" name="sbsfb2" type="radio" value="3"/>
-          Somewhat
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb2-4" name="sbsfb2" type="radio" value="4"/>
-          Quite a lot
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb2-5" name="sbsfb2" type="radio" value="5"/>
-          Could not do physical activities
-         </label>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-md-12">
-         <p>
-          3. During the
-          <strong style="text-decoration: underline;">
-           past 4 weeks
-          </strong>
-          how much difficulty did
-                you have doing your daily work, both at home and away from home, because of your physical health?
-         </p>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb3-1" name="sbsfb3" type="radio" value="1"/>
-          None at all
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb3-2" name="sbsfb3" type="radio" value="2"/>
-          A little bit
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb3-3" name="sbsfb3" type="radio" value="3"/>
-          Some
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb3-4" name="sbsfb3" type="radio" value="4"/>
-          Quite a lot
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb3-5" name="sbsfb3" type="radio" value="5"/>
-          Could not do daily work
-         </label>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-md-12">
-         <p>
-          4. How much
-          <span style="text-decoration: underline;">
-           bodily
-          </span>
-          pain have you had during the
-          <strong style="text-decoration: underline;">
-           past 4 weeks
-          </strong>
-          ?
-         </p>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb4-1" name="sbsfb4" type="radio" value="1"/>
-          None
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb4-2" name="sbsfb4" type="radio" value="2"/>
-          Very mild
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb4-3" name="sbsfb4" type="radio" value="3"/>
-          Mild
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb4-4" name="sbsfb4" type="radio" value="4"/>
-          Moderate
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb4-5" name="sbsfb4" type="radio" value="5"/>
-          Severe
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb4-5" name="sbsfb4" type="radio" value="5"/>
-          Very Severe
-         </label>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-md-12">
-         <p>
-          5. During the
-          <strong style="text-decoration: underline;">
-           past 4 weeks
-          </strong>
-          how much energy did you
-                have?
-         </p>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb5-1" name="sbsfb5" type="radio" value="1"/>
-          Very much
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb5-2" name="sbsfb5" type="radio" value="2"/>
-          Quite a lot
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb5-3" name="sbsfb5" type="radio" value="3"/>
-          Some
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb5-4" name="sbsfb5" type="radio" value="4"/>
-          A little
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb5-5" name="sbsfb5" type="radio" value="5"/>
-          None
-         </label>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-md-12">
-         <p>
-          6. During the
-          <strong style="text-decoration: underline;">
-           past 4 weeks
-          </strong>
-          how much did your physical health or emotional problems limit your usual social activities with family or friends?
-         </p>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb6-1" name="sbsfb6" type="radio" value="1"/>
-          Not at all
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb6-2" name="sbsfb6" type="radio" value="2"/>
-          Very little
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb6-3" name="sbsfb6" type="radio" value="3"/>
-          Somewhat
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb6-4" name="sbsfb6" type="radio" value="4"/>
-          Quite a lot
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb6-5" name="sbsfb6" type="radio" value="5"/>
-          Could not do social activities
-         </label>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-md-12">
-         <p>
-          7. During the
-          <strong style="text-decoration: underline;">
-           past 4 weeks
-          </strong>
-          how much have you been bothered by
-          <strong style="text-decoration: underline;">
-           emotional problems
-          </strong>
-          (such as feeling anxious, depressed or irritable)?
-         </p>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb7-1" name="sbsfb7" type="radio" value="1"/>
-          Not at all
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb7-2" name="sbsfb7" type="radio" value="2"/>
-          Slightly
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb7-3" name="sbsfb7" type="radio" value="3"/>
-          Moderately
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb7-4" name="sbsfb7" type="radio" value="4"/>
-          Quite a lot
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb7-5" name="sbsfb7" type="radio" value="5"/>
-          Extremely
-         </label>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-md-12">
-         <p>
-          8. During the
-          <strong style="text-decoration: underline;">
-           past 4 weeks
-          </strong>
-          how much did personal or emotional problems keep you from doing your usual work, school or other daily activities?
-         </p>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb8-1" name="sbsfb8" type="radio" value="1"/>
-          Not at all
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb8-2" name="sbsfb8" type="radio" value="2"/>
-          Very little
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb8-3" name="sbsfb8" type="radio" value="3"/>
-          Somewhat
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb8-4" name="sbsfb8" type="radio" value="4"/>
-          Quite a lot
-         </label>
-        </div>
-        <div class="col-md-2 form-group">
-         <label class="radio-inline">
-          <input id="sbsfb8-5" name="sbsfb8" type="radio" value="5"/>
-          Could not do daily activities
-         </label>
-        </div>
+       <div class="form-group" id="sbsru-container">
+        <label class="control-label" for="sbsru-n">
+         Were you exposed to secondhand smoke?
+        </label>
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="sbsruyn-n" name="sbsruyn" required="required" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="sbsruyn-y" name="sbsruyn" required="required" type="radio" value="y"/>
+         Yes
+        </label>
        </div>
       </div>
      </div>
-    </div>
-    <div class="btn-group">
-     <button class="btn btn-default btn-prev" type="button">
-      Previous
-     </button>
-     <button class="btn btn-default btn-next" type="button">
-      Next
-     </button>
+     <hr class="visible-xs-block visible-sm-block"/>
+     <div class="row">
+      <div class="col-md-6">
+       <label class="visible-xs visible-sm" for="sbsas">
+        About how old were you when you first started smoking cigarettes regularly?
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm" for="sbsas">
+        About how old were you when you first started smoking cigarettes regularly?
+       </label>
+      </div>
+      <div class="col-md-6">
+       <div class="form-group form-inline">
+        <input class="form-control input-sm numeric" id="sbsas" name="sbsas" size="5" type="text"/>
+       </div>
+      </div>
+     </div>
+     <hr class="visible-xs-block visible-sm-block"/>
+     <div class="row">
+      <div class="col-md-6">
+       <label class="visible-xs visible-sm" for="sbshsa-n">
+        Over the past month, have you smoked at all, even one cigarette?
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm" for="sbshsa-n">
+        Over the past month, have you smoked at all, even one cigarette?
+       </label>
+      </div>
+      <div class="col-md-6">
+       <div class="form-group">
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="sbshsa-n" name="sbshsa" required="required" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="sbshsa-y" name="sbshsa" required="required" type="radio" value="y"/>
+         Yes
+        </label>
+       </div>
+      </div>
+     </div>
+     <hr class="visible-xs-block visible-sm-block"/>
+     <div id="non-smoking-container">
+      <div class="row">
+       <div class="col-md-6">
+        <label class="visible-xs visible-sm" for="sbsdlcd">
+         If no, when was the date of your last cigarette?
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm" for="sbsdlcd">
+         If no, when was the date of your last cigarette?
+        </label>
+       </div>
+       <div class="col-md-6">
+        <div class="form-group" style="float:left;">
+         <select class="form-control input-sm" id="sbsdlcd" name="sbsdlcd" title="Last cigarette day">
+          <option selected="" value="-">
+           —
+          </option>
+          <option value="1">
+           1
+          </option>
+          <option value="2">
+           2
+          </option>
+          <option value="3">
+           3
+          </option>
+          <option value="4">
+           4
+          </option>
+          <option value="5">
+           5
+          </option>
+          <option value="6">
+           6
+          </option>
+          <option value="7">
+           7
+          </option>
+          <option value="8">
+           8
+          </option>
+          <option value="9">
+           9
+          </option>
+          <option value="10">
+           10
+          </option>
+          <option value="11">
+           11
+          </option>
+          <option value="12">
+           12
+          </option>
+          <option value="13">
+           13
+          </option>
+          <option value="14">
+           14
+          </option>
+          <option value="15">
+           15
+          </option>
+          <option value="16">
+           16
+          </option>
+          <option value="17">
+           17
+          </option>
+          <option value="18">
+           18
+          </option>
+          <option value="19">
+           19
+          </option>
+          <option value="20">
+           20
+          </option>
+          <option value="21">
+           21
+          </option>
+          <option value="22">
+           22
+          </option>
+          <option value="23">
+           23
+          </option>
+          <option value="24">
+           24
+          </option>
+          <option value="25">
+           25
+          </option>
+          <option value="26">
+           26
+          </option>
+          <option value="27">
+           27
+          </option>
+          <option value="28">
+           28
+          </option>
+          <option value="29">
+           29
+          </option>
+          <option value="30">
+           30
+          </option>
+          <option value="31">
+           31
+          </option>
+         </select>
+         <span class="small text-muted">
+          Day
+         </span>
+        </div>
+        <div class="form-group" style="float:left;">
+         <select class="form-control input-sm" id="sbsdlcm" name="sbsdlcm" title="Last cigarette month">
+          <option selected="" value="-">
+           —
+          </option>
+          <option value="1">
+           Jan
+          </option>
+          <option value="2">
+           Feb
+          </option>
+          <option value="3">
+           Mar
+          </option>
+          <option value="4">
+           Apr
+          </option>
+          <option value="5">
+           May
+          </option>
+          <option value="6">
+           Jun
+          </option>
+          <option value="7">
+           Jul
+          </option>
+          <option value="8">
+           Aug
+          </option>
+          <option value="9">
+           Sep
+          </option>
+          <option value="10">
+           Oct
+          </option>
+          <option value="11">
+           Nov
+          </option>
+          <option value="12">
+           Dec
+          </option>
+         </select>
+         <span class="small text-muted">
+          Month
+         </span>
+        </div>
+        <div class="form-group" style="float:left;">
+         <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbsdlcy" maxlength="4" name="sbsdlcy" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
+         <small class="help-block">
+          Year
+         </small>
+        </div>
+        <div class="alert alert-info" id="sbsdlc-message" style="display: none; float:left;margin-left: 5px;">
+         Number of years since quit:
+         <strong>
+          <span id="sbsdlc-value">
+          </span>
+         </strong>
+        </div>
+       </div>
+      </div>
+      <hr class="visible-xs-block visible-sm-block"/>
+      <div class="row">
+       <div class="col-md-6">
+        <label class="visible-xs visible-sm" for="sbfdpw">
+         When you were a smoker, on approximately how many days per week did you smoke cigarettes?
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm" for="sbfdpw">
+         When you were a smoker, on approximately how many days per week did you smoke cigarettes?
+        </label>
+       </div>
+       <div class="col-md-6">
+        <div class="form-group form-inline">
+         <input class="form-control input-sm numeric" data-fv-lessthan="true" data-fv-lessthan-value="7" id="sbfdpw" name="sbfdpw" size="5" type="text"/>
+        </div>
+       </div>
+      </div>
+      <hr class="visible-xs-block visible-sm-block"/>
+      <div class="row">
+       <div class="col-md-6">
+        <label class="visible-xs visible-sm" for="sbfppd">
+         On the days that you did smoke, approximately how many packs of cigarettes did you smoke per day (PPD)?
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm" for="sbfppd">
+         On the days that you did smoke, approximately how many packs of cigarettes did you smoke per day (PPD)?
+        </label>
+       </div>
+       <div class="col-md-6">
+        <div class="form-group form-inline">
+         <input class="form-control input-sm" id="sbfppd" name="sbfppd" size="5" type="text"/>
+        </div>
+       </div>
+      </div>
+      <hr class="visible-xs-block visible-sm-block"/>
+      <div class="row">
+       <div class="col-md-6">
+        <label class="visible-xs visible-sm" for="sbfdur">
+         For approximately how many years did you smoke this amount?
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm" for="sbfdur">
+         For approximately how many years did you smoke this amount?
+        </label>
+       </div>
+       <div class="col-md-6">
+        <div class="form-group form-inline">
+         <input class="form-control input-sm numeric" id="sbfdur" name="sbfdur" size="5" type="text"/>
+        </div>
+       </div>
+      </div>
+      <hr class="visible-xs-block visible-sm-block"/>
+     </div>
+     <div id="smoking-container">
+      <div class="row">
+       <div class="col-md-6">
+        <label class="visible-xs visible-sm" for="sbcdpw">
+         On average, on how many days per week do you (or did you) smoke cigarettes?
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm" for="sbcdpw">
+         On average, on how many days per week do you (or did you) smoke cigarettes?
+        </label>
+       </div>
+       <div class="col-md-6">
+        <div class="form-group form-inline">
+         <input class="form-control input-sm numeric" data-fv-lessthan="true" data-fv-lessthan-value="7" id="sbcdpw" name="sbcdpw" size="5" type="text"/>
+        </div>
+       </div>
+      </div>
+      <hr class="visible-xs-block visible-sm-block"/>
+      <div class="row">
+       <div class="col-md-6">
+        <label class="visible-xs visible-sm" for="sbcppd">
+         On average, how many packs ofcigarettes do you (or did you) smoke per day (PPD)?
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm" for="sbcppd">
+         On average, how many packs ofcigarettes do you (or did you) smoke per day (PPD)?
+        </label>
+       </div>
+       <div class="col-md-6">
+        <div class="form-group form-inline">
+         <input class="form-control input-sm numeric" id="sbcppd" name="sbcppd" size="5" type="text"/>
+        </div>
+       </div>
+      </div>
+      <hr class="visible-xs-block visible-sm-block"/>
+      <div class="row">
+       <div class="col-md-6">
+        <label class="visible-xs visible-sm" for="sbcdur">
+         For approximately how many years have you smoked this amount?
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm" for="sbcdur">
+         For approximately how many years have you smoked this amount?
+        </label>
+       </div>
+       <div class="col-md-6">
+        <div class="form-group form-inline">
+         <input class="form-control input-sm numeric" id="sbcdur" name="sbcdur" size="5" type="text"/>
+        </div>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-md-6 col-sm-offset-6 col-lg-offset-">
+        <input name="sbntpy" type="hidden" value=""/>
+        <div class="alert alert-info" id="sbntpy-message" style="display: none;">
+         <strong>
+          <span id="sbntpy-value">
+          </span>
+          total pack-years
+         </strong>
+         <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Pack-Years is calculated by multiplying the average number of packs
+                                   per day by the number of years smoking. For example: a person who has smoked 15
+                                   cigarettes a day for 40 years has a (15/20) x 40 = 30 pack-year smoking history." data-toggle="popover" title="Pack-Years calculation">
+         </i>
+        </div>
+       </div>
+      </div>
+      <hr class="visible-xs-block visible-sm-block"/>
+      <div class="row">
+       <div class="col-md-6">
+        <label class="visible-xs visible-sm" for="sbqttq-n">
+         Have you ever tried to quit smoking?
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm" for="sbqttq-n">
+         Have you ever tried to quit smoking?
+        </label>
+       </div>
+       <div class="col-md-6">
+        <div class="form-group">
+         <label class="radio-inline">
+          <input data-fv-notempty-message="Please select a value" id="sbqttq-n" name="sbqttq" required="required" type="radio" value="n"/>
+          No
+         </label>
+         <label class="radio-inline">
+          <input data-fv-notempty-message="Please select a value" id="sbqttq-y" name="sbqttq" required="required" type="radio" value="y"/>
+          Yes
+         </label>
+        </div>
+        <div class="form-group" id="sbqttq-container">
+         <label class="control-label" for="sbqttqtb">
+          How many times?
+         </label>
+         <select class="form-control input-sm" id="sbqttqtb" name="sbqttqtb">
+          <option selected="" value="-">
+           —
+          </option>
+          <option value="a">
+           1
+          </option>
+          <option value="b">
+           2–5
+          </option>
+          <option value="c">
+           6–10
+          </option>
+          <option value="d">
+           10+
+          </option>
+         </select>
+        </div>
+       </div>
+      </div>
+      <hr class="visible-xs-block visible-sm-block"/>
+      <div class="row" id="sbqly2-container">
+       <div class="col-md-6">
+        <label class="visible-xs visible-sm" for="sbqly2">
+         In the last 12 months, how many times have you quit smoking for at least 24 hours?
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm" for="sbqly2">
+         In the last 12 months, how many times have you quit smoking for at least 24 hours?
+        </label>
+       </div>
+       <div class="form-group col-md-6">
+        <select class="form-control input-sm" id="sbqly2" name="sbqly2">
+         <option selected="" value="-">
+          —
+         </option>
+         <option value="e">
+          0
+         </option>
+         <option value="a">
+          1
+         </option>
+         <option value="b">
+          2–5
+         </option>
+         <option value="c">
+          6–10
+         </option>
+         <option value="d">
+          10+
+         </option>
+        </select>
+       </div>
+      </div>
+      <hr class="visible-xs-block visible-sm-block"/>
+      <div class="row">
+       <div class="col-md-6">
+        <label class="visible-xs visible-sm" for="sbqst">
+         Are you seriously thinking of quitting smoking?
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm" for="sbqst">
+         Are you seriously thinking of quitting smoking?
+        </label>
+       </div>
+       <div class="form-group col-md-6">
+        <select class="form-control input-sm" id="sbqst" name="sbqst">
+         <option selected="" value="-">
+          —
+         </option>
+         <option value="y">
+          yes, within the next 30 days
+         </option>
+         <option value="m">
+          yes, within the next six months
+         </option>
+         <option value="n">
+          no, not thinking of quitting
+         </option>
+        </select>
+       </div>
+      </div>
+      <hr class="visible-xs-block visible-sm-block"/>
+      <div class="row">
+       <div class="col-md-6">
+        <label class="visible-xs visible-sm" for="sbcpd-n">
+         Smoking cessation information or counseling was offered to subject
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm" for="sbcpd-n">
+         Smoking cessation information or counseling was offered to subject
+        </label>
+       </div>
+       <div class="col-md-6">
+        <div class="form-group">
+         <label class="radio-inline">
+          <input data-fv-notempty-message="Please select a value" id="sbcpd-n" name="sbcpd" required="required" type="radio" value="n"/>
+          No
+         </label>
+         <label class="radio-inline">
+          <input data-fv-notempty-message="Please select a value" id="sbcpd-y" name="sbcpd" required="required" type="radio" value="y"/>
+          Yes
+         </label>
+        </div>
+       </div>
+      </div>
+      <hr class="visible-xs-block visible-sm-block"/>
+     </div>
+     <div class="row">
+      <div class="col-md-6">
+       <label class="visible-xs visible-sm" for="sbsews-n">
+        After age 18, did you work for more than one year in a worksite where smoking was allowed?
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm" for="sbsews-n">
+        After age 18, did you work for more than one year in a worksite where smoking was allowed?
+       </label>
+      </div>
+      <div class="col-md-6">
+       <div class="form-group">
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="sbsews-n" name="sbsews" required="required" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="sbsews-y" name="sbsews" required="required" type="radio" value="y"/>
+         Yes
+        </label>
+       </div>
+      </div>
+     </div>
+     <hr class="visible-xs-block visible-sm-block"/>
+     <div class="row">
+      <div class="col-md-6">
+       <label class="visible-xs visible-sm" for="sbsehs-n">
+        Did you ever work for more than one year in a job where you were exposed to other people’s tobacco smoke?
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm" for="sbsehs-n">
+        Did you ever work for more than one year in a job where you were exposed to other people’s tobacco smoke?
+       </label>
+      </div>
+      <div class="col-md-6">
+       <div class="form-group">
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="sbsehs-n" name="sbsehs" required="required" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="sbsehs-y" name="sbsehs" required="required" type="radio" value="y"/>
+         Yes
+        </label>
+       </div>
+      </div>
+     </div>
+     <div class="row" id="sbsehs-container">
+      <hr class="visible-xs-block visible-sm-block"/>
+      <div class="col-md-12">
+       <label>
+        List the occasions from the most recent:
+       </label>
+       <table class="table">
+        <thead class="thead-light">
+         <tr>
+          <th scope="col">
+           Age Range
+          </th>
+          <th scope="col">
+           Job
+          </th>
+          <th scope="col">
+           Smoking
+          </th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td>
+           <input class="form-control" name="sbsehsa1" title="Age Range 1" type="text"/>
+          </td>
+          <td>
+           <input class="form-control" name="sbsehsj1" title="Job 1" type="text"/>
+          </td>
+          <td>
+           <div class="form-group">
+            <label class="radio-inline">
+             <input data-fv-notempty-message="Please select a value" id="sbsehsr1-n" name="sbsehsr1" required="required" type="radio" value="n"/>
+             not permitted
+            </label>
+            <label class="radio-inline">
+             <input data-fv-notempty-message="Please select a value" id="sbsehsr1-r" name="sbsehsr1" required="required" type="radio" value="r"/>
+             restricted
+            </label>
+            <label class="radio-inline">
+             <input data-fv-notempty-message="Please select a value" id="sbsehsr1-y" name="sbsehsr1" required="required" type="radio" value="y"/>
+             allowed anywhere
+            </label>
+           </div>
+          </td>
+         </tr>
+         <tr>
+          <td>
+           <input class="form-control" name="sbsehsa2" title="Age Range 2" type="text"/>
+          </td>
+          <td>
+           <input class="form-control" name="sbsehsj2" title="Job 2" type="text"/>
+          </td>
+          <td>
+           <div class="form-group">
+            <label class="radio-inline">
+             <input data-fv-notempty-message="Please select a value" id="sbsehsr2-n" name="sbsehsr2" required="required" type="radio" value="n"/>
+             not permitted
+            </label>
+            <label class="radio-inline">
+             <input data-fv-notempty-message="Please select a value" id="sbsehsr2-r" name="sbsehsr2" required="required" type="radio" value="r"/>
+             restricted
+            </label>
+            <label class="radio-inline">
+             <input data-fv-notempty-message="Please select a value" id="sbsehsr2-y" name="sbsehsr2" required="required" type="radio" value="y"/>
+             allowed anywhere
+            </label>
+           </div>
+          </td>
+         </tr>
+         <tr>
+          <td>
+           <input class="form-control" name="sbsehsa3" title="Age Range 3" type="text"/>
+          </td>
+          <td>
+           <input class="form-control" name="sbsehsj3" title="Job 3" type="text"/>
+          </td>
+          <td>
+           <div class="form-group">
+            <label class="radio-inline">
+             <input data-fv-notempty-message="Please select a value" id="sbsehsr3-n" name="sbsehsr3" required="required" type="radio" value="n"/>
+             not permitted
+            </label>
+            <label class="radio-inline">
+             <input data-fv-notempty-message="Please select a value" id="sbsehsr3-r" name="sbsehsr3" required="required" type="radio" value="r"/>
+             restricted
+            </label>
+            <label class="radio-inline">
+             <input data-fv-notempty-message="Please select a value" id="sbsehsr3-y" name="sbsehsr3" required="required" type="radio" value="y"/>
+             allowed anywhere
+            </label>
+           </div>
+          </td>
+         </tr>
+         <tr>
+          <td>
+           <input class="form-control" name="sbsehsa4" title="Age Range 4" type="text"/>
+          </td>
+          <td>
+           <input class="form-control" name="sbsehsj4" title="Job 4" type="text"/>
+          </td>
+          <td>
+           <div class="form-group">
+            <label class="radio-inline">
+             <input data-fv-notempty-message="Please select a value" id="sbsehsr4-n" name="sbsehsr4" required="required" type="radio" value="n"/>
+             not permitted
+            </label>
+            <label class="radio-inline">
+             <input data-fv-notempty-message="Please select a value" id="sbsehsr4-r" name="sbsehsr4" required="required" type="radio" value="r"/>
+             restricted
+            </label>
+            <label class="radio-inline">
+             <input data-fv-notempty-message="Please select a value" id="sbsehsr4-y" name="sbsehsr4" required="required" type="radio" value="y"/>
+             allowed anywhere
+            </label>
+           </div>
+          </td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div>
+     <hr class="visible-xs-block visible-sm-block"/>
+     <div class="row">
+      <div class="col-md-6">
+       <label class="visible-xs visible-sm" for="sbhsy-n">
+        Did anyone in your house smoke in the home while you were under 18?
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm" for="sbhsy-n">
+        Did anyone in your house smoke in the home while you were under 18?
+       </label>
+      </div>
+      <div class="col-md-6">
+       <div class="form-group">
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="sbhsy-n" name="sbhsy" required="required" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="sbhsy-y" name="sbhsy" required="required" type="radio" value="y"/>
+         Yes
+        </label>
+       </div>
+      </div>
+     </div>
+     <hr class="visible-xs-block visible-sm-block"/>
+     <div class="row">
+      <div class="col-md-6">
+       <label class="visible-xs visible-sm" for="sbhsyh-n">
+        Was smoking allowed inside the house?
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm" for="sbhsyh-n">
+        Was smoking allowed inside the house?
+       </label>
+      </div>
+      <div class="col-md-6">
+       <div class="form-group">
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="sbhsyh-n" name="sbhsyh" required="required" type="radio" value="n"/>
+         Not permitted
+        </label>
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="sbhsyh-r" name="sbhsyh" required="required" type="radio" value="r"/>
+         Resticted
+        </label>
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="sbhsyh-y" name="sbhsyh" required="required" type="radio" value="y"/>
+         Yes
+        </label>
+       </div>
+      </div>
+     </div>
+     <hr class="visible-xs-block visible-sm-block"/>
+     <div class="row">
+      <div class="col-md-6">
+       <label class="visible-xs visible-sm" for="sbmsy-n">
+        Did your mother/primary caregiver smoke when you were under age 7?
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm" for="sbmsy-n">
+        Did your mother/primary caregiver smoke when you were under age 7?
+       </label>
+      </div>
+      <div class="col-md-6">
+       <div class="form-group">
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="sbmsy-n" name="sbmsy" required="required" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="sbmsy-y" name="sbmsy" required="required" type="radio" value="y"/>
+         Yes
+        </label>
+       </div>
+      </div>
+     </div>
+     <hr class="visible-xs-block visible-sm-block"/>
+     <div class="row">
+      <div class="col-md-6">
+       <label class="visible-xs visible-sm" for="sbmst-n">
+        Did your mother/primary caregiver smoke when you were ages 7–18?
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm" for="sbmst-n">
+        Did your mother/primary caregiver smoke when you were ages 7–18?
+       </label>
+      </div>
+      <div class="col-md-6">
+       <div class="form-group">
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="sbmst-n" name="sbmst" required="required" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="sbmst-y" name="sbmst" required="required" type="radio" value="y"/>
+         Yes
+        </label>
+       </div>
+      </div>
+     </div>
+     <hr class="visible-xs-block visible-sm-block"/>
+     <div class="row">
+      <div class="col-md-6">
+       <label class="visible-xs visible-sm" for="sbosy-n">
+        Did anyone else beside your mother/primary caregiver smoke in the home when you were under 18?
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm" for="sbosy-n">
+        Did anyone else beside your mother/primary caregiver smoke in the home when you were under 18?
+       </label>
+      </div>
+      <div class="col-md-6">
+       <div class="form-group">
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="sbosy-n" name="sbosy" required="required" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="sbosy-y" name="sbosy" required="required" type="radio" value="y"/>
+         Yes
+        </label>
+       </div>
+      </div>
+     </div>
+     <hr class="visible-xs-block visible-sm-block"/>
+     <div class="row">
+      <div class="col-md-6">
+       <label class="visible-xs visible-sm" for="sbslws-n">
+        Do you currently live with a smoker?
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm" for="sbslws-n">
+        Do you currently live with a smoker?
+       </label>
+      </div>
+      <div class="col-md-6">
+       <div class="form-group">
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="sbslws-n" name="sbslws" required="required" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="sbslws-y" name="sbslws" required="required" type="radio" value="y"/>
+         Yes
+        </label>
+       </div>
+      </div>
+     </div>
+     <hr class="visible-xs-block visible-sm-block"/>
+     <div class="row">
+      <div class="col-md-6">
+       <label class="visible-xs visible-sm" for="sbhso-n">
+        After age 18, did you live with someone for more than one year who smoked in your presence?
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm" for="sbhso-n">
+        After age 18, did you live with someone for more than one year who smoked in your presence?
+       </label>
+      </div>
+      <div class="col-md-6">
+       <div class="form-group">
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="sbhso-n" name="sbhso" required="required" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline">
+         <input data-fv-notempty-message="Please select a value" id="sbhso-y" name="sbhso" required="required" type="radio" value="y"/>
+         Yes
+        </label>
+       </div>
+      </div>
+     </div>
+     <div class="row" id="sbhso-container">
+      <hr class="visible-xs-block visible-sm-block"/>
+      <div class="col-md-12">
+       <label>
+        If yes, at what ages did you live with someone who smoked around you and how much
+                            did they smoke? (List the occasions from the most recent)
+       </label>
+       <table class="table ">
+        <thead>
+         <tr>
+          <th scope="col">
+           Age Range
+          </th>
+          <th scope="col">
+           Amount
+          </th>
+          <th scope="col">
+           Smoking
+          </th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td>
+           <input class="form-control" name="sbhsa1" title="Age Range 1" type="text"/>
+          </td>
+          <td>
+           <select class="form-control" name="sbhsas1" title="Amount 1">
+            <option value="-">
+             —
+            </option>
+            <option value="a">
+             1–14 cigarettes a day
+            </option>
+            <option value="b">
+             15–24 cigarettes a day
+            </option>
+            <option value="c">
+             25+ cigarettes a day
+            </option>
+            <option value="d">
+             Don’t know
+            </option>
+           </select>
+          </td>
+          <td>
+           <div class="form-group">
+            <label class="radio-inline">
+             <input data-fv-notempty-message="Please select a value" id="sbhsasr1-n" name="sbhsasr1" required="required" type="radio" value="n"/>
+             not permitted
+            </label>
+            <label class="radio-inline">
+             <input data-fv-notempty-message="Please select a value" id="sbhsasr1-r" name="sbhsasr1" required="required" type="radio" value="r"/>
+             restricted
+            </label>
+            <label class="radio-inline">
+             <input data-fv-notempty-message="Please select a value" id="sbhsasr1-y" name="sbhsasr1" required="required" type="radio" value="y"/>
+             allowed anywhere
+            </label>
+           </div>
+          </td>
+         </tr>
+         <tr>
+          <td>
+           <input class="form-control" name="sbhsa2" title="Age Range 2" type="text"/>
+          </td>
+          <td>
+           <select class="form-control" name="sbhsas2" title="Amount 2">
+            <option value="-">
+             —
+            </option>
+            <option value="a">
+             1–14 cigarettes a day
+            </option>
+            <option value="b">
+             15–24 cigarettes a day
+            </option>
+            <option value="c">
+             25+ cigarettes a day
+            </option>
+            <option value="d">
+             Don’t know
+            </option>
+           </select>
+          </td>
+          <td>
+           <div class="form-group">
+            <label class="radio-inline">
+             <input data-fv-notempty-message="Please select a value" id="sbhsasr2-n" name="sbhsasr2" required="required" type="radio" value="n"/>
+             not permitted
+            </label>
+            <label class="radio-inline">
+             <input data-fv-notempty-message="Please select a value" id="sbhsasr2-r" name="sbhsasr2" required="required" type="radio" value="r"/>
+             restricted
+            </label>
+            <label class="radio-inline">
+             <input data-fv-notempty-message="Please select a value" id="sbhsasr2-y" name="sbhsasr2" required="required" type="radio" value="y"/>
+             allowed anywhere
+            </label>
+           </div>
+          </td>
+         </tr>
+         <tr>
+          <td>
+           <input class="form-control" name="sbhsa3" title="Age Range 3" type="text"/>
+          </td>
+          <td>
+           <select class="form-control" name="sbhsas3" title="Amount 3">
+            <option value="-">
+             —
+            </option>
+            <option value="a">
+             1–14 cigarettes a day
+            </option>
+            <option value="b">
+             15–24 cigarettes a day
+            </option>
+            <option value="c">
+             25+ cigarettes a day
+            </option>
+            <option value="d">
+             Don’t know
+            </option>
+           </select>
+          </td>
+          <td>
+           <div class="form-group">
+            <label class="radio-inline">
+             <input data-fv-notempty-message="Please select a value" id="sbhsasr3-n" name="sbhsasr3" required="required" type="radio" value="n"/>
+             not permitted
+            </label>
+            <label class="radio-inline">
+             <input data-fv-notempty-message="Please select a value" id="sbhsasr3-r" name="sbhsasr3" required="required" type="radio" value="r"/>
+             restricted
+            </label>
+            <label class="radio-inline">
+             <input data-fv-notempty-message="Please select a value" id="sbhsasr3-y" name="sbhsasr3" required="required" type="radio" value="y"/>
+             allowed anywhere
+            </label>
+           </div>
+          </td>
+         </tr>
+         <tr>
+          <td>
+           <input class="form-control" name="sbhsa4" title="Age Range 4" type="text"/>
+          </td>
+          <td>
+           <select class="form-control" name="sbhsas4" title="Amount 4">
+            <option value="-">
+             —
+            </option>
+            <option value="a">
+             1–14 cigarettes a day
+            </option>
+            <option value="b">
+             15–24 cigarettes a day
+            </option>
+            <option value="c">
+             25+ cigarettes a day
+            </option>
+            <option value="d">
+             Don’t know
+            </option>
+           </select>
+          </td>
+          <td>
+           <div class="form-group">
+            <label class="radio-inline">
+             <input data-fv-notempty-message="Please select a value" id="sbhsasr4-n" name="sbhsasr4" required="required" type="radio" value="n"/>
+             not permitted
+            </label>
+            <label class="radio-inline">
+             <input data-fv-notempty-message="Please select a value" id="sbhsasr4-r" name="sbhsasr4" required="required" type="radio" value="r"/>
+             restricted
+            </label>
+            <label class="radio-inline">
+             <input data-fv-notempty-message="Please select a value" id="sbhsasr4-y" name="sbhsasr4" required="required" type="radio" value="y"/>
+             allowed anywhere
+            </label>
+           </div>
+          </td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div>
+     <hr class="visible-xs-block visible-sm-block"/>
     </div>
     <div class="pull-right">
      <input name="samistatus" type="hidden" value=""/>
@@ -2836,50 +1157,7 @@
   </script>
   <script language="JavaScript">
    // Intentionally not run after page load so tab doesn't show then dissapear.
-        if (!sf12Enabled) {
-            $("#health-tab, #health").remove();
-        }
-
         $(function () {
-            //hooks for calculating BMI on fields that would affect it (height, weight, units of each)
-            $("input[id^='sbpw'],input[id^='sbph']").on('change', function () {
-                var height = $("#sbph").val(), heightUnits = $("#sbphu").val();
-                var weight = $("#sbpw").val(), weightUnits = $("#sbpwu").val();
-                if (height > 0 && weight > 0) {
-                    var bmi = VAPALS.computeBMI(parseInt(height), heightUnits, parseInt(weight), weightUnits);
-                    if (bmi > 0) {
-                        $("#sbbmi").val(bmi);
-                        $("#bmi-value").text(bmi);
-                        $("#bmi-descriptor").text(VAPALS.computeBmiDescriptor(bmi));
-                        $("#bmi-message").show();
-                    }
-                    else {
-                        $("#sbbmi").val("");
-                        $("#bmi-message").hide();
-                    }
-                }
-            }).first().trigger("change"); //trigger on page load for existing data
-
-            //hook for calculating Pulmonary function test percentage (FFR)
-            $("#sbfev1, #sbfvc").on('change', function () {
-                var fev1 = $("#sbfev1").val();
-                var fvc = $("#sbfvc").val();
-                if (fev1 > 0 && fvc > 0) {
-                    var ffr = Math.round(100.0 * fev1 / fvc);
-                    if (ffr > 0) {
-                        $("#sbffr").val(ffr);
-                        $("#ffr-value").text(ffr);
-                        $("#ffr-message").show();
-                    }
-                    else {
-                        $("#sbffr").val("");
-                        $("#ffr-message").hide();
-                    }
-                }
-                else {
-                    $("#ffr-message").hide();
-                }
-            }).first().trigger('change');
 
             //hook for years since quit
             $("[name^=sbsdlc]").on('change', function () {
@@ -2919,33 +1197,6 @@
             }).first().trigger('change');
 
             //conditionally enabled fields
-            $("#sbrc").conditionallyEnable({sourceValues: "o", enable: "#sbrcs-container"}); // when race is "other", enable "race other"
-            $("[name=sbmly]").conditionallyEnable({enable: "#sbmlyo-container"}); //military service
-            $("[name=sbmeq]").conditionallyEnable({enable: "#sbmeq-container"}); //entire CT scan page
-            $("[name=sbfc]").conditionallyEnable({enable: "#sbfc-container"});
-            $("[name=sbhco]").conditionallyEnable({enable: "#sbhco-container"});
-            $("[name=sbmpa]").conditionallyEnable({enable: "#sbmpa-container"});
-            $("[name=sbmpc]").conditionallyEnable({enable: "#sbmpc-container"});
-            $("[name=sbmpht]").conditionallyEnable({enable: "#sbmpht-container"});
-            $("[name=sbmphc]").conditionallyEnable({enable: "#sbmphc-container"});
-            $("[name=sbmpas]").conditionallyEnable({enable: "#sbmpas-container"});
-            $("[name=sbmpmi]").conditionallyEnable({enable: "#sbmpmi-container"});
-            $("[name=sbmps]").conditionallyEnable({enable: "#sbmps-container"});
-            $("[name=sbmppv]").conditionallyEnable({enable: "#sbmppv-container"});
-            $("[name=sbmpd]").conditionallyEnable({enable: "#sbmpd-container"});
-            $("[name=sbmpld]").conditionallyEnable({enable: "#sbmpld-container"});
-            $("[name=sbmprd]").conditionallyEnable({enable: "#sbmprd-container"});
-            $("[name=sblcs]").conditionallyEnable({
-                enable: $("#sblcs-container").find("label, input[id!=sbwcos]")
-            });
-            $("#sbwco").conditionallyEnable({sourceValues: "o", enable: "#sbwcos"});
-            $("[name=sbact]").conditionallyEnable({
-                sourceValues: function (actualValue) {
-                    return actualValue !== '-' && actualValue !== 'e';
-                }, enable: "#sbact-container"
-            });
-            $("[name=sbahpft]").conditionallyEnable({enable: "#sbahpft-container"});
-            $("#sbahaoo").conditionallyEnable({sourceValues: "o", enable: "#sbahas"});
             $("[name=sbsru]").conditionallyEnable({sourceValues: "n", enable: "#sbsru-container"});
             $("[name=sbqttq]").conditionallyEnable({
                 enable: "#sbqttq-container, #sbqly2-container"
@@ -2956,97 +1207,6 @@
                 disable: "#non-smoking-container"
             });
             $("[name=sbsehs]").conditionallyEnable({enable: "#sbsehs-container"});
-
-
-            initTabbedNavigation("myTabs","myTabContent");
-            //setup tab navigation prev/next buttons
-            function getCurrentTab() {
-                return $("#myTabContent").find("> div:visible");
-            }
-
-            function getNextTabId() {
-                return getCurrentTab().next().attr("id");
-            }
-
-            function getPrevTabId() {
-                return getCurrentTab().prev().attr("id");
-            }
-
-
-            $(".btn-next").on("click", function () {
-                var nextTabId = getNextTabId();
-                // CB: form validation occurs on tab hide event
-                $("#myTabs").find("a[href='#" + nextTabId + "']").tab('show');
-
-            }).toggleClass("disabled", !getNextTabId());
-
-            $(".btn-prev").on("click", function () {
-                var prevTabId = getPrevTabId();
-                // CB: form validation occurs on tab hide event
-                $("#myTabs").find("a[href='#" + prevTabId + "']").tab('show');
-            }).toggleClass("disabled", !getPrevTabId());
-
-            $('a[data-toggle="tab"]').on('hide.bs.tab', function (e) {
-                var currentTab = e.target;
-                var tabContentSelector = $(currentTab).attr("href");
-                var fv = $(".validated").data('formValidation');
-                var valid = fv.validateContainer(tabContentSelector).isValid();
-                $(tabContentSelector).find("input, select").first().trigger('change');
-                if (!valid) {
-                    console.log("tab " + tabContentSelector + " is not valid");
-                    // e.preventDefault() // to cancel the navigation
-                }
-
-            }).on("shown.bs.tab", function () {
-                    $(".btn-next").toggleClass("disabled", !getNextTabId());
-                    $(".btn-prev").toggleClass("disabled", !getPrevTabId());
-                $("#myTabContent").find("input:visible, textarea:visible, select:visible").first().focus();
-            });
-
-
-            function checkCompleteness($container) {
-                console.log("checkCompleteness() container=" + $container);
-                var $requiredFields = $container.find("[required], [data-fv-notempty=true]").filter(":enabled"),
-                $tab = $(".nav-tabs").find("a[href='#" + $container.attr("id") + "']");
-                var emptyRequiredFields = $requiredFields.filter(function () {
-                    var $c = $(this);
-                    var value = $c.val();
-                    if ($c.is(":radio")) {
-                        var radioName = $c.attr("name");
-                        value = $("input[type='radio'][name='" + radioName + "']:checked").val();
-                    }
-                    return typeof value === "undefined" || value === "";
-                });
-                // check tab container validity
-                var fv = $(".validated").data('formValidation');
-                if (fv) {
-                    var valid = fv.isValidContainer($container);
-                    var reallyValid = valid == null || valid === true; //consider unvalidated (null) as "valid".
-
-                    //add completeness flag to tab if all required fields are filled in and form is likely valid.
-                    $tab.toggleClass("complete", emptyRequiredFields.length === 0 && reallyValid);
-                }
-            }
-
-
-            // trigger a check of completeness of each tab at page load and also any time an input changes.
-            $(".tab-pane").each(function () {
-                checkCompleteness($(this))
-            }).on("keyup change", function () {
-                var $container = $(this).closest(".tab-pane");
-                checkCompleteness($container);
-            });
-
-            //trigger age calculation when date picker is used to select a date.
-            $("#sbdob").closest(".datepicker").on("dp.change", function () {
-                var dateString = $("#sbdob").val();
-                if (dateString) {
-                    var m = moment(dateString, VAPALS.DATE_FORMAT);
-                    if (m.isValid()) {
-                        $("#sbage").text(VAPALS.computeAge(m.toDate()))
-                    }
-                }
-            });
 
             //Initialize Form Validation
             $(".validated").formValidation({framework: 'bootstrap'});

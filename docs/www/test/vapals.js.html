@@ -8,7 +8,7 @@
     <script src="../lib/moment.js"></script>
 </head>
 <body>
-<script src="../lib/jquery-3.2.1.slim.min.js"></script>
+<script src="../lib/jquery-3.3.1.min.js"></script>
 <script src="js/qunit-2.4.1.js"></script>
 <script src="js/blanket.js"></script>
 <script src="../lib/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
@@ -19,74 +19,6 @@
 <div id="qunit-fixture"></div>
 
 <script>
-    QUnit.test("computeBMI", function (assert) {
-        assert.equal(VAPALS.computeBMI(70, "i", 240, "p"), 34.44, "imperial values");
-        assert.equal(VAPALS.computeBMI(175, "c", 70, "kg"), 22.86, "metric kg weight unit");
-        assert.equal(VAPALS.computeBMI(175, "centimeters", 70, "k"), 22.86, "metric centimeters height unit");
-        assert.equal(VAPALS.computeBMI(175, null, 70, null), 22.86, "no units (assumed metric)");
-        assert.equal(VAPALS.computeBMI("175", null, "70", null), 22.86, "no units (assumed metric)");
-
-        assert.throws(function () {
-            VAPALS.computeBMI(-1, null, 70, null)
-        }, /height/, "invalid height");
-        assert.throws(function () {
-            VAPALS.computeBMI(170, null, 0, null)
-        }, /weight/, "invalid weight");
-        assert.throws(function () {
-            VAPALS.computeBMI(null, null, 70, null)
-        }, /height/, "null height");
-        assert.throws(function () {
-            VAPALS.computeBMI(175, null, null, null)
-        }, /weight/, "null weight")
-    });
-
-    QUnit.test("computeBMIDescriptor", function (assert) {
-        assert.equal(VAPALS.computeBmiDescriptor(0), "Underweight");
-        assert.equal(VAPALS.computeBmiDescriptor(18.49), "Underweight");
-        assert.equal(VAPALS.computeBmiDescriptor(18.5), "Normal");
-        assert.equal(VAPALS.computeBmiDescriptor(24.9), "Normal");
-        assert.equal(VAPALS.computeBmiDescriptor(25), "Overweight");
-        assert.equal(VAPALS.computeBmiDescriptor(29.999), "Overweight", "29.999 overweight");
-        assert.equal(VAPALS.computeBmiDescriptor(30), "Obese", "30, obese");
-
-        assert.throws(function () {
-            VAPALS.computeBmiDescriptor(null)
-        }, "null");
-        assert.throws(function () {
-            VAPALS.computeBmiDescriptor(" ")
-        }, "empty");
-        assert.throws(function () {
-            VAPALS.computeBmiDescriptor("foo")
-        }, "string");
-        assert.throws(function () {
-            VAPALS.computeBmiDescriptor(new Date())
-        }, "date")
-    });
-
-    QUnit.test("computeAge", function (assert) {
-        var now = moment("2018-01-01").startOf('day');
-        var zero = now.subtract(30, "days").toDate();
-        var adult = moment("1977-03-01").toDate();
-        assert.equal(VAPALS.computeAge(zero), 0);
-        assert.ok(VAPALS.computeAge(adult) > 40);
-        assert.throws(function () {
-            VAPALS.computeAge(null)
-        }, "null");
-        assert.throws(function () {
-            VAPALS.computeAge("foo")
-        }, "string")
-    });
-
-    QUnit.test("computeMonthsFrom", function (assert) {
-        var monthAgo = moment().subtract(32, "days").toDate();
-        assert.equal(VAPALS.computeMonthsFrom(monthAgo), 1, "month ago");
-
-        assert.ok(VAPALS.computeMonthsFrom("01/Mar/2016") > 12, "string input");
-        assert.equal(VAPALS.computeMonthsFrom(null), 0, "null");
-        assert.equal(VAPALS.computeMonthsFrom(""), 0, "empty");
-        assert.equal(VAPALS.computeMonthsFrom(" "), 0, "blank");
-        assert.equal(VAPALS.computeMonthsFrom("foobar"), 0, "invalid");
-    });
 
     QUnit.test("computeMonthsBetween", function (assert) {
         var monthAgo = moment().subtract(32, "days").toDate();
@@ -106,6 +38,11 @@
         assert.ok(VAPALS.toMoment("03/01/2018").isValid(), "string");
         assert.ok(VAPALS.toMoment(null).isValid() === false, "null");
         assert.ok(VAPALS.toMoment(1).isValid(), "int");
+    });
+
+    QUnit.test("todaysDate", function (assert) {
+        assert.ok(moment().add(2, 's') > moment(VAPALS.todaysDate()), "now+2sec > todaysDate()")
+        assert.ok(moment().subtract(2, 's') < moment(VAPALS.todaysDate()), "now-2sec < todaysDate()")
     });
 
 </script>

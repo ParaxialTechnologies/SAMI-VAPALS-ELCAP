@@ -1,4 +1,4 @@
-KBAPUTL ;ven/lgc - M2M data from another system ; 4/27/18 5:32pm
+KBAPUTL ;ven/lgc - M2M data from another system ; 5/18/18 11:37am
  ;;1.0;;**LOCAL**; APR 22, 2018
  ;
  ;
@@ -50,9 +50,10 @@ MKGPH Q:'$D(^KBAP("ALLPTS"))
  . S @root@(gien,"saminame")=$P(PTDATA,"^",4)
  . S @root@(gien,"sinamef")=$P($P($P(PTDATA,"^",4),",",2)," ")
  . S @root@(gien,"sinamel")=$P($P(PTDATA,"^",4),",")
- . S @root@(gien,"sbdob")=$P(PTDATA,"^",10)
+ . S @root@(gien,"sbdob")=$E($P(PTDATA,"^",10),1,4)_"-"_$E($P(PTDATA,"^",10),5,6)_"-"_$E($P(PTDATA,"^",10),7,8)
  . S @root@(gien,"last5")=$P(PTDATA,"^",9)
  . S @root@(gien,"dfn")=$P(PTDATA,"^",12)
+ . S @root@(gien,"gender")=$P($P($P(PTDATA,"pat-gender",2),"^",1,2),":",2)
  . S @root@("dfn",$P(PTDATA,"^",12),gien)=""
  . S @root@("last5",$P(PTDATA,"^",9),gien)=""
  . S @root@("name",$P(PTDATA,"^",4),gien)=""
@@ -94,6 +95,7 @@ PTSSN1 N root s root=$$setroot^%wd("patient-lookup")
  I ($P(NODE,",",4)_","_$P(NODE,",",5))[NAME S gien=+$P(NODE,",",6)
  Q:'$G(gien)
  N DOB S DOB=$$FMTHL7^XLFDT($P(XDATA,"^",2))
+ S DOB=$E(DOB,1,4)_"-"_$E(DOB,5,6)_"-"_$E(DOB,7,8)
  Q:'(DOB=@root@(gien,"sbdob"))
  N LAST5 S LAST5=$E(NAME)_$E(XDATA,6,9)
  Q:'(LAST5=@root@(gien,"last5"))
@@ -160,7 +162,92 @@ VIT2 Q:'$G(PTDFN)
  S NODE=$NA(@root@("dfn",PTDFN))
  S NODE=$Q(@NODE)
  I ($P(NODE,",",4)[PTDFN) S gien=+$P(NODE,",",5)
- Q:'$G(gien)
+ Q
  ;
  ;
+ ; Get Virtual Patient Record
+VPR(XDATA,DFN,PORT,IP,ACCVER) ;
+ K XDATA
+ Q:$G(IP)=""  Q:$G(PORT)=""
+ Q:$G(ACCVER)=""  Q:'($L($G(ACCVER),";")=2)
+ N CALL,CLOSE,CONNECT,CONTEXT,DIVFLAG,DIVISION,REQ,X
+ S CONNECT=$$CONNECT^XWBM2MC(PORT,IP,ACCVER)
+ Q:'($G(CONNECT)=1)
+ S DIVFLAG=$$GETDIV^XWBM2MC("DIVISIONS")
+ S XWBDIVS=0,DIVISION=$$SETDIV^XWBM2MC(XWBDIVS)
+ S CONTEXT=$$SETCONTX^XWBM2MC("VPR APPLICATION PROXY")
+ S ^TMP("POO",$J,"TYPE")="STRING"
+ S ^TMP("POO",$J,"VALUE")=DFN
+ S X=$$PARAM^XWBM2MC(1,$NA(^TMP("POO",$J)))
+ S CALL=$$CALLRPC^XWBM2MC("VPR GET PATIENT DATA","REQ",1)
+ M XDATA=REQ
+ S CLOSE=$$CLOSE^XWBM2MC
+ Q
+ ;
+ATTNDOC(ATTND,XDATA) ;
+ K ATTND
+ Q:'$D(XDATA)
+ N NODE S NODE=$NA(XDATA)
+ F  S NODE=$Q(@NODE) Q:NODE'["XDATA"  D  Q:$D(ATTND)
+ . I @NODE["&lt;attending code=&apos" D
+ .. N STRNG S STRNG=@NODE
+ .. S ATTND=+$P(STRNG,";",3)
+ .. S ATTND=ATTND_"^"_$P($P(STRNG,";",5),"&apos")
+ Q
+ ;
+XSSN(XSSN,XDATA) ;
+ K XSSN
+ Q:'$D(XDATA)
+ N NODE S NODE=$NA(XDATA)
+ F  S NODE=$Q(@NODE) Q:NODE'["XDATA"  D  Q:$D(XSSN)
+ . I @NODE["&lt;ssn value" D
+ .. N STRNG S STRNG=@NODE
+ .. S XSSN=$P($P(STRNG,";",3),"&apos")
+ Q
+ ;
+ADMTDT(ADMTDT,XDATA) ;
+ K ADMTDT
+ Q:'$D(XDATA)
+ N NODE S NODE=$NA(XDATA)
+ F  S NODE=$Q(@NODE) Q:NODE'["XDATA"  D  Q:$D(ADMTDT)
+ . I @NODE["&lt;admitted id" D
+ .. N STRNG S STRNG=@NODE
+ .. S ADMTDT="^DGPM("_+$P(STRNG,";",3)_",^"_+$P(STRNG,";",5)
+ Q
+ ;
+SPCLTY(SPCLTY,XDATA) ;
+ K SPCLTY
+ Q:'$D(XDATA)
+ N NODE S NODE=$NA(XDATA)
+ F  S NODE=$Q(@NODE) Q:NODE'["XDATA"  D  Q:$D(SPCLTY)
+ . I @NODE["&lt;specialty code=" D
+ .. N STRNG S STRNG=@NODE
+ .. S SPCLTY="CODE="_+$P(STRNG,";",3)_"^"_$P($P(STRNG,";",5),"&apos")
+ Q
+ ;
+PTLOC(PTLOC,XDATA) ;
+ K PTLOC
+ Q:'$D(XDATA)
+ N NODE S NODE=$NA(XDATA)
+ F  S NODE=$Q(@NODE) Q:NODE'["XDATA"  D  Q:$D(PTLOC)
+ . I @NODE["&lt;location code=" D
+ .. N STRNG S STRNG=@NODE
+ .. N F405IEN S F405IEN=+$P(STRNG,";",3)
+ .. N NODE S NODE=$NA(^DGPM(F405IEN)),NODE=$Q(@NODE)
+ .. N F42IEN S F42IEN=$P(@NODE,"^",6)
+ .. S PTLOC="^DGPM("_F405IEN_","_"^"
+ .. S PTLOC=PTLOC_"^DIC(42,"_F42IEN_",^"
+ .. S PTLOC=PTLOC_$P($P(STRNG,";",5),"&apos")
+ Q
 EOR ;KBAPUTL
+ ;
+DTADM ;;"&lt;admitted id=&apos;14&apos; date=&apos;3170901.191814&apos; /&gt;" entry into ^DGPM 
+ATTND ;;"&lt;attending code=&apos;63&apos; name=&apos;ALEXANDER,ROBERT&apos; /&gt;"
+DOB ;;"&lt;bid value=&apos;T6666&apos; /&gt;&lt;dob value=&apos;2320226&apos; /&gt;"
+SRVC ;;"&lt;locSvc code=&apos;S&apos; name=&apos;SURGERY&apos; /&gt;"
+WARD ;;"&lt;location code=&apos;7&apos; name=&apos;TESTWARD1&apos; /&gt;"
+SSN ;;"&lt;ssn value=&apos;888776666&apos; /&gt;&lt;veteran value=&apos;1&apos; /&gt;"
+SPCLTYX ;;"&lt;specialty code=&apos;1&apos; name=&apos;MEDICAL OBSERVATION&apos; /&gt;"
+ICN ;;"&lt;icn value=&apos;50000999&apos; /&gt;&lt;id value=&apos;22&apos; /&gt;"
+INPT ;;"&lt;inpatient value=&apos;false&apos; /&gt;&lt;lrdfn value=&apos;2&apos; /"
+ ;;

@@ -311,48 +311,62 @@
             </div>
 
 
-            <HR>
-            <div id="surgery">
+            <hr />
+            <div class="row">
                 <h2>Surgical Treatment Information</h2>
+            </div>
+            
+            <hr />
 
-                <HR>
-
+            <div class="row">
                 <h3>Pulmonary Function Test Data</h3>
 
-                <TABLE CELLSPACING=0 CELLPADDING=4>
-                    <TR>
-                        <TD align=right width="60%">
+            </div>
+            <!-- This likely needs to go to another tab  -->
+            <div class="row">
+                <div class="col-md-6 form-inline">
+                    <div class="form-group">
+                        <label>Have you had a pulmonary function test?</label>
 
-                            <label>Have you had a pulmonary function test?</label>
-                        </TD>
-                        <TD>
-                            <input type=hidden name="hvsbahpft" value="">
-                            <input type=radio name="sbahpft" value="n"> no
-                            <input type=radio name="sbahpft" value="y"> yes
-                        </TD>
-                    </TR>
-                    <TR>
-                        <TD>(Values are not required)</TD>
-                    </TR>
-                </TABLE>
+                        <div class="form-group">
+                            <label class="radio-inline">
+                                <input type=hidden name="hvsbahpft" value="">
+                            </label>
+                            <label class="radio-inline">
+                                 <input type="radio" name="sbahpft" value="n"> no
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="sbahpft" value="y"> yes
+                            </label>
+                        </div>
+                    </div>
 
-                <TABLE CELLSPACING=0 CELLPADDING=4>
-                    <TR>
-                        <TD>FEV1 (L/s) &nbsp;
-                            <input type=text name="sbfev1" onChange="synChk('sbfev1','pnum')" size=3></TD>
-                        <TD></TD>
-                        <TD>FVC (L) &nbsp;
-                            <input type=text name="sbfvc" onChange="calcFFR()" size=3></TD>
-                        <TD></TD>
-                        <TD>FEV1/FVC (%)
-                        </TD>
-                        <TD><input type=text name="sbffr" size=3
+                  
+                </div>
+
+                <div class="col-md-6 form-inline">
+                    <div class="form-group">
+                        <label>FEV1 (L/s)</label>
+                        <input type=text name="sbfev1" onChange="synChk('sbfev1','pnum')" size="3">
+                    </div>
+                    <div class="form-group">
+                        <label>FVC (L)</label>
+                        <input type=text name="sbfvc" onChange="calcFFR()" size="3">
+                    </div>
+                    <div class="form-group">
+                        <label>FEV1/FVC (%)</label>
+                       <input type=text name="sbffr" size="3"
                                    onFocus="document.forms[FNAME].elements['sbcop'].focus()">
-                        </TD>
-                        <TD>Carbon Monoxide (ppm) &nbsp;
-                            <input type=text name="sbcop" onChange="synChk('sbcop','pnum')" size=3></TD>
-                    </TR>
-                </TABLE>
+                    </div>
+                    <div class="form-group">
+                        <label>Carbon Monoxide (ppm)</label>
+                       <input type=text name="sbcop" onChange="synChk('sbcop','pnum')" size="3">
+                    </div>
+                </div>
+            </div>
+
+            <div id="surgery">
+                
 
                 <HR>
 

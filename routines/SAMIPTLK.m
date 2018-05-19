@@ -33,6 +33,7 @@ wsPtLkup(rtn,filter) ; patient lookup from patient-lookup cache
  . i cnt>0 d  ;
  . . d buildrtn(.rtn,.rslt)
  ; 
+ n have s have=""
  n q1 s q1=$na(@gn@(p1))
  n q1x s q1x=$e(q1,1,$l(q1)-2) ; removes the ")
  s qx=q1
@@ -43,6 +44,8 @@ wsPtLkup(rtn,filter) ; patient lookup from patient-lookup cache
  . . i p2'=$e($p(qx,",",5),1,$l(p2)) s exit=1
  . q:exit
  . n qx2 s qx2=+$p(qx,",",6)
+ . i $d(have(qx2)) q  ; already go this one
+ . s have(qx2)=""
  . s rslt(cnt,qx2)="" ; the ien
  . ;w !,qx," ien=",$o(rslt(cnt,""))
  i cnt>0 d buildrtn(.rtn,.rslt)
@@ -51,6 +54,7 @@ wsPtLkup(rtn,filter) ; patient lookup from patient-lookup cache
 buildrtn(rtn,ary) ; build the return json
  ;
  n root s root=$$setroot^%wd("patient-lookup")
+ n groot s groot=$$setroot^%wd("vapals-patients")
  n zi s zi=""
  n r1 s r1=""
  f  s zi=$o(ary(zi)) q:zi=""  d  ;
@@ -58,6 +62,13 @@ buildrtn(rtn,ary) ; build the return json
  . s r1("result",zi,"name")=$g(@root@(rx,"saminame"))
  . s r1("result",zi,"dfn")=$g(@root@(rx,"dfn"))
  . s r1("result",zi,"last5")=$g(@root@(rx,"last5"))
+ . s r1("result",zi,"gender")=$g(@root@(rx,"gender"))
+ . s r1("result",zi,"dob")=$g(@root@(rx,"sbdob"))
+ . s r1("result",zi,"vapals")=0
+ . n dfn s dfn=$g(@root@(rx,"dfn"))
+ . i $o(@groot@("dfn",dfn,""))'="" d  ;
+ . . s r1("result",zi,"vapals")=1
+ . . s r1("result",zi,"studyid")=$g(@groot@(dfn,"samistudyid"))
  ;
  ;q:'$d(r1)
  d ENCODE^VPRJSON("r1","rtn")

@@ -94,7 +94,7 @@ wsLookup(ARGS,BODY,RESULT) ; look up ELCAP patient
  do parseBody^%wf("vars",.bdy)
  merge ^gpl("lookup","vars")=vars
  ;
- new root set root=$$setroot^%wd("elcap-patients")
+ new root set root=$$setroot^%wd("vapals-patients")
  ;
  new sien,trtn
  if $get(vars("field"))="sid" do  ; searching by studyid

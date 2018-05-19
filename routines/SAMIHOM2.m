@@ -622,6 +622,9 @@ prefill(gien) ; prefill fields for form
  ;
  ; future - this routine could query Vista for patient fields
  ;
+ ; add this call to fetch ssn
+ ;D PTSSN^KBAPUTL(.XDATA,812,9430,"35.164.151.93","SEPI9393;Pvul+9339")
+ ;
  new root set root=$$setroot^%wd("elcap-patients")
  new saminame set saminame=$get(@root@(gien,"saminame"))
  quit:saminame=""

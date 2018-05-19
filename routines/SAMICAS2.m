@@ -123,7 +123,7 @@ wsCASE(rtn,filter) ; generate case review page
  ;
  kill rtn
  ;
- new groot set groot=$$setroot^%wd("elcap-patients") ; root of patient graphs
+ new groot set groot=$$setroot^%wd("vapals-patients") ; root of patient graphs
  ;
  new temp ; html template
  do getTemplate("temp","vapals:casereview")
@@ -147,7 +147,8 @@ wsCASE(rtn,filter) ; generate case review page
  ;
  n cnt s cnt=0
  new zi set zi=0
- for  set zi=$order(temp(zi)) quit:+zi=0  quit:temp(zi)["VEP0001"  do  ;
+ ;for  set zi=$order(temp(zi)) quit:+zi=0  quit:temp(zi)["VEP0001"  do  ;
+ for  set zi=$order(temp(zi)) quit:+zi=0  quit:temp(zi)["tbody"  do  ;
  . n ln s ln=temp(zi)
  . n touched s touched=0
  . ;
@@ -186,7 +187,10 @@ wsCASE(rtn,filter) ; generate case review page
  set nuhref=nuhref_"<input type=hidden name=""studyid"" value="_sid_">"
  set nuhref=nuhref_"<input value=""New Form"" class=""btn label label-warning"" role=""link"" type=""submit""></form></td>"
  s cnt=cnt+1
- set rtn(cnt)="<tr><td> "_sid_" </td><td> "_lname_" </td><td> "_fname_" </td><td> - </td><td>"_sidispdate_"</td><td>"_$char(13)
+ n last5 s last5=$$GETLAST5^SAMIFRM2(sid)
+ n pname s pname=$$GETNAME^SAMIFRM2(sid)
+ ;set rtn(cnt)="<tr><td> "_sid_" </td><td> "_lname_" </td><td> "_fname_" </td><td> - </td><td>"_sidispdate_"</td><td>"_$char(13)
+ set rtn(cnt)="<tr><td> "_last5_" </td><td> "_pname_" </td><td> XXX </td><td>"_sidispdate_"</td><td>"_$char(13)
  s cnt=cnt+1
  set rtn(cnt)="<form method=""post"" action=""/vapals"">"
  set cnt=cnt+1
@@ -208,9 +212,10 @@ wsCASE(rtn,filter) ; generate case review page
  if sbkey="" set sbkey="sbform-2017-12-10"
  new sbdate set sbdate=$$getDateKey^SAMICASE(sbkey)
  set sbkey="vapals:"_sbkey
- new sbdispdate set sbdispdate=$$key2dispDate^SAMICASE(sbdate)
+ new sbdispdate set sbdispdate=$$key2dispDate(sbdate)
  set cnt=cnt+1
- set rtn(cnt)="<tr><td> "_sid_" </td><td> - </td><td> - </td><td> - </td><td>"_sbdispdate_"</td><td>"_$char(13)
+ ;set rtn(cnt)="<tr><td> "_sid_" </td><td> - </td><td> - </td><td> - </td><td>"_sbdispdate_"</td><td>"_$char(13)
+ set rtn(cnt)="<tr><td> "_last5_" </td><td> - </td><td> - </td><td>"_sbdispdate_"</td><td>"_$char(13)
  set cnt=cnt+1
  set rtn(cnt)="<form method=""post"" action=""/vapals"">"_$char(13)
  set cnt=cnt+1
@@ -243,7 +248,8 @@ wsCASE(rtn,filter) ; generate case review page
  . . . set zform="vapals:"_zkey ; all the new forms are vapals:key
  . . . ;new geturl set geturl="/form?form="_zform_"&studyid="_sid_"&key="_zkey
  . . . set cnt=cnt+1
- . . . set rtn(cnt)="<tr><td> "_sid_" </td><td> - </td><td> - </td><td> - </td><td>"_dispdate_"</td><td>"
+ . . . ;set rtn(cnt)="<tr><td> "_sid_" </td><td> - </td><td> - </td><td> - </td><td>"_dispdate_"</td><td>"
+ . . . set rtn(cnt)="<tr><td> "_last5_" </td><td> - </td><td> - </td><td>"_dispdate_"</td><td>"
  . . . set cnt=cnt+1
  . . . set rtn(cnt)="<form method=""post"" action=""/vapals"">"_$char(13)
  . . . set cnt=cnt+1
@@ -345,7 +351,7 @@ getItems(ary,sid) ; get items available for studyid
  ;
  ;@stanza 2 get items
  ;
- new groot set groot=$$setroot^%wd("elcap-patients")
+ new groot set groot=$$setroot^%wd("vapals-patients")
  quit:'$data(@groot@("graph",sid))  ; nothing there
  ;
  kill @ary
@@ -431,14 +437,22 @@ key2dispDate(zkey) ; date in elcap format from key date
  new X set X=zkey
  new Y
  do ^%DT
- new Z set Z=$$FMTE^XLFDT(Y,"9D")
- set Z=$translate(Z," ","/")
+ ;new Z set Z=$$FMTE^XLFDT(Y,"9D")
+ ;set Z=$translate(Z," ","/")
+ n zdate
+ s zdate=$$vapalsDate(Y)
  ;
  ;@stanza 3 return & termination
  ;
- quit Z  ; return date; end of $$keysdispDate
+ quit zdate  ; return date; end of $$keysdispDate
  ;
  ;
+vapalsDate(fmdate) ; extrinsic which return the vapals format for dates
+ ; fmdate is the date in fileman format
+ ;new Z set Z=$$FMTE^XLFDT(fmdate,"9D")
+ ;set Z=$translate(Z," ","/")
+ new Z set Z=$$FMTE^XLFDT(fmdate,"5D")
+ q Z
  ;
  ;@section 2 wsNuForm, wsNuFormPost, & related ppis
  ;
@@ -471,7 +485,7 @@ wsNuForm(rtn,filter) ; select new form for patient (get service)
  quit:sid=""
  new sien set sien=$$sid2num^SAMIHOM2(sid)
  quit:+sien=0
- new root set root=$$setroot^%wd("elcap-patients")
+ new root set root=$$setroot^%wd("vapals-patients")
  new groot set groot=$name(@root@(sien))
  ;
  new saminame set saminame=$get(@groot@("saminame"))
@@ -647,7 +661,7 @@ makeCeform(sid,key) ; create ct evaluation form
  ;
  ;@stanza 2 create ct eval form
  ;
- new root set root=$$setroot^%wd("elcap-patients")
+ new root set root=$$setroot^%wd("vapals-patients")
  new sien set sien=$$sid2num^SAMIHOM2(sid)
  quit:+sien=0
  new cdate set cdate=$piece(key,"ceform-",2)
@@ -679,7 +693,7 @@ makeFuform(sid,key) ; create Follow-up form
  ;
  ;@stanza 2 create ct eval form
  ;
- new root set root=$$setroot^%wd("elcap-patients")
+ new root set root=$$setroot^%wd("vapals-patients")
  new sien set sien=$$sid2num^SAMIHOM2(sid)
  quit:+sien=0
  new cdate set cdate=$piece(key,"fuform-",2)
@@ -711,7 +725,7 @@ makePtform(sid,key) ; create ct evaluation form
  ;
  ;@stanza 2 create ct eval form
  ;
- new root set root=$$setroot^%wd("elcap-patients")
+ new root set root=$$setroot^%wd("vapals-patients")
  new sien set sien=$$sid2num^SAMIHOM2(sid)
  quit:+sien=0
  new cdate set cdate=$piece(key,"ptform-",2)
@@ -743,7 +757,7 @@ makeBxform(sid,key) ; create ct evaluation form
  ;
  ;@stanza 2 create ct eval form
  ;
- new root set root=$$setroot^%wd("elcap-patients")
+ new root set root=$$setroot^%wd("vapals-patients")
  new sien set sien=$$sid2num^SAMIHOM2(sid)
  quit:+sien=0
  new cdate set cdate=$piece(key,"bxform-",2)
@@ -761,7 +775,7 @@ makeBxform(sid,key) ; create ct evaluation form
  ;
 getSamiStatus(sid,form) ; extrinsic returns the value of 'samistatus' from the form
  n stat,root,useform
- s root=$$setroot^%wd("elcap-patients")
+ s root=$$setroot^%wd("vapals-patients")
  s useform=form
  i form["vapals:" s useform=$p(form,"vapals:",2)
  s stat=$g(@root@("graph",sid,useform,"samistatus"))
@@ -769,7 +783,7 @@ getSamiStatus(sid,form) ; extrinsic returns the value of 'samistatus' from the f
  ;
 setSamiStatus(sid,form,val) ; sets 'samistatus' to val in form
  n root,useform
- s root=$$setroot^%wd("elcap-patients")
+ s root=$$setroot^%wd("vapals-patients")
  s useform=form
  i form["vapals:" s useform=$p(form,"vapals:",2)
  i '$d(@root@("graph",sid,useform)) q  ; no form there
@@ -778,7 +792,7 @@ setSamiStatus(sid,form,val) ; sets 'samistatus' to val in form
  ;
 deleteForm(RESULT,ARGS) ; deletes a form if it is incomplete
  ; will not delete intake or background forms
- n root s root=$$setroot^%wd("elcap-patients")
+ n root s root=$$setroot^%wd("vapals-patients")
  n sid,form
  s sid=$g(ARGS("studyid"))
  q:sid=""
@@ -794,7 +808,7 @@ deleteForm(RESULT,ARGS) ; deletes a form if it is incomplete
  q
  ;
 initStatus ; set all forms to 'incomplete'
- n root s root=$$setroot^%wd("elcap-patients")
+ n root s root=$$setroot^%wd("vapals-patients")
  n zi,zj s (zi,zj)=""
  f  s zi=$o(@root@("graph",zi)) q:zi=""  d  ;
  . f  s zj=$o(@root@("graph",zi,zj)) q:zj=""  d  ;

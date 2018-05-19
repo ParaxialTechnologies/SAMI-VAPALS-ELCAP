@@ -108,7 +108,7 @@ INITFRMS ; initilize form file from elcap-patient graphs
  ; getVals^%wf
  ; INIT1FRM
  ;
- new root set root=$$setroot^%wd("elcap-patients")
+ new root set root=$$setroot^%wd("vapals-patients")
  quit:root=""
  new groot set groot=$name(@root@("graph"))
  new patient set patient=$order(@groot@(""),-1) ; use last patient in graph
@@ -231,7 +231,7 @@ loadData() ; import directory full of json data into elcap-patient graph
  new zlist
  do file2ary^%wd("zlist","/home/osehra/www/","sample-list.txt")
  ;
- new root set root=$$setroot^%wd("elcap-patients")
+ new root set root=$$setroot^%wd("vapals-patients")
  new json,ary,studyid,form,filename
  new zi set zi=""
  ;
@@ -382,6 +382,8 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  . . . s zhtml(%j+2)=repl ; 
  . . . set touched=1
  ;
+ n last5 s last5=$$GETLAST5^SAMIFRM2(sid)
+ ;
  if line["src=" do
  . do fixSrc(.line) ; insert see/ processor on src= references
  . quit
@@ -394,7 +396,7 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  . do findReplace^%ts(.line,"Sample, Sammy G",$g(vals("saminame")))
  ;
  if line["ST0001" do  ;
- . do findReplace^%ts(.line,"ST0001",sid)
+ . do findReplace^%ts(.line,"ST0001",last5)
  ;
  if line["1234567890" do  ;
  . do findReplace^%ts(.line,"1234567890","")
@@ -526,5 +528,16 @@ fixHref(line) ; fix html href lines to use resources in see/
  quit  ; end of fixHref
  ;
  ;
+GETLAST5(sid) ; extrinsic returns the last5 for patient sid
+ n root s root=$$setroot^%wd("vapals-patients")
+ n ien s ien=$o(@root@("sid",sid,""))
+ q:ien=""
+ q @root@(ien,"last5")
+ ;
+GETNAME(sid) ; extrinsic returns the name for patient sid
+ n root s root=$$setroot^%wd("vapals-patients")
+ n ien s ien=$o(@root@("sid",sid,""))
+ q:ien=""
+ q @root@(ien,"saminame")
  ;
 EOR ; end of routine SAMIFRM

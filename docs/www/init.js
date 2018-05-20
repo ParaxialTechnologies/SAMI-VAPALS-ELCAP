@@ -119,8 +119,7 @@ function initTabbedNavigation(tabContainerId, tabContentContainerId) {
         var $container = $(this).closest(".tab-pane");
         checkCompleteness($container);
     });
-} 
-
+}
 
 //global application handlers
 $(function () {
@@ -157,5 +156,28 @@ $(function () {
     $("#submit-button").on('click', function () {
         $("input[name=samistatus]").val("complete");
     });
+
+    $("a.navigation").on("click", function () {
+        var data = $(this).data();
+        var method = data.method === undefined ? "GET" : data.method
+        delete data.method;
+        data.studyId = studyId;
+
+        var form = document.createElement('form');
+        form.style.visibility = 'hidden'; // no user interaction is necessary
+        form.method = method; //'POST'; // forms by default use GET query strings
+        form.action = method.toLowerCase() === "get" ? $(this).attr("href") : "/vapals";
+
+        for (key in data) {
+            var input = document.createElement('input');
+            input.name = key;
+            input.value = data[key];
+            form.appendChild(input); // add key/value pair to form
+        }
+        document.body.appendChild(form);
+        form.submit();
+
+        return false;
+    })
 
 });

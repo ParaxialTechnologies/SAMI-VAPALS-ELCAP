@@ -5,43 +5,43 @@
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
   <title>
-   Case Review
+   New Form
   </title>
-  <link href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <link href="lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
-  <link href="lib/formvalidation/dist/css/formValidation.min.css" rel="stylesheet"/>
-  <link href="lib/bootstrap-datetimepicker-4.17.47/css/bootstrap-datetimepicker.css" rel="stylesheet"/>
-  <link href="vapals.css" rel="stylesheet"/>
-  <link href="lib/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet"/>
-  <link href="lib/jquery-ui-1.12.1/jquery-ui.structure.min.css" rel="stylesheet"/>
-  <link href="lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
+  <link href="../www/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="../www/lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+  <link href="../www/lib/formvalidation/dist/css/formValidation.min.css" rel="stylesheet"/>
+  <link href="../www/lib/bootstrap-datetimepicker-4.17.47/css/bootstrap-datetimepicker.css" rel="stylesheet"/>
+  <link href="../www/vapals.css" rel="stylesheet"/>
+  <link href="../www/lib/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet"/>
+  <link href="../www/lib/jquery-ui-1.12.1/jquery-ui.structure.min.css" rel="stylesheet"/>
+  <link href="../www/lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
  </head>
  <body>
-  <script src="lib/jquery-3.3.1.min.js">
+  <script src="../www/lib/jquery-3.3.1.min.js">
   </script>
-  <script src="lib/jquery-ui-1.12.1/jquery-ui.min.js">
+  <script src="../www/lib/jquery-ui-1.12.1/jquery-ui.min.js">
   </script>
-  <script src="lib/popper.min.js">
+  <script src="../www/lib/popper.min.js">
   </script>
-  <script src="lib/bootstrap-3.3.7-dist/js/bootstrap.min.js">
+  <script src="../www/lib/bootstrap-3.3.7-dist/js/bootstrap.min.js">
   </script>
-  <script src="lib/moment.js">
+  <script src="../www/lib/moment.js">
   </script>
-  <script src="lib/formvalidation/dist/js/formValidation.min.js">
+  <script src="../www/lib/formvalidation/dist/js/formValidation.min.js">
   </script>
-  <script src="lib/formvalidation/dist/js/framework/bootstrap.min.js">
+  <script src="../www/lib/formvalidation/dist/js/framework/bootstrap.min.js">
   </script>
-  <script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js">
+  <script src="../www/lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js">
   </script>
   <script src="https://www.gstatic.com/charts/loader.js" type="text/javascript">
   </script>
-  <script src="jquery-conditonally-enable.js">
+  <script src="../www/jquery-conditonally-enable.js">
   </script>
-  <script src="jqueryui-vista-filemanAutocomplete.js">
+  <script src="../www/jqueryui-vista-filemanAutocomplete.js">
   </script>
-  <script src="vapals.js">
+  <script src="../www/vapals.js">
   </script>
-  <script src="init.js">
+  <script src="../www/init.js">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -60,7 +60,7 @@
       </span>
      </button>
      <a href="home.html">
-      <img alt="VA-PALS Logo" height="50" src="img/new-logo.png" title="VA-PALS"/>
+      <img alt="VA-PALS Logo" height="50" src="../www/img/new-logo.png" title="VA-PALS"/>
      </a>
     </div>
     <div class="navbar-collapse collapse" id="navbar-main">
@@ -80,33 +80,51 @@
    </div>
   </nav>
   <div class="container-fluid" style="max-width:1550px">
-   <div class="table-responsive">
-    <table class="table">
-     <thead>
-      <tr>
-       <th>
-        SSN
-       </th>
-       <th>
-        Name
-       </th>
-       <th>
-        Facility Code
-       </th>
-       <th>
-        Date
-       </th>
-       <th>
-        Type
-       </th>
-       <th>
-        Action
-       </th>
-      </tr>
-     </thead>
-     <tbody>
-     </tbody>
-    </table>
+   <div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4">
+     <div class="panel panel-default">
+      <div class="panel-heading">
+       <h3 class="panel-title">
+        New Form
+       </h3>
+      </div>
+      <div class="panel-body">
+       <form action="todo" method="post">
+        <div class="form-group">
+         <label>
+          Please select the type of form to create
+         </label>
+         <select class="form-control" id="form" name="form">
+          <option value="background">
+           Screening Background
+          </option>
+          <option value="ctevaluation">
+           CT Evaluation
+          </option>
+          <option value="followup">
+           Follow-up
+          </option>
+          <option value="biopsy">
+           Biopsy
+          </option>
+          <option value="newform">
+           Pre-Intervention
+          </option>
+          <option value="newform">
+           Intervention
+          </option>
+          <option value="pet">
+           PET Evaluation
+          </option>
+         </select>
+        </div>
+        <div class="pull-right">
+         <input class="btn btn-primary" id="submit-button" type="submit" value="Create New Form"/>
+        </div>
+       </form>
+      </div>
+     </div>
+    </div>
    </div>
   </div>
   <footer>

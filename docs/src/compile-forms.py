@@ -36,7 +36,8 @@ for form, title in forms.items():
         html = env.get_template(form + ".html.jinja2").render(
             path="",
             version=version,
-            title=title)
+            title=title,
+            formMethod="post")
         fh.write(BeautifulSoup(html, 'html5lib').prettify().encode('utf-8'))
 
     with open("../mockups/" + form + ".html", "wb") as fh:
@@ -44,7 +45,8 @@ for form, title in forms.items():
             path="../www/",
             mockup="true",
             version=version,
-            title=title)
+            title=title,
+            formMethod="get")
         fh.write(BeautifulSoup(html, 'html5lib').prettify().encode('utf-8'))
 
 elapsedMs = (datetime.datetime.now() - start).microseconds / 1000

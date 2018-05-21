@@ -19,96 +19,42 @@
               data-fv-icon-validating="glyphicon glyphicon-refresh"
               data-fv-button-selector="#submit-button">
 
+            <h3>Contact Information</h3>
             <div class="row">
-                <div class="col-sm-6 col-md-3 form-group">
-                    <label for="sinamel">Patient Last Name</label>
-                    <input type="text" name="sinamel" id="sinamel" class="form-control" required="required">
-                </div>
-                <div class="col-sm-5 col-md-3 form-group">
-                    <label for="sinamef">First Name</label>
-                    <input type="text" name="sinamef" id="sinamef" class="form-control" required="required">
-                </div>
-                <div class="col-sm-1 form-group">
-                    <label for="sinamem">Middle <span class="hidden-sm hidden-md">Initial</span></label>
-                    <input type="text" name="sinamem" id="sinamem" class="form-control">
-                </div>
-
                 <div class="col-sm-4 col-md-3 form-group">
-                    <label for="sidfc">Date of First Contact</label>
-                    {{ f.datepicker("sidfc", true) }}
+                    <label for="sidc">Date of Contact</label>
+                    {{ f.datepicker("sidc", true, "Date of contact is required") }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <label>How did you learn about LSS?</label>
+                    {{ f.checkbox("silnph", "1", "Phone") }}
+                    {{ f.checkbox("silnls", "1", "Letter sent") }}
+                    {{ f.checkbox("silnlr", "1", "Letter sent and received") }}
+                    {{ f.checkbox("silnpc", "1", "PCP") }}
                 </div>
             </div>
 
             <div class="row">
-                <div class="form-group col-sm-3 col-md-2">
-                    <label for="sisid">Study ID</label>
-                    {# TODO insert current studyID into both of these fields#}
-                    <input type="hidden" name="hvsisid" value="VEP0001">
-                    <input type="text" name="sisid" id="sisid" onFocus="savesid()" value="VEP0001" class="form-control"
-                           required="required">
-                </div>
-                <div class="form-group col-sm-3 col-md-2">
-
-                    <label for="sifsid">Other Study ID</label>
-                    <input type="text" name="sifsid" id="sifsid" onFocus="savefsid()" onChange="confirmfsid()"
-                           class="form-control">
+                <div class="col-md-12 form-group">
+                    <label>Primary address verified</label>
+                    {{ f.inlineRadio("sipav", "sipav-y","y","Yes", true) }}
+                    {{ f.inlineRadio("sipav", "sipav-n","n","No") }}
                 </div>
             </div>
 
             <div class="row">
-                <div class="form-group col-sm-3 col-md-3 col-lg-2">
-                    <label for="sidoe">Date of Baseline CT</label>
-                    {{ f.datepicker("sidoe", true) }}
-                </div>
-                <div class="form-group col-sm-3 col-md-3 col-lg-2">
-                    <label for="sifac">Facility Code</label>
-                    <input type="text" name="sifac" id="sifac" class="form-control" required="required">
+                <div class="col-md-12 form-group">
+                    <label>Rural status</label>
+                    {{ f.inlineRadio("sirs", "sipav-u","u","Urban", true) }}
+                    {{ f.inlineRadio("sirs", "sipav-r","r","Rural") }}
                 </div>
             </div>
 
-            <div class="row">
-                <div class="form-group col-sm-12">
-                    {{ f.checkbox( "sisa", "y", "Requires Special Attention") }}
-                </div>
-            </div>
-
-            <hr/>
-
-            {# TODO: rewrite these notes so they are more structured instead of a giant textarea of mutable data (with developer tools help) #}
-            <div class="row">
-                <div class="form-group col-md-12">
-                    <label for="siadcomna">Note</label>
-                    <textarea name="siadcomna" id="siadcomna" rows="2" cols="65" class="form-control"></textarea>
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-12">
-                    <label for="siadcom">Notes & Correspondence</label>
-                    <textarea name="siadcom" id="siadcom" rows="4" cols="65" readonly="readonly"
-                              class="form-control" style="font-family: monospace;">
-                    </textarea>
-                    <button type="button" class="btn-link" data-toggle="modal" data-target="#correspondenceModal">
-                        Add Correspondence
-                    </button>
-                </div>
-            </div>
-
-            <hr/>
-
-            <h3>Patient Contact Information
-                <i class="small fa fa-question-circle-o" aria-hidden="true"
-                   data-toggle="popover"
-                   title="Update Patient Contact Information"
-                   data-html="true"
-                   data-trigger="click"
-                   data-content="Use the Update button when the patient's contact information changes. It will save a
-                                 copy of the information into the Additional Patient Information and clear the
-                                 appropriate fields so that you may enter the new contact information.
-                                 <button class='btn btn-sm btn-default' onclick='updatePatientContactInfo();'>Update</button>"></i>
-            </h3>
             <div class="row">
                 <div class="form-group col-sm-6 ">
-                    <label for="sipsa">Street Address</label>
+                    <label for="sipsa">Preferred Address</label>
                     <input type="text" name="sipsa" id="sipsa" class="form-control">
                 </div>
                 <div class="form-group col-sm-2">
@@ -141,37 +87,59 @@
                 </div>
             </div>
 
+            <hr/>
+
+            <h3>Smoking History</h3>
 
             <div class="row">
-                <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                    <label for="sipw">Phone (Work)</label>
-                    <input type="text" name="sipw" id="sipw" class="form-control"
-                           data-fv-phone="true" data-fv-phone-country="US">
-                </div>
-                <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                    <label for="siph">Phone (Home)</label>
-                    <input type="text" name="siph" id="siph" class="form-control"
-                           data-fv-phone="true" data-fv-phone-country="US">
-                </div>
-                <div class="form-group col-sm-12 col-md-4 col-lg-6">
-                    <label for="sipem">Email Address</label>
-                    <input type="text" name="sipem" id="sipem" class="form-control" data-fv-emailaddress="true">
+                <div class="col-md-4">
+                    <label>Have you ever smoked</label>
+                    <input type="text" name="sies" id="sies" class="form-control"/>
+                    {{ f.checkbox("siesn","1", "Never smoked") }}
+                    {{ f.checkbox("siesp","1", "Past") }}
+                    {{ f.checkbox("siesc","1", "Current") }}
+                    {{ f.checkbox("siesq","1", "Willing to quit") }}
                 </div>
             </div>
 
-            <hr/>
+            <div class="row">
+                <div class="col-md-4">
+                    {{ f.floatingLabel('sicpd', 'How many cigarettes did you smoke per day?') }}
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group form-inline">
+                        <input class="form-control input-sm" type="text" name="sicpd" id="sicpd" size="5">
+                    </div>
+                </div>
 
-            <h3>Physician Contact Information <i class="small fa fa-question-circle-o" aria-hidden="true"
-                                                 data-toggle="popover"
-                                                 title="Update Physician Contact Information"
-                                                 data-html="true"
-                                                 data-trigger="click"
-                                                 data-content="Use the Update button when the physician's contact
-                                               information changes.  It will save a copy of the information into the
-                                               Additional Patient Information and clear the appropriate fields so that
-                                               you may enter the new contact information.
-                                               <button class='btn btn-sm btn-default' onclick='updatePhysicianContactInfo();'>Update</button>"></i>
-            </h3>
+                <div class="col-md-4">
+                    {{ f.floatingLabel('sippd', 'How many packs of cigarettes did you smoke per day (PPD)?') }}
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group form-inline">
+                        <input class="form-control input-sm" type="text" name="sippd" id="sippd" size="5">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        {{ f.floatingLabel('sisny', '# of years') }}
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <input class="form-control" type="text" name="sisny" id="sisny" required="required">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        {{ f.floatingLabel('sippy', 'Reported pack years') }}
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <input class="form-control" type="text" name="sippy" id="sippy" required="required">
+                    </div>
+                </div>
+            </div>
+
 
             <div class="row">
                 <div class="form-group col-sm-12 col-md-12 col-lg-6">
@@ -339,29 +307,7 @@
                     <input type="text" name="sieso" id="sieso" class="form-control" required="required">
                 </div>
             </div>
-            <div class="row">
-                <div class="form-group col-md-4">
-                    <label for="sixdate">Date of Exit</label>
-                    <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
-                       data-content="The Date of Exit should be recorded for all subjects who are no longer active in
-                       the study.  It signifies the date on which they change to a non-active status."></i>
-                    {{ f.datepicker("sixdate", true) }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-sm-3 col-md-3 col-lg-2">
-                    <label for="">DOD</label>
-                    <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
-                       data-content="The Date of Death (DOD) should be recorded for all subjects who have expired."></i>
-                    {{ f.datepicker("sidod", true, "Date of death is required") }}
-                </div>
-                <div class="form-group col-sm-9 col-md-9 col-lg-10">
-                    <label for="sicod">COD</label>
-                    <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
-                       data-content="The Cause of Death (COD) should be recorded for all subjects who have expired."></i>
-                    <input type="text" name="sicod" id="sicod" class="form-control" required="required">
-                </div>
-            </div>
+
 
             <hr/>
 

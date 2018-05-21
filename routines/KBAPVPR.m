@@ -1,19 +1,24 @@
-KBAPVPR ;ven/lgc - GATHER AND PARSE PT VPR ; 5/9/18 11:45am
+KBAPVPR ;ven/lgc - GATHER AND PARSE PT VPR ; 5/21/18 12:59pm
  ;;1.0;;**LOCAL**; MAY 8, 2018
  ;
  ;
  ; Get Virtual Patient Record
 EN(DFN) Q:'$G(DFN)
- D VPR(DFN,9430,"35.164.151.93","SEPI9393;Pvul+9339")
+ D VPR(DFN)
  Q
  ;
  ;e.g.
- ; D VPR^KBAPVPR(DFN,PORT,IP,ACCVER)
- ; D VPR^KBAPVPR(22,9430,"35.164.151.93","SEPI9393;Pvul+9339")
-VPR(DFN,PORT,IP,ACCVER) ;
+ ; D VPR^KBAPVPR(DFN,ACCVER)
+ ; D VPR^KBAPVPR(22)
+VPR(DFN) ;
+ N PORT,IP,ACCVER
+ S PORT=$$GET^XPAR("SYS","SAMI PORT",,"Q")
+ S IP=$$GET^XPAR("SYS","SAMI IP ADDRESS",,"Q")
+ S:($G(IP)="") IP="127.0.0.1"
  Q:$G(IP)=""  Q:$G(PORT)=""
+ S ACCVER=$$GET^XPAR("SYS","SAMI ACCVER",,"Q")
  Q:$G(ACCVER)=""  Q:'($L($G(ACCVER),";")=2)
- N CALL,CLOSE,CONNECT,CONTEXT,DIVFLAG,DIVISION,REQ,X,XSSN
+ N CALL,CLOSE,CONNECT,CONTEXT,DIVFLAG,DIVISION,REQ,X,XSSN,XWBDIVS
  N REG,POO,NODE,gien,root
  ;
  N root s root=$$setroot^%wd("patient-lookup")
@@ -107,7 +112,7 @@ IOPT .. S INPT=$P($P($P(STRNG,"inpatient value",2),";",2),"&apos")
  S @root@(gien,"inpatient")=$G(INPT)
  ;
  ; Clear Context
- N CCONTEXT S CCONTEXT=$$GETCONTX^XWBM2MC(.CONTEXT) 
+ N CCONTEXT S CCONTEXT=$$GETCONTX^XWBM2MC(.CONTEXT)
  ;
  ; Now get radiology
 PULLRAD S CONTEXT=$$SETCONTX^XWBM2MC("MAG WINDOWS")
@@ -115,17 +120,15 @@ PULLRAD S CONTEXT=$$SETCONTX^XWBM2MC("MAG WINDOWS")
  S ^TMP("POO",$J,"VALUE")=DFN
  S X=$$PARAM^XWBM2MC(1,$NA(^TMP("POO",$J)))
  S CALL=$$CALLRPC^XWBM2MC("MAGJ PTRADEXAMS","POO",1)
- I $G(POO(1))]"" D
+ I $G(POO(1))]"",$P(POO(1),"^",3) D
+ . N CNT S CNT=0
+ . F  S CNT=CNT+1 Q:$G(POO(CNT))=""  D
  . S STRNG=$G(POO(1))
  . N RAD
  . S RAD=$P(STRNG,"^",3)_"^"_$P(STRNG,"^",5)_"^"
  . S RAD=RAD_$P(STRNG,"^",7)_"^"_$P(STRNG,"^",15)
- . S @root@(gien,"rad")=RAD
- ;
- ;
+ . S @root@(gien,"rad",$P(STRNG,"^",3))=RAD
  S CLOSE=$$CLOSE^XWBM2MC
- ;
- W !,$ZUT,!
  ; 
  S NODE=$NA(@root@(gien))
  F  S NODE=$Q(@NODE) Q:NODE'[gien  W !,NODE,"=",@NODE

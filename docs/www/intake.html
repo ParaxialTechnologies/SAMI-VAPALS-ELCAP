@@ -71,7 +71,7 @@
        </a>
       </li>
       <li class="dropdown" id="studyIdMenu" style="display:none;">
-       <a class="navigation" data-form="casereview" data-method="get" data-samiroute="form" href="casereview.html">
+       <a class="navigation" data-form="casereview" data-method="post" data-samiroute="form" href="casereview.html">
         Case Review
        </a>
       </li>
@@ -94,36 +94,18 @@
    </h2>
    <hr/>
    <form action="intake.html" class="validated" data-fv-button-selector="#submit-button" data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-validating="glyphicon glyphicon-refresh" method="post">
+    <h3>
+     Contact Information
+    </h3>
     <div class="row">
-     <div class="col-sm-6 col-md-3 form-group">
-      <label for="sinamel">
-       Patient Last Name
-      </label>
-      <input class="form-control" id="sinamel" name="sinamel" required="required" type="text"/>
-     </div>
-     <div class="col-sm-5 col-md-3 form-group">
-      <label for="sinamef">
-       First Name
-      </label>
-      <input class="form-control" id="sinamef" name="sinamef" required="required" type="text"/>
-     </div>
-     <div class="col-sm-1 form-group">
-      <label for="sinamem">
-       Middle
-       <span class="hidden-sm hidden-md">
-        Initial
-       </span>
-      </label>
-      <input class="form-control" id="sinamem" name="sinamem" type="text"/>
-     </div>
      <div class="col-sm-4 col-md-3 form-group">
-      <label for="sidfc">
-       Date of First Contact
+      <label for="sidc">
+       Date of Contact
       </label>
       <div class="input-group datepicker">
-       <input aria-describedby="sidfc-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" id="sidfc" name="sidfc"/>
+       <input aria-describedby="sidc-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" data-fv-notempty-message="Date of contact is required" id="sidc" name="sidc" required="required"/>
        <div class="input-group-addon">
-        <div class="input-group-text" id="sidfc-addon">
+        <div class="input-group-text" id="sidc-addon">
          <i aria-hidden="true" class="fa fa-calendar">
          </i>
         </div>
@@ -135,88 +117,70 @@
      </div>
     </div>
     <div class="row">
-     <div class="form-group col-sm-3 col-md-2">
-      <label for="sisid">
-       Study ID
+     <div class="col-md-12 form-group">
+      <label>
+       How did you learn about LSS?
       </label>
-      <input name="hvsisid" type="hidden" value="VEP0001"/>
-      <input class="form-control" id="sisid" name="sisid" onfocus="savesid()" required="required" type="text" value="VEP0001"/>
-     </div>
-     <div class="form-group col-sm-3 col-md-2">
-      <label for="sifsid">
-       Other Study ID
-      </label>
-      <input class="form-control" id="sifsid" name="sifsid" onchange="confirmfsid()" onfocus="savefsid()" type="text"/>
-     </div>
-    </div>
-    <div class="row">
-     <div class="form-group col-sm-3 col-md-3 col-lg-2">
-      <label for="sidoe">
-       Date of Baseline CT
-      </label>
-      <div class="input-group datepicker">
-       <input aria-describedby="sidoe-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" id="sidoe" name="sidoe"/>
-       <div class="input-group-addon">
-        <div class="input-group-text" id="sidoe-addon">
-         <i aria-hidden="true" class="fa fa-calendar">
-         </i>
-        </div>
-       </div>
-      </div>
-      <small class="form-text text-muted">
-       MM/DD/YYYY
-      </small>
-     </div>
-     <div class="form-group col-sm-3 col-md-3 col-lg-2">
-      <label for="sifac">
-       Facility Code
-      </label>
-      <input class="form-control" id="sifac" name="sifac" required="required" type="text"/>
-     </div>
-    </div>
-    <div class="row">
-     <div class="form-group col-sm-12">
       <div class="checkbox">
        <label>
-        <input id="sisa" name="sisa" type="checkbox" value="y"/>
-        Requires Special Attention
+        <input id="silnph" name="silnph" type="checkbox" value="1"/>
+        Phone
+       </label>
+      </div>
+      <div class="checkbox">
+       <label>
+        <input id="silnls" name="silnls" type="checkbox" value="1"/>
+        Letter sent
+       </label>
+      </div>
+      <div class="checkbox">
+       <label>
+        <input id="silnlr" name="silnlr" type="checkbox" value="1"/>
+        Letter sent and received
+       </label>
+      </div>
+      <div class="checkbox">
+       <label>
+        <input id="silnpc" name="silnpc" type="checkbox" value="1"/>
+        PCP
        </label>
       </div>
      </div>
     </div>
-    <hr/>
     <div class="row">
-     <div class="form-group col-md-12">
-      <label for="siadcomna">
-       Note
+     <div class="col-md-12 form-group">
+      <label>
+       Primary address verified
       </label>
-      <textarea class="form-control" cols="65" id="siadcomna" name="siadcomna" rows="2"></textarea>
+      <label class="radio-inline">
+       <input data-fv-notempty-message="Please select a value" id="sipav-y" name="sipav" required="required" type="radio" value="y"/>
+       Yes
+      </label>
+      <label class="radio-inline">
+       <input id="sipav-n" name="sipav" type="radio" value="n"/>
+       No
+      </label>
      </div>
     </div>
     <div class="row">
-     <div class="form-group col-md-12">
-      <label for="siadcom">
-       Notes &amp; Correspondence
+     <div class="col-md-12 form-group">
+      <label>
+       Rural status
       </label>
-      <textarea class="form-control" cols="65" id="siadcom" name="siadcom" readonly="readonly" rows="4" style="font-family: monospace;">                    </textarea>
-      <button class="btn-link" data-target="#correspondenceModal" data-toggle="modal" type="button">
-       Add Correspondence
-      </button>
+      <label class="radio-inline">
+       <input data-fv-notempty-message="Please select a value" id="sipav-u" name="sirs" required="required" type="radio" value="u"/>
+       Urban
+      </label>
+      <label class="radio-inline">
+       <input id="sipav-r" name="sirs" type="radio" value="r"/>
+       Rural
+      </label>
      </div>
     </div>
-    <hr/>
-    <h3>
-     Patient Contact Information
-     <i aria-hidden="true" class="small fa fa-question-circle-o" data-content="Use the Update button when the patient's contact information changes. It will save a
-                                 copy of the information into the Additional Patient Information and clear the
-                                 appropriate fields so that you may enter the new contact information.
-                                 &lt;button class='btn btn-sm btn-default' onclick='updatePatientContactInfo();'&gt;Update&lt;/button&gt;" data-html="true" data-toggle="popover" data-trigger="click" title="Update Patient Contact Information">
-     </i>
-    </h3>
     <div class="row">
      <div class="form-group col-sm-6 ">
       <label for="sipsa">
-       Street Address
+       Preferred Address
       </label>
       <input class="form-control" id="sipsa" name="sipsa" type="text"/>
      </div>
@@ -259,36 +223,96 @@
       <input class="form-control" id="sipcr" name="sipcr" type="text"/>
      </div>
     </div>
-    <div class="row">
-     <div class="form-group col-sm-6 col-md-4 col-lg-3">
-      <label for="sipw">
-       Phone (Work)
-      </label>
-      <input class="form-control" data-fv-phone="true" data-fv-phone-country="US" id="sipw" name="sipw" type="text"/>
-     </div>
-     <div class="form-group col-sm-6 col-md-4 col-lg-3">
-      <label for="siph">
-       Phone (Home)
-      </label>
-      <input class="form-control" data-fv-phone="true" data-fv-phone-country="US" id="siph" name="siph" type="text"/>
-     </div>
-     <div class="form-group col-sm-12 col-md-4 col-lg-6">
-      <label for="sipem">
-       Email Address
-      </label>
-      <input class="form-control" data-fv-emailaddress="true" id="sipem" name="sipem" type="text"/>
-     </div>
-    </div>
     <hr/>
     <h3>
-     Physician Contact Information
-     <i aria-hidden="true" class="small fa fa-question-circle-o" data-content="Use the Update button when the physician's contact
-                                               information changes.  It will save a copy of the information into the
-                                               Additional Patient Information and clear the appropriate fields so that
-                                               you may enter the new contact information.
-                                               &lt;button class='btn btn-sm btn-default' onclick='updatePhysicianContactInfo();'&gt;Update&lt;/button&gt;" data-html="true" data-toggle="popover" data-trigger="click" title="Update Physician Contact Information">
-     </i>
+     Smoking History
     </h3>
+    <div class="row">
+     <div class="col-md-4">
+      <label>
+       Have you ever smoked
+      </label>
+      <input class="form-control" id="sies" name="sies" type="text"/>
+      <div class="checkbox">
+       <label>
+        <input id="siesn" name="siesn" type="checkbox" value="1"/>
+        Never smoked
+       </label>
+      </div>
+      <div class="checkbox">
+       <label>
+        <input id="siesp" name="siesp" type="checkbox" value="1"/>
+        Past
+       </label>
+      </div>
+      <div class="checkbox">
+       <label>
+        <input id="siesc" name="siesc" type="checkbox" value="1"/>
+        Current
+       </label>
+      </div>
+      <div class="checkbox">
+       <label>
+        <input id="siesq" name="siesq" type="checkbox" value="1"/>
+        Willing to quit
+       </label>
+      </div>
+     </div>
+    </div>
+    <div class="row">
+     <div class="col-md-4">
+      <label class="visible-xs visible-sm" for="sicpd">
+       How many cigarettes did you smoke per day?
+      </label>
+      <label class="text-right pull-right hidden-xs hidden-sm" for="sicpd">
+       How many cigarettes did you smoke per day?
+      </label>
+     </div>
+     <div class="col-md-8">
+      <div class="form-group form-inline">
+       <input class="form-control input-sm" id="sicpd" name="sicpd" size="5" type="text"/>
+      </div>
+     </div>
+     <div class="col-md-4">
+      <label class="visible-xs visible-sm" for="sippd">
+       How many packs of cigarettes did you smoke per day (PPD)?
+      </label>
+      <label class="text-right pull-right hidden-xs hidden-sm" for="sippd">
+       How many packs of cigarettes did you smoke per day (PPD)?
+      </label>
+     </div>
+     <div class="col-md-8">
+      <div class="form-group form-inline">
+       <input class="form-control input-sm" id="sippd" name="sippd" size="5" type="text"/>
+      </div>
+     </div>
+     <div class="row">
+      <div class="col-md-4">
+       <label class="visible-xs visible-sm" for="sisny">
+        # of years
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm" for="sisny">
+        # of years
+       </label>
+      </div>
+      <div class="col-md-8 form-group">
+       <input class="form-control" id="sisny" name="sisny" required="required" type="text"/>
+      </div>
+     </div>
+     <div class="row">
+      <div class="col-md-4">
+       <label class="visible-xs visible-sm" for="sippy">
+        Reported pack years
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm" for="sippy">
+        Reported pack years
+       </label>
+      </div>
+      <div class="col-md-8 form-group">
+       <input class="form-control" id="sippy" name="sippy" required="required" type="text"/>
+      </div>
+     </div>
+    </div>
     <div class="row">
      <div class="form-group col-sm-12 col-md-12 col-lg-6">
       <label for="simdn">
@@ -562,57 +586,6 @@
        Specify
       </label>
       <input class="form-control" id="sieso" name="sieso" required="required" type="text"/>
-     </div>
-    </div>
-    <div class="row">
-     <div class="form-group col-md-4">
-      <label for="sixdate">
-       Date of Exit
-      </label>
-      <i aria-hidden="true" class="fa fa-question-circle-o" data-content="The Date of Exit should be recorded for all subjects who are no longer active in
-                       the study.  It signifies the date on which they change to a non-active status." data-toggle="popover">
-      </i>
-      <div class="input-group datepicker">
-       <input aria-describedby="sixdate-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" id="sixdate" name="sixdate"/>
-       <div class="input-group-addon">
-        <div class="input-group-text" id="sixdate-addon">
-         <i aria-hidden="true" class="fa fa-calendar">
-         </i>
-        </div>
-       </div>
-      </div>
-      <small class="form-text text-muted">
-       MM/DD/YYYY
-      </small>
-     </div>
-    </div>
-    <div class="row">
-     <div class="form-group col-sm-3 col-md-3 col-lg-2">
-      <label for="">
-       DOD
-      </label>
-      <i aria-hidden="true" class="fa fa-question-circle-o" data-content="The Date of Death (DOD) should be recorded for all subjects who have expired." data-toggle="popover">
-      </i>
-      <div class="input-group datepicker">
-       <input aria-describedby="sidod-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" data-fv-notempty-message="Date of death is required" id="sidod" name="sidod" required="required"/>
-       <div class="input-group-addon">
-        <div class="input-group-text" id="sidod-addon">
-         <i aria-hidden="true" class="fa fa-calendar">
-         </i>
-        </div>
-       </div>
-      </div>
-      <small class="form-text text-muted">
-       MM/DD/YYYY
-      </small>
-     </div>
-     <div class="form-group col-sm-9 col-md-9 col-lg-10">
-      <label for="sicod">
-       COD
-      </label>
-      <i aria-hidden="true" class="fa fa-question-circle-o" data-content="The Cause of Death (COD) should be recorded for all subjects who have expired." data-toggle="popover">
-      </i>
-      <input class="form-control" id="sicod" name="sicod" required="required" type="text"/>
      </div>
     </div>
     <hr/>

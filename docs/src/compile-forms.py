@@ -23,7 +23,6 @@ forms = {
     "intake": "Intake Form",
     "ctevaluation": "CT Evaluation Form",
     "home": "Home",
-    "home2b": "Home - Patient Lookup TEMP", # DELETE ME after patient lookup is complete on Mumps side.
     "casereview": "Case Review",
     "newform": "New Form",
     "followup": "Followup Form",

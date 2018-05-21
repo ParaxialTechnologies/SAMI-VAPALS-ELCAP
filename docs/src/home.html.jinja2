@@ -5,46 +5,26 @@
 {% block body %}
     <div class="container-fluid" style="max-width:1550px">
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-6 col-sm-offset-3">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Case Review</h3>
+                        <h3 class="panel-title">Patient Lookup</h3>
                     </div>
                     <div class="panel-body">
-                        <form action="casereview.html" method="post">
-                            <div class="form-group">
-                                <label for="field">Locate By</label>
-                                <select name="field" id="field" class="form-control">
-                                    <option value="sid"> Study ID
-                                    <option value="name"> Last Name
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="fvalue">Search Key</label>
-                                <input type="text" name="fvalue" id="fvalue" class="form-control"/>
-                            </div>
-                            <div class="pull-right">
-                                <input type="submit" value="Submit" class="btn btn-primary" id="submit-button">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+                        <form id="pt-lookup-form" method="post" action="/vapals">
+                            <input type="hidden" id="pt-lookup-samiroute" name="samiroute" value="">
+                            <input type="hidden" id="pt-lookup-dfn" name="dfn" value="">
+                            <input type="hidden" id="pt-lookup-name" name="name" value="">
+                            <input type="hidden" id="pt-lookup-studyid" name="studyid" value="">
 
-            <div class="col-sm-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">New Case</h3>
-                    </div>
-                    <div class="panel-body">
-                        <form action="intake.html" method="post">
                             <div class="form-group">
-                                <label for="saminame">Name</label>
-                                <input type="text" class="form-control" id="saminame" name="saminame"
-                                       placeholder="Last, First">
+                                <label for="pt-lookup-input">Patient</label>
+                                <input type="text" class="form-control" id="pt-lookup-input" name="pt-lookup-input"
+                                       placeholder="Name or LAST5">
                             </div>
                             <div class="pull-right">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button id="pt-lookup-btn" type="submit" class="btn btn-primary" disabled>Submit
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -57,13 +37,73 @@
         </h1>
 
         <div id="siteRural" class="col-lg-3 col-sm-6"></div>
+
+        <div id="pt-inclusion" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Caution:</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you certain you want to register this patient for VA-PALS?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                        <button type="button" id="pt-inclusion-btn" class="btn btn-primary">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 
 {% block script %}
     <script language="JavaScript">
         $(function () {
-            $("#fvalue").focus();
+            // Set up the modal confirmation to include a new patient
+            $('#pt-inclusion-btn').on("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                $('#pt-inclusion').modal('hide');
+                $('#pt-lookup-form').submit();
+            });
+
+            // Set up the patient lookup submit button
+            $('#pt-lookup-btn').on("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                let patient = Object.assign({}, $('#pt-lookup-input').data('vista').patient);
+                $('#pt-lookup-dfn').val(patient.dfn);
+                $('#pt-lookup-name').val(patient.name);
+                $('#pt-lookup-studyid').val(patient.studyid);
+
+                if (patient.vapals == 1) {
+                    $('#pt-lookup-samiroute').val('casereview');
+                    $('#pt-lookup-form').submit();
+                }
+                else {
+                    $('#pt-lookup-samiroute').val('newcase');
+                    $('#pt-inclusion').modal('show');
+                }
+            });
+
+            // Initialize the patient lookup input widget
+            var $patientLookupInput = $('#pt-lookup-input');
+            $patientLookupInput.filemanAutocomplete();
+
+            $patientLookupInput.on('filemanautocompleteselect', function (event, ui) {
+                // Enable show buttons
+                $('#pt-lookup-btn').removeAttr('disabled');
+            }).on('filemanautocompletechange', function (event, ui) {
+                if (!$(this).val()) {
+                    // Disable show buttons
+                    $('#pt-lookup-btn').attr('disabled', 'disabled');
+                }
+            }).focus();
         });
 
         // Load google charts

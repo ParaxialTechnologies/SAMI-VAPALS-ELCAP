@@ -81,58 +81,27 @@
   </nav>
   <div class="container-fluid" style="max-width:1550px">
    <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-6 col-sm-offset-3">
      <div class="panel panel-default">
       <div class="panel-heading">
        <h3 class="panel-title">
-        Case Review
+        Patient Lookup
        </h3>
       </div>
       <div class="panel-body">
-       <form action="casereview.html" method="post">
+       <form action="/vapals" id="pt-lookup-form" method="post">
+        <input id="pt-lookup-samiroute" name="samiroute" type="hidden" value=""/>
+        <input id="pt-lookup-dfn" name="dfn" type="hidden" value=""/>
+        <input id="pt-lookup-name" name="name" type="hidden" value=""/>
+        <input id="pt-lookup-studyid" name="studyid" type="hidden" value=""/>
         <div class="form-group">
-         <label for="field">
-          Locate By
+         <label for="pt-lookup-input">
+          Patient
          </label>
-         <select class="form-control" id="field" name="field">
-          <option value="sid">
-           Study ID
-          </option>
-          <option value="name">
-           Last Name
-          </option>
-         </select>
-        </div>
-        <div class="form-group">
-         <label for="fvalue">
-          Search Key
-         </label>
-         <input class="form-control" id="fvalue" name="fvalue" type="text"/>
+         <input class="form-control" id="pt-lookup-input" name="pt-lookup-input" placeholder="Name or LAST5" type="text"/>
         </div>
         <div class="pull-right">
-         <input class="btn btn-primary" id="submit-button" type="submit" value="Submit"/>
-        </div>
-       </form>
-      </div>
-     </div>
-    </div>
-    <div class="col-sm-6">
-     <div class="panel panel-default">
-      <div class="panel-heading">
-       <h3 class="panel-title">
-        New Case
-       </h3>
-      </div>
-      <div class="panel-body">
-       <form action="intake.html" method="post">
-        <div class="form-group">
-         <label for="saminame">
-          Name
-         </label>
-         <input class="form-control" id="saminame" name="saminame" placeholder="Last, First" type="text"/>
-        </div>
-        <div class="pull-right">
-         <button class="btn btn-primary" type="submit">
+         <button class="btn btn-primary" disabled="" id="pt-lookup-btn" type="submit">
           Submit
          </button>
         </div>
@@ -148,6 +117,35 @@
     </small>
    </h1>
    <div class="col-lg-3 col-sm-6" id="siteRural">
+   </div>
+   <div class="modal fade" id="pt-inclusion" role="dialog" tabindex="-1">
+    <div class="modal-dialog" role="document">
+     <div class="modal-content">
+      <div class="modal-header">
+       <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">
+         ×
+        </span>
+       </button>
+       <h4 class="modal-title">
+        Caution:
+       </h4>
+      </div>
+      <div class="modal-body">
+       <p>
+        Are you certain you want to register this patient for VA-PALS?
+       </p>
+      </div>
+      <div class="modal-footer">
+       <button class="btn btn-danger" data-dismiss="modal" type="button">
+        No
+       </button>
+       <button class="btn btn-primary" id="pt-inclusion-btn" type="button">
+        Yes
+       </button>
+      </div>
+     </div>
+    </div>
    </div>
   </div>
   <footer>
@@ -190,7 +188,48 @@
   </script>
   <script language="JavaScript">
    $(function () {
-            $("#fvalue").focus();
+            // Set up the modal confirmation to include a new patient
+            $('#pt-inclusion-btn').on("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                $('#pt-inclusion').modal('hide');
+                $('#pt-lookup-form').submit();
+            });
+
+            // Set up the patient lookup submit button
+            $('#pt-lookup-btn').on("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                let patient = Object.assign({}, $('#pt-lookup-input').data('vista').patient);
+                $('#pt-lookup-dfn').val(patient.dfn);
+                $('#pt-lookup-name').val(patient.name);
+                $('#pt-lookup-studyid').val(patient.studyid);
+
+                if (patient.vapals == 1) {
+                    $('#pt-lookup-samiroute').val('casereview');
+                    $('#pt-lookup-form').submit();
+                }
+                else {
+                    $('#pt-lookup-samiroute').val('newcase');
+                    $('#pt-inclusion').modal('show');
+                }
+            });
+
+            // Initialize the patient lookup input widget
+            var $patientLookupInput = $('#pt-lookup-input');
+            $patientLookupInput.filemanAutocomplete();
+
+            $patientLookupInput.on('filemanautocompleteselect', function (event, ui) {
+                // Enable show buttons
+                $('#pt-lookup-btn').removeAttr('disabled');
+            }).on('filemanautocompletechange', function (event, ui) {
+                if (!$(this).val()) {
+                    // Disable show buttons
+                    $('#pt-lookup-btn').attr('disabled', 'disabled');
+                }
+            }).focus();
         });
 
         // Load google charts

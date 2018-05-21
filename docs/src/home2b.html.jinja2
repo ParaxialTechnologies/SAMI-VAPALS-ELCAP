@@ -61,18 +61,18 @@
     <script language="JavaScript">
         $(function () {
             // Set up the modal confirmation to include a new patient
-            $('#pt-inclusion-btn').click(event, function() {
-                event.preventDefault();
-                event.stopPropagation();
+            $('#pt-inclusion-btn').on("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
                 
                 $('#pt-inclusion').modal('hide');
                 $('#pt-lookup-form').submit();
             });
             
             // Set up the patient lookup submit button
-            $('#pt-lookup-btn').click(event, function() {
-                event.preventDefault();
-                event.stopPropagation();
+            $('#pt-lookup-btn').on("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
                 
                 let patient = Object.assign({}, $('#pt-lookup-input').data('vista').patient);
                 $('#pt-lookup-dfn').val(patient.dfn);

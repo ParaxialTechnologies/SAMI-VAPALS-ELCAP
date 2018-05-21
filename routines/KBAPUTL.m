@@ -1,4 +1,4 @@
-KBAPUTL ;ven/lgc - M2M data from another system ; 5/18/18 11:37am
+KBAPUTL ;ven/lgc - M2M data from another system ; 5/21/18 12:55pm
  ;;1.0;;**LOCAL**; APR 22, 2018
  ;
  ;
@@ -6,9 +6,13 @@ KBAPUTL ;ven/lgc - M2M data from another system ; 5/18/18 11:37am
  ; e.g. M2M to Avicenna using known credentials
  ;  D ALLPTS^KBAPUTL(9430,"35.164.151.93","SEPI9393;Pvul+9339")
  ;  *** ORWPT ID INFO
-ALLPTS(PORT,IP,ACCVER) ;
- K ^KBAP("ALLPTS")
+ALLPTS ;
+ N PORT,IP,ACCVER,FINI
+ S PORT=$$GET^XPAR("SYS","SAMI PORT",,"Q")
+ S IP=$$GET^XPAR("SYS","SAMI IP ADDRESS",,"Q")
+ S:($G(IP)="") IP="127.0.0.1"
  Q:$G(IP)=""  Q:$G(PORT)=""
+ S ACCVER=$$GET^XPAR("SYS","SAMI ACCVER",,"Q")
  Q:$G(ACCVER)=""  Q:'($L($G(ACCVER),";")=2)
  N CONNECT,DIVFLAG,XWBDIVS,DIVISION,CONTEXT,X,I
  S CONNECT=$$CONNECT^XWBM2MC(PORT,IP,ACCVER)
@@ -16,6 +20,7 @@ ALLPTS(PORT,IP,ACCVER) ;
  S DIVFLAG=$$GETDIV^XWBM2MC("DIVISIONS")
  S XWBDIVS=0,DIVISION=$$SETDIV^XWBM2MC(XWBDIVS)
  S CONTEXT=$$SETCONTX^XWBM2MC("HMP UI CONTEXT")
+ K:($G(CONTEXT)) ^KBAP("ALLPTS")
  F I=65:1:90 D
  . S FINI=$C(I)
  . K ^TMP("POO",$J)
@@ -30,7 +35,8 @@ ALLPTS(PORT,IP,ACCVER) ;
  . S NODE=$NA(^KBAP("ALLPTS",FINI))
  . M @NODE=REQ
  S CLOSE=$$CLOSE^XWBM2MC
- W !,$ZUT
+ ;
+ D MKGPH
  Q
  ;
  ;
@@ -66,11 +72,16 @@ MKGPH Q:'$D(^KBAP("ALLPTS"))
  ;
  ; Obtain full SSN on a patient
  ; e.g. M2M to Avicenna using known credentials
- ; D PTSSN^KBAPUTL(.XDATA,812,9430,"35.164.151.93","SEPI9393;Pvul+9339")
-PTSSN(XDATA,DFN,PORT,IP,ACCVER) ;
+ ; D PTSSN^KBAPUTL(.XDATA,812,"SEPI9393;Pvul+9339")
+PTSSN(XDATA,DFN) ;
  K XDATA
  Q:'$G(DFN)
- Q:'$G(PORT)  Q:$G(IP)=""
+ N PORT,IP,ACCVER,POOSSN
+ S PORT=$$GET^XPAR("SYS","SAMI PORT",,"Q")
+ S IP=$$GET^XPAR("SYS","SAMI IP ADDRESS",,"Q")
+ S:($G(IP)="") IP="127.0.0.1"
+ Q:$G(IP)=""  Q:$G(PORT)=""
+ S ACCVER=$$GET^XPAR("SYS","SAMI ACCVER",,"Q")
  Q:$G(ACCVER)=""  Q:'($L($G(ACCVER),";")=2)
  N CONNECT,DIVFLAG,XWBDIVS,DIVISION,CONTEXT,X,I
  S CONNECT=$$CONNECT^XWBM2MC(PORT,IP,ACCVER)
@@ -81,7 +92,6 @@ PTSSN(XDATA,DFN,PORT,IP,ACCVER) ;
  K ^TMP("POO")
  S ^TMP("POO",$J,"TYPE")="STRING"
  S ^TMP("POO",$J,"VALUE")=DFN
- N NODE S NODE=$NA(ALLPTS)
  S X=$$PARAM^XWBM2MC(1,$NA(^TMP("POO",$J)))
  S CALL=$$CALLRPC^XWBM2MC("ORWPT ID INFO","POOSSN",1)
  I $G(POOSSN(1)) S XDATA=POOSSN(1)
@@ -107,9 +117,14 @@ PTSSN1 N root s root=$$setroot^%wd("patient-lookup")
  ; Pull Vitals on a patient
  ; e.g. M2M to Avicenna using known credentials
  ; D VIT^KBAPUTL(.XDATA,812,,,9430,"35.164.151.93","SEPI9393;Pvul+9339")
-VIT(XDATA,DFN,SDATE,EDATE,PORT,IP,ACCVER) ;
+VIT(XDATA,DFN,SDATE,EDATE) ;
  K XDATA
+ N PORT,IP,ACCVER
+ S PORT=$$GET^XPAR("SYS","SAMI PORT",,"Q")
+ S IP=$$GET^XPAR("SYS","SAMI IP ADDRESS",,"Q")
+ S:($G(IP)="") IP="127.0.0.1"
  Q:$G(IP)=""  Q:$G(PORT)=""
+ S ACCVER=$$GET^XPAR("SYS","SAMI ACCVER",,"Q")
  Q:$G(ACCVER)=""  Q:'($L($G(ACCVER),";")=2)
  ; if no start date specified, set to 19010101
  S:+$G(SDATE)=0 SDATE="19000101"
@@ -166,9 +181,14 @@ VIT2 Q:'$G(PTDFN)
  ;
  ;
  ; Get Virtual Patient Record
-VPR(XDATA,DFN,PORT,IP,ACCVER) ;
+VPR(XDATA,DFN) ;
  K XDATA
+ N PORT,IP,ACCVER
+ S PORT=$$GET^XPAR("SYS","SAMI PORT",,"Q")
+ S IP=$$GET^XPAR("SYS","SAMI IP ADDRESS",,"Q")
+ S:($G(IP)="") IP="127.0.0.1"
  Q:$G(IP)=""  Q:$G(PORT)=""
+ S ACCVER=$$GET^XPAR("SYS","ACCVER",,"Q")
  Q:$G(ACCVER)=""  Q:'($L($G(ACCVER),";")=2)
  N CALL,CLOSE,CONNECT,CONTEXT,DIVFLAG,DIVISION,REQ,X
  S CONNECT=$$CONNECT^XWBM2MC(PORT,IP,ACCVER)
@@ -240,14 +260,3 @@ PTLOC(PTLOC,XDATA) ;
  .. S PTLOC=PTLOC_$P($P(STRNG,";",5),"&apos")
  Q
 EOR ;KBAPUTL
- ;
-DTADM ;;"&lt;admitted id=&apos;14&apos; date=&apos;3170901.191814&apos; /&gt;" entry into ^DGPM 
-ATTND ;;"&lt;attending code=&apos;63&apos; name=&apos;ALEXANDER,ROBERT&apos; /&gt;"
-DOB ;;"&lt;bid value=&apos;T6666&apos; /&gt;&lt;dob value=&apos;2320226&apos; /&gt;"
-SRVC ;;"&lt;locSvc code=&apos;S&apos; name=&apos;SURGERY&apos; /&gt;"
-WARD ;;"&lt;location code=&apos;7&apos; name=&apos;TESTWARD1&apos; /&gt;"
-SSN ;;"&lt;ssn value=&apos;888776666&apos; /&gt;&lt;veteran value=&apos;1&apos; /&gt;"
-SPCLTYX ;;"&lt;specialty code=&apos;1&apos; name=&apos;MEDICAL OBSERVATION&apos; /&gt;"
-ICN ;;"&lt;icn value=&apos;50000999&apos; /&gt;&lt;id value=&apos;22&apos; /&gt;"
-INPT ;;"&lt;inpatient value=&apos;false&apos; /&gt;&lt;lrdfn value=&apos;2&apos; /"
- ;;

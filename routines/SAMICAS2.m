@@ -130,6 +130,7 @@ wsCASE(rtn,filter) ; generate case review page
  quit:'$data(temp)
  ;
  new sid set sid=$get(filter("studyid"))
+ if sid="" set sid=$get(filter("studyId"))
  if sid="" set sid=$get(filter("fvalue"))
  quit:sid=""
  ;

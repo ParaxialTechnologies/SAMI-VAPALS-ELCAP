@@ -333,9 +333,9 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  set line=line_$char(13,10) ; insert CRLF at end of every line
  ; for readability in browser
  ;
- if line["home.html" do  ;
- . do findReplace^%ts(.line,"home.html","/vapals")
- . set touched=1
+ ;if line["home.html" do  ;
+ ;. do findReplace^%ts(.line,"home.html","/vapals")
+ ;. set touched=1
  ;
  ;if line["casereview.html" do  ;
  ;. n repl
@@ -351,36 +351,36 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  ;. s zhtml(%j+2)="<? -- Redacted" ; get rid of extra 'Case Review" label and the unneeded </a>
  ;. set touched=1
  ;
- if line["studyIdMenu" do  ;
- . i line["#" q  ; in the javascript
- . s zhtml(%j)="<li>"
- . s %j=%j+1
- . s line=zhtml(%j)
- . n repl
- . set repl="<form method=""post"" action=""/vapals"">"
- . set repl=repl_"<input name=""samiroute"" value=""casereview"" type=""hidden"">"
- . set repl=repl_" <input name=""studyid"" value="""_sid_""" type=""hidden"">"
- . n zname s zname="Case Review"
- . set repl=repl_" <input value="""_zname_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"_$char(13)
- . ;set repl=repl_" <input value="""_zname_""" class=""nav navbar-nav"" role=""link"" type=""submit""></form>"_$char(13)
- . ;do findReplace^%ts(.line,"casereview.html","/vapals?samiroute=casereview&studyid="_sid)
- . s line=repl
- . s zhtml(%j+1)=""
- . s zhtml(%j+2)=""
- . do  ;
- . . if form["siform" q  ;
- . . if form["sbform" q  ;
- . . s ^gpl("incomplete")=sid_"^"_form_"^"_$$getSamiStatus^SAMICAS2(sid,form)
- . . if $$getSamiStatus^SAMICAS2(sid,form)["incomplete" d  ;
- . . . s zhtml(%j+1)="</li><li class=""dropdown"">"
- . . . set repl="<form method=""post"" action=""/vapals"">"
- . . . set repl=repl_"<input name=""samiroute"" value=""deleteform"" type=""hidden"">"
- . . . set repl=repl_" <input name=""studyid"" value="""_sid_""" type=""hidden"">"
- . . . set repl=repl_" <input name=""form"" value="""_form_""" type=""hidden"">"
- . . . n zname s zname="Delete Form"
- . . . set repl=repl_" <input value="""_zname_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"_$char(13)
- . . . s zhtml(%j+2)=repl ; 
- . . . set touched=1
+ ;if line["studyIdMenu" do  ;
+ ;. i line["#" q  ; in the javascript
+ ;. s zhtml(%j)="<li>"
+ ;. s %j=%j+1
+ ;. s line=zhtml(%j)
+ ;. n repl
+ ;. set repl="<form method=""post"" action=""/vapals"">"
+ ;. set repl=repl_"<input name=""samiroute"" value=""casereview"" type=""hidden"">"
+ ;. set repl=repl_" <input name=""studyid"" value="""_sid_""" type=""hidden"">"
+ ;. n zname s zname="Case Review"
+ ;. set repl=repl_" <input value="""_zname_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"_$char(13)
+ ;. ;set repl=repl_" <input value="""_zname_""" class=""nav navbar-nav"" role=""link"" type=""submit""></form>"_$char(13)
+ ;. ;do findReplace^%ts(.line,"casereview.html","/vapals?samiroute=casereview&studyid="_sid)
+ ;. s line=repl
+ ;. s zhtml(%j+1)=""
+ ;. s zhtml(%j+2)=""
+ ;. do  ;
+ ;. . if form["siform" q  ;
+ ;. . if form["sbform" q  ;
+ ;. . s ^gpl("incomplete")=sid_"^"_form_"^"_$$getSamiStatus^SAMICAS2(sid,form)
+ ;. . if $$getSamiStatus^SAMICAS2(sid,form)["incomplete" d  ;
+ ;. . . s zhtml(%j+1)="</li><li class=""dropdown"">"
+ ;. . . set repl="<form method=""post"" action=""/vapals"">"
+ ;. . . set repl=repl_"<input name=""samiroute"" value=""deleteform"" type=""hidden"">"
+ ;. . . set repl=repl_" <input name=""studyid"" value="""_sid_""" type=""hidden"">"
+ ;. . . set repl=repl_" <input name=""form"" value="""_form_""" type=""hidden"">"
+ ;. . . n zname s zname="Delete Form"
+ ;. . . set repl=repl_" <input value="""_zname_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"_$char(13)
+ ;. . . s zhtml(%j+2)=repl ; 
+ ;. . . set touched=1
  ;
  n last5 s last5=$$GETLAST5^SAMIFRM2(sid)
  ;
@@ -401,23 +401,23 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  if line["1234567890" do  ;
  . do findReplace^%ts(.line,"1234567890","")
  ;
- if line["intake.html" do  ;
- . do findReplace^%ts(.line,"intake.html","/form?form="_key_"&studyId="_sid)
+ ;if line["intake.html" do  ;
+ ;. do findReplace^%ts(.line,"intake.html","/form?form="_key_"&studyId="_sid)
  ;
- if line["background.html" do  ;
- . do findReplace^%ts(.line,"background.html","/form?form="_key_"&studyId="_sid)
+ ;if line["background.html" do  ;
+ ;. do findReplace^%ts(.line,"background.html","/form?form="_key_"&studyId="_sid)
  ;
- if line["ctevaluation.html" do  ;
- . do findReplace^%ts(.line,"ctevaluation.html","/form?form="_key_"&studyId="_sid)
+ ;if line["ctevaluation.html" do  ;
+ ;. do findReplace^%ts(.line,"ctevaluation.html","/form?form="_key_"&studyId="_sid)
  ;
- if line["followup.html" do  ;
- . do findReplace^%ts(.line,"followup.html","/form?form="_key_"&studyId="_sid)
+ ;if line["followup.html" do  ;
+ ;. do findReplace^%ts(.line,"followup.html","/form?form="_key_"&studyId="_sid)
  ;
- if line["pet.html" do  ;
- . do findReplace^%ts(.line,"pet.html","/form?form="_key_"&studyId="_sid)
+ ;if line["pet.html" do  ;
+ ;. do findReplace^%ts(.line,"pet.html","/form?form="_key_"&studyId="_sid)
  ;
- if line["biopsy.html" do  ;
- . do findReplace^%ts(.line,"biopsy.html","/form?form="_key_"&studyId="_sid)
+ ;if line["biopsy.html" do  ;
+ ;. do findReplace^%ts(.line,"biopsy.html","/form?form="_key_"&studyId="_sid)
  ;
  if line["XX0002" do  ;
  . i line["XXX" quit  ; 
@@ -426,10 +426,10 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  if line["VEP0001" do  ;
  . do findReplace^%ts(.line,"VEP0001",sid,"a")
  ;
- if line["01/Mar/2018" do  ;
- . n ztoday s ztoday=$$FMTE^XLFDT($$NOW^XLFDT,"9D")
- . s ztoday=$tr(ztoday," ","/")
- . d findReplace^%ts(.line,"01/Mar/2018",ztoday)
+ ;if line["01/Mar/2018" do  ;
+ ;. n ztoday s ztoday=$$FMTE^XLFDT($$NOW^XLFDT,"9D")
+ ;. s ztoday=$tr(ztoday," ","/")
+ ;. d findReplace^%ts(.line,"01/Mar/2018",ztoday)
  ;
  quit  ; end of SAMISUB2
  ;
@@ -514,6 +514,7 @@ fixHref(line) ; fix html href lines to use resources in see/
  . quit:line["href=""#"
  . quit:line["href='#"
  . quit:line["href=""http"
+ . quit:line["/vapals"
  . if line["href=""/" do  quit
  . . do findReplaceAll^%ts(.line,"href=""/","href=""/","href=""/see/sami/")
  . . quit

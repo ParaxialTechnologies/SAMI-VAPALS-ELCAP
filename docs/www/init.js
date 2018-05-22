@@ -157,19 +157,28 @@ $(function () {
         $("input[name=samistatus]").val("complete");
     });
 
+    /**
+     * Attach an onclick handler to "a.navigation" elements such that when clicked, submits a form POST or GET using
+     * parameters in the elements <code>data-*</code> attributes.
+     *
+     * Note that the <code>studyid</code> parameter is always injected based on the global <code>studyId</code>
+     * variable.
+     */
     $("a.navigation").on("click", function () {
-        var data = $(this).data();
-        var method = data.method === undefined ? "GET" : data.method
+        const data = $(this).data();
+        const method = data.method === undefined ? "GET" : data.method;
         delete data.method;
+
+        //field names are case-sensitive when POSTing to the backend. Generally lowercase is preferred.
         data.studyid = studyId;
 
-        var form = document.createElement('form');
+        const form = document.createElement('form');
         form.style.visibility = 'hidden'; // no user interaction is necessary
         form.method = method; //'POST'; // forms by default use GET query strings
         form.action = method.toLowerCase() === "get" ? $(this).attr("href") : "/vapals";
 
         for (key in data) {
-            var input = document.createElement('input');
+            const input = document.createElement('input');
             input.name = key;
             input.value = data[key];
             form.appendChild(input); // add key/value pair to form

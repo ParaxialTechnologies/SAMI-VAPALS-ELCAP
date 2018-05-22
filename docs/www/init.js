@@ -161,7 +161,7 @@ $(function () {
         var data = $(this).data();
         var method = data.method === undefined ? "GET" : data.method
         delete data.method;
-        data.studyId = studyId;
+        data.studyid = studyId;
 
         var form = document.createElement('form');
         form.style.visibility = 'hidden'; // no user interaction is necessary

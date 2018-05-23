@@ -1,3 +1,0 @@
-copy_binaries(
-  *.png
-  )

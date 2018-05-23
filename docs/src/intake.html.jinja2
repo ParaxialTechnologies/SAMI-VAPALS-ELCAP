@@ -25,9 +25,8 @@
                     <label for="sidc">Date of Contact</label>
                     {{ f.datepicker("sidc", true, "Date of contact is required") }}
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 form-group">
+
+                <div class="col-sm-8 col-md-9 form-group">
                     <label>How did you learn about LSS?</label>
                     {{ f.checkbox("silnph", "1", "Phone") }}
                     {{ f.checkbox("silnls", "1", "Letter sent") }}
@@ -92,8 +91,8 @@
             <h3>Smoking History</h3>
 
             <div class="row">
-                <div class="col-md-4">
-                    <label>Have you ever smoked</label>
+                <div class="col-md-12 form-group">
+                    <label for="sies">Have you ever smoked</label>
                     <input type="text" name="sies" id="sies" class="form-control"/>
                     {{ f.checkbox("siesn","1", "Never smoked") }}
                     {{ f.checkbox("siesp","1", "Past") }}
@@ -101,210 +100,119 @@
                     {{ f.checkbox("siesq","1", "Willing to quit") }}
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-md-4">
                     {{ f.floatingLabel('sicpd', 'How many cigarettes did you smoke per day?') }}
                 </div>
-                <div class="col-md-8">
-                    <div class="form-group form-inline">
-                        <input class="form-control input-sm" type="text" name="sicpd" id="sicpd" size="5">
-                    </div>
+                <div class="col-sm-2 form-group">
+                    <input class="form-control numeric" type="text" name="sicpd" id="sicpd" maxlength="4">
                 </div>
+            </div>
 
+            <div class="row">
                 <div class="col-md-4">
                     {{ f.floatingLabel('sippd', 'How many packs of cigarettes did you smoke per day (PPD)?') }}
                 </div>
-                <div class="col-md-8">
-                    <div class="form-group form-inline">
-                        <input class="form-control input-sm" type="text" name="sippd" id="sippd" size="5">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4">
-                        {{ f.floatingLabel('sisny', '# of years') }}
-                    </div>
-                    <div class="col-md-8 form-group">
-                        <input class="form-control" type="text" name="sisny" id="sisny" required="required">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4">
-                        {{ f.floatingLabel('sippy', 'Reported pack years') }}
-                    </div>
-                    <div class="col-md-8 form-group">
-                        <input class="form-control" type="text" name="sippy" id="sippy" required="required">
-                    </div>
+                <div class="col-sm-2 form-group">
+                    <input class="form-control numeric" type="text" name="sippd" id="sippd" maxlength="4">
                 </div>
             </div>
-
-
             <div class="row">
-                <div class="form-group col-sm-12 col-md-12 col-lg-6">
-                    <label for="simdn">Physician's Name</label>
-                    <input type="text" name="simdn" id="simdn" class="form-control">
+                <div class="col-md-4">
+                    {{ f.floatingLabel('sisny', '# of years') }}
                 </div>
-
-                <div class="form-group col-sm-6 col-md-6 col-lg-3">
-                    <label for="simdp">Physician's Phone</label>
-                    <input type="text" name="simdp" id="simdp" class="form-control"
-                           data-fv-phone="true" data-fv-phone-country="US">
-                </div>
-                <div class="form-group col-sm-6 col-md-6 col-lg-3">
-                    <label for="simdf">Physician's Fax</label>
-                    <input type="text" name="simdf" id="simdf" class="form-control"
-                           data-fv-phone="true" data-fv-phone-country="US">
-                </div>
-            </div>
-
-            <h4>Address
-                <small>only required for non-VA physicians</small>
-            </h4>
-
-            <div class="row">
-                <div class="form-group col-md-8">
-                    <label for="simdsa">Street Address</label>
-                    <input type="text" name="simdsa" id="simdsa" class="form-control">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="simdcn">County </label>
-                    <input type="text" name="simdcn" id="simdcn" class="form-control">
+                <div class="col-sm-2 form-group">
+                    <input class="form-control numeric" type="text" name="sisny" id="sisny" required="required"
+                           maxlength="3">
                 </div>
             </div>
 
             <div class="row">
-                <div class="form-group col-md-6">
-                    <label for="simdc">City </label>
-                    <input type="text" name="simdc" id="simdc" class="form-control">
+                <div class="col-md-4">
+                    {{ f.floatingLabel('sippy', 'Reported pack years') }}
                 </div>
-                <div class="form-group col-md-1">
-                    <label for="simds">State </label>
-                    <input type="text" name="simds" id="simds" class="form-control">
+                <div class="col-sm-2 form-group">
+                    <input class="form-control numeric" type="text" name="sippy" id="sippy"
+                           required="required" maxlength="4">
                 </div>
-                <div class="form-group col-md-2">
-                    <label for="simdz">Zip </label>
-                    <input type="text" name="simdz" id="simdz" class="form-control">
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    {{ f.floatingLabel('siq', 'Quit') }}
                 </div>
-                <div class="form-group col-md-3">
-                    <label for="simdcr">Country </label>
-                    <input type="text" name="simdcr" id="simdcr" class="form-control">
+                <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                    {{ f.datepicker ("siq", true) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    {{ f.floatingLabel('sicep', 'Smoking cessation education provided') }}
+                </div>
+                <div class="col-md-8 form-group">
+                    <textarea class="form-control" type="text" name="sicep" id="sicep"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    {{ f.floatingLabel('sicadx', 'Lung CA Dx (if applicable)') }}
+                </div>
+                <div class="col-md-4 form-group">
+                    {{ f.datepicker ("sicadx", true) }}
+                </div>
+                <div class="col-md-4 form-group">
+                    <input class="form-control" type="text" name="sicadxl" id="sicadxl"/>
+                    <span class="help-block">Location if not in VA</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    {{ f.floatingLabel('sipldct', 'Prior LDCT') }}
+                </div>
+                <div class="col-md-4 form-group">
+                    {{ f.datepicker ("sipldct", true) }}
+                </div>
+                <div class="col-md-4 form-group">
+                    <input class="form-control" type="text" name="sipldctl" id="sipldctl"/>
+                    <span class="help-block">Location if not in VA</span>
                 </div>
             </div>
 
             <hr/>
-
+            <p class="alert alert-warning">
+                Veteran of age and exposure to cigarette smoke as described above, and without a current
+                diagnosis or obvious symptoms suggestive of lung cancer, has been educated today about the
+                estimated risk for lung cancer, the possibility of a cure or live prolonging if an early lung
+                cancer were to be found during screening, the possibility of imaging abnormalities not being
+                lung cancer, the possibility of complications from additional diagnostic procedures, and the
+                approximate amount of radiation exposure associated with each screening procedure. In addition,
+                the Veteran has been educated today about the importance of avoiding exposure to cigarette
+                smoke, available tobacco cessation programs and available lung screening services at this VA
+                facility. Education material was provided to the veteran. <br/>
+                <br/>
+                Based on this information, the Veteran has opted for:
+            </p>
             <div class="row">
-                <div class="form-group col-sm-6 col-md-6 col-lg-3">
-                    <label for="sidob">Date of Birth</label>
-                    {{ f.datepicker("sidob", true, "Date of birth is required") }}
-                </div>
+                <div class="col-md-12 form-group">
+                    <label>LDCT ordered</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="sildct" id="sildct-n" value="n" required="required">
+                            No
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="sildct" id="sildct-l" value="l">
+                            Not at this time, okay to contact in the future
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="sildct" id="sildct-y" value="y">
+                            Yes
+                        </label>
+                    </div>
 
-                <div class="form-group col-sm-6 col-md-6 col-lg-3">
-                    <label for="sissn">SSN</label>
-                    <i class="small fa fa-question-circle-o" aria-hidden="true"
-                       data-toggle="popover"
-                       data-content="Please enter the social security number of the subject."></i>
-                    <input type="text" name="sissn" id="sissn" class="form-control"
-                           pattern="^(?!000|666)(?:[0-6][0-9]{2}|7(?:[0-6][0-9]|7[0-2]))-(?!00)[0-9]{2}-(?!0000)[0-9]{4}$"
-                           data-fv-regexp-message="SSN should be in XXX-XX-XXXX format">
-                </div>
-            </div>
-
-            <div class="alert alert-warning">
-                It is important to identify two contacts.
-                At least one needs to be at another address.
-            </div>
-
-            <div class="row">
-                <div class="form-group col-md-3">
-                    <label for="sikn">Emergency Contact (1)</label>
-                    <label for="sikn">Name</label>
-                    <input type="text" name="sikn" id="sikn" class="form-control">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="sikr">Relation</label>
-                    <input type="text" name="sikr" id="sikr" class="form-control">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="sika">Address</label>
-                    <input type="text" name="sika" id="sika" class="form-control">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="sikp">Phone</label>
-                    <input type="text" name="sikp" id="sikp" class="form-control"
-                           data-fv-phone="true" data-fv-phone-country="US">
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-3">
-                    <label for="siknb">Emergency Contact (2)</label>
-                    <label for="siknb">Name</label>
-                    <input type="text" name="siknb" id="siknb" class="form-control">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="sikrb">Relation</label>
-                    <input type="text" name="sikrb" id="sikrb" class="form-control">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="sikab">Address</label>
-                    <input type="text" name="sikab" id="sikab" class="form-control">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="sikpb">Phone</label>
-                    <input type="text" name="sikpb" id="sikpb" class="form-control"
-                           data-fv-phone="true" data-fv-phone-country="US">
-                </div>
-            </div>
-            <hr/>
-            <div class="row">
-                <div class="form-group col-md-12">
-                    <label for="sicnc-0">Phone Calls</label>
-                    {{ f.inlineRadio("sicnc","sicnc-0","0","0",false,"insertPatientCorrespondence('sicnc')") }}
-                    {{ f.inlineRadio("sicnc","sicnc-1","1","1",false,"insertPatientCorrespondence('sicnc')") }}
-                    {{ f.inlineRadio("sicnc","sicnc-2","2","2",false,"insertPatientCorrespondence('sicnc')") }}
-                    {{ f.inlineRadio("sicnc","sicnc-3","3","3",false,"insertPatientCorrespondence('sicnc')") }}
-                    {{ f.inlineRadio("sicnc","sicnc-x","x","X",false,"insertPatientCorrespondence('sicnc')") }}
-                </div>
-                <div class="form-group col-md-12">
-                    <label for="sicnc-0">Letters</label>
-                    {{ f.inlineRadio("sicnl","sicnl-0","0","0",false,"insertPatientCorrespondence('sicnl')") }}
-                    {{ f.inlineRadio("sicnl","sicnl-1","1","1",false,"insertPatientCorrespondence('sicnl')") }}
-                    {{ f.inlineRadio("sicnl","sicnl-2","2","2",false,"insertPatientCorrespondence('sicnl')") }}
-                    {{ f.inlineRadio("sicnl","sicnl-3","3","3",false,"insertPatientCorrespondence('sicnl')") }}
-                    {{ f.inlineRadio("sicnl","sicnl-x","x","X",false,"insertPatientCorrespondence('sicnl')") }}
-                </div>
-
-            </div>
-
-            <div class="row">
-                <div class="form-group col-md-4">
-                    <label for="sies">Patient Status</label>
-
-                    <select name="sies" id="sies" class="form-control">
-                        <option value="ac"> active
-                        <option value="tr"> transferred to another institution (specify)
-                        <option value="mr"> unable due to medical reason (specify)
-                        <option value="pr"> unwilling due to personal reason (specify)
-                        <option value="rf"> refused to continue
-                        <option value="pa"> physician advised against
-                        <option value="ra"> concern about radiation
-                        <option value="mv"> moved and unable to return
-                        <option value="in"> no insurance, can't have Dx CT
-                        <option value="bc"> burden of cost
-                        <option value="os"> other (specify)
-                        <option value="es"> excluded (specify)
-                        <option value="sc"> study complete
-                        <option value="nr"> no response to 3 calls + 3 letters
-                        <option value="nc"> unable to contact
-                        <option value="fe"> being followed elsewhere (get results)
-                        <option value="ex"> expired (record date / cause)
-                    </select>
-                </div>
-                <div class="form-group col-md-8">
-                    <label for="sieso">Specify</label>
-                    <input type="text" name="sieso" id="sieso" class="form-control" required="required">
                 </div>
             </div>
 
@@ -316,295 +224,13 @@
                     <span class="glyphicon glyphicon-trash"></span>Delete</a>
             </div>
             <div class="pull-right">
-                <input type="submit" value="Submit" class="btn btn-primary" id="submit-button">
+{#                <input type="submit" value="Submit" class="btn btn-primary">#}
+                <button class="btn btn-primary" id="submit-button" type="submit">
+                    Submit
+                </button>
             </div>
+<!--
+            -->
         </form>
     </div>
-
-    <div class="modal fade validated" id="correspondenceModal" tabindex="-1" role="dialog"
-         data-fv-icon-valid="glyphicon glyphicon-ok"
-         data-fv-icon-invalid="glyphicon glyphicon-remove"
-         data-fv-icon-validating="glyphicon glyphicon-refresh"
-         data-fv-button-selector="#add-correspondence-btn">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Record Correspondence
-                        <i class="small fa fa-question-circle-o" aria-hidden="true" data-toggle="popover"
-                           data-content="This section should be used to record correspondence or communication
-                                   with the patient or physician.  This includes the date, recipient and nature of the
-                                   communication, the date of the relevant CT exam, and the identity of the
-                                   coordinator."></i>
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="form-group col-sm-6">
-                            <label for="sircd">Correspondence Date</label>
-                            {{ f.datepicker("sircd", true, "Correspondence date is required") }}
-                        </div>
-                        <div class="form-group col-sm-6">
-                            <label for="sired">Date of Exam</label>
-                            {{ f.datepicker("sired", true) }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-sm-6">
-                            <label for="sirr">Recipient</label><br/>
-                            {{ f.inlineRadio("sirr", "sirr-s", "s", "patient", true) }}
-                            {{ f.inlineRadio("sirr", "sirr-m", "m", "physican", true) }}
-                        </div>
-
-                        <div class="form-group col-sm-6">
-                            <label for="sirmd">VA Providers co-signed</label>
-                            <input type="text" name="sirmd" id="sirmd" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-sm-4">
-                            <label for="sirn">Nature</label>
-                            <select name="sirn" id="sirn" class="form-control">
-                                <option value="" SELECTED> -
-                                <option value="faxed report"> faxed report
-                                <option value="mailed report"> mailed report
-                                <option value="called to give results"> called to give results
-                                <option value="Abx discussed with physician"> Abx discussed with physician
-                                <option value="Bx discussed with physician"> Bx discussed with physician
-                                <option value="other"> other (specify)
-                            </select>
-                        </div>
-                        <div class="form-group col-sm-4">
-                            <label for="sirns">Specify</label>
-                            <input type="text" name="sirns" id="sirns" class="form-control">
-                        </div>
-                        <div class="form-group col-sm-4">
-                            <label for="sirc">Coordinator</label>
-                            <input type="text" name="sirc" id="sirc" class="form-control">
-                        </div>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="add-correspondence-btn">Add</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-{% endblock %}
-
-{% block script %}
-    <script language="JavaScript">
-
-        //TODO: rename this function
-        function genD() {
-            return moment().format(VAPALS.DATE_TIME_FORMAT);
-        }
-
-        //TODO: updated from ELCAP uptCI() but could use some refining
-        function updatePatientContactInfo() {
-            var ts = genD();
-            var ovn = "siadcom";
-            var oval = $("#siadcom").val();
-            var tval = "Patient Contact Info (prior to update):\n";
-
-            var confMsg = (
-                "This will copy the patient contact information into the additional\n"
-                + "patient information log and clear the section so that you may record\n"
-                + "a new set (e.g. after a change of address or phone).  Click OK to\n"
-                + "proceed or Cancel to do nothing.");
-
-            var confval = confirm(confMsg);
-
-            if (confval == false)
-                return;
-
-            if ($("#sipsa").val())
-                tval += ($("#sipsa").val());
-
-            if ($("#sipan").val())
-                tval += (", Apt. " + $("#sipan").val());
-
-            tval += "\n";
-
-            if ($("#sipc").val())
-                tval += ($("#sipc").val() + ", ");
-            if ($("#sips").val())
-                tval += ($("#sips").val() + " ");
-            if ($("#sipz").val())
-                tval += ($("#sipz").val() + " ");
-
-            if ($("#sipcr").val())
-                tval += ($("#sipcr").val());
-            if ($("#sipcn").val()) {
-                tval += (" (" + $("#sipcn").val() + " county)");
-            }
-
-            tval += "\n";
-
-            if ($("#sipw").val()) {
-                tval += ("Work: " + $("#sipw").val() + "\n");
-            }
-            if ($("#siph").val()) {
-                tval += ("Home: " + $("#siph").val() + "\n");
-            }
-            if ($("#sipem").val()) {
-                tval += ("Email: " + $("#sipem").val() + "\n");
-            }
-            $("#siadcom").val(ts + tval + oval);
-
-            $("[name^=sip]").clear();
-        }
-
-        //TODO cleanup; was ELCAP tsCA()
-        function insertPatientCorrespondence(arg) {
-            var ts = genD();
-            var $textarea = $("#siadcom");
-            var currentValue = $textarea.val();
-            var text;
-
-            var selectedValue = $("[name=" + arg + "]:checked").val();
-
-            if (arg == "sicnc") {
-                if (selectedValue == "0")
-                    text = "contact made\n";
-                else if (selectedValue == "x")
-                    text = "phone call 4 made\n";
-                else
-                    text = "phone call " + selectedValue + " made\n";
-            }
-            else if (arg == "sicnl") {
-                if (selectedValue == "0")
-                    text = "contact made\n";
-                else if (selectedValue == "x")
-                    text = "certified letter mailed\n";
-                else
-                    text = "letter " + selectedValue + " sent\n";
-            }
-
-            $textarea.val(ts + " " + text + currentValue);
-        }
-
-        //TODO: updated from ELCAP umdCI() but could use some refining
-        function updatePhysicianContactInfo() {
-            var ts = genD();
-            var ovn = "siadcom";
-            var oval = $("#siadcom").val()
-            var tval = "Physician Contact Info (prior to update):\n";
-
-            var confMsg = (
-                "This will copy the physician contact information into the additional\n"
-                + "patient information log and clear the section so that you may record\n"
-                + "a new set (e.g. after a change of address or phone).  Click OK to\n"
-                + "proceed or Cancel to do nothing.");
-
-            var confval = confirm(confMsg);
-
-            if (confval == false)
-                return;
-
-            if ($("#simdn").val())
-                tval += ($("#simdn").val() + "\n");
-
-            if ($("#simdsa").val())
-                tval += ($("#simdsa").val());
-
-            tval += "\n";
-
-            if ($("#simdc").val())
-                tval += ($("#simdc").val() + ", ");
-            if ($("#simds").val())
-                tval += ($("#simds").val() + " ");
-            if ($("#simdz").val())
-                tval += ($("#simdz").val() + " ");
-
-            if ($("#simdcr").val())
-                tval += ($("#simdcr").val());
-
-            if ($("#simdcn").val()) {
-                tval += (" (" + $("#simdcn").val()
-                    + " county)");
-            }
-
-            tval += "\n";
-
-            if ($("#simdp").val()) {
-                tval += ("Phone: " + $("#simdp").val() + "\n");
-            }
-            if ($("#simdf").val()) {
-                tval += ("Fax: " + $("#simdf").val() + "\n");
-            }
-
-            $("#siadcom").val(ts + tval + oval);
-            $("[name^=simd]").clear();
-        }
-
-        $(function () {
-
-            //Correspondence modal
-            $("#add-correspondence-btn").on("click", function (e) {
-                var fv = $("#correspondenceModal").data("formValidation");
-                fv.validate();
-                if (fv.isValid()) {
-                    var $textarea = $("#siadcom");
-                    var originalValue = $textarea.val();
-                    var correspondenceDate = $("#sircd").val(),
-                        examDate = $("#sired").val(),
-                        recipient = $("[name=sirr]:checked").val() === "s" ? "patient" : "physician", //TODO: just use words instead of codes?
-                        physicianCoSigned = $("#sirmd").val(),
-                        nature = $("#sirn").val(),
-                        specify = $("#sirns").val(),
-                        coordinator = $("#sirc").val();
-
-                    var text = correspondenceDate + ": " + nature + ": " + specify + ": " + recipient;
-
-                    if (recipient === "physician") {
-                        text += " (" + physicianCoSigned + ")";
-                    }
-                    text += ": " + examDate + " exam: " + coordinator;
-                    $textarea.val(genD() + ": " + text + "\n" + originalValue);
-
-                    $("#correspondenceModal").modal('hide');
-                    $("#correspondenceModal").data("formValidation").resetForm(true);
-                }
-            });
-
-            $("#sirn").conditionallyEnable({sourceValues: "other", enable: "#sirns"});
-            $("[name=sirr]").conditionallyEnable({sourceValues: "m", enable: "#sirmd"});
-
-            //Conditional fields on main form
-            var requiresSpecificity = function (actualValue) {
-                return $.inArray(actualValue, ["tr", "mr", "pr", "os", "es"]) > -1
-            };
-
-            $("#sies").conditionallyEnable({
-                    sourceValues: function () {
-                        return true
-                    }, //match on all values
-                    enable: function (actualValue) {
-                        if (actualValue === "ex") {
-                            return $("#sidod, #sicod"); //enable date of death and cause of death
-                        }
-                        else if (requiresSpecificity(actualValue)) {
-                            return $("#sieso, #sixdate"); //enable specify field
-                        }
-                        return null; // don't do anything
-                    },
-                    disable: function (actualValue) { //return fields to disable when value does not match one of the above.
-                        if (actualValue === "ex") {
-                            return $("#sieso, #sixdate"); //disable the specify field
-                        }
-                        else if (requiresSpecificity(actualValue)) {
-                            return $("#sidod, #sicod"); //disable date of death/cause of death
-                        }
-                        return $("#sieso, #sidod, #sicod, #sixdate"); //disable all three fields
-                    }
-                }
-            );
-        });
-
-    </script>
-
 {% endblock %}

@@ -155,7 +155,7 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.05.23
+     SNAPSHOT 2018.05.24
     </span>
    </div>
   </footer>
@@ -220,13 +220,8 @@
             // Initialize the patient lookup input widget
             var $patientLookupInput = $('#pt-lookup-input');
             $patientLookupInput.filemanAutocomplete();
-            
-            $patientLookupInput.on('keydown', function(e){
-                // Set up Return key
-                if (e.keyCode === 13 && ($('#pt-lookup-btn').attr('disabled') == 'disabled')) {
-                    e.preventDefault();
-                }
-            }).on('filemanautocompleteselect', function (event, ui) {
+
+            $patientLookupInput.on('filemanautocompleteselect', function (event, ui) {
                 // Enable show buttons
                 $('#pt-lookup-btn').removeAttr('disabled');
             }).on('filemanautocompletechange', function (event, ui) {

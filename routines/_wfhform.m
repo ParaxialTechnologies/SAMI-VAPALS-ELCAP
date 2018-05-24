@@ -1202,6 +1202,10 @@ wsPostForm ; code for ws wsPostForm^%wf, submit HTML form
  new gr set gr=$$setroot^%wd("vapals-patients")
  merge @gr@("graph")=%json
  ;
+ if $get(ARGS("debug"))="" do  quit  ;
+ . do wsCASE^SAMICAS2(.RESULT,.ARGS)
+ . quit
+ ;
  ; validation process
  ;
  new errflag set errflag=0

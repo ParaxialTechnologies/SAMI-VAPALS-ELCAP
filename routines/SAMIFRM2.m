@@ -430,11 +430,6 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  if line["VEP0001" do  ;
  . do findReplace^%ts(.line,"VEP0001",sid,"a")
  ;
- ;if line["01/Mar/2018" do  ;
- ;. n ztoday s ztoday=$$FMTE^XLFDT($$NOW^XLFDT,"9D")
- ;. s ztoday=$tr(ztoday," ","/")
- ;. d findReplace^%ts(.line,"01/Mar/2018",ztoday)
- ;
  quit  ; end of SAMISUB2
  ;
 wsSbform(rtn,filter) ; background form access

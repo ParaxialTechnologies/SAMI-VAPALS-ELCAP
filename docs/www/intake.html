@@ -94,6 +94,9 @@
    </h2>
    <hr/>
    <form action="/vapals" class="validated" data-fv-button-selector="#submit-button" data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-validating="glyphicon glyphicon-refresh" method="post">
+    <input name="samiroute" type="hidden" value="postform"/>
+    <input name="studyid" type="hidden" value=""/>
+    <input name="form" type="hidden" value="FORMKEY"/>
     <h3>
      Contact Information
     </h3>
@@ -115,9 +118,7 @@
        MM/DD/YYYY
       </small>
      </div>
-    </div>
-    <div class="row">
-     <div class="col-md-12 form-group">
+     <div class="col-sm-8 col-md-9 form-group">
       <label>
        How did you learn about LSS?
       </label>
@@ -228,8 +229,8 @@
      Smoking History
     </h3>
     <div class="row">
-     <div class="col-md-4">
-      <label>
+     <div class="col-md-12 form-group">
+      <label for="sies">
        Have you ever smoked
       </label>
       <input class="form-control" id="sies" name="sies" type="text"/>
@@ -268,11 +269,11 @@
        How many cigarettes did you smoke per day?
       </label>
      </div>
-     <div class="col-md-8">
-      <div class="form-group form-inline">
-       <input class="form-control input-sm" id="sicpd" name="sicpd" size="5" type="text"/>
-      </div>
+     <div class="col-sm-2 form-group">
+      <input class="form-control numeric" id="sicpd" maxlength="4" name="sicpd" type="text"/>
      </div>
+    </div>
+    <div class="row">
      <div class="col-md-4">
       <label class="visible-xs visible-sm" for="sippd">
        How many packs of cigarettes did you smoke per day (PPD)?
@@ -281,114 +282,50 @@
        How many packs of cigarettes did you smoke per day (PPD)?
       </label>
      </div>
-     <div class="col-md-8">
-      <div class="form-group form-inline">
-       <input class="form-control input-sm" id="sippd" name="sippd" size="5" type="text"/>
-      </div>
-     </div>
-     <div class="row">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm" for="sisny">
-        # of years
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="sisny">
-        # of years
-       </label>
-      </div>
-      <div class="col-md-8 form-group">
-       <input class="form-control" id="sisny" name="sisny" required="required" type="text"/>
-      </div>
-     </div>
-     <div class="row">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm" for="sippy">
-        Reported pack years
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="sippy">
-        Reported pack years
-       </label>
-      </div>
-      <div class="col-md-8 form-group">
-       <input class="form-control" id="sippy" name="sippy" required="required" type="text"/>
-      </div>
+     <div class="col-sm-2 form-group">
+      <input class="form-control numeric" id="sippd" maxlength="4" name="sippd" type="text"/>
      </div>
     </div>
     <div class="row">
-     <div class="form-group col-sm-12 col-md-12 col-lg-6">
-      <label for="simdn">
-       Physician's Name
+     <div class="col-md-4">
+      <label class="visible-xs visible-sm" for="sisny">
+       # of years
       </label>
-      <input class="form-control" id="simdn" name="simdn" type="text"/>
+      <label class="text-right pull-right hidden-xs hidden-sm" for="sisny">
+       # of years
+      </label>
      </div>
-     <div class="form-group col-sm-6 col-md-6 col-lg-3">
-      <label for="simdp">
-       Physician's Phone
-      </label>
-      <input class="form-control" data-fv-phone="true" data-fv-phone-country="US" id="simdp" name="simdp" type="text"/>
-     </div>
-     <div class="form-group col-sm-6 col-md-6 col-lg-3">
-      <label for="simdf">
-       Physician's Fax
-      </label>
-      <input class="form-control" data-fv-phone="true" data-fv-phone-country="US" id="simdf" name="simdf" type="text"/>
-     </div>
-    </div>
-    <h4>
-     Address
-     <small>
-      only required for non-VA physicians
-     </small>
-    </h4>
-    <div class="row">
-     <div class="form-group col-md-8">
-      <label for="simdsa">
-       Street Address
-      </label>
-      <input class="form-control" id="simdsa" name="simdsa" type="text"/>
-     </div>
-     <div class="form-group col-md-4">
-      <label for="simdcn">
-       County
-      </label>
-      <input class="form-control" id="simdcn" name="simdcn" type="text"/>
+     <div class="col-sm-2 form-group">
+      <input class="form-control numeric" id="sisny" maxlength="3" name="sisny" required="required" type="text"/>
      </div>
     </div>
     <div class="row">
-     <div class="form-group col-md-6">
-      <label for="simdc">
-       City
+     <div class="col-md-4">
+      <label class="visible-xs visible-sm" for="sippy">
+       Reported pack years
       </label>
-      <input class="form-control" id="simdc" name="simdc" type="text"/>
+      <label class="text-right pull-right hidden-xs hidden-sm" for="sippy">
+       Reported pack years
+      </label>
      </div>
-     <div class="form-group col-md-1">
-      <label for="simds">
-       State
-      </label>
-      <input class="form-control" id="simds" name="simds" type="text"/>
-     </div>
-     <div class="form-group col-md-2">
-      <label for="simdz">
-       Zip
-      </label>
-      <input class="form-control" id="simdz" name="simdz" type="text"/>
-     </div>
-     <div class="form-group col-md-3">
-      <label for="simdcr">
-       Country
-      </label>
-      <input class="form-control" id="simdcr" name="simdcr" type="text"/>
+     <div class="col-sm-2 form-group">
+      <input class="form-control numeric" id="sippy" maxlength="4" name="sippy" required="required" type="text"/>
      </div>
     </div>
-    <hr/>
     <div class="row">
-     <div class="form-group col-sm-6 col-md-6 col-lg-3">
-      <label for="sidob">
-       Date of Birth
+     <div class="col-md-4">
+      <label class="visible-xs visible-sm" for="siq">
+       Quit
       </label>
+      <label class="text-right pull-right hidden-xs hidden-sm" for="siq">
+       Quit
+      </label>
+     </div>
+     <div class="col-sm-4 col-md-3 col-lg-2 form-group">
       <div class="input-group datepicker">
-       <input aria-describedby="sidob-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" data-fv-notempty-message="Date of birth is required" id="sidob" name="sidob" required="required"/>
+       <input aria-describedby="siq-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" id="siq" name="siq"/>
        <div class="input-group-addon">
-        <div class="input-group-text" id="sidob-addon">
+        <div class="input-group-text" id="siq-addon">
          <i aria-hidden="true" class="fa fa-calendar">
          </i>
         </div>
@@ -398,194 +335,118 @@
        MM/DD/YYYY
       </small>
      </div>
-     <div class="form-group col-sm-6 col-md-6 col-lg-3">
-      <label for="sissn">
-       SSN
-      </label>
-      <i aria-hidden="true" class="small fa fa-question-circle-o" data-content="Please enter the social security number of the subject." data-toggle="popover">
-      </i>
-      <input class="form-control" data-fv-regexp-message="SSN should be in XXX-XX-XXXX format" id="sissn" name="sissn" pattern="^(?!000|666)(?:[0-6][0-9]{2}|7(?:[0-6][0-9]|7[0-2]))-(?!00)[0-9]{2}-(?!0000)[0-9]{4}$" type="text"/>
-     </div>
-    </div>
-    <div class="alert alert-warning">
-     It is important to identify two contacts.
-                At least one needs to be at another address.
     </div>
     <div class="row">
-     <div class="form-group col-md-3">
-      <label for="sikn">
-       Emergency Contact (1)
+     <div class="col-md-4">
+      <label class="visible-xs visible-sm" for="sicep">
+       Smoking cessation education provided
       </label>
-      <label for="sikn">
-       Name
+      <label class="text-right pull-right hidden-xs hidden-sm" for="sicep">
+       Smoking cessation education provided
       </label>
-      <input class="form-control" id="sikn" name="sikn" type="text"/>
      </div>
-     <div class="form-group col-md-3">
-      <label for="sikr">
-       Relation
-      </label>
-      <input class="form-control" id="sikr" name="sikr" type="text"/>
-     </div>
-     <div class="form-group col-md-3">
-      <label for="sika">
-       Address
-      </label>
-      <input class="form-control" id="sika" name="sika" type="text"/>
-     </div>
-     <div class="form-group col-md-3">
-      <label for="sikp">
-       Phone
-      </label>
-      <input class="form-control" data-fv-phone="true" data-fv-phone-country="US" id="sikp" name="sikp" type="text"/>
+     <div class="col-md-8 form-group">
+      <textarea class="form-control" id="sicep" name="sicep" type="text"></textarea>
      </div>
     </div>
     <div class="row">
-     <div class="form-group col-md-3">
-      <label for="siknb">
-       Emergency Contact (2)
+     <div class="col-md-4">
+      <label class="visible-xs visible-sm" for="sicadx">
+       Lung CA Dx (if applicable)
       </label>
-      <label for="siknb">
-       Name
+      <label class="text-right pull-right hidden-xs hidden-sm" for="sicadx">
+       Lung CA Dx (if applicable)
       </label>
-      <input class="form-control" id="siknb" name="siknb" type="text"/>
      </div>
-     <div class="form-group col-md-3">
-      <label for="sikrb">
-       Relation
-      </label>
-      <input class="form-control" id="sikrb" name="sikrb" type="text"/>
+     <div class="col-md-4 form-group">
+      <div class="input-group datepicker">
+       <input aria-describedby="sicadx-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" id="sicadx" name="sicadx"/>
+       <div class="input-group-addon">
+        <div class="input-group-text" id="sicadx-addon">
+         <i aria-hidden="true" class="fa fa-calendar">
+         </i>
+        </div>
+       </div>
+      </div>
+      <small class="form-text text-muted">
+       MM/DD/YYYY
+      </small>
      </div>
-     <div class="form-group col-md-3">
-      <label for="sikab">
-       Address
-      </label>
-      <input class="form-control" id="sikab" name="sikab" type="text"/>
+     <div class="col-md-4 form-group">
+      <input class="form-control" id="sicadxl" name="sicadxl" type="text"/>
+      <span class="help-block">
+       Location if not in VA
+      </span>
      </div>
-     <div class="form-group col-md-3">
-      <label for="sikpb">
-       Phone
+    </div>
+    <div class="row">
+     <div class="col-md-4">
+      <label class="visible-xs visible-sm" for="sipldct">
+       Prior LDCT
       </label>
-      <input class="form-control" data-fv-phone="true" data-fv-phone-country="US" id="sikpb" name="sikpb" type="text"/>
+      <label class="text-right pull-right hidden-xs hidden-sm" for="sipldct">
+       Prior LDCT
+      </label>
+     </div>
+     <div class="col-md-4 form-group">
+      <div class="input-group datepicker">
+       <input aria-describedby="sipldct-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" id="sipldct" name="sipldct"/>
+       <div class="input-group-addon">
+        <div class="input-group-text" id="sipldct-addon">
+         <i aria-hidden="true" class="fa fa-calendar">
+         </i>
+        </div>
+       </div>
+      </div>
+      <small class="form-text text-muted">
+       MM/DD/YYYY
+      </small>
+     </div>
+     <div class="col-md-4 form-group">
+      <input class="form-control" id="sipldctl" name="sipldctl" type="text"/>
+      <span class="help-block">
+       Location if not in VA
+      </span>
      </div>
     </div>
     <hr/>
+    <p class="alert alert-warning">
+     Veteran of age and exposure to cigarette smoke as described above, and without a current
+                diagnosis or obvious symptoms suggestive of lung cancer, has been educated today about the
+                estimated risk for lung cancer, the possibility of a cure or live prolonging if an early lung
+                cancer were to be found during screening, the possibility of imaging abnormalities not being
+                lung cancer, the possibility of complications from additional diagnostic procedures, and the
+                approximate amount of radiation exposure associated with each screening procedure. In addition,
+                the Veteran has been educated today about the importance of avoiding exposure to cigarette
+                smoke, available tobacco cessation programs and available lung screening services at this VA
+                facility. Education material was provided to the veteran.
+     <br/>
+     <br/>
+     Based on this information, the Veteran has opted for:
+    </p>
     <div class="row">
-     <div class="form-group col-md-12">
-      <label for="sicnc-0">
-       Phone Calls
+     <div class="col-md-12 form-group">
+      <label>
+       LDCT ordered
       </label>
-      <label class="radio-inline">
-       <input id="sicnc-0" name="sicnc" onclick="insertPatientCorrespondence('sicnc')" type="radio" value="0"/>
-       0
-      </label>
-      <label class="radio-inline">
-       <input id="sicnc-1" name="sicnc" onclick="insertPatientCorrespondence('sicnc')" type="radio" value="1"/>
-       1
-      </label>
-      <label class="radio-inline">
-       <input id="sicnc-2" name="sicnc" onclick="insertPatientCorrespondence('sicnc')" type="radio" value="2"/>
-       2
-      </label>
-      <label class="radio-inline">
-       <input id="sicnc-3" name="sicnc" onclick="insertPatientCorrespondence('sicnc')" type="radio" value="3"/>
-       3
-      </label>
-      <label class="radio-inline">
-       <input id="sicnc-x" name="sicnc" onclick="insertPatientCorrespondence('sicnc')" type="radio" value="x"/>
-       X
-      </label>
-     </div>
-     <div class="form-group col-md-12">
-      <label for="sicnc-0">
-       Letters
-      </label>
-      <label class="radio-inline">
-       <input id="sicnl-0" name="sicnl" onclick="insertPatientCorrespondence('sicnl')" type="radio" value="0"/>
-       0
-      </label>
-      <label class="radio-inline">
-       <input id="sicnl-1" name="sicnl" onclick="insertPatientCorrespondence('sicnl')" type="radio" value="1"/>
-       1
-      </label>
-      <label class="radio-inline">
-       <input id="sicnl-2" name="sicnl" onclick="insertPatientCorrespondence('sicnl')" type="radio" value="2"/>
-       2
-      </label>
-      <label class="radio-inline">
-       <input id="sicnl-3" name="sicnl" onclick="insertPatientCorrespondence('sicnl')" type="radio" value="3"/>
-       3
-      </label>
-      <label class="radio-inline">
-       <input id="sicnl-x" name="sicnl" onclick="insertPatientCorrespondence('sicnl')" type="radio" value="x"/>
-       X
-      </label>
-     </div>
-    </div>
-    <div class="row">
-     <div class="form-group col-md-4">
-      <label for="sies">
-       Patient Status
-      </label>
-      <select class="form-control" id="sies" name="sies">
-       <option value="ac">
-        active
-       </option>
-       <option value="tr">
-        transferred to another institution (specify)
-       </option>
-       <option value="mr">
-        unable due to medical reason (specify)
-       </option>
-       <option value="pr">
-        unwilling due to personal reason (specify)
-       </option>
-       <option value="rf">
-        refused to continue
-       </option>
-       <option value="pa">
-        physician advised against
-       </option>
-       <option value="ra">
-        concern about radiation
-       </option>
-       <option value="mv">
-        moved and unable to return
-       </option>
-       <option value="in">
-        no insurance, can't have Dx CT
-       </option>
-       <option value="bc">
-        burden of cost
-       </option>
-       <option value="os">
-        other (specify)
-       </option>
-       <option value="es">
-        excluded (specify)
-       </option>
-       <option value="sc">
-        study complete
-       </option>
-       <option value="nr">
-        no response to 3 calls + 3 letters
-       </option>
-       <option value="nc">
-        unable to contact
-       </option>
-       <option value="fe">
-        being followed elsewhere (get results)
-       </option>
-       <option value="ex">
-        expired (record date / cause)
-       </option>
-      </select>
-     </div>
-     <div class="form-group col-md-8">
-      <label for="sieso">
-       Specify
-      </label>
-      <input class="form-control" id="sieso" name="sieso" required="required" type="text"/>
+      <div class="radio">
+       <label>
+        <input id="sildct-n" name="sildct" required="required" type="radio" value="n"/>
+        No
+       </label>
+      </div>
+      <div class="radio">
+       <label>
+        <input id="sildct-l" name="sildct" type="radio" value="l"/>
+        Not at this time, okay to contact in the future
+       </label>
+      </div>
+      <div class="radio">
+       <label>
+        <input id="sildct-y" name="sildct" type="radio" value="y"/>
+        Yes
+       </label>
+      </div>
      </div>
     </div>
     <hr/>
@@ -597,144 +458,14 @@
      </a>
     </div>
     <div class="pull-right">
-     <input class="btn btn-primary" id="submit-button" type="submit" value="Submit"/>
+     <button class="btn btn-primary" id="submit-button" type="submit">
+      Submit
+     </button>
     </div>
+    <!--
+            -->
    </form>
   </div>
-  <div class="modal fade validated" data-fv-button-selector="#add-correspondence-btn" data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-validating="glyphicon glyphicon-refresh" id="correspondenceModal" role="dialog" tabindex="-1">
-   <div class="modal-dialog" role="document">
-    <div class="modal-content">
-     <div class="modal-header">
-      <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-       <span aria-hidden="true">
-        ×
-       </span>
-      </button>
-      <h4 class="modal-title">
-       Record Correspondence
-       <i aria-hidden="true" class="small fa fa-question-circle-o" data-content="This section should be used to record correspondence or communication
-                                   with the patient or physician.  This includes the date, recipient and nature of the
-                                   communication, the date of the relevant CT exam, and the identity of the
-                                   coordinator." data-toggle="popover">
-       </i>
-      </h4>
-     </div>
-     <div class="modal-body">
-      <div class="row">
-       <div class="form-group col-sm-6">
-        <label for="sircd">
-         Correspondence Date
-        </label>
-        <div class="input-group datepicker">
-         <input aria-describedby="sircd-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" data-fv-notempty-message="Correspondence date is required" id="sircd" name="sircd" required="required"/>
-         <div class="input-group-addon">
-          <div class="input-group-text" id="sircd-addon">
-           <i aria-hidden="true" class="fa fa-calendar">
-           </i>
-          </div>
-         </div>
-        </div>
-        <small class="form-text text-muted">
-         MM/DD/YYYY
-        </small>
-       </div>
-       <div class="form-group col-sm-6">
-        <label for="sired">
-         Date of Exam
-        </label>
-        <div class="input-group datepicker">
-         <input aria-describedby="sired-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" id="sired" name="sired"/>
-         <div class="input-group-addon">
-          <div class="input-group-text" id="sired-addon">
-           <i aria-hidden="true" class="fa fa-calendar">
-           </i>
-          </div>
-         </div>
-        </div>
-        <small class="form-text text-muted">
-         MM/DD/YYYY
-        </small>
-       </div>
-      </div>
-      <div class="row">
-       <div class="form-group col-sm-6">
-        <label for="sirr">
-         Recipient
-        </label>
-        <br/>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sirr-s" name="sirr" required="required" type="radio" value="s"/>
-         patient
-        </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sirr-m" name="sirr" required="required" type="radio" value="m"/>
-         physican
-        </label>
-       </div>
-       <div class="form-group col-sm-6">
-        <label for="sirmd">
-         VA Providers co-signed
-        </label>
-        <input class="form-control" id="sirmd" name="sirmd" type="text"/>
-       </div>
-      </div>
-      <div class="row">
-       <div class="form-group col-sm-4">
-        <label for="sirn">
-         Nature
-        </label>
-        <select class="form-control" id="sirn" name="sirn">
-         <option selected="" value="">
-          -
-         </option>
-         <option value="faxed report">
-          faxed report
-         </option>
-         <option value="mailed report">
-          mailed report
-         </option>
-         <option value="called to give results">
-          called to give results
-         </option>
-         <option value="Abx discussed with physician">
-          Abx discussed with physician
-         </option>
-         <option value="Bx discussed with physician">
-          Bx discussed with physician
-         </option>
-         <option value="other">
-          other (specify)
-         </option>
-        </select>
-       </div>
-       <div class="form-group col-sm-4">
-        <label for="sirns">
-         Specify
-        </label>
-        <input class="form-control" id="sirns" name="sirns" type="text"/>
-       </div>
-       <div class="form-group col-sm-4">
-        <label for="sirc">
-         Coordinator
-        </label>
-        <input class="form-control" id="sirc" name="sirc" type="text"/>
-       </div>
-      </div>
-     </div>
-     <div class="modal-footer">
-      <button class="btn btn-default" data-dismiss="modal" type="button">
-       Close
-      </button>
-      <button class="btn btn-primary" id="add-correspondence-btn" type="button">
-       Add
-      </button>
-     </div>
-    </div>
-    <!-- /.modal-content -->
-   </div>
-   <!-- /.modal-dialog -->
-  </div>
-  <!-- /.modal -->
   <footer>
    <div class="container-fluid" style="max-width:1550px">
     <hr/>
@@ -742,7 +473,7 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.05.24
+     SNAPSHOT 2018.05.25
     </span>
    </div>
   </footer>
@@ -772,214 +503,6 @@
             console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
         });
     })
-  </script>
-  <script language="JavaScript">
-   //TODO: rename this function
-        function genD() {
-            return moment().format(VAPALS.DATE_TIME_FORMAT);
-        }
-
-        //TODO: updated from ELCAP uptCI() but could use some refining
-        function updatePatientContactInfo() {
-            var ts = genD();
-            var ovn = "siadcom";
-            var oval = $("#siadcom").val();
-            var tval = "Patient Contact Info (prior to update):\n";
-
-            var confMsg = (
-                "This will copy the patient contact information into the additional\n"
-                + "patient information log and clear the section so that you may record\n"
-                + "a new set (e.g. after a change of address or phone).  Click OK to\n"
-                + "proceed or Cancel to do nothing.");
-
-            var confval = confirm(confMsg);
-
-            if (confval == false)
-                return;
-
-            if ($("#sipsa").val())
-                tval += ($("#sipsa").val());
-
-            if ($("#sipan").val())
-                tval += (", Apt. " + $("#sipan").val());
-
-            tval += "\n";
-
-            if ($("#sipc").val())
-                tval += ($("#sipc").val() + ", ");
-            if ($("#sips").val())
-                tval += ($("#sips").val() + " ");
-            if ($("#sipz").val())
-                tval += ($("#sipz").val() + " ");
-
-            if ($("#sipcr").val())
-                tval += ($("#sipcr").val());
-            if ($("#sipcn").val()) {
-                tval += (" (" + $("#sipcn").val() + " county)");
-            }
-
-            tval += "\n";
-
-            if ($("#sipw").val()) {
-                tval += ("Work: " + $("#sipw").val() + "\n");
-            }
-            if ($("#siph").val()) {
-                tval += ("Home: " + $("#siph").val() + "\n");
-            }
-            if ($("#sipem").val()) {
-                tval += ("Email: " + $("#sipem").val() + "\n");
-            }
-            $("#siadcom").val(ts + tval + oval);
-
-            $("[name^=sip]").clear();
-        }
-
-        //TODO cleanup; was ELCAP tsCA()
-        function insertPatientCorrespondence(arg) {
-            var ts = genD();
-            var $textarea = $("#siadcom");
-            var currentValue = $textarea.val();
-            var text;
-
-            var selectedValue = $("[name=" + arg + "]:checked").val();
-
-            if (arg == "sicnc") {
-                if (selectedValue == "0")
-                    text = "contact made\n";
-                else if (selectedValue == "x")
-                    text = "phone call 4 made\n";
-                else
-                    text = "phone call " + selectedValue + " made\n";
-            }
-            else if (arg == "sicnl") {
-                if (selectedValue == "0")
-                    text = "contact made\n";
-                else if (selectedValue == "x")
-                    text = "certified letter mailed\n";
-                else
-                    text = "letter " + selectedValue + " sent\n";
-            }
-
-            $textarea.val(ts + " " + text + currentValue);
-        }
-
-        //TODO: updated from ELCAP umdCI() but could use some refining
-        function updatePhysicianContactInfo() {
-            var ts = genD();
-            var ovn = "siadcom";
-            var oval = $("#siadcom").val()
-            var tval = "Physician Contact Info (prior to update):\n";
-
-            var confMsg = (
-                "This will copy the physician contact information into the additional\n"
-                + "patient information log and clear the section so that you may record\n"
-                + "a new set (e.g. after a change of address or phone).  Click OK to\n"
-                + "proceed or Cancel to do nothing.");
-
-            var confval = confirm(confMsg);
-
-            if (confval == false)
-                return;
-
-            if ($("#simdn").val())
-                tval += ($("#simdn").val() + "\n");
-
-            if ($("#simdsa").val())
-                tval += ($("#simdsa").val());
-
-            tval += "\n";
-
-            if ($("#simdc").val())
-                tval += ($("#simdc").val() + ", ");
-            if ($("#simds").val())
-                tval += ($("#simds").val() + " ");
-            if ($("#simdz").val())
-                tval += ($("#simdz").val() + " ");
-
-            if ($("#simdcr").val())
-                tval += ($("#simdcr").val());
-
-            if ($("#simdcn").val()) {
-                tval += (" (" + $("#simdcn").val()
-                    + " county)");
-            }
-
-            tval += "\n";
-
-            if ($("#simdp").val()) {
-                tval += ("Phone: " + $("#simdp").val() + "\n");
-            }
-            if ($("#simdf").val()) {
-                tval += ("Fax: " + $("#simdf").val() + "\n");
-            }
-
-            $("#siadcom").val(ts + tval + oval);
-            $("[name^=simd]").clear();
-        }
-
-        $(function () {
-
-            //Correspondence modal
-            $("#add-correspondence-btn").on("click", function (e) {
-                var fv = $("#correspondenceModal").data("formValidation");
-                fv.validate();
-                if (fv.isValid()) {
-                    var $textarea = $("#siadcom");
-                    var originalValue = $textarea.val();
-                    var correspondenceDate = $("#sircd").val(),
-                        examDate = $("#sired").val(),
-                        recipient = $("[name=sirr]:checked").val() === "s" ? "patient" : "physician", //TODO: just use words instead of codes?
-                        physicianCoSigned = $("#sirmd").val(),
-                        nature = $("#sirn").val(),
-                        specify = $("#sirns").val(),
-                        coordinator = $("#sirc").val();
-
-                    var text = correspondenceDate + ": " + nature + ": " + specify + ": " + recipient;
-
-                    if (recipient === "physician") {
-                        text += " (" + physicianCoSigned + ")";
-                    }
-                    text += ": " + examDate + " exam: " + coordinator;
-                    $textarea.val(genD() + ": " + text + "\n" + originalValue);
-
-                    $("#correspondenceModal").modal('hide');
-                    $("#correspondenceModal").data("formValidation").resetForm(true);
-                }
-            });
-
-            $("#sirn").conditionallyEnable({sourceValues: "other", enable: "#sirns"});
-            $("[name=sirr]").conditionallyEnable({sourceValues: "m", enable: "#sirmd"});
-
-            //Conditional fields on main form
-            var requiresSpecificity = function (actualValue) {
-                return $.inArray(actualValue, ["tr", "mr", "pr", "os", "es"]) > -1
-            };
-
-            $("#sies").conditionallyEnable({
-                    sourceValues: function () {
-                        return true
-                    }, //match on all values
-                    enable: function (actualValue) {
-                        if (actualValue === "ex") {
-                            return $("#sidod, #sicod"); //enable date of death and cause of death
-                        }
-                        else if (requiresSpecificity(actualValue)) {
-                            return $("#sieso, #sixdate"); //enable specify field
-                        }
-                        return null; // don't do anything
-                    },
-                    disable: function (actualValue) { //return fields to disable when value does not match one of the above.
-                        if (actualValue === "ex") {
-                            return $("#sieso, #sixdate"); //disable the specify field
-                        }
-                        else if (requiresSpecificity(actualValue)) {
-                            return $("#sidod, #sicod"); //disable date of death/cause of death
-                        }
-                        return $("#sieso, #sidod, #sicod, #sixdate"); //disable all three fields
-                    }
-                }
-            );
-        });
   </script>
   <script language="JavaScript">
    //Initialize Form Validation

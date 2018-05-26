@@ -384,12 +384,12 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  ;
  n last5 s last5=$$GETLAST5^SAMIFRM2(sid)
  ;
- if line["FORMKEY" do  ;
- . do findReplace^%ts(.line,"FORMKEY",key)
+ if line["@@FORMKEY@@" do  ;
+ . do findReplace^%ts(.line,"@@FORMKEY@@",key)
  . quit
  ;
- if line["STUDYID" do  ;
- . do findReplace^%ts(.line,"STUDYID",sid)
+ if line["@@SID@@" do  ;
+ . do findReplace^%ts(.line,"@@SID@@",sid)
  . quit
  ;
  if line["src=" do

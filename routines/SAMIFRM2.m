@@ -388,6 +388,10 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  . do findReplace^%ts(.line,"FORMKEY",key)
  . quit
  ;
+ if line["STUDYID" do  ;
+ . do findReplace^%ts(.line,"STUDYID",sid)
+ . quit
+ ;
  if line["src=" do
  . do fixSrc(.line) ; insert see/ processor on src= references
  . quit

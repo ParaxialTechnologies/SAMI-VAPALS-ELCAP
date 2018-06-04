@@ -1,6 +1,5 @@
 {% extends 'layout.jinja2' %}
 {% import 'forms.jinja2' as f %}
-{% import 'sf12.jinja2' as sf12 %}
 {% block title %}{{ title | escape }}{% endblock %}
 
 {% block body %}
@@ -477,23 +476,6 @@
                 </div>
             </div>
 
-
-            <div id="sf12">
-                <h3>Health Survey</h3>
-                <div class="alert alert-info">
-                    <p>This survey asks for your views about your health. This information will help you keep track of
-                        how you feel and how well you are able to do your usual activities. </p>
-                    <p>
-                        Answer every question by selecting the answer as indicated. If you are unsure about how to
-                        answer a question, please give the best answer you can. </p>
-                    <p>
-                        For each of the following questions, please choose the one option that best describes your
-                        answer.</p>
-                </div>
-                {{ sf12.sf12("si") }}
-            </div>
-
-
             <div class="pull-right">
                 <input type="hidden" name="samistatus" value=""/>
                 <button type="submit" class="btn btn-default" id="save-for-later-button">Save for Later</button>
@@ -505,10 +487,6 @@
 
 {% block script %}
     <script language="JavaScript">
-        // Intentionally not run after page load so tab doesn't show then dissapear.
-        if (!sf12Enabled) {
-            $("#sf12").remove();
-        }
 
         $(function () {
             var $tsbFields = $("#sidof, #sidoe");

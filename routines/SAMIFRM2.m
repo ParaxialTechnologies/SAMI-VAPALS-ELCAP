@@ -384,6 +384,14 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  ;
  n last5 s last5=$$GETLAST5^SAMIFRM2(sid)
  ;
+ if line["@@FORMKEY@@" do  ;
+ . do findReplace^%ts(.line,"@@FORMKEY@@",key)
+ . quit
+ ;
+ if line["@@SID@@" do  ;
+ . do findReplace^%ts(.line,"@@SID@@",sid)
+ . quit
+ ;
  if line["src=" do
  . do fixSrc(.line) ; insert see/ processor on src= references
  . quit
@@ -425,11 +433,6 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  ;
  if line["VEP0001" do  ;
  . do findReplace^%ts(.line,"VEP0001",sid,"a")
- ;
- ;if line["01/Mar/2018" do  ;
- ;. n ztoday s ztoday=$$FMTE^XLFDT($$NOW^XLFDT,"9D")
- ;. s ztoday=$tr(ztoday," ","/")
- ;. d findReplace^%ts(.line,"01/Mar/2018",ztoday)
  ;
  quit  ; end of SAMISUB2
  ;

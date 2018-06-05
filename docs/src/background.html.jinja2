@@ -13,11 +13,15 @@
         </h2>
 
         <hr>
-        <form action="background.html" class="validated" method="{{ "get" if mockup else "post"  }}"
+        <form action="{{ "background.html" if mockup else "/vapals" }}" method="{{ formMethod }}"
+              class="validated"
               data-fv-icon-valid="glyphicon glyphicon-ok"
               data-fv-icon-invalid="glyphicon glyphicon-remove"
               data-fv-icon-validating="glyphicon glyphicon-refresh"
               data-fv-button-selector="#submit-button">
+            <input type="hidden" name="samiroute" value="postform"/>
+            <input type="hidden" name="studyid" value="@@SID@@"/>
+            <input type="hidden" name="form" value="@@FORMKEY@@"/>
             <div>
 
                 <div class="row">
@@ -324,8 +328,7 @@
 
                 <div class="row">
                     <div class="col-sm-6 col-md-3 col-lg-3">
-                        <label for="sbact" class="control-label">When did you most recently have a chest
-                            CT?</label>
+                        <label for="sbact" class="control-label">When did you most recently have a chest CT?</label>
                     </div>
                     <div class="col-sm-6 col-md-3 col-lg-2">
                         <div class="form-group">

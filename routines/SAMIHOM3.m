@@ -174,6 +174,10 @@ wsVAPALS(ARG,BODY,RESULT) ; vapals post web service - all calls come through thi
  . m ARG=vars
  . d wsGetForm^%wf(.RESULT,.ARG)
  ;
+ i route="postform" d  q  ;
+ . m ARG=vars
+ . d wsPostForm^%wf(.ARG,.BODY,.RESULT)
+ ;
  i route="deleteform" d  q  ;
  . m ARG=vars
  . d deleteForm^SAMICAS2(.RESULT,.ARG)

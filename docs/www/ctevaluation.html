@@ -97,7 +97,7 @@
     <input name="cesid" type="hidden" value="VEP0001"/>
     <div>
      <!--TABS-->
-     <!--  Scan , Nodules, Abnormalities, Follow Up, Impression,Image Quality -->
+     <!--  Scan , Nodules, Abnormalities, Follow Up, Impression -->
      <!-- each item contains (Tab Title,tab-html-id) -->
      <ul class="nav nav-tabs" id="ctEvalTabs" role="tablist" style="margin-bottom: 15px;">
       <li class="active" role="presentation">
@@ -135,13 +135,6 @@
         </i>
        </a>
       </li>
-      <li role="presentation">
-       <a aria-controls="image-quality" aria-selected="false" class="nav-link" data-toggle="tab" href="#image-quality" id="image-quality-tab" role="tab">
-        Image Quality
-        <i class="fa fa-check-circle-o complete-mark" title="This tab is complete">
-        </i>
-       </a>
-      </li>
      </ul>
      <div class="tab-content" id="ctEvalTabsContent">
       <div aria-labelledby="scan-tab" class="tab-pane active" id="scan" role="tabpanel">
@@ -163,31 +156,15 @@
           MM/DD/YYYY
          </small>
         </div>
-        <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-         <label for="ceen">
-          Exam Number
-         </label>
-         <input class="form-control" id="ceen" name="ceen" required="required" type="text"/>
-        </div>
        </div>
        <div class="row">
-        <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+        <div class="col-sm-6 col-md-4 col-lg-3 form-group">
          <label for="cerad">
           Radiologist
          </label>
          <input class="form-control" id="cerad" name="cerad" required="required" type="text"/>
         </div>
-        <div class="form-group">
-         <div class="checkbox">
-          <label>
-           <input id="cecon" name="cecon" type="checkbox" value="y"/>
-           Final Reading
-          </label>
-         </div>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-sm-12 col-md-6 form-group">
+        <div class="col-sm-6 col-md-4 col-lg-3 form-group">
          <label>
           Signing Radiologist
          </label>
@@ -321,32 +298,8 @@
          <input class="form-control" id="cedps" name="cedps" required="required" type="text"/>
         </div>
        </div>
-       <div class="row">
-        <div class="col-sm-12 form-group">
-         <div class="checkbox">
-          <label>
-           <input id="censb" name="censb" type="checkbox" value="y"/>
-           Normal Shortcut
-          </label>
-          <i aria-hidden="true" class="fa fa-question-circle-o" data-content="This checkbox provides a quick shortcut for normal or
-                                                            near-normal studies.  When the checkbox is checked, the majority of
-                                                            the form is automatically completed to indicate the absence of
-                                                            abnormal findings. Once checked, the radiologist may modify the form
-                                                            to indicate the presence of any abnormalities, without having to
-                                                            complete the majority of the form for a near-normal study.
-                                                            Note that checking this box may delete values from a partially
-                                                            completed form or one that contains pre-existing values (as on a
-                                                            repeat study)." data-toggle="popover" title="Normal Shortcut">
-          </i>
-          <span class="help-block">
-           Short-cut to fill in "no abnormalities" in all the subsequent data
-                                            values. You can input data values for those which are not negative.
-          </span>
-         </div>
-        </div>
-       </div>
-       <!-- end of scan tab -->
       </div>
+      <!-- end of scan tab -->
       <div aria-labelledby="nodules-tab" class="tab-pane" id="nodules" role="tabpanel">
        <div class="row">
         <div class="col-md-12">
@@ -388,38 +341,6 @@
            </li>
           </ul>
          </div>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-md-4 form-group">
-         <label class="visible-xs visible-sm" for="cenncn">
-          Total Number of Non-Calcified Nodules
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="cenncn">
-          Total Number of Non-Calcified Nodules
-         </label>
-        </div>
-        <div class="col-sm-3 form-group">
-         <input class="form-control" id="cenncn" name="cenncn" required="required" type="text"/>
-         <span class="small help-block">
-          list nodules &gt;= 3 mm
-         </span>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-md-4 form-group">
-         <label class="visible-xs visible-sm" for="cennod">
-          Total Number of Nodules
-         </label>
-         <label class="text-right pull-right hidden-xs hidden-sm" for="cennod">
-          Total Number of Nodules
-         </label>
-        </div>
-        <div class="col-sm-3 form-group">
-         <input class="form-control" id="cennod" name="cennod" required="required" type="text"/>
-         <span class="small help-block">
-          parenchymal and endobronchial
-         </span>
         </div>
        </div>
        <div class="row">
@@ -1638,370 +1559,6 @@
             </tr>
             <tr>
              <td>
-              Calcifications NOT c/w Benignity
-              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate whether the nodule has regions of calcification that are consistent with benignity.  Nodules that are considered calcified or probably calcified (?), are NOT COUNTED toward the total number of non-calcified nodules, only toward the total number of nodules." data-toggle="popover" title="Help">
-              </i>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect1ca-n" name="cect1ca" required="required" type="radio" value="n"/>
-                No
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect1ca-y" name="cect1ca" required="required" type="radio" value="y"/>
-                Yes
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect1ca-q" name="cect1ca" required="required" type="radio" value="q"/>
-                ?
-               </label>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect2ca-n" name="cect2ca" required="required" type="radio" value="n"/>
-                No
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect2ca-y" name="cect2ca" required="required" type="radio" value="y"/>
-                Yes
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect2ca-q" name="cect2ca" required="required" type="radio" value="q"/>
-                ?
-               </label>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect3ca-n" name="cect3ca" required="required" type="radio" value="n"/>
-                No
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect3ca-y" name="cect3ca" required="required" type="radio" value="y"/>
-                Yes
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect3ca-q" name="cect3ca" required="required" type="radio" value="q"/>
-                ?
-               </label>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect4ca-n" name="cect4ca" required="required" type="radio" value="n"/>
-                No
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect4ca-y" name="cect4ca" required="required" type="radio" value="y"/>
-                Yes
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect4ca-q" name="cect4ca" required="required" type="radio" value="q"/>
-                ?
-               </label>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect5ca-n" name="cect5ca" required="required" type="radio" value="n"/>
-                No
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect5ca-y" name="cect5ca" required="required" type="radio" value="y"/>
-                Yes
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect5ca-q" name="cect5ca" required="required" type="radio" value="q"/>
-                ?
-               </label>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect0ca-n" name="cect0ca" required="required" type="radio" value="n"/>
-                No
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect0ca-y" name="cect0ca" required="required" type="radio" value="y"/>
-                Yes
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect0ca-q" name="cect0ca" required="required" type="radio" value="q"/>
-                ?
-               </label>
-              </div>
-             </td>
-            </tr>
-            <tr>
-             <td>
-              Spiculations
-              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate whether the nodule has spiculations or 'pleural tags' connecting it to the pleural surface." data-toggle="popover" title="Help">
-              </i>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect1sp-n" name="cect1sp" required="required" type="radio" value="n"/>
-                absent
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect1sp-y" name="cect1sp" required="required" type="radio" value="y"/>
-                present
-               </label>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect2sp-n" name="cect2sp" required="required" type="radio" value="n"/>
-                absent
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect2sp-y" name="cect2sp" required="required" type="radio" value="y"/>
-                present
-               </label>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect3sp-n" name="cect3sp" required="required" type="radio" value="n"/>
-                absent
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect3sp-y" name="cect3sp" required="required" type="radio" value="y"/>
-                present
-               </label>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect4sp-n" name="cect4sp" required="required" type="radio" value="n"/>
-                absent
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect4sp-y" name="cect4sp" required="required" type="radio" value="y"/>
-                present
-               </label>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect5sp-n" name="cect5sp" required="required" type="radio" value="n"/>
-                absent
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect5sp-y" name="cect5sp" required="required" type="radio" value="y"/>
-                present
-               </label>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect0sp-n" name="cect0sp" required="required" type="radio" value="n"/>
-                absent
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect0sp-y" name="cect0sp" required="required" type="radio" value="y"/>
-                present
-               </label>
-              </div>
-             </td>
-            </tr>
-            <tr>
-             <td>
-              Pleural Tags
-              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate whether the nodule has spiculations or 'pleural tags' connecting it to the pleural surface." data-toggle="popover" title="Help">
-              </i>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect1pt-n" name="cect1pt" required="required" type="radio" value="n"/>
-                absent
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect1pt-y" name="cect1pt" required="required" type="radio" value="y"/>
-                present
-               </label>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect2pt-n" name="cect2pt" required="required" type="radio" value="n"/>
-                absent
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect2pt-y" name="cect2pt" required="required" type="radio" value="y"/>
-                present
-               </label>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect3pt-n" name="cect3pt" required="required" type="radio" value="n"/>
-                absent
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect3pt-y" name="cect3pt" required="required" type="radio" value="y"/>
-                present
-               </label>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect4pt-n" name="cect4pt" required="required" type="radio" value="n"/>
-                absent
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect4pt-y" name="cect4pt" required="required" type="radio" value="y"/>
-                present
-               </label>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect5pt-n" name="cect5pt" required="required" type="radio" value="n"/>
-                absent
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect5pt-y" name="cect5pt" required="required" type="radio" value="y"/>
-                present
-               </label>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect0pt-n" name="cect0pt" required="required" type="radio" value="n"/>
-                absent
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect0pt-y" name="cect0pt" required="required" type="radio" value="y"/>
-                present
-               </label>
-              </div>
-             </td>
-            </tr>
-            <tr>
-             <td>
-              Parenchymal Abnormality within 1 cm
-              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Emphysema or other abnormalities (i.e. cysts, scarring, atelectasis, fibrosis, etc.) seen in and throughout the lung parenchyma does not necessarily indicate that 'yes' should be answered here.  Only answer 'yes' if these abnormalities occur in the lung parenchyma within 1 cm of the nodule of interest." data-toggle="popover" title="Help">
-              </i>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect1pa-n" name="cect1pa" required="required" type="radio" value="n"/>
-                No
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect1pa-y" name="cect1pa" required="required" type="radio" value="y"/>
-                Yes
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect1pa-q" name="cect1pa" required="required" type="radio" value="q"/>
-                ?
-               </label>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect2pa-n" name="cect2pa" required="required" type="radio" value="n"/>
-                No
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect2pa-y" name="cect2pa" required="required" type="radio" value="y"/>
-                Yes
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect2pa-q" name="cect2pa" required="required" type="radio" value="q"/>
-                ?
-               </label>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect3pa-n" name="cect3pa" required="required" type="radio" value="n"/>
-                No
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect3pa-y" name="cect3pa" required="required" type="radio" value="y"/>
-                Yes
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect3pa-q" name="cect3pa" required="required" type="radio" value="q"/>
-                ?
-               </label>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect4pa-n" name="cect4pa" required="required" type="radio" value="n"/>
-                No
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect4pa-y" name="cect4pa" required="required" type="radio" value="y"/>
-                Yes
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect4pa-q" name="cect4pa" required="required" type="radio" value="q"/>
-                ?
-               </label>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect5pa-n" name="cect5pa" required="required" type="radio" value="n"/>
-                No
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect5pa-y" name="cect5pa" required="required" type="radio" value="y"/>
-                Yes
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect5pa-q" name="cect5pa" required="required" type="radio" value="q"/>
-                ?
-               </label>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect0pa-n" name="cect0pa" required="required" type="radio" value="n"/>
-                No
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect0pa-y" name="cect0pa" required="required" type="radio" value="y"/>
-                Yes
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect0pa-q" name="cect0pa" required="required" type="radio" value="q"/>
-                ?
-               </label>
-              </div>
-             </td>
-            </tr>
-            <tr>
-             <td>
               Nodule seen in series
               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate the CT series number in which the nodule appears." data-toggle="popover" title="Help">
               </i>
@@ -3015,7 +2572,7 @@
        </div>
        <div class="row">
         <div class="col-sm-12 form-group">
-         <label for="cennod">
+         <label>
           Emphysema
          </label>
          <div class="checkbox">
@@ -4034,13 +3591,13 @@
          </tbody>
         </table>
        </div>
-       <!-- end of nodules tab -->
       </div>
+      <!-- end of nodules tab -->
       <div aria-labelledby="abnormalities-tab" class="tab-pane" id="abnormalities" role="tabpanel">
        <hr/>
        <div class="row">
         <div class="col-sm-12 form-group">
-         <label for="cennod-n">
+         <label>
           Cardiac Abnormalities
          </label>
          <div>
@@ -5026,10 +4583,6 @@
            <input data-fv-notempty-message="Please select a value" id="ceoaa-y" name="ceoaa" required="required" type="radio" value="y"/>
            Yes
           </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="ceoaa-e" name="ceoaa" required="required" type="radio" value="e"/>
-           not visible
-          </label>
          </div>
         </div>
        </div>
@@ -5393,8 +4946,8 @@
          </label>
         </div>
        </div>
-       <!-- end of abnormalities tab -->
       </div>
+      <!-- end of abnormalities tab -->
       <div aria-labelledby="follow-up-tab" class="tab-pane" id="follow-up" role="tabpanel">
        <hr/>
        <h3>
@@ -5504,8 +5057,8 @@
          </div>
         </div>
        </div>
-       <!-- end of follow-up tab -->
       </div>
+      <!-- end of follow-up tab -->
       <div aria-labelledby="impression-tab" class="tab-pane" id="impression" role="tabpanel">
        <hr/>
        <h3>
@@ -5587,191 +5140,8 @@
          </label>
         </div>
        </div>
-       <!-- end of impression tab -->
       </div>
-      <div aria-labelledby="image-quality-tab" class="tab-pane" id="image-quality" role="tabpanel">
-       <hr/>
-       <h3>
-        Image Quality Scale
-       </h3>
-       <p>
-        Please indicate the cause(s) for the image quality problem if images were not satisfactory.
-        <br/>
-        1 = Satisfactory
-        <br/>
-        2 = Minor problem(s) not affecting the reading
-        <br/>
-        3 = Quality affects the reading but is acceptable (Does not have to be redone)
-        <br/>
-        4 = Not acceptable (Unreadable; may need to be redone)
-       </p>
-       <div class="table-responsive">
-        <table class="table">
-         <tbody>
-          <tr>
-           <td>
-            <label for="cetsql">
-             Lung Parenchyma:
-            </label>
-           </td>
-           <td>
-            <div class="form-group">
-             <select class="form-control" id="cetsql" name="cetsql">
-              <option value="1">
-               1
-              </option>
-              <option value="2">
-               2
-              </option>
-              <option value="3">
-               3
-              </option>
-              <option value="4">
-               4
-              </option>
-             </select>
-            </div>
-           </td>
-           <td>
-            <div class="form-group">
-             <div class="checkbox">
-              <label>
-               <input id="cetdqlh" name="cetdqlh" type="checkbox" value="h"/>
-               Patient body habitus
-              </label>
-             </div>
-            </div>
-           </td>
-           <td>
-            <div class="form-group">
-             <div class="checkbox">
-              <label>
-               <input id="cetdqlm" name="cetdqlm" type="checkbox" value="m"/>
-               Patient movement
-              </label>
-             </div>
-            </div>
-           </td>
-           <td>
-            <div class="form-group">
-             <div class="checkbox">
-              <label>
-               <input id="cetdqli" name="cetdqli" type="checkbox" value="i"/>
-               Insufficient inhalation
-              </label>
-             </div>
-            </div>
-           </td>
-           <td>
-            <div class="form-group">
-             <div class="checkbox">
-              <label>
-               <input id="cetdqlo" name="cetdqlo" type="checkbox" value="o"/>
-               Other (specify)
-              </label>
-             </div>
-            </div>
-           </td>
-           <td>
-            <div class="form-group">
-             <input class="form-control" id="cetsqlos" name="cetsqlos" type="text"/>
-            </div>
-           </td>
-          </tr>
-          <tr>
-           <td>
-            <label for="cetsqm">
-             Mediastinum/Abdomen:
-            </label>
-           </td>
-           <td>
-            <div class="form-group">
-             <select class="form-control" id="cetsqm" name="cetsqm">
-              <option value="1">
-               1
-              </option>
-              <option value="2">
-               2
-              </option>
-              <option value="3">
-               3
-              </option>
-              <option value="4">
-               4
-              </option>
-             </select>
-            </div>
-           </td>
-           <td>
-            <div class="form-group">
-             <div class="checkbox">
-              <label>
-               <input id="cetdqmh" name="cetdqmh" type="checkbox" value="h"/>
-               Patient body habitus
-              </label>
-             </div>
-            </div>
-           </td>
-           <td>
-            <div class="form-group">
-             <div class="checkbox">
-              <label>
-               <input id="cetdqmm" name="cetdqmm" type="checkbox" value="m"/>
-               Patient movement
-              </label>
-             </div>
-            </div>
-           </td>
-           <td>
-            <div class="form-group">
-             <div class="checkbox">
-              <label>
-               <input id="cetdqmi" name="cetdqmi" type="checkbox" value="i"/>
-               Insufficient inhalation
-              </label>
-             </div>
-            </div>
-           </td>
-           <td>
-            <div class="form-group">
-             <div class="checkbox">
-              <label>
-               <input id="cetdqmo" name="cetdqmo" type="checkbox" value="o"/>
-               Other (specify)
-              </label>
-             </div>
-            </div>
-           </td>
-           <td>
-            <div class="form-group">
-             <input class="form-control" id="cetsqmos" name="cetsqmos" type="text"/>
-            </div>
-           </td>
-          </tr>
-         </tbody>
-        </table>
-       </div>
-       <hr/>
-       <div class="row">
-        <div class="col-sm-2">
-         <div class="form-group">
-          <div class="checkbox">
-           <label>
-            <input id="cecoi" name="cecoi" type="checkbox" value="y"/>
-            Case of Interest
-           </label>
-          </div>
-         </div>
-        </div>
-        <div class="col-sm-10 form-group">
-         <label for="cecoico">
-          Comments
-         </label>
-         <input class="form-control" id="cecoico" name="cecoico" type="text"/>
-        </div>
-       </div>
-       <!-- end of image quality tab -->
-      </div>
+      <!-- end of impression tab -->
      </div>
     </div>
     <div class="btn-group">

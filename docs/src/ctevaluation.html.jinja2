@@ -1671,7 +1671,11 @@
 
             //bind CAC Score
             {#$("#cecclm, #ceccld, #cecccf, #ceccrc").on('change', calculateVisualCacScore)#}
-        
+
+            if ($("#cedos").val() == "") {
+                $("#cedos").val(moment().format(VAPALS.DATE_FORMAT));
+            }
+
             initTabbedNavigation("ctEvalTabs", "ctEvalTabsContent");
 
             //Initialize Form Validation

@@ -208,7 +208,8 @@
          </label>
          <label class="radio-inline">
           <input id="cetex-a" name="cetex" required="required" type="radio" value="a"/>
-          Annual Repeat
+          Annual
+                                    Repeat
          </label>
          <label class="radio-inline">
           <input id="cetex-d" name="cetex" required="required" type="radio" value="d"/>
@@ -232,7 +233,8 @@
          </label>
          <label class="radio-inline">
           <input id="cectp-i" name="cectp" required="required" type="radio" value="i"/>
-          Limited CT
+          Limited
+                                    CT
          </label>
         </div>
        </div>
@@ -5250,7 +5252,11 @@
 
             //bind CAC Score
             
-        
+
+            if ($("#cedos").val() == "") {
+                $("#cedos").val(moment().format(VAPALS.DATE_FORMAT));
+            }
+
             initTabbedNavigation("ctEvalTabs", "ctEvalTabsContent");
 
             //Initialize Form Validation

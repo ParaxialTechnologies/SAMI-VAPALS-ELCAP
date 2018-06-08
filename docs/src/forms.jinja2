@@ -42,6 +42,20 @@
     </div>
 {%- endmacro %}
 
+{% macro inlineCheckbox(name, value, labelText, attributes) -%}
+    <label class="checkbox-inline">
+        <input type="checkbox" name="{{ name }}" id="{{ name }}" value="{{ value }}"
+        {% set x = "" %}
+        {% if attributes!=null %}
+            {% for k,v in attributes.items() %}
+                {{ k }}="{{ v }}"
+            {% endfor %}
+        {% endif %}
+        >
+        {{ labelText }}
+    </label>
+{%- endmacro %}
+
 {% macro datepicker(name, pastDateRequired, requiredMessage) -%}
     <div class="input-group datepicker">
         <input class="form-control" id="{{ name }}" name="{{ name }}" aria-describedby="{{ name }}-addon"

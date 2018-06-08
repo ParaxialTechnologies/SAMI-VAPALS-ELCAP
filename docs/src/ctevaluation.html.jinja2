@@ -25,10 +25,10 @@
 
             <div>
                 <!--TABS-->
-                <!--  Scan , Nodules, Abnormalities, Follow Up, Impression,Image Quality -->
+                <!--  Scan , Nodules, Abnormalities, Follow Up, Impression -->
                 <!-- each item contains (Tab Title,tab-html-id) -->
                 {% set tab_list = [("Scan","scan"), ("Nodules", "nodules"), ("Abnormalities","abnormalities"), 
-                                ("Follow Up","follow-up"), ("Impression","impression"),("Image Quality","image-quality")] -%}
+                                ("Follow Up","follow-up"), ("Impression","impression")] -%}
 
                 <ul class="nav nav-tabs" id="ctEvalTabs" role="tablist" style="margin-bottom: 15px;">
                     {% for tab_name,tab_id in tab_list -%}
@@ -56,23 +56,13 @@
                                 <label for="cedos" class="control-label">CT Study Date</label>
                                 {{ f.datepicker("cedos", true, "CT Study date is required") }}
                             </div>
-                            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-                                <label for="ceen">Exam Number</label>
-                                <input type="text" class="form-control" id="ceen" name="ceen" required="required"/>
-                            </div>
-
                         </div>
                         <div class="row">
-                            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                            <div class="col-sm-6 col-md-4 col-lg-3 form-group">
                                 <label for="cerad">Radiologist</label>
                                 <input type="text" class="form-control" id="cerad" name="cerad" required="required"/>
                             </div>
-                            <div class="form-group">
-                                {{ f.checkbox("cecon", "y", "Final Reading") }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12 col-md-6 form-group">
+                            <div class="col-sm-6 col-md-4 col-lg-3  form-group">
                                 <label>Signing Radiologist</label>
                                 <select class="form-control" id="cerads" name="cerads">
                                     <option value="-" selected>&mdash;</option>
@@ -158,34 +148,8 @@
                                 <input type="text" class="form-control" id="cedps" name="cedps" required="required"/>
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-sm-12 form-group">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="censb" id="censb" value="y">
-                                        Normal Shortcut</label> <i class="fa fa-question-circle-o" aria-hidden="true"
-                                                                data-toggle="popover"
-                                                                title="Normal Shortcut"
-                                                                data-content="This checkbox provides a quick shortcut for normal or
-                                                            near-normal studies.  When the checkbox is checked, the majority of
-                                                            the form is automatically completed to indicate the absence of
-                                                            abnormal findings. Once checked, the radiologist may modify the form
-                                                            to indicate the presence of any abnormalities, without having to
-                                                            complete the majority of the form for a near-normal study.
-                                                            Note that checking this box may delete values from a partially
-                                                            completed form or one that contains pre-existing values (as on a
-                                                            repeat study)."></i>
-
-                                    <span class="help-block">Short-cut to fill in "no abnormalities" in all the subsequent data
-                                            values. You can input data values for those which are not negative. </span>
-                                </div>
-
-                            </div>
-                        </div>
-                        <!-- end of scan tab -->                        
-                    </div>
-                    <div class="tab-pane" id="nodules" role="tabpanel" aria-labelledby="nodules-tab">
+                    </div> <!-- end of scan tab -->
+                     <div class="tab-pane" id="nodules" role="tabpanel" aria-labelledby="nodules-tab">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="alert alert-warning">
@@ -219,26 +183,6 @@
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-4 form-group">
-                                {{ f.floatingLabel("cenncn", "Total Number of Non-Calcified Nodules") }}
-                            </div>
-                            <div class="col-sm-3 form-group">
-                                <input type="text" class="form-control" id="cenncn" name="cenncn" required="required"/>
-                                <span class="small help-block">list nodules >= 3 mm</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4 form-group">
-                                {{ f.floatingLabel("cennod", "Total Number of Nodules") }}
-                            </div>
-
-                            <div class="col-sm-3 form-group">
-                                <input type="text" class="form-control" id="cennod" name="cennod" required="required"/>
-                                <span class="small help-block">parenchymal and endobronchial</span>
-
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="table-responsive">
@@ -449,66 +393,6 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                Calcifications NOT c/w Benignity <i class="fa fa-question-circle-o"
-                                                                                    aria-hidden="true"
-                                                                                    data-toggle="popover" title="Help"
-                                                                                    data-content="Indicate whether the nodule has regions of calcification that are consistent with benignity.  Nodules that are considered calcified or probably calcified (?), are NOT COUNTED toward the total number of non-calcified nodules, only toward the total number of nodules."></i>
-                                            </td>
-                                            {% for i in r %}
-                                                <td>
-                                                    <div class="form-group">
-                                                        {{ f.inlineRadioNYQ("cect" + i|string + "ca") }}
-                                                    </div>
-                                                </td>
-                                            {% endfor %}
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Spiculations <i class="fa fa-question-circle-o" aria-hidden="true"
-                                                                data-toggle="popover" title="Help"
-                                                                data-content="Indicate whether the nodule has spiculations or 'pleural tags' connecting it to the pleural surface."></i>
-                                            </td>
-                                            {% for i in r %}
-                                                <td>
-                                                    <div class="form-group">
-                                                        {{ f.inlineRadio("cect"+i|string+"sp", "cect"+i|string+"sp-n", "n", "absent", true) }}
-                                                        {{ f.inlineRadio("cect"+i|string+"sp", "cect"+i|string+"sp-y", "y", "present", true) }}
-                                                    </div>
-                                                </td>
-                                            {% endfor %}
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Pleural Tags <i class="fa fa-question-circle-o" aria-hidden="true"
-                                                                data-toggle="popover" title="Help"
-                                                                data-content="Indicate whether the nodule has spiculations or 'pleural tags' connecting it to the pleural surface."></i>
-                                            </td>
-                                            {% for i in r %}
-                                                <td>
-                                                    <div class="form-group">
-                                                        {{ f.inlineRadio("cect"+i|string+"pt", "cect"+i|string+"pt-n", "n", "absent", true) }}
-                                                        {{ f.inlineRadio("cect"+i|string+"pt", "cect"+i|string+"pt-y", "y", "present", true) }}
-                                                    </div>
-                                                </td>
-                                            {% endfor %}
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Parenchymal Abnormality within 1 cm <i class="fa fa-question-circle-o"
-                                                                                    aria-hidden="true"
-                                                                                    data-toggle="popover" title="Help"
-                                                                                    data-content="Emphysema or other abnormalities (i.e. cysts, scarring, atelectasis, fibrosis, etc.) seen in and throughout the lung parenchyma does not necessarily indicate that 'yes' should be answered here.  Only answer 'yes' if these abnormalities occur in the lung parenchyma within 1 cm of the nodule of interest."></i>
-                                            </td>
-                                            {% for i in r %}
-                                                <td>
-                                                    <div class="form-group">
-                                                        {{ f.inlineRadioNYQ("cect" + i|string + "pa") }}
-                                                    </div>
-                                                </td>
-                                            {% endfor %}
-                                        </tr>
-                                        <tr>
-                                            <td>
                                                 Nodule seen in series <i class="fa fa-question-circle-o"
                                                                         aria-hidden="true"
                                                                         data-toggle="popover" title="Help"
@@ -652,7 +536,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-12 form-group">
-                                <label for="cennod">Emphysema</label>
+                                <label>Emphysema</label>
                                 {{ f.checkbox("ceemv","e","not visible") }}
                                 {{ f.inlineRadio("ceem", "ceem-no", "no", "none", true) }}
                                 {{ f.inlineRadio("ceem", "ceem-mi", "mi", "mild", false) }}
@@ -971,14 +855,13 @@
                                 </tbody>
                             </table>
                         </div>
-                        <!-- end of nodules tab -->
-                    </div>
+                     </div> <!-- end of nodules tab -->
                     <div class="tab-pane" id="abnormalities" role="tabpanel" aria-labelledby="abnormalities-tab">
                         {# CARDIAC ABNORMALITIES #}
                         <hr/>
                         <div class="row">
                             <div class="col-sm-12 form-group">
-                                <label for="cennod-n">Cardiac Abnormalities</label>
+                                <label>Cardiac Abnormalities</label>
                                 <div>
                                     {{ f.inlineRadioNYE("ceca") }}
                                 </div>
@@ -1439,7 +1322,8 @@
                             <div class="col-sm-12 form-group">
                                 <label for="ceoaa-n">Abdominal Abnormalities</label>
                                 <div>
-                                    {{ f.inlineRadioNYE("ceoaa") }}
+                                    {{ f.inlineRadio("ceoaa", "ceoaa-n","n","No",true) }}
+                                    {{ f.inlineRadio("ceoaa", "ceoaa-y","y","Yes",true) }}
                                 </div>
                             </div>
                         </div>
@@ -1595,8 +1479,7 @@
                                 {{ f.inlineCheckbox("ceaoabbi", "y", "Include in impression") }}
                             </div>
                         </div>
-                        <!-- end of abnormalities tab -->
-                    </div>
+                    </div> <!-- end of abnormalities tab -->
                     <div class="tab-pane" id="follow-up" role="tabpanel" aria-labelledby="follow-up-tab">
                         <hr/>
                         <h3>Follow Up</h3>
@@ -1641,8 +1524,7 @@
                                 {{ f.checkbox("cefusa", "y", "Special Attention") }}
                             </div>
                         </div>
-                        <!-- end of follow-up tab -->
-                    </div>
+                    </div> <!-- end of follow-up tab -->
 
                     <div class="tab-pane" id="impression" role="tabpanel" aria-labelledby="impression-tab">
                         <hr/>
@@ -1710,119 +1592,7 @@
                                 {{ f.inlineCheckbox("ceimrei", "y", "Include in impression") }}
                             </div>
                         </div>
-                        <!-- end of impression tab -->
-                    </div>
-
-                    <div class="tab-pane" id="image-quality" role="tabpanel" aria-labelledby="image-quality-tab">
-                        <hr/>
-                        <h3>Image Quality Scale</h3>
-                        <p>
-                            Please indicate the cause(s) for the image quality problem if images were not satisfactory.<BR>
-                            1 = Satisfactory <BR>
-                            2 = Minor problem(s) not affecting the reading <BR>
-                            3 = Quality affects the reading but is acceptable (Does not have to be redone)
-                            <BR>
-                            4 = Not acceptable (Unreadable; may need to be redone)
-                        </p>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <tbody>
-                                <tr>
-                                    <td><label for="cetsql">Lung Parenchyma:</label></td>
-                                    <td>
-                                        <div class="form-group">
-                                            <select name="cetsql" id="cetsql" class="form-control">
-                                                <option value="1"> 1</option>
-                                                <option value="2"> 2</option>
-                                                <option value="3"> 3</option>
-                                                <option value="4"> 4</option>
-                                            </select>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            {{ f.checkbox("cetdqlh","h","Patient body habitus") }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            {{ f.checkbox("cetdqlm","m","Patient movement") }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            {{ f.checkbox("cetdqli","i","Insufficient inhalation") }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            {{ f.checkbox("cetdqlo","o","Other (specify)") }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <input type="text" name="cetsqlos" id="cetsqlos" class="form-control"/>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><label for="cetsqm">Mediastinum/Abdomen:</label></td>
-                                    <td>
-                                        <div class="form-group">
-                                            <select name="cetsqm" id="cetsqm" class="form-control">
-                                                <option value="1"> 1</option>
-                                                <option value="2"> 2</option>
-                                                <option value="3"> 3</option>
-                                                <option value="4"> 4</option>
-                                            </select>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            {{ f.checkbox("cetdqmh","h","Patient body habitus") }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            {{ f.checkbox("cetdqmm","m","Patient movement") }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            {{ f.checkbox("cetdqmi","i","Insufficient inhalation") }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            {{ f.checkbox("cetdqmo","o","Other (specify)") }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <input type="text" name="cetsqmos" id="cetsqmos" class="form-control"/>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <hr/>
-
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <div class="form-group">
-                                    {{ f.checkbox("cecoi","y","Case of Interest") }}
-                                </div>
-                            </div>
-                            <div class="col-sm-10 form-group">
-                                <label for="cecoico">Comments</label>
-                                <input type="text" name="cecoico" id="cecoico" class="form-control">
-                            </div>
-                        </div>
-                        <!-- end of image quality tab -->
-                    </div>
-
+                    </div>   <!-- end of impression tab -->
                 </div>
             </div>
 

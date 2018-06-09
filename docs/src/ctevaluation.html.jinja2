@@ -125,10 +125,23 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-sm-6 col-md-4 form-group">
-                                <label for="cectrst">Reconstructed slice thickness (mm)</label>
-                                <input type="text" class="form-control" id="cectrst" name="cectrst"
-                                       required="required"/>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="cectrst">Reconstructed slice thickness (mm)</label>
+                                    <select name="cectrst" id="cectrst" class="form-control" required="required">
+                                        <option value=""> -</option>
+                                        <option value="0.5">0.5</option>
+                                        <option value="0.625">0.625</option>
+                                        <option value="0.75">0.75</option>
+                                        <option value="o">other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 form-group" id="cectrsto-container">
+                                <label for="cectrsto">Specify</label>
+                                <input class="form-control numeric" type="text" name="cectrsto"
+                                       id="cectrsto" placeholder="specify" required="required"
+                                       data-fv-integer="true" maxlength="5">
                             </div>
                         </div>
 
@@ -231,25 +244,25 @@
                                             {% for i in r %}
                                                 <td>
                                                     <div class="form-group">
-                                                                <select name="cect{{ i }}ch" onChange="newStat({{ i }})">
-                                                                    <option value="-"> -
-                                                                    <option value="n"> newly seen</option>
-                                                                    <option value="pn"> prev seen, no change</option>
-                                                                    <option value="pd"> prev seen, slight decr</option>
-                                                                    <option value="pe"> prev seen, marked decr</option>
-                                                                    <option value="pi"> prev seen, slight incr</option>
-                                                                    <option value="pj"> prev seen, marked incr</option>
-                                                                    <option value="po"> prev seen, obscured</option>
-                                                                    <option value="pw"> prev seen, resolved</option>
-                                                                    <option value="px"> prev seen, not a nodule</option>
-                                                                    <option value="pr"> prev seen, resected</option>
-                                                                    <option value="rn"> retrospect, no chg</option>
-                                                                    <option value="rd"> retrospect, decrease</option>
-                                                                    <option value="ri"> retrospect, slight incr</option>
-                                                                    <option value="rj"> retrospect, marked incr</option>
-                                                                    <option value="pk"> not in outside report</option>
-                                                                    <option value="pv"> not included in scan</option>
-                                                                </select>
+                                                        <select name="cect{{ i }}ch" onChange="newStat({{ i }})">
+                                                            <option value="-"> -
+                                                            <option value="n"> newly seen</option>
+                                                            <option value="pn"> prev seen, no change</option>
+                                                            <option value="pd"> prev seen, slight decr</option>
+                                                            <option value="pe"> prev seen, marked decr</option>
+                                                            <option value="pi"> prev seen, slight incr</option>
+                                                            <option value="pj"> prev seen, marked incr</option>
+                                                            <option value="po"> prev seen, obscured</option>
+                                                            <option value="pw"> prev seen, resolved</option>
+                                                            <option value="px"> prev seen, not a nodule</option>
+                                                            <option value="pr"> prev seen, resected</option>
+                                                            <option value="rn"> retrospect, no chg</option>
+                                                            <option value="rd"> retrospect, decrease</option>
+                                                            <option value="ri"> retrospect, slight incr</option>
+                                                            <option value="rj"> retrospect, marked incr</option>
+                                                            <option value="pk"> not in outside report</option>
+                                                            <option value="pv"> not included in scan</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -1675,6 +1688,8 @@
             if ($("#cedos").val() == "") {
                 $("#cedos").val(moment().format(VAPALS.DATE_FORMAT));
             }
+
+            $("#cectrst").conditionallyEnable({sourceValues: "o", enable: "#cectrsto-container"});
 
             initTabbedNavigation("ctEvalTabs", "ctEvalTabsContent");
 

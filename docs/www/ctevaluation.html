@@ -239,11 +239,35 @@
         </div>
        </div>
        <div class="row">
-        <div class="col-sm-6 col-md-4 form-group">
-         <label for="cectrst">
-          Reconstructed slice thickness (mm)
+        <div class="col-sm-4">
+         <div class="form-group">
+          <label for="cectrst">
+           Reconstructed slice thickness (mm)
+          </label>
+          <select class="form-control" id="cectrst" name="cectrst" required="required">
+           <option value="">
+            -
+           </option>
+           <option value="0.5">
+            0.5
+           </option>
+           <option value="0.625">
+            0.625
+           </option>
+           <option value="0.75">
+            0.75
+           </option>
+           <option value="o">
+            other
+           </option>
+          </select>
+         </div>
+        </div>
+        <div class="col-sm-4 form-group" id="cectrsto-container">
+         <label for="cectrsto">
+          Specify
          </label>
-         <input class="form-control" id="cectrst" name="cectrst" required="required" type="text"/>
+         <input class="form-control numeric" data-fv-integer="true" id="cectrsto" maxlength="5" name="cectrsto" placeholder="specify" required="required" type="text"/>
         </div>
        </div>
        <div class="row">
@@ -5256,6 +5280,8 @@
             if ($("#cedos").val() == "") {
                 $("#cedos").val(moment().format(VAPALS.DATE_FORMAT));
             }
+
+            $("#cectrst").conditionallyEnable({sourceValues: "o", enable: "#cectrsto-container"});
 
             initTabbedNavigation("ctEvalTabs", "ctEvalTabsContent");
 

@@ -170,35 +170,32 @@
                     </div> <!-- end of scan tab -->
                     <div class="tab-pane" id="nodules" role="tabpanel" aria-labelledby="nodules-tab">
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="alert alert-warning">
-                                    <h4>READ before completing the Nodule Grid</h4>
-                                    <ul>
-
-                                        <li> Include all Parenchymal and Endobronchial Nodules.</li>
-                                        <li> If # nodules > 20, estimate the correct number and state this is an estimate in the
-                                            nodule comment field.
-                                        </li>
-                                        <li> Note: hilar masses and focal consolidation are considered to be nodules and should
-                                            be included in the nodule grid.
-                                        </li>
-                                        <li> For BASELINE CT, the nodules will automatically be sorted with the largest
-                                            non-calcified nodule coming first.
-                                        </li>
-                                        <li> The same nodule ID will be used on all subsequent CT and other forms. NEW nodules,
-                                            even if LARGER, must follow nodules already listed.
-                                        </li>
-                                        <li> If there are more than 6 nodules, please fill in the grid for any nodule that is 5
-                                            mm or larger.
-                                        </li>
-                                        <li> Nodules classified as probably calcified will not be counted toward the number of
-                                            non-calcified nodules.
-                                        </li>
-                                        <li> For nodules recommended for biopsy or antibiotics, list the reason in the comments
-                                            field in the corresponding column.
-                                        </li>
-                                    </ul>
-                                </div>
+                            <div class="alert alert-warning">
+                                <h4>READ before completing the Nodule Grid</h4>
+                                <ul>
+                                    <li> Include all Parenchymal and Endobronchial Nodules.</li>
+                                    <li> If # nodules > 20, estimate the correct number and state this is an estimate
+                                        in the nodule comment field.
+                                    </li>
+                                    <li> Note: hilar masses and focal consolidation are considered to be nodules and
+                                        should be included in the nodule grid.
+                                    </li>
+                                    <li> For BASELINE CT, the nodules will automatically be sorted with the largest
+                                        non-calcified nodule coming first.
+                                    </li>
+                                    <li> The same nodule ID will be used on all subsequent CT and other forms. NEW
+                                        nodules, even if LARGER, must follow nodules already listed.
+                                    </li>
+                                    <li> If there are more than 6 nodules, please fill in the grid for any nodule that
+                                        is 5 mm or larger.
+                                    </li>
+                                    <li> Nodules classified as probably calcified will not be counted toward the number
+                                        of non-calcified nodules.
+                                    </li>
+                                    <li> For nodules recommended for biopsy or antibiotics, list the reason in the
+                                        comments field in the corresponding column.
+                                    </li>
+                                </ul>
                             </div>
                         </div>
 
@@ -214,18 +211,20 @@
                                             <th>Nodule 3</th>
                                             <th>Nodule 4</th>
                                             <th>Nodule 5</th>
-                                <th>
-                                    <div class="form-group">
-                                        <label>Additional Nodules</label>
-                                        <select name="cefctn" onChange="bm()" class="form-control">
-                                            <option value="6"> Nodule 6</option>
-                                            <option value="7"> Nodule 7</option>
-                                            <option value="8"> Nodule 8</option>
-                                            <option value="9"> Nodule 9</option>
-                                            <option value="10"> Nodule 10</option>
-                                        </select>
-                                    </div>
-                                </th>
+                                            <th>
+                                                <div class="form-group">
+                                                    <label>Additional Nodules</label>
+                                                    <!-- TODO: figure out bm() -->
+                                                    <select name="cefctn" onChange="bm()"
+                                                            class="form-control no-auto-focus">
+                                                        <option value="6"> Nodule 6</option>
+                                                        <option value="7"> Nodule 7</option>
+                                                        <option value="8"> Nodule 8</option>
+                                                        <option value="9"> Nodule 9</option>
+                                                        <option value="10"> Nodule 10</option>
+                                                    </select>
+                                                </div>
+                                            </th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -319,6 +318,70 @@
                                         </tr>
                                         <tr>
                                             <td>
+                                                Nodule seen in images
+                                                <i class="fa fa-question-circle-o" aria-hidden="true"
+                                                   data-toggle="popover" title="Help"
+                                                   data-content="Indicate the CT image number in which the nodule appears."></i>
+                                            </td>
+                                            {% for i in r %}
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="text" name="cect{{ i }}sn" size="3">
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Nodule seen in series
+                                                <i class="fa fa-question-circle-o" aria-hidden="true"
+                                                   data-toggle="popover" title="Help"
+                                                   data-content="Indicate the CT series number in which the nodule appears."></i>
+                                            </td>
+                                            {% for i in r %}
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="text" name="cect{{ i }}sn" size="3">
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Nodule Status <i class="fa fa-question-circle-o"
+                                                                 aria-hidden="true"
+                                                                 data-toggle="popover" title="Help"
+                                                                 data-content="If nodule calcifications are seen ('yes' is selected for Calcifications), 'benign (Ca++)' will automatically appear under Nodule Status.<li> When '?' is selected under Calcifications, Nodule Status will read 'prob benign, prob Ca++' (probably benign, probably calcified).  If the nodule is 'prev seen, resolved,' as noted in the 'Is it new' field, then Nodule Status will automatically read 'resolved.'  When 'prev seen, resected' is selected for 'Is it new', 'Resected-malignant' appears under Nodule Status.  If under 'Is it new' it reads 'not included in scan,' Nodule Status will also read 'not included in scan.'  These automatic entries help to maintain a level of consistency for data entry across institutions."></i>
+                                            </td>
+                                            {% for i in r %}
+                                                <td>
+                                                    <div class="form-group">
+                                                        <select name="cect{{ i }}st">
+                                                            <option value="-"> -</option>
+                                                            <option value="un"> unknown</option>
+                                                            <option value="bc"> benign (Ca++)</option>
+                                                            <option value="pc"> prob benign, prob Ca++</option>
+                                                            <option value="re"> resolved</option>
+                                                            <option value="rg"> resolving</option>
+                                                            <option value="tn"> no change - 2 yrs</option>
+                                                            <option value="pp"> PET - positive</option>
+                                                            <option value="pn"> PET - negative</option>
+                                                            <option value="pi"> PET - indeterminate</option>
+                                                            <option value="ub"> Biopsy - unknown</option>
+                                                            <option value="bb"> Biopsy - benign</option>
+                                                            <option value="mb"> Biopsy - malignant</option>
+                                                            <option value="ab"> Biopsy - atyp bronch prolif</option>
+                                                            <option value="om"> Biopsy - metastatic</option>
+                                                            <option value="mr"> Resected - malignant</option>
+                                                            <option value="br"> Resected - benign</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+
+                                        <tr>
+                                            <td>
                                                 Distance from the costal pleura (mm)? <i class="fa fa-question-circle-o"
                                                                                         aria-hidden="true"
                                                                                         data-toggle="popover" title="Help"
@@ -327,7 +390,7 @@
                                             {% for i in r %}
                                                 <td>
                                                     <div class="form-group">
-                                                        <input type="text" name="cect{{ i }}pld">
+                                                        <input type="text" name="cect{{ i }}pld" class="numeric">
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -341,7 +404,8 @@
                                             {% for i in r %}
                                                 <td>
                                                     <div class="form-group">
-                                                        <input type="text" name="cect{{ i }}sl" size="4">
+                                                        <input type="text" name="cect{{ i }}sl" size="4"
+                                                               class="numeric">
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -355,7 +419,34 @@
                                             {% for i in r %}
                                                 <td>
                                                     <div class="form-group">
-                                                        <input type="text" name="cect{{ i }}sw" size="4">
+                                                        <input type="text" name="cect{{ i }}sw" size="4"
+                                                               class="numeric">
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Height (mm)
+                                            </td>
+                                            {% for i in r %}
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="text" name="cect{{ i }}sh" size="4"
+                                                               class="numeric">
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Volume (mm<sup>3</sup>)
+                                            </td>
+                                            {% for i in r %}
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="text" name="cect{{ i }}sv" size="4"
+                                                               class="numeric">
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -410,71 +501,7 @@
                                                 </td>
                                             {% endfor %}
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                Nodule seen in series <i class="fa fa-question-circle-o"
-                                                                        aria-hidden="true"
-                                                                        data-toggle="popover" title="Help"
-                                                                        data-content="Indicate the CT series number in which the nodule appears."></i>
-                                            </td>
-                                            {% for i in r %}
-                                                <td>
-                                                    <div class="form-group">
-                                                        <input type="text" name="cect{{ i }}sn" size="3">
-                                                    </div>
-                                                </td>
-                                            {% endfor %}
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Nodule seen in images <i class="fa fa-question-circle-o"
-                                                                        aria-hidden="true"
-                                                                        data-toggle="popover" title="Help"
-                                                                        data-content="Indicate the CT image numbers in which the nodule appears."></i>
-                                            </td>
-                                            {% for i in r %}
-                                                <td>
-                                                    <div class="form-group">
-                                                        <input type="text" name="cect{{ i }}inl" size="3">
-                                                        -
-                                                        <input type="text" name="cect{{ i }}inh" size="3">
-                                                    </div>
-                                                </td>
-                                            {% endfor %}
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Nodule Status <i class="fa fa-question-circle-o"
-                                                                aria-hidden="true"
-                                                                data-toggle="popover" title="Help"
-                                                                data-content="If nodule calcifications are seen ('yes' is selected for Calcifications), 'benign (Ca++)' will automatically appear under Nodule Status.<li> When '?' is selected under Calcifications, Nodule Status will read 'prob benign, prob Ca++' (probably benign, probably calcified).  If the nodule is 'prev seen, resolved,' as noted in the 'Is it new' field, then Nodule Status will automatically read 'resolved.'  When 'prev seen, resected' is selected for 'Is it new', 'Resected-malignant' appears under Nodule Status.  If under 'Is it new' it reads 'not included in scan,' Nodule Status will also read 'not included in scan.'  These automatic entries help to maintain a level of consistency for data entry across institutions."></i>
-                                            </td>
-                                            {% for i in r %}
-                                                <td>
-                                                    <div class="form-group">
-                                                        <select name="cect{{ i }}st">
-                                                            <option value="-"> -</option>
-                                                            <option value="un"> unknown</option>
-                                                            <option value="bc"> benign (Ca++)</option>
-                                                            <option value="pc"> prob benign, prob Ca++</option>
-                                                            <option value="re"> resolved</option>
-                                                            <option value="rg"> resolving</option>
-                                                            <option value="tn"> no change - 2 yrs</option>
-                                                            <option value="pp"> PET - positive</option>
-                                                            <option value="pn"> PET - negative</option>
-                                                            <option value="pi"> PET - indeterminate</option>
-                                                            <option value="ub"> Biopsy - unknown</option>
-                                                            <option value="bb"> Biopsy - benign</option>
-                                                            <option value="mb"> Biopsy - malignant</option>
-                                                            <option value="ab"> Biopsy - atyp bronch prolif</option>
-                                                            <option value="om"> Biopsy - metastatic</option>
-                                                            <option value="mr"> Resected - malignant</option>
-                                                            <option value="br"> Resected - benign</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                            {% endfor %}
-                                        </tr>
+
                                         <tr>
                                             <td>
                                                 Action <i class="fa fa-question-circle-o"
@@ -550,9 +577,13 @@
 
                                         </tbody>
                                     </table>
+                                    {{ f.checkbox("cectnum","y", "Numerous additional <= 3mm nodules (calcified or non-calcified)") }}
                                 </div>
                             </div>
                         </div>
+
+                     </div> <!-- end of nodules tab -->
+                    <div class="tab-pane" id="abnormalities" role="tabpanel" aria-labelledby="abnormalities-tab">
                         <div class="row">
                             <div class="col-sm-12 form-group">
                                 <label>Emphysema</label>
@@ -563,7 +594,6 @@
                                 {{ f.inlineRadio("ceem", "ceem-se", "se", "severe", false) }}
                             </div>
                         </div>
-
 
                         <div class="table-responsive">
                             <table class="table">
@@ -589,9 +619,9 @@
                                     </td>
                                     {% for i in [1,2,3,4,5] %}
                                         <td style="padding-top:0px;">
-                                <div class="form-group">
-                                    {{ f.checkbox("cecbcl"+i|string, rf[i-1], "") }}
-                                </div>
+                                            <div class="form-group">
+                                                {{ f.checkbox("cecbcl"+i|string, rf[i-1], "") }}
+                                            </div>
                                         </td>
                                     {% endfor %}
                                 </tr>
@@ -707,7 +737,8 @@
                                 </tr>
 
                                 <tr>
-                                    <td colspan="7"><strong>Early and Late Findings of Interstitial Lung Disease</strong>
+                                    <td colspan="7"><strong>Early and Late Findings of Interstitial Lung
+                                        Disease</strong>
                                     </td>
                                 </tr>
                                 <tr>
@@ -874,8 +905,7 @@
                                 </tbody>
                             </table>
                         </div>
-                     </div> <!-- end of nodules tab -->
-                    <div class="tab-pane" id="abnormalities" role="tabpanel" aria-labelledby="abnormalities-tab">
+
                         {# CARDIAC ABNORMALITIES #}
                         <hr/>
                         <div class="row">

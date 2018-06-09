@@ -327,45 +327,43 @@
       <!-- end of scan tab -->
       <div aria-labelledby="nodules-tab" class="tab-pane" id="nodules" role="tabpanel">
        <div class="row">
-        <div class="col-md-12">
-         <div class="alert alert-warning">
-          <h4>
-           READ before completing the Nodule Grid
-          </h4>
-          <ul>
-           <li>
-            Include all Parenchymal and Endobronchial Nodules.
-           </li>
-           <li>
-            If # nodules &gt; 20, estimate the correct number and state this is an estimate in the
-                                            nodule comment field.
-           </li>
-           <li>
-            Note: hilar masses and focal consolidation are considered to be nodules and should
-                                            be included in the nodule grid.
-           </li>
-           <li>
-            For BASELINE CT, the nodules will automatically be sorted with the largest
-                                            non-calcified nodule coming first.
-           </li>
-           <li>
-            The same nodule ID will be used on all subsequent CT and other forms. NEW nodules,
-                                            even if LARGER, must follow nodules already listed.
-           </li>
-           <li>
-            If there are more than 6 nodules, please fill in the grid for any nodule that is 5
-                                            mm or larger.
-           </li>
-           <li>
-            Nodules classified as probably calcified will not be counted toward the number of
-                                            non-calcified nodules.
-           </li>
-           <li>
-            For nodules recommended for biopsy or antibiotics, list the reason in the comments
-                                            field in the corresponding column.
-           </li>
-          </ul>
-         </div>
+        <div class="alert alert-warning">
+         <h4>
+          READ before completing the Nodule Grid
+         </h4>
+         <ul>
+          <li>
+           Include all Parenchymal and Endobronchial Nodules.
+          </li>
+          <li>
+           If # nodules &gt; 20, estimate the correct number and state this is an estimate
+                                        in the nodule comment field.
+          </li>
+          <li>
+           Note: hilar masses and focal consolidation are considered to be nodules and
+                                        should be included in the nodule grid.
+          </li>
+          <li>
+           For BASELINE CT, the nodules will automatically be sorted with the largest
+                                        non-calcified nodule coming first.
+          </li>
+          <li>
+           The same nodule ID will be used on all subsequent CT and other forms. NEW
+                                        nodules, even if LARGER, must follow nodules already listed.
+          </li>
+          <li>
+           If there are more than 6 nodules, please fill in the grid for any nodule that
+                                        is 5 mm or larger.
+          </li>
+          <li>
+           Nodules classified as probably calcified will not be counted toward the number
+                                        of non-calcified nodules.
+          </li>
+          <li>
+           For nodules recommended for biopsy or antibiotics, list the reason in the
+                                        comments field in the corresponding column.
+          </li>
+         </ul>
         </div>
        </div>
        <div class="row">
@@ -397,7 +395,8 @@
                <label>
                 Additional Nodules
                </label>
-               <select class="form-control" name="cefctn" onchange="bm()">
+               <!-- TODO: figure out bm() -->
+               <select class="form-control no-auto-focus" name="cefctn" onchange="bm()">
                 <option value="6">
                  Nodule 6
                 </option>
@@ -1188,397 +1187,38 @@
             </tr>
             <tr>
              <td>
-              Distance from the costal pleura (mm)?
-              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="The shortest distance from the nodule to the costal pleura should be measured in millimeters." data-toggle="popover" title="Help">
+              Nodule seen in images
+              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate the CT image number in which the nodule appears." data-toggle="popover" title="Help">
               </i>
              </td>
              <td>
               <div class="form-group">
-               <input name="cect1pld" type="text"/>
+               <input name="cect1sn" size="3" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input name="cect2pld" type="text"/>
+               <input name="cect2sn" size="3" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input name="cect3pld" type="text"/>
+               <input name="cect3sn" size="3" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input name="cect4pld" type="text"/>
+               <input name="cect4sn" size="3" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input name="cect5pld" type="text"/>
+               <input name="cect5sn" size="3" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input name="cect0pld" type="text"/>
-              </div>
-             </td>
-            </tr>
-            <tr>
-             <td>
-              Length (mm)
-              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate the length (largest dimension) of the nodule.  The unit of measurement is always millimeters." data-toggle="popover" title="Help">
-              </i>
-             </td>
-             <td>
-              <div class="form-group">
-               <input name="cect1sl" size="4" type="text"/>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <input name="cect2sl" size="4" type="text"/>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <input name="cect3sl" size="4" type="text"/>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <input name="cect4sl" size="4" type="text"/>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <input name="cect5sl" size="4" type="text"/>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <input name="cect0sl" size="4" type="text"/>
-              </div>
-             </td>
-            </tr>
-            <tr>
-             <td>
-              Maximum Width (mm)
-              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate the maximum width (largest perpendicular dimension to the length) of the nodule.  The unit of measurement is always millimeters." data-toggle="popover" title="Help">
-              </i>
-             </td>
-             <td>
-              <div class="form-group">
-               <input name="cect1sw" size="4" type="text"/>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <input name="cect2sw" size="4" type="text"/>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <input name="cect3sw" size="4" type="text"/>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <input name="cect4sw" size="4" type="text"/>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <input name="cect5sw" size="4" type="text"/>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <input name="cect0sw" size="4" type="text"/>
-              </div>
-             </td>
-            </tr>
-            <tr>
-             <td>
-              Nodule Consistency
-              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Nodules may be classified into three types by attenuation characteristics: solid - nodule is uniformly solid in appearance; non-solid - nodule is uniformly non-solid (except for blood vessels) in appearance; part-solid - nodule has both solid and non-solid components" data-toggle="popover" title="Help">
-              </i>
-             </td>
-             <td>
-              <div class="form-group">
-               <select name="cect1nt" onchange="newTexture(1)">
-                <option value="-">
-                 -
-                </option>
-                <option value="s">
-                 solid
-                </option>
-                <option value="m">
-                 part-solid
-                </option>
-                <option value="g">
-                 non-solid
-                </option>
-                <option value="o">
-                 other (see comment)
-                </option>
-               </select>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <select name="cect2nt" onchange="newTexture(2)">
-                <option value="-">
-                 -
-                </option>
-                <option value="s">
-                 solid
-                </option>
-                <option value="m">
-                 part-solid
-                </option>
-                <option value="g">
-                 non-solid
-                </option>
-                <option value="o">
-                 other (see comment)
-                </option>
-               </select>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <select name="cect3nt" onchange="newTexture(3)">
-                <option value="-">
-                 -
-                </option>
-                <option value="s">
-                 solid
-                </option>
-                <option value="m">
-                 part-solid
-                </option>
-                <option value="g">
-                 non-solid
-                </option>
-                <option value="o">
-                 other (see comment)
-                </option>
-               </select>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <select name="cect4nt" onchange="newTexture(4)">
-                <option value="-">
-                 -
-                </option>
-                <option value="s">
-                 solid
-                </option>
-                <option value="m">
-                 part-solid
-                </option>
-                <option value="g">
-                 non-solid
-                </option>
-                <option value="o">
-                 other (see comment)
-                </option>
-               </select>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <select name="cect5nt" onchange="newTexture(5)">
-                <option value="-">
-                 -
-                </option>
-                <option value="s">
-                 solid
-                </option>
-                <option value="m">
-                 part-solid
-                </option>
-                <option value="g">
-                 non-solid
-                </option>
-                <option value="o">
-                 other (see comment)
-                </option>
-               </select>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <select name="cect0nt" onchange="newTexture(0)">
-                <option value="-">
-                 -
-                </option>
-                <option value="s">
-                 solid
-                </option>
-                <option value="m">
-                 part-solid
-                </option>
-                <option value="g">
-                 non-solid
-                </option>
-                <option value="o">
-                 other (see comment)
-                </option>
-               </select>
-              </div>
-             </td>
-            </tr>
-            <tr>
-             <td>
-              Solid Comp. Length x Width
-              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="TODO: ELCAP missing" data-toggle="popover" title="Help">
-              </i>
-             </td>
-             <td>
-              <div class="form-group">
-               <input disabled="true" name="cect1ssl" size="4" type="text"/>
-               x
-               <input disabled="true" name="cect1ssw" size="4" type="text"/>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <input disabled="true" name="cect2ssl" size="4" type="text"/>
-               x
-               <input disabled="true" name="cect2ssw" size="4" type="text"/>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <input disabled="true" name="cect3ssl" size="4" type="text"/>
-               x
-               <input disabled="true" name="cect3ssw" size="4" type="text"/>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <input disabled="true" name="cect4ssl" size="4" type="text"/>
-               x
-               <input disabled="true" name="cect4ssw" size="4" type="text"/>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <input disabled="true" name="cect5ssl" size="4" type="text"/>
-               x
-               <input disabled="true" name="cect5ssw" size="4" type="text"/>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <input disabled="true" name="cect0ssl" size="4" type="text"/>
-               x
-               <input disabled="true" name="cect0ssw" size="4" type="text"/>
-              </div>
-             </td>
-            </tr>
-            <tr>
-             <td>
-              Smooth Edges
-              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate whether the nodule has a smooth-appearing margin." data-toggle="popover" title="Help">
-              </i>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect1se-n" name="cect1se" required="required" type="radio" value="n"/>
-                No
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect1se-y" name="cect1se" required="required" type="radio" value="y"/>
-                Yes
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect1se-q" name="cect1se" required="required" type="radio" value="q"/>
-                ?
-               </label>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect2se-n" name="cect2se" required="required" type="radio" value="n"/>
-                No
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect2se-y" name="cect2se" required="required" type="radio" value="y"/>
-                Yes
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect2se-q" name="cect2se" required="required" type="radio" value="q"/>
-                ?
-               </label>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect3se-n" name="cect3se" required="required" type="radio" value="n"/>
-                No
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect3se-y" name="cect3se" required="required" type="radio" value="y"/>
-                Yes
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect3se-q" name="cect3se" required="required" type="radio" value="q"/>
-                ?
-               </label>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect4se-n" name="cect4se" required="required" type="radio" value="n"/>
-                No
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect4se-y" name="cect4se" required="required" type="radio" value="y"/>
-                Yes
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect4se-q" name="cect4se" required="required" type="radio" value="q"/>
-                ?
-               </label>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect5se-n" name="cect5se" required="required" type="radio" value="n"/>
-                No
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect5se-y" name="cect5se" required="required" type="radio" value="y"/>
-                Yes
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect5se-q" name="cect5se" required="required" type="radio" value="q"/>
-                ?
-               </label>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect0se-n" name="cect0se" required="required" type="radio" value="n"/>
-                No
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect0se-y" name="cect0se" required="required" type="radio" value="y"/>
-                Yes
-               </label>
-               <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect0se-q" name="cect0se" required="required" type="radio" value="q"/>
-                ?
-               </label>
+               <input name="cect0sn" size="3" type="text"/>
               </div>
              </td>
             </tr>
@@ -1616,55 +1256,6 @@
              <td>
               <div class="form-group">
                <input name="cect0sn" size="3" type="text"/>
-              </div>
-             </td>
-            </tr>
-            <tr>
-             <td>
-              Nodule seen in images
-              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate the CT image numbers in which the nodule appears." data-toggle="popover" title="Help">
-              </i>
-             </td>
-             <td>
-              <div class="form-group">
-               <input name="cect1inl" size="3" type="text"/>
-               -
-               <input name="cect1inh" size="3" type="text"/>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <input name="cect2inl" size="3" type="text"/>
-               -
-               <input name="cect2inh" size="3" type="text"/>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <input name="cect3inl" size="3" type="text"/>
-               -
-               <input name="cect3inh" size="3" type="text"/>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <input name="cect4inl" size="3" type="text"/>
-               -
-               <input name="cect4inh" size="3" type="text"/>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <input name="cect5inl" size="3" type="text"/>
-               -
-               <input name="cect5inh" size="3" type="text"/>
-              </div>
-             </td>
-             <td>
-              <div class="form-group">
-               <input name="cect0inl" size="3" type="text"/>
-               -
-               <input name="cect0inh" size="3" type="text"/>
               </div>
              </td>
             </tr>
@@ -2014,6 +1605,476 @@
                  Resected - benign
                 </option>
                </select>
+              </div>
+             </td>
+            </tr>
+            <tr>
+             <td>
+              Distance from the costal pleura (mm)?
+              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="The shortest distance from the nodule to the costal pleura should be measured in millimeters." data-toggle="popover" title="Help">
+              </i>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect1pld" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect2pld" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect3pld" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect4pld" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect5pld" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect0pld" type="text"/>
+              </div>
+             </td>
+            </tr>
+            <tr>
+             <td>
+              Length (mm)
+              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate the length (largest dimension) of the nodule.  The unit of measurement is always millimeters." data-toggle="popover" title="Help">
+              </i>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect1sl" size="4" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect2sl" size="4" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect3sl" size="4" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect4sl" size="4" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect5sl" size="4" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect0sl" size="4" type="text"/>
+              </div>
+             </td>
+            </tr>
+            <tr>
+             <td>
+              Maximum Width (mm)
+              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate the maximum width (largest perpendicular dimension to the length) of the nodule.  The unit of measurement is always millimeters." data-toggle="popover" title="Help">
+              </i>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect1sw" size="4" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect2sw" size="4" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect3sw" size="4" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect4sw" size="4" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect5sw" size="4" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect0sw" size="4" type="text"/>
+              </div>
+             </td>
+            </tr>
+            <tr>
+             <td>
+              Height (mm)
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect1sh" size="4" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect2sh" size="4" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect3sh" size="4" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect4sh" size="4" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect5sh" size="4" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect0sh" size="4" type="text"/>
+              </div>
+             </td>
+            </tr>
+            <tr>
+             <td>
+              Volume (mm
+              <sup>
+               3
+              </sup>
+              )
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect1sv" size="4" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect2sv" size="4" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect3sv" size="4" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect4sv" size="4" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect5sv" size="4" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input class="numeric" name="cect0sv" size="4" type="text"/>
+              </div>
+             </td>
+            </tr>
+            <tr>
+             <td>
+              Nodule Consistency
+              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Nodules may be classified into three types by attenuation characteristics: solid - nodule is uniformly solid in appearance; non-solid - nodule is uniformly non-solid (except for blood vessels) in appearance; part-solid - nodule has both solid and non-solid components" data-toggle="popover" title="Help">
+              </i>
+             </td>
+             <td>
+              <div class="form-group">
+               <select name="cect1nt" onchange="newTexture(1)">
+                <option value="-">
+                 -
+                </option>
+                <option value="s">
+                 solid
+                </option>
+                <option value="m">
+                 part-solid
+                </option>
+                <option value="g">
+                 non-solid
+                </option>
+                <option value="o">
+                 other (see comment)
+                </option>
+               </select>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <select name="cect2nt" onchange="newTexture(2)">
+                <option value="-">
+                 -
+                </option>
+                <option value="s">
+                 solid
+                </option>
+                <option value="m">
+                 part-solid
+                </option>
+                <option value="g">
+                 non-solid
+                </option>
+                <option value="o">
+                 other (see comment)
+                </option>
+               </select>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <select name="cect3nt" onchange="newTexture(3)">
+                <option value="-">
+                 -
+                </option>
+                <option value="s">
+                 solid
+                </option>
+                <option value="m">
+                 part-solid
+                </option>
+                <option value="g">
+                 non-solid
+                </option>
+                <option value="o">
+                 other (see comment)
+                </option>
+               </select>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <select name="cect4nt" onchange="newTexture(4)">
+                <option value="-">
+                 -
+                </option>
+                <option value="s">
+                 solid
+                </option>
+                <option value="m">
+                 part-solid
+                </option>
+                <option value="g">
+                 non-solid
+                </option>
+                <option value="o">
+                 other (see comment)
+                </option>
+               </select>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <select name="cect5nt" onchange="newTexture(5)">
+                <option value="-">
+                 -
+                </option>
+                <option value="s">
+                 solid
+                </option>
+                <option value="m">
+                 part-solid
+                </option>
+                <option value="g">
+                 non-solid
+                </option>
+                <option value="o">
+                 other (see comment)
+                </option>
+               </select>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <select name="cect0nt" onchange="newTexture(0)">
+                <option value="-">
+                 -
+                </option>
+                <option value="s">
+                 solid
+                </option>
+                <option value="m">
+                 part-solid
+                </option>
+                <option value="g">
+                 non-solid
+                </option>
+                <option value="o">
+                 other (see comment)
+                </option>
+               </select>
+              </div>
+             </td>
+            </tr>
+            <tr>
+             <td>
+              Solid Comp. Length x Width
+              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="TODO: ELCAP missing" data-toggle="popover" title="Help">
+              </i>
+             </td>
+             <td>
+              <div class="form-group">
+               <input disabled="true" name="cect1ssl" size="4" type="text"/>
+               x
+               <input disabled="true" name="cect1ssw" size="4" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input disabled="true" name="cect2ssl" size="4" type="text"/>
+               x
+               <input disabled="true" name="cect2ssw" size="4" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input disabled="true" name="cect3ssl" size="4" type="text"/>
+               x
+               <input disabled="true" name="cect3ssw" size="4" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input disabled="true" name="cect4ssl" size="4" type="text"/>
+               x
+               <input disabled="true" name="cect4ssw" size="4" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input disabled="true" name="cect5ssl" size="4" type="text"/>
+               x
+               <input disabled="true" name="cect5ssw" size="4" type="text"/>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <input disabled="true" name="cect0ssl" size="4" type="text"/>
+               x
+               <input disabled="true" name="cect0ssw" size="4" type="text"/>
+              </div>
+             </td>
+            </tr>
+            <tr>
+             <td>
+              Smooth Edges
+              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate whether the nodule has a smooth-appearing margin." data-toggle="popover" title="Help">
+              </i>
+             </td>
+             <td>
+              <div class="form-group">
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect1se-n" name="cect1se" required="required" type="radio" value="n"/>
+                No
+               </label>
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect1se-y" name="cect1se" required="required" type="radio" value="y"/>
+                Yes
+               </label>
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect1se-q" name="cect1se" required="required" type="radio" value="q"/>
+                ?
+               </label>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect2se-n" name="cect2se" required="required" type="radio" value="n"/>
+                No
+               </label>
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect2se-y" name="cect2se" required="required" type="radio" value="y"/>
+                Yes
+               </label>
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect2se-q" name="cect2se" required="required" type="radio" value="q"/>
+                ?
+               </label>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect3se-n" name="cect3se" required="required" type="radio" value="n"/>
+                No
+               </label>
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect3se-y" name="cect3se" required="required" type="radio" value="y"/>
+                Yes
+               </label>
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect3se-q" name="cect3se" required="required" type="radio" value="q"/>
+                ?
+               </label>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect4se-n" name="cect4se" required="required" type="radio" value="n"/>
+                No
+               </label>
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect4se-y" name="cect4se" required="required" type="radio" value="y"/>
+                Yes
+               </label>
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect4se-q" name="cect4se" required="required" type="radio" value="q"/>
+                ?
+               </label>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect5se-n" name="cect5se" required="required" type="radio" value="n"/>
+                No
+               </label>
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect5se-y" name="cect5se" required="required" type="radio" value="y"/>
+                Yes
+               </label>
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect5se-q" name="cect5se" required="required" type="radio" value="q"/>
+                ?
+               </label>
+              </div>
+             </td>
+             <td>
+              <div class="form-group">
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect0se-n" name="cect0se" required="required" type="radio" value="n"/>
+                No
+               </label>
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect0se-y" name="cect0se" required="required" type="radio" value="y"/>
+                Yes
+               </label>
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect0se-q" name="cect0se" required="required" type="radio" value="q"/>
+                ?
+               </label>
               </div>
              </td>
             </tr>
@@ -2592,9 +2653,18 @@
             </tr>
            </tbody>
           </table>
+          <div class="checkbox">
+           <label>
+            <input id="cectnum" name="cectnum" type="checkbox" value="y"/>
+            Numerous additional &lt;= 3mm nodules (calcified or non-calcified)
+           </label>
+          </div>
          </div>
         </div>
        </div>
+      </div>
+      <!-- end of nodules tab -->
+      <div aria-labelledby="abnormalities-tab" class="tab-pane" id="abnormalities" role="tabpanel">
        <div class="row">
         <div class="col-sm-12 form-group">
          <label>
@@ -3121,7 +3191,8 @@
           <tr>
            <td colspan="7">
             <strong>
-             Early and Late Findings of Interstitial Lung Disease
+             Early and Late Findings of Interstitial Lung
+                                        Disease
             </strong>
            </td>
           </tr>
@@ -3616,9 +3687,6 @@
          </tbody>
         </table>
        </div>
-      </div>
-      <!-- end of nodules tab -->
-      <div aria-labelledby="abnormalities-tab" class="tab-pane" id="abnormalities" role="tabpanel">
        <hr/>
        <div class="row">
         <div class="col-sm-12 form-group">
@@ -5195,7 +5263,7 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.06.08
+     SNAPSHOT 2018.06.09
     </span>
    </div>
   </footer>

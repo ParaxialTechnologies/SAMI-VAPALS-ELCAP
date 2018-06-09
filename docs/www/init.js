@@ -103,9 +103,9 @@ function initTabbedNavigation(tabContainerId, tabContentContainerId) {
         }
 
     }).on("shown.bs.tab", function () {
-            $(".btn-next").toggleClass("disabled", !getNextTabId());
-            $(".btn-prev").toggleClass("disabled", !getPrevTabId());
-        $("#"+tabContentContainerId).find("input:visible, textarea:visible, select:visible").first().focus();
+        $(".btn-next").toggleClass("disabled", !getNextTabId());
+        $(".btn-prev").toggleClass("disabled", !getPrevTabId());
+        $("#" + tabContentContainerId).find("input:visible, textarea:visible, select:visible").not(".no-auto-focus").first().focus();
     });
 
 

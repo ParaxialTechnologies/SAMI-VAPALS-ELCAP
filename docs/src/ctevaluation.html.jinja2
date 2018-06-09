@@ -99,8 +99,7 @@
                                 </label>
                                 <label class="radio-inline">
                                     <input type="radio" name="cetex" id="cetex-d" value="d" required="required">
-                                    Follow-up (not
-                                    annual repeat)
+                                    Follow-up (not annual repeat)
                                 </label>
                             </div>
                         </div>
@@ -1682,12 +1681,20 @@
             $tsbFields.closest(".datepicker").on("dp.change", calculateTimeSinceBaseline); //latch onto datetimepicker change events
             $tsbFields.first().trigger("change"); //trigger on page load for existing data;
 
-            //bind CAC Score
+            //TODO bind CAC Score
             {#$("#cecclm, #ceccld, #cecccf, #ceccrc").on('change', calculateVisualCacScore)#}
 
-            if ($("#cedos").val() == "") {
-                $("#cedos").val(moment().format(VAPALS.DATE_FORMAT));
+            $cedos = $("#cedos");
+            if (!$cedos.val()) {
+                $cedos.val(moment().format(VAPALS.DATE_FORMAT));
             }
+
+            $("[name=cetex]").on("change", function () {
+                $sidoe = $("#sidoe");
+                if ($(this).val() === "b" && !$sidoe.val()) {
+                    $sidoe.val($("#cedos").val());
+                }
+            })
 
             $("#cectrst").conditionallyEnable({sourceValues: "o", enable: "#cectrsto-container"});
 

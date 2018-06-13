@@ -727,32 +727,34 @@
 
 
         $(function () {
+
+
             //Biopsy
             $("[name='bxp']").conditionallyEnable({enable: $("#bxp-container")}); //entire form
             $("#bxindo").conditionallyEnable({sourceValues: "o", enable: "#bxind"}); // other indication
-            requireOneValidator($("[name^=bxind]"), $("[name=validator-bxind]")); // at least one indication checkbox
             $("#bxloco").conditionallyEnable({sourceValues: "o", enable: "#bxlocs"}); //other lesion
-            requireOneValidator($("[name^=bxloc]"), $("[name=validator-bxloc]")); // at least one lesion checkbox
-            requireOneValidator($("[name^=bxtos]"), $("[name=validator-bxtos]")); // at least one type of specimen
-            requireOneValidator($("[name^=bxtop]"), $("[name=validator-bxtop]")); // at least one type of procedure
             $("#bxtopo").conditionallyEnable({sourceValues: "o", enable: "#bxtopos"}); // other type of procedure
             $("[name='bxcp']").conditionallyEnable({enable: $("#bxcp-container")}); //procedure details
-            requireOneValidator($("#bxcp-container").find("[name^=bxcp]"), $("[name^=validator-bxcp]")); // at least one complication
             $("#bxcpo").conditionallyEnable({sourceValues: "o", enable: "#bxcpos"}); // other complication
 
             //Mediastinoscopy
             $("[name='rbmep']").conditionallyEnable({enable: $("#rbmep-container")}); //entire section
             $("#rbmlo").conditionallyEnable({sourceValues: "o", enable: "#rbmls"}); //other lesion
-            requireOneValidator($("[name^=rbml]"), $("[name^=validator-rbml]")) // at least one lesion
             $("[name=rbmec]").conditionallyEnable({enable: "#rbmecos"}); // complication specificity
 
             //Molecular Testing
             $("[name='rbmt']").conditionallyEnable({enable: "#rbmt-container"}); //entire section
+
+            //attach before requireOneValidators
+            $(".validated").formValidation({framework: 'bootstrap'});
+
+            requireOneValidator($("[name^=bxind]"), $("[name=validator-bxind]")); // at least one indication checkbox
+            requireOneValidator($("[name^=bxloc]"), $("[name=validator-bxloc]")); // at least one lesion checkbox
+            requireOneValidator($("[name^=bxtos]"), $("[name=validator-bxtos]")); // at least one type of specimen
+            requireOneValidator($("[name^=bxtop]"), $("[name=validator-bxtop]")); // at least one type of procedure
+            requireOneValidator($("#bxcp-container").find("[name^=bxcp]"), $("[name^=validator-bxcp]")); // at least one complication
+            requireOneValidator($("[name^=rbml]"), $("[name^=validator-rbml]")) // at least one lesion
         });
-  </script>
-  <script language="JavaScript">
-   //Initialize Form Validation
-    $(".validated").formValidation({framework: 'bootstrap'});
   </script>
  </body>
 </html>

@@ -227,13 +227,18 @@
                     <span class="glyphicon glyphicon-trash"></span>Delete</a>
             </div>
             <div class="pull-right">
-{#                <input type="submit" value="Submit" class="btn btn-primary">#}
                 <button class="btn btn-primary" id="submit-button" type="submit">
                     Submit
                 </button>
             </div>
-<!--
-            -->
         </form>
     </div>
+{% endblock %}
+
+{% block script %}
+    <script language="JavaScript">
+        $(function () {
+            $(".validated").formValidation({framework: 'bootstrap'});
+        });
+    </script>
 {% endblock %}

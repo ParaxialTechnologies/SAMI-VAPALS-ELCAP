@@ -28,6 +28,8 @@
             disable: null // fields to disable when value does not match sourceValues
         }, options);
 
+        console.log("conditionallyDisplay (settings: " + JSON.stringify(settings) + ")")
+
         var disableFields = settings.disable;
 
         var matchCallback = (typeof settings.sourceValues === 'function') ? settings.sourceValues : function (actualValue) {
@@ -60,11 +62,15 @@
 
             if (matches) {
                 $enableContainer.show();
-                $disableContainer.hide();
+                if ($disableContainer !== null) {
+                    $disableContainer.hide();
+                }
             }
             else {
                 $enableContainer.hide();
-                $disableContainer.show();
+                if ($disableContainer !== null) {
+                    $disableContainer.show();
+                }
             }
 
 

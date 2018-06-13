@@ -1604,6 +1604,26 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="form-group col-md-2">
+                                <label for="celrc">Lung-RADS Category</label>
+                                <select class="form-control" id="celrc" name="celrc">
+                                    <option value="">-</option>
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4A">4A</option>
+                                    <option value="4B">4B</option>
+                                    <option value="4X">4X</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-10">
+                                <label>Lung-RADS Modifiers</label>
+                                {{ f.checkbox("celrms", "s", "S - Clinically Significant or Potentially Clinically Significant Findings (non lung cancer)") }}
+                                {{ f.checkbox("celrmc", "c", "C - Prior diagnosis of lung cancer who return to screening") }}
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-sm-12 form-group">
                                 <strong>Other Findings</strong>
                                 <div class="radio">

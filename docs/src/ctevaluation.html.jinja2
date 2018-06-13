@@ -28,7 +28,7 @@
                 <!--  Scan , Nodules, Abnormalities, Follow Up, Impression -->
                 <!-- each item contains (Tab Title,tab-html-id) -->
                 {% set tab_list = [("Scan","scan"), ("Nodules", "nodules"), ("Abnormalities","abnormalities"), 
-                                ("Impression & Follow Up","impression")] -%}
+                                ("Follow Up & Impression","impression")] -%}
 
                 <ul class="nav nav-tabs" id="ctEvalTabs" role="tablist" style="margin-bottom: 15px;">
                     {% for tab_name,tab_id in tab_list -%}
@@ -1561,7 +1561,54 @@
                     {#  END Abnormalities tab#}
 
                     <div class="tab-pane" id="impression" role="tabpanel" aria-labelledby="impression-tab">
-                        <hr/>
+                        <h3>Follow Up</h3>
+                        <div class="alert alert-warning">
+                            Based on the data provided, this is the recommended follow-up; change if needed.
+                            Radiologist takes responsibility for report.
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 form-group">
+                                <label for="cefu">Follow Up:</label>
+                                <select name="cefu" id="cefu" class="form-control">
+                                    <option value="-"> -</option>
+                                    <option value="rs"> annual repeat CT</option>
+                                    <option value="dx"> f/u CT</option>
+                                    <option value="af"> Abx + f/u CT</option>
+                                    <option value="pe"> PET</option>
+                                    <option value="cc"> CT w contrast</option>
+                                    <option value="fn"> CT-guided biopsy</option>
+                                    <option value="br"> bronchoscopy</option>
+                                    <option value="va"> VAT</option>
+                                    <option value="su"> resection</option>
+                                    <option value="nf"> no further follow-up</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 form-group">
+                                <label for="cefuw-nw">When:</label><br/>
+                                {{ f.inlineRadio("cefuw", "cefuw-nw","nw","now") }}
+                                {{ f.inlineRadio("cefuw", "cefuw-1m","1m","1 month") }}
+                                {{ f.inlineRadio("cefuw", "cefuw-3m","3m","3 months") }}
+                                {{ f.inlineRadio("cefuw", "cefuw-6m","6m","6 months") }}
+                                {{ f.inlineRadio("cefuw", "cefuw-1y","1y","1 year") }}
+                                {{ f.inlineRadio("cefuw", "cefuw-os","os","other") }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 col-md-2 form-group">
+                                <label for="cefud">Follow-up Date:</label><br/>
+                                {{ f.datepicker("cefud", null, "Follow up date is required") }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12 form-group">
+                                {{ f.checkbox("cefusa", "y", "Special Attention") }}
+                            </div>
+                        </div>
+
+
                         <h3>Impression</h3>
                         <div class="row">
                             <div class="col-sm-12">
@@ -1644,58 +1691,6 @@
                             <div class="col-sm-12 form-group">
                                 <label for="ceimre">Impression Remarks</label>
                                 <textarea name="ceimre" id="ceimre" class="form-control"></textarea>
-                                {{ f.inlineCheckbox("ceimrei", "y", "Include in impression") }}
-                            </div>
-                        </div>
-
-
-                        <hr/>
-                        <h3>Follow Up</h3>
-                        <div class="alert alert-warning">
-                            Based on the data provided, this is the recommended follow-up; change if needed.
-                            Radiologist takes responsibility for report.
-                        </div>
-                        <div class="row">
-
-
-                            <div class="col-sm-3 form-group">
-                                <label for="cefu">Follow Up:</label>
-                                <select name="cefu" id="cefu" class="form-control">
-                                    <option value="-"> -</option>
-                                    <option value="rs"> annual repeat CT</option>
-                                    <option value="dx"> f/u CT</option>
-                                    <option value="af"> Abx + f/u CT</option>
-                                    <option value="pe"> PET</option>
-                                    <option value="cc"> CT w contrast</option>
-                                    <option value="fn"> CT-guided biopsy</option>
-                                    <option value="br"> bronchoscopy</option>
-                                    <option value="va"> VAT</option>
-                                    <option value="su"> resection</option>
-                                    <option value="nf"> no further follow-up</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12 form-group">
-                                <label for="cefuw-nw">When:</label><br/>
-                                {{ f.inlineRadio("cefuw", "cefuw-nw","nw","now") }}
-                                {{ f.inlineRadio("cefuw", "cefuw-1m","1m","1 month") }}
-                                {{ f.inlineRadio("cefuw", "cefuw-3m","3m","3 months") }}
-                                {{ f.inlineRadio("cefuw", "cefuw-6m","6m","6 months") }}
-                                {{ f.inlineRadio("cefuw", "cefuw-1y","1y","1 year") }}
-                                {{ f.inlineRadio("cefuw", "cefuw-os","os","other") }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-3 col-md-2 form-group">
-                                <label for="cefud">Follow-up Date:</label><br/>
-                                {{ f.datepicker("cefud", null, "Follow up date is required") }}
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-12 form-group">
-                                {{ f.checkbox("cefusa", "y", "Special Attention") }}
                             </div>
                         </div>
                     </div>   <!-- end of impression tab -->

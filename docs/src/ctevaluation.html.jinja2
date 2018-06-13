@@ -317,22 +317,6 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                Nodule seen in images
-                                                <i class="fa fa-question-circle-o" aria-hidden="true"
-                                                   data-toggle="popover" title="Help"
-                                                   data-content="Indicate the CT image number in which the nodule appears."></i>
-                                            </td>
-                                            {% for i in r %}
-                                                <td>
-                                                    <div class="form-group">
-                                                        <input type="text" name="cect{{ i }}sn" size="3"
-                                                               title="CT Image Number">
-                                                    </div>
-                                                </td>
-                                            {% endfor %}
-                                        </tr>
-                                        <tr>
-                                            <td>
                                                 Nodule seen in series
                                                 <i class="fa fa-question-circle-o" aria-hidden="true"
                                                    data-toggle="popover" title="Help"
@@ -343,6 +327,22 @@
                                                     <div class="form-group">
                                                         <input type="text" name="cect{{ i }}sn" size="3"
                                                                title="CT Series Number">
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Nodule seen in images
+                                                <i class="fa fa-question-circle-o" aria-hidden="true"
+                                                   data-toggle="popover" title="Help"
+                                                   data-content="Indicate the CT image number in which the nodule appears."></i>
+                                            </td>
+                                            {% for i in r %}
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="text" name="cect{{ i }}sn" size="3"
+                                                               title="CT Image Number">
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -1604,26 +1604,6 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-md-2">
-                                <label for="celrc">Lung-RADS Category</label>
-                                <select class="form-control" id="celrc" name="celrc">
-                                    <option value="">-</option>
-                                    <option value="0">0</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4A">4A</option>
-                                    <option value="4B">4B</option>
-                                    <option value="4X">4X</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-10">
-                                <label>Lung-RADS Modifiers</label>
-                                {{ f.checkbox("celrms", "s", "S - Clinically Significant or Potentially Clinically Significant Findings (non lung cancer)") }}
-                                {{ f.checkbox("celrmc", "c", "C - Prior diagnosis of lung cancer who return to screening") }}
-                            </div>
-                        </div>
-                        <div class="row">
                             <div class="col-sm-12 form-group">
                                 <strong>Other Findings</strong>
                                 <div class="radio">
@@ -1644,6 +1624,28 @@
                             <div class="col-sm-12 form-group">
                                 <label for="ceimre">Impression Remarks</label>
                                 <textarea name="ceimre" id="ceimre" class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                        <h3>Lung-RADS</h3>
+                        <div class="row">
+                            <div class="form-group col-md-2">
+                                <label for="celrc">Category</label>
+                                <select class="form-control" id="celrc" name="celrc">
+                                    <option value="">-</option>
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4A">4A</option>
+                                    <option value="4B">4B</option>
+                                    <option value="4X">4X</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-10">
+                                <label>Modifiers</label>
+                                {{ f.checkbox("celrms", "s", "S - Clinically Significant or Potentially Clinically Significant Findings (non lung cancer)") }}
+                                {{ f.checkbox("celrmc", "c", "C - Prior diagnosis of lung cancer who return to screening") }}
                             </div>
                         </div>
 

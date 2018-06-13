@@ -210,9 +210,8 @@
                                             <th>
                                                 <div class="form-group">
                                                     <label>Additional Nodules</label>
-                                                    <!-- TODO: figure out bm() -->
-                                                    <select name="cefctn" onChange="bm()"
-                                                            class="form-control no-auto-focus">
+                                                    <!-- TODO: figure out what bm() function did onclick of cefctn -->
+                                                    <select name="cefctn" class="form-control no-auto-focus">
                                                         <option value="6"> Nodule 6</option>
                                                         <option value="7"> Nodule 7</option>
                                                         <option value="8"> Nodule 8</option>
@@ -592,7 +591,18 @@
                             </div>
                         </div>
 
-                        <div class="table-responsive">
+                        {# PULMONARY ABNORMALITIES #}
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-sm-4 col-md-3">
+                                    <label>Pulmonary Abnormalities</label>
+                                </div>
+                                <div class="col-sm-8 col-md-9">
+                                    {{ f.inlineRadioNY("pa") }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive" id="pulmonary-container">
                             <table class="table">
                                 <thead>
                                 <tr>
@@ -805,7 +815,7 @@
                                 <tr>
                                     <td colspan="7">
                                         <div class="form-group">
-                                            <label>Additional Comments on Parenchymal Abnormalities</label>
+                                            <label>Additional Comments on Pulmonary Abnormalities</label>
                                             <textarea name="ceoppa" id="ceoppa" class="form-control"></textarea>
                                             {{ f.inlineCheckbox("ceoppai", "y", "Include in impression") }}
                                         </div>
@@ -901,20 +911,21 @@
 
                                 </tbody>
                             </table>
+                            <hr/>
                         </div>
 
                         {# CARDIAC ABNORMALITIES #}
-                        <hr/>
                         <div class="row">
-                            <div class="col-sm-12 form-group">
-                                <label>Cardiac Abnormalities</label>
-                                <div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-md-3">
+                                    <label>Cardiac Abnormalities</label>
+                                </div>
+                                <div class="col-sm-8 col-md-9">
                                     {{ f.inlineRadioNYE("ceca") }}
                                 </div>
                             </div>
                         </div>
-
-                        <div class="table-responsive">
+                        <div class="table-responsive" id="cardiac-container">
                             <table class="table">
                                 <tbody>
                                 <tr>
@@ -1064,20 +1075,23 @@
 
                                 </tbody>
                             </table>
+                            <hr/>
                         </div>
 
                         {# Neck and Mediastinal Abnormalities #}
-                        <hr/>
                         <div class="row">
-                            <div class="col-sm-12 form-group">
-                                <label for="ceoba-n">Neck and Mediastinal Abnormalities</label>
-                                <div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-md-3">
+
+                                    <label for="ceoba-n">Neck and Mediastinal Abnormalities</label>
+                                </div>
+                                <div class="col-sm-8 col-md-9">
                                     {{ f.inlineRadioNYE("ceoma") }}
                                 </div>
                             </div>
                         </div>
 
-                        <div class="table-responsive">
+                        <div class="table-responsive" id="neck-container">
                             <table class="table">
                                 <tbody>
                                 <tr>
@@ -1267,20 +1281,22 @@
                                 </tr>
                                 </tbody>
                             </table>
+                            <hr/>
                         </div>
 
                         {# Breast Abnormalities #}
-                        <hr/>
                         <div class="row">
-                            <div class="col-sm-12 form-group">
-                                <label for="ceoba-n">Breast Abnormalities</label>
-                                <div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-md-3">
+                                    <label for="ceoba-n">Breast Abnormalities</label>
+                                </div>
+                                <div class="col-sm-8 col-md-9">
                                     {{ f.inlineRadioNYE("ceoba") }}
                                 </div>
                             </div>
                         </div>
 
-                        <div class="table-responsive">
+                        <div class="table-responsive" id="breast-container">
                             <table class="table">
                                 <tbody>
                                 <tr>
@@ -1359,22 +1375,41 @@
                                 </tr>
                                 </tbody>
                             </table>
+                            <hr/>
                         </div>
 
+                        {# Bone Abnormalities #}
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-sm-4 col-md-3">
+                                    <label for="ceaba-n">Bone Abnormalities</label>
+                                </div>
+                                <div class="col-sm-8 col-md-9">
+                                    {{ f.inlineRadioNYE("ceaba") }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="bone-container">
+                            <div class="form-group col-sm-12">
+                                <label for="ceaoabb">Specify Bone Abnormalities</label>
+                                <textarea name="ceaoabb" id="ceaoabb" class="form-control"></textarea>
+                                {{ f.inlineCheckbox("ceaoabbi", "y", "Include in impression") }}
+                            </div>
+                        </div>
 
                         {# Abdominal Abnormalities #}
-                        <hr/>
                         <div class="row">
-                            <div class="col-sm-12 form-group">
-                                <label for="ceoaa-n">Abdominal Abnormalities</label>
-                                <div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-md-3">
+                                    <label for="ceoaa-n">Abdominal Abnormalities</label>
+                                </div>
+                                <div class="col-sm-8 col-md-9">
                                     {{ f.inlineRadio("ceoaa", "ceoaa-n","n","No",true) }}
                                     {{ f.inlineRadio("ceoaa", "ceoaa-y","y","Yes",true) }}
                                 </div>
                             </div>
                         </div>
-
-                        <div class="table-responsive">
+                        <div class="table-responsive" id="abdominal-container">
                             <table class="table">
                                 <tbody>
 
@@ -1505,27 +1540,11 @@
                                 </tr>
                                 </tbody>
                             </table>
+                            <hr/>
                         </div>
+                    </div>
+                    {#  END Abnormalities tab#}
 
-
-                        {# Bone Abnormalities #}
-                        <hr/>
-                        <div class="row">
-                            <div class="col-sm-12 form-group">
-                                <label for="ceaba-n">Bone Abnormalities</label>
-                                <div>
-                                    {{ f.inlineRadioNYE("ceaba") }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-sm-12">
-                                <label for="ceaoabb">Specify Bone Abnormalities</label>
-                                <textarea name="ceaoabb" id="ceaoabb" class="form-control"></textarea>
-                                {{ f.inlineCheckbox("ceaoabbi", "y", "Include in impression") }}
-                            </div>
-                        </div>
-                    </div> <!-- end of abnormalities tab -->
                     <div class="tab-pane" id="follow-up" role="tabpanel" aria-labelledby="follow-up-tab">
                         <hr/>
                         <h3>Follow Up</h3>
@@ -1702,6 +1721,23 @@
             }
         }
 
+        /**
+         * Sets the default value of a radio group and conditionally displays a container when that radio value is "y"
+         * @param radioGroupName the group of radio buttons to evaluate
+         * @param display selector for the container to display
+         * @param defaultValue the default value of the radio when no other option is already selected.
+         */
+        function abnormalities(radioGroupName, display, defaultValue) {
+            var $radios = $("input:radio[name=" + radioGroupName + "]");
+
+            //set default if not already selected
+            if ($radios.is(":checked") === false) {
+                $radios.filter("[value=" + defaultValue + "]").prop('checked', true);
+            }
+
+            $radios.conditionallyDisplay({sourceValues: "y", enable: display});
+        }
+
         $(function () {
             // bind to change events on study date and baseline date to calculate "time since baseline"
             var $tsbFields = $("#sidoe, #cedos");
@@ -1724,6 +1760,13 @@
             })
 
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
+
+            abnormalities("pa", "#pulmonary-container", "n");
+            abnormalities("ceca", "#cardiac-container", "n");
+            abnormalities("ceoma", "#neck-container", "n");
+            abnormalities("ceoba", "#breast-container", "n");
+            abnormalities("ceoaa", "#abdominal-container", "y");
+            abnormalities("ceaba", "#bone-container", "n");
 
             initTabbedNavigation("ctEvalTabs", "ctEvalTabsContent");
 

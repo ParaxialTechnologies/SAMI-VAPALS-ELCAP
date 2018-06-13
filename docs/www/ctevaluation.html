@@ -391,8 +391,8 @@
                <label>
                 Additional Nodules
                </label>
-               <!-- TODO: figure out bm() -->
-               <select class="form-control no-auto-focus" name="cefctn" onchange="bm()">
+               <!-- TODO: figure out what bm() function did onclick of cefctn -->
+               <select class="form-control no-auto-focus" name="cefctn">
                 <option value="6">
                  Nodule 6
                 </option>
@@ -2698,7 +2698,26 @@
          </div>
         </div>
        </div>
-       <div class="table-responsive">
+       <div class="row">
+        <div class="form-group">
+         <div class="col-sm-4 col-md-3">
+          <label>
+           Pulmonary Abnormalities
+          </label>
+         </div>
+         <div class="col-sm-8 col-md-9">
+          <label class="radio-inline">
+           <input data-fv-notempty-message="Please select a value" id="pa-n" name="pa" required="required" type="radio" value="n"/>
+           No
+          </label>
+          <label class="radio-inline">
+           <input data-fv-notempty-message="Please select a value" id="pa-y" name="pa" required="required" type="radio" value="y"/>
+           Yes
+          </label>
+         </div>
+        </div>
+       </div>
+       <div class="table-responsive" id="pulmonary-container">
         <table class="table">
          <thead>
           <tr>
@@ -3468,7 +3487,7 @@
            <td colspan="7">
             <div class="form-group">
              <label>
-              Additional Comments on Parenchymal Abnormalities
+              Additional Comments on Pulmonary Abnormalities
              </label>
              <textarea class="form-control" id="ceoppa" name="ceoppa"></textarea>
              <label class="checkbox-inline">
@@ -3690,14 +3709,16 @@
           </tr>
          </tbody>
         </table>
+        <hr/>
        </div>
-       <hr/>
        <div class="row">
-        <div class="col-sm-12 form-group">
-         <label>
-          Cardiac Abnormalities
-         </label>
-         <div>
+        <div class="form-group">
+         <div class="col-sm-4 col-md-3">
+          <label>
+           Cardiac Abnormalities
+          </label>
+         </div>
+         <div class="col-sm-8 col-md-9">
           <label class="radio-inline">
            <input data-fv-notempty-message="Please select a value" id="ceca-n" name="ceca" required="required" type="radio" value="n"/>
            No
@@ -3713,7 +3734,7 @@
          </div>
         </div>
        </div>
-       <div class="table-responsive">
+       <div class="table-responsive" id="cardiac-container">
         <table class="table">
          <tbody>
           <tr>
@@ -3966,14 +3987,16 @@
           </tr>
          </tbody>
         </table>
+        <hr/>
        </div>
-       <hr/>
        <div class="row">
-        <div class="col-sm-12 form-group">
-         <label for="ceoba-n">
-          Neck and Mediastinal Abnormalities
-         </label>
-         <div>
+        <div class="form-group">
+         <div class="col-sm-4 col-md-3">
+          <label for="ceoba-n">
+           Neck and Mediastinal Abnormalities
+          </label>
+         </div>
+         <div class="col-sm-8 col-md-9">
           <label class="radio-inline">
            <input data-fv-notempty-message="Please select a value" id="ceoma-n" name="ceoma" required="required" type="radio" value="n"/>
            No
@@ -3989,7 +4012,7 @@
          </div>
         </div>
        </div>
-       <div class="table-responsive">
+       <div class="table-responsive" id="neck-container">
         <table class="table">
          <tbody>
           <tr>
@@ -4470,14 +4493,16 @@
           </tr>
          </tbody>
         </table>
+        <hr/>
        </div>
-       <hr/>
        <div class="row">
-        <div class="col-sm-12 form-group">
-         <label for="ceoba-n">
-          Breast Abnormalities
-         </label>
-         <div>
+        <div class="form-group">
+         <div class="col-sm-4 col-md-3">
+          <label for="ceoba-n">
+           Breast Abnormalities
+          </label>
+         </div>
+         <div class="col-sm-8 col-md-9">
           <label class="radio-inline">
            <input data-fv-notempty-message="Please select a value" id="ceoba-n" name="ceoba" required="required" type="radio" value="n"/>
            No
@@ -4493,7 +4518,7 @@
          </div>
         </div>
        </div>
-       <div class="table-responsive">
+       <div class="table-responsive" id="breast-container">
         <table class="table">
          <tbody>
           <tr>
@@ -4664,14 +4689,51 @@
           </tr>
          </tbody>
         </table>
+        <hr/>
        </div>
-       <hr/>
        <div class="row">
-        <div class="col-sm-12 form-group">
-         <label for="ceoaa-n">
-          Abdominal Abnormalities
+        <div class="form-group">
+         <div class="col-sm-4 col-md-3">
+          <label for="ceaba-n">
+           Bone Abnormalities
+          </label>
+         </div>
+         <div class="col-sm-8 col-md-9">
+          <label class="radio-inline">
+           <input data-fv-notempty-message="Please select a value" id="ceaba-n" name="ceaba" required="required" type="radio" value="n"/>
+           No
+          </label>
+          <label class="radio-inline">
+           <input data-fv-notempty-message="Please select a value" id="ceaba-y" name="ceaba" required="required" type="radio" value="y"/>
+           Yes
+          </label>
+          <label class="radio-inline">
+           <input data-fv-notempty-message="Please select a value" id="ceaba-e" name="ceaba" required="required" type="radio" value="e"/>
+           not visible
+          </label>
+         </div>
+        </div>
+       </div>
+       <div class="row" id="bone-container">
+        <div class="form-group col-sm-12">
+         <label for="ceaoabb">
+          Specify Bone Abnormalities
          </label>
-         <div>
+         <textarea class="form-control" id="ceaoabb" name="ceaoabb"></textarea>
+         <label class="checkbox-inline">
+          <input id="ceaoabbi" name="ceaoabbi" type="checkbox" value="y"/>
+          Include in impression
+         </label>
+        </div>
+       </div>
+       <div class="row">
+        <div class="form-group">
+         <div class="col-sm-4 col-md-3">
+          <label for="ceoaa-n">
+           Abdominal Abnormalities
+          </label>
+         </div>
+         <div class="col-sm-8 col-md-9">
           <label class="radio-inline">
            <input data-fv-notempty-message="Please select a value" id="ceoaa-n" name="ceoaa" required="required" type="radio" value="n"/>
            No
@@ -4683,7 +4745,7 @@
          </div>
         </div>
        </div>
-       <div class="table-responsive">
+       <div class="table-responsive" id="abdominal-container">
         <table class="table">
          <tbody>
           <tr>
@@ -5008,43 +5070,9 @@
           </tr>
          </tbody>
         </table>
-       </div>
-       <hr/>
-       <div class="row">
-        <div class="col-sm-12 form-group">
-         <label for="ceaba-n">
-          Bone Abnormalities
-         </label>
-         <div>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="ceaba-n" name="ceaba" required="required" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="ceaba-y" name="ceaba" required="required" type="radio" value="y"/>
-           Yes
-          </label>
-          <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="ceaba-e" name="ceaba" required="required" type="radio" value="e"/>
-           not visible
-          </label>
-         </div>
-        </div>
-       </div>
-       <div class="row">
-        <div class="form-group col-sm-12">
-         <label for="ceaoabb">
-          Specify Bone Abnormalities
-         </label>
-         <textarea class="form-control" id="ceaoabb" name="ceaoabb"></textarea>
-         <label class="checkbox-inline">
-          <input id="ceaoabbi" name="ceaoabbi" type="checkbox" value="y"/>
-          Include in impression
-         </label>
-        </div>
+        <hr/>
        </div>
       </div>
-      <!-- end of abnormalities tab -->
       <div aria-labelledby="follow-up-tab" class="tab-pane" id="follow-up" role="tabpanel">
        <hr/>
        <h3>
@@ -5339,6 +5367,23 @@
             }
         }
 
+        /**
+         * Sets the default value of a radio group and conditionally displays a container when that radio value is "y"
+         * @param radioGroupName the group of radio buttons to evaluate
+         * @param display selector for the container to display
+         * @param defaultValue the default value of the radio when no other option is already selected.
+         */
+        function abnormalities(radioGroupName, display, defaultValue) {
+            var $radios = $("input:radio[name=" + radioGroupName + "]");
+
+            //set default if not already selected
+            if ($radios.is(":checked") === false) {
+                $radios.filter("[value=" + defaultValue + "]").prop('checked', true);
+            }
+
+            $radios.conditionallyDisplay({sourceValues: "y", enable: display});
+        }
+
         $(function () {
             // bind to change events on study date and baseline date to calculate "time since baseline"
             var $tsbFields = $("#sidoe, #cedos");
@@ -5361,6 +5406,13 @@
             })
 
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
+
+            abnormalities("pa", "#pulmonary-container", "n");
+            abnormalities("ceca", "#cardiac-container", "n");
+            abnormalities("ceoma", "#neck-container", "n");
+            abnormalities("ceoba", "#breast-container", "n");
+            abnormalities("ceoaa", "#abdominal-container", "y");
+            abnormalities("ceaba", "#bone-container", "n");
 
             initTabbedNavigation("ctEvalTabs", "ctEvalTabsContent");
 

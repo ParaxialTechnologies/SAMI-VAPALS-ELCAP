@@ -37,6 +37,8 @@
   </script>
   <script src="jquery-conditonally-enable.js">
   </script>
+  <script src="jquery-conditonally-display.js">
+  </script>
   <script src="jqueryui-vista-filemanAutocomplete.js">
   </script>
   <script src="vapals.js">
@@ -270,9 +272,9 @@
         </div>
        </div>
        <div class="row">
-        <div class="col-sm-4 col-md-3 form-group">
+        <div class="col-sm-4 form-group">
          <label class="control-label" for="sidoe">
-          Date of Baseline CT
+          Baseline CT
          </label>
          <div class="input-group datepicker">
           <input aria-describedby="sidoe-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" data-fv-notempty-message="Baseline CT date is required" id="sidoe" name="sidoe" required="required"/>
@@ -286,10 +288,16 @@
          <small class="form-text text-muted">
           MM/DD/YYYY
          </small>
+         <small class="form-text text-muted pull-right">
+          <span id="cetsb-text">
+           0
+          </span>
+          months since baseline
+         </small>
         </div>
-        <div class="col-sm-4 col-md-3 form-group">
+        <div class="col-sm-4 form-group">
          <label class="control-label" for="cedcs">
-          Date of Most Recent Comparative Study
+          Most Recent Comparative Study
          </label>
          <div class="input-group datepicker">
           <input aria-describedby="cedcs-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" data-fv-notempty-message="Date is required" id="cedcs" name="cedcs" required="required"/>
@@ -304,19 +312,7 @@
           MM/DD/YYYY
          </small>
         </div>
-       </div>
-       <div class="row">
-        <div class="col-sm-4 col-md-3 form-group">
-         <div class="alert alert-info" id="cetsb-alert">
-          Time since baseline:
-          <span id="cetsb-text">
-           0
-          </span>
-          months
-         </div>
-         <input class="form-control" id="cetsb" name="cetsb" type="hidden"/>
-        </div>
-        <div class="col-sm-4 col-md-3 form-group">
+        <div class="col-sm-4 form-group">
          <label class="control-label" for="cedps">
           Prior Scans
          </label>
@@ -2676,22 +2672,30 @@
            not visible
           </label>
          </div>
-         <label class="radio-inline">
-          <input data-fv-notempty-message="Please select a value" id="ceem-no" name="ceem" required="required" type="radio" value="no"/>
-          none
-         </label>
-         <label class="radio-inline">
-          <input id="ceem-mi" name="ceem" type="radio" value="mi"/>
-          mild
-         </label>
-         <label class="radio-inline">
-          <input id="ceem-mo" name="ceem" type="radio" value="mo"/>
-          moderate
-         </label>
-         <label class="radio-inline">
-          <input id="ceem-se" name="ceem" type="radio" value="se"/>
-          severe
-         </label>
+         <div class="radio">
+          <label>
+           <input id="ceem-no" name="ceem" required="required" type="radio" value="no"/>
+           none
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="ceem-mi" name="ceem" type="radio" value="mi"/>
+           mild - splaying of vessels or scattered bulbay/blebs
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="ceem-mo" name="ceem" type="radio" value="mo"/>
+           moderate - less than 50%
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="ceem-se" name="ceem" type="radio" value="se"/>
+           severe - more than 50%
+          </label>
+         </div>
         </div>
        </div>
        <div class="table-responsive">
@@ -5263,7 +5267,7 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.06.09
+     SNAPSHOT 2018.06.13
     </span>
    </div>
   </footer>
@@ -5356,7 +5360,7 @@
                 }
             })
 
-            $("#cectrst").conditionallyEnable({sourceValues: "o", enable: "#cectrsto-container"});
+            $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
 
             initTabbedNavigation("ctEvalTabs", "ctEvalTabsContent");
 

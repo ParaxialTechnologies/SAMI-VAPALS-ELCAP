@@ -124,15 +124,8 @@
        </a>
       </li>
       <li role="presentation">
-       <a aria-controls="follow-up" aria-selected="false" class="nav-link" data-toggle="tab" href="#follow-up" id="follow-up-tab" role="tab">
-        Follow Up
-        <i class="fa fa-check-circle-o complete-mark" title="This tab is complete">
-        </i>
-       </a>
-      </li>
-      <li role="presentation">
        <a aria-controls="impression" aria-selected="false" class="nav-link" data-toggle="tab" href="#impression" id="impression-tab" role="tab">
-        Impression
+        Impression &amp; Follow Up
         <i class="fa fa-check-circle-o complete-mark" title="This tab is complete">
         </i>
        </a>
@@ -320,7 +313,6 @@
         </div>
        </div>
       </div>
-      <!-- end of scan tab -->
       <div aria-labelledby="nodules-tab" class="tab-pane" id="nodules" role="tabpanel">
        <div class="row">
         <div class="alert alert-warning">
@@ -2659,7 +2651,6 @@
         </div>
        </div>
       </div>
-      <!-- end of nodules tab -->
       <div aria-labelledby="abnormalities-tab" class="tab-pane" id="abnormalities" role="tabpanel">
        <div class="row">
         <div class="col-sm-12 form-group">
@@ -5069,117 +5060,6 @@
         <hr/>
        </div>
       </div>
-      <div aria-labelledby="follow-up-tab" class="tab-pane" id="follow-up" role="tabpanel">
-       <hr/>
-       <h3>
-        Follow Up
-       </h3>
-       <div class="row">
-        <div class="col-sm-3 form-group">
-         <label for="cefu">
-          Follow-up:
-         </label>
-         <select class="form-control" id="cefu" name="cefu">
-          <option value="-">
-           -
-          </option>
-          <option value="rs">
-           annual repeat CT
-          </option>
-          <option value="dx">
-           f/u CT
-          </option>
-          <option value="af">
-           Abx + f/u CT
-          </option>
-          <option value="pe">
-           PET
-          </option>
-          <option value="cc">
-           CT w contrast
-          </option>
-          <option value="fn">
-           CT-guided biopsy
-          </option>
-          <option value="br">
-           bronchoscopy
-          </option>
-          <option value="va">
-           VAT
-          </option>
-          <option value="su">
-           resection
-          </option>
-          <option value="nf">
-           no further follow-up
-          </option>
-         </select>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-sm-12 form-group">
-         <label for="cefu">
-          When:
-         </label>
-         <br/>
-         <label class="radio-inline">
-          <input id="cefuw-nw" name="cefuw" type="radio" value="nw"/>
-          now
-         </label>
-         <label class="radio-inline">
-          <input id="cefuw-1m" name="cefuw" type="radio" value="1m"/>
-          1 month
-         </label>
-         <label class="radio-inline">
-          <input id="cefuw-3m" name="cefuw" type="radio" value="3m"/>
-          3 months
-         </label>
-         <label class="radio-inline">
-          <input id="cefuw-6m" name="cefuw" type="radio" value="6m"/>
-          6 months
-         </label>
-         <label class="radio-inline">
-          <input id="cefuw-1y" name="cefuw" type="radio" value="1y"/>
-          1 year
-         </label>
-         <label class="radio-inline">
-          <input id="cefuw-os" name="cefuw" type="radio" value="os"/>
-          other
-         </label>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-sm-3 col-md-2 form-group">
-         <label for="cefu">
-          Follow-up Date:
-         </label>
-         <br/>
-         <div class="input-group datepicker">
-          <input aria-describedby="cefud-addon" class="form-control" data-fv-date="true" data-fv-notempty-message="Follow up date is required" id="cefud" name="cefud" required="required"/>
-          <div class="input-group-addon">
-           <div class="input-group-text" id="cefud-addon">
-            <i aria-hidden="true" class="fa fa-calendar">
-            </i>
-           </div>
-          </div>
-         </div>
-         <small class="form-text text-muted">
-          MM/DD/YYYY
-         </small>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-sm-12 form-group">
-         <div class="checkbox">
-          <label>
-           <input id="cefusa" name="cefusa" type="checkbox" value="y"/>
-           Special Attention
-          </label>
-         </div>
-        </div>
-       </div>
-      </div>
-      <!-- end of follow-up tab -->
       <div aria-labelledby="impression-tab" class="tab-pane" id="impression" role="tabpanel">
        <hr/>
        <h3>
@@ -5259,6 +5139,118 @@
           <input id="ceimrei" name="ceimrei" type="checkbox" value="y"/>
           Include in impression
          </label>
+        </div>
+       </div>
+       <hr/>
+       <h3>
+        Follow Up
+       </h3>
+       <div class="alert alert-warning">
+        Based on the data provided, this is the recommended follow-up; change
+                            if needed. Radiologist takes responsibility for report
+       </div>
+       <div class="row">
+        <div class="col-sm-3 form-group">
+         <label for="cefu">
+          Follow Up:
+         </label>
+         <select class="form-control" id="cefu" name="cefu">
+          <option value="-">
+           -
+          </option>
+          <option value="rs">
+           annual repeat CT
+          </option>
+          <option value="dx">
+           f/u CT
+          </option>
+          <option value="af">
+           Abx + f/u CT
+          </option>
+          <option value="pe">
+           PET
+          </option>
+          <option value="cc">
+           CT w contrast
+          </option>
+          <option value="fn">
+           CT-guided biopsy
+          </option>
+          <option value="br">
+           bronchoscopy
+          </option>
+          <option value="va">
+           VAT
+          </option>
+          <option value="su">
+           resection
+          </option>
+          <option value="nf">
+           no further follow-up
+          </option>
+         </select>
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-sm-12 form-group">
+         <label for="cefuw-nw">
+          When:
+         </label>
+         <br/>
+         <label class="radio-inline">
+          <input id="cefuw-nw" name="cefuw" type="radio" value="nw"/>
+          now
+         </label>
+         <label class="radio-inline">
+          <input id="cefuw-1m" name="cefuw" type="radio" value="1m"/>
+          1 month
+         </label>
+         <label class="radio-inline">
+          <input id="cefuw-3m" name="cefuw" type="radio" value="3m"/>
+          3 months
+         </label>
+         <label class="radio-inline">
+          <input id="cefuw-6m" name="cefuw" type="radio" value="6m"/>
+          6 months
+         </label>
+         <label class="radio-inline">
+          <input id="cefuw-1y" name="cefuw" type="radio" value="1y"/>
+          1 year
+         </label>
+         <label class="radio-inline">
+          <input id="cefuw-os" name="cefuw" type="radio" value="os"/>
+          other
+         </label>
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-sm-3 col-md-2 form-group">
+         <label for="cefud">
+          Follow-up Date:
+         </label>
+         <br/>
+         <div class="input-group datepicker">
+          <input aria-describedby="cefud-addon" class="form-control" data-fv-date="true" data-fv-notempty-message="Follow up date is required" id="cefud" name="cefud" required="required"/>
+          <div class="input-group-addon">
+           <div class="input-group-text" id="cefud-addon">
+            <i aria-hidden="true" class="fa fa-calendar">
+            </i>
+           </div>
+          </div>
+         </div>
+         <small class="form-text text-muted">
+          MM/DD/YYYY
+         </small>
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-sm-12 form-group">
+         <div class="checkbox">
+          <label>
+           <input id="cefusa" name="cefusa" type="checkbox" value="y"/>
+           Special Attention
+          </label>
+         </div>
         </div>
        </div>
       </div>

@@ -145,24 +145,20 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-sm-4 col-md-3 form-group">
-                                <label for="sidoe" class="control-label">Date of Baseline CT</label>
+                            <div class="col-sm-4 form-group">
+                                <label for="sidoe" class="control-label">Baseline CT</label>
                                 {{ f.datepicker("sidoe", true, "Baseline CT date is required") }}
+                                <small class="form-text text-muted pull-right">
+                                    <span id="cetsb-text">0</span> months since baseline
+                                </small>
                             </div>
-                            <div class="col-sm-4 col-md-3 form-group">
-                                <label for="cedcs" class="control-label">Date of Most Recent Comparative Study</label>
+
+
+                            <div class="col-sm-4 form-group">
+                                <label for="cedcs" class="control-label">Most Recent Comparative Study</label>
                                 {{ f.datepicker("cedcs", true, "Date is required") }}
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-4 col-md-3 form-group">
-                                <div id="cetsb-alert" class="alert alert-info">
-                                    Time since baseline: <span id="cetsb-text">0</span> months
-                                </div>
-                                <input type="hidden" class="form-control" id="cetsb" name="cetsb"/>
-                            </div>
-                            <div class="col-sm-4 col-md-3 form-group">
+                            <div class="col-sm-4  form-group">
                                 <label for="cedps" class="control-label">Prior Scans</label>
                                 <input type="text" class="form-control" id="cedps" name="cedps" required="required"/>
                             </div>
@@ -588,10 +584,11 @@
                             <div class="col-sm-12 form-group">
                                 <label>Emphysema</label>
                                 {{ f.checkbox("ceemv","e","not visible") }}
-                                {{ f.inlineRadio("ceem", "ceem-no", "no", "none", true) }}
-                                {{ f.inlineRadio("ceem", "ceem-mi", "mi", "mild", false) }}
-                                {{ f.inlineRadio("ceem", "ceem-mo", "mo", "moderate", false) }}
-                                {{ f.inlineRadio("ceem", "ceem-se", "se", "severe", false) }}
+                                {{ f.radio("ceem", "ceem-no", "no", "none", true) }}
+                                {{ f.radio("ceem", "ceem-mi", "mi", "mild - splaying of vessels or scattered bulbay/blebs", false) }}
+                                {{ f.radio("ceem", "ceem-mo", "mo", "moderate - less than 50%", false) }}
+                                {{ f.radio("ceem", "ceem-se", "se", "severe - more than 50%", false) }}
+
                             </div>
                         </div>
 

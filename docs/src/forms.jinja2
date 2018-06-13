@@ -25,6 +25,17 @@
     {{ inlineRadio(groupName, groupName+"-e","e","not visible",true) }}
 {%- endmacro %}
 
+{% macro radio(group, id, value, label, required, checked) -%}
+    <div class="radio">
+        <label>
+            <input type="radio" name="{{ group }}" id="{{ id }}" value="{{ value }}"
+                    {{ "checked" if checked else "" }}
+                    {{ "required=\"required\"" if required else "" }}>
+            {{ label }}
+        </label>
+    </div>
+{%- endmacro %} %}
+
 
 {% macro checkbox(name, value, labelText, attributes) -%}
     <div class="checkbox">

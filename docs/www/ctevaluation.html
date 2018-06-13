@@ -160,7 +160,7 @@
          <input class="form-control" id="cerad" name="cerad" required="required" type="text"/>
         </div>
         <div class="col-sm-6 col-md-4 col-lg-3 form-group">
-         <label>
+         <label for="cerads">
           Signing Radiologist
          </label>
          <select class="form-control" id="cerads" name="cerads">
@@ -261,7 +261,7 @@
          <label for="cectrsto">
           Specify
          </label>
-         <input class="form-control numeric" data-fv-integer="true" id="cectrsto" maxlength="5" name="cectrsto" placeholder="specify" required="required" type="text"/>
+         <input class="form-control" data-fv-numeric="true" id="cectrsto" maxlength="5" min="0" name="cectrsto" placeholder="specify" required="required" type="text"/>
         </div>
        </div>
        <div class="row">
@@ -380,11 +380,11 @@
              </th>
              <th>
               <div class="form-group">
-               <label>
+               <label for="cefctn">
                 Additional Nodules
                </label>
                <!-- TODO: figure out what bm() function did onclick of cefctn -->
-               <select class="form-control no-auto-focus" name="cefctn">
+               <select class="form-control no-auto-focus" id="cefctn" name="cefctn">
                 <option value="6">
                  Nodule 6
                 </option>
@@ -419,7 +419,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect1ch" onchange="newStat(1)">
+               <select name="cect1ch" onchange="newStat(1)" title="Is this nodule new?">
                 <option value="-">
                  -
                 </option>
@@ -476,7 +476,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect2ch" onchange="newStat(2)">
+               <select name="cect2ch" onchange="newStat(2)" title="Is this nodule new?">
                 <option value="-">
                  -
                 </option>
@@ -533,7 +533,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect3ch" onchange="newStat(3)">
+               <select name="cect3ch" onchange="newStat(3)" title="Is this nodule new?">
                 <option value="-">
                  -
                 </option>
@@ -590,7 +590,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect4ch" onchange="newStat(4)">
+               <select name="cect4ch" onchange="newStat(4)" title="Is this nodule new?">
                 <option value="-">
                  -
                 </option>
@@ -647,7 +647,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect5ch" onchange="newStat(5)">
+               <select name="cect5ch" onchange="newStat(5)" title="Is this nodule new?">
                 <option value="-">
                  -
                 </option>
@@ -704,7 +704,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect0ch" onchange="newStat(0)">
+               <select name="cect0ch" onchange="newStat(0)" title="Is this nodule new?">
                 <option value="-">
                  -
                 </option>
@@ -771,7 +771,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect1en">
+               <select name="cect1en" title="Endobronchial">
                 <option value="-">
                  -
                 </option>
@@ -810,7 +810,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect2en">
+               <select name="cect2en" title="Endobronchial">
                 <option value="-">
                  -
                 </option>
@@ -849,7 +849,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect3en">
+               <select name="cect3en" title="Endobronchial">
                 <option value="-">
                  -
                 </option>
@@ -888,7 +888,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect4en">
+               <select name="cect4en" title="Endobronchial">
                 <option value="-">
                  -
                 </option>
@@ -927,7 +927,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect5en">
+               <select name="cect5en" title="Endobronchial">
                 <option value="-">
                  -
                 </option>
@@ -966,7 +966,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect0en">
+               <select name="cect0en" title="Endobronchial">
                 <option value="-">
                  -
                 </option>
@@ -1012,7 +1012,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect1ll">
+               <select name="cect1ll" title="Most likely location">
                 <option value="-">
                  -
                 </option>
@@ -1039,7 +1039,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect2ll">
+               <select name="cect2ll" title="Most likely location">
                 <option value="-">
                  -
                 </option>
@@ -1066,7 +1066,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect3ll">
+               <select name="cect3ll" title="Most likely location">
                 <option value="-">
                  -
                 </option>
@@ -1093,7 +1093,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect4ll">
+               <select name="cect4ll" title="Most likely location">
                 <option value="-">
                  -
                 </option>
@@ -1120,7 +1120,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect5ll">
+               <select name="cect5ll" title="Most likely location">
                 <option value="-">
                  -
                 </option>
@@ -1147,7 +1147,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect0ll">
+               <select name="cect0ll" title="Most likely location">
                 <option value="-">
                  -
                 </option>
@@ -1181,32 +1181,32 @@
              </td>
              <td>
               <div class="form-group">
-               <input name="cect1sn" size="3" type="text"/>
+               <input name="cect1sn" size="3" title="CT Image Number" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input name="cect2sn" size="3" type="text"/>
+               <input name="cect2sn" size="3" title="CT Image Number" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input name="cect3sn" size="3" type="text"/>
+               <input name="cect3sn" size="3" title="CT Image Number" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input name="cect4sn" size="3" type="text"/>
+               <input name="cect4sn" size="3" title="CT Image Number" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input name="cect5sn" size="3" type="text"/>
+               <input name="cect5sn" size="3" title="CT Image Number" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input name="cect0sn" size="3" type="text"/>
+               <input name="cect0sn" size="3" title="CT Image Number" type="text"/>
               </div>
              </td>
             </tr>
@@ -1218,32 +1218,32 @@
              </td>
              <td>
               <div class="form-group">
-               <input name="cect1sn" size="3" type="text"/>
+               <input name="cect1sn" size="3" title="CT Series Number" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input name="cect2sn" size="3" type="text"/>
+               <input name="cect2sn" size="3" title="CT Series Number" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input name="cect3sn" size="3" type="text"/>
+               <input name="cect3sn" size="3" title="CT Series Number" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input name="cect4sn" size="3" type="text"/>
+               <input name="cect4sn" size="3" title="CT Series Number" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input name="cect5sn" size="3" type="text"/>
+               <input name="cect5sn" size="3" title="CT Series Number" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input name="cect0sn" size="3" type="text"/>
+               <input name="cect0sn" size="3" title="CT Series Number" type="text"/>
               </div>
              </td>
             </tr>
@@ -1255,7 +1255,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect1st">
+               <select name="cect1st" title="Nodule status">
                 <option value="-">
                  -
                 </option>
@@ -1312,7 +1312,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect2st">
+               <select name="cect2st" title="Nodule status">
                 <option value="-">
                  -
                 </option>
@@ -1369,7 +1369,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect3st">
+               <select name="cect3st" title="Nodule status">
                 <option value="-">
                  -
                 </option>
@@ -1426,7 +1426,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect4st">
+               <select name="cect4st" title="Nodule status">
                 <option value="-">
                  -
                 </option>
@@ -1483,7 +1483,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect5st">
+               <select name="cect5st" title="Nodule status">
                 <option value="-">
                  -
                 </option>
@@ -1540,7 +1540,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect0st">
+               <select name="cect0st" title="Nodule status">
                 <option value="-">
                  -
                 </option>
@@ -1604,32 +1604,32 @@
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect1pld" type="text"/>
+               <input class="numeric" name="cect1pld" title="Distance" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect2pld" type="text"/>
+               <input class="numeric" name="cect2pld" title="Distance" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect3pld" type="text"/>
+               <input class="numeric" name="cect3pld" title="Distance" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect4pld" type="text"/>
+               <input class="numeric" name="cect4pld" title="Distance" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect5pld" type="text"/>
+               <input class="numeric" name="cect5pld" title="Distance" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect0pld" type="text"/>
+               <input class="numeric" name="cect0pld" title="Distance" type="text"/>
               </div>
              </td>
             </tr>
@@ -1641,32 +1641,32 @@
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect1sl" size="4" type="text"/>
+               <input class="numeric" name="cect1sl" size="4" title="Length (mm)" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect2sl" size="4" type="text"/>
+               <input class="numeric" name="cect2sl" size="4" title="Length (mm)" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect3sl" size="4" type="text"/>
+               <input class="numeric" name="cect3sl" size="4" title="Length (mm)" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect4sl" size="4" type="text"/>
+               <input class="numeric" name="cect4sl" size="4" title="Length (mm)" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect5sl" size="4" type="text"/>
+               <input class="numeric" name="cect5sl" size="4" title="Length (mm)" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect0sl" size="4" type="text"/>
+               <input class="numeric" name="cect0sl" size="4" title="Length (mm)" type="text"/>
               </div>
              </td>
             </tr>
@@ -1678,32 +1678,32 @@
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect1sw" size="4" type="text"/>
+               <input class="numeric" name="cect1sw" size="4" title="Maximum Width" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect2sw" size="4" type="text"/>
+               <input class="numeric" name="cect2sw" size="4" title="Maximum Width" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect3sw" size="4" type="text"/>
+               <input class="numeric" name="cect3sw" size="4" title="Maximum Width" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect4sw" size="4" type="text"/>
+               <input class="numeric" name="cect4sw" size="4" title="Maximum Width" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect5sw" size="4" type="text"/>
+               <input class="numeric" name="cect5sw" size="4" title="Maximum Width" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect0sw" size="4" type="text"/>
+               <input class="numeric" name="cect0sw" size="4" title="Maximum Width" type="text"/>
               </div>
              </td>
             </tr>
@@ -1713,32 +1713,32 @@
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect1sh" size="4" type="text"/>
+               <input class="numeric" name="cect1sh" size="4" title="Height" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect2sh" size="4" type="text"/>
+               <input class="numeric" name="cect2sh" size="4" title="Height" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect3sh" size="4" type="text"/>
+               <input class="numeric" name="cect3sh" size="4" title="Height" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect4sh" size="4" type="text"/>
+               <input class="numeric" name="cect4sh" size="4" title="Height" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect5sh" size="4" type="text"/>
+               <input class="numeric" name="cect5sh" size="4" title="Height" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect0sh" size="4" type="text"/>
+               <input class="numeric" name="cect0sh" size="4" title="Height" type="text"/>
               </div>
              </td>
             </tr>
@@ -1752,32 +1752,32 @@
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect1sv" size="4" type="text"/>
+               <input class="numeric" name="cect1sv" size="4" title="Volume" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect2sv" size="4" type="text"/>
+               <input class="numeric" name="cect2sv" size="4" title="Volume" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect3sv" size="4" type="text"/>
+               <input class="numeric" name="cect3sv" size="4" title="Volume" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect4sv" size="4" type="text"/>
+               <input class="numeric" name="cect4sv" size="4" title="Volume" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect5sv" size="4" type="text"/>
+               <input class="numeric" name="cect5sv" size="4" title="Volume" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input class="numeric" name="cect0sv" size="4" type="text"/>
+               <input class="numeric" name="cect0sv" size="4" title="Volume" type="text"/>
               </div>
              </td>
             </tr>
@@ -1789,7 +1789,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect1nt" onchange="newTexture(1)">
+               <select name="cect1nt" onchange="newTexture(1)" title="Nodule Consistency">
                 <option value="-">
                  -
                 </option>
@@ -1810,7 +1810,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect2nt" onchange="newTexture(2)">
+               <select name="cect2nt" onchange="newTexture(2)" title="Nodule Consistency">
                 <option value="-">
                  -
                 </option>
@@ -1831,7 +1831,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect3nt" onchange="newTexture(3)">
+               <select name="cect3nt" onchange="newTexture(3)" title="Nodule Consistency">
                 <option value="-">
                  -
                 </option>
@@ -1852,7 +1852,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect4nt" onchange="newTexture(4)">
+               <select name="cect4nt" onchange="newTexture(4)" title="Nodule Consistency">
                 <option value="-">
                  -
                 </option>
@@ -1873,7 +1873,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect5nt" onchange="newTexture(5)">
+               <select name="cect5nt" onchange="newTexture(5)" title="Nodule Consistency">
                 <option value="-">
                  -
                 </option>
@@ -1894,7 +1894,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect0nt" onchange="newTexture(0)">
+               <select name="cect0nt" onchange="newTexture(0)" title="Nodule Consistency">
                 <option value="-">
                  -
                 </option>
@@ -1922,44 +1922,44 @@
              </td>
              <td>
               <div class="form-group">
-               <input disabled="true" name="cect1ssl" size="4" type="text"/>
+               <input disabled="true" name="cect1ssl" size="4" title="Solid Comp. Length" type="text"/>
                x
-               <input disabled="true" name="cect1ssw" size="4" type="text"/>
+               <input disabled="true" name="cect1ssw" size="4" title="Solid Comp. Width" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input disabled="true" name="cect2ssl" size="4" type="text"/>
+               <input disabled="true" name="cect2ssl" size="4" title="Solid Comp. Length" type="text"/>
                x
-               <input disabled="true" name="cect2ssw" size="4" type="text"/>
+               <input disabled="true" name="cect2ssw" size="4" title="Solid Comp. Width" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input disabled="true" name="cect3ssl" size="4" type="text"/>
+               <input disabled="true" name="cect3ssl" size="4" title="Solid Comp. Length" type="text"/>
                x
-               <input disabled="true" name="cect3ssw" size="4" type="text"/>
+               <input disabled="true" name="cect3ssw" size="4" title="Solid Comp. Width" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input disabled="true" name="cect4ssl" size="4" type="text"/>
+               <input disabled="true" name="cect4ssl" size="4" title="Solid Comp. Length" type="text"/>
                x
-               <input disabled="true" name="cect4ssw" size="4" type="text"/>
+               <input disabled="true" name="cect4ssw" size="4" title="Solid Comp. Width" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input disabled="true" name="cect5ssl" size="4" type="text"/>
+               <input disabled="true" name="cect5ssl" size="4" title="Solid Comp. Length" type="text"/>
                x
-               <input disabled="true" name="cect5ssw" size="4" type="text"/>
+               <input disabled="true" name="cect5ssw" size="4" title="Solid Comp. Width" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input disabled="true" name="cect0ssl" size="4" type="text"/>
+               <input disabled="true" name="cect0ssl" size="4" title="Solid Comp. Length" type="text"/>
                x
-               <input disabled="true" name="cect0ssw" size="4" type="text"/>
+               <input disabled="true" name="cect0ssw" size="4" title="Solid Comp. Width" type="text"/>
               </div>
              </td>
             </tr>
@@ -2074,7 +2074,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect1ac">
+               <select name="cect1ac" title="Action">
                 <option value="-">
                  -
                 </option>
@@ -2110,7 +2110,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect2ac">
+               <select name="cect2ac" title="Action">
                 <option value="-">
                  -
                 </option>
@@ -2146,7 +2146,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect3ac">
+               <select name="cect3ac" title="Action">
                 <option value="-">
                  -
                 </option>
@@ -2182,7 +2182,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect4ac">
+               <select name="cect4ac" title="Action">
                 <option value="-">
                  -
                 </option>
@@ -2218,7 +2218,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect5ac">
+               <select name="cect5ac" title="Action">
                 <option value="-">
                  -
                 </option>
@@ -2254,7 +2254,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect0ac">
+               <select name="cect0ac" title="Action">
                 <option value="-">
                  -
                 </option>
@@ -2297,32 +2297,32 @@
              </td>
              <td>
               <div class="form-group">
-               <input name="cect1co" size="20" type="text"/>
+               <input name="cect1co" size="20" title="Comment" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input name="cect2co" size="20" type="text"/>
+               <input name="cect2co" size="20" title="Comment" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input name="cect3co" size="20" type="text"/>
+               <input name="cect3co" size="20" title="Comment" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input name="cect4co" size="20" type="text"/>
+               <input name="cect4co" size="20" title="Comment" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input name="cect5co" size="20" type="text"/>
+               <input name="cect5co" size="20" title="Comment" type="text"/>
               </div>
              </td>
              <td>
               <div class="form-group">
-               <input name="cect0co" size="20" type="text"/>
+               <input name="cect0co" size="20" title="Comment" type="text"/>
               </div>
              </td>
             </tr>
@@ -2334,7 +2334,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect1pd">
+               <select name="cect1pd" title="Pathologic Diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -2385,7 +2385,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect2pd">
+               <select name="cect2pd" title="Pathologic Diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -2436,7 +2436,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect3pd">
+               <select name="cect3pd" title="Pathologic Diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -2487,7 +2487,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect4pd">
+               <select name="cect4pd" title="Pathologic Diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -2538,7 +2538,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect5pd">
+               <select name="cect5pd" title="Pathologic Diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -2589,7 +2589,7 @@
              </td>
              <td>
               <div class="form-group">
-               <select name="cect0pd">
+               <select name="cect0pd" title="Pathologic Diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -2754,7 +2754,7 @@
              </label>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -2763,7 +2763,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -2772,7 +2772,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -2781,7 +2781,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -2790,7 +2790,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -2820,7 +2820,7 @@
              </label>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -2829,7 +2829,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -2838,7 +2838,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -2847,7 +2847,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -2856,7 +2856,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -2890,7 +2890,7 @@
              </label>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -2899,7 +2899,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -2908,7 +2908,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -2917,7 +2917,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -2926,7 +2926,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -2956,7 +2956,7 @@
              </label>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -2965,7 +2965,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -2974,7 +2974,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -2983,7 +2983,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -2992,7 +2992,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3045,7 +3045,7 @@
              </label>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3054,7 +3054,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3063,7 +3063,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3072,7 +3072,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3081,7 +3081,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3111,7 +3111,7 @@
              </label>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3120,7 +3120,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3129,7 +3129,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3138,7 +3138,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3147,7 +3147,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3230,7 +3230,7 @@
              </label>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3239,7 +3239,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3248,7 +3248,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3257,7 +3257,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3266,7 +3266,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3296,7 +3296,7 @@
              </label>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3305,7 +3305,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3314,7 +3314,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3323,7 +3323,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3332,7 +3332,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3362,7 +3362,7 @@
              </label>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3371,7 +3371,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3380,7 +3380,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3389,7 +3389,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3398,7 +3398,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3428,7 +3428,7 @@
              </label>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3437,7 +3437,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3446,7 +3446,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3455,7 +3455,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3464,7 +3464,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3477,7 +3477,7 @@
           <tr>
            <td colspan="7">
             <div class="form-group">
-             <label>
+             <label for="ceoppa">
               Additional Comments on Pulmonary Abnormalities
              </label>
              <textarea class="form-control" id="ceoppa" name="ceoppa"></textarea>
@@ -3558,7 +3558,7 @@
              </label>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3567,7 +3567,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3576,7 +3576,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3585,7 +3585,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3594,7 +3594,7 @@
              </div>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group">
              <div class="checkbox">
               <label>
@@ -3618,10 +3618,10 @@
            </td>
            <td colspan="5">
             <div class="form-group pull-left">
-             <label>
+             <label for="ceper">
               Right
              </label>
-             <select class="form-control" name="ceper" required="required">
+             <select class="form-control" id="ceper" name="ceper" required="required">
               <option value="-">
                -
               </option>
@@ -3640,10 +3640,10 @@
              </select>
             </div>
             <div class="form-group pull-left">
-             <label>
+             <label for="cepel">
               Left
              </label>
-             <select class="form-control" name="cepel" required="required">
+             <select class="form-control" id="cepel" name="cepel" required="required">
               <option value="-">
                -
               </option>
@@ -3687,7 +3687,7 @@
           <tr>
            <td colspan="7">
             <div class="form-group">
-             <label>
+             <label for="ceoppab">
               Describe Pleural Abnormalities
              </label>
              <textarea class="form-control" id="ceoppab" name="ceoppab"></textarea>
@@ -3869,7 +3869,7 @@
            </td>
            <td colspan="5">
             <div class="form-group">
-             <select class="form-control" name="cecca">
+             <select class="form-control" name="cecca" title="Aortic Calcification">
               <option value="-">
                -
               </option>
@@ -3891,7 +3891,7 @@
           </tr>
           <tr>
            <td>
-            Pericardial Effusion
+            Pericardial Effusion Severity
            </td>
            <td>
             <div class="form-group">
@@ -3905,10 +3905,7 @@
            </td>
            <td colspan="5">
             <div class="form-group">
-             <label for="ceprevm">
-              Severity
-             </label>
-             <select class="form-control" id="ceprevm" name="ceprevm">
+             <select class="form-control" id="ceprevm" name="ceprevm" title="Pericardial Effusion Severity">
               <option value="-">
                -
               </option>
@@ -3934,7 +3931,7 @@
            </td>
            <td colspan="5">
             <div class="form-group">
-             <input class="form-control" name="cepaw" size="4" type="text"/>
+             <input class="form-control numeric" data-fv-integer="true" id="cepaw" name="cepaw" size="4" title="Pulmonary Artery Width" type="text"/>
             </div>
            </td>
           </tr>
@@ -3944,7 +3941,7 @@
            </td>
            <td colspan="5">
             <div class="form-group">
-             <input class="form-control" name="ceaow" size="4" type="text"/>
+             <input class="form-control numeric" data-fv-integer="true" id="ceaow" name="ceaow" size="4" title="Ascending Aorta Width" type="text"/>
             </div>
            </td>
           </tr>
@@ -3958,14 +3955,16 @@
            </td>
            <td colspan="5">
             <div class="form-group">
-             <input class="form-control" name="cepar" onfocus="this.blur()" size="4" type="text"/>
+             <span id="cepar-text">
+             </span>
+             <input id="cepar" name="cepar" type="hidden"/>
             </div>
            </td>
           </tr>
           <tr>
            <td colspan="7">
             <div class="form-group">
-             <label>
+             <label for="cecommca">
               Additional Comments on Cardiac Abnormalities
              </label>
              <textarea class="form-control" id="cecommca" name="cecommca"></textarea>
@@ -4026,7 +4025,7 @@
              </label>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group form-inline">
              <div class="checkbox">
               <label>
@@ -4080,7 +4079,7 @@
              </label>
             </div>
            </td>
-           <td style="padding-top:0px;">
+           <td style="padding-top:0;">
             <div class="form-group form-inline">
              <div class="checkbox">
               <label>
@@ -4291,10 +4290,6 @@
              </div>
              <input class="form-control" id="ceagalns" name="ceagalns" placeholder="Specify" required="required" type="text"/>
             </div>
-           </td>
-          </tr>
-          <tr>
-           <td colspan="3">
            </td>
           </tr>
           <tr>
@@ -4568,7 +4563,7 @@
            </td>
            <td>
             <div class="form-group">
-             <select class="form-control" name="ceobard">
+             <select class="form-control" name="ceobard" title="Right Breast Density Classification">
               <option selected="" value="-">
                -
               </option>
@@ -4644,7 +4639,7 @@
            </td>
            <td>
             <div class="form-group">
-             <select class="form-control" name="ceobald">
+             <select class="form-control" name="ceobald" title="Left Breast Density Classification">
               <option selected="" value="-">
                -
               </option>
@@ -5068,8 +5063,8 @@
        <div class="row">
         <div class="col-sm-12">
          <div class="alert alert-info">
-          Annual repeat and follow-up CT scans should utilize the same
-                                    low-dose protocol used for baseline low-dose CT scans.
+          Annual repeat and follow-up CT scans should utilize the
+                                    same low-dose protocol used for baseline low-dose CT scans.
          </div>
         </div>
        </div>
@@ -5081,30 +5076,30 @@
          <div class="radio">
           <label>
            <input id="ceimn-rs" name="ceimn" type="radio" value="rs"/>
-           No evidence of nodules.
-                                        Follow-up as recommended above.
+           No evidence of
+                                        nodules. Follow-up as recommended above.
           </label>
          </div>
          <div class="radio">
           <label>
            <input id="ceimn-ro" name="ceimn" type="radio" value="ro"/>
-           Nodule(s) as described
-                                        above. Consistent with old granulomatous disease.
-                                        Follow-up as recommended above.
+           Nodule(s) as
+                                        described above. Consistent with old granulomatous disease. Follow-up as
+                                        recommended above.
           </label>
          </div>
          <div class="radio">
           <label>
            <input id="ceimn-ru" name="ceimn" type="radio" value="ru"/>
-           Nodule(s) unchanged, as
-                                        described above. Follow-up as recommended above.
+           Nodule(s) unchanged,
+                                        as described above. Follow-up as recommended above.
           </label>
          </div>
          <div class="radio">
           <label>
            <input id="ceimn-nf" name="ceimn" type="radio" value="nf"/>
-           Nodule(s) as described
-                                        above. Follow-up as recommended above.
+           Nodule(s) as
+                                        described above. Follow-up as recommended above.
           </label>
          </div>
         </div>
@@ -5117,14 +5112,15 @@
          <div class="radio">
           <label>
            <input id="ceimo-no" name="ceimo" type="radio" value="no"/>
-           No other abnormalities.
+           No other
+                                        abnormalities.
           </label>
          </div>
          <div class="radio">
           <label>
            <input id="ceimn-oa" name="ceimo" type="radio" value="oa"/>
-           Other abnormalities and
-                                        suggested follow-up as described above.
+           Other abnormalities
+                                        and suggested follow-up as described above.
           </label>
          </div>
         </div>
@@ -5146,8 +5142,8 @@
         Follow Up
        </h3>
        <div class="alert alert-warning">
-        Based on the data provided, this is the recommended follow-up; change
-                            if needed. Radiologist takes responsibility for report
+        Based on the data provided, this is the recommended follow-up; change if needed.
+                            Radiologist takes responsibility for report.
        </div>
        <div class="row">
         <div class="col-sm-3 form-group">
@@ -5312,14 +5308,14 @@
   <script language="JavaScript">
    //calculate Time Since Baseline (TSB)
         function calculateTimeSinceBaseline() {
-            var baselineDateString = $("#sidoe").val();
-            var studyDateString = $("#cedos").val();
+            const baselineDateString = $("#sidoe").val();
+            const studyDateString = $("#cedos").val();
             if (baselineDateString && studyDateString) {
-                var baselineDate = moment(baselineDateString, VAPALS.DATE_FORMAT);
-                var studyDate = moment(studyDateString, VAPALS.DATE_FORMAT);
+                const baselineDate = moment(baselineDateString, VAPALS.DATE_FORMAT);
+                const studyDate = moment(studyDateString, VAPALS.DATE_FORMAT);
                 if (baselineDate.isValid() && studyDate.isValid()) {
-                    var months = parseInt(studyDate.diff(baselineDate, "months", true))
-                    $("#cetsb-text").text(months)
+                    const months = parseInt(studyDate.diff(baselineDate, "months", true));
+                    $("#cetsb-text").text(months);
                     $("#cetsb").val(months);
                 }
                 else {
@@ -5328,31 +5324,32 @@
             }
         }
 
-        function calculateVisualCacScore() {
-            var res = 0;
-            console.log("calculateVisualCacScore")
-
-            var coronaryCalcification = $("#ceca").val() == "y";
-            if (coronaryCalcification) {
-                cal1 = $("#cecclm")[0].selectedIndex;
-                cal2 = $("#ceccld")[0].selectedIndex;
-                cal3 = $("#cecccf")[0].selectedIndex;
-                cal4 = $("#ceccrc")[0].selectedIndex;
-                if (cal1 > 0) cal1 = cal1 - 1;
-                if (cal2 > 0) cal2 = cal2 - 1;
-                if (cal3 > 0) cal3 = cal3 - 1;
-                if (cal4 > 0) cal4 = cal4 - 1;
-                res = cal1 + cal2 + cal3 + cal4;
-                console.log(res)
-                $("#cecccac").val(res);
-                $("#cecccac-text").text(res);
-            }
-            if (res > 0) {
-                $("ceca").val("y");
+        function calculatePulmonaryArteryAortaRatio() {
+            let res = 0;
+            const cepaw = $("#cepaw").val(), ceaow = $("#ceaow").val();
+            if (ceaow > 0) {
+                res = (cepaw / ceaow).toFixed(2);
+                $("#cepar-text").text(res);
+                $("#cepar").val(res);
             }
             else {
-                $("ceca").val("n");
+                $("#cepar-text").text("");
+                $("#cepar").val("");
             }
+        }
+
+        function calculateVisualCacScore() {
+            let cal1 = $("#cecclm")[0].selectedIndex;
+            let cal2 = $("#ceccld")[0].selectedIndex;
+            let cal3 = $("#cecccf")[0].selectedIndex;
+            let cal4 = $("#ceccrc")[0].selectedIndex;
+            if (cal1 > 0) cal1 = cal1 - 1;
+            if (cal2 > 0) cal2 = cal2 - 1;
+            if (cal3 > 0) cal3 = cal3 - 1;
+            if (cal4 > 0) cal4 = cal4 - 1;
+            const res = cal1 + cal2 + cal3 + cal4;
+            $("#cecccac").val(res);
+            $("#cecccac-text").text(res);
         }
 
         /**
@@ -5362,7 +5359,7 @@
          * @param defaultValue the default value of the radio when no other option is already selected.
          */
         function abnormalities(radioGroupName, display, defaultValue) {
-            var $radios = $("input:radio[name=" + radioGroupName + "]");
+            const $radios = $("input:radio[name=" + radioGroupName + "]");
 
             //set default if not already selected
             if ($radios.is(":checked") === false) {
@@ -5374,24 +5371,23 @@
 
         $(function () {
             // bind to change events on study date and baseline date to calculate "time since baseline"
-            var $tsbFields = $("#sidoe, #cedos");
+            const $tsbFields = $("#sidoe, #cedos");
             $tsbFields.closest(".datepicker").on("dp.change", calculateTimeSinceBaseline); //latch onto datetimepicker change events
             $tsbFields.first().trigger("change"); //trigger on page load for existing data;
 
-            //TODO bind CAC Score
-            
 
-            $cedos = $("#cedos");
+
+            const $cedos = $("#cedos");
             if (!$cedos.val()) {
-                $cedos.val(moment().format(VAPALS.DATE_FORMAT));
+                $cedos.val(moment().format(VAPALS.DATE_FORMAT)).trigger('change');
             }
 
             $("[name=cetex]").on("change", function () {
-                $sidoe = $("#sidoe");
+                const $sidoe = $("#sidoe");
                 if ($(this).val() === "b" && !$sidoe.val()) {
-                    $sidoe.val($("#cedos").val());
+                    $sidoe.val($("#cedos").val()).trigger('change');
                 }
-            })
+            });
 
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
 
@@ -5401,6 +5397,12 @@
             abnormalities("ceoba", "#breast-container", "n");
             abnormalities("ceoaa", "#abdominal-container", "y");
             abnormalities("ceaba", "#bone-container", "n");
+
+            //based on pre-selected values.
+            $("#cecclm, #ceccld, #cecccf, #ceccrc").on('change', calculateVisualCacScore);
+            calculateVisualCacScore();
+            $("#cepaw, #ceaow").on('keyup change', calculatePulmonaryArteryAortaRatio);
+            calculatePulmonaryArteryAortaRatio();
 
             initTabbedNavigation("ctEvalTabs", "ctEvalTabsContent");
 

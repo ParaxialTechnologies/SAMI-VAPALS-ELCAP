@@ -198,37 +198,36 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-12">
+                            <div id="add-first-nodule" class="alert alert-info">
+                                If no nodules were detected, you may skip this section.
+                                <button type="button" class="btn btn-default btn-xs" onclick="addNodule()">
+                                    <span class="fa fa-plus" aria-hidden="true"></span> Add nodule
+                                </button>
+                            </div>
+                            <div class="col-md-12" style="display: none;" id="nodule-table">
                                 <div class="table-responsive">
-                                    <table class="table">
+                                    <button type="button" class="btn btn-default btn-sm" onclick="addNodule()">
+                                        <span class="fa fa-plus" aria-hidden="true"></span> Add nodule
+                                    </button>
+                                    <!-- TODO: figure out what bm() function did onclick of cefctn -->
+                                    {% set r = range(1,11) %}
+                                    <table class="table-condensed table-striped" style="table-layout:auto;">
                                         <thead>
                                         <tr>
                                             <th>Nodule ID</th>
-                                            <th>Nodule 1</th>
-                                            <th>Nodule 2</th>
-                                            <th>Nodule 3</th>
-                                            <th>Nodule 4</th>
-                                            <th>Nodule 5</th>
-                                            <th>
-                                                <div class="form-group">
-                                                    <label for="cefctn">Additional Nodules</label>
-                                                    <!-- TODO: figure out what bm() function did onclick of cefctn -->
-                                                    <select id="cefctn" name="cefctn"
-                                                            class="form-control no-auto-focus">
-                                                        <option value="6"> Nodule 6</option>
-                                                        <option value="7"> Nodule 7</option>
-                                                        <option value="8"> Nodule 8</option>
-                                                        <option value="9"> Nodule 9</option>
-                                                        <option value="10"> Nodule 10</option>
-                                                    </select>
-                                                </div>
-                                            </th>
+                                            {% for i in r %}
+                                                <th data-nodule-id="{{ i }}" style="display:none;">
+                                                    Nodule {{ i }}
+                                                    <i class="remove-nodule fa fa-trash-o pull-right"
+                                                       title="Remove nodule {{ i }}" data-nodule-id="{{ i }}"
+                                                       onclick="removeNodule()"></i>
+                                                </th>
+                                            {% endfor %}
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {% set r =  [1,2,3,4,5,0] %}
                                         <tr>
-                                            <td>
+                                            <td style="white-space: nowrap;">
                                                 Is it new? <i class="fa fa-question-circle-o" aria-hidden="true"
                                                             data-toggle="popover" title="Help" data-content="A pull-down menu
                                                                 allows us to note whether a nodule is newly seen, previously seen,
@@ -238,11 +237,12 @@
                                                                 is also an option for nodules that are not included in the scan."></i>
                                             </td>
                                             {% for i in r %}
-                                                <td>
+                                                <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group">
-                                                        <select name="cect{{ i }}ch" onChange="newStat({{ i }})"
-                                                                title="Is this nodule new?">
-                                                            <option value="-"> -
+                                                        {# TODO What does newStat({{ i }}) do onchange?#}
+                                                        <select name="cect{{ i }}ch" title="Is this nodule new?"
+                                                                required="required">
+                                                            <option value=""> -
                                                             <option value="n"> newly seen</option>
                                                             <option value="pn"> prev seen, no change</option>
                                                             <option value="pd"> prev seen, slight decr</option>
@@ -265,7 +265,7 @@
                                             {% endfor %}
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td style="white-space: nowrap;">
                                                 Endobronchial? <i class="fa fa-question-circle-o" aria-hidden="true"
                                                                 data-toggle="popover" title="Help"
                                                                 data-content="It is required that both Endobronchial and Most
@@ -274,9 +274,10 @@
                                                                     such."></i>
                                             </td>
                                             {% for i in r %}
-                                                <td>
+                                                <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group">
-                                                        <select name="cect{{ i }}en" title="Endobronchial">
+                                                        <select name="cect{{ i }}en" title="Endobronchial"
+                                                                required="required">
                                                                     <option value="-"> -</option>
                                                                     <option value="no"> No</option>
                                                                     <option value="tr"> Trachea</option>
@@ -294,15 +295,16 @@
                                             {% endfor %}
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td style="white-space: nowrap;">
                                                 Most Likely Location? <i class="fa fa-question-circle-o" aria-hidden="true"
                                                                         data-toggle="popover" title="Help"
                                                                         data-content="If a nodule location is different from where it was described to be previously, do not go back and change the location on the previous exams but make sure to make a note of the previously mentioned location in the Comment field (see description below)."></i>
                                             </td>
                                             {% for i in r %}
-                                                <td>
+                                                <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group">
-                                                        <select name="cect{{ i }}ll" title="Most likely location">
+                                                        <select name="cect{{ i }}ll" title="Most likely location"
+                                                                required="required">
                                                                     <option value="-"> -</option>
                                                                     <option value="end"> Endobr</option>
                                                                     <option value="lul"> LUL</option>
@@ -316,14 +318,14 @@
                                             {% endfor %}
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td style="white-space: nowrap;">
                                                 Nodule seen in series
                                                 <i class="fa fa-question-circle-o" aria-hidden="true"
                                                    data-toggle="popover" title="Help"
                                                    data-content="Indicate the CT series number in which the nodule appears."></i>
                                             </td>
                                             {% for i in r %}
-                                                <td>
+                                                <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group">
                                                         <input type="text" name="cect{{ i }}sn" size="3"
                                                                title="CT Series Number">
@@ -332,14 +334,14 @@
                                             {% endfor %}
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td style="white-space: nowrap;">
                                                 Nodule seen in images
                                                 <i class="fa fa-question-circle-o" aria-hidden="true"
                                                    data-toggle="popover" title="Help"
                                                    data-content="Indicate the CT image number in which the nodule appears."></i>
                                             </td>
                                             {% for i in r %}
-                                                <td>
+                                                <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group">
                                                         <input type="text" name="cect{{ i }}sn" size="3"
                                                                title="CT Image Number">
@@ -348,14 +350,14 @@
                                             {% endfor %}
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td style="white-space: nowrap;">
                                                 Nodule Status <i class="fa fa-question-circle-o"
                                                                  aria-hidden="true"
                                                                  data-toggle="popover" title="Help"
                                                                  data-content="If nodule calcifications are seen ('yes' is selected for Calcifications), 'benign (Ca++)' will automatically appear under Nodule Status.<li> When '?' is selected under Calcifications, Nodule Status will read 'prob benign, prob Ca++' (probably benign, probably calcified).  If the nodule is 'prev seen, resolved,' as noted in the 'Is it new' field, then Nodule Status will automatically read 'resolved.'  When 'prev seen, resected' is selected for 'Is it new', 'Resected-malignant' appears under Nodule Status.  If under 'Is it new' it reads 'not included in scan,' Nodule Status will also read 'not included in scan.'  These automatic entries help to maintain a level of consistency for data entry across institutions."></i>
                                             </td>
                                             {% for i in r %}
-                                                <td>
+                                                <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group">
                                                         <select name="cect{{ i }}st" title="Nodule status">
                                                             <option value="-"> -</option>
@@ -382,14 +384,14 @@
                                         </tr>
 
                                         <tr>
-                                            <td>
+                                            <td style="white-space: nowrap;">
                                                 Distance from the costal pleura (mm)? <i class="fa fa-question-circle-o"
                                                                                         aria-hidden="true"
                                                                                         data-toggle="popover" title="Help"
                                                                                         data-content="The shortest distance from the nodule to the costal pleura should be measured in millimeters."></i>
                                             </td>
                                             {% for i in r %}
-                                                <td>
+                                                <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group">
                                                         <input type="text" name="cect{{ i }}pld" class="numeric"
                                                                title="Distance">
@@ -398,13 +400,13 @@
                                             {% endfor %}
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td style="white-space: nowrap;">
                                                 Length (mm) <i class="fa fa-question-circle-o" aria-hidden="true"
                                                             data-toggle="popover" title="Help"
                                                             data-content="Indicate the length (largest dimension) of the nodule.  The unit of measurement is always millimeters."></i>
                                             </td>
                                             {% for i in r %}
-                                                <td>
+                                                <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group">
                                                         <input type="text" name="cect{{ i }}sl" size="4"
                                                                title="Length (mm)"
@@ -414,13 +416,13 @@
                                             {% endfor %}
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td style="white-space: nowrap;">
                                                 Maximum Width (mm) <i class="fa fa-question-circle-o" aria-hidden="true"
                                                                     data-toggle="popover" title="Help"
                                                                     data-content="Indicate the maximum width (largest perpendicular dimension to the length) of the nodule.  The unit of measurement is always millimeters."></i>
                                             </td>
                                             {% for i in r %}
-                                                <td>
+                                                <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group">
                                                         <input type="text" name="cect{{ i }}sw" size="4"
                                                                title="Maximum Width"
@@ -430,11 +432,11 @@
                                             {% endfor %}
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td style="white-space: nowrap;">
                                                 Height (mm)
                                             </td>
                                             {% for i in r %}
-                                                <td>
+                                                <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group">
                                                         <input type="text" name="cect{{ i }}sh" size="4" title="Height"
                                                                class="numeric">
@@ -443,11 +445,11 @@
                                             {% endfor %}
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td style="white-space: nowrap;">
                                                 Volume (mm<sup>3</sup>)
                                             </td>
                                             {% for i in r %}
-                                                <td>
+                                                <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group">
                                                         <input type="text" name="cect{{ i }}sv" size="4" title="Volume"
                                                                class="numeric">
@@ -456,13 +458,13 @@
                                             {% endfor %}
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td style="white-space: nowrap;">
                                                 Nodule Consistency <i class="fa fa-question-circle-o" aria-hidden="true"
                                                                     data-toggle="popover" title="Help"
                                                                     data-content="Nodules may be classified into three types by attenuation characteristics: solid - nodule is uniformly solid in appearance; non-solid - nodule is uniformly non-solid (except for blood vessels) in appearance; part-solid - nodule has both solid and non-solid components"></i>
                                             </td>
                                             {% for i in r %}
-                                                <td>
+                                                <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group">
                                                         <select name="cect{{ i }}nt" onChange="newTexture({{ i }})"
                                                                 title="Nodule Consistency">
@@ -477,13 +479,13 @@
                                             {% endfor %}
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td style="white-space: nowrap;">
                                                 Solid Comp. Length x Width <i class="fa fa-question-circle-o" aria-hidden="true"
                                                                             data-toggle="popover" title="Help"
                                                                             data-content="TODO: ELCAP missing"></i>
                                             </td>
                                             {% for i in r %}
-                                                <td>
+                                                <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group">
                                                         <input type="text" name="cect{{ i }}ssl" disabled="true"
                                                                size="4" title="Solid Comp. Length">
@@ -495,13 +497,13 @@
                                             {% endfor %}
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td style="white-space: nowrap;">
                                                 Smooth Edges <i class="fa fa-question-circle-o" aria-hidden="true"
                                                                 data-toggle="popover" title="Help"
                                                                 data-content="Indicate whether the nodule has a smooth-appearing margin."></i>
                                             </td>
                                             {% for i in r %}
-                                                <td>
+                                                <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group">
                                                         {{ f.inlineRadioNYQ("cect" + i|string + "se") }}
                                                     </div>
@@ -510,14 +512,14 @@
                                         </tr>
 
                                         <tr>
-                                            <td>
+                                            <td style="white-space: nowrap;">
                                                 Action <i class="fa fa-question-circle-o"
                                                         aria-hidden="true"
                                                         data-toggle="popover" title="Help"
                                                         data-content="This field becomes very important when different nodules require different follow-up.  A pull-down menu allows us to choose among six different follow-up actions -    'repeat SCT' (repeat screening CT),    'f/u\ Dx CT' (follow-up Diagnostic CT),    'Abx + f/u Dx CT' (Antibiotic + follow-up Diagnostic CT),    'biopsy',    'bronchoscopy',       or    'resection'."></i>
                                             </td>
                                             {% for i in r %}
-                                                <td>
+                                                <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group">
                                                         <select name="cect{{ i }}ac" title="Action">
                                                             <option value="-"> -</option>
@@ -536,14 +538,14 @@
                                             {% endfor %}
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td style="white-space: nowrap;">
                                                 Comment <i class="fa fa-question-circle-o"
                                                         aria-hidden="true"
                                                         data-toggle="popover" title="Help"
                                                         data-content="This field is for additional comments about the nodule.  If a previously seen nodule is found to be something other than a nodule, note it here."></i>
                                             </td>
                                             {% for i in r %}
-                                                <td>
+                                                <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group">
                                                         <input type="text" name="cect{{ i }}co" size="20"
                                                                title="Comment">
@@ -552,14 +554,14 @@
                                             {% endfor %}
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td style="white-space: nowrap;">
                                                 Pathologic Diagnosis <i class="fa fa-question-circle-o"
                                                                         aria-hidden="true"
                                                                         data-toggle="popover" title="Help"
                                                                         data-content="If a biopsy was previously performed, the diagnosis was chosen from a pull-down menu on the Biopsy form.  When CT evaluation forms are created after the biopsy was done, the 'Pathologic Diagnosis' selected on the Biopsy Form is transferred onto the new CT evaluation Form.  Once a diagnosis has been assigned on the Biopsy Form and it pops up on the CT evaluation form, it CANNOT be changed."></i>
                                             </td>
                                             {% for i in r %}
-                                                <td>
+                                                <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group">
                                                         <select name="cect{{ i }}pd" title="Pathologic Diagnosis">
                                                             <option value="-"> -For Pathology Use Only-</option>
@@ -1778,13 +1780,46 @@
             $radios.conditionallyDisplay({sourceValues: "y", enable: display});
         }
 
+        let noduleCount = 0;
+
+        function addNodule() {
+            if (noduleCount === 10) {
+                VAPALS.displayWarning("No more than 10 nodules are allowed. You may need to scroll to the right to see the additional nodule fields.");
+            }
+            else {
+                displayNodules(++noduleCount);
+            }
+        }
+
+        function removeNodule() {
+            if (noduleCount > 0) {
+                displayNodules(--noduleCount);
+            }
+        }
+
+        function displayNodules(count) {
+            console.log("displayNodules() count: " + count);
+            $("[data-nodule-id]").hide().filter(function () {
+                return $(this).data("nodule-id") <= count;
+            }).show();
+
+            // Only show the delete icon on the last (rightmost) nodule;
+            // NB: there is currently no support renumbering fields so removing from the middle is not an option
+            $(".remove-nodule").hide().filter(function () {
+                return $(this).data("nodule-id") === count;
+            }).show();
+
+            $("#nodule-table").toggle(noduleCount > 0);
+            $("#add-first-nodule").toggle(noduleCount === 0);
+        }
+
+
         $(function () {
+            // SCAN
             // bind to change events on study date and baseline date to calculate "time since baseline"
             const $tsbFields = $("#sidoe, #cedos");
             $tsbFields.closest(".datepicker").on("dp.change", calculateTimeSinceBaseline); //latch onto datetimepicker change events
             $tsbFields.first().trigger("change"); //trigger on page load for existing data;
-
-
 
             const $cedos = $("#cedos");
             if (!$cedos.val()) {
@@ -1800,6 +1835,23 @@
 
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
 
+            // NODULES
+            // Display the proper number of nodule columns based on the nodules that have a value for
+            // "Is it new", a required field.
+            const $noduleKeyFields = $("[name^=cect][name$=ch]").filter(function () {
+                return $(this).val() !== "" && $(this).val() !== "-";
+            });
+
+
+            // NB: Generally, the number of fields that have a value can be the number of nodules we display. In
+            // the rare case where we persist a nodule without setting the first field (Is it new?), use the
+            // lastNoduleId in the list to determine the number of nodules to display.
+            const lastNoduleId = $noduleKeyFields.last().closest("[data-nodule-id]").data("nodule-id") || 0;
+            noduleCount = Math.max($noduleKeyFields.length, lastNoduleId);
+            displayNodules(noduleCount);
+
+
+            //ABNORMALITIES
             abnormalities("pa", "#pulmonary-container", "n");
             abnormalities("ceca", "#cardiac-container", "n");
             abnormalities("ceoma", "#neck-container", "n");
@@ -1807,15 +1859,14 @@
             abnormalities("ceoaa", "#abdominal-container", "y");
             abnormalities("ceaba", "#bone-container", "n");
 
-            //based on pre-selected values.
             $("#cecclm, #ceccld, #cecccf, #ceccrc").on('change', calculateVisualCacScore);
             calculateVisualCacScore();
             $("#cepaw, #ceaow").on('keyup change', calculatePulmonaryArteryAortaRatio);
             calculatePulmonaryArteryAortaRatio();
 
+            //WRAP IT UP
             initTabbedNavigation("ctEvalTabs", "ctEvalTabsContent");
 
-            //Initialize Form Validation
             $(".validated").formValidation({framework: 'bootstrap'});
         });
     </script>

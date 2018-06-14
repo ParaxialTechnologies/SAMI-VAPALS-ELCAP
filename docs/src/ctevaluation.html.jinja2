@@ -27,15 +27,15 @@
                 <!--TABS-->
                 <!--  Scan , Nodules, Abnormalities, Follow Up, Impression -->
                 <!-- each item contains (Tab Title,tab-html-id) -->
-                {% set tab_list = [("Scan","scan"), ("Nodules", "nodules"), ("Abnormalities","abnormalities"), 
+                {% set tab_list = [("Scan","scan"), ("Nodules", "nodules"), ("Abnormalities","abnormalities"),
                                 ("Impression & Follow Up","impression")] -%}
 
                 <ul class="nav nav-tabs" id="ctEvalTabs" role="tablist" style="margin-bottom: 15px;">
                     {% for tab_name,tab_id in tab_list -%}
                     <li role="presentation"
                         {% if loop.first %}class="active"{% endif %}>
-                        <a class="nav-link" id="{{tab_id}}-tab" data-toggle="tab" role="tab" 
-                            href="#{{tab_id}}"                           
+                        <a class="nav-link" id="{{ tab_id }}-tab" data-toggle="tab" role="tab"
+                           href="#{{ tab_id }}"
                            {% if loop.first %}
                             aria-expanded="true"
                             aria-selected="true"
@@ -46,7 +46,7 @@
                                                          title="This tab is complete"></i></a>
                     </li>
                     {%- endfor %}
-                    
+
                 </ul>
 
                 <div class="tab-content" id="ctEvalTabsContent">
@@ -753,10 +753,10 @@
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            {{ f.inlineRadio("cebs", "cebs-n","n","N/A",true) }}
-                                            {{ f.inlineRadio("cebs", "cebs-o","o","Normal",true) }}
-                                            {{ f.inlineRadio("cebs", "cebs-y","y","Abnormal",true) }}
-                                            {{ f.inlineRadio("cebs", "cebs-e","e","not visible",true) }}
+                                            {{ f.inlineRadio("cebs", "cebs-n","n","N/A") }}
+                                            {{ f.inlineRadio("cebs", "cebs-o","o","Normal") }}
+                                            {{ f.inlineRadio("cebs", "cebs-y","y","Abnormal") }}
+                                            {{ f.inlineRadio("cebs", "cebs-e","e","not visible") }}
                                         </div>
                                     </td>
                                     <td colspan="5">
@@ -886,10 +886,10 @@
                                 </tr>
 
                                 <tr>
-                                    <td>Rounded Atelectasis</td>
+                                    <td>Pleural Effusion</td>
                                     <td>
                                         <div class="form-group">
-                                            {{ f.inlineRadio("cepev", "cepev-e","e","not visible",true) }}
+                                            {{ f.checkbox("cepev","e", "not visible") }}
                                         </div>
                                     </td>
                                     <td colspan="5">
@@ -1449,7 +1449,7 @@
                                         </div>
                                     </td>
                                     <td style="padding-top:1px;">
-                                        <div class="form-group form-inline">
+                                        <div class="form-group form-inline" id="ceaga-container">
                                             {{ f.checkbox("ceagh","h","Cholecystectomy") }}&nbsp;&nbsp;
                                             {{ f.checkbox("ceags","s","Stones") }}&nbsp;&nbsp;
                                             {{ f.checkbox("ceagl","l","Sludge") }}&nbsp;&nbsp;
@@ -1468,7 +1468,7 @@
                                         </div>
                                     </td>
                                     <td style="padding-top:1px;">
-                                        <div class="form-group form-inline">
+                                        <div class="form-group form-inline" id="ceasa-container">
                                             {{ f.checkbox("ceasc","y","Calcification") }}&nbsp;&nbsp;
                                             {{ f.checkbox("ceasy","y","Cyst") }}&nbsp;&nbsp;
                                             {{ f.checkbox("ceasm","m","Mass") }}&nbsp;&nbsp;
@@ -1487,7 +1487,7 @@
                                         </div>
                                     </td>
                                     <td style="padding-top:1px;">
-                                        <div class="form-group form-inline">
+                                        <div class="form-group form-inline" id="ceala-container">
                                             {{ f.checkbox("cealc","y","Calcification") }}&nbsp;&nbsp;
                                             {{ f.checkbox("cealy","y","Cyst") }}&nbsp;&nbsp;
                                             {{ f.checkbox("cealm","m","Mass") }}&nbsp;&nbsp;
@@ -1508,7 +1508,7 @@
                                         </div>
                                     </td>
                                     <td style="padding-top:1px;">
-                                        <div class="form-group form-inline">
+                                        <div class="form-group form-inline" id="ceapa-container">
                                             {{ f.checkbox("ceapc","y","Calcification") }}&nbsp;&nbsp;
                                             {{ f.checkbox("ceapy","y","Cyst") }}&nbsp;&nbsp;
                                             {{ f.checkbox("ceapm","m","Mass") }}&nbsp;&nbsp;
@@ -1527,7 +1527,7 @@
                                         </div>
                                     </td>
                                     <td style="padding-top:1px;">
-                                        <div class="form-group form-inline">
+                                        <div class="form-group form-inline" id="ceaaa-container">
                                             {{ f.checkbox("ceaac","y","Calcification") }}&nbsp;&nbsp;
                                             {{ f.checkbox("ceaay","y","Cyst") }}&nbsp;&nbsp;
                                             {{ f.checkbox("ceaam","m","Mass") }}&nbsp;&nbsp;
@@ -1545,7 +1545,7 @@
                                         </div>
                                     </td>
                                     <td style="padding-top:1px;">
-                                        <div class="form-group form-inline">
+                                        <div class="form-group form-inline" id="ceaka-container">
                                             {{ f.checkbox("ceakc","y","Calcification") }}&nbsp;&nbsp;
                                             {{ f.checkbox("ceaky","y","Cyst") }}&nbsp;&nbsp;
                                             {{ f.checkbox("ceakm","m","Mass") }}&nbsp;&nbsp;
@@ -1587,7 +1587,8 @@
                                 <strong>Nodules</strong>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="ceimn" id="ceimn-rs" value="rs"> No evidence of
+                                        <input type="radio" name="ceimn" id="ceimn-rs" value="rs" required="required">
+                                        No evidence of
                                         nodules. Follow-up as recommended above.
                                     </label>
                                 </div>
@@ -1776,8 +1777,9 @@
         /**
          * Sets the default value of a radio group and conditionally displays a container when that radio value is "y"
          * @param radioGroupName the group of radio buttons to evaluate
-         * @param display selector for the container to display
          * @param defaultValue the default value of the radio when no other option is already selected.
+         * @param display selector for the container to display
+         * @param displayWhenValue display the `display` object when the radioGroupName value is equal to this
          */
         function defaultRadio(radioGroupName, defaultValue, display, displayWhenValue) {
             const $radios = $("input:radio[name=" + radioGroupName + "]");
@@ -1810,7 +1812,6 @@
         }
 
         function displayNodules(count) {
-            console.log("displayNodules() count: " + count);
             $("[data-nodule-id]").hide().filter(function () {
                 return $(this).data("nodule-id") <= count;
             }).show();
@@ -1823,6 +1824,13 @@
 
             $("#nodule-table").toggle(noduleCount > 0);
             $("#add-first-nodule").toggle(noduleCount === 0);
+        }
+
+        function findRadioGroupNames($container) {
+            return $.unique($container.find("input[type=radio]")
+                .map(function (index, element) {
+                    return this.name;
+                }));
         }
 
         $(function () {
@@ -1863,13 +1871,22 @@
 
 
             //ABNORMALITIES
-            //set default values and toggle display of each section
             defaultRadio("pa", "n", "#pulmonary-container", "y");
             defaultRadio("ceca", "n", "#cardiac-container", "y");
             defaultRadio("ceoma", "n", "#neck-container", "y");
             defaultRadio("ceoba", "n", "#breast-container", "y");
-            defaultRadio("ceoaa", "y", "#abdominal-container", "y");
             defaultRadio("ceaba", "n", "#bone-container", "y");
+            defaultRadio("ceoaa", "y", "#abdominal-container", "y");
+
+            //for each of the main sections, find all the radiogroups and default them to "n" (no)
+            // NB: Cardiac & Bone have no radio button groups.
+            const $containers = $("#pulmonary-container, #neck-container, #breast-container, #abdominal-container");
+            $.each($containers, function (i, container) {
+                const groupNames = findRadioGroupNames($(container));
+                $.each(groupNames, function (i, group) {
+                    defaultRadio(group, "n", $("#" + group + "-container"), "y");
+                });
+            })
 
 
 
@@ -1878,10 +1895,48 @@
             $("#cepaw, #ceaow").on('keyup change', calculatePulmonaryArteryAortaRatio);
             calculatePulmonaryArteryAortaRatio();
 
+            //for each of the containers that have radiogroups, ensure at least one of those groups has a value of "y".
+            $("form").on("submit", function (e) {
+                console.log("onsubmit");
+
+                //TODO First, validate each tab, navigate to the one that's bad; exit
+
+                //Then check abnormalities
+                const groups = [
+                    {radio: 'pa', container: $("#pulmonary-container"), humanName: "pulmonary"},
+                    {radio: 'ceoma', container: $("#neck-container"), humanName: "neck and mediastinal"},
+                    {radio: 'ceoba', container: $("#breast-container"), humanName: "breast"},
+                    {radio: 'ceoaa', container: $("#abdominal-container"), humanName: "abdominal"}
+                ];
+
+                var i; //NB: primiative loop so we exit immediately when one of these fails.
+                for (i = 0; i < groups.length; i++) {
+                    const g = groups[i];
+                    if ($("[name=" + g.radio + "]:checked").val() === "y") {
+                        const groupNames = findRadioGroupNames(g.container);
+                        yeses = $.grep(groupNames, function (groupName) {
+                            return $("[name=" + groupName + "]:checked").val() === "y";
+                        });
+                        if (yeses.length === 0) {
+                            VAPALS.displayWarning("At least one " + g.humanName + " abnormality must be selected.");
+                            e.preventDefault();
+                            e.stopPropagation();
+                            return false;
+                        }
+                    }
+                }
+
+                return true; //all checks passed
+
+            }
+
+
             //WRAP IT UP
+            $(".validated").formValidation({framework: 'bootstrap'});
+
+            //always after formValidation initialization
             initTabbedNavigation("ctEvalTabs", "ctEvalTabsContent");
 
-            $(".validated").formValidation({framework: 'bootstrap'});
         });
     </script>
 

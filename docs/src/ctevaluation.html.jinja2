@@ -53,14 +53,14 @@
                     <div class="tab-pane active" id="scan" role="tabpanel" aria-labelledby="scan-tab">
                         <div class="row">
                             <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-                                <label for="cedos" class="control-label">CT Study Date</label>
+                                <label for="cedos" class="control-label required">CT Study Date</label>
                                 {{ f.datepicker("cedos", true, "CT Study date is required") }}
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6 col-md-4 col-lg-3 form-group">
                                 {# TODO Get from signed on user, use text instead of input field #}
-                                <label for="cerad">Radiologist</label>
+                                <label for="cerad" class="control-label required">Radiologist</label>
                                 <input type="text" class="form-control" id="cerad" name="cerad" required="required"/>
                             </div>
                             <div class="col-sm-6 col-md-4 col-lg-3  form-group">
@@ -74,7 +74,7 @@
 
                         <div class="row">
                             <div class="col-md-12 form-group">
-                                <label for="ceclin">Clinical Information</label>
+                                <label for="ceclin" class="control-label">Clinical Information</label>
                                 <textarea class="form-control" id="ceclin" name="ceclin" rows="3"></textarea>
                                 {{ f.inlineCheckbox("ceclini", "y", "Include in impression") }}
                             </div>
@@ -88,8 +88,8 @@
 
                         <div class="row">
                             <div class="col-sm-12 form-group">
-                                <label for="sbdsd-b">Type of Exam</label>
-
+                                <label for="sbdsd-b" class="control-label required">Type of Exam</label>
+                                <br/>
                                 <label class="radio-inline">
                                     <input type="radio" name="cetex" id="cetex-b" value="b" required="required">
                                     Baseline
@@ -107,8 +107,8 @@
 
                         <div class="row">
                             <div class="col-sm-12 form-group">
-                                <label for="cectp-l">CT Protocol</label>
-
+                                <label for="cectp-l" class="control-label required">CT Protocol</label>
+                                <br/>
                                 <label class="radio-inline">
                                     <input type="radio" name="cectp" id="cectp-l" value="l" required="required">
                                     Low-Dose CT
@@ -127,7 +127,8 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label for="cectrst">Reconstructed slice thickness (mm)</label>
+                                    <label for="cectrst" class="control-label required">Reconstructed slice thickness
+                                        (mm)</label>
                                     <select name="cectrst" id="cectrst" class="form-control" required="required">
                                         <option value=""> -</option>
                                         <option value="0.5">0.5</option>
@@ -138,7 +139,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-4 form-group" id="cectrsto-container">
-                                <label for="cectrsto">Specify</label>
+                                <label for="cectrsto" class="control-label required">Specify</label>
                                 <input class="form-control" type="text" name="cectrsto" id="cectrsto"
                                        placeholder="specify" required="required" data-fv-numeric="true" min="0"
                                        maxlength="5">
@@ -147,7 +148,8 @@
 
                         <div class="row">
                             <div class="col-sm-4 form-group">
-                                <label for="sidoe" class="control-label">Baseline CT</label>
+                                <label for="sidoe" class="control-label required">Baseline
+                                    CT</label>
                                 {{ f.datepicker("sidoe", true, "Baseline CT date is required") }}
                                 <small class="form-text text-muted pull-right">
                                     <span id="cetsb-text">0</span> months since baseline
@@ -212,7 +214,7 @@
                                     </button>
                                     <!-- TODO: figure out what bm() function did onclick of cefctn -->
                                     {% set r = range(1,11) %}
-                                    <table class="table-condensed table-striped" style="table-layout:auto;">
+                                    <table class="table-striped" style="table-layout:auto;">
                                         <thead>
                                         <tr>
                                             <th>Nodule ID</th>
@@ -229,20 +231,22 @@
                                         <tbody>
                                         <tr>
                                             <td style="white-space: nowrap;">
-                                                Is it new? <i class="fa fa-question-circle-o" aria-hidden="true"
-                                                            data-toggle="popover" title="Help" data-content="A pull-down menu
+                                                <label class="control-label required">
+                                                    Is it new? <i class="fa fa-question-circle-o" aria-hidden="true"
+                                                                  data-toggle="popover" title="Help" data-content="A pull-down menu
                                                                 allows us to note whether a nodule is newly seen, previously seen,
                                                                 or seen in retrospect, as well as any change in size. Change
                                                                 (increase or decrease) refers to a change in the size of a nodule
                                                                 or a change in the solid component of a part-solid nodule. There
                                                                 is also an option for nodules that are not included in the scan."></i>
+                                                </label>
                                             </td>
                                             {% for i in r %}
                                                 <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group">
                                                         {# TODO What does newStat({{ i }}) do onchange?#}
                                                         <select name="cect{{ i }}ch" title="Is this nodule new?"
-                                                                required="required">
+                                                                class="form-group" required="required">
                                                             <option value=""> -
                                                             <option value="n"> newly seen</option>
                                                             <option value="pn"> prev seen, no change</option>
@@ -267,19 +271,21 @@
                                         </tr>
                                         <tr>
                                             <td style="white-space: nowrap;">
-                                                Endobronchial? <i class="fa fa-question-circle-o" aria-hidden="true"
+                                                <label class="control-label required">
+                                                    Endobronchial? <i class="fa fa-question-circle-o" aria-hidden="true"
                                                                 data-toggle="popover" title="Help"
                                                                 data-content="It is required that both Endobronchial and Most
                                                                     likely location be answered.  If the nodule has both a
                                                                     bronchial and parenchymal component, answer both to indicate
                                                                     such."></i>
+                                                </label>
                                             </td>
                                             {% for i in r %}
                                                 <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group">
                                                         <select name="cect{{ i }}en" title="Endobronchial"
                                                                 required="required">
-                                                                    <option value="-"> -</option>
+                                                            <option value=""> -</option>
                                                                     <option value="no"> No</option>
                                                                     <option value="tr"> Trachea</option>
                                                                     <option value="rm"> Rt. Main</option>
@@ -297,16 +303,19 @@
                                         </tr>
                                         <tr>
                                             <td style="white-space: nowrap;">
-                                                Most Likely Location? <i class="fa fa-question-circle-o" aria-hidden="true"
-                                                                        data-toggle="popover" title="Help"
-                                                                        data-content="If a nodule location is different from where it was described to be previously, do not go back and change the location on the previous exams but make sure to make a note of the previously mentioned location in the Comment field (see description below)."></i>
+                                                <label class="control-label required">
+                                                    Most Likely Location? <i class="fa fa-question-circle-o"
+                                                                             aria-hidden="true"
+                                                                             data-toggle="popover" title="Help"
+                                                                             data-content="If a nodule location is different from where it was described to be previously, do not go back and change the location on the previous exams but make sure to make a note of the previously mentioned location in the Comment field (see description below)."></i>
+                                                </label>
                                             </td>
                                             {% for i in r %}
                                                 <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group">
                                                         <select name="cect{{ i }}ll" title="Most likely location"
                                                                 required="required">
-                                                                    <option value="-"> -</option>
+                                                            <option value=""> -</option>
                                                                     <option value="end"> Endobr</option>
                                                                     <option value="lul"> LUL</option>
                                                                     <option value="lll"> LLL</option>
@@ -506,7 +515,7 @@
                                             {% for i in r %}
                                                 <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group">
-                                                        {{ f.inlineRadioNYQ("cect" + i|string + "se") }}
+                                                        {{ f.inlineRadioNYQ("cect" + i|string + "se", false) }}
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -1770,7 +1779,7 @@
          * @param display selector for the container to display
          * @param defaultValue the default value of the radio when no other option is already selected.
          */
-        function abnormalities(radioGroupName, display, defaultValue) {
+        function defaultRadio(radioGroupName, defaultValue, display, displayWhenValue) {
             const $radios = $("input:radio[name=" + radioGroupName + "]");
 
             //set default if not already selected
@@ -1778,7 +1787,9 @@
                 $radios.filter("[value=" + defaultValue + "]").prop('checked', true);
             }
 
-            $radios.conditionallyDisplay({sourceValues: "y", enable: display});
+            if (display && displayWhenValue) {
+                $radios.conditionallyDisplay({sourceValues: displayWhenValue, enable: display});
+            }
         }
 
         let noduleCount = 0;
@@ -1813,7 +1824,6 @@
             $("#nodule-table").toggle(noduleCount > 0);
             $("#add-first-nodule").toggle(noduleCount === 0);
         }
-
 
         $(function () {
             // SCAN
@@ -1853,12 +1863,15 @@
 
 
             //ABNORMALITIES
-            abnormalities("pa", "#pulmonary-container", "n");
-            abnormalities("ceca", "#cardiac-container", "n");
-            abnormalities("ceoma", "#neck-container", "n");
-            abnormalities("ceoba", "#breast-container", "n");
-            abnormalities("ceoaa", "#abdominal-container", "y");
-            abnormalities("ceaba", "#bone-container", "n");
+            //set default values and toggle display of each section
+            defaultRadio("pa", "n", "#pulmonary-container", "y");
+            defaultRadio("ceca", "n", "#cardiac-container", "y");
+            defaultRadio("ceoma", "n", "#neck-container", "y");
+            defaultRadio("ceoba", "n", "#breast-container", "y");
+            defaultRadio("ceoaa", "y", "#abdominal-container", "y");
+            defaultRadio("ceaba", "n", "#bone-container", "y");
+
+
 
             $("#cecclm, #ceccld, #cecccf, #ceccrc").on('change', calculateVisualCacScore);
             calculateVisualCacScore();

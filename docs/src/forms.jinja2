@@ -15,21 +15,21 @@
 {%- endmacro %}
 
 
-{% macro inlineRadioNY(groupName) -%}
-    {{ inlineRadio(groupName, groupName+"-n","n","No",true) }}
-    {{ inlineRadio(groupName, groupName+"-y","y","Yes",true) }}
+{% macro inlineRadioNY(groupName, required) -%}
+    {{ inlineRadio(groupName, groupName+"-n","n","No",required) }}
+    {{ inlineRadio(groupName, groupName+"-y","y","Yes",required) }}
 {%- endmacro %}
 
-{% macro inlineRadioNYQ(groupName) -%}
-    {{ inlineRadio(groupName, groupName+"-n","n","No",true) }}
-    {{ inlineRadio(groupName, groupName+"-y","y","Yes",true) }}
-    {{ inlineRadio(groupName, groupName+"-q","q","?",true) }}
+{% macro inlineRadioNYQ(groupName, required) -%}
+    {{ inlineRadio(groupName, groupName+"-n","n","No",required) }}
+    {{ inlineRadio(groupName, groupName+"-y","y","Yes",required) }}
+    {{ inlineRadio(groupName, groupName+"-q","q","?",required) }}
 {%- endmacro %}
 
-{% macro inlineRadioNYE(groupName) -%}
-    {{ inlineRadio(groupName, groupName+"-n","n","No",true) }}
-    {{ inlineRadio(groupName, groupName+"-y","y","Yes",true) }}
-    {{ inlineRadio(groupName, groupName+"-e","e","not visible",true) }}
+{% macro inlineRadioNYE(groupName, required) -%}
+    {{ inlineRadio(groupName, groupName+"-n","n","No",required) }}
+    {{ inlineRadio(groupName, groupName+"-y","y","Yes",required) }}
+    {{ inlineRadio(groupName, groupName+"-e","e","not visible",required) }}
 {%- endmacro %}
 
 {% macro radio(group, id, value, label, required, checked) -%}

@@ -15,6 +15,7 @@
   <link href="lib/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet"/>
   <link href="lib/jquery-ui-1.12.1/jquery-ui.structure.min.css" rel="stylesheet"/>
   <link href="lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
+  <link href="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
  </head>
  <body>
   <script src="lib/jquery-3.3.1.min.js">
@@ -32,6 +33,8 @@
   <script src="lib/formvalidation/dist/js/framework/bootstrap.min.js">
   </script>
   <script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js">
+  </script>
+  <script src="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.js">
   </script>
   <script src="https://www.gstatic.com/charts/loader.js" type="text/javascript">
   </script>
@@ -355,59 +358,83 @@
         </div>
        </div>
        <div class="row">
-        <div class="col-md-12">
+        <div class="alert alert-info" id="add-first-nodule">
+         If no nodules were detected, you may skip this section.
+         <button class="btn btn-default btn-xs" onclick="addNodule()" type="button">
+          <span aria-hidden="true" class="fa fa-plus">
+          </span>
+          Add nodule
+         </button>
+        </div>
+        <div class="col-md-12" id="nodule-table" style="display: none;">
          <div class="table-responsive">
-          <table class="table">
+          <button class="btn btn-default btn-sm" onclick="addNodule()" type="button">
+           <span aria-hidden="true" class="fa fa-plus">
+           </span>
+           Add nodule
+          </button>
+          <!-- TODO: figure out what bm() function did onclick of cefctn -->
+          <table class="table-condensed table-striped" style="table-layout:auto;">
            <thead>
             <tr>
              <th>
               Nodule ID
              </th>
-             <th>
+             <th data-nodule-id="1" style="display:none;">
               Nodule 1
+              <i class="remove-nodule fa fa-trash-o pull-right" data-nodule-id="1" onclick="removeNodule()" title="Remove nodule 1">
+              </i>
              </th>
-             <th>
+             <th data-nodule-id="2" style="display:none;">
               Nodule 2
+              <i class="remove-nodule fa fa-trash-o pull-right" data-nodule-id="2" onclick="removeNodule()" title="Remove nodule 2">
+              </i>
              </th>
-             <th>
+             <th data-nodule-id="3" style="display:none;">
               Nodule 3
+              <i class="remove-nodule fa fa-trash-o pull-right" data-nodule-id="3" onclick="removeNodule()" title="Remove nodule 3">
+              </i>
              </th>
-             <th>
+             <th data-nodule-id="4" style="display:none;">
               Nodule 4
+              <i class="remove-nodule fa fa-trash-o pull-right" data-nodule-id="4" onclick="removeNodule()" title="Remove nodule 4">
+              </i>
              </th>
-             <th>
+             <th data-nodule-id="5" style="display:none;">
               Nodule 5
+              <i class="remove-nodule fa fa-trash-o pull-right" data-nodule-id="5" onclick="removeNodule()" title="Remove nodule 5">
+              </i>
              </th>
-             <th>
-              <div class="form-group">
-               <label for="cefctn">
-                Additional Nodules
-               </label>
-               <!-- TODO: figure out what bm() function did onclick of cefctn -->
-               <select class="form-control no-auto-focus" id="cefctn" name="cefctn">
-                <option value="6">
-                 Nodule 6
-                </option>
-                <option value="7">
-                 Nodule 7
-                </option>
-                <option value="8">
-                 Nodule 8
-                </option>
-                <option value="9">
-                 Nodule 9
-                </option>
-                <option value="10">
-                 Nodule 10
-                </option>
-               </select>
-              </div>
+             <th data-nodule-id="6" style="display:none;">
+              Nodule 6
+              <i class="remove-nodule fa fa-trash-o pull-right" data-nodule-id="6" onclick="removeNodule()" title="Remove nodule 6">
+              </i>
+             </th>
+             <th data-nodule-id="7" style="display:none;">
+              Nodule 7
+              <i class="remove-nodule fa fa-trash-o pull-right" data-nodule-id="7" onclick="removeNodule()" title="Remove nodule 7">
+              </i>
+             </th>
+             <th data-nodule-id="8" style="display:none;">
+              Nodule 8
+              <i class="remove-nodule fa fa-trash-o pull-right" data-nodule-id="8" onclick="removeNodule()" title="Remove nodule 8">
+              </i>
+             </th>
+             <th data-nodule-id="9" style="display:none;">
+              Nodule 9
+              <i class="remove-nodule fa fa-trash-o pull-right" data-nodule-id="9" onclick="removeNodule()" title="Remove nodule 9">
+              </i>
+             </th>
+             <th data-nodule-id="10" style="display:none;">
+              Nodule 10
+              <i class="remove-nodule fa fa-trash-o pull-right" data-nodule-id="10" onclick="removeNodule()" title="Remove nodule 10">
+              </i>
              </th>
             </tr>
            </thead>
            <tbody>
             <tr>
-             <td>
+             <td style="white-space: nowrap;">
               Is it new?
               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="A pull-down menu
                                                                 allows us to note whether a nodule is newly seen, previously seen,
@@ -417,10 +444,10 @@
                                                                 is also an option for nodules that are not included in the scan." data-toggle="popover" title="Help">
               </i>
              </td>
-             <td>
+             <td data-nodule-id="1" style="display:none;">
               <div class="form-group">
-               <select name="cect1ch" onchange="newStat(1)" title="Is this nodule new?">
-                <option value="-">
+               <select name="cect1ch" required="required" title="Is this nodule new?">
+                <option value="">
                  -
                 </option>
                 <option value="n">
@@ -474,10 +501,10 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="2" style="display:none;">
               <div class="form-group">
-               <select name="cect2ch" onchange="newStat(2)" title="Is this nodule new?">
-                <option value="-">
+               <select name="cect2ch" required="required" title="Is this nodule new?">
+                <option value="">
                  -
                 </option>
                 <option value="n">
@@ -531,10 +558,10 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="3" style="display:none;">
               <div class="form-group">
-               <select name="cect3ch" onchange="newStat(3)" title="Is this nodule new?">
-                <option value="-">
+               <select name="cect3ch" required="required" title="Is this nodule new?">
+                <option value="">
                  -
                 </option>
                 <option value="n">
@@ -588,10 +615,10 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="4" style="display:none;">
               <div class="form-group">
-               <select name="cect4ch" onchange="newStat(4)" title="Is this nodule new?">
-                <option value="-">
+               <select name="cect4ch" required="required" title="Is this nodule new?">
+                <option value="">
                  -
                 </option>
                 <option value="n">
@@ -645,10 +672,10 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="5" style="display:none;">
               <div class="form-group">
-               <select name="cect5ch" onchange="newStat(5)" title="Is this nodule new?">
-                <option value="-">
+               <select name="cect5ch" required="required" title="Is this nodule new?">
+                <option value="">
                  -
                 </option>
                 <option value="n">
@@ -702,10 +729,238 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="6" style="display:none;">
               <div class="form-group">
-               <select name="cect0ch" onchange="newStat(0)" title="Is this nodule new?">
-                <option value="-">
+               <select name="cect6ch" required="required" title="Is this nodule new?">
+                <option value="">
+                 -
+                </option>
+                <option value="n">
+                 newly seen
+                </option>
+                <option value="pn">
+                 prev seen, no change
+                </option>
+                <option value="pd">
+                 prev seen, slight decr
+                </option>
+                <option value="pe">
+                 prev seen, marked decr
+                </option>
+                <option value="pi">
+                 prev seen, slight incr
+                </option>
+                <option value="pj">
+                 prev seen, marked incr
+                </option>
+                <option value="po">
+                 prev seen, obscured
+                </option>
+                <option value="pw">
+                 prev seen, resolved
+                </option>
+                <option value="px">
+                 prev seen, not a nodule
+                </option>
+                <option value="pr">
+                 prev seen, resected
+                </option>
+                <option value="rn">
+                 retrospect, no chg
+                </option>
+                <option value="rd">
+                 retrospect, decrease
+                </option>
+                <option value="ri">
+                 retrospect, slight incr
+                </option>
+                <option value="rj">
+                 retrospect, marked incr
+                </option>
+                <option value="pk">
+                 not in outside report
+                </option>
+                <option value="pv">
+                 not included in scan
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="7" style="display:none;">
+              <div class="form-group">
+               <select name="cect7ch" required="required" title="Is this nodule new?">
+                <option value="">
+                 -
+                </option>
+                <option value="n">
+                 newly seen
+                </option>
+                <option value="pn">
+                 prev seen, no change
+                </option>
+                <option value="pd">
+                 prev seen, slight decr
+                </option>
+                <option value="pe">
+                 prev seen, marked decr
+                </option>
+                <option value="pi">
+                 prev seen, slight incr
+                </option>
+                <option value="pj">
+                 prev seen, marked incr
+                </option>
+                <option value="po">
+                 prev seen, obscured
+                </option>
+                <option value="pw">
+                 prev seen, resolved
+                </option>
+                <option value="px">
+                 prev seen, not a nodule
+                </option>
+                <option value="pr">
+                 prev seen, resected
+                </option>
+                <option value="rn">
+                 retrospect, no chg
+                </option>
+                <option value="rd">
+                 retrospect, decrease
+                </option>
+                <option value="ri">
+                 retrospect, slight incr
+                </option>
+                <option value="rj">
+                 retrospect, marked incr
+                </option>
+                <option value="pk">
+                 not in outside report
+                </option>
+                <option value="pv">
+                 not included in scan
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="8" style="display:none;">
+              <div class="form-group">
+               <select name="cect8ch" required="required" title="Is this nodule new?">
+                <option value="">
+                 -
+                </option>
+                <option value="n">
+                 newly seen
+                </option>
+                <option value="pn">
+                 prev seen, no change
+                </option>
+                <option value="pd">
+                 prev seen, slight decr
+                </option>
+                <option value="pe">
+                 prev seen, marked decr
+                </option>
+                <option value="pi">
+                 prev seen, slight incr
+                </option>
+                <option value="pj">
+                 prev seen, marked incr
+                </option>
+                <option value="po">
+                 prev seen, obscured
+                </option>
+                <option value="pw">
+                 prev seen, resolved
+                </option>
+                <option value="px">
+                 prev seen, not a nodule
+                </option>
+                <option value="pr">
+                 prev seen, resected
+                </option>
+                <option value="rn">
+                 retrospect, no chg
+                </option>
+                <option value="rd">
+                 retrospect, decrease
+                </option>
+                <option value="ri">
+                 retrospect, slight incr
+                </option>
+                <option value="rj">
+                 retrospect, marked incr
+                </option>
+                <option value="pk">
+                 not in outside report
+                </option>
+                <option value="pv">
+                 not included in scan
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="9" style="display:none;">
+              <div class="form-group">
+               <select name="cect9ch" required="required" title="Is this nodule new?">
+                <option value="">
+                 -
+                </option>
+                <option value="n">
+                 newly seen
+                </option>
+                <option value="pn">
+                 prev seen, no change
+                </option>
+                <option value="pd">
+                 prev seen, slight decr
+                </option>
+                <option value="pe">
+                 prev seen, marked decr
+                </option>
+                <option value="pi">
+                 prev seen, slight incr
+                </option>
+                <option value="pj">
+                 prev seen, marked incr
+                </option>
+                <option value="po">
+                 prev seen, obscured
+                </option>
+                <option value="pw">
+                 prev seen, resolved
+                </option>
+                <option value="px">
+                 prev seen, not a nodule
+                </option>
+                <option value="pr">
+                 prev seen, resected
+                </option>
+                <option value="rn">
+                 retrospect, no chg
+                </option>
+                <option value="rd">
+                 retrospect, decrease
+                </option>
+                <option value="ri">
+                 retrospect, slight incr
+                </option>
+                <option value="rj">
+                 retrospect, marked incr
+                </option>
+                <option value="pk">
+                 not in outside report
+                </option>
+                <option value="pv">
+                 not included in scan
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="10" style="display:none;">
+              <div class="form-group">
+               <select name="cect10ch" required="required" title="Is this nodule new?">
+                <option value="">
                  -
                 </option>
                 <option value="n">
@@ -761,7 +1016,7 @@
              </td>
             </tr>
             <tr>
-             <td>
+             <td style="white-space: nowrap;">
               Endobronchial?
               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="It is required that both Endobronchial and Most
                                                                     likely location be answered.  If the nodule has both a
@@ -769,9 +1024,9 @@
                                                                     such." data-toggle="popover" title="Help">
               </i>
              </td>
-             <td>
+             <td data-nodule-id="1" style="display:none;">
               <div class="form-group">
-               <select name="cect1en" title="Endobronchial">
+               <select name="cect1en" required="required" title="Endobronchial">
                 <option value="-">
                  -
                 </option>
@@ -808,9 +1063,9 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="2" style="display:none;">
               <div class="form-group">
-               <select name="cect2en" title="Endobronchial">
+               <select name="cect2en" required="required" title="Endobronchial">
                 <option value="-">
                  -
                 </option>
@@ -847,9 +1102,9 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="3" style="display:none;">
               <div class="form-group">
-               <select name="cect3en" title="Endobronchial">
+               <select name="cect3en" required="required" title="Endobronchial">
                 <option value="-">
                  -
                 </option>
@@ -886,9 +1141,9 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="4" style="display:none;">
               <div class="form-group">
-               <select name="cect4en" title="Endobronchial">
+               <select name="cect4en" required="required" title="Endobronchial">
                 <option value="-">
                  -
                 </option>
@@ -925,9 +1180,9 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="5" style="display:none;">
               <div class="form-group">
-               <select name="cect5en" title="Endobronchial">
+               <select name="cect5en" required="required" title="Endobronchial">
                 <option value="-">
                  -
                 </option>
@@ -964,9 +1219,165 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="6" style="display:none;">
               <div class="form-group">
-               <select name="cect0en" title="Endobronchial">
+               <select name="cect6en" required="required" title="Endobronchial">
+                <option value="-">
+                 -
+                </option>
+                <option value="no">
+                 No
+                </option>
+                <option value="tr">
+                 Trachea
+                </option>
+                <option value="rm">
+                 Rt. Main
+                </option>
+                <option value="lm">
+                 Lt. Main
+                </option>
+                <option value="bi">
+                 BI
+                </option>
+                <option value="rul">
+                 RUL
+                </option>
+                <option value="rml">
+                 RML
+                </option>
+                <option value="rll">
+                 RLL
+                </option>
+                <option value="lul">
+                 LUL
+                </option>
+                <option value="lll">
+                 LLL
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="7" style="display:none;">
+              <div class="form-group">
+               <select name="cect7en" required="required" title="Endobronchial">
+                <option value="-">
+                 -
+                </option>
+                <option value="no">
+                 No
+                </option>
+                <option value="tr">
+                 Trachea
+                </option>
+                <option value="rm">
+                 Rt. Main
+                </option>
+                <option value="lm">
+                 Lt. Main
+                </option>
+                <option value="bi">
+                 BI
+                </option>
+                <option value="rul">
+                 RUL
+                </option>
+                <option value="rml">
+                 RML
+                </option>
+                <option value="rll">
+                 RLL
+                </option>
+                <option value="lul">
+                 LUL
+                </option>
+                <option value="lll">
+                 LLL
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="8" style="display:none;">
+              <div class="form-group">
+               <select name="cect8en" required="required" title="Endobronchial">
+                <option value="-">
+                 -
+                </option>
+                <option value="no">
+                 No
+                </option>
+                <option value="tr">
+                 Trachea
+                </option>
+                <option value="rm">
+                 Rt. Main
+                </option>
+                <option value="lm">
+                 Lt. Main
+                </option>
+                <option value="bi">
+                 BI
+                </option>
+                <option value="rul">
+                 RUL
+                </option>
+                <option value="rml">
+                 RML
+                </option>
+                <option value="rll">
+                 RLL
+                </option>
+                <option value="lul">
+                 LUL
+                </option>
+                <option value="lll">
+                 LLL
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="9" style="display:none;">
+              <div class="form-group">
+               <select name="cect9en" required="required" title="Endobronchial">
+                <option value="-">
+                 -
+                </option>
+                <option value="no">
+                 No
+                </option>
+                <option value="tr">
+                 Trachea
+                </option>
+                <option value="rm">
+                 Rt. Main
+                </option>
+                <option value="lm">
+                 Lt. Main
+                </option>
+                <option value="bi">
+                 BI
+                </option>
+                <option value="rul">
+                 RUL
+                </option>
+                <option value="rml">
+                 RML
+                </option>
+                <option value="rll">
+                 RLL
+                </option>
+                <option value="lul">
+                 LUL
+                </option>
+                <option value="lll">
+                 LLL
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="10" style="display:none;">
+              <div class="form-group">
+               <select name="cect10en" required="required" title="Endobronchial">
                 <option value="-">
                  -
                 </option>
@@ -1005,14 +1416,14 @@
              </td>
             </tr>
             <tr>
-             <td>
+             <td style="white-space: nowrap;">
               Most Likely Location?
               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="If a nodule location is different from where it was described to be previously, do not go back and change the location on the previous exams but make sure to make a note of the previously mentioned location in the Comment field (see description below)." data-toggle="popover" title="Help">
               </i>
              </td>
-             <td>
+             <td data-nodule-id="1" style="display:none;">
               <div class="form-group">
-               <select name="cect1ll" title="Most likely location">
+               <select name="cect1ll" required="required" title="Most likely location">
                 <option value="-">
                  -
                 </option>
@@ -1037,9 +1448,9 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="2" style="display:none;">
               <div class="form-group">
-               <select name="cect2ll" title="Most likely location">
+               <select name="cect2ll" required="required" title="Most likely location">
                 <option value="-">
                  -
                 </option>
@@ -1064,9 +1475,9 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="3" style="display:none;">
               <div class="form-group">
-               <select name="cect3ll" title="Most likely location">
+               <select name="cect3ll" required="required" title="Most likely location">
                 <option value="-">
                  -
                 </option>
@@ -1091,9 +1502,9 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="4" style="display:none;">
               <div class="form-group">
-               <select name="cect4ll" title="Most likely location">
+               <select name="cect4ll" required="required" title="Most likely location">
                 <option value="-">
                  -
                 </option>
@@ -1118,9 +1529,9 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="5" style="display:none;">
               <div class="form-group">
-               <select name="cect5ll" title="Most likely location">
+               <select name="cect5ll" required="required" title="Most likely location">
                 <option value="-">
                  -
                 </option>
@@ -1145,9 +1556,117 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="6" style="display:none;">
               <div class="form-group">
-               <select name="cect0ll" title="Most likely location">
+               <select name="cect6ll" required="required" title="Most likely location">
+                <option value="-">
+                 -
+                </option>
+                <option value="end">
+                 Endobr
+                </option>
+                <option value="lul">
+                 LUL
+                </option>
+                <option value="lll">
+                 LLL
+                </option>
+                <option value="rul">
+                 RUL
+                </option>
+                <option value="rml">
+                 RML
+                </option>
+                <option value="rll">
+                 RLL
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="7" style="display:none;">
+              <div class="form-group">
+               <select name="cect7ll" required="required" title="Most likely location">
+                <option value="-">
+                 -
+                </option>
+                <option value="end">
+                 Endobr
+                </option>
+                <option value="lul">
+                 LUL
+                </option>
+                <option value="lll">
+                 LLL
+                </option>
+                <option value="rul">
+                 RUL
+                </option>
+                <option value="rml">
+                 RML
+                </option>
+                <option value="rll">
+                 RLL
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="8" style="display:none;">
+              <div class="form-group">
+               <select name="cect8ll" required="required" title="Most likely location">
+                <option value="-">
+                 -
+                </option>
+                <option value="end">
+                 Endobr
+                </option>
+                <option value="lul">
+                 LUL
+                </option>
+                <option value="lll">
+                 LLL
+                </option>
+                <option value="rul">
+                 RUL
+                </option>
+                <option value="rml">
+                 RML
+                </option>
+                <option value="rll">
+                 RLL
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="9" style="display:none;">
+              <div class="form-group">
+               <select name="cect9ll" required="required" title="Most likely location">
+                <option value="-">
+                 -
+                </option>
+                <option value="end">
+                 Endobr
+                </option>
+                <option value="lul">
+                 LUL
+                </option>
+                <option value="lll">
+                 LLL
+                </option>
+                <option value="rul">
+                 RUL
+                </option>
+                <option value="rml">
+                 RML
+                </option>
+                <option value="rll">
+                 RLL
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="10" style="display:none;">
+              <div class="form-group">
+               <select name="cect10ll" required="required" title="Most likely location">
                 <option value="-">
                  -
                 </option>
@@ -1174,86 +1693,126 @@
              </td>
             </tr>
             <tr>
-             <td>
+             <td style="white-space: nowrap;">
               Nodule seen in series
               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate the CT series number in which the nodule appears." data-toggle="popover" title="Help">
               </i>
              </td>
-             <td>
+             <td data-nodule-id="1" style="display:none;">
               <div class="form-group">
                <input name="cect1sn" size="3" title="CT Series Number" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="2" style="display:none;">
               <div class="form-group">
                <input name="cect2sn" size="3" title="CT Series Number" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="3" style="display:none;">
               <div class="form-group">
                <input name="cect3sn" size="3" title="CT Series Number" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="4" style="display:none;">
               <div class="form-group">
                <input name="cect4sn" size="3" title="CT Series Number" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="5" style="display:none;">
               <div class="form-group">
                <input name="cect5sn" size="3" title="CT Series Number" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="6" style="display:none;">
               <div class="form-group">
-               <input name="cect0sn" size="3" title="CT Series Number" type="text"/>
+               <input name="cect6sn" size="3" title="CT Series Number" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="7" style="display:none;">
+              <div class="form-group">
+               <input name="cect7sn" size="3" title="CT Series Number" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="8" style="display:none;">
+              <div class="form-group">
+               <input name="cect8sn" size="3" title="CT Series Number" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="9" style="display:none;">
+              <div class="form-group">
+               <input name="cect9sn" size="3" title="CT Series Number" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="10" style="display:none;">
+              <div class="form-group">
+               <input name="cect10sn" size="3" title="CT Series Number" type="text"/>
               </div>
              </td>
             </tr>
             <tr>
-             <td>
+             <td style="white-space: nowrap;">
               Nodule seen in images
               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate the CT image number in which the nodule appears." data-toggle="popover" title="Help">
               </i>
              </td>
-             <td>
+             <td data-nodule-id="1" style="display:none;">
               <div class="form-group">
                <input name="cect1sn" size="3" title="CT Image Number" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="2" style="display:none;">
               <div class="form-group">
                <input name="cect2sn" size="3" title="CT Image Number" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="3" style="display:none;">
               <div class="form-group">
                <input name="cect3sn" size="3" title="CT Image Number" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="4" style="display:none;">
               <div class="form-group">
                <input name="cect4sn" size="3" title="CT Image Number" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="5" style="display:none;">
               <div class="form-group">
                <input name="cect5sn" size="3" title="CT Image Number" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="6" style="display:none;">
               <div class="form-group">
-               <input name="cect0sn" size="3" title="CT Image Number" type="text"/>
+               <input name="cect6sn" size="3" title="CT Image Number" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="7" style="display:none;">
+              <div class="form-group">
+               <input name="cect7sn" size="3" title="CT Image Number" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="8" style="display:none;">
+              <div class="form-group">
+               <input name="cect8sn" size="3" title="CT Image Number" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="9" style="display:none;">
+              <div class="form-group">
+               <input name="cect9sn" size="3" title="CT Image Number" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="10" style="display:none;">
+              <div class="form-group">
+               <input name="cect10sn" size="3" title="CT Image Number" type="text"/>
               </div>
              </td>
             </tr>
             <tr>
-             <td>
+             <td style="white-space: nowrap;">
               Nodule Status
               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="If nodule calcifications are seen ('yes' is selected for Calcifications), 'benign (Ca++)' will automatically appear under Nodule Status.&lt;li&gt; When '?' is selected under Calcifications, Nodule Status will read 'prob benign, prob Ca++' (probably benign, probably calcified).  If the nodule is 'prev seen, resolved,' as noted in the 'Is it new' field, then Nodule Status will automatically read 'resolved.'  When 'prev seen, resected' is selected for 'Is it new', 'Resected-malignant' appears under Nodule Status.  If under 'Is it new' it reads 'not included in scan,' Nodule Status will also read 'not included in scan.'  These automatic entries help to maintain a level of consistency for data entry across institutions." data-toggle="popover" title="Help">
               </i>
              </td>
-             <td>
+             <td data-nodule-id="1" style="display:none;">
               <div class="form-group">
                <select name="cect1st" title="Nodule status">
                 <option value="-">
@@ -1310,7 +1869,7 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="2" style="display:none;">
               <div class="form-group">
                <select name="cect2st" title="Nodule status">
                 <option value="-">
@@ -1367,7 +1926,7 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="3" style="display:none;">
               <div class="form-group">
                <select name="cect3st" title="Nodule status">
                 <option value="-">
@@ -1424,7 +1983,7 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="4" style="display:none;">
               <div class="form-group">
                <select name="cect4st" title="Nodule status">
                 <option value="-">
@@ -1481,7 +2040,7 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="5" style="display:none;">
               <div class="form-group">
                <select name="cect5st" title="Nodule status">
                 <option value="-">
@@ -1538,9 +2097,237 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="6" style="display:none;">
               <div class="form-group">
-               <select name="cect0st" title="Nodule status">
+               <select name="cect6st" title="Nodule status">
+                <option value="-">
+                 -
+                </option>
+                <option value="un">
+                 unknown
+                </option>
+                <option value="bc">
+                 benign (Ca++)
+                </option>
+                <option value="pc">
+                 prob benign, prob Ca++
+                </option>
+                <option value="re">
+                 resolved
+                </option>
+                <option value="rg">
+                 resolving
+                </option>
+                <option value="tn">
+                 no change - 2 yrs
+                </option>
+                <option value="pp">
+                 PET - positive
+                </option>
+                <option value="pn">
+                 PET - negative
+                </option>
+                <option value="pi">
+                 PET - indeterminate
+                </option>
+                <option value="ub">
+                 Biopsy - unknown
+                </option>
+                <option value="bb">
+                 Biopsy - benign
+                </option>
+                <option value="mb">
+                 Biopsy - malignant
+                </option>
+                <option value="ab">
+                 Biopsy - atyp bronch prolif
+                </option>
+                <option value="om">
+                 Biopsy - metastatic
+                </option>
+                <option value="mr">
+                 Resected - malignant
+                </option>
+                <option value="br">
+                 Resected - benign
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="7" style="display:none;">
+              <div class="form-group">
+               <select name="cect7st" title="Nodule status">
+                <option value="-">
+                 -
+                </option>
+                <option value="un">
+                 unknown
+                </option>
+                <option value="bc">
+                 benign (Ca++)
+                </option>
+                <option value="pc">
+                 prob benign, prob Ca++
+                </option>
+                <option value="re">
+                 resolved
+                </option>
+                <option value="rg">
+                 resolving
+                </option>
+                <option value="tn">
+                 no change - 2 yrs
+                </option>
+                <option value="pp">
+                 PET - positive
+                </option>
+                <option value="pn">
+                 PET - negative
+                </option>
+                <option value="pi">
+                 PET - indeterminate
+                </option>
+                <option value="ub">
+                 Biopsy - unknown
+                </option>
+                <option value="bb">
+                 Biopsy - benign
+                </option>
+                <option value="mb">
+                 Biopsy - malignant
+                </option>
+                <option value="ab">
+                 Biopsy - atyp bronch prolif
+                </option>
+                <option value="om">
+                 Biopsy - metastatic
+                </option>
+                <option value="mr">
+                 Resected - malignant
+                </option>
+                <option value="br">
+                 Resected - benign
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="8" style="display:none;">
+              <div class="form-group">
+               <select name="cect8st" title="Nodule status">
+                <option value="-">
+                 -
+                </option>
+                <option value="un">
+                 unknown
+                </option>
+                <option value="bc">
+                 benign (Ca++)
+                </option>
+                <option value="pc">
+                 prob benign, prob Ca++
+                </option>
+                <option value="re">
+                 resolved
+                </option>
+                <option value="rg">
+                 resolving
+                </option>
+                <option value="tn">
+                 no change - 2 yrs
+                </option>
+                <option value="pp">
+                 PET - positive
+                </option>
+                <option value="pn">
+                 PET - negative
+                </option>
+                <option value="pi">
+                 PET - indeterminate
+                </option>
+                <option value="ub">
+                 Biopsy - unknown
+                </option>
+                <option value="bb">
+                 Biopsy - benign
+                </option>
+                <option value="mb">
+                 Biopsy - malignant
+                </option>
+                <option value="ab">
+                 Biopsy - atyp bronch prolif
+                </option>
+                <option value="om">
+                 Biopsy - metastatic
+                </option>
+                <option value="mr">
+                 Resected - malignant
+                </option>
+                <option value="br">
+                 Resected - benign
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="9" style="display:none;">
+              <div class="form-group">
+               <select name="cect9st" title="Nodule status">
+                <option value="-">
+                 -
+                </option>
+                <option value="un">
+                 unknown
+                </option>
+                <option value="bc">
+                 benign (Ca++)
+                </option>
+                <option value="pc">
+                 prob benign, prob Ca++
+                </option>
+                <option value="re">
+                 resolved
+                </option>
+                <option value="rg">
+                 resolving
+                </option>
+                <option value="tn">
+                 no change - 2 yrs
+                </option>
+                <option value="pp">
+                 PET - positive
+                </option>
+                <option value="pn">
+                 PET - negative
+                </option>
+                <option value="pi">
+                 PET - indeterminate
+                </option>
+                <option value="ub">
+                 Biopsy - unknown
+                </option>
+                <option value="bb">
+                 Biopsy - benign
+                </option>
+                <option value="mb">
+                 Biopsy - malignant
+                </option>
+                <option value="ab">
+                 Biopsy - atyp bronch prolif
+                </option>
+                <option value="om">
+                 Biopsy - metastatic
+                </option>
+                <option value="mr">
+                 Resected - malignant
+                </option>
+                <option value="br">
+                 Resected - benign
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="10" style="display:none;">
+              <div class="form-group">
+               <select name="cect10st" title="Nodule status">
                 <option value="-">
                  -
                 </option>
@@ -1597,197 +2384,297 @@
              </td>
             </tr>
             <tr>
-             <td>
+             <td style="white-space: nowrap;">
               Distance from the costal pleura (mm)?
               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="The shortest distance from the nodule to the costal pleura should be measured in millimeters." data-toggle="popover" title="Help">
               </i>
              </td>
-             <td>
+             <td data-nodule-id="1" style="display:none;">
               <div class="form-group">
                <input class="numeric" name="cect1pld" title="Distance" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="2" style="display:none;">
               <div class="form-group">
                <input class="numeric" name="cect2pld" title="Distance" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="3" style="display:none;">
               <div class="form-group">
                <input class="numeric" name="cect3pld" title="Distance" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="4" style="display:none;">
               <div class="form-group">
                <input class="numeric" name="cect4pld" title="Distance" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="5" style="display:none;">
               <div class="form-group">
                <input class="numeric" name="cect5pld" title="Distance" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="6" style="display:none;">
               <div class="form-group">
-               <input class="numeric" name="cect0pld" title="Distance" type="text"/>
+               <input class="numeric" name="cect6pld" title="Distance" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="7" style="display:none;">
+              <div class="form-group">
+               <input class="numeric" name="cect7pld" title="Distance" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="8" style="display:none;">
+              <div class="form-group">
+               <input class="numeric" name="cect8pld" title="Distance" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="9" style="display:none;">
+              <div class="form-group">
+               <input class="numeric" name="cect9pld" title="Distance" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="10" style="display:none;">
+              <div class="form-group">
+               <input class="numeric" name="cect10pld" title="Distance" type="text"/>
               </div>
              </td>
             </tr>
             <tr>
-             <td>
+             <td style="white-space: nowrap;">
               Length (mm)
               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate the length (largest dimension) of the nodule.  The unit of measurement is always millimeters." data-toggle="popover" title="Help">
               </i>
              </td>
-             <td>
+             <td data-nodule-id="1" style="display:none;">
               <div class="form-group">
                <input class="numeric" name="cect1sl" size="4" title="Length (mm)" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="2" style="display:none;">
               <div class="form-group">
                <input class="numeric" name="cect2sl" size="4" title="Length (mm)" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="3" style="display:none;">
               <div class="form-group">
                <input class="numeric" name="cect3sl" size="4" title="Length (mm)" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="4" style="display:none;">
               <div class="form-group">
                <input class="numeric" name="cect4sl" size="4" title="Length (mm)" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="5" style="display:none;">
               <div class="form-group">
                <input class="numeric" name="cect5sl" size="4" title="Length (mm)" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="6" style="display:none;">
               <div class="form-group">
-               <input class="numeric" name="cect0sl" size="4" title="Length (mm)" type="text"/>
+               <input class="numeric" name="cect6sl" size="4" title="Length (mm)" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="7" style="display:none;">
+              <div class="form-group">
+               <input class="numeric" name="cect7sl" size="4" title="Length (mm)" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="8" style="display:none;">
+              <div class="form-group">
+               <input class="numeric" name="cect8sl" size="4" title="Length (mm)" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="9" style="display:none;">
+              <div class="form-group">
+               <input class="numeric" name="cect9sl" size="4" title="Length (mm)" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="10" style="display:none;">
+              <div class="form-group">
+               <input class="numeric" name="cect10sl" size="4" title="Length (mm)" type="text"/>
               </div>
              </td>
             </tr>
             <tr>
-             <td>
+             <td style="white-space: nowrap;">
               Maximum Width (mm)
               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate the maximum width (largest perpendicular dimension to the length) of the nodule.  The unit of measurement is always millimeters." data-toggle="popover" title="Help">
               </i>
              </td>
-             <td>
+             <td data-nodule-id="1" style="display:none;">
               <div class="form-group">
                <input class="numeric" name="cect1sw" size="4" title="Maximum Width" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="2" style="display:none;">
               <div class="form-group">
                <input class="numeric" name="cect2sw" size="4" title="Maximum Width" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="3" style="display:none;">
               <div class="form-group">
                <input class="numeric" name="cect3sw" size="4" title="Maximum Width" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="4" style="display:none;">
               <div class="form-group">
                <input class="numeric" name="cect4sw" size="4" title="Maximum Width" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="5" style="display:none;">
               <div class="form-group">
                <input class="numeric" name="cect5sw" size="4" title="Maximum Width" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="6" style="display:none;">
               <div class="form-group">
-               <input class="numeric" name="cect0sw" size="4" title="Maximum Width" type="text"/>
+               <input class="numeric" name="cect6sw" size="4" title="Maximum Width" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="7" style="display:none;">
+              <div class="form-group">
+               <input class="numeric" name="cect7sw" size="4" title="Maximum Width" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="8" style="display:none;">
+              <div class="form-group">
+               <input class="numeric" name="cect8sw" size="4" title="Maximum Width" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="9" style="display:none;">
+              <div class="form-group">
+               <input class="numeric" name="cect9sw" size="4" title="Maximum Width" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="10" style="display:none;">
+              <div class="form-group">
+               <input class="numeric" name="cect10sw" size="4" title="Maximum Width" type="text"/>
               </div>
              </td>
             </tr>
             <tr>
-             <td>
+             <td style="white-space: nowrap;">
               Height (mm)
              </td>
-             <td>
+             <td data-nodule-id="1" style="display:none;">
               <div class="form-group">
                <input class="numeric" name="cect1sh" size="4" title="Height" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="2" style="display:none;">
               <div class="form-group">
                <input class="numeric" name="cect2sh" size="4" title="Height" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="3" style="display:none;">
               <div class="form-group">
                <input class="numeric" name="cect3sh" size="4" title="Height" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="4" style="display:none;">
               <div class="form-group">
                <input class="numeric" name="cect4sh" size="4" title="Height" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="5" style="display:none;">
               <div class="form-group">
                <input class="numeric" name="cect5sh" size="4" title="Height" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="6" style="display:none;">
               <div class="form-group">
-               <input class="numeric" name="cect0sh" size="4" title="Height" type="text"/>
+               <input class="numeric" name="cect6sh" size="4" title="Height" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="7" style="display:none;">
+              <div class="form-group">
+               <input class="numeric" name="cect7sh" size="4" title="Height" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="8" style="display:none;">
+              <div class="form-group">
+               <input class="numeric" name="cect8sh" size="4" title="Height" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="9" style="display:none;">
+              <div class="form-group">
+               <input class="numeric" name="cect9sh" size="4" title="Height" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="10" style="display:none;">
+              <div class="form-group">
+               <input class="numeric" name="cect10sh" size="4" title="Height" type="text"/>
               </div>
              </td>
             </tr>
             <tr>
-             <td>
+             <td style="white-space: nowrap;">
               Volume (mm
               <sup>
                3
               </sup>
               )
              </td>
-             <td>
+             <td data-nodule-id="1" style="display:none;">
               <div class="form-group">
                <input class="numeric" name="cect1sv" size="4" title="Volume" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="2" style="display:none;">
               <div class="form-group">
                <input class="numeric" name="cect2sv" size="4" title="Volume" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="3" style="display:none;">
               <div class="form-group">
                <input class="numeric" name="cect3sv" size="4" title="Volume" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="4" style="display:none;">
               <div class="form-group">
                <input class="numeric" name="cect4sv" size="4" title="Volume" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="5" style="display:none;">
               <div class="form-group">
                <input class="numeric" name="cect5sv" size="4" title="Volume" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="6" style="display:none;">
               <div class="form-group">
-               <input class="numeric" name="cect0sv" size="4" title="Volume" type="text"/>
+               <input class="numeric" name="cect6sv" size="4" title="Volume" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="7" style="display:none;">
+              <div class="form-group">
+               <input class="numeric" name="cect7sv" size="4" title="Volume" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="8" style="display:none;">
+              <div class="form-group">
+               <input class="numeric" name="cect8sv" size="4" title="Volume" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="9" style="display:none;">
+              <div class="form-group">
+               <input class="numeric" name="cect9sv" size="4" title="Volume" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="10" style="display:none;">
+              <div class="form-group">
+               <input class="numeric" name="cect10sv" size="4" title="Volume" type="text"/>
               </div>
              </td>
             </tr>
             <tr>
-             <td>
+             <td style="white-space: nowrap;">
               Nodule Consistency
               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Nodules may be classified into three types by attenuation characteristics: solid - nodule is uniformly solid in appearance; non-solid - nodule is uniformly non-solid (except for blood vessels) in appearance; part-solid - nodule has both solid and non-solid components" data-toggle="popover" title="Help">
               </i>
              </td>
-             <td>
+             <td data-nodule-id="1" style="display:none;">
               <div class="form-group">
                <select name="cect1nt" onchange="newTexture(1)" title="Nodule Consistency">
                 <option value="-">
@@ -1808,7 +2695,7 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="2" style="display:none;">
               <div class="form-group">
                <select name="cect2nt" onchange="newTexture(2)" title="Nodule Consistency">
                 <option value="-">
@@ -1829,7 +2716,7 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="3" style="display:none;">
               <div class="form-group">
                <select name="cect3nt" onchange="newTexture(3)" title="Nodule Consistency">
                 <option value="-">
@@ -1850,7 +2737,7 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="4" style="display:none;">
               <div class="form-group">
                <select name="cect4nt" onchange="newTexture(4)" title="Nodule Consistency">
                 <option value="-">
@@ -1871,7 +2758,7 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="5" style="display:none;">
               <div class="form-group">
                <select name="cect5nt" onchange="newTexture(5)" title="Nodule Consistency">
                 <option value="-">
@@ -1892,9 +2779,93 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="6" style="display:none;">
               <div class="form-group">
-               <select name="cect0nt" onchange="newTexture(0)" title="Nodule Consistency">
+               <select name="cect6nt" onchange="newTexture(6)" title="Nodule Consistency">
+                <option value="-">
+                 -
+                </option>
+                <option value="s">
+                 solid
+                </option>
+                <option value="m">
+                 part-solid
+                </option>
+                <option value="g">
+                 non-solid
+                </option>
+                <option value="o">
+                 other (see comment)
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="7" style="display:none;">
+              <div class="form-group">
+               <select name="cect7nt" onchange="newTexture(7)" title="Nodule Consistency">
+                <option value="-">
+                 -
+                </option>
+                <option value="s">
+                 solid
+                </option>
+                <option value="m">
+                 part-solid
+                </option>
+                <option value="g">
+                 non-solid
+                </option>
+                <option value="o">
+                 other (see comment)
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="8" style="display:none;">
+              <div class="form-group">
+               <select name="cect8nt" onchange="newTexture(8)" title="Nodule Consistency">
+                <option value="-">
+                 -
+                </option>
+                <option value="s">
+                 solid
+                </option>
+                <option value="m">
+                 part-solid
+                </option>
+                <option value="g">
+                 non-solid
+                </option>
+                <option value="o">
+                 other (see comment)
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="9" style="display:none;">
+              <div class="form-group">
+               <select name="cect9nt" onchange="newTexture(9)" title="Nodule Consistency">
+                <option value="-">
+                 -
+                </option>
+                <option value="s">
+                 solid
+                </option>
+                <option value="m">
+                 part-solid
+                </option>
+                <option value="g">
+                 non-solid
+                </option>
+                <option value="o">
+                 other (see comment)
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="10" style="display:none;">
+              <div class="form-group">
+               <select name="cect10nt" onchange="newTexture(10)" title="Nodule Consistency">
                 <option value="-">
                  -
                 </option>
@@ -1915,61 +2886,89 @@
              </td>
             </tr>
             <tr>
-             <td>
+             <td style="white-space: nowrap;">
               Solid Comp. Length x Width
               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="TODO: ELCAP missing" data-toggle="popover" title="Help">
               </i>
              </td>
-             <td>
+             <td data-nodule-id="1" style="display:none;">
               <div class="form-group">
                <input disabled="true" name="cect1ssl" size="4" title="Solid Comp. Length" type="text"/>
                x
                <input disabled="true" name="cect1ssw" size="4" title="Solid Comp. Width" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="2" style="display:none;">
               <div class="form-group">
                <input disabled="true" name="cect2ssl" size="4" title="Solid Comp. Length" type="text"/>
                x
                <input disabled="true" name="cect2ssw" size="4" title="Solid Comp. Width" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="3" style="display:none;">
               <div class="form-group">
                <input disabled="true" name="cect3ssl" size="4" title="Solid Comp. Length" type="text"/>
                x
                <input disabled="true" name="cect3ssw" size="4" title="Solid Comp. Width" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="4" style="display:none;">
               <div class="form-group">
                <input disabled="true" name="cect4ssl" size="4" title="Solid Comp. Length" type="text"/>
                x
                <input disabled="true" name="cect4ssw" size="4" title="Solid Comp. Width" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="5" style="display:none;">
               <div class="form-group">
                <input disabled="true" name="cect5ssl" size="4" title="Solid Comp. Length" type="text"/>
                x
                <input disabled="true" name="cect5ssw" size="4" title="Solid Comp. Width" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="6" style="display:none;">
               <div class="form-group">
-               <input disabled="true" name="cect0ssl" size="4" title="Solid Comp. Length" type="text"/>
+               <input disabled="true" name="cect6ssl" size="4" title="Solid Comp. Length" type="text"/>
                x
-               <input disabled="true" name="cect0ssw" size="4" title="Solid Comp. Width" type="text"/>
+               <input disabled="true" name="cect6ssw" size="4" title="Solid Comp. Width" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="7" style="display:none;">
+              <div class="form-group">
+               <input disabled="true" name="cect7ssl" size="4" title="Solid Comp. Length" type="text"/>
+               x
+               <input disabled="true" name="cect7ssw" size="4" title="Solid Comp. Width" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="8" style="display:none;">
+              <div class="form-group">
+               <input disabled="true" name="cect8ssl" size="4" title="Solid Comp. Length" type="text"/>
+               x
+               <input disabled="true" name="cect8ssw" size="4" title="Solid Comp. Width" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="9" style="display:none;">
+              <div class="form-group">
+               <input disabled="true" name="cect9ssl" size="4" title="Solid Comp. Length" type="text"/>
+               x
+               <input disabled="true" name="cect9ssw" size="4" title="Solid Comp. Width" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="10" style="display:none;">
+              <div class="form-group">
+               <input disabled="true" name="cect10ssl" size="4" title="Solid Comp. Length" type="text"/>
+               x
+               <input disabled="true" name="cect10ssw" size="4" title="Solid Comp. Width" type="text"/>
               </div>
              </td>
             </tr>
             <tr>
-             <td>
+             <td style="white-space: nowrap;">
               Smooth Edges
               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate whether the nodule has a smooth-appearing margin." data-toggle="popover" title="Help">
               </i>
              </td>
-             <td>
+             <td data-nodule-id="1" style="display:none;">
               <div class="form-group">
                <label class="radio-inline">
                 <input data-fv-notempty-message="Please select a value" id="cect1se-n" name="cect1se" required="required" type="radio" value="n"/>
@@ -1985,7 +2984,7 @@
                </label>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="2" style="display:none;">
               <div class="form-group">
                <label class="radio-inline">
                 <input data-fv-notempty-message="Please select a value" id="cect2se-n" name="cect2se" required="required" type="radio" value="n"/>
@@ -2001,7 +3000,7 @@
                </label>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="3" style="display:none;">
               <div class="form-group">
                <label class="radio-inline">
                 <input data-fv-notempty-message="Please select a value" id="cect3se-n" name="cect3se" required="required" type="radio" value="n"/>
@@ -2017,7 +3016,7 @@
                </label>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="4" style="display:none;">
               <div class="form-group">
                <label class="radio-inline">
                 <input data-fv-notempty-message="Please select a value" id="cect4se-n" name="cect4se" required="required" type="radio" value="n"/>
@@ -2033,7 +3032,7 @@
                </label>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="5" style="display:none;">
               <div class="form-group">
                <label class="radio-inline">
                 <input data-fv-notempty-message="Please select a value" id="cect5se-n" name="cect5se" required="required" type="radio" value="n"/>
@@ -2049,30 +3048,94 @@
                </label>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="6" style="display:none;">
               <div class="form-group">
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect0se-n" name="cect0se" required="required" type="radio" value="n"/>
+                <input data-fv-notempty-message="Please select a value" id="cect6se-n" name="cect6se" required="required" type="radio" value="n"/>
                 No
                </label>
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect0se-y" name="cect0se" required="required" type="radio" value="y"/>
+                <input data-fv-notempty-message="Please select a value" id="cect6se-y" name="cect6se" required="required" type="radio" value="y"/>
                 Yes
                </label>
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect0se-q" name="cect0se" required="required" type="radio" value="q"/>
+                <input data-fv-notempty-message="Please select a value" id="cect6se-q" name="cect6se" required="required" type="radio" value="q"/>
+                ?
+               </label>
+              </div>
+             </td>
+             <td data-nodule-id="7" style="display:none;">
+              <div class="form-group">
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect7se-n" name="cect7se" required="required" type="radio" value="n"/>
+                No
+               </label>
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect7se-y" name="cect7se" required="required" type="radio" value="y"/>
+                Yes
+               </label>
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect7se-q" name="cect7se" required="required" type="radio" value="q"/>
+                ?
+               </label>
+              </div>
+             </td>
+             <td data-nodule-id="8" style="display:none;">
+              <div class="form-group">
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect8se-n" name="cect8se" required="required" type="radio" value="n"/>
+                No
+               </label>
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect8se-y" name="cect8se" required="required" type="radio" value="y"/>
+                Yes
+               </label>
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect8se-q" name="cect8se" required="required" type="radio" value="q"/>
+                ?
+               </label>
+              </div>
+             </td>
+             <td data-nodule-id="9" style="display:none;">
+              <div class="form-group">
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect9se-n" name="cect9se" required="required" type="radio" value="n"/>
+                No
+               </label>
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect9se-y" name="cect9se" required="required" type="radio" value="y"/>
+                Yes
+               </label>
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect9se-q" name="cect9se" required="required" type="radio" value="q"/>
+                ?
+               </label>
+              </div>
+             </td>
+             <td data-nodule-id="10" style="display:none;">
+              <div class="form-group">
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect10se-n" name="cect10se" required="required" type="radio" value="n"/>
+                No
+               </label>
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect10se-y" name="cect10se" required="required" type="radio" value="y"/>
+                Yes
+               </label>
+               <label class="radio-inline">
+                <input data-fv-notempty-message="Please select a value" id="cect10se-q" name="cect10se" required="required" type="radio" value="q"/>
                 ?
                </label>
               </div>
              </td>
             </tr>
             <tr>
-             <td>
+             <td style="white-space: nowrap;">
               Action
               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="This field becomes very important when different nodules require different follow-up.  A pull-down menu allows us to choose among six different follow-up actions -    'repeat SCT' (repeat screening CT),    'f/u\ Dx CT' (follow-up Diagnostic CT),    'Abx + f/u Dx CT' (Antibiotic + follow-up Diagnostic CT),    'biopsy',    'bronchoscopy',       or    'resection'." data-toggle="popover" title="Help">
               </i>
              </td>
-             <td>
+             <td data-nodule-id="1" style="display:none;">
               <div class="form-group">
                <select name="cect1ac" title="Action">
                 <option value="-">
@@ -2108,7 +3171,7 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="2" style="display:none;">
               <div class="form-group">
                <select name="cect2ac" title="Action">
                 <option value="-">
@@ -2144,7 +3207,7 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="3" style="display:none;">
               <div class="form-group">
                <select name="cect3ac" title="Action">
                 <option value="-">
@@ -2180,7 +3243,7 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="4" style="display:none;">
               <div class="form-group">
                <select name="cect4ac" title="Action">
                 <option value="-">
@@ -2216,7 +3279,7 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="5" style="display:none;">
               <div class="form-group">
                <select name="cect5ac" title="Action">
                 <option value="-">
@@ -2252,9 +3315,153 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="6" style="display:none;">
               <div class="form-group">
-               <select name="cect0ac" title="Action">
+               <select name="cect6ac" title="Action">
+                <option value="-">
+                 -
+                </option>
+                <option value="s">
+                 annual repeat CT
+                </option>
+                <option value="f">
+                 f/u CT
+                </option>
+                <option value="a">
+                 Abx + f/u CT
+                </option>
+                <option value="e">
+                 PET
+                </option>
+                <option value="c">
+                 CT w contrast
+                </option>
+                <option value="b">
+                 CT-guided biopsy
+                </option>
+                <option value="p">
+                 bronchoscopy
+                </option>
+                <option value="v">
+                 VAT
+                </option>
+                <option value="r">
+                 resection
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="7" style="display:none;">
+              <div class="form-group">
+               <select name="cect7ac" title="Action">
+                <option value="-">
+                 -
+                </option>
+                <option value="s">
+                 annual repeat CT
+                </option>
+                <option value="f">
+                 f/u CT
+                </option>
+                <option value="a">
+                 Abx + f/u CT
+                </option>
+                <option value="e">
+                 PET
+                </option>
+                <option value="c">
+                 CT w contrast
+                </option>
+                <option value="b">
+                 CT-guided biopsy
+                </option>
+                <option value="p">
+                 bronchoscopy
+                </option>
+                <option value="v">
+                 VAT
+                </option>
+                <option value="r">
+                 resection
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="8" style="display:none;">
+              <div class="form-group">
+               <select name="cect8ac" title="Action">
+                <option value="-">
+                 -
+                </option>
+                <option value="s">
+                 annual repeat CT
+                </option>
+                <option value="f">
+                 f/u CT
+                </option>
+                <option value="a">
+                 Abx + f/u CT
+                </option>
+                <option value="e">
+                 PET
+                </option>
+                <option value="c">
+                 CT w contrast
+                </option>
+                <option value="b">
+                 CT-guided biopsy
+                </option>
+                <option value="p">
+                 bronchoscopy
+                </option>
+                <option value="v">
+                 VAT
+                </option>
+                <option value="r">
+                 resection
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="9" style="display:none;">
+              <div class="form-group">
+               <select name="cect9ac" title="Action">
+                <option value="-">
+                 -
+                </option>
+                <option value="s">
+                 annual repeat CT
+                </option>
+                <option value="f">
+                 f/u CT
+                </option>
+                <option value="a">
+                 Abx + f/u CT
+                </option>
+                <option value="e">
+                 PET
+                </option>
+                <option value="c">
+                 CT w contrast
+                </option>
+                <option value="b">
+                 CT-guided biopsy
+                </option>
+                <option value="p">
+                 bronchoscopy
+                </option>
+                <option value="v">
+                 VAT
+                </option>
+                <option value="r">
+                 resection
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="10" style="display:none;">
+              <div class="form-group">
+               <select name="cect10ac" title="Action">
                 <option value="-">
                  -
                 </option>
@@ -2290,49 +3497,69 @@
              </td>
             </tr>
             <tr>
-             <td>
+             <td style="white-space: nowrap;">
               Comment
               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="This field is for additional comments about the nodule.  If a previously seen nodule is found to be something other than a nodule, note it here." data-toggle="popover" title="Help">
               </i>
              </td>
-             <td>
+             <td data-nodule-id="1" style="display:none;">
               <div class="form-group">
                <input name="cect1co" size="20" title="Comment" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="2" style="display:none;">
               <div class="form-group">
                <input name="cect2co" size="20" title="Comment" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="3" style="display:none;">
               <div class="form-group">
                <input name="cect3co" size="20" title="Comment" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="4" style="display:none;">
               <div class="form-group">
                <input name="cect4co" size="20" title="Comment" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="5" style="display:none;">
               <div class="form-group">
                <input name="cect5co" size="20" title="Comment" type="text"/>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="6" style="display:none;">
               <div class="form-group">
-               <input name="cect0co" size="20" title="Comment" type="text"/>
+               <input name="cect6co" size="20" title="Comment" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="7" style="display:none;">
+              <div class="form-group">
+               <input name="cect7co" size="20" title="Comment" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="8" style="display:none;">
+              <div class="form-group">
+               <input name="cect8co" size="20" title="Comment" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="9" style="display:none;">
+              <div class="form-group">
+               <input name="cect9co" size="20" title="Comment" type="text"/>
+              </div>
+             </td>
+             <td data-nodule-id="10" style="display:none;">
+              <div class="form-group">
+               <input name="cect10co" size="20" title="Comment" type="text"/>
               </div>
              </td>
             </tr>
             <tr>
-             <td>
+             <td style="white-space: nowrap;">
               Pathologic Diagnosis
               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="If a biopsy was previously performed, the diagnosis was chosen from a pull-down menu on the Biopsy form.  When CT evaluation forms are created after the biopsy was done, the 'Pathologic Diagnosis' selected on the Biopsy Form is transferred onto the new CT evaluation Form.  Once a diagnosis has been assigned on the Biopsy Form and it pops up on the CT evaluation form, it CANNOT be changed." data-toggle="popover" title="Help">
               </i>
              </td>
-             <td>
+             <td data-nodule-id="1" style="display:none;">
               <div class="form-group">
                <select name="cect1pd" title="Pathologic Diagnosis">
                 <option value="-">
@@ -2383,7 +3610,7 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="2" style="display:none;">
               <div class="form-group">
                <select name="cect2pd" title="Pathologic Diagnosis">
                 <option value="-">
@@ -2434,7 +3661,7 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="3" style="display:none;">
               <div class="form-group">
                <select name="cect3pd" title="Pathologic Diagnosis">
                 <option value="-">
@@ -2485,7 +3712,7 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="4" style="display:none;">
               <div class="form-group">
                <select name="cect4pd" title="Pathologic Diagnosis">
                 <option value="-">
@@ -2536,7 +3763,7 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="5" style="display:none;">
               <div class="form-group">
                <select name="cect5pd" title="Pathologic Diagnosis">
                 <option value="-">
@@ -2587,9 +3814,213 @@
                </select>
               </div>
              </td>
-             <td>
+             <td data-nodule-id="6" style="display:none;">
               <div class="form-group">
-               <select name="cect0pd" title="Pathologic Diagnosis">
+               <select name="cect6pd" title="Pathologic Diagnosis">
+                <option value="-">
+                 -For Pathology Use Only-
+                </option>
+                <option value="aa">
+                 AAH
+                </option>
+                <option value="ap">
+                 atyp bronch prolif
+                </option>
+                <option value="ba">
+                 BAC
+                </option>
+                <option value="ns">
+                 unspec. non-small cell
+                </option>
+                <option value="ad">
+                 adenocarcinoma
+                </option>
+                <option value="as">
+                 adenosquamous
+                </option>
+                <option value="la">
+                 large cell
+                </option>
+                <option value="sq">
+                 squamous cell
+                </option>
+                <option value="sm">
+                 small cell
+                </option>
+                <option value="ct">
+                 carcinoid - typical
+                </option>
+                <option value="ca">
+                 carcinoid - atypical
+                </option>
+                <option value="be">
+                 not malignant
+                </option>
+                <option value="bs">
+                 benign specific
+                </option>
+                <option value="os">
+                 other (specify)
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="7" style="display:none;">
+              <div class="form-group">
+               <select name="cect7pd" title="Pathologic Diagnosis">
+                <option value="-">
+                 -For Pathology Use Only-
+                </option>
+                <option value="aa">
+                 AAH
+                </option>
+                <option value="ap">
+                 atyp bronch prolif
+                </option>
+                <option value="ba">
+                 BAC
+                </option>
+                <option value="ns">
+                 unspec. non-small cell
+                </option>
+                <option value="ad">
+                 adenocarcinoma
+                </option>
+                <option value="as">
+                 adenosquamous
+                </option>
+                <option value="la">
+                 large cell
+                </option>
+                <option value="sq">
+                 squamous cell
+                </option>
+                <option value="sm">
+                 small cell
+                </option>
+                <option value="ct">
+                 carcinoid - typical
+                </option>
+                <option value="ca">
+                 carcinoid - atypical
+                </option>
+                <option value="be">
+                 not malignant
+                </option>
+                <option value="bs">
+                 benign specific
+                </option>
+                <option value="os">
+                 other (specify)
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="8" style="display:none;">
+              <div class="form-group">
+               <select name="cect8pd" title="Pathologic Diagnosis">
+                <option value="-">
+                 -For Pathology Use Only-
+                </option>
+                <option value="aa">
+                 AAH
+                </option>
+                <option value="ap">
+                 atyp bronch prolif
+                </option>
+                <option value="ba">
+                 BAC
+                </option>
+                <option value="ns">
+                 unspec. non-small cell
+                </option>
+                <option value="ad">
+                 adenocarcinoma
+                </option>
+                <option value="as">
+                 adenosquamous
+                </option>
+                <option value="la">
+                 large cell
+                </option>
+                <option value="sq">
+                 squamous cell
+                </option>
+                <option value="sm">
+                 small cell
+                </option>
+                <option value="ct">
+                 carcinoid - typical
+                </option>
+                <option value="ca">
+                 carcinoid - atypical
+                </option>
+                <option value="be">
+                 not malignant
+                </option>
+                <option value="bs">
+                 benign specific
+                </option>
+                <option value="os">
+                 other (specify)
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="9" style="display:none;">
+              <div class="form-group">
+               <select name="cect9pd" title="Pathologic Diagnosis">
+                <option value="-">
+                 -For Pathology Use Only-
+                </option>
+                <option value="aa">
+                 AAH
+                </option>
+                <option value="ap">
+                 atyp bronch prolif
+                </option>
+                <option value="ba">
+                 BAC
+                </option>
+                <option value="ns">
+                 unspec. non-small cell
+                </option>
+                <option value="ad">
+                 adenocarcinoma
+                </option>
+                <option value="as">
+                 adenosquamous
+                </option>
+                <option value="la">
+                 large cell
+                </option>
+                <option value="sq">
+                 squamous cell
+                </option>
+                <option value="sm">
+                 small cell
+                </option>
+                <option value="ct">
+                 carcinoid - typical
+                </option>
+                <option value="ca">
+                 carcinoid - atypical
+                </option>
+                <option value="be">
+                 not malignant
+                </option>
+                <option value="bs">
+                 benign specific
+                </option>
+                <option value="os">
+                 other (specify)
+                </option>
+               </select>
+              </div>
+             </td>
+             <td data-nodule-id="10" style="display:none;">
+              <div class="form-group">
+               <select name="cect10pd" title="Pathologic Diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -5416,13 +6847,46 @@
             $radios.conditionallyDisplay({sourceValues: "y", enable: display});
         }
 
+        let noduleCount = 0;
+
+        function addNodule() {
+            if (noduleCount === 10) {
+                VAPALS.displayWarning("No more than 10 nodules are allowed. You may need to scroll to the right to see the additional nodule fields.");
+            }
+            else {
+                displayNodules(++noduleCount);
+            }
+        }
+
+        function removeNodule() {
+            if (noduleCount > 0) {
+                displayNodules(--noduleCount);
+            }
+        }
+
+        function displayNodules(count) {
+            console.log("displayNodules() count: " + count);
+            $("[data-nodule-id]").hide().filter(function () {
+                return $(this).data("nodule-id") <= count;
+            }).show();
+
+            // Only show the delete icon on the last (rightmost) nodule;
+            // NB: there is currently no support renumbering fields so removing from the middle is not an option
+            $(".remove-nodule").hide().filter(function () {
+                return $(this).data("nodule-id") === count;
+            }).show();
+
+            $("#nodule-table").toggle(noduleCount > 0);
+            $("#add-first-nodule").toggle(noduleCount === 0);
+        }
+
+
         $(function () {
+            // SCAN
             // bind to change events on study date and baseline date to calculate "time since baseline"
             const $tsbFields = $("#sidoe, #cedos");
             $tsbFields.closest(".datepicker").on("dp.change", calculateTimeSinceBaseline); //latch onto datetimepicker change events
             $tsbFields.first().trigger("change"); //trigger on page load for existing data;
-
-
 
             const $cedos = $("#cedos");
             if (!$cedos.val()) {
@@ -5438,6 +6902,23 @@
 
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
 
+            // NODULES
+            // Display the proper number of nodule columns based on the nodules that have a value for
+            // "Is it new", a required field.
+            const $noduleKeyFields = $("[name^=cect][name$=ch]").filter(function () {
+                return $(this).val() !== "" && $(this).val() !== "-";
+            });
+
+
+            // NB: Generally, the number of fields that have a value can be the number of nodules we display. In
+            // the rare case where we persist a nodule without setting the first field (Is it new?), use the
+            // lastNoduleId in the list to determine the number of nodules to display.
+            const lastNoduleId = $noduleKeyFields.last().closest("[data-nodule-id]").data("nodule-id") || 0;
+            noduleCount = Math.max($noduleKeyFields.length, lastNoduleId);
+            displayNodules(noduleCount);
+
+
+            //ABNORMALITIES
             abnormalities("pa", "#pulmonary-container", "n");
             abnormalities("ceca", "#cardiac-container", "n");
             abnormalities("ceoma", "#neck-container", "n");
@@ -5445,15 +6926,14 @@
             abnormalities("ceoaa", "#abdominal-container", "y");
             abnormalities("ceaba", "#bone-container", "n");
 
-            //based on pre-selected values.
             $("#cecclm, #ceccld, #cecccf, #ceccrc").on('change', calculateVisualCacScore);
             calculateVisualCacScore();
             $("#cepaw, #ceaow").on('keyup change', calculatePulmonaryArteryAortaRatio);
             calculatePulmonaryArteryAortaRatio();
 
+            //WRAP IT UP
             initTabbedNavigation("ctEvalTabs", "ctEvalTabsContent");
 
-            //Initialize Form Validation
             $(".validated").formValidation({framework: 'bootstrap'});
         });
   </script>

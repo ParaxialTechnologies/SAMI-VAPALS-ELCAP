@@ -138,7 +138,7 @@
       <div aria-labelledby="scan-tab" class="tab-pane active" id="scan" role="tabpanel">
        <div class="row">
         <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-         <label class="control-label" for="cedos">
+         <label class="control-label required" for="cedos">
           CT Study Date
          </label>
          <div class="input-group datepicker">
@@ -157,7 +157,7 @@
        </div>
        <div class="row">
         <div class="col-sm-6 col-md-4 col-lg-3 form-group">
-         <label for="cerad">
+         <label class="control-label required" for="cerad">
           Radiologist
          </label>
          <input class="form-control" id="cerad" name="cerad" required="required" type="text"/>
@@ -175,7 +175,7 @@
        </div>
        <div class="row">
         <div class="col-md-12 form-group">
-         <label for="ceclin">
+         <label class="control-label" for="ceclin">
           Clinical Information
          </label>
          <textarea class="form-control" id="ceclin" name="ceclin" rows="3"></textarea>
@@ -197,9 +197,10 @@
        </div>
        <div class="row">
         <div class="col-sm-12 form-group">
-         <label for="sbdsd-b">
+         <label class="control-label required" for="sbdsd-b">
           Type of Exam
          </label>
+         <br/>
          <label class="radio-inline">
           <input id="cetex-b" name="cetex" required="required" type="radio" value="b"/>
           Baseline
@@ -217,9 +218,10 @@
        </div>
        <div class="row">
         <div class="col-sm-12 form-group">
-         <label for="cectp-l">
+         <label class="control-label required" for="cectp-l">
           CT Protocol
          </label>
+         <br/>
          <label class="radio-inline">
           <input id="cectp-l" name="cectp" required="required" type="radio" value="l"/>
           Low-Dose CT
@@ -238,8 +240,9 @@
        <div class="row">
         <div class="col-sm-4">
          <div class="form-group">
-          <label for="cectrst">
-           Reconstructed slice thickness (mm)
+          <label class="control-label required" for="cectrst">
+           Reconstructed slice thickness
+                                        (mm)
           </label>
           <select class="form-control" id="cectrst" name="cectrst" required="required">
            <option value="">
@@ -261,7 +264,7 @@
          </div>
         </div>
         <div class="col-sm-4 form-group" id="cectrsto-container">
-         <label for="cectrsto">
+         <label class="control-label required" for="cectrsto">
           Specify
          </label>
          <input class="form-control" data-fv-numeric="true" id="cectrsto" maxlength="5" min="0" name="cectrsto" placeholder="specify" required="required" type="text"/>
@@ -269,8 +272,9 @@
        </div>
        <div class="row">
         <div class="col-sm-4 form-group">
-         <label class="control-label" for="sidoe">
-          Baseline CT
+         <label class="control-label required" for="sidoe">
+          Baseline
+                                    CT
          </label>
          <div class="input-group datepicker">
           <input aria-describedby="sidoe-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" data-fv-notempty-message="Baseline CT date is required" id="sidoe" name="sidoe" required="required"/>
@@ -291,28 +295,30 @@
           months since baseline
          </small>
         </div>
-        <div class="col-sm-4 form-group">
-         <label class="control-label" for="cedcs">
-          Most Recent Comparative Study
-         </label>
-         <div class="input-group datepicker">
-          <input aria-describedby="cedcs-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" data-fv-notempty-message="Date is required" id="cedcs" name="cedcs" required="required"/>
-          <div class="input-group-addon">
-           <div class="input-group-text" id="cedcs-addon">
-            <i aria-hidden="true" class="fa fa-calendar">
-            </i>
+        <div id="non-baseline-container">
+         <div class="col-sm-4 form-group">
+          <label class="control-label required" for="cedcs">
+           Most Recent Comparative Study
+          </label>
+          <div class="input-group datepicker">
+           <input aria-describedby="cedcs-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" data-fv-notempty-message="Date is required" id="cedcs" name="cedcs" required="required"/>
+           <div class="input-group-addon">
+            <div class="input-group-text" id="cedcs-addon">
+             <i aria-hidden="true" class="fa fa-calendar">
+             </i>
+            </div>
            </div>
           </div>
+          <small class="form-text text-muted">
+           MM/DD/YYYY
+          </small>
          </div>
-         <small class="form-text text-muted">
-          MM/DD/YYYY
-         </small>
-        </div>
-        <div class="col-sm-4 form-group">
-         <label class="control-label" for="cedps">
-          Prior Scans
-         </label>
-         <input class="form-control" id="cedps" name="cedps" required="required" type="text"/>
+         <div class="col-sm-4 form-group">
+          <label class="control-label required" for="cedps">
+           Prior Scans
+          </label>
+          <input class="form-control" id="cedps" name="cedps" required="required" type="text"/>
+         </div>
         </div>
        </div>
       </div>
@@ -374,7 +380,7 @@
            Add nodule
           </button>
           <!-- TODO: figure out what bm() function did onclick of cefctn -->
-          <table class="table-condensed table-striped" style="table-layout:auto;">
+          <table class="table-striped" style="table-layout:auto;">
            <thead>
             <tr>
              <th>
@@ -435,18 +441,20 @@
            <tbody>
             <tr>
              <td style="white-space: nowrap;">
-              Is it new?
-              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="A pull-down menu
+              <label class="control-label required">
+               Is it new?
+               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="A pull-down menu
                                                                 allows us to note whether a nodule is newly seen, previously seen,
                                                                 or seen in retrospect, as well as any change in size. Change
                                                                 (increase or decrease) refers to a change in the size of a nodule
                                                                 or a change in the solid component of a part-solid nodule. There
                                                                 is also an option for nodules that are not included in the scan." data-toggle="popover" title="Help">
-              </i>
+               </i>
+              </label>
              </td>
              <td data-nodule-id="1" style="display:none;">
               <div class="form-group">
-               <select name="cect1ch" required="required" title="Is this nodule new?">
+               <select class="form-group" name="cect1ch" required="required" title="Is this nodule new?">
                 <option value="">
                  -
                 </option>
@@ -503,7 +511,7 @@
              </td>
              <td data-nodule-id="2" style="display:none;">
               <div class="form-group">
-               <select name="cect2ch" required="required" title="Is this nodule new?">
+               <select class="form-group" name="cect2ch" required="required" title="Is this nodule new?">
                 <option value="">
                  -
                 </option>
@@ -560,7 +568,7 @@
              </td>
              <td data-nodule-id="3" style="display:none;">
               <div class="form-group">
-               <select name="cect3ch" required="required" title="Is this nodule new?">
+               <select class="form-group" name="cect3ch" required="required" title="Is this nodule new?">
                 <option value="">
                  -
                 </option>
@@ -617,7 +625,7 @@
              </td>
              <td data-nodule-id="4" style="display:none;">
               <div class="form-group">
-               <select name="cect4ch" required="required" title="Is this nodule new?">
+               <select class="form-group" name="cect4ch" required="required" title="Is this nodule new?">
                 <option value="">
                  -
                 </option>
@@ -674,7 +682,7 @@
              </td>
              <td data-nodule-id="5" style="display:none;">
               <div class="form-group">
-               <select name="cect5ch" required="required" title="Is this nodule new?">
+               <select class="form-group" name="cect5ch" required="required" title="Is this nodule new?">
                 <option value="">
                  -
                 </option>
@@ -731,7 +739,7 @@
              </td>
              <td data-nodule-id="6" style="display:none;">
               <div class="form-group">
-               <select name="cect6ch" required="required" title="Is this nodule new?">
+               <select class="form-group" name="cect6ch" required="required" title="Is this nodule new?">
                 <option value="">
                  -
                 </option>
@@ -788,7 +796,7 @@
              </td>
              <td data-nodule-id="7" style="display:none;">
               <div class="form-group">
-               <select name="cect7ch" required="required" title="Is this nodule new?">
+               <select class="form-group" name="cect7ch" required="required" title="Is this nodule new?">
                 <option value="">
                  -
                 </option>
@@ -845,7 +853,7 @@
              </td>
              <td data-nodule-id="8" style="display:none;">
               <div class="form-group">
-               <select name="cect8ch" required="required" title="Is this nodule new?">
+               <select class="form-group" name="cect8ch" required="required" title="Is this nodule new?">
                 <option value="">
                  -
                 </option>
@@ -902,7 +910,7 @@
              </td>
              <td data-nodule-id="9" style="display:none;">
               <div class="form-group">
-               <select name="cect9ch" required="required" title="Is this nodule new?">
+               <select class="form-group" name="cect9ch" required="required" title="Is this nodule new?">
                 <option value="">
                  -
                 </option>
@@ -959,7 +967,7 @@
              </td>
              <td data-nodule-id="10" style="display:none;">
               <div class="form-group">
-               <select name="cect10ch" required="required" title="Is this nodule new?">
+               <select class="form-group" name="cect10ch" required="required" title="Is this nodule new?">
                 <option value="">
                  -
                 </option>
@@ -1017,17 +1025,19 @@
             </tr>
             <tr>
              <td style="white-space: nowrap;">
-              Endobronchial?
-              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="It is required that both Endobronchial and Most
+              <label class="control-label required">
+               Endobronchial?
+               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="It is required that both Endobronchial and Most
                                                                     likely location be answered.  If the nodule has both a
                                                                     bronchial and parenchymal component, answer both to indicate
                                                                     such." data-toggle="popover" title="Help">
-              </i>
+               </i>
+              </label>
              </td>
              <td data-nodule-id="1" style="display:none;">
               <div class="form-group">
                <select name="cect1en" required="required" title="Endobronchial">
-                <option value="-">
+                <option value="">
                  -
                 </option>
                 <option value="no">
@@ -1066,7 +1076,7 @@
              <td data-nodule-id="2" style="display:none;">
               <div class="form-group">
                <select name="cect2en" required="required" title="Endobronchial">
-                <option value="-">
+                <option value="">
                  -
                 </option>
                 <option value="no">
@@ -1105,7 +1115,7 @@
              <td data-nodule-id="3" style="display:none;">
               <div class="form-group">
                <select name="cect3en" required="required" title="Endobronchial">
-                <option value="-">
+                <option value="">
                  -
                 </option>
                 <option value="no">
@@ -1144,7 +1154,7 @@
              <td data-nodule-id="4" style="display:none;">
               <div class="form-group">
                <select name="cect4en" required="required" title="Endobronchial">
-                <option value="-">
+                <option value="">
                  -
                 </option>
                 <option value="no">
@@ -1183,7 +1193,7 @@
              <td data-nodule-id="5" style="display:none;">
               <div class="form-group">
                <select name="cect5en" required="required" title="Endobronchial">
-                <option value="-">
+                <option value="">
                  -
                 </option>
                 <option value="no">
@@ -1222,7 +1232,7 @@
              <td data-nodule-id="6" style="display:none;">
               <div class="form-group">
                <select name="cect6en" required="required" title="Endobronchial">
-                <option value="-">
+                <option value="">
                  -
                 </option>
                 <option value="no">
@@ -1261,7 +1271,7 @@
              <td data-nodule-id="7" style="display:none;">
               <div class="form-group">
                <select name="cect7en" required="required" title="Endobronchial">
-                <option value="-">
+                <option value="">
                  -
                 </option>
                 <option value="no">
@@ -1300,7 +1310,7 @@
              <td data-nodule-id="8" style="display:none;">
               <div class="form-group">
                <select name="cect8en" required="required" title="Endobronchial">
-                <option value="-">
+                <option value="">
                  -
                 </option>
                 <option value="no">
@@ -1339,7 +1349,7 @@
              <td data-nodule-id="9" style="display:none;">
               <div class="form-group">
                <select name="cect9en" required="required" title="Endobronchial">
-                <option value="-">
+                <option value="">
                  -
                 </option>
                 <option value="no">
@@ -1378,7 +1388,7 @@
              <td data-nodule-id="10" style="display:none;">
               <div class="form-group">
                <select name="cect10en" required="required" title="Endobronchial">
-                <option value="-">
+                <option value="">
                  -
                 </option>
                 <option value="no">
@@ -1417,14 +1427,16 @@
             </tr>
             <tr>
              <td style="white-space: nowrap;">
-              Most Likely Location?
-              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="If a nodule location is different from where it was described to be previously, do not go back and change the location on the previous exams but make sure to make a note of the previously mentioned location in the Comment field (see description below)." data-toggle="popover" title="Help">
-              </i>
+              <label class="control-label required">
+               Most Likely Location?
+               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="If a nodule location is different from where it was described to be previously, do not go back and change the location on the previous exams but make sure to make a note of the previously mentioned location in the Comment field (see description below)." data-toggle="popover" title="Help">
+               </i>
+              </label>
              </td>
              <td data-nodule-id="1" style="display:none;">
               <div class="form-group">
                <select name="cect1ll" required="required" title="Most likely location">
-                <option value="-">
+                <option value="">
                  -
                 </option>
                 <option value="end">
@@ -1451,7 +1463,7 @@
              <td data-nodule-id="2" style="display:none;">
               <div class="form-group">
                <select name="cect2ll" required="required" title="Most likely location">
-                <option value="-">
+                <option value="">
                  -
                 </option>
                 <option value="end">
@@ -1478,7 +1490,7 @@
              <td data-nodule-id="3" style="display:none;">
               <div class="form-group">
                <select name="cect3ll" required="required" title="Most likely location">
-                <option value="-">
+                <option value="">
                  -
                 </option>
                 <option value="end">
@@ -1505,7 +1517,7 @@
              <td data-nodule-id="4" style="display:none;">
               <div class="form-group">
                <select name="cect4ll" required="required" title="Most likely location">
-                <option value="-">
+                <option value="">
                  -
                 </option>
                 <option value="end">
@@ -1532,7 +1544,7 @@
              <td data-nodule-id="5" style="display:none;">
               <div class="form-group">
                <select name="cect5ll" required="required" title="Most likely location">
-                <option value="-">
+                <option value="">
                  -
                 </option>
                 <option value="end">
@@ -1559,7 +1571,7 @@
              <td data-nodule-id="6" style="display:none;">
               <div class="form-group">
                <select name="cect6ll" required="required" title="Most likely location">
-                <option value="-">
+                <option value="">
                  -
                 </option>
                 <option value="end">
@@ -1586,7 +1598,7 @@
              <td data-nodule-id="7" style="display:none;">
               <div class="form-group">
                <select name="cect7ll" required="required" title="Most likely location">
-                <option value="-">
+                <option value="">
                  -
                 </option>
                 <option value="end">
@@ -1613,7 +1625,7 @@
              <td data-nodule-id="8" style="display:none;">
               <div class="form-group">
                <select name="cect8ll" required="required" title="Most likely location">
-                <option value="-">
+                <option value="">
                  -
                 </option>
                 <option value="end">
@@ -1640,7 +1652,7 @@
              <td data-nodule-id="9" style="display:none;">
               <div class="form-group">
                <select name="cect9ll" required="required" title="Most likely location">
-                <option value="-">
+                <option value="">
                  -
                 </option>
                 <option value="end">
@@ -1667,7 +1679,7 @@
              <td data-nodule-id="10" style="display:none;">
               <div class="form-group">
                <select name="cect10ll" required="required" title="Most likely location">
-                <option value="-">
+                <option value="">
                  -
                 </option>
                 <option value="end">
@@ -2971,15 +2983,15 @@
              <td data-nodule-id="1" style="display:none;">
               <div class="form-group">
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect1se-n" name="cect1se" required="required" type="radio" value="n"/>
+                <input id="cect1se-n" name="cect1se" type="radio" value="n"/>
                 No
                </label>
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect1se-y" name="cect1se" required="required" type="radio" value="y"/>
+                <input id="cect1se-y" name="cect1se" type="radio" value="y"/>
                 Yes
                </label>
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect1se-q" name="cect1se" required="required" type="radio" value="q"/>
+                <input id="cect1se-q" name="cect1se" type="radio" value="q"/>
                 ?
                </label>
               </div>
@@ -2987,15 +2999,15 @@
              <td data-nodule-id="2" style="display:none;">
               <div class="form-group">
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect2se-n" name="cect2se" required="required" type="radio" value="n"/>
+                <input id="cect2se-n" name="cect2se" type="radio" value="n"/>
                 No
                </label>
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect2se-y" name="cect2se" required="required" type="radio" value="y"/>
+                <input id="cect2se-y" name="cect2se" type="radio" value="y"/>
                 Yes
                </label>
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect2se-q" name="cect2se" required="required" type="radio" value="q"/>
+                <input id="cect2se-q" name="cect2se" type="radio" value="q"/>
                 ?
                </label>
               </div>
@@ -3003,15 +3015,15 @@
              <td data-nodule-id="3" style="display:none;">
               <div class="form-group">
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect3se-n" name="cect3se" required="required" type="radio" value="n"/>
+                <input id="cect3se-n" name="cect3se" type="radio" value="n"/>
                 No
                </label>
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect3se-y" name="cect3se" required="required" type="radio" value="y"/>
+                <input id="cect3se-y" name="cect3se" type="radio" value="y"/>
                 Yes
                </label>
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect3se-q" name="cect3se" required="required" type="radio" value="q"/>
+                <input id="cect3se-q" name="cect3se" type="radio" value="q"/>
                 ?
                </label>
               </div>
@@ -3019,15 +3031,15 @@
              <td data-nodule-id="4" style="display:none;">
               <div class="form-group">
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect4se-n" name="cect4se" required="required" type="radio" value="n"/>
+                <input id="cect4se-n" name="cect4se" type="radio" value="n"/>
                 No
                </label>
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect4se-y" name="cect4se" required="required" type="radio" value="y"/>
+                <input id="cect4se-y" name="cect4se" type="radio" value="y"/>
                 Yes
                </label>
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect4se-q" name="cect4se" required="required" type="radio" value="q"/>
+                <input id="cect4se-q" name="cect4se" type="radio" value="q"/>
                 ?
                </label>
               </div>
@@ -3035,15 +3047,15 @@
              <td data-nodule-id="5" style="display:none;">
               <div class="form-group">
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect5se-n" name="cect5se" required="required" type="radio" value="n"/>
+                <input id="cect5se-n" name="cect5se" type="radio" value="n"/>
                 No
                </label>
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect5se-y" name="cect5se" required="required" type="radio" value="y"/>
+                <input id="cect5se-y" name="cect5se" type="radio" value="y"/>
                 Yes
                </label>
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect5se-q" name="cect5se" required="required" type="radio" value="q"/>
+                <input id="cect5se-q" name="cect5se" type="radio" value="q"/>
                 ?
                </label>
               </div>
@@ -3051,15 +3063,15 @@
              <td data-nodule-id="6" style="display:none;">
               <div class="form-group">
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect6se-n" name="cect6se" required="required" type="radio" value="n"/>
+                <input id="cect6se-n" name="cect6se" type="radio" value="n"/>
                 No
                </label>
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect6se-y" name="cect6se" required="required" type="radio" value="y"/>
+                <input id="cect6se-y" name="cect6se" type="radio" value="y"/>
                 Yes
                </label>
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect6se-q" name="cect6se" required="required" type="radio" value="q"/>
+                <input id="cect6se-q" name="cect6se" type="radio" value="q"/>
                 ?
                </label>
               </div>
@@ -3067,15 +3079,15 @@
              <td data-nodule-id="7" style="display:none;">
               <div class="form-group">
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect7se-n" name="cect7se" required="required" type="radio" value="n"/>
+                <input id="cect7se-n" name="cect7se" type="radio" value="n"/>
                 No
                </label>
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect7se-y" name="cect7se" required="required" type="radio" value="y"/>
+                <input id="cect7se-y" name="cect7se" type="radio" value="y"/>
                 Yes
                </label>
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect7se-q" name="cect7se" required="required" type="radio" value="q"/>
+                <input id="cect7se-q" name="cect7se" type="radio" value="q"/>
                 ?
                </label>
               </div>
@@ -3083,15 +3095,15 @@
              <td data-nodule-id="8" style="display:none;">
               <div class="form-group">
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect8se-n" name="cect8se" required="required" type="radio" value="n"/>
+                <input id="cect8se-n" name="cect8se" type="radio" value="n"/>
                 No
                </label>
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect8se-y" name="cect8se" required="required" type="radio" value="y"/>
+                <input id="cect8se-y" name="cect8se" type="radio" value="y"/>
                 Yes
                </label>
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect8se-q" name="cect8se" required="required" type="radio" value="q"/>
+                <input id="cect8se-q" name="cect8se" type="radio" value="q"/>
                 ?
                </label>
               </div>
@@ -3099,15 +3111,15 @@
              <td data-nodule-id="9" style="display:none;">
               <div class="form-group">
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect9se-n" name="cect9se" required="required" type="radio" value="n"/>
+                <input id="cect9se-n" name="cect9se" type="radio" value="n"/>
                 No
                </label>
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect9se-y" name="cect9se" required="required" type="radio" value="y"/>
+                <input id="cect9se-y" name="cect9se" type="radio" value="y"/>
                 Yes
                </label>
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect9se-q" name="cect9se" required="required" type="radio" value="q"/>
+                <input id="cect9se-q" name="cect9se" type="radio" value="q"/>
                 ?
                </label>
               </div>
@@ -3115,15 +3127,15 @@
              <td data-nodule-id="10" style="display:none;">
               <div class="form-group">
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect10se-n" name="cect10se" required="required" type="radio" value="n"/>
+                <input id="cect10se-n" name="cect10se" type="radio" value="n"/>
                 No
                </label>
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect10se-y" name="cect10se" required="required" type="radio" value="y"/>
+                <input id="cect10se-y" name="cect10se" type="radio" value="y"/>
                 Yes
                </label>
                <label class="radio-inline">
-                <input data-fv-notempty-message="Please select a value" id="cect10se-q" name="cect10se" required="required" type="radio" value="q"/>
+                <input id="cect10se-q" name="cect10se" type="radio" value="q"/>
                 ?
                </label>
               </div>
@@ -4085,18 +4097,18 @@
       <div aria-labelledby="abnormalities-tab" class="tab-pane" id="abnormalities" role="tabpanel">
        <div class="row">
         <div class="col-sm-12 form-group">
-         <label>
+         <label class="control-label required">
           Emphysema
          </label>
-         <div class="checkbox">
+         <div class="radio">
           <label>
-           <input id="ceemv" name="ceemv" type="checkbox" value="e"/>
+           <input id="ceem-nv" name="ceem" required="required" type="radio" value="nv"/>
            not visible
           </label>
          </div>
          <div class="radio">
           <label>
-           <input id="ceem-no" name="ceem" required="required" type="radio" value="no"/>
+           <input id="ceem-no" name="ceem" type="radio" value="no"/>
            none
           </label>
          </div>
@@ -4129,11 +4141,11 @@
          </div>
          <div class="col-sm-8 col-md-9">
           <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="pa-n" name="pa" required="required" type="radio" value="n"/>
+           <input id="pa-n" name="pa" type="radio" value="n"/>
            No
           </label>
           <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="pa-y" name="pa" required="required" type="radio" value="y"/>
+           <input id="pa-y" name="pa" type="radio" value="y"/>
            Yes
           </label>
          </div>
@@ -4172,15 +4184,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cecbc-n" name="cecbc" required="required" type="radio" value="n"/>
+              <input id="cecbc-n" name="cecbc" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cecbc-y" name="cecbc" required="required" type="radio" value="y"/>
+              <input id="cecbc-y" name="cecbc" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cecbc-e" name="cecbc" required="required" type="radio" value="e"/>
+              <input id="cecbc-e" name="cecbc" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -4238,15 +4250,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cecbb-n" name="cecbb" required="required" type="radio" value="n"/>
+              <input id="cecbb-n" name="cecbb" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cecbb-y" name="cecbb" required="required" type="radio" value="y"/>
+              <input id="cecbb-y" name="cecbb" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cecbb-e" name="cecbb" required="required" type="radio" value="e"/>
+              <input id="cecbb-e" name="cecbb" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -4308,15 +4320,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cerdc-n" name="cerdc" required="required" type="radio" value="n"/>
+              <input id="cerdc-n" name="cerdc" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cerdc-y" name="cerdc" required="required" type="radio" value="y"/>
+              <input id="cerdc-y" name="cerdc" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cerdc-e" name="cerdc" required="required" type="radio" value="e"/>
+              <input id="cerdc-e" name="cerdc" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -4374,15 +4386,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cescr-n" name="cescr" required="required" type="radio" value="n"/>
+              <input id="cescr-n" name="cescr" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cescr-y" name="cescr" required="required" type="radio" value="y"/>
+              <input id="cescr-y" name="cescr" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cescr-e" name="cescr" required="required" type="radio" value="e"/>
+              <input id="cescr-e" name="cescr" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -4463,15 +4475,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cebrsb-n" name="cebrsb" required="required" type="radio" value="n"/>
+              <input id="cebrsb-n" name="cebrsb" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cebrsb-y" name="cebrsb" required="required" type="radio" value="y"/>
+              <input id="cebrsb-y" name="cebrsb" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cebrsb-e" name="cebrsb" required="required" type="radio" value="e"/>
+              <input id="cebrsb-e" name="cebrsb" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -4529,15 +4541,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cebrss-n" name="cebrss" required="required" type="radio" value="n"/>
+              <input id="cebrss-n" name="cebrss" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cebrss-y" name="cebrss" required="required" type="radio" value="y"/>
+              <input id="cebrss-y" name="cebrss" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cebrss-e" name="cebrss" required="required" type="radio" value="e"/>
+              <input id="cebrss-e" name="cebrss" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -4648,15 +4660,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cerb-n" name="cerb" required="required" type="radio" value="n"/>
+              <input id="cerb-n" name="cerb" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cerb-y" name="cerb" required="required" type="radio" value="y"/>
+              <input id="cerb-y" name="cerb" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cerb-e" name="cerb" required="required" type="radio" value="e"/>
+              <input id="cerb-e" name="cerb" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -4714,15 +4726,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cepgo-n" name="cepgo" required="required" type="radio" value="n"/>
+              <input id="cepgo-n" name="cepgo" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cepgo-y" name="cepgo" required="required" type="radio" value="y"/>
+              <input id="cepgo-y" name="cepgo" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cepgo-e" name="cepgo" required="required" type="radio" value="e"/>
+              <input id="cepgo-e" name="cepgo" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -4780,15 +4792,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceret-n" name="ceret" required="required" type="radio" value="n"/>
+              <input id="ceret-n" name="ceret" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceret-y" name="ceret" required="required" type="radio" value="y"/>
+              <input id="ceret-y" name="ceret" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceret-e" name="ceret" required="required" type="radio" value="e"/>
+              <input id="ceret-e" name="ceret" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -4846,15 +4858,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cephc-n" name="cephc" required="required" type="radio" value="n"/>
+              <input id="cephc-n" name="cephc" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cephc-y" name="cephc" required="required" type="radio" value="y"/>
+              <input id="cephc-y" name="cephc" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cephc-e" name="cephc" required="required" type="radio" value="e"/>
+              <input id="cephc-e" name="cephc" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -4933,15 +4945,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cept-n" name="cept" required="required" type="radio" value="n"/>
+              <input id="cept-n" name="cept" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cept-y" name="cept" required="required" type="radio" value="y"/>
+              <input id="cept-y" name="cept" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cept-e" name="cept" required="required" type="radio" value="e"/>
+              <input id="cept-e" name="cept" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -4976,15 +4988,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cebatr-n" name="cebatr" required="required" type="radio" value="n"/>
+              <input id="cebatr-n" name="cebatr" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cebatr-y" name="cebatr" required="required" type="radio" value="y"/>
+              <input id="cebatr-y" name="cebatr" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cebatr-e" name="cebatr" required="required" type="radio" value="e"/>
+              <input id="cebatr-e" name="cebatr" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -5101,15 +5113,15 @@
            <td colspan="6">
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cepu-n" name="cepu" required="required" type="radio" value="n"/>
+              <input id="cepu-n" name="cepu" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cepu-y" name="cepu" required="required" type="radio" value="y"/>
+              <input id="cepu-y" name="cepu" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cepu-e" name="cepu" required="required" type="radio" value="e"/>
+              <input id="cepu-e" name="cepu" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -5142,15 +5154,15 @@
          </div>
          <div class="col-sm-8 col-md-9">
           <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="ceca-n" name="ceca" required="required" type="radio" value="n"/>
+           <input id="ceca-n" name="ceca" type="radio" value="n"/>
            No
           </label>
           <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="ceca-y" name="ceca" required="required" type="radio" value="y"/>
+           <input id="ceca-y" name="ceca" type="radio" value="y"/>
            Yes
           </label>
           <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="ceca-e" name="ceca" required="required" type="radio" value="e"/>
+           <input id="ceca-e" name="ceca" type="radio" value="e"/>
            not visible
           </label>
          </div>
@@ -5419,15 +5431,15 @@
          </div>
          <div class="col-sm-8 col-md-9">
           <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="ceoma-n" name="ceoma" required="required" type="radio" value="n"/>
+           <input id="ceoma-n" name="ceoma" type="radio" value="n"/>
            No
           </label>
           <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="ceoma-y" name="ceoma" required="required" type="radio" value="y"/>
+           <input id="ceoma-y" name="ceoma" type="radio" value="y"/>
            Yes
           </label>
           <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="ceoma-e" name="ceoma" required="required" type="radio" value="e"/>
+           <input id="ceoma-e" name="ceoma" type="radio" value="e"/>
            not visible
           </label>
          </div>
@@ -5443,15 +5455,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceccv-n" name="ceccv" required="required" type="radio" value="n"/>
+              <input id="ceccv-n" name="ceccv" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceccv-y" name="ceccv" required="required" type="radio" value="y"/>
+              <input id="ceccv-y" name="ceccv" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceccv-e" name="ceccv" required="required" type="radio" value="e"/>
+              <input id="ceccv-e" name="ceccv" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -5497,15 +5509,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceaya-n" name="ceaya" required="required" type="radio" value="n"/>
+              <input id="ceaya-n" name="ceaya" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceaya-y" name="ceaya" required="required" type="radio" value="y"/>
+              <input id="ceaya-y" name="ceaya" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceaya-e" name="ceaya" required="required" type="radio" value="e"/>
+              <input id="ceaya-e" name="ceaya" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -5565,15 +5577,15 @@
            <td>
             <div class="form-group form-inline">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cemln-n" name="cemln" required="required" type="radio" value="n"/>
+              <input id="cemln-n" name="cemln" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cemln-y" name="cemln" required="required" type="radio" value="y"/>
+              <input id="cemln-y" name="cemln" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cemln-e" name="cemln" required="required" type="radio" value="e"/>
+              <input id="cemln-e" name="cemln" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -5671,15 +5683,15 @@
            <td colspan="2">
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cemlncab-n" name="cemlncab" required="required" type="radio" value="n"/>
+              <input id="cemlncab-n" name="cemlncab" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cemlncab-y" name="cemlncab" required="required" type="radio" value="y"/>
+              <input id="cemlncab-y" name="cemlncab" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cemlncab-e" name="cemlncab" required="required" type="radio" value="e"/>
+              <input id="cemlncab-e" name="cemlncab" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -5692,15 +5704,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceagaln-n" name="ceagaln" required="required" type="radio" value="n"/>
+              <input id="ceagaln-n" name="ceagaln" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceagaln-y" name="ceagaln" required="required" type="radio" value="y"/>
+              <input id="ceagaln-y" name="ceagaln" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceagaln-e" name="ceagaln" required="required" type="radio" value="e"/>
+              <input id="ceagaln-e" name="ceagaln" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -5730,15 +5742,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cemva-n" name="cemva" required="required" type="radio" value="n"/>
+              <input id="cemva-n" name="cemva" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cemva-y" name="cemva" required="required" type="radio" value="y"/>
+              <input id="cemva-y" name="cemva" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cemva-e" name="cemva" required="required" type="radio" value="e"/>
+              <input id="cemva-e" name="cemva" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -5774,15 +5786,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cemeln-n" name="cemeln" required="required" type="radio" value="n"/>
+              <input id="cemeln-n" name="cemeln" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cemeln-y" name="cemeln" required="required" type="radio" value="y"/>
+              <input id="cemeln-y" name="cemeln" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cemeln-e" name="cemeln" required="required" type="radio" value="e"/>
+              <input id="cemeln-e" name="cemeln" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -5824,15 +5836,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cehhn-n" name="cehhn" required="required" type="radio" value="n"/>
+              <input id="cehhn-n" name="cehhn" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cehhn-y" name="cehhn" required="required" type="radio" value="y"/>
+              <input id="cehhn-y" name="cehhn" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cehhn-e" name="cehhn" required="required" type="radio" value="e"/>
+              <input id="cehhn-e" name="cehhn" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -5850,15 +5862,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceomm-n" name="ceomm" required="required" type="radio" value="n"/>
+              <input id="ceomm-n" name="ceomm" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceomm-y" name="ceomm" required="required" type="radio" value="y"/>
+              <input id="ceomm-y" name="ceomm" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceomm-e" name="ceomm" required="required" type="radio" value="e"/>
+              <input id="ceomm-e" name="ceomm" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -5921,15 +5933,15 @@
          </div>
          <div class="col-sm-8 col-md-9">
           <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="ceoba-n" name="ceoba" required="required" type="radio" value="n"/>
+           <input id="ceoba-n" name="ceoba" type="radio" value="n"/>
            No
           </label>
           <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="ceoba-y" name="ceoba" required="required" type="radio" value="y"/>
+           <input id="ceoba-y" name="ceoba" type="radio" value="y"/>
            Yes
           </label>
           <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="ceoba-e" name="ceoba" required="required" type="radio" value="e"/>
+           <input id="ceoba-e" name="ceoba" type="radio" value="e"/>
            not visible
           </label>
          </div>
@@ -5945,15 +5957,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceara-n" name="ceara" required="required" type="radio" value="n"/>
+              <input id="ceara-n" name="ceara" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceara-y" name="ceara" required="required" type="radio" value="y"/>
+              <input id="ceara-y" name="ceara" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceara-e" name="ceara" required="required" type="radio" value="e"/>
+              <input id="ceara-e" name="ceara" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -6021,15 +6033,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceafa-n" name="ceafa" required="required" type="radio" value="n"/>
+              <input id="ceafa-n" name="ceafa" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceafa-y" name="ceafa" required="required" type="radio" value="y"/>
+              <input id="ceafa-y" name="ceafa" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceafa-e" name="ceafa" required="required" type="radio" value="e"/>
+              <input id="ceafa-e" name="ceafa" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -6117,11 +6129,11 @@
          </div>
          <div class="col-sm-8 col-md-9">
           <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="ceaba-n" name="ceaba" required="required" type="radio" value="n"/>
+           <input id="ceaba-n" name="ceaba" type="radio" value="n"/>
            No
           </label>
           <label class="radio-inline">
-           <input data-fv-notempty-message="Please select a value" id="ceaba-y" name="ceaba" required="required" type="radio" value="y"/>
+           <input id="ceaba-y" name="ceaba" type="radio" value="y"/>
            Yes
           </label>
          </div>
@@ -6168,15 +6180,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceaga-n" name="ceaga" required="required" type="radio" value="n"/>
+              <input id="ceaga-n" name="ceaga" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceaga-y" name="ceaga" required="required" type="radio" value="y"/>
+              <input id="ceaga-y" name="ceaga" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceaga-e" name="ceaga" required="required" type="radio" value="e"/>
+              <input id="ceaga-e" name="ceaga" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -6218,15 +6230,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceasa-n" name="ceasa" required="required" type="radio" value="n"/>
+              <input id="ceasa-n" name="ceasa" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceasa-y" name="ceasa" required="required" type="radio" value="y"/>
+              <input id="ceasa-y" name="ceasa" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceasa-e" name="ceasa" required="required" type="radio" value="e"/>
+              <input id="ceasa-e" name="ceasa" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -6268,15 +6280,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceala-n" name="ceala" required="required" type="radio" value="n"/>
+              <input id="ceala-n" name="ceala" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceala-y" name="ceala" required="required" type="radio" value="y"/>
+              <input id="ceala-y" name="ceala" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceala-e" name="ceala" required="required" type="radio" value="e"/>
+              <input id="ceala-e" name="ceala" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -6324,15 +6336,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceapa-n" name="ceapa" required="required" type="radio" value="n"/>
+              <input id="ceapa-n" name="ceapa" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceapa-y" name="ceapa" required="required" type="radio" value="y"/>
+              <input id="ceapa-y" name="ceapa" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceapa-e" name="ceapa" required="required" type="radio" value="e"/>
+              <input id="ceapa-e" name="ceapa" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -6374,15 +6386,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceaaa-n" name="ceaaa" required="required" type="radio" value="n"/>
+              <input id="ceaaa-n" name="ceaaa" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceaaa-y" name="ceaaa" required="required" type="radio" value="y"/>
+              <input id="ceaaa-y" name="ceaaa" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceaaa-e" name="ceaaa" required="required" type="radio" value="e"/>
+              <input id="ceaaa-e" name="ceaaa" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -6424,15 +6436,15 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceaka-n" name="ceaka" required="required" type="radio" value="n"/>
+              <input id="ceaka-n" name="ceaka" type="radio" value="n"/>
               No
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceaka-y" name="ceaka" required="required" type="radio" value="y"/>
+              <input id="ceaka-y" name="ceaka" type="radio" value="y"/>
               Yes
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="ceaka-e" name="ceaka" required="required" type="radio" value="e"/>
+              <input id="ceaka-e" name="ceaka" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -6757,7 +6769,7 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.06.13
+     SNAPSHOT 2018.06.14
     </span>
    </div>
   </footer>
@@ -6836,7 +6848,7 @@
          * @param display selector for the container to display
          * @param defaultValue the default value of the radio when no other option is already selected.
          */
-        function abnormalities(radioGroupName, display, defaultValue) {
+        function defaultRadio(radioGroupName, defaultValue, display, displayWhenValue) {
             const $radios = $("input:radio[name=" + radioGroupName + "]");
 
             //set default if not already selected
@@ -6844,7 +6856,9 @@
                 $radios.filter("[value=" + defaultValue + "]").prop('checked', true);
             }
 
-            $radios.conditionallyDisplay({sourceValues: "y", enable: display});
+            if (display && displayWhenValue) {
+                $radios.conditionallyDisplay({sourceValues: displayWhenValue, enable: display});
+            }
         }
 
         let noduleCount = 0;
@@ -6880,7 +6894,6 @@
             $("#add-first-nodule").toggle(noduleCount === 0);
         }
 
-
         $(function () {
             // SCAN
             // bind to change events on study date and baseline date to calculate "time since baseline"
@@ -6899,7 +6912,7 @@
                     $sidoe.val($("#cedos").val()).trigger('change');
                 }
             });
-
+            $("[name=cetex]").conditionallyEnable({sourceValues: "b", disable: "#non-baseline-container"})
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
 
             // NODULES
@@ -6919,12 +6932,15 @@
 
 
             //ABNORMALITIES
-            abnormalities("pa", "#pulmonary-container", "n");
-            abnormalities("ceca", "#cardiac-container", "n");
-            abnormalities("ceoma", "#neck-container", "n");
-            abnormalities("ceoba", "#breast-container", "n");
-            abnormalities("ceoaa", "#abdominal-container", "y");
-            abnormalities("ceaba", "#bone-container", "n");
+            //set default values and toggle display of each section
+            defaultRadio("pa", "n", "#pulmonary-container", "y");
+            defaultRadio("ceca", "n", "#cardiac-container", "y");
+            defaultRadio("ceoma", "n", "#neck-container", "y");
+            defaultRadio("ceoba", "n", "#breast-container", "y");
+            defaultRadio("ceoaa", "y", "#abdominal-container", "y");
+            defaultRadio("ceaba", "n", "#bone-container", "y");
+
+
 
             $("#cecclm, #ceccld, #cecccf, #ceccrc").on('change', calculateVisualCacScore);
             calculateVisualCacScore();

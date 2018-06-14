@@ -4611,19 +4611,19 @@
            <td>
             <div class="form-group">
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cebs-n" name="cebs" required="required" type="radio" value="n"/>
+              <input id="cebs-n" name="cebs" type="radio" value="n"/>
               N/A
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cebs-o" name="cebs" required="required" type="radio" value="o"/>
+              <input id="cebs-o" name="cebs" type="radio" value="o"/>
               Normal
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cebs-y" name="cebs" required="required" type="radio" value="y"/>
+              <input id="cebs-y" name="cebs" type="radio" value="y"/>
               Abnormal
              </label>
              <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cebs-e" name="cebs" required="required" type="radio" value="e"/>
+              <input id="cebs-e" name="cebs" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -5049,14 +5049,16 @@
           </tr>
           <tr>
            <td>
-            Rounded Atelectasis
+            Pleural Effusion
            </td>
            <td>
             <div class="form-group">
-             <label class="radio-inline">
-              <input data-fv-notempty-message="Please select a value" id="cepev-e" name="cepev" required="required" type="radio" value="e"/>
-              not visible
-             </label>
+             <div class="checkbox">
+              <label>
+               <input id="cepev" name="cepev" type="checkbox" value="e"/>
+               not visible
+              </label>
+             </div>
             </div>
            </td>
            <td colspan="5">
@@ -6194,7 +6196,7 @@
             </div>
            </td>
            <td style="padding-top:1px;">
-            <div class="form-group form-inline">
+            <div class="form-group form-inline" id="ceaga-container">
              <div class="checkbox">
               <label>
                <input id="ceagh" name="ceagh" type="checkbox" value="h"/>
@@ -6244,7 +6246,7 @@
             </div>
            </td>
            <td style="padding-top:1px;">
-            <div class="form-group form-inline">
+            <div class="form-group form-inline" id="ceasa-container">
              <div class="checkbox">
               <label>
                <input id="ceasc" name="ceasc" type="checkbox" value="y"/>
@@ -6294,7 +6296,7 @@
             </div>
            </td>
            <td style="padding-top:1px;">
-            <div class="form-group form-inline">
+            <div class="form-group form-inline" id="ceala-container">
              <div class="checkbox">
               <label>
                <input id="cealc" name="cealc" type="checkbox" value="y"/>
@@ -6350,7 +6352,7 @@
             </div>
            </td>
            <td style="padding-top:1px;">
-            <div class="form-group form-inline">
+            <div class="form-group form-inline" id="ceapa-container">
              <div class="checkbox">
               <label>
                <input id="ceapc" name="ceapc" type="checkbox" value="y"/>
@@ -6400,7 +6402,7 @@
             </div>
            </td>
            <td style="padding-top:1px;">
-            <div class="form-group form-inline">
+            <div class="form-group form-inline" id="ceaaa-container">
              <div class="checkbox">
               <label>
                <input id="ceaac" name="ceaac" type="checkbox" value="y"/>
@@ -6450,7 +6452,7 @@
             </div>
            </td>
            <td style="padding-top:1px;">
-            <div class="form-group form-inline">
+            <div class="form-group form-inline" id="ceaka-container">
              <div class="checkbox">
               <label>
                <input id="ceakc" name="ceakc" type="checkbox" value="y"/>
@@ -6517,7 +6519,7 @@
          </strong>
          <div class="radio">
           <label>
-           <input id="ceimn-rs" name="ceimn" type="radio" value="rs"/>
+           <input id="ceimn-rs" name="ceimn" required="required" type="radio" value="rs"/>
            No evidence of
                                         nodules. Follow-up as recommended above.
           </label>
@@ -6845,8 +6847,9 @@
         /**
          * Sets the default value of a radio group and conditionally displays a container when that radio value is "y"
          * @param radioGroupName the group of radio buttons to evaluate
-         * @param display selector for the container to display
          * @param defaultValue the default value of the radio when no other option is already selected.
+         * @param display selector for the container to display
+         * @param displayWhenValue display the `display` object when the radioGroupName value is equal to this
          */
         function defaultRadio(radioGroupName, defaultValue, display, displayWhenValue) {
             const $radios = $("input:radio[name=" + radioGroupName + "]");
@@ -6879,7 +6882,6 @@
         }
 
         function displayNodules(count) {
-            console.log("displayNodules() count: " + count);
             $("[data-nodule-id]").hide().filter(function () {
                 return $(this).data("nodule-id") <= count;
             }).show();
@@ -6892,6 +6894,13 @@
 
             $("#nodule-table").toggle(noduleCount > 0);
             $("#add-first-nodule").toggle(noduleCount === 0);
+        }
+
+        function findRadioGroupNames($container) {
+            return $.unique($container.find("input[type=radio]")
+                .map(function (index, element) {
+                    return this.name;
+                }));
         }
 
         $(function () {
@@ -6932,13 +6941,22 @@
 
 
             //ABNORMALITIES
-            //set default values and toggle display of each section
             defaultRadio("pa", "n", "#pulmonary-container", "y");
             defaultRadio("ceca", "n", "#cardiac-container", "y");
             defaultRadio("ceoma", "n", "#neck-container", "y");
             defaultRadio("ceoba", "n", "#breast-container", "y");
-            defaultRadio("ceoaa", "y", "#abdominal-container", "y");
             defaultRadio("ceaba", "n", "#bone-container", "y");
+            defaultRadio("ceoaa", "y", "#abdominal-container", "y");
+
+            //for each of the main sections, find all the radiogroups and default them to "n" (no)
+            // NB: Cardiac & Bone have no radio button groups.
+            const $containers = $("#pulmonary-container, #neck-container, #breast-container, #abdominal-container");
+            $.each($containers, function (i, container) {
+                const groupNames = findRadioGroupNames($(container));
+                $.each(groupNames, function (i, group) {
+                    defaultRadio(group, "n", $("#" + group + "-container"), "y");
+                });
+            })
 
 
 
@@ -6947,10 +6965,48 @@
             $("#cepaw, #ceaow").on('keyup change', calculatePulmonaryArteryAortaRatio);
             calculatePulmonaryArteryAortaRatio();
 
+            //for each of the containers that have radiogroups, ensure at least one of those groups has a value of "y".
+            $("form").on("submit", function (e) {
+                console.log("onsubmit");
+
+                //TODO First, validate each tab, navigate to the one that's bad; exit
+
+                //Then check abnormalities
+                const groups = [
+                    {radio: 'pa', container: $("#pulmonary-container"), humanName: "pulmonary"},
+                    {radio: 'ceoma', container: $("#neck-container"), humanName: "neck and mediastinal"},
+                    {radio: 'ceoba', container: $("#breast-container"), humanName: "breast"},
+                    {radio: 'ceoaa', container: $("#abdominal-container"), humanName: "abdominal"}
+                ];
+
+                var i; //NB: primiative loop so we exit immediately when one of these fails.
+                for (i = 0; i < groups.length; i++) {
+                    const g = groups[i];
+                    if ($("[name=" + g.radio + "]:checked").val() === "y") {
+                        const groupNames = findRadioGroupNames(g.container);
+                        yeses = $.grep(groupNames, function (groupName) {
+                            return $("[name=" + groupName + "]:checked").val() === "y";
+                        });
+                        if (yeses.length === 0) {
+                            VAPALS.displayWarning("At least one " + g.humanName + " abnormality must be selected.");
+                            e.preventDefault();
+                            e.stopPropagation();
+                            return false;
+                        }
+                    }
+                }
+
+                return true; //all checks passed
+
+            }
+
+
             //WRAP IT UP
+            $(".validated").formValidation({framework: 'bootstrap'});
+
+            //always after formValidation initialization
             initTabbedNavigation("ctEvalTabs", "ctEvalTabsContent");
 
-            $(".validated").formValidation({framework: 'bootstrap'});
         });
   </script>
  </body>

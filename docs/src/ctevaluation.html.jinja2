@@ -598,9 +598,9 @@
                     <div class="tab-pane" id="abnormalities" role="tabpanel" aria-labelledby="abnormalities-tab">
                         <div class="row">
                             <div class="col-sm-12 form-group">
-                                <label>Emphysema</label>
-                                {{ f.checkbox("ceemv","e","not visible") }}
-                                {{ f.radio("ceem", "ceem-no", "no", "none", true) }}
+                                <label class="control-label required">Emphysema</label>
+                                {{ f.radio("ceem", "ceem-nv", "nv", "not visible", true) }}
+                                {{ f.radio("ceem", "ceem-no", "no", "none", false) }}
                                 {{ f.radio("ceem", "ceem-mi", "mi", "mild - splaying of vessels or scattered bulbay/blebs", false) }}
                                 {{ f.radio("ceem", "ceem-mo", "mo", "moderate - less than 50%", false) }}
                                 {{ f.radio("ceem", "ceem-se", "se", "severe - more than 50%", false) }}

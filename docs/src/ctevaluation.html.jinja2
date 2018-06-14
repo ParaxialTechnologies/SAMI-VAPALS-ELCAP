@@ -154,14 +154,15 @@
                                 </small>
                             </div>
 
-
-                            <div class="col-sm-4 form-group">
-                                <label for="cedcs" class="control-label">Most Recent Comparative Study</label>
-                                {{ f.datepicker("cedcs", true, "Date is required") }}
-                            </div>
-                            <div class="col-sm-4  form-group">
-                                <label for="cedps" class="control-label">Prior Scans</label>
-                                <input type="text" class="form-control" id="cedps" name="cedps" required="required"/>
+                            <div id="non-baseline-container">
+                                <div class="col-sm-4 form-group">
+                                    <label for="cedcs" class="control-label required">Most Recent Comparative Study</label>
+                                    {{ f.datepicker("cedcs", true, "Date is required") }}
+                                </div>
+                                <div class="col-sm-4  form-group">
+                                    <label for="cedps" class="control-label required">Prior Scans</label>
+                                    <input type="text" class="form-control" id="cedps" name="cedps" required="required"/>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1832,7 +1833,7 @@
                     $sidoe.val($("#cedos").val()).trigger('change');
                 }
             });
-
+            $("[name=cetex]").conditionallyEnable({sourceValues: "b", disable: "#non-baseline-container"})
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
 
             // NODULES

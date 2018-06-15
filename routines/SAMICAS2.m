@@ -209,30 +209,30 @@ wsCASE(rtn,filter) ; generate case review page
  ;
  ;@stanza 5 background form
  ;
- new sbkey set sbkey=$order(items("sbfor"))
- if sbkey="" set sbkey="sbform-2017-12-10"
- new sbdate set sbdate=$$getDateKey^SAMICASE(sbkey)
- set sbkey="vapals:"_sbkey
- new sbdispdate set sbdispdate=$$key2dispDate(sbdate)
- set cnt=cnt+1
- ;set rtn(cnt)="<tr><td> "_sid_" </td><td> - </td><td> - </td><td> - </td><td>"_sbdispdate_"</td><td>"_$char(13)
- set rtn(cnt)="<tr><td> "_last5_" </td><td> - </td><td> - </td><td>"_sbdispdate_"</td><td>"_$char(13)
- set cnt=cnt+1
- set rtn(cnt)="<form method=""post"" action=""/vapals"">"_$char(13)
- set cnt=cnt+1
- set rtn(cnt)="<input name=""samiroute"" value=""form"" type=""hidden"">"_$char(13)
- set cnt=cnt+1
- set rtn(cnt)=" <input name=""studyid"" value="""_sid_""" type=""hidden"">"_$char(13)
- set cnt=cnt+1
- set rtn(cnt)=" <input name=""form"" value="""_sbkey_""" type=""hidden"">"_$char(13)
- set cnt=cnt+1
- set rtn(cnt)=" <input value=""Background"" class=""btn btn-link"" role=""link"" type=""submit"">"_$char(13)
+ ;new sbkey set sbkey=$order(items("sbfor"))
+ ;if sbkey="" set sbkey="sbform-2017-12-10"
+ ;new sbdate set sbdate=$$getDateKey^SAMICASE(sbkey)
+ ;set sbkey="vapals:"_sbkey
+ ;new sbdispdate set sbdispdate=$$key2dispDate(sbdate)
+ ;set cnt=cnt+1
+ ;;set rtn(cnt)="<tr><td> "_sid_" </td><td> - </td><td> - </td><td> - </td><td>"_sbdispdate_"</td><td>"_$char(13)
+ ;set rtn(cnt)="<tr><td> "_last5_" </td><td> - </td><td> - </td><td>"_sbdispdate_"</td><td>"_$char(13)
+ ;set cnt=cnt+1
+ ;set rtn(cnt)="<form method=""post"" action=""/vapals"">"_$char(13)
+ ;set cnt=cnt+1
+ ;set rtn(cnt)="<input name=""samiroute"" value=""form"" type=""hidden"">"_$char(13)
+ ;set cnt=cnt+1
+ ;set rtn(cnt)=" <input name=""studyid"" value="""_sid_""" type=""hidden"">"_$char(13)
+ ;set cnt=cnt+1
+ ;set rtn(cnt)=" <input name=""form"" value="""_sbkey_""" type=""hidden"">"_$char(13)
+ ;set cnt=cnt+1
+ ;set rtn(cnt)=" <input value=""Background"" class=""btn btn-link"" role=""link"" type=""submit"">"_$char(13)
  ;
- new samistatus s samistatus=""
- if $$getSamiStatus(sid,sbkey)="incomplete" set samistatus="(incomplete)"
+ ;new samistatus s samistatus=""
+ ;if $$getSamiStatus(sid,sbkey)="incomplete" set samistatus="(incomplete)"
  ;
- set cnt=cnt+1
- set rtn(cnt)="</form>"_samistatus_"</td><td></td></tr>"
+ ;set cnt=cnt+1
+ ;set rtn(cnt)="</form>"_samistatus_"</td><td></td></tr>"
  ;
  ;@stanza 6 rest of the forms
  ;
@@ -366,11 +366,13 @@ getItems(ary,sid) ; get items available for studyid
  new tary
  for  set zi=$order(@ary@(zi)) quit:zi=""  do  ;
  . new zkey1,zform set zkey1=$piece(zi,"-",1)
- . if zkey1="sbform" quit  ;
+ . ;if zkey1="sbform" quit  ;
  . if zkey1="siform" quit  ;
  . new fname
  . if zkey1="ceform" set fname="CT Evaluation"
  . set zform=zkey1
+ . if zkey1="sbform" s zform="vapals:sbform"
+ . if zkey1="sbform" s fname="Background"
  . if zkey1="ceform" s zform="vapals:ceform"
  . if zkey1="fuform" s zform="vapals:ceform"
  . if zkey1="fuform" s fname="Follow-up"
@@ -528,7 +530,10 @@ wsNuForm(rtn,filter) ; select new form for patient (get service)
  . . s rtn(cnt)="<input type=hidden name=""sid"" value="_sid_">"
  . . s zi=zi+1
  . ;
- . i ln["background" s temp(zi)=""
+ . ;i ln["background" s temp(zi)=""
+ . i ln["background" d  ;
+ . . d findReplace^%ts(.ln,"background","sbform")
+ . . s temp(zi)=ln
  . i ln["followup" d  ;
  . . d findReplace^%ts(.ln,"followup","fuform")
  . . s temp(zi)=ln
@@ -602,6 +607,14 @@ wsNuFormPost(ARGS,BODY,RESULT) ; post new form selection (post service)
  . do getHome^SAMIHOM2(.RESULT,.ARGS) ; on error return to home page
  . quit
  ;
+ if nuform="sbform" do  ;
+ . new key set key="sbform-"_datekey
+ . set ARGS("key")=key
+ . set ARGS("studyid")=sid
+ . set ARGS("form")="vapals:sbform"
+ . do makeSbform(sid,key)
+ . quit
+ ;
  if nuform="ceform" do  ;
  . new key set key="ceform-"_datekey
  . set ARGS("key")=key
@@ -641,6 +654,38 @@ wsNuFormPost(ARGS,BODY,RESULT) ; post new form selection (post service)
  quit  ; end of wsNuFormPost
  ;
  ;
+ ;
+makeSbform(sid,key) ; create background form
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;
+ ;@called-by
+ ; wsNuFormPost
+ ;@calls
+ ; $$setroot^%wd
+ ; $$sid2num^SAMIHOM2
+ ;@input
+ ; sid = studiy id
+ ; key =
+ ;@output
+ ; @root@("graph",sid,key)
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ;@stanza 2 create ct eval form
+ ;
+ new root set root=$$setroot^%wd("vapals-patients")
+ new sien set sien=$$sid2num^SAMIHOM2(sid)
+ quit:+sien=0
+ new cdate set cdate=$piece(key,"sbform-",2)
+ merge @root@("graph",sid,key)=@root@(sien)
+ set @root@("graph",sid,key,"samicreatedate")=cdate
+ d setSamiStatus^SAMICAS2(sid,key,"incomplete")
+ ;
+ ;@stanza 3 termination
+ ;
+ quit  ; end of makeSbform
  ;
 makeCeform(sid,key) ; create ct evaluation form
  ;

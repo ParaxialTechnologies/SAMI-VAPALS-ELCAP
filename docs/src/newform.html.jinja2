@@ -17,13 +17,14 @@
                                     Please select the type of form to create
                                 </label>
                                 <select name="form" id="form" class="form-control">
-                                    <option value="background"> Screening Background
-                                    <option value="ctevaluation"> CT Evaluation
-                                    <option value="followup"> Follow-up
-                                    <option value="biopsy"> Biopsy
-                                    <option value="newform"> Pre-Intervention
-                                    <option value="newform"> Intervention
-                                    <option value="pet"> PET Evaluation
+                                    {% if mockup %}
+                                        <option value="background"> Screening Background
+                                        <option value="ctevaluation"> CT Evaluation
+                                        <option value="followup"> Follow-up
+                                        <option value="biopsy"> Biopsy
+                                        <option value="intervention"> Intervention
+                                        <option value="pet"> PET Evaluation
+                                    {% endif %}
                                 </select>
                             </div>
                             <div class="pull-right">

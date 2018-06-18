@@ -475,7 +475,7 @@ wsNewCase(ARGS,BODY,RESULT) ; receives post from home & creates new case
  do prefill(dfn) ; prefills from the "patient-lookup" graph
  ;
  n siformkey
- do makeSbform(gien) ; create a background form for new patient
+ ;do makeSbform(gien) ; create a background form for new patient
  set siformkey=$$makeSiform(gien) ; create an intake for for new patient
  ;
  set ARGS("studyid")=studyid
@@ -671,7 +671,7 @@ prefill(dfn) ; prefill fields for form
  ;
  ;
  ;
-makeSbform(num) ; create background form
+makeSbform(num) ; create background form -- depricated gpl 20180615
  ;
  ;@stanza 1 invocation, binding, & branching
  ;

@@ -15,6 +15,7 @@
   <link href="../www/lib/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet"/>
   <link href="../www/lib/jquery-ui-1.12.1/jquery-ui.structure.min.css" rel="stylesheet"/>
   <link href="../www/lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
+  <link href="../www/lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
  </head>
  <body>
   <script src="../www/lib/jquery-3.3.1.min.js">
@@ -33,9 +34,13 @@
   </script>
   <script src="../www/lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js">
   </script>
+  <script src="../www/lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.js">
+  </script>
   <script src="https://www.gstatic.com/charts/loader.js" type="text/javascript">
   </script>
   <script src="../www/jquery-conditonally-enable.js">
+  </script>
+  <script src="../www/jquery-conditonally-display.js">
   </script>
   <script src="../www/jqueryui-vista-filemanAutocomplete.js">
   </script>
@@ -94,7 +99,9 @@
    </h2>
    <hr/>
    <form action="intervention.html" class="validated" data-fv-button-selector="#submit-button" data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-validating="glyphicon glyphicon-refresh" method="get">
-    <input name="rbsid" type="hidden" value="VEP0001"/>
+    <input name="samiroute" type="hidden" value="postform"/>
+    <input name="studyid" type="hidden" value="@@SID@@"/>
+    <input name="form" type="hidden" value="@@FORMKEY@@"/>
     <div class="row">
      <div class="col-md-6 form-inline">
       <div class="form-group">
@@ -5698,7 +5705,7 @@
          <td>
           <input name="hvceemv" type="hidden" value=""/>
           <input name="ceemv" type="checkbox" value="e"/>
-          n/v
+          not visible
          </td>
          <td colspan="4">
           <table cellpadding="2" cellspacing="0">
@@ -5737,7 +5744,7 @@
          <td>
           <input name="hvcepev" type="hidden" value=""/>
           <input name="cepev" type="checkbox" value="e"/>
-          n/v
+          not visible
          </td>
          <td colspan="2">
           <table cellpadding="2" cellspacing="0" width="40%">
@@ -5807,7 +5814,7 @@
          <td>
           <input name="hvceccv" type="hidden" value=""/>
           <input name="ceccv" type="checkbox" value="e"/>
-          n/v
+          not visible
          </td>
          <td colspan="4">
           <table cellpadding="2" cellspacing="0" width="40%">
@@ -5919,7 +5926,7 @@
          <td>
           <input name="hvceprev" type="hidden" value=""/>
           <input name="ceprev" type="checkbox" value="e"/>
-          n/v
+          not visible
          </td>
          <td colspan="4">
           <table cellpadding="2" cellspacing="0">
@@ -5972,7 +5979,7 @@
           <input name="ceopp" type="radio" value="y"/>
           yes
           <input name="ceopp" onclick="ppAb('e')" type="radio" value="e"/>
-          n/v
+          not visible
          </td>
         </tr>
         <tr>
@@ -6029,7 +6036,7 @@
               <input name="cebat" onclick="setRVal('ceopp','y')" type="radio" value="y"/>
               yes
               <input name="cebat" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td align="left" colspan="3">
               <table border="1" cellpadding="0" cellspacing="0" width="100%">
@@ -6073,7 +6080,7 @@
               <input name="cebrs" onclick="setRVal('ceopp','y')" type="radio" value="y"/>
               yes
               <input name="cebrs" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td align="left" colspan="3">
               <table border="1" cellpadding="0" cellspacing="0" width="100%">
@@ -6117,7 +6124,7 @@
               <input name="cecbb" onclick="setRVal('ceopp','y')" type="radio" value="y"/>
               yes
               <input name="cecbb" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td align="left" colspan="3">
               <table border="1" cellpadding="0" cellspacing="0" width="100%">
@@ -6163,7 +6170,7 @@
               <input name="cephc" onclick="setRVal('ceopp','y')" type="radio" value="y"/>
               yes
               <input name="cephc" onclick="ppAbA('cephc')" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td align="left" colspan="3">
               <table border="1" cellpadding="0" cellspacing="0" width="100%">
@@ -6207,7 +6214,7 @@
               <input name="cescr" onclick="setRVal('ceopp','y')" type="radio" value="y"/>
               yes
               <input name="cescr" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td align="left" colspan="3">
               <table border="1" cellpadding="0" cellspacing="0" width="100%">
@@ -6274,7 +6281,7 @@
               <input name="cepp" onclick="setRVal('ceopp','y')" type="radio" value="y"/>
               yes
               <input name="cepp" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td align="left" colspan="4">
               <input name="hvceppca" type="hidden" value=""/>
@@ -6301,7 +6308,7 @@
               <input name="cept" onclick="setRVal('ceopp','y')" type="radio" value="y"/>
               yes
               <input name="cept" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td align="left" colspan="4">
               <input name="hvceptrt" type="hidden" value=""/>
@@ -6327,7 +6334,7 @@
               <input name="cebs" onclick="setRVal('ceopp','y')" type="radio" value="y"/>
               Abnormal
               <input name="cebs" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td align="left" colspan="4">
               <input name="hvcebsrt" type="hidden" value=""/>
@@ -6385,7 +6392,7 @@
               <input name="ceoma" type="radio" value="y"/>
               yes
               <input name="ceoma" onclick="clearanm('e')" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td align="left" width="12%">
               <label>
@@ -6410,7 +6417,7 @@
               <input name="ceata" onclick="setRVal('ceoma','y')" type="radio" value="y"/>
               yes
               <input name="ceata" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td align="left" width="25%">
               <input name="hvceatc" type="hidden" value=""/>
@@ -6474,7 +6481,7 @@
               <input name="ceaya" onclick="setRVal('ceoma','y')" type="radio" value="y"/>
               yes
               <input name="ceaya" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td align="left">
               <input name="hvceayc" type="hidden" value=""/>
@@ -6570,7 +6577,7 @@
               <input name="cemln" onclick="setRVal('ceoma','y')" type="radio" value="y"/>
               yes
               <input name="cemln" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td align="left" colspan="2">
               <label>
@@ -6655,7 +6662,7 @@
               <input name="cemlncab" onclick="setRVal('ceoma','y')" type="radio" value="y"/>
               yes
               <input name="cemlncab" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td>
              </td>
@@ -6677,7 +6684,7 @@
               <input name="cemva" onclick="setRVal('ceoma','y')" type="radio" value="y"/>
               yes
               <input name="cemva" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td align="left">
               <input name="hvcemvaa" type="hidden" value=""/>
@@ -6713,7 +6720,7 @@
               <input name="cemeln" onclick="setRVal('ceoma','y')" type="radio" value="y"/>
               yes
               <input name="cemeln" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td align="left">
               <input name="hvcemelna" type="hidden" value=""/>
@@ -6772,7 +6779,7 @@
               <input name="ceomm" onclick="setRVal('ceoma','y')" type="radio" value="y"/>
               yes
               <input name="ceomm" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td align="left">
               <input name="hvceamc" type="hidden" value=""/>
@@ -6869,7 +6876,7 @@
               <input name="ceoba" type="radio" value="y"/>
               yes
               <input name="ceoba" onclick="mBrAb('e')" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td>
               <label>
@@ -6895,7 +6902,7 @@
               <input name="ceara" onclick="setRVal('ceoba','y')" type="radio" value="y"/>
               yes
               <input name="ceara" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td align="left" colspan="2">
               <input name="hvceobarc" type="hidden" value=""/>
@@ -6951,7 +6958,7 @@
               <input name="ceafa" onclick="setRVal('ceoba','y')" type="radio" value="y"/>
               yes
               <input name="ceafa" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td align="left" colspan="2">
               <input name="hvceobafc" type="hidden" value=""/>
@@ -7011,7 +7018,7 @@
                   <input name="ceagaln" type="radio" value="y"/>
                   yes
                   <input name="ceagaln" type="radio" value="e"/>
-                  n/v
+                  not visible
                  </td>
                 </tr>
                </tbody>
@@ -7096,7 +7103,7 @@
               <input name="ceoaa" type="radio" value="y"/>
               yes
               <input name="ceoaa" onclick="clearaabd('e')" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td>
               <label>
@@ -7122,7 +7129,7 @@
               <input name="ceaga" onclick="setRVal('ceoaa','y')" type="radio" value="y"/>
               yes
               <input name="ceaga" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td colspan="2">
               <input name="hvceagh" type="hidden" value=""/>
@@ -7178,7 +7185,7 @@
               <input name="ceasa" onclick="setRVal('ceoaa','y')" type="radio" value="y"/>
               yes
               <input name="ceasa" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td align="left" colspan="2">
               <input name="hvceasc" type="hidden" value=""/>
@@ -7234,7 +7241,7 @@
               <input name="ceala" onclick="setRVal('ceoaa','y')" type="radio" value="y"/>
               yes
               <input name="ceala" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td align="left" colspan="2">
               <input name="hvcealc" type="hidden" value=""/>
@@ -7290,7 +7297,7 @@
               <input name="ceapa" onclick="setRVal('ceoaa','y')" type="radio" value="y"/>
               yes
               <input name="ceapa" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td align="left" colspan="2">
               <input name="hvceapc" type="hidden" value=""/>
@@ -7346,7 +7353,7 @@
               <input name="ceaaa" onclick="setRVal('ceoaa','y')" type="radio" value="y"/>
               yes
               <input name="ceaaa" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td align="left" colspan="2">
               <input name="hvceaac" type="hidden" value=""/>
@@ -7402,7 +7409,7 @@
               <input name="ceaka" onclick="setRVal('ceoaa','y')" type="radio" value="y"/>
               yes
               <input name="ceaka" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
              <td align="left" colspan="2">
               <input name="hvceakc" type="hidden" value=""/>
@@ -7504,7 +7511,7 @@
               <input name="ceaba" type="radio" value="y"/>
               yes
               <input name="ceaba" type="radio" value="e"/>
-              n/v
+              not visible
              </td>
             </tr>
            </tbody>
@@ -7709,7 +7716,7 @@
          Submit feedback
         </a>
         <span id="sami-version" style="float:right; font-family: Courier,monospace">
-         SNAPSHOT 2018.06.04
+         SNAPSHOT 2018.06.17
         </span>
        </div>
       </footer>
@@ -9768,12 +9775,8 @@
       </script>
       <script language="JavaScript">
        $(function () {
-
+            $(".validated").formValidation({framework: 'bootstrap'});
         });
-      </script>
-      <script language="JavaScript">
-       //Initialize Form Validation
-    $(".validated").formValidation({framework: 'bootstrap'});
       </script>
      </font>
     </font>

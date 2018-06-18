@@ -19,6 +19,10 @@
               data-fv-icon-invalid="glyphicon glyphicon-remove"
               data-fv-icon-validating="glyphicon glyphicon-refresh"
               data-fv-button-selector="#submit-button">
+
+            <input type="hidden" name="samiroute" value="postform"/>
+            <input type="hidden" name="studyid" value="@@SID@@"/>
+            <input type="hidden" name="form" value="@@FORMKEY@@"/>  
             <div class="row">
                 <div class="form-group col-sm-3 col-md-3 col-lg-2">
                     <label for="sidof">Follow-up Date</label>
@@ -512,7 +516,9 @@
             $("[name=sier]").conditionallyEnable({enable: "#sier-container"});
             $("[name=sisa]").conditionallyEnable({enable: "#sisa-container-y", disable: "sisa-container-n"});
             $("[name=sittq]").conditionallyEnable({enable: "#sittq-container"});
-            $("#siscl").conditionallyEnable({sourceValues: "l", enable: "#siscos"})
+            $("#siscl").conditionallyEnable({sourceValues: "l", enable: "#siscos"});
+
+            $(".validated").formValidation({framework: 'bootstrap'});
         });
 
     </script>

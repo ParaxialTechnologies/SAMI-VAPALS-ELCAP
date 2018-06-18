@@ -20,6 +20,9 @@
               data-fv-icon-validating="glyphicon glyphicon-refresh"
               data-fv-button-selector="#submit-button">
 
+            <input type="hidden" name="samiroute" value="postform"/>
+            <input type="hidden" name="studyid" value="@@SID@@"/>
+            <input type="hidden" name="form" value="@@FORMKEY@@"/>
 
             <div class="row">
                 <div class="col-sm-4 col-md-3 form-group">
@@ -517,6 +520,8 @@
                         $("#cefud").val("").focus();
                 }
             })
+
+            $(".validated").formValidation({framework: 'bootstrap'});
         });
     </script>
 

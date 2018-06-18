@@ -153,13 +153,15 @@
             });
 
             //finally reset any validations on now-disabled fields
-            var fv = $enableContainer.closest("form.validated").data('formValidation');
-            if (fv) {
-                var disabledFields = $enableContainer.find("input:disabled, select:disabled, textarea:disabled");
-                $.each(disabledFields, function (i, t) {
-                    console.log("resetting field " + $(t).attr('name'))
-                    fv.resetField($(t));
-                });
+            if ($enableContainer != null && typeof $enableContainer !== 'undefined') {
+                var fv = $enableContainer.closest("form.validated").data('formValidation');
+                if (fv) {
+                    var disabledFields = $enableContainer.find("input:disabled, select:disabled, textarea:disabled");
+                    $.each(disabledFields, function (i, t) {
+                        console.log("resetting field " + $(t).attr('name'))
+                        fv.resetField($(t));
+                    });
+                }
             }
         });
 

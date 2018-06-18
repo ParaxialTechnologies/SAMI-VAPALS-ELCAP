@@ -53,4 +53,15 @@ var VAPALS = new function () {
     this.DATE_FORMAT = "MM/DD/YYYY";
 
     this.DATE_TIME_FORMAT = "MM/DD/YYYY hh:mm:ss";
+
+
+    this.displayWarning = function (message) {
+        BootstrapDialog.alert({
+            type: BootstrapDialog.TYPE_WARNING,
+            title: 'Warning',
+            message: message,
+            closable: true
+        });
+    }
+
 };

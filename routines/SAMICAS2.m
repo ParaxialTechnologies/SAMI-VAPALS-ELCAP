@@ -504,13 +504,13 @@ wsNuForm(rtn,filter) ; select new form for patient (get service)
  . n ln s ln=temp(zi)
  . n touched s touched=0
  . ;
- . i ln["id" i ln["studyIdMenu" d  ;
- . . s zi=zi+4
+ . ;i ln["id" i ln["studyIdMenu" d  ;
+ . ;. s zi=zi+4
  . ;
- . i ln["home.html" d  ;
- . . d findReplace^%ts(.ln,"home.html","/vapals")
- . . s temp(zi)=ln
- . . s touched=1
+ . ;i ln["home.html" d  ;
+ . ;. d findReplace^%ts(.ln,"home.html","/vapals")
+ . ;. s temp(zi)=ln
+ . ;. s touched=1
  . ;
  . i ln["href" i 'touched d  ;
  . . d fixHref^SAMIFRM2(.ln)
@@ -520,39 +520,44 @@ wsNuForm(rtn,filter) ; select new form for patient (get service)
  . . d fixSrc^SAMIFRM2(.ln)
  . . s temp(zi)=ln
  . ;
- . i ln["form" i ln["todo" d  ;
- . . d findReplace^%ts(.ln,"todo","/vapals")
- . . s cnt=cnt+1
- . . s rtn(cnt)=ln
- . . s cnt=cnt+1
- . . s rtn(cnt)="<input type=hidden name=""samiroute"" value=""addform"">"
- . . s cnt=cnt+1
- . . s rtn(cnt)="<input type=hidden name=""sid"" value="_sid_">"
- . . s zi=zi+1
+ . ;i ln["form" i ln["todo" d  ;
+ . ;. d findReplace^%ts(.ln,"todo","/vapals")
+ . ;. s cnt=cnt+1
+ . ;. s rtn(cnt)=ln
+ . ;. s cnt=cnt+1
+ . ;. s rtn(cnt)="<input type=hidden name=""samiroute"" value=""addform"">"
+ . ;. s cnt=cnt+1
+ . ;. s rtn(cnt)="<input type=hidden name=""sid"" value="_sid_">"
+ . ;. s zi=zi+1
  . ;
  . ;i ln["background" s temp(zi)=""
- . i ln["background" d  ;
- . . d findReplace^%ts(.ln,"background","sbform")
- . . s temp(zi)=ln
- . i ln["followup" d  ;
- . . d findReplace^%ts(.ln,"followup","fuform")
- . . s temp(zi)=ln
- . i ln["pet" d  ;
- . . d findReplace^%ts(.ln,"pet","ptform")
- . . s temp(zi)=ln
- . i ln["ctevaluation" d  ;
- . . d findReplace^%ts(.ln,"ctevaluation","ceform")
- . . s temp(zi)=ln
- . i ln["biopsy" d  ;
- . . d findReplace^%ts(.ln,"biopsy","bxform")
- . . s temp(zi)=ln
- . i ln["newform" d  ;
- . . s temp(zi)=""
- . . s temp(zi+1)=""
+ . ;i ln["background" d  ;
+ . ;. d findReplace^%ts(.ln,"background","sbform")
+ . ;. s temp(zi)=ln
+ . ;i ln["followup" d  ;
+ . ;. d findReplace^%ts(.ln,"followup","fuform")
+ . ;. s temp(zi)=ln
+ . ;i ln["pet" d  ;
+ . ;. d findReplace^%ts(.ln,"pet","ptform")
+ . ;. s temp(zi)=ln
+ . ;i ln["ctevaluation" d  ;
+ . ;. d findReplace^%ts(.ln,"ctevaluation","ceform")
+ . ;. s temp(zi)=ln
+ . ;i ln["biopsy" d  ;
+ . ;. d findReplace^%ts(.ln,"biopsy","bxform")
+ . ;. s temp(zi)=ln
+ . ;i ln["newform" d  ;
+ . ;. s temp(zi)=""
+ . ;. s temp(zi+1)=""
  . ;
- . i ln["<script" i temp(zi+1)["function" d  ;
- . . s zi=$$scanFor^SAMIHOM2(.temp,zi,"</script")
- . . s zi=zi+1
+ . if ln["@@SID@@" do  ;
+ . . do findReplace^%ts(.ln,"@@SID@@",sid)
+ . . s temp(zi)=ln
+ . . quit
+ . ;
+ . ;i ln["<script" i temp(zi+1)["function" d  ;
+ . ;. s zi=$$scanFor^SAMIHOM2(.temp,zi,"</script")
+ . ;. s zi=zi+1
  . ; 
  . s cnt=cnt+1
  . set rtn(cnt)=temp(zi)
@@ -645,6 +650,14 @@ wsNuFormPost(ARGS,BODY,RESULT) ; post new form selection (post service)
  . set ARGS("studyid")=sid
  . set ARGS("form")="vapals:ptform"
  . do makePtform(sid,key)
+ . quit
+ ;
+ if nuform="itform" do  ;
+ . new key set key="itform-"_datekey
+ . set ARGS("key")=key
+ . set ARGS("studyid")=sid
+ . set ARGS("form")="vapals:itform"
+ . do makeItform(sid,key)
  . quit
  ;
  do wsGetForm^%wf(.RESULT,.ARGS)
@@ -775,6 +788,38 @@ makePtform(sid,key) ; create ct evaluation form
  new sien set sien=$$sid2num^SAMIHOM2(sid)
  quit:+sien=0
  new cdate set cdate=$piece(key,"ptform-",2)
+ merge @root@("graph",sid,key)=@root@(sien)
+ set @root@("graph",sid,key,"samicreatedate")=cdate
+ d setSamiStatus^SAMICAS2(sid,key,"incomplete")
+ ;
+ ;@stanza 3 termination
+ ;
+ quit  ; end of makePtform
+ ;
+makeItform(sid,key) ; create intervention form
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;
+ ;@called-by
+ ; wsNuFormPost
+ ;@calls
+ ; $$setroot^%wd
+ ; $$sid2num^SAMIHOM2
+ ;@input
+ ; sid = studiy id
+ ; key =
+ ;@output
+ ; @root@("graph",sid,key)
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ;@stanza 2 create ct eval form
+ ;
+ new root set root=$$setroot^%wd("vapals-patients")
+ new sien set sien=$$sid2num^SAMIHOM2(sid)
+ quit:+sien=0
+ new cdate set cdate=$piece(key,"itform-",2)
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate
  d setSamiStatus^SAMICAS2(sid,key,"incomplete")

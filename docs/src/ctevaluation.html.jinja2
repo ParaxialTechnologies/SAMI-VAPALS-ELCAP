@@ -1799,7 +1799,7 @@
 
         function addNodule() {
             if (noduleCount === 10) {
-                VAPALS.displayWarning("No more than 10 nodules are allowed. You may need to scroll to the right to see the additional nodule fields.");
+                VAPALS.displayNotification("Maximum Nodules Reached", "No more than 10 nodules are allowed. You may need to scroll to the right to see the additional nodule fields.");
             }
             else {
                 displayNodules(++noduleCount);
@@ -1919,7 +1919,7 @@
                             return $("[name=" + groupName + "]:checked").val() === "y";
                         });
                         if (yeses.length === 0) {
-                            VAPALS.displayWarning("At least one " + g.humanName + " abnormality must be selected.");
+                            VAPALS.displayNotification("Input Required","At least one " + g.humanName + " abnormality must be selected.");
                             e.preventDefault();
                             e.stopPropagation();
                             return false;

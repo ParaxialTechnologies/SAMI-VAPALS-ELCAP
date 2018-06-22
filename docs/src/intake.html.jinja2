@@ -33,7 +33,7 @@
                     <label>How did you learn about LSS?</label>
                     {{ f.checkbox("silnph", "1", "Phone") }}
                     {{ f.checkbox("silnls", "1", "Letter sent") }}
-                    {{ f.checkbox("silnlr", "1", "Letter sent and received") }}
+                    {{ f.checkbox("silnpu", "1", "Pulmonary") }}
                     {{ f.checkbox("silnpc", "1", "PCP") }}
                 </div>
             </div>
@@ -49,8 +49,8 @@
             <div class="row">
                 <div class="col-md-12 form-group">
                     <label>Rural status</label>
-                    {{ f.inlineRadio("sirs", "sipav-u","u","Urban", true) }}
-                    {{ f.inlineRadio("sirs", "sipav-r","r","Rural") }}
+                    {{ f.inlineRadio("sirs", "sirs-u","u","Urban", true) }}
+                    {{ f.inlineRadio("sirs", "sirs-r","r","Rural") }}
                 </div>
             </div>
 
@@ -86,6 +86,14 @@
                 <div class="form-group col-md-3">
                     <label for="sipcr">Country </label>
                     <input type="text" name="sipcr" id="sipcr" class="form-control">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-sm-6 ">
+                    <label for="sippn">Phone Number</label>
+                    <input type="text" name="sippn" id="sippn" class="form-control"
+                           data-fv-phone="true" data-fv-phone-country="US">
                 </div>
             </div>
 
@@ -181,6 +189,12 @@
             </div>
 
             <hr/>
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    {{ f.checkbox("siidmdc","1", "Informed Decision Making discussion complete", {"required":"true"}) }}
+                </div>
+
+            </div>
             <p class="alert alert-warning">
                 Veteran of age and exposure to cigarette smoke as described above, and without a current
                 diagnosis or obvious symptoms suggestive of lung cancer, has been educated today about the
@@ -238,6 +252,34 @@
 {% block script %}
     <script language="JavaScript">
         $(function () {
+
+            $("#sicpd").on('change', function () {
+                var cigsPerDay = $("#sicpd").val();
+                if (cigsPerDay > 0) {
+                    var cpd = (cigsPerDay/20).toFixed(2);
+                    if (cpd > 0) {
+                        $("#sippd").val(cpd);
+                    }
+                    else {
+                        $("#sippd").val("");
+                    }
+                    $("#sippd").change()
+                }
+                
+            }).first().trigger('change');
+
+            $("#sippd, #sisny").on('change', function () {
+                var packsPerDay = $("#sippd").val();
+                var cigYears = $("#sisny").val();
+                if (packsPerDay > 0 && cigYears >0) {
+                    var packYears = (packsPerDay*cigYears).toFixed(1);
+                    if (packYears > 0) {
+                        $("#sippy").val(packYears);
+                    }
+                }
+                
+            }).first().trigger('change');
+
             $(".validated").formValidation({framework: 'bootstrap'});
         });
     </script>

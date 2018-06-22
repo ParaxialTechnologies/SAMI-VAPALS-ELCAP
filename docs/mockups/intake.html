@@ -143,8 +143,8 @@
       </div>
       <div class="checkbox">
        <label>
-        <input id="silnlr" name="silnlr" type="checkbox" value="1"/>
-        Letter sent and received
+        <input id="silnpu" name="silnpu" type="checkbox" value="1"/>
+        Pulmonary
        </label>
       </div>
       <div class="checkbox">
@@ -176,11 +176,11 @@
        Rural status
       </label>
       <label class="radio-inline">
-       <input data-fv-notempty-message="Please select a value" id="sipav-u" name="sirs" required="required" type="radio" value="u"/>
+       <input data-fv-notempty-message="Please select a value" id="sirs-u" name="sirs" required="required" type="radio" value="u"/>
        Urban
       </label>
       <label class="radio-inline">
-       <input id="sipav-r" name="sirs" type="radio" value="r"/>
+       <input id="sirs-r" name="sirs" type="radio" value="r"/>
        Rural
       </label>
      </div>
@@ -229,6 +229,14 @@
        Country
       </label>
       <input class="form-control" id="sipcr" name="sipcr" type="text"/>
+     </div>
+    </div>
+    <div class="row">
+     <div class="form-group col-sm-6 ">
+      <label for="sippn">
+       Phone Number
+      </label>
+      <input class="form-control" data-fv-phone="true" data-fv-phone-country="US" id="sippn" name="sippn" type="text"/>
      </div>
     </div>
     <hr/>
@@ -417,6 +425,16 @@
      </div>
     </div>
     <hr/>
+    <div class="row">
+     <div class="col-md-12 form-group">
+      <div class="checkbox">
+       <label>
+        <input id="siidmdc" name="siidmdc" required="true" type="checkbox" value="1"/>
+        Informed Decision Making discussion complete
+       </label>
+      </div>
+     </div>
+    </div>
     <p class="alert alert-warning">
      Veteran of age and exposure to cigarette smoke as described above, and without a current
                 diagnosis or obvious symptoms suggestive of lung cancer, has been educated today about the
@@ -506,6 +524,34 @@
   </script>
   <script language="JavaScript">
    $(function () {
+
+            $("#sicpd").on('change', function () {
+                var cigsPerDay = $("#sicpd").val();
+                if (cigsPerDay > 0) {
+                    var cpd = (cigsPerDay/20).toFixed(2);
+                    if (cpd > 0) {
+                        $("#sippd").val(cpd);
+                    }
+                    else {
+                        $("#sippd").val("");
+                    }
+                    $("#sippd").change()
+                }
+                
+            }).first().trigger('change');
+
+            $("#sippd, #sisny").on('change', function () {
+                var packsPerDay = $("#sippd").val();
+                var cigYears = $("#sisny").val();
+                if (packsPerDay > 0 && cigYears >0) {
+                    var packYears = (packsPerDay*cigYears).toFixed(1);
+                    if (packYears > 0) {
+                        $("#sippy").val(packYears);
+                    }
+                }
+                
+            }).first().trigger('change');
+
             $(".validated").formValidation({framework: 'bootstrap'});
         });
   </script>

@@ -1112,8 +1112,7 @@
                         <div class="row">
                             <div class="form-group">
                                 <div class="col-sm-4 col-md-3">
-
-                                    <label for="ceoba-n">Neck and Mediastinal Abnormalities</label>
+                                    <label for="ceoma-n">Neck and Mediastinal Abnormalities</label>
                                 </div>
                                 <div class="col-sm-8 col-md-9">
                                     {{ f.inlineRadioNYE("ceoma") }}
@@ -1896,13 +1895,54 @@
             $("#cepaw, #ceaow").on('keyup change', calculatePulmonaryArteryAortaRatio);
             calculatePulmonaryArteryAortaRatio();
 
-            //for each of the containers that have radiogroups, ensure at least one of those groups has a value of "y".
-            $("form").on("submit", function (e) {
-                console.log("onsubmit");
+             /**
+            * Adds a formValidation validator that ensures at least one of the radio button children of each group is selected.
+            * if the parent is selected as a 'y'
+            * @param group the group of controls that need to be validated
+            */
+            function requireChildRadioSelectedValidator(group) {
+                var validatorControl = $("#"+group.radio+"-n");
+                var fv = $("form.validated").data("formValidation");
+                if (fv) {
+                    var radioGroups = findRadioGroupNames(group.container);
+                    $.each(radioGroups, function( idx, groupName ) {
+                        var childRadios =  $("[name=" + groupName + "]");
+                        childRadios.on('change', function () {
+                            fv.revalidateField(validatorControl);
+                        });
+                    });
+                    
+                    fv.addField(validatorControl.attr("name"), {
+                        excluded: function ($field, validator) {
+                            return false;
+                        },
+                        validators: {
+                            callback: {
+                                callback: function (value, validator, $field) {
+                                    var isValid = true;
+                                    if ($("[name=" + group.radio + "]:checked").val() === "y") {
+                                        var groupNames = findRadioGroupNames(group.container);
+                                        yeses = $.grep(groupNames, function (groupName) {
+                                            return  $("[name=" + groupName + "]:checked").val() === "y";
+                                        });
+                                        if (yeses.length === 0) {
+                                            isValid = false;
+                                        }
+                                    }
 
-                //TODO First, validate each tab, navigate to the one that's bad; exit
+                                    return {
+                                        valid : isValid,
+                                        message : "At least one " + group.humanName + " abnormality must be selected."
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
 
-                //Then check abnormalities
+            $(function () {
+
                 const groups = [
                     {radio: 'pa', container: $("#pulmonary-container"), humanName: "pulmonary"},
                     {radio: 'ceoma', container: $("#neck-container"), humanName: "neck and mediastinal"},
@@ -1910,22 +1950,18 @@
                     {radio: 'ceoaa', container: $("#abdominal-container"), humanName: "abdominal"}
                 ];
 
-                var i; //NB: primiative loop so we exit immediately when one of these fails.
                 for (i = 0; i < groups.length; i++) {
-                    const g = groups[i];
-                    if ($("[name=" + g.radio + "]:checked").val() === "y") {
-                        const groupNames = findRadioGroupNames(g.container);
-                        yeses = $.grep(groupNames, function (groupName) {
-                            return $("[name=" + groupName + "]:checked").val() === "y";
-                        });
-                        if (yeses.length === 0) {
-                            VAPALS.displayNotification("Input Required","At least one " + g.humanName + " abnormality must be selected.");
-                            e.preventDefault();
-                            e.stopPropagation();
-                            return false;
-                        }
-                    }
+                    requireChildRadioSelectedValidator(groups[i])
                 }
+            
+            });
+            
+
+            //for each of the containers that have radiogroups, ensure at least one of those groups has a value of "y".
+            $("form").on("submit", function (e) {
+                console.log("onsubmit");
+
+                //TODO First, validate each tab, navigate to the one that's bad; exit
 
                 return true; //all checks passed
 

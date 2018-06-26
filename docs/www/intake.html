@@ -298,7 +298,7 @@
       </label>
      </div>
      <div class="col-sm-2 form-group">
-      <input class="form-control numeric" id="sippd" maxlength="4" name="sippd" type="text"/>
+      <input class="form-control numeric" id="sippd" maxlength="4" name="sippd" readonly="" type="text"/>
      </div>
     </div>
     <div class="row">
@@ -324,7 +324,7 @@
       </label>
      </div>
      <div class="col-sm-2 form-group">
-      <input class="form-control numeric" id="sippy" maxlength="4" name="sippy" required="required" type="text"/>
+      <input class="form-control numeric" id="sippy" maxlength="4" name="sippy" readonly="" type="text"/>
      </div>
     </div>
     <div class="row">
@@ -429,7 +429,7 @@
      <div class="col-md-12 form-group">
       <div class="checkbox">
        <label>
-        <input id="siidmdc" name="siidmdc" required="true" type="checkbox" value="1"/>
+        <input data-fv-notempty-message="Confirm that the discussion has taken place" id="siidmdc" name="siidmdc" required="required" type="checkbox" value="1"/>
         Informed Decision Making discussion complete
        </label>
       </div>
@@ -496,7 +496,7 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.06.22
+     SNAPSHOT 2018.06.26
     </span>
    </div>
   </footer>
@@ -527,18 +527,18 @@
 
             $("#sicpd").on('change', function () {
                 var cigsPerDay = $("#sicpd").val();
-                if (cigsPerDay > 0) {
+                if (cigsPerDay >= 0) {
                     var cpd = (cigsPerDay/20).toFixed(2);
-                    if (cpd > 0) {
+                    if (cpd >= 0) {
                         $("#sippd").val(cpd);
                     }
                     else {
                         $("#sippd").val("");
                     }
-                    $("#sippd").change()
+                    $("#sippd").change();
                 }
                 
-            }).first().trigger('change');
+            }).trigger('change');
 
             $("#sippd, #sisny").on('change', function () {
                 var packsPerDay = $("#sippd").val();
@@ -547,10 +547,12 @@
                     var packYears = (packsPerDay*cigYears).toFixed(1);
                     if (packYears > 0) {
                         $("#sippy").val(packYears);
-                    }
+                    } 
+                } else {
+                     $("#sippy").val("0");
                 }
                 
-            }).first().trigger('change');
+            }).trigger('change');
 
             $(".validated").formValidation({framework: 'bootstrap'});
         });

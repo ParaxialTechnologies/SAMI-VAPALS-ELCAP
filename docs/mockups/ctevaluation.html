@@ -6929,8 +6929,7 @@
                 if ($(this).val() === "b" && !$sidoe.val()) {
                     $sidoe.val($("#cedos").val()).trigger('change');
                 }
-            });
-            $("[name=cetex]").conditionallyEnable({sourceValues: "b", disable: "#non-baseline-container"})
+            }).conditionallyEnable({sourceValues: "b", disable: "#non-baseline-container"});
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
 
             // NODULES
@@ -6965,7 +6964,7 @@
                 $.each(groupNames, function (i, group) {
                     defaultRadio(group, "n", $("#" + group + "-container"), "y");
                 });
-            })
+            });
 
 
 
@@ -6974,18 +6973,21 @@
             $("#cepaw, #ceaow").on('keyup change', calculatePulmonaryArteryAortaRatio);
             calculatePulmonaryArteryAortaRatio();
 
-             /**
-            * Adds a formValidation validator that ensures at least one of the radio button children of each group is selected.
-            * if the parent is selected as a 'y'
-            * @param group the group of controls that need to be validated
+            /**
+             * Adds a formValidation validator that ensures at least one radio button in group.container has a value of
+             * "y", if the parent radio (group.radio) also has a value of "y"
+             * @param group the group of controls that need to be validated.
+             * group.radio - the parent radio button controller
+             * group.container - the jQuery container where to find all other radio
+             * group.humanName - the common name for this validation group to be used in the validation error message.
             */
             function requireChildRadioSelectedValidator(group) {
-                var validatorControl = $("#"+group.radio+"-n");
-                var fv = $("form.validated").data("formValidation");
+                const validatorControl = $("#" + group.radio + "-n");
+                const fv = $("form.validated").data("formValidation");
                 if (fv) {
-                    var radioGroups = findRadioGroupNames(group.container);
+                    const radioGroups = findRadioGroupNames(group.container);
                     $.each(radioGroups, function( idx, groupName ) {
-                        var childRadios =  $("[name=" + groupName + "]");
+                        const childRadios = $("[name=" + groupName + "]");
                         childRadios.on('change', function () {
                             fv.revalidateField(validatorControl);
                         });
@@ -6998,10 +7000,10 @@
                         validators: {
                             callback: {
                                 callback: function (value, validator, $field) {
-                                    var isValid = true;
+                                    let isValid = true;
                                     if ($("[name=" + group.radio + "]:checked").val() === "y") {
-                                        var groupNames = findRadioGroupNames(group.container);
-                                        yeses = $.grep(groupNames, function (groupName) {
+                                        const groupNames = findRadioGroupNames(group.container);
+                                        const yeses = $.grep(groupNames, function (groupName) {
                                             return  $("[name=" + groupName + "]:checked").val() === "y";
                                         });
                                         if (yeses.length === 0) {
@@ -7029,7 +7031,7 @@
                     {radio: 'ceoaa', container: $("#abdominal-container"), humanName: "abdominal"}
                 ];
 
-                for (i = 0; i < groups.length; i++) {
+                for (let i = 0; i < groups.length; i++) {
                     requireChildRadioSelectedValidator(groups[i])
                 }
             

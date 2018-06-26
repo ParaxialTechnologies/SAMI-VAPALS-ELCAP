@@ -5,7 +5,6 @@
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
   <title>
-   New Form
   </title>
   <link href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
@@ -87,65 +86,42 @@
    </div>
   </nav>
   <div class="container-fluid" style="max-width:1550px">
-   <div class="row">
-    <div class="col-sm-12 col-md-6 col-lg-4">
-     <div class="panel panel-default">
-      <div class="panel-heading">
-       <h3 class="panel-title">
-        New Form
-       </h3>
-      </div>
-      <div class="panel-body">
-       <form action="/vapals" method="post">
-        <input name="samiroute" type="hidden" value="addform"/>
-        <input name="sid" type="hidden" value="@@SID@@"/>
-        <div class="form-group">
-         <label>
-          Please select the type of form to create
-         </label>
-         <select class="form-control" id="form" name="form">
-          <option value="sbform">
-           Screening Background
-          </option>
-          <option value="ceform">
-           CT Evaluation
-          </option>
-          <option value="fuform">
-           Follow-up
-          </option>
-          <option value="bxform">
-           Biopsy
-          </option>
-          <option value="itform">
-           Intervention
-          </option>
-          <option value="ptform">
-           PET Evaluation
-          </option>
-         </select>
-        </div>
-        <div class="pull-right">
-         <input class="btn btn-primary" id="submit-button" type="submit" value="Create New Form"/>
-        </div>
-       </form>
-      </div>
-     </div>
+   <h1>
+    Sample, Sammy G
+    <small class="text-muted" title="Study ID">
+     ST0001
+    </small>
+   </h1>
+   <h2>
+    <small class="text-muted" title="Medical Record Number">
+     1234567890
+    </small>
+   </h2>
+   <hr/>
+   <pre id="report-text">
+</pre>
+   <div class="pull-right">
+    <button class="btn btn-default" data-clipboard-target="#report-text">
+     <i alt="Copy to clipboard" class="glyphicon glyphicon-copy">
+     </i>
+     Copy to clipboard
+    </button>
+   </div>
+   <div class="clearfix">
+   </div>
+   <footer>
+    <div class="container-fluid" style="max-width:1550px">
+     <hr/>
+     <a href="https://issues.osehra.org/browse/VAP" target="_blank">
+      Submit feedback
+     </a>
+     <span id="sami-version" style="float:right; font-family: Courier,monospace">
+      SNAPSHOT 2018.06.26
+     </span>
     </div>
-   </div>
-  </div>
-  <footer>
-   <div class="container-fluid" style="max-width:1550px">
-    <hr/>
-    <a href="https://issues.osehra.org/browse/VAP" target="_blank">
-     Submit feedback
-    </a>
-    <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.06.26
-    </span>
-   </div>
-  </footer>
-  <script language="JavaScript">
-   var studyId = "@@SID@@";
+   </footer>
+   <script language="JavaScript">
+    var studyId = "@@SID@@";
     if (studyId) {
         $("#studyIdMenu").show();
     }
@@ -165,6 +141,15 @@
             console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
         });
     })
-  </script>
+   </script>
+   <script language="JavaScript">
+    new ClipboardJS('.btn').on("success", function(e){
+            $(e.trigger).tooltip({title:"Copied!", delay: { "hide": 1000 }}).show();
+            e.clearSelection();
+        }).on('error', function(e) {
+            $(e.trigger).tooltip({title:"Press ctrl-C"}).show();
+        });
+   </script>
+  </div>
  </body>
 </html>

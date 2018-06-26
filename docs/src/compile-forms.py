@@ -28,7 +28,9 @@ forms = {
     "followup": "Followup Form",
     "biopsy": "Biopsy Form",
     "pet": "PET Evaluation Form",
-    "intervention": "Intervention and Surgical Treatment Form"
+    "intervention": "Intervention and Surgical Treatment Form",
+    "editreport": "",
+    "report": ""
 }
 
 for form, title in forms.items():

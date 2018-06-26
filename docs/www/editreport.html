@@ -5,7 +5,6 @@
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
   <title>
-   New Form
   </title>
   <link href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
@@ -87,50 +86,31 @@
    </div>
   </nav>
   <div class="container-fluid" style="max-width:1550px">
-   <div class="row">
-    <div class="col-sm-12 col-md-6 col-lg-4">
-     <div class="panel panel-default">
-      <div class="panel-heading">
-       <h3 class="panel-title">
-        New Form
-       </h3>
-      </div>
-      <div class="panel-body">
-       <form action="/vapals" method="post">
-        <input name="samiroute" type="hidden" value="addform"/>
-        <input name="sid" type="hidden" value="@@SID@@"/>
-        <div class="form-group">
-         <label>
-          Please select the type of form to create
-         </label>
-         <select class="form-control" id="form" name="form">
-          <option value="sbform">
-           Screening Background
-          </option>
-          <option value="ceform">
-           CT Evaluation
-          </option>
-          <option value="fuform">
-           Follow-up
-          </option>
-          <option value="bxform">
-           Biopsy
-          </option>
-          <option value="itform">
-           Intervention
-          </option>
-          <option value="ptform">
-           PET Evaluation
-          </option>
-         </select>
-        </div>
-        <div class="pull-right">
-         <input class="btn btn-primary" id="submit-button" type="submit" value="Create New Form"/>
-        </div>
-       </form>
-      </div>
-     </div>
-    </div>
+   <h1>
+    Sample, Sammy G
+    <small class="text-muted" title="Study ID">
+     ST0001
+    </small>
+   </h1>
+   <h2>
+    <small class="text-muted" title="Medical Record Number">
+     1234567890
+    </small>
+   </h2>
+   <hr/>
+   <textarea class="form-control" id="report-text" style="font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;"></textarea>
+   <br/>
+   <div class="pull-right">
+    <a class="btn btn-default navigation" data-form="@@FORMKEY@@" data-method="post" data-samiroute="form" href="#!">
+     <span class="glyphicon glyphicon-trash">
+     </span>
+     Edit
+    </a>
+    <a class="btn btn-primary navigation" data-form="@@FORMKEY@@" data-method="post" data-samiroute="print" href="#!">
+     <span class="glyphicon glyphicon-trash">
+     </span>
+     Print/Finalize
+    </a>
    </div>
   </div>
   <footer>
@@ -165,6 +145,17 @@
             console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
         });
     })
+  </script>
+  <script language="JavaScript">
+   $.fn.extend({
+            autoresize: function () {
+                $(this).on('change keyup keydown paste cut', function () {
+                    $(this).height(0).height(this.scrollHeight);
+                }).change();
+            }
+        });
+
+        $('#report-text').autoresize();
   </script>
  </body>
 </html>

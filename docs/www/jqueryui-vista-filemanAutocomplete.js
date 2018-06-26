@@ -30,28 +30,22 @@ $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {
         else {
             html   = html + '<li>';
         }
-        html       = html + '<span>' + item['name'] + '</span>';
-        html       = html + '<br>';
-        html       = html + '<span class="indent">';
-        html       = html + 'Last 5: ';
-        html       = html + item['last5'];
-        html       = html + '</span>';
-        // html       = html + '<br>';
-        html       = html + '<span class="indent">';
-        html       = html + 'DOB: ';
-        html       = html + dob;
-        html       = html + '</span>';
-        // html       = html + '<br>';
-        html       = html + '<span class="indent">';
-        html       = html + 'Gender: ';
-        html       = html + gender;
-        html       = html + '</span>';
+        html       = html + "<div class='row'>"
+        html       = html + '<div class="col-sm-12">' + item['name'] + '</div>';
+        html       = html + '</div>';
+        html       = html + '<div class="row">';
+        html       = html + '<div class="col-sm-3">' + 'Last 5: ' + item['last5'] + '</div>';
+        html       = html + '<div class="col-sm-3">' + 'DOB: ' + dob + '</div>';
+        html       = html + '<div class="col-sm-3">' + 'Gender: ' +  gender + '</div>';
+        
         if (status == 1) {
-            // html   = html + '<br>';
-            html   = html + '<span class="indent" title="Enrolled in VA-PALS">';
-            html   = html + '<img src="see/img/vapals_icon.png" style="height:1.3em"/>&nbsp;<em>Enrolled</em>';
-            html   = html + '</span>';
+            html   = html + '<div class="col-sm-3 text-right" title="Enrolled in VA-PALS">';
+            html   = html + '<img src="see/img/vapals_icon.png" class="enrolled-icon"/>&nbsp;<em>Enrolled</em>';
+            html   = html + '</div>';
+        } else {
+            html = html + '<div class="col-sm-3"></div>'
         }
+        html       = html + "</div>"
         html       = html + '</li>';
         
         return $(html).appendTo(ul);

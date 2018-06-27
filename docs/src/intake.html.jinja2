@@ -125,8 +125,11 @@
                     {{ f.floatingLabel('sippd', 'How many packs of cigarettes did you smoke per day (PPD)?') }}
                 </div>
                 <div class="col-sm-2 form-group">
-                    <input class="form-control numeric" type="text" name="sippd" id="sippd" maxlength="4" readonly>
+                    <label id="sippd-val" />
                 </div>
+                <input  type="hidden" name="sippd" id="sippd" />
+                
+                
             </div>
             <div class="row">
                 <div class="col-md-4">
@@ -143,9 +146,10 @@
                     {{ f.floatingLabel('sippy', 'Reported pack years') }}
                 </div>
                 <div class="col-sm-2 form-group">
-                    <input class="form-control numeric" type="text" name="sippy" id="sippy"
-                           maxlength="4" readonly >
+                    <label id="sippy-val" />
                 </div>
+                <input  type="hidden" name="sippy" id="sippy" /> 
+               
             </div>
             <div class="row">
                 <div class="col-md-4">
@@ -259,9 +263,11 @@
                     var cpd = (cigsPerDay/20).toFixed(2);
                     if (cpd >= 0) {
                         $("#sippd").val(cpd);
+                        $("#sippd-val").text(cpd);
                     }
                     else {
                         $("#sippd").val("");
+                        $("#sippd-val").text("");
                     }
                     $("#sippd").change();
                 }
@@ -275,12 +281,14 @@
                     var packYears = (packsPerDay*cigYears).toFixed(1);
                     if (packYears > 0) {
                         $("#sippy").val(packYears);
+                        $("#sippy-val").text(packYears);
                     } 
                 } else {
                      $("#sippy").val("0");
+                     $("#sippy-val").text("0");
                 }
                 
-            }).trigger('change');
+            }).first().trigger('change');
 
             $(".validated").formValidation({framework: 'bootstrap'});
         });

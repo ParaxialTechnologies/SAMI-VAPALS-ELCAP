@@ -298,8 +298,10 @@
       </label>
      </div>
      <div class="col-sm-2 form-group">
-      <input class="form-control numeric" id="sippd" maxlength="4" name="sippd" readonly="" type="text"/>
+      <label id="sippd-val">
+      </label>
      </div>
+     <input id="sippd" name="sippd" type="hidden"/>
     </div>
     <div class="row">
      <div class="col-md-4">
@@ -324,8 +326,10 @@
       </label>
      </div>
      <div class="col-sm-2 form-group">
-      <input class="form-control numeric" id="sippy" maxlength="4" name="sippy" readonly="" type="text"/>
+      <label id="sippy-val">
+      </label>
      </div>
+     <input id="sippy" name="sippy" type="hidden"/>
     </div>
     <div class="row">
      <div class="col-md-4">
@@ -496,7 +500,7 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.06.26
+     SNAPSHOT 2018.06.27
     </span>
    </div>
   </footer>
@@ -531,9 +535,11 @@
                     var cpd = (cigsPerDay/20).toFixed(2);
                     if (cpd >= 0) {
                         $("#sippd").val(cpd);
+                        $("#sippd-val").text(cpd);
                     }
                     else {
                         $("#sippd").val("");
+                        $("#sippd-val").text("");
                     }
                     $("#sippd").change();
                 }
@@ -547,12 +553,14 @@
                     var packYears = (packsPerDay*cigYears).toFixed(1);
                     if (packYears > 0) {
                         $("#sippy").val(packYears);
+                        $("#sippy-val").text(packYears);
                     } 
                 } else {
                      $("#sippy").val("0");
+                     $("#sippy-val").text("0");
                 }
                 
-            }).trigger('change');
+            }).first().trigger('change');
 
             $(".validated").formValidation({framework: 'bootstrap'});
         });

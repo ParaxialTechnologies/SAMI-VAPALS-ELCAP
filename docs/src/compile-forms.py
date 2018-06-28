@@ -22,6 +22,7 @@ forms = {
     "background": "Background Form",
     "intake": "Intake Form",
     "ctevaluation": "CT Evaluation Form",
+    "ctevaluation-elcap": "CT Evaluation Form",
     "home": "Home",
     "casereview": "Case Review",
     "newform": "New Form",

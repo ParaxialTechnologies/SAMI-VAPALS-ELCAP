@@ -9,7 +9,7 @@ init2graph() ; initialize CTEVAL dictionary into graph cteval-dict
  s root=$$setroot^%wd("cteval-dict")
  k @root
  s g=$na(@root@("cteval-dict"))
- d INIT("g")
+ d INIT(g)
  q
  ;
 INIT(g) ;

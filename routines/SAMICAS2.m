@@ -265,7 +265,16 @@ wsCASE(rtn,filter) ; generate case review page
  . . . new samistatus s samistatus=""
  . . . if $$getSamiStatus(sid,zform)="incomplete" set samistatus="(incomplete)"
  . . . set cnt=cnt+1
- . . . set rtn(cnt)="</form>"_samistatus_"</td><td></td></tr>"
+ . . . set rtn(cnt)="</form>"_samistatus_"</td>"
+ . . . set cnt=cnt+1
+ . . . i zform["ceform" d  ;
+ . . . . new rpthref set rpthref="<form method=POST action=""/vapals"">"
+ . . . . set rpthref=rpthref_"<td><input type=hidden name=""samiroute"" value=""ctreport"">"
+ . . . . set rpthref=rpthref_"<input type=hidden name=""form"" value="_$p(zform,":",2)_">"
+ . . . . set rpthref=rpthref_"<input type=hidden name=""studyid"" value="_sid_">"
+ . . . . set rpthref=rpthref_"<input value=""Report"" class=""btn label label-warning"" role=""link"" type=""submit""></form></td>"
+ . . . . s rtn(cnt)=rpthref_"</tr>"
+ . . . e  set rtn(cnt)="<td></td></tr>"
  . . . quit
  . . quit
  . quit
@@ -295,7 +304,6 @@ wsCASE(rtn,filter) ; generate case review page
  ;@stanza 9 termination
  ;
  quit  ; end of wsCASE
- ;
  ;
  ;
 getTemplate(return,form) ; get html template
@@ -332,6 +340,16 @@ getTemplate(return,form) ; get html template
  quit  ; end of getTemplate
  ;
  ;
+countItems(sid) ; extrinsic returns how many forms the patient has
+ ; used before deleting a patient
+ new groot set groot=$$setroot^%wd("vapals-patients")
+ quit:'$data(@groot@("graph",sid)) 0  ; nothing there
+ n cnt,zi
+ s zi=""
+ s cnt=0
+ f  s zi=$o(@groot@("graph",sid,zi)) q:zi=""  d  ;
+ . s cnt=cnt+1
+ q cnt
  ;
 getItems(ary,sid) ; get items available for studyid
  ;
@@ -891,7 +909,6 @@ deleteForm(RESULT,ARGS) ; deletes a form if it is incomplete
  q:sid=""
  s form=$g(ARGS("form"))
  q:form=""
- i form["sbform" q  ;
  i form["siform" q  ;
  ;i '$d(@root@("graph",sid,form)) q  ; form does not exist
  i $$getSamiStatus^SAMICAS2(sid,form)="incomplete" d  ;

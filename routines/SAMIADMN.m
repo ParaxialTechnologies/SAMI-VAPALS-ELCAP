@@ -23,4 +23,34 @@ ClrWeb ; Clear the M Web Server files cache
  quit  ; end of CLRWEB
  ;
  ;
+SETELCAP() ; set VA-PALS to use the ELCAP version of the Ct Evaluation form
+ N GLB,FN,IEN
+ S FN=311.11
+ S GLB=$NA(^SAMI(311.11))
+ S IEN=$O(@GLB@("B","vapals:ceform",""))
+ I IEN="" D  Q  ;
+ . W !,"Error, record vapals:ceform is not found in SAMI FORM MAPPING file!"
+ N FDA
+ S FDA(FN,IEN_",",2)="ctevaluation-elcap.html"
+ N ZERR
+ D UPDATE^DIE("","FDA","","ZERR")
+ I $D(ZERR) D  Q  ;
+ . ZWR ZERR
+ Q
+ ;
+SETLUNGRADS() ; set VA-PALS to use the LungRads version of the Ct Evaluation form
+ N GLB,FN,IEN
+ S FN=311.11
+ S GLB=$NA(^SAMI(311.11))
+ S IEN=$O(@GLB@("B","vapals:ceform",""))
+ I IEN="" D  Q  ;
+ . W !,"Error, record vapals:ceform is not found in SAMI FORM MAPPING file!"
+ N FDA
+ S FDA(FN,IEN_",",2)="ctevaluation.html"
+ N ZERR
+ D UPDATE^DIE("","FDA","","ZERR")
+ I $D(ZERR) D  Q  ;
+ . ZWR ZERR
+ Q
+ ;
 EOR ; End of routine SAMIADMN

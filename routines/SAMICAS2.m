@@ -380,6 +380,8 @@ getItems(ary,sid) ; get items available for studyid
  . if zkey1="bxform" s zform="vapals:bxform"
  . if zkey1="ptform" s zform="vapals:ptform"
  . if zkey1="ptform" s fname="Pet Evaluation"
+ . if zkey1="itform" s zform="vapals:itform"
+ . if zkey1="itform" s fname="Intervention"
  . if $get(fname)="" set fname="unknown"
  . new zdate set zdate=$extract(zi,$length(zkey1)+2,$length(zi))
  . set tary("sort",zdate,zform,zi,fname)=""

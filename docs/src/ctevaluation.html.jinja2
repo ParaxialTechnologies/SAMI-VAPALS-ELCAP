@@ -29,7 +29,7 @@
                 <!--  Scan , Nodules, Abnormalities, Follow Up, Impression -->
                 <!-- each item contains (Tab Title,tab-html-id) -->
                 {% set tab_list = [("Scan","scan"), ("Nodules", "nodules"), ("Abnormalities","abnormalities"),
-                                ("Lung-RADS Impression & Follow Up","impression")] -%}
+                                (("Lung-RADS" if formPage=="ctevaluation" else "ELCAP") + " Impression & Follow Up","impression")] -%}
 
                 <ul class="nav nav-tabs" id="ctEvalTabs" role="tablist" style="margin-bottom: 15px;">
                     {% for tab_name,tab_id in tab_list -%}
@@ -1574,27 +1574,102 @@
                     {#  END Abnormalities tab#}
 
                     <div class="tab-pane" id="impression" role="tabpanel" aria-labelledby="impression-tab">
-                        <h3>Lung-RADS</h3>
-                        <div class="row">
-                            <div class="form-group col-md-2">
-                                <label for="celrc">Category</label>
-                                <select class="form-control" id="celrc" name="celrc">
-                                    <option value="">-</option>
-                                    <option value="0">0</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4A">4A</option>
-                                    <option value="4B">4B</option>
-                                    <option value="4X">4X</option>
-                                </select>
+
+                        {% macro lungrads() -%}
+                            <h3>Lung-RADS</h3>
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label for="celrc">Category</label>
+                                    <br/>
+                                    {{ f.inlineRadio("celrc", "celrc-na","-","Not applicable", true) }}
+                                    {{ f.inlineRadio("celrc", "celrc-0","0","0") }}
+                                    {{ f.inlineRadio("celrc", "celrc-1","1","1") }}
+                                    {{ f.inlineRadio("celrc", "celrc-2","2","2") }}
+                                    {{ f.inlineRadio("celrc", "celrc-3","3","3") }}
+                                    {{ f.inlineRadio("celrc", "celrc-4A","4A","4A") }}
+                                    {{ f.inlineRadio("celrc", "celrc-4B","4B","4B") }}
+                                    {{ f.inlineRadio("celrc", "celrc-4X","4X","4X") }}
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label>Modifiers</label>
+                                    {{ f.checkbox("celrms", "s", "S - Clinically Significant or Potentially Clinically Significant Findings (non lung cancer)") }}
+                                    {{ f.checkbox("celrmc", "c", "C - Prior diagnosis of lung cancer who return to screening") }}
+                                </div>
                             </div>
-                            <div class="form-group col-md-10">
-                                <label>Modifiers</label>
-                                {{ f.checkbox("celrms", "s", "S - Clinically Significant or Potentially Clinically Significant Findings (non lung cancer)") }}
-                                {{ f.checkbox("celrmc", "c", "C - Prior diagnosis of lung cancer who return to screening") }}
+                        {%- endmacro %}
+
+                        {% if formPage=="ctevaluation" %}
+                            {{ lungrads() }}
+                        {% endif %}
+
+                        {% if formPage=="ctevaluation-elcap" %}
+                            <h3>Impression</h3>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="alert alert-info">Annual repeat and follow-up CT scans should utilize
+                                        the same low-dose protocol used for baseline low-dose CT scans.
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                            <div class="row">
+                                <div class="col-sm-12 form-group">
+                                    <strong>Nodules</strong>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="ceimn" id="ceimn-rs" value="rs"
+                                                   required="required">
+                                            No evidence of
+                                            nodules. Follow-up as recommended above.
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="ceimn" id="ceimn-ro" value="ro"> Nodule(s) as
+                                            described above. Consistent with old granulomatous disease. Follow-up as
+                                            recommended above.
+                                        </label>
+                                    </div>
+
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="ceimn" id="ceimn-ru" value="ru"> Nodule(s)
+                                            unchanged, as described above. Follow-up as recommended above.
+                                        </label>
+                                    </div>
+
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="ceimn" id="ceimn-nf" value="nf"> Nodule(s) as
+                                            described above. Follow-up as recommended above.
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12 form-group">
+                                    <strong>Other Findings</strong>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="ceimo" id="ceimo-no" value="no"> No other
+                                            abnormalities.
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="ceimo" id="ceimn-oa" value="oa"> Other
+                                            abnormalities and suggested follow-up as described above.
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 form-group">
+                                    <label for="ceimre">Impression Remarks</label>
+                                    <textarea name="ceimre" id="ceimre" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        {% endif %}
 
                         <h3>Follow Up</h3>
                         <div class="alert alert-warning">
@@ -1642,6 +1717,10 @@
                                 {{ f.checkbox("cefusa", "y", "Special Attention") }}
                             </div>
                         </div>
+
+                        {% if formPage=="ctevaluation-elcap" %}
+                            {{ lungrads() }}
+                        {% endif %}
                     </div>   <!-- end of impression tab -->
                 </div>
             </div>

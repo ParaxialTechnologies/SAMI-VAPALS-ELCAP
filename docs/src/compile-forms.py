@@ -40,6 +40,7 @@ for form, title in forms.items():
             path="",
             version=version,
             title=title,
+            formPage=form,
             formMethod="post")
         fh.write(BeautifulSoup(html, 'html5lib').prettify().encode('utf-8'))
 
@@ -49,6 +50,7 @@ for form, title in forms.items():
             mockup="true",
             version=version,
             title=title,
+            formPage=form,
             formMethod="get")
         fh.write(BeautifulSoup(html, 'html5lib').prettify().encode('utf-8'))
 

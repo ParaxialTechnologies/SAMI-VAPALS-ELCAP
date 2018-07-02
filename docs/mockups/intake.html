@@ -143,8 +143,8 @@
       </div>
       <div class="checkbox">
        <label>
-        <input id="silnlr" name="silnlr" type="checkbox" value="1"/>
-        Letter sent and received
+        <input id="silnpu" name="silnpu" type="checkbox" value="1"/>
+        Pulmonary
        </label>
       </div>
       <div class="checkbox">
@@ -175,12 +175,12 @@
       <label>
        Rural status
       </label>
-      <label class="radio-inline" for="sipav-u">
-       <input data-fv-notempty-message="Please select a value" id="sipav-u" name="sirs" required="required" type="radio" value="u"/>
+      <label class="radio-inline" for="sirs-u">
+       <input data-fv-notempty-message="Please select a value" id="sirs-u" name="sirs" required="required" type="radio" value="u"/>
        Urban
       </label>
-      <label class="radio-inline" for="sipav-r">
-       <input id="sipav-r" name="sirs" type="radio" value="r"/>
+      <label class="radio-inline" for="sirs-r">
+       <input id="sirs-r" name="sirs" type="radio" value="r"/>
        Rural
       </label>
      </div>
@@ -229,6 +229,14 @@
        Country
       </label>
       <input class="form-control" id="sipcr" name="sipcr" type="text"/>
+     </div>
+    </div>
+    <div class="row">
+     <div class="form-group col-sm-6 ">
+      <label for="sippn">
+       Phone Number
+      </label>
+      <input class="form-control" data-fv-phone="true" data-fv-phone-country="US" id="sippn" name="sippn" type="text"/>
      </div>
     </div>
     <hr/>
@@ -290,8 +298,10 @@
       </label>
      </div>
      <div class="col-sm-2 form-group">
-      <input class="form-control numeric" id="sippd" maxlength="4" name="sippd" type="text"/>
+      <span class="control-label" id="sippd-val">
+      </span>
      </div>
+     <input id="sippd" name="sippd" type="hidden"/>
     </div>
     <div class="row">
      <div class="col-md-4">
@@ -316,8 +326,10 @@
       </label>
      </div>
      <div class="col-sm-2 form-group">
-      <input class="form-control numeric" id="sippy" maxlength="4" name="sippy" required="required" type="text"/>
+      <span id="sippy-val">
+      </span>
      </div>
+     <input id="sippy" name="sippy" type="hidden"/>
     </div>
     <div class="row">
      <div class="col-md-4">
@@ -417,6 +429,16 @@
      </div>
     </div>
     <hr/>
+    <div class="row">
+     <div class="col-md-12 form-group">
+      <div class="checkbox">
+       <label>
+        <input data-fv-notempty-message="Confirm that the discussion has taken place" id="siidmdc" name="siidmdc" required="required" type="checkbox" value="1"/>
+        Informed Decision Making discussion complete
+       </label>
+      </div>
+     </div>
+    </div>
     <p class="alert alert-warning">
      Veteran of age and exposure to cigarette smoke as described above, and without a current
                 diagnosis or obvious symptoms suggestive of lung cancer, has been educated today about the
@@ -478,7 +500,7 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.06.28
+     SNAPSHOT 2018.07.02
     </span>
    </div>
   </footer>
@@ -506,6 +528,38 @@
   </script>
   <script language="JavaScript">
    $(function () {
+            $("#sicpd").on('keyup change', function () {
+                var cigsPerDay = $("#sicpd").val();
+                if (cigsPerDay >= 0) {
+                    var cpd = (cigsPerDay/20).toFixed(2);
+                    if (cpd > 0) {
+                        $("#sippd").val(cpd);
+                        $("#sippd-val").text(cpd);
+                    }
+                    else {
+                        $("#sippd").val("");
+                        $("#sippd-val").text("-");
+                    }
+                    $("#sippd").change();
+                }
+            }).trigger('change');
+
+            $("#sippd, #sisny").on('keyup change', function () {
+                var packsPerDay = $("#sippd").val();
+                var cigYears = $("#sisny").val();
+                if (packsPerDay > 0 && cigYears >0) {
+                    var packYears = (packsPerDay*cigYears).toFixed(1);
+                    if (packYears > 0) {
+                        $("#sippy").val(packYears);
+                        $("#sippy-val").text(packYears);
+                    }
+                } else {
+                     $("#sippy").val("");
+                     $("#sippy-val").text("-");
+                }
+
+            }).first().trigger('change');
+
             $(".validated").formValidation({framework: 'bootstrap'});
         });
   </script>

@@ -132,7 +132,7 @@
       </li>
       <li role="presentation">
        <a aria-controls="impression" aria-selected="false" class="nav-link" data-toggle="tab" href="#impression" id="impression-tab" role="tab">
-        Lung-RADS Impression &amp; Follow Up
+        ELCAP Impression &amp; Follow Up
         <i class="fa fa-check-circle-o complete-mark" title="This tab is complete">
         </i>
        </a>
@@ -6506,56 +6506,79 @@
       </div>
       <div aria-labelledby="impression-tab" class="tab-pane" id="impression" role="tabpanel">
        <h3>
-        Lung-RADS
+        Impression
        </h3>
        <div class="row">
-        <div class="form-group col-md-2">
-         <label for="celrc">
-          Category
-         </label>
-         <select class="form-control" id="celrc" name="celrc">
-          <option value="">
-           -
-          </option>
-          <option value="0">
-           0
-          </option>
-          <option value="1">
-           1
-          </option>
-          <option value="2">
-           2
-          </option>
-          <option value="3">
-           3
-          </option>
-          <option value="4A">
-           4A
-          </option>
-          <option value="4B">
-           4B
-          </option>
-          <option value="4X">
-           4X
-          </option>
-         </select>
+        <div class="col-sm-12">
+         <div class="alert alert-info">
+          Annual repeat and follow-up CT scans should utilize the
+                                    same low-dose protocol used for baseline low-dose CT scans.
+         </div>
         </div>
-        <div class="form-group col-md-10">
-         <label>
-          Modifiers
+       </div>
+       <div class="row">
+        <div class="col-sm-12 form-group">
+         <strong>
+          Nodules
+         </strong>
+         <div class="radio">
+          <label>
+           <input id="ceimn-rs" name="ceimn" required="required" type="radio" value="rs"/>
+           No evidence of
+                                        nodules. Follow-up as recommended above.
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="ceimn-ro" name="ceimn" type="radio" value="ro"/>
+           Nodule(s) as
+                                        described above. Consistent with old granulomatous disease. Follow-up as
+                                        recommended above.
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="ceimn-ru" name="ceimn" type="radio" value="ru"/>
+           Nodule(s) unchanged,
+                                        as described above. Follow-up as recommended above.
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="ceimn-nf" name="ceimn" type="radio" value="nf"/>
+           Nodule(s) as
+                                        described above. Follow-up as recommended above.
+          </label>
+         </div>
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-sm-12 form-group">
+         <strong>
+          Other Findings
+         </strong>
+         <div class="radio">
+          <label>
+           <input id="ceimo-no" name="ceimo" type="radio" value="no"/>
+           No other
+                                        abnormalities.
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="ceimn-oa" name="ceimo" type="radio" value="oa"/>
+           Other abnormalities
+                                        and suggested follow-up as described above.
+          </label>
+         </div>
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-sm-12 form-group">
+         <label for="ceimre">
+          Impression Remarks
          </label>
-         <div class="checkbox">
-          <label>
-           <input id="celrms" name="celrms" type="checkbox" value="s"/>
-           S - Clinically Significant or Potentially Clinically Significant Findings (non lung cancer)
-          </label>
-         </div>
-         <div class="checkbox">
-          <label>
-           <input id="celrmc" name="celrmc" type="checkbox" value="c"/>
-           C - Prior diagnosis of lung cancer who return to screening
-          </label>
-         </div>
+         <textarea class="form-control" id="ceimre" name="ceimre"></textarea>
         </div>
        </div>
        <h3>
@@ -6669,6 +6692,66 @@
          </div>
         </div>
        </div>
+       <h3>
+        Lung-RADS
+       </h3>
+       <div class="row">
+        <div class="form-group col-md-12">
+         <label for="celrc">
+          Category
+         </label>
+         <br/>
+         <label class="radio-inline" for="celrc-na">
+          <input data-fv-notempty-message="Please select a value" id="celrc-na" name="celrc" required="required" type="radio" value="-"/>
+          Not applicable
+         </label>
+         <label class="radio-inline" for="celrc-0">
+          <input id="celrc-0" name="celrc" type="radio" value="0"/>
+          0
+         </label>
+         <label class="radio-inline" for="celrc-1">
+          <input id="celrc-1" name="celrc" type="radio" value="1"/>
+          1
+         </label>
+         <label class="radio-inline" for="celrc-2">
+          <input id="celrc-2" name="celrc" type="radio" value="2"/>
+          2
+         </label>
+         <label class="radio-inline" for="celrc-3">
+          <input id="celrc-3" name="celrc" type="radio" value="3"/>
+          3
+         </label>
+         <label class="radio-inline" for="celrc-4A">
+          <input id="celrc-4A" name="celrc" type="radio" value="4A"/>
+          4A
+         </label>
+         <label class="radio-inline" for="celrc-4B">
+          <input id="celrc-4B" name="celrc" type="radio" value="4B"/>
+          4B
+         </label>
+         <label class="radio-inline" for="celrc-4X">
+          <input id="celrc-4X" name="celrc" type="radio" value="4X"/>
+          4X
+         </label>
+        </div>
+        <div class="form-group col-md-12">
+         <label>
+          Modifiers
+         </label>
+         <div class="checkbox">
+          <label>
+           <input id="celrms" name="celrms" type="checkbox" value="s"/>
+           S - Clinically Significant or Potentially Clinically Significant Findings (non lung cancer)
+          </label>
+         </div>
+         <div class="checkbox">
+          <label>
+           <input id="celrmc" name="celrmc" type="checkbox" value="c"/>
+           C - Prior diagnosis of lung cancer who return to screening
+          </label>
+         </div>
+        </div>
+       </div>
       </div>
       <!-- end of impression tab -->
      </div>
@@ -6704,7 +6787,7 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.07.02
+     SNAPSHOT 2018.06.28
     </span>
    </div>
   </footer>
@@ -6904,7 +6987,7 @@
              * group.radio - the parent radio button controller
              * group.container - the jQuery container where to find all other radio
              * group.humanName - the common name for this validation group to be used in the validation error message.
-            */
+             */
             function requireChildRadioSelectedValidator(group) {
                 const validatorControl = $("#" + group.radio + "-n");
                 const fv = $("form.validated").data("formValidation");
@@ -6916,7 +6999,7 @@
                             fv.revalidateField(validatorControl);
                         });
                     });
-                    
+
                     fv.addField(validatorControl.attr("name"), {
                         excluded: function ($field, validator) {
                             return false;
@@ -6958,9 +7041,9 @@
                 for (let i = 0; i < groups.length; i++) {
                     requireChildRadioSelectedValidator(groups[i])
                 }
-            
+
             });
-            
+
 
             //for each of the containers that have radiogroups, ensure at least one of those groups has a value of "y".
             $("form").on("submit", function (e) {

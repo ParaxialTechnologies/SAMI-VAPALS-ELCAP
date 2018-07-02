@@ -29,23 +29,23 @@
                 <!--  Scan , Nodules, Abnormalities, Follow Up, Impression -->
                 <!-- each item contains (Tab Title,tab-html-id) -->
                 {% set tab_list = [("Scan","scan"), ("Nodules", "nodules"), ("Abnormalities","abnormalities"),
-                                ("Lung-RADS Impression & Follow Up","impression")] -%}
+                                ("ELCAP Impression & Follow Up","impression")] -%}
 
                 <ul class="nav nav-tabs" id="ctEvalTabs" role="tablist" style="margin-bottom: 15px;">
                     {% for tab_name,tab_id in tab_list -%}
-                    <li role="presentation"
-                        {% if loop.first %}class="active"{% endif %}>
-                        <a class="nav-link" id="{{ tab_id }}-tab" data-toggle="tab" role="tab"
-                           href="#{{ tab_id }}"
-                           {% if loop.first %}
-                            aria-expanded="true"
-                            aria-selected="true"
-                           {% else %}
-                            aria-selected="false"
-                           {% endif %}
-                           aria-controls="{{tab_id}}" >{{tab_name}} <i class="fa fa-check-circle-o complete-mark"
-                                                         title="This tab is complete"></i></a>
-                    </li>
+                        <li role="presentation"
+                            {% if loop.first %}class="active"{% endif %}>
+                            <a class="nav-link" id="{{ tab_id }}-tab" data-toggle="tab" role="tab"
+                               href="#{{ tab_id }}"
+                                    {% if loop.first %}
+                               aria-expanded="true"
+                               aria-selected="true"
+                                    {% else %}
+                               aria-selected="false"
+                                    {% endif %}
+                               aria-controls="{{tab_id}}" >{{tab_name}} <i class="fa fa-check-circle-o complete-mark"
+                                                                           title="This tab is complete"></i></a>
+                        </li>
                     {%- endfor %}
 
                 </ul>
@@ -274,8 +274,8 @@
                                             <td style="white-space: nowrap;">
                                                 <label class="control-label required">
                                                     Endobronchial? <i class="fa fa-question-circle-o" aria-hidden="true"
-                                                                data-toggle="popover" title="Help"
-                                                                data-content="It is required that both Endobronchial and Most
+                                                                      data-toggle="popover" title="Help"
+                                                                      data-content="It is required that both Endobronchial and Most
                                                                     likely location be answered.  If the nodule has both a
                                                                     bronchial and parenchymal component, answer both to indicate
                                                                     such."></i>
@@ -287,17 +287,17 @@
                                                         <select name="cect{{ i }}en" title="Endobronchial"
                                                                 required="required">
                                                             <option value=""> -</option>
-                                                                    <option value="no"> No</option>
-                                                                    <option value="tr"> Trachea</option>
-                                                                    <option value="rm"> Rt. Main</option>
-                                                                    <option value="lm"> Lt. Main</option>
-                                                                    <option value="bi"> BI</option>
-                                                                    <option value="rul"> RUL</option>
-                                                                    <option value="rml"> RML</option>
-                                                                    <option value="rll"> RLL</option>
-                                                                    <option value="lul"> LUL</option>
-                                                                    <option value="lll"> LLL</option>
-                                                                </select>
+                                                            <option value="no"> No</option>
+                                                            <option value="tr"> Trachea</option>
+                                                            <option value="rm"> Rt. Main</option>
+                                                            <option value="lm"> Lt. Main</option>
+                                                            <option value="bi"> BI</option>
+                                                            <option value="rul"> RUL</option>
+                                                            <option value="rml"> RML</option>
+                                                            <option value="rll"> RLL</option>
+                                                            <option value="lul"> LUL</option>
+                                                            <option value="lll"> LLL</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -317,13 +317,13 @@
                                                         <select name="cect{{ i }}ll" title="Most likely location"
                                                                 required="required">
                                                             <option value=""> -</option>
-                                                                    <option value="end"> Endobr</option>
-                                                                    <option value="lul"> LUL</option>
-                                                                    <option value="lll"> LLL</option>
-                                                                    <option value="rul"> RUL</option>
-                                                                    <option value="rml"> RML</option>
-                                                                    <option value="rll"> RLL</option>
-                                                                </select>
+                                                            <option value="end"> Endobr</option>
+                                                            <option value="lul"> LUL</option>
+                                                            <option value="lll"> LLL</option>
+                                                            <option value="rul"> RUL</option>
+                                                            <option value="rml"> RML</option>
+                                                            <option value="rll"> RLL</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -397,9 +397,9 @@
                                         <tr>
                                             <td style="white-space: nowrap;">
                                                 Distance from the costal pleura (mm)? <i class="fa fa-question-circle-o"
-                                                                                        aria-hidden="true"
-                                                                                        data-toggle="popover" title="Help"
-                                                                                        data-content="The shortest distance from the nodule to the costal pleura should be measured in millimeters."></i>
+                                                                                         aria-hidden="true"
+                                                                                         data-toggle="popover" title="Help"
+                                                                                         data-content="The shortest distance from the nodule to the costal pleura should be measured in millimeters."></i>
                                             </td>
                                             {% for i in r %}
                                                 <td data-nodule-id="{{ i }}" style="display:none;">
@@ -413,8 +413,8 @@
                                         <tr>
                                             <td style="white-space: nowrap;">
                                                 Length (mm) <i class="fa fa-question-circle-o" aria-hidden="true"
-                                                            data-toggle="popover" title="Help"
-                                                            data-content="Indicate the length (largest dimension) of the nodule.  The unit of measurement is always millimeters."></i>
+                                                               data-toggle="popover" title="Help"
+                                                               data-content="Indicate the length (largest dimension) of the nodule.  The unit of measurement is always millimeters."></i>
                                             </td>
                                             {% for i in r %}
                                                 <td data-nodule-id="{{ i }}" style="display:none;">
@@ -429,8 +429,8 @@
                                         <tr>
                                             <td style="white-space: nowrap;">
                                                 Maximum Width (mm) <i class="fa fa-question-circle-o" aria-hidden="true"
-                                                                    data-toggle="popover" title="Help"
-                                                                    data-content="Indicate the maximum width (largest perpendicular dimension to the length) of the nodule.  The unit of measurement is always millimeters."></i>
+                                                                      data-toggle="popover" title="Help"
+                                                                      data-content="Indicate the maximum width (largest perpendicular dimension to the length) of the nodule.  The unit of measurement is always millimeters."></i>
                                             </td>
                                             {% for i in r %}
                                                 <td data-nodule-id="{{ i }}" style="display:none;">
@@ -471,8 +471,8 @@
                                         <tr>
                                             <td style="white-space: nowrap;">
                                                 Nodule Consistency <i class="fa fa-question-circle-o" aria-hidden="true"
-                                                                    data-toggle="popover" title="Help"
-                                                                    data-content="Nodules may be classified into three types by attenuation characteristics: solid - nodule is uniformly solid in appearance; non-solid - nodule is uniformly non-solid (except for blood vessels) in appearance; part-solid - nodule has both solid and non-solid components"></i>
+                                                                      data-toggle="popover" title="Help"
+                                                                      data-content="Nodules may be classified into three types by attenuation characteristics: solid - nodule is uniformly solid in appearance; non-solid - nodule is uniformly non-solid (except for blood vessels) in appearance; part-solid - nodule has both solid and non-solid components"></i>
                                             </td>
                                             {% for i in r %}
                                                 <td data-nodule-id="{{ i }}" style="display:none;">
@@ -492,8 +492,8 @@
                                         <tr>
                                             <td style="white-space: nowrap;">
                                                 Solid Comp. Length x Width <i class="fa fa-question-circle-o" aria-hidden="true"
-                                                                            data-toggle="popover" title="Help"
-                                                                            data-content="TODO: ELCAP missing"></i>
+                                                                              data-toggle="popover" title="Help"
+                                                                              data-content="TODO: ELCAP missing"></i>
                                             </td>
                                             {% for i in r %}
                                                 <td data-nodule-id="{{ i }}" style="display:none;">
@@ -525,9 +525,9 @@
                                         <tr>
                                             <td style="white-space: nowrap;">
                                                 Action <i class="fa fa-question-circle-o"
-                                                        aria-hidden="true"
-                                                        data-toggle="popover" title="Help"
-                                                        data-content="This field becomes very important when different nodules require different follow-up.  A pull-down menu allows us to choose among six different follow-up actions -    'repeat SCT' (repeat screening CT),    'f/u\ Dx CT' (follow-up Diagnostic CT),    'Abx + f/u Dx CT' (Antibiotic + follow-up Diagnostic CT),    'biopsy',    'bronchoscopy',       or    'resection'."></i>
+                                                          aria-hidden="true"
+                                                          data-toggle="popover" title="Help"
+                                                          data-content="This field becomes very important when different nodules require different follow-up.  A pull-down menu allows us to choose among six different follow-up actions -    'repeat SCT' (repeat screening CT),    'f/u\ Dx CT' (follow-up Diagnostic CT),    'Abx + f/u Dx CT' (Antibiotic + follow-up Diagnostic CT),    'biopsy',    'bronchoscopy',       or    'resection'."></i>
                                             </td>
                                             {% for i in r %}
                                                 <td data-nodule-id="{{ i }}" style="display:none;">
@@ -551,9 +551,9 @@
                                         <tr>
                                             <td style="white-space: nowrap;">
                                                 Comment <i class="fa fa-question-circle-o"
-                                                        aria-hidden="true"
-                                                        data-toggle="popover" title="Help"
-                                                        data-content="This field is for additional comments about the nodule.  If a previously seen nodule is found to be something other than a nodule, note it here."></i>
+                                                           aria-hidden="true"
+                                                           data-toggle="popover" title="Help"
+                                                           data-content="This field is for additional comments about the nodule.  If a previously seen nodule is found to be something other than a nodule, note it here."></i>
                                             </td>
                                             {% for i in r %}
                                                 <td data-nodule-id="{{ i }}" style="display:none;">
@@ -1137,7 +1137,7 @@
                                             {{ f.checkbox("ceatm","m","Mass") }}&nbsp;&nbsp;
                                             {{ f.checkbox("ceato","o","Other") }}&nbsp;&nbsp;
                                             <input type="text" name="ceatos" id="ceatos" class="form-control" required="required"
-                                                placeholder="Specify">
+                                                   placeholder="Specify">
                                         </div>
                                     </td>
                                 </tr>
@@ -1158,7 +1158,7 @@
                                             {{ f.checkbox("ceaym","m","Mass") }}&nbsp;&nbsp;
                                             {{ f.checkbox("ceayo","o","Other") }}&nbsp;&nbsp;
                                             <input type="text" name="ceayos" id="ceayos" class="form-control" required="required"
-                                                placeholder="Specify">
+                                                   placeholder="Specify">
                                         </div>
                                     </td>
                                 </tr>
@@ -1220,7 +1220,7 @@
                                             {{ f.checkbox("ceagalnrt","r","Right") }}&nbsp;&nbsp;
                                             {{ f.checkbox("ceagalnlt","l","Left") }}&nbsp;&nbsp;
                                             <input type="text" name="ceagalns" id="ceagalns" class="form-control"
-                                                required="required" placeholder="Specify">
+                                                   required="required" placeholder="Specify">
                                         </div>
                                     </td>
                                 </tr>
@@ -1237,7 +1237,7 @@
                                             {{ f.checkbox("cemvap","w","Pulmonary arteries") }}&nbsp;&nbsp;
                                             {{ f.checkbox("cemvao","o","Other") }}&nbsp;&nbsp;
                                             <input type="text" name="cemvaos" id="cemvaos" class="form-control"
-                                                required="required" placeholder="Specify">
+                                                   required="required" placeholder="Specify">
                                         </div>
                                     </td>
                                 </tr>
@@ -1256,7 +1256,7 @@
                                             {{ f.checkbox("cemelnm","m","Mass") }}&nbsp;&nbsp;
                                             {{ f.checkbox("cemvlno","o","Other") }}&nbsp;&nbsp;
                                             <input type="text" name="cemelnos" id="cemelnos" class="form-control"
-                                                required="required" placeholder="Specify">
+                                                   required="required" placeholder="Specify">
                                         </div>
                                     </td>
                                 </tr>
@@ -1271,7 +1271,7 @@
                                     <td style="padding-top:1px;">
                                         <div class="form-group form-inline">
                                             <input type="text" name="cehhnos" id="cehhnos" class="form-control"
-                                                required="required" placeholder="Specify">
+                                                   required="required" placeholder="Specify">
                                         </div>
                                     </td>
                                 </tr>
@@ -1291,7 +1291,7 @@
                                             {{ f.checkbox("ceamm","m","Mass") }}&nbsp;&nbsp;
                                             {{ f.checkbox("ceamo","o","Other") }}&nbsp;&nbsp;
                                             <input type="text" name="ceommos" id="ceommos" class="form-control"
-                                                required="required" placeholder="Specify">
+                                                   required="required" placeholder="Specify">
                                         </div>
                                     </td>
                                 </tr>
@@ -1339,7 +1339,7 @@
                                             {{ f.checkbox("ceobarm","m","Mass") }}&nbsp;&nbsp;
                                             {{ f.checkbox("ceobaro","o","Other") }}&nbsp;&nbsp;
                                             <input type="text" name="ceobaros" id="ceobaros" class="form-control" required="required"
-                                                placeholder="Specify">
+                                                   placeholder="Specify">
                                         </div>
                                     </td>
                                 </tr>
@@ -1455,7 +1455,7 @@
                                             {{ f.checkbox("ceagl","l","Sludge") }}&nbsp;&nbsp;
                                             {{ f.checkbox("ceago","y","Other") }}&nbsp;&nbsp;
                                             <input type="text" name="ceagos" id="ceagos" class="form-control" required="required"
-                                                placeholder="Specify">
+                                                   placeholder="Specify">
                                         </div>
                                     </td>
                                 </tr>
@@ -1474,7 +1474,7 @@
                                             {{ f.checkbox("ceasm","m","Mass") }}&nbsp;&nbsp;
                                             {{ f.checkbox("ceaso","y","Other") }}&nbsp;&nbsp;
                                             <input type="text" name="ceasos" id="ceasos" class="form-control" required="required"
-                                                placeholder="Specify">
+                                                   placeholder="Specify">
                                         </div>
                                     </td>
                                 </tr>
@@ -1494,7 +1494,7 @@
                                             {{ f.checkbox("cealh","h","HU < 40") }}&nbsp;&nbsp;
                                             {{ f.checkbox("cealo","y","Other") }}&nbsp;&nbsp;
                                             <input type="text" name="cealos" id="cealos" class="form-control" required="required"
-                                                placeholder="Specify">
+                                                   placeholder="Specify">
                                         </div>
                                     </td>
                                 </tr>
@@ -1514,7 +1514,7 @@
                                             {{ f.checkbox("ceapm","m","Mass") }}&nbsp;&nbsp;
                                             {{ f.checkbox("ceapo","y","Other") }}&nbsp;&nbsp;
                                             <input type="text" name="ceapos" id="ceapos" class="form-control" required="required"
-                                                placeholder="Specify">
+                                                   placeholder="Specify">
                                         </div>
                                     </td>
                                 </tr>
@@ -1533,7 +1533,7 @@
                                             {{ f.checkbox("ceaam","m","Mass") }}&nbsp;&nbsp;
                                             {{ f.checkbox("ceaao","y","Other") }}&nbsp;&nbsp;
                                             <input type="text" name="ceaaos" id="ceaaos" class="form-control" required="required"
-                                                placeholder="Specify">
+                                                   placeholder="Specify">
                                         </div>
                                     </td>
                                 </tr>
@@ -1551,7 +1551,7 @@
                                             {{ f.checkbox("ceakm","m","Mass") }}&nbsp;&nbsp;
                                             {{ f.checkbox("ceako","y","Other") }}&nbsp;&nbsp;
                                             <input type="text" name="ceakos" id="ceakos" class="form-control" required="required"
-                                                placeholder="Specify">
+                                                   placeholder="Specify">
                                         </div>
                                     </td>
                                 </tr>
@@ -1574,27 +1574,72 @@
                     {#  END Abnormalities tab#}
 
                     <div class="tab-pane" id="impression" role="tabpanel" aria-labelledby="impression-tab">
-                        <h3>Lung-RADS</h3>
+                        <h3>Impression</h3>
                         <div class="row">
-                            <div class="form-group col-md-2">
-                                <label for="celrc">Category</label>
-                                <select class="form-control" id="celrc" name="celrc">
-                                    <option value="">-</option>
-                                    <option value="0">0</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4A">4A</option>
-                                    <option value="4B">4B</option>
-                                    <option value="4X">4X</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-10">
-                                <label>Modifiers</label>
-                                {{ f.checkbox("celrms", "s", "S - Clinically Significant or Potentially Clinically Significant Findings (non lung cancer)") }}
-                                {{ f.checkbox("celrmc", "c", "C - Prior diagnosis of lung cancer who return to screening") }}
+                            <div class="col-sm-12">
+                                <div class="alert alert-info">Annual repeat and follow-up CT scans should utilize the
+                                    same low-dose protocol used for baseline low-dose CT scans.
+                                </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-sm-12 form-group">
+                                <strong>Nodules</strong>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="ceimn" id="ceimn-rs" value="rs" required="required">
+                                        No evidence of
+                                        nodules. Follow-up as recommended above.
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="ceimn" id="ceimn-ro" value="ro"> Nodule(s) as
+                                        described above. Consistent with old granulomatous disease. Follow-up as
+                                        recommended above.
+                                    </label>
+                                </div>
+
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="ceimn" id="ceimn-ru" value="ru"> Nodule(s) unchanged,
+                                        as described above. Follow-up as recommended above.
+                                    </label>
+                                </div>
+
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="ceimn" id="ceimn-nf" value="nf"> Nodule(s) as
+                                        described above. Follow-up as recommended above.
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 form-group">
+                                <strong>Other Findings</strong>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="ceimo" id="ceimo-no" value="no"> No other
+                                        abnormalities.
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="ceimo" id="ceimn-oa" value="oa"> Other abnormalities
+                                        and suggested follow-up as described above.
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 form-group">
+                                <label for="ceimre">Impression Remarks</label>
+                                <textarea name="ceimre" id="ceimre" class="form-control"></textarea>
+                            </div>
+                        </div>
+
 
                         <h3>Follow Up</h3>
                         <div class="alert alert-warning">
@@ -1642,11 +1687,34 @@
                                 {{ f.checkbox("cefusa", "y", "Special Attention") }}
                             </div>
                         </div>
+
+
+                        <h3>Lung-RADS</h3>
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label for="celrc">Category</label>
+                                <br/>
+                                {{ f.inlineRadio("celrc", "celrc-na","-","Not applicable", true) }}
+                                {{ f.inlineRadio("celrc", "celrc-0","0","0") }}
+                                {{ f.inlineRadio("celrc", "celrc-1","1","1") }}
+                                {{ f.inlineRadio("celrc", "celrc-2","2","2") }}
+                                {{ f.inlineRadio("celrc", "celrc-3","3","3") }}
+                                {{ f.inlineRadio("celrc", "celrc-4A","4A","4A") }}
+                                {{ f.inlineRadio("celrc", "celrc-4B","4B","4B") }}
+                                {{ f.inlineRadio("celrc", "celrc-4X","4X","4X") }}
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Modifiers</label>
+                                {{ f.checkbox("celrms", "s", "S - Clinically Significant or Potentially Clinically Significant Findings (non lung cancer)") }}
+                                {{ f.checkbox("celrmc", "c", "C - Prior diagnosis of lung cancer who return to screening") }}
+                            </div>
+                        </div>
+
                     </div>   <!-- end of impression tab -->
                 </div>
             </div>
 
-             <div class="btn-group">
+            <div class="btn-group">
                 <button type="button" class="btn btn-default btn-prev">Previous</button>
                 <button type="button" class="btn btn-default btn-next">Next</button>
             </div>
@@ -1840,7 +1908,7 @@
              * group.radio - the parent radio button controller
              * group.container - the jQuery container where to find all other radio
              * group.humanName - the common name for this validation group to be used in the validation error message.
-            */
+             */
             function requireChildRadioSelectedValidator(group) {
                 const validatorControl = $("#" + group.radio + "-n");
                 const fv = $("form.validated").data("formValidation");
@@ -1852,7 +1920,7 @@
                             fv.revalidateField(validatorControl);
                         });
                     });
-                    
+
                     fv.addField(validatorControl.attr("name"), {
                         excluded: function ($field, validator) {
                             return false;
@@ -1894,9 +1962,9 @@
                 for (let i = 0; i < groups.length; i++) {
                     requireChildRadioSelectedValidator(groups[i])
                 }
-            
+
             });
-            
+
 
             //for each of the containers that have radiogroups, ensure at least one of those groups has a value of "y".
             $("form").on("submit", function (e) {

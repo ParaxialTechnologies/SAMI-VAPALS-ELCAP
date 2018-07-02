@@ -6511,8 +6511,8 @@
        <div class="row">
         <div class="col-sm-12">
          <div class="alert alert-info">
-          Annual repeat and follow-up CT scans should utilize the
-                                    same low-dose protocol used for baseline low-dose CT scans.
+          Annual repeat and follow-up CT scans should utilize
+                                        the same low-dose protocol used for baseline low-dose CT scans.
          </div>
         </div>
        </div>
@@ -6525,29 +6525,29 @@
           <label>
            <input id="ceimn-rs" name="ceimn" required="required" type="radio" value="rs"/>
            No evidence of
-                                        nodules. Follow-up as recommended above.
+                                            nodules. Follow-up as recommended above.
           </label>
          </div>
          <div class="radio">
           <label>
            <input id="ceimn-ro" name="ceimn" type="radio" value="ro"/>
            Nodule(s) as
-                                        described above. Consistent with old granulomatous disease. Follow-up as
-                                        recommended above.
+                                            described above. Consistent with old granulomatous disease. Follow-up as
+                                            recommended above.
           </label>
          </div>
          <div class="radio">
           <label>
            <input id="ceimn-ru" name="ceimn" type="radio" value="ru"/>
-           Nodule(s) unchanged,
-                                        as described above. Follow-up as recommended above.
+           Nodule(s)
+                                            unchanged, as described above. Follow-up as recommended above.
           </label>
          </div>
          <div class="radio">
           <label>
            <input id="ceimn-nf" name="ceimn" type="radio" value="nf"/>
            Nodule(s) as
-                                        described above. Follow-up as recommended above.
+                                            described above. Follow-up as recommended above.
           </label>
          </div>
         </div>
@@ -6561,14 +6561,14 @@
           <label>
            <input id="ceimo-no" name="ceimo" type="radio" value="no"/>
            No other
-                                        abnormalities.
+                                            abnormalities.
           </label>
          </div>
          <div class="radio">
           <label>
            <input id="ceimn-oa" name="ceimo" type="radio" value="oa"/>
-           Other abnormalities
-                                        and suggested follow-up as described above.
+           Other
+                                            abnormalities and suggested follow-up as described above.
           </label>
          </div>
         </div>
@@ -6987,7 +6987,7 @@
              * group.radio - the parent radio button controller
              * group.container - the jQuery container where to find all other radio
              * group.humanName - the common name for this validation group to be used in the validation error message.
-             */
+            */
             function requireChildRadioSelectedValidator(group) {
                 const validatorControl = $("#" + group.radio + "-n");
                 const fv = $("form.validated").data("formValidation");
@@ -6999,7 +6999,7 @@
                             fv.revalidateField(validatorControl);
                         });
                     });
-
+                    
                     fv.addField(validatorControl.attr("name"), {
                         excluded: function ($field, validator) {
                             return false;
@@ -7041,9 +7041,9 @@
                 for (let i = 0; i < groups.length; i++) {
                     requireChildRadioSelectedValidator(groups[i])
                 }
-
+            
             });
-
+            
 
             //for each of the containers that have radiogroups, ensure at least one of those groups has a value of "y".
             $("form").on("submit", function (e) {

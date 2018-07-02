@@ -175,11 +175,11 @@
       <label>
        Rural status
       </label>
-      <label class="radio-inline" for="sipav-u">
+      <label class="radio-inline" for="sirs-u">
        <input data-fv-notempty-message="Please select a value" id="sirs-u" name="sirs" required="required" type="radio" value="u"/>
        Urban
       </label>
-      <label class="radio-inline" for="sipav-r">
+      <label class="radio-inline" for="sirs-r">
        <input id="sirs-r" name="sirs" type="radio" value="r"/>
        Rural
       </label>
@@ -298,8 +298,8 @@
       </label>
      </div>
      <div class="col-sm-2 form-group">
-      <label id="sippd-val">
-      </label>
+      <span class="control-label" id="sippd-val">
+      </span>
      </div>
      <input id="sippd" name="sippd" type="hidden"/>
     </div>
@@ -326,8 +326,8 @@
       </label>
      </div>
      <div class="col-sm-2 form-group">
-      <label id="sippy-val">
-      </label>
+      <span id="sippy-val">
+      </span>
      </div>
      <input id="sippy" name="sippy" type="hidden"/>
     </div>
@@ -500,7 +500,7 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.06.27
+     SNAPSHOT 2018.07.02
     </span>
    </div>
   </footer>
@@ -528,25 +528,23 @@
   </script>
   <script language="JavaScript">
    $(function () {
-
-            $("#sicpd").on('change', function () {
+            $("#sicpd").on('keyup change', function () {
                 var cigsPerDay = $("#sicpd").val();
                 if (cigsPerDay >= 0) {
                     var cpd = (cigsPerDay/20).toFixed(2);
-                    if (cpd >= 0) {
+                    if (cpd > 0) {
                         $("#sippd").val(cpd);
                         $("#sippd-val").text(cpd);
                     }
                     else {
                         $("#sippd").val("");
-                        $("#sippd-val").text("");
+                        $("#sippd-val").text("-");
                     }
                     $("#sippd").change();
                 }
-                
             }).trigger('change');
 
-            $("#sippd, #sisny").on('change', function () {
+            $("#sippd, #sisny").on('keyup change', function () {
                 var packsPerDay = $("#sippd").val();
                 var cigYears = $("#sisny").val();
                 if (packsPerDay > 0 && cigYears >0) {
@@ -556,8 +554,8 @@
                         $("#sippy-val").text(packYears);
                     } 
                 } else {
-                     $("#sippy").val("0");
-                     $("#sippy-val").text("0");
+                     $("#sippy").val("");
+                     $("#sippy-val").text("-");
                 }
                 
             }).first().trigger('change');

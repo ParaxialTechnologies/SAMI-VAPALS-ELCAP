@@ -54,7 +54,6 @@ function initTabbedNavigation(tabContainerId, tabContentContainerId) {
     }
 
     function checkCompleteness($container) {
-        console.log("checkCompleteness() container=" + $container);
         var $requiredFields = $container.find("[required], [data-fv-notempty=true]").filter(":enabled"),
         $tab = $(".nav-tabs").find("a[href='#" + $container.attr("id") + "']");
         var emptyRequiredFields = $requiredFields.filter(function () {
@@ -67,14 +66,12 @@ function initTabbedNavigation(tabContainerId, tabContentContainerId) {
             return typeof value === "undefined" || value === "";
         });
         // check tab container validity
-        var fv = $(".validated").data('formValidation');
-        if (fv) {
-            var valid = fv.isValidContainer($container);
-            var reallyValid = valid == null || valid === true; //consider unvalidated (null) as "valid".
 
-            //add completeness flag to tab if all required fields are filled in and form is likely valid.
-            $tab.toggleClass("complete", emptyRequiredFields.length === 0 && reallyValid);
-        }
+        var valid = emptyRequiredFields.length === 0; //consider unvalidated (null) as "valid".
+
+        //add completeness flag to tab if all required fields are filled in and form is likely valid.
+        $tab.toggleClass("complete", valid);
+
     } 
 
 

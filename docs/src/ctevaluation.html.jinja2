@@ -29,7 +29,7 @@
                 <!--  Scan , Nodules, Abnormalities, Follow Up, Impression -->
                 <!-- each item contains (Tab Title,tab-html-id) -->
                 {% set tab_list = [("Scan","scan"), ("Nodules", "nodules"), ("Abnormalities","abnormalities"),
-                                (("Lung-RADS" if formPage=="ctevaluation" else "ELCAP") + " Impression & Follow Up","impression")] -%}
+                                (("Lung-RADS " if formPage=="ctevaluation" else "") + "Impression & Follow Up","impression")] -%}
 
                 <ul class="nav nav-tabs" id="ctEvalTabs" role="tablist" style="margin-bottom: 15px;">
                     {% for tab_name,tab_id in tab_list -%}
@@ -59,17 +59,17 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6 col-md-4 col-lg-3 form-group">
-                                {# TODO Get from signed on user, use text instead of input field #}
-                                <label for="cerad" class="control-label required">Radiologist</label>
-                                <input type="text" class="form-control" id="cerad" name="cerad" required="required"/>
-                            </div>
                             <div class="col-sm-6 col-md-4 col-lg-3  form-group">
                                 <label for="cerads">Signing Radiologist</label>
                                 <select class="form-control" id="cerads" name="cerads">
                                     <option value="-" selected>&mdash;</option>
                                     {#TODO#}
                                 </select>
+                            </div>
+                            <div class="col-sm-6 col-md-4 col-lg-3 form-group">
+                                {# TODO Get from signed on user, use text instead of input field #}
+                                <label for="cerad" class="control-label required">Radiologist</label>
+                                <input type="text" class="form-control" id="cerad" name="cerad" required="required"/>
                             </div>
                         </div>
 

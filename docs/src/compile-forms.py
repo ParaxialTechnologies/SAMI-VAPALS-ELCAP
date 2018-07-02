@@ -30,7 +30,6 @@ forms = [
     {"template": "biopsy", "title": "Biopsy Form", "output": "biopsy"},
     {"template": "pet", "title": "PET Evaluation Form", "output": "pet"},
     {"template": "intervention", "title": "Intervention and Surgical Treatment Form", "output": "intervention"},
-    {"template": "editreport", "title": "", "output": "editreport"},
     {"template": "report", "title": "", "output": "report"}
 ]
 

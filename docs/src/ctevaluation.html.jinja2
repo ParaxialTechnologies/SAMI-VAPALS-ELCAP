@@ -11,8 +11,8 @@
 {% endblock %}
 
 
+{% set noduleArray = range(1,11) %}
 {% block body %}
-    {% set noduleArray = range(1,11) %}
     <div class="container-fluid" style="max-width:1550px">
         <h1>
             Sample, Sammy G
@@ -408,53 +408,6 @@
                                         </tr>
                                         <tr>
                                             <td style="white-space: nowrap;">
-                                                <label class="control-label required" for="cect1nt">Nodule
-                                                    Consistency</label>
-                                                <i class="fa fa-question-circle-o" aria-hidden="true"
-                                                   data-toggle="popover" title="Help"
-                                                   data-content="Nodules may be classified into three types by attenuation characteristics: solid - nodule is uniformly solid in appearance; nonsolid - nodule is uniformly nonsolid (except for blood vessels) in appearance; part-solid - nodule has both solid and nonsolid components"></i>
-                                            </td>
-                                            {% for i in noduleArray %}
-                                                <td data-nodule-id="{{ i }}" style="display:none;">
-                                                    <div class="form-group form-group-sm">
-                                                        <select name="cect{{ i }}nt" id="cect{{ i }}nt"
-                                                                class="form-control" title="Nodule Consistency"
-                                                                required="required">
-                                                            <option value="-"> -</option>
-                                                            <option value="s"> solid</option>
-                                                            <option value="m"> part-solid</option>
-                                                            <option value="g"> nonsolid</option>
-                                                            <option value="o"> other (see comment)</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                            {% endfor %}
-                                        </tr>
-                                        <tr>
-                                            <td style="white-space: nowrap;">
-                                                <label class="control-label required" for="cect1ssl">Solid Comp. Length
-                                                    x Width</label>
-                                            </td>
-                                            {% for i in noduleArray %}
-                                                <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
-                                                    <div id="cect{{ i }}-container">
-                                                        <div class="form-group form-group-sm">
-                                                            <input type="text" name="cect{{ i }}ssl" id="cect{{ i }}ssl"
-                                                                   size="4" title="Solid Comp. Length"
-                                                                   class="form-control numeric" required="required">
-                                                        </div>
-                                                        &nbsp; x &nbsp;
-                                                        <div class="form-group form-group-sm">
-                                                            <input type="text" name="cect{{ i }}ssw" id="cect{{ i }}ssw"
-                                                                   size="4" title="Solid Comp. Width"
-                                                                   class="form-control numeric" required="required">
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            {% endfor %}
-                                        </tr>
-                                        <tr>
-                                            <td style="white-space: nowrap;">
                                                 <label class="control-label required" for="cect1sl">Length (mm)</label>
                                                 <i class="fa fa-question-circle-o" aria-hidden="true"
                                                    data-toggle="popover" title="Help"
@@ -491,35 +444,80 @@
                                         </tr>
                                         <tr>
                                             <td style="white-space: nowrap;">
-                                                <label class="control-label required" for="cect1sh">Height (mm)</label>
+                                                <label class="control-label" for="cect1sh">Height (mm)</label>
                                             </td>
                                             {% for i in noduleArray %}
                                                 <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
                                                     <div class="form-group form-group-sm">
                                                         <input type="text" name="cect{{ i }}sh" id="cect{{ i }}sh"
-                                                               size="4" title="Height" class="form-control numeric"
-                                                               required="required">
+                                                               size="4" title="Height" class="form-control numeric">
                                                     </div>
                                                 </td>
                                             {% endfor %}
                                         </tr>
                                         <tr>
                                             <td style="white-space: nowrap;">
-                                                <label class="control-label required" for="cect1sv">Volume
+                                                <label class="control-label" for="cect1sv">Volume
                                                     (mm<sup>3</sup>)</label>
                                             </td>
                                             {% for i in noduleArray %}
                                                 <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
                                                     <div class="form-group form-group-sm">
                                                         <input type="text" name="cect{{ i }}sv" id="cect{{ i }}sv"
-                                                               size="4" title="Volume"
-                                                               class="form-control numeric" required="required">
+                                                               size="4" title="Volume" class="form-control numeric">
                                                     </div>
                                                 </td>
                                             {% endfor %}
                                         </tr>
-
-
+                                        <tr>
+                                            <td style="white-space: nowrap;">
+                                                <label class="control-label required" for="cect1nt">Nodule
+                                                    Consistency</label>
+                                                <i class="fa fa-question-circle-o" aria-hidden="true"
+                                                   data-toggle="popover" title="Help"
+                                                   data-content="Nodules may be classified into three types by attenuation characteristics: solid - nodule is uniformly solid in appearance; nonsolid - nodule is uniformly nonsolid (except for blood vessels) in appearance; part-solid - nodule has both solid and nonsolid components"></i>
+                                            </td>
+                                            {% for i in noduleArray %}
+                                                <td data-nodule-id="{{ i }}" style="display:none;">
+                                                    <div class="form-group form-group-sm">
+                                                        <select name="cect{{ i }}nt" id="cect{{ i }}nt"
+                                                                class="form-control" title="Nodule Consistency"
+                                                                required="required">
+                                                            <option value="-"> -</option>
+                                                            <option value="s"> solid</option>
+                                                            <option value="m"> part-solid</option>
+                                                            <option value="g"> nonsolid</option>
+                                                            <option value="o"> other (see comment)</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                        <tr>
+                                            <td style="white-space: nowrap;">
+                                                <label class="control-label required" for="cect1ssl">Solid Comp. of
+                                                    part-solid</label>
+                                            </td>
+                                            {% for i in noduleArray %}
+                                                <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                                                    <div id="cect{{ i }}-container">
+                                                        <div class="form-group form-group-sm">
+                                                            <input type="text" name="cect{{ i }}ssl" id="cect{{ i }}ssl"
+                                                                   size="4" title="Solid Comp. Length"
+                                                                   placeholder="length"
+                                                                   class="form-control numeric" required="required">
+                                                        </div>
+                                                        &nbsp; x &nbsp;
+                                                        <div class="form-group form-group-sm">
+                                                            <input type="text" name="cect{{ i }}ssw" id="cect{{ i }}ssw"
+                                                                   size="4" title="Solid Comp. Width"
+                                                                   placeholder="width"
+                                                                   class="form-control numeric" required="required">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
                                         <tr>
                                             <td style="white-space: nowrap;">
                                                 <label class="control-label" for="cect1se-n">Smooth Edges</label> <i
@@ -594,7 +592,7 @@
                                         </tr>
                                         <tr>
                                             <td style="white-space: nowrap;">
-                                                <label class="control-label required" for="cect1co">Comment</label> <i
+                                                <label class="control-label" for="cect1co">Comment</label> <i
                                                     class="fa fa-question-circle-o"
                                                     aria-hidden="true"
                                                     data-toggle="popover" title="Help"
@@ -604,15 +602,14 @@
                                                 <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group form-group-sm">
                                                         <input type="text" name="cect{{ i }}co" id="cect{{ i }}co"
-                                                               size="20" class="form-control"
-                                                               title="Comment" required="required">
+                                                               size="20" class="form-control" title="Comment">
                                                     </div>
                                                 </td>
                                             {% endfor %}
                                         </tr>
                                         <tr>
                                             <td style="white-space: nowrap;">
-                                                <label class="control-label required" for="cect1pd">Pathologic
+                                                <label class="control-label" for="cect1pd">Pathologic
                                                     Diagnosis</label>
                                                 <i class="fa fa-question-circle-o" aria-hidden="true"
                                                    data-toggle="popover" title="Help"
@@ -622,8 +619,7 @@
                                                 <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group form-group-sm">
                                                         <select name="cect{{ i }}pd" id="cect{{ i }}pd"
-                                                                title="Pathologic Diagnosis" class="form-control"
-                                                                required="required">
+                                                                title="Pathologic Diagnosis" class="form-control">
                                                             <option value="-"> -For Pathology Use Only-</option>
                                                             <option value="aa"> AAH</option>
                                                             <option value="ap"> atyp bronch prolif</option>
@@ -1008,11 +1004,13 @@
                         <div class="table-responsive" id="cardiac-container" style="margin-left:1em;">
                             <table class="table">
                                 <tbody>
-                                <tr>
-                                    <td><label
-                                            class="control-label {{ "required" if formPage == "ctevaluation-elcap" else "" }}"
-                                            for="cecclm">Coronary Calcification</label></td>
-                                    {% if formPage=="ctevaluation-elcap" %}
+                                {% if formPage=="ctevaluation-elcap" %}
+                                    <tr>
+                                        <td>
+                                            <label
+                                                    class="control-label {{ "required" if formPage == "ctevaluation-elcap" else "" }}"
+                                                    for="cecclm">Coronary Calcification</label>
+                                        </td>
                                         <td>
                                             <div class="form-group">{{ f.checkbox("ceccv","e","not visible") }}</div>
                                         </td>
@@ -1070,28 +1068,30 @@
                                                 </select>
                                             </div>
                                         </td>
-                                    {% else %}
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="2">
+                                            <label class="control-label" for="cecccac">
+                                                Visual <abbr title="Coronary Artery Calcium">CAC</abbr> Score
+                                            </label>
+                                        </td>
+                                        <td colspan="5">
+                                            <span id="cecccac-text"></span>
+                                            <input type="hidden" name="cecccac" id="cecccac">
+                                        </td>
+                                    </tr>
+
+                                {% else %}
+                                    <tr>
                                         <td colspan="5">
                                             {{ f.inlineRadio("ceccv","ceccv-n","n","none") }}
                                             {{ f.inlineRadio("ceccv","ceccv-m","m","mild") }}
                                             {{ f.inlineRadio("ceccv","ceccv-d","d","moderate") }}
                                             {{ f.inlineRadio("ceccv","ceccv-s","s","severe") }}
                                         </td>
-                                    {% endif %}
-
-
-                                </tr>
-
-                                <tr>
-                                    <td colspan="2"><label class="control-label" for="cecccac">Visual CAC
-                                        Score</label><br/>
-                                        <small>(Coronary Artery Calcium)</small>
-                                    </td>
-                                    <td colspan="5">
-                                        <span id="cecccac-text"></span>
-                                        <input type="hidden" name="cecccac" id="cecccac">
-                                    </td>
-                                </tr>
+                                    </tr>
+                                {% endif %}
 
                                 <tr>
                                     <td><label class="control-label" for="cecca">Aortic Calcification</label></td>

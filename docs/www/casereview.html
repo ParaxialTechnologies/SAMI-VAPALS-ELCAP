@@ -123,12 +123,12 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.07.02
+     SNAPSHOT 2018.07.04
     </span>
    </div>
   </footer>
   <script language="JavaScript">
-   var studyId = "@@SID@@";
+   const studyId = "@@SID@@";
     if (studyId) {
         $("#studyIdMenu").show();
     }
@@ -136,15 +136,16 @@
     $(function () {
         //TODO: remove these debug functions.
         // These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly.
-        $.each($("form.validated").find("select, textarea, input:visible"), function (i, o) {
-            $input = $(this);
-            if ($input.closest(".form-group").length == 0) {
+        const $forms = $("form.validated");
+        $.each($forms.find("select, textarea, input:visible"), function (i, o) {
+            const $input = $(this);
+            if ($input.closest(".form-group").length === 0) {
                 console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
             }
         });
 
-        $.each($("form.validated").find("input[type=hidden][required]"), function (i, o) {
-            $input = $(this);
+        $.each($forms.find("input[type=hidden][required]"), function (i, o) {
+            const $input = $(this);
             console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
         });
     })

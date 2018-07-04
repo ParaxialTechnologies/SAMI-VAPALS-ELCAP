@@ -674,12 +674,12 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.07.02
+     SNAPSHOT 2018.07.04
     </span>
    </div>
   </footer>
   <script language="JavaScript">
-   var studyId = "@@SID@@";
+   const studyId = "@@SID@@";
     if (studyId) {
         $("#studyIdMenu").show();
     }
@@ -687,62 +687,22 @@
     $(function () {
         //TODO: remove these debug functions.
         // These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly.
-        $.each($("form.validated").find("select, textarea, input:visible"), function (i, o) {
-            $input = $(this);
-            if ($input.closest(".form-group").length == 0) {
+        const $forms = $("form.validated");
+        $.each($forms.find("select, textarea, input:visible"), function (i, o) {
+            const $input = $(this);
+            if ($input.closest(".form-group").length === 0) {
                 console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
             }
         });
 
-        $.each($("form.validated").find("input[type=hidden][required]"), function (i, o) {
-            $input = $(this);
+        $.each($forms.find("input[type=hidden][required]"), function (i, o) {
+            const $input = $(this);
             console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
         });
     })
   </script>
   <script language="JavaScript">
-   /**
-         * Adds a formValidation validator that ensures at least one of the checkboxes in $fields is selected.
-         * This validator is dynamically enabled/disabled based on how many of it's triggering $fields are enabled.
-         * @param $fields the checkbox fields
-         * @param $validatorControl a hidden input field used to track how many checkboxes are selected.
-         */
-        function requireOneValidator($fields, $validatorControl) {
-            var fv = $("form.validated").data("formValidation");
-            if (fv) {
-                //put the list of fields onto the validator control so we can refer back to them to determine if the
-                // validators should be enabled when triggered.
-                $validatorControl.data("fv-fields", $fields);
-
-                $fields.on('change', function () {
-                    $validatorControl.val($fields.filter(":checked").length);
-                    fv.revalidateField($validatorControl);
-                })
-                fv.addField($validatorControl.attr("name"), {
-                    excluded: function ($field, validator) {
-                        //enabled only if at least one of its controlling fields is enabled
-                        
-                        
-                        return false;
-                    },
-                    validators: {
-                        callback: {
-                            callback: function (value, validator, $field) {
-                                return {
-                                    //valid if all $fields are disabled or if the number of checked boxes is > 0
-                                    valid: $field.data("fv-fields").filter(":enabled").length == 0 || $field.val() > 0,
-                                    message: 'At least one selection is required'
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-        }
-
-
-        $(function () {
-
+   $(function () {
 
             //Biopsy
             $("[name='bxp']").conditionallyEnable({enable: $("#bxp-container")}); //entire form

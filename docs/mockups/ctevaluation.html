@@ -16,6 +16,11 @@
   <link href="../www/lib/jquery-ui-1.12.1/jquery-ui.structure.min.css" rel="stylesheet"/>
   <link href="../www/lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
   <link href="../www/lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
+  <style>
+   #nodule-table .form-group-sm {
+            margin: 5px 5px 5px 5px;
+        }
+  </style>
  </head>
  <body>
   <script src="../www/lib/jquery-3.3.1.min.js">
@@ -125,14 +130,14 @@
       </li>
       <li role="presentation">
        <a aria-controls="abnormalities" aria-selected="false" class="nav-link" data-toggle="tab" href="#abnormalities" id="abnormalities-tab" role="tab">
-        Abnormalities
+        Other Abnormalities
         <i class="fa fa-check-circle-o complete-mark" title="This tab is complete">
         </i>
        </a>
       </li>
       <li role="presentation">
        <a aria-controls="impression" aria-selected="false" class="nav-link" data-toggle="tab" href="#impression" id="impression-tab" role="tab">
-        Lung-RADS Impression &amp; Follow Up
+        Impression &amp; Follow Up
         <i class="fa fa-check-circle-o complete-mark" title="This tab is complete">
         </i>
        </a>
@@ -302,7 +307,8 @@
         <div id="non-baseline-container">
          <div class="col-sm-4 form-group">
           <label class="control-label required" for="cedcs">
-           Most Recent Comparative Study
+           Most Recent Comparative
+                                        Study
           </label>
           <div class="input-group datepicker">
            <input aria-describedby="cedcs-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" data-fv-notempty-message="Date is required" id="cedcs" name="cedcs" required="required"/>
@@ -334,31 +340,19 @@
          </h4>
          <ul>
           <li>
-           Include all Parenchymal and Endobronchial Nodules.
-          </li>
-          <li>
-           If # nodules &gt; 20, estimate the correct number and state this is an estimate
-                                        in the nodule comment field.
-          </li>
-          <li>
-           Note: hilar masses and focal consolidation are considered to be nodules and
-                                        should be included in the nodule grid.
+           Include all Parenchymal and Endobronchial Nodules.&gt; = 3.0 mm
           </li>
           <li>
            For BASELINE CT, the nodules will automatically be sorted with the largest
                                         non-calcified nodule coming first.
           </li>
           <li>
+           Note: hilar masses and focal consolidation should be included in the nodule
+                                        grid.
+          </li>
+          <li>
            The same nodule ID will be used on all subsequent CT and other forms. NEW
                                         nodules, even if LARGER, must follow nodules already listed.
-          </li>
-          <li>
-           If there are more than 6 nodules, please fill in the grid for any nodule that
-                                        is 5 mm or larger.
-          </li>
-          <li>
-           Nodules classified as probably calcified will not be counted toward the number
-                                        of non-calcified nodules.
           </li>
           <li>
            For nodules recommended for biopsy or antibiotics, list the reason in the
@@ -445,7 +439,7 @@
            <tbody>
             <tr>
              <td style="white-space: nowrap;">
-              <label class="control-label required">
+              <label class="control-label required" for="cect1ch">
                Is it new?
                <i aria-hidden="true" class="fa fa-question-circle-o" data-content="A pull-down menu
                                                                 allows us to note whether a nodule is newly seen, previously seen,
@@ -457,8 +451,8 @@
               </label>
              </td>
              <td data-nodule-id="1" style="display:none;">
-              <div class="form-group">
-               <select class="form-group" name="cect1ch" required="required" title="Is this nodule new?">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect1ch" name="cect1ch" required="required" title="Is this nodule new?">
                 <option value="">
                  -
                 </option>
@@ -514,8 +508,8 @@
               </div>
              </td>
              <td data-nodule-id="2" style="display:none;">
-              <div class="form-group">
-               <select class="form-group" name="cect2ch" required="required" title="Is this nodule new?">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect2ch" name="cect2ch" required="required" title="Is this nodule new?">
                 <option value="">
                  -
                 </option>
@@ -571,8 +565,8 @@
               </div>
              </td>
              <td data-nodule-id="3" style="display:none;">
-              <div class="form-group">
-               <select class="form-group" name="cect3ch" required="required" title="Is this nodule new?">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect3ch" name="cect3ch" required="required" title="Is this nodule new?">
                 <option value="">
                  -
                 </option>
@@ -628,8 +622,8 @@
               </div>
              </td>
              <td data-nodule-id="4" style="display:none;">
-              <div class="form-group">
-               <select class="form-group" name="cect4ch" required="required" title="Is this nodule new?">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect4ch" name="cect4ch" required="required" title="Is this nodule new?">
                 <option value="">
                  -
                 </option>
@@ -685,8 +679,8 @@
               </div>
              </td>
              <td data-nodule-id="5" style="display:none;">
-              <div class="form-group">
-               <select class="form-group" name="cect5ch" required="required" title="Is this nodule new?">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect5ch" name="cect5ch" required="required" title="Is this nodule new?">
                 <option value="">
                  -
                 </option>
@@ -742,8 +736,8 @@
               </div>
              </td>
              <td data-nodule-id="6" style="display:none;">
-              <div class="form-group">
-               <select class="form-group" name="cect6ch" required="required" title="Is this nodule new?">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect6ch" name="cect6ch" required="required" title="Is this nodule new?">
                 <option value="">
                  -
                 </option>
@@ -799,8 +793,8 @@
               </div>
              </td>
              <td data-nodule-id="7" style="display:none;">
-              <div class="form-group">
-               <select class="form-group" name="cect7ch" required="required" title="Is this nodule new?">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect7ch" name="cect7ch" required="required" title="Is this nodule new?">
                 <option value="">
                  -
                 </option>
@@ -856,8 +850,8 @@
               </div>
              </td>
              <td data-nodule-id="8" style="display:none;">
-              <div class="form-group">
-               <select class="form-group" name="cect8ch" required="required" title="Is this nodule new?">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect8ch" name="cect8ch" required="required" title="Is this nodule new?">
                 <option value="">
                  -
                 </option>
@@ -913,8 +907,8 @@
               </div>
              </td>
              <td data-nodule-id="9" style="display:none;">
-              <div class="form-group">
-               <select class="form-group" name="cect9ch" required="required" title="Is this nodule new?">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect9ch" name="cect9ch" required="required" title="Is this nodule new?">
                 <option value="">
                  -
                 </option>
@@ -970,8 +964,8 @@
               </div>
              </td>
              <td data-nodule-id="10" style="display:none;">
-              <div class="form-group">
-               <select class="form-group" name="cect10ch" required="required" title="Is this nodule new?">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect10ch" name="cect10ch" required="required" title="Is this nodule new?">
                 <option value="">
                  -
                 </option>
@@ -1029,7 +1023,7 @@
             </tr>
             <tr>
              <td style="white-space: nowrap;">
-              <label class="control-label required">
+              <label class="control-label required" for="cect1en">
                Endobronchial?
                <i aria-hidden="true" class="fa fa-question-circle-o" data-content="It is required that both Endobronchial and Most
                                                                     likely location be answered.  If the nodule has both a
@@ -1039,8 +1033,8 @@
               </label>
              </td>
              <td data-nodule-id="1" style="display:none;">
-              <div class="form-group">
-               <select name="cect1en" required="required" title="Endobronchial">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect1en" name="cect1en" required="required" title="Endobronchial">
                 <option value="">
                  -
                 </option>
@@ -1078,8 +1072,8 @@
               </div>
              </td>
              <td data-nodule-id="2" style="display:none;">
-              <div class="form-group">
-               <select name="cect2en" required="required" title="Endobronchial">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect2en" name="cect2en" required="required" title="Endobronchial">
                 <option value="">
                  -
                 </option>
@@ -1117,8 +1111,8 @@
               </div>
              </td>
              <td data-nodule-id="3" style="display:none;">
-              <div class="form-group">
-               <select name="cect3en" required="required" title="Endobronchial">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect3en" name="cect3en" required="required" title="Endobronchial">
                 <option value="">
                  -
                 </option>
@@ -1156,8 +1150,8 @@
               </div>
              </td>
              <td data-nodule-id="4" style="display:none;">
-              <div class="form-group">
-               <select name="cect4en" required="required" title="Endobronchial">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect4en" name="cect4en" required="required" title="Endobronchial">
                 <option value="">
                  -
                 </option>
@@ -1195,8 +1189,8 @@
               </div>
              </td>
              <td data-nodule-id="5" style="display:none;">
-              <div class="form-group">
-               <select name="cect5en" required="required" title="Endobronchial">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect5en" name="cect5en" required="required" title="Endobronchial">
                 <option value="">
                  -
                 </option>
@@ -1234,8 +1228,8 @@
               </div>
              </td>
              <td data-nodule-id="6" style="display:none;">
-              <div class="form-group">
-               <select name="cect6en" required="required" title="Endobronchial">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect6en" name="cect6en" required="required" title="Endobronchial">
                 <option value="">
                  -
                 </option>
@@ -1273,8 +1267,8 @@
               </div>
              </td>
              <td data-nodule-id="7" style="display:none;">
-              <div class="form-group">
-               <select name="cect7en" required="required" title="Endobronchial">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect7en" name="cect7en" required="required" title="Endobronchial">
                 <option value="">
                  -
                 </option>
@@ -1312,8 +1306,8 @@
               </div>
              </td>
              <td data-nodule-id="8" style="display:none;">
-              <div class="form-group">
-               <select name="cect8en" required="required" title="Endobronchial">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect8en" name="cect8en" required="required" title="Endobronchial">
                 <option value="">
                  -
                 </option>
@@ -1351,8 +1345,8 @@
               </div>
              </td>
              <td data-nodule-id="9" style="display:none;">
-              <div class="form-group">
-               <select name="cect9en" required="required" title="Endobronchial">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect9en" name="cect9en" required="required" title="Endobronchial">
                 <option value="">
                  -
                 </option>
@@ -1390,8 +1384,8 @@
               </div>
              </td>
              <td data-nodule-id="10" style="display:none;">
-              <div class="form-group">
-               <select name="cect10en" required="required" title="Endobronchial">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect10en" name="cect10en" required="required" title="Endobronchial">
                 <option value="">
                  -
                 </option>
@@ -1431,15 +1425,15 @@
             </tr>
             <tr>
              <td style="white-space: nowrap;">
-              <label class="control-label required">
+              <label class="control-label required" for="cect1ll">
                Most Likely Location?
                <i aria-hidden="true" class="fa fa-question-circle-o" data-content="If a nodule location is different from where it was described to be previously, do not go back and change the location on the previous exams but make sure to make a note of the previously mentioned location in the Comment field (see description below)." data-toggle="popover" title="Help">
                </i>
               </label>
              </td>
              <td data-nodule-id="1" style="display:none;">
-              <div class="form-group">
-               <select name="cect1ll" required="required" title="Most likely location">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect1ll" name="cect1ll" required="required" title="Most likely location">
                 <option value="">
                  -
                 </option>
@@ -1465,8 +1459,8 @@
               </div>
              </td>
              <td data-nodule-id="2" style="display:none;">
-              <div class="form-group">
-               <select name="cect2ll" required="required" title="Most likely location">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect2ll" name="cect2ll" required="required" title="Most likely location">
                 <option value="">
                  -
                 </option>
@@ -1492,8 +1486,8 @@
               </div>
              </td>
              <td data-nodule-id="3" style="display:none;">
-              <div class="form-group">
-               <select name="cect3ll" required="required" title="Most likely location">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect3ll" name="cect3ll" required="required" title="Most likely location">
                 <option value="">
                  -
                 </option>
@@ -1519,8 +1513,8 @@
               </div>
              </td>
              <td data-nodule-id="4" style="display:none;">
-              <div class="form-group">
-               <select name="cect4ll" required="required" title="Most likely location">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect4ll" name="cect4ll" required="required" title="Most likely location">
                 <option value="">
                  -
                 </option>
@@ -1546,8 +1540,8 @@
               </div>
              </td>
              <td data-nodule-id="5" style="display:none;">
-              <div class="form-group">
-               <select name="cect5ll" required="required" title="Most likely location">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect5ll" name="cect5ll" required="required" title="Most likely location">
                 <option value="">
                  -
                 </option>
@@ -1573,8 +1567,8 @@
               </div>
              </td>
              <td data-nodule-id="6" style="display:none;">
-              <div class="form-group">
-               <select name="cect6ll" required="required" title="Most likely location">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect6ll" name="cect6ll" required="required" title="Most likely location">
                 <option value="">
                  -
                 </option>
@@ -1600,8 +1594,8 @@
               </div>
              </td>
              <td data-nodule-id="7" style="display:none;">
-              <div class="form-group">
-               <select name="cect7ll" required="required" title="Most likely location">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect7ll" name="cect7ll" required="required" title="Most likely location">
                 <option value="">
                  -
                 </option>
@@ -1627,8 +1621,8 @@
               </div>
              </td>
              <td data-nodule-id="8" style="display:none;">
-              <div class="form-group">
-               <select name="cect8ll" required="required" title="Most likely location">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect8ll" name="cect8ll" required="required" title="Most likely location">
                 <option value="">
                  -
                 </option>
@@ -1654,8 +1648,8 @@
               </div>
              </td>
              <td data-nodule-id="9" style="display:none;">
-              <div class="form-group">
-               <select name="cect9ll" required="required" title="Most likely location">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect9ll" name="cect9ll" required="required" title="Most likely location">
                 <option value="">
                  -
                 </option>
@@ -1681,8 +1675,8 @@
               </div>
              </td>
              <td data-nodule-id="10" style="display:none;">
-              <div class="form-group">
-               <select name="cect10ll" required="required" title="Most likely location">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect10ll" name="cect10ll" required="required" title="Most likely location">
                 <option value="">
                  -
                 </option>
@@ -1710,127 +1704,136 @@
             </tr>
             <tr>
              <td style="white-space: nowrap;">
-              Nodule seen in series
+              <label class="control-label required" for="cect1sn">
+               Nodule seen in
+                                                    series
+              </label>
               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate the CT series number in which the nodule appears." data-toggle="popover" title="Help">
               </i>
              </td>
-             <td data-nodule-id="1" style="display:none;">
-              <div class="form-group">
-               <input name="cect1sn" size="3" title="CT Series Number" type="text"/>
+             <td class="form-inline" data-nodule-id="1" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect1sn" name="cect1sn" required="required" size="3" title="CT Series Number" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="2" style="display:none;">
-              <div class="form-group">
-               <input name="cect2sn" size="3" title="CT Series Number" type="text"/>
+             <td class="form-inline" data-nodule-id="2" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect2sn" name="cect2sn" required="required" size="3" title="CT Series Number" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="3" style="display:none;">
-              <div class="form-group">
-               <input name="cect3sn" size="3" title="CT Series Number" type="text"/>
+             <td class="form-inline" data-nodule-id="3" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect3sn" name="cect3sn" required="required" size="3" title="CT Series Number" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="4" style="display:none;">
-              <div class="form-group">
-               <input name="cect4sn" size="3" title="CT Series Number" type="text"/>
+             <td class="form-inline" data-nodule-id="4" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect4sn" name="cect4sn" required="required" size="3" title="CT Series Number" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="5" style="display:none;">
-              <div class="form-group">
-               <input name="cect5sn" size="3" title="CT Series Number" type="text"/>
+             <td class="form-inline" data-nodule-id="5" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect5sn" name="cect5sn" required="required" size="3" title="CT Series Number" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="6" style="display:none;">
-              <div class="form-group">
-               <input name="cect6sn" size="3" title="CT Series Number" type="text"/>
+             <td class="form-inline" data-nodule-id="6" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect6sn" name="cect6sn" required="required" size="3" title="CT Series Number" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="7" style="display:none;">
-              <div class="form-group">
-               <input name="cect7sn" size="3" title="CT Series Number" type="text"/>
+             <td class="form-inline" data-nodule-id="7" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect7sn" name="cect7sn" required="required" size="3" title="CT Series Number" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="8" style="display:none;">
-              <div class="form-group">
-               <input name="cect8sn" size="3" title="CT Series Number" type="text"/>
+             <td class="form-inline" data-nodule-id="8" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect8sn" name="cect8sn" required="required" size="3" title="CT Series Number" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="9" style="display:none;">
-              <div class="form-group">
-               <input name="cect9sn" size="3" title="CT Series Number" type="text"/>
+             <td class="form-inline" data-nodule-id="9" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect9sn" name="cect9sn" required="required" size="3" title="CT Series Number" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="10" style="display:none;">
-              <div class="form-group">
-               <input name="cect10sn" size="3" title="CT Series Number" type="text"/>
+             <td class="form-inline" data-nodule-id="10" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect10sn" name="cect10sn" required="required" size="3" title="CT Series Number" type="text"/>
               </div>
              </td>
             </tr>
             <tr>
              <td style="white-space: nowrap;">
-              Nodule seen in images
+              <label class="control-label required" for="cect1inl">
+               Nodule seen in
+                                                    images
+              </label>
               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate the CT image number in which the nodule appears." data-toggle="popover" title="Help">
               </i>
              </td>
-             <td data-nodule-id="1" style="display:none;">
-              <div class="form-group">
-               <input name="cect1sn" size="3" title="CT Image Number" type="text"/>
+             <td class="form-inline" data-nodule-id="1" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect1inl" name="cect1inl" required="required" size="3" title="CT Image Number" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="2" style="display:none;">
-              <div class="form-group">
-               <input name="cect2sn" size="3" title="CT Image Number" type="text"/>
+             <td class="form-inline" data-nodule-id="2" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect2inl" name="cect2inl" required="required" size="3" title="CT Image Number" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="3" style="display:none;">
-              <div class="form-group">
-               <input name="cect3sn" size="3" title="CT Image Number" type="text"/>
+             <td class="form-inline" data-nodule-id="3" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect3inl" name="cect3inl" required="required" size="3" title="CT Image Number" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="4" style="display:none;">
-              <div class="form-group">
-               <input name="cect4sn" size="3" title="CT Image Number" type="text"/>
+             <td class="form-inline" data-nodule-id="4" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect4inl" name="cect4inl" required="required" size="3" title="CT Image Number" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="5" style="display:none;">
-              <div class="form-group">
-               <input name="cect5sn" size="3" title="CT Image Number" type="text"/>
+             <td class="form-inline" data-nodule-id="5" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect5inl" name="cect5inl" required="required" size="3" title="CT Image Number" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="6" style="display:none;">
-              <div class="form-group">
-               <input name="cect6sn" size="3" title="CT Image Number" type="text"/>
+             <td class="form-inline" data-nodule-id="6" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect6inl" name="cect6inl" required="required" size="3" title="CT Image Number" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="7" style="display:none;">
-              <div class="form-group">
-               <input name="cect7sn" size="3" title="CT Image Number" type="text"/>
+             <td class="form-inline" data-nodule-id="7" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect7inl" name="cect7inl" required="required" size="3" title="CT Image Number" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="8" style="display:none;">
-              <div class="form-group">
-               <input name="cect8sn" size="3" title="CT Image Number" type="text"/>
+             <td class="form-inline" data-nodule-id="8" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect8inl" name="cect8inl" required="required" size="3" title="CT Image Number" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="9" style="display:none;">
-              <div class="form-group">
-               <input name="cect9sn" size="3" title="CT Image Number" type="text"/>
+             <td class="form-inline" data-nodule-id="9" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect9inl" name="cect9inl" required="required" size="3" title="CT Image Number" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="10" style="display:none;">
-              <div class="form-group">
-               <input name="cect10sn" size="3" title="CT Image Number" type="text"/>
+             <td class="form-inline" data-nodule-id="10" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect10inl" name="cect10inl" required="required" size="3" title="CT Image Number" type="text"/>
               </div>
              </td>
             </tr>
             <tr>
              <td style="white-space: nowrap;">
-              Nodule Status
+              <label class="control-label required" for="cect1st">
+               Nodule
+                                                    Status
+              </label>
               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="If nodule calcifications are seen ('yes' is selected for Calcifications), 'benign (Ca++)' will automatically appear under Nodule Status.&lt;li&gt; When '?' is selected under Calcifications, Nodule Status will read 'prob benign, prob Ca++' (probably benign, probably calcified).  If the nodule is 'prev seen, resolved,' as noted in the 'Is it new' field, then Nodule Status will automatically read 'resolved.'  When 'prev seen, resected' is selected for 'Is it new', 'Resected-malignant' appears under Nodule Status.  If under 'Is it new' it reads 'not included in scan,' Nodule Status will also read 'not included in scan.'  These automatic entries help to maintain a level of consistency for data entry across institutions." data-toggle="popover" title="Help">
               </i>
              </td>
              <td data-nodule-id="1" style="display:none;">
-              <div class="form-group">
-               <select name="cect1st" title="Nodule status">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect1st" name="cect1st" required="required" title="Nodule status">
                 <option value="-">
                  -
                 </option>
@@ -1886,8 +1889,8 @@
               </div>
              </td>
              <td data-nodule-id="2" style="display:none;">
-              <div class="form-group">
-               <select name="cect2st" title="Nodule status">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect2st" name="cect2st" required="required" title="Nodule status">
                 <option value="-">
                  -
                 </option>
@@ -1943,8 +1946,8 @@
               </div>
              </td>
              <td data-nodule-id="3" style="display:none;">
-              <div class="form-group">
-               <select name="cect3st" title="Nodule status">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect3st" name="cect3st" required="required" title="Nodule status">
                 <option value="-">
                  -
                 </option>
@@ -2000,8 +2003,8 @@
               </div>
              </td>
              <td data-nodule-id="4" style="display:none;">
-              <div class="form-group">
-               <select name="cect4st" title="Nodule status">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect4st" name="cect4st" required="required" title="Nodule status">
                 <option value="-">
                  -
                 </option>
@@ -2057,8 +2060,8 @@
               </div>
              </td>
              <td data-nodule-id="5" style="display:none;">
-              <div class="form-group">
-               <select name="cect5st" title="Nodule status">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect5st" name="cect5st" required="required" title="Nodule status">
                 <option value="-">
                  -
                 </option>
@@ -2114,8 +2117,8 @@
               </div>
              </td>
              <td data-nodule-id="6" style="display:none;">
-              <div class="form-group">
-               <select name="cect6st" title="Nodule status">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect6st" name="cect6st" required="required" title="Nodule status">
                 <option value="-">
                  -
                 </option>
@@ -2171,8 +2174,8 @@
               </div>
              </td>
              <td data-nodule-id="7" style="display:none;">
-              <div class="form-group">
-               <select name="cect7st" title="Nodule status">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect7st" name="cect7st" required="required" title="Nodule status">
                 <option value="-">
                  -
                 </option>
@@ -2228,8 +2231,8 @@
               </div>
              </td>
              <td data-nodule-id="8" style="display:none;">
-              <div class="form-group">
-               <select name="cect8st" title="Nodule status">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect8st" name="cect8st" required="required" title="Nodule status">
                 <option value="-">
                  -
                 </option>
@@ -2285,8 +2288,8 @@
               </div>
              </td>
              <td data-nodule-id="9" style="display:none;">
-              <div class="form-group">
-               <select name="cect9st" title="Nodule status">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect9st" name="cect9st" required="required" title="Nodule status">
                 <option value="-">
                  -
                 </option>
@@ -2342,8 +2345,8 @@
               </div>
              </td>
              <td data-nodule-id="10" style="display:none;">
-              <div class="form-group">
-               <select name="cect10st" title="Nodule status">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect10st" name="cect10st" required="required" title="Nodule status">
                 <option value="-">
                  -
                 </option>
@@ -2401,591 +2404,590 @@
             </tr>
             <tr>
              <td style="white-space: nowrap;">
-              Distance from the costal pleura (mm)?
-              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="The shortest distance from the nodule to the costal pleura should be measured in millimeters." data-toggle="popover" title="Help">
+              <label class="control-label required" for="cect1nt">
+               Nodule
+                                                    Consistency
+              </label>
+              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Nodules may be classified into three types by attenuation characteristics: solid - nodule is uniformly solid in appearance; nonsolid - nodule is uniformly nonsolid (except for blood vessels) in appearance; part-solid - nodule has both solid and nonsolid components" data-toggle="popover" title="Help">
               </i>
              </td>
              <td data-nodule-id="1" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect1pld" title="Distance" type="text"/>
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect1nt" name="cect1nt" required="required" title="Nodule Consistency">
+                <option value="-">
+                 -
+                </option>
+                <option value="s">
+                 solid
+                </option>
+                <option value="m">
+                 part-solid
+                </option>
+                <option value="g">
+                 nonsolid
+                </option>
+                <option value="o">
+                 other (see comment)
+                </option>
+               </select>
               </div>
              </td>
              <td data-nodule-id="2" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect2pld" title="Distance" type="text"/>
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect2nt" name="cect2nt" required="required" title="Nodule Consistency">
+                <option value="-">
+                 -
+                </option>
+                <option value="s">
+                 solid
+                </option>
+                <option value="m">
+                 part-solid
+                </option>
+                <option value="g">
+                 nonsolid
+                </option>
+                <option value="o">
+                 other (see comment)
+                </option>
+               </select>
               </div>
              </td>
              <td data-nodule-id="3" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect3pld" title="Distance" type="text"/>
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect3nt" name="cect3nt" required="required" title="Nodule Consistency">
+                <option value="-">
+                 -
+                </option>
+                <option value="s">
+                 solid
+                </option>
+                <option value="m">
+                 part-solid
+                </option>
+                <option value="g">
+                 nonsolid
+                </option>
+                <option value="o">
+                 other (see comment)
+                </option>
+               </select>
               </div>
              </td>
              <td data-nodule-id="4" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect4pld" title="Distance" type="text"/>
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect4nt" name="cect4nt" required="required" title="Nodule Consistency">
+                <option value="-">
+                 -
+                </option>
+                <option value="s">
+                 solid
+                </option>
+                <option value="m">
+                 part-solid
+                </option>
+                <option value="g">
+                 nonsolid
+                </option>
+                <option value="o">
+                 other (see comment)
+                </option>
+               </select>
               </div>
              </td>
              <td data-nodule-id="5" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect5pld" title="Distance" type="text"/>
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect5nt" name="cect5nt" required="required" title="Nodule Consistency">
+                <option value="-">
+                 -
+                </option>
+                <option value="s">
+                 solid
+                </option>
+                <option value="m">
+                 part-solid
+                </option>
+                <option value="g">
+                 nonsolid
+                </option>
+                <option value="o">
+                 other (see comment)
+                </option>
+               </select>
               </div>
              </td>
              <td data-nodule-id="6" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect6pld" title="Distance" type="text"/>
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect6nt" name="cect6nt" required="required" title="Nodule Consistency">
+                <option value="-">
+                 -
+                </option>
+                <option value="s">
+                 solid
+                </option>
+                <option value="m">
+                 part-solid
+                </option>
+                <option value="g">
+                 nonsolid
+                </option>
+                <option value="o">
+                 other (see comment)
+                </option>
+               </select>
               </div>
              </td>
              <td data-nodule-id="7" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect7pld" title="Distance" type="text"/>
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect7nt" name="cect7nt" required="required" title="Nodule Consistency">
+                <option value="-">
+                 -
+                </option>
+                <option value="s">
+                 solid
+                </option>
+                <option value="m">
+                 part-solid
+                </option>
+                <option value="g">
+                 nonsolid
+                </option>
+                <option value="o">
+                 other (see comment)
+                </option>
+               </select>
               </div>
              </td>
              <td data-nodule-id="8" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect8pld" title="Distance" type="text"/>
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect8nt" name="cect8nt" required="required" title="Nodule Consistency">
+                <option value="-">
+                 -
+                </option>
+                <option value="s">
+                 solid
+                </option>
+                <option value="m">
+                 part-solid
+                </option>
+                <option value="g">
+                 nonsolid
+                </option>
+                <option value="o">
+                 other (see comment)
+                </option>
+               </select>
               </div>
              </td>
              <td data-nodule-id="9" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect9pld" title="Distance" type="text"/>
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect9nt" name="cect9nt" required="required" title="Nodule Consistency">
+                <option value="-">
+                 -
+                </option>
+                <option value="s">
+                 solid
+                </option>
+                <option value="m">
+                 part-solid
+                </option>
+                <option value="g">
+                 nonsolid
+                </option>
+                <option value="o">
+                 other (see comment)
+                </option>
+               </select>
               </div>
              </td>
              <td data-nodule-id="10" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect10pld" title="Distance" type="text"/>
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect10nt" name="cect10nt" required="required" title="Nodule Consistency">
+                <option value="-">
+                 -
+                </option>
+                <option value="s">
+                 solid
+                </option>
+                <option value="m">
+                 part-solid
+                </option>
+                <option value="g">
+                 nonsolid
+                </option>
+                <option value="o">
+                 other (see comment)
+                </option>
+               </select>
               </div>
              </td>
             </tr>
             <tr>
              <td style="white-space: nowrap;">
-              Length (mm)
+              <label class="control-label required" for="cect1ssl">
+               Solid Comp. Length
+                                                    x Width
+              </label>
+             </td>
+             <td class="form-inline" data-nodule-id="1" style="display:none;">
+              <div id="cect1-container">
+               <div class="form-group form-group-sm">
+                <input class="form-control numeric" id="cect1ssl" name="cect1ssl" required="required" size="4" title="Solid Comp. Length" type="text"/>
+               </div>
+               x
+               <div class="form-group form-group-sm">
+                <input class="form-control numeric" id="cect1ssw" name="cect1ssw" required="required" size="4" title="Solid Comp. Width" type="text"/>
+               </div>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="2" style="display:none;">
+              <div id="cect2-container">
+               <div class="form-group form-group-sm">
+                <input class="form-control numeric" id="cect2ssl" name="cect2ssl" required="required" size="4" title="Solid Comp. Length" type="text"/>
+               </div>
+               x
+               <div class="form-group form-group-sm">
+                <input class="form-control numeric" id="cect2ssw" name="cect2ssw" required="required" size="4" title="Solid Comp. Width" type="text"/>
+               </div>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="3" style="display:none;">
+              <div id="cect3-container">
+               <div class="form-group form-group-sm">
+                <input class="form-control numeric" id="cect3ssl" name="cect3ssl" required="required" size="4" title="Solid Comp. Length" type="text"/>
+               </div>
+               x
+               <div class="form-group form-group-sm">
+                <input class="form-control numeric" id="cect3ssw" name="cect3ssw" required="required" size="4" title="Solid Comp. Width" type="text"/>
+               </div>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="4" style="display:none;">
+              <div id="cect4-container">
+               <div class="form-group form-group-sm">
+                <input class="form-control numeric" id="cect4ssl" name="cect4ssl" required="required" size="4" title="Solid Comp. Length" type="text"/>
+               </div>
+               x
+               <div class="form-group form-group-sm">
+                <input class="form-control numeric" id="cect4ssw" name="cect4ssw" required="required" size="4" title="Solid Comp. Width" type="text"/>
+               </div>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="5" style="display:none;">
+              <div id="cect5-container">
+               <div class="form-group form-group-sm">
+                <input class="form-control numeric" id="cect5ssl" name="cect5ssl" required="required" size="4" title="Solid Comp. Length" type="text"/>
+               </div>
+               x
+               <div class="form-group form-group-sm">
+                <input class="form-control numeric" id="cect5ssw" name="cect5ssw" required="required" size="4" title="Solid Comp. Width" type="text"/>
+               </div>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="6" style="display:none;">
+              <div id="cect6-container">
+               <div class="form-group form-group-sm">
+                <input class="form-control numeric" id="cect6ssl" name="cect6ssl" required="required" size="4" title="Solid Comp. Length" type="text"/>
+               </div>
+               x
+               <div class="form-group form-group-sm">
+                <input class="form-control numeric" id="cect6ssw" name="cect6ssw" required="required" size="4" title="Solid Comp. Width" type="text"/>
+               </div>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="7" style="display:none;">
+              <div id="cect7-container">
+               <div class="form-group form-group-sm">
+                <input class="form-control numeric" id="cect7ssl" name="cect7ssl" required="required" size="4" title="Solid Comp. Length" type="text"/>
+               </div>
+               x
+               <div class="form-group form-group-sm">
+                <input class="form-control numeric" id="cect7ssw" name="cect7ssw" required="required" size="4" title="Solid Comp. Width" type="text"/>
+               </div>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="8" style="display:none;">
+              <div id="cect8-container">
+               <div class="form-group form-group-sm">
+                <input class="form-control numeric" id="cect8ssl" name="cect8ssl" required="required" size="4" title="Solid Comp. Length" type="text"/>
+               </div>
+               x
+               <div class="form-group form-group-sm">
+                <input class="form-control numeric" id="cect8ssw" name="cect8ssw" required="required" size="4" title="Solid Comp. Width" type="text"/>
+               </div>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="9" style="display:none;">
+              <div id="cect9-container">
+               <div class="form-group form-group-sm">
+                <input class="form-control numeric" id="cect9ssl" name="cect9ssl" required="required" size="4" title="Solid Comp. Length" type="text"/>
+               </div>
+               x
+               <div class="form-group form-group-sm">
+                <input class="form-control numeric" id="cect9ssw" name="cect9ssw" required="required" size="4" title="Solid Comp. Width" type="text"/>
+               </div>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="10" style="display:none;">
+              <div id="cect10-container">
+               <div class="form-group form-group-sm">
+                <input class="form-control numeric" id="cect10ssl" name="cect10ssl" required="required" size="4" title="Solid Comp. Length" type="text"/>
+               </div>
+               x
+               <div class="form-group form-group-sm">
+                <input class="form-control numeric" id="cect10ssw" name="cect10ssw" required="required" size="4" title="Solid Comp. Width" type="text"/>
+               </div>
+              </div>
+             </td>
+            </tr>
+            <tr>
+             <td style="white-space: nowrap;">
+              <label class="control-label required" for="cect1sl">
+               Length (mm)
+              </label>
               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate the length (largest dimension) of the nodule.  The unit of measurement is always millimeters." data-toggle="popover" title="Help">
               </i>
              </td>
-             <td data-nodule-id="1" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect1sl" size="4" title="Length (mm)" type="text"/>
+             <td class="form-inline" data-nodule-id="1" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect1sl" name="cect1sl" required="required" size="4" title="Length (mm)" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="2" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect2sl" size="4" title="Length (mm)" type="text"/>
+             <td class="form-inline" data-nodule-id="2" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect2sl" name="cect2sl" required="required" size="4" title="Length (mm)" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="3" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect3sl" size="4" title="Length (mm)" type="text"/>
+             <td class="form-inline" data-nodule-id="3" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect3sl" name="cect3sl" required="required" size="4" title="Length (mm)" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="4" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect4sl" size="4" title="Length (mm)" type="text"/>
+             <td class="form-inline" data-nodule-id="4" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect4sl" name="cect4sl" required="required" size="4" title="Length (mm)" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="5" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect5sl" size="4" title="Length (mm)" type="text"/>
+             <td class="form-inline" data-nodule-id="5" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect5sl" name="cect5sl" required="required" size="4" title="Length (mm)" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="6" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect6sl" size="4" title="Length (mm)" type="text"/>
+             <td class="form-inline" data-nodule-id="6" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect6sl" name="cect6sl" required="required" size="4" title="Length (mm)" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="7" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect7sl" size="4" title="Length (mm)" type="text"/>
+             <td class="form-inline" data-nodule-id="7" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect7sl" name="cect7sl" required="required" size="4" title="Length (mm)" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="8" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect8sl" size="4" title="Length (mm)" type="text"/>
+             <td class="form-inline" data-nodule-id="8" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect8sl" name="cect8sl" required="required" size="4" title="Length (mm)" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="9" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect9sl" size="4" title="Length (mm)" type="text"/>
+             <td class="form-inline" data-nodule-id="9" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect9sl" name="cect9sl" required="required" size="4" title="Length (mm)" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="10" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect10sl" size="4" title="Length (mm)" type="text"/>
+             <td class="form-inline" data-nodule-id="10" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect10sl" name="cect10sl" required="required" size="4" title="Length (mm)" type="text"/>
               </div>
              </td>
             </tr>
             <tr>
              <td style="white-space: nowrap;">
-              Maximum Width (mm)
+              <label class="control-label required" for="cect1sw">
+               Maximum Width
+                                                    (mm)
+              </label>
               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate the maximum width (largest perpendicular dimension to the length) of the nodule.  The unit of measurement is always millimeters." data-toggle="popover" title="Help">
               </i>
              </td>
-             <td data-nodule-id="1" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect1sw" size="4" title="Maximum Width" type="text"/>
+             <td class="form-inline" data-nodule-id="1" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect1sw" name="cect1sw" required="required" size="4" title="Maximum Width" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="2" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect2sw" size="4" title="Maximum Width" type="text"/>
+             <td class="form-inline" data-nodule-id="2" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect2sw" name="cect2sw" required="required" size="4" title="Maximum Width" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="3" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect3sw" size="4" title="Maximum Width" type="text"/>
+             <td class="form-inline" data-nodule-id="3" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect3sw" name="cect3sw" required="required" size="4" title="Maximum Width" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="4" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect4sw" size="4" title="Maximum Width" type="text"/>
+             <td class="form-inline" data-nodule-id="4" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect4sw" name="cect4sw" required="required" size="4" title="Maximum Width" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="5" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect5sw" size="4" title="Maximum Width" type="text"/>
+             <td class="form-inline" data-nodule-id="5" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect5sw" name="cect5sw" required="required" size="4" title="Maximum Width" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="6" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect6sw" size="4" title="Maximum Width" type="text"/>
+             <td class="form-inline" data-nodule-id="6" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect6sw" name="cect6sw" required="required" size="4" title="Maximum Width" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="7" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect7sw" size="4" title="Maximum Width" type="text"/>
+             <td class="form-inline" data-nodule-id="7" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect7sw" name="cect7sw" required="required" size="4" title="Maximum Width" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="8" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect8sw" size="4" title="Maximum Width" type="text"/>
+             <td class="form-inline" data-nodule-id="8" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect8sw" name="cect8sw" required="required" size="4" title="Maximum Width" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="9" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect9sw" size="4" title="Maximum Width" type="text"/>
+             <td class="form-inline" data-nodule-id="9" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect9sw" name="cect9sw" required="required" size="4" title="Maximum Width" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="10" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect10sw" size="4" title="Maximum Width" type="text"/>
-              </div>
-             </td>
-            </tr>
-            <tr>
-             <td style="white-space: nowrap;">
-              Height (mm)
-             </td>
-             <td data-nodule-id="1" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect1sh" size="4" title="Height" type="text"/>
-              </div>
-             </td>
-             <td data-nodule-id="2" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect2sh" size="4" title="Height" type="text"/>
-              </div>
-             </td>
-             <td data-nodule-id="3" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect3sh" size="4" title="Height" type="text"/>
-              </div>
-             </td>
-             <td data-nodule-id="4" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect4sh" size="4" title="Height" type="text"/>
-              </div>
-             </td>
-             <td data-nodule-id="5" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect5sh" size="4" title="Height" type="text"/>
-              </div>
-             </td>
-             <td data-nodule-id="6" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect6sh" size="4" title="Height" type="text"/>
-              </div>
-             </td>
-             <td data-nodule-id="7" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect7sh" size="4" title="Height" type="text"/>
-              </div>
-             </td>
-             <td data-nodule-id="8" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect8sh" size="4" title="Height" type="text"/>
-              </div>
-             </td>
-             <td data-nodule-id="9" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect9sh" size="4" title="Height" type="text"/>
-              </div>
-             </td>
-             <td data-nodule-id="10" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect10sh" size="4" title="Height" type="text"/>
+             <td class="form-inline" data-nodule-id="10" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect10sw" name="cect10sw" required="required" size="4" title="Maximum Width" type="text"/>
               </div>
              </td>
             </tr>
             <tr>
              <td style="white-space: nowrap;">
-              Volume (mm
-              <sup>
-               3
-              </sup>
-              )
+              <label class="control-label required" for="cect1sh">
+               Height (mm)
+              </label>
              </td>
-             <td data-nodule-id="1" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect1sv" size="4" title="Volume" type="text"/>
+             <td class="form-inline" data-nodule-id="1" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect1sh" name="cect1sh" required="required" size="4" title="Height" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="2" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect2sv" size="4" title="Volume" type="text"/>
+             <td class="form-inline" data-nodule-id="2" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect2sh" name="cect2sh" required="required" size="4" title="Height" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="3" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect3sv" size="4" title="Volume" type="text"/>
+             <td class="form-inline" data-nodule-id="3" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect3sh" name="cect3sh" required="required" size="4" title="Height" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="4" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect4sv" size="4" title="Volume" type="text"/>
+             <td class="form-inline" data-nodule-id="4" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect4sh" name="cect4sh" required="required" size="4" title="Height" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="5" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect5sv" size="4" title="Volume" type="text"/>
+             <td class="form-inline" data-nodule-id="5" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect5sh" name="cect5sh" required="required" size="4" title="Height" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="6" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect6sv" size="4" title="Volume" type="text"/>
+             <td class="form-inline" data-nodule-id="6" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect6sh" name="cect6sh" required="required" size="4" title="Height" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="7" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect7sv" size="4" title="Volume" type="text"/>
+             <td class="form-inline" data-nodule-id="7" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect7sh" name="cect7sh" required="required" size="4" title="Height" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="8" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect8sv" size="4" title="Volume" type="text"/>
+             <td class="form-inline" data-nodule-id="8" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect8sh" name="cect8sh" required="required" size="4" title="Height" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="9" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect9sv" size="4" title="Volume" type="text"/>
+             <td class="form-inline" data-nodule-id="9" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect9sh" name="cect9sh" required="required" size="4" title="Height" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="10" style="display:none;">
-              <div class="form-group">
-               <input class="numeric" name="cect10sv" size="4" title="Volume" type="text"/>
-              </div>
-             </td>
-            </tr>
-            <tr>
-             <td style="white-space: nowrap;">
-              Nodule Consistency
-              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Nodules may be classified into three types by attenuation characteristics: solid - nodule is uniformly solid in appearance; non-solid - nodule is uniformly non-solid (except for blood vessels) in appearance; part-solid - nodule has both solid and non-solid components" data-toggle="popover" title="Help">
-              </i>
-             </td>
-             <td data-nodule-id="1" style="display:none;">
-              <div class="form-group">
-               <select name="cect1nt" onchange="newTexture(1)" title="Nodule Consistency">
-                <option value="-">
-                 -
-                </option>
-                <option value="s">
-                 solid
-                </option>
-                <option value="m">
-                 part-solid
-                </option>
-                <option value="g">
-                 non-solid
-                </option>
-                <option value="o">
-                 other (see comment)
-                </option>
-               </select>
-              </div>
-             </td>
-             <td data-nodule-id="2" style="display:none;">
-              <div class="form-group">
-               <select name="cect2nt" onchange="newTexture(2)" title="Nodule Consistency">
-                <option value="-">
-                 -
-                </option>
-                <option value="s">
-                 solid
-                </option>
-                <option value="m">
-                 part-solid
-                </option>
-                <option value="g">
-                 non-solid
-                </option>
-                <option value="o">
-                 other (see comment)
-                </option>
-               </select>
-              </div>
-             </td>
-             <td data-nodule-id="3" style="display:none;">
-              <div class="form-group">
-               <select name="cect3nt" onchange="newTexture(3)" title="Nodule Consistency">
-                <option value="-">
-                 -
-                </option>
-                <option value="s">
-                 solid
-                </option>
-                <option value="m">
-                 part-solid
-                </option>
-                <option value="g">
-                 non-solid
-                </option>
-                <option value="o">
-                 other (see comment)
-                </option>
-               </select>
-              </div>
-             </td>
-             <td data-nodule-id="4" style="display:none;">
-              <div class="form-group">
-               <select name="cect4nt" onchange="newTexture(4)" title="Nodule Consistency">
-                <option value="-">
-                 -
-                </option>
-                <option value="s">
-                 solid
-                </option>
-                <option value="m">
-                 part-solid
-                </option>
-                <option value="g">
-                 non-solid
-                </option>
-                <option value="o">
-                 other (see comment)
-                </option>
-               </select>
-              </div>
-             </td>
-             <td data-nodule-id="5" style="display:none;">
-              <div class="form-group">
-               <select name="cect5nt" onchange="newTexture(5)" title="Nodule Consistency">
-                <option value="-">
-                 -
-                </option>
-                <option value="s">
-                 solid
-                </option>
-                <option value="m">
-                 part-solid
-                </option>
-                <option value="g">
-                 non-solid
-                </option>
-                <option value="o">
-                 other (see comment)
-                </option>
-               </select>
-              </div>
-             </td>
-             <td data-nodule-id="6" style="display:none;">
-              <div class="form-group">
-               <select name="cect6nt" onchange="newTexture(6)" title="Nodule Consistency">
-                <option value="-">
-                 -
-                </option>
-                <option value="s">
-                 solid
-                </option>
-                <option value="m">
-                 part-solid
-                </option>
-                <option value="g">
-                 non-solid
-                </option>
-                <option value="o">
-                 other (see comment)
-                </option>
-               </select>
-              </div>
-             </td>
-             <td data-nodule-id="7" style="display:none;">
-              <div class="form-group">
-               <select name="cect7nt" onchange="newTexture(7)" title="Nodule Consistency">
-                <option value="-">
-                 -
-                </option>
-                <option value="s">
-                 solid
-                </option>
-                <option value="m">
-                 part-solid
-                </option>
-                <option value="g">
-                 non-solid
-                </option>
-                <option value="o">
-                 other (see comment)
-                </option>
-               </select>
-              </div>
-             </td>
-             <td data-nodule-id="8" style="display:none;">
-              <div class="form-group">
-               <select name="cect8nt" onchange="newTexture(8)" title="Nodule Consistency">
-                <option value="-">
-                 -
-                </option>
-                <option value="s">
-                 solid
-                </option>
-                <option value="m">
-                 part-solid
-                </option>
-                <option value="g">
-                 non-solid
-                </option>
-                <option value="o">
-                 other (see comment)
-                </option>
-               </select>
-              </div>
-             </td>
-             <td data-nodule-id="9" style="display:none;">
-              <div class="form-group">
-               <select name="cect9nt" onchange="newTexture(9)" title="Nodule Consistency">
-                <option value="-">
-                 -
-                </option>
-                <option value="s">
-                 solid
-                </option>
-                <option value="m">
-                 part-solid
-                </option>
-                <option value="g">
-                 non-solid
-                </option>
-                <option value="o">
-                 other (see comment)
-                </option>
-               </select>
-              </div>
-             </td>
-             <td data-nodule-id="10" style="display:none;">
-              <div class="form-group">
-               <select name="cect10nt" onchange="newTexture(10)" title="Nodule Consistency">
-                <option value="-">
-                 -
-                </option>
-                <option value="s">
-                 solid
-                </option>
-                <option value="m">
-                 part-solid
-                </option>
-                <option value="g">
-                 non-solid
-                </option>
-                <option value="o">
-                 other (see comment)
-                </option>
-               </select>
+             <td class="form-inline" data-nodule-id="10" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect10sh" name="cect10sh" required="required" size="4" title="Height" type="text"/>
               </div>
              </td>
             </tr>
             <tr>
              <td style="white-space: nowrap;">
-              Solid Comp. Length x Width
-              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="TODO: ELCAP missing" data-toggle="popover" title="Help">
-              </i>
+              <label class="control-label required" for="cect1sv">
+               Volume
+                                                    (mm
+               <sup>
+                3
+               </sup>
+               )
+              </label>
              </td>
-             <td data-nodule-id="1" style="display:none;">
-              <div class="form-group">
-               <input disabled="true" name="cect1ssl" size="4" title="Solid Comp. Length" type="text"/>
-               x
-               <input disabled="true" name="cect1ssw" size="4" title="Solid Comp. Width" type="text"/>
+             <td class="form-inline" data-nodule-id="1" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect1sv" name="cect1sv" required="required" size="4" title="Volume" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="2" style="display:none;">
-              <div class="form-group">
-               <input disabled="true" name="cect2ssl" size="4" title="Solid Comp. Length" type="text"/>
-               x
-               <input disabled="true" name="cect2ssw" size="4" title="Solid Comp. Width" type="text"/>
+             <td class="form-inline" data-nodule-id="2" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect2sv" name="cect2sv" required="required" size="4" title="Volume" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="3" style="display:none;">
-              <div class="form-group">
-               <input disabled="true" name="cect3ssl" size="4" title="Solid Comp. Length" type="text"/>
-               x
-               <input disabled="true" name="cect3ssw" size="4" title="Solid Comp. Width" type="text"/>
+             <td class="form-inline" data-nodule-id="3" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect3sv" name="cect3sv" required="required" size="4" title="Volume" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="4" style="display:none;">
-              <div class="form-group">
-               <input disabled="true" name="cect4ssl" size="4" title="Solid Comp. Length" type="text"/>
-               x
-               <input disabled="true" name="cect4ssw" size="4" title="Solid Comp. Width" type="text"/>
+             <td class="form-inline" data-nodule-id="4" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect4sv" name="cect4sv" required="required" size="4" title="Volume" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="5" style="display:none;">
-              <div class="form-group">
-               <input disabled="true" name="cect5ssl" size="4" title="Solid Comp. Length" type="text"/>
-               x
-               <input disabled="true" name="cect5ssw" size="4" title="Solid Comp. Width" type="text"/>
+             <td class="form-inline" data-nodule-id="5" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect5sv" name="cect5sv" required="required" size="4" title="Volume" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="6" style="display:none;">
-              <div class="form-group">
-               <input disabled="true" name="cect6ssl" size="4" title="Solid Comp. Length" type="text"/>
-               x
-               <input disabled="true" name="cect6ssw" size="4" title="Solid Comp. Width" type="text"/>
+             <td class="form-inline" data-nodule-id="6" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect6sv" name="cect6sv" required="required" size="4" title="Volume" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="7" style="display:none;">
-              <div class="form-group">
-               <input disabled="true" name="cect7ssl" size="4" title="Solid Comp. Length" type="text"/>
-               x
-               <input disabled="true" name="cect7ssw" size="4" title="Solid Comp. Width" type="text"/>
+             <td class="form-inline" data-nodule-id="7" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect7sv" name="cect7sv" required="required" size="4" title="Volume" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="8" style="display:none;">
-              <div class="form-group">
-               <input disabled="true" name="cect8ssl" size="4" title="Solid Comp. Length" type="text"/>
-               x
-               <input disabled="true" name="cect8ssw" size="4" title="Solid Comp. Width" type="text"/>
+             <td class="form-inline" data-nodule-id="8" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect8sv" name="cect8sv" required="required" size="4" title="Volume" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="9" style="display:none;">
-              <div class="form-group">
-               <input disabled="true" name="cect9ssl" size="4" title="Solid Comp. Length" type="text"/>
-               x
-               <input disabled="true" name="cect9ssw" size="4" title="Solid Comp. Width" type="text"/>
+             <td class="form-inline" data-nodule-id="9" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect9sv" name="cect9sv" required="required" size="4" title="Volume" type="text"/>
               </div>
              </td>
-             <td data-nodule-id="10" style="display:none;">
-              <div class="form-group">
-               <input disabled="true" name="cect10ssl" size="4" title="Solid Comp. Length" type="text"/>
-               x
-               <input disabled="true" name="cect10ssw" size="4" title="Solid Comp. Width" type="text"/>
+             <td class="form-inline" data-nodule-id="10" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="form-control numeric" id="cect10sv" name="cect10sv" required="required" size="4" title="Volume" type="text"/>
               </div>
              </td>
             </tr>
             <tr>
              <td style="white-space: nowrap;">
-              Smooth Edges
+              <label class="control-label" for="cect1se-n">
+               Smooth Edges
+              </label>
               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate whether the nodule has a smooth-appearing margin." data-toggle="popover" title="Help">
               </i>
              </td>
              <td data-nodule-id="1" style="display:none;">
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                <label class="radio-inline" for="cect1se-n">
                 <input id="cect1se-n" name="cect1se" type="radio" value="n"/>
                 No
@@ -3001,7 +3003,7 @@
               </div>
              </td>
              <td data-nodule-id="2" style="display:none;">
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                <label class="radio-inline" for="cect2se-n">
                 <input id="cect2se-n" name="cect2se" type="radio" value="n"/>
                 No
@@ -3017,7 +3019,7 @@
               </div>
              </td>
              <td data-nodule-id="3" style="display:none;">
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                <label class="radio-inline" for="cect3se-n">
                 <input id="cect3se-n" name="cect3se" type="radio" value="n"/>
                 No
@@ -3033,7 +3035,7 @@
               </div>
              </td>
              <td data-nodule-id="4" style="display:none;">
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                <label class="radio-inline" for="cect4se-n">
                 <input id="cect4se-n" name="cect4se" type="radio" value="n"/>
                 No
@@ -3049,7 +3051,7 @@
               </div>
              </td>
              <td data-nodule-id="5" style="display:none;">
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                <label class="radio-inline" for="cect5se-n">
                 <input id="cect5se-n" name="cect5se" type="radio" value="n"/>
                 No
@@ -3065,7 +3067,7 @@
               </div>
              </td>
              <td data-nodule-id="6" style="display:none;">
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                <label class="radio-inline" for="cect6se-n">
                 <input id="cect6se-n" name="cect6se" type="radio" value="n"/>
                 No
@@ -3081,7 +3083,7 @@
               </div>
              </td>
              <td data-nodule-id="7" style="display:none;">
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                <label class="radio-inline" for="cect7se-n">
                 <input id="cect7se-n" name="cect7se" type="radio" value="n"/>
                 No
@@ -3097,7 +3099,7 @@
               </div>
              </td>
              <td data-nodule-id="8" style="display:none;">
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                <label class="radio-inline" for="cect8se-n">
                 <input id="cect8se-n" name="cect8se" type="radio" value="n"/>
                 No
@@ -3113,7 +3115,7 @@
               </div>
              </td>
              <td data-nodule-id="9" style="display:none;">
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                <label class="radio-inline" for="cect9se-n">
                 <input id="cect9se-n" name="cect9se" type="radio" value="n"/>
                 No
@@ -3129,7 +3131,7 @@
               </div>
              </td>
              <td data-nodule-id="10" style="display:none;">
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                <label class="radio-inline" for="cect10se-n">
                 <input id="cect10se-n" name="cect10se" type="radio" value="n"/>
                 No
@@ -3147,13 +3149,241 @@
             </tr>
             <tr>
              <td style="white-space: nowrap;">
-              Action
-              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="This field becomes very important when different nodules require different follow-up.  A pull-down menu allows us to choose among six different follow-up actions -    'repeat SCT' (repeat screening CT),    'f/u\ Dx CT' (follow-up Diagnostic CT),    'Abx + f/u Dx CT' (Antibiotic + follow-up Diagnostic CT),    'biopsy',    'bronchoscopy',       or    'resection'." data-toggle="popover" title="Help">
+              <label class="control-label required" for="cect1sp-n">
+               Spiculated
+              </label>
+             </td>
+             <td data-nodule-id="1" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="radio-inline" for="cect1sp-n">
+                <input data-fv-notempty-message="Please select a value" id="cect1sp-n" name="cect1sp" required="required" type="radio" value="n"/>
+                No
+               </label>
+               <label class="radio-inline" for="cect1sp-y">
+                <input data-fv-notempty-message="Please select a value" id="cect1sp-y" name="cect1sp" required="required" type="radio" value="y"/>
+                Yes
+               </label>
+               <label class="radio-inline" for="cect1sp-q">
+                <input data-fv-notempty-message="Please select a value" id="cect1sp-q" name="cect1sp" required="required" type="radio" value="q"/>
+                ?
+               </label>
+              </div>
+             </td>
+             <td data-nodule-id="2" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="radio-inline" for="cect2sp-n">
+                <input data-fv-notempty-message="Please select a value" id="cect2sp-n" name="cect2sp" required="required" type="radio" value="n"/>
+                No
+               </label>
+               <label class="radio-inline" for="cect2sp-y">
+                <input data-fv-notempty-message="Please select a value" id="cect2sp-y" name="cect2sp" required="required" type="radio" value="y"/>
+                Yes
+               </label>
+               <label class="radio-inline" for="cect2sp-q">
+                <input data-fv-notempty-message="Please select a value" id="cect2sp-q" name="cect2sp" required="required" type="radio" value="q"/>
+                ?
+               </label>
+              </div>
+             </td>
+             <td data-nodule-id="3" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="radio-inline" for="cect3sp-n">
+                <input data-fv-notempty-message="Please select a value" id="cect3sp-n" name="cect3sp" required="required" type="radio" value="n"/>
+                No
+               </label>
+               <label class="radio-inline" for="cect3sp-y">
+                <input data-fv-notempty-message="Please select a value" id="cect3sp-y" name="cect3sp" required="required" type="radio" value="y"/>
+                Yes
+               </label>
+               <label class="radio-inline" for="cect3sp-q">
+                <input data-fv-notempty-message="Please select a value" id="cect3sp-q" name="cect3sp" required="required" type="radio" value="q"/>
+                ?
+               </label>
+              </div>
+             </td>
+             <td data-nodule-id="4" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="radio-inline" for="cect4sp-n">
+                <input data-fv-notempty-message="Please select a value" id="cect4sp-n" name="cect4sp" required="required" type="radio" value="n"/>
+                No
+               </label>
+               <label class="radio-inline" for="cect4sp-y">
+                <input data-fv-notempty-message="Please select a value" id="cect4sp-y" name="cect4sp" required="required" type="radio" value="y"/>
+                Yes
+               </label>
+               <label class="radio-inline" for="cect4sp-q">
+                <input data-fv-notempty-message="Please select a value" id="cect4sp-q" name="cect4sp" required="required" type="radio" value="q"/>
+                ?
+               </label>
+              </div>
+             </td>
+             <td data-nodule-id="5" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="radio-inline" for="cect5sp-n">
+                <input data-fv-notempty-message="Please select a value" id="cect5sp-n" name="cect5sp" required="required" type="radio" value="n"/>
+                No
+               </label>
+               <label class="radio-inline" for="cect5sp-y">
+                <input data-fv-notempty-message="Please select a value" id="cect5sp-y" name="cect5sp" required="required" type="radio" value="y"/>
+                Yes
+               </label>
+               <label class="radio-inline" for="cect5sp-q">
+                <input data-fv-notempty-message="Please select a value" id="cect5sp-q" name="cect5sp" required="required" type="radio" value="q"/>
+                ?
+               </label>
+              </div>
+             </td>
+             <td data-nodule-id="6" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="radio-inline" for="cect6sp-n">
+                <input data-fv-notempty-message="Please select a value" id="cect6sp-n" name="cect6sp" required="required" type="radio" value="n"/>
+                No
+               </label>
+               <label class="radio-inline" for="cect6sp-y">
+                <input data-fv-notempty-message="Please select a value" id="cect6sp-y" name="cect6sp" required="required" type="radio" value="y"/>
+                Yes
+               </label>
+               <label class="radio-inline" for="cect6sp-q">
+                <input data-fv-notempty-message="Please select a value" id="cect6sp-q" name="cect6sp" required="required" type="radio" value="q"/>
+                ?
+               </label>
+              </div>
+             </td>
+             <td data-nodule-id="7" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="radio-inline" for="cect7sp-n">
+                <input data-fv-notempty-message="Please select a value" id="cect7sp-n" name="cect7sp" required="required" type="radio" value="n"/>
+                No
+               </label>
+               <label class="radio-inline" for="cect7sp-y">
+                <input data-fv-notempty-message="Please select a value" id="cect7sp-y" name="cect7sp" required="required" type="radio" value="y"/>
+                Yes
+               </label>
+               <label class="radio-inline" for="cect7sp-q">
+                <input data-fv-notempty-message="Please select a value" id="cect7sp-q" name="cect7sp" required="required" type="radio" value="q"/>
+                ?
+               </label>
+              </div>
+             </td>
+             <td data-nodule-id="8" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="radio-inline" for="cect8sp-n">
+                <input data-fv-notempty-message="Please select a value" id="cect8sp-n" name="cect8sp" required="required" type="radio" value="n"/>
+                No
+               </label>
+               <label class="radio-inline" for="cect8sp-y">
+                <input data-fv-notempty-message="Please select a value" id="cect8sp-y" name="cect8sp" required="required" type="radio" value="y"/>
+                Yes
+               </label>
+               <label class="radio-inline" for="cect8sp-q">
+                <input data-fv-notempty-message="Please select a value" id="cect8sp-q" name="cect8sp" required="required" type="radio" value="q"/>
+                ?
+               </label>
+              </div>
+             </td>
+             <td data-nodule-id="9" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="radio-inline" for="cect9sp-n">
+                <input data-fv-notempty-message="Please select a value" id="cect9sp-n" name="cect9sp" required="required" type="radio" value="n"/>
+                No
+               </label>
+               <label class="radio-inline" for="cect9sp-y">
+                <input data-fv-notempty-message="Please select a value" id="cect9sp-y" name="cect9sp" required="required" type="radio" value="y"/>
+                Yes
+               </label>
+               <label class="radio-inline" for="cect9sp-q">
+                <input data-fv-notempty-message="Please select a value" id="cect9sp-q" name="cect9sp" required="required" type="radio" value="q"/>
+                ?
+               </label>
+              </div>
+             </td>
+             <td data-nodule-id="10" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="radio-inline" for="cect10sp-n">
+                <input data-fv-notempty-message="Please select a value" id="cect10sp-n" name="cect10sp" required="required" type="radio" value="n"/>
+                No
+               </label>
+               <label class="radio-inline" for="cect10sp-y">
+                <input data-fv-notempty-message="Please select a value" id="cect10sp-y" name="cect10sp" required="required" type="radio" value="y"/>
+                Yes
+               </label>
+               <label class="radio-inline" for="cect10sp-q">
+                <input data-fv-notempty-message="Please select a value" id="cect10sp-q" name="cect10sp" required="required" type="radio" value="q"/>
+                ?
+               </label>
+              </div>
+             </td>
+            </tr>
+            <tr>
+             <td style="white-space: nowrap;">
+              <label class="control-label" for="cect1pld">
+               Distance from the costal pleura (mm)?
+              </label>
+              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="The shortest distance from the nodule to the costal pleura should be measured in millimeters." data-toggle="popover" title="Help">
+              </i>
+             </td>
+             <td class="form-inline" data-nodule-id="1" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="numeric" id="cect1pld" name="cect1pld" title="Distance" type="text"/>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="2" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="numeric" id="cect2pld" name="cect2pld" title="Distance" type="text"/>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="3" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="numeric" id="cect3pld" name="cect3pld" title="Distance" type="text"/>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="4" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="numeric" id="cect4pld" name="cect4pld" title="Distance" type="text"/>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="5" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="numeric" id="cect5pld" name="cect5pld" title="Distance" type="text"/>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="6" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="numeric" id="cect6pld" name="cect6pld" title="Distance" type="text"/>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="7" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="numeric" id="cect7pld" name="cect7pld" title="Distance" type="text"/>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="8" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="numeric" id="cect8pld" name="cect8pld" title="Distance" type="text"/>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="9" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="numeric" id="cect9pld" name="cect9pld" title="Distance" type="text"/>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="10" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="numeric" id="cect10pld" name="cect10pld" title="Distance" type="text"/>
+              </div>
+             </td>
+            </tr>
+            <tr>
+             <td style="white-space: nowrap;">
+              <label class="control-label required" for="cect1ac">
+               Action
+              </label>
+              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="This field becomes very important when different nodules require different follow-up.  A pull-down menu allows us to choose among six different follow-up actions -    'repeat SCT' (repeat screening CT),    'follow-up\ Dx CT' (follow-up Diagnostic CT),    'Abx + follow-up Dx CT' (Antibiotic + follow-up Diagnostic CT),    'biopsy',    'bronchoscopy',       or    'resection'." data-toggle="popover" title="Help">
               </i>
              </td>
              <td data-nodule-id="1" style="display:none;">
-              <div class="form-group">
-               <select name="cect1ac" title="Action">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect1ac" name="cect1ac" title="Action">
                 <option value="-">
                  -
                 </option>
@@ -3161,10 +3391,10 @@
                  annual repeat CT
                 </option>
                 <option value="f">
-                 f/u CT
+                 follow-up CT
                 </option>
                 <option value="a">
-                 Abx + f/u CT
+                 Abx + follow-up CT
                 </option>
                 <option value="e">
                  PET
@@ -3177,9 +3407,6 @@
                 </option>
                 <option value="p">
                  bronchoscopy
-                </option>
-                <option value="v">
-                 VAT
                 </option>
                 <option value="r">
                  resection
@@ -3188,8 +3415,8 @@
               </div>
              </td>
              <td data-nodule-id="2" style="display:none;">
-              <div class="form-group">
-               <select name="cect2ac" title="Action">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect2ac" name="cect2ac" title="Action">
                 <option value="-">
                  -
                 </option>
@@ -3197,10 +3424,10 @@
                  annual repeat CT
                 </option>
                 <option value="f">
-                 f/u CT
+                 follow-up CT
                 </option>
                 <option value="a">
-                 Abx + f/u CT
+                 Abx + follow-up CT
                 </option>
                 <option value="e">
                  PET
@@ -3213,9 +3440,6 @@
                 </option>
                 <option value="p">
                  bronchoscopy
-                </option>
-                <option value="v">
-                 VAT
                 </option>
                 <option value="r">
                  resection
@@ -3224,8 +3448,8 @@
               </div>
              </td>
              <td data-nodule-id="3" style="display:none;">
-              <div class="form-group">
-               <select name="cect3ac" title="Action">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect3ac" name="cect3ac" title="Action">
                 <option value="-">
                  -
                 </option>
@@ -3233,10 +3457,10 @@
                  annual repeat CT
                 </option>
                 <option value="f">
-                 f/u CT
+                 follow-up CT
                 </option>
                 <option value="a">
-                 Abx + f/u CT
+                 Abx + follow-up CT
                 </option>
                 <option value="e">
                  PET
@@ -3249,9 +3473,6 @@
                 </option>
                 <option value="p">
                  bronchoscopy
-                </option>
-                <option value="v">
-                 VAT
                 </option>
                 <option value="r">
                  resection
@@ -3260,8 +3481,8 @@
               </div>
              </td>
              <td data-nodule-id="4" style="display:none;">
-              <div class="form-group">
-               <select name="cect4ac" title="Action">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect4ac" name="cect4ac" title="Action">
                 <option value="-">
                  -
                 </option>
@@ -3269,10 +3490,10 @@
                  annual repeat CT
                 </option>
                 <option value="f">
-                 f/u CT
+                 follow-up CT
                 </option>
                 <option value="a">
-                 Abx + f/u CT
+                 Abx + follow-up CT
                 </option>
                 <option value="e">
                  PET
@@ -3285,9 +3506,6 @@
                 </option>
                 <option value="p">
                  bronchoscopy
-                </option>
-                <option value="v">
-                 VAT
                 </option>
                 <option value="r">
                  resection
@@ -3296,8 +3514,8 @@
               </div>
              </td>
              <td data-nodule-id="5" style="display:none;">
-              <div class="form-group">
-               <select name="cect5ac" title="Action">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect5ac" name="cect5ac" title="Action">
                 <option value="-">
                  -
                 </option>
@@ -3305,10 +3523,10 @@
                  annual repeat CT
                 </option>
                 <option value="f">
-                 f/u CT
+                 follow-up CT
                 </option>
                 <option value="a">
-                 Abx + f/u CT
+                 Abx + follow-up CT
                 </option>
                 <option value="e">
                  PET
@@ -3321,9 +3539,6 @@
                 </option>
                 <option value="p">
                  bronchoscopy
-                </option>
-                <option value="v">
-                 VAT
                 </option>
                 <option value="r">
                  resection
@@ -3332,8 +3547,8 @@
               </div>
              </td>
              <td data-nodule-id="6" style="display:none;">
-              <div class="form-group">
-               <select name="cect6ac" title="Action">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect6ac" name="cect6ac" title="Action">
                 <option value="-">
                  -
                 </option>
@@ -3341,10 +3556,10 @@
                  annual repeat CT
                 </option>
                 <option value="f">
-                 f/u CT
+                 follow-up CT
                 </option>
                 <option value="a">
-                 Abx + f/u CT
+                 Abx + follow-up CT
                 </option>
                 <option value="e">
                  PET
@@ -3357,9 +3572,6 @@
                 </option>
                 <option value="p">
                  bronchoscopy
-                </option>
-                <option value="v">
-                 VAT
                 </option>
                 <option value="r">
                  resection
@@ -3368,8 +3580,8 @@
               </div>
              </td>
              <td data-nodule-id="7" style="display:none;">
-              <div class="form-group">
-               <select name="cect7ac" title="Action">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect7ac" name="cect7ac" title="Action">
                 <option value="-">
                  -
                 </option>
@@ -3377,10 +3589,10 @@
                  annual repeat CT
                 </option>
                 <option value="f">
-                 f/u CT
+                 follow-up CT
                 </option>
                 <option value="a">
-                 Abx + f/u CT
+                 Abx + follow-up CT
                 </option>
                 <option value="e">
                  PET
@@ -3393,9 +3605,6 @@
                 </option>
                 <option value="p">
                  bronchoscopy
-                </option>
-                <option value="v">
-                 VAT
                 </option>
                 <option value="r">
                  resection
@@ -3404,8 +3613,8 @@
               </div>
              </td>
              <td data-nodule-id="8" style="display:none;">
-              <div class="form-group">
-               <select name="cect8ac" title="Action">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect8ac" name="cect8ac" title="Action">
                 <option value="-">
                  -
                 </option>
@@ -3413,10 +3622,10 @@
                  annual repeat CT
                 </option>
                 <option value="f">
-                 f/u CT
+                 follow-up CT
                 </option>
                 <option value="a">
-                 Abx + f/u CT
+                 Abx + follow-up CT
                 </option>
                 <option value="e">
                  PET
@@ -3429,9 +3638,6 @@
                 </option>
                 <option value="p">
                  bronchoscopy
-                </option>
-                <option value="v">
-                 VAT
                 </option>
                 <option value="r">
                  resection
@@ -3440,8 +3646,8 @@
               </div>
              </td>
              <td data-nodule-id="9" style="display:none;">
-              <div class="form-group">
-               <select name="cect9ac" title="Action">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect9ac" name="cect9ac" title="Action">
                 <option value="-">
                  -
                 </option>
@@ -3449,10 +3655,10 @@
                  annual repeat CT
                 </option>
                 <option value="f">
-                 f/u CT
+                 follow-up CT
                 </option>
                 <option value="a">
-                 Abx + f/u CT
+                 Abx + follow-up CT
                 </option>
                 <option value="e">
                  PET
@@ -3465,9 +3671,6 @@
                 </option>
                 <option value="p">
                  bronchoscopy
-                </option>
-                <option value="v">
-                 VAT
                 </option>
                 <option value="r">
                  resection
@@ -3476,8 +3679,8 @@
               </div>
              </td>
              <td data-nodule-id="10" style="display:none;">
-              <div class="form-group">
-               <select name="cect10ac" title="Action">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect10ac" name="cect10ac" title="Action">
                 <option value="-">
                  -
                 </option>
@@ -3485,10 +3688,10 @@
                  annual repeat CT
                 </option>
                 <option value="f">
-                 f/u CT
+                 follow-up CT
                 </option>
                 <option value="a">
-                 Abx + f/u CT
+                 Abx + follow-up CT
                 </option>
                 <option value="e">
                  PET
@@ -3501,9 +3704,6 @@
                 </option>
                 <option value="p">
                  bronchoscopy
-                </option>
-                <option value="v">
-                 VAT
                 </option>
                 <option value="r">
                  resection
@@ -3514,70 +3714,75 @@
             </tr>
             <tr>
              <td style="white-space: nowrap;">
-              Comment
+              <label class="control-label required" for="cect1co">
+               Comment
+              </label>
               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="This field is for additional comments about the nodule.  If a previously seen nodule is found to be something other than a nodule, note it here." data-toggle="popover" title="Help">
               </i>
              </td>
              <td data-nodule-id="1" style="display:none;">
-              <div class="form-group">
-               <input name="cect1co" size="20" title="Comment" type="text"/>
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect1co" name="cect1co" required="required" size="20" title="Comment" type="text"/>
               </div>
              </td>
              <td data-nodule-id="2" style="display:none;">
-              <div class="form-group">
-               <input name="cect2co" size="20" title="Comment" type="text"/>
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect2co" name="cect2co" required="required" size="20" title="Comment" type="text"/>
               </div>
              </td>
              <td data-nodule-id="3" style="display:none;">
-              <div class="form-group">
-               <input name="cect3co" size="20" title="Comment" type="text"/>
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect3co" name="cect3co" required="required" size="20" title="Comment" type="text"/>
               </div>
              </td>
              <td data-nodule-id="4" style="display:none;">
-              <div class="form-group">
-               <input name="cect4co" size="20" title="Comment" type="text"/>
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect4co" name="cect4co" required="required" size="20" title="Comment" type="text"/>
               </div>
              </td>
              <td data-nodule-id="5" style="display:none;">
-              <div class="form-group">
-               <input name="cect5co" size="20" title="Comment" type="text"/>
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect5co" name="cect5co" required="required" size="20" title="Comment" type="text"/>
               </div>
              </td>
              <td data-nodule-id="6" style="display:none;">
-              <div class="form-group">
-               <input name="cect6co" size="20" title="Comment" type="text"/>
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect6co" name="cect6co" required="required" size="20" title="Comment" type="text"/>
               </div>
              </td>
              <td data-nodule-id="7" style="display:none;">
-              <div class="form-group">
-               <input name="cect7co" size="20" title="Comment" type="text"/>
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect7co" name="cect7co" required="required" size="20" title="Comment" type="text"/>
               </div>
              </td>
              <td data-nodule-id="8" style="display:none;">
-              <div class="form-group">
-               <input name="cect8co" size="20" title="Comment" type="text"/>
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect8co" name="cect8co" required="required" size="20" title="Comment" type="text"/>
               </div>
              </td>
              <td data-nodule-id="9" style="display:none;">
-              <div class="form-group">
-               <input name="cect9co" size="20" title="Comment" type="text"/>
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect9co" name="cect9co" required="required" size="20" title="Comment" type="text"/>
               </div>
              </td>
              <td data-nodule-id="10" style="display:none;">
-              <div class="form-group">
-               <input name="cect10co" size="20" title="Comment" type="text"/>
+              <div class="form-group form-group-sm">
+               <input class="form-control" id="cect10co" name="cect10co" required="required" size="20" title="Comment" type="text"/>
               </div>
              </td>
             </tr>
             <tr>
              <td style="white-space: nowrap;">
-              Pathologic Diagnosis
+              <label class="control-label required" for="cect1pd">
+               Pathologic
+                                                    Diagnosis
+              </label>
               <i aria-hidden="true" class="fa fa-question-circle-o" data-content="If a biopsy was previously performed, the diagnosis was chosen from a pull-down menu on the Biopsy form.  When CT evaluation forms are created after the biopsy was done, the 'Pathologic Diagnosis' selected on the Biopsy Form is transferred onto the new CT evaluation Form.  Once a diagnosis has been assigned on the Biopsy Form and it pops up on the CT evaluation form, it CANNOT be changed." data-toggle="popover" title="Help">
               </i>
              </td>
              <td data-nodule-id="1" style="display:none;">
-              <div class="form-group">
-               <select name="cect1pd" title="Pathologic Diagnosis">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect1pd" name="cect1pd" required="required" title="Pathologic Diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -3627,8 +3832,8 @@
               </div>
              </td>
              <td data-nodule-id="2" style="display:none;">
-              <div class="form-group">
-               <select name="cect2pd" title="Pathologic Diagnosis">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect2pd" name="cect2pd" required="required" title="Pathologic Diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -3678,8 +3883,8 @@
               </div>
              </td>
              <td data-nodule-id="3" style="display:none;">
-              <div class="form-group">
-               <select name="cect3pd" title="Pathologic Diagnosis">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect3pd" name="cect3pd" required="required" title="Pathologic Diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -3729,8 +3934,8 @@
               </div>
              </td>
              <td data-nodule-id="4" style="display:none;">
-              <div class="form-group">
-               <select name="cect4pd" title="Pathologic Diagnosis">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect4pd" name="cect4pd" required="required" title="Pathologic Diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -3780,8 +3985,8 @@
               </div>
              </td>
              <td data-nodule-id="5" style="display:none;">
-              <div class="form-group">
-               <select name="cect5pd" title="Pathologic Diagnosis">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect5pd" name="cect5pd" required="required" title="Pathologic Diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -3831,8 +4036,8 @@
               </div>
              </td>
              <td data-nodule-id="6" style="display:none;">
-              <div class="form-group">
-               <select name="cect6pd" title="Pathologic Diagnosis">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect6pd" name="cect6pd" required="required" title="Pathologic Diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -3882,8 +4087,8 @@
               </div>
              </td>
              <td data-nodule-id="7" style="display:none;">
-              <div class="form-group">
-               <select name="cect7pd" title="Pathologic Diagnosis">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect7pd" name="cect7pd" required="required" title="Pathologic Diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -3933,8 +4138,8 @@
               </div>
              </td>
              <td data-nodule-id="8" style="display:none;">
-              <div class="form-group">
-               <select name="cect8pd" title="Pathologic Diagnosis">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect8pd" name="cect8pd" required="required" title="Pathologic Diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -3984,8 +4189,8 @@
               </div>
              </td>
              <td data-nodule-id="9" style="display:none;">
-              <div class="form-group">
-               <select name="cect9pd" title="Pathologic Diagnosis">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect9pd" name="cect9pd" required="required" title="Pathologic Diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -4035,8 +4240,8 @@
               </div>
              </td>
              <td data-nodule-id="10" style="display:none;">
-              <div class="form-group">
-               <select name="cect10pd" title="Pathologic Diagnosis">
+              <div class="form-group form-group-sm">
+               <select class="form-control" id="cect10pd" name="cect10pd" required="required" title="Pathologic Diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -4155,7 +4360,7 @@
          </div>
         </div>
        </div>
-       <div class="table-responsive" id="pulmonary-container">
+       <div class="table-responsive" id="pulmonary-container" style="margin-left:1em;">
         <table class="table">
          <thead>
           <tr>
@@ -4183,7 +4388,9 @@
          <tbody>
           <tr>
            <td>
-            Cysts
+            <label class="control-label" for="cecbc-n">
+             Cysts
+            </label>
            </td>
            <td>
             <div class="form-group">
@@ -4249,7 +4456,9 @@
           </tr>
           <tr>
            <td>
-            Blebs/Bullae
+            <label class="control-label" for="cecbb-n">
+             Blebs/Bullae
+            </label>
            </td>
            <td>
             <div class="form-group">
@@ -4315,7 +4524,10 @@
           </tr>
           <tr>
            <td>
-            Regional or Diffuse Consolidation
+            <label class="control-label" for="cerdc-n">
+             Regional or Diffuse
+                                        Consolidation
+            </label>
             <br/>
             <small>
              (focal - put in nodule grid)
@@ -4385,7 +4597,9 @@
           </tr>
           <tr>
            <td>
-            Scarring
+            <label class="control-label" for="cescr-n">
+             Scarring
+            </label>
            </td>
            <td>
             <div class="form-group">
@@ -4450,9 +4664,9 @@
            </td>
           </tr>
           <tr>
-           <td colspan="2" style="border-top:none;">
+           <td style="border-top:none;">
            </td>
-           <td colspan="5" style="border-top:none;">
+           <td colspan="6" style="border-top:none;">
             <div class="form-group form-inline">
              <label>
               apical
@@ -4474,7 +4688,9 @@
           </tr>
           <tr>
            <td>
-            Bronchiectasis
+            <label class="control-label" for="cebrsb-n">
+             Bronchiectasis
+            </label>
            </td>
            <td>
             <div class="form-group">
@@ -4540,7 +4756,9 @@
           </tr>
           <tr>
            <td>
-            Small Airways Disease
+            <label class="control-label" for="cebrss-n">
+             Small Airways Disease
+            </label>
            </td>
            <td>
             <div class="form-group">
@@ -4606,7 +4824,9 @@
           </tr>
           <tr>
            <td>
-            Post-surgical findings
+            <label class="control-label" for="cebs-n">
+             Post-surgical findings
+            </label>
             <br/>
             <small>
              (i.e. bronchial resection margin)
@@ -4649,17 +4869,19 @@
             </div>
            </td>
           </tr>
-          <tr>
-           <td colspan="7">
-            <strong>
-             Early and Late Findings of Interstitial Lung
-                                        Disease
-            </strong>
-           </td>
-          </tr>
+         </tbody>
+        </table>
+        <h4>
+         Early and Late Findings of Interstitial Lung Disease
+        </h4>
+        <table class="table">
+         <tbody>
           <tr>
            <td>
-            Traction bronchiectasis in a peripheral location
+            <label class="control-label" for="cerb-n">
+             Traction bronchiectasis in a
+                                        peripheral location
+            </label>
            </td>
            <td>
             <div class="form-group">
@@ -4725,7 +4947,10 @@
           </tr>
           <tr>
            <td>
-            Peripheral Ground-glass Opacities
+            <label class="control-label" for="cepgo-n">
+             Peripheral Ground-glass
+                                        Opacities
+            </label>
            </td>
            <td>
             <div class="form-group">
@@ -4791,7 +5016,9 @@
           </tr>
           <tr>
            <td>
-            Reticulations
+            <label class="control-label" for="ceret-n">
+             Reticulations
+            </label>
            </td>
            <td>
             <div class="form-group">
@@ -4857,7 +5084,9 @@
           </tr>
           <tr>
            <td>
-            Honeycombing
+            <label class="control-label" for="cephc-n">
+             Honeycombing
+            </label>
            </td>
            <td>
             <div class="form-group">
@@ -4935,16 +5164,18 @@
             </div>
            </td>
           </tr>
-          <tr>
-           <td colspan="7">
-            <strong>
-             Pleural or pleural-related Abnormalities
-            </strong>
-           </td>
-          </tr>
+         </tbody>
+        </table>
+        <h4>
+         Pleural or pleural-related Abnormalities
+        </h4>
+        <table class="table">
+         <tbody>
           <tr>
            <td>
-            Pleural Thickening/Plaques
+            <label class="control-label" for="cept-n">
+             Pleural Thickening/Plaques
+            </label>
            </td>
            <td>
             <div class="form-group">
@@ -4987,7 +5218,9 @@
           </tr>
           <tr>
            <td>
-            Rounded Atelectasis
+            <label class="control-label" for="cebatr-n">
+             Rounded Atelectasis
+            </label>
            </td>
            <td>
             <div class="form-group">
@@ -5053,7 +5286,9 @@
           </tr>
           <tr>
            <td>
-            Pleural Effusion
+            <label class="control-label" for="cepev">
+             Pleural Effusion
+            </label>
            </td>
            <td>
             <div class="form-group">
@@ -5114,7 +5349,9 @@
           </tr>
           <tr>
            <td>
-            Pleural Tumor
+            <label class="control-label" for="cepu-n">
+             Pleural Tumor
+            </label>
            </td>
            <td colspan="6">
             <div class="form-group">
@@ -5174,123 +5411,40 @@
          </div>
         </div>
        </div>
-       <div class="table-responsive" id="cardiac-container">
+       <div class="table-responsive" id="cardiac-container" style="margin-left:1em;">
         <table class="table">
          <tbody>
           <tr>
            <td>
-            Coronary Calcification
+            <label class="control-label " for="cecclm">
+             Coronary Calcification
+            </label>
            </td>
-           <td>
-            <div class="form-group">
-             <div class="checkbox">
-              <label>
-               <input id="ceccv" name="ceccv" type="checkbox" value="e"/>
-               not visible
-              </label>
-             </div>
-            </div>
-           </td>
-           <td>
-            <div class="form-group">
-             <label for="cecclm">
-              Left Main
-             </label>
-             <select class="form-control" id="cecclm" name="cecclm">
-              <option value="-">
-               -
-              </option>
-              <option value="no">
-               none
-              </option>
-              <option value="mi">
-               minimal &lt; ⅓
-              </option>
-              <option value="mo">
-               moderate
-              </option>
-              <option value="ex">
-               extensive &gt; ⅔
-              </option>
-             </select>
-            </div>
-           </td>
-           <td>
-            <div class="form-group">
-             <label for="ceccld">
-              LAD
-             </label>
-             <select class="form-control" id="ceccld" name="ceccld">
-              <option value="-">
-               -
-              </option>
-              <option value="no">
-               none
-              </option>
-              <option value="mi">
-               minimal &lt; ⅓
-              </option>
-              <option value="mo">
-               moderate
-              </option>
-              <option value="ex">
-               extensive &gt; ⅔
-              </option>
-             </select>
-            </div>
-           </td>
-           <td>
-            <div class="form-group">
-             <label for="cecccf">
-              Circumflex
-             </label>
-             <select class="form-control" id="cecccf" name="cecccf">
-              <option value="-">
-               -
-              </option>
-              <option value="no">
-               none
-              </option>
-              <option value="mi">
-               minimal &lt; ⅓
-              </option>
-              <option value="mo">
-               moderate
-              </option>
-              <option value="ex">
-               extensive &gt; ⅔
-              </option>
-             </select>
-            </div>
-           </td>
-           <td>
-            <div class="form-group">
-             <label for="ceccrc">
-              RCA
-             </label>
-             <select class="form-control" id="ceccrc" name="ceccrc">
-              <option value="-">
-               -
-              </option>
-              <option value="no">
-               none
-              </option>
-              <option value="mi">
-               minimal &lt; ⅓
-              </option>
-              <option value="mo">
-               moderate
-              </option>
-              <option value="ex">
-               extensive &gt; ⅔
-              </option>
-             </select>
-            </div>
+           <td colspan="5">
+            <label class="radio-inline" for="ceccv-n">
+             <input id="ceccv-n" name="ceccv" type="radio" value="n"/>
+             none
+            </label>
+            <label class="radio-inline" for="ceccv-m">
+             <input id="ceccv-m" name="ceccv" type="radio" value="m"/>
+             mild
+            </label>
+            <label class="radio-inline" for="ceccv-d">
+             <input id="ceccv-d" name="ceccv" type="radio" value="d"/>
+             moderate
+            </label>
+            <label class="radio-inline" for="ceccv-s">
+             <input id="ceccv-s" name="ceccv" type="radio" value="s"/>
+             severe
+            </label>
            </td>
           </tr>
           <tr>
            <td colspan="2">
-            Visual CAC Score
+            <label class="control-label" for="cecccac">
+             Visual CAC
+                                        Score
+            </label>
             <br/>
             <small>
              (Coronary Artery Calcium)
@@ -5304,7 +5458,9 @@
           </tr>
           <tr>
            <td>
-            Aortic Calcification
+            <label class="control-label" for="cecca">
+             Aortic Calcification
+            </label>
            </td>
            <td>
             <div class="form-group">
@@ -5340,7 +5496,9 @@
           </tr>
           <tr>
            <td>
-            Pericardial Effusion Severity
+            <label class="control-label" for="ceprevm">
+             Pericardial Effusion Severity
+            </label>
            </td>
            <td>
             <div class="form-group">
@@ -5376,27 +5534,40 @@
           </tr>
           <tr>
            <td colspan="2">
-            Pulmonary Artery Width (mm)
+            <label class="control-label" for="cepaw">
+             Pulmonary Artery Width
+                                        (mm)
+            </label>
            </td>
-           <td colspan="5">
+           <td>
             <div class="form-group">
              <input class="form-control numeric" data-fv-integer="true" id="cepaw" name="cepaw" size="4" title="Pulmonary Artery Width" type="text"/>
             </div>
            </td>
+           <td colspan="4">
+           </td>
           </tr>
           <tr>
            <td colspan="2">
-            Ascending Aorta Width (mm)
+            <label class="control-label" for="ceaow">
+             Ascending Aorta Width
+                                        (mm)
+            </label>
            </td>
-           <td colspan="5">
+           <td>
             <div class="form-group">
              <input class="form-control numeric" data-fv-integer="true" id="ceaow" name="ceaow" size="4" title="Ascending Aorta Width" type="text"/>
             </div>
            </td>
+           <td colspan="4">
+           </td>
           </tr>
           <tr>
            <td colspan="2">
-            Pulmonary Artery/Aorta Ratio
+            <label class="control-label" for="cepar">
+             Pulmonary Artery/Aorta
+                                        Ratio
+            </label>
             <br/>
             <small>
              (calculated)
@@ -5451,12 +5622,14 @@
          </div>
         </div>
        </div>
-       <div class="table-responsive" id="neck-container">
+       <div class="table-responsive" id="neck-container" style="margin-left:1em;">
         <table class="table">
          <tbody>
           <tr>
            <td>
-            Thyroid
+            <label class="control-label" for="ceccv-n">
+             Thyroid
+            </label>
            </td>
            <td>
             <div class="form-group">
@@ -5506,7 +5679,9 @@
           </tr>
           <tr>
            <td>
-            Thymus
+            <label class="control-label" for="ceaya-n">
+             Thymus
+            </label>
             <br/>
             <small>
              (report if ovoid &gt; 7 mm or if thymic shape with width &gt; 1.3cm)
@@ -5560,14 +5735,18 @@
           </tr>
           <tr>
            <td colspan="3">
-            <strong>
-             Lymph Nodes
-             <small>
-              (w/o central fat)
-             </small>
-            </strong>
            </td>
           </tr>
+         </tbody>
+        </table>
+        <h4>
+         Lymph Nodes
+         <small>
+          (w/o central fat)
+         </small>
+        </h4>
+        <table class="table">
+         <tbody>
           <tr>
            <td>
             Any enlarged or growing hilar or mediastinal lymph nodes
@@ -5598,9 +5777,10 @@
            </td>
            <td>
             <div class="form-group">
-             <label>
+             <label for="validator-cemln">
               Level
              </label>
+             <input id="validator-cemln" name="validator-cemln" type="hidden" value="0"/>
              <div class="checkbox">
               <label>
                <input id="cemlnl1" name="cemlnl1" type="checkbox" value="N1"/>
@@ -5953,7 +6133,7 @@
          </div>
         </div>
        </div>
-       <div class="table-responsive" id="breast-container">
+       <div class="table-responsive" id="breast-container" style="margin-left:1em;">
         <table class="table">
          <tbody>
           <tr>
@@ -6145,7 +6325,7 @@
          </div>
         </div>
        </div>
-       <div class="row" id="bone-container">
+       <div class="row" id="bone-container" style="margin-left:1em;">
         <div class="form-group col-sm-12">
          <label for="ceaoabb">
           Specify Bone Abnormalities
@@ -6176,7 +6356,7 @@
          </div>
         </div>
        </div>
-       <div class="table-responsive" id="abdominal-container">
+       <div class="table-responsive" id="abdominal-container" style="margin-left:1em;">
         <table class="table">
          <tbody>
           <tr>
@@ -6506,63 +6686,77 @@
       </div>
       <div aria-labelledby="impression-tab" class="tab-pane" id="impression" role="tabpanel">
        <h3>
-        Lung-RADS
+        Impression
        </h3>
        <div class="row">
-        <div class="form-group col-md-12">
-         <label for="celrc">
-          Category
-         </label>
-         <br/>
-         <label class="radio-inline" for="celrc-na">
-          <input data-fv-notempty-message="Please select a value" id="celrc-na" name="celrc" required="required" type="radio" value="-"/>
-          Not applicable
-         </label>
-         <label class="radio-inline" for="celrc-0">
-          <input id="celrc-0" name="celrc" type="radio" value="0"/>
-          0
-         </label>
-         <label class="radio-inline" for="celrc-1">
-          <input id="celrc-1" name="celrc" type="radio" value="1"/>
-          1
-         </label>
-         <label class="radio-inline" for="celrc-2">
-          <input id="celrc-2" name="celrc" type="radio" value="2"/>
-          2
-         </label>
-         <label class="radio-inline" for="celrc-3">
-          <input id="celrc-3" name="celrc" type="radio" value="3"/>
-          3
-         </label>
-         <label class="radio-inline" for="celrc-4A">
-          <input id="celrc-4A" name="celrc" type="radio" value="4A"/>
-          4A
-         </label>
-         <label class="radio-inline" for="celrc-4B">
-          <input id="celrc-4B" name="celrc" type="radio" value="4B"/>
-          4B
-         </label>
-         <label class="radio-inline" for="celrc-4X">
-          <input id="celrc-4X" name="celrc" type="radio" value="4X"/>
-          4X
-         </label>
+        <div class="col-sm-12">
+         <div class="alert alert-info">
+          Annual repeat and follow-up CT scans should utilize
+                                    the same low-dose protocol used for baseline low-dose CT scans.
+         </div>
         </div>
-        <div class="form-group col-md-12">
-         <label>
-          Modifiers
+       </div>
+       <div class="row">
+        <div class="col-sm-12 form-group">
+         <strong>
+          Nodules
+         </strong>
+         <div class="radio">
+          <label>
+           <input id="ceimn-rs" name="ceimn" required="required" type="radio" value="rs"/>
+           No evidence of nodules. Follow-up as recommended.
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="ceimn-ro" name="ceimn" type="radio" value="ro"/>
+           Nodule(s) as
+                                        described. Consistent with old granulomatous disease. Follow-up as recommended.
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="ceimn-ru" name="ceimn" type="radio" value="ru"/>
+           Nodule(s)
+                                        unchanged, as described above. Follow-up as recommended.
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="ceimn-nf" name="ceimn" type="radio" value="nf"/>
+           Nodule(s) as
+                                        described above. Follow-up as recommended.
+          </label>
+         </div>
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-sm-12 form-group">
+         <strong>
+          Other Findings
+         </strong>
+         <div class="radio">
+          <label>
+           <input id="ceimo-no" name="ceimo" type="radio" value="no"/>
+           No other
+                                        abnormalities.
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="ceimn-oa" name="ceimo" type="radio" value="oa"/>
+           Other
+                                        abnormalities and suggested follow-up as described above.
+          </label>
+         </div>
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-sm-12 form-group">
+         <label for="ceimre">
+          Impression Remarks
          </label>
-         <div class="checkbox">
-          <label>
-           <input id="celrms" name="celrms" type="checkbox" value="s"/>
-           S - Clinically Significant or Potentially Clinically Significant Findings (non lung cancer)
-          </label>
-         </div>
-         <div class="checkbox">
-          <label>
-           <input id="celrmc" name="celrmc" type="checkbox" value="c"/>
-           C - Prior diagnosis of lung cancer who return to screening
-          </label>
-         </div>
+         <textarea class="form-control" id="ceimre" name="ceimre"></textarea>
         </div>
        </div>
        <h3>
@@ -6570,7 +6764,6 @@
        </h3>
        <div class="alert alert-warning">
         Based on the data provided, this is the recommended follow-up; change if needed.
-                            Radiologist takes responsibility for report.
        </div>
        <div class="row">
         <div class="col-sm-3 form-group">
@@ -6585,10 +6778,10 @@
            annual repeat CT
           </option>
           <option value="dx">
-           f/u CT
+           follow-up CT
           </option>
           <option value="af">
-           Abx + f/u CT
+           Abx + follow-up CT
           </option>
           <option value="pe">
            PET
@@ -6601,9 +6794,6 @@
           </option>
           <option value="br">
            bronchoscopy
-          </option>
-          <option value="va">
-           VAT
           </option>
           <option value="su">
            resection
@@ -6676,6 +6866,82 @@
          </div>
         </div>
        </div>
+       <h3>
+        Lung-RADS
+       </h3>
+       <div class="row">
+        <div class="form-group col-sm-5 col-md-4">
+         <label for="celrc">
+          Category
+         </label>
+         <br/>
+         <div class="radio">
+          <label>
+           <input id="celrc-na" name="celrc" required="required" type="radio" value="-"/>
+           Not applicable
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="celrc-0" name="celrc" type="radio" value="0"/>
+           0 (incomplete)
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="celrc-1" name="celrc" type="radio" value="1"/>
+           1 (negative)
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="celrc-2" name="celrc" type="radio" value="2"/>
+           2 (benign appearance or behavior)
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="celrc-3" name="celrc" type="radio" value="3"/>
+           3 (probably benign)
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="celrc-4A" name="celrc" type="radio" value="4A"/>
+           4A (suspicious)
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="celrc-4B" name="celrc" type="radio" value="4B"/>
+           4B (suspicious)
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="celrc-4X" name="celrc" type="radio" value="4X"/>
+           4X (suspicious)
+          </label>
+         </div>
+        </div>
+        <div class="form-group col-sm-7 col-md-8">
+         <label>
+          Modifiers
+         </label>
+         <div class="checkbox">
+          <label>
+           <input id="celrms" name="celrms" type="checkbox" value="s"/>
+           S - Clinically Significant or Potentially Clinically Significant Findings (non lung cancer)
+          </label>
+         </div>
+         <div class="checkbox">
+          <label>
+           <input id="celrmc" name="celrmc" type="checkbox" value="c"/>
+           C - Prior diagnosis of lung cancer who return to screening
+          </label>
+         </div>
+        </div>
+       </div>
       </div>
       <!-- end of impression tab -->
      </div>
@@ -6711,12 +6977,12 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.07.02
+     SNAPSHOT 2018.07.04
     </span>
    </div>
   </footer>
   <script language="JavaScript">
-   var studyId = "@@SID@@";
+   const studyId = "@@SID@@";
     if (studyId) {
         $("#studyIdMenu").show();
     }
@@ -6724,15 +6990,16 @@
     $(function () {
         //TODO: remove these debug functions.
         // These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly.
-        $.each($("form.validated").find("select, textarea, input:visible"), function (i, o) {
-            $input = $(this);
-            if ($input.closest(".form-group").length == 0) {
+        const $forms = $("form.validated");
+        $.each($forms.find("select, textarea, input:visible"), function (i, o) {
+            const $input = $(this);
+            if ($input.closest(".form-group").length === 0) {
                 console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
             }
         });
 
-        $.each($("form.validated").find("input[type=hidden][required]"), function (i, o) {
-            $input = $(this);
+        $.each($forms.find("input[type=hidden][required]"), function (i, o) {
+            const $input = $(this);
             console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
         });
     })
@@ -6861,6 +7128,9 @@
                     $sidoe.val($("#cedos").val()).trigger('change');
                 }
             }).conditionallyEnable({sourceValues: "b", disable: "#non-baseline-container"});
+
+            
+
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
 
             // NODULES
@@ -6898,9 +7168,7 @@
             });
 
 
-
-            $("#cecclm, #ceccld, #cecccf, #ceccrc").on('change', calculateVisualCacScore);
-            calculateVisualCacScore();
+            
             $("#cepaw, #ceaow").on('keyup change', calculatePulmonaryArteryAortaRatio);
             calculatePulmonaryArteryAortaRatio();
 
@@ -6911,19 +7179,19 @@
              * group.radio - the parent radio button controller
              * group.container - the jQuery container where to find all other radio
              * group.humanName - the common name for this validation group to be used in the validation error message.
-            */
+             */
             function requireChildRadioSelectedValidator(group) {
                 const validatorControl = $("#" + group.radio + "-n");
                 const fv = $("form.validated").data("formValidation");
                 if (fv) {
                     const radioGroups = findRadioGroupNames(group.container);
-                    $.each(radioGroups, function( idx, groupName ) {
+                    $.each(radioGroups, function (idx, groupName) {
                         const childRadios = $("[name=" + groupName + "]");
                         childRadios.on('change', function () {
                             fv.revalidateField(validatorControl);
                         });
                     });
-                    
+
                     fv.addField(validatorControl.attr("name"), {
                         excluded: function ($field, validator) {
                             return false;
@@ -6935,7 +7203,7 @@
                                     if ($("[name=" + group.radio + "]:checked").val() === "y") {
                                         const groupNames = findRadioGroupNames(group.container);
                                         const yeses = $.grep(groupNames, function (groupName) {
-                                            return  $("[name=" + groupName + "]:checked").val() === "y";
+                                            return $("[name=" + groupName + "]:checked").val() === "y";
                                         });
                                         if (yeses.length === 0) {
                                             isValid = false;
@@ -6943,8 +7211,8 @@
                                     }
 
                                     return {
-                                        valid : isValid,
-                                        message : "At least one " + group.humanName + " abnormality must be selected."
+                                        valid: isValid,
+                                        message: "At least one " + group.humanName + " abnormality must be selected."
                                     }
                                 }
                             }
@@ -6953,23 +7221,31 @@
                 }
             }
 
-            $(function () {
 
-                const groups = [
-                    {radio: 'pa', container: $("#pulmonary-container"), humanName: "pulmonary"},
-                    {radio: 'ceoma', container: $("#neck-container"), humanName: "neck and mediastinal"},
-                    {radio: 'ceoba', container: $("#breast-container"), humanName: "breast"},
-                    {radio: 'ceoaa', container: $("#abdominal-container"), humanName: "abdominal"}
-                ];
+            const groups = [
+                {radio: 'pa', container: $("#pulmonary-container"), humanName: "pulmonary"},
+                {radio: 'ceoma', container: $("#neck-container"), humanName: "neck and mediastinal"},
+                {radio: 'ceoba', container: $("#breast-container"), humanName: "breast"},
+                {radio: 'ceoaa', container: $("#abdominal-container"), humanName: "abdominal"}
+            ];
 
-                for (let i = 0; i < groups.length; i++) {
-                    requireChildRadioSelectedValidator(groups[i])
+            for (let i = 0; i < groups.length; i++) {
+                requireChildRadioSelectedValidator(groups[i])
+            }
+
+            //at least one checkbox whose name starts with cemlnl is required if cemln==y
+            const $cemlnFields = $("input[type='radio'][name='cemln']");
+            const validatorControlName = 'validator-cemln';
+            const $validatorControl = $("[name=" + validatorControlName + "]");
+            requireOneValidator($("[name^=cemlnl]"), $validatorControl);
+            $cemlnFields.on("change", function () {
+                const fv = $("form.validated").data("formValidation");
+                if (fv) {
+                    const lymphNodesEnabled = $cemlnFields.filter(":checked").val() === "y";
+                    fv.enableFieldValidators(validatorControlName, lymphNodesEnabled, 'callback');
                 }
-            
-            });
-            
+            }).first().trigger('change');
 
-            //for each of the containers that have radiogroups, ensure at least one of those groups has a value of "y".
             $("form").on("submit", function (e) {
                 console.log("onsubmit");
 

@@ -392,7 +392,7 @@ getItems(ary,sid) ; get items available for studyid
  . if zkey1="sbform" s zform="vapals:sbform"
  . if zkey1="sbform" s fname="Background"
  . if zkey1="ceform" s zform="vapals:ceform"
- . if zkey1="fuform" s zform="vapals:ceform"
+ . if zkey1="fuform" s zform="vapals:fuform"
  . if zkey1="fuform" s fname="Follow-up"
  . if zkey1="bxform" s fname="Biopsy"
  . if zkey1="bxform" s zform="vapals:bxform"

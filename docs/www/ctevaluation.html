@@ -6925,6 +6925,8 @@
      Delete
     </a>
     <div class="pull-right">
+     <input name="cennod" type="hidden" value="0"/>
+     <input name="ceanod" type="hidden" value="n"/>
      <input name="samistatus" type="hidden" value=""/>
      <button class="btn btn-default" id="save-for-later-button" type="submit">
       Save for Later
@@ -7044,12 +7046,16 @@
             }
             else {
                 displayNodules(++noduleCount);
+                $("[name='cennod']").val(noduleCount);
+                $("[name='ceanod']").val("y");
             }
         }
 
         function removeNodule() {
             if (noduleCount > 0) {
                 displayNodules(--noduleCount);
+                $("[name='cennod']").val(noduleCount);
+                $("[name='ceanod']").val(noduleCount === 0 ? "n" : "y");
             }
         }
 

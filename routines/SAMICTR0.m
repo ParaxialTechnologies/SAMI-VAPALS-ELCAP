@@ -48,6 +48,7 @@ wsReport(return,filter) ; web service which returns an html cteval report
  s sectionheader=1
  s dummy="******"
  s cac=""
+ s cacrec=""
  s tex=0
  s para="<p>"
  s legout=0
@@ -155,30 +156,40 @@ wsReport(return,filter) ; web service which returns an html cteval report
  ; lung nodules
  ;
  d hout("Lung nodules:")
- i $$xval("cennod",vals)="" d  ;
+ ;
+ ; see if there are any nodules using the cectXch fields
+ ;
+ n ij,hasnodules s hasnodules=0
+ f ij=1:1:10 i ($$xval("cect"_ij_"ch",vals)'="")&($$xval("cect"_ij_"ch",vals)'="-") s hasnodules=1
+ ;
+ i hasnodules=0 d  ;
  . d out(para)
  . d out("No pulmonary nodules are seen."_para)
- e  i $$xval("ceanod",vals)="n" d  ;
- . d out(para)
- . d out("No pulmonary nodules are seen."_para)
  ;
- d nodules^SAMICTR1(.rtn,.vals,.dict)
+ ;i $$xval("cennod",vals)="" d  ;
+ ;. d out(para)
+ ;. d out("No pulmonary nodules are seen."_para)
+ ;e  i $$xval("ceanod",vals)="n" d  ;
+ ;. d out(para)
+ ;. d out("No pulmonary nodules are seen."_para)
  ;
- d otherlung^SAMICTR2(.rtn,.vals,.dict)
+ d nodules^SAMICTR1(rtn,.vals,.dict)
  ;
- d heart^SAMICTR3(.rtn,.vals,.dict)
+ d otherlung^SAMICTR2(rtn,.vals,.dict)
  ;
- d neck^SAMICTR4(.rtn,.vals,.dict)
+ d heart^SAMICTR3(rtn,.vals,.dict)
  ;
- d breast^SAMICTR5(.rtn,.vals,.dict)
+ d neck^SAMICTR4(rtn,.vals,.dict)
  ;
- d pleural^SAMICTR6(.rtn,.vals,.dict)
+ d breast^SAMICTR5(rtn,.vals,.dict)
  ;
- d paricardial^SAMICTR7(.rtn,.vals,.dict)
+ d pleural^SAMICTR6(rtn,.vals,.dict)
  ;
- d abdominal^SAMICTR8(.rtn,.vals,.dict)
+ d paricardial^SAMICTR7(rtn,.vals,.dict)
  ;
- d lungrads^SAMICTR9(.rtn,.vals,.dict)
+ d abdominal^SAMICTR8(rtn,.vals,.dict)
+ ;
+ d lungrads^SAMICTR9(rtn,.vals,.dict)
  ;
  d impression^SAMICTRA(rtn,.vals,.dict)
  ;

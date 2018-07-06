@@ -262,6 +262,24 @@ INIT(g) ;
  set @g@("ceobad","3")="heterogeneously dense"
  set @g@("ceobad","4")="extremely dense"
  ;
+ ;# LungRADS
+ set @g@("celrad","0")="incomplete"
+ set @g@("celrad","1")="negative"
+ set @g@("celrad","2")="benign appearance or behavior"
+ set @g@("celrad","3")="probably benign"
+ set @g@("celrad","4A")="suspicious"
+ set @g@("celrad","4B")="suspicious"
+ set @g@("celrad","4X")="suspicious"
+ ;
+ ;# LungRADS also
+ set @g@("celrc","0")="incomplete"
+ set @g@("celrc","1")="negative"
+ set @g@("celrc","2")="benign appearance or behavior"
+ set @g@("celrc","3")="probably benign"
+ set @g@("celrc","4A")="suspicious"
+ set @g@("celrc","4B")="suspicious"
+ set @g@("celrc","4X")="suspicious"
+ ;
  ;# Impression Note:
  set @g@("note_imp")="Note: If LIMITED diagnostic scans are done to follow nodules, each one-year diagnostic scan which serves as the annual screening test MUST BE A FULL DIAGNOSTIC SCAN."
  ;

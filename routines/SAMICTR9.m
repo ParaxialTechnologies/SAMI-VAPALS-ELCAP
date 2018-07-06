@@ -6,6 +6,44 @@ SAMICTR9 ;ven/gpl - ielcap: forms ;2018-03-07T18:48Z
  ;
 lungrads(rtn,vals,dict)
  ; repgen13
+ ;
+ ; # LungRADS
+ ;
+ n lrstyle
+ i $$xval("celrc",vals)'="" s lrstyle=1 ; dom's style
+ e  s lrstyle=0 ; artit's style
+ ;
+ i lrstyle=0 d  ; Artit's style
+ . s lradModifiers=$$xval("celradc",vals)_$$xval("celrads",vals)
+ . ;
+ . i ($$xval("celrad",vals)'="-")&($$xval("celrad",vals)'="") d  ;
+ . . d out("The LungRADS category for this scan is: "_$$xval("celrad",vals)_lradModifiers)
+ . . d out(para)
+ ;
+ i lrstyle=1 d  ; Dom's style
+ . s X=$$xval("celrmc",vals)_$$xval("celrms",vals)
+ . s Y=""
+ . X ^%ZOSF("UPPERCASE")
+ . s lradModifiers=Y
+ . ;
+ . i ($$xval("celrc",vals)'="-")&($$xval("celrc",vals)'="") d  ;
+ . . d out("The LungRADS category for this scan is: "_$$xval("celrc",vals)_lradModifiers)
+ . . d out(para)
+ ;
+ ; # Impression
+ d out("</TD></TR></TABLE><TR><TD>")
+ d out("<HR SIZE=""2"" WIDTH=""100%"" ALIGN=""center"" NOSHADE>")
+ d out("</TD></TR>")
+ d out("<!-- impression -->")
+ d out("<TR><TD>")
+ d out("<FONT SIZE=""+2"">")
+ d out("<B>IMPRESSION:</B>")
+ d out("</FONT>")
+ d out("</TD></TR><TR><TD><TABLE>")
+ d out("<TR><TD WIDTH=20></TD><TD>")
+ ;
+ d out($$xsub("ceimn",vals,dict)_para)
+ ;
  q
  ;
  ;

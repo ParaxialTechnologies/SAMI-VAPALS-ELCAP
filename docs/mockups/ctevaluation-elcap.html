@@ -7489,6 +7489,30 @@
                 }
             }).first().trigger('change');
 
+            //followup date calculation
+            $("[name=cefuw]").on('change', function () {
+                const when = $("[name='cefuw']:checked").val();
+                switch (when) {
+                    case "nw":
+                        $("#cefud").val(moment().format(VAPALS.DATE_FORMAT));
+                        break;
+                    case "1m":
+                        $("#cefud").val(moment().add(1, 'month').format(VAPALS.DATE_FORMAT));
+                        break;
+                    case "3m":
+                        $("#cefud").val(moment().add(3, 'month').format(VAPALS.DATE_FORMAT));
+                        break;
+                    case "6m":
+                        $("#cefud").val(moment().add(6, 'month').format(VAPALS.DATE_FORMAT));
+                        break;
+                    case "1y":
+                        $("#cefud").val(moment().add(1, 'year').format(VAPALS.DATE_FORMAT));
+                        break;
+                    default:
+                        $("#cefud").val("").focus();
+                }
+            })
+
             $("form").on("submit", function (e) {
                 console.log("onsubmit");
 

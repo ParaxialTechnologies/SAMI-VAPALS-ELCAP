@@ -501,10 +501,10 @@
 
 
         $(function () {
-
             //follow up date calculator.
             $("[name=cefuw]").on("change", function () {
-                switch ($(this).val()) {
+                const when = $("[name='cefuw']:checked").val();
+                switch (when) {
                     case "nw":
                         $("#cefud").val(moment().format(VAPALS.DATE_FORMAT));
                         break;

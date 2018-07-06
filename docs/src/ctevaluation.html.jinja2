@@ -656,7 +656,7 @@
                                 <label class="control-label required">Emphysema</label>
                                 {{ f.radio("ceem", "ceem-nv", "nv", "not visible", true) }}
                                 {{ f.radio("ceem", "ceem-no", "no", "none", false) }}
-                                {{ f.radio("ceem", "ceem-mi", "mi", "mild - splaying of vessels or scattered bulbay/blebs", false) }}
+                                {{ f.radio("ceem", "ceem-mi", "mi", "mild - splaying of vessels or scattered bulla/blebs", false) }}
                                 {{ f.radio("ceem", "ceem-mo", "mo", "moderate - less than 50%", false) }}
                                 {{ f.radio("ceem", "ceem-se", "se", "severe - more than 50%", false) }}
 
@@ -1084,6 +1084,10 @@
 
                                 {% else %}
                                     <tr>
+                                        <td>
+                                            <label class="control-label {{ "required" if formPage == "ctevaluation-elcap" else "" }}"
+                                                   for="cecclm">Coronary Calcification</label>
+                                        </td>
                                         <td colspan="5">
                                             {{ f.inlineRadio("ceccv","ceccv-n","n","none") }}
                                             {{ f.inlineRadio("ceccv","ceccv-m","m","mild") }}

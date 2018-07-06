@@ -535,12 +535,12 @@
                                         </tr>
                                         <tr>
                                             <td style="white-space: nowrap;">
-                                                <label class="control-label required" for="cect1sp-n">Spiculated</label>
+                                                <label class="control-label" for="cect1sp-n">Spiculated</label>
                                             </td>
                                             {% for i in noduleArray %}
                                                 <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group form-group-sm">
-                                                        {{ f.inlineRadioNYQ("cect" + i|string + "sp", true) }}
+                                                        {{ f.inlineRadioNYQ("cect" + i|string + "sp", false) }}
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -565,7 +565,7 @@
                                         </tr>
                                         <tr>
                                             <td style="white-space: nowrap;">
-                                                <label class="control-label required" for="cect1ac">Action</label> <i
+                                                <label class="control-label" for="cect1ac">Action</label> <i
                                                     class="fa fa-question-circle-o"
                                                     aria-hidden="true"
                                                     data-toggle="popover" title="Help"

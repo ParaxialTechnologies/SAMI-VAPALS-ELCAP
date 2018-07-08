@@ -159,16 +159,17 @@ note(filter) ; extrnisic which creates a note
  d out("LDCT ordered: ")
  n ldct s ldct=""
  s:$$xval("sildct",vals)="n" ldct=ldct_" No"
- s:$$xval("sildct",vals)=1 ldct=ldct_" Not at this time, okay to contact in the future"
+ s:$$xval("sildct",vals)="l" ldct=ldct_" Not at this time, okay to contact in the future"
  s:$$xval("sildct",vals)="y" ldct=ldct_" Yes"
  d out("    "_ldct)
- d out("    "_"Veteran enrolled in the LSS program. Results and coordination of care ")
- d out("    "_"will be made by the LSS team.  ")
- d out("    "_"Scheduled by the LSS Coordinator:  ")
- d out("    "_"Best time and day:  ")
- d out("    "_"Best contact number:  ")
- d out(" ")
- d out(" ")
+ i $$xval("sildct",vals)="y" d  ;
+ . d out("    "_"Veteran enrolled in the LSS program. Results and coordination of care ")
+ . d out("    "_"will be made by the LSS team.  ")
+ ;d out("    "_"Scheduled by the LSS Coordinator:  ")
+ ;d out("    "_"Best time and day:  ")
+ ;d out("    "_"Best contact number:  ")
+ ;d out(" ")
+ ;d out(" ")
  ;
  q 1
  ;

@@ -145,6 +145,7 @@ wsVAPALS(ARG,BODY,RESULT) ; vapals post web service - all calls come through thi
  set bdy=$get(BODY(1))
  do parseBody^%wf("vars",.bdy)
  m vars=ARG
+ k ^gpl("vapals","vars")
  merge ^gpl("vapals","vars")=vars
  ;
  n route s route=$g(vars("samiroute"))
@@ -177,6 +178,9 @@ wsVAPALS(ARG,BODY,RESULT) ; vapals post web service - all calls come through thi
  i route="postform" d  q  ;
  . m ARG=vars
  . d wsPostForm^%wf(.ARG,.BODY,.RESULT)
+ . i $g(ARG("form"))["siform" d  ;
+ . . if $$note^SAMINOTI(.ARG) d  ;
+ . . . d wsNote^SAMINOTI(.RESULT,.ARG)
  ;
  i route="deleteform" d  q  ;
  . m ARG=vars

@@ -1,4 +1,4 @@
-SAMIHOM3 ;ven/gpl - ielcap: forms ;2018-03-07T18:48Z
+SAMIHOM3 ;ven/gpl - ielcap: forms ;2018-07-10  10:51 AM
  ;;18.0;SAMI;;
  ;
  ; Routine SAMIHOM2 contains subroutines for implementing the ELCAP Home
@@ -128,6 +128,17 @@ wsHOME(rtn,filter) ; web service for SAMI homepage
  if $g(filter("samiroute"))'="" do  quit  ; workaround for "get" access to pages
  . new BODY set BODY(1)=""
  . do wsVAPALS(.filter,.BODY,.rtn) 
+ ;
+ if $get(filter("dfn"))'="" do  quit  ; V4W/DLW - workaround for "get" access from CPRS
+ . new dfn set dfn=$get(filter("dfn"))
+ . new root set root=$$setroot^%wd("vapals-patients")
+ . new studyid set studyid=$get(@root@(dfn,"samistudyid"))
+ . new BODY
+ . if studyid'="" do
+ . . set BODY(1)="samiroute=casereview&dfn="_dfn_"&studyid="_studyid
+ . else  do
+ . . set BODY(1)="samiroute=lookup&dfn="_dfn_"&studyid="_studyid
+ . do wsVAPALS(.filter,.BODY,.rtn)
  ;
  do getHome(.rtn,.filter) ; VAPALS homepage
  ;

@@ -1,4 +1,4 @@
-KBAPTIU ;;ven/lgc - M2M Broker to build TIU ; 7/5/18 1:32pm
+KBAPTIUG ;;ven/lgc - M2M Broker to build TIU ; 7/10/18 10:07am
  ;;1.0;;**LOCAL**; APR 22, 2018
  ;
  ; VA-PALS will be using the VA's M2M broker to pull
@@ -23,6 +23,11 @@ KBAPTIU ;;ven/lgc - M2M Broker to build TIU ; 7/5/18 1:32pm
  ;   and the following Broker context menus.
  ;      OR CPRS GUI CHART
  ;
+NEWTIU(DFN,TITLE,PROV,CLINIEN,TIUTXT) ;
+ D ^ZTER
+ ;D BLDTIU(.TIUIEN,DFN,TITLE,PROV,CLINIEN)
+ ;D SETTEXT(XDATA,TIUIEN,.TIUTXT)
+ Q
  ; Temporary entry for VA-PALS testing
  ; Force TIU note TITLE, User, and Clinic
 EN(DFN) Q:'$G(DFN)
@@ -41,6 +46,7 @@ EN(DFN) Q:'$G(DFN)
  ;   TIUIEN  : IEN of new TIU note. 0=failure
 BLDTIU(TIUIEN,DFN,TITLE,USER,CLINIEN) ;
  N IP,PORT,ACCVER
+ K TIUIEN S TIUIEN=0
  S PORT=$$GET^XPAR("SYS","SAMI PORT",,"Q")
  S IP=$$GET^XPAR("SYS","SAMI IP ADDRESS",,"Q")
  S:($G(IP)="") IP="127.0.0.1"
@@ -417,4 +423,4 @@ DELTIU(TIUDA,VSTR,DFN) ;
  W !,$G(POO)
  Q
  ;
-EOR ;End of routine KBAPTIU
+EOR ;End of routine KBAPTIUG

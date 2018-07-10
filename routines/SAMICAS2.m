@@ -187,6 +187,11 @@ wsCASE(rtn,filter) ; generate case review page
  set nuhref=nuhref_"<td><input type=hidden name=""samiroute"" value=""nuform"">"
  set nuhref=nuhref_"<input type=hidden name=""studyid"" value="_sid_">"
  set nuhref=nuhref_"<input value=""New Form"" class=""btn label label-warning"" role=""link"" type=""submit""></form></td>"
+ new notehref set notehref="<form method=POST action=""/vapals"">"
+ set notehref=notehref_"<input type=hidden name=""samiroute"" value=""note"">"
+ set notehref=notehref_"<input type=hidden name=""studyid"" value="_sid_">"
+ set notehref=notehref_"<input type=hidden name=""form"" value="_$p(sikey,":",2)_">"
+ set notehref=notehref_"<input value=""Intake Note"" class=""btn btn-link"" role=""link"" type=""submit""></form>"
  s cnt=cnt+1
  n last5 s last5=$$GETLAST5^SAMIFRM2(sid)
  n pname s pname=$$GETNAME^SAMIFRM2(sid)
@@ -203,36 +208,9 @@ wsCASE(rtn,filter) ; generate case review page
  new samistatus s samistatus=""
  if $$getSamiStatus(sid,sikey)="incomplete" set samistatus="(incomplete)"
  set cnt=cnt+1
- set rtn(cnt)="</form>"_samistatus_"</td>"_$char(13)
+ set rtn(cnt)="</form>"_samistatus_notehref_"</td>"_$char(13)
  set cnt=cnt+1
  set rtn(cnt)=nuhref_"</tr>"
- ;
- ;@stanza 5 background form
- ;
- ;new sbkey set sbkey=$order(items("sbfor"))
- ;if sbkey="" set sbkey="sbform-2017-12-10"
- ;new sbdate set sbdate=$$getDateKey^SAMICASE(sbkey)
- ;set sbkey="vapals:"_sbkey
- ;new sbdispdate set sbdispdate=$$key2dispDate(sbdate)
- ;set cnt=cnt+1
- ;;set rtn(cnt)="<tr><td> "_sid_" </td><td> - </td><td> - </td><td> - </td><td>"_sbdispdate_"</td><td>"_$char(13)
- ;set rtn(cnt)="<tr><td> "_last5_" </td><td> - </td><td> - </td><td>"_sbdispdate_"</td><td>"_$char(13)
- ;set cnt=cnt+1
- ;set rtn(cnt)="<form method=""post"" action=""/vapals"">"_$char(13)
- ;set cnt=cnt+1
- ;set rtn(cnt)="<input name=""samiroute"" value=""form"" type=""hidden"">"_$char(13)
- ;set cnt=cnt+1
- ;set rtn(cnt)=" <input name=""studyid"" value="""_sid_""" type=""hidden"">"_$char(13)
- ;set cnt=cnt+1
- ;set rtn(cnt)=" <input name=""form"" value="""_sbkey_""" type=""hidden"">"_$char(13)
- ;set cnt=cnt+1
- ;set rtn(cnt)=" <input value=""Background"" class=""btn btn-link"" role=""link"" type=""submit"">"_$char(13)
- ;
- ;new samistatus s samistatus=""
- ;if $$getSamiStatus(sid,sbkey)="incomplete" set samistatus="(incomplete)"
- ;
- ;set cnt=cnt+1
- ;set rtn(cnt)="</form>"_samistatus_"</td><td></td></tr>"
  ;
  ;@stanza 6 rest of the forms
  ;
@@ -273,7 +251,8 @@ wsCASE(rtn,filter) ; generate case review page
  . . . . set rpthref=rpthref_"<input type=hidden name=""form"" value="_$p(zform,":",2)_">"
  . . . . set rpthref=rpthref_"<input type=hidden name=""studyid"" value="_sid_">"
  . . . . set rpthref=rpthref_"<input value=""Report"" class=""btn label label-warning"" role=""link"" type=""submit""></form></td>"
- . . . . s rtn(cnt)=rpthref_"</tr>"
+ . . . . ;s rtn(cnt)=rpthref_"</tr>"
+ . . . . s rtn(cnt)="</tr>" ; turn off report 
  . . . e  set rtn(cnt)="<td></td></tr>"
  . . . quit
  . . quit

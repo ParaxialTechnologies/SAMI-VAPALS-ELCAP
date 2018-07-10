@@ -201,6 +201,10 @@ wsVAPALS(ARG,BODY,RESULT) ; vapals post web service - all calls come through thi
  . m ARG=vars
  . d wsReport^SAMICTR0(.RESULT,.ARG)
  ;
+ i route="note" d  q  ; 
+ . m ARG=vars
+ . d wsNote^SAMINOTI(.RESULT,.ARG)
+ ;
  q
  ;
 devhome(rtn,filter) ; temporary home page for development

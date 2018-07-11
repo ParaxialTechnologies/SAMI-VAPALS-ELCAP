@@ -409,30 +409,18 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  if line["1234567890" do  ;
  . do findReplace^%ts(.line,"1234567890","")
  ;
- ;if line["intake.html" do  ;
- ;. do findReplace^%ts(.line,"intake.html","/form?form="_key_"&studyId="_sid)
- ;
- ;if line["background.html" do  ;
- ;. do findReplace^%ts(.line,"background.html","/form?form="_key_"&studyId="_sid)
- ;
- ;if line["ctevaluation.html" do  ;
- ;. do findReplace^%ts(.line,"ctevaluation.html","/form?form="_key_"&studyId="_sid)
- ;
- ;if line["followup.html" do  ;
- ;. do findReplace^%ts(.line,"followup.html","/form?form="_key_"&studyId="_sid)
- ;
- ;if line["pet.html" do  ;
- ;. do findReplace^%ts(.line,"pet.html","/form?form="_key_"&studyId="_sid)
- ;
- ;if line["biopsy.html" do  ;
- ;. do findReplace^%ts(.line,"biopsy.html","/form?form="_key_"&studyId="_sid)
- ;
  if line["XX0002" do  ;
  . i line["XXX" quit  ; 
  . do findReplace^%ts(.line,"XX0002",sid)
  ;
  if line["VEP0001" do  ;
  . do findReplace^%ts(.line,"VEP0001",sid,"a")
+ ;
+ if line["@@FROZEN@@" do  ;
+ . if $g(vals("samistatus"))="complete" d  ;
+ . . d findReplace^%ts(.line,"@@FROZEN@@","true")
+ . e  d  ;
+ . . d findReplace^%ts(.line,"@@FROZEN@@","false")
  ;
  quit  ; end of SAMISUB2
  ;

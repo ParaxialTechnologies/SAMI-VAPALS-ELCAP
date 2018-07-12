@@ -76,7 +76,7 @@
                 e.preventDefault();
                 e.stopPropagation();
 
-                let patient = Object.assign({}, $('#pt-lookup-input').data('vista').patient);
+                let patient = $.extend({}, $('#pt-lookup-input').data('vista').patient);
                 $('#pt-lookup-dfn').val(patient.dfn);
                 $('#pt-lookup-name').val(patient.name);
                 $('#pt-lookup-studyid').val(patient.studyid);

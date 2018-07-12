@@ -162,7 +162,7 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.07.06
+     SNAPSHOT 2018.07.11
     </span>
    </div>
   </footer>
@@ -205,7 +205,7 @@
                 e.preventDefault();
                 e.stopPropagation();
 
-                let patient = Object.assign({}, $('#pt-lookup-input').data('vista').patient);
+                let patient = $.extend({}, $('#pt-lookup-input').data('vista').patient);
                 $('#pt-lookup-dfn').val(patient.dfn);
                 $('#pt-lookup-name').val(patient.name);
                 $('#pt-lookup-studyid').val(patient.studyid);

@@ -187,7 +187,10 @@
                             <div class="alert alert-warning">
                                 <h4>READ before completing the Nodule Grid</h4>
                                 <ul>
-                                    <li> Include all Parenchymal and Endobronchial Nodules.> = 3.0 mm</li>
+                                    <li>Include all Parenchymal and Endobronchial Nodules >= 6.0 mm in diameter</li>
+                                    <li>For BASELINE CT, all nodules are new unless there is a CT more than 3 years
+                                        earlier.
+                                    </li>
                                     <li>For BASELINE CT, the nodules will automatically be sorted with the largest
                                         non-calcified nodule coming first.
                                     </li>
@@ -1947,11 +1950,16 @@
 
             $("[name=cetex]").on("change", function () {
                 const $sidoe = $("#sidoe");
-                if ($(this).val() === "b" && !$sidoe.val()) {
-                    $sidoe.val($("#cedos").val()).trigger('change');
+                if ($("[name=cetex]:checked").val() === "b") { // type of exam (tex) is baseline
+                    if (!$sidoe.val()) {
+                        $sidoe.val($("#cedos").val()).trigger('change');
+                    }
+                    $("select[name^=cect][name$=ch]").val("n"); // set nodule "is it new?" to "new"
                 }
             }).conditionallyEnable({sourceValues: "b", disable: "#non-baseline-container"});
 
+
+            // NODULES
             {% for i in noduleArray %}
                 $("#cect{{ i }}nt").conditionallyEnable({sourceValues: "m", enable: "#cect{{ i }}-container"});
 
@@ -1972,10 +1980,9 @@
 
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
 
-            // NODULES
             // Display the proper number of nodule columns based on the nodules that have a value for
-            // "Is it new", a required field.
-            const $noduleKeyFields = $("[name^=cect][name$=ch]").filter(function () {
+            // "Endobronchial", a required field.
+            const $noduleKeyFields = $("[name^=cect][name$=en]").filter(function () {
                 return $(this).val() !== "" && $(this).val() !== "-";
             });
 

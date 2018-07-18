@@ -1,4 +1,4 @@
-SAMIHOM3 ;ven/gpl - ielcap: forms ;2018-03-07T18:48Z
+SAMIHOM3 ;ven/gpl - ielcap: forms ;2018-07-10  10:51 AM
  ;;18.0;SAMI;;
  ;
  ; Routine SAMIHOM2 contains subroutines for implementing the ELCAP Home
@@ -129,6 +129,17 @@ wsHOME(rtn,filter) ; web service for SAMI homepage
  . new BODY set BODY(1)=""
  . do wsVAPALS(.filter,.BODY,.rtn) 
  ;
+ if $get(filter("dfn"))'="" do  quit  ; V4W/DLW - workaround for "get" access from CPRS
+ . new dfn set dfn=$get(filter("dfn"))
+ . new root set root=$$setroot^%wd("vapals-patients")
+ . new studyid set studyid=$get(@root@(dfn,"samistudyid"))
+ . new BODY
+ . if studyid'="" do
+ . . set BODY(1)="samiroute=casereview&dfn="_dfn_"&studyid="_studyid
+ . else  do
+ . . set BODY(1)="samiroute=lookup&dfn="_dfn_"&studyid="_studyid
+ . do wsVAPALS(.filter,.BODY,.rtn)
+ ;
  do getHome(.rtn,.filter) ; VAPALS homepage
  ;
  ;@stanza 3 termination
@@ -145,6 +156,7 @@ wsVAPALS(ARG,BODY,RESULT) ; vapals post web service - all calls come through thi
  set bdy=$get(BODY(1))
  do parseBody^%wf("vars",.bdy)
  m vars=ARG
+ k ^gpl("vapals","vars")
  merge ^gpl("vapals","vars")=vars
  ;
  n route s route=$g(vars("samiroute"))
@@ -177,10 +189,21 @@ wsVAPALS(ARG,BODY,RESULT) ; vapals post web service - all calls come through thi
  i route="postform" d  q  ;
  . m ARG=vars
  . d wsPostForm^%wf(.ARG,.BODY,.RESULT)
+ . i $g(ARG("form"))["siform" d  ;
+ . . if $$note^SAMINOTI(.ARG) d  ;
+ . . . d wsNote^SAMINOTI(.RESULT,.ARG)
  ;
  i route="deleteform" d  q  ;
  . m ARG=vars
  . d deleteForm^SAMICAS2(.RESULT,.ARG)
+ ;
+ i route="ctreport" d  q  ;
+ . m ARG=vars
+ . d wsReport^SAMICTR0(.RESULT,.ARG)
+ ;
+ i route="note" d  q  ; 
+ . m ARG=vars
+ . d wsNote^SAMINOTI(.RESULT,.ARG)
  ;
  q
  ;

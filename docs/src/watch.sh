@@ -8,10 +8,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 ${DIR}/build.sh
 
 # Install the when-changed program if not available
-command -v when-changed >/dev/null 2>&1 || { sudo pip install https://github.com/joh/when-changed/archive/master.zip; }
+command -v when-changed >/dev/null 2>&1 || { echo "Installing when-changed..."; sudo pip install https://github.com/joh/when-changed/archive/master.zip; }
 
 #automatically build files when changed.
-
-
 echo "Watching ${DIR}..."
 when-changed -vrs "${DIR}/" "${DIR}/build.sh"

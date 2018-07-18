@@ -13,7 +13,7 @@
         </h2>
 
         <hr/>
-        <form action="{{ "intake.html" if mockup else "/vapals" }}" class="validated" method="{{ formMethod }}"
+        <form action="{{ formPage+".html" if mockup else "/vapals" }}" class="validated" method="{{ formMethod }}"
               data-fv-icon-valid="glyphicon glyphicon-ok"
               data-fv-icon-invalid="glyphicon glyphicon-remove"
               data-fv-icon-validating="glyphicon glyphicon-refresh"
@@ -33,7 +33,7 @@
                     <label>How did you learn about LSS?</label>
                     {{ f.checkbox("silnph", "1", "Phone") }}
                     {{ f.checkbox("silnls", "1", "Letter sent") }}
-                    {{ f.checkbox("silnlr", "1", "Letter sent and received") }}
+                    {{ f.checkbox("silnpu", "1", "Pulmonary") }}
                     {{ f.checkbox("silnpc", "1", "PCP") }}
                 </div>
             </div>
@@ -49,8 +49,8 @@
             <div class="row">
                 <div class="col-md-12 form-group">
                     <label>Rural status</label>
-                    {{ f.inlineRadio("sirs", "sipav-u","u","Urban", true) }}
-                    {{ f.inlineRadio("sirs", "sipav-r","r","Rural") }}
+                    {{ f.inlineRadio("sirs", "sirs-u","u","Urban", true) }}
+                    {{ f.inlineRadio("sirs", "sirs-r","r","Rural") }}
                 </div>
             </div>
 
@@ -89,6 +89,14 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="form-group col-sm-6 ">
+                    <label for="sippn">Phone Number</label>
+                    <input type="text" name="sippn" id="sippn" class="form-control"
+                           data-fv-phone="true" data-fv-phone-country="US">
+                </div>
+            </div>
+
             <hr/>
 
             <h3>Smoking History</h3>
@@ -117,8 +125,11 @@
                     {{ f.floatingLabel('sippd', 'How many packs of cigarettes did you smoke per day (PPD)?') }}
                 </div>
                 <div class="col-sm-2 form-group">
-                    <input class="form-control numeric" type="text" name="sippd" id="sippd" maxlength="4">
+                    <span id="sippd-val" class="control-label"/>
                 </div>
+                <input  type="hidden" name="sippd" id="sippd" />
+                
+                
             </div>
             <div class="row">
                 <div class="col-md-4">
@@ -135,9 +146,10 @@
                     {{ f.floatingLabel('sippy', 'Reported pack years') }}
                 </div>
                 <div class="col-sm-2 form-group">
-                    <input class="form-control numeric" type="text" name="sippy" id="sippy"
-                           required="required" maxlength="4">
+                    <span id="sippy-val"/>
                 </div>
+                <input  type="hidden" name="sippy" id="sippy" /> 
+               
             </div>
             <div class="row">
                 <div class="col-md-4">
@@ -181,6 +193,12 @@
             </div>
 
             <hr/>
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    {{ f.checkbox("siidmdc","1", "Informed Decision Making discussion complete", {"required":"required", "data-fv-notempty-message":"Confirm that the discussion has taken place"}) }}
+                </div>
+
+            </div>
             <p class="alert alert-warning">
                 Veteran of age and exposure to cigarette smoke as described above, and without a current
                 diagnosis or obvious symptoms suggestive of lung cancer, has been educated today about the
@@ -223,17 +241,54 @@
             <hr/>
             <div class="pull-left">
                 <a class="btn btn-danger navigation" data-method="{{ formMethod }}" data-samiroute="deleteform"
-                   data-form="">
+                   href="{{ "intake.html" if mockup else "#!" }}" data-form="@@FORMKEY@@">
                     <span class="glyphicon glyphicon-trash"></span>Delete</a>
             </div>
             <div class="pull-right">
-{#                <input type="submit" value="Submit" class="btn btn-primary">#}
                 <button class="btn btn-primary" id="submit-button" type="submit">
                     Submit
                 </button>
             </div>
-<!--
-            -->
         </form>
     </div>
+{% endblock %}
+
+{% block script %}
+    <script language="JavaScript">
+        $(function () {
+            $("#sicpd").on('keyup change', function () {
+                var cigsPerDay = $("#sicpd").val();
+                if (cigsPerDay >= 0) {
+                    var cpd = (cigsPerDay/20).toFixed(2);
+                    if (cpd > 0) {
+                        $("#sippd").val(cpd);
+                        $("#sippd-val").text(cpd);
+                    }
+                    else {
+                        $("#sippd").val("");
+                        $("#sippd-val").text("-");
+                    }
+                    $("#sippd").change();
+                }
+            }).trigger('change');
+
+            $("#sippd, #sisny").on('keyup change', function () {
+                var packsPerDay = $("#sippd").val();
+                var cigYears = $("#sisny").val();
+                if (packsPerDay > 0 && cigYears >0) {
+                    var packYears = (packsPerDay*cigYears).toFixed(1);
+                    if (packYears > 0) {
+                        $("#sippy").val(packYears);
+                        $("#sippy-val").text(packYears);
+                    } 
+                } else {
+                     $("#sippy").val("");
+                     $("#sippy-val").text("-");
+                }
+                
+            }).first().trigger('change');
+
+            $(".validated").formValidation({framework: 'bootstrap'});
+        });
+    </script>
 {% endblock %}

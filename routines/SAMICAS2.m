@@ -187,6 +187,11 @@ wsCASE(rtn,filter) ; generate case review page
  set nuhref=nuhref_"<td><input type=hidden name=""samiroute"" value=""nuform"">"
  set nuhref=nuhref_"<input type=hidden name=""studyid"" value="_sid_">"
  set nuhref=nuhref_"<input value=""New Form"" class=""btn label label-warning"" role=""link"" type=""submit""></form></td>"
+ new notehref set notehref="<form method=POST action=""/vapals"">"
+ set notehref=notehref_"<input type=hidden name=""samiroute"" value=""note"">"
+ set notehref=notehref_"<input type=hidden name=""studyid"" value="_sid_">"
+ set notehref=notehref_"<input type=hidden name=""form"" value="_$p(sikey,":",2)_">"
+ set notehref=notehref_"<input value=""Intake Note"" class=""btn btn-link"" role=""link"" type=""submit""></form>"
  s cnt=cnt+1
  n last5 s last5=$$GETLAST5^SAMIFRM2(sid)
  n pname s pname=$$GETNAME^SAMIFRM2(sid)
@@ -203,36 +208,9 @@ wsCASE(rtn,filter) ; generate case review page
  new samistatus s samistatus=""
  if $$getSamiStatus(sid,sikey)="incomplete" set samistatus="(incomplete)"
  set cnt=cnt+1
- set rtn(cnt)="</form>"_samistatus_"</td>"_$char(13)
+ set rtn(cnt)="</form>"_samistatus_notehref_"</td>"_$char(13)
  set cnt=cnt+1
  set rtn(cnt)=nuhref_"</tr>"
- ;
- ;@stanza 5 background form
- ;
- ;new sbkey set sbkey=$order(items("sbfor"))
- ;if sbkey="" set sbkey="sbform-2017-12-10"
- ;new sbdate set sbdate=$$getDateKey^SAMICASE(sbkey)
- ;set sbkey="vapals:"_sbkey
- ;new sbdispdate set sbdispdate=$$key2dispDate(sbdate)
- ;set cnt=cnt+1
- ;;set rtn(cnt)="<tr><td> "_sid_" </td><td> - </td><td> - </td><td> - </td><td>"_sbdispdate_"</td><td>"_$char(13)
- ;set rtn(cnt)="<tr><td> "_last5_" </td><td> - </td><td> - </td><td>"_sbdispdate_"</td><td>"_$char(13)
- ;set cnt=cnt+1
- ;set rtn(cnt)="<form method=""post"" action=""/vapals"">"_$char(13)
- ;set cnt=cnt+1
- ;set rtn(cnt)="<input name=""samiroute"" value=""form"" type=""hidden"">"_$char(13)
- ;set cnt=cnt+1
- ;set rtn(cnt)=" <input name=""studyid"" value="""_sid_""" type=""hidden"">"_$char(13)
- ;set cnt=cnt+1
- ;set rtn(cnt)=" <input name=""form"" value="""_sbkey_""" type=""hidden"">"_$char(13)
- ;set cnt=cnt+1
- ;set rtn(cnt)=" <input value=""Background"" class=""btn btn-link"" role=""link"" type=""submit"">"_$char(13)
- ;
- ;new samistatus s samistatus=""
- ;if $$getSamiStatus(sid,sbkey)="incomplete" set samistatus="(incomplete)"
- ;
- ;set cnt=cnt+1
- ;set rtn(cnt)="</form>"_samistatus_"</td><td></td></tr>"
  ;
  ;@stanza 6 rest of the forms
  ;
@@ -265,7 +243,17 @@ wsCASE(rtn,filter) ; generate case review page
  . . . new samistatus s samistatus=""
  . . . if $$getSamiStatus(sid,zform)="incomplete" set samistatus="(incomplete)"
  . . . set cnt=cnt+1
- . . . set rtn(cnt)="</form>"_samistatus_"</td><td></td></tr>"
+ . . . set rtn(cnt)="</form>"_samistatus_"</td>"
+ . . . set cnt=cnt+1
+ . . . i zform["ceform" d  ;
+ . . . . new rpthref set rpthref="<form method=POST action=""/vapals"">"
+ . . . . set rpthref=rpthref_"<td><input type=hidden name=""samiroute"" value=""ctreport"">"
+ . . . . set rpthref=rpthref_"<input type=hidden name=""form"" value="_$p(zform,":",2)_">"
+ . . . . set rpthref=rpthref_"<input type=hidden name=""studyid"" value="_sid_">"
+ . . . . set rpthref=rpthref_"<input value=""Report"" class=""btn label label-warning"" role=""link"" type=""submit""></form></td>"
+ . . . . ;s rtn(cnt)=rpthref_"</tr>"
+ . . . . s rtn(cnt)="</tr>" ; turn off report 
+ . . . e  set rtn(cnt)="<td></td></tr>"
  . . . quit
  . . quit
  . quit
@@ -295,7 +283,6 @@ wsCASE(rtn,filter) ; generate case review page
  ;@stanza 9 termination
  ;
  quit  ; end of wsCASE
- ;
  ;
  ;
 getTemplate(return,form) ; get html template
@@ -332,6 +319,16 @@ getTemplate(return,form) ; get html template
  quit  ; end of getTemplate
  ;
  ;
+countItems(sid) ; extrinsic returns how many forms the patient has
+ ; used before deleting a patient
+ new groot set groot=$$setroot^%wd("vapals-patients")
+ quit:'$data(@groot@("graph",sid)) 0  ; nothing there
+ n cnt,zi
+ s zi=""
+ s cnt=0
+ f  s zi=$o(@groot@("graph",sid,zi)) q:zi=""  d  ;
+ . s cnt=cnt+1
+ q cnt
  ;
 getItems(ary,sid) ; get items available for studyid
  ;
@@ -374,12 +371,14 @@ getItems(ary,sid) ; get items available for studyid
  . if zkey1="sbform" s zform="vapals:sbform"
  . if zkey1="sbform" s fname="Background"
  . if zkey1="ceform" s zform="vapals:ceform"
- . if zkey1="fuform" s zform="vapals:ceform"
+ . if zkey1="fuform" s zform="vapals:fuform"
  . if zkey1="fuform" s fname="Follow-up"
  . if zkey1="bxform" s fname="Biopsy"
  . if zkey1="bxform" s zform="vapals:bxform"
  . if zkey1="ptform" s zform="vapals:ptform"
  . if zkey1="ptform" s fname="Pet Evaluation"
+ . if zkey1="itform" s zform="vapals:itform"
+ . if zkey1="itform" s fname="Intervention"
  . if $get(fname)="" set fname="unknown"
  . new zdate set zdate=$extract(zi,$length(zkey1)+2,$length(zi))
  . set tary("sort",zdate,zform,zi,fname)=""
@@ -504,13 +503,13 @@ wsNuForm(rtn,filter) ; select new form for patient (get service)
  . n ln s ln=temp(zi)
  . n touched s touched=0
  . ;
- . i ln["id" i ln["studyIdMenu" d  ;
- . . s zi=zi+4
+ . ;i ln["id" i ln["studyIdMenu" d  ;
+ . ;. s zi=zi+4
  . ;
- . i ln["home.html" d  ;
- . . d findReplace^%ts(.ln,"home.html","/vapals")
- . . s temp(zi)=ln
- . . s touched=1
+ . ;i ln["home.html" d  ;
+ . ;. d findReplace^%ts(.ln,"home.html","/vapals")
+ . ;. s temp(zi)=ln
+ . ;. s touched=1
  . ;
  . i ln["href" i 'touched d  ;
  . . d fixHref^SAMIFRM2(.ln)
@@ -520,39 +519,44 @@ wsNuForm(rtn,filter) ; select new form for patient (get service)
  . . d fixSrc^SAMIFRM2(.ln)
  . . s temp(zi)=ln
  . ;
- . i ln["form" i ln["todo" d  ;
- . . d findReplace^%ts(.ln,"todo","/vapals")
- . . s cnt=cnt+1
- . . s rtn(cnt)=ln
- . . s cnt=cnt+1
- . . s rtn(cnt)="<input type=hidden name=""samiroute"" value=""addform"">"
- . . s cnt=cnt+1
- . . s rtn(cnt)="<input type=hidden name=""sid"" value="_sid_">"
- . . s zi=zi+1
+ . ;i ln["form" i ln["todo" d  ;
+ . ;. d findReplace^%ts(.ln,"todo","/vapals")
+ . ;. s cnt=cnt+1
+ . ;. s rtn(cnt)=ln
+ . ;. s cnt=cnt+1
+ . ;. s rtn(cnt)="<input type=hidden name=""samiroute"" value=""addform"">"
+ . ;. s cnt=cnt+1
+ . ;. s rtn(cnt)="<input type=hidden name=""sid"" value="_sid_">"
+ . ;. s zi=zi+1
  . ;
  . ;i ln["background" s temp(zi)=""
- . i ln["background" d  ;
- . . d findReplace^%ts(.ln,"background","sbform")
- . . s temp(zi)=ln
- . i ln["followup" d  ;
- . . d findReplace^%ts(.ln,"followup","fuform")
- . . s temp(zi)=ln
- . i ln["pet" d  ;
- . . d findReplace^%ts(.ln,"pet","ptform")
- . . s temp(zi)=ln
- . i ln["ctevaluation" d  ;
- . . d findReplace^%ts(.ln,"ctevaluation","ceform")
- . . s temp(zi)=ln
- . i ln["biopsy" d  ;
- . . d findReplace^%ts(.ln,"biopsy","bxform")
- . . s temp(zi)=ln
- . i ln["newform" d  ;
- . . s temp(zi)=""
- . . s temp(zi+1)=""
+ . ;i ln["background" d  ;
+ . ;. d findReplace^%ts(.ln,"background","sbform")
+ . ;. s temp(zi)=ln
+ . ;i ln["followup" d  ;
+ . ;. d findReplace^%ts(.ln,"followup","fuform")
+ . ;. s temp(zi)=ln
+ . ;i ln["pet" d  ;
+ . ;. d findReplace^%ts(.ln,"pet","ptform")
+ . ;. s temp(zi)=ln
+ . ;i ln["ctevaluation" d  ;
+ . ;. d findReplace^%ts(.ln,"ctevaluation","ceform")
+ . ;. s temp(zi)=ln
+ . ;i ln["biopsy" d  ;
+ . ;. d findReplace^%ts(.ln,"biopsy","bxform")
+ . ;. s temp(zi)=ln
+ . ;i ln["newform" d  ;
+ . ;. s temp(zi)=""
+ . ;. s temp(zi+1)=""
  . ;
- . i ln["<script" i temp(zi+1)["function" d  ;
- . . s zi=$$scanFor^SAMIHOM2(.temp,zi,"</script")
- . . s zi=zi+1
+ . if ln["@@SID@@" do  ;
+ . . do findReplace^%ts(.ln,"@@SID@@",sid)
+ . . s temp(zi)=ln
+ . . quit
+ . ;
+ . ;i ln["<script" i temp(zi+1)["function" d  ;
+ . ;. s zi=$$scanFor^SAMIHOM2(.temp,zi,"</script")
+ . ;. s zi=zi+1
  . ; 
  . s cnt=cnt+1
  . set rtn(cnt)=temp(zi)
@@ -645,6 +649,14 @@ wsNuFormPost(ARGS,BODY,RESULT) ; post new form selection (post service)
  . set ARGS("studyid")=sid
  . set ARGS("form")="vapals:ptform"
  . do makePtform(sid,key)
+ . quit
+ ;
+ if nuform="itform" do  ;
+ . new key set key="itform-"_datekey
+ . set ARGS("key")=key
+ . set ARGS("studyid")=sid
+ . set ARGS("form")="vapals:itform"
+ . do makeItform(sid,key)
  . quit
  ;
  do wsGetForm^%wf(.RESULT,.ARGS)
@@ -783,6 +795,38 @@ makePtform(sid,key) ; create ct evaluation form
  ;
  quit  ; end of makePtform
  ;
+makeItform(sid,key) ; create intervention form
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;
+ ;@called-by
+ ; wsNuFormPost
+ ;@calls
+ ; $$setroot^%wd
+ ; $$sid2num^SAMIHOM2
+ ;@input
+ ; sid = studiy id
+ ; key =
+ ;@output
+ ; @root@("graph",sid,key)
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ;@stanza 2 create ct eval form
+ ;
+ new root set root=$$setroot^%wd("vapals-patients")
+ new sien set sien=$$sid2num^SAMIHOM2(sid)
+ quit:+sien=0
+ new cdate set cdate=$piece(key,"itform-",2)
+ merge @root@("graph",sid,key)=@root@(sien)
+ set @root@("graph",sid,key,"samicreatedate")=cdate
+ d setSamiStatus^SAMICAS2(sid,key,"incomplete")
+ ;
+ ;@stanza 3 termination
+ ;
+ quit  ; end of makePtform
+ ;
 makeBxform(sid,key) ; create ct evaluation form
  ;
  ;@stanza 1 invocation, binding, & branching
@@ -844,7 +888,6 @@ deleteForm(RESULT,ARGS) ; deletes a form if it is incomplete
  q:sid=""
  s form=$g(ARGS("form"))
  q:form=""
- i form["sbform" q  ;
  i form["siform" q  ;
  ;i '$d(@root@("graph",sid,form)) q  ; form does not exist
  i $$getSamiStatus^SAMICAS2(sid,form)="incomplete" d  ;

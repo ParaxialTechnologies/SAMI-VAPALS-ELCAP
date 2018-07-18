@@ -13,7 +13,7 @@
         </h2>
 
         <hr/>
-        <form action="{{ "followup.html" if mockup else "/vapals" }}" method="{{ formMethod }}"
+        <form action="{{ formPage+".html" if mockup else "/vapals" }}" method="{{ formMethod }}"
               class="validated"
               data-fv-icon-valid="glyphicon glyphicon-ok"
               data-fv-icon-invalid="glyphicon glyphicon-remove"
@@ -71,11 +71,11 @@
                         {{ f.floatingLabel('siopln', 'Ordered by') }}
                     </div>
                     <div class="col-md-4 form-group">
-                        <input type=text name="siopln" class="form-control">
+                        <input type=text name="siopfn" id="siopfn" class="form-control">
                         <span class="help-block small">First Name</span>
                     </div>
                     <div class="col-md-4 form-group">
-                        <input type=text name="siopln" class="form-control">
+                        <input type=text name="siopln" id="siopln" class="form-control">
                         <span class="help-block small">Last Name</span>
 
                     </div>
@@ -86,7 +86,7 @@
                         {{ f.floatingLabel('siopnpi', 'National Provider ID (NPI)') }}
                     </div>
                     <div class="col-sm-2 form-group">
-                        <input type=text name="siopnpi" class="form-control numeric" required="required">
+                        <input type=text name="siopnpi" id="siopnpi" class="form-control numeric" required="required">
                     </div>
                 </div>
 
@@ -479,7 +479,11 @@
                     {{ f.inlineRadio("sicpd", "sittq-y", "y", "yes", true) }}
                 </div>
             </div>
-
+            <div class="pull-left">
+                <a class="btn btn-danger navigation" data-method="{{ formMethod }}" data-samiroute="deleteform"
+                   href="{{ "followup.html" if mockup else "#!" }}" data-form="@@FORMKEY@@">
+                    <span class="glyphicon glyphicon-trash"></span>Delete</a>
+            </div>
             <div class="pull-right">
                 <input type="hidden" name="samistatus" value=""/>
                 <button type="submit" class="btn btn-default" id="save-for-later-button">Save for Later</button>
@@ -516,7 +520,9 @@
             $("[name=sier]").conditionallyEnable({enable: "#sier-container"});
             $("[name=sisa]").conditionallyEnable({enable: "#sisa-container-y", disable: "sisa-container-n"});
             $("[name=sittq]").conditionallyEnable({enable: "#sittq-container"});
-            $("#siscl").conditionallyEnable({sourceValues: "l", enable: "#siscos"})
+            $("#siscl").conditionallyEnable({sourceValues: "l", enable: "#siscos"});
+
+            $(".validated").formValidation({framework: 'bootstrap'});
         });
 
     </script>

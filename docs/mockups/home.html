@@ -15,6 +15,7 @@
   <link href="../www/lib/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet"/>
   <link href="../www/lib/jquery-ui-1.12.1/jquery-ui.structure.min.css" rel="stylesheet"/>
   <link href="../www/lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
+  <link href="../www/lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
  </head>
  <body>
   <script src="../www/lib/jquery-3.3.1.min.js">
@@ -33,9 +34,15 @@
   </script>
   <script src="../www/lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js">
   </script>
+  <script src="../www/lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.js">
+  </script>
+  <script src="../www/lib/clipboard.js">
+  </script>
   <script src="https://www.gstatic.com/charts/loader.js" type="text/javascript">
   </script>
   <script src="../www/jquery-conditonally-enable.js">
+  </script>
+  <script src="../www/jquery-conditonally-display.js">
   </script>
   <script src="../www/jqueryui-vista-filemanAutocomplete.js">
   </script>
@@ -89,7 +96,7 @@
        </h3>
       </div>
       <div class="panel-body">
-       <form action="/vapals" id="pt-lookup-form" method="post">
+       <form action="home.html" id="pt-lookup-form" method="post">
         <input id="pt-lookup-samiroute" name="samiroute" type="hidden" value=""/>
         <input id="pt-lookup-dfn" name="dfn" type="hidden" value=""/>
         <input id="pt-lookup-name" name="name" type="hidden" value=""/>
@@ -155,12 +162,12 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.06.04
+     SNAPSHOT 2018.07.16
     </span>
    </div>
   </footer>
   <script language="JavaScript">
-   var studyId = "@@SID@@";
+   const studyId = "@@SID@@";
     if (studyId) {
         $("#studyIdMenu").show();
     }
@@ -168,15 +175,16 @@
     $(function () {
         //TODO: remove these debug functions.
         // These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly.
-        $.each($("form.validated").find("select, textarea, input:visible"), function (i, o) {
-            $input = $(this);
-            if ($input.closest(".form-group").length == 0) {
+        const $forms = $("form.validated");
+        $.each($forms.find("select, textarea, input:visible"), function (i, o) {
+            const $input = $(this);
+            if ($input.closest(".form-group").length === 0) {
                 console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
             }
         });
 
-        $.each($("form.validated").find("input[type=hidden][required]"), function (i, o) {
-            $input = $(this);
+        $.each($forms.find("input[type=hidden][required]"), function (i, o) {
+            const $input = $(this);
             console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
         });
     })
@@ -197,7 +205,7 @@
                 e.preventDefault();
                 e.stopPropagation();
 
-                let patient = Object.assign({}, $('#pt-lookup-input').data('vista').patient);
+                let patient = $.extend({}, $('#pt-lookup-input').data('vista').patient);
                 $('#pt-lookup-dfn').val(patient.dfn);
                 $('#pt-lookup-name').val(patient.name);
                 $('#pt-lookup-studyid').val(patient.studyid);
@@ -258,10 +266,6 @@
             drawSite();
             //TODO: redraw on window resize
         }
-  </script>
-  <script language="JavaScript">
-   //Initialize Form Validation
-    $(".validated").formValidation({framework: 'bootstrap'});
   </script>
  </body>
 </html>

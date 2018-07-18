@@ -15,6 +15,7 @@
   <link href="lib/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet"/>
   <link href="lib/jquery-ui-1.12.1/jquery-ui.structure.min.css" rel="stylesheet"/>
   <link href="lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
+  <link href="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
  </head>
  <body>
   <script src="lib/jquery-3.3.1.min.js">
@@ -33,9 +34,15 @@
   </script>
   <script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js">
   </script>
+  <script src="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.js">
+  </script>
+  <script src="lib/clipboard.js">
+  </script>
   <script src="https://www.gstatic.com/charts/loader.js" type="text/javascript">
   </script>
   <script src="jquery-conditonally-enable.js">
+  </script>
+  <script src="jquery-conditonally-display.js">
   </script>
   <script src="jqueryui-vista-filemanAutocomplete.js">
   </script>
@@ -109,56 +116,59 @@
       </div>
       <div class="col-sm-6 col-md-3 col-lg-2">
        <div class="form-group">
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbfc-n" name="sbfc" required="required" type="radio" value="n"/>
+        <label class="radio-inline" for="sbfc-n">
+         <input id="sbfc-n" name="sbfc" type="radio" value="n"/>
          No
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbfc-y" name="sbfc" required="required" type="radio" value="y"/>
+        <label class="radio-inline" for="sbfc-y">
+         <input id="sbfc-y" name="sbfc" type="radio" value="y"/>
          Yes
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbfc-q" name="sbfc" required="required" type="radio" value="q"/>
+        <label class="radio-inline" for="sbfc-q">
+         <input id="sbfc-q" name="sbfc" type="radio" value="q"/>
          ?
         </label>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbfc-container">
-       <div class="form-group">
-        <label class="control-label" for="sbfcf-n">
+      <div id="sbfc-container" style="display: none;">
+       <div class="form-group col-sm-4 col-md-2">
+        <label class="control-label required" for="sbfcf-n">
          Father?
         </label>
-        <label class="radio-inline">
-         <input id="sbfcf-n" name="sbfcf" type="radio" value="n"/>
+        <br/>
+        <label class="radio-inline" for="sbfcf-n">
+         <input data-fv-notempty-message="Please select a value" id="sbfcf-n" name="sbfcf" required="required" type="radio" value="n"/>
          No
         </label>
-        <label class="radio-inline">
+        <label class="radio-inline" for="sbfcf-y">
          <input id="sbfcf-y" name="sbfcf" type="radio" value="y"/>
          Yes
         </label>
        </div>
-       <div class="form-group">
-        <label class="control-label" for="sbfcm-n" style="padding-left:15px;">
+       <div class="form-group col-sm-4 col-md-2">
+        <label class="control-label required" for="sbfcm-n">
          Mother?
         </label>
-        <label class="radio-inline">
-         <input id="sbfcm-n" name="sbfcm" type="radio" value="n"/>
+        <br/>
+        <label class="radio-inline" for="sbfcm-n">
+         <input data-fv-notempty-message="Please select a value" id="sbfcm-n" name="sbfcm" required="required" type="radio" value="n"/>
          No
         </label>
-        <label class="radio-inline">
+        <label class="radio-inline" for="sbfcm-y">
          <input id="sbfcm-y" name="sbfcm" type="radio" value="y"/>
          Yes
         </label>
        </div>
-       <div class="form-group">
-        <label class="control-label" for="sbfcs-n" style="padding-left:15px;">
+       <div class="form-group col-sm-4 col-md-2">
+        <label class="control-label required" for="sbfcs-n">
          Siblings?
         </label>
-        <label class="radio-inline">
-         <input id="sbfcs-n" name="sbfcs" type="radio" value="n"/>
+        <br/>
+        <label class="radio-inline" for="sbfcs-n">
+         <input data-fv-notempty-message="Please select a value" id="sbfcs-n" name="sbfcs" required="required" type="radio" value="n"/>
          No
         </label>
-        <label class="radio-inline">
+        <label class="radio-inline" for="sbfcs-y">
          <input id="sbfcs-y" name="sbfcs" type="radio" value="y"/>
          Yes
         </label>
@@ -177,21 +187,21 @@
       </div>
       <div class="col-sm-6 col-md-3 col-lg-2">
        <div class="form-group">
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbhco-n" name="sbhco" required="required" type="radio" value="n"/>
+        <label class="radio-inline" for="sbhco-n">
+         <input id="sbhco-n" name="sbhco" type="radio" value="n"/>
          No
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbhco-y" name="sbhco" required="required" type="radio" value="y"/>
+        <label class="radio-inline" for="sbhco-y">
+         <input id="sbhco-y" name="sbhco" type="radio" value="y"/>
          Yes
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbhco-q" name="sbhco" required="required" type="radio" value="q"/>
+        <label class="radio-inline" for="sbhco-q">
+         <input id="sbhco-q" name="sbhco" type="radio" value="q"/>
          ?
         </label>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbhco-container">
+      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbhco-container" style="display: none;">
        <div class="form-group">
         <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbhcdod" maxlength="4" name="sbhcdod" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
        </div>
@@ -212,30 +222,30 @@
       </div>
       <div class="col-sm-6 col-md-3 col-lg-2">
        <div class="form-group">
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmpa-n" name="sbmpa" required="required" type="radio" value="n"/>
+        <label class="radio-inline" for="sbmpa-n">
+         <input id="sbmpa-n" name="sbmpa" type="radio" value="n"/>
          No
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmpa-y" name="sbmpa" required="required" type="radio" value="y"/>
+        <label class="radio-inline" for="sbmpa-y">
+         <input id="sbmpa-y" name="sbmpa" type="radio" value="y"/>
          Yes
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmpa-q" name="sbmpa" required="required" type="radio" value="q"/>
+        <label class="radio-inline" for="sbmpa-q">
+         <input id="sbmpa-q" name="sbmpa" type="radio" value="q"/>
          ?
         </label>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpa-container">
+      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpa-container" style="display: none;">
        <div class="form-group">
-        <label class="" for="sbmpat-n">
+        <label class="required" for="sbmpat-n">
          Under current treatment?
         </label>
-        <label class="radio-inline">
+        <label class="radio-inline" for="sbmpat-n">
          <input data-fv-notempty-message="Please select a value" id="sbmpat-n" name="sbmpat" required="required" type="radio" value="n"/>
          No
         </label>
-        <label class="radio-inline">
+        <label class="radio-inline" for="sbmpat-y">
          <input data-fv-notempty-message="Please select a value" id="sbmpat-y" name="sbmpat" required="required" type="radio" value="y"/>
          Yes
         </label>
@@ -254,21 +264,21 @@
       </div>
       <div class="col-sm-6 col-md-3 col-lg-2">
        <div class="form-group">
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmpc-n" name="sbmpc" required="required" type="radio" value="n"/>
+        <label class="radio-inline" for="sbmpc-n">
+         <input id="sbmpc-n" name="sbmpc" type="radio" value="n"/>
          No
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmpc-y" name="sbmpc" required="required" type="radio" value="y"/>
+        <label class="radio-inline" for="sbmpc-y">
+         <input id="sbmpc-y" name="sbmpc" type="radio" value="y"/>
          Yes
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmpc-q" name="sbmpc" required="required" type="radio" value="q"/>
+        <label class="radio-inline" for="sbmpc-q">
+         <input id="sbmpc-q" name="sbmpc" type="radio" value="q"/>
          ?
         </label>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpc-container">
+      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpc-container" style="display: none;">
        <div class="form-group">
         <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpcw" maxlength="4" name="sbmpcw" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
        </div>
@@ -286,38 +296,39 @@
       </div>
       <div class="col-sm-6 col-md-3 col-lg-2">
        <div class="form-group">
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmpht-n" name="sbmpht" required="required" type="radio" value="n"/>
+        <label class="radio-inline" for="sbmpht-n">
+         <input id="sbmpht-n" name="sbmpht" type="radio" value="n"/>
          No
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmpht-y" name="sbmpht" required="required" type="radio" value="y"/>
+        <label class="radio-inline" for="sbmpht-y">
+         <input id="sbmpht-y" name="sbmpht" type="radio" value="y"/>
          Yes
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmpht-q" name="sbmpht" required="required" type="radio" value="q"/>
+        <label class="radio-inline" for="sbmpht-q">
+         <input id="sbmpht-q" name="sbmpht" type="radio" value="q"/>
          ?
         </label>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpht-container">
-       <div class="form-group" style="vertical-align: top;">
-        <label class="form-check-inline" for="sbmphtt-n">
+      <div class="" id="sbmpht-container" style="display: none;">
+       <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
+        <label class="form-check-inline required" for="sbmphtt-n">
          Treated?
         </label>
-        <label class="radio-inline">
-         <input id="sbmphtt-n" name="sbmphtt" type="radio" value="n"/>
+        <br/>
+        <label class="radio-inline" for="sbmphtt-n">
+         <input data-fv-notempty-message="Please select a value" id="sbmphtt-n" name="sbmphtt" required="required" type="radio" value="n"/>
          No
         </label>
-        <label class="radio-inline">
+        <label class="radio-inline" for="sbmphtt-y">
          <input id="sbmphtt-y" name="sbmphtt" type="radio" value="y"/>
          Yes
         </label>
        </div>
-       <div class="form-group" style="vertical-align: top;margin-left:10px;">
-        <input class="form-control input-sm numeric" data-fv-integer="true" id="sbmphtsw" maxlength="4" name="sbmphtsw" placeholder="Since (year)?" required="required" type="text"/>
+       <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
+        <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmphtsw" maxlength="4" name="sbmphtsw" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
        </div>
-       <div class="form-group" style="vertical-align: top;">
+       <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
         <input class="form-control input-sm" id="sbmphthv" name="sbmphthv" placeholder="Highest Value?" type="text"/>
        </div>
       </div>
@@ -334,30 +345,31 @@
       </div>
       <div class="col-sm-6 col-md-3 col-lg-2">
        <div class="form-group">
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmphc-n" name="sbmphc" required="required" type="radio" value="n"/>
+        <label class="radio-inline" for="sbmphc-n">
+         <input id="sbmphc-n" name="sbmphc" type="radio" value="n"/>
          No
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmphc-y" name="sbmphc" required="required" type="radio" value="y"/>
+        <label class="radio-inline" for="sbmphc-y">
+         <input id="sbmphc-y" name="sbmphc" type="radio" value="y"/>
          Yes
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmphc-q" name="sbmphc" required="required" type="radio" value="q"/>
+        <label class="radio-inline" for="sbmphc-q">
+         <input id="sbmphc-q" name="sbmphc" type="radio" value="q"/>
          ?
         </label>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmphc-container">
+      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmphc-container" style="display: none;">
        <div class="form-group">
-        <label class="control-label" for="sbmphct-n">
+        <label class="control-label required" for="sbmphct-n">
          Treated?
         </label>
-        <label class="radio-inline">
-         <input id="sbmphct-n" name="sbmphct" type="radio" value="n"/>
+        <br/>
+        <label class="radio-inline" for="sbmphct-n">
+         <input data-fv-notempty-message="Please select a value" id="sbmphct-n" name="sbmphct" required="required" type="radio" value="n"/>
          No
         </label>
-        <label class="radio-inline">
+        <label class="radio-inline" for="sbmphct-y">
          <input id="sbmphct-y" name="sbmphct" type="radio" value="y"/>
          Yes
         </label>
@@ -376,21 +388,21 @@
       </div>
       <div class="col-sm-6 col-md-3 col-lg-2">
        <div class="form-group">
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmpas-n" name="sbmpas" required="required" type="radio" value="n"/>
+        <label class="radio-inline" for="sbmpas-n">
+         <input id="sbmpas-n" name="sbmpas" type="radio" value="n"/>
          No
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmpas-y" name="sbmpas" required="required" type="radio" value="y"/>
+        <label class="radio-inline" for="sbmpas-y">
+         <input id="sbmpas-y" name="sbmpas" type="radio" value="y"/>
          Yes
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmpas-q" name="sbmpas" required="required" type="radio" value="q"/>
+        <label class="radio-inline" for="sbmpas-q">
+         <input id="sbmpas-q" name="sbmpas" type="radio" value="q"/>
          ?
         </label>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpas-container">
+      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpas-container" style="display: none;">
        <div class="form-group">
         <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpasw" maxlength="4" name="sbmpasw" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
        </div>
@@ -411,25 +423,25 @@
       </div>
       <div class="col-sm-6 col-md-3 col-lg-2">
        <div class="form-group">
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmpmi-n" name="sbmpmi" required="required" type="radio" value="n"/>
+        <label class="radio-inline" for="sbmpmi-n">
+         <input id="sbmpmi-n" name="sbmpmi" type="radio" value="n"/>
          No
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmpmi-y" name="sbmpmi" required="required" type="radio" value="y"/>
+        <label class="radio-inline" for="sbmpmi-y">
+         <input id="sbmpmi-y" name="sbmpmi" type="radio" value="y"/>
          Yes
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmpmi-q" name="sbmpmi" required="required" type="radio" value="q"/>
+        <label class="radio-inline" for="sbmpmi-q">
+         <input id="sbmpmi-q" name="sbmpmi" type="radio" value="q"/>
          ?
         </label>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpmi-container">
+      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpmi-container" style="display: none;">
        <div class="form-group">
         <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpmid" maxlength="4" name="sbmpmid" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
        </div>
-       <div class="">
+       <div class="form-group">
         <input class="form-control input-sm" id="sbmpmiw" name="sbmpmiw" placeholder="Where treated?" type="text"/>
        </div>
       </div>
@@ -446,21 +458,21 @@
       </div>
       <div class="col-sm-6 col-md-3 col-lg-2">
        <div class="form-group">
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmps-n" name="sbmps" required="required" type="radio" value="n"/>
+        <label class="radio-inline" for="sbmps-n">
+         <input id="sbmps-n" name="sbmps" type="radio" value="n"/>
          No
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmps-y" name="sbmps" required="required" type="radio" value="y"/>
+        <label class="radio-inline" for="sbmps-y">
+         <input id="sbmps-y" name="sbmps" type="radio" value="y"/>
          Yes
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmps-q" name="sbmps" required="required" type="radio" value="q"/>
+        <label class="radio-inline" for="sbmps-q">
+         <input id="sbmps-q" name="sbmps" type="radio" value="q"/>
          ?
         </label>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmps-container">
+      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmps-container" style="display: none;">
        <div class="form-group">
         <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpsd" maxlength="4" name="sbmpsd" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
        </div>
@@ -478,21 +490,21 @@
       </div>
       <div class="col-sm-6 col-md-3 col-lg-2">
        <div class="form-group">
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmppv-n" name="sbmppv" required="required" type="radio" value="n"/>
+        <label class="radio-inline" for="sbmppv-n">
+         <input id="sbmppv-n" name="sbmppv" type="radio" value="n"/>
          No
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmppv-y" name="sbmppv" required="required" type="radio" value="y"/>
+        <label class="radio-inline" for="sbmppv-y">
+         <input id="sbmppv-y" name="sbmppv" type="radio" value="y"/>
          Yes
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmppv-q" name="sbmppv" required="required" type="radio" value="q"/>
+        <label class="radio-inline" for="sbmppv-q">
+         <input id="sbmppv-q" name="sbmppv" type="radio" value="q"/>
          ?
         </label>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmppv-container">
+      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmppv-container" style="display: none;">
        <div class="form-group">
         <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmppvd" maxlength="4" name="sbmppvd" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
        </div>
@@ -510,36 +522,37 @@
       </div>
       <div class="col-sm-6 col-md-3 col-lg-2">
        <div class="form-group">
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmpd-n" name="sbmpd" required="required" type="radio" value="n"/>
+        <label class="radio-inline" for="sbmpd-n">
+         <input id="sbmpd-n" name="sbmpd" type="radio" value="n"/>
          No
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmpd-y" name="sbmpd" required="required" type="radio" value="y"/>
+        <label class="radio-inline" for="sbmpd-y">
+         <input id="sbmpd-y" name="sbmpd" type="radio" value="y"/>
          Yes
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmpd-q" name="sbmpd" required="required" type="radio" value="q"/>
+        <label class="radio-inline" for="sbmpd-q">
+         <input id="sbmpd-q" name="sbmpd" type="radio" value="q"/>
          ?
         </label>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpd-container">
-       <div class="form-group form-inline">
-        <label class="control-label" for="sbmpdw">
+      <div id="sbmpd-container" style="display: none;">
+       <div class="col-sm-3 form-group">
+        <label class="control-label required" for="sbmpdw">
          Starting at what age?
         </label>
         <input class="form-control input-sm numeric" data-fv-integer="true" id="sbmpdw" maxlength="4" name="sbmpdw" size="4" type="text"/>
        </div>
-       <div class="form-group" style="padding-left:10px;">
-        <label class="control-label" for="sbmpdt-n">
+       <div class="col-sm-3 form-group">
+        <label class="control-label required" for="sbmpdt-n">
          Treated?
         </label>
-        <label class="radio-inline">
-         <input id="sbmpdt-n" name="sbmpdt" type="radio" value="n"/>
+        <br/>
+        <label class="radio-inline" for="sbmpdt-n">
+         <input data-fv-notempty-message="Please select a value" id="sbmpdt-n" name="sbmpdt" required="required" type="radio" value="n"/>
          No
         </label>
-        <label class="radio-inline">
+        <label class="radio-inline" for="sbmpdt-y">
          <input id="sbmpdt-y" name="sbmpdt" type="radio" value="y"/>
          Yes
         </label>
@@ -558,30 +571,30 @@
       </div>
       <div class="col-sm-6 col-md-3 col-lg-2">
        <div class="form-group">
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmpld-n" name="sbmpld" required="required" type="radio" value="n"/>
+        <label class="radio-inline" for="sbmpld-n">
+         <input id="sbmpld-n" name="sbmpld" type="radio" value="n"/>
          No
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmpld-y" name="sbmpld" required="required" type="radio" value="y"/>
+        <label class="radio-inline" for="sbmpld-y">
+         <input id="sbmpld-y" name="sbmpld" type="radio" value="y"/>
          Yes
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmpld-q" name="sbmpld" required="required" type="radio" value="q"/>
+        <label class="radio-inline" for="sbmpld-q">
+         <input id="sbmpld-q" name="sbmpld" type="radio" value="q"/>
          ?
         </label>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpld-container">
+      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpld-container" style="display: none;">
        <div class="form-group">
-        <label class="control-label" for="sbmpldt-m">
+        <label class="control-label required" for="sbmpldt-m">
          Severity?
         </label>
-        <label class="radio-inline">
-         <input id="sbmpldt-m" name="sbmpldt" type="radio" value="m"/>
+        <label class="radio-inline" for="sbmpldt-m">
+         <input data-fv-notempty-message="Please select a value" id="sbmpldt-m" name="sbmpldt" required="required" type="radio" value="m"/>
          Mild
         </label>
-        <label class="radio-inline">
+        <label class="radio-inline" for="sbmpldt-s">
          <input id="sbmpldt-s" name="sbmpldt" type="radio" value="s"/>
          Severe
         </label>
@@ -600,30 +613,30 @@
       </div>
       <div class="col-sm-6 col-md-3 col-lg-2">
        <div class="form-group">
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmprd-n" name="sbmprd" required="required" type="radio" value="n"/>
+        <label class="radio-inline" for="sbmprd-n">
+         <input id="sbmprd-n" name="sbmprd" type="radio" value="n"/>
          No
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmprd-y" name="sbmprd" required="required" type="radio" value="y"/>
+        <label class="radio-inline" for="sbmprd-y">
+         <input id="sbmprd-y" name="sbmprd" type="radio" value="y"/>
          Yes
         </label>
-        <label class="radio-inline">
-         <input data-fv-notempty-message="Please select a value" id="sbmprd-q" name="sbmprd" required="required" type="radio" value="q"/>
+        <label class="radio-inline" for="sbmprd-q">
+         <input id="sbmprd-q" name="sbmprd" type="radio" value="q"/>
          ?
         </label>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmprd-container">
+      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmprd-container" style="display: none;">
        <div class="form-group">
-        <label class="control-label" for="sbmprdt-m">
+        <label class="control-label required" for="sbmprdt-m">
          Severity?
         </label>
-        <label class="radio-inline">
-         <input id="sbmprdt-m" name="sbmprdt" type="radio" value="m"/>
+        <label class="radio-inline" for="sbmprdt-m">
+         <input data-fv-notempty-message="Please select a value" id="sbmprdt-m" name="sbmprdt" required="required" type="radio" value="m"/>
          Mild
         </label>
-        <label class="radio-inline">
+        <label class="radio-inline" for="sbmprdt-s">
          <input id="sbmprdt-s" name="sbmprdt" type="radio" value="s"/>
          Severe
         </label>
@@ -642,17 +655,17 @@
       </div>
       <div class="col-sm-6 col-md-3 col-lg-2">
        <div class="form-group">
-        <label class="radio-inline">
+        <label class="radio-inline" for="sblcs-n">
          <input id="sblcs-n" name="sblcs" type="radio" value="n"/>
          No
         </label>
-        <label class="radio-inline">
+        <label class="radio-inline" for="sblcs-y">
          <input id="sblcs-y" name="sblcs" type="radio" value="y"/>
          Yes
         </label>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7" id="sblcs-container">
+      <div class="col-sm-12 col-md-6 col-lg-7" id="sblcs-container" style="display: none;">
        <div class="form-group">
         <p>
          <em>
@@ -721,12 +734,12 @@
         </select>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbact-container">
+      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbact-container" style="display: none;">
        <div class="form-group">
-        <label for="sbahcl">
+        <label class="control-label required" for="sbahcl">
          If so, where was the test done?
         </label>
-        <input class="form-control input-sm" id="sbahcl" name="sbahcl" type="text"/>
+        <input class="form-control input-sm" id="sbahcl" name="sbahcl" required="required" type="text"/>
        </div>
       </div>
      </div>
@@ -740,17 +753,17 @@
       </div>
       <div class="col-sm-6 col-md-3 col-lg-2">
        <div class="form-group">
-        <label class="radio-inline">
+        <label class="radio-inline" for="sbahpft-n">
          <input id="sbahpft-n" name="sbahpft" type="radio" value="n"/>
          No
         </label>
-        <label class="radio-inline">
+        <label class="radio-inline" for="sbahpft-y">
          <input id="sbahpft-y" name="sbahpft" type="radio" value="y"/>
          Yes
         </label>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbahpft-container">
+      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbahpft-container" style="display: none;">
        <div class="form-group">
         <label for="sbfev1">
          FEV1 (L/s)
@@ -789,11 +802,11 @@
       </div>
       <div class="col-sm-6 col-md-3 col-lg-2">
        <div class="form-group">
-        <label class="radio-inline">
+        <label class="radio-inline" for="sbaha-n">
          <input id="sbaha-n" name="sbaha" type="radio" value="n"/>
          No
         </label>
-        <label class="radio-inline">
+        <label class="radio-inline" for="sbaha-y">
          <input id="sbaha-y" name="sbaha" type="radio" value="y"/>
          Yes
         </label>
@@ -871,7 +884,7 @@
      <hr class="visible-xs-block visible-sm-block"/>
     </div>
     <div class="pull-left">
-     <a class="btn btn-danger navigation" data-form="" data-method="post" data-samiroute="deleteform">
+     <a class="btn btn-danger navigation" data-form="@@FORMKEY@@" data-method="post" data-samiroute="deleteform" href="#!">
       <span class="glyphicon glyphicon-trash">
       </span>
       Delete
@@ -895,12 +908,12 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.06.04
+     SNAPSHOT 2018.07.16
     </span>
    </div>
   </footer>
   <script language="JavaScript">
-   var studyId = "@@SID@@";
+   const studyId = "@@SID@@";
     if (studyId) {
         $("#studyIdMenu").show();
     }
@@ -908,15 +921,16 @@
     $(function () {
         //TODO: remove these debug functions.
         // These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly.
-        $.each($("form.validated").find("select, textarea, input:visible"), function (i, o) {
-            $input = $(this);
-            if ($input.closest(".form-group").length == 0) {
+        const $forms = $("form.validated");
+        $.each($forms.find("select, textarea, input:visible"), function (i, o) {
+            const $input = $(this);
+            if ($input.closest(".form-group").length === 0) {
                 console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
             }
         });
 
-        $.each($("form.validated").find("input[type=hidden][required]"), function (i, o) {
-            $input = $(this);
+        $.each($forms.find("input[type=hidden][required]"), function (i, o) {
+            const $input = $(this);
             console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
         });
     })
@@ -945,36 +959,33 @@
             }).first().trigger('change');
 
             //conditionally enabled fields
-            $("[name=sbfc]").conditionallyEnable({enable: "#sbfc-container"});
-            $("[name=sbhco]").conditionallyEnable({enable: "#sbhco-container"});
-            $("[name=sbmpa]").conditionallyEnable({enable: "#sbmpa-container"});
-            $("[name=sbmpc]").conditionallyEnable({enable: "#sbmpc-container"});
-            $("[name=sbmpht]").conditionallyEnable({enable: "#sbmpht-container"});
-            $("[name=sbmphc]").conditionallyEnable({enable: "#sbmphc-container"});
-            $("[name=sbmpas]").conditionallyEnable({enable: "#sbmpas-container"});
-            $("[name=sbmpmi]").conditionallyEnable({enable: "#sbmpmi-container"});
-            $("[name=sbmps]").conditionallyEnable({enable: "#sbmps-container"});
-            $("[name=sbmppv]").conditionallyEnable({enable: "#sbmppv-container"});
-            $("[name=sbmpd]").conditionallyEnable({enable: "#sbmpd-container"});
-            $("[name=sbmpld]").conditionallyEnable({enable: "#sbmpld-container"});
-            $("[name=sbmprd]").conditionallyEnable({enable: "#sbmprd-container"});
-            $("[name=sblcs]").conditionallyEnable({
+            $("[name=sbfc]").conditionallyDisplay({enable: "#sbfc-container"});
+            $("[name=sbhco]").conditionallyDisplay({enable: "#sbhco-container"});
+            $("[name=sbmpa]").conditionallyDisplay({enable: "#sbmpa-container"});
+            $("[name=sbmpc]").conditionallyDisplay({enable: "#sbmpc-container"});
+            $("[name=sbmpht]").conditionallyDisplay({enable: "#sbmpht-container"});
+            $("[name=sbmphc]").conditionallyDisplay({enable: "#sbmphc-container"});
+            $("[name=sbmpas]").conditionallyDisplay({enable: "#sbmpas-container"});
+            $("[name=sbmpmi]").conditionallyDisplay({enable: "#sbmpmi-container"});
+            $("[name=sbmps]").conditionallyDisplay({enable: "#sbmps-container"});
+            $("[name=sbmppv]").conditionallyDisplay({enable: "#sbmppv-container"});
+            $("[name=sbmpd]").conditionallyDisplay({enable: "#sbmpd-container"});
+            $("[name=sbmpld]").conditionallyDisplay({enable: "#sbmpld-container"});
+            $("[name=sbmprd]").conditionallyDisplay({enable: "#sbmprd-container"});
+            $("[name=sblcs]").conditionallyDisplay({
                 enable: $("#sblcs-container").find("label, input[id!=sbwcos]")
             });
-            $("#sbwco").conditionallyEnable({sourceValues: "o", enable: "#sbwcos"});
-            $("[name=sbact]").conditionallyEnable({
+            $("#sbwco").conditionallyDisplay({sourceValues: "o", enable: "#sbwcos"});
+            $("[name=sbact]").conditionallyDisplay({
                 sourceValues: function (actualValue) {
                     return actualValue !== '-' && actualValue !== 'e';
                 }, enable: "#sbact-container"
             });
-            $("[name=sbahpft]").conditionallyEnable({enable: "#sbahpft-container"});
-            $("#sbahaoo").conditionallyEnable({sourceValues: "o", enable: "#sbahas"});
+            $("[name=sbahpft]").conditionallyDisplay({enable: "#sbahpft-container"});
+            $("#sbahaoo").conditionallyDisplay({sourceValues: "o", enable: "#sbahas"});
 
+            $(".validated").formValidation({framework: 'bootstrap'});
         });
-  </script>
-  <script language="JavaScript">
-   //Initialize Form Validation
-    $(".validated").formValidation({framework: 'bootstrap'});
   </script>
  </body>
 </html>

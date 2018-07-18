@@ -11,7 +11,7 @@
                         <h3 class="panel-title">Patient Lookup</h3>
                     </div>
                     <div class="panel-body">
-                        <form id="pt-lookup-form" method="post" action="/vapals">
+                        <form id="pt-lookup-form" method="post" action="{{ formPage+".html" if mockup else "/vapals" }}">
                             <input type="hidden" id="pt-lookup-samiroute" name="samiroute" value="">
                             <input type="hidden" id="pt-lookup-dfn" name="dfn" value="">
                             <input type="hidden" id="pt-lookup-name" name="name" value="">
@@ -76,7 +76,7 @@
                 e.preventDefault();
                 e.stopPropagation();
 
-                let patient = Object.assign({}, $('#pt-lookup-input').data('vista').patient);
+                let patient = $.extend({}, $('#pt-lookup-input').data('vista').patient);
                 $('#pt-lookup-dfn').val(patient.dfn);
                 $('#pt-lookup-name').val(patient.name);
                 $('#pt-lookup-studyid').val(patient.studyid);

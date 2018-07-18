@@ -11,19 +11,20 @@
                         <h3 class="panel-title">New Form</h3>
                     </div>
                     <div class="panel-body">
-                        <form action="todo" method="post">
+                        <form action="{{ formPage+".html" if mockup else "/vapals" }}" method="post">
+                            <input type="hidden" name="samiroute" value="addform"/>
+                            <input type="hidden" name="sid" value="@@SID@@"/>
                             <div class="form-group">
                                 <label>
                                     Please select the type of form to create
                                 </label>
                                 <select name="form" id="form" class="form-control">
-                                    <option value="background"> Screening Background
-                                    <option value="ctevaluation"> CT Evaluation
-                                    <option value="followup"> Follow-up
-                                    <option value="biopsy"> Biopsy
-                                    <option value="newform"> Pre-Intervention
-                                    <option value="newform"> Intervention
-                                    <option value="pet"> PET Evaluation
+                                    <option value="sbform"> Screening Background
+                                    <option value="ceform"> CT Evaluation
+                                    <option value="fuform"> Follow-up
+                                    <option value="bxform"> Biopsy
+                                    <option value="itform"> Intervention
+                                    <option value="ptform"> PET Evaluation
                                 </select>
                             </div>
                             <div class="pull-right">

@@ -12,7 +12,7 @@
 
 .radio-inline .form-control-feedback{
     right:-28px;
-    top:-8px;
+    line-height: normal;
 }
 
 .form-inline .control-label{
@@ -43,20 +43,25 @@ input.label:empty {
   overflow-y: scroll;
 }
 
-.ui-menu.fm-autocomplete-menu .ui-menu-item.enrolled,
-.ui-menu.fm-autocomplete-menu .ui-menu-item.enrolled .ui-menu-item-wrapper.ui-state-active {
-  font-weight: bold;
-}
 
+/** This resets the default that come from the jq autocomplete that makes
+the current behaviour jumpy and inconsistent **/
 .ui-menu.fm-autocomplete-menu .ui-menu-item-wrapper.ui-state-active {
-  margin: 0px;
   border: none;
   background: none;
+  margin: none;
   color: red;
+  margin-left:-15px;
+  margin-right:-15px;
+  margin-top:0px;
+  margin-bottom:0px;
 }
 
-.ui-menu.fm-autocomplete-menu .ui-menu-item-wrapper.indent,
-.ui-menu.fm-autocomplete-menu .ui-menu-item-wrapper.ui-state-active.indent {
-  margin-left: 16px;
+img.enrolled-icon {
+    height: 1.5em;
 }
 
+label.required:before {
+    content: " *";
+    color: red;
+}

@@ -17,7 +17,7 @@
         </div>
 
         <hr/>
-        <form action="{{ "biopsy.html" if mockup else "/vapals" }}" method="{{ formMethod }}"
+        <form action="{{ formPage+".html" if mockup else "/vapals" }}" method="{{ formMethod }}"
               class="validated"
               data-fv-icon-valid="glyphicon glyphicon-ok"
               data-fv-icon-invalid="glyphicon glyphicon-remove"
@@ -252,6 +252,12 @@
             </div>
 
             <hr/>
+            <div class="pull-left">
+                <a class="btn btn-danger navigation" data-method="{{ formMethod }}" data-samiroute="deleteform"
+                   href="{{ "biopsy.html" if mockup else "#!" }}" data-form="@@FORMKEY@@">
+                    <span class="glyphicon glyphicon-trash"></span>Delete
+                </a>
+            </div>
 
             <div class="pull-right">
                 <input type="hidden" name="samistatus" value=""/>
@@ -265,68 +271,33 @@
 {% block script %}
     <script language="JavaScript">
 
-        /**
-         * Adds a formValidation validator that ensures at least one of the checkboxes in $fields is selected.
-         * This validator is dynamically enabled/disabled based on how many of it's triggering $fields are enabled.
-         * @param $fields the checkbox fields
-         * @param $validatorControl a hidden input field used to track how many checkboxes are selected.
-         */
-        function requireOneValidator($fields, $validatorControl) {
-            var fv = $("form.validated").data("formValidation");
-            if (fv) {
-                //put the list of fields onto the validator control so we can refer back to them to determine if the
-                // validators should be enabled when triggered.
-                $validatorControl.data("fv-fields", $fields);
-
-                $fields.on('change', function () {
-                    $validatorControl.val($fields.filter(":checked").length);
-                    fv.revalidateField($validatorControl);
-                })
-                fv.addField($validatorControl.attr("name"), {
-                    excluded: function ($field, validator) {
-                        //enabled only if at least one of its controlling fields is enabled
-                        {#return $field.data("fv-fields").filter(":enabled").length == 0;#}
-                        {#return $field.closest(":disabled").length>0;#}
-                        return false;
-                    },
-                    validators: {
-                        callback: {
-                            callback: function (value, validator, $field) {
-                                return {
-                                    //valid if all $fields are disabled or if the number of checked boxes is > 0
-                                    valid: $field.data("fv-fields").filter(":enabled").length == 0 || $field.val() > 0,
-                                    message: 'At least one selection is required'
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-        }
-
-
         $(function () {
+
             //Biopsy
             $("[name='bxp']").conditionallyEnable({enable: $("#bxp-container")}); //entire form
             $("#bxindo").conditionallyEnable({sourceValues: "o", enable: "#bxind"}); // other indication
-            requireOneValidator($("[name^=bxind]"), $("[name=validator-bxind]")); // at least one indication checkbox
             $("#bxloco").conditionallyEnable({sourceValues: "o", enable: "#bxlocs"}); //other lesion
-            requireOneValidator($("[name^=bxloc]"), $("[name=validator-bxloc]")); // at least one lesion checkbox
-            requireOneValidator($("[name^=bxtos]"), $("[name=validator-bxtos]")); // at least one type of specimen
-            requireOneValidator($("[name^=bxtop]"), $("[name=validator-bxtop]")); // at least one type of procedure
             $("#bxtopo").conditionallyEnable({sourceValues: "o", enable: "#bxtopos"}); // other type of procedure
             $("[name='bxcp']").conditionallyEnable({enable: $("#bxcp-container")}); //procedure details
-            requireOneValidator($("#bxcp-container").find("[name^=bxcp]"), $("[name^=validator-bxcp]")); // at least one complication
             $("#bxcpo").conditionallyEnable({sourceValues: "o", enable: "#bxcpos"}); // other complication
 
             //Mediastinoscopy
             $("[name='rbmep']").conditionallyEnable({enable: $("#rbmep-container")}); //entire section
             $("#rbmlo").conditionallyEnable({sourceValues: "o", enable: "#rbmls"}); //other lesion
-            requireOneValidator($("[name^=rbml]"), $("[name^=validator-rbml]")) // at least one lesion
             $("[name=rbmec]").conditionallyEnable({enable: "#rbmecos"}); // complication specificity
 
             //Molecular Testing
             $("[name='rbmt']").conditionallyEnable({enable: "#rbmt-container"}); //entire section
+
+            //attach before requireOneValidators
+            $(".validated").formValidation({framework: 'bootstrap'});
+
+            requireOneValidator($("[name^=bxind]"), $("[name=validator-bxind]")); // at least one indication checkbox
+            requireOneValidator($("[name^=bxloc]"), $("[name=validator-bxloc]")); // at least one lesion checkbox
+            requireOneValidator($("[name^=bxtos]"), $("[name=validator-bxtos]")); // at least one type of specimen
+            requireOneValidator($("[name^=bxtop]"), $("[name=validator-bxtop]")); // at least one type of procedure
+            requireOneValidator($("#bxcp-container").find("[name^=bxcp]"), $("[name^=validator-bxcp]")); // at least one complication
+            requireOneValidator($("[name^=rbml]"), $("[name^=validator-rbml]")) // at least one lesion
         });
 
 

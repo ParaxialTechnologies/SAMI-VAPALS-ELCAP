@@ -13,7 +13,7 @@
         </h2>
 
         <hr>
-        <form action="{{ "background.html" if mockup else "/vapals" }}" method="{{ formMethod }}"
+        <form action="{{ formPage+".html" if mockup else "/vapals" }}" method="{{ formMethod }}"
               class="validated"
               data-fv-icon-valid="glyphicon glyphicon-ok"
               data-fv-icon-invalid="glyphicon glyphicon-remove"
@@ -33,22 +33,20 @@
                             {{ f.inlineRadioNYQ("sbfc") }}
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbfc-container">
-                        <div class="form-group">
-                            <label class="control-label" for="sbfcf-n">Father?</label>
-                            {{ f.inlineRadio("sbfcf","sbfcf-n","n", "No") }}
+                    <div id="sbfc-container" style="display: none;">
+                        <div class="form-group col-sm-4 col-md-2">
+                            <label class="control-label required" for="sbfcf-n">Father?</label><br/>
+                            {{ f.inlineRadio("sbfcf","sbfcf-n","n", "No", true) }}
                             {{ f.inlineRadio("sbfcf","sbfcf-y","y", "Yes") }}
                         </div>
-                        <div class="form-group">
-                            <label class="control-label" for="sbfcm-n"
-                                   style="padding-left:15px;">Mother?</label>
-                            {{ f.inlineRadio("sbfcm","sbfcm-n","n", "No") }}
+                        <div class="form-group col-sm-4 col-md-2">
+                            <label class="control-label required" for="sbfcm-n">Mother?</label><br/>
+                            {{ f.inlineRadio("sbfcm","sbfcm-n","n", "No", true) }}
                             {{ f.inlineRadio("sbfcm","sbfcm-y","y", "Yes") }}
                         </div>
-                        <div class="form-group">
-                            <label class="control-label" for="sbfcs-n"
-                                   style="padding-left:15px;">Siblings?</label>
-                            {{ f.inlineRadio("sbfcs","sbfcs-n","n", "No") }}
+                        <div class="form-group col-sm-4 col-md-2">
+                            <label class="control-label required" for="sbfcs-n">Siblings?</label><br/>
+                            {{ f.inlineRadio("sbfcs","sbfcs-n","n", "No", true) }}
                             {{ f.inlineRadio("sbfcs","sbfcs-y","y", "Yes") }}
                         </div>
                     </div>
@@ -64,7 +62,7 @@
                             {{ f.inlineRadioNYQ("sbhco") }}
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbhco-container">
+                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbhco-container" style="display: none;">
                         <div class="form-group">
                             {{ f.yearpicker("sbhcdod", true, true, true) }}
                         </div>
@@ -85,9 +83,9 @@
                             {{ f.inlineRadioNYQ("sbmpa") }}
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpa-container">
+                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpa-container" style="display: none;">
                         <div class="form-group">
-                            <label for="sbmpat-n" class="">Under current treatment?</label>
+                            <label for="sbmpat-n" class="required">Under current treatment?</label>
                             {{ f.inlineRadio("sbmpat","sbmpat-n","n", "No", true) }}
                             {{ f.inlineRadio("sbmpat","sbmpat-y","y", "Yes", true) }}
                         </div>
@@ -104,7 +102,7 @@
                             {{ f.inlineRadioNYQ("sbmpc") }}
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpc-container">
+                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpc-container" style="display: none;">
                         <div class="form-group">
                             {{ f.yearpicker("sbmpcw", true, true, true) }}
                         </div>
@@ -121,24 +119,23 @@
                             {{ f.inlineRadioNYQ("sbmpht") }}
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpht-container">
-                        <div class="form-group" style="vertical-align: top;">
-                            <label class="form-check-inline" for="sbmphtt-n">Treated?</label>
-                            {{ f.inlineRadio("sbmphtt", "sbmphtt-n", "n", "No") }}
+{#                    col-sm-12 col-md-6 col-lg-7#}
+                    <div class="" id="sbmpht-container" style="display: none;">
+                        <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
+                            <label class="form-check-inline required" for="sbmphtt-n">Treated?</label><br/>
+                            {{ f.inlineRadio("sbmphtt", "sbmphtt-n", "n", "No", true) }}
                             {{ f.inlineRadio("sbmphtt", "sbmphtt-y", "y", "Yes") }}
-                        </div>
-                        <div class="form-group" style="vertical-align: top;margin-left:10px;">
-                            {# TODO: set max year#}
-                            <input class="form-control input-sm numeric" type="text" name="sbmphtsw"
-                                   id="sbmphtsw" placeholder="Since (year)?" required="required"
-                                   data-fv-integer="true" maxlength="4">
 
                         </div>
-                        <div class="form-group" style="vertical-align: top;">
+                        <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
+                            {{ f.yearpicker("sbmphtsw", true, true, true) }}
+                        </div>
+                        <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
                             <input class="form-control input-sm" type="text" name="sbmphthv"
                                    id="sbmphthv"
                                    placeholder="Highest Value?">
                         </div>
+
                     </div>
                 </div>
                 <hr class="visible-xs-block visible-sm-block"/>
@@ -152,10 +149,10 @@
                             {{ f.inlineRadioNYQ("sbmphc") }}
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmphc-container">
+                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmphc-container" style="display: none;">
                         <div class="form-group">
-                            <label class="control-label" for="sbmphct-n">Treated?</label>
-                            {{ f.inlineRadio("sbmphct", "sbmphct-n", "n", "No") }}
+                            <label class="control-label required" for="sbmphct-n">Treated?</label><br/>
+                            {{ f.inlineRadio("sbmphct", "sbmphct-n", "n", "No", true) }}
                             {{ f.inlineRadio("sbmphct", "sbmphct-y", "y", "Yes") }}
                         </div>
                     </div>
@@ -171,7 +168,7 @@
                             {{ f.inlineRadioNYQ("sbmpas") }}
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpas-container">
+                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpas-container" style="display: none;">
                         <div class="form-group">
                             {{ f.yearpicker("sbmpasw", true, true, true) }}
                         </div>
@@ -192,11 +189,11 @@
                             {{ f.inlineRadioNYQ("sbmpmi") }}
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpmi-container">
+                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpmi-container" style="display: none;">
                         <div class="form-group">
                             {{ f.yearpicker("sbmpmid", true, true, true) }}
                         </div>
-                        <div class="">
+                        <div class="form-group">
                             <input class="form-control input-sm" type="text" name="sbmpmiw" id="sbmpmiw"
                                    placeholder="Where treated?">
                         </div>
@@ -213,7 +210,7 @@
                             {{ f.inlineRadioNYQ("sbmps") }}
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmps-container">
+                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmps-container" style="display: none;">
                         <div class="form-group">
                             {{ f.yearpicker("sbmpsd", true, true, true) }}
                         </div>
@@ -230,7 +227,7 @@
                             {{ f.inlineRadioNYQ("sbmppv") }}
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmppv-container">
+                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmppv-container" style="display: none;">
                         <div class="form-group">
                             {{ f.yearpicker("sbmppvd", true, true, true) }}
                         </div>
@@ -247,16 +244,16 @@
                             {{ f.inlineRadioNYQ("sbmpd") }}
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpd-container">
-                        <div class="form-group form-inline">
-                            <label class="control-label" for="sbmpdw">Starting at what age?</label>
+                    <div id="sbmpd-container" style="display: none;">
+                        <div class="col-sm-3 form-group">
+                            <label class="control-label required" for="sbmpdw">Starting at what age?</label>
                             <input class="form-control input-sm numeric" type="text" name="sbmpdw"
                                    id="sbmpdw" size="4" data-fv-integer="true" maxlength="4">
                         </div>
 
-                        <div class="form-group" style="padding-left:10px;">
-                            <label class="control-label" for="sbmpdt-n">Treated?</label>
-                            {{ f.inlineRadio("sbmpdt", "sbmpdt-n", "n", "No") }}
+                        <div class="col-sm-3 form-group">
+                            <label class="control-label required" for="sbmpdt-n">Treated?</label><br/>
+                            {{ f.inlineRadio("sbmpdt", "sbmpdt-n", "n", "No", true) }}
                             {{ f.inlineRadio("sbmpdt", "sbmpdt-y", "y", "Yes") }}
                         </div>
 
@@ -273,10 +270,10 @@
                             {{ f.inlineRadioNYQ("sbmpld") }}
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpld-container">
+                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpld-container" style="display: none;">
                         <div class="form-group">
-                            <label class="control-label" for="sbmpldt-m">Severity?</label>
-                            {{ f.inlineRadio("sbmpldt", "sbmpldt-m", "m", "Mild") }}
+                            <label class="control-label required" for="sbmpldt-m">Severity?</label>
+                            {{ f.inlineRadio("sbmpldt", "sbmpldt-m", "m", "Mild", true) }}
                             {{ f.inlineRadio("sbmpldt", "sbmpldt-s", "s", "Severe") }}
                         </div>
                     </div>
@@ -292,10 +289,10 @@
                             {{ f.inlineRadioNYQ("sbmprd") }}
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmprd-container">
+                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmprd-container" style="display: none;">
                         <div class="form-group">
-                            <label class="control-label" for="sbmprdt-m">Severity?</label>
-                            {{ f.inlineRadio("sbmprdt", "sbmprdt-m", "m", "Mild") }}
+                            <label class="control-label required" for="sbmprdt-m">Severity?</label>
+                            {{ f.inlineRadio("sbmprdt", "sbmprdt-m", "m", "Mild", true) }}
                             {{ f.inlineRadio("sbmprdt", "sbmprdt-s", "s", "Severe") }}
                         </div>
                     </div>
@@ -312,7 +309,7 @@
                             {{ f.inlineRadio("sblcs","sblcs-y","y", "Yes") }}
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-lg-7" id="sblcs-container">
+                    <div class="col-sm-12 col-md-6 col-lg-7" id="sblcs-container" style="display: none;">
                         <div class="form-group">
                             <p><em>Check all that apply</em></p>
                             {{ f.checkbox("sbwcb", "b", "cough producing bloody material") }}
@@ -343,10 +340,10 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbact-container">
+                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbact-container" style="display: none;">
                         <div class="form-group">
-                            <label for="sbahcl">If so, where was the test done?</label>
-                            <input type="text" name="sbahcl" id="sbahcl" class="form-control input-sm"/>
+                            <label for="sbahcl" class="control-label required">If so, where was the test done?</label>
+                            <input type="text" name="sbahcl" id="sbahcl" class="form-control input-sm" required="required"/>
                         </div>
 
                     </div>
@@ -365,7 +362,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbahpft-container">
+                    <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbahpft-container" style="display: none;">
                         <div class="form-group">
                             <label for="sbfev1">FEV1 (L/s)</label>
                             <input class="form-control input-sm" type="text" name="sbfev1" id="sbfev1" size="4">
@@ -429,7 +426,7 @@
             </div>
             <div class="pull-left">
                 <a class="btn btn-danger navigation" data-method="{{ formMethod }}" data-samiroute="deleteform"
-                   data-form="">
+                   href="{{ "background.html" if mockup else "#!" }}" data-form="@@FORMKEY@@">
                     <span class="glyphicon glyphicon-trash"></span>Delete</a>
             </div>
             <div class="pull-right">
@@ -468,31 +465,32 @@
             }).first().trigger('change');
 
             //conditionally enabled fields
-            $("[name=sbfc]").conditionallyEnable({enable: "#sbfc-container"});
-            $("[name=sbhco]").conditionallyEnable({enable: "#sbhco-container"});
-            $("[name=sbmpa]").conditionallyEnable({enable: "#sbmpa-container"});
-            $("[name=sbmpc]").conditionallyEnable({enable: "#sbmpc-container"});
-            $("[name=sbmpht]").conditionallyEnable({enable: "#sbmpht-container"});
-            $("[name=sbmphc]").conditionallyEnable({enable: "#sbmphc-container"});
-            $("[name=sbmpas]").conditionallyEnable({enable: "#sbmpas-container"});
-            $("[name=sbmpmi]").conditionallyEnable({enable: "#sbmpmi-container"});
-            $("[name=sbmps]").conditionallyEnable({enable: "#sbmps-container"});
-            $("[name=sbmppv]").conditionallyEnable({enable: "#sbmppv-container"});
-            $("[name=sbmpd]").conditionallyEnable({enable: "#sbmpd-container"});
-            $("[name=sbmpld]").conditionallyEnable({enable: "#sbmpld-container"});
-            $("[name=sbmprd]").conditionallyEnable({enable: "#sbmprd-container"});
-            $("[name=sblcs]").conditionallyEnable({
+            $("[name=sbfc]").conditionallyDisplay({enable: "#sbfc-container"});
+            $("[name=sbhco]").conditionallyDisplay({enable: "#sbhco-container"});
+            $("[name=sbmpa]").conditionallyDisplay({enable: "#sbmpa-container"});
+            $("[name=sbmpc]").conditionallyDisplay({enable: "#sbmpc-container"});
+            $("[name=sbmpht]").conditionallyDisplay({enable: "#sbmpht-container"});
+            $("[name=sbmphc]").conditionallyDisplay({enable: "#sbmphc-container"});
+            $("[name=sbmpas]").conditionallyDisplay({enable: "#sbmpas-container"});
+            $("[name=sbmpmi]").conditionallyDisplay({enable: "#sbmpmi-container"});
+            $("[name=sbmps]").conditionallyDisplay({enable: "#sbmps-container"});
+            $("[name=sbmppv]").conditionallyDisplay({enable: "#sbmppv-container"});
+            $("[name=sbmpd]").conditionallyDisplay({enable: "#sbmpd-container"});
+            $("[name=sbmpld]").conditionallyDisplay({enable: "#sbmpld-container"});
+            $("[name=sbmprd]").conditionallyDisplay({enable: "#sbmprd-container"});
+            $("[name=sblcs]").conditionallyDisplay({
                 enable: $("#sblcs-container").find("label, input[id!=sbwcos]")
             });
-            $("#sbwco").conditionallyEnable({sourceValues: "o", enable: "#sbwcos"});
-            $("[name=sbact]").conditionallyEnable({
+            $("#sbwco").conditionallyDisplay({sourceValues: "o", enable: "#sbwcos"});
+            $("[name=sbact]").conditionallyDisplay({
                 sourceValues: function (actualValue) {
                     return actualValue !== '-' && actualValue !== 'e';
                 }, enable: "#sbact-container"
             });
-            $("[name=sbahpft]").conditionallyEnable({enable: "#sbahpft-container"});
-            $("#sbahaoo").conditionallyEnable({sourceValues: "o", enable: "#sbahas"});
+            $("[name=sbahpft]").conditionallyDisplay({enable: "#sbahpft-container"});
+            $("#sbahaoo").conditionallyDisplay({sourceValues: "o", enable: "#sbahas"});
 
+            $(".validated").formValidation({framework: 'bootstrap'});
         });
 
     </script>

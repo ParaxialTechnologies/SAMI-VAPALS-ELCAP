@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+  <title>
+  </title>
+  <link href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+  <link href="lib/formvalidation/dist/css/formValidation.min.css" rel="stylesheet"/>
+  <link href="lib/bootstrap-datetimepicker-4.17.47/css/bootstrap-datetimepicker.css" rel="stylesheet"/>
+  <link href="vapals.css" rel="stylesheet"/>
+  <link href="lib/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet"/>
+  <link href="lib/jquery-ui-1.12.1/jquery-ui.structure.min.css" rel="stylesheet"/>
+  <link href="lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
+  <link href="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <script src="lib/jquery-3.3.1.min.js">
+  </script>
+  <script src="lib/jquery-ui-1.12.1/jquery-ui.min.js">
+  </script>
+  <script src="lib/popper.min.js">
+  </script>
+  <script src="lib/bootstrap-3.3.7-dist/js/bootstrap.min.js">
+  </script>
+  <script src="lib/moment.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/formValidation.min.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/framework/bootstrap.min.js">
+  </script>
+  <script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js">
+  </script>
+  <script src="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.js">
+  </script>
+  <script src="lib/clipboard.js">
+  </script>
+  <script src="https://www.gstatic.com/charts/loader.js" type="text/javascript">
+  </script>
+  <script src="jquery-conditonally-enable.js">
+  </script>
+  <script src="jquery-conditonally-display.js">
+  </script>
+  <script src="jqueryui-vista-filemanAutocomplete.js">
+  </script>
+  <script src="vapals.js">
+  </script>
+  <script src="init.js">
+  </script>
+  <!--System Navigation-->
+  <nav class="navbar navbar-default" role="navigation">
+   <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+     <button class="navbar-toggle collapsed" data-target="#navbar-main" data-toggle="collapse" type="button">
+      <span class="sr-only">
+       Toggle navigation
+      </span>
+      <span class="icon-bar">
+      </span>
+      <span class="icon-bar">
+      </span>
+      <span class="icon-bar">
+      </span>
+     </button>
+     <a href="home.html">
+      <img alt="VA-PALS Logo" height="50" src="img/new-logo.png" title="VA-PALS"/>
+     </a>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar-main">
+     <ul class="nav navbar-nav">
+      <li>
+       <a href="home.html">
+        Home
+       </a>
+      </li>
+      <li class="dropdown" id="studyIdMenu" style="display:none;">
+       <a class="navigation" data-method="post" data-samiroute="casereview" href="#!">
+        Case Review
+       </a>
+      </li>
+     </ul>
+    </div>
+   </div>
+  </nav>
+  <div class="container-fluid" style="max-width:1550px">
+   <h1>
+    Sample, Sammy G
+    <small class="text-muted" title="Study ID">
+     ST0001
+    </small>
+   </h1>
+   <h2>
+    <small class="text-muted" title="Medical Record Number">
+     1234567890
+    </small>
+   </h2>
+   <hr/>
+   <pre id="report-text">
+</pre>
+   <div class="pull-right">
+    <button class="btn btn-default" data-clipboard-target="#report-text">
+     <i alt="Copy to clipboard" class="glyphicon glyphicon-copy">
+     </i>
+     Copy to clipboard
+    </button>
+   </div>
+   <div class="clearfix">
+   </div>
+   <footer>
+    <div class="container-fluid" style="max-width:1550px">
+     <hr/>
+     <a href="https://issues.osehra.org/browse/VAP" target="_blank">
+      Submit feedback
+     </a>
+     <span id="sami-version" style="float:right; font-family: Courier,monospace">
+      SNAPSHOT 2018.07.16
+     </span>
+    </div>
+   </footer>
+   <script language="JavaScript">
+    const studyId = "@@SID@@";
+    if (studyId) {
+        $("#studyIdMenu").show();
+    }
+
+    $(function () {
+        //TODO: remove these debug functions.
+        // These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly.
+        const $forms = $("form.validated");
+        $.each($forms.find("select, textarea, input:visible"), function (i, o) {
+            const $input = $(this);
+            if ($input.closest(".form-group").length === 0) {
+                console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
+            }
+        });
+
+        $.each($forms.find("input[type=hidden][required]"), function (i, o) {
+            const $input = $(this);
+            console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
+        });
+    })
+   </script>
+   <script language="JavaScript">
+    new ClipboardJS('.btn').on("success", function(e){
+            $(e.trigger).tooltip({title:"Copied!", delay: { "hide": 1000 }}).show();
+            e.clearSelection();
+        }).on('error', function(e) {
+            $(e.trigger).tooltip({title:"Press ctrl-C"}).show();
+        });
+   </script>
+  </div>
+ </body>
+</html>

@@ -25,6 +25,45 @@ function numericHandlerKeydown(e) {
 }
 
 /**
+ * Adds a formValidation validator that ensures at least one of the checkboxes in $fields is selected.
+ * This validator is dynamically enabled/disabled based on how many of it's triggering $fields are enabled.
+ * @param $fields the checkbox fields
+ * @param $validatorControl a hidden input field used to track how many checkboxes are selected.
+ */
+function requireOneValidator($fields, $validatorControl) {
+    var fv = $("form.validated").data("formValidation");
+    if (fv) {
+        //put the list of fields onto the validator control so we can refer back to them to determine if the
+        // validators should be enabled when triggered.
+        $validatorControl.data("fv-fields", $fields);
+
+        $fields.on('change', function () {
+            $validatorControl.val($fields.filter(":checked").length);
+            fv.revalidateField($validatorControl);
+        })
+        fv.addField($validatorControl.attr("name"), {
+            excluded: function ($field, validator) {
+                //enabled only if at least one of its controlling fields is enabled
+                //return $field.data("fv-fields").filter(":enabled").length == 0;
+                //return $field.closest(":disabled").length>0;
+                return false;
+            },
+            validators: {
+                callback: {
+                    callback: function (value, validator, $field) {
+                        return {
+                            //valid if all $fields are disabled or if the number of checked boxes is > 0
+                            valid: $field.data("fv-fields").filter(":enabled").length == 0 || $field.val() > 0,
+                            message: 'At least one selection is required'
+                        }
+                    }
+                }
+            }
+        });
+    }
+}
+
+/**
  * Helper function that revalidates a date when it has changed by manual change or via the datepicker plugin
  * @param e
  * @returns {boolean}
@@ -42,7 +81,7 @@ function validateDatePickerOnChange(e) {
 function initTabbedNavigation(tabContainerId, tabContentContainerId) {
     //setup tab navigation prev/next buttons
     function getCurrentTab() {
-        return $("#"+tabContentContainerId).find("> div:visible");
+        return $("#" + tabContentContainerId).find("> div:visible");
     }
 
     function getNextTabId() {
@@ -54,9 +93,8 @@ function initTabbedNavigation(tabContainerId, tabContentContainerId) {
     }
 
     function checkCompleteness($container) {
-        console.log("checkCompleteness() container=" + $container);
         var $requiredFields = $container.find("[required], [data-fv-notempty=true]").filter(":enabled"),
-        $tab = $(".nav-tabs").find("a[href='#" + $container.attr("id") + "']");
+            $tab = $(".nav-tabs").find("a[href='#" + $container.attr("id") + "']");
         var emptyRequiredFields = $requiredFields.filter(function () {
             var $c = $(this);
             var value = $c.val();
@@ -67,28 +105,26 @@ function initTabbedNavigation(tabContainerId, tabContentContainerId) {
             return typeof value === "undefined" || value === "";
         });
         // check tab container validity
-        var fv = $(".validated").data('formValidation');
-        if (fv) {
-            var valid = fv.isValidContainer($container);
-            var reallyValid = valid == null || valid === true; //consider unvalidated (null) as "valid".
 
-            //add completeness flag to tab if all required fields are filled in and form is likely valid.
-            $tab.toggleClass("complete", emptyRequiredFields.length === 0 && reallyValid);
-        }
-    } 
+        var valid = emptyRequiredFields.length === 0; //consider unvalidated (null) as "valid".
+
+        //add completeness flag to tab if all required fields are filled in and form is likely valid.
+        $tab.toggleClass("complete", valid);
+
+    }
 
 
     $(".btn-next").on("click", function () {
         var nextTabId = getNextTabId();
         // CB: form validation occurs on tab hide event
-        $("#"+tabContainerId).find("a[href='#" + nextTabId + "']").tab('show');
+        $("#" + tabContainerId).find("a[href='#" + nextTabId + "']").tab('show');
 
     }).toggleClass("disabled", !getNextTabId());
 
     $(".btn-prev").on("click", function () {
         var prevTabId = getPrevTabId();
         // CB: form validation occurs on tab hide event
-        $("#"+tabContainerId).find("a[href='#" + prevTabId + "']").tab('show');
+        $("#" + tabContainerId).find("a[href='#" + prevTabId + "']").tab('show');
     }).toggleClass("disabled", !getPrevTabId());
 
     $('a[data-toggle="tab"]').on('hide.bs.tab', function (e) {
@@ -103,13 +139,10 @@ function initTabbedNavigation(tabContainerId, tabContentContainerId) {
         }
 
     }).on("shown.bs.tab", function () {
-            $(".btn-next").toggleClass("disabled", !getNextTabId());
-            $(".btn-prev").toggleClass("disabled", !getPrevTabId());
-        $("#"+tabContentContainerId).find("input:visible, textarea:visible, select:visible").first().focus();
+        $(".btn-next").toggleClass("disabled", !getNextTabId());
+        $(".btn-prev").toggleClass("disabled", !getPrevTabId());
+        $("#" + tabContentContainerId).find("input:visible, textarea:visible, select:visible").not(".no-auto-focus").first().focus();
     });
-
-
-    
 
 
     // trigger a check of completeness of each tab at page load and also any time an input changes.

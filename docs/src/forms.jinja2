@@ -3,27 +3,45 @@
     <label for="{{ for }}" class="text-right pull-right hidden-xs hidden-sm">{{ text }}</label>
 {%- endmacro %}
 
-{% macro inlineRadio(groupName, id, value, labelText, required, onclick) -%}
-    <label class="radio-inline">
+{% macro inlineRadio(groupName, id, value, labelText, required, checked, onclick) -%}
+    <label class="radio-inline" for="{{ id }}">
         <input type="radio" name="{{ groupName }}" id="{{ id }}"
                 {{ " onclick=\""+ onclick + "\"" if onclick else "" }}
+                {{ " checked" if checked else "" }}
                 {{ " required=\"required\" data-fv-notempty-message=\"Please select a value\"" if required else "" }}
                value="{{ value }}">
         {{ labelText }}
     </label>
 {%- endmacro %}
 
-{% macro inlineRadioNYQ(groupName) -%}
-    {{ inlineRadio(groupName, groupName+"-n","n","No",true) }}
-    {{ inlineRadio(groupName, groupName+"-y","y","Yes",true) }}
-    {{ inlineRadio(groupName, groupName+"-q","q","?",true) }}
+
+{% macro inlineRadioNY(groupName, required) -%}
+    {{ inlineRadio(groupName, groupName+"-n","n","No",required) }}
+    {{ inlineRadio(groupName, groupName+"-y","y","Yes",required) }}
 {%- endmacro %}
 
-{% macro inlineRadioNYE(groupName) -%}
-    {{ inlineRadio(groupName, groupName+"-n","n","No",true) }}
-    {{ inlineRadio(groupName, groupName+"-y","y","Yes",true) }}
-    {{ inlineRadio(groupName, groupName+"-e","e","n/v",true) }}
+{% macro inlineRadioNYQ(groupName, required) -%}
+    {{ inlineRadio(groupName, groupName+"-n","n","No",required) }}
+    {{ inlineRadio(groupName, groupName+"-y","y","Yes",required) }}
+    {{ inlineRadio(groupName, groupName+"-q","q","?",required) }}
 {%- endmacro %}
+
+{% macro inlineRadioNYE(groupName, required) -%}
+    {{ inlineRadio(groupName, groupName+"-n","n","No",required) }}
+    {{ inlineRadio(groupName, groupName+"-y","y","Yes",required) }}
+    {{ inlineRadio(groupName, groupName+"-e","e","not visible",required) }}
+{%- endmacro %}
+
+{% macro radio(group, id, value, label, required, checked) -%}
+    <div class="radio">
+        <label>
+            <input type="radio" name="{{ group }}" id="{{ id }}" value="{{ value }}"
+                    {{ "checked" if checked else "" }}
+                    {{ "required=\"required\"" if required else "" }}>
+            {{ label }}
+        </label>
+    </div>
+{%- endmacro %} %}
 
 
 {% macro checkbox(name, value, labelText, attributes) -%}
@@ -40,6 +58,20 @@
             {{ labelText }}
         </label>
     </div>
+{%- endmacro %}
+
+{% macro inlineCheckbox(name, value, labelText, attributes) -%}
+    <label class="checkbox-inline">
+        <input type="checkbox" name="{{ name }}" id="{{ name }}" value="{{ value }}"
+        {% set x = "" %}
+        {% if attributes!=null %}
+            {% for k,v in attributes.items() %}
+                {{ k }}="{{ v }}"
+            {% endfor %}
+        {% endif %}
+        >
+        {{ labelText }}
+    </label>
 {%- endmacro %}
 
 {% macro datepicker(name, pastDateRequired, requiredMessage) -%}

@@ -15,6 +15,7 @@
   <link href="lib/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet"/>
   <link href="lib/jquery-ui-1.12.1/jquery-ui.structure.min.css" rel="stylesheet"/>
   <link href="lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
+  <link href="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
  </head>
  <body>
   <script src="lib/jquery-3.3.1.min.js">
@@ -33,9 +34,15 @@
   </script>
   <script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js">
   </script>
+  <script src="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.js">
+  </script>
+  <script src="lib/clipboard.js">
+  </script>
   <script src="https://www.gstatic.com/charts/loader.js" type="text/javascript">
   </script>
   <script src="jquery-conditonally-enable.js">
+  </script>
+  <script src="jquery-conditonally-display.js">
   </script>
   <script src="jqueryui-vista-filemanAutocomplete.js">
   </script>
@@ -136,8 +143,8 @@
       </div>
       <div class="checkbox">
        <label>
-        <input id="silnlr" name="silnlr" type="checkbox" value="1"/>
-        Letter sent and received
+        <input id="silnpu" name="silnpu" type="checkbox" value="1"/>
+        Pulmonary
        </label>
       </div>
       <div class="checkbox">
@@ -153,11 +160,11 @@
       <label>
        Primary address verified
       </label>
-      <label class="radio-inline">
+      <label class="radio-inline" for="sipav-y">
        <input data-fv-notempty-message="Please select a value" id="sipav-y" name="sipav" required="required" type="radio" value="y"/>
        Yes
       </label>
-      <label class="radio-inline">
+      <label class="radio-inline" for="sipav-n">
        <input id="sipav-n" name="sipav" type="radio" value="n"/>
        No
       </label>
@@ -168,12 +175,12 @@
       <label>
        Rural status
       </label>
-      <label class="radio-inline">
-       <input data-fv-notempty-message="Please select a value" id="sipav-u" name="sirs" required="required" type="radio" value="u"/>
+      <label class="radio-inline" for="sirs-u">
+       <input data-fv-notempty-message="Please select a value" id="sirs-u" name="sirs" required="required" type="radio" value="u"/>
        Urban
       </label>
-      <label class="radio-inline">
-       <input id="sipav-r" name="sirs" type="radio" value="r"/>
+      <label class="radio-inline" for="sirs-r">
+       <input id="sirs-r" name="sirs" type="radio" value="r"/>
        Rural
       </label>
      </div>
@@ -222,6 +229,14 @@
        Country
       </label>
       <input class="form-control" id="sipcr" name="sipcr" type="text"/>
+     </div>
+    </div>
+    <div class="row">
+     <div class="form-group col-sm-6 ">
+      <label for="sippn">
+       Phone Number
+      </label>
+      <input class="form-control" data-fv-phone="true" data-fv-phone-country="US" id="sippn" name="sippn" type="text"/>
      </div>
     </div>
     <hr/>
@@ -283,8 +298,10 @@
       </label>
      </div>
      <div class="col-sm-2 form-group">
-      <input class="form-control numeric" id="sippd" maxlength="4" name="sippd" type="text"/>
+      <span class="control-label" id="sippd-val">
+      </span>
      </div>
+     <input id="sippd" name="sippd" type="hidden"/>
     </div>
     <div class="row">
      <div class="col-md-4">
@@ -309,8 +326,10 @@
       </label>
      </div>
      <div class="col-sm-2 form-group">
-      <input class="form-control numeric" id="sippy" maxlength="4" name="sippy" required="required" type="text"/>
+      <span id="sippy-val">
+      </span>
      </div>
+     <input id="sippy" name="sippy" type="hidden"/>
     </div>
     <div class="row">
      <div class="col-md-4">
@@ -410,6 +429,16 @@
      </div>
     </div>
     <hr/>
+    <div class="row">
+     <div class="col-md-12 form-group">
+      <div class="checkbox">
+       <label>
+        <input data-fv-notempty-message="Confirm that the discussion has taken place" id="siidmdc" name="siidmdc" required="required" type="checkbox" value="1"/>
+        Informed Decision Making discussion complete
+       </label>
+      </div>
+     </div>
+    </div>
     <p class="alert alert-warning">
      Veteran of age and exposure to cigarette smoke as described above, and without a current
                 diagnosis or obvious symptoms suggestive of lung cancer, has been educated today about the
@@ -451,7 +480,7 @@
     </div>
     <hr/>
     <div class="pull-left">
-     <a class="btn btn-danger navigation" data-form="" data-method="post" data-samiroute="deleteform">
+     <a class="btn btn-danger navigation" data-form="@@FORMKEY@@" data-method="post" data-samiroute="deleteform" href="#!">
       <span class="glyphicon glyphicon-trash">
       </span>
       Delete
@@ -462,8 +491,6 @@
       Submit
      </button>
     </div>
-    <!--
-            -->
    </form>
   </div>
   <footer>
@@ -473,12 +500,12 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.06.04
+     SNAPSHOT 2018.07.16
     </span>
    </div>
   </footer>
   <script language="JavaScript">
-   var studyId = "@@SID@@";
+   const studyId = "@@SID@@";
     if (studyId) {
         $("#studyIdMenu").show();
     }
@@ -486,22 +513,56 @@
     $(function () {
         //TODO: remove these debug functions.
         // These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly.
-        $.each($("form.validated").find("select, textarea, input:visible"), function (i, o) {
-            $input = $(this);
-            if ($input.closest(".form-group").length == 0) {
+        const $forms = $("form.validated");
+        $.each($forms.find("select, textarea, input:visible"), function (i, o) {
+            const $input = $(this);
+            if ($input.closest(".form-group").length === 0) {
                 console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
             }
         });
 
-        $.each($("form.validated").find("input[type=hidden][required]"), function (i, o) {
-            $input = $(this);
+        $.each($forms.find("input[type=hidden][required]"), function (i, o) {
+            const $input = $(this);
             console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
         });
     })
   </script>
   <script language="JavaScript">
-   //Initialize Form Validation
-    $(".validated").formValidation({framework: 'bootstrap'});
+   $(function () {
+            $("#sicpd").on('keyup change', function () {
+                var cigsPerDay = $("#sicpd").val();
+                if (cigsPerDay >= 0) {
+                    var cpd = (cigsPerDay/20).toFixed(2);
+                    if (cpd > 0) {
+                        $("#sippd").val(cpd);
+                        $("#sippd-val").text(cpd);
+                    }
+                    else {
+                        $("#sippd").val("");
+                        $("#sippd-val").text("-");
+                    }
+                    $("#sippd").change();
+                }
+            }).trigger('change');
+
+            $("#sippd, #sisny").on('keyup change', function () {
+                var packsPerDay = $("#sippd").val();
+                var cigYears = $("#sisny").val();
+                if (packsPerDay > 0 && cigYears >0) {
+                    var packYears = (packsPerDay*cigYears).toFixed(1);
+                    if (packYears > 0) {
+                        $("#sippy").val(packYears);
+                        $("#sippy-val").text(packYears);
+                    } 
+                } else {
+                     $("#sippy").val("");
+                     $("#sippy-val").text("-");
+                }
+                
+            }).first().trigger('change');
+
+            $(".validated").formValidation({framework: 'bootstrap'});
+        });
   </script>
  </body>
 </html>

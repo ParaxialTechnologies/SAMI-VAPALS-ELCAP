@@ -13,7 +13,7 @@
         </h2>
 
         <hr/>
-        <form action="{{ "pet.html" if mockup else "/vapals" }}" method="{{ formMethod }}"
+        <form action="{{ formPage+".html" if mockup else "/vapals" }}" method="{{ formMethod }}"
               class="validated"
               data-fv-icon-valid="glyphicon glyphicon-ok"
               data-fv-icon-invalid="glyphicon glyphicon-remove"
@@ -399,8 +399,8 @@
                     <select name="cefu" class="form-control" required="required">
                         <option value="-"> -
                         <option value="rs"> annual repeat CT
-                        <option value="dx"> f/u CT
-                        <option value="af"> Abx + f/u CT
+                        <option value="dx"> follow-up CT
+                        <option value="af"> Abx + follow-up CT
                         <option value="pe"> PET
                         <option value="cc"> CT w contrast
                         <option value="fn"> CT-guided biopsy
@@ -482,7 +482,11 @@
             </div>
 
             <hr/>
-
+            <div class="pull-left">
+                <a class="btn btn-danger navigation" data-method="{{ formMethod }}" data-samiroute="deleteform"
+                   href="{{ "pet.html" if mockup else "#!" }}" data-form="@@FORMKEY@@">
+                    <span class="glyphicon glyphicon-trash"></span>Delete</a>
+            </div>
             <div class="pull-right">
                 <input type="hidden" name="samistatus" value=""/>
                 <button type="submit" class="btn btn-default" id="save-for-later-button">Save for Later</button>
@@ -497,10 +501,10 @@
 
 
         $(function () {
-
             //follow up date calculator.
             $("[name=cefuw]").on("change", function () {
-                switch ($(this).val()) {
+                const when = $("[name='cefuw']:checked").val();
+                switch (when) {
                     case "nw":
                         $("#cefud").val(moment().format(VAPALS.DATE_FORMAT));
                         break;
@@ -520,6 +524,8 @@
                         $("#cefud").val("").focus();
                 }
             })
+
+            $(".validated").formValidation({framework: 'bootstrap'});
         });
     </script>
 

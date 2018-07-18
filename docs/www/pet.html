@@ -15,6 +15,7 @@
   <link href="lib/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet"/>
   <link href="lib/jquery-ui-1.12.1/jquery-ui.structure.min.css" rel="stylesheet"/>
   <link href="lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
+  <link href="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
  </head>
  <body>
   <script src="lib/jquery-3.3.1.min.js">
@@ -33,9 +34,15 @@
   </script>
   <script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js">
   </script>
+  <script src="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.js">
+  </script>
+  <script src="lib/clipboard.js">
+  </script>
   <script src="https://www.gstatic.com/charts/loader.js" type="text/javascript">
   </script>
   <script src="jquery-conditonally-enable.js">
+  </script>
+  <script src="jquery-conditonally-display.js">
   </script>
   <script src="jqueryui-vista-filemanAutocomplete.js">
   </script>
@@ -140,11 +147,11 @@
       </label>
      </div>
      <div class="col-sm-3 form-group">
-      <label class="radio-inline">
+      <label class="radio-inline" for="ptofr-n">
        <input id="ptofr-n" name="ptofr" type="radio" value="n"/>
        no
       </label>
-      <label class="radio-inline">
+      <label class="radio-inline" for="ptofr-y">
        <input id="ptofr-y" name="ptofr" type="radio" value="yes"/>
        yes
       </label>
@@ -208,11 +215,11 @@
       </label>
      </div>
      <div class="col-sm-3 form-group">
-      <label class="radio-inline">
+      <label class="radio-inline" for="ceanod-n">
        <input id="ceanod-n" name="ceanod" type="radio" value="n"/>
        no
       </label>
-      <label class="radio-inline">
+      <label class="radio-inline" for="ceanod-y">
        <input id="ceanod-y" name="ceanod" type="radio" value="yes"/>
        yes
       </label>
@@ -228,11 +235,11 @@
       </label>
      </div>
      <div class="col-sm-3 form-group">
-      <label class="radio-inline">
+      <label class="radio-inline" for="cenncnlt-n">
        <input id="cenncnlt-n" name="cenncnlt" type="radio" value="n"/>
        no
       </label>
-      <label class="radio-inline">
+      <label class="radio-inline" for="cenncnlt-y">
        <input id="cenncnlt-y" name="cenncnlt" type="radio" value="yes"/>
        yes
       </label>
@@ -812,11 +819,11 @@
       </label>
      </div>
      <div class="col-sm-8 form-group">
-      <label class="radio-inline">
+      <label class="radio-inline" for="ceaf-n">
        <input id="ceaf-n" name="ceaf" type="radio" value="n"/>
        no
       </label>
-      <label class="radio-inline">
+      <label class="radio-inline" for="ceaf-y">
        <input id="ceaf-y" name="ceaf" type="radio" value="yes"/>
        yes
       </label>
@@ -913,10 +920,10 @@
         annual repeat CT
        </option>
        <option value="dx">
-        f/u CT
+        follow-up CT
        </option>
        <option value="af">
-        Abx + f/u CT
+        Abx + follow-up CT
        </option>
        <option value="pe">
         PET
@@ -955,27 +962,27 @@
        MM/DD/YYYY
       </small>
       <br/>
-      <label class="radio-inline">
+      <label class="radio-inline" for="cefuw-nw">
        <input id="cefuw-nw" name="cefuw" type="radio" value="nw"/>
        now
       </label>
-      <label class="radio-inline">
+      <label class="radio-inline" for="cefuw-nw">
        <input id="cefuw-nw" name="cefuw" type="radio" value="1m"/>
        1 month
       </label>
-      <label class="radio-inline">
+      <label class="radio-inline" for="cefuw-nw">
        <input id="cefuw-nw" name="cefuw" type="radio" value="3m"/>
        3 months
       </label>
-      <label class="radio-inline">
+      <label class="radio-inline" for="cefuw-nw">
        <input id="cefuw-nw" name="cefuw" type="radio" value="6m"/>
        6 months
       </label>
-      <label class="radio-inline">
+      <label class="radio-inline" for="cefuw-nw">
        <input id="cefuw-nw" name="cefuw" type="radio" value="1y"/>
        1 year
       </label>
-      <label class="radio-inline">
+      <label class="radio-inline" for="cefuw-nw">
        <input id="cefuw-nw" name="cefuw" type="radio" value="os"/>
        other
       </label>
@@ -1052,6 +1059,13 @@
      </div>
     </div>
     <hr/>
+    <div class="pull-left">
+     <a class="btn btn-danger navigation" data-form="@@FORMKEY@@" data-method="post" data-samiroute="deleteform" href="#!">
+      <span class="glyphicon glyphicon-trash">
+      </span>
+      Delete
+     </a>
+    </div>
     <div class="pull-right">
      <input name="samistatus" type="hidden" value=""/>
      <button class="btn btn-default" id="save-for-later-button" type="submit">
@@ -1070,12 +1084,12 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.06.04
+     SNAPSHOT 2018.07.16
     </span>
    </div>
   </footer>
   <script language="JavaScript">
-   var studyId = "@@SID@@";
+   const studyId = "@@SID@@";
     if (studyId) {
         $("#studyIdMenu").show();
     }
@@ -1083,25 +1097,26 @@
     $(function () {
         //TODO: remove these debug functions.
         // These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly.
-        $.each($("form.validated").find("select, textarea, input:visible"), function (i, o) {
-            $input = $(this);
-            if ($input.closest(".form-group").length == 0) {
+        const $forms = $("form.validated");
+        $.each($forms.find("select, textarea, input:visible"), function (i, o) {
+            const $input = $(this);
+            if ($input.closest(".form-group").length === 0) {
                 console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
             }
         });
 
-        $.each($("form.validated").find("input[type=hidden][required]"), function (i, o) {
-            $input = $(this);
+        $.each($forms.find("input[type=hidden][required]"), function (i, o) {
+            const $input = $(this);
             console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
         });
     })
   </script>
   <script language="JavaScript">
    $(function () {
-
             //follow up date calculator.
             $("[name=cefuw]").on("change", function () {
-                switch ($(this).val()) {
+                const when = $("[name='cefuw']:checked").val();
+                switch (when) {
                     case "nw":
                         $("#cefud").val(moment().format(VAPALS.DATE_FORMAT));
                         break;
@@ -1121,11 +1136,9 @@
                         $("#cefud").val("").focus();
                 }
             })
+
+            $(".validated").formValidation({framework: 'bootstrap'});
         });
-  </script>
-  <script language="JavaScript">
-   //Initialize Form Validation
-    $(".validated").formValidation({framework: 'bootstrap'});
   </script>
  </body>
 </html>

@@ -26,7 +26,7 @@
 
             <div class="row">
                 <div class="col-sm-4 col-md-3 form-group">
-                    <label class="control-label" for="bxdos">Study Date</label>
+                    <label class="control-label" for="bxdos">Study date</label>
                     {{ f.datepicker("ptdos", true, "Study Date is required") }}
                 </div>
             </div>
@@ -44,17 +44,17 @@
 
             <div class="row">
                 <div class="col-md-4 form-group">
-                    {{ f.floatingLabel("ptofr-n", "PET Scan Performed at Outside Institution") }}
+                    {{ f.floatingLabel("ptofr-n", "PET scan performed at outside institution") }}
                 </div>
                 <div class="col-sm-3 form-group">
-                    {{ f.inlineRadio("ptofr", "ptofr-n", "n", "no") }}
-                    {{ f.inlineRadio("ptofr", "ptofr-y", "yes", "yes") }}
+                    {{ f.inlineRadio("ptofr", "ptofr-n", "n", "No") }}
+                    {{ f.inlineRadio("ptofr", "ptofr-y", "yes", "Yes") }}
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-4 form-group">
-                    {{ f.floatingLabel("sidoe", "Date of Baseline CT") }}
+                    {{ f.floatingLabel("sidoe", "Date of baseline CT") }}
                 </div>
                 <div class="col-sm-3 form-group">
                     {{ f.datepicker("sidoe", true, "Baseline CT date is required") }}
@@ -63,7 +63,7 @@
 
             <div class="row">
                 <div class="col-md-4 form-group">
-                    {{ f.floatingLabel("cedos", "Date of Most Recent Comparative Study") }}
+                    {{ f.floatingLabel("cedos", "Date of most recent comparative study") }}
                 </div>
                 <div class="col-sm-3 form-group">
                     {{ f.datepicker("cedos", true, "Date is required") }}
@@ -75,8 +75,8 @@
                     {{ f.floatingLabel("ceanod-n", "Are there any nodules noted in the CT scan?") }}
                 </div>
                 <div class="col-sm-3 form-group">
-                    {{ f.inlineRadio("ceanod", "ceanod-n", "n", "no") }}
-                    {{ f.inlineRadio("ceanod", "ceanod-y", "yes", "yes") }}
+                    {{ f.inlineRadio("ceanod", "ceanod-n", "n", "No") }}
+                    {{ f.inlineRadio("ceanod", "ceanod-y", "yes", "Yes") }}
                 </div>
             </div>
 
@@ -85,8 +85,8 @@
                     {{ f.floatingLabel("cenncnlt-n", "Are non-calcified nodules noted, all less than 6 mm?") }}
                 </div>
                 <div class="col-sm-3 form-group">
-                    {{ f.inlineRadio("cenncnlt", "cenncnlt-n", "n", "no") }}
-                    {{ f.inlineRadio("cenncnlt", "cenncnlt-y", "yes", "yes") }}
+                    {{ f.inlineRadio("cenncnlt", "cenncnlt-n", "n", "No") }}
+                    {{ f.inlineRadio("cenncnlt", "cenncnlt-y", "yes", "Yes") }}
                 </div>
             </div>
 
@@ -164,7 +164,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><label for="cect1ll">Most Likely Location</label></td>
+                        <td><label for="cect1ll">Most likely location</label></td>
                         <td>
                             <select name="cect1ll" id="cect1ll" class="form-control">
                                 <option value="-"> -
@@ -190,7 +190,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <label for="cect1up">Maximum Nodule Uptake (SUV)</label>
+                            <label for="cect1up">Maximum nodule uptake (SUV)</label>
                         </td>
                         <td>
                             <input type=text name="cect1up" class="form-control numeric">
@@ -201,7 +201,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <label for="cect1st">Nodule Status</label>
+                            <label for="cect1st">Nodule status</label>
                         </td>
                         <td>
                             <select name="cect1st" id="cect1st" class="form-control">
@@ -247,7 +247,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><label for="cect1pd">Pathologic Diagnosis</label></td>
+                        <td><label for="cect1pd">Pathologic diagnosis</label></td>
                         <td>
                             <select name="cect1pd" id="cect1pd" class="form-control">
                                 <option value="-"> -For Pathology Use Only-
@@ -338,14 +338,14 @@
 
             <div class="row">
                 <div class="form-group col-sm-12">
-                    <label for="ptpdt">PET Details - Lung and nodules</label>
+                    <label for="ptpdt">PET details - lung and nodules</label>
                     <textarea name="ptpdt" id="ptpdt" class="form-control"></textarea>
                 </div>
             </div>
 
             <div class="row">
                 <div class="form-group col-sm-12">
-                    <label for="ptpdtln">PET Details - Lymph nodes</label>
+                    <label for="ptpdtln">PET details - lymph nodes</label>
                     <textarea name="ptpdtln" id="ptpdtln" class="form-control"></textarea>
                 </div>
             </div>
@@ -356,8 +356,8 @@
                     {{ f.floatingLabel("ceaf-n", "Other clinically significant ancillary finding?") }}
                 </div>
                 <div class="col-sm-8 form-group">
-                    {{ f.inlineRadio("ceaf", "ceaf-n", "n", "no") }}
-                    {{ f.inlineRadio("ceaf", "ceaf-y", "yes", "yes") }}
+                    {{ f.inlineRadio("ceaf", "ceaf-n", "n", "No") }}
+                    {{ f.inlineRadio("ceaf", "ceaf-y", "yes", "Yes") }}
                     {% set r =  [1,2] %}
                     {% for i in r %}
                         <div class="row">
@@ -413,12 +413,12 @@
                     <label for="cefuw-nw">When</label>
                     {{ f.datepicker("cefud", false, "Follow up date is required") }}
                     <br/>
-                    {{ f.inlineRadio("cefuw", "cefuw-nw", "nw", "now") }}
+                    {{ f.inlineRadio("cefuw", "cefuw-nw", "nw", "Nw") }}
                     {{ f.inlineRadio("cefuw", "cefuw-nw", "1m", "1 month") }}
                     {{ f.inlineRadio("cefuw", "cefuw-nw", "3m", "3 months") }}
                     {{ f.inlineRadio("cefuw", "cefuw-nw", "6m", "6 months") }}
                     {{ f.inlineRadio("cefuw", "cefuw-nw", "1y", "1 year") }}
-                    {{ f.inlineRadio("cefuw", "cefuw-nw", "os", "other") }}
+                    {{ f.inlineRadio("cefuw", "cefuw-nw", "os", "Other") }}
                 </div>
             </div>
 
@@ -451,7 +451,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12 form-group">
-                    <label for="ceimo-no">Other Findings</label>
+                    <label for="ceimo-no">Other findings</label>
                     <div class="radio">
                         <label>
                             <input type="radio" name="ceimo" id="ceimo-rs" value="rs" required="required"> No other
@@ -476,7 +476,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12 form-group">
-                    <label for="ceimre">Impression Remarks</label>
+                    <label for="ceimre">Impression remarks</label>
                     <textarea name="ceimre" id="ceimre" class="form-control"></textarea>
                 </div>
             </div>

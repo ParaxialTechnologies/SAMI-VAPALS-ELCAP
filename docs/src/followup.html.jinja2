@@ -25,11 +25,11 @@
             <input type="hidden" name="form" value="@@FORMKEY@@"/>  
             <div class="row">
                 <div class="form-group col-sm-3 col-md-3 col-lg-2">
-                    <label for="sidof">Follow-up Date</label>
+                    <label for="sidof">Follow-up date</label>
                     {{ f.datepicker("sidof", true) }}
                 </div>
                 <div class="form-group col-sm-3 col-md-3 col-lg-2">
-                    <label for="sidoe">Date of Baseline CT</label>
+                    <label for="sidoe">Date of baseline CT</label>
                     {{ f.datepicker("sidoe", true) }}
                 </div>
 
@@ -60,8 +60,8 @@
                 </div>
                 <div class="form-group col-sm-8">
                     <div>
-                        {{ f.inlineRadio("simeq", "simeq-n", "n", "no", true) }}
-                        {{ f.inlineRadio("simeq", "simeq-y", "y", "yes", true) }}
+                        {{ f.inlineRadio("simeq", "simeq-n", "n", "No", true) }}
+                        {{ f.inlineRadio("simeq", "simeq-y", "y", "Yes", true) }}
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        {{ f.floatingLabel('siopnpi', 'National Provider ID (NPI)') }}
+                        {{ f.floatingLabel('siopnpi', 'National provider ID (NPI)') }}
                     </div>
                     <div class="col-sm-2 form-group">
                         <input type=text name="siopnpi" id="siopnpi" class="form-control numeric" required="required">
@@ -95,8 +95,8 @@
                         {{ f.floatingLabel('sidsd-n', 'Documentation of shared decision making') }}
                     </div>
                     <div class="col-sm-8 form-group">
-                        {{ f.inlineRadio("sidsd", "sidsd-n", "n", "no", true) }}
-                        {{ f.inlineRadio("sidsd", "sidsd-y", "y", "yes", true) }}
+                        {{ f.inlineRadio("sidsd", "sidsd-n", "n", "No", true) }}
+                        {{ f.inlineRadio("sidsd", "sidsd-y", "y", "Yes", true) }}
                         <p class="help-block small">(shared decision making is required for reimbursement for G0297
                             exams on baseline <strong>only</strong>)</p>
                     </div>
@@ -106,8 +106,8 @@
                         {{ f.floatingLabel('siopss-c', 'Reported smoking status at time of order') }}
                     </div>
                     <div class="col-sm-8 form-group">
-                        {{ f.inlineRadio("siopss", "siopss-c", "c", "current", true) }}
-                        {{ f.inlineRadio("siopss", "siopss-f", "f", "former", true) }}
+                        {{ f.inlineRadio("siopss", "siopss-c", "c", "Current", true) }}
+                        {{ f.inlineRadio("siopss", "siopss-f", "f", "Former", true) }}
                     </div>
                 </div>
 
@@ -133,8 +133,8 @@
                         {{ f.floatingLabel('sioas', 'Reported asymptomatic for lung cancer at time of order') }}
                     </div>
                     <div class="col-md-8 form-group">
-                        {{ f.inlineRadio("sioas", "sioas-n", "n", "no", true) }}
-                        {{ f.inlineRadio("sioas", "sioas-y", "y", "yes", true) }}
+                        {{ f.inlineRadio("sioas", "sioas-n", "n", "No", true) }}
+                        {{ f.inlineRadio("sioas", "sioas-y", "y", "Yes", true) }}
                     </div>
                 </div>
                 <hr/>
@@ -154,8 +154,8 @@
                     {{ f.floatingLabel('siabx-n', 'Have you taken antibiotics since your last CT scan?') }}
                 </div>
                 <div class="col-md-8 form-group">
-                    {{ f.inlineRadio("siabx", "siabx-n", "n", "no", true) }}
-                    {{ f.inlineRadio("siabx", "siabx-y", "y", "yes", true) }}
+                    {{ f.inlineRadio("siabx", "siabx-n", "n", "No", true) }}
+                    {{ f.inlineRadio("siabx", "siabx-y", "y", "Yes", true) }}
                 </div>
             </div>
             <div class="row">
@@ -163,8 +163,8 @@
                     {{ f.floatingLabel('siaex-n', 'Is this an annual CT scan?') }}
                 </div>
                 <div class="col-md-8 form-group">
-                    {{ f.inlineRadio("siaex", "siaex-n", "n", "no", true) }}
-                    {{ f.inlineRadio("siaex", "siaex-y", "y", "yes", true) }}
+                    {{ f.inlineRadio("siaex", "siaex-n", "n", "No", true) }}
+                    {{ f.inlineRadio("siaex", "siaex-y", "y", "Yes", true) }}
                 </div>
             </div>
 
@@ -176,9 +176,9 @@
                     {{ f.floatingLabel('sisse-1', 'Which year did you last have a prolonged exposure to secondhand tobacco smoke?') }}
                 </div>
                 <div class="col-md-8 form-group">
-                    {{ f.inlineRadio("sisse", "sisse-1", "1", "less than 5 years ago", true) }}
-                    {{ f.inlineRadio("sisse", "sisse-5", "5", "more than 5 years ago", true) }}
-                    {{ f.inlineRadio("sisse", "sisse-10", "10", "more than 10 years ago", true) }}
+                    {{ f.inlineRadio("sisse", "sisse-1", "1", "Less than 5 years ago", true) }}
+                    {{ f.inlineRadio("sisse", "sisse-5", "5", "More than 5 years ago", true) }}
+                    {{ f.inlineRadio("sisse", "sisse-10", "10", "More than 10 years ago", true) }}
                 </div>
             </div>
 
@@ -189,10 +189,10 @@
                     {{ f.floatingLabel('siwc-b', 'During the past year, have you experienced any of these symptoms?') }}
                 </div>
                 <div class="col-md-8 form-group">
-                    {{ f.checkbox("siwcb", "b", "cough producing bloody material") }}
-                    {{ f.checkbox("siwcl", "l", "unexplained weight loss greater than 20 lbs") }}
-                    {{ f.checkbox("siwch", "h", "unexplained hoarseness") }}
-                    {{ f.checkbox("siwco", "o", "other") }}
+                    {{ f.checkbox("siwcb", "b", "Cough producing bloody material") }}
+                    {{ f.checkbox("siwcl", "l", "Unexplained weight loss greater than 20 lbs") }}
+                    {{ f.checkbox("siwch", "h", "Unexplained hoarseness") }}
+                    {{ f.checkbox("siwco", "o", "Other") }}
                     <input type="text" class="form-control input-sm" id="siwcos" name="siwcos" required="required"/>
                 </div>
             </div>
@@ -201,8 +201,8 @@
                     {{ f.floatingLabel('siwcp-n', 'If yes, have you seen a physician for this?') }}
                 </div>
                 <div class="col-md-2 form-group">
-                    {{ f.inlineRadio("siwcp", "siwcp-n", "n", "no") }}
-                    {{ f.inlineRadio("siwcp", "siwcp-y", "y", "yes") }}
+                    {{ f.inlineRadio("siwcp", "siwcp-n", "n", "No") }}
+                    {{ f.inlineRadio("siwcp", "siwcp-y", "y", "Yes") }}
                 </div>
                 <div class="col-md-6 form-group" id="siwcw-container">
                     <label class="control-label" for="siwcw">Whom?</label>
@@ -215,8 +215,8 @@
                     {{ f.floatingLabel('siwcp-n', 'If yes, are you now experiencing them?') }}
                 </div>
                 <div class="col-md-8 form-group">
-                    {{ f.inlineRadio("siwcn", "siwcn-n", "n", "no") }}
-                    {{ f.inlineRadio("siwcn", "siwcn-y", "y", "yes") }}
+                    {{ f.inlineRadio("siwcn", "siwcn-n", "n", "No") }}
+                    {{ f.inlineRadio("siwcn", "siwcn-y", "y", "Yes") }}
                 </div>
             </div>
 
@@ -227,12 +227,12 @@
                 <div class="col-md-8 form-group">
                     <select id="siact" name="siact" class="form-control">
                         <option value="-"> -
-                        <option value="a"> less than 6 months ago
+                        <option value="a"> Less than 6 months ago
                         <option value="b"> 6-18 months ago
                         <option value="f"> 18 months to 3 years ago
                         <option value="c"> 3 years to 5 years ago
-                        <option value="d"> over 5 years ago
-                        <option value="e"> never
+                        <option value="d"> Over 5 years ago
+                        <option value="e"> Never
                     </select>
                 </div>
             </div>
@@ -243,8 +243,8 @@
                     {{ f.floatingLabel('siho-n', 'Have you been hospitalized in the past year?') }}
                 </div>
                 <div class="col-md-2 form-group">
-                    {{ f.inlineRadio("siho", "siho-n", "n", "no", true) }}
-                    {{ f.inlineRadio("siho", "siho-y", "y", "yes", true) }}
+                    {{ f.inlineRadio("siho", "siho-n", "n", "No", true) }}
+                    {{ f.inlineRadio("siho", "siho-y", "y", "Yes", true) }}
                 </div>
                 <div class="col-md-6 col-lg-4" id="siho-container">
                     <div class="form-group">
@@ -267,25 +267,25 @@
                     {{ f.floatingLabel('sicd-n', 'Have you had a diagnosis of cancer in the past year?') }}
                 </div>
                 <div class="col-md-2 form-group">
-                    {{ f.inlineRadio("sicd", "sicd-n", "n", "no", true) }}
-                    {{ f.inlineRadio("sicd", "sicd-y", "y", "yes", true) }}
+                    {{ f.inlineRadio("sicd", "sicd-n", "n", "No", true) }}
+                    {{ f.inlineRadio("sicd", "sicd-y", "y", "Yes", true) }}
                 </div>
                 <div class="col-md-6 col-lg-4" id="sicd-container">
                     <div class="form-group">
                         <label for="sicdl" class="control-label">What part of the body?</label>
                         <select id="sicdl" name="sicdl" class="form-control">
                             <option value="-"> -
-                            <option value="br"> breast
-                            <option value="co"> colon / rectum
-                            <option value="li"> liver
-                            <option value="lu"> lung / bronchus
-                            <option value="ov"> ovary
-                            <option value="pa"> pancreas
-                            <option value="pr"> prostate
-                            <option value="sk"> skin
-                            <option value="st"> stomach
-                            <option value="ut"> uterus
-                            <option value="os"> other (specify)
+                            <option value="br"> Breast
+                            <option value="co"> Colon / rectum
+                            <option value="li"> Liver
+                            <option value="lu"> Lung / bronchus
+                            <option value="ov"> Ovary
+                            <option value="pa"> Pancreas
+                            <option value="pr"> Prostate
+                            <option value="sk"> Skin
+                            <option value="st"> Stomach
+                            <option value="ut"> Uterus
+                            <option value="os"> Other (specify)
                         </select>
                     </div>
                     <div class="form-group">
@@ -304,8 +304,8 @@
                     {{ f.floatingLabel('silcs-n', 'If lung cancer has been diagnosed, have you had surgery?') }}
                 </div>
                 <div class="col-md-2 form-group">
-                    {{ f.inlineRadio("silcs", "silcs-n", "n", "no", true) }}
-                    {{ f.inlineRadio("silcs", "silcs-y", "y", "yes", true) }}
+                    {{ f.inlineRadio("silcs", "silcs-n", "n", "No", true) }}
+                    {{ f.inlineRadio("silcs", "silcs-y", "y", "Yes", true) }}
                 </div>
                 <div class="col-md-6 col-lg-4" id="silcs-container">
                     <div class="form-group">
@@ -324,8 +324,8 @@
                     {{ f.floatingLabel('sier-n', 'If a lung cancer has been removed, is there evidence of recurrence?') }}
                 </div>
                 <div class="col-md-2 form-group">
-                    {{ f.inlineRadio("sier", "sier-n", "n", "no", true) }}
-                    {{ f.inlineRadio("sier", "sier-y", "y", "yes", true) }}
+                    {{ f.inlineRadio("sier", "sier-n", "n", "No", true) }}
+                    {{ f.inlineRadio("sier", "sier-y", "y", "Yes", true) }}
                 </div>
                 <div class="col-md-6 col-lg-4" id="sier-container">
                     <div class="form-group">
@@ -344,9 +344,9 @@
                     {{ f.floatingLabel('sisa-n', 'Over the past month, have you smoked cigarettes at all, even a puff?') }}
                 </div>
                 <div class="col-md-8 form-group">
-                    {{ f.inlineRadio("sisa", "sisa-n", "n", "no", true) }}
-                    {{ f.inlineRadio("sisa", "sisa-y", "y", "yes", true) }}
-                    {{ f.inlineRadio("sisa", "sisa-o", "o", "never smoked", true) }}
+                    {{ f.inlineRadio("sisa", "sisa-n", "n", "No", true) }}
+                    {{ f.inlineRadio("sisa", "sisa-y", "y", "Yes", true) }}
+                    {{ f.inlineRadio("sisa", "sisa-o", "o", "Never smoked", true) }}
                 </div>
             </div>
 
@@ -417,9 +417,9 @@
                     {{ f.floatingLabel('sittq-n', 'Since your prior CT scan, have you ever tried to quit smoking?') }}
                 </div>
                 <div class="col-md-8 form-group">
-                    {{ f.inlineRadio("sittq", "sittq-n", "n", "no", true) }}
-                    {{ f.inlineRadio("sittq", "sittq-y", "y", "yes", true) }}
-                    {{ f.inlineRadio("sittq", "sittq-o", "o", "n/a", true) }}
+                    {{ f.inlineRadio("sittq", "sittq-n", "n", "No", true) }}
+                    {{ f.inlineRadio("sittq", "sittq-y", "y", "Yes", true) }}
+                    {{ f.inlineRadio("sittq", "sittq-o", "o", "N/A", true) }}
                 </div>
             </div>
 
@@ -462,10 +462,10 @@
                 <div class="col-md-8 form-group">
                     <select id="siqst" name="siqst" class="form-control">
                         <option value="-"> -
-                        <option value="y"> yes, within the next 30 days
-                        <option value="m"> yes, within the next 6 months
-                        <option value="n"> no, not thinking of quitting
-                        <option value="o"> n/a
+                        <option value="y"> Yes, within the next 30 days
+                        <option value="m"> Yes, within the next 6 months
+                        <option value="n"> No, not thinking of quitting
+                        <option value="o"> N/A
                     </select>
                 </div>
             </div>
@@ -475,8 +475,8 @@
                     {{ f.floatingLabel('sicpd-n', 'Smoking cessation materials were distributed to subject?') }}
                 </div>
                 <div class="col-md-8 form-group">
-                    {{ f.inlineRadio("sicpd", "sittq-n", "n", "no", true) }}
-                    {{ f.inlineRadio("sicpd", "sittq-y", "y", "yes", true) }}
+                    {{ f.inlineRadio("sicpd", "sittq-n", "n", "No", true) }}
+                    {{ f.inlineRadio("sicpd", "sittq-y", "y", "Yes", true) }}
                 </div>
             </div>
             <div class="pull-left">

@@ -1689,7 +1689,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-12 form-group">
-                                <strong>Nodules</strong>
+                                <label class="required">Nodules</label>
                                 <div class="radio">
                                     <label>
                                         <input type="radio" name="ceimn" id="ceimn-rs" value="rs"
@@ -1775,7 +1775,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-3 col-md-2 form-group">
-                                <label for="cefud">Follow-up date:</label><br/>
+                                <label class="required" for="cefud">Follow-up date:</label><br/>
                                 {{ f.datepicker("cefud", null, "Follow up date is required") }}
                             </div>
                         </div>
@@ -1783,7 +1783,7 @@
                         <h3>Lung-RADS {{ "(Optional)" if formPage == "ctevaluation-elcap" else "" }}</h3>
                         <div class="row">
                             <div class="form-group col-sm-5 col-md-4">
-                                <label for="celrad">Category</label>
+                                <label class="required" for="celrad">Category</label>
                                 <br/>
                                 {{ f.radio("celrad", "celrad-na","-","Not applicable", formPage == "ctevaluation") }}
                                 {{ f.radio("celrad", "celrad-0","0","0 (incomplete)") }}

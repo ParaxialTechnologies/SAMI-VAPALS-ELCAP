@@ -1,6 +1,8 @@
-{% macro floatingLabel(for, text) -%}
-    <label for="{{ for }}" class="visible-xs visible-sm">{{ text }}</label>
-    <label for="{{ for }}" class="text-right pull-right hidden-xs hidden-sm">{{ text }}</label>
+{% macro floatingLabel(for, text, extraClasses) -%}
+    <label for="{{ for }}" 
+        class="visible-xs visible-sm {{ extraClasses }}"
+    >{{ text }}</label>
+    <label for="{{ for }}" class="text-right pull-right hidden-xs hidden-sm {{ extraClasses }}">{{ text }}</label>
 {%- endmacro %}
 
 {% macro inlineRadio(groupName, id, value, labelText, required, checked, onclick) -%}
@@ -44,10 +46,11 @@
 {%- endmacro %} %}
 
 
-{% macro checkbox(name, value, labelText, attributes) -%}
+{% macro checkbox(name, value, labelText, attributes, required) -%}
     <div class="checkbox">
-        <label>
+        <label {{ "class=\"required\"" if required else "" }} >
             <input type="checkbox" name="{{ name }}" id="{{ name }}" value="{{ value }}"
+            {{ "required=\"required\"" if required else "" }}
             {% set x = "" %}
             {% if attributes!=null %}
                 {% for k,v in attributes.items() %}
@@ -60,9 +63,10 @@
     </div>
 {%- endmacro %}
 
-{% macro inlineCheckbox(name, value, labelText, attributes) -%}
-    <label class="checkbox-inline">
+{% macro inlineCheckbox(name, value, labelText, attributes, required) -%}
+    <label class="checkbox-inline {{ "required" if required else "" }}">
         <input type="checkbox" name="{{ name }}" id="{{ name }}" value="{{ value }}"
+        {{ "required=\"required\"" if required else "" }}
         {% set x = "" %}
         {% if attributes!=null %}
             {% for k,v in attributes.items() %}
@@ -90,13 +94,15 @@
     <small class="form-text text-muted">MM/DD/YYYY</small>
 {%- endmacro %}
 
-{% macro yearpicker(name, pastdateRequired, required, small, helpText) -%}
+{% macro yearpicker(name, pastdateRequired, required, small, helpText, title) -%}
     <input class="form-control {{ "input-sm" if small else "" }} numeric yearpicker" type="text"
            name="{{ name }}" id="{{ name }}" size="5"
             {{ " required=\"required\"" if required else "" }}
             {{ " data-fv-date-max=\"VAPALS.todaysDate\"" if pastDateRequired else "" }}
            data-fv-integer="true" maxlength="4"
-           placeholder="YYYY" title="Last cigarette year">
+           placeholder="YYYY" 
+           title="{{title}}"
+           >
     {{ "<small class=\"help-block\">" + helpText + "</small>" if helpText else "" }}
 
 {%- endmacro %}

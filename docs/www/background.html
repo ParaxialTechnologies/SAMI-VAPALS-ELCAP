@@ -107,10 +107,10 @@
     <div>
      <div class="row">
       <div class="col-sm-6 col-md-3 col-lg-3">
-       <label class="visible-xs visible-sm" for="sbfc-n">
+       <label class="visible-xs visible-sm " for="sbfc-n">
         Family history of lung cancer?
        </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="sbfc-n">
+       <label class="text-right pull-right hidden-xs hidden-sm " for="sbfc-n">
         Family history of lung cancer?
        </label>
       </div>
@@ -178,10 +178,10 @@
      <hr class="visible-xs-block visible-sm-block"/>
      <div class="row">
       <div class="col-sm-6 col-md-3 col-lg-3">
-       <label class="visible-xs visible-sm" for="sbhco-n">
+       <label class="visible-xs visible-sm " for="sbhco-n">
         Any cancer?
        </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="sbhco-n">
+       <label class="text-right pull-right hidden-xs hidden-sm " for="sbhco-n">
         Any cancer?
        </label>
       </div>
@@ -201,11 +201,17 @@
         </label>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbhco-container" style="display: none;">
-       <div class="form-group">
-        <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbhcdod" maxlength="4" name="sbhcdod" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
+      <div id="sbhco-container" style="display: none;">
+       <div class="form-group col-sm-4 col-md-2">
+        <label class="control-label required" for="sbhcdod">
+         Year
+        </label>
+        <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbhcdod" maxlength="4" name="sbhcdod" placeholder="YYYY" required="required" size="5" title="" type="text"/>
        </div>
-       <div class="form-group" style="vertical-align: top;">
+       <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
+        <label class="control-label required" for="sbhcpbo">
+         Primary site
+        </label>
         <input class="form-control input-sm" id="sbhcpbo" name="sbhcpbo" placeholder="Primary site?" required="required" type="text"/>
        </div>
       </div>
@@ -213,10 +219,10 @@
      <hr class="visible-xs-block visible-sm-block"/>
      <div class="row">
       <div class="col-sm-6 col-md-3 col-lg-3">
-       <label class="visible-xs visible-sm" for="sbmpa-n">
+       <label class="visible-xs visible-sm " for="sbmpa-n">
         Asthma?
        </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="sbmpa-n">
+       <label class="text-right pull-right hidden-xs hidden-sm " for="sbmpa-n">
         Asthma?
        </label>
       </div>
@@ -236,11 +242,12 @@
         </label>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpa-container" style="display: none;">
+      <div class="col-sm-12 col-md-6 col-lg-7" id="sbmpa-container" style="display: none;">
        <div class="form-group">
         <label class="required" for="sbmpat-n">
          Under current treatment?
         </label>
+        <br/>
         <label class="radio-inline" for="sbmpat-n">
          <input data-fv-notempty-message="Please select a value" id="sbmpat-n" name="sbmpat" required="required" type="radio" value="n"/>
          No
@@ -255,10 +262,10 @@
      <hr class="visible-xs-block visible-sm-block"/>
      <div class="row">
       <div class="col-sm-6 col-md-3 col-lg-3">
-       <label class="visible-xs visible-sm" for="sbmpc-n">
+       <label class="visible-xs visible-sm " for="sbmpc-n">
         Emphysema or chronic bronchitis (COPD)?
        </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="sbmpc-n">
+       <label class="text-right pull-right hidden-xs hidden-sm " for="sbmpc-n">
         Emphysema or chronic bronchitis (COPD)?
        </label>
       </div>
@@ -278,19 +285,22 @@
         </label>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpc-container" style="display: none;">
+      <div class="col-sm-4 col-md-2" id="sbmpc-container" style="display: none;">
        <div class="form-group">
-        <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpcw" maxlength="4" name="sbmpcw" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
+        <label class="control-label required" for="sbmpcw">
+         Year
+        </label>
+        <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpcw" maxlength="4" name="sbmpcw" placeholder="YYYY" required="required" size="5" title="" type="text"/>
        </div>
       </div>
      </div>
      <hr class="visible-xs-block visible-sm-block"/>
      <div class="row">
       <div class="col-sm-6 col-md-3 col-lg-3">
-       <label class="visible-xs visible-sm" for="sbmpht-n">
+       <label class="visible-xs visible-sm " for="sbmpht-n">
         High blood pressure?
        </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="sbmpht-n">
+       <label class="text-right pull-right hidden-xs hidden-sm " for="sbmpht-n">
         High blood pressure?
        </label>
       </div>
@@ -326,9 +336,15 @@
         </label>
        </div>
        <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
-        <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmphtsw" maxlength="4" name="sbmphtsw" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
+        <label class="control-label required" for="sbmphtsw">
+         Year
+        </label>
+        <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmphtsw" maxlength="4" name="sbmphtsw" placeholder="YYYY" required="required" size="5" title="" type="text"/>
        </div>
        <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
+        <label class="control-label required" for="sbmphthv">
+         Highest Value
+        </label>
         <input class="form-control input-sm" id="sbmphthv" name="sbmphthv" placeholder="Highest Value?" type="text"/>
        </div>
       </div>
@@ -336,10 +352,10 @@
      <hr class="visible-xs-block visible-sm-block"/>
      <div class="row">
       <div class="col-sm-6 col-md-3 col-lg-3">
-       <label class="visible-xs visible-sm" for="sbmphc-n">
+       <label class="visible-xs visible-sm " for="sbmphc-n">
         High cholesterol?
        </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="sbmphc-n">
+       <label class="text-right pull-right hidden-xs hidden-sm " for="sbmphc-n">
         High cholesterol?
        </label>
       </div>
@@ -359,7 +375,7 @@
         </label>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmphc-container" style="display: none;">
+      <div class="col-sm-12 col-md-6 col-lg-7" id="sbmphc-container" style="display: none;">
        <div class="form-group">
         <label class="control-label required" for="sbmphct-n">
          Treated?
@@ -379,10 +395,10 @@
      <hr class="visible-xs-block visible-sm-block"/>
      <div class="row">
       <div class="col-sm-6 col-md-3 col-lg-3">
-       <label class="visible-xs visible-sm" for="sbmpas-n">
+       <label class="visible-xs visible-sm " for="sbmpas-n">
         Had an angioplasty or stent?
        </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="sbmpas-n">
+       <label class="text-right pull-right hidden-xs hidden-sm " for="sbmpas-n">
         Had an angioplasty or stent?
        </label>
       </div>
@@ -402,11 +418,17 @@
         </label>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpas-container" style="display: none;">
-       <div class="form-group">
-        <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpasw" maxlength="4" name="sbmpasw" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
+      <div id="sbmpas-container" style="display: none;">
+       <div class="form-group col-sm-4 col-md-2">
+        <label class="control-label required" for="sbmpasw">
+         Year
+        </label>
+        <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpasw" maxlength="4" name="sbmpasw" placeholder="YYYY" required="required" size="5" title="" type="text"/>
        </div>
-       <div class="form-group" style="vertical-align: top;">
+       <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
+        <label class="control-label required" for="sbmpast">
+         Where Treated
+        </label>
         <input class="form-control input-sm" id="sbmpast" name="sbmpast" placeholder="Where treated?" required="required" type="text"/>
        </div>
       </div>
@@ -414,10 +436,10 @@
      <hr class="visible-xs-block visible-sm-block"/>
      <div class="row">
       <div class="col-sm-6 col-md-3 col-lg-3">
-       <label class="visible-xs visible-sm" for="sbmpmi-n">
+       <label class="visible-xs visible-sm " for="sbmpmi-n">
         MI?
        </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="sbmpmi-n">
+       <label class="text-right pull-right hidden-xs hidden-sm " for="sbmpmi-n">
         MI?
        </label>
       </div>
@@ -437,22 +459,28 @@
         </label>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpmi-container" style="display: none;">
-       <div class="form-group">
-        <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpmid" maxlength="4" name="sbmpmid" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
+      <div id="sbmpmi-container" style="display: none;">
+       <div class="form-group col-sm-4 col-md-2">
+        <label class="control-label required" for="sbmpmid">
+         Year
+        </label>
+        <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpmid" maxlength="4" name="sbmpmid" placeholder="YYYY" required="required" size="5" title="" type="text"/>
        </div>
-       <div class="form-group">
-        <input class="form-control input-sm" id="sbmpmiw" name="sbmpmiw" placeholder="Where treated?" type="text"/>
+       <div class="form-group col-sm-4 col-md-2">
+        <label class="control-label" for="sbmpast">
+         Where Treated
+        </label>
+        <input class="form-control input-sm" id="sbmpmiw" name="sbmpmiw" placeholder="Location" type="text"/>
        </div>
       </div>
      </div>
      <hr class="visible-xs-block visible-sm-block"/>
      <div class="row">
       <div class="col-sm-6 col-md-3 col-lg-3">
-       <label class="visible-xs visible-sm" for="sbmps-n">
+       <label class="visible-xs visible-sm " for="sbmps-n">
         Stroke?
        </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="sbmps-n">
+       <label class="text-right pull-right hidden-xs hidden-sm " for="sbmps-n">
         Stroke?
        </label>
       </div>
@@ -472,19 +500,22 @@
         </label>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmps-container" style="display: none;">
-       <div class="form-group">
-        <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpsd" maxlength="4" name="sbmpsd" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
+      <div id="sbmps-container" style="display: none;">
+       <div class="form-group col-sm-4 col-md-2">
+        <label class="control-label required" for="sbmpsd">
+         Year
+        </label>
+        <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpsd" maxlength="4" name="sbmpsd" placeholder="YYYY" required="required" size="5" title="" type="text"/>
        </div>
       </div>
      </div>
      <hr class="visible-xs-block visible-sm-block"/>
      <div class="row">
       <div class="col-sm-6 col-md-3 col-lg-3">
-       <label class="visible-xs visible-sm" for="sbmppv-n">
+       <label class="visible-xs visible-sm " for="sbmppv-n">
         Peripheral vascular disease (poor circulation)?
        </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="sbmppv-n">
+       <label class="text-right pull-right hidden-xs hidden-sm " for="sbmppv-n">
         Peripheral vascular disease (poor circulation)?
        </label>
       </div>
@@ -504,19 +535,22 @@
         </label>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmppv-container" style="display: none;">
-       <div class="form-group">
-        <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmppvd" maxlength="4" name="sbmppvd" placeholder="YYYY" required="required" size="5" title="Last cigarette year" type="text"/>
+      <div id="sbmppv-container" style="display: none;">
+       <div class="form-group col-sm-4 col-md-2">
+        <label class="control-label required" for="sbmppvd">
+         Year
+        </label>
+        <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmppvd" maxlength="4" name="sbmppvd" placeholder="YYYY" required="required" size="5" title="" type="text"/>
        </div>
       </div>
      </div>
      <hr class="visible-xs-block visible-sm-block"/>
      <div class="row">
       <div class="col-sm-6 col-md-3 col-lg-3">
-       <label class="visible-xs visible-sm" for="sbmpd-n">
+       <label class="visible-xs visible-sm " for="sbmpd-n">
         Diabetes?
        </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="sbmpd-n">
+       <label class="text-right pull-right hidden-xs hidden-sm " for="sbmpd-n">
         Diabetes?
        </label>
       </div>
@@ -537,13 +571,13 @@
        </div>
       </div>
       <div id="sbmpd-container" style="display: none;">
-       <div class="col-sm-3 form-group">
+       <div class=" col-sm-4 col-md-2 form-group">
         <label class="control-label required" for="sbmpdw">
          Starting at what age?
         </label>
         <input class="form-control input-sm numeric" data-fv-integer="true" id="sbmpdw" maxlength="4" name="sbmpdw" size="4" type="text"/>
        </div>
-       <div class="col-sm-3 form-group">
+       <div class=" col-sm-4 col-md-2 form-group">
         <label class="control-label required" for="sbmpdt-n">
          Treated?
         </label>
@@ -562,10 +596,10 @@
      <hr class="visible-xs-block visible-sm-block"/>
      <div class="row">
       <div class="col-sm-6 col-md-3 col-lg-3">
-       <label class="visible-xs visible-sm" for="sbmpld-n">
+       <label class="visible-xs visible-sm " for="sbmpld-n">
         Liver disease?
        </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="sbmpld-n">
+       <label class="text-right pull-right hidden-xs hidden-sm " for="sbmpld-n">
         Liver disease?
        </label>
       </div>
@@ -585,11 +619,12 @@
         </label>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmpld-container" style="display: none;">
+      <div class="col-sm-12 col-md-6 col-lg-7" id="sbmpld-container" style="display: none;">
        <div class="form-group">
         <label class="control-label required" for="sbmpldt-m">
          Severity?
         </label>
+        <br/>
         <label class="radio-inline" for="sbmpldt-m">
          <input data-fv-notempty-message="Please select a value" id="sbmpldt-m" name="sbmpldt" required="required" type="radio" value="m"/>
          Mild
@@ -604,10 +639,10 @@
      <hr class="visible-xs-block visible-sm-block"/>
      <div class="row">
       <div class="col-sm-6 col-md-3 col-lg-3">
-       <label class="visible-xs visible-sm" for="sbmprd-n">
+       <label class="visible-xs visible-sm " for="sbmprd-n">
         Kidney (renal) disease?
        </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="sbmprd-n">
+       <label class="text-right pull-right hidden-xs hidden-sm " for="sbmprd-n">
         Kidney (renal) disease?
        </label>
       </div>
@@ -627,11 +662,12 @@
         </label>
        </div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbmprd-container" style="display: none;">
+      <div class="col-sm-12 col-md-6 col-lg-7" id="sbmprd-container" style="display: none;">
        <div class="form-group">
         <label class="control-label required" for="sbmprdt-m">
          Severity?
         </label>
+        <br/>
         <label class="radio-inline" for="sbmprdt-m">
          <input data-fv-notempty-message="Please select a value" id="sbmprdt-m" name="sbmprdt" required="required" type="radio" value="m"/>
          Mild
@@ -646,10 +682,10 @@
      <hr class="visible-xs-block visible-sm-block"/>
      <div class="row">
       <div class="col-sm-6 col-md-3 col-lg-3">
-       <label class="visible-xs visible-sm" for="sblcs-n">
+       <label class="visible-xs visible-sm " for="sblcs-n">
         Have you experienced any symptoms indicative of lung cancer?
        </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="sblcs-n">
+       <label class="text-right pull-right hidden-xs hidden-sm " for="sblcs-n">
         Have you experienced any symptoms indicative of lung cancer?
        </label>
       </div>
@@ -908,7 +944,7 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.07.23
+     SNAPSHOT 2018.07.25
     </span>
    </div>
   </footer>

@@ -25,17 +25,17 @@
             <input type="hidden" name="form" value="@@FORMKEY@@"/>  
             <div class="row">
                 <div class="form-group col-sm-3 col-md-3 col-lg-2">
-                    <label for="sidof">Follow-up date</label>
+                    <label class="required" for="sidof">Follow-up date</label>
                     {{ f.datepicker("sidof", true) }}
                 </div>
                 <div class="form-group col-sm-3 col-md-3 col-lg-2">
-                    <label for="sidoe">Date of baseline CT</label>
+                    <label class="required" for="sidoe">Date of baseline CT</label>
                     {{ f.datepicker("sidoe", true) }}
                 </div>
 
 
                 <div class="col-sm-4 col-md-3 form-group">
-                    <label for="sico">Coordinator</label>
+                    <label class="required" for="sico">Coordinator</label>
                     <input type="text" name="sico" id="sico" class="form-control" required="required"/>
                 </div>
             </div>
@@ -56,7 +56,7 @@
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    {{ f.floatingLabel('simeq-n', 'Was a CT lung screening scan ordered for this patient?') }}
+                    {{ f.floatingLabel('simeq-n', 'Was a CT lung screening scan ordered for this patient?', "required") }}
                 </div>
                 <div class="form-group col-sm-8">
                     <div>
@@ -83,7 +83,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        {{ f.floatingLabel('siopnpi', 'National provider ID (NPI)') }}
+                        {{ f.floatingLabel('siopnpi', 'National provider ID (NPI)', "required") }}
                     </div>
                     <div class="col-sm-2 form-group">
                         <input type=text name="siopnpi" id="siopnpi" class="form-control numeric" required="required">
@@ -92,7 +92,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        {{ f.floatingLabel('sidsd-n', 'Documentation of shared decision making') }}
+                        {{ f.floatingLabel('sidsd-n', 'Documentation of shared decision making' ,"required") }}
                     </div>
                     <div class="col-sm-8 form-group">
                         {{ f.inlineRadio("sidsd", "sidsd-n", "n", "No", true) }}
@@ -103,7 +103,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        {{ f.floatingLabel('siopss-c', 'Reported smoking status at time of order') }}
+                        {{ f.floatingLabel('siopss-c', 'Reported smoking status at time of order', "required") }}
                     </div>
                     <div class="col-sm-8 form-group">
                         {{ f.inlineRadio("siopss", "siopss-c", "c", "Current", true) }}
@@ -113,7 +113,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        {{ f.floatingLabel('siopqy', 'Reported pack years at time of order') }}
+                        {{ f.floatingLabel('siopqy', 'Reported pack years at time of order',"required") }}
                     </div>
                     <div class="col-md-8 form-group">
                         <input type="text" name="sioppy" id="sioppy" class="form-control numeric" required="required"/>
@@ -130,7 +130,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        {{ f.floatingLabel('sioas', 'Reported asymptomatic for lung cancer at time of order') }}
+                        {{ f.floatingLabel('sioas', 'Reported asymptomatic for lung cancer at time of order', "required") }}
                     </div>
                     <div class="col-md-8 form-group">
                         {{ f.inlineRadio("sioas", "sioas-n", "n", "No", true) }}
@@ -141,7 +141,7 @@
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    {{ f.floatingLabel('siopci', 'Clinical Information') }}
+                    {{ f.floatingLabel('siopci', 'Clinical Information', "required") }}
                 </div>
                 <div class="col-md-8 form-group">
                     <textarea class="form-control" id="siopci" name="siopci" rows="3" required="required"></textarea>
@@ -151,7 +151,7 @@
             <hr/>
             <div class="row">
                 <div class="col-md-4">
-                    {{ f.floatingLabel('siabx-n', 'Have you taken antibiotics since your last CT scan?') }}
+                    {{ f.floatingLabel('siabx-n', 'Have you taken antibiotics since your last CT scan?', "required") }}
                 </div>
                 <div class="col-md-8 form-group">
                     {{ f.inlineRadio("siabx", "siabx-n", "n", "No", true) }}
@@ -160,7 +160,7 @@
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    {{ f.floatingLabel('siaex-n', 'Is this an annual CT scan?') }}
+                    {{ f.floatingLabel('siaex-n', 'Is this an annual CT scan?', "required") }}
                 </div>
                 <div class="col-md-8 form-group">
                     {{ f.inlineRadio("siaex", "siaex-n", "n", "No", true) }}
@@ -173,7 +173,7 @@
 
             <div class="row">
                 <div class="col-md-4">
-                    {{ f.floatingLabel('sisse-1', 'Which year did you last have a prolonged exposure to secondhand tobacco smoke?') }}
+                    {{ f.floatingLabel('sisse-1', 'Which year did you last have a prolonged exposure to secondhand tobacco smoke?', "required") }}
                 </div>
                 <div class="col-md-8 form-group">
                     {{ f.inlineRadio("sisse", "sisse-1", "1", "Less than 5 years ago", true) }}
@@ -240,7 +240,7 @@
             <hr/>
             <div class="row">
                 <div class="col-md-4 col-lg-6">
-                    {{ f.floatingLabel('siho-n', 'Have you been hospitalized in the past year?') }}
+                    {{ f.floatingLabel('siho-n', 'Have you been hospitalized in the past year?', "required") }}
                 </div>
                 <div class="col-md-2 form-group">
                     {{ f.inlineRadio("siho", "siho-n", "n", "No", true) }}
@@ -264,7 +264,7 @@
 
             <div class="row">
                 <div class="col-md-4 col-lg-6">
-                    {{ f.floatingLabel('sicd-n', 'Have you had a diagnosis of cancer in the past year?') }}
+                    {{ f.floatingLabel('sicd-n', 'Have you had a diagnosis of cancer in the past year?', "required") }}
                 </div>
                 <div class="col-md-2 form-group">
                     {{ f.inlineRadio("sicd", "sicd-n", "n", "No", true) }}
@@ -301,7 +301,7 @@
 
             <div class="row">
                 <div class="col-md-4 col-lg-6">
-                    {{ f.floatingLabel('silcs-n', 'If lung cancer has been diagnosed, have you had surgery?') }}
+                    {{ f.floatingLabel('silcs-n', 'If lung cancer has been diagnosed, have you had surgery?', "required") }}
                 </div>
                 <div class="col-md-2 form-group">
                     {{ f.inlineRadio("silcs", "silcs-n", "n", "No", true) }}
@@ -321,7 +321,7 @@
 
             <div class="row">
                 <div class="col-md-4 col-lg-6">
-                    {{ f.floatingLabel('sier-n', 'If a lung cancer has been removed, is there evidence of recurrence?') }}
+                    {{ f.floatingLabel('sier-n', 'If a lung cancer has been removed, is there evidence of recurrence?', "required") }}
                 </div>
                 <div class="col-md-2 form-group">
                     {{ f.inlineRadio("sier", "sier-n", "n", "No", true) }}
@@ -341,7 +341,7 @@
 
             <div class="row">
                 <div class="col-md-4">
-                    {{ f.floatingLabel('sisa-n', 'Over the past month, have you smoked cigarettes at all, even a puff?') }}
+                    {{ f.floatingLabel('sisa-n', 'Over the past month, have you smoked cigarettes at all, even a puff?', "required") }}
                 </div>
                 <div class="col-md-8 form-group">
                     {{ f.inlineRadio("sisa", "sisa-n", "n", "No", true) }}
@@ -414,7 +414,7 @@
 
             <div class="row">
                 <div class="col-md-4">
-                    {{ f.floatingLabel('sittq-n', 'Since your prior CT scan, have you ever tried to quit smoking?') }}
+                    {{ f.floatingLabel('sittq-n', 'Since your prior CT scan, have you ever tried to quit smoking?', "required") }}
                 </div>
                 <div class="col-md-8 form-group">
                     {{ f.inlineRadio("sittq", "sittq-n", "n", "No", true) }}
@@ -472,7 +472,7 @@
 
             <div class="row">
                 <div class="col-md-4">
-                    {{ f.floatingLabel('sicpd-n', 'Smoking cessation materials were distributed to subject?') }}
+                    {{ f.floatingLabel('sicpd-n', 'Smoking cessation materials were distributed to subject?', "required") }}
                 </div>
                 <div class="col-md-8 form-group">
                     {{ f.inlineRadio("sicpd", "sittq-n", "n", "No", true) }}

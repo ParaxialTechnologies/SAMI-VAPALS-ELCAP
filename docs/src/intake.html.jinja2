@@ -25,7 +25,7 @@
             <h3>Contact Information</h3>
             <div class="row">
                 <div class="col-sm-4 col-md-3 form-group">
-                    <label for="sidc">Date of contact</label>
+                    <label for="sidc" class="required">Date of contact</label>
                     {{ f.datepicker("sidc", true, "Date of contact is required") }}
                 </div>
 
@@ -40,7 +40,7 @@
 
             <div class="row">
                 <div class="col-md-12 form-group">
-                    <label>Primary address verified</label>
+                    <label class="required">Primary address verified</label>
                     {{ f.inlineRadio("sipav", "sipav-y","y","Yes", true) }}
                     {{ f.inlineRadio("sipav", "sipav-n","n","No") }}
                 </div>
@@ -48,7 +48,7 @@
 
             <div class="row">
                 <div class="col-md-12 form-group">
-                    <label>Rural status</label>
+                    <label class="required">Rural status</label>
                     {{ f.inlineRadio("sirs", "sirs-u","u","Urban", true) }}
                     {{ f.inlineRadio("sirs", "sirs-r","r","Rural") }}
                 </div>
@@ -113,10 +113,10 @@
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    {{ f.floatingLabel('sicpd', 'How many cigarettes did you smoke per day?') }}
+                    {{ f.floatingLabel('sicpd', 'How many cigarettes did you smoke per day?', "required") }}
                 </div>
                 <div class="col-sm-2 form-group">
-                    <input class="form-control numeric" type="text" name="sicpd" id="sicpd" maxlength="4">
+                    <input class="form-control numeric" type="text" name="sicpd" id="sicpd" maxlength="4" required="required">
                 </div>
             </div>
 
@@ -125,7 +125,7 @@
                     {{ f.floatingLabel('sippd', 'How many packs of cigarettes did you smoke per day (PPD)?') }}
                 </div>
                 <div class="col-sm-2 form-group">
-                    <span id="sippd-val" class="control-label"/>
+                    <span id="sippd-val" class="control-label" />
                 </div>
                 <input  type="hidden" name="sippd" id="sippd" />
                 
@@ -133,7 +133,7 @@
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    {{ f.floatingLabel('sisny', '# of years') }}
+                    {{ f.floatingLabel('sisny', '# of years', "required") }}
                 </div>
                 <div class="col-sm-2 form-group">
                     <input class="form-control numeric" type="text" name="sisny" id="sisny" required="required"
@@ -195,7 +195,7 @@
             <hr/>
             <div class="row">
                 <div class="col-md-12 form-group">
-                    {{ f.checkbox("siidmdc","1", "Informed Decision Making discussion complete", {"required":"required", "data-fv-notempty-message":"Confirm that the discussion has taken place"}) }}
+                    {{ f.checkbox("siidmdc","1", "Informed Decision Making discussion complete", {"data-fv-notempty-message":"Confirm that the discussion has taken place"}, true) }}
                 </div>
 
             </div>
@@ -214,7 +214,7 @@
             </p>
             <div class="row">
                 <div class="col-md-12 form-group">
-                    <label>LDCT ordered</label>
+                    <label class="required">LDCT ordered</label>
                     <div class="radio">
                         <label>
                             <input type="radio" name="sildct" id="sildct-n" value="n" required="required">

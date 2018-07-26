@@ -646,6 +646,9 @@
 
                                         </tbody>
                                     </table>
+                                    <button type="button" class="btn btn-default btn-sm" onclick="addNodule()">
+                                        <span class="fa fa-plus" aria-hidden="true"></span> Add nodule
+                                    </button>
                                     {{ f.checkbox("cectnum","y", "Numerous additional <= 3mm nodules (calcified or non-calcified)") }}
                                 </div>
                             </div>
@@ -1926,6 +1929,7 @@
             }).show();
 
             $("#nodule-table").toggle(noduleCount > 0);
+            $("#cect"+count+"ch").focus()
             $("#add-first-nodule").toggle(noduleCount === 0);
         }
 

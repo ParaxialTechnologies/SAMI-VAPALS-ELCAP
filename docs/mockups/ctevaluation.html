@@ -4297,6 +4297,11 @@
             </tr>
            </tbody>
           </table>
+          <button class="btn btn-default btn-sm" onclick="addNodule()" type="button">
+           <span aria-hidden="true" class="fa fa-plus">
+           </span>
+           Add nodule
+          </button>
           <div class="checkbox">
            <label>
             <input id="cectnum" name="cectnum" type="checkbox" value="y"/>
@@ -7080,6 +7085,7 @@
             }).show();
 
             $("#nodule-table").toggle(noduleCount > 0);
+            $("#cect"+count+"ch").focus()
             $("#add-first-nodule").toggle(noduleCount === 0);
         }
 

@@ -211,7 +211,7 @@ $(function () {
      * Note that the <code>studyid</code> parameter is always injected based on the global <code>studyId</code>
      * variable.
      */
-    $("a.navigation, button.navigation").on("click", function () {
+    $("a.navigation").on("click", function () {
         const data = $(this).data();
         const method = data.method === undefined ? "GET" : data.method;
         delete data.method;

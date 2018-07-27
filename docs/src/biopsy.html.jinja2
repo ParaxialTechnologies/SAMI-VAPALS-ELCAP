@@ -31,7 +31,7 @@
             <h3>Biopsy</h3>
             <div class="row">
                 <div class="col-md-3 form-group">
-                    <label class="control-label" for="bxp-n">Was a biopsy performed?</label>
+                    <label class="control-label required" for="bxp-n">Was a biopsy performed?</label>
                     <div>
                         {{ f.inlineRadio("bxp", "bxp-n", "n", "No", true) }}
                         {{ f.inlineRadio("bxp", "bxp-y", "y", "Yes", true) }}
@@ -41,12 +41,12 @@
             <div id="bxp-container">
                 <div class="row">
                     <div class="col-sm-4 col-md-3 form-group">
-                        <label class="control-label" for="bxdos">Procedure date</label>
+                        <label class="control-label required" for="bxdos">Procedure date</label>
                         {{ f.datepicker("bxdos", true, "Procedure Date is required") }}
 
                     </div>
                     <div class="col-sm-8 col-md-6 form-group">
-                        <label for="bxw" class="control-label">Where was the biopsy performed?</label>
+                        <label for="bxw" class="control-label required">Where was the biopsy performed?</label>
                         <input type=text id="bxw" name="bxw" class="form-control" required="required">
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                 <div class="row" style="padding-bottom: 10px;">
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label class="control-label" for="validator-bxind">Indication for biopsy</label>
+                            <label class="control-label required" for="validator-bxind">Indication for biopsy</label>
                             <input type="hidden" id="validator-bxind" name="validator-bxind" value="0"/>
                         </div>
                         {{ f.checkbox("bxinds", "s", "Size") }}
@@ -69,7 +69,7 @@
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label class="control-label" for="validator-bxloc">Lesion site</label>
+                            <label class="control-label required" for="validator-bxloc">Lesion site</label>
                             <input type="hidden" id="validator-bxloc" name="validator-bxloc" value="0"/>
                         </div>
                         {{ f.checkbox("bxloclul", "lul", "LUL") }}
@@ -112,7 +112,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4 form-group">
-                        <label for="bxcp-n">Complications during biopsy?</label>
+                        <label class="required" for="bxcp-n">Complications during biopsy?</label>
                         <div>
                             {{ f.inlineRadio("bxcp", "bxcp-n", "n","No",true) }}
                             {{ f.inlineRadio("bxcp", "bxcp-y", "y","Yes",true) }}
@@ -147,7 +147,7 @@
             <h3>Mediastinoscopy</h3>
             <div class="row">
                 <div class="col-md-3 form-group">
-                    <label class="control-label" for="rbmep-n">Was a mediastinoscopy performed?</label>
+                    <label class="control-label required" for="rbmep-n">Was a mediastinoscopy performed?</label>
                     <div>
                         {{ f.inlineRadio("rbmep", "rbmep-n", "n", "No", true) }}
                         {{ f.inlineRadio("rbmep", "rbmep-y", "y", "Yes", true) }}
@@ -158,12 +158,12 @@
                 <div class="row">
 
                     <div class="col-md-3 form-group">
-                        <label class="control-label" for="rbmed">Procedure date</label>
+                        <label class="control-label required" for="rbmed">Procedure date</label>
                         {{ f.datepicker("rbmed", true) }}
 
                     </div>
                     <div class="col-md-6 form-group">
-                        <label for="rbmel" class="control-label">Where was the biopsy performed?</label>
+                        <label for="rbmel" class="control-label required">Where was the biopsy performed?</label>
                         <input type=text id="rbmel" name="rbmel" class="form-control" required="required">
                     </div>
 
@@ -171,7 +171,7 @@
 
                 <div class="row" style="padding-bottom: 10px;">
                     <div class="col-md-4">
-                        <label class="control-label" for="rbmllul">Lesion site</label>
+                        <label class="control-label required" for="rbmllul">Lesion site</label>
                         <div class="form-group">
                             <input type="hidden" id="validator-rbml" name="validator-rbml" value="0"/>
                         </div>
@@ -195,7 +195,7 @@
 
                 <div class="row">
                     <div class="col-md-4 form-group">
-                        <label for="rbmec-n">Complications during procedure?</label>
+                        <label class="required" for="rbmec-n">Complications during procedure?</label>
                         <div>
                             {{ f.inlineRadio("rbmec", "rbmec-n", "n","No",true) }}
                             {{ f.inlineRadio("rbmec", "rbmec-y", "y","Yes",true) }}
@@ -212,7 +212,7 @@
             <h3>Molecular Testing</h3>
             <div class="row">
                 <div class="col-sm-12 form-group">
-                    <label class="control-label" for="rbmt-n">Was molecular testing performed on the pathology
+                    <label class="control-label required" for="rbmt-n">Was molecular testing performed on the pathology
                         specimen?</label>
                     <div>
                         {{ f.inlineRadio("rbmt", "rbmt-n", "n", "No",true) }}
@@ -223,26 +223,26 @@
             <div class="row">
                 <div class="col-sm-4 form-group" id="rbmt-container">
                     <div class="form-group">
-                        <label class="control-label" for="rbmte-n">EGFR</label><br/>
+                        <label class="control-label required" for="rbmte-n">EGFR</label><br/>
                         {{ f.inlineRadio("rbmte", "rbmte-n", "n", "No", true) }}
                         {{ f.inlineRadio("rbmte", "rbmte-neg", "neg", "Negative", true) }}
                         {{ f.inlineRadio("rbmte", "rbmte-pos", "pos", "Positive", true) }}
                     </div>
                     <div class="form-group">
-                        <label class="control-label" for="rbmtk-n">K-Ras</label><br/>
+                        <label class="control-label required" for="rbmtk-n">K-Ras</label><br/>
                         {{ f.inlineRadio("rbmtk", "rbmtk-n", "n", "No", true) }}
                         {{ f.inlineRadio("rbmtk", "rbmtk-neg", "neg", "Negative", true) }}
                         {{ f.inlineRadio("rbmtk", "rbmtk-pos", "pos", "Positive", true) }}
                     </div>
                     <div class="form-group">
-                        <label class="control-label" for="rbmta-n">ALK</label><br/>
+                        <label class="control-label required" for="rbmta-n">ALK</label><br/>
                         {{ f.inlineRadio("rbmta", "rbmta-n", "n", "No", true) }}
                         {{ f.inlineRadio("rbmta", "rbmta-neg", "neg", "Negative", true) }}
                         {{ f.inlineRadio("rbmta", "rbmta-pos", "pos", "Positive", true) }}
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label" for="rbmtos">Other</label>
+                        <label class="control-label required" for="rbmtos">Other</label>
                         <input type="text" name="rbmtos" id="rbmtos" class="form-control" placeholder="specify">
                         {{ f.inlineRadio("rbmto", "rbmto-n", "n", "No", true) }}
                         {{ f.inlineRadio("rbmto", "rbmto-neg", "neg", "Negative", true) }}

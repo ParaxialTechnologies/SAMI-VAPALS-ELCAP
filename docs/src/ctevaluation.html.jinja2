@@ -646,6 +646,9 @@
 
                                         </tbody>
                                     </table>
+                                    <button type="button" class="btn btn-default btn-sm" onclick="addNodule()">
+                                        <span class="fa fa-plus" aria-hidden="true"></span> Add nodule
+                                    </button>
                                     {{ f.checkbox("cectnum","y", "Numerous additional <= 3mm nodules (calcified or non-calcified)") }}
                                 </div>
                             </div>
@@ -1019,7 +1022,7 @@
                                         </td>
                                         <td>
                                             <div class="form-group">
-                                                <label for="cecclm">Left main</label>
+                                                <label for="cecclm" class="required">Left main</label>
                                                 <select name="cecclm" id="cecclm" class="form-control"
                                                         required="required">
                                                     <option value=""> -</option>
@@ -1032,7 +1035,7 @@
                                         </td>
                                         <td>
                                             <div class="form-group">
-                                                <label for="ceccld">LAD</label>
+                                                <label for="ceccld" class="required">LAD</label>
                                                 <select name="ceccld" id="ceccld" class="form-control"
                                                         required="required">
                                                     <option value=""> -</option>
@@ -1046,7 +1049,7 @@
 
                                         <td>
                                             <div class="form-group">
-                                                <label for="cecccf">Circumflex</label>
+                                                <label for="cecccf" class="required">Circumflex</label>
                                                 <select name="cecccf" id="cecccf" class="form-control"
                                                         required="required">
                                                     <option value=""> -</option>
@@ -1060,7 +1063,7 @@
 
                                         <td>
                                             <div class="form-group">
-                                                <label for="ceccrc">RCA</label>
+                                                <label for="ceccrc" class="required">RCA</label>
                                                 <select name="ceccrc" id="ceccrc" class="form-control"
                                                         required="required">
                                                     <option value=""> -</option>
@@ -1689,7 +1692,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-12 form-group">
-                                <strong>Nodules</strong>
+                                <label class="required">Nodules</label>
                                 <div class="radio">
                                     <label>
                                         <input type="radio" name="ceimn" id="ceimn-rs" value="rs"
@@ -1775,7 +1778,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-3 col-md-2 form-group">
-                                <label for="cefud">Follow-up date:</label><br/>
+                                <label class="required" for="cefud">Follow-up date:</label><br/>
                                 {{ f.datepicker("cefud", null, "Follow up date is required") }}
                             </div>
                         </div>
@@ -1783,7 +1786,7 @@
                         <h3>Lung-RADS {{ "(Optional)" if formPage == "ctevaluation-elcap" else "" }}</h3>
                         <div class="row">
                             <div class="form-group col-sm-5 col-md-4">
-                                <label for="celrad">Category</label>
+                                <label class="required" for="celrad">Category</label>
                                 <br/>
                                 {{ f.radio("celrad", "celrad-na","-","Not applicable", formPage == "ctevaluation") }}
                                 {{ f.radio("celrad", "celrad-0","0","0 (incomplete)") }}
@@ -1926,6 +1929,7 @@
             }).show();
 
             $("#nodule-table").toggle(noduleCount > 0);
+            $("#cect"+count+"ch").focus()
             $("#add-first-nodule").toggle(noduleCount === 0);
         }
 
@@ -1969,7 +1973,14 @@
                         const l = $("#cect{{ i }}sl").val() || 0;
                         const w = $("#cect{{ i }}sw").val() || 0;
                         const h = $("#cect{{ i }}sh").val() || 0;
-                        const v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
+
+                        let v
+                        if (h==0) {
+                            v = l * w  * Math.sqrt( l * w )
+                        } else {
+                            v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
+                        }
+                        
                         $("#cect{{ i }}sv").val(v.toFixed(2));
                     });
                     $("#cect{{ i }}sv").on('keyup', function () {

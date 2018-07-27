@@ -109,7 +109,7 @@
     </h3>
     <div class="row">
      <div class="col-sm-4 col-md-3 form-group">
-      <label for="sidc">
+      <label class="required" for="sidc">
        Date of contact
       </label>
       <div class="input-group datepicker">
@@ -157,7 +157,7 @@
     </div>
     <div class="row">
      <div class="col-md-12 form-group">
-      <label>
+      <label class="required">
        Primary address verified
       </label>
       <label class="radio-inline" for="sipav-y">
@@ -172,7 +172,7 @@
     </div>
     <div class="row">
      <div class="col-md-12 form-group">
-      <label>
+      <label class="required">
        Rural status
       </label>
       <label class="radio-inline" for="sirs-u">
@@ -277,23 +277,23 @@
     </div>
     <div class="row">
      <div class="col-md-4">
-      <label class="visible-xs visible-sm" for="sicpd">
+      <label class="visible-xs visible-sm required" for="sicpd">
        How many cigarettes did you smoke per day?
       </label>
-      <label class="text-right pull-right hidden-xs hidden-sm" for="sicpd">
+      <label class="text-right pull-right hidden-xs hidden-sm required" for="sicpd">
        How many cigarettes did you smoke per day?
       </label>
      </div>
      <div class="col-sm-2 form-group">
-      <input class="form-control numeric" id="sicpd" maxlength="4" name="sicpd" type="text"/>
+      <input class="form-control numeric" id="sicpd" maxlength="4" name="sicpd" required="required" type="text"/>
      </div>
     </div>
     <div class="row">
      <div class="col-md-4">
-      <label class="visible-xs visible-sm" for="sippd">
+      <label class="visible-xs visible-sm " for="sippd">
        How many packs of cigarettes did you smoke per day (PPD)?
       </label>
-      <label class="text-right pull-right hidden-xs hidden-sm" for="sippd">
+      <label class="text-right pull-right hidden-xs hidden-sm " for="sippd">
        How many packs of cigarettes did you smoke per day (PPD)?
       </label>
      </div>
@@ -305,10 +305,10 @@
     </div>
     <div class="row">
      <div class="col-md-4">
-      <label class="visible-xs visible-sm" for="sisny">
+      <label class="visible-xs visible-sm required" for="sisny">
        # of years
       </label>
-      <label class="text-right pull-right hidden-xs hidden-sm" for="sisny">
+      <label class="text-right pull-right hidden-xs hidden-sm required" for="sisny">
        # of years
       </label>
      </div>
@@ -318,10 +318,10 @@
     </div>
     <div class="row">
      <div class="col-md-4">
-      <label class="visible-xs visible-sm" for="sippy">
+      <label class="visible-xs visible-sm " for="sippy">
        Reported pack years
       </label>
-      <label class="text-right pull-right hidden-xs hidden-sm" for="sippy">
+      <label class="text-right pull-right hidden-xs hidden-sm " for="sippy">
        Reported pack years
       </label>
      </div>
@@ -333,10 +333,10 @@
     </div>
     <div class="row">
      <div class="col-md-4">
-      <label class="visible-xs visible-sm" for="siq">
+      <label class="visible-xs visible-sm " for="siq">
        Quit
       </label>
-      <label class="text-right pull-right hidden-xs hidden-sm" for="siq">
+      <label class="text-right pull-right hidden-xs hidden-sm " for="siq">
        Quit
       </label>
      </div>
@@ -357,10 +357,10 @@
     </div>
     <div class="row">
      <div class="col-md-4">
-      <label class="visible-xs visible-sm" for="sicep">
+      <label class="visible-xs visible-sm " for="sicep">
        Smoking cessation education provided
       </label>
-      <label class="text-right pull-right hidden-xs hidden-sm" for="sicep">
+      <label class="text-right pull-right hidden-xs hidden-sm " for="sicep">
        Smoking cessation education provided
       </label>
      </div>
@@ -370,10 +370,10 @@
     </div>
     <div class="row">
      <div class="col-md-4">
-      <label class="visible-xs visible-sm" for="sicadx">
+      <label class="visible-xs visible-sm " for="sicadx">
        Lung CA Dx (if applicable)
       </label>
-      <label class="text-right pull-right hidden-xs hidden-sm" for="sicadx">
+      <label class="text-right pull-right hidden-xs hidden-sm " for="sicadx">
        Lung CA Dx (if applicable)
       </label>
      </div>
@@ -400,10 +400,10 @@
     </div>
     <div class="row">
      <div class="col-md-4">
-      <label class="visible-xs visible-sm" for="sipldct">
+      <label class="visible-xs visible-sm " for="sipldct">
        Prior LDCT
       </label>
-      <label class="text-right pull-right hidden-xs hidden-sm" for="sipldct">
+      <label class="text-right pull-right hidden-xs hidden-sm " for="sipldct">
        Prior LDCT
       </label>
      </div>
@@ -432,7 +432,7 @@
     <div class="row">
      <div class="col-md-12 form-group">
       <div class="checkbox">
-       <label>
+       <label class="required">
         <input data-fv-notempty-message="Confirm that the discussion has taken place" id="siidmdc" name="siidmdc" required="required" type="checkbox" value="1"/>
         Informed Decision Making discussion complete
        </label>
@@ -455,7 +455,7 @@
     </p>
     <div class="row">
      <div class="col-md-12 form-group">
-      <label>
+      <label class="required">
        LDCT ordered
       </label>
       <div class="radio">
@@ -500,7 +500,7 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.07.23
+     SNAPSHOT 2018.07.26
     </span>
    </div>
   </footer>
@@ -511,8 +511,7 @@
     }
 
     $(function () {
-        //TODO: remove these debug functions.
-        // These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly.
+        /** These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly. **/
         const $forms = $("form.validated");
         $.each($forms.find("select, textarea, input:visible"), function (i, o) {
             const $input = $(this);

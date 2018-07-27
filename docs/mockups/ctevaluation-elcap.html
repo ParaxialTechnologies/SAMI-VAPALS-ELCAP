@@ -188,7 +188,7 @@
           Clinical information
          </label>
          <textarea class="form-control" id="ceclin" name="ceclin" rows="3"></textarea>
-         <label class="checkbox-inline">
+         <label class="checkbox-inline ">
           <input id="ceclini" name="ceclini" type="checkbox" value="y"/>
           Include in impression
          </label>
@@ -4297,6 +4297,11 @@
             </tr>
            </tbody>
           </table>
+          <button class="btn btn-default btn-sm" onclick="addNodule()" type="button">
+           <span aria-hidden="true" class="fa fa-plus">
+           </span>
+           Add nodule
+          </button>
           <div class="checkbox">
            <label>
             <input id="cectnum" name="cectnum" type="checkbox" value="y"/>
@@ -5161,7 +5166,7 @@
               Additional comments on pulmonary abnormalities
              </label>
              <textarea class="form-control" id="ceoppa" name="ceoppa"></textarea>
-             <label class="checkbox-inline">
+             <label class="checkbox-inline ">
               <input id="ceoppai" name="ceoppai" type="checkbox" value="y"/>
               Include in impression
              </label>
@@ -5381,7 +5386,7 @@
               Describe pleural abnormalities
              </label>
              <textarea class="form-control" id="ceoppab" name="ceoppab"></textarea>
-             <label class="checkbox-inline">
+             <label class="checkbox-inline ">
               <input id="ceoppabi" name="ceoppabi" type="checkbox" value="y"/>
               Include in impression
              </label>
@@ -5436,7 +5441,7 @@
            </td>
            <td>
             <div class="form-group">
-             <label for="cecclm">
+             <label class="required" for="cecclm">
               Left main
              </label>
              <select class="form-control" id="cecclm" name="cecclm" required="required">
@@ -5460,7 +5465,7 @@
            </td>
            <td>
             <div class="form-group">
-             <label for="ceccld">
+             <label class="required" for="ceccld">
               LAD
              </label>
              <select class="form-control" id="ceccld" name="ceccld" required="required">
@@ -5484,7 +5489,7 @@
            </td>
            <td>
             <div class="form-group">
-             <label for="cecccf">
+             <label class="required" for="cecccf">
               Circumflex
              </label>
              <select class="form-control" id="cecccf" name="cecccf" required="required">
@@ -5508,7 +5513,7 @@
            </td>
            <td>
             <div class="form-group">
-             <label for="ceccrc">
+             <label class="required" for="ceccrc">
               RCA
              </label>
              <select class="form-control" id="ceccrc" name="ceccrc" required="required">
@@ -5679,7 +5684,7 @@
               Additional comments on cardiac abnormalities
              </label>
              <textarea class="form-control" id="cecommca" name="cecommca"></textarea>
-             <label class="checkbox-inline">
+             <label class="checkbox-inline ">
               <input id="cecommcai" name="cecommcai" type="checkbox" value="y"/>
               Include in impression
              </label>
@@ -6190,7 +6195,7 @@
                                                 abnormalities
              </label>
              <textarea class="form-control" id="ceotabnm" name="ceotabnm"></textarea>
-             <label class="checkbox-inline">
+             <label class="checkbox-inline ">
               <input id="ceotabnmi" name="ceotabnmi" type="checkbox" value="y"/>
               Include in impression
              </label>
@@ -6386,7 +6391,7 @@
               Additional comments on breast abnormalities
              </label>
              <textarea class="form-control" id="ceobrc" name="ceobrc"></textarea>
-             <label class="checkbox-inline">
+             <label class="checkbox-inline ">
               <input id="ceobrci" name="ceobrci" type="checkbox" value="y"/>
               Include in impression
              </label>
@@ -6422,7 +6427,7 @@
           Specify bone abnormalities
          </label>
          <textarea class="form-control" id="ceaoabb" name="ceaoabb"></textarea>
-         <label class="checkbox-inline">
+         <label class="checkbox-inline ">
           <input id="ceaoabbi" name="ceaoabbi" type="checkbox" value="y"/>
           Include in impression
          </label>
@@ -6763,7 +6768,7 @@
               Additional comments on abdominal abnormalities
              </label>
              <textarea class="form-control" id="ceaoab" name="ceaoab"></textarea>
-             <label class="checkbox-inline">
+             <label class="checkbox-inline ">
               <input id="ceaoabi" name="ceaoabi" type="checkbox" value="y"/>
               Include in impression
              </label>
@@ -6789,9 +6794,9 @@
        </div>
        <div class="row">
         <div class="col-sm-12 form-group">
-         <strong>
+         <label class="required">
           Nodules
-         </strong>
+         </label>
          <div class="radio">
           <label>
            <input id="ceimn-rs" name="ceimn" required="required" type="radio" value="rs"/>
@@ -6926,7 +6931,7 @@
        </div>
        <div class="row">
         <div class="col-sm-3 col-md-2 form-group">
-         <label for="cefud">
+         <label class="required" for="cefud">
           Follow-up date:
          </label>
          <br/>
@@ -6949,7 +6954,7 @@
        </h3>
        <div class="row">
         <div class="form-group col-sm-5 col-md-4">
-         <label for="celrad">
+         <label class="required" for="celrad">
           Category
          </label>
          <br/>
@@ -7057,7 +7062,7 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.07.23
+     SNAPSHOT 2018.07.26
     </span>
    </div>
   </footer>
@@ -7068,8 +7073,7 @@
     }
 
     $(function () {
-        //TODO: remove these debug functions.
-        // These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly.
+        /** These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly. **/
         const $forms = $("form.validated");
         $.each($forms.find("select, textarea, input:visible"), function (i, o) {
             const $input = $(this);
@@ -7184,6 +7188,7 @@
             }).show();
 
             $("#nodule-table").toggle(noduleCount > 0);
+            $("#cect"+count+"ch").focus()
             $("#add-first-nodule").toggle(noduleCount === 0);
         }
 
@@ -7227,7 +7232,14 @@
                         const l = $("#cect1sl").val() || 0;
                         const w = $("#cect1sw").val() || 0;
                         const h = $("#cect1sh").val() || 0;
-                        const v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
+
+                        let v
+                        if (h==0) {
+                            v = l * w  * Math.sqrt( l * w )
+                        } else {
+                            v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
+                        }
+                        
                         $("#cect1sv").val(v.toFixed(2));
                     });
                     $("#cect1sv").on('keyup', function () {
@@ -7243,7 +7255,14 @@
                         const l = $("#cect2sl").val() || 0;
                         const w = $("#cect2sw").val() || 0;
                         const h = $("#cect2sh").val() || 0;
-                        const v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
+
+                        let v
+                        if (h==0) {
+                            v = l * w  * Math.sqrt( l * w )
+                        } else {
+                            v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
+                        }
+                        
                         $("#cect2sv").val(v.toFixed(2));
                     });
                     $("#cect2sv").on('keyup', function () {
@@ -7259,7 +7278,14 @@
                         const l = $("#cect3sl").val() || 0;
                         const w = $("#cect3sw").val() || 0;
                         const h = $("#cect3sh").val() || 0;
-                        const v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
+
+                        let v
+                        if (h==0) {
+                            v = l * w  * Math.sqrt( l * w )
+                        } else {
+                            v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
+                        }
+                        
                         $("#cect3sv").val(v.toFixed(2));
                     });
                     $("#cect3sv").on('keyup', function () {
@@ -7275,7 +7301,14 @@
                         const l = $("#cect4sl").val() || 0;
                         const w = $("#cect4sw").val() || 0;
                         const h = $("#cect4sh").val() || 0;
-                        const v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
+
+                        let v
+                        if (h==0) {
+                            v = l * w  * Math.sqrt( l * w )
+                        } else {
+                            v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
+                        }
+                        
                         $("#cect4sv").val(v.toFixed(2));
                     });
                     $("#cect4sv").on('keyup', function () {
@@ -7291,7 +7324,14 @@
                         const l = $("#cect5sl").val() || 0;
                         const w = $("#cect5sw").val() || 0;
                         const h = $("#cect5sh").val() || 0;
-                        const v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
+
+                        let v
+                        if (h==0) {
+                            v = l * w  * Math.sqrt( l * w )
+                        } else {
+                            v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
+                        }
+                        
                         $("#cect5sv").val(v.toFixed(2));
                     });
                     $("#cect5sv").on('keyup', function () {
@@ -7307,7 +7347,14 @@
                         const l = $("#cect6sl").val() || 0;
                         const w = $("#cect6sw").val() || 0;
                         const h = $("#cect6sh").val() || 0;
-                        const v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
+
+                        let v
+                        if (h==0) {
+                            v = l * w  * Math.sqrt( l * w )
+                        } else {
+                            v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
+                        }
+                        
                         $("#cect6sv").val(v.toFixed(2));
                     });
                     $("#cect6sv").on('keyup', function () {
@@ -7323,7 +7370,14 @@
                         const l = $("#cect7sl").val() || 0;
                         const w = $("#cect7sw").val() || 0;
                         const h = $("#cect7sh").val() || 0;
-                        const v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
+
+                        let v
+                        if (h==0) {
+                            v = l * w  * Math.sqrt( l * w )
+                        } else {
+                            v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
+                        }
+                        
                         $("#cect7sv").val(v.toFixed(2));
                     });
                     $("#cect7sv").on('keyup', function () {
@@ -7339,7 +7393,14 @@
                         const l = $("#cect8sl").val() || 0;
                         const w = $("#cect8sw").val() || 0;
                         const h = $("#cect8sh").val() || 0;
-                        const v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
+
+                        let v
+                        if (h==0) {
+                            v = l * w  * Math.sqrt( l * w )
+                        } else {
+                            v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
+                        }
+                        
                         $("#cect8sv").val(v.toFixed(2));
                     });
                     $("#cect8sv").on('keyup', function () {
@@ -7355,7 +7416,14 @@
                         const l = $("#cect9sl").val() || 0;
                         const w = $("#cect9sw").val() || 0;
                         const h = $("#cect9sh").val() || 0;
-                        const v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
+
+                        let v
+                        if (h==0) {
+                            v = l * w  * Math.sqrt( l * w )
+                        } else {
+                            v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
+                        }
+                        
                         $("#cect9sv").val(v.toFixed(2));
                     });
                     $("#cect9sv").on('keyup', function () {
@@ -7371,7 +7439,14 @@
                         const l = $("#cect10sl").val() || 0;
                         const w = $("#cect10sw").val() || 0;
                         const h = $("#cect10sh").val() || 0;
-                        const v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
+
+                        let v
+                        if (h==0) {
+                            v = l * w  * Math.sqrt( l * w )
+                        } else {
+                            v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
+                        }
+                        
                         $("#cect10sv").val(v.toFixed(2));
                     });
                     $("#cect10sv").on('keyup', function () {

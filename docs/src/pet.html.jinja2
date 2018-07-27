@@ -26,14 +26,14 @@
 
             <div class="row">
                 <div class="col-sm-4 col-md-3 form-group">
-                    <label class="control-label" for="bxdos">Study date</label>
+                    <label class="control-label required" for="bxdos">Study date</label>
                     {{ f.datepicker("ptdos", true, "Study Date is required") }}
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-sm-6 form-group">
-                    <label for="ptrad">Radiologist</label>
+                    <label class="required" for="ptrad">Radiologist</label>
                     <input type="text" class="form-control" id="ptrad" name="ptrad" required="required"/>
                 </div>
                 <div class="col-sm-4 col-md-3 col-lg-2 form-group">
@@ -54,7 +54,7 @@
 
             <div class="row">
                 <div class="col-md-4 form-group">
-                    {{ f.floatingLabel("sidoe", "Date of baseline CT") }}
+                    {{ f.floatingLabel("sidoe", "Date of baseline CT", "required") }}
                 </div>
                 <div class="col-sm-3 form-group">
                     {{ f.datepicker("sidoe", true, "Baseline CT date is required") }}
@@ -63,7 +63,7 @@
 
             <div class="row">
                 <div class="col-md-4 form-group">
-                    {{ f.floatingLabel("cedos", "Date of most recent comparative study") }}
+                    {{ f.floatingLabel("cedos", "Date of most recent comparative study", "required") }}
                 </div>
                 <div class="col-sm-3 form-group">
                     {{ f.datepicker("cedos", true, "Date is required") }}
@@ -395,7 +395,7 @@
             <h3>Follow Up</h3>
             <div class="row">
                 <div class="col-md-6 form-group">
-                    <label for="cefu">Follow-up</label>
+                    <label class="required" for="cefu">Follow-up</label>
                     <select name="cefu" class="form-control" required="required">
                         <option value="-"> -
                         <option value="rs"> Annual repeat CT
@@ -410,15 +410,15 @@
                     </select>
                 </div>
                 <div class="col-md-6 form-group">
-                    <label for="cefuw-nw">When</label>
+                    <label class="required" for="cefuw-nw">When</label>
                     {{ f.datepicker("cefud", false, "Follow up date is required") }}
                     <br/>
                     {{ f.inlineRadio("cefuw", "cefuw-nw", "nw", "Now") }}
-                    {{ f.inlineRadio("cefuw", "cefuw-nw", "1m", "1 month") }}
-                    {{ f.inlineRadio("cefuw", "cefuw-nw", "3m", "3 months") }}
-                    {{ f.inlineRadio("cefuw", "cefuw-nw", "6m", "6 months") }}
-                    {{ f.inlineRadio("cefuw", "cefuw-nw", "1y", "1 year") }}
-                    {{ f.inlineRadio("cefuw", "cefuw-nw", "os", "Other") }}
+                    {{ f.inlineRadio("cefuw", "cefuw-1m", "1m", "1 month") }}
+                    {{ f.inlineRadio("cefuw", "cefuw-3m", "3m", "3 months") }}
+                    {{ f.inlineRadio("cefuw", "cefuw-6m", "6m", "6 months") }}
+                    {{ f.inlineRadio("cefuw", "cefuw-1y", "1y", "1 year") }}
+                    {{ f.inlineRadio("cefuw", "cefuw-os", "os", "Other") }}
                 </div>
             </div>
 
@@ -426,7 +426,7 @@
             <h3>Impression</h3>
             <div class="row">
                 <div class="col-md-12 form-group">
-                    <label for="ceimn-rs">Nodules</label>
+                    <label class="required" for="ceimn-rs">Nodules</label>
                     <div class="radio">
                         <label>
                             <input type="radio" name="ceimn" id="ceimn-rs" value="rs" required="required"> No evidence
@@ -451,7 +451,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12 form-group">
-                    <label for="ceimo-no">Other findings</label>
+                    <label class="required" for="ceimo-no">Other findings</label>
                     <div class="radio">
                         <label>
                             <input type="radio" name="ceimo" id="ceimo-rs" value="rs" required="required"> No other

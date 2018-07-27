@@ -1811,8 +1811,7 @@
                 <button type="button" class="btn btn-default btn-prev">Previous</button>
                 <button type="button" class="btn btn-default btn-next">Next</button>
             </div>
-            <a class="btn btn-danger navigation" data-method="{{ formMethod }}" data-samiroute="deleteform"
-               href="{{ "ctevaluation.html" if mockup else "#!" }}" data-form="@@FORMKEY@@">
+            <a id="delete-form" class="btn btn-danger" >
                 <span class="glyphicon glyphicon-trash"></span>Delete
             </a>
 
@@ -1825,6 +1824,8 @@
             </div>
         </form>
     </div>
+
+    {{ f.deleteformModal("ctevaluation.html", mockup, formMethod)}}
 {% endblock %}
 
 {% block script %}

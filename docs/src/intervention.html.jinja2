@@ -4116,8 +4116,7 @@
 
                 <hr/>
                 <div class="pull-left">
-                    <a class="btn btn-danger navigation" data-method="{{ formMethod }}" data-samiroute="deleteform"
-                       href="{{ "intervention.html" if mockup else "#!" }}" data-form="@@FORMKEY@@">
+                    <a  id="delete-form" class="btn btn-danger">
                         <span class="glyphicon glyphicon-trash"></span>Delete</a>
                 </div>
                 <div class="pull-right">
@@ -4128,6 +4127,8 @@
 
         </form>
     </div>
+
+    {{ f.deleteformModal("intervention.html", mockup, formMethod)}}
 {% endblock %}
 
 {% block script %}

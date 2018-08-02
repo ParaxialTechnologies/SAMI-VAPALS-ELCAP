@@ -203,6 +203,7 @@ $(function () {
 
         $('#delete-confirm-modal').modal('hide');
     });
+    
     $('#delete-confirm-modal').keypress(function(e) {
         var c = String.fromCharCode(e.which);
         if (e.which == 13 /* key code for Enter */ || c == "y" || c == "Y") {

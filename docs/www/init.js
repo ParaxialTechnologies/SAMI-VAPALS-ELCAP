@@ -190,6 +190,20 @@ $(function () {
         $("input[name=samistatus]").val("complete");
     });
 
+    $("#delete-form").on("click", function(e) {
+        $('#delete-confirm-modal').modal('show');
+        e.preventDefault();
+        e.stopPropagation();
+
+    })
+
+    $('#delete-form-cancel').on("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        $('#delete-confirm-modal').modal('hide');
+    });
+
     /**
      * Attach an onclick handler to "a.navigation" elements such that when clicked, submits a form POST or GET using
      * parameters in the elements <code>data-*</code> attributes.

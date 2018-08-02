@@ -436,9 +436,7 @@
 
             </div>
             <div class="pull-left">
-                <a class="btn btn-danger navigation" data-method="{{ formMethod }}" data-samiroute="deleteform"
-                   href="{{ "background.html" if mockup else "#!" }}" data-form="@@FORMKEY@@">
-                    <span class="glyphicon glyphicon-trash"></span>Delete</a>
+                <a id="delete-form" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>Delete</a>
             </div>
             <div class="pull-right">
                 <input type="hidden" name="samistatus" value=""/>
@@ -447,6 +445,8 @@
             </div>
         </form>
     </div>
+
+    {{ f.deleteFormModal("background.html", mockup, formMethod)}}
 
 {% endblock %}
 

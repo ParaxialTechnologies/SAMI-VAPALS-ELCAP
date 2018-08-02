@@ -190,7 +190,7 @@
                             <div class="alert alert-warning">
                                 <h4>READ before completing the Nodule Grid</h4>
                                 <ul>
-                                    <li>Include all Parenchymal and Endobronchial Nodules > = 6.0 mm in average diameter.</li>
+                                    <li>Include all Parenchymal and Endobronchial Nodules >= 6.0 mm in average diameter.</li>
                                     <li>For BASELINE CT, all nodules are new unless there is a CT more than 3 years earlier.</li>
                                     <li>For BASELINE CT, the nodules will automatically be sorted with the largest
                                         non-calcified nodule coming first.
@@ -1009,7 +1009,7 @@
                         <div class="row">
                             <div class="form-group">
                                 <div class="col-sm-4 col-md-3">
-                                    <label> Other Cardio-vascular Abnormalities</label>
+                                    <label>Other Cardio-vascular Abnormalities</label>
                                 </div>
                                 <div class="col-sm-8 col-md-9">
                                     {{ f.inlineRadioNYE("ceca") }}
@@ -1628,7 +1628,7 @@
                                     <tr>
                                         <td>
                                             <label
-                                                    class="control-label {{ "required" if formPage == "ctevaluation-elcap" else "" }}"
+                                                    class="control-label required"
                                                     for="cecclm">Coronary calcification</label>
                                         </td>
                                         <td>
@@ -1705,7 +1705,7 @@
                                 {% else %}
                                     <tr>
                                         <td>
-                                            <label class="control-label {{ "required" if formPage == "ctevaluation-elcap" else "" }}"
+                                            <label class="control-label"
                                                    for="cecclm">Coronary calcification</label>
                                         </td>
                                         <td colspan="5">
@@ -1852,9 +1852,7 @@
             </div>
 
             <div class="btn-group">
-                <a class="btn btn-danger navigation" data-method="{{ formMethod }}" data-samiroute="deleteform"
-                    href="{{ "ctevaluation.html" if mockup else "#!" }}" data-form="@@FORMKEY@@">
-                </a>
+                <a id="delete-form" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>Delete</a>
             </div>
             
 
@@ -1908,6 +1906,7 @@
             }
         }
 
+        {% if formPage=="ctevaluation-elcap" %}
         function calculateVisualCacScore() {
             let cal1 = $("#cecclm")[0].selectedIndex;
             let cal2 = $("#ceccld")[0].selectedIndex;
@@ -1921,6 +1920,7 @@
             $("#cecccac").val(res);
             $("#cecccac-text").text(res);
         }
+        {% endif %}
 
         /**
          * Sets the default value of a radio group and conditionally displays a container when that radio value is "y"
@@ -2198,7 +2198,7 @@
                 } else {
                     noduleDiamLabel.text("-");
                 }
-            }); //.first().trigger('change');
+            }).first().trigger('change');
 
 
 

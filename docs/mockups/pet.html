@@ -1060,7 +1060,7 @@
     </div>
     <hr/>
     <div class="pull-left">
-     <a class="btn btn-danger navigation" data-form="@@FORMKEY@@" data-method="get" data-samiroute="deleteform" href="pet.html">
+     <a class="btn btn-danger" id="delete-form">
       <span class="glyphicon glyphicon-trash">
       </span>
       Delete
@@ -1077,6 +1077,35 @@
     </div>
    </form>
   </div>
+  <div class="modal fade" id="delete-confirm-modal" role="dialog" tabindex="-1">
+   <div class="modal-dialog" role="document">
+    <div class="modal-content">
+     <div class="modal-header">
+      <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+       <span aria-hidden="true">
+        ×
+       </span>
+      </button>
+      <h4 class="modal-title">
+       Warning
+      </h4>
+     </div>
+     <div class="modal-body">
+      <p>
+       Are you certain you want to delete this form?
+      </p>
+     </div>
+     <div class="modal-footer">
+      <a class="btn btn-primary" data-dismiss="modal" id="delete-form-cancel">
+       No
+      </a>
+      <a class="btn btn-danger navigation" data-form="@@FORMKEY@@" data-method="get" data-samiroute="deleteform" href="pet.html" id="delete-form-btn">
+       Yes
+      </a>
+     </div>
+    </div>
+   </div>
+  </div>
   <footer>
    <div class="container-fluid" style="max-width:1550px">
     <hr/>
@@ -1084,7 +1113,7 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.07.27
+     SNAPSHOT 2018.08.02
     </span>
    </div>
   </footer>

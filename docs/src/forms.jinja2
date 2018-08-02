@@ -78,12 +78,13 @@
     </label>
 {%- endmacro %}
 
-{% macro datepicker(name, pastDateRequired, requiredMessage) -%}
+{% macro datepicker(name, pastDateRequired, futureDateRequired, requiredMessage) -%}
     <div class="input-group datepicker">
         <input class="form-control" id="{{ name }}" name="{{ name }}" aria-describedby="{{ name }}-addon"
                 {{ " required=\"required\"" if requiredMessage else "" }}
                 {{ " data-fv-notempty-message=\"" + requiredMessage + "\"" if requiredMessage else "" }}              
                 {{ " data-fv-date-max=\"VAPALS.todaysDate\"" if pastDateRequired else "" }}
+                {{ " data-fv-date-min=\"VAPALS.todaysDate\"" if futureDateRequired else "" }}
                 data-fv-date="true">
         <div class="input-group-addon">
             <div class="input-group-text" id="{{ name }}-addon">

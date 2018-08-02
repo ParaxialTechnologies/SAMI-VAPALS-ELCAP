@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-sm-4 col-md-3 form-group">
                     <label class="control-label required" for="bxdos">Study date</label>
-                    {{ f.datepicker("ptdos", true, "Study Date is required") }}
+                    {{ f.datepicker("ptdos", true, false, "Study date is required") }}
                 </div>
             </div>
 
@@ -57,7 +57,7 @@
                     {{ f.floatingLabel("sidoe", "Date of baseline CT", "required") }}
                 </div>
                 <div class="col-sm-3 form-group">
-                    {{ f.datepicker("sidoe", true, "Baseline CT date is required") }}
+                    {{ f.datepicker("sidoe", true, false, "Baseline CT date is required") }}
                 </div>
             </div>
 
@@ -66,7 +66,7 @@
                     {{ f.floatingLabel("cedos", "Date of most recent comparative study", "required") }}
                 </div>
                 <div class="col-sm-3 form-group">
-                    {{ f.datepicker("cedos", true, "Date is required") }}
+                    {{ f.datepicker("cedos", true, false, "Date is required") }}
                 </div>
             </div>
 
@@ -411,7 +411,7 @@
                 </div>
                 <div class="col-md-6 form-group">
                     <label class="required" for="cefuw-nw">When</label>
-                    {{ f.datepicker("cefud", false, "Follow up date is required") }}
+                    {{ f.datepicker("cefud", false, true, "A follow-up date is required") }}
                     <br/>
                     {{ f.inlineRadio("cefuw", "cefuw-nw", "nw", "Now") }}
                     {{ f.inlineRadio("cefuw", "cefuw-1m", "1m", "1 month") }}

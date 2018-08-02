@@ -37,6 +37,9 @@ function requireOneValidator($fields, $validatorControl) {
         // validators should be enabled when triggered.
         $validatorControl.data("fv-fields", $fields);
 
+        // set the initial value of the field to the state of the watched fields
+        $validatorControl.val($fields.filter(":checked").length);
+        
         $fields.on('change', function () {
             $validatorControl.val($fields.filter(":checked").length);
             fv.revalidateField($validatorControl);

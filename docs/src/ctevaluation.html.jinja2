@@ -412,6 +412,31 @@
                                         </tr>
                                         <tr>
                                             <td style="white-space: nowrap;">
+                                                <label class="control-label required" for="cect1nt">Nodule
+                                                    consistency</label>
+                                                <i class="fa fa-question-circle-o" aria-hidden="true"
+                                                   data-toggle="popover" title="Help"
+                                                   data-content="Nodules may be classified into three types by attenuation characteristics: solid - nodule is uniformly solid in appearance; nonsolid - nodule is uniformly nonsolid (except for blood vessels) in appearance; part-solid - nodule has both solid and nonsolid components"></i>
+                                            </td>
+                                            {% for i in noduleArray %}
+                                                <td data-nodule-id="{{ i }}" style="display:none;">
+                                                    <div class="form-group form-group-sm">
+                                                        <select name="cect{{ i }}nt" id="cect{{ i }}nt"
+                                                                class="form-control" title="Nodule Consistency"
+                                                                required="required">
+                                                            <option value="-"> -</option>
+                                                            <option value="s"> Solid</option>
+                                                            <option value="m"> Part-solid</option>
+                                                            <option value="g"> Nonsolid</option>
+                                                            <option value="o"> Other (see comment)</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+
+                                        <tr>
+                                            <td style="white-space: nowrap;">
                                                 <label class="control-label required" for="cect1sl">Length (mm)</label>
                                                 <i class="fa fa-question-circle-o" aria-hidden="true"
                                                    data-toggle="popover" title="Help"
@@ -491,30 +516,7 @@
                                                 </td>
                                             {% endfor %}
                                         </tr>
-                                        <tr>
-                                            <td style="white-space: nowrap;">
-                                                <label class="control-label required" for="cect1nt">Nodule
-                                                    consistency</label>
-                                                <i class="fa fa-question-circle-o" aria-hidden="true"
-                                                   data-toggle="popover" title="Help"
-                                                   data-content="Nodules may be classified into three types by attenuation characteristics: solid - nodule is uniformly solid in appearance; nonsolid - nodule is uniformly nonsolid (except for blood vessels) in appearance; part-solid - nodule has both solid and nonsolid components"></i>
-                                            </td>
-                                            {% for i in noduleArray %}
-                                                <td data-nodule-id="{{ i }}" style="display:none;">
-                                                    <div class="form-group form-group-sm">
-                                                        <select name="cect{{ i }}nt" id="cect{{ i }}nt"
-                                                                class="form-control" title="Nodule Consistency"
-                                                                required="required">
-                                                            <option value="-"> -</option>
-                                                            <option value="s"> Solid</option>
-                                                            <option value="m"> Part-solid</option>
-                                                            <option value="g"> Nonsolid</option>
-                                                            <option value="o"> Other (see comment)</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                            {% endfor %}
-                                        </tr>
+
                                         <tr>
                                             <td style="white-space: nowrap;">
                                                 <label class="control-label required" for="cect1ssl">Solid comp. of

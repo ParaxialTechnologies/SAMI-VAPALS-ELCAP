@@ -38,8 +38,8 @@
                 <!--TABS-->
                 <!--  Scan , Nodules, Abnormalities, Follow Up, Impression -->
                 <!-- each item contains (Tab Title,tab-html-id) -->
-                {% set tab_list = [("Scan","scan"), ("Nodules", "nodules"), ("Other Abnormalities","abnormalities"),
-                                ("Impression & Follow Up","impression")] -%}
+                {% set tab_list = [("Scan","scan"), ("Nodules", "nodules"), ("Emphysema/Coronary Calcifications","emphysema-coronary"),
+                            ("Other Abnormalities","abnormalities"), ("Impression & Follow Up","impression")] -%}
 
                 <ul class="nav nav-tabs" id="ctEvalTabs" role="tablist" style="margin-bottom: 15px;">
                     {% for tab_name,tab_id in tab_list -%}
@@ -113,6 +113,9 @@
                                     <input type="radio" name="cetex" id="cetex-d" value="d" required="required">
                                     Follow-up (not annual repeat)
                                 </label>
+                                <div class="alert alert-warning">
+                                    Only select Baseline if there is no prior CT or there is a prior CT scan more than 3 years ago
+                                </div>
                             </div>
                         </div>
 
@@ -187,10 +190,8 @@
                             <div class="alert alert-warning">
                                 <h4>READ before completing the Nodule Grid</h4>
                                 <ul>
-                                    <li>Include all Parenchymal and Endobronchial Nodules >= 6.0 mm in diameter</li>
-                                    <li>For BASELINE CT, all nodules are new unless there is a CT more than 3 years
-                                        earlier.
-                                    </li>
+                                    <li>Include all Parenchymal and Endobronchial Nodules >= 6.0 mm in average diameter.</li>
+                                    <li>For BASELINE CT, all nodules are new unless there is a CT more than 3 years earlier.</li>
                                     <li>For BASELINE CT, the nodules will automatically be sorted with the largest
                                         non-calcified nodule coming first.
                                     </li>
@@ -447,6 +448,24 @@
                                         </tr>
                                         <tr>
                                             <td style="white-space: nowrap;">
+                                                <label class="control-label" for="cect1sd">Mean diameter(mm)</label>
+                                                <i class="fa fa-question-circle-o" aria-hidden="true"
+                                                   data-toggle="popover" title="Help"
+                                                   data-content="Calculated mean diameter."></i>
+                                            </td>
+                                            {% for i in noduleArray %}
+                                                <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                                                    <div class="form-group form-group-sm">
+                                                        
+                                                        <label id="cect{{ i }}sd-val"
+                                                               title="Mean diameter"
+                                                               class="numeric">-</label>
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                        <tr>
+                                            <td style="white-space: nowrap;">
                                                 <label class="control-label" for="cect1sh">Height (mm)</label>
                                             </td>
                                             {% for i in noduleArray %}
@@ -657,17 +676,7 @@
                     </div>
                     {# END Nodules tab#}
                     <div class="tab-pane" id="abnormalities" role="tabpanel" aria-labelledby="abnormalities-tab">
-                        <div class="row">
-                            <div class="col-sm-12 form-group">
-                                <label class="control-label required">Emphysema</label>
-                                {{ f.radio("ceem", "ceem-nv", "nv", "Not visible", true) }}
-                                {{ f.radio("ceem", "ceem-no", "no", "None", false) }}
-                                {{ f.radio("ceem", "ceem-mi", "mi", "Mild - splaying of vessels or scattered bulla/blebs", false) }}
-                                {{ f.radio("ceem", "ceem-mo", "mo", "Moderate - less than 50%", false) }}
-                                {{ f.radio("ceem", "ceem-se", "se", "Severe - more than 50%", false) }}
-
-                            </div>
-                        </div>
+                       
 
                         {# PULMONARY ABNORMALITIES #}
                         <div class="row">
@@ -1000,7 +1009,7 @@
                         <div class="row">
                             <div class="form-group">
                                 <div class="col-sm-4 col-md-3">
-                                    <label>Cardiac abnormalities</label>
+                                    <label>Other Cardio-vascular Abnormalities</label>
                                 </div>
                                 <div class="col-sm-8 col-md-9">
                                     {{ f.inlineRadioNYE("ceca") }}
@@ -1010,99 +1019,6 @@
                         <div class="table-responsive" id="cardiac-container" style="margin-left:1em;">
                             <table class="table">
                                 <tbody>
-                                {% if formPage=="ctevaluation-elcap" %}
-                                    <tr>
-                                        <td>
-                                            <label
-                                                    class="control-label {{ "required" if formPage == "ctevaluation-elcap" else "" }}"
-                                                    for="cecclm">Coronary calcification</label>
-                                        </td>
-                                        <td>
-                                            <div class="form-group">{{ f.checkbox("ceccv","e","Not visible") }}</div>
-                                        </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <label for="cecclm" class="required">Left main</label>
-                                                <select name="cecclm" id="cecclm" class="form-control"
-                                                        required="required">
-                                                    <option value=""> -</option>
-                                                    <option value="no"> None</option>
-                                                    <option value="mi"> Minimal < &frac13;</option>
-                                                    <option value="mo"> Moderate</option>
-                                                    <option value="ex"> Extensive > &frac23;</option>
-                                                </select>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <label for="ceccld" class="required">LAD</label>
-                                                <select name="ceccld" id="ceccld" class="form-control"
-                                                        required="required">
-                                                    <option value=""> -</option>
-                                                    <option value="no"> None</option>
-                                                    <option value="mi"> Minimal < &frac13;</option>
-                                                    <option value="mo"> Moderate</option>
-                                                    <option value="ex"> Extensive > &frac23;</option>
-                                                </select>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="form-group">
-                                                <label for="cecccf" class="required">Circumflex</label>
-                                                <select name="cecccf" id="cecccf" class="form-control"
-                                                        required="required">
-                                                    <option value=""> -</option>
-                                                    <option value="no"> None</option>
-                                                    <option value="mi"> Minimal < &frac13;</option>
-                                                    <option value="mo"> Moderate</option>
-                                                    <option value="ex"> Extensive > &frac23;</option>
-                                                </select>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="form-group">
-                                                <label for="ceccrc" class="required">RCA</label>
-                                                <select name="ceccrc" id="ceccrc" class="form-control"
-                                                        required="required">
-                                                    <option value=""> -</option>
-                                                    <option value="no"> None</option>
-                                                    <option value="mi"> Minimal < &frac13;</option>
-                                                    <option value="mo"> Moderate</option>
-                                                    <option value="ex"> Extensive > &frac23;</option>
-                                                </select>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td colspan="2">
-                                            <label class="control-label" for="cecccac">
-                                                Visual <abbr title="Coronary Artery Calcium">CAC</abbr> score
-                                            </label>
-                                        </td>
-                                        <td colspan="5">
-                                            <span id="cecccac-text"></span>
-                                            <input type="hidden" name="cecccac" id="cecccac">
-                                        </td>
-                                    </tr>
-
-                                {% else %}
-                                    <tr>
-                                        <td>
-                                            <label class="control-label {{ "required" if formPage == "ctevaluation-elcap" else "" }}"
-                                                   for="cecclm">Coronary calcification</label>
-                                        </td>
-                                        <td colspan="5">
-                                            {{ f.inlineRadio("ceccv","ceccv-n","n","None") }}
-                                            {{ f.inlineRadio("ceccv","ceccv-m","m","Mild") }}
-                                            {{ f.inlineRadio("ceccv","ceccv-d","d","Moderate") }}
-                                            {{ f.inlineRadio("ceccv","ceccv-s","s","Severe") }}
-                                        </td>
-                                    </tr>
-                                {% endif %}
-
                                 <tr>
                                     <td><label class="control-label" for="cecca">Aortic calcification</label></td>
                                     <td>
@@ -1138,8 +1054,6 @@
                                                 <option value="ex"> Extensive</option>
                                             </select>
                                         </div>
-                                    </td>
-                                </tr>
 
                                 <tr>
                                     <td colspan="2"><label class="control-label" for="cepaw">Pulmonary artery width
@@ -1212,10 +1126,10 @@
                             <table class="table">
                                 <tbody>
                                 <tr>
-                                    <td><label class="control-label" for="ceccv-n">Thyroid</label></td>
+                                    <td><label class="control-label" for="ceata-n">Thyroid</label></td>
                                     <td>
                                         <div class="form-group">
-                                            {{ f.inlineRadioNYE("ceccv") }}
+                                            {{ f.inlineRadioNYE("ceata") }}
                                         </div>
                                     </td>
                                     <td style="padding-top:0;">
@@ -1681,6 +1595,136 @@
                     </div>
                     {#  END Abnormalities tab#}
 
+                    <div class="tab-pane" id="emphysema-coronary" role="tabpanel" aria-labelledby="emphysema-coronary-tab">
+
+                        <div class="row">
+                            <div class="col-sm-12 form-group">
+                                <label class="control-label required">Emphysema</label>
+                                {{ f.radio("ceem", "ceem-nv", "nv", "Not visible", true) }}
+                                {{ f.radio("ceem", "ceem-no", "no", "None", false) }}
+                                {{ f.radio("ceem", "ceem-mi", "mi", "Mild - splaying of vessels or scattered bulla/blebs", false) }}
+                                {{ f.radio("ceem", "ceem-mo", "mo", "Moderate - less than 50%", false) }}
+                                {{ f.radio("ceem", "ceem-se", "se", "Severe - more than 50%", false) }}
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-sm-4 col-md-3">
+                                    <label for="ceoca-n">Cardiac Abnormalities</label>
+                                </div>
+                                <div class="col-sm-8 col-md-9">
+                                    {{ f.inlineRadio("ceoca", "ceoca-n","n","No",true) }}
+                                    {{ f.inlineRadio("ceoca", "ceoca-y","y","Yes",true) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive" id="coronary-container" style="margin-left:1em;">
+                            <table class="table">
+                                <tbody>
+                                {% if formPage=="ctevaluation-elcap" %}
+                                    <tr>
+                                        <td>
+                                            <label
+                                                    class="control-label required"
+                                                    for="cecclm">Coronary calcification</label>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">{{ f.checkbox("ceccv","e","Not visible") }}</div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <label for="cecclm" class="required">Left main</label>
+                                                <select name="cecclm" id="cecclm" class="form-control"
+                                                        required="required">
+                                                    <option value=""> -</option>
+                                                    <option value="no"> None</option>
+                                                    <option value="mi"> Minimal < &frac13;</option>
+                                                    <option value="mo"> Moderate</option>
+                                                    <option value="ex"> Extensive > &frac23;</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <label for="ceccld" class="required">LAD</label>
+                                                <select name="ceccld" id="ceccld" class="form-control"
+                                                        required="required">
+                                                    <option value=""> -</option>
+                                                    <option value="no"> None</option>
+                                                    <option value="mi"> Minimal < &frac13;</option>
+                                                    <option value="mo"> Moderate</option>
+                                                    <option value="ex"> Extensive > &frac23;</option>
+                                                </select>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="form-group">
+                                                <label for="cecccf" class="required">Circumflex</label>
+                                                <select name="cecccf" id="cecccf" class="form-control"
+                                                        required="required">
+                                                    <option value=""> -</option>
+                                                    <option value="no"> None</option>
+                                                    <option value="mi"> Minimal < &frac13;</option>
+                                                    <option value="mo"> Moderate</option>
+                                                    <option value="ex"> Extensive > &frac23;</option>
+                                                </select>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="form-group">
+                                                <label for="ceccrc" class="required">RCA</label>
+                                                <select name="ceccrc" id="ceccrc" class="form-control"
+                                                        required="required">
+                                                    <option value=""> -</option>
+                                                    <option value="no"> None</option>
+                                                    <option value="mi"> Minimal < &frac13;</option>
+                                                    <option value="mo"> Moderate</option>
+                                                    <option value="ex"> Extensive > &frac23;</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="2">
+                                            <label class="control-label" for="cecccac">
+                                                Visual <abbr title="Coronary Artery Calcium">CAC</abbr> score
+                                            </label>
+                                        </td>
+                                        <td colspan="5">
+                                            <span id="cecccac-text"></span>
+                                            <input type="hidden" name="cecccac" id="cecccac">
+                                        </td>
+                                    </tr>
+
+                                {% else %}
+                                    <tr>
+                                        <td>
+                                            <label class="control-label"
+                                                   for="ceccv-n">Coronary calcification</label>
+                                        </td>
+                                        <td colspan="5">
+                                            {{ f.inlineRadio("ceccv","ceccv-n","n","None") }}
+                                            {{ f.inlineRadio("ceccv","ceccv-m","m","Mild") }}
+                                            {{ f.inlineRadio("ceccv","ceccv-d","d","Moderate") }}
+                                            {{ f.inlineRadio("ceccv","ceccv-s","s","Severe") }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+
+                    {# END Emphysema tab #}
+
                     <div class="tab-pane" id="impression" role="tabpanel" aria-labelledby="impression-tab">
                         <h3>Impression</h3>
                         <div class="row">
@@ -1783,7 +1827,7 @@
                             </div>
                         </div>
 
-                        <h3>Lung-RADS {{ "(Optional)" if formPage == "ctevaluation-elcap" else "" }}</h3>
+                        <h3>Lung-RADS</h3>
                         <div class="row">
                             <div class="form-group col-sm-5 col-md-4">
                                 <label class="required" for="celrad">Category</label>
@@ -1808,12 +1852,13 @@
             </div>
 
             <div class="btn-group">
-                <button type="button" class="btn btn-default btn-prev">Previous</button>
-                <button type="button" class="btn btn-default btn-next">Next</button>
+                <a id="delete-form" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>Delete</a>
             </div>
-            <a id="delete-form" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>Delete</a>
+            
 
             <div class="pull-right">
+                <button type="button" class="btn btn-default btn-prev">Previous</button>
+                <button type="button" class="btn btn-default btn-next">Next</button>
                 <input type="hidden" name="cennod" value="0"/>
                 <input type="hidden" name="ceanod" value="n"/>
                 <input type="hidden" name="samistatus" value=""/>
@@ -1861,6 +1906,7 @@
             }
         }
 
+        {% if formPage=="ctevaluation-elcap" %}
         function calculateVisualCacScore() {
             let cal1 = $("#cecclm")[0].selectedIndex;
             let cal2 = $("#ceccld")[0].selectedIndex;
@@ -1874,6 +1920,7 @@
             $("#cecccac").val(res);
             $("#cecccac-text").text(res);
         }
+        {% endif %}
 
         /**
          * Sets the default value of a radio group and conditionally displays a container when that radio value is "y"
@@ -1961,7 +2008,6 @@
                 }
             }).conditionallyEnable({sourceValues: "b", disable: "#non-baseline-container"});
 
-
             // NODULES
             {% for i in noduleArray %}
                 $("#cect{{ i }}nt").conditionallyEnable({sourceValues: "m", enable: "#cect{{ i }}-container"});
@@ -2012,6 +2058,7 @@
             defaultRadio("ceoba", "n", "#breast-container", "y");
             defaultRadio("ceaba", "n", "#bone-container", "y");
             defaultRadio("ceoaa", "y", "#abdominal-container", "y");
+            defaultRadio("ceoca", "n", "#coronary-container", "y");
 
             //for each of the main sections, find all the radiogroups and default them to "n" (no)
             // NB: Cardiac & Bone have no radio button groups.
@@ -2082,6 +2129,7 @@
 
 
             const groups = [
+                {radio: 'ceoca', container: $("#coronary-container"), humanName: "coronary"},
                 {radio: 'pa', container: $("#pulmonary-container"), humanName: "pulmonary"},
                 {radio: 'ceoma', container: $("#neck-container"), humanName: "neck and mediastinal"},
                 {radio: 'ceoba', container: $("#breast-container"), humanName: "breast"},
@@ -2127,7 +2175,32 @@
                     default:
                         $("#cefud").val("").focus();
                 }
-            })
+            });
+
+            // mean diameter calculation
+            const lengthFields = $("[name^=cect][name$=sl],[name^=cect][name$=sw]")
+            lengthFields.on('keyup change', function (e) { 
+                const targetField = $(e.target);
+                const noduleId = targetField.closest("td").attr("data-nodule-id");
+                const noduleDiamLabel = $("#cect"+noduleId+"sd-val");
+                const wval = $("#cect"+noduleId+"sw").val();
+                const lval = $("#cect"+noduleId+"sl").val();
+                const w = wval ? Number(wval) : 0;
+                const l = lval ? Number(lval) :  0;
+
+                if (w>0 && l>0) {
+                    const meanDiam = (l + w)/2;
+                    if (meanDiam > 0 ) {
+                        noduleDiamLabel.text(meanDiam.toFixed(2));
+                    } else {
+                        noduleDiamLabel.text("-");
+                    }
+                } else {
+                    noduleDiamLabel.text("-");
+                }
+            }).first().trigger('change');
+
+
 
             $("form").on("submit", function (e) {
                 console.log("onsubmit");

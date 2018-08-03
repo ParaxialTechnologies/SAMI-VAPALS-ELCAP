@@ -2142,19 +2142,6 @@
                 requireChildRadioSelectedValidator(groups[i])
             }
 
-            //at least one checkbox whose name starts with cemlnl is required if cemln==y
-            const $cemlnFields = $("input[type='radio'][name='cemln']");
-            const validatorControlName = 'validator-cemln';
-            const $validatorControl = $("[name=" + validatorControlName + "]");
-            requireOneValidator($("[name^=cemlnl]"), $validatorControl);
-            $cemlnFields.on("change", function () {
-                const fv = $("form.validated").data("formValidation");
-                if (fv) {
-                    const lymphNodesEnabled = $cemlnFields.filter(":checked").val() === "y";
-                    fv.enableFieldValidators(validatorControlName, lymphNodesEnabled, 'callback');
-                }
-            }).first().trigger('change');
-
             //followup date calculation
             $("[name=cefuw]").on('change', function () {
                 const when = $("[name='cefuw']:checked").val();
@@ -2216,6 +2203,21 @@
 
             //WRAP IT UP
             $(".validated").formValidation({framework: 'bootstrap'});
+
+            //at least one checkbox whose name starts with cemlnl is required if cemln==y
+            const $cemlnFields = $("input[type='radio'][name='cemln']");
+            const validatorControlName = 'validator-cemln';
+            const $validatorControl = $("[name=" + validatorControlName + "]");
+            // requireOneValidator needs to happen after formValidation is initialized
+            // through ...$(".validated").formValidation(...)
+            requireOneValidator($("[name^=cemlnl]"), $validatorControl);
+            $cemlnFields.on("change", function () {
+                const fv = $("form.validated").data("formValidation");
+                if (fv) {
+                    const lymphNodesEnabled = $cemlnFields.filter(":checked").val() === "y";
+                    fv.enableFieldValidators(validatorControlName, lymphNodesEnabled, 'callback');
+                }
+            }).first().trigger('change');
 
             //always after formValidation initialization
             initTabbedNavigation("ctEvalTabs", "ctEvalTabsContent");

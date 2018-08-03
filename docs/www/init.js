@@ -37,6 +37,9 @@ function requireOneValidator($fields, $validatorControl) {
         // validators should be enabled when triggered.
         $validatorControl.data("fv-fields", $fields);
 
+        // set the initial value of the field to the state of the watched fields
+        $validatorControl.val($fields.filter(":checked").length);
+        
         $fields.on('change', function () {
             $validatorControl.val($fields.filter(":checked").length);
             fv.revalidateField($validatorControl);
@@ -190,11 +193,11 @@ $(function () {
         $("input[name=samistatus]").val("complete");
     });
 
+    /** Handling of the delete form modal */
     $("#delete-form").on("click", function(e) {
         $('#delete-confirm-modal').modal('show');
         e.preventDefault();
         e.stopPropagation();
-
     })
 
     $('#delete-form-cancel').on("click", function (e) {
@@ -203,6 +206,16 @@ $(function () {
 
         $('#delete-confirm-modal').modal('hide');
     });
+    
+    $('#delete-confirm-modal').keypress(function(e) {
+        var c = String.fromCharCode(e.which);
+        if (e.which == 13 /* key code for Enter */ || c == "y" || c == "Y") {
+            $("#delete-form-btn").trigger("click");
+        } else if (c == "n" || c == "N") {
+            $('#delete-form-cancel').trigger("click");
+        }
+    });
+    /* ---------------- delete form modal dialog end ------*/
 
     /**
      * Attach an onclick handler to "a.navigation" elements such that when clicked, submits a form POST or GET using

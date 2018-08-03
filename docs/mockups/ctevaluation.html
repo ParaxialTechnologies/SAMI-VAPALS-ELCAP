@@ -129,6 +129,13 @@
        </a>
       </li>
       <li role="presentation">
+       <a aria-controls="emphysema-coronary" aria-selected="false" class="nav-link" data-toggle="tab" href="#emphysema-coronary" id="emphysema-coronary-tab" role="tab">
+        Emphysema/Coronary Calcifications
+        <i class="fa fa-check-circle-o complete-mark" title="This tab is complete">
+        </i>
+       </a>
+      </li>
+      <li role="presentation">
        <a aria-controls="abnormalities" aria-selected="false" class="nav-link" data-toggle="tab" href="#abnormalities" id="abnormalities-tab" role="tab">
         Other Abnormalities
         <i class="fa fa-check-circle-o complete-mark" title="This tab is complete">
@@ -223,6 +230,9 @@
           <input id="cetex-d" name="cetex" required="required" type="radio" value="d"/>
           Follow-up (not annual repeat)
          </label>
+         <div class="alert alert-warning">
+          Only select Baseline if there is no prior CT or there is a prior CT scan more than 3 years ago
+         </div>
         </div>
        </div>
        <div class="row">
@@ -340,11 +350,10 @@
          </h4>
          <ul>
           <li>
-           Include all Parenchymal and Endobronchial Nodules &gt;= 6.0 mm in diameter
+           Include all Parenchymal and Endobronchial Nodules &gt;= 6.0 mm in average diameter.
           </li>
           <li>
-           For BASELINE CT, all nodules are new unless there is a CT more than 3 years
-                                        earlier.
+           For BASELINE CT, all nodules are new unless there is a CT more than 3 years earlier.
           </li>
           <li>
            For BASELINE CT, the nodules will automatically be sorted with the largest
@@ -2527,6 +2536,85 @@
             </tr>
             <tr>
              <td style="white-space: nowrap;">
+              <label class="control-label" for="cect1sd">
+               Mean diameter(mm)
+              </label>
+              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Calculated mean diameter." data-toggle="popover" title="Help">
+              </i>
+             </td>
+             <td class="form-inline" data-nodule-id="1" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="numeric" id="cect1sd-val" title="Mean diameter">
+                -
+               </label>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="2" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="numeric" id="cect2sd-val" title="Mean diameter">
+                -
+               </label>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="3" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="numeric" id="cect3sd-val" title="Mean diameter">
+                -
+               </label>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="4" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="numeric" id="cect4sd-val" title="Mean diameter">
+                -
+               </label>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="5" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="numeric" id="cect5sd-val" title="Mean diameter">
+                -
+               </label>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="6" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="numeric" id="cect6sd-val" title="Mean diameter">
+                -
+               </label>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="7" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="numeric" id="cect7sd-val" title="Mean diameter">
+                -
+               </label>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="8" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="numeric" id="cect8sd-val" title="Mean diameter">
+                -
+               </label>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="9" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="numeric" id="cect9sd-val" title="Mean diameter">
+                -
+               </label>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="10" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="numeric" id="cect10sd-val" title="Mean diameter">
+                -
+               </label>
+              </div>
+             </td>
+            </tr>
+            <tr>
+             <td style="white-space: nowrap;">
               <label class="control-label" for="cect1sh">
                Height (mm)
               </label>
@@ -4314,43 +4402,6 @@
       </div>
       <div aria-labelledby="abnormalities-tab" class="tab-pane" id="abnormalities" role="tabpanel">
        <div class="row">
-        <div class="col-sm-12 form-group">
-         <label class="control-label required">
-          Emphysema
-         </label>
-         <div class="radio">
-          <label>
-           <input id="ceem-nv" name="ceem" required="required" type="radio" value="nv"/>
-           Not visible
-          </label>
-         </div>
-         <div class="radio">
-          <label>
-           <input id="ceem-no" name="ceem" type="radio" value="no"/>
-           None
-          </label>
-         </div>
-         <div class="radio">
-          <label>
-           <input id="ceem-mi" name="ceem" type="radio" value="mi"/>
-           Mild - splaying of vessels or scattered bulla/blebs
-          </label>
-         </div>
-         <div class="radio">
-          <label>
-           <input id="ceem-mo" name="ceem" type="radio" value="mo"/>
-           Moderate - less than 50%
-          </label>
-         </div>
-         <div class="radio">
-          <label>
-           <input id="ceem-se" name="ceem" type="radio" value="se"/>
-           Severe - more than 50%
-          </label>
-         </div>
-        </div>
-       </div>
-       <div class="row">
         <div class="form-group">
          <div class="col-sm-4 col-md-3">
           <label>
@@ -5401,7 +5452,7 @@
         <div class="form-group">
          <div class="col-sm-4 col-md-3">
           <label>
-           Cardiac abnormalities
+           Other Cardio-vascular Abnormalities
           </label>
          </div>
          <div class="col-sm-8 col-md-9">
@@ -5423,31 +5474,6 @@
        <div class="table-responsive" id="cardiac-container" style="margin-left:1em;">
         <table class="table">
          <tbody>
-          <tr>
-           <td>
-            <label class="control-label " for="cecclm">
-             Coronary calcification
-            </label>
-           </td>
-           <td colspan="5">
-            <label class="radio-inline" for="ceccv-n">
-             <input id="ceccv-n" name="ceccv" type="radio" value="n"/>
-             None
-            </label>
-            <label class="radio-inline" for="ceccv-m">
-             <input id="ceccv-m" name="ceccv" type="radio" value="m"/>
-             Mild
-            </label>
-            <label class="radio-inline" for="ceccv-d">
-             <input id="ceccv-d" name="ceccv" type="radio" value="d"/>
-             Moderate
-            </label>
-            <label class="radio-inline" for="ceccv-s">
-             <input id="ceccv-s" name="ceccv" type="radio" value="s"/>
-             Severe
-            </label>
-           </td>
-          </tr>
           <tr>
            <td>
             <label class="control-label" for="cecca">
@@ -5619,22 +5645,22 @@
          <tbody>
           <tr>
            <td>
-            <label class="control-label" for="ceccv-n">
+            <label class="control-label" for="ceata-n">
              Thyroid
             </label>
            </td>
            <td>
             <div class="form-group">
-             <label class="radio-inline" for="ceccv-n">
-              <input id="ceccv-n" name="ceccv" type="radio" value="n"/>
+             <label class="radio-inline" for="ceata-n">
+              <input id="ceata-n" name="ceata" type="radio" value="n"/>
               No
              </label>
-             <label class="radio-inline" for="ceccv-y">
-              <input id="ceccv-y" name="ceccv" type="radio" value="y"/>
+             <label class="radio-inline" for="ceata-y">
+              <input id="ceata-y" name="ceata" type="radio" value="y"/>
               Yes
              </label>
-             <label class="radio-inline" for="ceccv-e">
-              <input id="ceccv-e" name="ceccv" type="radio" value="e"/>
+             <label class="radio-inline" for="ceata-e">
+              <input id="ceata-e" name="ceata" type="radio" value="e"/>
               not visible
              </label>
             </div>
@@ -6676,6 +6702,95 @@
         <hr/>
        </div>
       </div>
+      <div aria-labelledby="emphysema-coronary-tab" class="tab-pane" id="emphysema-coronary" role="tabpanel">
+       <div class="row">
+        <div class="col-sm-12 form-group">
+         <label class="control-label required">
+          Emphysema
+         </label>
+         <div class="radio">
+          <label>
+           <input id="ceem-nv" name="ceem" required="required" type="radio" value="nv"/>
+           Not visible
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="ceem-no" name="ceem" type="radio" value="no"/>
+           None
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="ceem-mi" name="ceem" type="radio" value="mi"/>
+           Mild - splaying of vessels or scattered bulla/blebs
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="ceem-mo" name="ceem" type="radio" value="mo"/>
+           Moderate - less than 50%
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="ceem-se" name="ceem" type="radio" value="se"/>
+           Severe - more than 50%
+          </label>
+         </div>
+        </div>
+       </div>
+       <div class="row">
+        <div class="form-group">
+         <div class="col-sm-4 col-md-3">
+          <label for="ceoca-n">
+           Cardiac Abnormalities
+          </label>
+         </div>
+         <div class="col-sm-8 col-md-9">
+          <label class="radio-inline" for="ceoca-n">
+           <input data-fv-notempty-message="Please select a value" id="ceoca-n" name="ceoca" required="required" type="radio" value="n"/>
+           No
+          </label>
+          <label class="radio-inline" for="ceoca-y">
+           <input data-fv-notempty-message="Please select a value" id="ceoca-y" name="ceoca" required="required" type="radio" value="y"/>
+           Yes
+          </label>
+         </div>
+        </div>
+       </div>
+       <div class="table-responsive" id="coronary-container" style="margin-left:1em;">
+        <table class="table">
+         <tbody>
+          <tr>
+           <td>
+            <label class="control-label" for="ceccv-n">
+             Coronary calcification
+            </label>
+           </td>
+           <td colspan="5">
+            <label class="radio-inline" for="ceccv-n">
+             <input id="ceccv-n" name="ceccv" type="radio" value="n"/>
+             None
+            </label>
+            <label class="radio-inline" for="ceccv-m">
+             <input id="ceccv-m" name="ceccv" type="radio" value="m"/>
+             Mild
+            </label>
+            <label class="radio-inline" for="ceccv-d">
+             <input id="ceccv-d" name="ceccv" type="radio" value="d"/>
+             Moderate
+            </label>
+            <label class="radio-inline" for="ceccv-s">
+             <input id="ceccv-s" name="ceccv" type="radio" value="s"/>
+             Severe
+            </label>
+           </td>
+          </tr>
+         </tbody>
+        </table>
+       </div>
+      </div>
       <div aria-labelledby="impression-tab" class="tab-pane" id="impression" role="tabpanel">
        <h3>
         Impression
@@ -6926,19 +7041,19 @@
      </div>
     </div>
     <div class="btn-group">
+     <a class="btn btn-danger" id="delete-form">
+      <span class="glyphicon glyphicon-trash">
+      </span>
+      Delete
+     </a>
+    </div>
+    <div class="pull-right">
      <button class="btn btn-default btn-prev" type="button">
       Previous
      </button>
      <button class="btn btn-default btn-next" type="button">
       Next
      </button>
-    </div>
-    <a class="btn btn-danger navigation" data-form="@@FORMKEY@@" data-method="get" data-samiroute="deleteform" href="ctevaluation.html">
-     <span class="glyphicon glyphicon-trash">
-     </span>
-     Delete
-    </a>
-    <div class="pull-right">
      <input name="cennod" type="hidden" value="0"/>
      <input name="ceanod" type="hidden" value="n"/>
      <input name="samistatus" type="hidden" value=""/>
@@ -6951,6 +7066,35 @@
     </div>
    </form>
   </div>
+  <div class="modal fade" id="delete-confirm-modal" role="dialog" tabindex="-1">
+   <div class="modal-dialog" role="document">
+    <div class="modal-content">
+     <div class="modal-header">
+      <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+       <span aria-hidden="true">
+        ×
+       </span>
+      </button>
+      <h4 class="modal-title">
+       Warning
+      </h4>
+     </div>
+     <div class="modal-body">
+      <p>
+       Are you certain you want to delete this form?
+      </p>
+     </div>
+     <div class="modal-footer">
+      <a class="btn btn-primary" data-dismiss="modal" id="delete-form-cancel">
+       No
+      </a>
+      <a class="btn btn-danger navigation" data-form="@@FORMKEY@@" data-method="get" data-samiroute="deleteform" href="ctevaluation.html" id="delete-form-btn">
+       Yes
+      </a>
+     </div>
+    </div>
+   </div>
+  </div>
   <footer>
    <div class="container-fluid" style="max-width:1550px">
     <hr/>
@@ -6958,7 +7102,7 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.07.27
+     SNAPSHOT 2018.08.03
     </span>
    </div>
   </footer>
@@ -7017,19 +7161,7 @@
             }
         }
 
-        function calculateVisualCacScore() {
-            let cal1 = $("#cecclm")[0].selectedIndex;
-            let cal2 = $("#ceccld")[0].selectedIndex;
-            let cal3 = $("#cecccf")[0].selectedIndex;
-            let cal4 = $("#ceccrc")[0].selectedIndex;
-            if (cal1 > 0) cal1 = cal1 - 1;
-            if (cal2 > 0) cal2 = cal2 - 1;
-            if (cal3 > 0) cal3 = cal3 - 1;
-            if (cal4 > 0) cal4 = cal4 - 1;
-            const res = cal1 + cal2 + cal3 + cal4;
-            $("#cecccac").val(res);
-            $("#cecccac-text").text(res);
-        }
+        
 
         /**
          * Sets the default value of a radio group and conditionally displays a container when that radio value is "y"
@@ -7116,7 +7248,6 @@
                     $("select[name^=cect][name$=ch]").val("n"); // set nodule "is it new?" to "new"
                 }
             }).conditionallyEnable({sourceValues: "b", disable: "#non-baseline-container"});
-
 
             // NODULES
             
@@ -7375,6 +7506,7 @@
             defaultRadio("ceoba", "n", "#breast-container", "y");
             defaultRadio("ceaba", "n", "#bone-container", "y");
             defaultRadio("ceoaa", "y", "#abdominal-container", "y");
+            defaultRadio("ceoca", "n", "#coronary-container", "y");
 
             //for each of the main sections, find all the radiogroups and default them to "n" (no)
             // NB: Cardiac & Bone have no radio button groups.
@@ -7442,6 +7574,7 @@
 
 
             const groups = [
+                {radio: 'ceoca', container: $("#coronary-container"), humanName: "coronary"},
                 {radio: 'pa', container: $("#pulmonary-container"), humanName: "pulmonary"},
                 {radio: 'ceoma', container: $("#neck-container"), humanName: "neck and mediastinal"},
                 {radio: 'ceoba', container: $("#breast-container"), humanName: "breast"},
@@ -7487,7 +7620,32 @@
                     default:
                         $("#cefud").val("").focus();
                 }
-            })
+            });
+
+            // mean diameter calculation
+            const lengthFields = $("[name^=cect][name$=sl],[name^=cect][name$=sw]")
+            lengthFields.on('keyup change', function (e) { 
+                const targetField = $(e.target);
+                const noduleId = targetField.closest("td").attr("data-nodule-id");
+                const noduleDiamLabel = $("#cect"+noduleId+"sd-val");
+                const wval = $("#cect"+noduleId+"sw").val();
+                const lval = $("#cect"+noduleId+"sl").val();
+                const w = wval ? Number(wval) : 0;
+                const l = lval ? Number(lval) :  0;
+
+                if (w>0 && l>0) {
+                    const meanDiam = (l + w)/2;
+                    if (meanDiam > 0 ) {
+                        noduleDiamLabel.text(meanDiam.toFixed(2));
+                    } else {
+                        noduleDiamLabel.text("-");
+                    }
+                } else {
+                    noduleDiamLabel.text("-");
+                }
+            }).first().trigger('change');
+
+
 
             $("form").on("submit", function (e) {
                 console.log("onsubmit");

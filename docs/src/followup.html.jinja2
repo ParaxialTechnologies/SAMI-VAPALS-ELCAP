@@ -26,11 +26,11 @@
             <div class="row">
                 <div class="form-group col-sm-3 col-md-3 col-lg-2">
                     <label class="required" for="sidof">Follow-up date</label>
-                    {{ f.datepicker("sidof", false, true, "Follow up date is required") }}
+                    {{ f.datepicker("sidof", "future", "Follow up date is required") }}
                 </div>
                 <div class="form-group col-sm-3 col-md-3 col-lg-2">
                     <label class="required" for="sidoe">Date of baseline CT</label>
-                    {{ f.datepicker("sidoe", true, false, "Date of baseline CT is required") }}
+                    {{ f.datepicker("sidoe", "past", "Date of baseline CT is required") }}
                 </div>
 
 
@@ -294,7 +294,7 @@
                     </div>
                     <div class="form-group">
                         <label for="sicdd">When were you diagnosed?</label>
-                        {{ f.datepicker("sicdd", true) }}
+                        {{ f.datepicker("sicdd", "past") }}
                     </div>
                 </div>
             </div>
@@ -310,7 +310,7 @@
                 <div class="col-md-6 col-lg-4" id="silcs-container">
                     <div class="form-group">
                         <label for="silcsd">When?</label>
-                        {{ f.datepicker("silcsd", true) }}
+                        {{ f.datepicker("silcsd", "past") }}
                     </div>
                     <div class="form-group">
                         <label for="silcsl">Where?</label>

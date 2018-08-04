@@ -5,41 +5,43 @@
     <label for="{{ for }}" class="text-right pull-right hidden-xs hidden-sm {{ extraClasses }}">{{ text }}</label>
 {%- endmacro %}
 
-{% macro inlineRadio(groupName, id, value, labelText, required, checked, onclick) -%}
+{% macro inlineRadio(groupName, id, value, labelText, required, checked, onclick, tabindex) -%}
     <label class="radio-inline" for="{{ id }}">
         <input type="radio" name="{{ groupName }}" id="{{ id }}"
                 {{ " onclick=\""+ onclick + "\"" if onclick else "" }}
                 {{ " checked" if checked else "" }}
                 {{ " required=\"required\" data-fv-notempty-message=\"Please select a value\"" if required else "" }}
+                {{ " tabindex=\""+ tabindex + "\"" if tabindex else "" }}
                value="{{ value }}">
         {{ labelText }}
     </label>
 {%- endmacro %}
 
 
-{% macro inlineRadioNY(groupName, required) -%}
-    {{ inlineRadio(groupName, groupName+"-n","n","No",required) }}
-    {{ inlineRadio(groupName, groupName+"-y","y","Yes",required) }}
+{% macro inlineRadioNY(groupName, required, tabindex) -%}
+    {{ inlineRadio(groupName, groupName+"-n","n","No",required, false, null, tabindex) }}
+    {{ inlineRadio(groupName, groupName+"-y","y","Yes",required, false, null, tabindex) }}
 {%- endmacro %}
 
-{% macro inlineRadioNYQ(groupName, required) -%}
-    {{ inlineRadio(groupName, groupName+"-n","n","No",required) }}
-    {{ inlineRadio(groupName, groupName+"-y","y","Yes",required) }}
-    {{ inlineRadio(groupName, groupName+"-q","q","?",required) }}
+{% macro inlineRadioNYQ(groupName, required, tabindex) -%}
+    {{ inlineRadio(groupName, groupName+"-n","n","No",required,false, null, tabindex) }}
+    {{ inlineRadio(groupName, groupName+"-y","y","Yes",required, false, null, tabindex) }}
+    {{ inlineRadio(groupName, groupName+"-q","q","?",required, false, null, tabindex) }}
 {%- endmacro %}
 
-{% macro inlineRadioNYE(groupName, required) -%}
-    {{ inlineRadio(groupName, groupName+"-n","n","No",required) }}
-    {{ inlineRadio(groupName, groupName+"-y","y","Yes",required) }}
-    {{ inlineRadio(groupName, groupName+"-e","e","not visible",required) }}
+{% macro inlineRadioNYE(groupName, required, tabindex) -%}
+    {{ inlineRadio(groupName, groupName+"-n","n","No",required, false, null, tabindex) }}
+    {{ inlineRadio(groupName, groupName+"-y","y","Yes",required, false, null,tabindex) }}
+    {{ inlineRadio(groupName, groupName+"-e","e","not visible",required, false, null,tabindex) }}
 {%- endmacro %}
 
-{% macro radio(group, id, value, label, required, checked) -%}
+{% macro radio(group, id, value, label, required, checked, tabindex) -%}
     <div class="radio">
         <label>
             <input type="radio" name="{{ group }}" id="{{ id }}" value="{{ value }}"
                     {{ "checked" if checked else "" }}
-                    {{ "required=\"required\"" if required else "" }}>
+                    {{ "required=\"required\"" if required else "" }}
+                    {{ " tabindex=\""+ tabindex + "\"" if tabindex else "" }} >
             {{ label }}
         </label>
     </div>

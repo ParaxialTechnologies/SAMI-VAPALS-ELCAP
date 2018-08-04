@@ -5,41 +5,43 @@
     <label for="{{ for }}" class="text-right pull-right hidden-xs hidden-sm {{ extraClasses }}">{{ text }}</label>
 {%- endmacro %}
 
-{% macro inlineRadio(groupName, id, value, labelText, required, checked, onclick) -%}
+{% macro inlineRadio(groupName, id, value, labelText, required, checked, onclick, tabindex) -%}
     <label class="radio-inline" for="{{ id }}">
         <input type="radio" name="{{ groupName }}" id="{{ id }}"
                 {{ " onclick=\""+ onclick + "\"" if onclick else "" }}
                 {{ " checked" if checked else "" }}
                 {{ " required=\"required\" data-fv-notempty-message=\"Please select a value\"" if required else "" }}
+                {{ " tabindex=\""+ tabindex + "\"" if tabindex else "" }}
                value="{{ value }}">
         {{ labelText }}
     </label>
 {%- endmacro %}
 
 
-{% macro inlineRadioNY(groupName, required) -%}
-    {{ inlineRadio(groupName, groupName+"-n","n","No",required) }}
-    {{ inlineRadio(groupName, groupName+"-y","y","Yes",required) }}
+{% macro inlineRadioNY(groupName, required, tabindex) -%}
+    {{ inlineRadio(groupName, groupName+"-n","n","No",required, false, null, tabindex) }}
+    {{ inlineRadio(groupName, groupName+"-y","y","Yes",required, false, null, tabindex) }}
 {%- endmacro %}
 
-{% macro inlineRadioNYQ(groupName, required) -%}
-    {{ inlineRadio(groupName, groupName+"-n","n","No",required) }}
-    {{ inlineRadio(groupName, groupName+"-y","y","Yes",required) }}
-    {{ inlineRadio(groupName, groupName+"-q","q","?",required) }}
+{% macro inlineRadioNYQ(groupName, required, tabindex) -%}
+    {{ inlineRadio(groupName, groupName+"-n","n","No",required,false, null, tabindex) }}
+    {{ inlineRadio(groupName, groupName+"-y","y","Yes",required, false, null, tabindex) }}
+    {{ inlineRadio(groupName, groupName+"-q","q","?",required, false, null, tabindex) }}
 {%- endmacro %}
 
-{% macro inlineRadioNYE(groupName, required) -%}
-    {{ inlineRadio(groupName, groupName+"-n","n","No",required) }}
-    {{ inlineRadio(groupName, groupName+"-y","y","Yes",required) }}
-    {{ inlineRadio(groupName, groupName+"-e","e","not visible",required) }}
+{% macro inlineRadioNYE(groupName, required, tabindex) -%}
+    {{ inlineRadio(groupName, groupName+"-n","n","No",required, false, null, tabindex) }}
+    {{ inlineRadio(groupName, groupName+"-y","y","Yes",required, false, null,tabindex) }}
+    {{ inlineRadio(groupName, groupName+"-e","e","not visible",required, false, null,tabindex) }}
 {%- endmacro %}
 
-{% macro radio(group, id, value, label, required, checked) -%}
+{% macro radio(group, id, value, label, required, checked, tabindex) -%}
     <div class="radio">
         <label>
             <input type="radio" name="{{ group }}" id="{{ id }}" value="{{ value }}"
                     {{ "checked" if checked else "" }}
-                    {{ "required=\"required\"" if required else "" }}>
+                    {{ "required=\"required\"" if required else "" }}
+                    {{ " tabindex=\""+ tabindex + "\"" if tabindex else "" }} >
             {{ label }}
         </label>
     </div>
@@ -78,12 +80,21 @@
     </label>
 {%- endmacro %}
 
-{% macro datepicker(name, pastDateRequired, requiredMessage) -%}
+{# 
+    requiredMessage - serves both as a flag that the field is required, as well as provies the message
+        that is displayed if the field value is not present. This error message is presented only when 
+        there is no value provided in the field, and not when any of the date restrictions are not met. 
+    dateRestriction - the parameter would accept any string, but honors only 'past' and 'future' to add 
+        a restriction on the valid date in the date picker. Note that the error message shown is the
+        the standard FV message indicating that the date needs to be before/after the current date
+ #}
+{% macro datepicker(name, dateRestriction, requiredMessage) -%}
     <div class="input-group datepicker">
         <input class="form-control" id="{{ name }}" name="{{ name }}" aria-describedby="{{ name }}-addon"
                 {{ " required=\"required\"" if requiredMessage else "" }}
                 {{ " data-fv-notempty-message=\"" + requiredMessage + "\"" if requiredMessage else "" }}              
-                {{ " data-fv-date-max=\"VAPALS.todaysDate\"" if pastDateRequired else "" }}
+                {{ " data-fv-date-max=\"VAPALS.todaysDate\"" if dateRestriction=="past" else "" }}
+                {{ " data-fv-date-min=\"VAPALS.todaysDate\"" if dateRestriction=="future" else "" }}
                 data-fv-date="true">
         <div class="input-group-addon">
             <div class="input-group-text" id="{{ name }}-addon">

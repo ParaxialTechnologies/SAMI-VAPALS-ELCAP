@@ -412,6 +412,30 @@
                                         </tr>
                                         <tr>
                                             <td style="white-space: nowrap;">
+                                                <label class="control-label required" for="cect1nt">Nodule
+                                                    consistency</label>
+                                                <i class="fa fa-question-circle-o" aria-hidden="true"
+                                                   data-toggle="popover" title="Help"
+                                                   data-content="Nodules may be classified into three types by attenuation characteristics: solid - nodule is uniformly solid in appearance; nonsolid - nodule is uniformly nonsolid (except for blood vessels) in appearance; part-solid - nodule has both solid and nonsolid components"></i>
+                                            </td>
+                                            {% for i in noduleArray %}
+                                                <td data-nodule-id="{{ i }}" style="display:none;">
+                                                    <div class="form-group form-group-sm">
+                                                        <select name="cect{{ i }}nt" id="cect{{ i }}nt"
+                                                                class="form-control" title="Nodule Consistency"
+                                                                required="required" tabindex="{{ i }}07">
+                                                            <option value="-"> -</option>
+                                                            <option value="s"> Solid</option>
+                                                            <option value="m"> Part-solid</option>
+                                                            <option value="g"> Nonsolid</option>
+                                                            <option value="o"> Other (see comment)</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                        <tr>
+                                            <td style="white-space: nowrap;">
                                                 <label class="control-label required" for="cect1sl">Length (mm)</label>
                                                 <i class="fa fa-question-circle-o" aria-hidden="true"
                                                    data-toggle="popover" title="Help"
@@ -422,7 +446,7 @@
                                                     <div class="form-group form-group-sm">
                                                         <input type="text" name="cect{{ i }}sl" id="cect{{ i }}sl"
                                                                size="4" title="Length (mm)" class="form-control numeric"
-                                                               required="required" tabindex="{{ i }}07">
+                                                               required="required" tabindex="{{ i }}08">
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -441,7 +465,7 @@
                                                         <input type="text" name="cect{{ i }}sw" id="cect{{ i }}sw"
                                                                size="4" title="Maximum Width"
                                                                class="form-control numeric"
-                                                               required="required" tabindex="{{ i }}08">
+                                                               required="required" tabindex="{{ i }}09">
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -472,7 +496,7 @@
                                                 <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
                                                     <div class="form-group form-group-sm">
                                                         <input type="text" name="cect{{ i }}sh" id="cect{{ i }}sh"
-                                                               size="4" title="Height" class="form-control numeric" tabindex="{{ i }}09">
+                                                               size="4" title="Height" class="form-control numeric" tabindex="{{ i }}10">
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -486,31 +510,7 @@
                                                 <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
                                                     <div class="form-group form-group-sm">
                                                         <input type="text" name="cect{{ i }}sv" id="cect{{ i }}sv"
-                                                               size="4" title="Volume" class="form-control numeric" tabindex="{{ i }}10">
-                                                    </div>
-                                                </td>
-                                            {% endfor %}
-                                        </tr>
-                                        <tr>
-                                            <td style="white-space: nowrap;">
-                                                <label class="control-label required" for="cect1nt">Nodule
-                                                    consistency</label>
-                                                <i class="fa fa-question-circle-o" aria-hidden="true"
-                                                   data-toggle="popover" title="Help"
-                                                   data-content="Nodules may be classified into three types by attenuation characteristics: solid - nodule is uniformly solid in appearance; nonsolid - nodule is uniformly nonsolid (except for blood vessels) in appearance; part-solid - nodule has both solid and nonsolid components"></i>
-                                            </td>
-                                            {% for i in noduleArray %}
-                                                <td data-nodule-id="{{ i }}" style="display:none;">
-                                                    <div class="form-group form-group-sm">
-                                                        <select name="cect{{ i }}nt" id="cect{{ i }}nt"
-                                                                class="form-control" title="Nodule Consistency"
-                                                                required="required" tabindex="{{ i }}11">
-                                                            <option value="-"> -</option>
-                                                            <option value="s"> Solid</option>
-                                                            <option value="m"> Part-solid</option>
-                                                            <option value="g"> Nonsolid</option>
-                                                            <option value="o"> Other (see comment)</option>
-                                                        </select>
+                                                               size="4" title="Volume" class="form-control numeric" tabindex="{{ i }}11">
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -1754,14 +1754,14 @@
                                 <div class="radio">
                                     <label>
                                         <input type="radio" name="ceimn" id="ceimn-ru" value="ru"> Nodule(s)
-                                        unchanged, as described above. Follow-up as recommended.
+                                        unchanged, as described. Follow-up as recommended.
                                     </label>
                                 </div>
 
                                 <div class="radio">
                                     <label>
                                         <input type="radio" name="ceimn" id="ceimn-nf" value="nf"> Nodule(s) as
-                                        described above. Follow-up as recommended.
+                                        described. Follow-up as recommended.
                                     </label>
                                 </div>
                             </div>
@@ -2140,19 +2140,6 @@
                 requireChildRadioSelectedValidator(groups[i])
             }
 
-            //at least one checkbox whose name starts with cemlnl is required if cemln==y
-            const $cemlnFields = $("input[type='radio'][name='cemln']");
-            const validatorControlName = 'validator-cemln';
-            const $validatorControl = $("[name=" + validatorControlName + "]");
-            requireOneValidator($("[name^=cemlnl]"), $validatorControl);
-            $cemlnFields.on("change", function () {
-                const fv = $("form.validated").data("formValidation");
-                if (fv) {
-                    const lymphNodesEnabled = $cemlnFields.filter(":checked").val() === "y";
-                    fv.enableFieldValidators(validatorControlName, lymphNodesEnabled, 'callback');
-                }
-            }).first().trigger('change');
-
             //followup date calculation
             $("[name=cefuw]").on('change', function () {
                 const when = $("[name='cefuw']:checked").val();
@@ -2214,6 +2201,21 @@
 
             //WRAP IT UP
             $(".validated").formValidation({framework: 'bootstrap'});
+
+            //at least one checkbox whose name starts with cemlnl is required if cemln==y
+            const $cemlnFields = $("input[type='radio'][name='cemln']");
+            const validatorControlName = 'validator-cemln';
+            const $validatorControl = $("[name=" + validatorControlName + "]");
+            // requireOneValidator needs to happen after formValidation is initialized
+            // through ...$(".validated").formValidation(...)
+            requireOneValidator($("[name^=cemlnl]"), $validatorControl);
+            $cemlnFields.on("change", function () {
+                const fv = $("form.validated").data("formValidation");
+                if (fv) {
+                    const lymphNodesEnabled = $cemlnFields.filter(":checked").val() === "y";
+                    fv.enableFieldValidators(validatorControlName, lymphNodesEnabled, 'callback');
+                }
+            }).first().trigger('change');
 
             //always after formValidation initialization
             initTabbedNavigation("ctEvalTabs", "ctEvalTabsContent");

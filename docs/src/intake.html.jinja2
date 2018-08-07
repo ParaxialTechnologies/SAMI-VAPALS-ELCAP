@@ -35,6 +35,11 @@
                     {{ f.checkbox("silnls", "1", "Letter sent") }}
                     {{ f.checkbox("silnpu", "1", "Pulmonary") }}
                     {{ f.checkbox("silnpc", "1", "PCP") }}
+                    {{ f.checkbox("silnpn", "1", "Oncology") }}
+                    {{ f.checkbox("silnpp", "1", "Smoking cessation program") }}
+                    {{ f.checkbox("silnpo", "1", "Other") }}
+                    <input class="form-control input-sm" type="text" name="silnpos"
+                                   id="silnpos" title="Other" required="required">
                 </div>
             </div>
 
@@ -299,6 +304,8 @@
                 }
                 
             }).first().trigger('change');
+            
+            $("#silnpo").conditionallyEnable({sourceValues: "1", enable: "#silnpos"}); 
 
             $(".validated").formValidation({framework: 'bootstrap'});
         });

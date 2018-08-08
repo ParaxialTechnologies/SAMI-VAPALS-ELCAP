@@ -959,7 +959,20 @@
                                 </tr>
                                 </tbody>
                             </table>
-                            <h4>Pleural or pleural-related Abnormalities</h4>
+                            <hr/>
+                        </div>
+                        {# PLEURAL ABNORMALIITES #}
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-sm-4 col-md-3">
+                                    <label>Pleural or pleural-related abnormalities</label>
+                                </div>
+                                <div class="col-sm-8 col-md-9">
+                                    {{ f.inlineRadioNY("ceppra") }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive" id="pleural-container" style="margin-left:1em;">
                             <table class="table">
                                 <tbody>
                                 <tr>
@@ -1049,7 +1062,6 @@
 
                                 </tbody>
                             </table>
-                            <hr/>
                         </div>
 
                         {# CARDIAC ABNORMALITIES #}
@@ -2124,6 +2136,7 @@
 
             //ABNORMALITIES
             defaultRadio("pa", "n", "#pulmonary-container", "y");
+            defaultRadio("ceppra", "n", "#pleural-container", "y");
             defaultRadio("ceca", "n", "#cardiac-container", "y");
             defaultRadio("ceoma", "n", "#neck-container", "y");
             defaultRadio("ceoba", "n", "#breast-container", "y");
@@ -2133,7 +2146,7 @@
 
             //for each of the main sections, find all the radiogroups and default them to "n" (no)
             // NB: Cardiac & Bone have no radio button groups.
-            const $containers = $("#pulmonary-container, #neck-container, #breast-container, #abdominal-container");
+            const $containers = $("#pulmonary-container, #pleural-container,  #neck-container, #breast-container, #abdominal-container, #coronary-container");
             $.each($containers, function (i, container) {
                 const groupNames = findRadioGroupNames($(container));
                 $.each(groupNames, function (i, group) {
@@ -2200,11 +2213,13 @@
 
 
             const groups = [
-                {radio: 'ceoca', container: $("#coronary-container"), humanName: "coronary"},
                 {radio: 'pa', container: $("#pulmonary-container"), humanName: "pulmonary"},
+                {radio: 'ceppra', container: $("#pleural-container"), humanName: "pleural"},
                 {radio: 'ceoma', container: $("#neck-container"), humanName: "neck and mediastinal"},
                 {radio: 'ceoba', container: $("#breast-container"), humanName: "breast"},
-                {radio: 'ceoaa', container: $("#abdominal-container"), humanName: "abdominal"}
+                {radio: 'ceoaa', container: $("#abdominal-container"), humanName: "abdominal"},
+                {radio: 'ceoca', container: $("#coronary-container"), humanName: "coronary"}
+
             ];
 
             for (let i = 0; i < groups.length; i++) {

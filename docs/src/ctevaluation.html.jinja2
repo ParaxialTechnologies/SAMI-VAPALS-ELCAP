@@ -569,6 +569,24 @@
                                         </tr>
                                         <tr>
                                             <td style="white-space: nowrap;">
+                                                <label class="control-label" for="cect1ssd">Solid mean diameter(mm)</label>
+                                                <i class="fa fa-question-circle-o" aria-hidden="true"
+                                                   data-toggle="popover" title="Help"
+                                                   data-content="Solid calculated mean diameter."></i>
+                                            </td>
+                                            {% for i in noduleArray %}
+                                                <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                                                    <div class="form-group form-group-sm">
+                                                        
+                                                        <label id="cect{{ i }}ssd-val"
+                                                               title="Solid mean diameter"
+                                                               class="numeric">-</label>
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                        <tr>
+                                            <td style="white-space: nowrap;">
                                                 <label class="control-label" for="cect1se-n">Smooth edges</label> <i
                                                     class="fa fa-question-circle-o" aria-hidden="true"
                                                     data-toggle="popover" title="Help"
@@ -2013,6 +2031,30 @@
                 }));
         }
 
+        function setupMeanDiameterCalculation(lengthFieldSuffix, widthFieldSuffix, diamFieldSuffix) {
+            const lengthFields = $("[name^=cect][name$="+lengthFieldSuffix+"],[name^=cect][name$="+widthFieldSuffix+"]");
+            lengthFields.on('keyup change', function (e) { 
+                const targetField = $(e.target);
+                const noduleId = targetField.closest("td").attr("data-nodule-id");
+                const noduleDiamLabel = $("#cect"+noduleId+diamFieldSuffix+"-val");
+                const wval = $("#cect"+noduleId+widthFieldSuffix).val();
+                const lval = $("#cect"+noduleId+lengthFieldSuffix).val();
+                const w = wval ? Number(wval) : 0;
+                const l = lval ? Number(lval) :  0;
+
+                if (w>0 && l>0) {
+                    const meanDiam = (l + w)/2;
+                    if (meanDiam > 0 ) {
+                        noduleDiamLabel.text(meanDiam.toFixed(2));
+                    } else {
+                        noduleDiamLabel.text("-");
+                    }
+                } else {
+                    noduleDiamLabel.text("-");
+                }
+            }).first().trigger('change');
+        }
+
         $(function () {
             // SCAN
             // bind to change events on study date and baseline date to calculate "time since baseline"
@@ -2192,27 +2234,10 @@
             });
 
             // mean diameter calculation
-            const lengthFields = $("[name^=cect][name$=sl],[name^=cect][name$=sw]")
-            lengthFields.on('keyup change', function (e) { 
-                const targetField = $(e.target);
-                const noduleId = targetField.closest("td").attr("data-nodule-id");
-                const noduleDiamLabel = $("#cect"+noduleId+"sd-val");
-                const wval = $("#cect"+noduleId+"sw").val();
-                const lval = $("#cect"+noduleId+"sl").val();
-                const w = wval ? Number(wval) : 0;
-                const l = lval ? Number(lval) :  0;
+            setupMeanDiameterCalculation("sl", "sw", "sd");
 
-                if (w>0 && l>0) {
-                    const meanDiam = (l + w)/2;
-                    if (meanDiam > 0 ) {
-                        noduleDiamLabel.text(meanDiam.toFixed(2));
-                    } else {
-                        noduleDiamLabel.text("-");
-                    }
-                } else {
-                    noduleDiamLabel.text("-");
-                }
-            }).first().trigger('change');
+            // solid mean diameter calculation
+            setupMeanDiameterCalculation("ssl", "ssw", "ssd");
 
 
 

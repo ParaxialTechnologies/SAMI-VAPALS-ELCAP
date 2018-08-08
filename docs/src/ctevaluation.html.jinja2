@@ -557,6 +557,23 @@
                                         </tr>
                                         <tr>
                                             <td style="white-space: nowrap;">
+                                                <label class="control-label" for="cectin">Index Nodule</label> <i
+                                                    class="fa fa-question-circle-o" aria-hidden="true"
+                                                    data-toggle="popover" title="Help"
+                                                    data-content="Indicate whether the nodule is an index nodule. Only one nodule can be an index nodule."></i>
+                                            </td>
+                                            {% for i in noduleArray %}
+                                                <td data-nodule-id="{{ i }}" style="display:none;">
+                                                    <div class="form-group form-group-sm">
+                                                        {# Note that this checkbox spans multiple td-s, which is why we don't used the standard forms checkbox #}
+                                                        <input type="checkbox" class="radiocheckbox" name="cectin" id="cectin{{ i }}" value="{{ i }}">
+                                                       
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                        <tr>
+                                            <td style="white-space: nowrap;">
                                                 <label class="control-label" for="cect1sp-n">Spiculated</label>
                                             </td>
                                             {% for i in noduleArray %}
@@ -2216,6 +2233,9 @@
                     fv.enableFieldValidators(validatorControlName, lymphNodesEnabled, 'callback');
                 }
             }).first().trigger('change');
+
+            
+            exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
 
             //always after formValidation initialization
             initTabbedNavigation("ctEvalTabs", "ctEvalTabsContent");

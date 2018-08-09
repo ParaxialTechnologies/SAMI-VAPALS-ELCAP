@@ -161,6 +161,32 @@
                                        maxlength="5">
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="cectcdti" class="control-label">CDTI (vol)</label>
+                                     <input class="form-control" type="text" name="cectcdti" id="cectcdti"
+                                       data-fv-numeric="true" min="0"
+                                       maxlength="10">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="cectdlp" class="control-label">DLP</label>
+                                     <input class="form-control" type="text" name="cectdlp" id="cectdlp"
+                                       data-fv-numeric="true" min="0"
+                                       maxlength="10">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="cectssde" class="control-label">Size-specific dose estimates (SSDE)</label>
+                                     <input class="form-control" type="text" name="cectssde" id="cectssde"
+                                       data-fv-numeric="true" min="0"
+                                       maxlength="10">
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="row">
                             <div class="col-sm-4 form-group">
@@ -192,7 +218,8 @@
                             <div class="alert alert-warning">
                                 <h4>READ before completing the Nodule Grid</h4>
                                 <ul>
-                                    <li>Include all Parenchymal and Endobronchial Nodules >= 6.0 mm in average diameter.</li>
+                                    <li>BASELINE: Include all nodules >= 6.0 mm in average diameter.  Others are OPTIONAL.</li>
+                                    <li>ANNUAL REPEAT:  include all NEW nodules >= 3.0 mm in average diameter.</li>
                                     <li>For BASELINE CT, all nodules are new unless there is a CT more than 3 years earlier.</li>
                                     <li>For BASELINE CT, the nodules will automatically be sorted with the largest
                                         non-calcified nodule coming first.
@@ -544,6 +571,24 @@
                                         </tr>
                                         <tr>
                                             <td style="white-space: nowrap;">
+                                                <label class="control-label" for="cect1ssd">Solid mean diameter(mm)</label>
+                                                <i class="fa fa-question-circle-o" aria-hidden="true"
+                                                   data-toggle="popover" title="Help"
+                                                   data-content="Solid calculated mean diameter."></i>
+                                            </td>
+                                            {% for i in noduleArray %}
+                                                <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                                                    <div class="form-group form-group-sm">
+                                                        
+                                                        <label id="cect{{ i }}ssd-val"
+                                                               title="Solid mean diameter"
+                                                               class="numeric">-</label>
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                        <tr>
+                                            <td style="white-space: nowrap;">
                                                 <label class="control-label" for="cect1se-n">Smooth edges</label> <i
                                                     class="fa fa-question-circle-o" aria-hidden="true"
                                                     data-toggle="popover" title="Help"
@@ -643,11 +688,12 @@
                                                 <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group form-group-sm">
                                                         <select name="cect{{ i }}pd" id="cect{{ i }}pd"
-                                                                title="Pathologic Diagnosis" class="form-control" tabindex="{{ i }}19">
+                                                                title="Pathologic diagnosis" class="form-control" tabindex="{{ i }}19">
                                                             <option value="-"> -For Pathology Use Only-</option>
                                                             <option value="aa"> AAH</option>
-                                                            <option value="ap"> atyp bronch prolif</option>
-                                                            <option value="ba"> BAC</option>
+                                                            <option value="ap"> Atyp bronch prolif</option>
+                                                            <option value="ai"> AIS</option>
+                                                            <option value="mi"> MIA</option>
                                                             <option value="ns"> Unspec. non-small cell</option>
                                                             <option value="ad"> Adenocarcinoma</option>
                                                             <option value="as"> Adenosquamous</option>
@@ -670,7 +716,8 @@
                                     <button type="button" class="btn btn-default btn-sm" onclick="addNodule()" tabindex="1101">
                                         <span class="fa fa-plus" aria-hidden="true"></span> Add nodule
                                     </button>
-                                    {{ f.checkbox("cectnum","y", "Numerous additional <= 3mm nodules (calcified or non-calcified)", {"tabindex":"1102"}) }}
+                                    {{ f.checkbox("cectancn","1", "Additional non-calcified nodules", {"tabindex":"1102"}) }}
+                                    {{ f.checkbox("cectacn","1", "Additional calcified nodules", {"tabindex":"1103"}) }}
                                 </div>
                             </div>
                         </div>
@@ -914,7 +961,20 @@
                                 </tr>
                                 </tbody>
                             </table>
-                            <h4>Pleural or pleural-related Abnormalities</h4>
+                            <hr/>
+                        </div>
+                        {# PLEURAL ABNORMALIITES #}
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-sm-4 col-md-3">
+                                    <label>Pleural or pleural-related abnormalities</label>
+                                </div>
+                                <div class="col-sm-8 col-md-9">
+                                    {{ f.inlineRadioNY("ceppra") }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive" id="pleural-container" style="margin-left:1em;">
                             <table class="table">
                                 <tbody>
                                 <tr>
@@ -995,7 +1055,7 @@
                                 <tr>
                                     <td colspan="7">
                                         <div class="form-group">
-                                            <label for="ceoppab">Describe pleural abnormalities</label>
+                                            <label for="ceoppab">Additional comments on pleural abnormalities</label>
                                             <textarea name="ceoppab" id="ceoppab" class="form-control"></textarea>
                                             {{ f.inlineCheckbox("ceoppabi", "y", "Include in impression") }}
                                         </div>
@@ -1004,14 +1064,13 @@
 
                                 </tbody>
                             </table>
-                            <hr/>
                         </div>
 
                         {# CARDIAC ABNORMALITIES #}
                         <div class="row">
                             <div class="form-group">
                                 <div class="col-sm-4 col-md-3">
-                                    <label>Other Cardio-vascular Abnormalities</label>
+                                    <label>Cardiac and aortic abnormalities</label>
                                 </div>
                                 <div class="col-sm-8 col-md-9">
                                     {{ f.inlineRadioNYE("ceca") }}
@@ -1137,7 +1196,7 @@
                                     <td style="padding-top:0;">
                                         <div class="form-group form-inline">
                                             {{ f.checkbox("ceatc","c","Calcification") }}&nbsp;&nbsp;
-                                            {{ f.checkbox("ceaty","y","Cyst") }}&nbsp;&nbsp;
+                                            {{ f.checkbox("ceaty","y","Cyst/nodule < 15 mm") }}&nbsp;&nbsp;
                                             {{ f.checkbox("ceatm","m","Mass") }}&nbsp;&nbsp;
                                             {{ f.checkbox("ceato","o","Other") }}&nbsp;&nbsp;
                                             <input type="text" name="ceatos" id="ceatos" class="form-control"
@@ -1197,20 +1256,27 @@
                                     <td>
                                         <div class="form-group">
                                             <label for="validator-cemln">Level</label>
+                                            <small class="text-muted">8<sup>th</sup> edition classification: CHEST 2017;
+                                                151: 193-203
+                                            </small>
                                             <input type="hidden" id="validator-cemln" name="validator-cemln" value="0"/>
-                                            {{ f.checkbox("cemlnl1","N1","N1 (high mediastinal)") }}
-                                            {{ f.checkbox("cemlnl2r","N2R","N2R") }}
-                                            {{ f.checkbox("cemlnl2l","N2L","N2L (upper paratracheal)") }}
-                                            {{ f.checkbox("cemlnl3","N3","N3 (prevascular,retrotracheal)") }}
-                                            {{ f.checkbox("cemlnl4r","N4R","N4R") }}
-                                            {{ f.checkbox("cemlnl4l","N4L","N4L (lower paratracheal)") }}
-                                            {{ f.checkbox("cemlnl5","N5","N5 (subaortic (A-P window))") }}
-                                            {{ f.checkbox("cemlnl6","N6","N6 (para-aortic)") }}
-                                            {{ f.checkbox("cemlnl7","N7","N7 (subcarinal)") }}
-                                            {{ f.checkbox("cemlnl8","N8","N8 (para-esophageal), any size") }}
-                                            {{ f.checkbox("cemlnl9","N9","N9 (pulmonary ligament)") }}
-                                            {{ f.checkbox("cemlnl10r","N10R","N10R") }}
-                                            {{ f.checkbox("cemlnl10l","N10L","N10L (hilar)") }}
+                                            {{ f.checkbox("cemlnl1","N1","N1: Low cervical, supraclavicular, and sternal notch nodes") }}
+                                            {{ f.checkbox("cemlnl2r","N2R","N2R: Upper paratracheal (right)") }}
+                                            {{ f.checkbox("cemlnl2l","N2L","N2L: Upper paratracheal (left)") }}
+                                            {{ f.checkbox("cemlnl3a","N3A","N3A: Prevascular") }}
+                                            {{ f.checkbox("cemlnl3p","N3P","N3P: Retrotracheal") }}
+                                            {{ f.checkbox("cemlnl4r","N4R","N4R: Lower paratracheal (right)") }}
+                                            {{ f.checkbox("cemlnl4l","N4L","N4L: Lower paratracheal (left)") }}
+                                            {{ f.checkbox("cemlnl5","N5","N5: Subaortic") }}
+                                            {{ f.checkbox("cemlnl6","N6","N6: Para-aortic (ascending aorta or phrenic)") }}
+                                            {{ f.checkbox("cemlnl7","N7","N7: Subcarinal") }}
+                                            {{ f.checkbox("cemlnl8","N8","N8: Paraesophageal (below carina)") }}
+                                            {{ f.checkbox("cemlnl9","N9","N9: Pulmonary ligament") }}
+                                            {{ f.checkbox("cemlnl10","N10","N10: Hilar") }}
+                                            {{ f.checkbox("cemlnl11","N11","N11: Interlobar") }}
+                                            {{ f.checkbox("cemlnl12","N12","N12: Lobar") }}
+                                            {{ f.checkbox("cemlnl13","N13","N13: Segmental") }}
+                                            {{ f.checkbox("cemlnl14","N14","N14: Subsegmental") }}
                                         </div>
                                     </td>
                                 </tr>
@@ -1224,7 +1290,7 @@
                                 </tr>
 
                                 <tr>
-                                    <td>Axillary lymph nodes</td>
+                                    <td>Abnormal axillary lymph nodes</td>
                                     <td>
                                         <div class="form-group">
                                             {{ f.inlineRadioNYE("ceagaln") }}
@@ -1460,7 +1526,7 @@
                                 <tbody>
 
                                 <tr>
-                                    <td>Gall Bladder</td>
+                                    <td>Gallbladder</td>
                                     <td>
                                         <div class="form-group">
                                             {{ f.inlineRadioNYE("ceaga") }}
@@ -1601,12 +1667,20 @@
 
                         <div class="row">
                             <div class="col-sm-12 form-group">
-                                <label class="control-label required">Emphysema</label>
+                                <label class="control-label required">Emphysema
+                                    <i class="fa fa-question-circle-o" aria-hidden="true"
+                                            data-html="true"
+                                            data-toggle="popover" title="Help" 
+                                            data-content="Mild: splaying of vessels, occasional areas of emphysema<br/>
+                                            Moderate:  emphysema in less than ½ of the lungs<br/>
+                                            Severe:  emphysema in more than ½ of the lungs"></i>
+                                
+                                </label>
                                 {{ f.radio("ceem", "ceem-nv", "nv", "Not visible", true) }}
                                 {{ f.radio("ceem", "ceem-no", "no", "None", false) }}
-                                {{ f.radio("ceem", "ceem-mi", "mi", "Mild - splaying of vessels or scattered bulla/blebs", false) }}
-                                {{ f.radio("ceem", "ceem-mo", "mo", "Moderate - less than 50%", false) }}
-                                {{ f.radio("ceem", "ceem-se", "se", "Severe - more than 50%", false) }}
+                                {{ f.radio("ceem", "ceem-mi", "mi", "Mild", false) }}
+                                {{ f.radio("ceem", "ceem-mo", "mo", "Moderate", false) }}
+                                {{ f.radio("ceem", "ceem-se", "se", "Severe", false) }}
 
                             </div>
                         </div>
@@ -1854,18 +1928,18 @@
             </div>
 
             <div class="btn-group">
-                <a id="delete-form" class="btn btn-danger" tabindex="1103"><span class="glyphicon glyphicon-trash"></span>Delete</a>
+                <a id="delete-form" class="btn btn-danger" tabindex="1204"><span class="glyphicon glyphicon-trash"></span>Delete</a>
             </div>
             
 
             <div class="pull-right">
-                <button type="button" class="btn btn-default btn-prev" tabindex="1104">Previous</button>
-                <button type="button" class="btn btn-default btn-next" tabindex="1105">Next</button>
+                <button type="button" class="btn btn-default btn-prev" tabindex="1205">Previous</button>
+                <button type="button" class="btn btn-default btn-next" tabindex="1206">Next</button>
                 <input type="hidden" name="cennod" value="0"/>
                 <input type="hidden" name="ceanod" value="n"/>
                 <input type="hidden" name="samistatus" value=""/>
-                <button type="submit" class="btn btn-default" id="save-for-later-button" tabindex="1106">Save for Later</button>
-                <button type="submit" class="btn btn-primary" id="submit-button" tabindex="1107">Submit</button>
+                <button type="submit" class="btn btn-default" id="save-for-later-button" tabindex="1206">Save for Later</button>
+                <button type="submit" class="btn btn-primary" id="submit-button" tabindex="1207">Submit</button>
             </div>
         </form>
     </div>
@@ -1988,6 +2062,30 @@
                 }));
         }
 
+        function setupMeanDiameterCalculation(lengthFieldSuffix, widthFieldSuffix, diamFieldSuffix) {
+            const lengthFields = $("[name^=cect][name$="+lengthFieldSuffix+"],[name^=cect][name$="+widthFieldSuffix+"]");
+            lengthFields.on('keyup change', function (e) { 
+                const targetField = $(e.target);
+                const noduleId = targetField.closest("td").attr("data-nodule-id");
+                const noduleDiamLabel = $("#cect"+noduleId+diamFieldSuffix+"-val");
+                const wval = $("#cect"+noduleId+widthFieldSuffix).val();
+                const lval = $("#cect"+noduleId+lengthFieldSuffix).val();
+                const w = wval ? Number(wval) : 0;
+                const l = lval ? Number(lval) :  0;
+
+                if (w>0 && l>0) {
+                    const meanDiam = (l + w)/2;
+                    if (meanDiam > 0 ) {
+                        noduleDiamLabel.text(meanDiam.toFixed(2));
+                    } else {
+                        noduleDiamLabel.text("-");
+                    }
+                } else {
+                    noduleDiamLabel.text("-");
+                }
+            }).first().trigger('change');
+        }
+
         $(function () {
             // SCAN
             // bind to change events on study date and baseline date to calculate "time since baseline"
@@ -2055,6 +2153,7 @@
 
             //ABNORMALITIES
             defaultRadio("pa", "n", "#pulmonary-container", "y");
+            defaultRadio("ceppra", "n", "#pleural-container", "y");
             defaultRadio("ceca", "n", "#cardiac-container", "y");
             defaultRadio("ceoma", "n", "#neck-container", "y");
             defaultRadio("ceoba", "n", "#breast-container", "y");
@@ -2064,7 +2163,7 @@
 
             //for each of the main sections, find all the radiogroups and default them to "n" (no)
             // NB: Cardiac & Bone have no radio button groups.
-            const $containers = $("#pulmonary-container, #neck-container, #breast-container, #abdominal-container");
+            const $containers = $("#pulmonary-container, #pleural-container,  #neck-container, #breast-container, #abdominal-container, #coronary-container");
             $.each($containers, function (i, container) {
                 const groupNames = findRadioGroupNames($(container));
                 $.each(groupNames, function (i, group) {
@@ -2131,11 +2230,13 @@
 
 
             const groups = [
-                {radio: 'ceoca', container: $("#coronary-container"), humanName: "coronary"},
                 {radio: 'pa', container: $("#pulmonary-container"), humanName: "pulmonary"},
+                {radio: 'ceppra', container: $("#pleural-container"), humanName: "pleural"},
                 {radio: 'ceoma', container: $("#neck-container"), humanName: "neck and mediastinal"},
                 {radio: 'ceoba', container: $("#breast-container"), humanName: "breast"},
-                {radio: 'ceoaa', container: $("#abdominal-container"), humanName: "abdominal"}
+                {radio: 'ceoaa', container: $("#abdominal-container"), humanName: "abdominal"},
+                {radio: 'ceoca', container: $("#coronary-container"), humanName: "coronary"}
+
             ];
 
             for (let i = 0; i < groups.length; i++) {
@@ -2167,27 +2268,10 @@
             });
 
             // mean diameter calculation
-            const lengthFields = $("[name^=cect][name$=sl],[name^=cect][name$=sw]")
-            lengthFields.on('keyup change', function (e) { 
-                const targetField = $(e.target);
-                const noduleId = targetField.closest("td").attr("data-nodule-id");
-                const noduleDiamLabel = $("#cect"+noduleId+"sd-val");
-                const wval = $("#cect"+noduleId+"sw").val();
-                const lval = $("#cect"+noduleId+"sl").val();
-                const w = wval ? Number(wval) : 0;
-                const l = lval ? Number(lval) :  0;
+            setupMeanDiameterCalculation("sl", "sw", "sd");
 
-                if (w>0 && l>0) {
-                    const meanDiam = (l + w)/2;
-                    if (meanDiam > 0 ) {
-                        noduleDiamLabel.text(meanDiam.toFixed(2));
-                    } else {
-                        noduleDiamLabel.text("-");
-                    }
-                } else {
-                    noduleDiamLabel.text("-");
-                }
-            }).first().trigger('change');
+            // solid mean diameter calculation
+            setupMeanDiameterCalculation("ssl", "ssw", "ssd");
 
 
 

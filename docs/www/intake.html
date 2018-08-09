@@ -5,7 +5,7 @@
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
   <title>
-   Intake Form
+   LSS Intake Form
   </title>
   <link href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
@@ -94,7 +94,7 @@
     </small>
    </h1>
    <h2>
-    Intake Form
+    LSS Intake Form
     <small class="text-muted" title="Medical Record Number">
      1234567890
     </small>
@@ -153,6 +153,25 @@
         PCP
        </label>
       </div>
+      <div class="checkbox">
+       <label>
+        <input id="silnpn" name="silnpn" type="checkbox" value="1"/>
+        Oncology
+       </label>
+      </div>
+      <div class="checkbox">
+       <label>
+        <input id="silnpp" name="silnpp" type="checkbox" value="1"/>
+        Smoking cessation program
+       </label>
+      </div>
+      <div class="checkbox">
+       <label>
+        <input id="silnpo" name="silnpo" type="checkbox" value="1"/>
+        Other
+       </label>
+      </div>
+      <input class="form-control input-sm" id="silnpos" name="silnpos" required="required" title="Other" type="text"/>
      </div>
     </div>
     <div class="row">
@@ -167,21 +186,6 @@
       <label class="radio-inline" for="sipav-n">
        <input id="sipav-n" name="sipav" type="radio" value="n"/>
        No
-      </label>
-     </div>
-    </div>
-    <div class="row">
-     <div class="col-md-12 form-group">
-      <label class="required">
-       Rural status
-      </label>
-      <label class="radio-inline" for="sirs-u">
-       <input data-fv-notempty-message="Please select a value" id="sirs-u" name="sirs" required="required" type="radio" value="u"/>
-       Urban
-      </label>
-      <label class="radio-inline" for="sirs-r">
-       <input id="sirs-r" name="sirs" type="radio" value="r"/>
-       Rural
       </label>
      </div>
     </div>
@@ -237,6 +241,25 @@
        Phone number
       </label>
       <input class="form-control" data-fv-phone="true" data-fv-phone-country="US" id="sippn" name="sippn" type="text"/>
+     </div>
+    </div>
+    <div class="row">
+     <div class="col-md-12 form-group">
+      <label class="required">
+       Rural status
+      </label>
+      <label class="radio-inline" for="sirs-u">
+       <input data-fv-notempty-message="Please select a value" id="sirs-u" name="sirs" required="required" type="radio" value="u"/>
+       Urban
+      </label>
+      <label class="radio-inline" for="sirs-r">
+       <input id="sirs-r" name="sirs" type="radio" value="r"/>
+       Rural
+      </label>
+      <label class="radio-inline" for="sirs-n">
+       <input id="sirs-n" name="sirs" type="radio" value="n"/>
+       Unknown
+      </label>
      </div>
     </div>
     <hr/>
@@ -537,7 +560,7 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.08.04
+     SNAPSHOT 2018.08.09
     </span>
    </div>
   </footer>
@@ -596,6 +619,8 @@
                 }
                 
             }).first().trigger('change');
+            
+            $("#silnpo").conditionallyEnable({sourceValues: "1", enable: "#silnpos"}); 
 
             $(".validated").formValidation({framework: 'bootstrap'});
         });

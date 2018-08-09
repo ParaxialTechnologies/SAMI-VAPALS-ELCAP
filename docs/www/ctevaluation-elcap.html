@@ -276,6 +276,12 @@
            <option value="0.75">
             0.75
            </option>
+           <option value="0.8">
+            0.8
+           </option>
+           <option value="1.0">
+            1.0
+           </option>
            <option value="o">
             Other
            </option>
@@ -287,6 +293,32 @@
           Specify
          </label>
          <input class="form-control" data-fv-numeric="true" id="cectrsto" maxlength="5" min="0" name="cectrsto" placeholder="specify" required="required" type="text"/>
+        </div>
+       </div>
+       <div class="row">
+        <div class="col-sm-4">
+         <div class="form-group">
+          <label class="control-label" for="cectcdti">
+           CDTI (vol)
+          </label>
+          <input class="form-control" data-fv-numeric="true" id="cectcdti" maxlength="10" min="0" name="cectcdti" type="text"/>
+         </div>
+        </div>
+        <div class="col-sm-4">
+         <div class="form-group">
+          <label class="control-label" for="cectdlp">
+           DLP
+          </label>
+          <input class="form-control" data-fv-numeric="true" id="cectdlp" maxlength="10" min="0" name="cectdlp" type="text"/>
+         </div>
+        </div>
+        <div class="col-sm-4">
+         <div class="form-group">
+          <label class="control-label" for="cectssde">
+           Size-specific dose estimates (SSDE)
+          </label>
+          <input class="form-control" data-fv-numeric="true" id="cectssde" maxlength="10" min="0" name="cectssde" type="text"/>
+         </div>
         </div>
        </div>
        <div class="row">
@@ -350,7 +382,10 @@
          </h4>
          <ul>
           <li>
-           Include all Parenchymal and Endobronchial Nodules &gt;= 6.0 mm in average diameter.
+           BASELINE: Include all nodules &gt;= 6.0 mm in average diameter.  Others are OPTIONAL.
+          </li>
+          <li>
+           ANNUAL REPEAT:  include all NEW nodules &gt;= 3.0 mm in average diameter.
           </li>
           <li>
            For BASELINE CT, all nodules are new unless there is a CT more than 3 years earlier.
@@ -3072,6 +3107,85 @@
             </tr>
             <tr>
              <td style="white-space: nowrap;">
+              <label class="control-label" for="cect1ssd">
+               Solid mean diameter(mm)
+              </label>
+              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Solid calculated mean diameter." data-toggle="popover" title="Help">
+              </i>
+             </td>
+             <td class="form-inline" data-nodule-id="1" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="numeric" id="cect1ssd-val" title="Solid mean diameter">
+                -
+               </label>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="2" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="numeric" id="cect2ssd-val" title="Solid mean diameter">
+                -
+               </label>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="3" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="numeric" id="cect3ssd-val" title="Solid mean diameter">
+                -
+               </label>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="4" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="numeric" id="cect4ssd-val" title="Solid mean diameter">
+                -
+               </label>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="5" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="numeric" id="cect5ssd-val" title="Solid mean diameter">
+                -
+               </label>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="6" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="numeric" id="cect6ssd-val" title="Solid mean diameter">
+                -
+               </label>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="7" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="numeric" id="cect7ssd-val" title="Solid mean diameter">
+                -
+               </label>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="8" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="numeric" id="cect8ssd-val" title="Solid mean diameter">
+                -
+               </label>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="9" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="numeric" id="cect9ssd-val" title="Solid mean diameter">
+                -
+               </label>
+              </div>
+             </td>
+             <td class="form-inline" data-nodule-id="10" style="display:none;">
+              <div class="form-group form-group-sm">
+               <label class="numeric" id="cect10ssd-val" title="Solid mean diameter">
+                -
+               </label>
+              </div>
+             </td>
+            </tr>
+            <tr>
+             <td style="white-space: nowrap;">
               <label class="control-label" for="cect1se-n">
                Smooth edges
               </label>
@@ -3874,7 +3988,7 @@
              </td>
              <td data-nodule-id="1" style="display:none;">
               <div class="form-group form-group-sm">
-               <select class="form-control" id="cect1pd" name="cect1pd" tabindex="119" title="Pathologic Diagnosis">
+               <select class="form-control" id="cect1pd" name="cect1pd" tabindex="119" title="Pathologic diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -3882,10 +3996,13 @@
                  AAH
                 </option>
                 <option value="ap">
-                 atyp bronch prolif
+                 Atyp bronch prolif
                 </option>
-                <option value="ba">
-                 BAC
+                <option value="ai">
+                 AIS
+                </option>
+                <option value="mi">
+                 MIA
                 </option>
                 <option value="ns">
                  Unspec. non-small cell
@@ -3925,7 +4042,7 @@
              </td>
              <td data-nodule-id="2" style="display:none;">
               <div class="form-group form-group-sm">
-               <select class="form-control" id="cect2pd" name="cect2pd" tabindex="219" title="Pathologic Diagnosis">
+               <select class="form-control" id="cect2pd" name="cect2pd" tabindex="219" title="Pathologic diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -3933,10 +4050,13 @@
                  AAH
                 </option>
                 <option value="ap">
-                 atyp bronch prolif
+                 Atyp bronch prolif
                 </option>
-                <option value="ba">
-                 BAC
+                <option value="ai">
+                 AIS
+                </option>
+                <option value="mi">
+                 MIA
                 </option>
                 <option value="ns">
                  Unspec. non-small cell
@@ -3976,7 +4096,7 @@
              </td>
              <td data-nodule-id="3" style="display:none;">
               <div class="form-group form-group-sm">
-               <select class="form-control" id="cect3pd" name="cect3pd" tabindex="319" title="Pathologic Diagnosis">
+               <select class="form-control" id="cect3pd" name="cect3pd" tabindex="319" title="Pathologic diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -3984,10 +4104,13 @@
                  AAH
                 </option>
                 <option value="ap">
-                 atyp bronch prolif
+                 Atyp bronch prolif
                 </option>
-                <option value="ba">
-                 BAC
+                <option value="ai">
+                 AIS
+                </option>
+                <option value="mi">
+                 MIA
                 </option>
                 <option value="ns">
                  Unspec. non-small cell
@@ -4027,7 +4150,7 @@
              </td>
              <td data-nodule-id="4" style="display:none;">
               <div class="form-group form-group-sm">
-               <select class="form-control" id="cect4pd" name="cect4pd" tabindex="419" title="Pathologic Diagnosis">
+               <select class="form-control" id="cect4pd" name="cect4pd" tabindex="419" title="Pathologic diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -4035,10 +4158,13 @@
                  AAH
                 </option>
                 <option value="ap">
-                 atyp bronch prolif
+                 Atyp bronch prolif
                 </option>
-                <option value="ba">
-                 BAC
+                <option value="ai">
+                 AIS
+                </option>
+                <option value="mi">
+                 MIA
                 </option>
                 <option value="ns">
                  Unspec. non-small cell
@@ -4078,7 +4204,7 @@
              </td>
              <td data-nodule-id="5" style="display:none;">
               <div class="form-group form-group-sm">
-               <select class="form-control" id="cect5pd" name="cect5pd" tabindex="519" title="Pathologic Diagnosis">
+               <select class="form-control" id="cect5pd" name="cect5pd" tabindex="519" title="Pathologic diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -4086,10 +4212,13 @@
                  AAH
                 </option>
                 <option value="ap">
-                 atyp bronch prolif
+                 Atyp bronch prolif
                 </option>
-                <option value="ba">
-                 BAC
+                <option value="ai">
+                 AIS
+                </option>
+                <option value="mi">
+                 MIA
                 </option>
                 <option value="ns">
                  Unspec. non-small cell
@@ -4129,7 +4258,7 @@
              </td>
              <td data-nodule-id="6" style="display:none;">
               <div class="form-group form-group-sm">
-               <select class="form-control" id="cect6pd" name="cect6pd" tabindex="619" title="Pathologic Diagnosis">
+               <select class="form-control" id="cect6pd" name="cect6pd" tabindex="619" title="Pathologic diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -4137,10 +4266,13 @@
                  AAH
                 </option>
                 <option value="ap">
-                 atyp bronch prolif
+                 Atyp bronch prolif
                 </option>
-                <option value="ba">
-                 BAC
+                <option value="ai">
+                 AIS
+                </option>
+                <option value="mi">
+                 MIA
                 </option>
                 <option value="ns">
                  Unspec. non-small cell
@@ -4180,7 +4312,7 @@
              </td>
              <td data-nodule-id="7" style="display:none;">
               <div class="form-group form-group-sm">
-               <select class="form-control" id="cect7pd" name="cect7pd" tabindex="719" title="Pathologic Diagnosis">
+               <select class="form-control" id="cect7pd" name="cect7pd" tabindex="719" title="Pathologic diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -4188,10 +4320,13 @@
                  AAH
                 </option>
                 <option value="ap">
-                 atyp bronch prolif
+                 Atyp bronch prolif
                 </option>
-                <option value="ba">
-                 BAC
+                <option value="ai">
+                 AIS
+                </option>
+                <option value="mi">
+                 MIA
                 </option>
                 <option value="ns">
                  Unspec. non-small cell
@@ -4231,7 +4366,7 @@
              </td>
              <td data-nodule-id="8" style="display:none;">
               <div class="form-group form-group-sm">
-               <select class="form-control" id="cect8pd" name="cect8pd" tabindex="819" title="Pathologic Diagnosis">
+               <select class="form-control" id="cect8pd" name="cect8pd" tabindex="819" title="Pathologic diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -4239,10 +4374,13 @@
                  AAH
                 </option>
                 <option value="ap">
-                 atyp bronch prolif
+                 Atyp bronch prolif
                 </option>
-                <option value="ba">
-                 BAC
+                <option value="ai">
+                 AIS
+                </option>
+                <option value="mi">
+                 MIA
                 </option>
                 <option value="ns">
                  Unspec. non-small cell
@@ -4282,7 +4420,7 @@
              </td>
              <td data-nodule-id="9" style="display:none;">
               <div class="form-group form-group-sm">
-               <select class="form-control" id="cect9pd" name="cect9pd" tabindex="919" title="Pathologic Diagnosis">
+               <select class="form-control" id="cect9pd" name="cect9pd" tabindex="919" title="Pathologic diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -4290,10 +4428,13 @@
                  AAH
                 </option>
                 <option value="ap">
-                 atyp bronch prolif
+                 Atyp bronch prolif
                 </option>
-                <option value="ba">
-                 BAC
+                <option value="ai">
+                 AIS
+                </option>
+                <option value="mi">
+                 MIA
                 </option>
                 <option value="ns">
                  Unspec. non-small cell
@@ -4333,7 +4474,7 @@
              </td>
              <td data-nodule-id="10" style="display:none;">
               <div class="form-group form-group-sm">
-               <select class="form-control" id="cect10pd" name="cect10pd" tabindex="1019" title="Pathologic Diagnosis">
+               <select class="form-control" id="cect10pd" name="cect10pd" tabindex="1019" title="Pathologic diagnosis">
                 <option value="-">
                  -For Pathology Use Only-
                 </option>
@@ -4341,10 +4482,13 @@
                  AAH
                 </option>
                 <option value="ap">
-                 atyp bronch prolif
+                 Atyp bronch prolif
                 </option>
-                <option value="ba">
-                 BAC
+                <option value="ai">
+                 AIS
+                </option>
+                <option value="mi">
+                 MIA
                 </option>
                 <option value="ns">
                  Unspec. non-small cell
@@ -4392,8 +4536,14 @@
           </button>
           <div class="checkbox">
            <label>
-            <input id="cectnum" name="cectnum" tabindex="1102" type="checkbox" value="y"/>
-            Numerous additional &lt;= 3mm nodules (calcified or non-calcified)
+            <input id="cectancn" name="cectancn" tabindex="1102" type="checkbox" value="1"/>
+            Additional non-calcified nodules
+           </label>
+          </div>
+          <div class="checkbox">
+           <label>
+            <input id="cectacn" name="cectacn" tabindex="1103" type="checkbox" value="1"/>
+            Additional calcified nodules
            </label>
           </div>
          </div>
@@ -5226,9 +5376,28 @@
           </tr>
          </tbody>
         </table>
-        <h4>
-         Pleural or pleural-related Abnormalities
-        </h4>
+        <hr/>
+       </div>
+       <div class="row">
+        <div class="form-group">
+         <div class="col-sm-4 col-md-3">
+          <label>
+           Pleural or pleural-related abnormalities
+          </label>
+         </div>
+         <div class="col-sm-8 col-md-9">
+          <label class="radio-inline" for="ceppra-n">
+           <input id="ceppra-n" name="ceppra" type="radio" value="n"/>
+           No
+          </label>
+          <label class="radio-inline" for="ceppra-y">
+           <input id="ceppra-y" name="ceppra" type="radio" value="y"/>
+           Yes
+          </label>
+         </div>
+        </div>
+       </div>
+       <div class="table-responsive" id="pleural-container" style="margin-left:1em;">
         <table class="table">
          <tbody>
           <tr>
@@ -5434,7 +5603,7 @@
            <td colspan="7">
             <div class="form-group">
              <label for="ceoppab">
-              Describe pleural abnormalities
+              Additional comments on pleural abnormalities
              </label>
              <textarea class="form-control" id="ceoppab" name="ceoppab"></textarea>
              <label class="checkbox-inline ">
@@ -5446,13 +5615,12 @@
           </tr>
          </tbody>
         </table>
-        <hr/>
        </div>
        <div class="row">
         <div class="form-group">
          <div class="col-sm-4 col-md-3">
           <label>
-           Other Cardio-vascular Abnormalities
+           Cardiac and aortic abnormalities
           </label>
          </div>
          <div class="col-sm-8 col-md-9">
@@ -5676,7 +5844,7 @@
              <div class="checkbox">
               <label>
                <input id="ceaty" name="ceaty" type="checkbox" value="y"/>
-               Cyst
+               Cyst/nodule &lt; 15 mm
               </label>
              </div>
              <div class="checkbox">
@@ -5798,83 +5966,115 @@
              <label for="validator-cemln">
               Level
              </label>
+             <small class="text-muted">
+              8
+              <sup>
+               th
+              </sup>
+              edition classification: CHEST 2017;
+                                                151: 193-203
+             </small>
              <input id="validator-cemln" name="validator-cemln" type="hidden" value="0"/>
              <div class="checkbox">
               <label>
                <input id="cemlnl1" name="cemlnl1" type="checkbox" value="N1"/>
-               N1 (high mediastinal)
+               N1: Low cervical, supraclavicular, and sternal notch nodes
               </label>
              </div>
              <div class="checkbox">
               <label>
                <input id="cemlnl2r" name="cemlnl2r" type="checkbox" value="N2R"/>
-               N2R
+               N2R: Upper paratracheal (right)
               </label>
              </div>
              <div class="checkbox">
               <label>
                <input id="cemlnl2l" name="cemlnl2l" type="checkbox" value="N2L"/>
-               N2L (upper paratracheal)
+               N2L: Upper paratracheal (left)
               </label>
              </div>
              <div class="checkbox">
               <label>
-               <input id="cemlnl3" name="cemlnl3" type="checkbox" value="N3"/>
-               N3 (prevascular,retrotracheal)
+               <input id="cemlnl3a" name="cemlnl3a" type="checkbox" value="N3A"/>
+               N3A: Prevascular
+              </label>
+             </div>
+             <div class="checkbox">
+              <label>
+               <input id="cemlnl3p" name="cemlnl3p" type="checkbox" value="N3P"/>
+               N3P: Retrotracheal
               </label>
              </div>
              <div class="checkbox">
               <label>
                <input id="cemlnl4r" name="cemlnl4r" type="checkbox" value="N4R"/>
-               N4R
+               N4R: Lower paratracheal (right)
               </label>
              </div>
              <div class="checkbox">
               <label>
                <input id="cemlnl4l" name="cemlnl4l" type="checkbox" value="N4L"/>
-               N4L (lower paratracheal)
+               N4L: Lower paratracheal (left)
               </label>
              </div>
              <div class="checkbox">
               <label>
                <input id="cemlnl5" name="cemlnl5" type="checkbox" value="N5"/>
-               N5 (subaortic (A-P window))
+               N5: Subaortic
               </label>
              </div>
              <div class="checkbox">
               <label>
                <input id="cemlnl6" name="cemlnl6" type="checkbox" value="N6"/>
-               N6 (para-aortic)
+               N6: Para-aortic (ascending aorta or phrenic)
               </label>
              </div>
              <div class="checkbox">
               <label>
                <input id="cemlnl7" name="cemlnl7" type="checkbox" value="N7"/>
-               N7 (subcarinal)
+               N7: Subcarinal
               </label>
              </div>
              <div class="checkbox">
               <label>
                <input id="cemlnl8" name="cemlnl8" type="checkbox" value="N8"/>
-               N8 (para-esophageal), any size
+               N8: Paraesophageal (below carina)
               </label>
              </div>
              <div class="checkbox">
               <label>
                <input id="cemlnl9" name="cemlnl9" type="checkbox" value="N9"/>
-               N9 (pulmonary ligament)
+               N9: Pulmonary ligament
               </label>
              </div>
              <div class="checkbox">
               <label>
-               <input id="cemlnl10r" name="cemlnl10r" type="checkbox" value="N10R"/>
-               N10R
+               <input id="cemlnl10" name="cemlnl10" type="checkbox" value="N10"/>
+               N10: Hilar
               </label>
              </div>
              <div class="checkbox">
               <label>
-               <input id="cemlnl10l" name="cemlnl10l" type="checkbox" value="N10L"/>
-               N10L (hilar)
+               <input id="cemlnl11" name="cemlnl11" type="checkbox" value="N11"/>
+               N11: Interlobar
+              </label>
+             </div>
+             <div class="checkbox">
+              <label>
+               <input id="cemlnl12" name="cemlnl12" type="checkbox" value="N12"/>
+               N12: Lobar
+              </label>
+             </div>
+             <div class="checkbox">
+              <label>
+               <input id="cemlnl13" name="cemlnl13" type="checkbox" value="N13"/>
+               N13: Segmental
+              </label>
+             </div>
+             <div class="checkbox">
+              <label>
+               <input id="cemlnl14" name="cemlnl14" type="checkbox" value="N14"/>
+               N14: Subsegmental
               </label>
              </div>
             </div>
@@ -5903,7 +6103,7 @@
           </tr>
           <tr>
            <td>
-            Axillary lymph nodes
+            Abnormal axillary lymph nodes
            </td>
            <td>
             <div class="form-group">
@@ -6379,7 +6579,7 @@
          <tbody>
           <tr>
            <td>
-            Gall Bladder
+            Gallbladder
            </td>
            <td>
             <div class="form-group">
@@ -6707,6 +6907,10 @@
         <div class="col-sm-12 form-group">
          <label class="control-label required">
           Emphysema
+          <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Mild: splaying of vessels, occasional areas of emphysema&lt;br/&gt;
+                                            Moderate:  emphysema in less than ½ of the lungs&lt;br/&gt;
+                                            Severe:  emphysema in more than ½ of the lungs" data-html="true" data-toggle="popover" title="Help">
+          </i>
          </label>
          <div class="radio">
           <label>
@@ -6723,19 +6927,19 @@
          <div class="radio">
           <label>
            <input id="ceem-mi" name="ceem" type="radio" value="mi"/>
-           Mild - splaying of vessels or scattered bulla/blebs
+           Mild
           </label>
          </div>
          <div class="radio">
           <label>
            <input id="ceem-mo" name="ceem" type="radio" value="mo"/>
-           Moderate - less than 50%
+           Moderate
           </label>
          </div>
          <div class="radio">
           <label>
            <input id="ceem-se" name="ceem" type="radio" value="se"/>
-           Severe - more than 50%
+           Severe
           </label>
          </div>
         </div>
@@ -7145,26 +7349,26 @@
      </div>
     </div>
     <div class="btn-group">
-     <a class="btn btn-danger" id="delete-form" tabindex="1103">
+     <a class="btn btn-danger" id="delete-form" tabindex="1204">
       <span class="glyphicon glyphicon-trash">
       </span>
       Delete
      </a>
     </div>
     <div class="pull-right">
-     <button class="btn btn-default btn-prev" tabindex="1104" type="button">
+     <button class="btn btn-default btn-prev" tabindex="1205" type="button">
       Previous
      </button>
-     <button class="btn btn-default btn-next" tabindex="1105" type="button">
+     <button class="btn btn-default btn-next" tabindex="1206" type="button">
       Next
      </button>
      <input name="cennod" type="hidden" value="0"/>
      <input name="ceanod" type="hidden" value="n"/>
      <input name="samistatus" type="hidden" value=""/>
-     <button class="btn btn-default" id="save-for-later-button" tabindex="1106" type="submit">
+     <button class="btn btn-default" id="save-for-later-button" tabindex="1206" type="submit">
       Save for Later
      </button>
-     <button class="btn btn-primary" id="submit-button" tabindex="1107" type="submit">
+     <button class="btn btn-primary" id="submit-button" tabindex="1207" type="submit">
       Submit
      </button>
     </div>
@@ -7206,7 +7410,7 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.08.04
+     SNAPSHOT 2018.08.09
     </span>
    </div>
   </footer>
@@ -7343,6 +7547,30 @@
                 .map(function (index, element) {
                     return this.name;
                 }));
+        }
+
+        function setupMeanDiameterCalculation(lengthFieldSuffix, widthFieldSuffix, diamFieldSuffix) {
+            const lengthFields = $("[name^=cect][name$="+lengthFieldSuffix+"],[name^=cect][name$="+widthFieldSuffix+"]");
+            lengthFields.on('keyup change', function (e) { 
+                const targetField = $(e.target);
+                const noduleId = targetField.closest("td").attr("data-nodule-id");
+                const noduleDiamLabel = $("#cect"+noduleId+diamFieldSuffix+"-val");
+                const wval = $("#cect"+noduleId+widthFieldSuffix).val();
+                const lval = $("#cect"+noduleId+lengthFieldSuffix).val();
+                const w = wval ? Number(wval) : 0;
+                const l = lval ? Number(lval) :  0;
+
+                if (w>0 && l>0) {
+                    const meanDiam = (l + w)/2;
+                    if (meanDiam > 0 ) {
+                        noduleDiamLabel.text(meanDiam.toFixed(2));
+                    } else {
+                        noduleDiamLabel.text("-");
+                    }
+                } else {
+                    noduleDiamLabel.text("-");
+                }
+            }).first().trigger('change');
         }
 
         $(function () {
@@ -7619,6 +7847,7 @@
 
             //ABNORMALITIES
             defaultRadio("pa", "n", "#pulmonary-container", "y");
+            defaultRadio("ceppra", "n", "#pleural-container", "y");
             defaultRadio("ceca", "n", "#cardiac-container", "y");
             defaultRadio("ceoma", "n", "#neck-container", "y");
             defaultRadio("ceoba", "n", "#breast-container", "y");
@@ -7628,7 +7857,7 @@
 
             //for each of the main sections, find all the radiogroups and default them to "n" (no)
             // NB: Cardiac & Bone have no radio button groups.
-            const $containers = $("#pulmonary-container, #neck-container, #breast-container, #abdominal-container");
+            const $containers = $("#pulmonary-container, #pleural-container,  #neck-container, #breast-container, #abdominal-container, #coronary-container");
             $.each($containers, function (i, container) {
                 const groupNames = findRadioGroupNames($(container));
                 $.each(groupNames, function (i, group) {
@@ -7695,11 +7924,13 @@
 
 
             const groups = [
-                {radio: 'ceoca', container: $("#coronary-container"), humanName: "coronary"},
                 {radio: 'pa', container: $("#pulmonary-container"), humanName: "pulmonary"},
+                {radio: 'ceppra', container: $("#pleural-container"), humanName: "pleural"},
                 {radio: 'ceoma', container: $("#neck-container"), humanName: "neck and mediastinal"},
                 {radio: 'ceoba', container: $("#breast-container"), humanName: "breast"},
-                {radio: 'ceoaa', container: $("#abdominal-container"), humanName: "abdominal"}
+                {radio: 'ceoaa', container: $("#abdominal-container"), humanName: "abdominal"},
+                {radio: 'ceoca', container: $("#coronary-container"), humanName: "coronary"}
+
             ];
 
             for (let i = 0; i < groups.length; i++) {
@@ -7731,27 +7962,10 @@
             });
 
             // mean diameter calculation
-            const lengthFields = $("[name^=cect][name$=sl],[name^=cect][name$=sw]")
-            lengthFields.on('keyup change', function (e) { 
-                const targetField = $(e.target);
-                const noduleId = targetField.closest("td").attr("data-nodule-id");
-                const noduleDiamLabel = $("#cect"+noduleId+"sd-val");
-                const wval = $("#cect"+noduleId+"sw").val();
-                const lval = $("#cect"+noduleId+"sl").val();
-                const w = wval ? Number(wval) : 0;
-                const l = lval ? Number(lval) :  0;
+            setupMeanDiameterCalculation("sl", "sw", "sd");
 
-                if (w>0 && l>0) {
-                    const meanDiam = (l + w)/2;
-                    if (meanDiam > 0 ) {
-                        noduleDiamLabel.text(meanDiam.toFixed(2));
-                    } else {
-                        noduleDiamLabel.text("-");
-                    }
-                } else {
-                    noduleDiamLabel.text("-");
-                }
-            }).first().trigger('change');
+            // solid mean diameter calculation
+            setupMeanDiameterCalculation("ssl", "ssw", "ssd");
 
 
 

@@ -3355,6 +3355,65 @@
             </tr>
             <tr>
              <td style="white-space: nowrap;">
+              <label class="control-label" for="cectin">
+               Index Nodule
+              </label>
+              <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate whether the nodule is an index nodule. Only one nodule can be an index nodule." data-toggle="popover" title="Help">
+              </i>
+             </td>
+             <td data-nodule-id="1" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="radiocheckbox" id="cectin1" name="cectin" type="checkbox" value="1"/>
+              </div>
+             </td>
+             <td data-nodule-id="2" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="radiocheckbox" id="cectin2" name="cectin" type="checkbox" value="2"/>
+              </div>
+             </td>
+             <td data-nodule-id="3" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="radiocheckbox" id="cectin3" name="cectin" type="checkbox" value="3"/>
+              </div>
+             </td>
+             <td data-nodule-id="4" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="radiocheckbox" id="cectin4" name="cectin" type="checkbox" value="4"/>
+              </div>
+             </td>
+             <td data-nodule-id="5" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="radiocheckbox" id="cectin5" name="cectin" type="checkbox" value="5"/>
+              </div>
+             </td>
+             <td data-nodule-id="6" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="radiocheckbox" id="cectin6" name="cectin" type="checkbox" value="6"/>
+              </div>
+             </td>
+             <td data-nodule-id="7" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="radiocheckbox" id="cectin7" name="cectin" type="checkbox" value="7"/>
+              </div>
+             </td>
+             <td data-nodule-id="8" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="radiocheckbox" id="cectin8" name="cectin" type="checkbox" value="8"/>
+              </div>
+             </td>
+             <td data-nodule-id="9" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="radiocheckbox" id="cectin9" name="cectin" type="checkbox" value="9"/>
+              </div>
+             </td>
+             <td data-nodule-id="10" style="display:none;">
+              <div class="form-group form-group-sm">
+               <input class="radiocheckbox" id="cectin10" name="cectin" type="checkbox" value="10"/>
+              </div>
+             </td>
+            </tr>
+            <tr>
+             <td style="white-space: nowrap;">
               <label class="control-label" for="cect1sp-n">
                Spiculated
               </label>
@@ -7875,6 +7934,9 @@
                     fv.enableFieldValidators(validatorControlName, lymphNodesEnabled, 'callback');
                 }
             }).first().trigger('change');
+
+            
+            exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
 
             //always after formValidation initialization
             initTabbedNavigation("ctEvalTabs", "ctEvalTabsContent");

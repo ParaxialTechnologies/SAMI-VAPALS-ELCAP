@@ -157,6 +157,31 @@ function initTabbedNavigation(tabContainerId, tabContentContainerId) {
     });
 }
 
+/*
+    Sets up a checkbox with the given name to behave as an "exclusive" selection, that is: 
+    - Only one of the checkboxes that have this name can be selected at a time
+    - The selected checkbox can be unchecked. 
+
+    To a large extent the behavior of an exclusive checkbox is similar to that of a 
+    radio button; however, the difference is that in a radio button, at least one of the radios
+    is selected, where for an exclusive checkbox, all checkboxes could be unselected
+
+    @param checkboxName the 'name' attribute of the checkbox input element
+*/
+function exclusiveCheckbox(elemSelector, commonParentSelector) {
+    $(elemSelector).on("click",function() {
+        const thisId = $(this).attr("id");
+        const thisName = $(this).attr("name");
+        if (this.checked) {
+            $(this).closest(commonParentSelector).find('input[name="' + thisName + '"]:checked').filter(
+                function(idx,elem) {
+                    return $(elem).attr("id")!=thisId
+                }
+            ).prop('checked', false);
+        }
+    }); 
+}
+
 //global application handlers
 $(function () {
     $("body").on('keydown', 'input.numeric', numericHandlerKeydown);

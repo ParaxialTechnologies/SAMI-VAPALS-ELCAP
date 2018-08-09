@@ -35,6 +35,11 @@
                     {{ f.checkbox("silnls", "1", "Letter sent") }}
                     {{ f.checkbox("silnpu", "1", "Pulmonary") }}
                     {{ f.checkbox("silnpc", "1", "PCP") }}
+                    {{ f.checkbox("silnpn", "1", "Oncology") }}
+                    {{ f.checkbox("silnpp", "1", "Smoking cessation program") }}
+                    {{ f.checkbox("silnpo", "1", "Other") }}
+                    <input class="form-control input-sm" type="text" name="silnpos"
+                                   id="silnpos" title="Other" required="required">
                 </div>
             </div>
 
@@ -46,13 +51,7 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-12 form-group">
-                    <label class="required">Rural status</label>
-                    {{ f.inlineRadio("sirs", "sirs-u","u","Urban", true) }}
-                    {{ f.inlineRadio("sirs", "sirs-r","r","Rural") }}
-                </div>
-            </div>
+
 
             <div class="row">
                 <div class="form-group col-sm-6 ">
@@ -94,6 +93,15 @@
                     <label for="sippn">Phone number</label>
                     <input type="text" name="sippn" id="sippn" class="form-control"
                            data-fv-phone="true" data-fv-phone-country="US">
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <label class="required">Rural status</label>
+                    {{ f.inlineRadio("sirs", "sirs-u","u","Urban", true) }}
+                    {{ f.inlineRadio("sirs", "sirs-r","r","Rural") }}
+                    {{ f.inlineRadio("sirs", "sirs-n","n","Unknown") }}
                 </div>
             </div>
 
@@ -296,6 +304,8 @@
                 }
                 
             }).first().trigger('change');
+            
+            $("#silnpo").conditionallyEnable({sourceValues: "1", enable: "#silnpos"}); 
 
             $(".validated").formValidation({framework: 'bootstrap'});
         });

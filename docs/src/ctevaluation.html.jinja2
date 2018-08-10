@@ -396,8 +396,11 @@
                                                 <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
                                                     <div class="form-group form-group-sm">
                                                         <input type="text" name="cect{{ i }}inl" id="cect{{ i }}inl"
-                                                               size="3" class="form-control"
-                                                               title="CT Image Number" required="required" tabindex="{{ i }}05">
+                                                               size="3" class="form-control numeric" required="required"
+                                                               title="CT Image Number (Low)" tabindex="{{ i }}05">-
+                                                        <input type="text" name="cect{{ i }}inh" id="cect{{ i }}inh"
+                                                               size="3" class="form-control" required="required"
+                                                               title="CT Image Number (High)" tabindex="{{ i }}06">
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -416,7 +419,7 @@
                                                     <div class="form-group form-group-sm">
                                                         <select name="cect{{ i }}st" id="cect{{ i }}st"
                                                                 title="Nodule status" class="form-control"
-                                                                required="required" tabindex="{{ i }}06">
+                                                                required="required" tabindex="{{ i }}07">
                                                             <option value="-"> -</option>
                                                             <option value="un"> Unknown</option>
                                                             <option value="bc"> Benign (Ca++)</option>
@@ -452,7 +455,7 @@
                                                     <div class="form-group form-group-sm">
                                                         <select name="cect{{ i }}nt" id="cect{{ i }}nt"
                                                                 class="form-control" title="Nodule Consistency"
-                                                                required="required" tabindex="{{ i }}07">
+                                                                required="required" tabindex="{{ i }}08">
                                                             <option value="-"> -</option>
                                                             <option value="s"> Solid</option>
                                                             <option value="m"> Part-solid</option>
@@ -475,7 +478,7 @@
                                                     <div class="form-group form-group-sm">
                                                         <input type="text" name="cect{{ i }}sl" id="cect{{ i }}sl"
                                                                size="4" title="Length (mm)" class="form-control numeric"
-                                                               required="required" tabindex="{{ i }}08">
+                                                               required="required" tabindex="{{ i }}09">
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -494,7 +497,7 @@
                                                         <input type="text" name="cect{{ i }}sw" id="cect{{ i }}sw"
                                                                size="4" title="Maximum Width"
                                                                class="form-control numeric"
-                                                               required="required" tabindex="{{ i }}09">
+                                                               required="required" tabindex="{{ i }}10">
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -509,9 +512,7 @@
                                             {% for i in noduleArray %}
                                                 <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
                                                     <div class="form-group form-group-sm">
-                                                        
-                                                        <label id="cect{{ i }}sd-val"
-                                                               title="Mean diameter"
+                                                        <label id="cect{{ i }}sd-val" title="Mean diameter"
                                                                class="numeric">-</label>
                                                     </div>
                                                 </td>
@@ -525,7 +526,8 @@
                                                 <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
                                                     <div class="form-group form-group-sm">
                                                         <input type="text" name="cect{{ i }}sh" id="cect{{ i }}sh"
-                                                               size="4" title="Height" class="form-control numeric" tabindex="{{ i }}10">
+                                                               size="4" title="Height" class="form-control numeric"
+                                                               tabindex="{{ i }}11">
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -539,7 +541,8 @@
                                                 <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
                                                     <div class="form-group form-group-sm">
                                                         <input type="text" name="cect{{ i }}sv" id="cect{{ i }}sv"
-                                                               size="4" title="Volume" class="form-control numeric" tabindex="{{ i }}11">
+                                                               size="4" title="Volume" class="form-control numeric"
+                                                               tabindex="{{ i }}12">
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -555,15 +558,15 @@
                                                         <div class="form-group form-group-sm">
                                                             <input type="text" name="cect{{ i }}ssl" id="cect{{ i }}ssl"
                                                                    size="4" title="Solid Comp. Length"
-                                                                   placeholder="length"
-                                                                   class="form-control numeric" required="required" tabindex="{{ i }}12">
+                                                                   placeholder="length" required="required"
+                                                                   class="form-control numeric"  tabindex="{{ i }}13">
                                                         </div>
                                                         &nbsp; x &nbsp;
                                                         <div class="form-group form-group-sm">
                                                             <input type="text" name="cect{{ i }}ssw" id="cect{{ i }}ssw"
                                                                    size="4" title="Solid Comp. Width"
-                                                                   placeholder="width"
-                                                                   class="form-control numeric" required="required" tabindex="{{ i }}13">
+                                                                   placeholder="width" required="required"
+                                                                   class="form-control numeric" tabindex="{{ i }}14">
                                                         </div>
                                                     </div>
                                                 </td>
@@ -597,7 +600,7 @@
                                             {% for i in noduleArray %}
                                                 <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group form-group-sm">
-                                                        {{ f.inlineRadioNYQ("cect" + i|string + "se", false, i|string + "14") }}
+                                                        {{ f.inlineRadioNYQ("cect" + i|string + "se", false, i|string + "15") }}
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -613,8 +616,7 @@
                                                 <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group form-group-sm">
                                                         {# Note that this checkbox spans multiple td-s, which is why we don't used the standard forms checkbox #}
-                                                        <input type="checkbox" class="radiocheckbox" name="cectin" id="cectin{{ i }}" value="{{ i }}">
-                                                       
+                                                        <input type="checkbox" class="radiocheckbox" name="cectin" id="cectin{{ i }}" value="{{ i }}" tabindex="{{ i }}16">
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -626,7 +628,7 @@
                                             {% for i in noduleArray %}
                                                 <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group form-group-sm">
-                                                        {{ f.inlineRadioNYQ("cect" + i|string + "sp", false, i|string + "15") }}
+                                                        {{ f.inlineRadioNYQ("cect" + i|string + "sp", false, i|string + "17") }}
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -644,7 +646,7 @@
                                                     <div class="form-group form-group-sm">
                                                         <input type="text" name="cect{{ i }}pld" id="cect{{ i }}pld"
                                                                class="numeric"
-                                                               title="Distance" tabindex="{{ i }}16">
+                                                               title="Distance" tabindex="{{ i }}18">
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -661,7 +663,7 @@
                                                 <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group form-group-sm">
                                                         <select name="cect{{ i }}ac" id="cect{{ i }}ac" title="Action"
-                                                                class="form-control" tabindex="{{ i }}17">
+                                                                class="form-control" tabindex="{{ i }}19">
                                                             <option value="-"> -</option>
                                                             <option value="s"> Annual repeat CT</option>
                                                             <option value="f"> Follow-up CT</option>
@@ -688,7 +690,7 @@
                                                 <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group form-group-sm">
                                                         <input type="text" name="cect{{ i }}co" id="cect{{ i }}co"
-                                                               size="20" class="form-control" title="Comment" tabindex="{{ i }}18">
+                                                               size="20" class="form-control" title="Comment" tabindex="{{ i }}20">
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -705,7 +707,7 @@
                                                 <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group form-group-sm">
                                                         <select name="cect{{ i }}pd" id="cect{{ i }}pd"
-                                                                title="Pathologic diagnosis" class="form-control" tabindex="{{ i }}19">
+                                                                title="Pathologic diagnosis" class="form-control" tabindex="{{ i }}21">
                                                             <option value="-"> -For Pathology Use Only-</option>
                                                             <option value="aa"> AAH</option>
                                                             <option value="ap"> Atyp bronch prolif</option>

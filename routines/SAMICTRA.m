@@ -25,6 +25,11 @@ impression(rtn,vals,dict)
  d out("<TR><TD></TD></TR>")
  d out("<!-- Recommendation -->")
  ;
+ i $$xval("cefu",vals)'="nf" d  ; 2445-2450 gpl1
+ . d out("<TR><TD><FONT SIZE=""+2""><B>")
+ . d out("Recommendations:")
+ . d out("</TD></TR><TR><TD><TABLE><TR><TD WIDTH=20></TD><TD>")
+ ;
  n fuw
  s fuw=$$xsub("cefuw",vals,dict)
  ;d out("fuw= "_fuw)

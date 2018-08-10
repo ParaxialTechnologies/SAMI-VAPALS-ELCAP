@@ -42,17 +42,18 @@ wsReport(return,filter) ; web service which returns an html cteval report
  ;
  ; report parameters
  ;
- n nt,sectionheader,dummy,cac,tex,para,legout,lang,lanread
+ n nt,sectionheader,dummy,cac,tex,para,legout
+ ;; n lang,lanread
  ;
  s nt=1
  s sectionheader=1
- s dummy="******"
+ ;;s dummy="******"
  s cac=""
  s cacrec=""
- s tex=0
+ ;;s tex=0
  s para="<p>"
- s legout=0
- s qheader=1
+ ;;s legout=0
+ s qheader=0
  ;
  s lang=""
  s langread=0
@@ -83,23 +84,23 @@ wsReport(return,filter) ; web service which returns an html cteval report
  d out("<TR><TD><TABLE border=""0"" cellspacing=""0"" cellpadding=""3"" WIDTH=""640"">")
  ;
  ;# Queens specific header
- if qheader d  ;
- . d out("<TR><TD WIDTH=""85""><B>Exam Date: </B></TD><TD>")
- . d out($$xval("cedos",vals))
- . d out("</TD></TR>")
- . ;
- . d out("<TR><TD><B>Type:</B></TD><TD>")
- . d out($$xsub("cetex",vals,dict)_" "_$$xsub("cectp",vals,dict))
- . d out("</TD></TR>")
- . ;
- . d out("<TR><TD><B>Study ID:</B></TD><TD>")
- . d out(si)
- . d out("</TD></TR>")
- . ;
- . ;   set svc [exec vcrc -c12 -n $si]
- . d out("<TR><TD><B>SVC:</B></TD><TD>")
- . ;d out(svc)
- . d out("</TD></TR>")
+ ;;if qheader d  ;
+ ;;. d out("<TR><TD WIDTH=""85""><B>Exam Date: </B></TD><TD>")
+ ;;. d out($$xval("cedos",vals))
+ ;;. d out("</TD></TR>")
+ ;;. ;
+ ;;. d out("<TR><TD><B>Type:</B></TD><TD>")
+ ;;. d out($$xsub("cetex",vals,dict)_" "_$$xsub("cectp",vals,dict))
+ ;;. d out("</TD></TR>")
+ ;;. ;
+ ;;. d out("<TR><TD><B>Study ID:</B></TD><TD>")
+ ;;. d out(si)
+ ;;. d out("</TD></TR>")
+ ;;. ;
+ ;;. ;   set svc [exec vcrc -c12 -n $si]
+ ;;. d out("<TR><TD><B>SVC:</B></TD><TD>")
+ ;;. ;d out(svc)
+ ;;. d out("</TD></TR>")
  ;
  i $$xval("sidob",vals)>0 d  ;
  . d out("<TD><B>Date of Birth:</B></TD><TD>")

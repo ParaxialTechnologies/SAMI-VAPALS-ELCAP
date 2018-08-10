@@ -35,7 +35,7 @@ nodules(rtn,vals,dict)
  . ;
  . n calcification,calcstr
  . s calcification=$$xsub("cecta",vals,dict,"cect"_ii_"ca")
- . i calcification="" s calcstr="is "_spic_$$xsub("cectnt",vals,dict,"cect"_ii_"nt")_","
+ . i calcification="" s calcstr="is "_spic_$$xsub("cectnt",vals,dict,"cect"_ii_"nt")_", "
  . e  s calcstr="is "_calcification_", "_spic_$$xsub("cectnt",vals,dict,"cect"_ii_"nt")_", "
  . ;
  . n scomp
@@ -43,7 +43,7 @@ nodules(rtn,vals,dict)
  . i $$xval("cect"_ii_"ssl",vals)'="" d  ;
  . . s scomp=" (solid component "_$$xval("cect"_ii_"ssl",vals)_" mm x "_$$xval("cect"_ii_"ssw",vals)_" mm)"
  . ;
- . s calcstr=calcstr_$$xval("cect"_ii_"sl",vals)_" mm x "_$$xval("cect"_ii_"sw",vals)_" mm "_scomp_", "
+ . s calcstr=calcstr_$$xval("cect"_ii_"sl",vals)_" mm x "_$$xval("cect"_ii_"sw",vals)_" mm"_scomp_", "
  . ;
  . n smooth
  . s smooth=$$xsub("cectse",vals,dict,"cect"_ii_"se")
@@ -133,12 +133,13 @@ nodules(rtn,vals,dict)
  . . . i ($$xval("cetex",vals)="b")&($$xsub("cectch",vals,dict,"cect"_ii_"ch")="n") d  ;
  . . . . d out(nloc_" "_endo_" "_ii_" "_calcstr)
  . . . e  d out(nloc_" "_endo_" "_ii_" "_calcstr_" "_$$xsub("cectch",vals,dict,"cect"_ii_"ch")_" ")
- . . . ;e  d out(nloc_" "_endo_" "_ii_" "_calcstr_" "_$$xsub("cectch",vals,dict,"cect"_ii_"ch")_".")
+ . . d out(" series"_$$xval("cect"_ii_"sn",vals)_",") ; added from 1114 gpl1
  . . i $$xval("cect"_ii_"inl",vals)=$$xval("cect"_ii_"inh",vals) d  ;
  . . . d out("image"_$$xval("cect"_ii_"inh",vals)_". ")
  . . . ;d out("image "_$$xval("cect"_ii_"inh",vals)_".")
  . . e  d  ;
  . . . d out("images "_$$xval("cect"_ii_"inl",vals)-$$xval("cect"_ii_"inh",vals)_".")
+ . . i $$xval("cect"_ii_"co",vals)'="" d out($$xval("cect"_ii_"co",vals)_". ") ;1122 gpl1
  . . n ac
  . . s ac=$$xval("cect"_ii_"ac",vals)
  . . i ac'="" i (ac'="-") i (ac'="s") d  ;

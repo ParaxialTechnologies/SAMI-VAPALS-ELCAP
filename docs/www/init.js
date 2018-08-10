@@ -131,16 +131,12 @@ function initTabbedNavigation(tabContainerId, tabContentContainerId) {
     }).toggleClass("disabled", !getPrevTabId());
 
     $('a[data-toggle="tab"]').on('hide.bs.tab', function (e) {
+        //validate each tab as it is navigated away from.
         var currentTab = e.target;
         var tabContentSelector = $(currentTab).attr("href");
         var fv = $(".validated").data('formValidation');
-        var valid = fv.validateContainer(tabContentSelector).isValid();
-        $(tabContentSelector).find("input, select").first().trigger('change');
-        if (!valid) {
-            console.log("tab " + tabContentSelector + " is not valid");
-            // e.preventDefault() // to cancel the navigation
-        }
-
+        fv.validateContainer(tabContentSelector);
+        $(tabContentSelector).find("input, select").first().trigger('change'); //TODO: is this necessary?
     }).on("shown.bs.tab", function () {
         $(".btn-next").toggleClass("disabled", !getNextTabId());
         $(".btn-prev").toggleClass("disabled", !getPrevTabId());

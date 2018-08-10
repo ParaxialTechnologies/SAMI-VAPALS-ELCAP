@@ -28,7 +28,7 @@
             disable: null // fields to disable when value does not match sourceValues
         }, options);
 
-        console.log("conditionallyDisplay (settings: " + JSON.stringify(settings) + ")")
+        // console.log("conditionallyDisplay (settings: " + JSON.stringify(settings) + ")")
 
         var disableFields = settings.disable;
 
@@ -58,7 +58,7 @@
             var enableSize = $enableContainer == null ? 0 : $enableContainer.length
             var disableSize = $disableContainer == null ? 0 : $disableContainer.length
 
-            console.log("conditionallyDisplay(): change event triggered on field. id=" + $el.prop("id") + ", name=" + $el.prop("name") + ", matches=" + matches + ", enable=" + enableSize + ", disable=" + disableSize);
+            // console.log("conditionallyDisplay(): change event triggered on field. id=" + $el.prop("id") + ", name=" + $el.prop("name") + ", matches=" + matches + ", enable=" + enableSize + ", disable=" + disableSize);
 
             if (matches) {
                 $enableContainer.show();

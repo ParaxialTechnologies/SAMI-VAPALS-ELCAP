@@ -15,8 +15,6 @@ var VAPALS = new function () {
      * @returns {number}
      */
     this.computeMonthsBetween = function (from, to) {
-        console.log("computeMonthsBetween() entered. from=" + from + ", to=" + to);
-
         var fromMoment = this.toMoment(from);
         var toMoment = this.toMoment(to);
         if (fromMoment.isValid() && toMoment.isValid()) {

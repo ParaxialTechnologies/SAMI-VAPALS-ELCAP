@@ -131,7 +131,7 @@
             var enableSize = $enableContainer == null ? 0 : $enableContainer.length
             var disableSize = $disableContainer == null ? 0 : $disableContainer.length
 
-            console.log("conditionallyEnable(): change event triggered on field. id=" + $el.prop("id") + ", name=" + $el.prop("name") + ", matches=" + matches + ", enable=" + enableSize + ", disable=" + disableSize);
+            // console.log("conditionallyEnable(): change event triggered on field. id=" + $el.prop("id") + ", name=" + $el.prop("name") + ", matches=" + matches + ", enable=" + enableSize + ", disable=" + disableSize);
 
             if (matches) {
                 enableContainer($enableContainer);
@@ -158,7 +158,7 @@
                 if (fv) {
                     var disabledFields = $enableContainer.find("input:disabled, select:disabled, textarea:disabled");
                     $.each(disabledFields, function (i, t) {
-                        console.log("resetting field " + $(t).attr('name'))
+                        // console.log("resetting field " + $(t).attr('name'))
                         fv.resetField($(t));
                     });
                 }

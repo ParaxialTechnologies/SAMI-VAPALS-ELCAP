@@ -283,7 +283,8 @@
                                                         {# TODO What does newStat({{ i }}) do onchange?#}
                                                         <select name="cect{{ i }}ch" id="cect{{ i }}ch"
                                                                 title="Is this nodule new?" class="form-control"
-                                                                tabindex="{{ i }}01">
+                                                                tabindex="{{ i }}01" data-fv-callback="true"
+                                                                data-fv-callback-callback="notDash">
                                                             <option value="-"> -
                                                             <option value="n"> Newly seen</option>
                                                             <option value="pn"> Prev seen, no change</option>
@@ -322,8 +323,9 @@
                                                     <div class="form-group form-group-sm">
                                                         <select name="cect{{ i }}en" id="cect{{ i }}en"
                                                                 title="Endobronchial" class="form-control"
-                                                                required="required" tabindex="{{ i }}02">
-                                                            <option value=""> -</option>
+                                                                tabindex="{{ i }}02" data-fv-callback="true"
+                                                                data-fv-callback-callback="notDash">
+                                                            <option value="-"> -</option>
                                                             <option value="no"> No</option>
                                                             <option value="tr"> Trachea</option>
                                                             <option value="rm"> Rt. Main</option>
@@ -353,7 +355,8 @@
                                                     <div class="form-group form-group-sm">
                                                         <select name="cect{{ i }}ll" id="cect{{ i }}ll"
                                                                 title="Most likely location" class="form-control"
-                                                                required="required" tabindex="{{ i }}03">
+                                                                data-fv-callback="true"
+                                                                data-fv-callback-callback="notDash" tabindex="{{ i }}03">
                                                             <option value="-"> -</option>
                                                             <option value="end"> Endobr</option>
                                                             <option value="lul"> LUL</option>
@@ -419,7 +422,8 @@
                                                     <div class="form-group form-group-sm">
                                                         <select name="cect{{ i }}st" id="cect{{ i }}st"
                                                                 title="Nodule status" class="form-control"
-                                                                required="required" tabindex="{{ i }}07">
+                                                                data-fv-callback="true"
+                                                                data-fv-callback-callback="notDash" tabindex="{{ i }}07">
                                                             <option value="-"> -</option>
                                                             <option value="un"> Unknown</option>
                                                             <option value="bc"> Benign (Ca++)</option>
@@ -455,7 +459,8 @@
                                                     <div class="form-group form-group-sm">
                                                         <select name="cect{{ i }}nt" id="cect{{ i }}nt"
                                                                 class="form-control" title="Nodule Consistency"
-                                                                required="required" tabindex="{{ i }}08">
+                                                                data-fv-callback="true"
+                                                                data-fv-callback-callback="notDash" tabindex="{{ i }}08">
                                                             <option value="-"> -</option>
                                                             <option value="s"> Solid</option>
                                                             <option value="m"> Part-solid</option>
@@ -2048,11 +2053,20 @@
                 displayNodules(++noduleCount);
                 $("[name='cennod']").val(noduleCount);
                 $("[name='ceanod']").val("y");
+
+                $isItNew = $("#cect" + noduleCount + "ch").focus();
+                // set nodule "is it new?" to "new" when type of exam (tex) is baseline
+                if ($("[name=cetex]:checked").val() === "b") {
+                    $isItNew.val("n");
+                }
+                $isItNew.focus().trigger('change');
             }
         }
 
         function removeNodule() {
             if (noduleCount > 0) {
+                $("#cect" + noduleCount + "ch").val("-").trigger('change');
+
                 displayNodules(--noduleCount);
                 $("[name='cennod']").val(noduleCount);
                 $("[name='ceanod']").val(noduleCount === 0 ? "n" : "y");
@@ -2071,7 +2085,6 @@
             }).show();
 
             $("#nodule-table").toggle(noduleCount > 0);
-            $("#cect"+count+"ch").focus().trigger('change');
             $("#add-first-nodule").toggle(noduleCount === 0);
         }
 
@@ -2080,6 +2093,10 @@
                 .map(function (index, element) {
                     return this.name;
                 }));
+        }
+
+        function notDash(value, validator, $field) {
+            return {valid: $field.val() !== "-", message: 'Please select a value'};
         }
 
         function setupMeanDiameterCalculation(lengthFieldSuffix, widthFieldSuffix, diamFieldSuffix) {
@@ -2124,9 +2141,9 @@
                     if (!$sidoe.val()) {
                         $sidoe.val($("#cedos").val()).trigger('change');
                     }
-                    $("select[name^=cect][name$=ch]").val("n"); // set nodule "is it new?" to "new"
                 }
             }).conditionallyEnable({sourceValues: "b", disable: "#non-baseline-container"});
+
 
             // NODULES
             {% for i in noduleArray %}
@@ -2149,7 +2166,7 @@
                         $("#cect{{ i }}sv").val(v.toFixed(2));
                     });
                     $("#cect{{ i }}sv").on('keyup', function () {
-                        $fields.off('change.vapals');
+                        $fields.off('keyup.vapals');
                     });
 
                     $("#cect{{ i }}ch").on('change', function () {
@@ -2185,7 +2202,7 @@
                         else { //re-enable fields
                             $fields
                                 .prop('disabled', false)
-                                .trigger('change'); //set state according to other rules (i.e. part-solid fields)
+                                .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
                         }
                     });
                 }

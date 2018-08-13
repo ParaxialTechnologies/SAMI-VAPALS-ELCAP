@@ -119,7 +119,7 @@
         };
 
 
-        this.on('change', function () {
+        this.on('change.conditionally-enable', function () {
             var $el = $(this);
             var actualValue = $el.is(":checkbox") ? ($el.is(":checked") ? $el.val() : "") : $el.val();
 

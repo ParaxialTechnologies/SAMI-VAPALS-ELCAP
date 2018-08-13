@@ -17,6 +17,8 @@ wsPtLkup(rtn,filter) ; patient lookup from patient-lookup cache
  ;
  n root s root=$$setroot^%wd("patient-lookup")
  n search s search=$g(filter("search"))
+ n limit s limit=$g(filter("limit"))
+ i limit="" s limit=1000
  s search=$$UPCASE^XLFMSMT(search)
  n rslt
  n cnt s cnt=0
@@ -27,7 +29,7 @@ wsPtLkup(rtn,filter) ; patient lookup from patient-lookup cache
  i $l(search)=5 i +$e(search,2,5)>0 d  q  ; using last5
  . n gn2 s gn2=$na(@root@("last5"))
  . n ii s ii=""
- . f  s ii=$o(@gn2@(search,ii)) q:ii=""  d  ;
+ . f  s ii=$o(@gn2@(search,ii)) q:ii=""  q:cnt=limit  d  ;
  . . s cnt=cnt+1
  . . s rslt(cnt,ii)=""
  . i cnt>0 d  ;
@@ -37,7 +39,7 @@ wsPtLkup(rtn,filter) ; patient lookup from patient-lookup cache
  n q1 s q1=$na(@gn@(p1))
  n q1x s q1x=$e(q1,1,$l(q1)-2) ; removes the ")
  s qx=q1
- f  s qx=$q(@qx) q:$p(qx,q1x,2)=""  d  ;
+ f  s qx=$q(@qx) q:$p(qx,q1x,2)=""  q:cnt=limit  d  ;
  . s cnt=cnt+1
  . n exit s exit=0
  . i p2'="" d  ;

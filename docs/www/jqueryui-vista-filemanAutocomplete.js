@@ -72,6 +72,9 @@ $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {
 
             let ajaxRequest = $.ajax({
                 url: "/ptlookup/" + query,
+                data: {
+                    limit: 25
+                },
                 dataType: "json"
             });
 

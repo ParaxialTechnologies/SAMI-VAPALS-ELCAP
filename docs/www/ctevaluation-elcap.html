@@ -7600,13 +7600,17 @@
                 if ($("[name=cetex]:checked").val() === "b") {
                     $isItNew.val("n");
                 }
-                $isItNew.focus().trigger('change');
+                $isItNew.focus().trigger('change.cteval');
             }
         }
 
         function removeNodule() {
             if (noduleCount > 0) {
-                $("#cect" + noduleCount + "ch").val("-").trigger('change');
+                $("#cect" + noduleCount + "ch").val("-").trigger('change.cteval');
+                var fv = $("form.validated").data("formValidation");
+                if (fv) {
+                    fv.resetField("cect" + noduleCount + "ch");
+                }
 
                 displayNodules(--noduleCount);
                 $("[name='cennod']").val(noduleCount);
@@ -7710,7 +7714,7 @@
                         $fields.off('keyup.vapals');
                     });
 
-                    $("#cect1ch").on('change', function () {
+                    $("#cect1ch").on('change.cteval', function () {
 
                         // All fields related to this nodule.
                         // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
@@ -7770,7 +7774,7 @@
                         $fields.off('keyup.vapals');
                     });
 
-                    $("#cect2ch").on('change', function () {
+                    $("#cect2ch").on('change.cteval', function () {
 
                         // All fields related to this nodule.
                         // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
@@ -7830,7 +7834,7 @@
                         $fields.off('keyup.vapals');
                     });
 
-                    $("#cect3ch").on('change', function () {
+                    $("#cect3ch").on('change.cteval', function () {
 
                         // All fields related to this nodule.
                         // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
@@ -7890,7 +7894,7 @@
                         $fields.off('keyup.vapals');
                     });
 
-                    $("#cect4ch").on('change', function () {
+                    $("#cect4ch").on('change.cteval', function () {
 
                         // All fields related to this nodule.
                         // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
@@ -7950,7 +7954,7 @@
                         $fields.off('keyup.vapals');
                     });
 
-                    $("#cect5ch").on('change', function () {
+                    $("#cect5ch").on('change.cteval', function () {
 
                         // All fields related to this nodule.
                         // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
@@ -8010,7 +8014,7 @@
                         $fields.off('keyup.vapals');
                     });
 
-                    $("#cect6ch").on('change', function () {
+                    $("#cect6ch").on('change.cteval', function () {
 
                         // All fields related to this nodule.
                         // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
@@ -8070,7 +8074,7 @@
                         $fields.off('keyup.vapals');
                     });
 
-                    $("#cect7ch").on('change', function () {
+                    $("#cect7ch").on('change.cteval', function () {
 
                         // All fields related to this nodule.
                         // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
@@ -8130,7 +8134,7 @@
                         $fields.off('keyup.vapals');
                     });
 
-                    $("#cect8ch").on('change', function () {
+                    $("#cect8ch").on('change.cteval', function () {
 
                         // All fields related to this nodule.
                         // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
@@ -8190,7 +8194,7 @@
                         $fields.off('keyup.vapals');
                     });
 
-                    $("#cect9ch").on('change', function () {
+                    $("#cect9ch").on('change.cteval', function () {
 
                         // All fields related to this nodule.
                         // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
@@ -8250,7 +8254,7 @@
                         $fields.off('keyup.vapals');
                     });
 
-                    $("#cect10ch").on('change', function () {
+                    $("#cect10ch").on('change.cteval', function () {
 
                         // All fields related to this nodule.
                         // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
@@ -8292,8 +8296,8 @@
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
 
             // Display the proper number of nodule columns based on the nodules that have a value for
-            // "Endobronchial", a required field.
-            const $noduleKeyFields = $("[name^=cect][name$=en]").filter(function () {
+            // "Is it New", a required field.
+            const $noduleKeyFields = $("[name^=cect][name$=ch]").filter(function () {
                 return $(this).val() !== "" && $(this).val() !== "-";
             });
 

@@ -2059,13 +2059,17 @@
                 if ($("[name=cetex]:checked").val() === "b") {
                     $isItNew.val("n");
                 }
-                $isItNew.focus().trigger('change');
+                $isItNew.focus().trigger('change.cteval');
             }
         }
 
         function removeNodule() {
             if (noduleCount > 0) {
-                $("#cect" + noduleCount + "ch").val("-").trigger('change');
+                $("#cect" + noduleCount + "ch").val("-").trigger('change.cteval');
+                var fv = $("form.validated").data("formValidation");
+                if (fv) {
+                    fv.resetField("cect" + noduleCount + "ch");
+                }
 
                 displayNodules(--noduleCount);
                 $("[name='cennod']").val(noduleCount);
@@ -2169,7 +2173,7 @@
                         $fields.off('keyup.vapals');
                     });
 
-                    $("#cect{{ i }}ch").on('change', function () {
+                    $("#cect{{ i }}ch").on('change.cteval', function () {
 
                         // All fields related to this nodule.
                         // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
@@ -2211,8 +2215,8 @@
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
 
             // Display the proper number of nodule columns based on the nodules that have a value for
-            // "Endobronchial", a required field.
-            const $noduleKeyFields = $("[name^=cect][name$=en]").filter(function () {
+            // "Is it New", a required field.
+            const $noduleKeyFields = $("[name^=cect][name$=ch]").filter(function () {
                 return $(this).val() !== "" && $(this).val() !== "-";
             });
 

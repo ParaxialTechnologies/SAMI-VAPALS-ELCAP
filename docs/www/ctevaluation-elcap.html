@@ -7489,7 +7489,7 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.08.13
+     SNAPSHOT 2018.08.14
     </span>
    </div>
   </footer>
@@ -7607,11 +7607,6 @@
         function removeNodule() {
             if (noduleCount > 0) {
                 $("#cect" + noduleCount + "ch").val("-").trigger('change.cteval');
-                var fv = $("form.validated").data("formValidation");
-                if (fv) {
-                    fv.resetField("cect" + noduleCount + "ch");
-                }
-
                 displayNodules(--noduleCount);
                 $("[name='cennod']").val(noduleCount);
                 $("[name='ceanod']").val(noduleCount === 0 ? "n" : "y");
@@ -7689,7 +7684,6 @@
                 }
             }).conditionallyEnable({sourceValues: "b", disable: "#non-baseline-container"});
 
-
             // NODULES
             
                 $("#cect1nt").conditionallyEnable({sourceValues: "m", enable: "#cect1-container"});
@@ -7702,55 +7696,57 @@
                         const h = $("#cect1sh").val() || 0;
 
                         let v;
-                        if (h==0) {
-                            v = l * w  * Math.sqrt( l * w );
+                        if (h == 0) {
+                            v = l * w * Math.sqrt(l * w);
                         } else {
                             v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
                         }
-                        
+
                         $("#cect1sv").val(v.toFixed(2));
                     });
+                    // when the volume is manually entered, disable the auto-calculations
                     $("#cect1sv").on('keyup', function () {
                         $fields.off('keyup.vapals');
                     });
+                }
 
-                    $("#cect1ch").on('change.cteval', function () {
+                $("#cect1ch").on('change.cteval', function () {
 
-                        // All fields related to this nodule.
-                        // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
-                        // nodule 10 would match cect1*
-                        const regex = new RegExp("cect1[a-z]");
-                        const $fields = $('input,select').filter(function () {
-                            const name = $(this).attr('name');
-                            const id = $(this).attr('id');
-                            return id != "cect1ch" && (regex.test(name) || regex.test(id));
+                    // All fields related to this nodule.
+                    // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
+                    // nodule 10 would match cect1*
+                    const regex = new RegExp("cect1[a-z]");
+                    const $fields = $('input,select').filter(function () {
+                        const name = $(this).attr('name');
+                        const id = $(this).attr('id');
+                        return id != "cect1ch" && (regex.test(name) || regex.test(id));
+                    });
+
+                    if ($(this).val() === "-") {
+                        //empty out values
+                        $fields.filter("select").val("-");
+                        $fields.filter(":radio, :checkbox").prop('checked', false);
+                        $fields.filter(":text").val("");
+
+                        //change trigger added to clear any calculated text values
+                        $fields.trigger("change");
+
+                        //reset form validation messages (hide them)
+                        const fv = $("form.validated").data("formValidation");
+                        $.each($fields, function (i, el) {
+                            fv.resetField($(el).prop('name'));
                         });
 
-                        if ($(this).val() === "-") {
-                            //empty out values
-                            $fields.filter("select").val("-");
-                            $fields.filter(":radio, :checkbox").prop('checked', false);
-                            $fields.filter(":text").val("");
+                        //finally disable the fields
+                        $fields.prop('disabled', true);
+                    }
+                    else { //re-enable fields
+                        $fields
+                            .prop('disabled', false)
+                            .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
+                    }
+                });
 
-                            //change trigger added to clear any calculated text values
-                            $fields.trigger("change");
-
-                            //reset form validation messages (hide them)
-                            const fv = $("form.validated").data("formValidation");
-                            $.each($fields, function (i, el) {
-                                fv.resetField($(el).prop('name'));
-                            });
-
-                            //finally disable the fields
-                            $fields.prop('disabled', true);
-                        }
-                        else { //re-enable fields
-                            $fields
-                                .prop('disabled', false)
-                                .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
-                        }
-                    });
-                }
             
                 $("#cect2nt").conditionallyEnable({sourceValues: "m", enable: "#cect2-container"});
 
@@ -7762,55 +7758,57 @@
                         const h = $("#cect2sh").val() || 0;
 
                         let v;
-                        if (h==0) {
-                            v = l * w  * Math.sqrt( l * w );
+                        if (h == 0) {
+                            v = l * w * Math.sqrt(l * w);
                         } else {
                             v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
                         }
-                        
+
                         $("#cect2sv").val(v.toFixed(2));
                     });
+                    // when the volume is manually entered, disable the auto-calculations
                     $("#cect2sv").on('keyup', function () {
                         $fields.off('keyup.vapals');
                     });
+                }
 
-                    $("#cect2ch").on('change.cteval', function () {
+                $("#cect2ch").on('change.cteval', function () {
 
-                        // All fields related to this nodule.
-                        // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
-                        // nodule 10 would match cect1*
-                        const regex = new RegExp("cect2[a-z]");
-                        const $fields = $('input,select').filter(function () {
-                            const name = $(this).attr('name');
-                            const id = $(this).attr('id');
-                            return id != "cect2ch" && (regex.test(name) || regex.test(id));
+                    // All fields related to this nodule.
+                    // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
+                    // nodule 10 would match cect1*
+                    const regex = new RegExp("cect2[a-z]");
+                    const $fields = $('input,select').filter(function () {
+                        const name = $(this).attr('name');
+                        const id = $(this).attr('id');
+                        return id != "cect2ch" && (regex.test(name) || regex.test(id));
+                    });
+
+                    if ($(this).val() === "-") {
+                        //empty out values
+                        $fields.filter("select").val("-");
+                        $fields.filter(":radio, :checkbox").prop('checked', false);
+                        $fields.filter(":text").val("");
+
+                        //change trigger added to clear any calculated text values
+                        $fields.trigger("change");
+
+                        //reset form validation messages (hide them)
+                        const fv = $("form.validated").data("formValidation");
+                        $.each($fields, function (i, el) {
+                            fv.resetField($(el).prop('name'));
                         });
 
-                        if ($(this).val() === "-") {
-                            //empty out values
-                            $fields.filter("select").val("-");
-                            $fields.filter(":radio, :checkbox").prop('checked', false);
-                            $fields.filter(":text").val("");
+                        //finally disable the fields
+                        $fields.prop('disabled', true);
+                    }
+                    else { //re-enable fields
+                        $fields
+                            .prop('disabled', false)
+                            .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
+                    }
+                });
 
-                            //change trigger added to clear any calculated text values
-                            $fields.trigger("change");
-
-                            //reset form validation messages (hide them)
-                            const fv = $("form.validated").data("formValidation");
-                            $.each($fields, function (i, el) {
-                                fv.resetField($(el).prop('name'));
-                            });
-
-                            //finally disable the fields
-                            $fields.prop('disabled', true);
-                        }
-                        else { //re-enable fields
-                            $fields
-                                .prop('disabled', false)
-                                .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
-                        }
-                    });
-                }
             
                 $("#cect3nt").conditionallyEnable({sourceValues: "m", enable: "#cect3-container"});
 
@@ -7822,55 +7820,57 @@
                         const h = $("#cect3sh").val() || 0;
 
                         let v;
-                        if (h==0) {
-                            v = l * w  * Math.sqrt( l * w );
+                        if (h == 0) {
+                            v = l * w * Math.sqrt(l * w);
                         } else {
                             v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
                         }
-                        
+
                         $("#cect3sv").val(v.toFixed(2));
                     });
+                    // when the volume is manually entered, disable the auto-calculations
                     $("#cect3sv").on('keyup', function () {
                         $fields.off('keyup.vapals');
                     });
+                }
 
-                    $("#cect3ch").on('change.cteval', function () {
+                $("#cect3ch").on('change.cteval', function () {
 
-                        // All fields related to this nodule.
-                        // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
-                        // nodule 10 would match cect1*
-                        const regex = new RegExp("cect3[a-z]");
-                        const $fields = $('input,select').filter(function () {
-                            const name = $(this).attr('name');
-                            const id = $(this).attr('id');
-                            return id != "cect3ch" && (regex.test(name) || regex.test(id));
+                    // All fields related to this nodule.
+                    // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
+                    // nodule 10 would match cect1*
+                    const regex = new RegExp("cect3[a-z]");
+                    const $fields = $('input,select').filter(function () {
+                        const name = $(this).attr('name');
+                        const id = $(this).attr('id');
+                        return id != "cect3ch" && (regex.test(name) || regex.test(id));
+                    });
+
+                    if ($(this).val() === "-") {
+                        //empty out values
+                        $fields.filter("select").val("-");
+                        $fields.filter(":radio, :checkbox").prop('checked', false);
+                        $fields.filter(":text").val("");
+
+                        //change trigger added to clear any calculated text values
+                        $fields.trigger("change");
+
+                        //reset form validation messages (hide them)
+                        const fv = $("form.validated").data("formValidation");
+                        $.each($fields, function (i, el) {
+                            fv.resetField($(el).prop('name'));
                         });
 
-                        if ($(this).val() === "-") {
-                            //empty out values
-                            $fields.filter("select").val("-");
-                            $fields.filter(":radio, :checkbox").prop('checked', false);
-                            $fields.filter(":text").val("");
+                        //finally disable the fields
+                        $fields.prop('disabled', true);
+                    }
+                    else { //re-enable fields
+                        $fields
+                            .prop('disabled', false)
+                            .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
+                    }
+                });
 
-                            //change trigger added to clear any calculated text values
-                            $fields.trigger("change");
-
-                            //reset form validation messages (hide them)
-                            const fv = $("form.validated").data("formValidation");
-                            $.each($fields, function (i, el) {
-                                fv.resetField($(el).prop('name'));
-                            });
-
-                            //finally disable the fields
-                            $fields.prop('disabled', true);
-                        }
-                        else { //re-enable fields
-                            $fields
-                                .prop('disabled', false)
-                                .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
-                        }
-                    });
-                }
             
                 $("#cect4nt").conditionallyEnable({sourceValues: "m", enable: "#cect4-container"});
 
@@ -7882,55 +7882,57 @@
                         const h = $("#cect4sh").val() || 0;
 
                         let v;
-                        if (h==0) {
-                            v = l * w  * Math.sqrt( l * w );
+                        if (h == 0) {
+                            v = l * w * Math.sqrt(l * w);
                         } else {
                             v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
                         }
-                        
+
                         $("#cect4sv").val(v.toFixed(2));
                     });
+                    // when the volume is manually entered, disable the auto-calculations
                     $("#cect4sv").on('keyup', function () {
                         $fields.off('keyup.vapals');
                     });
+                }
 
-                    $("#cect4ch").on('change.cteval', function () {
+                $("#cect4ch").on('change.cteval', function () {
 
-                        // All fields related to this nodule.
-                        // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
-                        // nodule 10 would match cect1*
-                        const regex = new RegExp("cect4[a-z]");
-                        const $fields = $('input,select').filter(function () {
-                            const name = $(this).attr('name');
-                            const id = $(this).attr('id');
-                            return id != "cect4ch" && (regex.test(name) || regex.test(id));
+                    // All fields related to this nodule.
+                    // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
+                    // nodule 10 would match cect1*
+                    const regex = new RegExp("cect4[a-z]");
+                    const $fields = $('input,select').filter(function () {
+                        const name = $(this).attr('name');
+                        const id = $(this).attr('id');
+                        return id != "cect4ch" && (regex.test(name) || regex.test(id));
+                    });
+
+                    if ($(this).val() === "-") {
+                        //empty out values
+                        $fields.filter("select").val("-");
+                        $fields.filter(":radio, :checkbox").prop('checked', false);
+                        $fields.filter(":text").val("");
+
+                        //change trigger added to clear any calculated text values
+                        $fields.trigger("change");
+
+                        //reset form validation messages (hide them)
+                        const fv = $("form.validated").data("formValidation");
+                        $.each($fields, function (i, el) {
+                            fv.resetField($(el).prop('name'));
                         });
 
-                        if ($(this).val() === "-") {
-                            //empty out values
-                            $fields.filter("select").val("-");
-                            $fields.filter(":radio, :checkbox").prop('checked', false);
-                            $fields.filter(":text").val("");
+                        //finally disable the fields
+                        $fields.prop('disabled', true);
+                    }
+                    else { //re-enable fields
+                        $fields
+                            .prop('disabled', false)
+                            .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
+                    }
+                });
 
-                            //change trigger added to clear any calculated text values
-                            $fields.trigger("change");
-
-                            //reset form validation messages (hide them)
-                            const fv = $("form.validated").data("formValidation");
-                            $.each($fields, function (i, el) {
-                                fv.resetField($(el).prop('name'));
-                            });
-
-                            //finally disable the fields
-                            $fields.prop('disabled', true);
-                        }
-                        else { //re-enable fields
-                            $fields
-                                .prop('disabled', false)
-                                .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
-                        }
-                    });
-                }
             
                 $("#cect5nt").conditionallyEnable({sourceValues: "m", enable: "#cect5-container"});
 
@@ -7942,55 +7944,57 @@
                         const h = $("#cect5sh").val() || 0;
 
                         let v;
-                        if (h==0) {
-                            v = l * w  * Math.sqrt( l * w );
+                        if (h == 0) {
+                            v = l * w * Math.sqrt(l * w);
                         } else {
                             v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
                         }
-                        
+
                         $("#cect5sv").val(v.toFixed(2));
                     });
+                    // when the volume is manually entered, disable the auto-calculations
                     $("#cect5sv").on('keyup', function () {
                         $fields.off('keyup.vapals');
                     });
+                }
 
-                    $("#cect5ch").on('change.cteval', function () {
+                $("#cect5ch").on('change.cteval', function () {
 
-                        // All fields related to this nodule.
-                        // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
-                        // nodule 10 would match cect1*
-                        const regex = new RegExp("cect5[a-z]");
-                        const $fields = $('input,select').filter(function () {
-                            const name = $(this).attr('name');
-                            const id = $(this).attr('id');
-                            return id != "cect5ch" && (regex.test(name) || regex.test(id));
+                    // All fields related to this nodule.
+                    // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
+                    // nodule 10 would match cect1*
+                    const regex = new RegExp("cect5[a-z]");
+                    const $fields = $('input,select').filter(function () {
+                        const name = $(this).attr('name');
+                        const id = $(this).attr('id');
+                        return id != "cect5ch" && (regex.test(name) || regex.test(id));
+                    });
+
+                    if ($(this).val() === "-") {
+                        //empty out values
+                        $fields.filter("select").val("-");
+                        $fields.filter(":radio, :checkbox").prop('checked', false);
+                        $fields.filter(":text").val("");
+
+                        //change trigger added to clear any calculated text values
+                        $fields.trigger("change");
+
+                        //reset form validation messages (hide them)
+                        const fv = $("form.validated").data("formValidation");
+                        $.each($fields, function (i, el) {
+                            fv.resetField($(el).prop('name'));
                         });
 
-                        if ($(this).val() === "-") {
-                            //empty out values
-                            $fields.filter("select").val("-");
-                            $fields.filter(":radio, :checkbox").prop('checked', false);
-                            $fields.filter(":text").val("");
+                        //finally disable the fields
+                        $fields.prop('disabled', true);
+                    }
+                    else { //re-enable fields
+                        $fields
+                            .prop('disabled', false)
+                            .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
+                    }
+                });
 
-                            //change trigger added to clear any calculated text values
-                            $fields.trigger("change");
-
-                            //reset form validation messages (hide them)
-                            const fv = $("form.validated").data("formValidation");
-                            $.each($fields, function (i, el) {
-                                fv.resetField($(el).prop('name'));
-                            });
-
-                            //finally disable the fields
-                            $fields.prop('disabled', true);
-                        }
-                        else { //re-enable fields
-                            $fields
-                                .prop('disabled', false)
-                                .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
-                        }
-                    });
-                }
             
                 $("#cect6nt").conditionallyEnable({sourceValues: "m", enable: "#cect6-container"});
 
@@ -8002,55 +8006,57 @@
                         const h = $("#cect6sh").val() || 0;
 
                         let v;
-                        if (h==0) {
-                            v = l * w  * Math.sqrt( l * w );
+                        if (h == 0) {
+                            v = l * w * Math.sqrt(l * w);
                         } else {
                             v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
                         }
-                        
+
                         $("#cect6sv").val(v.toFixed(2));
                     });
+                    // when the volume is manually entered, disable the auto-calculations
                     $("#cect6sv").on('keyup', function () {
                         $fields.off('keyup.vapals');
                     });
+                }
 
-                    $("#cect6ch").on('change.cteval', function () {
+                $("#cect6ch").on('change.cteval', function () {
 
-                        // All fields related to this nodule.
-                        // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
-                        // nodule 10 would match cect1*
-                        const regex = new RegExp("cect6[a-z]");
-                        const $fields = $('input,select').filter(function () {
-                            const name = $(this).attr('name');
-                            const id = $(this).attr('id');
-                            return id != "cect6ch" && (regex.test(name) || regex.test(id));
+                    // All fields related to this nodule.
+                    // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
+                    // nodule 10 would match cect1*
+                    const regex = new RegExp("cect6[a-z]");
+                    const $fields = $('input,select').filter(function () {
+                        const name = $(this).attr('name');
+                        const id = $(this).attr('id');
+                        return id != "cect6ch" && (regex.test(name) || regex.test(id));
+                    });
+
+                    if ($(this).val() === "-") {
+                        //empty out values
+                        $fields.filter("select").val("-");
+                        $fields.filter(":radio, :checkbox").prop('checked', false);
+                        $fields.filter(":text").val("");
+
+                        //change trigger added to clear any calculated text values
+                        $fields.trigger("change");
+
+                        //reset form validation messages (hide them)
+                        const fv = $("form.validated").data("formValidation");
+                        $.each($fields, function (i, el) {
+                            fv.resetField($(el).prop('name'));
                         });
 
-                        if ($(this).val() === "-") {
-                            //empty out values
-                            $fields.filter("select").val("-");
-                            $fields.filter(":radio, :checkbox").prop('checked', false);
-                            $fields.filter(":text").val("");
+                        //finally disable the fields
+                        $fields.prop('disabled', true);
+                    }
+                    else { //re-enable fields
+                        $fields
+                            .prop('disabled', false)
+                            .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
+                    }
+                });
 
-                            //change trigger added to clear any calculated text values
-                            $fields.trigger("change");
-
-                            //reset form validation messages (hide them)
-                            const fv = $("form.validated").data("formValidation");
-                            $.each($fields, function (i, el) {
-                                fv.resetField($(el).prop('name'));
-                            });
-
-                            //finally disable the fields
-                            $fields.prop('disabled', true);
-                        }
-                        else { //re-enable fields
-                            $fields
-                                .prop('disabled', false)
-                                .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
-                        }
-                    });
-                }
             
                 $("#cect7nt").conditionallyEnable({sourceValues: "m", enable: "#cect7-container"});
 
@@ -8062,55 +8068,57 @@
                         const h = $("#cect7sh").val() || 0;
 
                         let v;
-                        if (h==0) {
-                            v = l * w  * Math.sqrt( l * w );
+                        if (h == 0) {
+                            v = l * w * Math.sqrt(l * w);
                         } else {
                             v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
                         }
-                        
+
                         $("#cect7sv").val(v.toFixed(2));
                     });
+                    // when the volume is manually entered, disable the auto-calculations
                     $("#cect7sv").on('keyup', function () {
                         $fields.off('keyup.vapals');
                     });
+                }
 
-                    $("#cect7ch").on('change.cteval', function () {
+                $("#cect7ch").on('change.cteval', function () {
 
-                        // All fields related to this nodule.
-                        // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
-                        // nodule 10 would match cect1*
-                        const regex = new RegExp("cect7[a-z]");
-                        const $fields = $('input,select').filter(function () {
-                            const name = $(this).attr('name');
-                            const id = $(this).attr('id');
-                            return id != "cect7ch" && (regex.test(name) || regex.test(id));
+                    // All fields related to this nodule.
+                    // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
+                    // nodule 10 would match cect1*
+                    const regex = new RegExp("cect7[a-z]");
+                    const $fields = $('input,select').filter(function () {
+                        const name = $(this).attr('name');
+                        const id = $(this).attr('id');
+                        return id != "cect7ch" && (regex.test(name) || regex.test(id));
+                    });
+
+                    if ($(this).val() === "-") {
+                        //empty out values
+                        $fields.filter("select").val("-");
+                        $fields.filter(":radio, :checkbox").prop('checked', false);
+                        $fields.filter(":text").val("");
+
+                        //change trigger added to clear any calculated text values
+                        $fields.trigger("change");
+
+                        //reset form validation messages (hide them)
+                        const fv = $("form.validated").data("formValidation");
+                        $.each($fields, function (i, el) {
+                            fv.resetField($(el).prop('name'));
                         });
 
-                        if ($(this).val() === "-") {
-                            //empty out values
-                            $fields.filter("select").val("-");
-                            $fields.filter(":radio, :checkbox").prop('checked', false);
-                            $fields.filter(":text").val("");
+                        //finally disable the fields
+                        $fields.prop('disabled', true);
+                    }
+                    else { //re-enable fields
+                        $fields
+                            .prop('disabled', false)
+                            .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
+                    }
+                });
 
-                            //change trigger added to clear any calculated text values
-                            $fields.trigger("change");
-
-                            //reset form validation messages (hide them)
-                            const fv = $("form.validated").data("formValidation");
-                            $.each($fields, function (i, el) {
-                                fv.resetField($(el).prop('name'));
-                            });
-
-                            //finally disable the fields
-                            $fields.prop('disabled', true);
-                        }
-                        else { //re-enable fields
-                            $fields
-                                .prop('disabled', false)
-                                .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
-                        }
-                    });
-                }
             
                 $("#cect8nt").conditionallyEnable({sourceValues: "m", enable: "#cect8-container"});
 
@@ -8122,55 +8130,57 @@
                         const h = $("#cect8sh").val() || 0;
 
                         let v;
-                        if (h==0) {
-                            v = l * w  * Math.sqrt( l * w );
+                        if (h == 0) {
+                            v = l * w * Math.sqrt(l * w);
                         } else {
                             v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
                         }
-                        
+
                         $("#cect8sv").val(v.toFixed(2));
                     });
+                    // when the volume is manually entered, disable the auto-calculations
                     $("#cect8sv").on('keyup', function () {
                         $fields.off('keyup.vapals');
                     });
+                }
 
-                    $("#cect8ch").on('change.cteval', function () {
+                $("#cect8ch").on('change.cteval', function () {
 
-                        // All fields related to this nodule.
-                        // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
-                        // nodule 10 would match cect1*
-                        const regex = new RegExp("cect8[a-z]");
-                        const $fields = $('input,select').filter(function () {
-                            const name = $(this).attr('name');
-                            const id = $(this).attr('id');
-                            return id != "cect8ch" && (regex.test(name) || regex.test(id));
+                    // All fields related to this nodule.
+                    // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
+                    // nodule 10 would match cect1*
+                    const regex = new RegExp("cect8[a-z]");
+                    const $fields = $('input,select').filter(function () {
+                        const name = $(this).attr('name');
+                        const id = $(this).attr('id');
+                        return id != "cect8ch" && (regex.test(name) || regex.test(id));
+                    });
+
+                    if ($(this).val() === "-") {
+                        //empty out values
+                        $fields.filter("select").val("-");
+                        $fields.filter(":radio, :checkbox").prop('checked', false);
+                        $fields.filter(":text").val("");
+
+                        //change trigger added to clear any calculated text values
+                        $fields.trigger("change");
+
+                        //reset form validation messages (hide them)
+                        const fv = $("form.validated").data("formValidation");
+                        $.each($fields, function (i, el) {
+                            fv.resetField($(el).prop('name'));
                         });
 
-                        if ($(this).val() === "-") {
-                            //empty out values
-                            $fields.filter("select").val("-");
-                            $fields.filter(":radio, :checkbox").prop('checked', false);
-                            $fields.filter(":text").val("");
+                        //finally disable the fields
+                        $fields.prop('disabled', true);
+                    }
+                    else { //re-enable fields
+                        $fields
+                            .prop('disabled', false)
+                            .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
+                    }
+                });
 
-                            //change trigger added to clear any calculated text values
-                            $fields.trigger("change");
-
-                            //reset form validation messages (hide them)
-                            const fv = $("form.validated").data("formValidation");
-                            $.each($fields, function (i, el) {
-                                fv.resetField($(el).prop('name'));
-                            });
-
-                            //finally disable the fields
-                            $fields.prop('disabled', true);
-                        }
-                        else { //re-enable fields
-                            $fields
-                                .prop('disabled', false)
-                                .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
-                        }
-                    });
-                }
             
                 $("#cect9nt").conditionallyEnable({sourceValues: "m", enable: "#cect9-container"});
 
@@ -8182,55 +8192,57 @@
                         const h = $("#cect9sh").val() || 0;
 
                         let v;
-                        if (h==0) {
-                            v = l * w  * Math.sqrt( l * w );
+                        if (h == 0) {
+                            v = l * w * Math.sqrt(l * w);
                         } else {
                             v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
                         }
-                        
+
                         $("#cect9sv").val(v.toFixed(2));
                     });
+                    // when the volume is manually entered, disable the auto-calculations
                     $("#cect9sv").on('keyup', function () {
                         $fields.off('keyup.vapals');
                     });
+                }
 
-                    $("#cect9ch").on('change.cteval', function () {
+                $("#cect9ch").on('change.cteval', function () {
 
-                        // All fields related to this nodule.
-                        // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
-                        // nodule 10 would match cect1*
-                        const regex = new RegExp("cect9[a-z]");
-                        const $fields = $('input,select').filter(function () {
-                            const name = $(this).attr('name');
-                            const id = $(this).attr('id');
-                            return id != "cect9ch" && (regex.test(name) || regex.test(id));
+                    // All fields related to this nodule.
+                    // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
+                    // nodule 10 would match cect1*
+                    const regex = new RegExp("cect9[a-z]");
+                    const $fields = $('input,select').filter(function () {
+                        const name = $(this).attr('name');
+                        const id = $(this).attr('id');
+                        return id != "cect9ch" && (regex.test(name) || regex.test(id));
+                    });
+
+                    if ($(this).val() === "-") {
+                        //empty out values
+                        $fields.filter("select").val("-");
+                        $fields.filter(":radio, :checkbox").prop('checked', false);
+                        $fields.filter(":text").val("");
+
+                        //change trigger added to clear any calculated text values
+                        $fields.trigger("change");
+
+                        //reset form validation messages (hide them)
+                        const fv = $("form.validated").data("formValidation");
+                        $.each($fields, function (i, el) {
+                            fv.resetField($(el).prop('name'));
                         });
 
-                        if ($(this).val() === "-") {
-                            //empty out values
-                            $fields.filter("select").val("-");
-                            $fields.filter(":radio, :checkbox").prop('checked', false);
-                            $fields.filter(":text").val("");
+                        //finally disable the fields
+                        $fields.prop('disabled', true);
+                    }
+                    else { //re-enable fields
+                        $fields
+                            .prop('disabled', false)
+                            .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
+                    }
+                });
 
-                            //change trigger added to clear any calculated text values
-                            $fields.trigger("change");
-
-                            //reset form validation messages (hide them)
-                            const fv = $("form.validated").data("formValidation");
-                            $.each($fields, function (i, el) {
-                                fv.resetField($(el).prop('name'));
-                            });
-
-                            //finally disable the fields
-                            $fields.prop('disabled', true);
-                        }
-                        else { //re-enable fields
-                            $fields
-                                .prop('disabled', false)
-                                .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
-                        }
-                    });
-                }
             
                 $("#cect10nt").conditionallyEnable({sourceValues: "m", enable: "#cect10-container"});
 
@@ -8242,56 +8254,59 @@
                         const h = $("#cect10sh").val() || 0;
 
                         let v;
-                        if (h==0) {
-                            v = l * w  * Math.sqrt( l * w );
+                        if (h == 0) {
+                            v = l * w * Math.sqrt(l * w);
                         } else {
                             v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
                         }
-                        
+
                         $("#cect10sv").val(v.toFixed(2));
                     });
+                    // when the volume is manually entered, disable the auto-calculations
                     $("#cect10sv").on('keyup', function () {
                         $fields.off('keyup.vapals');
                     });
+                }
 
-                    $("#cect10ch").on('change.cteval', function () {
+                $("#cect10ch").on('change.cteval', function () {
 
-                        // All fields related to this nodule.
-                        // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
-                        // nodule 10 would match cect1*
-                        const regex = new RegExp("cect10[a-z]");
-                        const $fields = $('input,select').filter(function () {
-                            const name = $(this).attr('name');
-                            const id = $(this).attr('id');
-                            return id != "cect10ch" && (regex.test(name) || regex.test(id));
+                    // All fields related to this nodule.
+                    // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
+                    // nodule 10 would match cect1*
+                    const regex = new RegExp("cect10[a-z]");
+                    const $fields = $('input,select').filter(function () {
+                        const name = $(this).attr('name');
+                        const id = $(this).attr('id');
+                        return id != "cect10ch" && (regex.test(name) || regex.test(id));
+                    });
+
+                    if ($(this).val() === "-") {
+                        //empty out values
+                        $fields.filter("select").val("-");
+                        $fields.filter(":radio, :checkbox").prop('checked', false);
+                        $fields.filter(":text").val("");
+
+                        //change trigger added to clear any calculated text values
+                        $fields.trigger("change");
+
+                        //reset form validation messages (hide them)
+                        const fv = $("form.validated").data("formValidation");
+                        $.each($fields, function (i, el) {
+                            fv.resetField($(el).prop('name'));
                         });
 
-                        if ($(this).val() === "-") {
-                            //empty out values
-                            $fields.filter("select").val("-");
-                            $fields.filter(":radio, :checkbox").prop('checked', false);
-                            $fields.filter(":text").val("");
+                        //finally disable the fields
+                        $fields.prop('disabled', true);
+                    }
+                    else { //re-enable fields
+                        $fields
+                            .prop('disabled', false)
+                            .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
+                    }
+                });
 
-                            //change trigger added to clear any calculated text values
-                            $fields.trigger("change");
-
-                            //reset form validation messages (hide them)
-                            const fv = $("form.validated").data("formValidation");
-                            $.each($fields, function (i, el) {
-                                fv.resetField($(el).prop('name'));
-                            });
-
-                            //finally disable the fields
-                            $fields.prop('disabled', true);
-                        }
-                        else { //re-enable fields
-                            $fields
-                                .prop('disabled', false)
-                                .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
-                        }
-                    });
-                }
             
+
 
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
 

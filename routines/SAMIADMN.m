@@ -68,6 +68,7 @@ wsSETELCAP(rtn,filter) ; set VA-PALS to use the ELCAP version of the Ct Evaluati
  I $D(ZERR) D  Q  ;
  . ;ZWR ZERR
  . D ^ZTER
+ S rtn="{ok}"
  Q
  ;
 wsSETLRADS(rtn,filter) ; set VA-PALS to use the LungRads version of the Ct Evaluation form
@@ -85,6 +86,7 @@ wsSETLRADS(rtn,filter) ; set VA-PALS to use the LungRads version of the Ct Evalu
  I $D(ZERR) D  Q  ;
  . ;ZWR ZERR
  . D ^ZTER
+ S rtn="{ok}"
  Q
  ;
 EOR ; End of routine SAMIADMN

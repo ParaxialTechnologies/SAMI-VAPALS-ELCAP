@@ -1931,7 +1931,7 @@
                         <h3>Lung-RADS</h3>
                         <div class="row">
                             <div class="form-group col-sm-5 col-md-4">
-                                <label class="required" for="celrad">Category</label>
+                                <label class="{{ "required" if formPage == "ctevaluation" }}" for="celrad">Category</label>
                                 <br/>
                                 {{ f.radio("celrad", "celrad-na","-","Not applicable", formPage == "ctevaluation") }}
                                 {{ f.radio("celrad", "celrad-0","0","0 (incomplete)") }}

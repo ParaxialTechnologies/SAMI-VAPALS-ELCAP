@@ -2156,14 +2156,9 @@
                     $fields.on('keyup.vapals', function () {
                         const l = $("#cect{{ i }}sl").val() || 0;
                         const w = $("#cect{{ i }}sw").val() || 0;
-                        const h = $("#cect{{ i }}sh").val() || 0;
-
-                        let v;
-                        if (h == 0) {
-                            v = l * w * Math.sqrt(l * w);
-                        } else {
-                            v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
-                        }
+                        const h = $("#cect{{ i }}sh").val() || Math.sqrt(l*w);
+                            
+                        v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
 
                         $("#cect{{ i }}sv").val(v.toFixed(2));
                     });

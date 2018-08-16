@@ -68,7 +68,7 @@ wsSETELCAP(rtn,filter) ; set VA-PALS to use the ELCAP version of the Ct Evaluati
  I $D(ZERR) D  Q  ;
  . ;ZWR ZERR
  . D ^ZTER
- S rtn="{ok}"
+ S rtn="{status: ""ok""}"
  Q
  ;
 wsSETLRADS(rtn,filter) ; set VA-PALS to use the LungRads version of the Ct Evaluation form
@@ -86,7 +86,18 @@ wsSETLRADS(rtn,filter) ; set VA-PALS to use the LungRads version of the Ct Evalu
  I $D(ZERR) D  Q  ;
  . ;ZWR ZERR
  . D ^ZTER
- S rtn="{ok}"
+ S rtn="{status: ""ok""}"
  Q
+ ;
+wsctversion(rtn,filter) ; web service to return the current ctform version
+ ;
+ n fn,ver,ien
+ s ien=$o(^SAMI(311.11,"B","vapals:ceform",""))
+ q:ien=""
+ s fn=$$GET1^DIQ(311.11,ien_",",2)
+ i fn["elcap" s ver="elcap"
+ i fn["lungr" s ver="lungrads"
+ s rtn="{ctversion: """_ver_"""}"
+ q
  ;
 EOR ; End of routine SAMIADMN

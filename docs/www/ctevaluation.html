@@ -7185,10 +7185,25 @@
           <option value="su">
            Resection
           </option>
+          <option value="pc">
+           Pulmonary consultation
+          </option>
+          <option value="tb">
+           Tumor board
+          </option>
           <option value="nf">
            No further follow-up
           </option>
+          <option value="o">
+           Other
+          </option>
          </select>
+        </div>
+        <div class="col-sm-4 form-group" id="cefuo-container">
+         <label class="control-label required" for="cefuo">
+          Specify
+         </label>
+         <input class="form-control" id="cefuo" name="cefuo" placeholder="specify" required="required" type="text"/>
         </div>
        </div>
        <div class="row">
@@ -7574,14 +7589,9 @@
                     $fields.on('keyup.vapals', function () {
                         const l = $("#cect1sl").val() || 0;
                         const w = $("#cect1sw").val() || 0;
-                        const h = $("#cect1sh").val() || 0;
-
-                        let v;
-                        if (h == 0) {
-                            v = l * w * Math.sqrt(l * w);
-                        } else {
-                            v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
-                        }
+                        const h = $("#cect1sh").val() || Math.sqrt(l*w);
+                            
+                        v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
 
                         $("#cect1sv").val(v.toFixed(2));
                     });
@@ -7636,14 +7646,9 @@
                     $fields.on('keyup.vapals', function () {
                         const l = $("#cect2sl").val() || 0;
                         const w = $("#cect2sw").val() || 0;
-                        const h = $("#cect2sh").val() || 0;
-
-                        let v;
-                        if (h == 0) {
-                            v = l * w * Math.sqrt(l * w);
-                        } else {
-                            v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
-                        }
+                        const h = $("#cect2sh").val() || Math.sqrt(l*w);
+                            
+                        v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
 
                         $("#cect2sv").val(v.toFixed(2));
                     });
@@ -7698,14 +7703,9 @@
                     $fields.on('keyup.vapals', function () {
                         const l = $("#cect3sl").val() || 0;
                         const w = $("#cect3sw").val() || 0;
-                        const h = $("#cect3sh").val() || 0;
-
-                        let v;
-                        if (h == 0) {
-                            v = l * w * Math.sqrt(l * w);
-                        } else {
-                            v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
-                        }
+                        const h = $("#cect3sh").val() || Math.sqrt(l*w);
+                            
+                        v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
 
                         $("#cect3sv").val(v.toFixed(2));
                     });
@@ -7760,14 +7760,9 @@
                     $fields.on('keyup.vapals', function () {
                         const l = $("#cect4sl").val() || 0;
                         const w = $("#cect4sw").val() || 0;
-                        const h = $("#cect4sh").val() || 0;
-
-                        let v;
-                        if (h == 0) {
-                            v = l * w * Math.sqrt(l * w);
-                        } else {
-                            v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
-                        }
+                        const h = $("#cect4sh").val() || Math.sqrt(l*w);
+                            
+                        v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
 
                         $("#cect4sv").val(v.toFixed(2));
                     });
@@ -7822,14 +7817,9 @@
                     $fields.on('keyup.vapals', function () {
                         const l = $("#cect5sl").val() || 0;
                         const w = $("#cect5sw").val() || 0;
-                        const h = $("#cect5sh").val() || 0;
-
-                        let v;
-                        if (h == 0) {
-                            v = l * w * Math.sqrt(l * w);
-                        } else {
-                            v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
-                        }
+                        const h = $("#cect5sh").val() || Math.sqrt(l*w);
+                            
+                        v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
 
                         $("#cect5sv").val(v.toFixed(2));
                     });
@@ -7884,14 +7874,9 @@
                     $fields.on('keyup.vapals', function () {
                         const l = $("#cect6sl").val() || 0;
                         const w = $("#cect6sw").val() || 0;
-                        const h = $("#cect6sh").val() || 0;
-
-                        let v;
-                        if (h == 0) {
-                            v = l * w * Math.sqrt(l * w);
-                        } else {
-                            v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
-                        }
+                        const h = $("#cect6sh").val() || Math.sqrt(l*w);
+                            
+                        v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
 
                         $("#cect6sv").val(v.toFixed(2));
                     });
@@ -7946,14 +7931,9 @@
                     $fields.on('keyup.vapals', function () {
                         const l = $("#cect7sl").val() || 0;
                         const w = $("#cect7sw").val() || 0;
-                        const h = $("#cect7sh").val() || 0;
-
-                        let v;
-                        if (h == 0) {
-                            v = l * w * Math.sqrt(l * w);
-                        } else {
-                            v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
-                        }
+                        const h = $("#cect7sh").val() || Math.sqrt(l*w);
+                            
+                        v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
 
                         $("#cect7sv").val(v.toFixed(2));
                     });
@@ -8008,14 +7988,9 @@
                     $fields.on('keyup.vapals', function () {
                         const l = $("#cect8sl").val() || 0;
                         const w = $("#cect8sw").val() || 0;
-                        const h = $("#cect8sh").val() || 0;
-
-                        let v;
-                        if (h == 0) {
-                            v = l * w * Math.sqrt(l * w);
-                        } else {
-                            v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
-                        }
+                        const h = $("#cect8sh").val() || Math.sqrt(l*w);
+                            
+                        v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
 
                         $("#cect8sv").val(v.toFixed(2));
                     });
@@ -8070,14 +8045,9 @@
                     $fields.on('keyup.vapals', function () {
                         const l = $("#cect9sl").val() || 0;
                         const w = $("#cect9sw").val() || 0;
-                        const h = $("#cect9sh").val() || 0;
-
-                        let v;
-                        if (h == 0) {
-                            v = l * w * Math.sqrt(l * w);
-                        } else {
-                            v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
-                        }
+                        const h = $("#cect9sh").val() || Math.sqrt(l*w);
+                            
+                        v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
 
                         $("#cect9sv").val(v.toFixed(2));
                     });
@@ -8132,14 +8102,9 @@
                     $fields.on('keyup.vapals', function () {
                         const l = $("#cect10sl").val() || 0;
                         const w = $("#cect10sw").val() || 0;
-                        const h = $("#cect10sh").val() || 0;
-
-                        let v;
-                        if (h == 0) {
-                            v = l * w * Math.sqrt(l * w);
-                        } else {
-                            v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
-                        }
+                        const h = $("#cect10sh").val() || Math.sqrt(l*w);
+                            
+                        v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
 
                         $("#cect10sv").val(v.toFixed(2));
                     });
@@ -8296,6 +8261,9 @@
             for (let i = 0; i < groups.length; i++) {
                 requireChildRadioSelectedValidator(groups[i])
             }
+
+            //FOLLOWUP
+            $("#cefu").conditionallyDisplay({sourceValues: "o", enable: "#cefuo-container"});
 
             //followup date calculation
             $("[name=cefuw]").on('change', function () {

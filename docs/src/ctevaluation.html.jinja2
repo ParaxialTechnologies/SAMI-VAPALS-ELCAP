@@ -758,20 +758,19 @@
 
                         <div class="row">
                             <div class="col-sm-12 form-group">
-                                <label class="control-label required">Emphysema
+                                <label class="control-label">Emphysema
                                     <i class="fa fa-question-circle-o" aria-hidden="true"
-                                       data-html="true"
-                                       data-toggle="popover" title="Help"
+                                       data-html="true" data-toggle="popover" title="Help"
                                        data-content="Mild: splaying of vessels, occasional areas of emphysema<br/>
                                             Moderate:  emphysema in less than ½ of the lungs<br/>
                                             Severe:  emphysema in more than ½ of the lungs"></i>
 
                                 </label>
-                                {{ f.radio("ceem", "ceem-nv", "nv", "Not visible", true) }}
-                                {{ f.radio("ceem", "ceem-no", "no", "None", false) }}
-                                {{ f.radio("ceem", "ceem-mi", "mi", "Mild", false) }}
-                                {{ f.radio("ceem", "ceem-mo", "mo", "Moderate", false) }}
-                                {{ f.radio("ceem", "ceem-se", "se", "Severe", false) }}
+                                {{ f.radio("ceem", "ceem-nv", "nv", "Not visible") }}
+                                {{ f.radio("ceem", "ceem-no", "no", "None") }}
+                                {{ f.radio("ceem", "ceem-mi", "mi", "Mild") }}
+                                {{ f.radio("ceem", "ceem-mo", "mo", "Moderate") }}
+                                {{ f.radio("ceem", "ceem-se", "se", "Severe") }}
 
                             </div>
                         </div>
@@ -782,8 +781,8 @@
                                     <label for="ceoca-n">Cardiac Abnormalities</label>
                                 </div>
                                 <div class="col-sm-8 col-md-9">
-                                    {{ f.inlineRadio("ceoca", "ceoca-n","n","No",true) }}
-                                    {{ f.inlineRadio("ceoca", "ceoca-y","y","Yes",true) }}
+                                    {{ f.inlineRadio("ceoca", "ceoca-n","n","No") }}
+                                    {{ f.inlineRadio("ceoca", "ceoca-y","y","Yes") }}
                                 </div>
                             </div>
                         </div>
@@ -794,8 +793,7 @@
                                 {% if formPage=="ctevaluation-elcap" %}
                                     <tr>
                                         <td>
-                                            <label
-                                                    class="control-label required"
+                                            <label class="control-label required"
                                                     for="cecclm">Coronary calcification</label>
                                         </td>
                                         <td>
@@ -2229,6 +2227,8 @@
             noduleCount = Math.max($noduleKeyFields.length, lastNoduleId);
             displayNodules(noduleCount);
 
+            //EMPHYSEMA
+            defaultRadio("ceem", "no");
 
             //ABNORMALITIES
             defaultRadio("pa", "n", "#pulmonary-container", "y");

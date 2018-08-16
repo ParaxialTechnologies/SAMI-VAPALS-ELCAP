@@ -1907,9 +1907,18 @@
                                     <option value="fn"> CT-guided biopsy</option>
                                     <option value="br"> Bronchoscopy</option>
                                     <option value="su"> Resection</option>
+                                    <option value="pc"> Pulmonary consultation</option>
+                                    <option value="tb"> Tumor board</option>
                                     <option value="nf"> No further follow-up</option>
+                                    <option value="o"> Other</option>
                                 </select>
                             </div>
+                            <div class="col-sm-4 form-group" id="cefuo-container">
+                                <label for="cefuo" class="control-label required">Specify</label>
+                                <input class="form-control" type="text" name="cefuo" id="cefuo"
+                                       placeholder="specify" required="required">
+                            </div>
+
                         </div>
                         <div class="row">
                             <div class="col-sm-12 form-group">
@@ -2321,6 +2330,9 @@
             for (let i = 0; i < groups.length; i++) {
                 requireChildRadioSelectedValidator(groups[i])
             }
+
+            //FOLLOWUP
+            $("#cefu").conditionallyDisplay({sourceValues: "o", enable: "#cefuo-container"});
 
             //followup date calculation
             $("[name=cefuw]").on('change', function () {

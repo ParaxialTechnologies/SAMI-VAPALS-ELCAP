@@ -4632,7 +4632,7 @@
       <div aria-labelledby="emphysema-coronary-tab" class="tab-pane" id="emphysema-coronary" role="tabpanel">
        <div class="row">
         <div class="col-sm-12 form-group">
-         <label class="control-label required">
+         <label class="control-label">
           Emphysema
           <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Mild: splaying of vessels, occasional areas of emphysema&lt;br/&gt;
                                             Moderate:  emphysema in less than ½ of the lungs&lt;br/&gt;
@@ -4641,7 +4641,7 @@
          </label>
          <div class="radio">
           <label>
-           <input id="ceem-nv" name="ceem" required="required" type="radio" value="nv"/>
+           <input id="ceem-nv" name="ceem" type="radio" value="nv"/>
            Not visible
           </label>
          </div>
@@ -4680,11 +4680,11 @@
          </div>
          <div class="col-sm-8 col-md-9">
           <label class="radio-inline" for="ceoca-n">
-           <input data-fv-notempty-message="Please select a value" id="ceoca-n" name="ceoca" required="required" type="radio" value="n"/>
+           <input id="ceoca-n" name="ceoca" type="radio" value="n"/>
            No
           </label>
           <label class="radio-inline" for="ceoca-y">
-           <input data-fv-notempty-message="Please select a value" id="ceoca-y" name="ceoca" required="required" type="radio" value="y"/>
+           <input id="ceoca-y" name="ceoca" type="radio" value="y"/>
            Yes
           </label>
          </div>
@@ -7488,7 +7488,7 @@
      Submit feedback
     </a>
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
-     SNAPSHOT 2018.08.15
+     SNAPSHOT 2018.08.16
     </span>
    </div>
   </footer>
@@ -8323,6 +8323,8 @@
             noduleCount = Math.max($noduleKeyFields.length, lastNoduleId);
             displayNodules(noduleCount);
 
+            //EMPHYSEMA
+            defaultRadio("ceem", "no");
 
             //ABNORMALITIES
             defaultRadio("pa", "n", "#pulmonary-container", "y");

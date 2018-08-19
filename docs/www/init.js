@@ -270,4 +270,16 @@ $(function () {
         return false;
     })
 
+    $("input[type=text].decimalformat").on("blur", function(e) {
+        const textField = e.target;
+
+        const fieldVal = $(textField).val()
+
+        if (fieldVal) {
+            textField.value = new Number(fieldVal).toFixed(1);
+        }
+    }).first().trigger('blur')
+
+
+
 });

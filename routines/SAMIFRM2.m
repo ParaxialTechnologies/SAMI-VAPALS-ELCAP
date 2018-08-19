@@ -382,7 +382,10 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  ;. . . s zhtml(%j+2)=repl ; 
  ;. . . set touched=1
  ;
+ n pssn s pssn=$$GETSSN^SAMIFRM2(sid)
  n last5 s last5=$$GETLAST5^SAMIFRM2(sid)
+ n useid s useid=pssn
+ i useid="" s useid=last5
  ;
  if line["@@FORMKEY@@" do  ;
  . do findReplace^%ts(.line,"@@FORMKEY@@",key)
@@ -404,7 +407,7 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  . do findReplace^%ts(.line,"Sample, Sammy G",$g(vals("saminame")))
  ;
  if line["ST0001" do  ;
- . do findReplace^%ts(.line,"ST0001",last5)
+ . do findReplace^%ts(.line,"ST0001",useid)
  ;
  if line["1234567890" do  ;
  . do findReplace^%ts(.line,"1234567890","")
@@ -531,5 +534,11 @@ GETNAME(sid) ; extrinsic returns the name for patient sid
  n ien s ien=$o(@root@("sid",sid,""))
  q:ien=""
  q @root@(ien,"saminame")
+ ;
+GETSSN(sid) ; extrinsic returns the ssn for patient sid
+ n root s root=$$setroot^%wd("vapals-patients")
+ n ien s ien=$o(@root@("sid",sid,""))
+ q:ien=""
+ q $g(@root@(ien,"sissn"))
  ;
 EOR ; end of routine SAMIFRM

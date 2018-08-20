@@ -96,7 +96,7 @@ wsctversion(rtn,filter) ; web service to return the current ctform version
  q:ien=""
  s fn=$$GET1^DIQ(311.11,ien_",",2)
  i fn["elcap" s ver="elcap"
- i fn["lungr" s ver="lungrads"
+ e  s ver="lungrads"
  s rtn="{""ctversion"": """_ver_"""}"
  q
  ;

@@ -194,9 +194,12 @@ wsCASE(rtn,filter) ; generate case review page
  set notehref=notehref_"<input value=""Intake Note"" class=""btn btn-link"" role=""link"" type=""submit""></form>"
  s cnt=cnt+1
  n last5 s last5=$$GETLAST5^SAMIFRM2(sid)
+ n pssn s pssn=$$GETSSN^SAMIFRM2(sid)
  n pname s pname=$$GETNAME^SAMIFRM2(sid)
+ n useid s useid=pssn
+ i useid="" s useid=last5
  ;set rtn(cnt)="<tr><td> "_sid_" </td><td> "_lname_" </td><td> "_fname_" </td><td> - </td><td>"_sidispdate_"</td><td>"_$char(13)
- set rtn(cnt)="<tr><td> "_last5_" </td><td> "_pname_" </td><td> XXX </td><td>"_sidispdate_"</td><td>"_$char(13)
+ set rtn(cnt)="<tr><td> "_useid_" </td><td> "_pname_" </td><td> XXX </td><td>"_sidispdate_"</td><td>"_$char(13)
  s cnt=cnt+1
  set rtn(cnt)="<form method=""post"" action=""/vapals"">"
  set cnt=cnt+1
@@ -228,7 +231,7 @@ wsCASE(rtn,filter) ; generate case review page
  . . . ;new geturl set geturl="/form?form="_zform_"&studyid="_sid_"&key="_zkey
  . . . set cnt=cnt+1
  . . . ;set rtn(cnt)="<tr><td> "_sid_" </td><td> - </td><td> - </td><td> - </td><td>"_dispdate_"</td><td>"
- . . . set rtn(cnt)="<tr><td> "_last5_" </td><td> - </td><td> - </td><td>"_dispdate_"</td><td>"
+ . . . set rtn(cnt)="<tr><td> "_useid_" </td><td> - </td><td> - </td><td>"_dispdate_"</td><td>"
  . . . set cnt=cnt+1
  . . . set rtn(cnt)="<form method=""post"" action=""/vapals"">"_$char(13)
  . . . set cnt=cnt+1
@@ -251,8 +254,8 @@ wsCASE(rtn,filter) ; generate case review page
  . . . . set rpthref=rpthref_"<input type=hidden name=""form"" value="_$p(zform,":",2)_">"
  . . . . set rpthref=rpthref_"<input type=hidden name=""studyid"" value="_sid_">"
  . . . . set rpthref=rpthref_"<input value=""Report"" class=""btn label label-warning"" role=""link"" type=""submit""></form></td>"
- . . . . ;s rtn(cnt)=rpthref_"</tr>"
- . . . . s rtn(cnt)="</tr>" ; turn off report 
+ . . . . s rtn(cnt)=rpthref_"</tr>"
+ . . . . ;s rtn(cnt)="</tr>" ; turn off report 
  . . . e  set rtn(cnt)="<td></td></tr>"
  . . . quit
  . . quit

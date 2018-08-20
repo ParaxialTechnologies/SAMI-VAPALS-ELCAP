@@ -539,6 +539,14 @@ GETSSN(sid) ; extrinsic returns the ssn for patient sid
  n root s root=$$setroot^%wd("vapals-patients")
  n ien s ien=$o(@root@("sid",sid,""))
  q:ien=""
- q $g(@root@(ien,"sissn"))
+ n pssn
+ s pssn=$g(@root@(ien,"sissn"))
+ i pssn="" d  ;
+ . n orgssn
+ . s orgssn=$o(@root@(ien,"ssn"))
+ . q:orgssn=""
+ . s pssn=$e(orgssn,1,3)_"-"_$e(orgssn,4,5)_"-"_$e(orgssn,6,9)
+ . s @root@(ien,"sissn")=pssn
+ q pssn
  ;
 EOR ; end of routine SAMIFRM

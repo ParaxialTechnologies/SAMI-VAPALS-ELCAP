@@ -512,7 +512,7 @@
                                         </tr>
                                         <tr>
                                             <td style="white-space: nowrap;">
-                                                <label class="control-label" for="cect1sd">Mean diameter(mm)</label>
+                                                <label class="control-label" for="cect1sd">Mean diameter (mm)</label>
                                                 <i class="fa fa-question-circle-o" aria-hidden="true"
                                                    data-toggle="popover" title="Help"
                                                    data-content="Calculated mean diameter."></i>
@@ -776,14 +776,10 @@
                         </div>
 
                         <div class="row">
-                            <div class="form-group">
-                                <div class="col-sm-4 col-md-3">
-                                    <label for="ceoca-n">Cardiac Abnormalities</label>
-                                </div>
-                                <div class="col-sm-8 col-md-9">
-                                    {{ f.inlineRadio("ceoca", "ceoca-n","n","No") }}
-                                    {{ f.inlineRadio("ceoca", "ceoca-y","y","Yes") }}
-                                </div>
+                            <div class="col-sm-12 form-group">
+                                <label for="ceoca-n" class="control-label">Coronary Artery Calcification</label>
+                                {{ f.radio("ceoca", "ceoca-n","n","No") }}
+                                {{ f.radio("ceoca", "ceoca-y","y","Yes") }}
                             </div>
                         </div>
 
@@ -1875,7 +1871,7 @@
                                 <div class="radio">
                                     <label>
                                         <input type="radio" name="ceimo" id="ceimo-no" value="no"> No other
-                                        abnormalities.
+                                        significant abnormalities.
                                     </label>
                                 </div>
                                 <div class="radio">

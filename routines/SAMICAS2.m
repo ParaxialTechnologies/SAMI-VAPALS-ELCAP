@@ -281,7 +281,8 @@ wsCASE(rtn,filter) ; generate case review page
  . set rtn(cnt)=line
  . quit
  ;
- ;D ADDCRLF^VPRJRUT(.rtn)
+ D ADDCRLF^VPRJRUT(.rtn)
+ set HTTPRSP("mime")="text/html" ; set mime type
  ;
  ;@stanza 9 termination
  ;

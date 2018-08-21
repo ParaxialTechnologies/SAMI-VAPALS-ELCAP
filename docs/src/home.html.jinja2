@@ -102,11 +102,17 @@
                 }                                   
             }).on("keyup", function(e) {
                 let ptNameVal = $patientLookupInput.val();
-                if (ptNameVal == "" || ( ptNameVal != $patientLookupInput.data('vista').patient.name)) {
+                let data = $patientLookupInput.data('vista');
+                let patientName = "";
+                if (data) {
+                    if (data.patient) {
+                        patientName = data.patient.name
+                    }
+                }
+                if (ptNameVal == "" || (ptNameVal != patientName)) {
                     $('#pt-lookup-btn').attr('disabled', 'disabled');
                     $patientLookupInput.trigger("change");
-                }                
-            
+                }
             }).on('filemanautocompleteselect', function (event, ui) {
                 // Enable show buttons
                 $('#pt-lookup-btn').removeAttr('disabled');

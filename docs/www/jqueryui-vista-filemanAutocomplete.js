@@ -70,7 +70,8 @@ $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {
                 return false;
             }
 
-            let ajaxRequest = $.ajax({
+            let ajaxRequest = null; //NB: keep on separate line so beforeSend function can access it.
+            ajaxRequest = $.ajax({
                 url: "/ptlookup/" + query,
                 data: {
                     limit: 25

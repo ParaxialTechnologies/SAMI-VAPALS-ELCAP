@@ -75,7 +75,19 @@ $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {
                 data: {
                     limit: 25
                 },
-                dataType: "json"
+                dataType: "json",
+                beforeSend : function() {
+                    if (ajaxRequest!=null) {
+                        ajaxRequest.abort();
+                    }
+                },
+                done: function (msg) {
+                    input.data('vista').patients = msg.result;
+                    response(msg.result);
+                },
+                fail: function (jqXHR, textStatus) {
+                    input.filemanAutocomplete('close');
+                }
             });
 
             ajaxRequest.done(function (msg) {

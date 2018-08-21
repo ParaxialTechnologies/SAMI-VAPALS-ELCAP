@@ -15,7 +15,7 @@ start = datetime.datetime.now()
 
 # Version should be replaced by Mumps processor to use the actual version number (i.e. SAMI 18.0T04). The "SNAPSHOT"
 # text refers to a non-KIDS distribution, such as when the code is built and deployed manually from source control.
-version = datetime.datetime.now().strftime('SNAPSHOT %Y.%m.%d')
+version = datetime.datetime.now().strftime('%Y.%m.%d')
 
 # map where key is the template file name and value is an object representing properties of the output
 forms = [
@@ -30,7 +30,8 @@ forms = [
     {"template": "biopsy", "title": "Biopsy Form", "output": "biopsy"},
     {"template": "pet", "title": "PET Evaluation Form", "output": "pet"},
     {"template": "intervention", "title": "Intervention and Surgical Treatment Form", "output": "intervention"},
-    {"template": "report", "title": "", "output": "report"}
+    {"template": "report", "title": "", "output": "report"},
+    {"template": "toggler", "title": "", "output": "toggler"}
 ]
 
 for form in forms:

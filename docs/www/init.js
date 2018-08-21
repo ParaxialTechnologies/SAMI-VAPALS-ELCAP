@@ -251,7 +251,7 @@ $(function () {
         delete data.method;
 
         //field names are case-sensitive when POSTing to the backend. Generally lowercase is preferred.
-        data.studyid = studyId;
+        data.studyid = localStorage.getItem("studyid");
 
         const form = document.createElement('form');
         form.style.visibility = 'hidden'; // no user interaction is necessary

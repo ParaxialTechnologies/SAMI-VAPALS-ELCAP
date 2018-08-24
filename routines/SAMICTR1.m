@@ -133,12 +133,11 @@ nodules(rtn,vals,dict)
  . . . i ($$xval("cetex",vals)="b")&($$xsub("cectch",vals,dict,"cect"_ii_"ch")="n") d  ;
  . . . . d out(nloc_" "_endo_" "_ii_" "_calcstr)
  . . . e  d out(nloc_" "_endo_" "_ii_" "_calcstr_" "_$$xsub("cectch",vals,dict,"cect"_ii_"ch")_" ")
- . . d out(" series"_$$xval("cect"_ii_"sn",vals)_",") ; added from 1114 gpl1
+ . . d out(" (Series "_$$xval("cect"_ii_"sn",vals)_",") ; added from 1114 gpl1
  . . i $$xval("cect"_ii_"inl",vals)=$$xval("cect"_ii_"inh",vals) d  ;
- . . . d out("image"_$$xval("cect"_ii_"inh",vals)_". ")
- . . . ;d out("image "_$$xval("cect"_ii_"inh",vals)_".")
+ . . . d out("image"_$$xval("cect"_ii_"inh",vals)_"). ")
  . . e  d  ;
- . . . d out("images "_$$xval("cect"_ii_"inl",vals)-$$xval("cect"_ii_"inh",vals)_".")
+ . . . d out("image "_$$xval("cect"_ii_"inl",vals)_$$xval("cect"_ii_"inh",vals)_"). ")
  . . i $$xval("cect"_ii_"co",vals)'="" d out($$xval("cect"_ii_"co",vals)_". ") ;1122 gpl1
  . . n ac
  . . s ac=$$xval("cect"_ii_"ac",vals)

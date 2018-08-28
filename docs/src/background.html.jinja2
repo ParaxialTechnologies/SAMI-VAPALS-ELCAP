@@ -478,13 +478,12 @@
             }).first().trigger('change');
 
             //conditionally enabled fields
-            const simpleSectionRadios = Array(
-                "sbfc","sbhco","sbmpa","sbmpc","sbmpht","sbmphc",
-                "sbmpas","sbmpmi","sbmps","sbmppv","sbmpd",
-                "sbmpld","sbmprd","sbahpft","sblcs"
+            const uncheckableRadioFieldNames = Array(
+                "sbfc", "sbhco", "sbmpa", "sbmpc", "sbmpht", "sbmphc", "sbmpas", "sbmpmi", "sbmps", "sbmppv", "sbmpd",
+                "sbmpld", "sbmprd", "sbahpft", "sblcs"
             );
 
-            jQuery.each(simpleSectionRadios,function(idx,name) {
+            jQuery.each(uncheckableRadioFieldNames, function (idx, name) {
                 $("[name="+name+"]").conditionallyDisplay({enable: "#"+name+"-container"});
                 uncheckableRadio("[name='"+name+"']","div.form-group");
             });  

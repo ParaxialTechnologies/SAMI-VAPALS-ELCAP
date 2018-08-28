@@ -166,7 +166,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2018.08.21
+     2018.08.28
     </span>
    </div>
   </footer>
@@ -178,6 +178,13 @@
         localStorage.setItem("studyid", studyId);
         $("#studyIdMenu").show();
     }
+
+    //purposefully executed before DOM is rendered so delete button is never visible
+    const frozen = "@@FROZEN@@";
+    if (frozen == "true") {
+        $("#delete-form").remove();
+    }
+
 
     $(function () {
         /** These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly. **/

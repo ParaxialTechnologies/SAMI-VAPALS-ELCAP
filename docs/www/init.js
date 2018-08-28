@@ -178,6 +178,30 @@ function exclusiveCheckbox(elemSelector, commonParentSelector) {
     }); 
 }
 
+function uncheckableRadio(elemSelector,commonParentSelector) {
+    // when you click a radio, it always is checked, so we need to store its state somewhere else
+    $(elemSelector).each(function() {
+        const radio = $(this);
+        radio.data('checked', radio.prop("checked"));
+
+        radio.on("click", function() {
+            const rd = $(this)
+            const thisName = $(this).attr("name");
+            if (rd.data("checked")) {
+                // we need to uncheck it
+                rd.prop("checked",false);
+                rd.data("checked", false);
+                rd.trigger('change');
+            } else {
+                rd.data('checked', true);
+                rd.closest(commonParentSelector).find('[name="' + thisName + '"]').not(rd).data('checked', false);
+                rd.trigger('change');
+            }
+        });
+
+    });
+}
+
 //global application handlers
 $(function () {
     $("body").on('keydown', 'input.numeric', numericHandlerKeydown);

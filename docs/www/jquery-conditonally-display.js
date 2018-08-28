@@ -61,13 +61,17 @@
             // console.log("conditionallyDisplay(): change event triggered on field. id=" + $el.prop("id") + ", name=" + $el.prop("name") + ", matches=" + matches + ", enable=" + enableSize + ", disable=" + disableSize);
 
             if (matches) {
-                $enableContainer.show();
+                if ($enableContainer!=null) {
+                    $enableContainer.show();
+                }
                 if ($disableContainer !== null) {
                     $disableContainer.hide();
                 }
             }
             else {
-                $enableContainer.hide();
+                if ($enableContainer!=null) {
+                    $enableContainer.hide();
+                }
                 if ($disableContainer !== null) {
                     $disableContainer.show();
                 }

@@ -273,7 +273,7 @@
         $(function () {
 
             //Biopsy
-            $("[name='bxp']").conditionallyEnable({enable: $("#bxp-container")}); //entire form
+            $("[name='bxp']").conditionallyDisplay({enable: $("#bxp-container")}); //entire form
             $("#bxindo").conditionallyEnable({sourceValues: "o", enable: "#bxind"}); // other indication
             $("#bxloco").conditionallyEnable({sourceValues: "o", enable: "#bxlocs"}); //other lesion
             $("#bxtopo").conditionallyEnable({sourceValues: "o", enable: "#bxtopos"}); // other type of procedure
@@ -281,12 +281,12 @@
             $("#bxcpo").conditionallyEnable({sourceValues: "o", enable: "#bxcpos"}); // other complication
 
             //Mediastinoscopy
-            $("[name='rbmep']").conditionallyEnable({enable: $("#rbmep-container")}); //entire section
+            $("[name='rbmep']").conditionallyDisplay({enable: $("#rbmep-container")}); //entire section
             $("#rbmlo").conditionallyEnable({sourceValues: "o", enable: "#rbmls"}); //other lesion
             $("[name=rbmec]").conditionallyEnable({enable: "#rbmecos"}); // complication specificity
 
             //Molecular Testing
-            $("[name='rbmt']").conditionallyEnable({enable: "#rbmt-container"}); //entire section
+            $("[name='rbmt']").conditionallyDisplay({enable: "#rbmt-container"}); //entire section
 
             //attach before requireOneValidators
             $(".validated").formValidation({framework: 'bootstrap'});

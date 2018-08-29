@@ -83,24 +83,28 @@ wsReport(return,filter) ; web service which returns an html cteval report
  d out("<!-- patient information -->")
  d out("<TR><TD><TABLE border=""0"" cellspacing=""0"" cellpadding=""3"" WIDTH=""640"">")
  ;
- ;# Queens specific header
- ;;if qheader d  ;
- ;;. d out("<TR><TD WIDTH=""85""><B>Exam Date: </B></TD><TD>")
- ;;. d out($$xval("cedos",vals))
- ;;. d out("</TD></TR>")
- ;;. ;
- ;;. d out("<TR><TD><B>Type:</B></TD><TD>")
- ;;. d out($$xsub("cetex",vals,dict)_" "_$$xsub("cectp",vals,dict))
- ;;. d out("</TD></TR>")
- ;;. ;
- ;;. d out("<TR><TD><B>Study ID:</B></TD><TD>")
- ;;. d out(si)
- ;;. d out("</TD></TR>")
- ;;. ;
- ;;. ;   set svc [exec vcrc -c12 -n $si]
- ;;. d out("<TR><TD><B>SVC:</B></TD><TD>")
- ;;. ;d out(svc)
- ;;. d out("</TD></TR>")
+ ; generate header
+ ;
+ d out("<TR><TD WIDTH=\""180\""><B>Patient Name:</B></TD><TD WIDTH=\""365\"">")
+ d out($$xval("sinamel",vals)_", "_$$xval("sinamef",vals))
+ d out("</TD>")
+ ;
+ d out("<TD WIDTH=\""120\""><B>Study ID:</B></TD><TD WIDTH=\""75\"">")
+ d out($$xval("sisid",vals))
+ d out("</TD>")
+ ;
+ d out("<TR><TD><B>Type of Examination:</B></TD><TD>")
+ d out($$xsub("cetex",vals,dict)_" "_$$xsub("cectp",vals,dict))
+ d out("</TD>")
+ d out("<TD> &nbsp; </TD><TD> &nbsp; </TD></TR>")
+ ;
+ d out("<TR><TD><B>Examination Date:</B></TD><TD>")
+ d out($$xval("cedos",vals))
+ ;
+ i $$xval("sidob",vals)'=-1 d  ;
+ . d out("<TD><B>Date of Birth:</B></TD><TD>")
+ . d out($$xval("sidob",vals))
+ e  d out("<TD> &nbsp; </TD><TD> &nbsp; </TD></TR>")
  ;
  i $$xval("sidob",vals)>0 d  ;
  . d out("<TD><B>Date of Birth:</B></TD><TD>")
@@ -108,6 +112,8 @@ wsReport(return,filter) ; web service which returns an html cteval report
  . d out("</TD></TR>")
  e  d  ;
  . d out("<TD> &nbsp; </TD><TD> &nbsp; </TD></TR>")
+ ;
+ ;# End of Header
  ;
  d out("</TABLE>")
  d out("</TD></TR><TR><TD>")

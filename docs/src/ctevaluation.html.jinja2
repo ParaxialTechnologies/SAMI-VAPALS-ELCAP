@@ -1933,24 +1933,25 @@
                             </div>
 
                         </div>
-                        <div class="row">
-                            <div class="col-sm-12 form-group">
-                                <label for="cefuw-nw">When:</label><br/>
-                                {{ f.inlineRadio("cefuw", "cefuw-nw","nw","Now") }}
-                                {{ f.inlineRadio("cefuw", "cefuw-1m","1m","1 month") }}
-                                {{ f.inlineRadio("cefuw", "cefuw-3m","3m","3 months") }}
-                                {{ f.inlineRadio("cefuw", "cefuw-6m","6m","6 months") }}
-                                {{ f.inlineRadio("cefuw", "cefuw-1y","1y","1 year") }}
-                                {{ f.inlineRadio("cefuw", "cefuw-os","os","Other") }}
+                        <div id="follow-up-date-container">
+                            <div class="row">
+                                <div class="col-sm-12 form-group" >
+                                    <label for="cefuw-nw">When:</label><br/>
+                                    {{ f.inlineRadio("cefuw", "cefuw-nw","nw","Now") }}
+                                    {{ f.inlineRadio("cefuw", "cefuw-1m","1m","1 month") }}
+                                    {{ f.inlineRadio("cefuw", "cefuw-3m","3m","3 months") }}
+                                    {{ f.inlineRadio("cefuw", "cefuw-6m","6m","6 months") }}
+                                    {{ f.inlineRadio("cefuw", "cefuw-1y","1y","1 year") }}
+                                    {{ f.inlineRadio("cefuw", "cefuw-os","os","Other") }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3 col-md-2 form-group" >
+                                    <label class="required" for="cefud">Approximate follow-up date:</label><br/>
+                                    {{ f.datepicker("cefud", "future", "Follow up date is required") }}
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-3 col-md-2 form-group">
-                                <label class="required" for="cefud">Approximate follow-up date:</label><br/>
-                                {{ f.datepicker("cefud", "future", "Follow up date is required") }}
-                            </div>
-                        </div>
-
                         <h3>Lung-RADS</h3>
                         <div class="row">
                             <div class="form-group col-sm-5 col-md-4">
@@ -2190,9 +2191,9 @@
             const lenWidthHeightFields = $("#cect"+noduleIdx+"sl, #cect"+noduleIdx+"sw, #cect"+noduleIdx+"sh");
             lenWidthHeightFields.on("keyup",function(e) {
                 let allFilled = true;
-                
+
                 lenWidthHeightFields.each( function(e,idx) {
-                    const v = $(this).val() || 0;    
+                    const v = $(this).val() || 0;
                     if ( v==0) {
                         allFilled = false;
                     }
@@ -2210,7 +2211,7 @@
                 const l = $("#cect"+noduleIdx+"sl").val() || 0;
                 const w = $("#cect"+noduleIdx+"sw").val() || 0;
                 const h = $("#cect"+noduleIdx+"sh").val() || 0;
-                    
+
                 v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
 
                 $("#cect"+noduleIdx+"sv").val(v.toFixed(2));
@@ -2222,7 +2223,7 @@
 
             $("#cect"+noduleIdx+"sv").on('change', function () {
                 // manually overriding the volume calculation
-                if ($(this).val()!="") {           
+                if ($(this).val()!="") {
                     markNoduleVolumeManuallyEntered(noduleIdx, true);
                     checkConsistentVolumeCalculations();
                 }
@@ -2288,7 +2289,8 @@
                         $sidoe.val($("#cedos").val()).trigger('change');
                     }
                 }
-            }).conditionallyEnable({sourceValues: "b", disable: "#non-baseline-container"});
+            }).conditionallyDisplay({sourceValues: "b", disable: "#non-baseline-container"});
+
 
             // NODULES
             const noduleArrayLength = {{ noduleArray|length }};
@@ -2410,6 +2412,7 @@
 
             //FOLLOWUP
             $("#cefu").conditionallyDisplay({sourceValues: "o", enable: "#cefuo-container"});
+            $("#cefu").conditionallyDisplay({sourceValues: "nf", disable: "#follow-up-date-container"});
 
             //followup date calculation
             $("[name=cefuw]").on('change', function () {

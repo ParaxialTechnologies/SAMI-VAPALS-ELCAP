@@ -7,6 +7,16 @@
         #nodule-table .form-group-sm {
             margin: 5px 5px 5px 5px;
         }
+
+        .affix-top {
+            position: static;
+        }
+
+        .affix {
+            position: sticky;
+            top: 0px;
+            z-index: 1;
+        }
     </style>
 {% endblock %}
 
@@ -2493,7 +2503,6 @@
                 }
             }).first().trigger('change');
 
-            
             exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
 
             //always after formValidation initialization
@@ -2516,6 +2525,13 @@
                 $("[name=" + fieldName + "]").val("n");
             })
 
+            //offset for all should be relative to where the panels actually start; immediately following the tabs
+            var rect = $("#ctEvalTabs").get()[0].getBoundingClientRect();
+            $(".panel-heading[aria-controls]").affix({
+                offset: {
+                    top: rect.y + rect.height
+                }
+            });
         });
     </script>
 

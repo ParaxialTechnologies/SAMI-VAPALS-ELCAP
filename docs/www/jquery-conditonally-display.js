@@ -28,7 +28,6 @@
             disable: null // fields to disable when value does not match sourceValues
         }, options);
 
-        var enabledAttributeName = "data-conditionally-displayed";
         // console.log("conditionallyDisplay (settings: " + JSON.stringify(settings) + ")")
 
         var disableFields = settings.disable;
@@ -56,8 +55,6 @@
             //toggle input fields within the container.
             var $enableContainer = enableFieldsCallback(actualValue, matches);
             var $disableContainer = disableFieldsCallback(actualValue, matches);
-            var enableSize = $enableContainer == null ? 0 : $enableContainer.length
-            var disableSize = $disableContainer == null ? 0 : $disableContainer.length
 
             // console.log("conditionallyDisplay(): change event triggered on field. id=" + $el.prop("id") + ", name=" + $el.prop("name") + ", matches=" + matches + ", enable=" + enableSize + ", disable=" + disableSize);
 

@@ -53,9 +53,12 @@ var VAPALS = new function () {
     this.DATE_TIME_FORMAT = "MM/DD/YYYY hh:mm:ss";
 
 
-    this.displayNotification = function (title, message) {
+    this.displayNotification = function (title, message, msgType) {
+        if (!msgType) {
+            msgType = BootstrapDialog.TYPE_INFO;
+        }
         BootstrapDialog.alert({
-            type: BootstrapDialog.TYPE_INFO,
+            type: msgType,
             title: title,
             message: message,
             closable: true

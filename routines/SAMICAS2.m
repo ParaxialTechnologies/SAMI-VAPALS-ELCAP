@@ -254,8 +254,8 @@ wsCASE(rtn,filter) ; generate case review page
  . . . . set rpthref=rpthref_"<input type=hidden name=""form"" value="_$p(zform,":",2)_">"
  . . . . set rpthref=rpthref_"<input type=hidden name=""studyid"" value="_sid_">"
  . . . . set rpthref=rpthref_"<input value=""Report"" class=""btn label label-warning"" role=""link"" type=""submit""></form></td>"
- . . . . ;s rtn(cnt)=rpthref_"</tr>"
- . . . . s rtn(cnt)="</tr>" ; turn off report 
+ . . . . s rtn(cnt)=rpthref_"</tr>"
+ . . . . ;s rtn(cnt)="</tr>" ; turn off report 
  . . . e  set rtn(cnt)="<td></td></tr>"
  . . . quit
  . . quit
@@ -386,6 +386,7 @@ getItems(ary,sid) ; get items available for studyid
  . if $get(fname)="" set fname="unknown"
  . new zdate set zdate=$extract(zi,$length(zkey1)+2,$length(zi))
  . set tary("sort",zdate,zform,zi,fname)=""
+ . set tary("type",zform,zi,fname)=""
  . quit
  merge @ary=tary
  ;

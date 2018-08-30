@@ -936,7 +936,7 @@
                                 </div>
                                 <div id="pulmonary-container" class="panel-collapse collapse" role="tabpanel">
                                     <div class="panel-body">
-                                        <input type="hidden" name="cepa" value="n"/>
+                                        <input type="hidden" name="cepa"/>
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <thead>
@@ -1190,7 +1190,7 @@
                                 </div>
                                 <div id="pleural-container" class="panel-collapse collapse" role="tabpanel">
                                     <div class="panel-body">
-                                        <input type="hidden" name="ceppra" value="n"/>
+                                        <input type="hidden" name="ceppra"/>
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <tbody>
@@ -1308,7 +1308,7 @@
                                 </div>
                                 <div id="cardiac-container" class="panel-collapse collapse" role="tabpanel">
                                     <div class="panel-body">
-                                        <input type="hidden" name="ceca" value="n"/>
+                                        <input type="hidden" name="ceca"/>
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <tbody>
@@ -1428,7 +1428,7 @@
                                 </div>
                                 <div id="neck-container" class="panel-collapse collapse" role="tabpanel">
                                     <div class="panel-body">
-                                        <input type="hidden" name="ceoma" value="n"/>
+                                        <input type="hidden" name="ceoma"/>
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <tbody>
@@ -1665,7 +1665,7 @@
                                 </div>
                                 <div id="breast-container" class="panel-collapse collapse" role="tabpanel">
                                     <div class="panel-body">
-                                        <input type="hidden" name="ceoba" value="n"/>
+                                        <input type="hidden" name="ceoba"/>
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <tbody>
@@ -1775,7 +1775,7 @@
                                 </div>
                                 <div id="bone-container" class="panel-collapse collapse" role="tabpanel">
                                     <div class="panel-body">
-                                        <input type="hidden" name="ceaba" value="n"/>
+                                        <input type="hidden" name="ceaba"/>
                                         <div class="row">
                                             <div class="form-group col-sm-12">
                                                 <label for="ceaoabb">Specify bone abnormalities</label>
@@ -1800,7 +1800,7 @@
                                 </div>
                                 <div id="abdominal-container" class="panel-collapse collapse" role="tabpanel">
                                     <div class="panel-body">
-                                        <input type="hidden" name="ceoaa" value="n"/>
+                                        <input type="hidden" name="ceoaa"/>
                                         <div class="table-responsive" id="abdominal-container">
                                             <table class="table">
                                                 <tbody>
@@ -2522,14 +2522,25 @@
                 $controller.find(".fa-chevron-down").show();
                 $controller.find(".fa-chevron-up").hide();
                 var fieldName = $controller.data("field-name");
-                $("[name=" + fieldName + "]").val("n");
+                $("[name=" + fieldName + "]").val("");
             })
 
             //offset for all should be relative to where the panels actually start; immediately following the tabs
-            var rect = $("#ctEvalTabs").get()[0].getBoundingClientRect();
+            const rect = $("#ctEvalTabs").get()[0].getBoundingClientRect();
             $(".panel-heading[aria-controls]").affix({
                 offset: {
                     top: rect.y + rect.height
+                }
+            });
+
+            //open panels where the field name is already set to "y"
+            $.each($(".panel-heading[data-toggle=collapse]"), function (i, controller) {
+                const $controller = $(controller);
+                const href = $controller.attr('href');
+                const fieldName = $controller.data('field-name');
+                const fieldValue = $("[name=" + fieldName + "]").val();
+                if (fieldValue === "y") {
+                    $(href).collapse('show');
                 }
             });
         });

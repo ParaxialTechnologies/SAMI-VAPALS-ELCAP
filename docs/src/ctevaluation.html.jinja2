@@ -476,7 +476,7 @@
                                         </tr>
                                         <tr>
                                             <td style="white-space: nowrap;">
-                                                <label class="control-label required" for="cect1sl">Length (mm)</label>
+                                                <label class="control-label" for="cect1sl">Length (mm)</label>
                                                 <i class="fa fa-question-circle-o" aria-hidden="true"
                                                    data-toggle="popover" title="Help"
                                                    data-content="Indicate the length (largest dimension) of the nodule.  The unit of measurement is always millimeters."></i>
@@ -486,14 +486,14 @@
                                                     <div class="form-group form-group-sm">
                                                         <input type="text" name="cect{{ i }}sl" id="cect{{ i }}sl"
                                                                size="4" title="Length (mm)" class="form-control numeric decimalformat"
-                                                               required="required" tabindex="{{ i }}09">
+                                                               tabindex="{{ i }}09">
                                                     </div>
                                                 </td>
                                             {% endfor %}
                                         </tr>
                                         <tr>
                                             <td style="white-space: nowrap;">
-                                                <label class="control-label required" for="cect1sw">Maximum width
+                                                <label class="control-label" for="cect1sw">Maximum width
                                                     (mm)</label>
                                                 <i class="fa fa-question-circle-o" aria-hidden="true"
                                                    data-toggle="popover" title="Help"
@@ -505,7 +505,7 @@
                                                         <input type="text" name="cect{{ i }}sw" id="cect{{ i }}sw"
                                                                size="4" title="Maximum Width"
                                                                class="form-control numeric decimalformat"
-                                                               required="required" tabindex="{{ i }}10">
+                                                               tabindex="{{ i }}10">
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -542,16 +542,33 @@
                                         </tr>
                                         <tr>
                                             <td style="white-space: nowrap;">
-                                                <label class="control-label" for="cect1sv">Volume
+                                                <label class="control-label required" for="cect1sv">Volume
                                                     (mm<sup>3</sup>)</label>
                                             </td>
                                             {% for i in noduleArray %}
-                                                <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
-                                                    <div class="form-group form-group-sm">
-                                                        <input type="text" name="cect{{ i }}sv" id="cect{{ i }}sv"
-                                                               size="4" title="Volume" class="form-control numeric decimalformat"
-                                                               tabindex="{{ i }}12">
+                                                <td data-nodule-id="{{ i }}" style="display:none;">
+                                                    <div class="row">
+                                                         <div class="form-group form-group-sm col-sm-6">
+                                                            <input type="text" name="cect{{ i }}sv" id="cect{{ i }}sv"
+                                                                size="4" title="Volume" class="form-control numeric decimalformat"
+                                                                required="required"
+                                                                tabindex="{{ i }}12">
+                                                            <input type="hidden" name="cect{{ i }}svovrrde" id="cect{{ i }}svovrrde" class="volume-override-flag"/>
+                                                           
+                                                            
+                                                        </div>
+                                                        <div class="form-group form-group-sm col-sm-5">
+                                                            <button class="btn" id="cect{{ i }}svb" tabindex="{{ i }}12" title="Calculate nodule volume using the standard ellipsoid formula">Calculate</button>       
+                                                        </div>
+
+                                                        
                                                     </div>
+                                                     <div id="cect{{ i }}svovrrde-warn" class="invisible">
+                                                                <div class="form-group form-group-sm"  >
+                                                                    <small class="text-warning">Manually entered</small>
+                                                                </div>
+                                                    </div>
+                                                   
                                                 </td>
                                             {% endfor %}
                                         </tr>
@@ -2252,58 +2269,106 @@
             }).first().trigger('change');
         }
 
-        $(function () {
-            // SCAN
-            // bind to change events on study date and baseline date to calculate "time since baseline"
-            const $tsbFields = $("#sidoe, #cedos");
-            $tsbFields.closest(".datepicker").on("dp.change", calculateTimeSinceBaseline); //latch onto datetimepicker change events
-            $tsbFields.first().trigger("change"); //trigger on page load for existing data;
+        function checkConsistentVolumeCalculations() {
+            const overrideValues = $(".volume-override-flag").map(function(idx,elem){
+                return $(elem).val();
+            }).filter(function(idx,v) { return v!= ""});
 
-            const $cedos = $("#cedos");
-            if (!$cedos.val()) {
-                $cedos.val(moment().format(VAPALS.DATE_FORMAT)).trigger('change');
-            }
-
-            $("[name=cetex]").on("change", function () {
-                const $sidoe = $("#sidoe");
-                if ($("[name=cetex]:checked").val() === "b") { // type of exam (tex) is baseline
-                    if (!$sidoe.val()) {
-                        $sidoe.val($("#cedos").val()).trigger('change');
+            if (overrideValues.length>0) {
+                let identicalElems = true;
+                for (i = 1; i < overrideValues.length; i++) {
+                    if (overrideValues[i]!=overrideValues[0]) {
+                        identicalElems = false;
+                        break;
                     }
                 }
-            }).conditionallyDisplay({sourceValues: "b", disable: "#non-baseline-container"});
 
-            // NODULES
-            {% for i in noduleArray %}
-                $("#cect{{ i }}nt").conditionallyEnable({sourceValues: "m", enable: "#cect{{ i }}-container"});
-
-                if ($("#cect{{ i }}sv").val() === "") {
-                    let $fields = $("#cect{{ i }}sl, #cect{{ i }}sw, #cect{{ i }}sh");
-                    $fields.on('keyup.vapals', function () {
-                        const l = $("#cect{{ i }}sl").val() || 0;
-                        const w = $("#cect{{ i }}sw").val() || 0;
-                        const h = $("#cect{{ i }}sh").val() || Math.sqrt(l*w);
-                            
-                        v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
-
-                        $("#cect{{ i }}sv").val(v.toFixed(2));
-                    });
-                    // when the volume is manually entered, disable the auto-calculations
-                    $("#cect{{ i }}sv").on('keyup', function () {
-                        $fields.off('keyup.vapals');
-                    });
+                if (!identicalElems) {
+                    VAPALS.displayNotification(
+                        "Warning : Inconsistent measuring techniques!",
+                        "The volume measuring techniques are inconsistent, some values of the 'Volume' field are calculated, others manually entered. "+
+                        "It is recommended that the volume for all nodes is specified using the same method. "+
+                        "Please review and update the values in the 'Volume' fields for all nodules",
+                        BootstrapDialog.TYPE_WARNING
+                    );
                 }
+            }
 
-                $("#cect{{ i }}ch").on('change.cteval', function () {
+        }
+
+        function markNoduleVolumeManuallyEntered(noduleIdx, isManual) {
+            if (isManual) {
+                $("#cect"+noduleIdx+"sv").addClass("volumeOverride");
+                $("#cect"+noduleIdx+"svovrrde").val("true");
+                $("#cect"+noduleIdx+"svovrrde-warn").removeClass("invisible");
+            } else {
+                $("#cect"+noduleIdx+"sv").removeClass("volumeOverride");
+                // set the manually overriden hidden field to false
+                $("#cect"+noduleIdx+"svovrrde").val("false");
+                $("#cect"+noduleIdx+"svovrrde-warn").addClass("invisible");
+            }
+        }
+
+        function setupNoduleVolumeCalculations(noduleIdx) {
+            const lenWidthHeightFields = $("#cect"+noduleIdx+"sl, #cect"+noduleIdx+"sw, #cect"+noduleIdx+"sh");
+            lenWidthHeightFields.on("keyup",function(e) {
+                let allFilled = true;
+
+                lenWidthHeightFields.each( function(e,idx) {
+                    const v = $(this).val() || 0;
+                    if ( v==0) {
+                        allFilled = false;
+                    }
+                });
+
+                const btnElem = $("#cect"+noduleIdx+"svb");
+                if (allFilled) {
+                    btnElem.attr("disabled",false);
+                } else {
+                    btnElem.attr("disabled", true);
+                }
+            }).first().trigger("keyup");
+
+            $("#cect"+noduleIdx+"svb").on('click', function () {
+                const l = $("#cect"+noduleIdx+"sl").val() || 0;
+                const w = $("#cect"+noduleIdx+"sw").val() || 0;
+                const h = $("#cect"+noduleIdx+"sh").val() || 0;
+
+                v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
+
+                $("#cect"+noduleIdx+"sv").val(v.toFixed(2));
+                var fv = $(this).closest("form.validated").data('formValidation');
+                if (fv) {
+                    fv.revalidateField("cect"+noduleIdx+"sv")
+                }
+                markNoduleVolumeManuallyEntered(noduleIdx, false);
+                checkConsistentVolumeCalculations();
+                return false;
+            });
+
+
+            $("#cect"+noduleIdx+"sv").on('change', function () {
+                // manually overriding the volume calculation
+                if ($(this).val()!="") {
+                    markNoduleVolumeManuallyEntered(noduleIdx, true);
+                    checkConsistentVolumeCalculations();
+                }
+            });
+        }
+
+        function setupNoduleEnabledState(noduleIdx) {
+            $("#cect"+noduleIdx+"nt").conditionallyEnable({sourceValues: "m", enable: "#cect"+noduleIdx+"-container"});
+
+            $("#cect"+noduleIdx+"ch").on('change.cteval', function () {
 
                     // All fields related to this nodule.
                     // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
                     // nodule 10 would match cect1*
-                    const regex = new RegExp("cect{{ i }}[a-z]");
+                    const regex = new RegExp("cect"+noduleIdx+"[a-z]");
                     const $fields = $('input,select').filter(function () {
                         const name = $(this).attr('name');
                         const id = $(this).attr('id');
-                        return id != "cect{{ i }}ch" && (regex.test(name) || regex.test(id));
+                        return id != "cect"+noduleIdx+"ch" && (regex.test(name) || regex.test(id));
                     });
 
                     if ($(this).val() === "-") {
@@ -2330,9 +2395,35 @@
                             .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
                     }
                 });
+        }
+        $(function () {
+            // SCAN
+            // bind to change events on study date and baseline date to calculate "time since baseline"
+            const $tsbFields = $("#sidoe, #cedos");
+            $tsbFields.closest(".datepicker").on("dp.change", calculateTimeSinceBaseline); //latch onto datetimepicker change events
+            $tsbFields.first().trigger("change"); //trigger on page load for existing data;
 
-            {% endfor %}
+            const $cedos = $("#cedos");
+            if (!$cedos.val()) {
+                $cedos.val(moment().format(VAPALS.DATE_FORMAT)).trigger('change');
+            }
 
+            $("[name=cetex]").on("change", function () {
+                const $sidoe = $("#sidoe");
+                if ($("[name=cetex]:checked").val() === "b") { // type of exam (tex) is baseline
+                    if (!$sidoe.val()) {
+                        $sidoe.val($("#cedos").val()).trigger('change');
+                    }
+                }
+            }).conditionallyDisplay({sourceValues: "b", disable: "#non-baseline-container"});
+
+
+            // NODULES
+            const noduleArrayLength = {{ noduleArray|length }};
+            for (i = 0; i < noduleArrayLength; i++) {
+                setupNoduleVolumeCalculations(i);
+                setupNoduleEnabledState(i);
+            }
 
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
 

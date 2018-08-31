@@ -48,41 +48,57 @@
 
         this.on('change.conditionally-display', function () {
             var $el = $(this);
-            var actualValue = $el.is(":checkbox") ? ($el.is(":checked") ? $el.val() : "") : $el.val();
+            var actualValue = $el.is(":checkbox, :radio") ? ($el.is(":checked") ? $el.val() : "") : $el.val();
 
             var matches = matchCallback(actualValue);
 
             //toggle input fields within the container.
             var $enableContainer = enableFieldsCallback(actualValue, matches);
             var $disableContainer = disableFieldsCallback(actualValue, matches);
-            var enableSize = $enableContainer == null ? 0 : $enableContainer.length
-            var disableSize = $disableContainer == null ? 0 : $disableContainer.length
 
             // console.log("conditionallyDisplay(): change event triggered on field. id=" + $el.prop("id") + ", name=" + $el.prop("name") + ", matches=" + matches + ", enable=" + enableSize + ", disable=" + disableSize);
 
             if (matches) {
-                $enableContainer.show();
+                if ($enableContainer!=null) {
+                    $enableContainer.show();
+                }
                 if ($disableContainer !== null) {
                     $disableContainer.hide();
                 }
             }
             else {
-                $enableContainer.hide();
+                if ($enableContainer!=null) {
+                    $enableContainer.hide();
+                }
                 if ($disableContainer !== null) {
                     $disableContainer.show();
                 }
             }
 
-
-            // //finally reset any validations on now-disabled fields
-            // var fv = $enableContainer.closest("form.validated").data('formValidation');
-            // if (fv) {
-            //     var disabledFields = $enableContainer.find("input:disabled, select:disabled, textarea:disabled");
-            //     $.each(disabledFields, function (i, t) {
-            //         console.log("resetting field " + $(t).attr('name'))
-            //         fv.resetField($(t));
-            //     });
-            // }
+            //finally reset any validations on all input fields - we don't want 
+            // any errors or markings to be coming out of fields that are not visible
+            $.each([$enableContainer, $disableContainer], function (i, $container){
+                if ($container != null && typeof $container !== 'undefined') {
+                    var fv = $container.closest("form.validated").data('formValidation');
+                    if (fv) {
+                         var inputFields = $container.find("input, select, textarea");
+                        $.each(inputFields, function (i, t) {
+                            const field = $(t);
+                            const fieldName = field.attr("name");
+                            const isValidatedField = fv.options.fields[fieldName]!=null;
+                            const isVisible = field.is(":visible");
+                            // console.log("resetting field " + fieldName);
+                            
+                            if (isValidatedField) {
+                                fv.resetField(field);
+                                fv.enableFieldValidators(fieldName, isVisible);
+                            } 
+                        });
+                    }
+                }
+            });
+            
+            
         });
 
         if (this.first().is(":radio")) {

@@ -116,7 +116,7 @@
                         {{ f.floatingLabel('siopqy', 'Reported pack years at time of order',"required") }}
                     </div>
                     <div class="col-md-8 form-group">
-                        <input type="text" name="sioppy" id="sioppy" class="form-control numeric" required="required"/>
+                        <input type="text" name="sioppy" id="sioppy" class="form-control numeric decimalformat" required="required"/>
                     </div>
                 </div>
                 <div class="row">
@@ -124,7 +124,7 @@
                         {{ f.floatingLabel('siopqy', 'Reported years since quit at time of order') }}
                     </div>
                     <div class="col-md-8 form-group">
-                        <input type="text" name="siopqy" id="siopqy" class="form-control numeric"/>
+                        <input type="text" name="siopqy" id="siopqy" class="form-control numeric decimalformat"/>
                     </div>
                 </div>
 
@@ -356,7 +356,7 @@
                         {{ f.floatingLabel('sidpw', 'On average, on how many days per week are you currently smoking cigarettes?') }}
                     </div>
                     <div class="col-md-1 form-group">
-                        <input type=text id="sierd" name="sierd" class="form-control numeric">
+                        <input type=text id="sierd" name="sierd" class="form-control numeric decimalformat">
                     </div>
                 </div>
                 <div class="row">
@@ -364,7 +364,7 @@
                         {{ f.floatingLabel('sippd', 'On average, on the days that you are smoking cigarettes, how many packs of cigarettes are you currently smoking per day (PPD)?') }}
                     </div>
                     <div class="col-md-1 form-group">
-                        <input type=text id="sippd" name="sippd" class="form-control numeric">
+                        <input type=text id="sippd" name="sippd" class="form-control numeric decimalformat">
                     </div>
                 </div>
             </div>
@@ -437,7 +437,8 @@
                     {{ f.floatingLabel('', 'Since your prior CT scan, what, if any, smoking cessation methods have you used?') }}
 
                 </div>
-                <div class="col-sm-8">
+                
+                <div class="col-sm-8 form-group">
                     {{ f.checkbox("sisca", "a","Have not tried to quit") }}
                     {{ f.checkbox("siscb", "b","\"Cold Turkey\" by completely stopping on your own with no other assistance") }}
                     {{ f.checkbox("siscc", "c","Tapering or reducing number of cigarettes smoked per day") }}
@@ -510,16 +511,16 @@
                 return $(this).val();
             }).first().trigger("dp.change"); //trigger on page load for existing data;
 
-            $("[name=simeq]").conditionallyEnable({enable: "#order-container"});
+            $("[name=simeq]").conditionallyDisplay({enable: "#order-container"});
             $("#siwco").conditionallyEnable({sourceValues: "o", enable: "#siwcos"});
             $("[name=siwcp]").conditionallyEnable({enable: "#siwcw-container"});
-            $("[name=siho]").conditionallyEnable({enable: "#siho-container"});
+            $("[name=siho]").conditionallyDisplay({enable: "#siho-container"});
             $("#sicdl").conditionallyEnable({sourceValues: "os", enable: "#sicdls"});
-            $("[name=sicd]").conditionallyEnable({enable: "#sicd-container"});
-            $("[name=silcs]").conditionallyEnable({enable: "#silcs-container"});
-            $("[name=sier]").conditionallyEnable({enable: "#sier-container"});
-            $("[name=sisa]").conditionallyEnable({enable: "#sisa-container-y", disable: "sisa-container-n"});
-            $("[name=sittq]").conditionallyEnable({enable: "#sittq-container"});
+            $("[name=sicd]").conditionallyDisplay({enable: "#sicd-container"});
+            $("[name=silcs]").conditionallyDisplay({enable: "#silcs-container"});
+            $("[name=sier]").conditionallyDisplay({enable: "#sier-container"});
+            $("[name=sisa]").conditionallyDisplay({enable: "#sisa-container-y", disable: "sisa-container-n"});
+            $("[name=sittq]").conditionallyDisplay({enable: "#sittq-container"});
             $("#siscl").conditionallyEnable({sourceValues: "l", enable: "#siscos"});
 
             $(".validated").formValidation({framework: 'bootstrap'});

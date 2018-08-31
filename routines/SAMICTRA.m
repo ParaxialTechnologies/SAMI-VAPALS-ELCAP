@@ -28,6 +28,7 @@ impression(rtn,vals,dict)
  i $$xval("cefu",vals)'="nf" d  ; 2445-2450 gpl1
  . d out("<TR><TD><FONT SIZE=""+2""><B>")
  . d out("Recommendations:")
+ . d out("</B></FONT>")
  . d out("</TD></TR><TR><TD><TABLE><TR><TD WIDTH=20></TD><TD>")
  ;
  n fuw
@@ -39,9 +40,9 @@ impression(rtn,vals,dict)
  ;zwr @vals@(*)
  ;zwr @dict@(*)
  i fuw="" d  ;
- . d out(para_"<B>"_$$xsub("cefu",vals,dict)_" on "_$$xval("cefud",vals)_".<B>"_para)
+ . d out(para_"<B>"_$$xsub("cefu",vals,dict)_" on "_$$xval("cefud",vals)_".</B>"_para)
  e  d  ;
- . d out(para_"<B>"_$$xsub("cefu",vals,dict)_" "_fuw_" on "_$$xval("cefud",vals)_".<B>"_para)
+ . d out(para_"<B>"_$$xsub("cefu",vals,dict)_" "_fuw_" on "_$$xval("cefud",vals)_".</B>"_para)
  ;
  d out("<TR><TD></TD></TR>")
  d out("<TR><TD><TABLE><TR><TD WIDTH=20></TD><TD>")

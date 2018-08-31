@@ -1,4 +1,4 @@
-SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 7/17/18 8:33pm
+SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 8/21/18 11:16am
  ;;1.0;;**LOCAL**; APR 22, 2018
  ;
  ; VA-PALS will be using the VA's M2M broker to pull
@@ -53,7 +53,7 @@ save2vista(filter) ;
  ;
  s si=$g(filter("studyid")) ; e.g."XXX00333"
  q:'$L($G(si)) 0
- ; 
+ ;
  s root=$$setroot^%wd("vapals-patients")
  ; e.g. root = ^%wd(17.040801,23)
  ;
@@ -71,7 +71,7 @@ save2vista(filter) ;
  s dest=$na(@vals@("note"))
  ; e.g. dest="^%wd(17.040801,23,""graph"",""XXX00333"",""siform-2018-06-04"",""note"")"
  ;
- ; Build the new tiu stubb.  
+ ; Build the new tiu stubb.
  ;   tiuien = 0 : Building new tiu stubb failed
  ;   tiuien = n : IEN into file #8925 for new note stubb
  s tiuien=+$$BLDTIU(ptdfn,tiutitleien,provduz,clinien)
@@ -92,86 +92,161 @@ save2vista(filter) ;
  ; RETURN
  ;   IEN of new TIU note. 0=failure
 BLDTIU(DFN,TITLE,USER,CLINIEN) ;
- N IP,PORT,ACCVER
- S PORT=$$GET^XPAR("SYS","SAMI PORT",,"Q")
- S IP=$$GET^XPAR("SYS","SAMI IP ADDRESS",,"Q")
- S:($G(IP)="") IP="127.0.0.1"
- Q:$G(IP)=""  Q:$G(PORT)=""
- S ACCVER=$$GET^XPAR("SYS","SAMI ACCVER",,"Q")
- Q:$G(ACCVER)=""  Q:'($L($G(ACCVER),";")=2)
- Q:'$G(DFN)  Q:'$G(TITLE)  Q:'$G(DUZ)
- Q:'$G(CLINIEN)
- K TIUIEN
- N SUPPRESS,VDT,NOASF,VSTR
- S VDT=$$HTFM^XLFDT($H) ; Visit date
- S VSTR=CLINIEN_";"_VDT_";A"
- S SUPPRESS=1
- S NOASF=1 ; Do not commit
+ N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY
+ N TIUIEN S TIUIEN=0
+ I '$G(DFN) Q:$Q TIUIEN  Q
+ I '$G(TITLE) Q:$Q TIUIEN  Q
+ I '$G(USER) Q:$Q TIUIEN  Q
+ I '$G(CLINIEN) Q:$Q TIUIEN  Q
+ N VDT S VDT=$$HTFM^XLFDT($H) ; Visit date
+ N VSTR S VSTR=CLINIEN_";"_VDT_";A"
+ N SUPPRESS S SUPPRESS=1
+ N NOASF S NOASF=1
+ S CNTXT="OR CPRS GUI CHART"
+ S RMPRC="TIU CREATE RECORD"
+ S (CONSOLE,CNTNOPEN)=0
  ;
- N CONNECT,DIVFLAG,XWBDIVS,DIVISION,CONTEXT,X,I
- S CONNECT=$$CONNECT^XWBM2MC(PORT,IP,ACCVER)
- Q:'($G(CONNECT)=1)
- S DIVFLAG=$$GETDIV^XWBM2MC("DIVISIONS")
- S XWBDIVS=0,DIVISION=$$SETDIV^XWBM2MC(XWBDIVS)
- S CONTEXT=$$SETCONTX^XWBM2MC("OR CPRS GUI CHART")
+ S XARRAY(1)=DFN
+ S XARRAY(2)=TITLE
+ S XARRAY(3)=""
+ S XARRAY(4)=""
+ S XARRAY(5)=""
  ;
- K ^TMP("POO")
- S ^TMP("POO",$J,"TYPE")="STRING"
- S ^TMP("POO",$J,"VALUE")=DFN
- S X=$$PARAM^XWBM2MC(1,$NA(^TMP("POO",$J)))
+ N POO
+ S POO(1202)=USER
+ S POO(1301)=$$HTFM^XLFDT($H) ; REFERENCE DATE
+ S POO(1205)=CLINIEN
+ S POO(1701)=""
+ S XARRAY(6)="@POO"
  ;
- K ^TMP("POO",$J)
- S ^TMP("POO",$J,"TYPE")="STRING"
- S ^TMP("POO",$J,"VALUE")=TITLE
- S X=$$PARAM^XWBM2MC(2,$NA(^TMP("POO",$J)))
+ S XARRAY(7)=VSTR
+ S XARRAY(8)=SUPPRESS
+ D M2M^KBAPM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
+ Q:$Q +$G(XDATA)  Q
  ;
- K ^TMP("POO",$J)
- S ^TMP("POO",$J,"TYPE")="STRING"
- S ^TMP("POO",$J,"VALUE")=""
- S X=$$PARAM^XWBM2MC(3,$NA(^TMP("POO",$J)))
- ;
- K ^TMP("POO",$J)
- S ^TMP("POO",$J,"TYPE")="STRING"
- S ^TMP("POO",$J,"VALUE")=""
- S X=$$PARAM^XWBM2MC(4,$NA(^TMP("POO",$J)))
- ;
- K ^TMP("POO",$J)
- S ^TMP("POO",$J,"TYPE")="STRING"
- S ^TMP("POO",$J,"VALUE")=""
- S X=$$PARAM^XWBM2MC(5,$NA(^TMP("POO",$J)))
- ;
- K ^TMP("POO",$J)
- S ^TMP("POO",$J,"TYPE")="ARRAY"
- S ^TMP("POO",$J,"VALUE",1202)=USER
- S ^TMP("POO",$J,"VALUE",1301)=$$HTFM^XLFDT($H) ; REFERENCE DATE
- S ^TMP("POO",$J,"VALUE",1205)=CLINIEN ; CLINIC IEN IN ^SC
- S ^TMP("POO",$J,"VALUE",1701)=""
- S X=$$PARAM^XWBM2MC(6,$NA(^TMP("POO",$J)))
- ;
- K ^TMP("POO",$J)
- S ^TMP("POO",$J,"TYPE")="STRING"
- S ^TMP("POO",$J,"VALUE")=VSTR
- S X=$$PARAM^XWBM2MC(7,$NA(^TMP("POO",$J)))
- ;
- K ^TMP("POO",$J)
- S ^TMP("POO",$J,"TYPE")="STRING"
- S ^TMP("POO",$J,"VALUE")=SUPPRESS
- S X=$$PARAM^XWBM2MC(8,$NA(^TMP("POO",$J)))
- ;
- S CALL=$$CALLRPC^XWBM2MC("TIU CREATE RECORD","REQ",1)
- ;
- S CLOSE=$$CLOSE^XWBM2MC
- Q $G(REQ(1))
  ;
  ;
  ; ENTER
  ;   tiuien   = IEN of tiu note stubb in file #8925
  ;   dest     = indirection pointer to tiu note text
  ;                in the "VA-PALS patients" graph store
-SETTEXT(tiuien,dest) ;
+SETTEXT(TIUIEN,dest) ;
  Q:'$g(tiuien) 0
  Q:'$d(dest) 0
  n snode s snode=$p(dest,")")
+ ;
+ N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY
+ S CNTXT="OR CPRS GUI CHART"
+ S RMPRC="TIU SET DOCUMENT TEXT"
+ S (CONSOLE,CNTNOPEN)=0
+ N SUPPRESS S SUPPRESS=0
+ ;
+ S XARRAY(1)=TIUIEN
+ ;
+ N POO,CNT
+ S POO("HDR")="1^1"
+ S NODE=dest,SNODE=$P(NODE,")")
+ F  S NODE=$Q(@NODE) Q:NODE'[SNODE  D
+ . S CNT=$G(CNT)+1
+ . S POO("TEXT",CNT,0)=@NODE
+ S XARRAY(2)="@POO"
+ ;
+ S XARRAY(3)=SUPPRESS
+ ;
+ D M2M^KBAPM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
+ ;
+ ;
+ I +$G(XDATA)>0 Q:$Q 1  Q
+ Q:$Q 0  Q
+ ;
+ ;
+ ; Additional Signers
+ ; ENTER
+ ;   TIUIEN   =  IEN of note in 8925
+ ;   TIULIST  =  Array by reference of users to make
+ ;               additional signers
+ ;               e.g. TIULIST(1)="72[^King,Matt]"
+ ;                    TIULIST(2)="64[^Smith,Mary]"
+ ;               NOTE: name not necessary
+ ; RETURN
+ ;   0 = failure, 1 = success
+ADDSGNR(TIUIEN,TIULIST) ;
+ I '$G(TIUIEN) Q:$Q 0  Q
+ I '$D(TIULIST) Q:$Q 0  Q
+ ;
+ N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY
+ S (CONSOLE,CNTNOPEN)=0
+ S CNTXT="OR CPRS GUI CHART"
+ S RMPRC="TIU UPDATE ADDITIONAL SIGNERS"
+ ;
+ K XARRAY
+ S XARRAY(1)=TIUIEN
+ ;
+ S XARRAY(2)="@TIULIST"
+ ;
+ D M2M^KBAPM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
+ ;
+ I +$G(XDATA)>0 Q:$Q 1  Q
+ Q:$Q 0  Q
+ ;
+ ;
+ ; Build a tiu addendum
+ ;ENTER
+ ;   TIUADIEN  = variable by reference for new TIU
+ ;               addendum IEN into 8925
+ ;   TIUIEN    = IEN of note in 8925 to which we 
+ ;               wish to add an addendum
+ ;   USERDUZ   = DUZ [IEN into file 200] of the user
+ ;               building the addendum
+BLDTIUA(TIUAIEN,TIUIEN,USERDUZ) ;
+ ;
+ I '$G(TIUIEN) Q:$Q 0  Q
+ I '$G(USERDUZ) Q:$Q 0  Q
+ ;
+ N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY
+ S (CONSOLE,CNTNOPEN)=0
+ S CNTXT="OR CPRS GUI CHART"
+ S RMPRC="TIU CREATE ADDENDUM RECORD"
+ ;
+ K XARRAY
+ S XARRAY(1)=TIUIEN
+ ;
+ N POO
+ S POO(1202)=USERDUZ
+ S POO(1301)=$$HTFM^XLFDT($H) ; REFERENCE DATE
+ S XARRAY(2)="@POO"
+ ;
+ N NOASF S NOASF=1 ; Do not commit
+ S XARRAY(8)=NOASF
+ ;
+ D M2M^KBAPM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
+ ;
+ I +$G(XDATA)>0 Q:$Q 1  Q
+ Q:$Q 0  Q
+ ;
+ ;
+ ; Add encounter information to a tiu note
+ ;ENTER
+ ;   VSTDATE = date of TIU note
+ ;   HFARRAY = array by reference of Health Factors e.g.
+ ;     HFARRAY(1)="HDR^0^^7;3180705.130554;A"
+ ;     HFARRAY(2)="VST^DT^3180705.130554"
+ ;     HFARRAY(3)="VST^PT^646"
+ ;     HFARRAY(4)="VST^HL^7"
+ ;     HFARRAY(5)="VST^VC^A"
+ ;     HFARRAY(6)="PRV^71^^^CARLSON,LARRY G^1"
+ ;     HFARRAY(7)="POV+^F17.210^COUNSELING AND SCREENING^Nicotine dependence, cigarettes, uncomplicated^1^^0^^^1"
+ ;     HFARRAY(8)="COM^1^@"
+ ;     HFARRAY(9)="HF+^619713^LUNG SCREENING HF^LCS AGREES TO BE SCREENED^@^^^^^2^"
+ ;     HFARRAY(10)="COM^2^@"
+ ;     HFARRAY(11)="HF+^647046^LUNG SCREENING HF^LCS CHEST CT PREVIOUSLY^@^^^^^3^"
+ ;     HFARRAY(12)="COM^3^@"
+ ;     HFARRAY(13)="HF+^647085^LUNG SCREENING HF^LCS NO EXCLUSIONS^@^^^^^4^"
+ ;     HFARRAY(14)="COM^4^@"
+ ;     HFARRAY(15)="CPT+^99203^NEW PATIENT^Intermediate Exam  26-35 Min^1^71^^^0^5^"
+ ;     HFARRAY(16)="COM^5^@"
+ ;
+BLDENCTR(VSTDATE,HFARRAY) ;
  ;
  ;
  N CONNECT,DIVFLAG,XWBDIVS,DIVISION,CONTEXT,X,I,SUPPRESS
@@ -179,141 +254,114 @@ SETTEXT(tiuien,dest) ;
  S PORT=$$GET^XPAR("SYS","SAMI PORT",,"Q")
  S IP=$$GET^XPAR("SYS","SAMI IP ADDRESS",,"Q")
  S:($G(IP)="") IP="127.0.0.1"
- Q:$G(IP)="" 0
- Q:$G(PORT)="" 0
+ Q:$G(IP)=""  Q:$G(PORT)=""
  S ACCVER=$$GET^XPAR("SYS","SAMI ACCVER",,"Q")
- Q:$G(ACCVER)="" 0
- Q:'($L($G(ACCVER),";")=2) 0
+ Q:$G(ACCVER)=""  Q:'($L($G(ACCVER),";")=2)
  S CONNECT=$$CONNECT^XWBM2MC(PORT,IP,ACCVER)
- Q:'($G(CONNECT)=1) 0
+ Q:'($G(CONNECT)=1)
  S DIVFLAG=$$GETDIV^XWBM2MC("DIVISIONS")
  S XWBDIVS=0,DIVISION=$$SETDIV^XWBM2MC(XWBDIVS)
  S CONTEXT=$$SETCONTX^XWBM2MC("OR CPRS GUI CHART")
  S SUPPRESS=0
  ;
-ST1 K ^TMP("POO")
- S ^TMP("POO",$J,"TYPE")="STRING"
- S ^TMP("POO",$J,"VALUE")=tiuien
+ENCTR1 K ^TMP("POO")
+ ;
+ S ^TMP("POO",$J,"TYPE")="ARRAY"
+ ;
+ S ^TMP("POO",$J,"VALUE",1)="HDR^0^^7;3180705.130554;A"
+ S ^TMP("POO",$J,"VALUE",2)="VST^DT^3180705.130554"
+ S ^TMP("POO",$J,"VALUE",3)="VST^PT^646"
+ S ^TMP("POO",$J,"VALUE",4)="VST^HL^7"
+ S ^TMP("POO",$J,"VALUE",5)="VST^VC^A"
+ S ^TMP("POO",$J,"VALUE",6)="PRV^71^^^CARLSON,LARRY G^1"
+ S ^TMP("POO",$J,"VALUE",7)="POV+^F17.210^COUNSELING AND SCREENING^Nicotine dependence, cigarettes, uncomplicated^1^^0^^^1"
+ S ^TMP("POO",$J,"VALUE",8)="COM^1^@"
+ S ^TMP("POO",$J,"VALUE",9)="HF+^619713^LUNG SCREENING HF^LCS AGREES TO BE SCREENED^@^^^^^2^"
+ S ^TMP("POO",$J,"VALUE",10)="COM^2^@"
+ S ^TMP("POO",$J,"VALUE",11)="HF+^647046^LUNG SCREENING HF^LCS CHEST CT PREVIOUSLY^@^^^^^3^"
+ S ^TMP("POO",$J,"VALUE",12)="COM^3^@"
+ S ^TMP("POO",$J,"VALUE",13)="HF+^647085^LUNG SCREENING HF^LCS NO EXCLUSIONS^@^^^^^4^"
+ S ^TMP("POO",$J,"VALUE",14)="COM^4^@"
+ S ^TMP("POO",$J,"VALUE",15)="CPT+^99203^NEW PATIENT^Intermediate Exam  26-35 Min^1^71^^^0^5^"
+ S ^TMP("POO",$J,"VALUE",16)="COM^5^@"
  S X=$$PARAM^XWBM2MC(1,$NA(^TMP("POO",$J)))
  ;
-ST2 K ^TMP("TIUX")
- S ^TMP("TIUX",$J,"TYPE")="ARRAY"
- S ^TMP("TIUX",$J,"VALUE","HDR")="1^1"
- n line s line=0
- f  s dest=$q(@dest) q:dest'[snode  d
- . s line=line+1
- . S ^TMP("TIUX",$J,"VALUE","{TEXT,"_line_",0")=@dest
- S X=$$PARAM^XWBM2MC(2,$NA(^TMP("TIUX",$J)))
- ;
-ST3 K ^TMP("POO",$J)
+ENCTR2 K ^TMP("POO")
  S ^TMP("POO",$J,"TYPE")="STRING"
- S ^TMP("POO",$J,"VALUE")=SUPPRESS
+ S ^TMP("POO",$J,"VALUE")="0"
  S X=$$PARAM^XWBM2MC(3,$NA(^TMP("POO",$J)))
  ;
-CALLSTXT S CALL=$$CALLRPC^XWBM2MC("TIU SET DOCUMENT TEXT","REQ",1)
- ;
- S CLOSE=$$CLOSE^XWBM2MC
- ;
- Q +$G(REQ(1))
- ;
- ;
- ; Additional Signers
-ENSNRS(TIUIEN) Q:'$G(TIUIEN)
- N TIULIST
- S TIULIST(1)="72^King,Matt"
- S TIULIST(2)="64^Smith,Mary"
- D ADDSGNR^KBAPTIU(.TIUADIEN,TIUIEN,.TIULIST)
- Q
- ; call into larrypoo docker and build tiu
- ;
-ADDSGNR(XDATA,TIUIEN,TIULIST) ;
- N IP,PORT,ACCVER
- S PORT=$$GET^XPAR("SYS","SAMI PORT",,"Q")
- S IP=$$GET^XPAR("SYS","SAMI IP ADDRESS",,"Q")
- S:($G(IP)="") IP="127.0.0.1"
- Q:$G(IP)=""  Q:$G(PORT)=""
- S ACCVER=$$GET^XPAR("SYS","SAMI ACCVER",,"Q")
- Q:$G(ACCVER)=""  Q:'($L($G(ACCVER),";")=2)
- Q:'$G(TIUIEN)  Q:'$D(TIULIST)
- ;
- K XDATA
- ;
- ;D IDSIGNRS^TIULX(.XDATA,TIUIEN,.TIULIST)
- ;Q
- ;
- N CONNECT,DIVFLAG,XWBDIVS,DIVISION,CONTEXT,X,I
- S CONNECT=$$CONNECT^XWBM2MC(PORT,IP,ACCVER)
- Q:'($G(CONNECT)=1)
- S DIVFLAG=$$GETDIV^XWBM2MC("DIVISIONS")
- S XWBDIVS=0,DIVISION=$$SETDIV^XWBM2MC(XWBDIVS)
- S CONTEXT=$$SETCONTX^XWBM2MC("OR CPRS GUI CHART")
- ;
- K ^TMP("POO")
+ENCTR3 K ^TMP("POO")
  S ^TMP("POO",$J,"TYPE")="STRING"
- S ^TMP("POO",$J,"VALUE")=TIUIEN
- S X=$$PARAM^XWBM2MC(1,$NA(^TMP("POO",$J)))
+ S ^TMP("POO",$J,"VALUE")="7"
+ S X=$$PARAM^XWBM2MC(3,$NA(^TMP("POO",$J)))
  ;
- K ^TMP("TIULIST",$J)
- S ^TMP("TIULIST",$J,"TYPE")="ARRAY"
- S ^TMP("TIULIST",$J,"VALUE",1)="72^King,Matt"
- S ^TMP("TIULIST",$J,"VALUE",2)="64^Smith,Mary"
- S X=$$PARAM^XWBM2MC(2,$NA(^TMP("TIULIST",$J)))
- ;
- S CALL=$$CALLRPC^XWBM2MC("TIU UPDATE ADDITIONAL SIGNERS","REQ",1)
+CALLENCT S CALL=$$CALLRPC^XWBM2MC("ORWPCE SAVE","REQ",1)
  ;
  S CLOSE=$$CLOSE^XWBM2MC
  Q
  ;
+TEST(DFN) ; Q:'$G(DFN)
+ K POO
+ S DFN=519
+ S TIUX(1202)=71 ; user
+ S TIUX(1301)=$$HTFM^XLFDT($H) ; reference date
+ S TIUX(1205)=7 ; clinic ien in file 44
+ S TIUX(1701)="" ; subject of tiue
+ S TITLE=5847
+ S CLINIEN=7
+ S VSTR="7;3180705.110403;A"
+ S SUPPRESS=1
+ S NOASF=1
+ D MAKE^TIUSRVP(.POO,DFN,TITLE,,,,.TIUX,VSTR,SUPPRESS)
+ ZWR POO
  ;
- ; Build a tiu addendum
-ENAD(TIUIEN,USERDUZ) Q:'$G(TIUIEN)
- D BLDTIUA^KBAPTIU(.TIUADIEN,TIUIEN,USERDUZ)
- Q
- ; call into larrypoo docker and build tiu
- ; D BLDTIUA^KBAPTIU(.TIUIEN,22,71)
-BLDTIUA(TIUAIEN,TIUIEN,USERDUZ) ;
- N IP,PORT,ACCVER
- S PORT=$$GET^XPAR("SYS","SAMI PORT",,"Q")
- S IP=$$GET^XPAR("SYS","SAMI IP ADDRESS",,"Q")
- S:($G(IP)="") IP="127.0.0.1"
- Q:$G(IP)=""  Q:$G(PORT)=""
- S ACCVER=$$GET^XPAR("SYS","SAMI ACCVER",,"Q")
- Q:$G(ACCVER)=""  Q:'($L($G(ACCVER),";")=2)
- Q:'$G(TIUIEN)  Q:'$G(USERDUZ)
+ ; Pull patient information from the server and
+ ;   push into the 'patient-lookup' Graphstore
+ ; Enter
+ ;   DFN   = IEN of patient into file 2
+ ; Returns
+ ;   SSN if called as in extrinsic
+PTINFO(DFN) ;
+ N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY,XDATA
+ S CNTXT="SCMC PCMMR APP PROXY MENU"
+ S RMPRC="SCMC PATIENT INFO"
+ S CONSOLE=1
+ S CNTNOPEN=0
+ N SSN S SSN=0
+ I '$G(DFN) Q:$Q SSN  Q
+ S XARRAY(1)=DFN
+ D M2M^KBAPM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
+ ; Update patient-lookup entry for this patient
+ N root s root=$$setroot^%wd("patient-lookup")
+ N NAME,NODE,gien
+ I '(DFN=$P(XDATA,"^",1)) Q:$Q SSN  Q
+ N NODE S NODE=$NA(@root@("dfn",DFN))
+ S NODE=$Q(@NODE)
+ S gien=+$P(NODE,",",5)
+ I '$G(gien) Q:$Q SSN  Q
+ S SSN=$P(XDATA,"^",3)
+ N DOB S DOB=$$FMTHL7^XLFDT($P(XDATA,"^",4))
+ S DOB=$E(DOB,1,4)_"-"_$E(DOB,5,6)_"-"_$E(DOB,7,8)
+ I '(DOB=@root@(gien,"sbdob")) Q:$Q SSN  Q
+ S @root@(gien,"ssn")=$P(XDATA,"^",3)
+ S:+$P(XDATA,"^",3) @root@("ssn",$P(XDATA,"^",3))=gien
+ S @root@(gien,"icn")=$P(XDATA,"^",18)
+ S:+$P(XDATA,"^",18) @root@("icn",$P(XDATA,"^",18))=gien
+ S @root@(gien,"age")=$P(XDATA,"^",5)
+ S @root@(gien,"sex")=$P(XDATA,"^",6)
+ S @root@(gien,"marital status")=$P(XDATA,"^",7)
+ S @root@(gien,"active duty")=$P(XDATA,"^",8)
+ S @root@(gien,"address1")=$P(XDATA,"^",9)
+ S @root@(gien,"address2")=$P(XDATA,"^",10)
+ S @root@(gien,"address3")=$P(XDATA,"^",11)
+ S @root@(gien,"city")=$P(XDATA,"^",12)
+ S @root@(gien,"state")=$P(XDATA,"^",13)
+ S @root@(gien,"zip")=$P(XDATA,"^",14)
+ S @root@(gien,"county")=$P(XDATA,"^",15)
+ S @root@(gien,"phone")=$P(XDATA,"^",16)
+ S @root@(gien,"sensitive patient")=$P(XDATA,"^",17)
  ;
- K TIUAIEN
- N VDT,NOASF
- S VDT=$$HTFM^XLFDT($H)
- S NOASF=1 ; Do not commit
- ;
- ;D MAKEADD^TIUSRVP(.TIUIEN,.POO,NOASF)
- ;Q
- ;
- N CONNECT,DIVFLAG,XWBDIVS,DIVISION,CONTEXT,X,I
- S CONNECT=$$CONNECT^XWBM2MC(PORT,IP,ACCVER)
- Q:'($G(CONNECT)=1)
- S DIVFLAG=$$GETDIV^XWBM2MC("DIVISIONS")
- S XWBDIVS=0,DIVISION=$$SETDIV^XWBM2MC(XWBDIVS)
- S CONTEXT=$$SETCONTX^XWBM2MC("OR CPRS GUI CHART")
- K ^TMP("POO")
- ;
- S ^TMP("POO",$J,"TYPE")="STRING"
- S ^TMP("POO",$J,"VALUE")=TIUIEN
- S X=$$PARAM^XWBM2MC(1,$NA(^TMP("POO",$J)))
- ;
- K ^TMP("MKTIU",$J)
- S ^TMP("MKTIU",$J,"TYPE")="ARRAY"
- S ^TMP("MKTIU",$J,"VALUE",1202)=USERDUZ
- S ^TMP("MKTIU",$J,"VALUE",1301)=$$HTFM^XLFDT($H) ; REFERENCE DATE
- S X=$$PARAM^XWBM2MC(2,$NA(^TMP("MKTIU",$J)))
- ;
- S ^TMP("POO",$J,"TYPE")="STRING"
- S ^TMP("POO",$J,"VALUE")=NOASF
- S X=$$PARAM^XWBM2MC(8,$NA(^TMP("POO",$J)))
- ;
- S CALL=$$CALLRPC^XWBM2MC("TIU CREATE ADDENDUM RECORD","REQ",1)
- ;
- S CLOSE=$$CLOSE^XWBM2MC
- Q
+ Q:$Q SSN  Q
  ;
 EOR ; End of routine SAMIVSTA

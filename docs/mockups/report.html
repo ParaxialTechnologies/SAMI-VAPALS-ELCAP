@@ -171,6 +171,8 @@ Interpreted by: IJL+DY
    </div>
    <div class="clearfix">
    </div>
+   <span id="studyid-html-element" style="display:none;" value="@@SID@@">
+   </span>
    <footer>
     <div class="container-fluid" style="max-width:1550px">
      <hr/>
@@ -178,15 +180,27 @@ Interpreted by: IJL+DY
       Submit feedback
      </a>
      <span id="sami-version" style="float:right; font-family: Courier,monospace">
-      SNAPSHOT 2018.08.15
+      <span id="formMode">
+      </span>
+      2018.08.31
      </span>
     </div>
    </footer>
    <script language="JavaScript">
-    const studyId = "@@SID@@";
-    if (studyId) {
+    const studyIdVal = $("#studyid-html-element").attr('value');
+    const studyId = $.trim(studyIdVal);
+    if (studyId && studyId.indexOf("@@") == -1) {
+        //store studyid value for use in pages that don't go through the forms processor
+        localStorage.setItem("studyid", studyId);
         $("#studyIdMenu").show();
     }
+
+    //purposefully executed before DOM is rendered so delete button is never visible
+    const frozen = "@@FROZEN@@";
+    if (frozen == "true") {
+        $("#delete-form").remove();
+    }
+
 
     $(function () {
         /** These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly. **/
@@ -202,6 +216,16 @@ Interpreted by: IJL+DY
             const $input = $(this);
             console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
         });
+
+        $.ajax("/ctversion", {
+            success: function (data, textStatus, jqXHR) {
+                const v = data.ctversion;
+                $("#formMode").text(v.toUpperCase());
+            },
+            error: function () {
+                $("#formMode").text("UNKNOWN");
+            }
+        })
     })
    </script>
    <script language="JavaScript">

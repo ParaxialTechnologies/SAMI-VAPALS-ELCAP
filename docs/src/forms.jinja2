@@ -5,13 +5,14 @@
     <label for="{{ for }}" class="text-right pull-right hidden-xs hidden-sm {{ extraClasses }}">{{ text }}</label>
 {%- endmacro %}
 
-{% macro inlineRadio(groupName, id, value, labelText, required, checked, onclick, tabindex) -%}
+{% macro inlineRadio(groupName, id, value, labelText, required, checked, onclick, tabindex, title) -%}
     <label class="radio-inline" for="{{ id }}">
         <input type="radio" name="{{ groupName }}" id="{{ id }}"
                 {{ " onclick=\""+ onclick + "\"" if onclick else "" }}
                 {{ " checked" if checked else "" }}
                 {{ " required=\"required\" data-fv-notempty-message=\"Please select a value\"" if required else "" }}
                 {{ " tabindex=\""+ tabindex + "\"" if tabindex else "" }}
+                {{ " title=\""+ title + "\"" if title else "" }}
                value="{{ value }}">
         {{ labelText }}
     </label>
@@ -24,9 +25,9 @@
 {%- endmacro %}
 
 {% macro inlineRadioNYQ(groupName, required, tabindex) -%}
-    {{ inlineRadio(groupName, groupName+"-n","n","No",required,false, null, tabindex) }}
-    {{ inlineRadio(groupName, groupName+"-y","y","Yes",required, false, null, tabindex) }}
-    {{ inlineRadio(groupName, groupName+"-q","q","?",required, false, null, tabindex) }}
+    {{ inlineRadio(groupName, groupName+"-n","n","No",required,false, null, tabindex,"Patient responded with 'No' to this question") }}
+    {{ inlineRadio(groupName, groupName+"-y","y","Yes",required, false, null, tabindex,"Patient responded with 'Yes' to this question") }}
+    {{ inlineRadio(groupName, groupName+"-q","q","?",required, false, null, tabindex, "Patient did not know the answer to this question") }}
 {%- endmacro %}
 
 {% macro inlineRadioNYE(groupName, required, tabindex) -%}

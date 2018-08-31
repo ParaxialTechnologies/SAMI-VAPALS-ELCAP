@@ -665,6 +665,13 @@ prefill(dfn) ; prefill fields for form
  ;
  ;@stanza 2 prefill fields
  ;
+ ; pull data from VistA
+ ;
+ ;n ok
+ ;s ok=$$PTINFO^SAMIVSTA(dfn)
+ ;i +ok<1 D ^ZTER
+ d PTINFO^SAMIVSTA(dfn)
+ ;
  ; prefills fields from patient-lookup graph
  ;
  new root set root=$$setroot^%wd("vapals-patients")

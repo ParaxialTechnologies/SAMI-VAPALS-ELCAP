@@ -99,6 +99,19 @@
                 // Set up Return key
                 if (e.keyCode === 13 && ($('#pt-lookup-btn').attr('disabled') == 'disabled')) {
                     e.preventDefault();
+                }                                   
+            }).on("keyup", function(e) {
+                let ptNameVal = $patientLookupInput.val();
+                let data = $patientLookupInput.data('vista');
+                let patientName = "";
+                if (data) {
+                    if (data.patient) {
+                        patientName = data.patient.name
+                    }
+                }
+                if (ptNameVal == "" || (ptNameVal != patientName)) {
+                    $('#pt-lookup-btn').attr('disabled', 'disabled');
+                    $patientLookupInput.trigger("change");
                 }
             }).on('filemanautocompleteselect', function (event, ui) {
                 // Enable show buttons

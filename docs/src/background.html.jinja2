@@ -22,6 +22,8 @@
             <input type="hidden" name="samiroute" value="postform"/>
             <input type="hidden" name="studyid" value="@@SID@@"/>
             <input type="hidden" name="form" value="@@FORMKEY@@"/>
+
+            <h3>Self-report of Comorbidities and Exposures</h3>
             <div>
 
                 <div class="row">
@@ -135,8 +137,8 @@
                             {{ f.yearpicker("sbmphtsw", true, true, true) }}
                         </div>
                         <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
-                            <label class="control-label required" for="sbmphthv">Highest Value</label>
-                            <input class="form-control input-sm" type="text" name="sbmphthv"
+                            <label class="control-label required numeric" for="sbmphthv">Highest Value</label>
+                            <input class="form-control input-sm numeric decimalformat" type="text" name="sbmphthv"
                                    id="sbmphthv"
                                    placeholder="Highest Value?">
                         </div>
@@ -412,7 +414,7 @@
 
                 <div class="row">
                     <div class="col-sm-6 col-md-3">
-                        <label for="sblcs-n" class="control-label">Have you ever worked in any of the
+                        <label for="sbahao-i" class="control-label">Have you ever worked in any of the
                             following?</label>
                     </div>
                     <div class="col-sm-6 col-md-9">
@@ -476,29 +478,24 @@
             }).first().trigger('change');
 
             //conditionally enabled fields
-            $("[name=sbfc]").conditionallyDisplay({enable: "#sbfc-container"});
-            $("[name=sbhco]").conditionallyDisplay({enable: "#sbhco-container"});
-            $("[name=sbmpa]").conditionallyDisplay({enable: "#sbmpa-container"});
-            $("[name=sbmpc]").conditionallyDisplay({enable: "#sbmpc-container"});
-            $("[name=sbmpht]").conditionallyDisplay({enable: "#sbmpht-container"});
-            $("[name=sbmphc]").conditionallyDisplay({enable: "#sbmphc-container"});
-            $("[name=sbmpas]").conditionallyDisplay({enable: "#sbmpas-container"});
-            $("[name=sbmpmi]").conditionallyDisplay({enable: "#sbmpmi-container"});
-            $("[name=sbmps]").conditionallyDisplay({enable: "#sbmps-container"});
-            $("[name=sbmppv]").conditionallyDisplay({enable: "#sbmppv-container"});
-            $("[name=sbmpd]").conditionallyDisplay({enable: "#sbmpd-container"});
-            $("[name=sbmpld]").conditionallyDisplay({enable: "#sbmpld-container"});
-            $("[name=sbmprd]").conditionallyDisplay({enable: "#sbmprd-container"});
-            $("[name=sblcs]").conditionallyDisplay({
-                enable: $("#sblcs-container").find("label, input[id!=sbwcos]")
-            });
+            const uncheckableRadioFieldNames = Array(
+                "sbfc", "sbhco", "sbmpa", "sbmpc", "sbmpht", "sbmphc", "sbmpas", "sbmpmi", "sbmps", "sbmppv", "sbmpd",
+                "sbmpld", "sbmprd", "sbahpft", "sblcs"
+            );
+
+            jQuery.each(uncheckableRadioFieldNames, function (idx, name) {
+                $("[name="+name+"]").conditionallyDisplay({enable: "#"+name+"-container"});
+                uncheckableRadio("[name='"+name+"']","div.form-group");
+            });  
+                    
+
             $("#sbwco").conditionallyDisplay({sourceValues: "o", enable: "#sbwcos"});
             $("[name=sbact]").conditionallyDisplay({
                 sourceValues: function (actualValue) {
                     return actualValue !== '-' && actualValue !== 'e';
                 }, enable: "#sbact-container"
             });
-            $("[name=sbahpft]").conditionallyDisplay({enable: "#sbahpft-container"});
+            
             $("#sbahaoo").conditionallyDisplay({sourceValues: "o", enable: "#sbahas"});
 
             $(".validated").formValidation({framework: 'bootstrap'});

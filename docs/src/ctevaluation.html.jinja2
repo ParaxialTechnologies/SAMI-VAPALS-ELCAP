@@ -2145,7 +2145,7 @@
             let res = 0;
             const cepaw = $("#cepaw").val(), ceaow = $("#ceaow").val();
             if (ceaow > 0) {
-                res = (cepaw / ceaow).toFixed(2);
+                res = (cepaw / ceaow).toFixed(1);
                 $("#cepar-text").text(res);
                 $("#cepar").val(res);
             }
@@ -2260,7 +2260,7 @@
                 if (w>0 && l>0) {
                     const meanDiam = (l + w)/2;
                     if (meanDiam > 0 ) {
-                        noduleDiamLabel.text(meanDiam.toFixed(2));
+                        noduleDiamLabel.text(meanDiam.toFixed(1));
                     } else {
                         noduleDiamLabel.text("-");
                     }
@@ -2337,7 +2337,7 @@
 
                 v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
 
-                $("#cect"+noduleIdx+"sv").val(v.toFixed(2));
+                $("#cect"+noduleIdx+"sv").val(v.toFixed(1));
                 var fv = $(this).closest("form.validated").data('formValidation');
                 if (fv) {
                     fv.revalidateField("cect"+noduleIdx+"sv")

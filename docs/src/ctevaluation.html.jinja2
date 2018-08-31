@@ -1895,10 +1895,13 @@
 
 
                         <h3>Follow Up
-                            <small>select one or more</small>
+                            <label for="validator-cefu">
+                                <small>select one or more</small>
+                            </label>
                         </h3>
                         <div class="row">
                             <div class="col-sm-12 form-group">
+                                <input type="hidden" id="validator-cefu" name="validator-cefu" value="0"/>
                                 <label for="cefuw-nw">CT follow up:</label><br/>
                                 {{ f.inlineCheckbox("cefuw", "1y","Annual repeat", {'id':'cefuw-1y'}) }}
                                 {{ f.inlineCheckbox("cefuw", "nw","Now", {'id':'cefuw-nw'}) }}
@@ -1918,6 +1921,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-12 form-group">
+                                <input type="hidden" id="validator-cefu" name="validator-cefu" value="0"/>
                                 <label for="cefu">Other follow up:</label><br/>
                                 {{ f.inlineCheckbox("cefuaf","y", "Antibiotics") }}
                                 {{ f.inlineCheckbox("cefucc","y", "Diagnostic CT") }}
@@ -2361,7 +2365,6 @@
 
             //display other followup specify field if "other" checkbox is enabled.
             $("[name=cefuo]").conditionallyDisplay({sourceValues: "y", enable: "#cefuo-container"});
-
             // mean diameter calculation
             setupMeanDiameterCalculation("sl", "sw", "sd");
 
@@ -2393,6 +2396,11 @@
                     fv.enableFieldValidators(validatorControlName, lymphNodesEnabled, 'callback');
                 }
             }).first().trigger('change');
+
+            //has to be after FV init
+            const $controls = $("[name=cefuw],#cefuaf,#cefucc,#cefupe,#cefufn,#cefubr,#cefupc,#cefutb,#cefunf,#cefuo");
+            const $fuValidatorControl = $("[name=validator-cefu]");
+            requireOneValidator($controls, $fuValidatorControl);
 
             
             exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);

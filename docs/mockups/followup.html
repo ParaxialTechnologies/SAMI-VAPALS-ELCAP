@@ -997,7 +997,7 @@
        Since your prior CT scan, what, if any, smoking cessation methods have you used?
       </label>
      </div>
-     <div class="col-sm-8">
+     <div class="col-sm-8 form-group">
       <div class="checkbox">
        <label>
         <input id="sisca" name="sisca" type="checkbox" value="a"/>
@@ -1180,7 +1180,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2018.08.21
+     2018.08.31
     </span>
    </div>
   </footer>
@@ -1192,6 +1192,13 @@
         localStorage.setItem("studyid", studyId);
         $("#studyIdMenu").show();
     }
+
+    //purposefully executed before DOM is rendered so delete button is never visible
+    const frozen = "@@FROZEN@@";
+    if (frozen == "true") {
+        $("#delete-form").remove();
+    }
+
 
     $(function () {
         /** These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly. **/
@@ -1234,16 +1241,16 @@
                 return $(this).val();
             }).first().trigger("dp.change"); //trigger on page load for existing data;
 
-            $("[name=simeq]").conditionallyEnable({enable: "#order-container"});
+            $("[name=simeq]").conditionallyDisplay({enable: "#order-container"});
             $("#siwco").conditionallyEnable({sourceValues: "o", enable: "#siwcos"});
             $("[name=siwcp]").conditionallyEnable({enable: "#siwcw-container"});
-            $("[name=siho]").conditionallyEnable({enable: "#siho-container"});
+            $("[name=siho]").conditionallyDisplay({enable: "#siho-container"});
             $("#sicdl").conditionallyEnable({sourceValues: "os", enable: "#sicdls"});
-            $("[name=sicd]").conditionallyEnable({enable: "#sicd-container"});
-            $("[name=silcs]").conditionallyEnable({enable: "#silcs-container"});
-            $("[name=sier]").conditionallyEnable({enable: "#sier-container"});
-            $("[name=sisa]").conditionallyEnable({enable: "#sisa-container-y", disable: "sisa-container-n"});
-            $("[name=sittq]").conditionallyEnable({enable: "#sittq-container"});
+            $("[name=sicd]").conditionallyDisplay({enable: "#sicd-container"});
+            $("[name=silcs]").conditionallyDisplay({enable: "#silcs-container"});
+            $("[name=sier]").conditionallyDisplay({enable: "#sier-container"});
+            $("[name=sisa]").conditionallyDisplay({enable: "#sisa-container-y", disable: "sisa-container-n"});
+            $("[name=sittq]").conditionallyDisplay({enable: "#sittq-container"});
             $("#siscl").conditionallyEnable({sourceValues: "l", enable: "#siscos"});
 
             $(".validated").formValidation({framework: 'bootstrap'});

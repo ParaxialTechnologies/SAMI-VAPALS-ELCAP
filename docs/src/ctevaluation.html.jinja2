@@ -646,7 +646,7 @@
                                             {% for i in noduleArray %}
                                                 <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group form-group-sm">
-                                                        {{ f.inlineRadioNYQ("cect" + i|string + "se", false, i|string + "15") }}
+                                                        {{ f.yesCheckbox("cect" + i|string + "se", {"tabindex":i|string+"15"}) }}
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -675,7 +675,7 @@
                                             {% for i in noduleArray %}
                                                 <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group form-group-sm">
-                                                        {{ f.inlineRadioNYQ("cect" + i|string + "sp", false, i|string + "17") }}
+                                                        {{ f.yesCheckbox("cect" + i|string + "sp", {"tabindex":i|string+"17"}) }}
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -973,12 +973,12 @@
                                                     <td><label class="control-label" for="cecbc-n">Cysts</label></td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("cecbc") }}
+                                                            {{ f.yesCheckbox("cecbc") }}
                                                         </div>
                                                     </td>
                                                     {% for i in [1,2,3,4,5] %}
-                                                        <td style="padding-top:0;">
-                                                            <div class="form-group">
+                                                        <td>
+                                                            <div class="form-group cecbc-container">
                                                                 {{ f.checkbox("cecbcl"+i|string, rf[i-1], "") }}
                                                             </div>
                                                         </td>
@@ -989,12 +989,12 @@
                                                     </td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("cecbb") }}
+                                                            {{ f.yesCheckbox("cecbb") }}
                                                         </div>
                                                     </td>
                                                     {% for i in [1,2,3,4,5] %}
-                                                        <td style="padding-top:0;">
-                                                            <div class="form-group">
+                                                        <td>
+                                                            <div class="form-group cecbb-container">
                                                                 {{ f.checkbox("cecbbl"+i|string, rf[i-1], "") }}
                                                             </div>
                                                         </td>
@@ -1007,12 +1007,12 @@
                                                     </td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("cerdc") }}
+                                                            {{ f.yesCheckbox("cerdc") }}
                                                         </div>
                                                     </td>
                                                     {% for i in [1,2,3,4,5] %}
-                                                        <td style="padding-top:0;">
-                                                            <div class="form-group">
+                                                        <td>
+                                                            <div class="form-group cerdc-container">
                                                                 {{ f.checkbox("cerdcl"+i|string, rf[i-1], "") }}
                                                             </div>
                                                         </td>
@@ -1022,12 +1022,12 @@
                                                     <td><label class="control-label" for="cescr-n">Scarring</label></td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("cescr") }}
+                                                            {{ f.yesCheckbox("cescr") }}
                                                         </div>
                                                     </td>
                                                     {% for i in [1,2,3,4,5] %}
-                                                        <td style="padding-top:0;">
-                                                            <div class="form-group">
+                                                        <td>
+                                                            <div class="form-group cescr-container">
                                                                 {{ f.checkbox("cescrl"+i|string, rf[i-1], "") }}
                                                             </div>
                                                         </td>
@@ -1036,7 +1036,7 @@
                                                 <tr>
                                                     <td style="border-top:none;"></td>
                                                     <td colspan="6" style="border-top:none;">
-                                                        <div class="form-group form-inline">
+                                                        <div class="form-group form-inline cescr-container">
                                                             <label>Apical</label>&nbsp;
                                                             {{ f.checkbox("cescrl6","au","Unilateral") }}
                                                             {{ f.checkbox("cescrl7","ab","Bilateral") }}
@@ -1049,12 +1049,12 @@
                                                                for="cebrsb-n">Bronchiectasis</label></td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("cebrsb") }}
+                                                            {{ f.yesCheckbox("cebrsb") }}
                                                         </div>
                                                     </td>
                                                     {% for i in [1,2,3,4,5] %}
-                                                        <td style="padding-top:0;">
-                                                            <div class="form-group">
+                                                        <td>
+                                                            <div class="form-group cebrsb-container">
                                                                 {{ f.checkbox("cebrsbl"+i|string, rf[i-1], "") }}
                                                             </div>
                                                         </td>
@@ -1066,12 +1066,12 @@
                                                         disease</label></td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("cebrss") }}
+                                                            {{ f.yesCheckbox("cebrss") }}
                                                         </div>
                                                     </td>
                                                     {% for i in [1,2,3,4,5] %}
-                                                        <td style="padding-top:0;">
-                                                            <div class="form-group">
+                                                        <td>
+                                                            <div class="form-group cebrss-container">
                                                                 {{ f.checkbox("cebrssl"+i|string, rf[i-1], "") }}
                                                             </div>
                                                         </td>
@@ -1110,12 +1110,12 @@
                                                         peripheral location</label></td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("cerb") }}
+                                                            {{ f.yesCheckbox("cerb") }}
                                                         </div>
                                                     </td>
                                                     {% for i in [1,2,3,4,5] %}
-                                                        <td style="padding-top:0;">
-                                                            <div class="form-group">
+                                                        <td>
+                                                            <div class="form-group cerb-container">
                                                                 {{ f.checkbox("cerbl"+i|string, rf[i-1], "") }}
                                                             </div>
                                                         </td>
@@ -1128,12 +1128,12 @@
                                                         opacities</label></td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("cepgo") }}
+                                                            {{ f.yesCheckbox("cepgo") }}
                                                         </div>
                                                     </td>
                                                     {% for i in [1,2,3,4,5] %}
-                                                        <td style="padding-top:0;">
-                                                            <div class="form-group">
+                                                        <td>
+                                                            <div class="form-group cepgo-container">
                                                                 {{ f.checkbox("cepgol"+i|string, rf[i-1], "") }}
                                                             </div>
                                                         </td>
@@ -1145,12 +1145,12 @@
                                                     </td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("ceret") }}
+                                                            {{ f.yesCheckbox("ceret") }}
                                                         </div>
                                                     </td>
                                                     {% for i in [1,2,3,4,5] %}
-                                                        <td style="padding-top:0;">
-                                                            <div class="form-group">
+                                                        <td>
+                                                            <div class="form-group ceret-container">
                                                                 {{ f.checkbox("ceretl"+i|string, rf[i-1], "") }}
                                                             </div>
                                                         </td>
@@ -1162,12 +1162,12 @@
                                                     </td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("cephc") }}
+                                                            {{ f.yesCheckbox("cephc") }}
                                                         </div>
                                                     </td>
                                                     {% for i in [1,2,3,4,5] %}
-                                                        <td style="padding-top:0;">
-                                                            <div class="form-group">
+                                                        <td>
+                                                            <div class="form-group cephc-container">
                                                                 {{ f.checkbox("cephcl"+i|string, rf[i-1], "") }}
                                                             </div>
                                                         </td>
@@ -1218,11 +1218,11 @@
                                                     </td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("cept") }}
+                                                            {{ f.yesCheckbox("cept") }}
                                                         </div>
                                                     </td>
                                                     <td colspan="5">
-                                                        <div class="form-group form-inline">
+                                                        <div class="form-group form-inline cept-container">
                                                             {{ f.checkbox("ceptrt", "r", "Right") }}
                                                             &nbsp;
                                                             {{ f.checkbox("ceptlt", "l", "Left") }}
@@ -1237,16 +1237,34 @@
                                                         atelectasis</label></td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("cebatr") }}
+                                                            {{ f.yesCheckbox("cebatr") }}
                                                         </div>
                                                     </td>
-                                                    {% for i in [1,2,3,4,5] %}
-                                                        <td style="padding-top:0;">
-                                                            <div class="form-group">
-                                                                {{ f.checkbox("cebatrl"+i|string, rf[i-1], "") }}
-                                                            </div>
-                                                        </td>
-                                                    {% endfor %}
+                                                    <td colspan="5">
+                                                        <table class="table">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>RUL</th>
+                                                                <th>RML</th>
+                                                                <th>RLL</th>
+                                                                <th>LUL</th>
+                                                                <th>LLL</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                {% for i in [1,2,3,4,5] %}
+                                                                    <td>
+                                                                        <div class="form-group cebatr-container">
+                                                                            {{ f.checkbox("cebatrl"+i|string, rf[i-1], "") }}
+                                                                        </div>
+                                                                    </td>
+                                                                {% endfor %}
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+
                                                 </tr>
 
                                                 <tr>
@@ -1254,10 +1272,10 @@
                                                         effusion</label></td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.checkbox("cepev","e", "Not visible") }}
+                                                            {{ f.yesCheckbox("cepev") }}
                                                         </div>
                                                     </td>
-                                                    <td colspan="5">
+                                                    <td colspan="5" class="cepev-container">
                                                         <div class="form-group pull-left">
                                                             <label for="ceper">Right</label>
                                                             <select id="ceper" name="ceper" class="form-control"
@@ -1289,7 +1307,7 @@
                                                     </td>
                                                     <td colspan="6">
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("cepu") }}
+                                                            {{ f.yesCheckbox("cepu") }}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -1332,9 +1350,6 @@
                                                 <tr>
                                                     <td><label class="control-label" for="cecca">Aortic
                                                         calcifications</label></td>
-                                                    <td>
-                                                        <div class="form-group">{{ f.checkbox("ceccav","e","Not visible") }}</div>
-                                                    </td>
                                                     <td colspan="5">
                                                         <div class="form-group">
                                                             <select name="cecca" class="form-control"
@@ -1352,9 +1367,6 @@
                                                 <tr>
                                                     <td><label class="control-label" for="ceprevm">Pericardial effusion
                                                         severity</label>
-                                                    </td>
-                                                    <td>
-                                                        <div class="form-group">{{ f.checkbox("ceprev","e","Not visible") }}</div>
                                                     </td>
                                                     <td colspan="5">
                                                         <div class="form-group">
@@ -1453,11 +1465,11 @@
                                                     <td><label class="control-label" for="ceata-n">Thyroid</label></td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("ceata") }}
+                                                            {{ f.yesCheckbox("ceata") }}
                                                         </div>
                                                     </td>
-                                                    <td style="padding-top:0;">
-                                                        <div class="form-group form-inline">
+                                                    <td>
+                                                        <div class="form-group form-inline ceata-container">
                                                             {{ f.checkbox("ceatc","c","Calcification") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("ceaty","y","Cyst/nodule < 15 mm") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("ceatm","m","Mass") }}&nbsp;&nbsp;
@@ -1478,11 +1490,11 @@
                                                     </td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("ceaya") }}
+                                                            {{ f.yesCheckbox("ceaya") }}
                                                         </div>
                                                     </td>
-                                                    <td style="padding-top:0;">
-                                                        <div class="form-group form-inline">
+                                                    <td>
+                                                        <div class="form-group form-inline ceaya-container">
                                                             {{ f.checkbox("ceayc","c","Calcification") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("ceayy","y","Cyst") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("ceaym","m","Mass") }}&nbsp;&nbsp;
@@ -1516,11 +1528,11 @@
                                                     </td>
                                                     <td>
                                                         <div class="form-group form-inline">
-                                                            {{ f.inlineRadioNYE("cemln") }}
+                                                            {{ f.yesCheckbox("cemln") }}
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <div class="form-group">
+                                                        <div class="form-group cemln-container">
                                                             <label for="validator-cemln">Level</label>
                                                             <small class="text-muted">8<sup>th</sup> edition
                                                                 classification: CHEST 2017;
@@ -1552,7 +1564,7 @@
                                                     <td>Any calcified hilar or mediastinal lymph nodes</td>
                                                     <td colspan="2">
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("cemlncab") }}
+                                                            {{ f.yesCheckbox("cemlncab") }}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -1561,11 +1573,11 @@
                                                     <td>Abnormal axillary lymph nodes</td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("ceagaln") }}
+                                                            {{ f.yesCheckbox("ceagaln") }}
                                                         </div>
                                                     </td>
                                                     <td style="padding-top:1px;">
-                                                        <div class="form-group form-inline">
+                                                        <div class="form-group form-inline ceagaln-container">
                                                             {{ f.checkbox("ceagalnrt","r","Right") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("ceagalnlt","l","Left") }}&nbsp;&nbsp;
                                                             <input type="text" name="ceagalns" id="ceagalns"
@@ -1578,11 +1590,11 @@
                                                     <td>Other Vascular Abnormalities</td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("cemva") }}
+                                                            {{ f.yesCheckbox("cemva") }}
                                                         </div>
                                                     </td>
                                                     <td style="padding-top:1px;">
-                                                        <div class="form-group form-inline">
+                                                        <div class="form-group form-inline cemva-container">
                                                             {{ f.checkbox("cemvaa","a","Aorta") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("cemvap","w","Pulmonary arteries") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("cemvao","o","Other") }}&nbsp;&nbsp;
@@ -1597,11 +1609,11 @@
                                                     <td>Esophageal</td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("cemeln") }}
+                                                            {{ f.yesCheckbox("cemeln") }}
                                                         </div>
                                                     </td>
                                                     <td style="padding-top:1px;">
-                                                        <div class="form-group form-inline">
+                                                        <div class="form-group form-inline cemeln-container">
                                                             {{ f.checkbox("cemelna","a","Air-fluid level") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("cemelnw","w","Wall thickening") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("cemelnm","m","Mass") }}&nbsp;&nbsp;
@@ -1617,11 +1629,11 @@
                                                     <td>Hiatal Hernia</td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("cehhn") }}
+                                                            {{ f.yesCheckbox("cehhn") }}
                                                         </div>
                                                     </td>
                                                     <td style="padding-top:1px;">
-                                                        <div class="form-group form-inline">
+                                                        <div class="form-group form-inline cehhn-container">
                                                             <input type="text" name="cehhnos" id="cehhnos"
                                                                    class="form-control"
                                                                    required="required" placeholder="Specify">
@@ -1634,11 +1646,11 @@
                                                     <td>Other Mediastinal Masses</td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("ceomm") }}
+                                                            {{ f.yesCheckbox("ceomm") }}
                                                         </div>
                                                     </td>
                                                     <td style="padding-top:1px;">
-                                                        <div class="form-group form-inline">
+                                                        <div class="form-group form-inline ceomm-container">
                                                             {{ f.checkbox("ceamc","v","Calcification") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("ceamy","y","Cyst") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("ceamm","m","Mass") }}&nbsp;&nbsp;
@@ -1690,11 +1702,11 @@
                                                     <td>Right Breast</td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("ceara") }}
+                                                            {{ f.yesCheckbox("ceara") }}
                                                         </div>
                                                     </td>
-                                                    <td style="padding-top:1px;">
-                                                        <div class="form-group form-inline">
+                                                    <td>
+                                                        <div class="form-group form-inline ceara-container">
                                                             {{ f.checkbox("ceobarc","c","Calcification") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("ceobary","y","Cyst") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("ceobarm","m","Mass") }}&nbsp;&nbsp;
@@ -1728,11 +1740,11 @@
                                                     <td>Left Breast</td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("ceafa") }}
+                                                            {{ f.yesCheckbox("ceafa") }}
                                                         </div>
                                                     </td>
-                                                    <td style="padding-top:1px;">
-                                                        <div class="form-group form-inline">
+                                                    <td>
+                                                        <div class="form-group form-inline ceafa-container">
                                                             {{ f.checkbox("ceobafc","c","Calcification") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("ceobafy","y","Cyst") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("ceobafm","m","Mass") }}&nbsp;&nbsp;
@@ -1826,11 +1838,11 @@
                                                     <td>Gallbladder</td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("ceaga") }}
+                                                            {{ f.yesCheckbox("ceaga") }}
                                                         </div>
                                                     </td>
-                                                    <td style="padding-top:1px;">
-                                                        <div class="form-group form-inline" id="ceaga-container">
+                                                    <td>
+                                                        <div class="form-group form-inline ceaga-container">
                                                             {{ f.checkbox("ceagh","h","Cholecystectomy") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("ceags","s","Stones") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("ceagl","l","Sludge") }}&nbsp;&nbsp;
@@ -1847,11 +1859,11 @@
                                                     <td>Spleen</td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("ceasa") }}
+                                                            {{ f.yesCheckbox("ceasa") }}
                                                         </div>
                                                     </td>
-                                                    <td style="padding-top:1px;">
-                                                        <div class="form-group form-inline" id="ceasa-container">
+                                                    <td>
+                                                        <div class="form-group form-inline ceasa-container">
                                                             {{ f.checkbox("ceasc","y","Calcification") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("ceasy","y","Cyst") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("ceasm","m","Mass") }}&nbsp;&nbsp;
@@ -1868,11 +1880,11 @@
                                                     <td>Liver</td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("ceala") }}
+                                                            {{ f.yesCheckbox("ceala") }}
                                                         </div>
                                                     </td>
-                                                    <td style="padding-top:1px;">
-                                                        <div class="form-group form-inline" id="ceala-container">
+                                                    <td>
+                                                        <div class="form-group form-inline ceala-container">
                                                             {{ f.checkbox("cealc","y","Calcification") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("cealy","y","Cyst") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("cealm","m","Mass") }}&nbsp;&nbsp;
@@ -1891,11 +1903,11 @@
                                                     <td>Pancreas</td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("ceapa") }}
+                                                            {{ f.yesCheckbox("ceapa") }}
                                                         </div>
                                                     </td>
-                                                    <td style="padding-top:1px;">
-                                                        <div class="form-group form-inline" id="ceapa-container">
+                                                    <td>
+                                                        <div class="form-group form-inline ceapa-container">
                                                             {{ f.checkbox("ceapc","y","Calcification") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("ceapy","y","Cyst") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("ceapm","m","Mass") }}&nbsp;&nbsp;
@@ -1912,11 +1924,11 @@
                                                     <td>Adrenals</td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("ceaaa") }}
+                                                            {{ f.yesCheckbox("ceaaa") }}
                                                         </div>
                                                     </td>
-                                                    <td style="padding-top:1px;">
-                                                        <div class="form-group form-inline" id="ceaaa-container">
+                                                    <td>
+                                                        <div class="form-group form-inline ceaaa-container">
                                                             {{ f.checkbox("ceaac","y","Calcification") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("ceaay","y","Cyst") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("ceaam","m","Mass") }}&nbsp;&nbsp;
@@ -1932,11 +1944,11 @@
                                                     <td>Kidneys</td>
                                                     <td>
                                                         <div class="form-group">
-                                                            {{ f.inlineRadioNYE("ceaka") }}
+                                                            {{ f.yesCheckbox("ceaka") }}
                                                         </div>
                                                     </td>
-                                                    <td style="padding-top:1px;">
-                                                        <div class="form-group form-inline" id="ceaka-container">
+                                                    <td>
+                                                        <div class="form-group form-inline ceaka-container">
                                                             {{ f.checkbox("ceakc","y","Calcification") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("ceaky","y","Cyst") }}&nbsp;&nbsp;
                                                             {{ f.checkbox("ceakm","m","Mass") }}&nbsp;&nbsp;
@@ -2181,26 +2193,6 @@
             $("#cecccac-text").text(res);
         }
 
-        /**
-         * Sets the default value of a radio group and conditionally displays a container when that radio value is "y"
-         * @param radioGroupName the group of radio buttons to evaluate
-         * @param defaultValue the default value of the radio when no other option is already selected.
-         * @param display selector for the container to display
-         * @param displayWhenValue display the `display` object when the radioGroupName value is equal to this
-         */
-        function defaultRadio(radioGroupName, defaultValue, display, displayWhenValue) {
-            const $radios = $("input:radio[name=" + radioGroupName + "]");
-
-            //set default if not already selected
-            if ($radios.is(":checked") === false) {
-                $radios.filter("[value=" + defaultValue + "]").prop('checked', true);
-            }
-
-            if (display && displayWhenValue) {
-                $radios.conditionallyDisplay({sourceValues: displayWhenValue, enable: display});
-            }
-        }
-
         let noduleCount = 0;
 
         function addNodule() {
@@ -2436,22 +2428,27 @@
                 }
             }).conditionallyDisplay({sourceValues: "b", disable: "#non-baseline-container"});
 
+            //EMPHYSEMA
+            $("#cecclm, #ceccld, #cecccf, #ceccrc").on('change', calculateVisualCacScore);
+            calculateVisualCacScore();
+            $("#cepaw, #ceaow").on('keyup change', calculatePulmonaryArteryAortaRatio);
+            calculatePulmonaryArteryAortaRatio();
+            $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
 
             // NODULES
+            setupMeanDiameterCalculation("sl", "sw", "sd");
+            setupMeanDiameterCalculation("ssl", "ssw", "ssd");
             const noduleArrayLength = {{ noduleArray|length }};
             for (i = 0; i < noduleArrayLength; i++) {
                 setupNoduleVolumeCalculations(i);
                 setupNoduleEnabledState(i);
             }
 
-            $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
-
             // Display the proper number of nodule columns based on the nodules that have a value for
             // "Is it New", a required field.
             const $noduleKeyFields = $("[name^=cect][name$=ch]").filter(function () {
                 return $(this).val() !== "" && $(this).val() !== "-";
             });
-
 
             // NB: Generally, the number of fields that have a value can be the number of nodules we display. In
             // the rare case where we persist a nodule without setting the first field (Is it new?), use the
@@ -2460,85 +2457,13 @@
             noduleCount = Math.max($noduleKeyFields.length, lastNoduleId);
             displayNodules(noduleCount);
 
-            //for each of the main sections, find all the radiogroups and default them to "n" (no)
-            // NB: Cardiac & Bone have no radio button groups.
-            const $containers = $("#pulmonary-container, #pleural-container,  #neck-container, #breast-container, #abdominal-container, #coronary-container");
-            $.each($containers, function (i, container) {
-                const groupNames = findRadioGroupNames($(container));
-                $.each(groupNames, function (i, group) {
-                    defaultRadio(group, "n", $("#" + group + "-container"), "y");
-                });
-            });
-
-
-            $("#cecclm, #ceccld, #cecccf, #ceccrc").on('change', calculateVisualCacScore);
-            calculateVisualCacScore();
-            $("#cepaw, #ceaow").on('keyup change', calculatePulmonaryArteryAortaRatio);
-            calculatePulmonaryArteryAortaRatio();
-
-            /**
-             * Adds a formValidation validator that ensures at least one radio button in group.container has a value of
-             * "y", if the parent radio (group.radio) also has a value of "y"
-             * @param group the group of controls that need to be validated.
-             * group.radio - the parent radio button controller
-             * group.container - the jQuery container where to find all other radio
-             * group.humanName - the common name for this validation group to be used in the validation error message.
-             */
-            function requireChildRadioSelectedValidator(group) {
-                const validatorControl = $("#" + group.radio + "-n");
-                const fv = $("form.validated").data("formValidation");
-                if (fv) {
-                    const radioGroups = findRadioGroupNames(group.container);
-                    $.each(radioGroups, function (idx, groupName) {
-                        const childRadios = $("[name=" + groupName + "]");
-                        childRadios.on('change', function () {
-                            fv.revalidateField(validatorControl);
-                        });
-                    });
-
-                    fv.addField(validatorControl.attr("name"), {
-                        excluded: function ($field, validator) {
-                            return false;
-                        },
-                        validators: {
-                            callback: {
-                                callback: function (value, validator, $field) {
-                                    let isValid = true;
-                                    if ($("[name=" + group.radio + "]:checked").val() === "y") {
-                                        const groupNames = findRadioGroupNames(group.container);
-                                        const yeses = $.grep(groupNames, function (groupName) {
-                                            return $("[name=" + groupName + "]:checked").val() === "y";
-                                        });
-                                        if (yeses.length === 0) {
-                                            isValid = false;
-                                        }
-                                    }
-
-                                    return {
-                                        valid: isValid,
-                                        message: "At least one " + group.humanName + " abnormality must be selected."
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
-            }
-
-
-            const groups = [
-                {radio: 'pa', container: $("#pulmonary-container"), humanName: "pulmonary"},
-                {radio: 'ceppra', container: $("#pleural-container"), humanName: "pleural"},
-                {radio: 'ceoma', container: $("#neck-container"), humanName: "neck and mediastinal"},
-                {radio: 'ceoba', container: $("#breast-container"), humanName: "breast"},
-                {radio: 'ceoaa', container: $("#abdominal-container"), humanName: "abdominal"},
-                {radio: 'ceoca', container: $("#coronary-container"), humanName: "coronary"}
-
-            ];
-
-            for (let i = 0; i < groups.length; i++) {
-                requireChildRadioSelectedValidator(groups[i])
-            }
+            //OTHER ABNORMALITIES
+            //Neck and mediastinal
+            $("#ceato").conditionallyDisplay({sourceValues: "o", enable:$("#ceatos")});
+            $("#ceayo").conditionallyDisplay({sourceValues: "o", enable:$("#ceayos")});
+            $("#cemvao").conditionallyDisplay({sourceValues: "o", enable:$("#cemvaos")});
+            $("#cemvlno").conditionallyDisplay({sourceValues: "o", enable:$("#cemelnos")});
+            $("#ceamo").conditionallyDisplay({sourceValues: "o", enable:$("#ceommos")});
 
             //FOLLOWUP
             $("#cefu").conditionallyDisplay({sourceValues: "o", enable: "#cefuo-container"});
@@ -2569,20 +2494,14 @@
                 }
             });
 
-            // mean diameter calculation
-            setupMeanDiameterCalculation("sl", "sw", "sd");
-
-            // solid mean diameter calculation
-            setupMeanDiameterCalculation("ssl", "ssw", "ssd");
 
 
+            //WRAP IT UP
             $("form").on("submit", function (e) {
                 //TODO VAP-238 First validate each tab, navigate to the tab and field that is invalid
                 return true; //all checks passed
             });
 
-
-            //WRAP IT UP
             $(".validated").formValidation({framework: 'bootstrap'});
 
             //at least one checkbox whose name starts with cemlnl is required if cemln==y
@@ -2640,6 +2559,16 @@
                     $(href).collapse('show');
                 }
             });
+
+            $.each($(".yes-checkbox"), function (i, el) {
+                var $checkbox = $(el);
+                var name = $checkbox.attr('name');
+                var $container = $("." + name + "-container");
+                if ($container.length > 0) {
+                    $checkbox.conditionallyEnable({enable: $container});
+                }
+            })
+
         });
     </script>
 

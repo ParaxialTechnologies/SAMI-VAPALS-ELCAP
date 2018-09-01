@@ -4,31 +4,9 @@ SAMICTR9 ;ven/gpl - ielcap: forms ;2018-03-07T18:48Z
  ;
  quit  ; no entry from top
  ;
-lungrads(rtn,vals,dict)
+impression(rtn,vals,dict)
  ; repgen13
  ;
- ; # LungRADS
- ;
- n lrstyle
- i $$xval("celrc",vals)'="" s lrstyle=1 ; dom's style
- e  s lrstyle=0 ; artit's style
- ;
- i lrstyle=0 d  ; Artit's style
- . s lradModifiers=$$xval("celradc",vals)_$$xval("celrads",vals)
- . ;
- . i ($$xval("celrad",vals)'="-")&($$xval("celrad",vals)'="") d  ;
- . . d out("The LungRADS category for this scan is: "_$$xval("celrad",vals)_lradModifiers)
- . . d out(para)
- ;
- i lrstyle=1 d  ; Dom's style
- . s X=$$xval("celrmc",vals)_$$xval("celrms",vals)
- . s Y=""
- . X ^%ZOSF("UPPERCASE")
- . s lradModifiers=Y
- . ;
- . i ($$xval("celrc",vals)'="-")&($$xval("celrc",vals)'="") d  ;
- . . d out("The LungRADS category for this scan is: "_$$xval("celrc",vals)_lradModifiers)
- . . d out(para)
  ;
  ; # Impression
  d out("</TD></TR></TABLE><TR><TD>")
@@ -44,6 +22,17 @@ lungrads(rtn,vals,dict)
  ;
  d out($$xsub("ceimn",vals,dict)_para)
  ;
+ ;# Report CAC Score and Extent of Emphysema
+ i cac>0 d  ;
+ . d out(cac_" "_cacrec_" "_para)
+ . if $$xval("ceemv",vals)="e" d  ;
+ . . if $$xval("ceem",vals)'="no" d  ;
+ . . . d out("Emphysema:")
+ . . . d out($$xsub("ceem",vals,dict)_"."_para)
+ ;
+ ;# Impression Remarks
+ i $$xval("ceimre",vals)'="" d  ;
+ . d out($$xval("ceimre",vals)_"."_para)
  q
  ;
  ;

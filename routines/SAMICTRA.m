@@ -4,20 +4,9 @@ SAMICTRA ;ven/gpl - ielcap: forms ;2018-03-07T18:48Z
  ;
  quit  ; no entry from top
  ;
-impression(rtn,vals,dict)
+recommend(rtn,vals,dict)
  ; repgen14
  ;
- ;# Report CAC Score and Extent of Emphysema
- i cac>0 d  ;
- . d out(cac_" "_cacrec_" "_para)
- . if $$xval("ceemv",vals)="e" d  ;
- . . if $$xval("ceem",vals)'="no" d  ;
- . . . d out("Emphysema:")
- . . . d out($$xsub("ceem",vals,dict)_"."_para)
- ;
- ;# Impression Remarks
- i $$xval("ceimre",vals)'="" d  ;
- . d out($$xval("ceimre",vals)_"."_para)
  ;
  ;# Recommendation
  d out("</TD></TR>")
@@ -45,6 +34,31 @@ impression(rtn,vals,dict)
  . d out(para_"<B>"_$$xsub("cefu",vals,dict)_" "_fuw_" on "_$$xval("cefud",vals)_".</B>"_para)
  ;
  d out("<TR><TD></TD></TR>")
+ ; # LungRADS
+ ;
+ d out("<TR><TD>")
+ n lrstyle
+ i $$xval("celrc",vals)'="" s lrstyle=1 ; dom's style
+ e  s lrstyle=0 ; artit's style
+ ;
+ i lrstyle=0 d  ; Artit's style
+ . s lradModifiers=$$xval("celradc",vals)_$$xval("celrads",vals)
+ . ;
+ . i ($$xval("celrad",vals)'="-")&($$xval("celrad",vals)'="") d  ;
+ . . d out("The LungRADS category for this scan is: "_$$xval("celrad",vals)_lradModifiers)
+ . . d out(para)
+ ;
+ i lrstyle=1 d  ; Dom's style
+ . s X=$$xval("celradc",vals)_$$xval("celrads",vals)
+ . s Y=""
+ . X ^%ZOSF("UPPERCASE")
+ . s lradModifiers=Y
+ . ;
+ . i ($$xval("celrc",vals)'="-")&($$xval("celrc",vals)'="") d  ;
+ . . d out("<B>LungRADS category: "_$$xval("celrad",vals)_lradModifiers_"</B>")
+ . . d out(para)
+ d out("</TD></TR>")
+ ;
  d out("<TR><TD><TABLE><TR><TD WIDTH=20></TD><TD>")
  ;
  ;# Check if Study is Completed

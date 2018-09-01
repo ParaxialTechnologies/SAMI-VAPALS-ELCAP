@@ -196,9 +196,9 @@ wsReport(return,filter) ; web service which returns an html cteval report
  ;
  d abdominal^SAMICTR8(rtn,.vals,.dict)
  ;
- d lungrads^SAMICTR9(rtn,.vals,.dict)
+ d impression^SAMICTR9(rtn,.vals,.dict)
  ;
- d impression^SAMICTRA(rtn,.vals,.dict)
+ d recommend^SAMICTRA(rtn,.vals,.dict)
  ;
  ; etc etc
  ;

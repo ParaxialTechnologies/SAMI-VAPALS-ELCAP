@@ -54,7 +54,6 @@
         <label {{ "class=\"required\"" if required else "" }} >
             <input type="checkbox" name="{{ name }}" id="{{ name }}" value="{{ value }}"
             {{ "required=\"required\"" if required else "" }}
-            {% set x = "" %}
             {% if attributes!=null %}
                 {% for k,v in attributes.items() %}
                     {{ k }}="{{ v }}"
@@ -70,7 +69,6 @@
     <label class="checkbox-inline {{ "required" if required else "" }}">
         <input type="checkbox" name="{{ name }}" id="{{ name }}" value="{{ value }}"
         {{ "required=\"required\"" if required else "" }}
-        {% set x = "" %}
         {% if attributes!=null %}
             {% for k,v in attributes.items() %}
                 {{ k }}="{{ v }}"
@@ -78,6 +76,19 @@
         {% endif %}
         >
         {{ labelText }}
+    </label>
+{%- endmacro %}
+
+{% macro yesCheckbox(name, attributes) -%}
+    <label class="checkbox-inline">
+        <input type="checkbox" class="yes-checkbox" name="{{ name }}" id="{{ name }}" value="y"
+        {% if attributes!=null %}
+            {% for k,v in attributes.items() %}
+                {{ k }}="{{ v }}"
+            {% endfor %}
+        {% endif %}
+        >
+        Yes
     </label>
 {%- endmacro %}
 

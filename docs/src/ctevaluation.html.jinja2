@@ -2492,9 +2492,10 @@
                     default:
                         $field.val("").focus();
                 }
-                var fv = $field.closest('.formValidation');
+
+                var fv = $field.closest("form.validated").data('formValidation');
                 if (fv) {
-                    fv.revalidateField("cefud");
+                    fv.revalidateField($field);
                 }
             });
 

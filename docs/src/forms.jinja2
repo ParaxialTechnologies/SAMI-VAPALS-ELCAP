@@ -89,6 +89,19 @@
     </label>
 {%- endmacro %}
 
+{% macro yesCheckbox(name, attributes) -%}
+    <label class="checkbox-inline">
+        <input type="checkbox" class="yes-checkbox" name="{{ name }}" id="{{ name }}" value="y"
+        {% if attributes!=null %}
+            {% for k,v in attributes.items() %}
+                {{ k }}="{{ v }}"
+            {% endfor %}
+        {% endif %}
+        >
+        Yes
+    </label>
+{%- endmacro %}
+
 {# 
     requiredMessage - serves both as a flag that the field is required, as well as provies the message
         that is displayed if the field value is not present. This error message is presented only when 

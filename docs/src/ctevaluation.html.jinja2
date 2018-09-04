@@ -2492,6 +2492,10 @@
                     default:
                         $field.val("").focus();
                 }
+                var fv = $field.closest('.formValidation');
+                if (fv) {
+                    fv.revalidateField("cefud");
+                }
             });
 
             //display other followup specify field if "other" checkbox is enabled.

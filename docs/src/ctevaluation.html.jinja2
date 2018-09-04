@@ -2497,10 +2497,11 @@
             //display other followup specify field if "other" checkbox is enabled.
             $("[name=cefuo]").conditionallyDisplay({sourceValues: "y", enable: "#cefuo-container"});
 
-            //auto-select "other" if user modifies the date
-            $("#cefud").on('keyup paste', function () {
+            function setCtFollowUpOther() {
                 $("[name=cefuw]").prop('checked', false).filter("[value=os]").prop('checked', true);
-            });
+            }
+            //auto-select "other" if user modifies the date
+            $("#cefud").on('keyup paste', setCtFollowUpOther).closest(".datepicker").on('dp.change', setCtFollowUpOther);
 
             // mean diameter calculation
             setupMeanDiameterCalculation("sl", "sw", "sd");

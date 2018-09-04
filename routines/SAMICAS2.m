@@ -254,8 +254,8 @@ wsCASE(rtn,filter) ; generate case review page
  . . . . set rpthref=rpthref_"<input type=hidden name=""form"" value="_$p(zform,":",2)_">"
  . . . . set rpthref=rpthref_"<input type=hidden name=""studyid"" value="_sid_">"
  . . . . set rpthref=rpthref_"<input value=""Report"" class=""btn label label-warning"" role=""link"" type=""submit""></form></td>"
- . . . . s rtn(cnt)=rpthref_"</tr>"
- . . . . ;s rtn(cnt)="</tr>" ; turn off report 
+ . . . . ;s rtn(cnt)=rpthref_"</tr>"
+ . . . . s rtn(cnt)="</tr>" ; turn off report 
  . . . e  set rtn(cnt)="<td></td></tr>"
  . . . quit
  . . quit

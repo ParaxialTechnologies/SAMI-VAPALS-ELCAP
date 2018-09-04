@@ -2050,25 +2050,45 @@
                             </div>
                         </div>
 
-                        <h3>Follow Up</h3>
+
+                        <h3>Follow Up
+                            <label for="validator-cefu">
+                                <small>select one or more</small>
+                            </label>
+                        </h3>
                         <div class="row">
-                            <div class="col-sm-3 form-group">
-                                <label for="cefu">Follow up:</label>
-                                <select name="cefu" id="cefu" class="form-control">
-                                    <option value="-"> -</option>
-                                    <option value="rs"> Annual repeat CT</option>
-                                    <option value="dx"> Follow-up CT</option>
-                                    <option value="af"> Abx + follow-up CT</option>
-                                    <option value="pe"> PET</option>
-                                    <option value="cc"> CT w contrast</option>
-                                    <option value="fn"> CT-guided biopsy</option>
-                                    <option value="br"> Bronchoscopy</option>
-                                    <option value="su"> Resection</option>
-                                    <option value="pc"> Pulmonary consultation</option>
-                                    <option value="tb"> Tumor board</option>
-                                    <option value="nf"> No further follow-up</option>
-                                    <option value="o"> Other</option>
-                                </select>
+                            <div class="col-sm-12 form-group">
+                                <input type="hidden" id="validator-cefu" name="validator-cefu" value="0"/>
+                                <label for="cefuw-nw">CT follow up:</label><br/>
+                                {{ f.inlineCheckbox("cefuw", "1y","Annual repeat", {'id':'cefuw-1y'}) }}
+                                {{ f.inlineCheckbox("cefuw", "nw","Now", {'id':'cefuw-nw'}) }}
+                                {{ f.inlineCheckbox("cefuw", "1m","1 month", {'id':'cefuw-1m'}) }}
+                                {{ f.inlineCheckbox("cefuw", "3m","3 months", {'id':'cefuw-3m'}) }}
+                                {{ f.inlineCheckbox("cefuw", "6m","6 months", {'id':'cefuw-6m'}) }}
+                                {{ f.inlineCheckbox("cefuw", "os","Other", {'id':'cefuw-os'}) }}
+                            </div>
+                        </div>
+                        <div id="follow-up-date-container">
+                            <div class="row">
+                                <div class="col-sm-3 col-md-3 form-group">
+                                    <label for="cefud">Approximate follow-up date:</label><br/>
+                                    {{ f.datepicker("cefud", "future") }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 form-group">
+                                <input type="hidden" id="validator-cefu" name="validator-cefu" value="0"/>
+                                <label for="cefu">Other follow up:</label><br/>
+                                {{ f.inlineCheckbox("cefuaf","y", "Antibiotics") }}
+                                {{ f.inlineCheckbox("cefucc","y", "Diagnostic CT") }}
+                                {{ f.inlineCheckbox("cefupe","y", "PET") }}
+                                {{ f.inlineCheckbox("cefufn","y", "Percutaneous biopsy") }}
+                                {{ f.inlineCheckbox("cefubr","y", "Bronchoscpy") }}
+                                {{ f.inlineCheckbox("cefupc","y", "Pulmonary consultation") }}
+                                {{ f.inlineCheckbox("cefutb","y", "Refer to tumor board") }}
+                                {{ f.inlineCheckbox("cefunf","y", "No other further follow-up") }}
+                                {{ f.inlineCheckbox("cefuo","y", "Other") }}
                             </div>
                             <div class="col-sm-4 form-group" id="cefuo-container">
                                 <label for="cefuo" class="control-label required">Specify</label>
@@ -2076,25 +2096,6 @@
                                        placeholder="specify" required="required">
                             </div>
 
-                        </div>
-                        <div id="follow-up-date-container">
-                            <div class="row">
-                                <div class="col-sm-12 form-group">
-                                    <label for="cefuw-nw">When:</label><br/>
-                                    {{ f.inlineRadio("cefuw", "cefuw-nw","nw","Now") }}
-                                    {{ f.inlineRadio("cefuw", "cefuw-1m","1m","1 month") }}
-                                    {{ f.inlineRadio("cefuw", "cefuw-3m","3m","3 months") }}
-                                    {{ f.inlineRadio("cefuw", "cefuw-6m","6m","6 months") }}
-                                    {{ f.inlineRadio("cefuw", "cefuw-1y","1y","1 year") }}
-                                    {{ f.inlineRadio("cefuw", "cefuw-os","os","Other") }}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-3 col-md-2 form-group">
-                                    <label class="required" for="cefud">Approximate follow-up date:</label><br/>
-                                    {{ f.datepicker("cefud", "future", "Follow up date is required") }}
-                                </div>
-                            </div>
                         </div>
                         <h3>Lung-RADS</h3>
                         <div class="row">
@@ -2466,14 +2467,16 @@
             $("#ceamo").conditionallyDisplay({sourceValues: "o", enable:$("#ceommos")});
 
             //FOLLOWUP
-            $("#cefu").conditionallyDisplay({sourceValues: "o", enable: "#cefuo-container"});
-            $("#cefu").conditionallyDisplay({sourceValues: "nf", disable: "#follow-up-date-container"});
+            exclusiveCheckbox("[name='cefuw']", "div");
 
             //followup date calculation
             $("[name=cefuw]").on('change', function () {
                 const when = $("[name='cefuw']:checked").val();
                 const $field = $("#cefud");
                 switch (when) {
+                    case "1y":
+                        $field.val(moment().add(1, 'year').format(VAPALS.DATE_FORMAT));
+                        break;
                     case "nw":
                         $field.val(moment().format(VAPALS.DATE_FORMAT));
                         break;
@@ -2486,14 +2489,30 @@
                     case "6m":
                         $field.val(moment().add(6, 'month').format(VAPALS.DATE_FORMAT));
                         break;
-                    case "1y":
-                        $field.val(moment().add(1, 'year').format(VAPALS.DATE_FORMAT));
-                        break;
                     default:
                         $field.val("").focus();
                 }
+
+                var fv = $field.closest("form.validated").data('formValidation');
+                if (fv) {
+                    fv.revalidateField($field);
+                }
             });
 
+            //display other followup specify field if "other" checkbox is enabled.
+            $("[name=cefuo]").conditionallyDisplay({sourceValues: "y", enable: "#cefuo-container"});
+
+            function setCtFollowUpOther() {
+                $("[name=cefuw]").prop('checked', false).filter("[value=os]").prop('checked', true);
+            }
+            //auto-select "other" if user modifies the date
+            $("#cefud").on('keyup paste', setCtFollowUpOther).closest(".datepicker").on('dp.change', setCtFollowUpOther);
+
+            // mean diameter calculation
+            setupMeanDiameterCalculation("sl", "sw", "sd");
+
+            // solid mean diameter calculation
+            setupMeanDiameterCalculation("ssl", "ssw", "ssd");
 
 
             //WRAP IT UP
@@ -2519,7 +2538,14 @@
                 }
             }).first().trigger('change');
 
+            //has to be after FV init
+            const $controls = $("[name=cefuw],#cefuaf,#cefucc,#cefupe,#cefufn,#cefubr,#cefupc,#cefutb,#cefunf,#cefuo");
+            const $fuValidatorControl = $("[name=validator-cefu]");
+            requireOneValidator($controls, $fuValidatorControl);
+
+
             exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
+
 
             //always after formValidation initialization
             initTabbedNavigation("ctEvalTabs", "ctEvalTabsContent");

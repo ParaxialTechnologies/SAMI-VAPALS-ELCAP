@@ -50,15 +50,20 @@
 
 
 {% macro checkbox(name, value, labelText, attributes, required) -%}
+    {% set attributes = attributes|default({}) %}
+    {% if attributes['id'] == null %}
+        {{ "" if attributes.update(id=name) else "" }}
+    {% endif %}
+    {% if required %}
+        {{ "" if attributes.update(required=required) else "" }}
+    {% endif %}
+
     <div class="checkbox">
         <label {{ "class=\"required\"" if required else "" }} >
-            <input type="checkbox" name="{{ name }}" id="{{ name }}" value="{{ value }}"
-            {{ "required=\"required\"" if required else "" }}
-            {% if attributes!=null %}
-                {% for k,v in attributes.items() %}
-                    {{ k }}="{{ v }}"
-                {% endfor %}
-            {% endif %}
+            <input type="checkbox" name="{{ name }}" value="{{ value }}"
+            {% for k,v in attributes.items() %}
+                {{ k }}="{{ v }}"
+            {% endfor %}
             >
             {{ labelText }}
         </label>
@@ -66,14 +71,19 @@
 {%- endmacro %}
 
 {% macro inlineCheckbox(name, value, labelText, attributes, required) -%}
+    {% set attributes = attributes|default({}) %}
+    {% if attributes['id'] == null %}
+        {{ "" if attributes.update(id=name) else "" }}
+    {% endif %}
+    {% if required %}
+        {{ "" if attributes.update(required=required) else "" }}
+    {% endif %}
+
     <label class="checkbox-inline {{ "required" if required else "" }}">
-        <input type="checkbox" name="{{ name }}" id="{{ name }}" value="{{ value }}"
-        {{ "required=\"required\"" if required else "" }}
-        {% if attributes!=null %}
-            {% for k,v in attributes.items() %}
-                {{ k }}="{{ v }}"
-            {% endfor %}
-        {% endif %}
+        <input type="checkbox" name="{{ name }}" value="{{ value }}"
+        {% for k,v in attributes.items() %}
+            {{ k }}="{{ v }}"
+        {% endfor %}
         >
         {{ labelText }}
     </label>

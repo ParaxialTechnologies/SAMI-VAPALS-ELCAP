@@ -31,8 +31,19 @@ forms = [
     {"template": "pet", "title": "PET Evaluation Form", "output": "pet"},
     {"template": "intervention", "title": "Intervention and Surgical Treatment Form", "output": "intervention"},
     {"template": "report", "title": "", "output": "report"},
-    {"template": "toggler", "title": "", "output": "toggler"}
+    {"template": "toggler", "title": "", "output": "toggler"},
+    {"template": "table", "title": "", "output": "table"}
 ]
+
+
+# report template with data table in it with 2 columns for Name SSN. Name be a link to case review page.
+# samroute:report
+# 1. followup
+# 2. activity
+# 3. missingct
+# 4. incomplete
+# 5. outreach
+# 6. enrollment
 
 for form in forms:
     with open("../www/" + form['output'] + ".html", "wb") as fh:

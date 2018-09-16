@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+  <title>
+  </title>
+  <link href="../www/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="../www/lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+  <link href="../www/lib/formvalidation/dist/css/formValidation.min.css" rel="stylesheet"/>
+  <link href="../www/lib/bootstrap-datetimepicker-4.17.47/css/bootstrap-datetimepicker.css" rel="stylesheet"/>
+  <link href="../www/vapals.css" rel="stylesheet"/>
+  <link href="../www/lib/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet"/>
+  <link href="../www/lib/jquery-ui-1.12.1/jquery-ui.structure.min.css" rel="stylesheet"/>
+  <link href="../www/lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
+  <link href="../www/lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <script src="../www/lib/jquery-3.3.1.min.js">
+  </script>
+  <script src="../www/lib/jquery-ui-1.12.1/jquery-ui.min.js">
+  </script>
+  <script src="../www/lib/popper.min.js">
+  </script>
+  <script src="../www/lib/bootstrap-3.3.7-dist/js/bootstrap.min.js">
+  </script>
+  <script src="../www/lib/moment.js">
+  </script>
+  <script src="../www/lib/formvalidation/dist/js/formValidation.min.js">
+  </script>
+  <script src="../www/lib/formvalidation/dist/js/framework/bootstrap.min.js">
+  </script>
+  <script src="../www/lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js">
+  </script>
+  <script src="../www/lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.js">
+  </script>
+  <script src="../www/lib/clipboard.js">
+  </script>
+  <script src="https://www.gstatic.com/charts/loader.js" type="text/javascript">
+  </script>
+  <script src="../www/jquery-conditonally-enable.js">
+  </script>
+  <script src="../www/jquery-conditonally-display.js">
+  </script>
+  <script src="../www/jqueryui-vista-filemanAutocomplete.js">
+  </script>
+  <script src="../www/vapals.js">
+  </script>
+  <script src="../www/init.js">
+  </script>
+  <!--System Navigation-->
+  <nav class="navbar navbar-default" role="navigation">
+   <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+     <button class="navbar-toggle collapsed" data-target="#navbar-main" data-toggle="collapse" type="button">
+      <span class="sr-only">
+       Toggle navigation
+      </span>
+      <span class="icon-bar">
+      </span>
+      <span class="icon-bar">
+      </span>
+      <span class="icon-bar">
+      </span>
+     </button>
+     <a href="home.html">
+      <img alt="VA-PALS Logo" height="50" src="../www/img/new-logo.png" title="VA-PALS"/>
+     </a>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar-main">
+     <ul class="nav navbar-nav">
+      <li>
+       <a href="home.html">
+        Home
+       </a>
+      </li>
+      <li class="dropdown" id="studyIdMenu" style="display:none;">
+       <a class="navigation" data-method="get" data-samiroute="casereview" href="casereview.html">
+        Case Review
+       </a>
+      </li>
+     </ul>
+    </div>
+   </div>
+  </nav>
+  <div class="container-fluid" style="max-width:1550px">
+   <h1>
+    PAGE NAME
+   </h1>
+   <hr/>
+   <div class="table-responsive">
+    <table class="table table-striped">
+     <thead>
+      <tr>
+       <th>
+        Name
+       </th>
+       <th>
+        SSN
+       </th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td>
+        Lorem Imspum
+       </td>
+       <td>
+        987-65-4321
+       </td>
+      </tr>
+     </tbody>
+     <tfoot>
+     </tfoot>
+    </table>
+   </div>
+   <div class="clearfix">
+   </div>
+   <span id="studyid-html-element" style="display:none;" value="@@SID@@">
+   </span>
+   <footer>
+    <div class="container-fluid" style="max-width:1550px">
+     <hr/>
+     <a href="https://issues.osehra.org/browse/VAP" tabindex="9000" target="_blank">
+      Submit feedback
+     </a>
+     <span id="sami-version" style="float:right; font-family: Courier,monospace">
+      <span id="formMode">
+      </span>
+      2018.09.16
+     </span>
+    </div>
+   </footer>
+   <script language="JavaScript">
+    const studyIdVal = $("#studyid-html-element").attr('value');
+    const studyId = $.trim(studyIdVal);
+    if (studyId && studyId.indexOf("@@") == -1) {
+        //store studyid value for use in pages that don't go through the forms processor
+        localStorage.setItem("studyid", studyId);
+        $("#studyIdMenu").show();
+    }
+
+    //purposefully executed before DOM is rendered so delete button is never visible
+    const frozen = "@@FROZEN@@";
+    if (frozen == "true") {
+        $("#delete-form").remove();
+    }
+
+
+    $(function () {
+        /** These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly. **/
+        const $forms = $("form.validated");
+        $.each($forms.find("select, textarea, input:visible"), function (i, o) {
+            const $input = $(this);
+            if ($input.closest(".form-group").length === 0) {
+                console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
+            }
+        });
+
+        $.each($forms.find("input[type=hidden][required]"), function (i, o) {
+            const $input = $(this);
+            console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
+        });
+
+        $.ajax("/ctversion", {
+            success: function (data, textStatus, jqXHR) {
+                const v = data.ctversion;
+                $("#formMode").text(v.toUpperCase());
+            },
+            error: function () {
+                $("#formMode").text("UNKNOWN");
+            }
+        })
+    })
+   </script>
+  </div>
+ </body>
+</html>

@@ -382,7 +382,8 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  ;. . . s zhtml(%j+2)=repl ; 
  ;. . . set touched=1
  ;
- n pssn s pssn=$$GETSSN^SAMIFRM2(sid)
+ ;n pssn s pssn=$$GETSSN^SAMIFRM2(sid)
+ n pssn s pssn=$$GETHDR^SAMIFRM2(sid)
  n last5 s last5=$$GETLAST5^SAMIFRM2(sid)
  n useid s useid=pssn
  i useid="" s useid=last5
@@ -549,5 +550,34 @@ GETSSN(sid) ; extrinsic returns the ssn for patient sid
  . s pssn=$e(orgssn,1,3)_"-"_$e(orgssn,4,5)_"-"_$e(orgssn,6,9)
  . s @root@(ien,"sissn")=pssn
  q pssn
+ ;
+GETHDR(sid) ; extrinsic returns header string for patient sid
+ n root s root=$$setroot^%wd("vapals-patients")
+ n ien s ien=$o(@root@("sid",sid,""))
+ n dfn s dfn=@root@(ien,"dfn")
+ q:ien=""
+ ;d prefill^SAMIHOM3(dfn) ;update from VistA
+ i $g(@root@(ien,"ssn"))="" d prefill^SAMIHOM3(dfn) ;update from VistA
+ i $g(@root@(ien,"sbdob"))=-1 d prefill^SAMIHOM3(dfn) ;update from VistA
+ i $g(@root@(ien,"ssn"))="" q "" ; patient info not available
+ n pssn,dob,age,sex
+ s pssn=$g(@root@(ien,"sissn"))
+ i pssn["sta" s pssn=""
+ i pssn="" d  ;
+ . n orgssn
+ . s orgssn=$g(@root@(ien,"ssn"))
+ . q:orgssn=""
+ . s pssn=$e(orgssn,1,3)_"-"_$e(orgssn,4,5)_"-"_$e(orgssn,6,9)
+ . s @root@(ien,"sissn")=pssn
+ s dob=$g(@root@(ien,"sbdob")) ; dob in VAPALS format
+ s sex=$g(@root@(ien,"sex"))
+ N X,Y
+ S X=dob
+ D ^%DT
+ s age=$p($$FMDIFF^XLFDT($$NOW^XLFDT,Y)/365,".")
+ s @root@(ien,"age")=age
+ n rtn
+ s rtn=pssn_" DOB: "_dob_" AGE: "_age_" GENDER: "_sex
+ q rtn
  ;
 EOR ; end of routine SAMIFRM

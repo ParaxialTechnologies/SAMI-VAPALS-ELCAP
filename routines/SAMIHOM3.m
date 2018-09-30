@@ -191,6 +191,14 @@ wsVAPALS(ARG,BODY,RESULT) ; vapals post web service - all calls come through thi
  . d wsPostForm^%wf(.ARG,.BODY,.RESULT)
  . i $g(ARG("form"))["siform" d  ;
  . . if $$note^SAMINOTI(.ARG) d  ;
+ . . . n filter
+ . . . s filter("studyid")=$G(ARG("studyid"))
+ . . . s filter("form")=$g(ARG("form")) ;
+ . . . n tiuien
+ . . . s tiuien=$$save2vista^SAMIVSTA(.filter)
+ . . . s filter("tiuien")=tiuien
+ . . . ;d save2vista^SAMIVSTA(.filter)
+ . . . m ^gpl("newfilter")=filter
  . . . d wsNote^SAMINOTI(.RESULT,.ARG)
  ;
  i route="deleteform" d  q  ;
@@ -686,7 +694,11 @@ prefill(dfn) ; prefill fields for form
  new saminame set saminame=$get(@root@(gien,"saminame"))
  ; dob format
  n dob s dob=$g(@lroot@(lien,"sbdob"))
- s dob=$$HL7TFM^XLFDT(dob)
+ n X,Y
+ S X=dob
+ d ^%DT
+ Q:Y=-1
+ s dob=Y
  if dob'="" set @root@(gien,"sbdob")=$$vapalsDate^SAMICAS2(dob)
  if dob'="" set @root@(gien,"sidob")=$$vapalsDate^SAMICAS2(dob)
  ; ssn format
@@ -762,6 +774,17 @@ makeSiform(num) ; create intake form
  quit:cdate=""
  merge @root@("graph",sid,"siform-"_cdate)=@root@(num)
  d setSamiStatus^SAMICAS2(sid,"siform-"_cdate,"complete")
+ ; initialize form from VistA data
+ n zf s zf=$na(@root@("graph",sid,"siform-"_cdate))
+ s @zf@("sipsa")=$g(@root@(num,"address1")) ; primary address
+ s @zf@("sipan")=$g(@root@(num,"address2")) ; apartment number
+ s @zf@("sipc")=$g(@root@(num,"city")) ; city
+ s @zf@("sips")=$g(@root@(num,"state")) ; state
+ s @zf@("sipcn")=$g(@root@(num,"county")) ; county
+ s @zf@("sipcr")="USA" ; country
+ s @zf@("sipz")=$g(@root@(num,"zip")) ; zip
+ s @zf@("sippn")=$g(@root@(num,"phone")) ; phone number
+ s @zf@("sidc")=$$vapalsDate^SAMICAS2($$NOW^XLFDT)
  ;
  ;@stanza 3 termination
  ;

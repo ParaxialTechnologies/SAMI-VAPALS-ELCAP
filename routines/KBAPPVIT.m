@@ -1,4 +1,4 @@
-KBAPPVIT ;VEN/LGC - Pull Vitals from another system ; 6/17/18 7:08pm
+KBAPPVIT ;ven/lgc - Pull Vitals from another system ; 8/14/18 12:29pm
  ;;1.0;GMRV;**LOCAL**; APR 22, 2018
 EN(XDATA,DFN,SDATE,EDATE) ;
  K XDATA

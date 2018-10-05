@@ -1,8 +1,29 @@
-KBAPM2M ;ven/lgc - M2M WITH SAM HABIEL'S KBANSCAU BROKER ; 8/21/18 11:28am
- ;;;;; 2018-08-16
+KBAPM2M ;ven/lgc/smh - M2M WITH SAM HABIEL'S KBANSCAU BROKER ; 9/28/18 2:27pm
+ ;;1.0;;**LOCAL**; SEPT 11, 2018
+ ;
+ ;SAM'S INDUSTRIAL CONGLOMERATES
  ;
  ; Provide standardized entrance into KBANSCAU
  ;  M2M broker for VA-PALS
+ ;
+ ;
+ ;@routine-credits
+ ;@primary development organization: Vista Expertise Network
+ ;@primary-dev: Larry G. Carlson (lgc)
+ ;@primary development organization: SAM'S INDUSTRIAL CONGLOMERATES
+ ;@primary-dev: Sam Habiel (smh)
+ ;@copyright:
+ ;@license: Apache 2.0
+ ; https://www.apache.org/licenses/LICENSE-2.0.html
+ ;
+ ;@last-updated: 2018-09-26
+ ;@application: VA-PALS
+ ;@version: 1.0
+ ;
+ ;
+START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
+ D EN^%ut($T(+0),2)
+ Q
  ;
  ; Enter
  ;   XDATA     = variable by reference for results
@@ -17,6 +38,7 @@ KBAPM2M ;ven/lgc - M2M WITH SAM HABIEL'S KBANSCAU BROKER ; 8/21/18 11:28am
  ;   XDATA     = results of broker call (-1 call failed)
  ;               with error message e.g. -1^error message
 M2M(XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY) ;
+ ;
  K XDATA S XDATA=-1
  S CONSOLE=+$G(CONSOLE)
  S CNTNOPEN=+$G(CNTNOPEN)
@@ -24,6 +46,8 @@ M2M(XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY) ;
  S PORT=$$GET^XPAR("SYS","SAMI PORT",,"Q")
  S HOST=$$GET^XPAR("SYS","SAMI IP ADDRESS",,"Q")
  S:($G(HOST)="") HOST="127.0.0.1"
+ ; *** NOTE: for UNIT TESTS use local host
+ S:$D(%ut) HOST="127.0.0.1"
  I $G(HOST)="" Q
  I $G(PORT)="" Q
  S AV=$$GET^XPAR("SYS","SAMI ACCVER",,"Q")
@@ -46,10 +70,11 @@ M2M(XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY) ;
  D:CONSOLE CONSOLE^KBANSCAU($$NOW^XLFDT)
  ;
  ; 3. Get Intro Message
- D WRITE^KBANSCAU($$RPC^KBANSCAU("XUS INTRO MSG")),WBF^KBANSCAU
- S X=$$READ^KBANSCAU()
- D:CONSOLE CONSOLE^KBANSCAU(X)
- D:CONSOLE CONSOLE^KBANSCAU($$NOW^XLFDT)
+ ;    Note: Don't need intro message /Sam Habiel
+ ; D WRITE^KBANSCAU($$RPC^KBANSCAU("XUS INTRO MSG")),WBF^KBANSCAU
+ ; S X=$$READ^KBANSCAU()
+ ; D:CONSOLE CONSOLE^KBANSCAU(X)
+ ; D:CONSOLE CONSOLE^KBANSCAU($$NOW^XLFDT)
  ;
  ; 4. Setup for Sign-on (can do CAPRI/auto signon here)
  D WRITE^KBANSCAU($$RPC^KBANSCAU("XUS SIGNON SETUP")),WBF^KBANSCAU
@@ -64,10 +89,11 @@ M2M(XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY) ;
  D:CONSOLE CONSOLE^KBANSCAU($$NOW^XLFDT)
  ;
  ; 6. Get/Set division (set not shown)
- D WRITE^KBANSCAU($$RPC^KBANSCAU("XUS DIVISION GET")),WBF^KBANSCAU
- S X=$$READ^KBANSCAU()
- D:CONSOLE CONSOLE^KBANSCAU(X)
- D:CONSOLE CONSOLE^KBANSCAU($$NOW^XLFDT)
+ ;    Note: Don't really need to set division /Sam Habiel
+ ; D WRITE^KBANSCAU($$RPC^KBANSCAU("XUS DIVISION GET")),WBF^KBANSCAU
+ ; S X=$$READ^KBANSCAU()
+ ; D:CONSOLE CONSOLE^KBANSCAU(X)
+ ; D:CONSOLE CONSOLE^KBANSCAU($$NOW^XLFDT)
  ;
  ; 7. Create the context
  D WRITE^KBANSCAU($$RPC^KBANSCAU("XWB CREATE CONTEXT",$$ENCRYP^XUSRB1(CNTXT))),WBF^KBANSCAU
@@ -82,7 +108,7 @@ M2M(XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY) ;
  D:CONSOLE CONSOLE^KBANSCAU($$NOW^XLFDT)
  M XDATA=X
  ;
- Q:CNTNOPEN
+ I CNTNOPEN Q
  ;
  ; Close connection and clean temporary variables
 CLSCLN ; 10. Logout
@@ -92,46 +118,50 @@ CLSCLN ; 10. Logout
  D:CONSOLE CONSOLE^KBANSCAU($$NOW^XLFDT)
  ;
  ; 11. Close connection
- S ^KBAP("KBANSCAU",11)=""
- D CLOSE^%ZISTCP
+ ;
+ ; We do not call CLOSE^%ZISTCP b/c it calls HOME^%ZIS which issues
+ ; a new line to slave devices. GTM makes 0 the principal device for
+ ; background jobs by default./Sam Habiel
+ S NIO=IO,IO=$S($G(IO(0))]"":IO(0),1:$P)
+ I NIO]"" C NIO K IO(1,NIO) S IO("CLOSE")=NIO
  D:CONSOLE CONSOLE^KBANSCAU($$NOW^XLFDT)
  ;
  ; 12. Clean temporary variables
  D CLEAN^KBANSCAU
+ ;
  Q
  ;
-PTINFO ; For testing only
- N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY
- S CNTXT="SCMC PCMMR APP PROXY MENU"
- S RMPRC="SCMC PATIENT INFO"
- S CONSOLE=1
- S CNTNOPEN=0
- S XARRAY(1)=333
- D M2M^KBAPM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
+ ; ============== UNIT TESTS ======================
+ ; NOTE: Unit tests will pull data using the local
+ ;       client VistA files rather than risk degrading
+ ;       large datasets in use.  NEVERTHELESS, it is
+ ;       recommended that UNIT TESTS be run when
+ ;       VA-PALS is not in use as some Graphstore globals
+ ;       are temporarily moved while testing is running.
+ ;
+STARTUP N PORT,HOST,AV,KBAPFAIL
+ S KBAPFAIL=0
+ S PORT=$$GET^XPAR("SYS","SAMI PORT",,"Q")
+ S HOST=$$GET^XPAR("SYS","SAMI IP ADDRESS",,"Q")
+ S:($G(HOST)="") HOST="127.0.0.1"
+ S AV=$$GET^XPAR("SYS","SAMI ACCVER",,"Q")
+ I ('$G(PORT))!('($L($G(AV),";")=2)) D  G SHUTDOWN
+ . D FAIL^%ut("SAMI PARAMETERS MUST BE SET UP FOR UNIT TESTING")
  Q
  ;
-BLDTIU ; For testing only
- N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY
- N VDT S VDT=$$HTFM^XLFDT($H) ; Visit date
- N CLINIEN S CLINIEN=7
- N VSTR S VSTR=CLINIEN_";"_VDT_";A"
- N SUPPRESS S SUPPRESS=1
- N NOASF S NOASF=1
- N TITLE S TITLE=5847
- S CNTXT="OR CPRS GUI CHART"
- S RMPRC="TIU CREATE RECORD"
- S CONSOLE=1
- S CNTNOPEN=0
- S XARRAY(1)=333
- S XARRAY(2)=5847
- S XARRAY(3)=VDT
- S XARRAY(6,1202)=71
- S XARRAY(6,1301)=$$HTFM^XLFDT($H)
- S XARRAY(6,1205)=CLINIEN
- S XARRAY(6,1701)=""
- S XARRAY(7)=SUPPRESS
- S XARRAY(8)=NOASF
- D M2M^KBAPM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
+SHUTDOWN ; ZEXCEPT: PORT,HOST,AV,KBAPFAIL - defined in STARTUP
+ K PORT,HOST,AV,KBAPFAIL
  Q
+ ;
+TESTM2M ; @TEST - Test full M2M call
+ N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY,XDATA
+ S CNTXT="XWB BROKER EXAMPLE"
+ S RMPRC="XWB EXAMPLE ECHO STRING"
+ S (CONSOLE,CNTNOPEN)=0
+ S XARRAY(1)="ABC12345DEF"
+ D M2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
+ D CHKEQ^%ut(XDATA,XARRAY(1),"Testing Complete KBAPM2M call  FAILED!")
+ Q
+ ;
  ;
 EOR ;End of routine KBAPM2M

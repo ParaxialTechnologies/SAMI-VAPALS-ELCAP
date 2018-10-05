@@ -1,4 +1,4 @@
-KBAPUTL ;ven/lgc - M2M Broker for VA-PALS ; 7/4/18 9:27am
+KBAPUTL ;ven/lgc - M2M Broker for VA-PALS ; 8/10/18 9:21am
  ;;1.0;;**LOCAL**; APR 22, 2018;Build 1
  ;
  ; VA-PALS will be using the VA's M2M broker to pull
@@ -337,6 +337,7 @@ PTINFO(DFN) ;
  S CALL=$$CALLRPC^XWBM2MC("SCMC PATIENT INFO","SCMCIFO",1)
  I $G(SCMCIFO(1)) N XDATA S XDATA=SCMCIFO(1)
  S CLOSE=$$CLOSE^XWBM2MC
+ ;
  ; Update patient-lookup entry for this patient
 SCMCIFO N root s root=$$setroot^%wd("patient-lookup")
  N NAME,NODE,gien
@@ -368,4 +369,63 @@ SCMCIFO N root s root=$$setroot^%wd("patient-lookup")
  S @root@(gien,"sensitive patient")=$P(XDATA,"^",17)
  ;
  Q:$Q SSN  Q
+ ;
+ ;
+ ; Remote procedure KBAP UPDT PTINFO GRAPH STORE
+ ; Variables
+ ;   SUCCESS  = var by reference (1=success,0=failure)
+ ;   XDATA    = string with pieces as below
+ ;     XDATA(1)=DFN
+ ;     XDATA(2)=Patient Name
+ ;     XDATA(3)=Patient SSN
+ ;     XDATA(4)=Patient DOB
+ ;     XDATA(5)=Patient Age
+ ;     XDATA(6)=Patient Gender
+ ;     XDATA(7)=Patient Marital Status
+ ;     XDATA(8)=Patient Active Duty
+ ;     XDATA(9)=Patient Address 1
+ ;     XDATA(10)=Patient Address 2
+ ;     XDATA(11)=Patient Address 3
+ ;     XDATA(12)=Patient City
+ ;     XDATA(13)=Patient State
+ ;     XDATA(14)=Patient ZIP
+ ;     XDATA(15)=Patient County
+ ;     XDATA(16)=Patient Phone
+ ;     XDATA(17)=Patient Sensitive Patient
+ ;     XDATA(18)=ICN
+UPPTGS(SUCCESS,XDATA) ;
+ K SUCCESS S SUCCESS=0
+ D ^ZTER
+ Q:'$D(XDATA)
+ N DFN S DFN=$P(XDATA,"^")
+ Q:'$G(DFN)
+ N root s root=$$setroot^%wd("patient-lookup")
+ N NODE S NODE=$NA(@root@("dfn",DFN))
+ S NODE=$Q(@NODE)
+ S gien=+$P(NODE,",",5)
+ Q:'$G(gien)
+ N DOB S DOB=$$FMTHL7^XLFDT($P(XDATA,"^",4))
+ S DOB=$E(DOB,1,4)_"-"_$E(DOB,5,6)_"-"_$E(DOB,7,8)
+ Q:'(DOB=@root@(gien,"sbdob"))
+ S @root@(gien,"ssn")=$P(XDATA,"^",3)
+ S:$P(XDATA,"^",3) @root@("ssn",$P(XDATA,"^",3))=gien
+ S @root@(gien,"icn")=$P(XDATA,"^",18)
+ S:$P(XDATA,"^",18) @root@("icn",$P(XDATA,"^",18))=gien
+ S @root@(gien,"age")=$P(XDATA,"^",5)
+ S @root@(gien,"sex")=$P(XDATA,"^",6)
+ S @root@(gien,"marital status")=$P(XDATA,"^",7)
+ S @root@(gien,"active duty")=$P(XDATA,"^",8)
+ S @root@(gien,"address1")=$P(XDATA,"^",9)
+ S @root@(gien,"address2")=$P(XDATA,"^",10)
+ S @root@(gien,"address3")=$P(XDATA,"^",11)
+ S @root@(gien,"city")=$P(XDATA,"^",12)
+ S @root@(gien,"state")=$P(XDATA,"^",13)
+ S @root@(gien,"zip")=$P(XDATA,"^",14)
+ S @root@(gien,"county")=$P(XDATA,"^",15)
+ S @root@(gien,"phone")=$P(XDATA,"^",16)
+ S @root@(gien,"sensitive patient")=$P(XDATA,"^",17)
+ S SUCCESS=gien_"^"_root
+ ;
+ Q
+ ;
 EOR ;KBAPUTL

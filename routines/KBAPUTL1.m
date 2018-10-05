@@ -1,4 +1,4 @@
-KBAPUTL1 ;ven/lgc - M2M Add single patient ; 7/4/18 9:28am
+KBAPUTL1 ;ven/lgc - M2M Add single patient ; 8/7/18 1:25pm
  ;;1.0;;**LOCAL**; APR 22, 2018
  ;
  Q  ; No entry from top
@@ -19,7 +19,7 @@ EN ; Temporary routine to allow testers to add
  S DIR("A")="Enter a patient's LAST5: "
  D ^DIR
  Q:X["^"
- I 'X?1A4N D  Q
+ I '(X?1A4N) D  Q
  . W !,"LAST5 must consist of a letter and 4 numbers"
  . W !," e.g. Z1234"
  N LAST5 S LAST5=X

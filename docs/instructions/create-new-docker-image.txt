@@ -1,0 +1,69 @@
+While logged into your Docker container, stop VistA.
+    [osehra@vapals ~]$ bin/stop_vista.sh 
+
+Switch back to the root user.
+    [osehra@vapals ~]$ exit
+    logout
+    [root@vapals ~]#
+
+As root open /etc/issue.net and update the image tag (version).
+
+      Vista Expertise Network & OSEHRA
+      ~
+      Platform: Docker
+      Image Tag: 0.0.30
+      Hostname: vapals
+      Project:  VA-PALS
+  
+      $ osehra
+      
+
+Log out of your Docker container.
+    [root@vapals ~]## exit
+    logout
+    Connection to localhost closed.
+    
+Find your container ID.
+    PumaConcolor:~ Alexis$ docker container ps -a
+    CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                                                                                                                                                  NAMES
+    6620da0d2017        osehra/va-pals      "/bin/sh -c /home/os…"   4 months ago        Up 18 minutes       0.0.0.0:4800->4800/tcp, 0.0.0.0:8001->8001/tcp, 0.0.0.0:8080->8080/tcp, 0.0.0.0:8888->8888/tcp, 0.0.0.0:9080->9080/tcp, 0.0.0.0:9430->9430/tcp, 0.0.0.0:2222->22/tcp   vapals
+
+Export your container using it's ID.
+    PumaConcolor:~ Alexis$ docker export 6620da0d2017 > ~/Docker/avicenna.tar
+    
+Stop your current container and remove it.
+    PumaConcolor:~ Alexis$ docker stop vapals
+    vapals
+    PumaConcolor:~ Alexis$ docker container rm vapals
+    vapals
+    
+Import your container as a new image.
+    PumaConcolor:~ Alexis$ docker import ~/Docker/avicenna.tar 
+    sha256:9f436ff76a08612f89b6b018e2760b0cbceeb3fa6d74a7b200bd0308353fa51c
+    
+Find your new image ID. It's repository and tag will be <none>.
+    PumaConcolor:~ Alexis$ docker images
+    REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+    <none>              <none>              9f436ff76a08        53 seconds ago      4.5GB
+    osehra/va-pals      0.0.29              efd189bbed3c        4 months ago        4.46GB
+    osehra/va-pals      latest              efd189bbed3c        4 months ago        4.46GB
+    
+Tag your new image, using it's ID with a repository, version number, and the keyword "latest".
+    PumaConcolor:~ Alexis$ docker tag 9f436ff76a08 osehra/va-pals:0.0.30
+    PumaConcolor:~ Alexis$ docker tag 9f436ff76a08 osehra/va-pals:latest
+    
+Push your new image to Docker Hub.
+    PumaConcolor:~ Alexis$ docker push osehra/va-pals
+    
+    You will see something like this:
+        The push refers to repository [docker.io/osehra/va-pals]
+        192ad7257335: Layer already exists 
+        0.0.29: digest: sha256:1664fc348c2bb7f9431fc501e3214bb5cb4872c1266616221fccacb71d177f2e size: 530
+        999ac6ca8a24: Pushed 
+        0.0.30: digest: sha256:eb0fd9a940f2e1b6aa26df368ca9f052550c1fbaa8baef94c12327bcf4b5de27 size: 530
+        999ac6ca8a24: Layer already exists 
+        latest: digest: sha256:eb0fd9a940f2e1b6aa26df368ca9f052550c1fbaa8baef94c12327bcf4b5de27 size: 530
+
+You can now start a new container using your new image.
+    PumaConcolor:~ Alexis$ docker run -d --name vapals -h vapals -p 2222:22 -p 8001:8001 -p 8080:8080 -p 8888:8888 -p 9080:9080 -p 9430:9430 -P --entrypoint "/bin/sh" osehra/va-pals -c /home/osehra/bin/start.sh
+    

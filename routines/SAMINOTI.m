@@ -170,6 +170,10 @@ note(filter) ; extrnisic which creates a note
  ;d out("    "_"Best contact number:  ")
  ;d out(" ")
  ;d out(" ")
+ ; clinical indication text
+ i $$xval("siclin",vals)'="" d  ; there is some text
+ . d out("Clinical Indications for Initial Screening CT:")
+ . d out(" "_$$xval("siclin",vals))
  ;
  q 1
  ;

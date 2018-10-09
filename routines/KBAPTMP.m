@@ -1,5 +1,22 @@
-KBAPTMP ; ; 10/8/18 12:50pm
+KBAPTMP ; ; 10/9/18 12:00pm
  ;;
+ ;
+BLDKBAP ;
+ K ^KBAP("LABARR")
+ S F60IEN=0
+BNAME F  S F60IEN=$O(^LAB(60,F60IEN)) Q:'F60IEN  D
+ . S F60NAME=$$UP^XLFSTR($P($G(^LAB(60,F60IEN,0)),"^"))
+ .; D GETLCM(F60IEN,F60NAME)
+ .; D GETLOD(F60IEN,F60NAME)
+ . D GET953(F60IEN,F60NAME)
+ S F60IEN=0
+BSYN F  S F60IEN=$O(^LAB(60,F60IEN)) Q:'F60IEN  D
+ . S F60SYN=""
+ . F  S F60SYN=$O(^LAB(60,F60IEN,5,"B",F60SYN)) Q:($TR(F60SYN," ")="")  D
+ ..; D GETLCM(F60IEN,F60SYN)
+ ..; D GETLOD(F60IEN,F60SYN)
+ .. D GET953(F60IEN,F60SYN)
+ Q
  ;
  ; Find entries in 95.3 that match for this test in file 60
  ;Entry
@@ -15,10 +32,14 @@ GET953(F60IEN,F60NAME) ;
  S SF60NAME=$E(F60NAME,1,$L(F60NAME)-1)
  S SF60L=$L(SF60NAME)
  S NODE=$NA(^LAB(95.3,"E",SF60NAME)),SNODE=$P($NA(^LAB(95.3,"E")),")")
- F  S NODE=$Q(@NODE) Q:NODE'[SNODE D  Q:DONE
+ F  S NODE=$Q(@NODE) Q:NODE'[SNODE  D  Q:DONE
  . I '($E($P($TR(NODE,""""),",",3),1,SF60L)[SF60NAME) D  Q
  .. S DONE=1
- . S LabLoincIEN=$P($P(NODE,",",4),")")
+ . N LabLoincIEN,LabLoinc0node,LabAccArea64061ien,LabAccessionArea
+ . N LabLoincFull,LabLoincShortName,LabLoincCmptIEN
+ . N LabLoincCmptName,LabElectronicCodesIEN,SYSTEM
+ . N Units
+ . S LabLoincIEN=$QS(NODE,4)
  . Q:'$G(LabLoincIEN)
  .; Quit if CLASSTYPE is not LABORATORY
  . Q:($G(^LAB(95.3,LabLoincIEN,3))>2)
@@ -34,12 +55,14 @@ GET953(F60IEN,F60NAME) ;
  . S LabLoincCmptName=$G(^LAB(95.31,LabLoincCmptIEN,0))
  .; Get SYSTEM or entry into LAB ELECTRONICS CODES [64.061] file
  . S LabElectronicCodesIEN=$P(LabLoinc0node,"^",8)
+ . Q:'$G(LabElectronicCodesIEN)
  . S SYSTEM=$G(^LAB(64.061,LabElectronicCodesIEN,0))
  . S LabElectronicCodesIEN=$P(LabLoinc0node,"^",14)
- . S Units=$G(^LAB(64.061,LabElectronicCodesIEN,0))
+ . S Units="unk"
+ . S:($G(LabElectronicCodesIEN)>0) Units=$P($G(^LAB(64.061,LabElectronicCodesIEN,0)),"^")
  .;
  .; If LabLoincCmptName or LabLoincShortName match, go on
- .I ((LabLoincCmptName=F60NAME)!($E(LabLoincShortName,1,$L(F60NAME))=F60NAME)) D
+ . I ((LabLoincCmptName=F60NAME)!($E(LabLoincShortName,1,$L(F60NAME))=F60NAME)) D
  .. W !,"LabLoincCmptName=",LabLoincCmptName
  .. W !,"LabAccessionArea=",LabAccessionArea
  .. W !,"LabLoincIEN= ",LabLoincIEN
@@ -55,20 +78,8 @@ GET953(F60IEN,F60NAME) ;
  .. S:$L($P(SYSTEM,"^",3)) LABABB($P(SYSTEM,"^",3))=""
  .. W !,"TYPE 'S=SPECIMEN'=",$P(SYSTEM,"^",7)
  .. W !," ZERO NODE 95.3=",LabLoinc0node,!,!
- ..; Build ^KBAP("LABARR" array
- ..;  ^KBAP("LABARR",x1,x2,x3,x4,x5,x6,x7,x8)=units
- ..;    subscript   Description
- ..;    x1          IEN of test in file 60
- ..;    x2          'inc' info from 'loinc-code-map'
- ..;                'lod' info from 'loinc org data'
- ..;                NOTE: to give preference to loinc-code-map data
- ..;    x3          Accession Area
- ..;    x4          Site/Specimen
- ..;    x5          LOINC integer
- ..;    x6          LOINC with checksum digit
- ..;    x7          Test name
- ..;    x8          'loinc org data' gien
  ..;
+ .. S ^KBAP("LABARR",F60IEN,"95.3",LabAccessionArea,$P(SYSTEM,"^"),LabLoincIEN,LabLoincFull,F60NAME,LabLoincIEN)=Units
  Q
  ;
 NEWTIU ; TEST BUILDING TIU AND ENTERING TEXT
@@ -319,4 +330,21 @@ SPLTAFN(ANSTR,STR,NBR) ; Split alpha from terminal numeric
  . I $E(ANSTR,I)?1N S NBR=$E(ANSTR,I,I)_$G(NBR)
  . I $E(ANSTR,I)?1A S STR=$E(ANSTR,1,$L(ANSTR)-$L(NBR)),DONE=1
  Q
+ ;
+ ; Find accession areas and site specimens
+ACCSS ;
+ N NODE,SNODE
+ S NODE=$NA(^KBAP("LABARR")),SNODE=$P(NODE,")")
+ F  S NODE=$Q(@NODE) Q:NODE'[SNODE  D
+ . N ACCAREA,SITESPEC
+ . S ACCAREA=$QS(NODE,4)
+ . S SITESPEC=$QS(NODE,5)
+ . S POOACC(ACCAREA)=$G(POOACC(ACCAREA))+1
+ . S POOSS(SITESPEC)=$G(POOSS(SITESPEC))+1
+ Q
+ ;CHEM,COAG,DRUG/TOX,HEM/BC,MICRO,CYTO,PATH,PULM,SERO,UA
+ ;"Amniotic fluid"
+ ;"Anus"
+ ;"BLD/TISS"
+ ;"BLD/URINE"
 EOR ; End of routine KBAPTMP

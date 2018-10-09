@@ -1,4 +1,4 @@
-SYNLINIT ; ven/lgc - Initialize Lab in a new VistA instance ; 10/8/18 11:30am
+SYNLINIT ; ven/lgc - Initialize Lab in a new VistA instance ; 10/9/18 12:05pm
  ;;;1.0;;;AUG 6, 2018
  ;
  ;
@@ -210,49 +210,38 @@ GET953(F60IEN,F60NAME) ; Data from LAB LOINC [95.3]
  S DONE=0
  S SF60NAME=$E(F60NAME,1,$L(F60NAME)-1)
  S SF60L=$L(SF60NAME)
- S NODE=$NA(^LAB(95.3,"E",SF60NAME))
- F  S NODE=$Q(@NODE) D  Q:DONE
+ S NODE=$NA(^LAB(95.3,"E",SF60NAME)),SNODE=$P($NA(^LAB(95.3,"E")),")")
+ F  S NODE=$Q(@NODE) Q:NODE'[SNODE  D  Q:DONE
  . I '($E($P($TR(NODE,""""),",",3),1,SF60L)[SF60NAME) D  Q
  .. S DONE=1
- . S LabLoincIEN=$P($P(NODE,",",4),")")
+ . N LabLoincIEN,LabLoinc0node,LabAccArea64061ien,LabAccessionArea
+ . N LabLoincFull,LabLoincShortName,LabLoincCmptIEN
+ . N LabLoincCmptName,LabElectronicCodesIEN,SYSTEM
+ . N Units
+ . S LabLoincIEN=$QS(NODE,4)
+ . Q:'$G(LabLoincIEN)
  .; Quit if CLASSTYPE is not LABORATORY
  . Q:($G(^LAB(95.3,LabLoincIEN,3))>2)
  .; Quit if STATUS is not DEL, TRIAL, or DISCOURAGED
  . Q:'($P($G(^LAB(95.3,LabLoincIEN,4)),"^")="")
  . S LabLoinc0node=$G(^LAB(95.3,LabLoincIEN,0))
  . S LabAccArea64061ien=$P(LabLoinc0node,"^",11)
- . S LabLoincFull=LabLoincIEN_"-"_$P(^LAB(95.3,LabLoincIEN,0),"^",15)
  . S LabAccessionArea=$P($G(^LAB(64.061,LabAccArea64061ien,0)),"^")
+ . S LabLoincFull=LabLoincIEN_"-"_$P(^LAB(95.3,LabLoincIEN,0),"^",15)
  . S LabLoincShortName=$G(^LAB(95.3,LabLoincIEN,81))
  .; Get Lab LOINC Component [95.31] entry
  . S LabLoincCmptIEN=$P(LabLoinc0node,"^",2)
  . S LabLoincCmptName=$G(^LAB(95.31,LabLoincCmptIEN,0))
  .; Get SYSTEM or entry into LAB ELECTRONICS CODES [64.061] file
  . S LabElectronicCodesIEN=$P(LabLoinc0node,"^",8)
+ . Q:'$G(LabElectronicCodesIEN)
  . S SYSTEM=$G(^LAB(64.061,LabElectronicCodesIEN,0))
- . S LabElectrinicCodesIEN=$P(LabLoinc0node,"^",14)
+ . S LabElectronicCodesIEN=$P(LabLoinc0node,"^",14)
  . S Units="unk"
- . S:($G(LabElectronicCodesIEN)>0) Units=$G(^LAB(64.061,LabElectronicCodesIEN,0))
+ . S:($G(LabElectronicCodesIEN)>0) Units=$P($G(^LAB(64.061,LabElectronicCodesIEN,0)),"^")
  .;
- .; If LabLoincCmptName or LabLoincShortName match, go on
- .I ((LabLoincCmptName=F60NAME)!($E(LabLoincShortName,1,$L(F60NAME))=F60NAME)) D
- .. W !,"LabLoincCmptName=",LabLoincCmptName
- .. W !,"LabAccessionArea=",LabAccessionArea
- .. W !,"LabLoincIEN= ",LabLoincIEN
- .. W !,"LabLoincShortName= ",LabLoincShortName
- .. W !,"FULL LOINC= ",LabLoincFull
- .. W !,"NODE=",NODE
- .. W !,"IEN INTO LAB(64.061)=",LabElectronicCodesIEN
- .. W !," SYSTEM=",SYSTEM
- .. W !,"SITE/SPECIMEN=",$P(SYSTEM,"^")
- .. W !,"Units=",Units
- .. W !,"LOINC ABB=",$P(SYSTEM,"^",2)
- .. W !,"LAB ABB=",$P(SYSTEM,"^",3)
- .. S:$L($P(SYSTEM,"^",3)) LABABB($P(SYSTEM,"^",3))=""
- .. W !,"TYPE 'S=SPECIMEN'=",$P(SYSTEM,"^",7)
- .. W !," ZERO NODE 95.3=",LabLoinc0node,!,!
- ..;
- .. S ^KBAP("LABARR",F60IEN,"95.3","LabAccessionArea",$P(SYSTEM,"^"),LabLoincIEN,LabLoincFull,F60NAME,LabLoincIEN)=Units
+ . I ((LabLoincCmptName=F60NAME)!($E(LabLoincShortName,1,$L(F60NAME))=F60NAME)) D
+ .. S ^KBAP("LABARR",F60IEN,"95.3",LabAccessionArea,$P(SYSTEM,"^"),LabLoincIEN,LabLoincFull,F60NAME,LabLoincIEN)=Units
  Q
  ;
 UPDTLAB ;

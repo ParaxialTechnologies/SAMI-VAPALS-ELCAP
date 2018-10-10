@@ -1,4 +1,4 @@
-SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 10/1/18 1:44pm
+SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 10/9/18 7:08pm
  ;;1.0;;**LOCAL**; APR 22, 2018
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -466,8 +466,8 @@ PTINFO(DFN) ;
  S @root@(gien,"icn")=$P(XDATA,"^",18)
  S:+$P(XDATA,"^",18) @root@("icn",$P(XDATA,"^",18))=gien
  ; Pull state abbreviation
- n dic5ien s dic5ien=$P($G(^DPT(DFN,.11)),"^",5)
- n StateABB s StateABB=$P($G(^DIC(5,dic5ien,0)),"^",2)
+ n dic5ien I $L($P(XDATA,"^",13)) s dic5ien=$O(^DIC(5,"B",$P(XDATA,"^",13),0))
+ n StateABB s StateABB=$P($G(^DIC(5,+$G(dic5ien),0)),"^",2)
  S @root@(gien,"age")=$P(XDATA,"^",5)
  S @root@(gien,"sex")=$P(XDATA,"^",6)
  S @root@(gien,"marital status")=$P(XDATA,"^",7)

@@ -1,4 +1,4 @@
-SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 10/9/18 7:08pm
+SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 10/10/18 9:28am
  ;;1.0;;**LOCAL**; APR 22, 2018
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker

@@ -1,4 +1,4 @@
-SYNLINIT ; ven/lgc - Initialize Lab in a new VistA instance ; 10/9/18 12:05pm
+SYNLINIT ; ven/lgc - Initialize Lab in a new VistA instance ; 10/10/18 1:22pm
  ;;;1.0;;;AUG 6, 2018
  ;
  ;
@@ -10,10 +10,15 @@ EN ; Get institution
  S LRINST=$$GETINST
  ; Read csv file and build LOINCA array
  D READCSV(fileloc)
+ ; Build the LOINCA array
+ N LOINCA S LOINCA="" D BLDGS(.LOINCA)
+ ; Build ^KBAP("LABARR" global
+ D BLDKBAP
  ; Build TMPARR for each test in file 60
  ; Run through TMPARR and update test
  ;   for accession area, institution
- ;   for site/specimen, LOINC, UNITS 
+ ;   for site/specimen, LOINC, UNITS
+ D UPDTLAB
  ; Make sure rollover running
  Q
  ;
@@ -148,6 +153,10 @@ BLDKBAP ;
  ;    then look up this name in in 'loinc-code-map'
  ; 2) run down each entry in file 60 SYNONYMS on each test
  ;    then look up this name in 'loinc-code-map'
+ ; With each step, build the ^KBAP("LABARR" global for use
+ ;   later in building/editing lab tests in file 60
+ ;   [UPDTLAB]
+ ;
  K ^KBAP("LABARR")
  S F60IEN=0
 BNAME F  S F60IEN=$O(^LAB(60,F60IEN)) Q:'F60IEN  D
@@ -248,7 +257,8 @@ UPDTLAB ;
  ; Run down ^KBAP("LABARR") and get
  ;   lab60ien
  N TMPARR,IEN60,IEN61,IEN68,ACCAREA,SPECIMEN,SPECIEN,TSTNAME
- N PRPRTY
+ N PRPRTY,IEN4
+ ;S IEN4=$$GETINST
  S IEN60=0
  F  S IEN60=$O(^LAB(60,IEN60)) Q:'IEN60  D
  . K TMPARR
@@ -285,8 +295,11 @@ UPDTTST(TMPARR) ;
  . I IEN68>0,IEN61>0 D
  ..; Does the test alrady have this accession
  ..;   area under the selected institution?
+ ..; If so just bail
  .. S AAEXIST=$$HAVEAA(IEN60,IEN4,IEN68)
  .. Q:AAEXIST
+ ..; Assign the institution and accession area
+ ..;  to this test
  .. S SUCCESS=$$ADDAA(IEN60,IEN4,IEN68)
  ..;
  ..; Does the test already have this specimen
@@ -297,7 +310,8 @@ UPDTTST(TMPARR) ;
  .. S SUCCESS=$$ADDSLNC(IEN60,IEN61,LOINC,UNITS)
  Q
  ;
- ;
+ ; Check if this test in file 60 already has assigned
+ ;   the indicate institution and accession area
 HAVEAA(IEN60,IEN4,IEN68) ;
  N I S (RSLT,I)=0
  F  S I=$O(^LAB(60,IEN60,8,I)) Q:'I  D
@@ -315,6 +329,9 @@ FDNAANMB(ACCAREA) ;
  . I ACC[ACCAREA S IEN68=$P($T(ACCAREA+CNT),"^",2)
  Q IEN68
  ;
+ ; Translate accession areas found in the data stored
+ ;  in ^KBAP("LABARR" to those we will support in our
+ ;  VistA instance
 ACCAREA ;;
  ;;CHEM^11
  ;;COAG^3
@@ -481,5 +498,30 @@ ADDSLNC(IEN60,IEN61,LOINC,UNITS) ;
  . S FDA(3,60.01,IENS,6)=UNITS
  D UPDATE^DIE("","FDA(3)","FDAIEN")
  Q '$D(DIERR)
+ ;
+ ; Build arrays of all accession areas and all 
+ ;  site/specimens saved in ^KBAP("LABARR" global
+FindAccAreaAndSiteSpec ;
+ N NODE,SNODE
+ S NODE=$NA(^KBAP("LABARR")),SNODE=$P(NODE,")")
+ F  S NODE=$Q(@NODE) Q:NODE'[SNODE  D
+ . S POOACC($QS(NODE,4))=$G(POOACC($QS(NODE,4)))+1
+ . S POOSS($QS(NODE,5))=$G(POOSS($QS(NODE,5)))+1
+ Q
+ ;
+ShowAccAreaSiteSpec(AccArea,SiteSpecimen) ;
+ N NODE,SNODE,T60IEN,T60NAME
+ S NODE=$NA(^KBAP("LABARR")),SNODE=$P(NODE,")")
+ F  S NODE=$Q(@NODE) Q:NODE'[SNODE  D
+ . I $L($G(AccArea))>0,$QS(NODE,4)=AccArea D
+ .. W !,NODE,"=",@NODE
+ .. S T60IEN=$QS(NODE,2),T60NAME=$P($G(^LAB(60,T60IEN,0)),"^")
+ .. W !,T60IEN," ",T60NAME
+ . I $L($G(SiteSpecimen))>0,$QS(NODE,5)=SiteSpecimen D
+ .. W !,NODE,"=",@NODE
+ .. S T60IEN=$QS(NODE,2),T60NAME=$P($G(^LAB(60,T60IEN,0)),"^")
+ .. W !,T60IEN," ",T60NAME
+ Q
+ ;
  ;
 EOR ;End of routine SYNLINIT

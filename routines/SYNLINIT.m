@@ -1,4 +1,4 @@
-SYNLINIT ; ven/lgc - Initialize Lab in a new VistA instance ; 10/10/18 1:22pm
+SYNLINIT ; ven/lgc - Initialize Lab in a new VistA instance ; 10/12/18 1:58pm
  ;;;1.0;;;AUG 6, 2018
  ;
  ;
@@ -6,20 +6,36 @@ SYNLINIT ; ven/lgc - Initialize Lab in a new VistA instance ; 10/10/18 1:22pm
  ;
  ;
 EN ; Get institution
- N LRINST
- S LRINST=$$GETINST
+ N IEN4
+ S IEN4=$$GETINST
+ I '$G(IEN4) D  Q
+ . W !,!,"*** You must select an institution to continue.",!,!
+ W !,"Continue using institution "_$G(^DIC(4,IEN4,0))
+ S %=2 D YN^DICN
+ Q:'(%=1)
+ ;
+ ; Make sure each accession area has an Identity
+ D SetAccessionIDs
+ ;
  ; Read csv file and build LOINCA array
- D READCSV(fileloc)
+ ;D READCSV(fileloc)
+ ;
  ; Build the LOINCA array
- N LOINCA S LOINCA="" D BLDGS(.LOINCA)
+ ;N LOINCA S LOINCA="" D BLDGS(.LOINCA)
+ ;
  ; Build ^KBAP("LABARR" global
  D BLDKBAP
+ ;
  ; Build TMPARR for each test in file 60
  ; Run through TMPARR and update test
  ;   for accession area, institution
  ;   for site/specimen, LOINC, UNITS
  D UPDTLAB
  ; Make sure rollover running
+ D SchedRollover
+ ; Run rollover manually now
+ W !,!," *** Running Lab Rollover manually now.",!
+ D ^LROLOVER
  Q
  ;
 GETINST() ;
@@ -134,6 +150,7 @@ BLDGS(LOINCA) ;
  ;    x1          IEN of test in file 60
  ;    x2          'inc' info from 'loinc-code-map'
  ;                'lod' info from 'loinc org data'
+ ;                '95.3' info from LAB LOINC file
  ;                NOTE: to give preference to loinc-code-map data
  ;    x3          Accession Area
  ;    x4          Site/Specimen
@@ -161,15 +178,15 @@ BLDKBAP ;
  S F60IEN=0
 BNAME F  S F60IEN=$O(^LAB(60,F60IEN)) Q:'F60IEN  D
  . S F60NAME=$$UP^XLFSTR($P($G(^LAB(60,F60IEN,0)),"^"))
- . D GETLCM(F60IEN,F60NAME)
- . D GETLOD(F60IEN,F60NAME)
+ .; D GETLCM(F60IEN,F60NAME)
+ .; D GETLOD(F60IEN,F60NAME)
  . D GET953(F60IEN,F60NAME)
  S F60IEN=0
 BSYN F  S F60IEN=$O(^LAB(60,F60IEN)) Q:'F60IEN  D
  . S F60SYN=""
  . F  S F60SYN=$O(^LAB(60,F60IEN,5,"B",F60SYN)) Q:($TR(F60SYN," ")="")  D
- .. D GETLCM(F60IEN,F60SYN)
- .. D GETLOD(F60IEN,F60SYN)
+ ..; D GETLCM(F60IEN,F60SYN)
+ ..; D GETLOD(F60IEN,F60SYN)
  .. D GET953(F60IEN,F60SYN)
  Q
  ;
@@ -257,8 +274,7 @@ UPDTLAB ;
  ; Run down ^KBAP("LABARR") and get
  ;   lab60ien
  N TMPARR,IEN60,IEN61,IEN68,ACCAREA,SPECIMEN,SPECIEN,TSTNAME
- N PRPRTY,IEN4
- ;S IEN4=$$GETINST
+ N PRPRTY
  S IEN60=0
  F  S IEN60=$O(^LAB(60,IEN60)) Q:'IEN60  D
  . K TMPARR
@@ -275,6 +291,7 @@ UPDTLAB ;
 UPDTTST(TMPARR) ;
  ; Run down each entry in the array
  N NODE,SNODES,LOINC,TSTNAME,ACCAREA,PRPRTY,UNITS
+ N SiteSpecimens
  N IEN60,IEN68,SPECIMEN,IEN61,AAEXIST,SPEXIST,LNCXIST
  S NODE=$NA(TMPARR),SNODE=$P(NODE,")")
  F  S NODE=$Q(@NODE) Q:NODE'[SNODE  D
@@ -291,23 +308,30 @@ UPDTTST(TMPARR) ;
  . S SPECIMEN=$QS(NODE,4) ; e.g. Synv fld; Ser/Plas
  .; Remember SPECIMEN may represent a multiple
  .;  such as 70;71
- . S IEN61=$$FNDSSNBR(SPECIMEN)
- . I IEN68>0,IEN61>0 D
+ . S SiteSpecimens=$$FNDSSNBR(SPECIMEN)
+ .;
+ .; If we have an accession area and one or more site/specimens
+ .;   update the test if necessary
+ .;
+ . I IEN68>0,SiteSpecimens>0 D
+ ..;
  ..; Does the test alrady have this accession
  ..;   area under the selected institution?
  ..; If so just bail
  .. S AAEXIST=$$HAVEAA(IEN60,IEN4,IEN68)
- .. Q:AAEXIST
- ..; Assign the institution and accession area
- ..;  to this test
- .. S SUCCESS=$$ADDAA(IEN60,IEN4,IEN68)
+ .. I '$G(AAEXIST) D
+ ...; Assign the institution and accession area
+ ...;  to this test
+ ... S SUCCESS=$$ADDAA(IEN60,IEN4,IEN68)
  ..;
  ..; Does the test already have this specimen
  ..;  and the associated LOINC?
- .. S SPEXIST=$D(^LAB(60,IEN60,1,IEN61))
- .. I SPEXIST S LNCXIST=$D(^LAB(60,IEN60,1,IEN61,95.3))
- .. I SPEXIST,LNCXIST Q
- .. S SUCCESS=$$ADDSLNC(IEN60,IEN61,LOINC,UNITS)
+ .. N NumberSpecimens S NumberSpecimens=$L(SiteSpecimens,";")
+ .. N I F I=1:1:NumberSpecimens S IEN61=$P(SiteSpecimens,";",I) D
+ ... S SPEXIST=$D(^LAB(60,IEN60,1,IEN61))
+ ... I SPEXIST S LNCXIST=$D(^LAB(60,IEN60,1,IEN61,95.3))
+ ... I SPEXIST,LNCXIST Q
+ ... S SUCCESS=$$ADDSLNC(IEN60,IEN61,LOINC,UNITS)
  Q
  ;
  ; Check if this test in file 60 already has assigned
@@ -329,9 +353,8 @@ FDNAANMB(ACCAREA) ;
  . I ACC[ACCAREA S IEN68=$P($T(ACCAREA+CNT),"^",2)
  Q IEN68
  ;
- ; Translate accession areas found in the data stored
- ;  in ^KBAP("LABARR" to those we will support in our
- ;  VistA instance
+ ;
+ ;
 ACCAREA ;;
  ;;CHEM^11
  ;;COAG^3
@@ -341,16 +364,30 @@ ACCAREA ;;
  ;;SERO^17
  ;;RIA^6
  ;;UA^7
+ ;;GAS^9
+ ;;PULM^6
+ ;;PANEL.CHEM^11
+ ;;PANEL.COAG^3
+ ;;PANEL.HEM/BC^10
+ ;;PANEL.MICRO^12
+ ;;PANEL.DRUG/TOX^20
+ ;;SPEC^11
+ ;;ABXBACT^12
+ ;;ALLERGY^11
+ ;;CHAL^11
+ ;;DRUGDOSE^20
+ ;;IO_IN_SALTS+CALS^11
  ;;
  ;
  ; Look up VistA site specimen (topography) IEN into
- ;   file 61 by specimen string found in Loinc.csv
+ ;   file 61 by specimen string
 FNDSSNBR(SPECIMEN) ;
  N SPEC,IEN61
  S (IEN61,CNT)=0
  F  S CNT=CNT+1,SPEC=$T(SITESPEC+CNT) Q:(SPEC="")  D
  . S SPEC=$P($P(SPEC,";;",2),"^")
- . I SPEC=SPECIMEN S IEN61=$P($T(SITESPEC+CNT),"^",2)
+ . I $$UP^XLFSTR(SPEC)=$$UP^XLFSTR(SPECIMEN) D
+ .. S IEN61=$P($T(SITESPEC+CNT),"^",2)
  Q IEN61
  ;
 SITESPEC ;;
@@ -499,6 +536,43 @@ ADDSLNC(IEN60,IEN61,LOINC,UNITS) ;
  D UPDATE^DIE("","FDA(3)","FDAIEN")
  Q '$D(DIERR)
  ;
+ ;
+ ; Make sure each accession area has a NUMERICAL IDENTIFIER
+ ;  NOTE: Despite the name of the field suggesting a numerical
+ ;        entry, the identifier may contain alpha characters.
+ ;        However, if an identifier has not been previously
+ ;        defined, we will set it to the IEN of the accession
+ ;        area in file 68.
+SetAccessionIDs ;
+ N IEN68 S IEN68=0
+ F  S IEN68=$O(^LRO(68,IEN68)) Q:'$G(IEN68)  D
+ . Q:$L($G(^LRO(68,IEN68,.4)))
+ . N DIERR,FDA,FDAIEN,IENS
+ . S IENS=IEN68_","
+ . S FDA(3,68,IENS,.4)=IEN68
+ . D UPDATE^DIE("","FDA(3)")
+ Q
+ ;
+ ; Schedule lab rollover task
+SchedRollover ;
+ N IEN19,IEN192,NODE1920,FDA,DIERR,FDAIEN,LROVDT
+ ; See if already in 19.2 and scheduled correctly
+ N IEN19 S IEN19=$O(^DIC(19,"B","LRTASK ROLLOVER",0))
+ I '+$G(IEN19) D  Q
+ . W !,!,"*** ERROR.  LRTASK ROLLOVER not in OPTION file.",!
+ S LROVDT=$P($$FMADD^XLFDT($$HTFM^XLFDT($H),1),".")_"."_"0005"
+ ;
+ S FDA(3,19.2,"?+1,",.01)=IEN19
+ S FDA(3,19.2,"?+1,",2)=LROVDT
+ S FDA(3,19.2,"?+1,",6)="1D"
+ D UPDATE^DIE("","FDA(3)")
+ ;
+ I '$D(DIERR) D  Q
+ . W !,!," *** LRTASK ROLLOVER scheduled for ",LROVDT," Daily.",!
+ W !,!," *** Tasking LRTASK ROLLOVER failed.  Schedule manually.",!
+ Q
+ ; ==================== Developer tools ================
+ ;
  ; Build arrays of all accession areas and all 
  ;  site/specimens saved in ^KBAP("LABARR" global
 FindAccAreaAndSiteSpec ;
@@ -522,6 +596,17 @@ ShowAccAreaSiteSpec(AccArea,SiteSpecimen) ;
  .. S T60IEN=$QS(NODE,2),T60NAME=$P($G(^LAB(60,T60IEN,0)),"^")
  .. W !,T60IEN," ",T60NAME
  Q
- ;
+DispTestWithLOINC ;
+ N NODE,SNODE,DONE,TOT953
+ S NODE=$NA(^LAB(60)),SNODE=$P(NODE,")")
+ S DONE=0
+ F  S NODE=$Q(@NODE) Q:NODE'[SNODE  D  Q:DONE
+ . I $QS(NODE,2)?.A S DONE=1 Q
+ . I $QS(NODE,3)=0 W !,NODE,"=",@NODE
+ . I $QS(NODE,5)["95.3" D
+ .. W !," ----- ",NODE,"=",@NODE
+ .. S TOT953=$G(TOT953)+1
+ W !,"Total site/specimen entries with LOINC :",TOT953
+ Q
  ;
 EOR ;End of routine SYNLINIT

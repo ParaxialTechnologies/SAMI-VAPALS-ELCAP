@@ -728,6 +728,16 @@ makeCeform(sid,key) ; create ct evaluation form
  new sien set sien=$$sid2num^SAMIHOM2(sid)
  quit:+sien=0
  new cdate set cdate=$piece(key,"ceform-",2)
+ new items,prevct
+ d getItems^SAMICAS2("items",sid)
+ s prevct=""
+ i $d(items("type","vapals:ceform")) d  ;previous cteval exists
+ . s prevct=$o(items("type","vapals:ceform",""),-1) ; latest ceform
+ i prevct'="" d  ;
+ . n target,source
+ . s source=$na(@root@("graph",sid,prevct))
+ . s target=$na(@root@("graph",sid,key))
+ . d CTCOPY^SAMICTC1(source,target)
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate
  d setSamiStatus^SAMICAS2(sid,key,"incomplete")

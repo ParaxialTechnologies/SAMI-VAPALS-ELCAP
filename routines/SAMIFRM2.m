@@ -525,18 +525,21 @@ fixHref(line) ; fix html href lines to use resources in see/
  ;
  ;
 GETLAST5(sid) ; extrinsic returns the last5 for patient sid
+ q:$g(sid)="" ""
  n root s root=$$setroot^%wd("vapals-patients")
  n ien s ien=$o(@root@("sid",sid,""))
  q:ien=""
  q @root@(ien,"last5")
  ;
 GETNAME(sid) ; extrinsic returns the name for patient sid
+ q:$g(sid)="" ""
  n root s root=$$setroot^%wd("vapals-patients")
  n ien s ien=$o(@root@("sid",sid,""))
  q:ien=""
  q @root@(ien,"saminame")
  ;
 GETSSN(sid) ; extrinsic returns the ssn for patient sid
+ q:$g(sid)="" ""
  n root s root=$$setroot^%wd("vapals-patients")
  n ien s ien=$o(@root@("sid",sid,""))
  q:ien=""
@@ -552,6 +555,7 @@ GETSSN(sid) ; extrinsic returns the ssn for patient sid
  q pssn
  ;
 GETHDR(sid) ; extrinsic returns header string for patient sid
+ q:$g(sid)="" ""
  n root s root=$$setroot^%wd("vapals-patients")
  n ien s ien=$o(@root@("sid",sid,""))
  n dfn s dfn=@root@(ien,"dfn")

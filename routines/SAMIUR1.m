@@ -33,7 +33,7 @@ wsReport(rtn,filter) ; generate a report based on parameters in the filter
  ;
  n ln,cnt,ii
  s (ii,ln,cnt)=0
- f  s ii=$o(temp(ii)) q:+ii=0  q:$g(temp(ii))["<tbody"  d  ;
+ f  s ii=$o(temp(ii)) q:+ii=0  q:$g(temp(ii))["<thead"  d  ;
  . s cnt=cnt+1
  . s ln=$g(temp(ii))
  . n samikey,si
@@ -42,6 +42,12 @@ wsReport(rtn,filter) ; generate a report based on parameters in the filter
  . i ln["PAGE NAME" d findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type))
  . s rtn(cnt)=ln
  . ;
+ s cnt=cnt+1 s rtn(cnt)="<thead><tr>"
+ s cnt=cnt+1 s rtn(cnt)="<th>Enrollment Date</th>"
+ s cnt=cnt+1 s rtn(cnt)="<th>Name</th>"
+ s cnt=cnt+1 s rtn(cnt)="<th>SSN</th>"
+ s cnt=cnt+1 s rtn(cnt)="</tr></thead>"
+ ;
  n pats,ij
  s pats=""
  d select(.pats,type) ; select patients for the report q:'$d(pats)
@@ -50,21 +56,27 @@ wsReport(rtn,filter) ; generate a report based on parameters in the filter
  s cnt=cnt+1 s rtn(cnt)="<tbody>"
  s ij=0
  f  s ij=$o(pats(ij)) q:+ij=0  d  ;
- . n sid s sid=$g(@root@(ij,"samistudyid"))
- . n name s name=$g(@root@(ij,"saminame"))
- . new nuhref set nuhref="<form method=POST action=""/vapals"">"
- . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""casereview"">"
- . set nuhref=nuhref_"<input type=hidden name=""studyid"" value="_sid_">"
- . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
- . s cnt=cnt+1
- . s rtn(cnt)="<tr><td>"_nuhref_"</td>"
- . n ssn s ssn=$$GETSSN^SAMIFRM2(sid)
- . i ssn="" d  ;
- . . n hdr
- . . s hdf=$$GETHDR^SAMIFRM2(sid)
- . . s ssn=$$GETSSN^SAMIFRM2(sid)
- . s cnt=cnt+1
- . s rtn(cnt)="<td>"_ssn_"</td></tr>"
+ . n ij2 s ij2=0
+ . f  s ij2=$o(pats(ij,ij2)) q:+ij2=0  d  ;
+ . . n dfn s dfn=ij2
+ . . n sid s sid=$g(@root@(dfn,"samistudyid"))
+ . . n name s name=$g(@root@(dfn,"saminame"))
+ . . n edate s edate=$g(pats(ij,dfn,"edate"))
+ . . s cnt=cnt+1 s rtn(cnt)="<tr>"
+ . . s cnt=cnt+1 s rtn(cnt)="<td>"_edate_"</td>"
+ . . new nuhref set nuhref="<form method=POST action=""/vapals"">"
+ . . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""casereview"">"
+ . . set nuhref=nuhref_"<input type=hidden name=""studyid"" value="_sid_">"
+ . . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
+ . . s cnt=cnt+1
+ . . s rtn(cnt)="<td>"_nuhref_"</td>"
+ . . n ssn s ssn=$$GETSSN^SAMIFRM2(sid)
+ . . i ssn="" d  ;
+ . . . n hdr
+ . . . s hdf=$$GETHDR^SAMIFRM2(sid)
+ . . . s ssn=$$GETSSN^SAMIFRM2(sid)
+ . . s cnt=cnt+1
+ . . s rtn(cnt)="<td>"_ssn_"</td></tr>"
  ;
  s cnt=cnt+1 s rtn(cnt)="</tbody>"
  ;s ii=ii-1
@@ -85,6 +97,16 @@ select(pats,type) ; selects patient for the report
  . n items s items=""
  . d getItems^SAMICAS2("items",sid)
  . q:'$d(items)
+ . n efmdate,edate,siform
+ . s siform=$o(items("siform-"))
+ . s edate=$g(@root@("graph",sid,siform,"sidc"))
+ . i edate="" s edate=$g(@root@("graph",sid,siform,"samicreatedate"))
+ . n X,Y
+ . s X=edate
+ . d ^%DT
+ . s efmdate=Y
+ . s edate=$$vapalsDate^SAMICAS2(efmdate)
+ . ;
  . i type="followup" d  ;
  . . q
  . i type="activity" d  ;
@@ -96,7 +118,8 @@ select(pats,type) ; selects patient for the report
  . i type="outreach" d  ;
  . . q
  . i type="enrollment" d  ;
- . . s pats(zi)=""
+ . . s pats(efmdate,zi,"edate")=edate
+ . . s pats(efmdate,zi)=""
  q
  ;
 PNAME(type) ; extrinsic returns the PAGE NAME for the report

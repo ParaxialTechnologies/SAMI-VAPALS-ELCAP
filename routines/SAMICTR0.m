@@ -67,13 +67,16 @@ wsReport(return,filter) ; web service which returns an html cteval report
  s registryForm=0
  i $$xval("ceaf",vals)'="" s registryForm=1
  ;
- d out("<HTML><HEAD>")
+ d out("<HTML>")
+ d out("<HEAD>")
+ d out("<!-- Calling TR: CT Evaluation Report -->")
  d out("<TITLE>CT Evaluation Report</TITLE>")
  d out("<link rel='stylesheet' href='/css/report.css'>")
  d out("</HEAD>")
  d out("<BODY BGCOLOR=""#ffffff"" TEXT=""#000000"">")
- d out("<TABLE border=""0"" cellspacing=""0"" cellpadding=""3"" WIDTH=""640""><TR><TD>")
+ ;d out("<TABLE border=""0"" cellspacing=""0"" cellpadding=""3"" WIDTH=""640""><TR><TD>")
  d out("<FONT SIZE=""+2""><CENTER>")
+ d out("<!-- Calling TR: CT Evaluation Report -->")
  d out("<B>CT Evaluation Report</B>")
  d out("</CENTER></FONT>")
  d out("</TD></TR><TR><TD>")
@@ -85,11 +88,11 @@ wsReport(return,filter) ; web service which returns an html cteval report
  ;
  ; generate header
  ;
- d out("<TR><TD WIDTH=\""180\""><B>Patient Name:</B></TD><TD WIDTH=\""365\"">")
+ d out("<TR><TD WIDTH=""180""><B>Patient Name:</B></TD><TD WIDTH=""365"">")
  d out($$xval("sinamel",vals)_", "_$$xval("sinamef",vals))
  d out("</TD>")
  ;
- d out("<TD WIDTH=\""120\""><B>Study ID:</B></TD><TD WIDTH=\""75\"">")
+ d out("<TD WIDTH=""120""><B>Study ID:</B></TD><TD WIDTH=""75"">")
  d out($$xval("sisid",vals))
  d out("</TD>")
  ;
@@ -116,7 +119,7 @@ wsReport(return,filter) ; web service which returns an html cteval report
  ;# End of Header
  ;
  d out("</TABLE>")
- d out("</TD></TR><TR><TD>")
+ ;d out("</TD></TR><TR><TD>")
  d out("<HR SIZE=""2"" WIDTH=""100%"" ALIGN=""center"" NOSHADE>")
  d out("</TD></TR>")
  d out("<!-- report -->")

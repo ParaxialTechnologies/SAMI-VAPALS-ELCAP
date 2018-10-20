@@ -15,10 +15,11 @@ recommend(rtn,vals,dict)
  d out("<!-- Recommendation -->")
  ;
  i $$xval("cefu",vals)'="nf" d  ; 2445-2450 gpl1
- . d out("<TR><TD><FONT SIZE=""+2""><B>")
+ . ;d out("<TR><TD><FONT SIZE=""+2""><B>")
+ . d out("<FONT SIZE=""+2""><B>")
  . d out("Recommendations:")
  . d out("</B></FONT>")
- . d out("</TD></TR><TR><TD><TABLE><TR><TD WIDTH=20></TD><TD>")
+ . ;d out("</TD></TR><TR><TD><TABLE><TR><TD WIDTH=20></TD><TD>")
  ;
  n fuw
  s fuw=$$xsub("cefuw",vals,dict)
@@ -33,33 +34,25 @@ recommend(rtn,vals,dict)
  e  d  ;
  . d out(para_"<B>"_$$xsub("cefu",vals,dict)_" "_fuw_" on "_$$xval("cefud",vals)_".</B>"_para)
  ;
- d out("<TR><TD></TD></TR>")
+ ;d out("<TR><TD></TD></TR>")
  ; # LungRADS
  ;
- d out("<TR><TD>")
- n lrstyle
- i $$xval("celrc",vals)'="" s lrstyle=1 ; dom's style
- e  s lrstyle=0 ; artit's style
+ ;d out("<TR><TD>")
+ ;n lrstyle
+ ;i $$xval("celrc",vals)'="" s lrstyle=1 ; dom's style
+ ;e  s lrstyle=0 ; artit's style
+ ;s lrstyle=0
  ;
- i lrstyle=0 d  ; Artit's style
+ d  ;
  . s lradModifiers=$$xval("celradc",vals)_$$xval("celrads",vals)
  . ;
  . i ($$xval("celrad",vals)'="-")&($$xval("celrad",vals)'="") d  ;
- . . d out("The LungRADS category for this scan is: "_$$xval("celrad",vals)_lradModifiers)
+ . . d out("The LungRADS category for this scan is: "_$$xval("celrad",vals)_" "_lradModifiers)
  . . d out(para)
  ;
- i lrstyle=1 d  ; Dom's style
- . s X=$$xval("celradc",vals)_$$xval("celrads",vals)
- . s Y=""
- . X ^%ZOSF("UPPERCASE")
- . s lradModifiers=Y
- . ;
- . i ($$xval("celrc",vals)'="-")&($$xval("celrc",vals)'="") d  ;
- . . d out("<B>LungRADS category: "_$$xval("celrad",vals)_lradModifiers_"</B>")
- . . d out(para)
- d out("</TD></TR>")
+ ;d out("</TD></TR>")
  ;
- d out("<TR><TD><TABLE><TR><TD WIDTH=20></TD><TD>")
+ ;d out("<TR><TD><TABLE><TR><TD WIDTH=20></TD><TD>")
  ;
  ;# Check if Study is Completed
  ;# Find Current Study ID

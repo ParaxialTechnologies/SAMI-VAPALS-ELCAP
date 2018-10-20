@@ -26,14 +26,14 @@ wsReport(return,filter) ; web service which returns an html cteval report
  n si
  s si=$g(filter("studyid"))
  i si="" d  ;
- . s si="XXX0004"
+ . s si="XXX00102"
  q:si=""
  n samikey
  s samikey=$g(filter("form"))
  i samikey="" d  ;
- . s samikey="ceform-2018-03-12"
+ . s samikey="ceform-2018-10-09"
  n root s root=$$setroot^%wd("vapals-patients")
- i $g(filter("studyid"))="" s root=$$setroot^%wd("elcap-patients")
+ i $g(filter("studyid"))="" s root=$$setroot^%wd("vapals-patients")
  s vals=$na(@root@("graph",si,samikey))
  ;W !,vals
  ;zwr @vals@(*)

@@ -91,6 +91,7 @@
 
 {% macro yesCheckbox(name, attributes) -%}
     <label class="checkbox-inline">
+        <input type="hidden" name="{{ name }}" value=""/>
         <input type="checkbox" class="yes-checkbox" name="{{ name }}" id="{{ name }}" value="y"
         {% if attributes!=null %}
             {% for k,v in attributes.items() %}

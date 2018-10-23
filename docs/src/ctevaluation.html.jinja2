@@ -653,6 +653,18 @@
                                         </tr>
                                         <tr>
                                             <td style="white-space: nowrap;">
+                                                <label class="control-label" for="cect1ca-n">Calcifications</label>
+                                            </td>
+                                            {% for i in noduleArray %}
+                                                <td data-nodule-id="{{ i }}" style="display:none;">
+                                                    <div class="form-group form-group-sm">
+                                                        {{ f.yesCheckbox("cect" + i|string + "ca", {"tabindex":i|string+"16"}) }}
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                        <tr>
+                                            <td style="white-space: nowrap;">
                                                 <label class="control-label" for="cectin">Index Nodule</label> <i
                                                     class="fa fa-question-circle-o" aria-hidden="true"
                                                     data-toggle="popover" title="Help"
@@ -663,7 +675,7 @@
                                                     <div class="form-group form-group-sm">
                                                         {# Note that this checkbox spans multiple td-s, which is why we don't used the standard forms checkbox #}
                                                         <input type="checkbox" class="radiocheckbox" name="cectin"
-                                                               id="cect{{ i }}in" value="{{ i }}" tabindex="{{ i }}16">
+                                                               id="cect{{ i }}in" value="{{ i }}" tabindex="{{ i }}17">
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -675,7 +687,7 @@
                                             {% for i in noduleArray %}
                                                 <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group form-group-sm">
-                                                        {{ f.yesCheckbox("cect" + i|string + "sp", {"tabindex":i|string+"17"}) }}
+                                                        {{ f.yesCheckbox("cect" + i|string + "sp", {"tabindex":i|string+"18"}) }}
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -693,7 +705,7 @@
                                                     <div class="form-group form-group-sm">
                                                         <input type="text" name="cect{{ i }}pld" id="cect{{ i }}pld"
                                                                class="numeric decimalformat"
-                                                               title="Distance" tabindex="{{ i }}18">
+                                                               title="Distance" tabindex="{{ i }}19">
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -710,7 +722,7 @@
                                                 <td data-nodule-id="{{ i }}" style="display:none;">
                                                     <div class="form-group form-group-sm">
                                                         <select name="cect{{ i }}ac" id="cect{{ i }}ac" title="Action"
-                                                                class="form-control" tabindex="{{ i }}19">
+                                                                class="form-control" tabindex="{{ i }}20">
                                                             <option value="-"> -</option>
                                                             <option value="s"> Annual repeat CT</option>
                                                             <option value="f"> Follow-up CT</option>
@@ -738,7 +750,7 @@
                                                     <div class="form-group form-group-sm">
                                                         <input type="text" name="cect{{ i }}co" id="cect{{ i }}co"
                                                                size="20" class="form-control" title="Comment"
-                                                               tabindex="{{ i }}20">
+                                                               tabindex="{{ i }}21">
                                                     </div>
                                                 </td>
                                             {% endfor %}
@@ -756,7 +768,7 @@
                                                     <div class="form-group form-group-sm">
                                                         <select name="cect{{ i }}pd" id="cect{{ i }}pd"
                                                                 title="Pathologic diagnosis" class="form-control"
-                                                                tabindex="{{ i }}21">
+                                                                tabindex="{{ i }}22">
                                                             <option value="-"> -For Pathology Use Only-</option>
                                                             <option value="aa"> AAH</option>
                                                             <option value="ap"> Atyp bronch prolif</option>

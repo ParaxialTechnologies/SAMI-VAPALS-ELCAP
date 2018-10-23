@@ -184,16 +184,20 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . set zhtml(%j)=tln
  . ;
  . if tln["submit" quit  ;
- . if tln["hidden" quit  ;
+ . if tln["hidden" d  quit  ; we need to try and process hidden fields
+ . . i tln'["type" q  ; probably in a javascript statement
+ . . n hname s hname=""
+ . . i tln["name=" do  ;
+ . . . set hname=$piece($piece(tln,"name=""",2),"""")
+ . . q:hname=""
+ . . n hval s hval=$g(vals(hname)) ; saved value of the hidden field
+ . . q:hval=""
+ . . d unvalue^%wf(.tln)
+ . . d value^%wf(.tln,hval)
+ . . ;i tln["value" d  ;
+ . . . 
+ . . set zhtml(%j)=tln
  . ;
- . ; hack for elcap forms - temporary - gpl
- . ; if tln["jquery-1.html" set zhtml(%j)="" quit  ; 
- . ; if tln["mgtsys.html" set zhtml(%j)="" quit  ; 
- . ; if tln["mgtsys2.html" set zhtml(%j)="" quit  ; 
- . ; if tln["index.html" set zhtml(%j)="" quit  ; 
- . ; if tln["identity.html" set zhtml(%j)="" quit  ; 
- . ; if tln["jquery-1.html" set zhtml(%j)="" quit  ; 
- . ; end hack
  . ;
  . ;@stanza 6 process errors
  . ;

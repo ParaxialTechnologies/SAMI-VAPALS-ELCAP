@@ -53,6 +53,10 @@ nodules(rtn,vals,dict)
  . i smooth="" s calcstr=calcstr_"smooth edges, "
  . e  s calcstr=calcstr_smooth_" edges, "
  . ;
+ . ; adding distance from costal pleura
+ . n pldstr
+ . s pldstr="within "_$$xval("cect"_ii_"pld",vals)_" mm of the costal pleura"
+ . ;
  . n skip s skip=0
  . ;# 3 cases: parenchymal, endobronchial, and both
  . ;
@@ -80,7 +84,7 @@ nodules(rtn,vals,dict)
  . . . . s skip=1
  . . . i en="rm" d  ;
  . . . . s endo="Nodule"
- . . . . s loc=$$xsub("cecten",vals,dict,"cect"_ii_"en")
+ . . . . s nloc=$$xsub("cecten",vals,dict,"cect"_ii_"en")
  . . . . i specialcase=1 d  ;
  . . . . . d out("Previously seen "_nloc_" "_endo_" "_ii_" ")
  . . . . . d out($$xsub("cectch",vals,dict,"cect"_ii_"ch")_".")
@@ -134,6 +138,8 @@ nodules(rtn,vals,dict)
  . . . d out($$xsub("cectch",vals,dict,"cect"_ii_"ch")_".")
  . e  d  ;
  . . i skip=0 d  ;
+ . . . ;# pleural distance only goes here
+ . . . i $$xval("cect"_ii_"pld",vals)'="" s calcstr=calcstr_" "_pldstr_","
  . . . ;# Special Handling for "newly seen" on baseline
  . . . ;i ($$xval("cetex",vals)="b")&($$xsub("cectch",vals,dict,"cect"_ii_"ch")="n") d  ;
  . . . i (($$xval("cetex",vals)="b")&($$xval("cect"_ii_"ch",vals)="n")) d  ; gpl 1002

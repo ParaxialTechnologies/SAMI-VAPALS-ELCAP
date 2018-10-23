@@ -104,10 +104,10 @@ wsReport(return,filter) ; web service which returns an html cteval report
  d out("<TR><TD><B>Examination Date:</B></TD><TD>")
  d out($$xval("cedos",vals))
  ;
- i $$xval("sidob",vals)'=-1 d  ;
- . d out("<TD><B>Date of Birth:</B></TD><TD>")
- . d out($$xval("sidob",vals))
- e  d out("<TD> &nbsp; </TD><TD> &nbsp; </TD></TR>")
+ ;i $$xval("sidob",vals)'=-1 d  ;
+ ;. d out("<TD><B>Date of Birth:</B></TD><TD>")
+ ;. d out($$xval("sidob",vals))
+ ;e  d out("<TD> &nbsp; </TD><TD> &nbsp; </TD></TR>")
  ;
  i $$xval("sidob",vals)>0 d  ;
  . d out("<TD><B>Date of Birth:</B></TD><TD>")

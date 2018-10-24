@@ -2236,6 +2236,7 @@
         }
 
         function displayNodules(count) {
+
             $("[data-nodule-id]").hide().filter(function () {
                 return $(this).data("nodule-id") <= count;
             }).show();
@@ -2246,8 +2247,8 @@
                 return $(this).data("nodule-id") === count;
             }).show();
 
-            $("#nodule-table").toggle(noduleCount > 0);
-            $("#add-first-nodule").toggle(noduleCount === 0);
+            $("#nodule-table").toggle(count > 0);
+            $("#add-first-nodule").toggle(count === 0);
         }
 
         function findRadioGroupNames($container) {
@@ -2457,17 +2458,6 @@
                 setupNoduleEnabledState(i);
             }
 
-            // Display the proper number of nodule columns based on the nodules that have a value for
-            // "Is it New", a required field.
-            const $noduleKeyFields = $("[name^=cect][name$=ch]").filter(function () {
-                return $(this).val() !== "" && $(this).val() !== "-";
-            });
-
-            // NB: Generally, the number of fields that have a value can be the number of nodules we display. In
-            // the rare case where we persist a nodule without setting the first field (Is it new?), use the
-            // lastNoduleId in the list to determine the number of nodules to display.
-            const lastNoduleId = $noduleKeyFields.last().closest("[data-nodule-id]").data("nodule-id") || 0;
-            noduleCount = Math.max($noduleKeyFields.length, lastNoduleId);
             displayNodules(noduleCount);
 
             //OTHER ABNORMALITIES

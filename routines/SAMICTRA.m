@@ -29,10 +29,14 @@ recommend(rtn,vals,dict)
  ;d out($o(@vals@("cefuw","")))
  ;zwr @vals@(*)
  ;zwr @dict@(*)
+ ;i fuw="" d  ;
+ ;. d out(para_"<B>"_$$xsub("cefu",vals,dict)_" on "_$$xval("cefud",vals)_".</B>"_para)
+ ;e  d  ;
+ ;. d out(para_"<B>"_$$xsub("cefu",vals,dict)_" "_fuw_" on "_$$xval("cefud",vals)_".</B>"_para)
  i fuw="" d  ;
- . d out(para_"<B>"_$$xsub("cefu",vals,dict)_" on "_$$xval("cefud",vals)_".</B>"_para)
+ . d out(para_"<B>A followup CT scan is recommended on "_$$xval("cefud",vals)_".</B>"_para)
  e  d  ;
- . d out(para_"<B>"_$$xsub("cefu",vals,dict)_" "_fuw_" on "_$$xval("cefud",vals)_".</B>"_para)
+ . d out(para_"<B>A followup CT scan is recommended "_fuw_" on "_$$xval("cefud",vals)_".</B>"_para)
  ;
  ;d out("<TR><TD></TD></TR>")
  ; # LungRADS

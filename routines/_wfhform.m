@@ -186,6 +186,8 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . if tln["submit" quit  ;
  . if tln["hidden" d  quit  ; we need to try and process hidden fields
  . . i tln'["type" q  ; probably in a javascript statement
+ . . i tln'["context" q  ; not marked for restoring
+ . . i tln'["server" q  ; not marked for restoring
  . . n hname s hname=""
  . . i tln["name=" do  ;
  . . . set hname=$piece($piece(tln,"name=""",2),"""")

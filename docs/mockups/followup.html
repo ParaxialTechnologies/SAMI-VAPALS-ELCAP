@@ -1223,6 +1223,16 @@
             error: function () {
                 $("#formMode").text("UNKNOWN");
             }
+        });
+
+        $(".yes-checkbox").change(function() {
+            const checked = $(this).is(":checked");
+            const fieldName = $(this).attr('name');
+            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function(i, v) { return checked; });
+        });
+
+        $.each($(".yes-checkbox:checked"), function(i,el){
+            $(el).trigger("change");
         })
     })
   </script>

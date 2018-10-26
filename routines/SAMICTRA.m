@@ -38,6 +38,24 @@ recommend(rtn,vals,dict)
  e  d  ;
  . d out(para_"<B>A followup CT scan is recommended "_fuw_" on "_$$xval("cefud",vals)_".</B>"_para)
  ;
+ ; #Other followup
+ n zfu,ofu,tofu,comma
+ s comma=0,tofu=""
+ s ofu=""
+ f zfu="cefuaf","cefucc","cefupe","cefufn","cefubr","cefupc","cefutb" d  ;
+ . i $$xval(zfu,vals)="y" s ofu=ofu_zfu
+ i $$xval("cefuo",vals)'="" s ofu=ofu_"cefuo"
+ i ofu'="" d  ;
+ . s tofu="Other followup: "
+ . i ofu["cefuaf" s tofu=tofu_"Antibiotics" s comma=1
+ . i ofu["cefucc" s tofu=tofu_$s(comma:", ",1:"")_"Diagnostic CT" s comma=1
+ . i ofu["cefupe" s tofu=tofu_$s(comma:", ",1:"")_"PET" s comma=1
+ . i ofu["cefufn" s tofu=tofu_$s(comma:", ",1:"")_"Percutaneous biopsy" s comma=1
+ . i ofu["cefubr" s tofu=tofu_$s(comma:", ",1:"")_"Bronchoscpy" s comma=1
+ . i ofu["cefupc" s tofu=tofu_$s(comma:", ",1:"")_"Pulmonary consultation" s comma=1
+ . i ofu["cefutb" s tofu=tofu_$s(comma:", ",1:"")_"Refer to tumor board" s comma=1
+ . i ofu["cefuo" s tofu=tofu_$s(comma:", ",1:"")_$$xval("cefuo",vals) s comma=1
+ i ofu'="" d out(para_tofu_para)
  ;d out("<TR><TD></TD></TR>")
  ; # LungRADS
  ;

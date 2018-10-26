@@ -254,8 +254,8 @@ wsCASE(rtn,filter) ; generate case review page
  . . . . set rpthref=rpthref_"<input type=hidden name=""form"" value="_$p(zform,":",2)_">"
  . . . . set rpthref=rpthref_"<input type=hidden name=""studyid"" value="_sid_">"
  . . . . set rpthref=rpthref_"<input value=""Report"" class=""btn label label-warning"" role=""link"" type=""submit""></form></td>"
- . . . . ;s rtn(cnt)=rpthref_"</tr>"
- . . . . s rtn(cnt)="</tr>" ; turn off report 
+ . . . . s rtn(cnt)=rpthref_"</tr>"
+ . . . . ;s rtn(cnt)="</tr>" ; turn off report 
  . . . e  set rtn(cnt)="<td></td></tr>"
  . . . quit
  . . quit
@@ -606,15 +606,27 @@ wsNuFormPost(ARGS,BODY,RESULT) ; post new form selection (post service)
  m vars=ARGS
  merge ^gpl("nuform","vars")=vars
  ;
+ new sid set sid=$get(vars("studyid"))
+ i sid="" s sid=$g(ARGS("sid"))
+ if sid="" do  quit  ;
+ . do getHome^SAMIHOM3(.RESULT,.ARGS) ; on error return to home page
+ . quit
+ ;
  set nuform=$get(vars("form"))
  if nuform="" set nuform="ceform"
  ;
- new datekey set datekey=$$keyDate^SAMIHOM2($$NOW^XLFDT)
+ new datekey set datekey=$$keyDate^SAMIHOM3($$NOW^XLFDT)
  ;
- new sid set sid=$get(vars("sid"))
- if sid="" do  quit  ;
- . do getHome^SAMIHOM2(.RESULT,.ARGS) ; on error return to home page
- . quit
+ ; check to see if form already exists
+ ;
+ n root s root=$$setroot^%wd("vapals-patients")
+ i $d(@root@("graph",sid,nuform_"-"_datekey)) d  ; already exists
+ . i nuform="siform" q
+ . n lastone
+ . s lastone=$o(@root@("graph",sid,nuform_"-a  "),-1)
+ . q:lastone=""
+ . s newfm=$$key2fm(lastone)
+ . s datekey=$$keyDate^SAMIHOM3($$FMADD^XLFDT(newfm,1)) ; add one day to the last form
  ;
  if nuform="sbform" do  ;
  . new key set key="sbform-"_datekey
@@ -670,6 +682,16 @@ wsNuFormPost(ARGS,BODY,RESULT) ; post new form selection (post service)
  ;
  quit  ; end of wsNuFormPost
  ;
+key2fm(key) ; convert a key to a fileman date
+ ; 
+ n datepart,X,Y,frm
+ s datepart=key
+ i $l(key,"-")=4 d  ; allow key to be the whole key ie ceform-2018-10-3
+ . s frm=$p(key,"-",1)
+ . s datepart=$p(key,frm_"-",2)
+ s X=datepart
+ d ^%DT
+ q Y
  ;
  ;
 makeSbform(sid,key) ; create background form

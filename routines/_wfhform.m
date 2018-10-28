@@ -1202,9 +1202,17 @@ wsPostForm ; code for ws wsPostForm^%wf, submit HTML form
  if sid="" set sid="XXXX17"
  quit:form=""
  quit:sid=""
- set %json(sid,form,"form")=form
+ ;set %json(sid,form,"form")=form
  do parseBody^%wf("tbdy",.body)
- merge %json(sid,form)=tbdy
+ ;
+ ; we want to store the form by the date in the form.. and delete the old one
+ ; 
+ new useform
+ set useform=$$saveFilter^SAMISAV(sid,form,.tbdy) ; make this a framework call
+ ;set %json(sid,form,"form")=form
+ set %json(sid,useform,"form")=useform
+ ;merge %json(sid,form)=tbdy
+ merge %json(sid,useform)=tbdy
  new gr set gr=$$setroot^%wd("vapals-patients")
  merge @gr@("graph")=%json
  ;
@@ -1214,26 +1222,27 @@ wsPostForm ; code for ws wsPostForm^%wf, submit HTML form
  ;
  ; validation process
  ;
- new errflag set errflag=0
- new revise
- do wsGetForm^%wf(.revise,.ARGS,1)
- if form="sbform2" if errflag'=0 do  quit  ;
- . merge RESULT=revise
+ ;new errflag set errflag=0
+ ;new revise
+ ;do wsGetForm^%wf(.revise,.ARGS,1)
+ ;if form="sbform2" if errflag'=0 do  quit  ;
+ ;. merge RESULT=revise
  ;
  ; end validation process
  ;
  ; no errors, file it into fileman
- new status s status=""
- if form["sbform" do  ;
- . do fileForm^%wffiler("tbdy","sbform",sid,"status")
- . ;
- . ; now return the fileman record that was created
- . new fman,fien
- . set fien=$order(^SAMI(311.102,"B",sid,""))
- . quit:fien=""
- . do fmx^%sfv2g("fman",311.102,fien)
- . quit
- merge fman=status
+ ;new status s status=""
+ ;if form["sbform" do  ;
+ ;. do fileForm^%wffiler("tbdy","sbform",sid,"status")
+ ;. ;
+ ;. ; now return the fileman record that was created
+ ;. new fman,fien
+ ;. set fien=$order(^SAMI(311.102,"B",sid,""))
+ ;. quit:fien=""
+ ;. do fmx^%sfv2g("fman",311.102,fien)
+ ;. quit
+ ;merge fman=status
+ n fman
  merge fman(form)=tbdy
  new tjson
  do ENCODE^VPRJSON("fman","tjson")

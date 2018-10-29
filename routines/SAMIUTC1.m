@@ -19,7 +19,7 @@ UTCTCPY ; @TEST - copies a Ct Eval form selectively
  ;CTCOPY(FROM,TO)
  ;n arc,poou
  s utsuccess=1
- D PullUTarr^SAMIUTST(.poou,"CTCOPY-SAMICTC1")
+ D PullUTarray^SAMIUTST(.poou,"CTCOPY-SAMICTC1")
  s FROM=$NA(poou),TO=$NA(arc)
  D CTCOPY^SAMICTC1(FROM,TO)
  n nodea,nodep s nodea=$na(arc),nodep=$na(poou)

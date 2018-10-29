@@ -25,7 +25,7 @@ UTCLRW ; @TEST - Test Clear the M WebServer
  D ClrWeb^SAMIADMN
  ; Compare rebuilt seeGraph with data saved
  k arc m arc=@root
- k poo d PullUTarr^SAMIUTST(.poo,"ClrWeb-SAMIADMN")
+ k poo d PullUTarray^SAMIUTST(.poo,"ClrWeb-SAMIADMN")
  s utsuccess=1
  n nodea,nodep s nodea=$na(arc),nodep=$na(poo)
  f  s nodea=$Q(@nodea),nodep=$Q(@nodep) q:nodea=""  d  q:'utsuccess

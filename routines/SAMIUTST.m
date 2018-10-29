@@ -106,7 +106,7 @@ PullUTdata(arr,title) ;
  ; Return
  ;     arr   = data pulled from the title entry in "vapals unit tests"
  ;             Graphstore
-PullUTarr(arr,title) ;
+PullUTarray(arr,title) ;
  k arr
  Q:($g(title)="")
  n root s root=$$setroot^%wd("vapals unit tests")

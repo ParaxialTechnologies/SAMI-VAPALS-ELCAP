@@ -27,7 +27,7 @@ UTIN2G ; @TEST - initialize CTEVAL dictionary into graph cteval-dict
  s utsuccess=1
  d init2graph^SAMICTD2
  m arc=@root
- k poo d PullUTarr^SAMIUTST(.poo,"init2graph-SAMICTD2")
+ k poo d PullUTarray^SAMIUTST(.poo,"init2graph-SAMICTD2")
  n nodea,nodep s nodea=$na(arc),nodep=$na(poo)
  f  s nodea=$Q(@nodea),nodep=$Q(@nodep) q:nodea=""  d  q:'utsuccess
  . i '(@nodea=@nodep) s utsuccess=0

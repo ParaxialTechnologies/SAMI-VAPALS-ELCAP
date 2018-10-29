@@ -157,7 +157,7 @@ UTCSRT ; @TEST - generates case review table
  ;casetbl(ary)
  n poo,pooc,arc,arcc
  D casetbl^SAMICAS2("poo")
- d PullUTarr^SAMIUTST(.arc,"casetbl-SAMICAS2")
+ d PullUTarray^SAMIUTST(.arc,"casetbl-SAMICAS2")
  s utsuccess=1
  n pnode,anode
  s pnode=$na(poo),anode=$na(arc)

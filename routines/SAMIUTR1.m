@@ -1,4 +1,4 @@
-SAMIUTR1 ;ven/lgc - UNIT TEST for SAMICTR1 ; 10/29/18 2:05pm
+SAMIUTR1 ;ven/lgc - UNIT TEST for SAMICTR1 ; 10/29/18 3:32pm
  ;;18.0;SAMI;;
  ;
  ;
@@ -19,11 +19,23 @@ UTNODUL ; @TEST - nodules
  ;nodules(rtn,vals,dict)
  n dict s dict=$$setroot^%wd("cteval-dict")
  s dict=$na(@dict@("cteval-dict"))
+ ;now pull node data into ceform-2018-21
+ n poo D PullUTarray^SAMIUTST(.poo,"nodules-SAMICTR1")
  s root=$$setroot^%wd("vapals-patients")
  s si="XXX00001",samikey="ceform-2018-10-21"
  s vals=$na(@root@("graph",si,samikey))
- s cnt=0
+ m @vals=poo
+ ;now generate report
+ s cnt=0,utsuccess=1
  d nodules^SAMICTR1("return",.vals,.dict)
+ ;now pull saved report
+ n arc s arc=$$PullUTarray^SAMIUTST(.arc,"UTNODUL^SAMIUTR1")
+ ; now compare return with arc
+ n noder,nodea s noder=$na(return),nodea=$na(arc)
+ f  s noder=$Q(@noder),nodea=$q(@nodea) q:noder=""  d  q:'utsuccess
+ . s utsuccess=0
+ i '(nodea="") s utsuccess=0
+ D CHKEQ^%ut(utsuccess,1,"Testing generating nodule report FAILED!")
  q
 UTOUT ; @TEST - out line
  ;out(ln)

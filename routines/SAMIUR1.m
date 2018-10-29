@@ -31,12 +31,6 @@ wsReport(rtn,filter) ; generate a report based on parameters in the filter
  d getThis^%wd("temp","table.html") ; page template
  q:'$d(temp)
  ;
- n pats
- s pats=""
- n datephrase
- d select(.pats,type,.datephrase) ; select patients for the report
- q:'$d(pats)
- ;
  n ln,cnt,ii
  s (ii,ln,cnt)=0
  f  s ii=$o(temp(ii)) q:+ii=0  q:$g(temp(ii))["<thead"  d  ;
@@ -45,18 +39,19 @@ wsReport(rtn,filter) ; generate a report based on parameters in the filter
  . n samikey,si
  . s (samikey,si)=""
  . D SAMISUB2^SAMIFRM2(.ln,samikey,si,.filter)
- . i ln["PAGE NAME" d findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type,datephrase))
+ . i ln["PAGE NAME" d findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type))
  . s rtn(cnt)=ln
  . ;
  s cnt=cnt+1 s rtn(cnt)="<thead><tr>"
  s cnt=cnt+1 s rtn(cnt)="<th>Enrollment Date</th>"
  s cnt=cnt+1 s rtn(cnt)="<th>Name</th>"
  s cnt=cnt+1 s rtn(cnt)="<th>SSN</th>"
- s cnt=cnt+1 s rtn(cnt)="<th>Followup</th>"
  s cnt=cnt+1 s rtn(cnt)="</tr></thead>"
  ;
+ n pats,ij
+ s pats=""
+ d select(.pats,type) ; select patients for the report q:'$d(pats)
  ;
- n ij
  n root s root=$$setroot^%wd("vapals-patients")
  s cnt=cnt+1 s rtn(cnt)="<tbody>"
  s ij=0
@@ -67,7 +62,6 @@ wsReport(rtn,filter) ; generate a report based on parameters in the filter
  . . n sid s sid=$g(@root@(dfn,"samistudyid"))
  . . n name s name=$g(@root@(dfn,"saminame"))
  . . n edate s edate=$g(pats(ij,dfn,"edate"))
- . . n cefud s cefud=$g(pats(ij,dfn,"cefud"))
  . . s cnt=cnt+1 s rtn(cnt)="<tr>"
  . . s cnt=cnt+1 s rtn(cnt)="<td>"_edate_"</td>"
  . . new nuhref set nuhref="<form method=POST action=""/vapals"">"
@@ -82,9 +76,7 @@ wsReport(rtn,filter) ; generate a report based on parameters in the filter
  . . . s hdf=$$GETHDR^SAMIFRM2(sid)
  . . . s ssn=$$GETSSN^SAMIFRM2(sid)
  . . s cnt=cnt+1
- . . s rtn(cnt)="<td>"_ssn_"</td>"
- . . s cnt=cnt+1
- . . s rtn(cnt)="<td>"_cefud_"</td></tr>"
+ . . s rtn(cnt)="<td>"_ssn_"</td></tr>"
  ;
  s cnt=cnt+1 s rtn(cnt)="</tbody>"
  ;s ii=ii-1
@@ -94,7 +86,7 @@ wsReport(rtn,filter) ; generate a report based on parameters in the filter
  . s rtn(cnt)=ln
  q
  ;
-select(pats,type,datephrase) ; selects patient for the report
+select(pats,type) ; selects patient for the report
  i $g(type)="" s type="enrollment"
  n zi s zi=0
  n root s root=$$setroot^%wd("vapals-patients")
@@ -105,28 +97,17 @@ select(pats,type,datephrase) ; selects patient for the report
  . n items s items=""
  . d getItems^SAMICAS2("items",sid)
  . q:'$d(items)
- . n efmdate,edate,siform,ceform,cefud,fmcefud,cedos,fmcedos
+ . n efmdate,edate,siform
  . s siform=$o(items("siform-"))
- . s ceform=$o(items("ceform-a"),-1)
- . s (cefud,fmcefud,cedos,fmcedos)=""
- . i ceform'="" d  ;
- . . s cefud=$g(@root@("graph",sid,ceform,"cefud"))
- . . i cefud'="" s fmcefud=$$key2fm^SAMICAS2(cefud)
- . . s cedos=$g(@root@("graph",sid,ceform,"cedos"))
- . . i cedos'="" s fmcedos=$$key2fm^SAMICAS2(cedos)
  . s edate=$g(@root@("graph",sid,siform,"sidc"))
  . i edate="" s edate=$g(@root@("graph",sid,siform,"samicreatedate"))
- . s efmdate=$$key2fm^SAMICAS2(edate)
+ . n X,Y
+ . s X=edate
+ . d ^%DT
+ . s efmdate=Y
  . s edate=$$vapalsDate^SAMICAS2(efmdate)
  . ;
  . i type="followup" d  ;
- . . n nplus30 s nplus30=$$FMADD^XLFDT($$NOW^XLFDT,31)
- . . i (+fmcefud<nplus30)!(ceform="") d  ; need ct scans
- . . . s pats(efmdate,zi,"edate")=edate
- . . . s pats(efmdate,zi)=""
- . . . i ceform="" s cefud="baseline"
- . . . s pats(efmdate,zi,"cefud")=cefud
- . . s datephrase=" before "_$$vapalsDate^SAMICAS2(nplus30)
  . . q
  . i type="activity" d  ;
  . . q
@@ -139,16 +120,14 @@ select(pats,type,datephrase) ; selects patient for the report
  . i type="enrollment" d  ;
  . . s pats(efmdate,zi,"edate")=edate
  . . s pats(efmdate,zi)=""
- . . s pats(efmdate,zi,"cefud")=cefud
- . . s datephrase=" as of "_$$vapalsDate^SAMICAS2($$NOW^XLFDT)
  q
  ;
-PNAME(type,phrase) ; extrinsic returns the PAGE NAME for the report
- i type="followup" q "Followup"_$g(phrase)
- i type="activity" q "Activity"_$g(phrase)
- i type="missingct" q "Missing CT Evaluation"_$g(phrase)
- i type="incomplete" q "Incomplete Forms"_$g(phrase)
- i type="outreach" q "Outreach"_$g(phrase)
- i type="enrollment" q "Enrollment"_$g(phrase)
+PNAME(type) ; extrinsic returns the PAGE NAME for the report
+ i type="followup" q "Followup"
+ i type="activity" q "Activity"
+ i type="missingct" q "Missing CT Evaluation"
+ i type="incomplete" q "Incomplete Forms"
+ i type="outreach" q "Outreach"
+ i type="enrollment" q "Enrollment"
  q ""
  ;

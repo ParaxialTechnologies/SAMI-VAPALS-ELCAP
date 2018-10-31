@@ -697,7 +697,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2018.10.24
+     2018.10.31
     </span>
    </div>
   </footer>
@@ -720,7 +720,7 @@
     $(function () {
         /** These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly. **/
         const $forms = $("form.validated");
-        $.each($forms.find("select, textarea, input:visible"), function (i, o) {
+        $.each($forms.find("select, textarea, input:visible, [name^='validator-']"), function (i, o) {
             const $input = $(this);
             if ($input.closest(".form-group").length === 0) {
                 console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");

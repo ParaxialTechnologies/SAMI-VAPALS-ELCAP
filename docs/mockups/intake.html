@@ -5,7 +5,7 @@
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
   <title>
-   LSS Intake Form
+   Lung Screening and Surveillance Intake Form
   </title>
   <link href="../www/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="../www/lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
@@ -94,7 +94,7 @@
     </small>
    </h1>
    <h2>
-    LSS Intake Form
+    Lung Screening and Surveillance Intake Form
     <small class="text-muted" title="Medical Record Number">
      1234567890
     </small>
@@ -104,6 +104,153 @@
     <input name="samiroute" type="hidden" value="postform"/>
     <input name="studyid" type="hidden" value="@@SID@@"/>
     <input name="form" type="hidden" value="@@FORMKEY@@"/>
+    <h3>
+     Pre-enrollment Eligibility
+    </h3>
+    <div class="row">
+     <div class="col-sm-2">
+      <label class="required" for="sipechrt">
+       Chart Review
+      </label>
+     </div>
+     <div class="col-sm-2 form-group">
+      <label class="radio-inline" for="sipechrt-y">
+       <input data-fv-notempty-message="Please select a value" id="sipechrt-y" name="sipechrt" required="required" type="radio" value="y"/>
+       Yes
+      </label>
+      <label class="radio-inline" for="sipechrt-n">
+       <input data-fv-notempty-message="Please select a value" id="sipechrt-n" name="sipechrt" required="required" type="radio" value="n"/>
+       No
+      </label>
+     </div>
+     <div class="col-sm-6">
+      <div class="alert alert-info" id="sipechrt-y-alert" style="display:none;">
+       Complete the remainder of the form; an intake note will be generated.
+      </div>
+      <div class="alert alert-info" id="sipechrt-n-alert" style="display:none;">
+       Indicate one or more reasons why the patient is not eligible for lung screening. No intake note will
+                    be generated.
+      </div>
+     </div>
+    </div>
+    <div class="row" id="discussion-container">
+     <div class="col-sm-2">
+      <label class="required" for="sipedisc">
+       Patient Discussion
+      </label>
+     </div>
+     <div class="col-sm-2 form-group">
+      <label class="radio-inline" for="sipedisc-y">
+       <input data-fv-notempty-message="Please select a value" id="sipedisc-y" name="sipedisc" required="required" type="radio" value="y"/>
+       Yes
+      </label>
+      <label class="radio-inline" for="sipedisc-n">
+       <input data-fv-notempty-message="Please select a value" id="sipedisc-n" name="sipedisc" required="required" type="radio" value="n"/>
+       No
+      </label>
+     </div>
+    </div>
+    <div class="row" id="reason-container">
+     <div class="col-md-12 form-group">
+      <h4>
+       Reason(s)
+      </h4>
+     </div>
+     <div class="col-md-12 form-group form-inline" id="reason-medical-container">
+      <label for="siremhlc">
+       Medical History
+      </label>
+      <br/>
+      <label class="checkbox-inline ">
+       <input id="siremhlc" name="siremhlc" type="checkbox" value="y"/>
+       lung cancer
+      </label>
+      <label class="checkbox-inline ">
+       <input id="siremhhs" name="siremhhs" type="checkbox" value="y"/>
+       health Status
+      </label>
+      <label class="checkbox-inline ">
+       <input id="siremhot" name="siremhot" type="checkbox" value="y"/>
+       other
+      </label>
+      <input class="form-control" id="sireemhoo" name="sireemhoo" placeholder="specify" required="required" type="text"/>
+     </div>
+     <div class="col-md-12" id="reason-smoking-container">
+      <div class="form-group form-group-sm form-inline">
+       <label>
+        Smoking History
+       </label>
+       <br/>
+       <label class="checkbox-inline ">
+        <input id="sireshqd" name="sireshqd" type="checkbox" value="y"/>
+        quit date greater than 15 years
+       </label>
+       <label class="checkbox-inline ">
+        <input id="sireshpy" name="sireshpy" type="checkbox" value="y"/>
+        less than 30 pack years
+       </label>
+       <label class="checkbox-inline ">
+        <input id="sireshnc" name="sireshnc" type="checkbox" value="y"/>
+        non-cigarette Use (e.g. pipe, smokeless, vape, cannabis)
+       </label>
+       <label class="checkbox-inline ">
+        <input id="sireshot" name="sireshot" type="checkbox" value="y"/>
+        other
+       </label>
+       <input class="form-control form-inline" id="sireshoo" name="sireshoo" placeholder="specify" required="required" type="text"/>
+      </div>
+     </div>
+     <div class="col-md-12" id="reason-elsewhere-container">
+      <div class="form-group form-group-sm form-inline">
+       <label>
+        Receiving Care Elsewhere
+       </label>
+       <br/>
+       <label class="checkbox-inline ">
+        <input id="sirecepc" name="sirecepc" type="checkbox" value="y"/>
+        followed in pulmonary clinic
+       </label>
+       <label class="checkbox-inline ">
+        <input id="sirecenc" name="sirecenc" type="checkbox" value="y"/>
+        followed in nodule clinic
+       </label>
+       <label class="checkbox-inline ">
+        <input id="sireceho" name="sireceho" type="checkbox" value="y"/>
+        followed in Hematology-Oncology
+       </label>
+       <label class="checkbox-inline ">
+        <input id="sirecepc" name="sirecepc" type="checkbox" value="y"/>
+        private care
+       </label>
+       <label class="checkbox-inline ">
+        <input id="sireceot" name="sireceot" type="checkbox" value="y"/>
+        other
+       </label>
+       <input class="form-control form-inline" id="sireceoo" name="sireceoo" placeholder="specify" required="required" type="text"/>
+      </div>
+     </div>
+     <div class="col-md-12" id="reason-contact-container">
+      <div class="form-group form-group-sm form-inline">
+       <label>
+        Unable To Contact
+       </label>
+       <br/>
+       <label class="checkbox-inline ">
+        <input id="sireucvm" name="sireucvm" type="checkbox" value="y"/>
+        left voice message
+       </label>
+       <label class="checkbox-inline ">
+        <input id="sireucbp" name="sireucbp" type="checkbox" value="y"/>
+        bad phone number
+       </label>
+       <label class="checkbox-inline ">
+        <input id="sireucot" name="sireucot" type="checkbox" value="y"/>
+        other
+       </label>
+       <input class="form-control form-inline" id="sireucoo" name="sireucoo" placeholder="specify" required="required" type="text"/>
+      </div>
+     </div>
+    </div>
     <h3>
      Contact Information
     </h3>
@@ -127,7 +274,7 @@
      </div>
      <div class="col-sm-8 col-md-9 form-group">
       <label>
-       How did you learn about LSS?
+       How did you learn about the Lung Screening and Surveillance (LSS) program?
       </label>
       <div class="checkbox">
        <label>
@@ -464,39 +611,38 @@
     </div>
     <p class="alert alert-warning">
      Veteran of age and exposure to cigarette smoke as described above, and without a current
-                diagnosis or obvious symptoms suggestive of lung cancer, has been educated today about the
-                estimated risk for lung cancer, the possibility of a cure or live prolonging if an early lung
-                cancer were to be found during screening, the possibility of imaging abnormalities not being
-                lung cancer, the possibility of complications from additional diagnostic procedures, and the
-                approximate amount of radiation exposure associated with each screening procedure. In addition,
-                the Veteran has been educated today about the importance of avoiding exposure to cigarette
-                smoke, available tobacco cessation programs and available lung screening services at this VA
-                facility. Education material was provided to the veteran.
+            diagnosis or obvious symptoms suggestive of lung cancer, has been educated today about the
+            estimated risk for lung cancer, the possibility of a cure or live prolonging if an early lung
+            cancer were to be found during screening, the possibility of imaging abnormalities not being
+            lung cancer, the possibility of complications from additional diagnostic procedures, and the
+            approximate amount of radiation exposure associated with each screening procedure. In addition,
+            the Veteran has been educated today about the importance of avoiding exposure to cigarette
+            smoke, available tobacco cessation programs and available lung screening services at this VA
+            facility. Education material was provided to the veteran.
      <br/>
-     <br/>
-     Based on this information, the Veteran has opted for:
     </p>
     <div class="row">
      <div class="col-md-12 form-group">
       <label class="required">
-       LDCT ordered
+       Based on this information, the Veteran has opted to
       </label>
       <div class="radio">
        <label>
         <input id="sildct-n" name="sildct" required="required" type="radio" value="n"/>
-        No
+        Not enroll
        </label>
       </div>
       <div class="radio">
        <label>
         <input id="sildct-l" name="sildct" type="radio" value="l"/>
-        Not at this time, okay to contact in the future
+        Not enroll at this time, okay to contact at this time
        </label>
       </div>
       <div class="radio">
        <label>
         <input id="sildct-y" name="sildct" type="radio" value="y"/>
-        Yes
+        Enroll in the Lung Screening and Surveillance (LSS) program and have an LDCT ordered.
+                        Coordination of care will be made by the LSS team
        </label>
       </div>
      </div>
@@ -509,6 +655,98 @@
       <textarea class="form-control" id="siclin" name="siclin" rows="3"></textarea>
      </div>
     </div>
+    <hr/>
+    <h3>
+     Current Status
+    </h3>
+    <div class="row">
+     <div class="col-md-12 form-group">
+      <label class="required" for="sistatus">
+       Enrollment
+      </label>
+      <br/>
+      <label class="radio-inline" for="sistatus-active">
+       <input data-fv-notempty-message="Please select a value" id="sistatus-active" name="sistatus" required="required" type="radio" value="active"/>
+       Active
+      </label>
+      <label class="radio-inline" for="sistatus-inactive">
+       <input id="sistatus-inactive" name="sistatus" type="radio" value="inactive"/>
+       Not active
+      </label>
+     </div>
+    </div>
+    <hr/>
+    <h3>
+     Reason for change
+    </h3>
+    <div class="row">
+     <div class="col-md-12 form-group">
+      <label class="required" for="sistachg">
+       Reason
+      </label>
+      <br/>
+      <select class="form-control" id="sistachg" name="sistachg" required="required">
+       <option>
+        -
+       </option>
+       <option value="transferred">
+        Transferred to another institution (specify)
+       </option>
+       <option value="medical">
+        Unable due to medical reason (specify)
+       </option>
+       <option value="unwilling">
+        Unwilling due to personal reason (specify)
+       </option>
+       <option value="refused">
+        Refused to continue
+       </option>
+       <option value="illadvised">
+        Physician advised against
+       </option>
+       <option value="radiation">
+        Concern about radiation
+       </option>
+       <option value="moved">
+        Moved and unable to return
+       </option>
+       <option value="insurance">
+        No insurance, can't have Dx CT
+       </option>
+       <option value="cost">
+        Burden of cost
+       </option>
+       <option value="other">
+        Other (specify)
+       </option>
+       <option value="excluded">
+        Excluded (specify)
+       </option>
+       <option value="complete">
+        Study complete
+       </option>
+       <option value="noresponse">
+        No response to 3 calls + 3 letters
+       </option>
+       <option value="nocontact">
+        Unable to contact
+       </option>
+       <option value="followed">
+        Being followed elsewhere (get results)
+       </option>
+      </select>
+     </div>
+    </div>
+    <div class="row">
+     <div class="col-md-8 form-group">
+      <label class="required" for="sistreas">
+       Explanation
+      </label>
+      <br/>
+      <textarea class="form-control" id="sistreas" name="sistreas" type="text"></textarea>
+     </div>
+    </div>
+    <pre class="prettyprint source linenums" id="changelog">2018-10-31 12:00 PM - {USERNAME} changed to {FIELD} to {VALUE}: {REASON} - {EXPLANATION}</pre>
     <hr/>
     <div class="pull-left">
      <button class="btn btn-primary" id="submit-button" type="submit">
@@ -564,7 +802,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2018.10.24
+     2018.10.31
     </span>
    </div>
   </footer>
@@ -587,7 +825,7 @@
     $(function () {
         /** These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly. **/
         const $forms = $("form.validated");
-        $.each($forms.find("select, textarea, input:visible"), function (i, o) {
+        $.each($forms.find("select, textarea, input:visible, [name^='validator-']"), function (i, o) {
             const $input = $(this);
             if ($input.closest(".form-group").length === 0) {
                 console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
@@ -622,42 +860,97 @@
   </script>
   <script language="JavaScript">
    $(function () {
-            $("#sicpd").on('keyup change', function () {
-                var cigsPerDay = $("#sicpd").val();
-                if (cigsPerDay >= 0) {
-                    var cpd = (cigsPerDay/20).toFixed(2);
-                    if (cpd > 0) {
-                        $("#sippd").val(cpd);
-                        $("#sippd-val").text(cpd);
-                    }
-                    else {
-                        $("#sippd").val("");
-                        $("#sippd-val").text("-");
-                    }
-                    $("#sippd").change();
-                }
-            }).trigger('change');
 
-            $("#sippd, #sisny").on('keyup change', function () {
-                var packsPerDay = $("#sippd").val();
-                var cigYears = $("#sisny").val();
-                if (packsPerDay > 0 && cigYears >0) {
-                    var packYears = (packsPerDay*cigYears).toFixed(1);
-                    if (packYears > 0) {
-                        $("#sippy").val(packYears);
-                        $("#sippy-val").text(packYears);
-                    } 
-                } else {
-                     $("#sippy").val("");
-                     $("#sippy-val").text("-");
+        $("#sicpd").on('keyup change', function () {
+            var cigsPerDay = $("#sicpd").val();
+            if (cigsPerDay >= 0) {
+                var cpd = (cigsPerDay / 20).toFixed(2);
+                if (cpd > 0) {
+                    $("#sippd").val(cpd);
+                    $("#sippd-val").text(cpd);
                 }
-                
-            }).first().trigger('change');
-            
-            $("#silnpo").conditionallyEnable({sourceValues: "1", enable: "#silnpos"}); 
+                else {
+                    $("#sippd").val("");
+                    $("#sippd-val").text("-");
+                }
+                $("#sippd").change();
+            }
+        }).trigger('change');
 
-            $(".validated").formValidation({framework: 'bootstrap'});
+        $("#sippd, #sisny").on('keyup change', function () {
+            var packsPerDay = $("#sippd").val();
+            var cigYears = $("#sisny").val();
+            if (packsPerDay > 0 && cigYears > 0) {
+                var packYears = (packsPerDay * cigYears).toFixed(1);
+                if (packYears > 0) {
+                    $("#sippy").val(packYears);
+                    $("#sippy-val").text(packYears);
+                }
+            } else {
+                $("#sippy").val("");
+                $("#sippy-val").text("-");
+            }
+
+        }).first().trigger('change');
+
+
+        //Pre enrollment: Chart eligibility
+        $("[name=sipechrt]").conditionallyDisplay({
+            sourceValues: "n",
+            enable: "#reason-container, #reason-medical-container, #reason-smoking-container, #reason-elsewhere-container",
+            disable: "#discussion-container, #reason-contact-container"
         });
+
+        //Pre-Enrollment: Patient discussion
+        $("[name=sipedisc]").conditionallyDisplay({
+            sourceValues: "n",
+            enable: "#reason-container, #reason-medical-container, #reason-smoking-container, #reason-elsewhere-container, #reason-contact-container"
+        });
+
+        //Pre enrollment - other reason fields
+        $("#siremhot").conditionallyDisplay({value: "y", enable: "#sireemhoo"});
+        $("#sireshot").conditionallyDisplay({value: "y", enable: "#sireshoo"});
+        $("#sireceot").conditionallyDisplay({value: "y", enable: "#sireceoo"});
+        $("#sireucot").conditionallyDisplay({value: "y", enable: "#sireucoo"});
+
+        //Contact info - how did you learn about LCS
+        $("#silnpo").conditionallyEnable({sourceValues: "1", enable: "#silnpos"});
+
+
+        $("form.validated").formValidation({framework: 'bootstrap'});
+
+        $("[name=sistatus]").on('change', function () {
+            $("#status-change-container").show();
+        });
+
+        $("[name=sipechrt]").on('change', function () {
+            var value = $("[name=sipechrt]:checked").val();
+            var $yesAlert = $("#sipechrt-y-alert"), $noAlert = $("#sipechrt-n-alert");
+            if (value === "n") {
+                $yesAlert.hide();
+                $noAlert.show();
+            }
+            else if (value === "y") {
+                $yesAlert.show();
+                $noAlert.hide();
+            }
+            else {
+                $yesAlert.hide();
+                $noAlert.hide();
+            }
+
+            $('input:radio[name=bedStatus]:checked').change(function () {
+                if ($("input[name='bedStatus']:checked").val() == 'allot') {
+                    alert("Allot Thai Gayo Bhai");
+                }
+                if ($("input[name='bedStatus']:checked").val() == 'transfer') {
+                    alert("Transfer Thai Gayo");
+                }
+            });
+
+
+        })
+    });
   </script>
  </body>
 </html>

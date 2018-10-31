@@ -1,4 +1,4 @@
-SAMIUTR1 ;ven/lgc - UNIT TEST for SAMICTR1 ; 10/29/18 3:32pm
+SAMIUTR1 ;ven/lgc - UNIT TEST for SAMICTR1 ; 10/29/18 4:11pm
  ;;18.0;SAMI;;
  ;
  ;
@@ -17,23 +17,25 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  ;
 UTNODUL ; @TEST - nodules
  ;nodules(rtn,vals,dict)
- n dict s dict=$$setroot^%wd("cteval-dict")
- s dict=$na(@dict@("cteval-dict"))
- ;now pull node data into ceform-2018-21
- n poo D PullUTarray^SAMIUTST(.poo,"nodules-SAMICTR1")
+ ;copy unit test graphstore into vapals-patients graphstore
+ ;  which otherwise would not have nodule data
+ n poo D PullUTarray^SAMIUTST(.poo,"UTNODUL^SAMICTR1 data")
  s root=$$setroot^%wd("vapals-patients")
  s si="XXX00001",samikey="ceform-2018-10-21"
  s vals=$na(@root@("graph",si,samikey))
  m @vals=poo
  ;now generate report
- s cnt=0,utsuccess=1
+ n dict s dict=$$setroot^%wd("cteval-dict")
+ s dict=$na(@dict@("cteval-dict"))
+ s cnt=0
  d nodules^SAMICTR1("return",.vals,.dict)
  ;now pull saved report
- n arc s arc=$$PullUTarray^SAMIUTST(.arc,"UTNODUL^SAMIUTR1")
+ n arc s arc=$$PullUTarray^SAMIUTST(.arc,"UTNODUL^SAMIUTR1 report")
  ; now compare return with arc
  n noder,nodea s noder=$na(return),nodea=$na(arc)
- f  s noder=$Q(@noder),nodea=$q(@nodea) q:noder=""  d  q:'utsuccess
- . s utsuccess=0
+ s utsuccess=1
+ f  s noder=$Q(@noder),nodea=$Q(@nodea) q:noder=""  d  q:'utsuccess
+ . i '(@noder=@nodea) s utsuccess=0
  i '(nodea="") s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing generating nodule report FAILED!")
  q

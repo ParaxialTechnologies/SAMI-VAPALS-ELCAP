@@ -2,30 +2,104 @@ SAMIUTPT ;ven/lgc - UNIT TEST for SAMIPTLK ; 10/24/18 10:51pm
  ;;18.0;SAMI;;
  ;
  ;
-START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
- D EN^%ut($T(+0),2)
- Q
+START
+ if $T(^%ut)="" do
+ . write !,"*** UNIT TEST NOT INSTALLED ***"
+ . quit
+ ;
+ do EN^%ut($text(+0),3)
+ quit
  ;
  ;
-STARTUP n utsuccess
- Q
+STARTUP
+ new utsuccess
+ quit
+ ;
+ ;
+SETUP
+ new rtn,filter,ary,expect,result
+ quit
+ ;
+ ;
+TEARDOWN ; ZEXCEPT: rtn,filter,ary,expect,result
+ kill rtn,filter,ary,expect,result
+ quit
+ ;
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
- K utsuccess
- Q
+ kill utsuccess
+ quit
  ;
  ;
-UTWSPTLK ; @TEST - patient lookup
- ;wsPtLookup(rtn,filter)
- q
+UTWSPTLK ; @TEST wsPtLookup^SAMIPTLK
+ ; Comments
  ;
-UTWSPTL1 ; @TEST - patient lookup from patient-lookup cache
- ;wsPtLkup(rtn,filter)
- q
+ set filter("search")=""
+ do wsPtLookup^SAMIPTLK(.rtn,.filter)
+ new result,expect
+ set expect="{""1"":""-1^No patient specified.""}"
+ set result=rtn(1)
+ do CHKEQ^%ut(result,expect)
  ;
-UTBLDRTN ; @TEST - build the return json
- ;buildrtn(rtn,ary)
- q
+ kill rtn,filter
+ set filter("search")="ZZZZ"
+ do wsPtLookup^SAMIPTLK(.rtn,.filter)
+ set expect="{""1"":""""}"
+ set result=rtn(1)
+ do CHKEQ^%ut(result,expect)
+ ;
+ kill rtn,filter
+ set filter("search")="A"
+ do wsPtLookup^SAMIPTLK(.rtn,.filter)
+ ; Check first node of rtn
+ set expect="{""1"":"
+ set result=rtn(1)
+ do CHKEQ^%ut(result,expect)
+ ; Check last node of rtn
+ set expect="""}"
+ set result=rtn($order(rtn(""),-1))
+ do CHKEQ^%ut(result,expect)
+ ;
+ ; 
+ quit
  ;
  ;
-EOR ;End of routine SAMIUTPT
+UTWSPTLC ; @TEST wsPtLkup^SAMIPTLK
+ ; Comments
+ ;
+ set filter("search")=""
+ do wsPtLkup^SAMIPTLK(.rtn,.filter)
+ ; Check first node of rtn
+ set expect="{""result"":"
+ set result=$piece(rtn(1),"[")
+ do CHKEQ^%ut(result,expect)
+ ; Check last node of rtn
+ set expect="}"
+ set result=$piece(rtn($order(rtn(""),-1)),"]",2)
+ do CHKEQ^%ut(result,expect)
+ ;
+ kill rtn,filter
+ set filter("search")="ZZZZ"
+ do wsPtLkup^SAMIPTLK(.rtn,.filter)
+ set expect=""
+ set result=$get(rtn(1))
+ do CHKEQ^%ut(result,expect)
+ ;
+ kill rtn,filter
+ set filter("search")="A"
+ do wsPtLkup^SAMIPTLK(.rtn,.filter)
+ ; Check first node of rtn
+ set expect="{""result"":"
+ set result=$piece(rtn(1),"[")
+ do CHKEQ^%ut(result,expect)
+ ; Check last node of rtn
+ set expect="}"
+ set result=$piece(rtn($order(rtn(""),-1)),"]",2)
+ do CHKEQ^%ut(result,expect)
+ ;
+ ; TODO: Add query using last 5
+ ;
+ quit
+ ;
+ ;
+EOR ; End of routine SAMIUTPT

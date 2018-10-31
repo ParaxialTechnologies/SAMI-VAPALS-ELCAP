@@ -323,6 +323,45 @@ file2ary(ary,dir,file) ;
  ;
  quit  ; end of file2ary^%wd
  ;
+getGraph(url,gname) ; get a graph from a web service
+ ;
+ q:'$d(gname)
+ i $$rootOf^%wd(gname)'=-1 d  q  ;
+ . w !,"error, graph exists: "_gname
+ n root s root=$$setroot^%wd(gname)
+ n %,json,grf
+ s %=$$%^%WC(.json,"GET",url)
+ w !,"result= ",%
+ i '$d(json) d  q  ;
+ . w !,"error, nothing returned"
+ d DECODE^VPRJSON("json","grf")
+ m @root=grf
+ n indx,rindx
+ s indx=$o(@root@(0))
+ s rindx=$na(@root@(indx))
+ s @root@("index","root")=rindx
+ d index(rindx)
+ q
+ ;
+wsGetGraph(RTN,FILTER) ; web service returns the requested graph FILTER("graph")="graph"
+ ; this is the server side of getGraph above
+ n graph s graph=$g(FILTER("graph"))
+ i graph="" d  q  ;
+ . s RTN="-1^please specify a graph"
+ ;n root s root=$$rootOf^%wd(graph)
+ n root s root=$$setroot^%wd(graph)
+ i +root=-1 d  q  ;
+ . s RTN="-1^graph not found"
+ ;
+ ;n json
+ ;s json=$$setroot^%wd(graph_"-json")
+ ;i +json'=-1 s RTN=json q  ;
+ ;s json=$$setroot^%wd(graph_"-json")
+ S RTN=$na(^TMP("SYNOUT",$J))
+ K @RTN
+ d ENCODE^VPRJSON(root,RTN)
+ q
+ ;
  ;
  ;
 eor ; end of routine %wdgraph

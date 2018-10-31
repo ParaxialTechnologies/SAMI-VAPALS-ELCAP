@@ -34,6 +34,9 @@
 
         var matchCallback = (typeof settings.sourceValues === 'function') ? settings.sourceValues : function (actualValue) {
             var sourceValuesArray = $.map(settings.sourceValues.split(","), $.trim);
+            if ($.isArray(actualValue)) {
+                return sourceValuesArray.some(v => actualValue.includes(v));
+            }
             return $.inArray(actualValue, sourceValuesArray) > -1;
         };
 
@@ -59,7 +62,7 @@
             // console.log("conditionallyDisplay(): change event triggered on field. id=" + $el.prop("id") + ", name=" + $el.prop("name") + ", matches=" + matches + ", enable=" + enableSize + ", disable=" + disableSize);
 
             if (matches) {
-                if ($enableContainer!=null) {
+                if ($enableContainer != null) {
                     $enableContainer.show();
                 }
                 if ($disableContainer !== null) {
@@ -67,7 +70,7 @@
                 }
             }
             else {
-                if ($enableContainer!=null) {
+                if ($enableContainer != null) {
                     $enableContainer.hide();
                 }
                 if ($disableContainer !== null) {
@@ -77,28 +80,28 @@
 
             //finally reset any validations on all input fields - we don't want 
             // any errors or markings to be coming out of fields that are not visible
-            $.each([$enableContainer, $disableContainer], function (i, $container){
+            $.each([$enableContainer, $disableContainer], function (i, $container) {
                 if ($container != null && typeof $container !== 'undefined') {
                     var fv = $container.closest("form.validated").data('formValidation');
                     if (fv) {
-                         var inputFields = $container.find("input, select, textarea");
+                        var inputFields = $container.find("input, select, textarea");
                         $.each(inputFields, function (i, t) {
                             const field = $(t);
                             const fieldName = field.attr("name");
-                            const isValidatedField = fv.options.fields[fieldName]!=null;
+                            const isValidatedField = fv.options.fields[fieldName] != null;
                             const isVisible = field.is(":visible");
                             // console.log("resetting field " + fieldName);
-                            
+
                             if (isValidatedField) {
                                 fv.resetField(field);
                                 fv.enableFieldValidators(fieldName, isVisible);
-                            } 
+                            }
                         });
                     }
                 }
             });
-            
-            
+
+
         });
 
         if (this.first().is(":radio")) {

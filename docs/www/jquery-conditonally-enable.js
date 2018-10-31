@@ -107,6 +107,9 @@
 
         var matchCallback = (typeof settings.sourceValues === 'function') ? settings.sourceValues : function (actualValue) {
             var sourceValuesArray = $.map(settings.sourceValues.split(","), $.trim);
+            if ($.isArray(actualValue)){
+                return sourceValuesArray.some(v => actualValue.includes(v));
+            }
             return $.inArray(actualValue, sourceValuesArray) > -1;
         };
 
@@ -122,7 +125,6 @@
         this.on('change.conditionally-enable', function () {
             var $el = $(this);
             var actualValue = $el.is(":checkbox") ? ($el.is(":checked") ? $el.val() : "") : $el.val();
-
             var matches = matchCallback(actualValue);
 
             //toggle input fields within the container.

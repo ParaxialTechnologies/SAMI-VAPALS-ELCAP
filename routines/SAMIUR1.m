@@ -129,6 +129,15 @@ select(pats,type,datephrase) ; selects patient for the report
  . . s datephrase=" before "_$$vapalsDate^SAMICAS2(nplus30)
  . . q
  . i type="activity" d  ;
+ . . n nminus30 s nminus30=$$FMADD^XLFDT($$NOW^XLFDT,-31)
+ . . n anyform s anyform=$o(items("sort",""),-1)
+ . . n fmanyform s fmanyform=$$key2fm^SAMICAS2(anyform)
+ . . i (+fmanyform>nminus30)!(+efmdate>nminus30) d  ; need any new form
+ . . . s pats(efmdate,zi,"edate")=edate
+ . . . s pats(efmdate,zi)=""
+ . . . i ceform="" s cefud="baseline"
+ . . . s pats(efmdate,zi,"cefud")=cefud
+ . . s datephrase=" after "_$$vapalsDate^SAMICAS2(nminus30)
  . . q
  . i type="missingct" d  ;
  . . q

@@ -792,7 +792,8 @@ makeSiform(num) ; create intake form
  . n zip s zip=@zf@("sipz")
  . q:zip=""
  . n ru s ru=$$UrbanRural^SAMIVSTA(zip)
- . i (ru="r")!(ru="u") s @zf@("sirs")=ru
+ . i ru=0 s ru="n"
+ . i (ru="r")!(ru="u")!(ru="n") s @zf@("sirs")=ru
  . s @root@(num,"sirs")=$g(@zf@("sirs"))
  n phn s phn=$g(@root@(num,"phone")) ; phone number
  i phn["x" s phn=$p(phn," x",1)

@@ -341,42 +341,43 @@
             </div>
         </div>
 
-        <hr/>
-        <h3>Reason for change</h3>
-        <div class="row">
-            <div class="col-md-12 form-group">
-                <label for="sistachg" class="required">Reason</label><br/>
-                <select id="sistachg" name="sistachg" required="required" class="form-control">
-                    <option>-</option>
-                    <option value="transferred">Transferred to another institution (specify)</option>
-                    <option value="medical">Unable due to medical reason (specify)</option>
-                    <option value="unwilling">Unwilling due to personal reason (specify)</option>
-                    <option value="refused">Refused to continue</option>
-                    <option value="illadvised">Physician advised against</option>
-                    <option value="radiation">Concern about radiation</option>
-                    <option value="moved">Moved and unable to return</option>
-                    <option value="insurance">No insurance, can't have Dx CT</option>
-                    <option value="cost">Burden of cost</option>
-                    <option value="other">Other (specify)</option>
-                    <option value="excluded">Excluded (specify)</option>
-                    <option value="complete">Study complete</option>
-                    <option value="noresponse">No response to 3 calls + 3 letters</option>
-                    <option value="nocontact">Unable to contact</option>
-                    <option value="followed">Being followed elsewhere (get results)</option>
-                </select>
+        <div id="reason-for-change-container">
+            <hr/>
+            <h3>Reason for change</h3>
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <label for="sistachg" class="required">Reason</label><br/>
+                    <select id="sistachg" name="sistachg" required="required" class="form-control">
+                        <option>-</option>
+                        <option value="transferred">Transferred to another institution (specify)</option>
+                        <option value="medical">Unable due to medical reason (specify)</option>
+                        <option value="unwilling">Unwilling due to personal reason (specify)</option>
+                        <option value="refused">Refused to continue</option>
+                        <option value="illadvised">Physician advised against</option>
+                        <option value="radiation">Concern about radiation</option>
+                        <option value="moved">Moved and unable to return</option>
+                        <option value="insurance">No insurance, can't have Dx CT</option>
+                        <option value="cost">Burden of cost</option>
+                        <option value="other">Other (specify)</option>
+                        <option value="excluded">Excluded (specify)</option>
+                        <option value="complete">Study complete</option>
+                        <option value="noresponse">No response to 3 calls + 3 letters</option>
+                        <option value="nocontact">Unable to contact</option>
+                        <option value="followed">Being followed elsewhere (get results)</option>
+                    </select>
+                </div>
             </div>
-        </div>
 
 
-        <div class="row">
-            <div class="col-md-8 form-group">
-                <label for="sistreas" class="required">Explanation</label><br/>
-                <textarea class="form-control" type="text" name="sistreas" id="sistreas"></textarea>
+            <div class="row">
+                <div class="col-md-8 form-group">
+                    <label for="sistreas" class="required">Explanation</label><br/>
+                    <textarea class="form-control" type="text" name="sistreas" id="sistreas"></textarea>
+                </div>
             </div>
+
+            <pre class="prettyprint source linenums" id="changelog">{{ "2018-10-31 12:00 PM - {USERNAME} changed to {FIELD} to {VALUE}: {REASON} - {EXPLANATION}" if mockup else "" }}</pre>
         </div>
-
-
-        <pre class="prettyprint source linenums" id="changelog">{{ "2018-10-31 12:00 PM - {USERNAME} changed to {FIELD} to {VALUE}: {REASON} - {EXPLANATION}" if mockup else "" }}</pre>
 
         <hr/>
         <div class="pull-left">
@@ -395,6 +396,15 @@
 
 {% block script %}
 <script language="JavaScript">
+
+
+    //purposefully executed before DOM is rendered so section is never visible
+    const newForm = "@@NEWFORM@@";
+    if (newForm == "true") {
+        $("#reason-for-change-container").remove();
+    }
+
+
     $(function () {
 
         $("#sicpd").on('keyup change', function () {

@@ -1,4 +1,4 @@
-SAMIUTR9 ;ven/lgc - UNIT TEST for SAMICTR8 ; 10/26/18 6:15pm
+SAMIUTR9 ;ven/lgc - UNIT TEST for SAMICTR9 ; 10/31/18 5:42pm
  ;;18.0;SAMI;;
  ;
  ;
@@ -15,8 +15,24 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  Q
  ;
  ;
-UTLNGRD ; @TEST - lungrads
- ;lungrads(rtn,vals,dict)
+UTIMPRS ; @TEST - impression
+ ;impression(rtn,vals,dict)
+ n vals,dict,si,samikey,root,poo,arc,nodea,nodep,para,cac
+ s root=$$setroot^%wd("vapals-patients")
+ s si="XXX00001"
+ s samikey="ceform-2018-10-21"
+ s vals=$na(@root@("graph",si,samikey))
+ s dict=$$setroot^%wd("cteval-dict")
+ s dict=$na(@dict@("cteval-dict"))
+ s cnt=1,para="POO",cacrec=" CaCrEc ",cac=99
+ s utsuccess=1
+ D impression^SAMICTR9("poo",.vals,.dict)
+ d PullUTarray^SAMIUTST(.arc,"UTIMPRS^SAMICTR9")
+ n nodea,nodep s nodea=$na(arc),nodep=$na(poo)
+ f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
+ . i '(@nodep=@nodea) s utsuccess=0
+ i '(nodea="") s utsuccess=0
+ D CHKEQ^%ut(utsuccess,1,"Testing recommend FAILED!")
  q
 UTOUT ; @TEST - out line
  ;out(ln)

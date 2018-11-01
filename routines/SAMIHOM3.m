@@ -788,7 +788,15 @@ makeSiform(num) ; create intake form
  s @zf@("sipcn")=$g(@root@(num,"county")) ; county
  s @zf@("sipcr")="USA" ; country
  s @zf@("sipz")=$g(@root@(num,"zip")) ; zip
- s @zf@("sippn")=$g(@root@(num,"phone")) ; phone number
+ i @zf@("sipz")'="" d  ;
+ . n zip s zip=@zf@("sipz")
+ . q:zip=""
+ . n ru s ru=$$UrbanRural^SAMIVSTA(zip)
+ . i (ru="r")!(ru="u") s @zf@("sirs")=ru
+ . s @root@(num,"sirs")=$g(@zf@("sirs"))
+ n phn s phn=$g(@root@(num,"phone")) ; phone number
+ i phn["x" s phn=$p(phn," x",1)
+ s @zf@("sippn")=phn
  s @zf@("sidc")=$$vapalsDate^SAMICAS2($$NOW^XLFDT)
  ; set samifirsttime variable for intake form
  s @zf@("samifirsttime")="true"

@@ -23,12 +23,7 @@
         </h2>
 
         <hr/>
-        <form action="{{ formPage+".html" if mockup else "/vapals" }}" method="{{ formMethod }}"
-              class="validated"
-              data-fv-icon-valid="glyphicon glyphicon-ok"
-              data-fv-icon-invalid="glyphicon glyphicon-remove"
-              data-fv-icon-validating="glyphicon glyphicon-refresh"
-              data-fv-button-selector="#submit-button">
+        <form action="{{ formPage+".html" if mockup else "/vapals" }}" method="{{ formMethod }}" id="main-form">
 
             <input type="hidden" name="samiroute" value="postform"/>
             <input type="hidden" name="studyid" value="@@SID@@"/>
@@ -99,24 +94,27 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-sm-12 form-group">
-                                <label for="sbdsd-b" class="control-label required">Type of exam</label>
-                                <br/>
-                                <label class="radio-inline">
-                                    <input type="radio" name="cetex" id="cetex-b" value="b" required="required">
-                                    Baseline
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="cetex" id="cetex-a" value="a" required="required"> Annual
-                                    repeat
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="cetex" id="cetex-d" value="d" required="required">
-                                    Follow-up (not annual repeat)
-                                </label>
+                            <label for="sbdsd-b" class="required">Type of exam</label>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+
+                                    <label class="radio-inline">
+                                        <input type="radio" name="cetex" id="cetex" value="b" required="required">
+                                        Baseline
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="cetex" id="cetex" value="a" required="required">
+                                        Annual
+                                        repeat
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="cetex" id="cetex" value="d" required="required">
+                                        Follow-up (not annual repeat)
+                                    </label>
+                                </div>
                                 <div class="alert alert-warning">
-                                    Only select Baseline if there is no prior CT or there is a prior CT scan more than 3
-                                    years ago
+                                    Only select Baseline if there is no prior CT or there is a prior CT scan more
+                                    than 3 years ago
                                 </div>
                             </div>
                         </div>
@@ -2406,9 +2404,11 @@
 
                     //reset form validation messages (hide them)
                     const fv = $("form.validated").data("formValidation");
-                    $.each($fields, function (i, el) {
-                        fv.resetField($(el).prop('name'));
-                    });
+                    if (fv) {
+                        $.each($fields, function (i, el) {
+                            fv.resetField($(el).prop('name'));
+                        });
+                    }
 
                     //finally disable the fields
                     $fields.prop('disabled', true);
@@ -2419,6 +2419,72 @@
                         .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
                 }
             });
+        }
+
+        function fv() {
+            return FormValidation.formValidation(
+                document.getElementById('main-form'),
+                {
+                    fields: {
+                        cedos: {
+                            validators: {
+                                notEmpty: {message: 'Study date is required'},
+                                date: {max: VAPALS.todaysDate(), message: 'Study date may not be in the future'}
+                            }
+                        },
+                        cerad: {
+                            validators: {notEmpty: {message: 'Radioligist is required'}}
+                        },
+                        cetex: {
+                            validators: {notEmpty: {message: 'Type of exam is required'}}
+                        },
+                        cectp: {
+                            validators: {notEmpty: {message: 'CT protocol is required'}}
+                        },
+                        cectrst: {
+                            validators: {notEmpty: {message: 'Reconstructed slice thickness is required'}}
+                        },
+                        sidoe: {
+                            validators: {
+                                notEmpty: {message: 'Baseline CT date is required'},
+                                date: {max: VAPALS.todaysDate(), message: 'Baseline CT date may not be in the future'}
+                            }
+                        },
+                        cedcs: {
+                            validators: {
+                                notEmpty: {message: 'Most recent comparative study date is required'},
+                                date: {
+                                    max: VAPALS.todaysDate(),
+                                    message: 'Most recent comparative study date may not be in the future'
+                                }
+                            }
+                        },
+                        cedps: {
+                            validators: {notEmpty: {message: 'Prior scans is required'}}
+                        },
+                    },
+                    plugins:
+                        {
+                            trigger: new FormValidation.plugins.Trigger(),
+                            bootstrap3: new FormValidation.plugins.Bootstrap3(),
+                            submitButton: new FormValidation.plugins.SubmitButton(),
+                            wizard: new FormValidation.plugins.Wizard({
+                                stepSelector: '.tab-pane',
+                                prevButton: '.btn-prev',
+                                nextButton: '.btn-next',
+                            }),
+                            icon:
+                                new FormValidation.plugins.Icon({
+                                    valid: 'fa fa-check',
+                                    invalid: 'fa fa-times',
+                                    validating: 'fa fa-refresh'
+                                }),
+                        }
+                    ,
+                }
+            )
+                ;
+
         }
 
         $(function () {
@@ -2460,13 +2526,14 @@
 
             displayNodules(noduleCount);
 
+
             //OTHER ABNORMALITIES
             //Neck and mediastinal
-            $("#ceato").conditionallyDisplay({sourceValues: "o", enable:$("#ceatos")});
-            $("#ceayo").conditionallyDisplay({sourceValues: "o", enable:$("#ceayos")});
-            $("#cemvao").conditionallyDisplay({sourceValues: "o", enable:$("#cemvaos")});
-            $("#cemvlno").conditionallyDisplay({sourceValues: "o", enable:$("#cemelnos")});
-            $("#ceamo").conditionallyDisplay({sourceValues: "o", enable:$("#ceommos")});
+            $("#ceato").conditionallyDisplay({sourceValues: "o", enable: $("#ceatos")});
+            $("#ceayo").conditionallyDisplay({sourceValues: "o", enable: $("#ceayos")});
+            $("#cemvao").conditionallyDisplay({sourceValues: "o", enable: $("#cemvaos")});
+            $("#cemvlno").conditionallyDisplay({sourceValues: "o", enable: $("#cemelnos")});
+            $("#ceamo").conditionallyDisplay({sourceValues: "o", enable: $("#ceommos")});
 
             //FOLLOWUP
             exclusiveCheckbox("[name='cefuw']", "div");
@@ -2507,6 +2574,7 @@
             function setCtFollowUpOther() {
                 $("[name=cefuw]").prop('checked', false).filter("[value=os]").prop('checked', true);
             }
+
             //auto-select "other" if user modifies the date
             $("#cefud").on('keyup paste', setCtFollowUpOther).closest(".datepicker").on('dp.change', setCtFollowUpOther);
 
@@ -2523,7 +2591,7 @@
                 return true; //all checks passed
             });
 
-            $(".validated").formValidation({framework: 'bootstrap'});
+            {#$(".validated").formValidation({framework: 'bootstrap'});#}
 
             //at least one checkbox whose name starts with cemlnl is required if cemln==y
             const $cemlnFields = $("input[type='radio'][name='cemln']");
@@ -2596,6 +2664,9 @@
                     $checkbox.conditionallyEnable({enable: $container});
                 }
             })
+
+            fv();
+            console.log("formValidation initialized")
 
         });
     </script>

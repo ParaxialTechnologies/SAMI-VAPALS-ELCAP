@@ -33,9 +33,11 @@
   </script>
   <script src="../www/lib/moment.js">
   </script>
-  <script src="../www/lib/formvalidation/dist/js/formValidation.min.js">
+  <script src="../www/lib/formvalidation/dist/js/FormValidation.min.js">
   </script>
-  <script src="../www/lib/formvalidation/dist/js/framework/bootstrap.min.js">
+  <script src="../www/lib/formvalidation/dist/js/plugins/Wizard.min.js">
+  </script>
+  <script src="../www/lib/formvalidation/dist/js/plugins/Bootstrap3.min.js">
   </script>
   <script src="../www/lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js">
   </script>
@@ -144,7 +146,7 @@
     </small>
    </h2>
    <hr/>
-   <form action="ctevaluation.html" class="validated" data-fv-button-selector="#submit-button" data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-validating="glyphicon glyphicon-refresh" method="get">
+   <form action="ctevaluation.html" id="main-form" method="get">
     <input name="samiroute" type="hidden" value="postform"/>
     <input name="studyid" type="hidden" value="@@SID@@"/>
     <input name="form" type="hidden" value="@@FORMKEY@@"/>
@@ -197,7 +199,7 @@
           CT study date
          </label>
          <div class="input-group datepicker">
-          <input aria-describedby="cedos-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" data-fv-notempty-message="CT Study date is required" id="cedos" name="cedos" required="required"/>
+          <input aria-describedby="cedos-addon" class="form-control" data-fv-date="true" id="cedos" name="cedos"/>
           <div class="input-group-addon">
            <div class="input-group-text" id="cedos-addon">
             <i aria-hidden="true" class="fa fa-calendar">
@@ -253,27 +255,28 @@
         </div>
        </div>
        <div class="row">
-        <div class="col-sm-12 form-group">
-         <label class="control-label required" for="sbdsd-b">
-          Type of exam
-         </label>
-         <br/>
-         <label class="radio-inline">
-          <input id="cetex-b" name="cetex" required="required" type="radio" value="b"/>
-          Baseline
-         </label>
-         <label class="radio-inline">
-          <input id="cetex-a" name="cetex" required="required" type="radio" value="a"/>
-          Annual
-                                    repeat
-         </label>
-         <label class="radio-inline">
-          <input id="cetex-d" name="cetex" required="required" type="radio" value="d"/>
-          Follow-up (not annual repeat)
-         </label>
+        <label class="required" for="sbdsd-b">
+         Type of exam
+        </label>
+        <div class="col-sm-12">
+         <div class="form-group">
+          <label class="radio-inline">
+           <input id="cetex" name="cetex" required="required" type="radio" value="b"/>
+           Baseline
+          </label>
+          <label class="radio-inline">
+           <input id="cetex" name="cetex" required="required" type="radio" value="a"/>
+           Annual
+                                        repeat
+          </label>
+          <label class="radio-inline">
+           <input id="cetex" name="cetex" required="required" type="radio" value="d"/>
+           Follow-up (not annual repeat)
+          </label>
+         </div>
          <div class="alert alert-warning">
-          Only select Baseline if there is no prior CT or there is a prior CT scan more than 3
-                                    years ago
+          Only select Baseline if there is no prior CT or there is a prior CT scan more
+                                    than 3 years ago
          </div>
         </div>
        </div>
@@ -371,7 +374,7 @@
                                     CT
          </label>
          <div class="input-group datepicker">
-          <input aria-describedby="sidoe-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" data-fv-notempty-message="Baseline CT date is required" id="sidoe" name="sidoe" required="required"/>
+          <input aria-describedby="sidoe-addon" class="form-control" data-fv-date="true" id="sidoe" name="sidoe"/>
           <div class="input-group-addon">
            <div class="input-group-text" id="sidoe-addon">
             <i aria-hidden="true" class="fa fa-calendar">
@@ -396,7 +399,7 @@
                                         study
           </label>
           <div class="input-group datepicker">
-           <input aria-describedby="cedcs-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" data-fv-notempty-message="Date is required" id="cedcs" name="cedcs" required="required"/>
+           <input aria-describedby="cedcs-addon" class="form-control" data-fv-date="true" id="cedcs" name="cedcs"/>
            <div class="input-group-addon">
             <div class="input-group-text" id="cedcs-addon">
              <i aria-hidden="true" class="fa fa-calendar">
@@ -7384,7 +7387,7 @@
           </label>
           <br/>
           <div class="input-group datepicker">
-           <input aria-describedby="cefud-addon" class="form-control" data-fv-date="true" data-fv-date-min="VAPALS.todaysDate" id="cefud" name="cefud"/>
+           <input aria-describedby="cefud-addon" class="form-control" data-fv-date="true" id="cefud" name="cefud"/>
            <div class="input-group-addon">
             <div class="input-group-text" id="cefud-addon">
              <i aria-hidden="true" class="fa fa-calendar">
@@ -7604,7 +7607,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2018.10.31
+     2018.11.01
     </span>
    </div>
   </footer>
@@ -7909,9 +7912,11 @@
 
                     //reset form validation messages (hide them)
                     const fv = $("form.validated").data("formValidation");
-                    $.each($fields, function (i, el) {
-                        fv.resetField($(el).prop('name'));
-                    });
+                    if (fv) {
+                        $.each($fields, function (i, el) {
+                            fv.resetField($(el).prop('name'));
+                        });
+                    }
 
                     //finally disable the fields
                     $fields.prop('disabled', true);
@@ -7922,6 +7927,72 @@
                         .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
                 }
             });
+        }
+
+        function fv() {
+            return FormValidation.formValidation(
+                document.getElementById('main-form'),
+                {
+                    fields: {
+                        cedos: {
+                            validators: {
+                                notEmpty: {message: 'Study date is required'},
+                                date: {max: VAPALS.todaysDate(), message: 'Study date may not be in the future'}
+                            }
+                        },
+                        cerad: {
+                            validators: {notEmpty: {message: 'Radioligist is required'}}
+                        },
+                        cetex: {
+                            validators: {notEmpty: {message: 'Type of exam is required'}}
+                        },
+                        cectp: {
+                            validators: {notEmpty: {message: 'CT protocol is required'}}
+                        },
+                        cectrst: {
+                            validators: {notEmpty: {message: 'Reconstructed slice thickness is required'}}
+                        },
+                        sidoe: {
+                            validators: {
+                                notEmpty: {message: 'Baseline CT date is required'},
+                                date: {max: VAPALS.todaysDate(), message: 'Baseline CT date may not be in the future'}
+                            }
+                        },
+                        cedcs: {
+                            validators: {
+                                notEmpty: {message: 'Most recent comparative study date is required'},
+                                date: {
+                                    max: VAPALS.todaysDate(),
+                                    message: 'Most recent comparative study date may not be in the future'
+                                }
+                            }
+                        },
+                        cedps: {
+                            validators: {notEmpty: {message: 'Prior scans is required'}}
+                        },
+                    },
+                    plugins:
+                        {
+                            trigger: new FormValidation.plugins.Trigger(),
+                            bootstrap3: new FormValidation.plugins.Bootstrap3(),
+                            submitButton: new FormValidation.plugins.SubmitButton(),
+                            wizard: new FormValidation.plugins.Wizard({
+                                stepSelector: '.tab-pane',
+                                prevButton: '.btn-prev',
+                                nextButton: '.btn-next',
+                            }),
+                            icon:
+                                new FormValidation.plugins.Icon({
+                                    valid: 'fa fa-check',
+                                    invalid: 'fa fa-times',
+                                    validating: 'fa fa-refresh'
+                                }),
+                        }
+                    ,
+                }
+            )
+                ;
+
         }
 
         $(function () {
@@ -7963,13 +8034,14 @@
 
             displayNodules(noduleCount);
 
+
             //OTHER ABNORMALITIES
             //Neck and mediastinal
-            $("#ceato").conditionallyDisplay({sourceValues: "o", enable:$("#ceatos")});
-            $("#ceayo").conditionallyDisplay({sourceValues: "o", enable:$("#ceayos")});
-            $("#cemvao").conditionallyDisplay({sourceValues: "o", enable:$("#cemvaos")});
-            $("#cemvlno").conditionallyDisplay({sourceValues: "o", enable:$("#cemelnos")});
-            $("#ceamo").conditionallyDisplay({sourceValues: "o", enable:$("#ceommos")});
+            $("#ceato").conditionallyDisplay({sourceValues: "o", enable: $("#ceatos")});
+            $("#ceayo").conditionallyDisplay({sourceValues: "o", enable: $("#ceayos")});
+            $("#cemvao").conditionallyDisplay({sourceValues: "o", enable: $("#cemvaos")});
+            $("#cemvlno").conditionallyDisplay({sourceValues: "o", enable: $("#cemelnos")});
+            $("#ceamo").conditionallyDisplay({sourceValues: "o", enable: $("#ceommos")});
 
             //FOLLOWUP
             exclusiveCheckbox("[name='cefuw']", "div");
@@ -8010,6 +8082,7 @@
             function setCtFollowUpOther() {
                 $("[name=cefuw]").prop('checked', false).filter("[value=os]").prop('checked', true);
             }
+
             //auto-select "other" if user modifies the date
             $("#cefud").on('keyup paste', setCtFollowUpOther).closest(".datepicker").on('dp.change', setCtFollowUpOther);
 
@@ -8026,7 +8099,7 @@
                 return true; //all checks passed
             });
 
-            $(".validated").formValidation({framework: 'bootstrap'});
+            
 
             //at least one checkbox whose name starts with cemlnl is required if cemln==y
             const $cemlnFields = $("input[type='radio'][name='cemln']");
@@ -8099,6 +8172,9 @@
                     $checkbox.conditionallyEnable({enable: $container});
                 }
             })
+
+            fv();
+            console.log("formValidation initialized")
 
         });
   </script>

@@ -135,7 +135,9 @@ function initTabbedNavigation(tabContainerId, tabContentContainerId) {
         var currentTab = e.target;
         var tabContentSelector = $(currentTab).attr("href");
         var fv = $(".validated").data('formValidation');
-        fv.validateContainer(tabContentSelector);
+        if (fv){
+            fv.validateContainer(tabContentSelector);
+        }
         $(tabContentSelector).find("input, select").first().trigger('change'); //TODO: is this necessary?
     }).on("shown.bs.tab", function () {
         $(".btn-next").toggleClass("disabled", !getNextTabId());

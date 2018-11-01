@@ -27,8 +27,8 @@ index ; create the zip index in the zip graph
 wsGetRU(rtn,filter) ; web service to return counts for rural and urban
  ;
  n root s root=$$setroot^%wd("vapals-patients")
- n rural,urban
- s (rural,urban)=0
+ n rural,urban,unknown
+ s (rural,urban,unknown)=0
  n zi s zi=0
  f  s zi=$o(@root@(zi)) q:+zi=0  d  ;
  . n sid s sid=@root@(zi,"sisid")
@@ -38,9 +38,12 @@ wsGetRU(rtn,filter) ; web service to return counts for rural and urban
  . s siform=$o(@gr@("siform-"))
  . i $g(@gr@(siform,"sirs"))="u" s urban=urban+1
  . i $g(@gr@(siform,"sirs"))="r" s rural=rural+1
+ . i $g(@gr@(siform,"sirs"))="n" s unknown=unknown+1 
  n rslt
  s rslt("result","urban")=urban
  s rslt("result","rural")=rural
+ s rslt("result","unknown")=unknown
+ s rslt("result","site")="VA-PALS Test"
  d ENCODE^VPRJSON("rslt","rtn")
  q
  ;

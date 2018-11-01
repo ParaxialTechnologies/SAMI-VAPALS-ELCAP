@@ -419,24 +419,28 @@
      <div class="col-md-8 form-group">
       <div class="checkbox">
        <label>
+        <input name="siwcb" type="hidden" value=""/>
         <input id="siwcb" name="siwcb" type="checkbox" value="b"/>
         Cough producing bloody material
        </label>
       </div>
       <div class="checkbox">
        <label>
+        <input name="siwcl" type="hidden" value=""/>
         <input id="siwcl" name="siwcl" type="checkbox" value="l"/>
         Unexplained weight loss greater than 20 lbs
        </label>
       </div>
       <div class="checkbox">
        <label>
+        <input name="siwch" type="hidden" value=""/>
         <input id="siwch" name="siwch" type="checkbox" value="h"/>
         Unexplained hoarseness
        </label>
       </div>
       <div class="checkbox">
        <label>
+        <input name="siwco" type="hidden" value=""/>
         <input id="siwco" name="siwco" type="checkbox" value="o"/>
         Other
        </label>
@@ -1000,72 +1004,84 @@
      <div class="col-sm-8 form-group">
       <div class="checkbox">
        <label>
+        <input name="sisca" type="hidden" value=""/>
         <input id="sisca" name="sisca" type="checkbox" value="a"/>
         Have not tried to quit
        </label>
       </div>
       <div class="checkbox">
        <label>
+        <input name="siscb" type="hidden" value=""/>
         <input id="siscb" name="siscb" type="checkbox" value="b"/>
         "Cold Turkey" by completely stopping on your own with no other assistance
        </label>
       </div>
       <div class="checkbox">
        <label>
+        <input name="siscc" type="hidden" value=""/>
         <input id="siscc" name="siscc" type="checkbox" value="c"/>
         Tapering or reducing number of cigarettes smoked per day
        </label>
       </div>
       <div class="checkbox">
        <label>
+        <input name="siscd" type="hidden" value=""/>
         <input id="siscd" name="siscd" type="checkbox" value="d"/>
         Self-help material (e.g., brochure, cessation website)
        </label>
       </div>
       <div class="checkbox">
        <label>
+        <input name="sisce" type="hidden" value=""/>
         <input id="sisce" name="sisce" type="checkbox" value="e"/>
         Individual consultation or cessation counseling
        </label>
       </div>
       <div class="checkbox">
        <label>
+        <input name="siscf" type="hidden" value=""/>
         <input id="siscf" name="siscf" type="checkbox" value="f"/>
         Telephone cessation counseling hotline (e.g., NY Smokers' Quitline)
        </label>
       </div>
       <div class="checkbox">
        <label>
+        <input name="siscg" type="hidden" value=""/>
         <input id="siscg" name="siscg" type="checkbox" value="g"/>
         Peer support (e.g., Nicotine Anonymous)
        </label>
       </div>
       <div class="checkbox">
        <label>
+        <input name="sisch" type="hidden" value=""/>
         <input id="sisch" name="sisch" type="checkbox" value="h"/>
         Nicotine replacement therapy (e.g., patch, gum, inhaler, nasal spray, lozenge)
        </label>
       </div>
       <div class="checkbox">
        <label>
+        <input name="sisci" type="hidden" value=""/>
         <input id="sisci" name="sisci" type="checkbox" value="i"/>
         Zyban
        </label>
       </div>
       <div class="checkbox">
        <label>
+        <input name="siscj" type="hidden" value=""/>
         <input id="siscj" name="siscj" type="checkbox" value="j"/>
         Hypnosis
        </label>
       </div>
       <div class="checkbox">
        <label>
+        <input name="sisck" type="hidden" value=""/>
         <input id="sisck" name="sisck" type="checkbox" value="k"/>
         Acupuncture / acupressure
        </label>
       </div>
       <div class="checkbox">
        <label>
+        <input name="siscl" type="hidden" value=""/>
         <input id="siscl" name="siscl" type="checkbox" value="l"/>
         Other (specify)
        </label>
@@ -1225,13 +1241,15 @@
             }
         });
 
-        $(".yes-checkbox").change(function() {
+        $("input[type=checkbox]").change(function () {
             const checked = $(this).is(":checked");
             const fieldName = $(this).attr('name');
-            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function(i, v) { return checked; });
+            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function (i, v) {
+                return checked;
+            });
         });
 
-        $.each($(".yes-checkbox:checked"), function(i,el){
+        $.each($("input[type=checkbox]:checked"), function (i, el) {
             $(el).trigger("change");
         })
     })

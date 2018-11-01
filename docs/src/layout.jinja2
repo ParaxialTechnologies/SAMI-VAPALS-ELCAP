@@ -65,7 +65,8 @@
             <ul class="nav navbar-nav">
                 <li><a href="home.html">Home</a></li>
                 <li class="dropdown" id="studyIdMenu" style="display:none;">
-                    <a class="navigation" data-method="{{ formMethod }}" data-samiroute="casereview" href="{{ "casereview.html" if mockup else "#!" }}">Case Review</a>
+                    <a class="navigation" data-method="{{ formMethod }}" data-samiroute="casereview"
+                       href="{{ "casereview.html" if mockup else "#!" }}">Case Review</a>
                 </li>
             </ul>
         </div>
@@ -125,13 +126,15 @@
             }
         });
 
-        $(".yes-checkbox").change(function() {
+        $("input[type=checkbox]").change(function () {
             const checked = $(this).is(":checked");
             const fieldName = $(this).attr('name');
-            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function(i, v) { return checked; });
+            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function (i, v) {
+                return checked;
+            });
         });
 
-        $.each($(".yes-checkbox:checked"), function(i,el){
+        $.each($("input[type=checkbox]:checked"), function (i, el) {
             $(el).trigger("change");
         })
     })

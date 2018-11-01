@@ -713,24 +713,28 @@
         </p>
         <div class="checkbox">
          <label>
+          <input name="sbwcb" type="hidden" value=""/>
           <input id="sbwcb" name="sbwcb" type="checkbox" value="b"/>
           Cough producing bloody material
          </label>
         </div>
         <div class="checkbox">
          <label>
+          <input name="sbwcl" type="hidden" value=""/>
           <input id="sbwcl" name="sbwcl" type="checkbox" value="l"/>
           Unexplained weight loss greater than 20 lbs.
          </label>
         </div>
         <div class="checkbox">
          <label>
+          <input name="sbwch" type="hidden" value=""/>
           <input id="sbwch" name="sbwch" type="checkbox" value="h"/>
           Unexplained hoarseness
          </label>
         </div>
         <div class="checkbox">
          <label>
+          <input name="sbwco" type="hidden" value=""/>
           <input id="sbwco" name="sbwco" type="checkbox" value="o"/>
           Other
          </label>
@@ -864,54 +868,63 @@
        <div class="form-group">
         <div class="checkbox">
          <label>
+          <input name="sbahaoi" type="hidden" value=""/>
           <input id="sbahaoi" name="sbahaoi" type="checkbox" value="i"/>
           Asbestos product manufacturing
          </label>
         </div>
         <div class="checkbox">
          <label>
+          <input name="sbahaoj" type="hidden" value=""/>
           <input id="sbahaoj" name="sbahaoj" type="checkbox" value="j"/>
           Auto repair
          </label>
         </div>
         <div class="checkbox">
          <label>
+          <input name="sbahaoh" type="hidden" value=""/>
           <input id="sbahaoh" name="sbahaoh" type="checkbox" value="h"/>
           Building maintenance
          </label>
         </div>
         <div class="checkbox">
          <label>
+          <input name="sbahaof" type="hidden" value=""/>
           <input id="sbahaof" name="sbahaof" type="checkbox" value="f"/>
           Chemical industry/foundary/refinery
          </label>
         </div>
         <div class="checkbox">
          <label>
+          <input name="sbahaoa" type="hidden" value=""/>
           <input id="sbahaoa" name="sbahaoa" type="checkbox" value="a"/>
           Construction/demolition
          </label>
         </div>
         <div class="checkbox">
          <label>
+          <input name="sbahaoe" type="hidden" value=""/>
           <input id="sbahaoe" name="sbahaoe" type="checkbox" value="e"/>
           Mining
          </label>
         </div>
         <div class="checkbox">
          <label>
+          <input name="sbahaog" type="hidden" value=""/>
           <input id="sbahaog" name="sbahaog" type="checkbox" value="g"/>
           Nuclear industry
          </label>
         </div>
         <div class="checkbox">
          <label>
+          <input name="sbahaoc" type="hidden" value=""/>
           <input id="sbahaoc" name="sbahaoc" type="checkbox" value="c"/>
           Ship construction/repair
          </label>
         </div>
         <div class="checkbox">
          <label>
+          <input name="sbahaoo" type="hidden" value=""/>
           <input id="sbahaoo" name="sbahaoo" type="checkbox" value="o"/>
           Other
          </label>
@@ -1025,13 +1038,15 @@
             }
         });
 
-        $(".yes-checkbox").change(function() {
+        $("input[type=checkbox]").change(function () {
             const checked = $(this).is(":checked");
             const fieldName = $(this).attr('name');
-            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function(i, v) { return checked; });
+            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function (i, v) {
+                return checked;
+            });
         });
 
-        $.each($(".yes-checkbox:checked"), function(i,el){
+        $.each($("input[type=checkbox]:checked"), function (i, el) {
             $(el).trigger("change");
         })
     })

@@ -1,4 +1,4 @@
-SAMIUR ;ven/gpl - sami user reports ;2018-03-08T17:53Z
+SAMIUR1 ;ven/gpl - sami user reports ;2018-03-08T17:53Z
  ;;18.0;SAM;;
  ;
  ; SAMIUR contains the routines to generate user reports
@@ -96,6 +96,7 @@ wsReport(rtn,filter) ; generate a report based on parameters in the filter
  ;
 select(pats,type,datephrase) ; selects patient for the report
  i $g(type)="" s type="enrollment"
+ s datephrase=""
  n zi s zi=0
  n root s root=$$setroot^%wd("vapals-patients")
  ;

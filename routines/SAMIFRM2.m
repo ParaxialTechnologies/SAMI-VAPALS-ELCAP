@@ -333,56 +333,6 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  set line=line_$char(13,10) ; insert CRLF at end of every line
  ; for readability in browser
  ;
- ;if line["home.html" do  ;
- ;. do findReplace^%ts(.line,"home.html","/vapals")
- ;. set touched=1
- ;
- ;if line["casereview.html" do  ;
- ;. n repl
- ;. set repl="<form method=""post"" action=""/vapals"">"
- ;. set repl=repl_"<input name=""samiroute"" value=""casereview"" type=""hidden"">"
- ;. set repl=repl_" <input name=""studyid"" value="""_sid_""" type=""hidden"">"
- ;. n zname s zname="Case Review"
- ;. set repl=repl_" <input value="""_zname_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"_$char(13)
- ;. ;set repl=repl_" <input value="""_zname_""" class=""nav navbar-nav"" role=""link"" type=""submit""></form>"_$char(13)
- ;. ;do findReplace^%ts(.line,"casereview.html","/vapals?samiroute=casereview&studyid="_sid)
- ;. s line=repl
- ;. s zhtml(%j+1)="<? -- Redacted"
- ;. s zhtml(%j+2)="<? -- Redacted" ; get rid of extra 'Case Review" label and the unneeded </a>
- ;. set touched=1
- ;
- ;if line["studyIdMenu" do  ;
- ;. i line["#" q  ; in the javascript
- ;. s zhtml(%j)="<li>"
- ;. s %j=%j+1
- ;. s line=zhtml(%j)
- ;. n repl
- ;. set repl="<form method=""post"" action=""/vapals"">"
- ;. set repl=repl_"<input name=""samiroute"" value=""casereview"" type=""hidden"">"
- ;. set repl=repl_" <input name=""studyid"" value="""_sid_""" type=""hidden"">"
- ;. n zname s zname="Case Review"
- ;. set repl=repl_" <input value="""_zname_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"_$char(13)
- ;. ;set repl=repl_" <input value="""_zname_""" class=""nav navbar-nav"" role=""link"" type=""submit""></form>"_$char(13)
- ;. ;do findReplace^%ts(.line,"casereview.html","/vapals?samiroute=casereview&studyid="_sid)
- ;. s line=repl
- ;. s zhtml(%j+1)=""
- ;. s zhtml(%j+2)=""
- ;. do  ;
- ;. . if form["siform" q  ;
- ;. . if form["sbform" q  ;
- ;. . s ^gpl("incomplete")=sid_"^"_form_"^"_$$getSamiStatus^SAMICAS2(sid,form)
- ;. . if $$getSamiStatus^SAMICAS2(sid,form)["incomplete" d  ;
- ;. . . s zhtml(%j+1)="</li><li class=""dropdown"">"
- ;. . . set repl="<form method=""post"" action=""/vapals"">"
- ;. . . set repl=repl_"<input name=""samiroute"" value=""deleteform"" type=""hidden"">"
- ;. . . set repl=repl_" <input name=""studyid"" value="""_sid_""" type=""hidden"">"
- ;. . . set repl=repl_" <input name=""form"" value="""_form_""" type=""hidden"">"
- ;. . . n zname s zname="Delete Form"
- ;. . . set repl=repl_" <input value="""_zname_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"_$char(13)
- ;. . . s zhtml(%j+2)=repl ; 
- ;. . . set touched=1
- ;
- ;n pssn s pssn=$$GETSSN^SAMIFRM2(sid)
  n pssn s pssn=$$GETHDR^SAMIFRM2(sid)
  n last5 s last5=$$GETLAST5^SAMIFRM2(sid)
  n useid s useid=pssn
@@ -425,6 +375,12 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  . . d findReplace^%ts(.line,"@@FROZEN@@","true")
  . e  d  ;
  . . d findReplace^%ts(.line,"@@FROZEN@@","false")
+ ;
+ if line["@@NEWFORM@@" do  ;
+ . if $g(vals("samifirsttime"))="true" d  ;
+ . . d findReplace^%ts(.line,"@@NEWFORM@@","true")
+ . e  d  ;
+ . . d findReplace^%ts(.line,"@@NEWFORM@@","false")
  ;
  quit  ; end of SAMISUB2
  ;

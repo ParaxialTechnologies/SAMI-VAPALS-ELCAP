@@ -207,11 +207,16 @@ wsVAPALS(ARG,BODY,RESULT) ; vapals post web service - all calls come through thi
  ;
  i route="ctreport" d  q  ;
  . m ARG=vars
- . d wsReport^SAMICTR0(.RESULT,.ARG)
+ . ;d wsReport^SAMICTR0(.RESULT,.ARG)
+ . d wsReport^SAMICTRT(.RESULT,.ARG)
  ;
  i route="note" d  q  ; 
  . m ARG=vars
  . d wsNote^SAMINOTI(.RESULT,.ARG)
+ ;
+ i route="report" d  q  ; 
+ . m ARG=vars
+ . d wsReport^SAMIUR1(.RESULT,.ARG)
  ;
  q
  ;
@@ -785,6 +790,8 @@ makeSiform(num) ; create intake form
  s @zf@("sipz")=$g(@root@(num,"zip")) ; zip
  s @zf@("sippn")=$g(@root@(num,"phone")) ; phone number
  s @zf@("sidc")=$$vapalsDate^SAMICAS2($$NOW^XLFDT)
+ ; set samifirsttime variable for intake form
+ s @zf@("samifirsttime")="true"
  ;
  ;@stanza 3 termination
  ;

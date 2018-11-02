@@ -1,4 +1,4 @@
-SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICAS2 ; 11/1/18 10:27am
+SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICAS2 ; 11/1/18 1:39pm
  ;;18.0;SAMI;;
  ;
  ;
@@ -21,11 +21,15 @@ UTGTMPL ; @TEST - get html template
  n temp,poou
  d getTemplate^SAMICAS2("temp","vapals:casereview")
  d PullUTarray^SAMIUTST(.poou,"UTGTMPL^SAMIUTS2")
- s utsuccess=1 n cnt s cnt=0
- f  s cnt=$O(poou(cnt)) q:'cnt  d
- . I '(poou(cnt)=temp(cnt)) s utsuccess=0 d
- .. s ^KBAP("SAMIUTS2",cnt)=""
- i '($o(poou("A",-1))=$o(temp("A",-1))) s utsuccess=0
+ s utsuccess=1
+ n nodep,nodet s nodep=$na(poou),nodet=$na(temp)
+ f  s nodep=$q(@nodep),nodet=$q(@nodet) q:nodep=""  d  q:'utsuccess
+ .; ignore the one node in arrays that have a date as
+ .;  we can't know ahead of time what date the unit test
+ .;  will be run on
+ . i ($qs(nodep,1)=169) q
+ . i '(@nodep=@nodet) s utsuccess=0
+ i '(nodet="") s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing getting vapals:casereview template FAILED!")
  q
  ;
@@ -148,11 +152,15 @@ UTWSCAS ; @TEST - generate case review page
  n filter s filter("studyid")="XXX00001"
  n temp D wsCASE^SAMICAS2(.temp,.filter)
  n poou D PullUTarray^SAMIUTST(.poou,"UTWSCAS^SAMIUTS2")
- s utsuccess=1 n cnt s cnt=0
- f  s cnt=$O(poou(cnt)) q:'cnt  d
- . I '(poou(cnt)=temp(cnt)) s utsuccess=0 d
- .. s ^KBAP("SAMIUTS2",cnt)=""
- i '($o(poou("A",-1))=$o(temp("A",-1))) s utsuccess=0
+ s utsuccess=1
+ n nodep,nodet s nodep=$na(poou),nodet=$na(temp)
+ f  s nodep=$q(@nodep),nodet=$q(@nodet) q:nodep=""  d  q:'utsuccess
+ .; ignore the one node in arrays that have a date as
+ .;  we can't know ahead of time what date the unit test
+ .;  will be run on
+ . i ($qs(nodep,1)=209) q
+ . i '(@nodep=@nodet) s utsuccess=0
+ i '(nodet="") s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing generating case review page FAILED!")
  q
  ;
@@ -176,36 +184,6 @@ UTCSRT ; @TEST - generates case review table
  f  s pnode=$q(@pnode),anode=$q(@anode) q:pnode=""  d
  . I '(@pnode=@anode) s utsuccess=0
  S:'(anode="") utsuccess=0
- q
- ;
-CheckForm(form,label,utsuccess) ;
- n sid s sid="XXX00001"
- n rootvp s rootvp=$$setroot^%wd("vapals-patients")
- n datekey s datekey="2018-10-21"
- n key set key=form_"-"_datekey
- ; delete existing entry
- k @rootvp@("graph",sid,key)
- set ARGS("key")=key
- set ARGS("studyid")=sid
- set ARGS("form")="vapals:"_form
- do @label^SAMICAS2(sid,key)
- ; ^%wd(17.040801,23,"graph","XXX00001",form_"-2018-10-21","active duty")="N and others
- ;
- ; fail if nodes not set in vapals-patients Graphstore
- i '$d(@rootvp@("graph",sid,key)) d  q
- . s utsuccess=0
- . D FAIL^%ut(form_" not set in vapals-patients Graphstore")
- ;
- ; Check that the vapals-patients node created is correct
- ;
- n temp,poou
- d PullUTdata^SAMIUTST(.poou,label)
- m temp=@rootvp@("graph",sid,key)
- s utsuccess=1
- n ss s ss=""
- f  s ss=$O(poou(ss)) q:ss=""  d  q:'utsuccess
- . i '$d(temp(ss)) s utsuccess=0
- . i '($g(poou(ss))=$g(temp(ss))) s utsuccess=0
  q
  ;
 EOR ;End of routine SAMIUTS2

@@ -1,4 +1,4 @@
-SAMIUTST ;ven/lgc - Unit Test Utilities ; 10/25/18 4:31pm
+SAMIUTST ;ven/lgc - Unit Test Utilities ; 11/2/18 9:31am
  ;;;SAMI;;
  ;
  ; Routine to push and pull information used during unit testing
@@ -58,17 +58,6 @@ START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  ; Return
  ;    loads "vapals unit tests" Graphstore under the
  ;       title entry with the data from the array
-SaveUTdata(arr,title) ;
- Q:'$D(arr)
- Q:($g(title)="")
- n root s root=$$setroot^%wd("vapals unit tests")
- n gien s gien=$$Getgien(root,title)
- k @root@(gien)
- ; load data
- n cnt s cnt=""
- f  s cnt=$O(arr(cnt)) q:cnt=""  d
- . s @root@(gien,cnt)=arr(cnt)
- q
  ;
 SaveUTarray(arr,title) ;
  Q:'$D(arr)
@@ -79,25 +68,6 @@ SaveUTarray(arr,title) ;
  ; load data
  m @root@(gien)=arr
  q
- ;
- ;
- ; Enter
- ;     arr   = array by reference to fill with data from Graphstore
- ;     title = title of the unit test
- ; Return
- ;     arr   = data pulled from the title entry in "vapals unit tests"
- ;             Graphstore
-PullUTdata(arr,title) ;
- k arr
- Q:($g(title)="")
- n root s root=$$setroot^%wd("vapals unit tests")
- n gien s gien=$$Getgien(root,title)
- ; pull data
- n cnt s cnt=""
- f  s cnt=$O(@root@(gien,cnt)) q:cnt=""  d
- . s arr(cnt)=@root@(gien,cnt)
- q
- ;
  ;
  ;
  ; Enter

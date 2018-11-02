@@ -217,35 +217,6 @@
       </label>
       <input class="form-control" id="sireemhoo" name="sireemhoo" placeholder="specify" required="required" type="text"/>
      </div>
-     <div class="col-md-12" id="reason-smoking-container">
-      <div class="form-group form-group-sm form-inline">
-       <label>
-        Smoking History
-       </label>
-       <br/>
-       <label class="checkbox-inline ">
-        <input name="sireshqd" type="hidden" value=""/>
-        <input id="sireshqd" name="sireshqd" type="checkbox" value="y"/>
-        quit date greater than 15 years
-       </label>
-       <label class="checkbox-inline ">
-        <input name="sireshpy" type="hidden" value=""/>
-        <input id="sireshpy" name="sireshpy" type="checkbox" value="y"/>
-        less than 30 pack years
-       </label>
-       <label class="checkbox-inline ">
-        <input name="sireshnc" type="hidden" value=""/>
-        <input id="sireshnc" name="sireshnc" type="checkbox" value="y"/>
-        non-cigarette Use (e.g. pipe, smokeless, vape, cannabis)
-       </label>
-       <label class="checkbox-inline ">
-        <input name="sireshot" type="hidden" value=""/>
-        <input id="sireshot" name="sireshot" type="checkbox" value="y"/>
-        other
-       </label>
-       <input class="form-control form-inline" id="sireshoo" name="sireshoo" placeholder="specify" required="required" type="text"/>
-      </div>
-     </div>
      <div class="col-md-12" id="reason-elsewhere-container">
       <div class="form-group form-group-sm form-inline">
        <label>
@@ -278,6 +249,35 @@
         other
        </label>
        <input class="form-control form-inline" id="sireceoo" name="sireceoo" placeholder="specify" required="required" type="text"/>
+      </div>
+     </div>
+     <div class="col-md-12" id="reason-smoking-container">
+      <div class="form-group form-group-sm form-inline">
+       <label>
+        Smoking History
+       </label>
+       <br/>
+       <label class="checkbox-inline ">
+        <input name="sireshqd" type="hidden" value=""/>
+        <input id="sireshqd" name="sireshqd" type="checkbox" value="y"/>
+        quit date greater than 15 years
+       </label>
+       <label class="checkbox-inline ">
+        <input name="sireshpy" type="hidden" value=""/>
+        <input id="sireshpy" name="sireshpy" type="checkbox" value="y"/>
+        less than 30 pack years
+       </label>
+       <label class="checkbox-inline ">
+        <input name="sireshnc" type="hidden" value=""/>
+        <input id="sireshnc" name="sireshnc" type="checkbox" value="y"/>
+        non-cigarette Use (e.g. pipe, smokeless, vape, cannabis)
+       </label>
+       <label class="checkbox-inline ">
+        <input name="sireshot" type="hidden" value=""/>
+        <input id="sireshot" name="sireshot" type="checkbox" value="y"/>
+        other
+       </label>
+       <input class="form-control form-inline" id="sireshoo" name="sireshoo" placeholder="specify" required="required" type="text"/>
       </div>
      </div>
      <div class="col-md-12" id="reason-contact-container">
@@ -870,7 +870,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2018.11.01
+     2018.11.02
     </span>
    </div>
   </footer>
@@ -933,8 +933,8 @@
     const newForm = "@@NEWFORM@@";
     if (newForm == "true") {
         $("#reason-for-change-container").remove();
+        $("#discussion-container").hide();
     }
-
 
     $(function () {
 

@@ -1,5 +1,5 @@
-SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 11/1/18 1:30pm
-;;18.0;SAMI;;
+SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 11/5/18 1:16pm
+ ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
  ;
@@ -144,6 +144,9 @@ UTWSSBF ; @TEST - background form access
  s utsuccess=1
  s nodep=$na(poo),nodea=$na(arc)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
+ . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
+ . i @nodep["siform" q
+ . i '($qs(nodep,1)=$qs(nodea,1)) s utsuccess=0
  . i '(@nodep=@nodea) s utsuccess=0
  i 'nodea="" s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing background form access FAILED!")
@@ -159,6 +162,9 @@ UTWSIFM ; @TEST - intake form access
  s utsuccess=1
  s nodep=$na(poo),nodea=$na(arc)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
+ . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
+ . i @nodep["siform" q
+ . i '($qs(nodep,1)=$qs(nodea,1)) s utsuccess=0
  . i '(@nodep=@nodea) s utsuccess=0
  i 'nodea="" s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing intake form access FAILED!")
@@ -174,6 +180,9 @@ UTCEFRM ; @TEST - ctevaluation form access
  s utsuccess=1
  s nodep=$na(poo),nodea=$na(arc)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
+ . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
+ . i @nodep["siform" q
+ . i '($qs(nodep,1)=$qs(nodea,1)) s utsuccess=0
  . i '(@nodep=@nodea) s utsuccess=0
  i 'nodea="" s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing ctevaluation form access FAILED!")

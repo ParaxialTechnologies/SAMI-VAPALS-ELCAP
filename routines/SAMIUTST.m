@@ -1,8 +1,12 @@
-SAMIUTST ;ven/lgc - Unit Test Utilities ; 11/2/18 2:05pm
+SAMIUTST ;ven/lgc - Unit Test Utilities ; 11/5/18 11:54am
  ;;18.0;SAMI;;
  ;
  ; Routine to push and pull information used during unit testing
  ;   of va-pals routines
+ ;
+START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
+ D EN^%ut($T(+0),2)
+ Q
  ;
  quit  ; No entry from top
  ;

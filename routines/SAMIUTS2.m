@@ -1,4 +1,4 @@
-SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICAS2 ; 11/5/18 11:20am
+SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICAS2 ; 11/5/18 11:37am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -178,15 +178,15 @@ UTWSCAS ; @TEST - generate case review page
  n filter s filter("studyid")="XXX00001"
  n poo D wsCASE^SAMICAS2(.poo,.filter)
  n arc D PullUTarray^SAMIUTST(.arc,"UTWSCAS^SAMIUTS2")
- zwr arc
- zwr poo
  s utsuccess=1
  n nodep,nodea s nodep=$na(poo),nodea=$na(arc)
- f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
+ f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d
  .; if the first non space 10 characters are a date, skip
  . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
- . i '($qs(nodep,1)=$qs(nodea,1)) s utsuccess=0 W nodep
- . i '(@nodep=@nodea) s utsuccess=0 W nodea
+ . i @nodep["siform" q
+ . i @nodep["Fourteen,Patient N" q
+ . i '($qs(nodep,1)=$qs(nodea,1)) s utsuccess=0 W !,nodea
+ . i '(@nodep=@nodea) s utsuccess=0 W !,nodea
  i '(nodea="") s utsuccess=0 w "at end:",nodea
  D CHKEQ^%ut(utsuccess,1,"Testing generating case review page FAILED!")
  q

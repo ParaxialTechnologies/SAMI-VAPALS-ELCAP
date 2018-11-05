@@ -31,6 +31,10 @@ START
  quit
  ;
  ;
+STARTUP
+ quit
+ ;
+ ;
 SETUP
  new rtn,filter,ary,expect,result
  quit
@@ -38,6 +42,10 @@ SETUP
  ;
 TEARDOWN ; ZEXCEPT: rtn,filter,ary,expect,result
  kill rtn,filter,ary,expect,result
+ quit
+ ;
+ ;
+SHUTDOWN
  quit
  ;
  ;

@@ -1,4 +1,4 @@
-SAMIUTUR ;ven/lgc - UNIT TEST for SAMIUR1 ; 10/31/18 1:31pm
+SAMIUTUR ;ven/lgc - UNIT TEST for SAMIUR1 ; 11/5/18 1:57pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -35,25 +35,25 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  ;
 UTWSRPT ; @TEST - generate a report based on parameters in the filter
  ;wsReport(rtn,filter)
- n filter,pats,temp
+ n filter,pats,poo,cnt
  s filter("samireporttype")="followup"
- s utsuccess=1
+ s utsuccess=0
  d wsReport^SAMIUR1(.poo,.filter)
- i $d(poo(90)) s utsuccess=($g(poo(90))["Followup")
+ s cnt=0 f  s cnt=$o(poo(cnt)) q:'cnt  i poo(cnt)["Followup before"  s utsuccess=1
  D CHKEQ^%ut(utsuccess,1,"Testing wsReport for followup FAILED!")
  ;
- k filter,pats,temp
+ k filter,pats,poo
  s filter("samireporttype")="activity"
- s utsuccess=1
+ s utsuccess=0
  d wsReport^SAMIUR1(.poo,.filter)
- i $d(poo(90)) s utsuccess=($g(poo(90))["Activity")
+ s cnt=0 f  s cnt=$o(poo(cnt)) q:'cnt  i poo(cnt)["Activity after" s utsuccess=1
  D CHKEQ^%ut(utsuccess,1,"Testing wsReport for activity FAILED!")
  ;
  k filter,pats,temp
  s filter("samireporttype")="enrollment"
  s utsuccess=1
  d wsReport^SAMIUR1(.poo,.filter)
- i $d(poo(90)) s utsuccess=($g(poo(90))["Enrollment")
+ s cnt=0 f  s cnt=$o(poo(cnt)) q:'cnt  i poo(cnt)["Enrollment as of" s utsuccess=1
  D CHKEQ^%ut(utsuccess,1,"Testing wsReport for enrollment FAILED!")
  q
  ;
@@ -72,11 +72,11 @@ UTSELCT ; @TEST - selects patient for the report
  s utsuccess=(datephrase=udtphrase)
  i utsuccess,$d(pats) d
  . n node,cnt s node=$na(pats),cnt=0
- . f  s node=$q(@node) q:node=""  d  q:'utsuccess
+ . f  s node=$q(@node) q:node=""  d
  .. s:cnt<3 cnt=cnt+1
- .. i cnt=1,'(@node="") s utsuccess=0 q
- .. i cnt=2,'($qs(node,3)="cefud") s utsuccess=0 q
- .. i cnt=3 s cnt=0 i '($qs(node,3)="edate") s utsuccess=0
+ .. i cnt=1,'(@node="") s utsuccess=0 w !,cnt,@node q
+ .. i cnt=2,'($qs(node,3)="cefud") s utsuccess=0 w !,cnt,@node q
+ .. i cnt=3 s cnt=0 i '($qs(node,3)="edate") s utsuccess=0 w !,cnt,@node
  D CHKEQ^%ut(utsuccess,1,"Testing type=null patient report FAILED!")
  ;
  k pats,type,datephrase
@@ -124,19 +124,19 @@ UTSELCT ; @TEST - selects patient for the report
  k pats,type,datephrase
  s type="missingct"
  D select^SAMIUR1(.pats,.type,.datephrase)
- s utsuccess='$d(datephrase)
+ s utsuccess=($g(datephrase)="")
  D CHKEQ^%ut(utsuccess,1,"Testing missingct patient report FAILED!")
  ;
  k pats,type,datephrase
  s type="incomplete"
  D select^SAMIUR1(.pats,.type,.datephrase)
- s utsuccess='$d(datephrase)
+ s utsuccess=($g(datephrase)="")
  D CHKEQ^%ut(utsuccess,1,"Testing incomplete patient report FAILED!")
  ;
  k pats,type,datephrase
  s type="outreach"
  D select^SAMIUR1(.pats,.type,.datephrase)
- s utsuccess='$d(datephrase)
+ s utsuccess=($g(datephrase)="")
  D CHKEQ^%ut(utsuccess,1,"Testing outreach patient report FAILED!")
  q
  ;

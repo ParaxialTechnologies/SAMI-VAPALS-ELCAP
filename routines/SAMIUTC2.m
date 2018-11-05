@@ -1,9 +1,28 @@
-SAMIUTC2 ;ven/lgc&arc - UNIT TEST for SAMISRC2 ; 20181031T1854Z
+SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ; 2018-11-02T1840Z
  ;;18.0;SAMI;;
  ;
+ ; @section 0 primary development
+ ;
+ ; @routine-credits
+ ; @primary-dev: Alexis Carlson (arc)
+ ;  alexis@vistaexpertise.net
+ ; @primary-dev-org: Vista Expertise Network (ven)
+ ;  http://vistaexpertise.net
+ ; @copyright: 2012/2018, ven, all rights reserved
+ ; @license: Apache 2.0
+ ;  https://www.apache.org/licenses/LICENSE-2.0.html
+ ;
+ ; @last-updated: 2018-11-02T1840Z
+ ; @application: SAMI
+ ; @version: 18.0
+ ; @patch-list: none yet
+ ;
+ ; @to-do
+ ;
+ ; @section 1 code
  ;
 START
- if $T(^%ut)="" do
+ if $text(^%ut)="" do
  . write !,"*** UNIT TEST NOT INSTALLED ***"
  . quit
  ;
@@ -11,35 +30,18 @@ START
  quit
  ;
  ;
-STARTUP
- new utsuccess
- quit
- ;
- ;
 SETUP
- new args,body,return,expect,result
+ new args,body,return,filter,from,to,expect,result,expectn,resultn,utsuccess
  quit
  ;
  ;
-TEARDOWN ; ZEXCEPT: args,body,return,expect,result
- kill args,body,return,expect,result
- quit
- ;
- ;
-SHUTDOWN ; ZEXCEPT: utsuccess,filter,body
- kill utsuccess,filter,body
+TEARDOWN ; ZEXCEPT: args,body,return,filter,from,to,expect,result,expectn,resultn,utsuccess
+ kill args,body,return,filter,from,to,expect,result,expectn,resultn,utsuccess
  quit
  ;
  ;
 UTWSLKU ; @TEST wsLookup^SAMISRC2
  ; Comments
- ;
- ; set args("dfn")=1
- ; set args("name")="Fourteen,Patient N"
- ; set args("pt-lookup-input")="Fourteen,Patient N"
- ; set args("samiroute")="casereview"
- ; set args("studyid")="XXX00001"
- ; set body(1)="samiroute=lookup&dfn=1&name=Fourteen%2CPatient+N&studyid=XXX00001&pt-lookup-input=Fourteen%2CPatient+N"
  ;
  ; Test with no patient study ID
  set body(1)=""
@@ -47,6 +49,17 @@ UTWSLKU ; @TEST wsLookup^SAMISRC2
  set expect="Patient not found"
  set result=filter("samilookuperror")
  do CHKEQ^%ut(result,expect)
+ ; Check the HTML array
+ kill expect,result
+ set utsuccess=1
+ do PullUTarray^SAMIUTST(.expect,"UTWSLKU^SAMIUTC2: Null SID")
+ set resultn=0,expectn=0
+ for  set resultn=$order(return(resultn)),expectn=$order(expect(expectn)) quit:('resultn)!('expectn)  do
+ . quit:(resultn=204) ; Node with a date
+ . if '(resultn=expectn) set utsuccess=0
+ . if '(return(resultn)=expect(expectn)) set utsuccess=0
+ if '(resultn="")&(expectn="") set utsuccess=0
+ do CHKEQ^%ut(utsuccess,1)
  ;
  ; Test with a patient study ID
  kill args,body,return,result,expect
@@ -55,6 +68,20 @@ UTWSLKU ; @TEST wsLookup^SAMISRC2
  set expect="XXX00001"
  set result=filter("studyid")
  do CHKEQ^%ut(result,expect)
+ ; Check the HTML array
+ kill expect,result,resultn,expectn
+ set utsuccess=1
+ do PullUTarray^SAMIUTST(.expect,"UTWSLKU^SAMIUTC2: SID=XXX00001")
+ set resultn=0,expectn=0
+ for  set resultn=$order(return(resultn)),expectn=$order(expect(expectn)) quit:('resultn)!('expectn)  do
+ . quit:(resultn=149) ; Nodes with a date
+ . quit:(resultn=151)
+ . quit:(resultn=152)
+ . quit:(resultn=169)
+ . if '(resultn=expectn) set utsuccess=0
+ . if '(return(resultn)=expect(expectn)) set utsuccess=0
+ if '(resultn="")&(expectn="") set utsuccess=0
+ do CHKEQ^%ut(utsuccess,1)
  ;
  q
  ;

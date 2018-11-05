@@ -1,6 +1,26 @@
-SAMIUTPT ;ven/arc - UNIT TEST for SAMIPTLK ; 20181031T1854Z
+SAMIUTPT ;ven/arc - Unit test for SAMIPTLK ; 2018-10-31T1854Z
  ;;18.0;SAMI;;
  ;
+ ; @section 0 primary development
+ ;
+ ; @routine-credits
+ ; @primary-dev: Alexis Carlson (arc)
+ ;  alexis@vistaexpertise.net
+ ; @primary-dev-org: Vista Expertise Network (ven)
+ ;  http://vistaexpertise.net
+ ; @copyright: 2012/2018, ven, all rights reserved
+ ; @license: Apache 2.0
+ ;  https://www.apache.org/licenses/LICENSE-2.0.html
+ ;
+ ; @last-updated: 2018-10-31T1854Z
+ ; @application: SAMI
+ ; @version: 18.0
+ ; @patch-list: none yet
+ ;
+ ; @to-do
+ ;  Add query using last 5
+ ;
+ ; @section 1 code
  ;
 START
  if $T(^%ut)="" do
@@ -11,11 +31,6 @@ START
  quit
  ;
  ;
-STARTUP
- new utsuccess
- quit
- ;
- ;
 SETUP
  new rtn,filter,ary,expect,result
  quit
@@ -23,11 +38,6 @@ SETUP
  ;
 TEARDOWN ; ZEXCEPT: rtn,filter,ary,expect,result
  kill rtn,filter,ary,expect,result
- quit
- ;
- ;
-SHUTDOWN ; ZEXCEPT: utsuccess
- kill utsuccess
  quit
  ;
  ;

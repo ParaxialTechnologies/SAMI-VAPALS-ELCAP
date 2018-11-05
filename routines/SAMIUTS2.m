@@ -1,6 +1,24 @@
-SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICAS2 ; 11/1/18 1:39pm
+SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICAS2 ; 11/5/18 11:20am
  ;;18.0;SAMI;;
  ;
+ ; @section 0 primary development
+ ;
+ ; @routine-credits
+ ; @primary-dev: Larry Carlson (lgc)
+ ;  larry@fiscientific.com
+ ; @primary-dev-org: Vista Expertise Network (ven)
+ ;  http://vistaexpertise.net
+ ; @copyright: 2012/2018, ven, all rights reserved
+ ; @license: Apache 2.0
+ ;  https://www.apache.org/licenses/LICENSE-2.0.html
+ ;
+ ; @application: SAMI
+ ; @version: 18.0
+ ; @patch-list: none yet
+ ;
+ ; @to-do
+ ;
+ ; @section 1 code
  ;
 START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  D EN^%ut($T(+0),2)
@@ -56,6 +74,7 @@ UTHMNY ; @TEST - extrinsic returns how many forms the patient has used before de
  s utsuccess=(uforms=forms)
  D CHKEQ^%ut(utsuccess,1,"Testing getting how many forms for patient FAIL!")
  q
+ ;
 UTCNTITM ; @TEST - get items available for studyid
  ;getItems(ary,sid)
  n rootut,rootvp,gienut,dfn,gienvp,studyid,uforms,forms
@@ -81,30 +100,37 @@ UTCNTITM ; @TEST - get items available for studyid
  . i '$d(poo(zi)) s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing getting available forms for patient FAILED!")
  q
+ ;
 UTGDTK ; @TEST - date portion of form key
  ;getDateKey(formid)
  n fdtkey s fdtkey=$$getDateKey^SAMICAS2("MYFORM-2018-10-03")
  D CHKEQ^%ut(fdtkey,"2018-10-03","Testing get date portion of form  FAILED!")
  q
+ ;
 UTK2DDT ; @TEST - date in elcap format from key date
  ;key2dispDate(zkey)
  n ecpdt s ecpdt=$$key2dispDate^SAMICAS2("2018-10-03")
  D CHKEQ^%ut(ecpdt,"10/3/2018","Testing date in elcap form  FAILED!")
  q
+ ;
 UTVPLSD ; @TEST - extrinsic which return the vapals format for dates
  ;vapalsDate(fmdate)
  n vpdate s vpdate=$$vapalsDate^SAMICAS2("3181003")
  D CHKEQ^%ut(vpdate,"10/3/2018","Testing fmdate to elcap date form  FAILED!")
  q
+ ;
 UTWSNF ; @TEST - select new form for patient (get service)
  ;wsNuForm(rtn,filter)
  q
+ ;
 UTNFPST ; @TEST - post new form selection (post service)
  ;wsNuFormPost(ARGS,BODY,RESULT)
  q
+ ;
 UTMKSBF ; @TEST - create background form
  ;makeSbform(sid,key)
  q
+ ;
 UTMKCEF ; @TEST - create ct evaluation form
  ;makeCeform(sid,key)
  d CheckForm^SAMIUTS2("ceform","makeCeform",.utsuccess)
@@ -150,29 +176,33 @@ UTMKBXF ; @TEST - create ct evaluation form
 UTWSCAS ; @TEST - generate case review page
  ;wsCASE(rtn,filter)
  n filter s filter("studyid")="XXX00001"
- n temp D wsCASE^SAMICAS2(.temp,.filter)
- n poou D PullUTarray^SAMIUTST(.poou,"UTWSCAS^SAMIUTS2")
+ n poo D wsCASE^SAMICAS2(.poo,.filter)
+ n arc D PullUTarray^SAMIUTST(.arc,"UTWSCAS^SAMIUTS2")
+ zwr arc
+ zwr poo
  s utsuccess=1
- n nodep,nodet s nodep=$na(poou),nodet=$na(temp)
- f  s nodep=$q(@nodep),nodet=$q(@nodet) q:nodep=""  d  q:'utsuccess
- .; ignore the one node in arrays that have a date as
- .;  we can't know ahead of time what date the unit test
- .;  will be run on
- . i ($qs(nodep,1)=209) q
- . i '(@nodep=@nodet) s utsuccess=0
- i '(nodet="") s utsuccess=0
+ n nodep,nodea s nodep=$na(poo),nodea=$na(arc)
+ f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
+ .; if the first non space 10 characters are a date, skip
+ . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
+ . i '($qs(nodep,1)=$qs(nodea,1)) s utsuccess=0 W nodep
+ . i '(@nodep=@nodea) s utsuccess=0 W nodea
+ i '(nodea="") s utsuccess=0 w "at end:",nodea
  D CHKEQ^%ut(utsuccess,1,"Testing generating case review page FAILED!")
  q
  ;
 UTGSAMIS ; @TEST - sets 'samistatus' to val in form
  ;setSamiStatus(sid,form,val)
  q
+ ;
 UTDELFM ; @TEST - deletes a form if it is incomplete
  ;deleteForm(RESULT,ARGS)
  q
+ ;
 UTINITS ; @TEST - set all forms to 'incomplete'
  ;initStatus
  q
+ ;
 UTCSRT ; @TEST - generates case review table
  ;casetbl(ary)
  n poo,pooc,arc,arcc
@@ -185,5 +215,36 @@ UTCSRT ; @TEST - generates case review table
  . I '(@pnode=@anode) s utsuccess=0
  S:'(anode="") utsuccess=0
  q
+ ;
+CheckForm(form,label,utsuccess) ;
+ n sid s sid="XXX00001"
+ n rootvp s rootvp=$$setroot^%wd("vapals-patients")
+ n datekey s datekey="2018-10-21"
+ n key set key=form_"-"_datekey
+ ; delete existing entry
+ k @rootvp@("graph",sid,key)
+ set ARGS("key")=key
+ set ARGS("studyid")=sid
+ set ARGS("form")="vapals:"_form
+ do @label^SAMICAS2(sid,key)
+ ; ^%wd(17.040801,23,"graph","XXX00001",form_"-2018-10-21","active duty")="N and others
+ ;
+ ; fail if nodes not set in vapals-patients Graphstore
+ i '$d(@rootvp@("graph",sid,key)) d  q
+ . s utsuccess=0
+ . D FAIL^%ut(form_" not set in vapals-patients Graphstore")
+ ;
+ ; Check that the vapals-patients node created is correct
+ ;
+ n temp,poou
+ d PullUTarray^SAMIUTST(.poou,label)
+ m temp=@rootvp@("graph",sid,key)
+ s utsuccess=1
+ n ss s ss=""
+ f  s ss=$O(poou(ss)) q:ss=""  d  q:'utsuccess
+ . i '$d(temp(ss)) s utsuccess=0
+ . i '($g(poou(ss))=$g(temp(ss))) s utsuccess=0
+ q
+ ;
  ;
 EOR ;End of routine SAMIUTS2

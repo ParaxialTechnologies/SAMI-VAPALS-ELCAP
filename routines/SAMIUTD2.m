@@ -1,6 +1,25 @@
 SAMIUTD2 ;ven/lgc - UNIT TEST for SAMIUTD2 ; 10/29/18 12:03pm
  ;;18.0;SAMI;;
  ;
+ ; @section 0 primary development
+ ;
+ ; @routine-credits
+ ; @primary-dev: Larry Carlson (lgc)
+ ;  larry@fiscientific.com
+ ; @primary-dev-org: Vista Expertise Network (ven)
+ ;  http://vistaexpertise.net
+ ; @copyright: 2012/2018, ven, all rights reserved
+ ; @license: Apache 2.0
+ ;  https://www.apache.org/licenses/LICENSE-2.0.html
+ ;
+ ; @last-updated: 10/29/18 12:03pm
+ ; @application: SAMI
+ ; @version: 18.0
+ ; @patch-list: none yet
+ ;
+ ; @to-do
+ ;
+ ; @section 1 code
  ;
 START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  D EN^%ut($T(+0),2)

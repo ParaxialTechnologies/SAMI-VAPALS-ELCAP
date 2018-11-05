@@ -1,5 +1,5 @@
 SAMIUTVS ;;ven/arc/lgc - UNIT TEST for SAMIVSTS ; 10/22/18 3:19pm
- ;;1.0;;**LOCAL**; APR 22, 2018
+ ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
  ;   to pull information from the VA server into the
@@ -28,38 +28,43 @@ SAMIUTVS ;;ven/arc/lgc - UNIT TEST for SAMIVSTS ; 10/22/18 3:19pm
  ;   and the following Broker context menu.
  ;      OR CPRS GUI CHART
  ;
+ ; @section 0 primary development
  ;
- ;@routine-credits
- ;@primary development organization: Vista Expertise Network
- ;@primary-dev: Larry G. Carlson (lgc)
- ;@primary-dev: Alexis R. Carlson (arc)
- ;@copyright:
- ;@license: Apache 2.0
- ; https://www.apache.org/licenses/LICENSE-2.0.html
+ ; @routine-credits
+ ; @primary-dev: Larry Carlson (lgc)
+ ;  larry@fiscientific.com
+ ; @primary-dev-org: Vista Expertise Network (ven)
+ ;  http://vistaexpertise.net
+ ; @copyright: 2012/2018, ven, all rights reserved
+ ; @license: Apache 2.0
+ ;  https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-09-26
- ;@application: VA-PALS
- ;@version: 1.0
+ ; @application: SAMI
+ ; @version: 18.0
+ ; @patch-list: none yet
  ;
- ;
- ;@sac-exemption
- ; sac 2.2.8 Vendor specific subroutines may not be called directly
- ;  except by Kernel, Mailman, & VA Fileman.
- ; sac 2.3.3.2 No VistA package may use the following intrinsic
- ;  (system) variables unless they are accessed using Kernel or VA
- ;  FileMan supported references: $D[EVICE], $I[O], $K[EY],
- ;  $P[RINCIPAL], $ROLES, $ST[ACK], $SY[STEM], $Z*.
- ;  (Exemptions: Kernel & VA Fileman)
- ; sac 2.9.1: Application software must use documented Kernel
- ;  supported references to perform all platform specific functions.
- ;  (Exemptions: Kernel & VA Fileman)
- ; ============== UNIT TESTS ======================
- ; NOTE: Unit tests will pull data using the local
+ ; @sac-exemption
+ ;  sac 2.2.8 Vendor specific subroutines may not be called directly
+ ;   except by Kernel, Mailman, & VA Fileman.
+ ;  sac 2.3.3.2 No VistA package may use the following intrinsic
+ ;   (system) variables unless they are accessed using Kernel or VA
+ ;   FileMan supported references: $D[EVICE], $I[O], $K[EY],
+ ;   $P[RINCIPAL], $ROLES, $ST[ACK], $SY[STEM], $Z*.
+ ;   (Exemptions: Kernel & VA Fileman)
+ ;  sac 2.9.1: Application software must use documented Kernel
+ ;   supported references to perform all platform specific functions.
+ ;   (Exemptions: Kernel & VA Fileman)
+ ;  ============== UNIT TESTS ======================
+ ;  NOTE: Unit tests will pull data using the local
  ;       client VistA files rather than risk degrading
  ;       large datasets in use.  NEVERTHELESS, it is
  ;       recommended that UNIT TESTS be run when
  ;       VA-PALS is not in use as some Graphstore globals
  ;       are temporarily moved while testing is running.
+ ;
+ ; @to-do
+ ;
+ ; @section 1 code
  ;
 START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  D EN^%ut($T(+0),2)

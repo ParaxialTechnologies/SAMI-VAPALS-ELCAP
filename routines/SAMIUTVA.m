@@ -1,5 +1,5 @@
 SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 10/22/18 12:08pm
- ;;1.0;;**LOCAL**; APR 22, 2018
+ ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
  ;   to pull information from the VA server into the
@@ -35,6 +35,24 @@ SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 10/22/18 12:08pm
  ;       VA-PALS is not in use as some Graphstore globals
  ;       are temporarily moved while testing is running.
  ;
+ ; @section 0 primary development
+ ;
+ ; @routine-credits
+ ; @primary-dev: Larry Carlson (lgc)
+ ;  larry@fiscientific.com
+ ; @primary-dev-org: Vista Expertise Network (ven)
+ ;  http://vistaexpertise.net
+ ; @copyright: 2012/2018, ven, all rights reserved
+ ; @license: Apache 2.0
+ ;  https://www.apache.org/licenses/LICENSE-2.0.html
+ ;
+ ; @application: SAMI
+ ; @version: 18.0
+ ; @patch-list: none yet
+ ;
+ ; @to-do
+ ;
+ ; @section 1 code
  ;
 START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  D EN^%ut($T(+0),2)

@@ -1,4 +1,4 @@
-SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 11/1/18 9:34am
+SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 11/5/18 10:36am
  ;;18.0;SAMI;;
  ;
  ;
@@ -30,16 +30,19 @@ UTPTLST ; @TEST - Tesing pulling all patients from vapals-patients
  ;
 UTGETHM ; @TEST - Testing pulling HTML for home.
  ;D getHome(rtn,filter)
- n poo,arc,cnt,filter
+ n poo,arc,nodea,nodep,filter
  s utsuccess=1
  D getHome^SAMIHOM3(.poo,.filter)
  ; Get array saved in "vapals unit tests" for this unit test
  D PullUTarray^SAMIUTST(.arc,"UTGETHM^SAMIHOM3")
- s cnt=0
- f  s cnt=$o(poo(cnt)) q:'cnt  d
- . I '($g(poo(cnt))=$g(arc(cnt))) d  q:'utsuccess
- .. s utsuccess=0
- i '($O(poo("A"),-1)=$O(arc("A"),-1)) s utsuccess=0
+ s utsuccess=1
+ s nodep=$na(poo),nodea=$na(arc)
+ f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
+ .; if the first non space 10 characters are a date, skip
+ . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
+ . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
+ . i '(@nodea=@nodep) s utsuccess=0
+ i '(nodea="") s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing pulling HTML home page FAILED!")
  q
  ;
@@ -143,7 +146,7 @@ UTADDPT ; @TEST Testing addPatient adding a new patient to vapals-patients
 UTWSNC ; @TEST - Testing wsNewCase adding a new case to vapals-patients Graphstore
  ;wsNewCase(ARGS,BODY,RESULT)
  n rootvp,rootpl,rootut,gienut,dfn,bdy,saminame,ARGS,result,utna,uthtml
- n utna,uthtm,arc
+ n utna,uthtm,arc,poo
  s rootvp=$$setroot^%wd("vapals-patients")
  s rootpl=$$setroot^%wd("patient-lookup")
  s rootut=$$setroot^%wd("vapals unit tests")
@@ -165,14 +168,15 @@ UTWSNC ; @TEST - Testing wsNewCase adding a new case to vapals-patients Graphsto
  i utna s uthtml=1 d
  . D PullUTarray^SAMIUTST(.arc,"UTWSNC^SAMIUTH3")
  . s rooty=$NA(^TMP("yottaForm",+$P(result,",",2)))
- . s cnt=0
- . f  s cnt=$o(@rooty@(cnt)) q:'cnt  d  q:'uthtml
- ..; Don't compare if sting contains "siform" as
- ..;   these 2 lines are date specific
- .. I arc(cnt)["siform" Q
- .. I '($g(@rooty@(cnt))=$g(arc(cnt))) s uthtml=0
- . i '($O(@rooty@("A"),-1)=$O(arc("A"),-1)) s uthtml=0
- ;
+ . m poo=@rooty
+ . s nodea=$na(arc),nodep=$na(poo)
+ . f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
+ ..; if the first non space 10 characters are a date, skip
+ .. i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
+ .. i @nodep["siform"  q
+ .. i '($qs(nodea,1)=$qs(nodep,1)) s uthtml=0
+ .. i '(@nodea=@nodep) s uthtml=0
+ i '(nodea="") s uthtml=0
  ;
  s utsuccess=$S((utna+uthtml=2):1,1:0)
  D CHKEQ^%ut(utsuccess,1,"Testing wsNewCase adding new patient to vapals-patients FAILED!")
@@ -180,51 +184,56 @@ UTWSNC ; @TEST - Testing wsNewCase adding a new case to vapals-patients Graphsto
  ;
  ;
 UTWSVP1 ; @TEST - Test wsVAPALS API route=""
- N ARG,BODY,RESULT,route,poo,cnt,arc,filter
+ N ARG,BODY,RESULT,route,poo,cnt,arc,filter,nodea,nodep
  ; testing route="". RESULT should have HTML
  s route="" D wsVAPALS^SAMIHOM3(.ARG,.BODY,.RESULT)
+ m poo=RESULT
  ;
  s utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
  D PullUTarray^SAMIUTST(.arc,"UTWSVP1^SAMIUTH3")
- s cnt=0
- f  s cnt=$o(RESULT(cnt)) q:'cnt  d
- . I '($g(RESULT(cnt))=$g(arc(cnt))) d  q:'utsuccess
- .. s utsuccess=0
- i '($O(RESULT("A"),-1)=$O(arc("A"),-1)) s utsuccess=0
+ s nodea=$na(arc),nodep=$na(poo)
+ f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d
+ . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
+ . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
+ . i '(@nodea=@nodep) s success=0 s utsuccess=0
+ i 'nodea="" s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing wsVAPALS route=0  FAILED!")
  q
  ;
 UTWSVP2 ; @TEST - Test wsVAPALS API route="lookup"
- N ARG,BODY,RESULT,route,poo,cnt,poou,filter
+ N ARG,BODY,RESULT,route,poo,arc,cnt,filter
  ; testing route=lookup"". RESULT should have HTML
  ; look up ELCAP patient (patient in vapals-patients
  s ARG("field")="sid",ARG("fvalue")="XXX00001",route="lookup"
  D wsVAPALS^SAMIHOM3(.ARG,.BODY,.RESULT)
- ;
+ m poo=RESULT
  s utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
  D PullUTarray^SAMIUTST(.arc,"UTWSVP2^SAMIUTH3")
- s cnt=0
- f  s cnt=$o(RESULT(cnt)) q:'cnt  d
- . I '($g(RESULT(cnt))=$g(arc(cnt))) d  q:'utsuccess
- .. s utsuccess=0
- i '($O(RESULT("A"),-1)=$O(arc("A"),-1)) s utsuccess=0
+ s nodea=$na(arc),nodep=$na(poo)
+ f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d
+ . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
+ . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
+ . i '(@nodea=@nodep) s success=0 s utsuccess=0
+ i 'nodea="" s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing wsVAPALS route=lookup  FAILED!")
  q
  ;
 UTWSVP3 ; @TEST - Test wsVAPALS API route="casereview"
- N ARG,BODY,RESULT,route,poo,cnt,arc,filter
+ N ARG,BODY,RESULT,route,poo,arc,filter
  s ARG("field")="sid",ARG("fvalue")="XXX00001",route="casereview"
  D wsVAPALS^SAMIHOM3(.ARG,.BODY,.RESULT)
+ m poo=RESULT
  s utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
  D PullUTarray^SAMIUTST(.arc,"UTWSVP3^SAMIUTH3")
- s cnt=0
- f  s cnt=$o(RESULT(cnt)) q:'cnt  d
- . I '($g(RESULT(cnt))=$g(arc(cnt))) d  q:'utsuccess
- .. s utsuccess=0
- i '($O(RESULT("A"),-1)=$O(arc("A"),-1)) s utsuccess=0
+ s nodea=$na(arc),nodep=$na(poo)
+ f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d
+ . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
+ . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
+ . i '(@nodea=@nodep) s success=0 s utsuccess=0
+ i 'nodea="" s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing wsVAPALS route=casereview  FAILED!")
  q
  ;

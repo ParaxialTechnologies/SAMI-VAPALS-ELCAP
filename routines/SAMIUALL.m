@@ -18,7 +18,6 @@ SAMIUALL ;ven/lmry/arc - Unit test overall coverage ;2018-11-05T20:01Z
  ; @patch-list: none yet
  ;
  ; @to-do
- ;  Add query using last 5
  ;
  ; @section 1 code
  ;
@@ -106,12 +105,7 @@ START ; Run the coverage tests
  set I=I+1,XCLUDE(I)="SAMIUTOT"
  set I=I+1,XCLUDE(I)="SAMIUTVR"
  ; These are deprecated routines
- set I=I+1,XCLUDE(I)="SAMIGRPH"
- set I=I+1,XCLUDE(I)="SAMICASE"
- set I=I+1,XCLUDE(I)="SAMIFRM"
- set I=I+1,XCLUDE(I)="SAMIHOM2"
- set I=I+1,XCLUDE(I)="SAMIHOME"
- set I=I+1,XCLUDE(I)="SAMISRCH"
+ ; set I=I+1,XCLUDE(I)="ROUTINE"
  ;
  ; Add the XCLUDE values to the TMP variable that tracks this coverage test.
  ;

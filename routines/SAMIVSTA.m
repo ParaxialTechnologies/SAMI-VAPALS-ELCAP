@@ -1,4 +1,4 @@
-SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 10/31/18 11:00am
+SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 11/7/18 9:41am
  ;;1.0;;**LOCAL**; APR 22, 2018
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -53,7 +53,7 @@ SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 10/31/18 11:00am
  ;  supported references to perform all platform specific functions.
  ;  (Exemptions: Kernel & VA Fileman)
  ;
- Q  ; cannot call from top
+ Q  ; not from top
  ;
  ; Enter
  ;  filter("studyid")  = VA-PALS study ID e.g. XXX00812
@@ -744,9 +744,11 @@ UrbanRural(zipcode) ;
  n root
  S root=$$setroot^%wd("NCHS Urban-Rural")
  Q:'$D(@root@("zip",+zipcode)) 0
- n samiru
+ n samiru,ruca30
+ s ruca30=$$GET^XPAR("SYS","SAMI URBAN/RURAL INDEX VALUE",,"Q")
+ s:'$g(ruca30) ruca30=1.1
  s samiru=@root@("zip",+zipcode)
- s samiru=$S(samiru>1.1:"r",1:"u")
+ s samiru=$S(samiru>ruca30:"r",1:"u")
  Q samiru
  ;
  ;

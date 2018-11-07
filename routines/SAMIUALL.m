@@ -26,10 +26,6 @@ START ; Run the coverage tests
  new I,NAMESPAC,RUNCODE,XCLUDE
  ;
  ; Set the namespace for the routines that are being tested.
- ; set I=0
- ; set I=I+1,NAMESPAC(I)="KBAPM2M*"
- ; set I=I+1,NAMESPAC(I)="SAMIHOM*"
- ; set I=I+1,NAMESPAC(I)="SAMIC*"
  set NAMESPAC="SAMI*"
  ;
  ; Add the routines here in the preferred order; this enables us to easily

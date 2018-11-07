@@ -164,7 +164,7 @@ UTSTGS ; @TEST - Save array to vapals unit tests graphstore
  D CHKEQ^%ut(utsuccess,1,"Testing saving/pulling from vapals unit test graphstore FAILED!")
  ;
 RTNS ;
- ;;KBAPM2M
+ ;;SAMIM2M
  ;;KBANSCAU
  ;;SAMIADMN
  ;;SAMICAS2

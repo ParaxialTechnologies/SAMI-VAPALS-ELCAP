@@ -57,7 +57,7 @@ RadProcedures(StationNumber) ;
  K XARRAY
  S XARRAY(1)=StationNumber
  S XARRAY(2)=1
- D M2M^KBAPM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
+ D M2M^SAMIM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
  I '($L(XDATA,$C(13,10))) Q:$Q 0  Q
  ;
  n si s si=$$ClearGraphstore("radiology procedures")
@@ -97,7 +97,7 @@ ActiveRadExams() ;
  S (CONSOLE,CNTNOPEN)=0
  K XARRAY
  S XARRAY(1)="ALL^ALL"
- D M2M^KBAPM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
+ D M2M^SAMIM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
  I '($L(XDATA,$C(13,10))) Q:$Q 0  Q
  ;
  n si s si=$$ClearGraphstore("radiology active exams")
@@ -130,7 +130,7 @@ RadStaff() ;
  K XARRAY
  S XARRAY(1)="S"
  S XARRAY(2)="" ; All names
- D M2M^KBAPM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
+ D M2M^SAMIM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
  I '($L(XDATA,$C(13,10))) Q:$Q 0  Q
  n si s si=$$ClearGraphstore("radiology staff")
  N I,gien,root,RASTAFF s gien=0
@@ -169,7 +169,7 @@ RadResidents() ;
  K XARRAY
  S XARRAY(1)="R"
  S XARRAY(2)="" ; All names
- D M2M^KBAPM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
+ D M2M^SAMIM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
  I '($L(XDATA,$C(13,10))) Q:$Q 0  Q
  ;
  n si s si=$$ClearGraphstore("radiology residents")
@@ -207,7 +207,7 @@ RadTechs() ;
  K XARRAY
  S XARRAY(1)="T"
  S XARRAY(2)="" ; All names
- D M2M^KBAPM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
+ D M2M^SAMIM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
  I '($L(XDATA,$C(13,10))) Q:$Q 0  Q
  ;
  n si s si=$$ClearGraphstore("radiology technologists")
@@ -242,7 +242,7 @@ RadModifiers() ;
  S CNTXT="MAG DICOM VISA"
  S RMPRC="MAG DICOM RADIOLOGY MODIFIERS"
  S (CONSOLE,CNTNOPEN)=0
- D M2M^KBAPM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
+ D M2M^SAMIM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
  I '($L(XDATA,$C(13,10))) Q:$Q 0  Q
  ;
  n si s si=$$ClearGraphstore("radiology modifiers")
@@ -286,7 +286,7 @@ RadDxCodes() ;
  S (CONSOLE,CNTNOPEN)=0
  K XARRAY
  S XARRAY(1)="" ; All names
- D M2M^KBAPM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
+ D M2M^SAMIM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
  I '($L(XDATA,$C(13,10))) Q:$Q 0  Q
  ;
  n si s si=$$ClearGraphstore("radiology diagnostic codes")

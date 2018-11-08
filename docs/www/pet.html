@@ -17,7 +17,7 @@
   <link href="lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
   <link href="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
  </head>
- <body>
+ <body id="body" style="position: relative;">
   <script src="lib/jquery-3.3.1.min.js">
   </script>
   <script src="lib/jquery-ui-1.12.1/jquery-ui.min.js">
@@ -28,9 +28,13 @@
   </script>
   <script src="lib/moment.js">
   </script>
-  <script src="lib/formvalidation/dist/js/formValidation.min.js">
+  <script src="lib/formvalidation/dist/js/FormValidation.min.js">
   </script>
-  <script src="lib/formvalidation/dist/js/framework/bootstrap.min.js">
+  <script src="lib/formvalidation/dist/js/plugins/Wizard.min.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/plugins/Bootstrap3.min.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/plugins/J.min.js">
   </script>
   <script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js">
   </script>
@@ -139,7 +143,7 @@
     </small>
    </h2>
    <hr/>
-   <form action="/vapals" class="validated" data-fv-button-selector="#submit-button" data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-validating="glyphicon glyphicon-refresh" method="post">
+      <form action="/vapals" class="validated" id="main-form" method="post">
     <input name="samiroute" type="hidden" value="postform"/>
     <input name="studyid" type="hidden" value="@@SID@@"/>
     <input name="form" type="hidden" value="@@FORMKEY@@"/>
@@ -149,7 +153,7 @@
        Study date
       </label>
       <div class="input-group datepicker">
-       <input aria-describedby="ptdos-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" data-fv-notempty-message="Study date is required" id="ptdos" name="ptdos" required="required"/>
+          <input aria-describedby="ptdos-addon" class="form-control" id="ptdos" name="ptdos"/>
        <div class="input-group-addon">
         <div class="input-group-text" id="ptdos-addon">
          <i aria-hidden="true" class="fa fa-calendar">
@@ -207,7 +211,7 @@
      </div>
      <div class="col-sm-3 form-group">
       <div class="input-group datepicker">
-       <input aria-describedby="sidoe-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" data-fv-notempty-message="Baseline CT date is required" id="sidoe" name="sidoe" required="required"/>
+          <input aria-describedby="sidoe-addon" class="form-control" id="sidoe" name="sidoe"/>
        <div class="input-group-addon">
         <div class="input-group-text" id="sidoe-addon">
          <i aria-hidden="true" class="fa fa-calendar">
@@ -231,7 +235,7 @@
      </div>
      <div class="col-sm-3 form-group">
       <div class="input-group datepicker">
-       <input aria-describedby="cedos-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" data-fv-notempty-message="Date is required" id="cedos" name="cedos" required="required"/>
+          <input aria-describedby="cedos-addon" class="form-control" id="cedos" name="cedos"/>
        <div class="input-group-addon">
         <div class="input-group-text" id="cedos-addon">
          <i aria-hidden="true" class="fa fa-calendar">
@@ -991,7 +995,7 @@
        When
       </label>
       <div class="input-group datepicker">
-       <input aria-describedby="cefud-addon" class="form-control" data-fv-date="true" data-fv-date-min="VAPALS.todaysDate" data-fv-notempty-message="A follow-up date is required" id="cefud" name="cefud" required="required"/>
+          <input aria-describedby="cefud-addon" class="form-control" id="cefud" name="cefud"/>
        <div class="input-group-addon">
         <div class="input-group-text" id="cefud-addon">
          <i aria-hidden="true" class="fa fa-calendar">
@@ -1078,8 +1082,7 @@
        <label>
         <input id="ceimo-oa" name="ceimo" required="required" type="radio" value="oa"/>
         Other
-                            abnormalities
-                            and suggested follow-up as described above.
+           abnormalities and suggested follow-up as described above.
        </label>
       </div>
       <div class="radio">
@@ -1158,7 +1161,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2018.10.31
+     2018.11.08
     </span>
    </div>
   </footer>
@@ -1181,20 +1184,19 @@
     $(function () {
         /** These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly. **/
         const $forms = $("form.validated");
-        $.each($forms.find("select, textarea, input:visible, [name^='validator-']"), function (i, o) {
+        $.each($forms.find("select, textarea, input:visible"), function () {
             const $input = $(this);
             if ($input.closest(".form-group").length === 0) {
                 console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
             }
         });
 
-        $.each($forms.find("input[type=hidden][required]"), function (i, o) {
-            const $input = $(this);
+        $.each($forms.find("input[type=hidden][required]"), function () {
             console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
         });
 
         $.ajax("/ctversion", {
-            success: function (data, textStatus, jqXHR) {
+            success: function (data) {
                 const v = data.ctversion;
                 $("#formMode").text(v.toUpperCase());
             },
@@ -1206,7 +1208,7 @@
         $("input[type=checkbox]").change(function () {
             const checked = $(this).is(":checked");
             const fieldName = $(this).attr('name');
-            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function (i, v) {
+            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function () {
                 return checked;
             });
         });
@@ -1217,7 +1219,82 @@
     })
   </script>
   <script language="JavaScript">
-   $(function () {
+      function createFormValidator() {
+
+          const $form = $('#main-form');
+          const multiInputValidators = ['ceimn', 'ceimo'];
+
+          $form.formValidation({
+                  fields: {
+                      ptdos: {
+                          validators: {
+                              notEmpty: {message: 'Study date is required'},
+                              date: {max: VAPALS.todaysDate(), message: 'Study date may not be in the future'}
+                          }
+                      },
+                      ptrad: {validators: {notEmpty: {message: 'Radiologist is required'}}},
+                      sidoe: {
+                          validators: {
+                              notEmpty: {message: 'Baseline CT date is required'},
+                              date: {max: VAPALS.todaysDate(), message: 'Baseline CT date may not be in the future'}
+                          }
+                      },
+                      cedos: {
+                          validators: {
+                              notEmpty: {message: 'Date is required'},
+                              date: {max: VAPALS.todaysDate(), message: 'Date may not be in the future'}
+                          }
+                      },
+                      cefu: {validators: {callback: {callback: notDash, message: 'Select a value'}}},
+                      cefud: {
+                          validators: {
+                              notEmpty: {message: 'Follow up date is required'},
+                              date: {min: VAPALS.todaysDate(), message: 'Date may not be in the past'}
+                          }
+                      },
+                      ceimn: {validators: {notEmpty: {message: 'Nodule impression is required'}}},
+                      ceimo: {validators: {notEmpty: {message: 'Other findings is required'}}},
+                  },
+                  plugins: {
+                      trigger: new FormValidation.plugins.Trigger(),
+                      bootstrap3: new FormValidation.plugins.Bootstrap3(),
+                      submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                      defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                      excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
+                      icon: new FormValidation.plugins.Icon({
+                          valid: '',
+                          invalid: 'glyphicon glyphicon-remove',
+                          validating: 'glyphicon glyphicon-refresh',
+                          onPlaced: function (e) {
+                              if (multiInputValidators.indexOf(e.field) > -1) {
+
+                                  let selector = "";
+                                  if (e.element.id) {
+                                      selector = "#" + e.element.id
+                                  }
+                                  else {
+                                      selector = "[name=" + e.element.name + "]"
+                                  }
+
+                                  $(selector).closest(".form-group").append(e.iconElement);
+                              }
+                          },
+                      })
+                  }
+              }
+          );
+
+          const fv = $form.data('formValidation');
+          fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);
+          fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
+
+          return fv;
+      }
+
+      $(function () {
+
+          const fv = createFormValidator();
+
             //follow up date calculator.
             $("[name=cefuw]").on("change", function () {
                 const when = $("[name='cefuw']:checked").val();
@@ -1240,9 +1317,9 @@
                     default:
                         $("#cefud").val("").focus();
                 }
-            })
 
-            $(".validated").formValidation({framework: 'bootstrap'});
+                fv.revalidateField('cefud');
+            });
         });
   </script>
  </body>

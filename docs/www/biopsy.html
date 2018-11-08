@@ -17,7 +17,7 @@
   <link href="lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
   <link href="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
  </head>
- <body>
+ <body id="body" style="position: relative;">
   <script src="lib/jquery-3.3.1.min.js">
   </script>
   <script src="lib/jquery-ui-1.12.1/jquery-ui.min.js">
@@ -28,9 +28,13 @@
   </script>
   <script src="lib/moment.js">
   </script>
-  <script src="lib/formvalidation/dist/js/formValidation.min.js">
+  <script src="lib/formvalidation/dist/js/FormValidation.min.js">
   </script>
-  <script src="lib/formvalidation/dist/js/framework/bootstrap.min.js">
+  <script src="lib/formvalidation/dist/js/plugins/Wizard.min.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/plugins/Bootstrap3.min.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/plugins/J.min.js">
   </script>
   <script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js">
   </script>
@@ -142,7 +146,7 @@
     If a new lesion is identified at a later point and new diagnostics are performed, please use a new form.
    </div>
    <hr/>
-   <form action="/vapals" class="validated" data-fv-button-selector="#submit-button" data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-validating="glyphicon glyphicon-refresh" method="post">
+      <form action="/vapals" class="validated" id="main-form" method="post">
     <input name="samiroute" type="hidden" value="postform"/>
     <input name="studyid" type="hidden" value="@@SID@@"/>
     <input name="form" type="hidden" value="@@FORMKEY@@"/>
@@ -156,11 +160,11 @@
       </label>
       <div>
        <label class="radio-inline" for="bxp-n">
-        <input data-fv-notempty-message="Please select a value" id="bxp-n" name="bxp" required="required" type="radio" value="n"/>
+           <input id="bxp-n" name="bxp" required="required" type="radio" value="n"/>
         No
        </label>
        <label class="radio-inline" for="bxp-y">
-        <input data-fv-notempty-message="Please select a value" id="bxp-y" name="bxp" required="required" type="radio" value="y"/>
+           <input id="bxp-y" name="bxp" type="radio" value="y"/>
         Yes
        </label>
       </div>
@@ -173,7 +177,7 @@
         Procedure date
        </label>
        <div class="input-group datepicker">
-        <input aria-describedby="bxdos-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" data-fv-notempty-message="Procedure Date is required" id="bxdos" name="bxdos" required="required"/>
+           <input aria-describedby="bxdos-addon" class="form-control" id="bxdos" name="bxdos"/>
         <div class="input-group-addon">
          <div class="input-group-text" id="bxdos-addon">
           <i aria-hidden="true" class="fa fa-calendar">
@@ -195,10 +199,9 @@
      <div class="row" style="padding-bottom: 10px;">
       <div class="col-sm-4">
        <div class="form-group">
-        <label class="control-label required" for="validator-bxind">
+           <label class="control-label required" for="bxinds">
          Indication for biopsy
         </label>
-        <input id="validator-bxind" name="validator-bxind" type="hidden" value="0"/>
         <div class="checkbox">
          <label>
           <input name="bxinds" type="hidden" value=""/>
@@ -234,15 +237,14 @@
           Other (specify)
          </label>
         </div>
-        <input class="form-control input-sm" id="bxind" name="bxind" required="required" type="text"/>
+           <input class="form-control input-sm" id="bxind" name="bxind" required="required" title="Other" type="text"/>
        </div>
       </div>
       <div class="col-sm-4">
        <div class="form-group">
-        <label class="control-label required" for="validator-bxloc">
+           <label class="control-label required" for="bxloclul">
          Lesion site
         </label>
-        <input id="validator-bxloc" name="validator-bxloc" type="hidden" value="0"/>
         <div class="checkbox">
          <label>
           <input name="bxloclul" type="hidden" value=""/>
@@ -327,7 +329,8 @@
           Other (specify)
          </label>
         </div>
-        <input class="form-control input-sm" id="bxlocs" name="bxlocs" required="required" type="text"/>
+           <input class="form-control input-sm" id="bxlocs" name="bxlocs" required="required" title="Other"
+                  type="text"/>
        </div>
       </div>
       <div class="col-sm-4">
@@ -389,22 +392,22 @@
           Other (specify)
          </label>
         </div>
-        <input class="form-control" id="bxtopos" name="bxtopos" required="required" type="text"/>
+           <input class="form-control" id="bxtopos" name="bxtopos" required="required" title="Other" type="text"/>
        </div>
       </div>
      </div>
      <div class="row">
       <div class="col-md-4 form-group">
-       <label class="required" for="bxcp-n">
+          <label class="control-label required" for="bxcp-n">
         Complications during biopsy?
        </label>
        <div>
         <label class="radio-inline" for="bxcp-n">
-         <input data-fv-notempty-message="Please select a value" id="bxcp-n" name="bxcp" required="required" type="radio" value="n"/>
+            <input id="bxcp-n" name="bxcp" required="required" type="radio" value="n"/>
          No
         </label>
         <label class="radio-inline" for="bxcp-y">
-         <input data-fv-notempty-message="Please select a value" id="bxcp-y" name="bxcp" required="required" type="radio" value="y"/>
+            <input id="bxcp-y" name="bxcp" required="required" type="radio" value="y"/>
          Yes
         </label>
        </div>
@@ -412,7 +415,9 @@
       <div class="col-md-8">
        <div id="bxcp-container">
         <div class="form-group">
-         <input id="validator-bxcp" name="validator-bxcp" type="hidden" value="0"/>
+            <label class="required" for="bxtopc">
+                Type of complication
+            </label>
          <div class="checkbox">
           <label>
            <input name="bxcpct" type="hidden" value=""/>
@@ -441,7 +446,8 @@
            Other (specify)
           </label>
          </div>
-         <input class="form-control input-sm" id="bxcpos" name="bxcpos" required="required" type="text"/>
+            <input class="form-control input-sm" id="bxcpos" name="bxcpos" required="required" title="Other"
+                   type="text"/>
         </div>
        </div>
       </div>
@@ -465,11 +471,11 @@
       </label>
       <div>
        <label class="radio-inline" for="rbmep-n">
-        <input data-fv-notempty-message="Please select a value" id="rbmep-n" name="rbmep" required="required" type="radio" value="n"/>
+           <input id="rbmep-n" name="rbmep" required="required" type="radio" value="n"/>
         No
        </label>
        <label class="radio-inline" for="rbmep-y">
-        <input data-fv-notempty-message="Please select a value" id="rbmep-y" name="rbmep" required="required" type="radio" value="y"/>
+           <input id="rbmep-y" name="rbmep" type="radio" value="y"/>
         Yes
        </label>
       </div>
@@ -482,7 +488,7 @@
         Procedure date
        </label>
        <div class="input-group datepicker">
-        <input aria-describedby="rbmed-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" id="rbmed" name="rbmed"/>
+           <input aria-describedby="rbmed-addon" class="form-control" id="rbmed" name="rbmed"/>
         <div class="input-group-addon">
          <div class="input-group-text" id="rbmed-addon">
           <i aria-hidden="true" class="fa fa-calendar">
@@ -496,7 +502,8 @@
       </div>
       <div class="col-md-6 form-group">
        <label class="control-label required" for="rbmel">
-        Where was the biopsy performed?
+           Where was the mediastinoscopy
+           performed?
        </label>
        <input class="form-control" id="rbmel" name="rbmel" required="required" type="text"/>
       </div>
@@ -507,7 +514,6 @@
         Lesion site
        </label>
        <div class="form-group">
-        <input id="validator-rbml" name="validator-rbml" type="hidden" value="0"/>
         <div class="checkbox">
          <label>
           <input name="rbmllul" type="hidden" value=""/>
@@ -592,7 +598,7 @@
           Other (specify)
          </label>
         </div>
-        <input class="form-control input-sm" id="rbmls" name="rbmls" required="required" type="text"/>
+           <input class="form-control input-sm" id="rbmls" name="rbmls" required="required" title="Other" type="text"/>
        </div>
       </div>
      </div>
@@ -603,11 +609,11 @@
        </label>
        <div>
         <label class="radio-inline" for="rbmec-n">
-         <input data-fv-notempty-message="Please select a value" id="rbmec-n" name="rbmec" required="required" type="radio" value="n"/>
+            <input id="rbmec-n" name="rbmec" required="required" type="radio" value="n"/>
          No
         </label>
         <label class="radio-inline" for="rbmec-y">
-         <input data-fv-notempty-message="Please select a value" id="rbmec-y" name="rbmec" required="required" type="radio" value="y"/>
+            <input id="rbmec-y" name="rbmec" required="required" type="radio" value="y"/>
          Yes
         </label>
        </div>
@@ -624,18 +630,18 @@
      Molecular Testing
     </h3>
     <div class="row">
-     <div class="col-sm-12 form-group">
+        <div class="col-md-5 form-group">
       <label class="control-label required" for="rbmt-n">
        Was molecular testing performed on the pathology
                         specimen?
       </label>
       <div>
        <label class="radio-inline" for="rbmt-n">
-        <input data-fv-notempty-message="Please select a value" id="rbmt-n" name="rbmt" required="required" type="radio" value="n"/>
+           <input id="rbmt-n" name="rbmt" required="required" type="radio" value="n"/>
         No
        </label>
        <label class="radio-inline" for="rbmt-y">
-        <input data-fv-notempty-message="Please select a value" id="rbmt-y" name="rbmt" required="required" type="radio" value="y"/>
+           <input id="rbmt-y" name="rbmt" required="required" type="radio" value="y"/>
         Yes
        </label>
       </div>
@@ -649,15 +655,15 @@
        </label>
        <br/>
        <label class="radio-inline" for="rbmte-n">
-        <input data-fv-notempty-message="Please select a value" id="rbmte-n" name="rbmte" required="required" type="radio" value="n"/>
+           <input id="rbmte-n" name="rbmte" required="required" type="radio" value="n"/>
         No
        </label>
        <label class="radio-inline" for="rbmte-neg">
-        <input data-fv-notempty-message="Please select a value" id="rbmte-neg" name="rbmte" required="required" type="radio" value="neg"/>
+           <input id="rbmte-neg" name="rbmte" type="radio" value="neg"/>
         Negative
        </label>
        <label class="radio-inline" for="rbmte-pos">
-        <input data-fv-notempty-message="Please select a value" id="rbmte-pos" name="rbmte" required="required" type="radio" value="pos"/>
+           <input id="rbmte-pos" name="rbmte" type="radio" value="pos"/>
         Positive
        </label>
       </div>
@@ -667,15 +673,15 @@
        </label>
        <br/>
        <label class="radio-inline" for="rbmtk-n">
-        <input data-fv-notempty-message="Please select a value" id="rbmtk-n" name="rbmtk" required="required" type="radio" value="n"/>
+           <input id="rbmtk-n" name="rbmtk" required="required" type="radio" value="n"/>
         No
        </label>
        <label class="radio-inline" for="rbmtk-neg">
-        <input data-fv-notempty-message="Please select a value" id="rbmtk-neg" name="rbmtk" required="required" type="radio" value="neg"/>
+           <input id="rbmtk-neg" name="rbmtk" type="radio" value="neg"/>
         Negative
        </label>
        <label class="radio-inline" for="rbmtk-pos">
-        <input data-fv-notempty-message="Please select a value" id="rbmtk-pos" name="rbmtk" required="required" type="radio" value="pos"/>
+           <input id="rbmtk-pos" name="rbmtk" type="radio" value="pos"/>
         Positive
        </label>
       </div>
@@ -685,35 +691,37 @@
        </label>
        <br/>
        <label class="radio-inline" for="rbmta-n">
-        <input data-fv-notempty-message="Please select a value" id="rbmta-n" name="rbmta" required="required" type="radio" value="n"/>
+           <input id="rbmta-n" name="rbmta" required="required" type="radio" value="n"/>
         No
        </label>
        <label class="radio-inline" for="rbmta-neg">
-        <input data-fv-notempty-message="Please select a value" id="rbmta-neg" name="rbmta" required="required" type="radio" value="neg"/>
+           <input id="rbmta-neg" name="rbmta" type="radio" value="neg"/>
         Negative
        </label>
        <label class="radio-inline" for="rbmta-pos">
-        <input data-fv-notempty-message="Please select a value" id="rbmta-pos" name="rbmta" required="required" type="radio" value="pos"/>
+           <input id="rbmta-pos" name="rbmta" type="radio" value="pos"/>
         Positive
        </label>
       </div>
       <div class="form-group">
-       <label class="control-label required" for="rbmtos">
+          <label class="control-label" for="rbmtos">
         Other
        </label>
        <input class="form-control" id="rbmtos" name="rbmtos" placeholder="specify" type="text"/>
-       <label class="radio-inline" for="rbmto-n">
-        <input data-fv-notempty-message="Please select a value" id="rbmto-n" name="rbmto" required="required" type="radio" value="n"/>
-        No
-       </label>
-       <label class="radio-inline" for="rbmto-neg">
-        <input data-fv-notempty-message="Please select a value" id="rbmto-neg" name="rbmto" required="required" type="radio" value="neg"/>
-        Negative
-       </label>
-       <label class="radio-inline" for="rbmto-pos">
-        <input data-fv-notempty-message="Please select a value" id="rbmto-pos" name="rbmto" required="required" type="radio" value="pos"/>
-        Positive
-       </label>
+          <div id="rbmto-container">
+              <label class="radio-inline" for="rbmto-n">
+                  <input id="rbmto-n" name="rbmto" required="required" type="radio" value="n"/>
+                  No
+              </label>
+              <label class="radio-inline" for="rbmto-neg">
+                  <input id="rbmto-neg" name="rbmto" type="radio" value="neg"/>
+                  Negative
+              </label>
+              <label class="radio-inline" for="rbmto-pos">
+                  <input id="rbmto-pos" name="rbmto" type="radio" value="pos"/>
+                  Positive
+              </label>
+          </div>
       </div>
      </div>
     </div>
@@ -776,7 +784,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2018.10.31
+     2018.11.08
     </span>
    </div>
   </footer>
@@ -799,20 +807,19 @@
     $(function () {
         /** These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly. **/
         const $forms = $("form.validated");
-        $.each($forms.find("select, textarea, input:visible, [name^='validator-']"), function (i, o) {
+        $.each($forms.find("select, textarea, input:visible"), function () {
             const $input = $(this);
             if ($input.closest(".form-group").length === 0) {
                 console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
             }
         });
 
-        $.each($forms.find("input[type=hidden][required]"), function (i, o) {
-            const $input = $(this);
+        $.each($forms.find("input[type=hidden][required]"), function () {
             console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
         });
 
         $.ajax("/ctversion", {
-            success: function (data, textStatus, jqXHR) {
+            success: function (data) {
                 const v = data.ctversion;
                 $("#formMode").text(v.toUpperCase());
             },
@@ -824,7 +831,7 @@
         $("input[type=checkbox]").change(function () {
             const checked = $(this).is(":checked");
             const fieldName = $(this).attr('name');
-            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function (i, v) {
+            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function () {
                 return checked;
             });
         });
@@ -835,7 +842,109 @@
     })
   </script>
   <script language="JavaScript">
-   $(function () {
+      function createFormValidator() {
+
+          const $form = $('#main-form');
+          const multiInputValidators = ['bxp', 'bxcp', 'rbmep', 'rbmec', 'rbmt', 'rbmte', 'rbmtk', 'rbmta', 'rbmto'];
+
+          $form.formValidation({
+                  fields: {
+                      //BIOPSY
+                      bxp: {validators: {notEmpty: {message: 'Biopsy location is required'}}},
+                      bxdos: {
+                          validators: {
+                              notEmpty: {message: 'Procedure date is required'},
+                              date: {
+                                  max: VAPALS.todaysDate(),
+                                  message: 'Procedure date must be at before today'
+                              }
+                          }
+                      },
+                      bxw: {validators: {notEmpty: {message: 'Biopsy performed is required'}}},
+                      bxinds: { //use a real element name for the field so conditional plugins can toggle the field
+                          selector: '[name^=bxind]',
+                          validators: {choice: {min: 1, message: 'Select one or more indications'}}
+                      },
+                      bxind: {validators: {notEmpty: {message: 'Other indication is required'}}},
+                      bxloclul: { //use a real element name for the field so conditional plugins can toggle the field
+                          selector: '[name^=bxloc]',
+                          validators: {choice: {min: 1, message: 'Select one or more sites'}}
+                      },
+                      bxlocs: {validators: {notEmpty: {message: 'Other lesion site is required'}}},
+                      bxtosc: { //use a real element name for the field so conditional plugins can toggle the field
+                          selector: '[name^=bxtos]',
+                          validators: {choice: {min: 1, message: 'Select one or more specimen types'}}
+                      },
+                      bxtopc: { //use a real element name for the field so conditional plugins can toggle the field
+                          selector: '[name^=bxtop]',
+                          validators: {choice: {min: 1, message: 'Select one or more procedure types'}}
+                      },
+                      bxtopos: {validators: {notEmpty: {message: 'Other type of procedure is required'}}},
+                      bxcp: {validators: {notEmpty: {message: 'Complications is required'}}},
+                      bxcpct: { //use a real element name for the field so conditional plugins can toggle the field
+                          selector: '[name=bxcpct],[name=bxcppt],[name=bxcppn],[name=bxcpo]',
+                          validators: {choice: {min: 1, message: 'Select one or more complication'}}
+                      },
+                      bxcpos: {validators: {notEmpty: {message: 'Other complication is required'}}},
+
+                      //Mediastinoscopy
+                      rbmep: {validators: {notEmpty: {message: 'Mediastinoscopy performed is required'}}},
+                      rbmed: {
+                          validators: {
+                              notEmpty: {message: 'Procedure date is required'},
+                              date: {
+                                  max: VAPALS.todaysDate(),
+                                  message: 'Procedure date must be at before today'
+                              }
+                          }
+                      },
+                      rbmel: {validators: {notEmpty: {message: 'Mediastinoscopy location is required'}}},
+                      rbmllul: { //use a real element name for the field so conditional plugins can toggle the field
+                          selector: '[name^=rbml]',
+                          validators: {choice: {min: 1, message: 'Select one or more sites'}}
+                      },
+                      rbmls: {validators: {notEmpty: {message: 'Other lesion site is required'}}},
+                      rbmec: {validators: {notEmpty: {message: 'Complications is required'}}},
+                      rbmecos: {validators: {notEmpty: {message: 'Other complication is required'}}},
+
+                      //Molecular Testing
+                      rbmt: {validators: {notEmpty: {message: 'Molecular testing is required'}}},
+                      rbmte: {validators: {notEmpty: {message: 'EGFR is required'}}},
+                      rbmtk: {validators: {notEmpty: {message: 'KRas is required'}}},
+                      rbmta: {validators: {notEmpty: {message: 'ALK is required'}}},
+                      rbmto: {validators: {notEmpty: {message: 'Other is required'}}},
+
+
+                  },
+                  plugins: {
+                      trigger: new FormValidation.plugins.Trigger(),
+                      bootstrap3: new FormValidation.plugins.Bootstrap3(),
+                      submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                      defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                      excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
+                      icon: new FormValidation.plugins.Icon({
+                          valid: '',
+                          invalid: 'glyphicon glyphicon-remove',
+                          validating: 'glyphicon glyphicon-refresh',
+                          onPlaced: function (e) {
+                              if (multiInputValidators.indexOf(e.field) > -1) {
+                                  $("#" + e.element.id).closest(".form-group").append(e.iconElement);
+                              }
+                          },
+                      })
+                  }
+              }
+          );
+
+          const fv = $form.data('formValidation');
+          fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);
+          fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
+
+          return fv;
+      }
+
+      $(function () {
+          createFormValidator();
 
             //Biopsy
             $("[name='bxp']").conditionallyDisplay({enable: $("#bxp-container")}); //entire form
@@ -852,16 +961,11 @@
 
             //Molecular Testing
             $("[name='rbmt']").conditionallyDisplay({enable: "#rbmt-container"}); //entire section
-
-            //attach before requireOneValidators
-            $(".validated").formValidation({framework: 'bootstrap'});
-
-            requireOneValidator($("[name^=bxind]"), $("[name=validator-bxind]")); // at least one indication checkbox
-            requireOneValidator($("[name^=bxloc]"), $("[name=validator-bxloc]")); // at least one lesion checkbox
-            requireOneValidator($("[name^=bxtos]"), $("[name=validator-bxtos]")); // at least one type of specimen
-            requireOneValidator($("[name^=bxtop]"), $("[name=validator-bxtop]")); // at least one type of procedure
-            requireOneValidator($("#bxcp-container").find("[name^=bxcp]"), $("[name^=validator-bxcp]")); // at least one complication
-            requireOneValidator($("[name^=rbml]"), $("[name^=validator-rbml]")) // at least one lesion
+          $("[name='rbmtos']").conditionallyEnable({
+              sourceValues: function (actualValue) {
+                  return actualValue !== "";
+              }, enable: "#rbmto-container"
+          });
         });
   </script>
  </body>

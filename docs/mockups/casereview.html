@@ -17,7 +17,7 @@
   <link href="../www/lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
   <link href="../www/lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
  </head>
- <body>
+ <body id="body" style="position: relative;">
   <script src="../www/lib/jquery-3.3.1.min.js">
   </script>
   <script src="../www/lib/jquery-ui-1.12.1/jquery-ui.min.js">
@@ -33,6 +33,8 @@
   <script src="../www/lib/formvalidation/dist/js/plugins/Wizard.min.js">
   </script>
   <script src="../www/lib/formvalidation/dist/js/plugins/Bootstrap3.min.js">
+  </script>
+  <script src="../www/lib/formvalidation/dist/js/plugins/J.min.js">
   </script>
   <script src="../www/lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js">
   </script>
@@ -240,7 +242,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2018.11.01
+     2018.11.08
     </span>
    </div>
   </footer>
@@ -263,20 +265,19 @@
     $(function () {
         /** These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly. **/
         const $forms = $("form.validated");
-        $.each($forms.find("select, textarea, input:visible, [name^='validator-']"), function (i, o) {
+        $.each($forms.find("select, textarea, input:visible"), function () {
             const $input = $(this);
             if ($input.closest(".form-group").length === 0) {
                 console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
             }
         });
 
-        $.each($forms.find("input[type=hidden][required]"), function (i, o) {
-            const $input = $(this);
+        $.each($forms.find("input[type=hidden][required]"), function () {
             console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
         });
 
         $.ajax("/ctversion", {
-            success: function (data, textStatus, jqXHR) {
+            success: function (data) {
                 const v = data.ctversion;
                 $("#formMode").text(v.toUpperCase());
             },
@@ -288,7 +289,7 @@
         $("input[type=checkbox]").change(function () {
             const checked = $(this).is(":checked");
             const fieldName = $(this).attr('name');
-            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function (i, v) {
+            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function () {
                 return checked;
             });
         });

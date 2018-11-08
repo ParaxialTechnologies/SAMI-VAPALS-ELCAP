@@ -172,9 +172,9 @@ select(pats,type,datephrase) ; selects patient for the report
  q
  ;
 PNAME(type,phrase) ; extrinsic returns the PAGE NAME for the report
- i type="followup" q "Followup"_$g(phrase)
- i type="activity" q "Activity"_$g(phrase)
- i type="missingct" q "Missing CT Evaluation"_$g(phrase)
+ i type="followup" q "Followup next 30 days -"_$g(phrase)
+ i type="activity" q "Activity last 30 days -"_$g(phrase)
+ i type="missingct" q "Intake but no CT Evaluation"_$g(phrase)
  i type="incomplete" q "Incomplete Forms"_$g(phrase)
  i type="outreach" q "Outreach"_$g(phrase)
  i type="enrollment" q "Enrollment"_$g(phrase)

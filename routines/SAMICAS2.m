@@ -385,6 +385,10 @@ getItems(ary,sid) ; get items available for studyid
  . if zkey1="itform" s fname="Intervention"
  . if $get(fname)="" set fname="unknown"
  . new zdate set zdate=$extract(zi,$length(zkey1)+2,$length(zi))
+ . q:$g(zdate)=""
+ . q:$g(zform)=""
+ . q:$g(zi)=""
+ . q:$g(fname)=""
  . set tary("sort",zdate,zform,zi,fname)=""
  . set tary("type",zform,zi,fname)=""
  . quit

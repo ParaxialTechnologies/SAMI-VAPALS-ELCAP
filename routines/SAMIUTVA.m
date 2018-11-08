@@ -1,4 +1,4 @@
-SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 10/22/18 12:08pm
+SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 11/7/18 7:54pm
  ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -303,5 +303,13 @@ UTDELTIU ; @TEST - Deleting an unsigned TIU note
  ;
  D CHKEQ^%ut(utsuccess,1,"Testing Deleting TIU FAILED!")
  Q
+ ;
+UTURBR ; @TEST - extrinsic to return urban or rural depending on zip code
+ n uturr,uturu
+ s uturu=$$UrbanRural^SAMIVSTA(40714)
+ s uturr=$$UrbanRural^SAMIVSTA(40713)
+ s utsuccess=((uturu_uturr)="ur")
+ D CHKEQ^%ut(utsuccess,1,"Testing Urban/Rural extrinsic FAILED!")
+ q
  ;
 EOR ;End of routine SAMIUTVA

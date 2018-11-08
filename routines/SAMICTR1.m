@@ -49,9 +49,10 @@ nodules(rtn,vals,dict)
  . s calcstr=calcstr_$$xval("cect"_ii_"sl",vals)_" mm x "_$$xval("cect"_ii_"sw",vals)_" mm"_scomp_", "
  . ;
  . n smooth
- . s smooth=$$xsub("cectse",vals,dict,"cect"_ii_"se")
- . i smooth="" s calcstr=calcstr_"smooth edges, "
- . e  s calcstr=calcstr_smooth_" edges, "
+ . ;s smooth=$$xsub("cectse",vals,dict,"cect"_ii_"se")
+ . s smooth=$$xval("cect"_ii_"se",vals)
+ . i smooth="y" s calcstr=calcstr_"smooth edges, "
+ . ;e  s calcstr=calcstr_smooth_" edges, " ;nothing if not smooth
  . ;
  . ; adding distance from costal pleura
  . n pldstr

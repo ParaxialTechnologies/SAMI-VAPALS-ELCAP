@@ -41,80 +41,6 @@ function validateDatePickerOnChange(e) {
     return true;
 }
 
-function initTabbedNavigation(tabContainerId, tabContentContainerId) {
-    //setup tab navigation prev/next buttons
-    function getCurrentTab() {
-        return $("#" + tabContentContainerId).find("> div:visible");
-    }
-
-    function getNextTabId() {
-        return getCurrentTab().next().attr("id");
-    }
-
-    function getPrevTabId() {
-        return getCurrentTab().prev().attr("id");
-    }
-
-    function checkCompleteness($container) {
-        var $requiredFields = $container.find("[required]").filter(":enabled"),
-            $tab = $(".nav-tabs").find("a[href='#" + $container.attr("id") + "']");
-        var emptyRequiredFields = $requiredFields.filter(function () {
-            var $c = $(this);
-            var value = $c.val();
-            if ($c.is(":radio")) {
-                var radioName = $c.attr("name");
-                value = $("input[type='radio'][name='" + radioName + "']:checked").val();
-            }
-            return typeof value === "undefined" || value === "";
-        });
-        // check tab container validity
-
-        var valid = emptyRequiredFields.length === 0; //consider unvalidated (null) as "valid".
-
-        //add completeness flag to tab if all required fields are filled in and form is likely valid.
-        $tab.toggleClass("complete", valid);
-
-    }
-
-
-    $(".btn-next").on("click", function () {
-        var nextTabId = getNextTabId();
-        // CB: form validation occurs on tab hide event
-        $("#" + tabContainerId).find("a[href='#" + nextTabId + "']").tab('show');
-
-    }).toggleClass("disabled", !getNextTabId());
-
-    $(".btn-prev").on("click", function () {
-        var prevTabId = getPrevTabId();
-        // CB: form validation occurs on tab hide event
-        $("#" + tabContainerId).find("a[href='#" + prevTabId + "']").tab('show');
-    }).toggleClass("disabled", !getPrevTabId());
-
-    $('a[data-toggle="tab"]').on('hide.bs.tab', function (e) {
-        //validate each tab as it is navigated away from.
-        var currentTab = e.target;
-        var tabContentSelector = $(currentTab).attr("href");
-        var fv = $(".validated").data('formValidation');
-        if (fv) {
-            fv.validateContainer(tabContentSelector);
-        }
-        $(tabContentSelector).find("input, select").first().trigger('change'); //TODO: is this necessary?
-    }).on("shown.bs.tab", function () {
-        $(".btn-next").toggleClass("disabled", !getNextTabId());
-        $(".btn-prev").toggleClass("disabled", !getPrevTabId());
-        $("#" + tabContentContainerId).find("input:visible, textarea:visible, select:visible").not(".no-auto-focus").first().focus();
-    });
-
-
-    // trigger a check of completeness of each tab at page load and also any time an input changes.
-    $(".tab-pane").each(function () {
-        checkCompleteness($(this))
-    }).on("keyup change", function () {
-        var $container = $(this).closest(".tab-pane");
-        checkCompleteness($container);
-    });
-}
-
 /*
     Sets up a checkbox with the given name to behave as an "exclusive" selection, that is: 
     - Only one of the checkboxes that have this name can be selected at a time
@@ -268,7 +194,5 @@ $(function () {
         if (fieldVal) {
             textField.value = Number(fieldVal).toFixed(1);
         }
-    }).first().trigger('blur')
-
-
+    }).first().trigger('blur');
 });

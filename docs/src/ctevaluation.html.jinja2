@@ -2639,9 +2639,6 @@
 
             exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
 
-            //always after formValidation initialization
-            //initTabbedNavigation("ctEvalTabs", "ctEvalTabsContent");
-
             //handle collapsible controls by toggling chevron icon and applying value to hidden field
             $(".collapse").on('show.bs.collapse', function () {
                 const id = $(this).attr('id');
@@ -2659,16 +2656,6 @@
                 $("[name=" + fieldName + "]").val("");
             });
 
-            //offset for all should be relative to where the panels actually start; immediately following the tabs
-            /* TODO fix if necessary
-            const rect = $("#ctEvalTabs").get()[0].getBoundingClientRect();
-            $(".panel-heading[aria-controls]").affix({
-                offset: {
-                    top: rect.y + rect.height
-                }
-            });
-            */
-
             //open panels where the field name is already set to "y"
             $.each($(".panel-heading[data-toggle=collapse]"), function (i, controller) {
                 const $controller = $(controller);
@@ -2680,8 +2667,7 @@
                 }
             });
 
-            //TODO: this used to do something useful...
-            $.each($(".yes-checkbox"), function (i, el) {
+            $.each($("#abnormalities .yes-checkbox"), function (i, el) {
                 const $checkbox = $(el);
                 const name = $checkbox.attr('name');
                 const $container = $("." + name + "-container");

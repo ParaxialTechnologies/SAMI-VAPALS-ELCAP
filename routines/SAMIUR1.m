@@ -123,7 +123,9 @@ select(pats,type,datephrase) ; selects patient for the report
  . ;
  . i type="followup" d  ;
  . . n nplus30 s nplus30=$$FMADD^XLFDT($$NOW^XLFDT,31)
- . . i (+fmcefud<nplus30)!(ceform="") d  ; need ct scans
+ . . ;i (+fmcefud<nplus30)!(ceform="") d  ; need ct scans
+ . . i (+fmcefud<nplus30) d  ; need ct scans
+ . . . i ceform="" q  ; no ct eval so no followup date
  . . . s pats(efmdate,zi,"edate")=edate
  . . . s pats(efmdate,zi)=""
  . . . i ceform="" s cefud="baseline"

@@ -1,3 +1,4 @@
+<!--suppress ALL -->
 {% macro floatingLabel(for, text, extraClasses) -%}
     <label for="{{ for }}"
            class="visible-xs visible-sm {{ extraClasses }}"
@@ -10,7 +11,7 @@
         <input type="radio" name="{{ groupName }}" id="{{ id }}"
                 {{ " onclick=\""+ onclick + "\"" if onclick else "" }}
                 {{ " checked" if checked else "" }}
-                {{ " required=\"required\" data-fv-notempty-message=\"Please select a value\"" if required else "" }}
+                {{ " required=\"required\" " if required else "" }}
                 {{ " tabindex=\""+ tabindex + "\"" if tabindex else "" }}
                 {{ " title=\""+ title + "\"" if title else "" }}
                value="{{ value }}">

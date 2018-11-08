@@ -64,14 +64,14 @@
             <div id="order-container">
                 <div class="row">
                     <div class="col-md-4">
-                        {{ f.floatingLabel('siopln', 'Ordered by') }}
+                        {{ f.floatingLabel('siopfn', 'Ordered by') }}
                     </div>
                     <div class="col-md-4 form-group">
                         <input type=text name="siopfn" id="siopfn" class="form-control">
                         <span class="help-block small">First Name</span>
                     </div>
                     <div class="col-md-4 form-group">
-                        <input type=text name="siopln" id="siopln" class="form-control">
+                        <input type=text name="siopln" id="siopln" class="form-control" title="Last name">
                         <span class="help-block small">Last Name</span>
 
                     </div>
@@ -503,7 +503,8 @@
             // for certain validators that use multiple inputs like checkboxes and radio groups, change the location
             // of the error icon to be based on the form-group element, instead of being immediately adjacent to the
             // first control in that group
-            const multiInputValidators = ['simeq', 'siabx', 'siaex', 'sisse', 'siho', 'sicd', 'silcs', 'sier', 'sisa', 'sittq', 'sicpd'];
+            const multiInputValidators = ['simeq', 'siabx', 'siaex', 'sisse', 'siho', 'sicd', 'silcs', 'sier', 'sisa',
+                'sittq', 'sicpd'];
 
             $form.formValidation({
                     fields: {
@@ -552,80 +553,6 @@
                         sittq: {validators: {notEmpty: {message: 'Quit attempt is required'}}},
                         siscos: {validators: {notEmpty: {message: 'Other method is required'}}},
                         sicpd: {validators: {notEmpty: {message: 'Cessation materials is required'}}},
-
-
-                        cectrsto: {
-                            validators: {
-                                notEmpty: {message: 'Reconstructed slice thickness is required'},
-                                numeric: {message: 'Must be a number'},
-                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
-                            }
-                        },
-                        cectcdti: {
-                            validators: {
-                                numeric: {message: 'Must be a number'},
-                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
-                            }
-                        },
-                        cectdlp: {
-                            validators: {
-                                numeric: {message: 'Must be a number'},
-                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
-                            }
-                        },
-                        cectssde: {
-                            validators: {
-                                numeric: {message: 'Must be a number'},
-                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
-                            }
-                        },
-                        sidoe: {
-                            validators: {
-                                notEmpty: {message: 'Baseline CT date is required'},
-                                date: {max: VAPALS.todaysDate(), message: 'Baseline CT date may not be in the future'}
-                            }
-                        },
-                        cedcs: {
-                            validators: {
-                                notEmpty: {message: 'Most recent comparative study date is required'},
-                                date: {
-                                    max: VAPALS.todaysDate(),
-                                    message: 'Most recent comparative study date may not be in the future'
-                                }
-                            }
-                        },
-                        cedps: {validators: {notEmpty: {message: 'Prior scans is required'}}},
-                        //Nodule fields are defined below due to dynamic nature of them.
-                        //Emphysema/Coronary Calcifications
-                        cecclm: {validators: {notEmpty: {message: 'Left main is required'}}},
-                        ceccld: {validators: {notEmpty: {message: 'LAD is required'}}},
-                        cecclf: {validators: {notEmpty: {message: 'Circumflex is required'}}},
-                        ceccrc: {validators: {notEmpty: {message: 'RCA is required'}}},
-
-                        //Abnormalities
-                        cdoaw: {validators: {integer: {message: 'must be a whole number'}}},
-                        ceaow: {validators: {integer: {message: 'must be a whole number'}}},
-
-                        //lymph nodes
-                        cemlnl1: { //use a real element name for the field so conditional plugins can toggle the field
-                            selector: '[name^=cemlnl]',
-                            validators: {choice: {min: 1, message: 'Select one or more classification'}}
-                        },
-
-                        //Impression
-                        ceimn: {validators: {notEmpty: {message: 'Nodule impression is required'}}},
-                        followup: {
-                            selector: '[name^=cefu][type=checkbox]',
-                            validators: {choice: {min: 1, message: 'Select at least one CT or Other follow up option'}}
-                        },
-                        cefud: {
-                            validators: {
-                                date: {
-                                    min: VAPALS.todaysDate(),
-                                    message: 'Follow up date must be at least today\'s date'
-                                }
-                            }
-                        },
                     },
                     plugins: {
                         trigger: new FormValidation.plugins.Trigger(),
@@ -660,11 +587,11 @@
 
             createFormValidator();
 
-            var $tsbFields = $("#sidof, #sidoe");
+            const $tsbFields = $("#sidof, #sidoe");
             $tsbFields.closest(".datepicker").on("dp.change", function () {
-                var baselineDate = $("#sidof").val();
-                var studyDate = $("#sidoe").val();
-                var months = VAPALS.computeMonthsBetween(baselineDate, studyDate);
+                const baselineDate = $("#sidof").val();
+                const studyDate = $("#sidoe").val();
+                const months = VAPALS.computeMonthsBetween(baselineDate, studyDate);
                 $("#sitsb-text").text(months);
                 $("#sitsb-alert").toggle(months > 0);
                 $("#sitsb").val(months);

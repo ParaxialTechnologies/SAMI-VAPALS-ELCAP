@@ -116,20 +116,19 @@
     $(function () {
         /** These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly. **/
         const $forms = $("form.validated");
-        $.each($forms.find("select, textarea, input:visible, [name^='validator-']"), function (i, o) {
+        $.each($forms.find("select, textarea, input:visible, [name^='validator-']"), function () {
             const $input = $(this);
             if ($input.closest(".form-group").length === 0) {
                 console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
             }
         });
 
-        $.each($forms.find("input[type=hidden][required]"), function (i, o) {
-            const $input = $(this);
+        $.each($forms.find("input[type=hidden][required]"), function () {
             console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
         });
 
         $.ajax("/ctversion", {
-            success: function (data, textStatus, jqXHR) {
+            success: function (data) {
                 const v = data.ctversion;
                 $("#formMode").text(v.toUpperCase());
             },
@@ -141,7 +140,7 @@
         $("input[type=checkbox]").change(function () {
             const checked = $(this).is(":checked");
             const fieldName = $(this).attr('name');
-            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function (i, v) {
+            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function () {
                 return checked;
             });
         });

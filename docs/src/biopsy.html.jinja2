@@ -50,20 +50,19 @@
                 <div class="row" style="padding-bottom: 10px;">
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label class="control-label required" for="validator-bxind">Indication for biopsy</label>
-                            <input type="hidden" id="validator-bxind" name="validator-bxind" value="0"/>
+                            <label class="control-label required" for="bxinds">Indication for biopsy</label>
                             {{ f.checkbox("bxinds", "s", "Size") }}
                             {{ f.checkbox("bxindr", "r", "No resolution after abx") }}
                             {{ f.checkbox("bxindg", "g", "Growth") }}
                             {{ f.checkbox("bxindp", "p", "Positive PET") }}
                             {{ f.checkbox("bxindo", "o", "Other (specify)") }}
-                            <input type=text id="bxind" name="bxind" class="form-control input-sm" required="required">
+                            <input type=text id="bxind" name="bxind" class="form-control input-sm" required="required"
+                                   title="Other">
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label class="control-label required" for="validator-bxloc">Lesion site</label>
-                            <input type="hidden" id="validator-bxloc" name="validator-bxloc" value="0"/>
+                            <label class="control-label required" for="bxloclul">Lesion site</label>
                             {{ f.checkbox("bxloclul", "lul", "LUL") }}
                             {{ f.checkbox("bxloclll", "lll", "LLL") }}
                             {{ f.checkbox("bxloclh", "lh", "L hilum") }}
@@ -77,7 +76,7 @@
                             {{ f.checkbox("bxlocp", "p", "Pleura") }}
                             {{ f.checkbox("bxloco", "o", "Other (specify)") }}
                             <input type=text id="bxlocs" name="bxlocs" class="form-control input-sm"
-                                   required="required">
+                                   required="required" title="Other">
                         </div>
                     </div>
 
@@ -95,7 +94,8 @@
                             {{ f.checkbox("bxtopv", "v", "VAT") }}
                             {{ f.checkbox("bxtopt", "t", "Thoracotomy") }}
                             {{ f.checkbox("bxtopo", "o", "Other (specify)") }}
-                            <input type=text id="bxtopos" name="bxtopos" class="form-control" required="required">
+                            <input type=text id="bxtopos" name="bxtopos" class="form-control" required="required"
+                                   title="Other">
                         </div>
                     </div>
                 </div>
@@ -111,13 +111,12 @@
                     <div class="col-md-8">
                         <div id="bxcp-container">
                             <div class="form-group">
-                                <input type="hidden" id="validator-bxcp" name="validator-bxcp" value="0"/>
                                 {{ f.checkbox("bxcpct", "c", "Chest tube") }}
                                 {{ f.checkbox("bxcppt", "pt", "Pneumothorax") }}
                                 {{ f.checkbox("bxcppn", "pn", "Pneumonectasis") }}
                                 {{ f.checkbox("bxcpo", "o", "Other (specify)") }}
                                 <input type=text id="bxcpos" name="bxcpos" class="form-control input-sm"
-                                       required="required">
+                                       required="required" title="Other">
                             </div>
                         </div>
                     </div>
@@ -161,7 +160,6 @@
                     <div class="col-md-4">
                         <label class="control-label required" for="rbmllul">Lesion site</label>
                         <div class="form-group">
-                            <input type="hidden" id="validator-rbml" name="validator-rbml" value="0"/>
                             {{ f.checkbox("rbmllul", "lul", "LUL") }}
                             {{ f.checkbox("rbmllll", "lll", "LLL") }}
                             {{ f.checkbox("rbmllh", "lh", "L hilum") }}
@@ -174,7 +172,8 @@
                             {{ f.checkbox("rbmlm", "m", "Mediastinum") }}
                             {{ f.checkbox("rbmlp", "p", "Pleura") }}
                             {{ f.checkbox("rbmlo", "o", "Other (specify)") }}
-                            <input type=text id="rbmls" name="rbmls" class="form-control input-sm" required="required">
+                            <input type=text id="rbmls" name="rbmls" class="form-control input-sm" required="required"
+                                   title="Other">
                         </div>
                     </div>
                 </div>
@@ -358,11 +357,12 @@
             createFormValidator();
 
             //Biopsy
-            $("[name='bxp']").conditionallyDisplay({enable: $("#bxp-container")}); //entire form
+            const $bxpContainer = $("#bxp-container");
+            $("[name='bxp']").conditionallyDisplay({enable: $bxpContainer}); //entire form
             $("#bxindo").conditionallyEnable({sourceValues: "o", enable: "#bxind"}); // other indication
             $("#bxloco").conditionallyEnable({sourceValues: "o", enable: "#bxlocs"}); //other lesion
             $("#bxtopo").conditionallyEnable({sourceValues: "o", enable: "#bxtopos"}); // other type of procedure
-            $("[name='bxcp']").conditionallyEnable({enable: $("#bxcp-container")}); //procedure details
+            $("[name='bxcp']").conditionallyEnable({enable: $bxpContainer}); //procedure details
             $("#bxcpo").conditionallyEnable({sourceValues: "o", enable: "#bxcpos"}); // other complication
 
             //Mediastinoscopy
@@ -374,14 +374,14 @@
             $("[name='rbmt']").conditionallyDisplay({enable: "#rbmt-container"}); //entire section
             $("[name='rbmtos']").conditionallyEnable({
                 sourceValues: function (actualValue) {
-                    return actualValue != "";
+                    return actualValue !== "";
                 }, enable: "#rbmto-container"
             });
 
             //attach before requireOneValidators
             $(".validated").formValidation({framework: 'bootstrap'});
 
-            requireOneValidator($("#bxcp-container").find("[name^=bxcp]"), $("[name^=validator-bxcp]")); // at least one complication
+            requireOneValidator($bxpContainer.find("[name^=bxcp]"), $("[name^=validator-bxcp]")); // at least one complication
             requireOneValidator($("[name^=rbml]"), $("[name^=validator-rbml]")) // at least one lesion
         });
 

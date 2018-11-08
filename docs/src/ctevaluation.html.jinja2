@@ -14,7 +14,7 @@
 
         #wizard-bar.affix {
             position: sticky;
-            top: 0px;
+            top: 0;
             z-index: 1000;
         }
     </style>
@@ -658,7 +658,7 @@
                                 </tr>
                                 <tr>
                                     <td style="white-space: nowrap;">
-                                        <label class="control-label" for="cect1in">Index Nodule</label> <i
+                                        <label class="control-label" for="cectin">Index Nodule</label> <i
                                             class="fa fa-question-circle-o" aria-hidden="true"
                                             data-toggle="popover" title="Help"
                                             data-content="Indicate whether the nodule is an index nodule. Only one nodule can be an index nodule."></i>
@@ -2139,6 +2139,7 @@
 {% endblock %}
 
 {% block script %}
+    <!--suppress Annotator -->
     <script language="JavaScript">
 
         //calculate Time Since Baseline (TSB)
@@ -2198,7 +2199,7 @@
                 $("[name='cennod']").val(noduleCount);
                 $("[name='ceanod']").val("y");
 
-                $isItNew = $("#cect" + noduleCount + "ch").focus();
+                const $isItNew = $("#cect" + noduleCount + "ch");
                 // set nodule "is it new?" to "new" when type of exam (tex) is baseline
                 if ($("[name=cetex]:checked").val() === "b") {
                     $isItNew.val("n");
@@ -2230,14 +2231,6 @@
 
             $("#nodule-table").toggle(count > 0);
             $("#add-first-nodule").toggle(count === 0);
-        }
-
-        //TODO remove id unused
-        function findRadioGroupNames($container) {
-            return $.unique($container.find("input[type=radio]")
-                .map(function (index, element) {
-                    return this.name;
-                }));
         }
 
         function setupMeanDiameterCalculation(lengthFieldSuffix, widthFieldSuffix, diamFieldSuffix) {
@@ -2273,8 +2266,8 @@
 
             if (overrideValues.length > 0) {
                 let identicalElems = true;
-                for (i = 1; i < overrideValues.length; i++) {
-                    if (overrideValues[i] != overrideValues[0]) {
+                for (var i = 1; i < overrideValues.length; i++) {
+                    if (overrideValues[i] !== overrideValues[0]) {
                         identicalElems = false;
                         break;
                     }
@@ -2308,10 +2301,10 @@
 
         function setupNoduleVolumeCalculations(noduleIdx) {
             const lenWidthHeightFields = $("#cect" + noduleIdx + "sl, #cect" + noduleIdx + "sw, #cect" + noduleIdx + "sh");
-            lenWidthHeightFields.on("keyup", function (e) {
+            lenWidthHeightFields.on("keyup", function () {
                 let allFilled = true;
 
-                lenWidthHeightFields.each(function (e, idx) {
+                lenWidthHeightFields.each(function () {
                     const v = $(this).val() || 0;
                     if (v == 0) {
                         allFilled = false;
@@ -2331,10 +2324,10 @@
                 const w = $("#cect" + noduleIdx + "sw").val() || 0;
                 const h = $("#cect" + noduleIdx + "sh").val() || 0;
 
-                v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
+                const v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
 
                 $("#cect" + noduleIdx + "sv").val(v.toFixed(1));
-                var fv = $(this).closest("form.validated").data('formValidation');
+                const fv = $(this).closest("form.validated").data('formValidation');
                 if (fv) {
                     fv.revalidateField("cect" + noduleIdx + "sv")
                 }
@@ -2574,7 +2567,7 @@
             setupMeanDiameterCalculation("sl", "sw", "sd");
             setupMeanDiameterCalculation("ssl", "ssw", "ssd");
             const noduleArrayLength = {{ noduleArray|length }};
-            for (i = 0; i < noduleArrayLength; i++) {
+            for (var i = 0; i < noduleArrayLength; i++) {
                 setupNoduleVolumeCalculations(i);
                 setupNoduleEnabledState(i);
             }
@@ -2648,18 +2641,18 @@
 
             //handle collapsible controls by toggling chevron icon and applying value to hidden field
             $(".collapse").on('show.bs.collapse', function () {
-                var id = $(this).attr('id');
-                var $controller = $("[aria-controls=" + id + "]");
+                const id = $(this).attr('id');
+                const $controller = $("[aria-controls=" + id + "]");
                 $controller.find(".fa-chevron-down").hide();
                 $controller.find(".fa-chevron-up").show();
-                var fieldName = $controller.data("field-name");
+                const fieldName = $controller.data("field-name");
                 $("[name=" + fieldName + "]").val("y");
             }).on('hide.bs.collapse', function () {
-                var id = $(this).attr('id');
-                var $controller = $("[aria-controls=" + id + "]");
+                const id = $(this).attr('id');
+                const $controller = $("[aria-controls=" + id + "]");
                 $controller.find(".fa-chevron-down").show();
                 $controller.find(".fa-chevron-up").hide();
-                var fieldName = $controller.data("field-name");
+                const fieldName = $controller.data("field-name");
                 $("[name=" + fieldName + "]").val("");
             });
 
@@ -2686,9 +2679,9 @@
 
             //TODO: this used to do something useful...
             $.each($(".yes-checkbox"), function (i, el) {
-                var $checkbox = $(el);
-                var name = $checkbox.attr('name');
-                var $container = $("." + name + "-container");
+                const $checkbox = $(el);
+                const name = $checkbox.attr('name');
+                const $container = $("." + name + "-container");
                 if ($container.length > 0) {
                     $checkbox.conditionallyEnable({enable: $container});
                 }

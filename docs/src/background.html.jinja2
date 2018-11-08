@@ -14,7 +14,7 @@
 
         <hr>
         <form action="{{ formPage+".html" if mockup else "/vapals" }}" method="{{ formMethod }}" id="main-form"
-              class="validated" data-fv-button-selector="#submit-button">
+              class="validated">
             <input type="hidden" name="samiroute" value="postform"/>
             <input type="hidden" name="studyid" value="@@SID@@"/>
             <input type="hidden" name="form" value="@@FORMKEY@@"/>
@@ -560,10 +560,10 @@
 
             //hook for calculating Pulmonary function test percentage (FFR)
             $("#sbfev1, #sbfvc").on('change', function () {
-                var fev1 = $("#sbfev1").val();
-                var fvc = $("#sbfvc").val();
+                const fev1 = $("#sbfev1").val();
+                const fvc = $("#sbfvc").val();
                 if (fev1 > 0 && fvc > 0) {
-                    var ffr = Math.round(100.0 * fev1 / fvc);
+                    const ffr = Math.round(100.0 * fev1 / fvc);
                     if (ffr > 0) {
                         $("#sbffr").val(ffr);
                         $("#ffr-value").text(ffr);
@@ -585,7 +585,7 @@
                 "sbmpld", "sbmprd", "sbahpft", "sblcs"
             );
 
-            jQuery.each(uncheckableRadioFieldNames, function (idx, name) {
+            $.each(uncheckableRadioFieldNames, function (idx, name) {
                 $("[name=" + name + "]").conditionallyDisplay({enable: "#" + name + "-container"});
                 uncheckableRadio("[name='" + name + "']", "div.form-group");
             });

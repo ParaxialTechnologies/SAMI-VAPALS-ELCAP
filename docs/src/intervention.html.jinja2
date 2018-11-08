@@ -14,11 +14,7 @@
 
         <hr>
         <form action="{{ formPage+".html" if mockup else "/vapals" }}" method="{{ formMethod }}"
-              class="validated"
-              data-fv-icon-valid="glyphicon glyphicon-ok"
-              data-fv-icon-invalid="glyphicon glyphicon-remove"
-              data-fv-icon-validating="glyphicon glyphicon-refresh"
-              data-fv-button-selector="#submit-button">
+              class="validated" id="main-form">
 
             <input type="hidden" name="samiroute" value="postform"/>
             <input type="hidden" name="studyid" value="@@SID@@"/>
@@ -6167,7 +6163,7 @@
             </script>
     <script language="JavaScript">
         $(function () {
-            $(".validated").formValidation({framework: 'bootstrap'});
+            {#$(".validated").formValidation({framework: 'bootstrap'});#}
         });
     </script>
 

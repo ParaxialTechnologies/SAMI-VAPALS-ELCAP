@@ -24,47 +24,6 @@ function numericHandlerKeydown(e) {
     }
 }
 
-/**
- * Adds a formValidation validator that ensures at least one of the checkboxes in $fields is selected.
- * This validator is dynamically enabled/disabled based on how many of it's triggering $fields are enabled.
- * @param $fields the checkbox fields
- * @param $validatorControl a hidden input field used to track how many checkboxes are selected.
- */
-function requireOneValidator($fields, $validatorControl) {
-    var fv = $("form.validated").data("formValidation");
-    if (fv) {
-        //put the list of fields onto the validator control so we can refer back to them to determine if the
-        // validators should be enabled when triggered.
-        $validatorControl.data("fv-fields", $fields);
-
-        // set the initial value of the field to the state of the watched fields
-        $validatorControl.val($fields.filter(":checked").length);
-
-        $fields.on('change', function () {
-            $validatorControl.val($fields.filter(":checked").length);
-            fv.revalidateField($validatorControl.attr('id'));
-        });
-        fv.addField($validatorControl.attr("name"), {
-            excluded: function ($field, validator) {
-                //enabled only if at least one of its controlling fields is enabled
-                //return $field.data("fv-fields").filter(":enabled").length == 0;
-                //return $field.closest(":disabled").length>0;
-                return false;
-            },
-            validators: {
-                callback: {
-                    callback: function (value, validator, $field) {
-                        return {
-                            //valid if all $fields are disabled or if the number of checked boxes is > 0
-                            valid: $field.data("fv-fields").filter(":enabled").length == 0 || $field.val() > 0,
-                            message: 'At least one selection is required'
-                        }
-                    }
-                }
-            }
-        });
-    }
-}
 
 /**
  * Helper function that revalidates a date when it has changed by manual change or via the datepicker plugin
@@ -97,7 +56,7 @@ function initTabbedNavigation(tabContainerId, tabContentContainerId) {
     }
 
     function checkCompleteness($container) {
-        var $requiredFields = $container.find("[required], [data-fv-notempty=true]").filter(":enabled"),
+        var $requiredFields = $container.find("[required]").filter(":enabled"),
             $tab = $(".nav-tabs").find("a[href='#" + $container.attr("id") + "']");
         var emptyRequiredFields = $requiredFields.filter(function () {
             var $c = $(this);

@@ -30,7 +30,7 @@
                     <label class="control-label required" for="bxp-n">Was a biopsy performed?</label>
                     <div>
                         {{ f.inlineRadio("bxp", "bxp-n", "n", "No", true) }}
-                        {{ f.inlineRadio("bxp", "bxp-y", "y", "Yes", true) }}
+                        {{ f.inlineRadio("bxp", "bxp-y", "y", "Yes") }}
                     </div>
                 </div>
             </div>
@@ -101,7 +101,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4 form-group">
-                        <label class="required" for="bxcp-n">Complications during biopsy?</label>
+                        <label class="control-label required" for="bxcp-n">Complications during biopsy?</label>
                         <div>
                             {{ f.inlineRadio("bxcp", "bxcp-n", "n","No",true) }}
                             {{ f.inlineRadio("bxcp", "bxcp-y", "y","Yes",true) }}
@@ -111,6 +111,7 @@
                     <div class="col-md-8">
                         <div id="bxcp-container">
                             <div class="form-group">
+                                <label for="bxtopc" class="required"> Type of complication </label>
                                 {{ f.checkbox("bxcpct", "c", "Chest tube") }}
                                 {{ f.checkbox("bxcppt", "pt", "Pneumothorax") }}
                                 {{ f.checkbox("bxcppn", "pn", "Pneumonectasis") }}
@@ -136,7 +137,7 @@
                     <label class="control-label required" for="rbmep-n">Was a mediastinoscopy performed?</label>
                     <div>
                         {{ f.inlineRadio("rbmep", "rbmep-n", "n", "No", true) }}
-                        {{ f.inlineRadio("rbmep", "rbmep-y", "y", "Yes", true) }}
+                        {{ f.inlineRadio("rbmep", "rbmep-y", "y", "Yes") }}
                     </div>
                 </div>
             </div>
@@ -210,20 +211,20 @@
                     <div class="form-group">
                         <label class="control-label required" for="rbmte-n">EGFR</label><br/>
                         {{ f.inlineRadio("rbmte", "rbmte-n", "n", "No", true) }}
-                        {{ f.inlineRadio("rbmte", "rbmte-neg", "neg", "Negative", true) }}
-                        {{ f.inlineRadio("rbmte", "rbmte-pos", "pos", "Positive", true) }}
+                        {{ f.inlineRadio("rbmte", "rbmte-neg", "neg", "Negative") }}
+                        {{ f.inlineRadio("rbmte", "rbmte-pos", "pos", "Positive") }}
                     </div>
                     <div class="form-group">
                         <label class="control-label required" for="rbmtk-n">K-Ras</label><br/>
                         {{ f.inlineRadio("rbmtk", "rbmtk-n", "n", "No", true) }}
-                        {{ f.inlineRadio("rbmtk", "rbmtk-neg", "neg", "Negative", true) }}
-                        {{ f.inlineRadio("rbmtk", "rbmtk-pos", "pos", "Positive", true) }}
+                        {{ f.inlineRadio("rbmtk", "rbmtk-neg", "neg", "Negative") }}
+                        {{ f.inlineRadio("rbmtk", "rbmtk-pos", "pos", "Positive") }}
                     </div>
                     <div class="form-group">
                         <label class="control-label required" for="rbmta-n">ALK</label><br/>
                         {{ f.inlineRadio("rbmta", "rbmta-n", "n", "No", true) }}
-                        {{ f.inlineRadio("rbmta", "rbmta-neg", "neg", "Negative", true) }}
-                        {{ f.inlineRadio("rbmta", "rbmta-pos", "pos", "Positive", true) }}
+                        {{ f.inlineRadio("rbmta", "rbmta-neg", "neg", "Negative") }}
+                        {{ f.inlineRadio("rbmta", "rbmta-pos", "pos", "Positive") }}
                     </div>
 
                     <div class="form-group">
@@ -231,8 +232,8 @@
                         <input type="text" name="rbmtos" id="rbmtos" class="form-control" placeholder="specify">
                         <div id="rbmto-container">
                             {{ f.inlineRadio("rbmto", "rbmto-n", "n", "No", true) }}
-                            {{ f.inlineRadio("rbmto", "rbmto-neg", "neg", "Negative", true) }}
-                            {{ f.inlineRadio("rbmto", "rbmto-pos", "pos", "Positive", true) }}
+                            {{ f.inlineRadio("rbmto", "rbmto-neg", "neg", "Negative") }}
+                            {{ f.inlineRadio("rbmto", "rbmto-pos", "pos", "Positive") }}
                         </div>
                     </div>
                 </div>
@@ -295,6 +296,10 @@
                         },
                         bxtopos: {validators: {notEmpty: {message: 'Other type of procedure is required'}}},
                         bxcp: {validators: {notEmpty: {message: 'Complications is required'}}},
+                        bxcpct: { //use a real element name for the field so conditional plugins can toggle the field
+                            selector: '[name=bxcpct],[name=bxcppt],[name=bxcppn],[name=bxcpo]',
+                            validators: {choice: {min: 1, message: 'Select one or more complication'}}
+                        },
                         bxcpos: {validators: {notEmpty: {message: 'Other complication is required'}}},
 
                         //Mediastinoscopy
@@ -357,12 +362,11 @@
             createFormValidator();
 
             //Biopsy
-            const $bxpContainer = $("#bxp-container");
-            $("[name='bxp']").conditionallyDisplay({enable: $bxpContainer}); //entire form
+            $("[name='bxp']").conditionallyDisplay({enable: $("#bxp-container")}); //entire form
             $("#bxindo").conditionallyEnable({sourceValues: "o", enable: "#bxind"}); // other indication
             $("#bxloco").conditionallyEnable({sourceValues: "o", enable: "#bxlocs"}); //other lesion
             $("#bxtopo").conditionallyEnable({sourceValues: "o", enable: "#bxtopos"}); // other type of procedure
-            $("[name='bxcp']").conditionallyEnable({enable: $bxpContainer}); //procedure details
+            $("[name='bxcp']").conditionallyEnable({enable: $("#bxcp-container")}); //procedure details
             $("#bxcpo").conditionallyEnable({sourceValues: "o", enable: "#bxcpos"}); // other complication
 
             //Mediastinoscopy
@@ -377,12 +381,6 @@
                     return actualValue !== "";
                 }, enable: "#rbmto-container"
             });
-
-            //attach before requireOneValidators
-            $(".validated").formValidation({framework: 'bootstrap'});
-
-            requireOneValidator($bxpContainer.find("[name^=bxcp]"), $("[name^=validator-bxcp]")); // at least one complication
-            requireOneValidator($("[name^=rbml]"), $("[name^=validator-rbml]")) // at least one lesion
         });
 
 

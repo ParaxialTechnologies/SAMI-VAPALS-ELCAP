@@ -1,4 +1,4 @@
-SAMIUTPT ;ven/lgc - UNIT TEST for SAMIPTLK ; 10/24/18 10:51pm
+SAMIUTPT ;ven/arc - UNIT TEST for SAMIPTLK ; 20181031T1854Z
  ;;18.0;SAMI;;
  ;
  ;
@@ -34,6 +34,7 @@ SHUTDOWN ; ZEXCEPT: utsuccess
 UTWSPTLK ; @TEST wsPtLookup^SAMIPTLK
  ; Comments
  ;
+ ; Test query string = ""
  set filter("search")=""
  do wsPtLookup^SAMIPTLK(.rtn,.filter)
  new result,expect
@@ -41,6 +42,7 @@ UTWSPTLK ; @TEST wsPtLookup^SAMIPTLK
  set result=rtn(1)
  do CHKEQ^%ut(result,expect)
  ;
+ ; Test query string = "ZZZZ"
  kill rtn,filter
  set filter("search")="ZZZZ"
  do wsPtLookup^SAMIPTLK(.rtn,.filter)
@@ -48,6 +50,7 @@ UTWSPTLK ; @TEST wsPtLookup^SAMIPTLK
  set result=rtn(1)
  do CHKEQ^%ut(result,expect)
  ;
+ ; Test query string = "A"
  kill rtn,filter
  set filter("search")="A"
  do wsPtLookup^SAMIPTLK(.rtn,.filter)
@@ -67,6 +70,7 @@ UTWSPTLK ; @TEST wsPtLookup^SAMIPTLK
 UTWSPTLC ; @TEST wsPtLkup^SAMIPTLK
  ; Comments
  ;
+ ; Test query string = ""
  set filter("search")=""
  do wsPtLkup^SAMIPTLK(.rtn,.filter)
  ; Check first node of rtn
@@ -78,6 +82,7 @@ UTWSPTLC ; @TEST wsPtLkup^SAMIPTLK
  set result=$piece(rtn($order(rtn(""),-1)),"]",2)
  do CHKEQ^%ut(result,expect)
  ;
+ ; Test query string = "ZZZZ"
  kill rtn,filter
  set filter("search")="ZZZZ"
  do wsPtLkup^SAMIPTLK(.rtn,.filter)
@@ -85,6 +90,7 @@ UTWSPTLC ; @TEST wsPtLkup^SAMIPTLK
  set result=$get(rtn(1))
  do CHKEQ^%ut(result,expect)
  ;
+ ; Test query string = "A"
  kill rtn,filter
  set filter("search")="A"
  do wsPtLkup^SAMIPTLK(.rtn,.filter)

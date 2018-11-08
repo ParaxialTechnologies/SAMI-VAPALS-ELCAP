@@ -1,4 +1,4 @@
-SAMIUTRA ;ven/lgc - UNIT TEST for SAMICTRA ; 10/26/18 6:18pm
+SAMIUTRA ;ven/lgc - UNIT TEST for SAMICTRA ; 10/31/18 4:13pm
  ;;18.0;SAMI;;
  ;
  ;
@@ -17,6 +17,22 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  ;
 UTRCMD ; @TEST - Recommendation
  ;recommend(rtn,vals,dict)
+ n vals,dict,si,samikey,root,poo,arc,nodea,nodep
+ s root=$$setroot^%wd("vapals-patients")
+ s si="XXX00001"
+ s samikey="ceform-2018-10-21"
+ s vals=$na(@root@("graph",si,samikey))
+ s dict=$$setroot^%wd("cteval-dict")
+ s dict=$na(@dict@("cteval-dict"))
+ s cnt=1,para="POO"
+ s utsuccess=1
+ D recommend^SAMICTRA("poo",.vals,.dict)
+ d PullUTarray^SAMIUTST(.arc,"UTRCMD^SAMIUTRA")
+ n nodea,nodep s nodea=$na(arc),nodep=$na(poo)
+ f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
+ . i '(@nodep=@nodea) s utsuccess=0
+ i '(nodea="") s utsuccess=0
+ D CHKEQ^%ut(utsuccess,1,"Testing recommend FAILED!")
  q
 UTOUT ; @TEST - out line
  ;out(ln)

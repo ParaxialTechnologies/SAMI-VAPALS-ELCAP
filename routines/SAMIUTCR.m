@@ -1,4 +1,4 @@
-SAMIUTCR ;ven/lgc - UNIT TEST for SAMICTR ; 10/29/18 12:21pm
+SAMIUTCR ;ven/lgc - UNIT TEST for SAMICTR ; 10/31/18 5:51pm
  ;;18.0;SAMI;;
  ;
  ;
@@ -23,7 +23,7 @@ UTWSRPT ; @TEST - web service which returns an html cteval report
  s utsuccess=1
  D wsReport^SAMICTR(.poo,.filter)
  ; compare poo with poou from a Pull
- D PullUTarray^SAMIUTST(.arc,"wsReport-SAMICTR")
+ D PullUTarray^SAMIUTST(.arc,"UTWSRPT^SAMIUTCR")
  ; now compare
  n pnode,anode s pnode=$na(poo),anode=$na(arc)
  f  s pnode=$q(@pnode),anode=$q(@anode) q:pnode=""  d

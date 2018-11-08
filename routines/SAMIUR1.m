@@ -1,4 +1,4 @@
-SAMIUR ;ven/gpl - sami user reports ;2018-03-08T17:53Z
+SAMIUR1 ;ven/gpl - sami user reports ;2018-03-08T17:53Z
  ;;18.0;SAM;;
  ;
  ; SAMIUR contains the routines to generate user reports
@@ -87,7 +87,8 @@ wsReport(rtn,filter) ; generate a report based on parameters in the filter
  . . s rtn(cnt)="<td>"_cefud_"</td></tr>"
  ;
  s cnt=cnt+1 s rtn(cnt)="</tbody>"
- ;s ii=ii-1
+ f  s ii=$o(temp(ii)) q:temp(ii)["</tbody>"  d  ;
+ . ; skip past template headers and blank body
  f  s ii=$o(temp(ii)) q:+ii=0  d  ;
  . s cnt=cnt+1
  . s ln=$g(temp(ii))
@@ -96,6 +97,7 @@ wsReport(rtn,filter) ; generate a report based on parameters in the filter
  ;
 select(pats,type,datephrase) ; selects patient for the report
  i $g(type)="" s type="enrollment"
+ s datephrase=""
  n zi s zi=0
  n root s root=$$setroot^%wd("vapals-patients")
  ;
@@ -138,10 +140,27 @@ select(pats,type,datephrase) ; selects patient for the report
  . . . i ceform="" s cefud="baseline"
  . . . s pats(efmdate,zi,"cefud")=cefud
  . . s datephrase=" after "_$$vapalsDate^SAMICAS2(nminus30)
+ . ;
+ . i type="incomplete" d  ;
+ . . n complete s complete=1
+ . . n zj s zj=""
+ . . n gr s gr=$na(@root@("graph",sid))
+ . . f  s zj=$o(@gr@(zj)) q:zj=""  d  ;
+ . . . i $g(@gr@(zj,"samistatus"))="incomplete" s complete=0
+ . . i complete=0 d  ; has incomplete form(s) 
+ . . . s pats(efmdate,zi,"edate")=edate
+ . . . s pats(efmdate,zi)=""
+ . . . i ceform="" s cefud="baseline"
+ . . . s pats(efmdate,zi,"cefud")=cefud
+ . . s datephrase=""
  . . q
  . i type="missingct" d  ;
- . . q
- . i type="incomplete" d  ;
+ . . i ceform="" d  ; has incomplete form(s) 
+ . . . s pats(efmdate,zi,"edate")=edate
+ . . . s pats(efmdate,zi)=""
+ . . . i ceform="" s cefud="baseline"
+ . . . s pats(efmdate,zi,"cefud")=cefud
+ . . s datephrase=""
  . . q
  . i type="outreach" d  ;
  . . q

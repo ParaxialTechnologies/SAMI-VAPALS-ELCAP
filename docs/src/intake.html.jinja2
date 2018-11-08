@@ -22,7 +22,7 @@
         <h3>Pre-enrollment Eligibility</h3>
         <div class="row">
             <div class="col-sm-3">
-                <label for="sipechrt" class="required">Chart Review</label>
+                <label for="sipechrt" class="required">Eligible based on chart?</label>
             </div>
             <div class="col-sm-3 form-group">
                 {{ f.inlineRadioYN("sipechrt", true) }}
@@ -39,7 +39,7 @@
         </div>
         <div class="row" id="discussion-container">
             <div class="col-sm-3">
-                <label for="sipedisc" class="required">Patient Discussion</label>
+                <label for="sipedisc" class="required">Eligible based on discussion with patient?</label>
             </div>
             <div class="col-sm-3 form-group">
                 {{ f.inlineRadioYN("sipedisc", true) }}
@@ -60,18 +60,6 @@
                        placeholder="specify" required="required">
             </div>
 
-            <div class="col-md-12" id="reason-smoking-container">
-                <div class="form-group form-group-sm form-inline">
-                    <label>Smoking History</label><br/>
-                    {{ f.inlineCheckbox("sireshqd","y", "quit date greater than 15 years") }}
-                    {{ f.inlineCheckbox("sireshpy","y", "less than 30 pack years") }}
-                    {{ f.inlineCheckbox("sireshnc","y", "non-cigarette Use (e.g. pipe, smokeless, vape, cannabis)") }}
-                    {{ f.inlineCheckbox("sireshot","y", "other") }}
-                    <input class="form-control form-inline" type="text" name="sireshoo" id="sireshoo"
-                           placeholder="specify" required="required">
-                </div>
-            </div>
-
             <div class="col-md-12" id="reason-elsewhere-container">
                 <div class="form-group form-group-sm form-inline">
                     <label>Receiving Care Elsewhere</label><br/>
@@ -81,6 +69,18 @@
                     {{ f.inlineCheckbox("sirecepc","y", "private care") }}
                     {{ f.inlineCheckbox("sireceot","y", "other") }}
                     <input class="form-control form-inline" type="text" name="sireceoo" id="sireceoo"
+                           placeholder="specify" required="required">
+                </div>
+            </div>
+
+            <div class="col-md-12" id="reason-smoking-container">
+                <div class="form-group form-group-sm form-inline">
+                    <label>Smoking History</label><br/>
+                    {{ f.inlineCheckbox("sireshqd","y", "quit date greater than 15 years") }}
+                    {{ f.inlineCheckbox("sireshpy","y", "less than 30 pack years") }}
+                    {{ f.inlineCheckbox("sireshnc","y", "non-cigarette Use (e.g. pipe, smokeless, vape, cannabis)") }}
+                    {{ f.inlineCheckbox("sireshot","y", "other") }}
+                    <input class="form-control form-inline" type="text" name="sireshoo" id="sireshoo"
                            placeholder="specify" required="required">
                 </div>
             </div>
@@ -306,7 +306,7 @@
                 <div class="radio">
                     <label>
                         <input type="radio" name="sildct" id="sildct-l" value="l">
-                        Not enroll at this time, okay to contact at this time
+                        Not enroll at this time, okay to contact in the future
                     </label>
                 </div>
                 <div class="radio">
@@ -404,90 +404,8 @@
     const newForm = "@@NEWFORM@@";
     if (newForm == "true") {
         $("#reason-for-change-container").remove();
-        $("#change-log-container").remove();
     }
 
-
-    function createFormValidator() {
-
-        const $form = $('#main-form');
-        const multiInputValidators = ['sipechrt', 'sipedisc', 'siremhlc', 'sipav', 'sirs'];
-
-        $form.formValidation({
-                fields: {
-                    sipechrt: {validators: {notEmpty: {message: 'Chart review is required'}}},
-                    sipedisc: {validators: {notEmpty: {message: 'Discussion review is required'}}},
-                    siremhlc: { //use a real element name for the field so conditional plugins can toggle the field
-                        selector: '[name^=sire]',
-                        validators: {choice: {min: 1, message: 'Select one or more reasons'}}
-                    },
-                    siremhoo: {validators: {notEmpty: {message: 'Other is required'}}},
-                    sireshoo: {validators: {notEmpty: {message: 'Other is required'}}},
-                    sireceoo: {validators: {notEmpty: {message: 'Other is required'}}},
-                    sireucoo: {validators: {notEmpty: {message: 'Other is required'}}},
-                    sidc: {
-                        validators: {
-                            notEmpty: {message: 'Contact date is required'},
-                            date: {max: VAPALS.todaysDate(), message: 'Contact date may not be in the future'}
-                        }
-                    },
-                    silnpos: {validators: {notEmpty: {message: 'Other is required'}}},
-                    sipav: {validators: {notEmpty: {message: 'Primary address verification is required'}}},
-                    sippn: {validators: {phone: {message: 'Not a valid US phone number', country: 'US'}}},
-                    sirs: {validators: {notEmpty: {message: 'Rural status is required'}}},
-                    sicpd: {
-                        validators: {
-                            notEmpty: {message: 'Packs per day is required'},
-                            integer: {message: 'must be a whole number'}
-                        }
-                    },
-                    sisny: {
-                        validators: {
-                            notEmpty: {message: 'Number of years is required'},
-                            integer: {message: 'must be a whole number'}
-                        }
-                    },
-                    siidmdc: {validators: {notEmpty: {message: 'Informed decision making is required'}}},
-                    sildct: {validators: {notEmpty: {message: 'Veterans\' option is required'}}},
-                    sistatus: {validators: {notEmpty: {message: 'Enrollment status is required'}}},
-                    sistachg: {validators: {notEmpty: {message: 'Reason for change is required'}}},
-                    sistreas: {validators: {notEmpty: {message: 'Explanation is required'}}},
-                },
-                plugins: {
-                    trigger: new FormValidation.plugins.Trigger(),
-                    bootstrap3: new FormValidation.plugins.Bootstrap3(),
-                    submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
-                    defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
-                    excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
-                    icon: new FormValidation.plugins.Icon({
-                        valid: '',
-                        invalid: 'glyphicon glyphicon-remove',
-                        validating: 'glyphicon glyphicon-refresh',
-                        onPlaced: function (e) {
-                            if (multiInputValidators.indexOf(e.field) > -1) {
-
-                                let selector = "";
-                                if (e.element.id) {
-                                    selector = "#" + e.element.id
-                                }
-                                else {
-                                    selector = "[name=" + e.element.name + "]"
-                                }
-
-                                $(selector).closest(".form-group").append(e.iconElement);
-                            }
-                        },
-                    })
-                }
-            }
-        );
-
-        const fv = $form.data('formValidation');
-        fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);
-        fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
-
-        return fv;
-    }
 
     $(function () {
 

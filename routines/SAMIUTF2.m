@@ -1,4 +1,4 @@
-SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 10/30/18 7:31pm
+SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 10/30/18 8:32pm
  ;;18.0;SAMI;;
  ;
  ;
@@ -116,16 +116,49 @@ UTSSUB2 ; @TEST -  used for Dom's new style forms
  D CHKEQ^%ut(utsuccess,1,"Testing SAMISUB2 used for Dom's forms FAILED!")
  q
  ;
-UTWSSBF ; background form access
+UTWSSBF ; @TEST - background form access
  ;wsSbform(rtn,filter)
+ n filter,rtn,arc,poo,nodea,nodep
+ s filter("studyid")="XXX00001"
+ d wsSbform^SAMIFRM2(.rtn,.filter)
+ m arc=@rtn
+ D PullUTarray^SAMIUTST(.poo,"UTWSSBF^SAMIUTF2")
+ s utsuccess=1
+ s nodep=$na(poo),nodea=$na(arc)
+ f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
+ . i '(@nodep=@nodea) s utsuccess=0
+ i 'nodea="" s utsuccess=0
+ D CHKEQ^%ut(utsuccess,1,"Testing background form access FAILED!")
  q
  ;
-UTWSIFM ; intake form access
+UTWSIFM ; @TEST - intake form access
  ;wsSiform
+ n filter,rtn,arc,poo,nodea,nodep
+ s filter("studyid")="XXX00001"
+ d wsSiform^SAMIFRM2(.rtn,.filter)
+ m arc=@rtn
+ D PullUTarray^SAMIUTST(.poo,"UTWSIFM^SAMIUTF2")
+ s utsuccess=1
+ s nodep=$na(poo),nodea=$na(arc)
+ f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
+ . i '(@nodep=@nodea) s utsuccess=0
+ i 'nodea="" s utsuccess=0
+ D CHKEQ^%ut(utsuccess,1,"Testing intake form access FAILED!")
  q
  ;
-UTCEFRM ; ctevaluation form access
+UTCEFRM ; @TEST - ctevaluation form access
  ;wsCeform(rtn,filter)
+ n filter,rtn,arc,poo,nodea,nodep
+ s filter("studyid")="XXX00001"
+ d wsCeform^SAMIFRM2(.rtn,.filter)
+ m arc=@rtn
+ D PullUTarray^SAMIUTST(.poo,"UTCEFRM^SAMIUTF2")
+ s utsuccess=1
+ s nodep=$na(poo),nodea=$na(arc)
+ f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
+ . i '(@nodep=@nodea) s utsuccess=0
+ i 'nodea="" s utsuccess=0
+ D CHKEQ^%ut(utsuccess,1,"Testing ctevaluation form access FAILED!")
  q
  ;
 UTFSRC ; fix html src lines to use resources in see/
@@ -140,6 +173,9 @@ UTFSRC ; fix html src lines to use resources in see/
  ;
 UTFHREF ; fix html href lines to use resources in see/
  ; fixHref(line)
+ n line,line2
+ S line="Some text then hfrf="""" for a test"
+ d fixHref^SAMIFRM2(.line)
  q
  ;
 UTGLST5 ; extrinsic returns the last5 for patient sid

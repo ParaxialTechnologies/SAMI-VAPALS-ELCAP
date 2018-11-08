@@ -32,6 +32,7 @@ saveFilter(sid,form,vars) ; extrinsic which returns the form key to use
  . . k @root@("graph",sid,form)
  . . s useform=moveto 
  if type="siform" d  ; intake form
+ . s vars("samifirsttime")="false"
  . n formdate s formdate=$g(vars("sidc")) ; date of the CT scan from the form
  . q:formdate=""
  . n fdate s fdate=$$key2fm^SAMICAS2(formdate) ; convert to fileman date

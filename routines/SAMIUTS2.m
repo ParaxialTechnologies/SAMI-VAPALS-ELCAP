@@ -1,4 +1,4 @@
-SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICAS2 ; 10/25/18 5:02pm
+SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICAS2 ; 11/1/18 10:27am
  ;;18.0;SAMI;;
  ;
  ;
@@ -20,7 +20,7 @@ UTGTMPL ; @TEST - get html template
  ;getTemplate(return,form)
  n temp,poou
  d getTemplate^SAMICAS2("temp","vapals:casereview")
- d PullUTdata^SAMIUTST(.poou,"vapals:casereview")
+ d PullUTarray^SAMIUTST(.poou,"UTGTMPL^SAMIUTS2")
  s utsuccess=1 n cnt s cnt=0
  f  s cnt=$O(poou(cnt)) q:'cnt  d
  . I '(poou(cnt)=temp(cnt)) s utsuccess=0 d
@@ -104,6 +104,18 @@ UTMKSBF ; @TEST - create background form
 UTMKCEF ; @TEST - create ct evaluation form
  ;makeCeform(sid,key)
  d CheckForm^SAMIUTS2("ceform","makeCeform",.utsuccess)
+ ; -----
+ ; We need to add additional fields to the ceform in
+ ;   vapals-patients that were deleted in SAMIUTH3 as
+ ;   they are used in other unit tests.  This will 
+ ;   not change the success of the test under way.
+ ;
+ n poo,root,vals
+ D PullUTarray^SAMIUTST(.poo,"UTNODUL^SAMICTR1 data")
+ s root=$$setroot^%wd("vapals-patients")
+ s vals=$na(@root@("graph","XXX00001","ceform-2018-10-21"))
+ m @vals=poo
+ ; -----
  D CHKEQ^%ut(utsuccess,1,"Testing create ct eval form FAILED!")
  q
  ;
@@ -135,7 +147,7 @@ UTWSCAS ; @TEST - generate case review page
  ;wsCASE(rtn,filter)
  n filter s filter("studyid")="XXX00001"
  n temp D wsCASE^SAMICAS2(.temp,.filter)
- n poou D PullUTdata^SAMIUTST(.poou,"wsCase-SAMICAS2")
+ n poou D PullUTarray^SAMIUTST(.poou,"UTWSCAS^SAMIUTS2")
  s utsuccess=1 n cnt s cnt=0
  f  s cnt=$O(poou(cnt)) q:'cnt  d
  . I '(poou(cnt)=temp(cnt)) s utsuccess=0 d

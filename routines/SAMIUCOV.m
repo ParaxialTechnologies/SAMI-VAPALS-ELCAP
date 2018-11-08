@@ -1,11 +1,14 @@
-SAMIUCOV ;ven/arc/lmry - Unit test overall coverage ;2018-11-08T17:56Z
+SAMIUCOV ;ven/arc/lmry - Unit test overall coverage ;2018-11-08T18:06Z
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
  ;
  ; @routine-credits
- ; @primary-dev: Alexis Carlson (arc)
+ ; @primary-dev:
+ ;  Alexis Carlson (arc)
  ;  alexis@vistaexpertise.net
+ ;  Linda Yaw (lmry)
+ ;  linda.yaw@vistaexpertise.net
  ; @primary-dev-org: Vista Expertise Network (ven)
  ;  http://vistaexpertise.net
  ; @copyright: 2012/2018, ven, all rights reserved
@@ -56,7 +59,7 @@ START ; Run the coverage tests
  set I=I+1,RUNCODE(I)="^SAMIUTVA"
  set I=I+1,RUNCODE(I)="^SAMIUTVS"
  set I=I+1,RUNCODE(I)="^SAMIUTRU"
- set I=I+1,RUNCODE(I)="^SAMIUSAV"
+ set I=I+1,RUNCODE(I)="^SAMIUTSV"
  ;
  ; Note that routine references may be specified in one of the following ways:
  ;   * MODULE         : Calls EN^%ut with the name as an argument.
@@ -96,7 +99,7 @@ START ; Run the coverage tests
  set I=I+1,XCLUDE(I)="SAMIUTVA"
  set I=I+1,XCLUDE(I)="SAMIUTVS"
  set I=I+1,XCLUDE(I)="SAMIUTRU"
- set I=I+1,XCLUDE(I)="SAMIUSAV"
+ set I=I+1,XCLUDE(I)="SAMIUTSV"
  ; Exclude low priority routines without complete unit tests
  set I=I+1,XCLUDE(I)="SAMID"
  set I=I+1,XCLUDE(I)="SAMIDOUT"

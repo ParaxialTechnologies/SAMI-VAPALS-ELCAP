@@ -86,15 +86,20 @@
                     if (fv) {
                         var inputFields = $container.find("input, select, textarea");
                         $.each(inputFields, function (i, t) {
-                            const field = $(t);
-                            const fieldName = field.attr("name");
-                            const isValidatedField = fv.options.fields[fieldName] != null;
-                            const isVisible = field.is(":visible");
+                            const $field = $(t);
+                            const fieldName = $field.attr("name");
+                            const isValidatedField = fv.fields[fieldName] != null;
+                            const isVisible = $field.is(":visible");
                             // console.log("resetting field " + fieldName);
 
                             if (isValidatedField) {
-                                fv.resetField(field);
-                                fv.enableFieldValidators(fieldName, isVisible);
+                                fv.resetField(fieldName);
+                                if (isVisible) {
+                                    fv.enableValidator(fieldName);
+                                }
+                                else {
+                                    fv.disableValidator(fieldName);
+                                }
                             }
                         });
                     }

@@ -43,7 +43,7 @@ function requireOneValidator($fields, $validatorControl) {
         $fields.on('change', function () {
             $validatorControl.val($fields.filter(":checked").length);
             fv.revalidateField($validatorControl);
-        })
+        });
         fv.addField($validatorControl.attr("name"), {
             excluded: function ($field, validator) {
                 //enabled only if at least one of its controlling fields is enabled
@@ -72,11 +72,11 @@ function requireOneValidator($fields, $validatorControl) {
  * @returns {boolean}
  */
 function validateDatePickerOnChange(e) {
-    var $datePicker = $(e.target)
+    var $datePicker = $(e.target);
     var fv = $datePicker.closest(".validated").data("formValidation");
     var $datePickerInput = $datePicker.find("input").addBack("input");
     if (fv && $datePickerInput.is(":enabled")) {
-        fv.revalidateField($datePickerInput);
+        fv.revalidateField($datePickerInput.attr('id'));
     }
     return true;
 }
@@ -187,7 +187,7 @@ function uncheckableRadio(elemSelector,commonParentSelector) {
         radio.data('checked', radio.prop("checked"));
 
         radio.on("click", function() {
-            const rd = $(this)
+            const rd = $(this);
             const thisName = $(this).attr("name");
             if (rd.data("checked")) {
                 // we need to uncheck it
@@ -245,7 +245,7 @@ $(function () {
         $('#delete-confirm-modal').modal('show');
         e.preventDefault();
         e.stopPropagation();
-    })
+    });
 
     $('#delete-form-cancel').on("click", function (e) {
         e.preventDefault();
@@ -256,9 +256,9 @@ $(function () {
     
     $('#delete-confirm-modal').keypress(function(e) {
         var c = String.fromCharCode(e.which);
-        if (e.which == 13 /* key code for Enter */ || c == "y" || c == "Y") {
+        if (e.which == 13 /* key code for Enter */ || c === "y" || c === "Y") {
             $("#delete-form-btn").trigger("click");
-        } else if (c == "n" || c == "N") {
+        } else if (c === "n" || c === "N") {
             $('#delete-form-cancel').trigger("click");
         }
     });
@@ -294,15 +294,15 @@ $(function () {
         form.submit();
 
         return false;
-    })
+    });
 
     $("input[type=text].decimalformat").on("blur", function(e) {
         const textField = e.target;
 
-        const fieldVal = $(textField).val()
+        const fieldVal = $(textField).val();
 
         if (fieldVal) {
-            textField.value = new Number(fieldVal).toFixed(1);
+            textField.value = Number(fieldVal).toFixed(1);
         }
     }).first().trigger('blur')
 

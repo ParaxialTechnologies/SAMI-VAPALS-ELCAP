@@ -404,8 +404,90 @@
     const newForm = "@@NEWFORM@@";
     if (newForm == "true") {
         $("#reason-for-change-container").remove();
+        $("#change-log-container").remove();
     }
 
+
+    function createFormValidator() {
+
+        const $form = $('#main-form');
+        const multiInputValidators = ['sipechrt', 'sipedisc', 'siremhlc', 'sipav', 'sirs'];
+
+        $form.formValidation({
+                fields: {
+                    sipechrt: {validators: {notEmpty: {message: 'Chart review is required'}}},
+                    sipedisc: {validators: {notEmpty: {message: 'Discussion review is required'}}},
+                    siremhlc: { //use a real element name for the field so conditional plugins can toggle the field
+                        selector: '[name^=sire]',
+                        validators: {choice: {min: 1, message: 'Select one or more reasons'}}
+                    },
+                    siremhoo: {validators: {notEmpty: {message: 'Other is required'}}},
+                    sireshoo: {validators: {notEmpty: {message: 'Other is required'}}},
+                    sireceoo: {validators: {notEmpty: {message: 'Other is required'}}},
+                    sireucoo: {validators: {notEmpty: {message: 'Other is required'}}},
+                    sidc: {
+                        validators: {
+                            notEmpty: {message: 'Contact date is required'},
+                            date: {max: VAPALS.todaysDate(), message: 'Contact date may not be in the future'}
+                        }
+                    },
+                    silnpos: {validators: {notEmpty: {message: 'Other is required'}}},
+                    sipav: {validators: {notEmpty: {message: 'Primary address verification is required'}}},
+                    sippn: {validators: {phone: {message: 'Not a valid US phone number', country: 'US'}}},
+                    sirs: {validators: {notEmpty: {message: 'Rural status is required'}}},
+                    sicpd: {
+                        validators: {
+                            notEmpty: {message: 'Packs per day is required'},
+                            integer: {message: 'must be a whole number'}
+                        }
+                    },
+                    sisny: {
+                        validators: {
+                            notEmpty: {message: 'Number of years is required'},
+                            integer: {message: 'must be a whole number'}
+                        }
+                    },
+                    siidmdc: {validators: {notEmpty: {message: 'Informed decision making is required'}}},
+                    sildct: {validators: {notEmpty: {message: 'Veterans\' option is required'}}},
+                    sistatus: {validators: {notEmpty: {message: 'Enrollment status is required'}}},
+                    sistachg: {validators: {notEmpty: {message: 'Reason for change is required'}}},
+                    sistreas: {validators: {notEmpty: {message: 'Explanation is required'}}},
+                },
+                plugins: {
+                    trigger: new FormValidation.plugins.Trigger(),
+                    bootstrap3: new FormValidation.plugins.Bootstrap3(),
+                    submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                    defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                    excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
+                    icon: new FormValidation.plugins.Icon({
+                        valid: '',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh',
+                        onPlaced: function (e) {
+                            if (multiInputValidators.indexOf(e.field) > -1) {
+
+                                let selector = "";
+                                if (e.element.id) {
+                                    selector = "#" + e.element.id
+                                }
+                                else {
+                                    selector = "[name=" + e.element.name + "]"
+                                }
+
+                                $(selector).closest(".form-group").append(e.iconElement);
+                            }
+                        },
+                    })
+                }
+            }
+        );
+
+        const fv = $form.data('formValidation');
+        fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);
+        fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
+
+        return fv;
+    }
 
     $(function () {
 

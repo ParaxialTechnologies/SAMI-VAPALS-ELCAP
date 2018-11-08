@@ -1,4 +1,4 @@
-SAMIUALL ;ven/lmry/arc - Unit test overall coverage ;2018-11-05T20:01Z
+SAMIUCOV ;ven/arc/lmry - Unit test overall coverage ;2018-11-08T17:56Z
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -12,7 +12,6 @@ SAMIUALL ;ven/lmry/arc - Unit test overall coverage ;2018-11-05T20:01Z
  ; @license: Apache 2.0
  ;  https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ; @last-updated: 2018-10-31T1854Z
  ; @application: SAMI
  ; @version: 18.0
  ; @patch-list: none yet
@@ -56,6 +55,8 @@ START ; Run the coverage tests
  set I=I+1,RUNCODE(I)="^SAMIUTC2"
  set I=I+1,RUNCODE(I)="^SAMIUTVA"
  set I=I+1,RUNCODE(I)="^SAMIUTVS"
+ set I=I+1,RUNCODE(I)="^SAMIUTRU"
+ set I=I+1,RUNCODE(I)="^SAMIUSAV"
  ;
  ; Note that routine references may be specified in one of the following ways:
  ;   * MODULE         : Calls EN^%ut with the name as an argument.
@@ -66,7 +67,7 @@ START ; Run the coverage tests
  ;
  ; Exclude the unit-test routines
  set I=0
- set I=I+1,XCLUDE(I)="SAMIUALL"
+ set I=I+1,XCLUDE(I)="SAMIUCOV"
  set I=I+1,XCLUDE(I)="SAMIUTST"
  set I=I+1,XCLUDE(I)="SAMIUTM2"
  set I=I+1,XCLUDE(I)="SAMIUTH3"
@@ -94,21 +95,22 @@ START ; Run the coverage tests
  set I=I+1,XCLUDE(I)="SAMIUTC2"
  set I=I+1,XCLUDE(I)="SAMIUTVA"
  set I=I+1,XCLUDE(I)="SAMIUTVS"
- ; These are low priority routines without complete unit tests
+ set I=I+1,XCLUDE(I)="SAMIUTRU"
+ set I=I+1,XCLUDE(I)="SAMIUSAV"
+ ; Exclude low priority routines without complete unit tests
  set I=I+1,XCLUDE(I)="SAMID"
  set I=I+1,XCLUDE(I)="SAMIDOUT"
  set I=I+1,XCLUDE(I)="SAMIDSSN"
  set I=I+1,XCLUDE(I)="SAMIVSTR"
- ; These are incomplete unit tests for low priority routines
+ ; Exclude incomplete unit tests for low priority routines
  set I=I+1,XCLUDE(I)="SAMIUTDS"
  set I=I+1,XCLUDE(I)="SAMIUTID"
  set I=I+1,XCLUDE(I)="SAMIUTOT"
  set I=I+1,XCLUDE(I)="SAMIUTVR"
- ; These are deprecated routines
+ ; Exclude deprecated routines
  ; set I=I+1,XCLUDE(I)="ROUTINE"
  ;
  ; Add the XCLUDE values to the TMP variable that tracks this coverage test.
- ;
  merge ^TMP("SAMI",$JOB,"XCLUDE")=XCLUDE
  ;
  do COVERAGE^%ut(NAMESPAC,.RUNCODE,.XCLUDE,2)
@@ -116,4 +118,4 @@ START ; Run the coverage tests
  quit  ; end of START
  ;
  ;
-EOR ; End of routine SAMIUALL
+EOR ; End of routine SAMIUCOV

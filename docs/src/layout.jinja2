@@ -17,14 +17,17 @@
     <link href="{{ path }}lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
     {% block head %}{% endblock %}
 </head>
-<body>
+<body id="body" style="position: relative;">
 <script src="{{ path }}lib/jquery-3.3.1.min.js"></script>
 <script src="{{ path }}lib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 <script src="{{ path }}lib/popper.min.js"></script>
 <script src="{{ path }}lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script src="{{ path }}lib/moment.js"></script>
-<script src="{{ path }}lib/formvalidation/dist/js/formValidation.min.js"></script>
-<script src="{{ path }}lib/formvalidation/dist/js/framework/bootstrap.min.js"></script>
+
+<script src="{{ path }}lib/formvalidation/dist/js/FormValidation.min.js"></script>
+<script src="{{ path }}lib/formvalidation/dist/js/plugins/Wizard.min.js"></script>
+<script src="{{ path }}lib/formvalidation/dist/js/plugins/Bootstrap3.min.js"></script>
+<script src="{{ path }}lib/formvalidation/dist/js/plugins/J.min.js"></script>
 <script src="{{ path }}lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 <script src="{{ path }}lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.js"></script>
 <script src="{{ path }}lib/clipboard.js"></script>
@@ -113,20 +116,19 @@
     $(function () {
         /** These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly. **/
         const $forms = $("form.validated");
-        $.each($forms.find("select, textarea, input:visible, [name^='validator-']"), function (i, o) {
+        $.each($forms.find("select, textarea, input:visible"), function () {
             const $input = $(this);
             if ($input.closest(".form-group").length === 0) {
                 console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
             }
         });
 
-        $.each($forms.find("input[type=hidden][required]"), function (i, o) {
-            const $input = $(this);
+        $.each($forms.find("input[type=hidden][required]"), function () {
             console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
         });
 
         $.ajax("/ctversion", {
-            success: function (data, textStatus, jqXHR) {
+            success: function (data) {
                 const v = data.ctversion;
                 $("#formMode").text(v.toUpperCase());
             },
@@ -138,7 +140,7 @@
         $("input[type=checkbox]").change(function () {
             const checked = $(this).is(":checked");
             const fieldName = $(this).attr('name');
-            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function (i, v) {
+            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function () {
                 return checked;
             });
         });

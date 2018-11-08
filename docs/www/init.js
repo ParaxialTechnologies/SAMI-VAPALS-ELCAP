@@ -24,47 +24,6 @@ function numericHandlerKeydown(e) {
     }
 }
 
-/**
- * Adds a formValidation validator that ensures at least one of the checkboxes in $fields is selected.
- * This validator is dynamically enabled/disabled based on how many of it's triggering $fields are enabled.
- * @param $fields the checkbox fields
- * @param $validatorControl a hidden input field used to track how many checkboxes are selected.
- */
-function requireOneValidator($fields, $validatorControl) {
-    var fv = $("form.validated").data("formValidation");
-    if (fv) {
-        //put the list of fields onto the validator control so we can refer back to them to determine if the
-        // validators should be enabled when triggered.
-        $validatorControl.data("fv-fields", $fields);
-
-        // set the initial value of the field to the state of the watched fields
-        $validatorControl.val($fields.filter(":checked").length);
-        
-        $fields.on('change', function () {
-            $validatorControl.val($fields.filter(":checked").length);
-            fv.revalidateField($validatorControl);
-        })
-        fv.addField($validatorControl.attr("name"), {
-            excluded: function ($field, validator) {
-                //enabled only if at least one of its controlling fields is enabled
-                //return $field.data("fv-fields").filter(":enabled").length == 0;
-                //return $field.closest(":disabled").length>0;
-                return false;
-            },
-            validators: {
-                callback: {
-                    callback: function (value, validator, $field) {
-                        return {
-                            //valid if all $fields are disabled or if the number of checked boxes is > 0
-                            valid: $field.data("fv-fields").filter(":enabled").length == 0 || $field.val() > 0,
-                            message: 'At least one selection is required'
-                        }
-                    }
-                }
-            }
-        });
-    }
-}
 
 /**
  * Helper function that revalidates a date when it has changed by manual change or via the datepicker plugin
@@ -72,11 +31,12 @@ function requireOneValidator($fields, $validatorControl) {
  * @returns {boolean}
  */
 function validateDatePickerOnChange(e) {
-    var $datePicker = $(e.target)
+    var $datePicker = $(e.target);
     var fv = $datePicker.closest(".validated").data("formValidation");
     var $datePickerInput = $datePicker.find("input").addBack("input");
     if (fv && $datePickerInput.is(":enabled")) {
-        fv.revalidateField($datePickerInput);
+        console.log('revalidating the date control');
+        fv.revalidateField($datePickerInput.attr('id'));
     }
     return true;
 }
@@ -96,7 +56,7 @@ function initTabbedNavigation(tabContainerId, tabContentContainerId) {
     }
 
     function checkCompleteness($container) {
-        var $requiredFields = $container.find("[required], [data-fv-notempty=true]").filter(":enabled"),
+        var $requiredFields = $container.find("[required]").filter(":enabled"),
             $tab = $(".nav-tabs").find("a[href='#" + $container.attr("id") + "']");
         var emptyRequiredFields = $requiredFields.filter(function () {
             var $c = $(this);
@@ -135,7 +95,9 @@ function initTabbedNavigation(tabContainerId, tabContentContainerId) {
         var currentTab = e.target;
         var tabContentSelector = $(currentTab).attr("href");
         var fv = $(".validated").data('formValidation');
-        fv.validateContainer(tabContentSelector);
+        if (fv) {
+            fv.validateContainer(tabContentSelector);
+        }
         $(tabContentSelector).find("input, select").first().trigger('change'); //TODO: is this necessary?
     }).on("shown.bs.tab", function () {
         $(".btn-next").toggleClass("disabled", !getNextTabId());
@@ -165,31 +127,31 @@ function initTabbedNavigation(tabContainerId, tabContentContainerId) {
     @param checkboxName the 'name' attribute of the checkbox input element
 */
 function exclusiveCheckbox(elemSelector, commonParentSelector) {
-    $(elemSelector).on("click",function() {
+    $(elemSelector).on("click", function () {
         const thisId = $(this).attr("id");
         const thisName = $(this).attr("name");
         if (this.checked) {
             $(this).closest(commonParentSelector).find('input[name="' + thisName + '"]:checked').filter(
-                function(idx,elem) {
-                    return $(elem).attr("id")!=thisId
+                function (idx, elem) {
+                    return $(elem).attr("id") != thisId
                 }
             ).prop('checked', false);
         }
-    }); 
+    });
 }
 
-function uncheckableRadio(elemSelector,commonParentSelector) {
+function uncheckableRadio(elemSelector, commonParentSelector) {
     // when you click a radio, it always is checked, so we need to store its state somewhere else
-    $(elemSelector).each(function() {
+    $(elemSelector).each(function () {
         const radio = $(this);
         radio.data('checked', radio.prop("checked"));
 
-        radio.on("click", function() {
-            const rd = $(this)
+        radio.on("click", function () {
+            const rd = $(this);
             const thisName = $(this).attr("name");
             if (rd.data("checked")) {
                 // we need to uncheck it
-                rd.prop("checked",false);
+                rd.prop("checked", false);
                 rd.data("checked", false);
                 rd.trigger('change');
             } else {
@@ -200,6 +162,10 @@ function uncheckableRadio(elemSelector,commonParentSelector) {
         });
 
     });
+}
+
+function notDash(fvInput) {
+    return fvInput.value !== '-';
 }
 
 //global application handlers
@@ -239,11 +205,11 @@ $(function () {
     });
 
     /** Handling of the delete form modal */
-    $("#delete-form").on("click", function(e) {
+    $("#delete-form").on("click", function (e) {
         $('#delete-confirm-modal').modal('show');
         e.preventDefault();
         e.stopPropagation();
-    })
+    });
 
     $('#delete-form-cancel').on("click", function (e) {
         e.preventDefault();
@@ -251,12 +217,12 @@ $(function () {
 
         $('#delete-confirm-modal').modal('hide');
     });
-    
-    $('#delete-confirm-modal').keypress(function(e) {
+
+    $('#delete-confirm-modal').keypress(function (e) {
         var c = String.fromCharCode(e.which);
-        if (e.which == 13 /* key code for Enter */ || c == "y" || c == "Y") {
+        if (e.which == 13 /* key code for Enter */ || c === "y" || c === "Y") {
             $("#delete-form-btn").trigger("click");
-        } else if (c == "n" || c == "N") {
+        } else if (c === "n" || c === "N") {
             $('#delete-form-cancel').trigger("click");
         }
     });
@@ -292,18 +258,17 @@ $(function () {
         form.submit();
 
         return false;
-    })
+    });
 
-    $("input[type=text].decimalformat").on("blur", function(e) {
+    $("input[type=text].decimalformat").on("blur", function (e) {
         const textField = e.target;
 
-        const fieldVal = $(textField).val()
+        const fieldVal = $(textField).val();
 
         if (fieldVal) {
-            textField.value = new Number(fieldVal).toFixed(1);
+            textField.value = Number(fieldVal).toFixed(1);
         }
     }).first().trigger('blur')
-
 
 
 });

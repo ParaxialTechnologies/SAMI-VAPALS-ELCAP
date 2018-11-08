@@ -49,7 +49,7 @@
         };
 
 
-        this.on('change.conditionally-display', function () {
+        this.on('change.conditionally-display, keyup.conditionally-display', function () {
             var $el = $(this);
             var actualValue = $el.is(":checkbox, :radio") ? ($el.is(":checked") ? $el.val() : "") : $el.val();
 
@@ -84,17 +84,22 @@
                 if ($container != null && typeof $container !== 'undefined') {
                     var fv = $container.closest("form.validated").data('formValidation');
                     if (fv) {
-                        var inputFields = $container.find("input, select, textarea");
+                        var inputFields = $container.find("input, select, textarea")
+                            .addBack('input, select, textarea'); //include container object if it's actually an input
                         $.each(inputFields, function (i, t) {
-                            const field = $(t);
-                            const fieldName = field.attr("name");
-                            const isValidatedField = fv.options.fields[fieldName] != null;
-                            const isVisible = field.is(":visible");
-                            // console.log("resetting field " + fieldName);
+                            const $field = $(t);
+                            const fieldName = $field.attr("name");
+                            const isValidatedField = fv.fields[fieldName] != null;
+                            const isVisible = $field.is(":visible");
 
                             if (isValidatedField) {
-                                fv.resetField(field);
-                                fv.enableFieldValidators(fieldName, isVisible);
+                                fv.resetField(fieldName);
+                                if (isVisible) {
+                                    fv.enableValidator(fieldName);
+                                }
+                                else {
+                                    fv.disableValidator(fieldName);
+                                }
                             }
                         });
                     }

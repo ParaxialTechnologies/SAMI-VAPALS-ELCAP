@@ -17,7 +17,7 @@
   <link href="../www/lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
   <link href="../www/lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
  </head>
- <body>
+ <body id="body" style="position: relative;">
   <script src="../www/lib/jquery-3.3.1.min.js">
   </script>
   <script src="../www/lib/jquery-ui-1.12.1/jquery-ui.min.js">
@@ -28,9 +28,13 @@
   </script>
   <script src="../www/lib/moment.js">
   </script>
-  <script src="../www/lib/formvalidation/dist/js/formValidation.min.js">
+  <script src="../www/lib/formvalidation/dist/js/FormValidation.min.js">
   </script>
-  <script src="../www/lib/formvalidation/dist/js/framework/bootstrap.min.js">
+  <script src="../www/lib/formvalidation/dist/js/plugins/Wizard.min.js">
+  </script>
+  <script src="../www/lib/formvalidation/dist/js/plugins/Bootstrap3.min.js">
+  </script>
+  <script src="../www/lib/formvalidation/dist/js/plugins/J.min.js">
   </script>
   <script src="../www/lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js">
   </script>
@@ -139,7 +143,7 @@
     </small>
    </h2>
    <hr/>
-   <form action="intake.html" class="validated" data-fv-button-selector="#submit-button" data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-validating="glyphicon glyphicon-refresh" method="get">
+   <form action="intake.html" class="validated" id="main-form" method="get">
     <input name="samiroute" type="hidden" value="postform"/>
     <input name="studyid" type="hidden" value="@@SID@@"/>
     <input name="form" type="hidden" value="@@FORMKEY@@"/>
@@ -152,13 +156,13 @@
        Eligible based on chart?
       </label>
      </div>
-     <div class="col-sm-2 form-group">
+     <div class="col-sm-3 form-group">
       <label class="radio-inline" for="sipechrt-y">
-       <input data-fv-notempty-message="Please select a value" id="sipechrt-y" name="sipechrt" required="required" type="radio" value="y"/>
+       <input id="sipechrt-y" name="sipechrt" required="required" type="radio" value="y"/>
        Yes
       </label>
       <label class="radio-inline" for="sipechrt-n">
-       <input data-fv-notempty-message="Please select a value" id="sipechrt-n" name="sipechrt" required="required" type="radio" value="n"/>
+       <input id="sipechrt-n" name="sipechrt" required="required" type="radio" value="n"/>
        No
       </label>
      </div>
@@ -178,13 +182,13 @@
        Eligible based on discussion with patient?
       </label>
      </div>
-     <div class="col-sm-2 form-group">
+     <div class="col-sm-3 form-group">
       <label class="radio-inline" for="sipedisc-y">
-       <input data-fv-notempty-message="Please select a value" id="sipedisc-y" name="sipedisc" required="required" type="radio" value="y"/>
+       <input id="sipedisc-y" name="sipedisc" required="required" type="radio" value="y"/>
        Yes
       </label>
       <label class="radio-inline" for="sipedisc-n">
-       <input data-fv-notempty-message="Please select a value" id="sipedisc-n" name="sipedisc" required="required" type="radio" value="n"/>
+       <input id="sipedisc-n" name="sipedisc" required="required" type="radio" value="n"/>
        No
       </label>
      </div>
@@ -314,7 +318,7 @@
        Date of contact
       </label>
       <div class="input-group datepicker">
-       <input aria-describedby="sidc-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" data-fv-notempty-message="Date of contact is required" id="sidc" name="sidc" required="required"/>
+       <input aria-describedby="sidc-addon" class="form-control" id="sidc" name="sidc"/>
        <div class="input-group-addon">
         <div class="input-group-text" id="sidc-addon">
          <i aria-hidden="true" class="fa fa-calendar">
@@ -388,7 +392,7 @@
        Primary address verified
       </label>
       <label class="radio-inline" for="sipav-y">
-       <input data-fv-notempty-message="Please select a value" id="sipav-y" name="sipav" required="required" type="radio" value="y"/>
+       <input id="sipav-y" name="sipav" required="required" type="radio" value="y"/>
        Yes
       </label>
       <label class="radio-inline" for="sipav-n">
@@ -448,7 +452,7 @@
       <label for="sippn">
        Phone number
       </label>
-      <input class="form-control" data-fv-phone="true" data-fv-phone-country="US" id="sippn" name="sippn" type="text"/>
+      <input class="form-control" id="sippn" name="sippn" type="text"/>
      </div>
     </div>
     <div class="row">
@@ -457,7 +461,7 @@
        Rural status
       </label>
       <label class="radio-inline" for="sirs-u">
-       <input data-fv-notempty-message="Please select a value" id="sirs-u" name="sirs" required="required" type="radio" value="u"/>
+       <input id="sirs-u" name="sirs" required="required" type="radio" value="u"/>
        Urban
       </label>
       <label class="radio-inline" for="sirs-r">
@@ -577,7 +581,7 @@
      </div>
      <div class="col-sm-4 col-md-3 col-lg-2 form-group">
       <div class="input-group datepicker">
-       <input aria-describedby="siq-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" id="siq" name="siq"/>
+       <input aria-describedby="siq-addon" class="form-control" id="siq" name="siq"/>
        <div class="input-group-addon">
         <div class="input-group-text" id="siq-addon">
          <i aria-hidden="true" class="fa fa-calendar">
@@ -614,7 +618,7 @@
      </div>
      <div class="col-md-4 form-group">
       <div class="input-group datepicker">
-       <input aria-describedby="sicadx-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" id="sicadx" name="sicadx"/>
+       <input aria-describedby="sicadx-addon" class="form-control" id="sicadx" name="sicadx"/>
        <div class="input-group-addon">
         <div class="input-group-text" id="sicadx-addon">
          <i aria-hidden="true" class="fa fa-calendar">
@@ -644,7 +648,7 @@
      </div>
      <div class="col-md-4 form-group">
       <div class="input-group datepicker">
-       <input aria-describedby="sipldct-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" id="sipldct" name="sipldct"/>
+       <input aria-describedby="sipldct-addon" class="form-control" id="sipldct" name="sipldct"/>
        <div class="input-group-addon">
         <div class="input-group-text" id="sipldct-addon">
          <i aria-hidden="true" class="fa fa-calendar">
@@ -669,7 +673,7 @@
       <div class="checkbox">
        <label class="required">
         <input name="siidmdc" type="hidden" value=""/>
-        <input data-fv-notempty-message="Confirm that the discussion has taken place" id="siidmdc" name="siidmdc" required="True" type="checkbox" value="1"/>
+        <input id="siidmdc" name="siidmdc" required="True" type="checkbox" value="1"/>
         Informed Decision Making discussion complete
        </label>
       </div>
@@ -732,7 +736,7 @@
       </label>
       <br/>
       <label class="radio-inline" for="sistatus-active">
-       <input data-fv-notempty-message="Please select a value" id="sistatus-active" name="sistatus" required="required" type="radio" value="active"/>
+       <input id="sistatus-active" name="sistatus" required="required" type="radio" value="active"/>
        Active
       </label>
       <label class="radio-inline" for="sistatus-inactive">
@@ -741,7 +745,7 @@
       </label>
      </div>
     </div>
-    <div id="reason-for-change-container">
+    <div id="reason-for-change-container" style="display: none;">
      <hr/>
      <h3>
       Reason for change
@@ -753,7 +757,7 @@
        </label>
        <br/>
        <select class="form-control" id="sistachg" name="sistachg" required="required">
-        <option>
+        <option value="">
          -
         </option>
         <option value="transferred">
@@ -813,7 +817,14 @@
        <textarea class="form-control" id="sistreas" name="sistreas" type="text"></textarea>
       </div>
      </div>
-     <pre class="prettyprint source linenums" id="changelog">2018-10-31 12:00 PM - {USERNAME} changed to {FIELD} to {VALUE}: {REASON} - {EXPLANATION}</pre>
+    </div>
+    <div class="row" id="change-log-container">
+     <div class="col-sm-12">
+      <h4>
+       Change Log
+      </h4>
+      <pre class="prettyprint source linenums" id="changelog">2018-10-31 12:00 PM - {USERNAME} changed to {FIELD} to {VALUE}: {REASON} - {EXPLANATION}</pre>
+     </div>
     </div>
     <hr/>
     <div class="pull-left">
@@ -870,7 +881,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2018.11.02
+     2018.11.08
     </span>
    </div>
   </footer>
@@ -893,20 +904,19 @@
     $(function () {
         /** These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly. **/
         const $forms = $("form.validated");
-        $.each($forms.find("select, textarea, input:visible, [name^='validator-']"), function (i, o) {
+        $.each($forms.find("select, textarea, input:visible"), function () {
             const $input = $(this);
             if ($input.closest(".form-group").length === 0) {
                 console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
             }
         });
 
-        $.each($forms.find("input[type=hidden][required]"), function (i, o) {
-            const $input = $(this);
+        $.each($forms.find("input[type=hidden][required]"), function () {
             console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
         });
 
         $.ajax("/ctversion", {
-            success: function (data, textStatus, jqXHR) {
+            success: function (data) {
                 const v = data.ctversion;
                 $("#formMode").text(v.toUpperCase());
             },
@@ -918,7 +928,7 @@
         $("input[type=checkbox]").change(function () {
             const checked = $(this).is(":checked");
             const fieldName = $(this).attr('name');
-            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function (i, v) {
+            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function () {
                 return checked;
             });
         });
@@ -933,32 +943,36 @@
     const newForm = "@@NEWFORM@@";
     if (newForm == "true") {
         $("#reason-for-change-container").remove();
-        $("#discussion-container").hide();
     }
+
 
     $(function () {
 
+        createFormValidator();
+
         $("#sicpd").on('keyup change', function () {
-            var cigsPerDay = $("#sicpd").val();
+            const cigsPerDay = $("#sicpd").val();
+            const $sippd = $("#sippd");
+            const $sippdVal = $("#sippd-val");
             if (cigsPerDay >= 0) {
-                var cpd = (cigsPerDay / 20).toFixed(2);
+                const cpd = (cigsPerDay / 20).toFixed(2);
                 if (cpd > 0) {
-                    $("#sippd").val(cpd);
-                    $("#sippd-val").text(cpd);
+                    $sippd.val(cpd);
+                    $sippdVal.text(cpd);
                 }
                 else {
-                    $("#sippd").val("");
-                    $("#sippd-val").text("-");
+                    $sippd.val("");
+                    $sippdVal.text("-");
                 }
-                $("#sippd").change();
+                $sippd.change();
             }
         }).trigger('change');
 
         $("#sippd, #sisny").on('keyup change', function () {
-            var packsPerDay = $("#sippd").val();
-            var cigYears = $("#sisny").val();
+            const packsPerDay = $("#sippd").val();
+            const cigYears = $("#sisny").val();
             if (packsPerDay > 0 && cigYears > 0) {
-                var packYears = (packsPerDay * cigYears).toFixed(1);
+                const packYears = (packsPerDay * cigYears).toFixed(1);
                 if (packYears > 0) {
                     $("#sippy").val(packYears);
                     $("#sippy-val").text(packYears);
@@ -976,6 +990,21 @@
             sourceValues: "n",
             enable: "#reason-container, #reason-medical-container, #reason-smoking-container, #reason-elsewhere-container",
             disable: "#discussion-container, #reason-contact-container"
+        }).on('change', function () {
+            const value = $("[name=sipechrt]:checked").val();
+            const $yesAlert = $("#sipechrt-y-alert"), $noAlert = $("#sipechrt-n-alert");
+            if (value === "n") {
+                $yesAlert.hide();
+                $noAlert.show();
+            }
+            else if (value === "y") {
+                $yesAlert.show();
+                $noAlert.hide();
+            }
+            else {
+                $yesAlert.hide();
+                $noAlert.hide();
+            }
         });
 
         //Pre-Enrollment: Patient discussion
@@ -990,43 +1019,15 @@
         $("#sireceot").conditionallyDisplay({value: "y", enable: "#sireceoo"});
         $("#sireucot").conditionallyDisplay({value: "y", enable: "#sireucoo"});
 
+
         //Contact info - how did you learn about LCS
         $("#silnpo").conditionallyEnable({sourceValues: "1", enable: "#silnpos"});
 
-
-        $("form.validated").formValidation({framework: 'bootstrap'});
-
         $("[name=sistatus]").on('change', function () {
-            $("#status-change-container").show();
+            if ($("#sistatus-inactive").is(":checked")) {
+                $("#reason-for-change-container").show();
+            }
         });
-
-        $("[name=sipechrt]").on('change', function () {
-            var value = $("[name=sipechrt]:checked").val();
-            var $yesAlert = $("#sipechrt-y-alert"), $noAlert = $("#sipechrt-n-alert");
-            if (value === "n") {
-                $yesAlert.hide();
-                $noAlert.show();
-            }
-            else if (value === "y") {
-                $yesAlert.show();
-                $noAlert.hide();
-            }
-            else {
-                $yesAlert.hide();
-                $noAlert.hide();
-            }
-
-            $('input:radio[name=bedStatus]:checked').change(function () {
-                if ($("input[name='bedStatus']:checked").val() == 'allot') {
-                    alert("Allot Thai Gayo Bhai");
-                }
-                if ($("input[name='bedStatus']:checked").val() == 'transfer') {
-                    alert("Transfer Thai Gayo");
-                }
-            });
-
-
-        })
     });
   </script>
  </body>

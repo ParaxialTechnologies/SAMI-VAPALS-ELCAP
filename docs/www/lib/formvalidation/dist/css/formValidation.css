@@ -1,299 +1,455 @@
-/*!
- * FormValidation (http://formvalidation.io)
- * The best jQuery plugin to validate form fields. Support Bootstrap, Foundation, Pure, SemanticUI, UIKit and custom frameworks
- *
- * @version     v0.8.1, built on 2016-07-29 1:10:54 AM
- * @author      https://twitter.com/formvalidation
- * @copyright   (c) 2013 - 2016 Nguyen Huu Phuoc
- * @license     http://formvalidation.io/license/
+/**
+ * FormValidation (https://formvalidation.io)
+ * The best validation library for JavaScript
+ * (c) 2013 - 2018 Nguyen Huu Phuoc <me@phuoc.ng>
  */
-.fv-has-feedback {
-    position: relative;
-}
+.fv-sr-only {
+  display: none; }
 
-.fv-control-feedback {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 3;
-    display: block;
-    text-align: center;
-}
+.fv-plugins-framework input::-ms-clear,
+.fv-plugins-framework textarea::-ms-clear {
+  display: none;
+  height: 0;
+  width: 0; }
 
-.fv-help-block {
-    display: block;
-}
+.fv-plugins-icon-container {
+  position: relative; }
 
-/* Hide the clear icon for field using placeholder attribute on IE10/11 */
-.fv-form [placeholder]::-ms-clear {
-    display: none;
-}
+.fv-plugins-icon {
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0; }
 
-/* -------------------
- * Support Bootstrap 3
- * ------------------- */
+.fv-plugins-tooltip {
+  position: absolute;
+  z-index: 10000; }
+  .fv-plugins-tooltip .fv-plugins-tooltip__content {
+    background: #000;
+    border-radius: 3px;
+    color: #eee;
+    padding: 10px;
+    position: relative; }
+    .fv-plugins-tooltip .fv-plugins-tooltip__content:before {
+      border: 8px solid transparent;
+      content: '';
+      position: absolute; }
 
-.fv-form-bootstrap .help-block {
-    margin-bottom: 0;
-}
+.fv-plugins-tooltip--hide {
+  opacity: 0; }
 
-.fv-form-bootstrap .tooltip-inner {
-    text-align: left;
-}
+.fv-plugins-tooltip--top-left {
+  margin-top: 8px; }
+  .fv-plugins-tooltip--top-left .fv-plugins-tooltip__content:before {
+    border-top-color: #000;
+    left: 8px;
+    top: 100%; }
 
-.fv-form-bootstrap .fv-bootstrap-icon-input-group {
-    z-index: 100;
-}
+.fv-plugins-tooltip--top {
+  margin-top: 8px; }
+  .fv-plugins-tooltip--top .fv-plugins-tooltip__content:before {
+    border-top-color: #000;
+    left: 50%;
+    margin-left: -8px;
+    top: 100%; }
 
-/* Inline form */
-.form-inline.fv-form-bootstrap .form-group {
-    vertical-align: top;
-}
+.fv-plugins-tooltip--top-right {
+  margin-top: 8px; }
+  .fv-plugins-tooltip--top-right .fv-plugins-tooltip__content:before {
+    border-top-color: #000;
+    right: 8px;
+    top: 100%; }
 
-/* -------------------------
- * Support Bootstrap 4 alpha
- * ------------------------- */
+.fv-plugins-tooltip--right .fv-plugins-tooltip__content:before {
+  border-right-color: #000;
+  margin-top: -8px;
+  right: 100%;
+  top: 50%; }
 
-.fv-form-bootstrap4 .fv-control-feedback {
-    width: 38px;
+.fv-plugins-tooltip--bottom-right {
+  margin-top: 8px; }
+  .fv-plugins-tooltip--bottom-right .fv-plugins-tooltip__content:before {
+    border-bottom-color: #000;
+    bottom: 100%;
+    right: 8px; }
+
+.fv-plugins-tooltip--bottom {
+  margin-top: 8px; }
+  .fv-plugins-tooltip--bottom .fv-plugins-tooltip__content:before {
+    border-bottom-color: #000;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -8px; }
+
+.fv-plugins-tooltip--bottom-left {
+  margin-top: 8px; }
+  .fv-plugins-tooltip--bottom-left .fv-plugins-tooltip__content:before {
+    border-bottom-color: #000;
+    bottom: 100%;
+    left: 8px; }
+
+.fv-plugins-tooltip--left .fv-plugins-tooltip__content:before {
+  border-left-color: #000;
+  left: 100%;
+  margin-top: -8px;
+  top: 50%; }
+
+.fv-plugins-tooltip-icon {
+  cursor: pointer;
+  pointer-events: inherit; }
+
+.fv-plugins-bootstrap {
+  /* For horizontal form */
+  /* Stacked form */
+  /* Inline form */ }
+  .fv-plugins-bootstrap .fv-help-block {
+    color: #dc3545;
+    font-size: 80%;
+    margin-top: .25rem; }
+  .fv-plugins-bootstrap .is-invalid ~ .form-check-label,
+  .fv-plugins-bootstrap .is-valid ~ .form-check-label {
+    color: inherit; }
+  .fv-plugins-bootstrap .has-danger .fv-plugins-icon {
+    color: #dc3545; }
+  .fv-plugins-bootstrap .has-success .fv-plugins-icon {
+    color: #28a745; }
+  .fv-plugins-bootstrap .fv-plugins-icon {
     height: 38px;
     line-height: 38px;
-}
+    width: 38px; }
+  .fv-plugins-bootstrap .input-group ~ .fv-plugins-icon {
+    z-index: 3; }
+  .fv-plugins-bootstrap .form-group.row .fv-plugins-icon {
+    right: 15px; }
+  .fv-plugins-bootstrap .form-group.row .fv-plugins-icon-check {
+    top: -7px;
+    /* labelHeight/2 - iconHeight/2 */ }
+  .fv-plugins-bootstrap:not(.form-inline) label ~ .fv-plugins-icon {
+    top: 32px; }
+  .fv-plugins-bootstrap:not(.form-inline) label ~ .fv-plugins-icon-check {
+    top: 25px; }
+  .fv-plugins-bootstrap:not(.form-inline) label.sr-only ~ .fv-plugins-icon-check {
+    top: -7px; }
+  .fv-plugins-bootstrap.form-inline .form-group {
+    align-items: flex-start;
+    flex-direction: column;
+    margin-bottom: auto; }
 
-/* For horizontal form */
-.fv-form-bootstrap4 .form-group.row .fv-control-feedback {
-    right: 15px;
-}
-.fv-form-bootstrap4 .form-group.row .form-check~.fv-control-feedback {
-    top: -7px; /* labelHeight/2 - iconHeight/2 */
-}
-/* Inline form */
-.fv-form-bootstrap4.form-inline .form-group {
-    vertical-align: top;
-}
-/* Stacked form */
-.fv-form-bootstrap4:not(.form-inline) label~.fv-control-feedback {
-    top: 32px;
-}
-/* Without label */
-.fv-form-bootstrap4:not(.form-inline) label.sr-only~.fv-control-feedback {
-    top: -7px; /* labelHeight/2 - iconHeight/2 */
-}
-.fv-form-bootstrap4:not(.form-inline) .form-check~.fv-control-feedback {
-    top: 25px; /* labelHeight + checkboxHeight/2 - iconHeight/2 */
-}
+.fv-plugins-bootstrap3 .help-block {
+  margin-bottom: 0; }
 
-.fv-form-bootstrap4 .has-success label,
-.fv-form-bootstrap4 .has-success .fv-control-feedback {
-    color: #5cb85c;
-}
+.fv-plugins-bootstrap3 .input-group ~ .form-control-feedback {
+  z-index: 4; }
 
-.fv-form-bootstrap4 .has-warning label,
-.fv-form-bootstrap4 .has-warning .fv-control-feedback {
-    color: #f0ad4e;
-}
+.fv-plugins-bootstrap3.form-inline .form-group {
+  vertical-align: top; }
 
-/* --------------------
- * Support Foundation 5
- * -------------------- */
+.fv-plugins-bulma {
+  /* Support add ons inside field */ }
+  .fv-plugins-bulma .field.has-addons {
+    flex-wrap: wrap; }
+    .fv-plugins-bulma .field.has-addons::after {
+      content: '';
+      width: 100%; }
+    .fv-plugins-bulma .field.has-addons .fv-plugins-message-container {
+      order: 1; }
+  .fv-plugins-bulma .icon.fv-plugins-icon-check {
+    top: -4px; }
+  .fv-plugins-bulma .fv-has-error .input,
+  .fv-plugins-bulma .fv-has-error .textarea {
+    border: 1px solid #ff3860;
+    /* Same as .input.is-danger */ }
+  .fv-plugins-bulma .fv-has-success .input,
+  .fv-plugins-bulma .fv-has-success .textarea {
+    border: 1px solid #23d160;
+    /* Same as .input.is-success */ }
 
-/* Icon position */
-.fv-form-foundation5 .fv-control-feedback {
-    right: 15px;    /* The padding-right of .columns */
-    width: 37px;    /* Same as height of input */
-    height: 37px;
-    line-height: 37px;
-}
-
-.fv-form-foundation5 .row .row:not(.collapse) .fv-control-feedback {
-    right: 8px;     /* Multiple fields in the same row, same as padding-right of .row .row .column(s) */
-}
-
-.fv-form-foundation5 .row .collapse .fv-control-feedback {
-    right: 0;
-}
-
-.fv-form-foundation5.fv-form-horizontal [type="checkbox"]~.fv-control-feedback,
-.fv-form-foundation5.fv-form-horizontal [type="radio"]~.fv-control-feedback {
-    top: -8px;      /* labelHeight/2 - iconHeight/2 */
-}
-
-/* Stacked form */
-.fv-form-foundation5 label .fv-control-feedback {
-    top: 21px;      /* Same as height of label */
-}
-
-.fv-form-foundation5 [type="checkbox"]~.fv-control-feedback,
-.fv-form-foundation5 [type="radio"]~.fv-control-feedback {
-    top: 15px;
-}
-
-/* Color */
-.fv-form-foundation5 .error .fv-control-feedback {
-    color: #f04124; /* Same as $alert-color, .error */
-}
-
-.fv-form-foundation5 .fv-has-success label,
-.fv-form-foundation5 .fv-has-success .fv-control-feedback {
-    color: #43AC6A; /* Same as $success-color */
-}
-
-/* --------------------
- * Support Foundation 6
- * -------------------- */
-
-/* Icon position */
-.fv-form-foundation .fv-control-feedback {
-    right: 15px;    /* The padding-right of .columns */
-    width: 39px;    /* Same as height of input */
+.fv-plugins-foundation {
+  /* Stacked form */ }
+  .fv-plugins-foundation .fv-plugins-icon {
     height: 39px;
     line-height: 39px;
-}
+    right: 0;
+    width: 39px;
+    /* Same as height of input */ }
+  .fv-plugins-foundation .grid-padding-x .fv-plugins-icon {
+    right: 15px; }
+  .fv-plugins-foundation .fv-plugins-icon-container .cell {
+    position: relative; }
+  .fv-plugins-foundation [type="checkbox"] ~ .fv-plugins-icon,
+  .fv-plugins-foundation [type="checkbox"] ~ .fv-plugins-icon {
+    top: -7px;
+    /* labelHeight/2 - iconHeight/2 */ }
+  .fv-plugins-foundation.fv-stacked-form .fv-plugins-message-container {
+    width: 100%; }
+  .fv-plugins-foundation.fv-stacked-form label .fv-plugins-icon,
+  .fv-plugins-foundation.fv-stacked-form fieldset [type="checkbox"] ~ .fv-plugins-icon,
+  .fv-plugins-foundation.fv-stacked-form fieldset [type="radio"] ~ .fv-plugins-icon {
+    top: 25px;
+    /* Same as height of label */ }
+  .fv-plugins-foundation .form-error {
+    display: block; }
+  .fv-plugins-foundation .fv-row__success .fv-plugins-icon {
+    color: #3adb76;
+    /* Same as .success */ }
+  .fv-plugins-foundation .fv-row__error label,
+  .fv-plugins-foundation .fv-row__error fieldset legend,
+  .fv-plugins-foundation .fv-row__error .fv-plugins-icon {
+    color: #cc4b37;
+    /* Same as .is-invalid-label and .form-error */ }
 
-.fv-form-foundation [type="checkbox"]~.fv-control-feedback,
-.fv-form-foundation [type="radio"]~.fv-control-feedback {
-    top: -7px;      /* labelHeight/2 - iconHeight/2 */
-}
+.fv-plugins-materialize .fv-plugins-icon {
+  height: 42px;
+  /* Same as height of input */
+  line-height: 42px;
+  width: 42px; }
 
-.fv-form-foundation .form-error {
-    display: block;
-}
+.fv-plugins-materialize .fv-plugins-icon-check {
+  top: -10px; }
 
-/* Stacked form */
-.fv-form-foundation label .fv-control-feedback,
-.fv-form-foundation fieldset [type="checkbox"]~.fv-control-feedback,
-.fv-form-foundation fieldset [type="radio"]~.fv-control-feedback {
-    top: 25px;      /* Same as height of label */
-}
+.fv-plugins-materialize .fv-invalid-row .helper-text,
+.fv-plugins-materialize .fv-invalid-row .fv-plugins-icon {
+  color: #F44336; }
 
-/* Color */
-.fv-form-foundation .fv-has-error label,
-.fv-form-foundation .fv-has-error fieldset legend,
-.fv-form-foundation .fv-has-error .fv-control-feedback {
-    color: #ec5840; /* Same as .alert */
-}
+.fv-plugins-materialize .fv-valid-row .helper-text,
+.fv-plugins-materialize .fv-valid-row .fv-plugins-icon {
+  color: #4CAF50; }
 
-.fv-form-foundation .fv-has-success label,
-.fv-form-foundation .fv-has-success fieldset legend,
-.fv-form-foundation .fv-has-success .fv-control-feedback {
-    color: #3adb76; /* Same as .success */
-}
+.fv-plugins-milligram .fv-plugins-icon {
+  height: 38px;
+  /* Same as height of input */
+  line-height: 38px;
+  width: 38px; }
 
-/* Tooltip */
-.fv-foundation-tooltip:before {
-    border-color: transparent transparent #0a0a0a;
-}
+.fv-plugins-milligram .column {
+  position: relative; }
+  .fv-plugins-milligram .column .fv-plugins-icon {
+    right: 10px; }
 
-/* ------------
- * Support Pure
- * ------------ */
+.fv-plugins-milligram .fv-plugins-icon-check {
+  top: -6px; }
 
-.fv-form-pure .fv-control-feedback {
-    width: 36px;    /* Height of Pure input */
+.fv-plugins-milligram .fv-plugins-message-container {
+  margin-bottom: 15px; }
+
+.fv-plugins-milligram.fv-stacked-form .fv-plugins-icon {
+  top: 30px; }
+
+.fv-plugins-milligram.fv-stacked-form .fv-plugins-icon-check {
+  top: 24px; }
+
+.fv-plugins-milligram .fv-invalid-row .fv-help-block,
+.fv-plugins-milligram .fv-invalid-row .fv-plugins-icon {
+  color: red; }
+
+.fv-plugins-milligram .fv-valid-row .fv-help-block,
+.fv-plugins-milligram .fv-valid-row .fv-plugins-icon {
+  color: green; }
+
+.fv-plugins-mini .fv-plugins-icon {
+  height: 42px;
+  /* Same as height of input */
+  line-height: 42px;
+  width: 42px;
+  top: 4px;
+  /* Same as input's margin top */ }
+
+.fv-plugins-mini .fv-plugins-icon-check {
+  top: -8px; }
+
+.fv-plugins-mini.fv-stacked-form .fv-plugins-icon {
+  top: 28px; }
+
+.fv-plugins-mini.fv-stacked-form .fv-plugins-icon-check {
+  top: 20px; }
+
+.fv-plugins-mini .fv-plugins-message-container {
+  margin: calc(var(--universal-margin) / 2); }
+
+.fv-plugins-mini .fv-invalid-row .fv-help-block,
+.fv-plugins-mini .fv-invalid-row .fv-plugins-icon {
+  color: var(--input-invalid-color); }
+
+.fv-plugins-mini .fv-valid-row .fv-help-block,
+.fv-plugins-mini .fv-valid-row .fv-plugins-icon {
+  color: #308732;
+  /* Same as tertiary color */ }
+
+.fv-plugins-mui .fv-plugins-icon {
+  height: 32px;
+  /* Same as height of input */
+  line-height: 32px;
+  width: 32px;
+  top: 15px;
+  right: 4px; }
+
+.fv-plugins-mui .fv-plugins-icon-check {
+  top: -6px;
+  right: -10px; }
+
+.fv-plugins-mui .fv-plugins-message-container {
+  margin: 8px 0; }
+
+.fv-plugins-mui .fv-invalid-row .fv-help-block,
+.fv-plugins-mui .fv-invalid-row .fv-plugins-icon {
+  color: #F44336; }
+
+.fv-plugins-mui .fv-valid-row .fv-help-block,
+.fv-plugins-mui .fv-valid-row .fv-plugins-icon {
+  color: #4CAF50; }
+
+.fv-plugins-pure {
+  /* Horizontal form */
+  /* Stacked form */ }
+  .fv-plugins-pure .fv-plugins-icon {
     height: 36px;
     line-height: 36px;
-}
-
-/* Horizontal form */
-.fv-form-pure.pure-form-aligned [type="checkbox"]~.fv-control-feedback,
-.fv-form-pure.pure-form-aligned [type="radio"]~.fv-control-feedback {
-    top: -9px;      /* labelHeight/2 - iconHeight/2 */
-}
-
-.fv-form-pure.pure-form-aligned .fv-help-block {
+    width: 36px;
+    /* Height of Pure input */ }
+  .fv-plugins-pure .fv-has-error label,
+  .fv-plugins-pure .fv-has-error .fv-help-block,
+  .fv-plugins-pure .fv-has-error .fv-plugins-icon {
+    color: #CA3C3C;
+    /* Same as .button-error */ }
+  .fv-plugins-pure .fv-has-success label,
+  .fv-plugins-pure .fv-has-success .fv-help-block,
+  .fv-plugins-pure .fv-has-success .fv-plugins-icon {
+    color: #1CB841;
+    /* Same as .button-success */ }
+  .fv-plugins-pure.pure-form-aligned .fv-help-block {
     margin-top: 5px;
-    margin-left: 180px;
-}
-
-/* Stacked form */
-.fv-form-pure.pure-form-stacked .pure-control-group {
-    margin-bottom: 8px;
-}
-
-.fv-form-pure.pure-form-stacked .fv-control-feedback {
-    top: 22px;      /* Same as height of label */
-}
-
-.fv-form-pure.pure-form-stacked .pure-radio~.fv-control-feedback {
-    top: 20px;
-}
-
-.fv-form-pure.pure-form-stacked .fv-sr-only~.fv-control-feedback {
+    margin-left: 180px; }
+  .fv-plugins-pure.pure-form-aligned .fv-plugins-icon-check {
     top: -9px;
-}
+    /* labelHeight/2 - iconHeight/2 */ }
+  .fv-plugins-pure.pure-form-stacked .pure-control-group {
+    margin-bottom: 8px; }
+  .fv-plugins-pure.pure-form-stacked .fv-plugins-icon {
+    top: 22px;
+    /* Same as height of label */ }
+  .fv-plugins-pure.pure-form-stacked .fv-plugins-icon-check {
+    top: 13px; }
+  .fv-plugins-pure.pure-form-stacked .fv-sr-only ~ .fv-plugins-icon {
+    top: -9px; }
 
-.fv-form-pure .fv-has-error label,
-.fv-form-pure .fv-has-error .fv-help-block,
-.fv-form-pure .fv-has-error .fv-control-feedback {
-    color: #CA3C3C; /* Same as .button-error */
-}
+.fv-plugins-semantic.ui.form .fields.error label,
+.fv-plugins-semantic .error .fv-plugins-icon {
+  color: #9f3a38;
+  /* Same as .ui.form .field.error .input */ }
 
-.fv-form-pure .fv-has-success label,
-.fv-form-pure .fv-has-success .fv-help-block,
-.fv-form-pure .fv-has-success .fv-control-feedback {
-    color: #1CB841; /* Same as .button-success */
-}
+.fv-plugins-semantic .fv-plugins-icon-check {
+  right: 7px; }
 
-/* -------------------
- * Support Semantic UI
- * ------------------- */
+.fv-plugins-shoelace .input-group {
+  margin-bottom: 0; }
 
-.fv-form-semantic.ui.form .fields.error label {
-    color: #9f3a38; /* Same as .ui.form .field.error .input */
-}
+.fv-plugins-shoelace .fv-plugins-icon {
+  height: 32px;
+  line-height: 32px;
+  /* Same as height of input */
+  width: 32px;
+  top: 28px;
+  /* Same as height of label */ }
 
-.fv-form-semantic .fv-control-feedback {
-    right: 7px;
-}
+.fv-plugins-shoelace .row .fv-plugins-icon {
+  right: 16px;
+  top: 0; }
 
-.fv-form-semantic .error .icon {
-    color: #9f3a38;
-}
+.fv-plugins-shoelace .fv-plugins-icon-check {
+  top: 24px; }
 
-/* --------------
- * Support UI Kit
- * -------------- */
+.fv-plugins-shoelace .fv-sr-only ~ .fv-plugins-icon,
+.fv-plugins-shoelace .fv-sr-only ~ div .fv-plugins-icon {
+  top: -4px; }
 
-.fv-form-uikit .fv-control-feedback {
-    top: 25px;      /* Height of UIKit label */
-    width: 30px;    /* Height of UIKit input */
-    height: 30px;
-    line-height: 30px;
-}
+.fv-plugins-shoelace .input-valid .fv-help-block,
+.fv-plugins-shoelace .input-valid .fv-plugins-icon {
+  color: #2ecc40; }
 
-.fv-form-uikit .uk-text-danger {
-    display: block;
-}
+.fv-plugins-shoelace .input-invalid .fv-help-block,
+.fv-plugins-shoelace .input-invalid .fv-plugins-icon {
+  color: #ff4136; }
 
-/* UIKit horizontal form */
-.fv-form-uikit.uk-form-horizontal .fv-control-feedback {
-    top: 0;
-}
+.fv-plugins-spectre .form-checkbox .form-icon,
+.fv-plugins-spectre .form-radio .form-icon {
+  margin: 0; }
 
-.fv-form-uikit.uk-form-horizontal [type="checkbox"]~.fv-control-feedback,
-.fv-form-uikit.uk-form-horizontal [type="radio"]~.fv-control-feedback {
-    top: -7px;
-}
+.fv-plugins-spectre .input-group .fv-plugins-icon {
+  z-index: 2; }
 
-/* Without labels */
-.fv-form-uikit label.fv-sr-only~.fv-control-feedback {
-    top: -7px !important;
-}
+.fv-plugins-spectre:not(.form-horizontal) .form-group.has-error .fv-plugins-icon {
+  margin-top: 4px; }
 
-/* Stacked form */
-.fv-form-uikit.uk-form-stacked [type="checkbox"]~.fv-control-feedback,
-.fv-form-uikit.uk-form-stacked [type="radio"]~.fv-control-feedback {
-    top: 20px;
-}
+.fv-plugins-spectre:not(.form-horizontal) .form-group.has-error .fv-plugins-icon-check {
+  margin-top: 0; }
 
-.fv-form-uikit .fv-has-error label,
-.fv-form-uikit .fv-has-error .uk-form-label,
-.fv-form-uikit .fv-has-error .fv-control-feedback {
-    color: #D85030;     /* Same as .uk-form-danger */
-}
+.fv-plugins-spectre:not(.form-horizontal) .form-group.has-success .fv-plugins-icon {
+  margin-top: 15px; }
 
-.fv-form-uikit .fv-has-success label,
-.fv-form-uikit .fv-has-success .uk-form-label,
-.fv-form-uikit .fv-has-success .fv-control-feedback {
-    color: #659F13;     /* Same as .uk-form-success */
-}
+.fv-plugins-spectre:not(.form-horizontal) .form-group.has-success .fv-plugins-icon-check {
+  margin-top: 0; }
+
+.fv-plugins-tachyons .fv-plugins-icon {
+  height: 36px;
+  line-height: 36px;
+  width: 36px; }
+
+.fv-plugins-tachyons .fv-plugins-icon-check {
+  top: -7px; }
+
+.fv-plugins-tachyons.fv-stacked-form .fv-plugins-icon {
+  top: 34px; }
+
+.fv-plugins-tachyons.fv-stacked-form .fv-plugins-icon-check {
+  top: 24px; }
+
+.fv-plugins-turret .fv-plugins-icon {
+  height: 48px;
+  /* Same as height of input */
+  line-height: 48px;
+  width: 48px; }
+
+.fv-plugins-turret.fv-stacked-form .fv-plugins-icon {
+  top: 37px; }
+
+.fv-plugins-turret.fv-stacked-form .fv-plugins-icon-check {
+  top: 24px; }
+
+.fv-plugins-turret .fv-invalid-row .form-message,
+.fv-plugins-turret .fv-invalid-row .fv-plugins-icon {
+  color: #c00;
+  /* Same as .form-message.error */ }
+
+.fv-plugins-turret .fv-valid-row .form-message,
+.fv-plugins-turret .fv-valid-row .fv-plugins-icon {
+  color: #00b300;
+  /* Same as .form-message.success */ }
+
+.fv-plugins-uikit {
+  /* Horizontal form */
+  /* Stacked form */ }
+  .fv-plugins-uikit .fv-plugins-icon {
+    height: 40px;
+    /* Height of UIKit input */
+    line-height: 40px;
+    top: 25px;
+    /* Height of UIKit label */
+    width: 40px; }
+  .fv-plugins-uikit.uk-form-horizontal .fv-plugins-icon {
+    top: 0; }
+  .fv-plugins-uikit.uk-form-horizontal .fv-plugins-icon-check {
+    top: -11px;
+    /* checkboxLabelHeight/2 - iconHeight/2 = 18/2 - 40/2 */ }
+  .fv-plugins-uikit.uk-form-stacked .fv-plugins-icon-check {
+    top: 15px;
+    /* labelHeight + labelMarginBottom + checkboxLabelHeight/2 - iconHeight/2 = 21 + 5 + 18/2 - 40/2 */ }
+  .fv-plugins-uikit.uk-form-stacked .fv-no-label .fv-plugins-icon {
+    top: 0; }
+  .fv-plugins-uikit.uk-form-stacked .fv-no-label .fv-plugins-icon-check {
+    top: -11px; }
+
+.fv-plugins-wizard--step {
+  display: none; }
+
+.fv-plugins-wizard--active {
+  display: block; }

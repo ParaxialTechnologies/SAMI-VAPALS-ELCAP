@@ -13,12 +13,8 @@
         </h2>
 
         <hr>
-        <form action="{{ formPage+".html" if mockup else "/vapals" }}" method="{{ formMethod }}"
-              class="validated"
-              data-fv-icon-valid="glyphicon glyphicon-ok"
-              data-fv-icon-invalid="glyphicon glyphicon-remove"
-              data-fv-icon-validating="glyphicon glyphicon-refresh"
-              data-fv-button-selector="#submit-button">
+        <form action="{{ formPage+".html" if mockup else "/vapals" }}" method="{{ formMethod }}" id="main-form"
+              class="validated">
             <input type="hidden" name="samiroute" value="postform"/>
             <input type="hidden" name="studyid" value="@@SID@@"/>
             <input type="hidden" name="form" value="@@FORMKEY@@"/>
@@ -67,12 +63,12 @@
                     <div id="sbhco-container" style="display: none;">
                         <div class="form-group col-sm-4 col-md-2">
                             <label class="control-label required" for="sbhcdod">Year</label>
-                            {{ f.yearpicker("sbhcdod", true, true, true) }}
+                            {{ f.yearpicker("sbhcdod", true, true) }}
                         </div>
                         <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
                             <label class="control-label required" for="sbhcpbo">Primary site</label>
                             <input class="form-control input-sm" type="text" name="sbhcpbo"
-                                   id="sbhcpbo" placeholder="Primary site?" required="required">
+                                   id="sbhcpbo" required="required">
                         </div>
                     </div>
                 </div>
@@ -91,7 +87,7 @@
                         <div class="form-group">
                             <label for="sbmpat-n" class="required">Under current treatment?</label><br/>
                             {{ f.inlineRadio("sbmpat","sbmpat-n","n", "No", true) }}
-                            {{ f.inlineRadio("sbmpat","sbmpat-y","y", "Yes", true) }}
+                            {{ f.inlineRadio("sbmpat","sbmpat-y","y", "Yes") }}
                         </div>
                     </div>
                 </div>
@@ -109,7 +105,7 @@
                     <div class="col-sm-4 col-md-2" id="sbmpc-container" style="display: none;">
                         <div class="form-group">
                             <label class="control-label required" for="sbmpcw">Year</label>
-                            {{ f.yearpicker("sbmpcw", true, true, true) }}
+                            {{ f.yearpicker("sbmpcw", true, true) }}
                         </div>
                     </div>
                 </div>
@@ -124,8 +120,7 @@
                             {{ f.inlineRadioNYQ("sbmpht") }}
                         </div>
                     </div>
-{#                    col-sm-12 col-md-6 col-lg-7#}
-                    <div class="" id="sbmpht-container" style="display: none;">
+                    <div id="sbmpht-container" style="display: none;">
                         <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
                             <label class="form-check-inline required" for="sbmphtt-n">Treated?</label><br/>
                             {{ f.inlineRadio("sbmphtt", "sbmphtt-n", "n", "No", true) }}
@@ -134,13 +129,12 @@
                         </div>
                         <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
                             <label class="control-label required" for="sbmphtsw">Year</label>
-                            {{ f.yearpicker("sbmphtsw", true, true, true) }}
+                            {{ f.yearpicker("sbmphtsw", true, true) }}
                         </div>
                         <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
-                            <label class="control-label required numeric" for="sbmphthv">Highest Value</label>
+                            <label class="control-label numeric" for="sbmphthv">Highest Value</label>
                             <input class="form-control input-sm numeric decimalformat" type="text" name="sbmphthv"
-                                   id="sbmphthv"
-                                   placeholder="Highest Value?">
+                                   id="sbmphthv">
                         </div>
 
                     </div>
@@ -178,12 +172,12 @@
                     <div id="sbmpas-container" style="display: none;">
                         <div class="form-group col-sm-4 col-md-2">
                             <label class="control-label required" for="sbmpasw">Year</label>
-                            {{ f.yearpicker("sbmpasw", true, true, true) }}
+                            {{ f.yearpicker("sbmpasw", true, true) }}
                         </div>
                         <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
                             <label class="control-label required" for="sbmpast">Where Treated</label>
                             <input class="form-control input-sm" type="text" name="sbmpast" id="sbmpast"
-                                   placeholder="Where treated?" required="required">
+                                   required="required">
                         </div>
                     </div>
                 </div>
@@ -201,12 +195,11 @@
                     <div id="sbmpmi-container" style="display: none;">
                         <div class="form-group col-sm-4 col-md-2">
                             <label class="control-label required" for="sbmpmid">Year</label>
-                            {{ f.yearpicker("sbmpmid", true, true, true) }}
+                            {{ f.yearpicker("sbmpmid", true, true) }}
                         </div>
-                        <div class="form-group col-sm-4 col-md-2" >
-                            <label class="control-label" for="sbmpast">Where Treated</label>
-                            <input class="form-control input-sm" type="text" name="sbmpmiw" id="sbmpmiw"
-                                   placeholder="Location">
+                        <div class="form-group col-sm-4 col-md-2">
+                            <label class="control-label" for="sbmpmiw">Where Treated</label>
+                            <input class="form-control input-sm" type="text" name="sbmpmiw" id="sbmpmiw">
                         </div>
                     </div>
                 </div>
@@ -224,7 +217,7 @@
                     <div id="sbmps-container" style="display: none;">
                         <div class="form-group col-sm-4 col-md-2">
                             <label class="control-label required" for="sbmpsd">Year</label>
-                            {{ f.yearpicker("sbmpsd", true, true, true) }}
+                            {{ f.yearpicker("sbmpsd", true, true) }}
                         </div>
                     </div>
                 </div>
@@ -242,7 +235,7 @@
                     <div id="sbmppv-container" style="display: none;">
                         <div class="form-group  col-sm-4 col-md-2">
                             <label class="control-label required" for="sbmppvd">Year</label>
-                            {{ f.yearpicker("sbmppvd", true, true, true) }}
+                            {{ f.yearpicker("sbmppvd", true, true) }}
                         </div>
                     </div>
                 </div>
@@ -261,7 +254,7 @@
                         <div class=" col-sm-4 col-md-2 form-group">
                             <label class="control-label required" for="sbmpdw">Starting at what age?</label>
                             <input class="form-control input-sm numeric" type="text" name="sbmpdw"
-                                   id="sbmpdw" size="4" data-fv-integer="true" maxlength="4">
+                                   id="sbmpdw" size="4" maxlength="4">
                         </div>
 
                         <div class=" col-sm-4 col-md-2 form-group">
@@ -356,7 +349,8 @@
                     <div class="col-sm-12 col-md-6 col-lg-7 form-inline" id="sbact-container" style="display: none;">
                         <div class="form-group">
                             <label for="sbahcl" class="control-label required">If so, where was the test done?</label>
-                            <input type="text" name="sbahcl" id="sbahcl" class="form-control input-sm" required="required"/>
+                            <input type="text" name="sbahcl" id="sbahcl" class="form-control input-sm"
+                                   required="required"/>
                         </div>
 
                     </div>
@@ -448,20 +442,128 @@
         </form>
     </div>
 
-    {{ f.deleteFormModal("background.html", mockup, formMethod)}}
+    {{ f.deleteFormModal("background.html", mockup, formMethod) }}
 
 {% endblock %}
 
 {% block script %}
     <script language="JavaScript">
 
+        function createFormValidator() {
+
+            const $form = $('#main-form');
+            const multiInputValidators = ['sbfcf', 'sbfcm', 'sbfcs', 'ceimn'];
+            const thisYear = VAPALS.todaysYear();
+            const minYear = thisYear - 100;
+            const yearValidationMessage = 'Must be between ' + minYear + ' and ' + thisYear;
+            $form.formValidation({
+                    fields: {
+                        sbfcf: {validators: {notEmpty: {message: 'Father\'s history is required'}}},
+                        sbfcm: {validators: {notEmpty: {message: 'Mother\'s history is required'}}},
+                        sbfcs: {validators: {notEmpty: {message: 'Sibling\'s history is required'}}},
+                        sbhcdod: {
+                            validators: {
+                                notEmpty: {message: 'Year is required'},
+                                between: {message: yearValidationMessage, min: minYear, max: thisYear}
+                            }
+                        },
+                        sbhcpbo: {validators: {notEmpty: {message: 'Primary site is required'}}},
+                        sbmpat: {validators: {notEmpty: {message: 'Current treatment is required'}}},
+                        sbmpcw: {
+                            validators: {
+                                notEmpty: {message: 'Year is required'},
+                                between: {message: yearValidationMessage, min: minYear, max: thisYear}
+                            }
+                        },
+                        sbmphtt: {validators: {notEmpty: {message: 'Treated is required'}}},
+                        sbmphtsw: {
+                            validators: {
+                                notEmpty: {message: 'Year is required'},
+                                between: {message: yearValidationMessage, min: minYear, max: thisYear}
+                            }
+                        },
+                        sbmphthv: {
+                            validators: {
+                                numeric: {message: 'Must be a number'},
+                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
+                            }
+                        },
+                        sbmphct: {validators: {notEmpty: {message: 'Treated is required'}}},
+                        sbmpasw: {
+                            validators: {
+                                notEmpty: {message: 'Year is required'},
+                                between: {message: yearValidationMessage, min: minYear, max: thisYear}
+                            }
+                        },
+                        sbmpast: {validators: {notEmpty: {message: 'Where treated is required'}}},
+                        sbmpmid: {
+                            validators: {
+                                notEmpty: {message: 'Year is required'},
+                                between: {message: yearValidationMessage, min: minYear, max: thisYear}
+                            }
+                        },
+                        sbmpmiw: {validators: {notEmpty: {message: 'Where treated is required'}}},
+                        sbmpsd: {
+                            validators: {
+                                notEmpty: {message: 'Year is required'},
+                                between: {message: yearValidationMessage, min: minYear, max: thisYear}
+                            }
+                        },
+                        sbmppvd: {
+                            validators: {
+                                notEmpty: {message: 'Year is required'},
+                                between: {message: yearValidationMessage, min: minYear, max: thisYear}
+                            }
+                        },
+                        sbmpdw: {
+                            validators: {
+                                notEmpty: {message: 'Age is required'},
+                                between: {message: 'Must be between 1 and 100', min: 1, max: 100}
+                            }
+                        },
+                        sbmpdt: {validators: {notEmpty: {message: 'Treated is required'}}},
+                        sbmpldt: {validators: {notEmpty: {message: 'Severity is required'}}},
+                        sbmprdt: {validators: {notEmpty: {message: 'Severity is required'}}},
+                        sbwcos: {validators: {notEmpty: {message: 'Other symptom is required'}}},
+                        sbahas: {validators: {notEmpty: {message: 'Other work is required'}}},
+                    },
+                    plugins: {
+                        trigger: new FormValidation.plugins.Trigger(),
+                        bootstrap3: new FormValidation.plugins.Bootstrap3(),
+                        submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                        excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
+                        icon: new FormValidation.plugins.Icon({
+                            valid: '',
+                            invalid: 'glyphicon glyphicon-remove',
+                            validating: 'glyphicon glyphicon-refresh',
+                            onPlaced: function (e) {
+                                if (multiInputValidators.indexOf(e.field) > -1) {
+                                    $("#" + e.element.id).closest(".form-group").append(e.iconElement);
+                                }
+                            },
+                        })
+                    }
+                }
+            );
+
+            const fv = $form.data('formValidation');
+            fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);
+            fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
+
+            return fv;
+        }
+
         $(function () {
+
+            createFormValidator();
+
             //hook for calculating Pulmonary function test percentage (FFR)
             $("#sbfev1, #sbfvc").on('change', function () {
-                var fev1 = $("#sbfev1").val();
-                var fvc = $("#sbfvc").val();
+                const fev1 = $("#sbfev1").val();
+                const fvc = $("#sbfvc").val();
                 if (fev1 > 0 && fvc > 0) {
-                    var ffr = Math.round(100.0 * fev1 / fvc);
+                    const ffr = Math.round(100.0 * fev1 / fvc);
                     if (ffr > 0) {
                         $("#sbffr").val(ffr);
                         $("#ffr-value").text(ffr);
@@ -483,11 +585,11 @@
                 "sbmpld", "sbmprd", "sbahpft", "sblcs"
             );
 
-            jQuery.each(uncheckableRadioFieldNames, function (idx, name) {
-                $("[name="+name+"]").conditionallyDisplay({enable: "#"+name+"-container"});
-                uncheckableRadio("[name='"+name+"']","div.form-group");
-            });  
-                    
+            $.each(uncheckableRadioFieldNames, function (idx, name) {
+                $("[name=" + name + "]").conditionallyDisplay({enable: "#" + name + "-container"});
+                uncheckableRadio("[name='" + name + "']", "div.form-group");
+            });
+
 
             $("#sbwco").conditionallyDisplay({sourceValues: "o", enable: "#sbwcos"});
             $("[name=sbact]").conditionallyDisplay({
@@ -495,10 +597,9 @@
                     return actualValue !== '-' && actualValue !== 'e';
                 }, enable: "#sbact-container"
             });
-            
+
             $("#sbahaoo").conditionallyDisplay({sourceValues: "o", enable: "#sbahas"});
 
-            $(".validated").formValidation({framework: 'bootstrap'});
         });
 
     </script>

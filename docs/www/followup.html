@@ -17,7 +17,7 @@
   <link href="lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
   <link href="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
  </head>
- <body>
+ <body id="body" style="position: relative;">
   <script src="lib/jquery-3.3.1.min.js">
   </script>
   <script src="lib/jquery-ui-1.12.1/jquery-ui.min.js">
@@ -28,9 +28,13 @@
   </script>
   <script src="lib/moment.js">
   </script>
-  <script src="lib/formvalidation/dist/js/formValidation.min.js">
+  <script src="lib/formvalidation/dist/js/FormValidation.min.js">
   </script>
-  <script src="lib/formvalidation/dist/js/framework/bootstrap.min.js">
+  <script src="lib/formvalidation/dist/js/plugins/Wizard.min.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/plugins/Bootstrap3.min.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/plugins/J.min.js">
   </script>
   <script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js">
   </script>
@@ -139,7 +143,7 @@
     </small>
    </h2>
    <hr/>
-   <form action="/vapals" class="validated" data-fv-button-selector="#submit-button" data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-validating="glyphicon glyphicon-refresh" method="post">
+   <form action="/vapals" class="validated" id="main-form" method="post">
     <input name="samiroute" type="hidden" value="postform"/>
     <input name="studyid" type="hidden" value="@@SID@@"/>
     <input name="form" type="hidden" value="@@FORMKEY@@"/>
@@ -149,7 +153,7 @@
        Follow-up date
       </label>
       <div class="input-group datepicker">
-       <input aria-describedby="sidof-addon" class="form-control" data-fv-date="true" data-fv-date-min="VAPALS.todaysDate" data-fv-notempty-message="Follow up date is required" id="sidof" name="sidof" required="required"/>
+       <input aria-describedby="sidof-addon" class="form-control" id="sidof" name="sidof"/>
        <div class="input-group-addon">
         <div class="input-group-text" id="sidof-addon">
          <i aria-hidden="true" class="fa fa-calendar">
@@ -166,7 +170,7 @@
        Date of baseline CT
       </label>
       <div class="input-group datepicker">
-       <input aria-describedby="sidoe-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" data-fv-notempty-message="Date of baseline CT is required" id="sidoe" name="sidoe" required="required"/>
+       <input aria-describedby="sidoe-addon" class="form-control" id="sidoe" name="sidoe"/>
        <div class="input-group-addon">
         <div class="input-group-text" id="sidoe-addon">
          <i aria-hidden="true" class="fa fa-calendar">
@@ -221,11 +225,11 @@
      <div class="form-group col-sm-8">
       <div>
        <label class="radio-inline" for="simeq-n">
-        <input data-fv-notempty-message="Please select a value" id="simeq-n" name="simeq" required="required" type="radio" value="n"/>
+        <input id="simeq-n" name="simeq" required="required" type="radio" value="n"/>
         No
        </label>
        <label class="radio-inline" for="simeq-y">
-        <input data-fv-notempty-message="Please select a value" id="simeq-y" name="simeq" required="required" type="radio" value="y"/>
+        <input id="simeq-y" name="simeq" type="radio" value="y"/>
         Yes
        </label>
       </div>
@@ -234,10 +238,10 @@
     <div id="order-container">
      <div class="row">
       <div class="col-md-4">
-       <label class="visible-xs visible-sm " for="siopln">
+       <label class="visible-xs visible-sm " for="siopfn">
         Ordered by
        </label>
-       <label class="text-right pull-right hidden-xs hidden-sm " for="siopln">
+       <label class="text-right pull-right hidden-xs hidden-sm " for="siopfn">
         Ordered by
        </label>
       </div>
@@ -248,7 +252,7 @@
        </span>
       </div>
       <div class="col-md-4 form-group">
-       <input class="form-control" id="siopln" name="siopln" type="text"/>
+       <input class="form-control" id="siopln" name="siopln" title="Last name" type="text"/>
        <span class="help-block small">
         Last Name
        </span>
@@ -278,11 +282,11 @@
       </div>
       <div class="col-sm-8 form-group">
        <label class="radio-inline" for="sidsd-n">
-        <input data-fv-notempty-message="Please select a value" id="sidsd-n" name="sidsd" required="required" type="radio" value="n"/>
+        <input id="sidsd-n" name="sidsd" required="required" type="radio" value="n"/>
         No
        </label>
        <label class="radio-inline" for="sidsd-y">
-        <input data-fv-notempty-message="Please select a value" id="sidsd-y" name="sidsd" required="required" type="radio" value="y"/>
+        <input id="sidsd-y" name="sidsd" type="radio" value="y"/>
         Yes
        </label>
        <p class="help-block small">
@@ -306,11 +310,11 @@
       </div>
       <div class="col-sm-8 form-group">
        <label class="radio-inline" for="siopss-c">
-        <input data-fv-notempty-message="Please select a value" id="siopss-c" name="siopss" required="required" type="radio" value="c"/>
+        <input id="siopss-c" name="siopss" required="required" type="radio" value="c"/>
         Current
        </label>
        <label class="radio-inline" for="siopss-f">
-        <input data-fv-notempty-message="Please select a value" id="siopss-f" name="siopss" required="required" type="radio" value="f"/>
+        <input id="siopss-f" name="siopss" type="radio" value="f"/>
         Former
        </label>
       </div>
@@ -352,11 +356,11 @@
       </div>
       <div class="col-md-8 form-group">
        <label class="radio-inline" for="sioas-n">
-        <input data-fv-notempty-message="Please select a value" id="sioas-n" name="sioas" required="required" type="radio" value="n"/>
+        <input id="sioas-n" name="sioas" required="required" type="radio" value="n"/>
         No
        </label>
        <label class="radio-inline" for="sioas-y">
-        <input data-fv-notempty-message="Please select a value" id="sioas-y" name="sioas" required="required" type="radio" value="y"/>
+        <input id="sioas-y" name="sioas" type="radio" value="y"/>
         Yes
        </label>
       </div>
@@ -391,11 +395,11 @@
      </div>
      <div class="col-md-8 form-group">
       <label class="radio-inline" for="siabx-n">
-       <input data-fv-notempty-message="Please select a value" id="siabx-n" name="siabx" required="required" type="radio" value="n"/>
+       <input id="siabx-n" name="siabx" required="required" type="radio" value="n"/>
        No
       </label>
       <label class="radio-inline" for="siabx-y">
-       <input data-fv-notempty-message="Please select a value" id="siabx-y" name="siabx" required="required" type="radio" value="y"/>
+       <input id="siabx-y" name="siabx" type="radio" value="y"/>
        Yes
       </label>
      </div>
@@ -411,11 +415,11 @@
      </div>
      <div class="col-md-8 form-group">
       <label class="radio-inline" for="siaex-n">
-       <input data-fv-notempty-message="Please select a value" id="siaex-n" name="siaex" required="required" type="radio" value="n"/>
+       <input id="siaex-n" name="siaex" required="required" type="radio" value="n"/>
        No
       </label>
       <label class="radio-inline" for="siaex-y">
-       <input data-fv-notempty-message="Please select a value" id="siaex-y" name="siaex" required="required" type="radio" value="y"/>
+       <input id="siaex-y" name="siaex" type="radio" value="y"/>
        Yes
       </label>
      </div>
@@ -432,15 +436,15 @@
      </div>
      <div class="col-md-8 form-group">
       <label class="radio-inline" for="sisse-1">
-       <input data-fv-notempty-message="Please select a value" id="sisse-1" name="sisse" required="required" type="radio" value="1"/>
+       <input id="sisse-1" name="sisse" required="required" type="radio" value="1"/>
        Less than 5 years ago
       </label>
       <label class="radio-inline" for="sisse-5">
-       <input data-fv-notempty-message="Please select a value" id="sisse-5" name="sisse" required="required" type="radio" value="5"/>
+       <input id="sisse-5" name="sisse" type="radio" value="5"/>
        More than 5 years ago
       </label>
       <label class="radio-inline" for="sisse-10">
-       <input data-fv-notempty-message="Please select a value" id="sisse-10" name="sisse" required="required" type="radio" value="10"/>
+       <input id="sisse-10" name="sisse" type="radio" value="10"/>
        More than 10 years ago
       </label>
      </div>
@@ -580,11 +584,11 @@
      </div>
      <div class="col-md-2 form-group">
       <label class="radio-inline" for="siho-n">
-       <input data-fv-notempty-message="Please select a value" id="siho-n" name="siho" required="required" type="radio" value="n"/>
+       <input id="siho-n" name="siho" required="required" type="radio" value="n"/>
        No
       </label>
       <label class="radio-inline" for="siho-y">
-       <input data-fv-notempty-message="Please select a value" id="siho-y" name="siho" required="required" type="radio" value="y"/>
+       <input id="siho-y" name="siho" type="radio" value="y"/>
        Yes
       </label>
      </div>
@@ -599,7 +603,7 @@
        <label for="sihod">
         When?
        </label>
-       <input class="form-control numeric yearpicker" data-fv-integer="true" id="sihod" maxlength="4" name="sihod" placeholder="YYYY" size="5" title="" type="text"/>
+       <input class="form-control numeric yearpicker" id="sihod" maxlength="4" name="sihod" placeholder="YYYY" size="5" title="" type="text"/>
       </div>
       <div class="form-group">
        <label for="sihol">
@@ -620,11 +624,11 @@
      </div>
      <div class="col-md-2 form-group">
       <label class="radio-inline" for="sicd-n">
-       <input data-fv-notempty-message="Please select a value" id="sicd-n" name="sicd" required="required" type="radio" value="n"/>
+       <input id="sicd-n" name="sicd" required="required" type="radio" value="n"/>
        No
       </label>
       <label class="radio-inline" for="sicd-y">
-       <input data-fv-notempty-message="Please select a value" id="sicd-y" name="sicd" required="required" type="radio" value="y"/>
+       <input id="sicd-y" name="sicd" type="radio" value="y"/>
        Yes
       </label>
      </div>
@@ -683,7 +687,7 @@
         When were you diagnosed?
        </label>
        <div class="input-group datepicker">
-        <input aria-describedby="sicdd-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" id="sicdd" name="sicdd"/>
+        <input aria-describedby="sicdd-addon" class="form-control" id="sicdd" name="sicdd"/>
         <div class="input-group-addon">
          <div class="input-group-text" id="sicdd-addon">
           <i aria-hidden="true" class="fa fa-calendar">
@@ -708,11 +712,11 @@
      </div>
      <div class="col-md-2 form-group">
       <label class="radio-inline" for="silcs-n">
-       <input data-fv-notempty-message="Please select a value" id="silcs-n" name="silcs" required="required" type="radio" value="n"/>
+       <input id="silcs-n" name="silcs" required="required" type="radio" value="n"/>
        No
       </label>
       <label class="radio-inline" for="silcs-y">
-       <input data-fv-notempty-message="Please select a value" id="silcs-y" name="silcs" required="required" type="radio" value="y"/>
+       <input id="silcs-y" name="silcs" type="radio" value="y"/>
        Yes
       </label>
      </div>
@@ -722,7 +726,7 @@
         When?
        </label>
        <div class="input-group datepicker">
-        <input aria-describedby="silcsd-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" id="silcsd" name="silcsd"/>
+        <input aria-describedby="silcsd-addon" class="form-control" id="silcsd" name="silcsd"/>
         <div class="input-group-addon">
          <div class="input-group-text" id="silcsd-addon">
           <i aria-hidden="true" class="fa fa-calendar">
@@ -753,11 +757,11 @@
      </div>
      <div class="col-md-2 form-group">
       <label class="radio-inline" for="sier-n">
-       <input data-fv-notempty-message="Please select a value" id="sier-n" name="sier" required="required" type="radio" value="n"/>
+       <input id="sier-n" name="sier" required="required" type="radio" value="n"/>
        No
       </label>
       <label class="radio-inline" for="sier-y">
-       <input data-fv-notempty-message="Please select a value" id="sier-y" name="sier" required="required" type="radio" value="y"/>
+       <input id="sier-y" name="sier" type="radio" value="y"/>
        Yes
       </label>
      </div>
@@ -784,15 +788,15 @@
      </div>
      <div class="col-md-8 form-group">
       <label class="radio-inline" for="sisa-n">
-       <input data-fv-notempty-message="Please select a value" id="sisa-n" name="sisa" required="required" type="radio" value="n"/>
+       <input id="sisa-n" name="sisa" required="required" type="radio" value="n"/>
        No
       </label>
       <label class="radio-inline" for="sisa-y">
-       <input data-fv-notempty-message="Please select a value" id="sisa-y" name="sisa" required="required" type="radio" value="y"/>
+       <input id="sisa-y" name="sisa" type="radio" value="y"/>
        Yes
       </label>
       <label class="radio-inline" for="sisa-o">
-       <input data-fv-notempty-message="Please select a value" id="sisa-o" name="sisa" required="required" type="radio" value="o"/>
+       <input id="sisa-o" name="sisa" type="radio" value="o"/>
        Never smoked
       </label>
      </div>
@@ -986,7 +990,7 @@
         </span>
        </div>
        <div class="form-group" style="float:left;">
-        <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sidlcy" maxlength="4" name="sidlcy" placeholder="YYYY" size="5" title="" type="text"/>
+        <input class="form-control input-sm numeric yearpicker" id="sidlcy" maxlength="4" name="sidlcy" placeholder="YYYY" size="5" title="" type="text"/>
         <small class="help-block">
          Year
         </small>
@@ -1005,15 +1009,15 @@
      </div>
      <div class="col-md-8 form-group">
       <label class="radio-inline" for="sittq-n">
-       <input data-fv-notempty-message="Please select a value" id="sittq-n" name="sittq" required="required" type="radio" value="n"/>
+       <input id="sittq-n" name="sittq" required="required" type="radio" value="n"/>
        No
       </label>
       <label class="radio-inline" for="sittq-y">
-       <input data-fv-notempty-message="Please select a value" id="sittq-y" name="sittq" required="required" type="radio" value="y"/>
+       <input id="sittq-y" name="sittq" type="radio" value="y"/>
        Yes
       </label>
       <label class="radio-inline" for="sittq-o">
-       <input data-fv-notempty-message="Please select a value" id="sittq-o" name="sittq" required="required" type="radio" value="o"/>
+       <input id="sittq-o" name="sittq" type="radio" value="o"/>
        N/A
       </label>
      </div>
@@ -1168,11 +1172,11 @@
      </div>
      <div class="col-md-8 form-group">
       <label class="radio-inline" for="sittq-n">
-       <input data-fv-notempty-message="Please select a value" id="sittq-n" name="sicpd" required="required" type="radio" value="n"/>
+       <input id="sittq-n" name="sicpd" required="required" type="radio" value="n"/>
        No
       </label>
       <label class="radio-inline" for="sittq-y">
-       <input data-fv-notempty-message="Please select a value" id="sittq-y" name="sicpd" required="required" type="radio" value="y"/>
+       <input id="sittq-y" name="sicpd" type="radio" value="y"/>
        Yes
       </label>
      </div>
@@ -1235,7 +1239,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2018.11.02
+     2018.11.08
     </span>
    </div>
   </footer>
@@ -1258,20 +1262,19 @@
     $(function () {
         /** These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly. **/
         const $forms = $("form.validated");
-        $.each($forms.find("select, textarea, input:visible, [name^='validator-']"), function (i, o) {
+        $.each($forms.find("select, textarea, input:visible"), function () {
             const $input = $(this);
             if ($input.closest(".form-group").length === 0) {
                 console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
             }
         });
 
-        $.each($forms.find("input[type=hidden][required]"), function (i, o) {
-            const $input = $(this);
+        $.each($forms.find("input[type=hidden][required]"), function () {
             console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
         });
 
         $.ajax("/ctversion", {
-            success: function (data, textStatus, jqXHR) {
+            success: function (data) {
                 const v = data.ctversion;
                 $("#formMode").text(v.toUpperCase());
             },
@@ -1283,7 +1286,7 @@
         $("input[type=checkbox]").change(function () {
             const checked = $(this).is(":checked");
             const fieldName = $(this).attr('name');
-            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function (i, v) {
+            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function () {
                 return checked;
             });
         });
@@ -1294,12 +1297,105 @@
     })
   </script>
   <script language="JavaScript">
-   $(function () {
-            var $tsbFields = $("#sidof, #sidoe");
+   function createFormValidator() {
+
+            const $form = $('#main-form');
+            const thisYear = VAPALS.todaysYear();
+            const minYear = thisYear - 100;
+            const yearValidationMessage = 'Must be between ' + minYear + ' and ' + thisYear;
+
+            // for certain validators that use multiple inputs like checkboxes and radio groups, change the location
+            // of the error icon to be based on the form-group element, instead of being immediately adjacent to the
+            // first control in that group
+            const multiInputValidators = ['simeq', 'siabx', 'siaex', 'sisse', 'siho', 'sicd', 'silcs', 'sier', 'sisa',
+                'sittq', 'sicpd'];
+
+            $form.formValidation({
+                    fields: {
+                        // SCAN
+                        sidof: {
+                            validators: {
+                                notEmpty: {message: 'Follow-up date is required'},
+                                date: {min: VAPALS.todaysDate(), message: 'Follow-up date must not be in the past'}
+                            }
+                        },
+                        sidoe: {
+                            validators: {
+                                notEmpty: {message: 'Baseline date is required'},
+                                date: {max: VAPALS.todaysDate(), message: 'Baseline date must not be in the future'}
+                            }
+                        },
+                        sico: {validators: {notEmpty: {message: 'Coordinator is required'}}},
+
+                        //Ordering Information
+                        simeq: {validators: {notEmpty: {message: 'Scan ordered is required'}}},
+                        siopnpi: {validators: {notEmpty: {message: 'Provider ID is required'}}},
+                        sidsd: {validators: {notEmpty: {message: 'Shared decision making is required'}}},
+                        siopss: {validators: {notEmpty: {message: 'Smoking status is required'}}},
+                        sioppy: {
+                            validators: {
+                                notEmpty: {message: 'Pack years is required'},
+                                numeric: {message: 'Must be a number'},
+                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
+                            }
+                        },
+                        sioas: {validators: {notEmpty: {message: 'Asymptomatic is required'}}},
+                        siopci: {validators: {notEmpty: {message: 'Clinical information is required'}}},
+                        siabx: {validators: {notEmpty: {message: 'Antibiotics is required'}}},
+                        siaex: {validators: {notEmpty: {message: 'Annual scan is required'}}},
+                        sisse: {validators: {notEmpty: {message: 'Prolonged exposure is required'}}},
+                        siwcos: {validators: {notEmpty: {message: 'Other symptom is required'}}},
+                        siwcw: {validators: {notEmpty: {message: 'Physician is required'}}},
+                        siho: {validators: {notEmpty: {message: 'Hospitalized is required'}}},
+                        sicd: {validators: {notEmpty: {message: 'Cancer diagnosis is required'}}},
+                        silcs: {validators: {notEmpty: {message: 'Cancer surgery is required'}}},
+                        sier: {validators: {notEmpty: {message: 'Recurrence is required'}}},
+
+                        //Smoking
+                        sisa: {validators: {notEmpty: {message: 'Smoking history is required'}}},
+                        sidlcy: {validators: {between: {message: yearValidationMessage, min: minYear, max: thisYear}}},
+                        sittq: {validators: {notEmpty: {message: 'Quit attempt is required'}}},
+                        siscos: {validators: {notEmpty: {message: 'Other method is required'}}},
+                        sicpd: {validators: {notEmpty: {message: 'Cessation materials is required'}}},
+                    },
+                    plugins: {
+                        trigger: new FormValidation.plugins.Trigger(),
+                        bootstrap3: new FormValidation.plugins.Bootstrap3(),
+                        submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                        excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
+                        icon: new FormValidation.plugins.Icon({
+                            valid: '',
+                            invalid: 'glyphicon glyphicon-remove',
+                            validating: 'glyphicon glyphicon-refresh',
+                            onPlaced: function (e) {
+                                if (multiInputValidators.indexOf(e.field) > -1) {
+                                    $("#" + e.element.id).closest(".form-group").append(e.iconElement);
+                                }
+                            },
+                        })
+                    }
+                }
+            );
+
+            const fv = $form.data('formValidation');
+
+            fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);
+            fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
+
+            return fv;
+        }
+
+
+        $(function () {
+
+            createFormValidator();
+
+            const $tsbFields = $("#sidof, #sidoe");
             $tsbFields.closest(".datepicker").on("dp.change", function () {
-                var baselineDate = $("#sidof").val();
-                var studyDate = $("#sidoe").val();
-                var months = VAPALS.computeMonthsBetween(baselineDate, studyDate);
+                const baselineDate = $("#sidof").val();
+                const studyDate = $("#sidoe").val();
+                const months = VAPALS.computeMonthsBetween(baselineDate, studyDate);
                 $("#sitsb-text").text(months);
                 $("#sitsb-alert").toggle(months > 0);
                 $("#sitsb").val(months);
@@ -1319,8 +1415,6 @@
             $("[name=sisa]").conditionallyDisplay({enable: "#sisa-container-y", disable: "sisa-container-n"});
             $("[name=sittq]").conditionallyDisplay({enable: "#sittq-container"});
             $("#siscl").conditionallyEnable({sourceValues: "l", enable: "#siscos"});
-
-            $(".validated").formValidation({framework: 'bootstrap'});
         });
   </script>
  </body>

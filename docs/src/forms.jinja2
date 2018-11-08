@@ -1,6 +1,7 @@
+<!--suppress ALL -->
 {% macro floatingLabel(for, text, extraClasses) -%}
-    <label for="{{ for }}" 
-        class="visible-xs visible-sm {{ extraClasses }}"
+    <label for="{{ for }}"
+           class="visible-xs visible-sm {{ extraClasses }}"
     >{{ text }}</label>
     <label for="{{ for }}" class="text-right pull-right hidden-xs hidden-sm {{ extraClasses }}">{{ text }}</label>
 {%- endmacro %}
@@ -10,7 +11,7 @@
         <input type="radio" name="{{ groupName }}" id="{{ id }}"
                 {{ " onclick=\""+ onclick + "\"" if onclick else "" }}
                 {{ " checked" if checked else "" }}
-                {{ " required=\"required\" data-fv-notempty-message=\"Please select a value\"" if required else "" }}
+                {{ " required=\"required\" " if required else "" }}
                 {{ " tabindex=\""+ tabindex + "\"" if tabindex else "" }}
                 {{ " title=\""+ title + "\"" if title else "" }}
                value="{{ value }}">
@@ -120,12 +121,7 @@
  #}
 {% macro datepicker(name, dateRestriction, requiredMessage) -%}
     <div class="input-group datepicker">
-        <input class="form-control" id="{{ name }}" name="{{ name }}" aria-describedby="{{ name }}-addon"
-                {{ " required=\"required\"" if requiredMessage else "" }}
-                {{ " data-fv-notempty-message=\"" + requiredMessage + "\"" if requiredMessage else "" }}              
-                {{ " data-fv-date-max=\"VAPALS.todaysDate\"" if dateRestriction=="past" else "" }}
-                {{ " data-fv-date-min=\"VAPALS.todaysDate\"" if dateRestriction=="future" else "" }}
-                data-fv-date="true">
+        <input class="form-control" id="{{ name }}" name="{{ name }}" aria-describedby="{{ name }}-addon">
         <div class="input-group-addon">
             <div class="input-group-text" id="{{ name }}-addon">
                 <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -135,15 +131,12 @@
     <small class="form-text text-muted">MM/DD/YYYY</small>
 {%- endmacro %}
 
-{% macro yearpicker(name, pastdateRequired, required, small, helpText, title) -%}
+{% macro yearpicker(name, required, small, helpText, title) -%}
     <input class="form-control {{ "input-sm" if small else "" }} numeric yearpicker" type="text"
            name="{{ name }}" id="{{ name }}" size="5"
             {{ " required=\"required\"" if required else "" }}
-            {{ " data-fv-date-max=\"VAPALS.todaysDate\"" if pastDateRequired else "" }}
-           data-fv-integer="true" maxlength="4"
-           placeholder="YYYY" 
-           title="{{title}}"
-           >
+           maxlength="4" placeholder="YYYY" title="{{ title }}"
+    >
     {{ "<small class=\"help-block\">" + helpText + "</small>" if helpText else "" }}
 
 {%- endmacro %}
@@ -161,10 +154,10 @@
                     <p>Are you certain you want to delete this form?</p>
                 </div>
                 <div class="modal-footer">
-                    <a  id="delete-form-cancel" class="btn btn-primary" data-dismiss="modal">No</a>
-                    <a  id="delete-form-btn" class="btn btn-danger navigation" data-method="{{ formMethod }}" 
-                    data-samiroute="deleteform" href="{{ href if mockup else "#!" }}"
-                    data-form="@@FORMKEY@@">Yes</a>
+                    <a id="delete-form-cancel" class="btn btn-primary" data-dismiss="modal">No</a>
+                    <a id="delete-form-btn" class="btn btn-danger navigation" data-method="{{ formMethod }}"
+                       data-samiroute="deleteform" href="{{ href if mockup else "#!" }}"
+                       data-form="@@FORMKEY@@">Yes</a>
                 </div>
             </div>
         </div>

@@ -14,11 +14,7 @@
 
         <hr/>
         <form action="{{ formPage+".html" if mockup else "/vapals" }}" method="{{ formMethod }}"
-              class="validated"
-              data-fv-icon-valid="glyphicon glyphicon-ok"
-              data-fv-icon-invalid="glyphicon glyphicon-remove"
-              data-fv-icon-validating="glyphicon glyphicon-refresh"
-              data-fv-button-selector="#submit-button">
+              class="validated" id="main-form">
 
             <input type="hidden" name="samiroute" value="postform"/>
             <input type="hidden" name="studyid" value="@@SID@@"/>
@@ -461,8 +457,7 @@
                     <div class="radio">
                         <label>
                             <input type="radio" name="ceimo" id="ceimo-oa" value="oa" required="required"> Other
-                            abnormalities
-                            and suggested follow-up as described above.
+                            abnormalities and suggested follow-up as described above.
                         </label>
                     </div>
                     <div class="radio">
@@ -500,7 +495,82 @@
     <script language="JavaScript">
 
 
+        function createFormValidator() {
+
+            const $form = $('#main-form');
+            const multiInputValidators = ['ceimn', 'ceimo'];
+
+            $form.formValidation({
+                    fields: {
+                        ptdos: {
+                            validators: {
+                                notEmpty: {message: 'Study date is required'},
+                                date: {max: VAPALS.todaysDate(), message: 'Study date may not be in the future'}
+                            }
+                        },
+                        ptrad: {validators: {notEmpty: {message: 'Radiologist is required'}}},
+                        sidoe: {
+                            validators: {
+                                notEmpty: {message: 'Baseline CT date is required'},
+                                date: {max: VAPALS.todaysDate(), message: 'Baseline CT date may not be in the future'}
+                            }
+                        },
+                        cedos: {
+                            validators: {
+                                notEmpty: {message: 'Date is required'},
+                                date: {max: VAPALS.todaysDate(), message: 'Date may not be in the future'}
+                            }
+                        },
+                        cefu: {validators: {callback: {callback: notDash, message: 'Select a value'}}},
+                        cefud: {
+                            validators: {
+                                notEmpty: {message: 'Follow up date is required'},
+                                date: {min: VAPALS.todaysDate(), message: 'Date may not be in the past'}
+                            }
+                        },
+                        ceimn: {validators: {notEmpty: {message: 'Nodule impression is required'}}},
+                        ceimo: {validators: {notEmpty: {message: 'Other findings is required'}}},
+                    },
+                    plugins: {
+                        trigger: new FormValidation.plugins.Trigger(),
+                        bootstrap3: new FormValidation.plugins.Bootstrap3(),
+                        submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                        excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
+                        icon: new FormValidation.plugins.Icon({
+                            valid: '',
+                            invalid: 'glyphicon glyphicon-remove',
+                            validating: 'glyphicon glyphicon-refresh',
+                            onPlaced: function (e) {
+                                if (multiInputValidators.indexOf(e.field) > -1) {
+
+                                    let selector = "";
+                                    if (e.element.id) {
+                                        selector = "#" + e.element.id
+                                    }
+                                    else {
+                                        selector = "[name=" + e.element.name + "]"
+                                    }
+
+                                    $(selector).closest(".form-group").append(e.iconElement);
+                                }
+                            },
+                        })
+                    }
+                }
+            );
+
+            const fv = $form.data('formValidation');
+            fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);
+            fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
+
+            return fv;
+        }
+
         $(function () {
+
+            const fv = createFormValidator();
+
             //follow up date calculator.
             $("[name=cefuw]").on("change", function () {
                 const when = $("[name='cefuw']:checked").val();
@@ -523,9 +593,9 @@
                     default:
                         $("#cefud").val("").focus();
                 }
-            })
 
-            $(".validated").formValidation({framework: 'bootstrap'});
+                fv.revalidateField('cefud');
+            });
         });
     </script>
 

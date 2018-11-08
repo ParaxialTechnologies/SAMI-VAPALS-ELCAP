@@ -17,7 +17,7 @@
   <link href="lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
   <link href="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
  </head>
- <body>
+ <body id="body" style="position: relative;">
   <script src="lib/jquery-3.3.1.min.js">
   </script>
   <script src="lib/jquery-ui-1.12.1/jquery-ui.min.js">
@@ -28,9 +28,13 @@
   </script>
   <script src="lib/moment.js">
   </script>
-  <script src="lib/formvalidation/dist/js/formValidation.min.js">
+  <script src="lib/formvalidation/dist/js/FormValidation.min.js">
   </script>
-  <script src="lib/formvalidation/dist/js/framework/bootstrap.min.js">
+  <script src="lib/formvalidation/dist/js/plugins/Wizard.min.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/plugins/Bootstrap3.min.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/plugins/J.min.js">
   </script>
   <script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js">
   </script>
@@ -205,7 +209,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2018.11.02
+     2018.11.08
     </span>
    </div>
   </footer>
@@ -228,20 +232,19 @@
     $(function () {
         /** These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly. **/
         const $forms = $("form.validated");
-        $.each($forms.find("select, textarea, input:visible, [name^='validator-']"), function (i, o) {
+        $.each($forms.find("select, textarea, input:visible"), function () {
             const $input = $(this);
             if ($input.closest(".form-group").length === 0) {
                 console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
             }
         });
 
-        $.each($forms.find("input[type=hidden][required]"), function (i, o) {
-            const $input = $(this);
+        $.each($forms.find("input[type=hidden][required]"), function () {
             console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
         });
 
         $.ajax("/ctversion", {
-            success: function (data, textStatus, jqXHR) {
+            success: function (data) {
                 const v = data.ctversion;
                 $("#formMode").text(v.toUpperCase());
             },
@@ -253,7 +256,7 @@
         $("input[type=checkbox]").change(function () {
             const checked = $(this).is(":checked");
             const fieldName = $(this).attr('name');
-            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function (i, v) {
+            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function () {
                 return checked;
             });
         });
@@ -295,15 +298,15 @@
             });
 
             // Initialize the patient lookup input widget
-            var $patientLookupInput = $('#pt-lookup-input');
+            const $patientLookupInput = $('#pt-lookup-input');
             $patientLookupInput.filemanAutocomplete();
             
             $patientLookupInput.on('keydown', function(e){
                 // Set up Return key
                 if (e.keyCode === 13 && ($('#pt-lookup-btn').attr('disabled') == 'disabled')) {
                     e.preventDefault();
-                }                                   
-            }).on("keyup", function(e) {
+                }
+            }).on("keyup", function () {
                 let ptNameVal = $patientLookupInput.val();
                 let data = $patientLookupInput.data('vista');
                 let patientName = "";
@@ -316,10 +319,10 @@
                     $('#pt-lookup-btn').attr('disabled', 'disabled');
                     $patientLookupInput.trigger("change");
                 }
-            }).on('filemanautocompleteselect', function (event, ui) {
+            }).on('filemanautocompleteselect', function () {
                 // Enable show buttons
                 $('#pt-lookup-btn').removeAttr('disabled');
-            }).on('filemanautocompletechange', function (event, ui) {
+            }).on('filemanautocompletechange', function () {
                 if (!$(this).val()) {
                     // Disable show buttons
                     $('#pt-lookup-btn').attr('disabled', 'disabled');
@@ -333,7 +336,7 @@
 
 
         function drawSite() {
-            var siteData = google.visualization.arrayToDataTable([
+            const siteData = google.visualization.arrayToDataTable([
                 ['Task', 'Hours per Day'],
                 ['Rural', 68],
                 ['Urban', 32]

@@ -4,16 +4,16 @@
 
 {% block body %}
     <div class="container-fluid" style="max-width:1550px">
-    <h1>
-        Sample, Sammy G
-        <small class="text-muted" title="Study ID">ST0001</small>
-    </h1>
-    <h2>{{ title | escape }}
-        <small class="text-muted" title="Medical Record Number">1234567890</small>
-    </h2>
+        <h1>
+            Sample, Sammy G
+            <small class="text-muted" title="Study ID">ST0001</small>
+        </h1>
+        <h2>{{ title | escape }}
+            <small class="text-muted" title="Medical Record Number">1234567890</small>
+        </h2>
 
-    <hr/>
-    {# @formatter:off#}
+        <hr/>
+        {# @formatter:off#}
 <pre id="report-text">
 {% if mockup %}
 CT examination of the entire thorax was performed at low-dose CT settings.
@@ -83,20 +83,17 @@ Interpreted by: IJL+DY
 
 
 
-    <div class="pull-right">
-        <button class="btn btn-default" data-clipboard-target="#report-text">
-            <i class="glyphicon glyphicon-copy" alt="Copy to clipboard"></i> Copy to clipboard
-        </button>
+        <div class="pull-right">
+            <button class="btn btn-default" data-clipboard-target="#report-text">
+                <i class="glyphicon glyphicon-copy" alt="Copy to clipboard"></i> Copy to clipboard
+            </button>
+        </div>
+        <div class="clearfix"></div>
     </div>
-    <div class="clearfix"></div>
-
-
-
 {% endblock %}
 
 {% block script %}
     <script language="JavaScript">
-
         new ClipboardJS('.btn').on("success", function(e){
             $(e.trigger).tooltip({title:"Copied!", delay: { "hide": 1000 }}).show();
             e.clearSelection();

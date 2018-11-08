@@ -17,7 +17,7 @@
   <link href="../www/lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
   <link href="../www/lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
  </head>
- <body>
+ <body id="body" style="position: relative;">
   <script src="../www/lib/jquery-3.3.1.min.js">
   </script>
   <script src="../www/lib/jquery-ui-1.12.1/jquery-ui.min.js">
@@ -28,9 +28,13 @@
   </script>
   <script src="../www/lib/moment.js">
   </script>
-  <script src="../www/lib/formvalidation/dist/js/formValidation.min.js">
+  <script src="../www/lib/formvalidation/dist/js/FormValidation.min.js">
   </script>
-  <script src="../www/lib/formvalidation/dist/js/framework/bootstrap.min.js">
+  <script src="../www/lib/formvalidation/dist/js/plugins/Wizard.min.js">
+  </script>
+  <script src="../www/lib/formvalidation/dist/js/plugins/Bootstrap3.min.js">
+  </script>
+  <script src="../www/lib/formvalidation/dist/js/plugins/J.min.js">
   </script>
   <script src="../www/lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js">
   </script>
@@ -139,7 +143,7 @@
     </small>
    </h2>
    <hr/>
-   <form action="background.html" class="validated" data-fv-button-selector="#submit-button" data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-validating="glyphicon glyphicon-refresh" method="get">
+   <form action="background.html" class="validated" id="main-form" method="get">
     <input name="samiroute" type="hidden" value="postform"/>
     <input name="studyid" type="hidden" value="@@SID@@"/>
     <input name="form" type="hidden" value="@@FORMKEY@@"/>
@@ -179,7 +183,7 @@
         </label>
         <br/>
         <label class="radio-inline" for="sbfcf-n">
-         <input data-fv-notempty-message="Please select a value" id="sbfcf-n" name="sbfcf" required="required" type="radio" value="n"/>
+         <input id="sbfcf-n" name="sbfcf" required="required" type="radio" value="n"/>
          No
         </label>
         <label class="radio-inline" for="sbfcf-y">
@@ -193,7 +197,7 @@
         </label>
         <br/>
         <label class="radio-inline" for="sbfcm-n">
-         <input data-fv-notempty-message="Please select a value" id="sbfcm-n" name="sbfcm" required="required" type="radio" value="n"/>
+         <input id="sbfcm-n" name="sbfcm" required="required" type="radio" value="n"/>
          No
         </label>
         <label class="radio-inline" for="sbfcm-y">
@@ -207,7 +211,7 @@
         </label>
         <br/>
         <label class="radio-inline" for="sbfcs-n">
-         <input data-fv-notempty-message="Please select a value" id="sbfcs-n" name="sbfcs" required="required" type="radio" value="n"/>
+         <input id="sbfcs-n" name="sbfcs" required="required" type="radio" value="n"/>
          No
         </label>
         <label class="radio-inline" for="sbfcs-y">
@@ -248,13 +252,13 @@
         <label class="control-label required" for="sbhcdod">
          Year
         </label>
-        <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbhcdod" maxlength="4" name="sbhcdod" placeholder="YYYY" required="required" size="5" title="" type="text"/>
+        <input class="form-control input-sm numeric yearpicker" id="sbhcdod" maxlength="4" name="sbhcdod" placeholder="YYYY" required="required" size="5" title="" type="text"/>
        </div>
        <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
         <label class="control-label required" for="sbhcpbo">
          Primary site
         </label>
-        <input class="form-control input-sm" id="sbhcpbo" name="sbhcpbo" placeholder="Primary site?" required="required" type="text"/>
+        <input class="form-control input-sm" id="sbhcpbo" name="sbhcpbo" required="required" type="text"/>
        </div>
       </div>
      </div>
@@ -291,11 +295,11 @@
         </label>
         <br/>
         <label class="radio-inline" for="sbmpat-n">
-         <input data-fv-notempty-message="Please select a value" id="sbmpat-n" name="sbmpat" required="required" type="radio" value="n"/>
+         <input id="sbmpat-n" name="sbmpat" required="required" type="radio" value="n"/>
          No
         </label>
         <label class="radio-inline" for="sbmpat-y">
-         <input data-fv-notempty-message="Please select a value" id="sbmpat-y" name="sbmpat" required="required" type="radio" value="y"/>
+         <input id="sbmpat-y" name="sbmpat" type="radio" value="y"/>
          Yes
         </label>
        </div>
@@ -332,7 +336,7 @@
         <label class="control-label required" for="sbmpcw">
          Year
         </label>
-        <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpcw" maxlength="4" name="sbmpcw" placeholder="YYYY" required="required" size="5" title="" type="text"/>
+        <input class="form-control input-sm numeric yearpicker" id="sbmpcw" maxlength="4" name="sbmpcw" placeholder="YYYY" required="required" size="5" title="" type="text"/>
        </div>
       </div>
      </div>
@@ -362,14 +366,14 @@
         </label>
        </div>
       </div>
-      <div class="" id="sbmpht-container" style="display: none;">
+      <div id="sbmpht-container" style="display: none;">
        <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
         <label class="form-check-inline required" for="sbmphtt-n">
          Treated?
         </label>
         <br/>
         <label class="radio-inline" for="sbmphtt-n">
-         <input data-fv-notempty-message="Please select a value" id="sbmphtt-n" name="sbmphtt" required="required" type="radio" value="n"/>
+         <input id="sbmphtt-n" name="sbmphtt" required="required" type="radio" value="n"/>
          No
         </label>
         <label class="radio-inline" for="sbmphtt-y">
@@ -381,13 +385,13 @@
         <label class="control-label required" for="sbmphtsw">
          Year
         </label>
-        <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmphtsw" maxlength="4" name="sbmphtsw" placeholder="YYYY" required="required" size="5" title="" type="text"/>
+        <input class="form-control input-sm numeric yearpicker" id="sbmphtsw" maxlength="4" name="sbmphtsw" placeholder="YYYY" required="required" size="5" title="" type="text"/>
        </div>
        <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
-        <label class="control-label required numeric" for="sbmphthv">
+        <label class="control-label numeric" for="sbmphthv">
          Highest Value
         </label>
-        <input class="form-control input-sm numeric decimalformat" id="sbmphthv" name="sbmphthv" placeholder="Highest Value?" type="text"/>
+        <input class="form-control input-sm numeric decimalformat" id="sbmphthv" name="sbmphthv" type="text"/>
        </div>
       </div>
      </div>
@@ -424,7 +428,7 @@
         </label>
         <br/>
         <label class="radio-inline" for="sbmphct-n">
-         <input data-fv-notempty-message="Please select a value" id="sbmphct-n" name="sbmphct" required="required" type="radio" value="n"/>
+         <input id="sbmphct-n" name="sbmphct" required="required" type="radio" value="n"/>
          No
         </label>
         <label class="radio-inline" for="sbmphct-y">
@@ -465,13 +469,13 @@
         <label class="control-label required" for="sbmpasw">
          Year
         </label>
-        <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpasw" maxlength="4" name="sbmpasw" placeholder="YYYY" required="required" size="5" title="" type="text"/>
+        <input class="form-control input-sm numeric yearpicker" id="sbmpasw" maxlength="4" name="sbmpasw" placeholder="YYYY" required="required" size="5" title="" type="text"/>
        </div>
        <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
         <label class="control-label required" for="sbmpast">
          Where Treated
         </label>
-        <input class="form-control input-sm" id="sbmpast" name="sbmpast" placeholder="Where treated?" required="required" type="text"/>
+        <input class="form-control input-sm" id="sbmpast" name="sbmpast" required="required" type="text"/>
        </div>
       </div>
      </div>
@@ -506,13 +510,13 @@
         <label class="control-label required" for="sbmpmid">
          Year
         </label>
-        <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpmid" maxlength="4" name="sbmpmid" placeholder="YYYY" required="required" size="5" title="" type="text"/>
+        <input class="form-control input-sm numeric yearpicker" id="sbmpmid" maxlength="4" name="sbmpmid" placeholder="YYYY" required="required" size="5" title="" type="text"/>
        </div>
        <div class="form-group col-sm-4 col-md-2">
-        <label class="control-label" for="sbmpast">
+        <label class="control-label" for="sbmpmiw">
          Where Treated
         </label>
-        <input class="form-control input-sm" id="sbmpmiw" name="sbmpmiw" placeholder="Location" type="text"/>
+        <input class="form-control input-sm" id="sbmpmiw" name="sbmpmiw" type="text"/>
        </div>
       </div>
      </div>
@@ -547,7 +551,7 @@
         <label class="control-label required" for="sbmpsd">
          Year
         </label>
-        <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmpsd" maxlength="4" name="sbmpsd" placeholder="YYYY" required="required" size="5" title="" type="text"/>
+        <input class="form-control input-sm numeric yearpicker" id="sbmpsd" maxlength="4" name="sbmpsd" placeholder="YYYY" required="required" size="5" title="" type="text"/>
        </div>
       </div>
      </div>
@@ -582,7 +586,7 @@
         <label class="control-label required" for="sbmppvd">
          Year
         </label>
-        <input class="form-control input-sm numeric yearpicker" data-fv-integer="true" id="sbmppvd" maxlength="4" name="sbmppvd" placeholder="YYYY" required="required" size="5" title="" type="text"/>
+        <input class="form-control input-sm numeric yearpicker" id="sbmppvd" maxlength="4" name="sbmppvd" placeholder="YYYY" required="required" size="5" title="" type="text"/>
        </div>
       </div>
      </div>
@@ -617,7 +621,7 @@
         <label class="control-label required" for="sbmpdw">
          Starting at what age?
         </label>
-        <input class="form-control input-sm numeric" data-fv-integer="true" id="sbmpdw" maxlength="4" name="sbmpdw" size="4" type="text"/>
+        <input class="form-control input-sm numeric" id="sbmpdw" maxlength="4" name="sbmpdw" size="4" type="text"/>
        </div>
        <div class=" col-sm-4 col-md-2 form-group">
         <label class="control-label required" for="sbmpdt-n">
@@ -625,7 +629,7 @@
         </label>
         <br/>
         <label class="radio-inline" for="sbmpdt-n">
-         <input data-fv-notempty-message="Please select a value" id="sbmpdt-n" name="sbmpdt" required="required" type="radio" value="n"/>
+         <input id="sbmpdt-n" name="sbmpdt" required="required" type="radio" value="n"/>
          No
         </label>
         <label class="radio-inline" for="sbmpdt-y">
@@ -668,7 +672,7 @@
         </label>
         <br/>
         <label class="radio-inline" for="sbmpldt-m">
-         <input data-fv-notempty-message="Please select a value" id="sbmpldt-m" name="sbmpldt" required="required" type="radio" value="m"/>
+         <input id="sbmpldt-m" name="sbmpldt" required="required" type="radio" value="m"/>
          Mild
         </label>
         <label class="radio-inline" for="sbmpldt-s">
@@ -711,7 +715,7 @@
         </label>
         <br/>
         <label class="radio-inline" for="sbmprdt-m">
-         <input data-fv-notempty-message="Please select a value" id="sbmprdt-m" name="sbmprdt" required="required" type="radio" value="m"/>
+         <input id="sbmprdt-m" name="sbmprdt" required="required" type="radio" value="m"/>
          Mild
         </label>
         <label class="radio-inline" for="sbmprdt-s">
@@ -1032,7 +1036,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2018.11.02
+     2018.11.08
     </span>
    </div>
   </footer>
@@ -1055,20 +1059,19 @@
     $(function () {
         /** These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly. **/
         const $forms = $("form.validated");
-        $.each($forms.find("select, textarea, input:visible, [name^='validator-']"), function (i, o) {
+        $.each($forms.find("select, textarea, input:visible"), function () {
             const $input = $(this);
             if ($input.closest(".form-group").length === 0) {
                 console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
             }
         });
 
-        $.each($forms.find("input[type=hidden][required]"), function (i, o) {
-            const $input = $(this);
+        $.each($forms.find("input[type=hidden][required]"), function () {
             console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
         });
 
         $.ajax("/ctversion", {
-            success: function (data, textStatus, jqXHR) {
+            success: function (data) {
                 const v = data.ctversion;
                 $("#formMode").text(v.toUpperCase());
             },
@@ -1080,7 +1083,7 @@
         $("input[type=checkbox]").change(function () {
             const checked = $(this).is(":checked");
             const fieldName = $(this).attr('name');
-            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function (i, v) {
+            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function () {
                 return checked;
             });
         });
@@ -1091,13 +1094,121 @@
     })
   </script>
   <script language="JavaScript">
-   $(function () {
+   function createFormValidator() {
+
+            const $form = $('#main-form');
+            const multiInputValidators = ['sbfcf', 'sbfcm', 'sbfcs', 'ceimn'];
+            const thisYear = VAPALS.todaysYear();
+            const minYear = thisYear - 100;
+            const yearValidationMessage = 'Must be between ' + minYear + ' and ' + thisYear;
+            $form.formValidation({
+                    fields: {
+                        sbfcf: {validators: {notEmpty: {message: 'Father\'s history is required'}}},
+                        sbfcm: {validators: {notEmpty: {message: 'Mother\'s history is required'}}},
+                        sbfcs: {validators: {notEmpty: {message: 'Sibling\'s history is required'}}},
+                        sbhcdod: {
+                            validators: {
+                                notEmpty: {message: 'Year is required'},
+                                between: {message: yearValidationMessage, min: minYear, max: thisYear}
+                            }
+                        },
+                        sbhcpbo: {validators: {notEmpty: {message: 'Primary site is required'}}},
+                        sbmpat: {validators: {notEmpty: {message: 'Current treatment is required'}}},
+                        sbmpcw: {
+                            validators: {
+                                notEmpty: {message: 'Year is required'},
+                                between: {message: yearValidationMessage, min: minYear, max: thisYear}
+                            }
+                        },
+                        sbmphtt: {validators: {notEmpty: {message: 'Treated is required'}}},
+                        sbmphtsw: {
+                            validators: {
+                                notEmpty: {message: 'Year is required'},
+                                between: {message: yearValidationMessage, min: minYear, max: thisYear}
+                            }
+                        },
+                        sbmphthv: {
+                            validators: {
+                                numeric: {message: 'Must be a number'},
+                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
+                            }
+                        },
+                        sbmphct: {validators: {notEmpty: {message: 'Treated is required'}}},
+                        sbmpasw: {
+                            validators: {
+                                notEmpty: {message: 'Year is required'},
+                                between: {message: yearValidationMessage, min: minYear, max: thisYear}
+                            }
+                        },
+                        sbmpast: {validators: {notEmpty: {message: 'Where treated is required'}}},
+                        sbmpmid: {
+                            validators: {
+                                notEmpty: {message: 'Year is required'},
+                                between: {message: yearValidationMessage, min: minYear, max: thisYear}
+                            }
+                        },
+                        sbmpmiw: {validators: {notEmpty: {message: 'Where treated is required'}}},
+                        sbmpsd: {
+                            validators: {
+                                notEmpty: {message: 'Year is required'},
+                                between: {message: yearValidationMessage, min: minYear, max: thisYear}
+                            }
+                        },
+                        sbmppvd: {
+                            validators: {
+                                notEmpty: {message: 'Year is required'},
+                                between: {message: yearValidationMessage, min: minYear, max: thisYear}
+                            }
+                        },
+                        sbmpdw: {
+                            validators: {
+                                notEmpty: {message: 'Age is required'},
+                                between: {message: 'Must be between 1 and 100', min: 1, max: 100}
+                            }
+                        },
+                        sbmpdt: {validators: {notEmpty: {message: 'Treated is required'}}},
+                        sbmpldt: {validators: {notEmpty: {message: 'Severity is required'}}},
+                        sbmprdt: {validators: {notEmpty: {message: 'Severity is required'}}},
+                        sbwcos: {validators: {notEmpty: {message: 'Other symptom is required'}}},
+                        sbahas: {validators: {notEmpty: {message: 'Other work is required'}}},
+                    },
+                    plugins: {
+                        trigger: new FormValidation.plugins.Trigger(),
+                        bootstrap3: new FormValidation.plugins.Bootstrap3(),
+                        submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                        excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
+                        icon: new FormValidation.plugins.Icon({
+                            valid: '',
+                            invalid: 'glyphicon glyphicon-remove',
+                            validating: 'glyphicon glyphicon-refresh',
+                            onPlaced: function (e) {
+                                if (multiInputValidators.indexOf(e.field) > -1) {
+                                    $("#" + e.element.id).closest(".form-group").append(e.iconElement);
+                                }
+                            },
+                        })
+                    }
+                }
+            );
+
+            const fv = $form.data('formValidation');
+            fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);
+            fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
+
+            return fv;
+        }
+
+        $(function () {
+
+            createFormValidator();
+
             //hook for calculating Pulmonary function test percentage (FFR)
             $("#sbfev1, #sbfvc").on('change', function () {
-                var fev1 = $("#sbfev1").val();
-                var fvc = $("#sbfvc").val();
+                const fev1 = $("#sbfev1").val();
+                const fvc = $("#sbfvc").val();
                 if (fev1 > 0 && fvc > 0) {
-                    var ffr = Math.round(100.0 * fev1 / fvc);
+                    const ffr = Math.round(100.0 * fev1 / fvc);
                     if (ffr > 0) {
                         $("#sbffr").val(ffr);
                         $("#ffr-value").text(ffr);
@@ -1119,11 +1230,11 @@
                 "sbmpld", "sbmprd", "sbahpft", "sblcs"
             );
 
-            jQuery.each(uncheckableRadioFieldNames, function (idx, name) {
-                $("[name="+name+"]").conditionallyDisplay({enable: "#"+name+"-container"});
-                uncheckableRadio("[name='"+name+"']","div.form-group");
-            });  
-                    
+            $.each(uncheckableRadioFieldNames, function (idx, name) {
+                $("[name=" + name + "]").conditionallyDisplay({enable: "#" + name + "-container"});
+                uncheckableRadio("[name='" + name + "']", "div.form-group");
+            });
+
 
             $("#sbwco").conditionallyDisplay({sourceValues: "o", enable: "#sbwcos"});
             $("[name=sbact]").conditionallyDisplay({
@@ -1131,10 +1242,9 @@
                     return actualValue !== '-' && actualValue !== 'e';
                 }, enable: "#sbact-container"
             });
-            
+
             $("#sbahaoo").conditionallyDisplay({sourceValues: "o", enable: "#sbahas"});
 
-            $(".validated").formValidation({framework: 'bootstrap'});
         });
   </script>
  </body>

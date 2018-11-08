@@ -70,7 +70,11 @@
                 var fv = $container.closest("form.validated").data('formValidation');
                 if (fv) {
                     $.each($fields, function (i, t) {
-                        fv.resetField($(t));
+                        var fieldName = $(t).attr("name");
+                        var fvf = fv.fields[fieldName];
+                        if (fvf) {
+                            fv.resetField(fieldName);
+                        }
                     });
                 }
 
@@ -107,7 +111,7 @@
 
         var matchCallback = (typeof settings.sourceValues === 'function') ? settings.sourceValues : function (actualValue) {
             var sourceValuesArray = $.map(settings.sourceValues.split(","), $.trim);
-            if ($.isArray(actualValue)){
+            if ($.isArray(actualValue)) {
                 return sourceValuesArray.some(v => actualValue.includes(v));
             }
             return $.inArray(actualValue, sourceValuesArray) > -1;
@@ -122,7 +126,7 @@
         };
 
 
-        this.on('change.conditionally-enable', function () {
+        this.on('change.conditionally-enable, keyup.conditionally-enable', function () {
             var $el = $(this);
             var actualValue = $el.is(":checkbox") ? ($el.is(":checked") ? $el.val() : "") : $el.val();
             var matches = matchCallback(actualValue);
@@ -130,8 +134,8 @@
             //toggle input fields within the container.
             var $enableContainer = enableFieldsCallback(actualValue, matches);
             var $disableContainer = disableFieldsCallback(actualValue, matches);
-            var enableSize = $enableContainer == null ? 0 : $enableContainer.length
-            var disableSize = $disableContainer == null ? 0 : $disableContainer.length
+            var enableSize = $enableContainer == null ? 0 : $enableContainer.length;
+            var disableSize = $disableContainer == null ? 0 : $disableContainer.length;
 
             // console.log("conditionallyEnable(): change event triggered on field. id=" + $el.prop("id") + ", name=" + $el.prop("name") + ", matches=" + matches + ", enable=" + enableSize + ", disable=" + disableSize);
 
@@ -148,9 +152,9 @@
             // the $container that is bound to another instance of this plugin. This is necessary because the
             // enabled/disable functions called above will enabled/disable all fields in it's context including those
             // that are controlled by a child element within this container.
-            $.each([$enableContainer, $disableContainer], function (i, $container){
-                if ($container){
-                    $container.find("["+enabledAttributeName+"]").trigger("change");
+            $.each([$enableContainer, $disableContainer], function (i, $container) {
+                if ($container) {
+                    $container.find("[" + enabledAttributeName + "]").trigger("change");
                 }
             });
 
@@ -161,7 +165,11 @@
                     var disabledFields = $enableContainer.find("input:disabled, select:disabled, textarea:disabled");
                     $.each(disabledFields, function (i, t) {
                         // console.log("resetting field " + $(t).attr('name'))
-                        fv.resetField($(t));
+                        const fieldName = $(t).attr("name");
+                        const fvf = fv.fields[fieldName];
+                        if (fvf) {
+                            fv.resetField(fieldName);
+                        }
                     });
                 }
             }

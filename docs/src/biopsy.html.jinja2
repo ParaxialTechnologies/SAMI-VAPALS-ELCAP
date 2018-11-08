@@ -17,16 +17,12 @@
         </div>
 
         <hr/>
-        <form action="{{ formPage+".html" if mockup else "/vapals" }}" method="{{ formMethod }}"
-              class="validated"
-              data-fv-icon-valid="glyphicon glyphicon-ok"
-              data-fv-icon-invalid="glyphicon glyphicon-remove"
-              data-fv-icon-validating="glyphicon glyphicon-refresh"
-              data-fv-button-selector="#submit-button">
+        <form action="{{ formPage+".html" if mockup else "/vapals" }}" method="{{ formMethod }}" class="validated"
+              id="main-form">
 
             <input type="hidden" name="samiroute" value="postform"/>
             <input type="hidden" name="studyid" value="@@SID@@"/>
-            <input type="hidden" name="form" value="@@FORMKEY@@"/>  
+            <input type="hidden" name="form" value="@@FORMKEY@@"/>
 
             <h3>Biopsy</h3>
             <div class="row">
@@ -154,7 +150,8 @@
 
                     </div>
                     <div class="col-md-6 form-group">
-                        <label for="rbmel" class="control-label required">Where was the biopsy performed?</label>
+                        <label for="rbmel" class="control-label required">Where was the mediastinoscopy
+                            performed?</label>
                         <input type=text id="rbmel" name="rbmel" class="form-control" required="required">
                     </div>
 
@@ -200,7 +197,7 @@
 
             <h3>Molecular Testing</h3>
             <div class="row">
-                <div class="col-sm-12 form-group">
+                <div class="col-md-5 form-group">
                     <label class="control-label required" for="rbmt-n">Was molecular testing performed on the pathology
                         specimen?</label>
                     <div>
@@ -231,11 +228,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label required" for="rbmtos">Other</label>
+                        <label class="control-label" for="rbmtos">Other</label>
                         <input type="text" name="rbmtos" id="rbmtos" class="form-control" placeholder="specify">
-                        {{ f.inlineRadio("rbmto", "rbmto-n", "n", "No", true) }}
-                        {{ f.inlineRadio("rbmto", "rbmto-neg", "neg", "Negative", true) }}
-                        {{ f.inlineRadio("rbmto", "rbmto-pos", "pos", "Positive", true) }}
+                        <div id="rbmto-container">
+                            {{ f.inlineRadio("rbmto", "rbmto-n", "n", "No", true) }}
+                            {{ f.inlineRadio("rbmto", "rbmto-neg", "neg", "Negative", true) }}
+                            {{ f.inlineRadio("rbmto", "rbmto-pos", "pos", "Positive", true) }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -253,13 +252,110 @@
         </form>
     </div>
 
-     {{ f.deleteFormModal("biopsy.html", mockup, formMethod)}}
+    {{ f.deleteFormModal("biopsy.html", mockup, formMethod) }}
 {% endblock %}
 
 {% block script %}
     <script language="JavaScript">
+        function createFormValidator() {
+
+            const $form = $('#main-form');
+            const multiInputValidators = ['bxp', 'bxcp', 'rbmep', 'rbmec', 'rbmt', 'rbmte', 'rbmtk', 'rbmta', 'rbmto'];
+
+            $form.formValidation({
+                    fields: {
+                        //BIOPSY
+                        bxp: {validators: {notEmpty: {message: 'Biopsy location is required'}}},
+                        bxdos: {
+                            validators: {
+                                notEmpty: {message: 'Procedure date is required'},
+                                date: {
+                                    max: VAPALS.todaysDate(),
+                                    message: 'Procedure date must be at before today'
+                                }
+                            }
+                        },
+                        bxw: {validators: {notEmpty: {message: 'Biopsy performed is required'}}},
+                        bxinds: { //use a real element name for the field so conditional plugins can toggle the field
+                            selector: '[name^=bxind]',
+                            validators: {choice: {min: 1, message: 'Select one or more indications'}}
+                        },
+                        bxind: {validators: {notEmpty: {message: 'Other indication is required'}}},
+                        bxloclul: { //use a real element name for the field so conditional plugins can toggle the field
+                            selector: '[name^=bxloc]',
+                            validators: {choice: {min: 1, message: 'Select one or more sites'}}
+                        },
+                        bxlocs: {validators: {notEmpty: {message: 'Other lesion site is required'}}},
+                        bxtosc: { //use a real element name for the field so conditional plugins can toggle the field
+                            selector: '[name^=bxtos]',
+                            validators: {choice: {min: 1, message: 'Select one or more specimen types'}}
+                        },
+                        bxtopc: { //use a real element name for the field so conditional plugins can toggle the field
+                            selector: '[name^=bxtop]',
+                            validators: {choice: {min: 1, message: 'Select one or more procedure types'}}
+                        },
+                        bxtopos: {validators: {notEmpty: {message: 'Other type of procedure is required'}}},
+                        bxcp: {validators: {notEmpty: {message: 'Complications is required'}}},
+                        bxcpos: {validators: {notEmpty: {message: 'Other complication is required'}}},
+
+                        //Mediastinoscopy
+                        rbmep: {validators: {notEmpty: {message: 'Mediastinoscopy performed is required'}}},
+                        rbmed: {
+                            validators: {
+                                notEmpty: {message: 'Procedure date is required'},
+                                date: {
+                                    max: VAPALS.todaysDate(),
+                                    message: 'Procedure date must be at before today'
+                                }
+                            }
+                        },
+                        rbmel: {validators: {notEmpty: {message: 'Mediastinoscopy location is required'}}},
+                        rbmllul: { //use a real element name for the field so conditional plugins can toggle the field
+                            selector: '[name^=rbml]',
+                            validators: {choice: {min: 1, message: 'Select one or more sites'}}
+                        },
+                        rbmls: {validators: {notEmpty: {message: 'Other lesion site is required'}}},
+                        rbmec: {validators: {notEmpty: {message: 'Complications is required'}}},
+                        rbmecos: {validators: {notEmpty: {message: 'Other complication is required'}}},
+
+                        //Molecular Testing
+                        rbmt: {validators: {notEmpty: {message: 'Molecular testing is required'}}},
+                        rbmte: {validators: {notEmpty: {message: 'EGFR is required'}}},
+                        rbmtk: {validators: {notEmpty: {message: 'KRas is required'}}},
+                        rbmta: {validators: {notEmpty: {message: 'ALK is required'}}},
+                        rbmto: {validators: {notEmpty: {message: 'Other is required'}}},
+
+
+                    },
+                    plugins: {
+                        trigger: new FormValidation.plugins.Trigger(),
+                        bootstrap3: new FormValidation.plugins.Bootstrap3(),
+                        submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                        excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
+                        icon: new FormValidation.plugins.Icon({
+                            valid: '',
+                            invalid: 'glyphicon glyphicon-remove',
+                            validating: 'glyphicon glyphicon-refresh',
+                            onPlaced: function (e) {
+                                if (multiInputValidators.indexOf(e.field) > -1) {
+                                    $("#" + e.element.id).closest(".form-group").append(e.iconElement);
+                                }
+                            },
+                        })
+                    }
+                }
+            );
+
+            const fv = $form.data('formValidation');
+            fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);
+            fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
+
+            return fv;
+        }
 
         $(function () {
+            createFormValidator();
 
             //Biopsy
             $("[name='bxp']").conditionallyDisplay({enable: $("#bxp-container")}); //entire form
@@ -276,14 +372,15 @@
 
             //Molecular Testing
             $("[name='rbmt']").conditionallyDisplay({enable: "#rbmt-container"}); //entire section
+            $("[name='rbmtos']").conditionallyEnable({
+                sourceValues: function (actualValue) {
+                    return actualValue != "";
+                }, enable: "#rbmto-container"
+            });
 
             //attach before requireOneValidators
             $(".validated").formValidation({framework: 'bootstrap'});
 
-            requireOneValidator($("[name^=bxind]"), $("[name=validator-bxind]")); // at least one indication checkbox
-            requireOneValidator($("[name^=bxloc]"), $("[name=validator-bxloc]")); // at least one lesion checkbox
-            requireOneValidator($("[name^=bxtos]"), $("[name=validator-bxtos]")); // at least one type of specimen
-            requireOneValidator($("[name^=bxtop]"), $("[name=validator-bxtop]")); // at least one type of procedure
             requireOneValidator($("#bxcp-container").find("[name^=bxcp]"), $("[name^=validator-bxcp]")); // at least one complication
             requireOneValidator($("[name^=rbml]"), $("[name^=validator-rbml]")) // at least one lesion
         });

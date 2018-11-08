@@ -14,20 +14,17 @@
 
     <hr/>
     <form action="{{ formPage+".html" if mockup else "/vapals" }}" class="validated" method="{{ formMethod }}"
-          data-fv-icon-valid="glyphicon glyphicon-ok"
-          data-fv-icon-invalid="glyphicon glyphicon-remove"
-          data-fv-icon-validating="glyphicon glyphicon-refresh"
-          data-fv-button-selector="#submit-button">
+          id="main-form">
         <input type="hidden" name="samiroute" value="postform"/>
         <input type="hidden" name="studyid" value="@@SID@@"/>
         <input type="hidden" name="form" value="@@FORMKEY@@"/>
 
         <h3>Pre-enrollment Eligibility</h3>
         <div class="row">
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                 <label for="sipechrt" class="required">Chart Review</label>
             </div>
-            <div class="col-sm-2 form-group">
+            <div class="col-sm-3 form-group">
                 {{ f.inlineRadioYN("sipechrt", true) }}
             </div>
             <div class="col-sm-6">
@@ -41,10 +38,10 @@
             </div>
         </div>
         <div class="row" id="discussion-container">
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                 <label for="sipedisc" class="required">Patient Discussion</label>
             </div>
-            <div class="col-sm-2 form-group">
+            <div class="col-sm-3 form-group">
                 {{ f.inlineRadioYN("sipedisc", true) }}
             </div>
         </div>
@@ -341,14 +338,14 @@
             </div>
         </div>
 
-        <div id="reason-for-change-container">
+        <div id="reason-for-change-container" style="display: none;">
             <hr/>
             <h3>Reason for change</h3>
             <div class="row">
                 <div class="col-md-12 form-group">
                     <label for="sistachg" class="required">Reason</label><br/>
                     <select id="sistachg" name="sistachg" required="required" class="form-control">
-                        <option>-</option>
+                        <option value="">-</option>
                         <option value="transferred">Transferred to another institution (specify)</option>
                         <option value="medical">Unable due to medical reason (specify)</option>
                         <option value="unwilling">Unwilling due to personal reason (specify)</option>
@@ -376,7 +373,13 @@
                 </div>
             </div>
 
-            <pre class="prettyprint source linenums" id="changelog">{{ "2018-10-31 12:00 PM - {USERNAME} changed to {FIELD} to {VALUE}: {REASON} - {EXPLANATION}" if mockup else "" }}</pre>
+        </div>
+
+        <div class="row" id="change-log-container">
+            <div class="col-sm-12">
+                <h4>Change Log</h4>
+                <pre class="prettyprint source linenums" id="changelog">{{ "2018-10-31 12:00 PM - {USERNAME} changed to {FIELD} to {VALUE}: {REASON} - {EXPLANATION}" if mockup else "" }}</pre>
+            </div>
         </div>
 
         <hr/>
@@ -400,12 +403,97 @@
 
     //purposefully executed before DOM is rendered so section is never visible
     const newForm = "@@NEWFORM@@";
-    if (newForm == "true") {
+    if (newForm === "true") {
         $("#reason-for-change-container").remove();
+        $("#change-log-container").remove();
     }
 
 
+    function createFormValidator() {
+
+        const $form = $('#main-form');
+        const multiInputValidators = ['sipechrt', 'sipedisc', 'siremhlc', 'sipav', 'sirs'];
+        const thisYear = VAPALS.todaysYear();
+        const minYear = thisYear - 100;
+        const yearValidationMessage = 'Must be between ' + minYear + ' and ' + thisYear;
+        $form.formValidation({
+                fields: {
+                    sipechrt: {validators: {notEmpty: {message: 'Chart review is required'}}},
+                    sipedisc: {validators: {notEmpty: {message: 'Discussion review is required'}}},
+                    siremhlc: { //use a real element name for the field so conditional plugins can toggle the field
+                        selector: '[name^=sire]',
+                        validators: {choice: {min: 1, message: 'Select one or more reasons'}}
+                    },
+                    siremhoo: {validators: {notEmpty: {message: 'Other is required'}}},
+                    sireshoo: {validators: {notEmpty: {message: 'Other is required'}}},
+                    sireceoo: {validators: {notEmpty: {message: 'Other is required'}}},
+                    sireucoo: {validators: {notEmpty: {message: 'Other is required'}}},
+                    sidc: {
+                        validators: {
+                            notEmpty: {message: 'Contact date is required'},
+                            date: {max: VAPALS.todaysDate(), message: 'Contact date may not be in the future'}
+                        }
+                    },
+                    silnpos: {validators: {notEmpty: {message: 'Other is required'}}},
+                    sipav: {validators: {notEmpty: {message: 'Primary address verification is required'}}},
+                    sirs: {validators: {notEmpty: {message: 'Rural status is required'}}},
+                    sicpd: {
+                        validators: {
+                            notEmpty: {message: 'Packs per day is required'},
+                            integer: {message: 'must be a whole number'}
+                        }
+                    },
+                    sisny: {
+                        validators: {
+                            notEmpty: {message: 'Number of years is required'},
+                            integer: {message: 'must be a whole number'}
+                        }
+                    },
+                    siidmdc: {validators: {notEmpty: {message: 'Informed decision making is required'}}},
+                    sildct: {validators: {notEmpty: {message: 'Veterans\' option is required'}}},
+                    sistatus: {validators: {notEmpty: {message: 'Enrollment status is required'}}},
+                    sistachg: {validators: {notEmpty: {message: 'Reason for change is required'}}},
+                    sistreas: {validators: {notEmpty: {message: 'Explanation is required'}}},
+                },
+                plugins: {
+                    trigger: new FormValidation.plugins.Trigger(),
+                    bootstrap3: new FormValidation.plugins.Bootstrap3(),
+                    submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                    defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                    excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
+                    icon: new FormValidation.plugins.Icon({
+                        valid: '',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh',
+                        onPlaced: function (e) {
+                            if (multiInputValidators.indexOf(e.field) > -1) {
+
+                                var selector = "";
+                                if (e.element.id) {
+                                    selector = "#" + e.element.id
+                                }
+                                else {
+                                    selector = "[name=" + e.element.name + "]"
+                                }
+
+                                $(selector).closest(".form-group").append(e.iconElement);
+                            }
+                        },
+                    })
+                }
+            }
+        );
+
+        const fv = $form.data('formValidation');
+        fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);
+        fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
+
+        return fv;
+    }
+
     $(function () {
+
+        createFormValidator();
 
         $("#sicpd").on('keyup change', function () {
             var cigsPerDay = $("#sicpd").val();
@@ -445,31 +533,7 @@
             sourceValues: "n",
             enable: "#reason-container, #reason-medical-container, #reason-smoking-container, #reason-elsewhere-container",
             disable: "#discussion-container, #reason-contact-container"
-        });
-
-        //Pre-Enrollment: Patient discussion
-        $("[name=sipedisc]").conditionallyDisplay({
-            sourceValues: "n",
-            enable: "#reason-container, #reason-medical-container, #reason-smoking-container, #reason-elsewhere-container, #reason-contact-container"
-        });
-
-        //Pre enrollment - other reason fields
-        $("#siremhot").conditionallyDisplay({value: "y", enable: "#sireemhoo"});
-        $("#sireshot").conditionallyDisplay({value: "y", enable: "#sireshoo"});
-        $("#sireceot").conditionallyDisplay({value: "y", enable: "#sireceoo"});
-        $("#sireucot").conditionallyDisplay({value: "y", enable: "#sireucoo"});
-
-        //Contact info - how did you learn about LCS
-        $("#silnpo").conditionallyEnable({sourceValues: "1", enable: "#silnpos"});
-
-
-        $("form.validated").formValidation({framework: 'bootstrap'});
-
-        $("[name=sistatus]").on('change', function () {
-            $("#status-change-container").show();
-        });
-
-        $("[name=sipechrt]").on('change', function () {
+        }).on('change', function () {
             var value = $("[name=sipechrt]:checked").val();
             var $yesAlert = $("#sipechrt-y-alert"), $noAlert = $("#sipechrt-n-alert");
             if (value === "n") {
@@ -484,18 +548,33 @@
                 $yesAlert.hide();
                 $noAlert.hide();
             }
+        });
 
-            $('input:radio[name=bedStatus]:checked').change(function () {
-                if ($("input[name='bedStatus']:checked").val() == 'allot') {
-                    alert("Allot Thai Gayo Bhai");
-                }
-                if ($("input[name='bedStatus']:checked").val() == 'transfer') {
-                    alert("Transfer Thai Gayo");
-                }
-            });
+        //Pre-Enrollment: Patient discussion
+        $("[name=sipedisc]").conditionallyDisplay({
+            sourceValues: "n",
+            enable: "#reason-container, #reason-medical-container, #reason-smoking-container, #reason-elsewhere-container, #reason-contact-container"
+        });
+
+        //Pre enrollment - other reason fields
+        $("#siremhot").conditionallyDisplay({value: "y", enable: "#sireemhoo"});
+        $("#sireshot").conditionallyDisplay({value: "y", enable: "#sireshoo"});
+        $("#sireceot").conditionallyDisplay({value: "y", enable: "#sireceoo"});
+        $("#sireucot").conditionallyDisplay({value: "y", enable: "#sireucoo"});
 
 
-        })
+        //Contact info - how did you learn about LCS
+        $("#silnpo").conditionallyEnable({sourceValues: "1", enable: "#silnpos"});
+
+
+        $("form.validated").formValidation({framework: 'bootstrap'});
+
+        $("[name=sistatus]").on('change', function () {
+            console.log("sistatus changed");
+            if ($("#sistatus-inactive").is(":checked")) {
+                $("#reason-for-change-container").show();
+            }
+        });
     });
 </script>
 {% endblock %}

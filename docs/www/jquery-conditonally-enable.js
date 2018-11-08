@@ -71,7 +71,6 @@
                 if (fv) {
                     $.each($fields, function (i, t) {
                         var fieldName = $(t).attr("name");
-                        console.log("about to reset field name: " + fieldName);
                         var fvf = fv.fields[fieldName];
                         if (fvf) {
                             fv.resetField(fieldName);
@@ -127,7 +126,7 @@
         };
 
 
-        this.on('change.conditionally-enable', function () {
+        this.on('change.conditionally-enable, keyup.conditionally-enable', function () {
             var $el = $(this);
             var actualValue = $el.is(":checkbox") ? ($el.is(":checked") ? $el.val() : "") : $el.val();
             var matches = matchCallback(actualValue);

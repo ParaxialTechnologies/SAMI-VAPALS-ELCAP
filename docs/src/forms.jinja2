@@ -1,6 +1,6 @@
 {% macro floatingLabel(for, text, extraClasses) -%}
-    <label for="{{ for }}" 
-        class="visible-xs visible-sm {{ extraClasses }}"
+    <label for="{{ for }}"
+           class="visible-xs visible-sm {{ extraClasses }}"
     >{{ text }}</label>
     <label for="{{ for }}" class="text-right pull-right hidden-xs hidden-sm {{ extraClasses }}">{{ text }}</label>
 {%- endmacro %}
@@ -130,15 +130,12 @@
     <small class="form-text text-muted">MM/DD/YYYY</small>
 {%- endmacro %}
 
-{% macro yearpicker(name, pastdateRequired, required, small, helpText, title) -%}
+{% macro yearpicker(name, required, small, helpText, title) -%}
     <input class="form-control {{ "input-sm" if small else "" }} numeric yearpicker" type="text"
            name="{{ name }}" id="{{ name }}" size="5"
             {{ " required=\"required\"" if required else "" }}
-            {{ " data-fv-date-max=\"VAPALS.todaysDate\"" if pastDateRequired else "" }}
-           data-fv-integer="true" maxlength="4"
-           placeholder="YYYY" 
-           title="{{title}}"
-           >
+           maxlength="4" placeholder="YYYY" title="{{ title }}"
+    >
     {{ "<small class=\"help-block\">" + helpText + "</small>" if helpText else "" }}
 
 {%- endmacro %}
@@ -156,10 +153,10 @@
                     <p>Are you certain you want to delete this form?</p>
                 </div>
                 <div class="modal-footer">
-                    <a  id="delete-form-cancel" class="btn btn-primary" data-dismiss="modal">No</a>
-                    <a  id="delete-form-btn" class="btn btn-danger navigation" data-method="{{ formMethod }}" 
-                    data-samiroute="deleteform" href="{{ href if mockup else "#!" }}"
-                    data-form="@@FORMKEY@@">Yes</a>
+                    <a id="delete-form-cancel" class="btn btn-primary" data-dismiss="modal">No</a>
+                    <a id="delete-form-btn" class="btn btn-danger navigation" data-method="{{ formMethod }}"
+                       data-samiroute="deleteform" href="{{ href if mockup else "#!" }}"
+                       data-form="@@FORMKEY@@">Yes</a>
                 </div>
             </div>
         </div>

@@ -39,10 +39,10 @@ function requireOneValidator($fields, $validatorControl) {
 
         // set the initial value of the field to the state of the watched fields
         $validatorControl.val($fields.filter(":checked").length);
-        
+
         $fields.on('change', function () {
             $validatorControl.val($fields.filter(":checked").length);
-            fv.revalidateField($validatorControl);
+            fv.revalidateField($validatorControl.attr('id'));
         });
         fv.addField($validatorControl.attr("name"), {
             excluded: function ($field, validator) {
@@ -76,6 +76,7 @@ function validateDatePickerOnChange(e) {
     var fv = $datePicker.closest(".validated").data("formValidation");
     var $datePickerInput = $datePicker.find("input").addBack("input");
     if (fv && $datePickerInput.is(":enabled")) {
+        console.log('revalidating the date control');
         fv.revalidateField($datePickerInput.attr('id'));
     }
     return true;
@@ -135,7 +136,7 @@ function initTabbedNavigation(tabContainerId, tabContentContainerId) {
         var currentTab = e.target;
         var tabContentSelector = $(currentTab).attr("href");
         var fv = $(".validated").data('formValidation');
-        if (fv){
+        if (fv) {
             fv.validateContainer(tabContentSelector);
         }
         $(tabContentSelector).find("input, select").first().trigger('change'); //TODO: is this necessary?
@@ -167,31 +168,31 @@ function initTabbedNavigation(tabContainerId, tabContentContainerId) {
     @param checkboxName the 'name' attribute of the checkbox input element
 */
 function exclusiveCheckbox(elemSelector, commonParentSelector) {
-    $(elemSelector).on("click",function() {
+    $(elemSelector).on("click", function () {
         const thisId = $(this).attr("id");
         const thisName = $(this).attr("name");
         if (this.checked) {
             $(this).closest(commonParentSelector).find('input[name="' + thisName + '"]:checked').filter(
-                function(idx,elem) {
-                    return $(elem).attr("id")!=thisId
+                function (idx, elem) {
+                    return $(elem).attr("id") != thisId
                 }
             ).prop('checked', false);
         }
-    }); 
+    });
 }
 
-function uncheckableRadio(elemSelector,commonParentSelector) {
+function uncheckableRadio(elemSelector, commonParentSelector) {
     // when you click a radio, it always is checked, so we need to store its state somewhere else
-    $(elemSelector).each(function() {
+    $(elemSelector).each(function () {
         const radio = $(this);
         radio.data('checked', radio.prop("checked"));
 
-        radio.on("click", function() {
+        radio.on("click", function () {
             const rd = $(this);
             const thisName = $(this).attr("name");
             if (rd.data("checked")) {
                 // we need to uncheck it
-                rd.prop("checked",false);
+                rd.prop("checked", false);
                 rd.data("checked", false);
                 rd.trigger('change');
             } else {
@@ -202,6 +203,10 @@ function uncheckableRadio(elemSelector,commonParentSelector) {
         });
 
     });
+}
+
+function notDash(fvInput) {
+    return fvInput.value !== '-';
 }
 
 //global application handlers
@@ -241,7 +246,7 @@ $(function () {
     });
 
     /** Handling of the delete form modal */
-    $("#delete-form").on("click", function(e) {
+    $("#delete-form").on("click", function (e) {
         $('#delete-confirm-modal').modal('show');
         e.preventDefault();
         e.stopPropagation();
@@ -253,8 +258,8 @@ $(function () {
 
         $('#delete-confirm-modal').modal('hide');
     });
-    
-    $('#delete-confirm-modal').keypress(function(e) {
+
+    $('#delete-confirm-modal').keypress(function (e) {
         var c = String.fromCharCode(e.which);
         if (e.which == 13 /* key code for Enter */ || c === "y" || c === "Y") {
             $("#delete-form-btn").trigger("click");
@@ -296,7 +301,7 @@ $(function () {
         return false;
     });
 
-    $("input[type=text].decimalformat").on("blur", function(e) {
+    $("input[type=text].decimalformat").on("blur", function (e) {
         const textField = e.target;
 
         const fieldVal = $(textField).val();
@@ -305,7 +310,6 @@ $(function () {
             textField.value = Number(fieldVal).toFixed(1);
         }
     }).first().trigger('blur')
-
 
 
 });

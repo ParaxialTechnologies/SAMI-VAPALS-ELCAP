@@ -7910,7 +7910,10 @@
                     const fv = $("form.validated").data("formValidation");
                     if (fv) {
                         $.each($fields, function (i, el) {
-                            fv.resetField($(el).prop('name'));
+                            const fieldName = $(el).prop('name');
+                            if (fv.fields[fieldName]) {
+                                fv.resetField(fieldName);
+                            }
                         });
                     }
 
@@ -8020,23 +8023,23 @@
                             }
                         },
                     },
-                plugins: {
-                    trigger: new FormValidation.plugins.Trigger(),
-                    bootstrap3: new FormValidation.plugins.Bootstrap3(),
-                    submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
-                    defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
-                    excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
-                    icon: new FormValidation.plugins.Icon({
-                        valid: '',
-                        invalid: 'glyphicon glyphicon-remove',
-                        validating: 'glyphicon glyphicon-refresh',
-                        onPlaced: function (e) {
-                            if (multiInputValidators.indexOf(e.field) > -1) {
-                                $("#" + e.element.id).closest(".form-group").append(e.iconElement);
-                            }
-                        },
-                    })
-                }
+                    plugins: {
+                        trigger: new FormValidation.plugins.Trigger(),
+                        bootstrap3: new FormValidation.plugins.Bootstrap3(),
+                        submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                        excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
+                        icon: new FormValidation.plugins.Icon({
+                            valid: '',
+                            invalid: 'glyphicon glyphicon-remove',
+                            validating: 'glyphicon glyphicon-refresh',
+                            onPlaced: function (e) {
+                                if (multiInputValidators.indexOf(e.field) > -1) {
+                                    $("#" + e.element.id).closest(".form-group").append(e.iconElement);
+                                }
+                            },
+                        })
+                    }
                 }
             );
 

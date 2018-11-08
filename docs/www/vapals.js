@@ -82,8 +82,6 @@ var VAPALS = new function () {
 
         if (firstErrEl) {
             var $el = $("#" + firstErrEl);
-            console.log("about to scroll to field: ");
-            console.log($el);
             var top = $el.offset().top - 150; //150 here to scroll a bit higher
 
             $([document.documentElement, document.body]).animate({

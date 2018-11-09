@@ -1198,6 +1198,8 @@ wsPostForm ; code for ws wsPostForm^%wf, submit HTML form
  set form=$get(ARGS("form"))
  set sid=$get(ARGS("studyid"))
  set body=$get(BODY(1))
+ i $d(BODY(2)) s body=body_$g(BODY(2))
+ i $d(BODY(3)) s body=body_$g(BODY(3))
  if form="" set form="sbform"
  if sid="" set sid="XXXX17"
  quit:form=""
@@ -1207,7 +1209,7 @@ wsPostForm ; code for ws wsPostForm^%wf, submit HTML form
  ;
  ; we want to store the form by the date in the form.. and delete the old one
  ; 
- new useform
+ new useform s useform=form
  set useform=$$saveFilter^SAMISAV(sid,form,.tbdy) ; make this a framework call
  ;set %json(sid,form,"form")=form
  set %json(sid,useform,"form")=useform
@@ -1216,10 +1218,18 @@ wsPostForm ; code for ws wsPostForm^%wf, submit HTML form
  new gr set gr=$$setroot^%wd("vapals-patients")
  merge @gr@("graph")=%json
  ;
- if $get(ARGS("debug"))="" do  quit  ;
+ i $g(ARGS("debug"))=1 d  ;
+ . kill ^gpl("sami")
+ . merge ^gpl("sami","args")=ARGS
+ . merge ^gpl("sami","body")=BODY
+ . merge ^gpl("sami","json")=%json
+ ;
+ ;if $get(ARGS("debug"))="" do  quit  ;
+ do  quit  ;
  . do wsCASE^SAMICAS2(.RESULT,.ARGS)
  . quit
  ;
+ quit  ; no validation process
  ; validation process
  ;
  ;new errflag set errflag=0

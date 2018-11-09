@@ -1,4 +1,4 @@
-SAMIUTSV ;ven/lgc - UNIT TEST for SAMISAV ; 11/7/18 7:34pm
+SAMIUTSV ;ven/lgc - UNIT TEST for SAMISAV ; 11/8/18 12:10pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -46,7 +46,7 @@ UTSAVF ; @TEST - extrinsic which returns the form key to use
  ; save off ceform built by earlier unit test
  m poo=@root@("graph","XXX00001","ceform-2018-10-21")
  s useform=$$saveFilter^SAMISAV(.sid,.form,.vars)
- s success=(useform="ceform-2018-10-29")
+ s utsuccess=(useform="ceform-2018-10-29")
  i '$d(@root@("graph","XXX00001",useform)) s utsuccess=0
  ; kill the new form just generated
  k @root@("graph","XXX00001",useform)

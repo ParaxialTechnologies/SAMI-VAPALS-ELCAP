@@ -207,8 +207,8 @@ wsVAPALS(ARG,BODY,RESULT) ; vapals post web service - all calls come through thi
  ;
  i route="ctreport" d  q  ;
  . m ARG=vars
- . ;d wsReport^SAMICTR0(.RESULT,.ARG)
- . d wsReport^SAMICTRT(.RESULT,.ARG)
+ . d wsReport^SAMICTR0(.RESULT,.ARG)
+ . ;d wsReport^SAMICTRT(.RESULT,.ARG)
  ;
  i route="note" d  q  ; 
  . m ARG=vars

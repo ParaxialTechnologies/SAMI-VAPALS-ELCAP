@@ -1,4 +1,4 @@
-SAMIUTUR ;ven/lgc - UNIT TEST for SAMIUR1 ; 11/5/18 1:57pm
+SAMIUTUR ;ven/lgc - UNIT TEST for SAMIUR1 ; 11/8/18 2:02pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -39,14 +39,14 @@ UTWSRPT ; @TEST - generate a report based on parameters in the filter
  s filter("samireporttype")="followup"
  s utsuccess=0
  d wsReport^SAMIUR1(.poo,.filter)
- s cnt=0 f  s cnt=$o(poo(cnt)) q:'cnt  i poo(cnt)["Followup before"  s utsuccess=1
+ s cnt=0 f  s cnt=$o(poo(cnt)) q:'cnt  i poo(cnt)["Followup next 30 days - before"  s utsuccess=1
  D CHKEQ^%ut(utsuccess,1,"Testing wsReport for followup FAILED!")
  ;
  k filter,pats,poo
  s filter("samireporttype")="activity"
  s utsuccess=0
  d wsReport^SAMIUR1(.poo,.filter)
- s cnt=0 f  s cnt=$o(poo(cnt)) q:'cnt  i poo(cnt)["Activity after" s utsuccess=1
+ s cnt=0 f  s cnt=$o(poo(cnt)) q:'cnt  i poo(cnt)["Activity last 30 days - after" s utsuccess=1
  D CHKEQ^%ut(utsuccess,1,"Testing wsReport for activity FAILED!")
  ;
  k filter,pats,temp
@@ -144,32 +144,32 @@ UTPNAME ; @TEST - extrinsic returns the PAGE NAME for the report
  ;PNAME(type)
  n str
  s str=$$PNAME^SAMIUR1("followup","-test text")
- s utsuccess=(str="Followup-test text")
+ s utsuccess=(str="Followup next 30 days --test text")
  D CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns followup PAGE NAME FAILED!")
  ;
  s str=$$PNAME^SAMIUR1("activity","-test text")
- s utsuccess=(str="Activity-test text")
- D CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns followup PAGE NAME FAILED!")
+ s utsuccess=(str="Activity last 30 days --test text")
+ D CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns activity PAGE NAME FAILED!")
  ;
  s str=$$PNAME^SAMIUR1("missingct","-test text")
- s utsuccess=(str="Missing CT Evaluation-test text")
- D CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns followup PAGE NAME FAILED!")
+ s utsuccess=(str="Intake but no CT Evaluation-test text")
+ D CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns missingct PAGE NAME FAILED!")
  ;
  s str=$$PNAME^SAMIUR1("incomplete","-test text")
  s utsuccess=(str="Incomplete Forms-test text")
- D CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns followup PAGE NAME FAILED!")
+ D CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns incomplete PAGE NAME FAILED!")
  ;
  s str=$$PNAME^SAMIUR1("outreach","-test text")
  s utsuccess=(str="Outreach-test text")
- D CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns followup PAGE NAME FAILED!")
+ D CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns outreach PAGE NAME FAILED!")
  ;
  s str=$$PNAME^SAMIUR1("enrollment","-test text")
  s utsuccess=(str="Enrollment-test text")
- D CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns followup PAGE NAME FAILED!")
+ D CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns enrollment PAGE NAME FAILED!")
  ;
  s str=$$PNAME^SAMIUR1("XXX","-test text")
  s utsuccess=(str="")
- D CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns followup PAGE NAME FAILED!")
+ D CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns XXX PAGE NAME FAILED!")
  q
  ;
  ;

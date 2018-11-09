@@ -1,4 +1,4 @@
-SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 11/5/18 1:16pm
+SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 11/8/18 1:22pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -164,6 +164,7 @@ UTWSIFM ; @TEST - intake form access
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
  . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
  . i @nodep["siform" q
+ . i @nodep["Date of contact is required" q
  . i '($qs(nodep,1)=$qs(nodea,1)) s utsuccess=0
  . i '(@nodep=@nodea) s utsuccess=0
  i 'nodea="" s utsuccess=0

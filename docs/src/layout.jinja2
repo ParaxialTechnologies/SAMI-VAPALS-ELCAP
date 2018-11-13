@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <meta name='version' content='{{ version }}'>
+    <meta name='author' content='Domenic DiNatale, domenic.dinatale@paraxialtech.com'>
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{{ path }}lib/bootstrap-3.3.7-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ path }}lib/font-awesome-4.7.0/css/font-awesome.min.css">
@@ -70,14 +70,27 @@
                        href="{{ "casereview.html" if mockup else "#!" }}">Case Review</a>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Reports <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{ "table.html" if mockup else "#!" }}" class="navigation" data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="followup">Participant Follow-up</a></li>
-                        <li><a href="{{ "table.html" if mockup else "#!" }}" class="navigation" data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="activity">Activity</a></li>
-                        <li><a href="{{ "table.html" if mockup else "#!" }}" class="navigation" data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="missingct">Missing Image & CT Evaluation</a></li>
-                        <li><a href="{{ "table.html" if mockup else "#!" }}" class="navigation" data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="incomplete">Incomplete Form</a></li>
-                        <li><a href="{{ "table.html" if mockup else "#!" }}" class="navigation" data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="outreach">Outreach</a></li>
-                        <li><a href="{{ "table.html" if mockup else "#!" }}" class="navigation" data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="enrollment">Enrollment</a></li>
+                        <li><a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
+                               data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="followup">Participant
+                            Follow-up</a></li>
+                        <li><a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
+                               data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="activity">Activity</a>
+                        </li>
+                        <li><a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
+                               data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="missingct">Missing
+                            Image & CT Evaluation</a></li>
+                        <li><a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
+                               data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="incomplete">Incomplete
+                            Form</a></li>
+                        <li><a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
+                               data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="outreach">Outreach</a>
+                        </li>
+                        <li><a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
+                               data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="enrollment">Enrollment</a>
+                        </li>
                     </ul>
                 </li>
             </ul>

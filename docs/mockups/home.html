@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2018.11.12" name="version"/>
+  <meta content="2018.11.13" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    Home
@@ -133,6 +133,16 @@
     </div>
    </div>
   </nav>
+  <style>
+   .chart {
+            width: 100%;
+            min-height: 450px;
+        }
+
+        .row {
+            margin: 0 !important;
+        }
+  </style>
   <div class="container-fluid" style="max-width:1550px">
    <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
@@ -164,40 +174,44 @@
      </div>
     </div>
    </div>
-   <h1>
-    Statistics
-    <small>
-     MOCKUPS ONLY
-    </small>
-   </h1>
-   <div class="col-lg-3 col-sm-6" id="siteRural">
+   <div class="row">
+    <div class="col-md-12 text-center">
+     <h1 id="chart-rural-heading">
+     </h1>
+    </div>
+    <div class="clearfix">
+    </div>
+    <div class="col-sm-6 col-sm-offset-3">
+     <div class="chart" id="chart-rural">
+     </div>
+    </div>
    </div>
-   <div class="modal fade" id="pt-inclusion" role="dialog" tabindex="-1">
-    <div class="modal-dialog" role="document">
-     <div class="modal-content">
-      <div class="modal-header">
-       <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-        <span aria-hidden="true">
-         ×
-        </span>
-       </button>
-       <h4 class="modal-title">
-        Caution:
-       </h4>
-      </div>
-      <div class="modal-body">
-       <p>
-        Are you certain you want to register this patient for VA-PALS?
-       </p>
-      </div>
-      <div class="modal-footer">
-       <button class="btn btn-danger" data-dismiss="modal" type="button">
-        No
-       </button>
-       <button class="btn btn-primary" id="pt-inclusion-btn" type="button">
-        Yes
-       </button>
-      </div>
+  </div>
+  <div class="modal fade" id="pt-inclusion" role="dialog" tabindex="-1">
+   <div class="modal-dialog" role="document">
+    <div class="modal-content">
+     <div class="modal-header">
+      <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+       <span aria-hidden="true">
+        ×
+       </span>
+      </button>
+      <h4 class="modal-title">
+       Caution:
+      </h4>
+     </div>
+     <div class="modal-body">
+      <p>
+       Are you certain you want to register this patient for VA-PALS?
+      </p>
+     </div>
+     <div class="modal-footer">
+      <button class="btn btn-danger" data-dismiss="modal" type="button">
+       No
+      </button>
+      <button class="btn btn-primary" id="pt-inclusion-btn" type="button">
+       Yes
+      </button>
      </div>
     </div>
    </div>
@@ -213,14 +227,14 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2018.11.12
+     2018.11.13
     </span>
    </div>
   </footer>
   <script language="JavaScript">
    const studyIdVal = $("#studyid-html-element").attr('value');
     const studyId = $.trim(studyIdVal);
-    if (studyId && studyId.indexOf("@@") == -1) {
+    if (studyId && studyId.indexOf("@@") === -1) {
         //store studyid value for use in pages that don't go through the forms processor
         localStorage.setItem("studyid", studyId);
         $("#studyIdMenu").show();
@@ -291,7 +305,7 @@
                 $('#pt-lookup-name').val(patient.name);
                 $('#pt-lookup-studyid').val(patient.studyid);
 
-                if (patient.vapals == 1) {
+                if (patient.vapals === 1) {
                     $('#pt-lookup-samiroute').val('casereview');
                     $('#pt-lookup-form').submit();
                 }
@@ -304,10 +318,10 @@
             // Initialize the patient lookup input widget
             const $patientLookupInput = $('#pt-lookup-input');
             $patientLookupInput.filemanAutocomplete();
-            
-            $patientLookupInput.on('keydown', function(e){
+
+            $patientLookupInput.on('keydown', function (e) {
                 // Set up Return key
-                if (e.keyCode === 13 && ($('#pt-lookup-btn').attr('disabled') == 'disabled')) {
+                if (e.keyCode === 13 && ($('#pt-lookup-btn').is(':disabled'))) {
                     e.preventDefault();
                 }
             }).on("keyup", function () {
@@ -319,7 +333,7 @@
                         patientName = data.patient.name
                     }
                 }
-                if (ptNameVal == "" || (ptNameVal != patientName)) {
+                if (ptNameVal === "" || (ptNameVal !== patientName)) {
                     $('#pt-lookup-btn').attr('disabled', 'disabled');
                     $patientLookupInput.trigger("change");
                 }
@@ -335,31 +349,52 @@
         });
 
         // Load google charts
-        google.charts.load('current', {'packages': ['corechart', 'bar']});
-        google.charts.setOnLoadCallback(drawCharts);
 
+        //first pull in the google API
+        google.charts.load('current', {'packages': ['corechart', 'bar']});
+        google.charts.setOnLoadCallback(googleReady);
+
+
+        function googleReady() {
+            $.ajax("/ruralurbancount", {dataType: "json"}).done(function (json) {
+                ruralData = json.result;
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                ruralData = {"error": errorThrown};
+            }).always(function () {
+                drawSite();
+            })
+        }
+
+        let ruralData;
 
         function drawSite() {
-            const siteData = google.visualization.arrayToDataTable([
-                ['Task', 'Hours per Day'],
-                ['Rural', 68],
-                ['Urban', 32]
-            ]);
+            if (ruralData) {
+                if (ruralData.error) {
+                    $("#chart-rural-heading").hide();
+                    const $alert = $("<div class='alert alert-warning'/>");
+                    $alert.append("<span class=\"glyphicon glyphicon-exclamation-sign\" aria-hidden=\"true\"></span>");
+                    $alert.append("&nbsp;Unable to view site statistics. <strong>" + ruralData.error + "</strong>");
+                    $('#chart-rural').html("").append($alert);
+                }
+                else {
+                    const siteData = google.visualization.arrayToDataTable([
+                        ['Classification', 'Count'],
+                        ['Rural', ruralData.rural],
+                        ['Urban', ruralData.urban],
+                        ['Unknown', ruralData.unknown]
+                    ]);
 
+                    new google.visualization.PieChart(document.getElementById('chart-rural')).draw(siteData, {is3D: true,});
 
-            new google.visualization.PieChart(document.getElementById('siteRural'))
-                .draw(siteData, {
-                    'title': 'Rural Engagement in Phoenix',
-                    height: 300,
-                    is3D: true,
-                });
+                    $("#chart-rural-heading").text("Rural engagement in " + ruralData.site)
+                }
+
+            }
         }
 
-        // Draw the chart and set the chart values
-        function drawCharts() {
+        $(window).resize(function () {
             drawSite();
-            //TODO: redraw on window resize
-        }
+        });
   </script>
  </body>
 </html>

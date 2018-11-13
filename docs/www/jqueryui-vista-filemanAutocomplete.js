@@ -30,7 +30,7 @@ $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {
         else {
             html   = html + '<li>';
         }
-        html       = html + "<div class='row'>"
+        html       = html + "<div class='row'>";
         html       = html + '<div class="col-sm-12">' + item['name'] + '</div>';
         html       = html + '</div>';
         html       = html + '<div class="row">';
@@ -39,13 +39,13 @@ $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {
         html       = html + '<div class="col-sm-3">' + 'Gender: ' +  gender + '</div>';
         
         if (status == 1) {
-            html   = html + '<div class="col-sm-3 text-right" title="Enrolled in VA-PALS">';
-            html   = html + '<img src="see/img/vapals_icon.png" class="enrolled-icon"/>&nbsp;<em>Enrolled</em>';
+            html   = html + '<div class="col-sm-3 text-right" title="Patient in VA-PALS">';
+            html   = html + '<img src="see/img/vapals_icon.png" class="enrolled-icon"/>&nbsp;<em>VA-PALS</em>';
             html   = html + '</div>';
         } else {
             html = html + '<div class="col-sm-3"></div>'
         }
-        html       = html + "</div>"
+        html       = html + "</div>";
         html       = html + '</li>';
         
         return $(html).appendTo(ul);

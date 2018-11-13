@@ -1,9 +1,9 @@
 /**
- * VA-PALS Project Utility class.
+ * VA-PALS-ELCAP Project Utility class.
  * @link https://github.com/OSEHRA/VA-PALS
  * @author Domenic DiNatale <domenic.dinatale@paraxialtech.com>
  * @license [Apache-2.0]{@link https://www.apache.org/licenses/LICENSE-2.0.html}
- * @copyright 2018 [VA-PALS]{@link http://va-pals.org/}
+ * @copyright 2018 [VA-PALS-ELCAP]{@link http://va-pals.org/}
  * @class
  */
 var VAPALS = new function () {

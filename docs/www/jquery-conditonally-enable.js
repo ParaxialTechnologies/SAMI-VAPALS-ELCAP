@@ -9,7 +9,7 @@
  * @link https://github.com/OSEHRA/VA-PALS
  * @author Domenic DiNatale <domenic.dinatale@paraxialtech.com>
  * @license [Apache-2.0]{@link https://www.apache.org/licenses/LICENSE-2.0.html}
- * @copyright 2018 [VA-PALS]{@link http://va-pals.org/}
+ * @copyright 2018 [VA-PALS-ELCAP]{@link http://va-pals.org/}
  * @param {string|function} [options.sourceValues="y"] - a comma separated list of values that must match to trigger enabling fields, or a function that returns a true/false value for if the actual value is considered a match
  * @param {string|function|object} [options.enable=null] - jQuery selector of fields to enable when source value is equal to one of the <code>sourceValues</code>
  * @param {string|function|object} [options.disable=null] - jQuery selector of fields to disable when source value is NOT equal the <code>sourceValues</code>

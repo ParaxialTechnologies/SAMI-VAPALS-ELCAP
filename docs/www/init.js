@@ -100,15 +100,16 @@ $(function () {
 
     $.each($(".datepicker"), function (i, el) {
         var $input = $(el).find("input").addBack("input"); //find the actual input control
-        var maxDateValue = $input.data('max-date');
-        var maxDate = maxDateValue ? moment(maxDateValue, "MM/DD/YYYY").endOf('day') : false; //false == no max
+        var restriction = $input.data("restriction");
+        var maxDate = restriction === "past" ? moment().endOf('day') : false; //false == no value
+        var minDate = restriction === "future" ? moment().startOf('day') : false; //false == no value
         $(el).datetimepicker({
             format: 'MM/DD/YYYY',
             useCurrent: false,
             keepInvalid: true,
-            maxDate: maxDate //hack to not select today
-        })
-            .on("dp.change", validateDatePickerOnChange);
+            minDate: minDate,
+            maxDate: maxDate
+        }).on("dp.change", validateDatePickerOnChange);
     });
 
     $.each($(".yearpicker"), function (i, el) {

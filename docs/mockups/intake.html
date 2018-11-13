@@ -154,7 +154,7 @@
     <h3>
      Pre-enrollment Eligibility
     </h3>
-    <div class="row">
+    <div class="row" id="pre-enrollment-questions">
      <div class="col-sm-3">
       <label class="required" for="sipechrt">
        Eligible based on chart?
@@ -695,7 +695,7 @@
             facility. Education material was provided to the veteran.
      <br/>
     </p>
-    <div class="row">
+    <div class="row" id="enrollment-container">
      <div class="col-md-12 form-group">
       <label class="required">
        Based on this information, the Veteran has opted to
@@ -950,6 +950,27 @@
         $("#change-log-container").remove();
     }
 
+    const enrolled = $("#sildct-y").is(":checked");
+    if (enrolled) {
+        const $preSection = $("#pre-enrollment-questions").html("");
+        const $preCol = $('<div class="col-lg-5 col-md-6 col-sm-8"/>');
+        const $preAlert = $("<div class=\"alert alert-info\">Patient was eligible based on chart and patient discussion.</div>");
+        $preCol.append($('<input type="hidden" id="sipechrt" name="sipechrt" value="y"/>'));
+        $preCol.append($('<input type="hidden" id="sipedisc" name="sipedisc" value="y"/>'));
+        $preCol.append($preAlert);
+        $preSection.append($preCol);
+
+        $("#discussion-container").remove();
+        $("#reason-container").remove();
+
+        const $enrollSection = $("#enrollment-container").html("");
+        const $enrollCol = $('<div class="col-lg-5 col-md-6 col-sm-8"/>');
+        const $enrollAlert = $("<div class=\"alert alert-info\">Patient has been enrolled in the Lung Screening and Surveillance (LSS) program.</div>");
+        $enrollCol.append($('<input type="hidden" id="sildct" name="sildct" value="y"/>'));
+        $enrollCol.append($enrollAlert);
+        $enrollSection.append($enrollCol);
+    }
+
 
     function createFormValidator() {
 
@@ -958,8 +979,6 @@
 
         $form.formValidation({
                 fields: {
-                    sipechrt: {validators: {notEmpty: {message: 'Chart review is required'}}},
-                    sipedisc: {validators: {notEmpty: {message: 'Discussion review is required'}}},
                     siremhlc: { //use a real element name for the field so conditional plugins can toggle the field
                         selector: '[name^=sire]',
                         validators: {choice: {min: 1, message: 'Select one or more reasons'}}
@@ -991,7 +1010,6 @@
                         }
                     },
                     siidmdc: {validators: {notEmpty: {message: 'Informed decision making is required'}}},
-                    sildct: {validators: {notEmpty: {message: 'Veterans\' option is required'}}},
                     sistatus: {validators: {notEmpty: {message: 'Enrollment status is required'}}},
                     sistachg: {validators: {notEmpty: {message: 'Reason for change is required'}}},
                     sistreas: {validators: {notEmpty: {message: 'Explanation is required'}}},
@@ -1025,7 +1043,13 @@
             }
         );
 
+
         const fv = $form.data('formValidation');
+        if (!enrolled) {
+            fv.addField('sipechrt', {validators: {notEmpty: {message: 'Chart review is required'}}});
+            fv.addField('sipedisc', {validators: {notEmpty: {message: 'Discussion review is required'}}});
+            fv.addField('sildct', {validators: {notEmpty: {message: 'Veterans\' option is required'}}});
+        }
         fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);
         fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
 

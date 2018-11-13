@@ -1,4 +1,4 @@
-# VA-PALS-ELCAP Management System
+# VAPALS-ELCAP Management System
 
 VA-Partnership to increase Access to Lung Screening
 ---------------------------------------------------
@@ -18,7 +18,7 @@ Repository Structure
 Docker Images
 -
 
-Instructions for installing a docker instance of the VA-PALS-ELCAP software is available [here](https://hub.docker.com/r/osehra/va-pals/) 
+Instructions for installing a docker instance of the VAPALS-ELCAP software is available [here](https://hub.docker.com/r/osehra/va-pals/) 
 
 Resources
 -

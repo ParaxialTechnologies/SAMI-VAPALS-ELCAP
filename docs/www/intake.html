@@ -1034,7 +1034,7 @@
 
     $(function () {
 
-        createFormValidator();
+        const fv = createFormValidator();
 
         $("#sicpd").on('keyup change', function () {
             const cigsPerDay = $("#sicpd").val();
@@ -1079,13 +1079,38 @@
         }).on('change', function () {
             const value = $("[name=sipechrt]:checked").val();
             const $yesAlert = $("#sipechrt-y-alert"), $noAlert = $("#sipechrt-n-alert");
+            const fields = [
+                'sidc',     //contact date
+                'sicpd',    //packs per day
+                'sisny',    //packs per year
+                'siidmdc',  //informed decision making
+                'sildct'    //enrollment
+            ];
+
             if (value === "n") {
                 $yesAlert.hide();
                 $noAlert.show();
+
+                $.each(fields, function (i, s) {
+                    //disable the validiator and remove required asterisk from associated labels
+                    fv.disableValidator(s);
+                    $("[name='" + s + "']").closest(".form-group").find('label').removeClass('required')
+                });
+
+                //auto-select "inactive" status
+                $("#sistatus-inactive").click();
+
             }
             else if (value === "y") {
                 $yesAlert.show();
                 $noAlert.hide();
+
+                $.each(fields, function (i, s) {
+                    //disable the validiator and remove required asterisk from associated labels
+                    fv.enableValidator(s);
+                    $("[name='" + s + "']").closest(".form-group").find('label').first().addClass('required')
+                });
+
             }
             else {
                 $yesAlert.hide();
@@ -1109,10 +1134,11 @@
         //Contact info - how did you learn about LCS
         $("#silnpo").conditionallyEnable({sourceValues: "1", enable: "#silnpos"});
 
+
         $("[name=sistatus]").on('change', function () {
-            if ($("#sistatus-inactive").is(":checked")) {
-                $("#reason-for-change-container").show();
-            }
+            //require reason fields when marking patient as "not active"
+            $("#reason-for-change-container").toggle($("#sistatus-inactive").is(":checked"));
+
         });
     });
   </script>

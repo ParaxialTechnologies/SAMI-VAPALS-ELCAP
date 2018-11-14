@@ -39,8 +39,8 @@ $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {
         html       = html + '<div class="col-sm-3">' + 'Gender: ' +  gender + '</div>';
         
         if (status == 1) {
-            html   = html + '<div class="col-sm-3 text-right" title="Patient in VA-PALS-ELCAP">';
-            html   = html + '<img src="see/img/vapals_icon.png" class="enrolled-icon"/>&nbsp;<em>VA-PALS-ELCAP</em>';
+            html   = html + '<div class="col-sm-3 text-right" title="Patient in VAPALS-ELCAP">';
+            html   = html + '<img src="see/img/vapals_icon.png" class="enrolled-icon"/>&nbsp;<em>VAPALS-ELCAP</em>';
             html   = html + '</div>';
         } else {
             html = html + '<div class="col-sm-3"></div>'

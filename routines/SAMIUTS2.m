@@ -1,4 +1,4 @@
-SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICAS2 ; 11/5/18 11:37am
+SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICAS2 ; 11/13/18 6:49pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -129,6 +129,7 @@ UTNFPST ; @TEST - post new form selection (post service)
  ;
 UTMKSBF ; @TEST - create background form
  ;makeSbform(sid,key)
+ d CheckForm^SAMIUTS2("sbform","makeSbform",.utsuccess)
  q
  ;
 UTMKCEF ; @TEST - create ct evaluation form

@@ -1,9 +1,12 @@
-SAMIFRM2 ;ven/gpl - ielcap: forms ;2018-03-18T17:15Z
+SAMIFRM2 ;ven/gpl - ielcap: forms ; 11/13/18 12:06pm
  ;;18.0;SAM;;
  ;
  ; Routine SAMIFRM contains subroutines for managing the ELCAP forms,
  ; including initialization and enhancements to the SAMI FORM FILE (311.11)
  ; CURRENTLY UNTESTED & IN PROGRESS
+ ;
+ ; CHANGE VEN/2018-11-13
+ ;  every occurance of SAMIHOM2 changed to SAMIHOM3
  ;
  quit  ; no entry from top
  ;
@@ -126,7 +129,7 @@ INITFRMS ; initilize form file from elcap-patient graphs
  ;
  ;
  ;
-INIT1FRM(form,ary) ; initialize one form named form from ary passed by name 
+INIT1FRM(form,ary) ; initialize one form named form from ary passed by name
  ;
  ;@called-by
  ; INITFRMS
@@ -364,7 +367,7 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  . do findReplace^%ts(.line,"1234567890","")
  ;
  if line["XX0002" do  ;
- . i line["XXX" quit  ; 
+ . i line["XXX" quit  ;
  . do findReplace^%ts(.line,"XX0002",sid)
  ;
  if line["VEP0001" do  ;
@@ -387,7 +390,7 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
 wsSbform(rtn,filter) ; background form access
  n sid s sid=$g(filter("studyid"))
  i sid="" s sid=$g(filter("sid"))
- i +sid>0 s sid=$$genStudyId^SAMIHOM2(sid)
+ i +sid>0 s sid=$$genStudyId^SAMIHOM3(sid)
  ;i sid="" s sid="XXX0001"
  n items d getItems^SAMICAS2("items",sid)
  ;w !,"sid=",sid,!
@@ -402,7 +405,7 @@ wsSbform(rtn,filter) ; background form access
 wsSiform(rtn,filter) ; intake form access
  n sid s sid=$g(filter("studyid"))
  i sid="" s sid=$g(filter("sid"))
- i +sid>0 s sid=$$genStudyId^SAMIHOM2(sid)
+ i +sid>0 s sid=$$genStudyId^SAMIHOM3(sid)
  ;i sid="" s sid="XXX0001"
  n items d getItems^SAMICAS2("items",sid)
  ;w !,"sid=",sid,!
@@ -417,7 +420,7 @@ wsSiform(rtn,filter) ; intake form access
 wsCeform(rtn,filter) ; ctevaluation form access
  n sid s sid=$g(filter("studyid"))
  i sid="" s sid=$g(filter("sid"))
- i +sid>0 s sid=$$genStudyId^SAMIHOM2(sid)
+ i +sid>0 s sid=$$genStudyId^SAMIHOM3(sid)
  ;i sid="" s sid="XXX0001"
  n items d getItems^SAMICAS2("items",sid)
  ;w !,"sid=",sid,!
@@ -540,4 +543,4 @@ GETHDR(sid) ; extrinsic returns header string for patient sid
  s rtn=pssn_" DOB: "_dob_" AGE: "_age_" GENDER: "_sex
  q rtn
  ;
-EOR ; end of routine SAMIFRM
+EOR ; end of routine SAMIFRM2

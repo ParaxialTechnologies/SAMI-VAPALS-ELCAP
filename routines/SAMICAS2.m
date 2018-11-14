@@ -1,8 +1,11 @@
-SAMICAS2 ;ven/gpl - ielcap: case review page ;2018-03-08T17:53Z
+SAMICAS2 ;ven/gpl - ielcap: case review page ; 11/13/18 10:32am
  ;;18.0;SAM;;
  ;
  ; SAMICASE contains subroutines for producing the ELCAP Case Review Page.
  ; It is currently untested & in progress.
+ ;
+ ; CHANGE VEN/2018-11-13
+ ;   changed all SAMIHOM2 to SAMIHOM3
  ;
  quit  ; no entry from top
  ;
@@ -101,13 +104,13 @@ wsCASE(rtn,filter) ; generate case review page
  ;ven/gpl;web service;procedure;
  ;@called-by
  ; web service SAMICASE-wsCASE
- ; wsNewCase^SAMIHOM2
+ ; wsNewCase^SAMIHOM3
  ; wsLookup^SAMISRCH
  ;@calls
  ; $$setroot^%wd
  ; getTemplate
  ; getItems
- ; $$sid2num^SAMIHOM2
+ ; $$sid2num^SAMIHOM3
  ; findReplace^%ts
  ; $$getDateKey
  ; $$key2dispDate
@@ -138,7 +141,7 @@ wsCASE(rtn,filter) ; generate case review page
  do getItems("items",sid)
  quit:'$data(items)
  ;
- new gien set gien=$$sid2num^SAMIHOM2(sid) ; graph ien
+ new gien set gien=$$sid2num^SAMIHOM3(sid) ; graph ien
  new name set name=$get(@groot@(gien,"saminame"))
  quit:name=""
  new fname set fname=$piece(name,",",2)
@@ -297,7 +300,7 @@ getTemplate(return,form) ; get html template
  ;@called-by
  ; wsCASE
  ; wsNuForm
- ; getHome^SAMIHOM2
+ ; getHome^SAMIHOM3
  ;@calls
  ; $$getTemplate^%wf
  ; getThis^%wd
@@ -477,7 +480,7 @@ wsNuForm(rtn,filter) ; select new form for patient (get service)
  ;@called-by
  ; web service SAMICASE-wsNuForm
  ;@calls
- ; $$sid2num^SAMIHOM2
+ ; $$sid2num^SAMIHOM3
  ; $$setroot^%wd
  ; getTemplate
  ; findReplace^%ts
@@ -494,7 +497,7 @@ wsNuForm(rtn,filter) ; select new form for patient (get service)
  ;
  new sid set sid=$get(filter("studyid"))
  quit:sid=""
- new sien set sien=$$sid2num^SAMIHOM2(sid)
+ new sien set sien=$$sid2num^SAMIHOM3(sid)
  quit:+sien=0
  new root set root=$$setroot^%wd("vapals-patients")
  new groot set groot=$name(@root@(sien))
@@ -564,7 +567,7 @@ wsNuForm(rtn,filter) ; select new form for patient (get service)
  . . quit
  . ;
  . ;i ln["<script" i temp(zi+1)["function" d  ;
- . ;. s zi=$$scanFor^SAMIHOM2(.temp,zi,"</script")
+ . ;. s zi=$$scanFor^SAMIHOM3(.temp,zi,"</script")
  . ;. s zi=zi+1
  . ; 
  . s cnt=cnt+1
@@ -590,8 +593,8 @@ wsNuFormPost(ARGS,BODY,RESULT) ; post new form selection (post service)
  ;@calls
  ; parseBody^%wf
  ; $$NOW^XLFDT
- ; $$keyDate^SAMIHOM2
- ; getHome^SAMIHOM2
+ ; $$keyDate^SAMIHOM3
+ ; getHome^SAMIHOM3
  ; makeCeform
  ; wsGetForm^%wf
  ;@input
@@ -707,7 +710,7 @@ makeSbform(sid,key) ; create background form
  ; wsNuFormPost
  ;@calls
  ; $$setroot^%wd
- ; $$sid2num^SAMIHOM2
+ ; $$sid2num^SAMIHOM3
  ;@input
  ; sid = studiy id
  ; key =
@@ -719,7 +722,7 @@ makeSbform(sid,key) ; create background form
  ;@stanza 2 create ct eval form
  ;
  new root set root=$$setroot^%wd("vapals-patients")
- new sien set sien=$$sid2num^SAMIHOM2(sid)
+ new sien set sien=$$sid2num^SAMIHOM3(sid)
  quit:+sien=0
  new cdate set cdate=$piece(key,"sbform-",2)
  merge @root@("graph",sid,key)=@root@(sien)
@@ -739,7 +742,7 @@ makeCeform(sid,key) ; create ct evaluation form
  ; wsNuFormPost
  ;@calls
  ; $$setroot^%wd
- ; $$sid2num^SAMIHOM2
+ ; $$sid2num^SAMIHOM3
  ;@input
  ; sid = studiy id
  ; key =
@@ -751,7 +754,7 @@ makeCeform(sid,key) ; create ct evaluation form
  ;@stanza 2 create ct eval form
  ;
  new root set root=$$setroot^%wd("vapals-patients")
- new sien set sien=$$sid2num^SAMIHOM2(sid)
+ new sien set sien=$$sid2num^SAMIHOM3(sid)
  quit:+sien=0
  new cdate set cdate=$piece(key,"ceform-",2)
  new items,prevct
@@ -781,7 +784,7 @@ makeFuform(sid,key) ; create Follow-up form
  ; wsNuFormPost
  ;@calls
  ; $$setroot^%wd
- ; $$sid2num^SAMIHOM2
+ ; $$sid2num^SAMIHOM3
  ;@input
  ; sid = studiy id
  ; key =
@@ -793,7 +796,7 @@ makeFuform(sid,key) ; create Follow-up form
  ;@stanza 2 create ct eval form
  ;
  new root set root=$$setroot^%wd("vapals-patients")
- new sien set sien=$$sid2num^SAMIHOM2(sid)
+ new sien set sien=$$sid2num^SAMIHOM3(sid)
  quit:+sien=0
  new cdate set cdate=$piece(key,"fuform-",2)
  merge @root@("graph",sid,key)=@root@(sien)
@@ -813,7 +816,7 @@ makePtform(sid,key) ; create ct evaluation form
  ; wsNuFormPost
  ;@calls
  ; $$setroot^%wd
- ; $$sid2num^SAMIHOM2
+ ; $$sid2num^SAMIHOM3
  ;@input
  ; sid = studiy id
  ; key =
@@ -825,7 +828,7 @@ makePtform(sid,key) ; create ct evaluation form
  ;@stanza 2 create ct eval form
  ;
  new root set root=$$setroot^%wd("vapals-patients")
- new sien set sien=$$sid2num^SAMIHOM2(sid)
+ new sien set sien=$$sid2num^SAMIHOM3(sid)
  quit:+sien=0
  new cdate set cdate=$piece(key,"ptform-",2)
  merge @root@("graph",sid,key)=@root@(sien)
@@ -845,7 +848,7 @@ makeItform(sid,key) ; create intervention form
  ; wsNuFormPost
  ;@calls
  ; $$setroot^%wd
- ; $$sid2num^SAMIHOM2
+ ; $$sid2num^SAMIHOM3
  ;@input
  ; sid = studiy id
  ; key =
@@ -857,7 +860,7 @@ makeItform(sid,key) ; create intervention form
  ;@stanza 2 create ct eval form
  ;
  new root set root=$$setroot^%wd("vapals-patients")
- new sien set sien=$$sid2num^SAMIHOM2(sid)
+ new sien set sien=$$sid2num^SAMIHOM3(sid)
  quit:+sien=0
  new cdate set cdate=$piece(key,"itform-",2)
  merge @root@("graph",sid,key)=@root@(sien)
@@ -877,7 +880,7 @@ makeBxform(sid,key) ; create ct evaluation form
  ; wsNuFormPost
  ;@calls
  ; $$setroot^%wd
- ; $$sid2num^SAMIHOM2
+ ; $$sid2num^SAMIHOM3
  ;@input
  ; sid = studiy id
  ; key =
@@ -889,7 +892,7 @@ makeBxform(sid,key) ; create ct evaluation form
  ;@stanza 2 create ct eval form
  ;
  new root set root=$$setroot^%wd("vapals-patients")
- new sien set sien=$$sid2num^SAMIHOM2(sid)
+ new sien set sien=$$sid2num^SAMIHOM3(sid)
  quit:+sien=0
  new cdate set cdate=$piece(key,"bxform-",2)
  merge @root@("graph",sid,key)=@root@(sien)

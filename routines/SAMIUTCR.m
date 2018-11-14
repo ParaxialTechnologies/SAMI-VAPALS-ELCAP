@@ -1,4 +1,4 @@
-SAMIUTCR ;ven/lgc - UNIT TEST for SAMICTR ; 10/31/18 5:51pm
+SAMIUTCR ;ven/lgc - UNIT TEST for SAMICTR ; 11/13/18 7:03pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -27,6 +27,10 @@ START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  ;
  ;
 STARTUP n utsuccess
+ n root s root=$$setroot^%wd("vapals-patients")
+ k @root@("graph","XXX00001")
+ n poo D PullUTarray^SAMIUTST(.poo,"all XXX00001 forms")
+ m @root=poo
  Q
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess

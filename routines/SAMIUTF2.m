@@ -1,4 +1,4 @@
-SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 11/8/18 1:22pm
+SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 11/13/18 8:16pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -26,6 +26,10 @@ START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  ;
  ;
 STARTUP n utsuccess
+ n root s root=$$setroot^%wd("vapals-patients")
+ k @root@("graph","XXX00001")
+ n poo D PullUTarray^SAMIUTST(.poo,"all XXX00001 forms")
+ m @root=poo
  Q
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
@@ -164,7 +168,7 @@ UTWSIFM ; @TEST - intake form access
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
  . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
  . i @nodep["siform" q
- . i @nodep["Date of contact is required" q
+ . i @nodep["input value=""11/12/2018""" q
  . i '($qs(nodep,1)=$qs(nodea,1)) s utsuccess=0
  . i '(@nodep=@nodea) s utsuccess=0
  i 'nodea="" s utsuccess=0
@@ -189,7 +193,7 @@ UTCEFRM ; @TEST - ctevaluation form access
  D CHKEQ^%ut(utsuccess,1,"Testing ctevaluation form access FAILED!")
  q
  ;
-UTFSRC ; fix html src lines to use resources in see/
+UTFSRC ; @TEST - fix html src lines to use resources in see/
  ;fixSrc(line)
  n line,line2
  S line="testing fixSrc, src=""/"" and src=""/"" end"
@@ -206,19 +210,32 @@ UTFHREF ; fix html href lines to use resources in see/
  d fixHref^SAMIFRM2(.line)
  q
  ;
-UTGLST5 ; extrinsic returns the last5 for patient sid
+UTGLST5 ; @TEST - extrinsic returns the last5 for patient sid
  ;GETLAST5(sid)
+ n sid s sid="XXX00001"
+ s utsuccess=($$GETLAST5^SAMIFRM2(sid)="F8924")
+ D CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns last5 FAILED!")
  q
  ;
-UTGTNM ; extrinsic returns the name for patient sid
+UTGTNM ; @TEST - extrinsic returns the name for patient sid
  ;GETNAME(sid)
+ n sid s sid="XXX00001"
+ s utsuccess=($$GETNAME^SAMIFRM2(sid)="Fourteen,Patient N")
+ D CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns name FAILED!")
  q
  ;
-UTGSSN ; extrinsic returns the ssn for patient sid
+UTGSSN ; @TEST - extrinsic returns the ssn for patient sid
  ;GETSSN(sid)
+ n sid s sid="XXX00001"
+ s utsuccess=($$GETSSN^SAMIFRM2(sid)="444-67-8924")
+ D CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns ssn FAILED!")
  q
-UTGETHDR ; extrinsic returns header string for patient sid
+ ;
+UTGETHDR ; @TEST - extrinsic returns header string for patient sid
  ;GETHDR(sid)
+ n sid s sid="XXX00001"
+ s utsuccess=($$GETHDR^SAMIFRM2(sid)="444-67-8924 DOB: 7/8/1956 AGE: 62 GENDER: M")
+ D CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns header FAILED!")
  q
  ;
 EOR ;End of routine SAMIUTF2

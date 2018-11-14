@@ -1,4 +1,4 @@
-SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 11/5/18 10:36am
+SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 11/14/18 10:19am
  ;;18.0;SAMI;;
  ;
  ;
@@ -108,14 +108,7 @@ UTADDPT ; @TEST Testing addPatient adding a new patient to vapals-patients
  ;*** Removes XXX00001 from vapals-patients file
  ;     so kills extra nodes in ceform-2018-01-21, thus
  ;     must put these back for other unit tests
- ;     DATA found in :
- ;     ^%wd(17.040801,93,"B","UTNODUL^SAMICTR1 data",17)=""
- ;    So will need to do  AFTER ceform-2018-10-21 is created
- ;       see SAMIUTS2
- ;     D PullUTarray^SAMIUTST(.poo,"UTNODUL^SAMICTR1 data")
- ;     s root=$$setroot^%wd("vapals-patients")
- ;     s vals=$na(@root@("graph","XXX00001","ceform-2018-10-21"))
- ;     m @vals=poo
+ ;     See STARTUP section in other unit test routines
  ;addPatient(dfn)
  n rootvp,rootpl,dfn,gien,studyid,gienut,rootut
  s rootvp=$$setroot^%wd("vapals-patients")
@@ -127,7 +120,7 @@ UTADDPT ; @TEST Testing addPatient adding a new patient to vapals-patients
  s dfn=@rootut@(gienut,"dfn")
  ;
  ; clear test patient from vapals-patients Graphstore
- s studyid=$g(@rootvp@(dfn,"sisid"))
+ s studyid="XXX00001"
  k:$L(studyid) @rootvp@("sid",studyid),@rootvp@("graph",studyid)
  k @rootvp@(dfn),@rootvp@("dfn",dfn)
  ;
@@ -174,6 +167,7 @@ UTWSNC ; @TEST - Testing wsNewCase adding a new case to vapals-patients Graphsto
  ..; if the first non space 10 characters are a date, skip
  .. i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
  .. i @nodep["siform"  q
+ .. i @nodea["input value=""11/13/2018""" q
  .. i '($qs(nodea,1)=$qs(nodep,1)) s uthtml=0
  .. i '(@nodea=@nodep) s uthtml=0
  i '(nodea="") s uthtml=0

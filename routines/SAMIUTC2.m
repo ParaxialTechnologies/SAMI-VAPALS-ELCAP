@@ -1,4 +1,4 @@
-SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ; 2018-11-02T1840Z
+SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ; 11/14/18 9:11am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -21,7 +21,7 @@ SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ; 2018-11-02T1840Z
  ;
  ; @section 1 code
  ;
-START
+START 
  if $text(^%ut)="" do
  . write !,"*** UNIT TEST NOT INSTALLED ***"
  . quit
@@ -30,7 +30,7 @@ START
  quit
  ;
  ;
-SETUP
+SETUP 
  new args,body,return,filter,from,to,expect,result,expectn,resultn,utsuccess
  quit
  ;

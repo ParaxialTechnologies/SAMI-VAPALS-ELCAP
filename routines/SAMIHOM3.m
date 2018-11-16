@@ -16,6 +16,7 @@ SAMIHOM3 ;ven/gpl - ielcap: forms ;2018-07-10  10:51 AM
  ;@routine-credits
  ;@primary-dev: George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
+ ;@additional-dev: Alexis R. Carlson (arc)
  ;@primary-dev-org: Vista Expertise Network (ven)
  ; http://vistaexpertise.net
  ;@copyright: 2017, gpl, all rights reserved
@@ -69,6 +70,9 @@ SAMIHOM3 ;ven/gpl - ielcap: forms ;2018-07-10  10:51 AM
  ; 2018-03-07 ven/toad v18.0t04 SAMIHOM2: in $$sid2num add
  ; wsNuForm^SAMICAS2 to called-by list; in keyDate,getHome update
  ; called-by.
+ ;
+ ; 2018-05-18 ven/arc v18.0t04 SAMIHOM3: fork from SAMIHOM2 for new patient
+ ; search page.
  ;
  ;@contents
  ;
@@ -861,4 +865,4 @@ index ; reindex the vapals-patients graph
  . s @root@("sid",sid,zi)="" 
  q
  ;
-EOR ; end of routine SAMIHOM2
+EOR ; end of routine SAMIHOM3

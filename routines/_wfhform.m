@@ -1,4 +1,4 @@
-%wfhform ;ven/gpl-web form: html form get & post ;2018-03-18T17:05Z
+%wfhform ;ven/gpl-web form: html form get & post ;2018-11-19T18:58Z
  ;;1.8;Mash;
  ;
  ; %wfhform implements the Web Form Library's html form get & post web
@@ -824,7 +824,7 @@ getVals ; code for ppi getVals^%wf, get field values from graph
  ;@called-by: none
  ;@calls
  ; $$setroot^%wd
- ; $$sid2num^SAMIHOME
+ ; $$sid2num^SAMIHOM3
  ;@input
  ; vrtn = 
  ; zid = 
@@ -849,7 +849,7 @@ getVals ; code for ppi getVals^%wf, get field values from graph
  ;
  ;@stanza 3 load prefill values
  ;
- new gien set gien=$$sid2num^SAMIHOME(zsid) ; graph ien of this patient
+ new gien set gien=$$sid2num^SAMIHOM3(zsid) ; graph ien of this patient
  merge @vrtn=@root@(gien)
  ;
  ;@stanza 4 termination

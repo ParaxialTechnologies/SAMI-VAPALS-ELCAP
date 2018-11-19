@@ -40,7 +40,7 @@ $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {
         
         if (status == 1) {
             html   = html + '<div class="col-sm-3 text-right" title="Patient in VAPALS-ELCAP">';
-            html   = html + '<img src="see/img/vapals_icon.png" class="enrolled-icon"/>&nbsp;<em>VAPALS-ELCAP</em>';
+            html   = html + '<img src="see/img/logo_transparent.png" class="enrolled-icon"/>&nbsp;<em>VAPALS-ELCAP</em>';
             html   = html + '</div>';
         } else {
             html = html + '<div class="col-sm-3"></div>'

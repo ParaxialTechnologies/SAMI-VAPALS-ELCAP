@@ -32,6 +32,11 @@ START ; Run the coverage tests
  ; Add the routines here in the preferred order; this enables us to easily
  ; rearrange these in whatever order we like.
  set I=0
+ ; set I=I+1,RUNCODE(I)="SAMID"
+ ; set I=I+1,RUNCODE(I)="SAMIDOUT"
+ ; set I=I+1,RUNCODE(I)="SAMIDSSN"
+ ; set I=I+1,RUNCODE(I)="SAMIVSTR"
+ ; set I=I+1,RUNCODE(I)="^SAMIUTLG"
  set I=I+1,RUNCODE(I)="^SAMIUTM2"
  set I=I+1,RUNCODE(I)="^SAMIUTH3"
  set I=I+1,RUNCODE(I)="^SAMIUTS2"
@@ -41,13 +46,6 @@ START ; Run the coverage tests
  set I=I+1,RUNCODE(I)="^SAMIUTCR"
  set I=I+1,RUNCODE(I)="^SAMIUTR0"
  set I=I+1,RUNCODE(I)="^SAMIUTR1"
- set I=I+1,RUNCODE(I)="^SAMIUTR2"
- set I=I+1,RUNCODE(I)="^SAMIUTR3"
- set I=I+1,RUNCODE(I)="^SAMIUTR4"
- set I=I+1,RUNCODE(I)="^SAMIUTR5"
- set I=I+1,RUNCODE(I)="^SAMIUTR6"
- set I=I+1,RUNCODE(I)="^SAMIUTR7"
- set I=I+1,RUNCODE(I)="^SAMIUTR8"
  set I=I+1,RUNCODE(I)="^SAMIUTR9"
  set I=I+1,RUNCODE(I)="^SAMIUTRA"
  set I=I+1,RUNCODE(I)="^SAMIUTRX"
@@ -68,10 +66,26 @@ START ; Run the coverage tests
  ;
  ; We generally prefer the middle form.
  ;
- ; Exclude the unit-test routines
  set I=0
+ ; Excude routines with incomplete unit tests
+ set I=I+1,XCLUDE(I)="SAMID"
+ set I=I+1,XCLUDE(I)="SAMIUTID"
+ ;
+ set I=I+1,XCLUDE(I)="SAMIDSSN"
+ set I=I+1,XCLUDE(I)="SAMIUTDS"
+ ;
+ set I=I+1,XCLUDE(I)="SAMIDOUT"
+ set I=I+1,XCLUDE(I)="SAMIUTOT"
+ ;
+ set I=I+1,XCLUDE(I)="SAMIVSTR"
+ set I=I+1,XCLUDE(I)="SAMIUTVR"
+ ;
+ set I=I+1,XCLUDE(I)="SAMILOG"
+ set I=I+1,XCLUDE(I)="SAMIUTLG"
+ ; Exclude checksum utility & overall coverage routine
  set I=I+1,XCLUDE(I)="SAMIUCOV"
  set I=I+1,XCLUDE(I)="SAMIUTST"
+ ; Exclude the unit-test routines
  set I=I+1,XCLUDE(I)="SAMIUTM2"
  set I=I+1,XCLUDE(I)="SAMIUTH3"
  set I=I+1,XCLUDE(I)="SAMIUTS2"
@@ -81,13 +95,6 @@ START ; Run the coverage tests
  set I=I+1,XCLUDE(I)="SAMIUTCR"
  set I=I+1,XCLUDE(I)="SAMIUTR0"
  set I=I+1,XCLUDE(I)="SAMIUTR1"
- set I=I+1,XCLUDE(I)="SAMIUTR2"
- set I=I+1,XCLUDE(I)="SAMIUTR3"
- set I=I+1,XCLUDE(I)="SAMIUTR4"
- set I=I+1,XCLUDE(I)="SAMIUTR5"
- set I=I+1,XCLUDE(I)="SAMIUTR6"
- set I=I+1,XCLUDE(I)="SAMIUTR7"
- set I=I+1,XCLUDE(I)="SAMIUTR8"
  set I=I+1,XCLUDE(I)="SAMIUTR9"
  set I=I+1,XCLUDE(I)="SAMIUTRA"
  set I=I+1,XCLUDE(I)="SAMIUTRX"
@@ -100,18 +107,6 @@ START ; Run the coverage tests
  set I=I+1,XCLUDE(I)="SAMIUTVS"
  set I=I+1,XCLUDE(I)="SAMIUTRU"
  set I=I+1,XCLUDE(I)="SAMIUTSV"
- ; Exclude low priority routines without complete unit tests
- set I=I+1,XCLUDE(I)="SAMID"
- set I=I+1,XCLUDE(I)="SAMIDOUT"
- set I=I+1,XCLUDE(I)="SAMIDSSN"
- set I=I+1,XCLUDE(I)="SAMIVSTR"
- ; Exclude incomplete unit tests for low priority routines
- set I=I+1,XCLUDE(I)="SAMIUTDS"
- set I=I+1,XCLUDE(I)="SAMIUTID"
- set I=I+1,XCLUDE(I)="SAMIUTOT"
- set I=I+1,XCLUDE(I)="SAMIUTVR"
- ; Exclude deprecated routines
- ; set I=I+1,XCLUDE(I)="ROUTINE"
  ;
  ; Add the XCLUDE values to the TMP variable that tracks this coverage test.
  merge ^TMP("SAMI",$JOB,"XCLUDE")=XCLUDE

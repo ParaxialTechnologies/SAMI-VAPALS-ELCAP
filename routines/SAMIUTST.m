@@ -1,4 +1,4 @@
-SAMIUTST ;ven/lgc - Unit Test Utilities ; 11/7/18 5:32pm
+SAMIUTST ;ven/lgc - Unit Test Utilities ; 11/20/18 2:41pm
  ;;18.0;SAMI;;
  ;
  ; Routine to push and pull information used during unit testing
@@ -173,13 +173,6 @@ RTNS ;
  ;;SAMICTR
  ;;SAMICTR0
  ;;SAMICTR1
- ;;SAMICTR2
- ;;SAMICTR3
- ;;SAMICTR4
- ;;SAMICTR5
- ;;SAMICTR6
- ;;SAMICTR7
- ;;SAMICTR8
  ;;SAMICTR9
  ;;SAMICTRA
  ;;SAMICTRX
@@ -194,5 +187,6 @@ RTNS ;
  ;;SAMIRU
  ;;SAMISAV
  ;;
+ ;
  ;
 EOR ; end of routine SAMIUTST

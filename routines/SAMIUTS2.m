@@ -1,4 +1,4 @@
-SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICAS2 ; 11/13/18 6:49pm
+SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICAS2 ; 11/15/18 9:59am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -121,7 +121,20 @@ UTVPLSD ; @TEST - extrinsic which return the vapals format for dates
  ;
 UTWSNF ; @TEST - select new form for patient (get service)
  ;wsNuForm(rtn,filter)
+ n rtn,ARGS,poo,arc
+ s ARGS("studyid")="XXX00001"
+ d wsNuForm^SAMICAS2(.poo,.ARGS)
+ d PullUTarray^SAMIUTST(.arc,"UTWSNF^SAMIUTS2")
+ s utsuccess=1
+ N nodep,nodea s nodep=$na(poo),nodea=$na(arc)
+ f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
+ . i $e($tr(@nodea," "),1,10)?4N1P2N1P2N q
+ . i @nodea["<meta" q
+ . i '(@nodep=@nodea) s utsuccess=0
+ i '(nodea="") s utsuccess=0
+ D CHKEQ^%ut(1,utsuccess,"Testing wsNuForm FAILED!")
  q
+ ;
  ;
 UTNFPST ; @TEST - post new form selection (post service)
  ;wsNuFormPost(ARGS,BODY,RESULT)

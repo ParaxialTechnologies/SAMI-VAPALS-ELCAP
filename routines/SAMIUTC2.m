@@ -1,4 +1,4 @@
-SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ; 11/14/18 9:11am
+SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ; 11/15/18 8:57am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -29,6 +29,13 @@ START
  do EN^%ut($text(+0),3)
  quit
  ;
+ ;
+STARTUP ; Ensure all of test patient's forms are setup in vapals-patients
+ n root s root=$$setroot^%wd("vapals-patients")
+ k @root@("graph","XXX00001")
+ n poo D PullUTarray^SAMIUTST(.poo,"all XXX00001 forms")
+ m @root=poo
+ q
  ;
 SETUP 
  new args,body,return,filter,from,to,expect,result,expectn,resultn,utsuccess

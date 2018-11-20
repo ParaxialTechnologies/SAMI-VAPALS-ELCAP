@@ -185,20 +185,6 @@ wsReport(return,filter) ; web service which returns an html cteval report
  ;
  d nodules^SAMICTR1(rtn,.vals,.dict)
  ;
- d otherlung^SAMICTR2(rtn,.vals,.dict)
- ;
- d heart^SAMICTR3(rtn,.vals,.dict)
- ;
- d neck^SAMICTR4(rtn,.vals,.dict)
- ;
- d breast^SAMICTR5(rtn,.vals,.dict)
- ;
- d pleural^SAMICTR6(rtn,.vals,.dict)
- ;
- d paricardial^SAMICTR7(rtn,.vals,.dict)
- ;
- d abdominal^SAMICTR8(rtn,.vals,.dict)
- ;
  d impression^SAMICTR9(rtn,.vals,.dict)
  ;
  d recommend^SAMICTRA(rtn,.vals,.dict)

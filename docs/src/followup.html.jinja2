@@ -13,24 +13,20 @@
         </h2>
 
         <hr/>
-        <form action="{{ formPage+".html" if mockup else "/vapals" }}" method="{{ formMethod }}"
-              class="validated"
-              data-fv-icon-valid="glyphicon glyphicon-ok"
-              data-fv-icon-invalid="glyphicon glyphicon-remove"
-              data-fv-icon-validating="glyphicon glyphicon-refresh"
-              data-fv-button-selector="#submit-button">
+        <form action="{{ formPage+".html" if mockup else "/vapals" }}" method="{{ formMethod }}" class="validated"
+              id="main-form">
 
             <input type="hidden" name="samiroute" value="postform"/>
             <input type="hidden" name="studyid" value="@@SID@@"/>
-            <input type="hidden" name="form" value="@@FORMKEY@@"/>  
+            <input type="hidden" name="form" value="@@FORMKEY@@"/>
             <div class="row">
                 <div class="form-group col-sm-3 col-md-3 col-lg-2">
                     <label class="required" for="sidof">Follow-up date</label>
-                    {{ f.datepicker("sidof", "future", "Follow up date is required") }}
+                    {{ f.datepicker("sidof", "future", true) }}
                 </div>
                 <div class="form-group col-sm-3 col-md-3 col-lg-2">
                     <label class="required" for="sidoe">Date of baseline CT</label>
-                    {{ f.datepicker("sidoe", "past", "Date of baseline CT is required") }}
+                    {{ f.datepicker("sidoe", "past", true) }}
                 </div>
 
 
@@ -61,21 +57,21 @@
                 <div class="form-group col-sm-8">
                     <div>
                         {{ f.inlineRadio("simeq", "simeq-n", "n", "No", true) }}
-                        {{ f.inlineRadio("simeq", "simeq-y", "y", "Yes", true) }}
+                        {{ f.inlineRadio("simeq", "simeq-y", "y", "Yes") }}
                     </div>
                 </div>
             </div>
             <div id="order-container">
                 <div class="row">
                     <div class="col-md-4">
-                        {{ f.floatingLabel('siopln', 'Ordered by') }}
+                        {{ f.floatingLabel('siopfn', 'Ordered by') }}
                     </div>
                     <div class="col-md-4 form-group">
                         <input type=text name="siopfn" id="siopfn" class="form-control">
                         <span class="help-block small">First Name</span>
                     </div>
                     <div class="col-md-4 form-group">
-                        <input type=text name="siopln" id="siopln" class="form-control">
+                        <input type=text name="siopln" id="siopln" class="form-control" title="Last name">
                         <span class="help-block small">Last Name</span>
 
                     </div>
@@ -96,7 +92,7 @@
                     </div>
                     <div class="col-sm-8 form-group">
                         {{ f.inlineRadio("sidsd", "sidsd-n", "n", "No", true) }}
-                        {{ f.inlineRadio("sidsd", "sidsd-y", "y", "Yes", true) }}
+                        {{ f.inlineRadio("sidsd", "sidsd-y", "y", "Yes") }}
                         <p class="help-block small">(shared decision making is required for reimbursement for G0297
                             exams on baseline <strong>only</strong>)</p>
                     </div>
@@ -107,7 +103,7 @@
                     </div>
                     <div class="col-sm-8 form-group">
                         {{ f.inlineRadio("siopss", "siopss-c", "c", "Current", true) }}
-                        {{ f.inlineRadio("siopss", "siopss-f", "f", "Former", true) }}
+                        {{ f.inlineRadio("siopss", "siopss-f", "f", "Former") }}
                     </div>
                 </div>
 
@@ -116,7 +112,8 @@
                         {{ f.floatingLabel('siopqy', 'Reported pack years at time of order',"required") }}
                     </div>
                     <div class="col-md-8 form-group">
-                        <input type="text" name="sioppy" id="sioppy" class="form-control numeric decimalformat" required="required"/>
+                        <input type="text" name="sioppy" id="sioppy" class="form-control numeric decimalformat"
+                               required="required"/>
                     </div>
                 </div>
                 <div class="row">
@@ -134,7 +131,7 @@
                     </div>
                     <div class="col-md-8 form-group">
                         {{ f.inlineRadio("sioas", "sioas-n", "n", "No", true) }}
-                        {{ f.inlineRadio("sioas", "sioas-y", "y", "Yes", true) }}
+                        {{ f.inlineRadio("sioas", "sioas-y", "y", "Yes") }}
                     </div>
                 </div>
                 <hr/>
@@ -155,7 +152,7 @@
                 </div>
                 <div class="col-md-8 form-group">
                     {{ f.inlineRadio("siabx", "siabx-n", "n", "No", true) }}
-                    {{ f.inlineRadio("siabx", "siabx-y", "y", "Yes", true) }}
+                    {{ f.inlineRadio("siabx", "siabx-y", "y", "Yes") }}
                 </div>
             </div>
             <div class="row">
@@ -164,7 +161,7 @@
                 </div>
                 <div class="col-md-8 form-group">
                     {{ f.inlineRadio("siaex", "siaex-n", "n", "No", true) }}
-                    {{ f.inlineRadio("siaex", "siaex-y", "y", "Yes", true) }}
+                    {{ f.inlineRadio("siaex", "siaex-y", "y", "Yes") }}
                 </div>
             </div>
 
@@ -177,8 +174,8 @@
                 </div>
                 <div class="col-md-8 form-group">
                     {{ f.inlineRadio("sisse", "sisse-1", "1", "Less than 5 years ago", true) }}
-                    {{ f.inlineRadio("sisse", "sisse-5", "5", "More than 5 years ago", true) }}
-                    {{ f.inlineRadio("sisse", "sisse-10", "10", "More than 10 years ago", true) }}
+                    {{ f.inlineRadio("sisse", "sisse-5", "5", "More than 5 years ago") }}
+                    {{ f.inlineRadio("sisse", "sisse-10", "10", "More than 10 years ago") }}
                 </div>
             </div>
 
@@ -244,7 +241,7 @@
                 </div>
                 <div class="col-md-2 form-group">
                     {{ f.inlineRadio("siho", "siho-n", "n", "No", true) }}
-                    {{ f.inlineRadio("siho", "siho-y", "y", "Yes", true) }}
+                    {{ f.inlineRadio("siho", "siho-y", "y", "Yes") }}
                 </div>
                 <div class="col-md-6 col-lg-4" id="siho-container">
                     <div class="form-group">
@@ -253,7 +250,7 @@
                     </div>
                     <div class="form-group">
                         <label for="sihod">When?</label>
-                        {{ f.yearpicker("sihod", true) }}
+                        {{ f.yearpicker("sihod") }}
                     </div>
                     <div class="form-group">
                         <label for="sihol">Where?</label>
@@ -268,7 +265,7 @@
                 </div>
                 <div class="col-md-2 form-group">
                     {{ f.inlineRadio("sicd", "sicd-n", "n", "No", true) }}
-                    {{ f.inlineRadio("sicd", "sicd-y", "y", "Yes", true) }}
+                    {{ f.inlineRadio("sicd", "sicd-y", "y", "Yes") }}
                 </div>
                 <div class="col-md-6 col-lg-4" id="sicd-container">
                     <div class="form-group">
@@ -305,7 +302,7 @@
                 </div>
                 <div class="col-md-2 form-group">
                     {{ f.inlineRadio("silcs", "silcs-n", "n", "No", true) }}
-                    {{ f.inlineRadio("silcs", "silcs-y", "y", "Yes", true) }}
+                    {{ f.inlineRadio("silcs", "silcs-y", "y", "Yes") }}
                 </div>
                 <div class="col-md-6 col-lg-4" id="silcs-container">
                     <div class="form-group">
@@ -325,7 +322,7 @@
                 </div>
                 <div class="col-md-2 form-group">
                     {{ f.inlineRadio("sier", "sier-n", "n", "No", true) }}
-                    {{ f.inlineRadio("sier", "sier-y", "y", "Yes", true) }}
+                    {{ f.inlineRadio("sier", "sier-y", "y", "Yes") }}
                 </div>
                 <div class="col-md-6 col-lg-4" id="sier-container">
                     <div class="form-group">
@@ -345,8 +342,8 @@
                 </div>
                 <div class="col-md-8 form-group">
                     {{ f.inlineRadio("sisa", "sisa-n", "n", "No", true) }}
-                    {{ f.inlineRadio("sisa", "sisa-y", "y", "Yes", true) }}
-                    {{ f.inlineRadio("sisa", "sisa-o", "o", "Never smoked", true) }}
+                    {{ f.inlineRadio("sisa", "sisa-y", "y", "Yes") }}
+                    {{ f.inlineRadio("sisa", "sisa-o", "o", "Never smoked") }}
                 </div>
             </div>
 
@@ -405,7 +402,7 @@
                         </div>
 
                         <div class="form-group" style="float:left;">
-                            {{ f.yearpicker("sidlcy", true, false, true, "Year") }}
+                            {{ f.yearpicker("sidlcy", false, true, "Year") }}
 
                         </div>
                     </div>
@@ -418,8 +415,8 @@
                 </div>
                 <div class="col-md-8 form-group">
                     {{ f.inlineRadio("sittq", "sittq-n", "n", "No", true) }}
-                    {{ f.inlineRadio("sittq", "sittq-y", "y", "Yes", true) }}
-                    {{ f.inlineRadio("sittq", "sittq-o", "o", "N/A", true) }}
+                    {{ f.inlineRadio("sittq", "sittq-y", "y", "Yes") }}
+                    {{ f.inlineRadio("sittq", "sittq-o", "o", "N/A") }}
                 </div>
             </div>
 
@@ -437,7 +434,7 @@
                     {{ f.floatingLabel('', 'Since your prior CT scan, what, if any, smoking cessation methods have you used?') }}
 
                 </div>
-                
+
                 <div class="col-sm-8 form-group">
                     {{ f.checkbox("sisca", "a","Have not tried to quit") }}
                     {{ f.checkbox("siscb", "b","\"Cold Turkey\" by completely stopping on your own with no other assistance") }}
@@ -477,7 +474,7 @@
                 </div>
                 <div class="col-md-8 form-group">
                     {{ f.inlineRadio("sicpd", "sittq-n", "n", "No", true) }}
-                    {{ f.inlineRadio("sicpd", "sittq-y", "y", "Yes", true) }}
+                    {{ f.inlineRadio("sicpd", "sittq-y", "y", "Yes") }}
                 </div>
             </div>
             <div class="pull-left">
@@ -491,18 +488,110 @@
         </form>
     </div>
 
-    {{ f.deleteFormModal("followup.html", mockup, formMethod)}}
+    {{ f.deleteFormModal("followup.html", mockup, formMethod) }}
 {% endblock %}
 
 {% block script %}
     <script language="JavaScript">
+        function createFormValidator() {
+
+            const $form = $('#main-form');
+            const thisYear = VAPALS.todaysYear();
+            const minYear = thisYear - 100;
+            const yearValidationMessage = 'Must be between ' + minYear + ' and ' + thisYear;
+
+            // for certain validators that use multiple inputs like checkboxes and radio groups, change the location
+            // of the error icon to be based on the form-group element, instead of being immediately adjacent to the
+            // first control in that group
+            const multiInputValidators = ['simeq', 'siabx', 'siaex', 'sisse', 'siho', 'sicd', 'silcs', 'sier', 'sisa',
+                'sittq', 'sicpd'];
+
+            $form.formValidation({
+                    fields: {
+                        // SCAN
+                        sidof: {
+                            validators: {
+                                notEmpty: {message: 'Follow-up date is required'},
+                                date: {min: VAPALS.todaysDate(), message: 'Follow-up date must not be in the past'}
+                            }
+                        },
+                        sidoe: {
+                            validators: {
+                                notEmpty: {message: 'Baseline date is required'},
+                                date: {max: VAPALS.todaysDate(), message: 'Baseline date must not be in the future'}
+                            }
+                        },
+                        sico: {validators: {notEmpty: {message: 'Coordinator is required'}}},
+
+                        //Ordering Information
+                        simeq: {validators: {notEmpty: {message: 'Scan ordered is required'}}},
+                        siopnpi: {validators: {notEmpty: {message: 'Provider ID is required'}}},
+                        sidsd: {validators: {notEmpty: {message: 'Shared decision making is required'}}},
+                        siopss: {validators: {notEmpty: {message: 'Smoking status is required'}}},
+                        sioppy: {
+                            validators: {
+                                notEmpty: {message: 'Pack years is required'},
+                                numeric: {message: 'Must be a number'},
+                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
+                            }
+                        },
+                        sioas: {validators: {notEmpty: {message: 'Asymptomatic is required'}}},
+                        siopci: {validators: {notEmpty: {message: 'Clinical information is required'}}},
+                        siabx: {validators: {notEmpty: {message: 'Antibiotics is required'}}},
+                        siaex: {validators: {notEmpty: {message: 'Annual scan is required'}}},
+                        sisse: {validators: {notEmpty: {message: 'Prolonged exposure is required'}}},
+                        siwcos: {validators: {notEmpty: {message: 'Other symptom is required'}}},
+                        siwcw: {validators: {notEmpty: {message: 'Physician is required'}}},
+                        siho: {validators: {notEmpty: {message: 'Hospitalized is required'}}},
+                        sicd: {validators: {notEmpty: {message: 'Cancer diagnosis is required'}}},
+                        silcs: {validators: {notEmpty: {message: 'Cancer surgery is required'}}},
+                        sier: {validators: {notEmpty: {message: 'Recurrence is required'}}},
+
+                        //Smoking
+                        sisa: {validators: {notEmpty: {message: 'Smoking history is required'}}},
+                        sidlcy: {validators: {between: {message: yearValidationMessage, min: minYear, max: thisYear}}},
+                        sittq: {validators: {notEmpty: {message: 'Quit attempt is required'}}},
+                        siscos: {validators: {notEmpty: {message: 'Other method is required'}}},
+                        sicpd: {validators: {notEmpty: {message: 'Cessation materials is required'}}},
+                    },
+                    plugins: {
+                        trigger: new FormValidation.plugins.Trigger(),
+                        bootstrap3: new FormValidation.plugins.Bootstrap3(),
+                        submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                        excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
+                        icon: new FormValidation.plugins.Icon({
+                            valid: '',
+                            invalid: 'glyphicon glyphicon-remove',
+                            validating: 'glyphicon glyphicon-refresh',
+                            onPlaced: function (e) {
+                                if (multiInputValidators.indexOf(e.field) > -1) {
+                                    $("#" + e.element.id).closest(".form-group").append(e.iconElement);
+                                }
+                            },
+                        })
+                    }
+                }
+            );
+
+            const fv = $form.data('formValidation');
+
+            fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);
+            fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
+
+            return fv;
+        }
+
 
         $(function () {
-            var $tsbFields = $("#sidof, #sidoe");
+
+            createFormValidator();
+
+            const $tsbFields = $("#sidof, #sidoe");
             $tsbFields.closest(".datepicker").on("dp.change", function () {
-                var baselineDate = $("#sidof").val();
-                var studyDate = $("#sidoe").val();
-                var months = VAPALS.computeMonthsBetween(baselineDate, studyDate);
+                const baselineDate = $("#sidof").val();
+                const studyDate = $("#sidoe").val();
+                const months = VAPALS.computeMonthsBetween(baselineDate, studyDate);
                 $("#sitsb-text").text(months);
                 $("#sitsb-alert").toggle(months > 0);
                 $("#sitsb").val(months);
@@ -522,8 +611,6 @@
             $("[name=sisa]").conditionallyDisplay({enable: "#sisa-container-y", disable: "sisa-container-n"});
             $("[name=sittq]").conditionallyDisplay({enable: "#sittq-container"});
             $("#siscl").conditionallyEnable({sourceValues: "l", enable: "#siscos"});
-
-            $(".validated").formValidation({framework: 'bootstrap'});
         });
 
     </script>

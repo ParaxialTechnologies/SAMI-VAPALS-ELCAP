@@ -33,8 +33,8 @@
             $(".alert").hide();
             $.ajax("/set" + mode, {
                 success: function () {
-                    var studyId = localStorage.getItem('studyid');
-                    var caseReview =studyId!="" && studyId != "@@SID@@";
+                    const studyId = localStorage.getItem('studyid');
+                    const caseReview = studyId != "" && studyId != "@@SID@@";
                     $("a.navigation").toggle(caseReview);
                     $("#success-message").text("Successfully enabled " + mode.toUpperCase() + "!").closest(".alert").show();
                     $("#formMode").text(mode.toUpperCase());

@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <meta name='version' content='{{ version }}'>
+    <meta name='author' content='Domenic DiNatale, domenic.dinatale@paraxialtech.com'>
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{{ path }}lib/bootstrap-3.3.7-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ path }}lib/font-awesome-4.7.0/css/font-awesome.min.css">
@@ -17,14 +17,17 @@
     <link href="{{ path }}lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
     {% block head %}{% endblock %}
 </head>
-<body>
+<body id="body" style="position: relative;">
 <script src="{{ path }}lib/jquery-3.3.1.min.js"></script>
 <script src="{{ path }}lib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 <script src="{{ path }}lib/popper.min.js"></script>
 <script src="{{ path }}lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script src="{{ path }}lib/moment.js"></script>
-<script src="{{ path }}lib/formvalidation/dist/js/formValidation.min.js"></script>
-<script src="{{ path }}lib/formvalidation/dist/js/framework/bootstrap.min.js"></script>
+
+<script src="{{ path }}lib/formvalidation/dist/js/FormValidation.min.js"></script>
+<script src="{{ path }}lib/formvalidation/dist/js/plugins/Wizard.min.js"></script>
+<script src="{{ path }}lib/formvalidation/dist/js/plugins/Bootstrap3.min.js"></script>
+<script src="{{ path }}lib/formvalidation/dist/js/plugins/J.min.js"></script>
 <script src="{{ path }}lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 <script src="{{ path }}lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.js"></script>
 <script src="{{ path }}lib/clipboard.js"></script>
@@ -55,17 +58,41 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            {#TODO: need better image and acutal link to "home"#}
-            <a href="home.html">
-
-                <img src="{{ path }}img/new-logo.png" title="VA-PALS" height="50" alt="VA-PALS Logo"/>
+            <a href="{{ "home.html" if mockup else "/vapals" }}" class="text-nowrap" style="text-decoration: none">
+                <img src="{{ path }}img/logo_transparent.png" title="VAPALS-ELCAP" height="50" alt="VAPALS-ELCAP Logo" class="hidden-xs"/>
+                <img src="{{ path }}img/logo_name.png" title="VAPALS-ELCAP" height="50" alt="VAPALS-ELCAP Logo"/>
             </a>
         </div>
-        <div class="navbar-collapse collapse" id="navbar-main">
+        <div class="navbar-collapse collapse navbar-right" id="navbar-main">
             <ul class="nav navbar-nav">
-                <li><a href="home.html">Home</a></li>
-                <li class="dropdown" id="studyIdMenu" style="display:none;">
-                    <a class="navigation" data-method="{{ formMethod }}" data-samiroute="casereview" href="{{ "casereview.html" if mockup else "#!" }}">Case Review</a>
+                <li><a href="{{ "home.html" if mockup else "/vapals" }}">Home</a></li>
+                <li id="studyIdMenu" style="display:none;">
+                    <a class="navigation" data-method="{{ formMethod }}" data-samiroute="casereview"
+                       href="{{ "casereview.html" if mockup else "#!" }}">Case Review</a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Reports <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
+                               data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="followup">Participant
+                            Follow-up</a></li>
+                        <li><a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
+                               data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="activity">Activity</a>
+                        </li>
+                        <li><a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
+                               data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="missingct">Missing
+                            Image & CT Evaluation</a></li>
+                        <li><a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
+                               data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="incomplete">Incomplete
+                            Form</a></li>
+                        <li><a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
+                               data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="outreach">Outreach</a>
+                        </li>
+                        <li><a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
+                               data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="enrollment">Enrollment</a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>
@@ -87,7 +114,7 @@
 <script language="JavaScript">
     const studyIdVal = $("#studyid-html-element").attr('value');
     const studyId = $.trim(studyIdVal);
-    if (studyId && studyId.indexOf("@@") == -1) {
+    if (studyId && studyId.indexOf("@@") === -1) {
         //store studyid value for use in pages that don't go through the forms processor
         localStorage.setItem("studyid", studyId);
         $("#studyIdMenu").show();
@@ -103,26 +130,37 @@
     $(function () {
         /** These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly. **/
         const $forms = $("form.validated");
-        $.each($forms.find("select, textarea, input:visible"), function (i, o) {
+        $.each($forms.find("select, textarea, input:visible"), function () {
             const $input = $(this);
             if ($input.closest(".form-group").length === 0) {
                 console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
             }
         });
 
-        $.each($forms.find("input[type=hidden][required]"), function (i, o) {
-            const $input = $(this);
+        $.each($forms.find("input[type=hidden][required]"), function () {
             console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
         });
 
         $.ajax("/ctversion", {
-            success: function (data, textStatus, jqXHR) {
+            success: function (data) {
                 const v = data.ctversion;
                 $("#formMode").text(v.toUpperCase());
             },
             error: function () {
                 $("#formMode").text("UNKNOWN");
             }
+        });
+
+        $("input[type=checkbox]").change(function () {
+            const checked = $(this).is(":checked");
+            const fieldName = $(this).attr('name');
+            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function () {
+                return checked;
+            });
+        });
+
+        $.each($("input[type=checkbox]:checked"), function (i, el) {
+            $(el).trigger("change");
         })
     })
 </script>

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
  <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+  <meta content="2018.11.19" name="version"/>
+  <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    New Form
   </title>
@@ -17,7 +18,7 @@
   <link href="lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
   <link href="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
  </head>
- <body>
+ <body id="body" style="position: relative;">
   <script src="lib/jquery-3.3.1.min.js">
   </script>
   <script src="lib/jquery-ui-1.12.1/jquery-ui.min.js">
@@ -28,9 +29,13 @@
   </script>
   <script src="lib/moment.js">
   </script>
-  <script src="lib/formvalidation/dist/js/formValidation.min.js">
+  <script src="lib/formvalidation/dist/js/FormValidation.min.js">
   </script>
-  <script src="lib/formvalidation/dist/js/framework/bootstrap.min.js">
+  <script src="lib/formvalidation/dist/js/plugins/Wizard.min.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/plugins/Bootstrap3.min.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/plugins/J.min.js">
   </script>
   <script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js">
   </script>
@@ -66,21 +71,64 @@
       <span class="icon-bar">
       </span>
      </button>
-     <a href="home.html">
-      <img alt="VA-PALS Logo" height="50" src="img/new-logo.png" title="VA-PALS"/>
+     <a class="text-nowrap" href="/vapals" style="text-decoration: none">
+      <img alt="VAPALS-ELCAP Logo" class="hidden-xs" height="50" src="img/logo_transparent.png" title="VAPALS-ELCAP"/>
+      <img alt="VAPALS-ELCAP Logo" height="50" src="img/logo_name.png" title="VAPALS-ELCAP"/>
      </a>
     </div>
-    <div class="navbar-collapse collapse" id="navbar-main">
+    <div class="navbar-collapse collapse navbar-right" id="navbar-main">
      <ul class="nav navbar-nav">
       <li>
-       <a href="home.html">
+       <a href="/vapals">
         Home
        </a>
       </li>
-      <li class="dropdown" id="studyIdMenu" style="display:none;">
+      <li id="studyIdMenu" style="display:none;">
        <a class="navigation" data-method="post" data-samiroute="casereview" href="#!">
         Case Review
        </a>
+      </li>
+      <li class="dropdown">
+       <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+        Reports
+        <span class="caret">
+        </span>
+       </a>
+       <ul class="dropdown-menu">
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="followup" data-samiroute="report" href="#!">
+          Participant
+                            Follow-up
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="activity" data-samiroute="report" href="#!">
+          Activity
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="missingct" data-samiroute="report" href="#!">
+          Missing
+                            Image &amp; CT Evaluation
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="incomplete" data-samiroute="report" href="#!">
+          Incomplete
+                            Form
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="outreach" data-samiroute="report" href="#!">
+          Outreach
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="enrollment" data-samiroute="report" href="#!">
+          Enrollment
+         </a>
+        </li>
+       </ul>
       </li>
      </ul>
     </div>
@@ -144,14 +192,14 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2018.09.04
+     2018.11.19
     </span>
    </div>
   </footer>
   <script language="JavaScript">
    const studyIdVal = $("#studyid-html-element").attr('value');
     const studyId = $.trim(studyIdVal);
-    if (studyId && studyId.indexOf("@@") == -1) {
+    if (studyId && studyId.indexOf("@@") === -1) {
         //store studyid value for use in pages that don't go through the forms processor
         localStorage.setItem("studyid", studyId);
         $("#studyIdMenu").show();
@@ -167,26 +215,37 @@
     $(function () {
         /** These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly. **/
         const $forms = $("form.validated");
-        $.each($forms.find("select, textarea, input:visible"), function (i, o) {
+        $.each($forms.find("select, textarea, input:visible"), function () {
             const $input = $(this);
             if ($input.closest(".form-group").length === 0) {
                 console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
             }
         });
 
-        $.each($forms.find("input[type=hidden][required]"), function (i, o) {
-            const $input = $(this);
+        $.each($forms.find("input[type=hidden][required]"), function () {
             console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
         });
 
         $.ajax("/ctversion", {
-            success: function (data, textStatus, jqXHR) {
+            success: function (data) {
                 const v = data.ctversion;
                 $("#formMode").text(v.toUpperCase());
             },
             error: function () {
                 $("#formMode").text("UNKNOWN");
             }
+        });
+
+        $("input[type=checkbox]").change(function () {
+            const checked = $(this).is(":checked");
+            const fieldName = $(this).attr('name');
+            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function () {
+                return checked;
+            });
+        });
+
+        $.each($("input[type=checkbox]:checked"), function (i, el) {
+            $(el).trigger("change");
         })
     })
   </script>

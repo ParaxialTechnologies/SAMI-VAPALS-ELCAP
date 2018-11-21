@@ -208,10 +208,15 @@ wsVAPALS(ARG,BODY,RESULT) ; vapals post web service - all calls come through thi
  i route="ctreport" d  q  ;
  . m ARG=vars
  . d wsReport^SAMICTR0(.RESULT,.ARG)
+ . ;d wsReport^SAMICTRT(.RESULT,.ARG)
  ;
  i route="note" d  q  ; 
  . m ARG=vars
  . d wsNote^SAMINOTI(.RESULT,.ARG)
+ ;
+ i route="report" d  q  ; 
+ . m ARG=vars
+ . d wsReport^SAMIUR1(.RESULT,.ARG)
  ;
  q
  ;
@@ -783,8 +788,19 @@ makeSiform(num) ; create intake form
  s @zf@("sipcn")=$g(@root@(num,"county")) ; county
  s @zf@("sipcr")="USA" ; country
  s @zf@("sipz")=$g(@root@(num,"zip")) ; zip
- s @zf@("sippn")=$g(@root@(num,"phone")) ; phone number
+ i @zf@("sipz")'="" d  ;
+ . n zip s zip=@zf@("sipz")
+ . q:zip=""
+ . n ru s ru=$$UrbanRural^SAMIVSTA(zip)
+ . i ru=0 s ru="n"
+ . i (ru="r")!(ru="u")!(ru="n") s @zf@("sirs")=ru
+ . s @root@(num,"sirs")=$g(@zf@("sirs"))
+ n phn s phn=$g(@root@(num,"phone")) ; phone number
+ i phn["x" s phn=$p(phn," x",1)
+ s @zf@("sippn")=phn
  s @zf@("sidc")=$$vapalsDate^SAMICAS2($$NOW^XLFDT)
+ ; set samifirsttime variable for intake form
+ s @zf@("samifirsttime")="true"
  ;
  ;@stanza 3 termination
  ;

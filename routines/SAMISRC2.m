@@ -106,7 +106,7 @@ wsLookup(ARGS,BODY,RESULT) ; look up ELCAP patient
  . set sien=+sien ; lose the leading zeros
  . if +sien=0 quit  ; didn't work
  . if $data(@root@(sien)) do  ; there is a record at that location
- . . set filter("studyid")=$$genStudyId^SAMIHOME(sien)
+ . . set filter("studyid")=$$genStudyId^SAMIHOM3(sien)
  . . do wsCASE^SAMICAS2(.trtn,.filter)
  . . quit
  . quit
@@ -118,7 +118,7 @@ wsLookup(ARGS,BODY,RESULT) ; look up ELCAP patient
  ; on failure, resturn to the home page, maybe pass an error message
  ;
  set filter("samilookuperror")="Patient not found"
- do getHome^SAMIHOM2(.trtn,.filter)
+ do getHome^SAMIHOM3(.trtn,.filter)
  merge RESULT=trtn
  ;
  ;@stanza 3 termination

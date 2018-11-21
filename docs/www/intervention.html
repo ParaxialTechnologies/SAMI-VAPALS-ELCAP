@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
  <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+  <meta content="2018.11.19" name="version"/>
+  <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    Intervention and Surgical Treatment Form
   </title>
@@ -17,7 +18,7 @@
   <link href="lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
   <link href="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
  </head>
- <body>
+ <body id="body" style="position: relative;">
   <script src="lib/jquery-3.3.1.min.js">
   </script>
   <script src="lib/jquery-ui-1.12.1/jquery-ui.min.js">
@@ -28,9 +29,13 @@
   </script>
   <script src="lib/moment.js">
   </script>
-  <script src="lib/formvalidation/dist/js/formValidation.min.js">
+  <script src="lib/formvalidation/dist/js/FormValidation.min.js">
   </script>
-  <script src="lib/formvalidation/dist/js/framework/bootstrap.min.js">
+  <script src="lib/formvalidation/dist/js/plugins/Wizard.min.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/plugins/Bootstrap3.min.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/plugins/J.min.js">
   </script>
   <script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js">
   </script>
@@ -66,21 +71,64 @@
       <span class="icon-bar">
       </span>
      </button>
-     <a href="home.html">
-      <img alt="VA-PALS Logo" height="50" src="img/new-logo.png" title="VA-PALS"/>
+     <a class="text-nowrap" href="/vapals" style="text-decoration: none">
+      <img alt="VAPALS-ELCAP Logo" class="hidden-xs" height="50" src="img/logo_transparent.png" title="VAPALS-ELCAP"/>
+      <img alt="VAPALS-ELCAP Logo" height="50" src="img/logo_name.png" title="VAPALS-ELCAP"/>
      </a>
     </div>
-    <div class="navbar-collapse collapse" id="navbar-main">
+    <div class="navbar-collapse collapse navbar-right" id="navbar-main">
      <ul class="nav navbar-nav">
       <li>
-       <a href="home.html">
+       <a href="/vapals">
         Home
        </a>
       </li>
-      <li class="dropdown" id="studyIdMenu" style="display:none;">
+      <li id="studyIdMenu" style="display:none;">
        <a class="navigation" data-method="post" data-samiroute="casereview" href="#!">
         Case Review
        </a>
+      </li>
+      <li class="dropdown">
+       <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+        Reports
+        <span class="caret">
+        </span>
+       </a>
+       <ul class="dropdown-menu">
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="followup" data-samiroute="report" href="#!">
+          Participant
+                            Follow-up
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="activity" data-samiroute="report" href="#!">
+          Activity
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="missingct" data-samiroute="report" href="#!">
+          Missing
+                            Image &amp; CT Evaluation
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="incomplete" data-samiroute="report" href="#!">
+          Incomplete
+                            Form
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="outreach" data-samiroute="report" href="#!">
+          Outreach
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="enrollment" data-samiroute="report" href="#!">
+          Enrollment
+         </a>
+        </li>
+       </ul>
       </li>
      </ul>
     </div>
@@ -100,7 +148,7 @@
     </small>
    </h2>
    <hr/>
-   <form action="/vapals" class="validated" data-fv-button-selector="#submit-button" data-fv-icon-invalid="glyphicon glyphicon-remove" data-fv-icon-valid="glyphicon glyphicon-ok" data-fv-icon-validating="glyphicon glyphicon-refresh" method="post">
+   <form action="/vapals" class="validated" id="main-form" method="post">
     <input name="samiroute" type="hidden" value="postform"/>
     <input name="studyid" type="hidden" value="@@SID@@"/>
     <input name="form" type="hidden" value="@@FORMKEY@@"/>
@@ -217,6 +265,7 @@
        </select>
        <div class="checkbox">
         <label>
+         <input name="rbcsx8" type="hidden" value=""/>
          <input id="rbcsx8" name="rbcsx8" type="checkbox" value="y"/>
          Not applicable (specify)
         </label>
@@ -345,6 +394,7 @@
        </select>
        <div class="checkbox">
         <label>
+         <input name="rbcsx8m" type="hidden" value=""/>
          <input id="rbcsx8m" name="rbcsx8m" type="checkbox" value="y"/>
          Not applicable (specify)
         </label>
@@ -380,6 +430,7 @@
        </label>
        <div class="checkbox">
         <label>
+         <input name="rbcsbos" type="hidden" value=""/>
          <input id="rbcsbos" name="rbcsbos" type="checkbox" value="y"/>
          If other, specify:
         </label>
@@ -551,7 +602,7 @@
         Treatment date
        </label>
        <div class="input-group datepicker">
-        <input aria-describedby="rbsud-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" id="rbsud" name="rbsud"/>
+        <input aria-describedby="rbsud-addon" class="form-control" data-restriction="past" id="rbsud" name="rbsud"/>
         <div class="input-group-addon">
          <div class="input-group-text" id="rbsud-addon">
           <i aria-hidden="true" class="fa fa-calendar">
@@ -712,7 +763,7 @@
          Procedure date
         </label>
         <div class="input-group datepicker">
-         <input aria-describedby="rbmed-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" id="rbmed" name="rbmed"/>
+         <input aria-describedby="rbmed-addon" class="form-control" data-restriction="past" id="rbmed" name="rbmed"/>
          <div class="input-group-addon">
           <div class="input-group-text" id="rbmed-addon">
            <i aria-hidden="true" class="fa fa-calendar">
@@ -781,23 +832,23 @@
       <div class="form-group">
        <input name="hvrbrep" type="hidden" value=""/>
        <label class="radio-inline" for="rbrep-n">
-        <input data-fv-notempty-message="Please select a value" id="rbrep-n" name="rbrep" required="required" type="radio" value="n"/>
+        <input id="rbrep-n" name="rbrep" required="required" type="radio" value="n"/>
         No
        </label>
        <label class="radio-inline" for="rbrep-y">
-        <input data-fv-notempty-message="Please select a value" id="rbrep-y" name="rbrep" required="required" type="radio" value="y"/>
+        <input id="rbrep-y" name="rbrep" required="required" type="radio" value="y"/>
         Yes
        </label>
        <label class="radio-inline" for="rbrep-r">
-        <input data-fv-notempty-message="Please select a value" id="rbrep-r" name="rbrep" required="required" type="radio" value="r"/>
+        <input id="rbrep-r" name="rbrep" required="required" type="radio" value="r"/>
         Refused
        </label>
        <label class="radio-inline" for="rbrep-r">
-        <input data-fv-notempty-message="Please select a value" id="rbrep-r" name="rbrep" required="required" type="radio" value="a"/>
+        <input id="rbrep-r" name="rbrep" required="required" type="radio" value="a"/>
         Aborted due to positive mediastinoscopy or other reasons
        </label>
        <label class="radio-inline" for="rbrep-r">
-        <input data-fv-notempty-message="Please select a value" id="rbrep-r" name="rbrep" required="required" type="radio" value="q"/>
+        <input id="rbrep-r" name="rbrep" required="required" type="radio" value="q"/>
         ?
        </label>
       </div>
@@ -809,7 +860,7 @@
        </label>
        <input name="hvrbsurd" type="hidden" value=""/>
        <div class="input-group datepicker">
-        <input aria-describedby="rbsurd-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" id="rbsurd" name="rbsurd"/>
+        <input aria-describedby="rbsurd-addon" class="form-control" data-restriction="past" id="rbsurd" name="rbsurd"/>
         <div class="input-group-addon">
          <div class="input-group-text" id="rbsurd-addon">
           <i aria-hidden="true" class="fa fa-calendar">
@@ -850,6 +901,7 @@
        <input name="hvrbtosv" type="hidden" value=""/>
        <div class="checkbox">
         <label>
+         <input name="rbtosv" type="hidden" value=""/>
          <input id="rbtosv" name="rbtosv" type="checkbox" value="v"/>
          VAT
         </label>
@@ -857,6 +909,7 @@
        <input name="hvrbtost" type="hidden" value=""/>
        <div class="checkbox">
         <label>
+         <input name="rbtosv" type="hidden" value=""/>
          <input id="rbtosv" name="rbtosv" type="checkbox" value="t"/>
          Thoracotomy
         </label>
@@ -864,6 +917,7 @@
        <input name="hvrbtosr" type="hidden" value=""/>
        <div class="checkbox">
         <label>
+         <input name="rbtosv" type="hidden" value=""/>
          <input id="rbtosv" name="rbtosv" type="checkbox" value="r"/>
          Robotic-assisted
         </label>
@@ -871,6 +925,7 @@
        <input name="hvrbtoso" type="hidden" value=""/>
        <div class="checkbox">
         <label>
+         <input name="rbtosv" type="hidden" value=""/>
          <input id="rbtosv" name="rbtosv" type="checkbox" value="o"/>
          Other
         </label>
@@ -894,11 +949,11 @@
       <div class="form-group form-inline">
        <input name="hvrbvto" type="hidden" value=""/>
        <label class="radio-inline" for="rbvto-n">
-        <input data-fv-notempty-message="Please select a value" id="rbvto-n" name="rbvto" required="required" type="radio" value="n"/>
+        <input id="rbvto-n" name="rbvto" required="required" type="radio" value="n"/>
         No
        </label>
        <label class="radio-inline" for="rbvto-y">
-        <input data-fv-notempty-message="Please select a value" id="rbvto-y" name="rbvto" required="required" type="radio" value="y"/>
+        <input id="rbvto-y" name="rbvto" required="required" type="radio" value="y"/>
         Yes
        </label>
       </div>
@@ -966,11 +1021,11 @@
       <div class="form-group">
        <input name="hvrbrmm" type="hidden" value=""/>
        <label class="radio-inline" for="rbrmm-g">
-        <input data-fv-notempty-message="Please select a value" id="rbrmm-g" name="rbrmm" required="required" type="radio" value="g"/>
+        <input id="rbrmm-g" name="rbrmm" required="required" type="radio" value="g"/>
         Gross
        </label>
        <label class="radio-inline" for="rbrmm-m">
-        <input data-fv-notempty-message="Please select a value" id="rbrmm-m" name="rbrmm" required="required" type="radio" value="m"/>
+        <input id="rbrmm-m" name="rbrmm" required="required" type="radio" value="m"/>
         Micro
        </label>
       </div>
@@ -984,23 +1039,23 @@
       <div class="form-group form-inline">
        <input name="hvrbwm" type="hidden" value=""/>
        <label class="radio-inline" for="rbwm-s">
-        <input data-fv-notempty-message="Please select a value" id="rbwm-s" name="rbwm" required="required" type="radio" value="s"/>
+        <input id="rbwm-s" name="rbwm" required="required" type="radio" value="s"/>
         Staple Line
        </label>
        <label class="radio-inline" for="rbwm-b">
-        <input data-fv-notempty-message="Please select a value" id="rbwm-b" name="rbwm" required="required" type="radio" value="b"/>
+        <input id="rbwm-b" name="rbwm" required="required" type="radio" value="b"/>
         Bronchial
        </label>
        <label class="radio-inline" for="rbwm-p">
-        <input data-fv-notempty-message="Please select a value" id="rbwm-p" name="rbwm" required="required" type="radio" value="p"/>
+        <input id="rbwm-p" name="rbwm" required="required" type="radio" value="p"/>
         Parenchymal
        </label>
        <label class="radio-inline" for="rbwm-v">
-        <input data-fv-notempty-message="Please select a value" id="rbwm-v" name="rbwm" required="required" type="radio" value="v"/>
+        <input id="rbwm-v" name="rbwm" required="required" type="radio" value="v"/>
         Vascular
        </label>
        <label class="radio-inline" for="rbwm-o">
-        <input data-fv-notempty-message="Please select a value" id="rbwm-o" name="rbwm" required="required" type="radio" value="o"/>
+        <input id="rbwm-o" name="rbwm" required="required" type="radio" value="o"/>
         Other
        </label>
       </div>
@@ -1022,15 +1077,15 @@
       <div class="form-group">
        <input name="hvrbrmws" type="hidden" value=""/>
        <label class="radio-inline" for="rbrmws-r">
-        <input data-fv-notempty-message="Please select a value" id="rbrmws-r" name="rbrmws" required="required" type="radio" value="r"/>
+        <input id="rbrmws-r" name="rbrmws" required="required" type="radio" value="r"/>
         Removed
        </label>
        <label class="radio-inline" for="rbrmws-i">
-        <input data-fv-notempty-message="Please select a value" id="rbrmws-i" name="rbrmws" required="required" type="radio" value="i"/>
+        <input id="rbrmws-i" name="rbrmws" required="required" type="radio" value="i"/>
         Intact
        </label>
        <label class="radio-inline" for="rbrmws-u">
-        <input data-fv-notempty-message="Please select a value" id="rbrmws-u" name="rbrmws" required="required" type="radio" value="u"/>
+        <input id="rbrmws-u" name="rbrmws" required="required" type="radio" value="u"/>
         Unknown
        </label>
       </div>
@@ -1042,15 +1097,15 @@
       <div class="form-group">
        <input name="hvrbrmam" type="hidden" value=""/>
        <label class="radio-inline" for="rbrmam-n">
-        <input data-fv-notempty-message="Please select a value" id="rbrmam-n" name="rbrmam" required="required" type="radio" value="n"/>
+        <input id="rbrmam-n" name="rbrmam" required="required" type="radio" value="n"/>
         No
        </label>
        <label class="radio-inline" for="rbrmam-y">
-        <input data-fv-notempty-message="Please select a value" id="rbrmam-y" name="rbrmam" required="required" type="radio" value="y"/>
+        <input id="rbrmam-y" name="rbrmam" required="required" type="radio" value="y"/>
         Yes
        </label>
        <label class="radio-inline" for="rbrmam-q">
-        <input data-fv-notempty-message="Please select a value" id="rbrmam-q" name="rbrmam" required="required" type="radio" value="q"/>
+        <input id="rbrmam-q" name="rbrmam" required="required" type="radio" value="q"/>
         N/A
        </label>
       </div>
@@ -1082,11 +1137,11 @@
       <div class="form-group">
        <input name="hvrbras" type="hidden" value=""/>
        <label class="radio-inline" for="rbras-n">
-        <input data-fv-notempty-message="Please select a value" id="rbras-n" name="rbras" required="required" type="radio" value="n"/>
+        <input id="rbras-n" name="rbras" required="required" type="radio" value="n"/>
         No
        </label>
        <label class="radio-inline" for="rbras-y">
-        <input data-fv-notempty-message="Please select a value" id="rbras-y" name="rbras" required="required" type="radio" value="y"/>
+        <input id="rbras-y" name="rbras" required="required" type="radio" value="y"/>
         Yes
        </label>
       </div>
@@ -1098,7 +1153,7 @@
        </label>
        <input name="hvrbrast" type="hidden" value=""/>
        <div class="input-group datepicker">
-        <input aria-describedby="rbrbrastmed-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" id="rbrbrastmed" name="rbrbrastmed"/>
+        <input aria-describedby="rbrbrastmed-addon" class="form-control" data-restriction="past" id="rbrbrastmed" name="rbrbrastmed"/>
         <div class="input-group-addon">
          <div class="input-group-text" id="rbrbrastmed-addon">
           <i aria-hidden="true" class="fa fa-calendar">
@@ -1128,11 +1183,11 @@
       <div class="form-group">
        <input name="hvrbrcs" type="hidden" value=""/>
        <label class="radio-inline" for="rbrcs-n">
-        <input data-fv-notempty-message="Please select a value" id="rbrcs-n" name="rbrcs" required="required" type="radio" value="n"/>
+        <input id="rbrcs-n" name="rbrcs" required="required" type="radio" value="n"/>
         No
        </label>
        <label class="radio-inline" for="rbrcs-y">
-        <input data-fv-notempty-message="Please select a value" id="rbrcs-y" name="rbrcs" required="required" type="radio" value="y"/>
+        <input id="rbrcs-y" name="rbrcs" required="required" type="radio" value="y"/>
         Yes
        </label>
       </div>
@@ -1154,11 +1209,11 @@
       <div class="form-group">
        <input name="hvrbrch" type="hidden" value=""/>
        <label class="radio-inline" for="rbrch-n">
-        <input data-fv-notempty-message="Please select a value" id="rbrch-n" name="rbrch" required="required" type="radio" value="n"/>
+        <input id="rbrch-n" name="rbrch" required="required" type="radio" value="n"/>
         No
        </label>
        <label class="radio-inline" for="rbrch-y">
-        <input data-fv-notempty-message="Please select a value" id="rbrch-y" name="rbrch" required="required" type="radio" value="y"/>
+        <input id="rbrch-y" name="rbrch" required="required" type="radio" value="y"/>
         Yes
        </label>
       </div>
@@ -1179,7 +1234,7 @@
         Date of chest tube removal
        </label>
        <div class="input-group datepicker">
-        <input aria-describedby="rbctrd-addon" class="form-control" data-fv-date="true" data-fv-date-max="VAPALS.todaysDate" id="rbctrd" name="rbctrd"/>
+        <input aria-describedby="rbctrd-addon" class="form-control" data-restriction="past" id="rbctrd" name="rbctrd"/>
         <div class="input-group-addon">
          <div class="input-group-text" id="rbctrd-addon">
           <i aria-hidden="true" class="fa fa-calendar">
@@ -1240,11 +1295,11 @@
       <div class="form-group form-inline">
        <input name="hvrbinv" type="hidden" value=""/>
        <label class="radio-inline" for="rbinv-n">
-        <input data-fv-notempty-message="Please select a value" id="rbinv-n" name="rbinv" required="required" type="radio" value="n"/>
+        <input id="rbinv-n" name="rbinv" required="required" type="radio" value="n"/>
         No
        </label>
        <label class="radio-inline" for="rbinv-y">
-        <input data-fv-notempty-message="Please select a value" id="rbinv-y" name="rbinv" required="required" type="radio" value="y"/>
+        <input id="rbinv-y" name="rbinv" required="required" type="radio" value="y"/>
         Yes
        </label>
       </div>
@@ -1257,6 +1312,7 @@
        <input name="hvrbinvv" type="hidden" value=""/>
        <div class="checkbox">
         <label>
+         <input name="rbinv" type="hidden" value=""/>
          <input id="rbinv" name="rbinv" type="checkbox" value="v"/>
          Major vascular
         </label>
@@ -1264,6 +1320,7 @@
        <input name="hvrbinvp" type="hidden" value=""/>
        <div class="checkbox">
         <label>
+         <input name="rbinp" type="hidden" value=""/>
          <input id="rbinp" name="rbinp" type="checkbox" value="p"/>
          Pleura
         </label>
@@ -1271,6 +1328,7 @@
        <input name="hvrbinva" type="hidden" value=""/>
        <div class="checkbox">
         <label>
+         <input name="rbina" type="hidden" value=""/>
          <input id="rbina" name="rbina" type="checkbox" value="a"/>
          Angiolymphatic
         </label>
@@ -1278,6 +1336,7 @@
        <input name="hvrbinvo" type="hidden" value=""/>
        <div class="checkbox">
         <label>
+         <input name="rbino" type="hidden" value=""/>
          <input id="rbino" name="rbino" type="checkbox" value="o"/>
          Other (specify)
         </label>
@@ -1306,6 +1365,7 @@
         <input name="hvrbinvt2b" type="hidden" value=""/>
         <div class="checkbox">
          <label>
+          <input name="rbinvt2b" type="hidden" value=""/>
           <input id="rbinvt2b" name="rbinvt2b" type="checkbox" value="b"/>
           Main bronchus (not carina)
          </label>
@@ -1313,6 +1373,7 @@
         <input name="hvrbinvt2a" type="hidden" value=""/>
         <div class="checkbox">
          <label>
+          <input name="rbinvt2a" type="hidden" value=""/>
           <input id="rbinvt2a" name="rbinvt2a" type="checkbox" value="a"/>
           Atelectasis to hilum
          </label>
@@ -1327,6 +1388,7 @@
         <input name="hvrbinvc" type="hidden" value=""/>
         <div class="checkbox">
          <label>
+          <input name="rbinvc" type="hidden" value=""/>
           <input id="rbinvc" name="rbinvc" type="checkbox" value="c"/>
           Chest wall
          </label>
@@ -1334,6 +1396,7 @@
         <input name="hvrbinvt3p" type="hidden" value=""/>
         <div class="checkbox">
          <label>
+          <input name="rbinvt3p" type="hidden" value=""/>
           <input id="rbinvt3p" name="rbinvt3p" type="checkbox" value="p"/>
           Pericardium
          </label>
@@ -1341,6 +1404,7 @@
         <input name="hvrbinvt3n" type="hidden" value=""/>
         <div class="checkbox">
          <label>
+          <input name="rbinvt3n" type="hidden" value=""/>
           <input id="rbinvt3n" name="rbinvt3n" type="checkbox" value="p"/>
           Phrenic nerve
          </label>
@@ -1355,6 +1419,7 @@
         <input name="hvrbinvm" type="hidden" value=""/>
         <div class="checkbox">
          <label>
+          <input name="rbinvm" type="hidden" value=""/>
           <input id="rbinvm" name="rbinvm" type="checkbox" value="m"/>
           Mediastinum
          </label>
@@ -1362,6 +1427,7 @@
         <input name="hvrbinvt4d" type="hidden" value=""/>
         <div class="checkbox">
          <label>
+          <input name="rbinvt4d" type="hidden" value=""/>
           <input id="rbinvt4d" name="rbinvt4d" type="checkbox" value="d"/>
           Diaphragm
          </label>
@@ -1369,6 +1435,7 @@
         <input name="hvrbinvt4h" type="hidden" value=""/>
         <div class="checkbox">
          <label>
+          <input name="rbinvt4h" type="hidden" value=""/>
           <input id="rbinvt4h" name="rbinvt4h" type="checkbox" value="h"/>
           Heart
          </label>
@@ -1376,6 +1443,7 @@
         <input name="hvrbinvt4g" type="hidden" value=""/>
         <div class="checkbox">
          <label>
+          <input name="rbinvt4g" type="hidden" value=""/>
           <input id="rbinvt4g" name="rbinvt4g" type="checkbox" value="g"/>
           Great vessels
          </label>
@@ -1383,6 +1451,7 @@
         <input name="hvrbinvt4r" type="hidden" value=""/>
         <div class="checkbox">
          <label>
+          <input name="rbinvt4r" type="hidden" value=""/>
           <input id="rbinvt4r" name="rbinvt4r" type="checkbox" value="r"/>
           Recurrent laryngeal nerve
          </label>
@@ -1390,6 +1459,7 @@
         <input name="hvrbinvt4c" type="hidden" value=""/>
         <div class="checkbox">
          <label>
+          <input name="rbinvt4c" type="hidden" value=""/>
           <input id="rbinvt4c" name="rbinvt4c" type="checkbox" value="c"/>
           Carina
          </label>
@@ -1397,6 +1467,7 @@
         <input name="hvrbinvt4t" type="hidden" value=""/>
         <div class="checkbox">
          <label>
+          <input name="rbinvt4t" type="hidden" value=""/>
           <input id="rbinvt4t" name="rbinvt4t" type="checkbox" value="t"/>
           Trachea
          </label>
@@ -1404,6 +1475,7 @@
         <input name="hvrbinvt4e" type="hidden" value=""/>
         <div class="checkbox">
          <label>
+          <input name="rbinvt4e" type="hidden" value=""/>
           <input id="rbinvt4e" name="rbinvt4e" type="checkbox" value="e"/>
           Esophagus
          </label>
@@ -1411,6 +1483,7 @@
         <input name="hvrbinvt4s" type="hidden" value=""/>
         <div class="checkbox">
          <label>
+          <input name="rbinvt4s" type="hidden" value=""/>
           <input id="rbinvt4s" name="rbinvt4s" type="checkbox" value="s"/>
           Spine
          </label>
@@ -7716,14 +7789,14 @@
       <span id="sami-version" style="float:right; font-family: Courier,monospace">
        <span id="formMode">
        </span>
-       2018.09.04
+       2018.11.19
       </span>
      </div>
     </footer>
     <script language="JavaScript">
      const studyIdVal = $("#studyid-html-element").attr('value');
     const studyId = $.trim(studyIdVal);
-    if (studyId && studyId.indexOf("@@") == -1) {
+    if (studyId && studyId.indexOf("@@") === -1) {
         //store studyid value for use in pages that don't go through the forms processor
         localStorage.setItem("studyid", studyId);
         $("#studyIdMenu").show();
@@ -7739,26 +7812,37 @@
     $(function () {
         /** These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly. **/
         const $forms = $("form.validated");
-        $.each($forms.find("select, textarea, input:visible"), function (i, o) {
+        $.each($forms.find("select, textarea, input:visible"), function () {
             const $input = $(this);
             if ($input.closest(".form-group").length === 0) {
                 console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
             }
         });
 
-        $.each($forms.find("input[type=hidden][required]"), function (i, o) {
-            const $input = $(this);
+        $.each($forms.find("input[type=hidden][required]"), function () {
             console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
         });
 
         $.ajax("/ctversion", {
-            success: function (data, textStatus, jqXHR) {
+            success: function (data) {
                 const v = data.ctversion;
                 $("#formMode").text(v.toUpperCase());
             },
             error: function () {
                 $("#formMode").text("UNKNOWN");
             }
+        });
+
+        $("input[type=checkbox]").change(function () {
+            const checked = $(this).is(":checked");
+            const fieldName = $(this).attr('name');
+            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function () {
+                return checked;
+            });
+        });
+
+        $.each($("input[type=checkbox]:checked"), function (i, el) {
+            $(el).trigger("change");
         })
     })
     </script>
@@ -9795,7 +9879,7 @@
     </script>
     <script language="JavaScript">
      $(function () {
-            $(".validated").formValidation({framework: 'bootstrap'});
+            
         });
     </script>
    </font>

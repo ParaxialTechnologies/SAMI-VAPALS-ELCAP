@@ -197,6 +197,9 @@
  ;
  ; 2018-03-24 ven/lmry %1.8t04 %wful: new %wfutexcl
  ;
+ ; 2018-11-19 ven/arc %1.8t04 %wfhform: in getVals load prefill values
+ ; by calling $$sid2num^SAMIHOM3.
+ ;
  ;@to-do
  ; use find & place in other three ppis
  ;

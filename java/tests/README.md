@@ -1,4 +1,4 @@
-## VA-PALS Tests
+## VAPALS-ELCAP Tests
 
 This is a sub-module of the VA-PALS project that aims to test all functionality. Most tests are integration tests and 
 require a running VistA instance.

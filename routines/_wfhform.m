@@ -1,4 +1,4 @@
-%wfhform ;ven/gpl-web form: html form get & post ;2018-03-18T17:05Z
+%wfhform ;ven/gpl-web form: html form get & post ;2018-11-19T18:58Z
  ;;1.8;Mash;
  ;
  ; %wfhform implements the Web Form Library's html form get & post web
@@ -184,16 +184,22 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . set zhtml(%j)=tln
  . ;
  . if tln["submit" quit  ;
- . if tln["hidden" quit  ;
+ . if tln["hidden" d  quit  ; we need to try and process hidden fields
+ . . i tln'["type" q  ; probably in a javascript statement
+ . . i tln'["context" q  ; not marked for restoring
+ . . i tln'["server" q  ; not marked for restoring
+ . . n hname s hname=""
+ . . i tln["name=" do  ;
+ . . . set hname=$piece($piece(tln,"name=""",2),"""")
+ . . q:hname=""
+ . . n hval s hval=$g(vals(hname)) ; saved value of the hidden field
+ . . q:hval=""
+ . . d unvalue^%wf(.tln)
+ . . d value^%wf(.tln,hval)
+ . . ;i tln["value" d  ;
+ . . . 
+ . . set zhtml(%j)=tln
  . ;
- . ; hack for elcap forms - temporary - gpl
- . ; if tln["jquery-1.html" set zhtml(%j)="" quit  ; 
- . ; if tln["mgtsys.html" set zhtml(%j)="" quit  ; 
- . ; if tln["mgtsys2.html" set zhtml(%j)="" quit  ; 
- . ; if tln["index.html" set zhtml(%j)="" quit  ; 
- . ; if tln["identity.html" set zhtml(%j)="" quit  ; 
- . ; if tln["jquery-1.html" set zhtml(%j)="" quit  ; 
- . ; end hack
  . ;
  . ;@stanza 6 process errors
  . ;
@@ -818,7 +824,7 @@ getVals ; code for ppi getVals^%wf, get field values from graph
  ;@called-by: none
  ;@calls
  ; $$setroot^%wd
- ; $$sid2num^SAMIHOME
+ ; $$sid2num^SAMIHOM3
  ;@input
  ; vrtn = 
  ; zid = 
@@ -843,7 +849,7 @@ getVals ; code for ppi getVals^%wf, get field values from graph
  ;
  ;@stanza 3 load prefill values
  ;
- new gien set gien=$$sid2num^SAMIHOME(zsid) ; graph ien of this patient
+ new gien set gien=$$sid2num^SAMIHOM3(zsid) ; graph ien of this patient
  merge @vrtn=@root@(gien)
  ;
  ;@stanza 4 termination
@@ -1192,42 +1198,61 @@ wsPostForm ; code for ws wsPostForm^%wf, submit HTML form
  set form=$get(ARGS("form"))
  set sid=$get(ARGS("studyid"))
  set body=$get(BODY(1))
+ i $d(BODY(2)) s body=body_$g(BODY(2))
+ i $d(BODY(3)) s body=body_$g(BODY(3))
  if form="" set form="sbform"
  if sid="" set sid="XXXX17"
  quit:form=""
  quit:sid=""
- set %json(sid,form,"form")=form
+ ;set %json(sid,form,"form")=form
  do parseBody^%wf("tbdy",.body)
- merge %json(sid,form)=tbdy
+ ;
+ ; we want to store the form by the date in the form.. and delete the old one
+ ; 
+ new useform s useform=form
+ set useform=$$saveFilter^SAMISAV(sid,form,.tbdy) ; make this a framework call
+ ;set %json(sid,form,"form")=form
+ set %json(sid,useform,"form")=useform
+ ;merge %json(sid,form)=tbdy
+ merge %json(sid,useform)=tbdy
  new gr set gr=$$setroot^%wd("vapals-patients")
  merge @gr@("graph")=%json
  ;
- if $get(ARGS("debug"))="" do  quit  ;
+ i $g(ARGS("debug"))=1 d  ;
+ . kill ^gpl("sami")
+ . merge ^gpl("sami","args")=ARGS
+ . merge ^gpl("sami","body")=BODY
+ . merge ^gpl("sami","json")=%json
+ ;
+ ;if $get(ARGS("debug"))="" do  quit  ;
+ do  quit  ;
  . do wsCASE^SAMICAS2(.RESULT,.ARGS)
  . quit
  ;
+ quit  ; no validation process
  ; validation process
  ;
- new errflag set errflag=0
- new revise
- do wsGetForm^%wf(.revise,.ARGS,1)
- if form="sbform2" if errflag'=0 do  quit  ;
- . merge RESULT=revise
+ ;new errflag set errflag=0
+ ;new revise
+ ;do wsGetForm^%wf(.revise,.ARGS,1)
+ ;if form="sbform2" if errflag'=0 do  quit  ;
+ ;. merge RESULT=revise
  ;
  ; end validation process
  ;
  ; no errors, file it into fileman
- new status s status=""
- if form["sbform" do  ;
- . do fileForm^%wffiler("tbdy","sbform",sid,"status")
- . ;
- . ; now return the fileman record that was created
- . new fman,fien
- . set fien=$order(^SAMI(311.102,"B",sid,""))
- . quit:fien=""
- . do fmx^%sfv2g("fman",311.102,fien)
- . quit
- merge fman=status
+ ;new status s status=""
+ ;if form["sbform" do  ;
+ ;. do fileForm^%wffiler("tbdy","sbform",sid,"status")
+ ;. ;
+ ;. ; now return the fileman record that was created
+ ;. new fman,fien
+ ;. set fien=$order(^SAMI(311.102,"B",sid,""))
+ ;. quit:fien=""
+ ;. do fmx^%sfv2g("fman",311.102,fien)
+ ;. quit
+ ;merge fman=status
+ n fman
  merge fman(form)=tbdy
  new tjson
  do ENCODE^VPRJSON("fman","tjson")

@@ -15,10 +15,11 @@ recommend(rtn,vals,dict)
  d out("<!-- Recommendation -->")
  ;
  i $$xval("cefu",vals)'="nf" d  ; 2445-2450 gpl1
- . d out("<TR><TD><FONT SIZE=""+2""><B>")
+ . ;d out("<TR><TD><FONT SIZE=""+2""><B>")
+ . d out("<FONT SIZE=""+2""><B>")
  . d out("Recommendations:")
  . d out("</B></FONT>")
- . d out("</TD></TR><TR><TD><TABLE><TR><TD WIDTH=20></TD><TD>")
+ . ;d out("</TD></TR><TR><TD><TABLE><TR><TD WIDTH=20></TD><TD>")
  ;
  n fuw
  s fuw=$$xsub("cefuw",vals,dict)
@@ -28,38 +29,52 @@ recommend(rtn,vals,dict)
  ;d out($o(@vals@("cefuw","")))
  ;zwr @vals@(*)
  ;zwr @dict@(*)
+ ;i fuw="" d  ;
+ ;. d out(para_"<B>"_$$xsub("cefu",vals,dict)_" on "_$$xval("cefud",vals)_".</B>"_para)
+ ;e  d  ;
+ ;. d out(para_"<B>"_$$xsub("cefu",vals,dict)_" "_fuw_" on "_$$xval("cefud",vals)_".</B>"_para)
  i fuw="" d  ;
- . d out(para_"<B>"_$$xsub("cefu",vals,dict)_" on "_$$xval("cefud",vals)_".</B>"_para)
+ . d out(para_"<B>A followup CT scan is recommended on "_$$xval("cefud",vals)_".</B>"_para)
  e  d  ;
- . d out(para_"<B>"_$$xsub("cefu",vals,dict)_" "_fuw_" on "_$$xval("cefud",vals)_".</B>"_para)
+ . d out(para_"<B>A followup CT scan is recommended "_fuw_" on "_$$xval("cefud",vals)_".</B>"_para)
  ;
- d out("<TR><TD></TD></TR>")
+ ; #Other followup
+ n zfu,ofu,tofu,comma
+ s comma=0,tofu=""
+ s ofu=""
+ f zfu="cefuaf","cefucc","cefupe","cefufn","cefubr","cefupc","cefutb" d  ;
+ . i $$xval(zfu,vals)="y" s ofu=ofu_zfu
+ i $$xval("cefuo",vals)'="" s ofu=ofu_"cefuo"
+ i ofu'="" d  ;
+ . s tofu="Other followup: "
+ . i ofu["cefuaf" s tofu=tofu_"Antibiotics" s comma=1
+ . i ofu["cefucc" s tofu=tofu_$s(comma:", ",1:"")_"Diagnostic CT" s comma=1
+ . i ofu["cefupe" s tofu=tofu_$s(comma:", ",1:"")_"PET" s comma=1
+ . i ofu["cefufn" s tofu=tofu_$s(comma:", ",1:"")_"Percutaneous biopsy" s comma=1
+ . i ofu["cefubr" s tofu=tofu_$s(comma:", ",1:"")_"Bronchoscpy" s comma=1
+ . i ofu["cefupc" s tofu=tofu_$s(comma:", ",1:"")_"Pulmonary consultation" s comma=1
+ . i ofu["cefutb" s tofu=tofu_$s(comma:", ",1:"")_"Refer to tumor board" s comma=1
+ . i ofu["cefuo" s tofu=tofu_$s(comma:", ",1:"")_$$xval("cefuo",vals) s comma=1
+ i ofu'="" d out(para_tofu_para)
+ ;d out("<TR><TD></TD></TR>")
  ; # LungRADS
  ;
- d out("<TR><TD>")
- n lrstyle
- i $$xval("celrc",vals)'="" s lrstyle=1 ; dom's style
- e  s lrstyle=0 ; artit's style
+ ;d out("<TR><TD>")
+ ;n lrstyle
+ ;i $$xval("celrc",vals)'="" s lrstyle=1 ; dom's style
+ ;e  s lrstyle=0 ; artit's style
+ ;s lrstyle=0
  ;
- i lrstyle=0 d  ; Artit's style
+ d  ;
  . s lradModifiers=$$xval("celradc",vals)_$$xval("celrads",vals)
  . ;
  . i ($$xval("celrad",vals)'="-")&($$xval("celrad",vals)'="") d  ;
- . . d out("The LungRADS category for this scan is: "_$$xval("celrad",vals)_lradModifiers)
+ . . d out("The LungRADS category for this scan is: "_$$xval("celrad",vals)_" "_lradModifiers)
  . . d out(para)
  ;
- i lrstyle=1 d  ; Dom's style
- . s X=$$xval("celradc",vals)_$$xval("celrads",vals)
- . s Y=""
- . X ^%ZOSF("UPPERCASE")
- . s lradModifiers=Y
- . ;
- . i ($$xval("celrc",vals)'="-")&($$xval("celrc",vals)'="") d  ;
- . . d out("<B>LungRADS category: "_$$xval("celrad",vals)_lradModifiers_"</B>")
- . . d out(para)
- d out("</TD></TR>")
+ ;d out("</TD></TR>")
  ;
- d out("<TR><TD><TABLE><TR><TD WIDTH=20></TD><TD>")
+ ;d out("<TR><TD><TABLE><TR><TD WIDTH=20></TD><TD>")
  ;
  ;# Check if Study is Completed
  ;# Find Current Study ID

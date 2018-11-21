@@ -1,9 +1,9 @@
 /**
- * VA-PALS Project Utility class.
+ * VAPALS-ELCAP Project Utility class.
  * @link https://github.com/OSEHRA/VA-PALS
  * @author Domenic DiNatale <domenic.dinatale@paraxialtech.com>
  * @license [Apache-2.0]{@link https://www.apache.org/licenses/LICENSE-2.0.html}
- * @copyright 2018 [VA-PALS]{@link http://va-pals.org/}
+ * @copyright 2018 [VAPALS-ELCAP]{@link http://va-pals.org/}
  * @class
  */
 var VAPALS = new function () {
@@ -21,7 +21,7 @@ var VAPALS = new function () {
             return Math.abs(parseInt(fromMoment.diff(toMoment, "months", true)))
         }
         return 0;
-    }
+    };
 
     /**
      * Converts a value into a moment object
@@ -44,9 +44,19 @@ var VAPALS = new function () {
      * Retrieves a Date representing "now".
      * @returns {Date}
      */
-    this.todaysDate = function() {
-        return new Date();
-    }
+    this.todaysDate = function () {
+        const now = new Date();
+        now.setHours(0,0,0,0); // beginning of day
+        return now;
+    };
+
+    /**
+     * Retrieves the current year.
+     * @returns {number}
+     */
+    this.todaysYear = function () {
+        return parseInt(moment().format('YYYY'));
+    };
 
     this.DATE_FORMAT = "MM/DD/YYYY";
 
@@ -63,6 +73,44 @@ var VAPALS = new function () {
             message: message,
             closable: true
         });
+    };
+
+    this.autoScrollToErrorField = function () {
+        //focus on first error
+        var firstErrEl = $(".fv-plugins-message-container [data-validator]:visible")
+            .first()
+            .closest(".form-group")
+            .find(":input").first().prop("id");
+
+        if (firstErrEl) {
+            var $el = $("#" + firstErrEl);
+            var top = $el.offset().top - 150; //150 here to scroll a bit higher
+
+            $([document.documentElement, document.body]).animate({
+                scrollTop: Math.max(0, top)
+            }, 250);
+
+            $el.focus();
+        }
+    };
+
+    this.hideSuccessFormatting = function (e) {
+        // e.element presents the field element
+        // e.valid indicates the field is valid or not
+        if (e.valid) {
+            // Remove has-success from the container
+            const groupEle = FormValidation.utils.closest(e.element, '.form-group');
+            if (groupEle) {
+                FormValidation.utils.classSet(groupEle, {
+                    'has-success': false,
+                });
+            }
+
+            // Remove is-valid from the element
+            FormValidation.utils.classSet(e.element, {
+                'is-valid': false,
+            });
+        }
     }
 
 };

@@ -1,9 +1,12 @@
-SAMIFRM2 ;ven/gpl - ielcap: forms ;2018-03-18T17:15Z
+SAMIFRM2 ;ven/gpl - ielcap: forms ; 11/13/18 12:06pm
  ;;18.0;SAM;;
  ;
  ; Routine SAMIFRM contains subroutines for managing the ELCAP forms,
  ; including initialization and enhancements to the SAMI FORM FILE (311.11)
  ; CURRENTLY UNTESTED & IN PROGRESS
+ ;
+ ; CHANGE VEN/2018-11-13
+ ;  every occurance of SAMIHOM2 changed to SAMIHOM3
  ;
  quit  ; no entry from top
  ;
@@ -126,7 +129,7 @@ INITFRMS ; initilize form file from elcap-patient graphs
  ;
  ;
  ;
-INIT1FRM(form,ary) ; initialize one form named form from ary passed by name 
+INIT1FRM(form,ary) ; initialize one form named form from ary passed by name
  ;
  ;@called-by
  ; INITFRMS
@@ -333,56 +336,6 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  set line=line_$char(13,10) ; insert CRLF at end of every line
  ; for readability in browser
  ;
- ;if line["home.html" do  ;
- ;. do findReplace^%ts(.line,"home.html","/vapals")
- ;. set touched=1
- ;
- ;if line["casereview.html" do  ;
- ;. n repl
- ;. set repl="<form method=""post"" action=""/vapals"">"
- ;. set repl=repl_"<input name=""samiroute"" value=""casereview"" type=""hidden"">"
- ;. set repl=repl_" <input name=""studyid"" value="""_sid_""" type=""hidden"">"
- ;. n zname s zname="Case Review"
- ;. set repl=repl_" <input value="""_zname_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"_$char(13)
- ;. ;set repl=repl_" <input value="""_zname_""" class=""nav navbar-nav"" role=""link"" type=""submit""></form>"_$char(13)
- ;. ;do findReplace^%ts(.line,"casereview.html","/vapals?samiroute=casereview&studyid="_sid)
- ;. s line=repl
- ;. s zhtml(%j+1)="<? -- Redacted"
- ;. s zhtml(%j+2)="<? -- Redacted" ; get rid of extra 'Case Review" label and the unneeded </a>
- ;. set touched=1
- ;
- ;if line["studyIdMenu" do  ;
- ;. i line["#" q  ; in the javascript
- ;. s zhtml(%j)="<li>"
- ;. s %j=%j+1
- ;. s line=zhtml(%j)
- ;. n repl
- ;. set repl="<form method=""post"" action=""/vapals"">"
- ;. set repl=repl_"<input name=""samiroute"" value=""casereview"" type=""hidden"">"
- ;. set repl=repl_" <input name=""studyid"" value="""_sid_""" type=""hidden"">"
- ;. n zname s zname="Case Review"
- ;. set repl=repl_" <input value="""_zname_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"_$char(13)
- ;. ;set repl=repl_" <input value="""_zname_""" class=""nav navbar-nav"" role=""link"" type=""submit""></form>"_$char(13)
- ;. ;do findReplace^%ts(.line,"casereview.html","/vapals?samiroute=casereview&studyid="_sid)
- ;. s line=repl
- ;. s zhtml(%j+1)=""
- ;. s zhtml(%j+2)=""
- ;. do  ;
- ;. . if form["siform" q  ;
- ;. . if form["sbform" q  ;
- ;. . s ^gpl("incomplete")=sid_"^"_form_"^"_$$getSamiStatus^SAMICAS2(sid,form)
- ;. . if $$getSamiStatus^SAMICAS2(sid,form)["incomplete" d  ;
- ;. . . s zhtml(%j+1)="</li><li class=""dropdown"">"
- ;. . . set repl="<form method=""post"" action=""/vapals"">"
- ;. . . set repl=repl_"<input name=""samiroute"" value=""deleteform"" type=""hidden"">"
- ;. . . set repl=repl_" <input name=""studyid"" value="""_sid_""" type=""hidden"">"
- ;. . . set repl=repl_" <input name=""form"" value="""_form_""" type=""hidden"">"
- ;. . . n zname s zname="Delete Form"
- ;. . . set repl=repl_" <input value="""_zname_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"_$char(13)
- ;. . . s zhtml(%j+2)=repl ; 
- ;. . . set touched=1
- ;
- ;n pssn s pssn=$$GETSSN^SAMIFRM2(sid)
  n pssn s pssn=$$GETHDR^SAMIFRM2(sid)
  n last5 s last5=$$GETLAST5^SAMIFRM2(sid)
  n useid s useid=pssn
@@ -414,7 +367,7 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  . do findReplace^%ts(.line,"1234567890","")
  ;
  if line["XX0002" do  ;
- . i line["XXX" quit  ; 
+ . i line["XXX" quit  ;
  . do findReplace^%ts(.line,"XX0002",sid)
  ;
  if line["VEP0001" do  ;
@@ -426,12 +379,18 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  . e  d  ;
  . . d findReplace^%ts(.line,"@@FROZEN@@","false")
  ;
+ if line["@@NEWFORM@@" do  ;
+ . if $g(vals("samifirsttime"))="true" d  ;
+ . . d findReplace^%ts(.line,"@@NEWFORM@@","true")
+ . e  d  ;
+ . . d findReplace^%ts(.line,"@@NEWFORM@@","false")
+ ;
  quit  ; end of SAMISUB2
  ;
 wsSbform(rtn,filter) ; background form access
  n sid s sid=$g(filter("studyid"))
  i sid="" s sid=$g(filter("sid"))
- i +sid>0 s sid=$$genStudyId^SAMIHOM2(sid)
+ i +sid>0 s sid=$$genStudyId^SAMIHOM3(sid)
  ;i sid="" s sid="XXX0001"
  n items d getItems^SAMICAS2("items",sid)
  ;w !,"sid=",sid,!
@@ -446,7 +405,7 @@ wsSbform(rtn,filter) ; background form access
 wsSiform(rtn,filter) ; intake form access
  n sid s sid=$g(filter("studyid"))
  i sid="" s sid=$g(filter("sid"))
- i +sid>0 s sid=$$genStudyId^SAMIHOM2(sid)
+ i +sid>0 s sid=$$genStudyId^SAMIHOM3(sid)
  ;i sid="" s sid="XXX0001"
  n items d getItems^SAMICAS2("items",sid)
  ;w !,"sid=",sid,!
@@ -461,7 +420,7 @@ wsSiform(rtn,filter) ; intake form access
 wsCeform(rtn,filter) ; ctevaluation form access
  n sid s sid=$g(filter("studyid"))
  i sid="" s sid=$g(filter("sid"))
- i +sid>0 s sid=$$genStudyId^SAMIHOM2(sid)
+ i +sid>0 s sid=$$genStudyId^SAMIHOM3(sid)
  ;i sid="" s sid="XXX0001"
  n items d getItems^SAMICAS2("items",sid)
  ;w !,"sid=",sid,!
@@ -525,18 +484,21 @@ fixHref(line) ; fix html href lines to use resources in see/
  ;
  ;
 GETLAST5(sid) ; extrinsic returns the last5 for patient sid
+ q:$g(sid)="" ""
  n root s root=$$setroot^%wd("vapals-patients")
  n ien s ien=$o(@root@("sid",sid,""))
  q:ien=""
  q @root@(ien,"last5")
  ;
 GETNAME(sid) ; extrinsic returns the name for patient sid
+ q:$g(sid)="" ""
  n root s root=$$setroot^%wd("vapals-patients")
  n ien s ien=$o(@root@("sid",sid,""))
  q:ien=""
  q @root@(ien,"saminame")
  ;
 GETSSN(sid) ; extrinsic returns the ssn for patient sid
+ q:$g(sid)="" ""
  n root s root=$$setroot^%wd("vapals-patients")
  n ien s ien=$o(@root@("sid",sid,""))
  q:ien=""
@@ -552,6 +514,7 @@ GETSSN(sid) ; extrinsic returns the ssn for patient sid
  q pssn
  ;
 GETHDR(sid) ; extrinsic returns header string for patient sid
+ q:$g(sid)="" ""
  n root s root=$$setroot^%wd("vapals-patients")
  n ien s ien=$o(@root@("sid",sid,""))
  n dfn s dfn=@root@(ien,"dfn")
@@ -580,4 +543,4 @@ GETHDR(sid) ; extrinsic returns header string for patient sid
  s rtn=pssn_" DOB: "_dob_" AGE: "_age_" GENDER: "_sex
  q rtn
  ;
-EOR ; end of routine SAMIFRM
+EOR ; end of routine SAMIFRM2

@@ -24,7 +24,8 @@ nodules(rtn,vals,dict)
  . n specialcase s specialcase=0
  . n ij,ik
  . s ik=$$xval("cect"_ii_"ch",vals)
- . f ij="pw","px","pr","pv" i ij=ik s specialcase=1
+ . ;f ij="pw","px","pr","pv" i ij=ik s specialcase=1
+ . i "pwpxprpv"[ik s specialcase=1
  . ;
  . ;# Example Sentence
  . ;# LUL Nodule 1 is non-calcified, non-solid, 6 mm x 6 mm (with 3 x 3) solid component), smooth edge, previously seen and unchanged. (Series 2, Image 65)
@@ -33,8 +34,10 @@ nodules(rtn,vals,dict)
  . n spic s spic=""
  . i $$xval("cect"_ii_"sp",vals)="y" s spic="spiculated, "
  . ;
- . n calcification,calcstr
- . s calcification=$$xsub("cecta",vals,dict,"cect"_ii_"ca")
+ . n calcification,calcstr,status
+ . s status=$$xval("cect"_ii_"st",vals)
+ . s @vals@("cect"_ii_"ca")=$s(status="bc":"y",status="pc":"q",1:"n")
+ . s calcification=$$xsub("cectca",vals,dict,"cect"_ii_"ca")
  . i calcification="" s calcstr="is "_spic_$$xsub("cectnt",vals,dict,"cect"_ii_"nt")_", "
  . e  s calcstr="is "_calcification_", "_spic_$$xsub("cectnt",vals,dict,"cect"_ii_"nt")_", "
  . ;
@@ -46,9 +49,14 @@ nodules(rtn,vals,dict)
  . s calcstr=calcstr_$$xval("cect"_ii_"sl",vals)_" mm x "_$$xval("cect"_ii_"sw",vals)_" mm"_scomp_", "
  . ;
  . n smooth
- . s smooth=$$xsub("cectse",vals,dict,"cect"_ii_"se")
- . i smooth="" s calcstr=calcstr_"smooth edges, "
- . e  s calcstr=calcstr_smooth_" edges, "
+ . ;s smooth=$$xsub("cectse",vals,dict,"cect"_ii_"se")
+ . s smooth=$$xval("cect"_ii_"se",vals)
+ . i smooth="y" s calcstr=calcstr_"smooth edges, "
+ . ;e  s calcstr=calcstr_smooth_" edges, " ;nothing if not smooth
+ . ;
+ . ; adding distance from costal pleura
+ . n pldstr
+ . s pldstr="within "_$$xval("cect"_ii_"pld",vals)_" mm of the costal pleura"
  . ;
  . n skip s skip=0
  . ;# 3 cases: parenchymal, endobronchial, and both
@@ -77,7 +85,7 @@ nodules(rtn,vals,dict)
  . . . . s skip=1
  . . . i en="rm" d  ;
  . . . . s endo="Nodule"
- . . . . s loc=$$xsub("cecten",vals,dict,"cect"_ii_"en")
+ . . . . s nloc=$$xsub("cecten",vals,dict,"cect"_ii_"en")
  . . . . i specialcase=1 d  ;
  . . . . . d out("Previously seen "_nloc_" "_endo_" "_ii_" ")
  . . . . . d out($$xsub("cectch",vals,dict,"cect"_ii_"ch")_".")
@@ -105,7 +113,8 @@ nodules(rtn,vals,dict)
  . . . . i specialcase=1 d  ;
  . . . . . d out(nloc_" "_endo_" "_ii_" "_$$xsub("cectch",vals,dict,"cect"_ii_"ch")_", likely endobronchial.")
  . . . . e  d  ;
- . . . . . i ($$xval("cetex",vals)="b")&($$xsub("cectch",vals,dict,"cect"_ii_"ch")="n") d  ;
+ . . . . . ;i ($$xval("cetex",vals)="b")&($$xsub("cectch",vals,dict,"cect"_ii_"ch")="n") d  ;
+ . . . . . i (($$xval("cetex",vals)="b")&($$xval("cect"_ii_"ch",vals)="n")) d  ; gpl 1002
  . . . . . . d out(nloc_" "_endo_" "_ii_" "_calcstr_" likely endobronchial.")
  . . . . . e  d out(nloc_" "_endo_" "_ii_" "_calcstr_" "_$$xsub("cectch",vals,dict,"cect"_ii_"ch")_" likely endobronchial.")
  . . . . s skip=1
@@ -119,9 +128,10 @@ nodules(rtn,vals,dict)
  . . . . d out(nloc_" "_endo_" "_ii_" previously seen with possible endobronchial component")
  . . . . d out($$xsub("cectch",vals,dict,"cect"_ii_"ch")_".")
  . . . e  d  ;
- . . . . i ($$xval("cetex",vals)="b")&($$xsub("cectch",vals,dict,"cect"_ii_"ch")="n") d  ;
+ . . . . ;i ($$xval("cetex",vals)="b")&($$xsub("cectch",vals,dict,"cect"_ii_"ch")="n") d  ;
+ . . . . i (($$xval("cetex",vals)="b")&($$xval("cect"_ii_"ch",vals)="n")) d  ; gpl 1002
  . . . . . d out(nloc_" "_endo_" "_ii_" "_calcstr_" with possible endobronchial component")
- . . . . e  d out(nloc_" "_endo_" "_ii_" "_calcstr_" with possible endobrochial component "_$$xsub("cectch",vals,dict,"cect"_ii_"ch")_".")
+ . . . . e  d out(nloc_" "_endo_" "_ii_" "_calcstr_" with possible endobronchial component "_$$xsub("cectch",vals,dict,"cect"_ii_"ch")_".")
  . . . s skip=1
  . i specialcase=1 d  ;
  . . i skip=0 d  ;
@@ -129,15 +139,22 @@ nodules(rtn,vals,dict)
  . . . d out($$xsub("cectch",vals,dict,"cect"_ii_"ch")_".")
  . e  d  ;
  . . i skip=0 d  ;
+ . . . ;# pleural distance only goes here
+ . . . i $$xval("cect"_ii_"pld",vals)'="" s calcstr=calcstr_" "_pldstr_","
  . . . ;# Special Handling for "newly seen" on baseline
- . . . i ($$xval("cetex",vals)="b")&($$xsub("cectch",vals,dict,"cect"_ii_"ch")="n") d  ;
+ . . . ;i ($$xval("cetex",vals)="b")&($$xsub("cectch",vals,dict,"cect"_ii_"ch")="n") d  ;
+ . . . i (($$xval("cetex",vals)="b")&($$xval("cect"_ii_"ch",vals)="n")) d  ; gpl 1002
  . . . . d out(nloc_" "_endo_" "_ii_" "_calcstr)
  . . . e  d out(nloc_" "_endo_" "_ii_" "_calcstr_" "_$$xsub("cectch",vals,dict,"cect"_ii_"ch")_" ")
  . . d out(" (Series "_$$xval("cect"_ii_"sn",vals)_",") ; added from 1114 gpl1
- . . i $$xval("cect"_ii_"inl",vals)=$$xval("cect"_ii_"inh",vals) d  ;
- . . . d out(" image "_$$xval("cect"_ii_"inh",vals)_"). ")
+ . . ;i $$xval("cect"_ii_"inl",vals)=$$xval("cect"_ii_"inh",vals) d  ;
+ . . ;. d out(" image "_$$xval("cect"_ii_"inh",vals)_"). ")
+ . . ;e  d  ;
+ . . ;. d out(" image "_$$xval("cect"_ii_"inl",vals)_$$xval("cect"_ii_"inh",vals)_"). ")
+ . . i $$xval("cect"_ii_"inh",vals)="" d  ;
+ . . . d out(" image "_$$xval("cect"_ii_"inl",vals)_"). ")
  . . e  d  ;
- . . . d out(" image "_$$xval("cect"_ii_"inl",vals)_$$xval("cect"_ii_"inh",vals)_"). ")
+ . . . d out(" image "_$$xval("cect"_ii_"inl",vals)_"-"_$$xval("cect"_ii_"inh",vals)_"). ")
  . . i $$xval("cect"_ii_"co",vals)'="" d out($$xval("cect"_ii_"co",vals)_". ") ;1122 gpl1
  . . n ac
  . . s ac=$$xval("cect"_ii_"ac",vals)

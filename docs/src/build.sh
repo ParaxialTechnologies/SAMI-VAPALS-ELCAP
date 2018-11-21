@@ -10,7 +10,7 @@ function pip_install {
     else
         printf "Not Installed\n"
         echo "Installing $1..."
-        pip install $1
+        pip install $1 --ignore-installed six
     fi
 }
 

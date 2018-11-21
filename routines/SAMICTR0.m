@@ -26,14 +26,14 @@ wsReport(return,filter) ; web service which returns an html cteval report
  n si
  s si=$g(filter("studyid"))
  i si="" d  ;
- . s si="XXX0004"
+ . s si="XXX00102"
  q:si=""
  n samikey
  s samikey=$g(filter("form"))
  i samikey="" d  ;
- . s samikey="ceform-2018-03-12"
+ . s samikey="ceform-2018-10-09"
  n root s root=$$setroot^%wd("vapals-patients")
- i $g(filter("studyid"))="" s root=$$setroot^%wd("elcap-patients")
+ i $g(filter("studyid"))="" s root=$$setroot^%wd("vapals-patients")
  s vals=$na(@root@("graph",si,samikey))
  ;W !,vals
  ;zwr @vals@(*)
@@ -67,13 +67,16 @@ wsReport(return,filter) ; web service which returns an html cteval report
  s registryForm=0
  i $$xval("ceaf",vals)'="" s registryForm=1
  ;
- d out("<HTML><HEAD>")
+ d out("<HTML>")
+ d out("<HEAD>")
+ d out("<!-- Calling TR: CT Evaluation Report -->")
  d out("<TITLE>CT Evaluation Report</TITLE>")
  d out("<link rel='stylesheet' href='/css/report.css'>")
  d out("</HEAD>")
  d out("<BODY BGCOLOR=""#ffffff"" TEXT=""#000000"">")
- d out("<TABLE border=""0"" cellspacing=""0"" cellpadding=""3"" WIDTH=""640""><TR><TD>")
+ ;d out("<TABLE border=""0"" cellspacing=""0"" cellpadding=""3"" WIDTH=""640""><TR><TD>")
  d out("<FONT SIZE=""+2""><CENTER>")
+ d out("<!-- Calling TR: CT Evaluation Report -->")
  d out("<B>CT Evaluation Report</B>")
  d out("</CENTER></FONT>")
  d out("</TD></TR><TR><TD>")
@@ -85,11 +88,11 @@ wsReport(return,filter) ; web service which returns an html cteval report
  ;
  ; generate header
  ;
- d out("<TR><TD WIDTH=\""180\""><B>Patient Name:</B></TD><TD WIDTH=\""365\"">")
+ d out("<TR><TD WIDTH=""180""><B>Patient Name:</B></TD><TD WIDTH=""365"">")
  d out($$xval("sinamel",vals)_", "_$$xval("sinamef",vals))
  d out("</TD>")
  ;
- d out("<TD WIDTH=\""120\""><B>Study ID:</B></TD><TD WIDTH=\""75\"">")
+ d out("<TD WIDTH=""120""><B>Study ID:</B></TD><TD WIDTH=""75"">")
  d out($$xval("sisid",vals))
  d out("</TD>")
  ;
@@ -101,10 +104,10 @@ wsReport(return,filter) ; web service which returns an html cteval report
  d out("<TR><TD><B>Examination Date:</B></TD><TD>")
  d out($$xval("cedos",vals))
  ;
- i $$xval("sidob",vals)'=-1 d  ;
- . d out("<TD><B>Date of Birth:</B></TD><TD>")
- . d out($$xval("sidob",vals))
- e  d out("<TD> &nbsp; </TD><TD> &nbsp; </TD></TR>")
+ ;i $$xval("sidob",vals)'=-1 d  ;
+ ;. d out("<TD><B>Date of Birth:</B></TD><TD>")
+ ;. d out($$xval("sidob",vals))
+ ;e  d out("<TD> &nbsp; </TD><TD> &nbsp; </TD></TR>")
  ;
  i $$xval("sidob",vals)>0 d  ;
  . d out("<TD><B>Date of Birth:</B></TD><TD>")
@@ -116,7 +119,7 @@ wsReport(return,filter) ; web service which returns an html cteval report
  ;# End of Header
  ;
  d out("</TABLE>")
- d out("</TD></TR><TR><TD>")
+ ;d out("</TD></TR><TR><TD>")
  d out("<HR SIZE=""2"" WIDTH=""100%"" ALIGN=""center"" NOSHADE>")
  d out("</TD></TR>")
  d out("<!-- report -->")
@@ -181,20 +184,6 @@ wsReport(return,filter) ; web service which returns an html cteval report
  ;. d out("No pulmonary nodules are seen."_para)
  ;
  d nodules^SAMICTR1(rtn,.vals,.dict)
- ;
- d otherlung^SAMICTR2(rtn,.vals,.dict)
- ;
- d heart^SAMICTR3(rtn,.vals,.dict)
- ;
- d neck^SAMICTR4(rtn,.vals,.dict)
- ;
- d breast^SAMICTR5(rtn,.vals,.dict)
- ;
- d pleural^SAMICTR6(rtn,.vals,.dict)
- ;
- d paricardial^SAMICTR7(rtn,.vals,.dict)
- ;
- d abdominal^SAMICTR8(rtn,.vals,.dict)
  ;
  d impression^SAMICTR9(rtn,.vals,.dict)
  ;

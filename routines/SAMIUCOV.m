@@ -1,4 +1,4 @@
-SAMIUCOV ;ven/arc/lmry - Unit test overall coverage ;2018-11-08T18:06Z
+SAMIUCOV ;ven/arc/lmry - Unit test overall coverage ; 11/20/18 4:24pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -35,8 +35,7 @@ START ; Run the coverage tests
  ; set I=I+1,RUNCODE(I)="SAMID"
  ; set I=I+1,RUNCODE(I)="SAMIDOUT"
  ; set I=I+1,RUNCODE(I)="SAMIDSSN"
- ; set I=I+1,RUNCODE(I)="SAMIVSTR"
- ; set I=I+1,RUNCODE(I)="^SAMIUTLG"
+ set I=I+1,RUNCODE(I)="^SAMIUTLG"
  set I=I+1,RUNCODE(I)="^SAMIUTM2"
  set I=I+1,RUNCODE(I)="^SAMIUTH3"
  set I=I+1,RUNCODE(I)="^SAMIUTS2"
@@ -77,15 +76,14 @@ START ; Run the coverage tests
  set I=I+1,XCLUDE(I)="SAMIDOUT"
  set I=I+1,XCLUDE(I)="SAMIUTOT"
  ;
- set I=I+1,XCLUDE(I)="SAMIVSTR"
- set I=I+1,XCLUDE(I)="SAMIUTVR"
- ;
- set I=I+1,XCLUDE(I)="SAMILOG"
- set I=I+1,XCLUDE(I)="SAMIUTLG"
  ; Exclude checksum utility & overall coverage routine
  set I=I+1,XCLUDE(I)="SAMIUCOV"
  set I=I+1,XCLUDE(I)="SAMIUTST"
+ ; Exclude radiology routine & unit test not in use
+ set I=I+1,XCLUDE(I)="SAMIVSTR"
+ set I=I+1,XCLUDE(I)="SAMIUTVR"
  ; Exclude the unit-test routines
+ set I=I+1,XCLUDE(I)="SAMIUTLG"
  set I=I+1,XCLUDE(I)="SAMIUTM2"
  set I=I+1,XCLUDE(I)="SAMIUTH3"
  set I=I+1,XCLUDE(I)="SAMIUTS2"

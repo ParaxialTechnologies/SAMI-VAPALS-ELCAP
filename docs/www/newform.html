@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+  <meta content="2018.11.19" name="version"/>
+  <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
+  <title>
+   New Form
+  </title>
+  <link href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+  <link href="lib/formvalidation/dist/css/formValidation.min.css" rel="stylesheet"/>
+  <link href="lib/bootstrap-datetimepicker-4.17.47/css/bootstrap-datetimepicker.css" rel="stylesheet"/>
+  <link href="vapals.css" rel="stylesheet"/>
+  <link href="lib/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet"/>
+  <link href="lib/jquery-ui-1.12.1/jquery-ui.structure.min.css" rel="stylesheet"/>
+  <link href="lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
+  <link href="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
+ </head>
+ <body id="body" style="position: relative;">
+  <script src="lib/jquery-3.3.1.min.js">
+  </script>
+  <script src="lib/jquery-ui-1.12.1/jquery-ui.min.js">
+  </script>
+  <script src="lib/popper.min.js">
+  </script>
+  <script src="lib/bootstrap-3.3.7-dist/js/bootstrap.min.js">
+  </script>
+  <script src="lib/moment.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/FormValidation.min.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/plugins/Wizard.min.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/plugins/Bootstrap3.min.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/plugins/J.min.js">
+  </script>
+  <script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js">
+  </script>
+  <script src="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.js">
+  </script>
+  <script src="lib/clipboard.js">
+  </script>
+  <script src="https://www.gstatic.com/charts/loader.js" type="text/javascript">
+  </script>
+  <script src="jquery-conditonally-enable.js">
+  </script>
+  <script src="jquery-conditonally-display.js">
+  </script>
+  <script src="jqueryui-vista-filemanAutocomplete.js">
+  </script>
+  <script src="vapals.js">
+  </script>
+  <script src="init.js">
+  </script>
+  <!--System Navigation-->
+  <nav class="navbar navbar-default" role="navigation">
+   <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+     <button class="navbar-toggle collapsed" data-target="#navbar-main" data-toggle="collapse" type="button">
+      <span class="sr-only">
+       Toggle navigation
+      </span>
+      <span class="icon-bar">
+      </span>
+      <span class="icon-bar">
+      </span>
+      <span class="icon-bar">
+      </span>
+     </button>
+     <a class="text-nowrap" href="/vapals" style="text-decoration: none">
+      <img alt="VAPALS-ELCAP Logo" class="hidden-xs" height="50" src="img/logo_transparent.png" title="VAPALS-ELCAP"/>
+      <img alt="VAPALS-ELCAP Logo" height="50" src="img/logo_name.png" title="VAPALS-ELCAP"/>
+     </a>
+    </div>
+    <div class="navbar-collapse collapse navbar-right" id="navbar-main">
+     <ul class="nav navbar-nav">
+      <li>
+       <a href="/vapals">
+        Home
+       </a>
+      </li>
+      <li id="studyIdMenu" style="display:none;">
+       <a class="navigation" data-method="post" data-samiroute="casereview" href="#!">
+        Case Review
+       </a>
+      </li>
+      <li class="dropdown">
+       <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+        Reports
+        <span class="caret">
+        </span>
+       </a>
+       <ul class="dropdown-menu">
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="followup" data-samiroute="report" href="#!">
+          Participant
+                            Follow-up
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="activity" data-samiroute="report" href="#!">
+          Activity
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="missingct" data-samiroute="report" href="#!">
+          Missing
+                            Image &amp; CT Evaluation
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="incomplete" data-samiroute="report" href="#!">
+          Incomplete
+                            Form
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="outreach" data-samiroute="report" href="#!">
+          Outreach
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="enrollment" data-samiroute="report" href="#!">
+          Enrollment
+         </a>
+        </li>
+       </ul>
+      </li>
+     </ul>
+    </div>
+   </div>
+  </nav>
+  <div class="container-fluid" style="max-width:1550px">
+   <div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4">
+     <div class="panel panel-default">
+      <div class="panel-heading">
+       <h3 class="panel-title">
+        New Form
+       </h3>
+      </div>
+      <div class="panel-body">
+       <form action="/vapals" method="post">
+        <input name="samiroute" type="hidden" value="addform"/>
+        <input name="sid" type="hidden" value="@@SID@@"/>
+        <div class="form-group">
+         <label>
+          Please select the type of form to create
+         </label>
+         <select class="form-control" id="form" name="form">
+          <option value="sbform">
+           Screening Background
+          </option>
+          <option value="ceform">
+           CT Evaluation
+          </option>
+          <option value="fuform">
+           Follow-up
+          </option>
+          <option value="bxform">
+           Biopsy
+          </option>
+          <option value="itform">
+           Intervention
+          </option>
+          <option value="ptform">
+           PET Evaluation
+          </option>
+         </select>
+        </div>
+        <div class="pull-right">
+         <input class="btn btn-primary" id="submit-button" type="submit" value="Create New Form"/>
+        </div>
+       </form>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <span id="studyid-html-element" style="display:none;" value="@@SID@@">
+  </span>
+  <footer>
+   <div class="container-fluid" style="max-width:1550px">
+    <hr/>
+    <a href="https://issues.osehra.org/browse/VAP" tabindex="9000" target="_blank">
+     Submit feedback
+    </a>
+    <span id="sami-version" style="float:right; font-family: Courier,monospace">
+     <span id="formMode">
+     </span>
+     2018.11.19
+    </span>
+   </div>
+  </footer>
+  <script language="JavaScript">
+   const studyIdVal = $("#studyid-html-element").attr('value');
+    const studyId = $.trim(studyIdVal);
+    if (studyId && studyId.indexOf("@@") === -1) {
+        //store studyid value for use in pages that don't go through the forms processor
+        localStorage.setItem("studyid", studyId);
+        $("#studyIdMenu").show();
+    }
+
+    //purposefully executed before DOM is rendered so delete button is never visible
+    const frozen = "@@FROZEN@@";
+    if (frozen == "true") {
+        $("#delete-form").remove();
+    }
+
+
+    $(function () {
+        /** These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly. **/
+        const $forms = $("form.validated");
+        $.each($forms.find("select, textarea, input:visible"), function () {
+            const $input = $(this);
+            if ($input.closest(".form-group").length === 0) {
+                console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
+            }
+        });
+
+        $.each($forms.find("input[type=hidden][required]"), function () {
+            console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
+        });
+
+        $.ajax("/ctversion", {
+            success: function (data) {
+                const v = data.ctversion;
+                $("#formMode").text(v.toUpperCase());
+            },
+            error: function () {
+                $("#formMode").text("UNKNOWN");
+            }
+        });
+
+        $("input[type=checkbox]").change(function () {
+            const checked = $(this).is(":checked");
+            const fieldName = $(this).attr('name');
+            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function () {
+                return checked;
+            });
+        });
+
+        $.each($("input[type=checkbox]:checked"), function (i, el) {
+            $(el).trigger("change");
+        })
+    })
+  </script>
+ </body>
+</html>

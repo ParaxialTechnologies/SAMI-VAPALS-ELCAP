@@ -1,0 +1,193 @@
+{% extends 'layout.jinja2' %}
+{% import 'forms.jinja2' as f %}
+{% block title %}{{ title | escape }}{% endblock %}
+
+{% block body %}
+    <style>
+        .chart {
+            width: 100%;
+            min-height: 450px;
+        }
+
+        .row {
+            margin: 0 !important;
+        }
+    </style>
+    <div class="container-fluid" style="max-width:1550px">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Patient Lookup</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form id="pt-lookup-form" method="post"
+                              action="{{ formPage+".html" if mockup else "/vapals" }}">
+                            <input type="hidden" id="pt-lookup-samiroute" name="samiroute" value="">
+                            <input type="hidden" id="pt-lookup-dfn" name="dfn" value="">
+                            <input type="hidden" id="pt-lookup-name" name="name" value="">
+                            <input type="hidden" id="pt-lookup-studyid" name="studyid" value="">
+
+                            <div class="form-group">
+                                <label for="pt-lookup-input">Patient</label>
+                                <input type="text" class="form-control" id="pt-lookup-input" name="pt-lookup-input"
+                                       placeholder="Name or LAST5">
+                            </div>
+                            <div class="pull-right">
+                                <button id="pt-lookup-btn" type="submit" class="btn btn-primary" disabled>Submit
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1 id="chart-rural-heading"></h1>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="col-sm-6 col-sm-offset-3">
+                <div id="chart-rural" class="chart"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="pt-inclusion" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Caution:</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you certain you want to register this patient for VAPALS-ELCAP?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                    <button type="button" id="pt-inclusion-btn" class="btn btn-primary">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script language="JavaScript">
+        $(function () {
+            // Set up the modal confirmation to include a new patient
+            $('#pt-inclusion-btn').on("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                $('#pt-inclusion').modal('hide');
+                $('#pt-lookup-form').submit();
+            });
+
+            // Set up the patient lookup submit button
+            $('#pt-lookup-btn').on("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                let patient = $.extend({}, $('#pt-lookup-input').data('vista').patient);
+                $('#pt-lookup-dfn').val(patient.dfn);
+                $('#pt-lookup-name').val(patient.name);
+                $('#pt-lookup-studyid').val(patient.studyid);
+
+                if (patient.vapals === 1) {
+                    $('#pt-lookup-samiroute').val('casereview');
+                    $('#pt-lookup-form').submit();
+                }
+                else {
+                    $('#pt-lookup-samiroute').val('newcase');
+                    $('#pt-inclusion').modal('show');
+                }
+            });
+
+            // Initialize the patient lookup input widget
+            const $patientLookupInput = $('#pt-lookup-input');
+            $patientLookupInput.filemanAutocomplete();
+
+            $patientLookupInput.on('keydown', function (e) {
+                // Set up Return key
+                if (e.keyCode === 13 && ($('#pt-lookup-btn').is(':disabled'))) {
+                    e.preventDefault();
+                }
+            }).on("keyup", function () {
+                let ptNameVal = $patientLookupInput.val();
+                let data = $patientLookupInput.data('vista');
+                let patientName = "";
+                if (data) {
+                    if (data.patient) {
+                        patientName = data.patient.name
+                    }
+                }
+                if (ptNameVal === "" || (ptNameVal !== patientName)) {
+                    $('#pt-lookup-btn').attr('disabled', 'disabled');
+                    $patientLookupInput.trigger("change");
+                }
+            }).on('filemanautocompleteselect', function () {
+                // Enable show buttons
+                $('#pt-lookup-btn').removeAttr('disabled');
+            }).on('filemanautocompletechange', function () {
+                if (!$(this).val()) {
+                    // Disable show buttons
+                    $('#pt-lookup-btn').attr('disabled', 'disabled');
+                }
+            }).focus();
+        });
+
+        // Load google charts
+
+        //first pull in the google API
+        google.charts.load('current', {'packages': ['corechart', 'bar']});
+        google.charts.setOnLoadCallback(googleReady);
+
+
+        function googleReady() {
+            $.ajax("/ruralurbancount", {dataType: "json"}).done(function (json) {
+                ruralData = json.result;
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                ruralData = {"error": errorThrown};
+            }).always(function () {
+                drawSite();
+            })
+        }
+
+        let ruralData;
+
+        function drawSite() {
+            if (ruralData) {
+                if (ruralData.error) {
+                    $("#chart-rural-heading").hide();
+                    const $alert = $("<div class='alert alert-warning'/>");
+                    $alert.append("<span class=\"glyphicon glyphicon-exclamation-sign\" aria-hidden=\"true\"></span>");
+                    $alert.append("&nbsp;Unable to view site statistics. <strong>" + ruralData.error + "</strong>");
+                    $('#chart-rural').html("").append($alert);
+                }
+                else {
+                    const siteData = google.visualization.arrayToDataTable([
+                        ['Classification', 'Count'],
+                        ['Rural', ruralData.rural],
+                        ['Urban', ruralData.urban],
+                        ['Unknown', ruralData.unknown]
+                    ]);
+
+                    new google.visualization.PieChart(document.getElementById('chart-rural')).draw(siteData, {is3D: true,});
+
+                    $("#chart-rural-heading").text("Rural engagement in " + ruralData.site)
+                }
+
+            }
+        }
+
+        $(window).resize(function () {
+            drawSite();
+        });
+
+    </script>
+
+{% endblock %}

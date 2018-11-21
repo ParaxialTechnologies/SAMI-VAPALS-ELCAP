@@ -1,0 +1,2684 @@
+{% extends 'layout.jinja2' %}
+{% import 'forms.jinja2' as f %}
+{% block title %}{{ title | escape }}{% endblock %}
+
+{% block head %}
+    <style>
+        #nodule-table .form-group-sm {
+            margin: 5px 5px 5px 5px;
+        }
+
+        #wizard-bar.affix-top {
+            position: static;
+        }
+
+        #wizard-bar.affix {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+    </style>
+{% endblock %}
+
+
+{% set noduleArray = range(1,11) %}
+{% block body %}
+    <div class="container-fluid" style="max-width:1550px">
+        <h1>
+            Sample, Sammy G
+            <small class="text-muted" title="Study ID">ST0001</small>
+        </h1>
+        <h2>{{ title }}
+            <small class="text-muted" title="Medical Record Number">1234567890</small>
+        </h2>
+
+        <hr/>
+
+        {# Build a navigation bar that will affix itself to the top of the screen and highligh active sections#}
+        {% set tab_list = [("Scan","scan"), ("Nodules", "nodules"), ("Emphysema/Coronary Calcifications","emphysema-coronary"),
+                            ("Other Abnormalities","abnormalities"), ("Impression & Follow Up","impression")] -%}
+        <nav class="navbar navbar-default hidden-xs" id="wizard-bar" data-spy="affix" data-offset-top="220"
+             data-offset-bottom="70">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="nav navbar-nav">
+                        {% for tab_name,tab_id in tab_list -%}
+                            <li><a href="#{{ tab_id }}">{{ tab_name }}</a></li>
+                        {%- endfor %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <form action="{{ formPage+".html" if mockup else "/vapals" }}" method="{{ formMethod }}" id="main-form"
+              class="validated">
+            <input type="hidden" name="samiroute" value="postform"/>
+            <input type="hidden" name="studyid" value="@@SID@@"/>
+            <input type="hidden" name="form" value="@@FORMKEY@@"/>
+
+            {# BEGIN Scan tab#}
+            <div id="scan" style="padding-top:8px">
+                <h3>Scan information</h3> {# will get hidden with affixed menu#}
+                <div class="row">
+                    <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                        <label for="cedos" class="control-label required">CT study date</label>
+                        {{ f.datepicker("cedos", "past", true) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3  form-group">
+                        <label for="cerads">Signing radiologist</label>
+                        <select class="form-control" id="cerads" name="cerads">
+                            <option value="-" selected="selected">&mdash;</option>
+                            {#TODO#}
+                        </select>
+                    </div>
+                    <div class="col-sm-6 col-md-4 col-lg-3 form-group">
+                        {# TODO Get from signed on user, use text instead of input field #}
+                        <label for="cerad" class="control-label required">Radiologist</label>
+                        <input type="text" class="form-control" id="cerad" name="cerad" required="required"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label for="ceclin" class="control-label">Clinical information</label>
+                        <textarea class="form-control" id="ceclin" name="ceclin" rows="3"></textarea>
+                        {{ f.inlineCheckbox("ceclini", "y", "Include in impression") }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        {{ f.checkbox("ceofr", "y", "CT scan performed at outside institution") }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="cetex-b" class="required">Type of exam</label>
+                            <br/>
+                            <label class="radio-inline">
+                                <input type="radio" name="cetex" id="cetex" value="b" required="required">
+                                Baseline
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="cetex" id="cetex" value="a" required="required">
+                                Annual
+                                repeat
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="cetex" id="cetex" value="d" required="required">
+                                Follow-up (not annual repeat)
+                            </label>
+                        </div>
+                        <div class="alert alert-warning">
+                            Only select Baseline if there is no prior CT or there is a prior CT scan more
+                            than 3 years ago
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 form-group">
+                        <label for="cectp-l" class="control-label required">CT protocol</label>
+                        <br/>
+                        <label class="radio-inline">
+                            <input type="radio" name="cectp" id="cectp-l" value="l" required="required">
+                            Low-Dose CT
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="cectp" id="cectp-d" value="d" required="required">
+                            Standard CT
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="cectp" id="cectp-i" value="i" required="required"> Limited
+                            CT
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="cectrst" class="control-label required">Reconstructed slice thickness
+                                (mm)</label>
+                            <select name="cectrst" id="cectrst" class="form-control" required="required">
+                                <option value=""> -</option>
+                                <option value="0.5">0.5</option>
+                                <option value="0.625">0.625</option>
+                                <option value="0.75">0.75</option>
+                                <option value="0.8">0.8</option>
+                                <option value="1.0">1.0</option>
+                                sidoe
+                                <option value="o">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group" id="cectrsto-container">
+                        <label for="cectrsto" class="control-label required">Specify</label>
+                        <input class="form-control numeric" type="text" name="cectrsto" id="cectrsto"
+                               placeholder="specify" required="required" maxlength="5">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="cectcdti" class="control-label">CDTI (vol)</label>
+                            <input class="form-control decimalformat" type="text" name="cectcdti" id="cectcdti"
+                                   maxlength="10">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="cectdlp" class="control-label">DLP</label>
+                            <input class="form-control decimalformat" type="text" name="cectdlp" id="cectdlp"
+                                   maxlength="10">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="cectssde" class="control-label">Size-specific dose estimates
+                                (SSDE)</label>
+                            <input class="form-control decimalformat" type="text" name="cectssde" id="cectssde"
+                                   maxlength="10">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4 form-group">
+                        <label for="sidoe" class="control-label required">Baseline
+                            CT</label>
+                        {{ f.datepicker("sidoe", "past", true) }}
+                        <small class="form-text text-muted pull-right">
+                            <span id="cetsb-text">0</span> months since baseline
+                        </small>
+                    </div>
+
+                    <div id="non-baseline-container">
+                        <div class="col-sm-4 form-group">
+                            <label for="cedcs" class="control-label required">Most recent comparative
+                                study</label>
+                            {{ f.datepicker("cedcs", "past", true) }}
+                        </div>
+                        <div class="col-sm-4  form-group">
+                            <label for="cedps" class="control-label required">Prior scans</label>
+                            <input type="text" class="form-control" id="cedps" name="cedps"
+                                   required="required"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {# END Scan tab#}
+
+            {# BEGIN Nodules tab#}
+            <div id="nodules" style="padding-top:8px">
+                <h3>Nodules</h3> {# will get hidden with affixed menu#}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-warning">
+                            <h4>READ before completing the Nodule Grid</h4>
+                            <ul>
+                                <li>BASELINE: Include all nodules >= 6.0 mm in average diameter. Others are
+                                    OPTIONAL.
+                                </li>
+                                <li>ANNUAL REPEAT: include all NEW nodules >= 3.0 mm in average diameter.</li>
+                                <li>For BASELINE CT, all nodules are new unless there is a CT more than 3 years
+                                    earlier.
+                                </li>
+                                <li>For BASELINE CT, the nodules will automatically be sorted with the largest
+                                    non-calcified nodule coming first.
+                                </li>
+                                <li>Note: hilar masses and focal consolidation should be included in the nodule
+                                    grid.
+                                </li>
+                                <li>The same nodule ID will be used on all subsequent CT and other forms. NEW
+                                    nodules, even if LARGER, must follow nodules already listed.
+                                </li>
+                                <li>For nodules recommended for biopsy or antibiotics, list the reason in the
+                                    comments field in the corresponding column.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="add-first-nodule" class="alert alert-info">
+                            If no nodules were detected, you may skip this section.
+                            <button type="button" class="btn btn-default btn-xs" onclick="addNodule()">
+                                <span class="fa fa-plus" aria-hidden="true"></span> Add nodule
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="display: none;" id="nodule-table">
+                        <div class="table-responsive">
+                            <button type="button" class="btn btn-default btn-sm" onclick="addNodule()">
+                                <span class="fa fa-plus" aria-hidden="true"></span> Add nodule
+                            </button>
+                            <!-- TODO: figure out what bm() function did onclick of cefctn -->
+                            <table class="table-striped" style="table-layout:auto;">
+                                <thead>
+                                <tr>
+                                    <th>Nodule ID</th>
+                                    {% for i in noduleArray %}
+                                        <th data-nodule-id="{{ i }}" style="display:none;">
+                                            Nodule {{ i }}
+                                            <i class="remove-nodule fa fa-trash-o pull-right"
+                                               title="Remove nodule {{ i }}" data-nodule-id="{{ i }}"
+                                               onclick="removeNodule()"></i>
+                                        </th>
+                                    {% endfor %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td style="white-space: nowrap;">
+                                        <label class="control-label required" for="cect1ch">
+                                            Is it new? <i class="fa fa-question-circle-o" aria-hidden="true"
+                                                          data-toggle="popover" title="Help" data-content="A pull-down menu
+                                                            allows us to note whether a nodule is newly seen, previously seen,
+                                                            or seen in retrospect, as well as any change in size. Change
+                                                            (increase or decrease) refers to a change in the size of a nodule
+                                                            or a change in the solid component of a part-solid nodule. There
+                                                            is also an option for nodules that are not included in the scan."></i>
+                                        </label>
+                                    </td>
+                                    {% for i in noduleArray %}
+                                        <td data-nodule-id="{{ i }}" style="display:none;">
+                                            <div class="form-group form-group-sm">
+                                                {# TODO What does newStat({{ i }}) do onchange?#}
+                                                <select name="cect{{ i }}ch" id="cect{{ i }}ch"
+                                                        title="Is this nodule new?" class="form-control"
+                                                        tabindex="{{ i }}01">
+                                                    <option value="-"> -
+                                                    <option value="n"> Newly seen</option>
+                                                    <option value="pn"> Prev seen, no change</option>
+                                                    <option value="pd"> Prev seen, slight decr</option>
+                                                    <option value="pe"> Prev seen, marked decr</option>
+                                                    <option value="pi"> Prev seen, slight incr</option>
+                                                    <option value="pj"> Prev seen, marked incr</option>
+                                                    <option value="po"> Prev seen, obscured</option>
+                                                    <option value="pw"> Prev seen, resolved</option>
+                                                    <option value="px"> Prev seen, not a nodule</option>
+                                                    <option value="pr"> Prev seen, resected</option>
+                                                    <option value="rn"> Retrospect, no chg</option>
+                                                    <option value="rd"> Retrospect, decrease</option>
+                                                    <option value="ri"> Retrospect, slight incr</option>
+                                                    <option value="rj"> Retrospect, marked incr</option>
+                                                    <option value="pk"> Not in outside report</option>
+                                                    <option value="pv"> Not included in scan</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td style="white-space: nowrap;">
+                                        <label class="control-label required" for="cect1en">
+                                            Endobronchial? <i class="fa fa-question-circle-o" aria-hidden="true"
+                                                              data-toggle="popover" title="Help"
+                                                              data-content="It is required that both Endobronchial and Most
+                                                                likely location be answered.  If the nodule has both a
+                                                                bronchial and parenchymal component, answer both to indicate
+                                                                such."></i>
+                                        </label>
+                                    </td>
+                                    {% for i in noduleArray %}
+                                        <td data-nodule-id="{{ i }}" style="display:none;">
+                                            <div class="form-group form-group-sm">
+                                                <select name="cect{{ i }}en" id="cect{{ i }}en"
+                                                        title="Endobronchial" class="form-control"
+                                                        tabindex="{{ i }}02">
+                                                    <option value="-"> -</option>
+                                                    <option value="no"> No</option>
+                                                    <option value="tr"> Trachea</option>
+                                                    <option value="rm"> Rt. Main</option>
+                                                    <option value="lm"> Lt. Main</option>
+                                                    <option value="bi"> BI</option>
+                                                    <option value="rul"> RUL</option>
+                                                    <option value="rml"> RML</option>
+                                                    <option value="rll"> RLL</option>
+                                                    <option value="lul"> LUL</option>
+                                                    <option value="lll"> LLL</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td style="white-space: nowrap;">
+                                        <label class="control-label required" for="cect1ll">
+                                            Most likely location? <i class="fa fa-question-circle-o"
+                                                                     aria-hidden="true"
+                                                                     data-toggle="popover" title="Help"
+                                                                     data-content="If a nodule location is different from where it was described to be previously, do not go back and change the location on the previous exams but make sure to make a note of the previously mentioned location in the Comment field (see description below)."></i>
+                                        </label>
+                                    </td>
+                                    {% for i in noduleArray %}
+                                        <td data-nodule-id="{{ i }}" style="display:none;">
+                                            <div class="form-group form-group-sm">
+                                                <select name="cect{{ i }}ll" id="cect{{ i }}ll"
+                                                        title="Most likely location" class="form-control"
+                                                        tabindex="{{ i }}03">
+                                                    <option value="-"> -</option>
+                                                    <option value="end"> Endobr</option>
+                                                    <option value="lul"> LUL</option>
+                                                    <option value="lll"> LLL</option>
+                                                    <option value="rul"> RUL</option>
+                                                    <option value="rml"> RML</option>
+                                                    <option value="rll"> RLL</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td style="white-space: nowrap;">
+                                        <label class="control-label required" for="cect1sn"> Nodule seen in
+                                            series </label>
+                                        <i class="fa fa-question-circle-o" aria-hidden="true"
+                                           data-toggle="popover" title="Help"
+                                           data-content="Indicate the CT series number in which the nodule appears."></i>
+                                    </td>
+                                    {% for i in noduleArray %}
+                                        <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                                            <div class="form-group form-group-sm">
+                                                <input type="text" name="cect{{ i }}sn" id="cect{{ i }}sn"
+                                                       size="3" class="form-control"
+                                                       title="CT Series Number" required="required"
+                                                       tabindex="{{ i }}04">
+                                            </div>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td style="white-space: nowrap;">
+                                        <label class="control-label required" for="cect1inl">Nodule seen in
+                                            images</label>
+                                        <i class="fa fa-question-circle-o" aria-hidden="true"
+                                           data-toggle="popover" title="Help"
+                                           data-content="Indicate the CT image number in which the nodule appears."></i>
+                                    </td>
+                                    {% for i in noduleArray %}
+                                        <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                                            <div class="form-group form-group-sm">
+                                                <input type="text" name="cect{{ i }}inl" id="cect{{ i }}inl"
+                                                       size="3" class="form-control numeric" required="required"
+                                                       title="CT Image Number (Low)" tabindex="{{ i }}05">-
+                                                <input type="text" name="cect{{ i }}inh" id="cect{{ i }}inh"
+                                                       size="3" class="form-control" required="required"
+                                                       title="CT Image Number (High)" tabindex="{{ i }}06">
+                                            </div>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td style="white-space: nowrap;">
+                                        <label class="control-label required" for="cect1st">Nodule
+                                            status</label>
+                                        <i class="fa fa-question-circle-o"
+                                           aria-hidden="true"
+                                           data-toggle="popover" title="Help"
+                                           data-content="If nodule calcifications are seen ('yes' is selected for Calcifications), 'benign (Ca++)' will automatically appear under Nodule Status.<li> When '?' is selected under Calcifications, Nodule Status will read 'prob benign, prob Ca++' (probably benign, probably calcified).  If the nodule is 'prev seen, resolved,' as noted in the 'Is it new' field, then Nodule Status will automatically read 'resolved.'  When 'prev seen, resected' is selected for 'Is it new', 'Resected-malignant' appears under Nodule Status.  If under 'Is it new' it reads 'not included in scan,' Nodule Status will also read 'not included in scan.'  These automatic entries help to maintain a level of consistency for data entry across institutions."></i>
+                                    </td>
+                                    {% for i in noduleArray %}
+                                        <td data-nodule-id="{{ i }}" style="display:none;">
+                                            <div class="form-group form-group-sm">
+                                                <select name="cect{{ i }}st" id="cect{{ i }}st"
+                                                        title="Nodule status" class="form-control"
+                                                        tabindex="{{ i }}07">
+                                                    <option value="-"> -</option>
+                                                    <option value="un"> Unknown</option>
+                                                    <option value="bc"> Benign (Ca++)</option>
+                                                    <option value="pc"> Prob benign, prob Ca++</option>
+                                                    <option value="re"> Resolved</option>
+                                                    <option value="rg"> Resolving</option>
+                                                    <option value="tn"> No change - 2 yrs</option>
+                                                    <option value="pp"> PET - positive</option>
+                                                    <option value="pn"> PET - negative</option>
+                                                    <option value="pi"> PET - indeterminate</option>
+                                                    <option value="ub"> Biopsy - unknown</option>
+                                                    <option value="bb"> Biopsy - benign</option>
+                                                    <option value="mb"> Biopsy - malignant</option>
+                                                    <option value="ab"> Biopsy - atyp bronch prolif</option>
+                                                    <option value="om"> Biopsy - metastatic</option>
+                                                    <option value="mr"> Resected - malignant</option>
+                                                    <option value="br"> Resected - benign</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td style="white-space: nowrap;">
+                                        <label class="control-label required" for="cect1nt">Nodule
+                                            consistency</label>
+                                        <i class="fa fa-question-circle-o" aria-hidden="true"
+                                           data-toggle="popover" title="Help"
+                                           data-content="Nodules may be classified into three types by attenuation characteristics: solid - nodule is uniformly solid in appearance; nonsolid - nodule is uniformly nonsolid (except for blood vessels) in appearance; part-solid - nodule has both solid and nonsolid components"></i>
+                                    </td>
+                                    {% for i in noduleArray %}
+                                        <td data-nodule-id="{{ i }}" style="display:none;">
+                                            <div class="form-group form-group-sm">
+                                                <select name="cect{{ i }}nt" id="cect{{ i }}nt"
+                                                        class="form-control" title="Nodule Consistency"
+                                                        tabindex="{{ i }}08">
+                                                    <option value="-"> -</option>
+                                                    <option value="s"> Solid</option>
+                                                    <option value="m"> Part-solid</option>
+                                                    <option value="g"> Nonsolid</option>
+                                                    <option value="o"> Other (see comment)</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td style="white-space: nowrap;">
+                                        <label class="control-label" for="cect1sl">Length (mm)</label>
+                                        <i class="fa fa-question-circle-o" aria-hidden="true"
+                                           data-toggle="popover" title="Help"
+                                           data-content="Indicate the length (largest dimension) of the nodule.  The unit of measurement is always millimeters."></i>
+                                    </td>
+                                    {% for i in noduleArray %}
+                                        <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                                            <div class="form-group form-group-sm">
+                                                <input type="text" name="cect{{ i }}sl" id="cect{{ i }}sl"
+                                                       size="4" title="Length (mm)"
+                                                       class="form-control numeric decimalformat"
+                                                       tabindex="{{ i }}09">
+                                            </div>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td style="white-space: nowrap;">
+                                        <label class="control-label" for="cect1sw">Maximum width
+                                            (mm)</label>
+                                        <i class="fa fa-question-circle-o" aria-hidden="true"
+                                           data-toggle="popover" title="Help"
+                                           data-content="Indicate the maximum width (largest perpendicular dimension to the length) of the nodule.  The unit of measurement is always millimeters."></i>
+                                    </td>
+                                    {% for i in noduleArray %}
+                                        <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                                            <div class="form-group form-group-sm">
+                                                <input type="text" name="cect{{ i }}sw" id="cect{{ i }}sw"
+                                                       size="4" title="Maximum Width"
+                                                       class="form-control numeric decimalformat"
+                                                       tabindex="{{ i }}10">
+                                            </div>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td style="white-space: nowrap;">
+                                        <label class="control-label" for="cect1sd">Mean diameter (mm)</label>
+                                        <i class="fa fa-question-circle-o" aria-hidden="true"
+                                           data-toggle="popover" title="Help"
+                                           data-content="Calculated mean diameter."></i>
+                                    </td>
+                                    {% for i in noduleArray %}
+                                        <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                                            <div class="form-group form-group-sm">
+                                                <label id="cect{{ i }}sd-val" title="Mean diameter"
+                                                       class="numeric">-</label>
+                                            </div>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td style="white-space: nowrap;">
+                                        <label class="control-label" for="cect1sh">Height (mm)</label>
+                                    </td>
+                                    {% for i in noduleArray %}
+                                        <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                                            <div class="form-group form-group-sm">
+                                                <input type="text" name="cect{{ i }}sh" id="cect{{ i }}sh"
+                                                       size="4" title="Height"
+                                                       class="form-control numeric decimalformat"
+                                                       tabindex="{{ i }}11">
+                                            </div>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td style="white-space: nowrap;">
+                                        <label class="control-label required" for="cect1sv">Volume
+                                            (mm<sup>3</sup>)</label>
+                                    </td>
+                                    {% for i in noduleArray %}
+                                        <td data-nodule-id="{{ i }}" style="display:none;">
+                                            <div class="row">
+                                                <div class="form-group form-group-sm col-sm-6">
+                                                    <input type="text" name="cect{{ i }}sv" id="cect{{ i }}sv"
+                                                           size="4" title="Volume"
+                                                           class="form-control numeric decimalformat"
+                                                           required="required"
+                                                           tabindex="{{ i }}12">
+                                                    <input type="hidden" name="cect{{ i }}svovrrde"
+                                                           id="cect{{ i }}svovrrde" context="server"
+                                                           class="volume-override-flag"/>
+
+
+                                                </div>
+                                                <div class="form-group form-group-sm col-sm-5">
+                                                    <button class="btn" id="cect{{ i }}svb" tabindex="{{ i }}12"
+                                                            title="Calculate nodule volume using the standard ellipsoid formula">
+                                                        Calculate
+                                                    </button>
+                                                </div>
+
+
+                                            </div>
+                                            <div id="cect{{ i }}svovrrde-warn" class="invisible">
+                                                <div class="form-group form-group-sm">
+                                                    <small class="text-warning">Manually entered</small>
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td style="white-space: nowrap;">
+                                        <label class="control-label required" for="cect1ssl">Solid comp. of
+                                            part-solid</label>
+                                    </td>
+                                    {% for i in noduleArray %}
+                                        <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                                            <div id="cect{{ i }}-container">
+                                                <div class="form-group form-group-sm">
+                                                    <input type="text" name="cect{{ i }}ssl" id="cect{{ i }}ssl"
+                                                           size="4" title="Solid Comp. Length"
+                                                           placeholder="length" required="required"
+                                                           class="form-control numeric decimalformat"
+                                                           tabindex="{{ i }}13">
+                                                </div>
+                                                &nbsp; x &nbsp;
+                                                <div class="form-group form-group-sm">
+                                                    <input type="text" name="cect{{ i }}ssw" id="cect{{ i }}ssw"
+                                                           size="4" title="Solid Comp. Width"
+                                                           placeholder="width" required="required"
+                                                           class="form-control numeric decimalformat"
+                                                           tabindex="{{ i }}14">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td style="white-space: nowrap;">
+                                        <label class="control-label" for="cect1ssd">Solid mean
+                                            diameter(mm)</label>
+                                        <i class="fa fa-question-circle-o" aria-hidden="true"
+                                           data-toggle="popover" title="Help"
+                                           data-content="Solid calculated mean diameter."></i>
+                                    </td>
+                                    {% for i in noduleArray %}
+                                        <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                                            <div class="form-group form-group-sm">
+
+                                                <label id="cect{{ i }}ssd-val"
+                                                       title="Solid mean diameter"
+                                                       class="numeric">-</label>
+                                            </div>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td style="white-space: nowrap;">
+                                        <label class="control-label" for="cect1se-n">Smooth edges</label> <i
+                                            class="fa fa-question-circle-o" aria-hidden="true"
+                                            data-toggle="popover" title="Help"
+                                            data-content="Indicate whether the nodule has a smooth-appearing margin, or describe further if needed in the comments section below."></i>
+                                    </td>
+                                    {% for i in noduleArray %}
+                                        <td data-nodule-id="{{ i }}" style="display:none;">
+                                            <div class="form-group form-group-sm">
+                                                {{ f.yesCheckbox("cect" + i|string + "se", {"tabindex":i|string+"15"}) }}
+                                            </div>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td style="white-space: nowrap;">
+                                        <label class="control-label" for="cect1ca-n">Calcifications</label>
+                                    </td>
+                                    {% for i in noduleArray %}
+                                        <td data-nodule-id="{{ i }}" style="display:none;">
+                                            <div class="form-group form-group-sm">
+                                                {{ f.yesCheckbox("cect" + i|string + "ca", {"tabindex":i|string+"16"}) }}
+                                            </div>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td style="white-space: nowrap;">
+                                        <label class="control-label" for="cectin">Index Nodule</label> <i
+                                            class="fa fa-question-circle-o" aria-hidden="true"
+                                            data-toggle="popover" title="Help"
+                                            data-content="Indicate whether the nodule is an index nodule. Only one nodule can be an index nodule."></i>
+                                    </td>
+                                    {% for i in noduleArray %}
+                                        <td data-nodule-id="{{ i }}" style="display:none;">
+                                            <div class="form-group form-group-sm">
+                                                {# Note that this checkbox spans multiple td-s, which is why we don't used the standard forms checkbox #}
+                                                <input type="checkbox" class="radiocheckbox" name="cectin"
+                                                       id="cect{{ i }}in" value="{{ i }}" tabindex="{{ i }}17">
+                                            </div>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td style="white-space: nowrap;">
+                                        <label class="control-label" for="cect1sp-n">Spiculated</label>
+                                    </td>
+                                    {% for i in noduleArray %}
+                                        <td data-nodule-id="{{ i }}" style="display:none;">
+                                            <div class="form-group form-group-sm">
+                                                {{ f.yesCheckbox("cect" + i|string + "sp", {"tabindex":i|string+"18"}) }}
+                                            </div>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td style="white-space: nowrap;">
+                                        <label class="control-label" for="cect1pld">
+                                            Distance from the costal pleura (mm)?</label>
+                                        <i class="fa fa-question-circle-o" aria-hidden="true"
+                                           data-toggle="popover" title="Help"
+                                           data-content="The shortest distance from the nodule to the costal pleura should be measured in millimeters."></i>
+                                    </td>
+                                    {% for i in noduleArray %}
+                                        <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                                            <div class="form-group form-group-sm">
+                                                <input type="text" name="cect{{ i }}pld" id="cect{{ i }}pld"
+                                                       class="numeric decimalformat"
+                                                       title="Distance" tabindex="{{ i }}19">
+                                            </div>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td style="white-space: nowrap;">
+                                        <label class="control-label" for="cect1ac">Action</label> <i
+                                            class="fa fa-question-circle-o"
+                                            aria-hidden="true"
+                                            data-toggle="popover" title="Help"
+                                            data-content="This field becomes very important when different nodules require different follow-up.  A pull-down menu allows us to choose among six different follow-up actions -    'repeat SCT' (repeat screening CT),    'follow-up\ Dx CT' (follow-up Diagnostic CT),    'Abx + follow-up Dx CT' (Antibiotic + follow-up Diagnostic CT),    'biopsy',    'bronchoscopy',       or    'resection'."></i>
+                                    </td>
+                                    {% for i in noduleArray %}
+                                        <td data-nodule-id="{{ i }}" style="display:none;">
+                                            <div class="form-group form-group-sm">
+                                                <select name="cect{{ i }}ac" id="cect{{ i }}ac" title="Action"
+                                                        class="form-control" tabindex="{{ i }}20">
+                                                    <option value="-"> -</option>
+                                                    <option value="s"> Annual repeat CT</option>
+                                                    <option value="f"> Follow-up CT</option>
+                                                    <option value="a"> Abx + follow-up CT</option>
+                                                    <option value="e"> PET</option>
+                                                    <option value="c"> CT w contrast</option>
+                                                    <option value="b"> CT-guided biopsy</option>
+                                                    <option value="p"> Bronchoscopy</option>
+                                                    <option value="r"> Resection</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td style="white-space: nowrap;">
+                                        <label class="control-label" for="cect1co">Comment</label> <i
+                                            class="fa fa-question-circle-o"
+                                            aria-hidden="true"
+                                            data-toggle="popover" title="Help"
+                                            data-content="This field is for additional comments about the nodule.  If a previously seen nodule is found to be something other than a nodule, note it here."></i>
+                                    </td>
+                                    {% for i in noduleArray %}
+                                        <td data-nodule-id="{{ i }}" style="display:none;">
+                                            <div class="form-group form-group-sm">
+                                                <input type="text" name="cect{{ i }}co" id="cect{{ i }}co"
+                                                       size="20" class="form-control" title="Comment"
+                                                       tabindex="{{ i }}21">
+                                            </div>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td style="white-space: nowrap;">
+                                        <label class="control-label" for="cect1pd">Pathologic
+                                            diagnosis</label>
+                                        <i class="fa fa-question-circle-o" aria-hidden="true"
+                                           data-toggle="popover" title="Help"
+                                           data-content="If a biopsy was previously performed, the diagnosis was chosen from a pull-down menu on the Biopsy form.  When CT evaluation forms are created after the biopsy was done, the 'Pathologic Diagnosis' selected on the Biopsy Form is transferred onto the new CT evaluation Form.  Once a diagnosis has been assigned on the Biopsy Form and it pops up on the CT evaluation form, it CANNOT be changed."></i>
+                                    </td>
+                                    {% for i in noduleArray %}
+                                        <td data-nodule-id="{{ i }}" style="display:none;">
+                                            <div class="form-group form-group-sm">
+                                                <select name="cect{{ i }}pd" id="cect{{ i }}pd"
+                                                        title="Pathologic diagnosis" class="form-control"
+                                                        tabindex="{{ i }}22">
+                                                    <option value="-"> -For Pathology Use Only-</option>
+                                                    <option value="aa"> AAH</option>
+                                                    <option value="ap"> Atyp bronch prolif</option>
+                                                    <option value="ai"> AIS</option>
+                                                    <option value="mi"> MIA</option>
+                                                    <option value="ns"> Unspec. non-small cell</option>
+                                                    <option value="ad"> Adenocarcinoma</option>
+                                                    <option value="as"> Adenosquamous</option>
+                                                    <option value="la"> Large cell</option>
+                                                    <option value="sq"> Squamous cell</option>
+                                                    <option value="sm"> Small cell</option>
+                                                    <option value="ct"> Carcinoid - typical</option>
+                                                    <option value="ca"> Carcinoid - atypical</option>
+                                                    <option value="be"> Not malignant</option>
+                                                    <option value="bs"> Benign specific</option>
+                                                    <option value="os"> Other (specify)</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+
+                                </tbody>
+                            </table>
+                            <button type="button" class="btn btn-default btn-sm" onclick="addNodule()"
+                                    tabindex="1101">
+                                <span class="fa fa-plus" aria-hidden="true"></span> Add nodule
+                            </button>
+                            {{ f.checkbox("cectancn","1", "Additional non-calcified nodules", {"tabindex":"1102"}) }}
+                            {{ f.checkbox("cectacn","1", "Additional calcified nodules", {"tabindex":"1103"}) }}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            {# END Nodules tab#}
+
+            {# BEGIN Emphysema tab#}
+            <div id="emphysema-coronary" style="padding-top: 1px;">
+                <h3>Emphysema/Coronary Calcifications</h3> {# will get hidden with affixed menu#}
+                <div class="row">
+                    <div class="col-sm-12 form-group">
+                        <label class="control-label">Emphysema
+                            <i class="fa fa-question-circle-o" aria-hidden="true"
+                               data-html="true" data-toggle="popover" title="Help"
+                               data-content="Mild: splaying of vessels, occasional areas of emphysema<br/>
+                                        Moderate:  emphysema in less than ½ of the lungs<br/>
+                                        Severe:  emphysema in more than ½ of the lungs"></i>
+
+                        </label>
+                        <br/>
+                        {{ f.inlineRadio("ceem", "ceem-nv", "nv", "Not visible") }}
+                        {{ f.inlineRadio("ceem", "ceem-no", "no", "None") }}
+                        {{ f.inlineRadio("ceem", "ceem-mi", "mi", "Mild") }}
+                        {{ f.inlineRadio("ceem", "ceem-mo", "mo", "Moderate") }}
+                        {{ f.inlineRadio("ceem", "ceem-se", "se", "Severe") }}
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label"
+                           for="ceccv-n">Coronary calcifications</label><br/>
+                    {{ f.inlineRadio("ceccv","ceccv-n","n","None") }}
+                    {{ f.inlineRadio("ceccv","ceccv-m","m","Mild") }}
+                    {{ f.inlineRadio("ceccv","ceccv-d","d","Moderate") }}
+                    {{ f.inlineRadio("ceccv","ceccv-s","s","Severe") }}
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" data-toggle="collapse"
+                                 href="#coronary-container"
+                                 aria-expanded="true" aria-controls="coronary-container"
+                                 data-field-name="ceoca" style="cursor:pointer;">
+                                <h4 class="panel-title">
+                                    <i class="fa fa-chevron-down"></i>
+                                    <i class="fa fa-chevron-up" style="display: none;"></i>
+                                    Coronary Artery Calcifications Score
+                                </h4>
+                            </div>
+                            <div id="coronary-container" class="panel-collapse collapse" role="tabpanel">
+                                <div class="panel-body">
+                                    <input type="hidden" name="ceoca" value="n"/>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label for="cecclm" class="required">Left main</label>
+                                                        <select name="cecclm" id="cecclm" class="form-control"
+                                                                required="required">
+                                                            <option value=""> -</option>
+                                                            <option value="no"> None</option>
+                                                            <option value="mi"> Minimal < &frac13;</option>
+                                                            <option value="mo"> Moderate</option>
+                                                            <option value="ex"> Extensive > &frac23;
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label for="ceccld" class="required">LAD</label>
+                                                        <select name="ceccld" id="ceccld"
+                                                                class="form-control"
+                                                                required="required">
+                                                            <option value=""> -</option>
+                                                            <option value="no"> None</option>
+                                                            <option value="mi"> Minimal < &frac13;</option>
+                                                            <option value="mo"> Moderate</option>
+                                                            <option value="ex"> Extensive > &frac23;
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label for="cecccf"
+                                                               class="required">Circumflex</label>
+                                                        <select name="cecccf" id="cecccf"
+                                                                class="form-control"
+                                                                required="required">
+                                                            <option value=""> -</option>
+                                                            <option value="no"> None</option>
+                                                            <option value="mi"> Minimal < &frac13;</option>
+                                                            <option value="mo"> Moderate</option>
+                                                            <option value="ex"> Extensive > &frac23;
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label for="ceccrc" class="required">RCA</label>
+                                                        <select name="ceccrc" id="ceccrc"
+                                                                class="form-control"
+                                                                required="required">
+                                                            <option value=""> -</option>
+                                                            <option value="no"> None</option>
+                                                            <option value="mi"> Minimal < &frac13;</option>
+                                                            <option value="mo"> Moderate</option>
+                                                            <option value="ex"> Extensive > &frac23;
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <label class="control-label" for="cecccac">
+                                                        Visual <abbr title="Coronary Artery Calcium">CAC</abbr>
+                                                        score
+                                                    </label>
+                                                </td>
+                                                <td colspan="5">
+                                                    <span id="cecccac-text"></span>
+                                                    <input type="hidden" name="cecccac" id="cecccac">
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            {# END Emphysema tab #}
+
+            {# BEGIN Abnormalities tab#}
+            <div id="abnormalities" style="padding-top:8px;">
+                <h3>Other Abnormalities</h3> {# will get hidden with affixed menu#}
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+                    {# PULMONARY ABNORMALITIES #}
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" data-toggle="collapse" href="#pulmonary-container"
+                             aria-expanded="true" aria-controls="pulmonary-container"
+                             data-field-name="cepa" style="cursor:pointer;">
+                            <h4 class="panel-title">
+                                <i class="fa fa-chevron-down"></i>
+                                <i class="fa fa-chevron-up" style="display: none;"></i>
+                                Pulmonary
+                            </h4>
+                        </div>
+                        <div id="pulmonary-container" class="panel-collapse collapse" role="tabpanel">
+                            <div class="panel-body">
+                                <input type="hidden" name="cepa"/>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th>RUL</th>
+                                            <th>RML</th>
+                                            <th>RLL</th>
+                                            <th>LUL</th>
+                                            <th>LLL</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% set rf = ["rul","rml","rll","lul","lll"] %}
+                                        <tr>
+                                            <td><label class="control-label" for="cecbc-n">Cysts</label></td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("cecbc") }}
+                                                </div>
+                                            </td>
+                                            {% for i in [1,2,3,4,5] %}
+                                                <td>
+                                                    <div class="form-group cecbc-container">
+                                                        {{ f.checkbox("cecbcl"+i|string, rf[i-1], "") }}
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                        <tr>
+                                            <td><label class="control-label" for="cecbb-n">Blebs/Bullae</label>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("cecbb") }}
+                                                </div>
+                                            </td>
+                                            {% for i in [1,2,3,4,5] %}
+                                                <td>
+                                                    <div class="form-group cecbb-container">
+                                                        {{ f.checkbox("cecbbl"+i|string, rf[i-1], "") }}
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                        <tr>
+                                            <td><label class="control-label" for="cerdc-n">Regional or diffuse
+                                                consolidation</label><br/>
+                                                <small>(focal - put in nodule grid)</small>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("cerdc") }}
+                                                </div>
+                                            </td>
+                                            {% for i in [1,2,3,4,5] %}
+                                                <td>
+                                                    <div class="form-group cerdc-container">
+                                                        {{ f.checkbox("cerdcl"+i|string, rf[i-1], "") }}
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                        <tr>
+                                            <td><label class="control-label" for="cescr-n">Scarring</label></td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("cescr") }}
+                                                </div>
+                                            </td>
+                                            {% for i in [1,2,3,4,5] %}
+                                                <td>
+                                                    <div class="form-group cescr-container">
+                                                        {{ f.checkbox("cescrl"+i|string, rf[i-1], "") }}
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                        <tr>
+                                            <td style="border-top:none;"></td>
+                                            <td colspan="6" style="border-top:none;">
+                                                <div class="form-group form-inline cescr-container">
+                                                    <label>Apical</label>&nbsp;
+                                                    {{ f.checkbox("cescrl6","au","Unilateral") }}
+                                                    {{ f.checkbox("cescrl7","ab","Bilateral") }}
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><label class="control-label"
+                                                       for="cebrsb-n">Bronchiectasis</label></td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("cebrsb") }}
+                                                </div>
+                                            </td>
+                                            {% for i in [1,2,3,4,5] %}
+                                                <td>
+                                                    <div class="form-group cebrsb-container">
+                                                        {{ f.checkbox("cebrsbl"+i|string, rf[i-1], "") }}
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+
+                                        <tr>
+                                            <td><label class="control-label" for="cebrss-n">Small airways
+                                                disease</label></td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("cebrss") }}
+                                                </div>
+                                            </td>
+                                            {% for i in [1,2,3,4,5] %}
+                                                <td>
+                                                    <div class="form-group cebrss-container">
+                                                        {{ f.checkbox("cebrssl"+i|string, rf[i-1], "") }}
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                        <tr>
+                                            <td><label class="control-label" for="cebs-n">Post-surgical
+                                                findings</label><br/>
+                                                <small>(i.e. bronchial resection margin)</small>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.inlineRadio("cebs", "cebs-n","n","N/A") }}
+                                                    {{ f.inlineRadio("cebs", "cebs-o","o","Normal") }}
+                                                    {{ f.inlineRadio("cebs", "cebs-y","y","Abnormal") }}
+                                                    {{ f.inlineRadio("cebs", "cebs-e","e","Not visible") }}
+                                                </div>
+                                            </td>
+                                            <td colspan="5">
+                                                <div class="form-group form-inline">
+                                                    {{ f.checkbox("cebsrt", "r", "Right") }}
+                                                    &nbsp;
+                                                    {{ f.checkbox("cebslt", "l", "Left") }}
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <h4>Early and Late Findings of Interstitial Lung Disease</h4>
+                                    <table class="table">
+                                        <tbody>
+                                        <tr>
+                                            <td><label class="control-label" for="cerb-n">Traction
+                                                bronchiectasis in a
+                                                peripheral location</label></td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("cerb") }}
+                                                </div>
+                                            </td>
+                                            {% for i in [1,2,3,4,5] %}
+                                                <td>
+                                                    <div class="form-group cerb-container">
+                                                        {{ f.checkbox("cerbl"+i|string, rf[i-1], "") }}
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+
+                                        <tr>
+                                            <td><label class="control-label" for="cepgo-n">Peripheral
+                                                ground-glass
+                                                opacities</label></td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("cepgo") }}
+                                                </div>
+                                            </td>
+                                            {% for i in [1,2,3,4,5] %}
+                                                <td>
+                                                    <div class="form-group cepgo-container">
+                                                        {{ f.checkbox("cepgol"+i|string, rf[i-1], "") }}
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+
+                                        <tr>
+                                            <td><label class="control-label" for="ceret-n">Reticulations</label>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("ceret") }}
+                                                </div>
+                                            </td>
+                                            {% for i in [1,2,3,4,5] %}
+                                                <td>
+                                                    <div class="form-group ceret-container">
+                                                        {{ f.checkbox("ceretl"+i|string, rf[i-1], "") }}
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+
+                                        <tr>
+                                            <td><label class="control-label" for="cephc-n">Honeycombing</label>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("cephc") }}
+                                                </div>
+                                            </td>
+                                            {% for i in [1,2,3,4,5] %}
+                                                <td>
+                                                    <div class="form-group cephc-container">
+                                                        {{ f.checkbox("cephcl"+i|string, rf[i-1], "") }}
+                                                    </div>
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="7">
+                                                <div class="form-group">
+                                                    <label for="ceoppa">Additional comments on pulmonary
+                                                        abnormalities</label>
+                                                    <textarea name="ceoppa" id="ceoppa"
+                                                              class="form-control"></textarea>
+                                                    {{ f.inlineCheckbox("ceoppai", "y", "Include in impression") }}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {# PLEURAL ABNORMALIITES #}
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" data-toggle="collapse" href="#pleural-container"
+                             aria-expanded="true" aria-controls="pleural-container"
+                             data-field-name="ceppra" style="cursor:pointer;">
+                            <h4 class="panel-title">
+
+                                <i class="fa fa-chevron-down"></i>
+                                <i class="fa fa-chevron-up" style="display: none;"></i>
+                                Pleural or pleural-related
+
+                            </h4>
+                        </div>
+                        <div id="pleural-container" class="panel-collapse collapse" role="tabpanel">
+                            <div class="panel-body">
+                                <input type="hidden" name="ceppra"/>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <label class="control-label" for="cept-n">Pleural
+                                                    thickening/plaques</label>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("cept") }}
+                                                </div>
+                                            </td>
+                                            <td colspan="5">
+                                                <div class="form-group form-inline cept-container">
+                                                    {{ f.checkbox("ceptrt", "r", "Right") }}
+                                                    &nbsp;
+                                                    {{ f.checkbox("ceptlt", "l", "Left") }}
+                                                    &nbsp;
+                                                    {{ f.checkbox("ceptct", "c", "Calcification") }}
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><label class="control-label" for="cebatr-n">Rounded
+                                                atelectasis</label></td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("cebatr") }}
+                                                </div>
+                                            </td>
+                                            <td colspan="5">
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>RUL</th>
+                                                        <th>RML</th>
+                                                        <th>RLL</th>
+                                                        <th>LUL</th>
+                                                        <th>LLL</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        {% for i in [1,2,3,4,5] %}
+                                                            <td>
+                                                                <div class="form-group cebatr-container">
+                                                                    {{ f.checkbox("cebatrl"+i|string, rf[i-1], "") }}
+                                                                </div>
+                                                            </td>
+                                                        {% endfor %}
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td><label class="control-label" for="cepev">Pleural
+                                                effusion</label></td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("cepev") }}
+                                                </div>
+                                            </td>
+                                            <td colspan="5" class="cepev-container">
+                                                <div class="form-group pull-left">
+                                                    <label for="ceper">Right</label>
+                                                    <select id="ceper" name="ceper" class="form-control"
+                                                            required="required">
+                                                        <option value="-"> -</option>
+                                                        <option value="no"> None</option>
+                                                        <option value="sm"> Small</option>
+                                                        <option value="mo"> Moderate</option>
+                                                        <option value="lg"> Large</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group pull-left">
+                                                    <label for="cepel">Left</label>
+                                                    <select id="cepel" name="cepel" class="form-control"
+                                                            required="required">
+                                                        <option value="-"> -</option>
+                                                        <option value="no"> None</option>
+                                                        <option value="sm"> Small</option>
+                                                        <option value="mo"> Moderate</option>
+                                                        <option value="lg"> Large</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><label class="control-label" for="cepu-n">Pleural tumor</label>
+                                            </td>
+                                            <td colspan="6">
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("cepu") }}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="7">
+                                                <div class="form-group">
+                                                    <label for="ceoppab">Additional comments on pleural
+                                                        abnormalities</label>
+                                                    <textarea name="ceoppab" id="ceoppab"
+                                                              class="form-control"></textarea>
+                                                    {{ f.inlineCheckbox("ceoppabi", "y", "Include in impression") }}
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {# CARDIAC ABNORMALITIES #}
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" data-toggle="collapse" href="#cardiac-container"
+                             aria-expanded="true" aria-controls="cardiac-container"
+                             data-field-name="ceca" style="cursor:pointer;">
+                            <h4 class="panel-title">
+                                <i class="fa fa-chevron-down"></i>
+                                <i class="fa fa-chevron-up" style="display: none;"></i>
+                                Cardiac and aortic
+                            </h4>
+                        </div>
+                        <div id="cardiac-container" class="panel-collapse collapse" role="tabpanel">
+                            <div class="panel-body">
+                                <input type="hidden" name="ceca"/>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <label class="control-label" for="cecca">Aortic calcifications</label>
+                                            </td>
+                                            <td colspan="5">
+                                                <div class="form-group">
+                                                    <select name="cecca" class="form-control"
+                                                            title="Aortic Calcifications">
+                                                        <option value="-"> -</option>
+                                                        <option value="no"> None</option>
+                                                        <option value="mi"> Minimal < &frac13;</option>
+                                                        <option value="mo"> Moderate</option>
+                                                        <option value="ex"> Extensive > &frac23;</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><label class="control-label" for="ceprevm">Pericardial effusion
+                                                severity</label>
+                                            </td>
+                                            <td colspan="5">
+                                                <div class="form-group">
+                                                    <select name="ceprevm" id="ceprevm" class="form-control"
+                                                            title="Pericardial Effusion Severity">
+                                                        <option value="-"> -</option>
+                                                        <option value="no"> None</option>
+                                                        <option value="mi"> Minimal</option>
+                                                        <option value="mo"> Moderate</option>
+                                                        <option value="ex"> Extensive</option>
+                                                    </select>
+                                                </div>
+
+                                        <tr>
+                                            <td colspan="2"><label class="control-label" for="cepaw">Pulmonary
+                                                artery width
+                                                (mm)</label></td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input type="text" id="cepaw" name="cepaw" size="4"
+                                                           class="form-control numeric decimalformat"
+                                                           title="Pulmonary Artery Width">
+                                                </div>
+                                            </td>
+                                            <td colspan="4">&nbsp;</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="2"><label class="control-label" for="ceaow">Ascending
+                                                aorta width (mm)</label></td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input type="text" id="ceaow" name="ceaow" size="4"
+                                                           class="form-control numeric decimalformat"
+                                                           title="Ascending Aorta Width">
+                                                </div>
+                                            </td>
+                                            <td colspan="4">
+                                                &nbsp;
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="2"><label class="control-label" for="cepar">Pulmonary
+                                                artery/aorta
+                                                ratio</label><br/>
+                                                <small>(calculated)</small>
+                                            </td>
+                                            <td colspan="5">
+                                                <div class="form-group">
+                                                    <span id="cepar-text"></span>
+                                                    <input type="hidden" id="cepar" name="cepar">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="7">
+                                                <div class="form-group">
+                                                    <label for="cecommca">Additional comments on cardiac
+                                                        abnormalities</label>
+                                                    <textarea name="cecommca" id="cecommca"
+                                                              class="form-control"></textarea>
+                                                    {{ f.inlineCheckbox("cecommcai", "y", "Include in impression") }}
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Neck and Mediastinal Abnormalities #}
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" data-toggle="collapse" href="#neck-container"
+                             aria-expanded="true" aria-controls="neck-container"
+                             data-field-name="ceoma" style="cursor:pointer;">
+                            <h4 class="panel-title">
+                                <i class="fa fa-chevron-down"></i>
+                                <i class="fa fa-chevron-up" style="display: none;"></i>
+                                Neck and mediastinal
+                            </h4>
+                        </div>
+                        <div id="neck-container" class="panel-collapse collapse" role="tabpanel">
+                            <div class="panel-body">
+                                <input type="hidden" name="ceoma"/>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr>
+                                            <td><label class="control-label" for="ceata-n">Thyroid</label></td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("ceata") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group form-inline ceata-container">
+                                                    {{ f.checkbox("ceatc","c","Calcification") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceaty","y","Cyst/nodule < 15 mm") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceatm","m","Mass") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceato","o","Other") }}&nbsp;&nbsp;
+                                                    <input type="text" name="ceatos" id="ceatos"
+                                                           class="form-control"
+                                                           required="required"
+                                                           placeholder="Specify">
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><label class="control-label" for="ceaya-n">Thymus</label><br/>
+                                                <small>(report if ovoid &gt; 7 mm or if thymic shape with width
+                                                    &gt; 1.3cm)
+                                                </small>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("ceaya") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group form-inline ceaya-container">
+                                                    {{ f.checkbox("ceayc","c","Calcification") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceayy","y","Cyst") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceaym","m","Mass") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceayo","o","Other") }}&nbsp;&nbsp;
+                                                    <input type="text" name="ceayos" id="ceayos"
+                                                           class="form-control"
+                                                           required="required"
+                                                           placeholder="Specify">
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="3">
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <h4>Lymph Nodes
+                                        <small>(w/o central fat)</small>
+                                    </h4>
+
+                                    <table class="table">
+                                        <tbody>
+
+                                        <tr>
+                                            <td>
+                                                Any enlarged or growing hilar or mediastinal lymph nodes<br/>
+                                                <small>(short axis &gt; 10mm)<br/>
+                                                    <strong>(any size for para-esophageal)</strong></small>
+                                            </td>
+                                            <td>
+                                                <div class="form-group form-inline">
+                                                    {{ f.yesCheckbox("cemln") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group" id="cemln-container">
+                                                    <label for="cemlnl1">Level</label>
+                                                    <small class="text-muted">8<sup>th</sup> edition
+                                                        classification: CHEST 2017; 151: 193-203
+                                                    </small>
+                                                    {{ f.checkbox("cemlnl1","N1","N1: Low cervical, supraclavicular, and sternal notch nodes") }}
+                                                    {{ f.checkbox("cemlnl2r","N2R","N2R: Upper paratracheal (right)") }}
+                                                    {{ f.checkbox("cemlnl2l","N2L","N2L: Upper paratracheal (left)") }}
+                                                    {{ f.checkbox("cemlnl3a","N3A","N3A: Prevascular") }}
+                                                    {{ f.checkbox("cemlnl3p","N3P","N3P: Retrotracheal") }}
+                                                    {{ f.checkbox("cemlnl4r","N4R","N4R: Lower paratracheal (right)") }}
+                                                    {{ f.checkbox("cemlnl4l","N4L","N4L: Lower paratracheal (left)") }}
+                                                    {{ f.checkbox("cemlnl5","N5","N5: Subaortic") }}
+                                                    {{ f.checkbox("cemlnl6","N6","N6: Para-aortic (ascending aorta or phrenic)") }}
+                                                    {{ f.checkbox("cemlnl7","N7","N7: Subcarinal") }}
+                                                    {{ f.checkbox("cemlnl8","N8","N8: Paraesophageal (below carina)") }}
+                                                    {{ f.checkbox("cemlnl9","N9","N9: Pulmonary ligament") }}
+                                                    {{ f.checkbox("cemlnl10","N10","N10: Hilar") }}
+                                                    {{ f.checkbox("cemlnl11","N11","N11: Interlobar") }}
+                                                    {{ f.checkbox("cemlnl12","N12","N12: Lobar") }}
+                                                    {{ f.checkbox("cemlnl13","N13","N13: Segmental") }}
+                                                    {{ f.checkbox("cemlnl14","N14","N14: Subsegmental") }}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Any calcified hilar or mediastinal lymph nodes</td>
+                                            <td colspan="2">
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("cemlncab") }}
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Abnormal axillary lymph nodes</td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("ceagaln") }}
+                                                </div>
+                                            </td>
+                                            <td style="padding-top:1px;">
+                                                <div class="form-group form-inline ceagaln-container">
+                                                    {{ f.checkbox("ceagalnrt","r","Right") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceagalnlt","l","Left") }}&nbsp;&nbsp;
+                                                    <input type="text" name="ceagalns" id="ceagalns"
+                                                           class="form-control"
+                                                           required="required" placeholder="Specify">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Other Vascular Abnormalities</td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("cemva") }}
+                                                </div>
+                                            </td>
+                                            <td style="padding-top:1px;">
+                                                <div class="form-group form-inline cemva-container">
+                                                    {{ f.checkbox("cemvaa","a","Aorta") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("cemvap","w","Pulmonary arteries") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("cemvao","o","Other") }}&nbsp;&nbsp;
+                                                    <input type="text" name="cemvaos" id="cemvaos"
+                                                           class="form-control"
+                                                           required="required" placeholder="Specify">
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Esophageal</td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("cemeln") }}
+                                                </div>
+                                            </td>
+                                            <td style="padding-top:1px;">
+                                                <div class="form-group form-inline cemeln-container">
+                                                    {{ f.checkbox("cemelna","a","Air-fluid level") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("cemelnw","w","Wall thickening") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("cemelnm","m","Mass") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("cemvlno","o","Other") }}&nbsp;&nbsp;
+                                                    <input type="text" name="cemelnos" id="cemelnos"
+                                                           class="form-control"
+                                                           required="required" placeholder="Specify">
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Hiatal Hernia</td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("cehhn") }}
+                                                </div>
+                                            </td>
+                                            <td style="padding-top:1px;">
+                                                <div class="form-group form-inline cehhn-container">
+                                                    <input type="text" name="cehhnos" id="cehhnos"
+                                                           class="form-control"
+                                                           required="required" placeholder="Specify">
+                                                </div>
+                                            </td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td>Other Mediastinal Masses</td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("ceomm") }}
+                                                </div>
+                                            </td>
+                                            <td style="padding-top:1px;">
+                                                <div class="form-group form-inline ceomm-container">
+                                                    {{ f.checkbox("ceamc","v","Calcification") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceamy","y","Cyst") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceamm","m","Mass") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceamo","o","Other") }}&nbsp;&nbsp;
+                                                    <input type="text" name="ceommos" id="ceommos"
+                                                           class="form-control"
+                                                           required="required" placeholder="Specify">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                <div class="form-group">
+                                                    <label for="ceotabnm">Additional comments on neck and
+                                                        mediastinal
+                                                        abnormalities</label>
+                                                    <textarea name="ceotabnm" id="ceotabnm"
+                                                              class="form-control"></textarea>
+                                                    {{ f.inlineCheckbox("ceotabnmi", "y", "Include in impression") }}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Breast Abnormalities #}
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" data-toggle="collapse" href="#breast-container"
+                             aria-expanded="true" aria-controls="breast-container"
+                             data-field-name="ceoba" style="cursor:pointer;">
+                            <h4 class="panel-title">
+                                <i class="fa fa-chevron-down"></i>
+                                <i class="fa fa-chevron-up" style="display: none;"></i>
+                                Breast
+                            </h4>
+                        </div>
+                        <div id="breast-container" class="panel-collapse collapse" role="tabpanel">
+                            <div class="panel-body">
+                                <input type="hidden" name="ceoba"/>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr>
+                                            <td>Right Breast</td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("ceara") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group form-inline ceara-container">
+                                                    {{ f.checkbox("ceobarc","c","Calcification") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceobary","y","Cyst") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceobarm","m","Mass") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceobaro","o","Other") }}&nbsp;&nbsp;
+                                                    <input type="text" name="ceobaros" id="ceobaros"
+                                                           class="form-control"
+                                                           required="required"
+                                                           placeholder="Specify">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">Right Breast Density Classification (BI-RADS)</td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <select name="ceobard" class="form-control"
+                                                            title="Right Breast Density Classification">
+                                                        <option value="-"> -</option>
+                                                        <option value="1"> 1 - Almost entirely fatty</option>
+                                                        <option value="2"> 2 - Scattered areas of fibroglandular
+                                                            density
+                                                        </option>
+                                                        <option value="3"> 3 - Heterogeneously dense</option>
+                                                        <option value="4"> 4 - Extremely dense</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Left Breast</td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("ceafa") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group form-inline ceafa-container">
+                                                    {{ f.checkbox("ceobafc","c","Calcification") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceobafy","y","Cyst") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceobafm","m","Mass") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceobafo","o","Other") }}&nbsp;&nbsp;
+                                                    <input type="text" name="ceobafos" id="ceobafos"
+                                                           class="form-control"
+                                                           required="required" placeholder="Specify">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">Left Breast Density Classification (BI-RADS)</td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <select name="ceobald" class="form-control"
+                                                            title="Left Breast Density Classification">
+                                                        <option value="-"> -</option>
+                                                        <option value="1"> 1 - Almost entirely fatty</option>
+                                                        <option value="2"> 2 - Scattered areas of fibroglandular
+                                                            density
+                                                        </option>
+                                                        <option value="3"> 3 - Heterogeneously dense</option>
+                                                        <option value="4"> 4 - Extremely dense</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                <div class="form-group">
+                                                    <label for="ceobrc">Additional comments on breast
+                                                        abnormalities</label>
+                                                    <textarea name="ceobrc" id="ceobrc"
+                                                              class="form-control"></textarea>
+                                                    {{ f.inlineCheckbox("ceobrci", "y", "Include in impression") }}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Bone Abnormalities #}
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" data-toggle="collapse" href="#bone-container"
+                             aria-expanded="true" aria-controls="bone-container"
+                             data-field-name="ceaba" style="cursor:pointer;">
+                            <h4 class="panel-title">
+                                <i class="fa fa-chevron-down"></i>
+                                <i class="fa fa-chevron-up" style="display: none;"></i>
+                                Bone
+                            </h4>
+                        </div>
+                        <div id="bone-container" class="panel-collapse collapse" role="tabpanel">
+                            <div class="panel-body">
+                                <input type="hidden" name="ceaba"/>
+                                <div class="row">
+                                    <div class="form-group col-sm-12">
+                                        <label for="ceaoabb">Specify bone abnormalities</label>
+                                        <textarea name="ceaoabb" id="ceaoabb" class="form-control"></textarea>
+                                        {{ f.inlineCheckbox("ceaoabbi", "y", "Include in impression") }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Abdominal Abnormalities #}
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" data-toggle="collapse" href="#abdominal-container"
+                             aria-expanded="true" aria-controls="abdominal-container"
+                             data-field-name="ceoaa" style="cursor:pointer;">
+                            <h4 class="panel-title">
+                                <i class="fa fa-chevron-down"></i>
+                                <i class="fa fa-chevron-up" style="display: none;"></i>
+                                Abdominal
+                            </h4>
+                        </div>
+                        <div id="abdominal-container" class="panel-collapse collapse" role="tabpanel">
+                            <div class="panel-body">
+                                <input type="hidden" name="ceoaa"/>
+                                <div class="table-responsive" id="abdominal-container">
+                                    <table class="table">
+                                        <tbody>
+
+                                        <tr>
+                                            <td>Gallbladder</td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("ceaga") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group form-inline ceaga-container">
+                                                    {{ f.checkbox("ceagh","h","Cholecystectomy") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceags","s","Stones") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceagl","l","Sludge") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceago","y","Other") }}&nbsp;&nbsp;
+                                                    <input type="text" name="ceagos" id="ceagos"
+                                                           class="form-control"
+                                                           required="required"
+                                                           placeholder="Specify">
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Spleen</td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("ceasa") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group form-inline ceasa-container">
+                                                    {{ f.checkbox("ceasc","y","Calcification") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceasy","y","Cyst") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceasm","m","Mass") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceaso","y","Other") }}&nbsp;&nbsp;
+                                                    <input type="text" name="ceasos" id="ceasos"
+                                                           class="form-control"
+                                                           required="required"
+                                                           placeholder="Specify">
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Liver</td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("ceala") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group form-inline ceala-container">
+                                                    {{ f.checkbox("cealc","y","Calcification") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("cealy","y","Cyst") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("cealm","m","Mass") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("cealh","h","HU < 40") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("cealo","y","Other") }}&nbsp;&nbsp;
+                                                    <input type="text" name="cealos" id="cealos"
+                                                           class="form-control"
+                                                           required="required"
+                                                           placeholder="Specify">
+                                                </div>
+                                            </td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td>Pancreas</td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("ceapa") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group form-inline ceapa-container">
+                                                    {{ f.checkbox("ceapc","y","Calcification") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceapy","y","Cyst") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceapm","m","Mass") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceapo","y","Other") }}&nbsp;&nbsp;
+                                                    <input type="text" name="ceapos" id="ceapos"
+                                                           class="form-control"
+                                                           required="required"
+                                                           placeholder="Specify">
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Adrenals</td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("ceaaa") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group form-inline ceaaa-container">
+                                                    {{ f.checkbox("ceaac","y","Calcification") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceaay","y","Cyst") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceaam","m","Mass") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceaao","y","Other") }}&nbsp;&nbsp;
+                                                    <input type="text" name="ceaaos" id="ceaaos"
+                                                           class="form-control"
+                                                           required="required"
+                                                           placeholder="Specify">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Kidneys</td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.yesCheckbox("ceaka") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group form-inline ceaka-container">
+                                                    {{ f.checkbox("ceakc","y","Calcification") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceaky","y","Cyst") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceakm","m","Mass") }}&nbsp;&nbsp;
+                                                    {{ f.checkbox("ceako","y","Other") }}&nbsp;&nbsp;
+                                                    <input type="text" name="ceakos" id="ceakos"
+                                                           class="form-control"
+                                                           required="required"
+                                                           placeholder="Specify">
+                                                </div>
+                                            </td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td colspan="3">
+                                                <div class="form-group">
+                                                    <label for="ceaoab">Additional comments on abdominal
+                                                        abnormalities</label>
+                                                    <textarea name="ceaoab" id="ceaoab"
+                                                              class="form-control"></textarea>
+                                                    {{ f.inlineCheckbox("ceaoabi", "y", "Include in impression") }}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {#  END Abnormalities tab#}
+
+            {# BEGIN Impression tab#}
+            <div id="impression" style="padding-top:2px;">
+                <h3>Impression</h3> {# will get hidden with affixed menu#}
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="alert alert-info">Annual repeat and follow-up CT scans should utilize
+                            the same low-dose protocol used for baseline low-dose CT scans.
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 form-group">
+                        <label class="required">Nodules</label>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="ceimn" id="ceimn-rs" value="rs" required="required">
+                                No evidence of nodules. Follow-up as recommended.
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="ceimn" id="ceimn-ro" value="ro"> Nodule(s) as
+                                described. Consistent with old granulomatous disease. Follow-up as recommended.
+                            </label>
+                        </div>
+
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="ceimn" id="ceimn-ru" value="ru"> Nodule(s)
+                                unchanged, as described. Follow-up as recommended.
+                            </label>
+                        </div>
+
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="ceimn" id="ceimn-nf" value="nf"> Nodule(s) as
+                                described. Follow-up as recommended.
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 form-group">
+                        <strong>Other Findings</strong>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="ceimo" id="ceimo-no" value="no"> No other
+                                significant abnormalities.
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="ceimo" id="ceimn-oa" value="oa"> Other
+                                abnormalities and suggested follow-up as described above.
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 form-group">
+                        <label for="ceimre">Impression remarks</label>
+                        <textarea name="ceimre" id="ceimre" class="form-control"></textarea>
+                    </div>
+                </div>
+
+
+                <h3>Follow Up
+                    <label for="cefuw">
+                        <small>select one or more</small>
+                    </label>
+                </h3>
+                <div class="row">
+                    <div class="col-sm-12 form-group">
+                        <label for="cefuw-nw">CT follow up:</label><br/>
+                        {{ f.inlineCheckbox("cefuw", "1y","Annual repeat", {'id':'cefuw-1y'}) }}
+                        {{ f.inlineCheckbox("cefuw", "nw","Now", {'id':'cefuw-nw'}) }}
+                        {{ f.inlineCheckbox("cefuw", "1m","1 month", {'id':'cefuw-1m'}) }}
+                        {{ f.inlineCheckbox("cefuw", "3m","3 months", {'id':'cefuw-3m'}) }}
+                        {{ f.inlineCheckbox("cefuw", "6m","6 months", {'id':'cefuw-6m'}) }}
+                        {{ f.inlineCheckbox("cefuw", "os","Other", {'id':'cefuw-os'}) }}
+                    </div>
+                </div>
+                <div id="follow-up-date-container">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4 form-group">
+                            <label for="cefud">Approximate follow-up date:</label><br/>
+                            {{ f.datepicker("cefud", "future") }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 form-group">
+                        <label for="cefu">Other follow up:</label><br/>
+                        {{ f.inlineCheckbox("cefuaf","y", "Antibiotics") }}
+                        {{ f.inlineCheckbox("cefucc","y", "Diagnostic CT") }}
+                        {{ f.inlineCheckbox("cefupe","y", "PET") }}
+                        {{ f.inlineCheckbox("cefufn","y", "Percutaneous biopsy") }}
+                        {{ f.inlineCheckbox("cefubr","y", "Bronchoscpy") }}
+                        {{ f.inlineCheckbox("cefupc","y", "Pulmonary consultation") }}
+                        {{ f.inlineCheckbox("cefutb","y", "Refer to tumor board") }}
+                        {{ f.inlineCheckbox("cefunf","y", "No other further follow-up") }}
+                        {{ f.inlineCheckbox("cefuo","y", "Other") }}
+                    </div>
+                    <div class="col-sm-4 form-group" id="cefuo-container">
+                        <label for="cefuo" class="control-label required">Specify</label>
+                        <input class="form-control" type="text" name="cefuo" id="cefuo"
+                               placeholder="specify" required="required">
+                    </div>
+
+                </div>
+                <h3>Lung-RADS</h3>
+                <div class="row">
+                    <div class="form-group col-sm-5 col-md-4">
+                        <label class="{{ "required" if formPage == "ctevaluation" }}"
+                               for="celrad">Category</label>
+                        <br/>
+                        {{ f.radio("celrad", "celrad-na","-","Not applicable", formPage == "ctevaluation") }}
+                        {{ f.radio("celrad", "celrad-0","0","0 (incomplete)") }}
+                        {{ f.radio("celrad", "celrad-1","1","1 (negative)") }}
+                        {{ f.radio("celrad", "celrad-2","2","2 (benign appearance or behavior)") }}
+                        {{ f.radio("celrad", "celrad-3","3","3 (probably benign)") }}
+                        {{ f.radio("celrad", "celrad-4A","4A","4A (suspicious)") }}
+                        {{ f.radio("celrad", "celrad-4B","4B","4B (suspicious)") }}
+                        {{ f.radio("celrad", "celrad-4X","4X","4X (suspicious)") }}
+                    </div>
+                    <div class="form-group col-sm-7 col-md-8">
+                        <label>Modifiers</label>
+                        {{ f.checkbox("celrads", "S", "S - clinically significant or potentially clinically significant findings (non lung cancer)") }}
+                        {{ f.checkbox("celradc", "C", "C - prior diagnosis of lung cancer who return to screening") }}
+                    </div>
+                </div>
+            </div>
+            {# END Impression tab#}
+
+
+            <div>
+                <input type="hidden" name="cennod" value="0" context="server"/>
+                <input type="hidden" name="ceanod" value="n" context="server"/>
+                <input type="hidden" name="samistatus" value=""/>
+                <button type="submit" class="btn btn-default" id="save-for-later-button" tabindex="1206">Save for
+                    Later
+                </button>
+                <button type="submit" class="btn btn-primary" id="submit-button" tabindex="1207">Submit</button>
+                <a id="delete-form" class="btn btn-danger pull-right" tabindex="1204"><span
+                        class="glyphicon glyphicon-trash"></span>Delete</a>
+
+            </div>
+
+        </form>
+    </div>
+
+    {{ f.deleteFormModal("ctevaluation.html", mockup, formMethod) }}
+{% endblock %}
+
+{% block script %}
+    <!--suppress Annotator -->
+    <script language="JavaScript">
+
+        //calculate Time Since Baseline (TSB)
+        function calculateTimeSinceBaseline() {
+            const baselineDateString = $("#sidoe").val();
+            const studyDateString = $("#cedos").val();
+            if (baselineDateString && studyDateString) {
+                const baselineDate = moment(baselineDateString, VAPALS.DATE_FORMAT);
+                const studyDate = moment(studyDateString, VAPALS.DATE_FORMAT);
+                if (baselineDate.isValid() && studyDate.isValid()) {
+                    const months = parseInt(studyDate.diff(baselineDate, "months", true));
+                    $("#cetsb-text").text(months);
+                    $("#cetsb").val(months);
+                }
+                else {
+                    $("#cetsb-text").text("error")
+                }
+            }
+        }
+
+        function calculatePulmonaryArteryAortaRatio() {
+            let res = 0;
+            const cepaw = $("#cepaw").val(), ceaow = $("#ceaow").val();
+            if (ceaow > 0) {
+                res = (cepaw / ceaow).toFixed(1);
+                $("#cepar-text").text(res);
+                $("#cepar").val(res);
+            }
+            else {
+                $("#cepar-text").text("");
+                $("#cepar").val("");
+            }
+        }
+
+        function calculateVisualCacScore() {
+            let cal1 = $("#cecclm")[0].selectedIndex;
+            let cal2 = $("#ceccld")[0].selectedIndex;
+            let cal3 = $("#cecccf")[0].selectedIndex;
+            let cal4 = $("#ceccrc")[0].selectedIndex;
+            if (cal1 > 0) cal1 = cal1 - 1;
+            if (cal2 > 0) cal2 = cal2 - 1;
+            if (cal3 > 0) cal3 = cal3 - 1;
+            if (cal4 > 0) cal4 = cal4 - 1;
+            const res = cal1 + cal2 + cal3 + cal4;
+            $("#cecccac").val(res);
+            $("#cecccac-text").text(res);
+        }
+
+        let noduleCount = parseInt($("[name='cennod']").val());
+
+        function addNodule() {
+            if (noduleCount === 10) {
+                VAPALS.displayNotification("Maximum Nodules Reached", "No more than 10 nodules are allowed. You may need to scroll to the right to see the additional nodule fields.");
+            }
+            else {
+                displayNodules(++noduleCount);
+                $("[name='cennod']").val(noduleCount);
+                $("[name='ceanod']").val("y");
+
+                const $isItNew = $("#cect" + noduleCount + "ch");
+                // set nodule "is it new?" to "new" when type of exam (tex) is baseline
+                if ($("[name=cetex]:checked").val() === "b") {
+                    $isItNew.val("n");
+                }
+                $isItNew.focus().trigger('change.cteval');
+            }
+        }
+
+        function removeNodule() {
+            if (noduleCount > 0) {
+                $("#cect" + noduleCount + "ch").val("-").trigger('change.cteval');
+                displayNodules(--noduleCount);
+                $("[name='cennod']").val(noduleCount);
+                $("[name='ceanod']").val(noduleCount === 0 ? "n" : "y");
+            }
+        }
+
+        function displayNodules(count) {
+
+            $("[data-nodule-id]").hide().filter(function () {
+                return $(this).data("nodule-id") <= count;
+            }).show();
+
+            // Only show the delete icon on the last (rightmost) nodule;
+            // NB: there is currently no support renumbering fields so removing from the middle is not an option
+            $(".remove-nodule").hide().filter(function () {
+                return $(this).data("nodule-id") === count;
+            }).show();
+
+            $("#nodule-table").toggle(count > 0);
+            $("#add-first-nodule").toggle(count === 0);
+        }
+
+        function setupMeanDiameterCalculation(lengthFieldSuffix, widthFieldSuffix, diamFieldSuffix) {
+            const lengthFields = $("[name^=cect][name$=" + lengthFieldSuffix + "],[name^=cect][name$=" + widthFieldSuffix + "]");
+            lengthFields.on('keyup change', function (e) {
+                const targetField = $(e.target);
+                const noduleId = targetField.closest("td").attr("data-nodule-id");
+                const noduleDiamLabel = $("#cect" + noduleId + diamFieldSuffix + "-val");
+                const wval = $("#cect" + noduleId + widthFieldSuffix).val();
+                const lval = $("#cect" + noduleId + lengthFieldSuffix).val();
+                const w = wval ? Number(wval) : 0;
+                const l = lval ? Number(lval) : 0;
+
+                if (w > 0 && l > 0) {
+                    const meanDiam = (l + w) / 2;
+                    if (meanDiam > 0) {
+                        noduleDiamLabel.text(meanDiam.toFixed(1));
+                    } else {
+                        noduleDiamLabel.text("-");
+                    }
+                } else {
+                    noduleDiamLabel.text("-");
+                }
+            }).first().trigger('change');
+        }
+
+        function checkConsistentVolumeCalculations() {
+            const overrideValues = $(".volume-override-flag").map(function (idx, elem) {
+                return $(elem).val();
+            }).filter(function (idx, v) {
+                return v !== ""
+            });
+
+            if (overrideValues.length > 0) {
+                let identicalElems = true;
+                for (var i = 1; i < overrideValues.length; i++) {
+                    if (overrideValues[i] !== overrideValues[0]) {
+                        identicalElems = false;
+                        break;
+                    }
+                }
+
+                if (!identicalElems) {
+                    VAPALS.displayNotification(
+                        "Warning : Inconsistent measuring techniques!",
+                        "The volume measuring techniques are inconsistent, some values of the 'Volume' field are calculated, others manually entered. " +
+                        "It is recommended that the volume for all nodes is specified using the same method. " +
+                        "Please review and update the values in the 'Volume' fields for all nodules",
+                        BootstrapDialog.TYPE_WARNING
+                    );
+                }
+            }
+
+        }
+
+        function markNoduleVolumeManuallyEntered(noduleIdx, isManual) {
+            if (isManual) {
+                $("#cect" + noduleIdx + "sv").addClass("volumeOverride");
+                $("#cect" + noduleIdx + "svovrrde").val("true");
+                $("#cect" + noduleIdx + "svovrrde-warn").removeClass("invisible");
+            } else {
+                $("#cect" + noduleIdx + "sv").removeClass("volumeOverride");
+                // set the manually overriden hidden field to false
+                $("#cect" + noduleIdx + "svovrrde").val("false");
+                $("#cect" + noduleIdx + "svovrrde-warn").addClass("invisible");
+            }
+        }
+
+        function setupNoduleVolumeCalculations(noduleIdx) {
+            const lenWidthHeightFields = $("#cect" + noduleIdx + "sl, #cect" + noduleIdx + "sw, #cect" + noduleIdx + "sh");
+            lenWidthHeightFields.on("keyup", function () {
+                let allFilled = true;
+
+                lenWidthHeightFields.each(function () {
+                    const v = $(this).val() || 0;
+                    if (v == 0) {
+                        allFilled = false;
+                    }
+                });
+
+                const btnElem = $("#cect" + noduleIdx + "svb");
+                if (allFilled) {
+                    btnElem.attr("disabled", false);
+                } else {
+                    btnElem.attr("disabled", true);
+                }
+            }).first().trigger("keyup");
+
+            $("#cect" + noduleIdx + "svb").on('click', function () {
+                const l = $("#cect" + noduleIdx + "sl").val() || 0;
+                const w = $("#cect" + noduleIdx + "sw").val() || 0;
+                const h = $("#cect" + noduleIdx + "sh").val() || 0;
+
+                const v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
+
+                $("#cect" + noduleIdx + "sv").val(v.toFixed(1));
+                const fv = $(this).closest("form.validated").data('formValidation');
+                if (fv) {
+                    fv.revalidateField("cect" + noduleIdx + "sv")
+                }
+                markNoduleVolumeManuallyEntered(noduleIdx, false);
+                //temporarily disabled
+                // checkConsistentVolumeCalculations();
+                return false;
+            });
+
+
+            $("#cect" + noduleIdx + "sv").on('change', function () {
+                // manually overriding the volume calculation
+                if ($(this).val() !== "") {
+                    markNoduleVolumeManuallyEntered(noduleIdx, true);
+                    //temporarily disabled
+                    //checkConsistentVolumeCalculations();
+                }
+            });
+        }
+
+        function setupNoduleEnabledState(noduleIdx) {
+            $("#cect" + noduleIdx + "nt").conditionallyEnable({
+                sourceValues: "m",
+                enable: "#cect" + noduleIdx + "-container"
+            });
+
+            $("#cect" + noduleIdx + "ch").on('change.cteval', function () {
+
+                // All fields related to this nodule.
+                // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
+                // nodule 10 would match cect1*
+                const regex = new RegExp("cect" + noduleIdx + "[a-z]");
+                const $fields = $('input,select').filter(function () {
+                    const name = $(this).attr('name');
+                    const id = $(this).attr('id');
+                    return id !== "cect" + noduleIdx + "ch" && (regex.test(name) || regex.test(id));
+                });
+
+                if ($(this).val() === "-") {
+                    //empty out values
+                    $fields.filter("select").val("-");
+                    $fields.filter(":radio, :checkbox").prop('checked', false);
+                    $fields.filter(":text").val("");
+
+                    //change trigger added to clear any calculated text values
+                    $fields.trigger("change");
+
+                    //reset form validation messages (hide them)
+                    const fv = $("form.validated").data("formValidation");
+                    if (fv) {
+                        $.each($fields, function (i, el) {
+                            const fieldName = $(el).prop('name');
+                            if (fv.fields[fieldName]) {
+                                fv.resetField(fieldName);
+                            }
+                        });
+                    }
+
+                    //finally disable the fields
+                    $fields.prop('disabled', true);
+                }
+                else { //re-enable fields
+                    $fields
+                        .prop('disabled', false)
+                        .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
+                }
+            });
+        }
+
+        function createFormValidator() {
+
+            const $form = $('#main-form');
+
+            // for certain validators that use multiple inputs like checkboxes and radio groups, change the location
+            // of the error icon to be based on the form-group element, instead of being immediately adjacent to the
+            // first control in that group
+            const multiInputValidators = ['followup', 'cetex', 'cectp', 'ceimn'];
+
+            $form.formValidation({
+                    fields: {
+                        // SCAN
+                        cedos: {
+                            validators: {
+                                notEmpty: {message: 'Study date is required'},
+                                date: {max: VAPALS.todaysDate(), message: 'Study date may not be in the future'}
+                            }
+                        },
+                        cerad: {validators: {notEmpty: {message: 'Radioligist is required'}}},
+                        cetex: {validators: {notEmpty: {message: 'Type of exam is required'}}},
+                        cectp: {validators: {notEmpty: {message: 'CT protocol is required'}}},
+                        cectrst: {validators: {notEmpty: {message: 'Reconstructed slice thickness is required'}}},
+                        cectrsto: {
+                            validators: {
+                                notEmpty: {message: 'Reconstructed slice thickness is required'},
+                                numeric: {message: 'Must be a number'},
+                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
+                            }
+                        },
+                        cectcdti: {
+                            validators: {
+                                numeric: {message: 'Must be a number'},
+                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
+                            }
+                        },
+                        cectdlp: {
+                            validators: {
+                                numeric: {message: 'Must be a number'},
+                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
+                            }
+                        },
+                        cectssde: {
+                            validators: {
+                                numeric: {message: 'Must be a number'},
+                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
+                            }
+                        },
+                        sidoe: {
+                            validators: {
+                                notEmpty: {message: 'Baseline CT date is required'},
+                                date: {max: VAPALS.todaysDate(), message: 'Baseline CT date may not be in the future'}
+                            }
+                        },
+                        cedcs: {
+                            validators: {
+                                notEmpty: {message: 'Most recent comparative study date is required'},
+                                date: {
+                                    max: VAPALS.todaysDate(),
+                                    message: 'Most recent comparative study date may not be in the future'
+                                }
+                            }
+                        },
+                        cedps: {validators: {notEmpty: {message: 'Prior scans is required'}}},
+                        //Nodule fields are defined below due to dynamic nature of them.
+                        //Emphysema/Coronary Calcifications
+                        cecclm: {validators: {notEmpty: {message: 'Left main is required'}}},
+                        ceccld: {validators: {notEmpty: {message: 'LAD is required'}}},
+                        cecclf: {validators: {notEmpty: {message: 'Circumflex is required'}}},
+                        ceccrc: {validators: {notEmpty: {message: 'RCA is required'}}},
+
+                        //Abnormalities
+                        cdoaw: {validators: {integer: {message: 'must be a whole number'}}},
+                        ceaow: {validators: {integer: {message: 'must be a whole number'}}},
+
+                        //lymph nodes
+                        cemlnl1: { //use a real element name for the field so conditional plugins can toggle the field
+                            selector: '[name^=cemlnl]',
+                            validators: {choice: {min: 1, message: 'Select one or more classification'}}
+                        },
+
+                        //Impression
+                        ceimn: {validators: {notEmpty: {message: 'Nodule impression is required'}}},
+                        followup: {
+                            selector: '[name^=cefu][type=checkbox]',
+                            validators: {choice: {min: 1, message: 'Select at least one CT or Other follow up option'}}
+                        },
+                        cefud: {
+                            validators: {
+                                date: {
+                                    min: VAPALS.todaysDate(),
+                                    message: 'Follow up date must be at least today\'s date'
+                                }
+                            }
+                        },
+                    },
+                    plugins: {
+                        trigger: new FormValidation.plugins.Trigger(),
+                        bootstrap3: new FormValidation.plugins.Bootstrap3(),
+                        submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                        excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
+                        icon: new FormValidation.plugins.Icon({
+                            valid: '',
+                            invalid: 'glyphicon glyphicon-remove',
+                            validating: 'glyphicon glyphicon-refresh',
+                            onPlaced: function (e) {
+                                if (multiInputValidators.indexOf(e.field) > -1) {
+                                    $("#" + e.element.id).closest(".form-group").append(e.iconElement);
+                                }
+                            },
+                        })
+                    }
+                }
+            );
+
+            const fv = $form.data('formValidation');
+
+            fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);
+            fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
+
+            //Nodule validations
+            {% for i in noduleArray %}
+                fv.addField('cect{{ i }}ch', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect{{ i }}en', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect{{ i }}ll', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect{{ i }}sn', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect{{ i }}inl', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect{{ i }}inh', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect{{ i }}st', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect{{ i }}nt', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect{{ i }}sv', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect{{ i }}ssl', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect{{ i }}ssw', {validators: {notEmpty: {message: 'Enter a value'}}});
+            {% endfor %}
+
+            return fv;
+        }
+
+        $(function () {
+
+            const fv = createFormValidator();
+
+            // SCAN
+            // bind to change events on study date and baseline date to calculate "time since baseline"
+            const $tsbFields = $("#sidoe, #cedos");
+            $tsbFields.closest(".datepicker").on("dp.change", calculateTimeSinceBaseline); //latch onto datetimepicker change events
+            $tsbFields.first().trigger("change"); //trigger on page load for existing data;
+
+            const $cedos = $("#cedos");
+            if (!$cedos.val()) {
+                $cedos.val(moment().format(VAPALS.DATE_FORMAT)).trigger('change');
+            }
+
+            $("[name=cetex]").on("change", function () {
+                const $sidoe = $("#sidoe");
+                if ($("[name=cetex]:checked").val() === "b") { // type of exam (tex) is baseline
+                    if (!$sidoe.val()) {
+                        $sidoe.val($("#cedos").val()).trigger('change');
+                    }
+                }
+            }).conditionallyDisplay({sourceValues: "b", disable: "#non-baseline-container"});
+
+            //EMPHYSEMA
+            $("#cecclm, #ceccld, #cecccf, #ceccrc").on('change', calculateVisualCacScore);
+            calculateVisualCacScore();
+            $("#cepaw, #ceaow").on('keyup change', calculatePulmonaryArteryAortaRatio);
+            calculatePulmonaryArteryAortaRatio();
+            $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
+
+            // NODULES
+            setupMeanDiameterCalculation("sl", "sw", "sd");
+            setupMeanDiameterCalculation("ssl", "ssw", "ssd");
+            const noduleArrayLength = {{ noduleArray|length }};
+            for (var i = 0; i < noduleArrayLength; i++) {
+                setupNoduleVolumeCalculations(i);
+                setupNoduleEnabledState(i);
+            }
+
+            displayNodules(noduleCount);
+
+            //OTHER ABNORMALITIES
+            //Neck and mediastinal
+            $("#ceato").conditionallyDisplay({sourceValues: "o", enable: $("#ceatos")});
+            $("#ceayo").conditionallyDisplay({sourceValues: "o", enable: $("#ceayos")});
+            $("#cemvao").conditionallyDisplay({sourceValues: "o", enable: $("#cemvaos")});
+            $("#cemvlno").conditionallyDisplay({sourceValues: "o", enable: $("#cemelnos")});
+            $("#ceamo").conditionallyDisplay({sourceValues: "o", enable: $("#ceommos")});
+
+            //FOLLOWUP
+            exclusiveCheckbox("[name='cefuw']", "div");
+
+            //followup date calculation
+            $("[name=cefuw]").on('change', function () {
+                const when = $("[name='cefuw']:checked").val();
+                const $field = $("#cefud");
+                switch (when) {
+                    case "1y":
+                        $field.val(moment().add(1, 'year').format(VAPALS.DATE_FORMAT));
+                        break;
+                    case "nw":
+                        $field.val(moment().format(VAPALS.DATE_FORMAT));
+                        break;
+                    case "1m":
+                        $field.val(moment().add(1, 'month').format(VAPALS.DATE_FORMAT));
+                        break;
+                    case "3m":
+                        $field.val(moment().add(3, 'month').format(VAPALS.DATE_FORMAT));
+                        break;
+                    case "6m":
+                        $field.val(moment().add(6, 'month').format(VAPALS.DATE_FORMAT));
+                        break;
+                    default:
+                        $field.val("").focus();
+                }
+
+                if (fv) {
+                    fv.revalidateField('cefud');
+                }
+            });
+
+            //display other followup specify field if "other" checkbox is enabled.
+            $("[name=cefuo]").conditionallyDisplay({sourceValues: "y", enable: "#cefuo-container"});
+
+            function setCtFollowUpOther() {
+                $("[name=cefuw]").prop('checked', false).filter("[value=os]").prop('checked', true);
+            }
+
+            //auto-select "other" if user modifies the date
+            $("#cefud").on('keyup paste', setCtFollowUpOther).closest(".datepicker").on('dp.change', setCtFollowUpOther);
+
+            // mean diameter calculation
+            setupMeanDiameterCalculation("sl", "sw", "sd");
+
+            // solid mean diameter calculation
+            setupMeanDiameterCalculation("ssl", "ssw", "ssd");
+
+
+            //at least one checkbox whose name starts with cemlnl is required if cemln==y
+            $("#cemln").conditionallyEnable({enable: '#cemln-container'});
+
+            exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
+
+            //handle collapsible controls by toggling chevron icon and applying value to hidden field
+            $(".collapse").on('show.bs.collapse', function () {
+                const id = $(this).attr('id');
+                const $controller = $("[aria-controls=" + id + "]");
+                $controller.find(".fa-chevron-down").hide();
+                $controller.find(".fa-chevron-up").show();
+                const fieldName = $controller.data("field-name");
+                $("[name=" + fieldName + "]").val("y");
+            }).on('hide.bs.collapse', function () {
+                const id = $(this).attr('id');
+                const $controller = $("[aria-controls=" + id + "]");
+                $controller.find(".fa-chevron-down").show();
+                $controller.find(".fa-chevron-up").hide();
+                const fieldName = $controller.data("field-name");
+                $("[name=" + fieldName + "]").val("");
+            });
+
+            //open panels where the field name is already set to "y"
+            $.each($(".panel-heading[data-toggle=collapse]"), function (i, controller) {
+                const $controller = $(controller);
+                const href = $controller.attr('href');
+                const fieldName = $controller.data('field-name');
+                const fieldValue = $("[name=" + fieldName + "]").val();
+                if (fieldValue === "y") {
+                    $(href).collapse('show');
+                }
+            });
+
+            $.each($("#abnormalities .yes-checkbox"), function (i, el) {
+                const $checkbox = $(el);
+                const name = $checkbox.attr('name');
+                const $container = $("." + name + "-container");
+                if ($container.length > 0) {
+                    $checkbox.conditionallyEnable({enable: $container});
+                }
+            });
+
+            $('#body').scrollspy({target: '#wizard-bar', offset: 10})
+
+        });
+    </script>
+
+{% endblock %}

@@ -1,0 +1,362 @@
+KIDS Distribution saved on Sep 13, 2017@21:45:12
+Initial form mapping file 311.11 for VA-PALS
+**KIDS**:sami*1.0*002^
+
+**INSTALL NAME**
+sami*1.0*002
+"BLD",10472,0)
+sami*1.0*002^^0^3170913^y
+"BLD",10472,1,0)
+^^1^1^3170913^
+"BLD",10472,1,1,0)
+file definition of the SAMI FORM MAPPING file 311.11 ^SAMI(311.11,
+"BLD",10472,4,0)
+^9.64PA^311.11^1
+"BLD",10472,4,311.11,0)
+311.11
+"BLD",10472,4,311.11,222)
+y^y^f^^^^n
+"BLD",10472,4,"B",311.11,311.11)
+
+"BLD",10472,6.3)
+1
+"BLD",10472,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10472,"KRN",.4,0)
+.4
+"BLD",10472,"KRN",.401,0)
+.401
+"BLD",10472,"KRN",.402,0)
+.402
+"BLD",10472,"KRN",.403,0)
+.403
+"BLD",10472,"KRN",.5,0)
+.5
+"BLD",10472,"KRN",.84,0)
+.84
+"BLD",10472,"KRN",3.6,0)
+3.6
+"BLD",10472,"KRN",3.8,0)
+3.8
+"BLD",10472,"KRN",9.2,0)
+9.2
+"BLD",10472,"KRN",9.8,0)
+9.8
+"BLD",10472,"KRN",19,0)
+19
+"BLD",10472,"KRN",19.1,0)
+19.1
+"BLD",10472,"KRN",101,0)
+101
+"BLD",10472,"KRN",409.61,0)
+409.61
+"BLD",10472,"KRN",771,0)
+771
+"BLD",10472,"KRN",779.2,0)
+779.2
+"BLD",10472,"KRN",870,0)
+870
+"BLD",10472,"KRN",8989.51,0)
+8989.51
+"BLD",10472,"KRN",8989.52,0)
+8989.52
+"BLD",10472,"KRN",8994,0)
+8994
+"BLD",10472,"KRN","B",.4,.4)
+
+"BLD",10472,"KRN","B",.401,.401)
+
+"BLD",10472,"KRN","B",.402,.402)
+
+"BLD",10472,"KRN","B",.403,.403)
+
+"BLD",10472,"KRN","B",.5,.5)
+
+"BLD",10472,"KRN","B",.84,.84)
+
+"BLD",10472,"KRN","B",3.6,3.6)
+
+"BLD",10472,"KRN","B",3.8,3.8)
+
+"BLD",10472,"KRN","B",9.2,9.2)
+
+"BLD",10472,"KRN","B",9.8,9.8)
+
+"BLD",10472,"KRN","B",19,19)
+
+"BLD",10472,"KRN","B",19.1,19.1)
+
+"BLD",10472,"KRN","B",101,101)
+
+"BLD",10472,"KRN","B",409.61,409.61)
+
+"BLD",10472,"KRN","B",771,771)
+
+"BLD",10472,"KRN","B",779.2,779.2)
+
+"BLD",10472,"KRN","B",870,870)
+
+"BLD",10472,"KRN","B",8989.51,8989.51)
+
+"BLD",10472,"KRN","B",8989.52,8989.52)
+
+"BLD",10472,"KRN","B",8994,8994)
+
+"FIA",311.11)
+SAMI FORM MAPPING
+"FIA",311.11,0)
+^SAMI(311.11,
+"FIA",311.11,0,0)
+311.11
+"FIA",311.11,0,1)
+y^y^f^^^^n
+"FIA",311.11,0,10)
+
+"FIA",311.11,0,11)
+
+"FIA",311.11,0,"RLRO")
+
+"FIA",311.11,311.11)
+0
+"FIA",311.11,311.11001)
+0
+"MBREQ")
+0
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"SEC","^DIC",311.11,311.11,0,"AUDIT")
+@
+"SEC","^DIC",311.11,311.11,0,"DD")
+@
+"SEC","^DIC",311.11,311.11,0,"DEL")
+@
+"SEC","^DIC",311.11,311.11,0,"LAYGO")
+@
+"SEC","^DIC",311.11,311.11,0,"RD")
+@
+"SEC","^DIC",311.11,311.11,0,"WR")
+@
+"VER")
+8.0^22.2
+"^DD",311.11,311.11,0)
+FIELD^^.02^5
+"^DD",311.11,311.11,0,"DT")
+3170913
+"^DD",311.11,311.11,0,"IX","B",311.11,.01)
+
+"^DD",311.11,311.11,0,"NM","SAMI FORM MAPPING")
+
+"^DD",311.11,311.11,.01,0)
+FORM^RF^^0;1^K:$L(X)>30!(X?.N)!($L(X)<3)!'(X'?1P.E) X
+"^DD",311.11,311.11,.01,.1)
+FORM NAME
+"^DD",311.11,311.11,.01,1,0)
+^.1
+"^DD",311.11,311.11,.01,1,1,0)
+311.11^B
+"^DD",311.11,311.11,.01,1,1,1)
+S ^SAMI(311.11,"B",$E(X,1,30),DA)=""
+"^DD",311.11,311.11,.01,1,1,2)
+K ^SAMI(311.11,"B",$E(X,1,30),DA)
+"^DD",311.11,311.11,.01,3)
+NAME MUST BE 3-30 CHARACTERS, NOT NUMERIC OR STARTING WITH PUNCTUATION
+"^DD",311.11,311.11,.01,"DT")
+3170913
+"^DD",311.11,311.11,.02,0)
+INDEXED BY^FJ20^^2;1^K:$L(X)>20!($L(X)<1) X
+"^DD",311.11,311.11,.02,3)
+MUMPS variable to use for lookup and indexing
+"^DD",311.11,311.11,.02,21,0)
+^^1^1^3170913^
+"^DD",311.11,311.11,.02,21,1,0)
+MUMPS symbol to use for lookup and indexing ie. studyid or DFN
+"^DD",311.11,311.11,.02,"DT")
+3170913
+"^DD",311.11,311.11,.5,0)
+FILEMAN FILE (DEFAULT)^P1'^DIC(^0;2^Q
+"^DD",311.11,311.11,.5,.1)
+DEFAULT FILEMAN FILE FOR MAPPING
+"^DD",311.11,311.11,.5,"DT")
+3170913
+"^DD",311.11,311.11,.7,0)
+GRAPH^P17.040801^%wd(17.040801,^0;3^Q
+"^DD",311.11,311.11,.7,.1)
+DEFAULT GRAPH FOR INTERMEDIATE STORAGE
+"^DD",311.11,311.11,.7,"DT")
+3170913
+"^DD",311.11,311.11,1,0)
+VARIABLE^311.11001A^^1;0
+"^DD",311.11,311.11001,0)
+VARIABLE SUB-FIELD^^5^8
+"^DD",311.11,311.11001,0,"DT")
+3170913
+"^DD",311.11,311.11001,0,"IX","B",311.11001,.01)
+
+"^DD",311.11,311.11001,0,"NM","VARIABLE")
+
+"^DD",311.11,311.11001,0,"UP")
+311.11
+"^DD",311.11,311.11001,.01,0)
+VARIABLE^MFJ90^^0;1^K:$L(X)>90!($L(X)<1) X
+"^DD",311.11,311.11001,.01,1,0)
+^.1
+"^DD",311.11,311.11001,.01,1,1,0)
+311.11001^B
+"^DD",311.11,311.11001,.01,1,1,1)
+S ^SAMI(311.11,DA(1),1,"B",$E(X,1,30),DA)=""
+"^DD",311.11,311.11001,.01,1,1,2)
+K ^SAMI(311.11,DA(1),1,"B",$E(X,1,30),DA)
+"^DD",311.11,311.11001,.01,3)
+Answer must be 1-90 characters in length.
+"^DD",311.11,311.11001,.01,"DT")
+3170913
+"^DD",311.11,311.11001,.02,0)
+TITLE^FJ90^^0;4^K:$L(X)>90!($L(X)<1) X
+"^DD",311.11,311.11001,.02,3)
+Answer must be 1-90 characters in length.
+"^DD",311.11,311.11001,.02,21,0)
+^^1^1^3170913^
+"^DD",311.11,311.11001,.02,21,1,0)
+Dictionary title of this variable
+"^DD",311.11,311.11001,.02,"DT")
+3170913
+"^DD",311.11,311.11001,.5,0)
+FILEMAN FILE^P1'^DIC(^0;2^Q
+"^DD",311.11,311.11001,.5,"DT")
+3170913
+"^DD",311.11,311.11001,1,0)
+FILEMAN FIELD^NJ17,7^^0;3^K:+X'=X!(X>999999999)!(X<0)!(X?.E1"."8N.N) X
+"^DD",311.11,311.11001,1,3)
+Fileman field number which maps to this variable
+"^DD",311.11,311.11001,1,21,0)
+^^1^1^3170913^
+"^DD",311.11,311.11001,1,21,1,0)
+Fileman field number which maps to this variable
+"^DD",311.11,311.11001,1,"DT")
+3170913
+"^DD",311.11,311.11001,2,0)
+DATA TYPE^FJ30^^0;5^K:$L(X)>30!($L(X)<1) X
+"^DD",311.11,311.11001,2,3)
+Dictionary data type of this variable
+"^DD",311.11,311.11001,2,21,0)
+^^1^1^3170913^
+"^DD",311.11,311.11001,2,21,1,0)
+Dictionary data type of this variable
+"^DD",311.11,311.11001,2,"DT")
+3170913
+"^DD",311.11,311.11001,3,0)
+REQUIRED^S^1:YES;0:NO;^0;6^Q
+"^DD",311.11,311.11001,3,3)
+Is this variable required?
+"^DD",311.11,311.11001,3,21,0)
+^^1^1^3170913^
+"^DD",311.11,311.11001,3,21,1,0)
+Dictionary definition of whether the variable is required
+"^DD",311.11,311.11001,3,"DT")
+3170913
+"^DD",311.11,311.11001,4,0)
+ELCAP FIELD NUMBER^NJ13,7^^1;1^K:+X'=X!(X>99999)!(X<0)!(X?.E1"."8N.N) X
+"^DD",311.11,311.11001,4,3)
+ELCAP field number of this variable, if available
+"^DD",311.11,311.11001,4,21,0)
+^^2^2^3170913^
+"^DD",311.11,311.11001,4,21,1,0)
+Dictionary value of the ELCAP field number for this variable. May not be ava
+"^DD",311.11,311.11001,4,21,2,0)
+May not be available.
+"^DD",311.11,311.11001,4,"DT")
+3170913
+"^DD",311.11,311.11001,5,0)
+COMMENTS^FJ90^^1;2^K:$L(X)>90!($L(X)<1) X
+"^DD",311.11,311.11001,5,3)
+Answer must be 1-90 characters in length.
+"^DD",311.11,311.11001,5,21,0)
+^^1^1^3170913^
+"^DD",311.11,311.11001,5,21,1,0)
+Dictionary definition/comments about the variable
+"^DD",311.11,311.11001,5,"DT")
+3170913
+"^DIC",311.11,311.11,0)
+SAMI FORM MAPPING^311.11
+"^DIC",311.11,311.11,0,"GL")
+^SAMI(311.11,
+"^DIC",311.11,311.11,"%",0)
+^1.005^^
+"^DIC",311.11,311.11,"%D",0)
+^^2^2^3170913^
+"^DIC",311.11,311.11,"%D",1,0)
+This is a form mapping file created by gpl for the VA-PALS project
+"^DIC",311.11,311.11,"%D",2,0)
+It maps the variable names used in the ELCAP forms to field numbers in fileman files
+"^DIC",311.11,"B","SAMI FORM MAPPING",311.11)
+
+**END**
+**END**

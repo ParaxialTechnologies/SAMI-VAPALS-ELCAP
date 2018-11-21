@@ -1,0 +1,1369 @@
+STANDARD DATA DICTIONARY #311.102 -- SAMI BACKGROUND FILE     10/5/17    PAGE 1
+STORED IN ^SAMI(311.102,  *** NO DATA STORED YET ***   SITE: AVICENNA.VISTAEXPER
+TISE.NET   UCI: VAH,ROU                                    (VERSION 18.0T03)
+
+DATA          NAME                  GLOBAL        DATA
+ELEMENT       TITLE                 LOCATION      TYPE
+-------------------------------------------------------------------------------
+
+
+              DD ACCESS: @
+              RD ACCESS: @
+              WR ACCESS: @
+             DEL ACCESS: @
+           LAYGO ACCESS: @
+           AUDIT ACCESS: @
+
+PRIMARY KEY:        A (#124)
+  Uniqueness Index: B (#1375)
+       File, Field: 1) STUDY ID (311.102,.01)
+
+
+INDEXED BY:    STUDY ID (B)
+
+
+    LAST MODIFIED: OCT 5,2017@13:05:47
+
+311.102,.01   STUDY ID               0;1 FREE TEXT (Required) (Key field)
+
+              Study ID
+              INPUT TRANSFORM:  K:$L(X)>15!($L(X)<3)!'(X?2.6U1.9N) X
+              MAXIMUM LENGTH:   15
+              LAST EDITED:      OCT 05, 2017
+              HELP-PROMPT:      Answer must be 3-15 characters in length, two
+                                to six letters followed by one to nine digits.
+                                Enter ?? for more help.
+              DESCRIPTION:      The unique study ID assigned to this patient.
+                                You can find the patient's study ID on his or
+                                her Intake form.
+
+                                This is the primary key field for SAMI Intake
+                                records. Every I-ELCAP participant will have a
+                                record with this field filled in. It is
+                                assigned automatically by the SAMI application
+                                according to the I-ELCAP protocol.
+
+              TECHNICAL DESCR:  Eventually, make this a pointer to file SAMI
+                                Intake (311.101).
+
+                                Primary Development
+
+                                @primary-dev: Kathy L Ice (kli)
+                                @primary-dev-org: Vista Expertise Network (ven)
+                                @additional-dev: Frederick D. S. Marshall
+                                (toad)
+
+                                2017-08-03 ven/kli SAMI*18.0T01: field
+                                originally created.
+
+                                2017-10-05 ven/toad SAMI*18.0T03: converted
+                                field from Name to Study ID, since Name is not
+                                usually available from the Background Form.
+
+              SOURCE OF DATA:   SAMI Background Form, I-ELCAP
+              FIELD INDEX:      B (#1375)    REGULAR    IR    LOOKUP & SORTING
+                   Unique for:  Key A (#124), File #311.102
+                  Short Descr:  Lookup SAMi Background Forms by Study ID
+                  Description:  Cross-reference B creates index B, which is
+                                file SAMI Background's uniqueness index for its
+                                primary key, A. It lets SAMI Background Form
+                                records be selected by field Study ID (.01).
+                    Set Logic:  S ^SAMI(311.102,"B",X,DA)=""
+                   Kill Logic:  K ^SAMI(311.102,"B",X,DA)
+                   Whole Kill:  K ^SAMI(311.102,"B")
+                         X(1):  STUDY ID  (311.102,.01)  (Subscr 1)  (forwards)
+
+
+311.102,.02   DATE OF BIRTH          0;2 DATE (Required)
+
+              Date of birth
+              INPUT TRANSFORM:  S %DT="E" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Enter the patient's date of birth, in any
+                                format.
+
+311.102,.03   AGE                    0;3 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>150)!(X<18)!(X?.E1"."1N.N) X
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Type a number between 18 and 150, 0 decimal
+                                digits.
+              DESCRIPTION:      Enter the patient's age. Eventually, this value
+                                will be calculated, but for now it needs to be
+                                entered manually.
+
+
+311.102,1     NAME                   0;4 FREE TEXT
+
+              Patient Name
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<3) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      OCT 05, 2017
+              HELP-PROMPT:      Answer must be 3-30 characters in length.
+              DESCRIPTION:
+                                The name of the patient: LASTNAME,FIRSTNAME MI
+
+              TECHNICAL DESCR:  Revisit when .01 is changed to a pointer.
+
+                                Primary Development
+
+                                @primary-dev: Kathy L Ice (kli)
+                                @primary-dev-org: Vista Expertise Network (ven)
+                                @additional-dev: Frederick D. S. Marshall
+                                (toad)
+
+                                2017-08-03 ven/kli SAMI*18.0T01: field
+                                originally created.
+
+                                2017-10-05 ven/toad SAMI*18.0T03: converted
+                                field from Study ID to Name.
+
+
+311.102,2     INTAKE DATE            0;5 DATE (Required)
+
+              INPUT TRANSFORM:  S %DT="EX" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Enter a date, in any format.
+              DESCRIPTION:      Enter the date of the patient's baseline CT.
+                                You can also use codes, such as T for today or
+                                T-1D for yesterday (1 day ago).
+
+
+311.102,3     OCCUPATION             0;6 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>20!($L(X)<3) X
+              MAXIMUM LENGTH:   20
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Answer must be 3-20 characters in length.
+              DESCRIPTION:      What is the patient's occupation? You may leave
+                                this field blank if you are unsure.
+
+
+311.102,4     OCCUPATION CODE        0;7 SET
+
+                                '1' FOR Higher executives;
+                                '2' FOR Business managers;
+                                '3' FOR Administrative personnel;
+                                '4' FOR Clerical/Sales workers;
+                                '5' FOR Skilled manual employees;
+                                '6' FOR Machine operators;
+                                '7' FOR Unskilled employees;
+                                '8' FOR Unemployed;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Enter the code that best represents the
+                                patient's occupation.
+
+311.102,5     SEX                    0;8 SET
+
+                                'm' FOR Male;
+                                'f' FOR Female;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Enter m for male or f for female.
+
+311.102,6     HEIGHT                 0;9 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>999)!(X<1)!(X?.E1"."3N.N) X
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Type a number between 1 and 999, 2 decimal
+                                digits.
+              DESCRIPTION:      Enter the patient's height in inches or
+                                centimeters. Indicate which you used in the
+                                next field.
+
+
+311.102,6.1   HEIGHT UNITS           0;10 SET
+
+                                'i' FOR Inches;
+                                'c' FOR Centimeters;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Enter i for inches or c for centimeters.
+              DESCRIPTION:      Enter the units used in the HEIGHT field: i for
+                                inches or c for centimeters.
+
+
+311.102,6.2   WEIGHT                 0;11 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>999)!(X<1)!(X?.E1"."3N.N) X
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Type a number between 1 and 999, 2 decimal
+                                digits.
+              DESCRIPTION:      Enter the patient's weight, in pounds or
+                                kilograms. Use the next field to indicate which
+                                you used.
+
+
+311.102,6.3   WEIGHT UNITS           0;12 SET
+
+                                'p' FOR Pounds;
+                                'k' FOR Kilograms;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Enter p for pounds or k for kilograms.
+              DESCRIPTION:      Enter the units used in the WEIGHT field: p for
+                                pounds or k for kilograms.
+
+
+311.102,6.4   BMI                    0;13 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>999)!(X<1)!(X?.E1"."5N.N) X
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Type a number between 1 and 999, 4 decimal
+                                digits.
+              DESCRIPTION:      Enter the patient's BMI, calculated from the
+                                given height and weight.
+
+
+311.102,7     ETHNICITY              0;14 SET
+
+                                'y' FOR Hispanic or Latino;
+                                'n' FOR Not Hispanic or Latino;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Enter y if the patient is Hispanic or Latino,
+                                or n if not.
+              DESCRIPTION:      Indicate whether the patient is Hispanic/Latino
+                                (y) or not (n). The patient's race can be
+                                indicated in the next field.
+
+
+311.102,7.1   RACE                   0;15 SET
+
+                                'i' FOR American Indian;
+                                'k' FOR Alaska Native;
+                                'a' FOR Asian;
+                                'p' FOR Native Hawaiian or Other Pacific Island
+                                er;
+                                'b' FOR Black or African American;
+                                'w' FOR White;
+                                't' FOR Two or more;
+                                'o' FOR Other (specify);
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Enter the code describing the patient's race.
+              DESCRIPTION:      Enter the code corresponding with the patient's
+                                race:
+
+                                i  American indian. A person having origins in
+                                any of the original peoples of North America,
+                                and who maintains cultural identification
+                                through tribal affiliation or community
+                                recognition.
+
+                                k  Alaskan Native. A person having origins in
+                                any of the indigenous peoples of Alaska, and
+                                who maintains cultural identification through
+                                tribal affiliation or community recognition.
+
+                                a  Asian. A person having origins in any of the
+                                original peoples of the Far East, Southeast
+                                Asia, or the Indian subcontinent. This area
+                                includes, for example, China, India, Japan,
+                                Korea, and the Philippine Islands.
+
+                                p  Native Hawaiian or other Pacific Islander. A
+                                person having origins in any of the original
+                                peoples of Hawaii or the Pacific Islands. This
+                                area includes, for example, Hawaii, Polynesia,
+                                Melanesia, and Micronesia.
+
+                                b  Black or African American. A person having
+                                origins in any of the black racial groups of
+                                Africa.
+
+                                w  White. A person having origins in any of the
+                                original peoples of Europe, North Africa, or
+                                the Middle East.
+
+                                t  Two or more. A person self-identifying as
+                                multiracial.
+
+                                o  Other (specify). Any other race reported
+                                that doesn't fit the above categories. If this
+                                category is chosen, please use the next field
+                                to specify.
+
+                                You may leave this field blank.
+
+
+311.102,7.2   RACE (SPECIFY)         0;16 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>20!($L(X)<2) X
+              MAXIMUM LENGTH:   20
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Answer must be 2-20 characters in length.
+              DESCRIPTION:      If you chose "other" as the patient's race,
+                                specify the race here.
+
+
+311.102,8     LEVEL OF EDUCATION     0;17 SET
+
+                                'n' FOR did not complete high school;
+                                'hs' FOR completed high school;
+                                'sc' FOR started college;
+                                'ts' FOR completed trade school;
+                                'ad' FOR completed 2-year college degree;
+                                'bd' FOR completed 4-year college degree;
+                                'gd' FOR advanced degree;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      The highest level of education completed by the
+                                patient.
+
+311.102,9     MILITARY               0;18 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Did the patient serve in the military?
+              DESCRIPTION:      Did the patient serve in the military? If yes,
+                                use the next field to indicate which branch of
+                                the military they served in.
+
+
+311.102,9.1   BRANCH                 0;19 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>20!($L(X)<2) X
+              MAXIMUM LENGTH:   20
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Answer must be 2-20 characters in length.
+              DESCRIPTION:      Enter the branch of the military the patient
+                                served in.
+
+
+311.102,9.2   SCAN ORDERED           0;20 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Was a CT lung screening scan ordered for this
+                                patient?
+              DESCRIPTION:      Was a CT lung screening scan ordered for this
+                                patient (CPT code G0297)? If yes, please fill
+                                in the next fields about the ordering
+                                practitioner.
+
+
+311.102,10    PRACTITIONER NAME      0;21 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<3) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Answer must be 3-30 characters in length.
+              DESCRIPTION:      If a CT lung screening scan was ordered, enter
+                                the name of the ordering practitioner. If not,
+                                leave the field blank.
+
+
+311.102,10.1  PRACTITIONER NPI       0;22 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>12!($L(X)<1) X
+              MAXIMUM LENGTH:   12
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Answer must be 1-12 characters in length.
+              DESCRIPTION:      If a CT lung screening scan was ordered for
+                                this patient, enter the NPI of the ordering
+                                practitioner. You may leave this field blank.
+
+
+311.102,11    SHARED DECISION        0;23 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Is there documentation of shared
+                                decision-making?
+
+311.102,12    PRACTITIONER PACK YEARS 0;24 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>999)!(X<1)!(X?.E1"."5N.N) X
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Type a number between 1 and 999, 4 decimal
+                                digits.
+              DESCRIPTION:      If a CT lung screening scan was ordered for
+                                this patient, enter the pack years as reported
+                                by the ordering practitioner.
+
+
+311.102,12.1  PRACTITIONER SMOKING STATUS 0;25 SET
+
+                                'c' FOR current;
+                                'f' FOR former;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Enter c for current or f for former.
+              DESCRIPTION:      Enter the patient's smoking status as reported
+                                by the ordering practitioner: c for current
+                                smoker or f for former smoker.
+
+
+311.102,12.2  PRACTITIONER QUIT YEARS 0;26 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>99)!(X<0)!(X?.E1"."3N.N) X
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Type a number between 0 and 99, 2 decimal
+                                digits.
+              DESCRIPTION:      Enter the patient's quit years as reported by
+                                the ordering practitioner.
+
+
+311.102,12.3  PRACTITIONER ASYMPTOMATIC 0;27 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Did the ordering pracitioner report the patient
+                                asymptomatic for lung cancer?
+
+311.102,12.4  CLINICAL INFORMATION   1;0   WORD-PROCESSING #311.10211
+                     (IGNORE "|")
+
+
+311.102,13    FAMILY HISTORY OF LUNG CANCER 2;1 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+                                'q' FOR ?;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Does the patient's family have a history of
+                                lung cancer?
+
+311.102,13.1  LUNG CANCER FATHER     2;2 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Does the patient's father have a history of
+                                lung cancer?
+
+311.102,13.2  LUNG CANCER MOTHER     2;3 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Does the patient's mother have a history of
+                                lung cancer?
+
+311.102,13.3  LUNG CANCER SIBLING    2;4 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Do one of more of the patient's sibings have a
+                                history of lung cancer?
+
+311.102,14    ALL OTHER CANCERS      2;5 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+                                'q' FOR ?;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Has the patient ever had any type of cancer?
+              DESCRIPTION:      Has the patient ever had any type of cancer? If
+                                yes, use the next two fields to indicate the
+                                cancer site and diagnosis date.
+
+
+311.102,14.1  OTHER CANCERS WHEN     2;6 DATE
+
+              INPUT TRANSFORM:  S %DT="E" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      In what year was the patient's cancer
+                                diagnosed?
+
+311.102,14.2  OTHER CANCERS SITE     2;7 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<3) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Answer must be 3-30 characters in length.
+              DESCRIPTION:      What is the primary site of the patient's
+                                previous cancer?
+
+
+311.102,15    ASTHMA                 2;8 SET
+
+              Asthma
+                                'n' FOR No;
+                                'y' FOR Yes;
+                                'q' FOR ?;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Does the patient have asthma?
+
+311.102,15.1  ASTHMA TREATED         2;9 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Is the patient's asthma currently being
+                                treated?
+
+311.102,16    EMPHYSEMA OR COPD      2;10 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+                                'q' FOR ?;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Does the patient have emphysema or chronic
+                                bronchitis (COPD)?
+
+311.102,16.1  EMPHYSEMA OR COPD WHEN 2;11 DATE
+
+              INPUT TRANSFORM:  S %DT="E" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      In what year was the patient's emphysema or
+                                COPD diagnosed?
+
+311.102,17    HYPERTENSION           2;12 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+                                'q' FOR ?;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Does the patient have high blood pressure
+                                (hypertension)?
+
+311.102,17.1  HYPERTENSION TREATED   2;13 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Is the patient's hypertension currently being
+                                treated?
+
+311.102,17.2  HYPERTENSION SINCE     2;14 DATE
+
+              INPUT TRANSFORM:  S %DT="E" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      When was the patient diagnosed with
+                                hypertension?
+
+311.102,17.3  HYPERTENSION HIGHEST VALUE 2;15 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>9!($L(X)<1) X
+              MAXIMUM LENGTH:   9
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Answer must be 1-9 characters in length.
+              DESCRIPTION:      Enter the highest blood-pressure value recorded
+                                for the patient.
+
+
+311.102,18    HIGH CHOLESTEROL       2;16 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+                                'q' FOR ?;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Does the patient have high cholesterol?
+
+311.102,18.1  HIGH CHOLESTEROL TREATED 2;17 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Is the patient's high cholesterol currently
+                                being treated?
+
+311.102,19    ANGIOPLASTY OR STENT   2;18 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+                                'q' FOR ?;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Has the patient ever had an angioplasty or a
+                                stent?
+
+311.102,19.1  ANGIOPLASTY WHEN       2;19 DATE
+
+              INPUT TRANSFORM:  S %DT="E" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      When was the patient's angioplasty or stent?
+
+311.102,19.2  ANGIOPLASTY WHERE      2;20 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Answer must be 5-30 characters in length.
+              DESCRIPTION:      Where was the patient treated when they had
+                                their angioplasty or stent?
+
+
+311.102,20    MI                     2;21 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+                                'q' FOR ?;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Has the patient ever had a myocardial
+                                infarction (MI)?
+
+311.102,20.1  MI WHEN                2;22 DATE
+
+              INPUT TRANSFORM:  S %DT="E" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      When was the patient's myocardial infarction
+                                (MI)?
+
+311.102,20.2  MI WHERE               2;23 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Answer must be 5-30 characters in length.
+              DESCRIPTION:      Where was the patient treated for their
+                                myocardial infarction (MI)?
+
+
+311.102,21    STROKE                 2;24 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+                                'q' FOR ?;
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Has the patient ever had a stroke?
+
+311.102,21.1  STROKE WHEN            2;25 DATE
+
+              INPUT TRANSFORM:  S %DT="E" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      When did the patient have a stroke?
+
+311.102,21.2  STROKE WHERE           2;26 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 07, 2017
+              HELP-PROMPT:      Answer must be 5-30 characters in length.
+              DESCRIPTION:
+                                Where was the patient treated for their stroke?
+
+
+311.102,22    PERIPHERAL VASCULAR DISEASE 2;27 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+                                'q' FOR ?;
+              LAST EDITED:      SEP 08, 2017
+              HELP-PROMPT:      Does the patient have peripheral vascular
+                                disease (poor circulation)?
+
+311.102,23    DIABETES               2;28 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+                                'q' FOR ?;
+              LAST EDITED:      SEP 08, 2017
+              HELP-PROMPT:      Does the patient have diabetes?
+
+311.102,23.1  DIABETES AGE           2;29 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>99)!(X<0)!(X?.E1"."1N.N) X
+              LAST EDITED:      SEP 08, 2017
+              HELP-PROMPT:      Type a number between 0 and 99, 0 decimal
+                                digits.
+              DESCRIPTION:      At what age was the patient first diagnosed
+                                with diabetes?
+
+
+311.102,23.2  DIABETES TREATED       2;30 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 08, 2017
+              HELP-PROMPT:      Is the patient's diabetes currently being
+                                treated?
+
+311.102,24    LIVER DISEASE          2;31 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+                                'q' FOR ?;
+              LAST EDITED:      SEP 08, 2017
+              HELP-PROMPT:      Does the patient have liver disease?
+
+311.102,24.1  LIVER SEVERITY         2;32 SET
+
+                                'm' FOR Mild;
+                                's' FOR Moderate/Severe;
+              LAST EDITED:      SEP 08, 2017
+              HELP-PROMPT:      Enter m for mild or s for moderate/severe liver
+                                disease.
+
+311.102,25    RENAL DISEASE          2;33 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+                                'q' FOR ?;
+              LAST EDITED:      SEP 08, 2017
+              HELP-PROMPT:      Does the patient have renal (kidney) disease?
+
+311.102,25.1  RENAL SEVERITY         2;34 SET
+
+                                'm' FOR Mild;
+                                's' FOR Moderate/Severe;
+              LAST EDITED:      SEP 08, 2017
+              HELP-PROMPT:      Enter m for mild or s for moderate/severe renal
+                                (kidney) disease.
+
+311.102,26    LUNG CANCER SYMPTOMS   2;35 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 08, 2017
+              HELP-PROMPT:      Has the patient experienced any symptoms
+                                indicative of lung cancer?
+
+311.102,26.1  SYMPTOMS CHECK         3;0 SET Multiple #311.10212
+
+
+311.10212,.01   SYMPTOMS CHECK         0;1 SET (Multiply asked)
+
+                                  'b' FOR cough producing bloody material;
+                                  'h' FOR persistent hoarseness;
+                                  'l' FOR unexplained weight loss;
+                                  'o' FOR other;
+                LAST EDITED:      SEP 08, 2017
+                HELP-PROMPT:      Select any symptom(s) the patient has
+                                  experienced.
+                DESCRIPTION:      Select any symptom(s) the patient has
+                                  experienced. You may select more than one. If
+                                  you select "other," please use the next field
+                                  to specify.
+
+                CROSS-REFERENCE:  311.10212^B
+                                1)= S ^SAMI(311.102,DA(1),3,"B",$E(X,1,30),DA)=
+                                ""
+
+                                2)= K ^SAMI(311.102,DA(1),3,"B",$E(X,1,30),DA)
+
+
+
+
+311.102,26.2  SYMPTOMS OTHER SPECIFY 4;1 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>20!($L(X)<5) X
+              MAXIMUM LENGTH:   20
+              LAST EDITED:      SEP 08, 2017
+              HELP-PROMPT:      Answer must be 5-20 characters in length.
+              DESCRIPTION:      If you chose "other" as a symptom the patient
+                                has experienced, please specify the symptom
+                                here.
+
+
+311.102,27    CHEST CT WHEN          4;2 SET
+
+              Most recent chest CT?
+                                'a' FOR less than 6 months ago;
+                                'b' FOR 6-18 months ago;
+                                'f' FOR 18 months to 3 years ago;
+                                'c' FOR 3 to 5 years ago;
+                                'd' FOR over 5 years ago;
+                                'e' FOR never;
+              LAST EDITED:      SEP 25, 2017
+              HELP-PROMPT:      When was the patient's most recent chest CT?
+
+311.102,27.1  CHEST CT WHERE         4;3 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 08, 2017
+              HELP-PROMPT:      Answer must be 5-30 characters in length.
+              DESCRIPTION:      Where was the patient's most recent chest CT
+                                done?
+
+
+311.102,27.2  PULMONARY FUNCTION TEST 4;4 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 08, 2017
+              HELP-PROMPT:      Has the patient had a pulmonary function test
+                                within the last five years?
+
+311.102,27.3  FEV1 (L/s)             4;5 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>9)!(X<0)!(X?.E1"."3N.N) X
+              LAST EDITED:      SEP 08, 2017
+              HELP-PROMPT:      Type a number between 0 and 9, 2 decimal
+                                digits.
+              DESCRIPTION:      Enter the FEV1 (L/s) value from the patient's
+                                recent pulmonary function test, if available.
+
+
+311.102,27.4  FVC (L)                4;6 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>9)!(X<0)!(X?.E1"."3N.N) X
+              LAST EDITED:      SEP 08, 2017
+              HELP-PROMPT:      Type a number between 0 and 9, 2 decimal
+                                digits.
+              DESCRIPTION:      Enter the FVC (L) value from the patient's
+                                recent pulmonary function test, if available.
+
+
+311.102,27.5  FEV1/FVC (%)           4;7 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>99)!(X<0)!(X?.E1"."3N.N) X
+              LAST EDITED:      SEP 08, 2017
+              HELP-PROMPT:      Type a number between 0 and 99, 2 decimal
+                                digits.
+              DESCRIPTION:      Enter the FEV1/FVC value from the patient's
+                                recent pulmonary function test, if available,
+                                expressed as a percentage. For example, if the
+                                result is 0.72, or 72%, enter 72. This is a
+                                numeric field, so it will not accept the
+                                percent sign (%).
+
+
+311.102,27.6  DIFFUSION CAPACITY     4;8 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>99)!(X<1)!(X?.E1"."5N.N) X
+              LAST EDITED:      SEP 08, 2017
+              HELP-PROMPT:      Type a number between 1 and 99, 4 decimal
+                                digits.
+              DESCRIPTION:      Enter the Diffusion Capacity (mL/min/mm Hg)
+                                from the patient's recent pulmonary function
+                                test, if available.
+
+
+311.102,28    ASBESTOS EXPOSURE      4;9 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 08, 2017
+              HELP-PROMPT:      Has the patient been exposed to asbestos?
+
+311.102,28.1  ASBESTOS OCCUPATION    5;0 SET Multiple #311.10213
+
+
+311.10213,.01   ASBESTOS OCCUPATION    0;1 SET (Multiply asked)
+
+                                  'i' FOR asbestos product manufacturing;
+                                  'j' FOR auto repair;
+                                  'h' FOR building maintenance;
+                                  'f' FOR chemical industry, foundry, refinery;
+
+                                  'a' FOR construction or demolition;
+                                  'e' FOR mining;
+                                  'g' FOR nuclear industry;
+                                  'c' FOR ship construction or repair;
+                                  'o' FOR other;
+                LAST EDITED:      SEP 08, 2017
+                HELP-PROMPT:      Indicate whether the patient has worked in
+                                  the listed occupations.
+                DESCRIPTION:      Indicate whether the patient has worked in
+                                  the listed occupations. You may choose more
+                                  than one. If you choose "other," please use
+                                  the next field to specify the occupation.
+
+                CROSS-REFERENCE:  311.10213^B
+                                1)= S ^SAMI(311.102,DA(1),5,"B",$E(X,1,30),DA)=
+                                ""
+
+                                2)= K ^SAMI(311.102,DA(1),5,"B",$E(X,1,30),DA)
+
+
+
+
+311.102,28.2  ASBESTOS OTHER SPECIFY 6;1 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>20!($L(X)<5) X
+              MAXIMUM LENGTH:   20
+              LAST EDITED:      SEP 08, 2017
+              HELP-PROMPT:      Answer must be 5-20 characters in length.
+              DESCRIPTION:      If you chose "other" as an asbestos-related
+                                occupation, please specify the occupation here.
+
+
+
+311.102,29    SMOKER                 6;2 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      Has the patient smoked at least 100 cigarettes
+                                in their lifetime?
+
+311.102,29.1  SECONDHAND             6;3 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      If not a smoker, was the patient exposed to
+                                secondhand smoke?
+
+311.102,29.2  SMOKING AGE            6;4 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>99)!(X<1)!(X?.E1"."1N.N) X
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      Type a number between 1 and 99, 0 decimal
+                                digits.
+              DESCRIPTION:      About how old was the patient when he or she
+                                started smoking cigarettes regularly?
+
+
+311.102,29.3  SMOKED IN PAST MONTH   6;5 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      Has the patient smoked in the last month, even
+                                one cigarette?
+
+311.102,29.4  LAST CIGARETTE DATE    6;6 DATE
+
+              INPUT TRANSFORM:  S %DT="E" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      If not a smoker, when was the patient's last
+                                cigarette?
+
+311.102,29.5  QUIT YEARS             6;7 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>99)!(X<0)!(X?.E1"."3N.N) X
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      Type a number between 0 and 99, 2 decimal
+                                digits.
+              DESCRIPTION:
+                                Number of years since quit.
+
+
+311.102,29.6  FORMER DAYS PER WEEK   6;8 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>7)!(X<1)!(X?.E1"."1N.N) X
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      Type a number between 1 and 7, 0 decimal
+                                digits.
+              DESCRIPTION:      When the patient was a smoker, on approximately
+                                how many days per week did he or she smoke
+                                cigarettes?
+
+
+311.102,29.7  FORMER PPD             6;9 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>9)!(X<0)!(X?.E1"."3N.N) X
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      Type a number between 0 and 9, 2 decimal
+                                digits.
+              DESCRIPTION:      On the days that the patient did smoke,
+                                approximately how many packs of cigarettes did
+                                he or she smoke per day (PPD)?
+
+
+311.102,29.8  FORMER DURATION        6;10 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>99)!(X<0)!(X?.E1"."3N.N) X
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      Type a number between 0 and 99, 2 decimal
+                                digits.
+              DESCRIPTION:      For approximately how many years did the
+                                patient smoke this amount? (The amount listed
+                                in the FORMER PPD field.)
+
+
+311.102,30    CURRENT DAYS PER WEEK  6;11 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>7)!(X<1)!(X?.E1"."1N.N) X
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      Type a number between 1 and 7, 0 decimal
+                                digits.
+              DESCRIPTION:      On average, how many days per week does the
+                                patient (or did the patient) smoke cigarettes?
+
+
+311.102,30.1  CURRENT PPD            6;12 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>9)!(X<0)!(X?.E1"."3N.N) X
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      Type a number between 0 and 9, 2 decimal
+                                digits.
+              DESCRIPTION:      On average, how many packs of cigarettes does
+                                the patient (or did the patient) smoke per day
+                                (PPD)?
+
+
+311.102,30.2  CURRENT DURATION       6;13 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>99)!(X<0)!(X?.E1"."3N.N) X
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      Type a number between 0 and 99, 2 decimal
+                                digits.
+              DESCRIPTION:      For approximately how many years has the
+                                patient smoked this amount? (The amount listed
+                                in the CURRENT PPD field.)
+
+
+311.102,30.3  TOTAL PACK YEARS       6;19 NUMBER
+
+              INPUT TRANSFORM:  K:+X'=X!(X>999)!(X<0)!(X?.E1"."3N.N) X
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      Type a number between 0 and 999, 2 decimal
+                                digits.
+              DESCRIPTION:      Enter the patient's total pack years,
+                                calculated from PPD and years of smoking.
+
+
+311.102,30.4  TRIED TO QUIT          6;14 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      Has the patient ever tried to quit smoking?
+
+311.102,30.5  TRIED HOW MANY TIMES   6;15 SET
+
+                                'a' FOR 1 time;
+                                'b' FOR 2-5 times;
+                                'c' FOR 6-10 times;
+                                'd' FOR more than 10 times;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      How many times has the patient tried to quit
+                                smoking?
+
+311.102,30.6  QUIT PAST 12 MONTHS    6;16 SET
+
+                                'e' FOR 0;
+                                'a' FOR 1;
+                                'b' FOR 2-5 times;
+                                'c' FOR 6-10 times;
+                                'd' FOR more than 10 times;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      In the past 12 months, how many times has the
+                                patient quit for at least 24 hours?
+
+311.102,30.7  THINKING OF QUITTING   6;17 SET
+
+                                'y' FOR Yes, within the next 30 days;
+                                'm' FOR Yes, within the next 6 months;
+                                'n' FOR No, not thinking of quitting;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      Is the patient seriously thinking of quitting?
+
+311.102,30.8  CESSATION PACKET       6;18 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      Was the patient offered smoking cessation
+                                information or counseling?
+
+311.102,31    SECONDHAND WORKSITE    6;20 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      After age 18, did the patient work where
+                                smoking was allowed?
+              DESCRIPTION:      After age 18, did the patient work for more
+                                than one year in a worksite where smoking was
+                                allowed?
+
+
+311.102,31.1  SECONDHAND WORK EXPOSURE 6;21 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      Did the patient work where they were exposed to
+                                secondhand smoke?
+              DESCRIPTION:      Did the patient ever work for more than one
+                                year in a job where he or she was exposed to
+                                other people's tobacco smoke?
+
+
+311.102,31.2  SECONDHAND WORK HISTORY 7;0 Multiple #311.10214
+                                 (Add New Entry without Asking)
+
+
+311.10214,.01   AGE RANGE              0;1 FREE TEXT (Multiply asked)
+
+                Age range
+                INPUT TRANSFORM:  K:$L(X)>20!($L(X)<3) X
+                MAXIMUM LENGTH:   20
+                LAST EDITED:      SEP 11, 2017
+                HELP-PROMPT:      Answer must be 3-20 characters in length.
+                DESCRIPTION:      Age range for the current occupation history
+                                  entry.
+
+                CROSS-REFERENCE:  311.10214^B
+                                1)= S ^SAMI(311.102,DA(1),7,"B",$E(X,1,30),DA)=
+                                ""
+
+                                2)= K ^SAMI(311.102,DA(1),7,"B",$E(X,1,30),DA)
+
+
+311.10214,.02   JOB                  0;2 FREE TEXT
+
+                INPUT TRANSFORM:K:$L(X)>30!($L(X)<5) X
+                MAXIMUM LENGTH:   30
+                LAST EDITED:    SEP 11, 2017
+                HELP-PROMPT:    Answer must be 5-30 characters in length.
+                DESCRIPTION:    The job or job title for the current work
+                                history entry.
+
+
+311.10214,1     SMOKING              0;3 SET
+
+                                'n' FOR not permitted;
+                                'r' FOR restricted;
+                                'y' FOR allowed anywhere;
+                LAST EDITED:    SEP 11, 2017
+                HELP-PROMPT:    For the current job history entry, was smoking
+                                allowed?
+
+
+
+311.102,32    SECONDHAND HOME UNDER 18 8;1 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      Did anyone smoke in the home when the patient
+                                was under 18?
+
+311.102,32.1  SMOKING ALLOWED HOME   8;2 SET
+
+                                'n' FOR not permitted;
+                                'r' FOR restricted;
+                                'y' FOR allowed anywhere;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      Was smoking allowed inside the house?
+
+311.102,32.2  MOTHER SMOKE UNDER 7   8;3 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      Did the patient's mother smoke when they were
+                                under 7?
+              DESCRIPTION:      Did the patient's mother or primary caregiver
+                                smoke when the patient was under age 7?
+
+
+311.102,32.3  MOTHER SMOKE 7-18      8;4 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      Did the patient's mother smoke when they were
+                                7-18?
+              DESCRIPTION:      Did the patient's mother or primary caregiver
+                                smoke when the patient was ages 7-18?
+
+
+311.102,32.4  HOME CHILDHOOD OTHER   8;5 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      Did anyone besides the patient's mother smoke
+                                under 18?
+              DESCRIPTION:      Did anyone else besides the patient's mother or
+                                primary caregiver smoke in the home when the
+                                patient was under 18?
+
+
+311.102,32.5  SECONDHAND CURRENT     8;6 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      Does the patient currently live with a smoker?
+
+311.102,32.6  SECONDHAND HOME ADULT  8;7 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      After age 18, did the patient live with someone
+                                who smoked?
+              DESCRIPTION:      After age 18, did the patient live with someone
+                                for more than a year who smoked in their
+                                presence?
+
+
+311.102,32.7  SECONDHAND HOME HISTORY 9;0 Multiple #311.10215
+                                 (Add New Entry without Asking)
+
+
+311.10215,.01   AGE RANGE              0;1 FREE TEXT (Multiply asked)
+
+                Age range
+                INPUT TRANSFORM:  K:$L(X)>20!($L(X)<3) X
+                MAXIMUM LENGTH:   20
+                LAST EDITED:      SEP 11, 2017
+                HELP-PROMPT:      Answer must be 3-20 characters in length.
+                DESCRIPTION:
+                                  Age range for the current home history entry.
+
+
+                CROSS-REFERENCE:  311.10215^B
+                                1)= S ^SAMI(311.102,DA(1),9,"B",$E(X,1,30),DA)=
+                                ""
+
+                                2)= K ^SAMI(311.102,DA(1),9,"B",$E(X,1,30),DA)
+
+
+311.10215,.02   AMOUNT SMOKED        0;2 SET
+
+                                'a' FOR 1-14 cigarettes per day;
+                                'b' FOR 15-24 cigarettes per day;
+                                'c' FOR 25 or more cigarettes per day;
+                                'd' FOR don't know;
+                LAST EDITED:    SEP 11, 2017
+                HELP-PROMPT:    For the current home history entry, how many
+                                cigarettes per day?
+
+311.10215,1     SMOKING              0;3 SET
+
+                                'n' FOR not permitted;
+                                'r' FOR restricted;
+                                'y' FOR allowed anywhere;
+                LAST EDITED:    SEP 11, 2017
+                HELP-PROMPT:    For the current home history entry, was smoking
+                                allowed in the home?
+
+
+
+311.102,33    GENERAL HEALTH         10;1 SET
+
+                                '1' FOR Excellent;
+                                '2' FOR Very good;
+                                '3' FOR Good;
+                                '4' FOR Fair;
+                                '5' FOR Poor;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      Overall, how would the patient rate thier
+                                health during the past 4 weeks?
+
+311.102,33.1  HEALTH ACTIVITY LIMITS 10;2 SET
+
+              Health limit usual activities
+                                '1' FOR Not at all;
+                                '2' FOR Very little;
+                                '3' FOR Somewhat;
+                                '4' FOR Quite a lot;
+                                '5' FOR Could not do physical activities;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      How much did phiscal health problems limit
+                                usual phsical activities?
+              DESCRIPTION:      During the past 4 weeks, how much did physical
+                                health problems limit the patient's usual
+                                physical activities (such as walking or
+                                climbing stairs)?
+
+
+311.102,33.2  HEALTH DAILY WORK      10;3 SET
+
+              Health difficulty with daily work
+                                '1' FOR Not at all;
+                                '2' FOR A little bit;
+                                '3' FOR Some;
+                                '4' FOR Quite a lot;
+                                '5' FOR Could not do daily work;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      How much difficulty did the patient have doing
+                                daily work?
+              DESCRIPTION:      During the past 4 weeks, how much difficulty
+                                did the patient have doing his or her daily
+                                work, both at home and away from home, because
+                                of physical health?
+
+
+311.102,33.4  BODILY PAIN            10;4 SET
+
+                                '1' FOR None;
+                                '2' FOR Very mild;
+                                '3' FOR Mild;
+                                '4' FOR Moderate;
+                                '5' FOR Severe;
+                                '6' FOR Very severe;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      How much bodily pain has the patinet had during
+                                the past 4 weeks?
+
+311.102,33.5  ENERGY                 10;5 SET
+
+                                '1' FOR Very much;
+                                '2' FOR Quite a lot;
+                                '3' FOR Some;
+                                '4' FOR A little;
+                                '5' FOR None;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      During the past 4 weeks, how much energy did
+                                the patient have?
+
+311.102,33.6  HEALTH SOCIAL LIMITS   10;6 SET
+
+              Health limited social activities
+                                '1' FOR None at all;
+                                '2' FOR Very little;
+                                '3' FOR Somewhat;
+                                '4' FOR Quite a lot;
+                                '5' FOR Could not do social activities;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      How much did the patient's health or emotional
+                                probelms limit social activities?
+              DESCRIPTION:      Duing the past 4 weeks, how much did the
+                                patient's physical health or  emotional
+                                problems limit their usual social activities
+                                with family or friends?
+
+
+311.102,33.7  HEALTH EMOTIONAL       10;7 SET
+
+                                '1' FOR Not at all;
+                                '2' FOR Slightly;
+                                '3' FOR Moderately;
+                                '4' FOR Quite a lot;
+                                '5' FOR Extremely;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      How much has the patient been bothered by
+                                emotional problems?
+              DESCRIPTION:      During the past 4 weeks, how much hwas the
+                                patient been bothered by emotional problems
+                                (such as feeling anxious, depressed or
+                                irritable)?
+
+
+311.102,33.8  HEALTH DAILY ACTIVITIES 10;8 SET
+
+              Health problems keeping from usual activities
+                                '1' FOR Not at all;
+                                '2' FOR Very little;
+                                '3' FOR Somewhat;
+                                '4' FOR Quite a lot;
+                                '5' FOR Could not do daily activities;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      How much did personal/emotional problems keep
+                                the patient from daily activities?
+              DESCRIPTION:      During the past 4 weeks, how much did personal
+                                or emotional problems keep the patient from
+                                doing their usual work, school or other daily
+                                activities?
+
+
+311.102,34    CONSENT SIGNED         10;9 SET
+
+                                'n' FOR No;
+                                'y' FOR Yes;
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      Has the participant signed the consent form?
+
+311.102,34.1  CONSENT DATE           10;10 DATE
+
+              INPUT TRANSFORM:  S %DT="E" D ^%DT S X=Y K:Y<1 X
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      On what date was the informed consent signed?
+
+311.102,34.2  CONSENT OBTAINED BY    10;11 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>30!($L(X)<5) X
+              MAXIMUM LENGTH:   30
+              LAST EDITED:      SEP 11, 2017
+              HELP-PROMPT:      Answer must be 5-30 characters in length.
+              DESCRIPTION:      The name of the individual obtaining consent
+                                from the participant.
+
+
+
+INPUT TEMPLATE(S):
+
+PRINT TEMPLATE(S):
+
+SORT TEMPLATE(S):
+
+FORM(S)/BLOCK(S):

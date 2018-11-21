@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>vapals.js Tests</title>
+    <link rel="stylesheet" href="css/qunit-2.4.1.css">
+    <script src="../lib/moment.js"></script>
+</head>
+<body>
+<script src="../lib/jquery-3.3.1.min.js"></script>
+<script src="js/qunit-2.4.1.js"></script>
+<script src="js/blanket.js"></script>
+<script src="../lib/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+
+<script src="../vapals.js" data-cover></script>
+
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+
+<script>
+
+    QUnit.test("computeMonthsBetween", function (assert) {
+        var monthAgo = moment().subtract(32, "days").toDate();
+        var now = moment();
+        assert.equal(VAPALS.computeMonthsBetween(monthAgo, now), 1, "month ago");
+
+        assert.ok(VAPALS.computeMonthsBetween("01/Mar/2016", now) > 12, "string input");
+        assert.equal(VAPALS.computeMonthsBetween(null, null), 0, "null");
+        assert.equal(VAPALS.computeMonthsBetween("", ""), 0, "empty");
+        assert.equal(VAPALS.computeMonthsBetween(" ", " "), 0, "blank");
+        assert.equal(VAPALS.computeMonthsBetween("foo", "bar"), 0, "invalid");
+    });
+
+    QUnit.test("toMoment", function (assert) {
+        assert.ok(VAPALS.toMoment(moment()).isValid(), "moment");
+        assert.ok(VAPALS.toMoment(new Date()).isValid(), "date");
+        assert.ok(VAPALS.toMoment("03/01/2018").isValid(), "string");
+        assert.ok(VAPALS.toMoment(null).isValid() === false, "null");
+        assert.ok(VAPALS.toMoment(1).isValid(), "int");
+    });
+
+    QUnit.test("todaysDate", function (assert) {
+        assert.ok(moment().add(2, 's') > moment(VAPALS.todaysDate()), "now+2sec > todaysDate()")
+        assert.ok(moment().subtract(2, 's') < moment(VAPALS.todaysDate()), "now-2sec < todaysDate()")
+    });
+
+</script>
+</body>
+</html>

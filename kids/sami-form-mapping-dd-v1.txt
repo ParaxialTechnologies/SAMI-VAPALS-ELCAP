@@ -1,0 +1,161 @@
+STANDARD DATA DICTIONARY #311.11 -- SAMI FORM MAPPING FILE                                                        9/13/17    PAGE 1
+STORED IN ^SAMI(311.11,  *** NO DATA STORED YET ***   SITE: DEMO.OSEHRA.ORG   UCI: PLA,PLA                                         
+
+DATA          NAME                  GLOBAL        DATA
+ELEMENT       TITLE                 LOCATION      TYPE
+-----------------------------------------------------------------------------------------------------------------------------------
+This is a form mapping file created by gpl for the VA-PALS project It maps the variable names used in the ELCAP forms to field
+numbers in fileman files 
+
+
+              DD ACCESS: @
+              RD ACCESS: @
+              WR ACCESS: @
+             DEL ACCESS: @
+           LAYGO ACCESS: @
+           AUDIT ACCESS: @
+
+CROSS
+REFERENCED BY: FORM(B)
+
+   CREATED ON: SEP 13,2017 by USER,ONE    LAST MODIFIED: SEP 13,2017@21:42:01
+
+311.11,.01    FORM                   0;1 FREE TEXT (Required)
+
+              FORM NAME   
+              INPUT TRANSFORM:  K:$L(X)>30!(X?.N)!($L(X)<3)!'(X'?1P.E) X
+              LAST EDITED:      SEP 13, 2017 
+              HELP-PROMPT:      NAME MUST BE 3-30 CHARACTERS, NOT NUMERIC OR STARTING WITH PUNCTUATION 
+              CROSS-REFERENCE:  311.11^B 
+                                1)= S ^SAMI(311.11,"B",$E(X,1,30),DA)=""
+                                2)= K ^SAMI(311.11,"B",$E(X,1,30),DA)
+
+
+311.11,.02    INDEXED BY             2;1 FREE TEXT
+
+              INPUT TRANSFORM:  K:$L(X)>20!($L(X)<1) X
+              MAXIMUM LENGTH:   20
+              LAST EDITED:      SEP 13, 2017 
+              HELP-PROMPT:      MUMPS variable to use for lookup and indexing 
+              DESCRIPTION:
+                                MUMPS symbol to use for lookup and indexing ie. studyid or DFN 
+
+
+311.11,.5     FILEMAN FILE (DEFAULT) 0;2 POINTER TO FILE FILE (#1)
+
+              DEFAULT FILEMAN FILE FOR MAPPING   
+              LAST EDITED:      SEP 13, 2017 
+
+311.11,.7     GRAPH                  0;3 POINTER TO graph FILE (#17.040801)
+
+              DEFAULT GRAPH FOR INTERMEDIATE STORAGE   
+              LAST EDITED:      SEP 13, 2017 
+
+311.11,1      VARIABLE               1;0 Multiple #311.11001 (Add New Entry without Asking)
+
+STANDARD DATA DICTIONARY #311.11 -- SAMI FORM MAPPING FILE                                                        9/13/17    PAGE 2
+STORED IN ^SAMI(311.11,  *** NO DATA STORED YET ***   SITE: DEMO.OSEHRA.ORG   UCI: PLA,PLA                                         
+
+DATA          NAME                  GLOBAL        DATA
+ELEMENT       TITLE                 LOCATION      TYPE
+-----------------------------------------------------------------------------------------------------------------------------------
+
+311.11001,.01   VARIABLE               0;1 FREE TEXT (Multiply asked)
+
+                INPUT TRANSFORM:  K:$L(X)>90!($L(X)<1) X
+                MAXIMUM LENGTH:   90
+                LAST EDITED:      SEP 13, 2017 
+                HELP-PROMPT:      Answer must be 1-90 characters in length. 
+                CROSS-REFERENCE:  311.11001^B 
+                                  1)= S ^SAMI(311.11,DA(1),1,"B",$E(X,1,30),DA)=""
+                                  2)= K ^SAMI(311.11,DA(1),1,"B",$E(X,1,30),DA)
+
+
+311.11001,.02   TITLE                  0;4 FREE TEXT
+
+                INPUT TRANSFORM:  K:$L(X)>90!($L(X)<1) X
+                MAXIMUM LENGTH:   90
+                LAST EDITED:      SEP 13, 2017 
+                HELP-PROMPT:      Answer must be 1-90 characters in length. 
+                DESCRIPTION:
+                                  Dictionary title of this variable 
+
+
+311.11001,.5    FILEMAN FILE           0;2 POINTER TO FILE FILE (#1)
+
+                LAST EDITED:      SEP 13, 2017 
+
+311.11001,1     FILEMAN FIELD          0;3 NUMBER
+
+                INPUT TRANSFORM:  K:+X'=X!(X>999999999)!(X<0)!(X?.E1"."8N.N) X
+                LAST EDITED:      SEP 13, 2017 
+                HELP-PROMPT:      Fileman field number which maps to this variable 
+                DESCRIPTION:
+                                  Fileman field number which maps to this variable 
+
+
+311.11001,2     DATA TYPE              0;5 FREE TEXT
+
+                INPUT TRANSFORM:  K:$L(X)>30!($L(X)<1) X
+                MAXIMUM LENGTH:   30
+                LAST EDITED:      SEP 13, 2017 
+                HELP-PROMPT:      Dictionary data type of this variable 
+                DESCRIPTION:
+                                  Dictionary data type of this variable 
+
+
+311.11001,3     REQUIRED               0;6 SET
+
+                                  '1' FOR YES; 
+                                  '0' FOR NO; 
+                LAST EDITED:      SEP 13, 2017 
+                HELP-PROMPT:      Is this variable required? 
+                DESCRIPTION:
+                                  Dictionary definition of whether the variable is required 
+
+STANDARD DATA DICTIONARY #311.11 -- SAMI FORM MAPPING FILE                                                        9/13/17    PAGE 3
+STORED IN ^SAMI(311.11,  *** NO DATA STORED YET ***   SITE: DEMO.OSEHRA.ORG   UCI: PLA,PLA                                         
+
+DATA          NAME                  GLOBAL        DATA
+ELEMENT       TITLE                 LOCATION      TYPE
+-----------------------------------------------------------------------------------------------------------------------------------
+
+311.11001,4     ELCAP FIELD NUMBER     1;1 NUMBER
+
+                INPUT TRANSFORM:  K:+X'=X!(X>99999)!(X<0)!(X?.E1"."8N.N) X
+                LAST EDITED:      SEP 13, 2017 
+                HELP-PROMPT:      ELCAP field number of this variable, if available 
+                DESCRIPTION:      Dictionary value of the ELCAP field number for this variable. May not be ava May not be
+                                  available.  
+
+
+311.11001,5     COMMENTS               1;2 FREE TEXT
+
+                INPUT TRANSFORM:  K:$L(X)>90!($L(X)<1) X
+                MAXIMUM LENGTH:   90
+                LAST EDITED:      SEP 13, 2017 
+                HELP-PROMPT:      Answer must be 1-90 characters in length. 
+                DESCRIPTION:
+                                  Dictionary definition/comments about the variable 
+
+
+
+
+
+      FILES POINTED TO                      FIELDS
+
+FILE (#1)                         FILEMAN FILE (DEFAULT) (#.5)
+                                  VARIABLE:FILEMAN FILE (#.5)
+
+graph (#17.040801)                GRAPH (#.7)
+
+
+
+INPUT TEMPLATE(S):
+
+PRINT TEMPLATE(S):
+
+SORT TEMPLATE(S):
+
+FORM(S)/BLOCK(S):
+

@@ -1,14 +1,12 @@
 Altering one of our Docker containers for development -- enabling the ability to push to our repos -- is straightforward. You need make a few, simple changes as the osehra user.
 
-Edit .bashrc.
+Edit .bashrc
 
     $ docker start vapals
     $ ssh -p 2222 root@localhost
     (password is "docker")
     $ oshera
-    [osehra@vapals ~]$ vi .bashrc
-
-
+    
     The file includes the following section:
 
     # Git
@@ -19,14 +17,4 @@ Edit .bashrc.
 
     Replace my Git credentials with your own.
 
-Replace the private key named id_rsa with the one from Avicenna. The easiest way to do that is to replace the text of id_rsa on your Docker container with the text of id_rsa on Avicenna. Personally, I'd copy the public key (id_rsa.pub) over as well, just so the pair of files match.
-
-    [osehra@vapals ~]$ vi .ssh/id_rsa
-    
-    In a separate session shell into Avicenna.
-    
-    $ ssh avicenna.vistaexpertise.net
-    avicenna$ osehra
-    avicenna$ cat .ssh/id_rsa
-    
-    You can just copy the output of the last command and paste it into vi on your Docker container.
+Replace the keys contents of the files id_rsa and id_rsa.pub with your own private and public keys. Then contact someone from VEN or OSEHRA and ask them to make you a collaborator for the OSEHRA/VA-PALS repo.

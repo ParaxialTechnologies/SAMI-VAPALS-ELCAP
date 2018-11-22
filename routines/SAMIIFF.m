@@ -1,4 +1,4 @@
-SAMIIFF ;ven/arc - Unit test for SAMISRC2 ; 2018-11-21T22:00Z
+SAMIIFF ;ven/arc - Build a graph of the intake form fields ; 2018-11-21T22:00Z
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development

@@ -208,21 +208,21 @@ ONE(SAMIDD,SAMIPKG,SAMILOG) ; code for ppi ONE^SAMID, export sami dd
  do:SAMILOG mini^%u(3,.SAMILOG)
  ;
  do
- . kill ^TMP("SAMIDOUT",$job) ; clear loading dock
+ . kill ^TMP("SAMIDOUT",$JOB) ; clear loading dock
  . new SAMIFLDS ; field table
  . do properties^%sfo(.SAMIFLDS,SAMIDD) ; build table
- . quit:'$data(SAMIFLDS(1)) ; done if no content returned
+ . quit:'$data(SAMIFLDS(1))  ; done if no content returned
  . kill SAMIFLDS("key") ; remove field index
- . merge ^TMP("SAMIDOUT",$job)=SAMIFLDS ; copy table to loading dock
+ . merge ^TMP("SAMIDOUT",$JOB)=SAMIFLDS ; copy table to loading dock
  . quit
- quit:'$data(^TMP("SAMIDOUT",$job))  ; done if loading dock empty
+ quit:'$data(^TMP("SAMIDOUT",$JOB))  ; done if loading dock empty
  ;
  ;@stanza 4 set new dd-export file
  ;
  do:SAMILOG mini^%u(4,.SAMILOG)
  ;
  do
- . new SAMIROOT set SAMIROOT=$name(^TMP("SAMIDOUT",$job,0)) ; dock root
+ . new SAMIROOT set SAMIROOT=$name(^TMP("SAMIDOUT",$JOB,0)) ; dock root
  . ;
  . new SAMIPATH set SAMIPATH=$get(SAMIPKG("PATH")) ; path to repository
  . quit:SAMIPATH=""  ; can't export w/o path
@@ -230,7 +230,7 @@ ONE(SAMIDD,SAMIPKG,SAMILOG) ; code for ppi ONE^SAMID, export sami dd
  . ;
  . ; export dd
  . new PSEUDO set PSEUDO=$$GTF^%ZISH(SAMIROOT,3,SAMIPATH,SAMINAME)
- . kill ^TMP("SAMIDOUT",$job) ; clear loading dock
+ . kill ^TMP("SAMIDOUT",$JOB) ; clear loading dock
  . quit
  ;
  ;@stanza 5 termination

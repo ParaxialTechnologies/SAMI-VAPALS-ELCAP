@@ -111,31 +111,31 @@ SSNIN ; code for ddi SSNIN^SAMID, input xform for .09 in 311.101
  ;@stanza 2 strip punctuation
  ;
  if X'?.AN do  ; if we have punctuation, probably dashes
- . new pos
- . for pos=1:1:$length(X) do:$extract(X,pos)?1P
- . . set $extract(X,pos)="" ; strip the punctuation
+ . new POS
+ . for POS=1:1:$length(X) do:$extract(X,POS)?1P
+ . . set $extract(X,POS)="" ; strip the punctuation
  . . ; this pulls next character to current position
- . . set pos=pos-1 ; so back up to check next character
+ . . set POS=POS-1 ; so back up to check next character
  . . quit
  . quit
  ;
  ;@stanza 3 handle pseudo-ssn
  ;
- if X="P"!(X="p") do  quit  ; if asked to generate a pseudo ssn
+ if X="P"!(X="p") do  quit  ; if asked to generate a PSEUDO ssn
  . set X=$$PSEUDO(X) ; replace P/p w/pseudo ssn
  . write:'$data(ZTQUEUED) "  ",X
  . quit
  ;
  if X["P",'$data(SAMIZNV) do  quit  ; if fixed pseudo ssn
- . new pseudo set pseudo=$$PSEUDO(X) ; what's the right pseudo ssn?
- . quit:X=pseudo  ; we're fine if X is the right pseudo ssn
+ . new PSEUDO set PSEUDO=$$PSEUDO(X) ; what's the right pseudo ssn?
+ . quit:X=PSEUDO  ; we're fine if X is the right pseudo ssn
  . kill X ; otherwise, reject it
  . write *7,"  Invalid pseudo SSN."
  . write !,"Type 'P' for the valid one"
  . quit
  ;
  if X["P",$data(SAMIZNV) do  quit  ; if variable pseudo ssn
- . new pseudo set pseudo=$$PSEUDO(X) ; what's the right pseudo ssn?
+ . new PSEUDO set PSEUDO=$$PSEUDO(X) ; what's the right pseudo ssn?
  . quit:X=L  ; we're fine if X is the right pseudo ssn
  . set X=L ; otherwise, change X to the right pseudo ssn
  . quit:$data(ZTQUEUED)
@@ -153,8 +153,8 @@ SSNIN ; code for ddi SSNIN^SAMID, input xform for .09 in 311.101
  ;@stanza 5 prevent duplicate ssn
  ;
  if $get(DIUTIL)'="VERIFY FIELDS" do  quit:'$data(X)
- . new record set record=$order(^SAMI(311.101,"SSN",X,0))
- . if record>0,$data(^SAMI(311.101,record,0)) do
+ . new RECORD set RECORD=$order(^SAMI(311.101,"SSN",X,0))
+ . if RECORD>0,$data(^SAMI(311.101,RECORD,0)) do
  . . kill X
  . . write $char(7),"  Already used by patient '",$piece(^(0),U),"'."
  . . quit
@@ -177,8 +177,8 @@ SSNIN ; code for ddi SSNIN^SAMID, input xform for .09 in 311.101
  ;@stanza 7 note ssn special valid cases
  ;
  if $data(X) do
- . new first3 set first3=$extract(X,1,3)
- . if first3>699,first3<729 do
+ . new FIRST3 set FIRST3=$extract(X,1,3)
+ . if FIRST3>699,FIRST3<729 do
  . . quit:$data(ZTQUEUED)
  . . write !!,$char(7),"      Note: This is a RR Retirement SSN."
  . . quit
@@ -218,42 +218,42 @@ PSEUDO ; generate pseudo-ssn
  ;
  ;@stanza 2 calculate preferred hash
  ;
- new name,dob
+ new NAME,DOB
  if $data(DPTIDS(.03)),$data(DPTX) do
- . set name=SAMIX
- . set dob=SAMIDS(.08)
+ . set NAME=SAMIX
+ . set DOB=SAMIDS(.08)
  . quit
  else  do
- . new header set header=^SAMI(311.101,DA,0)
- . set name=$piece(header,U)
- . set dob=$piece(header,U,3)
+ . new HEADER set HEADER=^SAMI(311.101,DA,0)
+ . set NAME=$piece(HEADER,U)
+ . set DOB=$piece(HEADER,U,3)
  . quit
  ;
  ; DG*5.3*621
- set:dob="" dob=2000000
+ set:DOB="" DOB=2000000
  ;
  ; hash last, middle, and first initials
- new init3 set init3=$$HASH($extract($piece(name,",",2))) ; last
- new init2 set init2=$$HASH($extract($piece(name," ",2))) ; middle
- new init1 set init1=$$HASH($extract(name)) ; first
+ new INIT3 set INIT3=$$HASH($extract($piece(NAME,",",2))) ; last
+ new INIT2 set INIT2=$$HASH($extract($piece(NAME," ",2))) ; middle
+ new INIT1 set INIT1=$$HASH($extract(NAME)) ; first
  ;
  ; pseudo ssn = hash initials, then mmdd, then yy, then P
- new pseudo
- set pseudo=init3_init2_init1_$extract(dob,4,7)_$extract(dob,2,3)_"P"
+ new PSEUDO
+ set PSEUDO=INIT3_INIT2_INIT1_$extract(DOB,4,7)_$extract(DOB,2,3)_"P"
  ;
  ;@stanza 3 find free hash if necessary
  ;
- if $data(^SAMI(311.101,"SSN",pseudo)) do
- . set pseudo=$$FINDFREE(pseudo)
+ if $data(^SAMI(311.101,"SSN",PSEUDO)) do
+ . set PSEUDO=$$FINDFREE(PSEUDO)
  . quit
  ;
  ;@stanza 4 termination
  ;
- quit pseudo ; return pseudo ssn ; end of $$PSEUDO
+ quit PSEUDO ; return PSEUDO ssn ; end of $$PSEUDO
  ;
  ;
  ;
-HASH(char) ; hash letter to digit
+HASH(CHAR) ; hash letter to digit
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -269,14 +269,14 @@ HASH(char) ; hash letter to digit
  ;@stanza 2 hash letter to digit
  ;
  ; hash a letter to a digit from 1 to 9
- new digit set digit=$ascii(char)-65\3+1
+ new DIGIT set DIGIT=$ascii(CHAR)-65\3+1
  ;
  ; if char was the empty string, digit will be negative; change to 0
- set:digit<0 digit=0
+ set:DIGIT<0 DIGIT=0
  ;
  ;@stanza 3 termination
  ;
- quit digit ; return hash ; end of $$HASH
+ quit DIGIT ; return hash ; end of $$HASH
  ;
  ;
  ;

@@ -1,4 +1,4 @@
-SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 11/14/18 10:19am
+SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 11/21/18 9:39am
  ;;18.0;SAMI;;
  ;
  ;
@@ -164,10 +164,11 @@ UTWSNC ; @TEST - Testing wsNewCase adding a new case to vapals-patients Graphsto
  . m poo=@rooty
  . s nodea=$na(arc),nodep=$na(poo)
  . f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
- ..; if the first non space 10 characters are a date, skip
+ ..; skip certain lines that will contain dates
  .. i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
  .. i @nodep["siform"  q
- .. i @nodea["input value=""11/13/2018""" q
+ .. i $e($tr($p(@nodea,"=",2),""""),1,10)?2N1"/"2N1"/"4N q
+ ..;
  .. i '($qs(nodea,1)=$qs(nodep,1)) s uthtml=0
  .. i '(@nodea=@nodep) s uthtml=0
  i '(nodea="") s uthtml=0

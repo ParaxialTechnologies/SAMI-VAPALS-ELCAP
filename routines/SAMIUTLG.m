@@ -1,4 +1,4 @@
-SAMIUTLG ;ven/lgc - Unit test for SAMILOG ; 11/19/18 11:12am
+SAMIUTLG ;ven/lgc - Unit test for SAMILOG ; 11/21/18 8:54am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -59,23 +59,18 @@ UTTOGL ; @TEST - Toggle VAPALS password identification
  . d ToggleOff^SAMILOG
  . s utsuccess='$g(^%W(17.6001,ienget,"AUTH"))
  . D CHKEQ^%ut(utsuccess,1,"Toggle password OFF FAILED!")
+ ;
+ ; Now test the interactive entry point
+ d SetPswdIdOnOff^SAMILOG
+ S utsuccess='(pooget=$g(^%W(17.6001,ienget,"AUTH")))
+ D CHKEQ^%ut(utsuccess,1,"Toggle password 1st interactive FAILED!")
+ d SetPswdIdOnOff^SAMILOG
+ S utsuccess=(pooget=$g(^%W(17.6001,ienget,"AUTH")))
+ D CHKEQ^%ut(utsuccess,1,"Toggle password 2nd interactive FAILED!")
+ ;
  ; Be sure we leave setting as it was
- i (pooget=$g(^%W(17.6001,ienget,"AUTH"))) q
- i pooget=1 d
- . s ^%W(17.6001,ienget,"AUTH")=1
- . s ^%W(17.6001,ienpost,"AUTH")=1
- e  d
- . s ^%W(17.6001,ienget,"AUTH")=0
- . s ^%W(17.6001,ienpost,"AUTH")=0
- D PullUTarray^SAMIUTST(.poou,"CTCOPY-SAMICTC1")
- s FROM=$NA(poou),TO=$NA(arc)
- D CTCOPY^SAMICTC1(FROM,TO)
- n nodea,nodep s nodea=$na(arc),nodep=$na(poou)
- f  s nodea=$Q(nodea),nodep=$Q(nodep) q:nodea=""  d
- . i '(nodea=nodep) s utsuccess=0
- . i '(@nodea=@nodep) s utsuccess=0
- i '(nodep="") s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing CTCOPY FAILED!")
+ S ^%W(17.6001,ienget,"AUTH")=pooget
+ S ^%W(17.6001,ienpost,"AUTH")=poopost
  q
  ;
 EOR ;End of routine SAMIUTLG

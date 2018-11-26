@@ -1,4 +1,4 @@
-%tses ;ven/toad-type string: setex^%ts ;2018-03-03T06:27Z
+%tses ;ven/toad-type string: setex^%ts ;2018-11-21T21:05Z
  ;;1.8;Mash;
  ;
  ; %tses implements MASH String Library ppi setex^%ts, change
@@ -28,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-03T06:27Z
+ ;@last-updated: 2018-11-21T21:05Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -452,7 +452,7 @@ setex ; change value of positional substring
  ;  new string set string="The world's vast and ANCIENT"
  ;  set string("extract","from")="l"
  ;  do setex^%ts(.string,"strange")
- ; produces string="The world’s vast and strange"
+ ; produces string="The world's vast and strange"
  ;  string("extract","from")=22
  ;  string("extract","to")=28
  ;
@@ -498,22 +498,80 @@ setex ; change value of positional substring
  ;
  ; group 9: from & to, relative addressing [tbd]
  ;
- ; 
- ; group 11: reserved values & other boundary conditions [tbd]
+ ;  new string set string="is to unmake power"
+ ;  set string("extract","from")="b"
+ ;  set string("extract","to")=3
+ ;  do setex^%ts(.string,"to make love ")
+ ; produces
+ ;  string="to make love is to unmake power"
+ ;  string("extract","from")=1
+ ;  string("extract","to")=13
+ ;
+ ;  new string set string="is to unmake power"
+ ;  set string("extract","from")="b"
+ ;  set string("extract","to")="b"
+ ;  do setex^%ts(.string,"to make love ")
+ ; produces
+ ;  string="to make love is to unmake power"
+ ;  string("extract","from")=1
+ ;  string("extract","to")=13
+ ;
+ ;  new string set string="is to unmake power"
+ ;  set string("extract","from")="0"
+ ;  set string("extract","to")="b"
+ ;  do setex^%ts(.string,"to make love ")
+ ; produces
+ ;  string=""
+ ;  string("extract","from")=0
+ ;  string("extract","to")=0
+ ;
+ ; group A: reserved values & other boundary conditions [tbd]
+ ;
+ ;  new string set string="Greed puts out"
+ ;  set string("extract","from")="a"
+ ;  do setex^%ts(.string," the sun","BAD")
+ ; produces
+ ;  string="Greed puts out"
+ ;  string("extract")=0
+ ;  string("extract","from")=0
+ ;  string("extract","to")=0
  ;
  ;
- ; group 12: the b flag [tbd]
+ ; group B: the b flag [tbd]
  ;
  ; only difference: for deletions, from & to set to +1
  ; except at end, where set to 0
  ;
- ; group 12: the i flag [tbd]
+ ; group C: the i flag [tbd]
  ;
  ; show effects on string("low",string")
  ;
- ; group 12: the r flag [tbd]
+ ; group D: the r flag [tbd]
  ;
  ; show effects on string("low",string")
+ ;
+ ; group E: synonyms
+ ;
+ ;  new string set string="O the hawk's flight"
+ ;  do se^%ts(.string,"bright")
+ ; produces
+ ;  string="bright the hawk's flight"
+ ;  string("extract","from")=1
+ ;  string("extract","to")=6
+ ;
+ ;  new string set string="O the hawk's flight"
+ ;  do setExtract^%ts(.string,"bright")
+ ; produces
+ ;  string="bright the hawk's flight"
+ ;  string("extract","from")=1
+ ;  string("extract","to")=6
+ ;
+ ;  new string set string="O the hawk's flight"
+ ;  do place^%ts(.string,"bright")
+ ; produces
+ ;  string="bright the hawk's flight"
+ ;  string("extract","from")=1
+ ;  string("extract","to")=6
  ;
  ;@tests [tbd]
  ;

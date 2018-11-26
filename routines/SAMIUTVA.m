@@ -1,4 +1,4 @@
-SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 11/7/18 7:54pm
+SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 11/21/18 1:57pm
  ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -62,6 +62,11 @@ STARTUP ; Set up dfn and tiuien to use throughout testing
  s utdfn="dfn"_$J
  s utdfn=$$GET^XPAR("SYS","SAMI SYSTEM TEST PATIENT DFN",,"Q")
  s (utsuccess,tiuien)=0
+ ; Set up graphstore graph on test patient
+ n root s root=$$setroot^%wd("vapals-patients")
+ k @root@("graph","XXX00001")
+ n poo D PullUTarray^SAMIUTST(.poo,"all XXX00001 forms")
+ m @root=poo
  Q
 SHUTDOWN ; ZEXCEPT: dfn,tiuien
  K utdfn,tiuien,utsuccess
@@ -82,7 +87,7 @@ UTBLDTIU ; @TEST - Build a new TIU and Visit stub for a patient
  I ('$g(provduz))!('$g(clinien))!('$g(tiutitleien)) D  Q
  . D FAIL^%ut("Provider,clinic, or tiu title missing")
  D BLDTIU^SAMIVSTA(.tiuien,utdfn,tiutitleien,provduz,clinien)
- H 1 ; Delay for time to build everything
+ H 3 ; Delay for time to build everything
  I '$g(tiuien) D  Q
  . D FAIL^%ut("Procedure failed to build new TIU note")
  n tiunode0 s tiunode0=$g(^TIU(8925,tiuien,0))
@@ -310,6 +315,27 @@ UTURBR ; @TEST - extrinsic to return urban or rural depending on zip code
  s uturr=$$UrbanRural^SAMIVSTA(40713)
  s utsuccess=((uturu_uturr)="ur")
  D CHKEQ^%ut(utsuccess,1,"Testing Urban/Rural extrinsic FAILED!")
+ q
+ ;
+UTTASK ; @TEST - test TASKIT creation of new note,text, and encounter
+ S filter("form")="siform-2018-11-13"
+ s filter("studyid")="XXX00001"
+ s tiuien=$$TASKIT^SAMIVSTA()
+ s utsuccess=$S(tiuien>0:1,1:0)
+ D CHKEQ^%ut(utsuccess,1,"Testing creating a new TIU note FAILED!")
+ ; If a new note was generated add encounter info
+ i tiuien d
+ . n ptdfn s ptdfn=$p(^TIU(8925,tiuien,0),"^",2)
+ . n provduz
+ . s provduz=$$GET^XPAR("SYS","SAMI DEFAULT PROVIDER DUZ",,"Q")
+ . D ENCNTR^SAMIVSTA
+ . s utsuccess=(tiuien>0)
+ . D CHKEQ^%ut(utsuccess,1,"Testing adding encounter informatin FAILED!")
+ ; If new note was generated, delete it
+ i tiuien d
+ . N D,D0,DG,DI,DIC,DICR,DIG,DIH
+ . s utsuccess=$$DELTIU^SAMIVSTA(tiuien)
+ . D CHKEQ^%ut(utsuccess,1,"Testing deleting TASKIT note  FAILED!")
  q
  ;
 EOR ;End of routine SAMIUTVA

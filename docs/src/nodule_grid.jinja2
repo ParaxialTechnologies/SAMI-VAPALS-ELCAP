@@ -1,0 +1,595 @@
+<div class="row">
+    <div class="col-md-12">
+        <div id="add-first-nodule" class="alert alert-info">
+            If no nodules were detected, you may skip this section.
+            <button type="button" class="btn btn-default btn-xs add-nodule"
+            ">
+            <span class="fa fa-plus" aria-hidden="true"></span> Add nodule
+            </button>
+        </div>
+    </div>
+    <div class="col-md-12" style="display: none;" id="nodule-table">
+        <div class="table-responsive">
+            <button type="button" class="btn btn-default btn-sm add-nodule"
+            ">
+            <span class="fa fa-plus" aria-hidden="true"></span> Add nodule
+            </button>
+            <table class="table-striped" style="table-layout:auto;">
+                <thead>
+                <tr>
+                    <th>Nodule ID</th>
+                    {% for i in noduleArray %}
+                        <th data-nodule-id="{{ i }}" style="display:none;">
+                            Nodule {{ i }}
+                            <i class="remove-nodule fa fa-trash-o pull-right remove-nodule"
+                               title="Remove nodule {{ i }}" data-nodule-id="{{ i }}"></i>
+                        </th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td style="white-space: nowrap;">
+                        <label class="control-label required" for="cect1ch">
+                            Is it new? <i class="fa fa-question-circle-o" aria-hidden="true"
+                                          data-toggle="popover" title="Help" data-content="A pull-down menu
+                                                            allows us to note whether a nodule is newly seen, previously seen,
+                                                            or seen in retrospect, as well as any change in size. Change
+                                                            (increase or decrease) refers to a change in the size of a nodule
+                                                            or a change in the solid component of a part-solid nodule. There
+                                                            is also an option for nodules that are not included in the scan."></i>
+                        </label>
+                    </td>
+                    {% for i in noduleArray %}
+                        <td data-nodule-id="{{ i }}" style="display:none;">
+                            <div class="form-group form-group-sm">
+                                {# TODO What does newStat({{ i }}) do onchange?#}
+                                <select name="cect{{ i }}ch" id="cect{{ i }}ch"
+                                        title="Is this nodule new?" class="form-control"
+                                        tabindex="{{ i }}01">
+                                    <option value="-"> -
+                                    <option value="n"> Newly seen</option>
+                                    <option value="pn"> Prev seen, no change</option>
+                                    <option value="pd"> Prev seen, slight decr</option>
+                                    <option value="pe"> Prev seen, marked decr</option>
+                                    <option value="pi"> Prev seen, slight incr</option>
+                                    <option value="pj"> Prev seen, marked incr</option>
+                                    <option value="po"> Prev seen, obscured</option>
+                                    <option value="pw"> Prev seen, resolved</option>
+                                    <option value="px"> Prev seen, not a nodule</option>
+                                    <option value="pr"> Prev seen, resected</option>
+                                    <option value="rn"> Retrospect, no chg</option>
+                                    <option value="rd"> Retrospect, decrease</option>
+                                    <option value="ri"> Retrospect, slight incr</option>
+                                    <option value="rj"> Retrospect, marked incr</option>
+                                    <option value="pk"> Not in outside report</option>
+                                    <option value="pv"> Not included in scan</option>
+                                </select>
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap;">
+                        <label class="control-label required" for="cect1en">
+                            Endobronchial? <i class="fa fa-question-circle-o" aria-hidden="true"
+                                              data-toggle="popover" title="Help"
+                                              data-content="It is required that both Endobronchial and Most
+                                                                likely location be answered.  If the nodule has both a
+                                                                bronchial and parenchymal component, answer both to indicate
+                                                                such."></i>
+                        </label>
+                    </td>
+                    {% for i in noduleArray %}
+                        <td data-nodule-id="{{ i }}" style="display:none;">
+                            <div class="form-group form-group-sm">
+                                <select name="cect{{ i }}en" id="cect{{ i }}en"
+                                        title="Endobronchial" class="form-control"
+                                        tabindex="{{ i }}02">
+                                    <option value="-"> -</option>
+                                    <option value="no"> No</option>
+                                    <option value="tr"> Trachea</option>
+                                    <option value="rm"> Rt. Main</option>
+                                    <option value="lm"> Lt. Main</option>
+                                    <option value="bi"> BI</option>
+                                    <option value="rul"> RUL</option>
+                                    <option value="rml"> RML</option>
+                                    <option value="rll"> RLL</option>
+                                    <option value="lul"> LUL</option>
+                                    <option value="lll"> LLL</option>
+                                </select>
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap;">
+                        <label class="control-label required" for="cect1ll">
+                            Most likely location? <i class="fa fa-question-circle-o"
+                                                     aria-hidden="true"
+                                                     data-toggle="popover" title="Help"
+                                                     data-content="If a nodule location is different from where it was described to be previously, do not go back and change the location on the previous exams but make sure to make a note of the previously mentioned location in the Comment field (see description below)."></i>
+                        </label>
+                    </td>
+                    {% for i in noduleArray %}
+                        <td data-nodule-id="{{ i }}" style="display:none;">
+                            <div class="form-group form-group-sm">
+                                <select name="cect{{ i }}ll" id="cect{{ i }}ll"
+                                        title="Most likely location" class="form-control"
+                                        tabindex="{{ i }}03">
+                                    <option value="-"> -</option>
+                                    <option value="end"> Endobr</option>
+                                    <option value="lul"> LUL</option>
+                                    <option value="lll"> LLL</option>
+                                    <option value="rul"> RUL</option>
+                                    <option value="rml"> RML</option>
+                                    <option value="rll"> RLL</option>
+                                </select>
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap;">
+                        <label class="control-label required" for="cect1sn"> Nodule seen in
+                            series </label>
+                        <i class="fa fa-question-circle-o" aria-hidden="true"
+                           data-toggle="popover" title="Help"
+                           data-content="Indicate the CT series number in which the nodule appears."></i>
+                    </td>
+                    {% for i in noduleArray %}
+                        <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                            <div class="form-group form-group-sm">
+                                <input type="text" name="cect{{ i }}sn" id="cect{{ i }}sn"
+                                       size="3" class="form-control"
+                                       title="CT Series Number" required="required"
+                                       tabindex="{{ i }}04">
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap;">
+                        <label class="control-label required" for="cect1inl">Nodule seen in
+                            images</label>
+                        <i class="fa fa-question-circle-o" aria-hidden="true"
+                           data-toggle="popover" title="Help"
+                           data-content="Indicate the CT image number in which the nodule appears."></i>
+                    </td>
+                    {% for i in noduleArray %}
+                        <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                            <div class="form-group form-group-sm">
+                                <input type="text" name="cect{{ i }}inl" id="cect{{ i }}inl"
+                                       size="3" class="form-control numeric" required="required"
+                                       title="CT Image Number (Low)" tabindex="{{ i }}05">-
+                                <input type="text" name="cect{{ i }}inh" id="cect{{ i }}inh"
+                                       size="3" class="form-control" required="required"
+                                       title="CT Image Number (High)" tabindex="{{ i }}06">
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap;">
+                        <label class="control-label required" for="cect1st">Nodule
+                            status</label>
+                        <i class="fa fa-question-circle-o"
+                           aria-hidden="true"
+                           data-toggle="popover" title="Help"
+                           data-content="If nodule calcifications are seen ('yes' is selected for Calcifications), 'benign (Ca++)' will automatically appear under Nodule Status.<li> When '?' is selected under Calcifications, Nodule Status will read 'prob benign, prob Ca++' (probably benign, probably calcified).  If the nodule is 'prev seen, resolved,' as noted in the 'Is it new' field, then Nodule Status will automatically read 'resolved.'  When 'prev seen, resected' is selected for 'Is it new', 'Resected-malignant' appears under Nodule Status.  If under 'Is it new' it reads 'not included in scan,' Nodule Status will also read 'not included in scan.'  These automatic entries help to maintain a level of consistency for data entry across institutions."></i>
+                    </td>
+                    {% for i in noduleArray %}
+                        <td data-nodule-id="{{ i }}" style="display:none;">
+                            <div class="form-group form-group-sm">
+                                <select name="cect{{ i }}st" id="cect{{ i }}st"
+                                        title="Nodule status" class="form-control"
+                                        tabindex="{{ i }}07">
+                                    <option value="-"> -</option>
+                                    <option value="un"> Unknown</option>
+                                    <option value="bc"> Benign (Ca++)</option>
+                                    <option value="pc"> Prob benign, prob Ca++</option>
+                                    <option value="re"> Resolved</option>
+                                    <option value="rg"> Resolving</option>
+                                    <option value="tn"> No change - 2 yrs</option>
+                                    <option value="pp"> PET - positive</option>
+                                    <option value="pn"> PET - negative</option>
+                                    <option value="pi"> PET - indeterminate</option>
+                                    <option value="ub"> Biopsy - unknown</option>
+                                    <option value="bb"> Biopsy - benign</option>
+                                    <option value="mb"> Biopsy - malignant</option>
+                                    <option value="ab"> Biopsy - atyp bronch prolif</option>
+                                    <option value="om"> Biopsy - metastatic</option>
+                                    <option value="mr"> Resected - malignant</option>
+                                    <option value="br"> Resected - benign</option>
+                                </select>
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap;">
+                        <label class="control-label required" for="cect1nt">Nodule
+                            consistency</label>
+                        <i class="fa fa-question-circle-o" aria-hidden="true"
+                           data-toggle="popover" title="Help"
+                           data-content="Nodules may be classified into three types by attenuation characteristics: solid - nodule is uniformly solid in appearance; nonsolid - nodule is uniformly nonsolid (except for blood vessels) in appearance; part-solid - nodule has both solid and nonsolid components"></i>
+                    </td>
+                    {% for i in noduleArray %}
+                        <td data-nodule-id="{{ i }}" style="display:none;">
+                            <div class="form-group form-group-sm">
+                                <select name="cect{{ i }}nt" id="cect{{ i }}nt"
+                                        class="form-control" title="Nodule Consistency"
+                                        tabindex="{{ i }}08">
+                                    <option value="-"> -</option>
+                                    <option value="s"> Solid</option>
+                                    <option value="m"> Part-solid</option>
+                                    <option value="g"> Nonsolid</option>
+                                    <option value="o"> Other (see comment)</option>
+                                </select>
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap;">
+                        <label class="control-label" for="cect1sl">Length (mm)</label>
+                        <i class="fa fa-question-circle-o" aria-hidden="true"
+                           data-toggle="popover" title="Help"
+                           data-content="Indicate the length (largest dimension) of the nodule.  The unit of measurement is always millimeters."></i>
+                    </td>
+                    {% for i in noduleArray %}
+                        <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                            <div class="form-group form-group-sm">
+                                <input type="text" name="cect{{ i }}sl" id="cect{{ i }}sl"
+                                       size="4" title="Length (mm)"
+                                       class="form-control numeric decimalformat"
+                                       tabindex="{{ i }}09">
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap;">
+                        <label class="control-label" for="cect1sw">Maximum width
+                            (mm)</label>
+                        <i class="fa fa-question-circle-o" aria-hidden="true"
+                           data-toggle="popover" title="Help"
+                           data-content="Indicate the maximum width (largest perpendicular dimension to the length) of the nodule.  The unit of measurement is always millimeters."></i>
+                    </td>
+                    {% for i in noduleArray %}
+                        <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                            <div class="form-group form-group-sm">
+                                <input type="text" name="cect{{ i }}sw" id="cect{{ i }}sw"
+                                       size="4" title="Maximum Width"
+                                       class="form-control numeric decimalformat"
+                                       tabindex="{{ i }}10">
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap;">
+                        <label class="control-label" for="cect1sd">Mean diameter (mm)</label>
+                        <i class="fa fa-question-circle-o" aria-hidden="true"
+                           data-toggle="popover" title="Help"
+                           data-content="Calculated mean diameter."></i>
+                    </td>
+                    {% for i in noduleArray %}
+                        <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                            <div class="form-group form-group-sm">
+                                <label id="cect{{ i }}sd-val" title="Mean diameter"
+                                       class="numeric">-</label>
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap;">
+                        <label class="control-label" for="cect1sh">Height (mm)</label>
+                    </td>
+                    {% for i in noduleArray %}
+                        <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                            <div class="form-group form-group-sm">
+                                <input type="text" name="cect{{ i }}sh" id="cect{{ i }}sh"
+                                       size="4" title="Height"
+                                       class="form-control numeric decimalformat"
+                                       tabindex="{{ i }}11">
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap;">
+                        <label class="control-label required" for="cect1sv">Volume
+                            (mm<sup>3</sup>)</label>
+                    </td>
+                    {% for i in noduleArray %}
+                        <td data-nodule-id="{{ i }}" style="display:none;">
+                            <div class="row">
+                                <div class="form-group form-group-sm col-sm-6">
+                                    <input type="text" name="cect{{ i }}sv" id="cect{{ i }}sv"
+                                           size="4" title="Volume"
+                                           class="form-control numeric decimalformat"
+                                           required="required"
+                                           tabindex="{{ i }}12">
+                                    <input type="hidden" name="cect{{ i }}svovrrde"
+                                           id="cect{{ i }}svovrrde" context="server"
+                                           class="volume-override-flag"/>
+
+
+                                </div>
+                                <div class="form-group form-group-sm col-sm-5">
+                                    <button class="btn" id="cect{{ i }}svb" tabindex="{{ i }}12"
+                                            title="Calculate nodule volume using the standard ellipsoid formula">
+                                        Calculate
+                                    </button>
+                                </div>
+
+
+                            </div>
+                            <div id="cect{{ i }}svovrrde-warn" class="invisible">
+                                <div class="form-group form-group-sm">
+                                    <small class="text-warning">Manually entered</small>
+                                </div>
+                            </div>
+
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap;">
+                        <label class="control-label required" for="cect1ssl">Solid comp. of
+                            part-solid</label>
+                    </td>
+                    {% for i in noduleArray %}
+                        <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                            <div id="cect{{ i }}-container">
+                                <div class="form-group form-group-sm">
+                                    <input type="text" name="cect{{ i }}ssl" id="cect{{ i }}ssl"
+                                           size="4" title="Solid Comp. Length"
+                                           placeholder="length" required="required"
+                                           class="form-control numeric decimalformat"
+                                           tabindex="{{ i }}13">
+                                </div>
+                                &nbsp; x &nbsp;
+                                <div class="form-group form-group-sm">
+                                    <input type="text" name="cect{{ i }}ssw" id="cect{{ i }}ssw"
+                                           size="4" title="Solid Comp. Width"
+                                           placeholder="width" required="required"
+                                           class="form-control numeric decimalformat"
+                                           tabindex="{{ i }}14">
+                                </div>
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap;">
+                        <label class="control-label" for="cect1ssd">Solid mean
+                            diameter(mm)</label>
+                        <i class="fa fa-question-circle-o" aria-hidden="true"
+                           data-toggle="popover" title="Help"
+                           data-content="Solid calculated mean diameter."></i>
+                    </td>
+                    {% for i in noduleArray %}
+                        <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                            <div class="form-group form-group-sm">
+
+                                <label id="cect{{ i }}ssd-val"
+                                       title="Solid mean diameter"
+                                       class="numeric">-</label>
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap;">
+                        <label class="control-label" for="cect1se-n">Smooth edges</label> <i
+                            class="fa fa-question-circle-o" aria-hidden="true"
+                            data-toggle="popover" title="Help"
+                            data-content="Indicate whether the nodule has a smooth-appearing margin, or describe further if needed in the comments section below."></i>
+                    </td>
+                    {% for i in noduleArray %}
+                        <td data-nodule-id="{{ i }}" style="display:none;">
+                            <div class="form-group form-group-sm">
+                                {{ f.yesCheckbox("cect" + i|string + "se", {"tabindex":i|string+"15"}) }}
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap;">
+                        <label class="control-label" for="cect1ca-n">Calcifications</label>
+                    </td>
+                    {% for i in noduleArray %}
+                        <td data-nodule-id="{{ i }}" style="display:none;">
+                            <div class="form-group form-group-sm">
+                                {{ f.yesCheckbox("cect" + i|string + "ca", {"tabindex":i|string+"16"}) }}
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap;">
+                        <label class="control-label" for="cectin">Index Nodule</label> <i
+                            class="fa fa-question-circle-o" aria-hidden="true"
+                            data-toggle="popover" title="Help"
+                            data-content="Indicate whether the nodule is an index nodule. Only one nodule can be an index nodule."></i>
+                    </td>
+                    {% for i in noduleArray %}
+                        <td data-nodule-id="{{ i }}" style="display:none;">
+                            <div class="form-group form-group-sm">
+                                {# Note that this checkbox spans multiple td-s, which is why we don't used the standard forms checkbox #}
+                                <input type="checkbox" class="radiocheckbox" name="cectin"
+                                       id="cect{{ i }}in" value="{{ i }}" tabindex="{{ i }}17">
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap;">
+                        <label class="control-label" for="cect1sp-n">Spiculated</label>
+                    </td>
+                    {% for i in noduleArray %}
+                        <td data-nodule-id="{{ i }}" style="display:none;">
+                            <div class="form-group form-group-sm">
+                                {{ f.yesCheckbox("cect" + i|string + "sp", {"tabindex":i|string+"18"}) }}
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap;">
+                        <label class="control-label" for="cect1pld">
+                            Distance from the costal pleura (mm)?</label>
+                        <i class="fa fa-question-circle-o" aria-hidden="true"
+                           data-toggle="popover" title="Help"
+                           data-content="The shortest distance from the nodule to the costal pleura should be measured in millimeters."></i>
+                    </td>
+                    {% for i in noduleArray %}
+                        <td data-nodule-id="{{ i }}" style="display:none;" class="form-inline">
+                            <div class="form-group form-group-sm">
+                                <input type="text" name="cect{{ i }}pld" id="cect{{ i }}pld"
+                                       class="numeric decimalformat"
+                                       title="Distance" tabindex="{{ i }}19">
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap;">
+                        <label class="control-label" for="cect1ac">Action</label> <i
+                            class="fa fa-question-circle-o"
+                            aria-hidden="true"
+                            data-toggle="popover" title="Help"
+                            data-content="This field becomes very important when different nodules require different follow-up.  A pull-down menu allows us to choose among six different follow-up actions -    'repeat SCT' (repeat screening CT),    'follow-up\ Dx CT' (follow-up Diagnostic CT),    'Abx + follow-up Dx CT' (Antibiotic + follow-up Diagnostic CT),    'biopsy',    'bronchoscopy',       or    'resection'."></i>
+                    </td>
+                    {% for i in noduleArray %}
+                        <td data-nodule-id="{{ i }}" style="display:none;">
+                            <div class="form-group form-group-sm">
+                                <select name="cect{{ i }}ac" id="cect{{ i }}ac" title="Action"
+                                        class="form-control" tabindex="{{ i }}20">
+                                    <option value="-"> -</option>
+                                    <option value="s"> Annual repeat CT</option>
+                                    <option value="f"> Follow-up CT</option>
+                                    <option value="a"> Abx + follow-up CT</option>
+                                    <option value="e"> PET</option>
+                                    <option value="c"> CT w contrast</option>
+                                    <option value="b"> CT-guided biopsy</option>
+                                    <option value="p"> Bronchoscopy</option>
+                                    <option value="r"> Resection</option>
+                                </select>
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap;">
+                        <label class="control-label" for="cect1co">Comment</label> <i
+                            class="fa fa-question-circle-o"
+                            aria-hidden="true"
+                            data-toggle="popover" title="Help"
+                            data-content="This field is for additional comments about the nodule.  If a previously seen nodule is found to be something other than a nodule, note it here."></i>
+                    </td>
+                    {% for i in noduleArray %}
+                        <td data-nodule-id="{{ i }}" style="display:none;">
+                            <div class="form-group form-group-sm">
+                                <input type="text" name="cect{{ i }}co" id="cect{{ i }}co"
+                                       size="20" class="form-control" title="Comment"
+                                       tabindex="{{ i }}21">
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td style="white-space: nowrap;">
+                        <label class="control-label" for="cect1pd">Pathologic
+                            diagnosis</label>
+                        <i class="fa fa-question-circle-o" aria-hidden="true"
+                           data-toggle="popover" title="Help"
+                           data-content="If a biopsy was previously performed, the diagnosis was chosen from a pull-down menu on the Biopsy form.  When CT evaluation forms are created after the biopsy was done, the 'Pathologic Diagnosis' selected on the Biopsy Form is transferred onto the new CT evaluation Form.  Once a diagnosis has been assigned on the Biopsy Form and it pops up on the CT evaluation form, it CANNOT be changed."></i>
+                    </td>
+                    {% for i in noduleArray %}
+                        <td data-nodule-id="{{ i }}" style="display:none;">
+                            <div class="form-group form-group-sm">
+                                <select name="cect{{ i }}pd" id="cect{{ i }}pd"
+                                        title="Pathologic diagnosis" class="form-control"
+                                        tabindex="{{ i }}22">
+                                    <option value="-"> -For Pathology Use Only-</option>
+                                    <option value="aa"> AAH</option>
+                                    <option value="ap"> Atyp bronch prolif</option>
+                                    <option value="ai"> AIS</option>
+                                    <option value="mi"> MIA</option>
+                                    <option value="ns"> Unspec. non-small cell</option>
+                                    <option value="ad"> Adenocarcinoma</option>
+                                    <option value="as"> Adenosquamous</option>
+                                    <option value="la"> Large cell</option>
+                                    <option value="sq"> Squamous cell</option>
+                                    <option value="sm"> Small cell</option>
+                                    <option value="ct"> Carcinoid - typical</option>
+                                    <option value="ca"> Carcinoid - atypical</option>
+                                    <option value="be"> Not malignant</option>
+                                    <option value="bs"> Benign specific</option>
+                                    <option value="os"> Other (specify)</option>
+                                </select>
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-default btn-sm add-nodule" tabindex="1101">
+                <span class="fa fa-plus" aria-hidden="true"></span> Add nodule
+            </button>
+            <div class="form-group">
+                {{ f.checkbox("cectancn","1", "Additional non-calcified nodules", {"tabindex":"1102"}) }}
+                {{ f.checkbox("cectacn","1", "Additional calcified nodules", {"tabindex":"1103"}) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" name="cennod" value="0" context="server"/>
+<input type="hidden" name="ceanod" value="n" context="server"/>
+
+<script language="JavaScript">
+    $(function () {
+        const noduleArrayLength = {{ noduleArray|length }};
+        const ng = $.noduleGrid({
+            availableNodules: noduleArrayLength,
+            getNoduleCount: function () {
+                return parseInt($("[name='cennod']").val());
+            },
+            setNoduleCount: function (noduleCount) {
+                $("[name='cennod']").val(noduleCount);
+                $("[name='ceanod']").val(noduleCount === 0 ? "n" : "y");
+            }
+        });
+
+        $(".add-nodule").on('click', ng.addNodule);
+        $(".remove-nodule").on('click', ng.removeNodule);
+
+
+        //Nodule validations; use timeout to be sure it's run after FV is bound.
+        window.setTimeout(function () {
+            const fv = $("#main-form").data('formValidation');
+
+            {% for i in noduleArray %}
+                fv.addField('cect{{ i }}ch', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect{{ i }}en', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect{{ i }}ll', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect{{ i }}sn', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect{{ i }}inl', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect{{ i }}inh', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect{{ i }}st', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect{{ i }}nt', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect{{ i }}sv', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect{{ i }}ssl', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect{{ i }}ssw', {validators: {notEmpty: {message: 'Enter a value'}}});
+            {% endfor %}
+        }, 0);
+
+
+    });
+</script>

@@ -563,21 +563,16 @@
             $("#sbfev1, #sbfvc").on('change', function () {
                 const fev1 = $("#sbfev1").val();
                 const fvc = $("#sbfvc").val();
-                if (fev1 > 0 && fvc > 0) {
-                    const ffr = Math.round(100.0 * fev1 / fvc);
-                    if (ffr > 0) {
-                        $("#sbffr").val(ffr);
-                        $("#ffr-value").text(ffr);
-                        $("#ffr-message").show();
-                    }
-                    else {
-                        $("#sbffr").val("");
-                        $("#ffr-message").hide();
-                    }
-                }
-                else {
+                const ffr = VAPALS.calculatePulmonaryFunction(fev1, fvc);
+                if (ffr > 0) {
+                    $("#sbffr").val(ffr);
+                    $("#ffr-value").text(ffr);
+                    $("#ffr-message").show();
+                } else {
+                    $("#sbffr").val("");
                     $("#ffr-message").hide();
                 }
+
             }).first().trigger('change');
 
             //conditionally enabled fields

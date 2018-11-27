@@ -41,8 +41,17 @@
     });
 
     QUnit.test("todaysDate", function (assert) {
-        assert.ok(moment().add(2, 's') > moment(VAPALS.todaysDate()), "now+2sec > todaysDate()")
-        assert.ok(moment().subtract(2, 's') < moment(VAPALS.todaysDate()), "now-2sec < todaysDate()")
+        assert.ok(moment().add(2, 's') > moment(VAPALS.todaysDate()), "now+2sec > todaysDate()");
+        assert.ok(moment().subtract(1, 'd') < moment(VAPALS.todaysDate()), "now-2sec < todaysDate()")
+    });
+
+    QUnit.test("todaysYear", function (assert) {
+        assert.ok(2017 < moment(VAPALS.todaysYear()), "past year")
+    });
+
+    QUnit.test("pulmonaryFunction", function (assert) {
+        assert.ok(20 == moment(VAPALS.calculatePulmonaryFunction(1, 5)), "normal");
+        assert.ok(0 == moment(VAPALS.calculatePulmonaryFunction(0, 0)), "sero")
     });
 
 </script>

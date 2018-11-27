@@ -41,7 +41,7 @@ var VAPALS = new function () {
     };
 
     /**
-     * Retrieves a Date representing "now".
+     * Retrieves a Date representing "now", without time information.
      * @returns {Date}
      */
     this.todaysDate = function () {
@@ -110,6 +110,15 @@ var VAPALS = new function () {
             FormValidation.utils.classSet(e.element, {
                 'is-valid': false,
             });
+        }
+    };
+
+    this.calculatePulmonaryFunction = function(fev1, fvc){
+        if (fev1 > 0 && fvc > 0) {
+            return Math.round(100.0 * fev1 / fvc);
+        }
+        else {
+            return 0;
         }
     }
 

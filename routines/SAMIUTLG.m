@@ -37,7 +37,7 @@ SHUTDOWN ; ZEXCEPT: utsuccess
 UTTOGL ; @TEST - Toggle VAPALS password identification
  ;ToggleOff^SAMILOG and ToggleON^SAMILOG
  n pooget,poopost,ienget,ienpost
- s ienget=$o(^%W(17.6001,"B","GET","vapals","wsHOME^SAMIHOM3",0))
+ s ienget=$o(^%W(17.6001,"B","GET","vapals","WSHOME^SAMIHOM3",0))
  s ienpost=$o(^%W(17.6001,"B","POST","vapals","wsVAPALS^SAMIHOM3",0))
  s pooget=$g(^%W(17.6001,ienget,"AUTH"))
  s poopost=$g(^%W(17.6001,ienpost,"AUTH"))

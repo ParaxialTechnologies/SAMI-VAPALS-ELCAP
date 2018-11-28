@@ -300,7 +300,7 @@ getTemplate(return,form) ; get html template
  ;@called-by
  ; wsCASE
  ; wsNuForm
- ; getHome^SAMIHOM3
+ ; GETHOME^SAMIHOM3
  ;@calls
  ; $$getTemplate^%wf
  ; getThis^%wd
@@ -594,7 +594,7 @@ wsNuFormPost(ARGS,BODY,RESULT) ; post new form selection (post service)
  ; parseBody^%wf
  ; $$NOW^XLFDT
  ; $$keyDate^SAMIHOM3
- ; getHome^SAMIHOM3
+ ; GETHOME^SAMIHOM3
  ; makeCeform
  ; wsGetForm^%wf
  ;@input
@@ -616,7 +616,7 @@ wsNuFormPost(ARGS,BODY,RESULT) ; post new form selection (post service)
  new sid set sid=$get(vars("studyid"))
  i sid="" s sid=$g(ARGS("sid"))
  if sid="" do  quit  ;
- . do getHome^SAMIHOM3(.RESULT,.ARGS) ; on error return to home page
+ . do GETHOME^SAMIHOM3(.RESULT,.ARGS) ; on error return to home page
  . quit
  ;
  set nuform=$get(vars("form"))

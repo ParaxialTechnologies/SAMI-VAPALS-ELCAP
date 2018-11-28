@@ -26,7 +26,7 @@ wsReport(rtn,filter) ; generate a report based on parameters in the filter
  n type,temp
  s type=$g(filter("samireporttype"))
  i type="" d  q  ; report type missing
- . d getHome^SAMIHOM3(.rtn,.filter) ; send them to home
+ . d GETHOME^SAMIHOM3(.rtn,.filter) ; send them to home
  ;
  d getThis^%wd("temp","table.html") ; page template
  q:'$d(temp)

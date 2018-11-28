@@ -99,12 +99,12 @@ setroot(graph) ; root of working storage
  ; makeCeform^SAMICASE
  ; INITFRMS^SAMIFRM
  ; loadData^SAMIFRM
- ; patlist^SAMIHOME
- ; wsNewCase^SAMIHOME
- ; nextNum^SAMIHOME
- ; prefill^SAMIHOME
- ; makeSbform^SAMIHOME
- ; makeSiform^SAMIHOME
+ ; PATLIST^SAMIHOM3
+ ; wsNewCase^SAMIHOM3
+ ; nextNum^SAMIHOM3
+ ; prefill^SAMIHOM3
+ ; makeSbform^SAMIHOM3
+ ; makeSiform^SAMIHOM3
  ; wsLookup^SAMISRCH
  ;@calls
  ; $$addgraph

@@ -1,4 +1,4 @@
-SAMIUTUR ;ven/lgc - UNIT TEST for SAMIUR1 ; 11/8/18 2:02pm
+SAMIUTUR ;ven/lgc - UNIT TEST for SAMIUR1 ; 11/28/18 2:05pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -35,7 +35,12 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  ;
 UTWSRPT ; @TEST - generate a report based on parameters in the filter
  ;wsReport(rtn,filter)
- n filter,pats,poo,cnt
+ n filter,pats,poo,cnt,root
+ D PullUTarray^SAMIUTST(.poo,"All XXX00812 graphstore globals")
+ s root=$$setroot^%wd("vapals-patients")
+ k @root@("graph","XXX00812")
+ m @root@("graph","XXX00812")=poo
+ k poo
  s filter("samireporttype")="followup"
  s utsuccess=0
  d wsReport^SAMIUR1(.poo,.filter)
@@ -55,11 +60,18 @@ UTWSRPT ; @TEST - generate a report based on parameters in the filter
  d wsReport^SAMIUR1(.poo,.filter)
  s cnt=0 f  s cnt=$o(poo(cnt)) q:'cnt  i poo(cnt)["Enrollment as of" s utsuccess=1
  D CHKEQ^%ut(utsuccess,1,"Testing wsReport for enrollment FAILED!")
+ k @root@("graph","XXX00812")
  q
  ;
 UTSELCT ; @TEST - selects patient for the report
  ;select(pats,type)
- n pats,type,datephrase,unplus30,unminus30,unowdate,udtphrase
+ n pats,type,datephrase,unplus30,unminus30,unowdate,udtphrase,poo
+ ;
+ D PullUTarray^SAMIUTST(.poo,"All XXX00812 graphstore globals")
+ s root=$$setroot^%wd("vapals-patients")
+ k @root@("graph","XXX00812")
+ m @root@("graph","XXX00812")=poo
+ k poo
  ;
  s unplus30=$P($$FMTE^XLFDT($$FMADD^XLFDT($$HTFM^XLFDT($H),31),5),"@")
  s unminus30=$P($$FMTE^XLFDT($$FMADD^XLFDT($$HTFM^XLFDT($H),-31),5),"@")
@@ -138,6 +150,7 @@ UTSELCT ; @TEST - selects patient for the report
  D select^SAMIUR1(.pats,.type,.datephrase)
  s utsuccess=($g(datephrase)="")
  D CHKEQ^%ut(utsuccess,1,"Testing outreach patient report FAILED!")
+ k @root@("graph","XXX00812")
  q
  ;
 UTPNAME ; @TEST - extrinsic returns the PAGE NAME for the report

@@ -1,4 +1,4 @@
-SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 11/7/18 9:41am
+SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 11/28/18 10:48am
  ;;1.0;;**LOCAL**; APR 22, 2018
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -94,7 +94,7 @@ TASKIT ;
  s tiutitleien=$O(^TIU(8925.1,"D",tiutitlepn,0))
  I '$g(tiutitleien) Q:$Q 0  Q
  ;
- s si=$g(filter("studyid")) ; e.g."XXX00333"
+ s si=$g(filter("studyid")) ; e.g."XXX00001"
  I '$L($G(si)) Q:$Q 0  Q
  ;
  s root=$$setroot^%wd("vapals-patients")
@@ -103,22 +103,24 @@ TASKIT ;
  s samikey=$g(filter("form"))
  I (samikey'["siform") Q:$Q 0  Q
  I '($L(samikey,"-")=4) Q:$Q 0  Q
- ; e.g. samikey="siform-2018-06-04"
+ ; e.g. samikey="siform-2018-11-13"
  ;
  s vals=$na(@root@("graph",si,samikey))
- ; e.g. vals="^%wd(17.040801,23,""graph"",""XXX00333"",""siform-2018-06-04"")"
+ ; e.g. vals="^%wd(17.040801,23,""graph"",""XXX00001"",""siform-2018-11-13"")"
  ;
  s ptdfn=@vals@("dfn")
  I '$g(ptdfn) Q:$Q 0  Q
  ;
  s dest=$na(@vals@("note"))
- ; e.g. dest="^%wd(17.040801,23,""graph"",""XXX00333"",""siform-2018-06-04"",""note"")"
+ ; e.g. dest="^%wd(17.040801,23,""graph"",""XXX00333"",""siform-2018-11-13"",""note"")"
  ;
  ; Build the new tiu stubb.
  ;   tiuien = 0 : Building new tiu stubb failed
  ;   tiuien = n : IEN into file #8925 for new note stubb
 NEWTIU D BLDTIU(.tiuien,ptdfn,tiutitleien,provduz,clinien)
  I 'tiuien Q:$Q 0  Q
+ ; For unit testing. Save new tiuien
+ i $d(%ut) S ^TMP("UNIT TEST","UTTASK^SAMIUTVA",$J)=tiuien
  ;
  ; Now set the text in the note
 NEWTXT D SETTEXT(.tiuien,dest)

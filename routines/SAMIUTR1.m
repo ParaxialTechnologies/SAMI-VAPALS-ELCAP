@@ -1,4 +1,4 @@
-SAMIUTR1 ;ven/lgc - UNIT TEST for SAMICTR1 ; 11/13/18 7:43pm
+SAMIUTR1 ;ven/lgc - UNIT TEST for SAMICTR1 ; 11/28/18 1:16pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -40,17 +40,16 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  ;
 UTNODUL ; @TEST - nodules
  ;nodules(rtn,vals,dict)
- n poo,root,si,vals,dict,cnt,return
+ n poo,root,si,vals,dict,cnt,return,arc,noder,nodea
  s root=$$setroot^%wd("vapals-patients")
  s si="XXX00001",samikey="ceform-2018-10-21"
  s vals=$na(@root@("graph",si,samikey))
- ;now pull saved report
  n dict s dict=$$setroot^%wd("cteval-dict")
  s dict=$na(@dict@("cteval-dict"))
  s cnt=0
  d nodules^SAMICTR1("return",.vals,.dict)
  ;now pull saved report
- n arc s arc=$$PullUTarray^SAMIUTST(.arc,"UTNODUL^SAMIUTR1 report")
+ D PullUTarray^SAMIUTST(.arc,"UTNODUL^SAMIUTR1 report")
  ; now compare return with arc
  n noder,nodea s noder=$na(return),nodea=$na(arc)
  s utsuccess=1
@@ -58,7 +57,28 @@ UTNODUL ; @TEST - nodules
  . i '(@noder=@nodea) s utsuccess=0
  i '(nodea="") s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing generating nodule report FAILED!")
+ ;
+ ; Try getting more line coverage with XXX00812
+ K @root@("graph","XXX00812")
+ D PullUTarray^SAMIUTST(.poo,"All XXX00812 graphstore globals")
+ m @root@("graph","XXX00812")=poo
+ s si="XXX00812",samikey="ceform-2018-11-28"
+ s vals=$na(@root@("graph",si,samikey))
+ s cnt=0
+ k return
+ d nodules^SAMICTR1("return",.vals,.dict)
+ ;now pull saved report
+ d PullUTarray^SAMIUTST(.arc,"UTNODUL^SAMIUTR1 report XXX00812")
+ ; now compare return with arc
+ n noder,nodea s noder=$na(return),nodea=$na(arc)
+ s utsuccess=1
+ f  s noder=$Q(@noder),nodea=$Q(@nodea) q:noder=""  d  q:'utsuccess
+ . i '(@noder=@nodea) s utsuccess=0
+ i '(nodea="") s utsuccess=0
+ K @root@("graph","XXX00812")
+ D CHKEQ^%ut(utsuccess,1,"Testing generating nodule XXX00812 report FAILED!")
  q
+ ;
 UTOUT ; @TEST - out line
  ;out(ln)
  n cnt,rtn,poo

@@ -1,4 +1,4 @@
-SAMIFRM2 ;ven/gpl - ielcap: forms ; 11/13/18 12:06pm
+SAMIFRM2 ;ven/gpl - ielcap: forms ; 11/27/18 11:28am
  ;;18.0;SAM;;
  ;
  ; Routine SAMIFRM contains subroutines for managing the ELCAP forms,
@@ -227,7 +227,11 @@ loadData() ; import directory full of json data into elcap-patient graph
  ; parseFileName
  ;
  new dir
- if '$$GETDIR(.dir,"/home/osehra/www/sample-data-20171129/") quit  ; user exited
+ ; Skip interactive if doing unit test VEN/lgc
+ I '$D(%ut) D
+ . if '$$GETDIR(.dir,"/home/osehra/www/sample-data-20171129/") quit  ; user exited
+ E  S dir="/home/osehra/www/sample-data-UnitTest/"
+ ;
  new cmd
  set cmd="""ls "_dir_" > /home/osehra/www/sample-list.txt"""
  zsystem @cmd

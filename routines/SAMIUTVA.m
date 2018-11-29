@@ -1,4 +1,4 @@
-SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 11/21/18 1:57pm
+SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 11/28/18 10:48am
  ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -320,7 +320,10 @@ UTURBR ; @TEST - extrinsic to return urban or rural depending on zip code
 UTTASK ; @TEST - test TASKIT creation of new note,text, and encounter
  S filter("form")="siform-2018-11-13"
  s filter("studyid")="XXX00001"
- s tiuien=$$TASKIT^SAMIVSTA()
+ n tiuien s tiuien=0
+ k ^TMP("UNIT TEST","UTTASK^SAMIUTVA",$J)
+ D TASKIT^SAMIVSTA
+ s tiuien=$g(^TMP("UNIT TEST","UTTASK^SAMIUTVA",$J))
  s utsuccess=$S(tiuien>0:1,1:0)
  D CHKEQ^%ut(utsuccess,1,"Testing creating a new TIU note FAILED!")
  ; If a new note was generated add encounter info

@@ -1,4 +1,4 @@
-SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 11/13/18 8:16pm
+SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 11/27/18 1:21pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -70,6 +70,7 @@ UTINITF ; @TEST - initilize form file from elcap-patient graphs
 UTINITF1 ; @TEST - initialize one form named form from ary passed by name
  ;D INIT1FRM(form,ary)
  q
+ ;
 UTREGF ; @TEST - ; register elcap forms in form mapping file
  ;REGFORMS()
  ;Delete all entires in 311.11 for these 8 forms
@@ -101,6 +102,30 @@ UTREGF ; @TEST - ; register elcap forms in form mapping file
  ;
 UTLOADD ; @TEST - import directory full of json data into elcap-patient graph
  ;loadData()
+ ;First be sure the XXX0005 graphstore info doesn't exist
+ n root,poo,arc,cmd,zlist,nodea,nodep
+ set root=$$setroot^%wd("vapals-patients")
+ k @root@("graph","XXX0005")
+ ;Check that the folder and three json test files are
+ ;  on our client
+ s cmd="""mkdir /home/osehra/www/sample-data-UnitTest"""
+ zsystem @cmd
+ S dir="/home/osehra/www/sample-data-UnitTest/"
+ k cmd s cmd="""ls "_dir_" > /home/osehra/www/sample-list.txt"""
+ zsystem @cmd
+ do file2ary^%wd("zlist","/home/osehra/www/","sample-list.txt")
+ i '($g(zlist(1))="XXX0005-ceform-2016-01-01.json") d  q
+ . D FAIL^%ut("Error, json files missing!")
+ ;
+ D loadData^SAMIFRM2
+ m arc=@root@("graph","XXX0005")
+ D PullUTarray^SAMIUTST(.poo,"UTLOADD^SAMIUTF2")
+ s nodea=$na(arc),nodep=$na(poo)
+ f  s nodea=$q(nodea),nodep=$q(nodep) q:nodea=""  d  q:'utsuccess
+ . i '(nodea=nodep) s utsuccess=0
+ . i '(@nodea=@nodep) s utsuccess=0
+ k @root@("graph","XXX0005")
+ D CHKEQ^%ut(utsuccess,1,"Testing import json data FAILED!")
  q
  ;
 UTPARSFN ; @TEST - parse filename extracting studyid & form
@@ -113,8 +138,14 @@ UTPARSFN ; @TEST - parse filename extracting studyid & form
  D CHKEQ^%ut(utsuccess,1,"Testing parse filename for studyid FAILED!")
  q
  ;
-UTGETDIR ; extrinsic which prompts for directory
+UTGETDIR ; @TEST - extrinsic which prompts for directory
  ;GETDIR(KBAIDIR,KBAIDEF)
+ n dir,udtime
+ s udtime=$g(DTIME)
+ S DTIME=1
+ S utsuccess=$$GETDIR^SAMIFRM2(.dir,"/home/osehra/www/sample-data-UnitTest")
+ S DTIME=udtime
+ D CHKEQ^%ut(utsuccess,1,"Testing GETDIR FAILED!")
  q
  ;
 UTGETFN ; extrinsic which prompts for filename

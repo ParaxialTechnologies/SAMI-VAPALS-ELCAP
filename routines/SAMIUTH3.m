@@ -1,4 +1,4 @@
-SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 11/21/18 9:39am
+SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 11/29/18 10:42am
  ;;18.0;SAMI;;
  ;
  ;
@@ -16,15 +16,73 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  K utsuccess
  Q
  ;
+UTWSHM ; @TEST - Testing web service for SAMI homepage
+ ; wsHOME(rtn,filter)
+ n filter,rtn,nodea,nodep,arc,poo
+ s filter("test")=1
+ d wsHOME^SAMIHOM3(.rtn,.filter)
+ m arc=rtn
+ s utsuccess=1
+ D PullUTarray^SAMIUTST(.poo,"UTWSHM^SAMIUTH3 test")
+ s nodea=$na(arc),nodep=$na(poo)
+ f  s nodea=$q(@nodea),nodep=$q(@nodep) q:(nodea="")  d  q:'utsuccess
+ .; check first 60 lines of configuration.  After that the returned
+ .;   array depends on test patients available
+ . q:($qs(nodea,1)=60)
+ . i '(nodea=nodep) s utsuccess=0 W !,nodea,!,nodep
+ . i '(@nodea=@nodep) s utsuccess=0 w !,@nodea,!,@nodep
+ D CHKEQ^%ut(utsuccess,1,"Testing web service test FAILED!")
+ q
+ ;
+UTWSHM1 k filter,rtn,nodea,nodep,arc,poo
+ s filter("samiroute")=""
+ d wsHOME^SAMIHOM3(.rtn,.filter)
+ m arc=rtn
+ s utsuccess=1
+ D PullUTarray^SAMIUTST(.poo,"UTWSHM^SAMIUTH3 samiroute null")
+ s nodea=$na(arc),nodep=$na(poo)
+ f  s nodea=$q(@nodea),nodep=$q(@nodep) q:(nodea="")  d  q:'utsuccess
+ . i '(nodea=nodep) s utsuccess=0 W !,nodea,!,nodep
+ . i '(@nodea=@nodep) s utsuccess=0 w !,@nodea,!,@nodep
+ i '(nodep="") s utsuccess=0
+ D CHKEQ^%ut(utsuccess,1,"Testing web service null samiroute FAILED!")
+ Q
+ ;
+UTWSHM2 k filter,rtn,nodea,nodep,arc,poo
+ s filter("dfn")=1
+ d wsHOME^SAMIHOM3(.rtn,.filter)
+ m arc=rtn
+ s utsuccess=1
+ D PullUTarray^SAMIUTST(.poo,"UTWSHM^SAMIUTH3 dfn=1")
+ s nodea=$na(arc),nodep=$na(poo)
+ f  s nodea=$q(@nodea),nodep=$q(@nodep) q:(nodea="")  d  q:'utsuccess
+ . i '(nodea=nodep) s utsuccess=0 W !,nodea,!,nodep
+ . i '(@nodea=@nodep) s utsuccess=0 w !,@nodea,!,@nodep
+ i '(nodep="") s utsuccess=0
+ D CHKEQ^%ut(utsuccess,1,"Testing web service dfn=1 FAILED!")
+ q
+ ;
+UTDVHM ; @TEST - Testing temporary home page for development
+ ; devhome(rtn,filter)
+ n filter,rtn,poo
+ d devhome^SAMIHOM3(.rtn,.filter)
+ D PullUTarray^SAMIUTST(.poo,"UTDVHM^SAMIUTH3")
+ s utsuccess=1
+ ; Check the first 60 nodes match as these represent
+ ;  the parameters for the html page, but not the list
+ ;  of patients - which will vary from day to day
+ n cnt s cnt=0
+ f  s cnt=$O(rtn(cnt)) q:cnt>60  d
+ . i '(rtn(cnt)=poo(cnt)) s utsuccess=0
+ D CHKEQ^%ut(utsuccess,1,"Testing building temp home page FAILED!")
+ q
+ ;
 UTPTLST ; @TEST - Tesing pulling all patients from vapals-patients
  ; D patlist(ary)
  n cnt,poo s cnt=""
  D patlist^SAMIHOM3("poo")
  new groot set groot=$$setroot^%wd("vapals-patients")
- s utsuccess=1
- f  s cnt=$O(poo(cnt)) q:(cnt="")  d  q:(utsuccess=0)
- . i '($d(@groot@("dfn",+$tr(cnt,"X"),+$tr(cnt,"X")))) d
- .. s utsuccess=0
+ s utsuccess=($D(poo)=10)
  D CHKEQ^%ut(utsuccess,1,"Testing pulling patients from vapals-patients FAILED!")
  q
  ;
@@ -179,6 +237,7 @@ UTWSNC ; @TEST - Testing wsNewCase adding a new case to vapals-patients Graphsto
  ;
  ;
 UTWSVP1 ; @TEST - Test wsVAPALS API route=""
+ ; d wsVAPALS
  N ARG,BODY,RESULT,route,poo,cnt,arc,filter,nodea,nodep
  ; testing route="". RESULT should have HTML
  s route="" D wsVAPALS^SAMIHOM3(.ARG,.BODY,.RESULT)
@@ -232,27 +291,44 @@ UTWSVP3 ; @TEST - Test wsVAPALS API route="casereview"
  D CHKEQ^%ut(utsuccess,1,"Testing wsVAPALS route=casereview  FAILED!")
  q
  ;
- ;
- ; Testing wsVAPALS notes
- ; s vars("samiroute")=""
- ;   d getHome(.RESULT,.ARG) ; on error go home
- ;D getHome^SAMIHOM3(rtn,filter)
- ; s vars("samiroute")="lookup"
- ;   d wsLookup^SAMISRC2(.ARG,.BODY,.RESULT)
- ; s vars("samiroute")="newcase"
- ;   d wsNewCase^SAMIHOM3(.ARG,.BODY,.RESULT)
- ; s vars("samiroute")="casereview"
- ;   d wsCASE^SAMICAS2(.RESULT,.ARG)
- ; s vars("samiroute")="nuform"
- ;   d wsNuForm^SAMICAS2(.RESULT,.ARG)
- ; s vars("samiroute")="addform"
- ;   d wsNuFormPost^SAMICAS2(.ARG,.BODY,.RESULT)
- ; s vars("samiroute")="form"
- ;   d wsGetForm^%wf(.RESULT,.ARG)
- ; s vars("samiroute")="postform"
- ;   d wsPostForm^%wf(.ARG,.BODY,.RESULT)
- ; wsVAPALS(ARG,BODY,RESULT) ; vapals post web service
+UTSIFRM ; @TEST - Testing creating a background form
+ ; d makeSiform(num)
+ n root,num,sid,cdate,poo
+ S num=1
+ set root=$$setroot^%wd("vapals-patients")
+ set sid=$get(@root@(num,"samistudyid"))
+ i sid="" d  q
+ . D FAIL^%ut("Error, no sid for dfn=1!")
+ set cdate=$get(@root@(num,"samicreatedate"))
+ i cdate="" d  q
+ . D FAIL^%ut("Error, no samigratedate for dfn=1!")
+ m poo=@root@("graph",sid,"siform-"_cdate)
+ k @root@("graph",sid,"siform-"_cdate)
+ D makeSiform^SAMIHOM3(num)
+ ; look for Sbform
+ s utsuccess=$d(@root@("graph",sid,"siform-"_cdate))
+ k @root@("graph",sid,"sbform-"_cdate)
+ m @root@("graph",sid,"sbform-"_cdate)=poo
+ D CHKEQ^%ut(utsuccess,10,"Testing makeSiform FAILED!")
  q
  ;
+UTSBFRM ; @TEST - Testing creating a background form
+ ; d makeSbform(num)
+ n root,num,sid,cdate
+ S num=1
+ set root=$$setroot^%wd("vapals-patients")
+ set sid=$get(@root@(num,"samistudyid"))
+ i sid="" d  q
+ . D FAIL^%ut("Error, no sid for dfn=1!")
+ set cdate=$get(@root@(num,"samicreatedate"))
+ i cdate="" d  q
+ . D FAIL^%ut("Error, no samigratedate for dfn=1!")
+ k @root@("graph",sid,"sbform-"_cdate)
+ D makeSbform^SAMIHOM3(num)
+ ; look for Sbform
+ s utsuccess=$d(@root@("graph",sid,"sbform-"_cdate))
+ k @root@("graph",sid,"sbform-"_cdate)
+ D CHKEQ^%ut(utsuccess,10,"Testing makeSbform FAILED!")
+ q
  ;
 EOR ;End of routine SAMIUTH3

@@ -78,19 +78,19 @@ UTDVHM ; @TEST - Testing temporary home page for development
  q
  ;
 UTPTLST ; @TEST - Tesing pulling all patients from vapals-patients
- ; D patlist(ary)
+ ; D PATLIST(ary)
  n cnt,poo s cnt=""
- D patlist^SAMIHOM3("poo")
+ D PATLIST^SAMIHOM3("poo")
  new groot set groot=$$setroot^%wd("vapals-patients")
  s utsuccess=($D(poo)=10)
  D CHKEQ^%ut(utsuccess,1,"Testing pulling patients from vapals-patients FAILED!")
  q
  ;
 UTGETHM ; @TEST - Testing pulling HTML for home.
- ;D getHome(rtn,filter)
+ ;D GETHOME(rtn,filter)
  n poo,arc,nodea,nodep,filter
  s utsuccess=1
- D getHome^SAMIHOM3(.poo,.filter)
+ D GETHOME^SAMIHOM3(.poo,.filter)
  ; Get array saved in "vapals unit tests" for this unit test
  D PullUTarray^SAMIUTST(.arc,"UTGETHM^SAMIHOM3")
  s utsuccess=1
@@ -105,10 +105,10 @@ UTGETHM ; @TEST - Testing pulling HTML for home.
  q
  ;
 UTSCAN4 ; @TEST - Testing scanning array for a given entry
- ;D getHome(rtn,filter)
+ ;D GETHOME(rtn,filter)
  ; S X=$$scanFor(ary,start,what)
  n from,to,str,x,rndm,poo,filter s rndm=$R(150)
- D getHome^SAMIHOM3(.poo,.filter)
+ D GETHOME^SAMIHOM3(.poo,.filter)
  s str=$g(poo(rndm))
  n start s start=1
  f  s start=$$scanFor^SAMIHOM3(.poo,start,str) q:(start=0)  q:(start=rndm)
@@ -236,11 +236,10 @@ UTWSNC ; @TEST - Testing wsNewCase adding a new case to vapals-patients Graphsto
  q
  ;
  ;
-UTWSVP1 ; @TEST - Test wsVAPALS API route=""
- ; d wsVAPALS
+UTWSVP1 ; @TEST - Test WSVAPALS API route=""
  N ARG,BODY,RESULT,route,poo,cnt,arc,filter,nodea,nodep
  ; testing route="". RESULT should have HTML
- s route="" D wsVAPALS^SAMIHOM3(.ARG,.BODY,.RESULT)
+ s route="" D WSVAPALS^SAMIHOM3(.ARG,.BODY,.RESULT)
  m poo=RESULT
  ;
  s utsuccess=1
@@ -252,15 +251,15 @@ UTWSVP1 ; @TEST - Test wsVAPALS API route=""
  . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
  . i '(@nodea=@nodep) s success=0 s utsuccess=0
  i 'nodea="" s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing wsVAPALS route=0  FAILED!")
+ D CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS route=0  FAILED!")
  q
  ;
-UTWSVP2 ; @TEST - Test wsVAPALS API route="lookup"
+UTWSVP2 ; @TEST - Test WSVAPALS API route="lookup"
  N ARG,BODY,RESULT,route,poo,arc,cnt,filter
  ; testing route=lookup"". RESULT should have HTML
  ; look up ELCAP patient (patient in vapals-patients
  s ARG("field")="sid",ARG("fvalue")="XXX00001",route="lookup"
- D wsVAPALS^SAMIHOM3(.ARG,.BODY,.RESULT)
+ D WSVAPALS^SAMIHOM3(.ARG,.BODY,.RESULT)
  m poo=RESULT
  s utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
@@ -271,13 +270,13 @@ UTWSVP2 ; @TEST - Test wsVAPALS API route="lookup"
  . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
  . i '(@nodea=@nodep) s success=0 s utsuccess=0
  i 'nodea="" s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing wsVAPALS route=lookup  FAILED!")
+ D CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS route=lookup  FAILED!")
  q
  ;
-UTWSVP3 ; @TEST - Test wsVAPALS API route="casereview"
+UTWSVP3 ; @TEST - Test WSVAPALS API route="casereview"
  N ARG,BODY,RESULT,route,poo,arc,filter
  s ARG("field")="sid",ARG("fvalue")="XXX00001",route="casereview"
- D wsVAPALS^SAMIHOM3(.ARG,.BODY,.RESULT)
+ D WSVAPALS^SAMIHOM3(.ARG,.BODY,.RESULT)
  m poo=RESULT
  s utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
@@ -288,7 +287,7 @@ UTWSVP3 ; @TEST - Test wsVAPALS API route="casereview"
  . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
  . i '(@nodea=@nodep) s success=0 s utsuccess=0
  i 'nodea="" s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing wsVAPALS route=casereview  FAILED!")
+ D CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS route=casereview  FAILED!")
  q
  ;
 UTSIFRM ; @TEST - Testing creating a background form

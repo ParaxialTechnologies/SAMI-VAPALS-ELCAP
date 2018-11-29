@@ -35,7 +35,7 @@ START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  ;             e.g. "poo" for poo(1)=xxx,poo(2)=yyy
  ;                  "^TMP("yottaForm",20523)"
  ;    title =  title of the unit test
- ;             e.g. patlist-SAMIHOM3
+ ;             e.g. PATLIST-SAMIHOM3
  ;    NOTE: deletes any earlier entry under this title, thus,
  ;          title must be unique
  ; Return

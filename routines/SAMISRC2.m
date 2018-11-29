@@ -75,7 +75,7 @@ wsLookup(ARGS,BODY,RESULT) ; look up ELCAP patient
  ; $$setroot^%wd
  ; $$genStudyId^SAMIHOME
  ; wsCASE^SAMICAS2
- ; getHome^SAMIHOME
+ ; GETHOME^SAMIHOME
  ;@input
  ;.ARGS =
  ;.BODY =
@@ -118,7 +118,7 @@ wsLookup(ARGS,BODY,RESULT) ; look up ELCAP patient
  ; on failure, resturn to the home page, maybe pass an error message
  ;
  set filter("samilookuperror")="Patient not found"
- do getHome^SAMIHOM3(.trtn,.filter)
+ do GETHOME^SAMIHOM3(.trtn,.filter)
  merge RESULT=trtn
  ;
  ;@stanza 3 termination

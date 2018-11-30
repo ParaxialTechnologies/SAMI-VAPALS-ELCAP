@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2018.11.19" name="version"/>
+  <meta content="2018.11.29" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    CT Evaluation Form
@@ -18,11 +18,7 @@
   <link href="../www/lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
   <link href="../www/lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
   <style>
-   #nodule-table .form-group-sm {
-            margin: 5px 5px 5px 5px;
-        }
-
-        #wizard-bar.affix-top {
+   #wizard-bar.affix-top {
             position: static;
         }
 
@@ -70,6 +66,22 @@
   </script>
   <script src="../www/init.js">
   </script>
+  <script src="../www/nodule-grid.js">
+  </script>
+  <div class="affix affix-top" style="right:15px; z-index:10000">
+   <span class="label label-warning visible-xs-block">
+    extra small
+   </span>
+   <span class="label label-info visible-sm-block">
+    small
+   </span>
+   <span class="label label-success visible-md-block">
+    medium
+   </span>
+   <span class="label label-primary visible-lg-block">
+    large
+   </span>
+  </div>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
    <div class="container-fluid">
@@ -339,7 +351,6 @@
          <option value="1.0">
           1.0
          </option>
-         sidoe
          <option value="o">
           Other
          </option>
@@ -479,7 +490,7 @@
       <div class="col-md-12">
        <div class="alert alert-info" id="add-first-nodule">
         If no nodules were detected, you may skip this section.
-        <button class="btn btn-default btn-xs" onclick="addNodule()" type="button">
+        <button "="" class="btn btn-default btn-xs add-nodule" type="button">
          <span aria-hidden="true" class="fa fa-plus">
          </span>
          Add nodule
@@ -488,12 +499,11 @@
       </div>
       <div class="col-md-12" id="nodule-table" style="display: none;">
        <div class="table-responsive">
-        <button class="btn btn-default btn-sm" onclick="addNodule()" type="button">
+        <button class="btn btn-default btn-sm add-nodule" type="button">
          <span aria-hidden="true" class="fa fa-plus">
          </span>
          Add nodule
         </button>
-        <!-- TODO: figure out what bm() function did onclick of cefctn -->
         <table class="table-striped" style="table-layout:auto;">
          <thead>
           <tr>
@@ -502,52 +512,52 @@
            </th>
            <th data-nodule-id="1" style="display:none;">
             Nodule 1
-            <i class="remove-nodule fa fa-trash-o pull-right" data-nodule-id="1" onclick="removeNodule()" title="Remove nodule 1">
+            <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="1" title="Remove nodule 1">
             </i>
            </th>
            <th data-nodule-id="2" style="display:none;">
             Nodule 2
-            <i class="remove-nodule fa fa-trash-o pull-right" data-nodule-id="2" onclick="removeNodule()" title="Remove nodule 2">
+            <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="2" title="Remove nodule 2">
             </i>
            </th>
            <th data-nodule-id="3" style="display:none;">
             Nodule 3
-            <i class="remove-nodule fa fa-trash-o pull-right" data-nodule-id="3" onclick="removeNodule()" title="Remove nodule 3">
+            <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="3" title="Remove nodule 3">
             </i>
            </th>
            <th data-nodule-id="4" style="display:none;">
             Nodule 4
-            <i class="remove-nodule fa fa-trash-o pull-right" data-nodule-id="4" onclick="removeNodule()" title="Remove nodule 4">
+            <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="4" title="Remove nodule 4">
             </i>
            </th>
            <th data-nodule-id="5" style="display:none;">
             Nodule 5
-            <i class="remove-nodule fa fa-trash-o pull-right" data-nodule-id="5" onclick="removeNodule()" title="Remove nodule 5">
+            <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="5" title="Remove nodule 5">
             </i>
            </th>
            <th data-nodule-id="6" style="display:none;">
             Nodule 6
-            <i class="remove-nodule fa fa-trash-o pull-right" data-nodule-id="6" onclick="removeNodule()" title="Remove nodule 6">
+            <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="6" title="Remove nodule 6">
             </i>
            </th>
            <th data-nodule-id="7" style="display:none;">
             Nodule 7
-            <i class="remove-nodule fa fa-trash-o pull-right" data-nodule-id="7" onclick="removeNodule()" title="Remove nodule 7">
+            <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="7" title="Remove nodule 7">
             </i>
            </th>
            <th data-nodule-id="8" style="display:none;">
             Nodule 8
-            <i class="remove-nodule fa fa-trash-o pull-right" data-nodule-id="8" onclick="removeNodule()" title="Remove nodule 8">
+            <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="8" title="Remove nodule 8">
             </i>
            </th>
            <th data-nodule-id="9" style="display:none;">
             Nodule 9
-            <i class="remove-nodule fa fa-trash-o pull-right" data-nodule-id="9" onclick="removeNodule()" title="Remove nodule 9">
+            <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="9" title="Remove nodule 9">
             </i>
            </th>
            <th data-nodule-id="10" style="display:none;">
             Nodule 10
-            <i class="remove-nodule fa fa-trash-o pull-right" data-nodule-id="10" onclick="removeNodule()" title="Remove nodule 10">
+            <i class="remove-nodule fa fa-trash-o pull-right remove-nodule" data-nodule-id="10" title="Remove nodule 10">
             </i>
            </th>
           </tr>
@@ -1822,7 +1832,7 @@
            <td style="white-space: nowrap;">
             <label class="control-label required" for="cect1sn">
              Nodule seen in
-                                            series
+                            series
             </label>
             <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate the CT series number in which the nodule appears." data-toggle="popover" title="Help">
             </i>
@@ -1882,7 +1892,7 @@
            <td style="white-space: nowrap;">
             <label class="control-label required" for="cect1inl">
              Nodule seen in
-                                            images
+                            images
             </label>
             <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate the CT image number in which the nodule appears." data-toggle="popover" title="Help">
             </i>
@@ -1962,7 +1972,7 @@
            <td style="white-space: nowrap;">
             <label class="control-label required" for="cect1st">
              Nodule
-                                            status
+                            status
             </label>
             <i aria-hidden="true" class="fa fa-question-circle-o" data-content="If nodule calcifications are seen ('yes' is selected for Calcifications), 'benign (Ca++)' will automatically appear under Nodule Status.&lt;li&gt; When '?' is selected under Calcifications, Nodule Status will read 'prob benign, prob Ca++' (probably benign, probably calcified).  If the nodule is 'prev seen, resolved,' as noted in the 'Is it new' field, then Nodule Status will automatically read 'resolved.'  When 'prev seen, resected' is selected for 'Is it new', 'Resected-malignant' appears under Nodule Status.  If under 'Is it new' it reads 'not included in scan,' Nodule Status will also read 'not included in scan.'  These automatic entries help to maintain a level of consistency for data entry across institutions." data-toggle="popover" title="Help">
             </i>
@@ -2542,7 +2552,7 @@
            <td style="white-space: nowrap;">
             <label class="control-label required" for="cect1nt">
              Nodule
-                                            consistency
+                            consistency
             </label>
             <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Nodules may be classified into three types by attenuation characteristics: solid - nodule is uniformly solid in appearance; nonsolid - nodule is uniformly nonsolid (except for blood vessels) in appearance; part-solid - nodule has both solid and nonsolid components" data-toggle="popover" title="Help">
             </i>
@@ -2821,7 +2831,7 @@
            <td style="white-space: nowrap;">
             <label class="control-label" for="cect1sw">
              Maximum width
-                                            (mm)
+                            (mm)
             </label>
             <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate the maximum width (largest perpendicular dimension to the length) of the nodule.  The unit of measurement is always millimeters." data-toggle="popover" title="Help">
             </i>
@@ -3017,7 +3027,7 @@
            <td style="white-space: nowrap;">
             <label class="control-label required" for="cect1sv">
              Volume
-                                            (mm
+                            (mm
              <sup>
               3
              </sup>
@@ -3229,7 +3239,7 @@
            <td style="white-space: nowrap;">
             <label class="control-label required" for="cect1ssl">
              Solid comp. of
-                                            part-solid
+                            part-solid
             </label>
            </td>
            <td class="form-inline" data-nodule-id="1" style="display:none;">
@@ -3347,7 +3357,7 @@
            <td style="white-space: nowrap;">
             <label class="control-label" for="cect1ssd">
              Solid mean
-                                            diameter(mm)
+                            diameter(mm)
             </label>
             <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Solid calculated mean diameter." data-toggle="popover" title="Help">
             </i>
@@ -4236,7 +4246,7 @@
            <td style="white-space: nowrap;">
             <label class="control-label" for="cect1pd">
              Pathologic
-                                            diagnosis
+                            diagnosis
             </label>
             <i aria-hidden="true" class="fa fa-question-circle-o" data-content="If a biopsy was previously performed, the diagnosis was chosen from a pull-down menu on the Biopsy form.  When CT evaluation forms are created after the biopsy was done, the 'Pathologic Diagnosis' selected on the Biopsy Form is transferred onto the new CT evaluation Form.  Once a diagnosis has been assigned on the Biopsy Form and it pops up on the CT evaluation form, it CANNOT be changed." data-toggle="popover" title="Help">
             </i>
@@ -4784,28 +4794,179 @@
           </tr>
          </tbody>
         </table>
-        <button class="btn btn-default btn-sm" onclick="addNodule()" tabindex="1101" type="button">
+        <button class="btn btn-default btn-sm add-nodule" tabindex="1101" type="button">
          <span aria-hidden="true" class="fa fa-plus">
          </span>
          Add nodule
         </button>
-        <div class="checkbox">
-         <label>
-          <input name="cectancn" type="hidden" value=""/>
-          <input id="cectancn" name="cectancn" tabindex="1102" type="checkbox" value="1"/>
-          Additional non-calcified nodules
-         </label>
-        </div>
-        <div class="checkbox">
-         <label>
-          <input name="cectacn" type="hidden" value=""/>
-          <input id="cectacn" name="cectacn" tabindex="1103" type="checkbox" value="1"/>
-          Additional calcified nodules
-         </label>
+        <div class="form-group">
+         <div class="checkbox">
+          <label>
+           <input name="cectancn" type="hidden" value=""/>
+           <input id="cectancn" name="cectancn" tabindex="1102" type="checkbox" value="1"/>
+           Additional non-calcified nodules
+          </label>
+         </div>
+         <div class="checkbox">
+          <label>
+           <input name="cectacn" type="hidden" value=""/>
+           <input id="cectacn" name="cectacn" tabindex="1103" type="checkbox" value="1"/>
+           Additional calcified nodules
+          </label>
+         </div>
         </div>
        </div>
       </div>
      </div>
+     <input context="server" name="cennod" type="hidden" value="0"/>
+     <input context="server" name="ceanod" type="hidden" value="n"/>
+     <script language="JavaScript">
+      $(function () {
+        const noduleArrayLength = 10;
+        const ng = $.noduleGrid({
+            availableNodules: noduleArrayLength,
+            getNoduleCount: function () {
+                return parseInt($("[name='cennod']").val());
+            },
+            setNoduleCount: function (noduleCount) {
+                $("[name='cennod']").val(noduleCount);
+                $("[name='ceanod']").val(noduleCount === 0 ? "n" : "y");
+            }
+        });
+
+        $(".add-nodule").on('click', ng.addNodule);
+        $(".remove-nodule").on('click', ng.removeNodule);
+        exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
+
+
+        //Add validations after all other anonymous functions have run and fv is bound.
+        window.setTimeout(function () {
+            const fv = $("#main-form").data('formValidation');
+
+            
+                fv.addField('cect1ch', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect1en', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect1ll', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect1sn', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect1inl', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect1inh', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect1st', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect1nt', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect1sv', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect1ssl', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect1ssw', {validators: {notEmpty: {message: 'Enter a value'}}});
+            
+                fv.addField('cect2ch', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect2en', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect2ll', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect2sn', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect2inl', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect2inh', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect2st', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect2nt', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect2sv', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect2ssl', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect2ssw', {validators: {notEmpty: {message: 'Enter a value'}}});
+            
+                fv.addField('cect3ch', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect3en', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect3ll', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect3sn', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect3inl', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect3inh', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect3st', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect3nt', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect3sv', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect3ssl', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect3ssw', {validators: {notEmpty: {message: 'Enter a value'}}});
+            
+                fv.addField('cect4ch', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect4en', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect4ll', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect4sn', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect4inl', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect4inh', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect4st', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect4nt', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect4sv', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect4ssl', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect4ssw', {validators: {notEmpty: {message: 'Enter a value'}}});
+            
+                fv.addField('cect5ch', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect5en', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect5ll', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect5sn', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect5inl', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect5inh', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect5st', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect5nt', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect5sv', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect5ssl', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect5ssw', {validators: {notEmpty: {message: 'Enter a value'}}});
+            
+                fv.addField('cect6ch', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect6en', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect6ll', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect6sn', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect6inl', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect6inh', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect6st', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect6nt', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect6sv', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect6ssl', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect6ssw', {validators: {notEmpty: {message: 'Enter a value'}}});
+            
+                fv.addField('cect7ch', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect7en', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect7ll', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect7sn', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect7inl', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect7inh', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect7st', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect7nt', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect7sv', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect7ssl', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect7ssw', {validators: {notEmpty: {message: 'Enter a value'}}});
+            
+                fv.addField('cect8ch', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect8en', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect8ll', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect8sn', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect8inl', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect8inh', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect8st', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect8nt', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect8sv', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect8ssl', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect8ssw', {validators: {notEmpty: {message: 'Enter a value'}}});
+            
+                fv.addField('cect9ch', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect9en', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect9ll', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect9sn', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect9inl', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect9inh', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect9st', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect9nt', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect9sv', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect9ssl', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect9ssw', {validators: {notEmpty: {message: 'Enter a value'}}});
+            
+                fv.addField('cect10ch', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect10en', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect10ll', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect10sn', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect10inl', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect10inh', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect10st', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect10nt', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
+                fv.addField('cect10sv', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect10ssl', {validators: {notEmpty: {message: 'Enter a value'}}});
+                fv.addField('cect10ssw', {validators: {notEmpty: {message: 'Enter a value'}}});
+            
+        }, 0);
+    });
+     </script>
     </div>
     <div id="emphysema-coronary" style="padding-top: 1px;">
      <h3>
@@ -5005,6 +5166,37 @@
        </div>
       </div>
      </div>
+     <script language="JavaScript">
+      $(function () {
+
+        function calculateVisualCacScore() {
+            let cal1 = $("#cecclm")[0].selectedIndex;
+            let cal2 = $("#ceccld")[0].selectedIndex;
+            let cal3 = $("#cecccf")[0].selectedIndex;
+            let cal4 = $("#ceccrc")[0].selectedIndex;
+            if (cal1 > 0) cal1 = cal1 - 1;
+            if (cal2 > 0) cal2 = cal2 - 1;
+            if (cal3 > 0) cal3 = cal3 - 1;
+            if (cal4 > 0) cal4 = cal4 - 1;
+            const res = cal1 + cal2 + cal3 + cal4;
+            $("#cecccac").val(res);
+            $("#cecccac-text").text(res);
+        }
+
+        $("#cecclm, #ceccld, #cecccf, #ceccrc").on('change', calculateVisualCacScore);
+        calculateVisualCacScore();
+
+        //Add validations after all other anonymous functions have run and fv is bound.
+        window.setTimeout(function () {
+            const fv = $("#main-form").data('formValidation');
+
+            fv.addField('cecclm', {validators: {notEmpty: {message: 'Left main is required'}}});
+            fv.addField('ceccld', {validators: {notEmpty: {message: 'LAD is required'}}});
+            fv.addField('cecclf', {validators: {notEmpty: {message: 'Circumflex is required'}}});
+            fv.addField('ceccrc', {validators: {notEmpty: {message: 'RCA is required'}}});
+        }, 0);
+    });
+     </script>
     </div>
     <div id="abnormalities" style="padding-top:8px;">
      <h3>
@@ -5186,7 +5378,7 @@
              <td>
               <label class="control-label" for="cerdc-n">
                Regional or diffuse
-                                                consolidation
+                                consolidation
               </label>
               <br/>
               <small>
@@ -5414,7 +5606,7 @@
              <td>
               <label class="control-label" for="cebrss-n">
                Small airways
-                                                disease
+                                disease
               </label>
              </td>
              <td>
@@ -5481,7 +5673,7 @@
              <td>
               <label class="control-label" for="cebs-n">
                Post-surgical
-                                                findings
+                                findings
               </label>
               <br/>
               <small>
@@ -5538,8 +5730,8 @@
              <td>
               <label class="control-label" for="cerb-n">
                Traction
-                                                bronchiectasis in a
-                                                peripheral location
+                                bronchiectasis in a
+                                peripheral location
               </label>
              </td>
              <td>
@@ -5606,8 +5798,8 @@
              <td>
               <label class="control-label" for="cepgo-n">
                Peripheral
-                                                ground-glass
-                                                opacities
+                                ground-glass
+                                opacities
               </label>
              </td>
              <td>
@@ -5807,7 +5999,7 @@
               <div class="form-group">
                <label for="ceoppa">
                 Additional comments on pulmonary
-                                                        abnormalities
+                                        abnormalities
                </label>
                <textarea class="form-control" id="ceoppa" name="ceoppa"></textarea>
                <label class="checkbox-inline ">
@@ -5844,7 +6036,7 @@
              <td>
               <label class="control-label" for="cept-n">
                Pleural
-                                                    thickening/plaques
+                                    thickening/plaques
               </label>
              </td>
              <td>
@@ -5886,7 +6078,7 @@
              <td>
               <label class="control-label" for="cebatr-n">
                Rounded
-                                                atelectasis
+                                atelectasis
               </label>
              </td>
              <td>
@@ -5980,7 +6172,7 @@
              <td>
               <label class="control-label" for="cepev">
                Pleural
-                                                effusion
+                                effusion
               </label>
              </td>
              <td>
@@ -6060,7 +6252,7 @@
               <div class="form-group">
                <label for="ceoppab">
                 Additional comments on pleural
-                                                        abnormalities
+                                        abnormalities
                </label>
                <textarea class="form-control" id="ceoppab" name="ceoppab"></textarea>
                <label class="checkbox-inline ">
@@ -6125,7 +6317,7 @@
              <td>
               <label class="control-label" for="ceprevm">
                Pericardial effusion
-                                                severity
+                                severity
               </label>
              </td>
              <td colspan="5">
@@ -6153,9 +6345,7 @@
             <tr>
              <td colspan="2">
               <label class="control-label" for="cepaw">
-               Pulmonary
-                                                artery width
-                                                (mm)
+               Pulmonary artery width (mm)
               </label>
              </td>
              <td>
@@ -6170,7 +6360,7 @@
              <td colspan="2">
               <label class="control-label" for="ceaow">
                Ascending
-                                                aorta width (mm)
+                                aorta width (mm)
               </label>
              </td>
              <td>
@@ -6185,8 +6375,8 @@
              <td colspan="2">
               <label class="control-label" for="cepar">
                Pulmonary
-                                                artery/aorta
-                                                ratio
+                                artery/aorta
+                                ratio
               </label>
               <br/>
               <small>
@@ -6206,7 +6396,7 @@
               <div class="form-group">
                <label for="cecommca">
                 Additional comments on cardiac
-                                                        abnormalities
+                                        abnormalities
                </label>
                <textarea class="form-control" id="cecommca" name="cecommca"></textarea>
                <label class="checkbox-inline ">
@@ -6296,7 +6486,7 @@
               <br/>
               <small>
                (report if ovoid &gt; 7 mm or if thymic shape with width
-                                                    &gt; 1.3cm)
+                                    &gt; 1.3cm)
               </small>
              </td>
              <td>
@@ -6388,7 +6578,7 @@
                  th
                 </sup>
                 edition
-                                                        classification: CHEST 2017; 151: 193-203
+                                        classification: CHEST 2017; 151: 193-203
                </small>
                <div class="checkbox">
                 <label>
@@ -6717,8 +6907,8 @@
               <div class="form-group">
                <label for="ceotabnm">
                 Additional comments on neck and
-                                                        mediastinal
-                                                        abnormalities
+                                        mediastinal
+                                        abnormalities
                </label>
                <textarea class="form-control" id="ceotabnm" name="ceotabnm"></textarea>
                <label class="checkbox-inline ">
@@ -6813,7 +7003,7 @@
                 </option>
                 <option value="2">
                  2 - Scattered areas of fibroglandular
-                                                            density
+                                            density
                 </option>
                 <option value="3">
                  3 - Heterogeneously dense
@@ -6887,7 +7077,7 @@
                 </option>
                 <option value="2">
                  2 - Scattered areas of fibroglandular
-                                                            density
+                                            density
                 </option>
                 <option value="3">
                  3 - Heterogeneously dense
@@ -6904,7 +7094,7 @@
               <div class="form-group">
                <label for="ceobrc">
                 Additional comments on breast
-                                                        abnormalities
+                                        abnormalities
                </label>
                <textarea class="form-control" id="ceobrc" name="ceobrc"></textarea>
                <label class="checkbox-inline ">
@@ -7260,7 +7450,7 @@
               <div class="form-group">
                <label for="ceaoab">
                 Additional comments on abdominal
-                                                        abnormalities
+                                        abnormalities
                </label>
                <textarea class="form-control" id="ceaoab" name="ceaoab"></textarea>
                <label class="checkbox-inline ">
@@ -7278,6 +7468,59 @@
        </div>
       </div>
      </div>
+     <script language="JavaScript">
+      function calculatePulmonaryArteryAortaRatio() {
+        let res = 0;
+        const cepaw = $("#cepaw").val(), ceaow = $("#ceaow").val();
+        if (ceaow > 0) {
+            res = (cepaw / ceaow).toFixed(1);
+            $("#cepar-text").text(res);
+            $("#cepar").val(res);
+        } else {
+            $("#cepar-text").text("");
+            $("#cepar").val("");
+        }
+    }
+
+    $(function () {
+        $("#cepaw, #ceaow").on('keyup change', calculatePulmonaryArteryAortaRatio);
+        calculatePulmonaryArteryAortaRatio();
+
+        //Neck and mediastinal
+        $("#ceato").conditionallyDisplay({sourceValues: "o", enable: $("#ceatos")});
+        $("#ceayo").conditionallyDisplay({sourceValues: "o", enable: $("#ceayos")});
+        $("#cemvao").conditionallyDisplay({sourceValues: "o", enable: $("#cemvaos")});
+        $("#cemvlno").conditionallyDisplay({sourceValues: "o", enable: $("#cemelnos")});
+        $("#ceamo").conditionallyDisplay({sourceValues: "o", enable: $("#ceommos")});
+
+        //at least one checkbox whose name starts with cemlnl is required if cemln==y
+        $("#cemln").conditionallyEnable({enable: '#cemln-container'});
+
+        $.each($("#abnormalities .yes-checkbox"), function (i, el) {
+            const $checkbox = $(el);
+            const name = $checkbox.attr('name');
+            const $container = $("." + name + "-container");
+            if ($container.length > 0) {
+                $checkbox.conditionallyEnable({enable: $container});
+            }
+        });
+
+        //Add validations after all other anonymous functions have run and fv is bound.
+        window.setTimeout(function () {
+            const fv = $("#main-form").data('formValidation');
+
+            fv.addField('cdoaw', {validators: {integer: {message: 'must be a whole number'}}});
+            fv.addField('ceaow', {validators: {integer: {message: 'must be a whole number'}}});
+
+            //lymph nodes; use a real element name for the field so conditional plugins can toggle the field
+            fv.addField('cemlnl1', {
+                selector: '[name^=cemlnl]',
+                validators: {choice: {min: 1, message: 'Select one or more classification'}}
+            });
+        }, 0);
+
+    });
+     </script>
     </div>
     <div id="impression" style="padding-top:2px;">
      <h3>
@@ -7356,11 +7599,9 @@
      </div>
      <h3>
       Follow Up
-      <label for="cefuw">
-       <small>
-        select one or more
-       </small>
-      </label>
+      <small>
+       select one or more
+      </small>
      </h3>
      <div class="row">
       <div class="col-sm-12 form-group">
@@ -7481,6 +7722,66 @@
        <input class="form-control" id="cefuo" name="cefuo" placeholder="specify" required="required" type="text"/>
       </div>
      </div>
+     <script language="JavaScript">
+      $(function () {
+        exclusiveCheckbox("[name='cefuw']", "div");
+
+        //followup date calculation
+        $("[name=cefuw]").on('change', function () {
+            const when = $("[name='cefuw']:checked").val();
+            const $field = $("#cefud");
+            switch (when) {
+                case "1y":
+                    $field.val(moment().add(1, 'year').format(VAPALS.DATE_FORMAT));
+                    break;
+                case "nw":
+                    $field.val(moment().format(VAPALS.DATE_FORMAT));
+                    break;
+                case "1m":
+                    $field.val(moment().add(1, 'month').format(VAPALS.DATE_FORMAT));
+                    break;
+                case "3m":
+                    $field.val(moment().add(3, 'month').format(VAPALS.DATE_FORMAT));
+                    break;
+                case "6m":
+                    $field.val(moment().add(6, 'month').format(VAPALS.DATE_FORMAT));
+                    break;
+                default:
+                    $field.val("").focus();
+            }
+
+            const fv = $("#main-form").data('formValidation');
+            if (fv) {
+                fv.revalidateField('cefud');
+            }
+
+            //display other followup specify field if "other" checkbox is enabled.
+            $("[name=cefuo]").conditionallyDisplay({sourceValues: "y", enable: "#cefuo-container"});
+
+            function setCtFollowUpOther() {
+                $("[name=cefuw]").prop('checked', false).filter("[value=os]").prop('checked', true);
+            }
+
+            //auto-select "other" if user modifies the date
+            $("#cefud").on('keyup paste', setCtFollowUpOther).closest(".datepicker").on('dp.change', setCtFollowUpOther);
+
+            //Add validations after all other anonymous functions have run and fv is bound.
+            window.setTimeout(function () {
+                const fv = $("#main-form").data('formValidation');
+
+                fv.addField('cecclm', {validators: {notEmpty: {message: 'Left main is required'}}});
+                fv.addField('cefud', {
+                    validators: {
+                        date: {min: VAPALS.todaysDate(), message: 'Follow up date must be at least today\'s date'}
+                    }
+                });
+
+            }, 0);
+
+
+        });
+    });
+     </script>
      <h3>
       Lung-RADS
      </h3>
@@ -7560,9 +7861,8 @@
       </div>
      </div>
     </div>
+    <hr/>
     <div>
-     <input context="server" name="cennod" type="hidden" value="0"/>
-     <input context="server" name="ceanod" type="hidden" value="n"/>
      <input name="samistatus" type="hidden" value=""/>
      <button class="btn btn-default" id="save-for-later-button" tabindex="1206" type="submit">
       Save for
@@ -7619,7 +7919,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2018.11.19
+     2018.11.29
     </span>
    </div>
   </footer>
@@ -7689,249 +7989,14 @@
                     const months = parseInt(studyDate.diff(baselineDate, "months", true));
                     $("#cetsb-text").text(months);
                     $("#cetsb").val(months);
-                }
-                else {
+                } else {
                     $("#cetsb-text").text("error")
                 }
             }
         }
 
-        function calculatePulmonaryArteryAortaRatio() {
-            let res = 0;
-            const cepaw = $("#cepaw").val(), ceaow = $("#ceaow").val();
-            if (ceaow > 0) {
-                res = (cepaw / ceaow).toFixed(1);
-                $("#cepar-text").text(res);
-                $("#cepar").val(res);
-            }
-            else {
-                $("#cepar-text").text("");
-                $("#cepar").val("");
-            }
-        }
-
-        function calculateVisualCacScore() {
-            let cal1 = $("#cecclm")[0].selectedIndex;
-            let cal2 = $("#ceccld")[0].selectedIndex;
-            let cal3 = $("#cecccf")[0].selectedIndex;
-            let cal4 = $("#ceccrc")[0].selectedIndex;
-            if (cal1 > 0) cal1 = cal1 - 1;
-            if (cal2 > 0) cal2 = cal2 - 1;
-            if (cal3 > 0) cal3 = cal3 - 1;
-            if (cal4 > 0) cal4 = cal4 - 1;
-            const res = cal1 + cal2 + cal3 + cal4;
-            $("#cecccac").val(res);
-            $("#cecccac-text").text(res);
-        }
-
-        let noduleCount = parseInt($("[name='cennod']").val());
-
-        function addNodule() {
-            if (noduleCount === 10) {
-                VAPALS.displayNotification("Maximum Nodules Reached", "No more than 10 nodules are allowed. You may need to scroll to the right to see the additional nodule fields.");
-            }
-            else {
-                displayNodules(++noduleCount);
-                $("[name='cennod']").val(noduleCount);
-                $("[name='ceanod']").val("y");
-
-                const $isItNew = $("#cect" + noduleCount + "ch");
-                // set nodule "is it new?" to "new" when type of exam (tex) is baseline
-                if ($("[name=cetex]:checked").val() === "b") {
-                    $isItNew.val("n");
-                }
-                $isItNew.focus().trigger('change.cteval');
-            }
-        }
-
-        function removeNodule() {
-            if (noduleCount > 0) {
-                $("#cect" + noduleCount + "ch").val("-").trigger('change.cteval');
-                displayNodules(--noduleCount);
-                $("[name='cennod']").val(noduleCount);
-                $("[name='ceanod']").val(noduleCount === 0 ? "n" : "y");
-            }
-        }
-
-        function displayNodules(count) {
-
-            $("[data-nodule-id]").hide().filter(function () {
-                return $(this).data("nodule-id") <= count;
-            }).show();
-
-            // Only show the delete icon on the last (rightmost) nodule;
-            // NB: there is currently no support renumbering fields so removing from the middle is not an option
-            $(".remove-nodule").hide().filter(function () {
-                return $(this).data("nodule-id") === count;
-            }).show();
-
-            $("#nodule-table").toggle(count > 0);
-            $("#add-first-nodule").toggle(count === 0);
-        }
-
-        function setupMeanDiameterCalculation(lengthFieldSuffix, widthFieldSuffix, diamFieldSuffix) {
-            const lengthFields = $("[name^=cect][name$=" + lengthFieldSuffix + "],[name^=cect][name$=" + widthFieldSuffix + "]");
-            lengthFields.on('keyup change', function (e) {
-                const targetField = $(e.target);
-                const noduleId = targetField.closest("td").attr("data-nodule-id");
-                const noduleDiamLabel = $("#cect" + noduleId + diamFieldSuffix + "-val");
-                const wval = $("#cect" + noduleId + widthFieldSuffix).val();
-                const lval = $("#cect" + noduleId + lengthFieldSuffix).val();
-                const w = wval ? Number(wval) : 0;
-                const l = lval ? Number(lval) : 0;
-
-                if (w > 0 && l > 0) {
-                    const meanDiam = (l + w) / 2;
-                    if (meanDiam > 0) {
-                        noduleDiamLabel.text(meanDiam.toFixed(1));
-                    } else {
-                        noduleDiamLabel.text("-");
-                    }
-                } else {
-                    noduleDiamLabel.text("-");
-                }
-            }).first().trigger('change');
-        }
-
-        function checkConsistentVolumeCalculations() {
-            const overrideValues = $(".volume-override-flag").map(function (idx, elem) {
-                return $(elem).val();
-            }).filter(function (idx, v) {
-                return v !== ""
-            });
-
-            if (overrideValues.length > 0) {
-                let identicalElems = true;
-                for (var i = 1; i < overrideValues.length; i++) {
-                    if (overrideValues[i] !== overrideValues[0]) {
-                        identicalElems = false;
-                        break;
-                    }
-                }
-
-                if (!identicalElems) {
-                    VAPALS.displayNotification(
-                        "Warning : Inconsistent measuring techniques!",
-                        "The volume measuring techniques are inconsistent, some values of the 'Volume' field are calculated, others manually entered. " +
-                        "It is recommended that the volume for all nodes is specified using the same method. " +
-                        "Please review and update the values in the 'Volume' fields for all nodules",
-                        BootstrapDialog.TYPE_WARNING
-                    );
-                }
-            }
-
-        }
-
-        function markNoduleVolumeManuallyEntered(noduleIdx, isManual) {
-            if (isManual) {
-                $("#cect" + noduleIdx + "sv").addClass("volumeOverride");
-                $("#cect" + noduleIdx + "svovrrde").val("true");
-                $("#cect" + noduleIdx + "svovrrde-warn").removeClass("invisible");
-            } else {
-                $("#cect" + noduleIdx + "sv").removeClass("volumeOverride");
-                // set the manually overriden hidden field to false
-                $("#cect" + noduleIdx + "svovrrde").val("false");
-                $("#cect" + noduleIdx + "svovrrde-warn").addClass("invisible");
-            }
-        }
-
-        function setupNoduleVolumeCalculations(noduleIdx) {
-            const lenWidthHeightFields = $("#cect" + noduleIdx + "sl, #cect" + noduleIdx + "sw, #cect" + noduleIdx + "sh");
-            lenWidthHeightFields.on("keyup", function () {
-                let allFilled = true;
-
-                lenWidthHeightFields.each(function () {
-                    const v = $(this).val() || 0;
-                    if (v == 0) {
-                        allFilled = false;
-                    }
-                });
-
-                const btnElem = $("#cect" + noduleIdx + "svb");
-                if (allFilled) {
-                    btnElem.attr("disabled", false);
-                } else {
-                    btnElem.attr("disabled", true);
-                }
-            }).first().trigger("keyup");
-
-            $("#cect" + noduleIdx + "svb").on('click', function () {
-                const l = $("#cect" + noduleIdx + "sl").val() || 0;
-                const w = $("#cect" + noduleIdx + "sw").val() || 0;
-                const h = $("#cect" + noduleIdx + "sh").val() || 0;
-
-                const v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
-
-                $("#cect" + noduleIdx + "sv").val(v.toFixed(1));
-                const fv = $(this).closest("form.validated").data('formValidation');
-                if (fv) {
-                    fv.revalidateField("cect" + noduleIdx + "sv")
-                }
-                markNoduleVolumeManuallyEntered(noduleIdx, false);
-                //temporarily disabled
-                // checkConsistentVolumeCalculations();
-                return false;
-            });
 
 
-            $("#cect" + noduleIdx + "sv").on('change', function () {
-                // manually overriding the volume calculation
-                if ($(this).val() !== "") {
-                    markNoduleVolumeManuallyEntered(noduleIdx, true);
-                    //temporarily disabled
-                    //checkConsistentVolumeCalculations();
-                }
-            });
-        }
-
-        function setupNoduleEnabledState(noduleIdx) {
-            $("#cect" + noduleIdx + "nt").conditionallyEnable({
-                sourceValues: "m",
-                enable: "#cect" + noduleIdx + "-container"
-            });
-
-            $("#cect" + noduleIdx + "ch").on('change.cteval', function () {
-
-                // All fields related to this nodule.
-                // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
-                // nodule 10 would match cect1*
-                const regex = new RegExp("cect" + noduleIdx + "[a-z]");
-                const $fields = $('input,select').filter(function () {
-                    const name = $(this).attr('name');
-                    const id = $(this).attr('id');
-                    return id !== "cect" + noduleIdx + "ch" && (regex.test(name) || regex.test(id));
-                });
-
-                if ($(this).val() === "-") {
-                    //empty out values
-                    $fields.filter("select").val("-");
-                    $fields.filter(":radio, :checkbox").prop('checked', false);
-                    $fields.filter(":text").val("");
-
-                    //change trigger added to clear any calculated text values
-                    $fields.trigger("change");
-
-                    //reset form validation messages (hide them)
-                    const fv = $("form.validated").data("formValidation");
-                    if (fv) {
-                        $.each($fields, function (i, el) {
-                            const fieldName = $(el).prop('name');
-                            if (fv.fields[fieldName]) {
-                                fv.resetField(fieldName);
-                            }
-                        });
-                    }
-
-                    //finally disable the fields
-                    $fields.prop('disabled', true);
-                }
-                else { //re-enable fields
-                    $fields
-                        .prop('disabled', false)
-                        .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
-                }
-            });
-        }
 
         function createFormValidator() {
 
@@ -7996,37 +8061,18 @@
                             }
                         },
                         cedps: {validators: {notEmpty: {message: 'Prior scans is required'}}},
-                        //Nodule fields are defined below due to dynamic nature of them.
-                        //Emphysema/Coronary Calcifications
-                        cecclm: {validators: {notEmpty: {message: 'Left main is required'}}},
-                        ceccld: {validators: {notEmpty: {message: 'LAD is required'}}},
-                        cecclf: {validators: {notEmpty: {message: 'Circumflex is required'}}},
-                        ceccrc: {validators: {notEmpty: {message: 'RCA is required'}}},
 
-                        //Abnormalities
-                        cdoaw: {validators: {integer: {message: 'must be a whole number'}}},
-                        ceaow: {validators: {integer: {message: 'must be a whole number'}}},
-
-                        //lymph nodes
-                        cemlnl1: { //use a real element name for the field so conditional plugins can toggle the field
-                            selector: '[name^=cemlnl]',
-                            validators: {choice: {min: 1, message: 'Select one or more classification'}}
-                        },
+                        //Nodules, emphysema, abnormality FV additions are done in their respective templates
 
                         //Impression
                         ceimn: {validators: {notEmpty: {message: 'Nodule impression is required'}}},
+
+                        //Virtual fields don't work with fv.addField, so we have to add it here
                         followup: {
                             selector: '[name^=cefu][type=checkbox]',
                             validators: {choice: {min: 1, message: 'Select at least one CT or Other follow up option'}}
                         },
-                        cefud: {
-                            validators: {
-                                date: {
-                                    min: VAPALS.todaysDate(),
-                                    message: 'Follow up date must be at least today\'s date'
-                                }
-                            }
-                        },
+
                     },
                     plugins: {
                         trigger: new FormValidation.plugins.Trigger(),
@@ -8052,129 +8098,6 @@
 
             fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);
             fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
-
-            //Nodule validations
-            
-                fv.addField('cect1ch', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect1en', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect1ll', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect1sn', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect1inl', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect1inh', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect1st', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect1nt', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect1sv', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect1ssl', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect1ssw', {validators: {notEmpty: {message: 'Enter a value'}}});
-            
-                fv.addField('cect2ch', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect2en', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect2ll', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect2sn', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect2inl', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect2inh', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect2st', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect2nt', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect2sv', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect2ssl', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect2ssw', {validators: {notEmpty: {message: 'Enter a value'}}});
-            
-                fv.addField('cect3ch', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect3en', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect3ll', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect3sn', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect3inl', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect3inh', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect3st', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect3nt', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect3sv', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect3ssl', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect3ssw', {validators: {notEmpty: {message: 'Enter a value'}}});
-            
-                fv.addField('cect4ch', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect4en', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect4ll', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect4sn', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect4inl', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect4inh', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect4st', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect4nt', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect4sv', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect4ssl', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect4ssw', {validators: {notEmpty: {message: 'Enter a value'}}});
-            
-                fv.addField('cect5ch', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect5en', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect5ll', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect5sn', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect5inl', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect5inh', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect5st', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect5nt', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect5sv', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect5ssl', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect5ssw', {validators: {notEmpty: {message: 'Enter a value'}}});
-            
-                fv.addField('cect6ch', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect6en', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect6ll', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect6sn', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect6inl', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect6inh', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect6st', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect6nt', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect6sv', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect6ssl', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect6ssw', {validators: {notEmpty: {message: 'Enter a value'}}});
-            
-                fv.addField('cect7ch', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect7en', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect7ll', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect7sn', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect7inl', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect7inh', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect7st', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect7nt', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect7sv', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect7ssl', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect7ssw', {validators: {notEmpty: {message: 'Enter a value'}}});
-            
-                fv.addField('cect8ch', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect8en', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect8ll', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect8sn', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect8inl', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect8inh', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect8st', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect8nt', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect8sv', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect8ssl', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect8ssw', {validators: {notEmpty: {message: 'Enter a value'}}});
-            
-                fv.addField('cect9ch', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect9en', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect9ll', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect9sn', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect9inl', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect9inh', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect9st', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect9nt', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect9sv', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect9ssl', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect9ssw', {validators: {notEmpty: {message: 'Enter a value'}}});
-            
-                fv.addField('cect10ch', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect10en', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect10ll', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect10sn', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect10inl', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect10inh', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect10st', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect10nt', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
-                fv.addField('cect10sv', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect10ssl', {validators: {notEmpty: {message: 'Enter a value'}}});
-                fv.addField('cect10ssw', {validators: {notEmpty: {message: 'Enter a value'}}});
-            
 
             return fv;
         }
@@ -8202,123 +8125,9 @@
                     }
                 }
             }).conditionallyDisplay({sourceValues: "b", disable: "#non-baseline-container"});
-
-            //EMPHYSEMA
-            $("#cecclm, #ceccld, #cecccf, #ceccrc").on('change', calculateVisualCacScore);
-            calculateVisualCacScore();
-            $("#cepaw, #ceaow").on('keyup change', calculatePulmonaryArteryAortaRatio);
-            calculatePulmonaryArteryAortaRatio();
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
 
-            // NODULES
-            setupMeanDiameterCalculation("sl", "sw", "sd");
-            setupMeanDiameterCalculation("ssl", "ssw", "ssd");
-            const noduleArrayLength = 10;
-            for (var i = 0; i < noduleArrayLength; i++) {
-                setupNoduleVolumeCalculations(i);
-                setupNoduleEnabledState(i);
-            }
-
-            displayNodules(noduleCount);
-
-            //OTHER ABNORMALITIES
-            //Neck and mediastinal
-            $("#ceato").conditionallyDisplay({sourceValues: "o", enable: $("#ceatos")});
-            $("#ceayo").conditionallyDisplay({sourceValues: "o", enable: $("#ceayos")});
-            $("#cemvao").conditionallyDisplay({sourceValues: "o", enable: $("#cemvaos")});
-            $("#cemvlno").conditionallyDisplay({sourceValues: "o", enable: $("#cemelnos")});
-            $("#ceamo").conditionallyDisplay({sourceValues: "o", enable: $("#ceommos")});
-
-            //FOLLOWUP
-            exclusiveCheckbox("[name='cefuw']", "div");
-
-            //followup date calculation
-            $("[name=cefuw]").on('change', function () {
-                const when = $("[name='cefuw']:checked").val();
-                const $field = $("#cefud");
-                switch (when) {
-                    case "1y":
-                        $field.val(moment().add(1, 'year').format(VAPALS.DATE_FORMAT));
-                        break;
-                    case "nw":
-                        $field.val(moment().format(VAPALS.DATE_FORMAT));
-                        break;
-                    case "1m":
-                        $field.val(moment().add(1, 'month').format(VAPALS.DATE_FORMAT));
-                        break;
-                    case "3m":
-                        $field.val(moment().add(3, 'month').format(VAPALS.DATE_FORMAT));
-                        break;
-                    case "6m":
-                        $field.val(moment().add(6, 'month').format(VAPALS.DATE_FORMAT));
-                        break;
-                    default:
-                        $field.val("").focus();
-                }
-
-                if (fv) {
-                    fv.revalidateField('cefud');
-                }
-            });
-
-            //display other followup specify field if "other" checkbox is enabled.
-            $("[name=cefuo]").conditionallyDisplay({sourceValues: "y", enable: "#cefuo-container"});
-
-            function setCtFollowUpOther() {
-                $("[name=cefuw]").prop('checked', false).filter("[value=os]").prop('checked', true);
-            }
-
-            //auto-select "other" if user modifies the date
-            $("#cefud").on('keyup paste', setCtFollowUpOther).closest(".datepicker").on('dp.change', setCtFollowUpOther);
-
-            // mean diameter calculation
-            setupMeanDiameterCalculation("sl", "sw", "sd");
-
-            // solid mean diameter calculation
-            setupMeanDiameterCalculation("ssl", "ssw", "ssd");
-
-
-            //at least one checkbox whose name starts with cemlnl is required if cemln==y
-            $("#cemln").conditionallyEnable({enable: '#cemln-container'});
-
-            exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
-
-            //handle collapsible controls by toggling chevron icon and applying value to hidden field
-            $(".collapse").on('show.bs.collapse', function () {
-                const id = $(this).attr('id');
-                const $controller = $("[aria-controls=" + id + "]");
-                $controller.find(".fa-chevron-down").hide();
-                $controller.find(".fa-chevron-up").show();
-                const fieldName = $controller.data("field-name");
-                $("[name=" + fieldName + "]").val("y");
-            }).on('hide.bs.collapse', function () {
-                const id = $(this).attr('id');
-                const $controller = $("[aria-controls=" + id + "]");
-                $controller.find(".fa-chevron-down").show();
-                $controller.find(".fa-chevron-up").hide();
-                const fieldName = $controller.data("field-name");
-                $("[name=" + fieldName + "]").val("");
-            });
-
-            //open panels where the field name is already set to "y"
-            $.each($(".panel-heading[data-toggle=collapse]"), function (i, controller) {
-                const $controller = $(controller);
-                const href = $controller.attr('href');
-                const fieldName = $controller.data('field-name');
-                const fieldValue = $("[name=" + fieldName + "]").val();
-                if (fieldValue === "y") {
-                    $(href).collapse('show');
-                }
-            });
-
-            $.each($("#abnormalities .yes-checkbox"), function (i, el) {
-                const $checkbox = $(el);
-                const name = $checkbox.attr('name');
-                const $container = $("." + name + "-container");
-                if ($container.length > 0) {
-                    $checkbox.conditionallyEnable({enable: $container});
-                }
-            });
+            
 
             $('#body').scrollspy({target: '#wizard-bar', offset: 10})
 

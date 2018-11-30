@@ -364,8 +364,7 @@
                     </div>
                     <div class="col-sm-6 col-md-3 col-lg-2">
                         <div class="form-group">
-                            {{ f.inlineRadio("sbahpft","sbahpft-n","n", "No") }}
-                            {{ f.inlineRadio("sbahpft","sbahpft-y","y", "Yes") }}
+                            {{ f.inlineRadioNY("sbahpft") }}
                         </div>
                     </div>
 
@@ -452,7 +451,7 @@
         function createFormValidator() {
 
             const $form = $('#main-form');
-            const multiInputValidators = ['sbfcf', 'sbfcm', 'sbfcs', 'ceimn'];
+            const multiInputValidators = ['sbfcf', 'sbfcm', 'sbfcs'];
             const thisYear = VAPALS.todaysYear();
             const minYear = thisYear - 100;
             const yearValidationMessage = 'Must be between ' + minYear + ' and ' + thisYear;

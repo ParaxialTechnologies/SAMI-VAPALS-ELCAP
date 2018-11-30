@@ -1,0 +1,166 @@
+<div class="row">
+    <div class="col-sm-12 form-group">
+        <label class="control-label">Emphysema
+            <i class="fa fa-question-circle-o" aria-hidden="true"
+               data-html="true" data-toggle="popover" title="Help"
+               data-content="Mild: splaying of vessels, occasional areas of emphysema<br/>
+                                        Moderate:  emphysema in less than ½ of the lungs<br/>
+                                        Severe:  emphysema in more than ½ of the lungs"></i>
+
+        </label>
+        <br/>
+        {{ f.inlineRadio("ceem", "ceem-nv", "nv", "Not visible") }}
+        {{ f.inlineRadio("ceem", "ceem-no", "no", "None") }}
+        {{ f.inlineRadio("ceem", "ceem-mi", "mi", "Mild") }}
+        {{ f.inlineRadio("ceem", "ceem-mo", "mo", "Moderate") }}
+        {{ f.inlineRadio("ceem", "ceem-se", "se", "Severe") }}
+
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label"
+           for="ceccv-n">Coronary calcifications</label><br/>
+    {{ f.inlineRadio("ceccv","ceccv-n","n","None") }}
+    {{ f.inlineRadio("ceccv","ceccv-m","m","Mild") }}
+    {{ f.inlineRadio("ceccv","ceccv-d","d","Moderate") }}
+    {{ f.inlineRadio("ceccv","ceccv-s","s","Severe") }}
+
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" data-toggle="collapse"
+                 href="#coronary-container"
+                 aria-expanded="true" aria-controls="coronary-container"
+                 data-field-name="ceoca" style="cursor:pointer;">
+                <h4 class="panel-title">
+                    <i class="fa fa-chevron-down"></i>
+                    <i class="fa fa-chevron-up" style="display: none;"></i>
+                    Coronary Artery Calcifications Score
+                </h4>
+            </div>
+            <div id="coronary-container" class="panel-collapse collapse" role="tabpanel">
+                <div class="panel-body">
+                    <input type="hidden" name="ceoca" value="n"/>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <label for="cecclm" class="required">Left main</label>
+                                        <select name="cecclm" id="cecclm" class="form-control"
+                                                required="required">
+                                            <option value=""> -</option>
+                                            <option value="no"> None</option>
+                                            <option value="mi"> Minimal < &frac13;</option>
+                                            <option value="mo"> Moderate</option>
+                                            <option value="ex"> Extensive > &frac23;
+                                            </option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label for="ceccld" class="required">LAD</label>
+                                        <select name="ceccld" id="ceccld"
+                                                class="form-control"
+                                                required="required">
+                                            <option value=""> -</option>
+                                            <option value="no"> None</option>
+                                            <option value="mi"> Minimal < &frac13;</option>
+                                            <option value="mo"> Moderate</option>
+                                            <option value="ex"> Extensive > &frac23;
+                                            </option>
+                                        </select>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="form-group">
+                                        <label for="cecccf"
+                                               class="required">Circumflex</label>
+                                        <select name="cecccf" id="cecccf"
+                                                class="form-control"
+                                                required="required">
+                                            <option value=""> -</option>
+                                            <option value="no"> None</option>
+                                            <option value="mi"> Minimal < &frac13;</option>
+                                            <option value="mo"> Moderate</option>
+                                            <option value="ex"> Extensive > &frac23;
+                                            </option>
+                                        </select>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="form-group">
+                                        <label for="ceccrc" class="required">RCA</label>
+                                        <select name="ceccrc" id="ceccrc"
+                                                class="form-control"
+                                                required="required">
+                                            <option value=""> -</option>
+                                            <option value="no"> None</option>
+                                            <option value="mi"> Minimal < &frac13;</option>
+                                            <option value="mo"> Moderate</option>
+                                            <option value="ex"> Extensive > &frac23;
+                                            </option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <label class="control-label" for="cecccac">
+                                        Visual <abbr title="Coronary Artery Calcium">CAC</abbr>
+                                        score
+                                    </label>
+                                </td>
+                                <td colspan="5">
+                                    <span id="cecccac-text"></span>
+                                    <input type="hidden" name="cecccac" id="cecccac">
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script language="JavaScript">
+    $(function () {
+
+        function calculateVisualCacScore() {
+            let cal1 = $("#cecclm")[0].selectedIndex;
+            let cal2 = $("#ceccld")[0].selectedIndex;
+            let cal3 = $("#cecccf")[0].selectedIndex;
+            let cal4 = $("#ceccrc")[0].selectedIndex;
+            if (cal1 > 0) cal1 = cal1 - 1;
+            if (cal2 > 0) cal2 = cal2 - 1;
+            if (cal3 > 0) cal3 = cal3 - 1;
+            if (cal4 > 0) cal4 = cal4 - 1;
+            const res = cal1 + cal2 + cal3 + cal4;
+            $("#cecccac").val(res);
+            $("#cecccac-text").text(res);
+        }
+
+        $("#cecclm, #ceccld, #cecccf, #ceccrc").on('change', calculateVisualCacScore);
+        calculateVisualCacScore();
+
+        //Add validations after all other anonymous functions have run and fv is bound.
+        window.setTimeout(function () {
+            const fv = $("#main-form").data('formValidation');
+
+            fv.addField('cecclm', {validators: {notEmpty: {message: 'Left main is required'}}});
+            fv.addField('ceccld', {validators: {notEmpty: {message: 'LAD is required'}}});
+            fv.addField('cecclf', {validators: {notEmpty: {message: 'Circumflex is required'}}});
+            fv.addField('ceccrc', {validators: {notEmpty: {message: 'RCA is required'}}});
+        }, 0);
+    });
+</script>

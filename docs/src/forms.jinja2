@@ -25,6 +25,11 @@
     {{ inlineRadio(groupName, groupName+"-y","y","Yes",required, false, null, tabindex) }}
 {%- endmacro %}
 
+{% macro radioNY(groupName, required, tabindex) -%}
+    {{ radio(groupName, groupName+"-n","n","No",required, false, tabindex) }}
+    {{ radio(groupName, groupName+"-y","y","Yes",required, false, tabindex) }}
+{%- endmacro %}
+
 {% macro inlineRadioYN(groupName, required, tabindex) -%}
     {{ inlineRadio(groupName, groupName+"-y","y","Yes",required, false, null, tabindex) }}
     {{ inlineRadio(groupName, groupName+"-n","n","No",required, false, null, tabindex) }}

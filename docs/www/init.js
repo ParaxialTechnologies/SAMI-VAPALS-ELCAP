@@ -196,4 +196,32 @@ $(function () {
             textField.value = Number(fieldVal).toFixed(1);
         }
     }).first().trigger('blur');
+
+    //handle collapsible controls by toggling chevron icon and applying value to hidden field
+    $(".collapse").on('show.bs.collapse', function () {
+        const id = $(this).attr('id');
+        const $controller = $("[aria-controls=" + id + "]");
+        $controller.find(".fa-chevron-down").hide();
+        $controller.find(".fa-chevron-up").show();
+        const fieldName = $controller.data("field-name");
+        $("[name=" + fieldName + "]").val("y");
+    }).on('hide.bs.collapse', function () {
+        const id = $(this).attr('id');
+        const $controller = $("[aria-controls=" + id + "]");
+        $controller.find(".fa-chevron-down").show();
+        $controller.find(".fa-chevron-up").hide();
+        const fieldName = $controller.data("field-name");
+        $("[name=" + fieldName + "]").val("");
+    });
+
+    //open panels where the field name is already set to "y"
+    $.each($(".panel-heading[data-toggle=collapse]"), function (i, controller) {
+        const $controller = $(controller);
+        const href = $controller.attr('href');
+        const fieldName = $controller.data('field-name');
+        const fieldValue = $("[name=" + fieldName + "]").val();
+        if (fieldValue === "y") {
+            $(href).collapse('show');
+        }
+    });
 });

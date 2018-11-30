@@ -10,7 +10,7 @@
  * @author Domenic DiNatale <domenic.dinatale@paraxialtech.com>
  * @license [Apache-2.0]{@link https://www.apache.org/licenses/LICENSE-2.0.html}
  * @copyright 2018 [VAPALS-ELCAP]{@link http://va-pals.org/}
- * @param {string|function} [options.availableNodules="10"] - number of nodules externally rendered in the grid. Depends on nodule_grid.jinja2
+ * @param {string|function} [options.availableNodules="10"] - number of nodules externally rendered in the grid. Depends on _nodule-grid.jinja2
  * @param {string|function|object} [options.getNoduleCount=fn()] - function used to get the number of visible nodules
  * @param {string|function|object} [options.setNoduleCount=fn(noduleCount)] - function used to set the number of visible nodules
 

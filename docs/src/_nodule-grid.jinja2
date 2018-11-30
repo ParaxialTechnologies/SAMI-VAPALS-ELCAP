@@ -1,3 +1,4 @@
+{% set noduleArray = range(1,11) %}
 <div class="row">
     <div class="col-md-12">
         <div id="add-first-nodule" class="alert alert-info">
@@ -10,9 +11,8 @@
     </div>
     <div class="col-md-12" style="display: none;" id="nodule-table">
         <div class="table-responsive">
-            <button type="button" class="btn btn-default btn-sm add-nodule"
-            ">
-            <span class="fa fa-plus" aria-hidden="true"></span> Add nodule
+            <button type="button" class="btn btn-default btn-sm add-nodule">
+                <span class="fa fa-plus" aria-hidden="true"></span> Add nodule
             </button>
             <table class="table-striped" style="table-layout:auto;">
                 <thead>
@@ -569,9 +569,10 @@
 
         $(".add-nodule").on('click', ng.addNodule);
         $(".remove-nodule").on('click', ng.removeNodule);
+        exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
 
 
-        //Nodule validations; use timeout to be sure it's run after FV is bound.
+        //Add validations after all other anonymous functions have run and fv is bound.
         window.setTimeout(function () {
             const fv = $("#main-form").data('formValidation');
 
@@ -589,7 +590,6 @@
                 fv.addField('cect{{ i }}ssw', {validators: {notEmpty: {message: 'Enter a value'}}});
             {% endfor %}
         }, 0);
-
-
     });
+
 </script>

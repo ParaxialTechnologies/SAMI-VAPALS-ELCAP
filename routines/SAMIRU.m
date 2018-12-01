@@ -36,6 +36,7 @@ wsGetRU(rtn,filter) ; web service to return counts for rural and urban
  . n gr s gr=$na(@root@("graph",sid))
  . n siform
  . s siform=$o(@gr@("siform-"))
+ . q:siform=""
  . i $g(@gr@(siform,"sirs"))="u" s urban=urban+1
  . i $g(@gr@(siform,"sirs"))="r" s rural=rural+1
  . i $g(@gr@(siform,"sirs"))="n" s unknown=unknown+1 

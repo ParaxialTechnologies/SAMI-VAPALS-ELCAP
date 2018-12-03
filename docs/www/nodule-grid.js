@@ -77,6 +77,10 @@
                         $fields
                             .prop('disabled', false)
                             .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
+
+                        // fixes a bug where L & W fields were required when nodule was solid and "is it new" was
+                        // changed from "-" to anything else; which occurs on subsequent scans.
+                        $("#cect" + noduleIdx + "nt").trigger('change');
                     }
                 });
             }

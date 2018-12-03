@@ -274,8 +274,7 @@
                 </tr>
                 <tr>
                     <td style="white-space: nowrap;">
-                        <label class="control-label required" for="cect1sv">Volume
-                            (mm<sup>3</sup>)</label>
+                        <label class="control-label" for="cect1sv">Volume (mm<sup>3</sup>)</label>
                     </td>
                     {% for i in noduleArray %}
                         <td data-nodule-id="{{ i }}" style="display:none;">
@@ -283,9 +282,8 @@
                                 <div class="form-group form-group-sm col-sm-6">
                                     <input type="text" name="cect{{ i }}sv" id="cect{{ i }}sv" size="4" title="Volume"
                                            class="form-control numeric decimalformat" tabindex="{{ i }}12">
-                                    <input type="hidden" name="cect{{ i }}svovrrde"
-                                           id="cect{{ i }}svovrrde" context="server"
-                                           class="volume-override-flag"/>
+                                    <input type="hidden" name="cect{{ i }}svovrrde" id="cect{{ i }}svovrrde"
+                                           context="server" class="volume-override-flag"/>
                                 </div>
                                 <div class="form-group form-group-sm col-sm-5">
                                     <button class="btn" id="cect{{ i }}svb" tabindex="{{ i }}12"
@@ -293,15 +291,12 @@
                                         Calculate
                                     </button>
                                 </div>
-
-
                             </div>
                             <div id="cect{{ i }}svovrrde-warn" class="invisible">
                                 <div class="form-group form-group-sm">
                                     <small class="text-warning">Manually entered</small>
                                 </div>
                             </div>
-
                         </td>
                     {% endfor %}
                 </tr>

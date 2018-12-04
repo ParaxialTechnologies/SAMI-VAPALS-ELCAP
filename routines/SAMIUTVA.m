@@ -1,4 +1,4 @@
-SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 11/28/18 10:48am
+SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 12/3/18 1:26pm
  ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -59,14 +59,14 @@ START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  Q
  ;
 STARTUP ; Set up dfn and tiuien to use throughout testing
- s utdfn="dfn"_$J
+ ;s utdfn="dfn"_$J
  s utdfn=$$GET^XPAR("SYS","SAMI SYSTEM TEST PATIENT DFN",,"Q")
  s (utsuccess,tiuien)=0
  ; Set up graphstore graph on test patient
  n root s root=$$setroot^%wd("vapals-patients")
  k @root@("graph","XXX00001")
  n poo D PullUTarray^SAMIUTST(.poo,"all XXX00001 forms")
- m @root=poo
+ m @root@("graph","XXX00001")=poo
  Q
 SHUTDOWN ; ZEXCEPT: dfn,tiuien
  K utdfn,tiuien,utsuccess

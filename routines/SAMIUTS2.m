@@ -1,4 +1,4 @@
-SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICAS2 ; 11/23/18 10:12am
+SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICAS2 ; 12/3/18 9:14am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -45,7 +45,8 @@ UTGTMPL ; @TEST - get html template
  .; ignore the one node in arrays that have a date as
  .;  we can't know ahead of time what date the unit test
  .;  will be run on
- . i ($qs(nodep,1)=169) q
+ . i $E($tr(@nodep,""""" "),1,10)?4N1"."2N1"."2N q
+ . i (@nodep["meta content") q
  . i '(@nodep=@nodet) s utsuccess=0
  i '(nodet="") s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing getting vapals:casereview template FAILED!")
@@ -204,6 +205,7 @@ UTWSCAS ; @TEST - generate case review page
  . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
  . i @nodep["siform" q
  . i @nodep["Fourteen,Patient N" q
+ . i (@nodep["meta content") q
  . i '($qs(nodep,1)=$qs(nodea,1)) s utsuccess=0 W !,nodea
  . i '(@nodep=@nodea) s utsuccess=0 W !,nodea
  i '(nodea="") s utsuccess=0 w "at end:",nodea

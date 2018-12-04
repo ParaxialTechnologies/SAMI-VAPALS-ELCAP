@@ -1,4 +1,4 @@
-SAMIUTR9 ;ven/lgc - UNIT TEST for SAMICTR9 ; 11/13/18 7:46pm
+SAMIUTR9 ;ven/lgc - UNIT TEST for SAMICTR9 ; 12/3/18 1:45pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -29,7 +29,7 @@ STARTUP n utsuccess
  n root s root=$$setroot^%wd("vapals-patients")
  k @root@("graph","XXX00001")
  n poo D PullUTarray^SAMIUTST(.poo,"all XXX00001 forms")
- m @root=poo
+ m @root@("graph","XXX00001")=poo
  Q
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess

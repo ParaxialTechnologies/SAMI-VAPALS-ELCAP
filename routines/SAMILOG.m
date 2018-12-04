@@ -1,4 +1,4 @@
-SAMILOG ;ven/lgc - APIs to toggle password identification ; 11/19/18 9:17am
+SAMILOG ;ven/lgc - APIs to toggle password identification ; 11/30/18 10:40am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -45,7 +45,11 @@ SetPswdIdOnOff ;
  . s Y=1
  ;
  W !
- S %=2 D YN^DICN i '(%=1) q
+ ; check if running unit test on this routine
+ i '$d(%ut) d
+ . S %=2 D YN^DICN i '(%=1) q
+ e  s %=1
+ ;
  q:$d(DTOUT)  q:$d(DUOUT)
  i Y=1 d ToggleOn W !,"VAPALS password ID is now turned ON",!,! q
  i Y=0 d ToggleOff W !,"VAPALS password ID is now turned OFF",!,! q
@@ -54,7 +58,7 @@ SetPswdIdOnOff ;
  ; Toggle password identification OFF
 ToggleOff n dierr,fda,ienget,ienpost,iens
  s ienget=$o(^%W(17.6001,"B","GET","vapals","WSHOME^SAMIHOM3",0))
- s ienpost=$o(^%W(17.6001,"B","POST","vapals","wsVAPALS^SAMIHOM3",0))
+ s ienpost=$o(^%W(17.6001,"B","POST","vapals","WSVAPALS^SAMIHOM3",0))
  q:'ienget  q:'ienpost
  s iens=ienget_","
  s FDA(3,17.6001,iens,11)=0
@@ -68,7 +72,7 @@ ToggleOff n dierr,fda,ienget,ienpost,iens
  ; Toggle password identification ON
 ToggleOn n dierr,fda,ienget,ienpost,iens
  s ienget=$o(^%W(17.6001,"B","GET","vapals","WSHOME^SAMIHOM3",0))
- s ienpost=$o(^%W(17.6001,"B","POST","vapals","wsVAPALS^SAMIHOM3",0))
+ s ienpost=$o(^%W(17.6001,"B","POST","vapals","WSVAPALS^SAMIHOM3",0))
  q:'ienget  q:'ienpost
  s iens=ienget_","
  s FDA(3,17.6001,iens,11)=1

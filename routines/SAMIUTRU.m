@@ -1,4 +1,4 @@
-SAMIUTRU ;ven/lgc - UNIT TEST for SAMIRU ; 11/7/18 5:24pm
+SAMIUTRU ;ven/lgc - UNIT TEST for SAMIRU ; 11/30/18 11:30am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -62,7 +62,12 @@ UTINDEX ; @TEST - create the zip index in the zip graph
  ;
 UTWSGRU ; @TEST - web service to return counts for rural and urban
  ;wsGetRU(rtn,filter)
- n rtn
+ n rtn,filter,root
+ s root=$$setroot^%wd("vapals-patients")
+ D PullUTarray^SAMIUTST(.poo,"All XXX00812 graphstore globals")
+ k @root@("graph","XXX00812")
+ m @root@("graph","XXX00812")=poo
+ ;
  d wsGetRU^SAMIRU(.rtn,.filter)
  s utsuccess=1
  i $g(rtn(1))'["result" s utsuccess=0
@@ -70,6 +75,7 @@ UTWSGRU ; @TEST - web service to return counts for rural and urban
  i $g(rtn(1))'["site" s utsuccess=0
  i $g(rtn(1))'["unknown" s utsuccess=0
  i $g(rtn(1))'["urban" s utsuccess=0
+ k @root@("graph","XXX00812")
  D CHKEQ^%ut(utsuccess,1,"Testing web service counting rural and urban FAILED!")
  q
  ;

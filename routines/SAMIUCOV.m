@@ -1,4 +1,4 @@
-SAMIUCOV ;ven/arc/lmry - Unit test overall coverage ; 11/20/18 4:24pm
+SAMIUCOV ;ven/arc/lmry - Unit test overall coverage ; 12/3/18 8:25am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -105,6 +105,8 @@ START ; Run the coverage tests
  set I=I+1,XCLUDE(I)="SAMIUTVS"
  set I=I+1,XCLUDE(I)="SAMIUTRU"
  set I=I+1,XCLUDE(I)="SAMIUTSV"
+ ; Exclude routine under construction
+ set I=I+1,XCLUDE(I)="SAMIIFF"
  ;
  ; Add the XCLUDE values to the TMP variable that tracks this coverage test.
  merge ^TMP("SAMI",$JOB,"XCLUDE")=XCLUDE

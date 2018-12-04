@@ -1,4 +1,4 @@
-SAMIHOM3 ;ven/gpl - ielcap: forms ;2018-07-10  10:51 AM
+SAMIHOM3 ;ven/gpl - ielcap: forms ; 12/4/18 11:06am
  ;;18.0;SAMI;;
  ;
  ; Routine SAMIHOM2 contains subroutines for implementing the ELCAP Home
@@ -345,11 +345,6 @@ GETHOME(RTN,FILTER) ; homepage accessed using GET
  . n ln s ln=temp(zi)
  . n touched s touched=0
  . ;
- . i ln["home.html" d  ;
- . . d findReplace^%ts(.ln,"home.html","/vapals")
- . . s temp(zi)=ln
- . . s touched=1
- . ;
  . i ln["href" i 'touched d  ;
  . . d fixHref^SAMIFRM2(.ln)
  . . s temp(zi)=ln
@@ -360,22 +355,6 @@ GETHOME(RTN,FILTER) ; homepage accessed using GET
  . ;
  . i ln["id" i ln["studyIdMenu" d  ;
  . . s zi=zi+4
- . ; 
- . i ln["casereview.html" d  ;
- . . d findReplace^%ts(.ln,"casereview.html","/vapals")
- . . s cnt=cnt+1
- . . s tout(cnt)=ln
- . . s cnt=cnt+1
- . . s tout(cnt)="<input type=hidden name=""samiroute"" value=""lookup"">"
- . . s zi=zi+1
- . ;
- . i ln["intake.html" d  ;
- . . d findReplace^%ts(.ln,"intake.html","/vapals")
- . . s cnt=cnt+1
- . . s tout(cnt)=ln
- . . s cnt=cnt+1
- . . s tout(cnt)="<input type=hidden name=""samiroute"" value=""newcase"">"
- . . s zi=zi+1
  . ;
  . set cnt=cnt+1
  . set tout(cnt)=temp(zi)

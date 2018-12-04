@@ -1,4 +1,4 @@
-SAMIUTLG ;ven/lgc - Unit test for SAMILOG ; 11/21/18 8:54am
+SAMIUTLG ;ven/lgc - Unit test for SAMILOG ; 11/30/18 10:32am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -38,7 +38,7 @@ UTTOGL ; @TEST - Toggle VAPALS password identification
  ;ToggleOff^SAMILOG and ToggleON^SAMILOG
  n pooget,poopost,ienget,ienpost
  s ienget=$o(^%W(17.6001,"B","GET","vapals","WSHOME^SAMIHOM3",0))
- s ienpost=$o(^%W(17.6001,"B","POST","vapals","wsVAPALS^SAMIHOM3",0))
+ s ienpost=$o(^%W(17.6001,"B","POST","vapals","WSVAPALS^SAMIHOM3",0))
  s pooget=$g(^%W(17.6001,ienget,"AUTH"))
  s poopost=$g(^%W(17.6001,ienpost,"AUTH"))
  ;if the two (get and post) are not set the same, then

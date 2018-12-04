@@ -1,4 +1,4 @@
-SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 11/29/18 10:42am
+SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 12/4/18 11:41am
  ;;18.0;SAMI;;
  ;
  ;
@@ -16,11 +16,11 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  K utsuccess
  Q
  ;
-UTWSHM ; @TEST - Testing web service for SAMI homepage
+UTWSHM ; @TEST - Testing web service for SAMI homepage test
  ; wsHOME(rtn,filter)
  n filter,rtn,nodea,nodep,arc,poo
  s filter("test")=1
- d wsHOME^SAMIHOM3(.rtn,.filter)
+ d WSHOME^SAMIHOM3(.rtn,.filter)
  m arc=rtn
  s utsuccess=1
  D PullUTarray^SAMIUTST(.poo,"UTWSHM^SAMIUTH3 test")
@@ -29,35 +29,41 @@ UTWSHM ; @TEST - Testing web service for SAMI homepage
  .; check first 60 lines of configuration.  After that the returned
  .;   array depends on test patients available
  . q:($qs(nodea,1)=60)
- . i '(nodea=nodep) s utsuccess=0 W !,nodea,!,nodep
+ . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0 W !,nodea,!,nodep
  . i '(@nodea=@nodep) s utsuccess=0 w !,@nodea,!,@nodep
  D CHKEQ^%ut(utsuccess,1,"Testing web service test FAILED!")
  q
  ;
-UTWSHM1 k filter,rtn,nodea,nodep,arc,poo
+UTWSHM1 ; @TEST - Testing web service for SAMI homepage samiroute=""
+ k filter,rtn,nodea,nodep,arc,poo
  s filter("samiroute")=""
- d wsHOME^SAMIHOM3(.rtn,.filter)
+ d WSHOME^SAMIHOM3(.rtn,.filter)
  m arc=rtn
  s utsuccess=1
  D PullUTarray^SAMIUTST(.poo,"UTWSHM^SAMIUTH3 samiroute null")
  s nodea=$na(arc),nodep=$na(poo)
  f  s nodea=$q(@nodea),nodep=$q(@nodep) q:(nodea="")  d  q:'utsuccess
- . i '(nodea=nodep) s utsuccess=0 W !,nodea,!,nodep
- . i '(@nodea=@nodep) s utsuccess=0 w !,@nodea,!,@nodep
+ . i $E($TR(@nodea,""""" "),1,10)?4N1"."2N1"."2N q
+ . i (@nodea["meta content") q
+ . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
+ . i '(@nodea=@nodep) s utsuccess=0
  i '(nodep="") s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing web service null samiroute FAILED!")
  Q
  ;
-UTWSHM2 k filter,rtn,nodea,nodep,arc,poo
+UTWSHM2 ; @TEST - Testing web service for SAMI homepage dfn=1
+ k filter,rtn,nodea,nodep,arc,poo
  s filter("dfn")=1
- d wsHOME^SAMIHOM3(.rtn,.filter)
+ d WSHOME^SAMIHOM3(.rtn,.filter)
  m arc=rtn
  s utsuccess=1
  D PullUTarray^SAMIUTST(.poo,"UTWSHM^SAMIUTH3 dfn=1")
  s nodea=$na(arc),nodep=$na(poo)
  f  s nodea=$q(@nodea),nodep=$q(@nodep) q:(nodea="")  d  q:'utsuccess
- . i '(nodea=nodep) s utsuccess=0 W !,nodea,!,nodep
- . i '(@nodea=@nodep) s utsuccess=0 w !,@nodea,!,@nodep
+ . i $E($TR(@nodea,""""" "),1,10)?4N1"."2N1"."2N q
+ . i (@nodea["meta content") q
+ . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
+ . i '(@nodea=@nodep) s utsuccess=0
  i '(nodep="") s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing web service dfn=1 FAILED!")
  q
@@ -65,7 +71,7 @@ UTWSHM2 k filter,rtn,nodea,nodep,arc,poo
 UTDVHM ; @TEST - Testing temporary home page for development
  ; devhome(rtn,filter)
  n filter,rtn,poo
- d devhome^SAMIHOM3(.rtn,.filter)
+ d DEVHOME^SAMIHOM3(.rtn,.filter)
  D PullUTarray^SAMIUTST(.poo,"UTDVHM^SAMIUTH3")
  s utsuccess=1
  ; Check the first 60 nodes match as these represent
@@ -98,6 +104,7 @@ UTGETHM ; @TEST - Testing pulling HTML for home.
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
  .; if the first non space 10 characters are a date, skip
  . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
+ . i (@nodep["meta content") q
  . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
  . i '(@nodea=@nodep) s utsuccess=0
  i '(nodea="") s utsuccess=0
@@ -179,8 +186,10 @@ UTADDPT ; @TEST Testing addPatient adding a new patient to vapals-patients
  ;
  ; clear test patient from vapals-patients Graphstore
  s studyid="XXX00001"
- k:$L(studyid) @rootvp@("sid",studyid),@rootvp@("graph",studyid)
- k @rootvp@(dfn),@rootvp@("dfn",dfn)
+ k @rootvp@("sid",studyid)
+ k @rootvp@("graph",studyid)
+ k @rootvp@(dfn)
+ k @rootvp@("dfn",dfn)
  ;
  ; generate new entry in vapals-patients, HTML in ^TMP("yottaForm",n)
  d addPatient^SAMIHOM3(dfn)
@@ -196,8 +205,9 @@ UTADDPT ; @TEST Testing addPatient adding a new patient to vapals-patients
  ;     and calls PTINFO and update both Graphstore files
 UTWSNC ; @TEST - Testing wsNewCase adding a new case to vapals-patients Graphstore
  ;wsNewCase(ARGS,BODY,RESULT)
- n rootvp,rootpl,rootut,gienut,dfn,bdy,saminame,ARGS,result,utna,uthtml
- n utna,uthtm,arc,poo
+ ;
+ n rootvp,rootpl,rootut,gienut,dfn,bdy,saminame,ARGS,result
+ n utna,uthtml,arc,poo
  s rootvp=$$setroot^%wd("vapals-patients")
  s rootpl=$$setroot^%wd("patient-lookup")
  s rootut=$$setroot^%wd("vapals unit tests")
@@ -205,6 +215,14 @@ UTWSNC ; @TEST - Testing wsNewCase adding a new case to vapals-patients Graphsto
  s dfn=@rootut@(gienut,"dfn")
  s saminame=@rootut@(gienut,"saminame")
  n bdy S bdy(1)="saminame="_saminame_"&dfn="_dfn
+ ;
+ ; clear test patient from vapals-patients Graphstore
+ s studyid="XXX00001"
+ k @rootvp@("sid",studyid)
+ k @rootvp@("graph",studyid)
+ k @rootvp@(dfn)
+ k @rootvp@("dfn",dfn)
+ ;
  ; generate new entry in vapals-patients
  ;   HTML result will be in ^TMP("yottaForm",n)
  d wsNewCase^SAMIHOM3(.ARGS,.bdy,.result)
@@ -223,6 +241,7 @@ UTWSNC ; @TEST - Testing wsNewCase adding a new case to vapals-patients Graphsto
  . s nodea=$na(arc),nodep=$na(poo)
  . f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
  ..; skip certain lines that will contain dates
+ .. i @nodep["meta content" q
  .. i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
  .. i @nodep["siform"  q
  .. i $e($tr($p(@nodea,"=",2),""""),1,10)?2N1"/"2N1"/"4N q
@@ -248,6 +267,7 @@ UTWSVP1 ; @TEST - Test WSVAPALS API route=""
  s nodea=$na(arc),nodep=$na(poo)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d
  . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
+ . i (@nodep["meta content") q
  . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
  . i '(@nodea=@nodep) s success=0 s utsuccess=0
  i 'nodea="" s utsuccess=0
@@ -258,7 +278,8 @@ UTWSVP2 ; @TEST - Test WSVAPALS API route="lookup"
  N ARG,BODY,RESULT,route,poo,arc,cnt,filter
  ; testing route=lookup"". RESULT should have HTML
  ; look up ELCAP patient (patient in vapals-patients
- s ARG("field")="sid",ARG("fvalue")="XXX00001",route="lookup"
+ s ARG("field")="sid",ARG("fvalue")="XXX00001"
+ S ARG("samiroute")="lookup"
  D WSVAPALS^SAMIHOM3(.ARG,.BODY,.RESULT)
  m poo=RESULT
  s utsuccess=1
@@ -267,6 +288,7 @@ UTWSVP2 ; @TEST - Test WSVAPALS API route="lookup"
  s nodea=$na(arc),nodep=$na(poo)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d
  . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
+ . i (@nodep["meta content") q
  . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
  . i '(@nodea=@nodep) s success=0 s utsuccess=0
  i 'nodea="" s utsuccess=0
@@ -275,7 +297,8 @@ UTWSVP2 ; @TEST - Test WSVAPALS API route="lookup"
  ;
 UTWSVP3 ; @TEST - Test WSVAPALS API route="casereview"
  N ARG,BODY,RESULT,route,poo,arc,filter
- s ARG("field")="sid",ARG("fvalue")="XXX00001",route="casereview"
+ s ARG("field")="sid",ARG("fvalue")="XXX00001"
+ s ARG("samiroute")="casereview"
  D WSVAPALS^SAMIHOM3(.ARG,.BODY,.RESULT)
  m poo=RESULT
  s utsuccess=1
@@ -284,10 +307,50 @@ UTWSVP3 ; @TEST - Test WSVAPALS API route="casereview"
  s nodea=$na(arc),nodep=$na(poo)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d
  . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
+ . i (@nodep["meta content") q
+ . i (@nodep["XXX") q
  . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
  . i '(@nodea=@nodep) s success=0 s utsuccess=0
  i 'nodea="" s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS route=casereview  FAILED!")
+ q
+ ;
+UTWSVP4 ; @TEST - Test WSVAPALS API route="addform"
+ N ARG,BODY,RESULT,route,poo,arc,filter
+ s ARG("field")="sid",ARG("fvalue")="XXX00001"
+ s ARG("samiroute")="addform"
+ D WSVAPALS^SAMIHOM3(.ARG,.BODY,.RESULT)
+ m poo=RESULT
+ s utsuccess=1
+ ; Get array saved in "vapals unit tests" for this unit test
+ D PullUTarray^SAMIUTST(.arc,"UTWSVP4^SAMIUTH3")
+ s nodea=$na(arc),nodep=$na(poo)
+ f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d
+ . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
+ . i (@nodep["meta content") q
+ . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
+ . i '(@nodea=@nodep) s success=0 s utsuccess=0
+ i 'nodea="" s utsuccess=0
+ D CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS route=addform  FAILED!")
+ q
+ ;
+UTWSVP5 ; @TEST - Test WSVAPALS API route="form"
+ N ARG,BODY,RESULT,route,poo,arc,filter
+ s ARG("field")="sid",ARG("fvalue")="XXX00001"
+ s ARG("samiroute")="form"
+ D WSVAPALS^SAMIHOM3(.ARG,.BODY,.RESULT)
+ m poo=RESULT
+ s utsuccess=1
+ ; Get array saved in "vapals unit tests" for this unit test
+ D PullUTarray^SAMIUTST(.arc,"UTWSVP5^SAMIUTH3")
+ s nodea=$na(arc),nodep=$na(poo)
+ f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d
+ . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
+ . i (@nodep["meta content") q
+ . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
+ . i '(@nodea=@nodep) s success=0 s utsuccess=0
+ i 'nodea="" s utsuccess=0
+ D CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS route=form  FAILED!")
  q
  ;
 UTSIFRM ; @TEST - Testing creating a background form

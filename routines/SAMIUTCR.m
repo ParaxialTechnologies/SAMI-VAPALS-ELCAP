@@ -1,4 +1,4 @@
-SAMIUTCR ;ven/lgc - UNIT TEST for SAMICTR ; 11/28/18 11:43am
+SAMIUTCR ;ven/lgc - UNIT TEST for SAMICTR ; 12/3/18 1:41pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -30,7 +30,7 @@ STARTUP n utsuccess
  n root s root=$$setroot^%wd("vapals-patients")
  k @root@("graph","XXX00001")
  n poo D PullUTarray^SAMIUTST(.poo,"all XXX00001 forms")
- m @root=poo
+ m @root@("graph","XXX00001")=poo
  Q
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
@@ -91,7 +91,7 @@ UTWSRPT ; @TEST - web service which returns an html cteval report
  . I '(@pnode=@anode) s utsuccess=0
  S:'(anode="") utsuccess=0
  k @root@("graph","XXX00812")
- D CHKEQ^%ut(utsuccess,1,"Testing web service returns html cteval XXX0005 FAILED!")
+ D CHKEQ^%ut(utsuccess,1,"Testing web service returns html cteval XXX00812 FAILED!")
  q
  ;
 UTOUT ; @TEST - out line

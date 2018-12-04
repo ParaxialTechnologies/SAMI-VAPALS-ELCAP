@@ -1,4 +1,4 @@
-SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 11/27/18 1:21pm
+SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 12/3/18 1:42pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -29,7 +29,7 @@ STARTUP n utsuccess
  n root s root=$$setroot^%wd("vapals-patients")
  k @root@("graph","XXX00001")
  n poo D PullUTarray^SAMIUTST(.poo,"all XXX00001 forms")
- m @root=poo
+ m @root@("graph","XXX00001")=poo
  Q
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
@@ -181,6 +181,7 @@ UTWSSBF ; @TEST - background form access
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
  . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
  . i @nodep["siform" q
+ . i @nodep["meta content" q
  . i '($qs(nodep,1)=$qs(nodea,1)) s utsuccess=0
  . i '(@nodep=@nodea) s utsuccess=0
  i 'nodea="" s utsuccess=0
@@ -200,6 +201,7 @@ UTWSIFM ; @TEST - intake form access
  . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
  . i @nodep["siform" q
  . i @nodep["input value=""11/12/2018""" q
+ . i @nodep["meta content" q
  . i '($qs(nodep,1)=$qs(nodea,1)) s utsuccess=0
  . i '(@nodep=@nodea) s utsuccess=0
  i 'nodea="" s utsuccess=0
@@ -218,6 +220,7 @@ UTCEFRM ; @TEST - ctevaluation form access
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
  . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
  . i @nodep["siform" q
+ . i @nodep["meta content" q
  . i '($qs(nodep,1)=$qs(nodea,1)) s utsuccess=0
  . i '(@nodep=@nodea) s utsuccess=0
  i 'nodea="" s utsuccess=0

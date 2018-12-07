@@ -1,4 +1,4 @@
-SAMICTR ;ven/gpl - ielcap: forms ;2018-03-07T18:48Z
+SAMICTR0 ;ven/gpl - ielcap: forms ;2018-03-07T18:48Z
  ;;18.0;SAMI;;
  ;
  ;
@@ -200,7 +200,7 @@ wsReport(return,filter) ; web service which returns an html cteval report
  ;
  q
  ;
-out(ln)
+out(ln) ;
  s cnt=cnt+1
  n lnn
  ;s debug=1
@@ -213,7 +213,7 @@ out(ln)
  . s @rtn@(lnn)=zp_":"_ln
  q
  ;
-hout(ln)
+hout(ln) ;
  d out("<p><span class='sectionhead'>"_ln_"</span>")
  q
  ;

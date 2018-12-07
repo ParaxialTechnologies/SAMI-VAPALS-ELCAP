@@ -4,7 +4,7 @@ SAMICTR1 ;ven/gpl - ielcap: forms ;2018-03-07T18:48Z
  ;
  quit  ; no entry from top
  ;
-nodules(rtn,vals,dict)
+nodules(rtn,vals,dict) ;
  ;
  ;
  ;# Report on Nodules
@@ -170,7 +170,7 @@ nodules(rtn,vals,dict)
  ;
  q
  ;
-out(ln)
+out(ln) ;
  s cnt=cnt+1
  n lnn
  ;s debug=1
@@ -183,7 +183,7 @@ out(ln)
  . s @rtn@(lnn)=zp_":"_ln
  q
  ;
-hout(ln)
+hout(ln) ;
  d out("<p><span class='sectionhead'>"_ln_"</span>")
  q
  ;
@@ -208,4 +208,3 @@ xsub(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined
  ;i zr="" s zr="["_var_","_zv_"]"
  q zr
  ;
- 

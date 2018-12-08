@@ -1,4 +1,4 @@
-SAMIUTCR ;ven/lgc - UNIT TEST for SAMICTR ; 12/3/18 1:41pm
+SAMIUTCR ;ven/lgc - UNIT TEST for SAMICTR ; 12/5/18 12:48pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -56,6 +56,22 @@ UTWSRPT ; @TEST - web service which returns an html cteval report
  S:'(anode="") utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing web service returns html cteval FAILED!")
  ;
+ n root
+ n root s root=$$setroot^%wd("vapals-patients")
+ k filter
+ s filter("studyid")="XXX00001"
+ s filter("form")="ceform-2018-12-03"
+ s utsuccess=1
+ D wsReport^SAMICTR(.poo,.filter)
+ ; compare poo with poou from a Pull
+ D PullUTarray^SAMIUTST(.arc,"UTWSRPT^SAMIUTCR XXX12-3")
+ ; now compare
+ n pnode,anode s pnode=$na(poo),anode=$na(arc)
+ f  s pnode=$q(@pnode),anode=$q(@anode) q:pnode=""  d
+ . I '(@pnode=@anode) s utsuccess=0
+ S:'(anode="") utsuccess=0
+ D CHKEQ^%ut(utsuccess,1,"Testing web service returns html cteval FAILED!")
+ ;
  ; Now lets try a special case
  n poo,arc,pnode,anode
  D PullUTarray^SAMIUTST(.poo,"ce-sb-si forms XXX0005")
@@ -75,23 +91,6 @@ UTWSRPT ; @TEST - web service which returns an html cteval report
  k @root@("graph","XXX0005")
  D CHKEQ^%ut(utsuccess,1,"Testing web service returns html cteval XXX0005 FAILED!")
  ;
- n poo,arc,pnode,anode
- D PullUTarray^SAMIUTST(.poo,"All XXX00812 graphstore globals")
- k @root@("graph","XXX00812")
- m @root@("graph","XXX00812")=poo
- k filter
- s filter("studyid")="XXX00812"
- s filter("form")="ceform-2018-11-28"
- s utsuccess=1
- D wsReport^SAMICTR(.arc,.filter)
- D PullUTarray^SAMIUTST(.poo,"UTLOADD^SAMIUTF2 XXX00812")
- ; now compare
- n pnode,anode s pnode=$na(poo),anode=$na(arc)
- f  s pnode=$q(@pnode),anode=$q(@anode) q:pnode=""  d
- . I '(@pnode=@anode) s utsuccess=0
- S:'(anode="") utsuccess=0
- k @root@("graph","XXX00812")
- D CHKEQ^%ut(utsuccess,1,"Testing web service returns html cteval XXX00812 FAILED!")
  q
  ;
 UTOUT ; @TEST - out line

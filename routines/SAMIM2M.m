@@ -1,5 +1,5 @@
-SAMIM2M ;ven/lgc/smh - M2M WITH SAM HABIEL'S KBANSCAU BROKER ; 10/22/18 12:34pm
- ;;1.0;;**LOCAL**; SEPT 11, 2018
+SAMIM2M ;ven/lgc/smh - M2M WITH SAM HABIEL'S KBANSCAU BROKER ; 12/7/18 11:40am
+ ;;18.0;SAM;;
  ;
  ;SAM'S INDUSTRIAL CONGLOMERATES
  ;
@@ -37,6 +37,7 @@ SAMIM2M ;ven/lgc/smh - M2M WITH SAM HABIEL'S KBANSCAU BROKER ; 10/22/18 12:34pm
  ;               with error message e.g. -1^error message
 M2M(XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY) ;
  ;
+ N X
  K XDATA S XDATA=-1
  S CONSOLE=+$G(CONSOLE)
  S CNTNOPEN=+$G(CNTNOPEN)
@@ -54,7 +55,7 @@ M2M(XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY) ;
  ;
  ; Below pulled from XWBTEST^KBANSCAU
  ; 1. Open Socket to remote system, check POP, use IO
- D CALL^%ZISTCP(HOST,PORT,5)
+ N POP D CALL^%ZISTCP(HOST,PORT,5)
  I $G(POP) QUIT
  U IO
  ;
@@ -120,7 +121,7 @@ CLSCLN ; 10. Logout
  ; We do not call CLOSE^%ZISTCP b/c it calls HOME^%ZIS which issues
  ; a new line to slave devices. GTM makes 0 the principal device for
  ; background jobs by default./Sam Habiel
- S NIO=IO,IO=$S($G(IO(0))]"":IO(0),1:$P)
+ N NIO S NIO=IO,IO=$S($G(IO(0))]"":IO(0),1:$P)
  I NIO]"" C NIO K IO(1,NIO) S IO("CLOSE")=NIO
  D:CONSOLE CONSOLE^KBANSCAU($$NOW^XLFDT)
  ;

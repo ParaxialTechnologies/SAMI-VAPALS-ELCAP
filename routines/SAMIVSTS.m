@@ -1,5 +1,5 @@
-SAMIVSTS ;;ven/arc/lgc - M2M Broker to build TIU for VA-PALS ; 11/9/18 6:17pm
- ;;1.0;;**LOCAL**; APR 22, 2018
+SAMIVSTS ;;ven/arc/lgc - M2M Broker to build TIU for VA-PALS ; 12/7/18 9:34am
+ ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
  ;   to pull information from the VA server into the
@@ -85,14 +85,15 @@ ALLPTS ; Get all patients from a server by sequentially calling
  ;           to use for patient array
  ;           Specifically designed for UNIT TEST where
  ;           we don't wish to corrupt existing data set
-ALLPTS1(SAMISS) N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY
+ALLPTS1(SAMISS) ; Build ^KBAP("ALLPTS" global
+ N XDATA,FINI,CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY
  S CNTXT="HMP UI CONTEXT"
  S RMPRC="HMP PATIENT SELECT"
  S (CONSOLE,CNTNOPEN)=0
  S:'$L($G(SAMISS)) SAMISS="ALLPTS"
  ;
  K ^KBAP(SAMISS)
- F I=65:1:90 D
+ N I,J F I=65:1:90 D
  . S FINI=$C(I)
  . K XARRAY
  . S XARRAY(1)="NAME"
@@ -110,7 +111,7 @@ ALLPTS1(SAMISS) N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY
  ; e.g.
  ;   D MKGPH^KBAPUTL
 MKGPH Q:'$D(^KBAP("ALLPTS"))
- n si s si=$$ClearGraphstore("patient-lookup")
+ n si s si=$$CLRGRPS("patient-lookup")
  Q:'$G(si)
  n root s root=$$setroot^%wd("patient-lookup")
  N gien,NODE,PTDATA,root
@@ -158,7 +159,7 @@ MKGPH Q:'$D(^KBAP("ALLPTS"))
  ;   If called as extrinsic
  ;      0 = rebuild of "reminders" Graphstore failed
  ;      n = number of reminders filed
-Reminders() ;
+RMDRS() ;
  N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY
  S CNTXT="OR CPRS GUI CHART"
  S RMPRC="PXRM REMINDERS AND CATEGORIES"
@@ -166,13 +167,13 @@ Reminders() ;
  D M2M^SAMIM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
  ; if successful continue
  I '$L(XDATA,$C(13,10)) Q:$Q 0  Q
- n si s si=$$ClearGraphstore("reminders")
+ n si s si=$$CLRGRPS("reminders")
  I '$G(si) Q:$Q 0  Q
  n root s root=$$setroot^%wd("reminders")
  n gien s gien=0
- N I,RCNT,TYPE,IEN,NAME,PRINTNAME,RMDR
+ N I,RCNT,TYPE,IEN,NAME,PRNTNAME,RMDR
  S RCNT=0
- F I=1:1:$L(XDATA,$C(13,10)) D
+ N I F I=1:1:$L(XDATA,$C(13,10)) D
  . S RMDR=$P(XDATA,$C(13,10),I)
  . Q:($L(RMDR,"^")<3)
  . S RCNT=$G(RCNT)+1
@@ -204,7 +205,7 @@ Reminders() ;
  ;   If called as extrinsic
  ;      0 = rebuild of "providers" Graphstore failed
  ;      n = number of providers filed
-Providers() ;
+PRVDRS() ;
  N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY
  S CNTXT="OR CPRS GUI CHART"
  S RMPRC="ORQPT PROVIDERS"
@@ -212,7 +213,7 @@ Providers() ;
  D M2M^SAMIM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
  ; if successful continue
  I '$L(XDATA,$C(13,10)) Q:$Q 0  Q
- n si s si=$$ClearGraphstore("providers")
+ n si s si=$$CLRGRPS("providers")
  I '$G(si) Q:$Q 0  Q
  n root s root=$$setroot^%wd("providers")
  n gien s gien=0
@@ -246,7 +247,7 @@ Providers() ;
  ;   If called as extrinsic
  ;      0 = rebuild of "clinics" Graphstore failed
  ;      n = number of clinics filed
-Clinics() ;
+CLINICS() ;
  N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY
  S CNTXT="OR CPRS GUI CHART"
  S RMPRC="ORWU1 NEWLOC"
@@ -257,7 +258,7 @@ Clinics() ;
  D M2M^SAMIM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
  ; if successful continue
  I '$L(XDATA,$C(13,10)) Q:$Q 0  Q
- n si s si=$$ClearGraphstore("clinics")
+ n si s si=$$CLRGRPS("clinics")
  I '$G(si) Q:$Q 0  Q
  n root s root=$$setroot^%wd("clinics")
  n gien s gien=0
@@ -290,7 +291,7 @@ Clinics() ;
  ;   If called as extrinsic
  ;      0 = rebuild of "health-factors" Graphstore failed
  ;      n = number of health factors filed
-HealthFactors() ; Clear the M Web Server files cache
+HLTHFCT() ; Clear the M Web Server files cache
  ;VEN/arc;test;function/procedure;dirty;silent;non-sac
  N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY
  S CNTXT="OR CPRS GUI CHART"
@@ -299,7 +300,7 @@ HealthFactors() ; Clear the M Web Server files cache
  D M2M^SAMIM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
  ; if successful continue
  I '$L(XDATA,$C(13,10)) Q:$Q 0  Q
- n si s si=$$ClearGraphstore("health-factors")
+ n si s si=$$CLRGRPS("health-factors")
  I '$G(si) Q:$Q 0  Q
  n root s root=$$setroot^%wd("health-factors")
  n gien s gien=0
@@ -320,7 +321,7 @@ HealthFactors() ; Clear the M Web Server files cache
  Q:$Q HCNT  Q
  ;
  ;
- ;@API-code: $$ClearGraphstore^SAMIVSTS
+ ;@API-code: $$CLRGRPS^SAMIVSTS
  ;
  ; Clear a Graphstore global of data
  ;Enter
@@ -329,7 +330,7 @@ HealthFactors() ; Clear the M Web Server files cache
  ; if called as extrinsic function
  ;   0 = failure to find named Graphstore
  ;   ien (si) of the Graphstore in ^%wd(17.040801,
-ClearGraphstore(name) ;
+CLRGRPS(name) ;
  I '$l($g(name)) Q:$Q 0  Q
  n si s si=$O(^%wd(17.040801,"B",name,0))
  i $g(si) K ^%wd(17.040801,si) s ^%wd(17.040801,si,0)=name

@@ -1,4 +1,4 @@
-SAMIRU ;ven/gpl - sami user reports ;2018-03-08T17:53Z
+SAMIRU ;ven/gpl - sami user reports ; 12/7/18 10:46am
  ;;18.0;SAM;;
  ;
  ; SAMIRU contains the routines to handle rural/urban status
@@ -9,7 +9,7 @@ SAMIRU ;ven/gpl - sami user reports ;2018-03-08T17:53Z
  ; sirs = rural status r,u,n
  ; sipsa = preferred address
  ;
- ; $$UrbanRural^SAMIVSTA(zipcode) returns r u
+ ; $$URBRUR^SAMIVSTA(zipcode) returns r u
  ;
  ; NCHS Urban-Rural graph for zip code table
  ;

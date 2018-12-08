@@ -1,4 +1,4 @@
-SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 11/28/18 10:48am
+SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 12/7/18 11:31am
  ;;1.0;;**LOCAL**; APR 22, 2018
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -62,7 +62,7 @@ SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 11/28/18 10:48am
  ;  if successful sets tiuien in @vals@("tiuien") node 
  ;   in Graphstore
  ;  if called as extrinsic function, returns tiu ien
-save2vista(filter) ;
+SV2VISTA(filter) ;
  I '$Q D  Q
  . N ZTSAVE,ZTRTN,ZTDESC,ZTDTH,ZTIO,ZTQUEUED,ZTREQ,ZTSK,X,Y
  . S ZTDESC="SAMIVSTA BUILDING NEW TIU NOTE"
@@ -130,7 +130,7 @@ NEWTXT D SETTEXT(.tiuien,dest)
  ; New code
  ; Now we will update the encounter
  ; Begin by pulling the VSTR for this note
-ENCNTR N VSTR S VSTR=$$VisitString(tiuien)
+ENCNTR N VSTR S VSTR=$$VISTSTR(tiuien)
  Q:'($L(VSTR,";")=3) tiuien
  ; Time to build the HF array for the next call
  N HFARRAY
@@ -258,7 +258,7 @@ BLDENCTR(tiuien,HFARRAY) ;
  ;
  I '$G(tiuien) Q:$Q 0  Q
  I '$D(HFARRAY) Q:$Q 0  Q
- N VSTR S VSTR=$$VisitString(tiuien)
+ N VSTR S VSTR=$$VISTSTR(tiuien)
  I '($L(VSTR,";")=3) Q:$Q 0  Q
  ;
  N SUPPRESS S SUPPRESS=0
@@ -279,7 +279,7 @@ ENCTR3 S XARRAY(3)=VSTR
  ;
  ;
  ;
- ;@API-code: $$AddSigners^SAMIVSTA
+ ;@API-code: $$ADDSGNRS^SAMIVSTA
  ;@API-Context menu : OR CPRS GUI CHART
  ;@API-Remote Procedure : TIU UPDATE ADDITIONAL SIGNERS
  ;
@@ -296,7 +296,7 @@ ENCTR3 S XARRAY(3)=VSTR
  ;  if called as extrinsic
  ;     0  = adding signer(s) failed
  ;     1  = adding signer(s) successful
-AddSigners(filter) ;
+ADDSGNRS(filter) ;
  I '$D(filter("add signers")) Q:$Q 0  Q
  ;
  ; Setup all variables into Graphstore
@@ -352,7 +352,7 @@ ADDSIGN N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY
  Q
  ;
  ;
- ;@API-code: $$TiuAddendum^SAMIVSTA
+ ;@API-code: $$TIUADND^SAMIVSTA
  ;@API-Context menu : OR CPRS GUI CHART
  ;@API-Remote Procedure : TIU CREATE ADDENDUM RECORD
  ;
@@ -368,7 +368,7 @@ ADDSIGN N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY
  ;  if called as extrinsic
  ;   0 = unsuccessful in adding addendum
  ;   n = ien of new addendum in 8925
-TiuAddendum(tiuien,userduz) ;
+TIUADND(tiuien,userduz) ;
  ;
  I '$G(tiuien) Q:$Q 0  Q
  I '$G(userduz) Q:$Q 0  Q
@@ -397,7 +397,7 @@ TiuAddendum(tiuien,userduz) ;
  ;
  ;
  ;
- ;@API-code: $$VisitString^SAMIVSTA
+ ;@API-code: $$VISTSTR^SAMIVSTA
  ;@API-Context menu : OR CPRS GUI CHART
  ;@API-Remote Procedure : ORWPCE NOTEVSTR
  ;
@@ -406,7 +406,7 @@ TiuAddendum(tiuien,userduz) ;
  ;RETURN
  ;   0 = failed to obtain VSTR for TIU
  ;   else VSTR string
-VisitString(tiuien) ;
+VISTSTR(tiuien) ;
  I '$G(tiuien) Q 0
  N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY,XDATA,X,Y
  S (CONSOLE,CNTNOPEN)=0
@@ -482,7 +482,7 @@ PTINFO(DFN) ;
  ; Now get rural or urban and push into both the 
  ;   "patient-lookup" and "vapals-patients" Graphstores
  I $P(XDATA,"^",14) D
- . n UrbanRural s UrbanRural=$$UrbanRural^SAMIVSTA($P(XDATA,"^",14))
+ . n UrbanRural s UrbanRural=$$URBRUR^SAMIVSTA($P(XDATA,"^",14))
  . S @root@(gien,"samiru")=UrbanRural
  . s root=$$setroot^%wd("vapals-patients")
  . s gien=$O(@root@("dfn",DFN,0))
@@ -570,7 +570,7 @@ VIT(dfn,sdate,edate) ;
  D M2M^SAMIM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
  I '$D(XDATA) Q:$Q 0  Q
  ;
- N PTDFN,NODE,gien,PTWT,PTHT,PTBP,STR,J,VITDT
+ N PTDFN,NODE,gien,PTWT,PTHT,PTBP,STR,J,VITDT,PTTEMP
  S (PTDFN,PTWT,PTHT,PTBP,VITDT)=0
  F J=1:1:$L(XDATA,$C(13,10)) D
  . S STR=$P(XDATA,$C(13,10),J)
@@ -684,7 +684,7 @@ VPR1 S root=$$setroot^%wd("patient-lookup")
  Q:$Q $G(gien)  Q
  ;
  ;
- ;@API-code: $$SignTIU^SAMIVSTA
+ ;@API-code: $$SIGNTIU^SAMIVSTA
  ;
  ; Sign a TIU note is ONLY FOR UNIT TESTING as it skips
  ;   over authorization processes.
@@ -692,7 +692,7 @@ VPR1 S root=$$setroot^%wd("patient-lookup")
  ;   tiuien = ien of note in 8925
  ;Return
  ;   0 = failure, 1 = successful
-SignTIU(TIUDA) ;
+SIGNTIU(TIUDA) ;
  ; some code pulled from SIGN in TIUSRVP2
  N X,TIUACT,TIUSIGN,TIUD0,TIUD12,TIUSTAT,SIGNER,COSIGNER,VALID
  n provduz,TIUES
@@ -721,7 +721,7 @@ DELTIU(tiuien) ;
  Q:'$G(tiuien) 0
  N ptdfn s ptdfn=$P($G(^TIU(8925,tiuien,0)),"^",2)
  Q:'$G(ptdfn) 0  Q:'$D(^DPT(ptdfn)) 0
- N VSTR S VSTR=$$VisitString(tiuien)
+ N VSTR S VSTR=$$VISTSTR(tiuien)
  Q:'($L(VSTR,";")=3) 0
  n poo
  ; Delete the tiu note
@@ -729,7 +729,7 @@ DELTIU(tiuien) ;
  ; poo successful if = 0
  Q:'($G(poo)=0) 0
  D DELETE^ORWPCE(.poo,VSTR,ptdfn)
- Q:($G(Y)=-1) Q
+ Q:($G(Y)=-1) 0
  Q 1
  ;
  ;
@@ -741,7 +741,7 @@ DELTIU(tiuien) ;
  ;Return
  ;   0 = failure to find definition
  ;   'rural' or 'urban' zip found in Graphstore
-UrbanRural(zipcode) ;
+URBRUR(zipcode) ;
  I $G(zipcode)<1 Q 0
  n root
  S root=$$setroot^%wd("NCHS Urban-Rural")

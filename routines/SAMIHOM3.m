@@ -1,4 +1,4 @@
-SAMIHOM3 ;ven/gpl - ielcap: forms ; 12/4/18 11:06am
+SAMIHOM3 ;ven/gpl - ielcap: forms ; 12/7/18 11:16am
  ;;18.0;SAMI;;
  ;
  ; Routine SAMIHOM2 contains subroutines for implementing the ELCAP Home
@@ -195,9 +195,9 @@ WSVAPALS(ARG,BODY,RESULT) ; vapals post web service - all calls come through thi
  . . . s FILTER("studyid")=$G(ARG("studyid"))
  . . . s FILTER("form")=$g(ARG("form")) ;
  . . . n tiuien
- . . . s tiuien=$$save2vista^SAMIVSTA(.FILTER)
+ . . . s tiuien=$$SV2VSTA^SAMIVSTA(.FILTER)
  . . . s FILTER("tiuien")=tiuien
- . . . ;d save2vista^SAMIVSTA(.FILTER)
+ . . . ;d SV2VSTA^SAMIVSTA(.FILTER)
  . . . m ^GPL("newFILTER")=FILTER
  . . . d wsNote^SAMINOTI(.RESULT,.ARG)
  ;
@@ -770,7 +770,7 @@ makeSiform(num) ; create intake form
  i @zf@("sipz")'="" d  ;
  . n zip s zip=@zf@("sipz")
  . q:zip=""
- . n ru s ru=$$UrbanRural^SAMIVSTA(zip)
+ . n ru s ru=$$URBRUR^SAMIVSTA(zip)
  . i ru=0 s ru="n"
  . i (ru="r")!(ru="u")!(ru="n") s @zf@("sirs")=ru
  . s @root@(num,"sirs")=$g(@zf@("sirs"))

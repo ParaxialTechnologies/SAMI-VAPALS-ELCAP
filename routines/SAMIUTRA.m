@@ -1,4 +1,4 @@
-SAMIUTRA ;ven/lgc - UNIT TEST for SAMICTRA ; 12/3/18 1:45pm
+SAMIUTRA ;ven/lgc - UNIT TEST for SAMICTRA ; 12/7/18 1:44pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -25,15 +25,15 @@ START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  Q
  ;
  ;
-STARTUP n utsuccess
+STARTUP n UTSUCCESS
  n root s root=$$setroot^%wd("vapals-patients")
  k @root@("graph","XXX00001")
  n poo D PullUTarray^SAMIUTST(.poo,"all XXX00001 forms")
  m @root@("graph","XXX00001")=poo
  Q
  ;
-SHUTDOWN ; ZEXCEPT: utsuccess
- K utsuccess
+SHUTDOWN ; ZEXCEPT: UTSUCCESS
+ K UTSUCCESS
  Q
  ;
  ;
@@ -47,54 +47,54 @@ UTRCMD ; @TEST - Recommendation
  s dict=$$setroot^%wd("cteval-dict")
  s dict=$na(@dict@("cteval-dict"))
  s cnt=1,para="POO"
- s utsuccess=1
- D recommend^SAMICTRA("poo",.vals,.dict)
+ s UTSUCCESS=1
+ D RCMND^SAMICTRA("poo",.vals,.dict)
  d PullUTarray^SAMIUTST(.arc,"UTRCMD^SAMIUTRA")
  n nodea,nodep s nodea=$na(arc),nodep=$na(poo)
- f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
- . i '(@nodep=@nodea) s utsuccess=0
- i '(nodea="") s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing recommend FAILED!")
+ f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'UTSUCCESS
+ . i '(@nodep=@nodea) s UTSUCCESS=0
+ i '(nodea="") s UTSUCCESS=0
+ D CHKEQ^%ut(UTSUCCESS,1,"Testing recommend FAILED!")
  q
 UTOUT ; @TEST - out line
- ;out(ln)
+ ;OUT(ln)
  n cnt,rtn,poo
  s cnt=1,rtn="poo",poo(1)="First line of test"
  n ln s ln="Second line test"
- s utsuccess=0
- D out^SAMICTRA(ln)
- s utsuccess=($g(poo(2))="Second line test")
- D CHKEQ^%ut(utsuccess,1,"Testing out(ln) adds line to array FAILED!")
+ s UTSUCCESS=0
+ D OUT^SAMICTRA(ln)
+ s UTSUCCESS=($g(poo(2))="Second line test")
+ D CHKEQ^%ut(UTSUCCESS,1,"Testing out(ln) adds line to array FAILED!")
  q
 UTHOUT ; @TEST - hout line
- ;hout(ln)
+ ;HOUT(ln)
  n cnt,rtn,poo
  s cnt=1,rtn="poo",poo(1)="First line of test"
  n ln s ln="Second line test"
- s utsuccess=0
- D hout^SAMICTRA(ln)
- s utsuccess=($g(poo(2))="<p><span class='sectionhead'>Second line test</span>")
- D CHKEQ^%ut(utsuccess,1,"Testing hout(ln) adds line to array FAILED!")
+ s UTSUCCESS=0
+ D HOUT^SAMICTRA(ln)
+ s UTSUCCESS=($g(poo(2))="<p><span class='sectionhead'>Second line test</span>")
+ D CHKEQ^%ut(UTSUCCESS,1,"Testing hout(ln) adds line to array FAILED!")
  q
 UTXVAL ; @TEST - extrinsic returns the patient value for var
  ;xval(var,vals)
- s utsuccess=0
+ s UTSUCCESS=0
  s arc(1)="Testing xval"
- s utsuccess=($$xval^SAMICTRA(1,"arc")="Testing xval")
- D CHKEQ^%ut(utsuccess,1,"Testing xval(var,vals) FAILED!")
+ s UTSUCCESS=($$XVAL^SAMICTRA(1,"arc")="Testing xval")
+ D CHKEQ^%ut(UTSUCCESS,1,"Testing xval(var,vals) FAILED!")
  q
 UTXSUB ; @TEST - extrinsic which returns the dictionary value defined by var
  ;xsub(var,vals,dict,valdx)
  n vals,var,poo,valdx,result
- s utsuccess=0
+ s UTSUCCESS=0
  s vals="poo"
  s var="cteval-dict"
  s poo(1)="biopsy"
  s valdx=1
  s dict=$$setroot^%wd("cteval-dict")
- s result=$$xsub^SAMICTRA(var,vals,dict,valdx)
- s utsuccess=(result="CT-guided biopsy")
- D CHKEQ^%ut(utsuccess,1,"Testing xsub(var,vals,dict,valdx) FAILED!")
+ s result=$$XSUB^SAMICTRA(var,vals,dict,valdx)
+ s UTSUCCESS=(result="CT-guided biopsy")
+ D CHKEQ^%ut(UTSUCCESS,1,"Testing xsub(var,vals,dict,valdx) FAILED!")
  q
  ;
 EOR ;End of routine SAMIUTRA

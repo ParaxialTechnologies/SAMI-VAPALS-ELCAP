@@ -1,4 +1,4 @@
-SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 12/4/18 11:41am
+SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 12/6/18 2:40pm
  ;;18.0;SAMI;;
  ;
  ;
@@ -29,8 +29,8 @@ UTWSHM ; @TEST - Testing web service for SAMI homepage test
  .; check first 60 lines of configuration.  After that the returned
  .;   array depends on test patients available
  . q:($qs(nodea,1)=60)
- . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0 W !,nodea,!,nodep
- . i '(@nodea=@nodep) s utsuccess=0 w !,@nodea,!,@nodep
+ . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
+ . i '(@nodea=@nodep) s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing web service test FAILED!")
  q
  ;
@@ -269,7 +269,7 @@ UTWSVP1 ; @TEST - Test WSVAPALS API route=""
  . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
  . i (@nodep["meta content") q
  . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
- . i '(@nodea=@nodep) s success=0 s utsuccess=0
+ . i '(@nodea=@nodep) s utsuccess=0
  i 'nodea="" s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS route=0  FAILED!")
  q
@@ -290,7 +290,7 @@ UTWSVP2 ; @TEST - Test WSVAPALS API route="lookup"
  . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
  . i (@nodep["meta content") q
  . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
- . i '(@nodea=@nodep) s success=0 s utsuccess=0
+ . i '(@nodea=@nodep) s utsuccess=0
  i 'nodea="" s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS route=lookup  FAILED!")
  q
@@ -310,7 +310,7 @@ UTWSVP3 ; @TEST - Test WSVAPALS API route="casereview"
  . i (@nodep["meta content") q
  . i (@nodep["XXX") q
  . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
- . i '(@nodea=@nodep) s success=0 s utsuccess=0
+ . i '(@nodea=@nodep) s utsuccess=0
  i 'nodea="" s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS route=casereview  FAILED!")
  q
@@ -329,7 +329,7 @@ UTWSVP4 ; @TEST - Test WSVAPALS API route="addform"
  . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
  . i (@nodep["meta content") q
  . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
- . i '(@nodea=@nodep) s success=0 s utsuccess=0
+ . i '(@nodea=@nodep) s utsuccess=0
  i 'nodea="" s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS route=addform  FAILED!")
  q
@@ -348,7 +348,7 @@ UTWSVP5 ; @TEST - Test WSVAPALS API route="form"
  . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
  . i (@nodep["meta content") q
  . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
- . i '(@nodea=@nodep) s success=0 s utsuccess=0
+ . i '(@nodea=@nodep) s utsuccess=0
  i 'nodea="" s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS route=form  FAILED!")
  q

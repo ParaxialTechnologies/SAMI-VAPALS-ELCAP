@@ -1,4 +1,4 @@
-SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 12/3/18 1:26pm
+SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 12/7/18 11:11am
  ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -124,7 +124,7 @@ UTENCTR ; @TEST - Update TIU with encounter and HF information
  n VSTR,provduz
  I '$G(utdfn) D  Q
  . D FAIL^%ut("Update tiu with encounter missing utdfn FAILED!")
- S VSTR=$$VisitString^SAMIVSTA(tiuien)
+ S VSTR=$$VISTSTR^SAMIVSTA(tiuien)
  I '($L(VSTR,";")=3) D  Q
  . D FAIL^%ut("Update tiu with encounter VSTR FAILED!")
  s provduz=$$GET^XPAR("SYS","SAMI DEFAULT PROVIDER DUZ",,"Q")
@@ -246,7 +246,7 @@ UTVSTR ; @TEST - Get Visit string (VSTR) for a TIU note
  N D,D0,DG,DI,DIC,DICR,DIG,DIH
  n tiuien,node0,node12,VSTR,tiuVSTR
  s tiuien=$O(^TIU(8925,"A"),-1)
- S VSTR=$$VisitString^SAMIVSTA(tiuien)
+ S VSTR=$$VISTSTR^SAMIVSTA(tiuien)
  s node0=$G(^TIU(8925,tiuien,0))
  s node12=$G(^TIU(8925,tiuien,12))
  s tiuVSTR=$P(node12,"^",5)_";"_$P(node0,"^",7)_";"_$P(node0,"^",13)
@@ -272,12 +272,12 @@ UTSIGN ; @TEST - Sign TIU note
  n status s status=$P(^TIU(8925,tiuien,0),"^",5)
  I '(status=5) D  Q
  . D FAIL^%ut("TIU status not 'unsigned' for SIGN TIU  - FAILED!")
- S utsuccess=$$SignTIU^SAMIVSTA(tiuien)
+ S utsuccess=$$SIGNTIU^SAMIVSTA(tiuien)
  D CHKEQ^%ut(utsuccess,1,"Testing Signing of TIU FAILED!")
  Q
  ;
 UTADDND ; @TEST - Add an addendum to a signed note
- ; $$TiuAddendum(tiuien,userduz)
+ ; $$TIUADND(tiuien,userduz)
  N D,D0,DG,DI,DIC,DICR,DIG,DIH
  I '$G(tiuien) D  Q
  . D FAIL^%ut("Unable to obtain tiuien for Adding Addendum  - FAILED!")
@@ -285,11 +285,11 @@ UTADDND ; @TEST - Add an addendum to a signed note
  s provduz=$$GET^XPAR("SYS","SAMI DEFAULT PROVIDER DUZ",,"Q")
  I '$G(provduz) D  Q
  . D FAIL^%ut("Unable to obtain Provider DUZ to Add Addendum  - FAILED!")
- n tiuaien s tiuaien=$$TiuAddendum^SAMIVSTA(tiuien,provduz)
+ n tiuaien s tiuaien=$$TIUADND^SAMIVSTA(tiuien,provduz)
  S:($G(tiuaien)>0) tiuien=tiuien_"^"_tiuaien
  s utsuccess=($G(tiuaien)>0)
  ; Sign the addendum
- N OK S OK=$$SignTIU^SAMIVSTA(tiuaien)
+ N OK S OK=$$SIGNTIU^SAMIVSTA(tiuaien)
  D CHKEQ^%ut(utsuccess,1,"Testing Adding Addendum FAILED!")
  Q
  ;
@@ -311,8 +311,8 @@ UTDELTIU ; @TEST - Deleting an unsigned TIU note
  ;
 UTURBR ; @TEST - extrinsic to return urban or rural depending on zip code
  n uturr,uturu
- s uturu=$$UrbanRural^SAMIVSTA(40714)
- s uturr=$$UrbanRural^SAMIVSTA(40713)
+ s uturu=$$URBRUR^SAMIVSTA(40714)
+ s uturr=$$URBRUR^SAMIVSTA(40713)
  s utsuccess=((uturu_uturr)="ur")
  D CHKEQ^%ut(utsuccess,1,"Testing Urban/Rural extrinsic FAILED!")
  q

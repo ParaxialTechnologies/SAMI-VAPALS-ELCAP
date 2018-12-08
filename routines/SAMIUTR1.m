@@ -1,4 +1,4 @@
-SAMIUTR1 ;ven/lgc - UNIT TEST for SAMICTR1 ; 12/3/18 1:44pm
+SAMIUTR1 ;ven/lgc - UNIT TEST for SAMICTR1 ; 12/7/18 1:22pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -26,15 +26,15 @@ START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  Q
  ;
  ;
-STARTUP n utsuccess
+STARTUP n UTSUCCESS
  n root s root=$$setroot^%wd("vapals-patients")
  k @root@("graph","XXX00001")
  n poo D PullUTarray^SAMIUTST(.poo,"all XXX00001 forms")
  m @root@("graph","XXX00001")=poo
  Q
  ;
-SHUTDOWN ; ZEXCEPT: utsuccess
- K utsuccess
+SHUTDOWN ; ZEXCEPT: UTSUCCESS
+ K UTSUCCESS
  Q
  ;
  ;
@@ -47,77 +47,76 @@ UTNODUL ; @TEST - nodules
  n dict s dict=$$setroot^%wd("cteval-dict")
  s dict=$na(@dict@("cteval-dict"))
  s cnt=0
- d nodules^SAMICTR1("return",.vals,.dict)
+ d NODULES^SAMICTR1("return",.vals,.dict)
  ;now pull saved report
  D PullUTarray^SAMIUTST(.arc,"UTNODUL^SAMIUTR1 report")
  ; now compare return with arc
  n noder,nodea s noder=$na(return),nodea=$na(arc)
- s utsuccess=1
- f  s noder=$Q(@noder),nodea=$Q(@nodea) q:noder=""  d  q:'utsuccess
- . i '(@noder=@nodea) s utsuccess=0
- i '(nodea="") s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing generating nodule report FAILED!")
+ s UTSUCCESS=1
+ f  s noder=$Q(@noder),nodea=$Q(@nodea) q:noder=""  d  q:'UTSUCCESS
+ . i '(@noder=@nodea) s UTSUCCESS=0
+ i '(nodea="") s UTSUCCESS=0
+ D CHKEQ^%ut(UTSUCCESS,1,"Testing generating nodule report FAILED!")
  ;
- ; Try getting more line coverage with XXX00812
- K @root@("graph","XXX00812")
- D PullUTarray^SAMIUTST(.poo,"All XXX00812 graphstore globals")
- m @root@("graph","XXX00812")=poo
- s si="XXX00812",samikey="ceform-2018-11-28"
+ n poo,root,si,vals,dict,cnt,return,arc,noder,nodea
+ s root=$$setroot^%wd("vapals-patients")
+ s si="XXX00001",samikey="ceform-2018-12-03"
  s vals=$na(@root@("graph",si,samikey))
+ n dict s dict=$$setroot^%wd("cteval-dict")
+ s dict=$na(@dict@("cteval-dict"))
  s cnt=0
- k return
- d nodules^SAMICTR1("return",.vals,.dict)
+ d NODULES^SAMICTR1("return",.vals,.dict)
  ;now pull saved report
- d PullUTarray^SAMIUTST(.arc,"UTNODUL^SAMIUTR1 report XXX00812")
+ D PullUTarray^SAMIUTST(.arc,"UTNODUL^SAMIUTR1 report XXX12-3")
  ; now compare return with arc
  n noder,nodea s noder=$na(return),nodea=$na(arc)
- s utsuccess=1
- f  s noder=$Q(@noder),nodea=$Q(@nodea) q:noder=""  d  q:'utsuccess
- . i '(@noder=@nodea) s utsuccess=0
- i '(nodea="") s utsuccess=0
- K @root@("graph","XXX00812")
- D CHKEQ^%ut(utsuccess,1,"Testing generating nodule XXX00812 report FAILED!")
+ s UTSUCCESS=1
+ f  s noder=$Q(@noder),nodea=$Q(@nodea) q:noder=""  d  q:'UTSUCCESS
+ . i '(@noder=@nodea) s UTSUCCESS=0
+ i '(nodea="") s UTSUCCESS=0
+ D CHKEQ^%ut(UTSUCCESS,1,"Testing generating nodule report XXX12-3  FAILED!")
+ ;
  q
  ;
 UTOUT ; @TEST - out line
- ;out(ln)
+ ;OUT(ln)
  n cnt,rtn,poo
  s cnt=1,rtn="poo",poo(1)="First line of test"
  n ln s ln="Second line test"
- s utsuccess=0
- D out^SAMICTR1(ln)
- s utsuccess=($g(poo(2))="Second line test")
- D CHKEQ^%ut(utsuccess,1,"Testing out(ln) adds line to array FAILED!")
+ s UTSUCCESS=0
+ D OUT^SAMICTR1(ln)
+ s UTSUCCESS=($g(poo(2))="Second line test")
+ D CHKEQ^%ut(UTSUCCESS,1,"Testing out(ln) adds line to array FAILED!")
  q
 UTHOUT ; @TEST - hout line
- ;hout(ln)
+ ;HOUT(ln)
  n cnt,rtn,poo
  s cnt=1,rtn="poo",poo(1)="First line of test"
  n ln s ln="Second line test"
- s utsuccess=0
- D hout^SAMICTR1(ln)
- s utsuccess=($g(poo(2))="<p><span class='sectionhead'>Second line test</span>")
- D CHKEQ^%ut(utsuccess,1,"Testing out(ln) adds line to array FAILED!")
+ s UTSUCCESS=0
+ D HOUT^SAMICTR1(ln)
+ s UTSUCCESS=($g(poo(2))="<p><span class='sectionhead'>Second line test</span>")
+ D CHKEQ^%ut(UTSUCCESS,1,"Testing out(ln) adds line to array FAILED!")
  q
 UTXVAL ; @TEST - extrinsic returns the patient value for var
- ;xval(var,vals)
- s utsuccess=0
+ ;XVAL(var,vals)
+ s UTSUCCESS=0
  s arc(1)="Testing xval"
- s utsuccess=($$xval^SAMICTR1(1,"arc")="Testing xval")
- D CHKEQ^%ut(utsuccess,1,"Testing xval(var,vals) FAILED!")
+ s UTSUCCESS=($$XVAL^SAMICTR1(1,"arc")="Testing xval")
+ D CHKEQ^%ut(UTSUCCESS,1,"Testing xval(var,vals) FAILED!")
  q
 UTXSUB ; @TEST - extrinsic which returns the dictionary value defined by var
- ;xsub(var,vals,dict,valdx)
+ ;XSUB(var,vals,dict,valdx)
  n vals,var,poo,valdx,result
- s utsuccess=0
+ s UTSUCCESS=0
  s vals="poo"
  s var="cteval-dict"
  s poo(1)="biopsy"
  s valdx=1
  s dict=$$setroot^%wd("cteval-dict")
- s result=$$xsub^SAMICTR1(var,vals,dict,valdx)
- s utsuccess=(result="CT-guided biopsy")
- D CHKEQ^%ut(utsuccess,1,"Testing xsub(var,vals,dict,valdx) FAILED!")
+ s result=$$XSUB^SAMICTR1(var,vals,dict,valdx)
+ s UTSUCCESS=(result="CT-guided biopsy")
+ D CHKEQ^%ut(UTSUCCESS,1,"Testing xsub(var,vals,dict,valdx) FAILED!")
  q
  ;
 EOR ;End of routine SAMIUTR1

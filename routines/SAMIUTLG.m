@@ -1,4 +1,4 @@
-SAMIUTLG ;ven/lgc - Unit test for SAMILOG ; 11/30/18 10:32am
+SAMIUTLG ;ven/lgc - Unit test for SAMILOG ; 12/7/18 9:04am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -26,16 +26,16 @@ START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  Q
  ;
  ;
-STARTUP n utsuccess
+STARTUP n UTSUCCESS
  Q
  ;
-SHUTDOWN ; ZEXCEPT: utsuccess
- K utsuccess
+SHUTDOWN ; ZEXCEPT: UTSUCCESS
+ K UTSUCCESS
  Q
  ;
  ;
 UTTOGL ; @TEST - Toggle VAPALS password identification
- ;ToggleOff^SAMILOG and ToggleON^SAMILOG
+ ;TOGOFF^SAMILOG and TOGON^SAMILOG
  n pooget,poopost,ienget,ienpost
  s ienget=$o(^%W(17.6001,"B","GET","vapals","WSHOME^SAMIHOM3",0))
  s ienpost=$o(^%W(17.6001,"B","POST","vapals","WSVAPALS^SAMIHOM3",0))
@@ -46,27 +46,27 @@ UTTOGL ; @TEST - Toggle VAPALS password identification
  i '(pooget=poopost) d  q
  . D FAIL^%ut("Error, WEB SERVICE URL HANDLER setup error!")
  i pooget=1 d
- . d ToggleOff^SAMILOG
- . s utsuccess='$g(^%W(17.6001,ienget,"AUTH"))
- . D CHKEQ^%ut(utsuccess,1,"Toggle password OFF FAILED!")
- . d ToggleOn^SAMILOG
- . s utsuccess=$g(^%W(17.6001,ienget,"AUTH"))
- . D CHKEQ^%ut(utsuccess,1,"Toggle password ON FAILED!")
+ . d TOGOFF^SAMILOG
+ . s UTSUCCESS='$g(^%W(17.6001,ienget,"AUTH"))
+ . D CHKEQ^%ut(UTSUCCESS,1,"Toggle password OFF FAILED!")
+ . d TOGON^SAMILOG
+ . s UTSUCCESS=$g(^%W(17.6001,ienget,"AUTH"))
+ . D CHKEQ^%ut(UTSUCCESS,1,"Toggle password ON FAILED!")
  e  d
- . d ToggleOn^SAMILOG
- . s utsuccess=$g(^%W(17.6001,ienget,"AUTH"))
- . D CHKEQ^%ut(utsuccess,1,"Toggle password ON FAILED!")
- . d ToggleOff^SAMILOG
- . s utsuccess='$g(^%W(17.6001,ienget,"AUTH"))
- . D CHKEQ^%ut(utsuccess,1,"Toggle password OFF FAILED!")
+ . d TOGON^SAMILOG
+ . s UTSUCCESS=$g(^%W(17.6001,ienget,"AUTH"))
+ . D CHKEQ^%ut(UTSUCCESS,1,"Toggle password ON FAILED!")
+ . d TOGOFF^SAMILOG
+ . s UTSUCCESS='$g(^%W(17.6001,ienget,"AUTH"))
+ . D CHKEQ^%ut(UTSUCCESS,1,"Toggle password OFF FAILED!")
  ;
  ; Now test the interactive entry point
- d SetPswdIdOnOff^SAMILOG
- S utsuccess='(pooget=$g(^%W(17.6001,ienget,"AUTH")))
- D CHKEQ^%ut(utsuccess,1,"Toggle password 1st interactive FAILED!")
- d SetPswdIdOnOff^SAMILOG
- S utsuccess=(pooget=$g(^%W(17.6001,ienget,"AUTH")))
- D CHKEQ^%ut(utsuccess,1,"Toggle password 2nd interactive FAILED!")
+ d STONOFF^SAMILOG
+ S UTSUCCESS='(pooget=$g(^%W(17.6001,ienget,"AUTH")))
+ D CHKEQ^%ut(UTSUCCESS,1,"Toggle password 1st interactive FAILED!")
+ d STONOFF^SAMILOG
+ S UTSUCCESS=(pooget=$g(^%W(17.6001,ienget,"AUTH")))
+ D CHKEQ^%ut(UTSUCCESS,1,"Toggle password 2nd interactive FAILED!")
  ;
  ; Be sure we leave setting as it was
  S ^%W(17.6001,ienget,"AUTH")=pooget

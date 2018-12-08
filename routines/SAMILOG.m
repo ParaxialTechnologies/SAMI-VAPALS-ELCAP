@@ -1,4 +1,4 @@
-SAMILOG ;ven/lgc - APIs to toggle password identification ; 11/30/18 10:40am
+SAMILOG ;ven/lgc - APIs to toggle password identification ; 12/7/18 9:04am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -31,7 +31,7 @@ SAMILOG ;ven/lgc - APIs to toggle password identification ; 11/30/18 10:40am
  ;   ^%W(17.6001,22,2) = wsVAPALS^SAMIHOM3   (2) F
  ;   ^%W(17.6001,22,"AUTH") = 1              (11)S
  ;
-SetPswdIdOnOff ;
+STONOFF ;
  N ienget,ienpost,DIR,X,Y,%,DTOUT,DUOUT
  s ienget=$o(^%W(17.6001,"B","GET","vapals","WSHOME^SAMIHOM3",0))
  s ienpost=$o(^%W(17.6001,"B","POST","vapals","wsVAPALS^SAMIHOM3",0))
@@ -51,35 +51,35 @@ SetPswdIdOnOff ;
  e  s %=1
  ;
  q:$d(DTOUT)  q:$d(DUOUT)
- i Y=1 d ToggleOn W !,"VAPALS password ID is now turned ON",!,! q
- i Y=0 d ToggleOff W !,"VAPALS password ID is now turned OFF",!,! q
+ i Y=1 d TOGON W !,"VAPALS password ID is now turned ON",!,! q
+ i Y=0 d TOGOFF W !,"VAPALS password ID is now turned OFF",!,! q
  q
  ;
  ; Toggle password identification OFF
-ToggleOff n dierr,fda,ienget,ienpost,iens
+TOGOFF n DIERR,FDA,ienget,ienpost,IENS
  s ienget=$o(^%W(17.6001,"B","GET","vapals","WSHOME^SAMIHOM3",0))
  s ienpost=$o(^%W(17.6001,"B","POST","vapals","WSVAPALS^SAMIHOM3",0))
  q:'ienget  q:'ienpost
- s iens=ienget_","
- s FDA(3,17.6001,iens,11)=0
+ s IENS=ienget_","
+ s FDA(3,17.6001,IENS,11)=0
  D UPDATE^DIE("","FDA(3)")
  ;
- s iens=ienpost_","
- s FDA(3,17.6001,iens,11)=0
+ s IENS=ienpost_","
+ s FDA(3,17.6001,IENS,11)=0
  D UPDATE^DIE("","FDA(3)")
  q
  ;
  ; Toggle password identification ON
-ToggleOn n dierr,fda,ienget,ienpost,iens
+TOGON n DIERR,FDA,ienget,ienpost,IENS
  s ienget=$o(^%W(17.6001,"B","GET","vapals","WSHOME^SAMIHOM3",0))
  s ienpost=$o(^%W(17.6001,"B","POST","vapals","WSVAPALS^SAMIHOM3",0))
  q:'ienget  q:'ienpost
- s iens=ienget_","
- s FDA(3,17.6001,iens,11)=1
+ S IENS=ienget_","
+ s FDA(3,17.6001,IENS,11)=1
  D UPDATE^DIE("","FDA(3)")
  ;
- s iens=ienpost_","
- s FDA(3,17.6001,iens,11)=1
+ s IENS=ienpost_","
+ s FDA(3,17.6001,IENS,11)=1
  D UPDATE^DIE("","FDA(3)")
  q
  ;

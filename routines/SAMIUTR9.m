@@ -1,4 +1,4 @@
-SAMIUTR9 ;ven/lgc - UNIT TEST for SAMICTR9 ; 12/3/18 1:45pm
+SAMIUTR9 ;ven/lgc - UNIT TEST for SAMICTR9 ; 12/7/18 1:35pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -38,7 +38,7 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  ;
  ;
 UTIMPRS ; @TEST - impression
- ;impression(rtn,vals,dict)
+ ;IMPRSN(rtn,vals,dict)
  n vals,dict,si,samikey,root,poo,arc,nodea,nodep,para,cac
  s root=$$setroot^%wd("vapals-patients")
  s si="XXX00001"
@@ -48,7 +48,7 @@ UTIMPRS ; @TEST - impression
  s dict=$na(@dict@("cteval-dict"))
  s cnt=1,para="POO",cacrec=" CaCrEc ",cac=99
  s utsuccess=1
- D impression^SAMICTR9("poo",.vals,.dict)
+ D IMPRSN^SAMICTR9("poo",.vals,.dict)
  d PullUTarray^SAMIUTST(.arc,"UTIMPRS^SAMICTR9")
  n nodea,nodep s nodea=$na(arc),nodep=$na(poo)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
@@ -57,34 +57,34 @@ UTIMPRS ; @TEST - impression
  D CHKEQ^%ut(utsuccess,1,"Testing recommend FAILED!")
  q
 UTOUT ; @TEST - out line
- ;out(ln)
+ ;OUT(ln)
  n cnt,rtn,poo
  s cnt=1,rtn="poo",poo(1)="First line of test"
  n ln s ln="Second line test"
  s utsuccess=0
- D out^SAMICTR9(ln)
+ D OUT^SAMICTR9(ln)
  s utsuccess=($g(poo(2))="Second line test")
  D CHKEQ^%ut(utsuccess,1,"Testing out(ln) adds line to array FAILED!")
  q
 UTHOUT ; @TEST - hout line
- ;hout(ln)
+ ;HOUT(ln)
  n cnt,rtn,poo
  s cnt=1,rtn="poo",poo(1)="First line of test"
  n ln s ln="Second line test"
  s utsuccess=0
- D hout^SAMICTR9(ln)
+ D HOUT^SAMICTR9(ln)
  s utsuccess=($g(poo(2))="<p><span class='sectionhead'>Second line test</span>")
  D CHKEQ^%ut(utsuccess,1,"Testing hout(ln) adds line to array FAILED!")
  q
 UTXVAL ; @TEST - extrinsic returns the patient value for var
- ;xval(var,vals)
+ ;XVAL(var,vals)
  s utsuccess=0
  s arc(1)="Testing xval"
- s utsuccess=($$xval^SAMICTR9(1,"arc")="Testing xval")
+ s utsuccess=($$XVAL^SAMICTR9(1,"arc")="Testing xval")
  D CHKEQ^%ut(utsuccess,1,"Testing xval(var,vals) FAILED!")
  q
 UTXSUB ; @TEST - extrinsic which returns the dictionary value defined by var
- ;xsub(var,vals,dict,valdx)
+ ;XSUB(var,vals,dict,valdx)
  n vals,var,poo,valdx,result
  s utsuccess=0
  s vals="poo"
@@ -92,7 +92,7 @@ UTXSUB ; @TEST - extrinsic which returns the dictionary value defined by var
  s poo(1)="biopsy"
  s valdx=1
  s dict=$$setroot^%wd("cteval-dict")
- s result=$$xsub^SAMICTR9(var,vals,dict,valdx)
+ s result=$$XSUB^SAMICTR9(var,vals,dict,valdx)
  s utsuccess=(result="CT-guided biopsy")
  D CHKEQ^%ut(utsuccess,1,"Testing xsub(var,vals,dict,valdx) FAILED!")
  q

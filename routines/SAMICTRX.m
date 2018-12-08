@@ -1,6 +1,5 @@
-SAMICTR1 ;ven/gpl - ielcap: forms ; 12/7/18 2:22pm
+SAMICTRX ;ven/gpl - ielcap: forms ; 12/7/18 2:22pm
  ;;18.0;SAMI;;
- ;
  ;
  quit  ; no entry from top
  ;

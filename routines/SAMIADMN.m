@@ -5,12 +5,16 @@ SAMIADMN ; VEN/ARC - IELCAP: Admin tools ;2018-05-03T22:35Z
  ;
  ; Author: Alexis Carlson (ARC)
  ; Primary development organization: Vista Expertise Network (VEN)
+ ; Additional development: Linda M. R. Yaw (lmry)
+ ; linda.yaw@vistaexpertise.net
  ;
  ; 2018-05-03 VEN/ARC:
  ; Create entry point to clear M Web Server files cache
  ;
+ ; 2018-12-06 ven/lmry: Minor clean-up for XINDEX
  ;
- quit ; No entry from top
+ ;
+ quit  ; No entry from top
  ;
  ;
 ClrWeb ; Clear the M Web Server files cache

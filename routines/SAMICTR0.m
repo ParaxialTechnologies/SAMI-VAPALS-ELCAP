@@ -1,4 +1,4 @@
-SAMICTR ;ven/gpl - ielcap: forms ; 12/7/18 1:39pm
+SAMICTR0 ;ven/gpl - ielcap: forms ; 12/7/18 1:39pm
  ;;18.0;SAMI;;
  ;
  ;
@@ -200,7 +200,7 @@ wsReport(return,filter) ; web service which returns an html cteval report
  ;
  q
  ;
-out(ln) 
+out(ln)
  s cnt=cnt+1
  n lnn
  ;s debug=1

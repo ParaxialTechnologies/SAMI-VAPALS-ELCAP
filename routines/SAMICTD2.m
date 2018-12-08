@@ -116,7 +116,6 @@ INIT(g) ;
  set @g@("cectpd","ca")="Carcinoid(atypical)"
  set @g@("cectpd","be")="Benign"
  set @g@("cectpd","bs")="Benign specific"
-
  set @g@("cectac","f")="Follow-up CT"
  set @g@("cectac","a")="Antibiotic treatment with a follow-up CT"
  set @g@("cectac","e")="PET"

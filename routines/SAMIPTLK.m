@@ -1,10 +1,10 @@
-SAMIPTLK	; GPL - SAMI patient lookup routines ; 2/24/18 4:39am
-	;;0.1;SAMI;nopatch;noreleasedate;Build 10
-	;
-	; Authored by George P. Lilly 2018
-	;
-	Q
-wsPtLookup(rtn,filter) ; patient lookup - calls HMPPTRPC
+SAMIPTLK ; GPL - SAMI patient lookup routines ; 12/10/18 9:16am
+ ;;0.1;SAMI;nopatch;noreleasedate;Build 10
+ ;
+ ; Authored by George P. Lilly 2018
+ ;
+ Q
+WSPTLOOK(rtn,filter) ; patient lookup - calls HMPPTRPC
  ;
  n search s search=$g(filter("search"))
  n rslt
@@ -13,7 +13,7 @@ wsPtLookup(rtn,filter) ; patient lookup - calls HMPPTRPC
  . D ENCODE^VPRJSON("rslt","rtn")
  q
  ;
-wsPtLkup(rtn,filter) ; patient lookup from patient-lookup cache
+WSPTLKUP(rtn,filter) ; patient lookup from patient-lookup cache
  ;
  n root s root=$$setroot^%wd("patient-lookup")
  n search s search=$g(filter("search"))
@@ -33,7 +33,7 @@ wsPtLkup(rtn,filter) ; patient lookup from patient-lookup cache
  . . s cnt=cnt+1
  . . s rslt(cnt,ii)=""
  . i cnt>0 d  ;
- . . d buildrtn(.rtn,.rslt)
+ . . d BUILDRTN(.rtn,.rslt)
  ; 
  n have s have=""
  n q1 s q1=$na(@gn@(p1))
@@ -50,10 +50,10 @@ wsPtLkup(rtn,filter) ; patient lookup from patient-lookup cache
  . s have(qx2)=""
  . s rslt(cnt,qx2)="" ; the ien
  . ;w !,qx," ien=",$o(rslt(cnt,""))
- i cnt>0 d buildrtn(.rtn,.rslt)
+ i cnt>0 d BUILDRTN(.rtn,.rslt)
  q
  ;
-buildrtn(rtn,ary) ; build the return json
+BUILDRTN(rtn,ary) ; build the return json
  ;
  n root s root=$$setroot^%wd("patient-lookup")
  n groot s groot=$$setroot^%wd("vapals-patients")
@@ -76,4 +76,3 @@ buildrtn(rtn,ary) ; build the return json
  d ENCODE^VPRJSON("r1","rtn")
  q
  ;
-

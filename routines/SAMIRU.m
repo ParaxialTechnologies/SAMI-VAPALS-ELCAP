@@ -1,4 +1,4 @@
-SAMIRU ;ven/gpl - sami user reports ; 12/7/18 10:46am
+SAMIRU ;ven/gpl - sami user reports ; 12/10/18 9:53am
  ;;18.0;SAM;;
  ;
  ; SAMIRU contains the routines to handle rural/urban status
@@ -13,7 +13,7 @@ SAMIRU ;ven/gpl - sami user reports ; 12/7/18 10:46am
  ;
  ; NCHS Urban-Rural graph for zip code table
  ;
-index ; create the zip index in the zip graph
+INDEX ; create the zip index in the zip graph
  n root
  s root=$$setroot^%wd("NCHS Urban-Rural")
  n zi s zi=0
@@ -24,7 +24,7 @@ index ; create the zip index in the zip graph
  . s @root@("zip",zi)=ruca30
  q
  ;
-wsGetRU(rtn,filter) ; web service to return counts for rural and urban
+WSGETRU(rtn,filter) ; web service to return counts for rural and urban
  ;
  n root s root=$$setroot^%wd("vapals-patients")
  n rural,urban,unknown

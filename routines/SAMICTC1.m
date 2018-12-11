@@ -1,4 +1,4 @@
-SAMICTC1 ;ven/gpl - ceform copy routine ;2018-03-07T18:48Z
+SAMICTC1 ;ven/gpl - ceform copy routine ; 12/10/18 11:06am
  ;;18.0;SAMI;;
  ;
  ;
@@ -472,7 +472,7 @@ CTCOPY(FROM,TO) ; copies a Ct Eval form selectively
  S @TO@("ceaoabi")=$G(@FROM@("ceaoabi")) ; y
  q
  ;
-genCTCOPY ; generates the copy routine from a graph
+GENCTCPY ; generates the copy routine from a graph
  ;
  n root s root=$$setroot^%wd("ceform-fields")
  n fldf s fldf=$na(@root@("field"))

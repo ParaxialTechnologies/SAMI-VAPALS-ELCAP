@@ -1,4 +1,4 @@
-SAMIUR1 ;ven/gpl - sami user reports ;2018-03-08T17:53Z
+SAMIUR1 ;ven/gpl - sami user reports ; 12/10/18 11:37am
  ;;18.0;SAM;;
  ;
  ; SAMIUR contains the routines to generate user reports
@@ -6,7 +6,7 @@ SAMIUR1 ;ven/gpl - sami user reports ;2018-03-08T17:53Z
  ;
  quit  ; no entry from top
  ;
-wsReport(rtn,filter) ; generate a report based on parameters in the filter
+WSREPORT(rtn,filter) ; generate a report based on parameters in the filter
  ;
  ; here are the user reports that are defined:
  ;  1. followup
@@ -34,7 +34,7 @@ wsReport(rtn,filter) ; generate a report based on parameters in the filter
  n pats
  s pats=""
  n datephrase
- d select(.pats,type,.datephrase) ; select patients for the report
+ d SELECT(.pats,type,.datephrase) ; select patients for the report
  q:'$d(pats)
  ;
  n ln,cnt,ii
@@ -95,7 +95,7 @@ wsReport(rtn,filter) ; generate a report based on parameters in the filter
  . s rtn(cnt)=ln
  q
  ;
-select(pats,type,datephrase) ; selects patient for the report
+SELECT(pats,type,datephrase) ; selects patient for the report
  i $g(type)="" s type="enrollment"
  s datephrase=""
  n zi s zi=0
@@ -105,7 +105,7 @@ select(pats,type,datephrase) ; selects patient for the report
  . n sid s sid=$g(@root@(zi,"samistudyid"))
  . q:sid=""
  . n items s items=""
- . d getItems^SAMICAS2("items",sid)
+ . d GETITEMS^SAMICAS2("items",sid)
  . q:'$d(items)
  . n efmdate,edate,siform,ceform,cefud,fmcefud,cedos,fmcedos
  . s siform=$o(items("siform-"))
@@ -113,13 +113,13 @@ select(pats,type,datephrase) ; selects patient for the report
  . s (cefud,fmcefud,cedos,fmcedos)=""
  . i ceform'="" d  ;
  . . s cefud=$g(@root@("graph",sid,ceform,"cefud"))
- . . i cefud'="" s fmcefud=$$key2fm^SAMICAS2(cefud)
+ . . i cefud'="" s fmcefud=$$KEY2FM^SAMICAS2(cefud)
  . . s cedos=$g(@root@("graph",sid,ceform,"cedos"))
- . . i cedos'="" s fmcedos=$$key2fm^SAMICAS2(cedos)
+ . . i cedos'="" s fmcedos=$$KEY2FM^SAMICAS2(cedos)
  . s edate=$g(@root@("graph",sid,siform,"sidc"))
  . i edate="" s edate=$g(@root@("graph",sid,siform,"samicreatedate"))
- . s efmdate=$$key2fm^SAMICAS2(edate)
- . s edate=$$vapalsDate^SAMICAS2(efmdate)
+ . s efmdate=$$KEY2FM^SAMICAS2(edate)
+ . s edate=$$VAPALSDT^SAMICAS2(efmdate)
  . ;
  . i type="followup" d  ;
  . . n nplus30 s nplus30=$$FMADD^XLFDT($$NOW^XLFDT,31)
@@ -130,18 +130,18 @@ select(pats,type,datephrase) ; selects patient for the report
  . . . s pats(efmdate,zi)=""
  . . . i ceform="" s cefud="baseline"
  . . . s pats(efmdate,zi,"cefud")=cefud
- . . s datephrase=" before "_$$vapalsDate^SAMICAS2(nplus30)
+ . . s datephrase=" before "_$$VAPALSDT^SAMICAS2(nplus30)
  . . q
  . i type="activity" d  ;
  . . n nminus30 s nminus30=$$FMADD^XLFDT($$NOW^XLFDT,-31)
  . . n anyform s anyform=$o(items("sort",""),-1)
- . . n fmanyform s fmanyform=$$key2fm^SAMICAS2(anyform)
+ . . n fmanyform s fmanyform=$$KEY2FM^SAMICAS2(anyform)
  . . i (+fmanyform>nminus30)!(+efmdate>nminus30) d  ; need any new form
  . . . s pats(efmdate,zi,"edate")=edate
  . . . s pats(efmdate,zi)=""
  . . . i ceform="" s cefud="baseline"
  . . . s pats(efmdate,zi,"cefud")=cefud
- . . s datephrase=" after "_$$vapalsDate^SAMICAS2(nminus30)
+ . . s datephrase=" after "_$$VAPALSDT^SAMICAS2(nminus30)
  . ;
  . i type="incomplete" d  ;
  . . n complete s complete=1
@@ -170,7 +170,7 @@ select(pats,type,datephrase) ; selects patient for the report
  . . s pats(efmdate,zi,"edate")=edate
  . . s pats(efmdate,zi)=""
  . . s pats(efmdate,zi,"cefud")=cefud
- . . s datephrase=" as of "_$$vapalsDate^SAMICAS2($$NOW^XLFDT)
+ . . s datephrase=" as of "_$$VAPALSDT^SAMICAS2($$NOW^XLFDT)
  q
  ;
 PNAME(type,phrase) ; extrinsic returns the PAGE NAME for the report

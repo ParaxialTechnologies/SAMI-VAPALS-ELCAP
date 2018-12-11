@@ -1,4 +1,4 @@
-SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 12/6/18 2:40pm
+SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 12/11/18 12:09pm
  ;;18.0;SAMI;;
  ;
  ;
@@ -28,7 +28,7 @@ UTWSHM ; @TEST - Testing web service for SAMI homepage test
  f  s nodea=$q(@nodea),nodep=$q(@nodep) q:(nodea="")  d  q:'utsuccess
  .; check first 60 lines of configuration.  After that the returned
  .;   array depends on test patients available
- . q:($qs(nodea,1)=60)
+ . q:($qs(nodea,1)>60)
  . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
  . i '(@nodea=@nodep) s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing web service test FAILED!")
@@ -118,7 +118,7 @@ UTSCAN4 ; @TEST - Testing scanning array for a given entry
  D GETHOME^SAMIHOM3(.poo,.filter)
  s str=$g(poo(rndm))
  n start s start=1
- f  s start=$$scanFor^SAMIHOM3(.poo,start,str) q:(start=0)  q:(start=rndm)
+ f  s start=$$SCANFOR^SAMIHOM3(.poo,start,str) q:(start=0)  q:(start=rndm)
  s utsuccess=(start=rndm)
  D CHKEQ^%ut(utsuccess,1,"Testing scanning array for a given string FAILED!")
  q
@@ -128,42 +128,42 @@ UTNXTN ; @TEST - Testing finding next entry number for "vapals-patients"
  n root s root=$$setroot^%wd("vapals-patients")
  n cnt,lstntry
  s cnt=0 f  s cnt=$O(@root@(cnt)) q:'+cnt  s lstntry=cnt
- s utsuccess=((lstntry+1)=$$nextNum^SAMIHOM3)
+ s utsuccess=((lstntry+1)=$$NEXTNUM^SAMIHOM3)
  D CHKEQ^%ut(utsuccess,1,"Testing finding next entry in vapals-patients FAILED!")
  q
  ;
 UTPFX ; @TEST - Testing getting study prefix
  ;$$prefix
- D CHKEQ^%ut($$prefix^SAMIHOM3,"XXX","Testing getting study prefix FAILED!")
+ D CHKEQ^%ut($$PREFIX^SAMIHOM3,"XXX","Testing getting study prefix FAILED!")
  q
  ;
 UTSTDID ; @TEST - Testing generating study ID
  ;$$genStudyId(nmb)
- n studyID s studyID=$$genStudyId^SAMIHOM3(123)
+ n studyID s studyID=$$GENSTDID^SAMIHOM3(123)
  D CHKEQ^%ut(studyID,"XXX00123","Testing getting study id FAILED!")
  q
  ;
 UTKEYDT ; @TEST - Testing generating key date from fm date
  ;$$keyDate(fmdt)
  n fmdt s fmdt="3181018"
- D CHKEQ^%ut($$keyDate^SAMIHOM3(fmdt),"2018-10-18","Testing generation of key date FAILED!")
+ D CHKEQ^%ut($$KEYDATE^SAMIHOM3(fmdt),"2018-10-18","Testing generation of key date FAILED!")
  q
  ;
 UTVALNM ; @TEST - Testing validate name function
  ;$$validateName(nm,args)
  n args,nm s args="",nm="POO"
- s x=$$validateName^SAMIHOM3(nm,.args),nm="POO,poo"
- s y=$$validateName^SAMIHOM3(nm,.args),utsuccess=((x+y)=0)
+ s x=$$VALDTNM^SAMIHOM3(nm,.args),nm="POO,poo"
+ s y=$$VALDTNM^SAMIHOM3(nm,.args),utsuccess=((x+y)=0)
  D CHKEQ^%ut(utsuccess,1,"Testing validate name function FAILED!")
  q
  ;
 UTINDX ; @TEST - Testing re-index of vapals-patients Graphstore
- ; d index^SAMIHOM3
+ ; d INDEX^SAMIHOM3
  n root s root=$$setroot^%wd("vapals-patients")
  s dfn1=$o(@root@("dfn",0))
  k @root@("dfn",dfn1)
  s dfn2=$o(@root@("dfn",0))
- d index^SAMIHOM3
+ d INDEX^SAMIHOM3
  s utsuccess=(dfn1'=dfn2)
  D CHKEQ^%ut(utsuccess,1,"Testing reindex of vapals-patients FAILED!")
  q
@@ -192,7 +192,7 @@ UTADDPT ; @TEST Testing addPatient adding a new patient to vapals-patients
  k @rootvp@("dfn",dfn)
  ;
  ; generate new entry in vapals-patients, HTML in ^TMP("yottaForm",n)
- d addPatient^SAMIHOM3(dfn)
+ d ADDPAT^SAMIHOM3(dfn)
  ;
  ; check new entry in vapals-patients
  s utsuccess=($D(@rootvp@(dfn))=10),studyid=@rootvp@(dfn,"sisid")
@@ -225,7 +225,7 @@ UTWSNC ; @TEST - Testing wsNewCase adding a new case to vapals-patients Graphsto
  ;
  ; generate new entry in vapals-patients
  ;   HTML result will be in ^TMP("yottaForm",n)
- d wsNewCase^SAMIHOM3(.ARGS,.bdy,.result)
+ d WSNEWCAS^SAMIHOM3(.ARGS,.bdy,.result)
  ;
  ; check new entry in vapals-patients
  s utna=($g(@rootvp@(dfn,"samistudyid"))=ARGS("studyid"))
@@ -366,7 +366,7 @@ UTSIFRM ; @TEST - Testing creating a background form
  . D FAIL^%ut("Error, no samigratedate for dfn=1!")
  m poo=@root@("graph",sid,"siform-"_cdate)
  k @root@("graph",sid,"siform-"_cdate)
- D makeSiform^SAMIHOM3(num)
+ D MKSIFORM^SAMIHOM3(num)
  ; look for Sbform
  s utsuccess=$d(@root@("graph",sid,"siform-"_cdate))
  k @root@("graph",sid,"sbform-"_cdate)
@@ -386,7 +386,7 @@ UTSBFRM ; @TEST - Testing creating a background form
  i cdate="" d  q
  . D FAIL^%ut("Error, no samigratedate for dfn=1!")
  k @root@("graph",sid,"sbform-"_cdate)
- D makeSbform^SAMIHOM3(num)
+ D MKSBFORM^SAMIHOM3(num)
  ; look for Sbform
  s utsuccess=$d(@root@("graph",sid,"sbform-"_cdate))
  k @root@("graph",sid,"sbform-"_cdate)

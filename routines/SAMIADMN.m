@@ -1,23 +1,19 @@
-SAMIADMN ; VEN/ARC - IELCAP: Admin tools ;2018-05-03T22:35Z
+SAMIADMN ; VEN/ARC - IELCAP: Admin tools ; 12/10/18 11:13am
  ;;1.0;SAMI;;
  ;
  ; Primary development:
  ;
  ; Author: Alexis Carlson (ARC)
  ; Primary development organization: Vista Expertise Network (VEN)
- ; Additional development: Linda M. R. Yaw (lmry)
- ; linda.yaw@vistaexpertise.net
  ;
  ; 2018-05-03 VEN/ARC:
  ; Create entry point to clear M Web Server files cache
  ;
- ; 2018-12-06 ven/lmry: Minor clean-up for XINDEX
+ ;
+ quit ; No entry from top
  ;
  ;
- quit  ; No entry from top
- ;
- ;
-ClrWeb ; Clear the M Web Server files cache
+CLRWEB ; Clear the M Web Server files cache
  ;VEN/ARC;test;procedure;dirty;silent;non-sac
  ;
  d purgegraph^%wd("html-cache")
@@ -42,7 +38,7 @@ SETELCAP() ; set VA-PALS to use the ELCAP version of the Ct Evaluation form
  . ZWR ZERR
  Q
  ;
-SETLUNGRADS() ; set VA-PALS to use the LungRads version of the Ct Evaluation form
+SETLGRDS() ; set VA-PALS to use the LungRads version of the Ct Evaluation form
  N GLB,FN,IEN
  S FN=311.11
  S GLB=$NA(^SAMI(311.11))
@@ -57,7 +53,7 @@ SETLUNGRADS() ; set VA-PALS to use the LungRads version of the Ct Evaluation for
  . ZWR ZERR
  Q
  ;
-wsSETELCAP(rtn,filter) ; set VA-PALS to use the ELCAP version of the Ct Evaluation form
+WSSTELCP(rtn,filter) ; set VA-PALS to use the ELCAP version of the Ct Evaluation form
  N GLB,FN,IEN
  S FN=311.11
  S GLB=$NA(^SAMI(311.11))
@@ -75,7 +71,7 @@ wsSETELCAP(rtn,filter) ; set VA-PALS to use the ELCAP version of the Ct Evaluati
  S rtn="{""status"": ""ok""}"
  Q
  ;
-wsSETLRADS(rtn,filter) ; set VA-PALS to use the LungRads version of the Ct Evaluation form
+WSSTLRAD(rtn,filter) ; set VA-PALS to use the LungRads version of the Ct Evaluation form
  N GLB,FN,IEN
  S FN=311.11
  S GLB=$NA(^SAMI(311.11))
@@ -93,7 +89,7 @@ wsSETLRADS(rtn,filter) ; set VA-PALS to use the LungRads version of the Ct Evalu
  S rtn="{""status"": ""ok""}"
  Q
  ;
-wsctversion(rtn,filter) ; web service to return the current ctform version
+WSCTVERS(rtn,filter) ; web service to return the current ctform version
  ;
  n fn,ver,ien
  s ien=$o(^SAMI(311.11,"B","vapals:ceform",""))

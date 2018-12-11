@@ -1,4 +1,4 @@
-SAMIUTNI ;ven/lgc - UNIT TEST for SAMINOTI ; 12/3/18 1:43pm
+SAMIUTNI ;ven/lgc - UNIT TEST for SAMINOTI ; 12/10/18 9:39am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -38,12 +38,12 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  ;
  ;
 UTWSNOTE ; @TEST - web service which returns a text note
- ;wsNote(return,filter)
+ ;WSNOTE(return,filter)
  n filter,poo,arc
  s filter("studyid")="XXX00001"
  s filter("form")="ceform-2018-10-21"
  ; pull text note
- d wsNote^SAMINOTI(.poo,.filter)
+ d WSNOTE^SAMINOTI(.poo,.filter)
  ; get array of what text note should look like
  d PullUTarray^SAMIUTST(.arc,"UTWSNOTE^SAMIUTNI")
  ; compare the two
@@ -58,7 +58,7 @@ UTWSNOTE ; @TEST - web service which returns a text note
  q
  ;
 UTNOTFLT ; @TEST - extrnisic which creates a note
- ;note(filter)
+ ;NOTE(filter)
  n filter,root,vals,poo
  s filter("studyid")="XXX00001"
  s filter("form")="ceform-2018-10-21"
@@ -67,7 +67,7 @@ UTNOTFLT ; @TEST - extrnisic which creates a note
  ; kill any existing note
  k @vals
  ; build new note
- d note^SAMINOTI(.filter)
+ d NOTE^SAMINOTI(.filter)
  ; pull array with what the note should look like in global
  d PullUTarray^SAMIUTST(.poo,"UTNOTFLT^SAMIUTNI")
  ; now compare the two
@@ -80,21 +80,21 @@ UTNOTFLT ; @TEST - extrnisic which creates a note
  q
  ;
 UTOUT ; @TEST - Testing out(ln)
- ;out(ln)
+ ;OUT(ln)
  n cnt,dest,poo
  s cnt=1,dest="poo",poo(1)="First line of test"
  n ln s ln="Second line test"
  s utsuccess=0
- D out^SAMINOTI(ln)
+ D OUT^SAMINOTI(ln)
  s utsuccess=($g(poo(2))="Second line test")
  D CHKEQ^%ut(utsuccess,1,"Testing out(ln) adds line to array FAILED!")
  q
  ;
 UTXVAL ; @TEST - extrinsic returns the patient value for var
- ;xval(var,vals)
+ ;XVAL(var,vals)
  s utsuccess=0
  s arc(1)="Testing xval"
- s utsuccess=($$xval^SAMINOTI(1,"arc")="Testing xval")
+ s utsuccess=($$XVAL^SAMINOTI(1,"arc")="Testing xval")
  D CHKEQ^%ut(utsuccess,1,"Testing xval(var,vals) FAILED!")
  q
  ;

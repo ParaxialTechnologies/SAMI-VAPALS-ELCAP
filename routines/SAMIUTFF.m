@@ -1,4 +1,4 @@
-SAMIUTD2 ;ven/lgc - UNIT TEST for SAMIUTD2 ; 12/10/18 11:00am
+SAMIUTFF ;ven/lgc - Unit test for SAMIIFF ; 12/11/18 1:33pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -12,7 +12,7 @@ SAMIUTD2 ;ven/lgc - UNIT TEST for SAMIUTD2 ; 12/10/18 11:00am
  ; @license: Apache 2.0
  ;  https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ; @last-updated: 10/29/18 12:03pm
+ ; @last-updated: 10/26/18 7:56pm
  ; @application: SAMI
  ; @version: 18.0
  ; @patch-list: none yet
@@ -34,24 +34,23 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  Q
  ;
  ;
-UTIN2G ; @TEST - initialize CTEVAL dictionary into graph cteval-dict
- ;INIT2GPH()
- n g,root,poo,arc
- s root=$$setroot^%wd("cteval-dict")
- m poo=@root
- d SaveUTarray^SAMIUTST(.poo,"init2graph-SAMICTD2")
- ; although init2graph kills the root, I need to do
- ;  so before the call so I know it is a new build
- k @root
+UTBLDGPH ; @TEST - Build a graph of the intake form fields
+ ;BLDGRPH
+ n arc,poo,nodea,nodep
  s utsuccess=1
- d INIT2GPH^SAMICTD2
+ ; Delete graph if it existed
+ DO purgegraph^%wd("siform-fields")
+ ; Now build the graph
+ D BLDGRPH^SAMIIFF
+ n root s root=$$setroot^%wd("siform-fields")
  m arc=@root
- k poo d PullUTarray^SAMIUTST(.poo,"init2graph-SAMICTD2")
- n nodea,nodep s nodea=$na(arc),nodep=$na(poo)
- f  s nodea=$Q(@nodea),nodep=$Q(@nodep) q:nodea=""  d  q:'utsuccess
+ D PullUTarray^SAMIUTST(.poo,"UTBLDGPH^SAMIUTFF")
+ n nodea,nodep s nodea=$na(arc),nodep=$na(poou)
+ f  s nodea=$Q(nodea),nodep=$Q(nodep) q:nodea=""  d
+ . i '(nodea=nodep) s utsuccess=0
  . i '(@nodea=@nodep) s utsuccess=0
  i '(nodep="") s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing initialization of CTEVAL dictionary FAILED!")
+ D CHKEQ^%ut(utsuccess,1,"Testing building siform graph FAILED!")
  q
  ;
-EOR ;End of routine SAMIUTD2
+EOR ;End of routine SAMIUFF

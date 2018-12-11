@@ -1,4 +1,4 @@
-SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICAS2 ; 12/3/18 9:14am
+SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICAS2 ; 12/10/18 7:03pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -35,9 +35,9 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  ;
  ;
 UTGTMPL ; @TEST - get html template
- ;getTemplate(return,form)
+ ;GETTMPL(return,form)
  n temp,poou
- d getTemplate^SAMICAS2("temp","vapals:casereview")
+ d GETTMPL^SAMICAS2("temp","vapals:casereview")
  d PullUTarray^SAMIUTST(.poou,"UTGTMPL^SAMIUTS2")
  s utsuccess=1
  n nodep,nodet s nodep=$na(poou),nodet=$na(temp)
@@ -53,7 +53,7 @@ UTGTMPL ; @TEST - get html template
  q
  ;
 UTHMNY ; @TEST - extrinsic returns how many forms the patient has used before deleting a patient
- ;countItems(sid)
+ ;CNTITEMS(sid)
  n rootut,rootvp,gienut,dfn,gienvp,studyid,uforms,forms
  ; get test patient
  s rootut=$$setroot^%wd("vapals unit tests")
@@ -71,13 +71,13 @@ UTHMNY ; @TEST - extrinsic returns how many forms the patient has used before de
  n uforms,forms,zi s uforms=0,zi=""
  f  s zi=$o(@rootvp@("graph",studyid,zi)) q:zi=""  d
  . s uforms=uforms+1
- s forms=$$countItems^SAMICAS2(studyid)
+ s forms=$$CNTITEMS^SAMICAS2(studyid)
  s utsuccess=(uforms=forms)
  D CHKEQ^%ut(utsuccess,1,"Testing getting how many forms for patient FAIL!")
  q
  ;
 UTCNTITM ; @TEST - get items available for studyid
- ;getItems(ary,sid)
+ ;GETITEMS(ary,sid)
  n rootut,rootvp,gienut,dfn,gienvp,studyid,uforms,forms
  ; get test patient
  s rootut=$$setroot^%wd("vapals unit tests")
@@ -95,7 +95,7 @@ UTCNTITM ; @TEST - get items available for studyid
  n uforms,forms,zi s uforms=0,zi=""
  f  s zi=$o(@rootvp@("graph",studyid,zi)) q:zi=""  d
  . s uforms(zi)=""
- d getItems^SAMICAS2("poo",studyid)
+ d GETITEMS^SAMICAS2("poo",studyid)
  s utsuccess=1
  s zi="" f  s zi=$o(uforms(zi)) q:zi=""  d
  . i '$d(poo(zi)) s utsuccess=0
@@ -104,27 +104,27 @@ UTCNTITM ; @TEST - get items available for studyid
  ;
 UTGDTK ; @TEST - date portion of form key
  ;getDateKey(formid)
- n fdtkey s fdtkey=$$getDateKey^SAMICAS2("MYFORM-2018-10-03")
+ n fdtkey s fdtkey=$$GETDTKEY^SAMICAS2("MYFORM-2018-10-03")
  D CHKEQ^%ut(fdtkey,"2018-10-03","Testing get date portion of form  FAILED!")
  q
  ;
 UTK2DDT ; @TEST - date in elcap format from key date
- ;key2dispDate(zkey)
- n ecpdt s ecpdt=$$key2dispDate^SAMICAS2("2018-10-03")
+ ;KEY2DSPD(zkey)
+ n ecpdt s ecpdt=$$KEY2DSPD^SAMICAS2("2018-10-03")
  D CHKEQ^%ut(ecpdt,"10/3/2018","Testing date in elcap form  FAILED!")
  q
  ;
 UTVPLSD ; @TEST - extrinsic which return the vapals format for dates
- ;vapalsDate(fmdate)
- n vpdate s vpdate=$$vapalsDate^SAMICAS2("3181003")
+ ;VAPALSDT(fmdate)
+ n vpdate s vpdate=$$VAPALSDT^SAMICAS2("3181003")
  D CHKEQ^%ut(vpdate,"10/3/2018","Testing fmdate to elcap date form  FAILED!")
  q
  ;
 UTWSNF ; @TEST - select new form for patient (get service)
- ;wsNuForm(rtn,filter)
+ ;WSNUFORM(rtn,filter)
  n rtn,ARGS,poo,arc
  s ARGS("studyid")="XXX00001"
- d wsNuForm^SAMICAS2(.poo,.ARGS)
+ d WSNUFORM^SAMICAS2(.poo,.ARGS)
  d PullUTarray^SAMIUTST(.arc,"UTWSNF^SAMIUTS2")
  s utsuccess=1
  N nodep,nodea s nodep=$na(poo),nodea=$na(arc)
@@ -137,23 +137,23 @@ UTWSNF ; @TEST - select new form for patient (get service)
  q
  ;
 UTK2FM ; @TEST - convert a key to a fileman date
- ; key2fm
+ ; KEY2FM
  n key,fmd
  s key="unittestform-2018-11-13"
- s fmd=$$key2fm^SAMICAS2(key)
+ s fmd=$$KEY2FM^SAMICAS2(key)
  s utsuccess=(fmd=3181113)
  D CHKEQ^%ut(1,utsuccess,"Testing key2fm FAILED!")
  q
  ;
 UTMKSBF ; @TEST - create background form
- ;makeSbform(sid,key)
- d CheckForm^SAMIUTS2("sbform","makeSbform",.utsuccess)
+ ;MKSBFORM(sid,key)
+ d CheckForm^SAMIUTS2("sbform","MKSBFORM",.utsuccess)
  D CHKEQ^%ut(1,utsuccess,"Testing create background form FAILED!")
  q
  ;
 UTMKCEF ; @TEST - create ct evaluation form
- ;makeCeform(sid,key)
- d CheckForm^SAMIUTS2("ceform","makeCeform",.utsuccess)
+ ;MKCEFORM(sid,key)
+ d CheckForm^SAMIUTS2("ceform","MKCEFORM",.utsuccess)
  ; -----
  ; We need to add additional fields to the ceform in
  ;   vapals-patients that were deleted in SAMIUTH3 as
@@ -170,69 +170,72 @@ UTMKCEF ; @TEST - create ct evaluation form
  q
  ;
 UTMKFUF ; @TEST - create Follow-up form
- ;makeFuform(sid,key)
- d CheckForm^SAMIUTS2("fuform","makeFuform",.utsuccess)
+ ;MKFUFORM(sid,key)
+ d CheckForm^SAMIUTS2("fuform","MKFUFORM",.utsuccess)
  D CHKEQ^%ut(utsuccess,1,"Testing create followup  form FAILED!")
  q
  ;
 UTMKPTF ; @TEST - create ct evaluation form
- ;makePtform(sid,key)
- d CheckForm^SAMIUTS2("ptform","makePtform",.utsuccess)
+ ;MKPTFORM(sid,key)
+ d CheckForm^SAMIUTS2("ptform","MKPTFORM",.utsuccess)
  D CHKEQ^%ut(utsuccess,1,"Testing create followup  form FAILED!")
  q
  ;
 UTMKITF ; @TEST - create intervention form
- ;makeItform(sid,key)
- d CheckForm^SAMIUTS2("itform","makeItform",.utsuccess)
+ ;MKITFORM(sid,key)
+ d CheckForm^SAMIUTS2("itform","MKITFORM",.utsuccess)
  D CHKEQ^%ut(utsuccess,1,"Testing create intervention form FAILED!")
  q
  ;
 UTMKBXF ; @TEST - create ct evaluation form
- ;makeBxform(sid,key)
- d CheckForm^SAMIUTS2("bxform","makeBxform",.utsuccess)
+ ;MKBXFORM(sid,key)
+ d CheckForm^SAMIUTS2("bxform","MKBXFORM",.utsuccess)
  D CHKEQ^%ut(utsuccess,1,"Testing create bx ct eval form FAILED!")
  q
  ;
 UTWSCAS ; @TEST - generate case review page
- ;wsCASE(rtn,filter)
+ ;WSCASE(rtn,filter)
  n filter s filter("studyid")="XXX00001"
- n poo D wsCASE^SAMICAS2(.poo,.filter)
+ n poo D WSCASE^SAMICAS2(.poo,.filter)
  n arc D PullUTarray^SAMIUTST(.arc,"UTWSCAS^SAMIUTS2")
  s utsuccess=1
  n nodep,nodea s nodep=$na(poo),nodea=$na(arc)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d
  .; if the first non space 10 characters are a date, skip
  . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
- . i @nodep["siform" q
- . i @nodep["Fourteen,Patient N" q
- . i (@nodep["meta content") q
- . i '($qs(nodep,1)=$qs(nodea,1)) s utsuccess=0 W !,nodea
- . i '(@nodep=@nodea) s utsuccess=0 W !,nodea
+ . i @nodea["<tr><td> 444-67-8924 </td><td> - </td><td> - </td><td>12/3/2018</td><td>" q
+ . i @nodea["vapals:ceform-2018-12-03" q
+ . i @nodea["value=ceform-2018-12-03" q
+ . i @nodea["siform" q
+ . i @nodea["Fourteen,Patient N" q
+ . i (@nodea["meta content") q
+ . i '($qs(nodep,1)=$qs(nodea,1)) s utsuccess=0
+ . i '(@nodep=@nodea) s utsuccess=0
  i '(nodea="") s utsuccess=0 w "at end:",nodea
  D CHKEQ^%ut(utsuccess,1,"Testing generating case review page FAILED!")
  q
  ;
 UTGSAMIS ; @TEST - get 'samistatus' to val in form
- ;getSamiStatus(sid,form)
+ ;GSAMISTA(sid,form)
  n root,form,sid,ss1,ss2
  s root=$$setroot^%wd("vapals-patients")
  s form="sbform-2018-10-21"
  s sid="XXX00001"
  s ss1=$g(@root@("graph",sid,"sbform-2018-10-21","samistatus"))
- s ss2=$$getSamiStatus^SAMICAS2(sid,form)
+ s ss2=$$GSAMISTA^SAMICAS2(sid,form)
  s utsuccess=(ss1=ss2)
  D CHKEQ^%ut(utsuccess,1,"Testing get samistatus FAILED!")
  q
  ;
 UTSSAMIS ; @TEST - set 'samistatus' to val in form
- ;setSamiStatus(sid,form,val)
+ ;SSAMISTA(sid,form,val)
  n root,form,sid,ss1,ss2,val
  s root=$$setroot^%wd("vapals-patients")
  s form="sbform-2018-10-21"
  s sid="XXX00001"
  s val="unit test"
  s ss1=$g(@root@("graph",sid,"sbform-2018-10-21","samistatus"))
- d setSamiStatus^SAMICAS2(sid,form,val)
+ d SSAMISTA^SAMICAS2(sid,form,val)
  s ss2=$g(@root@("graph",sid,"sbform-2018-10-21","samistatus"))
  ;return to original value
  s @root@("graph",sid,"sbform-2018-10-21","samistatus")=ss1
@@ -241,7 +244,7 @@ UTSSAMIS ; @TEST - set 'samistatus' to val in form
  q
  ;
 UTDELFM ; @TEST - deletes a form if it is incomplete
- ;deleteForm(RESULT,ARGS)
+ ;DELFORM(RESULT,ARGS)
  N ARGS,root,sbexist,sbexistd,poo
  s root=$$setroot^%wd("vapals-patients")
  s studyid="XXX00001"
@@ -252,7 +255,7 @@ UTDELFM ; @TEST - deletes a form if it is incomplete
  i 'sbexist d  q
  . D FAIL^%ut("sbform-2018-10-21 not in vapals-patients Graphstore")
  m poo=@root@("graph",studyid,form)
- d deleteForm^SAMICAS2(.rtn,.ARGS)
+ d DELFORM^SAMICAS2(.rtn,.ARGS)
  s sbexistd=$d(@root@("graph",studyid,form))
  ; now put back original sbform
  k @root@("graph",studyid,form)
@@ -268,9 +271,9 @@ UTINITS ; - set all forms to 'incomplete'
  q
  ;
 UTCSRT ; @TEST - generates case review table
- ;casetbl(ary)
+ ;CASETBL(ary)
  n poo,pooc,arc,arcc
- D casetbl^SAMICAS2("poo")
+ D CASETBL^SAMICAS2("poo")
  d PullUTarray^SAMIUTST(.arc,"casetbl-SAMICAS2")
  s utsuccess=1
  n pnode,anode
@@ -282,7 +285,7 @@ UTCSRT ; @TEST - generates case review table
  ;
  ;
 UTNFPST ; @TEST - post new form selection (post service)
- ;wsNuFormPost(ARGS,BODY,RESULT)
+ ;WSNFPOST(ARGS,BODY,RESULT)
  ; This call adds new forms of each type so must
  ;   be run after the above tests that generate
  ;   one of each type separately
@@ -295,7 +298,7 @@ UTNFPST ; @TEST - post new form selection (post service)
  ;   "itform"
  ;
  s ARGS("form")="ceform"
- d wsNuFormPost^SAMICAS2(.ARGS,.BODY,.RESULT)
+ d WSNFPOST^SAMICAS2(.ARGS,.BODY,.RESULT)
  s newform=$O(@root@("graph","XXX00001","ceform-2018-10-21"))
  s utsuccess=(newform["ceform")
  ; now kill the extra form just built
@@ -303,7 +306,7 @@ UTNFPST ; @TEST - post new form selection (post service)
  D CHKEQ^%ut(utsuccess,1,"Testing post ceform FAILED!")
  ;
  s ARGS("form")="sbform"
- d wsNuFormPost^SAMICAS2(.ARGS,.BODY,.RESULT)
+ d WSNFPOST^SAMICAS2(.ARGS,.BODY,.RESULT)
  s newform=$O(@root@("graph","XXX00001","sbform-2018-10-21"))
  s utsuccess=(newform["sbform")
  ; now kill the extra form just built
@@ -311,7 +314,7 @@ UTNFPST ; @TEST - post new form selection (post service)
  D CHKEQ^%ut(utsuccess,1,"Testing post sbform FAILED!")
  ;
  s ARGS("form")="fuform"
- d wsNuFormPost^SAMICAS2(.ARGS,.BODY,.RESULT)
+ d WSNFPOST^SAMICAS2(.ARGS,.BODY,.RESULT)
  s newform=$O(@root@("graph","XXX00001","fuform-2018-10-21"))
  s utsuccess=(newform["fuform")
  ; now kill the extra form just built
@@ -319,7 +322,7 @@ UTNFPST ; @TEST - post new form selection (post service)
  D CHKEQ^%ut(utsuccess,1,"Testing post fuform FAILED!")
  ;
  s ARGS("form")="bxform"
- d wsNuFormPost^SAMICAS2(.ARGS,.BODY,.RESULT)
+ d WSNFPOST^SAMICAS2(.ARGS,.BODY,.RESULT)
  s newform=$O(@root@("graph","XXX00001","bxform-2018-10-21"))
  s utsuccess=(newform["bxform")
  ; now kill the extra form just built
@@ -327,7 +330,7 @@ UTNFPST ; @TEST - post new form selection (post service)
  D CHKEQ^%ut(utsuccess,1,"Testing post bxform FAILED!")
  ;
  s ARGS("form")="ptform"
- d wsNuFormPost^SAMICAS2(.ARGS,.BODY,.RESULT)
+ d WSNFPOST^SAMICAS2(.ARGS,.BODY,.RESULT)
  s newform=$O(@root@("graph","XXX00001","ptform-2018-10-21"))
  s utsuccess=(newform["ptform")
  ; now kill the extra form just built
@@ -335,7 +338,7 @@ UTNFPST ; @TEST - post new form selection (post service)
  D CHKEQ^%ut(utsuccess,1,"Testing post ptform FAILED!")
  ;
  s ARGS("form")="itform"
- d wsNuFormPost^SAMICAS2(.ARGS,.BODY,.RESULT)
+ d WSNFPOST^SAMICAS2(.ARGS,.BODY,.RESULT)
  s newform=$O(@root@("graph","XXX00001","itform-2018-10-21"))
  s utsuccess=(newform["itform")
  ; now kill the extra form just built

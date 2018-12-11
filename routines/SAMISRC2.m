@@ -1,4 +1,4 @@
-SAMISRC2 ;ven/gpl - ielcap: home page search ;2018-03-07T18:49Z
+SAMISRC2 ;ven/gpl - ielcap: home page search ; 12/11/18 9:06am
  ;;18.0;SAM;;
  ;
  ; SAMISRCH contains subroutines for searching for patients on the
@@ -50,7 +50,7 @@ SAMISRC2 ;ven/gpl - ielcap: home page search ;2018-03-07T18:49Z
  ;
  ;@module-log
  ; 2018-03-06 ven/gpl v18.0t04 SAMISRCH: created new routine w/web
- ; service subroutine wsLookup.
+ ; service subroutine WSLOOKUP.
  ;
  ; 2018-03-07 ven/toad v18.0t04 SAMISRCH: update style, spell out
  ; language elements, add white space & do-dot quits.
@@ -63,18 +63,18 @@ SAMISRC2 ;ven/gpl - ielcap: home page search ;2018-03-07T18:49Z
  ;
  ;
  ;
-wsLookup(ARGS,BODY,RESULT) ; look up ELCAP patient
+WSLOOKUP(ARGS,BODY,RESULT) ; look up ELCAP patient
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
  ;ven/gpl;web service;procedure;
  ;@called-by
- ; web service SAMISRCH-wsLookup
+ ; web service SAMISRCH-WSLOOKUP
  ;@calls
  ; parseBody^%wf
  ; $$setroot^%wd
- ; $$genStudyId^SAMIHOME
- ; wsCASE^SAMICAS2
+ ; $$GENSTDID^SAMIHOME
+ ; WSCASE^SAMICAS2
  ; GETHOME^SAMIHOME
  ;@input
  ;.ARGS =
@@ -106,8 +106,8 @@ wsLookup(ARGS,BODY,RESULT) ; look up ELCAP patient
  . set sien=+sien ; lose the leading zeros
  . if +sien=0 quit  ; didn't work
  . if $data(@root@(sien)) do  ; there is a record at that location
- . . set filter("studyid")=$$genStudyId^SAMIHOM3(sien)
- . . do wsCASE^SAMICAS2(.trtn,.filter)
+ . . set filter("studyid")=$$GENSTDID^SAMIHOM3(sien)
+ . . do WSCASE^SAMICAS2(.trtn,.filter)
  . . quit
  . quit
  ;
@@ -123,7 +123,7 @@ wsLookup(ARGS,BODY,RESULT) ; look up ELCAP patient
  ;
  ;@stanza 3 termination
  ;
- quit  ; end of wsLookup
+ quit  ; end of WSLOOKUP
  ;
  ;
  ;

@@ -1,4 +1,4 @@
-SAMIUTRU ;ven/lgc - UNIT TEST for SAMIRU ; 12/6/18 11:53am
+SAMIUTRU ;ven/lgc - UNIT TEST for SAMIRU ; 12/10/18 9:55am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -33,7 +33,7 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  ;
  ;
 UTINDEX ; @TEST - create the zip index in the zip graph
- ;index^SAMIRU
+ ;INDEX^SAMIRU
  n root,samid1,samid2,samid3,poo,arc
  s root=$$setroot^%wd("NCHS Urban-Rural")
  s samid1=$d(@root@("zip")) ; should be 10
@@ -49,7 +49,7 @@ UTINDEX ; @TEST - create the zip index in the zip graph
  . d PullUTarray^SAMIUTST(.arc,"ZIP index on NCHS Urban-Rural")
  . m @root@("zip")=arc
  . D FAIL^%ut("Error, unable to kill 'zip' index on on NCHS Urban-Rural!")
- d index^SAMIRU
+ d INDEX^SAMIRU
  ; confirm now the "zip" does exist
  s samid3=$d(@root@("zip")) ; should be 10 again
  i '(samid3=10) d
@@ -60,11 +60,11 @@ UTINDEX ; @TEST - create the zip index in the zip graph
  q
  ;
 UTWSGRU ; @TEST - web service to return counts for rural and urban
- ;wsGetRU(rtn,filter)
+ ;WSGETRU(rtn,filter)
  n rtn,filter,root
  s root=$$setroot^%wd("vapals-patients")
  ;
- d wsGetRU^SAMIRU(.rtn,.filter)
+ d WSGETRU^SAMIRU(.rtn,.filter)
  s utsuccess=1
  i $g(rtn(1))'["result" s utsuccess=0
  i $g(rtn(1))'["rural" s utsuccess=0

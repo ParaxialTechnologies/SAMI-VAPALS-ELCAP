@@ -1,4 +1,4 @@
-SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 12/3/18 1:42pm
+SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 12/10/18 8:48am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -101,7 +101,7 @@ UTREGF ; @TEST - ; register elcap forms in form mapping file
  q
  ;
 UTLOADD ; @TEST - import directory full of json data into elcap-patient graph
- ;loadData()
+ ;LOADDATA()
  ;First be sure the XXX0005 graphstore info doesn't exist
  n root,poo,arc,cmd,zlist,nodea,nodep
  set root=$$setroot^%wd("vapals-patients")
@@ -117,7 +117,7 @@ UTLOADD ; @TEST - import directory full of json data into elcap-patient graph
  i '($g(zlist(1))="XXX0005-ceform-2016-01-01.json") d  q
  . D FAIL^%ut("Error, json files missing!")
  ;
- D loadData^SAMIFRM2
+ D LOADDATA^SAMIFRM2
  m arc=@root@("graph","XXX0005")
  D PullUTarray^SAMIUTST(.poo,"UTLOADD^SAMIUTF2")
  s nodea=$na(arc),nodep=$na(poo)
@@ -129,10 +129,10 @@ UTLOADD ; @TEST - import directory full of json data into elcap-patient graph
  q
  ;
 UTPARSFN ; @TEST - parse filename extracting studyid & form
- ;parseFileName(fn,zid,zform)
+ ;PRSFLNM(fn,zid,zform)
  n fn,zid,zform
  s fn="XXX00001-bxform-2018-10-21"
- d parseFileName^SAMIFRM2(.fn,.zid,.zform)
+ d PRSFLNM^SAMIFRM2(.fn,.zid,.zform)
  s utsuccess=0
  i zid="XXX00001",zform="bxform-2018-10-21" s utsuccess=1
  D CHKEQ^%ut(utsuccess,1,"Testing parse filename for studyid FAILED!")
@@ -170,10 +170,10 @@ UTSSUB2 ; @TEST -  used for Dom's new style forms
  q
  ;
 UTWSSBF ; @TEST - background form access
- ;wsSbform(rtn,filter)
+ ;WSSBFORM(rtn,filter)
  n filter,rtn,arc,poo,nodea,nodep
  s filter("studyid")="XXX00001"
- d wsSbform^SAMIFRM2(.rtn,.filter)
+ d WSSBFORM^SAMIFRM2(.rtn,.filter)
  m arc=@rtn
  D PullUTarray^SAMIUTST(.poo,"UTWSSBF^SAMIUTF2")
  s utsuccess=1
@@ -189,10 +189,10 @@ UTWSSBF ; @TEST - background form access
  q
  ;
 UTWSIFM ; @TEST - intake form access
- ;wsSiform
+ ;WSSIFORM
  n filter,rtn,arc,poo,nodea,nodep
  s filter("studyid")="XXX00001"
- d wsSiform^SAMIFRM2(.rtn,.filter)
+ d WSSIFORM^SAMIFRM2(.rtn,.filter)
  m arc=@rtn
  D PullUTarray^SAMIUTST(.poo,"UTWSIFM^SAMIUTF2")
  s utsuccess=1
@@ -209,10 +209,10 @@ UTWSIFM ; @TEST - intake form access
  q
  ;
 UTCEFRM ; @TEST - ctevaluation form access
- ;wsCeform(rtn,filter)
+ ;WSCEFORM(rtn,filter)
  n filter,rtn,arc,poo,nodea,nodep
  s filter("studyid")="XXX00001"
- d wsCeform^SAMIFRM2(.rtn,.filter)
+ d WSCEFORM^SAMIFRM2(.rtn,.filter)
  m arc=@rtn
  D PullUTarray^SAMIUTST(.poo,"UTCEFRM^SAMIUTF2")
  s utsuccess=1
@@ -228,20 +228,20 @@ UTCEFRM ; @TEST - ctevaluation form access
  q
  ;
 UTFSRC ; @TEST - fix html src lines to use resources in see/
- ;fixSrc(line)
+ ;FIXSRC(line)
  n line,line2
- S line="testing fixSrc, src=""/"" and src=""/"" end"
- s line2="testing fixSrc, src=""/see/sami/"" and src=""/see/sami/"" end"
- d fixSrc^SAMIFRM2(.line)
+ S line="testing FIXSRC, src=""/"" and src=""/"" end"
+ s line2="testing FIXSRC, src=""/see/sami/"" and src=""/see/sami/"" end"
+ d FIXSRC^SAMIFRM2(.line)
  s utsuccess=(line=line2)
  D CHKEQ^%ut(utsuccess,1,"Testing fix src lines FAILED!")
  q
  ;
 UTFHREF ; fix html href lines to use resources in see/
- ; fixHref(line)
+ ; FIXHREF(line)
  n line,line2
  S line="Some text then hfrf="""" for a test"
- d fixHref^SAMIFRM2(.line)
+ d FIXHREF^SAMIFRM2(.line)
  q
  ;
 UTGLST5 ; @TEST - extrinsic returns the last5 for patient sid

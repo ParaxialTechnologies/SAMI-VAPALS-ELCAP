@@ -1,4 +1,4 @@
-SAMIUTPT ;ven/arc - Unit test for SAMIPTLK ; 2018-10-31T1854Z
+SAMIUTPT ;ven/arc - Unit test for SAMIPTLK ; 12/10/18 9:12am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -22,7 +22,7 @@ SAMIUTPT ;ven/arc - Unit test for SAMIPTLK ; 2018-10-31T1854Z
  ;
  ; @section 1 code
  ;
-START
+START 
  if $T(^%ut)="" do
  . write !,"*** UNIT TEST NOT INSTALLED ***"
  . quit
@@ -31,11 +31,11 @@ START
  quit
  ;
  ;
-STARTUP
+STARTUP 
  quit
  ;
  ;
-SETUP
+SETUP 
  new rtn,filter,ary,expect,result
  quit
  ;
@@ -45,16 +45,16 @@ TEARDOWN ; ZEXCEPT: rtn,filter,ary,expect,result
  quit
  ;
  ;
-SHUTDOWN
+SHUTDOWN 
  quit
  ;
  ;
-UTWSPTLK ; @TEST wsPtLookup^SAMIPTLK
+UTWSPTLK ; @TEST WSPTLOOK^SAMIPTLK
  ; Comments
  ;
  ; Test query string = ""
  set filter("search")=""
- do wsPtLookup^SAMIPTLK(.rtn,.filter)
+ do WSPTLOOK^SAMIPTLK(.rtn,.filter)
  new result,expect
  set expect="{""1"":""-1^No patient specified.""}"
  set result=rtn(1)
@@ -63,7 +63,7 @@ UTWSPTLK ; @TEST wsPtLookup^SAMIPTLK
  ; Test query string = "ZZZZ"
  kill rtn,filter
  set filter("search")="ZZZZ"
- do wsPtLookup^SAMIPTLK(.rtn,.filter)
+ do WSPTLOOK^SAMIPTLK(.rtn,.filter)
  set expect="{""1"":""""}"
  set result=rtn(1)
  do CHKEQ^%ut(result,expect)
@@ -71,7 +71,7 @@ UTWSPTLK ; @TEST wsPtLookup^SAMIPTLK
  ; Test query string = "A"
  kill rtn,filter
  set filter("search")="A"
- do wsPtLookup^SAMIPTLK(.rtn,.filter)
+ do WSPTLOOK^SAMIPTLK(.rtn,.filter)
  ; Check first node of rtn
  set expect="{""1"":"
  set result=rtn(1)
@@ -85,12 +85,12 @@ UTWSPTLK ; @TEST wsPtLookup^SAMIPTLK
  quit
  ;
  ;
-UTWSPTLC ; @TEST wsPtLkup^SAMIPTLK
+UTWSPTLC ; @TEST WSPTLKUP^SAMIPTLK
  ; Comments
  ;
  ; Test query string = ""
  set filter("search")=""
- do wsPtLkup^SAMIPTLK(.rtn,.filter)
+ do WSPTLKUP^SAMIPTLK(.rtn,.filter)
  ; Check first node of rtn
  set expect="{""result"":"
  set result=$piece(rtn(1),"[")
@@ -103,7 +103,7 @@ UTWSPTLC ; @TEST wsPtLkup^SAMIPTLK
  ; Test query string = "ZZZZ"
  kill rtn,filter
  set filter("search")="ZZZZ"
- do wsPtLkup^SAMIPTLK(.rtn,.filter)
+ do WSPTLKUP^SAMIPTLK(.rtn,.filter)
  set expect=""
  set result=$get(rtn(1))
  do CHKEQ^%ut(result,expect)
@@ -111,7 +111,7 @@ UTWSPTLC ; @TEST wsPtLkup^SAMIPTLK
  ; Test query string = "A"
  kill rtn,filter
  set filter("search")="A"
- do wsPtLkup^SAMIPTLK(.rtn,.filter)
+ do WSPTLKUP^SAMIPTLK(.rtn,.filter)
  ; Check first node of rtn
  set expect="{""result"":"
  set result=$piece(rtn(1),"[")

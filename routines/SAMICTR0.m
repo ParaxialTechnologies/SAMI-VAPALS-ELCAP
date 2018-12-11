@@ -1,10 +1,10 @@
-SAMICTR0 ;ven/gpl - ielcap: forms ; 12/7/18 1:39pm
+SAMICTR0 ;ven/gpl - ielcap: forms ; 12/10/18 11:26am
  ;;18.0;SAMI;;
  ;
  ;
  quit  ; no entry from top
  ;
-wsReport(return,filter) ; web service which returns an html cteval report
+WSREPORT(return,filter) ; web service which returns an html cteval report
  ;
  s debug=0
  i $g(filter("debug"))=1 s debug=1
@@ -22,7 +22,7 @@ wsReport(return,filter) ; web service which returns an html cteval report
  ;d INIT^SAMICTD2("dict")
  s dict=$$setroot^%wd("cteval-dict")
  s dict=$na(@dict@("cteval-dict"))
- i $g(@dict@("pet"))="" d init2graph^SAMICTD2 ; initialize the dictionary first time
+ i $g(@dict@("pet"))="" d INIT2GPH^SAMICTD2 ; initialize the dictionary first time
  n si
  s si=$g(filter("studyid"))
  i si="" d  ;
@@ -62,126 +62,126 @@ wsReport(return,filter) ; web service which returns an html cteval report
  s auth("inst")=$g(filter("auth"))
  ;
  s newct=0
- i $$xval("ceoppa",vals)'="" s newct=1
+ i $$XVAL("ceoppa",vals)'="" s newct=1
  ;
  s registryForm=0
- i $$xval("ceaf",vals)'="" s registryForm=1
+ i $$XVAL("ceaf",vals)'="" s registryForm=1
  ;
- d out("<HTML>")
- d out("<HEAD>")
- d out("<!-- Calling TR: CT Evaluation Report -->")
- d out("<TITLE>CT Evaluation Report</TITLE>")
- d out("<link rel='stylesheet' href='/css/report.css'>")
- d out("</HEAD>")
- d out("<BODY BGCOLOR=""#ffffff"" TEXT=""#000000"">")
- ;d out("<TABLE border=""0"" cellspacing=""0"" cellpadding=""3"" WIDTH=""640""><TR><TD>")
- d out("<FONT SIZE=""+2""><CENTER>")
- d out("<!-- Calling TR: CT Evaluation Report -->")
- d out("<B>CT Evaluation Report</B>")
- d out("</CENTER></FONT>")
- d out("</TD></TR><TR><TD>")
- d out("<HR SIZE=""2"" WIDTH=""100%"" ALIGN=""center"" NOSHADE>")
- d out("</TD></TR>")
+ d OUT("<HTML>")
+ d OUT("<HEAD>")
+ d OUT("<!-- Calling TR: CT Evaluation Report -->")
+ d OUT("<TITLE>CT Evaluation Report</TITLE>")
+ d OUT("<link rel='stylesheet' href='/css/report.css'>")
+ d OUT("</HEAD>")
+ d OUT("<BODY BGCOLOR=""#ffffff"" TEXT=""#000000"">")
+ ;d OUT("<TABLE border=""0"" cellspacing=""0"" cellpadding=""3"" WIDTH=""640""><TR><TD>")
+ d OUT("<FONT SIZE=""+2""><CENTER>")
+ d OUT("<!-- Calling TR: CT Evaluation Report -->")
+ d OUT("<B>CT Evaluation Report</B>")
+ d OUT("</CENTER></FONT>")
+ d OUT("</TD></TR><TR><TD>")
+ d OUT("<HR SIZE=""2"" WIDTH=""100%"" ALIGN=""center"" NOSHADE>")
+ d OUT("</TD></TR>")
  ;
- d out("<!-- patient information -->")
- d out("<TR><TD><TABLE border=""0"" cellspacing=""0"" cellpadding=""3"" WIDTH=""640"">")
+ d OUT("<!-- patient information -->")
+ d OUT("<TR><TD><TABLE border=""0"" cellspacing=""0"" cellpadding=""3"" WIDTH=""640"">")
  ;
  ; generate header
  ;
- d out("<TR><TD WIDTH=""180""><B>Patient Name:</B></TD><TD WIDTH=""365"">")
- d out($$xval("sinamel",vals)_", "_$$xval("sinamef",vals))
- d out("</TD>")
+ d OUT("<TR><TD WIDTH=""180""><B>Patient Name:</B></TD><TD WIDTH=""365"">")
+ d OUT($$XVAL("sinamel",vals)_", "_$$XVAL("sinamef",vals))
+ d OUT("</TD>")
  ;
- d out("<TD WIDTH=""120""><B>Study ID:</B></TD><TD WIDTH=""75"">")
- d out($$xval("sisid",vals))
- d out("</TD>")
+ d OUT("<TD WIDTH=""120""><B>Study ID:</B></TD><TD WIDTH=""75"">")
+ d OUT($$XVAL("sisid",vals))
+ d OUT("</TD>")
  ;
- d out("<TR><TD><B>Type of Examination:</B></TD><TD>")
- d out($$xsub("cetex",vals,dict)_" "_$$xsub("cectp",vals,dict))
- d out("</TD>")
- d out("<TD> &nbsp; </TD><TD> &nbsp; </TD></TR>")
+ d OUT("<TR><TD><B>Type of Examination:</B></TD><TD>")
+ d OUT($$XSUB("cetex",vals,dict)_" "_$$XSUB("cectp",vals,dict))
+ d OUT("</TD>")
+ d OUT("<TD> &nbsp; </TD><TD> &nbsp; </TD></TR>")
  ;
- d out("<TR><TD><B>Examination Date:</B></TD><TD>")
- d out($$xval("cedos",vals))
+ d OUT("<TR><TD><B>Examination Date:</B></TD><TD>")
+ d OUT($$XVAL("cedos",vals))
  ;
- ;i $$xval("sidob",vals)'=-1 d  ;
- ;. d out("<TD><B>Date of Birth:</B></TD><TD>")
- ;. d out($$xval("sidob",vals))
- ;e  d out("<TD> &nbsp; </TD><TD> &nbsp; </TD></TR>")
+ ;i $$XVAL("sidob",vals)'=-1 d  ;
+ ;. d OUT("<TD><B>Date of Birth:</B></TD><TD>")
+ ;. d OUT($$XVAL("sidob",vals))
+ ;e  d OUT("<TD> &nbsp; </TD><TD> &nbsp; </TD></TR>")
  ;
- i $$xval("sidob",vals)>0 d  ;
- . d out("<TD><B>Date of Birth:</B></TD><TD>")
- . d out($$xval("sidob",vals))
- . d out("</TD></TR>")
+ i $$XVAL("sidob",vals)>0 d  ;
+ . d OUT("<TD><B>Date of Birth:</B></TD><TD>")
+ . d OUT($$XVAL("sidob",vals))
+ . d OUT("</TD></TR>")
  e  d  ;
- . d out("<TD> &nbsp; </TD><TD> &nbsp; </TD></TR>")
+ . d OUT("<TD> &nbsp; </TD><TD> &nbsp; </TD></TR>")
  ;
  ;# End of Header
  ;
- d out("</TABLE>")
- ;d out("</TD></TR><TR><TD>")
- d out("<HR SIZE=""2"" WIDTH=""100%"" ALIGN=""center"" NOSHADE>")
- d out("</TD></TR>")
- d out("<!-- report -->")
- d out("<TR><TD>")
- d out("<FONT SIZE=""+2""><B>")
- d out("Report:")
- d out("</B></FONT>")
- d out("</TD></TR><TR><TD><TABLE><TR><TD WIDTH=20></TD><TD>")
+ d OUT("</TABLE>")
+ ;d OUT("</TD></TR><TR><TD>")
+ d OUT("<HR SIZE=""2"" WIDTH=""100%"" ALIGN=""center"" NOSHADE>")
+ d OUT("</TD></TR>")
+ d OUT("<!-- report -->")
+ d OUT("<TR><TD>")
+ d OUT("<FONT SIZE=""+2""><B>")
+ d OUT("Report:")
+ d OUT("</B></FONT>")
+ d OUT("</TD></TR><TR><TD><TABLE><TR><TD WIDTH=20></TD><TD>")
  ;
- i $$xval("ceclin",vals)'="" d  ;
- . d hout("Clinical Information: ")
- . d out($$xval("ceclin",vals))
+ i $$XVAL("ceclin",vals)'="" d  ;
+ . d HOUT("Clinical Information: ")
+ . d OUT($$XVAL("ceclin",vals))
  ;
  n nopri s nopri=1
- d hout("Comparison CT Scans: ")
- if $$xval("cedcs",vals)'="" d  ;
- . d out($$xsub("cetex",vals,dict)_". ")
- . d out("Comparisons: "_$$xval("cedcs",vals))
+ d HOUT("Comparison CT Scans: ")
+ if $$XVAL("cedcs",vals)'="" d  ;
+ . d OUT($$XSUB("cetex",vals,dict)_". ")
+ . d OUT("Comparisons: "_$$XVAL("cedcs",vals))
  . s nopri=0
- if $$xval("cedps",vals)'="" d  ;
- . d out($$xval("cedps",vals))
+ if $$XVAL("cedps",vals)'="" d  ;
+ . d OUT($$XVAL("cedps",vals))
  . s nopri=0
- d:nopri out("None")
+ d:nopri OUT("None")
  ;
- d hout(" Description: ")
- i $$xval("cectp",vals)'="" d  ;
- . d out("Limited Diagnostic CT examination was performed.")
+ d HOUT(" Description: ")
+ i $$XVAL("cectp",vals)'="" d  ;
+ . d OUT("Limited Diagnostic CT examination was performed.")
  e  d  ;
- . d out("CT examination of the entire thorax was performed at"_$$xsub("cectp",vals,dict)_" settings.")
+ . d OUT("CT examination of the entire thorax was performed at"_$$XSUB("cectp",vals,dict)_" settings.")
  ;
- i $$xval("cectrst",vals)'="" d  ;
- . d out(" Images were obtained at "_$$xval("cectrst",vals)_" mm slice thickness.")
- . d out(" Multiplanar reconstructions were performed.")
+ i $$XVAL("cectrst",vals)'="" d  ;
+ . d OUT(" Images were obtained at "_$$XVAL("cectrst",vals)_" mm slice thickness.")
+ . d OUT(" Multiplanar reconstructions were performed.")
  ;
  i newct d  ;
  . n nvadbo s nvadbo=1
  . n ii
  . f ii="ceoaa","ceaga","ceasa","ceala","ceapa","ceaaa","ceaka" d  ;
- . . i $$xval(ii,vals)="e" set nvabdo=0
+ . . i $$XVAL(ii,vals)="e" set nvabdo=0
  . ;
  . i nvadbo=1 d  ;
- . . d out("Upper abdominal images were not acquired on the current scan due to its limited nature.")
+ . . d OUT("Upper abdominal images were not acquired on the current scan due to its limited nature.")
  ;
  ; lung nodules
  ;
- d hout("Lung nodules:")
+ d HOUT("Lung nodules:")
  ;
  ; see if there are any nodules using the cectXch fields
  ;
  n ij,hasnodules s hasnodules=0
- f ij=1:1:10 i ($$xval("cect"_ij_"ch",vals)'="")&($$xval("cect"_ij_"ch",vals)'="-") s hasnodules=1
+ f ij=1:1:10 i ($$XVAL("cect"_ij_"ch",vals)'="")&($$XVAL("cect"_ij_"ch",vals)'="-") s hasnodules=1
  ;
  i hasnodules=0 d  ;
- . d out(para)
- . d out("No pulmonary nodules are seen."_para)
+ . d OUT(para)
+ . d OUT("No pulmonary nodules are seen."_para)
  ;
- ;i $$xval("cennod",vals)="" d  ;
- ;. d out(para)
- ;. d out("No pulmonary nodules are seen."_para)
- ;e  i $$xval("ceanod",vals)="n" d  ;
- ;. d out(para)
- ;. d out("No pulmonary nodules are seen."_para)
+ ;i $$XVAL("cennod",vals)="" d  ;
+ ;. d OUT(para)
+ ;. d OUT("No pulmonary nodules are seen."_para)
+ ;e  i $$XVAL("ceanod",vals)="n" d  ;
+ ;. d OUT(para)
+ ;. d OUT("No pulmonary nodules are seen."_para)
  ;
  d NODULES^SAMICTR1(rtn,.vals,.dict)
  ;
@@ -191,16 +191,16 @@ wsReport(return,filter) ; web service which returns an html cteval report
  ;
  ; etc etc
  ;
- d out("</TABLE>")
- d out("<p><br></p><p><b>References:</b><br></p>")
- d out("<p>Recommendations for nodules and other findings are detailed in the I-ELCAP Protocol.<BR>")
- d out("A summary and the full I-ELCAP protocol can be viewed at: <a href=""http://ielcap.org/protocols"">http://ielcap.org/protocols</a></p>")
- d out("</TD></TR></TABLE></TD></TR></TABLE>")
- d out("</BODY></HTML>")
+ d OUT("</TABLE>")
+ d OUT("<p><br></p><p><b>References:</b><br></p>")
+ d OUT("<p>Recommendations for nodules and other findings are detailed in the I-ELCAP Protocol.<BR>")
+ d OUT("A summary and the full I-ELCAP protocol can be viewed at: <a href=""http://ielcap.org/protocols"">http://ielcap.org/protocols</a></p>")
+ d OUT("</TD></TR></TABLE></TD></TR></TABLE>")
+ d OUT("</BODY></HTML>")
  ;
  q
  ;
-out(ln)
+OUT(ln) 
  s cnt=cnt+1
  n lnn
  ;s debug=1
@@ -213,18 +213,18 @@ out(ln)
  . s @rtn@(lnn)=zp_":"_ln
  q
  ;
-hout(ln) 
- d out("<p><span class='sectionhead'>"_ln_"</span>")
+HOUT(ln) 
+ d OUT("<p><span class='sectionhead'>"_ln_"</span>")
  q
  ;
-xval(var,vals) ; extrinsic returns the patient value for var
+XVAL(var,vals) ; extrinsic returns the patient value for var
  ; vals is passed by name
  n zr
  s zr=$g(@vals@(var))
  ;i zr="" s zr="["_var_"]"
  q zr
  ;
-xsub(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined by var
+XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined by var
  ; vals and dict are passed by name
  ; valdx is used for nodules ala cect2co with the nodule number included
  ;n dict s dict=$$setroot^%wd("cteval-dict")
@@ -238,10 +238,10 @@ xsub(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined
  ;i zr="" s zr="["_var_","_zv_"]"
  q zr
  ;
-getFilter(filter,sid) ; fill in the filter for Ct Eval for sid
+GETFILTR(filter,sid) ; fill in the filter for Ct Eval for sid
  s filter("studyid")=sid
  n items,zform
- d getItems^SAMICAS2("items",sid)
+ d GETITEMS^SAMICAS2("items",sid)
  s zform=$o(items("ceform"))
  s filter("form")=zform
  zwr filter
@@ -250,7 +250,7 @@ T1(grtn,debug) ;
  n filter
  ;n sid s sid="XXX00333"
  n sid s sid="XXX00484"
- d getFilter(.filter,sid)
+ d GETFILTR(.filter,sid)
  i $g(debug)=1 s filter("debug")=1
  d wsReport^SAMICTR0(.grtn,.filter)
  q

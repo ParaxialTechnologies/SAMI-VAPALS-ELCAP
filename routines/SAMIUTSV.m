@@ -1,4 +1,4 @@
-SAMIUTSV ;ven/lgc - UNIT TEST for SAMISAV ; 11/8/18 12:10pm
+SAMIUTSV ;ven/lgc - UNIT TEST for SAMISAV ; 12/10/18 10:03am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -34,7 +34,7 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  ;
  ;
 UTSAVF ; @TEST - extrinsic which returns the form key to use
- ;safeFilter^SAMISAV
+ ;SAVFILTR^SAMISAV
  ; First test.  Move ceform-2018-10-21 to ceform-yyyy-mm-dd
  ;   and delete the old entry
  n sid,form,vars,root,poo,arc,useform,node
@@ -45,7 +45,7 @@ UTSAVF ; @TEST - extrinsic which returns the form key to use
  s root=$$setroot^%wd("vapals-patients")
  ; save off ceform built by earlier unit test
  m poo=@root@("graph","XXX00001","ceform-2018-10-21")
- s useform=$$saveFilter^SAMISAV(.sid,.form,.vars)
+ s useform=$$SAVFILTR^SAMISAV(.sid,.form,.vars)
  s utsuccess=(useform="ceform-2018-10-29")
  i '$d(@root@("graph","XXX00001",useform)) s utsuccess=0
  ; kill the new form just generated
@@ -70,7 +70,7 @@ UTSAVF ; @TEST - extrinsic which returns the form key to use
  s form=$qs(node,5)
  s vars("sidc")=@root@("graph","XXX00001",form,"sidc")
  ; run the api
- s useform=$$saveFilter^SAMISAV(.sid,.form,.vars)
+ s useform=$$SAVFILTR^SAMISAV(.sid,.form,.vars)
  s success=(useform="ceform-2018-10-29")
  i '$d(@root@("graph","XXX00001",useform)) s utsuccess=0
  ; kill the new form just generated

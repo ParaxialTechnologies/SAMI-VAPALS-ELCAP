@@ -1,4 +1,4 @@
-SAMIFRM2 ;ven/gpl - ielcap: forms ; 11/27/18 11:28am
+SAMIFRM2 ;ven/gpl - ielcap: forms ; 12/11/18 9:21am
  ;;18.0;SAM;;
  ;
  ; Routine SAMIFRM contains subroutines for managing the ELCAP forms,
@@ -88,14 +88,14 @@ SAMIFRM2 ;ven/gpl - ielcap: forms ; 11/27/18 11:28am
  ; INITFRMS: initial all available forms
  ; INIT1FRM: initialize 1 form from elcap-patient graph (field names only)
  ; REGFORMS: register elcap forms in form mapping file
- ; loadData: import directory full of json data into elcap-patient graph
- ; parseFileName: parse filename extracting studyid and form
+ ; LOADDATA: import directory full of json data into elcap-patient graph
+ ; PRSFLNM: parse filename extracting studyid and form
  ; $$GETDIR: extrinsic which prompts for directory
  ; $$GETFN: extrinsic which prompts for filename
  ; SAMISUBS: ln is passed by reference; filter is passed by reference
  ; SAMISUB2: used for Dom's new style forms
- ; fixSrc: fix html src lines to use resources in see/
- ; fixHref: fix html href lines to use resources in see/
+ ; FIXSRC: fix html src lines to use resources in see/
+ ; FIXHREF: fix html href lines to use resources in see/
  ;
  ;
  ;
@@ -216,7 +216,7 @@ REGFORMS() ; register elcap forms in form mapping file
  ;
  ;
  ;
-loadData() ; import directory full of json data into elcap-patient graph
+LOADDATA() ; import directory full of json data into elcap-patient graph
  ;
  ;@called-by: ???
  ;@calls
@@ -224,7 +224,7 @@ loadData() ; import directory full of json data into elcap-patient graph
  ; file2ary^%wd
  ; $$setroot^%wd
  ; DECODE^VPRJSON
- ; parseFileName
+ ; PRSFLNM
  ;
  new dir
  ; Skip interactive if doing unit test VEN/lgc
@@ -250,23 +250,23 @@ loadData() ; import directory full of json data into elcap-patient graph
  . kill json,ary
  . do file2ary^%wd("json",dir,filename)
  . do DECODE^VPRJSON("json","ary")
- . do parseFileName(filename,.studyid,.form)
+ . do PRSFLNM(filename,.studyid,.form)
  . quit:'$data(ary)
  . merge @root@("graph",studyid,form)=ary
  . quit
  ;
- quit  ; end of loadData
+ quit  ; end of LOADDATA
  ;
  ;
  ;
-parseFileName(fn,zid,zform) ; parse filename extracting studyid & form
+PRSFLNM(fn,zid,zform) ; parse filename extracting studyid & form
  ;
  ;             ie XXX0001-bxform-2004-02-01
  ; yields studyid=XXX0001
  ;                 & form=bxform-2004-02-01
  ;
  ;@called-by
- ; loadData
+ ; LOADDATA
  ;@calls: none
  ;
  set zid=$piece(fn,"-",1)
@@ -274,7 +274,7 @@ parseFileName(fn,zid,zform) ; parse filename extracting studyid & form
  set zform=$extract(fn,loc,$length(fn))
  set zform=$piece(zform,".",1)
  ;
- quit  ; end of parseFileName
+ quit  ; end of PRSFLNM
  ;
  ;
  ;
@@ -283,7 +283,7 @@ GETDIR(KBAIDIR,KBAIDEF) ; extrinsic which prompts for directory
  ; returns true if the user gave values
  ;
  ;@called-by
- ; loadData
+ ; LOADDATA
  ;@calls
  ; ^DIR
  ;
@@ -331,8 +331,8 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  ;@called-by
  ; wsGetForm^%wf
  ;@calls
- ; fixSrc
- ; fixHref
+ ; FIXSRC
+ ; FIXHREF
  ;
  ;
  new touched s touched=0
@@ -354,11 +354,11 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  . quit
  ;
  if line["src=" do
- . do fixSrc(.line) ; insert see/ processor on src= references
+ . do FIXSRC(.line) ; insert see/ processor on src= references
  . quit
  ;
  if line["href=" if 'touched do
- . do fixHref(.line) ; insert see/ processor on href= references
+ . do FIXHREF(.line) ; insert see/ processor on href= references
  . quit
  ;
  if line["Sample, Sammy G" do  ;
@@ -391,12 +391,12 @@ SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  ;
  quit  ; end of SAMISUB2
  ;
-wsSbform(rtn,filter) ; background form access
+WSSBFORM(rtn,filter) ; background form access
  n sid s sid=$g(filter("studyid"))
  i sid="" s sid=$g(filter("sid"))
- i +sid>0 s sid=$$genStudyId^SAMIHOM3(sid)
+ i +sid>0 s sid=$$GENSTDID^SAMIHOM3(sid)
  ;i sid="" s sid="XXX0001"
- n items d getItems^SAMICAS2("items",sid)
+ n items d GETITEMS^SAMICAS2("items",sid)
  ;w !,"sid=",sid,!
  ;zwr items
  ;b
@@ -406,12 +406,12 @@ wsSbform(rtn,filter) ; background form access
  d wsGetForm^%wf(.rtn,.filter)
  q
  ;
-wsSiform(rtn,filter) ; intake form access
+WSSIFORM(rtn,filter) ; intake form access
  n sid s sid=$g(filter("studyid"))
  i sid="" s sid=$g(filter("sid"))
- i +sid>0 s sid=$$genStudyId^SAMIHOM3(sid)
+ i +sid>0 s sid=$$GENSTDID^SAMIHOM3(sid)
  ;i sid="" s sid="XXX0001"
- n items d getItems^SAMICAS2("items",sid)
+ n items d GETITEMS^SAMICAS2("items",sid)
  ;w !,"sid=",sid,!
  ;zwr items
  ;b
@@ -421,12 +421,12 @@ wsSiform(rtn,filter) ; intake form access
  d wsGetForm^%wf(.rtn,.filter)
  q
  ;
-wsCeform(rtn,filter) ; ctevaluation form access
+WSCEFORM(rtn,filter) ; ctevaluation form access
  n sid s sid=$g(filter("studyid"))
  i sid="" s sid=$g(filter("sid"))
- i +sid>0 s sid=$$genStudyId^SAMIHOM3(sid)
+ i +sid>0 s sid=$$GENSTDID^SAMIHOM3(sid)
  ;i sid="" s sid="XXX0001"
- n items d getItems^SAMICAS2("items",sid)
+ n items d GETITEMS^SAMICAS2("items",sid)
  ;w !,"sid=",sid,!
  ;zwr items
  ;b
@@ -437,7 +437,7 @@ wsCeform(rtn,filter) ; ctevaluation form access
  q
  ;
  ;
-fixSrc(line) ; fix html src lines to use resources in see/
+FIXSRC(line) ; fix html src lines to use resources in see/
  ;
  ;@called-by
  ; SAMISUB2
@@ -457,11 +457,11 @@ fixSrc(line) ; fix html src lines to use resources in see/
  . . quit
  . quit
  ;
- quit  ; end of fixSrc
+ quit  ; end of FIXSRC
  ;
  ;
  ;
-fixHref(line) ; fix html href lines to use resources in see/
+FIXHREF(line) ; fix html href lines to use resources in see/
  ;
  ;@called-by
  ; SAMISUB2
@@ -484,7 +484,7 @@ fixHref(line) ; fix html href lines to use resources in see/
  . . quit
  . quit
  ;
- quit  ; end of fixHref
+ quit  ; end of FIXHREF
  ;
  ;
 GETLAST5(sid) ; extrinsic returns the last5 for patient sid
@@ -523,9 +523,9 @@ GETHDR(sid) ; extrinsic returns header string for patient sid
  n ien s ien=$o(@root@("sid",sid,""))
  n dfn s dfn=@root@(ien,"dfn")
  q:ien=""
- ;d prefill^SAMIHOM3(dfn) ;update from VistA
- i $g(@root@(ien,"ssn"))="" d prefill^SAMIHOM3(dfn) ;update from VistA
- i $g(@root@(ien,"sbdob"))=-1 d prefill^SAMIHOM3(dfn) ;update from VistA
+ ;d PREFILL^SAMIHOM3(dfn) ;update from VistA
+ i $g(@root@(ien,"ssn"))="" d PREFILL^SAMIHOM3(dfn) ;update from VistA
+ i $g(@root@(ien,"sbdob"))=-1 d PREFILL^SAMIHOM3(dfn) ;update from VistA
  i $g(@root@(ien,"ssn"))="" q "" ; patient info not available
  n pssn,dob,age,sex
  s pssn=$g(@root@(ien,"sissn"))

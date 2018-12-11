@@ -1,10 +1,10 @@
-SAMICTD2 ;ven/gpl - ielcap: forms ;2018-03-07T18:48Z
+SAMICTD2 ;ven/gpl - ielcap: forms ; 12/10/18 10:58am
  ;;18.0;SAMI;;
  ;
  ;
  quit  ; no entry from top
  ;
-init2graph() ; initialize CTEVAL dictionary into graph cteval-dict
+INIT2GPH() ; initialize CTEVAL dictionary into graph cteval-dict
  n g,root
  s root=$$setroot^%wd("cteval-dict")
  k @root
@@ -116,6 +116,7 @@ INIT(g) ;
  set @g@("cectpd","ca")="Carcinoid(atypical)"
  set @g@("cectpd","be")="Benign"
  set @g@("cectpd","bs")="Benign specific"
+ 
  set @g@("cectac","f")="Follow-up CT"
  set @g@("cectac","a")="Antibiotic treatment with a follow-up CT"
  set @g@("cectac","e")="PET"

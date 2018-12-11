@@ -1,4 +1,4 @@
-SAMIUTAD ;ven/lgc - Unit test for SAMIADMN ; 10/31/18 6:04pm
+SAMIUTAD ;ven/lgc - Unit test for SAMIADMN ; 12/10/18 11:16am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -41,7 +41,7 @@ UTCLRW ; @TEST - Test Clear the M WebServer
  n poo m poo=@root
  d SaveUTarray^SAMIUTST(.poo,"UTCLRW^SAMIUTAD")
  d purgegraph^%wd("seeGraph")
- D ClrWeb^SAMIADMN
+ D CLRWEB^SAMIADMN
  ; Compare rebuilt seeGraph with data saved
  k arc m arc=@root
  k poo d PullUTarray^SAMIUTST(.poo,"UTCLRW^SAMIUTAD")
@@ -82,7 +82,7 @@ UTSLRADS ; @TEST - Test set VA-PALS to use the LungRads version of the Ct Evalua
  n setting s setting=$p($g(^SAMI(311.11,ien,2)),"^",2)
  ; set to ELCAP
  s $p(^SAMI(311.11,ien,2),"^",2)="ctevaluation-elcap.html"
- d SETLUNGRADS^SAMIADMN()
+ d SETLGRDS^SAMIADMN()
  n poo s poo=$p($g(^SAMI(311.11,ien,2)),"^",2)
  s utsuccess=(poo="ctevaluation.html")
  ; Return to original state
@@ -100,7 +100,7 @@ UTWSLCP ; @TEST - set VA-PALS to use the ELCAP version of the Ct Evaluation form
  n setting s setting=$p($g(^SAMI(311.11,ien,2)),"^",2)
  ; set to LungRads
  s $p(^SAMI(311.11,ien,2),"^",2)="ctevaluation.html"
- n arc d wsSETELCAP^SAMIADMN(.arc,"")
+ n arc d WSSTELCP^SAMIADMN(.arc,"")
  n poo s poo=$p($g(^SAMI(311.11,ien,2)),"^",2)
  s utsuccess=(poo="ctevaluation-elcap.html")
  ; Return to original state
@@ -118,7 +118,7 @@ UTWSLRAD ; @TEST -  set VA-PALS to use the LungRads version of the Ct Evaluation
  n setting s setting=$p($g(^SAMI(311.11,ien,2)),"^",2)
  ; set to ELCAP
  s $p(^SAMI(311.11,ien,2),"^",2)="ctevaluation-elcap.html"
- n arc d wsSETLRADS^SAMIADMN(.arc,"")
+ n arc d WSSTLRAD^SAMIADMN(.arc,"")
  n poo s poo=$p($g(^SAMI(311.11,ien,2)),"^",2)
  s utsuccess=(poo="ctevaluation.html")
  ; Return to original state
@@ -134,7 +134,7 @@ UTWSCTV ; @TEST - web service to return the current ctform version
  n ien s ien=$o(^SAMI(311.11,"B","vapals:ceform",""))
  n poosfm s poosfm=$p($g(^SAMI(311.11,ien,2)),"^",2)
  s utsuccess=0
- n arcsfm D wsctversion^SAMIADMN(.arcsfm,"")
+ n arcsfm D WSCTVERS^SAMIADMN(.arcsfm,"")
  i poosfm="ctevaluation.html",arcsfm["lungrads" s utsuccess=1
  i poosfm="ctevaluation-elcap.html",arcsfm["elcap" s utsuccess=1
  D CHKEQ^%ut(utsuccess,1,"Testing web service return current ctform version FAILED!")

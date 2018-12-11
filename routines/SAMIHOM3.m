@@ -1,7 +1,7 @@
-SAMIHOM3 ;ven/gpl - ielcap: forms ; 12/7/18 11:16am
+SAMIHOM3 ;ven/gpl - ielcap: forms ; 12/11/18 9:36am
  ;;18.0;SAMI;;
  ;
- ; Routine SAMIHOM2 contains subroutines for implementing the ELCAP Home
+ ; Routine SAMIHOM3 contains subroutines for implementing the ELCAP Home
  ; Page. SAMIHOM3 is further enhanced to provide binding to VistA
  ; CURRENTLY UNTESTED & IN PROGRESS
  ;
@@ -49,25 +49,25 @@ SAMIHOM3 ;ven/gpl - ielcap: forms ; 12/7/18 11:16am
  ; https://www.osehra.org/groups/va-pals-open-source-project-group
  ;
  ;@module-log
- ; 2018-01-13 ven/gpl v18.0t04 SAMIHOM2: create routine from SAMIFRM to
+ ; 2018-01-13 ven/gpl v18.0t04 SAMIHOM3: create routine from SAMIFRM to
  ; implement ELCAP Home Page.
  ;
- ; 2018-02-05 ven/toad v18.0t04 SAMIHOM2: update license & attribution &
+ ; 2018-02-05 ven/toad v18.0t04 SAMIHOM3: update license & attribution &
  ; hdr comments, add white space & do-dot quits, spell out language
  ; elements.
  ;
- ; 2018-02-27 ven/gpl v18.0t04 SAMIHOM2: new subroutines $$prefix,GETHOME,
- ; $$scanFor,wsNewCase,prefill,makeSbform,makeSiform,$$validateName,
- ; $$sid2num,$$keyDate,$$genStudyId,$$nextNum to support creation of new
+ ; 2018-02-27 ven/gpl v18.0t04 SAMIHOM3: new subroutines $$PREFIX,GETHOME,
+ ; $$SCANFOR,WSNEWCAS,PREFILL,MKSBFORM,MKSIFORM,$$VALDTNM,
+ ; $$SID2NUM,$$KEYDATE,$$GENSTDID,$$NEXTNUM to support creation of new
  ; cases.
  ;
- ; 2018-03-01 ven/toad v18.0t04 SAMIHOM2: refactor & reorganize new code,
+ ; 2018-03-01 ven/toad v18.0t04 SAMIHOM3: refactor & reorganize new code,
  ; add header comments, r/findReplaceAll^%wf w/findReplace^%ts.
  ;
- ; 2018-03-06 ven/gpl v18.0t04 SAMIHOM2: ?
+ ; 2018-03-06 ven/gpl v18.0t04 SAMIHOM3: ?
  ;
- ; 2018-03-07 ven/toad v18.0t04 SAMIHOM2: in $$sid2num add
- ; wsNuForm^SAMICAS2 to called-by list; in keyDate,GETHOME update
+ ; 2018-03-07 ven/toad v18.0t04 SAMIHOM3: in $$SID2NUM add
+ ; WSNUFORM^SAMICAS2 to called-by list; in keyDate,GETHOME update
  ; called-by.
  ;
  ;@contents
@@ -78,23 +78,23 @@ SAMIHOM3 ;ven/gpl - ielcap: forms ; 12/7/18 11:16am
  ; DEVHOME: temporary home page for development
  ; PATLIST: returns a list of patients in ary, passed by name
  ; GETHOME: homepage accessed using GET (not subsequent visit)
- ; $$scanFor = scan array looking for value, return index
+ ; $$SCANFOR = scan array looking for value, return index
  ;
  ;  code for SAMI new case web service
  ;
- ; wsNewCase: web service receives post from home & creates new case
- ; $$nextNum = next number for studyid
- ; $$genStudyId = studyID for number
- ; $$prefix = letters to use to begin studyId
- ; $$keyDate = date in StudyId format (yyyy-mm-dd)
- ; $$validateName = validate a new name
- ; prefill: prefill fields for forms
- ; makeSiform: create intake form
- ; makeSbform: create background form
+ ; WSNEWCAS: web service receives post from home & creates new case
+ ; $$NEXTNUM = next number for studyid
+ ; $$GENSTDID = studyID for number
+ ; $$PREFIX = letters to use to begin studyId
+ ; $$KEYDATE = date in StudyId format (yyyy-mm-dd)
+ ; $$VALDTNM = validate a new name
+ ; PREFILL: prefill fields for forms
+ ; MKSIFORM: create intake form
+ ; MKSBFORM: create background form
  ;
- ;  api $$sid2num^SAMIHOM2
+ ;  api $$SID2NUM^SAMIHOM3
  ;
- ; $$sid2num = number part of studyid (XXX0001 -> 1)
+ ; $$SID2NUM = number part of studyid (XXX0001 -> 1)
  ;
  ;
  ;
@@ -164,23 +164,23 @@ WSVAPALS(ARG,BODY,RESULT) ; vapals post web service - all calls come through thi
  ;
  i route="lookup" d  q  ;
  . m ARG=vars
- . d wsLookup^SAMISRC2(.ARG,.BODY,.RESULT)
+ . d WSLOOKUP^SAMISRC2(.ARG,.BODY,.RESULT)
  ;
  i route="newcase" d  q  ;
  . m ARG=vars
- . d wsNewCase(.ARG,.BODY,.RESULT)
+ . d WSNEWCAS(.ARG,.BODY,.RESULT)
  ;
  i route="casereview" d  q  ;
  . m ARG=vars
- . d wsCASE^SAMICAS2(.RESULT,.ARG)
+ . d WSCASE^SAMICAS2(.RESULT,.ARG)
  ;
  i route="nuform" d  q  ;
  . m ARG=vars
- . d wsNuForm^SAMICAS2(.RESULT,.ARG)
+ . d WSNUFORM^SAMICAS2(.RESULT,.ARG)
  ;
  i route="addform" d  q  ;
  . m ARG=vars
- . d wsNuFormPost^SAMICAS2(.ARG,.BODY,.RESULT)
+ . d WSNFPOST^SAMICAS2(.ARG,.BODY,.RESULT)
  ;
  i route="form" d  q  ;
  . m ARG=vars
@@ -190,33 +190,33 @@ WSVAPALS(ARG,BODY,RESULT) ; vapals post web service - all calls come through thi
  . m ARG=vars
  . d wsPostForm^%wf(.ARG,.BODY,.RESULT)
  . i $g(ARG("form"))["siform" d  ;
- . . if $$note^SAMINOTI(.ARG) d  ;
+ . . if $$NOTE^SAMINOTI(.ARG) d  ;
  . . . n FILTER
  . . . s FILTER("studyid")=$G(ARG("studyid"))
  . . . s FILTER("form")=$g(ARG("form")) ;
  . . . n tiuien
- . . . s tiuien=$$SV2VSTA^SAMIVSTA(.FILTER)
+ . . . s tiuien=$$SV2VISTA^SAMIVSTA(.FILTER)
  . . . s FILTER("tiuien")=tiuien
  . . . ;d SV2VSTA^SAMIVSTA(.FILTER)
  . . . m ^GPL("newFILTER")=FILTER
- . . . d wsNote^SAMINOTI(.RESULT,.ARG)
+ . . . d WSNOTE^SAMINOTI(.RESULT,.ARG)
  ;
  i route="deleteform" d  q  ;
  . m ARG=vars
- . d deleteForm^SAMICAS2(.RESULT,.ARG)
+ . d DELFORM^SAMICAS2(.RESULT,.ARG)
  ;
  i route="ctreport" d  q  ;
  . m ARG=vars
- . d wsReport^SAMICTR0(.RESULT,.ARG)
+ . d WSREPORT^SAMICTR0(.RESULT,.ARG)
  . ;d wsReport^SAMICTRT(.RESULT,.ARG)
  ;
  i route="note" d  q  ; 
  . m ARG=vars
- . d wsNote^SAMINOTI(.RESULT,.ARG)
+ . d WSNOTE^SAMINOTI(.RESULT,.ARG)
  ;
  i route="report" d  q  ; 
  . m ARG=vars
- . d wsReport^SAMIUR1(.RESULT,.ARG)
+ . d WSREPORT^SAMIUR1(.RESULT,.ARG)
  ;
  q
  ;
@@ -315,13 +315,13 @@ GETHOME(RTN,FILTER) ; homepage accessed using GET
  ;ven/gpl;private;procedure;
  ;@called-by
  ; WSHOME
- ; wsNewCase
- ; wsNuFormPost^SAMICAS2
+ ; WSNEWCAS
+ ; WSNFPOST^SAMICAS2
  ; wsLookup^SAMISRCH
  ;@calls
- ; getTemplate^SAMICAS2
+ ; GETTMPL^SAMICAS2
  ; findReplace^%ts
- ; $$scanFor
+ ; $$SCANFOR
  ; ADDCRLF^VPRJRUT
  ;@input
  ; FILTER =
@@ -333,7 +333,7 @@ GETHOME(RTN,FILTER) ; homepage accessed using GET
  ;@stanza 2 get template for homepage
  ;
  new temp,tout
- do getTemplate^SAMICAS2("temp","vapals:home")
+ do GETTMPL^SAMICAS2("temp","vapals:home")
  quit:'$data(temp)
  ;
  ;@stanza 3 process homepage template
@@ -346,11 +346,11 @@ GETHOME(RTN,FILTER) ; homepage accessed using GET
  . n touched s touched=0
  . ;
  . i ln["href" i 'touched d  ;
- . . d fixHref^SAMIFRM2(.ln)
+ . . d FIXHREF^SAMIFRM2(.ln)
  . . s temp(zi)=ln
  . ;
  . i ln["src" d  ;
- . . d fixSrc^SAMIFRM2(.ln)
+ . . d FIXSRC^SAMIFRM2(.ln)
  . . s temp(zi)=ln
  . ;
  . i ln["id" i ln["studyIdMenu" d  ;
@@ -371,7 +371,7 @@ GETHOME(RTN,FILTER) ; homepage accessed using GET
  ;
  ;
  ;
-scanFor(ary,start,what) ; scan array looking for value
+SCANFOR(ary,start,what) ; scan array looking for value
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -405,7 +405,7 @@ scanFor(ary,start,what) ; scan array looking for value
  i %1<start s zrtn=start
  i %1>1000 s zrtn=start
  ;
- quit zrtn ; return array index; end of $$$scanFor
+ quit zrtn ; return array index; end of $$$SCANFOR
  ;
  ;
  ;
@@ -413,7 +413,7 @@ scanFor(ary,start,what) ; scan array looking for value
  ;
  ;
  ;
-wsNewCase(ARGS,BODY,RESULT) ; receives post from home & creates new case
+WSNEWCAS(ARGS,BODY,RESULT) ; receives post from home & creates new case
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -422,16 +422,16 @@ wsNewCase(ARGS,BODY,RESULT) ; receives post from home & creates new case
  ;@calls
  ; parseBody^%wf
  ; $$setroot^%wd
- ; $$nextNum
- ; $$genStudyId
+ ; $$NEXTNUM
+ ; $$GENSTDID
  ; $$NOW^XLFDT
- ; $$keyDate
- ; $$validateName
+ ; $$KEYDATE
+ ; $$VALDTNM
  ; GETHOME
- ; prefill
- ; makeSbform
- ; makeSiform
- ; wsCASE^SAMICAS2
+ ; PREFILL
+ ; MKSBFORM
+ ; MKSIFORM
+ ; WSCASE^SAMICAS2
  ;@input
  ;.ARGS =
  ; BODY =
@@ -454,7 +454,7 @@ wsNewCase(ARGS,BODY,RESULT) ; receives post from home & creates new case
  ;
  new saminame set saminame=$get(vars("name"))
  if saminame="" s saminame=$get(vars("saminame"))
- ;if $$validateName(saminame,.ARGS)=-1 do  quit  ;
+ ;if $$VALDTNM(saminame,.ARGS)=-1 do  quit  ;
  ;. new r1
  ;. do GETHOME(.r1,.ARGS) ; home page to redisplay
  ;. merge RESULT=r1
@@ -467,7 +467,7 @@ wsNewCase(ARGS,BODY,RESULT) ; receives post from home & creates new case
  ;. merge RESULT=r1
  ;. quit
  ;
- ;new gien set gien=$$nextNum
+ ;new gien set gien=$$NEXTNUM
  new gien set gien=dfn
  ;
  m ^GPL("newCase","G1")=root
@@ -477,40 +477,40 @@ wsNewCase(ARGS,BODY,RESULT) ; receives post from home & creates new case
  set @root@(gien,"saminum")=gien
  set @root@(gien,"saminame")=saminame
  ;
- new studyid set studyid=$$genStudyId(gien)
+ new studyid set studyid=$$GENSTDID(gien)
  set @root@(gien,"samistudyid")=studyid
  set @root@("sid",studyid,gien)=""
  ;
- new datekey set datekey=$$keyDate($$NOW^XLFDT)
+ new datekey set datekey=$$KEYDATE($$NOW^XLFDT)
  set @root@(gien,"samicreatedate")=datekey
  ;
  merge ^GPL("newCase",gien)=@root@(gien)
  ;
  ;
- do prefill(dfn) ; prefills from the "patient-lookup" graph
+ do PREFILL(dfn) ; prefills from the "patient-lookup" graph
  ;
  n siformkey
  ;do makeSbform(gien) ; create a background form for new patient
- set siformkey=$$makeSiform(gien) ; create an intake for for new patient
+ set siformkey=$$MKSIFORM(gien) ; create an intake for for new patient
  ;
  set ARGS("studyid")=studyid
  set ARGS("form")="vapals:"_siformkey
  do wsGetForm^%wf(.RESULT,.ARGS)
- ;do wsCASE^SAMICAS2(.RESULT,.ARGS) ; navigate to the case review page
+ ;do WSCASE^SAMICAS2(.RESULT,.ARGS) ; navigate to the case review page
  ;
  ;@stanza ? termination
  ;
- quit  ; end of wsNewCase
+ quit  ; end of WSNEWCAS
  ;
  ;
  ;
-nextNum() ; next number for studyid
+NEXTNUM() ; next number for studyid
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
  ;ven/gpl;private;variable;
  ;@called-by
- ; wsNewCase
+ ; WSNEWCAS
  ;@calls
  ; $$setroot^%wd
  ;@input: none
@@ -525,20 +525,20 @@ nextNum() ; next number for studyid
  ;
  ;@stanza 3 return & termination
  ;
- quit number ; return #; end of $$nextNum
+ quit number ; return #; end of $$NEXTNUM
  ;
  ;
  ;
-genStudyId(num) ; studyID for number
+GENSTDID(num) ; studyID for number
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
  ;ven/gpl;private;function;
  ;@called-by
- ; wsNewCase
+ ; WSNEWCAS
  ; wsLookup^SAMISRCH
  ;@calls
- ; $$prefix
+ ; $$PREFIX
  ;@input
  ; num = number of study id
  ;@output = study id corresponding to number
@@ -549,21 +549,21 @@ genStudyId(num) ; studyID for number
  ;
  new zl set zl=$length(num)
  new zz set zz="00000"
- new studyid set studyid=$$prefix_$extract(zz,1,5-zl)_num
+ new studyid set studyid=$$PREFIX_$extract(zz,1,5-zl)_num
  ;
  ;@stanza 3 return & termination
  ;
- quit studyid ; return study id; end of $$genStudyId
+ quit studyid ; return study id; end of $$GENSTDID
  ;
  ;
  ;
-prefix() ; letters to use to begin studyId
+PREFIX() ; letters to use to begin studyId
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
  ;ven/gpl;private;variable;
  ;@called-by
- ; $$genStudyId
+ ; $$GENSTDID
  ;@calls: none
  ;@input: none
  ;@output = study id prefix
@@ -572,18 +572,18 @@ prefix() ; letters to use to begin studyId
  ;
  ;@stanza 2 return & termination
  ;
- quit "XXX" ; return study id prefix; end of $$prefix
+ quit "XXX" ; return study id prefix; end of $$PREFIX
  ;
  ;
  ;
-keyDate(fmdt) ; date in StudyId format (yyyy-mm-dd)
+KEYDATE(fmdt) ; date in StudyId format (yyyy-mm-dd)
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
  ;ven/gpl;private;function;
  ;@called-by
- ; wsNewCase
- ; wsNuFormPost^SAMICAS2
+ ; WSNEWCAS
+ ; WSNFPOST^SAMICAS2
  ;@calls
  ; $$FMTE^XLFDT
  ;@input
@@ -607,17 +607,17 @@ keyDate(fmdt) ; date in StudyId format (yyyy-mm-dd)
  ;
  ;@stanza 3 return & termination
  ;
- quit studydate ; return date; end of $$keyDate
+ quit studydate ; return date; end of $$KEYDATE
  ;
  ;
  ;
-validateName(nm,args) ; validate new name
+VALDTNM(nm,args) ; validate new name
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
  ;ven/gpl;private;function;
  ;@called-by
- ; wsNewCase
+ ; WSNEWCAS
  ;@calls: none
  ;@input
  ; nm = name to validate
@@ -634,17 +634,17 @@ validateName(nm,args) ; validate new name
  ;
  ;@stanza 3 return & termination
  ;
- quit 1 ; return success; end of $$validateName
+ quit 1 ; return success; end of $$VALDTNM
  ;
  ;
  ;
-prefill(dfn) ; prefill fields for form
+PREFILL(dfn) ; prefill fields for form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
  ;ven/gpl;private;procedure;
  ;@called-by
- ; wsNewCase
+ ; WSNEWCAS
  ;@calls
  ; $$setroot^%wd
  ;@input
@@ -683,8 +683,8 @@ prefill(dfn) ; prefill fields for form
  d ^%DT
  Q:Y=-1
  s dob=Y
- if dob'="" set @root@(gien,"sbdob")=$$vapalsDate^SAMICAS2(dob)
- if dob'="" set @root@(gien,"sidob")=$$vapalsDate^SAMICAS2(dob)
+ if dob'="" set @root@(gien,"sbdob")=$$VAPALSDT^SAMICAS2(dob)
+ if dob'="" set @root@(gien,"sidob")=$$VAPALSDT^SAMICAS2(dob)
  ; ssn format
  n ssn s ssn=$g(@lroot@(lien,"ssn"))
  if $l(ssn)=9 set @root@(gien,"sissn")=$e(ssn,1,3)_"-"_$e(ssn,4,5)_"-"_$e(ssn,6,9)
@@ -693,17 +693,17 @@ prefill(dfn) ; prefill fields for form
  ;
  ;@stanza 3 termination
  ;
- quit  ; end of prefill
+ quit  ; end of PREFILL
  ;
  ;
  ;
-makeSbform(num) ; create background form -- depricated gpl 20180615
+MKSBFORM(num) ; create background form -- depricated gpl 20180615
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
  ;ven/gpl;private;procedure;
  ;@called-by
- ; wsNewCase
+ ; WSNEWCAS
  ;@calls
  ; $$setroot^%wd
  ;@input
@@ -723,21 +723,21 @@ makeSbform(num) ; create background form -- depricated gpl 20180615
  new cdate set cdate=$get(@root@(num,"samicreatedate"))
  quit:cdate=""
  merge @root@("graph",sid,"sbform-"_cdate)=@root@(num)
- d setSamiStatus^SAMICAS2(sid,"sbform-"_cdate,"incomplete")
+ d SSAMISTA^SAMICAS2(sid,"sbform-"_cdate,"incomplete")
  ;
  ;@stanza 3 termination
  ;
- quit  ; end of makeSbform
+ quit  ; end of MKSBFORM
  ;
  ;
  ;
-makeSiform(num) ; create intake form
+MKSIFORM(num) ; create intake form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
  ;ven/gpl;private;procedure;
  ;@called-by
- ; wsNewCase
+ ; WSNEWCAS
  ;@calls
  ; $$setroot^%wd
  ;@input
@@ -757,7 +757,7 @@ makeSiform(num) ; create intake form
  new cdate set cdate=$get(@root@(num,"samicreatedate"))
  quit:cdate=""
  merge @root@("graph",sid,"siform-"_cdate)=@root@(num)
- d setSamiStatus^SAMICAS2(sid,"siform-"_cdate,"complete")
+ d SSAMISTA^SAMICAS2(sid,"siform-"_cdate,"complete")
  ; initialize form from VistA data
  n zf s zf=$na(@root@("graph",sid,"siform-"_cdate))
  s @zf@("sipsa")=$g(@root@(num,"address1")) ; primary address
@@ -777,31 +777,31 @@ makeSiform(num) ; create intake form
  n phn s phn=$g(@root@(num,"phone")) ; phone number
  i phn["x" s phn=$p(phn," x",1)
  s @zf@("sippn")=phn
- s @zf@("sidc")=$$vapalsDate^SAMICAS2($$NOW^XLFDT)
+ s @zf@("sidc")=$$VAPALSDT^SAMICAS2($$NOW^XLFDT)
  ; set samifirsttime variable for intake form
  s @zf@("samifirsttime")="true"
  ;
  ;@stanza 3 termination
  ;
- quit "siform-"_cdate ; end of makeSiform
+ quit "siform-"_cdate ; end of MKSIFORM
  ;
  ;
  ;
- ;@section 4 api $$sid2num^SAMIHOM2
+ ;@section 4 api $$SID2NUM^SAMIHOM3
  ;
  ;
  ;
- ;@API $$sid2num^SAMIHOM2, number part of study id
-sid2num(sid) ; number part of studyid (XXX0001 -> 1)
+ ;@API $$SID2NUM^SAMIHOM3, number part of study id
+SID2NUM(sid) ; number part of studyid (XXX0001 -> 1)
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
  ;ven/gpl;public;function;
  ;@called-by
  ; getVals^%wfhform
- ; wsCASE^SAMICAS2
- ; wsNuForm^SAMICAS2
- ; makeCeform^SAMICAS2
+ ; WSCASE^SAMICAS2
+ ; WSNUFORM^SAMICAS2
+ ; MKCEFORM^SAMICAS2
  ;@calls: none
  ;@input
  ; sid = study id
@@ -818,7 +818,7 @@ sid2num(sid) ; number part of studyid (XXX0001 -> 1)
  quit number ; return number; end of $$sid2num
  ;
  ;
-addPatient(dfn) ; calls newCase to add patient dfn to vapals
+ADDPAT(dfn) ; calls newCase to add patient dfn to vapals
  n lroot s lroot=$$setroot^%wd("patient-lookup")
  n lien s lien=$o(@lroot@("dfn",dfn,""))
  q:lien=""
@@ -826,10 +826,10 @@ addPatient(dfn) ; calls newCase to add patient dfn to vapals
  q:name=""
  n bdy s bdy(1)="saminame="_name_"&dfn="_dfn
  n ARGS,result
- d wsNewCase(.ARGS,.bdy,.result)
+ d WSNEWCAS(.ARGS,.bdy,.result)
  zwr result
  ;
-index ; reindex the vapals-patients graph
+INDEX ; reindex the vapals-patients graph
  n root s root=$$setroot^%wd("vapals-patients")
  n zi s zi=0
  f  s zi=$o(@root@(zi)) q:+zi=0  d  ;

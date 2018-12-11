@@ -1,4 +1,4 @@
-SAMISAV ;ven/gpl - SAMI save routines ;2018-03-08T17:53Z
+SAMISAV ;ven/gpl - SAMI save routines ; 12/11/18 9:10am
  ;;18.0;SAM;;
  ;
  ; 
@@ -6,7 +6,7 @@ SAMISAV ;ven/gpl - SAMI save routines ;2018-03-08T17:53Z
  ;
  quit  ; no entry from top
  ;
-saveFilter(sid,form,vars) ; extrinsic which returns the form key to use
+SAVFILTR(sid,form,vars) ; extrinsic which returns the form key to use
  ; for saving. It will relocate the graph for the form if required based
  ; on dates entered on the form.
  ; 
@@ -18,12 +18,12 @@ saveFilter(sid,form,vars) ; extrinsic which returns the form key to use
  . m ^gpl("samisav","vals")=vars
  . n formdate s formdate=$g(vars("cedos")) ; date of the CT scan from the form
  . q:formdate=""
- . n fdate s fdate=$$key2fm^SAMICAS2(formdate) ; convert to fileman date
+ . n fdate s fdate=$$KEY2FM^SAMICAS2(formdate) ; convert to fileman date
  . q:fdate=""
  . q:fdate<0
- . n fmcurrent s fmcurrent=$$key2fm^SAMICAS2(form) ; current key in fm formate
+ . n fmcurrent s fmcurrent=$$KEY2FM^SAMICAS2(form) ; current key in fm formate
  . if fdate'=fmcurrent d  ;
- . . n moveto s moveto="ceform-"_$$keyDate^SAMIHOM3(fdate)
+ . . n moveto s moveto="ceform-"_$$KEYDATE^SAMIHOM3(fdate)
  . . ;w !,"old: ",fmcurrent," new: ",fdate," ... date must be changed
  . . k ^gpl("samisav")
  . . s ^gpl("samisav","current")=form_"^"_fmcurrent
@@ -37,12 +37,12 @@ saveFilter(sid,form,vars) ; extrinsic which returns the form key to use
  . s vars("samifirsttime")="false"
  . n formdate s formdate=$g(vars("sidc")) ; date of the CT scan from the form
  . q:formdate=""
- . n fdate s fdate=$$key2fm^SAMICAS2(formdate) ; convert to fileman date
+ . n fdate s fdate=$$KEY2FM^SAMICAS2(formdate) ; convert to fileman date
  . q:fdate=""
  . q:fdate<0
- . n fmcurrent s fmcurrent=$$key2fm^SAMICAS2(form) ; current key in fm formate
+ . n fmcurrent s fmcurrent=$$KEY2FM^SAMICAS2(form) ; current key in fm formate
  . if fdate'=fmcurrent d  ;
- . . n moveto s moveto="siform-"_$$keyDate^SAMIHOM3(fdate)
+ . . n moveto s moveto="siform-"_$$KEYDATE^SAMIHOM3(fdate)
  . . ;w !,"old: ",fmcurrent," new: ",fdate," ... date must be changed
  . . k ^gpl("samisav")
  . . s ^gpl("samisav","current")=form_"^"_fmcurrent
@@ -53,4 +53,3 @@ saveFilter(sid,form,vars) ; extrinsic which returns the form key to use
  . . s useform=moveto 
  q useform
  ;
- 

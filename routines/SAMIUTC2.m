@@ -1,4 +1,4 @@
-SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ; 12/3/18 2:27pm
+SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ; 12/10/18 9:47am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -47,12 +47,12 @@ TEARDOWN ; ZEXCEPT: args,body,return,filter,from,to,expect,result,expectn,result
  quit
  ;
  ;
-UTWSLKU ; @TEST wsLookup^SAMISRC2
+UTWSLKU ; @TEST WSLOOKUP^SAMISRC2
  ; Comments
  ;
  ; Test with no patient study ID
  set body(1)=""
- do wsLookup^SAMISRC2(.args,.body,.return)
+ do WSLOOKUP^SAMISRC2(.args,.body,.return)
  set expect="Patient not found"
  set result=filter("samilookuperror")
  do CHKEQ^%ut(result,expect)
@@ -72,7 +72,7 @@ UTWSLKU ; @TEST wsLookup^SAMISRC2
  ; Test with a patient study ID
  kill args,body,return,result,expect
  set body(1)="field=sid&fvalue=XXX00001"
- do wsLookup^SAMISRC2(.args,.body,.return)
+ do WSLOOKUP^SAMISRC2(.args,.body,.return)
  set expect="XXX00001"
  set result=filter("studyid")
  do CHKEQ^%ut(result,expect)

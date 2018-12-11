@@ -1,4 +1,4 @@
-SAMICAS2 ;ven/gpl - ielcap: case review page ; 11/13/18 10:32am
+SAMICAS2 ;ven/gpl - ielcap: case review page ; 12/11/18 9:33am
  ;;18.0;SAM;;
  ;
  ; SAMICASE contains subroutines for producing the ELCAP Case Review Page.
@@ -52,7 +52,7 @@ SAMICAS2 ;ven/gpl - ielcap: case review page ; 11/13/18 10:32am
  ;
  ;@module-log
  ; 2018-01-14 ven/gpl v18.0t04 SAMICASE: split from routine SAMIFRM,
- ; include wsCASE, getTemplate, getItems, casetbl.
+ ; include wsCASE, GETTMPL, GETITEMS, casetbl.
  ;
  ; 2018-02-05/08 ven/toad v18.0t04 SAMICASE: update style, license, &
  ; attribution, spell out language elements, add white space & do-dot
@@ -63,8 +63,8 @@ SAMICAS2 ;ven/gpl - ielcap: case review page ; 11/13/18 10:32am
  ; w/findReplaceAll^%wf, r/ln w/line, add @calls & @called-by tags, break
  ; up some long lines.
  ;
- ; 2018-02-27 ven/gpl v18.0t04 SAMICASE: new subroutines $$key2dispDate,
- ; $$getDateKey; in wsCASE get 1st & last names from graph, fix paths,
+ ; 2018-02-27 ven/gpl v18.0t04 SAMICASE: new subroutines $$KEY2DSPD,
+ ; $$GETDTKEY; in wsCASE get 1st & last names from graph, fix paths,
  ; key forms in graph w/date.
  ;
  ; 2018-03-01 ven/toad v18.0t04 SAMICASE: refactor & reorganize new code,
@@ -72,7 +72,7 @@ SAMICAS2 ;ven/gpl - ielcap: case review page ; 11/13/18 10:32am
  ;
  ; 2018-03-06 ven/gpl v18.0t04 SAMICASE: add New Form button, list rest
  ; of forms for patient, add web services wsNuForm & wsNuFormPost &
- ; method makeCeform, extend getItems to get rest of forms.
+ ; method MKCEFORM, extend GETITEMS to get rest of forms.
  ;
  ; 2018-03-07/08 ven/toad v18.0t04 SAMICASE: merge George changes w/rest,
  ; add white space, spell out mumps elements, add header comments to
@@ -80,14 +80,14 @@ SAMICAS2 ;ven/gpl - ielcap: case review page ; 11/13/18 10:32am
  ;
  ;@contents
  ; wsCASE: generate case review page
- ; $$getDateKey = date part of form key
- ; $$key2dispDate = date in elcap format from key date
- ; getTemplate: return html template
- ; getItems: get items available for studyid
+ ; $$GETDTKEY = date part of form key
+ ; $$KEY2DSPD = date in elcap format from key date
+ ; GETTMPL: return html template
+ ; GETITEMS: get items available for studyid
  ;
  ; wsNuForm: select a new form for patient (get service)
  ; wsNuFormPost: post new form selection (post service)
- ; makeCeform: create ct evaluation form
+ ; MKCEFORM: create ct evaluation form
  ;
  ; casetbl: generate case review table
  ;
@@ -97,23 +97,23 @@ SAMICAS2 ;ven/gpl - ielcap: case review page ; 11/13/18 10:32am
  ;
  ;
  ;
-wsCASE(rtn,filter) ; generate case review page
+WSCASE(rtn,filter) ; generate case review page
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
  ;ven/gpl;web service;procedure;
  ;@called-by
  ; web service SAMICASE-wsCASE
- ; wsNewCase^SAMIHOM3
+ ; WSNEWCAS^SAMIHOM3
  ; wsLookup^SAMISRCH
  ;@calls
  ; $$setroot^%wd
- ; getTemplate
- ; getItems
- ; $$sid2num^SAMIHOM3
+ ; GETTMPL
+ ; GETITEMS
+ ; $$SID2NUM^SAMIHOM3
  ; findReplace^%ts
- ; $$getDateKey
- ; $$key2dispDate
+ ; $$GETDTKEY
+ ; $$KEY2DSPD
  ;@input
  ;.filter =
  ;.filter("studyid")=studyid of the patient
@@ -129,7 +129,7 @@ wsCASE(rtn,filter) ; generate case review page
  new groot set groot=$$setroot^%wd("vapals-patients") ; root of patient graphs
  ;
  new temp ; html template
- do getTemplate("temp","vapals:casereview")
+ do GETTMPL("temp","vapals:casereview")
  quit:'$data(temp)
  ;
  new sid set sid=$get(filter("studyid"))
@@ -138,10 +138,10 @@ wsCASE(rtn,filter) ; generate case review page
  quit:sid=""
  ;
  new items
- do getItems("items",sid)
+ do GETITEMS("items",sid)
  quit:'$data(items)
  ;
- new gien set gien=$$sid2num^SAMIHOM3(sid) ; graph ien
+ new gien set gien=$$SID2NUM^SAMIHOM3(sid) ; graph ien
  new name set name=$get(@groot@(gien,"saminame"))
  quit:name=""
  new fname set fname=$piece(name,",",2)
@@ -165,11 +165,11 @@ wsCASE(rtn,filter) ; generate case review page
  . . s touched=1
  . ;
  . i ln["href" i 'touched d  ;
- . . d fixHref^SAMIFRM2(.ln)
+ . . d FIXHREF^SAMIFRM2(.ln)
  . . s temp(zi)=ln
  . ;
  . i ln["src" d  ;
- . . d fixSrc^SAMIFRM2(.ln)
+ . . d FIXSRC^SAMIFRM2(.ln)
  . . s temp(zi)=ln
  . ;
  . s cnt=cnt+1
@@ -182,9 +182,9 @@ wsCASE(rtn,filter) ; generate case review page
  ;
  new sikey set sikey=$order(items("sifor"))
  if sikey="" set sikey="siform-2017-12-10"
- new sidate set sidate=$$getDateKey(sikey)
+ new sidate set sidate=$$GETDTKEY(sikey)
  s sikey="vapals:"_sikey
- new sidispdate set sidispdate=$$key2dispDate(sidate)
+ new sidispdate set sidispdate=$$KEY2DSPD(sidate)
  ;new geturl set geturl="/form?form=vapals:siform&studyid="_sid_"&key="_sikey
  new nuhref set nuhref="<form method=POST action=""/vapals"">"
  set nuhref=nuhref_"<td><input type=hidden name=""samiroute"" value=""nuform"">"
@@ -212,7 +212,7 @@ wsCASE(rtn,filter) ; generate case review page
  set rtn(cnt)=rtn(cnt)_" <input value=""Intake"" class=""btn btn-link"" role=""link"" type=""submit"">"
  ;
  new samistatus s samistatus=""
- if $$getSamiStatus(sid,sikey)="incomplete" set samistatus="(incomplete)"
+ if $$GSAMISTA(sid,sikey)="incomplete" set samistatus="(incomplete)"
  set cnt=cnt+1
  set rtn(cnt)="</form>"_samistatus_notehref_"</td>"_$char(13)
  set cnt=cnt+1
@@ -229,7 +229,7 @@ wsCASE(rtn,filter) ; generate case review page
  . . . new zform set zform=zk
  . . . new zkey set zkey=$order(items("sort",cdate,zform,""))
  . . . new zname set zname=$order(items("sort",cdate,zform,zkey,""))
- . . . new dispdate set dispdate=$$key2dispDate(cdate)
+ . . . new dispdate set dispdate=$$KEY2DSPD(cdate)
  . . . set zform="vapals:"_zkey ; all the new forms are vapals:key
  . . . ;new geturl set geturl="/form?form="_zform_"&studyid="_sid_"&key="_zkey
  . . . set cnt=cnt+1
@@ -247,7 +247,7 @@ wsCASE(rtn,filter) ; generate case review page
  . . . set rtn(cnt)=" <input value="""_zname_""" class=""btn btn-link"" role=""link"" type=""submit"">"_$char(13)
  . . . ;
  . . . new samistatus s samistatus=""
- . . . if $$getSamiStatus(sid,zform)="incomplete" set samistatus="(incomplete)"
+ . . . if $$GSAMISTA(sid,zform)="incomplete" set samistatus="(incomplete)"
  . . . set cnt=cnt+1
  . . . set rtn(cnt)="</form>"_samistatus_"</td>"
  . . . set cnt=cnt+1
@@ -292,7 +292,7 @@ wsCASE(rtn,filter) ; generate case review page
  quit  ; end of wsCASE
  ;
  ;
-getTemplate(return,form) ; get html template
+GETTMPL(return,form) ; get html template
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -323,10 +323,10 @@ getTemplate(return,form) ; get html template
  ;
  ;@stanza 3 termination
  ;
- quit  ; end of getTemplate
+ quit  ; end of GETTMPL
  ;
  ;
-countItems(sid) ; extrinsic returns how many forms the patient has
+CNTITEMS(sid) ; extrinsic returns how many forms the patient has
  ; used before deleting a patient
  new groot set groot=$$setroot^%wd("vapals-patients")
  quit:'$data(@groot@("graph",sid)) 0  ; nothing there
@@ -337,7 +337,7 @@ countItems(sid) ; extrinsic returns how many forms the patient has
  . s cnt=cnt+1
  q cnt
  ;
-getItems(ary,sid) ; get items available for studyid
+GETITEMS(ary,sid) ; get items available for studyid
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -399,11 +399,11 @@ getItems(ary,sid) ; get items available for studyid
  ;
  ;@stanza 4 termination
  ;
- quit  ; end of getItems
+ quit  ; end of GETITEMS
  ;
  ;
  ;
-getDateKey(formid) ; date portion of form key
+GETDTKEY(formid) ; date portion of form key
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -415,7 +415,7 @@ getDateKey(formid) ; date portion of form key
  ; formid = form key
  ;@output = date from form key
  ;@examples [tbd]
- ; $$getDateKey("sbform-2018-02-26") = "2018-02-26"
+ ; $$GETDTKEY("sbform-2018-02-26") = "2018-02-26"
  ;@tests [tbd]
  ;
  ;@stanza 2 calculate date from key
@@ -425,11 +425,11 @@ getDateKey(formid) ; date portion of form key
  ;
  ;@stanza 3 return & termination
  ;
- quit date ; return date; end of $$getDateKey
+ quit date ; return date; end of $$GETDTKEY
  ;
  ;
  ;
-key2dispDate(zkey) ; date in elcap format from key date
+KEY2DSPD(zkey) ; date in elcap format from key date
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -454,14 +454,14 @@ key2dispDate(zkey) ; date in elcap format from key date
  ;new Z set Z=$$FMTE^XLFDT(Y,"9D")
  ;set Z=$translate(Z," ","/")
  n zdate
- s zdate=$$vapalsDate(Y)
+ s zdate=$$VAPALSDT(Y)
  ;
  ;@stanza 3 return & termination
  ;
  quit zdate  ; return date; end of $$keysdispDate
  ;
  ;
-vapalsDate(fmdate) ; extrinsic which return the vapals format for dates
+VAPALSDT(fmdate) ; extrinsic which return the vapals format for dates
  ; fmdate is the date in fileman format
  ;new Z set Z=$$FMTE^XLFDT(fmdate,"9D")
  ;set Z=$translate(Z," ","/")
@@ -472,7 +472,7 @@ vapalsDate(fmdate) ; extrinsic which return the vapals format for dates
  ;
  ;
  ;
-wsNuForm(rtn,filter) ; select new form for patient (get service)
+WSNUFORM(rtn,filter) ; select new form for patient (get service)
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -480,9 +480,9 @@ wsNuForm(rtn,filter) ; select new form for patient (get service)
  ;@called-by
  ; web service SAMICASE-wsNuForm
  ;@calls
- ; $$sid2num^SAMIHOM3
+ ; $$SID2NUM^SAMIHOM3
  ; $$setroot^%wd
- ; getTemplate
+ ; GETTMPL
  ; findReplace^%ts
  ; ADDCRLF^VPRJRUT
  ;@input
@@ -497,7 +497,7 @@ wsNuForm(rtn,filter) ; select new form for patient (get service)
  ;
  new sid set sid=$get(filter("studyid"))
  quit:sid=""
- new sien set sien=$$sid2num^SAMIHOM3(sid)
+ new sien set sien=$$SID2NUM^SAMIHOM3(sid)
  quit:+sien=0
  new root set root=$$setroot^%wd("vapals-patients")
  new groot set groot=$name(@root@(sien))
@@ -506,7 +506,7 @@ wsNuForm(rtn,filter) ; select new form for patient (get service)
  quit:saminame=""
  ;
  new temp,tout
- do getTemplate("temp","vapals:nuform")
+ do GETTMPL("temp","vapals:nuform")
  quit:'$data(temp)
  ;
  n cnt s cnt=0
@@ -524,11 +524,11 @@ wsNuForm(rtn,filter) ; select new form for patient (get service)
  . ;. s touched=1
  . ;
  . i ln["href" i 'touched d  ;
- . . d fixHref^SAMIFRM2(.ln)
+ . . d FIXHREF^SAMIFRM2(.ln)
  . . s temp(zi)=ln
  . ;
  . i ln["src" d  ;
- . . d fixSrc^SAMIFRM2(.ln)
+ . . d FIXSRC^SAMIFRM2(.ln)
  . . s temp(zi)=ln
  . ;
  . ;i ln["form" i ln["todo" d  ;
@@ -583,7 +583,7 @@ wsNuForm(rtn,filter) ; select new form for patient (get service)
  ;
  ;
  ;
-wsNuFormPost(ARGS,BODY,RESULT) ; post new form selection (post service)
+WSNFPOST(ARGS,BODY,RESULT) ; post new form selection (post service)
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -593,9 +593,9 @@ wsNuFormPost(ARGS,BODY,RESULT) ; post new form selection (post service)
  ;@calls
  ; parseBody^%wf
  ; $$NOW^XLFDT
- ; $$keyDate^SAMIHOM3
+ ; $$KEYDATE^SAMIHOM3
  ; GETHOME^SAMIHOM3
- ; makeCeform
+ ; MKCEFORM
  ; wsGetForm^%wf
  ;@input
  ;.ARGS =
@@ -622,7 +622,7 @@ wsNuFormPost(ARGS,BODY,RESULT) ; post new form selection (post service)
  set nuform=$get(vars("form"))
  if nuform="" set nuform="ceform"
  ;
- new datekey set datekey=$$keyDate^SAMIHOM3($$NOW^XLFDT)
+ new datekey set datekey=$$KEYDATE^SAMIHOM3($$NOW^XLFDT)
  ;
  ; check to see if form already exists
  ;
@@ -632,15 +632,15 @@ wsNuFormPost(ARGS,BODY,RESULT) ; post new form selection (post service)
  . n lastone
  . s lastone=$o(@root@("graph",sid,nuform_"-a  "),-1)
  . q:lastone=""
- . s newfm=$$key2fm(lastone)
- . s datekey=$$keyDate^SAMIHOM3($$FMADD^XLFDT(newfm,1)) ; add one day to the last form
+ . s newfm=$$KEY2FM(lastone)
+ . s datekey=$$KEYDATE^SAMIHOM3($$FMADD^XLFDT(newfm,1)) ; add one day to the last form
  ;
  if nuform="sbform" do  ;
  . new key set key="sbform-"_datekey
  . set ARGS("key")=key
  . set ARGS("studyid")=sid
  . set ARGS("form")="vapals:sbform"
- . do makeSbform(sid,key)
+ . do MKSBFORM(sid,key)
  . quit
  ;
  if nuform="ceform" do  ;
@@ -648,7 +648,7 @@ wsNuFormPost(ARGS,BODY,RESULT) ; post new form selection (post service)
  . set ARGS("key")=key
  . set ARGS("studyid")=sid
  . set ARGS("form")="vapals:ceform"
- . do makeCeform(sid,key)
+ . do MKCEFORM(sid,key)
  . quit
  ;
  if nuform="fuform" do  ;
@@ -656,7 +656,7 @@ wsNuFormPost(ARGS,BODY,RESULT) ; post new form selection (post service)
  . set ARGS("key")=key
  . set ARGS("studyid")=sid
  . set ARGS("form")="vapals:fuform"
- . do makeFuform(sid,key)
+ . do MKFUFORM(sid,key)
  . quit
  ;
  if nuform="bxform" do  ;
@@ -664,7 +664,7 @@ wsNuFormPost(ARGS,BODY,RESULT) ; post new form selection (post service)
  . set ARGS("key")=key
  . set ARGS("studyid")=sid
  . set ARGS("form")="vapals:bxform"
- . do makeBxform(sid,key)
+ . do MKBXFORM(sid,key)
  . quit
  ;
  if nuform="ptform" do  ;
@@ -672,7 +672,7 @@ wsNuFormPost(ARGS,BODY,RESULT) ; post new form selection (post service)
  . set ARGS("key")=key
  . set ARGS("studyid")=sid
  . set ARGS("form")="vapals:ptform"
- . do makePtform(sid,key)
+ . do MKPTFORM(sid,key)
  . quit
  ;
  if nuform="itform" do  ;
@@ -680,7 +680,7 @@ wsNuFormPost(ARGS,BODY,RESULT) ; post new form selection (post service)
  . set ARGS("key")=key
  . set ARGS("studyid")=sid
  . set ARGS("form")="vapals:itform"
- . do makeItform(sid,key)
+ . do MKITFORM(sid,key)
  . quit
  ;
  do wsGetForm^%wf(.RESULT,.ARGS)
@@ -689,7 +689,7 @@ wsNuFormPost(ARGS,BODY,RESULT) ; post new form selection (post service)
  ;
  quit  ; end of wsNuFormPost
  ;
-key2fm(key) ; convert a key to a fileman date
+KEY2FM(key) ; convert a key to a fileman date
  ; 
  n datepart,X,Y,frm
  s datepart=key
@@ -701,7 +701,7 @@ key2fm(key) ; convert a key to a fileman date
  q Y
  ;
  ;
-makeSbform(sid,key) ; create background form
+MKSBFORM(sid,key) ; create background form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -710,7 +710,7 @@ makeSbform(sid,key) ; create background form
  ; wsNuFormPost
  ;@calls
  ; $$setroot^%wd
- ; $$sid2num^SAMIHOM3
+ ; $$SID2NUM^SAMIHOM3
  ;@input
  ; sid = studiy id
  ; key =
@@ -722,18 +722,18 @@ makeSbform(sid,key) ; create background form
  ;@stanza 2 create ct eval form
  ;
  new root set root=$$setroot^%wd("vapals-patients")
- new sien set sien=$$sid2num^SAMIHOM3(sid)
+ new sien set sien=$$SID2NUM^SAMIHOM3(sid)
  quit:+sien=0
  new cdate set cdate=$piece(key,"sbform-",2)
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate
- d setSamiStatus^SAMICAS2(sid,key,"incomplete")
+ d SSAMISTA^SAMICAS2(sid,key,"incomplete")
  ;
  ;@stanza 3 termination
  ;
- quit  ; end of makeSbform
+ quit  ; end of MKSBFORM
  ;
-makeCeform(sid,key) ; create ct evaluation form
+MKCEFORM(sid,key) ; create ct evaluation form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -742,7 +742,7 @@ makeCeform(sid,key) ; create ct evaluation form
  ; wsNuFormPost
  ;@calls
  ; $$setroot^%wd
- ; $$sid2num^SAMIHOM3
+ ; $$SID2NUM^SAMIHOM3
  ;@input
  ; sid = studiy id
  ; key =
@@ -754,11 +754,11 @@ makeCeform(sid,key) ; create ct evaluation form
  ;@stanza 2 create ct eval form
  ;
  new root set root=$$setroot^%wd("vapals-patients")
- new sien set sien=$$sid2num^SAMIHOM3(sid)
+ new sien set sien=$$SID2NUM^SAMIHOM3(sid)
  quit:+sien=0
  new cdate set cdate=$piece(key,"ceform-",2)
  new items,prevct
- d getItems^SAMICAS2("items",sid)
+ d GETITEMS^SAMICAS2("items",sid)
  s prevct=""
  i $d(items("type","vapals:ceform")) d  ;previous cteval exists
  . s prevct=$o(items("type","vapals:ceform",""),-1) ; latest ceform
@@ -769,13 +769,13 @@ makeCeform(sid,key) ; create ct evaluation form
  . d CTCOPY^SAMICTC1(source,target)
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate
- d setSamiStatus^SAMICAS2(sid,key,"incomplete")
+ d SSAMISTA^SAMICAS2(sid,key,"incomplete")
  ;
  ;@stanza 3 termination
  ;
- quit  ; end of makeCeform
+ quit  ; end of MKCEFORM
  ;
-makeFuform(sid,key) ; create Follow-up form
+MKFUFORM(sid,key) ; create Follow-up form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -784,7 +784,7 @@ makeFuform(sid,key) ; create Follow-up form
  ; wsNuFormPost
  ;@calls
  ; $$setroot^%wd
- ; $$sid2num^SAMIHOM3
+ ; $$SID2NUM^SAMIHOM3
  ;@input
  ; sid = studiy id
  ; key =
@@ -796,18 +796,18 @@ makeFuform(sid,key) ; create Follow-up form
  ;@stanza 2 create ct eval form
  ;
  new root set root=$$setroot^%wd("vapals-patients")
- new sien set sien=$$sid2num^SAMIHOM3(sid)
+ new sien set sien=$$SID2NUM^SAMIHOM3(sid)
  quit:+sien=0
  new cdate set cdate=$piece(key,"fuform-",2)
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate
- d setSamiStatus^SAMICAS2(sid,key,"incomplete")
+ d SSAMISTA^SAMICAS2(sid,key,"incomplete")
  ;
  ;@stanza 3 termination
  ;
- quit  ; end of makeFuform
+ quit  ; end of MKFUFORM
  ;
-makePtform(sid,key) ; create ct evaluation form
+MKPTFORM(sid,key) ; create ct evaluation form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -816,7 +816,7 @@ makePtform(sid,key) ; create ct evaluation form
  ; wsNuFormPost
  ;@calls
  ; $$setroot^%wd
- ; $$sid2num^SAMIHOM3
+ ; $$SID2NUM^SAMIHOM3
  ;@input
  ; sid = studiy id
  ; key =
@@ -828,18 +828,18 @@ makePtform(sid,key) ; create ct evaluation form
  ;@stanza 2 create ct eval form
  ;
  new root set root=$$setroot^%wd("vapals-patients")
- new sien set sien=$$sid2num^SAMIHOM3(sid)
+ new sien set sien=$$SID2NUM^SAMIHOM3(sid)
  quit:+sien=0
  new cdate set cdate=$piece(key,"ptform-",2)
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate
- d setSamiStatus^SAMICAS2(sid,key,"incomplete")
+ d SSAMISTA^SAMICAS2(sid,key,"incomplete")
  ;
  ;@stanza 3 termination
  ;
- quit  ; end of makePtform
+ quit  ; end of MKPTFORM
  ;
-makeItform(sid,key) ; create intervention form
+MKITFORM(sid,key) ; create intervention form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -848,7 +848,7 @@ makeItform(sid,key) ; create intervention form
  ; wsNuFormPost
  ;@calls
  ; $$setroot^%wd
- ; $$sid2num^SAMIHOM3
+ ; $$SID2NUM^SAMIHOM3
  ;@input
  ; sid = studiy id
  ; key =
@@ -860,18 +860,18 @@ makeItform(sid,key) ; create intervention form
  ;@stanza 2 create ct eval form
  ;
  new root set root=$$setroot^%wd("vapals-patients")
- new sien set sien=$$sid2num^SAMIHOM3(sid)
+ new sien set sien=$$SID2NUM^SAMIHOM3(sid)
  quit:+sien=0
  new cdate set cdate=$piece(key,"itform-",2)
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate
- d setSamiStatus^SAMICAS2(sid,key,"incomplete")
+ d SSAMISTA^SAMICAS2(sid,key,"incomplete")
  ;
  ;@stanza 3 termination
  ;
- quit  ; end of makePtform
+ quit  ; end of MKPTFORM
  ;
-makeBxform(sid,key) ; create ct evaluation form
+MKBXFORM(sid,key) ; create ct evaluation form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -880,7 +880,7 @@ makeBxform(sid,key) ; create ct evaluation form
  ; wsNuFormPost
  ;@calls
  ; $$setroot^%wd
- ; $$sid2num^SAMIHOM3
+ ; $$SID2NUM^SAMIHOM3
  ;@input
  ; sid = studiy id
  ; key =
@@ -892,22 +892,22 @@ makeBxform(sid,key) ; create ct evaluation form
  ;@stanza 2 create ct eval form
  ;
  new root set root=$$setroot^%wd("vapals-patients")
- new sien set sien=$$sid2num^SAMIHOM3(sid)
+ new sien set sien=$$SID2NUM^SAMIHOM3(sid)
  quit:+sien=0
  new cdate set cdate=$piece(key,"bxform-",2)
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate
- d setSamiStatus^SAMICAS2(sid,key,"incomplete")
+ d SSAMISTA^SAMICAS2(sid,key,"incomplete")
  ;
  ;@stanza 3 termination
  ;
- quit  ; end of makeBxform
+ quit  ; end of MKBXFORM
  ;
  ;
  ;
  ;@section 3 casetbl
  ;
-getSamiStatus(sid,form) ; extrinsic returns the value of 'samistatus' from the form
+GSAMISTA(sid,form) ; extrinsic returns the value of 'samistatus' from the form
  n stat,root,useform
  s root=$$setroot^%wd("vapals-patients")
  s useform=form
@@ -915,7 +915,7 @@ getSamiStatus(sid,form) ; extrinsic returns the value of 'samistatus' from the f
  s stat=$g(@root@("graph",sid,useform,"samistatus"))
  q stat
  ;
-setSamiStatus(sid,form,val) ; sets 'samistatus' to val in form
+SSAMISTA(sid,form,val) ; sets 'samistatus' to val in form
  n root,useform
  s root=$$setroot^%wd("vapals-patients")
  s useform=form
@@ -924,7 +924,7 @@ setSamiStatus(sid,form,val) ; sets 'samistatus' to val in form
  s @root@("graph",sid,useform,"samistatus")=val
  q
  ;
-deleteForm(RESULT,ARGS) ; deletes a form if it is incomplete
+DELFORM(RESULT,ARGS) ; deletes a form if it is incomplete
  ; will not delete intake or background forms
  n root s root=$$setroot^%wd("vapals-patients")
  n sid,form
@@ -934,22 +934,22 @@ deleteForm(RESULT,ARGS) ; deletes a form if it is incomplete
  q:form=""
  i form["siform" q  ;
  ;i '$d(@root@("graph",sid,form)) q  ; form does not exist
- i $$getSamiStatus^SAMICAS2(sid,form)="incomplete" d  ;
+ i $$GSAMISTA^SAMICAS2(sid,form)="incomplete" d  ;
  . kill @root@("graph",sid,form)
  k ARGS("samiroute")
- d wsCASE^SAMICAS2(.RESULT,.ARGS)
+ d WSCASE^SAMICAS2(.RESULT,.ARGS)
  q
  ;
-initStatus ; set all forms to 'incomplete'
+INITSTAT ; set all forms to 'incomplete'
  n root s root=$$setroot^%wd("vapals-patients")
  n zi,zj s (zi,zj)=""
  f  s zi=$o(@root@("graph",zi)) q:zi=""  d  ;
  . f  s zj=$o(@root@("graph",zi,zj)) q:zj=""  d  ;
- . . if zj["siform" d setSamiStatus^SAMICAS2(zi,zj,"complete") q  ;
- . . d setSamiStatus^SAMICAS2(zi,zj,"incomplete")
+ . . if zj["siform" d SSAMISTA^SAMICAS2(zi,zj,"complete") q  ;
+ . . d SSAMISTA^SAMICAS2(zi,zj,"incomplete")
  q
  ;
-casetbl(ary) ; generates case review table
+CASETBL(ary) ; generates case review table
  ;
  ;@stanza 1 invocation, binding, & branching
  ;

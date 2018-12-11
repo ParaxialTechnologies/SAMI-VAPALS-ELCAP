@@ -35,6 +35,7 @@ START ; Run the coverage tests
  ; set I=I+1,RUNCODE(I)="SAMID"
  ; set I=I+1,RUNCODE(I)="SAMIDOUT"
  ; set I=I+1,RUNCODE(I)="SAMIDSSN"
+ set I=I=1,RUNCODE(I)="^SAMIUTFF"
  set I=I+1,RUNCODE(I)="^SAMIUTLG"
  set I=I+1,RUNCODE(I)="^SAMIUTM2"
  set I=I+1,RUNCODE(I)="^SAMIUTH3"
@@ -75,7 +76,6 @@ START ; Run the coverage tests
  ;
  set I=I+1,XCLUDE(I)="SAMIDOUT"
  set I=I+1,XCLUDE(I)="SAMIUTOT"
- ;
  ; Exclude checksum utility & overall coverage routine
  set I=I+1,XCLUDE(I)="SAMIUCOV"
  set I=I+1,XCLUDE(I)="SAMIUTST"
@@ -83,6 +83,7 @@ START ; Run the coverage tests
  set I=I+1,XCLUDE(I)="SAMIVSTR"
  set I=I+1,XCLUDE(I)="SAMIUTVR"
  ; Exclude the unit-test routines
+ set I=I+1,XCLUDE(I)="SAMIUTFF"
  set I=I+1,XCLUDE(I)="SAMIUTLG"
  set I=I+1,XCLUDE(I)="SAMIUTM2"
  set I=I+1,XCLUDE(I)="SAMIUTH3"
@@ -105,8 +106,6 @@ START ; Run the coverage tests
  set I=I+1,XCLUDE(I)="SAMIUTVS"
  set I=I+1,XCLUDE(I)="SAMIUTRU"
  set I=I+1,XCLUDE(I)="SAMIUTSV"
- ; Exclude routine under construction
- set I=I+1,XCLUDE(I)="SAMIIFF"
  ;
  ; Add the XCLUDE values to the TMP variable that tracks this coverage test.
  merge ^TMP("SAMI",$JOB,"XCLUDE")=XCLUDE

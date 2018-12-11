@@ -824,7 +824,7 @@ getVals ; code for ppi getVals^%wf, get field values from graph
  ;@called-by: none
  ;@calls
  ; $$setroot^%wd
- ; $$sid2num^SAMIHOM3
+ ; $$SID2NUM^SAMIHOM3
  ;@input
  ; vrtn = 
  ; zid = 
@@ -849,7 +849,7 @@ getVals ; code for ppi getVals^%wf, get field values from graph
  ;
  ;@stanza 3 load prefill values
  ;
- new gien set gien=$$sid2num^SAMIHOM3(zsid) ; graph ien of this patient
+ new gien set gien=$$SID2NUM^SAMIHOM3(zsid) ; graph ien of this patient
  merge @vrtn=@root@(gien)
  ;
  ;@stanza 4 termination
@@ -1210,7 +1210,7 @@ wsPostForm ; code for ws wsPostForm^%wf, submit HTML form
  ; we want to store the form by the date in the form.. and delete the old one
  ; 
  new useform s useform=form
- set useform=$$saveFilter^SAMISAV(sid,form,.tbdy) ; make this a framework call
+ set useform=$$SAVFILTR^SAMISAV(sid,form,.tbdy) ; make this a framework call
  ;set %json(sid,form,"form")=form
  set %json(sid,useform,"form")=useform
  ;merge %json(sid,form)=tbdy
@@ -1226,7 +1226,7 @@ wsPostForm ; code for ws wsPostForm^%wf, submit HTML form
  ;
  ;if $get(ARGS("debug"))="" do  quit  ;
  do  quit  ;
- . do wsCASE^SAMICAS2(.RESULT,.ARGS)
+ . do WSCASE^SAMICAS2(.RESULT,.ARGS)
  . quit
  ;
  quit  ; no validation process

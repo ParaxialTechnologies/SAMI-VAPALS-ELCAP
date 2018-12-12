@@ -1,4 +1,4 @@
-SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 12/11/18 12:09pm
+SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 12/11/18 7:14pm
  ;;18.0;SAMI;;
  ;
  ;
@@ -10,6 +10,10 @@ START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  ; ===================== UNIT TESTS =====================
  ;
 STARTUP n utsuccess
+ n root s root=$$setroot^%wd("vapals-patients")
+ k @root@("graph","XXX00001")
+ n poo D PullUTarray^SAMIUTST(.poo,"all XXX00001 forms")
+ m @root@("graph","XXX00001")=poo
  Q
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
@@ -17,7 +21,7 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  Q
  ;
 UTWSHM ; @TEST - Testing web service for SAMI homepage test
- ; wsHOME(rtn,filter)
+ ; WSHOME(rtn,filter)
  n filter,rtn,nodea,nodep,arc,poo
  s filter("test")=1
  d WSHOME^SAMIHOM3(.rtn,.filter)
@@ -25,10 +29,9 @@ UTWSHM ; @TEST - Testing web service for SAMI homepage test
  s utsuccess=1
  D PullUTarray^SAMIUTST(.poo,"UTWSHM^SAMIUTH3 test")
  s nodea=$na(arc),nodep=$na(poo)
- f  s nodea=$q(@nodea),nodep=$q(@nodep) q:(nodea="")  d  q:'utsuccess
+ f  s nodea=$q(@nodea),nodep=$q(@nodep) q:(nodea="")  q:($qs(nodea,1)>60)  d  q:'utsuccess
  .; check first 60 lines of configuration.  After that the returned
  .;   array depends on test patients available
- . q:($qs(nodea,1)>60)
  . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
  . i '(@nodea=@nodep) s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing web service test FAILED!")

@@ -1,4 +1,4 @@
-SAMIUTAD ;ven/lgc - Unit test for SAMIADMN ; 12/10/18 11:16am
+SAMIUTAD ;ven/lgc - Unit test for SAMIADMN ; 12/12/18 11:26am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -39,12 +39,12 @@ UTCLRW ; @TEST - Test Clear the M WebServer
  ;  then rebuild the seeGraph
  n root,poo,arc s root=$$setroot^%wd("seeGraph")
  n poo m poo=@root
- d SaveUTarray^SAMIUTST(.poo,"UTCLRW^SAMIUTAD")
+ d SVUTARR^SAMIUTST(.poo,"UTCLRW^SAMIUTAD")
  d purgegraph^%wd("seeGraph")
  D CLRWEB^SAMIADMN
  ; Compare rebuilt seeGraph with data saved
  k arc m arc=@root
- k poo d PullUTarray^SAMIUTST(.poo,"UTCLRW^SAMIUTAD")
+ k poo d PLUTARR^SAMIUTST(.poo,"UTCLRW^SAMIUTAD")
  s utsuccess=1
  n nodea,nodep s nodea=$na(arc),nodep=$na(poo)
  f  s nodea=$Q(@nodea),nodep=$Q(@nodep) q:nodea=""  d  q:'utsuccess
@@ -56,7 +56,7 @@ UTCLRW ; @TEST - Test Clear the M WebServer
 UTSLCP ; @TEST - Test set VA-PALS to use the ELCAP version of the Ct Evaluation form
  ; if set to LungRads poosfm will be "ctevaluation.html"
  ; if set to ELCAP poosfm will be "ctevaluation-elcap.html"
- n glb,gien S GLB=$NA(^SAMI(311.11))
+ n GLB,gien S GLB=$NA(^SAMI(311.11))
  S gien=$O(@GLB@("B","vapals:ceform",""))
  i gien="" d  q
  . D FAIL^%ut("Error, record vapals:ceform is not found in SAMI FORM MAPPING file!")
@@ -74,7 +74,7 @@ UTSLCP ; @TEST - Test set VA-PALS to use the ELCAP version of the Ct Evaluation 
 UTSLRADS ; @TEST - Test set VA-PALS to use the LungRads version of the Ct Evaluation form
  ; if set to LungRads poosfm will be "ctevaluation.html"
  ; if set to ELCAP poosfm will be "ctevaluation-elcap.html"
- n glb,gien S GLB=$NA(^SAMI(311.11))
+ n GLB,gien S GLB=$NA(^SAMI(311.11))
  S gien=$O(@GLB@("B","vapals:ceform",""))
  i gien="" d  q
  . D FAIL^%ut("Error, record vapals:ceform is not found in SAMI FORM MAPPING file!")
@@ -92,7 +92,7 @@ UTSLRADS ; @TEST - Test set VA-PALS to use the LungRads version of the Ct Evalua
 UTWSLCP ; @TEST - set VA-PALS to use the ELCAP version of the Ct Evaluation form
  ; if set to LungRads poosfm will be "ctevaluation.html"
  ; if set to ELCAP poosfm will be "ctevaluation-elcap.html"
- n glb,gien S GLB=$NA(^SAMI(311.11))
+ n GLB,gien S GLB=$NA(^SAMI(311.11))
  S gien=$O(@GLB@("B","vapals:ceform",""))
  i gien="" d  q
  . D FAIL^%ut("Error, record vapals:ceform is not found in SAMI FORM MAPPING file!")
@@ -110,7 +110,7 @@ UTWSLCP ; @TEST - set VA-PALS to use the ELCAP version of the Ct Evaluation form
 UTWSLRAD ; @TEST -  set VA-PALS to use the LungRads version of the Ct Evaluation form
  ; if set to LungRads poosfm will be "ctevaluation.html"
  ; if set to ELCAP poosfm will be "ctevaluation-elcap.html"
- n glb,gien S GLB=$NA(^SAMI(311.11))
+ n GLB,gien S GLB=$NA(^SAMI(311.11))
  S gien=$O(@GLB@("B","vapals:ceform",""))
  i gien="" d  q
  . D FAIL^%ut("Error, record vapals:ceform is not found in SAMI FORM MAPPING file!")
@@ -127,7 +127,7 @@ UTWSLRAD ; @TEST -  set VA-PALS to use the LungRads version of the Ct Evaluation
  q
 UTWSCTV ; @TEST - web service to return the current ctform version
  ; Look up entry in 311.11 manually and compare to results of call
- n glb,gien S GLB=$NA(^SAMI(311.11))
+ n GLB,gien S GLB=$NA(^SAMI(311.11))
  S gien=$O(@GLB@("B","vapals:ceform",""))
  i gien="" d  q
  . D FAIL^%ut("Error, record vapals:ceform is not found in SAMI FORM MAPPING file!")

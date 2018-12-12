@@ -1,4 +1,4 @@
-SAMIUTST ;ven/lgc - Unit Test Utilities ; 11/20/18 2:41pm
+SAMIUTST ;ven/lgc - Unit Test Utilities ; 12/12/18 11:23am
  ;;18.0;SAMI;;
  ;
  ; Routine to push and pull information used during unit testing
@@ -8,7 +8,7 @@ START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  D EN^%ut($T(+0),2)
  Q
  ;
- quit  ; No entry from top
+ Q  ; No entry from top
  ;
  ; @section 0 primary development
  ;
@@ -30,6 +30,10 @@ START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  ;
  ; @section 1 code
  ;
+ ; ***NOTE: SaveUTarray and PullUTarray will be deleted
+ ;          from this routine and replaced by
+ ;          SVUTARR and PLUTARR when all XINDEX work 
+ ;          on unit tests is completed/lgc
  ; Enter
  ;    arr   =  name of the array of unit test data to save
  ;             e.g. "poo" for poo(1)=xxx,poo(2)=yyy
@@ -45,7 +49,7 @@ SaveUTarray(arr,title) ;
  Q:'$D(arr)
  Q:($g(title)="")
  n root s root=$$setroot^%wd("vapals unit tests")
- n gien s gien=$$Getgien(root,title)
+ n gien s gien=$$GETGIEN(root,title)
  k @root@(gien)
  ; load data
  m @root@(gien)=arr
@@ -62,46 +66,83 @@ PullUTarray(arr,title) ;
  k arr
  Q:($g(title)="")
  n root s root=$$setroot^%wd("vapals unit tests")
- n gien s gien=$$Getgien(root,title)
+ n gien s gien=$$GETGIEN(root,title)
  ; pull data
  m arr=@root@(gien)
  q
  ;
+ ; 
+ ; Enter
+ ;    ARR   =  name of the array of unit test data to save
+ ;             e.g. "poo" for poo(1)=xxx,poo(2)=yyy
+ ;                  "^TMP("yottaForm",20523)"
+ ;    TITLE =  title of the unit test
+ ;             e.g. PATLIST-SAMIHOM3
+ ;    NOTE: deletes any earlier entry under this title, thus,
+ ;          title must be unique
+ ; Return
+ ;    loads "vapals unit tests" Graphstore under the
+ ;       title entry with the data from the array
+SVUTARR(ARR,TITLE) ;
+ Q:'$D(ARR)
+ Q:($G(TITLE)="")
+ N ROOT S ROOT=$$setroot^%wd("vapals unit tests")
+ N GIEN s GIEN=$$GETGIEN(ROOT,TITLE)
+ k @ROOT@(GIEN)
+ ; load data
+ M @ROOT@(GIEN)=ARR
+ Q
+ ;
+ ;
+ ; Enter
+ ;     ARR   = array by reference to fill with data from Graphstore
+ ;     TITLE = title of the unit test
+ ; Return
+ ;     ARR   = data pulled from the title entry in "vapals unit tests"
+ ;             Graphstore
+PLUTARR(ARR,TITLE) ;
+ K ARR
+ Q:($G(TITLE)="")
+ N ROOT S ROOT=$$setroot^%wd("vapals unit tests")
+ N GIEN S GIEN=$$GETGIEN(ROOT,TITLE)
+ ; pull data
+ M ARR=@ROOT@(GIEN)
+ Q
  ;
  ;Enter
- ;   dfn   = dfn of patient to use as test patient
- ;   title = title of entry in "vapals unit tests"
+ ;   DFN   = dfn of patient to use as test patient
+ ;   TITLE = title of entry in "vapals unit tests"
  ;Return
  ;   pushes a copy of the patient entry in the
  ;     "patient-lookup" Graphstore into the
  ;     "vapals unit tests" Graphstore
-SaveTestPatient(dfn,title) ;
- Q:($g(title)="")
- q:'$g(dfn)
- n rootut s rootut=$$setroot^%wd("vapals unit tests")
- n gienut s gienut=$$Getgien(rootut,title)
- k @rootut@(gienut)
- s @rootut@(gienut,"title")=title
+SVTSTPT(DFN,TITLE) ;
+ Q:($G(TITLE)="")
+ Q:'$G(DFN)
+ N ROOTUT S ROOTUT=$$setroot^%wd("vapals unit tests")
+ N GIENUT S GIENUT=$$GETGIEN(ROOTUT,TITLE)
+ K @ROOTUT@(GIENUT)
+ S @ROOTUT@(GIENUT,"title")=TITLE
  ; load data
- n rootpl s rootpl=$$setroot^%wd("patient-lookup")
- n gienpl s gienpl=$O(@rootpl@("dfn",dfn,0))
- m @rootut@(gienut)=@rootpl@(gienpl)
+ N ROOTPL S ROOTPL=$$setroot^%wd("patient-lookup")
+ N GIENPL S GIENPL=$O(@rootpl@("dfn",DFN,0))
+ M @ROOTUT@(GIENUT)=@ROOTPL@(GIENPL)
  q
  ;
  ;
  ;Enter
- ;   root   = root of "vapals unit tests" Graphstore
- ;   title  = title of unit test entry
+ ;   ROOT   = root of "vapals unit tests" Graphstore
+ ;   TITLE  = title of unit test entry
  ;Return
  ;   gien of title in "vapals unit tests"
  ;   NOTE: if this title didn't exist, it is generated
-Getgien(root,title) n gien
- n gien s gien=$O(@root@("B",title,0))
- q:gien gien
- s gien=$O(@root@("A"),-1)+1
- s @root@(gien,"title")=title
- s @root@("B",title,gien)=""
- q gien
+GETGIEN(ROOT,TITLE) ;
+ N GIEN S GIEN=$O(@ROOT@("B",TITLE,0))
+ Q:GIEN GIEN
+ S GIEN=$O(@ROOT@("A"),-1)+1
+ S @ROOT@(GIEN,"TITLE")=TITLE
+ S @ROOT@("B",TITLE,GIEN)=""
+ Q GIEN
  ;
  ;
  ; Build and save an array of all routines used
@@ -109,59 +150,61 @@ Getgien(root,title) n gien
  ;  of these routines and their present checksums
  ;  as determined by CHECK1
  ;
-BLDRTNS n temp,poo,arc,cnt,str
- s cnt=0
- f  s cnt=cnt+1 s str=$p($t(RTNS+cnt),";;",2) q:str=""  d
- . s temp(cnt)=str
- D SaveUTarray^SAMIUTST(.temp,"vapals routines")
- D PullUTarray^SAMIUTST(.poo,"vapals routines")
- s cnt=0
- f  s cnt=$o(poo(cnt)) q:'cnt  d
- . N X,Y S X=poo(cnt) X ^%ZOSF("RSUM1")
- . S arc(poo(cnt))=Y
- zwr arc
- d SaveUTarray(.arc,"vapals routines checksums")
- q
+BLDRTNS ;
+ N TEMP,POO,ARC,CNT,STR
+ S CNT=0
+ F  S CNT=CNT+1 S STR=$P($T(RTNS+CNT),";;",2) Q:STR=""  D
+ . S TEMP(CNT)=STR
+ D SVUTARR(.TEMP,"vapals routines")
+ D PLUTARR(.POO,"vapals routines")
+ S CNT=0
+ F  S CNT=$O(POO(CNT)) Q:'CNT  D
+ . N X,Y S X=POO(CNT) X ^%ZOSF("RSUM1")
+ . S ARC(POO(CNT))=Y
+ ZWR ARC
+ D SVUTARR(.ARC,"vapals routines checksums")
+ Q
  ;
  ;
 UTCHKSM ; @TEST - Test VAPALS routines checksums
- n poo,arc,temp,nodea,nodet,utsuccess
- D PullUTarray^SAMIUTST(.temp,"vapals routines checksums")
- D PullUTarray^SAMIUTST(.poo,"vapals routines")
- s cnt=0,utsuccess=1
- f  s cnt=$o(poo(cnt)) q:'cnt  d
- . N X,Y S X=poo(cnt) X ^%ZOSF("RSUM1")
- . s arc(poo(cnt))=Y
- s nodea=$na(arc),nodet=$na(temp)
- w !,!
- f  s nodea=$q(@nodea),nodet=$q(@nodet) q:nodea=""  d
- . i '($qs(nodea,1)=$qs(nodet,1)) s utsuccess=0
- . i '(@nodea=@nodet) s utsuccess=0
- . w !,$QS(nodea,1),"-",@nodea,"   ",$QS(nodet,1),"-",@nodet
- w !,!
- i 'nodet="" s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing VAPALS routines checksum FAILED!")
- q
+ N POO,ARC,TEMP,NODEA,NODET,UTSUCCESS
+ D PLUTARR(.TEMP,"vapals routines checksums")
+ D PLUTARR(.POO,"vapals routines")
+ S CNT=0,UTSUCCESS=1
+ F  S CNT=$O(POO(CNT)) Q:'CNT  D
+ . N X,Y S X=POO(CNT) X ^%ZOSF("RSUM1")
+ . S ARC(POO(CNT))=Y
+ S NODEA=$NA(ARC),NODET=$NA(TEMP)
+ W !,!
+ F  S NODEA=$Q(@NODEA),NODET=$Q(@NODET) Q:NODEA=""  D
+ . I '($QS(NODEA,1)=$QS(NODET,1)) S UTSUCCESS=0
+ . I '(@NODEA=@NODET) S UTSUCCESS=0
+ . W !,$QS(NODEA,1),"-",@NODEA,"   ",$QS(NODET,1),"-",@NODET
+ W !,!
+ I 'NODET="" S UTSUCCESS=0
+ ;
+ D CHKEQ^%ut(UTSUCCESS,1,"Testing VAPALS routines checksum FAILED!")
+ Q
  ;
 UTSTGS ; @TEST - Save array to vapals unit tests graphstore
- n poo,arc,root,gienut,title
- s poo("test1")="TESTing One"
- s poo("test2")="TESTing Two"
- s title="TEMP UNIT TEST ARRAY"
- D SaveUTarray(.poo,title)
- D PullUTarray(.arc,title)
- ; kill the temporary entry
- n rootut s rootut=$$setroot^%wd("vapals unit tests")
- n gienut s gienut=$$Getgien(rootut,title)
- k @rootut@(gienut)
- k @rootut@("B",title)
- s utsuccess=1
- s nodea=$na(arc),nodep=$na(poo)
- f  s nodea=$q(@nodea),nodep=$q(@nodep) q:nodea=""  d
- . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
- . i '(@nodea=@nodep) s utsuccess=0
- i 'nodep="" s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing saving/pulling from vapals unit test graphstore FAILED!")
+ N POO,ARC,ROOT,GIENUT,TITLE,NODEP,NODEA
+ S POO("TEST1")="TESTING ONE"
+ S POO("TEST2")="TESTING TWO"
+ S TITLE="TEMP UNIT TEST ARRAY"
+ D SVUTARR(.POO,TITLE)
+ D PLUTARR(.ARC,TITLE)
+ ; KILL THE TEMPORARY ENTRY
+ N ROOTUT S ROOTUT=$$setroot^%wd("vapals unit tests")
+ N GIENUT S GIENUT=$$GETGIEN(ROOTUT,TITLE)
+ K @ROOTUT@(GIENUT)
+ K @ROOTUT@("B",TITLE)
+ S UTSUCCESS=1
+ S NODEA=$NA(ARC),NODEP=$NA(POO)
+ F  S NODEA=$Q(@NODEA),NODEP=$Q(@NODEP) Q:NODEA=""  D
+ . I '($QS(NODEA,1)=$QS(NODEP,1)) S UTSUCCESS=0
+ . I '(@NODEA=@NODEP) S UTSUCCESS=0
+ I 'NODEP="" S UTSUCCESS=0
+ D CHKEQ^%ut(UTSUCCESS,1,"Testing saving/pulling from vapals unit test graphstore FAILED!")
  ;
 RTNS ;
  ;;SAMIM2M

@@ -1,4 +1,4 @@
-%tsutes ;ven/lmry-type string: test api setex^%ts ;2018-12-05T21:54Z
+%tsutes ;ven/lmry-type string: test api setex^%ts ;2018-12-14T18:07Z
  ;;1.8;Mash;
  ;
  ; This Mumps Advanced Shell (mash) routine implements unit tests for
@@ -15,7 +15,7 @@
  ;@copyright: 2016/2017/2018, ven, all rights reserved
  ;@license: Apache 2.0
  ;
- ;@last-updated: 2018-12-05T21:54Z
+ ;@last-updated: 2018-12-14T18:07Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -70,7 +70,7 @@ setex102 ; @TEST setex^%ts(.%tstring,""): string undef, substring=""
  ;
  ;ven/toad&lmry;test;procedure;clean;silent;mdc
  ;
- new string
+ new %tstring
  do setex^%ts(.%tstring,"")
  do CHKEQ^%ut(%tstring,"")
  do CHKEQ^%ut(%tstring("extract"),1)
@@ -947,7 +947,7 @@ setexc01 ; @TEST setex^%ts(.%tstring,insert,"i"): flags=i & prepad
  ;
  ; show effects on string("low",string")
  ;
- new string
+ new %tstring
  set %tstring("extract","from")=3
  new insert set insert="The world is in balance."
  do setex^%ts(.%tstring,insert,"i")

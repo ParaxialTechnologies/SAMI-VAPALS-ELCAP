@@ -303,7 +303,7 @@ setex ; change value of positional substring
  set newval=$get(newval)
  ;
  ; 3.2. handle from (absolute, relative, or reserved)
- set from=$get(string("extract","from"))
+ new from set from=$get(string("extract","from"))
  set:from="" from=1 ; default to 1st character
  new absolute set absolute=+from=from ; is from a character position?
  new relative set relative='absolute ; is from an address code?
@@ -319,7 +319,7 @@ setex ; change value of positional substring
  . quit  ; all other string values are reserved
  ;
  ; 3.3. handle to (absolute, relative, or reserved)
- set to=$get(string("extract","to"))
+ new to set to=$get(string("extract","to"))
  ;
  if absolute do  quit:reserved  ; absolute to
  . set:to="" to=from ; to defaults to from

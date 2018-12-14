@@ -1,4 +1,4 @@
-%tsfs ;ven/toad-type string: setfind^%ts ;2018-03-18T16:38Z
+%tsfs ;ven/toad-type string: setfind^%ts ;2018-12-12T20:40Z
  ;;1.8;Mash;
  ;
  ; %tsfs implements MASH String Library ppi setfind^%ts, find &
@@ -29,7 +29,7 @@
  ;@original-dev: George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
  ;
- ;@last-updated: 2018-03-18T16:38Z
+ ;@last-updated: 2018-12-12T20:40Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -68,20 +68,6 @@ setfind ; set a find (find & replace a substring)
  ;@ppi-called-by
  ; findReplace^%ts
  ; findReplaceAll^%ts
- ; check^%wf
- ; insError^%wf
- ; putErrMsg2^%wf
- ; $$replaceHref^%wf [deprecated]
- ; $$replaceSrc^%wf [deprecated]
- ; uncheck^%wf
- ; value^%wf
- ; wsGetForm^%wf
- ; wsCASE^SAMICASE
- ; wsNuForm^SAMICASE
- ; fixHref^SAMIFRM
- ; fixSrc^SAMIFRM
- ; SAMISUBS^SAMIFRM
- ; getHome^SAMIHOME
  ;@called-by: none
  ;@calls
  ; findex^%ts

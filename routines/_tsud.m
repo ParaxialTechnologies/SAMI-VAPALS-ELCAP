@@ -1,4 +1,4 @@
-%tsud ;ven/toad-type string: documentation ;2018-03-05T20:16Z
+%tsud ;ven/toad-type string: documentation ;2018-12-12T03:21Z
  ;;1.8;Mash;
  ;
  ; %tsud is the Mumps String Library's inroductory documentation.
@@ -23,7 +23,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-05T20:16Z
+ ;@last-updated: 2018-12-12T03:21Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -335,24 +335,29 @@
  ;  $$inverseCase^%ts
  ; $$sentenceCase^%ts
  ;
- ; That left the problem of what to name the two primitive methods for
- ; case conversion; one returns the lowercase alphabet, the other the
- ; uppercase alphabet. For the moment, we decided on:
+ ; The two primitive methods for case conversion (one returns the
+ ; lowercase alphabet, the other the uppercase) use a parallel naming
+ ; pattern based on "alpha" instead of "case":
  ;
- ; $$alphabet^%ts
+ ; $$upalpha^%ts
+ ; $$lowalpha^%ts
+ ;
+ ; Their abbreviated forms, which we do not expect to use often, end in
+ ; ac:
+ ;
+ ; $$uac^%ts
+ ; $$lac^%ts
+ ;
+ ; Their full names are there:
+ ;
+ ; $$upperAlpha^%ts
+ ; $$lowerAlpha^%ts
+ ;
+ ; Their old names, which we will keep until all calls to them are
+ ; replaced, are these:
+ ;
  ; $$ALPHABET^%ts
- ;
- ; Although these two are trivial functions for now, when Mash is
- ; extended to included character set profiles and localization, they will
- ; become more complex. Eventually - since we may support uppercase
- ; alternate method names - this distinction may fail, so we're looking
- ; at instead using this naming schema:
- ;
- ; $$lowalpha
- ; $$upalpha
- ;
- ; $$lowerAlphabet
- ; $$upperAlphabet
+ ; $$alphabet^%ts
  ;
  ;
  ; 3.2. The canonical names for the Extract Library elements:

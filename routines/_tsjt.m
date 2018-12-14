@@ -1,4 +1,4 @@
-%tsjt ;ven/toad-type string: $$trim^%ts ;2018-03-05T20:49Z
+%tsjt ;ven/toad-type string: $$trim^%ts ;2018-12-12T14:59Z
  ;;1.8;Mash;
  ;
  ; %tsjt implements MASH String Library ppi $$trim^%ts, trim character
@@ -28,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-05T20:49Z
+ ;@last-updated: 2018-12-12T14:59Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -63,7 +63,7 @@ trim ; trim character from end(s) of string
  ; $$trim^%ts
  ;@called-by: none
  ;@calls
- ; $$u^%ts
+ ; $$uc^%ts
  ;@input
  ; string = string to edit
  ; end = L for left, R for right, LR for both, default to both
@@ -99,7 +99,7 @@ trim ; trim character from end(s) of string
  set string=$get(string) ; ensure string defined
  set char=$get(char," ") ; default to trimming spaces
  if $translate(string,char)="" quit "" ; nothing but trim?
- set end=$$u^%ts($get(end,"LR")) ; default to both ends
+ set end=$$uc^%ts($get(end,"LR")) ; default to both ends
  ;
  new %nr set %nr=$length(string) ; start at right end
  if end["R" do  ; if trimming right end

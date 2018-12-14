@@ -1,4 +1,4 @@
-%tsul ;ven/toad-type string: development log ;2018-12-14T13:10Z
+%tsul ;ven/toad-type string: development log ;2018-12-14T18:21Z
  ;;1.8;Mash;
  ;
  ; %tsul is the Mumps String Library's primary-development log.
@@ -23,7 +23,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-12-14T13:10Z
+ ;@last-updated: 2018-12-14T18:21Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -357,7 +357,7 @@
  ; API to a ppi; rename u=>uc,l=>lc,c=>cc,i=>ic,s=>sc.
  ;  %tsc: rename ALPHABET => upalpha, alphabet => lowalpha, list synonyms,
  ; convert code to call main ppis, add ppi-called-by & ppi-code tags, list
- ; tests.
+ ; tests, add system & timing data.
  ;  %tsutc: test new synonyms; stdize labels & comments; retire alphabet &
  ; ALPHABET; rename u,l,c,i,s=>uc,lc,cc,ic,sc.
  ;  %tsjt: in TRIM r/$$u^%ts w/$$uc^%ts.

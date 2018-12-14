@@ -1,4 +1,4 @@
-%tsc ;ven/toad-type string: case conversion ;2018-12-14T17:29Z
+%tsc ;ven/toad-type string: case conversion ;2018-12-14T18:20Z
  ;;1.8;Mash;
  ;
  ; %tsc implements MASH String Library Case Conversion ppis.
@@ -27,7 +27,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-12-14T17:29Z
+ ;@last-updated: 2018-12-14T18:20Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -99,13 +99,13 @@ upalpha ; return ABCDEFGHIJKLMNOPQRSTUVWXYZ
  ;@output = ABCDEFGHIJKLMNOPQRSTUVWXYZ
  ;@meter: do case^%tsc
  ;@timing a
- ; count:
- ; total:
- ; min:
- ; max:
- ; mean:
- ; median:
- ; mode:
+ ; count:10,000
+ ; total:6,588
+ ; min:0
+ ; max:69
+ ; mean:.6588
+ ; median:1
+ ; mode:1
  ;@tests
  ; upalpha^%tsutc: $$upalpha^%ts
  ; uac^%tsutc: $$uac^%ts
@@ -138,13 +138,13 @@ lowalpha ; return abcdefghijklmnopqrstuvwxyz
  ;@output = abcdefghijklmnopqrstuvwxyz
  ;@meter: do case^%tsc
  ;@timing b
- ; count:
- ; total:
- ; min:
- ; max:
- ; mean:
- ; median:
- ; mode:
+ ; count:10,000
+ ; total:6,514
+ ; min:0
+ ; max:14
+ ; mean:.6514
+ ; median:1
+ ; mode:1
  ;@tests
  ; lowalpha^%tsutc: $$lowalpha^%ts
  ; lac^%tsutc: $$lac^%ts
@@ -180,13 +180,13 @@ upcase ; CONVERT STRING TO UPPERCASE
  ;@output = uppercase string
  ;@meter: do case^%tsc
  ;@timing c
- ; count:
- ; total:
- ; min:
- ; max:
- ; mean:
- ; median:
- ; mode:
+ ; count:10,000
+ ; total:12,984
+ ; min:1
+ ; max:15
+ ; mean:1.2984
+ ; median:1
+ ; mode:1
  ;@tests
  ; upcase01^%tsutc: string
  ; upcase02^%tsutc: phrase string
@@ -236,13 +236,13 @@ lowcase ; convert string to lowercase
  ;@output = lowercase string
  ;@meter: do case^%tsc
  ;@timing d
- ; count:
- ; total:
- ; min:
- ; max:
- ; mean:
- ; median:
- ; mode:
+ ; count:10,000
+ ; total:13,617
+ ; min:1
+ ; max:72
+ ; mean:1.3617
+ ; median:1
+ ; mode:1
  ;@tests
  ; lowcase01^%tsutc: string
  ; lowcase02^%tsutc: phrase string
@@ -279,13 +279,13 @@ capcase ; Convert String To Capitalized
  ;@output = capitalized string
  ;@meter: do case^%tsc
  ;@timing e
- ; count:
- ; total:
- ; min:
- ; max:
- ; mean:
- ; median:
- ; mode:
+ ; count:10,000
+ ; total:109,705
+ ; min:9
+ ; max:83
+ ; mean:10.9705
+ ; median:10
+ ; mode:10
  ;@examples
  ;  write $$capcase^%ts("THIS IS CAPITALIZED. (this isn't.)")
  ; produces
@@ -345,13 +345,13 @@ invcase ; iNVERT cASE (uPPERS TO lOWERS & vICE vERSA)
  ;@output = inverse-cased string
  ;@meter: do case^%tsc
  ;@timing f
- ; count:
- ; total:
- ; min:
- ; max:
- ; mean:
- ; median:
- ; mode:
+ ; count:10,000
+ ; total:16,262
+ ; min:1
+ ; max:68
+ ; mean:1.6262
+ ; median:2
+ ; mode:2
  ;@examples
  ;  write $$invcase^%ts("tHIS iS cAPITALIZED. (tHIS iSN'T.)")
  ; produces
@@ -397,13 +397,13 @@ sencase ; Convert string to sentence case
  ;@output = sentence-case string
  ;@meter: do case^%tsc
  ;@timing g
- ; count:
- ; total:
- ; min:
- ; max:
- ; mean:
- ; median:
- ; mode:
+ ; count:10,000
+ ; total:69,708
+ ; min:6
+ ; max:1,678
+ ; mean:6.9708
+ ; median:7
+ ; mode:7
  ;@examples
  ;  write $$sencase^%ts("HELLO!!! THIS IS A SENTENCE. (this isn't.)")
  ; produces

@@ -1,4 +1,4 @@
-%tses ;ven/toad-type string: setex^%ts ;2018-12-11T21:13Z
+%tses ;ven/toad-type string: setex^%ts ;2018-12-14T17:58Z
  ;;1.8;Mash;
  ;
  ; %tses implements MASH String Library ppi setex^%ts, change
@@ -29,7 +29,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-12-11T21:13Z
+ ;@last-updated: 2018-12-14T17:58Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -365,7 +365,7 @@ setex ; change value of positional substring
  ;@stanza 4 calculate placement
  ;
  new stringlen set stringlen=$length(string)
- new newvalen set newvalen=$length(replace)
+ new newvalen set newvalen=$length(newval)
  new prepad set prepad=0 ; # spaces to prefix to make set $extract work
  ;
  if absolute do  ; absolute addressing

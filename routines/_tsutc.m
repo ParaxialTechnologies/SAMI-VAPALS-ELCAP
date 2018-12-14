@@ -1,4 +1,4 @@
-%tsutc ;ven/lmry-type string-case: test ppis ^%tsc ;2018-12-12T04:14Z
+%tsutc ;ven/lmry-type string-case: test ppis ^%tsc ;2018-12-12T14:50Z
  ;;1.8;Mash;
  ;
  ; This Mumps Advanced Shell (mash) routine implements unit tests for
@@ -14,7 +14,7 @@
  ;@copyright: 2016/2017/2018, ven, all rights reserved
  ;@license: Apache 2.0
  ;
- ;@last-updated: 2018-12-12T04:14Z
+ ;@last-updated: 2018-12-12T14:50Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.7T03
@@ -28,30 +28,28 @@
  ;  upalpha: unit test for $$upalpha^%ts
  ;  uac: unit test for $$uac^%ts
  ;  upperAlpha: unit test for $$upperAlpha^%ts
- ;  ALPHABET: unit test for $$ALPHABET^%ts
  ;  lowalpha: unit test for $$lowalpha^%ts
  ;  lac: unit test for $$lac^%ts
  ;  lowerAlpha: unit test for $$lowerAlpha^%ts
- ;  alphabet: unit test for $$alphabet^%ts
  ; Group 2: Upper Case
  ;  upcase*: unit tests for $$upcase^%ts
- ;  u: unit test for $$u^%ts
+ ;  uc: unit test for $$uc^%ts
  ;  upperCase: unit test for $$upperCase^%ts
  ; Group 3: Lower Case
  ;  lowcase*: unit tests for $$lowcase^%ts
- ;  l: unit test for $$l^%ts
+ ;  lc: unit test for $$lc^%ts
  ;  lowerCase: unit test for $$lowerCase^%ts
  ; Group 4: Capital Case
  ;  capcase*: unit tests for $$capcase^%ts
- ;  c: unit test for $$c^%ts
+ ;  cc: unit test for $$cc^%ts
  ;  capitalCase: unit test for $$capitalCase^%ts
  ; Group 5: Inverse Case
  ;  invcase*: unit tests for $$invcase^%ts
- ;  i: unit test for $$i^%ts
+ ;  ic: unit test for $$ic^%ts
  ;  inverseCase: unit test for $$inverseCase^%ts
  ; Group 6: Sentence Case
  ;  sencase*: unit tests for $$sencase^%ts
- ;  s: unit test for $$s^%ts
+ ;  sc: unit test for $$sc^%ts
  ;  sentenceCase: unit test for $$sentenceCase^%ts
  ; 
  ;@called-by:
@@ -93,16 +91,6 @@ upperAlpha ; @TEST $$upperAlpha^%ts(%s,%c): test synonym
  quit  ; end of upperAlpha
  ;
  ;
-ALPHABET ; @TEST $$ALPHABET^%ts(%s,%c): test synonym
- ;
- ;ven/lmry;test;procedure;clean;silent;mdc
- ;
- new result set result="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
- do CHKEQ^%ut($$ALPHABET^%ts,result)
- ;
- quit  ; end of ALPHABET
- ;
- ;
  ;
 lowalpha ; @TEST $$lowalpha^%ts(): return lowercase alphabet
  ;
@@ -132,16 +120,6 @@ lowerAlpha ; @TEST $$lowerAlpha^%ts(): test synonym
  do CHKEQ^%ut($$lowerAlpha^%ts,result)
  ;
  quit  ; end of lowerAlpha
- ;
- ;
-alphabet ; @TEST $$alphabet^%ts(): test synonym
- ;
- ;ven/lmry;test;procedure;clean;silent;mdc
- ;
- new result set result="abcdefghijklmnopqrstuvwxyz"
- do CHKEQ^%ut($$alphabet^%ts,result)
- ;
- quit  ; end of alphabet
  ;
  ;
  ;
@@ -203,15 +181,15 @@ upcase05 ; @TEST $$upcase^%ts(%s): mixed alpha & non-alpha characters
  quit  ; end of upcase05
  ;
  ;
-u ; @TEST $$u^%ts(%s): test synonym
+uc ; @TEST $$uc^%ts(%s): test synonym
  ;
  ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="Terrarium"                     
  new result set result="TERRARIUM"
- do CHKEQ^%ut($$u^%ts(%s),result)
+ do CHKEQ^%ut($$uc^%ts(%s),result)
  ;
- quit  ; end of u
+ quit  ; end of uc
  ;
  ;
 upperCase ; @TEST $$upperCase^%ts(%s): test synonym
@@ -284,15 +262,15 @@ lowcase05 ; @TEST $$lowcase^%ts(%s): mixed alpha & non-alpha characters
  quit  ; end of lowcase05
  ;
  ;
-l ; @TEST $$l^%ts(%s): test synonym
+lc ; @TEST $$lc^%ts(%s): test synonym
  ;
  ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="TERRARIUM"                     
  new result set result="terrarium"
- do CHKEQ^%ut($$l^%ts(%s),result)
+ do CHKEQ^%ut($$lc^%ts(%s),result)
  ;
- quit  ; end of l
+ quit  ; end of lc
  ;
  ;
 lowerCase ; @TEST $$lowerCase^%ts(%s): test synonym
@@ -365,15 +343,15 @@ capcase05 ; @TEST $$capcase^%ts(%s): mixed upper & lowercase characters
  quit  ; end of capcase05
  ;
  ;
-c ; @TEST $$c^%ts(%s): test synonym
+cc ; @TEST $$cc^%ts(%s): test synonym
  ;
  ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="JeNNifer siTs in ThE WinDow Seat."
  new result set result="Jennifer Sits In The Window Seat."
- do CHKEQ^%ut($$c^%ts(%s),result)
+ do CHKEQ^%ut($$cc^%ts(%s),result)
  ;
- quit  ; end of c
+ quit  ; end of cc
  ;
  ;
 capitalCase ; @TEST $$capitalCase^%ts(%s): test synonym
@@ -435,15 +413,15 @@ invcase04 ; @TEST $$invcase^%ts(%s): non-alpha characters
  quit  ; end of invcase04
  ;
  ;
-i ; @TEST $$i^%ts(%s): test synonym
+ic ; @TEST $$ic^%ts(%s): test synonym
  ;
  ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="sNOW fALLS oN tHE tREES."
  new result set result="Snow Falls On The Trees."
- do CHKEQ^%ut($$i^%ts(%s),result)
+ do CHKEQ^%ut($$ic^%ts(%s),result)
  ;
- quit  ; end of i
+ quit  ; end of ic
  ;
  ;
 inverseCase ; @TEST $$inverseCase^%ts(%s): test synonym
@@ -527,15 +505,15 @@ sencase06 ; @TEST $$sencase^%ts(%s): more than one Sentence, different puncuatio
  quit  ; end of sencase06
  ;
  ;
-s ; @TEST $$s^%ts(%s): test synonym
+sc ; @TEST $$sc^%ts(%s): test synonym
  ;
  ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="JeNNifer siTs in ThE WinDow Seat."
  new result set result="Jennifer sits in the window seat."
- do CHKEQ^%ut($$s^%ts(%s),result)
+ do CHKEQ^%ut($$sc^%ts(%s),result)
  ;
- quit  ; end of s
+ quit  ; end of sc
  ;
  ;
 sentenceCase ; @TEST $$sentenceCase^%ts(%s): test synonym

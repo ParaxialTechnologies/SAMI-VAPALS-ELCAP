@@ -1,4 +1,4 @@
-SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ; 12/10/18 9:47am
+SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ; 12/14/18 11:49am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -21,7 +21,7 @@ SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ; 12/10/18 9:47am
  ;
  ; @section 1 code
  ;
-START 
+START ;
  if $text(^%ut)="" do
  . write !,"*** UNIT TEST NOT INSTALLED ***"
  . quit
@@ -33,17 +33,17 @@ START
 STARTUP ; Ensure all of test patient's forms are setup in vapals-patients
  n root s root=$$setroot^%wd("vapals-patients")
  k @root@("graph","XXX00001")
- n poo D PullUTarray^SAMIUTST(.poo,"all XXX00001 forms")
+ n poo D PLUTARR^SAMIUTST(.poo,"all XXX00001 forms")
  m @root@("graph","XXX00001")=poo
  q
  ;
-SETUP 
+SETUP ;
  new args,body,return,filter,from,to,expect,result,expectn,resultn,utsuccess
  quit
  ;
  ;
-TEARDOWN ; ZEXCEPT: args,body,return,filter,from,to,expect,result,expectn,resultn,utsuccess
- kill args,body,return,filter,from,to,expect,result,expectn,resultn,utsuccess
+TEARDOWN ; ZEXCEPT: SAMIUARGS,SAMIUBODY,SAMIURETURN,filter,from,to,expect,result,expectn,resultn,utsuccess
+ kill SAMIUARGS,SAMIUBODY,SAMIURETURN,filter,from,to,expect,result,expectn,resultn,utsuccess
  quit
  ;
  ;
@@ -51,41 +51,41 @@ UTWSLKU ; @TEST WSLOOKUP^SAMISRC2
  ; Comments
  ;
  ; Test with no patient study ID
- set body(1)=""
- do WSLOOKUP^SAMISRC2(.args,.body,.return)
+ set SAMIUBODY(1)=""
+ do WSLOOKUP^SAMISRC2(.SAMIUARGS,.SAMIUBODY,.SAMIURETURN)
  set expect="Patient not found"
  set result=filter("samilookuperror")
  do CHKEQ^%ut(result,expect)
  ; Check the HTML array
  kill expect,result
  set utsuccess=1
- do PullUTarray^SAMIUTST(.expect,"UTWSLKU^SAMIUTC2: Null SID")
+ do PLUTARR^SAMIUTST(.expect,"UTWSLKU^SAMIUTC2: Null SID")
  set resultn=0,expectn=0
- for  set resultn=$order(return(resultn)),expectn=$order(expect(expectn)) quit:('resultn)!('expectn)  do
- . quit:($E($TR(return(resultn),""""" "),1,10)?4N1"."2N1"."2N) ; Node with a date
- . quit:(return(resultn)["meta content")
+ for  set resultn=$order(SAMIURETURN(resultn)),expectn=$order(expect(expectn)) quit:('resultn)!('expectn)  do
+ . quit:($E($TR(SAMIURETURN(resultn),""""" "),1,10)?4N1"."2N1"."2N)  ; Node with a date
+ . quit:(SAMIURETURN(resultn)["meta content")
  . if '(resultn=expectn) set utsuccess=0
- . if '(return(resultn)=expect(expectn)) set utsuccess=0
+ . if '(SAMIURETURN(resultn)=expect(expectn)) set utsuccess=0
  if '(resultn="")&(expectn="") set utsuccess=0
  do CHKEQ^%ut(utsuccess,1)
  ;
  ; Test with a patient study ID
- kill args,body,return,result,expect
- set body(1)="field=sid&fvalue=XXX00001"
- do WSLOOKUP^SAMISRC2(.args,.body,.return)
+ kill SAMIUARGS,SAMIUBODY,SAMIURETURN,result,expect
+ set SAMIUBODY(1)="field=sid&fvalue=XXX00001"
+ do WSLOOKUP^SAMISRC2(.SAMIUARGS,.SAMIUBODY,.SAMIURETURN)
  set expect="XXX00001"
  set result=filter("studyid")
  do CHKEQ^%ut(result,expect)
  ; Check the HTML array
  kill expect,result,resultn,expectn
  set utsuccess=1
- do PullUTarray^SAMIUTST(.expect,"UTWSLKU^SAMIUTC2: SID=XXX00001")
+ do PLUTARR^SAMIUTST(.expect,"UTWSLKU^SAMIUTC2: SID=XXX00001")
  set resultn=0,expectn=0
- for  set resultn=$order(return(resultn)),expectn=$order(expect(expectn)) quit:('resultn)!('expectn)  do
- . quit:return(resultn)["meta content"
- . quit:'($E($TR(return(resultn),""""" "),1,10)?4N1"."2N1"."2N) ; Node with a date
+ for  set resultn=$order(SAMIURETURN(resultn)),expectn=$order(expect(expectn)) quit:('resultn)!('expectn)  do
+ . quit:SAMIURETURN(resultn)["meta content"
+ . quit:'($E($TR(SAMIURETURN(resultn),""""" "),1,10)?4N1"."2N1"."2N)  ; Node with a date
  . if '(resultn=expectn) set utsuccess=0
- . if '(return(resultn)=expect(expectn)) set utsuccess=0
+ . if '(SAMIURETURN(resultn)=expect(expectn)) set utsuccess=0
  if '(resultn="")&(expectn="") set utsuccess=0
  do CHKEQ^%ut(utsuccess,1)
  ;

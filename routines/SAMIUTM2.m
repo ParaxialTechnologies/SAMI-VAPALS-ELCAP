@@ -1,4 +1,4 @@
-SAMIUTM2 ;ven/lgc/smh - UNIT TEST for SAMIM2M ; 12/7/18 11:43am
+SAMIUTM2 ;ven/lgc/smh - UNIT TEST for SAMIM2M ; 12/17/18 9:39am
  ;;18.0;SAM;;
  ;
  ;SAM'S INDUSTRIAL CONGLOMERATES
@@ -33,28 +33,27 @@ START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  ;       VA-PALS is not in use as some Graphstore globals
  ;       are temporarily moved while testing is running.
  ;
-STARTUP N PORT,HOST,AV,KBAPFAIL
- S KBAPFAIL=0
- S PORT=$$GET^XPAR("SYS","SAMI PORT",,"Q")
- S HOST=$$GET^XPAR("SYS","SAMI IP ADDRESS",,"Q")
- S:($G(HOST)="") HOST="127.0.0.1"
- S AV=$$GET^XPAR("SYS","SAMI ACCVER",,"Q")
- I ('$G(PORT))!('($L($G(AV),";")=2)) D  G SHUTDOWN
+STARTUP N utsuccess,port,host,av
+ s port=$$GET^XPAR("SYS","SAMI PORT",,"Q")
+ s host=$$GET^XPAR("SYS","SAMI IP ADDRESS",,"Q")
+ s:($g(host)="") host="127.0.0.1"
+ s av=$$GET^XPAR("SYS","SAMI ACCVER",,"Q")
+ i ('$g(port))!('($l($G(av),";")=2)) d  g SHUTDOWN
  . D FAIL^%ut("SAMI PARAMETERS MUST BE SET UP FOR UNIT TESTING")
  Q
  ;
-SHUTDOWN ; ZEXCEPT: PORT,HOST,AV,KBAPFAIL - defined in STARTUP
- K PORT,HOST,AV,KBAPFAIL
- Q
+SHUTDOWN ; ZEXCEPT: utsuccess,port,host,av - defined in STARTUP
+ k utsuccess,port,host,av
+ q
  ;
 TESTM2M ; @TEST - Test full M2M call
- N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY,XDATA
- S CNTXT="XWB BROKER EXAMPLE"
- S RMPRC="XWB EXAMPLE ECHO STRING"
- S (CONSOLE,CNTNOPEN)=0
- S XARRAY(1)="ABC12345DEF"
- D M2M^SAMIM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
- D CHKEQ^%ut(XDATA,XARRAY(1),"Testing Complete SAMIM2M call  FAILED!")
+ n cntxt,rmprc,console,cntnopen,SAMIDATA,SAMIARR
+ s cntxt="XWB BROKER EXAMPLE"
+ s rmprc="XWB EXAMPLE ECHO STRING"
+ s (console,cntnopen)=0
+ s SAMIARR(1)="ABC12345DEF"
+ d M2M^SAMIM2M(.SAMIDATA,cntxt,rmprc,console,cntnopen,.SAMIARR)
+ D CHKEQ^%ut(SAMIDATA,SAMIARR(1),"Testing Complete SAMIM2M call  FAILED!")
  Q
  ;
  ;

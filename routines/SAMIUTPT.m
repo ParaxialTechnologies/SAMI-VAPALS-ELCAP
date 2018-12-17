@@ -1,4 +1,4 @@
-SAMIUTPT ;ven/arc - Unit test for SAMIPTLK ; 12/10/18 9:12am
+SAMIUTPT ;ven/arc - Unit test for SAMIPTLK ; 12/17/18 10:02am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -22,7 +22,7 @@ SAMIUTPT ;ven/arc - Unit test for SAMIPTLK ; 12/10/18 9:12am
  ;
  ; @section 1 code
  ;
-START 
+START ;
  if $T(^%ut)="" do
  . write !,"*** UNIT TEST NOT INSTALLED ***"
  . quit
@@ -31,21 +31,21 @@ START
  quit
  ;
  ;
-STARTUP 
+STARTUP ;
  quit
  ;
  ;
-SETUP 
- new rtn,filter,ary,expect,result
+SETUP ;
+ new SAMIURTN,SAMIUFLTR,expect,result
  quit
  ;
  ;
-TEARDOWN ; ZEXCEPT: rtn,filter,ary,expect,result
- kill rtn,filter,ary,expect,result
+TEARDOWN ; ZEXCEPT: SAMIURTN,SAMIUFLTR,expect,result
+ kill SAMIURTN,SAMIUFLTR,expect,result
  quit
  ;
  ;
-SHUTDOWN 
+SHUTDOWN ;
  quit
  ;
  ;
@@ -53,32 +53,32 @@ UTWSPTLK ; @TEST WSPTLOOK^SAMIPTLK
  ; Comments
  ;
  ; Test query string = ""
- set filter("search")=""
- do WSPTLOOK^SAMIPTLK(.rtn,.filter)
+ set SAMIUFLTR("search")=""
+ do WSPTLOOK^SAMIPTLK(.SAMIURTN,.SAMIUFLTR)
  new result,expect
  set expect="{""1"":""-1^No patient specified.""}"
- set result=rtn(1)
+ set result=SAMIURTN(1)
  do CHKEQ^%ut(result,expect)
  ;
  ; Test query string = "ZZZZ"
- kill rtn,filter
- set filter("search")="ZZZZ"
- do WSPTLOOK^SAMIPTLK(.rtn,.filter)
+ kill SAMIURTN,SAMIUFLTR
+ set SAMIUFLTR("search")="ZZZZ"
+ do WSPTLOOK^SAMIPTLK(.SAMIURTN,.SAMIUFLTR)
  set expect="{""1"":""""}"
- set result=rtn(1)
+ set result=SAMIURTN(1)
  do CHKEQ^%ut(result,expect)
  ;
  ; Test query string = "A"
- kill rtn,filter
- set filter("search")="A"
- do WSPTLOOK^SAMIPTLK(.rtn,.filter)
- ; Check first node of rtn
+ kill SAMIURTN,SAMIUFLTR
+ set SAMIUFLTR("search")="A"
+ do WSPTLOOK^SAMIPTLK(.SAMIURTN,.SAMIUFLTR)
+ ; Check first node of SAMIURTN
  set expect="{""1"":"
- set result=rtn(1)
+ set result=SAMIURTN(1)
  do CHKEQ^%ut(result,expect)
- ; Check last node of rtn
+ ; Check last node of SAMIURTN
  set expect="""}"
- set result=rtn($order(rtn(""),-1))
+ set result=SAMIURTN($order(SAMIURTN(""),-1))
  do CHKEQ^%ut(result,expect)
  ;
  ; 
@@ -89,36 +89,36 @@ UTWSPTLC ; @TEST WSPTLKUP^SAMIPTLK
  ; Comments
  ;
  ; Test query string = ""
- set filter("search")=""
- do WSPTLKUP^SAMIPTLK(.rtn,.filter)
- ; Check first node of rtn
+ set SAMIUFLTR("search")=""
+ do WSPTLKUP^SAMIPTLK(.SAMIURTN,.SAMIUFLTR)
+ ; Check first node of SAMIURTN
  set expect="{""result"":"
- set result=$piece(rtn(1),"[")
+ set result=$piece(SAMIURTN(1),"[")
  do CHKEQ^%ut(result,expect)
- ; Check last node of rtn
+ ; Check last node of SAMIURTN
  set expect="}"
- set result=$piece(rtn($order(rtn(""),-1)),"]",2)
+ set result=$piece(SAMIURTN($order(SAMIURTN(""),-1)),"]",2)
  do CHKEQ^%ut(result,expect)
  ;
  ; Test query string = "ZZZZ"
- kill rtn,filter
- set filter("search")="ZZZZ"
- do WSPTLKUP^SAMIPTLK(.rtn,.filter)
+ kill SAMIURTN,SAMIUFLTR
+ set SAMIUFLTR("search")="ZZZZ"
+ do WSPTLKUP^SAMIPTLK(.SAMIURTN,.SAMIUFLTR)
  set expect=""
- set result=$get(rtn(1))
+ set result=$get(SAMIURTN(1))
  do CHKEQ^%ut(result,expect)
  ;
  ; Test query string = "A"
- kill rtn,filter
- set filter("search")="A"
- do WSPTLKUP^SAMIPTLK(.rtn,.filter)
- ; Check first node of rtn
+ kill SAMIURTN,SAMIUFLTR
+ set SAMIUFLTR("search")="A"
+ do WSPTLKUP^SAMIPTLK(.SAMIURTN,.SAMIUFLTR)
+ ; Check first node of SAMIURTN
  set expect="{""result"":"
- set result=$piece(rtn(1),"[")
+ set result=$piece(SAMIURTN(1),"[")
  do CHKEQ^%ut(result,expect)
- ; Check last node of rtn
+ ; Check last node of SAMIURTN
  set expect="}"
- set result=$piece(rtn($order(rtn(""),-1)),"]",2)
+ set result=$piece(SAMIURTN($order(SAMIURTN(""),-1)),"]",2)
  do CHKEQ^%ut(result,expect)
  ;
  ; TODO: Add query using last 5

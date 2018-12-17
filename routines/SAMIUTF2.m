@@ -1,4 +1,4 @@
-SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 12/10/18 8:48am
+SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 12/14/18 11:58am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -28,7 +28,7 @@ START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
 STARTUP n utsuccess
  n root s root=$$setroot^%wd("vapals-patients")
  k @root@("graph","XXX00001")
- n poo D PullUTarray^SAMIUTST(.poo,"all XXX00001 forms")
+ n poo D PLUTARR^SAMIUTST(.poo,"all XXX00001 forms")
  m @root@("graph","XXX00001")=poo
  Q
  ;
@@ -119,7 +119,7 @@ UTLOADD ; @TEST - import directory full of json data into elcap-patient graph
  ;
  D LOADDATA^SAMIFRM2
  m arc=@root@("graph","XXX0005")
- D PullUTarray^SAMIUTST(.poo,"UTLOADD^SAMIUTF2")
+ D PLUTARR^SAMIUTST(.poo,"UTLOADD^SAMIUTF2")
  s nodea=$na(arc),nodep=$na(poo)
  f  s nodea=$q(nodea),nodep=$q(nodep) q:nodea=""  d  q:'utsuccess
  . i '(nodea=nodep) s utsuccess=0
@@ -175,7 +175,7 @@ UTWSSBF ; @TEST - background form access
  s filter("studyid")="XXX00001"
  d WSSBFORM^SAMIFRM2(.rtn,.filter)
  m arc=@rtn
- D PullUTarray^SAMIUTST(.poo,"UTWSSBF^SAMIUTF2")
+ D PLUTARR^SAMIUTST(.poo,"UTWSSBF^SAMIUTF2")
  s utsuccess=1
  s nodep=$na(poo),nodea=$na(arc)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
@@ -194,7 +194,7 @@ UTWSIFM ; @TEST - intake form access
  s filter("studyid")="XXX00001"
  d WSSIFORM^SAMIFRM2(.rtn,.filter)
  m arc=@rtn
- D PullUTarray^SAMIUTST(.poo,"UTWSIFM^SAMIUTF2")
+ D PLUTARR^SAMIUTST(.poo,"UTWSIFM^SAMIUTF2")
  s utsuccess=1
  s nodep=$na(poo),nodea=$na(arc)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
@@ -214,7 +214,7 @@ UTCEFRM ; @TEST - ctevaluation form access
  s filter("studyid")="XXX00001"
  d WSCEFORM^SAMIFRM2(.rtn,.filter)
  m arc=@rtn
- D PullUTarray^SAMIUTST(.poo,"UTCEFRM^SAMIUTF2")
+ D PLUTARR^SAMIUTST(.poo,"UTCEFRM^SAMIUTF2")
  s utsuccess=1
  s nodep=$na(poo),nodea=$na(arc)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess

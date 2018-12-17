@@ -1,4 +1,4 @@
-SAMIUTC1 ;ven/lgc - Unit test for SAMICTC1 ; 10/26/18 7:56pm
+SAMIUTC1 ;ven/lgc - Unit test for SAMICTC1 ; 12/14/18 11:45am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -36,12 +36,12 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  ;
 UTCTCPY ; @TEST - copies a Ct Eval form selectively
  ;CTCOPY(FROM,TO)
- ;n arc,poou
+ n arc,poo,SAMIUFROM,SAMIUTO
  s utsuccess=1
- D PullUTarray^SAMIUTST(.poou,"CTCOPY-SAMICTC1")
- s FROM=$NA(poou),TO=$NA(arc)
- D CTCOPY^SAMICTC1(FROM,TO)
- n nodea,nodep s nodea=$na(arc),nodep=$na(poou)
+ D PLUTARR^SAMIUTST(.poo,"CTCOPY-SAMICTC1")
+ S SAMIUFROM=$NA(poo),SAMIUTO=$NA(arc)
+ D CTCOPY^SAMICTC1(SAMIUFROM,SAMIUTO)
+ n nodea,nodep s nodea=$na(arc),nodep=$na(poo)
  f  s nodea=$Q(nodea),nodep=$Q(nodep) q:nodea=""  d
  . i '(nodea=nodep) s utsuccess=0
  . i '(@nodea=@nodep) s utsuccess=0

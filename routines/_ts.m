@@ -1,14 +1,17 @@
-%ts ;ven/toad-type string: api/ppi library ;2018-03-13T16:36Z
+%ts ;ven/toad-type string: api/ppi library ;2018-12-12T14:32Z
  ;;1.8;Mash;
  ;
  ; %ts is the Mumps String Library, an element of the Mumps
- ; Advanced Shell's Data Type Library. It collects all public
- ; application programmer interfaces in the Mumps String Library.
- ; Its APIs are implemented in other %ts* routines, none of which
- ; contains any public entry points.
+ ; Advanced Shell's Data Type Library. It collects all Mumps
+ ; String Library interfaces, both public application program
+ ; interfaces (apis) and private program interfaces (ppis).
+ ; Its interfaces are implemented in other %ts* routines, none
+ ; of which contains any public entry points.
  ; See %tsul for the module's primary-development log.
  ; See %tsud for documentation introducing the library.
- ; %ts contains public entry points.
+ ; %ts version 1.8 contains no public apis, only private ppis.
+ ; Applications may only call these ppis after negotiating a
+ ; private subscription.
  ;
  quit  ; no entry from top
  ;
@@ -27,7 +30,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-13T16:36Z
+ ;@last-updated: 2018-12-12T14:32Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -43,65 +46,79 @@
  ;
  ;
  ;
- ;@API $$alphabet^%ts, abcdefghijklmnopqrstuvwxyz
-alphabet() goto alphabet^%tsc
+ ;@ppi $$upalpha^%ts, abcdefghijklmnopqrstuvwxyz
+upalpha() goto upalpha^%tsc
  ;
- ;@API $$ALPHABET^%ts, ABCDEFGHIJKLMNOPQRSTUVWXYZ
-ALPHABET() goto ALPHABET^%tsc
+ ;@ppi $$uac^%ts, idem
+uac() goto upalpha^%tsc
+ ;
+ ;@ppi $$upperAlpha^%ts, idem
+upperAlpha() goto upalpha^%tsc
  ;
  ;
  ;
- ;@API $$upcase^%ts, upper case (ALL CAPITAL LETTERS)
+ ;@ppi $$lowalpha^%ts, ABCDEFGHIJKLMNOPQRSTUVWXYZ
+lowalpha() goto lowalpha^%tsc
+ ;
+ ;@ppi $$lac^%ts, idem
+lac() goto lowalpha^%tsc
+ ;
+ ;@ppi $$lowerAlpha^%ts, idem
+lowerAlpha() goto lowalpha^%tsc
+ ;
+ ;
+ ;
+ ;@ppi $$upcase^%ts, upper case (ALL CAPITAL LETTERS)
 upcase(string) goto upcase^%tsc
  ;
- ;@API $$u^%ts, upper case
-u(string) goto upcase^%tsc
+ ;@ppi $$uc^%ts, idem
+uc(string) goto upcase^%tsc
  ;
- ;@API $$upperCase^%ts, upper case
+ ;@ppi $$upperCase^%ts, idem
 upperCase(string) goto upcase^%tsc
  ;
  ;
  ;
- ;@API $$lowcase^%ts, lower case (no capital letters)
+ ;@ppi $$lowcase^%ts, lower case (no capital letters)
 lowcase(string) goto lowcase^%tsc
  ;
- ;@API $$l^%ts, lower case
-l(string) goto lowcase^%tsc
+ ;@ppi $$lc^%ts, idem
+lc(string) goto lowcase^%tsc
  ;
- ;@API $$lowerCase^%ts, lower case
+ ;@ppi $$lowerCase^%ts, idem
 lowerCase(string) goto lowcase^%tsc
  ;
  ;
  ;
- ;@API $$capcase^%ts, capital case (First Char Of Each Word Capital)
+ ;@ppi $$capcase^%ts, capital case (First Char Of Each Word Capital)
 capcase(string) goto capcase^%tsc
  ;
- ;@API $$c^%ts, capital case
-c(string) goto capcase^%tsc
+ ;@ppi $$cc^%ts, idem
+cc(string) goto capcase^%tsc
  ;
- ;@API $$capitalCase^%ts, capital case
+ ;@ppi $$capitalCase^%ts, idem
 capitalCase(string) goto capcase^%tsc
  ;
  ;
  ;
- ;@API $$invcase^%ts, inverse case (uPPERS TO lOWERS & vice versa)
+ ;@ppi $$invcase^%ts, inverse case (uPPERS TO lOWERS & vice versa)
 invcase(string) goto invcase^%tsc
  ;
- ;@API $$i^%ts, inverse case
-i(string) goto invcase^%tsc
+ ;@ppi $$ic^%ts, idem
+ic(string) goto invcase^%tsc
  ;
- ;@API $$inverseCase^%ts, inverse case
+ ;@ppi $$inverseCase^%ts, idem
 inverseCase(string) goto invcase^%tsc
  ;
  ;
  ;
- ;@API $$sencase^%ts, sentence case (1st character capital)
+ ;@ppi $$sencase^%ts, sentence case (Character one capital)
 sencase(string) goto sencase^%tsc
  ;
- ;@API $$s^%ts, sentence case
-s(string) goto sencase^%tsc
+ ;@ppi $$sc^%ts, idem
+sc(string) goto sencase^%tsc
  ;
- ;@API $$sentenceCase^%ts, sentence case
+ ;@ppi $$sentenceCase^%ts, idem
 sentenceCase(string) goto sencase^%tsc
  ;
  ;
@@ -110,31 +127,31 @@ sentenceCase(string) goto sencase^%tsc
  ;
  ;
  ;
- ;@API findex^%ts, find extract (find position of substring)
+ ;@ppi findex^%ts, find extract (find position of substring)
 findex(string,find,flags) goto findex^%tsef
  ;
- ;@API fe^%ts, find extract
+ ;@ppi fe^%ts, idem
 fe(string,find,flags) goto findex^%tsef
  ;
- ;@API findExtract^%ts, find extract
+ ;@ppi findExtract^%ts, idem
 findExtract(string,find,flags) goto findex^%tsef
  ;
- ;@API find^%ts, find extract
+ ;@ppi find^%ts, idem
 find(string,find,flags) goto findex^%tsef
  ;
  ;
  ;
- ;@API setex^%ts, set extract (change value of positional substring)
-setex(string,replace,flags) goto setex^%tses
+ ;@ppi setex^%ts, set extract (change value of positional substring)
+setex(string,newval,flags) goto setex^%tses
  ;
- ;@API se^%ts, set extract
-se(string,replace,flags) goto setex^%tses
+ ;@ppi se^%ts, idem
+se(string,newval,flags) goto setex^%tses
  ;
- ;@API setExtract^%ts, set extract
-setExtract(string,replace,flags) goto setex^%tses
+ ;@ppi setExtract^%ts, idem
+setExtract(string,newval,flags) goto setex^%tses
  ;
- ;@API place^%ts, set extract
-place(string,replace,flags) goto setex^%tses
+ ;@ppi place^%ts, idem
+place(string,newval,flags) goto setex^%tses
  ;
  ;
  ;
@@ -145,10 +162,10 @@ place(string,replace,flags) goto setex^%tses
  ;@ppi setfind^%ts, set find (find & replace substring)
 setfind(string,find,replace,flags) goto setfind^%tsfs
  ;
- ;@ppi sf^%ts, set find
+ ;@ppi sf^%ts, idem
 sf(string,find,replace,flags) goto setfind^%tsfs
  ;
- ;@ppi setFind^%ts, set find
+ ;@ppi setFind^%ts, idem
 setFind(string,find,replace,flags) goto setfind^%tsfs
  ;
  ;
@@ -167,7 +184,7 @@ findReplaceAll(string,find,replace,flags) goto findReplaceAll^%tsfwra
  ;
  ;
  ;
- ;@API $$trim^%ts, trim character from end(s) of string
+ ;@ppi $$trim^%ts, trim character from end(s) of string
 trim(string,end,char) goto trim^%tsjt
  ;
  ;
@@ -176,7 +193,7 @@ trim(string,end,char) goto trim^%tsjt
  ;
  ;
  ;
- ;@API $$strip^%ts, strip character(s) from string
+ ;@ppi $$strip^%ts, strip character(s) from string
 strip(string,char) goto strip^%tsvs
  ;
  ;

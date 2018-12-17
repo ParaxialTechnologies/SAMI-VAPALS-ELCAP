@@ -180,10 +180,6 @@
                     const v = Math.PI * (4 / 3) * l / 2 * w / 2 * h / 2;
 
                     $("#cect" + noduleIdx + "sv").val(v.toFixed(1));
-                    const fv = $(this).closest("form.validated").data('formValidation');
-                    if (fv) {
-                        fv.revalidateField("cect" + noduleIdx + "sv")
-                    }
                     markNoduleVolumeManuallyEntered(noduleIdx, false);
                     //temporarily disabled
                     // checkConsistentVolumeCalculations();

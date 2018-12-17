@@ -1,4 +1,4 @@
-%tsef ;ven/toad-type string: findex^%ts ;2018-03-20T19:02Z
+%tsef ;ven/toad-type string: findex^%ts ;2018-12-12T20:44Z
  ;;1.8;Mash;
  ;
  ; %tsef implements MASH String Library ppi findex^%ts, find substring;
@@ -28,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-20T19:02Z
+ ;@last-updated: 2018-12-12T20:44Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -100,7 +100,9 @@ findex ; find position of substring
  ; find^%ts
  ;@branches-from
  ; findex^%ts
- ;@ppi-called-by: none yet, but just wait an hour or two
+ ;@ppi-called-by
+ ; setfind^%ts
+ ; *^%tsutef [tests]
  ;@called-by: none
  ;@calls: $$lowcase^%ts
  ;@input

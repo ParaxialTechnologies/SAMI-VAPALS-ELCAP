@@ -1,4 +1,4 @@
-%hr ;ven/toad-host: run command ;2017-05-25T16:48Z
+%hr ;ven/toad-host: run command ;2018-12-19T20:17Z
  ;;1.7;Mash;;May 25, 2017;
  ;;1.7T02;Mash;;2017-05-25;
  ;(c) 2016/2017, Vista Expertise Network, all rights reserved
@@ -131,6 +131,8 @@
  ;
  ; 2017-05-25 ven/toad %*1.7T02 %hr: update dates & chg history.
  ;
+ ; 2018-12-19 ven/toad %*1.8t04 %hr: bump version, fix block mismatches.
+ ;
  ;
  ; contents
  ;
@@ -189,7 +191,7 @@ run ; code for run^%h: API Run Operating System Command
  . set results="" ; set pass-by-reference flag
  . quit
  else  do  ; if pass by name
- . if results=""  ; if name is empty
+ . if results="" do  ; if name is empty
  . . set results=$name(^%u("%hr",$job)) ; use default array
  . . quit
  . kill @results ; clear output array

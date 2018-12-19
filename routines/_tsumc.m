@@ -1,4 +1,4 @@
-%tsumc ;ven/toad - type string: ^%tsc meter ;2018-12-19T20:42Z
+%tsumc ;ven/toad - type string: ^%tsc meter ;2018-12-19T21:48Z
  ;;1.8;Mash;
  ;
  ; %tsumc implements meters for the Mash String Library on GT.M
@@ -27,7 +27,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-12-19T20:42Z
+ ;@last-updated: 2018-12-19T21:48Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -61,186 +61,71 @@
  ;@ppi-meter ^%tsc
 case ; (string-case ppis)
  ;
- ;@stanza 1 invocation, binding, & branching
- ;
- ;ven/toad;timer;procedure;clean;silent;mdc;NO tests
- ;@signature
- ; do case^%tsumc
- ;@called-by: none
- ;@calls
- ; setup
- ; record
- ; report
- ; upalpha^%ts
- ; lowalpha^%ts
- ; upcase^%ts
- ; lowcase^%ts
- ; capcase^%ts
- ; invcase^%ts
- ; sencase^%ts
- ;@input: none
- ;@output: report to screen
- ;
- ; The Mumps String Case Library ppis branch to simple top-down
- ; subroutines, so each need only be timed once.
- ;
- ;@stanza 2 general initialization
- ;
  new %tsumsg
  do system^%ums
  ;
- ;@stanza 3 upalpha^%ts timer
+ do time^%ums(.%tsumsg,"upalpha^%tsumc")
+ do time^%ums(.%tsumsg,"lowalpha^%tsumc")
+ do time^%ums(.%tsumsg,"upcase^%tsumc")
+ do time^%ums(.%tsumsg,"lowcase^%tsumc")
+ do time^%ums(.%tsumsg,"capcase^%tsumc")
+ do time^%ums(.%tsumsg,"invcase^%tsumc")
+ do time^%ums(.%tsumsg,"sencase^%tsumc")
  ;
- set timer=" ;@timing a. upalpha^%ts timer"
- new count,string,t0,t1
- do setup^%ums(.%tsumsg)
- set count=%tsumsg("count")
- for count=1:1:count do
- . set t0=$zut set string=$$upalpha^%ts set t1=$zut
- . do record^%ums(.%tsumsg,t0,t1)
- . quit
- do report^%ums(.%tsumsg)
- ;
- ;@stanza 4 lowalpha^%ts timer
- ;
- set timer=" ;@timing b. lowalpha^%ts timer"
- kill string,t0,t1
- do setup^%ums(.%tsumsg)
- for count=1:1:count do
- . set t0=$zut set string=$$lowalpha^%ts set t1=$zut
- . do record^%ums(.%tsumsg,t0,t1)
- . quit
- do report^%ums(.%tsumsg)
- ;
- ;@stanza 5 upcase^%ts timer
- ;
- set timer=" ;@timing c. upcase^%ts timer"
- kill string,t0,t1
- do setup^%ums(.%tsumsg)
- for count=1:1:count do
- . set string="Snow falls on the trees."
- . set t0=$zut set string=$$upcase^%ts(string) set t1=$zut
- . do record^%ums(.%tsumsg,t0,t1)
- . quit
- do report^%ums(.%tsumsg)
- ;
- ;@stanza 6 lowcase^%ts timer
- ;
- set timer=" ;@timing d. lowcase^%ts timer"
- kill string,t0,t1
- do setup^%ums(.%tsumsg)
- for count=1:1:count do
- . set string="SNOW FALLS ON THE TREES."
- . set t0=$zut set string=$$lowcase^%ts(string) set t1=$zut
- . do record^%ums(.%tsumsg,t0,t1)
- . quit
- do report^%ums(.%tsumsg)
- ;
- ;@stanza 7 capcase^%ts timer
- ;
- set timer=" ;@timing e. capcase^%ts timer"
- kill string,t0,t1
- do setup^%ums(.%tsumsg)
- for count=1:1:count do
- . set string="snow falls on the trees."
- . set t0=$zut set string=$$capcase^%ts(string) set t1=$zut
- . do record^%ums(.%tsumsg,t0,t1)
- . quit
- do report^%ums(.%tsumsg)
- ;
- ;@stanza 8 invcase^%ts timer
- ;
- set timer=" ;@timing f. invcase^%ts timer"
- kill string,t0,t1
- do setup^%ums(.%tsumsg)
- for count=1:1:count do
- . set string="sNOW fALLS oN tHE tREES."
- . set t0=$zut set string=$$invcase^%ts(string) set t1=$zut
- . do record^%ums(.%tsumsg,t0,t1)
- . quit
- do report^%ums(.%tsumsg)
- ;
- ;@stanza 9 sencase^%ts timer
- ;
- set timer=" ;@timing g. sencase^%ts timer"
- kill string,t0,t1
- do setup^%ums(.%tsumsg)
- for count=1:1:count do
- . set string="snow falls on the trees."
- . set t0=$zut set string=$$sencase^%ts(string) set t1=$zut
- . do record^%ums(.%tsumsg,t0,t1)
- . quit
- do report^%ums(.%tsumsg)
- ;
- quit  ; end of timer case^%tsumc
+ quit  ; end of meter case^%tsumc
  ;
  ;
  ;
- ;@section 2 main statistical subroutines
+ ;@section 2 timers for string-case library
  ;
  ;
  ;
-setup ; set up timing pass
- ;
- ;
- set count=10000
- set max=0
- kill median
- set min=999999999
- kill mode
- set total=0
- ;
- quit  ; end of setup
+upalpha ;@timer a. upalpha^%ts
+ new string
+ set %umst1=$zut set string=$$upalpha^%ts set %umst2=$zut
+ quit  ; end of upalpha
  ;
  ;
  ;
-record ; calculate & record statistics
- ;
- new time set time=t1-t0
- set total=total+time
- set:time<min min=time
- set:time>max max=time
- set mode(time)=$get(mode(time))+1
- set:mode(time)>$get(mode) mode=mode(time)_U_time
- ;
- quit  ; end of record
+lowalpha ;@timer b. lowalpha^%ts
+ new string
+ set %umst1=$zut set string=$$lowalpha^%ts set %umst2=$zut
+ quit  ; end of lowalpha
  ;
  ;
  ;
-report ; calculate & report timing statistics
+upcase ;@timer c. upcase^%ts
+ new string set string="Snow falls on the trees."
+ set %umst1=$zut set string=$$upcase^%ts(string) set %umst2=$zut
+ quit  ; end of upcase
  ;
- new mean set mean="mean:"_$fnumber(total/count,",")
- new time set time=""
- new cnt set cnt=0
  ;
- for  do  quit:time=""
- . set time=$order(mode(time))
- . quit:time=""
- . new occ set occ=mode(time)
- . new add
- . for add=1:1:occ do
- . . set cnt=cnt+1
- . . set median(cnt)=time
- . . quit
- . quit
  ;
- new med1 set med1=median(count\2)
- new med2 set med2=median(count\2+1)
- set median="median:"_$fnumber(med1+med2/2,",")
- set mode="mode:"_$fnumber($piece(mode,U,2),",")
- set count="count:"_$fnumber(count,",")
- set total="total:"_$fnumber(total,",")
- set min="min:"_$fnumber(min,",")
- set max="max:"_$fnumber(max,",")
+lowcase ;@timer d. lowcase^%ts
+ new string set string="SNOW FALLS ON THE TREES."
+ set %umst1=$zut set string=$$lowcase^%ts(string) set %umst2=$zut
+ quit  ; end of lowcase
  ;
- write !!,timer
- new stats set stats=count_","_total_","_min_","_max_","_mean_","_median_","_mode
- new stat
- for stat="count","total","min","max","mean","median","mode" do
- . write !," ; ",@stat
- . quit
  ;
- quit  ; end of report
+ ;
+capcase ;@timer e. capcase^%ts
+ new string set string="snow falls on the trees."
+ set %umst1=$zut set string=$$capcase^%ts(string) set %umst2=$zut
+ quit  ; end of capcase
+ ;
+ ;
+ ;
+invcase ;@timer f. invcase^%ts
+ new string set string="sNOW fALLS oN tHE tREES."
+ set %umst1=$zut set string=$$invcase^%ts(string) set %umst2=$zut
+ quit  ; end of invcase
+ ;
+ ;
+ ;
+sencase ;@timer g. sencase^%ts
+ new string set string="snow falls on the trees."
+ set %umst1=$zut set string=$$sencase^%ts(string) set %umst2=$zut
+ quit  ; end of sencase
  ;
  ;
  ;

@@ -1,4 +1,4 @@
-%ums ;ven/toad - m-meter: statistical tools ;2018-12-19T20:48Z
+%ums ;ven/toad - m-meter: statistical tools ;2018-12-19T21:02Z
  ;;1.8;Mash;
  ;
  ; %ums implements statistical tools for the Mash M-Meter on GT.M
@@ -28,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-12-19T20:48Z
+ ;@last-updated: 2018-12-19T21:02Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: M-Meter - %um
  ;@version: 1.8T04
@@ -146,7 +146,7 @@ system ; report system profile
  write !," ;"
  write !," ; timing performed with all other Vista jobs shut down."
  write !," ; 10,000 iterations were done and the duration of the call averaged."
- write !," ;  values are in microseconds"
+ write !," ; values are in microseconds"
  ;
  quit  ; end of system
  ;
@@ -156,8 +156,7 @@ system ; report system profile
  ;
  ;
  ;
-setup(%umsg) ; set up timing pass
- ;
+setup(%umsg,%umstimer) ; set up timing pass
  ;
  set %umsg("count")=10000
  set %umsg("max")=0
@@ -165,20 +164,38 @@ setup(%umsg) ; set up timing pass
  set %umsg("min")=999999999
  kill %umsg("mode")
  set %umsg("total")=0
+ set %umsg("timer")=%umstimer
  ;
  quit  ; end of setup
  ;
  ;
  ;
-record(%umsg,%umt0,%umt1) ; calculate & record statistics
+time(%umsg,%umstimer) ; abstract timer
  ;
- set %umt0=$get(%umt0)
- quit:$get(%umt0)'=+$get(%umt0)
+ do setup^%ums(.%umsg,%umstimer)
+ new %umst1,%umst2
  ;
- set %umt1=$get(%umt1)
- quit:$get(%umt1)'=+$get(%umt1)
+ new count
+ for count=1:1:%umsg("count") do
+ . do @%umstimer
+ . do record^%ums(.%umsg,%umst1,%umst2)
+ . quit
  ;
- new time set time=%umt1-%umt0
+ do report^%ums(.%umsg)
+ ;
+ quit  ; end of time
+ ;
+ ;
+ ;
+record(%umsg,time1,time2) ; calculate & record statistics
+ ;
+ set time1=$get(time1)
+ quit:$get(time1)'=+$get(time1)
+ ;
+ set time2=$get(time2)
+ quit:$get(time2)'=+$get(time2)
+ ;
+ new time set time=time2-time1
  set %umsg("total")=%umsg("total")+time
  set:time<%umsg("min") %umsg("min")=time
  set:time>%umsg("max") %umsg("max")=time
@@ -218,6 +235,8 @@ report(%umsg) ; calculate & report timing statistics
  new min set min="min:"_$fnumber(%umsg("min"),",")
  new max set max="max:"_$fnumber(%umsg("max"),",")
  ;
+ new timer set timer=%umsg("timer")
+ set $piece(timer," ")="" ; remove label for report
  write !!,timer
  new stats set stats=count_","_total_","_min_","_max_","_mean_","_median_","_mode
  new stat

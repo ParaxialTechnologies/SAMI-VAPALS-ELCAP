@@ -1,10 +1,12 @@
-%tsc ;ven/toad-type string: case conversion ;2018-02-23T22:06Z
+%tsc ;ven/toad-type string: case conversion ;2018-12-14T18:20Z
  ;;1.8;Mash;
  ;
- ; %tsc implements MASH String Library Case Conversion APIs.
+ ; %tsc implements MASH String Library Case Conversion ppis.
  ; See %tsud for an introduction to the String library, including an
- ; intro to the String Replace library.
+ ; intro to the String Case library.
  ; See %tsul for the module's primary-development log.
+ ; See %tsumc for meter (do case^%tsumc).
+ ; See %tsutc for unit tests (do ^%tsut).
  ; See %ts for the module's ppis & apis.
  ; %tsc contains no public entry points.
  ;
@@ -25,7 +27,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-02-23T22:06Z
+ ;@last-updated: 2018-12-14T18:20Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -37,25 +39,36 @@
  ; prev. Veterans Administration
  ; National Development Office in San Francisco (vaisf)
  ;
+ ;@timing-date: 2018-12-14
+ ;@timing-system: andronicus (dev,jvvztm-9.0-ven)
+ ;@cpu: Intel(R) Xeon(R) CPU E5-2676 v3 @ 2.40GHz
+ ;@ram: 2Gb
+ ;@os: Linux Ubuntu 16.04.5 LTS (xenial)
+ ;@mumps: YottaDB r1.22 Linux x86_64 (GT.M V6.3-004 Linux x86_64)
+ ;
+ ; timing performed with all other Vista jobs shut down.
+ ; 10,000 iterations were done & duration of call averaged.
+ ; values are in microseconds.
+ ;
  ;@to-do
  ; do multi-string versions [see JJOHCASE for examples]
  ; apply standard string-length protection consistently
  ; create unit tests for all of these subroutines
  ;
  ;@contents
- ; alphabet = code for API $$alphabet^%ts
- ;  abcdefghijklmnopqrstuvwxyz
- ; ALPHABET = code for API $$ALPHABET^%ts
+ ; upalpha = code for ppi $$upalpha^%ts
  ;  ABCDEFGHIJKLMNOPQRSTUVWXYZ
- ; upcase = code for API $$upcase^%ts
+ ; lowalpha = code for ppi $$lowalpha^%ts
+ ;  abcdefghijklmnopqrstuvwxyz
+ ; upcase = code for ppi $$upcase^%ts
  ;  CONVERT STRING TO UPPERCASE
- ; lowcase = code for API $$lowcase^%ts
+ ; lowcase = code for ppi $$lowcase^%ts
  ;  convert string to lowercase
- ; capcase = code for API $$capcase^%ts
+ ; capcase = code for ppi $$capcase^%ts
  ;  Convert String To Capitalized Case
- ; invcase = code for API $$invcase^%ts
+ ; invcase = code for ppi $$invcase^%ts
  ;  iNVERT cASE (uPPERS TO lOWERS & lOWERS TO uPPERS)
- ; sencase = code for API $$sencase^%ts
+ ; sencase = code for ppi $$sencase^%ts
  ;  Convert string to sentence-case
  ;
  ;
@@ -64,111 +77,227 @@
  ;
  ;
  ;
-alphabet ; code for API $$alphabet^%ts, abcdefghijklmnopqrstuvwxyz
+ ;@ppi-code $$upalpha^%ts
+upalpha ; return ABCDEFGHIJKLMNOPQRSTUVWXYZ
  ;
- ;ven/toad;private;variable;clean;silent;sac;NO tests;;100% tests
+ ;ven/toad;private;variable;clean;silent;mdc;100% tests
  ;@signature
- ; $$alphabet^%ts
+ ; $$upalpha^%ts
+ ;@synonyms
+ ; $$uac^%ts
+ ; $$upperAlpha^%ts
+ ; $$ALPHABET^%ts [deprecated]
  ;@branches-from
- ; $$alphabet^%ts
- ;@called-by
+ ; $$upalpha^%ts
+ ;@ppi-called-by
  ; $$upcase^%ts
+ ; $$lowcase^%ts
  ; $$invcase^%ts
- ;@calls: none
- ;@inputs: none
- ;@output = abcdefghijklmnopqrstuvwxyz
- ;@tests: [tbd]
- ;
- quit "abcdefghijklmnopqrstuvwxyz" ; end of $$alphabet^%ts
- ;
- ;
- ;
-ALPHABET ; code for API $$ALPHABET^%ts, ABCDEFGHIJKLMNOPQRSTUVWXYZ
- ;
- ;ven/toad;private;variable;clean;silent;sac;NO tests;100% tests
- ;@signature
- ;  $$ALPHABET^%ts
- ;@branches-from
- ; $$ALPHABET^%ts
- ;@called-by
- ; $$upcase^%ts
- ; $$invcase^%ts
+ ;@called-by: none
  ;@calls: none
  ;@inputs: none
  ;@output = ABCDEFGHIJKLMNOPQRSTUVWXYZ
- ;@tests: [tbd]
+ ;@meter: do case^%tsc
+ ;@timing a
+ ; count:10,000
+ ; total:6,588
+ ; min:0
+ ; max:69
+ ; mean:.6588
+ ; median:1
+ ; mode:1
+ ;@tests
+ ; upalpha^%tsutc: $$upalpha^%ts
+ ; uac^%tsutc: $$uac^%ts
+ ; upperAlpha^%tsutc: $$upperAlpha^%ts
+ ; ALPHABET^%tsutc: $$ALPHABET^%ts
  ;
- quit "ABCDEFGHIJKLMNOPQRSTUVWXYZ" ; end of $$ALPHABET^%ts
+ quit "ABCDEFGHIJKLMNOPQRSTUVWXYZ" ; end of $$upalpha^%ts
  ;
  ;
  ;
-upcase ; code for API $$upcase^%ts, CONVERT STRING TO UPPERCASE
+ ;@ppi-code $$lowalpha^%ts
+lowalpha ; return abcdefghijklmnopqrstuvwxyz
  ;
- ;isf/rwf,ven/toad;private;function;clean;silent;sac;;100% tests
+ ;ven/toad;private;variable;clean;silent;mdc;100% tests
+ ;@signature
+ ; $$lowalpha^%ts
+ ;@synonyms
+ ; $$lac^%ts
+ ; $$lowerAlpha^%ts
+ ; $$alphabet^%ts [deprecated]
+ ;@branches-from
+ ; $$lowalpha^%ts
+ ;@ppi-called-by
+ ; $$upcase^%ts
+ ; $$lowcase^%ts
+ ; $$invcase^%ts
+ ;@called-by: none
+ ;@calls: none
+ ;@inputs: none
+ ;@output = abcdefghijklmnopqrstuvwxyz
+ ;@meter: do case^%tsc
+ ;@timing b
+ ; count:10,000
+ ; total:6,514
+ ; min:0
+ ; max:14
+ ; mean:.6514
+ ; median:1
+ ; mode:1
+ ;@tests
+ ; lowalpha^%tsutc: $$lowalpha^%ts
+ ; lac^%tsutc: $$lac^%ts
+ ; lowerAlpha^%tsutc: $$lowerAlpha^%ts
+ ; alphabet^%tsutc: $$alphabet^%ts
+ ;
+ quit "abcdefghijklmnopqrstuvwxyz" ; end of $$lowalpha^%ts
+ ;
+ ;
+ ;
+ ;@ppi-code $$upcase^%ts
+upcase ; CONVERT STRING TO UPPERCASE
+ ;
+ ;isf/rwf,ven/toad;private;function;clean;silent;mdc;100% tests
  ;@signature
  ; $$upcase^%ts(string)
+ ;@synonyms
+ ; $$uc^%ts
+ ; $$upperCase^%ts
  ;@branches-from
  ; $$upcase^%ts
- ;@called-by
+ ;@ppi-called-by
  ; $$capcase^%ts
  ; $$sencase^%ts
+ ; $$trim^%ts
+ ; target^%mp4
+ ;@called-by: none
  ;@calls
- ; $$ALPHABET^%ts
- ; $$alphabet^%ts
+ ; $$upalpha^%ts
+ ; $$lowalpha^%ts
  ;@input
  ; string = string to convert
  ;@output = uppercase string
- ;@tests: [tbd]
+ ;@meter: do case^%tsc
+ ;@timing c
+ ; count:10,000
+ ; total:12,984
+ ; min:1
+ ; max:15
+ ; mean:1.2984
+ ; median:1
+ ; mode:1
+ ;@tests
+ ; upcase01^%tsutc: string
+ ; upcase02^%tsutc: phrase string
+ ; upcase03^%tsutc: empty string
+ ; upcase04^%tsutc: non-alpha characters
+ ; upcase05^%tsutc: mixed alpha & non-alpha characters
+ ; uc^%tsutc: $$uc^%ts
+ ; upperCase^%tsutc: $$upperCase^%ts
  ;
- set string=$translate(string,$$alphabet^%ts,$$ALPHABET^%ts)
+ set string=$translate(string,$$lowalpha^%ts,$$upalpha^%ts)
  ;
  quit string ; return uppercase string; end of $$upcase^%ts
  ;
  ;
  ;
-lowcase ; code for API $$lowcase^%ts, convert string to lowercase
+ ;@ppi-code $$lowcase^%ts
+lowcase ; convert string to lowercase
  ;
- ;isf/rwf,ven/toad;private;function;clean;silent;sac;100% tests
+ ;isf/rwf,ven/toad;private;function;clean;silent;mdc;100% tests
  ;@signature
  ; $$lowcase^%ts(string)
+ ;@synonyms
+ ; $$lc^%ts
+ ; $$lowerCase^%ts
  ;@branches-from
  ; $$lowcase^%ts
- ;@called-by
+ ;@ppi-called-by
  ; $$capcase^%ts
  ; $$sencase^%ts
+ ; command^%mp
+ ; intrin^%mp1
+ ; intvar^%mp1
+ ; intfunc^%mp1
+ ; target^%mp4
+ ; form2fields^%wfhfields
+ ; wsGetForm^%wfhform
+ ; check^%wfhinput
+ ; type^%wfhinput
+ ; uncheck^%wfhinput
+ ; ONE^SAMIDOUT
+ ;@called-by: none
  ;@calls
- ; $$ALPHABET^%ts
- ; $$alphabet^%ts
+ ; $$upalpha^%ts
+ ; $$lowalpha^%ts
  ;@input
  ; string = string to convert
  ;@output = lowercase string
- ;@tests: [tbd]
+ ;@meter: do case^%tsc
+ ;@timing d
+ ; count:10,000
+ ; total:13,617
+ ; min:1
+ ; max:72
+ ; mean:1.3617
+ ; median:1
+ ; mode:1
+ ;@tests
+ ; lowcase01^%tsutc: string
+ ; lowcase02^%tsutc: phrase string
+ ; lowcase03^%tsutc: empty string
+ ; lowcase04^%tsutc: non-alpha characters
+ ; lowcase05^%tsutc: mixed alpha & non-alpha characters
+ ; lc^%tsutc: $$lc^%ts
+ ; lowerCase^%tsutc: $$lowerCase^%ts
  ;
- set string=$translate(string,$$ALPHABET^%ts,$$alphabet^%ts)
+ set string=$translate(string,$$upalpha^%ts,$$lowalpha^%ts)
  ;
  quit string ; return lowercase string; end of $$lowcase^%ts
  ;
  ;
  ;
-capcase ; code for API $$capcase^%ts, Convert String To Capitalized
+ ;@ppi-code $$capcase^%ts
+capcase ; Convert String To Capitalized
  ;
- ;isf/rwf,ven/toad;private;function;clean;silent;sac;;100% tests
+ ;isf/rwf,ven/toad;private;function;clean;silent;mdc;100% tests
  ;@signature
  ; $$capcase^%ts(string)
+ ;@synonyms
+ ; $$cc^%ts
+ ; $$capitalCase^%ts
  ;@branches-from
  ; $$capcase^%ts
- ;@called by: none
+ ;@ppi-called by: none
+ ;@called-by: none
  ;@calls
  ; $$lowcase^%ts
  ; $$upcase^%ts
  ;@input
  ; string = string to convert
  ;@output = capitalized string
+ ;@meter: do case^%tsc
+ ;@timing e
+ ; count:10,000
+ ; total:109,705
+ ; min:9
+ ; max:83
+ ; mean:10.9705
+ ; median:10
+ ; mode:10
  ;@examples
  ;  write $$capcase^%ts("THIS IS CAPITALIZED. (this isn't.)")
  ; produces
  ;  This Is Capitalized. (This Isn't.)
- ;@tests: [tbd]
+ ;@tests
+ ; capcase01^%tsutc: uppercase string
+ ; capcase02^%tsutc: lowercase phrase
+ ; capcase03^%tsutc: empty string
+ ; capcase04^%tsutc: non-alpha characters
+ ; capcase05^%tsutc: mixed upper & lowercase characters
+ ; cc^%tsutc: $$cc^%ts
+ ; capitalCase^%tsutc: $$capitalCase^%ts
  ;
  ; Capitalized Case = first letter of each word uppercase, rest lower
  ;
@@ -195,30 +324,50 @@ capcase ; code for API $$capcase^%ts, Convert String To Capitalized
  ;
  ;
  ;
-invcase ; code for API $$invcase^%ts, iNVERT cASE (uPPERS TO lOWERS...
+ ;@ppi-code $$invcase^%ts
+invcase ; iNVERT cASE (uPPERS TO lOWERS & vICE vERSA)
  ;
- ;kbaz/zag,ven/toad;private;function;clean;silent;sac;;100% tests
+ ;kbaz/zag,ven/toad;private;function;clean;silent;mdc;100% tests
  ;@signature
  ; $$invcase^%ts(string)
+ ;@synonyms
+ ; $$ic^%ts
+ ; $$inverseCase^%ts
  ;@branches-from
  ; $$invcase^%ts
- ;@called by: none
+ ;@ppi-called by: none
+ ;@called-by: none
  ;@calls
- ; $$ALPHABET^%ts
- ; $$alphabet^%ts
+ ; $$upalpha^%ts
+ ; $$lowalpha^%ts
  ;@input
  ; string = string to convert
  ;@output = inverse-cased string
+ ;@meter: do case^%tsc
+ ;@timing f
+ ; count:10,000
+ ; total:16,262
+ ; min:1
+ ; max:68
+ ; mean:1.6262
+ ; median:2
+ ; mode:2
  ;@examples
  ;  write $$invcase^%ts("tHIS iS cAPITALIZED. (tHIS iSN'T.)")
  ; produces
  ;  This Is Capitalized. (This Isn't.)
- ;@tests: [tbd]
+ ;@tests
+ ; invcase01^%tsutc: uppercase & lowercase string
+ ; invcase02^%tsutc: mixed-case phrase
+ ; invcase03^%tsutc: empty string
+ ; invcase04^%tsutc: non-alpha characters
+ ; ic^%tsutc: $$ic^%ts
+ ; inverseCase^%tsutc: $$inverseCase^%ts
  ;
  ; Inverted Case = lowers replaced with uppers, uppers with lowers
  ;
- new up set up=$$ALPHABET^%ts
- new low set low=$$alphabet^%ts
+ new up set up=$$upalpha^%ts
+ new low set low=$$lowalpha^%ts
  new uplow set uplow=up_low
  new lowup set lowup=low_up
  set string=$translate(string,uplow,lowup)
@@ -227,25 +376,47 @@ invcase ; code for API $$invcase^%ts, iNVERT cASE (uPPERS TO lOWERS...
  ;
  ;
  ;
-sencase ; code for API $$sencase^%ts, Convert string to sentence case
+ ;@ppi-code $$sencase^%ts
+sencase ; Convert string to sentence case
  ;
- ;isf/rwf,ven/toad;private;function;clean;silent;sac;100% tests
+ ;isf/rwf,ven/toad;private;function;clean;silent;mdc;100% tests
  ;@signature
  ; $$sencase^%ts(string)
+ ;@synonyms
+ ; $$sc^%ts
+ ; $$sentenceCase^%ts
  ;@branches-from
  ; $$sencase^%ts
- ;@called by: none
+ ;@ppi-called by: none
+ ;@called-by: none
  ;@calls
  ; $$lowcase^%ts
  ; $$upcase^%ts
  ;@input
  ; string = string to convert
  ;@output = sentence-case string
+ ;@meter: do case^%tsc
+ ;@timing g
+ ; count:10,000
+ ; total:69,708
+ ; min:6
+ ; max:1,678
+ ; mean:6.9708
+ ; median:7
+ ; mode:7
  ;@examples
  ;  write $$sencase^%ts("HELLO!!! THIS IS A SENTENCE. (this isn't.)")
  ; produces
  ;  Hello!!! This is a sentence. (This isn't.)
- ;@tests: [tbd]
+ ;@tests
+ ; sencase01^%tsutc: uppercase string
+ ; sencase02^%tsutc: lowercase phrase
+ ; sencase03^%tsutc: empty string
+ ; sencase04^%tsutc: non-alpha characters
+ ; sencase05^%tsutc: mixed upper & lowercase characters to Sentence
+ ; sencase06^%tsutc: more than one Sentence, different puncuation
+ ; sc^%tsutc: $$sc^%ts
+ ; sentenceCase^%tsutc: $$sentenceCase^%ts
  ;
  ; Sentence case = first letter of each sentence uppercase, rest lower
  ;

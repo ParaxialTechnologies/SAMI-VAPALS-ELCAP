@@ -1,4 +1,4 @@
-%tsfwra ;ven/toad-type string: findReplaceAll^%ts ;2018-03-18T16:48Z
+%tsfwra ;ven/toad-type string: findReplaceAll^%ts ;2018-12-12T20:15Z
  ;;1.8;Mash;
  ;
  ; %tsfwra implements MASH String Library ppi findReplaceAll^%ts,
@@ -31,7 +31,7 @@
  ;@original-dev: George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
  ;
- ;@last-updated: 2018-03-18T16:48Z
+ ;@last-updated: 2018-12-12T20:15Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -62,15 +62,10 @@ findReplaceAll ; simple substring find & replace all
  ;@branches-from
  ; findReplaceAll^%ts
  ;@ppi-called-by
- ; $$replaceSrc^%wf [deprecated]
- ; wsCASE^SAMICASE
- ; wsNuForm^SAMICASE
- ; fixHref^SAMIFRM
- ; fixSrc^SAMIFRM
- ; SAMISUBS^SAMIFRM
- ; fixHref^SAMIFRM2
- ; fixSrc^SAMIFRM2
- ; getHome^SAMIHOME
+ ; *%tsutfwra [tests]
+ ; $$replaceSrc^%wfhform [deprecated]
+ ; FIXHREF^SAMIFRM2
+ ; FIXSRC^SAMIFRM2
  ;@called-by: none
  ;@calls
  ; setfind^%ts

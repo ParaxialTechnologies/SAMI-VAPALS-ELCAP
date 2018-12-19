@@ -1,4 +1,4 @@
-SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 12/7/18 11:11am
+SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 12/18/18 2:02pm
  ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -65,8 +65,8 @@ STARTUP ; Set up dfn and tiuien to use throughout testing
  ; Set up graphstore graph on test patient
  n root s root=$$setroot^%wd("vapals-patients")
  k @root@("graph","XXX00001")
- n poo D PullUTarray^SAMIUTST(.poo,"all XXX00001 forms")
- m @root@("graph","XXX00001")=poo
+ n SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
+ m @root@("graph","XXX00001")=SAMIUPOO
  Q
 SHUTDOWN ; ZEXCEPT: dfn,tiuien
  K utdfn,tiuien,utsuccess
@@ -102,20 +102,20 @@ UTBLDTIU ; @TEST - Build a new TIU and Visit stub for a patient
 UTSTEXT ; @TEST - Push text into an existing TIU note
  ; SETTEXT(.tiuien,.dest)
  N D,D0,DG,DI,DIC,DICR,DIG,DIH
- n poo
- s poo(1)="First line of UNIT TEST text."
- s poo(2)="Second line of UNIT TEST text."
- s poo(3)="Setting text time:"_$$HTE^XLFDT($H)
- s poo(4)="Forth and last line of UNIT TEST text"
- n dest s dest="poo"
+ n SAMIUPOO
+ s SAMIUPOO(1)="First line of UNIT TEST text."
+ s SAMIUPOO(2)="Second line of UNIT TEST text."
+ s SAMIUPOO(3)="Setting text time:"_$$HTE^XLFDT($H)
+ s SAMIUPOO(4)="Forth and last line of UNIT TEST text"
+ n dest s dest="SAMIUPOO"
  D SETTEXT^SAMIVSTA(.tiuien,dest)
  H 1 ; Delay for time to build everything
  I '$G(tiuien) D  Q
  . D FAIL^%ut("Procedure failed to set text in TIU note")
- s poo=0
- n I F I=1:1:4 D  Q:poo
- . I '($G(^TIU(8925,tiuien,"TEXT",I,0))=poo(I)) S poo=1
- D CHKEQ^%ut(poo,0,"Testing setting text in TIU note FAILED!")
+ s SAMIUPOO=0
+ n I F I=1:1:4 D  Q:SAMIUPOO
+ . I '($G(^TIU(8925,tiuien,"TEXT",I,0))=SAMIUPOO(I)) S SAMIUPOO=1
+ D CHKEQ^%ut(SAMIUPOO,0,"Testing setting text in TIU note FAILED!")
  Q
  ;
 UTENCTR ; @TEST - Update TIU with encounter and HF information

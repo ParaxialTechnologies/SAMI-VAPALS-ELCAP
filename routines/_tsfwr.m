@@ -1,4 +1,4 @@
-%tsfwr ;ven/toad-type string: findReplace^%ts ;2018-03-18T17:0Z
+%tsfwr ;ven/toad-type string: findReplace^%ts ;2018-12-12T20:20Z
  ;;1.8;Mash;
  ;
  ; %tsfwr implements MASH String Library ppi findReplace^%ts, which
@@ -31,7 +31,7 @@
  ;@original-dev: George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
  ;
- ;@last-updated: 2018-03-18T17:0Z
+ ;@last-updated: 2018-12-12T20:20Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -56,24 +56,25 @@ findReplace ; simple substring find & replace
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
- ;ven/gpl&toad;private;procedure;clean;silent;sac;NO tests
+ ;ven/gpl&toad;private;procedure;clean;silent;mdc;NO tests
  ;@signature
  ; do findReplace^%ts(.string,find,replace,flags)
  ;@branches-from
  ; findReplace^%ts
  ;@ppi-called-by
- ; check^%wf
- ; insError^%wf
- ; putErrMsg2^%wf
- ; $$replaceHref^%wf [deprecated]
- ; uncheck^%wf
- ; value^%wf
- ; wsGetForm^%wf
- ; wsCASE^SAMICAS2
- ; wsNuForm^SAMICAS2
- ; SAMISUBS^SAMIFRM
+ ; *%tsutfwr [tests]
+ ; form2fields^%wfhfields [dead block]
+ ; insError^%wfhform
+ ; putErrMsg2^%wfhform
+ ; $$replaceHref^%wfhform [deprecated]
+ ; value^%wfhform
+ ; wsGetForm^%wfhform
+ ; check^%wfhinput
+ ; uncheck^%wfhinput
+ ; WSCASE^SAMICAS2
+ ; WSNOFORM^SAMICAS2
  ; SAMISUB2^SAMIFRM2
- ; getHome^SAMIHOM2
+ ; WSREPORT^SAMIUR1
  ;@called-by: none
  ;@calls
  ; setfind^%ts

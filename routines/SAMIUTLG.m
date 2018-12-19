@@ -1,4 +1,4 @@
-SAMIUTLG ;ven/lgc - Unit test for SAMILOG ; 12/7/18 9:04am
+SAMIUTLG ;ven/lgc - Unit test for SAMILOG ; 12/17/18 9:23am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -26,11 +26,11 @@ START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  Q
  ;
  ;
-STARTUP n UTSUCCESS
+STARTUP n utsuccess
  Q
  ;
-SHUTDOWN ; ZEXCEPT: UTSUCCESS
- K UTSUCCESS
+SHUTDOWN ; ZEXCEPT: utsuccess
+ K utsuccess
  Q
  ;
  ;
@@ -47,30 +47,32 @@ UTTOGL ; @TEST - Toggle VAPALS password identification
  . D FAIL^%ut("Error, WEB SERVICE URL HANDLER setup error!")
  i pooget=1 d
  . d TOGOFF^SAMILOG
- . s UTSUCCESS='$g(^%W(17.6001,ienget,"AUTH"))
- . D CHKEQ^%ut(UTSUCCESS,1,"Toggle password OFF FAILED!")
+ . s utsuccess='$g(^%W(17.6001,ienget,"AUTH"))
+ . D CHKEQ^%ut(utsuccess,1,"Toggle password OFF FAILED!")
  . d TOGON^SAMILOG
- . s UTSUCCESS=$g(^%W(17.6001,ienget,"AUTH"))
- . D CHKEQ^%ut(UTSUCCESS,1,"Toggle password ON FAILED!")
+ . s utsuccess=$g(^%W(17.6001,ienget,"AUTH"))
+ . D CHKEQ^%ut(utsuccess,1,"Toggle password ON FAILED!")
  e  d
  . d TOGON^SAMILOG
- . s UTSUCCESS=$g(^%W(17.6001,ienget,"AUTH"))
- . D CHKEQ^%ut(UTSUCCESS,1,"Toggle password ON FAILED!")
+ . s utsuccess=$g(^%W(17.6001,ienget,"AUTH"))
+ . D CHKEQ^%ut(utsuccess,1,"Toggle password ON FAILED!")
  . d TOGOFF^SAMILOG
- . s UTSUCCESS='$g(^%W(17.6001,ienget,"AUTH"))
- . D CHKEQ^%ut(UTSUCCESS,1,"Toggle password OFF FAILED!")
+ . s utsuccess='$g(^%W(17.6001,ienget,"AUTH"))
+ . D CHKEQ^%ut(utsuccess,1,"Toggle password OFF FAILED!")
  ;
  ; Now test the interactive entry point
  d STONOFF^SAMILOG
- S UTSUCCESS='(pooget=$g(^%W(17.6001,ienget,"AUTH")))
- D CHKEQ^%ut(UTSUCCESS,1,"Toggle password 1st interactive FAILED!")
+ S utsuccess='(pooget=$g(^%W(17.6001,ienget,"AUTH")))
+ D CHKEQ^%ut(utsuccess,1,"Toggle password 1st interactive FAILED!")
  d STONOFF^SAMILOG
- S UTSUCCESS=(pooget=$g(^%W(17.6001,ienget,"AUTH")))
- D CHKEQ^%ut(UTSUCCESS,1,"Toggle password 2nd interactive FAILED!")
+ S utsuccess=(pooget=$g(^%W(17.6001,ienget,"AUTH")))
+ D CHKEQ^%ut(utsuccess,1,"Toggle password 2nd interactive FAILED!")
  ;
  ; Be sure we leave setting as it was
- S ^%W(17.6001,ienget,"AUTH")=pooget
- S ^%W(17.6001,ienpost,"AUTH")=poopost
+ n node s node=$NA(^%W(17.6001,ienget,"AUTH"))
+ s @node=pooget
+ s node=$NA(^%W(17.6001,ienpost,"AUTH"))
+ s @node=poopost
  q
  ;
 EOR ;End of routine SAMIUTLG

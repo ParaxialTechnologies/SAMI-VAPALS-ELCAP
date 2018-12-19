@@ -1,8 +1,8 @@
-%tsutc ;ven/lmry&mcglk&toad-type string-case: test string-case apis ^%tsc ;2018-03-09T02:49Z
+%tsutc ;ven/lmry-type string-case: test ppis ^%tsc ;2018-12-12T14:50Z
  ;;1.8;Mash;
  ;
  ; This Mumps Advanced Shell (mash) routine implements unit tests for
- ; Mash String Library string-case apis in %ts. It contains no public entry
+ ; Mash String Library string-case ppis in %ts. It contains no public entry
  ; points.
  ;
  ; primary development: see routine %tsul
@@ -14,7 +14,7 @@
  ;@copyright: 2016/2017/2018, ven, all rights reserved
  ;@license: Apache 2.0
  ;
- ;@last-updated: 2018-03-09T02:49Z
+ ;@last-updated: 2018-12-12T14:50Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.7T03
@@ -25,28 +25,32 @@
  ;
  ;@contents
  ; Group 1: Alphabet
- ;  alpha01 = unit test for $$alphabet^%ts
- ;  ALPHA01 = unit test for $$ALPHABET^%ts
+ ;  upalpha: unit test for $$upalpha^%ts
+ ;  uac: unit test for $$uac^%ts
+ ;  upperAlpha: unit test for $$upperAlpha^%ts
+ ;  lowalpha: unit test for $$lowalpha^%ts
+ ;  lac: unit test for $$lac^%ts
+ ;  lowerAlpha: unit test for $$lowerAlpha^%ts
  ; Group 2: Upper Case
- ;  upcase* = unit tests for $$upcase^%ts
- ;  u01 = unit test for $$u^%ts
- ;  upper = unit test for $$upperCase^%ts
+ ;  upcase*: unit tests for $$upcase^%ts
+ ;  uc: unit test for $$uc^%ts
+ ;  upperCase: unit test for $$upperCase^%ts
  ; Group 3: Lower Case
- ;  lowcase* = unit tests for $$lowcase^%ts
- ;  l01 = unit test for $$l^%ts
- ;  lower = unit test for $$lowerCase^%ts
+ ;  lowcase*: unit tests for $$lowcase^%ts
+ ;  lc: unit test for $$lc^%ts
+ ;  lowerCase: unit test for $$lowerCase^%ts
  ; Group 4: Capital Case
- ;  capcase* = unit tests for $$capcase^%ts
- ;  c01 = unit test for $$c^%ts
- ;  capital = unit test for $$capitalCase^%ts
+ ;  capcase*: unit tests for $$capcase^%ts
+ ;  cc: unit test for $$cc^%ts
+ ;  capitalCase: unit test for $$capitalCase^%ts
  ; Group 5: Inverse Case
- ;  invcase* = unit tests for $$invcase^%ts
- ;  i01 = unit test for $$i^%ts
- ;  inverse = unit test for $$inverseCase^%ts
+ ;  invcase*: unit tests for $$invcase^%ts
+ ;  ic: unit test for $$ic^%ts
+ ;  inverseCase: unit test for $$inverseCase^%ts
  ; Group 6: Sentence Case
- ;  sencase* = unit tests for $$sencase^%ts
- ;  s01 = unit test for $$s^%ts
- ;  sentence = unit test for $$sentenceCase^%ts
+ ;  sencase*: unit tests for $$sencase^%ts
+ ;  sc: unit test for $$sc^%ts
+ ;  sentenceCase: unit test for $$sentenceCase^%ts
  ; 
  ;@called-by:
  ; M-Unit
@@ -57,33 +61,74 @@
  ; Group 1: Alphabet
  ;
  ;
-alpha01 ; @TEST $$alphabet^%ts(): return lower case English alphabet
+upalpha ; @TEST $$upalpha^%ts(%s,%c): return uppercase alphabet
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
- ;
- new result set result="abcdefghijklmnopqrstuvwxyz"
- do CHKEQ^%ut($$alphabet^%ts,result)
- ;
- quit  ; end of alpha01
- ;
- ;
-ALPHA01 ; @TEST $$ALPHABET^%ts(%s,%c): Return upper case English alphabet
- ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/toad;test;procedure;clean;silent;mdc
  ;
  new result set result="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
- do CHKEQ^%ut($$ALPHABET^%ts,result)
+ do CHKEQ^%ut($$upalpha^%ts,result)
  ;
- quit  ; end of ALPHA01
+ quit  ; end of upalpha
+ ;
+ ;
+uac ; @TEST $$uac^%ts(%s,%c): test synonym
+ ;
+ ;ven/toad;test;procedure;clean;silent;mdc
+ ;
+ new result set result="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+ do CHKEQ^%ut($$uac^%ts,result)
+ ;
+ quit  ; end of uac
+ ;
+ ;
+upperAlpha ; @TEST $$upperAlpha^%ts(%s,%c): test synonym
+ ;
+ ;ven/toad;test;procedure;clean;silent;mdc
+ ;
+ new result set result="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+ do CHKEQ^%ut($$upperAlpha^%ts,result)
+ ;
+ quit  ; end of upperAlpha
+ ;
+ ;
+ ;
+lowalpha ; @TEST $$lowalpha^%ts(): return lowercase alphabet
+ ;
+ ;ven/toad;test;procedure;clean;silent;mdc
+ ;
+ new result set result="abcdefghijklmnopqrstuvwxyz"
+ do CHKEQ^%ut($$lowalpha^%ts,result)
+ ;
+ quit  ; end of lowalpha
+ ;
+ ;
+lac ; @TEST $$lac^%ts(): test synonym
+ ;
+ ;ven/toad;test;procedure;clean;silent;mdc
+ ;
+ new result set result="abcdefghijklmnopqrstuvwxyz"
+ do CHKEQ^%ut($$lac^%ts,result)
+ ;
+ quit  ; end of lac
+ ;
+ ;
+lowerAlpha ; @TEST $$lowerAlpha^%ts(): test synonym
+ ;
+ ;ven/toad;test;procedure;clean;silent;mdc
+ ;
+ new result set result="abcdefghijklmnopqrstuvwxyz"
+ do CHKEQ^%ut($$lowerAlpha^%ts,result)
+ ;
+ quit  ; end of lowerAlpha
  ;
  ;
  ;
  ; Group 2: Upper Case
  ;
  ;
-upcase01 ; @TEST $$upcase^%ts(%s): Convert string to uppercase
+upcase01 ; @TEST $$upcase^%ts(%s): string
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="Terrarium"                     
  new result set result="TERRARIUM"
@@ -92,9 +137,9 @@ upcase01 ; @TEST $$upcase^%ts(%s): Convert string to uppercase
  quit  ; end of upcase01
  ;
  ;
-upcase02 ; @TEST $$upcase^%ts(%s): Convert phrase string to uppercase
+upcase02 ; @TEST $$upcase^%ts(%s): phrase string
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="Snow falls on the trees."
  new result set result="SNOW FALLS ON THE TREES."
@@ -103,9 +148,9 @@ upcase02 ; @TEST $$upcase^%ts(%s): Convert phrase string to uppercase
  quit  ; end of upcase02
  ;
  ;
-upcase03 ; @TEST $$upcase^%ts(%s): See what happens with the empty string
+upcase03 ; @TEST $$upcase^%ts(%s): empty string
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s=""
  new result set result=%s
@@ -114,9 +159,9 @@ upcase03 ; @TEST $$upcase^%ts(%s): See what happens with the empty string
  quit  ; end of upcase03
  ;
  ;
-upcase04 ; @TEST $$upcase^%ts(%s): what happens with non-alpha characters
+upcase04 ; @TEST $$upcase^%ts(%s): non-alpha characters
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="23,980"
  new result set result=%s
@@ -125,9 +170,9 @@ upcase04 ; @TEST $$upcase^%ts(%s): what happens with non-alpha characters
  quit  ; end of upcase04
  ;
  ;
-upcase05 ; @TEST $$upcase^%ts(%s): mixed alpha and non-alpha characters
+upcase05 ; @TEST $$upcase^%ts(%s): mixed alpha & non-alpha characters
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="34 trucks, 53 tractors"
  new result set result="34 TRUCKS, 53 TRACTORS"
@@ -136,35 +181,35 @@ upcase05 ; @TEST $$upcase^%ts(%s): mixed alpha and non-alpha characters
  quit  ; end of upcase05
  ;
  ;
-u01 ; @TEST $$u^%ts(%s): Convert string to uppercase
+uc ; @TEST $$uc^%ts(%s): test synonym
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="Terrarium"                     
  new result set result="TERRARIUM"
- do CHKEQ^%ut($$u^%ts(%s),result)
+ do CHKEQ^%ut($$uc^%ts(%s),result)
  ;
- quit  ; end of u01
+ quit  ; end of uc
  ;
  ;
-upper ; @TEST $$upperCase^%ts(%s): Convert string to uppercase
+upperCase ; @TEST $$upperCase^%ts(%s): test synonym
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="Terrarium"                     
  new result set result="TERRARIUM"
  do CHKEQ^%ut($$upperCase^%ts(%s),result)
  ;
- quit  ; end of upper
+ quit  ; end of upperCase
  ;
  ;
  ;
  ; Group 3: Lower Case
  ;
  ;
-lowcase01 ; @TEST $$lowcase^%ts(%s): Convert string to lowercase
+lowcase01 ; @TEST $$lowcase^%ts(%s): string
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="TERRARIUM"                     
  new result set result="terrarium"
@@ -173,9 +218,9 @@ lowcase01 ; @TEST $$lowcase^%ts(%s): Convert string to lowercase
  quit  ; end of lowcase01
  ;
  ;
-lowcase02 ; @TEST $$lowcase^%ts(%s): Convert phrase string to lowercase
+lowcase02 ; @TEST $$lowcase^%ts(%s): phrase string
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="SNOW FALLS ON THE TREES."
  new result set result="snow falls on the trees."
@@ -184,9 +229,9 @@ lowcase02 ; @TEST $$lowcase^%ts(%s): Convert phrase string to lowercase
  quit  ; end of lowcase02
  ;
  ;
-lowcase03 ; @TEST $$lowcase^%ts(%s): See what happens with the empty string
+lowcase03 ; @TEST $$lowcase^%ts(%s): empty string
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s=""
  new result set result=%s
@@ -195,9 +240,9 @@ lowcase03 ; @TEST $$lowcase^%ts(%s): See what happens with the empty string
  quit  ; end of lowcase03
  ;
  ;
-lowcase04 ; @TEST $$lowcase^%ts(%s): what happens with non-alpha characters
+lowcase04 ; @TEST $$lowcase^%ts(%s): non-alpha characters
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="23,980"
  new result set result=%s
@@ -206,9 +251,9 @@ lowcase04 ; @TEST $$lowcase^%ts(%s): what happens with non-alpha characters
  quit  ; end of lowcase04
  ;
  ;
-lowcase05 ; @TEST $$lowcase^%ts(%s): mixed alpha and non-alpha characters
+lowcase05 ; @TEST $$lowcase^%ts(%s): mixed alpha & non-alpha characters
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="34 TRUCKS, 53 TRACTORS"
  new result set result="34 trucks, 53 tractors"
@@ -217,35 +262,35 @@ lowcase05 ; @TEST $$lowcase^%ts(%s): mixed alpha and non-alpha characters
  quit  ; end of lowcase05
  ;
  ;
-l01 ; @TEST $$l^%ts(%s): Test synonym $$l^%ts
+lc ; @TEST $$lc^%ts(%s): test synonym
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="TERRARIUM"                     
  new result set result="terrarium"
- do CHKEQ^%ut($$l^%ts(%s),result)
+ do CHKEQ^%ut($$lc^%ts(%s),result)
  ;
- quit  ; end of l01
+ quit  ; end of lc
  ;
  ;
-lower ; @TEST $$lowerCase^%ts(%s): test synonym $$lowerCase^%t
+lowerCase ; @TEST $$lowerCase^%ts(%s): test synonym
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="TERRARIUM"                     
  new result set result="terrarium"
  do CHKEQ^%ut($$lowerCase^%ts(%s),result)
  ;
- quit  ; end of lower
+ quit  ; end of lowerCase
  ;
  ;
  ;
  ; Group 4: Capital Case
  ;
  ;
-capcase01 ; @TEST $$capcase^%ts(%s): Convert uppercase string to Capitalized
+capcase01 ; @TEST $$capcase^%ts(%s): uppercase string
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="TERRARIUM"                     
  new result set result="Terrarium"
@@ -254,9 +299,9 @@ capcase01 ; @TEST $$capcase^%ts(%s): Convert uppercase string to Capitalized
  quit  ; end of capcase01
  ;
  ;
-capcase02 ; @TEST $$capcase^%ts(%s): Convert lowercase phrase to Capitalized
+capcase02 ; @TEST $$capcase^%ts(%s): lowercase phrase
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="snow falls on the trees."
  new result set result="Snow Falls On The Trees."
@@ -265,9 +310,9 @@ capcase02 ; @TEST $$capcase^%ts(%s): Convert lowercase phrase to Capitalized
  quit  ; end of capcase02
  ;
  ;
-capcase03 ; @TEST $$capcase^%ts(%s): See what happens with the empty string
+capcase03 ; @TEST $$capcase^%ts(%s): empty string
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s=""
  new result set result=%s
@@ -276,9 +321,9 @@ capcase03 ; @TEST $$capcase^%ts(%s): See what happens with the empty string
  quit  ; end of capcase03
  ;
  ;
-capcase04 ; @TEST $$capcase^%ts(%s): what happens with non-alpha characters
+capcase04 ; @TEST $$capcase^%ts(%s): non-alpha characters
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="23,980"
  new result set result=%s
@@ -287,9 +332,9 @@ capcase04 ; @TEST $$capcase^%ts(%s): what happens with non-alpha characters
  quit  ; end of capcase04
  ;
  ;
-capcase05 ; @TEST $$capcase^%ts(%s): mixed upper and lowercase characters
+capcase05 ; @TEST $$capcase^%ts(%s): mixed upper & lowercase characters
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="JeNNifer siTs in ThE WinDow Seat."
  new result set result="Jennifer Sits In The Window Seat."
@@ -298,35 +343,35 @@ capcase05 ; @TEST $$capcase^%ts(%s): mixed upper and lowercase characters
  quit  ; end of capcase05
  ;
  ;
-c01 ; @TEST $$c^%ts(%s): test synonym $$c^%ts
+cc ; @TEST $$cc^%ts(%s): test synonym
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="JeNNifer siTs in ThE WinDow Seat."
  new result set result="Jennifer Sits In The Window Seat."
- do CHKEQ^%ut($$c^%ts(%s),result)
+ do CHKEQ^%ut($$cc^%ts(%s),result)
  ;
- quit  ; end of c01
+ quit  ; end of cc
  ;
  ;
-capital ; @TEST $$capitalCase^%ts(%s): test synonym $$capitalCase^%ts
+capitalCase ; @TEST $$capitalCase^%ts(%s): test synonym
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="JeNNifer siTs in ThE WinDow Seat."
  new result set result="Jennifer Sits In The Window Seat."
  do CHKEQ^%ut($$capitalCase^%ts(%s),result)
  ;
- quit  ; end of capital
+ quit  ; end of capitalCase
  ;
  ;
  ;
  ;Group 5: Inverse Case
  ;
  ;
-invcase01 ; @TEST $$invcase^%ts(%s): Invert uppercase and lowercase string
+invcase01 ; @TEST $$invcase^%ts(%s): uppercase & lowercase string
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="tERRARIUM"                     
  new result set result="Terrarium"
@@ -335,9 +380,9 @@ invcase01 ; @TEST $$invcase^%ts(%s): Invert uppercase and lowercase string
  quit  ; end of invcase01
  ;
  ;
-invcase02 ; @TEST $$invcase^%ts(%s): Invert mixed case phrase.
+invcase02 ; @TEST $$invcase^%ts(%s): mixed-case phrase
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="sNOW fALLS oN tHE tREES."
  new result set result="Snow Falls On The Trees."
@@ -346,9 +391,9 @@ invcase02 ; @TEST $$invcase^%ts(%s): Invert mixed case phrase.
  quit  ; end of invcase02
  ;
  ;
-invcase03 ; @TEST $$invcase^%ts(%s): See what happens with the empty string
+invcase03 ; @TEST $$invcase^%ts(%s): empty string
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s=""
  new result set result=%s
@@ -357,9 +402,9 @@ invcase03 ; @TEST $$invcase^%ts(%s): See what happens with the empty string
  quit  ; end of invcase03
  ;
  ;
-invcase04 ; @TEST $$invcase^%ts(%s): what happens with non-alpha characters
+invcase04 ; @TEST $$invcase^%ts(%s): non-alpha characters
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="23,980"
  new result set result=%s
@@ -368,35 +413,35 @@ invcase04 ; @TEST $$invcase^%ts(%s): what happens with non-alpha characters
  quit  ; end of invcase04
  ;
  ;
-i01 ; @TEST $$i^%ts(%s): Test synonym $$i^%ts
+ic ; @TEST $$ic^%ts(%s): test synonym
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="sNOW fALLS oN tHE tREES."
  new result set result="Snow Falls On The Trees."
- do CHKEQ^%ut($$i^%ts(%s),result)
+ do CHKEQ^%ut($$ic^%ts(%s),result)
  ;
- quit  ; end of i01
+ quit  ; end of ic
  ;
  ;
-inverse ; @TEST $$i^%ts(%s): Test synonym $$inverseCase^%ts
+inverseCase ; @TEST $$inverseCase^%ts(%s): test synonym
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="sNOW fALLS oN tHE tREES."
  new result set result="Snow Falls On The Trees."
  do CHKEQ^%ut($$inverseCase^%ts(%s),result)
  ;
- quit  ; end of inverse
+ quit  ; end of inverseCase
  ;
  ;
  ;
  ; Group 6: Sentence Case
  ;
  ;
-sencase01 ; @TEST $$sencase^%ts(%s): Convert uppercase string to Sentence case
+sencase01 ; @TEST $$sencase^%ts(%s): uppercase string
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="TERRARIUM"                     
  new result set result="Terrarium"
@@ -405,9 +450,9 @@ sencase01 ; @TEST $$sencase^%ts(%s): Convert uppercase string to Sentence case
  quit  ; end of sencase01
  ;
  ;
-sencase02 ; @TEST $$sencase^%ts(%s): Convert lowercase phrase to Sentence case
+sencase02 ; @TEST $$sencase^%ts(%s): lowercase phrase
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="snow falls on the trees."
  new result set result="Snow falls on the trees."
@@ -416,9 +461,9 @@ sencase02 ; @TEST $$sencase^%ts(%s): Convert lowercase phrase to Sentence case
  quit  ; end of sencase02
  ;
  ;
-sencase03 ; @TEST $$sencase^%ts(%s): See what happens with the empty string
+sencase03 ; @TEST $$sencase^%ts(%s): empty string
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s=""
  new result set result=%s
@@ -427,9 +472,9 @@ sencase03 ; @TEST $$sencase^%ts(%s): See what happens with the empty string
  quit  ; end of sencase03
  ;
  ;
-sencase04 ; @TEST $$sencase^%ts(%s): what happens with non-alpha characters
+sencase04 ; @TEST $$sencase^%ts(%s): non-alpha characters
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="23,980"
  new result set result=%s
@@ -438,9 +483,9 @@ sencase04 ; @TEST $$sencase^%ts(%s): what happens with non-alpha characters
  quit  ; end of sencase04
  ;
  ;
-sencase05 ; @TEST $$sencase^%ts(%s): mixed upper and lowercase characters to Sentence.
+sencase05 ; @TEST $$sencase^%ts(%s): mixed upper & lowercase characters to Sentence
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="JeNNifer siTs in ThE WinDow Seat."
  new result set result="Jennifer sits in the window seat."
@@ -451,7 +496,7 @@ sencase05 ; @TEST $$sencase^%ts(%s): mixed upper and lowercase characters to Sen
  ;
 sencase06 ; @TEST $$sencase^%ts(%s): more than one Sentence, different puncuation
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="hello from outer space. wish you were here! what are you doing now? nothing?"
  new result set result="Hello from outer space. Wish you were here! What are you doing now? Nothing?"
@@ -460,26 +505,26 @@ sencase06 ; @TEST $$sencase^%ts(%s): more than one Sentence, different puncuatio
  quit  ; end of sencase06
  ;
  ;
-s01 ; @TEST $$s^%ts(%s): test synonym $$s^%ts
+sc ; @TEST $$sc^%ts(%s): test synonym
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="JeNNifer siTs in ThE WinDow Seat."
  new result set result="Jennifer sits in the window seat."
- do CHKEQ^%ut($$s^%ts(%s),result)
+ do CHKEQ^%ut($$sc^%ts(%s),result)
  ;
- quit  ; end of s01
+ quit  ; end of sc
  ;
  ;
-sentence ; @TEST $$sentenceCase^%ts(%s): test synonym $$sentenceCase^%ts
+sentenceCase ; @TEST $$sentenceCase^%ts(%s): test synonym
  ;
- ;ven/lmry;test;procedure;clean;silent;sac
+ ;ven/lmry;test;procedure;clean;silent;mdc
  ;
  new %s set %s="JeNNifer siTs in ThE WinDow Seat."
  new result set result="Jennifer sits in the window seat."
  do CHKEQ^%ut($$sentenceCase^%ts(%s),result)
  ;
- quit  ; end of sentence
+ quit  ; end of sentenceCase
  ;
  ;
  ;

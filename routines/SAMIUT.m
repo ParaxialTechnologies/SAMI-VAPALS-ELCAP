@@ -1,4 +1,4 @@
-SAMIUCOV ;ven/arc/lmry - Unit test overall coverage ; 12/3/18 8:25am
+SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 12/3/18 8:25am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -23,7 +23,44 @@ SAMIUCOV ;ven/arc/lmry - Unit test overall coverage ; 12/3/18 8:25am
  ;
  ; @section 1 code
  ;
-START ; Run the coverage tests
+ if $T(^%ut)="" do
+ . write !,"*** UNIT TEST NOT INSTALLED ***"
+ . quit
+ ;
+ do EN^%ut($text(+0),3)
+ ;
+ quit  ; End of call from top
+ ;
+ ;
+XTROU ; Unit tests for SAMI*.m
+ ;;SAMIUTFF
+ ;;SAMIUTLG
+ ;;SAMIUTM2
+ ;;SAMIUTH3
+ ;;SAMIUTS2
+ ;;SAMIUTAD
+ ;;SAMIUTC1
+ ;;SAMIUTD2
+ ;;SAMIUTCR
+ ;;SAMIUTR0
+ ;;SAMIUTR1
+ ;;SAMIUTR9
+ ;;SAMIUTRA
+ ;;SAMIUTRX
+ ;;SAMIUTF2
+ ;;SAMIUTPT
+ ;;SAMIUTUR
+ ;;SAMIUTNI
+ ;;SAMIUTC2
+ ;;SAMIUTVA
+ ;;SAMIUTVS
+ ;;SAMIUTRU
+ ;;SAMIUTSV
+ ;
+ quit  ; End of XTROU
+ ;
+ ;
+COVERAGE ; Coverage tests for SAMI*.m
  new I,NAMESPAC,RUNCODE,XCLUDE
  ;
  ; Set the namespace for the routines that are being tested.
@@ -112,7 +149,7 @@ START ; Run the coverage tests
  ;
  do COVERAGE^%ut(NAMESPAC,.RUNCODE,.XCLUDE,2)
  ;
- quit  ; end of START
+ quit  ; end of COVERAGE
  ;
  ;
-EOR ; End of routine SAMIUCOV
+EOR ; End of routine SAMIUT

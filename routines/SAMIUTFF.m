@@ -1,4 +1,4 @@
-SAMIUTFF ;ven/lgc - Unit test for SAMIIFF ; 12/11/18 1:33pm
+SAMIUTFF ;ven/lgc - Unit test for SAMIIFF ; 12/14/18 12:06pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -34,18 +34,18 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  Q
  ;
  ;
-UTBLDGPH ; @TEST - Build a graph of the intake form fields
+UTBLDGP ; @TEST - Build a graph of the intake form fields
  ;BLDGRPH
- n arc,poo,nodea,nodep
+ n SAMIUARC,SAMIUPOO,nodea,nodep
  s utsuccess=1
  ; Delete graph if it existed
  DO purgegraph^%wd("siform-fields")
  ; Now build the graph
  D BLDGRPH^SAMIIFF
  n root s root=$$setroot^%wd("siform-fields")
- m arc=@root
- D PullUTarray^SAMIUTST(.poo,"UTBLDGPH^SAMIUTFF")
- n nodea,nodep s nodea=$na(arc),nodep=$na(poou)
+ m SAMIUARC=@root
+ D PLUTARR^SAMIUTST(.SAMIUPOO,"UTBLDGPH^SAMIUTFF")
+ n nodea,nodep s nodea=$na(SAMIUARC),nodep=$na(SAMIUPOO)
  f  s nodea=$Q(nodea),nodep=$Q(nodep) q:nodea=""  d
  . i '(nodea=nodep) s utsuccess=0
  . i '(@nodea=@nodep) s utsuccess=0

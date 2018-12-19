@@ -1,4 +1,4 @@
-%ums ;ven/toad - m-meter: statistical tools ;2018-12-19T20:20Z
+%ums ;ven/toad - m-meter: statistical tools ;2018-12-19T20:23Z
  ;;1.8;Mash;
  ;
  ; %ums implements statistical tools for the Mash M-Meter on GT.M
@@ -28,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-12-19T20:20Z
+ ;@last-updated: 2018-12-19T20:23Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: M-Meter - %um
  ;@version: 1.8T04
@@ -130,8 +130,8 @@ system ; report system profile
  . new %umsinfo
  . do run^%h("lsb_release -a",.%umsinfo)
  . ;
- . new desc set desc=$piece(%umsinfo(3),":    ",2)
- . new codename set codename=$piece(%umsinfo(5),":       ",2)
+ . new desc set desc=$piece(%umsinfo(3),":"_$char(9),2)
+ . new codename set codename=$piece(%umsinfo(5),":"_$char(9),2)
  . new os set os="Linux "_desc_" ("_codename_")"
  . ; Linux Ubuntu 16.04.4 LTS (xenial)
  . ;

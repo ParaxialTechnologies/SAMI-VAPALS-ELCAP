@@ -74,15 +74,15 @@ WSHOME ; web service for SAMI homepage
  ;
 WSVAPALS ; vapals post web service - all calls come through this gateway
  ; WSVAPALS^SAMIHOM3(SAMIARG,SAMIBODY,SAMIRESULT) goto WSVAPALS^SAMIHOM4
- merge ^GPL("vapals")=SAMIARG
- m ^GPL("vapals","SAMIBODY")=SAMIBODY
+ merge ^SAMIGPL("vapals")=SAMIARG
+ m ^SAMIGPL("vapals","SAMIBODY")=SAMIBODY
  ;
  new vars,bdy
  set bdy=$get(SAMIBODY(1))
  do parseBody^%wf("vars",.bdy)
  m vars=SAMIARG
- k ^GPL("vapals","vars")
- merge ^GPL("vapals","vars")=vars
+ k ^SAMIGPL("vapals","vars")
+ merge ^SAMIGPL("vapals","vars")=vars
  ;
  n route s route=$g(vars("samiroute"))
  i route=""  d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home
@@ -123,7 +123,7 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  . . . s tiuien=$$SV2VISTA^SAMIVSTA(.SAMIFILTER)
  . . . s SAMIFILTER("tiuien")=tiuien
  . . . ;d SV2VSTA^SAMIVSTA(.SAMIFILTER)
- . . . m ^GPL("newSAMIFILTER")=SAMIFILTER
+ . . . m ^SAMIGPL("newSAMIFILTER")=SAMIFILTER
  . . . d WSNOTE^SAMINOTI(.RESULT,.SAMIARG)
  ;
  i route="deleteform" d  q  ;
@@ -266,7 +266,7 @@ GETHOME ; homepage accessed using GET
  ;
  ;
 WSNEWCAS ; receives post from home & creates new case
- ; WSNEWCAS(SAMIARGS,SAMIBODY,SAMIRESULT) goto WSNEWCAS^SAMIHOM4
+ ; WSNEWCAS^SAMIHOM3(SAMIARGS,SAMIBODY,SAMIRESULT) goto WSNEWCAS^SAMIHOM4
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -276,14 +276,14 @@ WSNEWCAS ; receives post from home & creates new case
  ; parseBody^%wf
  ; $$setroot^%wd
  ; $$NEXTNUM
- ; $$GENSTDID
+ ; $$GENSTDID^SAMIHOM3
  ; $$NOW^XLFDT
- ; $$KEYDATE
+ ; $$KEYDATE^SAMIHOM3
  ; $$VALDTNM
  ; GETHOME
  ; PREFILL
  ; MKSBFORM
- ; MKSIFORM
+ ; MKSIFORM^SAMIHOM3
  ; WSCASE^SAMICAS2
  ;@input
  ;.ARGS =
@@ -295,13 +295,13 @@ WSNEWCAS ; receives post from home & creates new case
  ;
  ;@stanza 2 ?
  ;
- merge ^GPL("newCase","ARGS")=ARGS
- merge ^GPL("newCase","BODY")=BODY
+ merge ^SAMIGPL("newCase","ARGS")=ARGS
+ merge ^SAMIGPL("newCase","BODY")=BODY
  ;
  new vars,bdy
  set bdy=$get(BODY(1))
  do parseBody^%wf("vars",.bdy)
- merge ^GPL("newCase","vars")=vars
+ merge ^SAMIGPL("newCase","vars")=vars
  ;
  new root set root=$$setroot^%wd("vapals-patients")
  ;
@@ -323,28 +323,28 @@ WSNEWCAS ; receives post from home & creates new case
  ;new gien set gien=$$NEXTNUM
  new gien set gien=dfn
  ;
- m ^GPL("newCase","G1")=root
+ m ^SAMIGPL("newCase","G1")=root
  ; create dfn index
  set @root@("dfn",dfn,gien)=""
  ;
  set @root@(gien,"saminum")=gien
  set @root@(gien,"saminame")=saminame
  ;
- new studyid set studyid=$$GENSTDID(gien)
+ new studyid set studyid=$$GENSTDID^SAMIHOM3(gien)
  set @root@(gien,"samistudyid")=studyid
  set @root@("sid",studyid,gien)=""
  ;
- new datekey set datekey=$$KEYDATE($$NOW^XLFDT)
+ new datekey set datekey=$$KEYDATE^SAMIHOM3($$NOW^XLFDT)
  set @root@(gien,"samicreatedate")=datekey
  ;
- merge ^GPL("newCase",gien)=@root@(gien)
+ merge ^SAMIGPL("newCase",gien)=@root@(gien)
  ;
  ;
- do PREFILL(dfn) ; prefills from the "patient-lookup" graph
+ do PREFILL^SAMIHOM3(dfn) ; prefills from the "patient-lookup" graph
  ;
  n siformkey
  ;do makeSbform(gien) ; create a background form for new patient
- set siformkey=$$MKSIFORM(gien) ; create an intake for for new patient
+ set siformkey=$$MKSIFORM^SAMIHOM3(gien) ; create an intake for for new patient
  ;
  set ARGS("studyid")=studyid
  set ARGS("form")="vapals:"_siformkey

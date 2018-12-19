@@ -517,7 +517,7 @@ ADDPAT(dfn) ; calls newCase to add patient dfn to vapals
  n bdy s bdy(1)="saminame="_name_"&dfn="_dfn
  n ARGS,result
  d WSNEWCAS(.ARGS,.bdy,.result)
- zwr result
+ ; zwr result
  ;
 INDEX ; reindex the vapals-patients graph
  n root s root=$$setroot^%wd("vapals-patients")
@@ -527,7 +527,7 @@ INDEX ; reindex the vapals-patients graph
  . s dfn=@root@(zi,"dfn")
  . s sid=@root@(zi,"samistudyid")
  . s @root@("dfn",dfn,zi)=""
- . s @root@("sid",sid,zi)="" 
+ . s @root@("sid",sid,zi)=""
  q
  ;
 EOR ; end of routine SAMIHOM3

@@ -1,4 +1,4 @@
-%tsul ;ven/toad-type string: development log ;2018-12-14T18:21Z
+%tsul ;ven/toad-type string: development log ;2018-12-19T20:29Z
  ;;1.8;Mash;
  ;
  ; %tsul is the Mumps String Library's primary-development log.
@@ -23,7 +23,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-12-14T18:21Z
+ ;@last-updated: 2018-12-19T20:29Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -342,7 +342,7 @@
  ;  %tses: add group A example of bad flag.
  ;  %tsutes: stdize test descriptions, move synonyms to group e, add test a01.
  ;
- ; 2018-12-05/14 ven/toad %*1.8t04 %tsutes: lowercase last tests; add test
+ ; 2018-12-05/19 ven/toad %*1.8t04 %tsutes: lowercase last tests; add test
  ;  c01; tune up tests (extra checks); namespace string.
  ;  %tses: lowercase example groups, add example c01, add examples based on
  ; lmry's tests, refine examples, move example comments to %tsudes (sac
@@ -364,7 +364,8 @@
  ;  %mp,%mp1,%mp4: r/$$u^%ts w/$$uc^%ts, r/$$l^%ts w/$$lc^%ts.
  ;  %tsut: add ^%tsudes,^%tsumc,meter^%tsumc to cover01.
  ;  %tsef,%tsfs,%tsfwr,%tsfwra: update ppi-called-by tag.
- ;  %tsumc: new meter routine for ^%tsc code.
+ ;  %tsumc: new meter routine for ^%tsc code, convert to use %ums.
+ ;  %ums: new m-meter statistics routine.
  ;
  ; 
  ;

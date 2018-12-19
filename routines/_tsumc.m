@@ -1,4 +1,4 @@
-%tsumc ;ven/toad - type string: ^%tsc meter ;2018-12-14T13:06Z
+%tsumc ;ven/toad - type string: ^%tsc meter ;2018-12-19T20:36Z
  ;;1.8;Mash;
  ;
  ; %tsumc implements meters for the Mash String Library on GT.M
@@ -27,7 +27,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-12-14T13:06Z
+ ;@last-updated: 2018-12-19T20:36Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -37,8 +37,9 @@
  ;
  ;@routine-log
  ;
- ; 2018-12-14 ven/toad %*1.8t04 %tsumc: create routine as a
- ; timer for ^%tsc subroutines. Based on routine XUSCNTUM.
+ ; 2018-12-14/19 ven/toad %*1.8t04 %tsumc: create routine as a
+ ; timer for ^%tsc subroutines (based on routine XUSCNTUM); convert
+ ; to use ^%ums calls.
  ;
  ;@timing-date: 2018-12-14
  ;@timing-system: avicenna (dev,jvvsam-18.0-vep)
@@ -85,89 +86,90 @@ case ; (string-case ppis)
  ;
  ;@stanza 2 general initialization
  ;
- new count,max,median,min,mode,timer,total
+ new %tsumsg
+ do system^%ums
  ;
  ;@stanza 3 upalpha^%ts timer
  ;
- set timer="a. upalpha^%ts timer"
+ set timer=" ;@timing a. upalpha^%ts timer"
  new string,t0,t1
- do setup
+ do setup^%ums(.%tsumsg)
  for count=1:1:count do
  . set t0=$zut set string=$$upalpha^%ts set t1=$zut
- . do record
+ . do record^%ums(.%tsumsg,t0,t1)
  . quit
- do report
+ do report^%ums(.%tsumsg)
  ;
  ;@stanza 4 lowalpha^%ts timer
  ;
- set timer="b. lowalpha^%ts timer"
+ set timer=" ;@timing b. lowalpha^%ts timer"
  kill string,t0,t1
- do setup
+ do setup^%ums(.%tsumsg)
  for count=1:1:count do
  . set t0=$zut set string=$$lowalpha^%ts set t1=$zut
- . do record
+ . do record^%ums(.%tsumsg,t0,t1)
  . quit
- do report
+ do report^%ums(.%tsumsg)
  ;
  ;@stanza 5 upcase^%ts timer
  ;
- set timer="c. upcase^%ts timer"
+ set timer=" ;@timing c. upcase^%ts timer"
  kill string,t0,t1
- do setup
+ do setup^%ums(.%tsumsg)
  for count=1:1:count do
  . set string="Snow falls on the trees."
  . set t0=$zut set string=$$upcase^%ts(string) set t1=$zut
- . do record
+ . do record^%ums(.%tsumsg,t0,t1)
  . quit
- do report
+ do report^%ums(.%tsumsg)
  ;
  ;@stanza 6 lowcase^%ts timer
  ;
- set timer="d. lowcase^%ts timer"
+ set timer=" ;@timing d. lowcase^%ts timer"
  kill string,t0,t1
- do setup
+ do setup^%ums(.%tsumsg)
  for count=1:1:count do
  . set string="SNOW FALLS ON THE TREES."
  . set t0=$zut set string=$$lowcase^%ts(string) set t1=$zut
- . do record
+ . do record^%ums(.%tsumsg,t0,t1)
  . quit
- do report
+ do report^%ums(.%tsumsg)
  ;
  ;@stanza 7 capcase^%ts timer
  ;
- set timer="e. capcase^%ts timer"
+ set timer=" ;@timing e. capcase^%ts timer"
  kill string,t0,t1
- do setup
+ do setup^%ums(.%tsumsg)
  for count=1:1:count do
  . set string="snow falls on the trees."
  . set t0=$zut set string=$$capcase^%ts(string) set t1=$zut
- . do record
+ . do record^%ums(.%tsumsg,t0,t1)
  . quit
- do report
+ do report^%ums(.%tsumsg)
  ;
  ;@stanza 8 invcase^%ts timer
  ;
- set timer="f. invcase^%ts timer"
+ set timer=" ;@timing f. invcase^%ts timer"
  kill string,t0,t1
- do setup
+ do setup^%ums(.%tsumsg)
  for count=1:1:count do
  . set string="sNOW fALLS oN tHE tREES."
  . set t0=$zut set string=$$invcase^%ts(string) set t1=$zut
- . do record
+ . do record^%ums(.%tsumsg,t0,t1)
  . quit
- do report
+ do report^%ums(.%tsumsg)
  ;
  ;@stanza 9 sencase^%ts timer
  ;
- set timer="g. sencase^%ts timer"
+ set timer=" ;@timing g. sencase^%ts timer"
  kill string,t0,t1
- do setup
+ do setup^%ums(.%tsumsg)
  for count=1:1:count do
  . set string="snow falls on the trees."
  . set t0=$zut set string=$$sencase^%ts(string) set t1=$zut
- . do record
+ . do record^%ums(.%tsumsg,t0,t1)
  . quit
- do report
+ do report^%ums(.%tsumsg)
  ;
  quit  ; end of timer case^%tsumc
  ;

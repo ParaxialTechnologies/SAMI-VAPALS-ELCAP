@@ -1,4 +1,4 @@
-%ums ;ven/toad - m-meter: statistical tools ;2018-12-19T20:12Z
+%ums ;ven/toad - m-meter: statistical tools ;2018-12-19T20:20Z
  ;;1.8;Mash;
  ;
  ; %ums implements statistical tools for the Mash M-Meter on GT.M
@@ -28,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-12-19T20:12Z
+ ;@last-updated: 2018-12-19T20:20Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: M-Meter - %um
  ;@version: 1.8T04
@@ -108,7 +108,7 @@ system ; report system profile
  . do run^%h("cat /proc/cpuinfo",.%umsinfo)
  . ;
  . new line5 set line5=%umsinfo(5)
- . new cpu set cpu=$piece(line5," : ",2)
+ . new cpu set cpu=$piece(line5,": ",2)
  . ; Intel(R) Xeon(R) CPU E5-2676 v3 @ 2.40GHz (dual core)
  . ;
  . write !," ;@cpu: ",cpu

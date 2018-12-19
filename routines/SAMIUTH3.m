@@ -116,7 +116,7 @@ UTGETHM ; @TEST - Testing pulling HTML for home.
  ;
 UTSCAN4 ; @TEST - Testing scanning array for a given entry
  ;D GETHOME(SAMIURTN,SAMIUFLTR)
- ; S X=$$scanFor(ary,start,what)
+ ; S X=$$SCANFOR(ary,start,what)
  n SAMIUSTR,rndm,SAMIUPOO,SAMIUFLTR s rndm=$R(150)
  D GETHOME^SAMIHOM3(.SAMIUPOO,.SAMIUFLTR)
  s SAMIUSTR=$g(SAMIUPOO(rndm))
@@ -127,7 +127,7 @@ UTSCAN4 ; @TEST - Testing scanning array for a given entry
  q
  ;
 UTNXTN ; @TEST - Testing finding next entry number for "vapals-patients"
- ; S X=$$nextNum
+ ; S X=$$NEXTNUM
  n root s root=$$setroot^%wd("vapals-patients")
  n cnt,lstntry
  s cnt=0 f  s cnt=$O(@root@(cnt)) q:'+cnt  s lstntry=cnt
@@ -147,7 +147,7 @@ UTSTDID ; @TEST - Testing generating study ID
  q
  ;
 UTKEYDT ; @TEST - Testing generating key date from fm date
- ;$$keyDate(fmdt)
+ ;$$KEYDATE(fmdt)
  n SAMIUFMDT s SAMIUFMDT="3181018"
  D CHKEQ^%ut($$KEYDATE^SAMIHOM3(SAMIUFMDT),"2018-10-18","Testing generation of key date FAILED!")
  q
@@ -175,12 +175,12 @@ UTINDX ; @TEST - Testing re-index of vapals-patients Graphstore
  D CHKEQ^%ut(utsuccess,1,"Testing reindex of vapals-patients FAILED!")
  q
  ;
-UTADDPT ; @TEST Testing addPatient adding a new patient to vapals-patients
+UTADDPT ; @TEST Testing ADDPATient adding a new patient to vapals-patients
  ;*** Removes XXX00001 from vapals-patients file
  ;     so kills extra nodes in ceform-2018-01-21, thus
  ;     must put these back for other unit tests
  ;     See STARTUP section in other unit test routines
- ;addPatient(dfn)
+ ;ADDPATient(dfn)
  n rootvp,rootpl,dfn,gien,studyid,gienut,rootut
  s rootvp=$$setroot^%wd("vapals-patients")
  s rootpl=$$setroot^%wd("patient-lookup")
@@ -203,14 +203,14 @@ UTADDPT ; @TEST Testing addPatient adding a new patient to vapals-patients
  ; check new entry in vapals-patients
  s utsuccess=($D(@rootvp@(dfn))=10),studyid=@rootvp@(dfn,"sisid")
  ;
- D CHKEQ^%ut(utsuccess,1,"Testing addPatient adding new patient to vapals-patients FAILED!")
+ D CHKEQ^%ut(utsuccess,1,"Testing ADDPATient adding new patient to vapals-patients FAILED!")
  q
  ;
  ; builds new si-form and loads vapals-patients Graphstore
  ;  @rootvp@(dfn,"graph"), @rootvp@(dfn,"graph"), @rootvp@(dfn)
  ;     and calls PTINFO and update both Graphstore files
-UTWSNC ; @TEST - Testing wsNewCase adding a new case to vapals-patients Graphstore
- ;wsNewCase(ARGS,BODY,RESULT)
+UTWSNC ; @TEST - Testing WSNEWCAS adding a new case to vapals-patients Graphstore
+ ;WSNEWCAS(ARGS,BODY,RESULT)
  ;
  n rootvp,rootpl,rootut,gienut,dfn,SAMIUBODY,saminame,SAMIUARGS,SAMIURSLT
  n utna,uthtml,SAMIUARC,SAMIUPOO
@@ -257,7 +257,7 @@ UTWSNC ; @TEST - Testing wsNewCase adding a new case to vapals-patients Graphsto
  i '(nodea="") s uthtml=0
  ;
  s utsuccess=$S((utna+uthtml=2):1,1:0)
- D CHKEQ^%ut(utsuccess,1,"Testing wsNewCase adding new patient to vapals-patients FAILED!")
+ D CHKEQ^%ut(utsuccess,1,"Testing WSNEWCAS adding new patient to vapals-patients FAILED!")
  q
  ;
  ;

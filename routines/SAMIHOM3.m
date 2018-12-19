@@ -67,7 +67,7 @@ SAMIHOM3 ;ven/gpl - ielcap: forms ; 12/11/18 9:36am
  ; 2018-03-06 ven/gpl v18.0t04 SAMIHOM3: ?
  ;
  ; 2018-03-07 ven/toad v18.0t04 SAMIHOM3: in $$SID2NUM add
- ; WSNUFORM^SAMICAS2 to called-by list; in keyDate,GETHOME update
+ ; WSNUFORM^SAMICAS2 to called-by list; in KEYDATE,GETHOME update
  ; called-by.
  ;
  ;@contents
@@ -505,7 +505,7 @@ SID2NUM(sid) ; number part of studyid (XXX0001 -> 1)
  ;
  ;@stanza 3 return & termination
  ;
- quit number ; return number; end of $$sid2num
+ quit number ; return number; end of $$SID2NUM
  ;
  ;
 ADDPAT(dfn) ; calls newCase to add patient dfn to vapals

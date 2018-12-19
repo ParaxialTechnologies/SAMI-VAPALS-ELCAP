@@ -1,4 +1,4 @@
-%ums ;ven/toad - m-meter: statistical tools ;2018-12-19T20:45Z
+%ums ;ven/toad - m-meter: statistical tools ;2018-12-19T20:48Z
  ;;1.8;Mash;
  ;
  ; %ums implements statistical tools for the Mash M-Meter on GT.M
@@ -28,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-12-19T20:45Z
+ ;@last-updated: 2018-12-19T20:48Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: M-Meter - %um
  ;@version: 1.8T04
@@ -191,7 +191,7 @@ record(%umsg,%umt0,%umt1) ; calculate & record statistics
  ;
 report(%umsg) ; calculate & report timing statistics
  ;
- set %umsg("mean")=%umsg(total)/%umsg(count)
+ set %umsg("mean")=%umsg("total")/%umsg("count")
  new mean set mean="mean:"_$fnumber(%umsg("mean"),",")
  new time set time=""
  new cnt set cnt=0

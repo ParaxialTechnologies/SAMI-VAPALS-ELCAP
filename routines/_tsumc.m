@@ -1,4 +1,4 @@
-%tsumc ;ven/toad - type string: ^%tsc meter ;2018-12-19T20:40Z
+%tsumc ;ven/toad - type string: ^%tsc meter ;2018-12-19T20:42Z
  ;;1.8;Mash;
  ;
  ; %tsumc implements meters for the Mash String Library on GT.M
@@ -27,7 +27,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-12-19T20:40Z
+ ;@last-updated: 2018-12-19T20:42Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -94,7 +94,7 @@ case ; (string-case ppis)
  set timer=" ;@timing a. upalpha^%ts timer"
  new count,string,t0,t1
  do setup^%ums(.%tsumsg)
- set count=%umsg("count")
+ set count=%tsumsg("count")
  for count=1:1:count do
  . set t0=$zut set string=$$upalpha^%ts set t1=$zut
  . do record^%ums(.%tsumsg,t0,t1)

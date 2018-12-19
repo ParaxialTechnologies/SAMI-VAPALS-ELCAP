@@ -1,4 +1,4 @@
-%ums ;ven/toad - m-meter: statistical tools ;2018-12-19T20:08Z
+%ums ;ven/toad - m-meter: statistical tools ;2018-12-19T20:12Z
  ;;1.8;Mash;
  ;
  ; %ums implements statistical tools for the Mash M-Meter on GT.M
@@ -28,7 +28,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-12-19T20:08Z
+ ;@last-updated: 2018-12-19T20:12Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: M-Meter - %um
  ;@version: 1.8T04
@@ -97,7 +97,7 @@ system ; report system profile
  . new Y do GETENV^%ZOSV
  . new uci set uci=$piece(Y,"^")
  . new volume set volume=$piece(Y,"^",2)
- . new system set system=$piece(Y,"^",3)_" ("_uci_","_vol_")"
+ . new system set system=$piece(Y,"^",3)_" ("_uci_","_volume_")"
  . ; avicenna (dev,jvvsam-18.0-vep)
  . ;
  . write !," ;@timing-system: ",system
@@ -207,8 +207,8 @@ report(%umsg) ; calculate & report timing statistics
  . . quit
  . quit
  ;
- new med1 set med1=%umsg("median",count)\2)
- new med2 set med2=%umsg("median",count)\2+1)
+ new med1 set med1=%umsg("median",count)\2
+ new med2 set med2=%umsg("median",count)\2+1
  set %umsg("median")=med1+med2/2
  new median set median="median:"_$fnumber(%umsg("median"),",")
  ;

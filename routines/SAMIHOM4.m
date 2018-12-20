@@ -356,7 +356,4 @@ WSNEWCAS ; receives post from home & creates new case
  quit  ; end of WSNEWCAS
  ;
  ;
- ;
- ;
- ;
 EOR ; End of routine SAMIHOM4

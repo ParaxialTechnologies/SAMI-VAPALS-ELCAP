@@ -77,9 +77,9 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  merge ^SAMIGPL("vapals")=SAMIARG
  m ^SAMIGPL("vapals","SAMIBODY")=SAMIBODY
  ;
- new vars,bdy
- set bdy=$get(SAMIBODY(1))
- do parseBody^%wf("vars",.bdy)
+ new vars,SAMIBDY
+ set SAMIBDY=$get(SAMIBODY(1))
+ do parseBody^%wf("vars",.SAMIBDY)
  m vars=SAMIARG
  k ^SAMIGPL("vapals","vars")
  merge ^SAMIGPL("vapals","vars")=vars
@@ -298,9 +298,9 @@ WSNEWCAS ; receives post from home & creates new case
  merge ^SAMIGPL("newCase","ARGS")=ARGS
  merge ^SAMIGPL("newCase","BODY")=BODY
  ;
- new vars,bdy
- set bdy=$get(BODY(1))
- do parseBody^%wf("vars",.bdy)
+ new vars,SAMIBDY
+ set SAMIBDY=$get(SAMIBODY(1))
+ do parseBody^%wf("vars",.SAMIBDY)
  merge ^SAMIGPL("newCase","vars")=vars
  ;
  new root set root=$$setroot^%wd("vapals-patients")

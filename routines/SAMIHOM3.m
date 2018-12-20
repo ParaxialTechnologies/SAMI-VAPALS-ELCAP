@@ -107,10 +107,10 @@ WSHOME(SAMIRTN,SAMIFILTER) goto WSHOME^SAMIHOM4
  ;
  ;
  ; vapals post web service - all calls come through this gateway
-WSVAPALS(ARG,BODY,RESULT) goto WSVAPALS^SAMIHOM4
+WSVAPALS(SAMIARG,SAMIBODY,SAMIRESULT) goto WSVAPALS^SAMIHOM4
  ;
  ;
- ; temporary home page for development
+; temporary home page for development
 DEVHOME(SAMIRTN,SAMIFILTER) goto DEVHOME^SAMIHOM4
  ;
  ;
@@ -143,6 +143,7 @@ PATLIST(ARY) ; returns a list of patients in ary, passed by name
  ;@stanza 3 termination
  ;
  quit  ; end of PATLIST
+ ;
  ;
  ;
  ; homepage accessed using GET
@@ -188,6 +189,7 @@ SCANFOR(ary,start,what) ; scan array looking for value
  ;
  ;
  ;@section 2 code for SAMI new case web service
+ ;
  ;
  ;
  ; receives post from home & creates new case
@@ -530,4 +532,4 @@ INDEX ; reindex the vapals-patients graph
  . s @root@("sid",sid,zi)=""
  q
  ;
-EOR ; end of routine SAMIHOM3
+EOR ; end of routine SAMIHOM2

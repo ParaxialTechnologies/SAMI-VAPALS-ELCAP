@@ -74,8 +74,8 @@ WSHOME ; web service for SAMI homepage
  ;
 WSVAPALS ; vapals post web service - all calls come through this gateway
  ; WSVAPALS^SAMIHOM3(SAMIARG,SAMIBODY,SAMIRESULT) goto WSVAPALS^SAMIHOM4
- merge ^SAMIGPL("vapals")=SAMIARG
- m ^SAMIGPL("vapals","SAMIBODY")=SAMIBODY
+ m ^SAMIGPL("vapals")=SAMIARG
+ m ^SAMIGPL("vapals","BODY")=SAMIBODY
  ;
  new vars,SAMIBDY
  set SAMIBDY=$get(SAMIBODY(1))
@@ -109,39 +109,39 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  ;
  i route="form" d  q  ;
  . m SAMIARG=vars
- . d wsGetForm^%wf(.RESULT,.SAMIARG)
+ . d wsGetForm^%wf(.SAMIRESULT,.SAMIARG)
  ;
  i route="postform" d  q  ;
  . m SAMIARG=vars
- . d wsPostForm^%wf(.SAMIARG,.SAMIBODY,.RESULT)
+ . d wsPostForm^%wf(.ARG,.BODY,.RESULT)
  . i $g(SAMIARG("form"))["siform" d  ;
  . . if $$NOTE^SAMINOTI(.SAMIARG) d  ;
- . . . n SAMIFILTER
- . . . s SAMIFILTER("studyid")=$G(SAMIARG("studyid"))
- . . . s SAMIFILTER("form")=$g(SAMIARG("form")) ;
+ . . . n FILTER
+ . . . s FILTER("studyid")=$G(SAMIARG("studyid"))
+ . . . s FILTER("form")=$g(SAMIARG("form")) ;
  . . . n tiuien
  . . . s tiuien=$$SV2VISTA^SAMIVSTA(.SAMIFILTER)
  . . . s SAMIFILTER("tiuien")=tiuien
- . . . ;d SV2VSTA^SAMIVSTA(.SAMIFILTER)
- . . . m ^SAMIGPL("newSAMIFILTER")=SAMIFILTER
- . . . d WSNOTE^SAMINOTI(.RESULT,.SAMIARG)
+ . . . ;d SV2VSTA^SAMIVSTA(.FILTER)
+ . . . m ^SAMIGPL("newFILTER")=SAMIFILTER
+ . . . d WSNOTE^SAMINOTI(.SAMIRESULT,.SAMIARG)
  ;
  i route="deleteform" d  q  ;
  . m SAMIARG=vars
- . d DELFORM^SAMICAS2(.RESULT,.SAMIARG)
+ . d DELFORM^SAMICAS2(.SAMIRESULT,.SAMIARG)
  ;
  i route="ctreport" d  q  ;
  . m SAMIARG=vars
- . d WSREPORT^SAMICTR0(.RESULT,.SAMIARG)
- . ;d wsReport^SAMICTRT(.RESULT,.SAMIARG)
+ . d WSREPORT^SAMICTR0(.SAMIRESULT,.SAMIARG)
+ . ;d wsReport^SAMICTRT(.SAMIRESULT,.SAMIARG)
  ;
  i route="note" d  q  ; 
  . m SAMIARG=vars
- . d WSNOTE^SAMINOTI(.RESULT,.SAMIARG)
+ . d WSNOTE^SAMINOTI(.SAMIRESULT,.SAMIARG)
  ;
  i route="report" d  q  ; 
  . m SAMIARG=vars
- . d WSREPORT^SAMIUR1(.RESULT,.SAMIARG)
+ . d WSREPORT^SAMIUR1(.SAMIRESULT,.SAMIARG)
  ;
  quit  ; End of WSVAPALS
  ;
@@ -295,11 +295,11 @@ WSNEWCAS ; receives post from home & creates new case
  ;
  ;@stanza 2 ?
  ;
- merge ^SAMIGPL("newCase","ARGS")=ARGS
- merge ^SAMIGPL("newCase","BODY")=BODY
+ merge ^SAMIGPL("newCase","ARGS")=SAMIARGS
+ merge ^SAMIGPL("newCase","BODY")=SAMIBODY
  ;
- new vars,SAMIBDY
- set SAMIBDY=$get(SAMIBODY(1))
+ new vars,bdy
+ set SAMIBDY=$get(BODY(1))
  do parseBody^%wf("vars",.SAMIBDY)
  merge ^SAMIGPL("newCase","vars")=vars
  ;
@@ -346,10 +346,10 @@ WSNEWCAS ; receives post from home & creates new case
  ;do makeSbform(gien) ; create a background form for new patient
  set siformkey=$$MKSIFORM^SAMIHOM3(gien) ; create an intake for for new patient
  ;
- set ARGS("studyid")=studyid
- set ARGS("form")="vapals:"_siformkey
- do wsGetForm^%wf(.RESULT,.ARGS)
- ;do WSCASE^SAMICAS2(.RESULT,.ARGS) ; navigate to the case review page
+ set SAMIARGS("studyid")=studyid
+ set SAMIARGS("form")="vapals:"_siformkey
+ do wsGetForm^%wf(.SAMIRESULT,.SAMIARGS)
+ ;do WSCASE^SAMICAS2(.SAMIRESULT,.SAMIARGS) ; navigate to the case review page
  ;
  ;@stanza ? termination
  ;

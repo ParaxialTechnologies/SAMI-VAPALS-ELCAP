@@ -611,7 +611,7 @@ WSNFPOST(ARGS,BODY,RESULT) ; post new form selection (post service)
  set bdy=$get(BODY(1))
  do parseBody^%wf("vars",.bdy)
  m vars=ARGS
- merge ^gpl("nuform","vars")=vars
+ merge ^SAMIGPL("nuform","vars")=vars
  ;
  new sid set sid=$get(vars("studyid"))
  i sid="" s sid=$g(ARGS("sid"))

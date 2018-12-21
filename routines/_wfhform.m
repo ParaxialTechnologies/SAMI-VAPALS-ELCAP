@@ -609,7 +609,7 @@ putErrMsg2 ; code for ppi putErrMsg2^%wf, insert error msgs
  ;@stanza 2 insert error messages
  ;
  if $g(err)="" set err="errctrl"
- ; merge ^gpl("err")=@err
+ ; merge ^SAMIGPL("err")=@err
  new errno set errno=$get(@err@("errorCount"))+1
  set @err@("errorCount")=errno
  new uline set uline=$get(@err@("currentErrorLine"))
@@ -1219,10 +1219,10 @@ wsPostForm ; code for ws wsPostForm^%wf, submit HTML form
  merge @gr@("graph")=%json
  ;
  i $g(ARGS("debug"))=1 d  ;
- . kill ^gpl("sami")
- . merge ^gpl("sami","args")=ARGS
- . merge ^gpl("sami","body")=BODY
- . merge ^gpl("sami","json")=%json
+ . kill ^SAMIGPL("sami")
+ . merge ^SAMIGPL("sami","args")=ARGS
+ . merge ^SAMIGPL("sami","body")=BODY
+ . merge ^SAMIGPL("sami","json")=%json
  ;
  ;if $get(ARGS("debug"))="" do  quit  ;
  do  quit  ;
@@ -1259,11 +1259,11 @@ wsPostForm ; code for ws wsPostForm^%wf, submit HTML form
  do beautify^%wd("tjson","RESULT")
  DO ADDCRLF^VPRJRUT(.RESULT)
  set HTTPRSP("mime")="application/json"
- kill ^gpl("sami")
- merge ^gpl("sami","args")=ARGS
- merge ^gpl("sami","body")=BODY
- merge ^gpl("sami","json")=%json
- merge ^gpl("sami","fman")=fman
+ kill ^SAMIGPL("sami")
+ merge ^SAMIGPL("sami","args")=ARGS
+ merge ^SAMIGPL("sami","body")=BODY
+ merge ^SAMIGPL("sami","json")=%json
+ merge ^SAMIGPL("sami","fman")=fman
  ;
  ;@stanza 3 termination
  ;
@@ -1303,7 +1303,7 @@ parseBody ; code for ppi parseBody^%wf, get field values from form
  ;@stanza 2 parse variables from form
  ;
  new ii set ii=""
- if '$data(body) set body=$get(^gpl("sami","body",1))
+ if '$data(body) set body=$get(^SAMIGPL("sami","body",1))
  quit:'$data(body)
  new tmp set tmp=body
  kill @rtn

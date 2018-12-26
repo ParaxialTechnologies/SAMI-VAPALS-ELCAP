@@ -15,7 +15,7 @@ SAVFILTR(sid,form,vars) ; extrinsic which returns the form key to use
  n type s type=$p(form,"-",1)
  ;
  if type="ceform" d  ; ct evaluation form
- . m ^SAMIGPL("samisav","vals")=vars
+ . m ^gpl("samisav","vals")=vars
  . n formdate s formdate=$g(vars("cedos")) ; date of the CT scan from the form
  . q:formdate=""
  . n fdate s fdate=$$KEY2FM^SAMICAS2(formdate) ; convert to fileman date
@@ -25,11 +25,11 @@ SAVFILTR(sid,form,vars) ; extrinsic which returns the form key to use
  . if fdate'=fmcurrent d  ;
  . . n moveto s moveto="ceform-"_$$KEYDATE^SAMIHOM3(fdate)
  . . ;w !,"old: ",fmcurrent," new: ",fdate," ... date must be changed
- . . k ^SAMIGPL("samisav")
- . . s ^SAMIGPL("samisav","current")=form_"^"_fmcurrent
- . . s ^SAMIGPL("samisav","incoming")=formdate_"^"_fdate
- . . s ^SAMIGPL("samisav","conclusion")="graph must be moved to: "_moveto
- . . m ^SAMIGPL("samisav","vals")=vars
+ . . k ^gpl("samisav")
+ . . s ^gpl("samisav","current")=form_"^"_fmcurrent
+ . . s ^gpl("samisav","incoming")=formdate_"^"_fdate
+ . . s ^gpl("samisav","conclusion")="graph must be moved to: "_moveto
+ . . m ^gpl("samisav","vals")=vars
  . . m @root@("graph",sid,moveto)=@root@("graph",sid,form)
  . . k @root@("graph",sid,form)
  . . s useform=moveto 
@@ -44,10 +44,10 @@ SAVFILTR(sid,form,vars) ; extrinsic which returns the form key to use
  . if fdate'=fmcurrent d  ;
  . . n moveto s moveto="siform-"_$$KEYDATE^SAMIHOM3(fdate)
  . . ;w !,"old: ",fmcurrent," new: ",fdate," ... date must be changed
- . . k ^SAMIGPL("samisav")
- . . s ^SAMIGPL("samisav","current")=form_"^"_fmcurrent
- . . s ^SAMIGPL("samisav","incoming")=formdate_"^"_fdate
- . . s ^SAMIGPL("samisav","conclusion")="graph must be moved to: "_moveto
+ . . k ^gpl("samisav")
+ . . s ^gpl("samisav","current")=form_"^"_fmcurrent
+ . . s ^gpl("samisav","incoming")=formdate_"^"_fdate
+ . . s ^gpl("samisav","conclusion")="graph must be moved to: "_moveto
  . . m @root@("graph",sid,moveto)=@root@("graph",sid,form)
  . . k @root@("graph",sid,form)
  . . s useform=moveto 

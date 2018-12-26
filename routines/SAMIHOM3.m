@@ -102,16 +102,178 @@ SAMIHOM3 ;ven/gpl - ielcap: forms ; 12/11/18 9:36am
  ;
  ;
  ;
- ; web service for SAMI homepage
-WSHOME(SAMIRTN,SAMIFILTER) goto WSHOME^SAMIHOM4
+WSHOME(RTN,FILTER) ; web service for SAMI homepage
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;web service;procedure;
+ ;@called-by
+ ;@calls
+ ; GETHOME
+ ;@input
+ ; FILTER
+ ;@output
+ ;.RTN
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ; no parameters required
+ ;
+ ;@stanza 2 present development or temporary homepage
+ ;
+ if $get(FILTER("test"))=1 do  quit
+ . do DEVHOME(.RTN,.FILTER)
+ . quit
+ ;
+ if $g(FILTER("samiroute"))'="" do  quit  ; workaround for "get" access to pages
+ . new BODY set BODY(1)=""
+ . do WSVAPALS(.FILTER,.BODY,.RTN)
+ ;
+ if $get(FILTER("dfn"))'="" do  quit  ; V4W/DLW - workaround for "get" access from CPRS
+ . new dfn set dfn=$get(FILTER("dfn"))
+ . new root set root=$$setroot^%wd("vapals-patients")
+ . new studyid set studyid=$get(@root@(dfn,"samistudyid"))
+ . new BODY
+ . if studyid'="" do
+ . . set BODY(1)="samiroute=casereview&dfn="_dfn_"&studyid="_studyid
+ . else  do
+ . . set BODY(1)="samiroute=lookup&dfn="_dfn_"&studyid="_studyid
+ . do WSVAPALS(.FILTER,.BODY,.RTN)
+ ;
+ do GETHOME(.RTN,.FILTER) ; VAPALS homepage
+ ;
+ ;@stanza 3 termination
+ ;
+ quit  ; end of WSHOME
  ;
  ;
- ; vapals post web service - all calls come through this gateway
-WSVAPALS(SAMIARG,SAMIBODY,SAMIRESULT) goto WSVAPALS^SAMIHOM4
  ;
+WSVAPALS(ARG,BODY,RESULT) ; vapals post web service - all calls come through this gateway
+ m ^GPL("vapals")=ARG
+ m ^GPL("vapals","BODY")=BODY
  ;
-; temporary home page for development
-DEVHOME(SAMIRTN,SAMIFILTER) goto DEVHOME^SAMIHOM4
+ new vars,bdy
+ set bdy=$get(BODY(1))
+ do parseBody^%wf("vars",.bdy)
+ m vars=ARG
+ k ^GPL("vapals","vars")
+ merge ^GPL("vapals","vars")=vars
+ ;
+ n route s route=$g(vars("samiroute"))
+ i route=""  d GETHOME(.RESULT,.ARG) ; on error go home
+ ;
+ i route="lookup" d  q  ;
+ . m ARG=vars
+ . d WSLOOKUP^SAMISRC2(.ARG,.BODY,.RESULT)
+ ;
+ i route="newcase" d  q  ;
+ . m ARG=vars
+ . d WSNEWCAS(.ARG,.BODY,.RESULT)
+ ;
+ i route="casereview" d  q  ;
+ . m ARG=vars
+ . d WSCASE^SAMICAS2(.RESULT,.ARG)
+ ;
+ i route="nuform" d  q  ;
+ . m ARG=vars
+ . d WSNUFORM^SAMICAS2(.RESULT,.ARG)
+ ;
+ i route="addform" d  q  ;
+ . m ARG=vars
+ . d WSNFPOST^SAMICAS2(.ARG,.BODY,.RESULT)
+ ;
+ i route="form" d  q  ;
+ . m ARG=vars
+ . d wsGetForm^%wf(.RESULT,.ARG)
+ ;
+ i route="postform" d  q  ;
+ . m ARG=vars
+ . d wsPostForm^%wf(.ARG,.BODY,.RESULT)
+ . i $g(ARG("form"))["siform" d  ;
+ . . if $$NOTE^SAMINOTI(.ARG) d  ;
+ . . . n FILTER
+ . . . s FILTER("studyid")=$G(ARG("studyid"))
+ . . . s FILTER("form")=$g(ARG("form")) ;
+ . . . n tiuien
+ . . . s tiuien=$$SV2VISTA^SAMIVSTA(.FILTER)
+ . . . s FILTER("tiuien")=tiuien
+ . . . ;d SV2VSTA^SAMIVSTA(.FILTER)
+ . . . m ^GPL("newFILTER")=FILTER
+ . . . d WSNOTE^SAMINOTI(.RESULT,.ARG)
+ ;
+ i route="deleteform" d  q  ;
+ . m ARG=vars
+ . d DELFORM^SAMICAS2(.RESULT,.ARG)
+ ;
+ i route="ctreport" d  q  ;
+ . m ARG=vars
+ . d WSREPORT^SAMICTR0(.RESULT,.ARG)
+ . ;d wsReport^SAMICTRT(.RESULT,.ARG)
+ ;
+ i route="note" d  q  ; 
+ . m ARG=vars
+ . d WSNOTE^SAMINOTI(.RESULT,.ARG)
+ ;
+ i route="report" d  q  ; 
+ . m ARG=vars
+ . d WSREPORT^SAMIUR1(.RESULT,.ARG)
+ ;
+ q
+ ;
+DEVHOME(RTN,FILTER) ; temporary home page for development
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;
+ ;@called-by
+ ; WSHOME
+ ;@calls
+ ; htmltb2^%yottaweb
+ ; PATLIST
+ ; genhtml^%yottautl
+ ; addary^%yottautl
+ ;@input
+ ; FILTER =
+ ;@output
+ ;.RTN =
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ;@stanza 2 ?
+ ;
+ new gtop,gbot
+ do htmltb2^%yottaweb(.gtop,.gbot,"SAMI Test Patients")
+ ;
+ new html,ary,hpat
+ do PATLIST("hpat")
+ quit:'$data(hpat)
+ ;
+ set ary("title")="SAMI Test Patients on this system"
+ set ary("header",1)="StudyId"
+ set ary("header",2)="Name"
+ ;
+ new cnt set cnt=0
+ new zi set zi=""
+ for  set zi=$order(hpat(zi)) quit:zi=""  do  ;
+ . set cnt=cnt+1
+ . new url set url="<a href=""/cform.cgi?studyId="_zi_""">"_zi_"</a>"
+ . set ary(cnt,1)=url
+ . set ary(cnt,2)=""
+ . quit
+ ;
+ do genhtml^%yottautl("html","ary")
+ ;
+ do addary^%yottautl("RTN","gtop")
+ do addary^%yottautl("RTN","html")
+ set RTN($order(RTN(""),-1)+1)=gbot
+ kill RTN(0)
+ ;
+ set HTTPRSP("mime")="text/html"
+ ;
+ ;@stanza ? termination
+ ;
+ quit  ; end of DEVHOME
+ ;
  ;
  ;
 PATLIST(ARY) ; returns a list of patients in ary, passed by name
@@ -146,8 +308,67 @@ PATLIST(ARY) ; returns a list of patients in ary, passed by name
  ;
  ;
  ;
- ; homepage accessed using GET
-GETHOME(SAMIRTN,SAMIFILTER) goto GETHOME^SAMIHOM4
+GETHOME(RTN,FILTER) ; homepage accessed using GET
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;
+ ;@called-by
+ ; WSHOME
+ ; WSNEWCAS
+ ; WSNFPOST^SAMICAS2
+ ; wsLookup^SAMISRCH
+ ;@calls
+ ; GETTMPL^SAMICAS2
+ ; findReplace^%ts
+ ; $$SCANFOR
+ ; ADDCRLF^VPRJRUT
+ ;@input
+ ; FILTER =
+ ;@output
+ ;.RTN =
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ;@stanza 2 get template for homepage
+ ;
+ new temp,tout
+ do GETTMPL^SAMICAS2("temp","vapals:home")
+ quit:'$data(temp)
+ ;
+ ;@stanza 3 process homepage template
+ ;
+ new cnt set cnt=0
+ new zi set zi=0
+ for  set zi=$order(temp(zi)) quit:+zi=0  do  ;
+ . ;
+ . n ln s ln=temp(zi)
+ . n touched s touched=0
+ . ;
+ . i ln["href" i 'touched d  ;
+ . . d FIXHREF^SAMIFRM2(.ln)
+ . . s temp(zi)=ln
+ . ;
+ . i ln["src" d  ;
+ . . d FIXSRC^SAMIFRM2(.ln)
+ . . s temp(zi)=ln
+ . ;
+ . i ln["id" i ln["studyIdMenu" d  ;
+ . . s zi=zi+4
+ . ;
+ . set cnt=cnt+1
+ . set tout(cnt)=temp(zi)
+ . quit
+ ;
+ ;@stanza 4 add cr/lf & save to return array
+ ;
+ do ADDCRLF^VPRJRUT(.tout)
+ merge RTN=tout
+ ;
+ ;@stanza 5 termination
+ ;
+ quit  ; end of GETHOME
+ ;
  ;
  ;
 SCANFOR(ary,start,what) ; scan array looking for value
@@ -192,8 +413,95 @@ SCANFOR(ary,start,what) ; scan array looking for value
  ;
  ;
  ;
- ; receives post from home & creates new case
-WSNEWCAS(SAMIARGS,SAMIBODY,SAMIRESULT) goto WSNEWCAS^SAMIHOM4
+WSNEWCAS(ARGS,BODY,RESULT) ; receives post from home & creates new case
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;
+ ;@called-by
+ ;@calls
+ ; parseBody^%wf
+ ; $$setroot^%wd
+ ; $$NEXTNUM
+ ; $$GENSTDID
+ ; $$NOW^XLFDT
+ ; $$KEYDATE
+ ; $$VALDTNM
+ ; GETHOME
+ ; PREFILL
+ ; MKSBFORM
+ ; MKSIFORM
+ ; WSCASE^SAMICAS2
+ ;@input
+ ;.ARGS =
+ ; BODY =
+ ;.RESULT =
+ ;@output: ?
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ;@stanza 2 ?
+ ;
+ merge ^GPL("newCase","ARGS")=ARGS
+ merge ^GPL("newCase","BODY")=BODY
+ ;
+ new vars,bdy
+ set bdy=$get(BODY(1))
+ do parseBody^%wf("vars",.bdy)
+ merge ^GPL("newCase","vars")=vars
+ ;
+ new root set root=$$setroot^%wd("vapals-patients")
+ ;
+ new saminame set saminame=$get(vars("name"))
+ if saminame="" s saminame=$get(vars("saminame"))
+ ;if $$VALDTNM(saminame,.ARGS)=-1 do  quit  ;
+ ;. new r1
+ ;. do GETHOME(.r1,.ARGS) ; home page to redisplay
+ ;. merge RESULT=r1
+ ;. quit
+ ;
+ new dfn s dfn=$get(vars("dfn"))
+ ;if dfn="" do  quit  ;
+ ;. new r1
+ ;. do GETHOME(.r1,.ARGS) ; home page to redisplay
+ ;. merge RESULT=r1
+ ;. quit
+ ;
+ ;new gien set gien=$$NEXTNUM
+ new gien set gien=dfn
+ ;
+ m ^GPL("newCase","G1")=root
+ ; create dfn index
+ set @root@("dfn",dfn,gien)=""
+ ;
+ set @root@(gien,"saminum")=gien
+ set @root@(gien,"saminame")=saminame
+ ;
+ new studyid set studyid=$$GENSTDID(gien)
+ set @root@(gien,"samistudyid")=studyid
+ set @root@("sid",studyid,gien)=""
+ ;
+ new datekey set datekey=$$KEYDATE($$NOW^XLFDT)
+ set @root@(gien,"samicreatedate")=datekey
+ ;
+ merge ^GPL("newCase",gien)=@root@(gien)
+ ;
+ ;
+ do PREFILL(dfn) ; prefills from the "patient-lookup" graph
+ ;
+ n siformkey
+ ;do makeSbform(gien) ; create a background form for new patient
+ set siformkey=$$MKSIFORM(gien) ; create an intake for for new patient
+ ;
+ set ARGS("studyid")=studyid
+ set ARGS("form")="vapals:"_siformkey
+ do wsGetForm^%wf(.RESULT,.ARGS)
+ ;do WSCASE^SAMICAS2(.RESULT,.ARGS) ; navigate to the case review page
+ ;
+ ;@stanza ? termination
+ ;
+ quit  ; end of WSNEWCAS
+ ;
  ;
  ;
 NEXTNUM() ; next number for studyid
@@ -519,7 +827,7 @@ ADDPAT(dfn) ; calls newCase to add patient dfn to vapals
  n bdy s bdy(1)="saminame="_name_"&dfn="_dfn
  n ARGS,result
  d WSNEWCAS(.ARGS,.bdy,.result)
- ; zwr result
+ zwr result
  ;
 INDEX ; reindex the vapals-patients graph
  n root s root=$$setroot^%wd("vapals-patients")
@@ -529,7 +837,7 @@ INDEX ; reindex the vapals-patients graph
  . s dfn=@root@(zi,"dfn")
  . s sid=@root@(zi,"samistudyid")
  . s @root@("dfn",dfn,zi)=""
- . s @root@("sid",sid,zi)=""
+ . s @root@("sid",sid,zi)="" 
  q
  ;
 EOR ; end of routine SAMIHOM2

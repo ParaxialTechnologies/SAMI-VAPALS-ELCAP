@@ -25,16 +25,16 @@ SAMILOG ;ven/lgc - APIs to toggle password identification ; 12/7/18 9:04am
  ;   ^%W(17.6001,20,1) = vapals              (1) F
  ;   ^%W(17.6001,20,2) = WSHOME^SAMIHOM3     (2) F
  ;   ^%W(17.6001,20,"AUTH") = 1              (11)S
- ; ^%W(17.6001,"B","POST","vapals","WSVAPALS^SAMIHOM3",22)
+ ; ^%W(17.6001,"B","POST","vapals","wsVAPALS^SAMIHOM3",22)
  ;   ^%W(17.6001,22,0) = POST                (.01)
  ;   ^%W(17.6001,22,1) = vapals              (1) F
- ;   ^%W(17.6001,22,2) = WSVAPALS^SAMIHOM3   (2) F
+ ;   ^%W(17.6001,22,2) = wsVAPALS^SAMIHOM3   (2) F
  ;   ^%W(17.6001,22,"AUTH") = 1              (11)S
  ;
 STONOFF ;
  N ienget,ienpost,DIR,X,Y,%,DTOUT,DUOUT
  s ienget=$o(^%W(17.6001,"B","GET","vapals","WSHOME^SAMIHOM3",0))
- s ienpost=$o(^%W(17.6001,"B","POST","vapals","WSVAPALS^SAMIHOM3",0))
+ s ienpost=$o(^%W(17.6001,"B","POST","vapals","wsVAPALS^SAMIHOM3",0))
  I $G(^%W(17.6001,ienget,"AUTH")) D
  . W !,"VAPALS password ID is presently ON",!
  . W !," would you like to turn *** OFF *** VAPALS password ID."

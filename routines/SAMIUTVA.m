@@ -1,4 +1,4 @@
-SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 12/26/18 9:53am
+SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 12/26/18 1:33pm
  ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -200,46 +200,6 @@ UTSSN ; @TEST - Pull SSN on a patient
  D CHKEQ^%ut($P(utsuccess,"^",2),GSssn,"Testing PTSSN FAILED!")
  Q
  ;
-UTVIT ; @TEST - Pull Vitals on a patient
- ; D VIT(dfn,sdate,edate)
- ; Find entry in patient-lookup without a 'vitals node'
- ;  however the patient has vitals in 120.5
- N D,D0,DG,DI,DIC,DICR,DIG,DIH
- N root s root=$$setroot^%wd("patient-lookup")
- N gien s gien=0
- N gnode,utdfn,utNeedsVitUpdate s utNeedsVitUpdate=0
- F  S gien=$O(@root@(gien)) Q:'gien  D  Q:utNeedsVitUpdate
- . S utdfn=$G(@root@(gien,"dfn")) Q:'utdfn
- . I $O(^GMR(120.5,"C",utdfn,0)) D
- .. s gnode=$NA(@root@(gien,"vitals")),gnode=$Q(@gnode)
- .. I '(gnode["vitals") s utNeedsVitUpdate=1
- I 'gien D  Q
- . D FAIL^%ut("Unable to find suitable patient for Vitals - FAILED!")
- ;Found a good patient
- S utsuccess=$$VIT^SAMIVSTA(utdfn)
- s gnode=$NA(@root@(gien,"vitals")),gnode=$Q(@gnode)
- s utsuccess=(gnode["vitals")
- D CHKEQ^%ut(utsuccess,1,"Testing updating Vitals FAILED!")
- Q
- ;
-UTVPR ; @TEST - Pull Virtual Patient Record (VPR) on a patient
- ; D VPR(dfn)
- ; Find entry in patient-lookup without an 'inpatient' node'
- N D,D0,DG,DI,DIC,DICR,DIG,DIH
- N root s root=$$setroot^%wd("patient-lookup")
- N gien s gien=0
- N gnode,utdfn,utNeedsVPRUpdate s utNeedsVPRUpdate=0
- F  S gien=$O(@root@(gien)) Q:'gien  D  Q:utNeedsVPRUpdate
- . S utdfn=$G(@root@(gien,"dfn")) Q:'utdfn
- . I '$D(@root@(gien,"inpatient")) s utNeedsVPRUpdate=1
- I 'gien D  Q
- . D FAIL^%ut("Unable to find suitable patient for VPR - FAILED!")
- ;Found a good patient
- S utsuccess=$$VPR^SAMIVSTA(utdfn)
- H 1
- s utsuccess=$D(@root@(gien,"inpatient"))
- D CHKEQ^%ut(utsuccess,1,"Testing updating with VPR  FAILED!")
- Q
  ;
 UTVSTR ; @TEST - Get Visit string (VSTR) for a TIU note
  ; D VisitString(tiuien)

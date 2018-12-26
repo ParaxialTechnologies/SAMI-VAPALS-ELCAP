@@ -567,7 +567,7 @@ WSNUFORM(rtn,filter) ; select new form for patient (get service)
  . . quit
  . ;
  . ;i ln["<script" i temp(zi+1)["function" d  ;
- . ;. s zi=$$SCANFOR^SAMIHOM3(.temp,zi,"</script")
+ . ;. s zi=$$scanFor^SAMIHOM3(.temp,zi,"</script")
  . ;. s zi=zi+1
  . ; 
  . s cnt=cnt+1
@@ -611,7 +611,7 @@ WSNFPOST(ARGS,BODY,RESULT) ; post new form selection (post service)
  set bdy=$get(BODY(1))
  do parseBody^%wf("vars",.bdy)
  m vars=ARGS
- merge ^SAMIGPL("nuform","vars")=vars
+ merge ^gpl("nuform","vars")=vars
  ;
  new sid set sid=$get(vars("studyid"))
  i sid="" s sid=$g(ARGS("sid"))

@@ -100,8 +100,8 @@ setroot(graph) ; root of working storage
  ; INITFRMS^SAMIFRM
  ; loadData^SAMIFRM
  ; PATLIST^SAMIHOM3
- ; wsNewCase^SAMIHOM3
- ; nextNum^SAMIHOM3
+ ; WSNEWCASe^SAMIHOM3
+ ; NEXTNUM^SAMIHOM3
  ; prefill^SAMIHOM3
  ; makeSbform^SAMIHOM3
  ; makeSiform^SAMIHOM3

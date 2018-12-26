@@ -170,7 +170,7 @@
  ; findReplace^%ts with A flag; remove findReplaceAll^%wf.
  ;
  ; 2018-02-27 ven/gpl 1.8t04 %wfhform: in getVals load prefill values
- ; by calling $$sid2num^SAMIHOME.
+ ; by calling $$SID2NUM^SAMIHOME.
  ;
  ; 2018-03-05 ven/toad %1.8t04 %wfhinput: in uncheck,check,type use
  ; new calls, add examples, & be cautious about lowercase, rename
@@ -198,7 +198,7 @@
  ; 2018-03-24 ven/lmry %1.8t04 %wful: new %wfutexcl
  ;
  ; 2018-11-19 ven/arc %1.8t04 %wfhform: in getVals load prefill values
- ; by calling $$sid2num^SAMIHOM3.
+ ; by calling $$SID2NUM^SAMIHOM3.
  ;
  ;@to-do
  ; use find & place in other three ppis

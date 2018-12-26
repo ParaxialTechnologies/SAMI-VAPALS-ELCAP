@@ -376,7 +376,7 @@ addtag(tag,zien,zien2) ; add a tag to a graph
  ;
 wssee(rtn,filter) ; web service for browsing files using the graph
  ;
- merge ^gpl("filter")=filter
+ merge ^SAMIGPL("filter")=filter
  new arg set arg=$get(filter("*"))
  if arg="" do toppage^%yottahtm(.rtn,.filter) quit  ;
  ;
@@ -438,7 +438,7 @@ wssee(rtn,filter) ; web service for browsing files using the graph
  ;
  do match("#"_arg,"matches")
  ;
- ; merge ^gpl("matches")=matches
+ ; merge ^SAMIGPL("matches")=matches
  ; if $data(matches) set rtn=$query(matches)
  ;
  if $$count("matches")>0 do  quit  ; more than one match

@@ -1,4 +1,4 @@
-SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 12/18/18 2:02pm
+SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 12/26/18 9:53am
  ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -77,7 +77,7 @@ TEARDOWN Q
 UTBLDTIU ; @TEST - Build a new TIU and Visit stub for a patient
  ; BLDTIU(.tiuien,DFN,TITLE,USER,CLINIEN)
  N D,D0,DG,DI,DIC,DICR,DIG,DIH
- n provduz,clinien,tiutitlepn,tiutitleien,ptdfn,KBAPFAIL
+ n provduz,clinien,tiutitlepn,tiutitleien,ptdfn
  s provduz=$$GET^XPAR("SYS","SAMI DEFAULT PROVIDER DUZ",,"Q")
  s clinien=$$GET^XPAR("SYS","SAMI DEFAULT CLINIC IEN",,"Q")
  s tiutitlepn=$$GET^XPAR("SYS","SAMI NOTE TITLE PRINT NAME",,"Q")
@@ -121,31 +121,31 @@ UTSTEXT ; @TEST - Push text into an existing TIU note
 UTENCTR ; @TEST - Update TIU with encounter and HF information
  ; BLDENCTR(.tiuien,.HFARRAY)
  N D,D0,DG,DI,DIC,DICR,DIG,DIH
- n VSTR,provduz
+ n vstr,provduz
  I '$G(utdfn) D  Q
  . D FAIL^%ut("Update tiu with encounter missing utdfn FAILED!")
- S VSTR=$$VISTSTR^SAMIVSTA(tiuien)
- I '($L(VSTR,";")=3) D  Q
+ S vstr=$$VISTSTR^SAMIVSTA(tiuien)
+ I '($L(vstr,";")=3) D  Q
  . D FAIL^%ut("Update tiu with encounter VSTR FAILED!")
  s provduz=$$GET^XPAR("SYS","SAMI DEFAULT PROVIDER DUZ",,"Q")
  I '$G(provduz) D  Q
  . D FAIL^%ut("Update tiu with encounter no provduz FAILED!")
  ; Time to build the HF array for the next call
- N HFARRAY
- S HFARRAY(1)="HDR^0^^"_VSTR
- S HFARRAY(2)="VST^DT^"_$P(VSTR,";",2)
- S HFARRAY(3)="VST^PT^"_utdfn
- S HFARRAY(4)="VST^HL^"_$P(VSTR,";")
- S HFARRAY(5)="VST^VC^"_$P(VSTR,";",3)
- S HFARRAY(6)="PRV^"_provduz_"^^^"_$P($G(^VA(200,provduz,0)),"^")_"^1"
- S HFARRAY(7)="POV+^F17.210^COUNSELING AND SCREENING^Nicotine dependence, cigarettes, uncomplicated^1^^0^^^1"
- S HFARRAY(8)="COM^1^@"
- S HFARRAY(9)="HF+^999001^LUNG SCREENING HF^LCS-ENROLLED^@^^^^^2^"
- S HFARRAY(10)="COM^2^@"
- S HFARRAY(11)="CPT+^99203^NEW PATIENT^Intermediate Exam  26-35 Min^1^71^^^0^3^"
- S HFARRAY(12)="COM^3^@"
+ N SAMIUHFA
+ S SAMIUHFA(1)="HDR^0^^"_vstr
+ S SAMIUHFA(2)="VST^DT^"_$P(vstr,";",2)
+ S SAMIUHFA(3)="VST^PT^"_utdfn
+ S SAMIUHFA(4)="VST^HL^"_$P(vstr,";")
+ S SAMIUHFA(5)="VST^VC^"_$P(vstr,";",3)
+ S SAMIUHFA(6)="PRV^"_provduz_"^^^"_$P($G(^VA(200,provduz,0)),"^")_"^1"
+ S SAMIUHFA(7)="POV+^F17.210^COUNSELING AND SCREENING^Nicotine dependence, cigarettes, uncomplicated^1^^0^^^1"
+ S SAMIUHFA(8)="COM^1^@"
+ S SAMIUHFA(9)="HF+^999001^LUNG SCREENING HF^LCS-ENROLLED^@^^^^^2^"
+ S SAMIUHFA(10)="COM^2^@"
+ S SAMIUHFA(11)="CPT+^99203^NEW PATIENT^Intermediate Exam  26-35 Min^1^71^^^0^3^"
+ S SAMIUHFA(12)="COM^3^@"
  ;
- S utsuccess=$$BLDENCTR^SAMIVSTA(.tiuien,.HFARRAY)
+ S utsuccess=$$BLDENCTR^SAMIVSTA(.tiuien,.SAMIUHFA)
  D CHKEQ^%ut(utsuccess,tiuien,"Testing adding encounter to TIU note FAILED!")
  Q
  ;

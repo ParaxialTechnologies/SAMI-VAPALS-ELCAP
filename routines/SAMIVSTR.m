@@ -1,4 +1,4 @@
-SAMIVSTR ; ven/lgc,arc - IELCAP: M2M to Graph tools ; 12/18/18 2:19pm
+SAMIVSTR ; ven/lgc,arc - IELCAP: M2M to Graph tools ; 12/27/18 11:13am
  ;;1.0;SAMI;;
  ;
  ;@routine-credits
@@ -50,7 +50,7 @@ RADPROCD(StationNumber) ;
  I '$L($G(StationNumber)) D
  . S StationNumber=$$GET^XPAR("SYS","SAMI DEFAULT STATION NUMBER",,"Q")
  I '$L($G(StationNumber)) Q:$Q 0  Q
- N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY,XDATA
+ N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY,XDATA,RDPRC
  S CNTXT="MAG DICOM VISA"
  S RMPRC="MAGV GET RADIOLOGY PROCEDURES"
  S (CONSOLE,CNTNOPEN)=0
@@ -62,7 +62,8 @@ RADPROCD(StationNumber) ;
  ;
  n si s si=$$CLRGRPHS("radiology procedures")
  N I,gien,root s gien=0
- s root=$$setroot^%wd("radiology procedures")
+ ;s root=$$setroot^%wd("radiology procedures")
+ s root=$$SETROOT("radiology procedures")
  F I=1:1:$L(XDATA,$C(13,10)) D
  . S RDPRC=$P(XDATA,$C(13,10),I)
  . Q:($L(RDPRC,"^")<3)
@@ -102,7 +103,8 @@ ACTEXAMS() ;
  ;
  n si s si=$$CLRGRPHS("radiology active exams")
  N gien,root s gien=0
- s root=$$setroot^%wd("radiology active exams")
+ ;s root=$$setroot^%wd("radiology active exams")
+ s root=$$SETROOT("radiology active exams")
  ; *** need to run on active system to see how
  ;     to build file
  S @root@("Date Last Updated")=$$HTE^XLFDT($H)
@@ -134,7 +136,8 @@ RADSTAFF() ;
  I '($L(XDATA,$C(13,10))) Q:$Q 0  Q
  n si s si=$$CLRGRPHS("radiology staff")
  N I,gien,root,RASTAFF s gien=0
- s root=$$setroot^%wd("radiology staff")
+ ;s root=$$setroot^%wd("radiology staff")
+ s root=$$SETROOT("radiology staff")
  F I=1:1:$L(XDATA,$C(13,10)) D
  . S RASTAFF=$P(XDATA,$C(13,10),I)
  . Q:($L(RASTAFF,"^")<2)
@@ -162,7 +165,7 @@ RADSTAFF() ;
  ;      0 = rebuild of "radiology residents" Graphstore failed
  ;      n = number of radiology residents filed
 RADRESDT() ;
- N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY,XDATA
+ N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY,XDATA,RADRES
  S CNTXT="MAG DICOM VISA"
  S RMPRC="MAG DICOM GET RAD PERSON"
  S (CONSOLE,CNTNOPEN)=0
@@ -174,7 +177,8 @@ RADRESDT() ;
  ;
  n si s si=$$CLRGRPHS("radiology residents")
  N I,gien,root,RARES s gien=0
- s root=$$setroot^%wd("radiology residents")
+ ;s root=$$setroot^%wd("radiology residents")
+ s root=$$SETROOT("radiology residents")
  F I=1:1:$L(XDATA,$C(13,10)) D
  . S RADRES=$P(XDATA,$C(13,10),I)
  . Q:($L(RADRES,"^")<2)
@@ -212,7 +216,8 @@ RADTECHS() ;
  ;
  n si s si=$$CLRGRPHS("radiology technologists")
  N I,gien,root,RATECH s gien=0
- s root=$$setroot^%wd("radiology technologists")
+ ;s root=$$setroot^%wd("radiology technologists")
+ s root=$$SETROOT("radiology technologists")
  F I=1:1:$L(XDATA,$C(13,10)) D
  . S RATECH=$P(XDATA,$C(13,10),I)
  . Q:($L(RATECH,"^")<2)
@@ -247,7 +252,8 @@ RADMODS() ;
  ;
  n si s si=$$CLRGRPHS("radiology modifiers")
  N I,gien,root,RAMOD,TypeOfImage s gien=0
- s root=$$setroot^%wd("radiology modifiers")
+ ;s root=$$setroot^%wd("radiology modifiers")
+ s root=$$SETROOT("radiology modifiers")
  F I=1:1:$L(XDATA,$C(13,10)) D
  . S RAMOD=$P(XDATA,$C(13,10),I)
  . Q:($L(RAMOD,"^")<3)
@@ -280,7 +286,7 @@ RADMODS() ;
  ;      0 = rebuild of "radiology dx codes" Graphstore failed
  ;      n = number of radiology dx codes filed
 RADDXCDS() ;
- N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY,XDATA
+ N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY,XDATA,RADXCD
  S CNTXT="MAG DICOM VISA"
  S RMPRC="MAG DICOM GET RAD DX CODE"
  S (CONSOLE,CNTNOPEN)=0
@@ -291,7 +297,8 @@ RADDXCDS() ;
  ;
  n si s si=$$CLRGRPHS("radiology diagnostic codes")
  N I,gien,root,RATECH s gien=0
- s root=$$setroot^%wd("radiology diagnostic codes")
+ ;s root=$$setroot^%wd("radiology diagnostic codes")
+ s root=$$SETROOT("radiology diagnostic codes")
  F I=1:1:$L(XDATA,$C(13,10)) D
  . S RADXCD=$P(XDATA,$C(13,10),I)
  . Q:($L(RADXCD,"^")<2)
@@ -319,9 +326,26 @@ RADDXCDS() ;
  ; Clear a Graphstore global of data
 CLRGRPHS(name) ;
  i '($l($g(name))) Q:$Q 0  Q
- n si s si=$O(^%wd(17.040801,"B",name,0))
- i $g(si) K ^%wd(17.040801,si) s ^%wd(17.040801,si,0)=name
- e  d purgegraph^%wd(name) s si=$O(^%wd(17.040801,"B",name,0))
+ n siglb s siglb="^%wd(17.040801,""B"","""_name_""",0)"
+ n si s si=$o(@siglb)
+ i $g(si) d
+ . s siglb="^%wd(17.040801,"_si_")"
+ . k @siglb
+ . s siglb="^%wd(17.040801,"_si_",0)"
+ . s @siglb=name
+ e  d
+ . s siglb="setroot^%wd("""_name_""")"
+ . d @siglb
+ . s siglb="^%wd(17.040801,""B"","""_name_""",0)"
+ . s si=$o(@siglb)
  Q:$Q $g(si)  Q
+ ;
+SETROOT(name) ;
+ n siglb s siglb="setroot^%wd("""_name_""")"
+ d @siglb
+ s siglb="^%wd(17.040801,""B"","""_name_""",0)"
+ n si s si=$o(@siglb)
+ n root s root="^%wd(17.040801,"_si_")"
+ q root
  ;
 EOR ; End of routine SAMIVSTR

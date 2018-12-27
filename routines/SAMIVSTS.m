@@ -1,4 +1,4 @@
-SAMIVSTS ;;ven/arc/lgc - M2M Broker to build TIU for VA-PALS ; 12/7/18 9:34am
+SAMIVSTS ;;ven/arc/lgc - M2M Broker to build TIU for VA-PALS ; 12/27/18 11:09am
  ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -113,9 +113,9 @@ ALLPTS1(SAMISS) ; Build ^KBAP("ALLPTS" global
 MKGPH Q:'$D(^KBAP("ALLPTS"))
  n si s si=$$CLRGRPS("patient-lookup")
  Q:'$G(si)
- n root s root=$$setroot^%wd("patient-lookup")
  N gien,NODE,PTDATA,root
- s root=$$setroot^%wd("patient-lookup")
+ ;s root=$$setroot^%wd("patient-lookup")
+ s root=$$SETROOT("patient-lookup")
  s gien=0
  N NODE S NODE=$NA(^KBAP("ALLPTS"))
  N SNODE S SNODE=$P(NODE,")")
@@ -169,7 +169,8 @@ RMDRS() ;
  I '$L(XDATA,$C(13,10)) Q:$Q 0  Q
  n si s si=$$CLRGRPS("reminders")
  I '$G(si) Q:$Q 0  Q
- n root s root=$$setroot^%wd("reminders")
+ ;n root s root=$$setroot^%wd("reminders")
+ n root s root=$$SETROOT("reminders")
  n gien s gien=0
  N I,RCNT,TYPE,IEN,NAME,PRNTNAME,RMDR
  S RCNT=0
@@ -215,7 +216,8 @@ PRVDRS() ;
  I '$L(XDATA,$C(13,10)) Q:$Q 0  Q
  n si s si=$$CLRGRPS("providers")
  I '$G(si) Q:$Q 0  Q
- n root s root=$$setroot^%wd("providers")
+ ;n root s root=$$setroot^%wd("providers")
+ n root s root=$$SETROOT("providers")
  n gien s gien=0
  N I,PCNT,PROVDUZ,NAME,PRVDR
  S PCNT=0
@@ -260,7 +262,8 @@ CLINICS() ;
  I '$L(XDATA,$C(13,10)) Q:$Q 0  Q
  n si s si=$$CLRGRPS("clinics")
  I '$G(si) Q:$Q 0  Q
- n root s root=$$setroot^%wd("clinics")
+ ;n root s root=$$setroot^%wd("clinics")
+ n root s root=$$SETROOT("clinics")
  n gien s gien=0
  N I,CCNT,CLINIEN,NAME,CNC
  S CCNT=0
@@ -302,7 +305,8 @@ HLTHFCT() ; Clear the M Web Server files cache
  I '$L(XDATA,$C(13,10)) Q:$Q 0  Q
  n si s si=$$CLRGRPS("health-factors")
  I '$G(si) Q:$Q 0  Q
- n root s root=$$setroot^%wd("health-factors")
+ ;n root s root=$$setroot^%wd("health-factors")
+ n root s root=$$SETROOT("health-factors")
  n gien s gien=0
  N I,HCNT,IEN,NAME,HFCT
  S HCNT=0
@@ -332,9 +336,26 @@ HLTHFCT() ; Clear the M Web Server files cache
  ;   ien (si) of the Graphstore in ^%wd(17.040801,
 CLRGRPS(name) ;
  I '$l($g(name)) Q:$Q 0  Q
- n si s si=$O(^%wd(17.040801,"B",name,0))
- i $g(si) K ^%wd(17.040801,si) s ^%wd(17.040801,si,0)=name
- e  d purgegraph^%wd(name)
+ n siglb s siglb="^%wd(17.040801,""B"","""_name_""",0)"
+ n si s si=$o(@siglb)
+ i $g(si) d
+ . s siglb="^%wd(17.040801,"_si_")"
+ . k @siglb
+ . s siglb="^%wd(17.040801,"_si_",0)"
+ . s @siglb=name
+ e  d
+ . s siglb="setroot^%wd("""_name_""")"
+ . d @siglb
+ . s siglb="^%wd(17.040801,""B"","""_name_""",0)"
+ . s si=$o(@siglb)
  Q:$Q $g(si)  Q
+ ;
+SETROOT(name) ;
+ n siglb s siglb="setroot^%wd("""_name_""")"
+ d @siglb
+ s siglb="^%wd(17.040801,""B"","""_name_""",0)"
+ n si s si=$o(@siglb)
+ n root s root="^%wd(17.040801,"_si_")"
+ q root
  ;
 EOR ; End of routine SAMIVSTS

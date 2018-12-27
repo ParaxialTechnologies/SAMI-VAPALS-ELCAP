@@ -1,4 +1,4 @@
-SAMIVSTB ;;ven/lgc - M2M Broker to for VA-PALS ; 12/26/18 12:57pm
+SAMIVSTB ;;ven/lgc - M2M Broker to for VA-PALS ; 12/27/18 11:28am
  ;;18.0;SAMI;;
  ;
  ; API's called by SAMIVSA only
@@ -82,7 +82,8 @@ VIT(dfn,sdate,edate) ;
  .. s pttemp=$p(str,"Data=Temp.",2)
  .. s pttemp=$p(str,"^",2,5)_"^"_vitdt
  i '$g(ptdfn),'(ptdfn=dfn) q:$Q 0  q
- n root s root=$$setroot^%wd("patient-lookup")
+ ;n root s root=$$setroot^%wd("patient-lookup")
+ n root s root=$$SETROOT("patient-lookup")
  s node=$na(@root@("dfn",ptdfn)),node=$q(@node)
  i '($p(node,",",4)[ptdfn) q:$Q 1  q
  s gien=+$p(node,",",5)
@@ -163,7 +164,8 @@ VPR(dfn) ;
  ;
  ; Now save data in "patient-lookup" Graph Store
  ;
-VPR1 s root=$$setroot^%wd("patient-lookup")
+VPR1 ;s root=$$setroot^%wd("patient-lookup")
+ s root=$$SETROOT("patient-lookup")
  s node=$na(@root@("dfn",dfn)),node=$q(@node)
  i '($p(node,",",4)[dfn) q:$Q 1  q
  S gien=+$p(node,",",5)
@@ -177,6 +179,12 @@ VPR1 s root=$$setroot^%wd("patient-lookup")
  s @root@(gien,"inpatient")=$g(inpt)
  q:$Q $g(gien)  q
  ;
- ;
+SETROOT(name) ;
+ n siglb s siglb="setroot^%wd("""_name_""")"
+ d @siglb
+ s siglb="^%wd(17.040801,""B"","""_name_""",0)"
+ n si s si=$o(@siglb)
+ n root s root="^%wd(17.040801,"_si_")"
+ q root
  ;
 EOR ; End of routine SAMIVSTB

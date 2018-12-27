@@ -1,4 +1,4 @@
-SAMIUTVB ;;ven/lgc - UNIT TEST for SAMIVSTA ; 12/26/18 1:32pm
+SAMIUTVB ;;ven/lgc - UNIT TEST for SAMIVSTA ; 12/27/18 11:31am
  ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -63,7 +63,8 @@ STARTUP ; Set up dfn and tiuien to use throughout testing
  s utdfn=$$GET^XPAR("SYS","SAMI SYSTEM TEST PATIENT DFN",,"Q")
  s (utsuccess,tiuien)=0
  ; Set up graphstore graph on test patient
- n root s root=$$setroot^%wd("vapals-patients")
+ ;n root s root=$$setroot^%wd("vapals-patients")
+ n root s root=$$SETROOT^SAMIVSTB("vapals-patients")
  k @root@("graph","XXX00001")
  n SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
  m @root@("graph","XXX00001")=SAMIUPOO
@@ -80,7 +81,8 @@ UTVIT ; @TEST - Pull Vitals on a patient
  ; Find entry in patient-lookup without a 'vitals node'
  ;  however the patient has vitals in 120.5
  N D,D0,DG,DI,DIC,DICR,DIG,DIH
- N root s root=$$setroot^%wd("patient-lookup")
+ ;N root s root=$$setroot^%wd("patient-lookup")
+ n root s root=$$SETROOT^SAMIVSTB("patient-lookup")
  N gien s gien=0
  N gnode,utdfn,utNeedsVitUpdate s utNeedsVitUpdate=0
  F  S gien=$O(@root@(gien)) Q:'gien  D  Q:utNeedsVitUpdate
@@ -101,7 +103,8 @@ UTVPR ; @TEST - Pull Virtual Patient Record (VPR) on a patient
  ; D VPR(dfn)
  ; Find entry in patient-lookup without an 'inpatient' node'
  N D,D0,DG,DI,DIC,DICR,DIG,DIH
- N root s root=$$setroot^%wd("patient-lookup")
+ ;N root s root=$$setroot^%wd("patient-lookup")
+ n root s root=$$SETROOT^SAMIVSTB("patient-lookup")
  N gien s gien=0
  N gnode,utdfn,utNeedsVPRUpdate s utNeedsVPRUpdate=0
  F  S gien=$O(@root@(gien)) Q:'gien  D  Q:utNeedsVPRUpdate

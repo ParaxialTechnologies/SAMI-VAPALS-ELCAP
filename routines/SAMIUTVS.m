@@ -1,4 +1,4 @@
-SAMIUTVS ;;ven/arc/lgc - UNIT TEST for SAMIVSTS ; 12/27/18 10:02am
+SAMIUTVS ;80R;;ven/arc/lgc - UNIT TEST for SAMIVSTS ; 12/27/18 12:45pm
  ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -91,7 +91,7 @@ UTMGPH ; @TEST - Test making 'patient-lookup' Graphstore
  n node,snode,root,gien,dfn,PtData
  ;
  ;s root=$$setroot^%wd("patient-lookup")
- s root=$$SETROOT^SAMIVSTS("patient-lookup")
+ s root=$$SETROOT^SAMIUTST("patient-lookup")
  ;
  S node=$NA(^KBAP("ALLPTS")),snode=$P(node,")")
  S utsuccess=1
@@ -131,7 +131,7 @@ UTAPTS ; @TEST - Test pulling patient data through broker
  N name2,sex2,dob2,last52,dfn2
  N node2,nodeG,gien
  ;n root s root=$$setroot^%wd("patient-lookup")
- n root s root=$$SETROOT^SAMIVSTS("patient-lookup")
+ n root s root=$$SETROOT^SAMIUTST("patient-lookup")
  S utsuccess=1
  S dfn2=0
  f  s dfn2=$O(^DPT(dfn2)) Q:'dfn2  D  Q:'utsuccess
@@ -157,7 +157,7 @@ UTAPTS ; @TEST - Test pulling patient data through broker
 UTPRVDS ; @TEST - Pulling Providers through the broker
  K ^KBAP("UNIT TEST PROVIDERS")
  ;n root s root=$$setroot^%wd("providers")
- n root s root=$$SETROOT^SAMIVSTS("providers")
+ n root s root=$$SETROOT^SAMIUTST("providers")
  m ^KBAP("UNIT TEST PROVIDERS")=@root
  S utsuccess=1
  N SAMIpvds
@@ -180,7 +180,7 @@ UTPRVDS ; @TEST - Pulling Providers through the broker
 UTRMDRS ; @TEST - Pulling Reminders through the broker
  K ^KBAP("UNIT TEST REMINDERS")
  ;n root s root=$$setroot^%wd("reminders")
- n root s root=$$SETROOT^SAMIVSTS("reminders")
+ n root s root=$$SETROOT^SAMIUTST("reminders")
  m ^KBAP("UNIT TEST REMINDERS")=@root
  S utsuccess=1
  N SAMIreminders
@@ -209,7 +209,7 @@ UTRMDRS ; @TEST - Pulling Reminders through the broker
 UTCLNC ; @TEST - Pulling Clinics through the broker
  K ^KBAP("UNIT TEST CLINICS")
  ;n root s root=$$setroot^%wd("clinics")
- n root s root=$$SETROOT^SAMIVSTS("clinics")
+ n root s root=$$SETROOT^SAMIUTST("clinics")
  m ^KBAP("UNIT TEST CLINICS")=@root
  S utsuccess=1
  N SAMIclnc
@@ -232,7 +232,7 @@ UTCLNC ; @TEST - Pulling Clinics through the broker
 UTHF ; @TEST - Pulling Health Factors through the broker
  K ^KBAP("UNIT TEST HEALTH FACTORS")
  ;n root s root=$$setroot^%wd("health-factors")
- n root s root=$$SETROOT^SAMIVSTS("health-factors")
+ n root s root=$$SETROOT^SAMIUTST("health-factors")
  m ^KBAP("UNIT TEST HEALTH FACTORS")=@root
  S utsuccess=1
  N SAMIhf
@@ -253,7 +253,7 @@ UTHF ; @TEST - Pulling Health Factors through the broker
  ;
 UTCLRG ; @TEST - Clear a Graphstore of entries
  ;n root s root=$$setroot^%wd("providers")
- n root s root=$$SETROOT^SAMIVSTS("providers")
+ n root s root=$$SETROOT^SAMIUTST("providers")
  K ^KBAP("UNIT TEST CLRGRPH") M ^KBAP("UNIT TEST CLRGRPH")=@root
  n cnt s cnt=$O(@root@("A"),-1)
  I 'cnt D  Q

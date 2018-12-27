@@ -1,4 +1,4 @@
-SAMIUTST ;ven/lgc - Unit Test Utilities ; 12/18/18 10:53am
+SAMIUTST ;ven/lgc - Unit Test Utilities ; 12/27/18 12:41pm
  ;;18.0;SAMI;;
  ;
  ; Routine to push and pull information used during unit testing
@@ -164,6 +164,14 @@ UTSTGS ; @TEST - Save array to vapals unit tests graphstore
  . i '(@nodea=@nodep) s utsuccess=0
  i 'nodep="" s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing saving/pulling from vapals unit test graphstore FAILED!")
+ ;
+SETROOT(name) ;
+ n siglb s siglb="setroot^%wd("""_name_""")"
+ d @siglb
+ s siglb="^%wd(17.040801,""B"","""_name_""",0)"
+ n si s si=$o(@siglb)
+ n root s root="^%wd(17.040801,"_si_")"
+ q root
  ;
 RTNS ;
  ;;SAMIM2M

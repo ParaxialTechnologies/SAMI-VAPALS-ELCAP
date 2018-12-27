@@ -1,4 +1,4 @@
-SAMIVSTS ;;ven/arc/lgc - M2M Broker to build TIU for VA-PALS ; 12/27/18 11:09am
+SAMIVSTS ;;ven/arc/lgc - M2M Broker to build TIU for VA-PALS ; 12/27/18 12:52pm
  ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -115,7 +115,7 @@ MKGPH Q:'$D(^KBAP("ALLPTS"))
  Q:'$G(si)
  N gien,NODE,PTDATA,root
  ;s root=$$setroot^%wd("patient-lookup")
- s root=$$SETROOT("patient-lookup")
+ s root=$$SETROOT^SAMIUTST("patient-lookup")
  s gien=0
  N NODE S NODE=$NA(^KBAP("ALLPTS"))
  N SNODE S SNODE=$P(NODE,")")
@@ -170,7 +170,7 @@ RMDRS() ;
  n si s si=$$CLRGRPS("reminders")
  I '$G(si) Q:$Q 0  Q
  ;n root s root=$$setroot^%wd("reminders")
- n root s root=$$SETROOT("reminders")
+ n root s root=$$SETROOT^SAMIUTST("reminders")
  n gien s gien=0
  N I,RCNT,TYPE,IEN,NAME,PRNTNAME,RMDR
  S RCNT=0
@@ -217,7 +217,7 @@ PRVDRS() ;
  n si s si=$$CLRGRPS("providers")
  I '$G(si) Q:$Q 0  Q
  ;n root s root=$$setroot^%wd("providers")
- n root s root=$$SETROOT("providers")
+ n root s root=$$SETROOT^SAMIUTST("providers")
  n gien s gien=0
  N I,PCNT,PROVDUZ,NAME,PRVDR
  S PCNT=0
@@ -263,7 +263,7 @@ CLINICS() ;
  n si s si=$$CLRGRPS("clinics")
  I '$G(si) Q:$Q 0  Q
  ;n root s root=$$setroot^%wd("clinics")
- n root s root=$$SETROOT("clinics")
+ n root s root=$$SETROOT^SAMIUTST("clinics")
  n gien s gien=0
  N I,CCNT,CLINIEN,NAME,CNC
  S CCNT=0
@@ -306,7 +306,7 @@ HLTHFCT() ; Clear the M Web Server files cache
  n si s si=$$CLRGRPS("health-factors")
  I '$G(si) Q:$Q 0  Q
  ;n root s root=$$setroot^%wd("health-factors")
- n root s root=$$SETROOT("health-factors")
+ n root s root=$$SETROOT^SAMIUTST("health-factors")
  n gien s gien=0
  N I,HCNT,IEN,NAME,HFCT
  S HCNT=0
@@ -349,13 +349,5 @@ CLRGRPS(name) ;
  . s siglb="^%wd(17.040801,""B"","""_name_""",0)"
  . s si=$o(@siglb)
  Q:$Q $g(si)  Q
- ;
-SETROOT(name) ;
- n siglb s siglb="setroot^%wd("""_name_""")"
- d @siglb
- s siglb="^%wd(17.040801,""B"","""_name_""",0)"
- n si s si=$o(@siglb)
- n root s root="^%wd(17.040801,"_si_")"
- q root
  ;
 EOR ; End of routine SAMIVSTS

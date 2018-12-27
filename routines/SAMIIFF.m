@@ -1,4 +1,4 @@
-SAMIIFF ;ven/arc - Build a graph of the intake form fields ; 2018-11-21T22:00Z
+SAMIIFF ;ven/arc - Build a graph of the intake form fields ; 12/27/18 12:11pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -30,7 +30,8 @@ BLDGRPH ; Build a graph of the intake form fields
  DO purgegraph^%wd("siform-fields")
  DO addgraph^%wd("siform-fields")
  ;
- NEW ROOT SET ROOT=$$setroot^%wd("siform-fields")
+ ;NEW ROOT SET ROOT=$$setroot^%wd("siform-fields")
+ NEW ROOT S ROOT=$$SETROOT("siform-fields")
  ;
  SET @ROOT@("field",1,"label")=""
  SET @ROOT@("field",1,"name")="viewport"
@@ -181,7 +182,14 @@ BLDGRPH ; Build a graph of the intake form fields
  SET @ROOT@("field",68,"label")="Reason for change - Explanation"
  SET @ROOT@("field",68,"name")="sistreas"
  ;
- QUIT ; End of BLDGRPH
+ QUIT  ; End of BLDGRPH
  ;
+SETROOT(name) ;
+ n siglb s siglb="setroot^%wd("""_name_""")"
+ d @siglb
+ s siglb="^%wd(17.040801,""B"","""_name_""",0)"
+ n si s si=$o(@siglb)
+ n root s root="^%wd(17.040801,"_si_")"
+ q root
  ;
 EOR ; End of routine SAMIIFF

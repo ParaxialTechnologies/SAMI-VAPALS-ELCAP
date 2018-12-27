@@ -1,4 +1,4 @@
-SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 12/27/18 11:52am
+SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 12/27/18 12:48pm
  ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -98,7 +98,7 @@ TASKIT ;
  i '$l($g(si)) q:$Q 0  q
  ;
  ;s root=$$setroot^%wd("vapals-patients")
- s root=$$SETROOT("vapals-patients")
+ s root=$$SETROOT^SAMIUTST("vapals-patients")
  ; e.g. root = ^%wd(17.040801,23)
  ;
  s samikey=$g(filter("form"))
@@ -307,7 +307,7 @@ ADDSGNRS(filter) ;
  q:'$l($g(si))
  ;
  ;s root=$$setroot^%wd("vapals-patients")
- s root=$$SETROOT("vapals-patients")
+ s root=$$SETROOT^SAMIUTST("vapals-patients")
  ; e.g. root = ^%wd(17.040801,23)
  ;
  s samikey=$g(filter("form"))
@@ -449,7 +449,7 @@ PTINFO(dfn) ;
  d M2M^SAMIM2M(.SAMIUXD,cntxt,rmprc,console,cntnopen,.SAMIUARR)
  ; Update patient-lookup entry for this patient
  ;n root s root=$$setroot^%wd("patient-lookup")
- n root s root=$$SETROOT("patient-lookup")
+ n root s root=$$SETROOT^SAMIUTST("patient-lookup")
  n name,node,gien
  i '(dfn=$p(SAMIUXD,"^",1)) q:$Q rslt  q
  s rslt="1^"_dfn
@@ -488,7 +488,7 @@ PTINFO(dfn) ;
  . n UrbanRural s UrbanRural=$$URBRUR^SAMIVSTA($p(SAMIUXD,"^",14))
  . s @root@(gien,"samiru")=UrbanRural
  .; s root=$$setroot^%wd("vapals-patients")
- . s root=$$SETROOT("vapals-patients")
+ . s root=$$SETROOT^SAMIUTST("vapals-patients")
  . s gien=$o(@root@("dfn",dfn,0))
  . s:gien @root@(gien,"samiru")=UrbanRural
  q:$Q rslt  q
@@ -523,7 +523,7 @@ PTSSN(dfn) ;
  s ssn="1^"_$p(SAMIUXD,"^")
  ;
 PTSSN1 ;n root s root=$$setroot^%wd("patient-lookup")
- n root s root=$$SETROOT("patient-lookup")
+ n root s root=$$SETROOT^SAMIUTST("patient-lookup")
  n name,node,gien
  s name=$p(SAMIUXD,"^",8)
  n node s node=$na(@root@("name",name))
@@ -602,7 +602,7 @@ URBRUR(zipcode) ;
  I $g(zipcode)<1 Q 0
  n root
  ;s root=$$setroot^%wd("NCHS Urban-Rural")
- s root=$$SETROOT("NCHS Urban-Rural")
+ s root=$$SETROOT^SAMIUTST("NCHS Urban-Rural")
  q:'$D(@root@("zip",+zipcode)) 0
  n samiru,ruca30
  s ruca30=$$GET^XPAR("SYS","SAMI URBAN/RURAL INDEX VALUE",,"Q")
@@ -628,13 +628,5 @@ KASAVE(provider,tiuien) ;
  q:'$D(^TIU(8925,tiuien)) 0
  k ^TIU(8925,"ASAVE",provider,tiuien)
  q 1
- ;
-SETROOT(name) ;
- n siglb s siglb="setroot^%wd("""_name_""")"
- d @siglb
- s siglb="^%wd(17.040801,""B"","""_name_""",0)"
- n si s si=$o(@siglb)
- n root s root="^%wd(17.040801,"_si_")"
- q root
  ;
 EOR ; End of routine SAMIVSTA

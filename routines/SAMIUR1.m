@@ -1,4 +1,4 @@
-SAMIUR1 ;ven/gpl - sami user reports ; 12/10/18 11:37am
+SAMIUR1 ;ven/gpl - sami user reports ; 12/27/18 2:00pm
  ;;18.0;SAM;;
  ;
  ; SAMIUR contains the routines to generate user reports
@@ -17,11 +17,11 @@ WSREPORT(rtn,filter) ; generate a report based on parameters in the filter
  ;  6. enrollment
  ; the report to generate is passed in parameter samireporttype
  ;
- s debug=0
+ n debug s debug=0
  i $g(filter("debug"))=1 s debug=1
  ;
  k return
- s HTTPRSP("mime")="text/html"
+ n HTTPRSP s HTTPRSP("mime")="text/html"
  ;
  n type,temp
  s type=$g(filter("samireporttype"))
@@ -78,7 +78,7 @@ WSREPORT(rtn,filter) ; generate a report based on parameters in the filter
  . . s rtn(cnt)="<td>"_nuhref_"</td>"
  . . n ssn s ssn=$$GETSSN^SAMIFRM2(sid)
  . . i ssn="" d  ;
- . . . n hdr
+ . . . n hdf
  . . . s hdf=$$GETHDR^SAMIFRM2(sid)
  . . . s ssn=$$GETSSN^SAMIFRM2(sid)
  . . s cnt=cnt+1

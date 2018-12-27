@@ -1,4 +1,4 @@
-SAMISAV ;ven/gpl - SAMI save routines ; 12/11/18 9:10am
+SAMISAV ;ven/gpl - SAMI save routines ; 12/27/18 3:44pm
  ;;18.0;SAM;;
  ;
  ; 
@@ -32,7 +32,7 @@ SAVFILTR(sid,form,vars) ; extrinsic which returns the form key to use
  . . m ^SAMIGPL("samisav","vals")=vars
  . . m @root@("graph",sid,moveto)=@root@("graph",sid,form)
  . . k @root@("graph",sid,form)
- . . s useform=moveto 
+ . . s useform=moveto
  if type="siform" d  ; intake form
  . s vars("samifirsttime")="false"
  . n formdate s formdate=$g(vars("sidc")) ; date of the CT scan from the form
@@ -50,6 +50,6 @@ SAVFILTR(sid,form,vars) ; extrinsic which returns the form key to use
  . . s ^SAMIGPL("samisav","conclusion")="graph must be moved to: "_moveto
  . . m @root@("graph",sid,moveto)=@root@("graph",sid,form)
  . . k @root@("graph",sid,form)
- . . s useform=moveto 
+ . . s useform=moveto
  q useform
  ;

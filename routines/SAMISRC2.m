@@ -1,4 +1,4 @@
-SAMISRC2 ;ven/gpl - ielcap: home page search ; 12/11/18 9:06am
+SAMISRC2 ;ven/gpl - ielcap: home page search ; 12/27/18 3:38pm
  ;;18.0;SAM;;
  ;
  ; SAMISRCH contains subroutines for searching for patients on the
@@ -127,4 +127,4 @@ WSLOOKUP(ARGS,BODY,RESULT) ; look up ELCAP patient
  ;
  ;
  ;
-eor ; end of routine SAMISRCH
+EOR ; end of routine SAMISRCH

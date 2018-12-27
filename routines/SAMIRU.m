@@ -1,4 +1,4 @@
-SAMIRU ;ven/gpl - sami user reports ; 12/10/18 9:53am
+SAMIRU ;ven/gpl - sami user reports ; 12/27/18 3:47pm
  ;;18.0;SAM;;
  ;
  ; SAMIRU contains the routines to handle rural/urban status
@@ -39,7 +39,7 @@ WSGETRU(rtn,filter) ; web service to return counts for rural and urban
  . q:siform=""
  . i $g(@gr@(siform,"sirs"))="u" s urban=urban+1
  . i $g(@gr@(siform,"sirs"))="r" s rural=rural+1
- . i $g(@gr@(siform,"sirs"))="n" s unknown=unknown+1 
+ . i $g(@gr@(siform,"sirs"))="n" s unknown=unknown+1
  n rslt
  s rslt("result","urban")=urban
  s rslt("result","rural")=rural

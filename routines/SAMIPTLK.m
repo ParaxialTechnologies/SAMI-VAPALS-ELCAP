@@ -1,4 +1,4 @@
-SAMIPTLK ; GPL - SAMI patient lookup routines ; 12/10/18 9:16am
+SAMIPTLK ; GPL - SAMI patient lookup routines ; 12/27/18 3:53pm
  ;;0.1;SAMI;nopatch;noreleasedate;Build 10
  ;
  ; Authored by George P. Lilly 2018
@@ -38,7 +38,7 @@ WSPTLKUP(rtn,filter) ; patient lookup from patient-lookup cache
  n have s have=""
  n q1 s q1=$na(@gn@(p1))
  n q1x s q1x=$e(q1,1,$l(q1)-2) ; removes the ")
- s qx=q1
+ n qx s qx=q1
  f  s qx=$q(@qx) q:$p(qx,q1x,2)=""  q:cnt=limit  d  ;
  . s cnt=cnt+1
  . n exit s exit=0

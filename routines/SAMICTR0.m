@@ -1,4 +1,4 @@
-SAMICTR0 ;ven/gpl - ielcap: forms ; 12/28/18 11:36am
+SAMICTR0 ;ven/gpl - ielcap: forms ; 12/28/18 12:37pm
  ;;18.0;SAMI;;
  ;
  ;
@@ -49,7 +49,7 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  s sectionheader=1
  ;;s dummy="******"
  s cac=""
- s cacrec=""
+ n cacrec s cacrec=""
  ;;s tex=0
  s para="<p>"
  ;;s legout=0
@@ -58,13 +58,13 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  n lang s lang=""
  n langread s langread=0
  ;
- s auth("perm")="a"
+ n auth s auth("perm")="a"
  s auth("inst")=$g(filter("auth"))
  ;
  n newct s newct=0
  i $$XVAL("ceoppa",vals)'="" s newct=1
  ;
- s registryForm=0
+ n registryForm s registryForm=0
  i $$XVAL("ceaf",vals)'="" s registryForm=1
  ;
  d OUT("<HTML>")

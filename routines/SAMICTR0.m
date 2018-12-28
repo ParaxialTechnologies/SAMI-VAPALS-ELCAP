@@ -1,4 +1,4 @@
-SAMICTR0 ;ven/gpl - ielcap: forms ; 12/10/18 11:26am
+SAMICTR0 ;ven/gpl - ielcap: forms ; 12/28/18 11:36am
  ;;18.0;SAMI;;
  ;
  ;
@@ -53,15 +53,15 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  ;;s tex=0
  s para="<p>"
  ;;s legout=0
- s qheader=0
+ n qheader s qheader=0
  ;
- s lang=""
- s langread=0
+ n lang s lang=""
+ n langread s langread=0
  ;
  s auth("perm")="a"
  s auth("inst")=$g(filter("auth"))
  ;
- s newct=0
+ n newct s newct=0
  i $$XVAL("ceoppa",vals)'="" s newct=1
  ;
  s registryForm=0
@@ -158,7 +158,7 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  . n nvadbo s nvadbo=1
  . n ii
  . f ii="ceoaa","ceaga","ceasa","ceala","ceapa","ceaaa","ceaka" d  ;
- . . i $$XVAL(ii,vals)="e" set nvabdo=0
+ . . i $$XVAL(ii,vals)="e" set nvadbo=0
  . ;
  . i nvadbo=1 d  ;
  . . d OUT("Upper abdominal images were not acquired on the current scan due to its limited nature.")
@@ -200,7 +200,7 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  ;
  q
  ;
-OUT(ln) 
+OUT(ln) ;
  s cnt=cnt+1
  n lnn
  ;s debug=1
@@ -213,7 +213,7 @@ OUT(ln)
  . s @rtn@(lnn)=zp_":"_ln
  q
  ;
-HOUT(ln) 
+HOUT(ln) ;
  d OUT("<p><span class='sectionhead'>"_ln_"</span>")
  q
  ;
@@ -244,7 +244,7 @@ GETFILTR(filter,sid) ; fill in the filter for Ct Eval for sid
  d GETITEMS^SAMICAS2("items",sid)
  s zform=$o(items("ceform"))
  s filter("form")=zform
- zwr filter
+ ;zwr filter
  q
 T1(grtn,debug) ; 
  n filter
@@ -252,6 +252,6 @@ T1(grtn,debug) ;
  n sid s sid="XXX00484"
  d GETFILTR(.filter,sid)
  i $g(debug)=1 s filter("debug")=1
- d wsReport^SAMICTR0(.grtn,.filter)
+ d WSREPORT^SAMICTR0(.grtn,.filter)
  q
  ;

@@ -1,4 +1,4 @@
-SAMICTRX ;ven/gpl - ielcap: forms ; 12/7/18 8:30pm
+SAMICTRX ;ven/gpl - ielcap: forms ; 12/28/18 9:16am
  ;;18.0;SAMI;;
  ;
  ;
@@ -6,7 +6,7 @@ SAMICTRX ;ven/gpl - ielcap: forms ; 12/7/18 8:30pm
  ;
  ;NAME HERE
  ;
-OUT(ln) 
+OUT(ln) ;
  s cnt=cnt+1
  n lnn
  ;s debug=1
@@ -19,7 +19,7 @@ OUT(ln)
  . s @rtn@(lnn)=zp_":"_ln
  q
  ;
-HOUT(ln) 
+HOUT(ln) ;
  d OUT("<p><span class='sectionhead'>"_ln_"</span>")
  q
  ;

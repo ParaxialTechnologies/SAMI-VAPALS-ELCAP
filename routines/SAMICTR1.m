@@ -1,10 +1,10 @@
-SAMICTR1 ;ven/gpl - ielcap: forms ; 12/7/18 1:18pm
+SAMICTR1 ;ven/gpl - ielcap: forms ; 12/28/18 10:54am
  ;;18.0;SAMI;;
  ;
  ;
  quit  ; no entry from top
  ;
-NODULES(rtn,vals,dict) 
+NODULES(rtn,vals,dict) ;
  ;
  ;
  ;# Report on Nodules
@@ -61,12 +61,12 @@ NODULES(rtn,vals,dict)
  . n skip s skip=0
  . ;# 3 cases: parenchymal, endobronchial, and both
  . ;
- . n en,nloc,endo,ll
+ . n en,loc,nloc,endo,ll
  . s en=$$XVAL("cect"_ii_"en",vals)
  . s ll=$$XVAL("cect"_ii_"ll",vals)
  . i ($l(en)<2)!(en="no")!(en="") d  ;
  . . ;# 1) parenchymal only
- . . s X=ll
+ . . n X,Y s X=ll
  . . X ^%ZOSF("UPPERCASE")
  . . s loc=Y
  . . s nloc=Y
@@ -107,6 +107,7 @@ NODULES(rtn,vals,dict)
  . . . . s skip=1
  . . . i skip=0 d  ; "default"
  . . . . s endo="Nodule"
+ . . . . n X,Y
  . . . . s X=$$XVAL("cect"_ii_"en",vals)
  . . . . X ^%ZOSF("UPPERCASE")
  . . . . s nloc=Y
@@ -121,6 +122,7 @@ NODULES(rtn,vals,dict)
  . . e  d  ;
  . . . s endo="Nodule"
  . . . s loc=$$XSUB("cectll",vals,dict,"cect"_ii_"ll")
+ . . . n X,Y
  . . . s X=$$XVAL("cect"_ii_"en",vals)
  . . . X ^%ZOSF("UPPERCASE")
  . . . s nloc=Y
@@ -170,7 +172,7 @@ NODULES(rtn,vals,dict)
  ;
  q
  ;
-OUT(ln) 
+OUT(ln) ;
  s cnt=cnt+1
  n lnn
  ;s debug=1
@@ -183,7 +185,7 @@ OUT(ln)
  . s @rtn@(lnn)=zp_":"_ln
  q
  ;
-HOUT(ln) 
+HOUT(ln) ;
  d OUT("<p><span class='sectionhead'>"_ln_"</span>")
  q
  ;

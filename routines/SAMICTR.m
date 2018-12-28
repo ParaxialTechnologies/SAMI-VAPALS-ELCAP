@@ -1,4 +1,4 @@
-SAMICTR ;ven/gpl - ielcap: forms ; 12/27/18 5:19pm
+SAMICTR ;ven/gpl - ielcap: forms ; 12/28/18 11:37am
  ;;18.0;SAMI;;
  ;
  ;
@@ -12,7 +12,7 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  ;s rtn=$na(^TMP("SAMICTR",$J))
  n rtn s rtn="return"
  k @rtn
- n HTTPRSP s HTTPRSP("mime")="text/html"
+ s HTTPRSP("mime")="text/html"
  ;
  n cnt s cnt=0 ; line number
  ;

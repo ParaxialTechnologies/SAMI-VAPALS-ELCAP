@@ -1,10 +1,10 @@
-SAMICTRA ;ven/gpl - ielcap: forms ; 12/7/18 1:42pm
+SAMICTRA ;ven/gpl - ielcap: forms ; 12/28/18 9:43am
  ;;18.0;SAMI;;
  ;
  ;
  quit  ; no entry from top
  ;
-RCMND(rtn,vals,dict) 
+RCMND(rtn,vals,dict) ;
  ; repgen14
  ;
  ;
@@ -66,6 +66,7 @@ RCMND(rtn,vals,dict)
  ;s lrstyle=0
  ;
  d  ;
+ . n lradModifiers
  . s lradModifiers=$$XVAL("celradc",vals)_$$XVAL("celrads",vals)
  . ;
  . i ($$XVAL("celrad",vals)'="-")&($$XVAL("celrad",vals)'="") d  ;
@@ -93,7 +94,7 @@ RCMND(rtn,vals,dict)
  q
  ;
  ;
-OUT(ln) 
+OUT(ln) ;
  s cnt=cnt+1
  n lnn
  ;s debug=1
@@ -107,7 +108,7 @@ OUT(ln)
  . s @rtn@(lnn)=zp_":"_ln
  q
  ;
-HOUT(ln) 
+HOUT(ln) ;
  d OUT("<p><span class='sectionhead'>"_ln_"</span>")
  q
  ;

@@ -1,10 +1,10 @@
-SAMICTR9 ;ven/gpl - ielcap: forms ; 12/7/18 1:33pm
+SAMICTR9 ;ven/gpl - ielcap: forms ; 12/28/18 10:26am
  ;;18.0;SAMI;;
  ;
  ;
  quit  ; no entry from top
  ;
-IMPRSN(rtn,vals,dict) 
+IMPRSN(rtn,vals,dict) ;
  ; repgen13
  ;
  ;
@@ -36,7 +36,7 @@ IMPRSN(rtn,vals,dict)
  q
  ;
  ;
-OUT(ln) 
+OUT(ln) ;
  s cnt=cnt+1
  n lnn
  ;s debug=1
@@ -49,7 +49,7 @@ OUT(ln)
  . s @rtn@(lnn)=zp_":"_ln
  q
  ;
-HOUT(ln) 
+HOUT(ln) ;
  d OUT("<p><span class='sectionhead'>"_ln_"</span>")
  q
  ;

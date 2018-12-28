@@ -1,4 +1,4 @@
-SAMINOTI ;ven/gpl - ielcap: forms ; 12/27/18 3:56pm
+SAMINOTI ;ven/gpl - ielcap: forms ; 12/28/18 11:37am
  ;;18.0;SAMI;;
  ;
  ;
@@ -10,7 +10,7 @@ WSNOTE(return,filter) ; web service which returns a text note
  i $g(filter("debug"))=1 s debug=1
  ;
  k return
- n HTTPRSP s HTTPRSP("mime")="text/html"
+ s HTTPRSP("mime")="text/html"
  ;
  n si
  s si=$g(filter("studyid"))

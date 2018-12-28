@@ -27,3 +27,5 @@ Resources
 1. [OSEHRA Jira Project](https://issues.osehra.org/secure/RapidBoard.jspa?projectKey=VAP) - This project uses Jira to manage sprints and track defects. If you see something, say something!
 1. [OSEHRA Project Page](https://www.osehra.org/groups/va-pals-open-source-project-group) - Keep track of our progress, read blog posts and subscribe to events.
 
+
+---

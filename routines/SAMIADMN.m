@@ -1,4 +1,4 @@
-SAMIADMN ; VEN/ARC - IELCAP: Admin tools ; 12/10/18 11:13am
+SAMIADMN ; VEN/ARC - IELCAP: Admin tools ; 12/27/18 4:38pm
  ;;1.0;SAMI;;
  ;
  ; Primary development:
@@ -10,7 +10,7 @@ SAMIADMN ; VEN/ARC - IELCAP: Admin tools ; 12/10/18 11:13am
  ; Create entry point to clear M Web Server files cache
  ;
  ;
- quit ; No entry from top
+ quit  ; No entry from top
  ;
  ;
 CLRWEB ; Clear the M Web Server files cache
@@ -35,7 +35,8 @@ SETELCAP() ; set VA-PALS to use the ELCAP version of the Ct Evaluation form
  N ZERR
  D UPDATE^DIE("","FDA","","ZERR")
  I $D(ZERR) D  Q  ;
- . ZWR ZERR
+ .; ZWR ZERR
+ . D ^ZTER
  Q
  ;
 SETLGRDS() ; set VA-PALS to use the LungRads version of the Ct Evaluation form
@@ -50,7 +51,8 @@ SETLGRDS() ; set VA-PALS to use the LungRads version of the Ct Evaluation form
  N ZERR
  D UPDATE^DIE("","FDA","","ZERR")
  I $D(ZERR) D  Q  ;
- . ZWR ZERR
+ .; ZWR ZERR
+ . D ^ZTER
  Q
  ;
 WSSTELCP(rtn,filter) ; set VA-PALS to use the ELCAP version of the Ct Evaluation form

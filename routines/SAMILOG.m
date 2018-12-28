@@ -1,4 +1,4 @@
-SAMILOG ;ven/lgc - APIs to toggle password identification ; 12/7/18 9:04am
+SAMILOG ;ven/lgc - APIs to toggle password identification ; 12/27/18 4:27pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -46,7 +46,7 @@ STONOFF ;
  ;
  W !
  ; check if running unit test on this routine
- i '$d(%ut) d
+ n forxindex s forxindex="%ut" i '$d(@forxindex) d
  . S %=2 D YN^DICN i '(%=1) q
  e  s %=1
  ;

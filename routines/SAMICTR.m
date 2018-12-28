@@ -1,4 +1,4 @@
-SAMICTR ;ven/gpl - ielcap: forms ; 12/10/18 10:59am
+SAMICTR ;ven/gpl - ielcap: forms ; 12/27/18 5:19pm
  ;;18.0;SAMI;;
  ;
  ;
@@ -6,13 +6,13 @@ SAMICTR ;ven/gpl - ielcap: forms ; 12/10/18 10:59am
  ;
 WSREPORT(return,filter) ; web service which returns an html cteval report
  ;
- s debug=0
+ n debug s debug=0
  i $g(filter("debug"))=1 s debug=1
  ;
  ;s rtn=$na(^TMP("SAMICTR",$J))
- s rtn="return"
+ n rtn s rtn="return"
  k @rtn
- s HTTPRSP("mime")="text/html"
+ n HTTPRSP s HTTPRSP("mime")="text/html"
  ;
  n cnt s cnt=0 ; line number
  ;
@@ -42,7 +42,7 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  ;
  ; report parameters
  ;
- n nt,sectionheader,dummy,cac,tex,para,legout,lang,lanread
+ n nt,sectionheader,dummy,cac,tex,para,legout,lang,langread
  ;
  s nt=1
  s sectionheader=1
@@ -51,18 +51,19 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  s tex=0
  s para="<p>"
  s legout=0
- s qheader=1
+ n qheader s qheader=1
  ;
  s lang=""
  s langread=0
  ;
+ n auth
  s auth("perm")="a"
  s auth("inst")=$g(filter("auth"))
  ;
- s newct=0
+ n newct s newct=0
  i $$XVAL("ceoppa",vals)'="" s newct=1
  ;
- s registryForm=0
+ n registryForm s registryForm=0
  i $$XVAL("ceaf",vals)'="" s registryForm=1
  ;
  d OUT("<HTML><HEAD>")
@@ -147,7 +148,7 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  . n nvadbo s nvadbo=1
  . n ii
  . f ii="ceoaa","ceaga","ceasa","ceala","ceapa","ceaaa","ceaka" d  ;
- . . i $$XVAL(ii,vals)="e" set nvabdo=0
+ . . i $$XVAL(ii,vals)="e" set nvadbo=0
  . ;
  . i nvadbo=1 d  ;
  . . d OUT("Upper abdominal images were not acquired on the current scan due to its limited nature.")
@@ -208,12 +209,12 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  . n skip s skip=0
  . ;# 3 cases: parenchymal, endobronchial, and both
  . ;
- . n en,nloc,endo,ll
+ . n en,nloc,endo,ll,loc
  . s en=$$XVAL("cect"_ii_"en",vals)
  . s ll=$$XVAL("cect"_ii_"ll",vals)
  . i ($l(en)<2)!(en="no")!(en="") d  ;
  . . ;# 1) parenchymal only
- . . s X=ll
+ . . n X,Y s X=ll
  . . X ^%ZOSF("UPPERCASE")
  . . s loc=Y
  . . s nloc=Y
@@ -254,7 +255,7 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  . . . . s skip=1
  . . . i skip=0 d  ; "default"
  . . . . s endo="Nodule"
- . . . . s X=$$XVAL("cect"_ii_"en",vals)
+ . . . . n X,Y s X=$$XVAL("cect"_ii_"en",vals)
  . . . . X ^%ZOSF("UPPERCASE")
  . . . . s nloc=Y
  . . . . i specialcase=1 d  ;
@@ -267,7 +268,7 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  . . e  d  ;
  . . . s endo="Nodule"
  . . . s loc=$$XSUB("cectll",vals,dict,"cect"_ii_"ll")
- . . . s X=$$XVAL("cect"_ii_"en",vals)
+ . . . n X,Y s X=$$XVAL("cect"_ii_"en",vals)
  . . . X ^%ZOSF("UPPERCASE")
  . . . s nloc=Y
  . . . i specialcase=1 d  ;

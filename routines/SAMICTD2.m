@@ -1,4 +1,4 @@
-SAMICTD2 ;ven/gpl - ielcap: forms ; 12/10/18 10:58am
+SAMICTD2 ;ven/gpl - ielcap: forms ; 12/27/18 4:52pm
  ;;18.0;SAMI;;
  ;
  ;
@@ -116,7 +116,7 @@ INIT(g) ;
  set @g@("cectpd","ca")="Carcinoid(atypical)"
  set @g@("cectpd","be")="Benign"
  set @g@("cectpd","bs")="Benign specific"
- 
+ ;
  set @g@("cectac","f")="Follow-up CT"
  set @g@("cectac","a")="Antibiotic treatment with a follow-up CT"
  set @g@("cectac","e")="PET"
@@ -284,9 +284,11 @@ INIT(g) ;
  set @g@("note_imp")="Note: If LIMITED diagnostic scans are done to follow nodules, each one-year diagnostic scan which serves as the annual screening test MUST BE A FULL DIAGNOSTIC SCAN."
  ;
  ;# Study Complete Notice
- set @g@("study_complete")="You have completed the free screening provided by the New York Early Lung Cancer Action Program.  Further screening outside of this project is at the discretion of you and your physician.  Please call if you have any questions or concerns."
+ set @g@("study_complete")="You have completed the free screening provided by the New York Early Lung Cancer Action Program.  "
+ set @g@("study_complete")=@g@("study_complete")_"Further screening outside of this project is at the discretion of you and your physician.  Please call if you have any questions or concerns."
  ;
- ;#set CAC_recommendation "Since your Visual Coronary Artery Calcium Score (CAC), which is calculated by The Coordinating Site at Weill Medical College of Cornell University, is above 3, we recommend that you consult with a cardiologist, as you may be at risk for coronary artery disease."
+ ;#set CAC_recommendation "Since your Visual Coronary Artery Calcium Score (CAC), which is calculated by The Coordinating Site at Weill Medical College of Cornell University, is above 3, "
+ ;we recommend that you consult with a cardiologist, as you may be at risk for coronary artery disease."
  ;
  ;#set CAC_recommendation "Clinical interpretation of the Visual Coronary Artery Calcium Score (CAC) is provided in the attached writeup."
  ;

@@ -1,4 +1,4 @@
-SAMIM2M ;ven/lgc/smh - M2M WITH SAM HABIEL'S KBANSCAU BROKER ; 12/7/18 11:40am
+SAMIM2M ;ven/lgc/smh - M2M WITH SAM HABIEL'S KBANSCAU BROKER ; 12/27/18 4:31pm
  ;;18.0;SAM;;
  ;
  ;SAM'S INDUSTRIAL CONGLOMERATES
@@ -46,7 +46,8 @@ M2M(XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY) ;
  S HOST=$$GET^XPAR("SYS","SAMI IP ADDRESS",,"Q")
  S:($G(HOST)="") HOST="127.0.0.1"
  ; *** NOTE: for UNIT TESTS use local host
- S:$D(%ut) HOST="127.0.0.1"
+ n forxindex s forxindex="%ut"
+ S:$D(@forxindex) HOST="127.0.0.1"
  I $G(HOST)="" Q
  I $G(PORT)="" Q
  S AV=$$GET^XPAR("SYS","SAMI ACCVER",,"Q")

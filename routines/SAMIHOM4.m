@@ -1,4 +1,4 @@
-SAMIHOM4 ;ven/gpl,arc - ielcap: forms;2018-11-30T17:45Z
+SAMIHOM4 ;ven/gpl,arc - ielcap: forms;2018-11-30T17:45Z ; 1/1/19 1:23pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -299,7 +299,7 @@ WSNEWCAS ; receives post from home & creates new case
  merge ^SAMIGPL("newCase","BODY")=SAMIBODY
  ;
  new vars,bdy
- set SAMIBDY=$get(BODY(1))
+ set SAMIBDY=$get(SAMIBODY(1))
  do parseBody^%wf("vars",.SAMIBDY)
  merge ^SAMIGPL("newCase","vars")=vars
  ;

@@ -1,4 +1,4 @@
-SAMIHOM3 ;ven/gpl - ielcap: Home page, intake form, web services ; 2018-12-29T02:10Z
+SAMIHOM3 ;ven/gpl - ielcap: forms ; 12/11/18 9:36am
  ;;18.0;SAMI;;
  ;
  ; Routine SAMIHOM3 contains subroutines for implementing the ELCAP Home
@@ -22,7 +22,7 @@ SAMIHOM3 ;ven/gpl - ielcap: Home page, intake form, web services ; 2018-12-29T02
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-12-29T02:10Z
+ ;@last-updated: 2018-03-07T18:48Z
  ;@application: Screening Applications Management (SAM)
  ;@module: Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files: SAMI Forms (311.101-311.199)
@@ -70,42 +70,32 @@ SAMIHOM3 ;ven/gpl - ielcap: Home page, intake form, web services ; 2018-12-29T02
  ; WSNUFORM^SAMICAS2 to called-by list; in keyDate,GETHOME update
  ; called-by.
  ;
- ; 2018-12-18/26 ven/arc v18.0t04 SAMIHOM3: changes for SAC compliance
- ; including breaking this routine into 2 routines SAMIHOM3 and SAMIHOM4
- ;
- ; 2018-12-29 ven/lmry v18.0t04 SAMIHOM3: add to history, correct contents,
- ; update @calls sections, added stanza 1 to ADDPAT and INDEX
- ;
  ;@contents
  ;
  ;  code for SAMI homepage web service
  ;
- ; WSHOME: web service for SAMI homepage redirect to SAMIHOM4
- ; WSVAPALS: vapals post web service - all calls come through this gateway
- ;   redirect to SAMIHOM4
- ; DEVHOME: temporary home page for development  redirect to SAMIHOM4
+ ; WSHOME: web service for SAMI homepage
+ ; DEVHOME: temporary home page for development
  ; PATLIST: returns a list of patients in ary, passed by name
- ; GETHOME: homepage accessed using GET (not subsequent visit)  redirect to SAMIHOM4
+ ; GETHOME: homepage accessed using GET (not subsequent visit)
  ; $$SCANFOR = scan array looking for value, return index
  ;
  ;  code for SAMI new case web service
  ;
- ; WSNEWCAS: web service receives post from home & creates new case  redirect
- ;   to SAMIHOM4
+ ; WSNEWCAS: web service receives post from home & creates new case
  ; $$NEXTNUM = next number for studyid
  ; $$GENSTDID = studyID for number
  ; $$PREFIX = letters to use to begin studyId
  ; $$KEYDATE = date in StudyId format (yyyy-mm-dd)
  ; $$VALDTNM = validate a new name
  ; PREFILL: prefill fields for forms
- ; MKSBFORM: create background form depricated gpl 20180615
  ; MKSIFORM: create intake form
+ ; MKSBFORM: create background form
  ;
  ;  api $$SID2NUM^SAMIHOM3
+ ;
  ; $$SID2NUM = number part of studyid (XXX0001 -> 1)
  ;
- ; ADDPAT: calls newCase to add patient dfn to vapals
- ; INDEX: reindex the vapals-patients graph
  ;
  ;
  ;@section 1 code for SAMI homepage web service
@@ -349,8 +339,6 @@ PREFILL(dfn) ; prefill fields for form
  ; WSNEWCAS
  ;@calls
  ; $$setroot^%wd
- ; $$PTINFO^SAMIVSTA
- ; $$VAPALSDT^SAMICAS2
  ;@input
  ; gien =
  ;@output
@@ -410,7 +398,6 @@ MKSBFORM(num) ; create background form -- depricated gpl 20180615
  ; WSNEWCAS
  ;@calls
  ; $$setroot^%wd
- ; SSAMISTA^SAMICAS2
  ;@input
  ; num = index where new form should be built
  ;@output
@@ -445,9 +432,6 @@ MKSIFORM(num) ; create intake form
  ; WSNEWCAS
  ;@calls
  ; $$setroot^%wd
- ; SSAMISTA^SAMICAS2
- ; $$URBRUR^SAMIVSTA
- ; $$VAPALSDT^SAMICAS2
  ;@input
  ; num = index where new form should be built
  ;@output
@@ -527,24 +511,6 @@ SID2NUM(sid) ; number part of studyid (XXX0001 -> 1)
  ;
  ;
 ADDPAT(dfn) ; calls newCase to add patient dfn to vapals
- ;
- ;@stanza 1 invocation, binding, & branching
- ;
- ;ven/gpl;private;procedure;
- ;@called-by
- ; 
- ;@calls
- ; $$setroot^%wd
- ; WSNEWCAS
- ;@input
- ; dfn = patient ID number
- ;@output
- ; 
- ;@examples [tbd]
- ;@tests [tbd]
- ;
- ;@stanza 2 calls newCase to add patient dfn to vapals
- ;
  n lroot s lroot=$$setroot^%wd("patient-lookup")
  n lien s lien=$o(@lroot@("dfn",dfn,""))
  q:lien=""
@@ -556,23 +522,6 @@ ADDPAT(dfn) ; calls newCase to add patient dfn to vapals
  ; zwr result
  ;
 INDEX ; reindex the vapals-patients graph
- ;
- ;@stanza 1 invocation, binding, & branching
- ;
- ;ven/gpl;private;procedure;
- ;@called-by
- ; 
- ;@calls
- ; $$setroot^%wd
- ;@input
- ; none
- ;@output
- ; 
- ;@examples [tbd]
- ;@tests [tbd]
- ;
- ;@stanza 2 reindex the vapals-patients graph
- ;
  n root s root=$$setroot^%wd("vapals-patients")
  n zi s zi=0
  f  s zi=$o(@root@(zi)) q:+zi=0  d  ;

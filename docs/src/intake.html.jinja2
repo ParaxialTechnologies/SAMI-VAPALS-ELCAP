@@ -277,46 +277,46 @@
         </div>
 
         <hr/>
-        <div class="row">
-            <div class="col-md-12 form-group">
-                {{ f.checkbox("siidmdc","1", "Informed Decision Making discussion complete", {}, true) }}
+        <div id="enrollment-container">
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    {{ f.checkbox("siidmdc","1", "Informed decision making discussion complete", {}, true) }}
+                </div>
             </div>
-
-        </div>
-        <p class="alert alert-warning">
-            Veteran of age and exposure to cigarette smoke as described above, and without a current
-            diagnosis or obvious symptoms suggestive of lung cancer, has been educated today about the
-            estimated risk for lung cancer, the possibility of a cure or live prolonging if an early lung
-            cancer were to be found during screening, the possibility of imaging abnormalities not being
-            lung cancer, the possibility of complications from additional diagnostic procedures, and the
-            approximate amount of radiation exposure associated with each screening procedure. In addition,
-            the Veteran has been educated today about the importance of avoiding exposure to cigarette
-            smoke, available tobacco cessation programs and available lung screening services at this VA
-            facility. Education material was provided to the veteran. <br/>
-        </p>
-        <div class="row" id="enrollment-container">
-            <div class="col-md-12 form-group">
-                <label class="required">Based on this information, the Veteran has opted to</label>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="sildct" id="sildct-n" value="n" required="required">
-                        Not enroll
-                    </label>
+            <p class="alert alert-warning">
+                Veteran of age and exposure to cigarette smoke as described above, and without a current
+                diagnosis or obvious symptoms suggestive of lung cancer, has been educated today about the
+                estimated risk for lung cancer, the possibility of a cure or live prolonging if an early lung
+                cancer were to be found during screening, the possibility of imaging abnormalities not being
+                lung cancer, the possibility of complications from additional diagnostic procedures, and the
+                approximate amount of radiation exposure associated with each screening procedure. In addition,
+                the Veteran has been educated today about the importance of avoiding exposure to cigarette
+                smoke, available tobacco cessation programs and available lung screening services at this VA
+                facility. Education material was provided to the veteran. <br/>
+            </p>
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <label class="required">Based on this information, the Veteran has opted to</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="sildct" id="sildct-n" value="n" required="required">
+                            Not enroll
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="sildct" id="sildct-l" value="l">
+                            Not enroll at this time, okay to contact in the future
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="sildct" id="sildct-y" value="y">
+                            Enroll in the Lung Screening and Surveillance (LSS) program and have an LDCT ordered.
+                            Coordination of care will be made by the LSS team
+                        </label>
+                    </div>
                 </div>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="sildct" id="sildct-l" value="l">
-                        Not enroll at this time, okay to contact in the future
-                    </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="sildct" id="sildct-y" value="y">
-                        Enroll in the Lung Screening and Surveillance (LSS) program and have an LDCT ordered.
-                        Coordination of care will be made by the LSS team
-                    </label>
-                </div>
-
             </div>
         </div>
 
@@ -424,8 +424,11 @@
 
         const $enrollSection = $("#enrollment-container").html("");
         const $enrollCol = $('<div class="col-lg-5 col-md-6 col-sm-8"/>');
-        const $enrollAlert = $("<div class=\"alert alert-info\">Patient has been enrolled in the Lung Screening and Surveillance (LSS) program.</div>");
-        $enrollCol.append($('<input type="hidden" id="sildct" name="sildct" value="y"/>'));
+        const $enrollAlert = $("<div class=\"alert alert-info\">Informed decision making was completed and patient " +
+            "has been enrolled in the Lung Screening and Surveillance (LSS) program.</div>");
+        $enrollCol.append($('<input type="hidden" id="sildct" name="sildct" value="y"/>')); //veterans' option to enroll
+        $enrollCol.append($('<input type="hidden" id="siidmdc" name="siidmdc" value="1"/>')); //informed decision making
+
         $enrollCol.append($enrollAlert);
         $enrollSection.append($enrollCol);
     }

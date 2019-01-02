@@ -1,4 +1,4 @@
-SAMICTR0 ;ven/gpl - ielcap: forms ; 12/28/18 12:37pm
+SAMICTR0 ;ven/gpl - ielcap: forms ; 1/2/19 9:28am
  ;;18.0;SAMI;;
  ;
  ;
@@ -184,6 +184,8 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  ;. d OUT("No pulmonary nodules are seen."_para)
  ;
  d NODULES^SAMICTR1(rtn,.vals,.dict)
+ ;
+ d OTHRLUNG^SAMICTR2(rtn,.vals,.dict)
  ;
  d IMPRSN^SAMICTR9(rtn,.vals,.dict)
  ;

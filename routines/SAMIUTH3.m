@@ -1,4 +1,4 @@
-SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 1/1/19 4:48pm
+SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 1/2/19 8:24am
  ;;18.0;SAMI;;
  ;
  ;
@@ -399,7 +399,7 @@ UTSBFRM ; @TEST - Testing creating a background form
  D CHKEQ^%ut(utsuccess,10,"Testing makeSbform FAILED!")
  q
  ;
-UTPOSTF ; @TEST - Test WSVAPALS API route="postform"
+UTPOSTF ; TEST NOT DONE YET/lgc - Test WSVAPALS API route="postform"
  N SAMIUARG,SAMIUBODY,SAMIURSLT,route,SAMIUPOO,SAMIUARC,SAMIUFLTR
  s SAMIUARG("field")="sid",SAMIUARG("fvalue")="XXX00001"
  s SAMIUARG("samiroute")="postform"

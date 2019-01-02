@@ -185,8 +185,6 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  ;
  d NODULES^SAMICTR1(rtn,.vals,.dict)
  ;
- d OTHRLUNG^SAMICTR2(rtn,.vals,.dict)
- ;
  d IMPRSN^SAMICTR9(rtn,.vals,.dict)
  ;
  d RCMND^SAMICTRA(rtn,.vals,.dict)

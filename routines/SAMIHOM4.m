@@ -1,4 +1,4 @@
-SAMIHOM4 ;ven/gpl,arc - ielcap: forms;2018-11-30T17:45Z ; 1/1/19 1:23pm
+SAMIHOM4 ;ven/gpl,arc - ielcap: forms;2018-11-30T17:45Z ; 1/1/19 4:59pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -113,12 +113,12 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  ;
  i route="postform" d  q  ;
  . m SAMIARG=vars
- . d wsPostForm^%wf(.ARG,.BODY,.RESULT)
+ . d wsPostForm^%wf(.SAMIARG,.SAMIBODY,.SAMIRESULT)
  . i $g(SAMIARG("form"))["siform" d  ;
  . . if $$NOTE^SAMINOTI(.SAMIARG) d  ;
- . . . n FILTER
- . . . s FILTER("studyid")=$G(SAMIARG("studyid"))
- . . . s FILTER("form")=$g(SAMIARG("form")) ;
+ . . . n SAMIFILTER
+ . . . s SAMIFILTER("studyid")=$G(SAMIARG("studyid"))
+ . . . s SAMIFILTER("form")=$g(SAMIARG("form")) ;
  . . . n tiuien
  . . . s tiuien=$$SV2VISTA^SAMIVSTA(.SAMIFILTER)
  . . . s SAMIFILTER("tiuien")=tiuien

@@ -1,4 +1,4 @@
-SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 12/14/18 3:50pm
+SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 1/1/19 4:48pm
  ;;18.0;SAMI;;
  ;
  ;
@@ -359,7 +359,7 @@ UTWSVP5 ; @TEST - Test WSVAPALS API route="form"
  D CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS route=form  FAILED!")
  q
  ;
-UTSIFRM ; @TEST - Testing creating a background form
+UTSIFRM ; @TEST - Testing creating a Siform
  ; d makeSiform(num)
  n root,SAMIUNUM,sid,cdate,SAMIUPOO
  S SAMIUNUM=1
@@ -373,10 +373,10 @@ UTSIFRM ; @TEST - Testing creating a background form
  m SAMIUPOO=@root@("graph",sid,"siform-"_cdate)
  k @root@("graph",sid,"siform-"_cdate)
  D MKSIFORM^SAMIHOM3(SAMIUNUM)
- ; look for Sbform
+ ; look for Siform
  s utsuccess=$d(@root@("graph",sid,"siform-"_cdate))
- k @root@("graph",sid,"sbform-"_cdate)
- m @root@("graph",sid,"sbform-"_cdate)=SAMIUPOO
+ k @root@("graph",sid,"siform-"_cdate)
+ m @root@("graph",sid,"siform-"_cdate)=SAMIUPOO
  D CHKEQ^%ut(utsuccess,10,"Testing makeSiform FAILED!")
  q
  ;
@@ -399,4 +399,22 @@ UTSBFRM ; @TEST - Testing creating a background form
  D CHKEQ^%ut(utsuccess,10,"Testing makeSbform FAILED!")
  q
  ;
+UTPOSTF ; @TEST - Test WSVAPALS API route="postform"
+ N SAMIUARG,SAMIUBODY,SAMIURSLT,route,SAMIUPOO,SAMIUARC,SAMIUFLTR
+ s SAMIUARG("field")="sid",SAMIUARG("fvalue")="XXX00001"
+ s SAMIUARG("samiroute")="postform"
+ D WSVAPALS^SAMIHOM3(.SAMIUARG,.SAMIUBODY,.SAMIURSLT)
+ m SAMIUPOO=SAMIURSLT
+ s utsuccess=1
+ ; Get array saved in "vapals unit tests" for this unit test
+ D PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP5^SAMIUTH3")
+ s nodea=$na(SAMIUARC),nodep=$na(SAMIUPOO)
+ f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d
+ . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
+ . i (@nodep["meta content") q
+ . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
+ . i '(@nodea=@nodep) s utsuccess=0
+ i 'nodea="" s utsuccess=0
+ D CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS route=form  FAILED!")
+ q
 EOR ;End of routine SAMIUTH3

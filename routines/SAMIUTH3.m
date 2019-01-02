@@ -1,4 +1,4 @@
-SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 1/2/19 8:24am
+SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 1/2/19 10:56am
  ;;18.0;SAMI;;
  ;
  ;
@@ -397,17 +397,20 @@ UTSBFRM ; @TEST - Testing creating a background form
  s utsuccess=$d(@root@("graph",sid,"sbform-"_cdate))
  k @root@("graph",sid,"sbform-"_cdate)
  D CHKEQ^%ut(utsuccess,10,"Testing makeSbform FAILED!")
- q
  ;
-UTPOSTF ; TEST NOT DONE YET/lgc - Test WSVAPALS API route="postform"
+ ; 
+ ;
+UTPOSTF ; @TEST - Test WSVAPALS API route="postform" build TIU
  N SAMIUARG,SAMIUBODY,SAMIURSLT,route,SAMIUPOO,SAMIUARC,SAMIUFLTR
- s SAMIUARG("field")="sid",SAMIUARG("fvalue")="XXX00001"
+ ;
  s SAMIUARG("samiroute")="postform"
+ s SAMIUARG("form")="siform"
+ s SAMIUARG("studyid")="XXX00001"
  D WSVAPALS^SAMIHOM3(.SAMIUARG,.SAMIUBODY,.SAMIURSLT)
  m SAMIUPOO=SAMIURSLT
  s utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
- D PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP5^SAMIUTH3")
+ D PLUTARR^SAMIUTST(.SAMIUARC,"UTPOSTF^SAMIUTH3")
  s nodea=$na(SAMIUARC),nodep=$na(SAMIUPOO)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d
  . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
@@ -415,6 +418,6 @@ UTPOSTF ; TEST NOT DONE YET/lgc - Test WSVAPALS API route="postform"
  . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
  . i '(@nodea=@nodep) s utsuccess=0
  i 'nodea="" s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS route=form  FAILED!")
+ D CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS postform  FAILED!")
  q
 EOR ;End of routine SAMIUTH3

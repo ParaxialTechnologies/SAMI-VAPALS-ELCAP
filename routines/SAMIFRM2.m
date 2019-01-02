@@ -1,12 +1,9 @@
-SAMIFRM2 ;ven/gpl - ielcap: forms ; 12/11/18 9:21am
- ;;18.0;SAM;;
+SAMIFRM2 ;ven/gpl - ielcap: forms ;2019-01-02T18:04Z
+ ;;18.0;SAMI;;
  ;
  ; Routine SAMIFRM contains subroutines for managing the ELCAP forms,
  ; including initialization and enhancements to the SAMI FORM FILE (311.11)
  ; CURRENTLY UNTESTED & IN PROGRESS
- ;
- ; CHANGE VEN/2018-11-13
- ;  every occurance of SAMIHOM2 changed to SAMIHOM3
  ;
  quit  ; no entry from top
  ;
@@ -25,7 +22,7 @@ SAMIFRM2 ;ven/gpl - ielcap: forms ; 12/11/18 9:21am
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-18T17:15Z
+ ;@last-updated: 2019-01-02T18:04Z
  ;@application: Screening Applications Management (SAM)
  ;@module: Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files: SAMI Forms (311.101-311.199)
@@ -84,18 +81,78 @@ SAMIFRM2 ;ven/gpl - ielcap: forms ; 12/11/18 9:21am
  ; 2018-03-18 ven/toad SAMI*18.0t04 SAMIFRM2: restore calls to
  ; findReplaceAll^%ts.
  ;
+ ; 2018-03-21/04-02 ven/gpl SAMI*18.0t04 SAMIFRM2: max date insertion,
+ ; case review navigation changed to post, date order for CT Eval in
+ ; case review; changes to support incomplete forms display & processing;
+ ; fix to not inject html in the javascript for case review navigation;
+ ; fix followup submit.
+ ;
+ ; 2018-04-24 ven/gpl SAMI*18.0t04 SAMIFRM2: added Pet & Biopsy forms.
+ ;
+ ; 2018-05-18/21 ven/gpl SAMI*18.0t04 SAMIFRM2: conversion to new graph
+ ; & simplified forms processing.
+ ;
+ ; 2018-05-22 par/dom SAMI*18.0t04 SAMIFRM2: VAP-95 - removed code that
+ ; replaced hard-coded date w/"today" from backend, no longer needed.
+ ;
+ ; 2018-05-24 ven/gpl SAMI*18.0t04 SAMIFRM2: changes for submit processing
+ ; on forms.
+ ;
+ ; 2018-05-25 par/dom SAMI*18.0t04 SAMIFRM2: merge pull request 3 fr/
+ ; OSEHRA/VAP-95-Remove-Today-Text-Replacement2. VAP-95 remove today text
+ ; replacement.
+ ;
+ ; 2018-05-25 ven/gpl SAMI*18.0t04 SAMIFRM2: add STUDYID for txt replace;
+ ; more changes for STUDYID substitution.
+ ;
+ ; 2018-07-11 ven/gpl SAMI*18.0t04 SAMIFRM2: added FROZEN variable based
+ ; on samistatus=compete.
+ ;
+ ; 2018-08-19 ven/gpl SAMI*18.0t04 SAMIFRM2: use ssn instead of last5 where
+ ; available; revised ssn formatting.
+ ;
+ ; 2018-09-30 ven/gpl SAMI*18.0t04 SAMIFRM2: header & prefill of intake.
+ ;
+ ; 2018-10-15 ven/gpl SAMI*18.0t04 SAMIFRM2: initial user reports:
+ ; enrollment.
+ ;
+ ; 2018-10-31 ven/gpl SAMI*18.0t04 SAMIFRM2: new input form features,
+ ; report menu fix.
+ ;
+ ; 2018-11-13 ven/gpl SAMI*18.0t04 SAMIFRM2: every occurance of SAMIHOM2
+ ; changed to SAMIHOM3.
+ ;
+ ; 2018-11-14 ven/gpl SAMI*18.0t04 SAMIFRM2: fix graph store forms.
+ ;
+ ; 2018-11-29 ven/lgc SAMI*18.0t04 SAMIFRM2: ongoing unit-test work.
+ ;
+ ; 2018-12-11/12 ven/toad SAMI*18.0t04 SAMIFRM2: update chg log; in SAMISUB2
+ ; r/last findReplace^%ts w/a flag and r/w/findReplaceAll^%ts; passim
+ ; spell out language elements, update tags called-by, calls, tests;
+ ; namespace call-by-ref & call-by-name actuals.
+ ;
+ ; 2019-01-02 ven/toad SAMI*18.0t04 SAMIFRM2: update chg log.
+ ;
  ;@contents
  ; INITFRMS: initial all available forms
  ; INIT1FRM: initialize 1 form from elcap-patient graph (field names only)
+ ;
  ; REGFORMS: register elcap forms in form mapping file
  ; LOADDATA: import directory full of json data into elcap-patient graph
  ; PRSFLNM: parse filename extracting studyid and form
- ; $$GETDIR: extrinsic which prompts for directory
- ; $$GETFN: extrinsic which prompts for filename
+ ;
+ ; $$GETDIR = prompt for directory
+ ; $$GETFN = prompt for filename
+ ;
  ; SAMISUBS: ln is passed by reference; filter is passed by reference
  ; SAMISUB2: used for Dom's new style forms
  ; FIXSRC: fix html src lines to use resources in see/
  ; FIXHREF: fix html href lines to use resources in see/
+ ;
+ ; $$GETLAST5 = last5 for patient sid
+ ; $$GETNAME = name for patient sid
+ ; $$GETSSN = ssn for patient sid
+ ; $$GETHDR = header string for patient sid
  ;
  ;
  ;
@@ -116,13 +173,14 @@ INITFRMS ; initilize form file from elcap-patient graphs
  new groot set groot=$name(@root@("graph"))
  new patient set patient=$order(@groot@(""),-1) ; use last patient in graph
  quit:patient=""
+ ;
  new form set form=""
  ; for each form patient has:
  for  set form=$order(@groot@(patient,form)) quit:form=""  do
- . new array
- . do getVals^%wf("array",form,patient) ; get array of fields & values
+ . new SAMIARRAY
+ . do getVals^%wf("SAMIARRAY",form,patient) ; get array of fields & values
  . write !,"using patient: ",patient
- . do INIT1FRM(form,"array") ; initialize form & its fields
+ . do INIT1FRM(form,"SAMIARRAY") ; initialize form & its fields
  . quit
  ;
  quit  ; end of INITFRMS
@@ -142,31 +200,36 @@ INIT1FRM(form,ary) ; initialize one form named form from ary passed by name
  new fn set fn=311.11 ; file number
  new sfn set sfn=311.11001 ; subfile number for variables
  new fmroot set fmroot=$name(^SAMI(311.11))
- new fda,%yerr
- set fda(fn,"?+1,",.01)=form
+ ;
+ new SAMIFDA,SAMIERR
+ set SAMIFDA(fn,"?+1,",.01)=form
  write !,"creating form ",form
- do UPDATE^DIE("","fda","","%yerr")
- if $data(%yerr) do  quit  ;
+ do UPDATE^DIE("","SAMIFDA","","SAMIERR")
+ if $data(SAMIERR) do  quit  ;
  . write !,"error creating form record ",id,!
- . zwrite %yerr
+ . zwrite SAMIERR
  . quit
+ ;
  new %ien set %ien=$order(@fmroot@("B",form,""))
  if %ien="" do  quit  ;
  . write !,"error locating form record ",form
  . quit
+ ;
  new %j set %j=""
  new vcnt set vcnt=0
- kill fda
+ kill SAMIFDA
  for  set %j=$order(@ary@(%j)) quit:%j=""  do  ;
  . set vcnt=vcnt+1
- . set fda(sfn,"?+"_vcnt_","_%ien_",",.01)=%j
+ . set SAMIFDA(sfn,"?+"_vcnt_","_%ien_",",.01)=%j
  . quit
+ ;
  do CLEAN^DILF
  write !,"creating variables for form ",%ien
- do UPDATE^DIE("","fda","","%yerr")
- if $data(%yerr) do  quit  ;
+ ;
+ do UPDATE^DIE("","SAMIFDA","","SAMIERR")
+ if $data(SAMIERR) do  quit  ;
  . write !,"error creating variable record ",%j,!
- . zwrite %yerr
+ . zwrite SAMIERR
  . quit
  ;
  quit  ; end of INIT1FRM
@@ -197,14 +260,14 @@ REGFORMS() ; register elcap forms in form mapping file
  ;
  new zi set zi=""
  for  set zi=$order(ftbl(zi)) quit:zi=""  do  ;
- . new fda,%yerr
- . set fda(fn,"?+1,",.01)=zi
- . set fda(fn,"?+1,",2)=$order(ftbl(zi,""))
+ . new SAMIFDA,SAMIERR
+ . set SAMIFDA(fn,"?+1,",.01)=zi
+ . set SAMIFDA(fn,"?+1,",2)=$order(ftbl(zi,""))
  . write !,"creating form ",zi," named: ",$order(ftbl(zi,""))
- . do UPDATE^DIE("","fda","","%yerr")
- . if $data(%yerr) do  quit  ;
+ . do UPDATE^DIE("","SAMIFDA","","SAMIERR")
+ . if $data(SAMIERR) do  quit  ;
  . . write !,"error creating form record ",zi,!
- . . zwrite %yerr
+ . . zwrite SAMIERR
  . . quit
  . new %ien set %ien=$order(@fmroot@("B",zi,""))
  . if %ien="" do  quit  ;
@@ -226,33 +289,34 @@ LOADDATA() ; import directory full of json data into elcap-patient graph
  ; DECODE^VPRJSON
  ; PRSFLNM
  ;
- new dir
+ new SAMIDIR
  ; Skip interactive if doing unit test VEN/lgc
- I '$D(%ut) D
- . if '$$GETDIR(.dir,"/home/osehra/www/sample-data-20171129/") quit  ; user exited
- E  S dir="/home/osehra/www/sample-data-UnitTest/"
+ if '$data(%ut) do
+ . if '$$GETDIR(.SAMIDIR,"/home/osehra/www/sample-data-20171129/") quit  ; user exited
+ . quit
+ else  set SAMIDIR="/home/osehra/www/sample-data-UnitTest/"
  ;
  new cmd
- set cmd="""ls "_dir_" > /home/osehra/www/sample-list.txt"""
+ set cmd="""ls "_SAMIDIR_" > /home/osehra/www/sample-list.txt"""
  zsystem @cmd
- new zlist
- do file2ary^%wd("zlist","/home/osehra/www/","sample-list.txt")
+ new SAMILIST
+ do file2ary^%wd("SAMILIST","/home/osehra/www/","sample-list.txt")
  ;
  new root set root=$$setroot^%wd("vapals-patients")
- new json,ary,studyid,form,filename
+ new SAMIJSON,SAMIARY,studyid,form,filename
  new zi set zi=""
  ;
- for  set zi=$order(zlist(zi)) quit:zi=""  do  ;
- . set filename=$get(zlist(zi))
+ for  set zi=$order(SAMILIST(zi)) quit:zi=""  do  ;
+ . set filename=$get(SAMILIST(zi))
  . quit:filename=""
  . if $length(filename,"-")'=5 write !,"file "_filename_" rejected" quit  ;
  . if filename'[".json" write !,"file "_filename_" rejected" quit  ;
- . kill json,ary
- . do file2ary^%wd("json",dir,filename)
- . do DECODE^VPRJSON("json","ary")
+ . kill SAMIJSON,SAMIARY
+ . do file2ary^%wd("SAMIJSON",SAMIDIR,filename)
+ . do DECODE^VPRJSON("SAMIJSON","SAMIARY")
  . do PRSFLNM(filename,.studyid,.form)
- . quit:'$data(ary)
- . merge @root@("graph",studyid,form)=ary
+ . quit:'$data(SAMIARY)
+ . merge @root@("graph",studyid,form)=SAMIARY
  . quit
  ;
  quit  ; end of LOADDATA
@@ -278,7 +342,7 @@ PRSFLNM(fn,zid,zform) ; parse filename extracting studyid & form
  ;
  ;
  ;
-GETDIR(KBAIDIR,KBAIDEF) ; extrinsic which prompts for directory
+GETDIR(KBAIDIR,KBAIDEF) ; prompt for directory
  ;
  ; returns true if the user gave values
  ;
@@ -292,7 +356,9 @@ GETDIR(KBAIDIR,KBAIDEF) ; extrinsic which prompts for directory
  set DIR("A")="File Directory"
  if '$data(KBAIDEF) set KBAIDEF="/home/osehra/www/"
  set DIR("B")=KBAIDEF
+ ;
  do ^DIR
+ ;
  if Y="^" quit 0 ;
  set KBAIDIR=Y
  ;
@@ -300,7 +366,7 @@ GETDIR(KBAIDIR,KBAIDEF) ; extrinsic which prompts for directory
  ;
  ;
  ;
-GETFN(KBAIFN,KBAIDEF) ; extrinsic which prompts for filename
+GETFN(KBAIFN,KBAIDEF) ; prompt for filename
  ;
  ; returns true if the user gave values
  ;
@@ -313,7 +379,9 @@ GETFN(KBAIFN,KBAIDEF) ; extrinsic which prompts for filename
  set DIR("A")="File Name"
  if '$data(KBAIDEF) set KBAIDEF="outpatient-list.txt"
  set DIR("B")=KBAIDEF
+ ;
  do ^DIR
+ ;
  if Y="" quit 0 ;
  if Y="^" quit 0 ;
  set KBAIFN=Y
@@ -322,138 +390,193 @@ GETFN(KBAIFN,KBAIDEF) ; extrinsic which prompts for filename
  ;
  ;
  ;
- ;
-SAMISUB2(line,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
+SAMISUB2(SAMILINE,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  ;
  ; line is passed by reference; filter is passed by reference
  ; can modify any line in the html as needed
  ;
  ;@called-by
  ; wsGetForm^%wf
+ ; WSNOTE^SAMINOTI
+ ; WSREPORT^SAMIUR1
  ;@calls
+ ; $$GETHDR^SAMIFRM2
+ ; $$GETLAST5^SAMIFRM2
+ ; findReplace^%ts
+ ; findReplaceAll^%ts
  ; FIXSRC
  ; FIXHREF
+ ;@tests
+ ; UTSSUB2^SAMIUTF2: used for Dom's new style forms
  ;
+ new touched set touched=0
  ;
- new touched s touched=0
- ;
- set line=line_$char(13,10) ; insert CRLF at end of every line
+ set SAMILINE=SAMILINE_$char(13,10) ; insert CRLF at end of every line
  ; for readability in browser
  ;
- n pssn s pssn=$$GETHDR^SAMIFRM2(sid)
- n last5 s last5=$$GETLAST5^SAMIFRM2(sid)
- n useid s useid=pssn
- i useid="" s useid=last5
+ new pssn set pssn=$$GETHDR^SAMIFRM2(sid)
+ new last5 set last5=$$GETLAST5^SAMIFRM2(sid)
+ new useid set useid=pssn
+ if useid="" set useid=last5
  ;
- if line["@@FORMKEY@@" do  ;
- . do findReplace^%ts(.line,"@@FORMKEY@@",key)
+ if SAMILINE["@@FORMKEY@@" do  ;
+ . do findReplace^%ts(.SAMILINE,"@@FORMKEY@@",key)
  . quit
  ;
- if line["@@SID@@" do  ;
- . do findReplace^%ts(.line,"@@SID@@",sid)
+ if SAMILINE["@@SID@@" do  ;
+ . do findReplace^%ts(.SAMILINE,"@@SID@@",sid)
  . quit
  ;
- if line["src=" do
- . do FIXSRC(.line) ; insert see/ processor on src= references
+ if SAMILINE["src=" do
+ . do FIXSRC(.SAMILINE) ; insert see/ processor on src= references
  . quit
  ;
- if line["href=" if 'touched do
- . do FIXHREF(.line) ; insert see/ processor on href= references
+ if SAMILINE["href=" if 'touched do
+ . do FIXHREF(.SAMILINE) ; insert see/ processor on href= references
  . quit
  ;
- if line["Sample, Sammy G" do  ;
- . do findReplace^%ts(.line,"Sample, Sammy G",$g(vals("saminame")))
+ if SAMILINE["Sample, Sammy G" do  ;
+ . do findReplace^%ts(.SAMILINE,"Sample, Sammy G",$get(vals("saminame")))
+ . quit
  ;
- if line["ST0001" do  ;
- . do findReplace^%ts(.line,"ST0001",useid)
+ if SAMILINE["ST0001" do  ;
+ . do findReplace^%ts(.SAMILINE,"ST0001",useid)
+ . quit
  ;
- if line["1234567890" do  ;
- . do findReplace^%ts(.line,"1234567890","")
+ if SAMILINE["1234567890" do  ;
+ . do findReplace^%ts(.SAMILINE,"1234567890","")
+ . quit
  ;
- if line["XX0002" do  ;
- . i line["XXX" quit  ;
- . do findReplace^%ts(.line,"XX0002",sid)
+ if SAMILINE["XX0002" do  ;
+ . if SAMILINE["XXX" quit  ;
+ . do findReplace^%ts(.SAMILINE,"XX0002",sid)
+ . quit
  ;
- if line["VEP0001" do  ;
- . do findReplace^%ts(.line,"VEP0001",sid,"a")
+ if SAMILINE["VEP0001" do  ;
+ . do findReplaceAll^%ts(.SAMILINE,"VEP0001",sid)
+ . quit
  ;
- if line["@@FROZEN@@" do  ;
- . if $g(vals("samistatus"))="complete" d  ;
- . . d findReplace^%ts(.line,"@@FROZEN@@","true")
- . e  d  ;
- . . d findReplace^%ts(.line,"@@FROZEN@@","false")
+ if SAMILINE["@@FROZEN@@" do  ;
+ . if $get(vals("samistatus"))="complete" do  ;
+ . . do findReplace^%ts(.SAMILINE,"@@FROZEN@@","true")
+ . . quit
+ . else  do  ;
+ . . do findReplace^%ts(.SAMILINE,"@@FROZEN@@","false")
+ . . quit
+ . quit
  ;
- if line["@@NEWFORM@@" do  ;
- . if $g(vals("samifirsttime"))="true" d  ;
- . . d findReplace^%ts(.line,"@@NEWFORM@@","true")
- . e  d  ;
- . . d findReplace^%ts(.line,"@@NEWFORM@@","false")
+ if SAMILINE["@@NEWFORM@@" do  ;
+ . if $get(vals("samifirsttime"))="true" do  ;
+ . . do findReplace^%ts(.SAMILINE,"@@NEWFORM@@","true")
+ . . quit
+ . else  do  ;
+ . . do findReplace^%ts(.SAMILINE,"@@NEWFORM@@","false")
+ . . quit
+ . quit
  ;
  quit  ; end of SAMISUB2
  ;
-WSSBFORM(rtn,filter) ; background form access
- n sid s sid=$g(filter("studyid"))
- i sid="" s sid=$g(filter("sid"))
- i +sid>0 s sid=$$GENSTDID^SAMIHOM3(sid)
- ;i sid="" s sid="XXX0001"
- n items d GETITEMS^SAMICAS2("items",sid)
- ;w !,"sid=",sid,!
- ;zwr items
- ;b
- n key s key=$o(items("sbfor"))
- s filter("key")=key
- s filter("form")="vapals:sbform"
- d wsGetForm^%wf(.rtn,.filter)
- q
- ;
-WSSIFORM(rtn,filter) ; intake form access
- n sid s sid=$g(filter("studyid"))
- i sid="" s sid=$g(filter("sid"))
- i +sid>0 s sid=$$GENSTDID^SAMIHOM3(sid)
- ;i sid="" s sid="XXX0001"
- n items d GETITEMS^SAMICAS2("items",sid)
- ;w !,"sid=",sid,!
- ;zwr items
- ;b
- n key s key=$o(items("sifor"))
- s filter("key")=key
- s filter("form")="vapals:siform"
- d wsGetForm^%wf(.rtn,.filter)
- q
- ;
-WSCEFORM(rtn,filter) ; ctevaluation form access
- n sid s sid=$g(filter("studyid"))
- i sid="" s sid=$g(filter("sid"))
- i +sid>0 s sid=$$GENSTDID^SAMIHOM3(sid)
- ;i sid="" s sid="XXX0001"
- n items d GETITEMS^SAMICAS2("items",sid)
- ;w !,"sid=",sid,!
- ;zwr items
- ;b
- n key s key=$o(items("cefor"))
- s filter("key")=key
- s filter("form")="vapals:ceform"
- d wsGetForm^%wf(.rtn,.filter)
- q
  ;
  ;
-FIXSRC(line) ; fix html src lines to use resources in see/
+WSSBFORM(SAMIRTN,SAMIFILTER) ; background form access
  ;
  ;@called-by
+ ;@calls
+ ; $$GENSTDID^SAMIHOM3
+ ; GETITEMS^SAMICAS2
+ ; wsGetForm^%wf
+ ;
+ new sid set sid=$get(SAMIFILTER("studyid"))
+ if sid="" set sid=$get(SAMIFILTER("sid"))
+ if +sid>0 set sid=$$GENSTDID^SAMIHOM3(sid)
+ ;if sid="" set sid="XXX0001"
+ ;
+ new items do GETITEMS^SAMICAS2("items",sid)
+ ;write !,"sid=",sid,!
+ ;zwrite items
+ ;break
+ ;
+ new key set key=$order(items("sbfor"))
+ set SAMIFILTER("key")=key
+ set SAMIFILTER("form")="vapals:sbform"
+ do wsGetForm^%wf(.SAMIRTN,.SAMIFILTER)
+ ;
+ quit  ; end of WSSBFORM
+ ;
+ ;
+ ;
+WSSIFORM(SAMIRTN,SAMIFILTER) ; intake form access
+ ;
+ ;@called-by
+ ;@calls
+ ; $$GENSTDID^SAMIHOM3
+ ; GETITEMS^SAMICAS2
+ ; wsGetForm^%wf
+ ;
+ new sid set sid=$get(SAMIFILTER("studyid"))
+ if sid="" set sid=$get(SAMIFILTER("sid"))
+ if +sid>0 set sid=$$GENSTDID^SAMIHOM3(sid)
+ ;if sid="" set sid="XXX0001"
+ ;
+ new items do GETITEMS^SAMICAS2("items",sid)
+ ;write !,"sid=",sid,!
+ ;zwrite items
+ ;break
+ ;
+ new key set key=$order(items("sifor"))
+ set SAMIFILTER("key")=key
+ set SAMIFILTER("form")="vapals:siform"
+ do wsGetForm^%wf(.SAMIRTN,.SAMIFILTER)
+ ;
+ quit  ; end of WSSIFORM
+ ;
+ ;
+ ;
+WSCEFORM(SAMIRTN,SAMIFILTER) ; ctevaluation form access
+ ;
+ ;@called-by
+ ;@calls
+ ; $$GENSTDID^SAMIHOM3
+ ; GETITEMS^SAMICAS2
+ ; wsGetForm^%wf
+ ;
+ new sid set sid=$get(SAMIFILTER("studyid"))
+ if sid="" set sid=$get(SAMIFILTER("sid"))
+ if +sid>0 set sid=$$GENSTDID^SAMIHOM3(sid)
+ ;if sid="" set sid="XXX0001"
+ ;
+ new items do GETITEMS^SAMICAS2("items",sid)
+ ;write !,"sid=",sid,!
+ ;zwrite items
+ ;break
+ ;
+ new key set key=$order(items("cefor"))
+ set SAMIFILTER("key")=key
+ set SAMIFILTER("form")="vapals:ceform"
+ do wsGetForm^%wf(.SAMIRTN,.SAMIFILTER)
+ ;
+ quit  ; end of WSCEFORM
+ ;
+ ;
+ ;
+FIXSRC(SAMILINE) ; fix html src lines to use resources in see/
+ ;
+ ;@called-by
+ ; WSCASE^SAMICAS2
  ; SAMISUB2
  ;@calls
  ; findReplaceAll^%ts
  ;
- if line["src=" do  ;
- . if line["src=""http" quit
- . if line["src=""/" do  quit
- . . do findReplaceAll^%ts(.line,"src=""/","src=""/see/sami/")
+ if SAMILINE["src=" do  ;
+ . if SAMILINE["src=""http" quit
+ . if SAMILINE["src=""/" do  quit
+ . . do findReplaceAll^%ts(.SAMILINE,"src=""/","src=""/see/sami/")
  . . quit
- . if line["src=""" do  quit
- . . do findReplaceAll^%ts(.line,"src=""","src=""/see/sami/")
+ . if SAMILINE["src=""" do  quit
+ . . do findReplaceAll^%ts(.SAMILINE,"src=""","src=""/see/sami/")
  . . quit
- . if line["src=" do
- . . do findReplaceAll^%ts(.line,"src=","src=/see/sami/")
+ . if SAMILINE["src=" do
+ . . do findReplaceAll^%ts(.SAMILINE,"src=","src=/see/sami/")
  . . quit
  . quit
  ;
@@ -461,90 +584,139 @@ FIXSRC(line) ; fix html src lines to use resources in see/
  ;
  ;
  ;
-FIXHREF(line) ; fix html href lines to use resources in see/
+FIXHREF(SAMILINE) ; fix html href lines to use resources in see/
  ;
  ;@called-by
+ ; WSCASE^SAMICAS2
  ; SAMISUB2
  ;@calls
  ; findReplaceAll^%ts
  ;
- if line["href=" do  ;
- . quit:line["href=""#"
- . quit:line["href='#"
- . quit:line["href=""http"
- . quit:line["/vapals"
- . if line["href=""/" do  quit
- . . do findReplaceAll^%ts(.line,"href=""/","href=""/","href=""/see/sami/")
+ if SAMILINE["href=" do  ;
+ . quit:SAMILINE["href=""#"
+ . quit:SAMILINE["href='#"
+ . quit:SAMILINE["href=""http"
+ . quit:SAMILINE["/vapals"
+ . if SAMILINE["href=""/" do  quit
+ . . do findReplaceAll^%ts(.SAMILINE,"href=""/","href=""/","href=""/see/sami/")
  . . quit
- . if line["href=""" do  quit
- . . do findReplaceAll^%ts(.line,"href=""","href=""/see/sami/")
+ . if SAMILINE["href=""" do  quit
+ . . do findReplaceAll^%ts(.SAMILINE,"href=""","href=""/see/sami/")
  . . quit
- . if line["href=" do  quit
- . . do findReplaceAll^%ts(.line,"href=","href=/see/sami/")
+ . if SAMILINE["href=" do  quit
+ . . do findReplaceAll^%ts(.SAMILINE,"href=","href=/see/sami/")
  . . quit
  . quit
  ;
  quit  ; end of FIXHREF
  ;
  ;
+ ;
 GETLAST5(sid) ; extrinsic returns the last5 for patient sid
- q:$g(sid)="" ""
- n root s root=$$setroot^%wd("vapals-patients")
- n ien s ien=$o(@root@("sid",sid,""))
- q:ien=""
- q @root@(ien,"last5")
+ ;
+ ;@called-by
+ ; WSCASE^SAMICAS2
+ ;@calls
+ ; $$setroot^%wd
+ ;
+ quit:$get(sid)="" ""
+ new root set root=$$setroot^%wd("vapals-patients")
+ new ien set ien=$order(@root@("sid",sid,""))
+ quit:ien=""
+ ;
+ quit @root@(ien,"last5")
+ ;
+ ;
  ;
 GETNAME(sid) ; extrinsic returns the name for patient sid
- q:$g(sid)="" ""
- n root s root=$$setroot^%wd("vapals-patients")
- n ien s ien=$o(@root@("sid",sid,""))
- q:ien=""
- q @root@(ien,"saminame")
+ ;
+ ;@called-by
+ ; WSCASE^SAMICAS2
+ ;@calls
+ ; $$setroot^%wd
+ ;
+ quit:$get(sid)="" ""
+ new root set root=$$setroot^%wd("vapals-patients")
+ new ien set ien=$order(@root@("sid",sid,""))
+ quit:ien=""
+ ;
+ quit @root@(ien,"saminame") ; end of $$GETNAME
+ ;
+ ;
  ;
 GETSSN(sid) ; extrinsic returns the ssn for patient sid
- q:$g(sid)="" ""
- n root s root=$$setroot^%wd("vapals-patients")
- n ien s ien=$o(@root@("sid",sid,""))
- q:ien=""
- n pssn
- s pssn=$g(@root@(ien,"sissn"))
- i pssn["sta" s pssn=""
- i pssn="" d  ;
- . n orgssn
- . s orgssn=$g(@root@(ien,"ssn"))
- . q:orgssn=""
- . s pssn=$e(orgssn,1,3)_"-"_$e(orgssn,4,5)_"-"_$e(orgssn,6,9)
- . s @root@(ien,"sissn")=pssn
- q pssn
+ ;
+ ;@called-by
+ ; WSCASE^SAMICAS2
+ ;@calls
+ ; $$setroot^%wd
+ ;
+ quit:$get(sid)="" ""
+ new root set root=$$setroot^%wd("vapals-patients")
+ new ien set ien=$order(@root@("sid",sid,""))
+ quit:ien=""
+ ;
+ new pssn
+ set pssn=$get(@root@(ien,"sissn"))
+ if pssn["sta" set pssn=""
+ if pssn="" do  ;
+ . new orgssn
+ . set orgssn=$get(@root@(ien,"ssn"))
+ . quit:orgssn=""
+ . set pssn=$extract(orgssn,1,3)_"-"_$extract(orgssn,4,5)_"-"_$extract(orgssn,6,9)
+ . set @root@(ien,"sissn")=pssn
+ . quit
+ ;
+ quit pssn ; end of $$GETSSN
+ ;
+ ;
  ;
 GETHDR(sid) ; extrinsic returns header string for patient sid
- q:$g(sid)="" ""
- n root s root=$$setroot^%wd("vapals-patients")
- n ien s ien=$o(@root@("sid",sid,""))
- n dfn s dfn=@root@(ien,"dfn")
- q:ien=""
- ;d PREFILL^SAMIHOM3(dfn) ;update from VistA
- i $g(@root@(ien,"ssn"))="" d PREFILL^SAMIHOM3(dfn) ;update from VistA
- i $g(@root@(ien,"sbdob"))=-1 d PREFILL^SAMIHOM3(dfn) ;update from VistA
- i $g(@root@(ien,"ssn"))="" q "" ; patient info not available
- n pssn,dob,age,sex
- s pssn=$g(@root@(ien,"sissn"))
- i pssn["sta" s pssn=""
- i pssn="" d  ;
- . n orgssn
- . s orgssn=$g(@root@(ien,"ssn"))
- . q:orgssn=""
- . s pssn=$e(orgssn,1,3)_"-"_$e(orgssn,4,5)_"-"_$e(orgssn,6,9)
- . s @root@(ien,"sissn")=pssn
- s dob=$g(@root@(ien,"sbdob")) ; dob in VAPALS format
- s sex=$g(@root@(ien,"sex"))
- N X,Y
- S X=dob
- D ^%DT
- s age=$p($$FMDIFF^XLFDT($$NOW^XLFDT,Y)/365,".")
- s @root@(ien,"age")=age
- n rtn
- s rtn=pssn_" DOB: "_dob_" AGE: "_age_" GENDER: "_sex
- q rtn
+ ;
+ ;@called-by
+ ;@calls
+ ; $$setroot^%wd
+ ; PREFILL^SAMIHOM3
+ ; ^%DT
+ ; $$NOW^XLFDT
+ ; $$FMDIFF^XLFDT
+ ;
+ quit:$get(sid)="" ""
+ new root set root=$$setroot^%wd("vapals-patients")
+ new ien set ien=$order(@root@("sid",sid,""))
+ new dfn set dfn=@root@(ien,"dfn")
+ quit:ien=""
+ ;
+ ;do PREFILL^SAMIHOM3(dfn) ;update from VistA
+ if $get(@root@(ien,"ssn"))="" do PREFILL^SAMIHOM3(dfn) ;update from VistA
+ if $get(@root@(ien,"sbdob"))=-1 do PREFILL^SAMIHOM3(dfn) ;update from VistA
+ ;
+ if $get(@root@(ien,"ssn"))="" quit "" ; patient info not available
+ new pssn,dob,age,sex
+ set pssn=$get(@root@(ien,"sissn"))
+ if pssn["sta" set pssn=""
+ if pssn="" do  ;
+ . new orgssn
+ . set orgssn=$get(@root@(ien,"ssn"))
+ . quit:orgssn=""
+ . set pssn=$extract(orgssn,1,3)_"-"_$extract(orgssn,4,5)_"-"_$extract(orgssn,6,9)
+ . set @root@(ien,"sissn")=pssn
+ . quit
+ ;
+ set dob=$get(@root@(ien,"sbdob")) ; dob in VAPALS format
+ set sex=$get(@root@(ien,"sex"))
+ ;
+ new X,Y
+ set X=dob
+ do ^%DT
+ set age=$piece($$FMDIFF^XLFDT($$NOW^XLFDT,Y)/365,".")
+ set @root@(ien,"age")=age
+ ;
+ new rtn
+ set rtn=pssn_" DOB: "_dob_" AGE: "_age_" GENDER: "_sex
+ ;
+ quit rtn ; end of $$GETHDR
+ ;
+ ;
  ;
 EOR ; end of routine SAMIFRM2

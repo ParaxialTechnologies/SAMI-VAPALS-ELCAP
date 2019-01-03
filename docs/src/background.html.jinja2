@@ -21,31 +21,26 @@
 
             <h3>Self-report of Comorbidities and Exposures</h3>
             <div>
-
                 <div class="row">
-                    <div class="col-sm-6 col-md-3 col-lg-3">
-                        {{ f.floatingLabel('sbfc-n', 'Family history of lung cancer?') }}
+                    <div class="col-sm-6 col-md-3">
+                        <label for="sbahao-i" class="control-label">Have you ever worked in any of the
+                            following?</label>
                     </div>
-                    <div class="col-sm-6 col-md-3 col-lg-2">
+                    <div class="col-sm-6 col-md-9">
                         <div class="form-group">
-                            {{ f.inlineRadioNYQ("sbfc") }}
-                        </div>
-                    </div>
-                    <div id="sbfc-container" style="display: none;">
-                        <div class="form-group col-sm-4 col-md-2">
-                            <label class="control-label required" for="sbfcf-n">Father?</label><br/>
-                            {{ f.inlineRadio("sbfcf","sbfcf-n","n", "No", true) }}
-                            {{ f.inlineRadio("sbfcf","sbfcf-y","y", "Yes") }}
-                        </div>
-                        <div class="form-group col-sm-4 col-md-2">
-                            <label class="control-label required" for="sbfcm-n">Mother?</label><br/>
-                            {{ f.inlineRadio("sbfcm","sbfcm-n","n", "No", true) }}
-                            {{ f.inlineRadio("sbfcm","sbfcm-y","y", "Yes") }}
-                        </div>
-                        <div class="form-group col-sm-4 col-md-2">
-                            <label class="control-label required" for="sbfcs-n">Siblings?</label><br/>
-                            {{ f.inlineRadio("sbfcs","sbfcs-n","n", "No", true) }}
-                            {{ f.inlineRadio("sbfcs","sbfcs-y","y", "Yes") }}
+                            {{ f.checkbox("sbahaoi", "i", "Asbestos product manufacturing") }}
+                            {{ f.checkbox("sbahaoj", "j", "Auto repair") }}
+                            {{ f.checkbox("sbahaoh", "h", "Building maintenance") }}
+                            {{ f.checkbox("sbahaof", "f", "Chemical industry/foundary/refinery") }}
+                            {{ f.checkbox("sbahaoa", "a", "Construction/demolition") }}
+                            {{ f.checkbox("sbahaoe", "e", "Mining") }}
+                            {{ f.checkbox("sbahaog", "g", "Nuclear industry") }}
+                            {{ f.checkbox("sbahaoc", "c", "Ship construction/repair") }}
+                            {{ f.checkbox("sbahaoc", "ao", "Agent orange") }}
+                            {{ f.checkbox("sbahaoc", "bp", "Burn pits") }}
+                            {{ f.checkbox("sbahaoo", "o", "Other") }}
+                            <input class="form-control input-sm" type="text" name="sbahas" id="sbahas"
+                                   title="Other work" required="required">
                         </div>
                     </div>
                 </div>
@@ -53,261 +48,7 @@
 
                 <div class="row">
                     <div class="col-sm-6 col-md-3 col-lg-3">
-                        {{ f.floatingLabel('sbhco-n', 'Any cancer?') }}
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-lg-2">
-                        <div class="form-group">
-                            {{ f.inlineRadioNYQ("sbhco") }}
-                        </div>
-                    </div>
-                    <div id="sbhco-container" style="display: none;">
-                        <div class="form-group col-sm-4 col-md-2">
-                            <label class="control-label required" for="sbhcdod">Year</label>
-                            {{ f.yearpicker("sbhcdod", true, true) }}
-                        </div>
-                        <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
-                            <label class="control-label required" for="sbhcpbo">Primary site</label>
-                            <input class="form-control input-sm" type="text" name="sbhcpbo"
-                                   id="sbhcpbo" required="required">
-                        </div>
-                    </div>
-                </div>
-                <hr class="visible-xs-block visible-sm-block"/>
-
-                <div class="row">
-                    <div class="col-sm-6 col-md-3 col-lg-3">
-                        {{ f.floatingLabel('sbmpa-n', 'Asthma?') }}
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-lg-2">
-                        <div class="form-group">
-                            {{ f.inlineRadioNYQ("sbmpa") }}
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-lg-7" id="sbmpa-container" style="display: none;">
-                        <div class="form-group">
-                            <label for="sbmpat-n" class="required">Under current treatment?</label><br/>
-                            {{ f.inlineRadio("sbmpat","sbmpat-n","n", "No", true) }}
-                            {{ f.inlineRadio("sbmpat","sbmpat-y","y", "Yes") }}
-                        </div>
-                    </div>
-                </div>
-                <hr class="visible-xs-block visible-sm-block"/>
-
-                <div class="row">
-                    <div class="col-sm-6 col-md-3 col-lg-3">
-                        {{ f.floatingLabel('sbmpc-n', 'Emphysema or chronic bronchitis (COPD)?') }}
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-lg-2">
-                        <div class="form-group">
-                            {{ f.inlineRadioNYQ("sbmpc") }}
-                        </div>
-                    </div>
-                    <div class="col-sm-4 col-md-2" id="sbmpc-container" style="display: none;">
-                        <div class="form-group">
-                            <label class="control-label required" for="sbmpcw">Year</label>
-                            {{ f.yearpicker("sbmpcw", true, true) }}
-                        </div>
-                    </div>
-                </div>
-                <hr class="visible-xs-block visible-sm-block"/>
-
-                <div class="row">
-                    <div class="col-sm-6 col-md-3 col-lg-3">
-                        {{ f.floatingLabel('sbmpht-n', 'High blood pressure?') }}
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-lg-2">
-                        <div class="form-group">
-                            {{ f.inlineRadioNYQ("sbmpht") }}
-                        </div>
-                    </div>
-                    <div id="sbmpht-container" style="display: none;">
-                        <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
-                            <label class="form-check-inline required" for="sbmphtt-n">Treated?</label><br/>
-                            {{ f.inlineRadio("sbmphtt", "sbmphtt-n", "n", "No", true) }}
-                            {{ f.inlineRadio("sbmphtt", "sbmphtt-y", "y", "Yes") }}
-
-                        </div>
-                        <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
-                            <label class="control-label required" for="sbmphtsw">Year</label>
-                            {{ f.yearpicker("sbmphtsw", true, true) }}
-                        </div>
-                        <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
-                            <label class="control-label numeric" for="sbmphthv">Highest Value</label>
-                            <input class="form-control input-sm numeric decimalformat" type="text" name="sbmphthv"
-                                   id="sbmphthv">
-                        </div>
-
-                    </div>
-                </div>
-                <hr class="visible-xs-block visible-sm-block"/>
-
-                <div class="row">
-                    <div class="col-sm-6 col-md-3 col-lg-3">
-                        {{ f.floatingLabel('sbmphc-n', 'High cholesterol?') }}
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-lg-2">
-                        <div class="form-group">
-                            {{ f.inlineRadioNYQ("sbmphc") }}
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-lg-7" id="sbmphc-container" style="display: none;">
-                        <div class="form-group">
-                            <label class="control-label required" for="sbmphct-n">Treated?</label><br/>
-                            {{ f.inlineRadio("sbmphct", "sbmphct-n", "n", "No", true) }}
-                            {{ f.inlineRadio("sbmphct", "sbmphct-y", "y", "Yes") }}
-                        </div>
-                    </div>
-                </div>
-                <hr class="visible-xs-block visible-sm-block"/>
-
-                <div class="row">
-                    <div class="col-sm-6 col-md-3 col-lg-3">
-                        {{ f.floatingLabel('sbmpas-n', 'Had an angioplasty or stent?') }}
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-lg-2">
-                        <div class="form-group">
-                            {{ f.inlineRadioNYQ("sbmpas") }}
-                        </div>
-                    </div>
-                    <div id="sbmpas-container" style="display: none;">
-                        <div class="form-group col-sm-4 col-md-2">
-                            <label class="control-label required" for="sbmpasw">Year</label>
-                            {{ f.yearpicker("sbmpasw", true, true) }}
-                        </div>
-                        <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
-                            <label class="control-label required" for="sbmpast">Where Treated</label>
-                            <input class="form-control input-sm" type="text" name="sbmpast" id="sbmpast"
-                                   required="required">
-                        </div>
-                    </div>
-                </div>
-                <hr class="visible-xs-block visible-sm-block"/>
-
-                <div class="row">
-                    <div class="col-sm-6 col-md-3 col-lg-3">
-                        {{ f.floatingLabel('sbmpmi-n', 'MI?') }}
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-lg-2">
-                        <div class="form-group">
-                            {{ f.inlineRadioNYQ("sbmpmi") }}
-                        </div>
-                    </div>
-                    <div id="sbmpmi-container" style="display: none;">
-                        <div class="form-group col-sm-4 col-md-2">
-                            <label class="control-label required" for="sbmpmid">Year</label>
-                            {{ f.yearpicker("sbmpmid", true, true) }}
-                        </div>
-                        <div class="form-group col-sm-4 col-md-2">
-                            <label class="control-label" for="sbmpmiw">Where Treated</label>
-                            <input class="form-control input-sm" type="text" name="sbmpmiw" id="sbmpmiw">
-                        </div>
-                    </div>
-                </div>
-                <hr class="visible-xs-block visible-sm-block"/>
-
-                <div class="row">
-                    <div class="col-sm-6 col-md-3 col-lg-3">
-                        {{ f.floatingLabel('sbmps-n', 'Stroke?') }}
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-lg-2">
-                        <div class="form-group">
-                            {{ f.inlineRadioNYQ("sbmps") }}
-                        </div>
-                    </div>
-                    <div id="sbmps-container" style="display: none;">
-                        <div class="form-group col-sm-4 col-md-2">
-                            <label class="control-label required" for="sbmpsd">Year</label>
-                            {{ f.yearpicker("sbmpsd", true, true) }}
-                        </div>
-                    </div>
-                </div>
-                <hr class="visible-xs-block visible-sm-block"/>
-
-                <div class="row">
-                    <div class="col-sm-6 col-md-3 col-lg-3">
-                        {{ f.floatingLabel('sbmppv-n', 'Peripheral vascular disease (poor circulation)?') }}
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-lg-2">
-                        <div class="form-group">
-                            {{ f.inlineRadioNYQ("sbmppv") }}
-                        </div>
-                    </div>
-                    <div id="sbmppv-container" style="display: none;">
-                        <div class="form-group  col-sm-4 col-md-2">
-                            <label class="control-label required" for="sbmppvd">Year</label>
-                            {{ f.yearpicker("sbmppvd", true, true) }}
-                        </div>
-                    </div>
-                </div>
-                <hr class="visible-xs-block visible-sm-block"/>
-
-                <div class="row">
-                    <div class="col-sm-6 col-md-3 col-lg-3">
-                        {{ f.floatingLabel('sbmpd-n', 'Diabetes?') }}
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-lg-2">
-                        <div class="form-group">
-                            {{ f.inlineRadioNYQ("sbmpd") }}
-                        </div>
-                    </div>
-                    <div id="sbmpd-container" style="display: none;">
-                        <div class=" col-sm-4 col-md-2 form-group">
-                            <label class="control-label required" for="sbmpdw">Starting at what age?</label>
-                            <input class="form-control input-sm numeric" type="text" name="sbmpdw"
-                                   id="sbmpdw" size="4" maxlength="4">
-                        </div>
-
-                        <div class=" col-sm-4 col-md-2 form-group">
-                            <label class="control-label required" for="sbmpdt-n">Treated?</label><br/>
-                            {{ f.inlineRadio("sbmpdt", "sbmpdt-n", "n", "No", true) }}
-                            {{ f.inlineRadio("sbmpdt", "sbmpdt-y", "y", "Yes") }}
-                        </div>
-
-                    </div>
-                </div>
-                <hr class="visible-xs-block visible-sm-block"/>
-
-                <div class="row">
-                    <div class="col-sm-6 col-md-3 col-lg-3">
-                        {{ f.floatingLabel('sbmpld-n', 'Liver disease?') }}
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-lg-2">
-                        <div class="form-group">
-                            {{ f.inlineRadioNYQ("sbmpld") }}
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-lg-7" id="sbmpld-container" style="display: none;">
-                        <div class="form-group">
-                            <label class="control-label required" for="sbmpldt-m">Severity?</label><br/>
-                            {{ f.inlineRadio("sbmpldt", "sbmpldt-m", "m", "Mild", true) }}
-                            {{ f.inlineRadio("sbmpldt", "sbmpldt-s", "s", "Severe") }}
-                        </div>
-                    </div>
-                </div>
-                <hr class="visible-xs-block visible-sm-block"/>
-
-                <div class="row">
-                    <div class="col-sm-6 col-md-3 col-lg-3">
-                        {{ f.floatingLabel('sbmprd-n', 'Kidney (renal) disease?') }}
-                    </div>
-                    <div class="col-sm-6 col-md-3 col-lg-2">
-                        <div class="form-group">
-                            {{ f.inlineRadioNYQ("sbmprd") }}
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-lg-7" id="sbmprd-container" style="display: none;">
-                        <div class="form-group">
-                            <label class="control-label required" for="sbmprdt-m">Severity?</label> <br/>
-                            {{ f.inlineRadio("sbmprdt", "sbmprdt-m", "m", "Mild", true) }}
-                            {{ f.inlineRadio("sbmprdt", "sbmprdt-s", "s", "Severe") }}
-                        </div>
-                    </div>
-                </div>
-                <hr class="visible-xs-block visible-sm-block"/>
-
-                <div class="row">
-                    <div class="col-sm-6 col-md-3 col-lg-3">
-                        {{ f.floatingLabel('sblcs-n', 'Have you experienced any symptoms indicative of lung cancer?') }}
+                        <label for="sblcs-n">Have you experienced any symptoms indicative of lung cancer?</label>
                     </div>
                     <div class="col-sm-6 col-md-3 col-lg-2">
                         <div class="form-group">
@@ -404,30 +145,460 @@
 
                 </div>
                 <hr class="visible-xs-block visible-sm-block"/>
-
+                <br/><br/>
+                <label>Do you know if you have had any of the following conditions?</label>
+                <h4>Cancers</h4>
                 <div class="row">
-                    <div class="col-sm-6 col-md-3">
-                        <label for="sbahao-i" class="control-label">Have you ever worked in any of the
-                            following?</label>
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        {{ f.floatingLabel('sbfc-n', 'Family history of lung cancer') }}
                     </div>
-                    <div class="col-sm-6 col-md-9">
+                    <div class="col-sm-6 col-md-3 col-lg-2">
                         <div class="form-group">
-                            {{ f.checkbox("sbahaoi", "i", "Asbestos product manufacturing") }}
-                            {{ f.checkbox("sbahaoj", "j", "Auto repair") }}
-                            {{ f.checkbox("sbahaoh", "h", "Building maintenance") }}
-                            {{ f.checkbox("sbahaof", "f", "Chemical industry/foundary/refinery") }}
-                            {{ f.checkbox("sbahaoa", "a", "Construction/demolition") }}
-                            {{ f.checkbox("sbahaoe", "e", "Mining") }}
-                            {{ f.checkbox("sbahaog", "g", "Nuclear industry") }}
-                            {{ f.checkbox("sbahaoc", "c", "Ship construction/repair") }}
-                            {{ f.checkbox("sbahaoo", "o", "Other") }}
-                            <input class="form-control input-sm" type="text" name="sbahas" id="sbahas"
-                                   title="Other work" required="required">
+                            {{ f.inlineRadioNYQ("sbfc") }}
+                        </div>
+                    </div>
+                    <div id="sbfc-container" style="display: none;">
+                        <div class="form-group col-sm-4 col-md-2">
+                            <label class="control-label required" for="sbfcf-n">Father?</label><br/>
+                            {{ f.inlineRadio("sbfcf","sbfcf-n","n", "No", true) }}
+                            {{ f.inlineRadio("sbfcf","sbfcf-y","y", "Yes") }}
+                        </div>
+                        <div class="form-group col-sm-4 col-md-2">
+                            <label class="control-label required" for="sbfcm-n">Mother?</label><br/>
+                            {{ f.inlineRadio("sbfcm","sbfcm-n","n", "No", true) }}
+                            {{ f.inlineRadio("sbfcm","sbfcm-y","y", "Yes") }}
+                        </div>
+                        <div class="form-group col-sm-4 col-md-2">
+                            <label class="control-label required" for="sbfcs-n">Siblings?</label><br/>
+                            {{ f.inlineRadio("sbfcs","sbfcs-n","n", "No", true) }}
+                            {{ f.inlineRadio("sbfcs","sbfcs-y","y", "Yes") }}
                         </div>
                     </div>
                 </div>
                 <hr class="visible-xs-block visible-sm-block"/>
 
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        {{ f.floatingLabel('sbhco-n', 'Any cancer') }}
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            {{ f.inlineRadioNYQ("sbhco") }}
+                        </div>
+                    </div>
+                    <div id="sbhco-container" style="display: none;">
+                        <div class="form-group col-sm-4 col-md-2">
+                            <label class="control-label required" for="sbhcdod">Year</label>
+                            {{ f.yearpicker("sbhcdod", true, true) }}
+                        </div>
+                        <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
+                            <label class="control-label required" for="sbhcpbo">Primary site</label>
+                            <input class="form-control input-sm" type="text" name="sbhcpbo"
+                                   id="sbhcpbo" required="required">
+                        </div>
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        {{ f.floatingLabel('sbhme-n', 'Melanoma') }}
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            {{ f.inlineRadioNYQ("sbhme") }}
+                        </div>
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        {{ f.floatingLabel('sbhba-n', 'Basal/squamous-cell skin cancer') }}
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            {{ f.inlineRadioNYQ("sbhba") }}
+                        </div>
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        {{ f.floatingLabel('sbhle-n', 'Leukemia') }}
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            {{ f.inlineRadioNYQ("sbhle") }}
+                        </div>
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        {{ f.floatingLabel('sbhly-n', 'Lymphoma') }}
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            {{ f.inlineRadioNYQ("sbhly") }}
+                        </div>
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        {{ f.floatingLabel('sbhcao', 'Any other cancer') }}
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            <input type="text" name="sbhcao" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+                <h4>Pulmonary problems</h4>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        {{ f.floatingLabel('sbmpa-n', 'Asthma') }}
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            {{ f.inlineRadioNYQ("sbmpa") }}
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-7" id="sbmpa-container" style="display: none;">
+                        <div class="form-group">
+                            <label for="sbmpat-n" class="required">Under current treatment?</label><br/>
+                            {{ f.inlineRadio("sbmpat","sbmpat-n","n", "No", true) }}
+                            {{ f.inlineRadio("sbmpat","sbmpat-y","y", "Yes") }}
+                        </div>
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        {{ f.floatingLabel('sbmpc-n', 'COPD/Emphysema/Chronic bronchitis') }}
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            {{ f.inlineRadioNYQ("sbmpc") }}
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-md-2" id="sbmpc-container" style="display: none;">
+                        <div class="form-group">
+                            <label class="control-label required" for="sbmpcw">Year</label>
+                            {{ f.yearpicker("sbmpcw", true, true) }}
+                        </div>
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        {{ f.floatingLabel('sbmpn-n', 'Childhood pneumonia') }}
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            {{ f.inlineRadioNYQ("sbmpn") }}
+                        </div>
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+                <h4>Diabetes</h4>
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        {{ f.floatingLabel('sbmpd-n', 'Diabetes') }}
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            {{ f.inlineRadioNYQ("sbmpd") }}
+                        </div>
+                    </div>
+                    <div id="sbmpd-container" style="display: none;">
+                        <div class=" col-sm-4 col-md-2 form-group">
+                            <label class="control-label required" for="sbmpdw">Starting at what age?</label>
+                            <input class="form-control input-sm numeric" type="text" name="sbmpdw"
+                                   id="sbmpdw" size="4" maxlength="4">
+                        </div>
+
+                        <div class=" col-sm-4 col-md-2 form-group">
+                            <label class="control-label required" for="sbmpdt-n">Treated?</label><br/>
+                            {{ f.inlineRadio("sbmpdt", "sbmpdt-n", "n", "No", true) }}
+                            {{ f.inlineRadio("sbmpdt", "sbmpdt-y", "y", "Yes") }}
+                        </div>
+
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+                <h4>Cardiac Diseases</h4>
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        {{ f.floatingLabel('sbmpmi-n', 'Myocardial Infarction (MI)') }}
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            {{ f.inlineRadioNYQ("sbmpmi") }}
+                        </div>
+                    </div>
+                    <div id="sbmpmi-container" style="display: none;">
+                        <div class="form-group col-sm-4 col-md-2">
+                            <label class="control-label required" for="sbmpmid">Year</label>
+                            {{ f.yearpicker("sbmpmid", true, true) }}
+                        </div>
+                        <div class="form-group col-sm-4 col-md-2">
+                            <label class="control-label" for="sbmpmiw">Where Treated</label>
+                            <input class="form-control input-sm" type="text" name="sbmpmiw" id="sbmpmiw">
+                        </div>
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        {{ f.floatingLabel('sbmpas-n', 'Angiostent') }}
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            {{ f.inlineRadioNYQ("sbmpas") }}
+                        </div>
+                    </div>
+                    <div id="sbmpas-container" style="display: none;">
+                        <div class="form-group col-sm-4 col-md-2">
+                            <label class="control-label required" for="sbmpasw">Year</label>
+                            {{ f.yearpicker("sbmpasw", true, true) }}
+                        </div>
+                        <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
+                            <label class="control-label required" for="sbmpast">Where Treated</label>
+                            <input class="form-control input-sm" type="text" name="sbmpast" id="sbmpast"
+                                   required="required">
+                        </div>
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        {{ f.floatingLabel('sbmpcabg-n', '<abbr title="coronary artery bypass grafting">CABG<abbr>') }}
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            {{ f.inlineRadioNYQ("sbmpcabg") }}
+                        </div>
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        {{ f.floatingLabel('sbmpangi-n', 'Angina') }}
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            {{ f.inlineRadioNYQ("sbmpangi") }}
+                        </div>
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        {{ f.floatingLabel('sbmphf-n', 'Heart Failure') }}
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            {{ f.inlineRadioNYQ("sbmphf") }}
+                        </div>
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+                <h4>Vascular Diseases</h4>
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        {{ f.floatingLabel('sbmps-n', 'Stroke') }}
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            {{ f.inlineRadioNYQ("sbmps") }}
+                        </div>
+                    </div>
+                    <div id="sbmps-container" style="display: none;">
+                        <div class="form-group col-sm-4 col-md-2">
+                            <label class="control-label required" for="sbmpsd">Year</label>
+                            {{ f.yearpicker("sbmpsd", true, true) }}
+                        </div>
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        {{ f.floatingLabel('sbmppv-n', 'Peripheral vascular disease') }}
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            {{ f.inlineRadioNYQ("sbmppv") }}
+                        </div>
+                    </div>
+                    <div id="sbmppv-container" style="display: none;">
+                        <div class="form-group  col-sm-4 col-md-2">
+                            <label class="control-label required" for="sbmppvd">Year</label>
+                            {{ f.yearpicker("sbmppvd", true, true) }}
+                        </div>
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        {{ f.floatingLabel('sbmpht-n', 'Hypertension') }}
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            {{ f.inlineRadioNYQ("sbmpht") }}
+                        </div>
+                    </div>
+                    <div id="sbmpht-container" style="display: none;">
+                        <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
+                            <label class="form-check-inline required" for="sbmphtt-n">Treated?</label><br/>
+                            {{ f.inlineRadio("sbmphtt", "sbmphtt-n", "n", "No", true) }}
+                            {{ f.inlineRadio("sbmphtt", "sbmphtt-y", "y", "Yes") }}
+                        </div>
+                        <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
+                            <label class="control-label required" for="sbmphtsw">Year</label>
+                            {{ f.yearpicker("sbmphtsw", true, true) }}
+                        </div>
+                        <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
+                            <label class="control-label numeric" for="sbmphthv">Highest Value</label>
+                            <input class="form-control input-sm numeric decimalformat" type="text" name="sbmphthv"
+                                   id="sbmphthv">
+                        </div>
+
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+
+                <h4>Other Diseases</h4>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        {{ f.floatingLabel('sbmpulce-n', 'Ulcer') }}
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            {{ f.inlineRadioNYQ("sbmpulce") }}
+                        </div>
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        {{ f.floatingLabel('sbmpld-n', 'Liver disease') }}
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            {{ f.inlineRadioNYQ("sbmpld") }}
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-7" id="sbmpld-container" style="display: none;">
+                        <div class="form-group">
+                            <label class="control-label required" for="sbmpldt-m">Severity?</label><br/>
+                            {{ f.inlineRadio("sbmpldt", "sbmpldt-m", "m", "Mild", true) }}
+                            {{ f.inlineRadio("sbmpldt", "sbmpldt-s", "s", "Severe") }}
+                        </div>
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        {{ f.floatingLabel('sbmprd-n', 'Renal disease') }}
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            {{ f.inlineRadioNYQ("sbmprd") }}
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-7" id="sbmprd-container" style="display: none;">
+                        <div class="form-group">
+                            <label class="control-label required" for="sbmprdt-m">Severity?</label> <br/>
+                            {{ f.inlineRadio("sbmprdt", "sbmprdt-m", "m", "Mild", true) }}
+                            {{ f.inlineRadio("sbmprdt", "sbmprdt-s", "s", "Severe") }}
+                        </div>
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        {{ f.floatingLabel('sbmpct-n', 'Connective tissue diseases') }}
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            {{ f.inlineRadioNYQ("sbmpct") }}
+                        </div>
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        {{ f.floatingLabel('sbmphc-n', 'High cholesterol') }}
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            {{ f.inlineRadioNYQ("sbmphc") }}
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-7" id="sbmphc-container" style="display: none;">
+                        <div class="form-group">
+                            <label class="control-label required" for="sbmphct-n">Treated?</label><br/>
+                            {{ f.inlineRadio("sbmphct", "sbmphct-n", "n", "No", true) }}
+                            {{ f.inlineRadio("sbmphct", "sbmphct-y", "y", "Yes") }}
+                        </div>
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        {{ f.floatingLabel('sbmpoth-n', 'Other') }}
+                    </div>
+                    <div class="col-sm-6 col-md-3 col-lg-2">
+                        <div class="form-group">
+                            {{ f.inlineRadioNYQ("sbmpoth") }}
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-7" id="sbmpoth-container" style="display: none;">
+                        <div class="form-group">
+                            <label class="control-label required" for="sbmpoth-n">Specify</label><br/>
+                            <input class="form-control" type="text" name="sbmpod" id="sbmpod"
+                                   placeholder="specify" required="required">
+                        </div>
+                    </div>
+                </div>
+                <hr class="visible-xs-block visible-sm-block"/>
+
+                <label for="sbcmnt"><h4>Comments</h4></label>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <textarea name="sbcmnt" id="sbcmnt" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
 
             </div>
             <div class="pull-left">
@@ -523,6 +694,7 @@
                         sbmpdt: {validators: {notEmpty: {message: 'Treated is required'}}},
                         sbmpldt: {validators: {notEmpty: {message: 'Severity is required'}}},
                         sbmprdt: {validators: {notEmpty: {message: 'Severity is required'}}},
+                        sbmpod: {validators: {notEmpty: {message: 'Other disease is required'}}},
                         sbwcos: {validators: {notEmpty: {message: 'Other symptom is required'}}},
                         sbahcl: {validators: {notEmpty: {message: 'CT location is required'}}},
                         sbahas: {validators: {notEmpty: {message: 'Other work is required'}}},
@@ -577,7 +749,7 @@
             //conditionally enabled fields
             const uncheckableRadioFieldNames = Array(
                 "sbfc", "sbhco", "sbmpa", "sbmpc", "sbmpht", "sbmphc", "sbmpas", "sbmpmi", "sbmps", "sbmppv", "sbmpd",
-                "sbmpld", "sbmprd", "sbahpft", "sblcs"
+                "sbmpld", "sbmprd", "sbahpft", "sblcs", "sbmpoth"
             );
 
             $.each(uncheckableRadioFieldNames, function (idx, name) {

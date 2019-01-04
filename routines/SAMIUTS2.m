@@ -1,4 +1,4 @@
-SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICAS2 ; 12/18/18 9:35am
+SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICAS2 ; 1/3/19 3:54pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -203,12 +203,9 @@ UTWSCAS ; @TEST - generate case review page
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d
  .; if the first non space 10 characters are a date, skip
  . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
- . i @nodea["<tr><td> 444-67-8924 </td><td> - </td><td> - </td><td>12/3/2018</td><td>" q
- . i @nodea["vapals:ceform-2018-12-03" q
- . i @nodea["value=ceform-2018-12-03" q
- . i ($qs(nodea,1)=219) q  ; form incomplete or not
- . i '($qs(nodep,1)=$qs(nodea,1)) s utsuccess=0
- . i '(@nodep=@nodea) s utsuccess=0
+ . i (@nodep["meta content") q
+ . i '($qs(nodep,1)=$qs(nodea,1)) s utsuccess=0 w !,"qs ",nodep
+ . i '(@nodep=@nodea) s utsuccess=0 w !,@nodep,!,@nodea,!
  i '(nodea="") s utsuccess=0 w "at end:",nodea
  D CHKEQ^%ut(utsuccess,1,"Testing generating case review page FAILED!")
  q

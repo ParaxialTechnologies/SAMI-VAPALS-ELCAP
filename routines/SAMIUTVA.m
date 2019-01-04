@@ -1,4 +1,4 @@
-SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 12/27/18 12:44pm
+SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 1/3/19 3:41pm
  ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -257,6 +257,7 @@ UTADDND ; @TEST - Add an addendum to a signed note
  Q
  ;
 UTDELTIU ; @TEST - Deleting an unsigned TIU note
+ H 2
  N D,D0,DG,DI,DIC,DICR,DIG,DIH
  N tiuaien S tiuaien=$S($P(tiuien,"^",2):$P(tiuien,"^",2),1:0)
  s tiuien=+$G(tiuien)
@@ -281,12 +282,16 @@ UTURBR ; @TEST - extrinsic to return urban or rural depending on zip code
  q
  ;
 UTTASK ; @TEST - test TASKIT creation of new note,text, and encounter
- S filter("form")="siform-2018-11-13"
+ ;get existing siform from graph store.
+ n root s root=$$setroot^%wd("vapals-patients")
+ n glbrt s glbrt=$na(@root@("graph","XXX00001","siform"))
+ s filter("form")=$o(@glbrt)
+ ;
  s filter("studyid")="XXX00001"
  n tiuien s tiuien=0
- k ^TMP("UNIT TEST","UTTASK^SAMIUTVA",$J)
+ k ^TMP("UNIT TEST","UTTASK^SAMIUTVA")
  D TASKIT^SAMIVSTA
- s tiuien=$g(^TMP("UNIT TEST","UTTASK^SAMIUTVA",$J))
+ s tiuien=$g(^TMP("UNIT TEST","UTTASK^SAMIUTVA"))
  s utsuccess=$S(tiuien>0:1,1:0)
  D CHKEQ^%ut(utsuccess,1,"Testing creating a new TIU note FAILED!")
  ; If a new note was generated add encounter info

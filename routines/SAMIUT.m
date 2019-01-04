@@ -1,4 +1,4 @@
-SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 12/3/18 8:25am
+SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 1/3/19 7:11pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -44,6 +44,7 @@ XTROU ; Unit tests for SAMI*.m
  ;;SAMIUTCR
  ;;SAMIUTR0
  ;;SAMIUTR1
+ ;;SAMIUTR2
  ;;SAMIUTR9
  ;;SAMIUTRA
  ;;SAMIUTRX
@@ -53,6 +54,7 @@ XTROU ; Unit tests for SAMI*.m
  ;;SAMIUTNI
  ;;SAMIUTC2
  ;;SAMIUTVA
+ ;;SAMIUTVB
  ;;SAMIUTVS
  ;;SAMIUTRU
  ;;SAMIUTSV
@@ -83,6 +85,7 @@ COVERAGE ; Coverage tests for SAMI*.m
  set I=I+1,RUNCODE(I)="^SAMIUTCR"
  set I=I+1,RUNCODE(I)="^SAMIUTR0"
  set I=I+1,RUNCODE(I)="^SAMIUTR1"
+ set I=I+1,RUNCODE(I)="^SAMIUTR2"
  set I=I+1,RUNCODE(I)="^SAMIUTR9"
  set I=I+1,RUNCODE(I)="^SAMIUTRA"
  set I=I+1,RUNCODE(I)="^SAMIUTRX"
@@ -92,6 +95,7 @@ COVERAGE ; Coverage tests for SAMI*.m
  set I=I+1,RUNCODE(I)="^SAMIUTNI"
  set I=I+1,RUNCODE(I)="^SAMIUTC2"
  set I=I+1,RUNCODE(I)="^SAMIUTVA"
+ set I=I+1,RUNCODE(I)="^SAMIUTVB"
  set I=I+1,RUNCODE(I)="^SAMIUTVS"
  set I=I+1,RUNCODE(I)="^SAMIUTRU"
  set I=I+1,RUNCODE(I)="^SAMIUTSV"
@@ -120,6 +124,7 @@ COVERAGE ; Coverage tests for SAMI*.m
  set I=I+1,XCLUDE(I)="SAMIVSTR"
  set I=I+1,XCLUDE(I)="SAMIUTVR"
  ; Exclude the unit-test routines
+ set I=I+1,XCLUDE(I)="SAMIUT"
  set I=I+1,XCLUDE(I)="SAMIUTFF"
  set I=I+1,XCLUDE(I)="SAMIUTLG"
  set I=I+1,XCLUDE(I)="SAMIUTM2"
@@ -131,6 +136,7 @@ COVERAGE ; Coverage tests for SAMI*.m
  set I=I+1,XCLUDE(I)="SAMIUTCR"
  set I=I+1,XCLUDE(I)="SAMIUTR0"
  set I=I+1,XCLUDE(I)="SAMIUTR1"
+ set I=I+1,XCLUDE(I)="SAMIUTR2"
  set I=I+1,XCLUDE(I)="SAMIUTR9"
  set I=I+1,XCLUDE(I)="SAMIUTRA"
  set I=I+1,XCLUDE(I)="SAMIUTRX"
@@ -140,6 +146,7 @@ COVERAGE ; Coverage tests for SAMI*.m
  set I=I+1,XCLUDE(I)="SAMIUTNI"
  set I=I+1,XCLUDE(I)="SAMIUTC2"
  set I=I+1,XCLUDE(I)="SAMIUTVA"
+ set I=I+1,XCLUDE(I)="SAMIUTVB"
  set I=I+1,XCLUDE(I)="SAMIUTVS"
  set I=I+1,XCLUDE(I)="SAMIUTRU"
  set I=I+1,XCLUDE(I)="SAMIUTSV"

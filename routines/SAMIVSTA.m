@@ -1,4 +1,4 @@
-SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 12/27/18 12:48pm
+SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 1/3/19 2:14pm
  ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -121,7 +121,7 @@ TASKIT ;
 NEWTIU d BLDTIU(.tiuien,ptdfn,tiutitleien,provduz,clinien)
  i 'tiuien q:$Q 0  q
  ; For unit testing. Save new tiuien
- i $d(%ut) s ^TMP("UNIT TEST","UTTASK^SAMIUTVA",$J)=tiuien
+ i $d(%ut) s ^TMP("UNIT TEST","UTTASK^SAMIUTVA")=tiuien
  ;
  ; Now set the text in the note
 NEWTXT d SETTEXT(.tiuien,dest)

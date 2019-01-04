@@ -1,4 +1,4 @@
-SAMIUTAD ;ven/lgc - Unit test for SAMIADMN ; 12/12/18 11:26am
+SAMIUTAD ;ven/lgc - Unit test for SAMIADMN ; 1/3/19 9:37am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -40,11 +40,13 @@ UTCLRW ; @TEST - Test Clear the M WebServer
  n root,poo,arc s root=$$setroot^%wd("seeGraph")
  n poo m poo=@root
  d SVUTARR^SAMIUTST(.poo,"UTCLRW^SAMIUTAD")
+ H 1
  d purgegraph^%wd("seeGraph")
  D CLRWEB^SAMIADMN
  ; Compare rebuilt seeGraph with data saved
  k arc m arc=@root
  k poo d PLUTARR^SAMIUTST(.poo,"UTCLRW^SAMIUTAD")
+ H 1
  s utsuccess=1
  n nodea,nodep s nodea=$na(arc),nodep=$na(poo)
  f  s nodea=$Q(@nodea),nodep=$Q(@nodep) q:nodea=""  d  q:'utsuccess

@@ -1,4 +1,4 @@
-SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 1/2/19 10:56am
+SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 1/3/19 2:33pm
  ;;18.0;SAMI;;
  ;
  ;
@@ -393,20 +393,29 @@ UTSBFRM ; @TEST - Testing creating a background form
  . D FAIL^%ut("Error, no samigratedate for dfn=1!")
  k @root@("graph",sid,"sbform-"_cdate)
  D MKSBFORM^SAMIHOM3(SAMIUNUM)
+ H 2
  ; look for Sbform
- s utsuccess=$d(@root@("graph",sid,"sbform-"_cdate))
+ s utsuccess=+$d(@root@("graph",sid,"sbform-"_cdate))
  k @root@("graph",sid,"sbform-"_cdate)
  D CHKEQ^%ut(utsuccess,10,"Testing makeSbform FAILED!")
- ;
+ q
  ; 
  ;
 UTPOSTF ; @TEST - Test WSVAPALS API route="postform" build TIU
  N SAMIUARG,SAMIUBODY,SAMIURSLT,route,SAMIUPOO,SAMIUARC,SAMIUFLTR
+ ; get name of existing siform for our test patient
+ s root=$$setroot^%wd("vapals-patients")
+ n glbrt s glbrt=$na(@root@("graph","XXX00001","siform"))
+ s SAMIUARG("form")=$o(@glbrt)
  ;
+ K ^TMP("UNIT TEST","UTTASK^SAMIUTVA")
  s SAMIUARG("samiroute")="postform"
- s SAMIUARG("form")="siform"
  s SAMIUARG("studyid")="XXX00001"
  D WSVAPALS^SAMIHOM3(.SAMIUARG,.SAMIUBODY,.SAMIURSLT)
+ H 2
+ n tiuien s tiuien=$G(^TMP("UNIT TEST","UTTASK^SAMIUTVA"))
+ i '$g(tiuien) d  q
+ . D FAIL^%ut("Error, New TIU note not created")
  m SAMIUPOO=SAMIURSLT
  s utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
@@ -415,9 +424,13 @@ UTPOSTF ; @TEST - Test WSVAPALS API route="postform" build TIU
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d
  . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
  . i (@nodep["meta content") q
+ . i (@nodep["Date of contact:") q
  . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
  . i '(@nodea=@nodep) s utsuccess=0
  i 'nodea="" s utsuccess=0
+ ; Delete the tiu note just created
+ n chkdel s chkdel=$$DELTIU^SAMIVSTA(tiuien)
+ ;
  D CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS postform  FAILED!")
  q
 EOR ;End of routine SAMIUTH3

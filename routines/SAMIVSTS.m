@@ -1,4 +1,4 @@
-SAMIVSTS ;;ven/arc/lgc - M2M Broker to build TIU for VA-PALS ; 12/27/18 12:52pm
+SAMIVSTS ;;ven/arc/lgc - M2M Broker to build TIU for VA-PALS ; 1/4/19 8:02pm
  ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -54,14 +54,13 @@ SAMIVSTS ;;ven/arc/lgc - M2M Broker to build TIU for VA-PALS ; 12/27/18 12:52pm
  ;  supported references to perform all platform specific functions.
  ;  (Exemptions: Kernel & VA Fileman)
  ;
-START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
- D EN^%ut($T(+0),2)
- Q
- ;
  ;@API-code: D ALLPTS^SAMIVSTS
  ;@API-called-by: Option : SAMI PULL VA-PALS PATIENTS
  ;@API-Context menu : HMP UI CONTEXT
  ;@API-Remote Procedure : HMP PATIENT SELECT
+ ;
+ ; not from the top
+ q
  ;
 ALLPTS ; Get all patients from a server by sequentially calling
  ;  for last names beginning with each letter of the
@@ -75,10 +74,10 @@ ALLPTS ; Get all patients from a server by sequentially calling
  ;
  ;multi-dev;API;Procedure;clean;silent;sac exemption;0% tests
  ;
- D ALLPTS1("ALLPTS")
+ d ALLPTS1("ALLPTS")
  ; Now build a new 'patient-lookup' graph
- D MKGPH
- Q
+ d MKGPH
+ q
  ;
  ;ENTER
  ;  SAMISS = Subscript name within ^KBAP global
@@ -86,63 +85,63 @@ ALLPTS ; Get all patients from a server by sequentially calling
  ;           Specifically designed for UNIT TEST where
  ;           we don't wish to corrupt existing data set
 ALLPTS1(SAMISS) ; Build ^KBAP("ALLPTS" global
- N XDATA,FINI,CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY
- S CNTXT="HMP UI CONTEXT"
- S RMPRC="HMP PATIENT SELECT"
- S (CONSOLE,CNTNOPEN)=0
- S:'$L($G(SAMISS)) SAMISS="ALLPTS"
+ n SAMIXD,fini,CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR
+ s CNTXT="HMP UI CONTEXT"
+ s RMPRC="HMP PATIENT SELECT"
+ s (CONSOLE,CNTNOPEN)=0
+ s:'$l($g(SAMISS)) SAMISS="ALLPTS"
  ;
- K ^KBAP(SAMISS)
- N I,J F I=65:1:90 D
- . S FINI=$C(I)
- . K XARRAY
- . S XARRAY(1)="NAME"
- . S XARRAY(2)=FINI
- . D M2M^SAMIM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
- . F J=1:1:$L(XDATA,$C(13,10)) D
- .. Q:'$L($P(XDATA,$C(13,10),J))
- .. S ^KBAP(SAMISS,FINI,J)=$P(XDATA,$C(13,10),J)
+ k ^KBAP(SAMISS)
+ n I,J F I=65:1:90 d
+ . s fini=$c(I)
+ . k SAMIXARR
+ . s SAMIXARR(1)="NAME"
+ . s SAMIXARR(2)=fini
+ . d M2M^SAMIM2M(.SAMIXD,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.SAMIXARR)
+ . f J=1:1:$l(SAMIXD,$c(13,10)) d
+ .. q:'$l($p(SAMIXD,$c(13,10),J))
+ .. s ^KBAP(SAMISS,fini,J)=$p(SAMIXD,$c(13,10),J)
  ;
- Q
+ q
  ;
  ;
  ; Make Graph Store patient-lookup global from
  ;  ^KBAP("ALLPTS")
  ; e.g.
  ;   D MKGPH^KBAPUTL
-MKGPH Q:'$D(^KBAP("ALLPTS"))
+MKGPH q:'$d(^KBAP("ALLPTS"))
  n si s si=$$CLRGRPS("patient-lookup")
- Q:'$G(si)
- N gien,NODE,PTDATA,root
+ q:'$g(si)
+ n gien,node,ptdata,root
  ;s root=$$setroot^%wd("patient-lookup")
  s root=$$SETROOT^SAMIUTST("patient-lookup")
  s gien=0
- N NODE S NODE=$NA(^KBAP("ALLPTS"))
- N SNODE S SNODE=$P(NODE,")")
- F  S NODE=$Q(@NODE) Q:NODE'[SNODE  D
- . S PTDATA=@NODE
- . S gien=gien+1
- . S @root@(gien,"saminame")=$P(PTDATA,"^",4)
- . S @root@(gien,"sinamef")=$P($P($P(PTDATA,"^",4),",",2)," ")
- . S @root@(gien,"sinamel")=$P($P(PTDATA,"^",4),",")
- . S @root@(gien,"sbdob")=$E($P(PTDATA,"^",10),1,4)_"-"_$E($P(PTDATA,"^",10),5,6)_"-"_$E($P(PTDATA,"^",10),7,8)
- . S @root@(gien,"last5")=$P(PTDATA,"^",9)
- . S @root@(gien,"dfn")=$P(PTDATA,"^",12)
- . S @root@(gien,"gender")=$P($P($P(PTDATA,"pat-gender",2),"^",1,2),":",2)
- . S:($L($P(PTDATA,"^",12))) @root@("dfn",$P(PTDATA,"^",12),gien)=""
- . S:($L($P(PTDATA,"^",9))) @root@("last5",$P(PTDATA,"^",9),gien)=""
+ n node s node=$na(^KBAP("ALLPTS"))
+ n snode S snode=$p(node,")")
+ f  S node=$Q(@node) q:node'[snode  d
+ . s ptdata=@node
+ . s gien=gien+1
+ . s @root@(gien,"saminame")=$p(ptdata,"^",4)
+ . s @root@(gien,"sinamef")=$p($p($p(ptdata,"^",4),",",2)," ")
+ . s @root@(gien,"sinamel")=$p($p(ptdata,"^",4),",")
+ . s @root@(gien,"sbdob")=$e($p(ptdata,"^",10),1,4)_"-"_$e($p(ptdata,"^",10),5,6)_"-"_$e($p(ptdata,"^",10),7,8)
+ . s @root@(gien,"last5")=$p(ptdata,"^",9)
+ . s @root@(gien,"dfn")=$p(ptdata,"^",12)
+ . s @root@(gien,"gender")=$p($p($p(ptdata,"pat-gender",2),"^",1,2),":",2)
+ . s:($l($p(ptdata,"^",12))) @root@("dfn",$p(ptdata,"^",12),gien)=""
+ . s:($l($p(ptdata,"^",9))) @root@("last5",$p(ptdata,"^",9),gien)=""
  .; Mixed case
- . S:($L($P(PTDATA,"^",4))) @root@("name",$P(PTDATA,"^",4),gien)=""
+ . s:($l($p(ptdata,"^",4))) @root@("name",$p(ptdata,"^",4),gien)=""
  .; Upper case
- . S:($L($P(PTDATA,"^",1))) @root@("name",$P(PTDATA,"^",1),gien)=""
- . I $L($P(PTDATA,"^",4)) D
- .. S @root@("saminame",$P(PTDATA,"^",4),gien)=""
- . I $L($P($P($P(PTDATA,"^",4),",",2)," ")) D
- .. S @root@("sinamef",$P($P($P(PTDATA,"^",4),",",2)," "),gien)=""
- . I $L($P($P(PTDATA,"^",4),",")) D
- .. S @root@("sinamel",$P($P(PTDATA,"^",4),","),gien)=""
- S @root@("Date Last Updated")=$$HTE^XLFDT($H)
- Q
+ . s:($l($p(ptdata,"^",1))) @root@("name",$p(ptdata,"^",1),gien)=""
+ . i $l($p(ptdata,"^",4)) D
+ .. s @root@("saminame",$p(ptdata,"^",4),gien)=""
+ . i $l($p($p($p(ptdata,"^",4),",",2)," ")) D
+ .. s @root@("sinamef",$p($p($p(ptdata,"^",4),",",2)," "),gien)=""
+ . i $l($p($p(ptdata,"^",4),",")) D
+ .. s @root@("sinamel",$p($p(ptdata,"^",4),","),gien)=""
+ s @root@("Date Last Updated")=$$HTE^XLFDT($H)
+ q
  ;
  ;
  ;
@@ -160,36 +159,36 @@ MKGPH Q:'$D(^KBAP("ALLPTS"))
  ;      0 = rebuild of "reminders" Graphstore failed
  ;      n = number of reminders filed
 RMDRS() ;
- N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY
- S CNTXT="OR CPRS GUI CHART"
- S RMPRC="PXRM REMINDERS AND CATEGORIES"
- S (CONSOLE,CNTNOPEN)=0
- D M2M^SAMIM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
+ n CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR
+ s CNTXT="OR CPRS GUI CHART"
+ s RMPRC="PXRM REMINDERS AND CATEGORIES"
+ s (CONSOLE,CNTNOPEN)=0
+ d M2M^SAMIM2M(.SAMIXD,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.SAMIXARR)
  ; if successful continue
- I '$L(XDATA,$C(13,10)) Q:$Q 0  Q
+ i '$l(SAMIXD,$c(13,10)) q:$Q 0  q
  n si s si=$$CLRGRPS("reminders")
- I '$G(si) Q:$Q 0  Q
+ i '$g(si) q:$Q 0  q
  ;n root s root=$$setroot^%wd("reminders")
  n root s root=$$SETROOT^SAMIUTST("reminders")
  n gien s gien=0
- N I,RCNT,TYPE,IEN,NAME,PRNTNAME,RMDR
- S RCNT=0
- N I F I=1:1:$L(XDATA,$C(13,10)) D
- . S RMDR=$P(XDATA,$C(13,10),I)
- . Q:($L(RMDR,"^")<3)
- . S RCNT=$G(RCNT)+1
- . S TYPE=$P(RMDR,U)
- . S IEN=$P(RMDR,U,2)
- . S NAME=$P(RMDR,U,3)
- . S PRNTNAME=$P(RMDR,U,4)
+ n I,rcnt,type,ien,name,prntname,rmdr
+ s rcnt=0
+ n i f i=1:1:$l(SAMIXD,$c(13,10)) d
+ . s rmdr=$p(SAMIXD,$c(13,10),i)
+ . q:($l(rmdr,"^")<3)
+ . s rcnt=$g(rcnt)+1
+ . s type=$p(rmdr,U)
+ . s ien=$p(rmdr,U,2)
+ . s name=$p(rmdr,U,3)
+ . s prntname=$p(rmdr,U,4)
  . ;
- . S gien=gien+1
- . S @root@(gien,"type")=TYPE
- . S @root@(gien,"ien")=IEN
- . S @root@(gien,"name")=NAME
- . S @root@(gien,"printname")=PRNTNAME
- S @root@("Date Last Updated")=$$HTE^XLFDT($H)
- Q:$Q RCNT  Q
+ . s gien=gien+1
+ . s @root@(gien,"type")=type
+ . s @root@(gien,"ien")=ien
+ . s @root@(gien,"name")=name
+ . s @root@(gien,"printname")=prntname
+ s @root@("Date Last Updated")=$$HTE^XLFDT($H)
+ q:$Q rcnt  q
  ;
  ;
  ;
@@ -207,32 +206,32 @@ RMDRS() ;
  ;      0 = rebuild of "providers" Graphstore failed
  ;      n = number of providers filed
 PRVDRS() ;
- N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY
- S CNTXT="OR CPRS GUI CHART"
- S RMPRC="ORQPT PROVIDERS"
- S (CONSOLE,CNTNOPEN)=0
- D M2M^SAMIM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
+ n CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR
+ s CNTXT="OR CPRS GUI CHART"
+ s RMPRC="ORQPT PROVIDERS"
+ s (CONSOLE,CNTNOPEN)=0
+ d M2M^SAMIM2M(.SAMIXD,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.SAMIXARR)
  ; if successful continue
- I '$L(XDATA,$C(13,10)) Q:$Q 0  Q
+ i '$l(SAMIXD,$c(13,10)) q:$Q 0  q
  n si s si=$$CLRGRPS("providers")
- I '$G(si) Q:$Q 0  Q
+ i '$g(si) q:$Q 0  q
  ;n root s root=$$setroot^%wd("providers")
  n root s root=$$SETROOT^SAMIUTST("providers")
  n gien s gien=0
- N I,PCNT,PROVDUZ,NAME,PRVDR
- S PCNT=0
- F I=1:1:$L(XDATA,$C(13,10)) D
- . S PRVDR=$P(XDATA,$C(13,10),I)
- . Q:($L(PRVDR,"^")<2)
- . S PCNT=$G(PCNT)+1
- . S PROVDUZ=$P(PRVDR,U)
- . S NAME=$P(PRVDR,U,2)
+ n I,pcnt,provduz,name,prvdr
+ s pcnt=0
+ f I=1:1:$l(SAMIXD,$c(13,10)) d
+ . s prvdr=$p(SAMIXD,$c(13,10),I)
+ . q:($l(prvdr,"^")<2)
+ . s pcnt=$g(pcnt)+1
+ . s provduz=$p(prvdr,U)
+ . s name=$p(prvdr,U,2)
  . ;
- . S gien=gien+1
- . S @root@(gien,"duz")=PROVDUZ
- . S @root@(gien,"name")=NAME
- S @root@("Date Last Updated")=$$HTE^XLFDT($H)
- Q:$Q PCNT  Q
+ . s gien=gien+1
+ . s @root@(gien,"duz")=provduz
+ . s @root@(gien,"name")=name
+ s @root@("Date Last Updated")=$$HTE^XLFDT($H)
+ q:$Q pcnt  q
  ;
  ;
  ;
@@ -250,35 +249,35 @@ PRVDRS() ;
  ;      0 = rebuild of "clinics" Graphstore failed
  ;      n = number of clinics filed
 CLINICS() ;
- N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY
+ N CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR
  S CNTXT="OR CPRS GUI CHART"
  S RMPRC="ORWU1 NEWLOC"
  S (CONSOLE,CNTNOPEN)=0
- K XARRAY
- S XARRAY(1)=" "
- S XARRAY(2)=1
- D M2M^SAMIM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
+ K SAMIXARR
+ S SAMIXARR(1)=" "
+ S SAMIXARR(2)=1
+ D M2M^SAMIM2M(.SAMIXD,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.SAMIXARR)
  ; if successful continue
- I '$L(XDATA,$C(13,10)) Q:$Q 0  Q
+ i '$l(SAMIXD,$c(13,10)) q:$Q 0  q
  n si s si=$$CLRGRPS("clinics")
- I '$G(si) Q:$Q 0  Q
+ i '$g(si) q:$Q 0  q
  ;n root s root=$$setroot^%wd("clinics")
  n root s root=$$SETROOT^SAMIUTST("clinics")
  n gien s gien=0
- N I,CCNT,CLINIEN,NAME,CNC
- S CCNT=0
- F I=1:1:$L(XDATA,$C(13,10)) D
- . S CNC=$P(XDATA,$C(13,10),I)
- . Q:($L(CNC,"^")<2)
- . S CCNT=$G(CCNT)+1
- . S CLINIEN=$P(CNC,U)
- . S NAME=$P(CNC,U,2)
+ n I,ccnt,clinien,name,cnc
+ s ccnt=0
+ f I=1:1:$l(SAMIXD,$c(13,10)) d
+ . s cnc=$p(SAMIXD,$c(13,10),I)
+ . q:($l(cnc,"^")<2)
+ . s ccnt=$g(ccnt)+1
+ . s clinien=$p(cnc,U)
+ . s name=$p(cnc,U,2)
  . ;
- . S gien=gien+1
- . S @root@(gien,"ien")=CLINIEN
- . S @root@(gien,"name")=NAME
+ . s gien=gien+1
+ . s @root@(gien,"ien")=clinien
+ . s @root@(gien,"name")=name
  S @root@("Date Last Updated")=$$HTE^XLFDT($H)
- Q:$Q CCNT  Q
+ q:$Q ccnt  q
  ;
  ;
  ;@API-code: $$HealthFactors^SAMIVSTS -or- D HealthFactors^SAMIVSTS
@@ -296,33 +295,33 @@ CLINICS() ;
  ;      n = number of health factors filed
 HLTHFCT() ; Clear the M Web Server files cache
  ;VEN/arc;test;function/procedure;dirty;silent;non-sac
- N CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY
+ N CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR
  S CNTXT="OR CPRS GUI CHART"
  S RMPRC="ORWPCE GET HEALTH FACTORS TY"
  S (CONSOLE,CNTNOPEN)=0
- D M2M^SAMIM2M(.XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.XARRAY)
+ D M2M^SAMIM2M(.SAMIXD,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.SAMIXARR)
  ; if successful continue
- I '$L(XDATA,$C(13,10)) Q:$Q 0  Q
+ I '$l(SAMIXD,$c(13,10)) q:$Q 0  q
  n si s si=$$CLRGRPS("health-factors")
- I '$G(si) Q:$Q 0  Q
+ I '$g(si) q:$Q 0  q
  ;n root s root=$$setroot^%wd("health-factors")
  n root s root=$$SETROOT^SAMIUTST("health-factors")
  n gien s gien=0
- N I,HCNT,IEN,NAME,HFCT
- S HCNT=0
- F I=1:1:$L(XDATA,$C(13,10)) D
- . S HFCT=$P(XDATA,$C(13,10),I)
- . Q:($L(HFCT,"^")<2)
- . S HCNT=$G(HCNT)+1
- . S IEN=$P(HFCT,U)
- . S NAME=$P(HFCT,U,2)
+ N I,hcnt,ien,name,hfct
+ S hcnt=0
+ f I=1:1:$l(SAMIXD,$c(13,10)) d
+ . s hfct=$p(SAMIXD,$c(13,10),I)
+ . q:($l(hfct,"^")<2)
+ . s hcnt=$g(hcnt)+1
+ . s ien=$p(hfct,U)
+ . s name=$p(hfct,U,2)
  . ;
- . S gien=gien+1
- . S @root@(gien,"ien")=IEN
- . S @root@(gien,"name")=NAME
- . S:$L(NAME) @root@("name",NAME,gien)=""
+ . s gien=gien+1
+ . s @root@(gien,"ien")=ien
+ . s @root@(gien,"name")=name
+ . s:$l(name) @root@("name",name,gien)=""
  S @root@("Date Last Updated")=$$HTE^XLFDT($H)
- Q:$Q HCNT  Q
+ q:$Q hcnt  q
  ;
  ;
  ;@API-code: $$CLRGRPS^SAMIVSTS
@@ -335,7 +334,7 @@ HLTHFCT() ; Clear the M Web Server files cache
  ;   0 = failure to find named Graphstore
  ;   ien (si) of the Graphstore in ^%wd(17.040801,
 CLRGRPS(name) ;
- I '$l($g(name)) Q:$Q 0  Q
+ I '$l($g(name)) q:$Q 0  q
  n siglb s siglb="^%wd(17.040801,""B"","""_name_""",0)"
  n si s si=$o(@siglb)
  i $g(si) d
@@ -348,6 +347,6 @@ CLRGRPS(name) ;
  . d @siglb
  . s siglb="^%wd(17.040801,""B"","""_name_""",0)"
  . s si=$o(@siglb)
- Q:$Q $g(si)  Q
+ q:$Q $g(si)  q
  ;
 EOR ; End of routine SAMIVSTS

@@ -1,4 +1,4 @@
-SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICAS2 ; 1/3/19 3:54pm
+SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICAS2 ; 1/4/19 9:41am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -202,11 +202,11 @@ UTWSCAS ; @TEST - generate case review page
  n nodep,nodea s nodep=$na(SAMIUPOO),nodea=$na(SAMIUARC)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d
  .; if the first non space 10 characters are a date, skip
- . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
- . i (@nodep["meta content") q
- . i '($qs(nodep,1)=$qs(nodea,1)) s utsuccess=0 w !,"qs ",nodep
- . i '(@nodep=@nodea) s utsuccess=0 w !,@nodep,!,@nodea,!
- i '(nodea="") s utsuccess=0 w "at end:",nodea
+ . q:($e($tr(@nodep," "),1,10)?4N1P2N1P2N)
+ . q:(@nodep["meta content")
+ . i '($qs(nodep,1)=$qs(nodea,1)) s utsuccess=0
+ . i '(@nodep=@nodea) s utsuccess=0
+ i '(nodea="") s utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing generating case review page FAILED!")
  q
  ;

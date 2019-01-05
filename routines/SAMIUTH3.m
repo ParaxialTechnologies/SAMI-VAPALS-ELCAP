@@ -1,4 +1,4 @@
-SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 1/3/19 2:33pm
+SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 1/4/19 9:36am
  ;;18.0;SAMI;;
  ;
  ;
@@ -199,6 +199,7 @@ UTADDPT ; @TEST Testing ADDPATient adding a new patient to vapals-patients
  ;
  ; generate new entry in vapals-patients, HTML in ^TMP("yottaForm",n)
  d ADDPAT^SAMIHOM3(dfn)
+ H 1
  ;
  ; check new entry in vapals-patients
  s utsuccess=($D(@rootvp@(dfn))=10),studyid=@rootvp@(dfn,"sisid")
@@ -212,8 +213,8 @@ UTADDPT ; @TEST Testing ADDPATient adding a new patient to vapals-patients
 UTWSNC ; @TEST - Testing WSNEWCAS adding a new case to vapals-patients Graphstore
  ;WSNEWCAS(ARGS,BODY,RESULT)
  ;
- n rootvp,rootpl,rootut,gienut,dfn,SAMIUBODY,saminame,SAMIUARGS,SAMIURSLT
- n utna,uthtml,SAMIUARC,SAMIUPOO
+ n rootvp,rootpl,rootut,gienut,dfn,saminame,utna,uthtml
+ n SAMIUBODY,SAMIUARGS,SAMIURSLT,SAMIUARC,SAMIUPOO
  s rootvp=$$setroot^%wd("vapals-patients")
  s rootpl=$$setroot^%wd("patient-lookup")
  s rootut=$$setroot^%wd("vapals unit tests")

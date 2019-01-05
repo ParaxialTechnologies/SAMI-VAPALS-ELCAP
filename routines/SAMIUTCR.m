@@ -1,4 +1,4 @@
-SAMIUTCR ;ven/lgc - UNIT TEST for SAMICTR ; 12/14/18 11:29am
+SAMIUTCR ;ven/lgc - UNIT TEST for SAMICTR ; 1/4/19 11:18am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -40,6 +40,7 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  ;
 UTWSRPT ; @TEST - web service which returns an html cteval report
  ;WSREPORT(return,filter)
+ ;use ceform-2018-10-21
  n root
  n root s root=$$setroot^%wd("vapals-patients")
  k filter
@@ -56,8 +57,7 @@ UTWSRPT ; @TEST - web service which returns an html cteval report
  S:'(anode="") utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing web service returns html cteval FAILED!")
  ;
- n root
- n root s root=$$setroot^%wd("vapals-patients")
+ ;use ceform-2018-12-03
  k filter
  s filter("studyid")="XXX00001"
  s filter("form")="ceform-2018-12-03"

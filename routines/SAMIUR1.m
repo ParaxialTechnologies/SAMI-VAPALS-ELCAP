@@ -1,4 +1,4 @@
-SAMIUR1 ;ven/gpl - sami user reports ; 12/28/18 11:37am
+SAMIUR1 ;ven/gpl - sami user reports ; 1/7/19 1:02pm
  ;;18.0;SAM;;
  ;
  ; SAMIUR contains the routines to generate user reports
@@ -6,7 +6,7 @@ SAMIUR1 ;ven/gpl - sami user reports ; 12/28/18 11:37am
  ;
  quit  ; no entry from top
  ;
-WSREPORT(rtn,filter) ; generate a report based on parameters in the filter
+WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  ;
  ; here are the user reports that are defined:
  ;  1. followup
@@ -19,14 +19,14 @@ WSREPORT(rtn,filter) ; generate a report based on parameters in the filter
  ;
  n debug s debug=0
  i $g(filter("debug"))=1 s debug=1
- ;
+ i $g(filter("debug"))=1 s debug=1
  k return
  s HTTPRSP("mime")="text/html"
  ;
  n type,temp
  s type=$g(filter("samireporttype"))
  i type="" d  q  ; report type missing
- . d GETHOME^SAMIHOM3(.rtn,.filter) ; send them to home
+ . d GETHOME^SAMIHOM3(.SAMIRTN,.filter) ; send them to home
  ;
  d getThis^%wd("temp","table.html") ; page template
  q:'$d(temp)
@@ -44,21 +44,21 @@ WSREPORT(rtn,filter) ; generate a report based on parameters in the filter
  . s ln=$g(temp(ii))
  . n samikey,si
  . s (samikey,si)=""
- . D SAMISUB2^SAMIFRM2(.ln,samikey,si,.filter)
+ . d SAMISUB2^SAMIFRM2(.ln,samikey,si,.filter)
  . i ln["PAGE NAME" d findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type,datephrase))
- . s rtn(cnt)=ln
+ . s SAMIRTN(cnt)=ln
  . ;
- s cnt=cnt+1 s rtn(cnt)="<thead><tr>"
- s cnt=cnt+1 s rtn(cnt)="<th>Enrollment Date</th>"
- s cnt=cnt+1 s rtn(cnt)="<th>Name</th>"
- s cnt=cnt+1 s rtn(cnt)="<th>SSN</th>"
- s cnt=cnt+1 s rtn(cnt)="<th>Followup</th>"
- s cnt=cnt+1 s rtn(cnt)="</tr></thead>"
+ s cnt=cnt+1 s SAMIRTN(cnt)="<thead><tr>"
+ s cnt=cnt+1 s SAMIRTN(cnt)="<th>Enrollment Date</th>"
+ s cnt=cnt+1 s SAMIRTN(cnt)="<th>Name</th>"
+ s cnt=cnt+1 s SAMIRTN(cnt)="<th>SSN</th>"
+ s cnt=cnt+1 s SAMIRTN(cnt)="<th>Followup</th>"
+ s cnt=cnt+1 s SAMIRTN(cnt)="</tr></thead>"
  ;
  ;
  n ij
  n root s root=$$setroot^%wd("vapals-patients")
- s cnt=cnt+1 s rtn(cnt)="<tbody>"
+ s cnt=cnt+1 s SAMIRTN(cnt)="<tbody>"
  s ij=0
  f  s ij=$o(pats(ij)) q:+ij=0  d  ;
  . n ij2 s ij2=0
@@ -68,34 +68,34 @@ WSREPORT(rtn,filter) ; generate a report based on parameters in the filter
  . . n name s name=$g(@root@(dfn,"saminame"))
  . . n edate s edate=$g(pats(ij,dfn,"edate"))
  . . n cefud s cefud=$g(pats(ij,dfn,"cefud"))
- . . s cnt=cnt+1 s rtn(cnt)="<tr>"
- . . s cnt=cnt+1 s rtn(cnt)="<td>"_edate_"</td>"
+ . . s cnt=cnt+1 s SAMIRTN(cnt)="<tr>"
+ . . s cnt=cnt+1 s SAMIRTN(cnt)="<td>"_edate_"</td>"
  . . new nuhref set nuhref="<form method=POST action=""/vapals"">"
  . . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""casereview"">"
  . . set nuhref=nuhref_"<input type=hidden name=""studyid"" value="_sid_">"
  . . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
  . . s cnt=cnt+1
- . . s rtn(cnt)="<td>"_nuhref_"</td>"
+ . . s SAMIRTN(cnt)="<td>"_nuhref_"</td>"
  . . n ssn s ssn=$$GETSSN^SAMIFRM2(sid)
  . . i ssn="" d  ;
  . . . n hdf
  . . . s hdf=$$GETHDR^SAMIFRM2(sid)
  . . . s ssn=$$GETSSN^SAMIFRM2(sid)
  . . s cnt=cnt+1
- . . s rtn(cnt)="<td>"_ssn_"</td>"
+ . . s SAMIRTN(cnt)="<td>"_ssn_"</td>"
  . . s cnt=cnt+1
- . . s rtn(cnt)="<td>"_cefud_"</td></tr>"
+ . . s SAMIRTN(cnt)="<td>"_cefud_"</td></tr>"
  ;
- s cnt=cnt+1 s rtn(cnt)="</tbody>"
+ s cnt=cnt+1 s SAMIRTN(cnt)="</tbody>"
  f  s ii=$o(temp(ii)) q:temp(ii)["</tbody>"  d  ;
  . ; skip past template headers and blank body
  f  s ii=$o(temp(ii)) q:+ii=0  d  ;
  . s cnt=cnt+1
  . s ln=$g(temp(ii))
- . s rtn(cnt)=ln
+ . s SAMIRTN(cnt)=ln
  q
  ;
-SELECT(pats,type,datephrase) ; selects patient for the report
+SELECT(SAMIPATS,type,datephrase) ; selects patient for the report
  i $g(type)="" s type="enrollment"
  s datephrase=""
  n zi s zi=0
@@ -126,10 +126,10 @@ SELECT(pats,type,datephrase) ; selects patient for the report
  . . ;i (+fmcefud<nplus30)!(ceform="") d  ; need ct scans
  . . i (+fmcefud<nplus30) d  ; need ct scans
  . . . i ceform="" q  ; no ct eval so no followup date
- . . . s pats(efmdate,zi,"edate")=edate
- . . . s pats(efmdate,zi)=""
+ . . . s SAMIPATS(efmdate,zi,"edate")=edate
+ . . . s SAMIPATS(efmdate,zi)=""
  . . . i ceform="" s cefud="baseline"
- . . . s pats(efmdate,zi,"cefud")=cefud
+ . . . s SAMIPATS(efmdate,zi,"cefud")=cefud
  . . s datephrase=" before "_$$VAPALSDT^SAMICAS2(nplus30)
  . . q
  . i type="activity" d  ;
@@ -137,10 +137,10 @@ SELECT(pats,type,datephrase) ; selects patient for the report
  . . n anyform s anyform=$o(items("sort",""),-1)
  . . n fmanyform s fmanyform=$$KEY2FM^SAMICAS2(anyform)
  . . i (+fmanyform>nminus30)!(+efmdate>nminus30) d  ; need any new form
- . . . s pats(efmdate,zi,"edate")=edate
- . . . s pats(efmdate,zi)=""
+ . . . s SAMIPATS(efmdate,zi,"edate")=edate
+ . . . s SAMIPATS(efmdate,zi)=""
  . . . i ceform="" s cefud="baseline"
- . . . s pats(efmdate,zi,"cefud")=cefud
+ . . . s SAMIPATS(efmdate,zi,"cefud")=cefud
  . . s datephrase=" after "_$$VAPALSDT^SAMICAS2(nminus30)
  . ;
  . i type="incomplete" d  ;
@@ -150,26 +150,26 @@ SELECT(pats,type,datephrase) ; selects patient for the report
  . . f  s zj=$o(@gr@(zj)) q:zj=""  d  ;
  . . . i $g(@gr@(zj,"samistatus"))="incomplete" s complete=0
  . . i complete=0 d  ; has incomplete form(s) 
- . . . s pats(efmdate,zi,"edate")=edate
- . . . s pats(efmdate,zi)=""
+ . . . s SAMIPATS(efmdate,zi,"edate")=edate
+ . . . s SAMIPATS(efmdate,zi)=""
  . . . i ceform="" s cefud="baseline"
- . . . s pats(efmdate,zi,"cefud")=cefud
+ . . . s SAMIPATS(efmdate,zi,"cefud")=cefud
  . . s datephrase=""
  . . q
  . i type="missingct" d  ;
  . . i ceform="" d  ; has incomplete form(s) 
- . . . s pats(efmdate,zi,"edate")=edate
- . . . s pats(efmdate,zi)=""
+ . . . s SAMIPATS(efmdate,zi,"edate")=edate
+ . . . s SAMIPATS(efmdate,zi)=""
  . . . i ceform="" s cefud="baseline"
- . . . s pats(efmdate,zi,"cefud")=cefud
+ . . . s SAMIPATS(efmdate,zi,"cefud")=cefud
  . . s datephrase=""
  . . q
  . i type="outreach" d  ;
  . . q
  . i type="enrollment" d  ;
- . . s pats(efmdate,zi,"edate")=edate
- . . s pats(efmdate,zi)=""
- . . s pats(efmdate,zi,"cefud")=cefud
+ . . s SAMIPATS(efmdate,zi,"edate")=edate
+ . . s SAMIPATS(efmdate,zi)=""
+ . . s SAMIPATS(efmdate,zi,"cefud")=cefud
  . . s datephrase=" as of "_$$VAPALSDT^SAMICAS2($$NOW^XLFDT)
  q
  ;

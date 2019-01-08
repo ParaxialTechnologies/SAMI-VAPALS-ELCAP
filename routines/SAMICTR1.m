@@ -87,23 +87,28 @@ NODULES(rtn,vals,dict) ;
  . . . . s endo="Nodule"
  . . . . s nloc=$$XSUB("cecten",vals,dict,"cect"_ii_"en")
  . . . . i specialcase=1 d  ;
- . . . . . d OUT("Previously seen "_nloc_" "_endo_" "_ii_" ")
+ . . . . . ;d OUT("Previously seen "_nloc_" "_endo_" "_ii_" ")
+ . . . . . d OUT("Previously seen "_endo_" "_ii_" in the "_nloc_" "_calcstr_" ")
  . . . . . d OUT($$XSUB("cectch",vals,dict,"cect"_ii_"ch")_".")
  . . . . e  d  ;
  . . . . . i ($$XVAL("cetex",vals)="b")&($$XVAL("cect"_ii_"ch",vals)="n") d  ;
- . . . . . . d OUT(nloc_" "_endo_" "_ii_".")
- . . . . . e  d OUT(nloc_" "_endo_" "_ii_" "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_".")
+ . . . . . . ;d OUT(nloc_" "_endo_" "_ii_".")
+ . . . . . . d OUT(endo_" "_ii_" is seen in the "_loc_" "_calcstr_".")
+ . . . . . ;e  d OUT(nloc_" "_endo_" "_ii_" "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_".")
+ . . . . . e  d OUT(endo_" "_ii_" in the "_loc_" "_calcstr_", "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_".")
  . . . . s skip=1
  . . . i en="bi" d  ;
  . . . . s endo="Nodule"
  . . . . s loc=$$XSUB("cecten",vals,dict,"cect"_ii_"en")
  . . . . i specialcase=1 d  ;
- . . . . . d OUT("Previously seen "_endo_" "_ii_" in the "_loc)
+ . . . . . ;d OUT("Previously seen "_endo_" "_ii_" in the "_loc)
+ . . . . . d OUT("Previously seen "_endo_" "_ii_" in the "_nloc_" "_calcstr_" ")
  . . . . . d OUT($$XSUB("cectch",vals,dict,"cect"_ii_"ch")_".")
  . . . . e  d  ;
  . . . . . i ($$XVAL("cetex",vals)="b")&($$XVAL("cect"_ii_"ch",vals)="n") d  ;
- . . . . . . d OUT(endo_" "_ii_" is seen in the "_loc_".")
- . . . . . e  d OUT(endo_" "_ii_" in the "_loc_" "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_".")
+ . . . . . . ;d OUT(endo_" "_ii_" is seen in the "_loc_".")
+ . . . . . . d OUT(endo_" "_ii_" is seen in the "_loc_" "_calcstr_".")
+ . . . . . e  d OUT(nloc_" "_endo_" "_ii_" "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_".")
  . . . . s skip=1
  . . . i skip=0 d  ; "default"
  . . . . s endo="Nodule"

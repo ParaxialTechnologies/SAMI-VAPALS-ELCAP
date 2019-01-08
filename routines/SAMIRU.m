@@ -48,3 +48,12 @@ WSGETRU(rtn,filter) ; web service to return counts for rural and urban
  d ENCODE^VPRJSON("rslt","rtn")
  q
  ;
+WSZIPRU(rtn,filter) ;
+ n zzip s zzip=$g(filter("zip"))
+ n rslt,ru
+ s ru=$$URBRUR^SAMIVSTA(zzip)
+ if (ru'="u")&(ru'="r") s ru="n"
+ s rslt("result")=ru
+ d ENCODE^VPRJSON("rslt","rtn")
+ q
+ ;

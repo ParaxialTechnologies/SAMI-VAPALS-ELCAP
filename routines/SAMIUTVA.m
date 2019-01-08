@@ -1,4 +1,4 @@
-SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 1/3/19 3:41pm
+SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 1/8/19 12:51pm
  ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -82,231 +82,232 @@ UTBLDTIU ; @TEST - Build a new TIU and Visit stub for a patient
  s provduz=$$GET^XPAR("SYS","SAMI DEFAULT PROVIDER DUZ",,"Q")
  s clinien=$$GET^XPAR("SYS","SAMI DEFAULT CLINIC IEN",,"Q")
  s tiutitlepn=$$GET^XPAR("SYS","SAMI NOTE TITLE PRINT NAME",,"Q")
- s tiutitleien=$O(^TIU(8925.1,"D",tiutitlepn,0))
- I '$G(utdfn) D  Q
- . D FAIL^%ut("Patient DFN missing")
- I ('$g(provduz))!('$g(clinien))!('$g(tiutitleien)) D  Q
- . D FAIL^%ut("Provider,clinic, or tiu title missing")
- D BLDTIU^SAMIVSTA(.tiuien,utdfn,tiutitleien,provduz,clinien)
- H 3 ; Delay for time to build everything
- I '$g(tiuien) D  Q
- . D FAIL^%ut("Procedure failed to build new TIU note")
+ s tiutitleien=$o(^TIU(8925.1,"D",tiutitlepn,0))
+ i '$g(utdfn) d  q
+ . d FAIL^%ut("Patient DFN missing")
+ I ('$g(provduz))!('$g(clinien))!('$g(tiutitleien)) d  q
+ . d FAIL^%ut("Provider,clinic, or tiu title missing")
+ d BLDTIU^SAMIVSTA(.tiuien,utdfn,tiutitleien,provduz,clinien)
+ h 3 ; Delay for time to build everything
+ i '$g(tiuien) d  q
+ . d FAIL^%ut("Procedure failed to build new TIU note")
  n tiunode0 s tiunode0=$g(^TIU(8925,tiuien,0))
- I '($P(tiunode0,"^",1,2)=(tiutitleien_"^"_utdfn)) D  Q
- . D FAIL^%ut("Procedure failed to build CORRECT TIU note")
- I '$P(tiunode0,"^",3) D  Q
- . D FAIL^%ut("Procedure failed to build TIU visit")
- n aupnvist0 s aupnvist0=$G(^AUPNVSIT(+$P(tiunode0,"^",3),0))
- D CHKEQ^%ut(+aupnvist0,+$P(tiunode0,"^",7),"Testing building TIU note FAILED!")
- Q
+ i '($p(tiunode0,"^",1,2)=(tiutitleien_"^"_utdfn)) d  q
+ . d FAIL^%ut("Procedure failed to build CORRECT TIU note")
+ i '$p(tiunode0,"^",3) d  q
+ . d FAIL^%ut("Procedure failed to build TIU visit")
+ n aupnvist0 s aupnvist0=$g(^AUPNVSIT(+$p(tiunode0,"^",3),0))
+ d CHKEQ^%ut(+aupnvist0,+$p(tiunode0,"^",7),"Testing building TIU note FAILED!")
+ q
  ;
 UTSTEXT ; @TEST - Push text into an existing TIU note
  ; SETTEXT(.tiuien,.dest)
- N D,D0,DG,DI,DIC,DICR,DIG,DIH
+ n D,D0,DG,DI,DIC,DICR,DIG,DIH
  n SAMIUPOO
  s SAMIUPOO(1)="First line of UNIT TEST text."
  s SAMIUPOO(2)="Second line of UNIT TEST text."
  s SAMIUPOO(3)="Setting text time:"_$$HTE^XLFDT($H)
  s SAMIUPOO(4)="Forth and last line of UNIT TEST text"
  n dest s dest="SAMIUPOO"
- D SETTEXT^SAMIVSTA(.tiuien,dest)
- H 1 ; Delay for time to build everything
- I '$G(tiuien) D  Q
- . D FAIL^%ut("Procedure failed to set text in TIU note")
+ d SETTEXT^SAMIVSTA(.tiuien,dest)
+ h 1 ; Delay for time to build everything
+ i '$g(tiuien) d  q
+ . d FAIL^%ut("Procedure failed to set text in TIU note")
  s SAMIUPOO=0
- n I F I=1:1:4 D  Q:SAMIUPOO
- . I '($G(^TIU(8925,tiuien,"TEXT",I,0))=SAMIUPOO(I)) S SAMIUPOO=1
- D CHKEQ^%ut(SAMIUPOO,0,"Testing setting text in TIU note FAILED!")
- Q
+ n I f I=1:1:4 d  q:SAMIUPOO
+ . i '($g(^TIU(8925,tiuien,"TEXT",I,0))=SAMIUPOO(I)) s SAMIUPOO=1
+ d CHKEQ^%ut(SAMIUPOO,0,"Testing setting text in TIU note FAILED!")
+ q
  ;
 UTENCTR ; @TEST - Update TIU with encounter and HF information
  ; BLDENCTR(.tiuien,.HFARRAY)
- N D,D0,DG,DI,DIC,DICR,DIG,DIH
+ n D,D0,DG,DI,DIC,DICR,DIG,DIH
  n vstr,provduz
- I '$G(utdfn) D  Q
- . D FAIL^%ut("Update tiu with encounter missing utdfn FAILED!")
- S vstr=$$VISTSTR^SAMIVSTA(tiuien)
- I '($L(vstr,";")=3) D  Q
- . D FAIL^%ut("Update tiu with encounter VSTR FAILED!")
+ i '$g(utdfn) d  q
+ . d FAIL^%ut("Update tiu with encounter missing utdfn FAILED!")
+ s vstr=$$VISTSTR^SAMIVSTA(tiuien)
+ i '($L(vstr,";")=3) d  q
+ . d FAIL^%ut("Update tiu with encounter VSTR FAILED!")
  s provduz=$$GET^XPAR("SYS","SAMI DEFAULT PROVIDER DUZ",,"Q")
- I '$G(provduz) D  Q
- . D FAIL^%ut("Update tiu with encounter no provduz FAILED!")
+ i '$g(provduz) d  q
+ . d FAIL^%ut("Update tiu with encounter no provduz FAILED!")
  ; Time to build the HF array for the next call
- N SAMIUHFA
- S SAMIUHFA(1)="HDR^0^^"_vstr
- S SAMIUHFA(2)="VST^DT^"_$P(vstr,";",2)
- S SAMIUHFA(3)="VST^PT^"_utdfn
- S SAMIUHFA(4)="VST^HL^"_$P(vstr,";")
- S SAMIUHFA(5)="VST^VC^"_$P(vstr,";",3)
- S SAMIUHFA(6)="PRV^"_provduz_"^^^"_$P($G(^VA(200,provduz,0)),"^")_"^1"
- S SAMIUHFA(7)="POV+^F17.210^COUNSELING AND SCREENING^Nicotine dependence, cigarettes, uncomplicated^1^^0^^^1"
- S SAMIUHFA(8)="COM^1^@"
- S SAMIUHFA(9)="HF+^999001^LUNG SCREENING HF^LCS-ENROLLED^@^^^^^2^"
- S SAMIUHFA(10)="COM^2^@"
- S SAMIUHFA(11)="CPT+^99203^NEW PATIENT^Intermediate Exam  26-35 Min^1^71^^^0^3^"
- S SAMIUHFA(12)="COM^3^@"
+ n SAMIUHFA
+ s SAMIUHFA(1)="HDR^0^^"_vstr
+ s SAMIUHFA(2)="VST^DT^"_$p(vstr,";",2)
+ s SAMIUHFA(3)="VST^PT^"_utdfn
+ s SAMIUHFA(4)="VST^HL^"_$p(vstr,";")
+ s SAMIUHFA(5)="VST^VC^"_$p(vstr,";",3)
+ s SAMIUHFA(6)="PRV^"_provduz_"^^^"_$p($g(^VA(200,provduz,0)),"^")_"^1"
+ s SAMIUHFA(7)="POV+^F17.210^COUNSELING AND SCREENING^Nicotine dependence, cigarettes, uncomplicated^1^^0^^^1"
+ s SAMIUHFA(8)="COM^1^@"
+ s SAMIUHFA(9)="HF+^999001^LUNG SCREENING HF^LCS-ENROLLED^@^^^^^2^"
+ s SAMIUHFA(10)="COM^2^@"
+ s SAMIUHFA(11)="CPT+^99203^NEW PATIENT^Intermediate Exam  26-35 Min^1^71^^^0^3^"
+ s SAMIUHFA(12)="COM^3^@"
  ;
- S utsuccess=$$BLDENCTR^SAMIVSTA(.tiuien,.SAMIUHFA)
- D CHKEQ^%ut(utsuccess,tiuien,"Testing adding encounter to TIU note FAILED!")
- Q
+ s utsuccess=$$BLDENCTR^SAMIVSTA(.tiuien,.SAMIUHFA)
+ d CHKEQ^%ut(utsuccess,tiuien,"Testing adding encounter to TIU note FAILED!")
+ q
  ;
 UTPTINF ; @TEST - Pull additional patient information
  ; D PTINFO^SAMIVSTA(dfn)
  ; Find patient without SSN filed in Graphstore
- N D,D0,DG,DI,DIC,DICR,DIG,DIH
+ n D,D0,DG,DI,DIC,DICR,DIG,DIH
  ;N root s root=$$setroot^%wd("patient-lookup")
  n root s root=$$SETROOT^SAMIUTST("patient-lookup")
- N gien s gien=0
- F  S gien=$O(@root@(gien)) Q:'gien  Q:'($D(@root@(gien,"ssn")))
- I 'gien D  Q
- . D FAIL^%ut("Unable to find Graphstore entry without SSN - FAILED!")
- N utdfn s utdfn=@root@(gien,"dfn")
- I 'utdfn D  Q
- . D FAIL^%ut("Unable to find patient dfn in Graphstore - FAILED!")
+ n gien s gien=0
+ f  s gien=$o(@root@(gien)) q:'gien  q:'($D(@root@(gien,"ssn")))
+ i 'gien d  q
+ . d FAIL^%ut("Unable to find Graphstore entry without SSN - FAILED!")
+ n utdfn s utdfn=@root@(gien,"dfn")
+ i 'utdfn d  q
+ . d FAIL^%ut("Unable to find patient dfn in Graphstore - FAILED!")
  s utsuccess=$$PTINFO^SAMIVSTA(utdfn)
- D CHKEQ^%ut(utsuccess,("2^"_utdfn),"Testing PTINFO FAILED!")
- Q
+ d CHKEQ^%ut(utsuccess,("2^"_utdfn),"Testing PTINFO FAILED!")
+ q
  ;
 UTADDNS ; @TEST - Add additional signers to a TIU note
  ; D ADDSIGN
  ; NOTE: Signers will not show up on tiu in CPRS until it is
  ;       edited or signed
- N D,D0,DG,DI,DIC,DICR,DIG,DIH
+ n D,D0,DG,DI,DIC,DICR,DIG,DIH
  s utsuccess=0
- I '$G(tiuien) D  Q
- . D FAIL^%ut("Add additional signers failed - no tiuien")
+ i '$g(tiuien) d  q
+ . d FAIL^%ut("Add additional signers failed - no tiuien")
  n filter
  S filter("add signers",1)="64^Smith,Mary"
- D ADDSIGN^SAMIVSTA
- H 1
- D CHKEQ^%ut(utsuccess,1,"Testing Adding additional signers  FAILED!")
- Q
+ d ADDSIGN^SAMIVSTA
+ h 1
+ d CHKEQ^%ut(utsuccess,1,"Testing Adding additional signers  FAILED!")
+ q
  ;
  ;
 UTSSN ; @TEST - Pull SSN on a patient
  ; D PTSSN(dfn)
  ; Find patient without SSN filed in Graphstore
- N D,D0,DG,DI,DIC,DICR,DIG,DIH
+ n D,D0,DG,DI,DIC,DICR,DIG,DIH
  ;N root s root=$$setroot^%wd("patient-lookup")
  n root s root=$$SETROOT^SAMIUTST("patient-lookup")
- N gien s gien=0
- F  S gien=$O(@root@(gien)) Q:'gien  Q:'($D(@root@(gien,"ssn")))
- I 'gien D  Q
- . D FAIL^%ut("Unable to find Graphstore entry without SSN - FAILED!")
- N utdfn s utdfn=@root@(gien,"dfn")
- I 'utdfn D  Q
- . D FAIL^%ut("Unable to find patient dfn in Graphstore - FAILED!")
+ n gien s gien=0
+ f  S gien=$o(@root@(gien)) q:'gien  q:'($D(@root@(gien,"ssn")))
+ i 'gien d  q
+ . d FAIL^%ut("Unable to find Graphstore entry without SSN - FAILED!")
+ n utdfn s utdfn=@root@(gien,"dfn")
+ i 'utdfn d  q
+ . d FAIL^%ut("Unable to find patient dfn in Graphstore - FAILED!")
  s utsuccess=$$PTSSN^SAMIVSTA(utdfn) ; 2^999989135
- I '($P(utsuccess,"^",2)=$P(^DPT(utdfn,0),"^",9)) D  Q
- . D FAIL^%ut("Unable to pull correct patient ssn - FAILED!")
- N GSssn S GSssn=$G(@root@(gien,"ssn"))
- D CHKEQ^%ut($P(utsuccess,"^",2),GSssn,"Testing PTSSN FAILED!")
- Q
+ i '($p(utsuccess,"^",2)=$p(^DPT(utdfn,0),"^",9)) d  q
+ . d FAIL^%ut("Unable to pull correct patient ssn - FAILED!")
+ n GSssn s GSssn=$g(@root@(gien,"ssn"))
+ d CHKEQ^%ut($p(utsuccess,"^",2),GSssn,"Testing PTSSN FAILED!")
+ q
  ;
  ;
 UTVSTR ; @TEST - Get Visit string (VSTR) for a TIU note
  ; D VisitString(tiuien)
- N D,D0,DG,DI,DIC,DICR,DIG,DIH
+ n D,D0,DG,DI,DIC,DICR,DIG,DIH
  n tiuien,node0,node12,VSTR,tiuVSTR
- s tiuien=$O(^TIU(8925,"A"),-1)
- S VSTR=$$VISTSTR^SAMIVSTA(tiuien)
- s node0=$G(^TIU(8925,tiuien,0))
- s node12=$G(^TIU(8925,tiuien,12))
- s tiuVSTR=$P(node12,"^",5)_";"_$P(node0,"^",7)_";"_$P(node0,"^",13)
- D CHKEQ^%ut(VSTR,tiuVSTR,"Testing getting Visit String FAILED!")
- Q
+ s tiuien=$o(^TIU(8925,"A"),-1)
+ s VSTR=$$VISTSTR^SAMIVSTA(tiuien)
+ s node0=$g(^TIU(8925,tiuien,0))
+ s node12=$g(^TIU(8925,tiuien,12))
+ s tiuVSTR=$p(node12,"^",5)_";"_$p(node0,"^",7)_";"_$p(node0,"^",13)
+ d CHKEQ^%ut(VSTR,tiuVSTR,"Testing getting Visit String FAILED!")
+ q
  ;
 UTKASAVE ; @TEST - Kill ASAVE node for a TIU note
- N D,D0,DG,DI,DIC,DICR,DIG,DIH
+ n D,D0,DG,DI,DIC,DICR,DIG,DIH
  n provduz
  s provduz=$$GET^XPAR("SYS","SAMI DEFAULT PROVIDER DUZ",,"Q")
- I '$G(provduz) D  Q
- . D FAIL^%ut("Unable to obtain Provider DUZ for ASAVE  - FAILED!")
- I '$G(tiuien) D  Q
- . D FAIL^%ut("Unable to obtain tiuien for ASAVE  - FAILED!")
+ i '$g(provduz) d  q
+ . d FAIL^%ut("Unable to obtain Provider DUZ for ASAVE  - FAILED!")
+ i '$g(tiuien) d  q
+ . d FAIL^%ut("Unable to obtain tiuien for ASAVE  - FAILED!")
  s utsuccess=$$KASAVE^SAMIVSTA(provduz,tiuien)
- D CHKEQ^%ut(utsuccess,1,"Testing updating with VPR  FAILED!")
- Q
+ d CHKEQ^%ut(utsuccess,1,"Testing updating with VPR  FAILED!")
+ q
  ;
 UTSIGN ; @TEST - Sign TIU note
- N D,D0,DG,DI,DIC,DICR,DIG,DIH
- I '$G(tiuien) D  Q
- . D FAIL^%ut("Unable to obtain tiuien for SIGN TIU  - FAILED!")
- n status s status=$P(^TIU(8925,tiuien,0),"^",5)
- I '(status=5) D  Q
- . D FAIL^%ut("TIU status not 'unsigned' for SIGN TIU  - FAILED!")
- S utsuccess=$$SIGNTIU^SAMIVSTA(tiuien)
- D CHKEQ^%ut(utsuccess,1,"Testing Signing of TIU FAILED!")
+ n D,D0,DG,DI,DIC,DICR,DIG,DIH
+ i '$g(tiuien) d  q
+ . d FAIL^%ut("Unable to obtain tiuien for SIGN TIU  - FAILED!")
+ n status s status=$p(^TIU(8925,tiuien,0),"^",5)
+ i '(status=5) d  q
+ . d FAIL^%ut("TIU status not 'unsigned' for SIGN TIU  - FAILED!")
+ s utsuccess=$$SIGNTIU^SAMIVSTA(tiuien)
+ d CHKEQ^%ut(utsuccess,1,"Testing Signing of TIU FAILED!")
  Q
  ;
 UTADDND ; @TEST - Add an addendum to a signed note
  ; $$TIUADND(tiuien,userduz)
- N D,D0,DG,DI,DIC,DICR,DIG,DIH
- I '$G(tiuien) D  Q
- . D FAIL^%ut("Unable to obtain tiuien for Adding Addendum  - FAILED!")
+ n D,D0,DG,DI,DIC,DICR,DIG,DIH
+ i '$g(tiuien) d  q
+ . d FAIL^%ut("Unable to obtain tiuien for Adding Addendum  - FAILED!")
  n provduz
  s provduz=$$GET^XPAR("SYS","SAMI DEFAULT PROVIDER DUZ",,"Q")
- I '$G(provduz) D  Q
- . D FAIL^%ut("Unable to obtain Provider DUZ to Add Addendum  - FAILED!")
+ i '$g(provduz) d  q
+ . d FAIL^%ut("Unable to obtain Provider DUZ to Add Addendum  - FAILED!")
  n tiuaien s tiuaien=$$TIUADND^SAMIVSTA(tiuien,provduz)
- S:($G(tiuaien)>0) tiuien=tiuien_"^"_tiuaien
- s utsuccess=($G(tiuaien)>0)
+ s:($g(tiuaien)>0) tiuien=tiuien_"^"_tiuaien
+ s utsuccess=($g(tiuaien)>0)
  ; Sign the addendum
- N OK S OK=$$SIGNTIU^SAMIVSTA(tiuaien)
- D CHKEQ^%ut(utsuccess,1,"Testing Adding Addendum FAILED!")
- Q
+ n OK S OK=$$SIGNTIU^SAMIVSTA(tiuaien)
+ d CHKEQ^%ut(utsuccess,1,"Testing Adding Addendum FAILED!")
+ q
  ;
 UTDELTIU ; @TEST - Deleting an unsigned TIU note
- H 2
- N D,D0,DG,DI,DIC,DICR,DIG,DIH
- N tiuaien S tiuaien=$S($P(tiuien,"^",2):$P(tiuien,"^",2),1:0)
- s tiuien=+$G(tiuien)
- I '$G(tiuien) D  Q
- . D FAIL^%ut("Unable to obtain tiuien for Deleting TIU  - FAILED!")
+ h 2
+ n D,D0,DG,DI,DIC,DICR,DIG,DIH
+ n tiuaien S tiuaien=$S($p(tiuien,"^",2):$p(tiuien,"^",2),1:0)
+ s tiuien=+$g(tiuien)
+ i '$g(tiuien) d  q
+ . d FAIL^%ut("Unable to obtain tiuien for Deleting TIU  - FAILED!")
  ; Set note status back to UNSIGNED so we can delete it
- S:$D(^TIU(8925,+tiuien,0)) $P(^TIU(8925,+tiuien,0),"^",5)=5
- S:$D(^TIU(8925,+tiuaien,0)) $P(^TIU(8925,+tiuaien,0),"^",5)=5
+ s:$d(^TIU(8925,+tiuien,0)) $p(^TIU(8925,+tiuien,0),"^",5)=5
+ s:$d(^TIU(8925,+tiuaien,0)) $p(^TIU(8925,+tiuaien,0),"^",5)=5
  ;
- s:$G(tiuaien) utsuccess=$$DELTIU^SAMIVSTA(tiuaien)
+ s:$g(tiuaien) utsuccess=$$DELTIU^SAMIVSTA(tiuaien)
  s utsuccess=$$DELTIU^SAMIVSTA(tiuien)
  ;
- D CHKEQ^%ut(utsuccess,1,"Testing Deleting TIU FAILED!")
- Q
+ d CHKEQ^%ut(utsuccess,1,"Testing Deleting TIU FAILED!")
+ q
  ;
 UTURBR ; @TEST - extrinsic to return urban or rural depending on zip code
  n uturr,uturu
  s uturu=$$URBRUR^SAMIVSTA(40714)
  s uturr=$$URBRUR^SAMIVSTA(40713)
  s utsuccess=((uturu_uturr)="ur")
- D CHKEQ^%ut(utsuccess,1,"Testing Urban/Rural extrinsic FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing Urban/Rural extrinsic FAILED!")
  q
  ;
 UTTASK ; @TEST - test TASKIT creation of new note,text, and encounter
  ;get existing siform from graph store.
- n root s root=$$setroot^%wd("vapals-patients")
+ ;n root s root=$$setroot^%wd("vapals-patients")
+ n root s root=$$SETROOT^SAMIUTST("vapals-patients")
  n glbrt s glbrt=$na(@root@("graph","XXX00001","siform"))
  s filter("form")=$o(@glbrt)
  ;
  s filter("studyid")="XXX00001"
  n tiuien s tiuien=0
  k ^TMP("UNIT TEST","UTTASK^SAMIUTVA")
- D TASKIT^SAMIVSTA
+ d TASKIT^SAMIVSTA
  s tiuien=$g(^TMP("UNIT TEST","UTTASK^SAMIUTVA"))
  s utsuccess=$S(tiuien>0:1,1:0)
- D CHKEQ^%ut(utsuccess,1,"Testing creating a new TIU note FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing creating a new TIU note FAILED!")
  ; If a new note was generated add encounter info
  i tiuien d
  . n ptdfn s ptdfn=$p(^TIU(8925,tiuien,0),"^",2)
  . n provduz
  . s provduz=$$GET^XPAR("SYS","SAMI DEFAULT PROVIDER DUZ",,"Q")
- . D ENCNTR^SAMIVSTA
+ . d ENCNTR^SAMIVSTA
  . s utsuccess=(tiuien>0)
- . D CHKEQ^%ut(utsuccess,1,"Testing adding encounter informatin FAILED!")
+ . d CHKEQ^%ut(utsuccess,1,"Testing adding encounter informatin FAILED!")
  ; If new note was generated, delete it
  i tiuien d
- . N D,D0,DG,DI,DIC,DICR,DIG,DIH
+ . n D,D0,DG,DI,DIC,DICR,DIG,DIH
  . s utsuccess=$$DELTIU^SAMIVSTA(tiuien)
- . D CHKEQ^%ut(utsuccess,1,"Testing deleting TASKIT note  FAILED!")
+ . d CHKEQ^%ut(utsuccess,1,"Testing deleting TASKIT note  FAILED!")
  q
  ;
 EOR ;End of routine SAMIUTVA

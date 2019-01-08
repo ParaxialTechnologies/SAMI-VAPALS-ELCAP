@@ -1,4 +1,4 @@
-SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 1/7/19 12:08pm
+SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 1/8/19 12:38pm
  ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -76,7 +76,7 @@ TASKIT ;
  ; Setup all variables into Graphstore
  ;
  n samikey,vals,root,dest,provduz,ptdfn,tiutitlepn
- n tiutitleien,tiuien,ok,X,Y,SAMIXD
+ n tiutitleien,tiuien,X,Y,SAMIXD
  n clinien,si
  s tiuien=0
  ;
@@ -103,7 +103,7 @@ TASKIT ;
  ;
  s samikey=$g(filter("form"))
  i (samikey'["siform") q:$Q 0  q
- i '($L(samikey,"-")=4) q:$Q 0  q
+ i '($l(samikey,"-")=4) q:$Q 0  q
  ; e.g. samikey="siform-2018-11-13"
  ;
  s vals=$na(@root@("graph",si,samikey))
@@ -149,7 +149,7 @@ ENCNTR n VSTR S VSTR=$$VISTSTR(tiuien)
  s SAMIHFARR(12)="COM^3^@"
  d BLDENCTR(.tiuien,.SAMIHFARR)
  i $G(tiuien),$g(provduz) d
- . n Asave s ASave=$$KASAVE(provduz,tiuien)
+ . n ASave s ASave=$$KASAVE(provduz,tiuien)
  i $G(tiuien) q:$Q tiuien  q
  q:$Q 0  q
  ;
@@ -349,9 +349,9 @@ ADDSIGN n cntxt,rmprc,console,cntnopen,SAMIARR,SAMIXD
  ..  s @vals@("add signers",cnt)=SAMIPOO(cnt)
  ;
  ; if doing UNIT TEST update utsuccess
- i $g(%ut),$d(utsuccess) D
+ i $g(%ut),$d(utsuccess) d
  . s utsuccess=($g(SAMIXD)>0)
- Q
+ q
  ;
  ;
  ;@API-code: $$TIUADND^SAMIVSTA
@@ -551,7 +551,7 @@ PTSSN1 ;n root s root=$$setroot^%wd("patient-lookup")
  ;   0 = failure, 1 = successful
 SIGNTIU(tiuda) ;
  ; some code pulled from SIGN in TIUSRVP2
- n X,tiud0,tiud12,TIUSTAT,signer,cosigner
+ n X,tiud0,tiud12,signer,cosigner
  n provduz,tiues
  s provduz=$$GET^XPAR("SYS","SAMI DEFAULT PROVIDER DUZ",,"Q")
  s tiud0=$g(^TIU(8925,+tiuda,0)),tiud12=$g(^TIU(8925,+tiuda,12))

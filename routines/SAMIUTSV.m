@@ -1,4 +1,4 @@
-SAMIUTSV ;ven/lgc - UNIT TEST for SAMISAV ; 12/18/18 12:34pm
+SAMIUTSV ;ven/lgc - UNIT TEST for SAMISAV ; 1/8/19 1:43pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -20,17 +20,17 @@ SAMIUTSV ;ven/lgc - UNIT TEST for SAMISAV ; 12/18/18 12:34pm
  ;
  ; @section 1 code
  ;
-START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
- D EN^%ut($T(+0),2)
- Q
+START i $t(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
+ d EN^%ut($t(+0),2)
+ q
  ;
  ;
 STARTUP n utsuccess
- Q
+ q
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
- K utsuccess
- Q
+ k utsuccess
+ q
  ;
  ;
 UTSAVF ; @TEST - extrinsic which returns the form key to use
@@ -42,7 +42,8 @@ UTSAVF ; @TEST - extrinsic which returns the form key to use
  s form="ceform-2018-10-21" ; form built by earlier unit test
  s SAMIUVARS("sidc")="11/7/2018"
  s SAMIUVARS("cedos")="10/29/2018"
- s root=$$setroot^%wd("vapals-patients")
+ ;s root=$$setroot^%wd("vapals-patients")
+ s root=$$SETROOT^SAMIUTST("vapals-patients")
  ; save off ceform built by earlier unit test
  m SAMIUPOO=@root@("graph","XXX00001","ceform-2018-10-21")
  s useform=$$SAVFILTR^SAMISAV(.sid,.form,.SAMIUVARS)
@@ -52,7 +53,7 @@ UTSAVF ; @TEST - extrinsic which returns the form key to use
  k @root@("graph","XXX00001",useform)
  ; return the original form
  m @root@("graph","XXX00001","ceform-2018-10-21")=SAMIUPOO
- ;D CHKEQ^%ut(utsuccess,1,"extrinsic which returns the ceform key FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"extrinsic which returns the ceform key FAILED!")
  ;
  ;Now test for "siform"
  ;Start by saving the present siform
@@ -61,7 +62,7 @@ UTSAVF ; @TEST - extrinsic which returns the form key to use
  k SAMIUPOO m SAMIUPOO=@root@("graph","XXX00001",form)
  k @root@("graph","XXX00001",form)
  ;Now pull in the siform saved earlier with an earlier date
- D PLUTARR^SAMIUTST(.SAMIUARC,"UTSAVF")
+ d PLUTARR^SAMIUTST(.SAMIUARC,"UTSAVF")
  m @root@("graph","XXX00001",form)=SAMIUARC
  ;Now we can see about testing as the siform pulled in
  ;  is from an earlier date
@@ -77,8 +78,8 @@ UTSAVF ; @TEST - extrinsic which returns the form key to use
  k @root@("graph","XXX00001",useform)
  ; return the original form
  m @root@("graph","XXX00001",form)=SAMIUPOO
- D CHKEQ^%ut(utsuccess,1,"extrinsic which returns the siform key FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"extrinsic which returns the siform key FAILED!")
  q
  ;
  ;
-EOR ;End of routine SAMIUSV
+EOR ;End of routine SAMIUTSV

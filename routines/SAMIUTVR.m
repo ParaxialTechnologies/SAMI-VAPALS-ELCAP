@@ -1,4 +1,4 @@
-SAMIUTVR ; ven/lgc,arc - UNIT TESTS for SAMIVSTR ; 12/26/18 4:46pm
+SAMIUTVR ; ven/lgc,arc - UNIT TESTS for SAMIVSTR ; 1/7/19 7:02pm
  ;;1.0;SAMI;;
  ;
  ;@routine-credits
@@ -43,12 +43,7 @@ UTRAPCD ; @TEST - Pulling Radiology Procedures through the broker
  k ^KBAP("UNIT TEST RA PROCEDURES")
  ;
  ;n root s root=$$setroot^%wd("radiology procedures")
- n name s name="radiology procedures"
- n siglb s siglb="setroot^%wd("""_name_""")"
- d @siglb
- s siglb="^%wd(17.040801,""B"","""_name_""",0)"
- n si s si=$o(@siglb)
- n root s root="^%wd(17.040801,"_si_")"
+ n root s root=$$SETROOT^SAMIUTST("radiology procedures")
  ;
  m ^KBAP("UNIT TEST RA PROCEDURES")=@root
  n KBAPPRCD,utsuccess s utsuccess=0
@@ -81,12 +76,7 @@ UTRASTAF ; @TEST - Pulling all active radiology staff
  k ^KBAP("UNIT TEST RAD STAFF")
  ;
  ;n root s root=$$setroot^%wd("radiology staff")
- n name s name="radiology staff"
- n siglb s siglb="setroot^%wd("""_name_""")"
- d @siglb
- s siglb="^%wd(17.040801,""B"","""_name_""",0)"
- n si s si=$o(@siglb)
- n root s root="^%wd(17.040801,"_si_")"
+ n root s root=$$SETROOT^SAMIUTST("radiology staff")
  ;
  m ^KBAP("UNIT TEST RAD STAFF")=@root
  n KBAPSTAF,utsuccess s utsuccess=0
@@ -116,12 +106,7 @@ UTRARES ; @TEST - Pulling all active radiology residents
  k ^KBAP("UNIT TEST RAD RESIDENTS")
  ;
  ;n root s root=$$setroot^%wd("radiology residents")
- n name s name="radiology residents"
- n siglb s siglb="setroot^%wd("""_name_""")"
- d @siglb
- s siglb="^%wd(17.040801,""B"","""_name_""",0)"
- n si s si=$o(@siglb)
- n root s root="^%wd(17.040801,"_si_")"
+ n root s root=$$SETROOT^SAMIUTST("radiology residents")
  ;
  m ^KBAP("UNIT TEST RAD RESIDENTS")=@root
  n KBAPRES,utsuccess s utsuccess=0
@@ -151,12 +136,7 @@ UTRATECH ; @TEST - Pulling all active radiology technologists
  k ^KBAP("UNIT TEST RAD TECHS")
  ;
  ;n root s root=$$setroot^%wd("radiology technologists")
- n name s name="radiology technologists"
- n siglb s siglb="setroot^%wd("""_name_""")"
- d @siglb
- s siglb="^%wd(17.040801,""B"","""_name_""",0)"
- n si s si=$o(@siglb)
- n root s root="^%wd(17.040801,"_si_")"
+ n root s root=$$SETROOT^SAMIUTST("radiology technologists")
  ;
  m ^KBAP("UNIT TEST RAD TECHS")=@root
  n KBAPTECH,utsuccess s utsuccess=0
@@ -186,12 +166,7 @@ UTRAMOD ; @TEST - Pulling all radiology diagnosis modifiers
  k ^KBAP("UNIT TEST RAD MODS")
  ;
  ;n root s root=$$setroot^%wd("radiology modifiers")
- n name s name="radiology modifiers"
- n siglb s siglb="setroot^%wd("""_name_""")"
- d @siglb
- s siglb="^%wd(17.040801,""B"","""_name_""",0)"
- n si s si=$o(@siglb)
- n root s root="^%wd(17.040801,"_si_")"
+ n root s root=$$SETROOT^SAMIUTST("radiology modifiers")
  ;
  m ^KBAP("UNIT TEST RAD MODS")=@root
  n KBAPMODS,utsuccess s utsuccess=0
@@ -224,12 +199,7 @@ UTRADXCD ; @TEST - Pull all radiology diagnostic codes
  k ^KBAP("UNIT TEST RA DX CODES")
  ;
  ;n root s root=$$setroot^%wd("radiology diagnostic codes")
- n name s name="radiology diagnostic codes"
- n siglb s siglb="setroot^%wd("""_name_""")"
- d @siglb
- s siglb="^%wd(17.040801,""B"","""_name_""",0)"
- n si s si=$o(@siglb)
- n root s root="^%wd(17.040801,"_si_")"
+ n root s root=$$SETROOT^SAMIUTST("radiology diagnostic codes")
  ;
  m ^KBAP("UNIT TEST RA DX CODES")=@root
  n KBAPCODS,utsuccess s utsuccess=0
@@ -253,12 +223,7 @@ UTRADXCD ; @TEST - Pull all radiology diagnostic codes
 UTCLRG ; @TEST - Clear a Graphstore of entries
  ;
  ;n root s root=$$setroot^%wd("radiology diagnostic codes")
- n name s name="radiology diagnostic codes"
- n siglb s siglb="setroot^%wd("""_name_""")"
- d @siglb
- s siglb="^%wd(17.040801,""B"","""_name_""",0)"
- n si s si=$o(@siglb)
- n root s root="^%wd(17.040801,"_si_")"
+ n root s root=$$SETROOT^SAMIUTST("radiology diagnostic codes")
  ;
  k ^KBAP("UNIT TEST CLRGRPH") M ^KBAP("UNIT TEST CLRGRPH")=@root
  n cnt s cnt=$O(@root@("A"),-1)

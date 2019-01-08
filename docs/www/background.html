@@ -242,7 +242,7 @@
          Other
         </label>
        </div>
-       <input class="form-control input-sm" id="sbahas" name="sbahas" required="required" title="Other work" type="text"/>
+       <input class="form-control input-sm" id="sbahas" name="sbahas" title="Other work" type="text"/>
       </div>
      </div>
     </div>
@@ -300,7 +300,7 @@
          Other
         </label>
        </div>
-       <input class="form-control input-sm" id="sbwcos" name="sbwcos" required="required" title="Other symptom" type="text"/>
+       <input class="form-control input-sm" id="sbwcos" name="sbwcos" title="Other symptom" type="text"/>
       </div>
      </div>
     </div>
@@ -680,10 +680,10 @@
        </div>
        <div id="sbaoc-container" style="display: none;">
         <div class="form-group col-sm-4 col-md-2">
-         <label class="control-label required" for="sbaocsp">
+         <label class="control-label" for="sbaocsp">
           Specify
          </label>
-         <input class="form-control input-sm" name="sbaocsp" required="required" type="text"/>
+         <input class="form-control input-sm" name="sbaocsp" type="text"/>
         </div>
         <div class="form-group col-sm-4 col-md-2">
          <label class="control-label" for="sbaocyr">
@@ -1291,10 +1291,10 @@
        </div>
        <div id="sbmpct-container" style="display: none;">
         <div class="form-group col-sm-12 col-md-6 col-lg-7">
-         <label class="control-label required" for="sbmpctsp">
+         <label class="control-label" for="sbmpctsp">
           Specify
          </label>
-         <input class="form-control input-sm" id="sbmpctsp" name="sbmpctsp" required="required" type="text"/>
+         <input class="form-control input-sm" id="sbmpctsp" name="sbmpctsp" type="text"/>
         </div>
        </div>
       </div>
@@ -1407,11 +1407,11 @@
        </div>
        <div class="col-sm-12 col-md-6 col-lg-7" id="sbmpoth-container" style="display: none;">
         <div class="form-group">
-         <label class="control-label required" for="sbmpoth-n">
+         <label class="control-label" for="sbmpoth-n">
           Specify
          </label>
          <br/>
-         <input class="form-control" id="sbmpod" name="sbmpod" required="required" type="text"/>
+         <input class="form-control" id="sbmpod" name="sbmpod" type="text"/>
         </div>
        </div>
       </div>
@@ -1554,17 +1554,12 @@
             const pastYearValidator = {between: {message: yearValidationMessage, min: minYear, max: thisYear}};
             $form.formValidation({
                     fields: {
-                        //top section
-                        sbahas: {validators: {notEmpty: {message: 'Other work is required'}}},
-                        sbwcos: {validators: {notEmpty: {message: 'Other symptom is required'}}},
-
                         //Cancers
                         sbhlcdt: {validators: pastYearValidator}, // lung cancer
                         sbhmedt: {validators: pastYearValidator}, // melanima
                         sbhbadt: {validators: pastYearValidator}, // basal/squamous-cell skin
                         sbhledt: {validators: pastYearValidator}, // leukemia
                         sbhlydt: {validators: pastYearValidator}, // lymphoma
-                        sbaocsp: {validators: {notEmpty: {message: 'Other cancers(s) is required'}}}, // Other cancers
                         sbaocyr: {validators: pastYearValidator},
 
                         //Pulmonary
@@ -1590,11 +1585,6 @@
                                 greaterThan: {min: 0, message: 'Value must be greater than 0'}
                             }
                         },
-
-                        //Other diseases
-                        sbmpctsp: {validators: {notEmpty: {message: 'Connective tissue is required'}}},
-                        sbmpod: {validators: {notEmpty: {message: 'Other disease is required'}}},
-
                     },
                     plugins: {
                         trigger: new FormValidation.plugins.Trigger(),

@@ -1,10 +1,10 @@
-SAMICTR2 ;ven/gpl - ielcap: forms ;2018-03-07T18:48Z
+SAMICTR2 ;ven/gpl - ielcap: forms ; 1/9/19 8:31am
  ;;18.0;SAMI;;
  ;
  ;
  quit  ; no entry from top
  ;
-OTHRLUNG(rtn,vals,dict)
+OTHRLUNG(rtn,vals,dict) ;
  ; repgen2,repgen3
  ;
  ; starts at "Other lung findings:"
@@ -177,7 +177,7 @@ OTHRLUNG(rtn,vals,dict)
  ;
 LOBESTR(lst,opt) ; extrinsic returns lobes
  ; lst is of the for a^b^c where a,b and c are variable names
- n rtstr,lln,tary
+ n rtstr,lln,tary,lzi
  s tary=""
  s rtstr=""
  s lln=$l(lst,"^")
@@ -200,7 +200,7 @@ HLFIND() ; references and sets lfind in calling routine
  . s lfind=1
  q
  ;
-OUT(ln)
+OUT(ln) ;
  s cnt=cnt+1
  n lnn
  ;s debug=1
@@ -213,7 +213,7 @@ OUT(ln)
  . s @rtn@(lnn)=zp_":"_ln
  q
  ;
-HOUT(ln)
+HOUT(ln) ;
  d OUT("<p><span class='sectionhead'>"_ln_"</span>")
  q
  ;

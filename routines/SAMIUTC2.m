@@ -1,4 +1,4 @@
-SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ; 1/3/19 9:56am
+SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ; 1/9/19 1:38pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -33,8 +33,8 @@ START ;
 STARTUP ; Ensure all of test patient's forms are setup in vapals-patients
  n root s root=$$setroot^%wd("vapals-patients")
  k @root@("graph","XXX00001")
- n poo D PLUTARR^SAMIUTST(.poo,"all XXX00001 forms")
- m @root@("graph","XXX00001")=poo
+ n SAMIPOO D PLUTARR^SAMIUTST(.SAMIPOO,"all XXX00001 forms")
+ m @root@("graph","XXX00001")=SAMIPOO
  q
  ;
 SETUP ;

@@ -1,14 +1,14 @@
-SAMIUTST ;ven/lgc - Unit Test Utilities ; 12/27/18 12:41pm
+SAMIUTST ;ven/lgc - Unit Test Utilities ; 1/9/19 9:29am
  ;;18.0;SAMI;;
  ;
  ; Routine to push and pull information used during unit testing
  ;   of va-pals routines
  ;
-START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
- D EN^%ut($T(+0),2)
- Q
+START i $t(^%ut)="" W !,"*** UNIT TEST NOT INSTALLEd ***" Q
+ d EN^%ut($t(+0),2)
+ q
  ;
- Q  ; No entry from top
+ q  ; No entry from top
  ;
  ; @section 0 primary development
  ;
@@ -45,7 +45,8 @@ START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
 SVUTARR(arr,title) ;
  q:'$d(arr)
  q:($g(title)="")
- n root s root=$$setroot^%wd("vapals unit tests")
+ ;n root s root=$$setroot^%wd("vapals unit tests")
+ n root s root=$$SETROOT("vapals unit tests")
  n gien s gien=$$GETGIEN(root,title)
  k @root@(gien)
  ; load data
@@ -62,11 +63,12 @@ SVUTARR(arr,title) ;
 PLUTARR(arr,title) ;
  K arr
  q:($g(title)="")
- n root s root=$$setroot^%wd("vapals unit tests")
+ ;n root s root=$$setroot^%wd("vapals unit tests")
+ n root s root=$$SETROOT("vapals unit tests")
  n gien s gien=$$GETGIEN(root,title)
  ; pull data
- M arr=@root@(gien)
- Q
+ m arr=@root@(gien)
+ q
  ;
  ;Enter
  ;   dfn   = dfn of patient to use as test patient
@@ -75,15 +77,17 @@ PLUTARR(arr,title) ;
  ;   pushes a copy of the patient entry in the
  ;     "patient-lookup" Graphstore into the
  ;     "vapals unit tests" Graphstore
-SVTSTPT(dfn,title) ;
+SVTSTPT(dfn,title) ; Push a copy of test patient into vapals unit tests
  q:($G(title)="")
  q:'$G(dfn)
- n rootut S rootut=$$setroot^%wd("vapals unit tests")
+ ;n rootut S rootut=$$setroot^%wd("vapals unit tests")
+ n rootut s rootut=$$SETROOT("vapals unit tests")
  n gienut S gienut=$$GETGIEN(rootut,title)
  k @rootut@(gienut)
  s @rootut@(gienut,"title")=title
  ; load data
- n rootpl s rootpl=$$setroot^%wd("patient-lookup")
+ ;n rootpl s rootpl=$$setroot^%wd("patient-lookup")
+ n rootpl s rootpl=$$SETROOT("patient-lookup")
  n gienpl s gienpl=$O(@rootpl@("dfn",dfn,0))
  m @rootut@(gienut)=@rootpl@(gienpl)
  q
@@ -127,6 +131,7 @@ BLDRTNS ;
  ;
 UTCHKSM ; @TEST - Test VAPALS routines checksums
  n poo,arc,temp,nodea,nodet,utsuccess
+ D BLDRTNS
  d PLUTARR(.temp,"vapals routines checksums")
  d PLUTARR(.poo,"vapals routines")
  s cnt=0,utsuccess=1
@@ -153,7 +158,8 @@ UTSTGS ; @TEST - Save array to vapals unit tests graphstore
  d SVUTARR(.poo,title)
  d PLUTARR(.arc,title)
  ; KILL THE TEMPORARY ENTRY
- n rootut s rootut=$$setroot^%wd("vapals unit tests")
+ ;n rootut s rootut=$$setroot^%wd("vapals unit tests")
+ n rootut s rootut=$$SETROOT("vapals unit tests")
  n gienut s gienut=$$GETGIEN(rootut,title)
  k @rootut@(gienut)
  k @rootut@("B",title)
@@ -163,8 +169,24 @@ UTSTGS ; @TEST - Save array to vapals unit tests graphstore
  . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
  . i '(@nodea=@nodep) s utsuccess=0
  i 'nodep="" s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing saving/pulling from vapals unit test graphstore FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing saving/pulling from vapals unit test graphstore FAILED!")
+ q
  ;
+UTSVTSTP ; @TEST - Push a copy of test patient into vapals unit tests
+ n dfn s dfn=$$GET^XPAR("SYS","SAMI SYSTEM TEST PATIENT DFN",,"Q")
+ n title s title="myunittest"
+ ; kill entry if already existed
+ n rootut s rootut=$$SETROOT("vapals unit tests")
+ n gienut S gienut=$$GETGIEN(rootut,title)
+ k @rootut@(gienut)
+ ;
+ d SVTSTPT(dfn,title)
+ s utsuccess=(@rootut@(gienut,"dfn")=dfn)
+ d CHKEQ^%ut(utsuccess,1,"Test placing test patient in unit test graphstore FAILED!")
+ q
+ ;
+ ; A replacement for setroot^%wd to prevent XINDEX error
+ ;   by hiding the call in an indirection
 SETROOT(name) ;
  n siglb s siglb="setroot^%wd("""_name_""")"
  d @siglb
@@ -174,20 +196,28 @@ SETROOT(name) ;
  q root
  ;
 RTNS ;
- ;;SAMIM2M
  ;;KBANSCAU
  ;;SAMIADMN
  ;;SAMICAS2
+ ;;SAMICAS3
  ;;SAMICTC1
  ;;SAMICTD2
  ;;SAMICTR
  ;;SAMICTR0
  ;;SAMICTR1
+ ;;SAMICTR2
+ ;;SAMICTR3
  ;;SAMICTR9
  ;;SAMICTRA
  ;;SAMICTRX
+ ;;SAMIFDM
+ ;;SAMIFLD
+ ;;SAMIFORM
+ ;;SAMIFUL
+ ;;SAMIFWS
  ;;SAMIFRM2
  ;;SAMIHOM3
+ ;;SAMIHOM4
  ;;SAMIIFF
  ;;SAMILOG
  ;;SAMIM2M

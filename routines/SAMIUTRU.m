@@ -1,4 +1,4 @@
-SAMIUTRU ;ven/lgc - UNIT TEST for SAMIRU ; 12/17/18 3:28pm
+SAMIUTRU ;ven/lgc - UNIT TEST for SAMIRU ; 1/10/19 11:06am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -20,22 +20,23 @@ SAMIUTRU ;ven/lgc - UNIT TEST for SAMIRU ; 12/17/18 3:28pm
  ;
  ; @section 1 code
  ;
-START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
- D EN^%ut($T(+0),2)
- Q
+START i $t(^%ut)="" w !,"*** UNIT TEST NOT INSTALLED ***" Q
+ d EN^%ut($T(+0),2)
+ q
  ;
 STARTUP n utsuccess
- Q
+ q
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
- K utsuccess
- Q
+ k utsuccess
+ q
  ;
  ;
 UTINDEX ; @TEST - create the zip index in the zip graph
  ;INDEX^SAMIRU
  n root,samid1,samid2,samid3,SAMIUPOO,SAMIUARC
- s root=$$setroot^%wd("NCHS Urban-Rural")
+ ;s root=$$setroot^%wd("NCHS Urban-Rural")
+ s root=$$SETROOT^SAMIUTST("NCHS Urban-Rural")
  s samid1=$d(@root@("zip")) ; should be 10
  i samid1=10 d
  . m SAMIUPOO=@root@("zip")
@@ -48,7 +49,7 @@ UTINDEX ; @TEST - create the zip index in the zip graph
  i '(samid2=0) d  q
  . d PLUTARR^SAMIUTST(.SAMIUARC,"ZIP index on NCHS Urban-Rural")
  . m @root@("zip")=SAMIUARC
- . D FAIL^%ut("Error, unable to kill 'zip' index on on NCHS Urban-Rural!")
+ . d FAIL^%ut("Error, unable to kill 'zip' index on on NCHS Urban-Rural!")
  d INDEX^SAMIRU
  ; confirm now the "zip" does exist
  s samid3=$d(@root@("zip")) ; should be 10 again
@@ -56,13 +57,14 @@ UTINDEX ; @TEST - create the zip index in the zip graph
  . d PLUTARR^SAMIUTST(.SAMIUARC,"ZIP index on NCHS Urban-Rural")
  . m @root@("zip")=SAMIUARC
  s utsuccess=(samid3=10)
- D CHKEQ^%ut(utsuccess,1,"Create 'zip' index on NCHS Urban-Rural FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Create 'zip' index on NCHS Urban-Rural FAILED!")
  q
  ;
 UTWSGRU ; @TEST - web service to return counts for rural and urban
  ;WSGETRU(rtn,filter)
  n SAMIURTN,SAMIUFLTR,root
- s root=$$setroot^%wd("vapals-patients")
+ ;s root=$$setroot^%wd("vapals-patients")
+ s root=$$SETROOT^SAMIUTST("vapals-patients")
  ;
  d WSGETRU^SAMIRU(.SAMIURTN,.SAMIUFLTR)
  s utsuccess=1
@@ -71,8 +73,20 @@ UTWSGRU ; @TEST - web service to return counts for rural and urban
  i $g(SAMIURTN(1))'["site" s utsuccess=0
  i $g(SAMIURTN(1))'["unknown" s utsuccess=0
  i $g(SAMIURTN(1))'["urban" s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing web service counting rural and urban FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing web service counting rural and urban FAILED!")
  q
  ;
+UTWSZIP ; @TEST - web service to return rural or urban
+ n SAMIFLTR,SAMIPOO
+ s SAMIFLTR("zip")=40713
+ d WSZIPRU^SAMIRU(.SAMIPOO,.SAMIFLTR)
+ s utsuccess=(SAMIPOO(1)="{""result"":""r""}")
+ d CHKEQ^%ut(utsuccess,1,"Testing web service return rural FAILED!")
+ ;
+ s SAMIFLTR("zip")=40714
+ d WSZIPRU^SAMIRU(.SAMIPOO,.SAMIFLTR)
+ s utsuccess=(SAMIPOO(1)="{""result"":""u""}")
+ d CHKEQ^%ut(utsuccess,1,"Testing web service return urban FAILED!")
+ q
  ;
 EOR ;End of routine SAMIUTRU

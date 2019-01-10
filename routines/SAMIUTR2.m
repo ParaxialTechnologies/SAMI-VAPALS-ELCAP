@@ -1,4 +1,4 @@
-SAMIUTR2 ;ven/lgc - UNIT TEST for SAMICTR2 ; 1/3/19 7:01pm
+SAMIUTR2 ;ven/lgc - UNIT TEST for SAMICTR2 ; 1/9/19 2:17pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -21,17 +21,18 @@ SAMIUTR2 ;ven/lgc - UNIT TEST for SAMICTR2 ; 1/3/19 7:01pm
  ;
  ; @section 1 code
  ;
-START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
- D EN^%ut($T(+0),2)
- Q
+START i $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
+ d EN^%ut($T(+0),2)
+ q
  ;
  ;
 STARTUP n utsuccess
- n root s root=$$setroot^%wd("vapals-patients")
+ ;n root s root=$$setroot^%wd("vapals-patients")
+ n root s root=$$SETROOT^SAMIUTST("vapals-patients")
  k @root@("graph","XXX00001")
  n SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
  m @root@("graph","XXX00001")=SAMIUPOO
- Q
+ q
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
  K utsuccess
@@ -42,44 +43,42 @@ UTOTLNG ; @TEST - nodules
  ;OTHERLUNG(rtn,vals,dict)
  n SAMIUPOO,SAMIUARC
  n root,si,vals,dict,cnt,return,noder,nodea,para
- s root=$$setroot^%wd("vapals-patients")
+ ;s root=$$setroot^%wd("vapals-patients")
+ s root=$$SETROOT^SAMIUTST("vapals-patients")
  s si="XXX00001"
  n samikey s samikey="ceform-2018-10-21"
  s vals=$na(@root@("graph",si,samikey))
- n dict s dict=$$setroot^%wd("cteval-dict")
+ ;n dict s dict=$$setroot^%wd("cteval-dict")
+ n dict s dict=$$SETROOT^SAMIUTST("cteval-dict")
  s dict=$na(@dict@("cteval-dict"))
  s cnt=0
  s para="SAMIUPOO"
  d OTHRLUNG^SAMICTR2("return",vals,dict)
  ;now pull saved report
- D PLUTARR^SAMIUTST(.SAMIUARC,"UTOTLNG^SAMIUTR2 report")
+ d PLUTARR^SAMIUTST(.SAMIUARC,"UTOTLNG^SAMIUTR2 report")
  ; now compare return with SAMIUARC
  n noder,nodea s noder=$na(return),nodea=$na(SAMIUARC)
  s utsuccess=1
  f  s noder=$Q(@noder),nodea=$Q(@nodea) q:noder=""  d  q:'utsuccess
  . i '(@noder=@nodea) s utsuccess=0
  i '(nodea="") s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing other Lung report FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing other Lung report FAILED!")
  ;
- n SAMIUPOO,root,si,vals,dict,cnt,return,SAMIUARC,noder,nodea
- s root=$$setroot^%wd("vapals-patients")
+ n SAMIUPOO,si,vals,cnt,return,SAMIUARC,noder,nodea
  s si="XXX00001",samikey="ceform-2018-12-03"
  s vals=$na(@root@("graph",si,samikey))
- n dict s dict=$$setroot^%wd("cteval-dict")
- s dict=$na(@dict@("cteval-dict"))
  s cnt=0
  s para="POO"
  d OTHRLUNG^SAMICTR2("return",vals,dict)
  ;now pull saved report
- D PLUTARR^SAMIUTST(.SAMIUARC,"UTOTLNG^SAMIUTR2 report XXX12-3")
+ d PLUTARR^SAMIUTST(.SAMIUARC,"UTOTLNG^SAMIUTR2 report XXX12-3")
  ; now compare return with SAMIUARC
  n noder,nodea s noder=$na(return),nodea=$na(SAMIUARC)
  s utsuccess=1
  f  s noder=$Q(@noder),nodea=$Q(@nodea) q:noder=""  d  q:'utsuccess
  . i '(@noder=@nodea) s utsuccess=0
  i '(nodea="") s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing generating nodule report XXX12-3  FAILED!")
- ;
+ d CHKEQ^%ut(utsuccess,1,"Testing generating nodule report XXX12-3  FAILED!")
  q
  ;
 UTOUT ; @TEST - out line
@@ -88,27 +87,30 @@ UTOUT ; @TEST - out line
  s cnt=1,rtn="SAMIUPOO",SAMIUPOO(1)="First line of test"
  n SAMIULN s SAMIULN="Second line test"
  s utsuccess=0
- D OUT^SAMICTR2(SAMIULN)
+ d OUT^SAMICTR2(SAMIULN)
  s utsuccess=($g(SAMIUPOO(2))="Second line test")
- D CHKEQ^%ut(utsuccess,1,"Testing out(ln) adds line to array FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing out(ln) adds line to array FAILED!")
  q
+ ;
 UTHOUT ; @TEST - hout line
  ;HOUT(ln)
  n cnt,rtn,SAMIUPOO
  s cnt=1,rtn="SAMIUPOO",SAMIUPOO(1)="First line of test"
  n SAMIULN s SAMIULN="Second line test"
  s utsuccess=0
- D HOUT^SAMICTR2(SAMIULN)
+ d HOUT^SAMICTR2(SAMIULN)
  s utsuccess=($g(SAMIUPOO(2))="<p><span class='sectionhead'>Second line test</span>")
- D CHKEQ^%ut(utsuccess,1,"Testing out(ln) adds line to array FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing out(ln) adds line to array FAILED!")
  q
+ ;
 UTXVAL ; @TEST - extrinsic returns the patient value for var
  ;XVAL(var,vals)
  s utsuccess=0
  s SAMIUARC(1)="Testing xval"
  s utsuccess=($$XVAL^SAMICTR2(1,"SAMIUARC")="Testing xval")
- D CHKEQ^%ut(utsuccess,1,"Testing xval(var,vals) FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing xval(var,vals) FAILED!")
  q
+ ;
 UTXSUB ; @TEST - extrinsic which returns the dictionary value defined by var
  ;XSUB(var,vals,dict,valdx)
  n vals,var,SAMIUPOO,valdx,result
@@ -117,10 +119,11 @@ UTXSUB ; @TEST - extrinsic which returns the dictionary value defined by var
  s var="cteval-dict"
  s SAMIUPOO(1)="biopsy"
  s valdx=1
- s dict=$$setroot^%wd("cteval-dict")
+ ;s dict=$$setroot^%wd("cteval-dict")
+ s dict=$$SETROOT^SAMIUTST("cteval-dict")
  s result=$$XSUB^SAMICTR2(var,vals,dict,valdx)
  s utsuccess=(result="CT-guided biopsy")
- D CHKEQ^%ut(utsuccess,1,"Testing xsub(var,vals,dict,valdx) FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing xsub(var,vals,dict,valdx) FAILED!")
  q
  ;
 EOR ;End of routine SAMIUTR1

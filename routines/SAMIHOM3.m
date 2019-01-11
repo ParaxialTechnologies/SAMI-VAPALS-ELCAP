@@ -1,4 +1,4 @@
-SAMIHOM3 ;ven/gpl - ielcap: forms ; 12/11/18 9:36am
+SAMIHOM3 ;ven/gpl - ielcap: forms ; 1/11/19 10:07am
  ;;18.0;SAMI;;
  ;
  ; Routine SAMIHOM3 contains subroutines for implementing the ELCAP Home
@@ -110,7 +110,6 @@ WSHOME(SAMIRTN,SAMIFILTER) goto WSHOME^SAMIHOM4
 WSVAPALS(SAMIARG,SAMIBODY,SAMIRESULT) goto WSVAPALS^SAMIHOM4
  ;
  ;
-; temporary home page for development
 DEVHOME(SAMIRTN,SAMIFILTER) goto DEVHOME^SAMIHOM4
  ;
  ;
@@ -532,4 +531,4 @@ INDEX ; reindex the vapals-patients graph
  . s @root@("sid",sid,zi)=""
  q
  ;
-EOR ; end of routine SAMIHOM2
+EOR ; end of routine SAMIHOM3

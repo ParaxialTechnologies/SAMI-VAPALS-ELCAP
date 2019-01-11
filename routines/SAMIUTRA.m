@@ -1,4 +1,4 @@
-SAMIUTRA ;ven/lgc - UNIT TEST for SAMICTRA ; 12/17/18 3:20pm
+SAMIUTRA ;ven/lgc - UNIT TEST for SAMICTRA ; 1/10/19 11:16am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -20,13 +20,14 @@ SAMIUTRA ;ven/lgc - UNIT TEST for SAMICTRA ; 12/17/18 3:20pm
  ;
  ; @section 1 code
  ;
-START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
- D EN^%ut($T(+0),2)
- Q
+START i $t(^%ut)="" w !,"*** UNIT TEST NOT INSTALLED ***" Q
+ d EN^%ut($T(+0),2)
+ q
  ;
  ;
 STARTUP n utsuccess
- n root s root=$$setroot^%wd("vapals-patients")
+ ;n root s root=$$setroot^%wd("vapals-patients")
+ n root s root=$$SETROOT^SAMIUTST("vapals-patients")
  k @root@("graph","XXX00001")
  n SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
  m @root@("graph","XXX00001")=SAMIUPOO
@@ -40,11 +41,13 @@ SHUTDOWN ; ZEXCEPT: utsuccess
 UTRCMD ; @TEST - Recommendation
  ;recommend(rtn,vals,dict)
  n vals,dict,si,samikey,root,SAMIUPOO,SAMIUARC,nodea,nodep
- s root=$$setroot^%wd("vapals-patients")
+ ;s root=$$setroot^%wd("vapals-patients")
+ n root s root=$$SETROOT^SAMIUTST("vapals-patients")
  s si="XXX00001"
  s samikey="ceform-2018-10-21"
  s vals=$na(@root@("graph",si,samikey))
- s dict=$$setroot^%wd("cteval-dict")
+ ;s dict=$$setroot^%wd("cteval-dict")
+ s dict=$$SETROOT^SAMIUTST("cteval-dict")
  s dict=$na(@dict@("cteval-dict"))
  s cnt=1
  ; SAMICTRA needs para = value to insert in one line
@@ -93,7 +96,8 @@ UTXSUB ; @TEST - extrinsic which returns the dictionary value defined by var
  s var="cteval-dict"
  s SAMIUPOO(1)="biopsy"
  s valdx=1
- s dict=$$setroot^%wd("cteval-dict")
+ ;s dict=$$setroot^%wd("cteval-dict")
+ s dict=$$SETROOT^SAMIUTST("cteval-dict")
  s result=$$XSUB^SAMICTRA(var,vals,dict,valdx)
  s utsuccess=(result="CT-guided biopsy")
  D CHKEQ^%ut(utsuccess,1,"Testing xsub(var,vals,dict,valdx) FAILED!")

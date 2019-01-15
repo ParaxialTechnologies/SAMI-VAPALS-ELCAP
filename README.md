@@ -3,7 +3,10 @@
 VA-Partnership to increase Access to Lung Screening
 ---------------------------------------------------
 
-This is the main repository that supports the the [VA-Partnership to increase Access to Lung Screening project](http://va-pals.org/)
+This is the main repository that supports the the [VA-Partnership to increase Access to Lung Screening project](http://va-pals.org/). 
+The original management system was created and donated by Early Diagnosis and Treatment Research Foundation within the
+International Early Lung Cancer Action Program (I-ELCAP), an international program of lung cancer screening.
+
 
 Repository Structure
 -

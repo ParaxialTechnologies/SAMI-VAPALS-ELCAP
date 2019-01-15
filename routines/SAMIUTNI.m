@@ -1,4 +1,4 @@
-SAMIUTNI ;ven/lgc - UNIT TEST for SAMINOTI ; 12/17/18 9:46am
+SAMIUTNI ;ven/lgc - UNIT TEST for SAMINOTI ; 1/14/19 12:57pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -20,21 +20,22 @@ SAMIUTNI ;ven/lgc - UNIT TEST for SAMINOTI ; 12/17/18 9:46am
  ;
  ; @section 1 code
  ;
-START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
- D EN^%ut($T(+0),2)
- Q
+START i $t(^%ut)="" w !,"*** UNIT TEST NOT INSTALLED ***" q
+ d EN^%ut($T(+0),2)
+ q
  ;
  ;
 STARTUP n utsuccess
- n root s root=$$setroot^%wd("vapals-patients")
+ ;n root s root=$$setroot^%wd("vapals-patients")
+ n root s root=$$SETROOT^SAMIUTST("vapals-patients")
  k @root@("graph","XXX00001")
- n SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
+ n SAMIUPOO d PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
  m @root@("graph","XXX00001")=SAMIUPOO
- Q
+ q
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
- K utsuccess
- Q
+ k utsuccess
+ q
  ;
  ;
 UTWSNOTE ; @TEST - web service which returns a text note
@@ -54,18 +55,19 @@ UTWSNOTE ; @TEST - web service which returns a text note
  . i $E($tr(@nodep,""""" "),1,10)?4N1"."2N1"."2N q
  . i '(@nodep=@nodea) s utsuccess=0
  i utsuccess s utsuccess=(nodea="")
- D CHKEQ^%ut(utsuccess,1,"Testing web service return a note FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing web service return a note FAILED!")
  q
  ;
 UTNOTFLT ; @TEST - extrnisic which creates a note
  ;NOTE(filter)
- n SAMIFLTR,root,vals,SAMIUPOO
+ n SAMIFLTR,root,SAMIVALS,SAMIUPOO
  s SAMIFLTR("studyid")="XXX00001"
  s SAMIFLTR("form")="ceform-2018-10-21"
- s root=$$setroot^%wd("vapals-patients")
- s vals=$na(@root@("graph",SAMIFLTR("studyid"),SAMIFLTR("form"),"note"))
+ ;s root=$$setroot^%wd("vapals-patients")
+ s root=$$SETROOT^SAMIUTST("vapals-patients")
+ s SAMIVALS=$na(@root@("graph",SAMIFLTR("studyid"),SAMIFLTR("form"),"note"))
  ; kill any existing note
- k @vals
+ k @SAMIVALS
  ; build new note
  d NOTE^SAMINOTI(.SAMIFLTR)
  ; pull array with what the note should look like in global
@@ -73,10 +75,10 @@ UTNOTFLT ; @TEST - extrnisic which creates a note
  ; now compare the two
  s utsuccess=1
  n nodep s nodep=$na(SAMIUPOO)
- f  s nodep=$q(@nodep),vals=$q(@vals) q:(nodep="")  d  q:'utsuccess
- . i '(@nodep=@vals) s utsuccess=0
- i utsuccess s utsuccess=($qs(vals,6)'["note")
- D CHKEQ^%ut(utsuccess,1,"Testing extrinsic which creates note FAILED!")
+ f  s nodep=$q(@nodep),SAMIVALS=$q(@SAMIVALS) q:(nodep="")  d  q:'utsuccess
+ . i '(@nodep=@SAMIVALS) s utsuccess=0
+ i utsuccess s utsuccess=($qs(SAMIVALS,6)'["note")
+ d CHKEQ^%ut(utsuccess,1,"Testing extrinsic which creates note FAILED!")
  q
  ;
 UTOUT ; @TEST - Testing out(ln)
@@ -85,9 +87,9 @@ UTOUT ; @TEST - Testing out(ln)
  s cnt=1,dest="SAMIUPOO",SAMIUPOO(1)="First line of test"
  n SAMILN s SAMILN="Second line test"
  s utsuccess=0
- D OUT^SAMINOTI(SAMILN)
+ d OUT^SAMINOTI(SAMILN)
  s utsuccess=($g(SAMIUPOO(2))="Second line test")
- D CHKEQ^%ut(utsuccess,1,"Testing out(ln) adds line to array FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing out(ln) adds line to array FAILED!")
  q
  ;
 UTXVAL ; @TEST - extrinsic returns the patient value for var
@@ -95,7 +97,7 @@ UTXVAL ; @TEST - extrinsic returns the patient value for var
  s utsuccess=0
  s SAMIUARC(1)="Testing xval"
  s utsuccess=($$XVAL^SAMINOTI(1,"SAMIUARC")="Testing xval")
- D CHKEQ^%ut(utsuccess,1,"Testing xval(var,vals) FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing xval(var,vals) FAILED!")
  q
  ;
 EOR ;End of routine SAMIUTNI

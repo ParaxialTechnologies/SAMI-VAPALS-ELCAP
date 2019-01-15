@@ -1,4 +1,4 @@
-SAMIUTC1 ;ven/lgc - Unit test for SAMICTC1 and SAMICTC2 ; 12/28/18 1:16pm
+SAMIUTC1 ;ven/lgc - Unit test for SAMICTC1 and SAMICTC2 ; 1/15/19 10:09am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -27,26 +27,26 @@ START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  ;
  ;
 STARTUP n utsuccess
- Q
+ q
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
- K utsuccess
- Q
+ k utsuccess
+ q
  ;
  ;
 UTCTCPY ; @TEST - copies a Ct Eval form selectively
  ;CTCOPY(FROM,TO)
- n arc,poo,SAMIUFROM,SAMIUTO
+ n SAMIUARC,SAMIUPOO,SAMIUFROM,SAMIUTO
  s utsuccess=1
- D PLUTARR^SAMIUTST(.poo,"CTCOPY-SAMICTC1")
- S SAMIUFROM=$NA(poo),SAMIUTO=$NA(arc)
- D CTCOPY^SAMICTC1(SAMIUFROM,SAMIUTO)
- n nodea,nodep s nodea=$na(arc),nodep=$na(poo)
- f  s nodea=$Q(nodea),nodep=$Q(nodep) q:nodea=""  d
+ d PLUTARR^SAMIUTST(.SAMIUPOO,"CTCOPY-SAMICTC1")
+ S SAMIUFROM=$NA(SAMIUPOO),SAMIUTO=$NA(SAMIUARC)
+ d CTCOPY^SAMICTC1(SAMIUFROM,SAMIUTO)
+ n nodea,nodep s nodea=$na(SAMIUARC),nodep=$na(SAMIUPOO)
+ f  s nodea=$q(nodea),nodep=$q(nodep) q:nodea=""  d
  . i '(nodea=nodep) s utsuccess=0
  . i '(@nodea=@nodep) s utsuccess=0
  i '(nodep="") s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing CTCOPY FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing CTCOPY FAILED!")
  q
 UTGNCTC ; @TEST - generates the copy routine from a graph
  q

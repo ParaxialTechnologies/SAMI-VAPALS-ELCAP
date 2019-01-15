@@ -1,4 +1,4 @@
-SAMIUTD2 ;ven/lgc - UNIT TEST for SAMIUTD2 ; 12/14/18 11:53am
+SAMIUTD2 ;ven/lgc - UNIT TEST for SAMIUTD2 ; 1/15/19 8:58am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -21,23 +21,24 @@ SAMIUTD2 ;ven/lgc - UNIT TEST for SAMIUTD2 ; 12/14/18 11:53am
  ;
  ; @section 1 code
  ;
-START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
- D EN^%ut($T(+0),2)
- Q
+START i $t(^%ut)="" w !,"*** UNIT TEST NOT INSTALLED ***" q
+ d EN^%ut($T(+0),2)
+ q
  ;
  ;
 STARTUP n utsuccess
- Q
+ q
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
- K utsuccess
- Q
+ k utsuccess
+ q
  ;
  ;
 UTIN2G ; @TEST - initialize CTEVAL dictionary into graph cteval-dict
  ;INIT2GPH()
  n root,SAMIUPOO,SAMIUARC
- s root=$$setroot^%wd("cteval-dict")
+ ;s root=$$setroot^%wd("cteval-dict")
+ s root=$$SETROOT^SAMIUTST("cteval-dict")
  m SAMIUPOO=@root
  d SVUTARR^SAMIUTST(.SAMIUPOO,"init2graph-SAMICTD2")
  ; although init2graph kills the root, I need to do

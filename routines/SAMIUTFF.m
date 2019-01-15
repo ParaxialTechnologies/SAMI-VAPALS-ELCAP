@@ -1,4 +1,4 @@
-SAMIUTFF ;ven/lgc - Unit test for SAMIIFF ; 12/27/18 12:07pm
+SAMIUTFF ;ven/lgc - Unit test for SAMIIFF ; 1/14/19 2:10pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -21,17 +21,17 @@ SAMIUTFF ;ven/lgc - Unit test for SAMIIFF ; 12/27/18 12:07pm
  ;
  ; @section 1 code
  ;
-START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
- D EN^%ut($T(+0),2)
- Q
+START i $t(^%ut)="" w !,"*** UNIT TEST NOT INSTALLED ***" q
+ d EN^%ut($T(+0),2)
+ q
  ;
  ;
 STARTUP n utsuccess
- Q
+ q
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
- K utsuccess
- Q
+ k utsuccess
+ q
  ;
  ;
 UTBLDGP ; @TEST - Build a graph of the intake form fields
@@ -43,17 +43,17 @@ UTBLDGP ; @TEST - Build a graph of the intake form fields
  n siglb s siglb="purgegraph^%wd(""siform-fields"")"
  d @siglb
  ; Now build the graph
- D BLDGRPH^SAMIIFF
+ d BLDGRPH^SAMIIFF
  ;n root s root=$$setroot^%wd("siform-fields")
  n root s root=$$SETROOT^SAMIIFF("siform-fields")
  m SAMIUARC=@root
- D PLUTARR^SAMIUTST(.SAMIUPOO,"UTBLDGPH^SAMIUTFF")
+ d PLUTARR^SAMIUTST(.SAMIUPOO,"UTBLDGPH^SAMIUTFF")
  n nodea,nodep s nodea=$na(SAMIUARC),nodep=$na(SAMIUPOO)
  f  s nodea=$Q(nodea),nodep=$Q(nodep) q:nodea=""  d
  . i '(nodea=nodep) s utsuccess=0
  . i '(@nodea=@nodep) s utsuccess=0
  i '(nodep="") s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing building siform graph FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing building siform graph FAILED!")
  q
  ;
 EOR ;End of routine SAMIUFF

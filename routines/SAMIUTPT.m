@@ -1,4 +1,4 @@
-SAMIUTPT ;ven/arc - Unit test for SAMIPTLK ; 12/17/18 10:02am
+SAMIUTPT ;ven/arc - Unit test for SAMIPTLK ; 1/14/19 11:39am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -23,7 +23,7 @@ SAMIUTPT ;ven/arc - Unit test for SAMIPTLK ; 12/17/18 10:02am
  ; @section 1 code
  ;
 START ;
- if $T(^%ut)="" do
+ if $t(^%ut)="" do
  . write !,"*** UNIT TEST NOT INSTALLED ***"
  . quit
  ;

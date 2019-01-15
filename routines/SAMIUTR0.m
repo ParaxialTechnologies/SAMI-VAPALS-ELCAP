@@ -1,4 +1,4 @@
-SAMIUTR0 ;ven/lgc - UNIT TEST for SAMICTR0 ; 12/17/18 10:25am
+SAMIUTR0 ;ven/lgc - UNIT TEST for SAMICTR0 ; 1/14/19 11:33am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -21,13 +21,14 @@ SAMIUTR0 ;ven/lgc - UNIT TEST for SAMICTR0 ; 12/17/18 10:25am
  ;
  ; @section 1 code
  ;
-START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
- D EN^%ut($T(+0),2)
- Q
+START i $t(^%ut)="" w !,"*** UNIT TEST NOT INSTALLED ***" q
+ d EN^%ut($T(+0),2)
+ q
  ;
  ;
 STARTUP n utsuccess
- n root s root=$$setroot^%wd("vapals-patients")
+ ;n root s root=$$setroot^%wd("vapals-patients")
+ n root s root=$$SETROOT^SAMIUTST("vapals-patients")
  k @root@("graph","XXX00001")
  n SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
  m @root@("graph","XXX00001")=SAMIUPOO
@@ -45,26 +46,28 @@ UTWSRPT ; @TEST - web service which returns an html cteval report
  s SAMIUFLTR("studyid")="XXX00001"
  s SAMIUFLTR("form")="ceform-2018-10-21"
  s utsuccess=1
- D WSREPORT^SAMICTR0(.SAMIUPOO,.SAMIUFLTR)
+ d WSREPORT^SAMICTR0(.SAMIUPOO,.SAMIUFLTR)
  ; compare SAMIUPOO with SAMIUPOOu from a Pull
- D PLUTARR^SAMIUTST(.SAMIUARC,"wsReport-SAMICTR0")
+ d PLUTARR^SAMIUTST(.SAMIUARC,"wsReport-SAMICTR0")
  ; now compare
  n pnode,anode s pnode=$na(SAMIUPOO),anode=$na(SAMIUARC)
  f  s pnode=$q(@pnode),anode=$q(@anode) q:pnode=""  d
  . I '(@pnode=@anode) s utsuccess=0
- S:'(anode="") utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing web service returns html cteval FAILED!")
+ s:'(anode="") utsuccess=0
+ d CHKEQ^%ut(utsuccess,1,"Testing web service returns html cteval FAILED!")
  q
+ ;
 UTOUT ; @TEST - out line
  ;out(SAMIULN)
  n cnt,rtn,SAMIUPOO
  s cnt=1,rtn="SAMIUPOO",SAMIUPOO(1)="First line of test"
  n SAMIULN s SAMIULN="Second line test"
  s utsuccess=0
- D OUT^SAMICTR0(SAMIULN)
+ d OUT^SAMICTR0(SAMIULN)
  s utsuccess=($g(SAMIUPOO(2))="Second line test")
- D CHKEQ^%ut(utsuccess,1,"Testing out(ln) adds line to array FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing out(ln) adds line to array FAILED!")
  q
+ ;
 UTHOUT ; @TEST - hout line
  ;hout(ln)
  ; just run hout(ln) and it will add another line
@@ -72,10 +75,11 @@ UTHOUT ; @TEST - hout line
  s cnt=1,rtn="SAMIUPOO",SAMIUPOO(1)="First line of test"
  n SAMIULN s SAMIULN="Second line test"
  s utsuccess=0
- D HOUT^SAMICTR0(SAMIULN)
+ d HOUT^SAMICTR0(SAMIULN)
  s utsuccess=($g(SAMIUPOO(2))="<p><span class='sectionhead'>Second line test</span>")
- D CHKEQ^%ut(utsuccess,1,"Testing out(ln) adds line to array FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing out(ln) adds line to array FAILED!")
  q
+ ;
 UTXVAL ; @TEST - extrinsic returns the patient value for var
  ;xval(var,vals)
  ;w $$XVAL^SAMICTR0(51,"SAMIUARC")
@@ -83,21 +87,24 @@ UTXVAL ; @TEST - extrinsic returns the patient value for var
  s utsuccess=0
  s SAMIUARC(1)="Testing xval"
  s utsuccess=($$XVAL^SAMICTR0(1,"SAMIUARC")="Testing xval")
- D CHKEQ^%ut(utsuccess,1,"Testing xval(var,vals) FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing xval(var,vals) FAILED!")
  q
-UTXSUB ; @TEST - extrinsic which returns the dictionary value defined by var
+ ;
+UTXSUB ; @TEST - extrinsic which returns the dictionary value defined by SAMIVAR
  ;xsub(var,vals,dict,valdx)
- n var,vals,SAMIUPOO,valdx,result,dict
+ n SAMIVAR,SAMIVALS,SAMIUPOO,SAMIVALDX,result,SAMIDICT
  s utsuccess=0
- s vals="SAMIUPOO"
- s var="cteval-dict"
+ s SAMIVALS="SAMIUPOO"
+ s SAMIVAR="cteval-dict"
  s SAMIUPOO(1)="biopsy"
- s valdx=1
- s dict=$$setroot^%wd("cteval-dict")
- s result=$$XSUB^SAMICTR0(var,vals,dict,valdx)
+ s SAMIVALDX=1
+ ;s dict=$$setroot^%wd("cteval-dict")
+ n SAMIDICT s SAMIDICT=$$SETROOT^SAMIUTST("cteval-dict")
+ s result=$$XSUB^SAMICTR0(SAMIVAR,SAMIVALS,SAMIDICT,SAMIVALDX)
  s utsuccess=(result="CT-guided biopsy")
- D CHKEQ^%ut(utsuccess,1,"Testing xsub(var,vals,dict,valdx) FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing xsub(SAMIVAR,SAMIVALS,dict,SAMIVALDX) FAILED!")
  q
+ ;
 UTGTFLT ; @TEST - fill in the SAMIUFLTR for Ct Eval for sid
  ;getFilter(SAMIUFLTR,sid)
  d GETFILTR^SAMICTR0(.SAMIUFLTR,"XXX00001")
@@ -106,6 +113,7 @@ UTGTFLT ; @TEST - fill in the SAMIUFLTR for Ct Eval for sid
  s:'(SAMIUFLTR("studyid")="XXX00001") utsuccess=0
  D CHKEQ^%ut(utsuccess,1,"Testing getFilter FAILED!")
  q
+ ;
 UTT1 ; @TEST - Testing T1
  ;T1(grtn,debug) ;
  q

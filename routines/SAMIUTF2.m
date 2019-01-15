@@ -1,4 +1,4 @@
-SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 1/9/19 1:39pm
+SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 1/15/19 8:51am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -20,29 +20,31 @@ SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 1/9/19 1:39pm
  ;
  ; @section 1 code
  ;
-START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
- D EN^%ut($T(+0),2)
- Q
+START i $t(^%ut)="" w !,"*** UNIT TEST NOT INSTALLED ***" q
+ d EN^%ut($T(+0),2)
+ q
  ;
  ;
 STARTUP n utsuccess
- n root s root=$$setroot^%wd("vapals-patients")
+ ;n root s root=$$setroot^%wd("vapals-patients")
+ n root s root=$$SETROOT^SAMIUTST("vapals-patients")
  k @root@("graph","XXX00001")
  n SAMIPOO D PLUTARR^SAMIUTST(.SAMIPOO,"all XXX00001 forms")
  m @root@("graph","XXX00001")=SAMIPOO
- Q
+ q
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
- K utsuccess
- Q
+ k utsuccess
+ q
  ;
  ;
 UTINITF ; @TEST - initilize form file from elcap-patient graphs
  ;D INITFRMS
  ; Find out what new form will be added
- n utroot set utroot=$$setroot^%wd("vapals-patients")
+ ;n utroot set utroot=$$setroot^%wd("vapals-patients")
+ n utroot s utroot=$$SETROOT^SAMIUTST("vapals-patients")
  i utroot="" d  q
- . D FAIL^%ut("Error couldn't find vapals-patients graphstore!")
+ . d FAIL^%ut("Error couldn't find vapals-patients graphstore!")
  n utgroot s utgroot=$na(@utroot@("graph"))
  n utpatient set utpatient=$order(@utgroot@(""),-1)
  n utform s utform=""
@@ -51,7 +53,7 @@ UTINITF ; @TEST - initilize form file from elcap-patient graphs
  for  s utform=$order(@utgroot@(utpatient,utform)) quit:utform=""  d
  . s allforms(utform)=""
  ; now let SAMIFRM2 build the entries
- D INITFRMS^SAMIFRM2
+ d INITFRMS^SAMIFRM2
  ; now see if there are new entries in 311.11 for
  ;   each of these forms
  s utsuccess=1
@@ -61,12 +63,12 @@ UTINITF ; @TEST - initilize form file from elcap-patient graphs
  ; now delete the new entries from 311.11
  s utform="" f  s utform=$o(allforms(utform)) q:utform=""  d
  . n DIK,DIERR,DA
- . S DIK="^SAMI(311.11,"
- . S DA=$o(^SAMI(311.11,"B",utform,0))
- . i DA D ^DIK
- D CHKEQ^%ut(utsuccess,1,"Testing initialize file from elcap FAILED!")
- ;
+ . s DIK="^SAMI(311.11,"
+ . s DA=$o(^SAMI(311.11,"B",utform,0))
+ . i DA d ^DIK
+ d CHKEQ^%ut(utsuccess,1,"Testing initialize file from elcap FAILED!")
  q
+ ;
 UTINITF1 ; @TEST - initialize one form named form from ary passed by name
  ;D INIT1FRM(form,ary)
  q
@@ -85,47 +87,48 @@ UTREGF ; @TEST - ; register elcap forms in form mapping file
  s uftbl("sintake","Schedule Contact.html")=""
  n uzi set uzi=""
  for  set uzi=$order(uftbl(uzi)) quit:uzi=""  do
- . I $O(^SAMI(311.11,"B",uzi,0)) D
- .. N DIK,DA,DIERR
- .. S DIK="^SAMI(311.11,"
- .. S DA=$O(^SAMI(311.11,"B",uzi,0))
- .. D ^DIK
+ . i $O(^SAMI(311.11,"B",uzi,0)) d
+ .. n DIK,DA,DIERR
+ .. s DIK="^SAMI(311.11,"
+ .. s DA=$O(^SAMI(311.11,"B",uzi,0))
+ .. d ^DIK
  ; Now run REGFORMS which should rebuild these
- D REGFORMS^SAMIFRM2
+ d REGFORMS^SAMIFRM2
  ; Now check each exists again
  s utsuccess=1
  s uzi=""
  for  set uzi=$order(uftbl(uzi)) quit:uzi=""  d
  . I '($O(^SAMI(311.11,"B",uzi,0))) s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing register elcap forms in mapping file FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing register elcap forms in mapping file FAILED!")
  q
  ;
 UTLOADD ; @TEST - import directory full of json data into elcap-patient graph
  ;LOADDATA()
  ;First be sure the XXX0005 graphstore info doesn't exist
- n root,poo,arc,cmd,zlist,nodea,nodep
- set root=$$setroot^%wd("vapals-patients")
+ n root,SAMIUPOO,SAMIUARC,cmd,zlist,nodea,nodep
+ ;set root=$$setroot^%wd("vapals-patients")
+ s root=$$SETROOT^SAMIUTST("vapals-patients")
  k @root@("graph","XXX0005")
  ;Check that the folder and three json test files are
  ;  on our client
  s cmd="""mkdir /home/osehra/www/sample-data-UnitTest"""
  zsystem @cmd
- S dir="/home/osehra/www/sample-data-UnitTest/"
+ s dir="/home/osehra/www/sample-data-UnitTest/"
  k cmd s cmd="""ls "_dir_" > /home/osehra/www/sample-list.txt"""
  zsystem @cmd
  do file2ary^%wd("zlist","/home/osehra/www/","sample-list.txt")
  i '($g(zlist(1))="XXX0005-ceform-2016-01-01.json") d  q
- . D FAIL^%ut("Error, json files missing!")
+ . d FAIL^%ut("Error, json files missing!")
  ;
- D LOADDATA^SAMIFRM2
- m arc=@root@("graph","XXX0005")
- D PLUTARR^SAMIUTST(.poo,"UTLOADD^SAMIUTF2")
- s nodea=$na(arc),nodep=$na(poo)
+ d LOADDATA^SAMIFRM2
+ m SAMIUARC=@root@("graph","XXX0005")
+ d PLUTARR^SAMIUTST(.SAMIUPOO,"UTLOADD^SAMIUTF2")
+ s nodea=$na(SAMIUARC),nodep=$na(SAMIUPOO)
  f  s nodea=$q(nodea),nodep=$q(nodep) q:nodea=""  d  q:'utsuccess
  . i '(nodea=nodep) s utsuccess=0
  . i '(@nodea=@nodep) s utsuccess=0
  k @root@("graph","XXX0005")
- D CHKEQ^%ut(utsuccess,1,"Testing import json data FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing import json data FAILED!")
  q
  ;
 UTPARSFN ; @TEST - parse filename extracting studyid & form
@@ -135,17 +138,17 @@ UTPARSFN ; @TEST - parse filename extracting studyid & form
  d PRSFLNM^SAMIFRM2(.fn,.zid,.zform)
  s utsuccess=0
  i zid="XXX00001",zform="bxform-2018-10-21" s utsuccess=1
- D CHKEQ^%ut(utsuccess,1,"Testing parse filename for studyid FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing parse filename for studyid FAILED!")
  q
  ;
 UTGETDIR ; @TEST - extrinsic which prompts for directory
  ;GETDIR(KBAIDIR,KBAIDEF)
  n dir,udtime
  s udtime=$g(DTIME)
- S DTIME=1
- S utsuccess=$$GETDIR^SAMIFRM2(.dir,"/home/osehra/www/sample-data-UnitTest")
- S DTIME=udtime
- D CHKEQ^%ut(utsuccess,1,"Testing GETDIR FAILED!")
+ s DTIME=1
+ s utsuccess=$$GETDIR^SAMIFRM2(.dir,"/home/osehra/www/sample-data-UnitTest")
+ s DTIME=udtime
+ d CHKEQ^%ut(utsuccess,1,"Testing GETDIR FAILED!")
  q
  ;
 UTGETFN ; extrinsic which prompts for filename
@@ -154,30 +157,30 @@ UTGETFN ; extrinsic which prompts for filename
  ;
 UTSSUB2 ; @TEST -  used for Dom's new style forms
  ;SAMISUB2(line,form,sid,filter,%j,zhtml)
- n sid,line,uline,form,filter,%j,zhtml
+ n SAMISID,SAMILINE,uline,SAMIFORM,SAMIFLTR,SAMIJ,SAMIZHTML
  s uline="2018-10-21 and XXX00001 AND src=/see/sami/ and href=/see/sami/ something 444-67-8924 DOB: 7/8/1956 AGE: 62 GENDER: M and  XX0002 XXX00001  false "
  s utsuccess=0
- s sid="XXX00001"
- s line="@@FORMKEY@@ and @@SID@@ AND src= and href= something"
- s line=line_" ST0001 and 1234567890 XX0002 VEP0001 "
- s line=line_" @@FROZEN@@ "
+ s SAMISID="XXX00001"
+ s SAMILINE="@@FORMKEY@@ and @@SID@@ AND src= and href= something"
+ s SAMILINE=SAMILINE_" ST0001 and 1234567890 XX0002 VEP0001 "
+ s SAMILINE=SAMILINE_" @@FROZEN@@ "
  s key="2018-10-21"
  s utsuccess=0
- D SAMISUB2^SAMIFRM2(.line,.form,.sid,.filter,.%j,.zhtml)
- s line=$e(line,1,145),uline=$e(uline,1,145)
- i line=uline s utsuccess=1
- D CHKEQ^%ut(utsuccess,1,"Testing SAMISUB2 used for Dom's forms FAILED!")
+ d SAMISUB2^SAMIFRM2(.SAMILINE,.SAMIFORM,SAMISID,.SAMIFLTR,.SAMIJ,.SAMIZHTML)
+ s SAMILINE=$e(SAMILINE,1,145),uline=$e(uline,1,145)
+ i SAMILINE=uline s utsuccess=1
+ d CHKEQ^%ut(utsuccess,1,"Testing SAMISUB2 used for Dom's forms FAILED!")
  q
  ;
 UTWSSBF ; @TEST - background form access
  ;WSSBFORM(rtn,filter)
- n filter,rtn,arc,poo,nodea,nodep
- s filter("studyid")="XXX00001"
- d WSSBFORM^SAMIFRM2(.rtn,.filter)
- m arc=@rtn
- D PLUTARR^SAMIUTST(.poo,"UTWSSBF^SAMIUTF2")
+ n SAMIFLTR,SAMIRTN,SAMIUARC,SAMIUPOO,nodea,nodep
+ s SAMIFLTR("studyid")="XXX00001"
+ d WSSBFORM^SAMIFRM2(.SAMIRTN,.SAMIFLTR)
+ m SAMIUARC=@SAMIRTN
+ D PLUTARR^SAMIUTST(.SAMIUPOO,"UTWSSBF^SAMIUTF2")
  s utsuccess=1
- s nodep=$na(poo),nodea=$na(arc)
+ s nodep=$na(SAMIUPOO),nodea=$na(SAMIUARC)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
  . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
  . i @nodep["siform" q
@@ -185,18 +188,18 @@ UTWSSBF ; @TEST - background form access
  . i '($qs(nodep,1)=$qs(nodea,1)) s utsuccess=0
  . i '(@nodep=@nodea) s utsuccess=0
  i 'nodea="" s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing background form access FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing background form access FAILED!")
  q
  ;
 UTWSIFM ; @TEST - intake form access
  ;WSSIFORM
- n filter,rtn,arc,poo,nodea,nodep
- s filter("studyid")="XXX00001"
- d WSSIFORM^SAMIFRM2(.rtn,.filter)
- m arc=@rtn
- D PLUTARR^SAMIUTST(.poo,"UTWSIFM^SAMIUTF2")
+ n SAMIFLTR,SAMIRTN,SAMIUARC,SAMIUPOO,nodea,nodep
+ s SAMIFLTR("studyid")="XXX00001"
+ d WSSIFORM^SAMIFRM2(.SAMIRTN,.SAMIFLTR)
+ m SAMIUARC=@SAMIRTN
+ d PLUTARR^SAMIUTST(.SAMIUPOO,"UTWSIFM^SAMIUTF2")
  s utsuccess=1
- s nodep=$na(poo),nodea=$na(arc)
+ s nodep=$na(SAMIUPOO),nodea=$na(SAMIUARC)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
  . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
  . i @nodep["siform" q
@@ -205,18 +208,18 @@ UTWSIFM ; @TEST - intake form access
  . i '($qs(nodep,1)=$qs(nodea,1)) s utsuccess=0
  . i '(@nodep=@nodea) s utsuccess=0
  i 'nodea="" s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing intake form access FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing intake form access FAILED!")
  q
  ;
 UTCEFRM ; @TEST - ctevaluation form access
  ;WSCEFORM(rtn,filter)
- n filter,rtn,arc,poo,nodea,nodep
- s filter("studyid")="XXX00001"
- d WSCEFORM^SAMIFRM2(.rtn,.filter)
- m arc=@rtn
- D PLUTARR^SAMIUTST(.poo,"UTCEFRM^SAMIUTF2")
+ n SAMIFLTR,SAMIRTN,SAMIUARC,SAMIUPOO,nodea,nodep
+ s SAMIFLTR("studyid")="XXX00001"
+ d WSCEFORM^SAMIFRM2(.SAMIRTN,.SAMIFLTR)
+ m SAMIUARC=@SAMIRTN
+ d PLUTARR^SAMIUTST(.SAMIUPOO,"UTCEFRM^SAMIUTF2")
  s utsuccess=1
- s nodep=$na(poo),nodea=$na(arc)
+ s nodep=$na(SAMIUPOO),nodea=$na(SAMIUARC)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
  . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
  . i @nodep["siform" q
@@ -224,52 +227,52 @@ UTCEFRM ; @TEST - ctevaluation form access
  . i '($qs(nodep,1)=$qs(nodea,1)) s utsuccess=0
  . i '(@nodep=@nodea) s utsuccess=0
  i 'nodea="" s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing ctevaluation form access FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing ctevaluation form access FAILED!")
  q
  ;
 UTFSRC ; @TEST - fix html src lines to use resources in see/
- ;FIXSRC(line)
- n line,line2
- S line="testing FIXSRC, src=""/"" and src=""/"" end"
- s line2="testing FIXSRC, src=""/see/sami/"" and src=""/see/sami/"" end"
- d FIXSRC^SAMIFRM2(.line)
- s utsuccess=(line=line2)
- D CHKEQ^%ut(utsuccess,1,"Testing fix src lines FAILED!")
+ ;FIXSRC(SAMILINE)
+ n SAMILINE,SAMILINE2
+ s SAMILINE="testing FIXSRC, src=""/"" and src=""/"" end"
+ s SAMILINE2="testing FIXSRC, src=""/see/sami/"" and src=""/see/sami/"" end"
+ d FIXSRC^SAMIFRM2(.SAMILINE)
+ s utsuccess=(SAMILINE=SAMILINE2)
+ d CHKEQ^%ut(utsuccess,1,"Testing fix src SAMILINEs FAILED!")
  q
  ;
-UTFHREF ; fix html href lines to use resources in see/
- ; FIXHREF(line)
- n line,line2
- S line="Some text then hfrf="""" for a test"
- d FIXHREF^SAMIFRM2(.line)
+UTFHREF ; fix html href SAMILINEs to use resources in see/
+ ; FIXHREF(SAMILINE)
+ n SAMILINE,SAMILINE2
+ s SAMILINE="Some text then hfrf="""" for a test"
+ d FIXHREF^SAMIFRM2(.SAMILINE)
  q
  ;
 UTGLST5 ; @TEST - extrinsic returns the last5 for patient sid
  ;GETLAST5(sid)
  n sid s sid="XXX00001"
  s utsuccess=($$GETLAST5^SAMIFRM2(sid)="F8924")
- D CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns last5 FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns last5 FAILED!")
  q
  ;
 UTGTNM ; @TEST - extrinsic returns the name for patient sid
  ;GETNAME(sid)
  n sid s sid="XXX00001"
  s utsuccess=($$GETNAME^SAMIFRM2(sid)="Fourteen,Patient N")
- D CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns name FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns name FAILED!")
  q
  ;
 UTGSSN ; @TEST - extrinsic returns the ssn for patient sid
  ;GETSSN(sid)
  n sid s sid="XXX00001"
  s utsuccess=($$GETSSN^SAMIFRM2(sid)="444-67-8924")
- D CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns ssn FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns ssn FAILED!")
  q
  ;
 UTGETHDR ; @TEST - extrinsic returns header string for patient sid
  ;GETHDR(sid)
  n sid s sid="XXX00001"
  s utsuccess=($$GETHDR^SAMIFRM2(sid)="444-67-8924 DOB: 7/8/1956 AGE: 62 GENDER: M")
- D CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns header FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns header FAILED!")
  q
  ;
 EOR ;End of routine SAMIUTF2

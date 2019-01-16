@@ -1,4 +1,4 @@
-SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 1/14/19 2:03pm
+SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 1/16/19 8:45am
  ;;18.0;SAMI;;
  ;
  ;
@@ -10,8 +10,7 @@ START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  ; ===================== UNIT TESTS =====================
  ;
 STARTUP n utsuccess
- ;n root s root=$$setroot^%wd("vapals-patients")
- n root s root=$$SETROOT^SAMIUTST("vapals-patients")
+ n root s root=$$setroot^%wd("vapals-patients")
  k @root@("graph","XXX00001")
  n SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
  m @root@("graph","XXX00001")=SAMIUPOO
@@ -91,8 +90,7 @@ UTPTLST ; @TEST - Tesing pulling all patients from vapals-patients
  ; D PATLIST(ary)
  n cnt,SAMIUPOO s cnt=""
  D PATLIST^SAMIHOM3("SAMIUPOO")
- ;new groot set groot=$$setroot^%wd("vapals-patients")
- new groot set groot=$$SETROOT^SAMIUTST("vapals-patients")
+ new groot set groot=$$setroot^%wd("vapals-patients")
  s utsuccess=($D(SAMIUPOO)=10)
  D CHKEQ^%ut(utsuccess,1,"Testing pulling patients from vapals-patients FAILED!")
  q
@@ -130,8 +128,7 @@ UTSCAN4 ; @TEST - Testing scanning array for a given entry
  ;
 UTNXTN ; @TEST - Testing finding next entry number for "vapals-patients"
  ; S X=$$NEXTNUM
- ;n root s root=$$setroot^%wd("vapals-patients")
- n root s root=$$SETROOT^SAMIUTST("vapals-patients")
+ n root s root=$$setroot^%wd("vapals-patients")
  n cnt,lstntry
  s cnt=0 f  s cnt=$O(@root@(cnt)) q:'+cnt  s lstntry=cnt
  s utsuccess=((lstntry+1)=$$NEXTNUM^SAMIHOM3)
@@ -169,8 +166,7 @@ UTVALNM ; @TEST - Testing validate name function
 UTINDX ; @TEST - Testing re-index of vapals-patients Graphstore
  ; d INDEX^SAMIHOM3
  n root,dfn1,dfn2
- ;s root=$$setroot^%wd("vapals-patients")
- n root s root=$$SETROOT^SAMIUTST("vapals-patients")
+ s root=$$setroot^%wd("vapals-patients")
  s dfn1=$o(@root@("dfn",0))
  k @root@("dfn",dfn1)
  s dfn2=$o(@root@("dfn",0))
@@ -186,14 +182,11 @@ UTADDPT ; @TEST Testing ADDPATient adding a new patient to vapals-patients
  ;     See STARTUP section in other unit test routines
  ;ADDPATient(dfn)
  n rootvp,rootpl,dfn,gien,studyid,gienut,rootut
- ;s rootvp=$$setroot^%wd("vapals-patients")
- n rootvp s rootvp=$$SETROOT^SAMIUTST("vapals-patients")
- ;s rootpl=$$setroot^%wd("patient-lookup")
- n rootpl s rootpl=$$SETROOT^SAMIUTST("vapals-patients")
+ s rootvp=$$setroot^%wd("vapals-patients")
+ s rootpl=$$setroot^%wd("patient-lookup")
  ;
  ; get test patient
- ;s rootut=$$setroot^%wd("vapals unit tests")
- s rootut=$$SETROOT^SAMIUTST("vapals unit tests")
+ s rootut=$$setroot^%wd("vapals unit tests")
  s gienut=$O(@rootut@("B","patient-lookup test patient",0))
  s dfn=@rootut@(gienut,"dfn")
  ;
@@ -222,12 +215,9 @@ UTWSNC ; @TEST - Testing WSNEWCAS adding a new case to vapals-patients Graphstor
  ;
  n rootvp,rootpl,rootut,gienut,dfn,saminame,utna,uthtml
  n SAMIUBODY,SAMIUARGS,SAMIURSLT,SAMIUARC,SAMIUPOO
- ;s rootvp=$$setroot^%wd("vapals-patients")
- s rootvp=$$SETROOT^SAMIUTST("vapals-patients")
- ;s rootpl=$$setroot^%wd("patient-lookup")
- s rootpl=$$SETROOT^SAMIUTST("patient-lookup")
- ;s rootut=$$setroot^%wd("vapals unit tests")
- s rootut=$$SETROOT^SAMIUTST("vapals unit tests")
+ s rootvp=$$setroot^%wd("vapals-patients")
+ s rootpl=$$setroot^%wd("patient-lookup")
+ s rootut=$$setroot^%wd("vapals unit tests")
  s gienut=$O(@rootut@("B","patient-lookup test patient",0))
  s dfn=@rootut@(gienut,"dfn")
  s saminame=@rootut@(gienut,"saminame")
@@ -375,8 +365,7 @@ UTSIFRM ; @TEST - Testing creating a Siform
  ; d makeSiform(num)
  n root,SAMIUNUM,sid,cdate,SAMIUPOO
  S SAMIUNUM=1
- ;set root=$$setroot^%wd("vapals-patients")
- set root=$$SETROOT^SAMIUTST("vapals-patients")
+ set root=$$setroot^%wd("vapals-patients")
  set sid=$get(@root@(SAMIUNUM,"samistudyid"))
  i sid="" d  q
  . D FAIL^%ut("Error, no sid for dfn=1!")
@@ -397,8 +386,7 @@ UTSBFRM ; @TEST - Testing creating a background form
  ; d makeSbform(num)
  n root,SAMIUNUM,sid,cdate
  S SAMIUNUM=1
- ;set root=$$setroot^%wd("vapals-patients")
- set root=$$SETROOT^SAMIUTST("vapals-patients")
+ set root=$$setroot^%wd("vapals-patients")
  set sid=$get(@root@(SAMIUNUM,"samistudyid"))
  i sid="" d  q
  . D FAIL^%ut("Error, no sid for dfn=1!")
@@ -418,8 +406,7 @@ UTSBFRM ; @TEST - Testing creating a background form
 UTPOSTF ; @TEST - Test WSVAPALS API route="postform" build TIU
  N SAMIUARG,SAMIUBODY,SAMIURSLT,route,SAMIUPOO,SAMIUARC,SAMIUFLTR
  ; get name of existing siform for our test patient
- ;s root=$$setroot^%wd("vapals-patients")
- set root=$$SETROOT^SAMIUTST("vapals-patients")
+ s root=$$setroot^%wd("vapals-patients")
  n glbrt s glbrt=$na(@root@("graph","XXX00001","siform"))
  s SAMIUARG("form")=$o(@glbrt)
  ;

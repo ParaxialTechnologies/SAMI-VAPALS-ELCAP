@@ -1,4 +1,4 @@
-SAMIUTFF ;ven/lgc - Unit test for SAMIIFF ; 1/14/19 2:10pm
+SAMIUTFF ;ven/lgc - Unit test for SAMIIFF ; 1/16/19 9:38am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -44,8 +44,7 @@ UTBLDGP ; @TEST - Build a graph of the intake form fields
  d @siglb
  ; Now build the graph
  d BLDGRPH^SAMIIFF
- ;n root s root=$$setroot^%wd("siform-fields")
- n root s root=$$SETROOT^SAMIIFF("siform-fields")
+ n root s root=$$setroot^%wd("siform-fields")
  m SAMIUARC=@root
  d PLUTARR^SAMIUTST(.SAMIUPOO,"UTBLDGPH^SAMIUTFF")
  n nodea,nodep s nodea=$na(SAMIUARC),nodep=$na(SAMIUPOO)

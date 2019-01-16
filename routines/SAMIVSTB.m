@@ -1,4 +1,4 @@
-SAMIVSTB ;;ven/lgc - M2M Broker to for VA-PALS ; 12/27/18 12:49pm
+SAMIVSTB ;;ven/lgc - M2M Broker to for VA-PALS ; 1/16/19 9:39am
  ;;18.0;SAMI;;
  ;
  ; API's called by SAMIVSA only
@@ -82,8 +82,7 @@ VIT(dfn,sdate,edate) ;
  .. s pttemp=$p(str,"Data=Temp.",2)
  .. s pttemp=$p(str,"^",2,5)_"^"_vitdt
  i '$g(ptdfn),'(ptdfn=dfn) q:$Q 0  q
- ;n root s root=$$setroot^%wd("patient-lookup")
- n root s root=$$SETROOT^SAMIUTST("patient-lookup")
+ n root s root=$$setroot^%wd("patient-lookup")
  s node=$na(@root@("dfn",ptdfn)),node=$q(@node)
  i '($p(node,",",4)[ptdfn) q:$Q 1  q
  s gien=+$p(node,",",5)
@@ -164,8 +163,7 @@ VPR(dfn) ;
  ;
  ; Now save data in "patient-lookup" Graph Store
  ;
-VPR1 ;s root=$$setroot^%wd("patient-lookup")
- s root=$$SETROOT^SAMIUTST("patient-lookup")
+VPR1 s root=$$setroot^%wd("patient-lookup")
  s node=$na(@root@("dfn",dfn)),node=$q(@node)
  i '($p(node,",",4)[dfn) q:$Q 1  q
  S gien=+$p(node,",",5)

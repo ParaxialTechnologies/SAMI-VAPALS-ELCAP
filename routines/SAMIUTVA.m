@@ -1,4 +1,4 @@
-SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 1/8/19 12:51pm
+SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 1/16/19 9:07am
  ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -63,8 +63,7 @@ STARTUP ; Set up dfn and tiuien to use throughout testing
  s utdfn=$$GET^XPAR("SYS","SAMI SYSTEM TEST PATIENT DFN",,"Q")
  s (utsuccess,tiuien)=0
  ; Set up graphstore graph on test patient
- ;n root s root=$$setroot^%wd("vapals-patients")
- n root s root=$$SETROOT^SAMIUTST("vapals-patients")
+ n root s root=$$setroot^%wd("vapals-patients")
  k @root@("graph","XXX00001")
  n SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
  m @root@("graph","XXX00001")=SAMIUPOO
@@ -154,8 +153,7 @@ UTPTINF ; @TEST - Pull additional patient information
  ; D PTINFO^SAMIVSTA(dfn)
  ; Find patient without SSN filed in Graphstore
  n D,D0,DG,DI,DIC,DICR,DIG,DIH
- ;N root s root=$$setroot^%wd("patient-lookup")
- n root s root=$$SETROOT^SAMIUTST("patient-lookup")
+ n root s root=$$setroot^%wd("patient-lookup")
  n gien s gien=0
  f  s gien=$o(@root@(gien)) q:'gien  q:'($D(@root@(gien,"ssn")))
  i 'gien d  q
@@ -187,8 +185,7 @@ UTSSN ; @TEST - Pull SSN on a patient
  ; D PTSSN(dfn)
  ; Find patient without SSN filed in Graphstore
  n D,D0,DG,DI,DIC,DICR,DIG,DIH
- ;N root s root=$$setroot^%wd("patient-lookup")
- n root s root=$$SETROOT^SAMIUTST("patient-lookup")
+ n root s root=$$setroot^%wd("patient-lookup")
  n gien s gien=0
  f  S gien=$o(@root@(gien)) q:'gien  q:'($D(@root@(gien,"ssn")))
  i 'gien d  q
@@ -283,8 +280,7 @@ UTURBR ; @TEST - extrinsic to return urban or rural depending on zip code
  ;
 UTTASK ; @TEST - test TASKIT creation of new note,text, and encounter
  ;get existing siform from graph store.
- ;n root s root=$$setroot^%wd("vapals-patients")
- n root s root=$$SETROOT^SAMIUTST("vapals-patients")
+ n root s root=$$setroot^%wd("vapals-patients")
  n glbrt s glbrt=$na(@root@("graph","XXX00001","siform"))
  s filter("form")=$o(@glbrt)
  ;

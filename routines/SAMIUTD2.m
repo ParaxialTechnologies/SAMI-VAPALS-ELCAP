@@ -1,4 +1,4 @@
-SAMIUTD2 ;ven/lgc - UNIT TEST for SAMIUTD2 ; 1/15/19 8:58am
+SAMIUTD2 ;ven/lgc - UNIT TEST for SAMIUTD2 ; 1/16/19 8:42am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -37,8 +37,7 @@ SHUTDOWN ; ZEXCEPT: utsuccess
 UTIN2G ; @TEST - initialize CTEVAL dictionary into graph cteval-dict
  ;INIT2GPH()
  n root,SAMIUPOO,SAMIUARC
- ;s root=$$setroot^%wd("cteval-dict")
- s root=$$SETROOT^SAMIUTST("cteval-dict")
+ s root=$$setroot^%wd("cteval-dict")
  m SAMIUPOO=@root
  d SVUTARR^SAMIUTST(.SAMIUPOO,"init2graph-SAMICTD2")
  ; although init2graph kills the root, I need to do

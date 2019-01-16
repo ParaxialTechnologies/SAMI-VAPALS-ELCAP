@@ -1,4 +1,4 @@
-SAMIUTSV ;ven/lgc - UNIT TEST for SAMISAV ; 1/8/19 1:43pm
+SAMIUTSV ;ven/lgc - UNIT TEST for SAMISAV ; 1/16/19 8:55am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -42,8 +42,7 @@ UTSAVF ; @TEST - extrinsic which returns the form key to use
  s form="ceform-2018-10-21" ; form built by earlier unit test
  s SAMIUVARS("sidc")="11/7/2018"
  s SAMIUVARS("cedos")="10/29/2018"
- ;s root=$$setroot^%wd("vapals-patients")
- s root=$$SETROOT^SAMIUTST("vapals-patients")
+ s root=$$setroot^%wd("vapals-patients")
  ; save off ceform built by earlier unit test
  m SAMIUPOO=@root@("graph","XXX00001","ceform-2018-10-21")
  s useform=$$SAVFILTR^SAMISAV(.sid,.form,.SAMIUVARS)

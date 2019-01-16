@@ -1,4 +1,4 @@
-SAMIUTR2 ;ven/lgc - UNIT TEST for SAMICTR2 ; 1/9/19 2:17pm
+SAMIUTR2 ;ven/lgc - UNIT TEST for SAMICTR2 ; 1/16/19 8:50am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -27,8 +27,7 @@ START i $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  ;
  ;
 STARTUP n utsuccess
- ;n root s root=$$setroot^%wd("vapals-patients")
- n root s root=$$SETROOT^SAMIUTST("vapals-patients")
+ n root s root=$$setroot^%wd("vapals-patients")
  k @root@("graph","XXX00001")
  n SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
  m @root@("graph","XXX00001")=SAMIUPOO
@@ -43,13 +42,11 @@ UTOTLNG ; @TEST - nodules
  ;OTHERLUNG(rtn,vals,dict)
  n SAMIUPOO,SAMIUARC
  n root,si,vals,dict,cnt,return,noder,nodea,para
- ;s root=$$setroot^%wd("vapals-patients")
- s root=$$SETROOT^SAMIUTST("vapals-patients")
+ s root=$$setroot^%wd("vapals-patients")
  s si="XXX00001"
  n samikey s samikey="ceform-2018-10-21"
  s vals=$na(@root@("graph",si,samikey))
- ;n dict s dict=$$setroot^%wd("cteval-dict")
- n dict s dict=$$SETROOT^SAMIUTST("cteval-dict")
+ n dict s dict=$$setroot^%wd("cteval-dict")
  s dict=$na(@dict@("cteval-dict"))
  s cnt=0
  s para="SAMIUPOO"
@@ -119,8 +116,7 @@ UTXSUB ; @TEST - extrinsic which returns the dictionary value defined by var
  s var="cteval-dict"
  s SAMIUPOO(1)="biopsy"
  s valdx=1
- ;s dict=$$setroot^%wd("cteval-dict")
- s dict=$$SETROOT^SAMIUTST("cteval-dict")
+ s dict=$$setroot^%wd("cteval-dict")
  s result=$$XSUB^SAMICTR2(var,vals,dict,valdx)
  s utsuccess=(result="CT-guided biopsy")
  d CHKEQ^%ut(utsuccess,1,"Testing xsub(var,vals,dict,valdx) FAILED!")

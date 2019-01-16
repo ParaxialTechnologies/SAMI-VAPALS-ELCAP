@@ -1,4 +1,4 @@
-SAMIUTUR ;ven/lgc - UNIT TEST for SAMIUR1 ; 1/7/19 1:23pm
+SAMIUTUR ;ven/lgc - UNIT TEST for SAMIUR1 ; 1/16/19 9:05am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -26,7 +26,7 @@ START i $t(^%ut)="" w !,"*** UNIT TEST NOT INSTALLED ***" q
  ;
  ;
 STARTUP n utsuccess
- n root s root=$$SETROOT^SAMIUTST("vapals-patients")
+ n root s root=$$setroot^%wd("vapals-patients")
  k @root@("graph","XXX00001")
  n SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
  m @root@("graph","XXX00001")=SAMIUPOO
@@ -40,7 +40,6 @@ SHUTDOWN ; ZEXCEPT: utsuccess
 UTWSRPT ; @TEST - generate a report based on parameters in filter
  ;wsReport(rtn,SAMIUFLTR)
  n SAMIUFLTR,pats,SAMIUPOO,cnt,root
- s root=$$SETROOT^SAMIUTST("vapals-patients")
  s SAMIUFLTR("samireporttype")="followup"
  s utsuccess=0
  d WSREPORT^SAMIUR1(.SAMIUPOO,.SAMIUFLTR)
@@ -65,7 +64,7 @@ UTWSRPT ; @TEST - generate a report based on parameters in filter
 UTSELCT ; @TEST - selects patient for the report
  ;select(pats,type)
  n SAMIUPATS,SAMITYPE,SAMIUDPHR,unplus30,unminus30,unowdate,udtphrase,SAMIUPOO
- s root=$$SETROOT^SAMIUTST("vapals-patients")
+ n root s root=$$setroot^%wd("vapals-patients")
  ;
  s unplus30=$P($$FMTE^XLFDT($$FMADD^XLFDT($$HTFM^XLFDT($H),31),5),"@")
  s unminus30=$P($$FMTE^XLFDT($$FMADD^XLFDT($$HTFM^XLFDT($H),-31),5),"@")

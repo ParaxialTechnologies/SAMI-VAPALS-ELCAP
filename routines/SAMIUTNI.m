@@ -1,4 +1,4 @@
-SAMIUTNI ;ven/lgc - UNIT TEST for SAMINOTI ; 1/14/19 12:57pm
+SAMIUTNI ;ven/lgc - UNIT TEST for SAMINOTI ; 1/16/19 8:46am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -26,8 +26,7 @@ START i $t(^%ut)="" w !,"*** UNIT TEST NOT INSTALLED ***" q
  ;
  ;
 STARTUP n utsuccess
- ;n root s root=$$setroot^%wd("vapals-patients")
- n root s root=$$SETROOT^SAMIUTST("vapals-patients")
+ n root s root=$$setroot^%wd("vapals-patients")
  k @root@("graph","XXX00001")
  n SAMIUPOO d PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
  m @root@("graph","XXX00001")=SAMIUPOO
@@ -63,8 +62,7 @@ UTNOTFLT ; @TEST - extrnisic which creates a note
  n SAMIFLTR,root,SAMIVALS,SAMIUPOO
  s SAMIFLTR("studyid")="XXX00001"
  s SAMIFLTR("form")="ceform-2018-10-21"
- ;s root=$$setroot^%wd("vapals-patients")
- s root=$$SETROOT^SAMIUTST("vapals-patients")
+ s root=$$setroot^%wd("vapals-patients")
  s SAMIVALS=$na(@root@("graph",SAMIFLTR("studyid"),SAMIFLTR("form"),"note"))
  ; kill any existing note
  k @SAMIVALS

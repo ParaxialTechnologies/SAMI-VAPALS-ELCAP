@@ -1,4 +1,4 @@
-SAMIVSTS ;;ven/arc/lgc - M2M Broker to build TIU for VA-PALS ; 1/4/19 8:02pm
+SAMIVSTS ;;ven/arc/lgc - M2M Broker to build TIU for VA-PALS ; 1/16/19 9:26am
  ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -113,8 +113,7 @@ MKGPH q:'$d(^KBAP("ALLPTS"))
  n si s si=$$CLRGRPS("patient-lookup")
  q:'$g(si)
  n gien,node,ptdata,root
- ;s root=$$setroot^%wd("patient-lookup")
- s root=$$SETROOT^SAMIUTST("patient-lookup")
+ s root=$$setroot^%wd("patient-lookup")
  s gien=0
  n node s node=$na(^KBAP("ALLPTS"))
  n snode S snode=$p(node,")")
@@ -168,8 +167,7 @@ RMDRS() ;
  i '$l(SAMIXD,$c(13,10)) q:$Q 0  q
  n si s si=$$CLRGRPS("reminders")
  i '$g(si) q:$Q 0  q
- ;n root s root=$$setroot^%wd("reminders")
- n root s root=$$SETROOT^SAMIUTST("reminders")
+ n root s root=$$setroot^%wd("reminders")
  n gien s gien=0
  n I,rcnt,type,ien,name,prntname,rmdr
  s rcnt=0
@@ -215,8 +213,7 @@ PRVDRS() ;
  i '$l(SAMIXD,$c(13,10)) q:$Q 0  q
  n si s si=$$CLRGRPS("providers")
  i '$g(si) q:$Q 0  q
- ;n root s root=$$setroot^%wd("providers")
- n root s root=$$SETROOT^SAMIUTST("providers")
+ n root s root=$$setroot^%wd("providers")
  n gien s gien=0
  n I,pcnt,provduz,name,prvdr
  s pcnt=0
@@ -261,8 +258,7 @@ CLINICS() ;
  i '$l(SAMIXD,$c(13,10)) q:$Q 0  q
  n si s si=$$CLRGRPS("clinics")
  i '$g(si) q:$Q 0  q
- ;n root s root=$$setroot^%wd("clinics")
- n root s root=$$SETROOT^SAMIUTST("clinics")
+ n root s root=$$setroot^%wd("clinics")
  n gien s gien=0
  n I,ccnt,clinien,name,cnc
  s ccnt=0
@@ -304,8 +300,7 @@ HLTHFCT() ; Clear the M Web Server files cache
  I '$l(SAMIXD,$c(13,10)) q:$Q 0  q
  n si s si=$$CLRGRPS("health-factors")
  I '$g(si) q:$Q 0  q
- ;n root s root=$$setroot^%wd("health-factors")
- n root s root=$$SETROOT^SAMIUTST("health-factors")
+ n root s root=$$setroot^%wd("health-factors")
  n gien s gien=0
  N I,hcnt,ien,name,hfct
  S hcnt=0
@@ -334,19 +329,10 @@ HLTHFCT() ; Clear the M Web Server files cache
  ;   0 = failure to find named Graphstore
  ;   ien (si) of the Graphstore in ^%wd(17.040801,
 CLRGRPS(name) ;
- I '$l($g(name)) q:$Q 0  q
- n siglb s siglb="^%wd(17.040801,""B"","""_name_""",0)"
- n si s si=$o(@siglb)
- i $g(si) d
- . s siglb="^%wd(17.040801,"_si_")"
- . k @siglb
- . s siglb="^%wd(17.040801,"_si_",0)"
- . s @siglb=name
- e  d
- . s siglb="setroot^%wd("""_name_""")"
- . d @siglb
- . s siglb="^%wd(17.040801,""B"","""_name_""",0)"
- . s si=$o(@siglb)
+ i '($l($g(name))) q:$Q 0  q
+ n si s si=$o(^%wd(17.040801,"B",name,0))
+ i $g(si) k ^%wd(17.040801,si) s ^%wd(17.040801,si,0)=name
+ e  d purgegraph^%wd(name) s si=$o(^%wd(17.040801,"B",name,0))
  q:$Q $g(si)  q
  ;
 EOR ; End of routine SAMIVSTS

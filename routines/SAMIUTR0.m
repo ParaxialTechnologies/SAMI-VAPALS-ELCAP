@@ -1,4 +1,4 @@
-SAMIUTR0 ;ven/lgc - UNIT TEST for SAMICTR0 ; 1/14/19 11:33am
+SAMIUTR0 ;ven/lgc - UNIT TEST for SAMICTR0 ; 1/16/19 8:47am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -27,8 +27,7 @@ START i $t(^%ut)="" w !,"*** UNIT TEST NOT INSTALLED ***" q
  ;
  ;
 STARTUP n utsuccess
- ;n root s root=$$setroot^%wd("vapals-patients")
- n root s root=$$SETROOT^SAMIUTST("vapals-patients")
+ n root s root=$$setroot^%wd("vapals-patients")
  k @root@("graph","XXX00001")
  n SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
  m @root@("graph","XXX00001")=SAMIUPOO
@@ -98,8 +97,7 @@ UTXSUB ; @TEST - extrinsic which returns the dictionary value defined by SAMIVAR
  s SAMIVAR="cteval-dict"
  s SAMIUPOO(1)="biopsy"
  s SAMIVALDX=1
- ;s dict=$$setroot^%wd("cteval-dict")
- n SAMIDICT s SAMIDICT=$$SETROOT^SAMIUTST("cteval-dict")
+ s SAMIDICT=$$setroot^%wd("cteval-dict")
  s result=$$XSUB^SAMICTR0(SAMIVAR,SAMIVALS,SAMIDICT,SAMIVALDX)
  s utsuccess=(result="CT-guided biopsy")
  d CHKEQ^%ut(utsuccess,1,"Testing xsub(SAMIVAR,SAMIVALS,dict,SAMIVALDX) FAILED!")

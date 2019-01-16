@@ -1,4 +1,4 @@
-SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICAS2,SAMICAS3 ; 1/10/19 9:22am
+SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICAS2,SAMICAS3 ; 1/16/19 8:55am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -26,8 +26,7 @@ START I $t(^%ut)="" W !,"*** UNIT TEST NOT INSTALLEd ***" Q
  ;
  ;
 STARTUP n utsuccess
- ;n root s root=$$setroot^%wd("vapals-patients")
- n root s root=$$SETROOT^SAMIUTST("vapals-patients")
+ n root s root=$$setroot^%wd("vapals-patients")
  k @root@("graph","XXX00001")
  n SAMIPOO D PLUTARR^SAMIUTST(.SAMIPOO,"all XXX00001 forms")
  m @root@("graph","XXX00001")=SAMIPOO
@@ -62,13 +61,11 @@ UTHMNY ; @TEST - extrinsic returns how many forms the patient has used before de
  ;CNTITEMS(sid)
  n rootut,rootvp,gienut,dfn,gienvp,studyid,uforms,forms
  ; get test patient
- ;s rootut=$$setroot^%wd("vapals unit tests")
- s rootut=$$SETROOT^SAMIUTST("vapals unit tests")
+ s rootut=$$setroot^%wd("vapals unit tests")
  s gienut=$O(@rootut@("B","patient-lookup test patient",0))
  s dfn=@rootut@(gienut,"dfn")
  ; get studyid on patient
- ;set rootvp=$$setroot^%wd("vapals-patients")
- s rootvp=$$SETROOT^SAMIUTST("vapals-patients")
+ set rootvp=$$setroot^%wd("vapals-patients")
  s gienvp=$O(@rootvp@("dfn",dfn,0))
  i '$g(gienvp) d  q
  . d FAIL^%ut("Test patient not found in vapals-patients Graphstore")
@@ -88,13 +85,11 @@ UTCNTITM ; @TEST - get items available for studyid
  ;GETITEMS(ary,sid)
  n rootut,rootvp,gienut,dfn,gienvp,studyid,uforms,forms
  ; get test patient
- ;s rootut=$$setroot^%wd("vapals unit tests")
- s rootut=$$SETROOT^SAMIUTST("vapals unit tests")
+ s rootut=$$setroot^%wd("vapals unit tests")
  s gienut=$O(@rootut@("B","patient-lookup test patient",0))
  s dfn=@rootut@(gienut,"dfn")
  ; get studyid on patient
- ;set rootvp=$$setroot^%wd("vapals-patients")
- s rootvp=$$SETROOT^SAMIUTST("vapals-patients")
+ set rootvp=$$setroot^%wd("vapals-patients")
  s gienvp=$O(@rootvp@("dfn",dfn,0))
  i '$g(gienvp) d  q
  . d FAIL^%ut("Test patient not found in vapals-patients Graphstore")
@@ -172,8 +167,7 @@ UTMKCEF ; @TEST - create ct evaluation form
  ;
  n SAMIUPOO,root,vals
  d PLUTARR^SAMIUTST(.SAMIUPOO,"UTNODUL^SAMICTR1 data")
- ;s root=$$setroot^%wd("vapals-patients")
- s root=$$SETROOT^SAMIUTST("vapals-patients")
+ s root=$$setroot^%wd("vapals-patients")
  s vals=$na(@root@("graph","XXX00001","ceform-2018-10-21"))
  m @vals=SAMIUPOO
  ; -----
@@ -224,8 +218,7 @@ UTWSCAS ; @TEST - generate case review page
 UTGSAMIS ; @TEST - get 'samistatus' to val in form
  ;GSAMISTA(sid,form)
  n root,form,sid,ss1,ss2
- ;s root=$$setroot^%wd("vapals-patients")
- s root=$$SETROOT^SAMIUTST("vapals-patients")
+ s root=$$setroot^%wd("vapals-patients")
  s form="sbform-2018-10-21"
  s sid="XXX00001"
  s ss1=$g(@root@("graph",sid,"sbform-2018-10-21","samistatus"))
@@ -237,8 +230,7 @@ UTGSAMIS ; @TEST - get 'samistatus' to val in form
 UTSSAMIS ; @TEST - set 'samistatus' to val in form
  ;SSAMISTA(sid,form,val)
  n root,form,sid,ss1,ss2,val
- ;s root=$$setroot^%wd("vapals-patients")
- s root=$$SETROOT^SAMIUTST("vapals-patients")
+ s root=$$setroot^%wd("vapals-patients")
  s form="sbform-2018-10-21"
  s sid="XXX00001"
  s val="unit test"
@@ -254,8 +246,7 @@ UTSSAMIS ; @TEST - set 'samistatus' to val in form
 UTDELFM ; @TEST - deletes a form if it is incomplete
  ;DELFORM(RESULT,SAMIUARGS)
  n SAMIUARGS,root,sbexist,sbexistd,SAMIUPOO,SAMIURTN
- ;s root=$$setroot^%wd("vapals-patients")
- s root=$$SETROOT^SAMIUTST("vapals-patients")
+ s root=$$setroot^%wd("vapals-patients")
  s studyid="XXX00001"
  s form="sbform-2018-10-21"
  S SAMIUARGS("studyid")=studyid
@@ -299,8 +290,7 @@ UTNFPST ; @TEST - post new form selection (post service)
  ;   be run after the above tests that generate
  ;   one of each type separately
  n SAMIUBODY,SAMIUARGS,SAMIURSLT,root,newform
- ;s root=$$setroot^%wd("vapals-patients")
- s root=$$SETROOT^SAMIUTST("vapals-patients")
+ s root=$$setroot^%wd("vapals-patients")
  s SAMIUBODY(1)=""
  s SAMIUARGS("studyid")="XXX00001"
  ;
@@ -369,8 +359,7 @@ UTNFPST ; @TEST - post new form selection (post service)
  ;
 CHKFORM(form,LABEL,utsuccess) ;
  n sid s sid="XXX00001"
- ;n rootvp s rootvp=$$setroot^%wd("vapals-patients")
- s rootvp=$$SETROOT^SAMIUTST("vapals-patients")
+ n rootvp s rootvp=$$setroot^%wd("vapals-patients")
  n datekey s datekey="2018-10-21"
  n key set key=form_"-"_datekey
  ; delete existing entry

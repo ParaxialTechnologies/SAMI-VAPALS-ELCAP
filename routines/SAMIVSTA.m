@@ -1,4 +1,4 @@
-SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 1/8/19 12:38pm
+SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 1/16/19 9:13am
  ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -97,8 +97,7 @@ TASKIT ;
  s si=$g(filter("studyid")) ; e.g."XXX00001"
  i '$l($g(si)) q:$Q 0  q
  ;
- ;s root=$$setroot^%wd("vapals-patients")
- s root=$$SETROOT^SAMIUTST("vapals-patients")
+ s root=$$setroot^%wd("vapals-patients")
  ; e.g. root = ^%wd(17.040801,23)
  ;
  s samikey=$g(filter("form"))
@@ -306,8 +305,7 @@ ADDSGNRS(filter) ;
  s si=$g(filter("studyid")) ; e.g."XXX00333"
  q:'$l($g(si))
  ;
- ;s root=$$setroot^%wd("vapals-patients")
- s root=$$SETROOT^SAMIUTST("vapals-patients")
+ s root=$$setroot^%wd("vapals-patients")
  ; e.g. root = ^%wd(17.040801,23)
  ;
  s samikey=$g(filter("form"))
@@ -448,8 +446,7 @@ PTINFO(dfn) ;
  ;
  d M2M^SAMIM2M(.SAMIXD,cntxt,rmprc,console,cntnopen,.SAMIARR)
  ; Update patient-lookup entry for this patient
- ;n root s root=$$setroot^%wd("patient-lookup")
- n root s root=$$SETROOT^SAMIUTST("patient-lookup")
+ n root s root=$$setroot^%wd("patient-lookup")
  n name,node,gien
  i '(dfn=$p(SAMIXD,"^",1)) q:$Q rslt  q
  s rslt="1^"_dfn
@@ -487,8 +484,7 @@ PTINFO(dfn) ;
  i $p(SAMIXD,"^",14) D
  . n UrbanRural s UrbanRural=$$URBRUR^SAMIVSTA($p(SAMIXD,"^",14))
  . s @root@(gien,"samiru")=UrbanRural
- .; s root=$$setroot^%wd("vapals-patients")
- . s root=$$SETROOT^SAMIUTST("vapals-patients")
+ . s root=$$setroot^%wd("vapals-patients")
  . s gien=$o(@root@("dfn",dfn,0))
  . s:gien @root@(gien,"samiru")=UrbanRural
  q:$Q rslt  q
@@ -522,8 +518,7 @@ PTSSN(dfn) ;
  i '$g(SAMIXD) q:$Q ssn  q
  s ssn="1^"_$p(SAMIXD,"^")
  ;
-PTSSN1 ;n root s root=$$setroot^%wd("patient-lookup")
- n root s root=$$SETROOT^SAMIUTST("patient-lookup")
+PTSSN1 n root s root=$$setroot^%wd("patient-lookup")
  n name,node,gien
  s name=$p(SAMIXD,"^",8)
  n node s node=$na(@root@("name",name))
@@ -601,8 +596,7 @@ DELTIU(tiuien) ;
 URBRUR(zipcode) ;
  I $g(zipcode)<1 Q 0
  n root
- ;s root=$$setroot^%wd("NCHS Urban-Rural")
- s root=$$SETROOT^SAMIUTST("NCHS Urban-Rural")
+ s root=$$setroot^%wd("NCHS Urban-Rural")
  q:'$d(@root@("zip",+zipcode)) 0
  n samiru,ruca30
  s ruca30=$$GET^XPAR("SYS","SAMI URBAN/RURAL INDEX VALUE",,"Q")

@@ -1,4 +1,4 @@
-SAMIVSTR ; ven/lgc,arc - IELCAP: M2M to Graph tools ; 1/7/19 10:37am
+SAMIVSTR ; ven/lgc,arc - IELCAP: M2M to Graph tools ; 1/16/19 9:24am
  ;;1.0;SAMI;;
  ;
  ;@routine-credits
@@ -62,8 +62,7 @@ RADPROCD(StationNumber) ;
  ;
  n si s si=$$CLRGRPHS("radiology procedures")
  n I,gien,root s gien=0
- ;s root=$$setroot^%wd("radiology procedures")
- s root=$$SETROOT^SAMIUTST("radiology procedures")
+ s root=$$setroot^%wd("radiology procedures")
  f I=1:1:$l(SAMIXD,$c(13,10)) D
  . s rdprc=$p(SAMIXD,$c(13,10),I)
  . q:($l(rdprc,"^")<3)
@@ -103,8 +102,7 @@ ACTEXAMS() ;
  ;
  n si s si=$$CLRGRPHS("radiology active exams")
  n gien,root s gien=0
- ;s root=$$setroot^%wd("radiology active exams")
- s root=$$SETROOT^SAMIUTST("radiology active exams")
+ s root=$$setroot^%wd("radiology active exams")
  ; *** need to run on active system to see how
  ;     to build file
  s @root@("Date Last Updated")=$$HTE^XLFDT($H)
@@ -136,8 +134,7 @@ RADSTAFF() ;
  I '($l(SAMIXD,$c(13,10))) q:$Q 0  q
  n si s si=$$CLRGRPHS("radiology staff")
  n I,gien,root,rastaff s gien=0
- ;s root=$$setroot^%wd("radiology staff")
- s root=$$SETROOT^SAMIUTST("radiology staff")
+ s root=$$setroot^%wd("radiology staff")
  f I=1:1:$l(SAMIXD,$c(13,10)) D
  . s rastaff=$p(SAMIXD,$c(13,10),I)
  . q:($l(rastaff,"^")<2)
@@ -177,8 +174,7 @@ RADRESDT() ;
  ;
  n si s si=$$CLRGRPHS("radiology residents")
  n I,gien,root,RAREs s gien=0
- ;s root=$$setroot^%wd("radiology residents")
- s root=$$SETROOT^SAMIUTST("radiology residents")
+ s root=$$setroot^%wd("radiology residents")
  f I=1:1:$l(SAMIXD,$c(13,10)) D
  . s radres=$p(SAMIXD,$c(13,10),I)
  . q:($l(radres,"^")<2)
@@ -216,8 +212,7 @@ RADTECHS() ;
  ;
  n si s si=$$CLRGRPHS("radiology technologists")
  n I,gien,root,ratech s gien=0
- ;s root=$$setroot^%wd("radiology technologists")
- s root=$$SETROOT^SAMIUTST("radiology technologists")
+ s root=$$setroot^%wd("radiology technologists")
  f I=1:1:$l(SAMIXD,$c(13,10)) D
  . s ratech=$p(SAMIXD,$c(13,10),I)
  . q:($l(ratech,"^")<2)
@@ -252,8 +247,7 @@ RADMODS() ;
  ;
  n si s si=$$CLRGRPHS("radiology modifiers")
  n I,gien,root,ramod,TypeOfImage s gien=0
- ;s root=$$setroot^%wd("radiology modifiers")
- s root=$$SETROOT^SAMIUTST("radiology modifiers")
+ s root=$$setroot^%wd("radiology modifiers")
  f I=1:1:$l(SAMIXD,$c(13,10)) D
  . s ramod=$p(SAMIXD,$c(13,10),I)
  . q:($l(ramod,"^")<3)
@@ -297,8 +291,7 @@ RADDXCDS() ;
  ;
  n si s si=$$CLRGRPHS("radiology diagnostic codes")
  n I,gien,root,RATECH s gien=0
- ;s root=$$setroot^%wd("radiology diagnostic codes")
- s root=$$SETROOT^SAMIUTST("radiology diagnostic codes")
+ s root=$$setroot^%wd("radiology diagnostic codes")
  f I=1:1:$l(SAMIXD,$c(13,10)) D
  . s radxcd=$p(SAMIXD,$c(13,10),I)
  . q:($l(radxcd,"^")<2)
@@ -326,18 +319,9 @@ RADDXCDS() ;
  ; Clear a Graphstore global of data
 CLRGRPHS(name) ;
  i '($l($g(name))) q:$Q 0  q
- n siglb s siglb="^%wd(17.040801,""B"","""_name_""",0)"
- n si s si=$o(@siglb)
- i $g(si) d
- . s siglb="^%wd(17.040801,"_si_")"
- . k @siglb
- . s siglb="^%wd(17.040801,"_si_",0)"
- . s @siglb=name
- e  d
- . s siglb="setroot^%wd("""_name_""")"
- . d @siglb
- . s siglb="^%wd(17.040801,""B"","""_name_""",0)"
- . s si=$o(@siglb)
+ n si s si=$O(^%wd(17.040801,"B",name,0))
+ i $g(si) k ^%wd(17.040801,si) s ^%wd(17.040801,si,0)=name
+ e  d purgegraph^%wd(name) s si=$O(^%wd(17.040801,"B",name,0))
  q:$Q $g(si)  q
  ;
 EOR ; End of routine SAMIVSTR

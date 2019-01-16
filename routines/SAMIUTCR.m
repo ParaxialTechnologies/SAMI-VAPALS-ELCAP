@@ -1,4 +1,4 @@
-SAMIUTCR ;ven/lgc - UNIT TEST for SAMICTR ; 1/15/19 9:16am
+SAMIUTCR ;ven/lgc - UNIT TEST for SAMICTR ; 1/16/19 8:41am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -27,8 +27,7 @@ START i $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  ;
  ;
 STARTUP n utsuccess
- ;n root s root=$$setroot^%wd("vapals-patients")
- n root s root=$$SETROOT^SAMIUTST("vapals-patients")
+ n root s root=$$setroot^%wd("vapals-patients")
  k @root@("graph","XXX00001")
  n SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
  m @root@("graph","XXX00001")=SAMIUPOO
@@ -42,8 +41,7 @@ SHUTDOWN ; ZEXCEPT: utsuccess
 UTWSRPT ; @TEST - web service which returns an html cteval report
  ;WSREPORT(return,SAMIFLTR)
  ;use ceform-2018-10-21
- ;n root s root=$$setroot^%wd("vapals-patients")
- n root s root=$$SETROOT^SAMIUTST("vapals-patients")
+ n root s root=$$setroot^%wd("vapals-patients")
  k SAMIFLTR
  s SAMIFLTR("studyid")="XXX00001"
  s SAMIFLTR("form")="ceform-2018-10-21"
@@ -131,8 +129,7 @@ UTXSUB ; @TEST - extrinsic which returns the dictionary value defined by var
  s SAMIUVAR="cteval-dict"
  s SAMIUPOO(1)="biopsy"
  s SAMIUVALDX=1
- ;s SAMIUDICT=$$setroot^%wd("cteval-dict")
- s SAMIUDICT=$$SETROOT^SAMIUTST("cteval-dict")
+ s SAMIUDICT=$$setroot^%wd("cteval-dict")
  s result=$$XSUB^SAMICTR(SAMIUVAR,SAMIUVALS,SAMIUDICT,SAMIUVALDX)
  s utsuccess=(result="CT-guided biopsy")
  D CHKEQ^%ut(utsuccess,1,"Testing xsub(var,vals,dict,valdx) FAILED!")

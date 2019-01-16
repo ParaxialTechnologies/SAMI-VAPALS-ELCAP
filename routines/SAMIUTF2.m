@@ -1,4 +1,4 @@
-SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 1/15/19 8:51am
+SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 1/16/19 8:43am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -26,8 +26,7 @@ START i $t(^%ut)="" w !,"*** UNIT TEST NOT INSTALLED ***" q
  ;
  ;
 STARTUP n utsuccess
- ;n root s root=$$setroot^%wd("vapals-patients")
- n root s root=$$SETROOT^SAMIUTST("vapals-patients")
+ n root s root=$$setroot^%wd("vapals-patients")
  k @root@("graph","XXX00001")
  n SAMIPOO D PLUTARR^SAMIUTST(.SAMIPOO,"all XXX00001 forms")
  m @root@("graph","XXX00001")=SAMIPOO
@@ -41,8 +40,7 @@ SHUTDOWN ; ZEXCEPT: utsuccess
 UTINITF ; @TEST - initilize form file from elcap-patient graphs
  ;D INITFRMS
  ; Find out what new form will be added
- ;n utroot set utroot=$$setroot^%wd("vapals-patients")
- n utroot s utroot=$$SETROOT^SAMIUTST("vapals-patients")
+ n utroot set utroot=$$setroot^%wd("vapals-patients")
  i utroot="" d  q
  . d FAIL^%ut("Error couldn't find vapals-patients graphstore!")
  n utgroot s utgroot=$na(@utroot@("graph"))
@@ -106,8 +104,7 @@ UTLOADD ; @TEST - import directory full of json data into elcap-patient graph
  ;LOADDATA()
  ;First be sure the XXX0005 graphstore info doesn't exist
  n root,SAMIUPOO,SAMIUARC,cmd,zlist,nodea,nodep
- ;set root=$$setroot^%wd("vapals-patients")
- s root=$$SETROOT^SAMIUTST("vapals-patients")
+ set root=$$setroot^%wd("vapals-patients")
  k @root@("graph","XXX0005")
  ;Check that the folder and three json test files are
  ;  on our client

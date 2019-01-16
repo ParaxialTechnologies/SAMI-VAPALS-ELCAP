@@ -1,4 +1,4 @@
-SAMIUTR9 ;ven/lgc - UNIT TEST for SAMICTR9 ; 1/14/19 10:47am
+SAMIUTR9 ;ven/lgc - UNIT TEST for SAMICTR9 ; 1/16/19 8:50am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -26,8 +26,7 @@ START i $t(^%ut)="" w !,"*** UNIT TEST NOT INSTALLED ***" q
  ;
  ;
 STARTUP n utsuccess
- ;n root s root=$$setroot^%wd("vapals-patients")
- n root s root=$$SETROOT^SAMIUTST("vapals-patients")
+ n root s root=$$setroot^%wd("vapals-patients")
  k @root@("graph","XXX00001")
  n SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
  m @root@("graph","XXX00001")=SAMIUPOO
@@ -42,13 +41,11 @@ UTIMPRS ; @TEST - impression
  ;IMPRSN(rtn,SAMIVALS,dict)
  n SAMIVALS,SAMIDICT,si,samikey,root,SAMIUPOO,SAMIUARC
  n nodea,nodep,para,cac,cacrec
- ;s root=$$setroot^%wd("vapals-patients")
- s root=$$SETROOT^SAMIUTST("vapals-patients")
+ s root=$$setroot^%wd("vapals-patients")
  s si="XXX00001"
  s samikey="ceform-2018-10-21"
  s SAMIVALS=$na(@root@("graph",si,samikey))
- ;s SAMIDICT=$$setroot^%wd("cteval-dict")
- s SAMIDICT=$$SETROOT^SAMIUTST("cteval-dict")
+ s SAMIDICT=$$setroot^%wd("cteval-dict")
  s SAMIDICT=$na(@SAMIDICT@("cteval-dict"))
  s cnt=1,para="POO"
  s cacrec=" CaCrEc ",cac=99
@@ -100,8 +97,7 @@ UTXSUB ; @TEST - extrinsic which returns the dictionary value defined by var
  s SAMIVAR="cteval-dict"
  s SAMIUPOO(1)="biopsy"
  s SAMIVALDX=1
- ;s SAMIDICT=$$setroot^%wd("cteval-dict")
- s SAMIDICT=$$SETROOT^SAMIUTST("cteval-dict")
+ s SAMIDICT=$$setroot^%wd("cteval-dict")
  s result=$$XSUB^SAMICTR9(SAMIVAR,SAMIVALS,SAMIDICT,SAMIVALDX)
  s utsuccess=(result="CT-guided biopsy")
  d CHKEQ^%ut(utsuccess,1,"Testing xsub(var,SAMIVALS,dict,valdx) FAILED!")

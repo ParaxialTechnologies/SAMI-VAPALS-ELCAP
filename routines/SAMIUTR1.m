@@ -1,4 +1,4 @@
-SAMIUTR1 ;ven/lgc - UNIT TEST for SAMICTR1 ; 1/14/19 11:22am
+SAMIUTR1 ;ven/lgc - UNIT TEST for SAMICTR1 ; 1/16/19 8:49am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -27,8 +27,7 @@ START i $t(^%ut)="" w !,"*** UNIT TEST NOT INSTALLED ***" q
  ;
  ;
 STARTUP n utsuccess
- ;n root s root=$$setroot^%wd("vapals-patients")
- n root s root=$$SETROOT^SAMIUTST("vapals-patients")
+ n root s root=$$setroot^%wd("vapals-patients")
  k @root@("graph","XXX00001")
  n SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
  m @root@("graph","XXX00001")=SAMIUPOO
@@ -43,13 +42,11 @@ UTNODUL ; @TEST - nodules
  ;nodules(rtn,SAMIVALS,dict)
  n SAMIUPOO,root,SAMISI,SAMIVALS,SAMIDICT,SAMIUARC
  n noder,nodea,cnt,return
- ;s root=$$setroot^%wd("vapals-patients")
- n root s root=$$SETROOT^SAMIUTST("vapals-patients")
+ s root=$$setroot^%wd("vapals-patients")
  s SAMISI="XXX00001"
  n SAMIKEY s SAMIKEY="ceform-2018-10-21"
  s SAMIVALS=$na(@root@("graph",SAMISI,SAMIKEY))
- ;n SAMIDICT s SAMIDICT=$$setroot^%wd("cteval-dict")
- n SAMIDICT s SAMIDICT=$$SETROOT^SAMIUTST("cteval-dict")
+ n SAMIDICT s SAMIDICT=$$setroot^%wd("cteval-dict")
  s SAMIDICT=$na(@SAMIDICT@("cteval-dict"))
  s cnt=0
  d NODULES^SAMICTR1("return",SAMIVALS,SAMIDICT)
@@ -65,12 +62,10 @@ UTNODUL ; @TEST - nodules
  ;
  n SAMIUPOO,SAMISI,SAMIVALS,SAMIDICT,SAMIUARC
  n root,cnt,return,noder,nodea
- ;s root=$$setroot^%wd("vapals-patients")
- s root=$$SETROOT^SAMIUTST("vapals-patients")
+ s root=$$setroot^%wd("vapals-patients")
  s SAMISI="XXX00001",SAMIKEY="ceform-2018-12-03"
  s SAMIVALS=$na(@root@("graph",SAMISI,SAMIKEY))
- ;n SAMIDICT s SAMIDICT=$$setroot^%wd("cteval-dict")
- n SAMIDICT s SAMIDICT=$$SETROOT^SAMIUTST("cteval-dict")
+ n SAMIDICT s SAMIDICT=$$setroot^%wd("cteval-dict")
  s SAMIDICT=$na(@SAMIDICT@("cteval-dict"))
  s cnt=0
  d NODULES^SAMICTR1("return",SAMIVALS,SAMIDICT)
@@ -123,8 +118,7 @@ UTXSUB ; @TEST - extrinsic which returns the dictionary value defined by var
  s SAMIVAR="cteval-dict"
  s SAMIUPOO(1)="biopsy"
  s SAMIVALDX=1
- ;s SAMIDICT=$$setroot^%wd("cteval-dict")
- S SAMIDICT=$$SETROOT^SAMIUTST("cteval-dict")
+ s SAMIDICT=$$setroot^%wd("cteval-dict")
  s result=$$XSUB^SAMICTR1(SAMIVAR,SAMIVALS,SAMIDICT,SAMIVALDX)
  s utsuccess=(result="CT-guided biopsy")
  d CHKEQ^%ut(utsuccess,1,"Testing xsub(var,SAMIVALS,SAMIDICT,valdx) FAILED!")

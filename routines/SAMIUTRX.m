@@ -1,4 +1,4 @@
-SAMIUTRX ;ven/lgc - UNIT TEST for SAMICTRX ; 1/9/19 2:04pm
+SAMIUTRX ;ven/lgc - UNIT TEST for SAMICTRX ; 1/16/19 8:53am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -80,8 +80,7 @@ UTXSUB ; @TEST - extrinsic which returns the dictionary value defined by var
  s var="cteval-dict"
  s poo(1)="biopsy"
  s valdx=1
- ;s dict=$$setroot^%wd("cteval-dict")
- s dict=$$SETROOT^SAMIUTST("cteval-dict")
+ s dict=$$setroot^%wd("cteval-dict")
  s result=$$XSUB^SAMICTRX(var,vals,dict,valdx)
  s utsuccess=(result="CT-guided biopsy")
  d CHKEQ^%ut(utsuccess,1,"Testing xsub(var,vals,dict,valdx) FAILED!")

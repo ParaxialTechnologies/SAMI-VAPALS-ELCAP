@@ -1,4 +1,4 @@
-SAMIUTRU ;ven/lgc - UNIT TEST for SAMIRU ; 1/10/19 11:06am
+SAMIUTRU ;ven/lgc - UNIT TEST for SAMIRU ; 1/16/19 8:52am
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -35,8 +35,7 @@ SHUTDOWN ; ZEXCEPT: utsuccess
 UTINDEX ; @TEST - create the zip index in the zip graph
  ;INDEX^SAMIRU
  n root,samid1,samid2,samid3,SAMIUPOO,SAMIUARC
- ;s root=$$setroot^%wd("NCHS Urban-Rural")
- s root=$$SETROOT^SAMIUTST("NCHS Urban-Rural")
+ s root=$$setroot^%wd("NCHS Urban-Rural")
  s samid1=$d(@root@("zip")) ; should be 10
  i samid1=10 d
  . m SAMIUPOO=@root@("zip")
@@ -63,8 +62,7 @@ UTINDEX ; @TEST - create the zip index in the zip graph
 UTWSGRU ; @TEST - web service to return counts for rural and urban
  ;WSGETRU(rtn,filter)
  n SAMIURTN,SAMIUFLTR,root
- ;s root=$$setroot^%wd("vapals-patients")
- s root=$$SETROOT^SAMIUTST("vapals-patients")
+ s root=$$setroot^%wd("vapals-patients")
  ;
  d WSGETRU^SAMIRU(.SAMIURTN,.SAMIUFLTR)
  s utsuccess=1

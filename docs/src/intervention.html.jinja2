@@ -319,9 +319,7 @@
                             <div class="form-group">
                                 <label for="sbahpft-n">Have you had a pulmonary function test?</label>
                                 <br/>
-                                <div class="form-group">
-                                    {{ f.inlineRadioNY("sbahpft") }}
-                                </div>
+                                {{ f.inlineRadioNY("sbahpft") }}
                             </div>
                         </div>
 
@@ -1133,17 +1131,20 @@
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input name="rbal{{ i }}l" id="rbal{{ i }}l" class="form-control numeric" size="4">
+                                            <input name="rbal{{ i }}l" id="rbal{{ i }}l" class="form-control numeric"
+                                                   size="4">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input name="rbal{{ i }}w" id="rbal{{ i }}w" class="form-control numeric" size="4">
+                                            <input name="rbal{{ i }}w" id="rbal{{ i }}w" class="form-control numeric"
+                                                   size="4">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input name="rbal{{ i }}h" id="rbal{{ i }}h" class="form-control numeric" size="4">
+                                            <input name="rbal{{ i }}h" id="rbal{{ i }}h" class="form-control numeric"
+                                                   size="4">
                                         </div>
                                     </td>
                                     <td>
@@ -1485,8 +1486,42 @@
                     <h2>Chemotherapy Treatment Information</h2>
                     <div class="row">
                         <div class="col-md-4 form-group">
-                            <label for="rbrtchpn">Treating physician name</label>
-                            <input name="rbrtchpn" id="rbrtchpn" class="form-control">
+                            <label for="chmd">Treating physician name</label>
+                            <input name="chmd" id="chmd" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="chfdot">First date of treatment</label>
+                                    {{ f.datepicker("chfdot","past") }}
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="chldot">Last date of treatment</label>
+                                    {{ f.datepicker("chldot","past") }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-5">
+                            <div class="form-group">
+                                <label for="sbahpft-n">Frequency of chemotherapy</label>
+                                <br/>
+                                {{ f.inlineRadio("chf", "chf-d", "d", "daily") }}
+                                {{ f.inlineRadio("chf", "chf-od", "od", "every other day") }}
+                                {{ f.inlineRadio("chf", "chf-w", "w", "weekly") }}
+                                {{ f.inlineRadio("chf", "chf-o", "o", "other") }}
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4">
+                            <div class="form-group" id="chf-container">
+                                <label for="chfs">Specify</label>
+                                <input name="chfs" id="chfs" class="form-control">
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -1510,72 +1545,114 @@
                             <input name="rbrtchlo" id="rbrtchlo" class="form-control">
                         </div>
                     </div>
+
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-lg-6 col-md-12 form-group">
+                            <label for="rbchdt">Describe treatment</label>
+                            <input name="rbchdt" id="rbchdt" class="form-control">
+                        </div>
+                        <div class="col-lg-6 col-md-12 form-group">
+                            <label for="rbchst">Subsequent treatments</label>
+                            <input name="rbchst" id="rbchst" class="form-control">
+                        </div>
+                        <div class="col-lg-6 col-md-12 form-group">
+                            <label for="rbchdr">Drugs used</label>
+                            <input name="rbchdr" id="rbchdr" class="form-control">
+                        </div>
+                        <div class="col-lg-6 col-md-12 form-group">
+                            <label for="rbchnt">Number of rounds</label>
+                            <input name="rbchnt" id="rbchnt" class="form-control numeric">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="rbrtchco">Comments</label>
-                                <textarea name="rbrtchco" id="rbrtchco" class="form-control"></textarea>
+                                <label for="chedd-n">Was the entire dose delivered to the patient?</label>
+                                <br/>
+                                {{ f.inlineRadioNY("chedd") }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="chedds">Specify</label>
+                                <input name="chedds" id="chedds" class="form-control">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="rbrtchem-n">Chemotherapy?</label>
-                                {{ f.inlineRadio("rbrtchem", "rbrtchem-n", "n", "No") }}
-                                {{ f.inlineRadio("rbrtchem", "rbrtchem-y", "y", "Yes") }}
-                                {{ f.inlineRadio("rbrtchem", "rbrtchem-q", "q", "?") }}
-                                {{ f.inlineRadio("rbrtchem", "rbrtchem-r", "r", "Refused") }}
+                                <label for="chc-n">Were there complications associated with treatment?</label>
+                                <br/>
+                                {{ f.inlineRadioNY("chc") }}
                             </div>
                         </div>
-                        <div id="chemo-refusal-container">
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label for="rbrtchrd">Refusal date</label>
-                                    {{ f.datepicker("rbrtchrd","past") }}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="rbrtchrr">Reason</label>
-                                    <input name="rbrtchrr" id="rbrtchrr" class="form-control">
-                                </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="chcs">Specify</label>
+                                <input name="chcs" id="chcs" class="form-control">
                             </div>
                         </div>
                     </div>
-
-
                     <div class="row">
-                        <div class="col-md-3 form-group">
-                            <label for="rbrtchsd">If yes, start date</label>
-                            {{ f.datepicker("rbrtchsd","past") }}
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="chse-n">Side effects</label>
+                                <br/>
+                                {{ f.inlineRadio("chse", "chf-n", "n", "none") }}
+                                {{ f.inlineRadio("chse", "chf-mi", "mi", "minimal") }}
+                                {{ f.inlineRadio("chse", "chf-ma", "ma", "marked") }}
+                            </div>
                         </div>
-
-                        <div class="col-md-3 form-group">
-                            <label for="rbrtchhl">Hospital/Office Location</label>
-                            <input name="rbrtchhl" id="rbrtchhl" class="form-control">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="chsec">Comments</label>
+                                <input name="chsec" id="chsec" class="form-control">
+                            </div>
                         </div>
                     </div>
-
                     <div class="row">
-                        <div class="col-md-3 col-lg-2 form-group">
-                            <label for="rbrtchrd">Describe treatment</label>
-                            <input name="rbrtchdt" id="rbrtchrd" class="form-control">
+                        <div class="col-md-12">
+                            <label class="small">Check all that apply</label>
                         </div>
-                        <div class="col-md-3 col-lg-2 form-group">
-                            <label for="rbrtchst">Subsequent treatments</label>
-                            <input name="rbrtchst" id="rbrtchst" class="form-control">
+                        <div class="col-lg-1 col-md-2">
+                            {{ f.checkbox("chsef", "f", "Fatique") }}
                         </div>
-                        <div class="col-md-3 col-lg-2 form-group">
-                            <label for="rbrtchdu">Drugs used</label>
-                            <input name="rbrtchdu" id="rbrtchdu" class="form-control">
+                        <div class="col-md-2">
+                            {{ f.checkbox("chsetc", "tc", "Tightness in chest") }}
                         </div>
-                        <div class="col-md-3 col-lg-2 form-group">
-                            <label for="rbrtchnr">Number of rounds</label>
-                            <input name="rbrtchnr" id="rbrtchnr" class="form-control numeric">
+                        <div class="col-md-2">
+                            {{ f.checkbox("chsecwp", "cwp", "Chest wall pain") }}
+                        </div>
+                        <div class="col-md-1">
+                            {{ f.checkbox("chsecgh", "c", "Cough") }}
+                        </div>
+                        <div class="col-lg-2 col-md-3">
+                            {{ f.checkbox("chsesob", "sob", "Shortness of breath") }}
+                        </div>
+
+                        <div class="col-lg-1 col-md-2">
+                            {{ f.checkbox("chsed", "d", "Dyspnea") }}
+                        </div>
+                        <div class="col-md-3">
+                            {{ f.checkbox("chsedawl", "dawl", "Decreased appetite/weight loss") }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ f.checkbox("chsenv", "nv", "Nausea/vomiting") }}
+                        </div>
+                        <div class="col-md-1">
+                            {{ f.checkbox("chseda", "da", "Diarrhea") }}
+                        </div>
+                        <div class="col-md-1">
+                            {{ f.checkbox("chseo", "o", "Other") }}
+                        </div>
+                        <div class="col-md-5" id="chseo-container">
+                            <div class="form-group">
+                                <label for="chseos">Specify</label>
+                                <input name="chseos" id="chseos" class="form-control">
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </div>
 
@@ -1800,8 +1877,11 @@
 
             //Chemotherapy section
             $("#rbrtchls").conditionallyEnable({sourceValues: "o", enable: "#chemo-lesion-container"});
-            $("[name=chemo]").conditionallyEnable({sourceValues: "r", enable: "#chemo-refusal-container"});
+            $("[name=chf]").conditionallyEnable({sourceValues: "o", enable: "#chf-container"});
+            $("#chseo").conditionallyEnable({sourceValues: "o", enable: "#chseo-container"});
 
+
+            //treatment type selection
             $("#rbto").on('change', function () {
                 const val = $(this).val();
                 $("#surgery").toggle(val === 's');

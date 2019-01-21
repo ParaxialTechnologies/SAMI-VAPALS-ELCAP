@@ -1,4 +1,4 @@
-SAMIVSTS ;;ven/arc/lgc - M2M Broker to build TIU for VA-PALS ; 1/16/19 9:26am
+SAMIVSTS ;;ven/arc/lgc - M2M Broker to build TIU for VA-PALS ; 1/21/19 10:22am
  ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -54,14 +54,13 @@ SAMIVSTS ;;ven/arc/lgc - M2M Broker to build TIU for VA-PALS ; 1/16/19 9:26am
  ;  supported references to perform all platform specific functions.
  ;  (Exemptions: Kernel & VA Fileman)
  ;
- ;@API-code: D ALLPTS^SAMIVSTS
- ;@API-called-by: Option : SAMI PULL VA-PALS PATIENTS
- ;@API-Context menu : HMP UI CONTEXT
- ;@API-Remote Procedure : HMP PATIENT SELECT
- ;
  ; not from the top
  q
  ;
+ ;
+ ;@rpi - HMP PATIENT SELECT
+ ;@oi - SAMI PULL VA-PALS PATIENTS
+ ;@API-code: D ALLPTS^SAMIVSTS
 ALLPTS ; Get all patients from a server by sequentially calling
  ;  for last names beginning with each letter of the
  ;  alphabet, building a complete array of patient names
@@ -73,7 +72,7 @@ ALLPTS ; Get all patients from a server by sequentially calling
  ;  SAMI PULL VA-PALS PATIENTS
  ;
  ;multi-dev;API;Procedure;clean;silent;sac exemption;0% tests
- ;
+ ;@oi  - option interface
  d ALLPTS1("ALLPTS")
  ; Now build a new 'patient-lookup' graph
  d MKGPH
@@ -144,11 +143,9 @@ MKGPH q:'$d(^KBAP("ALLPTS"))
  ;
  ;
  ;
+ ;@rpi - PXRM REMINDERS AND CATEGORIES
+ ;@oi - SAMI PULL REMINDERS
  ;@API-code: $$Reminders^SAMIVSTS -or- D Reminders^SAMIVSTS
- ;@API-called-by: Option : SAMI PULL REMINDERS
- ;@API-Context menu : OR CPRS GUI CHART
- ;@API-Remote Procedure : PXRM REMINDERS AND CATEGORIES
- ;
  ; Pull Remiders off the server and build the
  ;    'reminders' Graphstore
  ;Enter
@@ -190,11 +187,9 @@ RMDRS() ;
  ;
  ;
  ;
+ ;@rpi -  ORQPT PROVIDERS
+ ;@oi - SAMI PULL PROVIDERS
  ;@API-code: $$Providers^SAMIVSTS -or- D Providers^SAMIVSTS
- ;@API-called-by: Option : SAMI PULL PROVIDERS
- ;@API-Context menu : OR CPRS GUI CHART
- ;@API-Remote Procedure : ORQPT PROVIDERS
- ;
  ; Pull Providers off the server and build the
  ;    'providers' Graphstore
  ;Enter
@@ -232,11 +227,9 @@ PRVDRS() ;
  ;
  ;
  ;
+ ;@pi - SAMI PULL CLINICS
+ ;@rpi -  ORWU1 NEWLOC
  ;@API-code: $$Clinics^SAMIVSTS -or- D Clinics^SAMIVSTS
- ;@API-called-by: Option : SAMI PULL CLINICS
- ;@API-Context menu : OR CPRS GUI CHART
- ;@API-Remote Procedure : ORWU1 NEWLOC
- ;
  ; Pull Clinics off the server and build the
  ;    'clinics' Graphstore
  ;Enter
@@ -276,11 +269,9 @@ CLINICS() ;
  q:$Q ccnt  q
  ;
  ;
+ ;@oi - SAMI PULL HEALTH FACTORS
+ ;@rpi - ORWPCE GET HEALTH FACTORS TY
  ;@API-code: $$HealthFactors^SAMIVSTS -or- D HealthFactors^SAMIVSTS
- ;@API-called-by: Option : SAMI PULL HEALTH FACTORS
- ;@API-Context menu : OR CPRS GUI CHART
- ;@API-Remote Procedure : ORWPCE GET HEALTH FACTORS TY
- ;
  ; Pull Health Factors  off the server and build the
  ;    'health-factors' Graphstore
  ;Enter

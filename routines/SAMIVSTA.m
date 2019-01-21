@@ -1,4 +1,4 @@
-SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 1/16/19 9:13am
+SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 1/18/19 2:15pm
  ;;18.0;SAMI;;
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
@@ -37,7 +37,7 @@ SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 1/16/19 9:13am
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-09-26
+ ;@last-updated: 2019-01-18
  ;@application: VA-PALS
  ;@version: 1.0
  ;
@@ -53,15 +53,21 @@ SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 1/16/19 9:13am
  ;  supported references to perform all platform specific functions.
  ;  (Exemptions: Kernel & VA Fileman)
  ;
- Q  ; not from top
+ q  ; not from top
  ;
- ; Enter
+ ;@called-by
+ ;  SAMIHOM4  [$$SV2VISTA^SAMIVSTA(.SAMIFILTER)]
+ ;@calls
+ ;  TASKIT^SAMIVSTA
+ ;@input
  ;  filter("studyid")  = VA-PALS study ID e.g. XXX00812
  ;  filter("form"))    = "siform-" + date e.g. siform-2018-05-18
- ; Exit
+ ;@output
  ;  if successful sets tiuien in @vals@("tiuien") node 
  ;   in Graphstore
  ;  if called as extrinsic function, returns tiu ien
+ ;@tests
+ ;  UTTASK^SAMIUTVA
 SV2VISTA(filter) ;
  i '$Q d  q
  . n ZTSAVE,ZTRTN,ZTDESC,ZTDTH,ZTIO,ZTQUEUED,ZTREQ,ZTSK,X,Y
@@ -72,10 +78,18 @@ SV2VISTA(filter) ;
  . s ZTRTN="TASKIT^SAMIVSTA"
  . d ^%ZTLOAD
  ;
-TASKIT ;
- ; Setup all variables into Graphstore
  ;
- n samikey,vals,root,dest,provduz,ptdfn,tiutitlepn
+ ;@called-by
+ ;  SV2VISTA^SAMIVSTA
+ ;@calls
+ ;  $$GET^XPAR
+ ;  $$setroot^%wd
+ ;@input
+ ;@output
+ ;@tests
+ ; UTTASK^SAMIUTVA
+ ;Setup all variables into Graphstore
+TASKIT n samikey,vals,root,dest,provduz,ptdfn,tiutitlepn
  n tiutitleien,tiuien,X,Y,SAMIXD
  n clinien,si
  s tiuien=0
@@ -114,22 +128,45 @@ TASKIT ;
  s dest=$na(@vals@("note"))
  ; e.g. dest="^%wd(17.040801,23,""graph"",""XXX00333"",""siform-2018-11-13"",""note"")"
  ;
- ; Build the new tiu stubb.
+ ;
+ ;@called-by
+ ;@calls
+ ;  BLDTIU^SAMIVSTA
+ ;@input
+ ;@output
  ;   tiuien = 0 : Building new tiu stubb failed
  ;   tiuien = n : IEN into file #8925 for new note stubb
+ ;@tests
+ ; Build the new tiu stubb.
 NEWTIU d BLDTIU(.tiuien,ptdfn,tiutitleien,provduz,clinien)
  i 'tiuien q:$Q 0  q
  ; For unit testing. Save new tiuien
  i $d(%ut) s ^TMP("UNIT TEST","UTTASK^SAMIUTVA")=tiuien
  ;
- ; Now set the text in the note
+ ;
+ ;@called-by
+ ;@calls
+ ;  SETTEXT^SAMIVSTA
+ ;@input
+ ;@output
+ ;@tests
+ ; Set text in the note
 NEWTXT d SETTEXT(.tiuien,dest)
  s:(tiuien>0) @vals@("tiuien")=tiuien
  i '$G(tiuien) q:$Q 0  q
+ ; 
  ;
- ; New code
- ; Now we will update the encounter
- ; Begin by pulling the VSTR for this note
+ ;@called-by
+ ;  ENCNTR^SAMIVSTA
+ ;@calls
+ ;  VISTSTR^SAMIVSTA
+ ;  BLDENCTR^SAMIVSTA
+ ;  $$KSAVE^SAMIVSTA
+ ;@input
+ ;@output
+ ;@tests
+ ;   UTTASK^SAMIUTVA
+ ; Update the encounter
 ENCNTR n VSTR S VSTR=$$VISTSTR(tiuien)
  q:'($L(VSTR,";")=3) tiuien
  ; Time to build the HF array for the next call
@@ -153,20 +190,23 @@ ENCNTR n VSTR S VSTR=$$VISTSTR(tiuien)
  q:$Q 0  q
  ;
  ;
- ;@API-code: $$BLDTIU^SAMIVSTA
- ;@API-Context menu : OR CPRS GUI CHART
- ;@API-Remote Procedure : TIU CREATE RECORD
- ;
- ; Build a TIU and VISIT stubb
- ; Remote Procedure : TIU CREATE RECORD
- ; ENTER
+ ;@rpi - TIU CREATE RECORD
+ ;@called-by
+ ;  ENCNTR^SAMIVSTA
+ ;@calls
+ ;  $$HTFM^XLFDT($H)
+ ;  M2M^SAMIM2M
+ ;@input
  ;   tiuien  : variable by reference for tiuien
  ;   dfn     : IEN into PATIENT [#2] file
  ;   title   : TIU title IEN into TIU DOCUMENT DEFINITION [#8925.1]
  ;   user    : DUZ of user generating TIU document
  ;   clinien : IEN of clinic in HOSPITAL LOCATION [#44]
- ; RETURN
+ ;@output
  ;   ien of new TIU note. 0=failure
+ ;@tests
+ ;   UTBLDTIU^SAMIUTVA
+ ; Build a TIU and VISIT stubb
 BLDTIU(tiuien,dfn,title,user,clinien) ;
  n cntxt,rmprc,console,cntopen,SAMIARR,SAMIXD
  k tiuien s tiuien=0
@@ -202,17 +242,20 @@ BLDTIU(tiuien,dfn,title,user,clinien) ;
  q
  ;
  ;
- ;@API-code: $$SETTEXT^SAMIVSTA
- ;@API-Context menu : OR CPRS GUI CHART
- ;@API-Remote Procedure : TIU SET DOCUMENT TEXT
- ;
- ;Set text in existing tiu note stubb
- ; ENTER
+ ;@rpi - TIU SET DOCUMENT TEXT
+ ;@called-by
+ ;  $$SETTEXT^SAMIVSTA
+ ;@calls
+ ;  M2M^SAMIM2M
+ ;@input
  ;   tiuien   = IEN of tiu note stubb in file #8925 by reference
  ;   dest     = indirection pointer to tiu note text
  ;                in the "VA-PALS patients" graph store
- ; RETURN
+ ;@output
  ;   tiuien  = 0 if filing failed, the TIU IEN if successful
+ ;@tests
+ ;  UTSTEXT^SAMIUTVA
+ ;Set text in existing tiu note stubb
 SETTEXT(tiuien,dest) ;
  S tiuien=+$G(tiuien)
  q:'$g(tiuien)
@@ -239,21 +282,30 @@ SETTEXT(tiuien,dest) ;
  ;
  d M2M^SAMIM2M(.SAMIXD,cntxt,rmprc,console,cntnopen,.SAMIARR)
  ;
+ ;@called-by
+ ;  ENCNTR^SAMIVSTA
+ ;@calls
+ ;@input
+ ;@output
+ ;@tests
 STXT1 s tiuien=+$G(SAMIXD)
  q
  ;
  ;
- ;@API-code: $$BLDENCTR^SAMIVSTA
- ;@API-Context menu : OR CPRS GUI CHART
- ;@API-Remote Procedure : ORWPCE SAVE
- ;
- ; Add encounter information to a tiu note
- ;ENTER
+ ;@rpi - ORWPCE SAVE
+ ;@called-by
+ ;  $$BLDENCTR^SAMIVSTA
+ ;@calls
+ ;  $$VISTSTR^SAMIVSTA
+ ;@input
  ;   tiuien  = IEN of note in 8925
  ;   hfarray = array by reference of Health Factors e.g.
- ;EXIT
+ ;@output
  ;   tiuien  = 0 failed to file encounter
  ;           = IEN of note in 8925 if successful
+ ;@tests
+ ;  UTENCTR^SAMIUTVA
+ ; Add encounter information to a tiu note
 BLDENCTR(tiuien,SAMIUHFA) ;
  ;
  i '$g(tiuien) q:$Q 0  q
@@ -267,11 +319,27 @@ BLDENCTR(tiuien,SAMIUHFA) ;
  s rmprc="ORWPCE SAVE"
  s (console,cntnopen)=0
  ;
+ ;@called-by
+ ;@calls
+ ;@input
+ ;@output
+ ;@tests
 HFARRAY k SAMIARR
  s SAMIARR(1)="@SAMIUHFA"
  ;
+ ;@called-by
+ ;@calls
+ ;@input
+ ;@output
+ ;@tests
 SPRS s SAMIARR(2)=suppress
  ;
+ ;@called-by
+ ;@calls
+ ;  M2M^SAMIM2M
+ ;@input
+ ;@output
+ ;@tests
 ENCTR3 s SAMIARR(3)=VSTR
  ;
  d M2M^SAMIM2M(.SAMIXD,cntxt,rmprc,console,cntnopen,.SAMIARR)
@@ -279,10 +347,13 @@ ENCTR3 s SAMIARR(3)=VSTR
  ;
  ;
  ;
- ;@API-code: $$ADDSGNRS^SAMIVSTA
- ;@API-Context menu : OR CPRS GUI CHART
- ;@API-Remote Procedure : TIU UPDATE ADDITIONAL SIGNERS
- ;
+ ;@rpi - TIU UPDATE ADDITIONAL SIGNERS
+ ;@called-by
+ ;@calls
+ ;  $$setroot^%wd
+ ;@input
+ ;@output
+ ;@tests
  ; Additional Signers
  ; Enter
  ;  filter("studyid")  = VA-PALS study ID e.g. XXX00812
@@ -319,7 +390,14 @@ ADDSGNRS(filter) ;
  s tiuien=@vals@("tiuien")
  i '$g(tiuien) q:$Q 0  q
  ;
- ; Called at this point for UNIT TEST
+ ;
+ ;@called-by
+ ;@calls
+ ;  $$KASAVE^SAMIVSTA
+ ;@input
+ ;@output
+ ;@tests
+ ;  UTADDNS^SAMIUTVA
 ADDSIGN n cntxt,rmprc,console,cntnopen,SAMIARR,SAMIXD
  s (console,cntnopen)=0
  s cntxt="OR CPRS GUI CHART"
@@ -352,22 +430,25 @@ ADDSIGN n cntxt,rmprc,console,cntnopen,SAMIARR,SAMIXD
  q
  ;
  ;
- ;@API-code: $$TIUADND^SAMIVSTA
- ;@API-Context menu : OR CPRS GUI CHART
- ;@API-Remote Procedure : TIU CREATE ADDENDUM RECORD
- ;
- ; Build a tiu addendum
- ;ENTER
+ ;@rpi - TIU CREATE ADDENDUM RECORD
+ ;@called-by
+ ;@calls
+ ;  $$HTFM^XLFDT
+ ;  M2M^SAMIM2M
+ ;@input
  ;   tiuaien   = variable by reference for new TIU
  ;               addendum IEN into 8925
  ;   tiuien    = IEN of note in 8925 to which we
  ;               wish to add an addendum
  ;   userduz   = DUZ [IEN into file 200] of the user
  ;               building the addendum
- ;RETURN
+ ;@output
  ;  if called as extrinsic
  ;   0 = unsuccessful in adding addendum
  ;   n = ien of new addendum in 8925
+ ;@tests
+ ;   UTADDND^SAMIUTVA
+ ; Build a tiu addendum
 TIUADND(tiuien,userduz) ;
  ;
  i '$g(tiuien) q:$Q 0  q
@@ -395,17 +476,18 @@ TIUADND(tiuien,userduz) ;
  q:$Q 0  q
  ;
  ;
- ;
- ;
- ;@API-code: $$VISTSTR^SAMIVSTA
- ;@API-Context menu : OR CPRS GUI CHART
- ;@API-Remote Procedure : ORWPCE NOTEVSTR
- ;
- ;ENTER
+ ;@rpi - ORWPCE NOTEVSTR
+ ;@called-by
+ ;@calls
+ ;  M2M^SAMIM2M
+ ;@input
  ;   tiuien = IEN of TIU note in 8925
- ;RETURN
+ ;@output
  ;   0 = failed to obtain VSTR for TIU
  ;   else VSTR string
+ ;@tests
+ ;  UTVSTR^SAMIUTVA
+ ;  UTENCTR^SAMIUTVA
 VISTSTR(tiuien) ;
  i '$g(tiuien) q 0
  n cntxt,rmprc,console,cntnopen,SAMIARR,SAMIXD,X,Y
@@ -418,20 +500,27 @@ VISTSTR(tiuien) ;
  q SAMIXD
  ;
  ;
- ;@API-code: $$PTINFO^SAMIVSTA
- ;@API-Context menu : SCMC PCMMR APP PROXY MENU
- ;@API-Remote Procedure : SCMC PATIENT INFO
- ;
- ; Pull patient information from the server and
- ;   push into the 'patient-lookup' Graphstore
- ; Enter
+ ;@rpi - SCMC PATIENT INFO
+ ;@called-by
+ ;   PTINFO^KBAIPTIN
+ ;   SAMIHOM3
+ ;@calls
+ ;  M2M^SAMIM2M
+ ;  $$setroot^%wd
+ ;  $$FMTHL7^XLFDT
+ ;  $$URBRUR^SAMIVSTA
+ ;@input
  ;   DFN   = IEN of patient into file 2
- ; Returns
+ ;@output
  ;   Sets additional nodes in patient's Graphstore
  ;   If called as extrinsic
  ;      0   = unable to identify patient
  ;      1^dfn = lookup of patient successful
  ;      2^dfn = and update of Graphstore successful
+ ;@tests
+ ;  UTPTINF^SAMIUTVA
+ ; Pull patient information from the server and
+ ;   push into the 'patient-lookup' Graphstore
 PTINFO(dfn) ;
  n cntxt,rmprc,console,cntnopen,SAMIARR,SAMIXD
  n X,rslt
@@ -491,20 +580,22 @@ PTINFO(dfn) ;
  ;
  ;
  ;
- ;@API-code: $$PTSSN^SAMIVSTA
- ;@API-Context menu : OR CPRS GUI CHART
- ;@API-Remote Procedure : ORWPT ID INFO
- ;
- ; Pull patient SSN from the server and
- ;   push into the 'patient-lookup' Graphstore
- ; Enter
+ ;@rpi - ORWPT ID INFO
+ ;@called-by
+ ;@calls
+ ;  M2M^SAMIM2M
+ ;@input
  ;   DFN   = IEN of patient into file 2
- ; Returns
+ ;@output
  ;   Sets additional nodes in patient's Graphstore
  ;   If called as extrinsic
  ;      0   = unable to identify patient
  ;      1^SSN = lookup of patient successful
  ;      2^SSN = and update of Graphstore successful
+ ;@tests
+ ;  UTSSN^SAMIUTVA
+ ; Pull patient SSN from the server and
+ ;   push into the 'patient-lookup' Graphstore
 PTSSN(dfn) ;
  n cntxt,rmprc,console,cntnopen,SAMIARR,SAMIXD
  s cntxt="OR CPRS GUI CHART"
@@ -518,6 +609,13 @@ PTSSN(dfn) ;
  i '$g(SAMIXD) q:$Q ssn  q
  s ssn="1^"_$p(SAMIXD,"^")
  ;
+ ;@called-by
+ ;@calls
+ ;  $$setroot^%wd
+ ;  $$FMTHL7^XLFDT
+ ;@input
+ ;@output
+ ;@tests
 PTSSN1 n root s root=$$setroot^%wd("patient-lookup")
  n name,node,gien
  s name=$p(SAMIXD,"^",8)
@@ -537,13 +635,20 @@ PTSSN1 n root s root=$$setroot^%wd("patient-lookup")
  ;
  ;
  ;@API-code: $$SIGNTIU^SAMIVSTA
- ;
+ ;@called-by
+ ;@calls
+ ;  $$GET^XPAR
+ ;  $$GET1^DIQ
+ ;  ES^TIURS
+ ;@input
+ ;   tiuien = ien of note in 8925
+ ;@output
+ ;   0 = failure, 1 = successful
+ ;@tests
+ ;  UTSIGN^SAMIUTVA
+ ;  UTADDND^SAMIUTVA
  ; Sign a TIU note is ONLY FOR UNIT TESTING as it skips
  ;   over authorization processes.
- ;Enter
- ;   tiuien = ien of note in 8925
- ;Return
- ;   0 = failure, 1 = successful
 SIGNTIU(tiuda) ;
  ; some code pulled from SIGN in TIUSRVP2
  n X,tiud0,tiud12,signer,cosigner
@@ -557,17 +662,22 @@ SIGNTIU(tiuda) ;
  d ES^TIURS(tiuda,tiues)
  s status=$p(^TIU(8925,tiuda,0),"^",5)
  q (status=7)
- ;
- ;
  q
  ;
  ;@API-code: $$DELTIU^SAMIVSTA
- ;
- ; Delete an unsigned tiu note
- ;Enter
+ ;@called-by
+ ;@calls
+ ;  $$VISTSTR^SAMIVSTA
+ ;  DELETE^TIUSRVP
+ ;  DELETE^ORWPCE
+ ;@input
  ;   tiuien = ien of note in 8925
- ;Return
+ ;@output
  ;   0 = failure, 1 = successful
+ ;@tests
+ ;  UTDELTIU^SAMIUTVA
+ ;  SAMIUTH3
+ ; Delete an unsigned tiu note
 DELTIU(tiuien) ;
  n Y s Y=0
  q:'$g(tiuien) 0
@@ -587,12 +697,19 @@ DELTIU(tiuien) ;
  ;
  ;
  ;@API-code: $$UrbanRural^SAMIVSTA(zipcode)
- ;
- ;Enter
- ;   zip code
- ;Return
+ ;@called-by
+ ;  SAMIRU
+ ;  SAMIHOM3
+ ;@calls
+ ;  $$setroot^%wd
+ ;  $$GET^XPAR
+ ;@input
+ ;  zip code
+ ;@output
  ;   0 = failure to find definition
  ;   'rural' or 'urban' zip found in Graphstore
+ ;@tests
+ ;  UTURBR^SAMIUTVA
 URBRUR(zipcode) ;
  I $g(zipcode)<1 Q 0
  n root
@@ -607,15 +724,18 @@ URBRUR(zipcode) ;
  ;
  ;
  ;@API-code: $$KASAVE^SAMIVSTA
- ;
+ ;@called-by
+ ;@calls
+ ;@input
+ ;   tiuien   = ien of note in 8925
+ ;   provider = duz of provider
+ ;@output
+ ;   0 = failure, 1 = successful
+ ;@tests
+ ;  UTKASAVE^SAMIUTVA
  ; Clear the "ASAVE" cross reference to prevent CPRS
  ;  call to prevent TIU WAS THIS SAVED? broker call 
  ;  returning error message
- ;Enter
- ;   tiuien   = ien of note in 8925
- ;   provider = duz of provider
- ;Return
- ;   0 = failure, 1 = successful
 KASAVE(provider,tiuien) ;
  q:'$g(tiuien) 0
  q:'$g(provider) 0

@@ -1,14 +1,14 @@
-SAMIADMN ; VEN/ARC - IELCAP: Admin tools ; 1/22/19 1:23pm
+SAMIADMN ; ven/arc - IELCAP: Admin tools ; 1/22/19 2:03pm
  ;;1.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
  ;
  ; Primary development:
  ;
- ; Author: Alexis Carlson (ARC)
+ ; Author: Alexis Carlson (arc)
  ; Primary development organization: Vista Expertise Network (VEN)
  ;
- ; 2018-05-03 VEN/ARC:
+ ; 2018-05-03 ven/arc:
  ; Create entry point to clear M Web Server files cache
  ;
  ;
@@ -16,7 +16,7 @@ SAMIADMN ; VEN/ARC - IELCAP: Admin tools ; 1/22/19 1:23pm
  ;
  ;
 CLRWEB ; Clear the M Web Server files cache
- ;VEN/ARC;test;procedure;dirty;silent;non-sac
+ ;ven/arc;test;procedure;dirty;silent;non-sac
  ;
  d purgegraph^%wd("html-cache")
  d purgegraph^%wd("seeGraph")

@@ -1,4 +1,4 @@
-SAMICAS2 ;ven/gpl - ielcap: case review page ; 1/22/19 1:23pm
+SAMICAS2 ;ven/gpl - ielcap: case review page ; 1/22/19 2:04pm
  ;;18.0;SAM;;
  ;
  ;@license: see routine SAMIUL
@@ -6,7 +6,7 @@ SAMICAS2 ;ven/gpl - ielcap: case review page ; 1/22/19 1:23pm
  ; SAMICASE contains subroutines for producing the ELCAP Case Review Page.
  ; It is currently untested & in progress.
  ;
- ; CHANGE VEN/2018-11-13
+ ; CHANGE ven/2018-11-13
  ;   changed all SAMIHOM2 to SAMIHOM3
  ;
  quit  ; no entry from top

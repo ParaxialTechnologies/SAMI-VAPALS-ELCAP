@@ -1,6 +1,7 @@
-SAMICTC2 ;ven/gpl - ceform copy routine continued ; 12/28/18 1:14pm
+SAMICTC2 ;ven/gpl - ceform copy routine continued ; 1/22/19 1:25pm
  ;;18.0;SAMI;;
  ;
+ ;@license: see routine SAMIUL
  ;
  quit  ; no entry from top
  ;

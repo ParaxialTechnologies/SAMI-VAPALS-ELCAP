@@ -1,6 +1,7 @@
-SAMICTRX ;ven/gpl - ielcap: forms ; 12/28/18 9:16am
+SAMICTRX ;ven/gpl - ielcap: forms ; 1/22/19 1:26pm
  ;;18.0;SAMI;;
  ;
+ ;@license: see routine SAMIUL
  ;
  quit  ; no entry from top
  ;

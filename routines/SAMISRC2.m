@@ -1,5 +1,7 @@
-SAMISRC2 ;ven/gpl - ielcap: home page search ; 12/27/18 3:38pm
+SAMISRC2 ;ven/gpl - ielcap: home page search ; 1/22/19 1:30pm
  ;;18.0;SAM;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; SAMISRCH contains subroutines for searching for patients on the
  ; ELCAP home page.

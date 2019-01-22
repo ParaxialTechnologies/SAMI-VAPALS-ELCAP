@@ -1,5 +1,7 @@
-SAMIADMN ; VEN/ARC - IELCAP: Admin tools ; 12/27/18 4:38pm
+SAMIADMN ; VEN/ARC - IELCAP: Admin tools ; 1/22/19 1:23pm
  ;;1.0;SAMI;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; Primary development:
  ;

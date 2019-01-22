@@ -1,5 +1,7 @@
-SAMID ;ven/toad - dd: ppis & ddis ;2018-02-05T23:50Z
+SAMID ;ven/toad - dd: ppis & ddis ; 1/22/19 1:27pm
  ;;18.0;SAMI;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; SAMID contains the SAMI data-dictionary PPIs & DDIs.
  ; CURRENTLY UNTESTED & IN PROGRESS

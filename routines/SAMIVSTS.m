@@ -1,5 +1,7 @@
-SAMIVSTS ;;ven/arc/lgc - M2M Broker to build TIU for VA-PALS ; 1/21/19 10:22am
+SAMIVSTS ;;ven/arc/lgc - M2M Broker to build TIU for VA-PALS ; 1/22/19 1:41pm
  ;;18.0;SAMI;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
  ;   to pull information from the VA server into the

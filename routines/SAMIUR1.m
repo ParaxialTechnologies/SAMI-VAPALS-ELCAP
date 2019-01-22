@@ -1,5 +1,7 @@
-SAMIUR1 ;ven/gpl - sami user reports ; 1/7/19 1:02pm
+SAMIUR1 ;ven/gpl - sami user reports ; 1/22/19 1:31pm
  ;;18.0;SAM;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; SAMIUR contains the routines to generate user reports
  ; It is currently untested & in progress.

@@ -1,5 +1,7 @@
-SAMIVSTB ;;ven/lgc - M2M Broker to for VA-PALS ; 1/16/19 9:39am
+SAMIVSTB ;;ven/lgc - M2M Broker to for VA-PALS ; 1/22/19 1:41pm
  ;;18.0;SAMI;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; API's called by SAMIVSA only
  ;

@@ -1,5 +1,7 @@
-SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ; 1/9/19 1:38pm
+SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ; 1/22/19 1:32pm
  ;;18.0;SAMI;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; @section 0 primary development
  ;

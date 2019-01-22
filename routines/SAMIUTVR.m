@@ -1,5 +1,7 @@
-SAMIUTVR ; ven/lgc,arc - UNIT TESTS for SAMIVSTR ; 1/16/19 9:31am
+SAMIUTVR ; ven/lgc,arc - UNIT TESTS for SAMIVSTR ; 1/22/19 1:40pm
  ;;1.0;SAMI;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ;@routine-credits
  ;@primary development organization: Vista Expertise Network

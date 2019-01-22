@@ -1,5 +1,7 @@
-SAMIUTD2 ;ven/lgc - UNIT TEST for SAMIUTD2 ; 1/16/19 8:42am
+SAMIUTD2 ;ven/lgc - UNIT TEST for SAMIUTD2 ; 1/22/19 1:33pm
  ;;18.0;SAMI;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; @section 0 primary development
  ;

@@ -1,5 +1,7 @@
-SAMIUTST ;ven/lgc - Unit Test Utilities ; 1/16/19 9:34am
+SAMIUTST ;ven/lgc - Unit Test Utilities ; 1/22/19 1:38pm
  ;;18.0;SAMI;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; Routine to push and pull information used during unit testing
  ;   of va-pals routines

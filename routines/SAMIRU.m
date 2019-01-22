@@ -1,5 +1,7 @@
-SAMIRU ;ven/gpl - sami user reports ; 12/27/18 3:47pm
+SAMIRU ;ven/gpl - sami user reports ; 1/22/19 1:30pm
  ;;18.0;SAM;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; SAMIRU contains the routines to handle rural/urban status
  ; It is currently untested & in progress.

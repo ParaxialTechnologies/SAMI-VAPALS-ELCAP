@@ -1,5 +1,7 @@
-SAMIUTC1 ;ven/lgc - Unit test for SAMICTC1 and SAMICTC2 ; 1/15/19 10:09am
+SAMIUTC1 ;ven/lgc - Unit test for SAMICTC1 and SAMICTC2 ; 1/22/19 1:32pm
  ;;18.0;SAMI;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; @section 0 primary development
  ;

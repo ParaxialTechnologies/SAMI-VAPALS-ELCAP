@@ -1,6 +1,7 @@
-SAMICTD2 ;ven/gpl - ielcap: forms ; 12/27/18 4:52pm
+SAMICTD2 ;ven/gpl - ielcap: forms ; 1/22/19 1:25pm
  ;;18.0;SAMI;;
  ;
+ ;@license: see routine SAMIUL
  ;
  quit  ; no entry from top
  ;

@@ -1,5 +1,7 @@
-SAMIUTFF ;ven/lgc - Unit test for SAMIIFF ; 1/16/19 9:38am
+SAMIUTFF ;ven/lgc - Unit test for SAMIIFF ; 1/22/19 1:33pm
  ;;18.0;SAMI;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; @section 0 primary development
  ;

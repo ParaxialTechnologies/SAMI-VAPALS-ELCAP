@@ -1,5 +1,7 @@
-SAMIUTM2 ;ven/lgc/smh - UNIT TEST for SAMIM2M ; 1/14/19 1:13pm
+SAMIUTM2 ;ven/lgc/smh - UNIT TEST for SAMIM2M ; 1/22/19 1:35pm
  ;;18.0;SAM;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ;SAM'S INDUSTRIAL CONGLOMERATES
  ;

@@ -1,5 +1,7 @@
-SAMIDSSN ;ven/toad - dd: ssn in sami intake ;2018-02-06T00:02Z
+SAMIDSSN ;ven/toad - dd: ssn in sami intake ; 1/22/19 1:28pm
  ;;18.0;SAMI;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; Routine SAMIDSSN contains code that supports the data dictionary
  ; of field Social Security Number (.09) in file SAMI Intake (311.101).

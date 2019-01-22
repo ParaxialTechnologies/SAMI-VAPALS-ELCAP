@@ -1,5 +1,7 @@
-SAMIVSTR ; ven/lgc,arc - IELCAP: M2M to Graph tools ; 1/16/19 9:24am
+SAMIVSTR ; ven/lgc,arc - IELCAP: M2M to Graph tools ; 1/22/19 1:41pm
  ;;1.0;SAMI;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ;@routine-credits
  ;@primary development organization: Vista Expertise Network

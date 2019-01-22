@@ -1,5 +1,7 @@
-SAMIUTLG ;ven/lgc - Unit test for SAMILOG ; 1/14/19 1:22pm
+SAMIUTLG ;ven/lgc - Unit test for SAMILOG ; 1/22/19 1:34pm
  ;;18.0;SAMI;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; @section 0 primary development
  ;

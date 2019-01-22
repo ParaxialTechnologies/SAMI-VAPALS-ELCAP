@@ -1,6 +1,7 @@
-SAMISAV ;ven/gpl - SAMI save routines ; 12/27/18 3:44pm
+SAMISAV ;ven/gpl - SAMI save routines ; 1/22/19 1:30pm
  ;;18.0;SAM;;
  ;
+ ;@license: see routine SAMIUL
  ; 
  ; It is currently untested & in progress.
  ;

@@ -1,5 +1,7 @@
-SAMIHOM3 ;ven/gpl - ielcap: forms ; 1/11/19 10:07am
+SAMIHOM3 ;ven/gpl - ielcap: forms ; 1/22/19 1:28pm
  ;;18.0;SAMI;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; Routine SAMIHOM3 contains subroutines for implementing the ELCAP Home
  ; Page. SAMIHOM3 is further enhanced to provide binding to VistA

@@ -1,5 +1,7 @@
-SAMIUTPT ;ven/arc - Unit test for SAMIPTLK ; 1/14/19 11:39am
+SAMIUTPT ;ven/arc - Unit test for SAMIPTLK ; 1/22/19 1:36pm
  ;;18.0;SAMI;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; @section 0 primary development
  ;

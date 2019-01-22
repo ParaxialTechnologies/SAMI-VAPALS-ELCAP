@@ -1,5 +1,7 @@
-SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 1/16/19 9:07am
+SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 1/22/19 1:39pm
  ;;18.0;SAMI;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; VA-PALS will be using Sam Habiel's [KBANSCAU] broker
  ;   to pull information from the VA server into the

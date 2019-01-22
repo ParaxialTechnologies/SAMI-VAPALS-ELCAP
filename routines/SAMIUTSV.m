@@ -1,5 +1,7 @@
-SAMIUTSV ;ven/lgc - UNIT TEST for SAMISAV ; 1/16/19 8:55am
+SAMIUTSV ;ven/lgc - UNIT TEST for SAMISAV ; 1/22/19 1:39pm
  ;;18.0;SAMI;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; @section 0 primary development
  ;

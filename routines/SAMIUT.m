@@ -1,5 +1,7 @@
-SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 1/3/19 7:11pm
+SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 1/22/19 1:31pm
  ;;18.0;SAMI;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; @section 0 primary development
  ;

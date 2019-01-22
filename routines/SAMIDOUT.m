@@ -1,5 +1,7 @@
-SAMIDOUT ;ven/toad - dd: output ;2018-02-06T00:00Z
+SAMIDOUT ;ven/toad - dd: output ; 1/22/19 1:27pm
  ;;18.0;SAMI;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; Routine SAMIDOUT contains subroutines for outputing the data
  ; dictionary of SAMI fields to the va-pals repository in tab-delimited

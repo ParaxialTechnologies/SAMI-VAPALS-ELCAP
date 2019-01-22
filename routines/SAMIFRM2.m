@@ -1,5 +1,7 @@
-SAMIFRM2 ;ven/gpl - ielcap: forms ;2019-01-02T18:04Z
+SAMIFRM2 ;ven/gpl - ielcap: forms ; 1/22/19 1:28pm
  ;;18.0;SAMI;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; Routine SAMIFRM contains subroutines for managing the ELCAP forms,
  ; including initialization and enhancements to the SAMI FORM FILE (311.11)

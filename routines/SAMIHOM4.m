@@ -1,5 +1,7 @@
-SAMIHOM4 ;ven/gpl,arc - ielcap: forms;2018-11-30T17:45Z ; 1/2/19 11:02am
+SAMIHOM4 ;ven/gpl,arc - ielcap: forms;2018-11-30T17:45Z ; 1/22/19 1:28pm
  ;;18.0;SAMI;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; @section 0 primary development
  ;

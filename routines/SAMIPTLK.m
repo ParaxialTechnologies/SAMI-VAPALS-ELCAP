@@ -1,5 +1,7 @@
-SAMIPTLK ; GPL - SAMI patient lookup routines ; 12/27/18 3:53pm
+SAMIPTLK ; GPL - SAMI patient lookup routines ; 1/22/19 1:30pm
  ;;0.1;SAMI;nopatch;noreleasedate;Build 10
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; Authored by George P. Lilly 2018
  ;

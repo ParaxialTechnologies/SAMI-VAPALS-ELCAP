@@ -1,5 +1,7 @@
-SAMIUTR9 ;ven/lgc - UNIT TEST for SAMICTR9 ; 1/16/19 8:50am
+SAMIUTR9 ;ven/lgc - UNIT TEST for SAMICTR9 ; 1/22/19 1:37pm
  ;;18.0;SAMI;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; @section 0 primary development
  ;

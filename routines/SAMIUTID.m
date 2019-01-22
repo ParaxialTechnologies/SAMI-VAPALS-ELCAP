@@ -1,6 +1,7 @@
-SAMIUTID ;ven/lgc - UNIT TEST for SAMIID ; 10/24/18 12:50pm
+SAMIUTID ;ven/lgc - UNIT TEST for SAMIID ; 1/22/19 1:34pm
  ;;18.0;SAMI;;
  ;
+ ;@license: see routine SAMIUL
  ;
 START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  D EN^%ut($T(+0),2)

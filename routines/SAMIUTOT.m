@@ -1,6 +1,7 @@
-SAMIUTOT ;ven/lgc - UNIT TEST for SAMIDOUT ; 10/24/18 12:54pm
+SAMIUTOT ;ven/lgc - UNIT TEST for SAMIDOUT ; 1/22/19 1:36pm
  ;;18.0;SAMI;;
  ;
+ ;@license: see routine SAMIUL
  ;
 START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  D EN^%ut($T(+0),2)

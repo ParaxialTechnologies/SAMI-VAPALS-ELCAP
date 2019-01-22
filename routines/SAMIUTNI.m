@@ -1,5 +1,7 @@
-SAMIUTNI ;ven/lgc - UNIT TEST for SAMINOTI ; 1/16/19 8:46am
+SAMIUTNI ;ven/lgc - UNIT TEST for SAMINOTI ; 1/22/19 1:35pm
  ;;18.0;SAMI;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; @section 0 primary development
  ;

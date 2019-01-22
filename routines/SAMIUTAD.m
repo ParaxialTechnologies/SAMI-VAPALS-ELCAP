@@ -1,5 +1,7 @@
-SAMIUTAD ;ven/lgc - Unit test for SAMIADMN ; 1/3/19 9:37am
+SAMIUTAD ;ven/lgc - Unit test for SAMIADMN ; 1/22/19 1:32pm
  ;;18.0;SAMI;;
+ ;
+ ;@license: see routine SAMIUL
  ;
  ; @section 0 primary development
  ;

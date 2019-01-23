@@ -1,4 +1,4 @@
-SAMIUTR2 ;ven/lgc - UNIT TEST for SAMICTR2 ; 1/22/19 1:37pm
+SAMIUTR2 ;ven/lgc - UNIT TEST for SAMICTR2 ; 1/23/19 9:13am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -124,4 +124,4 @@ UTXSUB ; @TEST - extrinsic which returns the dictionary value defined by var
  d CHKEQ^%ut(utsuccess,1,"Testing xsub(var,vals,dict,valdx) FAILED!")
  q
  ;
-EOR ;End of routine SAMIUTR1
+EOR ;End of routine SAMIUTR2

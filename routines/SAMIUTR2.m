@@ -1,4 +1,4 @@
-SAMIUTR2 ;ven/lgc - UNIT TEST for SAMICTR2 ; 1/23/19 9:13am
+SAMIUTR2 ;ven/lgc - UNIT TEST for SAMICTR2 ; 1/23/19 1:36pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -40,7 +40,7 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  Q
  ;
  ;
-UTOTLNG ; @TEST - nodules
+UTOTLNG ; @TEST - other lung
  ;OTHERLUNG(rtn,vals,dict)
  n SAMIUPOO,SAMIUARC
  n root,si,vals,dict,cnt,return,noder,nodea,para
@@ -78,11 +78,28 @@ UTOTLNG ; @TEST - nodules
  . i '(@noder=@nodea) s utsuccess=0
  i '(nodea="") s utsuccess=0
  d CHKEQ^%ut(utsuccess,1,"Testing generating nodule report XXX12-3  FAILED!")
+ ;
+ n SAMIUPOO,si,vals,cnt,return,SAMIUARC,noder,nodea
+ s si="XXX00001",samikey="ceform-2019-01-23"
+ s vals=$na(@root@("graph",si,samikey))
+ s cnt=0
+ s para="POO"
+ d OTHRLUNG^SAMICTR2("return",vals,dict)
+ ;now pull saved report
+ d PLUTARR^SAMIUTST(.SAMIUARC,"UTOTLNG^SAMIUTR2 report XXX01-23")
+ ; now compare return with SAMIUARC
+ n noder,nodea s noder=$na(return),nodea=$na(SAMIUARC)
+ s utsuccess=1
+ f  s noder=$Q(@noder),nodea=$Q(@nodea) q:noder=""  d  q:'utsuccess
+ . i '(@noder=@nodea) s utsuccess=0
+ i '(nodea="") s utsuccess=0
+ d CHKEQ^%ut(utsuccess,1,"Testing generating nodule report XXX01-23  FAILED!")
  q
  ;
 UTOUT ; @TEST - out line
  ;OUT(ln)
- n cnt,rtn,SAMIUPOO
+ n cnt,rtn,SAMIUPOO,debug
+ s debug=1
  s cnt=1,rtn="SAMIUPOO",SAMIUPOO(1)="First line of test"
  n SAMIULN s SAMIULN="Second line test"
  s utsuccess=0

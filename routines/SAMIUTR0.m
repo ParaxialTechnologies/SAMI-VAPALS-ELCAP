@@ -1,4 +1,4 @@
-SAMIUTR0 ;ven/lgc - UNIT TEST for SAMICTR0 ; 1/22/19 1:36pm
+SAMIUTR0 ;ven/lgc - UNIT TEST for SAMICTR0 ; 1/23/19 1:54pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -60,7 +60,8 @@ UTWSRPT ; @TEST - web service which returns an html cteval report
  ;
 UTOUT ; @TEST - out line
  ;out(SAMIULN)
- n cnt,rtn,SAMIUPOO
+ n cnt,rtn,SAMIUPOO,debug
+ s debug=1
  s cnt=1,rtn="SAMIUPOO",SAMIUPOO(1)="First line of test"
  n SAMIULN s SAMIULN="Second line test"
  s utsuccess=0

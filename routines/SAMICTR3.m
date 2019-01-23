@@ -1,29 +1,26 @@
-SAMICTR3 ;ven/gpl - ielcap: forms ; 1/23/19 1:42pm
+SAMICTR3 ;ven/gpl - ielcap: forms ;2018-03-07T18:48Z
  ;;18.0;SAMI;;
  ;
- ;@license: see routine SAMIUL
  ;
  quit  ; no entry from top
  ;
-EMPHYS(rtn,vals,dict)  ; repgen4,repgen5
- ;
+EMPHYS(rtn,vals,dict)
+ ; repgen4,repgen5
+ ;  
  ;# Emphysema
  ;
- if $$XVAL("ceemv",vals)'="e" d  ;
+ ;if $$XVAL("ceemv",vals)'="e" d  ;
+ if $$XVAL("ceem",vals)'="" d  ;
  . D HOUT("Emphysema:")
  . D OUT($$XSUB("ceem",vals,dict)_para)
- ; if { 0 != [ string compare e [xval ceemv] ] } {
- ;   hputs "Emphysema:"
- ;   puts "[xsub ceem ceem].${para}"
- ; }
  ;
  D HOUT("Pleura:")
  ; hputs "Pleura:"
  N pe s pe=0
- ; set pe 0
- ; # Pleural Effusion
  ;
- if $$XVAL("cepev",vals)'="" d  ;
+ ; # Pleural Effusion
+ ; 
+ if $$XVAL("cepev",vals)'="e" d  ;
  . if $$XVAL("ceper",vals)'="no" d  ;
  . . if $$XVAL("cepel",vals)'="no" d  ;
  . . . if $$XVAL("cepel",vals)=$$XVAL("ceper",vals) d  ;
@@ -39,49 +36,20 @@ EMPHYS(rtn,vals,dict)  ; repgen4,repgen5
  . else  d  ;
  . . d OUT("On right "_$$XSUB("cepe",vals,dict,"cepr")_" pleural effusion")
  . . d OUT(" and on left "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusion."_para)
- . . s pe=1
+ . . s pe=1 
  ;
- ;  if { 0 != [ string compare e [xval cepev] ] } {
- ;    if { 0 != [ string compare no [xval ceper] ] } {
- ;      if { 0 != [ string compare no [xval cepel] ] } {
- ;        if { [string compare [xval cepel] [xval ceper]] == 0 } {
- ;          puts "[tr "Bilateral"] [xsub cepe cepel] [tr "pleural effusions"].$ ;{para}"
- ;        } else {
- ;          puts "[tr "Bilateral pleural effusions "]; [xsub cepe cepel] [tr "o ;n left"], "
- ;          puts "[tr "and"] [xsub cepe ceper] [tr "on right"].${para}"
- ;        }
- ;        set pe 1
- ;      } else {
- ;        puts "[tr "On right "] [xsub cepe ceper] [tr "pleural effusion"]"
- ;        puts "[tr "and"] [tr "on left "] [xsub cepe cepel] [tr "pleural effus ;ion"].${para}"
- ;        set pe 1
- ;      }
- ;    } else {
- ;      if { 0 != [ string compare no [xval cepel] ] } {
- ;        puts "[tr "On right "] [xsub cepe ceper] [tr "pleural effusion"]"
- ;        puts "[tr "and"] [tr "on left "] [xsub cepe cepel] [tr "pleural effus ;ion"].${para}"
- ;        set pe 1
- ;      }
- ;    }
- ;  }
  if pe=0 d  ;
  . d OUT("No pleural effusions."_para)
  ;  if { $pe == 0 } {
  ;    puts "[tr "No pleural effusions"].${para}"
  ;  }
- ;
+ ;  
  n yespp s yespp=0
  ;
  if $$XVAL("cebatr",vals)="y" d  ;
  . d OUT("Rounded atelectasis in the ")
  . d OUT($$LOBESTR^SAMICTR2("cebatrl1^cebatrl2^cebatrl3^cebatrl4^cebatrl5",0)_".<br>")
  . s yespp=1
- ;  if { 0 == [ string compare y [xval cebatr] ] } {
- ;    puts "[tr "Rounded atelectasis in the"]"
- ;    puts "[lobestr [list cebatrl1 cebatrl2 cebatrl3 cebatrl4 cebatrl5] 0]"
- ;    #puts "[sidestr {Rounded atelectasis} cebatrrt cebatrlt]"
- ;    set yespp 1
- ;   ; ; ; ; ; ; ; ; ; ; ; ;}
  ;
  if $$XVAL("cept",vals)="y" d  ;
  . s yespp=1
@@ -103,34 +71,6 @@ EMPHYS(rtn,vals,dict)  ; repgen4,repgen5
  . if numl=0 set str="Pleural thickening/plaques."
  . d OUT(str_"<br>")
  ;
- ;
- ;  if { 0 == [ string compare y [xval cept] ] } {
- ;    set yespp 1
- ;    set numl 0
- ;    set str "[tr "Pleural thickening/plaques in the"] "
- ;    if { 0 == [ string compare r [xval ceptrt] ] } {
- ;      append str [tr "right"]
- ;      incr numl
- ;    }
- ;    if { 0 == [ string compare l [xval ceptlt] ] } {
- ;      if { $numl > 0 } {
- ;        append str " [tr "and"] "
- ;      }
- ;      append str [tr "left"]
- ;      incr numl
- ;    }
- ;    #if { $numl > 1 } {
- ;    #  append str " [tr "lungs"]."
- ;    #} else {
- ;    #  append str " [tr "lung"]."
- ;    #}
- ;    append str "."
- ;    if { $numl == 0 } {
- ;      set str "[tr "Pleural thickening/plaques"]."
- ;    }
- ;    puts "$str${cr}"
- ;   ; ; ; ; ; ; ;}
- ;
  if $$XVAL("cepu",vals)="y" d  ;
  . s yespp=1
  . if $l($$XVAL("cepus",vals))'=0 d  ;
@@ -138,42 +78,14 @@ EMPHYS(rtn,vals,dict)  ; repgen4,repgen5
  . e  d OUT("Pleural tumor.")
  . d OUT("<br>")
  ;
- ;  if { 0 == [ string compare y [xval cepu] ] } {
- ;    set yespp 1
- ;    if { [string length [string trim [xval cepus]]] != 0 } {
- ;      puts "[tr "Pleural tumor"]: [xval cepus]"
- ;    } else {
- ;      puts "[tr "Pleural tumor"]."
- ;    }
- ;    puts "${cr}"
- ;   ; ; ; ; ; ; ;}
- ;
  i yespp=0 d OUT(para)
  ;
- ;  if { $yespp == 0 } {
- ;    #puts "${para}[tr "No other abnormalities in the lung parenchyma or pleur ;a"].${para}"
- ;    puts "${para}"
- ;  }
- ;
- i newct=1 d  ;
+ ;i newct=1 d  ;
+ d  ;
  . if $$XVAL("ceoppab",vals)'="" d OUT($$XVAL("ceoppab",vals)_"."_para)
  . else  d
  . . if yespp=1 d OUT(para)
  ;
- ;  if { $newct == 1 } {
- ;
- ;    if { 0 != [ string length [xval ceoppab] ] } {
- ;      # puts "Additional Comments on Parenchymal or Pleural Abnormalities:"
- ;    if { [string compare [xval ceoppab] $dummy] != 0 } {
- ;       puts "[xval ceoppab].${para}"
- ;    }
- ;    } else {
- ;      if { $yespp == 1 } {
- ;      puts "${para}"
- ;    }
- ;    ; ;}
- ;
- ;   ;}
  ;
  d HOUT("Coronary Artery Calcifications:")
  ;# Coronary Calcification
@@ -183,25 +95,10 @@ EMPHYS(rtn,vals,dict)  ; repgen4,repgen5
  . set vcac=$$XVAL("cecccac",vals)
  . if vcac'="" d  ;
  . . s cacrec=""
- . . s cac="The Visual Coronary Artery Calcium (CAC) Score is "_vcac_". "
+ . . s cac="The Visual Coronary Artery Calcium (CAC) Score is "_vcac_". "   
  . . s cacval=vcac
  . . i cacval>3 s cacrec=$g(@dict@("CAC_recommendation"))_para
  ;
- ;hputs "Coronary Artery Calcifications:"
- ;
- ;# Coronary Calcification
- ;if { 0 != [ string compare e [xval ceccv] ] } {
- ;   set vcac "[xval cecccac]"
- ;   if { [string compare $dummy $vcac] != 0 } {
- ;      set cacrec ""
- ;      if { [string length $vcac] != 0 } {
- ;         set cac "[tr "The Visual Coronary Artery Calcium (CAC) Score is"] ${ ;vcac}. "
- ;         scan $vcac {%d} cacval
- ;         if { $cacval > 3 } {
- ;            set cacrec "${CAC_recommendation}${para}"
- ;         }
- ;      }
- ;    }
  ;
  n samicac s samicac=0
  i $$XVAL("cecclm",vals)'="no" s samicac=1
@@ -214,53 +111,21 @@ EMPHYS(rtn,vals,dict)  ; repgen4,repgen5
  . d OUT($$XSUB("cecc",vals,dict,"ceccld")_" in left anterior descending,")
  . d OUT($$XSUB("cecc",vals,dict,"cecclf")_" in circumflex, and")
  . d OUT($$XSUB("cecc",vals,dict,"ceccrc")_" in right coronary. "_cac_para)
- ;
- ;
- ;if { 0 != [expr [string compare no [xval cecclm]] || [string compare no [xval ; ceccld]] || [string compare no [xval cecccf]] || [string compare no [xval ce ;ccrc]]] } {
- ;  #puts "[tr "Coronary calcifications are seen as follows"]: \
- ;
- ;  puts "[xsub cecc cecclm] [tr "in left main"],"
- ;  puts "[xsub cecc ceccld] [tr "in left anterior descending"],"
- ;  puts "[xsub cecc cecccf] [tr "in circumflex"], [tr "and"]"
- ;  puts "[xsub cecc ceccrc] [tr "in right coronary"]. ${cac} ${para}"
- ;} else {
- ;  #puts "[tr "No coronary calcifications are seen"]. ${cac} ${para}"
- ;  puts "None. ${cac} ${para}"
- ;  } ; ; ;
- ;}
+ ; 
  if $$XVAL("cecca",vals)'="-" d  ;
  . d HOUT("Aortic Calcifications: ")
  . d OUT($$XSUB("cecc",vals,dict,"cecca"))
  ;
- ;if { 0 != [string length [xval cecca]] } {
- ;   if { [string compare $dummy [xval cecca]] != 0 } {
- ;      hputs "Aortic Calcifications:"
- ;      puts "[xsub cecc cecca]."
- ;    }
- ;}
  d HOUT("Cardiac Findings:")
- ;
- ;hputs "Cardiac Findings:"
  ;
  ;# Pericardial Effusion
  if $$XVAL("ceprevm",vals)'="-" d  ;
  . if $$XVAL("ceprevm",vals)'="no" d  ;
- . . if $$XVAL("ceprevm",vals)'="" d
+ . . if $$XVAL("ceprevm",vals)'="" d  
  . . . d OUT("A "_$$XSUB("ceprevm",vals,dict,"ceprevm")_" pericardial effusion"_"."_para)
  . . . s pe=1
  . . else  d OUT("No pericardial effusion."_para)
  ;
- ;# Pericardial Effusion
- ;if { 0 != [ string compare e [xval ceprev] ] } {
- ;   if { 0 != [string compare no [xval ceprevm]] } {
- ;      if { [string compare $dummy [xval ceprevm]] != 0 } {
- ;      puts "[tr "A"] [xsub ceprevm ceprevm] [tr "pericardial effusion"].${par ;a}"
- ;      set pe 1
- ;      }
- ;   } else {
- ;      puts "[tr "No pericardial effusion"].${para}"
- ;   }
- ;}
  ;
  ;;# Pulmonary and Aortic Diameter
  i $$XVAL("cepaw",vals)'="" d  ;
@@ -269,211 +134,174 @@ EMPHYS(rtn,vals,dict)  ; repgen4,repgen5
  . . d OUT("Widest ascending aortic diameter at the same level is "_$$XVAL("ceaow",vals)_" mm. ")
  . . if $$XVAL("cepar",vals)'="" d  ;
  . . . d OUT("The ratio is "_$$XVAL("cepar",vals)_".")
- ;
- ;# Pulmonary and Aortic Diameter
- ;if { 0 != [ string compare $dummy [xval cepaw] ] } {
- ;    puts "[tr "Widest main pulmonary artery diameter is"] [xval cepaw] mm."
- ;  if { 0 != [ string compare $dummy [xval ceaow] ] } {
- ;       puts -nonewline "[tr "Widest ascending aortic diameter at the same lev ;el is"] [xval ceaow] mm."
- ;     if { 0 != [ string compare $dummy [xval cepar] ] } {
- ;        puts -nonewline " [tr "The ratio is"] [xval cepar]."
- ;     }
- ;     puts "${para}"
- ;    } ;
- ;}
+ . d OUT(para)
  ;
  ; #"Additional Comments on Cardiac Abnormalities:"
  if $$XVAL("cecommca",vals)'="" d  ;
  . d OUT($$XVAL("cecommca",vals)_"."_para)
  ;
- ;    if { 0 != [ string length [xval cecommca] ] } {
- ;      # puts "Additional Comments on Cardiac Abnormalities:"
- ;    if { [string compare $dummy [xval cecommca]] != 0 } {
- ;      puts "[xval cecommca].${para}"
- ;    }
- ;    }
  ;
  d HOUT("Mediastinum:")
  n yesmm s yesmm=0
  n abn
- i $$XVAL("ceoma",vals)="y"&$$XVAL("ceata",vals)="y" d  ;
+ i ($$XVAL("ceoma",vals)="y")&($$XVAL("ceata",vals)="y") d  ;
  . s yeamm=1
- . s abn="ceatc^ceaty^ceatm"
- ;hputs "Mediastinum:"
- ;
- ;   set yesmm 0
- ;   # Neck and Mediastinal Abnormalities
- ;   if { 0 == [ string compare y [xval ceoma] ] } {
- ;   if { 0 == [ string compare y [xval ceata] ] } {
- ;      set yesmm 1
- ;      set abn [ccmstr [list ceatc ceaty ceatm]]
- ;      if { [string length $abn] == 0 } {
- ;         puts -nonewline "[tr "Noted in the thyroid"] "
- ;      } else {
- ;         puts -nonewline "$abn [tr "thyroid"]. "
- ;      }
- ;      puts "[xval ceatos]${cr}"
- ;   }
- ;   if { 0 == [ string compare y [xval ceaya] ] } {
- ;      set yesmm 1
- ;      set abn [ccmstr [list ceayc ceayy ceaym]]
- ;      if { [string length $abn] == 0 } {
- ;         puts -nonewline "[tr "Noted in the thymus"]. "
- ;      } else {
- ;         puts -nonewline "$abn [tr "thymus"]. "
- ;      }
- ;      puts "[xval ceayos]${cr}"
- ;   }
- ;   #puts "<BR>"
- ;    ;}
+ . s abn=$$CCMSTR("ceatc^ceaty^ceatm",vals)
+ . ;d OUT("[abn="_abn_"]")
+ . i abn="" d OUT("Noted in the thyroid.")
+ . i abn'="" d OUT(abn_" thyroid.")
+ . i $$XVAL("ceato",vals)="o" d OUT($$XVAL("ceatos",vals)_"<br>")
+ i $$XVAL("ceaya",vals)="y" d  ;
+ . s yesmm=1
+ . s abn=$$CCMSTR("ceayc^ceayy^ceaym",vals)
+ . i abn="" d OUT("Noted in the thymus")
+ . i abn'="" d OUT(abn_" thymus.")
+ . i $$XVAL("ceayo",vals)="o" d OUT($$XVAL("ceayos",vals)_"<br>")
  ;
  ;   # Non-calcified lymph nodes
- ;   set lnlist [list "cemlnl1"  "cemlnl2r"  "cemlnl2l" "cemlnl3" "cemlnl4r" \
- ;                    "cemlnl4l" "cemlnl5"   "cemlnl6"  "cemlnl7" "cemlnl8" \
- ;                    "cemlnl9"  "cemlnl10r" "cemlnl10l"]
- ;   set lnlistt [list "high mediastinal"  "right upper paratracheal" "left upp ;er paratracheal"  "prevascular/retrotracheal" "right lower paratracheal" "lef ;t lower paratracheal" "sub-aortic (A-P window)" "para-aortic" "subcarinal" "p ;ara-esophageal" "pulmonary ligament" "right hilar" "left hilar" ]
+ n lnlist,lnlistt
+ set lnlist(1)="cemlnl1"
+ set lnlist(2)="cemlnl2r"
+ set lnlist(3)="cemlnl2l"
+ set lnlist(4)="cemlnl3"
+ set lnlist(5)="cemlnl4r"
+ set lnlist(6)="cemlnl4l"
+ set lnlist(7)="cemlnl5"
+ set lnlist(8)="cemlnl6"
+ set lnlist(9)="cemlnl7"
+ set lnlist(10)="cemlnl8"
+ set lnlist(11)="cemlnl9"
+ set lnlist(12)="cemlnl10r"
+ set lnlist(13)="cemlnl10l"
  ;
- ;   if { 0 == [ string compare y [xval cemln] ] } {
- ;      set yesmm 1
- ;      set llist {}
- ;      foreach item $lnlist {
- ;         if { [string compare $dummy [xval $item]] != 0 } {
- ;      if { [string length [xval $item]] > 1 } {
- ;         lappend llist [tr [lsearch $lnlist $item]]
- ;      }
- ;   }
- ;      }
- ;      set lnum [llength $llist]
- ;      if { $lnum == 0 } {
- ;         puts "[tr "Enlarged or growing lymph nodes are noted"]. "
- ;      } else {
- ;   set slnum $lnum
- ;         puts "[tr "Enlarged or growing lymph nodes in the"] "
- ;   foreach item $llist {
- ;      puts -nonewline "[lindex $lnlistt $item]"
- ;      if { $lnum > 2 } {
- ;         puts ", "
- ;      }
- ;      if { $lnum == 2 } {
- ;         puts " [tr "and"] "
- ;      }
- ;      incr lnum -1
- ;   }
- ;    if { $slnum > 1 } {
- ;       puts " [tr "locations"]."
- ;          } else {
- ;       puts " [tr "location"]."
- ;          }
- ;      }
- ;   } ;
+ set lnlistt(1)="high mediastinal"
+ set lnlistt(2)="right upper paratracheal"
+ set lnlistt(3)="left upper paratracheal"
+ set lnlistt(4)="prevascular/retrotracheal"
+ set lnlistt(5)="right lower paratracheal"
+ set lnlistt(6)="left lower paratracheal"
+ set lnlistt(7)="sub-aortic (A-P window)"
+ set lnlistt(8)="para-aortic"
+ set lnlistt(9)="subcarinal"
+ set lnlistt(10)="para-esophageal"
+ set lnlistt(11)="pulmonary ligament"
+ set lnlistt(12)="right hilar"
+ set lnlistt(13)="left hilar"
  ;
- ;   if { 0 == [ string compare y [xval cemlncab] ] } {
- ;      set yesmm 1
- ;      puts "[tr "Calcified lymph nodes present"].${cr}"
- ;   }
  ;
- ;   if { 0 == [ string compare y [xval ceagaln] ] } {
- ;      set yesmm 1
- ;      puts " [tr "Enlarged or growing axillary lymph nodes without central fa ;t are seen"]."
- ;      puts "[xval ceagalns]${cr}"
- ;   }
+ if $$XVAL("cemln",vals)="y" d  ;
+ . s yesmm=1
+ . n llist,item
+ . s (llist,item)=""
+ . f  s item=$o(lnlist(item)) q:item=""  d  ;
+ . . i $$XVAL(lnlist(item),vals)'="" s llist($o(llist(""),-1)+1)=lnlist(item)
+ . n lnum,slnum
+ . s lnum=$o(llist(""),-1)
+ . i lnum=0 d OUT("Enlarged or growing lymph nodes are noted.")
+ . i lnum>0 d  ;
+ . . s slnum=lnum
+ . . d OUT("Enlarged or growing lymph nodes in the ")
+ . . s item=""
+ . . f  s item=$o(llist(item)) q:item=""  d  ;
+ . . . d OUT(lnlistt(item))
+ . . . i lnum>2 d OUT(", ")
+ . . . i lnum=2 d OUT(" and ")
+ . . . s lnum=lnum-1
+ . . i slnum>1 d OUT("locations.")
+ . . i slnum=1 d OUT("location.")
  ;
- ;   if { 0 == [ string compare y [xval cemva] ] } {
- ;      set yesmm 1
- ;      if { 0 == [ string compare a [xval cemvaa] ] } {
- ;         puts "[tr "Other vascular abnormalities are seen in the aorta"]."
- ;      }
- ;      if { 0 == [ string compare w [xval cemvap] ] } {
- ;         puts "[tr "Other vascular abnormalities are seen in the pulmonary se ;ries"]."
- ;      }
- ;      puts "[xval cemvaos]${cr}"
- ;   }
- ;   #puts "${para}"
+ ;
+ if $$XVAL("cemlncab",vals)="y" d  ;
+ . set yesmm=1
+ . d OUT("Calcified lymph nodes present.<br>")
+ ;
+ if $$XVAL("ceagaln",vals)="y" d  ;
+ . set yesmm=1
+ . d OUT("Enlarged or growing axillary lymph nodes without central fat are seen.")
+ . d OUT($$XVAL("ceagalns",vals)_"<br>")
+ ;
+ if $$XVAL("cemva",vals)="y" d  ;
+ . set yesmm=1
+ . if $$XVAL("cemvaa",vals)="a" d  ;
+ . . d OUT("Other vascular abnormalities are seen in the aorta.")
+ . if $$XVAL("cemvaa",vals)="w" d  ;
+ . . d OUT("Other vascular abnormalities are seen in the pulmonary series.")
+ . d OUT($$XVAL("cemvaos",vals)_"<br>")
  ;
  ;   # Esophageal
- ;  if { 0 == [ string compare y [xval cemeln] ] } {
- ;    set yesmm 1
- ;    set elist {}
- ;    set numl 0
- ;    if { 0 == [ string compare a [xval cemelna] ] } {
- ;      lappend elist [tr "Air-fluid level"]
- ;      incr numl
- ;    }
- ;    if { 0 == [ string compare w [xval cemelnw] ] } {
- ;      lappend elist [tr "Wall thickening"]
- ;      incr numl
- ;    }
- ;    if { 0 == [ string compare m [xval cemelnm] ] } {
- ;      lappend elist [tr "A mass"]
- ;      incr numl
- ;    }
- ;    if { $numl == 0 } {
- ;      puts "[tr "Esophageal abnormality noted"]."
- ;    } else {
- ;      puts -nonewline "[lindex $elist 0]"
- ;      if { $numl == 1 } {
- ;        puts -nonewline " is "
- ;      } else {
- ;        if { $numl == 2 } {
- ;          puts -nonewline " [tr "and"] "
- ;        } else {
- ;          puts -nonewline ", "
- ;        }
- ;        puts -nonewline "[string tolower [lindex $elist 1]]"
- ;        if { $numl == 3 } {
- ;          puts -nonewline ", [tr "and"] [lindex $elist 2]"
- ;        }
- ;        puts -nonewline " are "
- ;      }
- ;      puts "[tr "seen in the esophagus"]."
- ;    }
- ;    puts "[xval cemelnos]"
- ;    puts "${para}"
- ;   ; ; ;}
+ if $$XVAL("cemeln",vals)="y" d  ;
+ . set yesmm=1
+ . n elist s elist=""
+ . set numl=0
+ . if $$XVAL("cemelna",vals)="a" d  ;
+ . . s elist($o(elist(""),-1)+1)="Air-fluid level"
+ . . s numl=numl+1
+ . if $$XVAL("cemelnw",vals)="w" d  ;
+ . . s elist($o(elist(""),-1)+1)="Wall thickening"
+ . . s numl=numl+1
+ . if $$XVAL("cemelnm",vals)="m" d  ;
+ . . s elist($o(elist(""),-1)+1)="A mass"
+ . . s numl=numl+1
+ . if numl=0 d OUT("Esophageal abnormality noted.")
+ . e  d  ;
+ . . d OUT($g(elist(1)))
+ . . if numl=1 d OUT(" is ")
+ . . e  d  ;
+ . . . if numl=2 d  ;
+ . . . . d OUT(" and ")
+ . . . e  d OUT(", ")
+ . . . d OUT($$LOWC($g(elist(2))))
+ . . . if numl=3 d  ;
+ . . . . d OUT(", and "_$$LOWC($g(elist(3))))
+ . . d OUT("seen in the esophagus.")
+ . d OUT($$XVAL("cemelnos",vals)_para)
  ;
- ;  if { 0 == [ string compare y [xval cehhn] ] } {
- ;    set yesmm 1
- ;    if { [string length [string trim [xval cehhnos]]] != 0 } {
- ;      puts "[tr "Hiatal hernia"]: [xval cehhnos]."
- ;    } else {
- ;      puts "[tr "Hiatal hernia"]."
- ;    }
- ;    puts "${para}"
- ;  }
  ;
- ;  if { 0 == [ string compare y [xval ceomm] ] } {
- ;    set yesmm 1
- ;    set tval [xval ceommos]
- ;    if { [string compare $tval $dummy] == 0 } {
- ;      set tval ""
- ;    }
- ;    set abn [ccmstr [list ceamc ceamy ceamm]]
- ;    if { [string length $abn] == 0 } {
- ;      puts -nonewline "[tr "Abnormality noted in the mediastinum"]. "
- ;    } else {
- ;      puts -nonewline "$abn mediastinum. "
- ;    }
- ;    puts "$tval${cr}"
- ;  }
+ if $$XVAL("cehhn",vals)="y" d  ;
+ . set yesmm=1
+ . if $$XVAL("cehhnos",vals)'="" d OUT("Hiatal hernia: "_$$XVAL("cehhnos",vals))
+ . if $$XVAL("cehhnos",vals)="" d OUT("Hiatal hernia.")
+ . d OUT(para)
  ;
- ;  if { $yesmm == 0 } {
- ;    #puts "${para}[tr "No abnormalities are seen in the neck or mediastinum"] ;.${cr}"
- ;    puts "No abnormalities.${para}"
- ;   ; ;}
+ if $$XVAL("ceomm",vals)="y" d  ;
+ . set yesmm=1
+ . n tval
+ . set tval=$$XVAL("ceommos",vals)
+ . set abn=$$CCMSTR("ceamc^ceamy^ceamm",vals)
+ . if abn="" d OUT("Abnormality noted in the mediastinum. ")
+ . e  d OUT(abn_" mediastinum. ")
+ . d OUT(tval_"<br>")
+ i yesmm=0 d OUT("No abnormalities."_para)
+ i $$XVAL("ceotabnm",vals)'="" d  ;
+ . d OUT($$XVAL("ceotabnm",vals)_"."_para)
+ d OUT("<p>")
  ;
- ;  if { $newct == 1 } {
- ;    if { 0 != [ string length [xval ceotabnm] ] } {
- ;      # puts "Additional Comments on Neck and Mediastinal Abnormalities:"
- ;      puts "[xval ceotabnm].${para}"
- ;    }
- ;  }
- ;  puts "</p>"
- ;;
  ;
  q
  ;
  ;
-OUT(ln)  s cnt=cnt+1
+CCMSTR(lst,vals) ; extrinsic that forms phrases
+ n retstr s retstr=""
+ n lblist s lblist=""
+ n lb,ib s ib=""
+ f lb=1:1:$l(lst,"^") d  ;
+ . s ib=$$XVAL($p(lst,"^",lb),vals)
+ . if ib'="" d  ;
+ . . i ib="y" d  ; 
+ . . . i "ceasc cealc ceapc ceapc ceaac ceakc"[lb s lblist($o(lblist(""),-1)+1)="Calcification"
+ . . . else  s lblist($o(lblist(""),-1)+1)="Cyst"
+ . . i ib="c" s lblist($o(lblist(""),-1)+1)="Calcification"
+ . . i ib="m" s lblist($o(lblist(""),-1)+1)="Mass"
+ i $o(lblist(""),-1)=1 s retstr=retstr_lblist(1)_" is seen in the"
+ e  i $o(lblist(""),-1)=2 s retstr=retstr_lblist(1)_" and "_$$LOWC(lblist(2))_" are seen in the"
+ e  i $o(lblist(""),-1)=3 s retstr=retstr_"Calicification, cyst, and mass are seen in the"
+ q retstr
+ ;
+LOWC(X) ;  CONVERT X TO LOWERCASE
+ Q $TR(X,"ABCDEFGHIJKLMNOPQRSTUVWXYZ","abcdefghijklmnopqrstuvwxyz")
+ ;
+OUT(ln)
+ s cnt=cnt+1
  n lnn
  ;s debug=1
  s lnn=$o(@rtn@(" "),-1)+1
@@ -485,7 +313,8 @@ OUT(ln)  s cnt=cnt+1
  . s @rtn@(lnn)=zp_":"_ln
  q
  ;
-HOUT(ln)  d OUT("<p><span class='sectionhead'>"_ln_"</span>")
+HOUT(ln)
+ d OUT("<p><span class='sectionhead'>"_ln_"</span>")
  q
  ;
 XVAL(var,vals) ; extrinsic returns the patient value for var
@@ -509,3 +338,4 @@ XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined
  ;i zr="" s zr="["_var_","_zv_"]"
  q zr
  ;
+ 

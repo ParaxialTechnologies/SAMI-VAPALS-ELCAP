@@ -1,4 +1,4 @@
-SAMIUTR0 ;ven/lgc - UNIT TEST for SAMICTR0 ; 1/23/19 1:54pm
+SAMIUTR0 ;ven/lgc - UNIT TEST for SAMICTR0 ; 1/23/19 5:36pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -66,7 +66,7 @@ UTOUT ; @TEST - out line
  n SAMIULN s SAMIULN="Second line test"
  s utsuccess=0
  d OUT^SAMICTR0(SAMIULN)
- s utsuccess=($g(SAMIUPOO(2))="Second line test")
+ s utsuccess=($g(SAMIUPOO(2))["Second line test")
  d CHKEQ^%ut(utsuccess,1,"Testing out(ln) adds line to array FAILED!")
  q
  ;

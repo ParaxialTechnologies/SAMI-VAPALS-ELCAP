@@ -1,10 +1,11 @@
-SAMICTR3 ;ven/gpl - ielcap: forms ;2018-03-07T18:48Z
+SAMICTR3 ;ven/gpl - ielcap: forms ; 1/23/19 5:14pm
  ;;18.0;SAMI;;
  ;
+ ;@license: see routine SAMIUL
  ;
  quit  ; no entry from top
  ;
-EMPHYS(rtn,vals,dict)
+EMPHYS(rtn,vals,dict) ;
  ; repgen4,repgen5
  ;  
  ;# Emphysema
@@ -36,7 +37,7 @@ EMPHYS(rtn,vals,dict)
  . else  d  ;
  . . d OUT("On right "_$$XSUB("cepe",vals,dict,"cepr")_" pleural effusion")
  . . d OUT(" and on left "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusion."_para)
- . . s pe=1 
+ . . s pe=1
  ;
  if pe=0 d  ;
  . d OUT("No pleural effusions."_para)
@@ -95,7 +96,7 @@ EMPHYS(rtn,vals,dict)
  . set vcac=$$XVAL("cecccac",vals)
  . if vcac'="" d  ;
  . . s cacrec=""
- . . s cac="The Visual Coronary Artery Calcium (CAC) Score is "_vcac_". "   
+ . . s cac="The Visual Coronary Artery Calcium (CAC) Score is "_vcac_". "
  . . s cacval=vcac
  . . i cacval>3 s cacrec=$g(@dict@("CAC_recommendation"))_para
  ;
@@ -121,7 +122,7 @@ EMPHYS(rtn,vals,dict)
  ;# Pericardial Effusion
  if $$XVAL("ceprevm",vals)'="-" d  ;
  . if $$XVAL("ceprevm",vals)'="no" d  ;
- . . if $$XVAL("ceprevm",vals)'="" d  
+ . . if $$XVAL("ceprevm",vals)'="" d
  . . . d OUT("A "_$$XSUB("ceprevm",vals,dict,"ceprevm")_" pericardial effusion"_"."_para)
  . . . s pe=1
  . . else  d OUT("No pericardial effusion."_para)
@@ -300,7 +301,7 @@ CCMSTR(lst,vals) ; extrinsic that forms phrases
 LOWC(X) ;  CONVERT X TO LOWERCASE
  Q $TR(X,"ABCDEFGHIJKLMNOPQRSTUVWXYZ","abcdefghijklmnopqrstuvwxyz")
  ;
-OUT(ln)
+OUT(ln) ;
  s cnt=cnt+1
  n lnn
  ;s debug=1
@@ -313,7 +314,7 @@ OUT(ln)
  . s @rtn@(lnn)=zp_":"_ln
  q
  ;
-HOUT(ln)
+HOUT(ln) ;
  d OUT("<p><span class='sectionhead'>"_ln_"</span>")
  q
  ;
@@ -338,4 +339,3 @@ XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined
  ;i zr="" s zr="["_var_","_zv_"]"
  q zr
  ;
- 

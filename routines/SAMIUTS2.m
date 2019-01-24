@@ -1,4 +1,4 @@
-SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICAS2,SAMICAS3 ; 1/22/19 1:38pm
+SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICAS2,SAMICAS3 ; 1/24/19 9:59am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL

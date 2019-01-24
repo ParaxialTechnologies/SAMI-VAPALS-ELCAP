@@ -1,4 +1,4 @@
-SAMIUTR3 ;ven/lgc - UNIT TEST for SAMICTR3 ; 1/23/19 1:45pm
+SAMIUTR3 ;ven/lgc - UNIT TEST for SAMICTR3 ; 1/23/19 5:30pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -55,7 +55,7 @@ UTEMPHYS ; @TEST - emphysema
  s para="SAMIUPOO"
  d EMPHYS^SAMICTR3("return",vals,dict)
  ;now pull saved report
- d PLUTARR^SAMIUTST(.SAMIUARC,"UTEMPHYS^SAMIUTR2 report")
+ d PLUTARR^SAMIUTST(.SAMIUARC,"UTEMPHYS^SAMIUTR3 report")
  ; now compare return with SAMIUARC
  n noder,nodea s noder=$na(return),nodea=$na(SAMIUARC)
  s utsuccess=1
@@ -72,7 +72,7 @@ UTEMPHYS ; @TEST - emphysema
  s para="POO"
  d EMPHYS^SAMICTR3("return",vals,dict)
  ;now pull saved report
- d PLUTARR^SAMIUTST(.SAMIUARC,"UTEMPHYS^SAMIUTR2 report XXX12-3")
+ d PLUTARR^SAMIUTST(.SAMIUARC,"UTEMPHYS^SAMIUTR3 report XXX12-3")
  ; now compare return with SAMIUARC
  n noder,nodea s noder=$na(return),nodea=$na(SAMIUARC)
  s utsuccess=1
@@ -90,7 +90,7 @@ UTEMPHYS ; @TEST - emphysema
  s para="POO"
  d EMPHYS^SAMICTR3("return",vals,dict)
  ;now pull saved report
- d PLUTARR^SAMIUTST(.SAMIUARC,"UTEMPHYS^SAMIUTR2 report XXX01-23")
+ d PLUTARR^SAMIUTST(.SAMIUARC,"UTEMPHYS^SAMIUTR3 report XXX01-23")
  ; now compare return with SAMIUARC
  n noder,nodea s noder=$na(return),nodea=$na(SAMIUARC)
  s utsuccess=1
@@ -98,6 +98,13 @@ UTEMPHYS ; @TEST - emphysema
  . i '(@noder=@nodea) s utsuccess=0
  i '(nodea="") s utsuccess=0
  d CHKEQ^%ut(utsuccess,1,"Testing generating nodule report XXX01-23  FAILED!")
+ q
+ ;
+ ;
+UTLOWC ; @TEST - convert to lower case
+ n str s str="LARRYPOO UNIT TEST"
+ s utsuccess=($$LOWC^SAMICTR3(str)="larrypoo unit test")
+ d CHKEQ^%ut(utsuccess,1,"Testing convert to lower case FAILED!")
  q
  ;
 UTOUT ; @TEST - out line
@@ -108,7 +115,7 @@ UTOUT ; @TEST - out line
  n SAMIULN s SAMIULN="Second line test"
  s utsuccess=0
  d OUT^SAMICTR3(SAMIULN)
- s utsuccess=($g(SAMIUPOO(2))="Second line test")
+ s utsuccess=($g(SAMIUPOO(2))["Second line test")
  d CHKEQ^%ut(utsuccess,1,"Testing out(ln) adds line to array FAILED!")
  q
  ;

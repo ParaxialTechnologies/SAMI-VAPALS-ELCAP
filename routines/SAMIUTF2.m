@@ -1,4 +1,4 @@
-SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 1/22/19 1:33pm
+SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 1/24/19 9:16am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -163,7 +163,7 @@ UTSSUB2 ; @TEST -  used for Dom's new style forms
  s SAMILINE="@@FORMKEY@@ and @@SID@@ AND src= and href= something"
  s SAMILINE=SAMILINE_" ST0001 and 1234567890 XX0002 VEP0001 "
  s SAMILINE=SAMILINE_" @@FROZEN@@ "
- ;s key="2018-10-21"
+ s key="2018-10-21"
  s utsuccess=0
  d SAMISUB2^SAMIFRM2(.SAMILINE,.SAMIFORM,SAMISID,.SAMIFLTR,.SAMIJ,.SAMIZHTML)
  s SAMILINE=$e(SAMILINE,1,145),uline=$e(uline,1,145)

@@ -1072,13 +1072,12 @@
     $(function () {
 
         const fv = createFormValidator();
-        let zipLookupTimer = 0;
         const initialRuralUrbanValue = $("[name=sirs]").filter(":checked").val();
         const $zipField = $("#sipz");
         const RURAL = 'r';
         const URBAN = 'u';
         const UNKNOWN = 'n';
-
+        let zipLookupTimer = 0;
 
         function zipLookup(updateSelection) {
             const zipcode = $zipField.val();
@@ -1110,7 +1109,7 @@
                 });
         }
 
-        //whenever the zip code is changed, determine the zip code designation
+        //whenever the zip code is changed, determine the zip code designation, but wait until user stops typing.
         $zipField.on('keyup change', function () {
             if (zipLookupTimer) {
                 clearTimeout(zipLookupTimer);

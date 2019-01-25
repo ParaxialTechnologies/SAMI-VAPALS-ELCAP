@@ -40,7 +40,7 @@
   </script>
   <script src="lib/moment.js">
   </script>
-  <script src="lib/formvalidation/dist/js/FormValidation.min.js">
+  <script src="lib/formvalidation/dist/js/FormValidation.full.min.js">
   </script>
   <script src="lib/formvalidation/dist/js/plugins/Wizard.min.js">
   </script>
@@ -463,9 +463,13 @@
      <div class="row">
       <div class="col-md-6">
        <label for="rbcsb">
-        Clinical staging based on:
+        Clinical staging based on
        </label>
        <div class="form-group form-inline">
+        <label class="radio-inline">
+         <input id="rbcsb-c" name="rbcsb" type="radio" value="c"/>
+         only CT
+        </label>
         <label class="radio-inline">
          <input id="rbcsb-p" name="rbcsb" type="radio" value="p"/>
          only PET
@@ -500,13 +504,13 @@
        <label for="rbmdp">
         Referring physician's phone
        </label>
-       <input class="form-control" data-fv-phone="true" data-fv-phone-country="US" id="simdp" name="rbmdp" type="text"/>
+       <input class="form-control" id="rbmdp" name="rbmdp" type="text"/>
       </div>
       <div class="form-group col-sm-6 col-md-6 col-lg-3">
        <label for="rbmdf">
         Referring physician's fax
        </label>
-       <input class="form-control" data-fv-phone="true" data-fv-phone-country="US" id="rbmdf" name="rbmdf" type="text"/>
+       <input class="form-control" id="rbmdf" name="rbmdf" type="text"/>
       </div>
      </div>
      <div class="row">
@@ -520,13 +524,13 @@
        <label for="rbsumdp">
         Treating physician's phone
        </label>
-       <input class="form-control" data-fv-phone="true" data-fv-phone-country="US" id="rbsumdp" name="rbsumdp" type="text"/>
+       <input class="form-control" id="rbsumdp" name="rbsumdp" type="text"/>
       </div>
       <div class="form-group col-sm-6 col-md-6 col-lg-3">
        <label for="rbsumdf">
         Treating physician's fax
        </label>
-       <input class="form-control" data-fv-phone="true" data-fv-phone-country="US" id="rbsumdf" name="rbsumdf" type="text"/>
+       <input class="form-control" id="rbsumdf" name="rbsumdf" type="text"/>
       </div>
      </div>
      <div class="row">
@@ -692,19 +696,19 @@
          <label for="sbfev1">
           FEV1 (L/s)
          </label>
-         <input class="form-control input-sm" id="sbfev1" name="sbfev1" size="4" type="text"/>
+         <input class="form-control input-sm numeric" id="sbfev1" name="sbfev1" size="4" type="text"/>
         </div>
         <div class="form-group">
          <label for="sbfvc">
           FVC (L)
          </label>
-         <input class="form-control input-sm" id="sbfvc" name="sbfvc" size="4" type="text"/>
+         <input class="form-control input-sm numeric" id="sbfvc" name="sbfvc" size="4" type="text"/>
         </div>
         <div class="form-group">
          <label for="sbcop">
           Diffusion capacity (mL/min/mm Hg)
          </label>
-         <input class="form-control input-sm" id="sbcop" name="sbcop" size="4" type="text"/>
+         <input class="form-control input-sm numeric" id="sbcop" name="sbcop" size="4" type="text"/>
         </div>
         <div class="alert alert-info" id="ffr-message" style="display: none; margin-top:5px;">
          FEV1/FVC (%) is
@@ -718,7 +722,7 @@
          <label for="sbcop">
           Carbon monoxide (ppm)
          </label>
-         <input class="form-control input-sm" id="sbcop" name="sbcop" size="3"/>
+         <input class="form-control input-sm numeric" id="sbcop" name="sbcop" size="3"/>
         </div>
        </div>
       </div>
@@ -803,13 +807,13 @@
           <label for="rbmemdp">
            Physician's phone
           </label>
-          <input class="form-control" data-fv-phone="true" data-fv-phone-country="US" id="rbmemdp" name="rbmemdp"/>
+          <input class="form-control" id="rbmemdp" name="rbmemdp"/>
          </div>
          <div class="form-group col-md-6">
           <label for="rbmemdf">
            Physician's fax
           </label>
-          <input class="form-control" data-fv-phone="true" data-fv-phone-country="US" id="rbmemdf" name="rbmemdf"/>
+          <input class="form-control" id="rbmemdf" name="rbmemdf"/>
          </div>
         </div>
        </div>
@@ -11644,8 +11648,15 @@
                         rbcsx8s: {validators: {notEmpty: {message: 'Other clinical TNM status is required'}}},
                         rbcsxs8m: {validators: {notEmpty: {message: 'Other clinical TNM status is required'}}},
                         rbcsbos: {validators: {notEmpty: {message: 'Clinical staging basis is required.'}}},
+                        rbmdp: {validators: {phone: {message: 'Referring physician\'s phone is invalid', country: 'US'}}},
+                        rbmdf: {validators: {phone: {message: 'Referring physician\'s fax is invalid', country: 'US'}}},
+                        rbsumdp: {validators: {phone: {message: 'Treating physician\'s phone is invalid', country: 'US'}}},
+                        rbsumdf: {validators: {phone: {message: 'Treating physician\'s fax is invalid', country: 'US'}}},
                         rblocs: {validators: {notEmpty: {message: 'Lesion site is required.'}}},
                         rbtos: {validators: {notEmpty: {message: 'Treatment option is required.'}}},
+                        //surgery
+                        rbmemdp: {validators: {phone: {message: 'Physician\'s phone is invalid', country: 'US'}}},
+                        rbmemdf: {validators: {phone: {message: 'Physician\'s fax is invalid', country: 'US'}}},
                         rbsurd: {validators: {notEmpty: {message: 'Resection no/refusal date is required.'}}},
                         rbsurr: {validators: {notEmpty: {message: 'Resection no/refusal reason is required.'}}},
                         rbtosos: {validators: {notEmpty: {message: 'Type of surgery is required.'}}},

@@ -338,7 +338,7 @@
       </small>
      </div>
      <div class="col-sm-8 col-md-9 form-group">
-      <label>
+      <label for="silnpos">
        How did you learn about the Lung Screening and Surveillance (LSS) program?
       </label>
       <div class="checkbox">
@@ -446,6 +446,8 @@
        Zip
       </label>
       <input class="form-control" id="sipz" name="sipz" type="text"/>
+      <small class="text-muted" id="rural-text">
+      </small>
      </div>
      <div class="form-group col-md-3">
       <label for="sipcr">
@@ -954,7 +956,7 @@
   <script language="JavaScript">
    //purposefully executed before DOM is rendered so section is never visible
     const newForm = "@@NEWFORM@@";
-    if (newForm == "true") {
+    if (newForm === "true") {
         $("#reason-for-change-container").remove();
         $("#change-log-container").remove();
     }
@@ -1042,8 +1044,7 @@
                                 let selector = "";
                                 if (e.element.id) {
                                     selector = "#" + e.element.id
-                                }
-                                else {
+                                } else {
                                     selector = "[name=" + e.element.name + "]"
                                 }
 
@@ -1071,6 +1072,60 @@
     $(function () {
 
         const fv = createFormValidator();
+        let zipLookupTimer = 0;
+        const initialRuralUrbanValue = $("[name=sirs]").filter(":checked").val();
+        const $zipField = $("#sipz");
+        const RURAL = 'r';
+        const URBAN = 'u';
+        const UNKNOWN = 'n';
+
+
+        function zipLookup(updateSelection) {
+            const zipcode = $zipField.val();
+            const $ruralText = $("#rural-text");
+            $.ajax(("/zipru/" + zipcode), {dataType: "json"})
+                .done(function (json) {
+                    const ruralData = json.result;
+                    let message = "";
+                    if (ruralData === URBAN) {
+                        message = zipcode + " is an <em>urban</em> address";
+                        if (updateSelection) {
+                            $("[name=sirs][value='" + URBAN + "']").prop('checked', true);
+                        }
+                    } else if (ruralData === RURAL) {
+                        message = zipcode + " is a <em>rural</em> address";
+                        if (updateSelection) {
+                            $("[name=sirs][value='" + RURAL + "']").prop('checked', true);
+                        }
+                    } else if (ruralData === UNKNOWN) {
+                        message = "cannot determine rural/urban status";
+                        if (updateSelection) {
+                            $("[name=sirs][value='" + UNKNOWN + "']").prop('checked', true);
+                        }
+                    }
+                    $ruralText.html(message);
+                })
+                .fail(function () {
+                    $ruralText.html("");
+                });
+        }
+
+        //whenever the zip code is changed, determine the zip code designation
+        $zipField.on('keyup change', function () {
+            if (zipLookupTimer) {
+                clearTimeout(zipLookupTimer);
+            }
+            zipLookupTimer = setTimeout(function () {
+                zipLookup(true);
+            }, 400);
+        });
+
+        if ($zipField.val() !== "") {
+            //if selection is blank, select the appropriate value, otherwise just get the help text
+            const updateSelection = initialRuralUrbanValue === undefined;
+            zipLookup(updateSelection);
+        }
+
 
         $("#sicpd").on('keyup change', function () {
             const cigsPerDay = $("#sicpd").val();
@@ -1081,8 +1136,7 @@
                 if (cpd > 0) {
                     $sippd.val(cpd);
                     $sippdVal.text(cpd);
-                }
-                else {
+                } else {
                     $sippd.val("");
                     $sippdVal.text("-");
                 }
@@ -1136,8 +1190,7 @@
                 //auto-select "inactive" status
                 $("#sistatus-inactive").click();
 
-            }
-            else if (value === "y") {
+            } else if (value === "y") {
                 $yesAlert.show();
                 $noAlert.hide();
 
@@ -1147,8 +1200,7 @@
                     $("[name='" + s + "']").closest(".form-group").find('label').first().addClass('required')
                 });
 
-            }
-            else {
+            } else {
                 $yesAlert.hide();
                 $noAlert.hide();
             }

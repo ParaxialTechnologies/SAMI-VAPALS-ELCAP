@@ -126,7 +126,7 @@
          </a>
         </li>
         <li>
-         <a class="navigation" data-method="post" data-samireporttype="enrollment" data-samiroute="report" href="#!">
+         <a class="navigation" data-method="post" data-samireporttype="enrollment" data-samiroute="report" data-start-date="" href="#!">
           Enrollment
          </a>
         </li>
@@ -284,7 +284,13 @@
 
         $.each($("input[type=checkbox]:checked"), function (i, el) {
             $(el).trigger("change");
-        })
+        });
+
+        const reportsStartDate = VAPALS.toMoment(VAPALS.todaysDate()).subtract(30, "days").format(VAPALS.DATE_FORMAT);
+        const reportsEndDate = VAPALS.toMoment(VAPALS.todaysDate()).format(VAPALS.DATE_FORMAT);
+
+        $("a[data-samiroute=report]").attr("data-start-date", reportsStartDate).attr("data-end-date", reportsEndDate);
+
     })
   </script>
   <script language="JavaScript">

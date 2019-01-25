@@ -125,7 +125,7 @@
          </a>
         </li>
         <li>
-         <a class="navigation" data-method="post" data-samireporttype="enrollment" data-samiroute="report" href="#!">
+         <a class="navigation" data-method="post" data-samireporttype="enrollment" data-samiroute="report" data-start-date="" href="#!">
           Enrollment
          </a>
         </li>
@@ -138,7 +138,55 @@
   <div class="container-fluid" style="max-width:1550px">
    <h1>
     PAGE NAME
+    <small>
+     CRITERIA
+    </small>
    </h1>
+   <form action="/vapals" class="validated" id="main-form" method="post">
+    <input name="samiroute" type="hidden" value="report"/>
+    <input name="samireporttype" type="hidden" value="@@REPORTTYPE@@"/>
+    <div class="row">
+     <div class="col-md-2 col-sm-3 form-group">
+      <label for="start-date">
+       Start
+      </label>
+      <div class="input-group datepicker">
+       <input aria-describedby="start-date-addon" class="form-control" data-restriction="past" id="start-date" name="start-date"/>
+       <div class="input-group-addon">
+        <div class="input-group-text" id="start-date-addon">
+         <i aria-hidden="true" class="fa fa-calendar">
+         </i>
+        </div>
+       </div>
+      </div>
+      <small class="form-text text-muted">
+       MM/DD/YYYY
+      </small>
+     </div>
+     <div class="col-md-2 col-sm-3 form-group">
+      <label for="end-date">
+       End
+      </label>
+      <div class="input-group datepicker">
+       <input aria-describedby="end-date-addon" class="form-control" data-restriction="past" id="end-date" name="end-date"/>
+       <div class="input-group-addon">
+        <div class="input-group-text" id="end-date-addon">
+         <i aria-hidden="true" class="fa fa-calendar">
+         </i>
+        </div>
+       </div>
+      </div>
+      <small class="form-text text-muted">
+       MM/DD/YYYY
+      </small>
+     </div>
+     <div class="col-md-2 col-sm-3 col-xs-2" style="height:45px;">
+      <button class="btn btn-primary" id="submit-button" style="top: 24px;position: absolute;" type="submit">
+       Submit
+      </button>
+     </div>
+    </div>
+   </form>
    <hr/>
    <div class="table-responsive">
     <table class="table table-striped">
@@ -226,7 +274,13 @@
 
         $.each($("input[type=checkbox]:checked"), function (i, el) {
             $(el).trigger("change");
-        })
+        });
+
+        const reportsStartDate = VAPALS.toMoment(VAPALS.todaysDate()).subtract(30, "days").format(VAPALS.DATE_FORMAT);
+        const reportsEndDate = VAPALS.toMoment(VAPALS.todaysDate()).format(VAPALS.DATE_FORMAT);
+
+        $("a[data-samiroute=report]").attr("data-start-date", reportsStartDate).attr("data-end-date", reportsEndDate);
+
     })
   </script>
  </body>

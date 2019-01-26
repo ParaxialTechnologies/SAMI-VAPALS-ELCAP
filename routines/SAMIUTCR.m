@@ -1,4 +1,4 @@
-SAMIUTCR ;ven/lgc - UNIT TEST for SAMICTR ; 1/22/19 1:32pm
+SAMIUTCR ;ven/lgc - UNIT TEST for SAMICTR ; 1/24/19 6:00pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -33,6 +33,10 @@ STARTUP n utsuccess
  k @root@("graph","XXX00001")
  n SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
  m @root@("graph","XXX00001")=SAMIUPOO
+ K SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"ceform-2019-01-24")
+ m @root@("graph","XXX00001","ceform-2019-01-24")=SAMIUPOO
+ K SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"ceform-2018-01-02")
+ m @root@("graph","XXX00001","ceform-2018-01-02")=SAMIUPOO
  Q
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
@@ -66,6 +70,52 @@ UTWSRPT ; @TEST - web service which returns an html cteval report
  d WSREPORT^SAMICTR(.SAMIUPOO,.SAMIFLTR)
  ; compare SAMIUPOO with SAMIUPOO from a Pull
  d PLUTARR^SAMIUTST(.SAMIUARC,"UTWSRPT^SAMIUTCR XXX12-3")
+ ; now compare
+ n pnode,anode s pnode=$na(SAMIUPOO),anode=$na(SAMIUARC)
+ f  s pnode=$q(@pnode),anode=$q(@anode) q:pnode=""  d
+ . I '(@pnode=@anode) s utsuccess=0
+ s:'(anode="") utsuccess=0
+ d CHKEQ^%ut(utsuccess,1,"Testing web service returns html cteval FAILED!")
+ ;
+ ;use ceform-2019-01-23
+ k SAMIFLTR
+ s SAMIFLTR("studyid")="XXX00001"
+ s SAMIFLTR("form")="ceform-2019-01-23"
+ s ^%wd(17.040801,23,"graph","XXX00001","ceform-2019-01-23","cetex")="b"
+ s utsuccess=1
+ d WSREPORT^SAMICTR(.SAMIUPOO,.SAMIFLTR)
+ ; compare SAMIUPOO with SAMIUPOO from a Pull
+ d PLUTARR^SAMIUTST(.SAMIUARC,"UTWSRPT^SAMIUTCR XXX01-23")
+ ; now compare
+ n pnode,anode s pnode=$na(SAMIUPOO),anode=$na(SAMIUARC)
+ f  s pnode=$q(@pnode),anode=$q(@anode) q:pnode=""  d
+ . I '(@pnode=@anode) s utsuccess=0
+ s:'(anode="") utsuccess=0
+ d CHKEQ^%ut(utsuccess,1,"Testing web service returns html cteval FAILED!")
+ ;
+ ;use ceform-2019-01-24
+ k SAMIFLTR
+ s SAMIFLTR("studyid")="XXX00001"
+ s SAMIFLTR("form")="ceform-2019-01-24"
+ s utsuccess=1
+ d WSREPORT^SAMICTR(.SAMIUPOO,.SAMIFLTR)
+ ; compare SAMIUPOO with SAMIUPOO from a Pull
+ d PLUTARR^SAMIUTST(.SAMIUARC,"UTWSRPT^SAMIUTCR XXX01-24")
+ ; now compare
+ n pnode,anode s pnode=$na(SAMIUPOO),anode=$na(SAMIUARC)
+ f  s pnode=$q(@pnode),anode=$q(@anode) q:pnode=""  d
+ . I '(@pnode=@anode) s utsuccess=0
+ s:'(anode="") utsuccess=0
+ d CHKEQ^%ut(utsuccess,1,"Testing web service returns html cteval FAILED!")
+ ;
+ ;use ceform-2018-01-02
+ k SAMIFLTR
+ s SAMIFLTR("studyid")="XXX00001"
+ s SAMIFLTR("form")="ceform-2018-01-02"
+ s utsuccess=1
+ d WSREPORT^SAMICTR(.SAMIUPOO,.SAMIFLTR)
+ ; compare SAMIUPOO with SAMIUPOO from a Pull
+ d PLUTARR^SAMIUTST(.SAMIUARC,"UTWSRPT^SAMIUTCR XXX01-02")
  ; now compare
  n pnode,anode s pnode=$na(SAMIUPOO),anode=$na(SAMIUARC)
  f  s pnode=$q(@pnode),anode=$q(@anode) q:pnode=""  d

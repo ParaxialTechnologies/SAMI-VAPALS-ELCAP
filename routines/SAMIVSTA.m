@@ -1,4 +1,4 @@
-SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 1/22/19 1:40pm
+SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 1/25/19 4:06pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -708,15 +708,15 @@ DELTIU(tiuien) ;
  ;@input
  ;  zip code
  ;@output
- ;   0 = failure to find definition
- ;   'rural' or 'urban' zip found in Graphstore
+ ;   n = failure to find definition
+ ;   r : 'rural' or u: 'urban' zip found in Graphstore
  ;@tests
  ;  UTURBR^SAMIUTVA
 URBRUR(zipcode) ;
- I $g(zipcode)<1 Q 0
+ I $g(zipcode)<1 Q "n"
  n root
  s root=$$setroot^%wd("NCHS Urban-Rural")
- q:'$d(@root@("zip",+zipcode)) 0
+ q:'$d(@root@("zip",+zipcode)) "n"
  n samiru,ruca30
  s ruca30=$$GET^XPAR("SYS","SAMI URBAN/RURAL INDEX VALUE",,"Q")
  s:'$g(ruca30) ruca30=1.1

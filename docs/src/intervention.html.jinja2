@@ -46,10 +46,11 @@
 
         <form action="{{ formPage+".html" if mockup else "/vapals" }}" method="{{ formMethod }}"
               class="validated" id="main-form">
-
             <input type="hidden" name="samiroute" value="postform"/>
             <input type="hidden" name="studyid" value="@@SID@@"/>
             <input type="hidden" name="form" value="@@FORMKEY@@"/>
+
+            {#BEGIN Treatement tab#}
             <div id="treatment" style="padding-top:8px">
                 <h3>Treatment</h3> {# will get hidden with affixed menu#}
                 <div class="row">
@@ -173,8 +174,11 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="rbcsb">Clinical staging based on:</label>
+                        <label for="rbcsb">Clinical staging based on</label>
                         <div class="form-group  form-inline">
+                            <label class="radio-inline">
+                                <input type="radio" name="rbcsb" id="rbcsb-c" value="c">&nbsp;only CT
+                            </label>
                             <label class="radio-inline">
                                 <input type="radio" name="rbcsb" id="rbcsb-p" value="p">&nbsp;only PET
                             </label>
@@ -204,13 +208,11 @@
 
                     <div class="form-group col-sm-6 col-md-6 col-lg-3">
                         <label for="rbmdp">Referring physician's phone</label>
-                        <input type="text" name="rbmdp" id="simdp" class="form-control"
-                               data-fv-phone="true" data-fv-phone-country="US">
+                        <input type="text" name="rbmdp" id="rbmdp" class="form-control">
                     </div>
                     <div class="form-group col-sm-6 col-md-6 col-lg-3">
                         <label for="rbmdf">Referring physician's fax</label>
-                        <input type="text" name="rbmdf" id="rbmdf" class="form-control"
-                               data-fv-phone="true" data-fv-phone-country="US">
+                        <input type="text" name="rbmdf" id="rbmdf" class="form-control">
                     </div>
                 </div>
 
@@ -222,13 +224,11 @@
 
                     <div class="form-group col-sm-6 col-md-6 col-lg-3">
                         <label for="rbsumdp">Treating physician's phone</label>
-                        <input type="text" name="rbsumdp" id="rbsumdp" class="form-control"
-                               data-fv-phone="true" data-fv-phone-country="US">
+                        <input type="text" name="rbsumdp" id="rbsumdp" class="form-control">
                     </div>
                     <div class="form-group col-sm-6 col-md-6 col-lg-3">
                         <label for="rbsumdf">Treating physician's fax</label>
-                        <input type="text" name="rbsumdf" id="rbsumdf" class="form-control"
-                               data-fv-phone="true" data-fv-phone-country="US">
+                        <input type="text" name="rbsumdf" id="rbsumdf" class="form-control">
                     </div>
                 </div>
 
@@ -319,24 +319,25 @@
                             <div class="form-group">
                                 <label for="sbahpft-n">Have you had a pulmonary function test?</label>
                                 <br/>
-                                <div class="form-group">
-                                    {{ f.inlineRadioNY("sbahpft") }}
-                                </div>
+                                {{ f.inlineRadioNY("sbahpft") }}
                             </div>
                         </div>
 
                         <div class="col-sm-12 col-md-8 form-inline" id="sbahpft-container">
                             <div class="form-group">
                                 <label for="sbfev1">FEV1 (L/s)</label>
-                                <input class="form-control input-sm" type="text" name="sbfev1" id="sbfev1" size="4">
+                                <input class="form-control input-sm numeric" type="text" name="sbfev1" id="sbfev1"
+                                       size="4">
                             </div>
                             <div class="form-group">
                                 <label for="sbfvc">FVC (L)</label>
-                                <input class="form-control input-sm" type="text" name="sbfvc" id="sbfvc" size="4">
+                                <input class="form-control input-sm numeric" type="text" name="sbfvc" id="sbfvc"
+                                       size="4">
                             </div>
                             <div class="form-group">
                                 <label for="sbcop">Diffusion capacity (mL/min/mm Hg)</label>
-                                <input class="form-control input-sm" type="text" name="sbcop" id="sbcop" size="4">
+                                <input class="form-control input-sm numeric" type="text" name="sbcop" id="sbcop"
+                                       size="4">
                             </div>
                             <div class="alert alert-info" id="ffr-message" style="display: none; margin-top:5px;">
                                 FEV1/FVC (%) is <strong><span id="ffr-value"></span></strong>
@@ -344,7 +345,7 @@
                             <input type="hidden" name="sbffr" id="sbffr"/>
                             <div class="form-group">
                                 <label for="sbcop">Carbon monoxide (ppm)</label>
-                                <input name="sbcop" id="sbcop" class="form-control input-sm" size="3">
+                                <input name="sbcop" id="sbcop" class="form-control input-sm numeric" size="3">
                             </div>
                         </div>
                     </div>
@@ -400,21 +401,17 @@
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for="rbmemdp">Physician's phone</label>
-                                    <input name="rbmemdp" id="rbmemdp" class="form-control" data-fv-phone="true"
-                                           data-fv-phone-country="US">
+                                    <input name="rbmemdp" id="rbmemdp" class="form-control">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="rbmemdf">Physician's fax</label>
-                                    <input name="rbmemdf" id="rbmemdf" class="form-control" data-fv-phone="true"
-                                           data-fv-phone-country="US">
+                                    <input name="rbmemdf" id="rbmemdf" class="form-control">
                                 </div>
                             </div>
                         </div>
                     </div>
 
-
                     <h3>Resection</h3>
-
                     <div class="row">
                         <div class="col-md-6">
                             <label class="required" for="rbrep-n">Was resection performed?</label>
@@ -1133,17 +1130,20 @@
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input name="rbal{{ i }}l" id="rbal{{ i }}l" class="form-control numeric" size="4">
+                                            <input name="rbal{{ i }}l" id="rbal{{ i }}l" class="form-control numeric"
+                                                   size="4">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input name="rbal{{ i }}w" id="rbal{{ i }}w" class="form-control numeric" size="4">
+                                            <input name="rbal{{ i }}w" id="rbal{{ i }}w" class="form-control numeric"
+                                                   size="4">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input name="rbal{{ i }}h" id="rbal{{ i }}h" class="form-control numeric" size="4">
+                                            <input name="rbal{{ i }}h" id="rbal{{ i }}h" class="form-control numeric"
+                                                   size="4">
                                         </div>
                                     </td>
                                     <td>
@@ -1343,52 +1343,59 @@
                     <h2>Radiation Treatment Information</h2>
                     <div class="row">
                         <div class="col-md-4 form-group">
-                            <label for="rbrtonco">Radiation Oncologist Name</label>
-                            <input name="rbrtonco" id="rbrtonco" class="form-control">
+                            <label for="rtron">Radiation oncologist name</label>
+                            <input name="rtron" id="rtron" class="form-control">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-2 form-group">
-                            <label for="rbrtdoft">First Date of Treatment</label>
-                            {{ f.datepicker("rbrtdoft","past") }}
+                            <label for="rtfdot">First date of treatment</label>
+                            {{ f.datepicker("rtfdot","past") }}
                         </div>
 
                         <div class="col-md-2 form-group">
-                            <label for="rbrtdolt">Last Date of Treatment</label>
-                            {{ f.datepicker("rbrtdolt","past") }}
+                            <label for="rtldot">Last date of treatment</label>
+                            {{ f.datepicker("rtldot","past") }}
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-3 col-lg-2 form-group">
-                            <label for="rbrttdor">Total Dose of Radiation </label>
-                            <input name="rbrttdor" id="rbrttdor" class="form-control numeric">
+                            <label for="rbrttdor">Total dose of radiation</label>
+                            <div class="input-group">
+                                <input name="rbrttdor" id="rbrttdor" class="form-control numeric">
+                                <div class="input-group-addon">cGy</div>
+                            </div>
                         </div>
                         <div class="col-md-3 col-lg-2 form-group">
-                            <label for="rbrtdpfr">Dose per Fraction of Radiation</label>
-                            <input name="rbrtdpfr" id="rbrtdpfr" class="form-control numeric"></div>
+                            <label for="rbrtdpfr">Dose per fraction of radiation</label>
+                            <div class="input-group">
+                                <input name="rbrtdpfr" id="rbrtdpfr" class="form-control numeric">
+                                <div class="input-group-addon">cGy</div>
+                            </div>
+                        </div>
                         <div class="col-md-3 col-lg-2 form-group">
-                            <label for="rbrtnof">Number of Fractions</label>
+                            <label for="rbrtnof">Number of fractions</label>
                             <input name="rbrtnof" id="rbrtnof" class="form-control numeric">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6 col-lg-4 form-group">
-                            <label for="rbrtfreq-d">Frequency of Radiation</label><br/>
-                            {{ f.inlineRadio("rbrtfreq","rbrtfreq-d","d","daily") }}
-                            {{ f.inlineRadio("rbrtfreq","rbrtfreq-e","e","every other day") }}
-                            {{ f.inlineRadio("rbrtfreq","rbrtfreq-w","w","weekly") }}
-                            {{ f.inlineRadio("rbrtfreq","rbrtfreq-o","o","other") }}
+                            <label for="rtfor-d">Frequency of radiation</label><br/>
+                            {{ f.inlineRadio("rtfor","rtfor-d","d","daily") }}
+                            {{ f.inlineRadio("rtfor","rtfor-od","od","every other day") }}
+                            {{ f.inlineRadio("rtfor","rtfor-w","w","weekly") }}
+                            {{ f.inlineRadio("rtfor","rtfor-o","o","other") }}
                         </div>
-                        <div class="col-md-4 form-group" id="radiation-frequency-container">
-                            <label for="rbrtfrsp">Specify</label>
-                            <input name="rbrtfrsp" id="rbrtfrsp" class="form-control">
+                        <div class="col-md-4 form-group" id="rtfor-container">
+                            <label for="rtfors">Specify</label>
+                            <input name="rtfors" id="rtfors" class="form-control">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-3 form-group">
-                            <label for="rbrtls">Lesion Site</label>
-                            <select class="form-control" name="rbrtls" id="rbrtls">
+                            <label for="rtloc">Lesion site</label>
+                            <select class="form-control" name="rtloc" id="rtloc">
                                 <option value="-"> -</option>
                                 <option value="lul"> LUL</option>
                                 <option value="lll"> LLL</option>
@@ -1401,81 +1408,302 @@
                                 <option value="o"> Other (specify)</option>
                             </select>
                         </div>
-                        <div class="col-md-6 col-lg-3 form-group" id="radiation-lesion-container">
-                            <label for="rbrtlssp">Specify</label>
-                            <input name="rbrtlssp" id="rbrtlssp" class="form-control">
+                        <div class="col-md-6 col-lg-3 form-group" id="rtloc-container">
+                            <label for="rtlocs">Specify</label>
+                            <input name="rtlocs" id="rtlocs" class="form-control">
                         </div>
 
                     </div>
+
                     <div class="row">
-                        <div class="col-md-4 col-lg-2 form-group" for="rbrtsgtv">
-                            <label for="rbrtsgtv">Size of Gross Tumor Volume (cc)</label>
-                            <input name="rbrtsgtv" id="rbrtsgtv" class="form-control numeric">
+                        <div class="col-md-4 col-lg-2 form-group">
+                            <label for="rtsogtv">Size of gross tumor volume</label>
+                            <div class="input-group">
+                                <input name="rtsogtv" id="rtsogtv" class="form-control numeric">
+                                <div class="input-group-addon">cc</div>
+                            </div>
                         </div>
                         <div class="col-md-4 col-lg-2 form-group">
-                            <label for="rbrtsitv">Size of Internal Target Volume (cc)</label>
-                            <input name="rbrtsitv" id="rbrtsitv" class="form-control numeric">
+                            <label for="rtsoitv">Size of internal target volume</label>
+                            <div class="input-group">
+                                <input name="rtsoitv" id="rtsoitv" class="form-control numeric">
+                                <div class="input-group-addon">cc</div>
+                            </div>
                         </div>
                         <div class="col-md-4 col-lg-2 form-group">
-                            <label for="rbrtsptv">Size of Planning Target Volume (cc)</label>
-                            <input name="rbrtsptv" id="rbrtsptv" class="form-control numeric">
+                            <label for="rtsoptv">Size of planning target volume</label>
+                            <div class="input-group">
+                                <input name="rtsoptv" id="rtsoptv" class="form-control numeric">
+                                <div class="input-group-addon">cc</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-9 col-md-12 form-group">
+                            <label for="rtrddt-3d">Radiation dose delivery</label>
+                            <br/>
+                            {{ f.inlineRadio("rtrddt", "rtrddt-3d", "crt", "3D-CRT") }}
+                            {{ f.inlineRadio("rtrddt", "rtrddt-imrt", "imrt", "<abbr title=\"Intensity-modulated radiotherapy\">IMRT</abbr>") }}
+                            {{ f.inlineRadio("rtrddt", "rtrddt-vmat", "vmat", "<abbr title=\"Volumetric Arc Therapy\">VMAT</abbr>") }}
+                            {{ f.inlineRadio("rtrddt", "rtrddt-carc", "carc", "conformal arc") }}
+                            {{ f.inlineRadio("rtrddt", "rtrddt-c", "c", "cyberknife") }}
+                            {{ f.inlineRadio("rtrddt", "rtrddt-t", "t", "tomotherapy") }}
+                            {{ f.inlineRadio("rtrddt", "rtrddt-p", "p", "protons based") }}
+                            {{ f.inlineRadio("rtrddt", "rtrddt-o", "o", "other (specify)") }}
+                        </div>
+                        <div class="col-md-3" id="rtrddt-container">
+                            <label for="rtrddto">Specify</label>
+                            <input name="rtrddto" id="rtrddto" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-9 col-md-9 form-group">
+                            <label for="rttmct-n">Tumor motion control</label>
+                            <br/>
+                            {{ f.inlineRadio("rttmct", "rttmct-n", "n", "none") }}
+                            {{ f.inlineRadio("rttmct", "rttmct-s", "s", "4D-simulation and ITV") }}
+                            {{ f.inlineRadio("rttmct", "rttmct-r", "r", "gated radiation") }}
+                            {{ f.inlineRadio("rttmct", "rttmct-b", "b", "breath hold") }}
+                            {{ f.inlineRadio("rttmct", "rttmct-o", "o","other (specify)") }}
+                        </div>
+                        <div class="col-md-3" id="rttmct-container">
+                            <label for="rttmcto">Specify</label>
+                            <input name="rttmcto" id="rttmcto" class="form-control">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 form-group">
-                            <label for="rbrttech-3d">Radiation Dose Delivery Technique</label>
-                            {{ f.inlineRadio("rbrttech", "rbrttech-3d", "3d","3D-CRT") }}
-                            {{ f.inlineRadio("rbrttech", "rbrttech-imrt", "IMRT","IMRT") }}
-                            {{ f.inlineRadio("rbrttech", "rbrttech-c", "c","cyberknife") }}
-                            {{ f.inlineRadio("rbrttech", "rbrttech-t", "t","tomotherapy") }}
-
+                            <label for="rtsbrt-n"><abbr title="Stereotactic Body Radiation Therapy">SBRT</abbr></label>
+                            <br/>
+                            {{ f.inlineRadioNY("rtsbrt") }}
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4 col-lg-3 form-group">
-                            <label for="rbrtrdil">V20 of ipsilateral lung (percentage)</label>
-                            <input name="rbrtrdil" id="rbrtrdil" class="form-control numeric">
+                        <div class="col-md-6 form-group">
+                            <label for="rttmct-n">Patient positioning</label>
+                            <br/>
+                            {{ f.inlineRadio("rtpp", "rtpp-a", "a", "alphacradle") }}
+                            {{ f.inlineRadio("rtpp", "rtpp-s", "s", "stereotactic body frame") }}
+                            {{ f.inlineRadio("rtpp", "rtpp-o", "o","other (specify)") }}
                         </div>
-                        <div class="col-md-4 col-lg-3 form-group">
-                            <label for="rbrtrdtl"> V20 of total lung (percentage)</label>
-                            <input name="rbrtrdtl" id="rbrtrdtl" class="form-control numeric">
+                        <div class="col-md-3" id="rtpp-container">
+                            <label for="rtppo">Specify</label>
+                            <input name="rtppo" id="rtppo" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="rttmct-n">Treatment verification</label>
+                            <br/>
+                            {{ f.inlineRadio("rttv", "rttv-i", "i", "kv images") }}
+                            {{ f.inlineRadio("rttv", "rttv-c", "c", "cone beam CT") }}
+                            {{ f.inlineRadio("rttv", "rttv-o", "o","other (specify)") }}
+                        </div>
+                        <div class="col-md-3" id="rttv-container">
+                            <label for="rttvo">Specify</label>
+                            <input name="rttvo" id="rttvo" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-4">
+                            <label for="rtilp">V20 of ipsilateral lung (percentage)</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rtilp" id="rtilp" class="form-control numeric">
                         </div>
 
-                        <div class="col-md-4 col-lg-3 form-group">
-                            <label for="rbrtrdcw">V30 of chest wall (cc)</label>
-                            <input name="rbrtrdcw" id="rbrtrdcw" class="form-control numeric">
+                        <div class="col-lg-offset-2 col-md-offset-1 col-lg-3 col-sm-4">
+                            <label for="rttlp"> V20 of total lung (percentage)</label>
                         </div>
-                        <div class="col-md-4 col-lg-3 form-group">
-                            <label for="rbrtrdme">Maximum Esophageal Dose</label>
-                            <input name="rbrtrdme" id="rbrtrdme" class="form-control numeric">
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rttlp" id="rttlp" class="form-control numeric" size="4">
                         </div>
-                        <div class="col-md-4 col-lg-3 form-group">
-                            <label for="rbrtrdmd">Maximum Distal Bronchus Dose</label>
-                            <input name="rbrtrdmd" id="rbrtrdmd" class="form-control numeric">
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-4">
+                            <label for="rtcw">V30 of chest wall (cc)</label>
                         </div>
-                        <div class="col-md-4 col-lg-3 form-group">
-                            <label for="rbrtrdmm"> Maximum Mainstem Bronchus Dose</label>
-                            <input name="rbrtrdmm" id="rbrtrdmm" class="form-control numeric">
+                        <div class="col-md-1 col-sm-2 form-group form-group form-group-sm">
+                            <input name="rtcw" id="rtcw" class="form-control numeric" size="4">
                         </div>
-                        <div class="col-md-4 col-lg-3 form-group">
-                            <label for="rbrtrdpt">D95 of PTV (in Gray)</label>
-                            <input name="rbrtrdpt" id="rbrtrdpt" class="form-control numeric">
+                        <div class="col-lg-offset-2 col-md-offset-1 col-lg-3 col-sm-4">
+                            <label for="rtmed">Maximum Esophageal Dose</label>
                         </div>
-                        <div class="col-md-4 col-lg-3 form-group">
-                            <label for="rbrtrdbp"> Brachial plexus max [32 Gy]</label>
-                            <input name="rbrtrdbp" id="rbrtrdbp" class="form-control numeric">
+                        <div class="col-md-1 col-sm-2 form-group form-group form-group-sm">
+                            <input name="rtmed" id="rtmed" class="form-control numeric" size="4">
                         </div>
-                        <div class="col-md-4 col-lg-3 form-group">
-                            <label for="rbrtrdhr">Heart/pericardium receiving 32Gy [15cc] </label>
-                            <input name="rbrtrdhr" id="rbrtrdhr" class="form-control numeric">
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-4">
+                            <label for="rtmdbd">Maximum Distal Bronchus Dose</label>
                         </div>
-                        <div class="col-md-4 col-lg-3 form-group">
-                            <label for="rbrtrdsd">Max skin dose < 32Gy</label>
-                            <input name="rbrtrdsd" id="rbrtrdsd" class="form-control numeric">
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rtmdbd" id="rtmdbd" class="form-control numeric" size="4">
                         </div>
-                        <div class="col-md-4 col-lg-3 form-group">
-                            <label for="rbrtrdis">Ration of Rx isodose vol to PTV < 1.5</label>
-                            <input name="rbrtrdis" id="rbrtrdis" class="form-control numeric">
+                        <div class="col-lg-offset-2 col-md-offset-1 col-lg-3 col-sm-4">
+                            <label for="rtmmbd"> Maximum Mainstem Bronchus Dose</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rtmmbd" id="rtmmbd" class="form-control numeric" size="4">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-4">
+                            <label for="rtptv">D95 of PTV (in Gray)</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rtptv" id="rtptv" class="form-control numeric" size="4">
+                        </div>
+                        <div class="col-lg-offset-2 col-md-offset-1 col-lg-3 col-sm-4">
+                            <label for="rtbpm"> Brachial plexus max [32 Gy]</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rtbpm" id="rtbpm" class="form-control numeric" size="4">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-4">
+                            <label for="rthpr">Heart/pericardium receiving 32Gy [15cc] </label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rthpr" id="rthpr" class="form-control numeric" size="4">
+                        </div>
+                        <div class="col-lg-offset-2 col-md-offset-1 col-lg-3 col-sm-4">
+                            <label for="rtmsd">Max skin dose < 32Gy</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rtmsd" id="rtmsd" class="form-control numeric" size="4">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-4">
+                            <label for="rtrorx">Ration of Rx isodose vol to PTV < 1.5</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rtrorx" id="rtrorx" class="form-control numeric" size="4">
+                        </div>
+                        <div class="col-lg-offset-2 col-md-offset-1 col-lg-3 col-sm-4">
+                            <label for="rtv100">V100 %</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rtv100" id="rtv100" class="form-control numeric" size="4">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-4">
+                            <label for="rtdmax">Dmax %</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rtdmax" id="rtdmax" class="form-control numeric" size="4">
+                        </div>
+                        <div class="col-lg-offset-2 col-md-offset-1 col-lg-3 col-sm-4">
+                            <label for="rtd2cm">D2cm max%</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rtd2cm" id="rtd2cm" class="form-control numeric" size="4">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-4">
+                            <label for="rtribv30">V30 to rib</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rtribv30" id="rtribv30" class="form-control numeric" size="4">
+                        </div>
+                        <div class="col-lg-offset-2 col-md-offset-1 col-lg-3 col-sm-4">
+                            <label for="rtribmax">Highest dose to rib</label>
+                        </div>
+                        <div class="col-md-1 col-sm-2 form-group form-group-sm">
+                            <input name="rtribmax" id="rtribmax" class="form-control numeric" size="4">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 form-group">
+                            <label for="rtedds-n">Was the entire dose delivered to the patient?</label>
+                            <br/>
+                            {{ f.inlineRadioNY("rtedd") }}
+                        </div>
+                        <div class="col-md-3" id="rtedd-container">
+                            <label for="rtedds">Specify</label>
+                            <input name="rtedds" id="rtedds" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="rtcui-n">Were there any unplanned interruptions or incomplete
+                                    fractions?</label>
+                                <br/>
+                                {{ f.inlineRadioNY("rtcui") }}
+                            </div>
+                        </div>
+                        <div class="col-md-4" id="rtcui-container">
+                            <div class="form-group">
+                                <label for="rtcuis">Specify</label>
+                                <input name="rtcuis" id="rtcuis" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="rtse-n">Side effects</label>
+                                <br/>
+                                {{ f.inlineRadio("rtse", "rtse-n", "n", "none") }}
+                                {{ f.inlineRadio("rtse", "rtse-mi", "mi", "minimal") }}
+                                {{ f.inlineRadio("rtse", "rtse-ma", "ma", "marked") }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="rtsec">Comments</label>
+                                <input name="rtsec" id="rtsec" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="small">Check all that apply</label>
+                        </div>
+                        <div class="col-lg-1 col-md-2">
+                            {{ f.checkbox("rtsef", "f", "Fatique") }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ f.checkbox("rtsetc", "tc", "Tightness in chest") }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ f.checkbox("rtsecwp", "cwp", "Chest wall pain") }}
+                        </div>
+                        <div class="col-md-1">
+                            {{ f.checkbox("rtsecgh", "c", "Cough") }}
+                        </div>
+                        <div class="col-lg-2 col-md-3">
+                            {{ f.checkbox("rtsesob", "sob", "Shortness of breath") }}
+                        </div>
+                        <div class="col-lg-1 col-md-2">
+                            {{ f.checkbox("rtsed", "d", "Dyspnea") }}
+                        </div>
+                        <div class="col-md-3">
+                            {{ f.checkbox("rtsedawl", "dawl", "Decreased appetite/weight loss") }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ f.checkbox("rtsenv", "nv", "Nausea/vomiting") }}
+                        </div>
+                        <div class="col-md-1">
+                            {{ f.checkbox("rtseda", "da", "Diarrhea") }}
+                        </div>
+                        <div class="col-md-1">
+                            {{ f.checkbox("rtseo", "o", "Other") }}
+                        </div>
+                        <div class="col-md-5" id="rtseo-container">
+                            <div class="form-group">
+                                <label for="rtseos">Specify</label>
+                                <input name="rtseos" id="rtseos" class="form-control">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1485,8 +1713,42 @@
                     <h2>Chemotherapy Treatment Information</h2>
                     <div class="row">
                         <div class="col-md-4 form-group">
-                            <label for="rbrtchpn">Treating physician name</label>
-                            <input name="rbrtchpn" id="rbrtchpn" class="form-control">
+                            <label for="chmd">Treating physician name</label>
+                            <input name="chmd" id="chmd" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="chfdot">First date of treatment</label>
+                                    {{ f.datepicker("chfdot","past") }}
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="chldot">Last date of treatment</label>
+                                    {{ f.datepicker("chldot","past") }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-5">
+                            <div class="form-group">
+                                <label for="sbahpft-n">Frequency of chemotherapy</label>
+                                <br/>
+                                {{ f.inlineRadio("chf", "chf-d", "d", "daily") }}
+                                {{ f.inlineRadio("chf", "chf-od", "od", "every other day") }}
+                                {{ f.inlineRadio("chf", "chf-w", "w", "weekly") }}
+                                {{ f.inlineRadio("chf", "chf-o", "o", "other") }}
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4">
+                            <div class="form-group" id="chf-container">
+                                <label for="chfs">Specify</label>
+                                <input name="chfs" id="chfs" class="form-control">
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -1510,74 +1772,117 @@
                             <input name="rbrtchlo" id="rbrtchlo" class="form-control">
                         </div>
                     </div>
+
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-lg-6 col-md-12 form-group">
+                            <label for="rbchdt">Describe treatment</label>
+                            <input name="rbchdt" id="rbchdt" class="form-control">
+                        </div>
+                        <div class="col-lg-6 col-md-12 form-group">
+                            <label for="rbchst">Subsequent treatments</label>
+                            <input name="rbchst" id="rbchst" class="form-control">
+                        </div>
+                        <div class="col-lg-6 col-md-12 form-group">
+                            <label for="rbchdr">Drugs used</label>
+                            <input name="rbchdr" id="rbchdr" class="form-control">
+                        </div>
+                        <div class="col-lg-6 col-md-12 form-group">
+                            <label for="rbchnt">Number of rounds</label>
+                            <input name="rbchnt" id="rbchnt" class="form-control numeric">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="rbrtchco">Comments</label>
-                                <textarea name="rbrtchco" id="rbrtchco" class="form-control"></textarea>
+                                <label for="chedd-n">Was the entire dose delivered to the patient?</label>
+                                <br/>
+                                {{ f.inlineRadioNY("chedd") }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="chedds">Specify</label>
+                                <input name="chedds" id="chedds" class="form-control">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="rbrtchem-n">Chemotherapy?</label>
-                                {{ f.inlineRadio("rbrtchem", "rbrtchem-n", "n", "No") }}
-                                {{ f.inlineRadio("rbrtchem", "rbrtchem-y", "y", "Yes") }}
-                                {{ f.inlineRadio("rbrtchem", "rbrtchem-q", "q", "?") }}
-                                {{ f.inlineRadio("rbrtchem", "rbrtchem-r", "r", "Refused") }}
+                                <label for="chc-n">Were there complications associated with treatment?</label>
+                                <br/>
+                                {{ f.inlineRadioNY("chc") }}
                             </div>
                         </div>
-                        <div id="chemo-refusal-container">
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label for="rbrtchrd">Refusal date</label>
-                                    {{ f.datepicker("rbrtchrd","past") }}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="rbrtchrr">Reason</label>
-                                    <input name="rbrtchrr" id="rbrtchrr" class="form-control">
-                                </div>
+                        <div class="col-md-4" id="chc-container">
+                            <div class="form-group">
+                                <label for="chcs">Specify</label>
+                                <input name="chcs" id="chcs" class="form-control">
                             </div>
                         </div>
                     </div>
-
-
                     <div class="row">
-                        <div class="col-md-3 form-group">
-                            <label for="rbrtchsd">If yes, start date</label>
-                            {{ f.datepicker("rbrtchsd","past") }}
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="chse-n">Side effects</label>
+                                <br/>
+                                {{ f.inlineRadio("chse", "chse-n", "n", "none") }}
+                                {{ f.inlineRadio("chse", "chse-mi", "mi", "minimal") }}
+                                {{ f.inlineRadio("chse", "chse-ma", "ma", "marked") }}
+                            </div>
                         </div>
-
-                        <div class="col-md-3 form-group">
-                            <label for="rbrtchhl">Hospital/Office Location</label>
-                            <input name="rbrtchhl" id="rbrtchhl" class="form-control">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="chsec">Comments</label>
+                                <input name="chsec" id="chsec" class="form-control">
+                            </div>
                         </div>
                     </div>
-
                     <div class="row">
-                        <div class="col-md-3 col-lg-2 form-group">
-                            <label for="rbrtchrd">Describe treatment</label>
-                            <input name="rbrtchdt" id="rbrtchrd" class="form-control">
+                        <div class="col-md-12">
+                            <label class="small">Check all that apply</label>
                         </div>
-                        <div class="col-md-3 col-lg-2 form-group">
-                            <label for="rbrtchst">Subsequent treatments</label>
-                            <input name="rbrtchst" id="rbrtchst" class="form-control">
+                        <div class="col-lg-1 col-md-2">
+                            {{ f.checkbox("chsef", "f", "Fatique") }}
                         </div>
-                        <div class="col-md-3 col-lg-2 form-group">
-                            <label for="rbrtchdu">Drugs used</label>
-                            <input name="rbrtchdu" id="rbrtchdu" class="form-control">
+                        <div class="col-md-2">
+                            {{ f.checkbox("chsetc", "tc", "Tightness in chest") }}
                         </div>
-                        <div class="col-md-3 col-lg-2 form-group">
-                            <label for="rbrtchnr">Number of rounds</label>
-                            <input name="rbrtchnr" id="rbrtchnr" class="form-control numeric">
+                        <div class="col-md-2">
+                            {{ f.checkbox("chsecwp", "cwp", "Chest wall pain") }}
+                        </div>
+                        <div class="col-md-1">
+                            {{ f.checkbox("chsecgh", "c", "Cough") }}
+                        </div>
+                        <div class="col-lg-2 col-md-3">
+                            {{ f.checkbox("chsesob", "sob", "Shortness of breath") }}
+                        </div>
+                        <div class="col-lg-1 col-md-2">
+                            {{ f.checkbox("chsed", "d", "Dyspnea") }}
+                        </div>
+                        <div class="col-md-3">
+                            {{ f.checkbox("chsedawl", "dawl", "Decreased appetite/weight loss") }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ f.checkbox("chsenv", "nv", "Nausea/vomiting") }}
+                        </div>
+                        <div class="col-md-1">
+                            {{ f.checkbox("chseda", "da", "Diarrhea") }}
+                        </div>
+                        <div class="col-md-1">
+                            {{ f.checkbox("chseo", "o", "Other") }}
+                        </div>
+                        <div class="col-md-5" id="chseo-container">
+                            <div class="form-group">
+                                <label for="chseos">Specify</label>
+                                <input name="chseos" id="chseos" class="form-control">
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </div>
+            <hr/>
+            {#END Treatement tab#}
 
             {#BEGIN Nodules tab#}
             <div id="nodules" style="padding-top:8px">
@@ -1625,6 +1930,7 @@
                     </div>
                 </div>
             </div>
+            <hr/>
             {#END Nodules tab#}
 
             {# BEGIN Emphysema tab#}
@@ -1632,6 +1938,7 @@
                 <h3>Emphysema/Coronary Calcifications</h3> {# will get hidden with affixed menu#}
                 {% include '_emphysema.jinja2' %}
             </div>
+            <hr/>
             {# END Emphysema tab #}
 
             {# BEGIN Abnormalities tab#}
@@ -1639,6 +1946,7 @@
                 <h3>Other Abnormalities</h3> {# will get hidden with affixed menu#}
                 {% include '_abnormalities.jinja2' %}
             </div>
+            <hr/>
             {#  END Abnormalities tab#}
 
             {# BEGIN Intervention tab#}
@@ -1656,25 +1964,24 @@
                     </div>
                 </div>
 
-
                 <h3>Follow Up
                     <small>select one or more</small>
                 </h3>
                 {% include '_followup.jinja2' %}
 
-                {# END Intervention tab#}
-
-                <hr/>
-                <div class="pull-left">
-                    <input type="hidden" name="samistatus" value=""/>
-                    <button type="submit" class="btn btn-default" id="save-for-later-button">Save for Later</button>
-                    <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
-                </div>
-                <div class="pull-right">
-                    <a id="delete-form" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>Delete</a>
-                </div>
-
             </div>
+            <hr/>
+            {# END Intervention tab#}
+
+            <div class="pull-left">
+                <input type="hidden" name="samistatus" value=""/>
+                <button type="submit" class="btn btn-default" id="save-for-later-button">Save for Later</button>
+                <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
+            </div>
+            <div class="pull-right">
+                <a id="delete-form" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>Delete</a>
+            </div>
+
         </form>
     </div>
 
@@ -1697,8 +2004,15 @@
                         rbcsx8s: {validators: {notEmpty: {message: 'Other clinical TNM status is required'}}},
                         rbcsxs8m: {validators: {notEmpty: {message: 'Other clinical TNM status is required'}}},
                         rbcsbos: {validators: {notEmpty: {message: 'Clinical staging basis is required.'}}},
+                        rbmdp: {validators: {phone: {message: 'Referring physician\'s phone is invalid', country: 'US'}}},
+                        rbmdf: {validators: {phone: {message: 'Referring physician\'s fax is invalid', country: 'US'}}},
+                        rbsumdp: {validators: {phone: {message: 'Treating physician\'s phone is invalid', country: 'US'}}},
+                        rbsumdf: {validators: {phone: {message: 'Treating physician\'s fax is invalid', country: 'US'}}},
                         rblocs: {validators: {notEmpty: {message: 'Lesion site is required.'}}},
                         rbtos: {validators: {notEmpty: {message: 'Treatment option is required.'}}},
+                        //surgery
+                        rbmemdp: {validators: {phone: {message: 'Physician\'s phone is invalid', country: 'US'}}},
+                        rbmemdf: {validators: {phone: {message: 'Physician\'s fax is invalid', country: 'US'}}},
                         rbsurd: {validators: {notEmpty: {message: 'Resection no/refusal date is required.'}}},
                         rbsurr: {validators: {notEmpty: {message: 'Resection no/refusal reason is required.'}}},
                         rbtosos: {validators: {notEmpty: {message: 'Type of surgery is required.'}}},
@@ -1795,13 +2109,24 @@
             $("[name=rbpsx8]").conditionallyEnable({enable: "#rbpsx8-container"});
 
             //Radiation section
-            $("[name=rbrtfreq]").conditionallyEnable({sourceValues: "o", enable: "#radiation-frequency-container"});
-            $("#rbrtls").conditionallyEnable({sourceValues: "o", enable: "#radiation-lesion-container"});
+            $("[name=rtfor]").conditionallyEnable({sourceValues: "o", enable: "#rtfor-container"});
+            $("#rtloc").conditionallyEnable({sourceValues: "o", enable: "#rtloc-container"});
+            $("[name=rtrddt]").conditionallyEnable({sourceValues: "o", enable: "#rtrddt-container"});
+            $("[name=rttmct]").conditionallyEnable({sourceValues: "o", enable: "#rttmct-container"});
+            $("[name=rtpp]").conditionallyEnable({sourceValues: "o", enable: "#rtpp-container"});
+            $("[name=rttv]").conditionallyEnable({sourceValues: "o", enable: "#rttv-container"});
+            $("[name=rtedd]").conditionallyEnable({enable: "#rtedd-container"});
+            $("[name=rtcui]").conditionallyEnable({enable: "#rtcui-container"});
+            $("#rtseo").conditionallyEnable({sourceValues: "o", enable: "#rtseo-container"});
 
             //Chemotherapy section
             $("#rbrtchls").conditionallyEnable({sourceValues: "o", enable: "#chemo-lesion-container"});
-            $("[name=chemo]").conditionallyEnable({sourceValues: "r", enable: "#chemo-refusal-container"});
+            $("[name=chf]").conditionallyEnable({sourceValues: "o", enable: "#chf-container"});
+            $("[name=chc]").conditionallyEnable({enable: "#chc-container"});
+            $("#chseo").conditionallyEnable({sourceValues: "o", enable: "#chseo-container"});
 
+
+            //treatment type selection
             $("#rbto").on('change', function () {
                 const val = $(this).val();
                 $("#surgery").toggle(val === 's');

@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.01.08" name="version"/>
+  <meta content="2019.01.25" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
   </title>
@@ -28,7 +28,7 @@
   </script>
   <script src="../www/lib/moment.js">
   </script>
-  <script src="../www/lib/formvalidation/dist/js/FormValidation.min.js">
+  <script src="../www/lib/formvalidation/dist/js/FormValidation.full.min.js">
   </script>
   <script src="../www/lib/formvalidation/dist/js/plugins/Wizard.min.js">
   </script>
@@ -125,7 +125,7 @@
          </a>
         </li>
         <li>
-         <a class="navigation" data-method="get" data-samireporttype="enrollment" data-samiroute="report" href="table.html">
+         <a class="navigation" data-method="get" data-samireporttype="enrollment" data-samiroute="report" data-start-date="" href="table.html">
           Enrollment
          </a>
         </li>
@@ -138,7 +138,55 @@
   <div class="container-fluid" style="max-width:1550px">
    <h1>
     PAGE NAME
+    <small>
+     CRITERIA
+    </small>
    </h1>
+   <form action="table.html" class="validated" id="main-form" method="get">
+    <input name="samiroute" type="hidden" value="report"/>
+    <input name="samireporttype" type="hidden" value="@@REPORTTYPE@@"/>
+    <div class="row">
+     <div class="col-md-2 col-sm-3 form-group">
+      <label for="start-date">
+       Start
+      </label>
+      <div class="input-group datepicker">
+       <input aria-describedby="start-date-addon" class="form-control" data-restriction="past" id="start-date" name="start-date"/>
+       <div class="input-group-addon">
+        <div class="input-group-text" id="start-date-addon">
+         <i aria-hidden="true" class="fa fa-calendar">
+         </i>
+        </div>
+       </div>
+      </div>
+      <small class="form-text text-muted">
+       MM/DD/YYYY
+      </small>
+     </div>
+     <div class="col-md-2 col-sm-3 form-group">
+      <label for="end-date">
+       End
+      </label>
+      <div class="input-group datepicker">
+       <input aria-describedby="end-date-addon" class="form-control" data-restriction="past" id="end-date" name="end-date"/>
+       <div class="input-group-addon">
+        <div class="input-group-text" id="end-date-addon">
+         <i aria-hidden="true" class="fa fa-calendar">
+         </i>
+        </div>
+       </div>
+      </div>
+      <small class="form-text text-muted">
+       MM/DD/YYYY
+      </small>
+     </div>
+     <div class="col-md-2 col-sm-3 col-xs-2" style="height:45px;">
+      <button class="btn btn-primary" id="submit-button" style="top: 24px;position: absolute;" type="submit">
+       Submit
+      </button>
+     </div>
+    </div>
+   </form>
    <hr/>
    <div class="table-responsive">
     <table class="table table-striped">
@@ -180,7 +228,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.01.08
+     2019.01.25
     </span>
    </div>
   </footer>
@@ -234,7 +282,13 @@
 
         $.each($("input[type=checkbox]:checked"), function (i, el) {
             $(el).trigger("change");
-        })
+        });
+
+        const reportsStartDate = VAPALS.toMoment(VAPALS.todaysDate()).subtract(30, "days").format(VAPALS.DATE_FORMAT);
+        const reportsEndDate = VAPALS.toMoment(VAPALS.todaysDate()).format(VAPALS.DATE_FORMAT);
+
+        $("a[data-samiroute=report]").attr("data-start-date", reportsStartDate).attr("data-end-date", reportsEndDate);
+
     })
   </script>
  </body>

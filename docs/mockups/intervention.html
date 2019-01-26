@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.01.08" name="version"/>
+  <meta content="2019.01.25" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    Intervention and Surgical Treatment Form
@@ -40,7 +40,7 @@
   </script>
   <script src="../www/lib/moment.js">
   </script>
-  <script src="../www/lib/formvalidation/dist/js/FormValidation.min.js">
+  <script src="../www/lib/formvalidation/dist/js/FormValidation.full.min.js">
   </script>
   <script src="../www/lib/formvalidation/dist/js/plugins/Wizard.min.js">
   </script>
@@ -137,7 +137,7 @@
          </a>
         </li>
         <li>
-         <a class="navigation" data-method="get" data-samireporttype="enrollment" data-samiroute="report" href="table.html">
+         <a class="navigation" data-method="get" data-samireporttype="enrollment" data-samiroute="report" data-start-date="" href="table.html">
           Enrollment
          </a>
         </li>
@@ -463,9 +463,13 @@
      <div class="row">
       <div class="col-md-6">
        <label for="rbcsb">
-        Clinical staging based on:
+        Clinical staging based on
        </label>
        <div class="form-group form-inline">
+        <label class="radio-inline">
+         <input id="rbcsb-c" name="rbcsb" type="radio" value="c"/>
+         only CT
+        </label>
         <label class="radio-inline">
          <input id="rbcsb-p" name="rbcsb" type="radio" value="p"/>
          only PET
@@ -500,13 +504,13 @@
        <label for="rbmdp">
         Referring physician's phone
        </label>
-       <input class="form-control" data-fv-phone="true" data-fv-phone-country="US" id="simdp" name="rbmdp" type="text"/>
+       <input class="form-control" id="rbmdp" name="rbmdp" type="text"/>
       </div>
       <div class="form-group col-sm-6 col-md-6 col-lg-3">
        <label for="rbmdf">
         Referring physician's fax
        </label>
-       <input class="form-control" data-fv-phone="true" data-fv-phone-country="US" id="rbmdf" name="rbmdf" type="text"/>
+       <input class="form-control" id="rbmdf" name="rbmdf" type="text"/>
       </div>
      </div>
      <div class="row">
@@ -520,13 +524,13 @@
        <label for="rbsumdp">
         Treating physician's phone
        </label>
-       <input class="form-control" data-fv-phone="true" data-fv-phone-country="US" id="rbsumdp" name="rbsumdp" type="text"/>
+       <input class="form-control" id="rbsumdp" name="rbsumdp" type="text"/>
       </div>
       <div class="form-group col-sm-6 col-md-6 col-lg-3">
        <label for="rbsumdf">
         Treating physician's fax
        </label>
-       <input class="form-control" data-fv-phone="true" data-fv-phone-country="US" id="rbsumdf" name="rbsumdf" type="text"/>
+       <input class="form-control" id="rbsumdf" name="rbsumdf" type="text"/>
       </div>
      </div>
      <div class="row">
@@ -677,16 +681,14 @@
           Have you had a pulmonary function test?
          </label>
          <br/>
-         <div class="form-group">
-          <label class="radio-inline" for="sbahpft-n">
-           <input id="sbahpft-n" name="sbahpft" type="radio" value="n"/>
-           No
-          </label>
-          <label class="radio-inline" for="sbahpft-y">
-           <input id="sbahpft-y" name="sbahpft" type="radio" value="y"/>
-           Yes
-          </label>
-         </div>
+         <label class="radio-inline" for="sbahpft-n">
+          <input id="sbahpft-n" name="sbahpft" type="radio" value="n"/>
+          No
+         </label>
+         <label class="radio-inline" for="sbahpft-y">
+          <input id="sbahpft-y" name="sbahpft" type="radio" value="y"/>
+          Yes
+         </label>
         </div>
        </div>
        <div class="col-sm-12 col-md-8 form-inline" id="sbahpft-container">
@@ -694,19 +696,19 @@
          <label for="sbfev1">
           FEV1 (L/s)
          </label>
-         <input class="form-control input-sm" id="sbfev1" name="sbfev1" size="4" type="text"/>
+         <input class="form-control input-sm numeric" id="sbfev1" name="sbfev1" size="4" type="text"/>
         </div>
         <div class="form-group">
          <label for="sbfvc">
           FVC (L)
          </label>
-         <input class="form-control input-sm" id="sbfvc" name="sbfvc" size="4" type="text"/>
+         <input class="form-control input-sm numeric" id="sbfvc" name="sbfvc" size="4" type="text"/>
         </div>
         <div class="form-group">
          <label for="sbcop">
           Diffusion capacity (mL/min/mm Hg)
          </label>
-         <input class="form-control input-sm" id="sbcop" name="sbcop" size="4" type="text"/>
+         <input class="form-control input-sm numeric" id="sbcop" name="sbcop" size="4" type="text"/>
         </div>
         <div class="alert alert-info" id="ffr-message" style="display: none; margin-top:5px;">
          FEV1/FVC (%) is
@@ -720,7 +722,7 @@
          <label for="sbcop">
           Carbon monoxide (ppm)
          </label>
-         <input class="form-control input-sm" id="sbcop" name="sbcop" size="3"/>
+         <input class="form-control input-sm numeric" id="sbcop" name="sbcop" size="3"/>
         </div>
        </div>
       </div>
@@ -805,13 +807,13 @@
           <label for="rbmemdp">
            Physician's phone
           </label>
-          <input class="form-control" data-fv-phone="true" data-fv-phone-country="US" id="rbmemdp" name="rbmemdp"/>
+          <input class="form-control" id="rbmemdp" name="rbmemdp"/>
          </div>
          <div class="form-group col-md-6">
           <label for="rbmemdf">
            Physician's fax
           </label>
-          <input class="form-control" data-fv-phone="true" data-fv-phone-country="US" id="rbmemdf" name="rbmemdf"/>
+          <input class="form-control" id="rbmemdf" name="rbmemdf"/>
          </div>
         </div>
        </div>
@@ -3161,21 +3163,21 @@
       </h2>
       <div class="row">
        <div class="col-md-4 form-group">
-        <label for="rbrtonco">
-         Radiation Oncologist Name
+        <label for="rtron">
+         Radiation oncologist name
         </label>
-        <input class="form-control" id="rbrtonco" name="rbrtonco"/>
+        <input class="form-control" id="rtron" name="rtron"/>
        </div>
       </div>
       <div class="row">
        <div class="col-md-2 form-group">
-        <label for="rbrtdoft">
-         First Date of Treatment
+        <label for="rtfdot">
+         First date of treatment
         </label>
         <div class="input-group datepicker">
-         <input aria-describedby="rbrtdoft-addon" class="form-control" data-restriction="past" id="rbrtdoft" name="rbrtdoft"/>
+         <input aria-describedby="rtfdot-addon" class="form-control" data-restriction="past" id="rtfdot" name="rtfdot"/>
          <div class="input-group-addon">
-          <div class="input-group-text" id="rbrtdoft-addon">
+          <div class="input-group-text" id="rtfdot-addon">
            <i aria-hidden="true" class="fa fa-calendar">
            </i>
           </div>
@@ -3186,13 +3188,13 @@
         </small>
        </div>
        <div class="col-md-2 form-group">
-        <label for="rbrtdolt">
-         Last Date of Treatment
+        <label for="rtldot">
+         Last date of treatment
         </label>
         <div class="input-group datepicker">
-         <input aria-describedby="rbrtdolt-addon" class="form-control" data-restriction="past" id="rbrtdolt" name="rbrtdolt"/>
+         <input aria-describedby="rtldot-addon" class="form-control" data-restriction="past" id="rtldot" name="rtldot"/>
          <div class="input-group-addon">
-          <div class="input-group-text" id="rbrtdolt-addon">
+          <div class="input-group-text" id="rtldot-addon">
            <i aria-hidden="true" class="fa fa-calendar">
            </i>
           </div>
@@ -3206,59 +3208,69 @@
       <div class="row">
        <div class="col-md-3 col-lg-2 form-group">
         <label for="rbrttdor">
-         Total Dose of Radiation
+         Total dose of radiation
         </label>
-        <input class="form-control numeric" id="rbrttdor" name="rbrttdor"/>
+        <div class="input-group">
+         <input class="form-control numeric" id="rbrttdor" name="rbrttdor"/>
+         <div class="input-group-addon">
+          cGy
+         </div>
+        </div>
        </div>
        <div class="col-md-3 col-lg-2 form-group">
         <label for="rbrtdpfr">
-         Dose per Fraction of Radiation
+         Dose per fraction of radiation
         </label>
-        <input class="form-control numeric" id="rbrtdpfr" name="rbrtdpfr"/>
+        <div class="input-group">
+         <input class="form-control numeric" id="rbrtdpfr" name="rbrtdpfr"/>
+         <div class="input-group-addon">
+          cGy
+         </div>
+        </div>
        </div>
        <div class="col-md-3 col-lg-2 form-group">
         <label for="rbrtnof">
-         Number of Fractions
+         Number of fractions
         </label>
         <input class="form-control numeric" id="rbrtnof" name="rbrtnof"/>
        </div>
       </div>
       <div class="row">
        <div class="col-md-6 col-lg-4 form-group">
-        <label for="rbrtfreq-d">
-         Frequency of Radiation
+        <label for="rtfor-d">
+         Frequency of radiation
         </label>
         <br/>
-        <label class="radio-inline" for="rbrtfreq-d">
-         <input id="rbrtfreq-d" name="rbrtfreq" type="radio" value="d"/>
+        <label class="radio-inline" for="rtfor-d">
+         <input id="rtfor-d" name="rtfor" type="radio" value="d"/>
          daily
         </label>
-        <label class="radio-inline" for="rbrtfreq-e">
-         <input id="rbrtfreq-e" name="rbrtfreq" type="radio" value="e"/>
+        <label class="radio-inline" for="rtfor-od">
+         <input id="rtfor-od" name="rtfor" type="radio" value="od"/>
          every other day
         </label>
-        <label class="radio-inline" for="rbrtfreq-w">
-         <input id="rbrtfreq-w" name="rbrtfreq" type="radio" value="w"/>
+        <label class="radio-inline" for="rtfor-w">
+         <input id="rtfor-w" name="rtfor" type="radio" value="w"/>
          weekly
         </label>
-        <label class="radio-inline" for="rbrtfreq-o">
-         <input id="rbrtfreq-o" name="rbrtfreq" type="radio" value="o"/>
+        <label class="radio-inline" for="rtfor-o">
+         <input id="rtfor-o" name="rtfor" type="radio" value="o"/>
          other
         </label>
        </div>
-       <div class="col-md-4 form-group" id="radiation-frequency-container">
-        <label for="rbrtfrsp">
+       <div class="col-md-4 form-group" id="rtfor-container">
+        <label for="rtfors">
          Specify
         </label>
-        <input class="form-control" id="rbrtfrsp" name="rbrtfrsp"/>
+        <input class="form-control" id="rtfors" name="rtfors"/>
        </div>
       </div>
       <div class="row">
        <div class="col-md-3 form-group">
-        <label for="rbrtls">
-         Lesion Site
+        <label for="rtloc">
+         Lesion site
         </label>
-        <select class="form-control" id="rbrtls" name="rbrtls">
+        <select class="form-control" id="rtloc" name="rtloc">
          <option value="-">
           -
          </option>
@@ -3291,122 +3303,528 @@
          </option>
         </select>
        </div>
-       <div class="col-md-6 col-lg-3 form-group" id="radiation-lesion-container">
-        <label for="rbrtlssp">
+       <div class="col-md-6 col-lg-3 form-group" id="rtloc-container">
+        <label for="rtlocs">
          Specify
         </label>
-        <input class="form-control" id="rbrtlssp" name="rbrtlssp"/>
+        <input class="form-control" id="rtlocs" name="rtlocs"/>
        </div>
       </div>
       <div class="row">
-       <div class="col-md-4 col-lg-2 form-group" for="rbrtsgtv">
-        <label for="rbrtsgtv">
-         Size of Gross Tumor Volume (cc)
+       <div class="col-md-4 col-lg-2 form-group">
+        <label for="rtsogtv">
+         Size of gross tumor volume
         </label>
-        <input class="form-control numeric" id="rbrtsgtv" name="rbrtsgtv"/>
+        <div class="input-group">
+         <input class="form-control numeric" id="rtsogtv" name="rtsogtv"/>
+         <div class="input-group-addon">
+          cc
+         </div>
+        </div>
        </div>
        <div class="col-md-4 col-lg-2 form-group">
-        <label for="rbrtsitv">
-         Size of Internal Target Volume (cc)
+        <label for="rtsoitv">
+         Size of internal target volume
         </label>
-        <input class="form-control numeric" id="rbrtsitv" name="rbrtsitv"/>
+        <div class="input-group">
+         <input class="form-control numeric" id="rtsoitv" name="rtsoitv"/>
+         <div class="input-group-addon">
+          cc
+         </div>
+        </div>
        </div>
        <div class="col-md-4 col-lg-2 form-group">
-        <label for="rbrtsptv">
-         Size of Planning Target Volume (cc)
+        <label for="rtsoptv">
+         Size of planning target volume
         </label>
-        <input class="form-control numeric" id="rbrtsptv" name="rbrtsptv"/>
+        <div class="input-group">
+         <input class="form-control numeric" id="rtsoptv" name="rtsoptv"/>
+         <div class="input-group-addon">
+          cc
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-lg-9 col-md-12 form-group">
+        <label for="rtrddt-3d">
+         Radiation dose delivery
+        </label>
+        <br/>
+        <label class="radio-inline" for="rtrddt-3d">
+         <input id="rtrddt-3d" name="rtrddt" type="radio" value="crt"/>
+         3D-CRT
+        </label>
+        <label class="radio-inline" for="rtrddt-imrt">
+         <input id="rtrddt-imrt" name="rtrddt" type="radio" value="imrt"/>
+         <abbr title="Intensity-modulated radiotherapy">
+          IMRT
+         </abbr>
+        </label>
+        <label class="radio-inline" for="rtrddt-vmat">
+         <input id="rtrddt-vmat" name="rtrddt" type="radio" value="vmat"/>
+         <abbr title="Volumetric Arc Therapy">
+          VMAT
+         </abbr>
+        </label>
+        <label class="radio-inline" for="rtrddt-carc">
+         <input id="rtrddt-carc" name="rtrddt" type="radio" value="carc"/>
+         conformal arc
+        </label>
+        <label class="radio-inline" for="rtrddt-c">
+         <input id="rtrddt-c" name="rtrddt" type="radio" value="c"/>
+         cyberknife
+        </label>
+        <label class="radio-inline" for="rtrddt-t">
+         <input id="rtrddt-t" name="rtrddt" type="radio" value="t"/>
+         tomotherapy
+        </label>
+        <label class="radio-inline" for="rtrddt-p">
+         <input id="rtrddt-p" name="rtrddt" type="radio" value="p"/>
+         protons based
+        </label>
+        <label class="radio-inline" for="rtrddt-o">
+         <input id="rtrddt-o" name="rtrddt" type="radio" value="o"/>
+         other (specify)
+        </label>
+       </div>
+       <div class="col-md-3" id="rtrddt-container">
+        <label for="rtrddto">
+         Specify
+        </label>
+        <input class="form-control" id="rtrddto" name="rtrddto"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-lg-9 col-md-9 form-group">
+        <label for="rttmct-n">
+         Tumor motion control
+        </label>
+        <br/>
+        <label class="radio-inline" for="rttmct-n">
+         <input id="rttmct-n" name="rttmct" type="radio" value="n"/>
+         none
+        </label>
+        <label class="radio-inline" for="rttmct-s">
+         <input id="rttmct-s" name="rttmct" type="radio" value="s"/>
+         4D-simulation and ITV
+        </label>
+        <label class="radio-inline" for="rttmct-r">
+         <input id="rttmct-r" name="rttmct" type="radio" value="r"/>
+         gated radiation
+        </label>
+        <label class="radio-inline" for="rttmct-b">
+         <input id="rttmct-b" name="rttmct" type="radio" value="b"/>
+         breath hold
+        </label>
+        <label class="radio-inline" for="rttmct-o">
+         <input id="rttmct-o" name="rttmct" type="radio" value="o"/>
+         other (specify)
+        </label>
+       </div>
+       <div class="col-md-3" id="rttmct-container">
+        <label for="rttmcto">
+         Specify
+        </label>
+        <input class="form-control" id="rttmcto" name="rttmcto"/>
        </div>
       </div>
       <div class="row">
        <div class="col-md-12 form-group">
-        <label for="rbrttech-3d">
-         Radiation Dose Delivery Technique
+        <label for="rtsbrt-n">
+         <abbr title="Stereotactic Body Radiation Therapy">
+          SBRT
+         </abbr>
         </label>
-        <label class="radio-inline" for="rbrttech-3d">
-         <input id="rbrttech-3d" name="rbrttech" type="radio" value="3d"/>
-         3D-CRT
+        <br/>
+        <label class="radio-inline" for="rtsbrt-n">
+         <input id="rtsbrt-n" name="rtsbrt" type="radio" value="n"/>
+         No
         </label>
-        <label class="radio-inline" for="rbrttech-imrt">
-         <input id="rbrttech-imrt" name="rbrttech" type="radio" value="IMRT"/>
-         IMRT
-        </label>
-        <label class="radio-inline" for="rbrttech-c">
-         <input id="rbrttech-c" name="rbrttech" type="radio" value="c"/>
-         cyberknife
-        </label>
-        <label class="radio-inline" for="rbrttech-t">
-         <input id="rbrttech-t" name="rbrttech" type="radio" value="t"/>
-         tomotherapy
+        <label class="radio-inline" for="rtsbrt-y">
+         <input id="rtsbrt-y" name="rtsbrt" type="radio" value="y"/>
+         Yes
         </label>
        </div>
       </div>
       <div class="row">
-       <div class="col-md-4 col-lg-3 form-group">
-        <label for="rbrtrdil">
+       <div class="col-md-6 form-group">
+        <label for="rttmct-n">
+         Patient positioning
+        </label>
+        <br/>
+        <label class="radio-inline" for="rtpp-a">
+         <input id="rtpp-a" name="rtpp" type="radio" value="a"/>
+         alphacradle
+        </label>
+        <label class="radio-inline" for="rtpp-s">
+         <input id="rtpp-s" name="rtpp" type="radio" value="s"/>
+         stereotactic body frame
+        </label>
+        <label class="radio-inline" for="rtpp-o">
+         <input id="rtpp-o" name="rtpp" type="radio" value="o"/>
+         other (specify)
+        </label>
+       </div>
+       <div class="col-md-3" id="rtpp-container">
+        <label for="rtppo">
+         Specify
+        </label>
+        <input class="form-control" id="rtppo" name="rtppo"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-md-6 form-group">
+        <label for="rttmct-n">
+         Treatment verification
+        </label>
+        <br/>
+        <label class="radio-inline" for="rttv-i">
+         <input id="rttv-i" name="rttv" type="radio" value="i"/>
+         kv images
+        </label>
+        <label class="radio-inline" for="rttv-c">
+         <input id="rttv-c" name="rttv" type="radio" value="c"/>
+         cone beam CT
+        </label>
+        <label class="radio-inline" for="rttv-o">
+         <input id="rttv-o" name="rttv" type="radio" value="o"/>
+         other (specify)
+        </label>
+       </div>
+       <div class="col-md-3" id="rttv-container">
+        <label for="rttvo">
+         Specify
+        </label>
+        <input class="form-control" id="rttvo" name="rttvo"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-lg-3 col-sm-4">
+        <label for="rtilp">
          V20 of ipsilateral lung (percentage)
         </label>
-        <input class="form-control numeric" id="rbrtrdil" name="rbrtrdil"/>
        </div>
-       <div class="col-md-4 col-lg-3 form-group">
-        <label for="rbrtrdtl">
+       <div class="col-md-1 col-sm-2 form-group form-group-sm">
+        <input class="form-control numeric" id="rtilp" name="rtilp"/>
+       </div>
+       <div class="col-lg-offset-2 col-md-offset-1 col-lg-3 col-sm-4">
+        <label for="rttlp">
          V20 of total lung (percentage)
         </label>
-        <input class="form-control numeric" id="rbrtrdtl" name="rbrtrdtl"/>
        </div>
-       <div class="col-md-4 col-lg-3 form-group">
-        <label for="rbrtrdcw">
+       <div class="col-md-1 col-sm-2 form-group form-group-sm">
+        <input class="form-control numeric" id="rttlp" name="rttlp" size="4"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-lg-3 col-sm-4">
+        <label for="rtcw">
          V30 of chest wall (cc)
         </label>
-        <input class="form-control numeric" id="rbrtrdcw" name="rbrtrdcw"/>
        </div>
-       <div class="col-md-4 col-lg-3 form-group">
-        <label for="rbrtrdme">
+       <div class="col-md-1 col-sm-2 form-group form-group form-group-sm">
+        <input class="form-control numeric" id="rtcw" name="rtcw" size="4"/>
+       </div>
+       <div class="col-lg-offset-2 col-md-offset-1 col-lg-3 col-sm-4">
+        <label for="rtmed">
          Maximum Esophageal Dose
         </label>
-        <input class="form-control numeric" id="rbrtrdme" name="rbrtrdme"/>
        </div>
-       <div class="col-md-4 col-lg-3 form-group">
-        <label for="rbrtrdmd">
+       <div class="col-md-1 col-sm-2 form-group form-group form-group-sm">
+        <input class="form-control numeric" id="rtmed" name="rtmed" size="4"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-lg-3 col-sm-4">
+        <label for="rtmdbd">
          Maximum Distal Bronchus Dose
         </label>
-        <input class="form-control numeric" id="rbrtrdmd" name="rbrtrdmd"/>
        </div>
-       <div class="col-md-4 col-lg-3 form-group">
-        <label for="rbrtrdmm">
+       <div class="col-md-1 col-sm-2 form-group form-group-sm">
+        <input class="form-control numeric" id="rtmdbd" name="rtmdbd" size="4"/>
+       </div>
+       <div class="col-lg-offset-2 col-md-offset-1 col-lg-3 col-sm-4">
+        <label for="rtmmbd">
          Maximum Mainstem Bronchus Dose
         </label>
-        <input class="form-control numeric" id="rbrtrdmm" name="rbrtrdmm"/>
        </div>
-       <div class="col-md-4 col-lg-3 form-group">
-        <label for="rbrtrdpt">
+       <div class="col-md-1 col-sm-2 form-group form-group-sm">
+        <input class="form-control numeric" id="rtmmbd" name="rtmmbd" size="4"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-lg-3 col-sm-4">
+        <label for="rtptv">
          D95 of PTV (in Gray)
         </label>
-        <input class="form-control numeric" id="rbrtrdpt" name="rbrtrdpt"/>
        </div>
-       <div class="col-md-4 col-lg-3 form-group">
-        <label for="rbrtrdbp">
+       <div class="col-md-1 col-sm-2 form-group form-group-sm">
+        <input class="form-control numeric" id="rtptv" name="rtptv" size="4"/>
+       </div>
+       <div class="col-lg-offset-2 col-md-offset-1 col-lg-3 col-sm-4">
+        <label for="rtbpm">
          Brachial plexus max [32 Gy]
         </label>
-        <input class="form-control numeric" id="rbrtrdbp" name="rbrtrdbp"/>
        </div>
-       <div class="col-md-4 col-lg-3 form-group">
-        <label for="rbrtrdhr">
+       <div class="col-md-1 col-sm-2 form-group form-group-sm">
+        <input class="form-control numeric" id="rtbpm" name="rtbpm" size="4"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-lg-3 col-sm-4">
+        <label for="rthpr">
          Heart/pericardium receiving 32Gy [15cc]
         </label>
-        <input class="form-control numeric" id="rbrtrdhr" name="rbrtrdhr"/>
        </div>
-       <div class="col-md-4 col-lg-3 form-group">
-        <label for="rbrtrdsd">
+       <div class="col-md-1 col-sm-2 form-group form-group-sm">
+        <input class="form-control numeric" id="rthpr" name="rthpr" size="4"/>
+       </div>
+       <div class="col-lg-offset-2 col-md-offset-1 col-lg-3 col-sm-4">
+        <label for="rtmsd">
          Max skin dose &lt; 32Gy
         </label>
-        <input class="form-control numeric" id="rbrtrdsd" name="rbrtrdsd"/>
        </div>
-       <div class="col-md-4 col-lg-3 form-group">
-        <label for="rbrtrdis">
+       <div class="col-md-1 col-sm-2 form-group form-group-sm">
+        <input class="form-control numeric" id="rtmsd" name="rtmsd" size="4"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-lg-3 col-sm-4">
+        <label for="rtrorx">
          Ration of Rx isodose vol to PTV &lt; 1.5
         </label>
-        <input class="form-control numeric" id="rbrtrdis" name="rbrtrdis"/>
+       </div>
+       <div class="col-md-1 col-sm-2 form-group form-group-sm">
+        <input class="form-control numeric" id="rtrorx" name="rtrorx" size="4"/>
+       </div>
+       <div class="col-lg-offset-2 col-md-offset-1 col-lg-3 col-sm-4">
+        <label for="rtv100">
+         V100 %
+        </label>
+       </div>
+       <div class="col-md-1 col-sm-2 form-group form-group-sm">
+        <input class="form-control numeric" id="rtv100" name="rtv100" size="4"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-lg-3 col-sm-4">
+        <label for="rtdmax">
+         Dmax %
+        </label>
+       </div>
+       <div class="col-md-1 col-sm-2 form-group form-group-sm">
+        <input class="form-control numeric" id="rtdmax" name="rtdmax" size="4"/>
+       </div>
+       <div class="col-lg-offset-2 col-md-offset-1 col-lg-3 col-sm-4">
+        <label for="rtd2cm">
+         D2cm max%
+        </label>
+       </div>
+       <div class="col-md-1 col-sm-2 form-group form-group-sm">
+        <input class="form-control numeric" id="rtd2cm" name="rtd2cm" size="4"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-lg-3 col-sm-4">
+        <label for="rtribv30">
+         V30 to rib
+        </label>
+       </div>
+       <div class="col-md-1 col-sm-2 form-group form-group-sm">
+        <input class="form-control numeric" id="rtribv30" name="rtribv30" size="4"/>
+       </div>
+       <div class="col-lg-offset-2 col-md-offset-1 col-lg-3 col-sm-4">
+        <label for="rtribmax">
+         Highest dose to rib
+        </label>
+       </div>
+       <div class="col-md-1 col-sm-2 form-group form-group-sm">
+        <input class="form-control numeric" id="rtribmax" name="rtribmax" size="4"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-lg-3 col-md-4 form-group">
+        <label for="rtedds-n">
+         Was the entire dose delivered to the patient?
+        </label>
+        <br/>
+        <label class="radio-inline" for="rtedd-n">
+         <input id="rtedd-n" name="rtedd" type="radio" value="n"/>
+         No
+        </label>
+        <label class="radio-inline" for="rtedd-y">
+         <input id="rtedd-y" name="rtedd" type="radio" value="y"/>
+         Yes
+        </label>
+       </div>
+       <div class="col-md-3" id="rtedd-container">
+        <label for="rtedds">
+         Specify
+        </label>
+        <input class="form-control" id="rtedds" name="rtedds"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-md-4">
+        <div class="form-group">
+         <label for="rtcui-n">
+          Were there any unplanned interruptions or incomplete
+                                    fractions?
+         </label>
+         <br/>
+         <label class="radio-inline" for="rtcui-n">
+          <input id="rtcui-n" name="rtcui" type="radio" value="n"/>
+          No
+         </label>
+         <label class="radio-inline" for="rtcui-y">
+          <input id="rtcui-y" name="rtcui" type="radio" value="y"/>
+          Yes
+         </label>
+        </div>
+       </div>
+       <div class="col-md-4" id="rtcui-container">
+        <div class="form-group">
+         <label for="rtcuis">
+          Specify
+         </label>
+         <input class="form-control" id="rtcuis" name="rtcuis"/>
+        </div>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-md-4">
+        <div class="form-group">
+         <label for="rtse-n">
+          Side effects
+         </label>
+         <br/>
+         <label class="radio-inline" for="rtse-n">
+          <input id="rtse-n" name="rtse" type="radio" value="n"/>
+          none
+         </label>
+         <label class="radio-inline" for="rtse-mi">
+          <input id="rtse-mi" name="rtse" type="radio" value="mi"/>
+          minimal
+         </label>
+         <label class="radio-inline" for="rtse-ma">
+          <input id="rtse-ma" name="rtse" type="radio" value="ma"/>
+          marked
+         </label>
+        </div>
+       </div>
+       <div class="col-md-4">
+        <div class="form-group">
+         <label for="rtsec">
+          Comments
+         </label>
+         <input class="form-control" id="rtsec" name="rtsec"/>
+        </div>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-md-12">
+        <label class="small">
+         Check all that apply
+        </label>
+       </div>
+       <div class="col-lg-1 col-md-2">
+        <div class="checkbox">
+         <label>
+          <input name="rtsef" type="hidden" value=""/>
+          <input id="rtsef" name="rtsef" type="checkbox" value="f"/>
+          Fatique
+         </label>
+        </div>
+       </div>
+       <div class="col-md-2">
+        <div class="checkbox">
+         <label>
+          <input name="rtsetc" type="hidden" value=""/>
+          <input id="rtsetc" name="rtsetc" type="checkbox" value="tc"/>
+          Tightness in chest
+         </label>
+        </div>
+       </div>
+       <div class="col-md-2">
+        <div class="checkbox">
+         <label>
+          <input name="rtsecwp" type="hidden" value=""/>
+          <input id="rtsecwp" name="rtsecwp" type="checkbox" value="cwp"/>
+          Chest wall pain
+         </label>
+        </div>
+       </div>
+       <div class="col-md-1">
+        <div class="checkbox">
+         <label>
+          <input name="rtsecgh" type="hidden" value=""/>
+          <input id="rtsecgh" name="rtsecgh" type="checkbox" value="c"/>
+          Cough
+         </label>
+        </div>
+       </div>
+       <div class="col-lg-2 col-md-3">
+        <div class="checkbox">
+         <label>
+          <input name="rtsesob" type="hidden" value=""/>
+          <input id="rtsesob" name="rtsesob" type="checkbox" value="sob"/>
+          Shortness of breath
+         </label>
+        </div>
+       </div>
+       <div class="col-lg-1 col-md-2">
+        <div class="checkbox">
+         <label>
+          <input name="rtsed" type="hidden" value=""/>
+          <input id="rtsed" name="rtsed" type="checkbox" value="d"/>
+          Dyspnea
+         </label>
+        </div>
+       </div>
+       <div class="col-md-3">
+        <div class="checkbox">
+         <label>
+          <input name="rtsedawl" type="hidden" value=""/>
+          <input id="rtsedawl" name="rtsedawl" type="checkbox" value="dawl"/>
+          Decreased appetite/weight loss
+         </label>
+        </div>
+       </div>
+       <div class="col-md-2">
+        <div class="checkbox">
+         <label>
+          <input name="rtsenv" type="hidden" value=""/>
+          <input id="rtsenv" name="rtsenv" type="checkbox" value="nv"/>
+          Nausea/vomiting
+         </label>
+        </div>
+       </div>
+       <div class="col-md-1">
+        <div class="checkbox">
+         <label>
+          <input name="rtseda" type="hidden" value=""/>
+          <input id="rtseda" name="rtseda" type="checkbox" value="da"/>
+          Diarrhea
+         </label>
+        </div>
+       </div>
+       <div class="col-md-1">
+        <div class="checkbox">
+         <label>
+          <input name="rtseo" type="hidden" value=""/>
+          <input id="rtseo" name="rtseo" type="checkbox" value="o"/>
+          Other
+         </label>
+        </div>
+       </div>
+       <div class="col-md-5" id="rtseo-container">
+        <div class="form-group">
+         <label for="rtseos">
+          Specify
+         </label>
+         <input class="form-control" id="rtseos" name="rtseos"/>
+        </div>
        </div>
       </div>
      </div>
@@ -3416,10 +3834,86 @@
       </h2>
       <div class="row">
        <div class="col-md-4 form-group">
-        <label for="rbrtchpn">
+        <label for="chmd">
          Treating physician name
         </label>
-        <input class="form-control" id="rbrtchpn" name="rbrtchpn"/>
+        <input class="form-control" id="chmd" name="chmd"/>
+       </div>
+      </div>
+      <div class="row">
+       <div>
+        <div class="col-md-2">
+         <div class="form-group">
+          <label for="chfdot">
+           First date of treatment
+          </label>
+          <div class="input-group datepicker">
+           <input aria-describedby="chfdot-addon" class="form-control" data-restriction="past" id="chfdot" name="chfdot"/>
+           <div class="input-group-addon">
+            <div class="input-group-text" id="chfdot-addon">
+             <i aria-hidden="true" class="fa fa-calendar">
+             </i>
+            </div>
+           </div>
+          </div>
+          <small class="form-text text-muted">
+           MM/DD/YYYY
+          </small>
+         </div>
+        </div>
+        <div class="col-md-2">
+         <div class="form-group">
+          <label for="chldot">
+           Last date of treatment
+          </label>
+          <div class="input-group datepicker">
+           <input aria-describedby="chldot-addon" class="form-control" data-restriction="past" id="chldot" name="chldot"/>
+           <div class="input-group-addon">
+            <div class="input-group-text" id="chldot-addon">
+             <i aria-hidden="true" class="fa fa-calendar">
+             </i>
+            </div>
+           </div>
+          </div>
+          <small class="form-text text-muted">
+           MM/DD/YYYY
+          </small>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-lg-4 col-md-5">
+        <div class="form-group">
+         <label for="sbahpft-n">
+          Frequency of chemotherapy
+         </label>
+         <br/>
+         <label class="radio-inline" for="chf-d">
+          <input id="chf-d" name="chf" type="radio" value="d"/>
+          daily
+         </label>
+         <label class="radio-inline" for="chf-od">
+          <input id="chf-od" name="chf" type="radio" value="od"/>
+          every other day
+         </label>
+         <label class="radio-inline" for="chf-w">
+          <input id="chf-w" name="chf" type="radio" value="w"/>
+          weekly
+         </label>
+         <label class="radio-inline" for="chf-o">
+          <input id="chf-o" name="chf" type="radio" value="o"/>
+          other
+         </label>
+        </div>
+       </div>
+       <div class="col-lg-3 col-md-4">
+        <div class="form-group" id="chf-container">
+         <label for="chfs">
+          Specify
+         </label>
+         <input class="form-control" id="chfs" name="chfs"/>
+        </div>
        </div>
       </div>
       <div class="row">
@@ -3468,122 +3962,221 @@
        </div>
       </div>
       <div class="row">
-       <div class="col-md-12">
+       <div class="col-lg-6 col-md-12 form-group">
+        <label for="rbchdt">
+         Describe treatment
+        </label>
+        <input class="form-control" id="rbchdt" name="rbchdt"/>
+       </div>
+       <div class="col-lg-6 col-md-12 form-group">
+        <label for="rbchst">
+         Subsequent treatments
+        </label>
+        <input class="form-control" id="rbchst" name="rbchst"/>
+       </div>
+       <div class="col-lg-6 col-md-12 form-group">
+        <label for="rbchdr">
+         Drugs used
+        </label>
+        <input class="form-control" id="rbchdr" name="rbchdr"/>
+       </div>
+       <div class="col-lg-6 col-md-12 form-group">
+        <label for="rbchnt">
+         Number of rounds
+        </label>
+        <input class="form-control numeric" id="rbchnt" name="rbchnt"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-md-4">
         <div class="form-group">
-         <label for="rbrtchco">
-          Comments
+         <label for="chedd-n">
+          Was the entire dose delivered to the patient?
          </label>
-         <textarea class="form-control" id="rbrtchco" name="rbrtchco"></textarea>
+         <br/>
+         <label class="radio-inline" for="chedd-n">
+          <input id="chedd-n" name="chedd" type="radio" value="n"/>
+          No
+         </label>
+         <label class="radio-inline" for="chedd-y">
+          <input id="chedd-y" name="chedd" type="radio" value="y"/>
+          Yes
+         </label>
+        </div>
+       </div>
+       <div class="col-md-4">
+        <div class="form-group">
+         <label for="chedds">
+          Specify
+         </label>
+         <input class="form-control" id="chedds" name="chedds"/>
         </div>
        </div>
       </div>
       <div class="row">
        <div class="col-md-4">
         <div class="form-group">
-         <label for="rbrtchem-n">
-          Chemotherapy?
+         <label for="chc-n">
+          Were there complications associated with treatment?
          </label>
-         <label class="radio-inline" for="rbrtchem-n">
-          <input id="rbrtchem-n" name="rbrtchem" type="radio" value="n"/>
+         <br/>
+         <label class="radio-inline" for="chc-n">
+          <input id="chc-n" name="chc" type="radio" value="n"/>
           No
          </label>
-         <label class="radio-inline" for="rbrtchem-y">
-          <input id="rbrtchem-y" name="rbrtchem" type="radio" value="y"/>
+         <label class="radio-inline" for="chc-y">
+          <input id="chc-y" name="chc" type="radio" value="y"/>
           Yes
          </label>
-         <label class="radio-inline" for="rbrtchem-q">
-          <input id="rbrtchem-q" name="rbrtchem" type="radio" value="q"/>
-          ?
-         </label>
-         <label class="radio-inline" for="rbrtchem-r">
-          <input id="rbrtchem-r" name="rbrtchem" type="radio" value="r"/>
-          Refused
-         </label>
         </div>
        </div>
-       <div id="chemo-refusal-container">
-        <div class="col-md-2">
-         <div class="form-group">
-          <label for="rbrtchrd">
-           Refusal date
-          </label>
-          <div class="input-group datepicker">
-           <input aria-describedby="rbrtchrd-addon" class="form-control" data-restriction="past" id="rbrtchrd" name="rbrtchrd"/>
-           <div class="input-group-addon">
-            <div class="input-group-text" id="rbrtchrd-addon">
-             <i aria-hidden="true" class="fa fa-calendar">
-             </i>
-            </div>
-           </div>
-          </div>
-          <small class="form-text text-muted">
-           MM/DD/YYYY
-          </small>
-         </div>
-        </div>
-        <div class="col-md-6">
-         <div class="form-group">
-          <label for="rbrtchrr">
-           Reason
-          </label>
-          <input class="form-control" id="rbrtchrr" name="rbrtchrr"/>
-         </div>
+       <div class="col-md-4" id="chc-container">
+        <div class="form-group">
+         <label for="chcs">
+          Specify
+         </label>
+         <input class="form-control" id="chcs" name="chcs"/>
         </div>
        </div>
       </div>
       <div class="row">
-       <div class="col-md-3 form-group">
-        <label for="rbrtchsd">
-         If yes, start date
-        </label>
-        <div class="input-group datepicker">
-         <input aria-describedby="rbrtchsd-addon" class="form-control" data-restriction="past" id="rbrtchsd" name="rbrtchsd"/>
-         <div class="input-group-addon">
-          <div class="input-group-text" id="rbrtchsd-addon">
-           <i aria-hidden="true" class="fa fa-calendar">
-           </i>
-          </div>
-         </div>
+       <div class="col-md-4">
+        <div class="form-group">
+         <label for="chse-n">
+          Side effects
+         </label>
+         <br/>
+         <label class="radio-inline" for="chse-n">
+          <input id="chse-n" name="chse" type="radio" value="n"/>
+          none
+         </label>
+         <label class="radio-inline" for="chse-mi">
+          <input id="chse-mi" name="chse" type="radio" value="mi"/>
+          minimal
+         </label>
+         <label class="radio-inline" for="chse-ma">
+          <input id="chse-ma" name="chse" type="radio" value="ma"/>
+          marked
+         </label>
         </div>
-        <small class="form-text text-muted">
-         MM/DD/YYYY
-        </small>
        </div>
-       <div class="col-md-3 form-group">
-        <label for="rbrtchhl">
-         Hospital/Office Location
-        </label>
-        <input class="form-control" id="rbrtchhl" name="rbrtchhl"/>
+       <div class="col-md-4">
+        <div class="form-group">
+         <label for="chsec">
+          Comments
+         </label>
+         <input class="form-control" id="chsec" name="chsec"/>
+        </div>
        </div>
       </div>
       <div class="row">
-       <div class="col-md-3 col-lg-2 form-group">
-        <label for="rbrtchrd">
-         Describe treatment
+       <div class="col-md-12">
+        <label class="small">
+         Check all that apply
         </label>
-        <input class="form-control" id="rbrtchrd" name="rbrtchdt"/>
        </div>
-       <div class="col-md-3 col-lg-2 form-group">
-        <label for="rbrtchst">
-         Subsequent treatments
-        </label>
-        <input class="form-control" id="rbrtchst" name="rbrtchst"/>
+       <div class="col-lg-1 col-md-2">
+        <div class="checkbox">
+         <label>
+          <input name="chsef" type="hidden" value=""/>
+          <input id="chsef" name="chsef" type="checkbox" value="f"/>
+          Fatique
+         </label>
+        </div>
        </div>
-       <div class="col-md-3 col-lg-2 form-group">
-        <label for="rbrtchdu">
-         Drugs used
-        </label>
-        <input class="form-control" id="rbrtchdu" name="rbrtchdu"/>
+       <div class="col-md-2">
+        <div class="checkbox">
+         <label>
+          <input name="chsetc" type="hidden" value=""/>
+          <input id="chsetc" name="chsetc" type="checkbox" value="tc"/>
+          Tightness in chest
+         </label>
+        </div>
        </div>
-       <div class="col-md-3 col-lg-2 form-group">
-        <label for="rbrtchnr">
-         Number of rounds
-        </label>
-        <input class="form-control numeric" id="rbrtchnr" name="rbrtchnr"/>
+       <div class="col-md-2">
+        <div class="checkbox">
+         <label>
+          <input name="chsecwp" type="hidden" value=""/>
+          <input id="chsecwp" name="chsecwp" type="checkbox" value="cwp"/>
+          Chest wall pain
+         </label>
+        </div>
+       </div>
+       <div class="col-md-1">
+        <div class="checkbox">
+         <label>
+          <input name="chsecgh" type="hidden" value=""/>
+          <input id="chsecgh" name="chsecgh" type="checkbox" value="c"/>
+          Cough
+         </label>
+        </div>
+       </div>
+       <div class="col-lg-2 col-md-3">
+        <div class="checkbox">
+         <label>
+          <input name="chsesob" type="hidden" value=""/>
+          <input id="chsesob" name="chsesob" type="checkbox" value="sob"/>
+          Shortness of breath
+         </label>
+        </div>
+       </div>
+       <div class="col-lg-1 col-md-2">
+        <div class="checkbox">
+         <label>
+          <input name="chsed" type="hidden" value=""/>
+          <input id="chsed" name="chsed" type="checkbox" value="d"/>
+          Dyspnea
+         </label>
+        </div>
+       </div>
+       <div class="col-md-3">
+        <div class="checkbox">
+         <label>
+          <input name="chsedawl" type="hidden" value=""/>
+          <input id="chsedawl" name="chsedawl" type="checkbox" value="dawl"/>
+          Decreased appetite/weight loss
+         </label>
+        </div>
+       </div>
+       <div class="col-md-2">
+        <div class="checkbox">
+         <label>
+          <input name="chsenv" type="hidden" value=""/>
+          <input id="chsenv" name="chsenv" type="checkbox" value="nv"/>
+          Nausea/vomiting
+         </label>
+        </div>
+       </div>
+       <div class="col-md-1">
+        <div class="checkbox">
+         <label>
+          <input name="chseda" type="hidden" value=""/>
+          <input id="chseda" name="chseda" type="checkbox" value="da"/>
+          Diarrhea
+         </label>
+        </div>
+       </div>
+       <div class="col-md-1">
+        <div class="checkbox">
+         <label>
+          <input name="chseo" type="hidden" value=""/>
+          <input id="chseo" name="chseo" type="checkbox" value="o"/>
+          Other
+         </label>
+        </div>
+       </div>
+       <div class="col-md-5" id="chseo-container">
+        <div class="form-group">
+         <label for="chseos">
+          Specify
+         </label>
+         <input class="form-control" id="chseos" name="chseos"/>
+        </div>
        </div>
       </div>
      </div>
     </div>
+    <hr/>
     <div id="nodules" style="padding-top:8px">
      <h3>
       Nodules
@@ -8141,6 +8734,7 @@
       </div>
      </div>
     </div>
+    <hr/>
     <div id="emphysema-coronary" style="padding-top: 1px;">
      <h3>
       Emphysema/Coronary Calcifications
@@ -8371,6 +8965,7 @@
     });
      </script>
     </div>
+    <hr/>
     <div id="abnormalities" style="padding-top:8px;">
      <h3>
       Other Abnormalities
@@ -10695,6 +11290,7 @@
     });
      </script>
     </div>
+    <hr/>
     <div id="intervention">
      <h3>
       Summary of interventions for this malignancy
@@ -10920,23 +11516,23 @@
         });
     });
      </script>
-     <hr/>
-     <div class="pull-left">
-      <input name="samistatus" type="hidden" value=""/>
-      <button class="btn btn-default" id="save-for-later-button" type="submit">
-       Save for Later
-      </button>
-      <button class="btn btn-primary" id="submit-button" type="submit">
-       Submit
-      </button>
-     </div>
-     <div class="pull-right">
-      <a class="btn btn-danger" id="delete-form">
-       <span class="glyphicon glyphicon-trash">
-       </span>
-       Delete
-      </a>
-     </div>
+    </div>
+    <hr/>
+    <div class="pull-left">
+     <input name="samistatus" type="hidden" value=""/>
+     <button class="btn btn-default" id="save-for-later-button" type="submit">
+      Save for Later
+     </button>
+     <button class="btn btn-primary" id="submit-button" type="submit">
+      Submit
+     </button>
+    </div>
+    <div class="pull-right">
+     <a class="btn btn-danger" id="delete-form">
+      <span class="glyphicon glyphicon-trash">
+      </span>
+      Delete
+     </a>
     </div>
    </form>
   </div>
@@ -10980,7 +11576,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.01.08
+     2019.01.25
     </span>
    </div>
   </footer>
@@ -11034,7 +11630,13 @@
 
         $.each($("input[type=checkbox]:checked"), function (i, el) {
             $(el).trigger("change");
-        })
+        });
+
+        const reportsStartDate = VAPALS.toMoment(VAPALS.todaysDate()).subtract(30, "days").format(VAPALS.DATE_FORMAT);
+        const reportsEndDate = VAPALS.toMoment(VAPALS.todaysDate()).format(VAPALS.DATE_FORMAT);
+
+        $("a[data-samiroute=report]").attr("data-start-date", reportsStartDate).attr("data-end-date", reportsEndDate);
+
     })
   </script>
   <script language="JavaScript">
@@ -11052,8 +11654,15 @@
                         rbcsx8s: {validators: {notEmpty: {message: 'Other clinical TNM status is required'}}},
                         rbcsxs8m: {validators: {notEmpty: {message: 'Other clinical TNM status is required'}}},
                         rbcsbos: {validators: {notEmpty: {message: 'Clinical staging basis is required.'}}},
+                        rbmdp: {validators: {phone: {message: 'Referring physician\'s phone is invalid', country: 'US'}}},
+                        rbmdf: {validators: {phone: {message: 'Referring physician\'s fax is invalid', country: 'US'}}},
+                        rbsumdp: {validators: {phone: {message: 'Treating physician\'s phone is invalid', country: 'US'}}},
+                        rbsumdf: {validators: {phone: {message: 'Treating physician\'s fax is invalid', country: 'US'}}},
                         rblocs: {validators: {notEmpty: {message: 'Lesion site is required.'}}},
                         rbtos: {validators: {notEmpty: {message: 'Treatment option is required.'}}},
+                        //surgery
+                        rbmemdp: {validators: {phone: {message: 'Physician\'s phone is invalid', country: 'US'}}},
+                        rbmemdf: {validators: {phone: {message: 'Physician\'s fax is invalid', country: 'US'}}},
                         rbsurd: {validators: {notEmpty: {message: 'Resection no/refusal date is required.'}}},
                         rbsurr: {validators: {notEmpty: {message: 'Resection no/refusal reason is required.'}}},
                         rbtosos: {validators: {notEmpty: {message: 'Type of surgery is required.'}}},
@@ -11150,13 +11759,24 @@
             $("[name=rbpsx8]").conditionallyEnable({enable: "#rbpsx8-container"});
 
             //Radiation section
-            $("[name=rbrtfreq]").conditionallyEnable({sourceValues: "o", enable: "#radiation-frequency-container"});
-            $("#rbrtls").conditionallyEnable({sourceValues: "o", enable: "#radiation-lesion-container"});
+            $("[name=rtfor]").conditionallyEnable({sourceValues: "o", enable: "#rtfor-container"});
+            $("#rtloc").conditionallyEnable({sourceValues: "o", enable: "#rtloc-container"});
+            $("[name=rtrddt]").conditionallyEnable({sourceValues: "o", enable: "#rtrddt-container"});
+            $("[name=rttmct]").conditionallyEnable({sourceValues: "o", enable: "#rttmct-container"});
+            $("[name=rtpp]").conditionallyEnable({sourceValues: "o", enable: "#rtpp-container"});
+            $("[name=rttv]").conditionallyEnable({sourceValues: "o", enable: "#rttv-container"});
+            $("[name=rtedd]").conditionallyEnable({enable: "#rtedd-container"});
+            $("[name=rtcui]").conditionallyEnable({enable: "#rtcui-container"});
+            $("#rtseo").conditionallyEnable({sourceValues: "o", enable: "#rtseo-container"});
 
             //Chemotherapy section
             $("#rbrtchls").conditionallyEnable({sourceValues: "o", enable: "#chemo-lesion-container"});
-            $("[name=chemo]").conditionallyEnable({sourceValues: "r", enable: "#chemo-refusal-container"});
+            $("[name=chf]").conditionallyEnable({sourceValues: "o", enable: "#chf-container"});
+            $("[name=chc]").conditionallyEnable({enable: "#chc-container"});
+            $("#chseo").conditionallyEnable({sourceValues: "o", enable: "#chseo-container"});
 
+
+            //treatment type selection
             $("#rbto").on('change', function () {
                 const val = $(this).val();
                 $("#surgery").toggle(val === 's');

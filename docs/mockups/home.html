@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.01.08" name="version"/>
+  <meta content="2019.01.25" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    Home
@@ -29,7 +29,7 @@
   </script>
   <script src="../www/lib/moment.js">
   </script>
-  <script src="../www/lib/formvalidation/dist/js/FormValidation.min.js">
+  <script src="../www/lib/formvalidation/dist/js/FormValidation.full.min.js">
   </script>
   <script src="../www/lib/formvalidation/dist/js/plugins/Wizard.min.js">
   </script>
@@ -126,7 +126,7 @@
          </a>
         </li>
         <li>
-         <a class="navigation" data-method="get" data-samireporttype="enrollment" data-samiroute="report" href="table.html">
+         <a class="navigation" data-method="get" data-samireporttype="enrollment" data-samiroute="report" data-start-date="" href="table.html">
           Enrollment
          </a>
         </li>
@@ -230,7 +230,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.01.08
+     2019.01.25
     </span>
    </div>
   </footer>
@@ -284,7 +284,13 @@
 
         $.each($("input[type=checkbox]:checked"), function (i, el) {
             $(el).trigger("change");
-        })
+        });
+
+        const reportsStartDate = VAPALS.toMoment(VAPALS.todaysDate()).subtract(30, "days").format(VAPALS.DATE_FORMAT);
+        const reportsEndDate = VAPALS.toMoment(VAPALS.todaysDate()).format(VAPALS.DATE_FORMAT);
+
+        $("a[data-samiroute=report]").attr("data-start-date", reportsStartDate).attr("data-end-date", reportsEndDate);
+
     })
   </script>
   <script language="JavaScript">

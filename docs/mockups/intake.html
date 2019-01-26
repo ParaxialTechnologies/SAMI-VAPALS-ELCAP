@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.01.08" name="version"/>
+  <meta content="2019.01.25" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    Lung Screening and Surveillance Intake Form
@@ -29,7 +29,7 @@
   </script>
   <script src="../www/lib/moment.js">
   </script>
-  <script src="../www/lib/formvalidation/dist/js/FormValidation.min.js">
+  <script src="../www/lib/formvalidation/dist/js/FormValidation.full.min.js">
   </script>
   <script src="../www/lib/formvalidation/dist/js/plugins/Wizard.min.js">
   </script>
@@ -126,7 +126,7 @@
          </a>
         </li>
         <li>
-         <a class="navigation" data-method="get" data-samireporttype="enrollment" data-samiroute="report" href="table.html">
+         <a class="navigation" data-method="get" data-samireporttype="enrollment" data-samiroute="report" data-start-date="" href="table.html">
           Enrollment
          </a>
         </li>
@@ -338,7 +338,7 @@
       </small>
      </div>
      <div class="col-sm-8 col-md-9 form-group">
-      <label>
+      <label for="silnpos">
        How did you learn about the Lung Screening and Surveillance (LSS) program?
       </label>
       <div class="checkbox">
@@ -446,6 +446,8 @@
        Zip
       </label>
       <input class="form-control" id="sipz" name="sipz" type="text"/>
+      <small class="text-muted" id="rural-text">
+      </small>
      </div>
      <div class="form-group col-md-3">
       <label for="sipcr">
@@ -894,7 +896,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.01.08
+     2019.01.25
     </span>
    </div>
   </footer>
@@ -948,13 +950,19 @@
 
         $.each($("input[type=checkbox]:checked"), function (i, el) {
             $(el).trigger("change");
-        })
+        });
+
+        const reportsStartDate = VAPALS.toMoment(VAPALS.todaysDate()).subtract(30, "days").format(VAPALS.DATE_FORMAT);
+        const reportsEndDate = VAPALS.toMoment(VAPALS.todaysDate()).format(VAPALS.DATE_FORMAT);
+
+        $("a[data-samiroute=report]").attr("data-start-date", reportsStartDate).attr("data-end-date", reportsEndDate);
+
     })
   </script>
   <script language="JavaScript">
    //purposefully executed before DOM is rendered so section is never visible
     const newForm = "@@NEWFORM@@";
-    if (newForm == "true") {
+    if (newForm === "true") {
         $("#reason-for-change-container").remove();
         $("#change-log-container").remove();
     }
@@ -1042,8 +1050,7 @@
                                 let selector = "";
                                 if (e.element.id) {
                                     selector = "#" + e.element.id
-                                }
-                                else {
+                                } else {
                                     selector = "[name=" + e.element.name + "]"
                                 }
 
@@ -1071,6 +1078,59 @@
     $(function () {
 
         const fv = createFormValidator();
+        const initialRuralUrbanValue = $("[name=sirs]").filter(":checked").val();
+        const $zipField = $("#sipz");
+        const RURAL = 'r';
+        const URBAN = 'u';
+        const UNKNOWN = 'n';
+        let zipLookupTimer = 0;
+
+        function zipLookup(updateSelection) {
+            const zipcode = $zipField.val();
+            const $ruralText = $("#rural-text");
+            $.ajax(("/zipru/" + zipcode), {dataType: "json"})
+                .done(function (json) {
+                    const ruralData = json.result;
+                    let message = "";
+                    if (ruralData === URBAN) {
+                        message = zipcode + " is an <em>urban</em> address";
+                        if (updateSelection) {
+                            $("[name=sirs][value='" + URBAN + "']").prop('checked', true);
+                        }
+                    } else if (ruralData === RURAL) {
+                        message = zipcode + " is a <em>rural</em> address";
+                        if (updateSelection) {
+                            $("[name=sirs][value='" + RURAL + "']").prop('checked', true);
+                        }
+                    } else if (ruralData === UNKNOWN) {
+                        message = "cannot determine rural/urban status";
+                        if (updateSelection) {
+                            $("[name=sirs][value='" + UNKNOWN + "']").prop('checked', true);
+                        }
+                    }
+                    $ruralText.html(message);
+                })
+                .fail(function () {
+                    $ruralText.html("");
+                });
+        }
+
+        //whenever the zip code is changed, determine the zip code designation, but wait until user stops typing.
+        $zipField.on('keyup change', function () {
+            if (zipLookupTimer) {
+                clearTimeout(zipLookupTimer);
+            }
+            zipLookupTimer = setTimeout(function () {
+                zipLookup(true);
+            }, 400);
+        });
+
+        if ($zipField.val() !== "") {
+            //if selection is blank, select the appropriate value, otherwise just get the help text
+            const updateSelection = initialRuralUrbanValue === undefined;
+            zipLookup(updateSelection);
+        }
+
 
         $("#sicpd").on('keyup change', function () {
             const cigsPerDay = $("#sicpd").val();
@@ -1081,8 +1141,7 @@
                 if (cpd > 0) {
                     $sippd.val(cpd);
                     $sippdVal.text(cpd);
-                }
-                else {
+                } else {
                     $sippd.val("");
                     $sippdVal.text("-");
                 }
@@ -1136,8 +1195,7 @@
                 //auto-select "inactive" status
                 $("#sistatus-inactive").click();
 
-            }
-            else if (value === "y") {
+            } else if (value === "y") {
                 $yesAlert.show();
                 $noAlert.hide();
 
@@ -1147,8 +1205,7 @@
                     $("[name='" + s + "']").closest(".form-group").find('label').first().addClass('required')
                 });
 
-            }
-            else {
+            } else {
                 $yesAlert.hide();
                 $noAlert.hide();
             }

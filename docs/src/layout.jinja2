@@ -24,7 +24,7 @@
 <script src="{{ path }}lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script src="{{ path }}lib/moment.js"></script>
 
-<script src="{{ path }}lib/formvalidation/dist/js/FormValidation.min.js"></script>
+<script src="{{ path }}lib/formvalidation/dist/js/FormValidation.full.min.js"></script>
 <script src="{{ path }}lib/formvalidation/dist/js/plugins/Wizard.min.js"></script>
 <script src="{{ path }}lib/formvalidation/dist/js/plugins/Bootstrap3.min.js"></script>
 <script src="{{ path }}lib/formvalidation/dist/js/plugins/J.min.js"></script>
@@ -93,7 +93,7 @@
                                data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="outreach">Outreach</a>
                         </li>
                         <li><a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
-                               data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="enrollment">Enrollment</a>
+                               data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="enrollment" data-start-date="">Enrollment</a>
                         </li>
                     </ul>
                 </li>
@@ -164,7 +164,13 @@
 
         $.each($("input[type=checkbox]:checked"), function (i, el) {
             $(el).trigger("change");
-        })
+        });
+
+        const reportsStartDate = VAPALS.toMoment(VAPALS.todaysDate()).subtract(30, "days").format(VAPALS.DATE_FORMAT);
+        const reportsEndDate = VAPALS.toMoment(VAPALS.todaysDate()).format(VAPALS.DATE_FORMAT);
+
+        $("a[data-samiroute=report]").attr("data-start-date", reportsStartDate).attr("data-end-date", reportsEndDate);
+
     })
 </script>
 

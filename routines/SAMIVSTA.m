@@ -1,4 +1,4 @@
-SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 1/25/19 4:06pm
+SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 1/28/19 7:52pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -713,7 +713,7 @@ DELTIU(tiuien) ;
  ;@tests
  ;  UTURBR^SAMIUTVA
 URBRUR(zipcode) ;
- I $g(zipcode)<1 Q "n"
+ I $g(zipcode)<501 Q "n"
  n root
  s root=$$setroot^%wd("NCHS Urban-Rural")
  q:'$d(@root@("zip",+zipcode)) "n"

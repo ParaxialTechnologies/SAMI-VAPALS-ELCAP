@@ -1,7 +1,6 @@
-SAMICTR1 ;ven/gpl - ielcap: forms ; 1/22/19 1:25pm
+SAMICTR1 ;ven/gpl - ielcap: forms ; 12/28/18 10:54am
  ;;18.0;SAMI;;
  ;
- ;@license: see routine SAMIUL
  ;
  quit  ; no entry from top
  ;
@@ -63,6 +62,7 @@ NODULES(rtn,vals,dict) ;
  . ;# 3 cases: parenchymal, endobronchial, and both
  . ;
  . n en,loc,nloc,endo,ll
+ . s loc=""
  . s en=$$XVAL("cect"_ii_"en",vals)
  . s ll=$$XVAL("cect"_ii_"ll",vals)
  . i ($l(en)<2)!(en="no")!(en="") d  ;
@@ -94,9 +94,9 @@ NODULES(rtn,vals,dict) ;
  . . . . e  d  ;
  . . . . . i ($$XVAL("cetex",vals)="b")&($$XVAL("cect"_ii_"ch",vals)="n") d  ;
  . . . . . . ;d OUT(nloc_" "_endo_" "_ii_".")
- . . . . . . d OUT(endo_" "_ii_" is seen in the "_loc_" "_calcstr_".")
+ . . . . . . d OUT(endo_" "_ii_" is seen in the "_nloc_" "_calcstr_".")
  . . . . . ;e  d OUT(nloc_" "_endo_" "_ii_" "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_".")
- . . . . . e  d OUT(endo_" "_ii_" in the "_loc_" "_calcstr_", "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_".")
+ . . . . . e  d OUT(endo_" "_ii_" in the "_nloc_" "_calcstr_", "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_".")
  . . . . s skip=1
  . . . i en="bi" d  ;
  . . . . s endo="Nodule"

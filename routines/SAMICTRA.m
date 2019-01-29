@@ -1,7 +1,6 @@
-SAMICTRA ;ven/gpl - ielcap: forms ; 1/22/19 1:26pm
+SAMICTRA ;ven/gpl - ielcap: forms ; 12/28/18 9:43am
  ;;18.0;SAMI;;
  ;
- ;@license: see routine SAMIUL
  ;
  quit  ; no entry from top
  ;
@@ -67,6 +66,7 @@ RCMND(rtn,vals,dict) ;
  ;s lrstyle=0
  ;
  d  ;
+ . q  ; LUNGRADS moved to SAMICTR4
  . n lradModifiers
  . s lradModifiers=$$XVAL("celradc",vals)_$$XVAL("celrads",vals)
  . ;

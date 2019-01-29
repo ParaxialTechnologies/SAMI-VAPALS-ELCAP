@@ -1,7 +1,6 @@
-SAMICTR9 ;ven/gpl - ielcap: forms ; 1/22/19 1:26pm
+SAMICTR9 ;ven/gpl - ielcap: forms ; 12/28/18 10:26am
  ;;18.0;SAMI;;
  ;
- ;@license: see routine SAMIUL
  ;
  quit  ; no entry from top
  ;
@@ -24,7 +23,16 @@ IMPRSN(rtn,vals,dict) ;
  d OUT($$XSUB("ceimn",vals,dict)_para)
  ;
  ;# Report CAC Score and Extent of Emphysema
- i cac>0 d  ;
+ s cacval=0
+ if $$XVAL("ceccv",vals)'="e" d  ;
+ . set vcac=$$XVAL("cecccac",vals)
+ . if vcac'="" d  ;
+ . . s cacrec=""
+ . . s cac="The Visual Coronary Artery Calcium (CAC) Score is "_vcac_". "
+ . . s cacval=vcac
+ . . i cacval>3 s cacrec=$g(@dict@("CAC_recommendation"))_para
+ ;
+ i cacval>0 d  ;
  . d OUT(cac_" "_cacrec_" "_para)
  . if $$XVAL("ceemv",vals)="e" d  ;
  . . if $$XVAL("ceem",vals)'="no" d  ;

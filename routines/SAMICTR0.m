@@ -1,7 +1,6 @@
-SAMICTR0 ;ven/gpl - ielcap: forms ; 1/22/19 1:25pm
+SAMICTR0 ;ven/gpl - ielcap: forms ; 1/2/19 9:28am
  ;;18.0;SAMI;;
  ;
- ;@license: see routine SAMIUL
  ;
  quit  ; no entry from top
  ;
@@ -146,7 +145,7 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  d:nopri OUT("None")
  ;
  d HOUT(" Description: ")
- i $$XVAL("cectp",vals)'="" d  ;
+ i $$XVAL("cectp",vals)="i" d  ;
  . d OUT("Limited Diagnostic CT examination was performed.")
  e  d  ;
  . d OUT("CT examination of the entire thorax was performed at"_$$XSUB("cectp",vals,dict)_" settings.")
@@ -188,6 +187,10 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  ;
  d OTHRLUNG^SAMICTR2(rtn,.vals,.dict)
  ;
+ d EMPHYS^SAMICTR3(rtn,.vals,.dict)
+ ;
+ d BREAST^SAMICTR4(rtn,.vals,.dict)
+ ;
  d IMPRSN^SAMICTR9(rtn,.vals,.dict)
  ;
  d RCMND^SAMICTRA(rtn,.vals,.dict)
@@ -199,6 +202,11 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  d OUT("<p>Recommendations for nodules and other findings are detailed in the I-ELCAP Protocol.<BR>")
  d OUT("A summary and the full I-ELCAP protocol can be viewed at: <a href=""http://ielcap.org/protocols"">http://ielcap.org/protocols</a></p>")
  d OUT("</TD></TR></TABLE></TD></TR></TABLE>")
+ s debug=1
+ d:$g(debug)  ;
+ . n zi s zi=""
+ . f  s zi=$o(@vals@(zi)) q:zi=""  d  ;
+ . . d OUT("<br>"_zi_" "_$g(@vals@(zi)))
  d OUT("</BODY></HTML>")
  ;
  q

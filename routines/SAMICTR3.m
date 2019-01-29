@@ -21,9 +21,13 @@ EMPHYS(rtn,vals,dict) ;
  ;
  ; # Pleural Effusion
  ; 
+ if $$XVAL("ceper",vals)="-" d  ;
+ . if $$XVAL("cepel",vals)="-" d  ;
+ . . s @vals@("cepev")="e"
+ ;
  if $$XVAL("cepev",vals)'="e" d  ;
- . if $$XVAL("ceper",vals)'="no" d  ;
- . . if $$XVAL("cepel",vals)'="no" d  ;
+ . if $$XVAL("ceper",vals)'="-" d  ;
+ . . if $$XVAL("cepel",vals)'="-" d  ;
  . . . if $$XVAL("cepel",vals)=$$XVAL("ceper",vals) d  ;
  . . . . d OUT("Bilateral "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusions."_para)
  . . . else  d  ;
@@ -81,7 +85,6 @@ EMPHYS(rtn,vals,dict) ;
  ;
  i yespp=0 d OUT(para)
  ;
- ;i newct=1 d  ;
  d  ;
  . if $$XVAL("ceoppab",vals)'="" d OUT($$XVAL("ceoppab",vals)_"."_para)
  . else  d
@@ -92,6 +95,10 @@ EMPHYS(rtn,vals,dict) ;
  ;# Coronary Calcification
  n vcac,cac,cacrec
  s (cac,cacrec)=""
+ ;
+ if $$XVAL("cecccac",vals)'="" d  ;
+ . s @vals@("ceccv")="e"
+ ;
  if $$XVAL("ceccv",vals)'="e" d  ;
  . set vcac=$$XVAL("cecccac",vals)
  . if vcac'="" d  ;
@@ -286,10 +293,12 @@ CCMSTR(lst,vals) ; extrinsic that forms phrases
  n lblist s lblist=""
  n lb,ib s ib=""
  f lb=1:1:$l(lst,"^") d  ;
+ . n lvar s lvar=$p(lst,"^",lb)
  . s ib=$$XVAL($p(lst,"^",lb),vals)
  . if ib'="" d  ;
  . . i ib="y" d  ; 
- . . . i "ceasc cealc ceapc ceapc ceaac ceakc"[lb s lblist($o(lblist(""),-1)+1)="Calcification"
+ . . . i $f("ceasc cealc ceapc ceapc ceaac ceakc",lvar)>0 s lblist($o(lblist(""),-1)+1)="Calcification"
+ . . . ;i "ceasc cealc ceapc ceapc ceaac ceakc"[lb s lblist($o(lblist(""),-1)+1)="Calcification"
  . . . else  s lblist($o(lblist(""),-1)+1)="Cyst"
  . . i ib="c" s lblist($o(lblist(""),-1)+1)="Calcification"
  . . i ib="m" s lblist($o(lblist(""),-1)+1)="Mass"

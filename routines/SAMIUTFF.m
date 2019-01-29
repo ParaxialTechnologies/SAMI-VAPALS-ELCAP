@@ -1,4 +1,4 @@
-SAMIUTFF ;ven/lgc - Unit test for SAMIIFF ; 1/22/19 1:33pm
+SAMIUTFF ;ven/lgc - Unit test for SAMIIFF ; 1/29/19 2:17pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -41,7 +41,7 @@ UTBLDGP ; @TEST - Build a graph of the intake form fields
  n SAMIUARC,SAMIUPOO,nodea,nodep
  s utsuccess=1
  ; Delete graph if it existed
- ;DO purgegraph^%wd("siform-fields")
+ DO purgegraph^%wd("siform-fields")
  n siglb s siglb="purgegraph^%wd(""siform-fields"")"
  d @siglb
  ; Now build the graph

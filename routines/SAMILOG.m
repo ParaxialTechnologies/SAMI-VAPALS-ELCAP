@@ -1,4 +1,4 @@
-SAMILOG ;ven/lgc - APIs to toggle password identification ; 12/27/18 4:27pm
+SAMILOG ;ven/lgc - APIs to toggle password identification ; 1/29/19 12:47pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -32,21 +32,21 @@ SAMILOG ;ven/lgc - APIs to toggle password identification ; 12/27/18 4:27pm
  ;   ^%W(17.6001,22,"AUTH") = 1              (11)S
  ;
 STONOFF ;
- N ienget,ienpost,DIR,X,Y,%,DTOUT,DUOUT
- s ienget=$o(^%W(17.6001,"B","GET","vapals","WSHOME^SAMIHOM3",0))
- s ienpost=$o(^%W(17.6001,"B","POST","vapals","WSVAPALS^SAMIHOM3",0))
- I $G(^%W(17.6001,ienget,"AUTH")) D
- . W !,"VAPALS password ID is presently ON",!
- . W !," would you like to turn *** OFF *** VAPALS password ID."
+ n ienget,ienpost,DIR,X,Y,%,DTOUT,DUOUT
+ s ienget=$O(^%W(17.6001,"B","GET","vapals","WSHOME^SAMIHOM3",0))
+ s ienpost=$O(^%W(17.6001,"B","POST","vapals","WSVAPALS^SAMIHOM3",0))
+ i $g(^%W(17.6001,ienget,"AUTH")) d
+ . w !,"VAPALS password ID is presently ON",!
+ . w !," would you like to turn *** OFF *** VAPALS password ID."
  . s Y=0
- E  d
- . W !,"VAPALS password ID is presently OFF",!
- . W !," would you like to turn *** ON *** VAPALS password ID."
+ e  d
+ . w !,"VAPALS password ID is presently OFF",!
+ . w !," would you like to turn *** ON *** VAPALS password ID."
  . s Y=1
  ;
- W !
+ w !
  ; check if running unit test on this routine
- n forxindex s forxindex="%ut" i '$d(@forxindex) d
+ n forxindex s forxindex="%ut" i '$D(@forxindex) d
  . S %=2 D YN^DICN i '(%=1) q
  e  s %=1
  ;

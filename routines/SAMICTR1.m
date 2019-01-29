@@ -63,6 +63,7 @@ NODULES(rtn,vals,dict) ;
  . ;
  . n en,loc,nloc,endo,ll
  . s loc=""
+ . s nloc=""
  . s en=$$XVAL("cect"_ii_"en",vals)
  . s ll=$$XVAL("cect"_ii_"ll",vals)
  . i ($l(en)<2)!(en="no")!(en="") d  ;

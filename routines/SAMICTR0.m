@@ -202,7 +202,7 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  d OUT("<p>Recommendations for nodules and other findings are detailed in the I-ELCAP Protocol.<BR>")
  d OUT("A summary and the full I-ELCAP protocol can be viewed at: <a href=""http://ielcap.org/protocols"">http://ielcap.org/protocols</a></p>")
  d OUT("</TD></TR></TABLE></TD></TR></TABLE>")
- s debug=1
+ ;s debug=1
  d:$g(debug)  ;
  . n zi s zi=""
  . f  s zi=$o(@vals@(zi)) q:zi=""  d  ;

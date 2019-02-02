@@ -1,4 +1,4 @@
-SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 1/22/19 1:39pm
+SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 2/2/19 2:27pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -273,10 +273,11 @@ UTDELTIU ; @TEST - Deleting an unsigned TIU note
  q
  ;
 UTURBR ; @TEST - extrinsic to return urban or rural depending on zip code
- n uturr,uturu
- s uturu=$$URBRUR^SAMIVSTA(40714)
- s uturr=$$URBRUR^SAMIVSTA(40713)
- s utsuccess=((uturu_uturr)="ur")
+ n uturbr
+ s uturbr=$$URBRUR^SAMIVSTA(40714)
+ s uturbr=uturbr_$$URBRUR^SAMIVSTA(40272)
+ s uturbr=uturbr_$$URBRUR^SAMIVSTA(99185)
+ s utsuccess=(uturbr="nur")
  d CHKEQ^%ut(utsuccess,1,"Testing Urban/Rural extrinsic FAILED!")
  q
  ;

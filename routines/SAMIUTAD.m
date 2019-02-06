@@ -1,4 +1,4 @@
-SAMIUTAD ;ven/lgc - Unit test for SAMIADMN ; 1/24/19 9:32am
+SAMIUTAD ;ven/lgc - Unit test for SAMIADMN ; 2/6/19 11:35am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -40,10 +40,14 @@ UTCLRW ; @TEST - Test Clear the M WebServer
  ; will delete seeGraph and html-cache Graphstores
  ;  then rebuild the seeGraph
  n root,poo,arc s root=$$setroot^%wd("seeGraph")
- n poo m poo=@root
  d purgegraph^%wd("seeGraph")
  D CLRWEB^SAMIADMN
- ; Compare rebuilt seeGraph with data saved
+ ; save the seeGraph file just built
+ n poo m poo=@root
+ ; run the Clear the M Webserver again
+ D CLRWEB^SAMIADMN
+ ; Compare rebuilt seeGraph to be sure it generates
+ ;   the same data each time
  k arc m arc=@root
  s utsuccess=1
  n nodea,nodep s nodea=$na(arc),nodep=$na(poo)

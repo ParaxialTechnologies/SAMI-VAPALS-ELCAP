@@ -1,4 +1,4 @@
-SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 1/24/19 9:16am
+SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 2/6/19 1:18pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL

@@ -1,10 +1,10 @@
-SAMICTR4 ;ven/gpl - ielcap: forms ;2018-03-07T18:48Z
+SAMICTR4 ;ven/gpl - ielcap: forms ; 2/6/19 1:25pm
  ;;18.0;SAMI;;
  ;
  ;
  quit  ; no entry from top
  ;
-BREAST(rtn,vals,dict)
+BREAST(rtn,vals,dict) 
  ; repgen6
  n destr s destr="is seen"
  n sba set sba=0
@@ -119,7 +119,7 @@ BREAST(rtn,vals,dict)
  q
  ;
  ;
-OUT(ln)
+OUT(ln) 
  s cnt=cnt+1
  n lnn
  ;s debug=1
@@ -132,7 +132,7 @@ OUT(ln)
  . s @rtn@(lnn)=zp_":"_ln
  q
  ;
-HOUT(ln)
+HOUT(ln) 
  d OUT("<p><span class='sectionhead'>"_ln_"</span>")
  q
  ;
@@ -157,4 +157,4 @@ XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined
  ;i zr="" s zr="["_var_","_zv_"]"
  q zr
  ;
- 
+ ;

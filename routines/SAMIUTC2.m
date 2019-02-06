@@ -1,4 +1,4 @@
-SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ; 1/22/19 1:32pm
+SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ; 2/6/19 11:53am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -87,7 +87,7 @@ UTWSLKU ; @TEST WSLOOKUP^SAMISRC2
  . quit:SAMIURETURN(resultn)["meta content"
  . quit:($E($TR(SAMIURETURN(resultn),""""" "),1,10)?4N1"."2N1"."2N)  ; Node with a date
  . if '(resultn=expectn) set utsuccess=0 w !,"r=e ",resultn," ",expectn
- . if '(SAMIURETURN(resultn)=expect(expectn)) set utsuccess=0 w !,resultn
+ . if '(SAMIURETURN(resultn)=expect(expectn)) set utsuccess=0
  if '(resultn="")&(expectn="") set utsuccess=0
  do CHKEQ^%ut(utsuccess,1)
  ;

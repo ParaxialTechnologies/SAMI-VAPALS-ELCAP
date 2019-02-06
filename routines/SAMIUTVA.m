@@ -1,4 +1,4 @@
-SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 2/2/19 2:27pm
+SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 2/5/19 4:25pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -277,7 +277,7 @@ UTURBR ; @TEST - extrinsic to return urban or rural depending on zip code
  s uturbr=$$URBRUR^SAMIVSTA(40714)
  s uturbr=uturbr_$$URBRUR^SAMIVSTA(40272)
  s uturbr=uturbr_$$URBRUR^SAMIVSTA(99185)
- s utsuccess=(uturbr="nur")
+ s utsuccess=(uturbr="urn")
  d CHKEQ^%ut(utsuccess,1,"Testing Urban/Rural extrinsic FAILED!")
  q
  ;

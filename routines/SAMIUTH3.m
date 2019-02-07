@@ -1,4 +1,4 @@
-SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 2/6/19 11:20am
+SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 2/7/19 10:39am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -252,7 +252,7 @@ UTWSNC ; @TEST - Testing WSNEWCAS adding a new case to vapals-patients Graphstor
  .. i @nodep["meta content" q
  .. i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
  .. i @nodep["siform"  q
- .. i $e($tr($p(@nodea,"=",2),""""),1,10)?2N1"/"2N1"/"4N q
+ .. i $p($e($tr($p(@nodea,"=",2),""""),1,10)," ")?.N1"/".N1"/"4N q
  .. i @nodea["1/4/2019" q
  ..;
  .. i '($qs(nodea,1)=$qs(nodep,1)) s uthtml=0

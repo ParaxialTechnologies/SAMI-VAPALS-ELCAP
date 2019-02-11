@@ -1,4 +1,4 @@
-SAMIUR1 ;ven/gpl - sami user reports ; 1/22/19 1:31pm
+SAMIUR ;ven/gpl - sami user reports ; 2/10/19 1:31pm
  ;;18.0;SAM;;
  ;
  ;@license: see routine SAMIUL
@@ -19,29 +19,25 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  ;  6. enrollment
  ; the report to generate is passed in parameter samireporttype
  ;
+ n debug s debug=0
+ i $g(filter("debug"))=1 s debug=1
+ i $g(filter("debug"))=1 s debug=1
+ k SAMIRTN
+ s HTTPRSP("mime")="text/html"
+ ;
  n type,temp
  s type=$g(filter("samireporttype"))
  i type="" d  q  ; report type missing
  . d GETHOME^SAMIHOM3(.SAMIRTN,.filter) ; send them to home
  ;
- n RPT2
- d RPTTBL^SAMIUR2(.RPT2,type)
- i $d(RPT2) d  q  ;
- . d WSREPORT^SAMIUR(.SAMIRTN,.filter)
- n debug s debug=0
- i $g(filter("debug"))=1 s debug=1
- i $g(filter("debug"))=1 s debug=1
- k return
- s HTTPRSP("mime")="text/html"
- ;
  d getThis^%wd("temp","table.html") ; page template
  q:'$d(temp)
  ;
- n pats
- s pats=""
+ n SAMIPATS
+ ;s pats=""
  n datephrase
- d SELECT(.pats,type,.datephrase) ; select patients for the report
- q:'$d(pats)
+ d SELECT(.SAMIPATS,type,.datephrase) ; select patients for the report
+ ;q:'$d(SAMIPATS)
  ;
  n ln,cnt,ii
  s (ii,ln,cnt)=0
@@ -54,43 +50,54 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  . i ln["PAGE NAME" d findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type,datephrase))
  . s SAMIRTN(cnt)=ln
  . ;
- s cnt=cnt+1 s SAMIRTN(cnt)="<thead><tr>"
- s cnt=cnt+1 s SAMIRTN(cnt)="<th>Enrollment Date</th>"
- s cnt=cnt+1 s SAMIRTN(cnt)="<th>Name</th>"
- s cnt=cnt+1 s SAMIRTN(cnt)="<th>SSN</th>"
- s cnt=cnt+1 s SAMIRTN(cnt)="<th>Followup</th>"
- s cnt=cnt+1 s SAMIRTN(cnt)="</tr></thead>"
+ n RPT,ik
+ d RPTTBL^SAMIUR2(.RPT,type) ; get the report specs
+ i '$d(RPT) d  q  ; don't know about this report
+ . d GETHOME^SAMIHOM3(.SAMIRTN,.filter) ; send them to home
  ;
+ ; output the header
+ ;
+ s cnt=cnt+1 s SAMIRTN(cnt)="<thead><tr>"
+ s ir=""
+ f  s ir=$o(RPT(ir)) q:ir=""  d  ;
+ . s cnt=cnt+1
+ . s SAMIRTN(cnt)="<th>"_$g(RPT(ir,"header"))_"</th>"
+ s cnt=cnt+1 s SAMIRTN(cnt)="</tr></thead>"
  ;
  n ij
  n root s root=$$setroot^%wd("vapals-patients")
  s cnt=cnt+1 s SAMIRTN(cnt)="<tbody>"
  s ij=0
- f  s ij=$o(pats(ij)) q:+ij=0  d  ;
+ f  s ij=$o(SAMIPATS(ij)) q:+ij=0  d  ;
  . n ij2 s ij2=0
- . f  s ij2=$o(pats(ij,ij2)) q:+ij2=0  d  ;
+ . f  s ij2=$o(SAMIPATS(ij,ij2)) q:+ij2=0  d  ;
  . . n dfn s dfn=ij2
- . . n sid s sid=$g(@root@(dfn,"samistudyid"))
- . . n name s name=$g(@root@(dfn,"saminame"))
- . . n edate s edate=$g(pats(ij,dfn,"edate"))
- . . n cefud s cefud=$g(pats(ij,dfn,"cefud"))
- . . s cnt=cnt+1 s SAMIRTN(cnt)="<tr>"
- . . s cnt=cnt+1 s SAMIRTN(cnt)="<td>"_edate_"</td>"
+ . . s SAMIPATS(ij,dfn,"sid")=$g(@root@(dfn,"samistudyid"))
+ . . n sid s sid=SAMIPATS(ij,dfn,"sid")
+ . . s SAMIPATS(ij,dfn,"name")=$g(@root@(dfn,"saminame"))
+ . . n name s name=SAMIPATS(ij,dfn,"name")
+ . . s SAMIPATS(ij,dfn,"ssn")=$$GETSSN^SAMIFRM2(sid)
  . . new nuhref set nuhref="<form method=POST action=""/vapals"">"
  . . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""casereview"">"
  . . set nuhref=nuhref_"<input type=hidden name=""studyid"" value="_sid_">"
  . . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
+ . . s SAMIPATS(ij,dfn,"nuhref")=nuhref
+ . . ;
+ . . k ^gpl("SAMIPATS")
+ . . m ^gpl("SAMIPATS")=SAMIPATS
+ . . s cnt=cnt+1 s SAMIRTN(cnt)="<tr>"
+ . . s ir=""
+ . . f  s ir=$o(RPT(ir)) q:ir=""  d  ;
+ . . . s cnt=cnt+1
+ . . . n XR,XRV
+ . . . ;s XR=$g(RPT(ir,"routine"))_"("_ij_",.SAMIPATS)"
+ . . . s XR="S XRV="_$g(RPT(ir,"routine"))_"("_ij_","_dfn_",.SAMIPATS)"
+ . . . ;s XRV=@XR
+ . . . X XR
+ . . . s SAMIRTN(cnt)="<td>"_$g(XRV)_"</td>"
+ . . ;
  . . s cnt=cnt+1
- . . s SAMIRTN(cnt)="<td>"_nuhref_"</td>"
- . . n ssn s ssn=$$GETSSN^SAMIFRM2(sid)
- . . i ssn="" d  ;
- . . . n hdf
- . . . s hdf=$$GETHDR^SAMIFRM2(sid)
- . . . s ssn=$$GETSSN^SAMIFRM2(sid)
- . . s cnt=cnt+1
- . . s SAMIRTN(cnt)="<td>"_ssn_"</td>"
- . . s cnt=cnt+1
- . . s SAMIRTN(cnt)="<td>"_cefud_"</td></tr>"
+ . . s SAMIRTN(cnt)="</tr>"
  ;
  s cnt=cnt+1 s SAMIRTN(cnt)="</tbody>"
  f  s ii=$o(temp(ii)) q:temp(ii)["</tbody>"  d  ;

@@ -48,6 +48,7 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  . s (samikey,si)=""
  . d SAMISUB2^SAMIFRM2(.ln,samikey,si,.filter)
  . i ln["PAGE NAME" d findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type,datephrase))
+ . i ln["@@REPORTTYPE@@" d findReplace^%ts(.ln,"@@REPORTTYPE@@",type)
  . s SAMIRTN(cnt)=ln
  . ;
  n RPT,ik
@@ -143,6 +144,12 @@ SELECT(SAMIPATS,type,datephrase) ; selects patient for the report
  . . . s SAMIPATS(efmdate,zi)=""
  . . . i ceform="" s cefud="baseline"
  . . . s SAMIPATS(efmdate,zi,"cefud")=cefud
+ . . . s SAMIPATS(efmdate,zi,"cedos")=cedos
+ . . . s SAMIPATS(efmdate,zi,"ceform")=ceform
+ . . . s SAMIPATS(efmdate,zi,"ceform-vals")=$na(@root@("graph",sid,ceform))
+ . . . s SAMIPATS(efmdate,zi,"siform")=siform
+ . . . s SAMIPATS(efmdate,zi,"siform-vals")=$na(@root@("graph",sid,siform))
+ . . . m SAMIPATS(efmdate,zi,"items")=items
  . . s datephrase=" before "_$$VAPALSDT^SAMICAS2(nplus30)
  . . q
  . i type="activity" d  ;
@@ -154,6 +161,10 @@ SELECT(SAMIPATS,type,datephrase) ; selects patient for the report
  . . . s SAMIPATS(efmdate,zi)=""
  . . . i ceform="" s cefud="baseline"
  . . . s SAMIPATS(efmdate,zi,"cefud")=cefud
+ . . . s SAMIPATS(efmdate,zi,"cedos")=cedos
+ . . . s SAMIPATS(efmdate,zi,"ceform")=ceform
+ . . . s SAMIPATS(efmdate,zi,"siform")=siform
+ . . . m SAMIPATS(efmdate,zi,"items")=items
  . . s datephrase=" after "_$$VAPALSDT^SAMICAS2(nminus30)
  . ;
  . i type="incomplete" d  ;
@@ -161,12 +172,17 @@ SELECT(SAMIPATS,type,datephrase) ; selects patient for the report
  . . n zj s zj=""
  . . n gr s gr=$na(@root@("graph",sid))
  . . f  s zj=$o(@gr@(zj)) q:zj=""  d  ;
- . . . i $g(@gr@(zj,"samistatus"))="incomplete" s complete=0
+ . . . i $g(@gr@(zj,"samistatus"))="incomplete" d  ;
+ . . . . s complete=0
+ . . . . s SAMIPATS(efmdate,zi,"iform")=$g(SAMIPATS(efmdate,zi,"iform"))_" "_zj
  . . i complete=0 d  ; has incomplete form(s) 
  . . . s SAMIPATS(efmdate,zi,"edate")=edate
  . . . s SAMIPATS(efmdate,zi)=""
  . . . i ceform="" s cefud="baseline"
  . . . s SAMIPATS(efmdate,zi,"cefud")=cefud
+ . . . s SAMIPATS(efmdate,zi,"ceform")=ceform
+ . . . s SAMIPATS(efmdate,zi,"siform")=siform
+ . . . m SAMIPATS(efmdate,zi,"items")=items
  . . s datephrase=""
  . . q
  . i type="missingct" d  ;
@@ -175,6 +191,9 @@ SELECT(SAMIPATS,type,datephrase) ; selects patient for the report
  . . . s SAMIPATS(efmdate,zi)=""
  . . . i ceform="" s cefud="baseline"
  . . . s SAMIPATS(efmdate,zi,"cefud")=cefud
+ . . . s SAMIPATS(efmdate,zi,"ceform")=ceform
+ . . . s SAMIPATS(efmdate,zi,"siform")=siform
+ . . . m SAMIPATS(efmdate,zi,"items")=items
  . . s datephrase=""
  . . q
  . i type="outreach" d  ;
@@ -183,6 +202,10 @@ SELECT(SAMIPATS,type,datephrase) ; selects patient for the report
  . . s SAMIPATS(efmdate,zi,"edate")=edate
  . . s SAMIPATS(efmdate,zi)=""
  . . s SAMIPATS(efmdate,zi,"cefud")=cefud
+ . . . s SAMIPATS(efmdate,zi,"ceform")=ceform
+ . . . s SAMIPATS(efmdate,zi,"cedos")=cedos
+ . . . s SAMIPATS(efmdate,zi,"siform")=siform
+ . . . m SAMIPATS(efmdate,zi,"items")=items
  . . s datephrase=" as of "_$$VAPALSDT^SAMICAS2($$NOW^XLFDT)
  q
  ;

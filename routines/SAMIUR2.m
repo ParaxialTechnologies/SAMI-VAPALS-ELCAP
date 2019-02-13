@@ -103,60 +103,108 @@ SSN(zdt,dfn,SAMIPATS) ; extrinsic returns SSN
  ;
 BLINEDT(zdt,dfn,SAMIPATS) ; extrinsic returns Baseline Date
  n bldt
- s bldt="baslinedate"
- q $g(SAMIPATS(zdt,dfn,"edate"))
+ s bldt=$g(SAMIPATS(zdt,dfn,"edate"))
+ q bldt
  ;
 RECOM(zdt,dfn,SAMIPATS) ; extrinsic returns Recommendation
  n recom
- s recom="recommendation"
+ s recom="Full Diagnostic CT"
  q recom
  ;
 WHEN(zdt,dfn,SAMIPATS) ; extrinsic returns followup text ie. "in one year"
- n whn
- s whn="in one year"
+ n root s root=$$setroot^%wd("vapals-patients")
+ n ceform s ceform=$g(SAMIPATS(zdt,dfn,"ceform"))
+ n sid s sid=$g(@root@(dfn,"samistudyid"))
+ q:ceform="" ""
+ n vals s vals=$na(@root@("graph",sid,ceform))
+ n DICT
+ s DICT("cefuw","1m")="in one month"
+ s DICT("cefuw","1y")="in one year"
+ s DICT("cefuw","3m")="in three months"
+ s DICT("cefuw","6m")="in six months"
+ s DICT("cefuw","os")="other as specified"
+ n whnx s whnx=$g(@vals@("cefuw"))
+ q:whnx="" ""
+ s whn=$g(DICT("cefuw",whnx))
  q whn
  ;
 LASTEXM(zdt,dfn,SAMIPATS) ; extrinsic returns patient last exam
  n lexm
- s lexm="last exam date"
+ s lexm=$g(SAMIPATS(zdt,dfn,"cedos"))
  q lexm
  ;
 STATUS(zdt,dfn,SAMIPATS) ; extrinsic returns patient status
  n stat
- s stat="active"
+ n root s root=$$setroot^%wd("vapals-patients")
+ n sid s sid=$g(@root@(dfn,"samistudyid"))
+ n siform s siform=$g(SAMIPATS(zdt,dfn,"siform"))
+ n vals s vals=$na(@root@("graph",sid,siform))
+ s stat=$g(@vals@("sistatus"))
  q stat
  ;
 STREETAD(zdt,dfn,SAMIPATS) ; extrinsic returns patient street address
  n staddr
- s staddr="street address"
+ n root s root=$$setroot^%wd("vapals-patients")
+ n sid s sid=$g(@root@(dfn,"samistudyid"))
+ n siform s siform=$g(SAMIPATS(zdt,dfn,"siform"))
+ n vals s vals=$na(@root@("graph",sid,siform))
+ s staddr=$g(@vals@("sipsa"))
  q staddr
  ;
 STUDYDT(zdt,dfn,SAMIPATS) ; extrinsic returns the lastest Study Date
- q "study date"
+ n stdt
+ s stdt=$g(SAMIPATS(zdt,dfn,"cedos"))
+ q stdt
  ;
 STUDYTYP(zdt,dfn,SAMIPATS) ; extrinsic returns the latest Study Type
- q "study type"
+ n root s root=$$setroot^%wd("vapals-patients")
+ n ceform s ceform=$g(SAMIPATS(zdt,dfn,"ceform"))
+ n sid s sid=$g(@root@(dfn,"samistudyid"))
+ q:ceform="" ""
+ n vals s vals=$na(@root@("graph",sid,ceform))
+ n stypx,styp
+ s stypx=$g(@vals@("cetex"))
+ s styp=$s(stypx="a":"Annual",stypx="b":"Baseline",stypx="d":"Followup",1:"")
+ q styp
  ;
 CTPROT(zdt,dfn,SAMIPATS) ; extrinsic returns the CT Protocol
- q "CT Protocol"
+ n root s root=$$setroot^%wd("vapals-patients")
+ n ceform s ceform=$g(SAMIPATS(zdt,dfn,"ceform"))
+ n sid s sid=$g(@root@(dfn,"samistudyid"))
+ q:ceform="" ""
+ n vals s vals=$na(@root@("graph",sid,ceform))
+ n cectp s cectp=$g(@vals@("cectp"))
+ n ctyp
+ s ctyp=$s(cectp="l":"Low-Dose CT",cectp="d":"Standard CT",cectp="i":"Limited",1:"")
+ q ctyp
  ;
 GENDER(zdt,dfn,SAMIPATS) ; extrinsic returns gender
- q "gender"
+ n root s root=$$setroot^%wd("vapals-patients")
+ n gend
+ s gend=$g(@root@(dfn,"gender"))
+ q:gend="" ""
+ s gend=$p(gend,"^",2)
+ q gend
  ;
 RACE(zdt,dfn,SAMIPATS) ; extrinsic returns race
- q "race"
+ n root s root=$$setroot^%wd("vapals-patients")
+ n race s race=$g(@root@(dfn,"race"))
+ q:race=""
+ q race
  ;
 ETHNCTY(zdt,dfn,SAMIPATS) ; extrinsic returns ethnicity
  q "ethnicity"
  ;
 AGE(zdt,dfn,SAMIPATS) ; extrinsic returns age
- q "age"
+ n root s root=$$setroot^%wd("vapals-patients")
+ n age s age=$g(@root@(dfn,"age"))
+ q age
  ;
 SMKSTAT(zdt,dfn,SAMIPATS) ; extrinsic returns smoking status
  q "smoking status"
  ;
 IFORM(zdt,dfn,SAMIPATS) ; extrinsic returns the name(s) of the incomplete forms
- q "incomplete forms"
+ q $g(SAMIPATS(zdt,dfn,"iform"))
  ;
 IFORMDT(zdt,dfn,SAMIPATS) ; extrinsic returns incomplete form date
  q "iform date"

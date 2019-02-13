@@ -202,11 +202,11 @@ SELECT(SAMIPATS,type,datephrase) ; selects patient for the report
  . . s SAMIPATS(efmdate,zi,"edate")=edate
  . . s SAMIPATS(efmdate,zi)=""
  . . s SAMIPATS(efmdate,zi,"cefud")=cefud
- . . . s SAMIPATS(efmdate,zi,"ceform")=ceform
- . . . s SAMIPATS(efmdate,zi,"cedos")=cedos
- . . . s SAMIPATS(efmdate,zi,"siform")=siform
- . . . m SAMIPATS(efmdate,zi,"items")=items
- . . s datephrase=" as of "_$$VAPALSDT^SAMICAS2($$NOW^XLFDT)
+ . . s SAMIPATS(efmdate,zi,"ceform")=ceform
+ . . s SAMIPATS(efmdate,zi,"cedos")=cedos
+ . . s SAMIPATS(efmdate,zi,"siform")=siform
+ . . m SAMIPATS(efmdate,zi,"items")=items
+ . s datephrase=" as of "_$$VAPALSDT^SAMICAS2($$NOW^XLFDT)
  q
  ;
 PNAME(type,phrase) ; extrinsic returns the PAGE NAME for the report

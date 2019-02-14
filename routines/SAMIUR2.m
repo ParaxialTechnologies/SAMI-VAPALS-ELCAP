@@ -63,8 +63,10 @@ RPTTBL(RPT,TYPE) ; RPT is passed by reference and returns the
  . S RPT(6,"routine")="$$ETHNCTY^SAMIUR2"
  . S RPT(7,"header")="Age"
  . S RPT(7,"routine")="$$AGE^SAMIUR2"
- . S RPT(8,"header")="Smoking Status"
- . S RPT(8,"routine")="$$SMKSTAT^SAMIUR2"
+ . S RPT(8,"header")="Urban/Rural"
+ . S RPT(8,"routine")="$$RURAL^SAMIUR2"
+ . S RPT(9,"header")="Smoking Status"
+ . S RPT(9,"routine")="$$SMKSTAT^SAMIUR2"
  if TYPE="incomplete" d  q  ;
  . S RPT(1,"header")="Enrollment date"
  . S RPT(1,"routine")="$$BLINEDT^SAMIUR2"
@@ -197,11 +199,27 @@ ETHNCTY(zdt,dfn,SAMIPATS) ; extrinsic returns ethnicity
  ;
 AGE(zdt,dfn,SAMIPATS) ; extrinsic returns age
  n root s root=$$setroot^%wd("vapals-patients")
- n age s age=$g(@root@(dfn,"age"))
+ n dob,age
+ set dob=$get(@root@(dfn,"sbdob")) ; dob in VAPALS format
+ ;
+ new X,Y
+ set X=dob
+ do ^%DT
+ set age=$piece($$FMDIFF^XLFDT($$NOW^XLFDT,Y)/365,".")
  q age
  ;
 SMKSTAT(zdt,dfn,SAMIPATS) ; extrinsic returns smoking status
- q "smoking status"
+ n root s root=$$setroot^%wd("vapals-patients")
+ n sid s sid=$g(@root@(dfn,"samistudyid"))
+ n siform s siform=$g(SAMIPATS(zdt,dfn,"siform"))
+ n vals s vals=$na(@root@("graph",sid,siform))
+ n smk
+ s smk="unknown"
+ if $g(@vals@("siesn")) s smk="Never smoked"
+ if $g(@vals@("siesp")) s smk="Past smoker"
+ if $g(@vals@("siesc")) s smk="Current smoker"
+ if $g(@vals@("siesq")) s smk="Current smoker"
+ q smk
  ;
 IFORM(zdt,dfn,SAMIPATS) ; extrinsic returns the name(s) of the incomplete forms
  q $g(SAMIPATS(zdt,dfn,"iform"))
@@ -209,3 +227,15 @@ IFORM(zdt,dfn,SAMIPATS) ; extrinsic returns the name(s) of the incomplete forms
 IFORMDT(zdt,dfn,SAMIPATS) ; extrinsic returns incomplete form date
  q "iform date"
  ;
+RURAL(zdt,dfn,SAMIPATS) ; extrinsic which returns the rural/urban status
+ ; of the patient
+ n root s root=$$setroot^%wd("vapals-patients")
+ n sid s sid=$g(@root@(dfn,"samistudyid"))
+ n siform s siform=$g(SAMIPATS(zdt,dfn,"siform"))
+ n vals s vals=$na(@root@("graph",sid,siform))
+ n sirs
+ s sirs=$g(@vals@("sirs"))
+ s sirs=$s(sirs="r":"rural",sirs="u":"urban",sirs="n":"unknown",1:"unknown")
+ q sirs
+ ;
+ 

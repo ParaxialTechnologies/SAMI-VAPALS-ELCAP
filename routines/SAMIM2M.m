@@ -1,4 +1,4 @@
-SAMIM2M ;ven/lgc/smh - M2M WITH SAM HABIEL'S KBANSCAU BROKER ; 2/2/19 2:37pm
+SAMIM2M ;ven/lgc/smh - M2M WITH SAM HABIEL'S KBANSCAU BROKER ; 2/13/19 3:10pm
  ;;18.0;SAM;;
  ;
  ;@license: see routine SAMIUL
@@ -126,6 +126,7 @@ CLSCLN ; 10. Logout
  ; background jobs by default./Sam Habiel
  N NIO S NIO=IO,IO=$S($G(IO(0))]"":IO(0),1:$P)
  I NIO]"" C NIO K IO(1,NIO) S IO("CLOSE")=NIO
+ ;
  D:CONSOLE CONSOLE^XWBCLRPC($$NOW^XLFDT)
  ;
  ; 12. Clean temporary variables

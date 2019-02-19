@@ -1,4 +1,4 @@
-SAMINOTI ;ven/gpl - ielcap: forms ; 1/22/19 1:29pm
+SAMINOTI ;ven/gpl - ielcap: forms ; 2/14/19 10:47am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -31,7 +31,7 @@ WSNOTE(return,filter) ; web service which returns a text note
  m vals=@root@("graph",si,samikey)
  ;
  new temp,tout
- do GETTMPL^SAMICAS2("temp","vapals:note")
+ do GETTMPL^SAMICASE("temp","vapals:note")
  quit:'$data(temp)
  ;
  n cnt s cnt=0

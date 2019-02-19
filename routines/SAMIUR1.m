@@ -1,4 +1,4 @@
-SAMIUR1 ;ven/gpl - sami user reports ; 1/22/19 1:31pm
+SAMIUR1 ;ven/gpl - sami user reports ; 2/14/19 10:55am
  ;;18.0;SAM;;
  ;
  ;@license: see routine SAMIUL
@@ -111,7 +111,7 @@ SELECT(SAMIPATS,type,datephrase) ; selects patient for the report
  . n sid s sid=$g(@root@(zi,"samistudyid"))
  . q:sid=""
  . n items s items=""
- . d GETITEMS^SAMICAS2("items",sid)
+ . d GETITEMS^SAMICASE("items",sid)
  . q:'$d(items)
  . n efmdate,edate,siform,ceform,cefud,fmcefud,cedos,fmcedos
  . s siform=$o(items("siform-"))
@@ -119,13 +119,13 @@ SELECT(SAMIPATS,type,datephrase) ; selects patient for the report
  . s (cefud,fmcefud,cedos,fmcedos)=""
  . i ceform'="" d  ;
  . . s cefud=$g(@root@("graph",sid,ceform,"cefud"))
- . . i cefud'="" s fmcefud=$$KEY2FM^SAMICAS2(cefud)
+ . . i cefud'="" s fmcefud=$$KEY2FM^SAMICASE(cefud)
  . . s cedos=$g(@root@("graph",sid,ceform,"cedos"))
- . . i cedos'="" s fmcedos=$$KEY2FM^SAMICAS2(cedos)
+ . . i cedos'="" s fmcedos=$$KEY2FM^SAMICASE(cedos)
  . s edate=$g(@root@("graph",sid,siform,"sidc"))
  . i edate="" s edate=$g(@root@("graph",sid,siform,"samicreatedate"))
- . s efmdate=$$KEY2FM^SAMICAS2(edate)
- . s edate=$$VAPALSDT^SAMICAS2(efmdate)
+ . s efmdate=$$KEY2FM^SAMICASE(edate)
+ . s edate=$$VAPALSDT^SAMICASE(efmdate)
  . ;
  . i type="followup" d  ;
  . . n nplus30 s nplus30=$$FMADD^XLFDT($$NOW^XLFDT,31)
@@ -136,18 +136,18 @@ SELECT(SAMIPATS,type,datephrase) ; selects patient for the report
  . . . s SAMIPATS(efmdate,zi)=""
  . . . i ceform="" s cefud="baseline"
  . . . s SAMIPATS(efmdate,zi,"cefud")=cefud
- . . s datephrase=" before "_$$VAPALSDT^SAMICAS2(nplus30)
+ . . s datephrase=" before "_$$VAPALSDT^SAMICASE(nplus30)
  . . q
  . i type="activity" d  ;
  . . n nminus30 s nminus30=$$FMADD^XLFDT($$NOW^XLFDT,-31)
  . . n anyform s anyform=$o(items("sort",""),-1)
- . . n fmanyform s fmanyform=$$KEY2FM^SAMICAS2(anyform)
+ . . n fmanyform s fmanyform=$$KEY2FM^SAMICASE(anyform)
  . . i (+fmanyform>nminus30)!(+efmdate>nminus30) d  ; need any new form
  . . . s SAMIPATS(efmdate,zi,"edate")=edate
  . . . s SAMIPATS(efmdate,zi)=""
  . . . i ceform="" s cefud="baseline"
  . . . s SAMIPATS(efmdate,zi,"cefud")=cefud
- . . s datephrase=" after "_$$VAPALSDT^SAMICAS2(nminus30)
+ . . s datephrase=" after "_$$VAPALSDT^SAMICASE(nminus30)
  . ;
  . i type="incomplete" d  ;
  . . n complete s complete=1
@@ -176,7 +176,7 @@ SELECT(SAMIPATS,type,datephrase) ; selects patient for the report
  . . s SAMIPATS(efmdate,zi,"edate")=edate
  . . s SAMIPATS(efmdate,zi)=""
  . . s SAMIPATS(efmdate,zi,"cefud")=cefud
- . . s datephrase=" as of "_$$VAPALSDT^SAMICAS2($$NOW^XLFDT)
+ . . s datephrase=" as of "_$$VAPALSDT^SAMICASE($$NOW^XLFDT)
  q
  ;
 PNAME(type,phrase) ; extrinsic returns the PAGE NAME for the report

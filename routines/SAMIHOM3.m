@@ -1,4 +1,4 @@
-SAMIHOM3 ;ven/gpl - ielcap: forms ; 1/22/19 1:28pm
+SAMIHOM3 ;ven/gpl - ielcap: forms ; 2/14/19 10:37am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -69,7 +69,7 @@ SAMIHOM3 ;ven/gpl - ielcap: forms ; 1/22/19 1:28pm
  ; 2018-03-06 ven/gpl v18.0t04 SAMIHOM3: ?
  ;
  ; 2018-03-07 ven/toad v18.0t04 SAMIHOM3: in $$SID2NUM add
- ; WSNUFORM^SAMICAS2 to called-by list; in keyDate,GETHOME update
+ ; WSNUFORM^SAMICASE to called-by list; in keyDate,GETHOME update
  ; called-by.
  ;
  ;@contents
@@ -276,7 +276,7 @@ KEYDATE(fmdt) ; date in StudyId format (yyyy-mm-dd)
  ;ven/gpl;private;function;
  ;@called-by
  ; WSNEWCAS
- ; WSNFPOST^SAMICAS2
+ ; WSNFPOST^SAMICASE
  ;@calls
  ; $$FMTE^XLFDT
  ;@input
@@ -376,8 +376,8 @@ PREFILL(dfn) ; prefill fields for form
  d ^%DT
  Q:Y=-1
  s dob=Y
- if dob'="" set @root@(gien,"sbdob")=$$VAPALSDT^SAMICAS2(dob)
- if dob'="" set @root@(gien,"sidob")=$$VAPALSDT^SAMICAS2(dob)
+ if dob'="" set @root@(gien,"sbdob")=$$VAPALSDT^SAMICASE(dob)
+ if dob'="" set @root@(gien,"sidob")=$$VAPALSDT^SAMICASE(dob)
  ; ssn format
  n ssn s ssn=$g(@lroot@(lien,"ssn"))
  if $l(ssn)=9 set @root@(gien,"sissn")=$e(ssn,1,3)_"-"_$e(ssn,4,5)_"-"_$e(ssn,6,9)
@@ -416,7 +416,7 @@ MKSBFORM(num) ; create background form -- depricated gpl 20180615
  new cdate set cdate=$get(@root@(num,"samicreatedate"))
  quit:cdate=""
  merge @root@("graph",sid,"sbform-"_cdate)=@root@(num)
- d SSAMISTA^SAMICAS2(sid,"sbform-"_cdate,"incomplete")
+ d SSAMISTA^SAMICASE(sid,"sbform-"_cdate,"incomplete")
  ;
  ;@stanza 3 termination
  ;
@@ -450,7 +450,7 @@ MKSIFORM(num) ; create intake form
  new cdate set cdate=$get(@root@(num,"samicreatedate"))
  quit:cdate=""
  merge @root@("graph",sid,"siform-"_cdate)=@root@(num)
- d SSAMISTA^SAMICAS2(sid,"siform-"_cdate,"complete")
+ d SSAMISTA^SAMICASE(sid,"siform-"_cdate,"complete")
  ; initialize form from VistA data
  n zf s zf=$na(@root@("graph",sid,"siform-"_cdate))
  s @zf@("sipsa")=$g(@root@(num,"address1")) ; primary address
@@ -470,7 +470,7 @@ MKSIFORM(num) ; create intake form
  n phn s phn=$g(@root@(num,"phone")) ; phone number
  i phn["x" s phn=$p(phn," x",1)
  s @zf@("sippn")=phn
- s @zf@("sidc")=$$VAPALSDT^SAMICAS2($$NOW^XLFDT)
+ s @zf@("sidc")=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
  ; set samifirsttime variable for intake form
  s @zf@("samifirsttime")="true"
  ;
@@ -492,9 +492,9 @@ SID2NUM(sid) ; number part of studyid (XXX0001 -> 1)
  ;ven/gpl;public;function;
  ;@called-by
  ; getVals^%wfhform
- ; WSCASE^SAMICAS2
- ; WSNUFORM^SAMICAS2
- ; MKCEFORM^SAMICAS2
+ ; WSCASE^SAMICASE
+ ; WSNUFORM^SAMICASE
+ ; MKCEFORM^SAMICASE
  ;@calls: none
  ;@input
  ; sid = study id

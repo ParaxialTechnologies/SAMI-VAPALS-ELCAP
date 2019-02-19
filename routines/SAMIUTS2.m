@@ -1,4 +1,4 @@
-SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICAS2,SAMICAS3 ; 1/24/19 9:59am
+SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICASE,SAMICAS2,SAMICAS3 ; 2/14/19 1:53pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -44,7 +44,7 @@ SHUTDOWN ; ZEXCEPT: utsuccess
 UTGTMPL ; @TEST - get html template
  ;GETTMPL(return,form)
  n temp,SAMIUPOO
- d GETTMPL^SAMICAS2("temp","vapals:casereview")
+ d GETTMPL^SAMICASE("temp","vapals:casereview")
  d PLUTARR^SAMIUTST(.SAMIUPOO,"UTGTMPL^SAMIUTS2")
  s utsuccess=1
  n nodep,nodet s nodep=$na(SAMIUPOO),nodet=$na(temp)
@@ -102,7 +102,7 @@ UTCNTITM ; @TEST - get items available for studyid
  n uforms,forms,zi s uforms=0,zi=""
  f  s zi=$o(@rootvp@("graph",studyid,zi)) q:zi=""  d
  . s uforms(zi)=""
- d GETITEMS^SAMICAS2("SAMIUPOO",studyid)
+ d GETITEMS^SAMICASE("SAMIUPOO",studyid)
  s utsuccess=1
  s zi="" f  s zi=$o(uforms(zi)) q:zi=""  d
  . i '$d(SAMIUPOO(zi)) s utsuccess=0
@@ -123,7 +123,7 @@ UTK2DDT ; @TEST - date in elcap format from key date
  ;
 UTVPLSD ; @TEST - extrinsic which return the vapals format for dates
  ;VAPALSDT(fmdate)
- n vpdate s vpdate=$$VAPALSDT^SAMICAS2("3181003")
+ n vpdate s vpdate=$$VAPALSDT^SAMICASE("3181003")
  d CHKEQ^%ut(vpdate,"10/3/2018","Testing fmdate to elcap date form  FAILED!")
  q
  ;
@@ -131,7 +131,7 @@ UTWSNF ; @TEST - select new form for patient (get service)
  ;WSNUFORM(rtn,filter)
  n rtn,SAMIUARGS,SAMIUPOO,SAMIUARC
  s SAMIUARGS("studyid")="XXX00001"
- d WSNUFORM^SAMICAS2(.SAMIUPOO,.SAMIUARGS)
+ d WSNUFORM^SAMICASE(.SAMIUPOO,.SAMIUARGS)
  d PLUTARR^SAMIUTST(.SAMIUARC,"UTWSNF^SAMIUTS2")
  s utsuccess=1
  n nodep,nodea s nodep=$na(SAMIUPOO),nodea=$na(SAMIUARC)
@@ -147,7 +147,7 @@ UTK2FM ; @TEST - convert a key to a fileman date
  ; KEY2FM
  n SAMIKEY,fmd
  s SAMIKEY="unittestform-2018-11-13"
- s fmd=$$KEY2FM^SAMICAS2(SAMIKEY)
+ s fmd=$$KEY2FM^SAMICASE(SAMIKEY)
  s utsuccess=(fmd=3181113)
  d CHKEQ^%ut(1,utsuccess,"Testing key2fm FAILED!")
  q
@@ -164,7 +164,7 @@ UTMKCEF ; @TEST - create ct evaluation form
  ; -----
  ; We need to add additional fields to the ceform in
  ;   vapals-patients that were deleted in SAMIUTH3 as
- ;   they are used in other unit tests.  This will 
+ ;   they are used in other unit tests.  This will
  ;   not change the success of the test under way.
  ;
  n SAMIUPOO,root,vals
@@ -203,14 +203,15 @@ UTMKBXF ; @TEST - create ct evaluation form
 UTWSCAS ; @TEST - generate case review page
  ;WSCASE(rtn,filter)
  n SAMIUFLTR s SAMIUFLTR("studyid")="XXX00001"
- n SAMIUPOO d WSCASE^SAMICAS2(.SAMIUPOO,.SAMIUFLTR)
+ n SAMIUPOO d WSCASE^SAMICASE(.SAMIUPOO,.SAMIUFLTR)
  n SAMIUARC d PLUTARR^SAMIUTST(.SAMIUARC,"UTWSCAS^SAMIUTS2")
  s utsuccess=1
  n nodep,nodea s nodep=$na(SAMIUPOO),nodea=$na(SAMIUARC)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d
  .; if the first non space 10 characters are a date, skip
- . q:($e($tr(@nodep," "),1,10)?4N1P2N1P2N)
- . q:(@nodep["meta content")
+ . q:(@nodep["ceform")
+ . q:(@nodea["</form>(incomplete)</td>")
+ . q:(($p(@nodep,"</td><td>",4))?.N1"/".N1"/"4N)
  . i '($qs(nodep,1)=$qs(nodea,1)) s utsuccess=0
  . i '(@nodep=@nodea) s utsuccess=0
  i '(nodea="") s utsuccess=0
@@ -237,7 +238,7 @@ UTSSAMIS ; @TEST - set 'samistatus' to val in form
  s sid="XXX00001"
  s val="unit test"
  s ss1=$g(@root@("graph",sid,"sbform-2018-10-21","samistatus"))
- d SSAMISTA^SAMICAS2(sid,form,val)
+ d SSAMISTA^SAMICASE(sid,form,val)
  s ss2=$g(@root@("graph",sid,"sbform-2018-10-21","samistatus"))
  ;return to original value
  s @root@("graph",sid,"sbform-2018-10-21","samistatus")=ss1
@@ -257,7 +258,7 @@ UTDELFM ; @TEST - deletes a form if it is incomplete
  i 'sbexist d  q
  . d FAIL^%ut("sbform-2018-10-21 not in vapals-patients Graphstore")
  m SAMIUPOO=@root@("graph",studyid,form)
- d DELFORM^SAMICAS2(.SAMIURTN,.SAMIUARGS)
+ d DELFORM^SAMICASE(.SAMIURTN,.SAMIUARGS)
  s sbexistd=$d(@root@("graph",studyid,form))
  ; now put back original sbform
  k @root@("graph",studyid,form)
@@ -275,14 +276,15 @@ UTINITS ; - set all forms to 'incomplete'
 UTCSRT ; @TEST - generates case review table
  ;CASETBL(ary)
  n SAMIUPOO,SAMIUARC
- d CASETBL^SAMICAS2("SAMIUPOO")
- d PLUTARR^SAMIUTST(.SAMIUARC,"casetbl-SAMICAS2")
+ d CASETBL^SAMICAS3("SAMIUPOO")
+ d PLUTARR^SAMIUTST(.SAMIUARC,"casetbl-SAMICASE")
  s utsuccess=1
  n pnode,anode
  s pnode=$na(SAMIUPOO),anode=$na(SAMIUARC)
  f  s pnode=$q(@pnode),anode=$q(@anode) q:pnode=""  d
  . I '(@pnode=@anode) s utsuccess=0
  s:'(anode="") utsuccess=0
+ d CHKEQ^%ut(utsuccess,1,"Testing generate case review  FAILED!")
  q
  ;
  ;
@@ -300,7 +302,7 @@ UTNFPST ; @TEST - post new form selection (post service)
  ;   "itform"
  ;
  s SAMIUARGS("form")="ceform"
- d WSNFPOST^SAMICAS2(.SAMIUARGS,.SAMIUBODY,.SAMIURSLT)
+ d WSNFPOST^SAMICASE(.SAMIUARGS,.SAMIUBODY,.SAMIURSLT)
  s newform=$O(@root@("graph","XXX00001","ceform-2018-10-21"))
  s utsuccess=(newform["ceform")
  ; now kill the extra form just built
@@ -308,7 +310,7 @@ UTNFPST ; @TEST - post new form selection (post service)
  d CHKEQ^%ut(utsuccess,1,"Testing post ceform FAILED!")
  ;
  s SAMIUARGS("form")="sbform"
- d WSNFPOST^SAMICAS2(.SAMIUARGS,.SAMIUBODY,.SAMIURSLT)
+ d WSNFPOST^SAMICASE(.SAMIUARGS,.SAMIUBODY,.SAMIURSLT)
  s newform=$O(@root@("graph","XXX00001","sbform-2018-10-21"))
  s utsuccess=(newform["sbform")
  ; now kill the extra form just built
@@ -316,7 +318,7 @@ UTNFPST ; @TEST - post new form selection (post service)
  d CHKEQ^%ut(utsuccess,1,"Testing post sbform FAILED!")
  ;
  s SAMIUARGS("form")="fuform"
- d WSNFPOST^SAMICAS2(.SAMIUARGS,.SAMIUBODY,.SAMIURSLT)
+ d WSNFPOST^SAMICASE(.SAMIUARGS,.SAMIUBODY,.SAMIURSLT)
  s newform=$O(@root@("graph","XXX00001","fuform-2018-10-21"))
  s utsuccess=(newform["fuform")
  ; now kill the extra form just built
@@ -324,7 +326,7 @@ UTNFPST ; @TEST - post new form selection (post service)
  d CHKEQ^%ut(utsuccess,1,"Testing post fuform FAILED!")
  ;
  s SAMIUARGS("form")="bxform"
- d WSNFPOST^SAMICAS2(.SAMIUARGS,.SAMIUBODY,.SAMIURSLT)
+ d WSNFPOST^SAMICASE(.SAMIUARGS,.SAMIUBODY,.SAMIURSLT)
  s newform=$O(@root@("graph","XXX00001","bxform-2018-10-21"))
  s utsuccess=(newform["bxform")
  ; now kill the extra form just built
@@ -332,7 +334,7 @@ UTNFPST ; @TEST - post new form selection (post service)
  d CHKEQ^%ut(utsuccess,1,"Testing post bxform FAILED!")
  ;
  s SAMIUARGS("form")="ptform"
- d WSNFPOST^SAMICAS2(.SAMIUARGS,.SAMIUBODY,.SAMIURSLT)
+ d WSNFPOST^SAMICASE(.SAMIUARGS,.SAMIUBODY,.SAMIURSLT)
  s newform=$O(@root@("graph","XXX00001","ptform-2018-10-21"))
  s utsuccess=(newform["ptform")
  ; now kill the extra form just built
@@ -340,7 +342,7 @@ UTNFPST ; @TEST - post new form selection (post service)
  d CHKEQ^%ut(utsuccess,1,"Testing post ptform FAILED!")
  ;
  s SAMIUARGS("form")="itform"
- d WSNFPOST^SAMICAS2(.SAMIUARGS,.SAMIUBODY,.SAMIURSLT)
+ d WSNFPOST^SAMICASE(.SAMIUARGS,.SAMIUBODY,.SAMIURSLT)
  s newform=$O(@root@("graph","XXX00001","itform-2018-10-21"))
  s utsuccess=(newform["itform")
  ; now kill the extra form just built
@@ -350,7 +352,7 @@ UTNFPST ; @TEST - post new form selection (post service)
  q
  ;
  ; Builds the form found in 'form' by calling
- ;   the entry point in SAMICAS2 named in 'label'
+ ;   the entry point in SAMICASE named in 'label'
  ; Enter
  ;   form       = name of the form to build (e.g. "sbform")
  ;   label      = the datekey to use to identify this
@@ -369,7 +371,7 @@ CHKFORM(form,LABEL,utsuccess) ;
  s SAMIUARGS("key")=key
  s SAMIUARGS("studyid")=sid
  s SAMIUARGS("form")="vapals:"_form
- n rtn s rtn=LABEL_"^SAMICAS2(sid,key)" d @rtn
+ n rtn s rtn=LABEL_"^SAMICAS3(sid,key)" d @rtn
  ; ^%wd(17.040801,23,"graph","XXX00001",form_"-2018-10-21","active duty")="N and others
  ;
  ; fail if nodes not set in vapals-patients Graphstore

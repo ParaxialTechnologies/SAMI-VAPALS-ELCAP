@@ -1,4 +1,4 @@
-SAMISRC2 ;ven/gpl - ielcap: home page search ; 1/22/19 1:30pm
+SAMISRC2 ;ven/gpl - ielcap: home page search ; 2/14/19 10:49am
  ;;18.0;SAM;;
  ;
  ;@license: see routine SAMIUL
@@ -76,7 +76,7 @@ WSLOOKUP(ARGS,BODY,RESULT) ; look up ELCAP patient
  ; parseBody^%wf
  ; $$setroot^%wd
  ; $$GENSTDID^SAMIHOME
- ; WSCASE^SAMICAS2
+ ; WSCASE^SAMICASE
  ; GETHOME^SAMIHOME
  ;@input
  ;.ARGS =
@@ -109,7 +109,7 @@ WSLOOKUP(ARGS,BODY,RESULT) ; look up ELCAP patient
  . if +sien=0 quit  ; didn't work
  . if $data(@root@(sien)) do  ; there is a record at that location
  . . set filter("studyid")=$$GENSTDID^SAMIHOM3(sien)
- . . do WSCASE^SAMICAS2(.trtn,.filter)
+ . . do WSCASE^SAMICASE(.trtn,.filter)
  . . quit
  . quit
  ;

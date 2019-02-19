@@ -1,4 +1,4 @@
-SAMICTR0 ;ven/gpl - ielcap: forms ; 1/2/19 9:28am
+SAMICTR0 ;ven/gpl - ielcap: forms ; 2/14/19 10:29am
  ;;18.0;SAMI;;
  ;
  ;
@@ -252,7 +252,7 @@ XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined
 GETFILTR(filter,sid) ; fill in the filter for Ct Eval for sid
  s filter("studyid")=sid
  n items,zform
- d GETITEMS^SAMICAS2("items",sid)
+ d GETITEMS^SAMICASE("items",sid)
  s zform=$o(items("ceform"))
  s filter("form")=zform
  ;zwr filter

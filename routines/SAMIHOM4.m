@@ -1,4 +1,4 @@
-SAMIHOM4 ;ven/gpl,arc - ielcap: forms;2018-11-30T17:45Z ; 1/22/19 1:28pm
+SAMIHOM4 ;ven/gpl,arc - ielcap: forms;2018-11-30T17:45Z ; 2/14/19 10:45am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -99,15 +99,15 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  ;
  i route="casereview" d  q  ;
  . m SAMIARG=vars
- . d WSCASE^SAMICAS2(.SAMIRESULT,.SAMIARG)
+ . d WSCASE^SAMICASE(.SAMIRESULT,.SAMIARG)
  ;
  i route="nuform" d  q  ;
  . m SAMIARG=vars
- . d WSNUFORM^SAMICAS2(.SAMIRESULT,.SAMIARG)
+ . d WSNUFORM^SAMICASE(.SAMIRESULT,.SAMIARG)
  ;
  i route="addform" d  q  ;
  . m SAMIARG=vars
- . d WSNFPOST^SAMICAS2(.SAMIARG,.SAMIBODY,.SAMIRESULT)
+ . d WSNFPOST^SAMICASE(.SAMIARG,.SAMIBODY,.SAMIRESULT)
  ;
  i route="form" d  q  ;
  . m SAMIARG=vars
@@ -130,7 +130,7 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  ;
  i route="deleteform" d  q  ;
  . m SAMIARG=vars
- . d DELFORM^SAMICAS2(.SAMIRESULT,.SAMIARG)
+ . d DELFORM^SAMICASE(.SAMIRESULT,.SAMIARG)
  ;
  i route="ctreport" d  q  ;
  . m SAMIARG=vars
@@ -213,10 +213,10 @@ GETHOME ; homepage accessed using GET
  ;@called-by
  ; WSHOME
  ; WSNEWCAS
- ; WSNFPOST^SAMICAS2
+ ; WSNFPOST^SAMICASE
  ; wsLookup^SAMISRCH
  ;@calls
- ; GETTMPL^SAMICAS2
+ ; GETTMPL^SAMICASE
  ; findReplace^%ts
  ; $$SCANFOR
  ; ADDCRLF^VPRJRUT
@@ -230,7 +230,7 @@ GETHOME ; homepage accessed using GET
  ;@stanza 2 get template for homepage
  ;
  new temp,tout
- do GETTMPL^SAMICAS2("temp","vapals:home")
+ do GETTMPL^SAMICASE("temp","vapals:home")
  quit:'$data(temp)
  ;
  ;@stanza 3 process homepage template
@@ -286,7 +286,7 @@ WSNEWCAS ; receives post from home & creates new case
  ; PREFILL
  ; MKSBFORM
  ; MKSIFORM^SAMIHOM3
- ; WSCASE^SAMICAS2
+ ; WSCASE^SAMICASE
  ;@input
  ;.ARGS =
  ; BODY =
@@ -351,7 +351,7 @@ WSNEWCAS ; receives post from home & creates new case
  set SAMIARGS("studyid")=studyid
  set SAMIARGS("form")="vapals:"_siformkey
  do wsGetForm^%wf(.SAMIRESULT,.SAMIARGS)
- ;do WSCASE^SAMICAS2(.SAMIRESULT,.SAMIARGS) ; navigate to the case review page
+ ;do WSCASE^SAMICASE(.SAMIRESULT,.SAMIARGS) ; navigate to the case review page
  ;
  ;@stanza ? termination
  ;

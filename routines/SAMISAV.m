@@ -1,4 +1,4 @@
-SAMISAV ;ven/gpl - SAMI save routines ; 1/22/19 1:30pm
+SAMISAV ;ven/gpl - SAMI save routines ; 2/14/19 12:10pm
  ;;18.0;SAM;;
  ;
  ;@license: see routine SAMIUL
@@ -19,10 +19,10 @@ SAVFILTR(sid,form,vars) ; extrinsic which returns the form key to use
  . m ^SAMIGPL("samisav","vals")=vars
  . n formdate s formdate=$g(vars("cedos")) ; date of the CT scan from the form
  . q:formdate=""
- . n fdate s fdate=$$KEY2FM^SAMICAS2(formdate) ; convert to fileman date
+ . n fdate s fdate=$$KEY2FM^SAMICASE(formdate) ; convert to fileman date
  . q:fdate=""
  . q:fdate<0
- . n fmcurrent s fmcurrent=$$KEY2FM^SAMICAS2(form) ; current key in fm formate
+ . n fmcurrent s fmcurrent=$$KEY2FM^SAMICASE(form) ; current key in fm formate
  . if fdate'=fmcurrent d  ;
  . . n moveto s moveto="ceform-"_$$KEYDATE^SAMIHOM3(fdate)
  . . ;w !,"old: ",fmcurrent," new: ",fdate," ... date must be changed
@@ -38,10 +38,10 @@ SAVFILTR(sid,form,vars) ; extrinsic which returns the form key to use
  . s vars("samifirsttime")="false"
  . n formdate s formdate=$g(vars("sidc")) ; date of the CT scan from the form
  . q:formdate=""
- . n fdate s fdate=$$KEY2FM^SAMICAS2(formdate) ; convert to fileman date
+ . n fdate s fdate=$$KEY2FM^SAMICASE(formdate) ; convert to fileman date
  . q:fdate=""
  . q:fdate<0
- . n fmcurrent s fmcurrent=$$KEY2FM^SAMICAS2(form) ; current key in fm formate
+ . n fmcurrent s fmcurrent=$$KEY2FM^SAMICASE(form) ; current key in fm formate
  . if fdate'=fmcurrent d  ;
  . . n moveto s moveto="siform-"_$$KEYDATE^SAMIHOM3(fdate)
  . . ;w !,"old: ",fmcurrent," new: ",fdate," ... date must be changed

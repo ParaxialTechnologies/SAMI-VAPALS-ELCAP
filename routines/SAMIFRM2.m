@@ -1,4 +1,4 @@
-SAMIFRM2 ;ven/gpl - ielcap: forms ; 1/22/19 1:28pm
+SAMIFRM2 ;ven/gpl - ielcap: forms ; 2/14/19 10:35am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -485,7 +485,7 @@ WSSBFORM(SAMIRTN,SAMIFILTER) ; background form access
  ;@called-by
  ;@calls
  ; $$GENSTDID^SAMIHOM3
- ; GETITEMS^SAMICAS2
+ ; GETITEMS^SAMICASE
  ; wsGetForm^%wf
  ;
  new sid set sid=$get(SAMIFILTER("studyid"))
@@ -493,7 +493,7 @@ WSSBFORM(SAMIRTN,SAMIFILTER) ; background form access
  if +sid>0 set sid=$$GENSTDID^SAMIHOM3(sid)
  ;if sid="" set sid="XXX0001"
  ;
- new items do GETITEMS^SAMICAS2("items",sid)
+ new items do GETITEMS^SAMICASE("items",sid)
  ;write !,"sid=",sid,!
  ;zwrite items
  ;break
@@ -512,7 +512,7 @@ WSSIFORM(SAMIRTN,SAMIFILTER) ; intake form access
  ;@called-by
  ;@calls
  ; $$GENSTDID^SAMIHOM3
- ; GETITEMS^SAMICAS2
+ ; GETITEMS^SAMICASE
  ; wsGetForm^%wf
  ;
  new sid set sid=$get(SAMIFILTER("studyid"))
@@ -520,7 +520,7 @@ WSSIFORM(SAMIRTN,SAMIFILTER) ; intake form access
  if +sid>0 set sid=$$GENSTDID^SAMIHOM3(sid)
  ;if sid="" set sid="XXX0001"
  ;
- new items do GETITEMS^SAMICAS2("items",sid)
+ new items do GETITEMS^SAMICASE("items",sid)
  ;write !,"sid=",sid,!
  ;zwrite items
  ;break
@@ -539,7 +539,7 @@ WSCEFORM(SAMIRTN,SAMIFILTER) ; ctevaluation form access
  ;@called-by
  ;@calls
  ; $$GENSTDID^SAMIHOM3
- ; GETITEMS^SAMICAS2
+ ; GETITEMS^SAMICASE
  ; wsGetForm^%wf
  ;
  new sid set sid=$get(SAMIFILTER("studyid"))
@@ -547,7 +547,7 @@ WSCEFORM(SAMIRTN,SAMIFILTER) ; ctevaluation form access
  if +sid>0 set sid=$$GENSTDID^SAMIHOM3(sid)
  ;if sid="" set sid="XXX0001"
  ;
- new items do GETITEMS^SAMICAS2("items",sid)
+ new items do GETITEMS^SAMICASE("items",sid)
  ;write !,"sid=",sid,!
  ;zwrite items
  ;break
@@ -564,7 +564,7 @@ WSCEFORM(SAMIRTN,SAMIFILTER) ; ctevaluation form access
 FIXSRC(SAMILINE) ; fix html src lines to use resources in see/
  ;
  ;@called-by
- ; WSCASE^SAMICAS2
+ ; WSCASE^SAMICASE
  ; SAMISUB2
  ;@calls
  ; findReplaceAll^%ts
@@ -589,7 +589,7 @@ FIXSRC(SAMILINE) ; fix html src lines to use resources in see/
 FIXHREF(SAMILINE) ; fix html href lines to use resources in see/
  ;
  ;@called-by
- ; WSCASE^SAMICAS2
+ ; WSCASE^SAMICASE
  ; SAMISUB2
  ;@calls
  ; findReplaceAll^%ts
@@ -617,7 +617,7 @@ FIXHREF(SAMILINE) ; fix html href lines to use resources in see/
 GETLAST5(sid) ; extrinsic returns the last5 for patient sid
  ;
  ;@called-by
- ; WSCASE^SAMICAS2
+ ; WSCASE^SAMICASE
  ;@calls
  ; $$setroot^%wd
  ;
@@ -633,7 +633,7 @@ GETLAST5(sid) ; extrinsic returns the last5 for patient sid
 GETNAME(sid) ; extrinsic returns the name for patient sid
  ;
  ;@called-by
- ; WSCASE^SAMICAS2
+ ; WSCASE^SAMICASE
  ;@calls
  ; $$setroot^%wd
  ;
@@ -649,7 +649,7 @@ GETNAME(sid) ; extrinsic returns the name for patient sid
 GETSSN(sid) ; extrinsic returns the ssn for patient sid
  ;
  ;@called-by
- ; WSCASE^SAMICAS2
+ ; WSCASE^SAMICASE
  ;@calls
  ; $$setroot^%wd
  ;

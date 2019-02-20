@@ -1,4 +1,4 @@
-SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 20190220Z19:12
+SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 20190220Z19:27
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -416,7 +416,7 @@ ADDSIGN new cntxt,rmprc,console,cntnopen,SAMIARR,SAMIXD
  ;
  ; Clear ASAVE nodes
  if $data(SAMIPOO) do
- . new cnt,ASave save cnt=0
+ . new cnt,ASave set cnt=0
  . for  set cnt=$O(SAMIPOO(cnt)) quit:'cnt  do
  .. set ASave=$$KASAVE($piece(SAMIPOO(cnt),"^"),tiuien)
  ;
@@ -542,7 +542,7 @@ PTINFO(dfn) ;
  if '(dfn=$p(SAMIXD,"^",1)) q:$Q rslt  q
  set rslt="1^"_dfn
  new node set node=$name(@root@("dfn",dfn))
- set node=$quit(@node)
+ set node=$Q(@node)
  set gien=+$piece(node,",",5)
  if '$get(gien) quit:$Q rslt  quit
  set rslt="2^"_dfn
@@ -622,7 +622,7 @@ PTSSN1 new root set root=$$setroot^%wd("patient-lookup")
  new name,node,gien
  set name=$piece(SAMIXD,"^",8)
  new node set node=$name(@root@("name",name))
- set node=$quit(@node)
+ set node=$Q(@node)
  if ($piece(node,",",4)_","_$piece(node,",",5))[name set gien=+$piece(node,",",6)
  if '$get(gien) quit:$Q ssn  quit
  new dob set dob=$$FMTHL7^XLFDT($piece(SAMIXD,"^",2))

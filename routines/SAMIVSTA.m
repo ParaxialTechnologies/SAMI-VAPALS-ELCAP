@@ -1,4 +1,4 @@
-SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 20190218Z02:33
+SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 20190220Z19:12
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -39,7 +39,7 @@ SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 20190218Z02:33
  ;@copyright:
  ;@license: see routine SAMIUL
  ;
- ;@last-updated: 2019-02-18
+ ;@last-updated: 2019-02-20
  ;@application: VA-PALS
  ;@version: 1.0
  ;
@@ -99,33 +99,33 @@ TASKIT new samikey,vals,root,dest,provduz,ptdfn,tiutitlepn
  set provduz=$get(filter("DUZ"))
  if 'provduz do
  . set provduz=$$GET^XPAR("SYS","SAMI DEFAULT PROVIDER DUZ",,"Q")
- if '$get(provduz) quit:$quit 0  quit
+ if '$get(provduz) quit:$Q 0  quit
  ;
  set clinien=$get(filter("clinicien"))
  if 'clinien do
  . set clinien=$$GET^XPAR("SYS","SAMI DEFAULT CLINIC IEN",,"Q")
- if '$get(clinien) quit:$quit 0  quit
+ if '$get(clinien) quit:$Q 0  quit
  ;
  set tiutitlepn=$$GET^XPAR("SYS","SAMI NOTE TITLE PRINT NAME",,"Q")
  set tiutitleien=$order(^TIU(8925.1,"D",tiutitlepn,0))
- if '$get(tiutitleien) quit:$quit 0  quit
+ if '$get(tiutitleien) quit:$Q 0  quit
  ;
  set si=$get(filter("studyid")) ; e.g."XXX00001"
- if '$length($get(si)) quit:$quit 0  quit
+ if '$length($get(si)) quit:$Q 0  quit
  ;
  set root=$$setroot^%wd("vapals-patients")
  ; e.g. root = ^%wd(17.040801,23)
  ;
  set samikey=$g(filter("form"))
- if (samikey'["siform") quit:$quit 0  quit
- i '($length(samikey,"-")=4) quit:$quit 0  quit
+ if (samikey'["siform") quit:$Q 0  quit
+ i '($length(samikey,"-")=4) quit:$Q 0  quit
  ; e.g. samikey="siform-2018-11-13"
  ;
  set vals=$name(@root@("graph",si,samikey))
  ; e.g. vals="^%wd(17.040801,23,""graph"",""XXX00001"",""siform-2018-11-13"")"
  ;
  set ptdfn=@vals@("dfn")
- if '$get(ptdfn) quit:$quit 0  quit
+ if '$get(ptdfn) quit:$Q 0  quit
  ;
  set dest=$name(@vals@("note"))
  ; e.g. dest="^%wd(17.040801,23,""graph"",""XXX00333"",""siform-2018-11-13"",""note"")"
@@ -141,7 +141,7 @@ TASKIT new samikey,vals,root,dest,provduz,ptdfn,tiutitlepn
  ;@tests
  ; Build the new tiu stubb.
 NEWTIU d BLDTIU(.tiuien,ptdfn,tiutitleien,provduz,clinien)
- if 'tiuien quit:$quit 0  quit
+ if 'tiuien quit:$Q 0  quit
  ; For unit testing. Save new tiuien
  if $data(%ut) set ^TMP("UNIT TEST","UTTASK^SAMIUTVA")=tiuien
  ;
@@ -155,7 +155,7 @@ NEWTIU d BLDTIU(.tiuien,ptdfn,tiutitleien,provduz,clinien)
  ; Set text in the note
 NEWTXT d SETTEXT(.tiuien,dest)
  set:(tiuien>0) @vals@("tiuien")=tiuien
- if '$get(tiuien) quit:$quit 0  quit
+ if '$get(tiuien) quit:$Q 0  quit
  ; 
  ;
  ;@called-by
@@ -188,8 +188,8 @@ ENCNTR new VSTR set VSTR=$$VISTSTR(tiuien)
  do BLDENCTR(.tiuien,.SAMIHFARR)
  if $get(tiuien),$get(provduz) do
  . new ASave set ASave=$$KASAVE(provduz,tiuien)
- if $get(tiuien) quit:$quit 0  quit
- quit:$quit 0  quit
+ if $get(tiuien) quit:$Q 0  quit
+ quit:$Q 0  quit
  ;
  ;
  ;@rpi - TIU CREATE RECORD
@@ -310,10 +310,10 @@ STXT1 set tiuien=+$get(SAMIXD)
  ; Add encounter information to a tiu note
 BLDENCTR(tiuien,SAMIUHFA) ;
  ;
- if '$get(tiuien) quit:$quit 0  quit
- if '$d(SAMIUHFA) quit:$quit 0  quit
+ if '$get(tiuien) quit:$Q 0  quit
+ if '$d(SAMIUHFA) quit:$Q 0  quit
  new VSTR set VSTR=$$VISTSTR(tiuien)
- if '($length(VSTR,";")=3) quit:$quit 0  quit
+ if '($length(VSTR,";")=3) quit:$Q 0  quit
  ;
  new suppress set suppress=0
  new cntxt,rmprc,console,cntnopen,SAMIARR
@@ -345,7 +345,7 @@ SPRS set SAMIARR(2)=suppress
 ENCTR3 set SAMIARR(3)=VSTR
  ;
  do M2M^SAMIM2M(.SAMIXD,cntxt,rmprc,console,cntnopen,.SAMIARR)
- quit:$quit tiuien  quit
+ quit:$Q tiuien  quit
  ;
  ;
  ;
@@ -370,7 +370,7 @@ ENCTR3 set SAMIARR(3)=VSTR
  ;     0  = adding signer(s) failed
  ;     1  = adding signer(s) successful
 ADDSGNRS(filter) ;
- if '$data(filter("add signers")) quit:$quit 0  quit
+ if '$data(filter("add signers")) quit:$Q 0  quit
  ;
  ; Setup all variables into Graphstore
  new si,root,vals,tiuien
@@ -382,15 +382,15 @@ ADDSGNRS(filter) ;
  ; e.g. root = ^%wd(17.040801,23)
  ;
  set samikey=$get(filter("form"))
- if (samikey'["siform") quit:$quit 0  quit
- if '($length(samikey,"-")=4) quit:$quit 0  quit
+ if (samikey'["siform") quit:$Q 0  quit
+ if '($length(samikey,"-")=4) quit:$Q 0  quit
  ; e.g. samikey="siform-2018-06-04"
  ;
  set vals=$name(@root@("graph",si,samikey))
  ; e.g. vals="^%wd(17.040801,23,""graph"",""XXX00333"",""siform-2018-06-04"")"
  ;
  set tiuien=@vals@("tiuien")
- if '$get(tiuien) quit:$quit 0  quit
+ if '$get(tiuien) quit:$Q 0  quit
  ;
  ;
  ;@called-by
@@ -421,7 +421,7 @@ ADDSIGN new cntxt,rmprc,console,cntnopen,SAMIARR,SAMIXD
  .. set ASave=$$KASAVE($piece(SAMIPOO(cnt),"^"),tiuien)
  ;
  ; If not UNIT TEST update Graphstore
- if +$get(SAMIXD),'$get(%ut) do  quit:$quit 1
+ if +$get(SAMIXD),'$get(%ut) do  quit:$Q 1
  . new cnt set cnt=0
  . for  set cnt=$O(SAMIPOO(cnt)) quit:'cnt  do
  ..  set @vals@("add signers",cnt)=SAMIPOO(cnt)
@@ -453,8 +453,8 @@ ADDSIGN new cntxt,rmprc,console,cntnopen,SAMIARR,SAMIXD
  ; Build a tiu addendum
 TIUADND(tiuien,userduz) ;
  ;
- if '$get(tiuien) quit:$quit 0  quit
- if '$get(userduz) quit:$quit 0  quit
+ if '$get(tiuien) quit:$Q 0  quit
+ if '$get(userduz) quit:$Q 0  quit
  ;
  new cntxt,rmprc,console,cntnopen,SAMIARR,SAMIXD
  set (console,cntnopen)=0
@@ -474,8 +474,8 @@ TIUADND(tiuien,userduz) ;
  ;
  do M2M^SAMIM2M(.SAMIXD,cntxt,rmprc,console,cntnopen,.SAMIARR)
  ;
- if (+$get(SAMIXD)>0) quit:$quit +$get(SAMIXD)
-quit:$quit 0  quit
+ if (+$get(SAMIXD)>0) quit:$Q +$get(SAMIXD)
+quit:$Q 0  quit
  ;
  ;
  ;@rpi - ORWPCE NOTEVSTR
@@ -532,7 +532,7 @@ PTINFO(dfn) ;
  set console=0
  set cntnopen=0
  new ssn set ssn=""
- if '$g(dfn) quit:$quit rslt  quit
+ if '$g(dfn) quit:$Q rslt  quit
  set SAMIARR(1)=dfn
  ;
  do M2M^SAMIM2M(.SAMIXD,cntxt,rmprc,console,cntnopen,.SAMIARR)
@@ -544,7 +544,7 @@ PTINFO(dfn) ;
  new node set node=$name(@root@("dfn",dfn))
  set node=$quit(@node)
  set gien=+$piece(node,",",5)
- if '$get(gien) quit:$quit rslt  quit
+ if '$get(gien) quit:$Q rslt  quit
  set rslt="2^"_dfn
  set ssn=$piece(SAMIXD,"^",3)
  new dob set dob=$$FMTHL7^XLFDT($piece(SAMIXD,"^",4))
@@ -578,7 +578,7 @@ PTINFO(dfn) ;
  . set root=$$setroot^%wd("vapals-patients")
  . set gien=$order(@root@("dfn",dfn,0))
  . set:gien @root@(gien,"samiru")=UrbanRural
- quit:$quit rslt  quit
+ quit:$Q rslt  quit
  ;
  ;
  ;
@@ -604,11 +604,11 @@ PTSSN(dfn) ;
  set rmprc="ORWPT ID INFO"
  set (console,cntnopen)=0
  new ssn set ssn=0
- if '$get(dfn) quit:$quit ssn  quit
+ if '$get(dfn) quit:$Q ssn  quit
  set SAMIARR(1)=dfn
  kill SAMIXD
  do M2M^SAMIM2M(.SAMIXD,cntxt,rmprc,console,cntnopen,.SAMIARR)
- if '$get(SAMIXD) quit:$quit ssn  quit
+ if '$get(SAMIXD) quit:$Q ssn  quit
  set ssn="1^"_$piece(SAMIXD,"^")
  ;
  ;@called-by
@@ -624,16 +624,16 @@ PTSSN1 new root set root=$$setroot^%wd("patient-lookup")
  new node set node=$name(@root@("name",name))
  set node=$quit(@node)
  if ($piece(node,",",4)_","_$piece(node,",",5))[name set gien=+$piece(node,",",6)
- if '$get(gien) quit:$quit ssn  quit
+ if '$get(gien) quit:$Q ssn  quit
  new dob set dob=$$FMTHL7^XLFDT($piece(SAMIXD,"^",2))
  set dob=$extract(dob,1,4)_"-"_$extract(dob,5,6)_"-"_$extract(dob,7,8)
- if '(dob=@root@(gien,"sbdob")) quit:$quit ssn  quit
+ if '(dob=@root@(gien,"sbdob")) quit:$Q ssn  quit
  new last5 set last5=$extract(name)_$extract(SAMIXD,6,9)
- if '(last5=@root@(gien,"last5")) quit:$quit ssn  quit
+ if '(last5=@root@(gien,"last5")) quit:$Q ssn  quit
  set @root@(gien,"ssn")=$piece(SAMIXD,"^")
  set @root@("ssn",$piece(SAMIXD,"^"))=gien
  set ssn="2^"_$piece(SAMIXD,"^")
- quit:$quit ssn  quit
+ quit:$Q ssn  quit
  ;
  ;
  ;@API-code: $$SIGNTIU^SAMIVSTA

@@ -1,4 +1,4 @@
-SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 20190220Z19:27
+SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 2/20/19 3:11pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -116,7 +116,7 @@ TASKIT new samikey,vals,root,dest,provduz,ptdfn,tiutitlepn
  set root=$$setroot^%wd("vapals-patients")
  ; e.g. root = ^%wd(17.040801,23)
  ;
- set samikey=$g(filter("form"))
+ set samikey=$get(filter("form"))
  if (samikey'["siform") quit:$Q 0  quit
  i '($length(samikey,"-")=4) quit:$Q 0  quit
  ; e.g. samikey="siform-2018-11-13"
@@ -376,7 +376,7 @@ ADDSGNRS(filter) ;
  new si,root,vals,tiuien
  ;
  set si=$get(filter("studyid")) ; e.g."XXX00333"
- quit:'$length($g(si))
+ quit:'$length($get(si))
  ;
  set root=$$setroot^%wd("vapals-patients")
  ; e.g. root = ^%wd(17.040801,23)
@@ -475,7 +475,7 @@ TIUADND(tiuien,userduz) ;
  do M2M^SAMIM2M(.SAMIXD,cntxt,rmprc,console,cntnopen,.SAMIARR)
  ;
  if (+$get(SAMIXD)>0) quit:$Q +$get(SAMIXD)
-quit:$Q 0  quit
+ quit:$Q 0  quit
  ;
  ;
  ;@rpi - ORWPCE NOTEVSTR
@@ -532,14 +532,14 @@ PTINFO(dfn) ;
  set console=0
  set cntnopen=0
  new ssn set ssn=""
- if '$g(dfn) quit:$Q rslt  quit
+ if '$get(dfn) quit:$Q rslt  quit
  set SAMIARR(1)=dfn
  ;
  do M2M^SAMIM2M(.SAMIXD,cntxt,rmprc,console,cntnopen,.SAMIARR)
  ; Update patient-lookup entry for this patient
  new root set root=$$setroot^%wd("patient-lookup")
  new name,node,gien
- if '(dfn=$p(SAMIXD,"^",1)) q:$Q rslt  q
+ if '(dfn=$p(SAMIXD,"^",1)) quit:$Q rslt  quit
  set rslt="1^"_dfn
  new node set node=$name(@root@("dfn",dfn))
  set node=$Q(@node)
@@ -693,7 +693,7 @@ DELTIU(tiuien) ;
  ; SAMIPOO successful if = 0
  quit:'($get(SAMIPOO)=0) 0
  do DELETE^ORWPCE(.SAMIPOO,vstr,ptdfn)
- quit:($g(Y)=-1) 0
+ quit:($get(Y)=-1) 0
  quit 1
  ;
  ;
@@ -716,12 +716,12 @@ URBRUR(zipcode) ;
  if $get(zipcode)<501 quit "n"
  new root
  set root=$$setroot^%wd("NCHS Urban-Rural")
- quit:'$d(@root@("zip",+zipcode)) "n"
+ quit:'$data(@root@("zip",+zipcode)) "n"
  new samiru,ruca30
  set ruca30=$$GET^XPAR("SYS","SAMI URBAN/RURAL INDEX VALUE",,"Q")
  set:'$get(ruca30) ruca30=1.1
  set samiru=@root@("zip",+zipcode)
- set samiru=$s(samiru>ruca30:"r",1:"u")
+ set samiru=$select(samiru>ruca30:"r",1:"u")
  quit samiru
  ;
  ;
@@ -741,7 +741,7 @@ URBRUR(zipcode) ;
 KASAVE(provider,tiuien) ;
  quit:'$get(tiuien) 0
  quit:'$get(provider) 0
- quit:'$d(^TIU(8925,tiuien)) 0
+ quit:'$data(^TIU(8925,tiuien)) 0
  kill ^TIU(8925,"ASAVE",provider,tiuien)
  quit 1
  ;

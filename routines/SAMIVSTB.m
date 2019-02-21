@@ -1,4 +1,4 @@
-SAMIVSTB ;;ven/lgc - M2M Broker to for VA-PALS ; 2019-02-21T01:16
+SAMIVSTB ;;ven/lgc - M2M Broker to for VA-PALS ; 2019-02-21T21:35
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -9,6 +9,7 @@ SAMIVSTB ;;ven/lgc - M2M Broker to for VA-PALS ; 2019-02-21T01:16
  ;@primary development organization: Vista Expertise Network
  ;@primary-dev: Larry G. Carlson (lgc)
  ;@primary-dev: Alexis R. Carlson (arc)
+ ;@additional-dev: Linda M. R. Yaw (lmry)
  ;@copyright:
  ;@license: see routine SAMIUL
  ;

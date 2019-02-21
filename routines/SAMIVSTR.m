@@ -1,4 +1,4 @@
-SAMIVSTR ; ven/lgc/arc - IELCAP: M2M to Graph tools ; 1/22/19 2:24pm
+SAMIVSTR ; ven/lgc/arc - IELCAP: M2M to Graph tools ; 2019-02-21T21:50pm
  ;;1.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -7,11 +7,11 @@ SAMIVSTR ; ven/lgc/arc - IELCAP: M2M to Graph tools ; 1/22/19 2:24pm
  ;@primary development organization: Vista Expertise Network
  ;@primary-dev: Larry G. Carlson (lgc)
  ;@primary-dev: Alexis R. Carlson (arc)
+ ;@additional-dev: Linda M. R. Yaw (lmry)
  ;@copyright:
- ;@license: Apache 2.0
- ; https://www.apache.org/licenses/LICENSE-2.0.html
+ ;@license: see routine SAMIUL
  ;
- ;@last-updated: 2018-09-26
+ ;@last-updated: 2019-02-21
  ;@application: VA-PALS
  ;@version: 1.0
  ;
@@ -27,13 +27,13 @@ SAMIVSTR ; ven/lgc/arc - IELCAP: M2M to Graph tools ; 1/22/19 2:24pm
  ;  supported references to perform all platform specific functions.
  ;  (Exemptions: Kernel & VA Fileman)
  ;
-START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLEd ***" Q
- d EN^%ut($T(+0),2)
- Q
+START if $text(^%ut)="" write !,"*** UNIT TEST NOT INSTALLED ***" quit
+ do EN^%ut($text(+0),2)
+ quit
  ;
  ;
  ;@API-code: $$RadProcedures(StationNumber) - or -
- ;           d RadProcedures(StationNumber)
+ ;           do RadProcedures(StationNumber)
  ;@API-called-by: Option : SAMI PULL RADIOLOGY PROCEDURES
  ;@API-Context menu : MAG DICOM VISA
  ;@API-Remote Procedure : MAGV GET RADIOLOGY PROCEDURES
@@ -49,37 +49,37 @@ START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLEd ***" Q
  ;      0 = rebuild of "radiology procedures" Graphstore failed
  ;      n = number of radiology procedures filed
 RADPROCD(StationNumber) ;
- I '$l($G(StationNumber)) D
- . s StationNumber=$$GET^XPAR("SYS","SAMI DEFAULT STATIOn NUMBER",,"Q")
- I '$l($G(StationNumber)) q:$Q 0  q
- n CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR,SAMIXD,rdprc
- s CNTXT="MAG DICOM VISA"
- s RMPRC="MAGV GET RADIOLOGY PROCEDURES"
- s (CONSOLE,CNTNOPEN)=0
- k SAMIXARR
- s SAMIXARR(1)=StationNumber
- s SAMIXARR(2)=1
- d M2M^SAMIM2M(.SAMIXD,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.SAMIXARR)
- I '($l(SAMIXD,$c(13,10))) q:$Q 0  q
+ if '$length($get(StationNumber)) do
+ . set StationNumber=$$GET^XPAR("SYS","SAMI DEFAULT STATIOn NUMBER",,"Q")
+ if '$length($get(StationNumber)) quit:$Q 0  quit
+ new CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR,SAMIXD,rdprc
+ set CNTXT="MAG DICOM VISA"
+ set RMPRC="MAGV GET RADIOLOGY PROCEDURES"
+ set (CONSOLE,CNTNOPEN)=0
+ kill SAMIXARR
+ set SAMIXARR(1)=StationNumber
+ set SAMIXARR(2)=1
+ do M2M^SAMIM2M(.SAMIXD,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.SAMIXARR)
+ if '($length(SAMIXD,$char(13,10))) quit:$Q 0  quit
  ;
- n si s si=$$CLRGRPHS("radiology procedures")
- n I,gien,root s gien=0
- s root=$$setroot^%wd("radiology procedures")
- f I=1:1:$l(SAMIXD,$c(13,10)) D
- . s rdprc=$p(SAMIXD,$c(13,10),I)
- . q:($l(rdprc,"^")<3)
- . s gien=gien+1
- . s @root@(gien,"name")=$p(rdprc,"^")
- . s @root@(gien,"ien71")=$p(rdprc,"^",2)
- . s @root@(gien,"CPT")=$p(rdprc,"^",4)
- . S:$l($p(rdprc,"^")) @root@("name",$p(rdprc,"^"),gien)=""
- . S:$l($p(rdprc,"^",4)) @root@("CPT",$p(rdprc,"^",4),$p(rdprc,"^"),gien)=""
+ new si set si=$$CLRGRPHS("radiology procedures")
+ new I,gien,root set gien=0
+ set root=$$setroot^%wd("radiology procedures")
+ for I=1:1:$length(SAMIXD,$char(13,10)) do
+ . set rdprc=$piece(SAMIXD,$char(13,10),I)
+ . quit:($length(rdprc,"^")<3)
+ . set gien=gien+1
+ . set @root@(gien,"name")=$piece(rdprc,"^")
+ . set @root@(gien,"ien71")=$piece(rdprc,"^",2)
+ . set @root@(gien,"CPT")=$piece(rdprc,"^",4)
+ . set:$length($piece(rdprc,"^")) @root@("name",$piece(rdprc,"^"),gien)=""
+ . set:$length($piece(rdprc,"^",4)) @root@("CPT",$piece(rdprc,"^",4),$piece(rdprc,"^"),gien)=""
  ;
- s @root@("Date Last Updated")=$$HTE^XLFDT($H)
- q:$Q $G(gien)  q
+ set @root@("Date Last Updated")=$$HTE^XLFDT($horolog)
+ quit:$Q $get(gien)  quit
  ;
  ;
- ;@API-code: $$ActiveRadExams - or - d ActiveRadExams
+ ;@API-code: $$ActiveRadExams - or - do ActiveRadExams
  ;@API-called-by: Option : SAMI PULL RAd ACTIVE EXAMS
  ;@API-Context menu : MAG DICOM VISA
  ;@API-Remote Procedure : MAGJ RADACTIVEEXAMS
@@ -93,22 +93,22 @@ RADPROCD(StationNumber) ;
  ;      0 = rebuild of "radiology active exams" Graphstore failed
  ;      n = number of active exams filed
 ACTEXAMS() ;
- n CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR,SAMIXD
- s CNTXT="MAG DICOM VISA"
- s RMPRC="MAGJ RADACTIVEEXAMS"
- s (CONSOLE,CNTNOPEN)=0
- k SAMIXARR
- s SAMIXARR(1)="ALL^ALL"
- d M2M^SAMIM2M(.SAMIXD,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.SAMIXARR)
- I '($l(SAMIXD,$c(13,10))) q:$Q 0  q
+ new CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR,SAMIXD
+ set CNTXT="MAG DICOM VISA"
+ set RMPRC="MAGJ RADACTIVEEXAMS"
+ set (CONSOLE,CNTNOPEN)=0
+ kill SAMIXARR
+ set SAMIXARR(1)="ALL^ALL"
+ do M2M^SAMIM2M(.SAMIXD,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.SAMIXARR)
+ if '($length(SAMIXD,$char(13,10))) quit:$Q 0  quit
  ;
- n si s si=$$CLRGRPHS("radiology active exams")
- n gien,root s gien=0
- s root=$$setroot^%wd("radiology active exams")
+ new si set si=$$CLRGRPHS("radiology active exams")
+ new gien,root set gien=0
+ set root=$$setroot^%wd("radiology active exams")
  ; *** need to run on active system to see how
  ;     to build file
- s @root@("Date Last Updated")=$$HTE^XLFDT($H)
- q:$Q $G(gien)  q
+ set @root@("Date Last Updated")=$$HTE^XLFDT($horolog)
+ quit:$Q $get(gien)  quit
  ;
  ;
  ;@API-code: W $$RadStaff - or - d RadStaff
@@ -125,28 +125,28 @@ ACTEXAMS() ;
  ;      0 = rebuild of "radiology staff" Graphstore failed
  ;      n = number of radiology staff filed
 RADSTAFF() ;
- n CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR,SAMIXD
- s CNTXT="MAG DICOM VISA"
- s RMPRC="MAG DICOM GET RAD PERSON"
- s (CONSOLE,CNTNOPEN)=0
- k SAMIXARR
- s SAMIXARR(1)="S"
- s SAMIXARR(2)="" ; All names
- d M2M^SAMIM2M(.SAMIXD,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.SAMIXARR)
- I '($l(SAMIXD,$c(13,10))) q:$Q 0  q
- n si s si=$$CLRGRPHS("radiology staff")
- n I,gien,root,rastaff s gien=0
- s root=$$setroot^%wd("radiology staff")
- f I=1:1:$l(SAMIXD,$c(13,10)) D
- . s rastaff=$p(SAMIXD,$c(13,10),I)
- . q:($l(rastaff,"^")<2)
- . q:($p(rastaff,"^")["-1")
- . s gien=gien+1
- . s @root@(gien,"duz")=$p(rastaff,"^")
- . s @root@(gien,"name")=$p(rastaff,"^",2)
- . S:$l($p(rastaff,"^",2)) @root@("name",$p(rastaff,"^",2),gien)=""
- s @root@("Date Last Updated")=$$HTE^XLFDT($H)
- q:$Q $G(gien)  q
+ new CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR,SAMIXD
+ set CNTXT="MAG DICOM VISA"
+ set RMPRC="MAG DICOM GET RAD PERSON"
+ set (CONSOLE,CNTNOPEN)=0
+ kill SAMIXARR
+ set SAMIXARR(1)="S"
+ set SAMIXARR(2)="" ; All names
+ do M2M^SAMIM2M(.SAMIXD,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.SAMIXARR)
+ if '($length(SAMIXD,$char(13,10))) quit:$Q 0  quit
+ new si set si=$$CLRGRPHS("radiology staff")
+ new I,gien,root,rastaff set gien=0
+ set root=$$setroot^%wd("radiology staff")
+ for I=1:1:$length(SAMIXD,$char(13,10)) do
+ . set rastaff=$piece(SAMIXD,$char(13,10),I)
+ . quit:($length(rastaff,"^")<2)
+ . quit:($piece(rastaff,"^")["-1")
+ . set gien=gien+1
+ . set @root@(gien,"duz")=$piece(rastaff,"^")
+ . set @root@(gien,"name")=$piece(rastaff,"^",2)
+ . set:$length($piece(rastaff,"^",2)) @root@("name",$piece(rastaff,"^",2),gien)=""
+ set @root@("Date Last Updated")=$$HTE^XLFDT($horolog)
+ quit:$Q $get(gien)  quit
  ;
  ;
  ;
@@ -164,27 +164,27 @@ RADSTAFF() ;
  ;      0 = rebuild of "radiology residents" Graphstore failed
  ;      n = number of radiology residents filed
 RADRESDT() ;
- n CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR,SAMIXD,radres
- s CNTXT="MAG DICOM VISA"
- s RMPRC="MAG DICOM GET RAD PERSON"
- s (CONSOLE,CNTNOPEN)=0
- k SAMIXARR
- s SAMIXARR(1)="R"
- s SAMIXARR(2)="" ; All names
- d M2M^SAMIM2M(.SAMIXD,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.SAMIXARR)
- I '($l(SAMIXD,$c(13,10))) q:$Q 0  q
+ new CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR,SAMIXD,radres
+ set CNTXT="MAG DICOM VISA"
+ set RMPRC="MAG DICOM GET RAD PERSON"
+ set (CONSOLE,CNTNOPEN)=0
+ kill SAMIXARR
+ set SAMIXARR(1)="R"
+ set SAMIXARR(2)="" ; All names
+ do M2M^SAMIM2M(.SAMIXD,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.SAMIXARR)
+ if '($length(SAMIXD,$char(13,10))) quit:$Q 0  quit
  ;
- n si s si=$$CLRGRPHS("radiology residents")
- n I,gien,root,RAREs s gien=0
- s root=$$setroot^%wd("radiology residents")
- f I=1:1:$l(SAMIXD,$c(13,10)) D
- . s radres=$p(SAMIXD,$c(13,10),I)
- . q:($l(radres,"^")<2)
- . q:($p(radres,"^")["-1")
- . s gien=gien+1,@root@(gien,"duz")=$p(radres,"^"),@root@(gien,"name")=$p(radres,"^",2)
- . S:$l($p(radres,"^",2)) @root@("name",$p(radres,"^",2),gien)=""
- s @root@("Date Last Updated")=$$HTE^XLFDT($H)
- q:$Q $G(gien)  q
+ new si set si=$$CLRGRPHS("radiology residents")
+ new I,gien,root,RAREs set gien=0
+ set root=$$setroot^%wd("radiology residents")
+ for I=1:1:$length(SAMIXD,$char(13,10)) do
+ . set radres=$piece(SAMIXD,$char(13,10),I)
+ . quit:($length(radres,"^")<2)
+ . quit:($piece(radres,"^")["-1")
+ . set gien=gien+1,@root@(gien,"duz")=$piece(radres,"^"),@root@(gien,"name")=$piece(radres,"^",2)
+ . set:$length($piece(radres,"^",2)) @root@("name",$piece(radres,"^",2),gien)=""
+ set @root@("Date Last Updated")=$$HTE^XLFDT($horolog)
+ quit:$Q $get(gien)  quit
  ;
  ;
  ;
@@ -202,29 +202,29 @@ RADRESDT() ;
  ;      0 = rebuild of "radiology technologists" Graphstore failed
  ;      n = number of radiology technologists filed
 RADTECHS() ;
- n CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR,SAMIXD
- s CNTXT="MAG DICOM VISA"
- s RMPRC="MAG DICOM GET RAD PERSON"
- s (CONSOLE,CNTNOPEN)=0
- k SAMIXARR
- s SAMIXARR(1)="T"
- s SAMIXARR(2)="" ; All names
- d M2M^SAMIM2M(.SAMIXD,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.SAMIXARR)
- I '($l(SAMIXD,$c(13,10))) q:$Q 0  q
+ new CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR,SAMIXD
+ set CNTXT="MAG DICOM VISA"
+ set RMPRC="MAG DICOM GET RAD PERSON"
+ set (CONSOLE,CNTNOPEN)=0
+ kill SAMIXARR
+ set SAMIXARR(1)="T"
+ set SAMIXARR(2)="" ; All names
+ do M2M^SAMIM2M(.SAMIXD,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.SAMIXARR)
+ if '($length(SAMIXD,$char(13,10))) quit:$Q 0  quit
  ;
- n si s si=$$CLRGRPHS("radiology technologists")
- n I,gien,root,ratech s gien=0
- s root=$$setroot^%wd("radiology technologists")
- f I=1:1:$l(SAMIXD,$c(13,10)) D
- . s ratech=$p(SAMIXD,$c(13,10),I)
- . q:($l(ratech,"^")<2)
- . q:($p(ratech,"^")["-1")
- . s gien=gien+1
- . s @root@(gien,"duz")=$p(ratech,"^")
- . s @root@(gien,"name")=$p(ratech,"^",2)
- . S:$l($p(ratech,"^",2)) @root@("name",$p(ratech,"^",2),gien)=""
- s @root@("Date Last Updated")=$$HTE^XLFDT($H)
- q:$Q $G(gien)  q
+ new si set si=$$CLRGRPHS("radiology technologists")
+ new I,gien,root,ratech set gien=0
+ set root=$$setroot^%wd("radiology technologists")
+ for I=1:1:$length(SAMIXD,$char(13,10)) do
+ . set ratech=$piece(SAMIXD,$char(13,10),I)
+ . quit:($length(ratech,"^")<2)
+ . quit:($piece(ratech,"^")["-1")
+ . set gien=gien+1
+ . set @root@(gien,"duz")=$piece(ratech,"^")
+ . set @root@(gien,"name")=$piece(ratech,"^",2)
+ . set:$length($piece(ratech,"^",2)) @root@("name",$piece(ratech,"^",2),gien)=""
+ set @root@("Date Last Updated")=$$HTE^XLFDT($horolog)
+ quit:$Q $get(gien)  quit
  ;
  ;
  ;@API-code: $$RadModifiers - or - d RadModifiers
@@ -240,32 +240,32 @@ RADTECHS() ;
  ;      0 = rebuild of "radiology modifiers" Graphstore failed
  ;      n = number of radiology modifiers filed
 RADMODS() ;
- n CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR,SAMIXD
- s CNTXT="MAG DICOM VISA"
- s RMPRC="MAG DICOM RADIOLOGY MODIFIERS"
- s (CONSOLE,CNTNOPEN)=0
- d M2M^SAMIM2M(.SAMIXD,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.SAMIXARR)
- I '($l(SAMIXD,$c(13,10))) q:$Q 0  q
+ new CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR,SAMIXD
+ set CNTXT="MAG DICOM VISA"
+ set RMPRC="MAG DICOM RADIOLOGY MODIFIERS"
+ set (CONSOLE,CNTNOPEN)=0
+ do M2M^SAMIM2M(.SAMIXD,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.SAMIXARR)
+ if '($length(SAMIXD,$char(13,10))) quit:$Q 0  quit
  ;
- n si s si=$$CLRGRPHS("radiology modifiers")
- n I,gien,root,ramod,TypeOfImage s gien=0
- s root=$$setroot^%wd("radiology modifiers")
- f I=1:1:$l(SAMIXD,$c(13,10)) D
- . s ramod=$p(SAMIXD,$c(13,10),I)
- . q:($l(ramod,"^")<3)
- . q:($p(ramod,"^")["-1")
- . s gien=gien+1
- . s @root@(gien,"name")=$p(ramod,"^")
- . s @root@(gien,"ien71.2")=$p(ramod,"^",2)
- . s @root@(gien,"ien79.2")=$p(ramod,"^",3)
- . I +$p(ramod,"^",3) D
- .. s TypeOfImage=$p($G(^RA(79.2,+$p(ramod,"^",3),0)),"^")
- .. s @root@(gien,"type of imaging")=TypeOfImage
- .. s @root@("type of imaging",TypeOfImage,gien)=""
- . S:$l(ramod,"^") @root@("name",$p(ramod,"^"),gien)=""
- s @root@("Date Last Updated")=$$HTE^XLFDT($H)
+ new si set si=$$CLRGRPHS("radiology modifiers")
+ new I,gien,root,ramod,TypeOfImage set gien=0
+ set root=$$setroot^%wd("radiology modifiers")
+ for I=1:1:$length(SAMIXD,$char(13,10)) do
+ . set ramod=$piece(SAMIXD,$char(13,10),I)
+ . quit:($length(ramod,"^")<3)
+ . quit:($piece(ramod,"^")["-1")
+ . set gien=gien+1
+ . set @root@(gien,"name")=$piece(ramod,"^")
+ . set @root@(gien,"ien71.2")=$piece(ramod,"^",2)
+ . set @root@(gien,"ien79.2")=$piece(ramod,"^",3)
+ . if +$piece(ramod,"^",3) do
+ .. set TypeOfImage=$piece($get(^RA(79.2,+$piece(ramod,"^",3),0)),"^")
+ .. set @root@(gien,"type of imaging")=TypeOfImage
+ .. set @root@("type of imaging",TypeOfImage,gien)=""
+ . set:$length(ramod,"^") @root@("name",$piece(ramod,"^"),gien)=""
+ set @root@("Date Last Updated")=$$HTE^XLFDT($horolog)
  ;
- q:$Q $G(gien)  q
+ quit:$Q $get(gien)  quit
  ;
  ;
  ;@API-code: $$RadDxCodes - or - d RadDxCodes
@@ -282,29 +282,29 @@ RADMODS() ;
  ;      0 = rebuild of "radiology dx codes" Graphstore failed
  ;      n = number of radiology dx codes filed
 RADDXCDS() ;
- n CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR,SAMIXD,radxcd
- s CNTXT="MAG DICOM VISA"
- s RMPRC="MAG DICOM GET RAD DX CODE"
- s (CONSOLE,CNTNOPEN)=0
- k SAMIXARR
- s SAMIXARR(1)="" ; All names
- d M2M^SAMIM2M(.SAMIXD,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.SAMIXARR)
- I '($l(SAMIXD,$c(13,10))) q:$Q 0  q
+ new CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR,SAMIXD,radxcd
+ set CNTXT="MAG DICOM VISA"
+ set RMPRC="MAG DICOM GET RAD DX CODE"
+ set (CONSOLE,CNTNOPEN)=0
+ kill SAMIXARR
+ set SAMIXARR(1)="" ; All names
+ do M2M^SAMIM2M(.SAMIXD,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.SAMIXARR)
+ if '($length(SAMIXD,$char(13,10))) quit:$Q 0  quit
  ;
- n si s si=$$CLRGRPHS("radiology diagnostic codes")
- n I,gien,root,RATECH s gien=0
- s root=$$setroot^%wd("radiology diagnostic codes")
- f I=1:1:$l(SAMIXD,$c(13,10)) D
- . s radxcd=$p(SAMIXD,$c(13,10),I)
- . q:($l(radxcd,"^")<2)
- . q:($p(radxcd,"^")["-1")
- . s gien=gien+1
- . s @root@(gien,"ien78.3")=$p(radxcd,"^")
- . s @root@(gien,"name")=$p(radxcd,"^",2)
- . S:$l($p(radxcd,"^",2)) @root@("name",$p(radxcd,"^",2),gien)=""
- s @root@("Date Last Updated")=$$HTE^XLFDT($H)
+ new si set si=$$CLRGRPHS("radiology diagnostic codes")
+ new I,gien,root,RATECH set gien=0
+ set root=$$setroot^%wd("radiology diagnostic codes")
+ for I=1:1:$length(SAMIXD,$char(13,10)) do
+ . set radxcd=$piece(SAMIXD,$char(13,10),I)
+ . quit:($length(radxcd,"^")<2)
+ . quit:($piece(radxcd,"^")["-1")
+ . set gien=gien+1
+ . set @root@(gien,"ien78.3")=$piece(radxcd,"^")
+ . set @root@(gien,"name")=$piece(radxcd,"^",2)
+ . set:$length($piece(radxcd,"^",2)) @root@("name",$piece(radxcd,"^",2),gien)=""
+ set @root@("Date Last Updated")=$$HTE^XLFDT($horolog)
  ;
- q:$Q $G(gien)  q
+ quit:$Q $get(gien)  quit
  ;
  ;
  ;@API-code: $$CLRGRPHS(name) - or - d CLRGRPHS(name)
@@ -320,10 +320,10 @@ RADDXCDS() ;
  ;      >0  = ien of Graphstore
  ; Clear a Graphstore global of data
 CLRGRPHS(name) ;
- i '($l($g(name))) q:$Q 0  q
- n si s si=$O(^%wd(17.040801,"B",name,0))
- i $g(si) k ^%wd(17.040801,si) s ^%wd(17.040801,si,0)=name
- e  d purgegraph^%wd(name) s si=$O(^%wd(17.040801,"B",name,0))
- q:$Q $g(si)  q
+ if '($length($get(name))) quit:$Q 0  quit
+ new si set si=$order(^%wd(17.040801,"B",name,0))
+ if $get(si) kill ^%wd(17.040801,si) set ^%wd(17.040801,si,0)=name
+ else  do purgegraph^%wd(name) set si=$order(^%wd(17.040801,"B",name,0))
+ quit:$Q $get(si)  quit
  ;
 EOR ; End of routine SAMIVSTR

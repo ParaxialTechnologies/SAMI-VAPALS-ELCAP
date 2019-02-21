@@ -1,4 +1,4 @@
-SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 2/18/19 11:08pm
+SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 2/20/19 9:47am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -62,8 +62,6 @@ XTROU ; Unit tests for SAMI*.m
  ;;SAMIUTVS
  ;;SAMIUTRU
  ;;SAMIUTSV
- ;;XWBUTCLM
- ;;XWBUTCLR
  ;
  quit  ; End of XTROU
  ;
@@ -109,8 +107,8 @@ COVERAGE ; Coverage tests for SAMI*.m
  set I=I+1,RUNCODE(I)="^SAMIUTRU"
  ; set I=I+1,RUNCODE(I)="^SAMIUTRP"
  set I=I+1,RUNCODE(I)="^SAMIUTSV"
- set I=I+1,RUNCODE(I)="^XWBUTCLM"
- set I=I+1,RUNCODE(I)="^XWBUTCLR"
+ ;set I=I+1,RUNCODE(I)="^XWBUTCLM"
+ ;set I=I+1,RUNCODE(I)="^XWBUTCLR"
  ;
  ; Note that routine references may be specified in one of the following ways:
  ;   * MODULE         : Calls EN^%ut with the name as an argument.
@@ -166,8 +164,8 @@ COVERAGE ; Coverage tests for SAMI*.m
  set I=I+1,XCLUDE(I)="SAMIUTRU"
  ; set I=I+1,XCLUDE(I)="SAMIUTRP"
  set I=I+1,XCLUDE(I)="SAMIUTSV"
- set I=I+1,XCLUDE(I)="XWBUTCLM"
- set I=I+1,XCLUDE(I)="XWBUTCLR"
+ ;set I=I+1,XCLUDE(I)="XWBUTCLM"
+ ;set I=I+1,XCLUDE(I)="XWBUTCLR"
  ;
  ; Add the XCLUDE values to the TMP variable that tracks this coverage test.
  merge ^TMP("SAMI",$JOB,"XCLUDE")=XCLUDE

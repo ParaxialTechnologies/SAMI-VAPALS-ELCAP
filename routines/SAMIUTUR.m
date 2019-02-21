@@ -1,4 +1,4 @@
-SAMIUTUR ;ven/lgc - UNIT TEST for SAMIUR1 ; 1/22/19 1:39pm
+SAMIUTUR ;ven/lgc - UNIT TEST for SAMIUR1 ; 2/20/19 11:12am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -45,14 +45,14 @@ UTWSRPT ; @TEST - generate a report based on parameters in filter
  s SAMIUFLTR("samireporttype")="followup"
  s utsuccess=0
  d WSREPORT^SAMIUR1(.SAMIUPOO,.SAMIUFLTR)
- s cnt=0 f  s cnt=$o(SAMIUPOO(cnt)) q:'cnt  i SAMIUPOO(cnt)["Followup next 30 days - before"  s utsuccess=1
+ s cnt=0 f  s cnt=$o(SAMIUPOO(cnt)) q:'cnt  i SAMIUPOO(cnt)["Followup next 30 days"  s utsuccess=1
  d CHKEQ^%ut(utsuccess,1,"Testing wsReport for followup FAILED!")
  ;
  k SAMIUFLTR,SAMIUPOO
  s SAMIUFLTR("samireporttype")="activity"
  s utsuccess=0
  d WSREPORT^SAMIUR1(.SAMIUPOO,.SAMIUFLTR)
- s cnt=0 f  s cnt=$o(SAMIUPOO(cnt)) q:'cnt  i SAMIUPOO(cnt)["Activity last 30 days - after" s utsuccess=1
+ s cnt=0 f  s cnt=$o(SAMIUPOO(cnt)) q:'cnt  i SAMIUPOO(cnt)["Activity last 30 days" s utsuccess=1
  d CHKEQ^%ut(utsuccess,1,"Testing wsReport for activity FAILED!")
  ;
  k SAMIUFLTR

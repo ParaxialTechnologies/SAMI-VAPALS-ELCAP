@@ -1,4 +1,4 @@
-SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 2019-02-26T01:33Z
+SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 2019-02-26T01:42Z
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -90,7 +90,7 @@ UTBLDTIU ; @TEST - Build a new TIU and Visit stub for a patient
  if ('$get(provduz))!('$get(clinien))!('$get(tiutitleien)) do  quit
  . do FAIL^%ut("Provider,clinic, or tiu title missing")
  do BLDTIU^SAMIVSTA(.tiuien,utdfn,tiutitleien,provduz,clinien)
- halt 3 ; Delay for time to build everything
+ hang 3 ; Delay for time to build everything
  if '$get(tiuien) do  quit
  . do FAIL^%ut("Procedure failed to build new TIU note")
  new tiunode0 set tiunode0=$get(^TIU(8925,tiuien,0))
@@ -112,7 +112,7 @@ UTSTEXT ; @TEST - Push text into an existing TIU note
  set SAMIUPOO(4)="Forth and last line of UNIT TEST text"
  new dest set dest="SAMIUPOO"
  do SETTEXT^SAMIVSTA(.tiuien,dest)
- halt 1 ; Delay for time to build everything
+ hang 1 ; Delay for time to build everything
  if '$get(tiuien) do  quit
  . do FAIL^%ut("Procedure failed to set text in TIU note")
  set SAMIUPOO=0
@@ -179,7 +179,7 @@ UTADDNS ; @TEST - Add additional signers to a TIU note
  new filter
  set filter("add signers",1)="64^Smith,Mary"
  do ADDSIGN^SAMIVSTA
- halt 1
+ hang 1
  do CHKEQ^%ut(utsuccess,1,"Testing Adding additional signers  FAILED!")
  quit
  ;
@@ -257,7 +257,7 @@ UTADDND ; @TEST - Add an addendum to a signed note
  quit
  ;
 UTDELTIU ; @TEST - Deleting an unsigned TIU note
- halt 2
+ hang 2
  new D,D0,DG,DI,DIC,DICR,DIG,DIH
  new tiuaien set tiuaien=$select($piece(tiuien,"^",2):$piece(tiuien,"^",2),1:0)
  set tiuien=+$get(tiuien)

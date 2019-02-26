@@ -1,4 +1,4 @@
-SAMIUTST ;ven/lgc - Unit Test Utilities ; 1/22/19 1:38pm
+SAMIUTST ;ven/lgc - Unit Test Utilities ; 2/25/19 8:01pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -47,7 +47,6 @@ START i $t(^%ut)="" W !,"*** UNIT TEST NOT INSTALLEd ***" Q
 SVUTARR(arr,title) ;
  q:'$d(arr)
  q:($g(title)="")
- ;n root s root=$$setroot^%wd("vapals unit tests")
  n root s root=$$setroot^%wd("vapals unit tests")
  n gien s gien=$$GETGIEN(root,title)
  k @root@(gien)
@@ -65,7 +64,6 @@ SVUTARR(arr,title) ;
 PLUTARR(arr,title) ;
  K arr
  q:($g(title)="")
- ;n root s root=$$setroot^%wd("vapals unit tests")
  n root s root=$$setroot^%wd("vapals unit tests")
  n gien s gien=$$GETGIEN(root,title)
  ; pull data

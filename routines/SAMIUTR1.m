@@ -1,4 +1,4 @@
-SAMIUTR1 ;ven/lgc - UNIT TEST for SAMICTR1 ; 1/23/19 5:35pm
+SAMIUTR1 ;ven/lgc - UNIT TEST for SAMICTR1 ; 2/25/19 8:00pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -85,6 +85,25 @@ UTNODUL ; @TEST - nodules
  n root,cnt,return,noder,nodea
  s root=$$setroot^%wd("vapals-patients")
  s SAMISI="XXX00001",SAMIKEY="ceform-2019-01-23"
+ s SAMIVALS=$na(@root@("graph",SAMISI,SAMIKEY))
+ n SAMIDICT s SAMIDICT=$$setroot^%wd("cteval-dict")
+ s SAMIDICT=$na(@SAMIDICT@("cteval-dict"))
+ s cnt=0
+ d NODULES^SAMICTR1("return",SAMIVALS,SAMIDICT)
+ ;now pull saved report
+ d PLUTARR^SAMIUTST(.SAMIUARC,"UTNODUL^SAMIUTR1 report XXX01-23")
+ ; now compare return with SAMIUARC
+ n noder,nodea s noder=$na(return),nodea=$na(SAMIUARC)
+ s utsuccess=1
+ f  s noder=$Q(@noder),nodea=$Q(@nodea) q:noder=""  d  q:'utsuccess
+ . i '(@noder=@nodea) s utsuccess=0
+ i '(nodea="") s utsuccess=0
+ d CHKEQ^%ut(utsuccess,1,"Testing generating nodule report XXX01-23  FAILED!")
+ ;
+ n SAMIUPOO,SAMISI,SAMIVALS,SAMIDICT,SAMIUARC
+ n root,cnt,return,noder,nodea
+ s root=$$setroot^%wd("vapals-patients")
+ s SAMISI="XXX00001",SAMIKEY="ceform-2019-02-25"
  s SAMIVALS=$na(@root@("graph",SAMISI,SAMIKEY))
  n SAMIDICT s SAMIDICT=$$setroot^%wd("cteval-dict")
  s SAMIDICT=$na(@SAMIDICT@("cteval-dict"))

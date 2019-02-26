@@ -1,4 +1,4 @@
-SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 2/20/19 3:11pm
+SAMIVSTA ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 2/21/19 1:56pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -570,7 +570,7 @@ PTINFO(dfn) ;
  set @root@(gien,"county")=$piece(SAMIXD,"^",15)
  set @root@(gien,"phone")=$piece(SAMIXD,"^",16)
  set @root@(gien,"sensitive patient")=$piece(SAMIXD,"^",17)
- ; Now get rural or urban and push into both the 
+ ; Get rural or urban and push into both the
  ;   "patient-lookup" and "vapals-patients" Graphstores
  if $piece(SAMIXD,"^",14) do
  . new UrbanRural set UrbanRural=$$URBRUR^SAMIVSTA($piece(SAMIXD,"^",14))
@@ -578,6 +578,19 @@ PTINFO(dfn) ;
  . set root=$$setroot^%wd("vapals-patients")
  . set gien=$order(@root@("dfn",dfn,0))
  . set:gien @root@(gien,"samiru")=UrbanRural
+ ;
+ ; Get race and push into both the
+ ;   "patient-lookup" and "vapals-patients" Graphstores
+ if $piece(SAMIXD,"^",18) do
+ . new race set race=$$RACE^SAMIVSTA($piece(SAMIXD,"^",18))
+ . set root=$$setroot^%wd("patient-lookup")
+ . set node=$name(@root@("dfn",dfn))
+ . set node=$Q(@node)
+ . set gien=+$piece(node,",",5)
+ . set @root@(gien,"race")=race
+ . set root=$$setroot^%wd("vapals-patients")
+ . set gien=$order(@root@("dfn",dfn,0))
+ . set:gien @root@(gien,"race")=race
  quit:$Q rslt  quit
  ;
  ;
@@ -725,7 +738,32 @@ URBRUR(zipcode) ;
  quit samiru
  ;
  ;
- ;@API-code: $$KASAVE^SAMIVSTA
+ ;
+ ;@API-code: $$RACE^SAMIVSTA(ICN)
+ ;@called-by
+ ;  PTINFO^SAMIVSTA
+ ;@calls
+ ;  $$setroot^%wd
+ ;@input
+ ;  icn
+ ;@output
+ ;   null = no race defined in file 2
+ ;   race (e.g. ASIAN, WHITE)
+ ;@tests
+ ;  UTRACE^SAMIUTVA
+RACE(icn) ; Return patient's race
+ if '$get(icn) q ""
+ new cntxt,rmprc,console,cntnopen,SAMIUARR,SAMIUXD,root,race
+ set cntxt="SPN GENERAL USER RPC"
+ set rmprc="SPN GET RACE"
+ set (console,cntnopen)=0
+ set SAMIUARR(1)=icn
+ do M2M^SAMIM2M(.SAMIUXD,cntxt,rmprc,console,cntnopen,.SAMIUARR)
+ s race=$p(SAMIUXD,"^")
+ q race
+ ;
+ ;
+ ;@API-code: $$KSAVE^SAMIVSTA
  ;@called-by
  ;@calls
  ;@input

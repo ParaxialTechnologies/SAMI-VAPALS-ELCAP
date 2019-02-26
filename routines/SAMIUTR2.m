@@ -1,4 +1,4 @@
-SAMIUTR2 ;ven/lgc - UNIT TEST for SAMICTR2 ; 1/23/19 5:34pm
+SAMIUTR2 ;ven/lgc - UNIT TEST for SAMICTR2 ; 2/25/19 8:00pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL

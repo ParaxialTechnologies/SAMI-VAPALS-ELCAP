@@ -1,4 +1,4 @@
-SAMIUTUR ;ven/lgc - UNIT TEST for SAMIUR1 ; 2/20/19 11:12am
+SAMIUTUR ;ven/lgc - UNIT TEST for SAMIUR1,SAMIUR2 ; 2/22/19 12:26pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -60,6 +60,28 @@ UTWSRPT ; @TEST - generate a report based on parameters in filter
  s utsuccess=1
  d WSREPORT^SAMIUR1(.SAMIUPOO,.SAMIUFLTR)
  s cnt=0 f  s cnt=$o(SAMIUPOO(cnt)) q:'cnt  i SAMIUPOO(cnt)["Enrollment as of" s utsuccess=1
+ d CHKEQ^%ut(utsuccess,1,"Testing wsReport for enrollment FAILED!")
+ ;
+ k SAMIUFLTR
+ s SAMIUFLTR("samireporttype")="missingct"
+ s utsuccess=1
+ d WSREPORT^SAMIUR1(.SAMIUPOO,.SAMIUFLTR)
+ s cnt=0 f  s cnt=$o(SAMIUPOO(cnt)) q:'cnt  i SAMIUPOO(cnt)["missingct" s utsuccess=1
+ d CHKEQ^%ut(utsuccess,1,"Testing wsReport for enrollment FAILED!")
+ ;
+ k SAMIUFLTR
+ s SAMIUFLTR("samireporttype")="incomplete"
+ s utsuccess=1
+ d WSREPORT^SAMIUR1(.SAMIUPOO,.SAMIUFLTR)
+ s cnt=0 f  s cnt=$o(SAMIUPOO(cnt)) q:'cnt  i SAMIUPOO(cnt)["incomplete" s utsuccess=1
+ d CHKEQ^%ut(utsuccess,1,"Testing wsReport for enrollment FAILED!")
+ ;
+ k SAMIUFLTR
+ s SAMIUFLTR("samireporttype")="outreach"
+ s SAMIUFLTR("debug")=1
+ s utsuccess=1
+ d WSREPORT^SAMIUR1(.SAMIUPOO,.SAMIUFLTR)
+ s cnt=0 f  s cnt=$o(SAMIUPOO(cnt)) q:'cnt  i SAMIUPOO(cnt)["@@REPORTTYPE@@" s utsuccess=1
  d CHKEQ^%ut(utsuccess,1,"Testing wsReport for enrollment FAILED!")
  q
  ;

@@ -139,4 +139,68 @@ const VAPALS = new function () {
         return self.indexOf(value) === index;
     };
 
+    /**
+     * Returns the data dictionary of the current page.
+     */
+    this.dd = function () {
+
+        let report = "";
+
+        function line(text) {
+            report = report + text + "\n"
+        }
+
+        const processed = [];
+        line("NAME\tTYPE\tVALUES\tLABEL(S)\tREQUIRED");
+        $.each($("form").find(":input, p.lead, h3, h4, label.doc-heading"), function (i, el) {
+            const $el = $(el);
+            let name = $el.prop('name');
+            let type = $el.prop('type');
+            const tagName = $el.prop("tagName");
+            //A ? signifies could be conditionally required. Rules could be complex
+            const required = $el.prop("required") === true ? "Yes" : "?";
+
+            //skip hidden fields since they can be pseudo elements for checkboxes
+            if (type !== 'hidden' && type !== 'submit' && !processed.includes(name)) {
+                processed.push(name);
+
+                let values = [];
+                let labels = [];
+                if (type === 'radio') {
+                    const $options = $("[name=" + name + "]");
+                    values = Array.from($options.map(function () {
+                        return $(this).val()
+                    }));
+                    labels = Array.from($options.map(function () {
+                        return $(this).closest("label").text().trim()
+                    }));
+                } else if (type === 'select' || type === 'select-one') {
+                    const $options = $el.find("option");
+                    values = Array.from($options.map(function () {
+                        return $(this).val()
+                    }));
+                    labels = Array.from($options.map(function () {
+                        return $(this).text().trim()
+                    }));
+                } else if (type === 'checkbox') {
+                    values.push($el.val());
+                    labels.push($el.closest("label").text().trim())
+                } else if (type === 'text' || type === 'textarea') {
+                    const label = $el.prop('placeholder') || $el.prop('title') || $el.closest(".form-group").find("label").first().text().trim();
+                    labels.push(label);
+                } else if (tagName === "P" || tagName === "H3" || tagName === "H4" || tagName === "LABEL") {
+                    name = "-";
+                    type = "-";
+                    values.push("-");
+                    labels.push($el.text().trim().replace(/(\r\n|\n|\r)/gm, ""));
+                } else {
+                    console.log(name + " is a " + type)
+                }
+
+                line([name, type, values, labels, required].join("\t"))
+                // console.log(labels.join(","))
+            }
+        });
+        console.log(report)
+    }
 };

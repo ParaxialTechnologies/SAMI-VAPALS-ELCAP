@@ -6,7 +6,7 @@
  * @copyright 2018 [VAPALS-ELCAP]{@link http://va-pals.org/}
  * @class
  */
-var VAPALS = new function () {
+const VAPALS = new function () {
 
     /**
      * Computes the number of months between the provided date and now.
@@ -15,8 +15,8 @@ var VAPALS = new function () {
      * @returns {number}
      */
     this.computeMonthsBetween = function (from, to) {
-        var fromMoment = this.toMoment(from);
-        var toMoment = this.toMoment(to);
+        const fromMoment = this.toMoment(from);
+        const toMoment = this.toMoment(to);
         if (fromMoment.isValid() && toMoment.isValid()) {
             return Math.abs(parseInt(fromMoment.diff(toMoment, "months", true)))
         }
@@ -31,11 +31,9 @@ var VAPALS = new function () {
     this.toMoment = function (value) {
         if (moment.isMoment(value)) {
             return value;
-        }
-        else if ($.type(value) === "date") {
+        } else if ($.type(value) === "date") {
             return moment(value);
-        }
-        else {
+        } else {
             return moment(value, VAPALS.DATE_FORMAT);
         }
     };
@@ -46,7 +44,7 @@ var VAPALS = new function () {
      */
     this.todaysDate = function () {
         const now = new Date();
-        now.setHours(0,0,0,0); // beginning of day
+        now.setHours(0, 0, 0, 0); // beginning of day
         return now;
     };
 
@@ -77,14 +75,14 @@ var VAPALS = new function () {
 
     this.autoScrollToErrorField = function () {
         //focus on first error
-        var firstErrEl = $(".fv-plugins-message-container [data-validator]:visible")
+        const firstErrEl = $(".fv-plugins-message-container [data-validator]:visible")
             .first()
             .closest(".form-group")
             .find(":input").first().prop("id");
 
         if (firstErrEl) {
-            var $el = $("#" + firstErrEl);
-            var top = $el.offset().top - 150; //150 here to scroll a bit higher
+            const $el = $("#" + firstErrEl);
+            const top = $el.offset().top - 150; //150 here to scroll a bit higher
 
             $([document.documentElement, document.body]).animate({
                 scrollTop: Math.max(0, top)
@@ -113,13 +111,32 @@ var VAPALS = new function () {
         }
     };
 
-    this.calculatePulmonaryFunction = function(fev1, fvc){
+    this.calculatePulmonaryFunction = function (fev1, fvc) {
         if (fev1 > 0 && fvc > 0) {
             return Math.round(100.0 * fev1 / fvc);
-        }
-        else {
+        } else {
             return 0;
         }
-    }
+    };
+
+    /**
+     * Sleeps the UI thread for the given number of milliseconds
+     * @param ms
+     * @returns {Promise<any>}
+     */
+    this.sleep = function (ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    };
+
+    /**
+     * reduces an array to unique values <code>array.filter(unique)
+     * @param value
+     * @param index
+     * @param self
+     * @returns {boolean}
+     */
+    this.unique = function (value, index, self) {
+        return self.indexOf(value) === index;
+    };
 
 };

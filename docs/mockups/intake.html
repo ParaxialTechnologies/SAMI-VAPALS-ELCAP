@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.01.25" name="version"/>
+  <meta content="2019.02.28" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    Lung Screening and Surveillance Intake Form
@@ -17,6 +17,17 @@
   <link href="../www/lib/jquery-ui-1.12.1/jquery-ui.structure.min.css" rel="stylesheet"/>
   <link href="../www/lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
   <link href="../www/lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
+  <style>
+   #wizard-bar.affix-top {
+            position: static;
+        }
+
+        #wizard-bar.affix {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+  </style>
  </head>
  <body id="body" style="position: relative;">
   <script src="../www/lib/jquery-3.3.1.min.js">
@@ -150,709 +161,983 @@
     </small>
    </h2>
    <hr/>
+   <nav class="navbar navbar-default hidden-xs" data-offset-bottom="70" data-offset-top="220" data-spy="affix" id="wizard-bar">
+    <div class="row">
+     <div class="col-sm-12">
+      <ul class="nav navbar-nav">
+       <li>
+        <a href="#chart-eligibility" id="chart-eligibility-tab">
+         Chart Eligibility
+        </a>
+       </li>
+       <li>
+        <a href="#intake" id="intake-tab">
+         Intake
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </nav>
    <form action="intake.html" class="validated" id="main-form" method="get">
     <input name="samiroute" type="hidden" value="postform"/>
     <input name="studyid" type="hidden" value="@@SID@@"/>
     <input name="form" type="hidden" value="@@FORMKEY@@"/>
-    <h3>
-     Pre-enrollment Eligibility
-    </h3>
-    <div class="row" id="pre-enrollment-questions">
-     <div class="col-sm-3">
-      <label class="required" for="sipechrt">
-       Eligible based on chart?
-      </label>
-     </div>
-     <div class="col-sm-3 form-group">
-      <label class="radio-inline" for="sipechrt-y">
-       <input id="sipechrt-y" name="sipechrt" required="required" type="radio" value="y"/>
-       Yes
-      </label>
-      <label class="radio-inline" for="sipechrt-n">
-       <input id="sipechrt-n" name="sipechrt" required="required" type="radio" value="n"/>
-       No
-      </label>
-     </div>
-     <div class="col-sm-6">
-      <div class="alert alert-info" id="sipechrt-y-alert" style="display:none;">
-       Complete the remainder of the form; an intake note will be generated.
-      </div>
-      <div class="alert alert-info" id="sipechrt-n-alert" style="display:none;">
-       Indicate one or more reasons why the patient is not eligible for lung screening. No intake note will
-                    be generated.
-      </div>
-     </div>
-    </div>
-    <div class="row" id="discussion-container">
-     <div class="col-sm-3">
-      <label class="required" for="sipedisc">
-       Eligible based on discussion with patient?
-      </label>
-     </div>
-     <div class="col-sm-3 form-group">
-      <label class="radio-inline" for="sipedisc-y">
-       <input id="sipedisc-y" name="sipedisc" required="required" type="radio" value="y"/>
-       Yes
-      </label>
-      <label class="radio-inline" for="sipedisc-n">
-       <input id="sipedisc-n" name="sipedisc" required="required" type="radio" value="n"/>
-       No
-      </label>
-     </div>
-    </div>
-    <div class="row" id="reason-container">
-     <div class="col-md-12 form-group">
-      <h4>
-       Reason(s)
-      </h4>
-     </div>
-     <div class="col-md-12 form-group form-inline" id="reason-medical-container">
-      <label for="siremhlc">
-       Medical History
-      </label>
-      <br/>
-      <label class="checkbox-inline ">
-       <input name="siremhlc" type="hidden" value=""/>
-       <input id="siremhlc" name="siremhlc" type="checkbox" value="y"/>
-       lung cancer
-      </label>
-      <label class="checkbox-inline ">
-       <input name="siremhhs" type="hidden" value=""/>
-       <input id="siremhhs" name="siremhhs" type="checkbox" value="y"/>
-       health status
-      </label>
-      <label class="checkbox-inline ">
-       <input name="siremhot" type="hidden" value=""/>
-       <input id="siremhot" name="siremhot" type="checkbox" value="y"/>
-       other
-      </label>
-      <input class="form-control" id="sireemhoo" name="sireemhoo" placeholder="specify" required="required" type="text"/>
-     </div>
-     <div class="col-md-12" id="reason-elsewhere-container">
-      <div class="form-group form-group-sm form-inline">
-       <label>
-        Receiving Care Elsewhere
-       </label>
-       <br/>
-       <label class="checkbox-inline ">
-        <input name="sirecepc" type="hidden" value=""/>
-        <input id="sirecepc" name="sirecepc" type="checkbox" value="y"/>
-        followed in pulmonary clinic
-       </label>
-       <label class="checkbox-inline ">
-        <input name="sirecenc" type="hidden" value=""/>
-        <input id="sirecenc" name="sirecenc" type="checkbox" value="y"/>
-        followed in nodule clinic
-       </label>
-       <label class="checkbox-inline ">
-        <input name="sireceho" type="hidden" value=""/>
-        <input id="sireceho" name="sireceho" type="checkbox" value="y"/>
-        followed in Hematology-Oncology
-       </label>
-       <label class="checkbox-inline ">
-        <input name="sirecepc" type="hidden" value=""/>
-        <input id="sirecepc" name="sirecepc" type="checkbox" value="y"/>
-        private care
-       </label>
-       <label class="checkbox-inline ">
-        <input name="sireceot" type="hidden" value=""/>
-        <input id="sireceot" name="sireceot" type="checkbox" value="y"/>
-        other
-       </label>
-       <input class="form-control form-inline" id="sireceoo" name="sireceoo" placeholder="specify" required="required" type="text"/>
-      </div>
-     </div>
-     <div class="col-md-12" id="reason-smoking-container">
-      <div class="form-group form-group-sm form-inline">
-       <label>
-        Smoking History
-       </label>
-       <br/>
-       <label class="checkbox-inline ">
-        <input name="sireshqd" type="hidden" value=""/>
-        <input id="sireshqd" name="sireshqd" type="checkbox" value="y"/>
-        quit date greater than 15 years
-       </label>
-       <label class="checkbox-inline ">
-        <input name="sireshpy" type="hidden" value=""/>
-        <input id="sireshpy" name="sireshpy" type="checkbox" value="y"/>
-        less than 30 pack years
-       </label>
-       <label class="checkbox-inline ">
-        <input name="sireshnc" type="hidden" value=""/>
-        <input id="sireshnc" name="sireshnc" type="checkbox" value="y"/>
-        non-cigarette Use (e.g. pipe, smokeless, vape, cannabis)
-       </label>
-       <label class="checkbox-inline ">
-        <input name="sireshot" type="hidden" value=""/>
-        <input id="sireshot" name="sireshot" type="checkbox" value="y"/>
-        other
-       </label>
-       <input class="form-control form-inline" id="sireshoo" name="sireshoo" placeholder="specify" required="required" type="text"/>
-      </div>
-     </div>
-     <div class="col-md-12" id="reason-contact-container">
-      <div class="form-group form-group-sm form-inline">
-       <label>
-        Unable To Contact
-       </label>
-       <br/>
-       <label class="checkbox-inline ">
-        <input name="sireucvm" type="hidden" value=""/>
-        <input id="sireucvm" name="sireucvm" type="checkbox" value="y"/>
-        left voice message
-       </label>
-       <label class="checkbox-inline ">
-        <input name="sireucbp" type="hidden" value=""/>
-        <input id="sireucbp" name="sireucbp" type="checkbox" value="y"/>
-        bad phone number
-       </label>
-       <label class="checkbox-inline ">
-        <input name="sireucot" type="hidden" value=""/>
-        <input id="sireucot" name="sireucot" type="checkbox" value="y"/>
-        other
-       </label>
-       <input class="form-control form-inline" id="sireucoo" name="sireucoo" placeholder="specify" required="required" type="text"/>
-      </div>
-     </div>
-    </div>
-    <h3>
-     Contact Information
-    </h3>
-    <div class="row">
-     <div class="col-sm-4 col-md-3 form-group">
-      <label class="required" for="sidc">
-       Date of contact
-      </label>
-      <div class="input-group datepicker">
-       <input aria-describedby="sidc-addon" class="form-control" data-restriction="past" id="sidc" name="sidc" required="required"/>
-       <div class="input-group-addon">
-        <div class="input-group-text" id="sidc-addon">
-         <i aria-hidden="true" class="fa fa-calendar">
-         </i>
-        </div>
-       </div>
-      </div>
-      <small class="form-text text-muted">
-       MM/DD/YYYY
-      </small>
-     </div>
-     <div class="col-sm-8 col-md-9 form-group">
-      <label for="silnpos">
-       How did you learn about the Lung Screening and Surveillance (LSS) program?
-      </label>
-      <div class="checkbox">
-       <label>
-        <input name="silnph" type="hidden" value=""/>
-        <input id="silnph" name="silnph" type="checkbox" value="1"/>
-        Phone
-       </label>
-      </div>
-      <div class="checkbox">
-       <label>
-        <input name="silnls" type="hidden" value=""/>
-        <input id="silnls" name="silnls" type="checkbox" value="1"/>
-        Letter sent
-       </label>
-      </div>
-      <div class="checkbox">
-       <label>
-        <input name="silnpu" type="hidden" value=""/>
-        <input id="silnpu" name="silnpu" type="checkbox" value="1"/>
-        Pulmonary
-       </label>
-      </div>
-      <div class="checkbox">
-       <label>
-        <input name="silnpc" type="hidden" value=""/>
-        <input id="silnpc" name="silnpc" type="checkbox" value="1"/>
-        PCP
-       </label>
-      </div>
-      <div class="checkbox">
-       <label>
-        <input name="silnpn" type="hidden" value=""/>
-        <input id="silnpn" name="silnpn" type="checkbox" value="1"/>
-        Oncology
-       </label>
-      </div>
-      <div class="checkbox">
-       <label>
-        <input name="silnpp" type="hidden" value=""/>
-        <input id="silnpp" name="silnpp" type="checkbox" value="1"/>
-        Smoking cessation program
-       </label>
-      </div>
-      <div class="checkbox">
-       <label>
-        <input name="silnpo" type="hidden" value=""/>
-        <input id="silnpo" name="silnpo" type="checkbox" value="1"/>
-        Other
-       </label>
-      </div>
-      <input class="form-control input-sm" id="silnpos" name="silnpos" required="required" title="Other" type="text"/>
-     </div>
-    </div>
-    <div class="row">
-     <div class="col-md-12 form-group">
-      <label class="required">
-       Primary address verified
-      </label>
-      <label class="radio-inline" for="sipav-y">
-       <input id="sipav-y" name="sipav" required="required" type="radio" value="y"/>
-       Yes
-      </label>
-      <label class="radio-inline" for="sipav-n">
-       <input id="sipav-n" name="sipav" type="radio" value="n"/>
-       No
-      </label>
-     </div>
-    </div>
-    <div class="row">
-     <div class="form-group col-sm-6 ">
-      <label for="sipsa">
-       Preferred address
-      </label>
-      <input class="form-control" id="sipsa" name="sipsa" type="text"/>
-     </div>
-     <div class="form-group col-sm-2">
-      <label for="sipan">
-       Apt #
-      </label>
-      <input class="form-control" id="sipan" name="sipan" type="text"/>
-     </div>
-     <div class="form-group col-sm-4">
-      <label for="sipcn">
-       County
-      </label>
-      <input class="form-control" id="sipcn" name="sipcn" type="text"/>
-     </div>
-    </div>
-    <div class="row">
-     <div class="form-group col-md-6">
-      <label for="sipc">
-       City
-      </label>
-      <input class="form-control" id="sipc" name="sipc" type="text"/>
-     </div>
-     <div class="form-group col-md-1">
-      <label for="sips">
-       State
-      </label>
-      <input class="form-control" id="sips" name="sips" type="text"/>
-     </div>
-     <div class="form-group col-md-2">
-      <label for="sipz">
-       Zip
-      </label>
-      <input class="form-control" id="sipz" name="sipz" type="text"/>
-      <small class="text-muted" id="rural-text">
-      </small>
-     </div>
-     <div class="form-group col-md-3">
-      <label for="sipcr">
-       Country
-      </label>
-      <input class="form-control" id="sipcr" name="sipcr" type="text"/>
-     </div>
-    </div>
-    <div class="row">
-     <div class="form-group col-sm-6 ">
-      <label for="sippn">
-       Phone number
-      </label>
-      <input class="form-control" id="sippn" name="sippn" type="text"/>
-     </div>
-    </div>
-    <div class="row">
-     <div class="col-md-12 form-group">
-      <label class="required">
-       Rural status
-      </label>
-      <label class="radio-inline" for="sirs-u">
-       <input id="sirs-u" name="sirs" required="required" type="radio" value="u"/>
-       Urban
-      </label>
-      <label class="radio-inline" for="sirs-r">
-       <input id="sirs-r" name="sirs" type="radio" value="r"/>
-       Rural
-      </label>
-      <label class="radio-inline" for="sirs-n">
-       <input id="sirs-n" name="sirs" type="radio" value="n"/>
-       Unknown
-      </label>
-     </div>
-    </div>
-    <hr/>
-    <h3>
-     Smoking History
-    </h3>
-    <div class="row">
-     <div class="col-md-12 form-group">
-      <label for="sies">
-       Have you ever smoked
-      </label>
-      <input class="form-control" id="sies" name="sies" type="text"/>
-      <div class="checkbox">
-       <label>
-        <input name="siesn" type="hidden" value=""/>
-        <input id="siesn" name="siesn" type="checkbox" value="1"/>
-        Never smoked
-       </label>
-      </div>
-      <div class="checkbox">
-       <label>
-        <input name="siesp" type="hidden" value=""/>
-        <input id="siesp" name="siesp" type="checkbox" value="1"/>
-        Past
-       </label>
-      </div>
-      <div class="checkbox">
-       <label>
-        <input name="siesc" type="hidden" value=""/>
-        <input id="siesc" name="siesc" type="checkbox" value="1"/>
-        Current
-       </label>
-      </div>
-      <div class="checkbox">
-       <label>
-        <input name="siesq" type="hidden" value=""/>
-        <input id="siesq" name="siesq" type="checkbox" value="1"/>
-        Willing to quit
-       </label>
-      </div>
-     </div>
-    </div>
-    <div class="row">
-     <div class="col-md-4">
-      <label class="visible-xs visible-sm required" for="sicpd">
-       How many cigarettes did you smoke per day?
-      </label>
-      <label class="text-right pull-right hidden-xs hidden-sm required" for="sicpd">
-       How many cigarettes did you smoke per day?
-      </label>
-     </div>
-     <div class="col-sm-2 form-group">
-      <input class="form-control numeric" id="sicpd" maxlength="4" name="sicpd" required="required" type="text"/>
-     </div>
-    </div>
-    <div class="row">
-     <div class="col-md-4">
-      <label class="visible-xs visible-sm " for="sippd">
-       How many packs of cigarettes did you smoke per day (PPD)?
-      </label>
-      <label class="text-right pull-right hidden-xs hidden-sm " for="sippd">
-       How many packs of cigarettes did you smoke per day (PPD)?
-      </label>
-     </div>
-     <div class="col-sm-2 form-group">
-      <span class="control-label" id="sippd-val">
-      </span>
-     </div>
-     <input id="sippd" name="sippd" type="hidden"/>
-    </div>
-    <div class="row">
-     <div class="col-md-4">
-      <label class="visible-xs visible-sm required" for="sisny">
-       # of years
-      </label>
-      <label class="text-right pull-right hidden-xs hidden-sm required" for="sisny">
-       # of years
-      </label>
-     </div>
-     <div class="col-sm-2 form-group">
-      <input class="form-control numeric decimalformat" id="sisny" maxlength="4" name="sisny" required="required" type="text"/>
-     </div>
-    </div>
-    <div class="row">
-     <div class="col-md-4">
-      <label class="visible-xs visible-sm " for="sippy">
-       Reported pack years
-      </label>
-      <label class="text-right pull-right hidden-xs hidden-sm " for="sippy">
-       Reported pack years
-      </label>
-     </div>
-     <div class="col-sm-2 form-group">
-      <span id="sippy-val">
-      </span>
-     </div>
-     <input id="sippy" name="sippy" type="hidden"/>
-    </div>
-    <div class="row">
-     <div class="col-md-4">
-      <label class="visible-xs visible-sm " for="siq">
-       Quit
-      </label>
-      <label class="text-right pull-right hidden-xs hidden-sm " for="siq">
-       Quit
-      </label>
-     </div>
-     <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-      <div class="input-group datepicker">
-       <input aria-describedby="siq-addon" class="form-control" data-restriction="past" id="siq" name="siq"/>
-       <div class="input-group-addon">
-        <div class="input-group-text" id="siq-addon">
-         <i aria-hidden="true" class="fa fa-calendar">
-         </i>
-        </div>
-       </div>
-      </div>
-      <small class="form-text text-muted">
-       MM/DD/YYYY
-      </small>
-     </div>
-    </div>
-    <div class="row">
-     <div class="col-md-4">
-      <label class="visible-xs visible-sm " for="sicep">
-       Smoking cessation education provided
-      </label>
-      <label class="text-right pull-right hidden-xs hidden-sm " for="sicep">
-       Smoking cessation education provided
-      </label>
-     </div>
-     <div class="col-md-8 form-group">
-      <textarea class="form-control" id="sicep" name="sicep" type="text"></textarea>
-     </div>
-    </div>
-    <div class="row">
-     <div class="col-md-4">
-      <label class="visible-xs visible-sm " for="sicadx">
-       Lung CA Dx (if applicable)
-      </label>
-      <label class="text-right pull-right hidden-xs hidden-sm " for="sicadx">
-       Lung CA Dx (if applicable)
-      </label>
-     </div>
-     <div class="col-md-4 form-group">
-      <div class="input-group datepicker">
-       <input aria-describedby="sicadx-addon" class="form-control" data-restriction="past" id="sicadx" name="sicadx"/>
-       <div class="input-group-addon">
-        <div class="input-group-text" id="sicadx-addon">
-         <i aria-hidden="true" class="fa fa-calendar">
-         </i>
-        </div>
-       </div>
-      </div>
-      <small class="form-text text-muted">
-       MM/DD/YYYY
-      </small>
-     </div>
-     <div class="col-md-4 form-group">
-      <input class="form-control" id="sicadxl" name="sicadxl" type="text"/>
-      <span class="help-block">
-       Location if not in VA
-      </span>
-     </div>
-    </div>
-    <div class="row">
-     <div class="col-md-4">
-      <label class="visible-xs visible-sm " for="sipldct">
-       Prior LDCT
-      </label>
-      <label class="text-right pull-right hidden-xs hidden-sm " for="sipldct">
-       Prior LDCT
-      </label>
-     </div>
-     <div class="col-md-4 form-group">
-      <div class="input-group datepicker">
-       <input aria-describedby="sipldct-addon" class="form-control" data-restriction="past" id="sipldct" name="sipldct"/>
-       <div class="input-group-addon">
-        <div class="input-group-text" id="sipldct-addon">
-         <i aria-hidden="true" class="fa fa-calendar">
-         </i>
-        </div>
-       </div>
-      </div>
-      <small class="form-text text-muted">
-       MM/DD/YYYY
-      </small>
-     </div>
-     <div class="col-md-4 form-group">
-      <input class="form-control" id="sipldctl" name="sipldctl" type="text"/>
-      <span class="help-block">
-       Location if not in VA
-      </span>
-     </div>
-    </div>
-    <hr/>
-    <div id="enrollment-container">
+    <div id="chart-eligibility">
      <div class="row">
-      <div class="col-md-12 form-group">
+      <div class="col-md-12">
+       <p class="required lead">
+        The participant was identified as a potential lung screening candidate by:
+       </p>
+      </div>
+      <div class="col-sm-6 col-md-4">
+       <div class="form-group">
+        <div class="radio">
+         <label>
+          <input id="siceiden-referral" name="siceiden" required="required" type="radio" value="referral"/>
+          Referral
+         </label>
+        </div>
+        <div class="radio">
+         <label>
+          <input id="siceiden-ldct" name="siceiden" required="required" type="radio" value="ldct"/>
+          Low-dose CT placed directly by clinician
+         </label>
+        </div>
+        <div class="radio">
+         <label>
+          <input id="siceiden-lspo" name="siceiden" required="required" type="radio" value="outreach"/>
+          Lung screening program outreach
+         </label>
+        </div>
+        <div class="radio">
+         <label>
+          <input id="siceiden-self" name="siceiden" required="required" type="radio" value="self"/>
+          Self-referred
+         </label>
+        </div>
+       </div>
+      </div>
+      <div class="col-sm-6" id="referral-container" style="display: none;">
+       <div class="form-group">
+        <label class="required" for="sicerfdt">
+         Date of referral
+        </label>
+        <div class="input-group datepicker">
+         <input aria-describedby="sicerfdt-addon" class="form-control" data-restriction="past" id="sicerfdt" name="sicerfdt" required="required"/>
+         <div class="input-group-addon">
+          <div class="input-group-text" id="sicerfdt-addon">
+           <i aria-hidden="true" class="fa fa-calendar">
+           </i>
+          </div>
+         </div>
+        </div>
+        <small class="form-text text-muted">
+         MM/DD/YYYY
+        </small>
+       </div>
+       <div class="form-group">
+        <label class="required doc-heading">
+         Specialty of referring provider
+        </label>
+        <br/>
+        <div class="checkbox">
+         <label>
+          <input name="sicerfpc" type="hidden" value=""/>
+          <input id="sicerfpc" name="sicerfpc" type="checkbox" value="y"/>
+          Primary Care
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="sicerfwh" type="hidden" value=""/>
+          <input id="sicerfwh" name="sicerfwh" type="checkbox" value="y"/>
+          Women's Health
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="sicerfge" type="hidden" value=""/>
+          <input id="sicerfge" name="sicerfge" type="checkbox" value="y"/>
+          Geriatrics
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="sicerfpu" type="hidden" value=""/>
+          <input id="sicerfpu" name="sicerfpu" type="checkbox" value="y"/>
+          Pulmonology
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="sicerfon" type="hidden" value=""/>
+          <input id="sicerfon" name="sicerfon" type="checkbox" value="y"/>
+          Oncology
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="sicerfsc" type="hidden" value=""/>
+          <input id="sicerfsc" name="sicerfsc" type="checkbox" value="y"/>
+          Smoking Cessation
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="sicerfot" type="hidden" value=""/>
+          <input id="sicerfot" name="sicerfot" type="checkbox" value="y"/>
+          Other
+         </label>
+        </div>
+        <input class="form-control form-inline" id="sicerfoo" name="sicerfoo" placeholder="specify" required="required" type="text"/>
+       </div>
+      </div>
+     </div>
+     <div class="row">
+      <div class="col-sm-6 col-md-4">
+       <p class="required lead">
+        Eligible based on chart review?
+       </p>
+      </div>
+      <div class="col-sm-6 col-md-8 form-group">
+       <label class="radio-inline" for="sicechrt-y">
+        <input id="sicechrt-y" name="sicechrt" required="required" type="radio" value="y"/>
+        Yes
+       </label>
+       <label class="radio-inline" for="sicechrt-n">
+        <input id="sicechrt-n" name="sicechrt" required="required" type="radio" value="n"/>
+        No
+       </label>
+      </div>
+     </div>
+     <div class="row">
+      <div class="col-sm-12">
+       <div class="alert alert-info" id="sicechrt-y-alert" style="display:none;">
+        Complete the remainder of the form; an intake note will be generated.
+       </div>
+      </div>
+     </div>
+     <div class="row">
+      <div class="col-md-12">
+       <div class="panel panel-default" id="reason-container" style="display:none;">
+        <div class="alert alert-warning" style="margin-bottom: 0;border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
+         Indicate one or more reasons why the patient is not eligible for lung screening. No intake
+                            note will be generated.
+        </div>
+        <div class="panel-body">
+         <div class="form-group form-group-sm form-inline">
+          <label for="sicemhlc">
+           Medical History
+          </label>
+          <br/>
+          <label class="checkbox-inline ">
+           <input name="sicemhlc" type="hidden" value=""/>
+           <input group="ineligible-reason" id="sicemhlc" name="sicemhlc" type="checkbox" value="y"/>
+           lung cancer
+          </label>
+          <label class="checkbox-inline ">
+           <input name="sicemhhs" type="hidden" value=""/>
+           <input group="ineligible-reason" id="sicemhhs" name="sicemhhs" type="checkbox" value="y"/>
+           health status
+          </label>
+          <label class="checkbox-inline ">
+           <input name="sicemhot" type="hidden" value=""/>
+           <input group="ineligible-reason" id="sicemhot" name="sicemhot" type="checkbox" value="y"/>
+           other
+          </label>
+          <input class="form-control" id="sicemhoo" name="sicemhoo" placeholder="specify" required="required" type="text"/>
+          <br/>
+          <br/>
+          <label>
+           Receiving Care Elsewhere
+          </label>
+          <br/>
+          <label class="checkbox-inline ">
+           <input name="sicecepc" type="hidden" value=""/>
+           <input group="ineligible-reason" id="sicecepc" name="sicecepc" type="checkbox" value="y"/>
+           followed in pulmonary clinic
+          </label>
+          <label class="checkbox-inline ">
+           <input name="sicecenc" type="hidden" value=""/>
+           <input group="ineligible-reason" id="sicecenc" name="sicecenc" type="checkbox" value="y"/>
+           followed in nodule clinic
+          </label>
+          <label class="checkbox-inline ">
+           <input name="siceceho" type="hidden" value=""/>
+           <input group="ineligible-reason" id="siceceho" name="siceceho" type="checkbox" value="y"/>
+           followed in hematology-Oncology
+          </label>
+          <label class="checkbox-inline ">
+           <input name="sicecepr" type="hidden" value=""/>
+           <input group="ineligible-reason" id="sicecepr" name="sicecepr" type="checkbox" value="y"/>
+           private care
+          </label>
+          <label class="checkbox-inline ">
+           <input name="siceceot" type="hidden" value=""/>
+           <input group="ineligible-reason" id="siceceot" name="siceceot" type="checkbox" value="y"/>
+           other
+          </label>
+          <input class="form-control" id="siceceoo" name="siceceoo" placeholder="specify" required="required" type="text"/>
+          <br/>
+          <br/>
+          <label>
+           Smoking History
+          </label>
+          <br/>
+          <label class="checkbox-inline ">
+           <input name="siceshqd" type="hidden" value=""/>
+           <input group="ineligible-reason" id="siceshqd" name="siceshqd" type="checkbox" value="y"/>
+           quit date greater than 15 years
+          </label>
+          <label class="checkbox-inline ">
+           <input name="siceshpy" type="hidden" value=""/>
+           <input group="ineligible-reason" id="siceshpy" name="siceshpy" type="checkbox" value="y"/>
+           less than 30 pack years
+          </label>
+          <label class="checkbox-inline ">
+           <input name="siceshnc" type="hidden" value=""/>
+           <input group="ineligible-reason" id="siceshnc" name="siceshnc" type="checkbox" value="y"/>
+           non-cigarette use (e.g. pipe, smokeless, vape, cannabis)
+          </label>
+          <label class="checkbox-inline ">
+           <input name="siceshot" type="hidden" value=""/>
+           <input group="ineligible-reason" id="siceshot" name="siceshot" type="checkbox" value="y"/>
+           other
+          </label>
+          <input class="form-control" id="siceshoo" name="siceshoo" placeholder="specify" required="required" type="text"/>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <button class="btn btn-primary" id="save-chart-eligibility" type="submit">
+      Submit Chart Eligibility
+     </button>
+    </div>
+    <div id="pre-enrollment-discussion" style="display:none;">
+     <hr/>
+     <div class="row">
+      <div class="col-sm-12">
+       <p class="required lead">
+        Was a pre-enrollment discussion held?
+       </p>
+      </div>
+     </div>
+     <div class="row">
+      <div class="col-sm-3 form-group">
+       <label class="radio-inline" for="sipedisc-y">
+        <input id="sipedisc-y" name="sipedisc" required="required" type="radio" value="y"/>
+        Yes
+       </label>
+       <label class="radio-inline" for="sipedisc-n">
+        <input id="sipedisc-n" name="sipedisc" required="required" type="radio" value="n"/>
+        No
+       </label>
+      </div>
+     </div>
+     <div id="discussion-container">
+      <h4>
+       Pre-Enrollment Discussion
+      </h4>
+      <div class="row">
+       <div class="col-sm-4 col-md-3 form-group">
+        <label class="required" for="sipedc">
+         Date of contact
+        </label>
+        <div class="input-group datepicker">
+         <input aria-describedby="sipedc-addon" class="form-control" data-restriction="past" id="sipedc" name="sipedc" required="required"/>
+         <div class="input-group-addon">
+          <div class="input-group-text" id="sipedc-addon">
+           <i aria-hidden="true" class="fa fa-calendar">
+           </i>
+          </div>
+         </div>
+        </div>
+        <small class="form-text text-muted">
+         MM/DD/YYYY
+        </small>
+       </div>
+       <div class="col-sm-8 col-md-9 form-group">
+        <label>
+         The lung screening program reached the participant or was contacted via
+                            (check all that apply)?
+        </label>
+        <div class="checkbox">
+         <label>
+          <input name="sipecnip" type="hidden" value=""/>
+          <input group="discussion-contact" id="sipecnip" name="sipecnip" type="checkbox" value="1"/>
+          In person
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="sipecnte" type="hidden" value=""/>
+          <input group="discussion-contact" id="sipecnte" name="sipecnte" type="checkbox" value="1"/>
+          Telephone
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="sipecnth" type="hidden" value=""/>
+          <input group="discussion-contact" id="sipecnth" name="sipecnth" type="checkbox" value="1"/>
+          TeleHealth
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="sipecnml" type="hidden" value=""/>
+          <input group="discussion-contact" id="sipecnml" name="sipecnml" type="checkbox" value="1"/>
+          Mailed letter
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="sipecnpp" type="hidden" value=""/>
+          <input group="discussion-contact" id="sipecnpp" name="sipecnpp" type="checkbox" value="1"/>
+          Message in patient portal
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="sipecnvd" type="hidden" value=""/>
+          <input group="discussion-contact" id="sipecnvd" name="sipecnvd" type="checkbox" value="1"/>
+          Video-on-Demand (VOD)
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="sipecnot" type="hidden" value=""/>
+          <input group="discussion-contact" id="sipecnot" name="sipecnot" type="checkbox" value="1"/>
+          Other
+         </label>
+        </div>
+        <input class="form-control input-sm" id="sipecnoo" name="sipecnoo" required="required" title="Other contact method" type="text"/>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-md-12">
+        <p class="lead">
+         A pre-enrollment discussion with the participant resulted in:
+        </p>
+        <div class="form-group">
+         <div class="radio">
+          <label>
+           <input id="siperslt-y" name="siperslt" required="required" type="radio" value="y"/>
+           Participant is interested in discussing lung screening. The program will proceed with enrollment process.
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="siperslt-u" name="siperslt" required="required" type="radio" value="u"/>
+           Participant is unsure of lung screening. Ok to contact in the future.
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="siperslt-nn" name="siperslt" required="required" type="radio" value="nn"/>
+           Participant is not interested in discussing lung screening at this time. Ok to contact in the future.
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="siperslt-nf" name="siperslt" required="required" type="radio" value="nf"/>
+           Participant is not interested in discussing lung screening in the future.
+          </label>
+         </div>
+         <div class="radio">
+          <label>
+           <input id="siperslt-na" name="siperslt" required="required" type="radio" value="na"/>
+           Unable to reach participant at this time.
+          </label>
+         </div>
+        </div>
+       </div>
+       <div class="col-md-12">
+        <div class="form-group">
+         <label class="required" for="sipecmnt">
+          Comments
+         </label>
+         <textarea class="form-control" id="sipecmnt" name="sipecmnt" required="required"></textarea>
+        </div>
+       </div>
+      </div>
+      <button class="btn btn-primary" id="save-pre-enrollment-discussion" type="submit">
+       Submit Pre-Enrollment Discussion
+      </button>
+     </div>
+    </div>
+    <div id="intake" style="display:none;">
+     <hr/>
+     <h3>
+      Intake discussion
+     </h3>
+     <div class="row">
+      <div class="col-sm-4 col-md-3 form-group">
+       <label class="required" for="sintdc">
+        Date of contact
+       </label>
+       <div class="input-group datepicker">
+        <input aria-describedby="sintdc-addon" class="form-control" data-restriction="past" id="sintdc" name="sintdc" required="required"/>
+        <div class="input-group-addon">
+         <div class="input-group-text" id="sintdc-addon">
+          <i aria-hidden="true" class="fa fa-calendar">
+          </i>
+         </div>
+        </div>
+       </div>
+       <small class="form-text text-muted">
+        MM/DD/YYYY
+       </small>
+      </div>
+      <div class="col-sm-8 col-md-9 form-group">
+       <label class="doc-heading">
+        The lung screening program reached the participant or was contacted via
+                        (check all that apply):
+       </label>
        <div class="checkbox">
-        <label class="required">
-         <input name="siidmdc" type="hidden" value=""/>
-         <input id="siidmdc" name="siidmdc" required="required" type="checkbox" value="1"/>
-         Informed decision making discussion complete
+        <label>
+         <input name="sintcnip" type="hidden" value=""/>
+         <input group="intake-contact" id="sintcnip" name="sintcnip" type="checkbox" value="1"/>
+         In person
         </label>
        </div>
+       <div class="checkbox">
+        <label>
+         <input name="sintcnph" type="hidden" value=""/>
+         <input group="intake-contact" id="sintcnph" name="sintcnph" type="checkbox" value="1"/>
+         Telephone
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input name="sintcnth" type="hidden" value=""/>
+         <input group="intake-contact" id="sintcnth" name="sintcnth" type="checkbox" value="1"/>
+         TeleHealth
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input name="sintcnml" type="hidden" value=""/>
+         <input group="intake-contact" id="sintcnml" name="sintcnml" type="checkbox" value="1"/>
+         Mailed letter
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input name="sintcnpp" type="hidden" value=""/>
+         <input group="intake-contact" id="sintcnpp" name="sintcnpp" type="checkbox" value="1"/>
+         Message in patient portal
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input name="sintcnvd" type="hidden" value=""/>
+         <input group="intake-contact" id="sintcnvd" name="sintcnvd" type="checkbox" value="1"/>
+         Video-on-Demand (VOD)
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input name="sintcnot" type="hidden" value=""/>
+         <input group="intake-contact" id="sintcnot" name="sintcnot" type="checkbox" value="1"/>
+         Other
+        </label>
+       </div>
+       <input class="form-control input-sm" id="sintcnoo" name="sintcnoo" required="required" title="Other contact method" type="text"/>
       </div>
      </div>
-     <p class="alert alert-warning">
-      Veteran of age and exposure to cigarette smoke as described above, and without a current
-                diagnosis or obvious symptoms suggestive of lung cancer, has been educated today about the
-                estimated risk for lung cancer, the possibility of a cure or live prolonging if an early lung
-                cancer were to be found during screening, the possibility of imaging abnormalities not being
-                lung cancer, the possibility of complications from additional diagnostic procedures, and the
-                approximate amount of radiation exposure associated with each screening procedure. In addition,
-                the Veteran has been educated today about the importance of avoiding exposure to cigarette
-                smoke, available tobacco cessation programs and available lung screening services at this VA
-                facility. Education material was provided to the veteran.
-      <br/>
-     </p>
      <div class="row">
       <div class="col-md-12 form-group">
        <label class="required">
-        Based on this information, the Veteran has opted to
+        Primary address verified
        </label>
-       <div class="radio">
-        <label>
-         <input id="sildct-n" name="sildct" required="required" type="radio" value="n"/>
-         Not enroll
-        </label>
-       </div>
-       <div class="radio">
-        <label>
-         <input id="sildct-l" name="sildct" type="radio" value="l"/>
-         Not enroll at this time, okay to contact in the future
-        </label>
-       </div>
-       <div class="radio">
-        <label>
-         <input id="sildct-y" name="sildct" type="radio" value="y"/>
-         Enroll in the Lung Screening and Surveillance (LSS) program and have an LDCT ordered.
-                            Coordination of care will be made by the LSS team
-        </label>
-       </div>
+       <label class="radio-inline" for="sipav-y">
+        <input id="sipav-y" name="sintpav" required="required" type="radio" value="y"/>
+        Yes
+       </label>
+       <label class="radio-inline" for="sipav-n">
+        <input id="sipav-n" name="sintpav" type="radio" value="n"/>
+        No
+       </label>
       </div>
      </div>
-    </div>
-    <div class="row">
-     <div class="col-md-12 form-group">
-      <label class="control-label" for="siclin">
-       Clinical Indications for Initial Screening CT
-      </label>
-      <textarea class="form-control" id="siclin" name="siclin" rows="3"></textarea>
+     <div class="row">
+      <div class="form-group col-sm-6 ">
+       <label for="sintpsa">
+        Preferred address
+       </label>
+       <input class="form-control" id="sintpsa" name="sintpsa" type="text"/>
+      </div>
+      <div class="form-group col-sm-2">
+       <label for="sintpan">
+        Apt #
+       </label>
+       <input class="form-control" id="sintpan" name="sintpan" type="text"/>
+      </div>
+      <div class="form-group col-sm-4">
+       <label for="sintpcn">
+        County
+       </label>
+       <input class="form-control" id="sintpcn" name="sintpcn" type="text"/>
+      </div>
      </div>
-    </div>
-    <hr/>
-    <h3>
-     Current Status
-    </h3>
-    <div class="row">
-     <div class="col-md-12 form-group">
-      <label class="required" for="sistatus">
-       Enrollment
-      </label>
-      <br/>
-      <label class="radio-inline" for="sistatus-active">
-       <input id="sistatus-active" name="sistatus" required="required" type="radio" value="active"/>
-       Active
-      </label>
-      <label class="radio-inline" for="sistatus-inactive">
-       <input id="sistatus-inactive" name="sistatus" type="radio" value="inactive"/>
-       Not active
-      </label>
+     <div class="row">
+      <div class="form-group col-md-6">
+       <label for="sintpc">
+        City
+       </label>
+       <input class="form-control" id="sintpc" name="sintpc" type="text"/>
+      </div>
+      <div class="form-group col-md-1">
+       <label for="sintps">
+        State
+       </label>
+       <input class="form-control" id="sintps" name="sintps" type="text"/>
+      </div>
+      <div class="form-group col-md-2">
+       <label for="sintpz">
+        Zip
+       </label>
+       <input class="form-control" id="sintpz" name="sintpz" type="text"/>
+       <small class="text-muted" id="rural-text">
+       </small>
+      </div>
+      <div class="form-group col-md-3">
+       <label for="sintpcr">
+        Country
+       </label>
+       <input class="form-control" id="sintpcr" name="sintpcr" type="text"/>
+      </div>
      </div>
-    </div>
-    <div id="reason-for-change-container" style="display: none;">
+     <div class="row">
+      <div class="form-group col-sm-6 ">
+       <label for="sintppn">
+        Phone number
+       </label>
+       <input class="form-control" id="sintppn" name="sintppn" type="text"/>
+      </div>
+     </div>
+     <div class="row">
+      <div class="col-md-12 form-group">
+       <label class="required">
+        Rural status
+       </label>
+       <label class="radio-inline" for="sintrs-u">
+        <input id="sintrs-u" name="sintrs" required="required" type="radio" value="u"/>
+        Urban
+       </label>
+       <label class="radio-inline" for="sintrs-r">
+        <input id="sintrs-r" name="sintrs" type="radio" value="r"/>
+        Rural
+       </label>
+       <label class="radio-inline" for="sintrs-n">
+        <input id="sintrs-n" name="sintrs" type="radio" value="n"/>
+        Unknown
+       </label>
+      </div>
+     </div>
      <hr/>
      <h3>
-      Reason for change
+      Smoking History
      </h3>
      <div class="row">
       <div class="col-md-12 form-group">
-       <label class="required" for="sistachg">
-        Reason
+       <label for="sintes">
+        Have you ever smoked
        </label>
+       <input class="form-control" id="sintes" name="sintes" type="text"/>
+       <div class="checkbox">
+        <label>
+         <input name="sintesn" type="hidden" value=""/>
+         <input id="sintesn" name="sintesn" type="checkbox" value="1"/>
+         Never smoked
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input name="sintesp" type="hidden" value=""/>
+         <input id="sintesp" name="sintesp" type="checkbox" value="1"/>
+         Past
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input name="sintesc" type="hidden" value=""/>
+         <input id="sintesc" name="sintesc" type="checkbox" value="1"/>
+         Current
+        </label>
+       </div>
+       <div class="checkbox">
+        <label>
+         <input name="sintesq" type="hidden" value=""/>
+         <input id="sintesq" name="sintesq" type="checkbox" value="1"/>
+         Willing to quit
+        </label>
+       </div>
+      </div>
+     </div>
+     <div class="row form-group">
+      <div class="col-md-4">
+       <label class="visible-xs visible-sm required" for="sintcpd">
+        How many cigarettes did you smoke per day?
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm required" for="sintcpd">
+        How many cigarettes did you smoke per day?
+       </label>
+      </div>
+      <div class="col-sm-2">
+       <input class="form-control numeric" id="sintcpd" maxlength="4" name="sintcpd" required="required" type="text"/>
+      </div>
+     </div>
+     <div class="row form-group">
+      <div class="col-md-4">
+       <label class="visible-xs visible-sm " for="sintppd">
+        How many packs of cigarettes did you smoke per day (PPD)?
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm " for="sintppd">
+        How many packs of cigarettes did you smoke per day (PPD)?
+       </label>
+      </div>
+      <div class="col-sm-2">
+       <span class="control-label" id="sintppd-val">
+       </span>
+      </div>
+      <input id="sintppd" name="sintppd" type="hidden"/>
+     </div>
+     <div class="row form-group">
+      <div class="col-md-4">
+       <label class="visible-xs visible-sm required" for="sintsny">
+        # of years
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm required" for="sintsny">
+        # of years
+       </label>
+      </div>
+      <div class="col-sm-2">
+       <input class="form-control numeric decimalformat" id="sintsny" maxlength="4" name="sintsny" required="required" type="text"/>
+      </div>
+     </div>
+     <div class="row form-group">
+      <div class="col-md-4">
+       <label class="visible-xs visible-sm " for="sintppy">
+        Reported pack years
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm " for="sintppy">
+        Reported pack years
+       </label>
+      </div>
+      <div class="col-sm-2">
+       <span id="sintppy-val">
+       </span>
+      </div>
+      <input id="sintppy" name="sintppy" type="hidden"/>
+     </div>
+     <div class="row form-group">
+      <div class="col-md-4">
+       <label class="visible-xs visible-sm " for="sintq">
+        Quit
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm " for="sintq">
+        Quit
+       </label>
+      </div>
+      <div class="col-sm-4 col-md-3 col-lg-2">
+       <div class="input-group datepicker">
+        <input aria-describedby="sintq-addon" class="form-control" data-restriction="past" id="sintq" name="sintq"/>
+        <div class="input-group-addon">
+         <div class="input-group-text" id="sintq-addon">
+          <i aria-hidden="true" class="fa fa-calendar">
+          </i>
+         </div>
+        </div>
+       </div>
+       <small class="form-text text-muted">
+        MM/DD/YYYY
+       </small>
+      </div>
+     </div>
+     <div class="row form-group">
+      <div class="col-md-4">
+       <label class="visible-xs visible-sm " for="sintcep">
+        Smoking cessation education provided
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm " for="sintcep">
+        Smoking cessation education provided
+       </label>
+      </div>
+      <div class="col-md-8">
+       <textarea class="form-control" id="sintcep" name="sintcep" type="text"></textarea>
+      </div>
+     </div>
+     <div class="row form-group">
+      <div class="col-md-4">
+       <label class="visible-xs visible-sm " for="sintcadx">
+        Lung CA Dx (if applicable)
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm " for="sintcadx">
+        Lung CA Dx (if applicable)
+       </label>
+      </div>
+      <div class="col-md-4">
+       <div class="input-group datepicker">
+        <input aria-describedby="sintcadx-addon" class="form-control" data-restriction="past" id="sintcadx" name="sintcadx"/>
+        <div class="input-group-addon">
+         <div class="input-group-text" id="sintcadx-addon">
+          <i aria-hidden="true" class="fa fa-calendar">
+          </i>
+         </div>
+        </div>
+       </div>
+       <small class="form-text text-muted">
+        MM/DD/YYYY
+       </small>
+      </div>
+      <div class="col-md-4 form-group">
+       <input class="form-control" id="sintcadl" name="sintcadl" title="Lung CA Dx location" type="text"/>
+       <span class="help-block">
+        Location if not in VA
+       </span>
+      </div>
+     </div>
+     <div class="row form-group">
+      <div class="col-md-4">
+       <label class="visible-xs visible-sm " for="sinttxct">
+        Any prior thorax CT
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm " for="sinttxct">
+        Any prior thorax CT
+       </label>
+      </div>
+      <div class="col-md-4">
+       <div class="input-group datepicker">
+        <input aria-describedby="sinttxct-addon" class="form-control" data-restriction="past" id="sinttxct" name="sinttxct"/>
+        <div class="input-group-addon">
+         <div class="input-group-text" id="sinttxct-addon">
+          <i aria-hidden="true" class="fa fa-calendar">
+          </i>
+         </div>
+        </div>
+       </div>
+       <small class="form-text text-muted">
+        MM/DD/YYYY
+       </small>
+      </div>
+      <div class="col-md-4 form-group">
+       <input class="form-control numeric" id="sintcadl" name="sintcadl" title="Number thorax CT" type="text"/>
+       <span class="help-block">
+        Number
+       </span>
+      </div>
+     </div>
+     <div class="row form-group">
+      <div class="col-md-4">
+       <label class="visible-xs visible-sm " for="sintpldc">
+        Prior LDCT
+       </label>
+       <label class="text-right pull-right hidden-xs hidden-sm " for="sintpldc">
+        Prior LDCT
+       </label>
+      </div>
+      <div class="col-md-4">
+       <div class="input-group datepicker">
+        <input aria-describedby="sintpldc-addon" class="form-control" data-restriction="past" id="sintpldc" name="sintpldc"/>
+        <div class="input-group-addon">
+         <div class="input-group-text" id="sintpldc-addon">
+          <i aria-hidden="true" class="fa fa-calendar">
+          </i>
+         </div>
+        </div>
+       </div>
+       <small class="form-text text-muted">
+        MM/DD/YYYY
+       </small>
+      </div>
+      <div class="col-md-4 form-group">
+       <input class="form-control" id="sintpldl" name="sintpldl" title="Prior LDCT location" type="text"/>
+       <span class="help-block">
+        Location if not in VA
+       </span>
+      </div>
+     </div>
+     <hr/>
+     <div id="enrollment-container">
+      <div class="row">
+       <div class="col-md-12 form-group">
+        <div class="checkbox">
+         <label class="required">
+          <input name="sintidmd" type="hidden" value=""/>
+          <input id="sintidmd" name="sintidmd" required="required" type="checkbox" value="1"/>
+          Informed decision making discussion complete
+         </label>
+        </div>
+       </div>
+      </div>
+      <p class="alert alert-warning">
+       Veteran of age and exposure to cigarette smoke as described above, and without a current
+                    diagnosis or obvious symptoms suggestive of lung cancer, has been educated today about the
+                    estimated risk for lung cancer, the possibility of a cure or live prolonging if an early lung
+                    cancer were to be found during screening, the possibility of imaging abnormalities not being
+                    lung cancer, the possibility of complications from additional diagnostic procedures, and the
+                    approximate amount of radiation exposure associated with each screening procedure. In addition,
+                    the Veteran has been educated today about the importance of avoiding exposure to cigarette
+                    smoke, available tobacco cessation programs and available lung screening services at this VA
+                    facility. Education material was provided to the veteran.
        <br/>
-       <select class="form-control" id="sistachg" name="sistachg" required="required">
-        <option value="">
-         -
-        </option>
-        <option value="transferred">
-         Transferred to another institution (specify)
-        </option>
-        <option value="medical">
-         Unable due to medical reason (specify)
-        </option>
-        <option value="unwilling">
-         Unwilling due to personal reason (specify)
-        </option>
-        <option value="refused">
-         Refused to continue
-        </option>
-        <option value="illadvised">
-         Physician advised against
-        </option>
-        <option value="radiation">
-         Concern about radiation
-        </option>
-        <option value="moved">
-         Moved and unable to return
-        </option>
-        <option value="insurance">
-         No insurance, can't have Dx CT
-        </option>
-        <option value="cost">
-         Burden of cost
-        </option>
-        <option value="other">
-         Other (specify)
-        </option>
-        <option value="excluded">
-         Excluded (specify)
-        </option>
-        <option value="complete">
-         Study complete
-        </option>
-        <option value="noresponse">
-         No response to 3 calls + 3 letters
-        </option>
-        <option value="nocontact">
-         Unable to contact
-        </option>
-        <option value="followed">
-         Being followed elsewhere (get results)
-        </option>
-       </select>
+      </p>
+      <div class="row">
+       <div class="col-md-12 form-group">
+        <label class="required">
+         Based on this information, the Veteran has opted to
+        </label>
+        <div class="radio">
+         <label>
+          <input id="sintldct-n" name="sintldct" required="required" type="radio" value="n"/>
+          Not enroll
+         </label>
+        </div>
+        <div class="radio">
+         <label>
+          <input id="sintldct-l" name="sintldct" type="radio" value="l"/>
+          Not enroll at this time, okay to contact in the future
+         </label>
+        </div>
+        <div class="radio">
+         <label>
+          <input id="sintldct-y" name="sintldct" type="radio" value="y"/>
+          Enroll in the Lung Screening and Surveillance (LSS) program and have an LDCT ordered.
+                                Coordination of care will be made by the LSS team
+         </label>
+        </div>
+       </div>
       </div>
      </div>
      <div class="row">
-      <div class="col-md-8 form-group">
-       <label class="required" for="sistreas">
-        Explanation
+      <div class="col-md-12 form-group">
+       <label class="control-label" for="sintclin">
+        Clinical Indications for Initial Screening CT
        </label>
-       <br/>
-       <textarea class="form-control" id="sistreas" name="sistreas" type="text"></textarea>
+       <textarea class="form-control" id="sintclin" name="sintclin" rows="3"></textarea>
       </div>
      </div>
-    </div>
-    <div class="row" id="change-log-container">
-     <div class="col-sm-12">
-      <h4>
-       Change Log
-      </h4>
-      <pre class="prettyprint source linenums" id="changelog">2018-10-31 12:00 PM - {USERNAME} changed to {FIELD} to {VALUE}: {REASON} - {EXPLANATION}</pre>
+     <hr/>
+     <h3>
+      Current Status
+     </h3>
+     <div class="row">
+      <div class="col-md-12 form-group">
+       <label class="required" for="sistatus">
+        Enrollment
+       </label>
+       <br/>
+       <label class="radio-inline" for="sintstat-active">
+        <input id="sintstat-active" name="sintstat" required="required" type="radio" value="active"/>
+        Active
+       </label>
+       <label class="radio-inline" for="sintstat-inactive">
+        <input id="sintstat-inactive" name="sintstat" type="radio" value="inactive"/>
+        Not active
+       </label>
+      </div>
      </div>
-    </div>
-    <hr/>
-    <div class="pull-left">
-     <input name="samistatus" type="hidden" value=""/>
-     <button class="btn btn-default" id="save-for-later-button" type="submit">
-      Save for Later
-     </button>
-     <button class="btn btn-primary" id="submit-button" type="submit">
-      Submit
-     </button>
-    </div>
-    <div class="pull-right">
-     <a class="btn btn-danger" id="delete-form">
-      <span class="glyphicon glyphicon-trash">
-      </span>
-      Delete
-     </a>
+     <div id="reason-for-change-container" style="display: none;">
+      <hr/>
+      <h3>
+       Reason for change
+      </h3>
+      <div class="row">
+       <div class="col-md-12 form-group">
+        <label class="required" for="sintstre">
+         Reason
+        </label>
+        <br/>
+        <select class="form-control" id="sintstre" name="sintstre" required="required">
+         <option value="">
+          -
+         </option>
+         <option value="transferred">
+          Transferred to another institution (specify)
+         </option>
+         <option value="medical">
+          Unable due to medical reason (specify)
+         </option>
+         <option value="unwilling">
+          Unwilling due to personal reason (specify)
+         </option>
+         <option value="refused">
+          Refused to continue
+         </option>
+         <option value="illadvised">
+          Physician advised against
+         </option>
+         <option value="radiation">
+          Concern about radiation
+         </option>
+         <option value="moved">
+          Moved and unable to return
+         </option>
+         <option value="insurance">
+          No insurance, can't have Dx CT
+         </option>
+         <option value="cost">
+          Burden of cost
+         </option>
+         <option value="other">
+          Other (specify)
+         </option>
+         <option value="excluded">
+          Excluded (specify)
+         </option>
+         <option value="complete">
+          Study complete
+         </option>
+         <option value="noresponse">
+          No response to 3 calls + 3 letters
+         </option>
+         <option value="nocontact">
+          Unable to contact
+         </option>
+         <option value="followed">
+          Being followed elsewhere (get results)
+         </option>
+        </select>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-md-8 form-group">
+        <label class="required" for="sintstrx">
+         Explanation
+        </label>
+        <br/>
+        <textarea class="form-control" id="sintstrx" name="sintstrx" type="text"></textarea>
+       </div>
+      </div>
+     </div>
+     <div class="row" id="change-log-container">
+      <div class="col-sm-12">
+       <h4>
+        Change Log
+       </h4>
+       <pre class="prettyprint source linenums" id="changelog">2018-10-31 12:00 PM - {USERNAME} changed to {FIELD} to {VALUE}: {REASON} - {EXPLANATION}</pre>
+      </div>
+     </div>
+     <hr/>
+     <div class="pull-left">
+      <input name="samistatus" type="hidden" value=""/>
+      <button class="btn btn-default" id="save-for-later-button" type="submit">
+       Save for Later
+      </button>
+      <button class="btn btn-primary" id="submit-button" type="submit">
+       Submit
+      </button>
+     </div>
+     <div class="pull-right">
+      <a class="btn btn-danger" id="delete-form">
+       <span class="glyphicon glyphicon-trash">
+       </span>
+       Delete
+      </a>
+     </div>
     </div>
    </form>
   </div>
@@ -896,7 +1181,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.01.25
+     2019.02.28
     </span>
    </div>
   </footer>
@@ -969,23 +1254,22 @@
 
     const enrolled = $("#sildct-y").is(":checked");
     if (enrolled) {
-        const $preSection = $("#pre-enrollment-questions").html("");
-        const $preCol = $('<div class="col-lg-5 col-md-6 col-sm-8"/>');
+        const $preSection = $("#chart-eligibility").html("");
+        const $preCol = $('<div class="col-lg-5 col-md-6 col-sm-8"></div>');
         const $preAlert = $("<div class=\"alert alert-info\">Patient was eligible based on chart and patient discussion.</div>");
-        $preCol.append($('<input type="hidden" id="sipechrt" name="sipechrt" value="y"/>'));
-        $preCol.append($('<input type="hidden" id="sipedisc" name="sipedisc" value="y"/>'));
+        $preCol.append($('<input type="hidden" id="sicechrt" name="sicechrt" value="y"/>'));
         $preCol.append($preAlert);
         $preSection.append($preCol);
 
-        $("#discussion-container").remove();
+        $("#pre-enrollment-discussion").remove();
         $("#reason-container").remove();
 
         const $enrollSection = $("#enrollment-container").html("");
-        const $enrollCol = $('<div class="col-lg-5 col-md-6 col-sm-8"/>');
+        const $enrollCol = $('<div class="col-lg-5 col-md-6 col-sm-8"></div>');
         const $enrollAlert = $("<div class=\"alert alert-info\">Informed decision making was completed and patient " +
             "has been enrolled in the Lung Screening and Surveillance (LSS) program.</div>");
-        $enrollCol.append($('<input type="hidden" id="sildct" name="sildct" value="y"/>')); //veterans' option to enroll
-        $enrollCol.append($('<input type="hidden" id="siidmdc" name="siidmdc" value="1"/>')); //informed decision making
+        $enrollCol.append($('<input type="hidden" id="sintldct" name="sintldct" value="y"/>')); //veterans' option to enroll
+        $enrollCol.append($('<input type="hidden" id="sintidmd" name="sintidmd" value="1"/>')); //informed decision making
 
         $enrollCol.append($enrollAlert);
         $enrollSection.append($enrollCol);
@@ -995,44 +1279,83 @@
     function createFormValidator() {
 
         const $form = $('#main-form');
-        const multiInputValidators = ['sipechrt', 'sipedisc', 'siremhlc', 'sipav', 'sirs', 'sistatus'];
+        const multiInputValidators = ['siceiden', 'sicechrt', 'sicemhlc', 'sipedisc', 'sintpav', 'sintrs', 'sintstat'];
 
         $form.formValidation({
                 fields: {
-                    siremhlc: { //use a real element name for the field so conditional plugins can toggle the field
-                        selector: '[name^=sire]',
+                    siceiden: {
+                        validators: {notEmpty: {message: 'Potential candidate is required'}}
+                    },
+                    sicerfdt: {
+                        validators: {
+                            notEmpty: {message: 'Referral date is required'},
+                            date: {max: VAPALS.todaysDate(), message: 'Referral date may not be in the future'}
+                        }
+                    },
+                    sicerfpc: { //use a real element name for the field so conditional plugins can toggle the field
+                        selector: '[name^=sicerf][type=checkbox]',
+                        validators: {choice: {min: 1, message: 'Select one or more specialty providers'}}
+                    },
+                    sicerfoo: {
+                        validators: {notEmpty: {message: 'Other referring provider specialty is required'}}
+                    },
+                    sicemhlc: { //use a real element name for the field so conditional plugins can toggle the field
+                        selector: '[group=ineligible-reason]',
                         validators: {choice: {min: 1, message: 'Select one or more reasons'}}
                     },
-                    siremhoo: {validators: {notEmpty: {message: 'Other is required'}}},
-                    sireshoo: {validators: {notEmpty: {message: 'Other is required'}}},
-                    sireceoo: {validators: {notEmpty: {message: 'Other is required'}}},
-                    sireucoo: {validators: {notEmpty: {message: 'Other is required'}}},
-                    sidc: {
+                    sicemhoo: {validators: {notEmpty: {message: 'Other medical reason is required'}}},
+                    siceceoo: {validators: {notEmpty: {message: 'Other care is required'}}},
+                    siceshoo: {validators: {notEmpty: {message: 'Other smoking history is required'}}},
+
+                    //Pre-Enrollment Discussion
+                    sipedc: {
                         validators: {
                             notEmpty: {message: 'Contact date is required'},
                             date: {max: VAPALS.todaysDate(), message: 'Contact date may not be in the future'}
                         }
                     },
-                    silnpos: {validators: {notEmpty: {message: 'Other is required'}}},
-                    sipav: {validators: {notEmpty: {message: 'Primary address verification is required'}}},
-                    sippn: {validators: {phone: {message: 'Not a valid US phone number', country: 'US'}}},
-                    sirs: {validators: {notEmpty: {message: 'Rural status is required'}}},
-                    sicpd: {
+                    sipecnip: { //use a real element name for the field so conditional plugins can toggle the field
+                        selector: '[group=discussion-contact]',
+                        validators: {choice: {min: 1, message: 'Select one or more contact methods'}}
+                    },
+                    sipecnoo: {validators: {notEmpty: {message: 'Other contact method is required'}}},
+                    siperslt: {validators: {notEmpty: {message: 'Discussion result is required'}}},
+                    sipecmnt: {validators: {notEmpty: {message: 'Discussion comments are required'}}},
+
+                    //Intake section
+
+                    sintdc: {
+                        validators: {
+                            notEmpty: {message: 'Contact date is required'},
+                            date: {max: VAPALS.todaysDate(), message: 'Contact date may not be in the future'}
+                        }
+                    },
+                    sintcnip: { //use a real element name for the field so conditional plugins can toggle the field
+                        selector: '[group=intake-contact]',
+                        validators: {choice: {min: 1, message: 'Select one or more contact methods'}}
+                    },
+                    sintcnoo: {validators: {notEmpty: {message: 'Other contact method is required'}}},
+                    sintpav: {validators: {notEmpty: {message: 'Primary address verification is required'}}},
+                    //TODO: shouldn't address be required?
+                    sintppn: {validators: {phone: {message: 'Not a valid US phone number', country: 'US'}}},
+                    sintrs: {validators: {notEmpty: {message: 'Rural status is required'}}},
+                    sintcpd: {
                         validators: {
                             notEmpty: {message: 'Packs per day is required'},
                             integer: {message: 'must be a whole number'}
                         }
                     },
-                    sisny: {
+                    sintsny: {
                         validators: {
                             notEmpty: {message: 'Number of years is required'},
                             integer: {message: 'must be a whole number'}
                         }
                     },
-                    siidmdc: {validators: {notEmpty: {message: 'Informed decision making is required'}}},
-                    sistatus: {validators: {notEmpty: {message: 'Enrollment status is required'}}},
-                    sistachg: {validators: {notEmpty: {message: 'Reason for change is required'}}},
-                    sistreas: {validators: {notEmpty: {message: 'Explanation is required'}}},
+                    sintidmd: {validators: {notEmpty: {message: 'Informed decision making is required'}}},
+                    sintstat: {validators: {notEmpty: {message: 'Enrollment status is required'}}},
+                    sintstre: {validators: {notEmpty: {message: 'Reason for change is required'}}},
+                    sintstrx: {validators: {notEmpty: {message: 'Explanation is required'}}},
+
                 },
                 plugins: {
                     trigger: new FormValidation.plugins.Trigger(),
@@ -1065,9 +1388,9 @@
 
         const fv = $form.data('formValidation');
         if (!enrolled) {
-            fv.addField('sipechrt', {validators: {notEmpty: {message: 'Chart review is required'}}});
+            fv.addField('sicechrt', {validators: {notEmpty: {message: 'Chart review is required'}}});
             fv.addField('sipedisc', {validators: {notEmpty: {message: 'Discussion review is required'}}});
-            fv.addField('sildct', {validators: {notEmpty: {message: 'Veterans\' option is required'}}});
+            fv.addField('sintldct', {validators: {notEmpty: {message: 'Veterans\' option is required'}}});
         }
         fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);
         fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
@@ -1077,9 +1400,9 @@
 
     $(function () {
 
-        const fv = createFormValidator();
-        const initialRuralUrbanValue = $("[name=sirs]").filter(":checked").val();
-        const $zipField = $("#sipz");
+        createFormValidator();
+        const initialRuralUrbanValue = $("[name=sintrs]").filter(":checked").val();
+        const $zipField = $("#sintpz");
         const RURAL = 'r';
         const URBAN = 'u';
         const UNKNOWN = 'n';
@@ -1095,17 +1418,17 @@
                     if (ruralData === URBAN) {
                         message = zipcode + " is an <em>urban</em> address";
                         if (updateSelection) {
-                            $("[name=sirs][value='" + URBAN + "']").prop('checked', true);
+                            $("[name=sintrs][value='" + URBAN + "']").prop('checked', true);
                         }
                     } else if (ruralData === RURAL) {
                         message = zipcode + " is a <em>rural</em> address";
                         if (updateSelection) {
-                            $("[name=sirs][value='" + RURAL + "']").prop('checked', true);
+                            $("[name=sintrs][value='" + RURAL + "']").prop('checked', true);
                         }
                     } else if (ruralData === UNKNOWN) {
                         message = "cannot determine rural/urban status";
                         if (updateSelection) {
-                            $("[name=sirs][value='" + UNKNOWN + "']").prop('checked', true);
+                            $("[name=sintrs][value='" + UNKNOWN + "']").prop('checked', true);
                         }
                     }
                     $ruralText.html(message);
@@ -1131,109 +1454,170 @@
             zipLookup(updateSelection);
         }
 
+        //PRE-ENROLLMENT CHART ELIGIBILITY
+        $("[name=siceiden]").conditionallyDisplay({sourceValues: "referral", enable: "#referral-container"});
+        $("#sicerfot").conditionallyDisplay({enable: "#sicerfoo"});
 
-        $("#sicpd").on('keyup change', function () {
-            const cigsPerDay = $("#sicpd").val();
-            const $sippd = $("#sippd");
-            const $sippdVal = $("#sippd-val");
+        //If not eligible via chart, require the reason, hide the remainder of the form.
+        $("[name=sicechrt]").conditionallyDisplay({
+            sourceValues: "n",
+            enable: "#reason-container",
+            disable: "#pre-enrollment-discussion, #intake, #intake-tab"
+        }).on('change', function () {
+            //when patient is eligible, display informational message requiring remaining sections be completed.
+            const eligible = $("[name=sicechrt]:checked").val();
+            $("#sicechrt-y-alert").toggle(eligible === "y");
+        });
+
+        // "other" fields in reason block
+        $("#sicemhot").conditionallyDisplay({enable: "#sicemhoo"}); //other medical history
+        $("#siceceot").conditionallyDisplay({enable: "#siceceoo"}); //received care elsewhere
+        $("#siceshot").conditionallyDisplay({enable: "#siceshoo"}); //other smoking history
+
+        //start the page by hiding the discussion and intake sections if the current value for eligible based on chart review is not "Y"
+        const eligible = $("[name=sicechrt]:checked").val();
+        if (eligible === undefined || eligible === 'n') {
+            $("#pre-enrollment-discussion, #intake, #intake-tab").hide();
+        }
+
+        //PRE-ENROLLMENT PATIENT DISCUSSION
+
+        //enable discussion container when pre-enrollment discussion occurred AND enable intake area when pre-enrollment did NOT occur (default)
+        $("[name=sipedisc]")
+            .conditionallyDisplay({sourceValues: 'y', enable: '#discussion-container'})
+            .conditionallyDisplay({sourceValues: 'n', enable: '#intake,#intake-tab'});
+
+        //enable intake when pre-enrollment result is that the patient want's in.
+        $("[name=siperslt]").conditionallyDisplay({enable: '#intake,#intake-tab'});
+
+        $("#sipecnot").conditionallyEnable({sourceValues: "1", enable: "#sipecnoo"}); // other contact method
+
+        // If unselected (initial form), preselect "no" as the default.
+        const hadDiscussion = $("[name=sipedisc]:checked").val();
+        if (hadDiscussion === undefined) {
+            $("#sipedisc-n").prop("checked", true);
+        }
+
+
+        //INTAKE
+        $("#sintcnot").conditionallyEnable({sourceValues: "1", enable: "#sintcnoo"});
+        $("#sintcpd").on('keyup change', function () {
+            const cigsPerDay = $("#sintcpd").val();
+            const $sintppd = $("#sintppd");
+            const $sintppdVal = $("#sintppd-val");
             if (cigsPerDay >= 0) {
                 const cpd = (cigsPerDay / 20).toFixed(2);
                 if (cpd > 0) {
-                    $sippd.val(cpd);
-                    $sippdVal.text(cpd);
+                    $sintppd.val(cpd);
+                    $sintppdVal.text(cpd);
                 } else {
-                    $sippd.val("");
-                    $sippdVal.text("-");
+                    $sintppd.val("");
+                    $sintppdVal.text("-");
                 }
-                $sippd.change();
+                $sintppd.change();
             }
         }).trigger('change');
 
-        $("#sippd, #sisny").on('keyup change', function () {
-            const packsPerDay = $("#sippd").val();
-            const cigYears = $("#sisny").val();
+        $("#sintppd, #sintsny").on('keyup change', function () {
+            const packsPerDay = $("#sintppd").val();
+            const cigYears = $("#sintsny").val();
             if (packsPerDay > 0 && cigYears > 0) {
                 const packYears = (packsPerDay * cigYears).toFixed(1);
                 if (packYears > 0) {
-                    $("#sippy").val(packYears);
-                    $("#sippy-val").text(packYears);
+                    $("#sintppy").val(packYears);
+                    $("#sintppy-val").text(packYears);
                 }
             } else {
-                $("#sippy").val("");
-                $("#sippy-val").text("-");
+                $("#sintppy").val("");
+                $("#sintppy-val").text("-");
             }
 
         }).first().trigger('change');
 
 
-        //Pre enrollment: Chart eligibility
-        $("[name=sipechrt]").conditionallyDisplay({
-            sourceValues: "n",
-            enable: "#reason-container, #reason-medical-container, #reason-smoking-container, #reason-elsewhere-container",
-            disable: "#discussion-container, #reason-contact-container"
-        }).on('change', function () {
-            const value = $("[name=sipechrt]:checked").val();
-            const $yesAlert = $("#sipechrt-y-alert"), $noAlert = $("#sipechrt-n-alert");
-            const fields = [
-                'sidc',     //contact date
-                'sicpd',    //packs per day
-                'sisny',    //packs per year
-                'siidmdc',  //informed decision making
-                'sildct'    //enrollment
-            ];
+        $("[name=sintstat]").on('submit', function () {
+//require reason fields when marking patient as "not active"
+            $("#reason-for-change-container").toggle($("#sintstat-inactive").is(":checked"));
 
-            if (value === "n") {
-                $yesAlert.hide();
-                $noAlert.show();
+        });
 
-                $.each(fields, function (i, s) {
-                    //disable the validiator and remove required asterisk from associated labels
-                    fv.disableValidator(s);
-                    $("[name='" + s + "']").closest(".form-group").find('label').removeClass('required')
-                });
+        $('#body').scrollspy({target: '#wizard-bar'})
+    });
 
-                //auto-select "inactive" status
-                $("#sistatus-inactive").click();
+    //NB: needs to be outside of jquery fx to prevent default
+    $("#save-chart-eligibility").on('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const fv = $("form").data("formValidation");
 
-            } else if (value === "y") {
-                $yesAlert.show();
-                $noAlert.hide();
-
-                $.each(fields, function (i, s) {
-                    //disable the validiator and remove required asterisk from associated labels
-                    fv.enableValidator(s);
-                    $("[name='" + s + "']").closest(".form-group").find('label').first().addClass('required')
-                });
-
-            } else {
-                $yesAlert.hide();
-                $noAlert.hide();
+        validateSection(fv, $("#chart-eligibility")).then(function (value) {
+            if (value) {
+                $("[name=samistatus]").val("chart-eligibility");
+                $("form").trigger("submit");
             }
-        });
-
-        //Pre-Enrollment: Patient discussion
-        $("[name=sipedisc]").conditionallyDisplay({
-            sourceValues: "n",
-            enable: "#reason-container, #reason-medical-container, #reason-smoking-container, #reason-elsewhere-container, #reason-contact-container"
-        });
-
-        //Pre enrollment - other reason fields
-        $("#siremhot").conditionallyDisplay({value: "y", enable: "#sireemhoo"});
-        $("#sireshot").conditionallyDisplay({value: "y", enable: "#sireshoo"});
-        $("#sireceot").conditionallyDisplay({value: "y", enable: "#sireceoo"});
-        $("#sireucot").conditionallyDisplay({value: "y", enable: "#sireucoo"});
-
-
-        //Contact info - how did you learn about LCS
-        $("#silnpo").conditionallyEnable({sourceValues: "1", enable: "#silnpos"});
-
-
-        $("[name=sistatus]").on('change', function () {
-            //require reason fields when marking patient as "not active"
-            $("#reason-for-change-container").toggle($("#sistatus-inactive").is(":checked"));
-
+        }).catch(function (err) {
+            console.error(err)
         });
     });
+    $("#save-pre-enrollment-discussion").on('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const fv = $("form").data("formValidation");
+
+        validateSection(fv, $("#pre-enrollment-discussion")).then(function (value) {
+            if (value) {
+                $("[name=samistatus]").val("pre-enrollment-discussion");
+                $("form").trigger("submit");
+            }
+        }).catch(function (err) {
+            console.error(err)
+        });
+    });
+
+
+    /**
+     * Validates all visible input fields within a section of the page using the provided formValidation instance
+     * @param fv the form validator
+     * @param $section the area to validate.
+     * @returns {Promise<boolean>} true if validated without error; otherwise false.
+     */
+    async function validateSection(fv, $section) {
+        const maxWaitMillis = 1000;
+        const sleepIntervalMillis = 10;
+        const $inputFields = $section.find(":input:visible");
+        const fieldNames = $inputFields.map(function () {
+            return this.name;
+        }).get();
+        const distinctNames = fieldNames.filter(VAPALS.unique);
+
+        let remaining = 0;
+        let elapsed = 0;
+        let success = true;
+        if (fv) {
+            $.each(distinctNames, function (i, fieldName) {
+                if (fieldName in fv.fields) {
+                    remaining++;
+                    //console.log("validating " + fieldName);
+                    fv.validateField(fieldName).then(function (status) {
+                        //console.log("Validation result for " + fieldName + " is " + status);
+                        if (status === 'Invalid') {
+                            success = false;
+                        }
+                        remaining--;
+                    });
+                }
+            });
+
+            while (remaining !== 0 && elapsed < maxWaitMillis) {
+                //console.log("sleeping... remaining=" + remaining);
+                await VAPALS.sleep(sleepIntervalMillis);
+                elapsed = elapsed + sleepIntervalMillis;
+            }
+        }
+        //console.log("validateSection() returning " + success + ", elapsed=" + elapsed);
+
+        return success;
+    }
   </script>
  </body>
 </html>

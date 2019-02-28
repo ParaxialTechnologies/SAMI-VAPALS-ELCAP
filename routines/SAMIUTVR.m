@@ -1,4 +1,4 @@
-SAMIUTVR ; ven/lgc,arc - UNIT TESTS for SAMIVSTR ; 1/22/19 1:40pm
+SAMIUTVR ; ven/lgc,arc - UNIT TESTS for SAMIVSTR ; 20190228T18:59Z
  ;;1.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -7,11 +7,11 @@ SAMIUTVR ; ven/lgc,arc - UNIT TESTS for SAMIVSTR ; 1/22/19 1:40pm
  ;@primary development organization: Vista Expertise Network
  ;@primary-dev: Larry G. Carlson (lgc)
  ;@primary-dev: Alexis R. Carlson (arc)
+ ;@additional-dev: Linda M. R. Yaw (lmry)
  ;@copyright:
- ;@license: Apache 2.0
- ; https://www.apache.org/licenses/LICENSE-2.0.html
+ ;@license: see routine SAMIUL
  ;
- ;@last-updated: 2018-09-26
+ ;@last-updated: 2019-02-28
  ;@application: VA-PALS
  ;@version: 1.0
  ;
@@ -27,9 +27,9 @@ SAMIUTVR ; ven/lgc,arc - UNIT TESTS for SAMIVSTR ; 1/22/19 1:40pm
  ;  supported references to perform all platform specific functions.
  ;  (Exemptions: Kernel & VA Fileman)
  ;
-START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
- D EN^%ut($T(+0),2)
- Q
+START if $text(^%ut)="" write !,"*** UNIT TEST NOT INSTALLED ***" quit
+ do EN^%ut($text(+0),2)
+ quit
  ;
  ;
  ; ============== UNIT TESTS ======================
@@ -42,191 +42,191 @@ START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  ;
 UTRAPCD ; @TEST - Pulling Radiology Procedures through the broker
  ;  RADPROCD(StationNumber)
- k ^KBAP("UNIT TEST RA PROCEDURES")
+ kill ^KBAP("UNIT TEST RA PROCEDURES")
  ;
- n root s root=$$setroot^%wd("radiology procedures")
+ new root set root=$$setroot^%wd("radiology procedures")
  ;
- m ^KBAP("UNIT TEST RA PROCEDURES")=@root
- n KBAPPRCD,utsuccess s utsuccess=0
- s KBAPPRCD=$$RADPROCD^SAMIVSTR(6100)
- i '$g(KBAPPRCD) d  q
- . m @root=^KBAP("UNIT TEST RA PROCEDURES")
- . k ^KBAP("UNIT TEST RA PROCEDURES")
- . d FAIL^%ut("No radiology procedures pulled through broker")
- n ien,ien71G,cptG,nameG,entryV
- f ien=1:1:$g(KBAPPRCD) d  q:$g(utsuccess)
- . s ien71G=@root@(ien,"ien71")
- . i '$d(^RAMIS(71,ien71G,0)) s utsuccess=1 q
- . s nameG=@root@(ien,"name")
- . s cptG=@root@(ien,"CPT")
- . s entryV=$g(^RAMIS(71,ien71G,0))
- . i '($p(entryV,"^")=nameG) s utsuccess=1 q
- . i '($p(entryV,"^",9)=cptG) s utsuccess=1 q
- d CLRGRPHS^SAMIVSTR("radiology procedures")
- m @root=^KBAP("UNIT TEST RA PROCEDURES")
- k ^KBAP("UNIT TEST RA PROCEDURES")
- d CHKEQ^%ut(utsuccess,0,"Testing pulling rad procedures through broker FAILED!")
- q
+ merge ^KBAP("UNIT TEST RA PROCEDURES")=@root
+ new KBAPPRCD,utsuccess set utsuccess=0
+ set KBAPPRCD=$$RADPROCD^SAMIVSTR(6100)
+ if '$get(KBAPPRCD) do  quit
+ . merge @root=^KBAP("UNIT TEST RA PROCEDURES")
+ . kill ^KBAP("UNIT TEST RA PROCEDURES")
+ . do FAIL^%ut("No radiology procedures pulled through broker")
+ new ien,ien71G,cptG,nameG,entryV
+ for ien=1:1:$get(KBAPPRCD) do  quit:$get(utsuccess)
+ . set ien71G=@root@(ien,"ien71")
+ . if '$data(^RAMIS(71,ien71G,0)) set utsuccess=1 quit
+ . set nameG=@root@(ien,"name")
+ . set cptG=@root@(ien,"CPT")
+ . set entryV=$get(^RAMIS(71,ien71G,0))
+ . if '($piece(entryV,"^")=nameG) set utsuccess=1 quit
+ . if '($piece(entryV,"^",9)=cptG) set utsuccess=1 quit
+ do CLRGRPHS^SAMIVSTR("radiology procedures")
+ merge @root=^KBAP("UNIT TEST RA PROCEDURES")
+ kill ^KBAP("UNIT TEST RA PROCEDURES")
+ do CHKEQ^%ut(utsuccess,0,"Testing pulling rad procedures through broker FAILED!")
+ quit
  ;
 UTRAEXMS ; @TEST - Pulling Radiology Acive Exams through the broker
  ;  ACTEXAMS
- q
+ quit
  ;
 UTRASTAF ; @TEST - Pulling all active radiology staff
  ;  RADSTAFF
- k ^KBAP("UNIT TEST RAD STAFF")
+ kill ^KBAP("UNIT TEST RAD STAFF")
  ;
- n root s root=$$setroot^%wd("radiology staff")
+ new root set root=$$setroot^%wd("radiology staff")
  ;
- m ^KBAP("UNIT TEST RAD STAFF")=@root
- n KBAPSTAF,utsuccess s utsuccess=0
- s KBAPSTAF=$$RADSTAFF^SAMIVSTR
- i '$g(KBAPSTAF) d  q
- . m @root=^KBAP("UNIT TEST RAD STAFF")
- . k ^KBAP("UNIT TEST RAD STAFF")
- . d FAIL^%ut("No radiology staff found.")
- n ien,duzG,nameG
- f ien=1:1:$g(KBAPSTAF) d  q:$g(utsuccess)
- . s duzG=@root@(ien,"duz")
- . s nameG=@root@(ien,"name")
- . n cnt s cnt=0,utsuccess=1
- . F  S cnt=$O(^VA(200,duzG,"RAC",cnt)) q:'cnt  d
- ..  I ^VA(200,duzG,"RAC",cnt,0)="S" s utsuccess=0
- . q:utsuccess
- . i '($$UP^XLFSTR(nameG))=($$UP^XLFSTR($p($g(^VA(200,duzG,0)),"^"))) d  q
- .. s utsuccess=1
- d CLRGRPHS^SAMIVSTR("radiology staff")
- m @root=^KBAP("UNIT TEST RAD STAFF")
- k ^KBAP("UNIT TEST RAD STAFF")
- d CHKEQ^%ut(utsuccess,0,"Testing pulling Radiology Staff through broker FAILED!")
- q
+ merge ^KBAP("UNIT TEST RAD STAFF")=@root
+ new KBAPSTAF,utsuccess set utsuccess=0
+ set KBAPSTAF=$$RADSTAFF^SAMIVSTR
+ if '$get(KBAPSTAF) do  quit
+ . merge @root=^KBAP("UNIT TEST RAD STAFF")
+ . kill ^KBAP("UNIT TEST RAD STAFF")
+ . do FAIL^%ut("No radiology staff found.")
+ new ien,duzG,nameG
+ for ien=1:1:$get(KBAPSTAF) do  quit:$get(utsuccess)
+ . set duzG=@root@(ien,"duz")
+ . set nameG=@root@(ien,"name")
+ . new cnt set cnt=0,utsuccess=1
+ . for  set cnt=$order(^VA(200,duzG,"RAC",cnt)) quit:'cnt  do
+ ..  if ^VA(200,duzG,"RAC",cnt,0)="S" set utsuccess=0
+ . quit:utsuccess
+ . if '($$UP^XLFSTR(nameG))=($$UP^XLFSTR($piece($get(^VA(200,duzG,0)),"^"))) do  quit
+ .. set utsuccess=1
+ do CLRGRPHS^SAMIVSTR("radiology staff")
+ merge @root=^KBAP("UNIT TEST RAD STAFF")
+ kill ^KBAP("UNIT TEST RAD STAFF")
+ do CHKEQ^%ut(utsuccess,0,"Testing pulling Radiology Staff through broker FAILED!")
+ quit
  ;
 UTRARES ; @TEST - Pulling all active radiology residents
  ;  RADRESDT
- k ^KBAP("UNIT TEST RAD RESIDENTS")
+ kill ^KBAP("UNIT TEST RAD RESIDENTS")
  ;
- n root s root=$$setroot^%wd("radiology residents")
+ new root set root=$$setroot^%wd("radiology residents")
  ;
- m ^KBAP("UNIT TEST RAD RESIDENTS")=@root
- n KBAPRES,utsuccess s utsuccess=0
- s KBAPRES=$$RADRESDT^SAMIVSTR
- i '$g(KBAPRES) d  q
- . m @root=^KBAP("UNIT TEST RAD RESIDENTS")
- . k ^KBAP("UNIT TEST RAD RESIDENTS")
- . d FAIL^%ut("No radiology residents found.")
- n ien,duzG,nameG
- f ien=1:1:$g(KBAPRES) d  q:$g(utsuccess)
- . s duzG=@root@(ien,"duz")
- . s nameG=@root@(ien,"name")
- . n cnt s cnt=0,utsuccess=1
- . f  s cnt=$O(^VA(200,duzG,"RAC",cnt)) q:'cnt  d
- ..  I ^VA(200,duzG,"RAC",cnt,0)="R" s utsuccess=0
- . q:utsuccess
- . i '($$UP^XLFSTR(nameG))=($$UP^XLFSTR($p($g(^VA(200,duzG,0)),"^"))) d  q
- .. s utsuccess=1
- d CLRGRPHS^SAMIVSTR("radiology residents")
- m @root=^KBAP("UNIT TEST RAD RESIDENTS")
- k ^KBAP("UNIT TEST RAD RESIDENTS")
- d CHKEQ^%ut(utsuccess,0,"Testing pulling Radiology residents through broker FAILED!")
- q
+ merge ^KBAP("UNIT TEST RAD RESIDENTS")=@root
+ new KBAPRES,utsuccess set utsuccess=0
+ set KBAPRES=$$RADRESDT^SAMIVSTR
+ if '$get(KBAPRES) do  quit
+ . merge @root=^KBAP("UNIT TEST RAD RESIDENTS")
+ . kill ^KBAP("UNIT TEST RAD RESIDENTS")
+ . do FAIL^%ut("No radiology residents found.")
+ new ien,duzG,nameG
+ for ien=1:1:$get(KBAPRES) do  quit:$get(utsuccess)
+ . set duzG=@root@(ien,"duz")
+ . set nameG=@root@(ien,"name")
+ . new cnt set cnt=0,utsuccess=1
+ . for  set cnt=$order(^VA(200,duzG,"RAC",cnt)) quit:'cnt  do
+ ..  if ^VA(200,duzG,"RAC",cnt,0)="R" set utsuccess=0
+ . quit:utsuccess
+ . if '($$UP^XLFSTR(nameG))=($$UP^XLFSTR($piece($get(^VA(200,duzG,0)),"^"))) do  quit
+ .. set utsuccess=1
+ do CLRGRPHS^SAMIVSTR("radiology residents")
+ merge @root=^KBAP("UNIT TEST RAD RESIDENTS")
+ kill ^KBAP("UNIT TEST RAD RESIDENTS")
+ do CHKEQ^%ut(utsuccess,0,"Testing pulling Radiology residents through broker FAILED!")
+ quit
  ;
 UTRATECH ; @TEST - Pulling all active radiology technologists
  ;  RADTECHS
- k ^KBAP("UNIT TEST RAD TECHS")
+ kill ^KBAP("UNIT TEST RAD TECHS")
  ;
- n root s root=$$setroot^%wd("radiology technologists")
+ new root s root=$$setroot^%wd("radiology technologists")
  ;
- m ^KBAP("UNIT TEST RAD TECHS")=@root
- n KBAPTECH,utsuccess s utsuccess=0
- s KBAPTECH=$$RADTECHS^SAMIVSTR
- i '$g(KBAPTECH) d  q
- . m @root=^KBAP("UNIT TEST RAD TECHS")
- . k ^KBAP("UNIT TEST RAD TECHS")
- . d FAIL^%ut("No radiology technologists found.")
- n ien,duzG,nameG
- f ien=1:1:$g(KBAPTECH) d  q:$g(utsuccess)
- . s duzG=@root@(ien,"duz")
- . s nameG=@root@(ien,"name")
- . n cnt s cnt=0,utsuccess=1
- . f  S cnt=$O(^VA(200,duzG,"RAC",cnt)) q:'cnt  d
- ..  i ^VA(200,duzG,"RAC",cnt,0)="T" s utsuccess=0
- . q:utsuccess
- . i '($$UP^XLFSTR(nameG))=($$UP^XLFSTR($p($g(^VA(200,duzG,0)),"^"))) d  q
- .. s utsuccess=1
- d CLRGRPHS^SAMIVSTR("radiology technologists")
- m @root=^KBAP("UNIT TEST RAD TECHS")
- k ^KBAP("UNIT TEST RAD TECHS")
- d CHKEQ^%ut(utsuccess,0,"Testing pulling Radiology technologists through broker FAILED!")
- q
+ merge ^KBAP("UNIT TEST RAD TECHS")=@root
+ new KBAPTECH,utsuccess set utsuccess=0
+ set KBAPTECH=$$RADTECHS^SAMIVSTR
+ if '$get(KBAPTECH) do  quit
+ . merge @root=^KBAP("UNIT TEST RAD TECHS")
+ . kill ^KBAP("UNIT TEST RAD TECHS")
+ . do FAIL^%ut("No radiology technologists found.")
+ new ien,duzG,nameG
+ for ien=1:1:$get(KBAPTECH) do  quit:$get(utsuccess)
+ . set duzG=@root@(ien,"duz")
+ . set nameG=@root@(ien,"name")
+ . new cnt set cnt=0,utsuccess=1
+ . for  set cnt=$order(^VA(200,duzG,"RAC",cnt)) quit:'cnt  do
+ ..  if ^VA(200,duzG,"RAC",cnt,0)="T" set utsuccess=0
+ . quit:utsuccess
+ . if '($$UP^XLFSTR(nameG))=($$UP^XLFSTR($piece($get(^VA(200,duzG,0)),"^"))) do  quit
+ .. set utsuccess=1
+ do CLRGRPHS^SAMIVSTR("radiology technologists")
+ merge @root=^KBAP("UNIT TEST RAD TECHS")
+ kill ^KBAP("UNIT TEST RAD TECHS")
+ do CHKEQ^%ut(utsuccess,0,"Testing pulling Radiology technologists through broker FAILED!")
+ quit
  ;
 UTRAMOD ; @TEST - Pulling all radiology diagnosis modifiers
  ;  RADMODS
- k ^KBAP("UNIT TEST RAD MODS")
+ kill ^KBAP("UNIT TEST RAD MODS")
  ;
- n root s root=$$setroot^%wd("radiology modifiers")
+ new root set root=$$setroot^%wd("radiology modifiers")
  ;
- m ^KBAP("UNIT TEST RAD MODS")=@root
- n KBAPMODS,utsuccess s utsuccess=0
- S KBAPMODS=$$RADMODS^SAMIVSTR
- i '$g(KBAPMODS) d  q
- . m @root=^KBAP("UNIT TEST RAD MODS")
- . k ^KBAP("UNIT TEST RAD MODS")
- . d FAIL^%ut("No radiology diagnosis modifiers found.")
- n ien,ien712G,ien792G,nameG,TypeOfImagingG,ienV,TypeOfImagingV
- f ien=1:1:$g(KBAPMODS) d  q:$g(utsuccess)
- . s ien712G=@root@(ien,"ien71.2")
- . s nameG=@root@(ien,"name")
- . s ien792G=@root@(ien,"ien79.2")
- . s TypeOfImagingG=@root@(ien,"type of imaging")
+ merge ^KBAP("UNIT TEST RAD MODS")=@root
+ new KBAPMODS,utsuccess set utsuccess=0
+ set KBAPMODS=$$RADMODS^SAMIVSTR
+ if '$get(KBAPMODS) do  quit
+ . merge @root=^KBAP("UNIT TEST RAD MODS")
+ . kill ^KBAP("UNIT TEST RAD MODS")
+ . do FAIL^%ut("No radiology diagnosis modifiers found.")
+ new ien,ien712G,ien792G,nameG,TypeOfImagingG,ienV,TypeOfImagingV
+ for ien=1:1:$get(KBAPMODS) do  quit:$get(utsuccess)
+ . set ien712G=@root@(ien,"ien71.2")
+ . set nameG=@root@(ien,"name")
+ . set ien792G=@root@(ien,"ien79.2")
+ . set TypeOfImagingG=@root@(ien,"type of imaging")
  .;  check this entry in 71.2 has an ien79.2 image type
- . n cnt s cnt=0,utsuccess=1
- . f  S cnt=$O(^RAMIS(71.2,ien712G,1,cnt)) q:'cnt  d
- ..  i $g(^RAMIS(71.2,ien712G,1,cnt,0))=ien792G s utsuccess=0
- . q:utsuccess
- . i '($$UP^XLFSTR(nameG))=($$UP^XLFSTR($p($g(^RAMIS(71.2,ien712G,0)),"^"))) d  q
- .. s utsuccess=1
- d CLRGRPHS^SAMIVSTR("radiology modifiers")
- m @root=^KBAP("UNIT TEST RAD MODS")
- k ^KBAP("UNIT TEST RAD MODS")
- d CHKEQ^%ut(utsuccess,0,"Testing pulling Radiology Dx Modifiers through broker FAILED!")
- q
+ . new cnt set cnt=0,utsuccess=1
+ . for  set cnt=$order(^RAMIS(71.2,ien712G,1,cnt)) quit:'cnt  do
+ ..  if $get(^RAMIS(71.2,ien712G,1,cnt,0))=ien792G set utsuccess=0
+ . quit:utsuccess
+ . if '($$UP^XLFSTR(nameG))=($$UP^XLFSTR($p($g(^RAMIS(71.2,ien712G,0)),"^"))) do  quit
+ .. set utsuccess=1
+ do CLRGRPHS^SAMIVSTR("radiology modifiers")
+ merge @root=^KBAP("UNIT TEST RAD MODS")
+ kill ^KBAP("UNIT TEST RAD MODS")
+ do CHKEQ^%ut(utsuccess,0,"Testing pulling Radiology Dx Modifiers through broker FAILED!")
+ quit
  ;
 UTRADXCD ; @TEST - Pull all radiology diagnostic codes
  ;  RADDXCDS
- k ^KBAP("UNIT TEST RA DX CODES")
+ kill ^KBAP("UNIT TEST RA DX CODES")
  ;
- n root s root=$$setroot^%wd("radiology diagnostic codes")
+ new root set root=$$setroot^%wd("radiology diagnostic codes")
  ;
- m ^KBAP("UNIT TEST RA DX CODES")=@root
- n KBAPCODS,utsuccess s utsuccess=0
- s KBAPCODS=$$RADDXCDS^SAMIVSTR
- i '$g(KBAPCODS) d  q
- . m @root=^KBAP("UNIT TEST RA DX CODES") k ^KBAP("UNIT TEST RA DX CODES")
- . d FAIL^%ut("No radiology dx codes pulled through broker")
- n ien,ien783G,nameG,nameV
- f ien=1:1:$g(KBAPCODS) d  q:$g(utsuccess)
- . s ien783G=@root@(ien,"ien78.3")
- . i '$d(^RA(78.3,ien783G,0)) s utsuccess=1 q
- . s nameG=@root@(ien,"name")
- . s nameV=$p($g(^RA(78.3,ien783G,0)),"^")
- . i '(nameG=nameV) s utsuccess=1 q
- d CLRGRPHS^SAMIVSTR("radiology diagnostic codes")
- m @root=^KBAP("UNIT TEST RA DX CODES")
- k ^KBAP("UNIT TEST RA DX CODES")
- d CHKEQ^%ut(utsuccess,0,"Testing pulling rad dx codes through broker FAILED!")
- q
+ merge ^KBAP("UNIT TEST RA DX CODES")=@root
+ new KBAPCODS,utsuccess set utsuccess=0
+ set KBAPCODS=$$RADDXCDS^SAMIVSTR
+ if '$get(KBAPCODS) do  quit
+ . merge @root=^KBAP("UNIT TEST RA DX CODES") kill ^KBAP("UNIT TEST RA DX CODES")
+ . do FAIL^%ut("No radiology dx codes pulled through broker")
+ new ien,ien783G,nameG,nameV
+ for ien=1:1:$get(KBAPCODS) do  quit:$get(utsuccess)
+ . set ien783G=@root@(ien,"ien78.3")
+ . if '$data(^RA(78.3,ien783G,0)) set utsuccess=1 quit
+ . set nameG=@root@(ien,"name")
+ . set nameV=$piece($get(^RA(78.3,ien783G,0)),"^")
+ . if '(nameG=nameV) set utsuccess=1 quit
+ do CLRGRPHS^SAMIVSTR("radiology diagnostic codes")
+ merge @root=^KBAP("UNIT TEST RA DX CODES")
+ kill ^KBAP("UNIT TEST RA DX CODES")
+ do CHKEQ^%ut(utsuccess,0,"Testing pulling rad dx codes through broker FAILED!")
+ quit
  ;
 UTCLRG ; @TEST - Clear a Graphstore of entries
  ;
- n root s root=$$setroot^%wd("radiology diagnostic codes")
+ new root set root=$$setroot^%wd("radiology diagnostic codes")
  ;
- k ^KBAP("UNIT TEST CLRGRPH") M ^KBAP("UNIT TEST CLRGRPH")=@root
- n cnt s cnt=$O(@root@("A"),-1)
- i 'cnt d  q
- . d FAIL^%ut("No 'radiology diagnostic codes' entry")
- s cnt=$$CLRGRPHS^SAMIVSTR("radiology diagnostic codes"),cnt=$O(@root@("A"),-1)
- m @root=^KBAP("UNIT TEST CLRGRPH") K ^KBAP("UNIT TEST CLRGRPH")
- d CHKEQ^%ut(cnt,0,"Clear Graphstore FAILED!")
- q
+ kill ^KBAP("UNIT TEST CLRGRPH") merge ^KBAP("UNIT TEST CLRGRPH")=@root
+ new cnt set cnt=$order(@root@("A"),-1)
+ if 'cnt do  quit
+ . do FAIL^%ut("No 'radiology diagnostic codes' entry")
+ set cnt=$$CLRGRPHS^SAMIVSTR("radiology diagnostic codes"),cnt=$order(@root@("A"),-1)
+ merge @root=^KBAP("UNIT TEST CLRGRPH") kill ^KBAP("UNIT TEST CLRGRPH")
+ do CHKEQ^%ut(cnt,0,"Clear Graphstore FAILED!")
+ quit
  ;
 EOR ; End of routine SAMIUTVR

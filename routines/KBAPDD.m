@@ -1,4 +1,4 @@
-KBAPDD ;ven/lgc - Build DD from HTML ; 3/4/19 12:42pm
+KBAPDD ;ven/lgc - Build DD from HTML ; 3/5/19 12:46pm
  ;;SAMI;;
  q
  ;
@@ -58,7 +58,7 @@ BLDFILE(formkey) ;
  . s @root@("field",name)=cnt
  q
  ;
-BLDCEF ;
+BLDKBCEF ;
  K ^KBAP("CEF","KBAPDD")
  s path="/home/osehra/tmp/"
  S filename="cef_data.txt"
@@ -69,13 +69,31 @@ BLDCEF ;
  n linecnt s linecnt=0
  F  U IO R LINE Q:$$STATUS^%ZISH  D
  . s linecnt=$g(linecnt)+1
- . s name=$p(LINE,"^")
- . s label=$p(LINE,"^",2)
- . s value=$p(LINE,"^",3)
- . i $l(name) s gien=$g(@root@("field",name))
- . i gien d
- .. s @root@("field",gien,"label")=$g(label)
- .. s @root@("field",gien","value")=$g(value)
- . U $P W !,LINE
+ . S ^KBAP("CEF","KBAPDD",linecnt)=LINE
  D CLOSE^%ZISH
  Q
+ ;
+BLDCEF ;
+ n name,label,value,line,root
+ s root=$$setroot^%wd("ceform-fields")
+ k @root
+ s @root@(0)="ceform-fields"
+ n linecnt s linecnt=0
+ F  S linecnt=$o(^KBAP("CEF","KBAPDD",linecnt)) q:'linecnt  d
+ . q:(linecnt<4)
+ . s line=^KBAP("CEF","KBAPDD",linecnt)
+ . q:($TR(line," ")="")
+ .; if this line defines a new variable save the name
+ .;   and build an index entry
+ . i $l($$TRIM^XLFSTR($p(line,"^"),"LR"," ")) d
+ .. s name=$$TRIM^XLFSTR($p(line,"^"),"LR"," ")
+ .. s @root@("field",$g(name))=(linecnt-1)
+ .;
+ . s label=$$TRIM^XLFSTR($p(line,"^",2),"LR"," ")
+ . s value=$$TRIM^XLFSTR($p(line,"^",3),"LR"," ")
+ . s @root@("field",(linecnt-3),"name")=$g(name)
+ . s @root@("field",(linecnt-3),"label")=$g(label)
+ . s @root@("field",(linecnt-3),"value")=$g(value)
+ q
+ ;
+EOR ; End of routine KBAPDD

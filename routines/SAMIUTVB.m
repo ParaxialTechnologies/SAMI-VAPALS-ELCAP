@@ -1,4 +1,4 @@
-SAMIUTVB ;;ven/lgc - UNIT TEST for SAMIVSTB ; 2019-02-27T18:37Z
+SAMIUTVB ;;ven/lgc - UNIT TEST for SAMIVSTB ; 3/6/19 1:06pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -42,12 +42,11 @@ SAMIUTVB ;;ven/lgc - UNIT TEST for SAMIVSTB ; 2019-02-27T18:37Z
  ; @routine-credits
  ; @primary-dev: Larry Carlson (lgc)
  ;  larry@fiscientific.com
- ; @additional-dev: Linda M. R. Yaw (lmry)
- ;  linda.yaw@vistaexpertise.net
  ; @primary-dev-org: Vista Expertise Network (ven)
  ;  http://vistaexpertise.net
  ; @copyright: 2012/2018, ven, all rights reserved
- ; @license: see routine SAMIUL
+ ; @license: Apache 2.0
+ ;  https://www.apache.org/licenses/LICENSE-2.0.html
  ;
  ; @application: SAMI
  ; @version: 18.0
@@ -57,65 +56,65 @@ SAMIUTVB ;;ven/lgc - UNIT TEST for SAMIVSTB ; 2019-02-27T18:37Z
  ;
  ; @section 1 code
  ;
-START if $text(^%ut)="" write !,"*** UNIT TEST NOT INSTALLED ***" quit
- do EN^%ut($text(+0),2)
- quit
+START i $t(^%ut)="" w !,"*** UNIT TEST NOT INSTALLED ***" q
+ d EN^%ut($t(+0),2)
+ q
  ;
 STARTUP ; Set up dfn and tiuien to use throughout testing
- ;set utdfn="dfn"_$J
- set utdfn=$$GET^XPAR("SYS","SAMi SYSTEM TEST PATIENT DFN",,"Q")
- set (utsuccess,tiuien)=0
+ ;s utdfn="dfn"_$J
+ s utdfn=$$GET^XPAR("SYS","SAMi SYSTEM TEST PATIENT DFN",,"Q")
+ s (utsuccess,tiuien)=0
  ; Set up graphstore graph on test patient
- new root set root=$$setroot^%wd("vapals-patients")
- kill @root@("graph","XXX00001")
- new SAMIUPOO do PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
- merge @root@("graph","XXX00001")=SAMIUPOO
- quit
+ n root s root=$$setroot^%wd("vapals-patients")
+ k @root@("graph","XXX00001")
+ n SAMIUPOO d PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
+ m @root@("graph","XXX00001")=SAMIUPOO
+ q
 SHUTDOWN ; ZEXCEPT: dfn,tiuien
- kill utdfn,tiuien,utsuccess
- quit
-SETUP quit
-TEARDOWN quit
+ k utdfn,tiuien,utsuccess
+ q
+SETUP q
+TEARDOWN q
  ;
  ;
 UTVIT ; @TEST - Pull Vitals on a patient
- ; do VIT(dfn,sdate,edate)
+ ; d VIT(dfn,sdate,edate)
  ; Find entry in patient-lookup without a 'vitals node'
  ;  however the patient has vitals in 120.5
- new root set root=$$setroot^%wd("patient-lookup")
- new gien set gien=0
- new gnode,utdfn,utNeedsVitUpdate s utNeedsVitUpdate=0
- for  set gien=$order(@root@(gien)) quit:'gien  do  quit:utNeedsVitUpdate
- . set utdfn=$get(@root@(gien,"dfn")) quit:'utdfn
- . if $order(^GMR(120.5,"C",utdfn,0)) do
- .. set gnode=$name(@root@(gien,"vitals")),gnode=$query(@gnode)
- .. if '(gnode["vitals") set utNeedsVitUpdate=1
- if 'gien do  quit
- . do FAIL^%ut("Unable to find suitable patient for Vitals - FAILED!")
+ n root s root=$$setroot^%wd("patient-lookup")
+ n gien s gien=0
+ n gnode,utdfn,utNeedsVitUpdate s utNeedsVitUpdate=0
+ f  s gien=$o(@root@(gien)) q:'gien  d  q:utNeedsVitUpdate
+ . S utdfn=$g(@root@(gien,"dfn")) q:'utdfn
+ . i $o(^GMR(120.5,"C",utdfn,0)) d
+ .. s gnode=$na(@root@(gien,"vitals")),gnode=$q(@gnode)
+ .. i '(gnode["vitals") s utNeedsVitUpdate=1
+ i 'gien d  q
+ . d FAIL^%ut("Unable to find suitable patient for Vitals - FAILED!")
  ;Found a good patient
- set utsuccess=$$VIT^SAMIVSTB(utdfn)
- set gnode=$name(@root@(gien,"vitals")),gnode=$query(@gnode)
- set utsuccess=(gnode["vitals")
- do CHKEQ^%ut(utsuccess,1,"Testing updating Vitals FAILED!")
- quit
+ s utsuccess=$$VIT^SAMIVSTA(utdfn)
+ s gnode=$na(@root@(gien,"vitals")),gnode=$q(@gnode)
+ s utsuccess=(gnode["vitals")
+ d CHKEQ^%ut(utsuccess,1,"Testing updating Vitals FAILED!")
+ q
  ;
 UTVPR ; @TEST - Pull Virtual Patient Record (VPR) on a patient
- ; do VPR(dfn)
+ ; d VPR(dfn)
  ; Find entry in patient-lookup without an 'inpatient' node'
- new root set root=$$setroot^%wd("patient-lookup")
- new gien set gien=0
- new gnode,utdfn,utNeedsVPRUpdate set utNeedsVPRUpdate=0
- for  set gien=$order(@root@(gien)) quit:'gien  do  quit:utNeedsVPRUpdate
- . set utdfn=$get(@root@(gien,"dfn")) quit:'utdfn
- . if '$data(@root@(gien,"inpatient")) set utNeedsVPRUpdate=1
- if 'gien do  quit
- . do FAIL^%ut("Unable to find suitable patient for VPR - FAILED!")
+ n root s root=$$setroot^%wd("patient-lookup")
+ n gien s gien=0
+ n gnode,utdfn,utNeedsVPRUpdate s utNeedsVPRUpdate=0
+ f  s gien=$o(@root@(gien)) q:'gien  d  q:utNeedsVPRUpdate
+ . s utdfn=$g(@root@(gien,"dfn")) q:'utdfn
+ . i '$d(@root@(gien,"inpatient")) s utNeedsVPRUpdate=1
+ i 'gien d  Q
+ . d FAIL^%ut("Unable to find suitable patient for VPR - FAILED!")
  ;Found a good patient
- set utsuccess=$$VPR^SAMIVSTB(utdfn)
- hang 1
- set utsuccess=$data(@root@(gien,"inpatient"))
- do CHKEQ^%ut(utsuccess,1,"Testing updating with VPR  FAILED!")
- quit
+ s utsuccess=$$VPR^SAMIVSTA(utdfn)
+ h 1
+ s utsuccess=$d(@root@(gien,"inpatient"))
+ d CHKEQ^%ut(utsuccess,1,"Testing updating with VPR  FAILED!")
+ q
  ;
  ;
 EOR ;End of routine SAMIUTVB

@@ -530,11 +530,13 @@
     const enrolled = $("#sildct-y").is(":checked");
     if (enrolled) {
         const $preSection = $("#chart-eligibility").html("");
+        const $preRow = $('<div class="row"></div>');
         const $preCol = $('<div class="col-lg-5 col-md-6 col-sm-8"></div>');
         const $preAlert = $("<div class=\"alert alert-info\">Patient was eligible based on chart and patient discussion.</div>");
         $preCol.append($('<input type="hidden" id="sicechrt" name="sicechrt" value="y"/>'));
         $preCol.append($preAlert);
-        $preSection.append($preCol);
+        $preRow.append($preCol);
+        $preSection.append($preRow);
 
         $("#pre-enrollment-discussion").remove();
         $("#reason-container").remove();

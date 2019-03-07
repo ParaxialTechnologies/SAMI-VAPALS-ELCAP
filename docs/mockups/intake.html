@@ -1255,15 +1255,11 @@
         $("#change-log-container").remove();
     }
 
-    function isEnrolled() {
-        let enrolled = $("[name=sildct]:checkbox").val(); //checkbox
-        if (enrolled === undefined) {
-            enrolled = $("#sildct").val() //hidden field
-        }
-        return enrolled;
+    let enrolled = $("[name=sildct]:checkbox").val(); //checkbox
+    if (enrolled === undefined) {
+        enrolled = $("#sildct").val() //hidden field
     }
 
-    const enrolled = isEnrolled();
     if (enrolled) {
         const $preSection = $("#chart-eligibility").html("");
         const $preRow = $('<div class="row"></div>');
@@ -1278,6 +1274,7 @@
         $("#reason-container").remove();
 
         const $enrollSection = $("#enrollment-container").html("");
+        const $enrollRow = $('<div class="row"></div>');
         const $enrollCol = $('<div class="col-lg-5 col-md-6 col-sm-8"></div>');
         const $enrollAlert = $("<div class=\"alert alert-info\">Informed decision making was completed and patient " +
             "is enrolled in the Lung Screening and Surveillance (LSS) program.</div>");
@@ -1285,8 +1282,10 @@
         $enrollCol.append($('<input type="hidden" id="siidmdc" name="siidmdc" value="1"/>')); //informed decision making
 
         $enrollCol.append($enrollAlert);
-        $enrollSection.append($enrollCol);
+        $enrollRow.append($enrollCol);
+        $enrollSection.append($enrollRow);
     }
+
 
     function createFormValidator() {
 
@@ -1295,47 +1294,7 @@
 
         $form.formValidation({
                 fields: {
-                    siceiden: {
-                        validators: {notEmpty: {message: 'Potential candidate is required'}}
-                    },
-                    sicerfdt: {
-                        validators: {
-                            notEmpty: {message: 'Referral date is required'},
-                            date: {max: VAPALS.todaysDate(), message: 'Referral date may not be in the future'}
-                        }
-                    },
-                    sicerfpc: { //use a real element name for the field so conditional plugins can toggle the field
-                        selector: '[name^=sicerf][type=checkbox]',
-                        validators: {choice: {min: 1, message: 'Select one or more specialty providers'}}
-                    },
-                    sicerfoo: {
-                        validators: {notEmpty: {message: 'Other referring provider specialty is required'}}
-                    },
-                    sicemhlc: { //use a real element name for the field so conditional plugins can toggle the field
-                        selector: '[group=ineligible-reason]',
-                        validators: {choice: {min: 1, message: 'Select one or more reasons'}}
-                    },
-                    sicemhoo: {validators: {notEmpty: {message: 'Other medical reason is required'}}},
-                    siceceoo: {validators: {notEmpty: {message: 'Other care is required'}}},
-                    siceshoo: {validators: {notEmpty: {message: 'Other smoking history is required'}}},
-
-                    //Pre-Enrollment Discussion
-                    sipedc: {
-                        validators: {
-                            notEmpty: {message: 'Contact date is required'},
-                            date: {max: VAPALS.todaysDate(), message: 'Contact date may not be in the future'}
-                        }
-                    },
-                    sipecnip: { //use a real element name for the field so conditional plugins can toggle the field
-                        selector: '[group=discussion-contact]',
-                        validators: {choice: {min: 1, message: 'Select one or more contact methods'}}
-                    },
-                    sipecnoo: {validators: {notEmpty: {message: 'Other contact method is required'}}},
-                    siperslt: {validators: {notEmpty: {message: 'Discussion result is required'}}},
-                    sipecmnt: {validators: {notEmpty: {message: 'Discussion comments are required'}}},
-
-                    //Intake section
-
+                    //Intake section only here
                     sidc: {
                         validators: {
                             notEmpty: {message: 'Contact date is required'},
@@ -1363,7 +1322,6 @@
                             integer: {message: 'must be a whole number'}
                         }
                     },
-                    siidmdc: {validators: {notEmpty: {message: 'Informed decision making is required'}}},
                     sistatus: {validators: {notEmpty: {message: 'Enrollment status is required'}}},
                     sistachg: {validators: {notEmpty: {message: 'Reason for change is required'}}},
                     sistreas: {validators: {notEmpty: {message: 'Explanation is required'}}},
@@ -1397,13 +1355,58 @@
             }
         );
 
+        //NB: keep this else event handlers won't work.
+        const fv = $form.data("formValidation");
 
-        const fv = $form.data('formValidation');
+        // when enrolled these fields are removed from the DOM, so we add the validators here
         if (!enrolled) {
+
+            // CHART REVIEW
             fv.addField('sicechrt', {validators: {notEmpty: {message: 'Chart review is required'}}});
+            fv.addField('siceiden', {validators: {notEmpty: {message: 'Potential candidate is required'}}});
+            fv.addField('sicerfdt', {
+                validators: {
+                    notEmpty: {message: 'Referral date is required'},
+                    date: {max: VAPALS.todaysDate(), message: 'Referral date may not be in the future'}
+                }
+            });
+            fv.addField('sicerfpc', {
+                //use a real element name for the field so conditional plugins can toggle the field
+                selector: '[name^=sicerf][type=checkbox]',
+                validators: {choice: {min: 1, message: 'Select one or more specialty providers'}}
+            });
+            fv.addField('sicerfoo', {
+                validators: {notEmpty: {message: 'Other referring provider specialty is required'}}
+            });
+            fv.addField('sicemhlc', { //use a real element name for the field so conditional plugins can toggle the field
+                selector: '[group=ineligible-reason]',
+                validators: {choice: {min: 1, message: 'Select one or more reasons'}}
+            });
+            fv.addField('sicemhoo', {validators: {notEmpty: {message: 'Other medical reason is required'}}});
+            fv.addField('siceceoo', {validators: {notEmpty: {message: 'Other care is required'}}});
+            fv.addField('siceshoo', {validators: {notEmpty: {message: 'Other smoking history is required'}}});
+
+            // PRE-ENROLLMENT DISCUSSION
             fv.addField('sipedisc', {validators: {notEmpty: {message: 'Discussion review is required'}}});
+            fv.addField('sipedc', {
+                validators: {
+                    notEmpty: {message: 'Contact date is required'},
+                    date: {max: VAPALS.todaysDate(), message: 'Contact date may not be in the future'}
+                }
+            });
+            fv.addField('sipecnip', { //use a real element name for the field so conditional plugins can toggle the field
+                selector: '[group=discussion-contact]',
+                validators: {choice: {min: 1, message: 'Select one or more contact methods'}}
+            });
+            fv.addField('sipecnoo', {validators: {notEmpty: {message: 'Other contact method is required'}}});
+            fv.addField('siperslt', {validators: {notEmpty: {message: 'Discussion result is required'}}});
+            fv.addField('sipecmnt', {validators: {notEmpty: {message: 'Discussion comments are required'}}});
+
+            // INTAKE AREA
+            fv.addField('siidmdc', {validators: {notEmpty: {message: 'Informed decision making is required'}}});
             fv.addField('sildct', {validators: {notEmpty: {message: 'Veterans\' option is required'}}});
         }
+
         fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);
         fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
 
@@ -1486,7 +1489,8 @@
         $("#siceceot").conditionallyDisplay({enable: "#siceceoo"}); //received care elsewhere
         $("#siceshot").conditionallyDisplay({enable: "#siceshoo"}); //other smoking history
 
-        //start the page by hiding the discussion and intake sections if the current value for eligible based on chart review is not "Y"
+        //start the page by hiding the discussion and intake sections if the current value for eligible based on chart
+        // review is not "Y"
         const eligible = $("[name=sicechrt]:checked").val();
         if (!enrolled && (eligible === undefined || eligible === 'n')) {
             $("#pre-enrollment-discussion, #intake, #intake-tab").hide();
@@ -1494,7 +1498,8 @@
 
         //PRE-ENROLLMENT PATIENT DISCUSSION
 
-        //enable discussion container when pre-enrollment discussion occurred AND enable intake area when pre-enrollment did NOT occur (default)
+        //enable discussion container when pre-enrollment discussion occurred AND enable intake area when
+        // pre-enrollment did NOT occur (default)
         $("[name=sipedisc]")
             .conditionallyDisplay({sourceValues: 'y', enable: '#discussion-container'})
             .conditionallyDisplay({sourceValues: 'n', enable: '#intake,#intake-tab'});
@@ -1548,7 +1553,7 @@
 
 
         $("[name=sistatus]").on('submit', function () {
-//require reason fields when marking patient as "not active"
+            //require reason fields when marking patient as "not active"
             $("#reason-for-change-container").toggle($("#sistatus-inactive").is(":checked"));
 
         });

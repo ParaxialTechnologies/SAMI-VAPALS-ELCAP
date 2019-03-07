@@ -202,7 +202,7 @@
                 </button>
             </div>
         </div>
-        <div id="intake" style="display:none;">
+        <div id="intake">
             <hr/>
             <h3>Intake discussion</h3>
             <div class="row">
@@ -527,7 +527,11 @@
         $("#change-log-container").remove();
     }
 
-    const enrolled = $("#sildct-y").is(":checked");
+    let enrolled = $("[name=sildct]:checkbox").val(); //checkbox
+    if (enrolled === undefined) {
+        enrolled = $("#sildct").val() //hidden field
+    }
+
     if (enrolled) {
         const $preSection = $("#chart-eligibility").html("");
         const $preRow = $('<div class="row"></div>');
@@ -544,7 +548,7 @@
         const $enrollSection = $("#enrollment-container").html("");
         const $enrollCol = $('<div class="col-lg-5 col-md-6 col-sm-8"></div>');
         const $enrollAlert = $("<div class=\"alert alert-info\">Informed decision making was completed and patient " +
-            "has been enrolled in the Lung Screening and Surveillance (LSS) program.</div>");
+            "is enrolled in the Lung Screening and Surveillance (LSS) program.</div>");
         $enrollCol.append($('<input type="hidden" id="sildct" name="sildct" value="y"/>')); //veterans' option to enroll
         $enrollCol.append($('<input type="hidden" id="siidmdc" name="siidmdc" value="1"/>')); //informed decision making
 
@@ -751,15 +755,17 @@
         $("#siceceot").conditionallyDisplay({enable: "#siceceoo"}); //received care elsewhere
         $("#siceshot").conditionallyDisplay({enable: "#siceshoo"}); //other smoking history
 
-        //start the page by hiding the discussion and intake sections if the current value for eligible based on chart review is not "Y"
+        //start the page by hiding the discussion and intake sections if the current value for eligible based on chart
+        // review is not "Y"
         const eligible = $("[name=sicechrt]:checked").val();
-        if (eligible === undefined || eligible === 'n') {
+        if (!enrolled && (eligible === undefined || eligible === 'n')) {
             $("#pre-enrollment-discussion, #intake, #intake-tab").hide();
         }
 
         //PRE-ENROLLMENT PATIENT DISCUSSION
 
-        //enable discussion container when pre-enrollment discussion occurred AND enable intake area when pre-enrollment did NOT occur (default)
+        //enable discussion container when pre-enrollment discussion occurred AND enable intake area when
+        // pre-enrollment did NOT occur (default)
         $("[name=sipedisc]")
             .conditionallyDisplay({sourceValues: 'y', enable: '#discussion-container'})
             .conditionallyDisplay({sourceValues: 'n', enable: '#intake,#intake-tab'});
@@ -813,7 +819,7 @@
 
 
         $("[name=sistatus]").on('submit', function () {
-//require reason fields when marking patient as "not active"
+            //require reason fields when marking patient as "not active"
             $("#reason-for-change-container").toggle($("#sistatus-inactive").is(":checked"));
 
         });

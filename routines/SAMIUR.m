@@ -36,7 +36,7 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  n SAMIPATS
  ;s pats=""
  n datephrase
- d SELECT(.SAMIPATS,type,.datephrase) ; select patients for the report
+ d SELECT(.SAMIPATS,type,.datephrase,.filter) ; select patients for the report
  ;q:'$d(SAMIPATS)
  ;
  n ln,cnt,ii
@@ -47,8 +47,13 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  . n samikey,si
  . s (samikey,si)=""
  . d SAMISUB2^SAMIFRM2(.ln,samikey,si,.filter)
- . i ln["PAGE NAME" d findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type,datephrase))
+ . ;i ln["PAGE NAME" d findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type,datephrase))
+ . i ln["PAGE NAME" d findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type,""))
+ . i ln["CRITERIA" d findReplace^%ts(.ln,"CRITERIA",datephrase)
  . i ln["@@REPORTTYPE@@" d findReplace^%ts(.ln,"@@REPORTTYPE@@",type)
+ . ;
+ . i ln["name=""start-date""" d findReplace^%ts(.ln,"start-date""","start-date"" value="""_$g(filter("start-date"))_"""")
+ . i ln["name=""end-date""" d findReplace^%ts(.ln,"end-date""","end-date"" value="""_$g(filter("end-date"))_"""")
  . s SAMIRTN(cnt)=ln
  . ;
  n RPT,ik
@@ -84,8 +89,8 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  . . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
  . . s SAMIPATS(ij,dfn,"nuhref")=nuhref
  . . ;
- . . k ^gpl("SAMIPATS")
- . . m ^gpl("SAMIPATS")=SAMIPATS
+ . . ;k ^gpl("SAMIPATS")
+ . . ;m ^gpl("SAMIPATS")=SAMIPATS
  . . s cnt=cnt+1 s SAMIRTN(cnt)="<tr>"
  . . s ir=""
  . . f  s ir=$o(RPT(ir)) q:ir=""  d  ;
@@ -109,8 +114,23 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  . s SAMIRTN(cnt)=ln
  q
  ;
-SELECT(SAMIPATS,type,datephrase) ; selects patient for the report
+SELECT(SAMIPATS,type,datephrase,filter) ;selects patients for report
+ ;m ^gpl("select")=filter
  i $g(type)="" s type="enrollment"
+ n strdt,enddt,fmstrdt,fmenddt
+ s strdt=$g(filter("start-date"))
+ s fmstrdt=$$KEY2FM^SAMICASE(strdt)
+ i fmstrdt=-1 d  ;
+ . s fmstrdt=2000101
+ . i type="followup" s fmstrdt=$$NOW^XLFDT
+ . i type="activity" s fmstrdt=$$FMADD^XLFDT($$NOW^XLFDT,-31)
+ i strdt="" s filter("start-date")=$$VAPALSDT^SAMICASE(fmstrdt)
+ s enddt=$g(filter("end-date"))
+ s fmenddt=$$KEY2FM^SAMICASE(enddt)
+ i fmenddt=-1 d  ;
+ . s fmenddt=$$NOW^XLFDT
+ . i type="followup" s fmenddt=$$FMADD^XLFDT($$NOW^XLFDT,31)
+ i enddt="" s filter("end-date")=$$VAPALSDT^SAMICASE(fmenddt)
  s datephrase=""
  n zi s zi=0
  n root s root=$$setroot^%wd("vapals-patients")
@@ -136,27 +156,29 @@ SELECT(SAMIPATS,type,datephrase) ; selects patient for the report
  . s edate=$$VAPALSDT^SAMICASE(efmdate)
  . ;
  . i type="followup" d  ;
- . . n nplus30 s nplus30=$$FMADD^XLFDT($$NOW^XLFDT,31)
- . . ;i (+fmcefud<nplus30)!(ceform="") d  ; need ct scans
- . . i (+fmcefud<nplus30) d  ; need ct scans
+ . . ;n nplus30 s nplus30=$$FMADD^XLFDT($$NOW^XLFDT,31)
+ . . i +fmcefud<fmstrdt q  ; before start date
+ . . i (+fmcefud<fmenddt) d  ; before end date
  . . . i ceform="" q  ; no ct eval so no followup date
- . . . s SAMIPATS(efmdate,zi,"edate")=edate
- . . . s SAMIPATS(efmdate,zi)=""
+ . . . s SAMIPATS(fmcefud,zi,"edate")=edate
+ . . . s SAMIPATS(fmcefud,zi)=""
  . . . i ceform="" s cefud="baseline"
- . . . s SAMIPATS(efmdate,zi,"cefud")=cefud
- . . . s SAMIPATS(efmdate,zi,"cedos")=cedos
- . . . s SAMIPATS(efmdate,zi,"ceform")=ceform
- . . . s SAMIPATS(efmdate,zi,"ceform-vals")=$na(@root@("graph",sid,ceform))
- . . . s SAMIPATS(efmdate,zi,"siform")=siform
- . . . s SAMIPATS(efmdate,zi,"siform-vals")=$na(@root@("graph",sid,siform))
- . . . m SAMIPATS(efmdate,zi,"items")=items
- . . s datephrase=" before "_$$VAPALSDT^SAMICASE(nplus30)
+ . . . s SAMIPATS(fmcefud,zi,"cefud")=cefud
+ . . . s SAMIPATS(fmcefud,zi,"cedos")=cedos
+ . . . s SAMIPATS(fmcefud,zi,"ceform")=ceform
+ . . . s SAMIPATS(fmcefud,zi,"ceform-vals")=$na(@root@("graph",sid,ceform))
+ . . . s SAMIPATS(fmcefud,zi,"siform")=siform
+ . . . s SAMIPATS(fmcefud,zi,"siform-vals")=$na(@root@("graph",sid,siform))
+ . . . m SAMIPATS(fmcefud,zi,"items")=items
+ . . s datephrase=" before "_$$VAPALSDT^SAMICASE(fmenddt)
  . . q
  . i type="activity" d  ;
- . . n nminus30 s nminus30=$$FMADD^XLFDT($$NOW^XLFDT,-31)
+ . . ;n nminus30 s nminus30=$$FMADD^XLFDT($$NOW^XLFDT,-31)
  . . n anyform s anyform=$o(items("sort",""),-1)
  . . n fmanyform s fmanyform=$$KEY2FM^SAMICASE(anyform)
- . . i (+fmanyform>nminus30)!(+efmdate>nminus30) d  ; need any new form
+ . . i +fmanyform<fmstrdt q  ; before the start date
+ . . ;i (+fmanyform<fmenddt)!(+efmdate>fmenddt) d  ; need any new form
+ . . i (+fmanyform<fmenddt)  d  ;
  . . . s SAMIPATS(efmdate,zi,"edate")=edate
  . . . s SAMIPATS(efmdate,zi)=""
  . . . i ceform="" s cefud="baseline"
@@ -165,7 +187,12 @@ SELECT(SAMIPATS,type,datephrase) ; selects patient for the report
  . . . s SAMIPATS(efmdate,zi,"ceform")=ceform
  . . . s SAMIPATS(efmdate,zi,"siform")=siform
  . . . m SAMIPATS(efmdate,zi,"items")=items
- . . s datephrase=" after "_$$VAPALSDT^SAMICASE(nminus30)
+ . . s datephrase=" after "_$$VAPALSDT^SAMICASE(fmstrdt)
+ . ;
+ . ; date filter for all the rest of the reports
+ . ;
+ . i efmdate<fmstrdt q  ; before the start date
+ . i efmdate>fmenddt q  ; after the end date
  . ;
  . i type="incomplete" d  ;
  . . n complete s complete=1
@@ -210,8 +237,10 @@ SELECT(SAMIPATS,type,datephrase) ; selects patient for the report
  q
  ;
 PNAME(type,phrase) ; extrinsic returns the PAGE NAME for the report
- i type="followup" q "Followup next 30 days -"_$g(phrase)
- i type="activity" q "Activity last 30 days -"_$g(phrase)
+ ;i type="followup" q "Followup next 30 days -"_$g(phrase)
+ i type="followup" q "Followup "_$g(phrase)
+ ;i type="activity" q "Activity last 30 days -"_$g(phrase)
+ i type="activity" q "Activity "_$g(phrase)
  i type="missingct" q "Intake but no CT Evaluation"_$g(phrase)
  i type="incomplete" q "Incomplete Forms"_$g(phrase)
  i type="outreach" q "Outreach"_$g(phrase)

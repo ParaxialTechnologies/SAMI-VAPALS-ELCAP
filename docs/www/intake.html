@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.03.07" name="version"/>
+  <meta content="2019.03.11" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    Lung Screening and Surveillance Intake Form
@@ -927,37 +927,7 @@
        </small>
       </div>
       <div class="col-md-4 form-group">
-       <input class="form-control numeric" id="sicadxl" name="sicadxl" title="Number thorax CT" type="text"/>
-       <span class="help-block">
-        Number
-       </span>
-      </div>
-     </div>
-     <div class="row form-group">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm " for="sipldct">
-        Prior LDCT
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm " for="sipldct">
-        Prior LDCT
-       </label>
-      </div>
-      <div class="col-md-4">
-       <div class="input-group datepicker">
-        <input aria-describedby="sipldct-addon" class="form-control" data-restriction="past" id="sipldct" name="sipldct"/>
-        <div class="input-group-addon">
-         <div class="input-group-text" id="sipldct-addon">
-          <i aria-hidden="true" class="fa fa-calendar">
-          </i>
-         </div>
-        </div>
-       </div>
-       <small class="form-text text-muted">
-        MM/DD/YYYY
-       </small>
-      </div>
-      <div class="col-md-4 form-group">
-       <input class="form-control" id="sipldctl" name="sipldctl" title="Prior LDCT location" type="text"/>
+       <input class="form-control" id="siptctl" name="siptctl" title="Location thorax CT" type="text"/>
        <span class="help-block">
         Location if not in VA
        </span>
@@ -1008,8 +978,8 @@
         <div class="radio">
          <label>
           <input id="sildct-y" name="sildct" type="radio" value="y"/>
-          Enroll in the Lung Screening and Surveillance (LSS) program and have an LDCT ordered.
-                                Coordination of care will be made by the LSS team
+          Enroll in the Lung Screening program and have an LDCT ordered.
+                                Coordination of care will be made by the team
          </label>
         </div>
        </div>
@@ -1184,7 +1154,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.03.07
+     2019.03.11
     </span>
    </div>
   </footer>
@@ -1277,7 +1247,7 @@
         const $enrollRow = $('<div class="row"></div>');
         const $enrollCol = $('<div class="col-lg-5 col-md-6 col-sm-8"></div>');
         const $enrollAlert = $("<div class=\"alert alert-info\">Informed decision making was completed and patient " +
-            "is enrolled in the Lung Screening and Surveillance (LSS) program.</div>");
+            "is enrolled in the Lung Screening program.</div>");
         $enrollCol.append($('<input type="hidden" id="sildct" name="sildct" value="y"/>')); //veterans' option to enroll
         $enrollCol.append($('<input type="hidden" id="siidmdc" name="siidmdc" value="1"/>')); //informed decision making
 

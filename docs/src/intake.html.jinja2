@@ -375,24 +375,10 @@
                     {{ f.datepicker ("siptct", "past") }}
                 </div>
                 <div class="col-md-4 form-group">
-                    <input class="form-control numeric" type="text" name="sicadxl" id="sicadxl"
-                           title="Number thorax CT"/>
-                    <span class="help-block">Number</span>
-                </div>
-            </div>
-            <div class="row form-group">
-                <div class="col-md-4">
-                    {{ f.floatingLabel('sipldct', 'Prior LDCT') }}
-                </div>
-                <div class="col-md-4">
-                    {{ f.datepicker ("sipldct", "past") }}
-                </div>
-                <div class="col-md-4 form-group">
-                    <input class="form-control" type="text" name="sipldctl" id="sipldctl" title="Prior LDCT location"/>
+                    <input class="form-control" type="text" name="siptctl" id="siptctl" title="Location thorax CT"/>
                     <span class="help-block">Location if not in VA</span>
                 </div>
             </div>
-
             <hr/>
             <div id="enrollment-container">
                 <div class="row">
@@ -429,8 +415,8 @@
                         <div class="radio">
                             <label>
                                 <input type="radio" name="sildct" id="sildct-y" value="y">
-                                Enroll in the Lung Screening and Surveillance (LSS) program and have an LDCT ordered.
-                                Coordination of care will be made by the LSS team
+                                Enroll in the Lung Screening program and have an LDCT ordered.
+                                Coordination of care will be made by the team
                             </label>
                         </div>
                     </div>
@@ -549,7 +535,7 @@
         const $enrollRow = $('<div class="row"></div>');
         const $enrollCol = $('<div class="col-lg-5 col-md-6 col-sm-8"></div>');
         const $enrollAlert = $("<div class=\"alert alert-info\">Informed decision making was completed and patient " +
-            "is enrolled in the Lung Screening and Surveillance (LSS) program.</div>");
+            "is enrolled in the Lung Screening program.</div>");
         $enrollCol.append($('<input type="hidden" id="sildct" name="sildct" value="y"/>')); //veterans' option to enroll
         $enrollCol.append($('<input type="hidden" id="siidmdc" name="siidmdc" value="1"/>')); //informed decision making
 

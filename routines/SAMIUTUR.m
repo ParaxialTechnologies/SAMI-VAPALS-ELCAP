@@ -1,4 +1,4 @@
-SAMIUTUR ;ven/lgc - UNIT TEST for SAMIUR1,SAMIUR2 ; 2/22/19 12:26pm
+SAMIUTUR ;ven/lgc - UNIT TEST for SAMIUR1,SAMIUR2 ; 3/11/19 2:12pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -41,47 +41,55 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  ;
 UTWSRPT ; @TEST - generate a report based on parameters in filter
  ;wsReport(rtn,SAMIUFLTR)
+ n rpttstr
+ ;
  n SAMIUFLTR,pats,SAMIUPOO,cnt,root
  s SAMIUFLTR("samireporttype")="followup"
+ s rpttstr="<input name=""samireporttype"" type=""hidden"" value=""followup""/>"
  s utsuccess=0
  d WSREPORT^SAMIUR1(.SAMIUPOO,.SAMIUFLTR)
- s cnt=0 f  s cnt=$o(SAMIUPOO(cnt)) q:'cnt  i SAMIUPOO(cnt)["Followup next 30 days"  s utsuccess=1
+ s cnt=0 f  s cnt=$o(SAMIUPOO(cnt)) q:'cnt  i SAMIUPOO(cnt)[rpttstr s utsuccess=1
  d CHKEQ^%ut(utsuccess,1,"Testing wsReport for followup FAILED!")
  ;
  k SAMIUFLTR,SAMIUPOO
  s SAMIUFLTR("samireporttype")="activity"
+ s rpttstr="<input name=""samireporttype"" type=""hidden"" value=""activity""/>"
  s utsuccess=0
  d WSREPORT^SAMIUR1(.SAMIUPOO,.SAMIUFLTR)
- s cnt=0 f  s cnt=$o(SAMIUPOO(cnt)) q:'cnt  i SAMIUPOO(cnt)["Activity last 30 days" s utsuccess=1
+ s cnt=0 f  s cnt=$o(SAMIUPOO(cnt)) q:'cnt  i SAMIUPOO(cnt)[rpttstr s utsuccess=1
  d CHKEQ^%ut(utsuccess,1,"Testing wsReport for activity FAILED!")
  ;
  k SAMIUFLTR
  s SAMIUFLTR("samireporttype")="enrollment"
- s utsuccess=1
+ s rpttstr="<input name=""samireporttype"" type=""hidden"" value=""enrollment""/>"
+ s utsuccess=0
  d WSREPORT^SAMIUR1(.SAMIUPOO,.SAMIUFLTR)
- s cnt=0 f  s cnt=$o(SAMIUPOO(cnt)) q:'cnt  i SAMIUPOO(cnt)["Enrollment as of" s utsuccess=1
+ s cnt=0 f  s cnt=$o(SAMIUPOO(cnt)) q:'cnt  i SAMIUPOO(cnt)[rpttstr s utsuccess=1
  d CHKEQ^%ut(utsuccess,1,"Testing wsReport for enrollment FAILED!")
  ;
  k SAMIUFLTR
  s SAMIUFLTR("samireporttype")="missingct"
+ s rpttstr="<input name=""samireporttype"" type=""hidden"" value=""missingct""/>"
  s utsuccess=1
  d WSREPORT^SAMIUR1(.SAMIUPOO,.SAMIUFLTR)
- s cnt=0 f  s cnt=$o(SAMIUPOO(cnt)) q:'cnt  i SAMIUPOO(cnt)["missingct" s utsuccess=1
+ s cnt=0 f  s cnt=$o(SAMIUPOO(cnt)) q:'cnt  i SAMIUPOO(cnt)[rpttstr s utsuccess=1
  d CHKEQ^%ut(utsuccess,1,"Testing wsReport for enrollment FAILED!")
  ;
  k SAMIUFLTR
  s SAMIUFLTR("samireporttype")="incomplete"
+ s rpttstr="<input name=""samireporttype"" type=""hidden"" value=""incomplete""/>"
  s utsuccess=1
  d WSREPORT^SAMIUR1(.SAMIUPOO,.SAMIUFLTR)
- s cnt=0 f  s cnt=$o(SAMIUPOO(cnt)) q:'cnt  i SAMIUPOO(cnt)["incomplete" s utsuccess=1
+ s cnt=0 f  s cnt=$o(SAMIUPOO(cnt)) q:'cnt  i SAMIUPOO(cnt)[rpttstr s utsuccess=1
  d CHKEQ^%ut(utsuccess,1,"Testing wsReport for enrollment FAILED!")
  ;
  k SAMIUFLTR
  s SAMIUFLTR("samireporttype")="outreach"
  s SAMIUFLTR("debug")=1
+ s rpttstr="<input name=""samireporttype"" type=""hidden"" value=""outreach""/>"
  s utsuccess=1
  d WSREPORT^SAMIUR1(.SAMIUPOO,.SAMIUFLTR)
- s cnt=0 f  s cnt=$o(SAMIUPOO(cnt)) q:'cnt  i SAMIUPOO(cnt)["@@REPORTTYPE@@" s utsuccess=1
+ s cnt=0 f  s cnt=$o(SAMIUPOO(cnt)) q:'cnt  i SAMIUPOO(cnt)[rpttstr s utsuccess=1
  d CHKEQ^%ut(utsuccess,1,"Testing wsReport for enrollment FAILED!")
  q
  ;

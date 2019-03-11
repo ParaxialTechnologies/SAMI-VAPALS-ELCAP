@@ -1,4 +1,4 @@
-SAMIUTVS ;ven/arc/lgc - UNIT TEST for SAMIVSTS ; 1/22/19 1:40pm
+SAMIUTVS ;ven/arc/lgc - UNIT TEST for SAMIVSTS ; 3/7/19 11:38am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -83,7 +83,7 @@ UTMGPH ; @TEST - Test making 'patient-lookup' Graphstore
  i '$d(^KBAP("ALLPTS")) d  q
  .  d FAIL^%ut("^KBAP(""ALLPTS"") must exist for TESTING")
  ;
- d MKGPH^SAMIVSTS ; Rebuild 'patient-lookup' Graphstore
+ d MKGPH^SAMIVSTA ; Rebuild 'patient-lookup' Graphstore
  ; Check that the Graphstore was built
  n ptlkup s ptlkup="^%wd(17.040801,""B"",""patient-lookup"")"
  n si s si=$o(@ptlkup@(0))
@@ -118,7 +118,7 @@ UTMGPH ; @TEST - Test making 'patient-lookup' Graphstore
  ;
 UTAPTS ; @TEST - Test pulling patient data through broker
  k ^KBAP("ALLPTS UNITTEST")
- d ALLPTS1^SAMIVSTS("ALLPTS UNITTEST")
+ d ALLPTS1^SAMIVSTA("ALLPTS UNITTEST")
  ;                in file 2         in ALLPTS
  ;  NAME            piece 1          piece 1
  ;  sex             piece 2          piece 6
@@ -160,7 +160,7 @@ UTPRVDS ; @TEST - Pulling Providers through the broker
  m ^KBAP("UNIT TEST PROVIDERS")=@root
  s utsuccess=1
  n SAMIPVDS
- s SAMIPVDS=$$PRVDRS^SAMIVSTS
+ s SAMIPVDS=$$PRVDRS^SAMIVSTA
  i '$g(SAMIPVDS) d  q
  . m @root=^KBAP("UNIT TEST PROVIDERS") k ^KBAP("UNIT TEST PROVIDERS")
  . d FAIL^%ut("No providers pulled through broker")
@@ -182,7 +182,7 @@ UTRMDRS ; @TEST - Pulling Reminders through the broker
  m ^KBAP("UNIT TEST REMINDERS")=@root
  s utsuccess=1
  n SAMIREMINDERS
- S SAMIREMINDERS=$$RMDRS^SAMIVSTS
+ S SAMIREMINDERS=$$RMDRS^SAMIVSTA
  i '$g(SAMIREMINDERS) d  q
  . m @root=^KBAP("UNIT TEST REMINDERS")
  . k ^KBAP("UNIT TEST REMINDERS")
@@ -210,7 +210,7 @@ UTCLNC ; @TEST - Pulling Clinics through the broker
  m ^KBAP("UNIT TEST CLINICS")=@root
  s utsuccess=1
  n SAMICLNC
- s SAMICLNC=$$CLINICS^SAMIVSTS
+ s SAMICLNC=$$CLINICS^SAMIVSTA
  i '$g(SAMICLNC) d  q
  . m @root=^KBAP("UNIT TEST CLINICS")
  . k ^KBAP("UNIT TEST CLINICS")
@@ -232,7 +232,7 @@ UTHF ; @TEST - Pulling Health Factors through the broker
  m ^KBAP("UNIT TEST HEALTH FACTORS")=@root
  s utsuccess=1
  n SAMIHF
- S SAMIHF=$$HLTHFCT^SAMIVSTS
+ S SAMIHF=$$HLTHFCT^SAMIVSTA
  i '$g(SAMIHF) d  q
  . m @root=^KBAP("UNIT TEST HEALTH FACTORS")
  . k ^KBAP("UNIT TEST HEALTH FACTORS")
@@ -253,7 +253,7 @@ UTCLRG ; @TEST - Clear a Graphstore of entries
  n cnt s cnt=$o(@root@("A"),-1)
  i 'cnt d  q
  . d FAIL^%ut("No 'providers found' entry")
- s cnt=$$CLRGRPS^SAMIVSTS("providers"),cnt=$o(@root@("A"),-1)
+ s cnt=$$CLRGRPS^SAMIVSTA("providers"),cnt=$o(@root@("A"),-1)
  m @root=^KBAP("UNIT TEST CLRGRPH") k ^KBAP("UNIT TEST CLRGRPH")
  d CHKEQ^%ut(cnt,0,"Clear Graphstore FAILED!")
  q

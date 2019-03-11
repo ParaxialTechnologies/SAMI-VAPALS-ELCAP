@@ -1,4 +1,4 @@
-SAMIUTR2 ;ven/lgc - UNIT TEST for SAMICTR2 ; 2/25/19 8:00pm
+SAMIUTR2 ;ven/lgc - UNIT TEST for SAMICTR2 ; 2/26/19 11:31am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -30,9 +30,13 @@ START i $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  ;
 STARTUP n utsuccess
  n root s root=$$setroot^%wd("vapals-patients")
- k @root@("graph","XXX00001")
- n SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
- m @root@("graph","XXX00001")=SAMIUPOO
+ ; **** temp change
+ ;k @root@("graph","XXX00001")
+ ;n SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
+ ;m @root@("graph","XXX00001")=SAMIUPOO
+ n SAMIUPOO m SAMIUPOO=@root@("graph","XXX00001")
+ D SVUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
+ ; *** end temp change
  q
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
@@ -94,6 +98,47 @@ UTOTLNG ; @TEST - other lung
  . i '(@noder=@nodea) s utsuccess=0
  i '(nodea="") s utsuccess=0
  d CHKEQ^%ut(utsuccess,1,"Testing generating nodule report XXX01-23  FAILED!")
+ ;
+ n SAMIUPOO,si,vals,cnt,return,SAMIUARC,noder,nodea
+ s si="XXX00001",samikey="ceform-2019-02-25"
+ s vals=$na(@root@("graph",si,samikey))
+ s cnt=0
+ s para="POO"
+ d OTHRLUNG^SAMICTR2("return",vals,dict)
+ ; *** temp change
+ d SVUTARR^SAMIUTST(.return,"UTOTLNG^SAMIUTR2 report XXX02-25")
+ H 2
+ ; *** end temp change
+ ;now pull saved report
+ d PLUTARR^SAMIUTST(.SAMIUARC,"UTOTLNG^SAMIUTR2 report XXX02-25")
+ ; now compare return with SAMIUARC
+ n noder,nodea s noder=$na(return),nodea=$na(SAMIUARC)
+ s utsuccess=1
+ f  s noder=$Q(@noder),nodea=$Q(@nodea) q:noder=""  d  q:'utsuccess
+ . i '(@noder=@nodea) s utsuccess=0
+ i '(nodea="") s utsuccess=0
+ d CHKEQ^%ut(utsuccess,1,"Testing generating nodule report XXX02-25  FAILED!")
+ ;
+ n SAMIUPOO,si,vals,cnt,return,SAMIUARC,noder,nodea
+ s si="XXX00001",samikey="ceform-2019-02-26"
+ s vals=$na(@root@("graph",si,samikey))
+ s cnt=0
+ s para="POO"
+ d OTHRLUNG^SAMICTR2("return",vals,dict)
+ ; *** temp change
+ d SVUTARR^SAMIUTST(.return,"UTOTLNG^SAMIUTR2 report XXX02-26")
+ H 2
+ ; *** end temp change
+ ;now pull saved report
+ d PLUTARR^SAMIUTST(.SAMIUARC,"UTOTLNG^SAMIUTR2 report XXX02-26")
+ ; now compare return with SAMIUARC
+ n noder,nodea s noder=$na(return),nodea=$na(SAMIUARC)
+ s utsuccess=1
+ f  s noder=$Q(@noder),nodea=$Q(@nodea) q:noder=""  d  q:'utsuccess
+ . i '(@noder=@nodea) s utsuccess=0
+ i '(nodea="") s utsuccess=0
+ d CHKEQ^%ut(utsuccess,1,"Testing generating nodule report XXX02-26  FAILED!")
+ ;
  q
  ;
 UTOUT ; @TEST - out line

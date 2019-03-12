@@ -1,4 +1,4 @@
-SAMIADMN ; ven/arc - IELCAP: Admin tools ; 1/22/19 2:03pm
+SAMIADMN ; ven/arc - IELCAP: Admin tools ; 2019-03-12T20:29Z
  ;;1.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -7,6 +7,7 @@ SAMIADMN ; ven/arc - IELCAP: Admin tools ; 1/22/19 2:03pm
  ;
  ; @primary-dev: Alexis Carlson (arc)
  ; @additional-dev: Larry Carlson (lgc)
+ ; @additional-dev: George Lilly (gpl)
  ; @additional-dev: Linda M. R. Yaw (lmry)
  ; Primary development organization: Vista Expertise Network (VEN)
  ;
@@ -22,7 +23,7 @@ SAMIADMN ; ven/arc - IELCAP: Admin tools ; 1/22/19 2:03pm
  ; 2018-12-27 ven/lgc: update routines for SAC compliance
  ; 2019-01-22 ven/lgc: add license info and edit for lower case initials
  ; 2019-03-12 ven/lmry: Spell out commands, add table of contents, few format changes, 
- ;  also noted routines used for debugging, added history
+ ;  also noted routines used for debugging, added history, added gpl, lgc, me to devs
  ;
  quit  ; No entry from top
  ;

@@ -158,7 +158,7 @@ SELECT(SAMIPATS,type,datephrase,filter) ;selects patients for report
  . i type="followup" d  ;
  . . ;n nplus30 s nplus30=$$FMADD^XLFDT($$NOW^XLFDT,31)
  . . i +fmcefud<fmstrdt q  ; before start date
- . . i (+fmcefud<fmenddt) d  ; before end date
+ . . i (+fmcefud<(fmenddt+1)) d  ; before end date
  . . . i ceform="" q  ; no ct eval so no followup date
  . . . s SAMIPATS(fmcefud,zi,"edate")=edate
  . . . s SAMIPATS(fmcefud,zi)=""
@@ -177,8 +177,8 @@ SELECT(SAMIPATS,type,datephrase,filter) ;selects patients for report
  . . n anyform s anyform=$o(items("sort",""),-1)
  . . n fmanyform s fmanyform=$$KEY2FM^SAMICASE(anyform)
  . . i +fmanyform<fmstrdt q  ; before the start date
- . . ;i (+fmanyform<fmenddt)!(+efmdate>fmenddt) d  ; need any new form
- . . i (+fmanyform<fmenddt)  d  ;
+ . . ;i (+fmanyform<(fmenddt+1))!(+efmdate>fmenddt) d  ; need any new form
+ . . i (+fmanyform<(fmenddt+1))  d  ;
  . . . s SAMIPATS(efmdate,zi,"edate")=edate
  . . . s SAMIPATS(efmdate,zi)=""
  . . . i ceform="" s cefud="baseline"
@@ -192,7 +192,7 @@ SELECT(SAMIPATS,type,datephrase,filter) ;selects patients for report
  . ; date filter for all the rest of the reports
  . ;
  . i efmdate<fmstrdt q  ; before the start date
- . i efmdate>fmenddt q  ; after the end date
+ . i efmdate>(fmenddt+1) q  ; after the end date
  . ;
  . i type="incomplete" d  ;
  . . n complete s complete=1

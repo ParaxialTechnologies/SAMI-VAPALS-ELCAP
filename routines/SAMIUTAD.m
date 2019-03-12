@@ -1,4 +1,4 @@
-SAMIUTAD ;ven/lgc - Unit test for SAMIADMN ; 2/6/19 11:35am
+SAMIUTAD ;ven/lgc - Unit test for SAMIADMN ; 2019-03-12T21:04Z
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -8,13 +8,14 @@ SAMIUTAD ;ven/lgc - Unit test for SAMIADMN ; 2/6/19 11:35am
  ; @routine-credits
  ; @primary-dev: Larry Carlson (lgc)
  ;  larry@fiscientific.com
+ ; @additional-dev: Linda M. R. Yaw (lmry)
+ ;  linda.yaw@vistaexpertise.net
  ; @primary-dev-org: Vista Expertise Network (ven)
  ;  http://vistaexpertise.net
  ; @copyright: 2012/2018, ven, all rights reserved
- ; @license: Apache 2.0
- ;  https://www.apache.org/licenses/LICENSE-2.0.html
+ ; @license: see routine SAMIUL
  ;
- ; @last-updated: 110/31/18 6:04pm
+ ; @last-updated: 2019-03-12T21:04Z
  ; @application: SAMI
  ; @version: 18.0
  ; @patch-list: none yet
@@ -23,125 +24,125 @@ SAMIUTAD ;ven/lgc - Unit test for SAMIADMN ; 2/6/19 11:35am
  ;
  ; @section 1 code
  ;
-START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
- D EN^%ut($T(+0),2)
- Q
+START if $text(^%ut)="" write !,"*** UNIT TEST NOT INSTALLED ***" quit
+ do EN^%ut($text(+0),2)
+ quit
  ;
  ;
-STARTUP n utsuccess
- Q
+STARTUP new utsuccess
+ quit
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
- K utsuccess
- Q
+ kill utsuccess
+ quit
  ;
  ;
 UTCLRW ; @TEST - Test Clear the M WebServer
  ; will delete seeGraph and html-cache Graphstores
  ;  then rebuild the seeGraph
- n root,poo,arc s root=$$setroot^%wd("seeGraph")
- d purgegraph^%wd("seeGraph")
- D CLRWEB^SAMIADMN
+ new root,poo,arc set root=$$setroot^%wd("seeGraph")
+ do purgegraph^%wd("seeGraph")
+ do CLRWEB^SAMIADMN
  ; save the seeGraph file just built
- n poo m poo=@root
+ new poo merge poo=@root
  ; run the Clear the M Webserver again
- D CLRWEB^SAMIADMN
+ do CLRWEB^SAMIADMN
  ; Compare rebuilt seeGraph to be sure it generates
  ;   the same data each time
- k arc m arc=@root
- s utsuccess=1
- n nodea,nodep s nodea=$na(arc),nodep=$na(poo)
- f  s nodea=$Q(@nodea),nodep=$Q(@nodep) q:nodea=""  d  q:'utsuccess
- . i '(@nodea=@nodep) s utsuccess=0
- i '(nodep="") s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing Clear M WebServer FAILED!")
- q
+ kill arc merge arc=@root
+ set utsuccess=1
+ new nodea,nodep set nodea=$name(arc),nodep=$name(poo)
+ for  set nodea=$Q(@nodea),nodep=$Q(@nodep) quit:nodea=""  do  quit:'utsuccess
+ . if '(@nodea=@nodep) set utsuccess=0
+ if '(nodep="") set utsuccess=0
+ do CHKEQ^%ut(utsuccess,1,"Testing Clear M WebServer FAILED!")
+ quit
  ;
 UTSLCP ; @TEST - Test set VA-PALS to use the ELCAP version of the Ct Evaluation form
  ; if set to LungRads poosfm will be "ctevaluation.html"
  ; if set to ELCAP poosfm will be "ctevaluation-elcap.html"
- n GLB,gien S GLB=$NA(^SAMI(311.11))
- S gien=$O(@GLB@("B","vapals:ceform",""))
- i gien="" d  q
- . D FAIL^%ut("Error, record vapals:ceform is not found in SAMI FORM MAPPING file!")
- n ien s ien=$o(^SAMI(311.11,"B","vapals:ceform",""))
- n setting s setting=$p($g(^SAMI(311.11,ien,2)),"^",2)
+ new GLB,gien set GLB=$name(^SAMI(311.11))
+ set gien=$order(@GLB@("B","vapals:ceform",""))
+ if gien="" do  quit
+ . do FAIL^%ut("Error, record vapals:ceform is not found in SAMI FORM MAPPING file!")
+ new ien set ien=$order(^SAMI(311.11,"B","vapals:ceform",""))
+ new setting set setting=$piece($get(^SAMI(311.11,ien,2)),"^",2)
  ; set to LungRads
- s $p(^SAMI(311.11,ien,2),"^",2)="ctevaluation.html"
- d SETELCAP^SAMIADMN()
- n poo s poo=$p($g(^SAMI(311.11,ien,2)),"^",2)
- s utsuccess=(poo="ctevaluation-elcap.html")
+ set $piece(^SAMI(311.11,ien,2),"^",2)="ctevaluation.html"
+ do SETELCAP^SAMIADMN()
+ new poo set poo=$piece($get(^SAMI(311.11,ien,2)),"^",2)
+ set utsuccess=(poo="ctevaluation-elcap.html")
  ; Return to original state
- s $p(^SAMI(311.11,ien,2),"^",2)=setting
- D CHKEQ^%ut(utsuccess,1,"Testing setting VAPALS to use ELCAP FAILED!")
- q
+ set $piece(^SAMI(311.11,ien,2),"^",2)=setting
+ do CHKEQ^%ut(utsuccess,1,"Testing setting VAPALS to use ELCAP FAILED!")
+ quit
 UTSLRADS ; @TEST - Test set VA-PALS to use the LungRads version of the Ct Evaluation form
  ; if set to LungRads poosfm will be "ctevaluation.html"
  ; if set to ELCAP poosfm will be "ctevaluation-elcap.html"
- n GLB,gien S GLB=$NA(^SAMI(311.11))
- S gien=$O(@GLB@("B","vapals:ceform",""))
- i gien="" d  q
- . D FAIL^%ut("Error, record vapals:ceform is not found in SAMI FORM MAPPING file!")
- n ien s ien=$o(^SAMI(311.11,"B","vapals:ceform",""))
- n setting s setting=$p($g(^SAMI(311.11,ien,2)),"^",2)
+ new GLB,gien set GLB=$NA(^SAMI(311.11))
+ set gien=$order(@GLB@("B","vapals:ceform",""))
+ if gien="" do  quit
+ . do FAIL^%ut("Error, record vapals:ceform is not found in SAMI FORM MAPPING file!")
+ new ien set ien=$order(^SAMI(311.11,"B","vapals:ceform",""))
+ new setting set setting=$piece($get(^SAMI(311.11,ien,2)),"^",2)
  ; set to ELCAP
- s $p(^SAMI(311.11,ien,2),"^",2)="ctevaluation-elcap.html"
- d SETLGRDS^SAMIADMN()
- n poo s poo=$p($g(^SAMI(311.11,ien,2)),"^",2)
- s utsuccess=(poo="ctevaluation.html")
+ set $piece(^SAMI(311.11,ien,2),"^",2)="ctevaluation-elcap.html"
+ do SETLGRDS^SAMIADMN()
+ new poo set poo=$piece($get(^SAMI(311.11,ien,2)),"^",2)
+ set utsuccess=(poo="ctevaluation.html")
  ; Return to original state
- s $p(^SAMI(311.11,ien,2),"^",2)=setting
- D CHKEQ^%ut(utsuccess,1,"Testing setting VAPALS to use LungRads FAILED!")
- q
+ set $piece(^SAMI(311.11,ien,2),"^",2)=setting
+ do CHKEQ^%ut(utsuccess,1,"Testing setting VAPALS to use LungRads FAILED!")
+ quit
 UTWSLCP ; @TEST - set VA-PALS to use the ELCAP version of the Ct Evaluation form
  ; if set to LungRads poosfm will be "ctevaluation.html"
  ; if set to ELCAP poosfm will be "ctevaluation-elcap.html"
- n GLB,gien S GLB=$NA(^SAMI(311.11))
- S gien=$O(@GLB@("B","vapals:ceform",""))
- i gien="" d  q
- . D FAIL^%ut("Error, record vapals:ceform is not found in SAMI FORM MAPPING file!")
- n ien s ien=$o(^SAMI(311.11,"B","vapals:ceform",""))
- n setting s setting=$p($g(^SAMI(311.11,ien,2)),"^",2)
+ new GLB,gien set GLB=$name(^SAMI(311.11))
+ set gien=$order(@GLB@("B","vapals:ceform",""))
+ if gien="" do  quit
+ . do FAIL^%ut("Error, record vapals:ceform is not found in SAMI FORM MAPPING file!")
+ new ien set ien=$order(^SAMI(311.11,"B","vapals:ceform",""))
+ new setting set setting=$piece($get(^SAMI(311.11,ien,2)),"^",2)
  ; set to LungRads
- s $p(^SAMI(311.11,ien,2),"^",2)="ctevaluation.html"
- n arc d WSSTELCP^SAMIADMN(.arc,"")
- n poo s poo=$p($g(^SAMI(311.11,ien,2)),"^",2)
- s utsuccess=(poo="ctevaluation-elcap.html")
+ set $piece(^SAMI(311.11,ien,2),"^",2)="ctevaluation.html"
+ new arc do WSSTELCP^SAMIADMN(.arc,"")
+ new poo set poo=$piece($get(^SAMI(311.11,ien,2)),"^",2)
+ set utsuccess=(poo="ctevaluation-elcap.html")
  ; Return to original state
- s $p(^SAMI(311.11,ien,2),"^",2)=setting
- D CHKEQ^%ut(utsuccess,1,"Testing setting VAPALS to use ELCAP FAILED!")
- q
+ set $piece(^SAMI(311.11,ien,2),"^",2)=setting
+ do CHKEQ^%ut(utsuccess,1,"Testing setting VAPALS to use ELCAP FAILED!")
+ quit
 UTWSLRAD ; @TEST -  set VA-PALS to use the LungRads version of the Ct Evaluation form
  ; if set to LungRads poosfm will be "ctevaluation.html"
  ; if set to ELCAP poosfm will be "ctevaluation-elcap.html"
- n GLB,gien S GLB=$NA(^SAMI(311.11))
- S gien=$O(@GLB@("B","vapals:ceform",""))
- i gien="" d  q
- . D FAIL^%ut("Error, record vapals:ceform is not found in SAMI FORM MAPPING file!")
- n ien s ien=$o(^SAMI(311.11,"B","vapals:ceform",""))
- n setting s setting=$p($g(^SAMI(311.11,ien,2)),"^",2)
+ new GLB,gien set GLB=$name(^SAMI(311.11))
+ set gien=$order(@GLB@("B","vapals:ceform",""))
+ if gien="" do  quit
+ . do FAIL^%ut("Error, record vapals:ceform is not found in SAMI FORM MAPPING file!")
+ new ien set ien=$order(^SAMI(311.11,"B","vapals:ceform",""))
+ new setting set setting=$piece($get(^SAMI(311.11,ien,2)),"^",2)
  ; set to ELCAP
- s $p(^SAMI(311.11,ien,2),"^",2)="ctevaluation-elcap.html"
- n arc d WSSTLRAD^SAMIADMN(.arc,"")
- n poo s poo=$p($g(^SAMI(311.11,ien,2)),"^",2)
- s utsuccess=(poo="ctevaluation.html")
+ set $piece(^SAMI(311.11,ien,2),"^",2)="ctevaluation-elcap.html"
+ new arc do WSSTLRAD^SAMIADMN(.arc,"")
+ new poo set poo=$piece($get(^SAMI(311.11,ien,2)),"^",2)
+ set utsuccess=(poo="ctevaluation.html")
  ; Return to original state
- s $p(^SAMI(311.11,ien,2),"^",2)=setting
- D CHKEQ^%ut(utsuccess,1,"Testing setting VAPALS to use LungRads FAILED!")
- q
+ set $piece(^SAMI(311.11,ien,2),"^",2)=setting
+ do CHKEQ^%ut(utsuccess,1,"Testing setting VAPALS to use LungRads FAILED!")
+ quit
 UTWSCTV ; @TEST - web service to return the current ctform version
  ; Look up entry in 311.11 manually and compare to results of call
- n GLB,gien S GLB=$NA(^SAMI(311.11))
- S gien=$O(@GLB@("B","vapals:ceform",""))
- i gien="" d  q
- . D FAIL^%ut("Error, record vapals:ceform is not found in SAMI FORM MAPPING file!")
- n ien s ien=$o(^SAMI(311.11,"B","vapals:ceform",""))
- n poosfm s poosfm=$p($g(^SAMI(311.11,ien,2)),"^",2)
- s utsuccess=0
- n arcsfm D WSCTVERS^SAMIADMN(.arcsfm,"")
- i poosfm="ctevaluation.html",arcsfm["lungrads" s utsuccess=1
- i poosfm="ctevaluation-elcap.html",arcsfm["elcap" s utsuccess=1
- D CHKEQ^%ut(utsuccess,1,"Testing web service return current ctform version FAILED!")
- q
+ new GLB,gien set GLB=$name(^SAMI(311.11))
+ set gien=$order(@GLB@("B","vapals:ceform",""))
+ if gien="" do  quit
+ . do FAIL^%ut("Error, record vapals:ceform is not found in SAMI FORM MAPPING file!")
+ new ien set ien=$order(^SAMI(311.11,"B","vapals:ceform",""))
+ new poosfm set poosfm=$piece($get(^SAMI(311.11,ien,2)),"^",2)
+ set utsuccess=0
+ new arcsfm do WSCTVERS^SAMIADMN(.arcsfm,"")
+ if poosfm="ctevaluation.html",arcsfm["lungrads" set utsuccess=1
+ if poosfm="ctevaluation-elcap.html",arcsfm["elcap" set utsuccess=1
+ do CHKEQ^%ut(utsuccess,1,"Testing web service return current ctform version FAILED!")
+ quit
  ;
 EOR ;End of routine SAMIUTAD

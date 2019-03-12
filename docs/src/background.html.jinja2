@@ -127,6 +127,81 @@
             </div>
             <hr class="visible-xs-block visible-sm-block"/>
 
+            <div class="row">
+                <div class="col-sm-6 col-md-4 col-lg-4">
+                    <label for="sbqtatt" class="control-label">If you currently smoke, how many times have you attempted
+                        to quit in the last 12 months?</label>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <input class="form-control input-sm numeric" type="text" name="sbqtatt" id="sbqtatt"
+                               size="4" maxlength="4">
+                    </div>
+                </div>
+            </div>
+            <hr class="visible-xs-block visible-sm-block"/>
+
+            <div class="row">
+                <div class="col-sm-6 col-md-4 col-lg-4">
+                    <label for="sbscs-n" class="control-label">Have you been provided with smoking cessation
+                        services?</label>
+                </div>
+                <div class="col-sm-6 col-md-3 col-lg-2">
+                    <div class="form-group">
+                        {{ f.inlineRadioNY("sbscs") }}
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="sbscs-container">
+                <div class="col-sm-6 col-sm-offset-6 col-md-8 col-md-offset-4">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-3">
+                            <div class="form-group">
+                                <label for="sbscsw">When?</label>
+                                {{ f.datepicker("sbscsw","past") }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="sbscsmv">Have you used any of the following medications?</label>
+                                <em>Check all that apply</em>
+                                <div class="form-group">
+                                    {{ f.checkbox("sbscsmv", "v", "Varenicline") }}
+                                    {{ f.checkbox("sbscsmb", "b", "Buproprion") }}
+                                    {{ f.checkbox("sbscsmp", "p", "Patch") }}
+                                    {{ f.checkbox("sbscsml", "l", "Lozenges") }}
+                                    {{ f.checkbox("sbscsmg", "g", "Gum") }}
+                                    {{ f.checkbox("sbscsmo", "o", "Other") }}
+                                    <input class="form-control input-sm" type="text" name="sbscsmoo" id="sbscsmoo"
+                                           title="Other medication"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="sbscs5a-n">Have you been counseled on the 5 A’s (Ask, Assess, Advise,
+                                    Assist, Arrange)?</label><br/>
+                                {{ f.inlineRadioNY("sbscs5a") }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="sbscsref-n">Have you been referred for smoking cessation
+                                    services?</label><br/>
+                                {{ f.inlineRadioNY("sbscsref") }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="visible-xs-block visible-sm-block"/>
+
             <label>Do you know if you have had any of the following?</label>
 
             <div class="panel panel-default">
@@ -772,16 +847,17 @@
 
             }).first().trigger('change');
 
-            //conditionally enabled fields
+            //Uncheckable radio names
             const uncheckableRadioFieldNames = Array(
-                "sblcs",  //51 lung cancer indicative
-                "sbahpft", //103 pulmonary function test
-                "sbfc", "sbhlc", "sbhme", "sbhba", "sbhle", "sbhly", "sbaoc",//cancers
-                "sbmpa", "sbmpc", //pulmonary
-                "sbmpd", //diabetes
-                "sbmpmi", "sbmpas", "sbmpcabg", "sbmpangi", "sbmphf", //cardiac
-                "sbmps", "sbmppv", "sbmpht", //vascular
-                "sbmpct", "sbmpoth", //Other disease
+                "sblcs",                                                        // lung cancer indicative
+                "sbahpft",                                                      // pulmonary function test
+                "sbscs", "sbscs5a", "sbscsref",                                 // smoking cessation
+                "sbfc", "sbhlc", "sbhme", "sbhba", "sbhle", "sbhly", "sbaoc",   //cancers
+                "sbmpa", "sbmpc",                                               //pulmonary
+                "sbmpd",                                                        //diabetes
+                "sbmpmi", "sbmpas", "sbmpcabg", "sbmpangi", "sbmphf",           //cardiac
+                "sbmps", "sbmppv", "sbmpht",                                    //vascular
+                "sbmpct", "sbmpoth",                                            //Other disease
             );
 
             $.each(uncheckableRadioFieldNames, function (idx, name) {
@@ -790,14 +866,15 @@
             });
 
 
-            $("#sbwco").conditionallyDisplay({sourceValues: "o", enable: "#sbwcos"});
+            $("#sbahaoo").conditionallyDisplay({sourceValues: "o", enable: "#sbahas"}); //41
+            $("#sbwco").conditionallyDisplay({sourceValues: "o", enable: "#sbwcos"}); //64
             $("[name=sbact]").conditionallyDisplay({
                 sourceValues: function (actualValue) {
                     return actualValue !== '-' && actualValue !== 'e';
-                }, enable: "#sbact-container"
+                }, enable: "#sbact-container" //88
             });
 
-            $("#sbahaoo").conditionallyDisplay({sourceValues: "o", enable: "#sbahas"});
+            $("#sbscsmo").conditionallyDisplay({sourceValues: "o", enable: "#sbscsmoo"}); //163
 
         });
 

@@ -1,4 +1,4 @@
-SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 3/7/19 12:58pm
+SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 3/11/19 6:20pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -62,6 +62,7 @@ XTROU ; Unit tests for SAMI*.m
  ;;SAMIUTVR
  ;;SAMIUTRU
  ;;SAMIUTSV
+ ;;SAMIUTST
  ;
  quit  ; End of XTROU
  ;
@@ -109,6 +110,7 @@ COVERAGE ; Coverage tests for SAMI*.m
  set I=I+1,RUNCODE(I)="^SAMIUTSV"
  ;set I=I+1,RUNCODE(I)="^XWBUTCLM"
  ;set I=I+1,RUNCODE(I)="^XWBUTCLR"
+ set I=I+1,RUNCODE(I)="^SAMIUTST"
  ;
  ; Note that routine references may be specified in one of the following ways:
  ;   * MODULE         : Calls EN^%ut with the name as an argument.
@@ -129,10 +131,10 @@ COVERAGE ; Coverage tests for SAMI*.m
  set I=I+1,XCLUDE(I)="SAMIUTOT"
  ; Exclude checksum utility & overall coverage routine
  set I=I+1,XCLUDE(I)="SAMIUCOV"
- set I=I+1,XCLUDE(I)="SAMIUTST"
+ ; set I=I+1,XCLUDE(I)="SAMIUTST"
  ; Exclude radiology routine & unit test not in use
- ;set I=I+1,XCLUDE(I)="SAMIVSTR"
- ;set I=I+1,XCLUDE(I)="SAMIUTVR"
+ set I=I+1,XCLUDE(I)="SAMIVSTR"
+ set I=I+1,XCLUDE(I)="SAMIUTVR"
  ; Exclude the unit-test routines
  set I=I+1,XCLUDE(I)="SAMIUT"
  set I=I+1,XCLUDE(I)="SAMIUTFF"

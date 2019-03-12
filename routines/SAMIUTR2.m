@@ -1,4 +1,4 @@
-SAMIUTR2 ;ven/lgc - UNIT TEST for SAMICTR2 ; 2/26/19 11:31am
+SAMIUTR2 ;ven/lgc - UNIT TEST for SAMICTR2 ; 3/11/19 5:48pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -30,13 +30,9 @@ START i $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  ;
 STARTUP n utsuccess
  n root s root=$$setroot^%wd("vapals-patients")
- ; **** temp change
- ;k @root@("graph","XXX00001")
- ;n SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
- ;m @root@("graph","XXX00001")=SAMIUPOO
- n SAMIUPOO m SAMIUPOO=@root@("graph","XXX00001")
- D SVUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
- ; *** end temp change
+ k @root@("graph","XXX00001")
+ n SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
+ m @root@("graph","XXX00001")=SAMIUPOO
  q
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess

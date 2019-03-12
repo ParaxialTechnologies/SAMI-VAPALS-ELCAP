@@ -1,4 +1,4 @@
-SAMIUTST ;ven/lgc - Unit Test Utilities ; 2/25/19 8:01pm
+SAMIUTST ;ven/lgc - Unit Test Utilities ; 3/11/19 6:38pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -80,13 +80,11 @@ PLUTARR(arr,title) ;
 SVTSTPT(dfn,title) ; Push a copy of test patient into vapals unit tests
  q:($G(title)="")
  q:'$G(dfn)
- ;n rootut S rootut=$$setroot^%wd("vapals unit tests")
  n rootut s rootut=$$setroot^%wd("vapals unit tests")
  n gienut S gienut=$$GETGIEN(rootut,title)
  k @rootut@(gienut)
  s @rootut@(gienut,"title")=title
  ; load data
- ;n rootpl s rootpl=$$setroot^%wd("patient-lookup")
  n rootpl s rootpl=$$setroot^%wd("patient-lookup")
  n gienpl s gienpl=$O(@rootpl@("dfn",dfn,0))
  m @rootut@(gienut)=@rootpl@(gienpl)
@@ -158,7 +156,6 @@ UTSTGS ; @TEST - Save array to vapals unit tests graphstore
  d SVUTARR(.poo,title)
  d PLUTARR(.arc,title)
  ; KILL THE TEMPORARY ENTRY
- ;n rootut s rootut=$$setroot^%wd("vapals unit tests")
  n rootut s rootut=$$setroot^%wd("vapals unit tests")
  n gienut s gienut=$$GETGIEN(rootut,title)
  k @rootut@(gienut)
@@ -186,25 +183,27 @@ UTSVTSTP ; @TEST - Push a copy of test patient into vapals unit tests
  q
  ;
 RTNS ;
- ;;KBANSCAU
  ;;SAMIADMN
  ;;SAMICAS2
  ;;SAMICAS3
+ ;;SAMICASE
  ;;SAMICTC1
+ ;;SAMICTC2
  ;;SAMICTD2
  ;;SAMICTR
  ;;SAMICTR0
  ;;SAMICTR1
  ;;SAMICTR2
  ;;SAMICTR3
+ ;;SAMICTR4
  ;;SAMICTR9
  ;;SAMICTRA
+ ;;SAMICTR
  ;;SAMICTRX
- ;;SAMIFDM
- ;;SAMIFLD
- ;;SAMIFORM
- ;;SAMIFUL
- ;;SAMIFWS
+ ;;SAMICUL
+ ;;SAMID
+ ;;SAMIDOUT
+ ;;SAMIDSSN
  ;;SAMIFRM2
  ;;SAMIHOM3
  ;;SAMIHOM4
@@ -216,9 +215,17 @@ RTNS ;
  ;;SAMIRU
  ;;SAMISAV
  ;;SAMISRC2
+ ;;SAMIUL
  ;;SAMIUR1
+ ;;SAMIUR2
+ ;;SAMIUR
+ ;;SAMIVST1
+ ;;SAMIVST2
+ ;;SAMIVST3
+ ;;SAMIVST4
+ ;;SAMIVST5
  ;;SAMIVSTA
- ;;SAMIVSTS
+ ;;SAMIVUL
  ;;
  ;
  ;

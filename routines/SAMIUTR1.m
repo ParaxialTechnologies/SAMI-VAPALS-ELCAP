@@ -1,4 +1,4 @@
-SAMIUTR1 ;ven/lgc - UNIT TEST for SAMICTR1 ; 2/26/19 11:16am
+SAMIUTR1 ;ven/lgc - UNIT TEST for SAMICTR1 ; 3/12/19 10:37am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -29,10 +29,10 @@ START i $t(^%ut)="" w !,"*** UNIT TEST NOT INSTALLED ***" q
  ;
  ;
 STARTUP n utsuccess
- ;n root s root=$$setroot^%wd("vapals-patients")
- ;k @root@("graph","XXX00001")
- ;n SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
- ;m @root@("graph","XXX00001")=SAMIUPOO
+ n root s root=$$setroot^%wd("vapals-patients")
+ k @root@("graph","XXX00001")
+ n SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
+ m @root@("graph","XXX00001")=SAMIUPOO
  q
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
@@ -110,14 +110,14 @@ UTNODUL ; @TEST - nodules
  s cnt=0
  d NODULES^SAMICTR1("return",SAMIVALS,SAMIDICT)
  ;now pull saved report
- d PLUTARR^SAMIUTST(.SAMIUARC,"UTNODUL^SAMIUTR1 report XXX01-23")
+ d PLUTARR^SAMIUTST(.SAMIUARC,"UTNODUL^SAMIUTR1 report XXX02-25")
  ; now compare return with SAMIUARC
  n noder,nodea s noder=$na(return),nodea=$na(SAMIUARC)
  s utsuccess=1
  f  s noder=$Q(@noder),nodea=$Q(@nodea) q:noder=""  d  q:'utsuccess
  . i '(@noder=@nodea) s utsuccess=0
  i '(nodea="") s utsuccess=0
- d CHKEQ^%ut(utsuccess,1,"Testing generating nodule report XXX01-23  FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing generating nodule report XXX02-25  FAILED!")
  q
  ;
 UTOUT ; @TEST - out line

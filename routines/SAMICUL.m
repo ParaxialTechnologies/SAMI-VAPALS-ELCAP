@@ -1,4 +1,4 @@
-SAMICUL ;ven/gpl - ielcap: case review page log ; 2019-03-14T02:22Z
+SAMICUL ;ven/gpl - ielcap: case review page log ; 2019-03-14T19:05Z
  ;;18.0;SAM;;
  ;
  ;@license: see routine SAMIUL
@@ -80,7 +80,11 @@ SAMICUL ;ven/gpl - ielcap: case review page log ; 2019-03-14T02:22Z
  ; add white space, spell out mumps elements, add header comments to
  ; new subroutines, r/findReplace^%wf & replaceAll^%wf w/findReplace^%ts.
  ;
- ; 2019-03-14 ven/lmry v18.0 SAMICAS2: spell out some missed mumps elements
+ ; 2018-11-13 ven/??? v18.0t04 SAMICUL: changed all SAMIHOM2 to SAMIHOM3
  ;
+ ; 2019-03-14 ven/lmry v18.0t04 SAMICAS2: spell out some missed mumps elements
+ ;
+ ; 2019-03-14 ven/lmry v18.0t04 SAMICAS3: spell out some missed mumps elements, fix
+ ;  copy/paste errors in the comments for MKFUFORM, MKBXFORM, and MKPTFORM
  ;
 EOR ; end of routine SAMICUL

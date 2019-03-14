@@ -1,9 +1,9 @@
-SAMICAS2 ;ven/gpl - ielcap: case review page ; 2019-03-14T02:18Z
+SAMICAS2 ;ven/gpl - ielcap: case review page ; 2019-03-14T19:52Z
  ;;18.0;SAM;;
  ;
  ;@license: see routine SAMIUL
  ;
- ;@documentation : see SAMICASE
+ ;@documentation : see SAMICUL
  ;
  ;@contents
  ; wsCASE: generate case review page

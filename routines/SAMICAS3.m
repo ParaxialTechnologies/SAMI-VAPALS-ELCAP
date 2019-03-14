@@ -1,4 +1,4 @@
-SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ; 2/18/19 9:33am
+SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ; 2019-03-14T19:08Z
  ;;18.0;SAM;;
  ;
  ;@license: see routine SAMIUL
@@ -6,8 +6,7 @@ SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ; 2/18/19 9:33am
  ; SAMICASE contains subroutines for producing the ELCAP Case Review Page.
  ; It is currently untested & in progress.
  ;
- ; CHANGE ven/2018-11-13
- ;   changed all SAMIHOM2 to SAMIHOM3
+ ; see SAMICUL for documentation
  ;
  quit  ; no entry from top
  ;
@@ -55,7 +54,7 @@ WSNFPOST ; post new form selection (post service)
  merge ^SAMIGPL("nuform","vars")=vars
  ;
  new sid set sid=$get(vars("studyid"))
- if sid="" set sid=$g(ARGS("sid"))
+ if sid="" set sid=$get(ARGS("sid"))
  if sid="" do  quit  ;
  . do GETHOME^SAMIHOM3(.RESULT,.ARGS) ; on error return to home page
  . quit
@@ -142,14 +141,14 @@ MKSBFORM(sid,key) ; create background form
  ; $$setroot^%wd
  ; $$SID2NUM^SAMIHOM3
  ;@input
- ; sid = studiy id
+ ; sid = study id
  ; key =
  ;@output
  ; @root@("graph",sid,key)
  ;@examples [tbd]
  ;@tests [tbd]
  ;
- ;@stanza 2 create ct eval form
+ ;@stanza 2 create background form
  ;
  new root set root=$$setroot^%wd("vapals-patients")
  new sien set sien=$$SID2NUM^SAMIHOM3(sid)
@@ -174,7 +173,7 @@ MKCEFORM(sid,key) ; create ct evaluation form
  ; $$setroot^%wd
  ; $$SID2NUM^SAMIHOM3
  ;@input
- ; sid = studiy id
+ ; sid = study id
  ; key =
  ;@output
  ; @root@("graph",sid,key)
@@ -190,12 +189,12 @@ MKCEFORM(sid,key) ; create ct evaluation form
  new items,prevct
  do GETITEMS^SAMICASE("items",sid)
  set prevct=""
- if $d(items("type","vapals:ceform")) d  ;previous cteval exists
- . s prevct=$o(items("type","vapals:ceform",""),-1) ; latest ceform
- i prevct'="" do  ;
+ if $data(items("type","vapals:ceform")) do  ;previous cteval exists
+ . set prevct=$order(items("type","vapals:ceform",""),-1) ; latest ceform
+ if prevct'="" do  ;
  . new target,source
- . set source=$na(@root@("graph",sid,prevct))
- . set target=$na(@root@("graph",sid,key))
+ . set source=$name(@root@("graph",sid,prevct))
+ . set target=$name(@root@("graph",sid,key))
  . do CTCOPY^SAMICTC1(source,target)
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate
@@ -216,14 +215,14 @@ MKFUFORM(sid,key) ; create Follow-up form
  ; $$setroot^%wd
  ; $$SID2NUM^SAMIHOM3
  ;@input
- ; sid = studiy id
+ ; sid = study id
  ; key =
  ;@output
  ; @root@("graph",sid,key)
  ;@examples [tbd]
  ;@tests [tbd]
  ;
- ;@stanza 2 create ct eval form
+ ;@stanza 2 create Follow-up form
  ;
  new root set root=$$setroot^%wd("vapals-patients")
  new sien set sien=$$SID2NUM^SAMIHOM3(sid)
@@ -237,7 +236,7 @@ MKFUFORM(sid,key) ; create Follow-up form
  ;
  quit  ; end of MKFUFORM
  ;
-MKPTFORM(sid,key) ; create ct evaluation form
+MKPTFORM(sid,key) ; create pet evaluation form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -248,14 +247,14 @@ MKPTFORM(sid,key) ; create ct evaluation form
  ; $$setroot^%wd
  ; $$SID2NUM^SAMIHOM3
  ;@input
- ; sid = studiy id
+ ; sid = study id
  ; key =
  ;@output
  ; @root@("graph",sid,key)
  ;@examples [tbd]
  ;@tests [tbd]
  ;
- ;@stanza 2 create ct eval form
+ ;@stanza 2 create pet eval form
  ;
  new root set root=$$setroot^%wd("vapals-patients")
  new sien set sien=$$SID2NUM^SAMIHOM3(sid)
@@ -280,14 +279,14 @@ MKITFORM(sid,key) ; create intervention form
  ; $$setroot^%wd
  ; $$SID2NUM^SAMIHOM3
  ;@input
- ; sid = studiy id
+ ; sid = study id
  ; key =
  ;@output
  ; @root@("graph",sid,key)
  ;@examples [tbd]
  ;@tests [tbd]
  ;
- ;@stanza 2 create ct eval form
+ ;@stanza 2 create intervention form
  ;
  new root set root=$$setroot^%wd("vapals-patients")
  new sien set sien=$$SID2NUM^SAMIHOM3(sid)
@@ -299,9 +298,9 @@ MKITFORM(sid,key) ; create intervention form
  ;
  ;@stanza 3 termination
  ;
- quit  ; end of MKPTFORM
+ quit  ; end of MKITFORM
  ;
-MKBXFORM(sid,key) ; create ct evaluation form
+MKBXFORM(sid,key) ; create background form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -312,14 +311,14 @@ MKBXFORM(sid,key) ; create ct evaluation form
  ; $$setroot^%wd
  ; $$SID2NUM^SAMIHOM3
  ;@input
- ; sid = studiy id
+ ; sid = study id
  ; key =
  ;@output
  ; @root@("graph",sid,key)
  ;@examples [tbd]
  ;@tests [tbd]
  ;
- ;@stanza 2 create ct eval form
+ ;@stanza 2 create background form
  ;
  new root set root=$$setroot^%wd("vapals-patients")
  new sien set sien=$$SID2NUM^SAMIHOM3(sid)

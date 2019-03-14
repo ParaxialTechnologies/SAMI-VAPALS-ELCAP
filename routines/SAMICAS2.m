@@ -1,4 +1,4 @@
-SAMICAS2 ;ven/gpl - ielcap: case review page ; 2/18/19 10:16am
+SAMICAS2 ;ven/gpl - ielcap: case review page ; 2019-03-14T02:18Z
  ;;18.0;SAM;;
  ;
  ;@license: see routine SAMIUL
@@ -147,7 +147,7 @@ WSCASE ; generate case review page
  set rtn(cnt)=rtn(cnt)_" <input name=""form"" value="""_sikey_""" type=""hidden"">"
  set rtn(cnt)=rtn(cnt)_" <input value=""Intake"" class=""btn btn-link"" role=""link"" type=""submit"">"
  ;
- new samistatus s samistatus=""
+ new samistatus set samistatus=""
  if $$GSAMISTA(sid,sikey)="incomplete" set samistatus="(incomplete)"
  set cnt=cnt+1
  set rtn(cnt)="</form>"_samistatus_notehref_"</td>"_$char(13)
@@ -182,7 +182,7 @@ WSCASE ; generate case review page
  . . . set cnt=cnt+1
  . . . set rtn(cnt)=" <input value="""_zname_""" class=""btn btn-link"" role=""link"" type=""submit"">"_$char(13)
  . . . ;
- . . . new samistatus s samistatus=""
+ . . . new samistatus set samistatus=""
  . . . if $$GSAMISTA(sid,zform)="incomplete" set samistatus="(incomplete)"
  . . . set cnt=cnt+1
  . . . set rtn(cnt)="</form>"_samistatus_"</td>"
@@ -399,8 +399,8 @@ KEY2DSPD(zkey) ; date in elcap format from key date
  do ^%DT
  ;new Z set Z=$$FMTE^XLFDT(Y,"9D")
  ;set Z=$translate(Z," ","/")
- n zdate
- s zdate=$$VAPALSDT^SAMICASE(Y)
+ new zdate
+ set zdate=$$VAPALSDT^SAMICASE(Y)
  ;
  ;@stanza 3 return & termination
  ;
@@ -562,8 +562,8 @@ KEY2FM ; convert a key to a fileman date
  ;
  new datepart,X,Y,frm
  set datepart=key
- if $l(key,"-")=4 do  ; allow key to be the whole key ie ceform-2018-10-3
- . set frm=$p(key,"-",1)
+ if $length(key,"-")=4 do  ; allow key to be the whole key ie ceform-2018-10-3
+ . set frm=$piece(key,"-",1)
  . set datepart=$piece(key,frm_"-",2)
  set X=datepart
  do ^%DT
@@ -589,7 +589,7 @@ GSAMISTA(sid,form) ; extrinsic returns the value of 'samistatus' from the form
  set root=$$setroot^%wd("vapals-patients")
  set useform=form
  if form["vapals:" set useform=$p(form,"vapals:",2)
- set stat=$g(@root@("graph",sid,useform,"samistatus"))
+ set stat=$get(@root@("graph",sid,useform,"samistatus"))
  quit stat
  ;
  ;@ppi - sets 'samistatus' to val in form
@@ -609,7 +609,7 @@ SSAMISTA ; sets 'samistatus' to val in form
  new root,useform
  set root=$$setroot^%wd("vapals-patients")
  set useform=form
- if form["vapals:" s useform=$p(form,"vapals:",2)
+ if form["vapals:" set useform=$piece(form,"vapals:",2)
  if '$d(@root@("graph",sid,useform)) quit  ; no form there
  set @root@("graph",sid,useform,"samistatus")=val
  quit
@@ -635,9 +635,9 @@ DELFORM ; deletes a form if it is incomplete
  ;
  new root set root=$$setroot^%wd("vapals-patients")
  new sid,form
- set sid=$g(ARGS("studyid"))
+ set sid=$get(ARGS("studyid"))
  quit:sid=""
- set form=$g(ARGS("form"))
+ set form=$get(ARGS("form"))
  quit:form=""
  if form["siform" quit  ;
  ;if '$data(@root@("graph",sid,form)) quit  ; form does not exist

@@ -1,4 +1,4 @@
-SAMICUL ;ven/gpl - ielcap: case review page log & license ; 2/14/19 10:12am
+SAMICUL ;ven/gpl - ielcap: case review page log ; 2019-03-14T02:22Z
  ;;18.0;SAM;;
  ;
  ;@license: see routine SAMIUL
@@ -22,10 +22,9 @@ SAMICUL ;ven/gpl - ielcap: case review page log & license ; 2/14/19 10:12am
  ;@primary-dev-org: Vista Expertise Network (ven)
  ; http://vistaexpertise.net
  ;@copyright: 2017, gpl, all rights reserved
- ;@license: Apache 2.0
- ; https://www.apache.org/licenses/LICENSE-2.0.html
+ ;@license: see routine SAMIUL
  ;
- ;@last-updated: 2018-03-08T17:53Z
+ ;@last-updated: 2019-03-14T02:22Z
  ;@application: Screening Applications Management (SAM)
  ;@module: Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files: SAMI Forms (311.101-311.199)
@@ -35,6 +34,8 @@ SAMICUL ;ven/gpl - ielcap: case review page log & license ; 2/14/19 10:12am
  ;
  ;@additional-dev: Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
+ ;@additional-dev: Linda M. R. Yaw (lmry)
+ ; linda.yaw@vistaexpertise.net
  ;
  ;@module-credits
  ;@project: VA Partnership to Increase Access to Lung Screening
@@ -78,6 +79,8 @@ SAMICUL ;ven/gpl - ielcap: case review page log & license ; 2/14/19 10:12am
  ; 2018-03-07/08 ven/toad v18.0t04 SAMICASE: merge George changes w/rest,
  ; add white space, spell out mumps elements, add header comments to
  ; new subroutines, r/findReplace^%wf & replaceAll^%wf w/findReplace^%ts.
+ ;
+ ; 2019-03-14 ven/lmry v18.0 SAMICAS2: spell out some missed mumps elements
  ;
  ;
 EOR ; end of routine SAMICUL

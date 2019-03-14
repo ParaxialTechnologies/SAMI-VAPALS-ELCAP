@@ -1,4 +1,4 @@
-SAMIUTFF ;ven/lgc - Unit test for SAMIIFF ; 1/29/19 2:17pm
+SAMIUTFF ;ven/lgc - Unit test for SAMIFF ; 3/12/19 1:33pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -6,7 +6,7 @@ SAMIUTFF ;ven/lgc - Unit test for SAMIIFF ; 1/29/19 2:17pm
  ; @section 0 primary development
  ;
  ; @routine-credits
- ; @primary-dev: Larry Carlson (lgc)
+ ; @primary-dev: Alexis R. Carlson (arc)
  ;  larry@fiscientific.com
  ; @primary-dev-org: Vista Expertise Network (ven)
  ;  http://vistaexpertise.net
@@ -36,25 +36,8 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  q
  ;
  ;
-UTBLDGP ; @TEST - Build a graph of the intake form fields
- ;BLDGRPH
- n SAMIUARC,SAMIUPOO,nodea,nodep
- s utsuccess=1
- ; Delete graph if it existed
- DO purgegraph^%wd("siform-fields")
- n siglb s siglb="purgegraph^%wd(""siform-fields"")"
- d @siglb
- ; Now build the graph
- d BLDGRPH^SAMIIFF
- n root s root=$$setroot^%wd("siform-fields")
- m SAMIUARC=@root
- d PLUTARR^SAMIUTST(.SAMIUPOO,"UTBLDGPH^SAMIUTFF")
- n nodea,nodep s nodea=$na(SAMIUARC),nodep=$na(SAMIUPOO)
- f  s nodea=$Q(nodea),nodep=$Q(nodep) q:nodea=""  d
- . i '(nodea=nodep) s utsuccess=0
- . i '(@nodea=@nodep) s utsuccess=0
- i '(nodep="") s utsuccess=0
- d CHKEQ^%ut(utsuccess,1,"Testing building siform graph FAILED!")
+UTPRSTSV ; @TEST - Parse TSV file and build graph
+ ;
  q
  ;
 EOR ;End of routine SAMIUFF

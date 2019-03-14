@@ -1,4 +1,4 @@
-SAMIVST5 ; ven/lgc/arc - M2RPC Broker Utilities - Radiology ; 3/7/19 9:35am
+SAMIVST5 ; ven/lgc/arc - M2Broker calls for VA-PALS - RAD; 3/7/19 9:35am ; 3/13/19 7:40pm
  ;;1.0;SAMI;;
  ;
  ;@license: see routine SAMIUL

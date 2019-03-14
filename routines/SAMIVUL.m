@@ -1,4 +1,4 @@
-SAMIVUL ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 3/5/19 1:24pm
+SAMIVUL ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 3/13/19 11:47am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -58,4 +58,4 @@ SAMIVUL ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 3/5/19 1:24pm
  quit  ; not from top
  ;
  ;
-EOR ; End of routine SAMIVUL
+ ; End of routine SAMIVUL

@@ -1,4 +1,4 @@
-SAMIVST2 ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 3/7/19 10:03am
+SAMIVST2 ;;ven/lgc - M2Broker calls for VA-PALS - PT INFO ; 3/13/19 7:38pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL

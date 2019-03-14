@@ -1,4 +1,4 @@
-SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 3/11/19 6:20pm
+SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 3/13/19 12:14pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -35,7 +35,6 @@ SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 3/11/19 6:20pm
  ;
  ;
 XTROU ; Unit tests for SAMI*.m
- ;;SAMIUTFF
  ;;SAMIUTLG
  ;;SAMIUTH3
  ;;SAMIUTS2
@@ -79,7 +78,7 @@ COVERAGE ; Coverage tests for SAMI*.m
  ; set I=I+1,RUNCODE(I)="SAMID"
  ; set I=I+1,RUNCODE(I)="SAMIDOUT"
  ; set I=I+1,RUNCODE(I)="SAMIDSSN"
- set I=I=1,RUNCODE(I)="^SAMIUTFF"
+ ; set I=I=1,RUNCODE(I)="^SAMIUTFF"
  set I=I+1,RUNCODE(I)="^SAMIUTLG"
  ;set I=I+1,RUNCODE(I)="^SAMIUTM2"
  set I=I+1,RUNCODE(I)="^SAMIUTH3"
@@ -106,10 +105,7 @@ COVERAGE ; Coverage tests for SAMI*.m
  set I=I+1,RUNCODE(I)="^SAMIUTVR"
  set I=I+1,RUNCODE(I)="^SAMIUTVS"
  set I=I+1,RUNCODE(I)="^SAMIUTRU"
- ; set I=I+1,RUNCODE(I)="^SAMIUTRP"
  set I=I+1,RUNCODE(I)="^SAMIUTSV"
- ;set I=I+1,RUNCODE(I)="^XWBUTCLM"
- ;set I=I+1,RUNCODE(I)="^XWBUTCLR"
  set I=I+1,RUNCODE(I)="^SAMIUTST"
  ;
  ; Note that routine references may be specified in one of the following ways:
@@ -124,20 +120,23 @@ COVERAGE ; Coverage tests for SAMI*.m
  set I=I+1,XCLUDE(I)="SAMID"
  set I=I+1,XCLUDE(I)="SAMIUTID"
  ;
+ ; Exclude documentation only routines
+ set I=I+1,XCLUDE(I)="SAMIUL"
+ set I=I+1,XCLUDE(I)="SAMIVUL"
+ ;
  set I=I+1,XCLUDE(I)="SAMIDSSN"
  set I=I+1,XCLUDE(I)="SAMIUTDS"
  ;
  set I=I+1,XCLUDE(I)="SAMIDOUT"
  set I=I+1,XCLUDE(I)="SAMIUTOT"
- ; Exclude checksum utility & overall coverage routine
- set I=I+1,XCLUDE(I)="SAMIUCOV"
- ; set I=I+1,XCLUDE(I)="SAMIUTST"
- ; Exclude radiology routine & unit test not in use
- set I=I+1,XCLUDE(I)="SAMIVSTR"
- set I=I+1,XCLUDE(I)="SAMIUTVR"
- ; Exclude the unit-test routines
- set I=I+1,XCLUDE(I)="SAMIUT"
+ ;
+ set I=I+1,XCLUDE(I)="SAMIIFF"
+ set I=I+1,XCLUDE(I)="SAMIFF"
  set I=I+1,XCLUDE(I)="SAMIUTFF"
+ ;
+ ; Exclude the unit-test routines
+ set I=I+1,XCLUDE(I)="SAMIUTVR"
+ set I=I+1,XCLUDE(I)="SAMIUT"
  set I=I+1,XCLUDE(I)="SAMIUTLG"
  set I=I+1,XCLUDE(I)="SAMIUTM2"
  set I=I+1,XCLUDE(I)="SAMIUTH3"
@@ -164,10 +163,7 @@ COVERAGE ; Coverage tests for SAMI*.m
  set I=I+1,XCLUDE(I)="SAMIUTVR"
  set I=I+1,XCLUDE(I)="SAMIUTVS"
  set I=I+1,XCLUDE(I)="SAMIUTRU"
- ; set I=I+1,XCLUDE(I)="SAMIUTRP"
  set I=I+1,XCLUDE(I)="SAMIUTSV"
- ;set I=I+1,XCLUDE(I)="XWBUTCLM"
- ;set I=I+1,XCLUDE(I)="XWBUTCLR"
  ;
  ; Add the XCLUDE values to the TMP variable that tracks this coverage test.
  merge ^TMP("SAMI",$JOB,"XCLUDE")=XCLUDE

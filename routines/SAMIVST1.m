@@ -1,4 +1,4 @@
-SAMIVST1 ;;ven/lgc - M2RPC Broker MODULE for VA-PALS ; 3/6/19 12:59pm
+SAMIVST1 ;;ven/lgc - M2Broker calls for VA-PALS - New TIU ; 3/13/19 7:37pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL

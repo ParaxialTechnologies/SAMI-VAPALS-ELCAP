@@ -1,4 +1,4 @@
-SAMIVST4 ;;ven/arc/lgc - M2RPC Broker Utilities Pull Server Data ; 3/7/19 9:30am
+SAMIVST4 ;;ven/arc/lgc - M2Broker calls for VA-PALS - ALL PTS  ; 3/13/19 7:40pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL

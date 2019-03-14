@@ -1,4 +1,4 @@
-SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICASE,SAMICAS2,SAMICAS3 ; 2/25/19 7:54pm
+SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICASE,SAMICAS2,SAMICAS3 ; 3/13/19 11:21am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -161,18 +161,6 @@ UTMKSBF ; @TEST - create background form
 UTMKCEF ; @TEST - create ct evaluation form
  ;MKCEFORM(sid,key)
  d CHKFORM^SAMIUTS2("ceform","MKCEFORM",.utsuccess)
- ; -----
- ; We need to add additional fields to the ceform in
- ;   vapals-patients that were deleted in SAMIUTH3 as
- ;   they are used in other unit tests.  This will
- ;   not change the success of the test under way.
- ;
- n SAMIUPOO,root,vals
- d PLUTARR^SAMIUTST(.SAMIUPOO,"UTNODUL^SAMICTR1 data")
- s root=$$setroot^%wd("vapals-patients")
- s vals=$na(@root@("graph","XXX00001","ceform-2018-10-21"))
- m @vals=SAMIUPOO
- ; -----
  d CHKEQ^%ut(utsuccess,1,"Testing create ct eval form FAILED!")
  q
  ;
@@ -208,10 +196,9 @@ UTWSCAS ; @TEST - generate case review page
  s utsuccess=1
  n nodep,nodea s nodep=$na(SAMIUPOO),nodea=$na(SAMIUARC)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d
- .; if the first non space 10 characters are a date, skip
- . q:(@nodep["ceform")
- . q:(@nodea["</form>(incomplete)</td>")
- . q:(($p(@nodep,"</td><td>",4))?.N1"/".N1"/"4N)
+ . q:(@nodep["(incomplete)")
+ . q:(@nodep["<meta content")
+ . q:($e($tr(@nodep," "),1,10))?4N1P2N1P2N
  . i '($qs(nodep,1)=$qs(nodea,1)) s utsuccess=0
  . i '(@nodep=@nodea) s utsuccess=0
  i '(nodea="") s utsuccess=0

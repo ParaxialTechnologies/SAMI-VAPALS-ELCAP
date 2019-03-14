@@ -1,10 +1,10 @@
-SAMICTR2 ;ven/gpl - ielcap: forms ;2018-03-07T18:48Z
+SAMICTR2 ;ven/gpl - ielcap: forms ; 3/13/19 12:27pm
  ;;18.0;SAMI;;
  ;
  ;
- quit  ; no entry from top
+ ;quit  ; no entry from top
  ;
-OTHRLUNG(rtn,vals,dict)
+OTHRLUNG(rtn,vals,dict) 
  ; repgen2,repgen3
  ;
  ; starts at "Other lung findings:"
@@ -203,7 +203,7 @@ HLFIND() ; references and sets lfind in calling routine
  . s lfind=1
  q
  ;
-OUT(ln)
+OUT(ln) 
  s cnt=cnt+1
  n lnn
  ;s debug=1
@@ -216,7 +216,7 @@ OUT(ln)
  . s @rtn@(lnn)=zp_":"_ln
  q
  ;
-HOUT(ln)
+HOUT(ln) 
  d OUT("<p><span class='sectionhead'>"_ln_"</span>")
  q
  ;

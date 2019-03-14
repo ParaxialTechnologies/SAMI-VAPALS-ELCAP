@@ -1,4 +1,4 @@
-SAMIVST3 ;;ven/lgc - M2RPC Broker to for VA-PALS ; 3/7/19 9:15am
+SAMIVST3 ;;ven/lgc - M2Broker calls for VA-PALS -VIT/VPR ; 3/13/19 7:39pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL

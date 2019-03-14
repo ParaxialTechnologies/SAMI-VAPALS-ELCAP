@@ -1,5 +1,7 @@
-SAMIFF ;ven/lgc,arc - Build a graph of form fields ; 2019-03-12T18:00Z
+SAMIFF ;ven/lgc,arc - Build a graph of form fields ; 2019-03-14T20:29Z
  ;;18.0;SAMI;;
+ ;
+ quit ; No entry from top
  ;
  ;@license: see routine SAMIUL
  ;
@@ -8,7 +10,7 @@ SAMIFF ;ven/lgc,arc - Build a graph of form fields ; 2019-03-12T18:00Z
  ; @routine-credits
  ; @primary-dev:
  ;  Larry "poo" Carlson (lgc)
- ;   ???
+ ;   larry@fiscientific.com
  ;  Alexis Carlson (arc)
  ;   alexis@vistaexpertise.net
  ; @primary-dev-org: Vista Expertise Network (ven)
@@ -17,6 +19,7 @@ SAMIFF ;ven/lgc,arc - Build a graph of form fields ; 2019-03-12T18:00Z
  ; @license: Apache 2.0
  ;  https://www.apache.org/licenses/LICENSE-2.0.html
  ;
+ ; @last-updated: 2019-03-14T20:29Z
  ; @application: SAMI
  ; @version: 18.0
  ; @patch-list: none yet
@@ -25,8 +28,6 @@ SAMIFF ;ven/lgc,arc - Build a graph of form fields ; 2019-03-12T18:00Z
  ;   Add label comments
  ;
  ; @section 1 code
- ;
- quit ; No entry from top
  ;
  ;
 PRSTSV(path,filename,graphname) ; Parse TSV file and build graph
@@ -56,7 +57,7 @@ PRSTSV(path,filename,graphname) ; Parse TSV file and build graph
  . . set placeholder=$piece(LINE,$CHAR(9),5)
  . . set values=$piece(LINE,$CHAR(9),6)
  . . set labels=$piece(LINE,$CHAR(9),7)
- . . ;
+ . . ; use $P write !,fieldnum," ",name
  . . for inputnum=1:1 quit:inputnum>$length(values,";")  do
  . . . set @root@("field",fieldnum,"input",inputnum,"question")=question
  . . . set @root@("field",fieldnum,"input",inputnum,"name")=name
@@ -67,10 +68,9 @@ PRSTSV(path,filename,graphname) ; Parse TSV file and build graph
  . . . set @root@("field",fieldnum,"input",inputnum,"label")=$piece(labels,";",inputnum)
  . . set @root@("field","B",name,fieldnum)=""
  . set fieldnum=fieldnum+1
- . set value="",label=""
  do CLOSE^%ZISH
  ;
- quit
+ quit ; End of label PRSTSV
  ;
  ;
 EOR ; End of routine SAMIFF

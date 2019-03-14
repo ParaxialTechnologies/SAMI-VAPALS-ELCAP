@@ -1,4 +1,4 @@
-SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 3/13/19 12:14pm
+SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 3/14/19 12:16pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -62,6 +62,7 @@ XTROU ; Unit tests for SAMI*.m
  ;;SAMIUTRU
  ;;SAMIUTSV
  ;;SAMIUTST
+ ;;SAMIUTFF
  ;
  quit  ; End of XTROU
  ;
@@ -75,10 +76,9 @@ COVERAGE ; Coverage tests for SAMI*.m
  ; Add the routines here in the preferred order; this enables us to easily
  ; rearrange these in whatever order we like.
  set I=0
- ; set I=I+1,RUNCODE(I)="SAMID"
- ; set I=I+1,RUNCODE(I)="SAMIDOUT"
- ; set I=I+1,RUNCODE(I)="SAMIDSSN"
- ; set I=I=1,RUNCODE(I)="^SAMIUTFF"
+ ; set I=I+1,RUNCODE(I)="^SAMID"
+ ; set I=I+1,RUNCODE(I)="^SAMIDOUT"
+ ; set I=I+1,RUNCODE(I)="^SAMIDSSN"
  set I=I+1,RUNCODE(I)="^SAMIUTLG"
  ;set I=I+1,RUNCODE(I)="^SAMIUTM2"
  set I=I+1,RUNCODE(I)="^SAMIUTH3"
@@ -107,6 +107,7 @@ COVERAGE ; Coverage tests for SAMI*.m
  set I=I+1,RUNCODE(I)="^SAMIUTRU"
  set I=I+1,RUNCODE(I)="^SAMIUTSV"
  set I=I+1,RUNCODE(I)="^SAMIUTST"
+ set I=I=1,RUNCODE(I)="^SAMIUTFF"
  ;
  ; Note that routine references may be specified in one of the following ways:
  ;   * MODULE         : Calls EN^%ut with the name as an argument.
@@ -123,16 +124,15 @@ COVERAGE ; Coverage tests for SAMI*.m
  ; Exclude documentation only routines
  set I=I+1,XCLUDE(I)="SAMIUL"
  set I=I+1,XCLUDE(I)="SAMIVUL"
+ set I=I+1,XCLUDE(I)="SAMICUL"
  ;
+ ; Exclude why?
  set I=I+1,XCLUDE(I)="SAMIDSSN"
  set I=I+1,XCLUDE(I)="SAMIUTDS"
  ;
+ ; Exclude why?
  set I=I+1,XCLUDE(I)="SAMIDOUT"
  set I=I+1,XCLUDE(I)="SAMIUTOT"
- ;
- set I=I+1,XCLUDE(I)="SAMIIFF"
- set I=I+1,XCLUDE(I)="SAMIFF"
- set I=I+1,XCLUDE(I)="SAMIUTFF"
  ;
  ; Exclude the unit-test routines
  set I=I+1,XCLUDE(I)="SAMIUTVR"
@@ -164,6 +164,7 @@ COVERAGE ; Coverage tests for SAMI*.m
  set I=I+1,XCLUDE(I)="SAMIUTVS"
  set I=I+1,XCLUDE(I)="SAMIUTRU"
  set I=I+1,XCLUDE(I)="SAMIUTSV"
+ set I=I+1,XCLUDE(I)="SAMIUTFF"
  ;
  ; Add the XCLUDE values to the TMP variable that tracks this coverage test.
  merge ^TMP("SAMI",$JOB,"XCLUDE")=XCLUDE

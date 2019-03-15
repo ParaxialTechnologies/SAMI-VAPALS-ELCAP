@@ -1,4 +1,4 @@
-%wfhform ;ven/gpl-web form: html form get & post ;2019-03-15T17:14Z
+%wfhform ;ven/gpl-web form: html form get & post ;2019-03-15T21:54Z
  ;;1.8;Mash;
  ;
  ; %wfhform implements the Web Form Library's html form get & post web
@@ -199,7 +199,7 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . . d unvalue^%wf(.tln)
  . . d value^%wf(.tln,hval)
  . . ;i tln["value" d  ;
- . . . 
+ . . ;. 
  . . set zhtml(%j)=tln
  . ;
  . ;

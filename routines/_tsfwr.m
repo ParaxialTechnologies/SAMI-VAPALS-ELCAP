@@ -1,4 +1,4 @@
-%tsfwr ;ven/toad-type string: findReplace^%ts ;2018-12-12T20:20Z
+%tsfwr ;ven/toad-type string: findReplace^%ts ;2019-03-15T22:13Z
  ;;1.8;Mash;
  ;
  ; %tsfwr implements MASH String Library ppi findReplace^%ts, which
@@ -30,8 +30,10 @@
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;@original-dev: George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
+ ;@additional-dev: Linda M. R. Yaw (lmry)
+ ; linda.yaw@vistaexpertise.net
  ;
- ;@last-updated: 2018-12-12T20:20Z
+ ;@last-updated: 2019-03-15T22:13Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Type String - %ts
  ;@version: 1.8T04
@@ -71,8 +73,8 @@ findReplace ; simple substring find & replace
  ; wsGetForm^%wfhform
  ; check^%wfhinput
  ; uncheck^%wfhinput
- ; WSCASE^SAMICAS2
- ; WSNOFORM^SAMICAS2
+ ; WSCASE^SAMICASE
+ ; WSNOFORM^SAMICASE
  ; SAMISUB2^SAMIFRM2
  ; WSREPORT^SAMIUR1
  ;@called-by: none

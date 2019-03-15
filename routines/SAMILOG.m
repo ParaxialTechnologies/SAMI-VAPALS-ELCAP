@@ -1,4 +1,4 @@
-SAMILOG ;ven/lgc - APIs to toggle password identification ; 3/14/19 7:15pm
+SAMILOG ;ven/lgc - APIs to toggle password identification ; 2019-03-15T17:56Z
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -6,11 +6,12 @@ SAMILOG ;ven/lgc - APIs to toggle password identification ; 3/14/19 7:15pm
  ; @routine-credits
  ; @primary-dev: Larry Carlson (lgc)
  ;  larry@fiscientific.com
+ ; @additional-dev: Linda M. R. Yaw (lmry)
+ ;  linda.yaw@vistaexpertise.net
  ; @primary-dev-org: Vista Expertise Network (ven)
  ;  http://vistaexpertise.net
  ; @copyright: 2012/2018, ven, all rights reserved
- ; @license: Apache 2.0
- ;  https://www.apache.org/licenses/LICENSE-2.0.html
+ ; @license: see routine SAMIUL
  ;
  ; @application: SAMI
  ; @version: 18.0
@@ -32,54 +33,54 @@ SAMILOG ;ven/lgc - APIs to toggle password identification ; 3/14/19 7:15pm
  ;   ^%W(17.6001,22,"AUTH") = 1              (11)S
  ;
 STONOFF ;
- n ienget,ienpost,DIR,X,Y,%,DTOUT,DUOUT,ONOFF
- s ienget=$O(^%W(17.6001,"B","GET","vapals","WSHOME^SAMIHOM3",0))
- s ienpost=$O(^%W(17.6001,"B","POST","vapals","WSVAPALS^SAMIHOM3",0))
- i $g(^%W(17.6001,ienget,"AUTH")) d
- . w !,"VAPALS password ID is presently ON",!
- . w !," would you like to turn *** OFF *** VAPALS password ID."
- . s ONOFF="ON"
- e  d
- . w !,"VAPALS password ID is presently OFF",!
- . w !," would you like to turn *** ON *** VAPALS password ID."
- . s ONOFF="OFF"
+ new ienget,ienpost,DIR,X,Y,%,DTOUT,DUOUT,ONOFF
+ set ienget=$order(^%W(17.6001,"B","GET","vapals","WSHOME^SAMIHOM3",0))
+ set ienpost=$order(^%W(17.6001,"B","POST","vapals","WSVAPALS^SAMIHOM3",0))
+ if $get(^%W(17.6001,ienget,"AUTH")) do
+ . write !,"VAPALS password ID is presently ON",!
+ . write !," would you like to turn *** OFF *** VAPALS password ID."
+ . set ONOFF="ON"
+ else  do
+ . write !,"VAPALS password ID is presently OFF",!
+ . write !," would you like to turn *** ON *** VAPALS password ID."
+ . set ONOFF="OFF"
  ;
- w !
+ write !
  ; check if running unit test on this routine
- I $data(%ut) goto STONOFF1
+ if $data(%ut) goto STONOFF1
  ;
- S %=2 D YN^DICN q:$d(DTOUT)  q:$d(DUOUT)  q:%=2
+ set %=2 do YN^DICN quit:$data(DTOUT)  quit:$data(DUOUT)  quit:%=2
  ;
-STONOFF1 if ONOFF="OFF" d TOGON W !,"VAPALS password ID is now turned ON",!,!
- if ONOFF="ON" d TOGOFF W !,"VAPALS password ID is now turned OFF",!,!
- q
+STONOFF1 if ONOFF="OFF" do TOGON write !,"VAPALS password ID is now turned ON",!,!
+ if ONOFF="ON" do TOGOFF write !,"VAPALS password ID is now turned OFF",!,!
+ quit
  ;
  ; Toggle password identification OFF
-TOGOFF n DIERR,FDA,ienget,ienpost,IENS
- s ienget=$o(^%W(17.6001,"B","GET","vapals","WSHOME^SAMIHOM3",0))
- s ienpost=$o(^%W(17.6001,"B","POST","vapals","WSVAPALS^SAMIHOM3",0))
- q:'ienget  q:'ienpost
- s IENS=ienget_","
- s FDA(3,17.6001,IENS,11)=0
- D UPDATE^DIE("","FDA(3)")
+TOGOFF new DIERR,FDA,ienget,ienpost,IENS
+ set ienget=$order(^%W(17.6001,"B","GET","vapals","WSHOME^SAMIHOM3",0))
+ set ienpost=$order(^%W(17.6001,"B","POST","vapals","WSVAPALS^SAMIHOM3",0))
+ quit:'ienget  quit:'ienpost
+ set IENS=ienget_","
+ set FDA(3,17.6001,IENS,11)=0
+ do UPDATE^DIE("","FDA(3)")
  ;
- s IENS=ienpost_","
- s FDA(3,17.6001,IENS,11)=0
- D UPDATE^DIE("","FDA(3)")
- q
+ set IENS=ienpost_","
+ set FDA(3,17.6001,IENS,11)=0
+ do UPDATE^DIE("","FDA(3)")
+ quit
  ;
  ; Toggle password identification ON
-TOGON n DIERR,FDA,ienget,ienpost,IENS
- s ienget=$o(^%W(17.6001,"B","GET","vapals","WSHOME^SAMIHOM3",0))
- s ienpost=$o(^%W(17.6001,"B","POST","vapals","WSVAPALS^SAMIHOM3",0))
- q:'ienget  q:'ienpost
- S IENS=ienget_","
- s FDA(3,17.6001,IENS,11)=1
- D UPDATE^DIE("","FDA(3)")
+TOGON new DIERR,FDA,ienget,ienpost,IENS
+ set ienget=$order(^%W(17.6001,"B","GET","vapals","WSHOME^SAMIHOM3",0))
+ set ienpost=$order(^%W(17.6001,"B","POST","vapals","WSVAPALS^SAMIHOM3",0))
+ quit:'ienget  quit:'ienpost
+ set IENS=ienget_","
+ set FDA(3,17.6001,IENS,11)=1
+ do UPDATE^DIE("","FDA(3)")
  ;
- s IENS=ienpost_","
- s FDA(3,17.6001,IENS,11)=1
- D UPDATE^DIE("","FDA(3)")
- q
+ set IENS=ienpost_","
+ set FDA(3,17.6001,IENS,11)=1
+ do UPDATE^DIE("","FDA(3)")
+ quit
  ;
 EOR ;End of routine SAMILOG

@@ -1,4 +1,4 @@
-%wdgraph ;ven/gpl-write dialog: graphstore ;2018-03-07T18:47Z
+%wdgraph ;ven/gpl-write dialog: graphstore ;2018-03-15T21:26Z
  ;;1.8;Mash;
  ;
  ; %wdgraph implements the Write Document Library's ppis & apis. At
@@ -24,7 +24,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-07T18:47Z
+ ;@last-updated: 2018-03-15T21:26Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Write Dialog - %wd
  ;@version: 1.8T04
@@ -33,6 +33,8 @@
  ;
  ;@additional-dev: Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
+ ;@additional-dev: Linda M. R. Yaw (lmry)
+ ; linda.yaw@vistaexpertise.net
  ;
  ;@module-credits
  ;@primary-dev: George P. Lilly (gpl)
@@ -100,11 +102,11 @@ setroot(graph) ; root of working storage
  ; INITFRMS^SAMIFRM
  ; loadData^SAMIFRM
  ; PATLIST^SAMIHOM3
- ; WSNEWCASe^SAMIHOM3
+ ; WSNEWCAS^SAMIHOM3
  ; NEXTNUM^SAMIHOM3
- ; prefill^SAMIHOM3
- ; makeSbform^SAMIHOM3
- ; makeSiform^SAMIHOM3
+ ; PREFILL^SAMIHOM3
+ ; MAKESBFORM^SAMIHOM3
+ ; MAKESIFORM^SAMIHOM3
  ; wsLookup^SAMISRCH
  ;@calls
  ; $$addgraph

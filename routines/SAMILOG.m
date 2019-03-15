@@ -1,4 +1,4 @@
-SAMILOG ;ven/lgc - APIs to toggle password identification ; 1/29/19 12:47pm
+SAMILOG ;ven/lgc - APIs to toggle password identification ; 3/14/19 7:15pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -32,27 +32,26 @@ SAMILOG ;ven/lgc - APIs to toggle password identification ; 1/29/19 12:47pm
  ;   ^%W(17.6001,22,"AUTH") = 1              (11)S
  ;
 STONOFF ;
- n ienget,ienpost,DIR,X,Y,%,DTOUT,DUOUT
+ n ienget,ienpost,DIR,X,Y,%,DTOUT,DUOUT,ONOFF
  s ienget=$O(^%W(17.6001,"B","GET","vapals","WSHOME^SAMIHOM3",0))
  s ienpost=$O(^%W(17.6001,"B","POST","vapals","WSVAPALS^SAMIHOM3",0))
  i $g(^%W(17.6001,ienget,"AUTH")) d
  . w !,"VAPALS password ID is presently ON",!
  . w !," would you like to turn *** OFF *** VAPALS password ID."
- . s Y=0
+ . s ONOFF="ON"
  e  d
  . w !,"VAPALS password ID is presently OFF",!
  . w !," would you like to turn *** ON *** VAPALS password ID."
- . s Y=1
+ . s ONOFF="OFF"
  ;
  w !
  ; check if running unit test on this routine
- n forxindex s forxindex="%ut" i '$D(@forxindex) d
- . S %=2 D YN^DICN i '(%=1) q
- e  s %=1
+ I $data(%ut) goto STONOFF1
  ;
- q:$d(DTOUT)  q:$d(DUOUT)
- i Y=1 d TOGON W !,"VAPALS password ID is now turned ON",!,! q
- i Y=0 d TOGOFF W !,"VAPALS password ID is now turned OFF",!,! q
+ S %=2 D YN^DICN q:$d(DTOUT)  q:$d(DUOUT)  q:%=2
+ ;
+STONOFF1 if ONOFF="OFF" d TOGON W !,"VAPALS password ID is now turned ON",!,!
+ if ONOFF="ON" d TOGOFF W !,"VAPALS password ID is now turned OFF",!,!
  q
  ;
  ; Toggle password identification OFF

@@ -1,4 +1,4 @@
-%wfhform ;ven/gpl-web form: html form get & post ;2018-11-19T18:58Z
+%wfhform ;ven/gpl-web form: html form get & post ;2019-03-15T17:14Z
  ;;1.8;Mash;
  ;
  ; %wfhform implements the Web Form Library's html form get & post web
@@ -29,7 +29,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-18T17:05Z
+ ;@last-updated: 2019-03-15T17:14Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Web Form - %wf
  ;@version: 1.8T04
@@ -38,6 +38,8 @@
  ;
  ;@additional-dev: Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
+ ;@additional-dev: Linda M. R. Yaw (lmry)
+ ; linda.yaw@vistaexpertise.net
  ;
  ;@to-do
  ; break up into smaller routines & change branches from %wf
@@ -1226,7 +1228,7 @@ wsPostForm ; code for ws wsPostForm^%wf, submit HTML form
  ;
  ;if $get(ARGS("debug"))="" do  quit  ;
  do  quit  ;
- . do WSCASE^SAMICAS2(.RESULT,.ARGS)
+ . do WSCASE^SAMICASE(.RESULT,.ARGS)
  . quit
  ;
  quit  ; no validation process

@@ -1,4 +1,4 @@
-SAMIUTCR ;ven/lgc - UNIT TEST for SAMICTR ; 2/6/19 12:57pm
+SAMIUTCR ;ven/lgc - UNIT TEST for SAMICTR ; 3/15/19 11:15am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -43,6 +43,11 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  K utsuccess
  Q
  ;
+ ;
+UTQUIT ; @TEST - Quit at top of routine
+ D ^SAMICTR
+ d SUCCEED^%ut
+ q
  ;
 UTWSRPT ; @TEST - web service which returns an html cteval report
  ;WSREPORT(return,SAMIFLTR)

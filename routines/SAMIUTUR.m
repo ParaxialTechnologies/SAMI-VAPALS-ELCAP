@@ -1,4 +1,4 @@
-SAMIUTUR ;ven/lgc - UNIT TEST for SAMIUR1,SAMIUR2 ; 3/11/19 2:12pm
+SAMIUTUR ;ven/lgc - UNIT TEST for SAMIUR,SAMIUR1,SAMIUR2 ; 3/15/19 11:39am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -32,12 +32,27 @@ STARTUP n utsuccess
  k @root@("graph","XXX00001")
  n SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
  m @root@("graph","XXX00001")=SAMIUPOO
+ ; Temporarily update sidc field in siform-2018-11-13 
+ s @root@("graph","XXX00001","siform-2018-11-13","sidc")=$P($$HTE^XLFDT($H,5),"@")
  q
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
- K utsuccess
+ k utsuccess
+ ; Replace sidc field in siform-2018-11-13
+ n root s root=$$setroot^%wd("vapals-patients")
+ s @root@("graph","XXX00001","siform-2018-11-13","sidc")="11/13/2018"
+ k root
  q
  ;
+ ;
+UTQUIT ; @TEST - Quit at top of routine
+ D ^SAMIUR
+ d SUCCEED^%ut
+ D ^SAMIUR1
+ d SUCCEED^%ut
+ D ^SAMIUR2
+ d SUCCEED^%ut
+ q
  ;
 UTWSRPT ; @TEST - generate a report based on parameters in filter
  ;wsReport(rtn,SAMIUFLTR)

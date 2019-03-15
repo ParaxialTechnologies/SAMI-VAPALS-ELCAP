@@ -1,4 +1,4 @@
-SAMIUTNI ;ven/lgc - UNIT TEST for SAMINOTI ; 1/22/19 1:35pm
+SAMIUTNI ;ven/lgc - UNIT TEST for SAMINOTI ; 3/15/19 11:27am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -38,6 +38,11 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  k utsuccess
  q
  ;
+ ;
+UTQUIT ; @TEST - Quit at top of routine
+ D ^SAMINOTI
+ d SUCCEED^%ut
+ q
  ;
 UTWSNOTE ; @TEST - web service which returns a text note
  ;WSNOTE(return,filter)

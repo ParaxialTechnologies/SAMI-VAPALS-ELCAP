@@ -1,4 +1,4 @@
-SAMIVST1 ;;ven/lgc - M2Broker calls for VA-PALS - New TIU ; 3/13/19 7:37pm
+SAMIVST1 ;;ven/lgc - M2Broker calls for VA-PALS - New TIU ; 3/14/19 11:56am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -326,7 +326,7 @@ ADDSGNRS ;
  ; Setup all variables into Graphstore
  new si,root,vals,tiuien
  ;
- set si=$get(filter("studyid")) ; e.g."XXX00333"
+ set si=$get(filter("studyid")) ; e.g."XXX00001"
  quit:'$length($get(si))
  ;
  set root=$$setroot^%wd("vapals-patients")
@@ -335,10 +335,10 @@ ADDSGNRS ;
  set samikey=$get(filter("form"))
  if (samikey'["siform") quit:$Q 0  quit
  if '($length(samikey,"-")=4) quit:$Q 0  quit
- ; e.g. samikey="siform-2018-06-04"
+ ; e.g. samikey="ceform-2018-10-21"
  ;
  set vals=$name(@root@("graph",si,samikey))
- ; e.g. vals="^%wd(17.040801,23,""graph"",""XXX00333"",""siform-2018-06-04"")"
+ ; e.g. vals=^%wd(17.040801,23,"graph","XXX00001","siform-2018-11-13")
  ;
  set tiuien=@vals@("tiuien")
  if '$get(tiuien) quit:$Q 0  quit

@@ -1,4 +1,4 @@
-SAMICUL ;ven/gpl - ielcap: case review page log ; 2019-03-14T19:05Z
+SAMICUL ;ven/gpl - ielcap: case review page log ; 3/15/19 11:15am
  ;;18.0;SAM;;
  ;
  ;@license: see routine SAMIUL
@@ -7,9 +7,6 @@ SAMICUL ;ven/gpl - ielcap: case review page log ; 2019-03-14T19:05Z
  ;
  ; CHANGE ven/2018-11-13
  ;   changed all SAMIHOM2 to SAMIHOM3
- ;
- quit  ; no entry from top
- ;
  ;
  ;
  ;@section 0 primary development: see routine %wful

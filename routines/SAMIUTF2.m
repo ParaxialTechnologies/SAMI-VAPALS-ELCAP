@@ -1,4 +1,4 @@
-SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 2/6/19 1:18pm
+SAMIUTF2 ;ven/lgc - UNIT TEST for SAMIFRM2 ; 3/15/19 11:16am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -38,6 +38,11 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  k utsuccess
  q
  ;
+ ;
+UTQUIT ; @TEST - Quit at top of routine
+ D ^SAMIFRM2
+ d SUCCEED^%ut
+ q
  ;
 UTINITF ; @TEST - initilize form file from elcap-patient graphs
  ;D INITFRMS

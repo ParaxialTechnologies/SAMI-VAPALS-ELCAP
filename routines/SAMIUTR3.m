@@ -1,4 +1,4 @@
-SAMIUTR3 ;ven/lgc - UNIT TEST for SAMICTR3 ; 2/5/19 5:49pm
+SAMIUTR3 ;ven/lgc - UNIT TEST for SAMICTR3 ; 3/15/19 11:11am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -39,6 +39,11 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  K utsuccess
  Q
  ;
+ ;
+UTQUIT ; @TEST - Quit at top of routine
+ D ^SAMICTR3
+ d SUCCEED^%ut
+ q
  ;
 UTEMPHYS ; @TEST - emphysema
  ;EMPHYS(rtn,vals,dict)

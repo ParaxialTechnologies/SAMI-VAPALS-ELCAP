@@ -1,4 +1,4 @@
-SAMIUTR1 ;ven/lgc - UNIT TEST for SAMICTR1 ; 3/12/19 10:37am
+SAMIUTR1 ;ven/lgc - UNIT TEST for SAMICTR1 ; 3/15/19 11:10am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -39,6 +39,11 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  k utsuccess
  q
  ;
+ ;
+UTQUIT ; @TEST - Quit at top of routine
+ D ^SAMICTR1
+ d SUCCEED^%ut
+ q
  ;
 UTNODUL ; @TEST - nodules
  ;nodules(rtn,SAMIVALS,dict)

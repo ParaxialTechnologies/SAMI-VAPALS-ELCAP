@@ -1,4 +1,4 @@
-SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 2019-02-26T01:42Z
+SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 3/14/19 11:55am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -169,16 +169,24 @@ UTPTINF ; @TEST - Pull additional patient information
  quit
  ;
 UTADDNS ; @TEST - Add additional signers to a TIU note
- ; do ADDSIGN
+ ; do ADDSGNRS,ADDSIGN
  ; NOTE: Signers will not show up on tiu in CPRS until it is
  ;       edited or signed
  new D,D0,DG,DI,DIC,DICR,DIG,DIH
  set utsuccess=0
  if '$get(tiuien) do  quit
  . do FAIL^%ut("Add additional signers failed - no tiuien")
+ new root,vals
+ ; Set the tiuien variable in an existing test patient
+ ;  form to the newly generated tiu
+ set root=$$setroot^%wd("vapals-patients")
+ set vals=$name(@root@("graph","XXX00001","siform-2018-11-13"))
+ set @vals@("tiuien")=tiuien
  new filter
+ set filter("studyid")="XXX00001"
+ set filter("form")="siform-2018-11-13"
  set filter("add signers",1)="64^Smith,Mary"
- do ADDSIGN^SAMIVSTA
+ do ADDSGNRS^SAMIVSTA(.filter) ; sets utsuccess if unit testing
  hang 1
  do CHKEQ^%ut(utsuccess,1,"Testing Adding additional signers  FAILED!")
  quit

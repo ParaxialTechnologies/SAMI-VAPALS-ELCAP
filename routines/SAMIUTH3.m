@@ -1,4 +1,4 @@
-SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3 ; 2/7/19 10:39am
+SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3,SAMIHOM4 ; 3/15/19 11:25am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -20,6 +20,13 @@ STARTUP n utsuccess
 SHUTDOWN ; ZEXCEPT: utsuccess
  K utsuccess
  Q
+ ;
+UTQUIT ; @TEST - Quit at top of routine
+ D ^SAMIHOM3
+ d SUCCEED^%ut
+ D ^SAMIHOM4
+ d SUCCEED^%ut
+ q
  ;
 UTWSHM ; @TEST - Testing web service for SAMI homepage test
  ; WSHOME(SAMIURTN,SAMIUFLTR)

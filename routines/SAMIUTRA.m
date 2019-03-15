@@ -1,4 +1,4 @@
-SAMIUTRA ;ven/lgc - UNIT TEST for SAMICTRA ; 1/22/19 1:37pm
+SAMIUTRA ;ven/lgc - UNIT TEST for SAMICTRA ; 3/15/19 11:13am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -38,6 +38,11 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  k utsuccess
  q
  ;
+ ;
+UTQUIT ; @TEST - Quit at top of routine
+ D ^SAMICTRA
+ d SUCCEED^%ut
+ q
  ;
 UTRCMD ; @TEST - Recommendation
  ;recommend(rtn,SAMIVALS,dict)

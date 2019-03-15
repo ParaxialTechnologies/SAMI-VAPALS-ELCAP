@@ -1,4 +1,4 @@
-SAMIUTR2 ;ven/lgc - UNIT TEST for SAMICTR2 ; 3/12/19 12:18pm
+SAMIUTR2 ;ven/lgc - UNIT TEST for SAMICTR2 ; 3/15/19 11:10am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -39,6 +39,11 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  K utsuccess
  Q
  ;
+ ;
+UTQUIT ; @TEST - Quit at top of routine
+ D ^SAMICTR2
+ d SUCCEED^%ut
+ q
  ;
 UTOTLNG ; @TEST - other lung
  ;OTHERLUNG(rtn,vals,dict)

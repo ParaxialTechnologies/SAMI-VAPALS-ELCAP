@@ -1,4 +1,4 @@
-SAMIUTRU ;ven/lgc - UNIT TEST for SAMIRU ; 1/22/19 1:37pm
+SAMIUTRU ;ven/lgc - UNIT TEST for SAMIRU ; 3/15/19 11:28am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -33,6 +33,11 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  k utsuccess
  q
  ;
+ ;
+UTQUIT ; @TEST - Quit at top of routine
+ D ^SAMIRU
+ d SUCCEED^%ut
+ q
  ;
 UTINDEX ; @TEST - create the zip index in the zip graph
  ;INDEX^SAMIRU

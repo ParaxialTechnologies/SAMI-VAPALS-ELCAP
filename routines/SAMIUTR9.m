@@ -1,4 +1,4 @@
-SAMIUTR9 ;ven/lgc - UNIT TEST for SAMICTR9 ; 1/22/19 1:37pm
+SAMIUTR9 ;ven/lgc - UNIT TEST for SAMICTR9 ; 3/15/19 11:13am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -38,6 +38,11 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  k utsuccess
  q
  ;
+ ;
+UTQUIT ; @TEST - Quit at top of routine
+ D ^SAMICTR9
+ d SUCCEED^%ut
+ q
  ;
 UTIMPRS ; @TEST - impression
  ;IMPRSN(rtn,SAMIVALS,dict)

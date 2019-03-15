@@ -1,4 +1,4 @@
-SAMIUTR4 ;ven/lgc - UNIT TEST for SAMICTR4 ; 2/6/19 1:46pm
+SAMIUTR4 ;ven/lgc - UNIT TEST for SAMICTR4 ; 3/15/19 11:11am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -39,6 +39,11 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  K utsuccess
  Q
  ;
+ ;
+UTQUIT ; @TEST - Quit at top of routine
+ D ^SAMICTR4
+ d SUCCEED^%ut
+ q
  ;
 UTBRST ; @TEST - Breast
  ;BREAST(rtn,vals,dict)

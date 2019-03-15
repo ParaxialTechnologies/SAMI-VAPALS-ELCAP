@@ -1,4 +1,4 @@
-SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICASE,SAMICAS2,SAMICAS3 ; 3/13/19 11:21am
+SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICASE,SAMICAS2,SAMICAS3 ; 3/15/19 10:54am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -40,6 +40,15 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  k utsuccess
  q
  ;
+ ;
+UTQUIT ; @TEST - Quit at top of routine
+ D ^SAMICASE
+ d SUCCEED^%ut
+ D ^SAMICAS2
+ d SUCCEED^%ut
+ D ^SAMICAS3
+ d SUCCEED^%ut
+ q
  ;
 UTGTMPL ; @TEST - get html template
  ;GETTMPL(return,form)

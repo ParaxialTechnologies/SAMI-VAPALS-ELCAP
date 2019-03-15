@@ -1,4 +1,4 @@
-SAMIUTSV ;ven/lgc - UNIT TEST for SAMISAV ; 1/22/19 1:39pm
+SAMIUTSV ;ven/lgc - UNIT TEST for SAMISAV ; 3/15/19 11:29am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -34,6 +34,11 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  k utsuccess
  q
  ;
+ ;
+UTQUIT ; @TEST - Quit at top of routine
+ D ^SAMISAV
+ d SUCCEED^%ut
+ q
  ;
 UTSAVF ; @TEST - extrinsic which returns the form key to use
  ;SAVFILTR^SAMISAV

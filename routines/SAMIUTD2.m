@@ -1,4 +1,4 @@
-SAMIUTD2 ;ven/lgc - UNIT TEST for SAMIUTD2 ; 1/22/19 1:33pm
+SAMIUTD2 ;ven/lgc - UNIT TEST for SAMICTD2 ; 3/15/19 11:04am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -35,6 +35,11 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  k utsuccess
  q
  ;
+ ;
+UTQUIT ; @TEST - Quit at top of routine
+ d ^SAMICTD2
+ d SUCCEED^%ut
+ q
  ;
 UTIN2G ; @TEST - initialize CTEVAL dictionary into graph cteval-dict
  ;INIT2GPH()

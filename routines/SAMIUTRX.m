@@ -1,4 +1,4 @@
-SAMIUTRX ;ven/lgc - UNIT TEST for SAMICTRX ; 1/22/19 1:38pm
+SAMIUTRX ;ven/lgc - UNIT TEST for SAMICTRX ; 3/15/19 11:14am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -34,6 +34,11 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  k utsuccess
  q
  ;
+ ;
+UTQUIT ; @TEST - Quit at top of routine
+ D ^SAMICTRX
+ d SUCCEED^%ut
+ q
  ;
 UTOUT ; @TEST - out line
  ;OUT(ln)

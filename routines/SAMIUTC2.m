@@ -1,4 +1,4 @@
-SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ; 3/13/19 11:36am
+SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ; 3/15/19 11:35am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -48,6 +48,11 @@ TEARDOWN ; ZEXCEPT: SAMIUARGS,SAMIUBODY,SAMIURETURN,filter,from,to,expect,result
  kill SAMIUARGS,SAMIUBODY,SAMIURETURN,filter,from,to,expect,result,expectn,resultn,utsuccess
  quit
  ;
+ ;
+UTQUIT ; @TEST - Quit at top of routine
+ D ^SAMISRC2
+ d SUCCEED^%ut
+ q
  ;
 UTWSLKU ; @TEST WSLOOKUP^SAMISRC2
  ; Comments

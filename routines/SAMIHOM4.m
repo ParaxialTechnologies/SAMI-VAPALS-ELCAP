@@ -143,7 +143,7 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  ;
  i route="report" d  q  ; 
  . m SAMIARG=vars
- . d WSREPORT^SAMIUR1(.SAMIRESULT,.SAMIARG)
+ . d WSREPORT^SAMIUR(.SAMIRESULT,.SAMIARG)
  ;
  quit  ; End of WSVAPALS
  ;

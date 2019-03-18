@@ -1,4 +1,4 @@
-SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA ; 3/14/19 11:55am
+SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA,SAMIVST1,SAMIVST2 ; 3/18/19 9:38am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL

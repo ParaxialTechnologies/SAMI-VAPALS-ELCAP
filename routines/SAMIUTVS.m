@@ -1,4 +1,4 @@
-SAMIUTVS ;ven/arc/lgc - UNIT TEST for SAMIVSTS ; 3/7/19 11:38am
+SAMIUTVS ;ven/arc/lgc - UNIT TEST for SAMIVST4 ; 3/18/19 9:39am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL

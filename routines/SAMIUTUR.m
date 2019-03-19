@@ -1,4 +1,4 @@
-SAMIUTUR ;ven/lgc - UNIT TEST for SAMIUR,SAMIUR1,SAMIUR2 ; 3/18/19 2:21pm
+SAMIUTUR ;ven/lgc - UNIT TEST for SAMIUR,SAMIUR1,SAMIUR2 ; 3/19/19 11:16am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -83,27 +83,19 @@ UTWSRPT ; @TEST - generate a report based on parameters in filter
  k SAMIUFLTR
  s SAMIUFLTR("samireporttype")="missingct"
  s rpttstr="<input name=""samireporttype"" type=""hidden"" value=""missingct""/>"
- s utsuccess=1
+ s utsuccess=0
  d WSREPORT^SAMIUR(.SAMIUPOO,.SAMIUFLTR)
  s cnt=0 f  s cnt=$o(SAMIUPOO(cnt)) q:'cnt  i SAMIUPOO(cnt)[rpttstr s utsuccess=1
- d CHKEQ^%ut(utsuccess,1,"Testing wsReport for enrollment FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing wsReport for missingct FAILED!")
  ;
  k SAMIUFLTR
  s SAMIUFLTR("samireporttype")="incomplete"
  s rpttstr="<input name=""samireporttype"" type=""hidden"" value=""incomplete""/>"
- s utsuccess=1
+ s utsuccess=0
  d WSREPORT^SAMIUR(.SAMIUPOO,.SAMIUFLTR)
  s cnt=0 f  s cnt=$o(SAMIUPOO(cnt)) q:'cnt  i SAMIUPOO(cnt)[rpttstr s utsuccess=1
- d CHKEQ^%ut(utsuccess,1,"Testing wsReport for enrollment FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing wsReport for incomplete FAILED!")
  ;
- k SAMIUFLTR
- s SAMIUFLTR("samireporttype")="outreach"
- s SAMIUFLTR("debug")=1
- s rpttstr="<input name=""samireporttype"" type=""hidden"" value=""outreach""/>"
- s utsuccess=1
- d WSREPORT^SAMIUR(.SAMIUPOO,.SAMIUFLTR)
- s cnt=0 f  s cnt=$o(SAMIUPOO(cnt)) q:'cnt  i SAMIUPOO(cnt)[rpttstr s utsuccess=1
- d CHKEQ^%ut(utsuccess,1,"Testing wsReport for enrollment FAILED!")
  q
  ;
 UTSELCT ; @TEST - selects patient for the report
@@ -121,39 +113,46 @@ UTSELCT ; @TEST - selects patient for the report
  s utsuccess=(SAMIUDPHR=udtphrase)
  i utsuccess,$d(SAMIUPATS) d
  . n node,cnt s node=$na(SAMIUPATS),cnt=0
- . f  s node=$q(@node) q:node=""  d
- .. s:cnt<3 cnt=cnt+1
+ . f  s node=$q(@node) q:node=""  d  q:(cnt=5)
+ .. s cnt=cnt+1
  .. i cnt=1,'(@node="") s utsuccess=0 q
- .. i cnt=2,'($qs(node,3)="cefud") s utsuccess=0 q
- .. i cnt=3 s cnt=0 i '($qs(node,3)="edate") s utsuccess=0 q
+ .. i cnt=2,'($qs(node,3)="cedos") s utsuccess=0 q
+ .. i cnt=3,'($qs(node,3)="ceform") s utsuccess=0 q
+ .. i cnt=4,'($qs(node,3)="cefud") s utsuccess=0 q
+ .. i cnt=5,'($qs(node,3)="edate") s utsuccess=0
  d CHKEQ^%ut(utsuccess,1,"Testing type=null patient report FAILED!")
  ;
  k SAMIUPATS
  s SAMITYPE="followup",SAMIUDPHR=""
  s udtphrase=" before "_unplus30
- d SELECT^SAMIUR1(.SAMIUPATS,SAMITYPE,.SAMIUDPHR)
+ d SELECT^SAMIUR(.SAMIUPATS,SAMITYPE,.SAMIUDPHR)
  s utsuccess=(SAMIUDPHR=udtphrase)
- i utsuccess,$d(pats) d
- . n node,cnt s node=$na(pats),cnt=0
- . f  s node=$q(@node) q:node=""  d  q:'utsuccess
- .. s:cnt<3 cnt=cnt+1
+ i utsuccess,$d(SAMIUPATS) d
+ . n node,cnt s node=$na(SAMIUPATS),cnt=0
+ . f  s node=$q(@node) q:node=""  d  q:(cnt=6)
+ .. s cnt=cnt+1
  .. i cnt=1,'(@node="") s utsuccess=0 q
- .. i cnt=2,'($qs(node,3)="cefud") s utsuccess=0 q
- .. i cnt=3 s cnt=0 i '($qs(node,3)="edate") s utsuccess=0
+ .. i cnt=2,'($qs(node,3)="cedos") s utsuccess=0 q
+ .. i cnt=3,'($qs(node,3)="ceform") s utsuccess=0 q
+ .. i cnt=4,'($qs(node,3)="ceform-vals") s utsuccess=0 q
+ .. i cnt=5,'($qs(node,3)="cefud") s utsuccess=0 q
+ .. i cnt=6,'($qs(node,3)="edate") s utsuccess=0
  d CHKEQ^%ut(utsuccess,1,"Testing followup patient report FAILED!")
  ;
  k SAMIUPATS
  s SAMITYPE="activity",SAMIUDPHR=""
- s udtphrase=" after "_unminus30
+ s udtphrase=" as of "_unowdate
  d SELECT^SAMIUR(.SAMIUPATS,SAMITYPE,.SAMIUDPHR)
  s utsuccess=(SAMIUDPHR=udtphrase)
- i utsuccess,$d(pats) d
- . n node,cnt s node=$na(pats),cnt=0
- . f  s node=$q(@node) q:node=""  d  q:'utsuccess
- .. s:cnt<3 cnt=cnt+1
+ i utsuccess,$d(SAMIUPATS) d
+ . n node,cnt s node=$na(SAMIUPATS),cnt=0
+ . f  s node=$q(@node) q:node=""  d  q:(cnt=5)
+ .. s cnt=cnt+1
  .. i cnt=1,'(@node="") s utsuccess=0 q
- .. i cnt=2,'($qs(node,3)="cefud") s utsuccess=0 q
- .. i cnt=3 s cnt=0 i '($qs(node,3)="edate") s utsuccess=0
+ .. i cnt=2,'($qs(node,3)="cedos") s utsuccess=0 q
+ .. i cnt=3,'($qs(node,3)="ceform") s utsuccess=0 q
+ .. i cnt=4,'($qs(node,3)="cefud") s utsuccess=0 q
+ .. i cnt=5,'($qs(node,3)="edate") s utsuccess=0
  d CHKEQ^%ut(utsuccess,1,"Testing activity patient report FAILED!")
  ;
  k SAMIUPATS
@@ -161,43 +160,58 @@ UTSELCT ; @TEST - selects patient for the report
  s udtphrase=" as of "_unowdate
  d SELECT^SAMIUR(.SAMIUPATS,SAMITYPE,.SAMIUDPHR)
  s utsuccess=(SAMIUDPHR=udtphrase)
- i utsuccess,$d(pats) d
- . n node,cnt s node=$na(pats),cnt=0
- . f  s node=$q(@node) q:node=""  d  q:'utsuccess
- .. s:cnt<3 cnt=cnt+1
+ i utsuccess,$d(SAMIUPATS) d
+ . n node,cnt s node=$na(SAMIUPATS),cnt=0
+ . f  s node=$q(@node) q:node=""  d  q:(cnt=5)
+ .. s cnt=cnt+1
  .. i cnt=1,'(@node="") s utsuccess=0 q
- .. i cnt=2,'($qs(node,3)="cefud") s utsuccess=0 q
- .. i cnt=3 s cnt=0 i '($qs(node,3)="edate") s utsuccess=0
+ .. i cnt=2,'($qs(node,3)="cedos") s utsuccess=0 q
+ .. i cnt=3,'($qs(node,3)="ceform") s utsuccess=0 q
+ .. i cnt=4,'($qs(node,3)="cefud") s utsuccess=0 q
+ .. i cnt=5,'($qs(node,3)="edate") s utsuccess=0
  d CHKEQ^%ut(utsuccess,1,"Testing enrollment patient report FAILED!")
  ;
  k SAMIUPATS
  s SAMITYPE="missingct",SAMIUDPHR=""
+ s udtphrase=" as of "_unowdate
  d SELECT^SAMIUR(.SAMIUPATS,SAMITYPE,.SAMIUDPHR)
- s utsuccess=($g(SAMIUDPHR)="")
+ s utsuccess=(SAMIUDPHR=udtphrase)
+ i utsuccess,$d(SAMIUPATS) d
+ . n node,cnt s node=$na(SAMIUPATS),cnt=0
+ . f  s node=$q(@node) q:node=""  d  q:(cnt=4)
+ .. s cnt=cnt+1
+ .. i cnt=1,'(@node="") s utsuccess=0 q
+ .. i cnt=2,'($qs(node,3)="ceform") s utsuccess=0 q
+ .. i cnt=3,'($qs(node,3)="cefud") s utsuccess=0 q
+ .. i cnt=4,'($qs(node,3)="edate") s utsuccess=0
  d CHKEQ^%ut(utsuccess,1,"Testing missingct patient report FAILED!")
  ;
  k SAMIUPATS
  s SAMITYPE="incomplete",SAMIUDPHR=""
+ s udtphrase=" as of "_unowdate
  d SELECT^SAMIUR(.SAMIUPATS,SAMITYPE,.SAMIUDPHR)
- s utsuccess=($g(SAMIUDPHR)="")
+ s utsuccess=(SAMIUDPHR=udtphrase)
+ i utsuccess,$d(SAMIUPATS) d
+ . n node,cnt s node=$na(SAMIUPATS),cnt=0
+ . f  s node=$q(@node) q:node=""  d  q:(cnt=4)
+ .. s cnt=cnt+1
+ .. i cnt=1,'(@node="") s utsuccess=0 q
+ .. i cnt=2,'($qs(node,3)="ceform") s utsuccess=0 q
+ .. i cnt=3,'($qs(node,3)="cefud") s utsuccess=0 q
+ .. i cnt=4,'($qs(node,3)="edate") s utsuccess=0
  d CHKEQ^%ut(utsuccess,1,"Testing incomplete patient report FAILED!")
  ;
- k SAMIUPATS
- s SAMITYPE="outreach",SAMIUDPHR=""
- d SELECT^SAMIUR(.SAMIUPATS,SAMITYPE,.SAMIUDPHR)
- s utsuccess=($g(SAMIUDPHR)="")
- d CHKEQ^%ut(utsuccess,1,"Testing outreach patient report FAILED!")
  q
  ;
 UTPNAME ; @TEST - extrinsic returns the PAGE NAME for the report
  ;PNAME(type)
  n str
  s str=$$PNAME^SAMIUR("followup","-test text")
- s utsuccess=(str="Followup next 30 days --test text")
+ s utsuccess=(str="Followup -test text")
  d CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns followup PAGE NAME FAILED!")
  ;
  s str=$$PNAME^SAMIUR("activity","-test text")
- s utsuccess=(str="Activity last 30 days --test text")
+ s utsuccess=(str="Activity -test text")
  d CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns activity PAGE NAME FAILED!")
  ;
  s str=$$PNAME^SAMIUR("missingct","-test text")

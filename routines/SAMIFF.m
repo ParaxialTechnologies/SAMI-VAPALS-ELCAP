@@ -1,7 +1,7 @@
-SAMIFF ;ven/lgc,arc - Build a graph of form fields ; 2019-03-14T20:29Z
+SAMIFF ;ven/lgc,arc - Build a graph of form fields ; 3/19/19 2:24pm
  ;;18.0;SAMI;;
  ;
- quit ; No entry from top
+ quit  ; No entry from top
  ;
  ;@license: see routine SAMIUL
  ;
@@ -48,8 +48,8 @@ PRSTSV(path,filename,graphname) ; Parse TSV file and build graph
  ;
  do OPEN^%ZISH("FILE",path,filename,"R")
  ;
- for  use IO read LINE quit:$$STATUS^%ZISH  do
- . if fieldnum>0 do; Skip TSV file column headers
+ for  use IO read LINE:DTIME quit:$$STATUS^%ZISH  do
+ . if fieldnum>0 do  ; Skip TSV file column headers
  . . set question=$piece(LINE,$CHAR(9),1)
  . . set name=$piece(LINE,$CHAR(9),2)
  . . set type=$piece(LINE,$CHAR(9),3)
@@ -70,7 +70,7 @@ PRSTSV(path,filename,graphname) ; Parse TSV file and build graph
  . set fieldnum=fieldnum+1
  do CLOSE^%ZISH
  ;
- quit ; End of label PRSTSV
+ quit  ; End of label PRSTSV
  ;
  ;
 EOR ; End of routine SAMIFF

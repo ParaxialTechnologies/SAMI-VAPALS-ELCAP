@@ -1,4 +1,4 @@
-SAMIVST5 ; ven/lgc/arc - M2Broker calls for VA-PALS - RAD; 3/7/19 9:35am ; 3/13/19 7:40pm
+SAMIVST5 ; ven/lgc/arc - M2Broker calls for VA-PALS - RAD; 3/7/19 9:35am ; 3/19/19 9:15am
  ;;1.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -32,23 +32,20 @@ START if $text(^%ut)="" write !,"*** UNIT TEST NOT INSTALLED ***" quit
  quit
  ;
  ;
- ;@API-code: $$RadProcedures(StationNumber) - or -
- ;           do RadProcedures(StationNumber)
- ;@API-called-by: Option : SAMI PULL RADIOLOGY PROCEDURES
- ;@API-Context menu : MAG DICOM VISA
- ;@API-Remote Procedure : MAGV GET RADIOLOGY PROCEDURES
+ ;@dmi,@oi (Option: SAMI PULL RADIOLOGY PROCEDURES)
+RADPROCD ;Pull RadiologyProcedures off the VA server into graphstore
  ;
- ; Pull RadiologyProcedures off the server and build the
- ;    'radiology procedures' Graphstore
- ;Enter
+ ;May be called as $$RadProcedures(StationNumber) - or -
+ ;           do RadProcedures(StationNumber)
+ ;Input
  ;   [StationNumber]  
- ;     if not entered, uses SAMI DEFAULT STATIOn NUMBER
+ ;     if not entered, uses SAMI DEFAULT STATION NUMBER
  ;        parameter entry
- ;Return
+ ;Exit
  ;   If called as extrinsic
  ;      0 = rebuild of "radiology procedures" Graphstore failed
  ;      n = number of radiology procedures filed
-RADPROCD ;
+ ;
  if '$length($get(StationNumber)) do
  . set StationNumber=$$GET^XPAR("SYS","SAMI DEFAULT STATIOn NUMBER",,"Q")
  if '$length($get(StationNumber)) quit:$Q 0  quit
@@ -79,20 +76,16 @@ RADPROCD ;
  quit:$Q $get(gien)  quit
  ;
  ;
- ;@API-code: $$ActiveRadExams - or - do ActiveRadExams
- ;@API-called-by: Option : SAMI PULL RAd ACTIVE EXAMS
- ;@API-Context menu : MAG DICOM VISA
- ;@API-Remote Procedure : MAGJ RADACTIVEEXAMS
+ ;@dmi,@oi (option :SAMI PULL RAd ACTIVE EXAMS)
+ACTEXAMS ; Pull RadiologyProcedures off the VA server into graphstore
  ;
- ; Pull RadiologyProcedures off the server and build the
- ;    'radiology active exams' Graphstore
- ;Enter
+ ;Input
  ;   nothing required
- ;Return
+ ;Exit
  ;   If called as extrinsic
  ;      0 = rebuild of "radiology active exams" Graphstore failed
  ;      n = number of active exams filed
-ACTEXAMS ;
+ ;
  new CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR,SAMIXD
  set CNTXT="MAG DICOM VISA"
  set RMPRC="MAGJ RADACTIVEEXAMS"
@@ -111,20 +104,16 @@ ACTEXAMS ;
  quit:$Q $get(gien)  quit
  ;
  ;
- ;@API-code: W $$RadStaff - or - d RadStaff
- ;@API-called-by: Option : SAMI PULL RADIOLOGY STAFF
- ;@API-Context menu : MAG DICOM VISA
- ;@API-Remote Procedure : MAG DICOM GET RAd PERSON
+ ;@dmi,@oi (Option : SAMI PULL RADIOLOGY STAFF)
+RADSTAFF ; Pull Radiology Staff off the VA server into graphstore
  ;
- ; Pull Radiology Staff off the server and build the
- ;    'radiology staff' Graphstore
- ;Enter
+ ;Input
  ;   nothing required
- ;Return
+ ;Exit
  ;   If called as extrinsic
  ;      0 = rebuild of "radiology staff" Graphstore failed
  ;      n = number of radiology staff filed
-RADSTAFF ;
+ ;
  new CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR,SAMIXD
  set CNTXT="MAG DICOM VISA"
  set RMPRC="MAG DICOM GET RAD PERSON"
@@ -149,21 +138,16 @@ RADSTAFF ;
  quit:$Q $get(gien)  quit
  ;
  ;
+ ;@dmi,@oi (SAMI PULL RADIOLOGY RESIDENTS)
+RADRESDT ; Pull Radiology Residents off the VA server into graphstore
  ;
- ;@API-code: $$RadResidents - or - d RadResidents
- ;@API-called-by: Option : SAMI PULL RADIOLOGY RESIDENTS
- ;@API-Context menu : MAG DICOM VISA
- ;@API-Remote Procedure : MAG DICOM GET RAd PERSON
- ;
- ; Pull Radiology Residents off the server and build the
- ;    'radiology residents' Graphstore
- ;Enter
+ ;Input
  ;   nothing required
- ;Return
+ ;Exit
  ;   If called as extrinsic
  ;      0 = rebuild of "radiology residents" Graphstore failed
  ;      n = number of radiology residents filed
-RADRESDT ;
+ ;
  new CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR,SAMIXD,radres
  set CNTXT="MAG DICOM VISA"
  set RMPRC="MAG DICOM GET RAD PERSON"
@@ -187,21 +171,17 @@ RADRESDT ;
  quit:$Q $get(gien)  quit
  ;
  ;
+ ;@dmi,@oi (Option: SAMI PULL RADIOLOGY TECHS)
  ;
- ;@API-code: $$RadTechs - or - d RadTechs
- ;@API-called-by: Option : SAMI PULL RADIOLOGY TECHS
- ;@API-Context menu : MAG DICOM VISA
- ;@API-Remote Procedure : MAG DICOM GET RAd PERSON
+RADTECHS ; Pull Radiology Technologists off the VA server into graphstore
  ;
- ; Pull Radiology Technologists off the server and build the
- ;    'radiology technologists' Graphstore
- ;Enter
+ ;Input
  ;   nothing required
- ;Return
+ ;Exit
  ;   If called as extrinsic
  ;      0 = rebuild of "radiology technologists" Graphstore failed
  ;      n = number of radiology technologists filed
-RADTECHS ;
+ ;
  new CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR,SAMIXD
  set CNTXT="MAG DICOM VISA"
  set RMPRC="MAG DICOM GET RAD PERSON"
@@ -227,19 +207,16 @@ RADTECHS ;
  quit:$Q $get(gien)  quit
  ;
  ;
- ;@API-code: $$RadModifiers - or - d RadModifiers
- ;@API-called-by: Option : SAMI PULL RADIOLOGY MODIFIERS
- ;@API-Context menu : MAG DICOM VISA
- ;@API-Remote Procedure : MAG DICOM RADIOLOGY MODIFIERS
+ ;@dmi,@oi (Option : SAMI PULL RADIOLOGY MODIFIER)
+RADMODS ; Pull Radiology Modifiers off the VA server and build graphstore
  ;
- ; Pull Radiology Modifiers off the server and build the
- ;    'radiology modifiers' Graphstore
  ;Enter
  ;   nothing required
+ ;Exit
  ;   If called as extrinsic
  ;      0 = rebuild of "radiology modifiers" Graphstore failed
  ;      n = number of radiology modifiers filed
-RADMODS ;
+ ;
  new CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR,SAMIXD
  set CNTXT="MAG DICOM VISA"
  set RMPRC="MAG DICOM RADIOLOGY MODIFIERS"
@@ -268,20 +245,16 @@ RADMODS ;
  quit:$Q $get(gien)  quit
  ;
  ;
- ;@API-code: $$RadDxCodes - or - d RadDxCodes
- ;@API-called-by: Option : SAMI PULL RADIOLOGY DX CODES
- ;@API-Context menu : MAG DICOM VISA
- ;@API-Remote Procedure : MAG DICOM GET RAd DX CODE
+ ;@dmi,@oi (Option: SAMI PULL RADIOLOGY DX CODES)
+RADDXCDS ; Pull Radiology Dx Codes off the server and build graphstore
  ;
- ; Pull Radiology Dx Codes off the server and build the
- ;    'radiology dx codes' Graphstore
- ;Enter
+ ;Input
  ;   nothing required
- ;Return
+ ;Exit
  ;   If called as extrinsic
  ;      0 = rebuild of "radiology dx codes" Graphstore failed
  ;      n = number of radiology dx codes filed
-RADDXCDS ;
+ ;
  new CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR,SAMIXD,radxcd
  set CNTXT="MAG DICOM VISA"
  set RMPRC="MAG DICOM GET RAD DX CODE"

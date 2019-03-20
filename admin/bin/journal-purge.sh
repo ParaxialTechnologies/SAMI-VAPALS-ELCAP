@@ -7,7 +7,13 @@
 # Copyright: Copyright © 2019 Fourth Watch Software LC
 # License:   See $HOME/run/routines/SAMIUL.m
 
-source $HOME/etc/env.conf
+if [[ -f $HOME/etc/env.conf ]]
+then
+    source $HOME/etc/env.conf
+else
+    echo "Missing environment configuration file [$HOME/etc/env.conf]" >&2
+    exit 2
+fi
 
 function usage {
     echo "Info:  Purge old YottaDB journals in a VAPALS-ELCAP environment"
@@ -18,6 +24,7 @@ function usage {
     echo "       $0 -h         # Display this help menu"
 }
 
+script=$(basename $0)
 logfile="$HOME/var/log/$(basename $0 .sh).log"
 
 while getopts :hqtd: OPTION
@@ -48,7 +55,7 @@ done
 
 [[ $quiet == on ]] && exec &> $logfile || exec &> >(tee $logfile)
 
-echo "[$(date)]: Start $(basename $0) $@"
+echo "[$(date)]: Start $script $@"
 echo
 
 echo -n "[$(date)]: Purging journals older than ${days:-7} day(s)"
@@ -70,6 +77,6 @@ count=$(cat $gtm_tmp/junk.$$ | wc -l) && rm $gtm_tmp/junk.$$
 echo "[$(date)]: A total of $count journal(s) out of $total total journal(s) $msg removed"
 echo
 
-echo "[$(date)]: Finish $(basename $0) $@"
+echo "[$(date)]: Finish $script $@"
 
 exit 0

@@ -7,7 +7,14 @@
 # Copyright: Copyright © 2019 Fourth Watch Software LC
 # License:   See $HOME/run/routines/SAMIUL.m
 
-source $HOME/etc/env.conf
+if [[ -f $HOME/etc/env.conf ]]
+then
+    source $HOME/etc/env.conf
+else
+    echo "Missing environment configuration file [$HOME/etc/env.conf]" >&2
+    exit 2
+fi
+
 set -e
 
 function usage {
@@ -18,11 +25,12 @@ function usage {
     echo "       $0 -h  # Display this help menu"
 }
 
+script=$(basename $0)
 logfile="$HOME/var/log/$(basename $0 .sh).log"
 datetime=$(date +%Y%m%d%H%M)
 backupdir="$HOME/data/backups/$datetime"
 
-trap "rm -rf $backupdir*; echo -e \"\n[$(date)]: Interrupt $(basename $0) $@\"; exit 127" SIGINT SIGQUIT SIGABRT SIGTERM
+trap "rm -rf $backupdir*; echo -e \"\n[$(date)]: Interrupt $script $@\"; exit 127" SIGINT SIGQUIT SIGABRT SIGTERM
 
 while getopts :hqv OPTION
 do
@@ -43,7 +51,7 @@ done
 [[ ! -d $backupdir ]] && mkdir -p $backupdir/{data/globals,data/journals,run/routines}
 [[ $quiet == on ]] && exec &> $logfile || exec &> >(tee $logfile)
 
-echo "[$(date)]: Start $(basename $0) $@"
+echo "[$(date)]: Start $script $@"
 echo
 
 echo "[$(date)]: Backing up the global directory..."
@@ -74,6 +82,6 @@ echo "[$(date)]: Cleaning up..."
 rm $verbose -rf $backupdir
 echo
 
-echo "[$(date)]: Finish $(basename $0) $@"
+echo "[$(date)]: Finish $script $@"
 
 exit 0

@@ -7,7 +7,13 @@
 # Copyright: Copyright © 2019 Fourth Watch Software LC
 # License:   See $HOME/run/routines/SAMIUL.m
 
-source $HOME/etc/env.conf
+if [[ -f $HOME/etc/env.conf ]]
+then
+    source $HOME/etc/env.conf
+else
+    echo "Missing environment configuration file [$HOME/etc/env.conf]" >&2
+    exit 2
+fi
 
 function usage {
     echo "Info:  Enable YottaDB journaling in a VAPALS-ELCAP environment"
@@ -16,6 +22,7 @@ function usage {
     echo "       $0 -h  # Display this help menu"
 }
 
+script=$(basename $0)
 logfile="$HOME/var/log/$(basename $0 .sh).log"
 
 while getopts :hq OPTION
@@ -34,7 +41,7 @@ done
 
 [[ $quiet == on ]] && exec &> $logfile || exec &> >(tee $logfile)
 
-echo "[$(date)]: Start $(basename $0) $@"
+echo "[$(date)]: Start $script $@"
 echo
 
 echo "[$(date)]: Enabling the journals..."
@@ -42,6 +49,6 @@ $gtm_dist/mupip set -journal="enable,on,before,file=$HOME/data/journals/osehra.m
 $gtm_dist/mupip set -journal="enable,on,before,file=$HOME/data/journals/perf.mjl" -file $HOME/data/globals/perf.dat
 echo
 
-echo "[$(date)]: Finish $(basename $0) $@"
+echo "[$(date)]: Finish $script $@"
 
 exit 0

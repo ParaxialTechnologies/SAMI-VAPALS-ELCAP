@@ -58,10 +58,10 @@ then
 fi
 echo
 
-tmstatus=$($gtm_dist/mumps -run %XCMD 'write $data(^%ZTSCH("RUN"))#2')
-echo "[$(date)]: Taskman status = $tmstatus"
-if [[ $tmstatus -eq 1 ]]
+tmstatus=$($gtm_dist/mumps -run %XCMD 'write $get(^%ZTSCH("RUN"))')
+if [[ $tmstatus =~ [0-9,] ]]
 then
+    echo "[$(date)]: Taskman status = running ($tmstatus)"
     echo "[$(date)]: Stopping Taskman..."
 $gtm_dist/mumps -run %XCMD 'set U="^" do STOP^ZTMKU' << EOF
 yes
@@ -69,12 +69,35 @@ yes
 yes
 EOF
 
+    count=0
     while true
     do
-        tmstatus=$($gtm_dist/mumps -run %XCMD 'write $data(^%ZTSCH("RUN"))#2')
-        [[ $tmstatus == 0 ]] && echo "[$(date)]: Taskman status = $tmstatus" && break
+        tmstatus=$($gtm_dist/mumps -run %XCMD 'write $get(^%ZTSCH("RUN"))')
+        [[ $tmstatus == "" ]] && echo "[$(date)]: Taskman status = ${tmstatus:-stopped}" && break
+
         sleep 5
+        count=$((count + 5))
+
+        if [[ $count -ge 30 ]]
+        then
+            tmstatus=$($gtm_dist/mumps -run %XCMD 'write $get(^%ZTSCH("RUN"))')
+            if [[ $tmstatus == "" ]]
+            then
+                echo "[$(date)]: Taskman status = ${tmstatus:-stopped}"
+            else
+                echo "[$(date)]: Taskman status = running ($tmstatus)"
+                echo "[$(date)]: Taskman will be shutdown with the rest of the Mumps processes"
+            fi
+
+            break
+        fi
     done
+elif [[ $tmstatus == "" ]]
+then
+    echo "[$(date)]: Taskman status = ${tmstatus:-stopped}"
+else
+    echo "[$(date)]: Taskman status = $tmstatus"
+    echo "[$(date)]: Taskman needs to be reconfigured"
 fi
 echo
 
@@ -112,6 +135,9 @@ then
     $gtm_dist/mupip rundown -region \*
     echo
 fi
+
+mstatus=$(ps -u $USER -o pid,cmd | grep mumps | grep -v grep)
+echo -e "[$(date)]: Running Mumps processes:\n$mstatus\n"
 
 echo "[$(date)]: Finish $script $@"
 

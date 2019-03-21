@@ -62,10 +62,11 @@ then
     echo
 fi
 
-tmstatus=$($gtm_dist/mumps -run %XCMD 'write $data(^%ZTSCH("RUN"))#2')
-echo "[$(date)]: Taskman status = $tmstatus"
-if [[ $tmstatus -eq 0 ]]
+tmstatus=$($gtm_dist/mumps -run %XCMD 'write $get(^%ZTSCH("RUN"))')
+if [[ $tmstatus == "" ]]
 then
+    echo "[$(date)]: Taskman status = ${tmstatus:-stopped}"
+
     cd $gtm_log
 
     echo "[$(date)]: Starting Taskman..."
@@ -73,10 +74,21 @@ then
 
     sleep 1
 
-    tmstatus=$($gtm_dist/mumps -run %XCMD 'write $data(^%ZTSCH("RUN"))#2')
-    echo "[$(date)]: Taskman status = $tmstatus"
+    tmstatus=$($gtm_dist/mumps -run %XCMD 'write $get(^%ZTSCH("RUN"))')
+    if [[ $tmstatus =~ [0-9,] ]]
+    then
+        echo "[$(date)]: Taskman status = running ($tmstatus)"
+    else
+        echo "[$(date)]: Taskman status = ${tmstatus:-stopped}"
+    fi
 
     cd - > /dev/null
+elif [[ $tmstatus =~ [0-9,] ]]
+then
+    echo "[$(date)]: Taskman status = running ($tmstatus)"
+else
+    echo "[$(date)]: Taskman status = $tmstatus"
+    echo "[$(date)]: Taskman needs to be reconfigured"
 fi
 echo
 
@@ -97,6 +109,9 @@ then
     cd - > /dev/null
 fi
 echo
+
+mstatus=$(ps -u $USER -o pid,cmd | grep mumps | grep -v grep)
+echo -e "[$(date)]: Running Mumps processes:\n$mstatus\n"
 
 echo "[$(date)]: Finish $script $@"
 

@@ -1,4 +1,4 @@
-SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ; 3/15/19 11:35am
+SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ; 2019-03-21T17:37Z
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -8,13 +8,15 @@ SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ; 3/15/19 11:35am
  ; @routine-credits
  ; @primary-dev: Alexis Carlson (arc)
  ;  alexis@vistaexpertise.net
+ ; @additional-dev: Linda M. R. Yaw (lmry)
+ ;  linda.yaw@vistaexpertise.net
  ; @primary-dev-org: Vista Expertise Network (ven)
  ;  http://vistaexpertise.net
  ; @copyright: 2012/2018, ven, all rights reserved
  ; @license: Apache 2.0
  ;  https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ; @last-updated: 2018-11-02T1840Z
+ ; @last-updated: 2019-03-21T17:37Z
  ; @application: SAMI
  ; @version: 18.0
  ; @patch-list: none yet
@@ -33,11 +35,11 @@ START ;
  ;
  ;
 STARTUP ; Ensure all of test patient's forms are setup in vapals-patients
- n root s root=$$setroot^%wd("vapals-patients")
- k @root@("graph","XXX00001")
- n SAMIPOO D PLUTARR^SAMIUTST(.SAMIPOO,"all XXX00001 forms")
- m @root@("graph","XXX00001")=SAMIPOO
- q
+ new root set root=$$setroot^%wd("vapals-patients")
+ kill @root@("graph","XXX00001")
+ new SAMIPOO do PLUTARR^SAMIUTST(.SAMIPOO,"all XXX00001 forms")
+ merge @root@("graph","XXX00001")=SAMIPOO
+ quit
  ;
 SETUP ;
  new args,body,return,filter,from,to,expect,result,expectn,resultn,utsuccess
@@ -50,9 +52,9 @@ TEARDOWN ; ZEXCEPT: SAMIUARGS,SAMIUBODY,SAMIURETURN,filter,from,to,expect,result
  ;
  ;
 UTQUIT ; @TEST - Quit at top of routine
- D ^SAMISRC2
- d SUCCEED^%ut
- q
+ do ^SAMISRC2
+ do SUCCEED^%ut
+ quit
  ;
 UTWSLKU ; @TEST WSLOOKUP^SAMISRC2
  ; Comments
@@ -69,7 +71,7 @@ UTWSLKU1 set SAMIUBODY(1)=""
  do PLUTARR^SAMIUTST(.expect,"UTWSLKU^SAMIUTC2: Null SID")
  set resultn=0,expectn=0
  for  set resultn=$order(SAMIURETURN(resultn)),expectn=$order(expect(expectn)) quit:('resultn)!('expectn)  do
- . quit:($E($TR(SAMIURETURN(resultn),""""" "),1,10)?4N1"."2N1"."2N)  ; Node with a date
+ . quit:($extract($translate(SAMIURETURN(resultn),""""" "),1,10)?4N1"."2N1"."2N)  ; Node with a date
  . quit:(SAMIURETURN(resultn)["meta content")
  . if '(resultn=expectn) set utsuccess=0
  . if '(SAMIURETURN(resultn)=expect(expectn)) set utsuccess=0
@@ -90,13 +92,13 @@ UTWSLKU2 kill SAMIUARGS,SAMIUBODY,SAMIURETURN,result,expect
  set resultn=0,expectn=0
  for  set resultn=$order(SAMIURETURN(resultn)),expectn=$order(expect(expectn)) quit:('resultn)!('expectn)  do
  . quit:SAMIURETURN(resultn)["meta content"
- . quit:($E($TR(SAMIURETURN(resultn),""""" "),1,10)?4N1"."2N1"."2N)  ; Node with a date
+ . quit:($extract($translate(SAMIURETURN(resultn),""""" "),1,10)?4N1"."2N1"."2N)  ; Node with a date
  . if '(resultn=expectn) set utsuccess=0
  . if '(SAMIURETURN(resultn)=expect(expectn)) set utsuccess=0
  if '(resultn="")&(expectn="") set utsuccess=0
  do CHKEQ^%ut(utsuccess,1)
  ;
- q
+ quit
  ;
  ;
 EOR ;End of routine SAMIUTC2

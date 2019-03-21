@@ -485,7 +485,7 @@ SAMISUB2(SAMILINE,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  . for  set zi=$order(@clog@(zi)) quit:zi=""  d  ;
  . . new zien set zien=+(%j_"."_zi)
  . . set zhtml(zien)=@clog@(zi)
- . set zhtml(%j_"."_$order(@clog@(""),-1)+1)="<pre>"
+ . set zhtml(%j_"."_$order(@clog@(""),-1)+1)="</pre>"
  ;
  quit  ; end of SAMISUB2
  ;

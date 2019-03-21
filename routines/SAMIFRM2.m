@@ -476,6 +476,17 @@ SAMISUB2(SAMILINE,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  . . quit
  . quit
  ;
+ if SAMILINE["changelog" d  ;
+ . new root set root=$$setroot^%wd("vapals-patients")
+ . new clog set clog=$na(@root@("graph",sid,form,"changelog"))
+ . if '$d(@clog) q  ;
+ . do findReplace^%ts(.SAMILINE,"</pre>","")
+ . new zi set zi=""
+ . for  set zi=$order(@clog@(zi)) quit:zi=""  d  ;
+ . . new zien set zien=+(%j_"."_zi)
+ . . set zhtml(zien)=@clog@(zi)
+ . set zhtml(%j_"."_$order(@clog@(""),-1)+1)="<pre>"
+ ;
  quit  ; end of SAMISUB2
  ;
  ;

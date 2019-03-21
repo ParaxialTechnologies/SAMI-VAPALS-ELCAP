@@ -1208,11 +1208,21 @@ wsPostForm ; code for ws wsPostForm^%wf, submit HTML form
  quit:sid=""
  ;set %json(sid,form,"form")=form
  do parseBody^%wf("tbdy",.body)
+ ; 
+ ; change log
+ ;
+ i form["siform" d  ;
+ . n root s root=$$setroot^%wd("vapals-patients")
+ . m tbdy("changelog")=@root@("graph",sid,form,"changelog")
+ . d CLOG^SAMICLOG(sid,form,"tbdy")
  ;
  ; we want to store the form by the date in the form.. and delete the old one
  ; 
  new useform s useform=form
  set useform=$$SAVFILTR^SAMISAV(sid,form,.tbdy) ; make this a framework call
+ ;
+ ; generate the change log
+ ;
  ;set %json(sid,form,"form")=form
  set %json(sid,useform,"form")=useform
  ;merge %json(sid,form)=tbdy

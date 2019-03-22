@@ -1,4 +1,4 @@
-SAMIFF ;ven/lgc,arc - Build a graph of form fields ; 3/19/19 2:24pm
+SAMIFF ;ven/lgc,arc - Build a graph of form fields ; 2019-03-22T16:45Z
  ;;18.0;SAMI;;
  ;
  quit  ; No entry from top
@@ -9,15 +9,15 @@ SAMIFF ;ven/lgc,arc - Build a graph of form fields ; 3/19/19 2:24pm
  ;
  ; @routine-credits
  ; @primary-dev:
- ;  Larry "poo" Carlson (lgc)
- ;   larry@fiscientific.com
- ;  Alexis Carlson (arc)
- ;   alexis@vistaexpertise.net
+ ;   Larry "poo" Carlson (lgc)
+ ;     larry@fiscientific.com
+ ;   Alexis Carlson (arc)
+ ;     alexis.carlson@vistaexpertise.net
  ; @primary-dev-org: Vista Expertise Network (ven)
- ;  http://vistaexpertise.net
+ ;   http://vistaexpertise.net
  ; @copyright: 2012/2018, ven, all rights reserved
  ; @license: Apache 2.0
- ;  https://www.apache.org/licenses/LICENSE-2.0.html
+ ;   https://www.apache.org/licenses/LICENSE-2.0.html
  ;
  ; @last-updated: 2019-03-14T20:29Z
  ; @application: SAMI
@@ -27,14 +27,18 @@ SAMIFF ;ven/lgc,arc - Build a graph of form fields ; 3/19/19 2:24pm
  ; @to-do
  ;   Add label comments
  ;
+ ; @change-log
+ ;   2019-03-22 ven/arc : Have PRSTSV report fields for which the number of
+ ;     values does not match the number of labels
+ ;
  ; @section 1 code
  ;
  ;
 PRSTSV(path,filename,graphname) ; Parse TSV file and build graph
  ; @input
- ;  path = full path, eg. - "/home/osehra/lib/silver/va-pals/form-fields/"
- ;  filename = name of TSV file, eg. - "intake-form-fields.tsv"
- ;  graphname = name of graph to build
+ ;   path = full path, eg. - "/home/osehra/lib/silver/va-pals/form-fields/"
+ ;   filename = name of TSV file, eg. - "intake-form-fields.tsv"
+ ;   graphname = name of graph to build
  ;
  quit:($get(path)="")!($get(filename)="")!($get(graphname)="")
  ;
@@ -47,26 +51,32 @@ PRSTSV(path,filename,graphname) ; Parse TSV file and build graph
  new question,name,type,required,placeholder,values,labels
  ;
  do OPEN^%ZISH("FILE",path,filename,"R")
+ new line
  ;
- for  use IO read LINE:DTIME quit:$$STATUS^%ZISH  do
+ for  use IO read line:5 quit:$$STATUS^%ZISH  do
  . if fieldnum>0 do  ; Skip TSV file column headers
- . . set question=$piece(LINE,$CHAR(9),1)
- . . set name=$piece(LINE,$CHAR(9),2)
- . . set type=$piece(LINE,$CHAR(9),3)
- . . set required=$piece(LINE,$CHAR(9),4)
- . . set placeholder=$piece(LINE,$CHAR(9),5)
- . . set values=$piece(LINE,$CHAR(9),6)
- . . set labels=$piece(LINE,$CHAR(9),7)
- . . ; use $P write !,fieldnum," ",name
- . . for inputnum=1:1 quit:inputnum>$length(values,";")  do
- . . . set @root@("field",fieldnum,"input",inputnum,"question")=question
- . . . set @root@("field",fieldnum,"input",inputnum,"name")=name
- . . . set @root@("field",fieldnum,"input",inputnum,"type")=type
- . . . set @root@("field",fieldnum,"input",inputnum,"required")=required
- . . . set @root@("field",fieldnum,"input",inputnum,"placeholder")=placeholder
- . . . set @root@("field",fieldnum,"input",inputnum,"value")=$piece(values,";",inputnum)
- . . . set @root@("field",fieldnum,"input",inputnum,"label")=$piece(labels,";",inputnum)
- . . set @root@("field","B",name,fieldnum)=""
+ . . set question=$piece(line,$CHAR(9),1)
+ . . set name=$piece(line,$CHAR(9),2)
+ . . set type=$piece(line,$CHAR(9),3)
+ . . set required=$piece(line,$CHAR(9),4)
+ . . set placeholder=$piece(line,$CHAR(9),5)
+ . . set values=$piece(line,$CHAR(9),6)
+ . . set labels=$piece(line,$CHAR(9),7)
+ . . ; Check that the number of values matches the number of labels
+ . . if $length(values,";")=$length(labels,";") do
+ . . . for inputnum=1:1 quit:inputnum>$length(values,";")  do
+ . . . . set @root@("field",fieldnum,"input",inputnum,"question")=question
+ . . . . set @root@("field",fieldnum,"input",inputnum,"name")=name
+ . . . . set @root@("field",fieldnum,"input",inputnum,"type")=type
+ . . . . set @root@("field",fieldnum,"input",inputnum,"required")=required
+ . . . . set @root@("field",fieldnum,"input",inputnum,"placeholder")=placeholder
+ . . . . set @root@("field",fieldnum,"input",inputnum,"value")=$piece(values,";",inputnum)
+ . . . . set @root@("field",fieldnum,"input",inputnum,"label")=$piece(labels,";",inputnum)
+ . . . set @root@("field","B",name,fieldnum)=""
+ . . else  do
+ . . . use $P write !,"Field: ",name
+ . . . use $P write !,?4,"Values: ",$length(values,";")
+ . . . use $P write !,?4,"Labels: ",$length(labels,";"),!
  . set fieldnum=fieldnum+1
  do CLOSE^%ZISH
  ;

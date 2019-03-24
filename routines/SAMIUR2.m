@@ -76,8 +76,6 @@ RPTTBL(RPT,TYPE) ; RPT is passed by reference and returns the
  . S RPT(3,"routine")="$$SSN^SAMIUR2"
  . S RPT(4,"header")="Incomplete form"
  . S RPT(4,"routine")="$$IFORM^SAMIUR2"
- . S RPT(5,"header")="Incomplete form date"
- . S RPT(5,"routine")="$$IFORMDT^SAMIUR2"
  if TYPE="missingct" d  q  ;
  . S RPT(1,"header")="Enrollment date"
  . S RPT(1,"routine")="$$BLINEDT^SAMIUR2"
@@ -87,6 +85,10 @@ RPTTBL(RPT,TYPE) ; RPT is passed by reference and returns the
  . S RPT(3,"routine")="$$SSN^SAMIUR2"
  ;
  q
+ ;
+DFN2SID(DFN) ;extrinsic returns the studyid for patient DFN
+ n root s root=$$setroot^%wd("vapals-patients")
+ q $g(@root@(DFN,"sisid"))
  ;
 FUDATE(zdt,dfn,SAMIPATS) ; extrinsic returns followup date
  n fud
@@ -222,10 +224,39 @@ SMKSTAT(zdt,dfn,SAMIPATS) ; extrinsic returns smoking status
  q smk
  ;
 IFORM(zdt,dfn,SAMIPATS) ; extrinsic returns the name(s) of the incomplete forms
- q $g(SAMIPATS(zdt,dfn,"iform"))
+ n iform s iform=$g(SAMIPATS(zdt,dfn,"iform"))
+ q:iform="" ""  ;
+ n return,zkey1,zn,typ
+ s return="<table>"
+ f zn=2:1  q:$p(iform," ",zn)=""  d  ;
+ . s return=return_"<tr><td>"
+ . s zkey1=$p(iform," ",zn)
+ . n fname
+ . if zkey1["ceform" set fname="CT Evaluation" set typ="ceform"
+ . if zkey1["sbform" set fname="Background" set typ="sbform"
+ . if zkey1["fuform" set fname="Follow-up" set typ="fuform"
+ . if zkey1["bxform" set fname="Biopsy" set typ="bxform"
+ . if zkey1["ptform" set fname="Pet Evaluation" set typ="ptform"
+ . if zkey1["itform" set fname="Intervention" set typ="itform"
+ . if zkey1["siform" set fname="Intake Form" set typ="siform"
+ . if $get(fname)="" set fname="unknown" set typ=""
+ . ;
+ . n sid s sid=$$DFN2SID^SAMIUR2(dfn)
+ . n zdate s zdate=$$VAPALSDT^SAMICASE($$KEY2FM^SAMICASE(zkey1))
+ . s return=return_$$MKNAV(sid,zkey1,fname_" - "_zdate,typ)
+ . s return=return_"</td></tr>"
+ s return=return_"</table>"
+ q return
  ;
-IFORMDT(zdt,dfn,SAMIPATS) ; extrinsic returns incomplete form date
- q "iform date"
+MKNAV(sid,zform,fname,form) ; extrinsic return html for navigation to a form
+ ;
+ n rtn
+ set rtn="<form method=""post"" action=""/vapals"">"
+ set rtn=rtn_"<input name=""samiroute"" value=""form"" type=""hidden"">"
+ set rtn=rtn_" <input name=""studyid"" value="""_sid_""" type=""hidden"">"
+ set rtn=rtn_" <input name=""form"" value=""vapals:"_zform_""" type=""hidden"">"
+ set rtn=rtn_" <input value="""_fname_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"_$char(13)
+ q rtn
  ;
 RURAL(zdt,dfn,SAMIPATS) ; extrinsic which returns the rural/urban status
  ; of the patient

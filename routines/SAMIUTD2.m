@@ -1,4 +1,4 @@
-SAMIUTD2 ;ven/lgc - UNIT TEST for SAMICTD2 ; 3/15/19 11:04am
+SAMIUTD2 ;ven/lgc - UNIT TEST for SAMICTD2 ; 2019-03-25T19:20Z
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -11,10 +11,9 @@ SAMIUTD2 ;ven/lgc - UNIT TEST for SAMICTD2 ; 3/15/19 11:04am
  ; @primary-dev-org: Vista Expertise Network (ven)
  ;  http://vistaexpertise.net
  ; @copyright: 2012/2018, ven, all rights reserved
- ; @license: Apache 2.0
- ;  https://www.apache.org/licenses/LICENSE-2.0.html
+ ; @license: see routine SAMIUL
  ;
- ; @last-updated: 10/29/18 12:03pm
+ ; @last-updated: 2019-03-25T19:20Z
  ; @application: SAMI
  ; @version: 18.0
  ; @patch-list: none yet
@@ -23,42 +22,42 @@ SAMIUTD2 ;ven/lgc - UNIT TEST for SAMICTD2 ; 3/15/19 11:04am
  ;
  ; @section 1 code
  ;
-START i $t(^%ut)="" w !,"*** UNIT TEST NOT INSTALLED ***" q
- d EN^%ut($T(+0),2)
- q
+START if $text(^%ut)="" write !,"*** UNIT TEST NOT INSTALLED ***" quit
+ do EN^%ut($text(+0),2)
+ quit
  ;
  ;
-STARTUP n utsuccess
- q
+STARTUP new utsuccess
+ quit
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
- k utsuccess
- q
+ kill utsuccess
+ quit
  ;
  ;
 UTQUIT ; @TEST - Quit at top of routine
- d ^SAMICTD2
- d SUCCEED^%ut
- q
+ do ^SAMICTD2
+ do SUCCEED^%ut
+ quit
  ;
 UTIN2G ; @TEST - initialize CTEVAL dictionary into graph cteval-dict
  ;INIT2GPH()
- n root,SAMIUPOO,SAMIUARC
- s root=$$setroot^%wd("cteval-dict")
- m SAMIUPOO=@root
- d SVUTARR^SAMIUTST(.SAMIUPOO,"init2graph-SAMICTD2")
+ new root,SAMIUPOO,SAMIUARC
+ set root=$$setroot^%wd("cteval-dict")
+ merge SAMIUPOO=@root
+ do SVUTARR^SAMIUTST(.SAMIUPOO,"init2graph-SAMICTD2")
  ; although init2graph kills the root, I need to do
  ;  so before the call so I know it is a new build
- k @root
- s utsuccess=1
- d INIT2GPH^SAMICTD2
- m SAMIUARC=@root
- k SAMIUPOO d PLUTARR^SAMIUTST(.SAMIUPOO,"init2graph-SAMICTD2")
- n nodea,nodep s nodea=$na(SAMIUARC),nodep=$na(SAMIUPOO)
- f  s nodea=$Q(@nodea),nodep=$Q(@nodep) q:nodea=""  d  q:'utsuccess
- . i '(@nodea=@nodep) s utsuccess=0
- i '(nodep="") s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing initialization of CTEVAL dictionary FAILED!")
- q
+ kill @root
+ set utsuccess=1
+ do INIT2GPH^SAMICTD2
+ merge SAMIUARC=@root
+ kill SAMIUPOO do PLUTARR^SAMIUTST(.SAMIUPOO,"init2graph-SAMICTD2")
+ new nodea,nodep set nodea=$name(SAMIUARC),nodep=$name(SAMIUPOO)
+ for  set nodea=$query(@nodea),nodep=$query(@nodep) quit:nodea=""  do  quit:'utsuccess
+ . if '(@nodea=@nodep) set utsuccess=0
+ if '(nodep="") set utsuccess=0
+ do CHKEQ^%ut(utsuccess,1,"Testing initialization of CTEVAL dictionary FAILED!")
+ quit
  ;
 EOR ;End of routine SAMIUTD2

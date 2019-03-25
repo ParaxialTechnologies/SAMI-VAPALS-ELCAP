@@ -1,4 +1,4 @@
-SAMIUTLG ;ven/lgc - Unit test for SAMILOG ; 1/22/19 1:34pm
+SAMIUTLG ;ven/lgc - Unit test for SAMILOG ; 2019-03-25T22:09Z
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -8,13 +8,14 @@ SAMIUTLG ;ven/lgc - Unit test for SAMILOG ; 1/22/19 1:34pm
  ; @routine-credits
  ; @primary-dev: Larry Carlson (lgc)
  ;  larry@fiscientific.com
+ ; @additional-dev: Linda M. R. Yaw (lmry)
+ ;  linda.yaw@vistaexpertise.net
  ; @primary-dev-org: Vista Expertise Network (ven)
  ;  http://vistaexpertise.net
  ; @copyright: 2012/2018, ven, all rights reserved
- ; @license: Apache 2.0
- ;  https://www.apache.org/licenses/LICENSE-2.0.html
+ ; @license: see routine SAMIUL
  ;
- ; @last-updated: 10/26/18 7:56pm
+ ; @last-updated: 2019-03-25T22:09Z
  ; @application: SAMI
  ; @version: 18.0
  ; @patch-list: none yet
@@ -23,58 +24,58 @@ SAMIUTLG ;ven/lgc - Unit test for SAMILOG ; 1/22/19 1:34pm
  ;
  ; @section 1 code
  ;
-START i $t(^%ut)="" w !,"*** UNIT TEST NOT INSTALLED ***" q
- d EN^%ut($T(+0),2)
- q
+START if $text(^%ut)="" write !,"*** UNIT TEST NOT INSTALLED ***" quit
+ do EN^%ut($text(+0),2)
+ quit
  ;
  ;
-STARTUP n utsuccess
- q
+STARTUP new utsuccess
+ quit
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
- k utsuccess
- q
+ kill utsuccess
+ quit
  ;
  ;
 UTTOGL ; @TEST - Toggle VAPALS password identification
  ;TOGOFF^SAMILOG and TOGON^SAMILOG
- n pooget,poopost,ienget,ienpost
- s ienget=$o(^%W(17.6001,"B","GET","vapals","WSHOME^SAMIHOM3",0))
- s ienpost=$o(^%W(17.6001,"B","POST","vapals","WSVAPALS^SAMIHOM3",0))
- s pooget=$g(^%W(17.6001,ienget,"AUTH"))
- s poopost=$g(^%W(17.6001,ienpost,"AUTH"))
+ new pooget,poopost,ienget,ienpost
+ set ienget=$order(^%W(17.6001,"B","GET","vapals","WSHOME^SAMIHOM3",0))
+ set ienpost=$order(^%W(17.6001,"B","POST","vapals","WSVAPALS^SAMIHOM3",0))
+ set pooget=$get(^%W(17.6001,ienget,"AUTH"))
+ set poopost=$get(^%W(17.6001,ienpost,"AUTH"))
  ;if the two (get and post) are not set the same, then
  ;  there is an error in the WEB SERVICE URL HANDLER file
- i '(pooget=poopost) d  q
- . d FAIL^%ut("Error, WEB SERVICE URL HANDLER setup error!")
- i pooget=1 d
- . d TOGOFF^SAMILOG
- . s utsuccess='$g(^%W(17.6001,ienget,"AUTH"))
- . d CHKEQ^%ut(utsuccess,1,"Toggle password OFF FAILED!")
- . d TOGON^SAMILOG
- . s utsuccess=$g(^%W(17.6001,ienget,"AUTH"))
- . d CHKEQ^%ut(utsuccess,1,"Toggle password ON FAILED!")
- e  d
- . d TOGON^SAMILOG
- . s utsuccess=$g(^%W(17.6001,ienget,"AUTH"))
- . d CHKEQ^%ut(utsuccess,1,"Toggle password ON FAILED!")
- . d TOGOFF^SAMILOG
- . s utsuccess='$g(^%W(17.6001,ienget,"AUTH"))
- . d CHKEQ^%ut(utsuccess,1,"Toggle password OFF FAILED!")
+ if '(pooget=poopost) do  quit
+ . do FAIL^%ut("Error, WEB SERVICE URL HANDLER setup error!")
+ if pooget=1 do
+ . do TOGOFF^SAMILOG
+ . set utsuccess='$get(^%W(17.6001,ienget,"AUTH"))
+ . do CHKEQ^%ut(utsuccess,1,"Toggle password OFF FAILED!")
+ . do TOGON^SAMILOG
+ . set utsuccess=$get(^%W(17.6001,ienget,"AUTH"))
+ . do CHKEQ^%ut(utsuccess,1,"Toggle password ON FAILED!")
+ else  do
+ . do TOGON^SAMILOG
+ . set utsuccess=$get(^%W(17.6001,ienget,"AUTH"))
+ . do CHKEQ^%ut(utsuccess,1,"Toggle password ON FAILED!")
+ . do TOGOFF^SAMILOG
+ . set utsuccess='$get(^%W(17.6001,ienget,"AUTH"))
+ . do CHKEQ^%ut(utsuccess,1,"Toggle password OFF FAILED!")
  ;
  ; Now test the interactive entry point
- d STONOFF^SAMILOG
- s utsuccess='(pooget=$g(^%W(17.6001,ienget,"AUTH")))
- d CHKEQ^%ut(utsuccess,1,"Toggle password 1st interactive FAILED!")
- d STONOFF^SAMILOG
- s utsuccess=(pooget=$g(^%W(17.6001,ienget,"AUTH")))
- d CHKEQ^%ut(utsuccess,1,"Toggle password 2nd interactive FAILED!")
+ do STONOFF^SAMILOG
+ set utsuccess='(pooget=$get(^%W(17.6001,ienget,"AUTH")))
+ do CHKEQ^%ut(utsuccess,1,"Toggle password 1st interactive FAILED!")
+ do STONOFF^SAMILOG
+ set utsuccess=(pooget=$get(^%W(17.6001,ienget,"AUTH")))
+ do CHKEQ^%ut(utsuccess,1,"Toggle password 2nd interactive FAILED!")
  ;
  ; Be sure we leave setting as it was
- n node s node=$NA(^%W(17.6001,ienget,"AUTH"))
- s @node=pooget
- s node=$NA(^%W(17.6001,ienpost,"AUTH"))
- s @node=poopost
- q
+ new node set node=$name(^%W(17.6001,ienget,"AUTH"))
+ set @node=pooget
+ set node=$name(^%W(17.6001,ienpost,"AUTH"))
+ set @node=poopost
+ quit
  ;
 EOR ;End of routine SAMIUTLG

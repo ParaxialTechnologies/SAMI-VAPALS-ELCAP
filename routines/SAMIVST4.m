@@ -1,4 +1,4 @@
-SAMIVST4 ;;ven/arc/lgc - M2Broker calls for VA-PALS - ALL PTS  ; 3/13/19 7:40pm
+SAMIVST4 ;;ven/arc/lgc - M2Broker calls for VA-PALS - ALL PTS  ; 3/20/19 9:24am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -60,32 +60,36 @@ SAMIVST4 ;;ven/arc/lgc - M2Broker calls for VA-PALS - ALL PTS  ; 3/13/19 7:40pm
  quit
  ;
  ;
- ;@rpi - HMP PATIENT SELECT
- ;@oi - SAMI PULL VA-PALS PATIENTS
- ;@API-code: D ALLPTS^SAMIVSTS
-ALLPTS ; Get all patients from a server by sequentially calling
+ ;@dmi,@oi (Option: SAMI PULL VA-PALS PATIENTS)
+ALLPTS ; Get all patients from a VA server by sequentially calling
  ;  for last names beginning with each letter of the
  ;  alphabet, building a complete array of patient names
  ;  in the ^KBAP("ALLPTS") global.  Once all the patient
  ;  names and demographics are pulled into this global,
  ;  the information is parsed into the 'patient-information'
  ;  graph in VA-PALS graph store database.
+ ;
  ; Note : call directly or schedule option
  ;  SAMI PULL VA-PALS PATIENTS
  ;
- ;multi-dev;API;Procedure;clean;silent;sac exemption;0% tests
- ;@oi  - option interface
  do ALLPTS1("ALLPTS")
  ; Now build a new 'patient-lookup' graph
  do MKGPH
  quit
  ;
- ;ENTER
+ ;
+ ;@dmi
+ALLPTS1(SAMISS) ; Build ^KBAP(SAMISS global
+ ;
+ ;Input
  ;  SAMISS = Subscript name within ^KBAP global
  ;           to use for patient array
  ;           Specifically designed for UNIT TEST where
  ;           we don't wish to corrupt existing data set
-ALLPTS1(SAMISS) ; Build ^KBAP("ALLPTS" global
+ ;Exit
+ ;  Builds ^KBAP(SAMISS global with all patient information
+ ;    pulled from the VA server
+ ;
  new SAMIXD,fini,CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR
  set CNTXT="HMP UI CONTEXT"
  set RMPRC="HMP PATIENT SELECT"
@@ -106,11 +110,12 @@ ALLPTS1(SAMISS) ; Build ^KBAP("ALLPTS" global
  quit
  ;
  ;
+ ;@dmi
+MKGPH quit:'$data(^KBAP("ALLPTS"))
  ; Make Graph Store patient-lookup global from
  ;  ^KBAP("ALLPTS")
  ; e.g.
  ;   do MKGPH^KBAPUTL
-MKGPH quit:'$data(^KBAP("ALLPTS"))
  new si set si=$$CLRGRPS^SAMIVSTA("patient-lookup")
  quit:'$get(si)
  new gien,node,ptdata,root

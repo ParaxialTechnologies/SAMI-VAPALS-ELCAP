@@ -1,4 +1,4 @@
-SAMIFF ;ven/lgc,arc - Build a graph of form fields ; 2019-03-22T16:45Z
+SAMIFF ;ven/lgc,arc - Build a graph of form fields ; 3/25/19 3:41pm
  ;;18.0;SAMI;;
  ;
  quit  ; No entry from top
@@ -48,12 +48,17 @@ PRSTSV(path,filename,graphname) ; Parse TSV file and build graph
  ;
  new fieldnum set fieldnum=0
  new inputnum set inputnum=0
- new question,name,type,required,placeholder,values,labels
+ new question,name,type,required,placeholder,values,labels,cnt
+ new errmsg s errmsg=""
  ;
  do OPEN^%ZISH("FILE",path,filename,"R")
  new line
+ s cnt=1
  ;
- for  use IO read line:5 quit:$$STATUS^%ZISH  do
+ for  use IO read line:5 quit:$$STATUS^%ZISH  do  q:$length(errmsg)
+ . s cnt=cnt+1
+ . if '(line[$CHAR(9)) d  q
+ .. set errmsg="Line "_cnt_" not tab delimited :::"_line
  . if fieldnum>0 do  ; Skip TSV file column headers
  . . set question=$piece(line,$CHAR(9),1)
  . . set name=$piece(line,$CHAR(9),2)
@@ -65,13 +70,17 @@ PRSTSV(path,filename,graphname) ; Parse TSV file and build graph
  . . ; Check that the number of values matches the number of labels
  . . if $length(values,";")=$length(labels,";") do
  . . . for inputnum=1:1 quit:inputnum>$length(values,";")  do
+ . . . . new value,label
  . . . . set @root@("field",fieldnum,"input",inputnum,"question")=question
  . . . . set @root@("field",fieldnum,"input",inputnum,"name")=name
  . . . . set @root@("field",fieldnum,"input",inputnum,"type")=type
  . . . . set @root@("field",fieldnum,"input",inputnum,"required")=required
  . . . . set @root@("field",fieldnum,"input",inputnum,"placeholder")=placeholder
- . . . . set @root@("field",fieldnum,"input",inputnum,"value")=$piece(values,";",inputnum)
- . . . . set @root@("field",fieldnum,"input",inputnum,"label")=$piece(labels,";",inputnum)
+ . . . . set value=$piece(values,";",inputnum)
+ . . . . set @root@("field",fieldnum,"input",inputnum,"value")=value
+ . . . . set label=$piece(labels,";",inputnum)
+ . . . . set @root@("field",fieldnum,"input",inputnum,"label")=label
+ . . . . i '($get(value)=""),'($get(label)="") set @root@("field","C",name,value,label)=""
  . . . set @root@("field","B",name,fieldnum)=""
  . . else  do
  . . . use $P write !,"Field: ",name
@@ -79,6 +88,7 @@ PRSTSV(path,filename,graphname) ; Parse TSV file and build graph
  . . . use $P write !,?4,"Labels: ",$length(labels,";"),!
  . set fieldnum=fieldnum+1
  do CLOSE^%ZISH
+ write:$l(errmsg) !,!,"*** ",errmsg," ***",!,!
  ;
  quit  ; End of label PRSTSV
  ;

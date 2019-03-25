@@ -1,4 +1,4 @@
-SAMIUTFF ;ven/arc - Unit test for SAMIFF ; 2019-03-14T20:29Z
+SAMIUTFF ;ven/arc - Unit test for SAMIFF ; 3/25/19 3:43pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -64,7 +64,7 @@ UTPRSTSV ; @TEST Parse TSV file and build graph of form fields
  ;  2) Check that each input contains nodes for each parameter
  ;  3) Check that cross-reference nodes exist
  ;
- D PRSTSV^SAMIFF("/home/osehra/lib/silver/va-pals/form-fields/","intake-form-fields.tsv","form fields - intake")
+ D PRSTSV^SAMIFF("/home/osehra/lib/silver/va-pals/docs/form-fields/","intake.tsv","form fields - intake")
  ;
  ; Check that the graph actually contains data
  set root=$$setroot^%wd("form fields - intake")

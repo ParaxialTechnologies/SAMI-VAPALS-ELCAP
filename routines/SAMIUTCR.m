@@ -1,4 +1,4 @@
-SAMIUTCR ;ven/lgc - UNIT TEST for SAMICTR ; 2019-03-25T18:31Z
+SAMIUTCR ;ven/lgc - UNIT TEST for SAMICTR ; 2019-03-25T19:12Z
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -13,10 +13,9 @@ SAMIUTCR ;ven/lgc - UNIT TEST for SAMICTR ; 2019-03-25T18:31Z
  ; @primary-dev-org: Vista Expertise Network (ven)
  ;  http://vistaexpertise.net
  ; @copyright: 2012/2018, ven, all rights reserved
- ; @license: Apache 2.0
- ;  https://www.apache.org/licenses/LICENSE-2.0.html
+ ; @license: see routine SAMIUL
  ;
- ; @last-updated: 2019-03-25T18:31Z
+ ; @last-updated: 2019-03-25T19:12Z
  ; @application: SAMI
  ; @version: 18.0
  ; @patch-list: none yet
@@ -37,7 +36,7 @@ STARTUP new utsuccess
  merge @root@("graph","XXX00001")=SAMIUPOO
  kill SAMIUPOO do PLUTARR^SAMIUTST(.SAMIUPOO,"ceform-2019-01-24")
  merge @root@("graph","XXX00001","ceform-2019-01-24")=SAMIUPOO
- kill SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"ceform-2018-01-02")
+ kill SAMIUPOO do PLUTARR^SAMIUTST(.SAMIUPOO,"ceform-2018-01-02")
  merge @root@("graph","XXX00001","ceform-2018-01-02")=SAMIUPOO
  quit
  ;

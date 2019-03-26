@@ -1,4 +1,4 @@
-SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 3/25/19 1:24pm
+SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 3/25/19 3:59pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -77,11 +77,15 @@ COVERAGE ; Coverage tests for SAMI*.m
  ; Add the routines here in the preferred order; this enables us to easily
  ; rearrange these in whatever order we like.
  set I=0
+ ;
  ; set I=I+1,RUNCODE(I)="^SAMID"
  ; set I=I+1,RUNCODE(I)="^SAMIDOUT"
  ; set I=I+1,RUNCODE(I)="^SAMIDSSN"
+ ;
  set I=I+1,RUNCODE(I)="^SAMIUTLG"
+ ;
  ;set I=I+1,RUNCODE(I)="^SAMIUTM2"
+ ;
  set I=I+1,RUNCODE(I)="^SAMIUTH3"
  set I=I+1,RUNCODE(I)="^SAMIUTS2"
  set I=I+1,RUNCODE(I)="^SAMIUTAD"

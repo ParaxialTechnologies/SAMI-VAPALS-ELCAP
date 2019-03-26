@@ -1,4 +1,4 @@
-SAMIFF ;ven/lgc,arc - Build a graph of form fields ; 3/25/19 3:41pm
+SAMIFF ;ven/lgc,arc - Build a graph of form fields ; 3/26/19 9:19am
  ;;18.0;SAMI;;
  ;
  quit  ; No entry from top
@@ -55,10 +55,10 @@ PRSTSV(path,filename,graphname) ; Parse TSV file and build graph
  new line
  s cnt=1
  ;
- for  use IO read line:5 quit:$$STATUS^%ZISH  do  q:$length(errmsg)
- . s cnt=cnt+1
- . if '(line[$CHAR(9)) d  q
- .. set errmsg="Line "_cnt_" not tab delimited :::"_line
+ for  use IO read line:1 quit:$$STATUS^%ZISH  do  q:$length(errmsg)
+ . set cnt=cnt+1
+ . do  q:'(errmsg="")
+ .. set errmsg=$S(POP:"file missing",'(line[$CHAR(9)):"file not TAB delimited",1:"")
  . if fieldnum>0 do  ; Skip TSV file column headers
  . . set question=$piece(line,$CHAR(9),1)
  . . set name=$piece(line,$CHAR(9),2)

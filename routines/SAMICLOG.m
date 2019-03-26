@@ -1,4 +1,4 @@
-SAMICLOG ;ven/gpl - SAMI intake form change log routines ; 3/26/19 11:26am
+SAMICLOG ;ven/gpl - SAMI intake form change log routines ; 3/26/19 12:49pm
  ;;18.0;SAM;;
  ;
  ;@license: see routine SAMIUL
@@ -12,6 +12,12 @@ CLOG(sid,form,vars) ; adds to the intake form change log
  ;
  n root,CLOGROOT,var
  s root=$$setroot^%wd("vapals-patients")
+ ;
+ ;If samifirsttime is true, then this is the first submission
+ ;  for the intake form and we will not need to check
+ ;  for changes
+ q:($g(@root@("graph",sid,form,"samifirsttime"))="true")
+ ;
  s CLOGROOT=$na(@root@("graph",sid,form,"changelog"))
  ;
  n old

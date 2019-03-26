@@ -1,4 +1,4 @@
-SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 3/14/19 12:16pm
+SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 3/26/19 9:51am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -63,6 +63,7 @@ XTROU ; Unit tests for SAMI*.m
  ;;SAMIUTSV
  ;;SAMIUTST
  ;;SAMIUTFF
+ ;;SAMIUTCG
  ;
  quit  ; End of XTROU
  ;
@@ -76,11 +77,15 @@ COVERAGE ; Coverage tests for SAMI*.m
  ; Add the routines here in the preferred order; this enables us to easily
  ; rearrange these in whatever order we like.
  set I=0
+ ;
  ; set I=I+1,RUNCODE(I)="^SAMID"
  ; set I=I+1,RUNCODE(I)="^SAMIDOUT"
  ; set I=I+1,RUNCODE(I)="^SAMIDSSN"
+ ;
  set I=I+1,RUNCODE(I)="^SAMIUTLG"
+ ;
  ;set I=I+1,RUNCODE(I)="^SAMIUTM2"
+ ;
  set I=I+1,RUNCODE(I)="^SAMIUTH3"
  set I=I+1,RUNCODE(I)="^SAMIUTS2"
  set I=I+1,RUNCODE(I)="^SAMIUTAD"
@@ -107,7 +112,8 @@ COVERAGE ; Coverage tests for SAMI*.m
  set I=I+1,RUNCODE(I)="^SAMIUTRU"
  set I=I+1,RUNCODE(I)="^SAMIUTSV"
  set I=I+1,RUNCODE(I)="^SAMIUTST"
- set I=I=1,RUNCODE(I)="^SAMIUTFF"
+ set I=I+1,RUNCODE(I)="^SAMIUTFF"
+ set I=I+1,RUNCODE(I)="^SAMIUTCG"
  ;
  ; Note that routine references may be specified in one of the following ways:
  ;   * MODULE         : Calls EN^%ut with the name as an argument.
@@ -120,6 +126,9 @@ COVERAGE ; Coverage tests for SAMI*.m
  ; Excude routines with incomplete unit tests
  set I=I+1,XCLUDE(I)="SAMID"
  set I=I+1,XCLUDE(I)="SAMIUTID"
+ ;
+ ; Excude deprecated routines not yet deleted
+ set I=I+1,XCLUDE(I)="SAMIUR1"
  ;
  ; Exclude documentation only routines
  set I=I+1,XCLUDE(I)="SAMIUL"
@@ -165,6 +174,7 @@ COVERAGE ; Coverage tests for SAMI*.m
  set I=I+1,XCLUDE(I)="SAMIUTRU"
  set I=I+1,XCLUDE(I)="SAMIUTSV"
  set I=I+1,XCLUDE(I)="SAMIUTFF"
+ set I=I+1,XCLUDE(I)="SAMIUTCG"
  ;
  ; Add the XCLUDE values to the TMP variable that tracks this coverage test.
  merge ^TMP("SAMI",$JOB,"XCLUDE")=XCLUDE

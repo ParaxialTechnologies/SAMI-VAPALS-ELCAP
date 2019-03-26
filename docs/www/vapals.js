@@ -151,19 +151,21 @@ const VAPALS = new function () {
         }
 
         const processed = [];
-        line("NAME\tTYPE\tVALUES\tLABEL(S)\tREQUIRED");
+        line("QUESTION\tNAME\tTYPE\tREQUIRED\tPLACEHOLDER\tVALUES\tLABELS");
         $.each($("form").find(":input, p.lead, h3, h4, label.doc-heading"), function (i, el) {
             const $el = $(el);
             let name = $el.prop('name');
             let type = $el.prop('type');
             const tagName = $el.prop("tagName");
             //A ? signifies could be conditionally required. Rules could be complex
-            const required = $el.prop("required") === true ? "Yes" : "?";
-
+            // const required = $el.prop("required") === true ? "Yes" : "?";
+            // Changing this for now so we have a boolean value in the graph store
+            const required = $el.prop("required") === true ? "1" : "0";
+            
             //skip hidden fields since they can be pseudo elements for checkboxes
             if (type !== 'hidden' && type !== 'submit' && !processed.includes(name)) {
                 processed.push(name);
-
+                
                 let values = [];
                 let labels = [];
                 if (type === 'radio') {
@@ -186,18 +188,41 @@ const VAPALS = new function () {
                     values.push($el.val());
                     labels.push($el.closest("label").text().trim())
                 } else if (type === 'text' || type === 'textarea') {
-                    const label = $el.prop('placeholder') || $el.prop('title') || $el.closest(".form-group").find("label").first().text().trim();
+                    const label = $el.prop('placeholder') || $el.prop('title') || $el.closest(".form-group").find("label").first().text().trim().replace(/(\r\n|\n|\r)/gm, " ").replace(/\t/g, " ").replace(/\s+/g, " ");
                     labels.push(label);
                 } else if (tagName === "P" || tagName === "H3" || tagName === "H4" || tagName === "LABEL") {
                     name = "-";
                     type = "-";
                     values.push("-");
-                    labels.push($el.text().trim().replace(/(\r\n|\n|\r)/gm, ""));
+                    labels.push($el.text().trim().replace(/(\r\n|\n|\r)/gm, " ").replace(/\t/g, " ").replace(/\s+/g, " "));
                 } else {
                     console.log(name + " is a " + type)
                 }
-
-                line([name, type, values, labels, required].join("\t"))
+                
+                // Additions by Alexis
+                let question = '';
+                question     = $el.closest('.form-group').prev('label').text().trim().replace(/(\r\n|\n|\r)/gm, " ").replace(/\t/g, " ").replace(/\s+/g, " ");
+                // Call out the absence of a meaningful question so a human can provide it.
+                // if (question === labels.toString()) question = '';
+                if (question == '') {
+                    question = $el.prev('label').text().trim().replace(/(\r\n|\n|\r)/gm, " ").replace(/\t/g, " ").replace(/\s+/g, " ");
+                }
+                if (question == '') {
+                    question = $el.closest('.input-group').prev('label').text().trim().replace(/(\r\n|\n|\r)/gm, " ").replace(/\t/g, " ").replace(/\s+/g, " ");
+                }
+                if (question == '') {
+                    question = $el.closest('.form-group').find('label').first().text().trim().replace(/(\r\n|\n|\r)/gm, " ").replace(/\t/g, " ").replace(/\s+/g, " ");
+                }
+                
+                // Additions by Alexis
+                // For now we'll capture this manually; it's simply to provide a blank column.
+                let placeholder='';
+                
+                // Additions by Alexis
+                values = values.join(';');
+                labels = labels.join(';');
+                
+                line([question, name, type, required, placeholder, values, labels].join("\t"))
                 // console.log(labels.join(","))
             }
         });

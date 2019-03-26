@@ -1,4 +1,4 @@
-SAMICLOG ;ven/gpl - SAMI intake form change log routines ; 3/26/19 11:16am
+SAMICLOG ;ven/gpl - SAMI intake form change log routines ; 3/26/19 11:26am
  ;;18.0;SAM;;
  ;
  ;@license: see routine SAMIUL
@@ -72,14 +72,14 @@ DOLOGIT(vars,old,var,entry) ;
  ;   sets new "changelog" node in vapals-patients graphstore documenting
  ;
  n rootdd s rootdd=$$setroot^%wd("form fields - intake")
- n newval,oldval
+ n newval,oldval,nvtrans,ovtrans
  s newval=$g(@vars@(var)) i '(newval="") d
  . s nvtrans=$o(@rootdd@("field","C",var,newval,""))
  . s:'(nvtrans="") newval=nvtrans
  s:(newval="") newval="null"
  s oldval=$g(@old@(var)) i '(oldval="") d
  . s ovtrans=$o(@rootdd@("field","C",var,oldval,""))
- . s:'(ovtrans="") oldval=oltrans
+ . s:'(ovtrans="") oldval=ovtrans
  s:(oldval="") oldval="null"
  q:(newval=oldval)
  s entry=entry_oldval_" to: "_newval

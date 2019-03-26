@@ -1,4 +1,4 @@
-SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 3/25/19 3:59pm
+SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 3/26/19 9:51am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -112,8 +112,8 @@ COVERAGE ; Coverage tests for SAMI*.m
  set I=I+1,RUNCODE(I)="^SAMIUTRU"
  set I=I+1,RUNCODE(I)="^SAMIUTSV"
  set I=I+1,RUNCODE(I)="^SAMIUTST"
- set I=I=1,RUNCODE(I)="^SAMIUTFF"
- set I=I=1,RUNCODE(I)="^SAMIUTCG"
+ set I=I+1,RUNCODE(I)="^SAMIUTFF"
+ set I=I+1,RUNCODE(I)="^SAMIUTCG"
  ;
  ; Note that routine references may be specified in one of the following ways:
  ;   * MODULE         : Calls EN^%ut with the name as an argument.

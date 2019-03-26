@@ -1,4 +1,4 @@
-SAMICLOG ;ven/gpl - SAMI intake form change log routines ; 3/25/19 8:51am
+SAMICLOG ;ven/gpl - SAMI intake form change log routines ; 3/26/19 11:16am
  ;;18.0;SAM;;
  ;
  ;@license: see routine SAMIUL
@@ -48,6 +48,8 @@ CLOG(sid,form,vars) ; adds to the intake form change log
  . . s @zg=$s(@zg'="":@zg_",",1:@zg)_" VOD"
  . i $g(@zn@("silnot"))=1 d  ;
  . . s @zg=$s(@zg'="":@zg_",",1:@zg)_" Other contact method YN"
+ s ovia=$s(ovia="":"null",1:ovia)
+ s nvia=$s(nvia="":"null",1:nvia)
  i ovia'=nvia d  ;
  . d LOGIT(CLOGROOT,"Contacted via changed from "_ovia_" to "_nvia)
  ;
@@ -76,7 +78,7 @@ DOLOGIT(vars,old,var,entry) ;
  . s:'(nvtrans="") newval=nvtrans
  s:(newval="") newval="null"
  s oldval=$g(@old@(var)) i '(oldval="") d
- . s ovtrans=$o(@root@("field","C",var,oldval,""))
+ . s ovtrans=$o(@rootdd@("field","C",var,oldval,""))
  . s:'(ovtrans="") oldval=oltrans
  s:(oldval="") oldval="null"
  q:(newval=oldval)

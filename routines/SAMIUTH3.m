@@ -1,187 +1,187 @@
-SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3,SAMIHOM4 ; 3/15/19 11:25am
+SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3,SAMIHOM4 ; 2019-03-28T19:07Z
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
  ;
-START I $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
- D EN^%ut($T(+0),2)
- Q
+START if $text(^%ut)="" write !,"*** UNIT TEST NOT INSTALLED ***" quit
+ do EN^%ut($text(+0),2)
+ quit
  ;
  ;
  ; ===================== UNIT TESTS =====================
  ;
-STARTUP n utsuccess
- n root s root=$$setroot^%wd("vapals-patients")
- k @root@("graph","XXX00001")
- n SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
- m @root@("graph","XXX00001")=SAMIUPOO
- Q
+STARTUP new utsuccess
+ new root set root=$$setroot^%wd("vapals-patients")
+ kill @root@("graph","XXX00001")
+ new SAMIUPOO do PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
+ merge @root@("graph","XXX00001")=SAMIUPOO
+ quit
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
- K utsuccess
- Q
+ kill utsuccess
+ quit
  ;
 UTQUIT ; @TEST - Quit at top of routine
- D ^SAMIHOM3
- d SUCCEED^%ut
- D ^SAMIHOM4
- d SUCCEED^%ut
- q
+ do ^SAMIHOM3
+ do SUCCEED^%ut
+ do ^SAMIHOM4
+ do SUCCEED^%ut
+ quit
  ;
 UTWSHM ; @TEST - Testing web service for SAMI homepage test
  ; WSHOME(SAMIURTN,SAMIUFLTR)
- n SAMIUFLTR,SAMIURTN,nodea,nodep,SAMIUARC,SAMIUPOO
- s SAMIUFLTR("test")=1
- d WSHOME^SAMIHOM3(.SAMIURTN,.SAMIUFLTR)
- m SAMIUARC=SAMIURTN
- s utsuccess=1
- D PLUTARR^SAMIUTST(.SAMIUPOO,"UTWSHM^SAMIUTH3 test")
- s nodea=$na(SAMIUARC),nodep=$na(SAMIUPOO)
- f  s nodea=$q(@nodea),nodep=$q(@nodep) q:(nodea="")  q:($qs(nodea,1)>60)  d  q:'utsuccess
+ new SAMIUFLTR,SAMIURTN,nodea,nodep,SAMIUARC,SAMIUPOO
+ set SAMIUFLTR("test")=1
+ do WSHOME^SAMIHOM3(.SAMIURTN,.SAMIUFLTR)
+ merge SAMIUARC=SAMIURTN
+ set utsuccess=1
+ do PLUTARR^SAMIUTST(.SAMIUPOO,"UTWSHM^SAMIUTH3 test")
+ set nodea=$name(SAMIUARC),nodep=$name(SAMIUPOO)
+ for  set nodea=$query(@nodea),nodep=$query(@nodep) quit:(nodea="")  quit:($qsubscript(nodea,1)>60)  do  quit:'utsuccess
  .; check first 60 lines of configuration.  After that the returned
  .;   array depends on test patients available
- . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
- . i '(@nodea=@nodep) s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing web service test FAILED!")
- q
+ . if '($qsubscript(nodea,1)=$qsubscript(nodep,1)) set utsuccess=0
+ . if '(@nodea=@nodep) set utsuccess=0
+ do CHKEQ^%ut(utsuccess,1,"Testing web service test FAILED!")
+ quit
  ;
 UTWSHM1 ; @TEST - Testing web service for SAMI homepage samiroute=""
- k SAMIUFLTR,SAMIURTN,nodea,nodep,SAMIUARC,SAMIUPOO
- s SAMIUFLTR("samiroute")=""
- d WSHOME^SAMIHOM3(.SAMIURTN,.SAMIUFLTR)
- m SAMIUARC=SAMIURTN
- s utsuccess=1
- D PLUTARR^SAMIUTST(.SAMIUPOO,"UTWSHM^SAMIUTH3 samiroute null")
- s nodea=$na(SAMIUARC),nodep=$na(SAMIUPOO)
- f  s nodea=$q(@nodea),nodep=$q(@nodep) q:(nodea="")  d  q:'utsuccess
- . i $E($TR(@nodea,""""" "),1,10)?4N1"."2N1"."2N q
- . i (@nodea["meta content") q
- . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
- . i '(@nodea=@nodep) s utsuccess=0
- i '(nodep="") s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing web service null samiroute FAILED!")
- Q
+ kill SAMIUFLTR,SAMIURTN,nodea,nodep,SAMIUARC,SAMIUPOO
+ set SAMIUFLTR("samiroute")=""
+ do WSHOME^SAMIHOM3(.SAMIURTN,.SAMIUFLTR)
+ merge SAMIUARC=SAMIURTN
+ set utsuccess=1
+ do PLUTARR^SAMIUTST(.SAMIUPOO,"UTWSHM^SAMIUTH3 samiroute null")
+ set nodea=$name(SAMIUARC),nodep=$name(SAMIUPOO)
+ for  set nodea=$query(@nodea),nodep=$query(@nodep) quit:(nodea="")  do  quit:'utsuccess
+ . if $extract($translate(@nodea,""""" "),1,10)?4N1"."2N1"."2N quit
+ . if (@nodea["meta content") quit
+ . if '($qsubscript(nodea,1)=$qsubscript(nodep,1)) set utsuccess=0
+ . if '(@nodea=@nodep) set utsuccess=0
+ if '(nodep="") set utsuccess=0
+ do CHKEQ^%ut(utsuccess,1,"Testing web service null samiroute FAILED!")
+ quit
  ;
 UTWSHM2 ; @TEST - Testing web service for SAMI homepage dfn=1
- k SAMIUFLTR,SAMIURTN,nodea,nodep,SAMIUARC,SAMIUPOO
- s SAMIUFLTR("dfn")=1
- d WSHOME^SAMIHOM3(.SAMIURTN,.SAMIUFLTR)
- m SAMIUARC=SAMIURTN
- s utsuccess=1
- D PLUTARR^SAMIUTST(.SAMIUPOO,"UTWSHM^SAMIUTH3 dfn=1")
- s nodea=$na(SAMIUARC),nodep=$na(SAMIUPOO)
- f  s nodea=$q(@nodea),nodep=$q(@nodep) q:(nodea="")  d  q:'utsuccess
- . i $E($TR(@nodea,""""" "),1,10)?4N1"."2N1"."2N q
- . i (@nodea["meta content") q
- . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
- . i '(@nodea=@nodep) s utsuccess=0
- i '(nodep="") s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing web service dfn=1 FAILED!")
- q
+ kill SAMIUFLTR,SAMIURTN,nodea,nodep,SAMIUARC,SAMIUPOO
+ set SAMIUFLTR("dfn")=1
+ do WSHOME^SAMIHOM3(.SAMIURTN,.SAMIUFLTR)
+ merge SAMIUARC=SAMIURTN
+ set utsuccess=1
+ do PLUTARR^SAMIUTST(.SAMIUPOO,"UTWSHM^SAMIUTH3 dfn=1")
+ set nodea=$name(SAMIUARC),nodep=$name(SAMIUPOO)
+ for  set nodea=$query(@nodea),nodep=$query(@nodep) quit:(nodea="")  do  quit:'utsuccess
+ . if $extract($translate(@nodea,""""" "),1,10)?4N1"."2N1"."2N quit
+ . if (@nodea["meta content") quit
+ . if '($qsubscript(nodea,1)=$qsubscript(nodep,1)) set utsuccess=0
+ . if '(@nodea=@nodep) set utsuccess=0
+ if '(nodep="") set utsuccess=0
+ do CHKEQ^%ut(utsuccess,1,"Testing web service dfn=1 FAILED!")
+ quit
  ;
 UTDVHM ; @TEST - Testing temporary home page for development
  ; devhome(SAMIURTN,SAMIUFLTR)
- n SAMIUFLTR,SAMIURTN,SAMIUPOO
- d DEVHOME^SAMIHOM3(.SAMIURTN,.SAMIUFLTR)
- D PLUTARR^SAMIUTST(.SAMIUPOO,"UTDVHM^SAMIUTH3")
- s utsuccess=1
+ new SAMIUFLTR,SAMIURTN,SAMIUPOO
+ do DEVHOME^SAMIHOM3(.SAMIURTN,.SAMIUFLTR)
+ do PLUTARR^SAMIUTST(.SAMIUPOO,"UTDVHM^SAMIUTH3")
+ set utsuccess=1
  ; Check the first 60 nodes match as these represent
  ;  the parameters for the html page, but not the list
  ;  of patients - which will vary from day to day
- n cnt s cnt=0
- f  s cnt=$O(SAMIURTN(cnt)) q:cnt>60  d
- . i '(SAMIURTN(cnt)=SAMIUPOO(cnt)) s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing building temp home page FAILED!")
- q
+ new cnt set cnt=0
+ for  set cnt=$order(SAMIURTN(cnt)) quit:cnt>60  do
+ . if '(SAMIURTN(cnt)=SAMIUPOO(cnt)) set utsuccess=0
+ do CHKEQ^%ut(utsuccess,1,"Testing building temp home page FAILED!")
+ quit
  ;
 UTPTLST ; @TEST - Tesing pulling all patients from vapals-patients
- ; D PATLIST(ary)
- n cnt,SAMIUPOO s cnt=""
- D PATLIST^SAMIHOM3("SAMIUPOO")
+ ; do PATLIST(ary)
+ new cnt,SAMIUPOO s cnt=""
+ do PATLIST^SAMIHOM3("SAMIUPOO")
  new groot set groot=$$setroot^%wd("vapals-patients")
- s utsuccess=($D(SAMIUPOO)=10)
- D CHKEQ^%ut(utsuccess,1,"Testing pulling patients from vapals-patients FAILED!")
- q
+ set utsuccess=($data(SAMIUPOO)=10)
+ do CHKEQ^%ut(utsuccess,1,"Testing pulling patients from vapals-patients FAILED!")
+ quit
  ;
 UTGETHM ; @TEST - Testing pulling HTML for home.
- ;D GETHOME(SAMIURTN,SAMIUFLTR)
- n SAMIUPOO,SAMIUARC,nodea,nodep,SAMIUFLTR
- s utsuccess=1
- D GETHOME^SAMIHOM3(.SAMIUPOO,.SAMIUFLTR)
+ ;do GETHOME(SAMIURTN,SAMIUFLTR)
+ new SAMIUPOO,SAMIUARC,nodea,nodep,SAMIUFLTR
+ set utsuccess=1
+ do GETHOME^SAMIHOM3(.SAMIUPOO,.SAMIUFLTR)
  ; Get array saved in "vapals unit tests" for this unit test
- D PLUTARR^SAMIUTST(.SAMIUARC,"UTGETHM^SAMIHOM3")
- s utsuccess=1
- s nodep=$na(SAMIUPOO),nodea=$na(SAMIUARC)
- f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
+ do PLUTARR^SAMIUTST(.SAMIUARC,"UTGETHM^SAMIHOM3")
+ set utsuccess=1
+ set nodep=$name(SAMIUPOO),nodea=$name(SAMIUARC)
+ for  set nodep=$query(@nodep),nodea=$query(@nodea) quit:nodep=""  do  quit:'utsuccess
  .; if the first non space 10 characters are a date, skip
- . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
- . i (@nodep["meta content") q
- . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
- . i '(@nodea=@nodep) s utsuccess=0
- i '(nodea="") s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing pulling HTML home page FAILED!")
- q
+ . if ($extract($translate(@nodep," "),1,10)?4N1P2N1P2N) quit
+ . if (@nodep["meta content") quit
+ . if '($qsubscript(nodea,1)=$qsubscript(nodep,1)) set utsuccess=0
+ . if '(@nodea=@nodep) set utsuccess=0
+ if '(nodea="") set utsuccess=0
+ do CHKEQ^%ut(utsuccess,1,"Testing pulling HTML home page FAILED!")
+ quit
  ;
 UTSCAN4 ; @TEST - Testing scanning array for a given entry
- ;D GETHOME(SAMIURTN,SAMIUFLTR)
- ; S X=$$SCANFOR(ary,start,what)
- n SAMIUSTR,rndm,SAMIUPOO,SAMIUFLTR s rndm=$R(150)
- D GETHOME^SAMIHOM3(.SAMIUPOO,.SAMIUFLTR)
- s SAMIUSTR=$g(SAMIUPOO(rndm))
- n SAMIUSTART s SAMIUSTART=1
- f  s SAMIUSTART=$$SCANFOR^SAMIHOM3(.SAMIUPOO,SAMIUSTART,SAMIUSTR) q:(SAMIUSTART=0)  q:(SAMIUSTART=rndm)
- s utsuccess=(SAMIUSTART=rndm)
- D CHKEQ^%ut(utsuccess,1,"Testing scanning array for a given string FAILED!")
- q
+ ;do GETHOME(SAMIURTN,SAMIUFLTR)
+ ; set X=$$SCANFOR(ary,start,what)
+ new SAMIUSTR,rndm,SAMIUPOO,SAMIUFLTR set rndm=$random(150)
+ do GETHOME^SAMIHOM3(.SAMIUPOO,.SAMIUFLTR)
+ set SAMIUSTR=$get(SAMIUPOO(rndm))
+ new SAMIUSTART set SAMIUSTART=1
+ for  set SAMIUSTART=$$SCANFOR^SAMIHOM3(.SAMIUPOO,SAMIUSTART,SAMIUSTR) quit:(SAMIUSTART=0)  quit:(SAMIUSTART=rndm)
+ set utsuccess=(SAMIUSTART=rndm)
+ do CHKEQ^%ut(utsuccess,1,"Testing scanning array for a given string FAILED!")
+ quit
  ;
 UTNXTN ; @TEST - Testing finding next entry number for "vapals-patients"
- ; S X=$$NEXTNUM
- n root s root=$$setroot^%wd("vapals-patients")
- n cnt,lstntry
- s cnt=0 f  s cnt=$O(@root@(cnt)) q:'+cnt  s lstntry=cnt
- s utsuccess=((lstntry+1)=$$NEXTNUM^SAMIHOM3)
- D CHKEQ^%ut(utsuccess,1,"Testing finding next entry in vapals-patients FAILED!")
- q
+ ; set X=$$NEXTNUM
+ new root set root=$$setroot^%wd("vapals-patients")
+ new cnt,lstntry
+ set cnt=0 for  set cnt=$order(@root@(cnt)) quit:'+cnt  set lstntry=cnt
+ set utsuccess=((lstntry+1)=$$NEXTNUM^SAMIHOM3)
+ do CHKEQ^%ut(utsuccess,1,"Testing finding next entry in vapals-patients FAILED!")
+ quit
  ;
 UTPFX ; @TEST - Testing getting study prefix
  ;$$prefix
- D CHKEQ^%ut($$PREFIX^SAMIHOM3,"XXX","Testing getting study prefix FAILED!")
- q
+ do CHKEQ^%ut($$PREFIX^SAMIHOM3,"XXX","Testing getting study prefix FAILED!")
+ quit
  ;
 UTSTDID ; @TEST - Testing generating study ID
  ;$$genStudyId(nmb)
- n studyID s studyID=$$GENSTDID^SAMIHOM3(123)
- D CHKEQ^%ut(studyID,"XXX00123","Testing getting study id FAILED!")
- q
+ new studyID set studyID=$$GENSTDID^SAMIHOM3(123)
+ do CHKEQ^%ut(studyID,"XXX00123","Testing getting study id FAILED!")
+ quit
  ;
 UTKEYDT ; @TEST - Testing generating key date from fm date
  ;$$KEYDATE(fmdt)
- n SAMIUFMDT s SAMIUFMDT="3181018"
- D CHKEQ^%ut($$KEYDATE^SAMIHOM3(SAMIUFMDT),"2018-10-18","Testing generation of key date FAILED!")
- q
+ new SAMIUFMDT set SAMIUFMDT="3181018"
+ do CHKEQ^%ut($$KEYDATE^SAMIHOM3(SAMIUFMDT),"2018-10-18","Testing generation of key date FAILED!")
+ quit
  ;
 UTVALNM ; @TEST - Testing validate name function
  ;$$validateName(nm,args)
- n SAMIUARGS,nm s SAMIUARGS="",nm="POO"
- n SAMIUX,SAMIUY
- s SAMIUX=$$VALDTNM^SAMIHOM3(nm,.SAMIUARGS)
- S nm="POO,SAMIUPOO"
- s SAMIUY=$$VALDTNM^SAMIHOM3(nm,.SAMIUARGS)
- S utsuccess=((SAMIUX+SAMIUY)=0)
- D CHKEQ^%ut(utsuccess,1,"Testing validate name function FAILED!")
- q
+ new SAMIUARGS,nm set SAMIUARGS="",nm="POO"
+ new SAMIUX,SAMIUY
+ set SAMIUX=$$VALDTNM^SAMIHOM3(nm,.SAMIUARGS)
+ set nm="POO,SAMIUPOO"
+ set SAMIUY=$$VALDTNM^SAMIHOM3(nm,.SAMIUARGS)
+ set utsuccess=((SAMIUX+SAMIUY)=0)
+ do CHKEQ^%ut(utsuccess,1,"Testing validate name function FAILED!")
+ quit
  ;
 UTINDX ; @TEST - Testing re-index of vapals-patients Graphstore
- ; d INDEX^SAMIHOM3
- n root,dfn1,dfn2
- s root=$$setroot^%wd("vapals-patients")
- s dfn1=$o(@root@("dfn",0))
- k @root@("dfn",dfn1)
- s dfn2=$o(@root@("dfn",0))
- d INDEX^SAMIHOM3
- s utsuccess=(dfn1'=dfn2)
- D CHKEQ^%ut(utsuccess,1,"Testing reindex of vapals-patients FAILED!")
- q
+ ; do INDEX^SAMIHOM3
+ new root,dfn1,dfn2
+ set root=$$setroot^%wd("vapals-patients")
+ set dfn1=$order(@root@("dfn",0))
+ kill @root@("dfn",dfn1)
+ set dfn2=$order(@root@("dfn",0))
+ do INDEX^SAMIHOM3
+ set utsuccess=(dfn1'=dfn2)
+ do CHKEQ^%ut(utsuccess,1,"Testing reindex of vapals-patients FAILED!")
+ quit
  ;
 UTADDPT ; @TEST Testing ADDPATient adding a new patient to vapals-patients
  ;*** Removes XXX00001 from vapals-patients file
@@ -189,31 +189,31 @@ UTADDPT ; @TEST Testing ADDPATient adding a new patient to vapals-patients
  ;     must put these back for other unit tests
  ;     See STARTUP section in other unit test routines
  ;ADDPATient(dfn)
- n rootvp,rootpl,dfn,gien,studyid,gienut,rootut
- s rootvp=$$setroot^%wd("vapals-patients")
- s rootpl=$$setroot^%wd("patient-lookup")
+ new rootvp,rootpl,dfn,gien,studyid,gienut,rootut
+ set rootvp=$$setroot^%wd("vapals-patients")
+ set rootpl=$$setroot^%wd("patient-lookup")
  ;
  ; get test patient
- s rootut=$$setroot^%wd("vapals unit tests")
- s gienut=$O(@rootut@("B","patient-lookup test patient",0))
- s dfn=@rootut@(gienut,"dfn")
+ set rootut=$$setroot^%wd("vapals unit tests")
+ set gienut=$order(@rootut@("B","patient-lookup test patient",0))
+ set dfn=@rootut@(gienut,"dfn")
  ;
  ; clear test patient from vapals-patients Graphstore
- s studyid="XXX00001"
- k @rootvp@("sid",studyid)
- k @rootvp@("graph",studyid)
- k @rootvp@(dfn)
- k @rootvp@("dfn",dfn)
+ set studyid="XXX00001"
+ kill @rootvp@("sid",studyid)
+ kill @rootvp@("graph",studyid)
+ kill @rootvp@(dfn)
+ kill @rootvp@("dfn",dfn)
  ;
  ; generate new entry in vapals-patients, HTML in ^TMP("yottaForm",n)
- d ADDPAT^SAMIHOM3(dfn)
- H 1
+ do ADDPAT^SAMIHOM3(dfn)
+ hang 1
  ;
  ; check new entry in vapals-patients
- s utsuccess=($D(@rootvp@(dfn))=10),studyid=@rootvp@(dfn,"sisid")
+ set utsuccess=($data(@rootvp@(dfn))=10),studyid=@rootvp@(dfn,"sisid")
  ;
- D CHKEQ^%ut(utsuccess,1,"Testing ADDPATient adding new patient to vapals-patients FAILED!")
- q
+ do CHKEQ^%ut(utsuccess,1,"Testing ADDPATient adding new patient to vapals-patients FAILED!")
+ quit
  ;
  ; builds new si-form and loads vapals-patients Graphstore
  ;  @rootvp@(dfn,"graph"), @rootvp@(dfn,"graph"), @rootvp@(dfn)
@@ -221,226 +221,228 @@ UTADDPT ; @TEST Testing ADDPATient adding a new patient to vapals-patients
 UTWSNC ; @TEST - Testing WSNEWCAS adding a new case to vapals-patients Graphstore
  ;WSNEWCAS(ARGS,BODY,RESULT)
  ;
- n rootvp,rootpl,rootut,gienut,dfn,saminame,utna,uthtml
- n SAMIUBODY,SAMIUARGS,SAMIURSLT,SAMIUARC,SAMIUPOO
- s rootvp=$$setroot^%wd("vapals-patients")
- s rootpl=$$setroot^%wd("patient-lookup")
- s rootut=$$setroot^%wd("vapals unit tests")
- s gienut=$O(@rootut@("B","patient-lookup test patient",0))
- s dfn=@rootut@(gienut,"dfn")
- s saminame=@rootut@(gienut,"saminame")
- n SAMIUBODY S SAMIUBODY(1)="saminame="_saminame_"&dfn="_dfn
+ new rootvp,rootpl,rootut,gienut,dfn,saminame,utna,uthtml
+ new SAMIUBODY,SAMIUARGS,SAMIURSLT,SAMIUARC,SAMIUPOO
+ set rootvp=$$setroot^%wd("vapals-patients")
+ set rootpl=$$setroot^%wd("patient-lookup")
+ set rootut=$$setroot^%wd("vapals unit tests")
+ set gienut=$order(@rootut@("B","patient-lookup test patient",0))
+ set dfn=@rootut@(gienut,"dfn")
+ set saminame=@rootut@(gienut,"saminame")
+ new SAMIUBODY set SAMIUBODY(1)="saminame="_saminame_"&dfn="_dfn
  ;
  ; clear test patient from vapals-patients Graphstore
- s studyid="XXX00001"
- k @rootvp@("sid",studyid)
- k @rootvp@("graph",studyid)
- k @rootvp@(dfn)
- k @rootvp@("dfn",dfn)
+ set studyid="XXX00001"
+ kill @rootvp@("sid",studyid)
+ kill @rootvp@("graph",studyid)
+ kill @rootvp@(dfn)
+ kill @rootvp@("dfn",dfn)
  ;
  ; generate new entry in vapals-patients
  ;   HTML result will be in ^TMP("yottaForm",n)
- d WSNEWCAS^SAMIHOM3(.SAMIUARGS,.SAMIUBODY,.SAMIURSLT)
+ do WSNEWCAS^SAMIHOM3(.SAMIUARGS,.SAMIUBODY,.SAMIURSLT)
  ;
  ; check new entry in vapals-patients
- s utna=($g(@rootvp@(dfn,"samistudyid"))=SAMIUARGS("studyid"))
+ set utna=($get(@rootvp@(dfn,"samistudyid"))=SAMIUARGS("studyid"))
  ;
  ; check HTML matches that saved in vapals unit tests
  ;  e.g. SAMIUARGS("form")="vapals:siform-2018-10-18"
  ;       SAMIUARGS("studyid")="XXX00001"
  ;  e.g. result="^TMP(""yottaForm"",20523)"
- i utna s uthtml=1 d
- . D PLUTARR^SAMIUTST(.SAMIUARC,"UTWSNC^SAMIUTH3")
- . n rooty s rooty=$NA(^TMP("yottaForm",+$P(SAMIURSLT,",",2)))
- . m SAMIUPOO=@rooty
- . s nodea=$na(SAMIUARC),nodep=$na(SAMIUPOO)
- . f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
+ if utna set uthtml=1 do
+ . do PLUTARR^SAMIUTST(.SAMIUARC,"UTWSNC^SAMIUTH3")
+ . new rooty set rooty=$name(^TMP("yottaForm",+$piece(SAMIURSLT,",",2)))
+ . merge SAMIUPOO=@rooty
+ . set nodea=$name(SAMIUARC),nodep=$name(SAMIUPOO)
+ . for  set nodep=$query(@nodep),nodea=$query(@nodea) quit:nodep=""  do  quit:'utsuccess
  ..; skip certain lines that will contain dates
- .. i @nodep["meta content" q
- .. i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
- .. i @nodep["siform"  q
- .. i $p($e($tr($p(@nodea,"=",2),""""),1,10)," ")?.N1"/".N1"/"4N q
- .. i @nodea["1/4/2019" q
+ .. if @nodep["meta content" quit
+ .. if ($extract($translate(@nodep," "),1,10)?4N1P2N1P2N) quit
+ .. if @nodep["siform"  quit
+ .. if $piece($extract($translate($piece(@nodea,"=",2),""""),1,10)," ")?.N1"/".N1"/"4N quit
+ .. if @nodea["1/4/2019" quit
  ..;
- .. i '($qs(nodea,1)=$qs(nodep,1)) s uthtml=0
- .. i '(@nodea=@nodep) s uthtml=0
- i '(nodea="") s uthtml=0
+ .. if '($qsubscript(nodea,1)=$qsubscript(nodep,1)) set uthtml=0
+ .. if '(@nodea=@nodep) set uthtml=0
+ if '(nodea="") set uthtml=0
  ;
- s utsuccess=$S((utna+uthtml=2):1,1:0)
- D CHKEQ^%ut(utsuccess,1,"Testing WSNEWCAS adding new patient to vapals-patients FAILED!")
- q
+ set utsuccess=$select((utna+uthtml=2):1,1:0)
+ do CHKEQ^%ut(utsuccess,1,"Testing WSNEWCAS adding new patient to vapals-patients FAILED!")
+ quit
  ;
  ;
 UTWSVP1 ; @TEST - Test WSVAPALS API route=""
- N route,SAMIUPOO,cnt,SAMIUARC,SAMIUFLTR,nodea,nodep
+ new route,SAMIUPOO,cnt,SAMIUARC,SAMIUFLTR,nodea,nodep
  ; testing route="". RESULT should have HTML
- s route="" D WSVAPALS^SAMIHOM3(.SAMIUARG,.SAMIUBODY,.SAMIURSLT)
- m SAMIUPOO=SAMIURSLT
+ set route="" do WSVAPALS^SAMIHOM3(.SAMIUARG,.SAMIUBODY,.SAMIURSLT)
+ merge SAMIUPOO=SAMIURSLT
  ;
- s utsuccess=1
+ set utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
- D PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP1^SAMIUTH3")
- s nodea=$na(SAMIUARC),nodep=$na(SAMIUPOO)
- f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d
- . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
- . i (@nodep["meta content") q
- . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
- . i '(@nodea=@nodep) s utsuccess=0
- i 'nodea="" s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS route=0  FAILED!")
- q
+ do PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP1^SAMIUTH3")
+ set nodea=$name(SAMIUARC),nodep=$name(SAMIUPOO)
+ for  set nodep=$query(@nodep),nodea=$query(@nodea) quit:nodep=""  do
+ . if ($extract($translate(@nodep," "),1,10)?4N1P2N1P2N) quit
+ . if (@nodep["meta content") quit
+ . if '($qsubscript(nodea,1)=$qsubscript(nodep,1)) set utsuccess=0
+ . if '(@nodea=@nodep) set utsuccess=0
+ if 'nodea="" set utsuccess=0
+ do CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS route=0  FAILED!")
+ quit
  ;
 UTWSVP2 ; @TEST - Test WSVAPALS API route="lookup"
- N SAMIUARG,SAMIUBODY,SAMIURSLT,route,SAMIUPOO,SAMIUARC,cnt,SAMIUFLTR
+ new SAMIUARG,SAMIUBODY,SAMIURSLT,route,SAMIUPOO,SAMIUARC,cnt,SAMIUFLTR
  ; testing route=lookup"". RESULT should have HTML
  ; look up ELCAP patient (patient in vapals-patients
- s SAMIUARG("field")="sid",SAMIUARG("fvalue")="XXX00001"
- S SAMIUARG("samiroute")="lookup"
- D WSVAPALS^SAMIHOM3(.SAMIUARG,.SAMIUBODY,.SAMIURSLT)
- m SAMIUPOO=SAMIURSLT
- s utsuccess=1
+ set SAMIUARG("field")="sid",SAMIUARG("fvalue")="XXX00001"
+ Set SAMIUARG("samiroute")="lookup"
+ do WSVAPALS^SAMIHOM3(.SAMIUARG,.SAMIUBODY,.SAMIURSLT)
+ merge SAMIUPOO=SAMIURSLT
+ set utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
- D PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP2^SAMIUTH3")
- s nodea=$na(SAMIUARC),nodep=$na(SAMIUPOO)
- f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d
- . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
- . i (@nodep["meta content") q
- . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
- . i '(@nodea=@nodep) s utsuccess=0
- i 'nodea="" s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS route=lookup  FAILED!")
- q
+ do PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP2^SAMIUTH3")
+ set nodea=$name(SAMIUARC),nodep=$name(SAMIUPOO)
+ for  set nodep=$query(@nodep),nodea=$query(@nodea) quit:nodep=""  do
+ . if ($extract($translate(@nodep," "),1,10)?4N1P2N1P2N) quit
+ . if (@nodep["meta content") quit
+ . if '($qsubscript(nodea,1)=$qsubscript(nodep,1)) set utsuccess=0
+ . if '(@nodea=@nodep) set utsuccess=0
+ if 'nodea="" set utsuccess=0
+ do CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS route=lookup  FAILED!")
+ quit
  ;
 UTWSVP3 ; @TEST - Test WSVAPALS API route="casereview"
- N SAMIUARG,SAMIUBODY,SAMIURSLT,route,SAMIUPOO,SAMIUARC,SAMIUFLTR
- s SAMIUARG("field")="sid",SAMIUARG("fvalue")="XXX00001"
- s SAMIUARG("samiroute")="casereview"
- D WSVAPALS^SAMIHOM3(.SAMIUARG,.SAMIUBODY,.SAMIURSLT)
- m SAMIUPOO=SAMIURSLT
- s utsuccess=1
+ new SAMIUARG,SAMIUBODY,SAMIURSLT,route,SAMIUPOO,SAMIUARC,SAMIUFLTR
+ set SAMIUARG("field")="sid",SAMIUARG("fvalue")="XXX00001"
+ set SAMIUARG("samiroute")="casereview"
+ do WSVAPALS^SAMIHOM3(.SAMIUARG,.SAMIUBODY,.SAMIURSLT)
+ merge SAMIUPOO=SAMIURSLT
+ set utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
- D PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP3^SAMIUTH3")
- s nodea=$na(SAMIUARC),nodep=$na(SAMIUPOO)
- f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d
- . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
- . i (@nodep["meta content") q
- . i (@nodep["XXX") q
- . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
- . i '(@nodea=@nodep) s utsuccess=0
- i 'nodea="" s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS route=casereview  FAILED!")
- q
+ do PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP3^SAMIUTH3")
+ set nodea=$name(SAMIUARC),nodep=$name(SAMIUPOO)
+ for  set nodep=$query(@nodep),nodea=$query(@nodea) quit:nodep=""  do
+ . if ($extract($translate(@nodep," "),1,10)?4N1P2N1P2N) quit
+ . if (@nodep["meta content") quit
+ . if (@nodep["XXX") quit
+ . if '($qsubscript(nodea,1)=$qsubscript(nodep,1)) set utsuccess=0
+ . if '(@nodea=@nodep) set utsuccess=0
+ if 'nodea="" set utsuccess=0
+ do CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS route=casereview  FAILED!")
+ quit
  ;
 UTWSVP4 ; @TEST - Test WSVAPALS API route="addform"
- N SAMIUARG,SAMIUBODY,SAMIURSLT,route,SAMIUPOO,SAMIUARC,SAMIUFLTR
- s SAMIUARG("field")="sid",SAMIUARG("fvalue")="XXX00001"
- s SAMIUARG("samiroute")="addform"
- D WSVAPALS^SAMIHOM3(.SAMIUARG,.SAMIUBODY,.SAMIURSLT)
- m SAMIUPOO=SAMIURSLT
- s utsuccess=1
+ new SAMIUARG,SAMIUBODY,SAMIURSLT,route,SAMIUPOO,SAMIUARC,SAMIUFLTR
+ set SAMIUARG("field")="sid",SAMIUARG("fvalue")="XXX00001"
+ set SAMIUARG("samiroute")="addform"
+ do WSVAPALS^SAMIHOM3(.SAMIUARG,.SAMIUBODY,.SAMIURSLT)
+ merge SAMIUPOO=SAMIURSLT
+ set utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
- D PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP4^SAMIUTH3")
- s nodea=$na(SAMIUARC),nodep=$na(SAMIUPOO)
- f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d
- . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
- . i (@nodep["meta content") q
- . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
- . i '(@nodea=@nodep) s utsuccess=0
- i 'nodea="" s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS route=addform  FAILED!")
- q
+ do PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP4^SAMIUTH3")
+ set nodea=$name(SAMIUARC),nodep=$name(SAMIUPOO)
+ for  set nodep=$query(@nodep),nodea=$query(@nodea) quit:nodep=""  do
+ . if ($extract($translate(@nodep," "),1,10)?4N1P2N1P2N) quit
+ . if (@nodep["meta content") quit
+ . if '($qsubscript(nodea,1)=$qsubscript(nodep,1)) set utsuccess=0
+ . if '(@nodea=@nodep) set utsuccess=0
+ if 'nodea="" set utsuccess=0
+ do CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS route=addform  FAILED!")
+ quit
  ;
 UTWSVP5 ; @TEST - Test WSVAPALS API route="form"
- N SAMIUARG,SAMIUBODY,SAMIURSLT,route,SAMIUPOO,SAMIUARC,SAMIUFLTR
- s SAMIUARG("field")="sid",SAMIUARG("fvalue")="XXX00001"
- s SAMIUARG("samiroute")="form"
- D WSVAPALS^SAMIHOM3(.SAMIUARG,.SAMIUBODY,.SAMIURSLT)
- m SAMIUPOO=SAMIURSLT
- s utsuccess=1
+ new SAMIUARG,SAMIUBODY,SAMIURSLT,route,SAMIUPOO,SAMIUARC,SAMIUFLTR
+ set SAMIUARG("field")="sid",SAMIUARG("fvalue")="XXX00001"
+ set SAMIUARG("samiroute")="form"
+ do WSVAPALS^SAMIHOM3(.SAMIUARG,.SAMIUBODY,.SAMIURSLT)
+ merge SAMIUPOO=SAMIURSLT
+ set utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
- D PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP5^SAMIUTH3")
- s nodea=$na(SAMIUARC),nodep=$na(SAMIUPOO)
- f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d
- . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
- . i (@nodep["meta content") q
- . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
- . i '(@nodea=@nodep) s utsuccess=0
- i 'nodea="" s utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS route=form  FAILED!")
- q
+ do PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP5^SAMIUTH3")
+ set nodea=$name(SAMIUARC),nodep=$name(SAMIUPOO)
+ for  set nodep=$query(@nodep),nodea=$query(@nodea) quit:nodep=""  do
+ . if ($extract($translate(@nodep," "),1,10)?4N1P2N1P2N) quit
+ . if (@nodep["meta content") quit
+ . if '($qsubscript(nodea,1)=$qsubscript(nodep,1)) set utsuccess=0
+ . if '(@nodea=@nodep) set utsuccess=0
+ if 'nodea="" set utsuccess=0
+ do CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS route=form  FAILED!")
+ quit
  ;
 UTSIFRM ; @TEST - Testing creating a Siform
- ; d makeSiform(num)
- n root,SAMIUNUM,sid,cdate,SAMIUPOO
- S SAMIUNUM=1
+ ; do makeSiform(num)
+ new root,SAMIUNUM,sid,cdate,SAMIUPOO
+ set SAMIUNUM=1
  set root=$$setroot^%wd("vapals-patients")
  set sid=$get(@root@(SAMIUNUM,"samistudyid"))
- i sid="" d  q
- . D FAIL^%ut("Error, no sid for dfn=1!")
+ if sid="" do  quit
+ . do FAIL^%ut("Error, no sid for dfn=1!")
  set cdate=$get(@root@(SAMIUNUM,"samicreatedate"))
- i cdate="" d  q
- . D FAIL^%ut("Error, no samigratedate for dfn=1!")
- m SAMIUPOO=@root@("graph",sid,"siform-"_cdate)
- k @root@("graph",sid,"siform-"_cdate)
- D MKSIFORM^SAMIHOM3(SAMIUNUM)
+ if cdate="" do  quit
+ . do FAIL^%ut("Error, no samigratedate for dfn=1!")
+ merge SAMIUPOO=@root@("graph",sid,"siform-"_cdate)
+ kill @root@("graph",sid,"siform-"_cdate)
+ do MKSIFORM^SAMIHOM3(SAMIUNUM)
  ; look for Siform
- s utsuccess=$d(@root@("graph",sid,"siform-"_cdate))
- k @root@("graph",sid,"siform-"_cdate)
- m @root@("graph",sid,"siform-"_cdate)=SAMIUPOO
- D CHKEQ^%ut(utsuccess,10,"Testing makeSiform FAILED!")
- q
+ set utsuccess=$data(@root@("graph",sid,"siform-"_cdate))
+ kill @root@("graph",sid,"siform-"_cdate)
+ merge @root@("graph",sid,"siform-"_cdate)=SAMIUPOO
+ do CHKEQ^%ut(utsuccess,10,"Testing makeSiform FAILED!")
+ quit
  ;
 UTSBFRM ; @TEST - Testing creating a background form
- ; d makeSbform(num)
- n root,SAMIUNUM,sid,cdate
- S SAMIUNUM=1
+ ; do makeSbform(num)
+ new root,SAMIUNUM,sid,cdate
+ set SAMIUNUM=1
  set root=$$setroot^%wd("vapals-patients")
  set sid=$get(@root@(SAMIUNUM,"samistudyid"))
- i sid="" d  q
- . D FAIL^%ut("Error, no sid for dfn=1!")
+ if sid="" do  quit
+ . do FAIL^%ut("Error, no sid for dfn=1!")
  set cdate=$get(@root@(SAMIUNUM,"samicreatedate"))
- i cdate="" d  q
- . D FAIL^%ut("Error, no samigratedate for dfn=1!")
- k @root@("graph",sid,"sbform-"_cdate)
- D MKSBFORM^SAMIHOM3(SAMIUNUM)
- H 2
+ if cdate="" do  quit
+ . do FAIL^%ut("Error, no samigratedate for dfn=1!")
+ kill @root@("graph",sid,"sbform-"_cdate)
+ do MKSBFORM^SAMIHOM3(SAMIUNUM)
+ hang 2
  ; look for Sbform
- s utsuccess=+$d(@root@("graph",sid,"sbform-"_cdate))
- k @root@("graph",sid,"sbform-"_cdate)
- D CHKEQ^%ut(utsuccess,10,"Testing makeSbform FAILED!")
- q
+ set utsuccess=+$data(@root@("graph",sid,"sbform-"_cdate))
+ kill @root@("graph",sid,"sbform-"_cdate)
+ do CHKEQ^%ut(utsuccess,10,"Testing makeSbform FAILED!")
+ quit
  ; 
  ;
 UTPOSTF ; @TEST - Test WSVAPALS API route="postform" build TIU
- N SAMIUARG,SAMIUBODY,SAMIURSLT,route,SAMIUPOO,SAMIUARC,SAMIUFLTR
+ new SAMIUARG,SAMIUBODY,SAMIURSLT,route,SAMIUPOO,SAMIUARC,SAMIUFLTR
  ; get name of existing siform for our test patient
- s root=$$setroot^%wd("vapals-patients")
- n glbrt s glbrt=$na(@root@("graph","XXX00001","siform"))
- s SAMIUARG("form")=$o(@glbrt)
+ set root=$$setroot^%wd("vapals-patients")
+ new glbrt set glbrt=$name(@root@("graph","XXX00001","siform"))
+ set SAMIUARG("form")=$order(@glbrt)
  ;
- K ^TMP("UNIT TEST","UTTASK^SAMIUTVA")
- s SAMIUARG("samiroute")="postform"
- s SAMIUARG("studyid")="XXX00001"
- D WSVAPALS^SAMIHOM3(.SAMIUARG,.SAMIUBODY,.SAMIURSLT)
- H 2
- n tiuien s tiuien=$G(^TMP("UNIT TEST","UTTASK^SAMIUTVA"))
- i '$g(tiuien) d  q
- . D FAIL^%ut("Error, New TIU note not created")
- m SAMIUPOO=SAMIURSLT
- s utsuccess=1
+ kill ^TMP("UNIT TEST","UTTASK^SAMIUTVA")
+ set SAMIUARG("samiroute")="postform"
+ set SAMIUARG("studyid")="XXX00001"
+ do WSVAPALS^SAMIHOM3(.SAMIUARG,.SAMIUBODY,.SAMIURSLT)
+ hang 2
+ new tiuien set tiuien=$get(^TMP("UNIT TEST","UTTASK^SAMIUTVA"))
+ if '$get(tiuien) do  quit
+ . do FAIL^%ut("Error, New TIU note not created")
+ merge SAMIUPOO=SAMIURSLT
+ set utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
- D PLUTARR^SAMIUTST(.SAMIUARC,"UTPOSTF^SAMIUTH3")
- s nodea=$na(SAMIUARC),nodep=$na(SAMIUPOO)
- f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d
- . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
- . i (@nodep["meta content") q
- . i (@nodep["Date of contact:") q
- . i '($qs(nodea,1)=$qs(nodep,1)) s utsuccess=0
- . i '(@nodea=@nodep) s utsuccess=0
- i 'nodea="" s utsuccess=0
+ do PLUTARR^SAMIUTST(.SAMIUARC,"UTPOSTF^SAMIUTH3")
+ set nodea=$name(SAMIUARC),nodep=$name(SAMIUPOO)
+ for  set nodep=$query(@nodep),nodea=$query(@nodea) quit:nodep=""  do
+ . if ($extract($translate(@nodep," "),1,10)?4N1P2N1P2N) quit
+ . if (@nodep["meta content") quit
+ . if (@nodep["Date of contact:") quit
+ . if '($qsubscript(nodea,1)=$qsubscript(nodep,1)) set utsuccess=0
+ . if '(@nodea=@nodep) set utsuccess=0
+ if 'nodea="" set utsuccess=0
  ; Delete the tiu note just created
- n chkdel s chkdel=$$DELTIU^SAMIVSTA(tiuien)
+ new chkdel set chkdel=$$DELTIU^SAMIVSTA(tiuien)
  ;
- D CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS postform  FAILED!")
- q
+ do CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS postform  FAILED!")
+ quit
+ ;
+ ;
 EOR ;End of routine SAMIUTH3

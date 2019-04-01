@@ -1,4 +1,4 @@
-SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 3/26/19 9:51am
+SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 2019-03-28T
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -24,7 +24,7 @@ SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 3/26/19 9:51am
  ;
  ; @section 1 code
  ;
- if $T(^%ut)="" do
+ if $text(^%ut)="" do
  . write !,"*** UNIT TEST NOT INSTALLED ***"
  . quit
  ;

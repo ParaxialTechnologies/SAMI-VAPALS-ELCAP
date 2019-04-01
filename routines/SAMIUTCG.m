@@ -1,4 +1,4 @@
-SAMIUTCG ;ven/lgc - UNIT TEST for SAMICLOG ; 3/25/19 1:22pm
+SAMIUTCG ;ven/lgc - UNIT TEST for SAMICLOG ; 4/1/19 10:34am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -57,6 +57,8 @@ UTCLOG ; @TEST - Storing change log events in vapals-patients graphstore
  s sid="XXX00001"
  s form="siform-2018-11-13"
  k @root@("graph",sid,form,"changelog")
+ ; set the samifirsttime node null or changlog will not proceed
+ s @root@("graph",sid,form,"samifirsttime")=""
  ;
  ; Build changelog entries
  D CLOG^SAMICLOG(sid,form,"poo")

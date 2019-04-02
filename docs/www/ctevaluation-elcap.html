@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.03.12" name="version"/>
+  <meta content="2019.04.01" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    CT Evaluation Form
@@ -2870,7 +2870,7 @@
           </tr>
           <tr>
            <td style="white-space: nowrap;">
-            <label class="control-label" for="cect1sd">
+            <label class="control-label">
              Mean diameter (mm)
             </label>
             <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Calculated mean diameter." data-toggle="popover" title="Help">
@@ -3334,9 +3334,8 @@
           </tr>
           <tr>
            <td style="white-space: nowrap;">
-            <label class="control-label" for="cect1ssd">
-             Solid mean
-                            diameter(mm)
+            <label class="control-label">
+             Solid mean diameter(mm)
             </label>
             <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Solid calculated mean diameter." data-toggle="popover" title="Help">
             </i>
@@ -3414,7 +3413,7 @@
           </tr>
           <tr>
            <td style="white-space: nowrap;">
-            <label class="control-label" for="cect1se-n">
+            <label class="control-label" for="cect1se">
              Smooth edges
             </label>
             <i aria-hidden="true" class="fa fa-question-circle-o" data-content="Indicate whether the nodule has a smooth-appearing margin, or describe further if needed in the comments section below." data-toggle="popover" title="Help">
@@ -3513,7 +3512,7 @@
           </tr>
           <tr>
            <td style="white-space: nowrap;">
-            <label class="control-label" for="cect1ca-n">
+            <label class="control-label" for="cect1ca">
              Calcifications
             </label>
            </td>
@@ -3669,7 +3668,7 @@
           </tr>
           <tr>
            <td style="white-space: nowrap;">
-            <label class="control-label" for="cect1sp-n">
+            <label class="control-label" for="cect1sp">
              Spiculated
             </label>
            </td>
@@ -4796,6 +4795,20 @@
        </div>
       </div>
      </div>
+     <div id="dialog-message" title="Download complete">
+      <p>
+       <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;">
+       </span>
+       Your files have downloaded successfully into the My Downloads folder.
+      </p>
+      <p>
+       Currently using
+       <b>
+        36% of your storage space
+       </b>
+       .
+      </p>
+     </div>
      <input context="server" name="cennod" type="hidden" value="0"/>
      <input context="server" name="ceanod" type="hidden" value="n"/>
      <script language="JavaScript">
@@ -4952,7 +4965,16 @@
                 fv.addField('cect10ssl', {validators: {notEmpty: {message: 'Enter a solid comp. length'}}});
                 fv.addField('cect10ssw', {validators: {notEmpty: {message: 'Enter a solid comp. width'}}});
             
+
+            $("#nodule-table").closest("form").on('submit.nodule-grid', function () {
+                const examType = $("[name=cetex]:checked").val(); // baseline is "b"; only available on CT Eval form
+                if (examType === 'b') {
+                    ng.sortData();
+                }
+            });
         }, 0);
+
+
     });
      </script>
     </div>
@@ -7891,7 +7913,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.03.12
+     2019.04.01
     </span>
    </div>
   </footer>

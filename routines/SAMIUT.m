@@ -1,4 +1,4 @@
-SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 2019-03-28T
+SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 2019-04-02T19:41Z
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -77,10 +77,6 @@ COVERAGE ; Coverage tests for SAMI*.m
  ; rearrange these in whatever order we like.
  set I=0
  ;
- ; set I=I+1,RUNCODE(I)="^SAMID"
- ; set I=I+1,RUNCODE(I)="^SAMIDOUT"
- ; set I=I+1,RUNCODE(I)="^SAMIDSSN"
- ;
  ;set I=I+1,RUNCODE(I)="^SAMIUTM2"
  ;
  set I=I+1,RUNCODE(I)="^SAMIUTAD"
@@ -122,8 +118,6 @@ COVERAGE ; Coverage tests for SAMI*.m
  ;
  set I=0
  ; Excude routines with incomplete unit tests
- set I=I+1,XCLUDE(I)="SAMID"
- set I=I+1,XCLUDE(I)="SAMIUTID"
  ;
  ; Excude deprecated routines not yet deleted
  set I=I+1,XCLUDE(I)="SAMIUR1"
@@ -133,13 +127,6 @@ COVERAGE ; Coverage tests for SAMI*.m
  set I=I+1,XCLUDE(I)="SAMIVUL"
  set I=I+1,XCLUDE(I)="SAMICUL"
  ;
- ; Exclude why?
- set I=I+1,XCLUDE(I)="SAMIDSSN"
- set I=I+1,XCLUDE(I)="SAMIUTDS"
- ;
- ; Exclude why?
- set I=I+1,XCLUDE(I)="SAMIDOUT"
- set I=I+1,XCLUDE(I)="SAMIUTOT"
  ;
  ; Exclude the unit-test routines
  set I=I+1,XCLUDE(I)="SAMIUT"

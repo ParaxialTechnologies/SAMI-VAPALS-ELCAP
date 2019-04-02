@@ -247,7 +247,7 @@
                 </tr>
                 <tr>
                     <td style="white-space: nowrap;">
-                        <label class="control-label" for="cect1sd">Mean diameter (mm)</label>
+                        <label class="control-label">Mean diameter (mm)</label>
                         <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover" title="Help"
                            data-content="Calculated mean diameter."></i>
                     </td>
@@ -324,8 +324,7 @@
                 </tr>
                 <tr>
                     <td style="white-space: nowrap;">
-                        <label class="control-label" for="cect1ssd">Solid mean
-                            diameter(mm)</label>
+                        <label class="control-label">Solid mean diameter(mm)</label>
                         <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover" title="Help"
                            data-content="Solid calculated mean diameter."></i>
                     </td>
@@ -339,7 +338,7 @@
                 </tr>
                 <tr>
                     <td style="white-space: nowrap;">
-                        <label class="control-label" for="cect1se-n">Smooth edges</label>
+                        <label class="control-label" for="cect1se">Smooth edges</label>
                         <i class="fa fa-question-circle-o" aria-hidden="true" data-toggle="popover" title="Help"
                            data-content="Indicate whether the nodule has a smooth-appearing margin, or describe further if needed in the comments section below."></i>
                     </td>
@@ -353,7 +352,7 @@
                 </tr>
                 <tr>
                     <td style="white-space: nowrap;">
-                        <label class="control-label" for="cect1ca-n">Calcifications</label>
+                        <label class="control-label" for="cect1ca">Calcifications</label>
                     </td>
                     {% for i in noduleArray %}
                         <td data-nodule-id="{{ i }}" style="display:none;">
@@ -381,7 +380,7 @@
                 </tr>
                 <tr>
                     <td style="white-space: nowrap;">
-                        <label class="control-label" for="cect1sp-n">Spiculated</label>
+                        <label class="control-label" for="cect1sp">Spiculated</label>
                     </td>
                     {% for i in noduleArray %}
                         <td data-nodule-id="{{ i }}" style="display:none;">
@@ -490,7 +489,15 @@
         </div>
     </div>
 </div>
-
+<div id="dialog-message" title="Download complete">
+    <p>
+        <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
+        Your files have downloaded successfully into the My Downloads folder.
+    </p>
+    <p>
+        Currently using <b>36% of your storage space</b>.
+    </p>
+</div>
 <input type="hidden" name="cennod" value="0" context="server"/>
 <input type="hidden" name="ceanod" value="n" context="server"/>
 
@@ -531,7 +538,16 @@
                 fv.addField('cect{{ i }}ssl', {validators: {notEmpty: {message: 'Enter a solid comp. length'}}});
                 fv.addField('cect{{ i }}ssw', {validators: {notEmpty: {message: 'Enter a solid comp. width'}}});
             {% endfor %}
+
+            $("#nodule-table").closest("form").on('submit.nodule-grid', function () {
+                const examType = $("[name=cetex]:checked").val(); // baseline is "b"; only available on CT Eval form
+                if (examType === 'b') {
+                    ng.sortData();
+                }
+            });
         }, 0);
+
+
     });
 
 </script>

@@ -85,24 +85,29 @@
                 });
             }
 
-            function setupMeanDiameterCalculation(lengthFieldSuffix, widthFieldSuffix, diamFieldSuffix) {
+            function mean(v1, v2) {
+                const w = v1 ? Number(v1) : 0;
+                const l = v2 ? Number(v2) : 0;
+
+                if (w > 0 && l > 0) {
+                    return (l + w) / 2;
+                } else {
+                    return 0;
+                }
+            }
+
+            function setupMeanDiameterCalculation(lengthFieldSuffix, widthFieldSuffix, labelSuffix) {
                 const lengthFields = $("[name^=cect][name$=" + lengthFieldSuffix + "],[name^=cect][name$=" + widthFieldSuffix + "]");
                 lengthFields.on('keyup change', function (e) {
                     const targetField = $(e.target);
                     const noduleId = targetField.closest("td").attr("data-nodule-id");
-                    const noduleDiamLabel = $("#cect" + noduleId + diamFieldSuffix + "-val");
-                    const wval = $("#cect" + noduleId + widthFieldSuffix).val();
-                    const lval = $("#cect" + noduleId + lengthFieldSuffix).val();
-                    const w = wval ? Number(wval) : 0;
-                    const l = lval ? Number(lval) : 0;
+                    const noduleDiamLabel = $("#cect" + noduleId + labelSuffix);
+                    const widthValue = $("#cect" + noduleId + widthFieldSuffix).val();
+                    const lengthValue = $("#cect" + noduleId + lengthFieldSuffix).val();
+                    const m = mean(widthValue, lengthValue);
 
-                    if (w > 0 && l > 0) {
-                        const meanDiam = (l + w) / 2;
-                        if (meanDiam > 0) {
-                            noduleDiamLabel.text(meanDiam.toFixed(1));
-                        } else {
-                            noduleDiamLabel.text("-");
-                        }
+                    if (m > 0) {
+                        noduleDiamLabel.text(m.toFixed(1));
                     } else {
                         noduleDiamLabel.text("-");
                     }
@@ -139,16 +144,17 @@
 
             }
 
-            function markNoduleVolumeManuallyEntered(noduleIdx, isManual) {
+            function markNoduleVolumeManuallyEntered(noduleId, isManual) {
+                // console.log("markNoduleVolumeManuallyEntered() noduleId=" + noduleId + ", isManual=" + isManual)
                 if (isManual) {
-                    $("#cect" + noduleIdx + "sv").addClass("volumeOverride");
-                    $("#cect" + noduleIdx + "svovrrde").val("true");
-                    $("#cect" + noduleIdx + "svovrrde-warn").removeClass("invisible");
+                    $("#cect" + noduleId + "sv").addClass("volumeOverride");
+                    $("#cect" + noduleId + "svovrrde").val("true");
+                    $("#cect" + noduleId + "svovrrde-warn").removeClass("invisible");
                 } else {
-                    $("#cect" + noduleIdx + "sv").removeClass("volumeOverride");
+                    $("#cect" + noduleId + "sv").removeClass("volumeOverride");
                     // set the manually overriden hidden field to false
-                    $("#cect" + noduleIdx + "svovrrde").val("false");
-                    $("#cect" + noduleIdx + "svovrrde-warn").addClass("invisible");
+                    $("#cect" + noduleId + "svovrrde").val("false");
+                    $("#cect" + noduleId + "svovrrde-warn").addClass("invisible");
                 }
             }
 
@@ -197,6 +203,108 @@
                 });
             }
 
+            function _sortData() {
+                let sorted = false;
+                //i = index based. Start at 1 because if there's only 1 nodule no sorting.
+                for (let i = 1; i < settings.getNoduleCount(); i++) {
+                    let index = i;
+                    while (index > 0 && getNoduleSize(index) > getNoduleSize(index - 1)) {
+                        swapFields(index, index - 1);
+                        sorted = true;
+                        index--;
+                    }
+                }
+
+                if (sorted) {
+                    //TODO: replace alert with notification. However don't submit the form until user has dismissed it.
+                    //VAPALS.displayNotification("Nodule sort", "Nodules have been sorted by solid component mean diameter.");
+                    alert("Nodules have been sorted by solid component mean diameter.");
+                }
+            }
+
+            function swapValues(selector1, selector2) {
+                const $f1 = $(selector1);
+                const $f2 = $(selector2);
+
+                //special handling of checkboxes
+                if ($f1.is(":checkbox")) {
+                    const checked1 = $f1.is(":checked");
+                    const checked2 = $f2.is(":checked");
+                    $f1.prop('checked', checked2);
+                    $f2.prop('checked', checked1);
+                } else { //normal swap for inputs, selects, etc
+                    const temp1 = $(selector1).val();
+                    const temp2 = $(selector2).val();
+                    $(selector1).val(temp2).data("previous-value", temp2);
+                    $(selector2).val(temp1).data("previous-value", temp1);
+                }
+            }
+
+            function swapFields(noduleIndex, otherIndex) {
+                console.log("swapFields() entered. noduleIndex=" + noduleIndex + ", other=" + otherIndex);
+                const nodeId1 = noduleIndex + 1;
+                const nodeId2 = otherIndex + 1;
+                const prefix1 = '#cect' + nodeId1;
+                const prefix2 = '#cect' + nodeId2;
+                const suffixes = ['ch', 'en', 'll', 'sn', 'inl', 'inh', 'st', 'nt', 'sl', 'sw', 'sd', 'sh', 'sv',
+                    'ssl', 'ssw', 'ssd', 'ssd-val', 'se', 'ca', 'in', 'sp', 'pld', 'ac', 'co', 'pd'];
+                const selectorMap = []; //map of elements (i.e. arr['elementA'] = 'elementB' ) that needs to swap values.
+                for (let suffix of suffixes) {
+                    selectorMap[prefix1 + suffix] = prefix2 + suffix;
+                }
+
+                //NB: When we call the change event on updated fields, the volume override field will always be true.
+                // To get around this, we keep the original field values, manually swap them, then re-evaluate if the
+                // volume was manually entered
+                const $override1 = $("#cect" + nodeId1 + "svovrrde");
+                const $override2 = $("#cect" + nodeId2 + "svovrrde");
+                const origOverrideVal1 = $override1.val();
+                const origOverrideVal2 = $override2.val();
+
+                const changeQueue = [];
+                for (let key in selectorMap) {
+                    const selector1 = key;
+                    const selector2 = selectorMap[key];
+                    swapValues(selector1, selector2);
+                    changeQueue.push(selector1, selector2);
+                }
+
+                //trigger change events on every field so any conditional fields are triggered.
+                $.each(changeQueue, function (i, el) {
+                    $(el).trigger('change');
+                });
+
+
+                //As noted above, restore volume override values
+                $override1.val(origOverrideVal2);
+                $override2.val(origOverrideVal1);
+                markNoduleVolumeManuallyEntered(nodeId1, $override1.val() === 'true');
+                markNoduleVolumeManuallyEntered(nodeId2, $override2.val() === 'true')
+            }
+
+            function getNoduleSize(tableColumnIndex) {
+                const noduleId = tableColumnIndex + 1;
+                let v1 = 0;
+                let v2 = 0;
+                const consistencyType = $("#cect" + noduleId + "nt").val();
+                if (consistencyType === 'm') { //part solid
+                    v1 = $("#cect" + noduleId + "ssl").val();
+                    v2 = $("#cect" + noduleId + "ssw").val();
+                } else {
+                    v1 = $("#cect" + noduleId + "sl").val();
+                    v2 = $("#cect" + noduleId + "sw").val();
+                }
+                let m = mean(v1, v2);
+                console.log("nodule size of nodule" + noduleId + " is: " + m);
+
+                //Add a factor of 1000000 to ensure any nodule with a solid component is before any non-solids
+                if (consistencyType !== 's' && consistencyType !== 'm') {
+                    m -= 100000; //insane number that would never be a real nodule size (100 meters)
+                    console.log("nodule size adjusted for non-solid: " + m);
+                }
+                return m;
+            }
+
             function _displayNodules(count) {
                 $("[data-nodule-id]").hide().filter(function () {
                     return $(this).data("nodule-id") <= count;
@@ -242,10 +350,10 @@
             function _init() {
 
                 // mean diameter calculation
-                setupMeanDiameterCalculation("sl", "sw", "sd");
+                setupMeanDiameterCalculation("sl", "sw", "sd-val");
 
                 // solid mean diameter calculation
-                setupMeanDiameterCalculation("ssl", "ssw", "ssd");
+                setupMeanDiameterCalculation("ssl", "ssw", "ssd-val");
 
                 for (let i = 0; i < settings.availableNodules; i++) {
                     setupNoduleVolumeCalculations(i);
@@ -257,6 +365,7 @@
                     displayNodules: _displayNodules,
                     addNodule: _addNodule,
                     removeNodule: _removeNodule,
+                    sortData: _sortData
                 };
             }
 

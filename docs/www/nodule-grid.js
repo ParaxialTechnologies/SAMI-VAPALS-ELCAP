@@ -208,7 +208,7 @@
                 //i = index based. Start at 1 because if there's only 1 nodule no sorting.
                 for (let i = 1; i < settings.getNoduleCount(); i++) {
                     let index = i;
-                    while (index > 0 && getNoduleSize(index) > getNoduleSize(index - 1)) {
+                    while (index > 0 && getNoduleSizeForSorting(index) > getNoduleSizeForSorting(index - 1)) {
                         swapFields(index, index - 1);
                         sorted = true;
                         index--;
@@ -218,7 +218,7 @@
                 if (sorted) {
                     //TODO: replace alert with notification. However don't submit the form until user has dismissed it.
                     //VAPALS.displayNotification("Nodule sort", "Nodules have been sorted by solid component mean diameter.");
-                    alert("Nodules have been sorted by solid component mean diameter.");
+                    alert("Nodules have been sorted by non-calcified solid component mean diameter.");
                 }
             }
 
@@ -282,7 +282,7 @@
                 markNoduleVolumeManuallyEntered(nodeId2, $override2.val() === 'true')
             }
 
-            function getNoduleSize(tableColumnIndex) {
+            function getNoduleSizeForSorting(tableColumnIndex) {
                 const noduleId = tableColumnIndex + 1;
                 let v1 = 0;
                 let v2 = 0;
@@ -295,12 +295,23 @@
                     v2 = $("#cect" + noduleId + "sw").val();
                 }
                 let m = mean(v1, v2);
-                console.log("nodule size of nodule" + noduleId + " is: " + m);
+                //console.log("nodule size of nodule" + noduleId + " is: " + m);
 
-                //Add a factor of 1000000 to ensure any nodule with a solid component is before any non-solids
+
+                //Subtract 100000 to make nodules with no solid component sorted after those with a solid component
                 if (consistencyType !== 's' && consistencyType !== 'm') {
                     m -= 100000; //insane number that would never be a real nodule size (100 meters)
-                    console.log("nodule size adjusted for non-solid: " + m);
+                    //console.log("nodule size adjusted for non-solid: " + m);
+                }
+
+                //Subtract 200000 to make calcified nodules sort after non-calcified.
+                // Calcified nodules are those with a status of Benign (Ca++) or Prob benign, prob Ca++. All other
+                // statuses, including blank are considered "non-calcified".
+                const noduleStatus = $("#cect" + noduleId + "st").val();
+                const calcified = noduleStatus === 'bc' || noduleStatus === 'pc';
+                if (calcified === true) {
+                    m -= 200000; //insane number that would never be a real nodule size (100 meters)
+                    //console.log("nodule size adjusted for calcification: " + m);
                 }
                 return m;
             }

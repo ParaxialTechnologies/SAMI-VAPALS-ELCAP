@@ -95,9 +95,23 @@ PRSTSV(path,filename,graphname) ; Parse TSV file and build graph
  quit  ; End of label PRSTSV
  ;
  ;
-UPDTFLD ;
+INTAKE ;
  ;
- quit  ;
+ new inroot set inroot=$$setroot^%wd("form fields - intake")
+ ; new ctroot set ctroot=$$setroot^%wd("form fields - ct evaluation")
+ ; new innode set innode=$name(@root@("field","B"))
+ ; new nodepattern set nodepattern=$piece(node,")")
+ ; new checknode set checknode=$query(@node)
+ ; new fieldname set fieldname=""
+ ; new checkfieldname set checkfieldname=""
+ ; new matches set matches=0
+ ;
+ ;
+ ; for infieldnum=1:1:728  do
+ ; . set infieldname=@inroot@("field",infieldnum,"input",1,"name")
+ ;
+ ;
+ quit  ; End of label INTAKE
  ;
  ;
 DUPS(graphname) ;

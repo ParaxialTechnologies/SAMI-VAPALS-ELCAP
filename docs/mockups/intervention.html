@@ -8931,8 +8931,7 @@
       </div>
      </div>
      <script language="JavaScript">
-      $(function () {
-
+      function initEmphysema(fv) {
         function calculateVisualCacScore() {
             let cal1 = $("#cecclm")[0].selectedIndex;
             let cal2 = $("#ceccld")[0].selectedIndex;
@@ -8951,15 +8950,13 @@
         calculateVisualCacScore();
 
         //Add validations after all other anonymous functions have run and fv is bound.
-        window.setTimeout(function () {
-            const fv = $("#main-form").data('formValidation');
-
+        if (fv) {
             fv.addField('cecclm', {validators: {notEmpty: {message: 'Left main is required'}}});
             fv.addField('ceccld', {validators: {notEmpty: {message: 'LAD is required'}}});
             fv.addField('cecclf', {validators: {notEmpty: {message: 'Circumflex is required'}}});
             fv.addField('ceccrc', {validators: {notEmpty: {message: 'RCA is required'}}});
-        }, 0);
-    });
+        }
+    }
      </script>
     </div>
     <hr/>
@@ -11231,7 +11228,7 @@
         }
     }
 
-    $(function () {
+    function initAbnormalities(fv) {
         $("#cepaw, #ceaow").on('keyup change', calculatePulmonaryArteryAortaRatio);
         calculatePulmonaryArteryAortaRatio();
 
@@ -11255,9 +11252,7 @@
         });
 
         //Add validations after all other anonymous functions have run and fv is bound.
-        window.setTimeout(function () {
-            const fv = $("#main-form").data('formValidation');
-
+        if (fv) {
             fv.addField('cdoaw', {validators: {integer: {message: 'must be a whole number'}}});
             fv.addField('ceaow', {validators: {integer: {message: 'must be a whole number'}}});
 
@@ -11266,9 +11261,8 @@
                 selector: '[name^=cemlnl]',
                 validators: {choice: {min: 1, message: 'Select one or more classification'}}
             });
-        }, 0);
-
-    });
+        }
+    }
      </script>
     </div>
     <hr/>
@@ -11762,6 +11756,8 @@
             
 
             initNoduleGrid(fv);
+            initAbnormalities(fv);
+            initEmphysema(fv);
             initFollowup(fv);
 
             $('#body').scrollspy({target: '#wizard-bar', offset: 10})

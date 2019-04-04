@@ -992,7 +992,7 @@
         }
     }
 
-    $(function () {
+    function initAbnormalities(fv) {
         $("#cepaw, #ceaow").on('keyup change', calculatePulmonaryArteryAortaRatio);
         calculatePulmonaryArteryAortaRatio();
 
@@ -1016,9 +1016,7 @@
         });
 
         //Add validations after all other anonymous functions have run and fv is bound.
-        window.setTimeout(function () {
-            const fv = $("#main-form").data('formValidation');
-
+        if (fv) {
             fv.addField('cdoaw', {validators: {integer: {message: 'must be a whole number'}}});
             fv.addField('ceaow', {validators: {integer: {message: 'must be a whole number'}}});
 
@@ -1027,8 +1025,7 @@
                 selector: '[name^=cemlnl]',
                 validators: {choice: {min: 1, message: 'Select one or more classification'}}
             });
-        }, 0);
-
-    });
+        }
+    }
 
 </script>

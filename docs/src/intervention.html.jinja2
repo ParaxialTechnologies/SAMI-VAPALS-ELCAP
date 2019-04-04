@@ -2037,7 +2037,7 @@
                         rbrep: {validators: {notEmpty: {message: 'Resection performed is required'}}},
                         //Intervention; virtual fields don't work with fv.addField, so we have to add it here
                         followup: {
-                            selector: '[name^=cefu][type=checkbox]',
+                            selector: '[name^=cefu][type=checkbox], [name^=cefu][type=radio]',
                             validators: {choice: {min: 1, message: 'Select at least one CT or Other follow up option'}}
                         },
 

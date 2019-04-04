@@ -1,12 +1,12 @@
 <div class="row">
     <div class="col-sm-12 form-group">
         <label for="cefuw-nw">LDCT follow up:</label><br/>
-        {{ f.inlineCheckbox("cefuw", "1y","Annual repeat", {'id':'cefuw-1y'}) }}
-        {{ f.inlineCheckbox("cefuw", "nw","Now", {'id':'cefuw-nw'}) }}
-        {{ f.inlineCheckbox("cefuw", "1m","1 month", {'id':'cefuw-1m'}) }}
-        {{ f.inlineCheckbox("cefuw", "3m","3 months", {'id':'cefuw-3m'}) }}
-        {{ f.inlineCheckbox("cefuw", "6m","6 months", {'id':'cefuw-6m'}) }}
-        {{ f.inlineCheckbox("cefuw", "os","Other", {'id':'cefuw-os'}) }}
+        {{ f.inlineRadio("cefuw", "cefuw-1y", "1y", "Annual repeat") }}
+        {{ f.inlineRadio("cefuw", "cefuw-nw", "nw", "Now") }}
+        {{ f.inlineRadio("cefuw", "cefuw-1m", "1m", "1 month") }}
+        {{ f.inlineRadio("cefuw", "cefuw-3m", "3m", "3 months") }}
+        {{ f.inlineRadio("cefuw", "cefuw-6m", "6m", "6 months") }}
+        {{ f.inlineRadio("cefuw", "cefuw-os", "os", "Other") }}
     </div>
 </div>
 <div id="follow-up-date-container">
@@ -41,7 +41,7 @@
 <script language="JavaScript">
 
     function initFollowup(fv) {
-        exclusiveCheckbox("[name='cefuw']", "div");
+        uncheckableRadio("[name='cefuw']", "div");
 
         //followup date calculation
         $("[name=cefuw]").on('change', function () {

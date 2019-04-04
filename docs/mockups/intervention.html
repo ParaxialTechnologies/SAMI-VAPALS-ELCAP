@@ -11318,34 +11318,28 @@
         LDCT follow up:
        </label>
        <br/>
-       <label class="checkbox-inline ">
-        <input name="cefuw" type="hidden" value=""/>
-        <input id="cefuw-1y" name="cefuw" type="checkbox" value="1y"/>
+       <label class="radio-inline" for="cefuw-1y">
+        <input id="cefuw-1y" name="cefuw" type="radio" value="1y"/>
         Annual repeat
        </label>
-       <label class="checkbox-inline ">
-        <input name="cefuw" type="hidden" value=""/>
-        <input id="cefuw-nw" name="cefuw" type="checkbox" value="nw"/>
+       <label class="radio-inline" for="cefuw-nw">
+        <input id="cefuw-nw" name="cefuw" type="radio" value="nw"/>
         Now
        </label>
-       <label class="checkbox-inline ">
-        <input name="cefuw" type="hidden" value=""/>
-        <input id="cefuw-1m" name="cefuw" type="checkbox" value="1m"/>
+       <label class="radio-inline" for="cefuw-1m">
+        <input id="cefuw-1m" name="cefuw" type="radio" value="1m"/>
         1 month
        </label>
-       <label class="checkbox-inline ">
-        <input name="cefuw" type="hidden" value=""/>
-        <input id="cefuw-3m" name="cefuw" type="checkbox" value="3m"/>
+       <label class="radio-inline" for="cefuw-3m">
+        <input id="cefuw-3m" name="cefuw" type="radio" value="3m"/>
         3 months
        </label>
-       <label class="checkbox-inline ">
-        <input name="cefuw" type="hidden" value=""/>
-        <input id="cefuw-6m" name="cefuw" type="checkbox" value="6m"/>
+       <label class="radio-inline" for="cefuw-6m">
+        <input id="cefuw-6m" name="cefuw" type="radio" value="6m"/>
         6 months
        </label>
-       <label class="checkbox-inline ">
-        <input name="cefuw" type="hidden" value=""/>
-        <input id="cefuw-os" name="cefuw" type="checkbox" value="os"/>
+       <label class="radio-inline" for="cefuw-os">
+        <input id="cefuw-os" name="cefuw" type="radio" value="os"/>
         Other
        </label>
       </div>
@@ -11433,7 +11427,8 @@
      </div>
      <script language="JavaScript">
       function initFollowup(fv) {
-        exclusiveCheckbox("[name='cefuw']", "div");
+        
+        uncheckableRadio("[name='cefuw']", "div");
 
         //followup date calculation
         $("[name=cefuw]").on('change', function () {
@@ -11656,7 +11651,7 @@
                         rbrep: {validators: {notEmpty: {message: 'Resection performed is required'}}},
                         //Intervention; virtual fields don't work with fv.addField, so we have to add it here
                         followup: {
-                            selector: '[name^=cefu][type=checkbox]',
+                            selector: '[name^=cefu][type=checkbox], [name^=cefu][type=radio]',
                             validators: {choice: {min: 1, message: 'Select at least one CT or Other follow up option'}}
                         },
 

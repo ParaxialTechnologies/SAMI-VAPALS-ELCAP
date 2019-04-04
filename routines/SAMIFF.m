@@ -48,17 +48,15 @@ PRSTSV(path,filename,graphname) ; Parse TSV file and build graph
  ;
  new fieldnum set fieldnum=0
  new inputnum set inputnum=0
- new question,name,type,required,placeholder,values,labels,cnt
- new errmsg s errmsg=""
+ new question,name,type,required,placeholder,values,labels
+ new errmsg set errmsg=""
  ;
  do OPEN^%ZISH("FILE",path,filename,"R")
  new line
- s cnt=1
  ;
- for  use IO read line:1 quit:$$STATUS^%ZISH  do  q:$length(errmsg)
- . set cnt=cnt+1
- . do  q:'(errmsg="")
- .. set errmsg=$S(POP:"file missing",'(line[$CHAR(9)):"file not TAB delimited",1:"")
+ for  use IO read line:1 quit:$$STATUS^%ZISH  do  quit:$length(errmsg)
+ . do  quit:'(errmsg="")
+ . . set errmsg=$S(POP:"file missing",'(line[$CHAR(9)):"file not TAB delimited",1:"")
  . if fieldnum>0 do  ; Skip TSV file column headers
  . . set question=$piece(line,$CHAR(9),1)
  . . set name=$piece(line,$CHAR(9),2)
@@ -67,6 +65,7 @@ PRSTSV(path,filename,graphname) ; Parse TSV file and build graph
  . . set placeholder=$piece(line,$CHAR(9),5)
  . . set values=$piece(line,$CHAR(9),6)
  . . set labels=$piece(line,$CHAR(9),7)
+ . . ;
  . . ; Check that the number of values matches the number of labels
  . . if $length(values,";")=$length(labels,";") do
  . . . for inputnum=1:1 quit:inputnum>$length(values,";")  do
@@ -80,7 +79,9 @@ PRSTSV(path,filename,graphname) ; Parse TSV file and build graph
  . . . . set @root@("field",fieldnum,"input",inputnum,"value")=value
  . . . . set label=$piece(labels,";",inputnum)
  . . . . set @root@("field",fieldnum,"input",inputnum,"label")=label
- . . . . i '($get(value)=""),'($get(label)="") set @root@("field","C",name,value,label)=""
+ . . . . ;
+ . . . . if '($get(value)=""),'($get(label)="")  do
+ . . . . . set @root@("field","C",name,value,label)=""
  . . . set @root@("field","B",name,fieldnum)=""
  . . else  do
  . . . use $P write !,"Field: ",name
@@ -88,9 +89,42 @@ PRSTSV(path,filename,graphname) ; Parse TSV file and build graph
  . . . use $P write !,?4,"Labels: ",$length(labels,";"),!
  . set fieldnum=fieldnum+1
  do CLOSE^%ZISH
+ ;
  write:$l(errmsg) !,!,"*** ",errmsg," ***",!,!
  ;
  quit  ; End of label PRSTSV
+ ;
+ ;
+UPDTFLD ;
+ ;
+ quit  ;
+ ;
+ ;
+DUPS(graphname) ;
+ ;
+ new root set root=$$setroot^%wd(graphname)
+ new node set node=$name(@root@("field","B"))
+ new nodepattern set nodepattern=$piece(node,")")
+ new checknode set checknode=$query(@node)
+ new fieldname set fieldname=""
+ new checkfieldname set checkfieldname=""
+ new matches set matches=0
+ ;
+ for  set node=$query(@node) quit:node'[nodepattern  do
+ . set fieldname=$piece(node,",",5)
+ . ;
+ . for  set checknode=$query(@checknode) quit:checknode'[nodepattern  do
+ . . set checkfieldname=$piece(checknode,",",5)
+ . . ;
+ . . if checkfieldname=fieldname do
+ . . . set matches=matches+1
+ . if matches>0 do
+ . . write !,"Field: ",fieldname
+ . . write !,?4,"Matches: ",matches,!
+ . set checknode=$query(@node)
+ . set matches=0
+ ;
+ quit  ; End of label DUPS
  ;
  ;
 EOR ; End of routine SAMIFF

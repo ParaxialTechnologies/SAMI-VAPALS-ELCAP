@@ -1,40 +1,39 @@
 QUESTION	NAME	TYPE	REQUIRED	PLACEHOLDER	VALUES	LABELS
-	ptdos	text	1			Study date
-	ptrad	text	1			Radiologist
-	ptradnpi	text	0			Radiologist NPI
-	ptofr	radio	0		n;yes	No;Yes
-	sidoe	text	1			
-	cedos	text	1			
-	ceanod	radio	0		n;yes	No;Yes
-	cenncnlt	radio	0		n;yes	No;Yes
-	cefctn	select-one	0		2;3;4;5	Nodule 2;Nodule 3;Nodule 4;Nodule 5
-	cect1ch	select-one	0		-;n;pn;pd;pe;pi;pj;po;pw;px;pr;rn;rd;ri;rj;pk;pv	-;Newly seen;Prev seen; no change;Prev seen; slight decr;Prev seen; marked decr;Prev seen; slight incr;Prev seen; marked incr;Prev seen; obscured;Prev seen; resolved;Prev seen; not a nodule;Prev seen; resected;Retrospect; no chg;Retrospect; decrease;Retrospect; slight incr;Retrospect; marked incr;Not in outside report;Not included in scan
-	cect0ch	select-one	0		-;n;pn;pd;pe;pi;pj;po;pw;px;pr;rn;rd;ri;rj;pk;pv	-;Newly seen;Prev seen; no change;Prev seen; slight decr;Prev seen; marked decr;Prev seen; slight incr;Prev seen; marked incr;Prev seen; obscured;Prev seen; resolved;Prev seen; not a nodule;Prev seen; resected;Retrospect; no chg;Retrospect; decrease;Retrospect; slight incr;Retrospect; marked incr;Not in outside report;Not included in scan
-	cect1ll	select-one	0		-;end;lul;lll;rul;rml;rll	-;Endobr;LUL;LLL;RUL;RML;RLL
-	cect0ll	select-one	0		-;end;lul;lll;rul;rml;rll	-;Endobr;LUL;LLL;RUL;RML;RLL
-	cect1up	text	0			
-	cect0up	text	0			
-	cect1st	select-one	0		-;un;bc;pc;re;rg;tn;pp;pn;pi;ub;bb;mb;ab;om;mr;br	-;Unknown;Benign (Ca++);Prob benign; prob Ca++;Resolved;Resolving;No change - 2 yrs;PET - positive;PET - negative;PET - indeterminate;Biopsy - unknown;Biopsy - benign;Biopsy - malignant;Biopsy - atyp bronch prolif;Biopsy - metastatic;Resected - malignant;Resected - benign
-	cect0st	select-one	0		-;un;bc;pc;re;rg;tn;pp;pn;pi;ub;bb;mb;ab;om;mr;br	-;Unknown;Benign (Ca++);Prob benign; prob Ca++;Resolved;Resolving;No change - 2 yrs;PET - positive;PET - negative;PET - indeterminate;Biopsy - unknown;Biopsy - benign;Biopsy - malignant;Biopsy - atyp bronch prolif;Biopsy - metastatic;Resected - malignant;Resected - benign
-	cect1pd	select-one	0		-;aa;ap;ba;ns;ad;as;la;sq;sm;ct;ca;be;bs;os	-For Pathology Use Only-;AAH;Atyp bronch prolif;BAC;Unspec. non-small cell;Adenocarcinoma;Adenosquamous;Large cell;Squamous cell;Small cell;Carcinoid - typical;Carcinoid - atypical;Not malignant;Benign specific;Other (specify)
-	cect0pd	select-one	0		-;aa;ap;ba;ns;ad;as;la;sq;sm;ct;ca;be;bs;os	-For Pathology Use Only-;AAH;Atyp bronch prolif;BAC;Unspec. non-small cell;Adenocarcinoma;Adenosquamous;Large cell;Squamous cell;Small cell;Carcinoid - typical;Carcinoid - atypical;Not malignant;Benign specific;Other (specify)
-	ceinod	select-one	0		-;1;2;3;4;5	-;1;2;3;4;5
-	celrad	select-one	0		-;0;1;2;3;4A;4B;4X	-;0;1;2;3;4A;4B;4X
-	celrads	checkbox	0		S	S
-	celradc	checkbox	0		C	C
-	ptpdt	textarea	0			PET details - lung and nodules
-	ptpdtln	textarea	0			PET details - lymph nodes
-	ceaf	radio	0		n;yes	No;Yes
-	ceafl1	select-one	0		-;b;a;h;n	-;Breast;Abdomen;Head;Neck
-	ceafo1	text	0			Describe
-	ceafl2	select-one	0		-;b;a;h;n	-;Breast;Abdomen;Head;Neck
-	ceafo2	text	0			Describe
-	ceafmc	textarea	0			Comments
-	ceofo	textarea	0			Any other findings
-	-	-	0		-	Follow Up
-	cefu	select-one	1		-;rs;dx;af;pe;cc;fn;br;va;su	-;Annual repeat CT;Follow-up CT;Abx + follow-up CT;PET;CT w contrast;CT-guided biopsy;Bronchoscopy;VAT;Resection
-	cefud	text	1			When
-	cefuw	radio	0		nw;1m;3m;6m;1y;os	Now;1 month;3 months;6 months;1 year;Other
-	ceimn	radio			rs;ro;ru	No evidence of abnormal uptake. Follow-up as recommended above.;Uptake as described above. Follow-up as recommended above.;Nodule(s) unchanged; as described above. Follow-up as recommended above.
-	ceimo	radio			rs;oa;da	No other abnormalities.;Other abnormalities and suggested follow-up as described above.;Diffuse abnormalities and suggested follow-up as described above.;Diffuse abnormalities.
-	ceimre	textarea	0			Impression remarks
+Study date	ptdos	text	1			Study date
+Radiologist	ptrad	text	1			Radiologist
+Radiologist NPI	ptradnpi	text	0			Radiologist NPI
+PET scan performed at outside institution	ptofr	radio	0		n;yes	No;Yes
+Date of baseline CT	sidoe	text	1			
+Date of most recent comparative study	cedos	text	1			
+Are there any nodules noted in the CT scan	ceanod	radio	0		n;yes	No;Yes
+Are non-calcified nodules noted, all less than 6 mm	cenncnlt	radio	0		n;yes	No;Yes
+Additional Nodules	cefctn	select-one	0		2;3;4;5	Nodule 2;Nodule 3;Nodule 4;Nodule 5
+Nodule 1. Is it new	cect1ch	select-one	0		-;n;pn;pd;pe;pi;pj;po;pw;px;pr;rn;rd;ri;rj;pk;pv	-;Newly seen;Prev seen, no change;Prev seen, slight decr;Prev seen, marked decr;Prev seen, slight incr;Prev seen, marked incr;Prev seen, obscured;Prev seen, resolved;Prev seen, not a nodule;Prev seen, resected;Retrospect, no chg;Retrospect, decrease;Retrospect, slight incr;Retrospect, marked incr;Not in outside report;Not included in scan
+Additional Nodule. Is it new.	cect0ch	select-one	0		-;n;pn;pd;pe;pi;pj;po;pw;px;pr;rn;rd;ri;rj;pk;pv	-;Newly seen;Prev seen, no change;Prev seen, slight decr;Prev seen, marked decr;Prev seen, slight incr;Prev seen, marked incr;Prev seen, obscured;Prev seen, resolved;Prev seen, not a nodule;Prev seen, resected;Retrospect, no chg;Retrospect, decrease;Retrospect, slight incr;Retrospect, marked incr;Not in outside report;Not included in scan
+Nodule 1. Most likely location	cect1ll	select-one	0		-;end;lul;lll;rul;rml;rll	-;Endobr;LUL;LLL;RUL;RML;RLL
+Additional Nodule. Most likely location	cect0ll	select-one	0		-;end;lul;lll;rul;rml;rll	-;Endobr;LUL;LLL;RUL;RML;RLL
+Nodule 1. Maximum nodule uptake (SUV)	cect1up	text	0			
+Additional Nodule. Maximum nodule uptake (SUV)	cect0up	text	0			
+Nodule 1. Nodule status	cect1st	select-one	0		-;un;bc;pc;re;rg;tn;pp;pn;pi;ub;bb;mb;ab;om;mr;br	-;Unknown;Benign (Ca++);Prob benign, prob Ca++;Resolved;Resolving;No change - 2 yrs;PET - positive;PET - negative;PET - indeterminate;Biopsy - unknown;Biopsy - benign;Biopsy - malignant;Biopsy - atyp bronch prolif;Biopsy - metastatic;Resected - malignant;Resected - benign
+Additional Nodule. Pathologic diagnosis	cect0st	select-one	0		-;un;bc;pc;re;rg;tn;pp;pn;pi;ub;bb;mb;ab;om;mr;br	-;Unknown;Benign (Ca++);Prob benign, prob Ca++;Resolved;Resolving;No change - 2 yrs;PET - positive;PET - negative;PET - indeterminate;Biopsy - unknown;Biopsy - benign;Biopsy - malignant;Biopsy - atyp bronch prolif;Biopsy - metastatic;Resected - malignant;Resected - benign
+Nodule 1. Nodule status	cect1pd	select-one	0		-;aa;ap;ba;ns;ad;as;la;sq;sm;ct;ca;be;bs;os	-For Pathology Use Only-;AAH;Atyp bronch prolif;BAC;Unspec. non-small cell;Adenocarcinoma;Adenosquamous;Large cell;Squamous cell;Small cell;Carcinoid - typical;Carcinoid - atypical;Not malignant;Benign specific;Other (specify)
+Additional Nodule. Pathologic diagnosis	cect0pd	select-one	0		-;aa;ap;ba;ns;ad;as;la;sq;sm;ct;ca;be;bs;os	-For Pathology Use Only-;AAH;Atyp bronch prolif;BAC;Unspec. non-small cell;Adenocarcinoma;Adenosquamous;Large cell;Squamous cell;Small cell;Carcinoid - typical;Carcinoid - atypical;Not malignant;Benign specific;Other (specify)
+Indicate the index nodule driving follow up	ceinod	select-one	0		-;1;2;3;4;5	-;1;2;3;4;5
+LungRADS category	celrad	select-one	0		-;0;1;2;3;4A;4B;4X	-;0;1;2;3;4A;4B;4X
+LungRADS modifier S	celrads	checkbox	0		S	S
+LungRADS modifier C	celradc	checkbox	0		C	C
+PET details - lung and nodules	ptpdt	textarea	0			PET details - lung and nodules
+PET details - lymph nodes	ptpdtln	textarea	0			PET details - lymph nodes
+Other clinically significant ancillary finding	ceaf	radio	0		n;yes	No;Yes
+Organ/Location 1	ceafl1	select-one	0		-;b;a;h;n	-;Breast;Abdomen;Head;Neck
+Organ/Location 1 describe	ceafo1	text	0			Describe
+Organ/Location 2	ceafl2	select-one	0		-;b;a;h;n	-;Breast;Abdomen;Head;Neck
+Organ/Location 2 describe	ceafo2	text	0			Describe
+Comments	ceafmc	textarea	0			Comments
+Other findings	ceofo	textarea	0			Any other findings
+Follow-up	cefu	select-one	1		-;rs;dx;af;pe;cc;fn;br;va;su	-;Annual repeat CT;Follow-up CT;Abx + follow-up CT;PET;CT w contrast;CT-guided biopsy;Bronchoscopy;VAT;Resection
+Follow-up date	cefud	text	1			When
+Next followup	cefuw	radio	0		nw;1m;3m;6m;1y;os	Now;1 month;3 months;6 months;1 year;Other
+Nodule impression	ceimn	radio			rs;ro;ru	No evidence of abnormal uptake. Follow-up as recommended above.;Uptake as described above. Follow-up as recommended above.;Nodule(s) unchanged, as described above. Follow-up as recommended above.
+Nodule - other findings	ceimo	radio			rs;oa;da	No other abnormalities.;Other abnormalities and suggested follow-up as described above.;Diffuse abnormalities.
+Impression remarks	ceimre	textarea	0			Impression remarks

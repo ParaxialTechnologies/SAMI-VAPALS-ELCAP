@@ -493,9 +493,10 @@
 <input type="hidden" name="ceanod" value="n" context="server"/>
 
 <script language="JavaScript">
-    $(function () {
+
+    function initNoduleGrid(fv) {
         const noduleArrayLength = parseInt("{{ noduleArray|length }}");
-        const ng = $.noduleGrid({
+        const $noduleGrid = $.noduleGrid({
             availableNodules: noduleArrayLength,
             getNoduleCount: function () {
                 return parseInt($("[name='cennod']").val());
@@ -506,15 +507,11 @@
             }
         });
 
-        $(".add-nodule").on('click', ng.addNodule);
-        $(".remove-nodule").on('click', ng.removeNodule);
+        $(".add-nodule").on('click', $noduleGrid.addNodule);
+        $(".remove-nodule").on('click', $noduleGrid.removeNodule);
         exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
 
-
-        //Add validations after all other anonymous functions have run and fv is bound.
-        window.setTimeout(function () {
-            const fv = $("#main-form").data('formValidation');
-
+        if (fv) {
             {% for i in noduleArray %}
                 fv.addField('cect{{ i }}ch', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
                 fv.addField('cect{{ i }}en', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
@@ -529,16 +526,9 @@
                 fv.addField('cect{{ i }}ssl', {validators: {notEmpty: {message: 'Enter a solid comp. length'}}});
                 fv.addField('cect{{ i }}ssw', {validators: {notEmpty: {message: 'Enter a solid comp. width'}}});
             {% endfor %}
+        }
 
-            $("#nodule-table").closest("form").on('submit.nodule-grid', function () {
-                const examType = $("[name=cetex]:checked").val(); // baseline is "b"; only available on CT Eval form
-                if (examType === 'b') {
-                    ng.sortData();
-                }
-            });
-        }, 0);
-
-
-    });
+        return $noduleGrid;
+    }
 
 </script>

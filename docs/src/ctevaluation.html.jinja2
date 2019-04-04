@@ -395,8 +395,6 @@
         }
 
 
-
-
         function createFormValidator() {
 
             const $form = $('#main-form');
@@ -477,7 +475,9 @@
                         trigger: new FormValidation.plugins.Trigger(),
                         bootstrap3: new FormValidation.plugins.Bootstrap3(),
                         submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
-                        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                        // Instead of using the defaultSubmit plugin here, we listen for the core.form.valid event
+                        // below to sort nodule grid (if necessary), then submit
+                        //defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
                         excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
                         icon: new FormValidation.plugins.Icon({
                             valid: '',
@@ -516,6 +516,7 @@
                 $cedos.val(moment().format(VAPALS.DATE_FORMAT)).trigger('change');
             }
 
+            //type of exam
             $("[name=cetex]").on("change", function () {
                 const $sidoe = $("#sidoe");
                 if ($("[name=cetex]:checked").val() === "b") { // type of exam (tex) is baseline
@@ -524,12 +525,23 @@
                     }
                 }
             }).conditionallyDisplay({sourceValues: "b", disable: "#non-baseline-container"});
+
+            //reconstructed slice thickness
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
 
-            {#Emphysema, Nodule Grid, Abnormalities, Followup JS functionality is in their own template files#}
+            {#NB: Emphysema, Nodule Grid, Abnormalities, Followup JS functionality is in their own template files#}
+            const $noduleGrid = initNoduleGrid(fv);
+            initFollowup(fv);
+
+            fv.on('core.form.valid', function () {
+                const examType = $("[name=cetex]:checked").val(); // baseline is "b"; only available on CT Eval form
+                if (examType === 'b') {
+                    $noduleGrid.sortData();
+                }
+                $("form").trigger('submit');
+            });
 
             $('#body').scrollspy({target: '#wizard-bar', offset: 10})
-
         });
     </script>
 

@@ -4798,9 +4798,9 @@
      <input context="server" name="cennod" type="hidden" value="0"/>
      <input context="server" name="ceanod" type="hidden" value="n"/>
      <script language="JavaScript">
-      $(function () {
+      function initNoduleGrid(fv) {
         const noduleArrayLength = parseInt("10");
-        const ng = $.noduleGrid({
+        const $noduleGrid = $.noduleGrid({
             availableNodules: noduleArrayLength,
             getNoduleCount: function () {
                 return parseInt($("[name='cennod']").val());
@@ -4811,15 +4811,11 @@
             }
         });
 
-        $(".add-nodule").on('click', ng.addNodule);
-        $(".remove-nodule").on('click', ng.removeNodule);
+        $(".add-nodule").on('click', $noduleGrid.addNodule);
+        $(".remove-nodule").on('click', $noduleGrid.removeNodule);
         exclusiveCheckbox("[name='cectin']", "tr" /* the common parent of all checkboxes of this name*/);
 
-
-        //Add validations after all other anonymous functions have run and fv is bound.
-        window.setTimeout(function () {
-            const fv = $("#main-form").data('formValidation');
-
+        if (fv) {
             
                 fv.addField('cect1ch', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
                 fv.addField('cect1en', {validators: {callback: {callback: notDash, message: 'Select a value'}}});
@@ -4951,17 +4947,10 @@
                 fv.addField('cect10ssl', {validators: {notEmpty: {message: 'Enter a solid comp. length'}}});
                 fv.addField('cect10ssw', {validators: {notEmpty: {message: 'Enter a solid comp. width'}}});
             
+        }
 
-            $("#nodule-table").closest("form").on('submit.nodule-grid', function () {
-                const examType = $("[name=cetex]:checked").val(); // baseline is "b"; only available on CT Eval form
-                if (examType === 'b') {
-                    ng.sortData();
-                }
-            });
-        }, 0);
-
-
-    });
+        return $noduleGrid;
+    }
      </script>
     </div>
     <div id="emphysema-coronary" style="padding-top: 1px;">
@@ -7699,11 +7688,11 @@
        <label class="control-label required" for="cefuo">
         Specify
        </label>
-       <input class="form-control" id="cefuo" name="cefuo" placeholder="specify" required="required" type="text"/>
+       <input class="form-control" id="cefuoo" name="cefuoo" placeholder="specify" required="required" type="text"/>
       </div>
      </div>
      <script language="JavaScript">
-      $(function () {
+      function initFollowup(fv) {
         exclusiveCheckbox("[name='cefuw']", "div");
 
         //followup date calculation
@@ -7730,37 +7719,31 @@
                     $field.val("").focus();
             }
 
-            const fv = $("#main-form").data('formValidation');
             if (fv) {
                 fv.revalidateField('cefud');
             }
-
-            //display other followup specify field if "other" checkbox is enabled.
-            $("[name=cefuo]").conditionallyDisplay({sourceValues: "y", enable: "#cefuo-container"});
-
-            function setCtFollowUpOther() {
-                $("[name=cefuw]").prop('checked', false).filter("[value=os]").prop('checked', true);
-            }
-
-            //auto-select "other" if user modifies the date
-            $("#cefud").on('keyup paste', setCtFollowUpOther).closest(".datepicker").on('dp.change', setCtFollowUpOther);
-
-            //Add validations after all other anonymous functions have run and fv is bound.
-            window.setTimeout(function () {
-                const fv = $("#main-form").data('formValidation');
-
-                fv.addField('cecclm', {validators: {notEmpty: {message: 'Left main is required'}}});
-                fv.addField('cefud', {
-                    validators: {
-                        date: {min: VAPALS.todaysDate(), message: 'Follow up date must be at least today\'s date'}
-                    }
-                });
-
-            }, 0);
-
-
         });
-    });
+
+        //display other followup specify field if "other" checkbox is enabled.
+        $("[name=cefuo]").conditionallyDisplay({sourceValues: "y", enable: "#cefuo-container"});
+
+        function setCtFollowUpOther() {
+            $("[name=cefuw]").prop('checked', false).filter("[value=os]").prop('checked', true);
+        }
+
+        //auto-select "other" if user modifies the date
+        $("#cefud").on('keyup paste', setCtFollowUpOther).closest(".datepicker").on('dp.change', setCtFollowUpOther);
+
+        //Add validations after all other anonymous functions have run and fv is bound.
+        if (fv) {
+            fv.addField('cecclm', {validators: {notEmpty: {message: 'Left main is required'}}});
+            fv.addField('cefud', {
+                validators: {
+                    date: {min: VAPALS.todaysDate(), message: 'Follow up date must be at least today\'s date'}
+                }
+            });
+        }
+    }
      </script>
      <h3>
       Lung-RADS
@@ -7982,8 +7965,6 @@
         }
 
 
-
-
         function createFormValidator() {
 
             const $form = $('#main-form');
@@ -8064,7 +8045,9 @@
                         trigger: new FormValidation.plugins.Trigger(),
                         bootstrap3: new FormValidation.plugins.Bootstrap3(),
                         submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
-                        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                        // Instead of using the defaultSubmit plugin here, we listen for the core.form.valid event
+                        // below to sort nodule grid (if necessary), then submit
+                        //defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
                         excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
                         icon: new FormValidation.plugins.Icon({
                             valid: '',
@@ -8103,6 +8086,7 @@
                 $cedos.val(moment().format(VAPALS.DATE_FORMAT)).trigger('change');
             }
 
+            //type of exam
             $("[name=cetex]").on("change", function () {
                 const $sidoe = $("#sidoe");
                 if ($("[name=cetex]:checked").val() === "b") { // type of exam (tex) is baseline
@@ -8111,12 +8095,23 @@
                     }
                 }
             }).conditionallyDisplay({sourceValues: "b", disable: "#non-baseline-container"});
+
+            //reconstructed slice thickness
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
+
+            const $noduleGrid = initNoduleGrid(fv);
+            fv.on('core.form.valid', function () {
+                const examType = $("[name=cetex]:checked").val(); // baseline is "b"; only available on CT Eval form
+                if (examType === 'b') {
+                    $noduleGrid.sortData();
+                }
+                $("form").trigger('submit');
+            });
+            initFollowup(fv);
 
             
 
             $('#body').scrollspy({target: '#wizard-bar', offset: 10})
-
         });
   </script>
  </body>

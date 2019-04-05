@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.04.04" name="version"/>
+  <meta content="2019.04.05" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    Lung Screening and Surveillance Intake Form
@@ -414,9 +414,9 @@
      <button class="btn btn-primary" id="save-chart-eligibility" type="submit">
       Submit Chart Eligibility
      </button>
+     <hr/>
     </div>
     <div id="pre-enrollment-discussion" style="display:none;">
-     <hr/>
      <div class="row">
       <div class="col-sm-12">
        <p class="required lead">
@@ -566,9 +566,9 @@
        Submit Pre-Enrollment Discussion
       </button>
      </div>
+     <hr/>
     </div>
     <div id="intake">
-     <hr/>
      <h3>
       Intake discussion
      </h3>
@@ -1154,7 +1154,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.04.04
+     2019.04.05
     </span>
    </div>
   </footer>
@@ -1220,29 +1220,67 @@
   <script language="JavaScript">
    //purposefully executed before DOM is rendered so section is never visible
     const newForm = "@@NEWFORM@@";
+    const chartEligibilityNoteExists = "@@CHART_ELIGIBILITY_NOTE_EXISTS@@" === "true" || "@@PRE_ENROLLMENT_NOTE_EXISTS@@" === "true" || "@@INTAKE_NOTE_EXISTS@@" === "true";
+    const preEnrollmentNoteExists = "@@PRE_ENROLLMENT_NOTE_EXISTS@@" === "true" || "@@INTAKE_NOTE_EXISTS@@" === "true";
+
     if (newForm === "true") {
         $("#reason-for-change-container").remove();
         $("#change-log-container").remove();
     }
 
-    let enrolled = $("[name=sildct]:checked").val(); //checkbox
-    if (enrolled === undefined) {
-        enrolled = $("#sildct").val() //hidden field
+
+    if (chartEligibilityNoteExists) {
+        let notice = "";
+        let noticeClass = "alert-info";
+
+        const eligibleValue = $("[name=sicechrt]:checked").val();
+        if (eligibleValue === 'y' || eligibleValue === 'n') {
+            $("#chart-eligibility").html("");
+            if (eligibleValue === 'y') {
+                notice += "Previously considered to be <em>eligible</em> based on a chart review.";
+            } else if (eligibleValue === 'n') {
+                notice += "Previously considered <strong>ineligible<strong> during a chart review. Refer to eligibility note for details.";
+                noticeClass = "alert-warning"
+            }
+        }
+
+        if (preEnrollmentNoteExists) {
+            const discussionHeldValue = $("[name=sipedisc]:checked").val();
+            if (discussionHeldValue === 'y') {
+                notice += "<br/><br/>";
+                notice += "A pre-enrollment discussion was held with the patient";
+
+                const discussionDateValue = $("#sipedc").val();
+                if (discussionDateValue) {
+                    notice += " on " + discussionDateValue;
+                }
+                notice += ".";
+
+                const discussionResultDesc = $("[name=siperslt]:checked").parent("label").text().trim();
+                if (discussionResultDesc) {
+                    notice += " The result of that discussion was \"" + discussionResultDesc + "\""
+                }
+            }
+
+            $("#pre-enrollment-discussion").html(""); //clear out the HTML regardless of value
+        }
+
+        //now add the note to the DOM:
+        if (notice !== "") {
+            const $preSection = $("#chart-eligibility");
+            const $preRow = $('<div class="row"></div>');
+            const $preCol = $('<div class="col-lg-8 col-md-12"></div>');
+            const $alert = $('<div class="alert ' + noticeClass + '">' + notice + '</div>');
+            $preCol.append($alert);
+            $preRow.append($preCol);
+            $preSection.append($preRow);
+            $("#wizard-bar").remove(); // no need for the navbar
+        }
     }
 
+
+    const enrolled = $("[name=sildct]:checked").val() || $("#sildct").val(); //visible checkbox or hidden field value
     if (enrolled) {
-        const $preSection = $("#chart-eligibility").html("");
-        const $preRow = $('<div class="row"></div>');
-        const $preCol = $('<div class="col-lg-5 col-md-6 col-sm-8"></div>');
-        const $preAlert = $("<div class=\"alert alert-info\">Patient was eligible based on chart and patient discussion.</div>");
-        $preCol.append($('<input type="hidden" id="sicechrt" name="sicechrt" value="y"/>'));
-        $preCol.append($preAlert);
-        $preRow.append($preCol);
-        $preSection.append($preRow);
-
-        $("#pre-enrollment-discussion").remove();
-        $("#reason-container").remove();
-
         const $enrollSection = $("#enrollment-container").html("");
         const $enrollRow = $('<div class="row"></div>');
         const $enrollCol = $('<div class="col-lg-5 col-md-6 col-sm-8"></div>');
@@ -1447,7 +1485,7 @@
         $("[name=sicechrt]").conditionallyDisplay({
             sourceValues: "n",
             enable: "#reason-container",
-            disable: "#pre-enrollment-discussion, #intake, #intake-tab"
+            disable: "#pre-enrollment-discussion" //, #intake, #intake-tab
         }).on('change', function () {
             //when patient is eligible, display informational message requiring remaining sections be completed.
             const eligible = $("[name=sicechrt]:checked").val();
@@ -1463,7 +1501,7 @@
         // review is not "Y"
         const eligible = $("[name=sicechrt]:checked").val();
         if (!enrolled && (eligible === undefined || eligible === 'n')) {
-            $("#pre-enrollment-discussion, #intake, #intake-tab").hide();
+            $("#pre-enrollment-discussion").hide(); //, #intake, #intake-tab
         }
 
         //PRE-ENROLLMENT PATIENT DISCUSSION
@@ -1471,11 +1509,11 @@
         //enable discussion container when pre-enrollment discussion occurred AND enable intake area when
         // pre-enrollment did NOT occur (default)
         $("[name=sipedisc]")
-            .conditionallyDisplay({sourceValues: 'y', enable: '#discussion-container'})
-            .conditionallyDisplay({sourceValues: 'n', enable: '#intake,#intake-tab'});
+            .conditionallyDisplay({sourceValues: 'y', enable: '#discussion-container'});
+        //.conditionallyDisplay({sourceValues: 'n', enable: '#intake,#intake-tab'});
 
         //enable intake when pre-enrollment result is that the patient want's in.
-        $("[name=siperslt]").conditionallyDisplay({enable: '#intake,#intake-tab'});
+        //$("[name=siperslt]").conditionallyDisplay({enable: '#intake,#intake-tab'});
 
         $("#sipecnot").conditionallyEnable({sourceValues: "1", enable: "#sipecnoo"}); // other contact method
 
@@ -1484,7 +1522,6 @@
         if (hadDiscussion === undefined) {
             $("#sipedisc-n").prop("checked", true);
         }
-
 
         //INTAKE
         $("#silnot").conditionallyEnable({sourceValues: "1", enable: "#silnoo"});

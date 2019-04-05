@@ -264,9 +264,10 @@
                 const origOverrideVal2 = $override2.val();
 
                 const changeQueue = [];
-                for (let i = 0; i < selectorMap.length; ++i) {
-                    const selector1 = selectorMap[i];
-                    const selector2 = selectorMap[selector1];
+                // for (let i = 0; i < selectorMap.length; ++i) {
+                for (let key in selectorMap){
+                    const selector1 = key;
+                    const selector2 = selectorMap[key];
                     swapValues(selector1, selector2);
                     changeQueue.push(selector1, selector2);
                 }

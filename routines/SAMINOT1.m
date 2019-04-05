@@ -8,19 +8,19 @@ SAMINOT1 ;ven/gpl - ielcap: forms ; 2/14/19 10:47am
 EXISTCE(SID,FORM) ; extrinsic returns "true" or "false"
  ; if a Chart Eligibility Note exists
  n root s root=$$setroot^%wd("vapals-patients")
- i @root@("graph",SID,FORM,"sicechrt")="y" q "true"
+ i $g(@root@("graph",SID,FORM,"sicechrt"))="y" q "true"
  q "false"
  ;
 EXISTPRE(SID,FORM) ; extrinsic returns "true" or "false"
  ; if a Pre-enrollment Note exists
  n root s root=$$setroot^%wd("vapals-patients")
- i @root@("graph",SID,FORM,"sipedisc")="y" q "true"
+ i $g(@root@("graph",SID,FORM,"sipedisc"))="y" q "true"
  q "false"
  ;
 EXISTINT(SID,FORM) ; extrinsic returns "true" or "false"
  ; if an Intake Note exists
  n root s root=$$setroot^%wd("vapals-patients")
- i @root@("graph",SID,FORM,"sistatus")="y" q "true"
+ i $g(@root@("graph",SID,FORM,"sistatus"))="y" q "true"
  q "false"
  ;
 WSNOTE(return,filter) ; web service which returns a text note

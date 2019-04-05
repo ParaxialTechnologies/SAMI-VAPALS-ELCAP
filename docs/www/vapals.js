@@ -125,7 +125,10 @@ const VAPALS = new function () {
      * @returns {Promise<any>}
      */
     this.sleep = function (ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
+        // return new Promise(resolve => setTimeout(resolve, ms)); // Won't work in IE11
+        return new Promise(function (resolve) {
+            return setTimeout(resolve, ms)
+        })
     };
 
     /**
@@ -161,11 +164,11 @@ const VAPALS = new function () {
             // const required = $el.prop("required") === true ? "Yes" : "?";
             // Changing this for now so we have a boolean value in the graph store
             const required = $el.prop("required") === true ? "1" : "0";
-            
+
             //skip hidden fields since they can be pseudo elements for checkboxes
             if (type !== 'hidden' && type !== 'submit' && !processed.includes(name)) {
                 processed.push(name);
-                
+
                 let values = [];
                 let labels = [];
                 if (type === 'radio') {
@@ -198,10 +201,10 @@ const VAPALS = new function () {
                 } else {
                     console.log(name + " is a " + type)
                 }
-                
+
                 // Additions by Alexis
                 let question = '';
-                question     = $el.closest('.form-group').prev('label').text().trim().replace(/(\r\n|\n|\r)/gm, " ").replace(/\t/g, " ").replace(/\s+/g, " ");
+                question = $el.closest('.form-group').prev('label').text().trim().replace(/(\r\n|\n|\r)/gm, " ").replace(/\t/g, " ").replace(/\s+/g, " ");
                 // Call out the absence of a meaningful question so a human can provide it.
                 // if (question === labels.toString()) question = '';
                 if (question == '') {
@@ -213,15 +216,15 @@ const VAPALS = new function () {
                 if (question == '') {
                     question = $el.closest('.form-group').find('label').first().text().trim().replace(/(\r\n|\n|\r)/gm, " ").replace(/\t/g, " ").replace(/\s+/g, " ");
                 }
-                
+
                 // Additions by Alexis
                 // For now we'll capture this manually; it's simply to provide a blank column.
-                let placeholder='';
-                
+                let placeholder = '';
+
                 // Additions by Alexis
                 values = values.join(';');
                 labels = labels.join(';');
-                
+
                 line([question, name, type, required, placeholder, values, labels].join("\t"))
                 // console.log(labels.join(","))
             }

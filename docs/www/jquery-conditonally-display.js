@@ -35,7 +35,10 @@
         var matchCallback = (typeof settings.sourceValues === 'function') ? settings.sourceValues : function (actualValue) {
             var sourceValuesArray = $.map(settings.sourceValues.split(","), $.trim);
             if ($.isArray(actualValue)) {
-                return sourceValuesArray.some(v => actualValue.includes(v));
+                // return sourceValuesArray.some(v => actualValue.includes(v)); //won't work in IE11
+                return sourceValuesArray.some(function (v) {
+                    return actualValue.includes(v);
+                });
             }
             return $.inArray(actualValue, sourceValuesArray) > -1;
         };
@@ -68,8 +71,7 @@
                 if ($disableContainer !== null) {
                     $disableContainer.hide();
                 }
-            }
-            else {
+            } else {
                 if ($enableContainer != null) {
                     $enableContainer.hide();
                 }
@@ -96,8 +98,7 @@
                                 fv.resetField(fieldName);
                                 if (isVisible) {
                                     fv.enableValidator(fieldName);
-                                }
-                                else {
+                                } else {
                                     fv.disableValidator(fieldName);
                                 }
                             }
@@ -115,8 +116,7 @@
                 this.filter(":checked"),
                 this.filter(":not(':checked')")
             ).first().trigger("change");
-        }
-        else {
+        } else {
             this.trigger("change");
         }
 

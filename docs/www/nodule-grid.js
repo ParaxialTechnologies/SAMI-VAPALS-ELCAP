@@ -249,7 +249,9 @@
                 const suffixes = ['ch', 'en', 'll', 'sn', 'inl', 'inh', 'st', 'nt', 'sl', 'sw', 'sd', 'sh', 'sv',
                     'ssl', 'ssw', 'ssd', 'ssd-val', 'se', 'ca', 'in', 'sp', 'pld', 'ac', 'co', 'pd'];
                 const selectorMap = []; //map of elements (i.e. arr['elementA'] = 'elementB' ) that needs to swap values.
-                for (let suffix of suffixes) {
+                //let x of suffixes won't wor in IE11
+                for (let i = 0; i < suffixes.length; ++i) {
+                    const suffix = suffixes[i];
                     selectorMap[prefix1 + suffix] = prefix2 + suffix;
                 }
 
@@ -262,12 +264,13 @@
                 const origOverrideVal2 = $override2.val();
 
                 const changeQueue = [];
-                for (let key in selectorMap) {
-                    const selector1 = key;
-                    const selector2 = selectorMap[key];
+                for (let i = 0; i < selectorMap.length; ++i) {
+                    const selector1 = selectorMap[i];
+                    const selector2 = selectorMap[selector1];
                     swapValues(selector1, selector2);
                     changeQueue.push(selector1, selector2);
                 }
+
 
                 //trigger change events on every field so any conditional fields are triggered.
                 $.each(changeQueue, function (i, el) {

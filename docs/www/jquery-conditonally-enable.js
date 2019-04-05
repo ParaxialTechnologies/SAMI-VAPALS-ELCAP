@@ -39,8 +39,7 @@
                         if (true === currentlyDisabled) { //if value has changed
                             if ($(this).is(":checkbox")) {
                                 $(this).prop("checked", $(this).data("previous-value") === "checked");
-                            }
-                            else { //other types of controls
+                            } else { //other types of controls
                                 $(this).val($(this).data("previous-value")); //restore old value
                             }
                             $(this).trigger("change");
@@ -85,8 +84,7 @@
                             $(this).data("previous-value", $(this).is(":checked") ? "checked" : "");
                             $(this).prop("checked", false);
 
-                        }
-                        else { //other types of controls
+                        } else { //other types of controls
                             $(this).data("previous-value", $(this).val()); //save the old value
                             $(this).val("");
                         }
@@ -112,7 +110,10 @@
         var matchCallback = (typeof settings.sourceValues === 'function') ? settings.sourceValues : function (actualValue) {
             var sourceValuesArray = $.map(settings.sourceValues.split(","), $.trim);
             if ($.isArray(actualValue)) {
-                return sourceValuesArray.some(v => actualValue.includes(v));
+                // return sourceValuesArray.some(v => actualValue.includes(v)); //doesn't work in IE 11
+                return sourceValuesArray.some(function (v) {
+                    return actualValue.includes(v);
+                });
             }
             return $.inArray(actualValue, sourceValuesArray) > -1;
         };
@@ -142,8 +143,7 @@
             if (matches) {
                 enableContainer($enableContainer);
                 disableContainer($disableContainer);
-            }
-            else {
+            } else {
                 disableContainer($enableContainer);
                 enableContainer($disableContainer);
             }
@@ -181,8 +181,7 @@
                 this.filter(":checked"),
                 this.filter(":not(':checked')")
             ).first().trigger("change");
-        }
-        else {
+        } else {
             this.trigger("change");
         }
 

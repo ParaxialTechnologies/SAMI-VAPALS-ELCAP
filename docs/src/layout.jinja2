@@ -18,6 +18,8 @@
     {% block head %}{% endblock %}
 </head>
 <body id="body" style="position: relative;">
+<script src="{{ path }}lib/es5-shim.js"></script>
+<script src="{{ path }}lib/es6-shim.js"></script>
 <script src="{{ path }}lib/jquery-3.3.1.min.js"></script>
 <script src="{{ path }}lib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 <script src="{{ path }}lib/popper.min.js"></script>
@@ -93,7 +95,8 @@
                                data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="outreach">Outreach</a>
                         </li>
                         <li><a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
-                               data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="enrollment" data-start-date="">Enrollment</a>
+                               data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="enrollment"
+                               data-start-date="">Enrollment</a>
                         </li>
                     </ul>
                 </li>

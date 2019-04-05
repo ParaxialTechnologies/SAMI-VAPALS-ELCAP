@@ -476,6 +476,21 @@ SAMISUB2(SAMILINE,form,sid,filter,%j,zhtml) ; used for Dom's new style forms
  . . quit
  . quit
  ;
+ if SAMILINE["@@CHART_ELIGIBILITY_NOTE_EXISTS@@" d  ;
+ . n zexist
+ . s zexist=$$EXISTCE^SAMINOT1(sid,form)
+ . do findReplace^%ts(.SAMILINE,"@@CHART_ELIGIBILITY_NOTE_EXISTS@@",zexist)
+ ;
+ if SAMILINE["@@PRE_ENROLLMENT_NOTE_EXISTS@@" d  ;
+ . n zexist
+ . s zexist=$$EXISTPRE^SAMINOT1(sid,form)
+ . do findReplace^%ts(.SAMILINE,"@@PRE_ENROLLMENT_NOTE_EXISTS@@",zexist)
+ ;
+ if SAMILINE["@@INTAKE_NOTE_EXISTS@@" d  ;
+ . n zexist
+ . s zexist=$$EXISTINT^SAMINOT1(sid,form)
+ . do findReplace^%ts(.SAMILINE,"@@INTAKE_NOTE_EXISTS@@",zexist)
+ ;
  if SAMILINE["changelog" d  ;
  . new root set root=$$setroot^%wd("vapals-patients")
  . new clog set clog=$na(@root@("graph",sid,form,"changelog"))

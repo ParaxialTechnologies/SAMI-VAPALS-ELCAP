@@ -1,4 +1,4 @@
-SAMIUTR0 ;ven/lgc - UNIT TEST for SAMICTR0 ; 3/15/19 11:09am
+SAMIUTR0 ;ven/lgc - UNIT TEST for SAMICTR0 ; 20190413T22:31Z
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -8,13 +8,14 @@ SAMIUTR0 ;ven/lgc - UNIT TEST for SAMICTR0 ; 3/15/19 11:09am
  ; @routine-credits
  ; @primary-dev: Larry Carlson (lgc)
  ;  larry@fiscientific.com
+ ; @additional-dev: Linda M. R. Yaw (lmry)
+ ;  linda.yaw@vistaexpertise.net
  ; @primary-dev-org: Vista Expertise Network (ven)
  ;  http://vistaexpertise.net
  ; @copyright: 2012/2018, ven, all rights reserved
- ; @license: Apache 2.0
- ;  https://www.apache.org/licenses/LICENSE-2.0.html
+ ; @license: see routine SAMIUL
  ;
- ; @last-updated: 10/26/18 1:46pm
+ ; @last-updated: 20190413T22:31Z
  ; @application: SAMI
  ; @version: 18.0
  ; @patch-list: none yet
@@ -23,104 +24,104 @@ SAMIUTR0 ;ven/lgc - UNIT TEST for SAMICTR0 ; 3/15/19 11:09am
  ;
  ; @section 1 code
  ;
-START i $t(^%ut)="" w !,"*** UNIT TEST NOT INSTALLED ***" q
- d EN^%ut($T(+0),2)
- q
+START if $text(^%ut)="" write !,"*** UNIT TEST NOT INSTALLED ***" quit
+ do EN^%ut($text(+0),2)
+ quit
  ;
  ;
-STARTUP n utsuccess
- n root s root=$$setroot^%wd("vapals-patients")
- k @root@("graph","XXX00001")
- n SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
- m @root@("graph","XXX00001")=SAMIUPOO
- Q
+STARTUP new utsuccess
+ new root set root=$$setroot^%wd("vapals-patients")
+ kill @root@("graph","XXX00001")
+ new SAMIUPOO do PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
+ merge @root@("graph","XXX00001")=SAMIUPOO
+ quit
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
- K utsuccess
- Q
+ kill utsuccess
+ quit
  ;
 UTQUIT ; @TEST - Quit at top of routine
- D ^SAMICTR0
- d SUCCEED^%ut
- q
+ do ^SAMICTR0
+ do SUCCEED^%ut
+ quit
  ;
 UTWSRPT ; @TEST - web service which returns an html cteval report
  ;wsReport(return,SAMIUFLTR)
- n SAMIUARC
- k SAMIUFLTR
- s SAMIUFLTR("studyid")="XXX00001"
- s SAMIUFLTR("form")="ceform-2018-10-21"
- s utsuccess=1
- d WSREPORT^SAMICTR0(.SAMIUPOO,.SAMIUFLTR)
+ new SAMIUARC
+ kill SAMIUFLTR
+ set SAMIUFLTR("studyid")="XXX00001"
+ set SAMIUFLTR("form")="ceform-2018-10-21"
+ set utsuccess=1
+ do WSREPORT^SAMICTR0(.SAMIUPOO,.SAMIUFLTR)
  ; compare SAMIUPOO with SAMIUPOOu from a Pull
- d PLUTARR^SAMIUTST(.SAMIUARC,"wsReport-SAMICTR0")
+ do PLUTARR^SAMIUTST(.SAMIUARC,"wsReport-SAMICTR0")
  ; now compare
- n pnode,anode s pnode=$na(SAMIUPOO),anode=$na(SAMIUARC)
- f  s pnode=$q(@pnode),anode=$q(@anode) q:pnode=""  d
- . I '(@pnode=@anode) s utsuccess=0
- s:'(anode="") utsuccess=0
- d CHKEQ^%ut(utsuccess,1,"Testing web service returns html cteval FAILED!")
- q
+ new pnode,anode set pnode=$name(SAMIUPOO),anode=$name(SAMIUARC)
+ for  set pnode=$query(@pnode),anode=$query(@anode) quit:pnode=""  do
+ . if '(@pnode=@anode) set utsuccess=0
+ set:'(anode="") utsuccess=0
+ do CHKEQ^%ut(utsuccess,1,"Testing web service returns html cteval FAILED!")
+ quit
  ;
 UTOUT ; @TEST - out line
  ;out(SAMIULN)
- n cnt,rtn,SAMIUPOO,debug
- s debug=1
- s cnt=1,rtn="SAMIUPOO",SAMIUPOO(1)="First line of test"
- n SAMIULN s SAMIULN="Second line test"
- s utsuccess=0
- d OUT^SAMICTR0(SAMIULN)
- s utsuccess=($g(SAMIUPOO(2))["Second line test")
- d CHKEQ^%ut(utsuccess,1,"Testing out(ln) adds line to array FAILED!")
- q
+ new cnt,rtn,SAMIUPOO,debug
+ set debug=1
+ set cnt=1,rtn="SAMIUPOO",SAMIUPOO(1)="First line of test"
+ new SAMIULN set SAMIULN="Second line test"
+ set utsuccess=0
+ do OUT^SAMICTR0(SAMIULN)
+ set utsuccess=($get(SAMIUPOO(2))["Second line test")
+ do CHKEQ^%ut(utsuccess,1,"Testing out(ln) adds line to array FAILED!")
+ quit
  ;
 UTHOUT ; @TEST - hout line
  ;hout(ln)
  ; just run hout(ln) and it will add another line
- n cnt,rtn,SAMIUPOO
- s cnt=1,rtn="SAMIUPOO",SAMIUPOO(1)="First line of test"
- n SAMIULN s SAMIULN="Second line test"
- s utsuccess=0
- d HOUT^SAMICTR0(SAMIULN)
- s utsuccess=($g(SAMIUPOO(2))="<p><span class='sectionhead'>Second line test</span>")
- d CHKEQ^%ut(utsuccess,1,"Testing out(ln) adds line to array FAILED!")
- q
+ new cnt,rtn,SAMIUPOO
+ set cnt=1,rtn="SAMIUPOO",SAMIUPOO(1)="First line of test"
+ new SAMIULN set SAMIULN="Second line test"
+ set utsuccess=0
+ do HOUT^SAMICTR0(SAMIULN)
+ set utsuccess=($get(SAMIUPOO(2))="<p><span class='sectionhead'>Second line test</span>")
+ do CHKEQ^%ut(utsuccess,1,"Testing out(ln) adds line to array FAILED!")
+ quit
  ;
 UTXVAL ; @TEST - extrinsic returns the patient value for var
  ;xval(var,vals)
- ;w $$XVAL^SAMICTR0(51,"SAMIUARC")
- n SAMIUARC
- s utsuccess=0
- s SAMIUARC(1)="Testing xval"
- s utsuccess=($$XVAL^SAMICTR0(1,"SAMIUARC")="Testing xval")
- d CHKEQ^%ut(utsuccess,1,"Testing xval(var,vals) FAILED!")
- q
+ ;write $$XVAL^SAMICTR0(51,"SAMIUARC")
+ new SAMIUARC
+ set utsuccess=0
+ set SAMIUARC(1)="Testing xval"
+ set utsuccess=($$XVAL^SAMICTR0(1,"SAMIUARC")="Testing xval")
+ do CHKEQ^%ut(utsuccess,1,"Testing xval(var,vals) FAILED!")
+ quit
  ;
 UTXSUB ; @TEST - extrinsic which returns the dictionary value defined by SAMIVAR
  ;xsub(var,vals,dict,valdx)
- n SAMIVAR,SAMIVALS,SAMIUPOO,SAMIVALDX,result,SAMIDICT
- s utsuccess=0
- s SAMIVALS="SAMIUPOO"
- s SAMIVAR="cteval-dict"
- s SAMIUPOO(1)="biopsy"
- s SAMIVALDX=1
- s SAMIDICT=$$setroot^%wd("cteval-dict")
- s result=$$XSUB^SAMICTR0(SAMIVAR,SAMIVALS,SAMIDICT,SAMIVALDX)
- s utsuccess=(result="CT-guided biopsy")
- d CHKEQ^%ut(utsuccess,1,"Testing xsub(SAMIVAR,SAMIVALS,dict,SAMIVALDX) FAILED!")
- q
+ new SAMIVAR,SAMIVALS,SAMIUPOO,SAMIVALDX,result,SAMIDICT
+ set utsuccess=0
+ set SAMIVALS="SAMIUPOO"
+ set SAMIVAR="cteval-dict"
+ set SAMIUPOO(1)="biopsy"
+ set SAMIVALDX=1
+ set SAMIDICT=$$setroot^%wd("cteval-dict")
+ set result=$$XSUB^SAMICTR0(SAMIVAR,SAMIVALS,SAMIDICT,SAMIVALDX)
+ set utsuccess=(result="CT-guided biopsy")
+ do CHKEQ^%ut(utsuccess,1,"Testing xsub(SAMIVAR,SAMIVALS,dict,SAMIVALDX) FAILED!")
+ quit
  ;
 UTGTFLT ; @TEST - fill in the SAMIUFLTR for Ct Eval for sid
  ;getFilter(SAMIUFLTR,sid)
- d GETFILTR^SAMICTR0(.SAMIUFLTR,"XXX00001")
- s utsuccess=1
- s:'(SAMIUFLTR("form")="ceform-2018-10-21") utsuccess=0
- s:'(SAMIUFLTR("studyid")="XXX00001") utsuccess=0
- D CHKEQ^%ut(utsuccess,1,"Testing getFilter FAILED!")
- q
+ do GETFILTR^SAMICTR0(.SAMIUFLTR,"XXX00001")
+ set utsuccess=1
+ set:'(SAMIUFLTR("form")="ceform-2018-10-21") utsuccess=0
+ set:'(SAMIUFLTR("studyid")="XXX00001") utsuccess=0
+ do CHKEQ^%ut(utsuccess,1,"Testing getFilter FAILED!")
+ quit
  ;
 UTT1 ; @TEST - Testing T1
  ;T1(grtn,debug) ;
- q
+ quit
  ;
 EOR ;End of routine SAMIUTR0

@@ -117,7 +117,7 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  . m SAMIARG=vars
  . d wsPostForm^%wf(.SAMIARG,.SAMIBODY,.SAMIRESULT)
  . i $g(SAMIARG("form"))["siform" d  ;
- . . if $$NOTE^SAMINOTI(.SAMIARG) d  ;
+ . . if $$NOTE^SAMINOT1(.SAMIARG) d  ;
  . . . n SAMIFILTER
  . . . s SAMIFILTER("studyid")=$G(SAMIARG("studyid"))
  . . . s SAMIFILTER("form")=$g(SAMIARG("form")) ;
@@ -126,7 +126,7 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  . . . s SAMIFILTER("tiuien")=tiuien
  . . . ;d SV2VSTA^SAMIVSTA(.FILTER)
  . . . m ^SAMIGPL("newFILTER")=SAMIFILTER
- . . . d WSNOTE^SAMINOTI(.SAMIRESULT,.SAMIARG)
+ . . . d WSNOTE^SAMINOT1(.SAMIRESULT,.SAMIARG)
  ;
  i route="deleteform" d  q  ;
  . m SAMIARG=vars
@@ -139,7 +139,7 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  ;
  i route="note" d  q  ; 
  . m SAMIARG=vars
- . d WSNOTE^SAMINOTI(.SAMIRESULT,.SAMIARG)
+ . d WSNOTE^SAMINOT1(.SAMIRESULT,.SAMIARG)
  ;
  i route="report" d  q  ; 
  . m SAMIARG=vars

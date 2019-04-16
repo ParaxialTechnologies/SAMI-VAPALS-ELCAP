@@ -179,8 +179,8 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . ;
  . new newstyle set newstyle=0
  . if form["vapals:" set newstyle=1
- . ;if form["vapals:" do SAMISUB2^SAMIFRM2(.tln,form,sid,.filter,.%j,.zhtml)
- . if newstyle=1 do SAMISUB2^SAMIFRM2(.tln,key,sid,.filter,.%j,.zhtml)
+ . ;if form["vapals:" do SAMISUB2^SAMIFORM(.tln,form,sid,.filter,.%j,.zhtml)
+ . if newstyle=1 do SAMISUB2^SAMIFORM(.tln,key,sid,.filter,.%j,.zhtml)
  . ;else  do SAMISUBS^SAMIFRM(.tln,form,sid,.filter)
  . if newstyle=0 do SAMISUBS^SAMIFRM(.tln,form,sid,.filter)
  . set zhtml(%j)=tln
@@ -1208,21 +1208,11 @@ wsPostForm ; code for ws wsPostForm^%wf, submit HTML form
  quit:sid=""
  ;set %json(sid,form,"form")=form
  do parseBody^%wf("tbdy",.body)
- ; 
- ; change log
- ;
- i form["siform" d  ;
- . n root s root=$$setroot^%wd("vapals-patients")
- . m tbdy("changelog")=@root@("graph",sid,form,"changelog")
- . d CLOG^SAMICLOG(sid,form,"tbdy")
  ;
  ; we want to store the form by the date in the form.. and delete the old one
  ; 
  new useform s useform=form
  set useform=$$SAVFILTR^SAMISAV(sid,form,.tbdy) ; make this a framework call
- ;
- ; generate the change log
- ;
  ;set %json(sid,form,"form")=form
  set %json(sid,useform,"form")=useform
  ;merge %json(sid,form)=tbdy

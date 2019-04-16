@@ -1,4 +1,4 @@
-SAMIUR ;ven/gpl - sami user reports ; 2/14/19 12:00pm
+SAMIUR ;ven/gpl - sami user reports ; 3/29/19 10:29am
  ;;18.0;SAM;;
  ;
  ;@license: see routine SAMIUL
@@ -46,7 +46,7 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  . s ln=$g(temp(ii))
  . n samikey,si
  . s (samikey,si)=""
- . d SAMISUB2^SAMIFRM2(.ln,samikey,si,.filter)
+ . d SAMISUB2^SAMIFORM(.ln,samikey,si,.filter)
  . ;i ln["PAGE NAME" d findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type,datephrase))
  . i ln["PAGE NAME" d findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type,""))
  . i ln["CRITERIA" d findReplace^%ts(.ln,"CRITERIA",datephrase)
@@ -82,7 +82,7 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  . . n sid s sid=SAMIPATS(ij,dfn,"sid")
  . . s SAMIPATS(ij,dfn,"name")=$g(@root@(dfn,"saminame"))
  . . n name s name=SAMIPATS(ij,dfn,"name")
- . . s SAMIPATS(ij,dfn,"ssn")=$$GETSSN^SAMIFRM2(sid)
+ . . s SAMIPATS(ij,dfn,"ssn")=$$GETSSN^SAMIFORM(sid)
  . . new nuhref set nuhref="<form method=POST action=""/vapals"">"
  . . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""casereview"">"
  . . set nuhref=nuhref_"<input type=hidden name=""studyid"" value="_sid_">"

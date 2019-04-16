@@ -1,4 +1,4 @@
-SAMIHOM4 ;ven/gpl,arc - ielcap: forms;2018-11-30T17:45Z ; 2/14/19 10:45am
+SAMIHOM4 ;ven/gpl,arc - ielcap: forms;2018-11-30T17:45Z ; 4/16/19 12:17pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -243,11 +243,11 @@ GETHOME ; homepage accessed using GET
  . n touched s touched=0
  . ;
  . i ln["href" i 'touched d  ;
- . . d FIXHREF^SAMIFRM2(.ln)
+ . . d FIXHREF^SAMIFORM(.ln)
  . . s temp(zi)=ln
  . ;
  . i ln["src" d  ;
- . . d FIXSRC^SAMIFRM2(.ln)
+ . . d FIXSRC^SAMIFORM(.ln)
  . . s temp(zi)=ln
  . ;
  . i ln["id" i ln["studyIdMenu" d  ;

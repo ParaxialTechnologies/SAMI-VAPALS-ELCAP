@@ -1,4 +1,4 @@
-SAMINOT1 ;ven/gpl - ielcap: forms ; 2/14/19 10:47am
+SAMINOT1 ;ven/gpl - ielcap: forms ; 4/16/19 12:57pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -62,7 +62,7 @@ WSNOTE(return,filter) ; web service which returns a text note
  f  s zi=$o(temp(zi)) q:zi=""  d  ;
  . ;
  . n line s line=temp(zi)
- . D SAMISUB2^SAMIFRM2(.line,samikey,si,.filter)
+ . D SAMISUB2^SAMIFORM(.line,samikey,si,.filter)
  . s temp(zi)=line
  . ;
  . s cnt=cnt+1
@@ -178,7 +178,7 @@ ELNOTE(vals,dest,cnt) ; eligibility NOTE TEXT
  s @vals@("chart-eligibility-complete")="true"
  q
  ;
-PRENOTE(vals,dest,cnt)
+PRENOTE(vals,dest,cnt) 
  ;
  D OUT("")
  d OUT("A pre-enrollment discussion was held: [Yes/No]")
@@ -192,7 +192,7 @@ PRENOTE(vals,dest,cnt)
  s @vals@("pre-note-complete")="true"
  q
  ;
-INNOTE(vals,dest,cnt)
+INNOTE(vals,dest,cnt) 
  ;
  ;Lung Screening Program Intake Note
  ;

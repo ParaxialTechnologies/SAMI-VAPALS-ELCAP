@@ -1,4 +1,4 @@
-SAMICAS2 ;ven/gpl - ielcap: case review page ; 2019-03-14T19:52Z
+SAMICAS2 ;ven/gpl - ielcap: case review page ; 3/29/19 10:17am
  ;;18.0;SAM;;
  ;
  ;@license: see routine SAMIUL
@@ -41,13 +41,13 @@ WSCASE ; generate case review page
  ; GETITEMS^SAMICASE
  ; $$SID2NUM^SAMIHOM3
  ; findReplace^%ts
- ; FIXHREF^SAMIFRM2
- ; FIXSRC^SAMIFRM2
+ ; FIXHREF^SAMIFORM
+ ; FIXSRC^SAMIFORM
  ; $$GETDTKEY^SAMICAS2
  ; $$KEY2DSPD^SAMICAS2
- ; $$GETLAST5^SAMIFRM2
- ; $$GETSSN^SAMIFRM2
- ; $$GETNAME^SAMIFRM2
+ ; $$GETLAST5^SAMIFORM
+ ; $$GETSSN^SAMIFORM
+ ; $$GETNAME^SAMIFORM
  ; $$GSAMISTA^SAMICAS2
  ; D ADDCRLF^VPRJRUT
  ;@input :
@@ -101,11 +101,11 @@ WSCASE ; generate case review page
  . . set touched=1
  . ;
  . if ln["href" if 'touched do  ;
- . . do FIXHREF^SAMIFRM2(.ln)
+ . . do FIXHREF^SAMIFORM(.ln)
  . . set temp(zi)=ln
  . ;
  . if ln["src" do  ;
- . . do FIXSRC^SAMIFRM2(.ln)
+ . . do FIXSRC^SAMIFORM(.ln)
  . . set temp(zi)=ln
  . ;
  . set cnt=cnt+1
@@ -132,9 +132,9 @@ WSCASE ; generate case review page
  set notehref=notehref_"<input type=hidden name=""form"" value="_$p(sikey,":",2)_">"
  set notehref=notehref_"<input value=""Intake Note"" class=""btn btn-link"" role=""link"" type=""submit""></form>"
  set cnt=cnt+1
- new last5 set last5=$$GETLAST5^SAMIFRM2(sid)
- new pssn set pssn=$$GETSSN^SAMIFRM2(sid)
- new pname set pname=$$GETNAME^SAMIFRM2(sid)
+ new last5 set last5=$$GETLAST5^SAMIFORM(sid)
+ new pssn set pssn=$$GETSSN^SAMIFORM(sid)
+ new pname set pname=$$GETNAME^SAMIFORM(sid)
  new useid set useid=pssn
  if useid="" set useid=last5
  ;set rtn(cnt)="<tr><td> "_sid_" </td><td> "_lname_" </td><td> "_fname_" </td><td> - </td><td>"_sidispdate_"</td><td>"_$char(13)
@@ -444,8 +444,8 @@ WSNUFORM ; select new form for patient (get service)
  ; $$setroot^%wd
  ; GETTMPL^SAMICAS2
  ; findReplace^%ts
- ; FIXHREF^SAMIFRM2
- ; FIXSRC^SAMIFRM2
+ ; FIXHREF^SAMIFORM
+ ; FIXSRC^SAMIFORM
  ; findReplace^%ts
  ;@input
  ; .filter =
@@ -487,11 +487,11 @@ WSNUFORM ; select new form for patient (get service)
  . ;. set touched=1
  . ;
  . if ln["href" if 'touched do  ;
- . . do FIXHREF^SAMIFRM2(.ln)
+ . . do FIXHREF^SAMIFORM(.ln)
  . . set temp(zi)=ln
  . ;
  . if ln["src" d  ;
- . . do FIXSRC^SAMIFRM2(.ln)
+ . . do FIXSRC^SAMIFORM(.ln)
  . . set temp(zi)=ln
  . ;
  . ;if ln["form" if ln["todo" do  ;

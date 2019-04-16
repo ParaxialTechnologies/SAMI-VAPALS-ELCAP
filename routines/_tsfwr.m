@@ -75,7 +75,7 @@ findReplace ; simple substring find & replace
  ; uncheck^%wfhinput
  ; WSCASE^SAMICASE
  ; WSNOFORM^SAMICASE
- ; SAMISUB2^SAMIFRM2
+ ; SAMISUB2^SAMIFORM
  ; WSREPORT^SAMIUR1
  ;@called-by: none
  ;@calls

@@ -64,8 +64,8 @@ findReplaceAll ; simple substring find & replace all
  ;@ppi-called-by
  ; *%tsutfwra [tests]
  ; $$replaceSrc^%wfhform [deprecated]
- ; FIXHREF^SAMIFRM2
- ; FIXSRC^SAMIFRM2
+ ; FIXHREF^SAMIFORM
+ ; FIXSRC^SAMIFORM
  ;@called-by: none
  ;@calls
  ; setfind^%ts

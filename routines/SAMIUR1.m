@@ -1,4 +1,4 @@
-SAMIUR1 ;ven/gpl - sami user reports ; 2/14/19 10:55am
+SAMIUR1 ;ven/gpl - sami user reports ; 3/29/19 10:28am
  ;;18.0;SAM;;
  ;
  ;@license: see routine SAMIUL
@@ -50,7 +50,7 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  . s ln=$g(temp(ii))
  . n samikey,si
  . s (samikey,si)=""
- . d SAMISUB2^SAMIFRM2(.ln,samikey,si,.filter)
+ . d SAMISUB2^SAMIFORM(.ln,samikey,si,.filter)
  . i ln["PAGE NAME" d findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type,datephrase))
  . s SAMIRTN(cnt)=ln
  . ;
@@ -82,11 +82,11 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  . . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
  . . s cnt=cnt+1
  . . s SAMIRTN(cnt)="<td>"_nuhref_"</td>"
- . . n ssn s ssn=$$GETSSN^SAMIFRM2(sid)
+ . . n ssn s ssn=$$GETSSN^SAMIFORM(sid)
  . . i ssn="" d  ;
  . . . n hdf
- . . . s hdf=$$GETHDR^SAMIFRM2(sid)
- . . . s ssn=$$GETSSN^SAMIFRM2(sid)
+ . . . s hdf=$$GETHDR^SAMIFLD(sid)
+ . . . s ssn=$$GETSSN^SAMIFORM(sid)
  . . s cnt=cnt+1
  . . s SAMIRTN(cnt)="<td>"_ssn_"</td>"
  . . s cnt=cnt+1

@@ -1,4 +1,4 @@
-SAMIUTST ;ven/lgc - Unit Test Utilities ; 3/11/19 6:38pm
+SAMIUTST ;ven/lgc - Unit Test Utilities ; 4/1/19 10:48am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -204,10 +204,13 @@ RTNS ;
  ;;SAMID
  ;;SAMIDOUT
  ;;SAMIDSSN
- ;;SAMIFRM2
+ ;;SAMIFORM
+ ;;SAMIFLD
+ ;;SAMIFWS
+ ;;SAMIFDM
  ;;SAMIHOM3
  ;;SAMIHOM4
- ;;SAMIIFF
+ ;;SAMIFF
  ;;SAMILOG
  ;;SAMIM2M
  ;;SAMINOTI

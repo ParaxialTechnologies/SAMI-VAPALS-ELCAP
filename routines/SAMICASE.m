@@ -1,4 +1,4 @@
-SAMICASE ;ven/gpl - ielcap: case review page module; 2/14/19 10:11am ; 3/13/19 7:31pm
+SAMICASE ;ven/gpl - ielcap: case review page module; 2/14/19 10:11am ; 3/29/19 10:18am
  ;;18.0;SAM;;
  ;
  ;@license: see routine SAMIUL
@@ -25,13 +25,13 @@ WSCASE(rtn,filter) ; generate case review page
  ; GETITEMS^SAMICAS2
  ; $$SID2NUM^SAMIHOM3
  ; findReplace^%ts
- ; FIXHREF^SAMIFRM2
- ; FIXSRC^SAMIFRM2
+ ; FIXHREF^SAMIFORM
+ ; FIXSRC^SAMIFORM
  ; $$GETDTKEY^SAMICAS2
  ; $$KEY2DSPD^SAMICAS2
- ; $$GETLAST5^SAMIFRM2
- ; $$GETSSN^SAMIFRM2
- ; $$GETNAME^SAMIFRM2
+ ; $$GETLAST5^SAMIFORM
+ ; $$GETSSN^SAMIFORM
+ ; $$GETNAME^SAMIFORM
  ; $$GSAMISTA^SAMICAS2
  ; D ADDCRLF^VPRJRUT
  ;@input :
@@ -68,9 +68,9 @@ GETITEMS(ary,sid) ; get items available for studyid
  ; GETITEMS^SAMICAS2
  ; MKCEFORM^SAMICAS3
  ; GETFILTR^SAMICTR0
- ; WSSBFORM^SAMIFRM2
- ; WSSIFORM^SAMIFRM2
- ; WSCEFORM^SAMIFRM2
+ ; WSSBFORM^SAMIFORM
+ ; WSSIFORM^SAMIFORM
+ ; WSCEFORM^SAMIFORM
  ; SELECT^SAMIUR1
  ;@calls
  ; $$setroot^%wd
@@ -110,8 +110,8 @@ WSNUFORM(rtn,filter) ; select new form for patient (get service)
  ; $$setroot^%wd
  ; GETTMPL^SAMICAS2
  ; findReplace^%ts
- ; FIXHREF^SAMIFRM2
- ; FIXSRC^SAMIFRM2
+ ; FIXHREF^SAMIFORM
+ ; FIXSRC^SAMIFORM
  ; findReplace^%ts
  ;@input
  ; .filter =

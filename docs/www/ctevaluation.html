@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.04.05" name="version"/>
+  <meta content="2019.04.17" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    CT Evaluation Form
@@ -30,9 +30,11 @@
   </style>
  </head>
  <body id="body" style="position: relative;">
+  <script src="lib/es5-shim.js">
+  </script>
   <script src="lib/es6-shim.js">
   </script>
-  <script src="lib/jquery-3.3.1.min.js">
+  <script src="lib/jquery-3.4.0.js">
   </script>
   <script src="lib/jquery-ui-1.12.1/jquery-ui.min.js">
   </script>
@@ -7872,7 +7874,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.04.05
+     2019.04.17
     </span>
    </div>
   </footer>
@@ -7956,7 +7958,7 @@
 
 
         function createFormValidator() {
-
+            console.log("start createFormValidator");
             const $form = $('#main-form');
 
             // for certain validators that use multiple inputs like checkboxes and radio groups, change the location
@@ -7977,13 +7979,15 @@
                         cetex: {validators: {notEmpty: {message: 'Type of exam is required'}}},
                         cectp: {validators: {notEmpty: {message: 'CT protocol is required'}}},
                         cectrst: {validators: {notEmpty: {message: 'Reconstructed slice thickness is required'}}},
+                        /*
                         cectrsto: {
                             validators: {
-                                notEmpty: {message: 'Reconstructed slice thickness is required'},
+                                notEmpty: {message: 'Other reconstructed slice thickness is required'},
                                 numeric: {message: 'Must be a number'},
                                 greaterThan: {min: 0, message: 'Value must be greater than 0'}
                             }
                         },
+
                         cectcdti: {
                             validators: {
                                 numeric: {message: 'Must be a number'},
@@ -8029,7 +8033,7 @@
                             selector: '[name^=cefu][type=checkbox], [name^=cefu][type=radio]',
                             validators: {choice: {min: 1, message: 'Select at least one CT or Other follow up option'}}
                         },
-
+                        */
                     },
                     plugins: {
                         trigger: new FormValidation.plugins.Trigger(),
@@ -8055,9 +8059,13 @@
 
             const fv = $form.data('formValidation');
 
-            fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);
+            fv.on('core.form.invalid', function () {
+                console.log("core.form.invalid");
+                VAPALS.autoScrollToErrorField()
+            });
             fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
-
+            console.log("returning fv");
+            console.log(fv);
             return fv;
         }
 
@@ -8087,7 +8095,7 @@
             }).conditionallyDisplay({sourceValues: "b", disable: "#non-baseline-container"});
 
             //reconstructed slice thickness
-            $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
+            //$("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
 
             
             const $noduleGrid = initNoduleGrid(fv);
@@ -8095,7 +8103,23 @@
             initEmphysema(fv);
             initFollowup(fv);
 
-            fv.on('core.form.valid', function () {
+            fv.on('core.element.validating', function (e) {
+                console.log('core.element.validating.vapals ' + e.field)
+            });
+            fv.on('core.element.validated', function (e) {
+                console.log('core.element.validated.vapals ' + e.field + ": " + e.valid);
+            });
+            fv.on('core.form.invalid', function (e) {
+                console.log("core.form.invalid.vapals");
+            });
+            fv.on('core.form.notvalidated', function (e) {
+                console.log("core.form.notvalidated.vapals");
+            });
+            fv.on('core.form.reset', function (e) {
+                console.log("core.form.reset.vapals");
+            });
+            fv.on('core.form.valid', function (e) {
+                console.log("core.form.valid.vapals")
                 const examType = $("[name=cetex]:checked").val(); // baseline is "b"; only available on CT Eval form
                 if (examType === 'b') {
                     $noduleGrid.sortData();
@@ -8103,6 +8127,8 @@
                 $("form").trigger('submit');
             });
 
+
+            $("#submit-button").on('click', fv.validate())
             $('#body').scrollspy({target: '#wizard-bar', offset: 10})
         });
   </script>

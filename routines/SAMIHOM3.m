@@ -471,6 +471,7 @@ MKSIFORM(num) ; create intake form
  i phn["x" s phn=$p(phn," x",1)
  s @zf@("sippn")=phn
  s @zf@("sidc")=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
+ s @zf@("sipedc")=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
  ; set samifirsttime variable for intake form
  s @zf@("samifirsttime")="true"
  ;

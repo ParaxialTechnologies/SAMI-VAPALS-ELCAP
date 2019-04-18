@@ -8,17 +8,17 @@ SAMINOT1 ;ven/gpl - ielcap: forms ; 4/16/19 12:57pm
 EXISTCE(SID,FORM) ; extrinsic returns "true" or "false"
  ; if a Chart Eligibility Note exists
  n root s root=$$setroot^%wd("vapals-patients")
- n vals s vals=$na(@root@("graph",SID,FORM))
+ n gvals s gvals=$na(@root@("graph",SID,FORM))
  ;i $g(@root@("graph",SID,FORM,"sicechrt"))="y" q "true"
- i $g(@vals@("pre-note-complete"))="true" q "true"
+ i $g(@gvals@("pre-note-complete"))="true" q "true"
  q "false"
  ;
 EXISTPRE(SID,FORM) ; extrinsic returns "true" or "false"
  ; if a Pre-enrollment Note exists
  n root s root=$$setroot^%wd("vapals-patients")
- n vals s vals=$na(@root@("graph",SID,FORM))
+ n gvals s gvals=$na(@root@("graph",SID,FORM))
  ;i $g(@root@("graph",SID,FORM,"sipedisc"))="y" q "true"
- i $g(@vals@("pre-note-complete"))="true" q "true"
+ i $g(@gvals@("pre-note-complete"))="true" q "true"
  q "false"
  ;
 EXISTINT(SID,FORM) ; extrinsic returns "true" or "false"
@@ -180,17 +180,34 @@ ELNOTE(vals,dest,cnt) ; eligibility NOTE TEXT
  ;
 PRENOTE(vals,dest,cnt) 
  ;
+ i $g(@vals@("sipedisc"))'="y" q  ; no prelim discussion
  D OUT("")
- d OUT("A pre-enrollment discussion was held: [Yes/No]")
+ ;d OUT("A pre-enrollment discussion was held.")
  ;[If Yes is selected then add the following 5 lines]
  D OUT("The program attempted to reach the Veteran to discuss lung screening.")
- D OUT("Date of pre-enrollment discussion: [Discussion Date]")
- D OUT("The lung screening program reached the potential candidate or was contacted via: [Selection(s)]")
- D OUT("The pre-enrollment discussion with the participant resulted in: [Selection]")
- D OUT("Comments: [Comments]")
+ D OUT("Date of pre-enrollment discussion: "_$$XVAL("sipedc",vals))
+ n via s via=""
+ s:$$XVAL("sipecnip",vals)="1" via=via_" In person"
+ s:$$XVAL("sipecnte",vals)="1" via=via_" Telephone"
+ s:$$XVAL("sipecnth",vals)="1" via=via_" TeleHealth"
+ s:$$XVAL("sipecnml",vals)="1" via=via_" Mailed Letter"
+ s:$$XVAL("sipecnpp",vals)="1" via=via_" Message in patient portal"
+ s:$$XVAL("sipecnvd",vals)="1" via=via_" Video-on-Demand (VOD)"
+ s:$$XVAL("sipecnot",vals)="1" via=via_" "_$$XVAL("sipecnoo",vals)
+ D OUT("The lung screening program reached the potential candidate or was contacted via:"_via)
+ D OUT("The pre-enrollment discussion with the participant resulted in: "_$$SUBRSLT($$XVAL("siperslt",vals)))
+ D OUT("Comments: "_$$XVAL("sipecmnt",vals))
  ;
  s @vals@("pre-note-complete")="true"
  q
+ ;
+SUBRSLT(XVAL) ; translation of discussion result
+ q:XVAL="y" "Participant is interested in discussing lung screening. The program will proceed with enrollment process."
+ q:XVAL="u" "Participant is unsure of lung screening. Ok to contact in the future."
+ q:XVAL="nn" "Participant is not interested in discussing lung screening at this time. Ok to contact in the future."
+ q:XVAL="nf" "Participant is not interested in discussing lung screening in the future."
+ q:XVAL="na" "Unable to reach participant at this time"
+ q ""
  ;
 INNOTE(vals,dest,cnt) 
  ;

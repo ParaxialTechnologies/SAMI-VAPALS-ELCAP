@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.04.17" name="version"/>
+  <meta content="2019.04.18" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    CT Evaluation Form
@@ -42,7 +42,7 @@
   </script>
   <script src="../www/lib/moment.js">
   </script>
-  <script src="../www/lib/formvalidation/dist/js/FormValidation.full.min.js">
+  <script src="../www/lib/formvalidation/dist/js/FormValidation.full.js">
   </script>
   <script src="../www/lib/formvalidation/dist/js/plugins/Wizard.min.js">
   </script>
@@ -7872,7 +7872,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.04.17
+     2019.04.18
     </span>
    </div>
   </footer>
@@ -7977,58 +7977,59 @@
                         cetex: {validators: {notEmpty: {message: 'Type of exam is required'}}},
                         cectp: {validators: {notEmpty: {message: 'CT protocol is required'}}},
                         cectrst: {validators: {notEmpty: {message: 'Reconstructed slice thickness is required'}}},
-                        cectrsto: {
-                            validators: {
-                                notEmpty: {message: 'Reconstructed slice thickness is required'},
-                                numeric: {message: 'Must be a number'},
-                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
-                            }
-                        },
-                        cectcdti: {
-                            validators: {
-                                numeric: {message: 'Must be a number'},
-                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
-                            }
-                        },
-                        cectdlp: {
-                            validators: {
-                                numeric: {message: 'Must be a number'},
-                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
-                            }
-                        },
-                        cectssde: {
-                            validators: {
-                                numeric: {message: 'Must be a number'},
-                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
-                            }
-                        },
-                        sidoe: {
-                            validators: {
-                                notEmpty: {message: 'Baseline CT date is required'},
-                                date: {max: VAPALS.todaysDate(), message: 'Baseline CT date may not be in the future'}
-                            }
-                        },
-                        cedcs: {
-                            validators: {
-                                notEmpty: {message: 'Most recent comparative study date is required'},
-                                date: {
-                                    max: VAPALS.todaysDate(),
-                                    message: 'Most recent comparative study date may not be in the future'
-                                }
-                            }
-                        },
-                        cedps: {validators: {notEmpty: {message: 'Prior scans is required'}}},
+                         cectrsto: {
+                             validators: {
+                                 notEmpty: {message: 'Other reconstructed slice thickness is required'},
+                                 numeric: {message: 'Must be a number'},
+                                 greaterThan: {min: 0, message: 'Value must be greater than 0'}
+                             }
+                         },
 
-                        //Nodules, emphysema, abnormality FV additions are done in their respective templates
+                         cectcdti: {
+                             validators: {
+                                 numeric: {message: 'Must be a number'},
+                                 greaterThan: {min: 0, message: 'Value must be greater than 0'}
+                             }
+                         },
+                         cectdlp: {
+                             validators: {
+                                 numeric: {message: 'Must be a number'},
+                                 greaterThan: {min: 0, message: 'Value must be greater than 0'}
+                             }
+                         },
+                         cectssde: {
+                             validators: {
+                                 numeric: {message: 'Must be a number'},
+                                 greaterThan: {min: 0, message: 'Value must be greater than 0'}
+                             }
+                         },
+                         sidoe: {
+                             validators: {
+                                 notEmpty: {message: 'Baseline CT date is required'},
+                                 date: {max: VAPALS.todaysDate(), message: 'Baseline CT date may not be in the future'}
+                             }
+                         },
+                         cedcs: {
+                             validators: {
+                                 notEmpty: {message: 'Most recent comparative study date is required'},
+                                 date: {
+                                     max: VAPALS.todaysDate(),
+                                     message: 'Most recent comparative study date may not be in the future'
+                                 }
+                             }
+                         },
+                         cedps: {validators: {notEmpty: {message: 'Prior scans is required'}}},
 
-                        //Impression
-                        ceimn: {validators: {notEmpty: {message: 'Nodule impression is required'}}},
+                         //Nodules, emphysema, abnormality FV additions are done in their respective templates
 
-                        //Virtual fields don't work with fv.addField, so we have to add it here
-                        followup: {
-                            selector: '[name^=cefu][type=checkbox], [name^=cefu][type=radio]',
-                            validators: {choice: {min: 1, message: 'Select at least one CT or Other follow up option'}}
-                        },
+                         //Impression
+                         ceimn: {validators: {notEmpty: {message: 'Nodule impression is required'}}},
+
+                         //Virtual fields don't work with fv.addField, so we have to add it here
+                         followup: {
+                             selector: '[name^=cefu][type=checkbox], [name^=cefu][type=radio]',
+                             validators: {choice: {min: 1, message: 'Select at least one CT or Other follow up option'}}
+                         },
 
                     },
                     plugins: {
@@ -8101,6 +8102,13 @@
                     $noduleGrid.sortData();
                 }
                 $("form").trigger('submit');
+            });
+
+
+            $("#submit-button").on('click.vapals', function () {
+                fv.validate().catch(function (error) {
+                    console.error(error); // added to trap issues with IE11
+                });
             });
 
             $('#body').scrollspy({target: '#wizard-bar', offset: 10})

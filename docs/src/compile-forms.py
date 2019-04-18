@@ -16,6 +16,7 @@ start = datetime.datetime.now()
 # Version should be replaced by Mumps processor to use the actual version number (i.e. SAMI 18.0T04). The "SNAPSHOT"
 # text refers to a non-KIDS distribution, such as when the code is built and deployed manually from source control.
 version = datetime.datetime.now().strftime('%Y.%m.%d')
+#version = datetime.datetime.now().strftime('%Y.%m.%d %H:%M:%S')
 
 # map where key is the template file name and value is an object representing properties of the output
 forms = [

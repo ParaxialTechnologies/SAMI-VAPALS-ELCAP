@@ -5665,7 +5665,7 @@
                 var element = 'radio' === type || 'checkbox' === type ? elements[0] : e.element;
                 if (this.messages.has(element)) {
                     var container = this.messages.get(element);
-                    container.querySelectorAll('[data-field="' + e.field + '"]').forEach(function (messageEle) {
+                    [].slice.call(container.querySelectorAll('[data-field="' + e.field + '"]')).forEach(function (messageEle) {
                         container.removeChild(messageEle);
                     });
                 }

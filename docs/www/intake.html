@@ -1576,13 +1576,11 @@
         e.stopPropagation();
         const fv = $("form").data("formValidation");
 
-        validateSection(fv, $("#chart-eligibility")).then(function (value) {
-            if (value) {
+        validateSection(fv, $("#chart-eligibility")).then(function (valid) {
+            if (valid) {
                 $("[name=samistatus]").val("chart-eligibility");
                 $("form").trigger("submit");
             }
-        }).catch(function (err) {
-            console.error(err)
         });
     });
     $("#save-pre-enrollment-discussion").on('click', function (e) {
@@ -1590,13 +1588,11 @@
         e.stopPropagation();
         const fv = $("form").data("formValidation");
 
-        validateSection(fv, $("#pre-enrollment-discussion")).then(function (value) {
-            if (value) {
+        validateSection(fv, $("#pre-enrollment-discussion")).then(function (valid) {
+            if (valid) {
                 $("[name=samistatus]").val("pre-enrollment-discussion");
                 $("form").trigger("submit");
             }
-        }).catch(function (err) {
-            console.error(err)
         });
     });
 
@@ -1607,42 +1603,32 @@
      * @param $section the area to validate.
      * @returns {Promise<boolean>} true if validated without error; otherwise false.
      */
-    async function validateSection(fv, $section) {
-        const maxWaitMillis = 1000;
-        const sleepIntervalMillis = 10;
+    function validateSection(fv, $section) {
         const $inputFields = $section.find(":input:visible");
         const fieldNames = $inputFields.map(function () {
             return this.name;
         }).get();
         const distinctNames = fieldNames.filter(VAPALS.unique);
-
-        let remaining = 0;
-        let elapsed = 0;
-        let success = true;
-        if (fv) {
-            $.each(distinctNames, function (i, fieldName) {
-                if (fieldName in fv.fields) {
-                    remaining++;
-                    //console.log("validating " + fieldName);
-                    fv.validateField(fieldName).then(function (status) {
-                        //console.log("Validation result for " + fieldName + " is " + status);
-                        if (status === 'Invalid') {
-                            success = false;
-                        }
-                        remaining--;
-                    });
-                }
-            });
-
-            while (remaining !== 0 && elapsed < maxWaitMillis) {
-                //console.log("sleeping... remaining=" + remaining);
-                await VAPALS.sleep(sleepIntervalMillis);
-                elapsed = elapsed + sleepIntervalMillis;
+        return new Promise(function (resolve) {
+            const validationPromises = [];
+            if (fv) {
+                $.each(distinctNames, function (i, fieldName) {
+                    if (fieldName in fv.fields) {
+                        validationPromises.push(fv.validateField(fieldName));
+                    }
+                });
             }
-        }
-        //console.log("validateSection() returning " + success + ", elapsed=" + elapsed);
 
-        return success;
+            Promise.all(validationPromises).then(function (values) {
+                $.each(values, function (i, v) {
+                    console.log("value= " + v);
+                    if (v === 'Invalid') {
+                        return resolve(false);
+                    }
+                });
+                return (resolve(true));
+            });
+        });
     }
   </script>
  </body>

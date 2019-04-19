@@ -1,4 +1,4 @@
-SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA,SAMIVST1,SAMIVST2 ; 4/19/19 1:54pm
+SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA,SAMIVST1,SAMIVST2 ; 4/19/19 1:57pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -287,7 +287,7 @@ UTURBR ; @TEST - extrinsic to return urban or rural depending on zip code
  set uturbr=uturbr_$$URBRUR^SAMIVSTA(40272)
  set uturbr=uturbr_$$URBRUR^SAMIVSTA(99185)
  set utsuccess=(uturbr="nur")
- do CHKEQ^%ut(utsuccess,1,"Testing the Urban/Rural extrinsic FAILED!")
+ do CHKEQ^%ut(utsuccess,1,"Testing Urban/Rural extrinsic FAILED!")
  quit
  ;
 UTTASK ; @TEST - test TASKIT creation of new note,text, and encounter

@@ -1,4 +1,4 @@
-SAMIUTRU ;ven/lgc - UNIT TEST for SAMIRU ; 3/15/19 11:28am
+SAMIUTRU ;ven/lgc - UNIT TEST for SAMIRU ; 4/19/19 11:41am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -46,21 +46,21 @@ UTINDEX ; @TEST - create the zip index in the zip graph
  s samid1=$d(@root@("zip")) ; should be 10
  i samid1=10 d
  . m SAMIUPOO=@root@("zip")
- . d SVUTARR^SAMIUTST(.SAMIUPOO,"ZIP index on NCHS Urban-Rural")
+ . d SVUTARR^SAMIUTST(.SAMIUPOO,"UTINDEX^SAMIUTRU")
  ; if the "zip" index exists, delete it
  i samid1=10 k @root@("zip")
  ; confirm the "zip" index does not exist
  s samid2=$d(@root@("zip")) ; should be 0
  ; Fail if unable to kill the "zip" index
  i '(samid2=0) d  q
- . d PLUTARR^SAMIUTST(.SAMIUARC,"ZIP index on NCHS Urban-Rural")
+ . d PLUTARR^SAMIUTST(.SAMIUARC,"UTINDEX^SAMIUTRU")
  . m @root@("zip")=SAMIUARC
  . d FAIL^%ut("Error, unable to kill 'zip' index on on NCHS Urban-Rural!")
  d INDEX^SAMIRU
  ; confirm now the "zip" does exist
  s samid3=$d(@root@("zip")) ; should be 10 again
  i '(samid3=10) d
- . d PLUTARR^SAMIUTST(.SAMIUARC,"ZIP index on NCHS Urban-Rural")
+ . d PLUTARR^SAMIUTST(.SAMIUARC,"UTINDEX^SAMIUTRU")
  . m @root@("zip")=SAMIUARC
  s utsuccess=(samid3=10)
  d CHKEQ^%ut(utsuccess,1,"Create 'zip' index on NCHS Urban-Rural FAILED!")
@@ -83,14 +83,25 @@ UTWSGRU ; @TEST - web service to return counts for rural and urban
  ;
 UTWSZIP ; @TEST - web service to return rural or urban
  n SAMIFLTR,SAMIPOO
- s SAMIFLTR("zip")=40713
+ s utsuccess=0
+ ;
+ s SAMIFLTR("zip")="02111"
  d WSZIPRU^SAMIRU(.SAMIPOO,.SAMIFLTR)
- s utsuccess=(SAMIPOO(1)="{""result"":""r""}")
- d CHKEQ^%ut(utsuccess,1,"Testing web service return rural FAILED!")
+ S SAMIPOO=$G(SAMIPOO)_$TR($P($P(SAMIPOO(1),":",2),"}"),"""")
+ ;
+ s SAMIFLTR("zip")="03216"
+ d WSZIPRU^SAMIRU(.SAMIPOO,.SAMIFLTR)
+ S SAMIPOO=$G(SAMIPOO)_$TR($P($P(SAMIPOO(1),":",2),"}"),"""")
  ;
  s SAMIFLTR("zip")=40714
  d WSZIPRU^SAMIRU(.SAMIPOO,.SAMIFLTR)
- s utsuccess=(SAMIPOO(1)="{""result"":""u""}")
+ S SAMIPOO=$G(SAMIPOO)_$TR($P($P(SAMIPOO(1),":",2),"}"),"""")
+ ;
+ s SAMIFLTR("zip")=98178
+ d WSZIPRU^SAMIRU(.SAMIPOO,.SAMIFLTR)
+ S SAMIPOO=$G(SAMIPOO)_$TR($P($P(SAMIPOO(1),":",2),"}"),"""")
+ ;
+ s utsuccess=(SAMIPOO="urnu")
  d CHKEQ^%ut(utsuccess,1,"Testing web service return urban FAILED!")
  q
  ;

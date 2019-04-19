@@ -1,4 +1,4 @@
-SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3,SAMIHOM4 ; 2019-03-28T19:07Z
+SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3,SAMIHOM4 ; 4/19/19 1:12pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -277,6 +277,9 @@ UTWSVP1 ; @TEST - Test WSVAPALS API route=""
  set route="" do WSVAPALS^SAMIHOM3(.SAMIUARG,.SAMIUBODY,.SAMIURSLT)
  merge SAMIUPOO=SAMIURSLT
  ;
+ k ^KBAP("SAMIUTH3","UTWSVP1","SAMIUPOO")
+ m ^KBAP("SAMIUTH3","UTWSVP1","SAMIUPOO")=SAMIUPOO
+ ;
  set utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
  do PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP1^SAMIUTH3")
@@ -317,6 +320,10 @@ UTWSVP3 ; @TEST - Test WSVAPALS API route="casereview"
  set SAMIUARG("samiroute")="casereview"
  do WSVAPALS^SAMIHOM3(.SAMIUARG,.SAMIUBODY,.SAMIURSLT)
  merge SAMIUPOO=SAMIURSLT
+ ;
+ k ^KBAP("SAMIUTH3","UTWSVP3","SAMIUPOO")
+ m ^KBAP("SAMIUTH3","UTWSVP3","SAMIUPOO")=SAMIUPOO
+ ;
  set utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
  do PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP3^SAMIUTH3")

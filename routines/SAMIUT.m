@@ -1,4 +1,4 @@
-SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 2019-04-02T19:41Z
+SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 4/19/19 1:19pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -41,10 +41,11 @@ XTROU ; Unit tests for SAMI*.m
  ;;SAMIUTCR
  ;;SAMIUTD2
  ;;SAMIUTF2
- ;;SAMIUTFF
+ ;;SAMIUTF
  ;;SAMIUTH3
  ;;SAMIUTLG
  ;;SAMIUTNI
+ ;;SAMIUTN1
  ;;SAMIUTPT
  ;;SAMIUTR0
  ;;SAMIUTR1
@@ -85,11 +86,12 @@ COVERAGE ; Coverage tests for SAMI*.m
  set I=I+1,RUNCODE(I)="^SAMIUTCG"
  set I=I+1,RUNCODE(I)="^SAMIUTCR"
  set I=I+1,RUNCODE(I)="^SAMIUTD2"
- set I=I+1,RUNCODE(I)="^SAMIUTF2"
+ set I=I+1,RUNCODE(I)="^SAMIUTF"
  set I=I+1,RUNCODE(I)="^SAMIUTFF"
  set I=I+1,RUNCODE(I)="^SAMIUTH3"
  set I=I+1,RUNCODE(I)="^SAMIUTLG"
  set I=I+1,RUNCODE(I)="^SAMIUTNI"
+ set I=I+1,RUNCODE(I)="^SAMIUTN1"
  set I=I+1,RUNCODE(I)="^SAMIUTPT"
  set I=I+1,RUNCODE(I)="^SAMIUTR0"
  set I=I+1,RUNCODE(I)="^SAMIUTR1"
@@ -121,6 +123,8 @@ COVERAGE ; Coverage tests for SAMI*.m
  ;
  ; Excude deprecated routines not yet deleted
  set I=I+1,XCLUDE(I)="SAMIUR1"
+ set I=I+1,XCLUDE(I)="SAMIUTF2"
+ set I=I+1,XCLUDE(I)="SAMIFRM2"
  ;
  ; Exclude documentation only routines
  set I=I+1,XCLUDE(I)="SAMIUL"
@@ -136,7 +140,6 @@ COVERAGE ; Coverage tests for SAMI*.m
  set I=I+1,XCLUDE(I)="SAMIUTCG"
  set I=I+1,XCLUDE(I)="SAMIUTCR"
  set I=I+1,XCLUDE(I)="SAMIUTD2"
- set I=I+1,XCLUDE(I)="SAMIUTF2"
  set I=I+1,XCLUDE(I)="SAMIUTFF"
  set I=I+1,XCLUDE(I)="SAMIUTH3"
  set I=I+1,XCLUDE(I)="SAMIUTLG"

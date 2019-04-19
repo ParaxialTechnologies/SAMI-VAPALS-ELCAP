@@ -1,4 +1,4 @@
-SAMIRU ;ven/gpl - sami user reports ; 1/22/19 1:30pm
+SAMIRU ;ven/gpl - sami user reports ; 4/19/19 10:47am
  ;;18.0;SAM;;
  ;
  ;@license: see routine SAMIUL
@@ -18,12 +18,15 @@ SAMIRU ;ven/gpl - sami user reports ; 1/22/19 1:30pm
 INDEX ; create the zip index in the zip graph
  n root
  s root=$$setroot^%wd("NCHS Urban-Rural")
+ k @root@("zip")
  n zi s zi=0
  f  s zi=$o(@root@(zi)) q:+zi=0  d  ;
  . n ruca30
  . s ruca30=$g(@root@(zi,"ruca30"))
  . q:ruca30=""
- . s @root@("zip",zi)=ruca30
+ . s zipcoden=$g(@root@(zi,"zipcoden"))
+ . q:zipcoden=""
+ . s @root@("zip",zipcoden)=ruca30
  q
  ;
 WSGETRU(rtn,filter) ; web service to return counts for rural and urban

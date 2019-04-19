@@ -133,16 +133,14 @@ NOTE(filter) ; extrnisic which creates a note
  . d MKIN(si,samikey,vals) ;
  . s didnote=1
  ;
- ;n cnt s cnt=0 ; line number
- ;n dest s dest=$na(@vals@("note"))
- ;k @dest
- ;d OLDNOTE(vals,dest,.cnt) ; test with an old note
  q didnote
  ;
 MKEL(sid,form,vals) ;
  n cnt s cnt=0
  n dest s dest=$na(@vals@("eligibility-note"))
  k @dest
+ d OUT("Lung Screening Program Chart Eligibility Note")
+ d OUT("")
  d ELNOTE(vals,dest,cnt)
  q
  ;
@@ -151,7 +149,12 @@ MKPRE(sid,form,vals) ;
  n dest s dest=$na(@vals@("pre-note"))
  k @dest
  i $g(@vals@("chart-eligibility-complete"))'="true" d  ;
+ . d OUT("Lung Screening Program Chart Eligibility and Pre-enrollment Discussion Note")
+ . d OUT("")
  . d ELNOTE(vals,dest,cnt)
+ i $g(@vals@("chart-eligibility-complete"))="true" d  ;
+ . d OUT("Lung Screening Program Pre-enrollment Discussion Note")
+ . d OUT("") 
  d PRENOTE(vals,dest,cnt)
  q
  ;
@@ -159,6 +162,8 @@ MKIN(sid,form,vals) ;
  n cnt s cnt=0
  n dest s dest=$na(@vals@("intake-note"))
  k @dest
+ d OUT("Lung Screening Program Intake Note")
+ d OUT("")
  i $g(@vals@("chart-eligibility-complete"))'="true" d  ;
  . d ELNOTE(vals,dest,cnt)
  i $g(@vals@("pre-note-complete"))'="true" d  ;
@@ -172,8 +177,18 @@ ELNOTE(vals,dest,cnt) ; eligibility NOTE TEXT
  D OUT("The participant was identified as a potential lung screening candidate by: "_$$XVAL("siceiden",vals))
  if $$XVAL("siceiden",vals)="referral" d  ;
  . D OUT("Date of Referral: "_$$XVAL("sicerfdt",vals))
- . D OUT("Specialty of referring provider:  [Specialty]")
- D OUT("The patient is eligible based on chart review: "_$$XVAL("sicechrt",vals))
+ . n spec s spec=""
+ . s:$$XVAL("sicerfpc",vals)="y" spec=spec_" Primary Care"
+ . s:$$XVAL("sicerfwh",vals)="y" spec=spec_" Women's Health"
+ . s:$$XVAL("sicerfge",vals)="y" spec=spec_" Geriatrics"
+ . s:$$XVAL("sicerfpu",vals)="y" spec=spec_" Pulmonology"
+ . s:$$XVAL("sicerfon",vals)="y" spec=spec_" Oncology"
+ . s:$$XVAL("sicerfsc",vals)="y" spec=spec_" Smoking Cessation"
+ . s:$$XVAL("sicerfot",vals)="y" spec=spec_" "_$$XVAL("sicerfoo",vals)
+ . D OUT("Specialty of referring provider: "_spec)
+ n elig
+ s elig=$$XVAL("sicechrt",vals)
+ D OUT("The patient is eligible based on chart review: "_$s(elig="y":"Yes",1:"no"))
  D OUT("")
  s @vals@("chart-eligibility-complete")="true"
  q
@@ -250,10 +265,13 @@ INNOTE(vals,dest,cnt)
  d OUT(" ")
  d OUT("   "_"Date of intake discussion contact: "_$$XVAL("sidc",vals))
  n learn s learn=""
- s:$$XVAL("silnph",vals) learn=learn_" Phone"
- s:$$XVAL("silnls",vals) learn=learn_" Letter"
- s:$$XVAL("silnpu",vals) learn=learn_" Pulmonary"
- s:$$XVAL("silnpc",vals) learn=learn_" PCP"
+ s:$$XVAL("silnip",vals) learn=learn_" In person"
+ s:$$XVAL("silnph",vals) learn=learn_" Telephone"
+ s:$$XVAL("silnth",vals) learn=learn_" TeleHealth"
+ s:$$XVAL("silnml",vals) learn=learn_" Mailed letter"
+ s:$$XVAL("silnpp",vals) learn=learn_" Message in patient portal"
+ s:$$XVAL("silnvd",vals) learn=learn_" Video-on-Demand (VOD)"
+ s:$$XVAL("silnot",vals) learn=learn_" "_$$XVAL("silnoo",vals)
  d OUT("   "_"How did you learn about the Lung Screening Program?: "_learn)
  n verified s verified=""
  s:$$XVAL("sipav",vals)="y" verified="Yes"
@@ -335,97 +353,6 @@ INNOTE(vals,dest,cnt)
  ;[If Clinical Indication text is provided add them to the note]
  ;Clinical Indications:          [Show Input Text]
  ;
- ;
- q
- ;
-OLDNOTE(vals,dest,cnt) ; generate the old intake note
- ;
- ;
- d OUT("Lung Screening and Surveillance (LSS) Outreach and Intake Encounter Note ")
- d OUT(" ")
- d OUT("   "_"Date of contact: "_$$XVAL("sidc",vals))
- n learn s learn=""
- s:$$XVAL("silnph",vals) learn=learn_" Phone"
- s:$$XVAL("silnls",vals) learn=learn_" Letter"
- s:$$XVAL("silnpu",vals) learn=learn_" Pulmonary"
- s:$$XVAL("silnpc",vals) learn=learn_" PCP"
- d OUT("   "_"How did you learn about LSS?: "_learn)
- n verified s verified=""
- s:$$XVAL("sipav",vals)="y" verified="Yes"
- s:$$XVAL("sipav",vals)="n" verified="No"
- d OUT("   "_"Primary address verified: "_verified)
- n rural s rural=""
- s:$$XVAL("sirs",vals)="r" rural="rural"
- s:$$XVAL("sirs",vals)="u" rural="urban"
- d OUT("   "_""_"Rural status: "_rural)
- d OUT("   "_"Preferred address and contact number: ")
- n pa s pa=""
- i $$XVAL("sipsa",vals)'="" d  ;
- . d OUT("      "_$$XVAL("sipsa",vals))
- . n csz s csz=""
- . s:$$XVAL("sipc",vals)'="" csz=$$XVAL("sipc",vals)
- . s:$$XVAL("sips",vals)'="" csz=csz_", "_$$XVAL("sips",vals)
- . s:$$XVAL("sipz",vals)'="" csz=csz_" "_$$XVAL("sipz",vals)
- . d OUT("      "_csz)
- d:$$XVAL("sippn",vals)'="" OUT("      "_$$XVAL("sippn",vals))
- d OUT("   "_"Ever smoked?: ")
- d OUT("      "_$$XVAL("sies",vals))
- n sstatus s sstatus=""
- s:$$XVAL("siesn",vals) sstatus=sstatus_" Never smoked"
- s:$$XVAL("siesp",vals) sstatus=sstatus_" Past"
- s:$$XVAL("siesc",vals) sstatus=sstatus_" Current"
- s:$$XVAL("siesq",vals) sstatus=sstatus_" Willing to quit"
- d OUT("    Smoking Status: "_sstatus)
- d OUT("   "_"CIGs per day: ")
- d OUT("      "_$$XVAL("sicpd",vals))
- d OUT("   "_"PPD: ")
- d OUT("      "_$$XVAL("sippd",vals))
- d OUT("   "_"# of years: ")
- d OUT("      "_$$XVAL("sisny",vals))
- d OUT("   "_"PPY: ")
- d OUT("      "_$$XVAL("sippy",vals))
- d OUT("   "_"Quit smoking on: "_$$XVAL("siq",vals))
- d OUT("   "_"Prior LDCT: ")
- n prior s prior=""
- s:$$XVAL("sicadx",vals)'="" prior=prior_$$XVAL("sicadx",vals)
- s:$$XVAL("sicadxl",vals)'="" prior=prior_" at "_$$XVAL("sicadxl",vals)
- d OUT("      "_prior)
- d OUT(" ")
- d OUT("Shared Decision Making: ")
- d OUT(" ")
- d OUT("Veteran of age and exposure to cigarette smoke as described above, and without")
- d OUT("a current diagnosis or obvious symptoms suggestive of lung cancer, has been")
- d OUT("educated today about the estimated risk for lung cancer, the possibility of")
- d OUT("cure or life prolonging if an early lung cancer were to be found during")
- d OUT("screening, the possibility of imaging abnormalities not being lung cancer, the")
- d OUT("possibility of complications from additional diagnostic procedures, and the")
- d OUT("approximate amount of radiation exposure associated with each screening")
- d OUT("procedure.  In addition, the Veteran has been educated today about the")
- d OUT("importance of adhering to annual lung screening, the possible impact of other")
- d OUT("medical conditions on the overall health status, the importance of avoiding")
- d OUT("exposure to cigarette smoke, available tobacco cessation programs and")
- d OUT("available lung screening services at the Phoenix VA.  Education material was")
- d OUT("provided to the veteran.  Based on this information, the Veteran has opted")
- d OUT("for: ")
- d OUT(" ")
- d OUT("LDCT ordered: ")
- n ldct s ldct=""
- s:$$XVAL("sildct",vals)="n" ldct=ldct_" No"
- s:$$XVAL("sildct",vals)="l" ldct=ldct_" Not at this time, okay to contact in the future"
- s:$$XVAL("sildct",vals)="y" ldct=ldct_" Yes"
- d OUT("    "_ldct)
- i $$XVAL("sildct",vals)="y" d  ;
- . d OUT("    "_"Veteran enrolled in the LSS program. Results and coordination of care ")
- . d OUT("    "_"will be made by the LSS team.  ")
- ;d OUT("    "_"Scheduled by the LSS Coordinator:  ")
- ;d OUT("    "_"Best time and day:  ")
- ;d OUT("    "_"Best contact number:  ")
- ;d OUT(" ")
- ;d OUT(" ")
- ; clinical indication text
- i $$XVAL("siclin",vals)'="" d  ; there is some text
- . d OUT("Clinical Indications for Initial Screening CT:")
- . d OUT(" "_$$XVAL("siclin",vals))
  ;
  q
  ;

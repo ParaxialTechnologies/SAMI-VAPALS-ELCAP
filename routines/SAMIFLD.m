@@ -133,7 +133,8 @@ LOAD ; process html line, e.g., load json data into graph
  . quit
  ;
  if SAMILINE["Sample, Sammy G" do  ; insert actual patient name
- . do findReplace^%ts(.SAMILINE,"Sample, Sammy G",$get(SAMIVALS("saminame")))
+ . ;do findReplace^%ts(.SAMILINE,"Sample, Sammy G",$get(SAMIVALS("saminame")))
+ . do findReplace^%ts(.SAMILINE,"Sample, Sammy G",$$GETNAME^SAMIFORM(sid))
  . quit
  ;
  if SAMILINE["ST0001" do  ; insert patient ssn or last 5

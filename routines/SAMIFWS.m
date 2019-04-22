@@ -1,4 +1,4 @@
-SAMIFWS ;ven/gpl - elcap: form debugging web services ; 3/27/19 12:26pm
+SAMIFWS ;ven/gpl - elcap: form debugging web services ; 4/22/19 12:25pm
  ;;18.0;SAMI;;
  ;
  ; Routine SAMIFWS contains debugging subroutines that implement web
@@ -82,7 +82,7 @@ WSSBFORM ; background form access
  ; SAMIFILTER("studyid") = patient study id (e.g., "XXX00045")
  ; SAMIFILTER("fvalue") = deprecated
  ;@tests
- ; UTWSSBF^SAMIUTF2: background form access
+ ; UTWSSBF^SAMIUTF: background form access
  ;
  ; This was the old GET background web service, before ws POST vapals
  ; took over all form get and post functions. It is kept as a debugging
@@ -140,7 +140,7 @@ WSSIFORM ; intake form access
  ; SAMIFILTER("studyid") = patient study id (e.g., "XXX00045")
  ; SAMIFILTER("fvalue") = deprecated
  ;@tests
- ; UTWSIFM^SAMIUTF2: intake form access
+ ; UTWSIFM^SAMIUTF: intake form access
  ;
  ; This was the old GET intake web service, before ws POST vapals
  ; took over all form get and post functions. It is kept as a debugging
@@ -198,7 +198,7 @@ WSCEFORM ; ctevaluation form access
  ; SAMIFILTER("studyid") = patient study id (e.g., "XXX00045")
  ; SAMIFILTER("fvalue") = deprecated
  ;@tests
- ; UTCEFRM^SAMIUTF2: ctevaluation form access
+ ; UTCEFRM^SAMIUTF: ctevaluation form access
  ;
  ; This was the old GET ctevaluation web service, before ws POST vapals
  ; took over all form get and post functions. It is kept as a debugging

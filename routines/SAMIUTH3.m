@@ -1,4 +1,4 @@
-SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3,SAMIHOM4 ; 4/19/19 1:12pm
+SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3,SAMIHOM4 ; 4/22/19 10:32am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -241,9 +241,11 @@ UTWSNC ; @TEST - Testing WSNEWCAS adding a new case to vapals-patients Graphstor
  ; generate new entry in vapals-patients
  ;   HTML result will be in ^TMP("yottaForm",n)
  do WSNEWCAS^SAMIHOM3(.SAMIUARGS,.SAMIUBODY,.SAMIURSLT)
+ h 2
  ;
  ; check new entry in vapals-patients
  set utna=($get(@rootvp@(dfn,"samistudyid"))=SAMIUARGS("studyid"))
+ set utsuccess=1
  ;
  ; check HTML matches that saved in vapals unit tests
  ;  e.g. SAMIUARGS("form")="vapals:siform-2018-10-18"
@@ -252,6 +254,7 @@ UTWSNC ; @TEST - Testing WSNEWCAS adding a new case to vapals-patients Graphstor
  if utna set uthtml=1 do
  . do PLUTARR^SAMIUTST(.SAMIUARC,"UTWSNC^SAMIUTH3")
  . new rooty set rooty=$name(^TMP("yottaForm",+$piece(SAMIURSLT,",",2)))
+ . set rooty=$name(^TMP("yottaForm",+$piece(SAMIURSLT,",",2)))
  . merge SAMIUPOO=@rooty
  . set nodea=$name(SAMIUARC),nodep=$name(SAMIUPOO)
  . for  set nodep=$query(@nodep),nodea=$query(@nodea) quit:nodep=""  do  quit:'utsuccess
@@ -276,9 +279,6 @@ UTWSVP1 ; @TEST - Test WSVAPALS API route=""
  ; testing route="". RESULT should have HTML
  set route="" do WSVAPALS^SAMIHOM3(.SAMIUARG,.SAMIUBODY,.SAMIURSLT)
  merge SAMIUPOO=SAMIURSLT
- ;
- k ^KBAP("SAMIUTH3","UTWSVP1","SAMIUPOO")
- m ^KBAP("SAMIUTH3","UTWSVP1","SAMIUPOO")=SAMIUPOO
  ;
  set utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
@@ -320,9 +320,6 @@ UTWSVP3 ; @TEST - Test WSVAPALS API route="casereview"
  set SAMIUARG("samiroute")="casereview"
  do WSVAPALS^SAMIHOM3(.SAMIUARG,.SAMIUBODY,.SAMIURSLT)
  merge SAMIUPOO=SAMIURSLT
- ;
- k ^KBAP("SAMIUTH3","UTWSVP3","SAMIUPOO")
- m ^KBAP("SAMIUTH3","UTWSVP3","SAMIUPOO")=SAMIUPOO
  ;
  set utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
@@ -435,6 +432,8 @@ UTPOSTF ; @TEST - Test WSVAPALS API route="postform" build TIU
  . do FAIL^%ut("Error, New TIU note not created")
  merge SAMIUPOO=SAMIURSLT
  set utsuccess=1
+ K ^KBAP("UTPOSTF","SAMIUTH3","SAMIUPOO",$J)
+ M ^KBAP("UTPOSTF","SAMIUTH3","SAMIUPOO",$J)=SAMIUPOO
  ; Get array saved in "vapals unit tests" for this unit test
  do PLUTARR^SAMIUTST(.SAMIUARC,"UTPOSTF^SAMIUTH3")
  set nodea=$name(SAMIUARC),nodep=$name(SAMIUPOO)

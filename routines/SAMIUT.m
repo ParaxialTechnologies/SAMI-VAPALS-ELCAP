@@ -1,4 +1,4 @@
-SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 4/19/19 1:19pm
+SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 4/22/19 8:39am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -130,6 +130,7 @@ COVERAGE ; Coverage tests for SAMI*.m
  set I=I+1,XCLUDE(I)="SAMIUL"
  set I=I+1,XCLUDE(I)="SAMIVUL"
  set I=I+1,XCLUDE(I)="SAMICUL"
+ set I=I+1,XCLUDE(I)="SAMIFUL"
  ;
  ;
  ; Exclude the unit-test routines

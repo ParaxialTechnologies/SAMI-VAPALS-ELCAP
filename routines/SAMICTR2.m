@@ -1,8 +1,8 @@
-SAMICTR2 ;ven/gpl - ielcap: forms ; 3/19/19 1:24pm
+SAMICTR2 ;ven/gpl - ielcap: forms ; 4/22/19 9:04am
  ;;18.0;SAMI;;
  ;
  ;
- ;quit  ; no entry from top
+ quit  ; no entry from top
  ;
 OTHRLUNG(rtn,vals,dict) ;
  ; repgen2,repgen3

@@ -1,4 +1,4 @@
-SAMIUTR2 ;ven/lgc - UNIT TEST for SAMICTR2 ; 3/15/19 11:10am
+SAMIUTR2 ;ven/lgc - UNIT TEST for SAMICTR2 ; 4/22/19 9:04am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -22,6 +22,7 @@ SAMIUTR2 ;ven/lgc - UNIT TEST for SAMICTR2 ; 3/15/19 11:10am
  ; @to-do
  ;
  ; @section 1 code
+ ;
  ;
 START i $T(^%ut)="" W !,"*** UNIT TEST NOT INSTALLED ***" Q
  d EN^%ut($T(+0),2)

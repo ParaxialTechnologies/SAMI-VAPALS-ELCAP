@@ -1,4 +1,4 @@
-SAMIUTCG ;ven/lgc - UNIT TEST for SAMICLOG ; 4/1/19 10:34am
+SAMIUTCG ;ven/lgc - UNIT TEST for SAMICLOG ; 4/22/19 11:01am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -71,7 +71,7 @@ UTCLOG ; @TEST - Storing change log events in vapals-patients graphstore
  n nodep,nodea s nodep=$na(poo),nodea=$na(arc)
  s utsuccess=1
  f  s nodea=$q(@nodea),nodep=$q(@nodep) q:nodea=""  d
- . i '(@nodea=@nodep) s utsuccess=0
+ . i '($p(@nodea,"]",2)=$p(@nodep,"]",2)) s utsuccess=0
  d CHKEQ^%ut(utsuccess,1,"Storing change log events in vapals-patients graphstore FAILED!")
  q
  ;

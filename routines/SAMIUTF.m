@@ -1,4 +1,4 @@
-SAMIUTF ;ven/lgc - UNIT TEST for SAMIFORM,SAMIFLD,SAMIFWS,SAMIFDM ; 4/4/19 1:50pm
+SAMIUTF ;ven/lgc - UNIT TEST for SAMIFORM,SAMIFLD,SAMIFWS,SAMIFDM ; 4/22/19 11:52am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -130,7 +130,7 @@ UTLOADD ; @TEST - import directory full of json data into elcap-patient graph
  s utsuccess=1
  d IMPORT^SAMIFORM
  m SAMIUARC=@root@("graph","XXX0005")
- d PLUTARR^SAMIUTST(.SAMIUPOO,"UTLOADD^SAMIUTF2")
+ d PLUTARR^SAMIUTST(.SAMIUPOO,"UTLOADD^SAMIUTF")
  s nodea=$na(SAMIUARC),nodep=$na(SAMIUPOO)
  f  s nodea=$q(nodea),nodep=$q(nodep) q:nodea=""  d  q:'utsuccess
  . i '(nodea=nodep) s utsuccess=0
@@ -189,7 +189,7 @@ UTWSSBF ; @TEST - background form access
  s SAMIFLTR("studyid")="XXX00001"
  d WSSBFORM^SAMIFORM(.SAMIRTN,.SAMIFLTR)
  m SAMIUARC=@SAMIRTN
- D PLUTARR^SAMIUTST(.SAMIUPOO,"UTWSSBF^SAMIUTF2")
+ D PLUTARR^SAMIUTST(.SAMIUPOO,"UTWSSBF^SAMIUTF")
  s utsuccess=1
  s nodep=$na(SAMIUPOO),nodea=$na(SAMIUARC)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
@@ -208,7 +208,7 @@ UTWSIFM ; @TEST - intake form access
  s SAMIFLTR("studyid")="XXX00001"
  d WSSIFORM^SAMIFORM(.SAMIRTN,.SAMIFLTR)
  m SAMIUARC=@SAMIRTN
- d PLUTARR^SAMIUTST(.SAMIUPOO,"UTWSIFM^SAMIUTF2")
+ d PLUTARR^SAMIUTST(.SAMIUPOO,"UTWSIFM^SAMIUTF")
  s utsuccess=1
  s nodep=$na(SAMIUPOO),nodea=$na(SAMIUARC)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
@@ -228,7 +228,7 @@ UTCEFRM ; @TEST - ctevaluation form access
  s SAMIFLTR("studyid")="XXX00001"
  d WSCEFORM^SAMIFORM(.SAMIRTN,.SAMIFLTR)
  m SAMIUARC=@SAMIRTN
- d PLUTARR^SAMIUTST(.SAMIUPOO,"UTCEFRM^SAMIUTF2")
+ d PLUTARR^SAMIUTST(.SAMIUPOO,"UTCEFRM^SAMIUTF")
  s utsuccess=1
  s nodep=$na(SAMIUPOO),nodea=$na(SAMIUARC)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess

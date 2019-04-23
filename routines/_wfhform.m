@@ -73,7 +73,7 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  ; getThis^%wd
  ; $$lowcase^%ts
  ; SAMISUBS^SAMIFRM
- ; SAMISUB2^SAMIFRM
+ ; LOAD^SAMIFRM
  ; redactErr^%wf
  ; redactErr2^%wf
  ; $$formLabel^%wf
@@ -179,8 +179,10 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . ;
  . new newstyle set newstyle=0
  . if form["vapals:" set newstyle=1
- . ;if form["vapals:" do SAMISUB2^SAMIFORM(.tln,form,sid,.filter,.%j,.zhtml)
- . if newstyle=1 do SAMISUB2^SAMIFORM(.tln,key,sid,.filter,.%j,.zhtml)
+ . ;if form["vapals:" do LOAD^SAMIFORM(.tln,form,sid,.filter,.%j,.zhtml,.vals)
+ . if newstyle=1 do
+ . . do LOAD^SAMIFORM(.tln,key,sid,.filter,.%j,.zhtml,.vals)
+ . . quit
  . ;else  do SAMISUBS^SAMIFRM(.tln,form,sid,.filter)
  . if newstyle=0 do SAMISUBS^SAMIFRM(.tln,form,sid,.filter)
  . set zhtml(%j)=tln

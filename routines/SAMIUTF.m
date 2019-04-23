@@ -1,4 +1,4 @@
-SAMIUTF ;ven/lgc - UNIT TEST for SAMIFORM,SAMIFLD,SAMIFWS,SAMIFDM ; 4/22/19 11:52am
+SAMIUTF ;ven/lgc - UNIT TEST for SAMIFORM,SAMIFLD,SAMIFWS,SAMIFDM ; 4/23/19 10:31am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -165,8 +165,8 @@ UTGETFN ; extrinsic which prompts for filename
  d CHKEQ^%ut(utsuccess,1,"Testing GETFN FAILED!")
  q
  ;
-UTSSUB2 ; @TEST -  used for Dom's new style forms
- ;SAMISUB2^SAMIFORM(line,form,sid,filter,%j,zhtml)
+UTLOAD ; @TEST -  used for Dom's new style forms
+ ;LOAD^SAMIFORM(line,form,sid,filter,%j,zhtml)
  n SAMISID,SAMILINE,uline,SAMIFORM,SAMIFLTR,SAMIJ,SAMIZHTML
  n uline
  D PLUTARR^SAMIUTST(.uline,"UTSSUB2^SAMIUTF")
@@ -177,10 +177,10 @@ UTSSUB2 ; @TEST -  used for Dom's new style forms
  s SAMILINE=SAMILINE_" ST0001 and 1234567890 XX0002 VEP0001 "
  s SAMILINE=SAMILINE_" @@FROZEN@@ "
  s key="2018-10-21"
- d SAMISUB2^SAMIFORM(.SAMILINE,.SAMIFORM,SAMISID,.SAMIFLTR,.SAMIJ,.SAMIZHTML)
+ d LOAD^SAMIFORM(.SAMILINE,.SAMIFORM,SAMISID,.SAMIFLTR,.SAMIJ,.SAMIZHTML)
  s SAMILINE=$e(SAMILINE,1,145),uline=$e(uline,1,145)
  s utsuccess=(SAMILINE=uline)
- d CHKEQ^%ut(utsuccess,1,"Testing SAMISUB2 used for Dom's forms FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing LOAD used for Dom's forms FAILED!")
  q
  ;
 UTWSSBF ; @TEST - background form access

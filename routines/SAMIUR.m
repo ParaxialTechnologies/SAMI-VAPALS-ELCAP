@@ -1,4 +1,4 @@
-SAMIUR ;ven/gpl - sami user reports ; 3/29/19 10:29am
+SAMIUR ;ven/gpl - sami user reports ; 4/23/19 10:43am
  ;;18.0;SAM;;
  ;
  ;@license: see routine SAMIUL
@@ -46,7 +46,7 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  . s ln=$g(temp(ii))
  . n samikey,si
  . s (samikey,si)=""
- . d SAMISUB2^SAMIFORM(.ln,samikey,si,.filter)
+ . d LOAD^SAMIFORM(.ln,samikey,si,.filter)
  . ;i ln["PAGE NAME" d findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type,datephrase))
  . i ln["PAGE NAME" d findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type,""))
  . i ln["CRITERIA" d findReplace^%ts(.ln,"CRITERIA",datephrase)

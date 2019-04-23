@@ -1,4 +1,4 @@
-SAMIFORM ;ven/gpl - ielcap: form library ;2019-01-08T19:58Z
+SAMIFORM ;ven/gpl - ielcap: form library ; 4/23/19 10:08am
  ;;18.0;SAMI;;
  ;
  ; Routine SAMIFORM contains the vapals-elcap form library.
@@ -63,9 +63,6 @@ SAMIFORM ;ven/gpl - ielcap: form library ;2019-01-08T19:58Z
  ;
  ;@ppi LOAD^SAMIFORM, process html line, e.g., load json data into graph
 LOAD(SAMILINE,form,sid,SAMIFILTER,SAMILNUM,SAMIHTML,SAMIVALS) goto LOAD^SAMIFLD
- ;
- ;@ppi SAMISUB2^SAMIFORM, ibid
-SAMISUB2(SAMILINE,form,sid,SAMIFILTER,SAMILNUM,SAMIHTML,SAMIVALS) goto LOAD^SAMIFLD
  ;
  ;
  ;

@@ -1,4 +1,4 @@
-SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3,SAMIHOM4 ; 4/22/19 10:32am
+SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3,SAMIHOM4 ; 4/23/19 12:26pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -263,7 +263,9 @@ UTWSNC ; @TEST - Testing WSNEWCAS adding a new case to vapals-patients Graphstor
  .. if ($extract($translate(@nodep," "),1,10)?4N1P2N1P2N) quit
  .. if @nodep["siform"  quit
  .. if $piece($extract($translate($piece(@nodea,"=",2),""""),1,10)," ")?.N1"/".N1"/"4N quit
- .. if @nodea["1/4/2019" quit
+ .. if @nodea["4/19/2019" quit
+ .. if @nodea["const frozen" quit
+ .. if @nodea["const newForm" quit
  ..;
  .. if '($qsubscript(nodea,1)=$qsubscript(nodep,1)) set uthtml=0
  .. if '(@nodea=@nodep) set uthtml=0
@@ -432,8 +434,8 @@ UTPOSTF ; @TEST - Test WSVAPALS API route="postform" build TIU
  . do FAIL^%ut("Error, New TIU note not created")
  merge SAMIUPOO=SAMIURSLT
  set utsuccess=1
- K ^KBAP("UTPOSTF","SAMIUTH3","SAMIUPOO",$J)
- M ^KBAP("UTPOSTF","SAMIUTH3","SAMIUPOO",$J)=SAMIUPOO
+ K ^KBAP("UTPOSTF","SAMIUTH3","SAMIUPOO")
+ M ^KBAP("UTPOSTF","SAMIUTH3","SAMIUPOO")=SAMIUPOO
  ; Get array saved in "vapals unit tests" for this unit test
  do PLUTARR^SAMIUTST(.SAMIUARC,"UTPOSTF^SAMIUTH3")
  set nodea=$name(SAMIUARC),nodep=$name(SAMIUPOO)

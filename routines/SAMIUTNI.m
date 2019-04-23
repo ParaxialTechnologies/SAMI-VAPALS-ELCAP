@@ -1,4 +1,4 @@
-SAMIUTNI ;ven/lgc - UNIT TEST for SAMINOTI ; 2019-03-28T22:22Z
+SAMIUTNI ;ven/lgc - UNIT TEST for SAMINOTI ; 4/23/19 11:37am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -60,6 +60,7 @@ UTWSNOTE ; @TEST - web service which returns a text note
  for  set nodep=$query(@nodep),nodea=$query(@nodea) quit:nodep=""  do  quit:'utsuccess
  . if (@nodep["meta content") quit
  . if $extract($translate(@nodep,""""" "),1,10)?4N1"."2N1"."2N quit
+ . if ($qs(nodea,1)=142) quit
  . if '(@nodep=@nodea) set utsuccess=0
  if utsuccess set utsuccess=(nodea="")
  do CHKEQ^%ut(utsuccess,1,"Testing web service return a note FAILED!")

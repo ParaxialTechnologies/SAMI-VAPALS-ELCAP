@@ -1,4 +1,4 @@
-%wfhform ;ven/gpl-web form: html form get & post ;2019-03-15T21:54Z
+%wfhform ;ven/gpl-web form: html form get & post ;2019-04-24T00:53Z
  ;;1.8;Mash;
  ;
  ; %wfhform implements the Web Form Library's html form get & post web
@@ -29,7 +29,7 @@
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2019-03-15T17:14Z
+ ;@last-updated: 2019-04-24T00:53Z
  ;@application: Mumps Advanced Shell (Mash)
  ;@module: Web Form - %wf
  ;@version: 1.8T04
@@ -114,10 +114,10 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  if sid="" set sid=$get(filter("fvalue"))
  if sid="" set sid="XXXX01"
  ;
- new key set key=$g(filter("key")) ; graph key for the saved form
- i key="" set key=form
- i key["vapals:" s key=$p(key,"vapals:",2)
- i form["vapals:" s form=$p(form,"-",1)
+ new key set key=$get(filter("key")) ; graph key for the saved form
+ if key="" set key=form
+ if key["vapals:" set key=$piece(key,"vapals:",2)
+ if form["vapals:" set form=$piece(form,"-",1)
  ;
  new vals
  ;do getVals^%wf("vals",form,sid) ; load saved field values
@@ -158,7 +158,7 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  for  set %j=$order(zhtml(%j)) quit:%j=""  do  ;
  . new tln set tln=zhtml(%j)
  . set tln("low")=$$lowcase^%ts(tln) ; lowercase for checks
- . new customscan s customscan=""
+ . new customscan set customscan=""
  . ;
  . ;@stanza 5 special handling of SAMI forms
  . ;
@@ -188,21 +188,23 @@ wsGetForm ; code for wsGetForm^%wf, get html form
  . set zhtml(%j)=tln
  . ;
  . if tln["submit" quit  ;
- . if tln["hidden" d  quit  ; we need to try and process hidden fields
- . . i tln'["type" q  ; probably in a javascript statement
- . . i tln'["context" q  ; not marked for restoring
- . . i tln'["server" q  ; not marked for restoring
- . . n hname s hname=""
- . . i tln["name=" do  ;
+ . if tln["hidden" do  quit  ; we need to try and process hidden fields
+ . . if tln'["type" quit  ; probably in a javascript statement
+ . . if tln'["context" quit  ; not marked for restoring
+ . . if tln'["server" quit  ; not marked for restoring
+ . . new hname set hname=""
+ . . if tln["name=" do  ;
  . . . set hname=$piece($piece(tln,"name=""",2),"""")
- . . q:hname=""
- . . n hval s hval=$g(vals(hname)) ; saved value of the hidden field
- . . q:hval=""
- . . d unvalue^%wf(.tln)
- . . d value^%wf(.tln,hval)
+ . . . quit
+ . . quit:hname=""
+ . . new hval set hval=$get(vals(hname)) ; saved value of the hidden field
+ . . quit:hval=""
+ . . do unvalue^%wf(.tln)
+ . . do value^%wf(.tln,hval)
  . . ;i tln["value" d  ;
  . . ;. 
  . . set zhtml(%j)=tln
+ . . quit
  . ;
  . ;
  . ;@stanza 6 process errors
@@ -713,8 +715,7 @@ debugFld ; code for ppi debugFld^%wf, insert field debugging info
  ;
  ;@stanza 2 insert debugging info re field
  ;
- new dtxt
- set dtxt="field="_name
+ new dtxt set dtxt="field="_name
  new fary
  do getFieldMap^%wffmap("fary",form,name)
  set dtxt=dtxt_" fmFld="_$get(fary("FILEMAN_FIELD"))
@@ -757,7 +758,7 @@ unvalue ; code for ppi unvalue^%wf, clear input value in html line
  ;
  new l1,l2,l3,t1,t2
  set l1=$find(line,"value=""")
- q:l1=0
+ quit:l1=0
  set t1=$extract(line,1,l1-1)
  set t2=$extract(line,l1,$length(line))
  set l3=$find(t2,"""")
@@ -1101,10 +1102,10 @@ numValid ; code for ppi $$numValid^%wf, validate numeric field
  . if @x set result=1
  . else  set result=0
  . quit
- else  d  ; no right of decimal point
+ else  do  ; no right of decimal point
  . set x="value?."_specn_"N"
  . quit
- w !,x
+ write !,x
  if @x quit 1
  ;
  ;@stanza 3 termination
@@ -1149,9 +1150,15 @@ dateFormat ; code for ppi $$dateFormat^%wf, date in elcap format
  do ^%DT
  if Y=-1 quit  ; invalid date, can't reformat
  new dtmp set dtmp=$$FMTE^XLFDT(Y,"D") ; default exteral date format
- if $length(dtmp)=12 set val=$extract(dtmp,5,6)_"/"_$extract(dtmp,1,3)_"/"_$extract(dtmp,9,12) ; jan 01,1987
- else  set val=dtmp
- if $length(val)=8 set val=$extract(val,5,8)
+ if $length(dtmp)=12 do
+ . set val=$extract(dtmp,5,6)_"/"_$extract(dtmp,1,3)_"/"_$extract(dtmp,9,12) ; jan 01,1987
+ . quit
+ else  do
+ . set val=dtmp
+ . quit
+ if $length(val)=8 do
+ . set val=$extract(val,5,8)
+ . quit
  ;
  ;@stanza 3 termination
  ;
@@ -1202,19 +1209,30 @@ wsPostForm ; code for ws wsPostForm^%wf, submit HTML form
  set form=$get(ARGS("form"))
  set sid=$get(ARGS("studyid"))
  set body=$get(BODY(1))
- i $d(BODY(2)) s body=body_$g(BODY(2))
- i $d(BODY(3)) s body=body_$g(BODY(3))
+ if $data(BODY(2)) set body=body_$get(BODY(2))
+ if $data(BODY(3)) set body=body_$get(BODY(3))
  if form="" set form="sbform"
  if sid="" set sid="XXXX17"
  quit:form=""
  quit:sid=""
  ;set %json(sid,form,"form")=form
  do parseBody^%wf("tbdy",.body)
+ ; 
+ ; change log
+ ;
+ if form["siform" do  ;
+ . new root set root=$$setroot^%wd("vapals-patients")
+ . merge tbdy("changelog")=@root@("graph",sid,form,"changelog")
+ . do CLOG^SAMICLOG(sid,form,"tbdy")
+ . quit
  ;
  ; we want to store the form by the date in the form.. and delete the old one
  ; 
- new useform s useform=form
+ new useform set useform=form
  set useform=$$SAVFILTR^SAMISAV(sid,form,.tbdy) ; make this a framework call
+ ;
+ ; generate the change log
+ ;
  ;set %json(sid,form,"form")=form
  set %json(sid,useform,"form")=useform
  ;merge %json(sid,form)=tbdy
@@ -1222,18 +1240,22 @@ wsPostForm ; code for ws wsPostForm^%wf, submit HTML form
  new gr set gr=$$setroot^%wd("vapals-patients")
  merge @gr@("graph")=%json
  ;
- i $g(ARGS("debug"))=1 d  ;
+ if $get(ARGS("debug"))=1 do  ;
  . kill ^SAMIGPL("sami")
  . merge ^SAMIGPL("sami","args")=ARGS
  . merge ^SAMIGPL("sami","body")=BODY
  . merge ^SAMIGPL("sami","json")=%json
+ . quit
  ;
  ;if $get(ARGS("debug"))="" do  quit  ;
  do  quit  ;
  . do WSCASE^SAMICASE(.RESULT,.ARGS)
  . quit
  ;
+ ;
  quit  ; no validation process
+ ;
+ ;
  ; validation process
  ;
  ;new errflag set errflag=0
@@ -1256,12 +1278,15 @@ wsPostForm ; code for ws wsPostForm^%wf, submit HTML form
  ;. do fmx^%sfv2g("fman",311.102,fien)
  ;. quit
  ;merge fman=status
- n fman
+ ;
+ ; this code is cut off for now by the quit above
+ ;
+ new fman
  merge fman(form)=tbdy
  new tjson
  do ENCODE^VPRJSON("fman","tjson")
  do beautify^%wd("tjson","RESULT")
- DO ADDCRLF^VPRJRUT(.RESULT)
+ do ADDCRLF^VPRJRUT(.RESULT)
  set HTTPRSP("mime")="application/json"
  kill ^SAMIGPL("sami")
  merge ^SAMIGPL("sami","args")=ARGS

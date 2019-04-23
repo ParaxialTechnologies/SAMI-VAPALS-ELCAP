@@ -1,4 +1,4 @@
-SAMIFDM ;ven/gpl - elcap: form dmi code ; 3/28/19 11:03am
+SAMIFDM ;ven/gpl - elcap: form dmi code ; 4/23/19 9:03am
  ;;18.0;SAMI;;
  ;
  ; Routine SAMIFDM contains subroutines for processing the ELCAP forms,
@@ -113,7 +113,7 @@ INIT1(form,ary) ; initialize one form
  ; describing the form and its variables.
  ;
  write !,form ; display form name
- zwrite @ary ; display getVals array (form fields & values)
+ ;zwrite @ary ; display getVals array (form fields & values)
  new fn set fn=311.11 ; file SAMI Form Mapping
  new sfn set sfn=311.11001 ; subfile Variable
  new fmroot set fmroot=$name(^SAMI(311.11)) ; data-global root
@@ -124,7 +124,7 @@ INIT1(form,ary) ; initialize one form
  do UPDATE^DIE("","SAMIFDA","","SAMIERR") ; create/update record
  if $data(SAMIERR) do  quit  ; report updater problems
  . write !,"error creating form record ",form,!
- . zwrite SAMIERR ; show fileman dbs error array
+ .; zwrite SAMIERR ; show fileman dbs error array
  . quit
  ;
  new %ien set %ien=$order(@fmroot@("B",form,"")) ; get form ien
@@ -146,7 +146,7 @@ INIT1(form,ary) ; initialize one form
  do UPDATE^DIE("","SAMIFDA","","SAMIERR") ; create/update subfile
  if $data(SAMIERR) do  quit  ; report updater problems
  . write !,"error creating variable record ",%j,!
- . zwrite SAMIERR ; show fileman dbs error array
+ .; zwrite SAMIERR ; show fileman dbs error array
  . quit
  ;
  quit  ; end of INIT1
@@ -203,7 +203,7 @@ REGISTER ; register elcap forms in form mapping file
  . do UPDATE^DIE("","SAMIFDA","","SAMIERR")
  . if $data(SAMIERR) do  quit  ; report updater error
  . . write !,"error creating form record ",zi,!
- . . zwrite SAMIERR
+ . .; zwrite SAMIERR
  . . quit
  . ;
  . new %ien set %ien=$order(@fmroot@("B",zi,""))

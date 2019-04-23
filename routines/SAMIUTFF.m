@@ -1,4 +1,4 @@
-SAMIUTFF ;ven/arc - Unit test for SAMIFF ; 3/26/19 9:52am
+SAMIUTFF ;ven/arc - Unit test for SAMIFF ; 4/23/19 9:44am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -55,7 +55,7 @@ UTFF ; @TEST Entry from top
  ;
  do ^SAMIFF
  do SUCCEED^%ut
- quit ; End of label UTFF
+ quit  ; End of label UTFF
  ;
  ;
 UTPRSTSV ; @TEST Parse TSV file and build graph of form fields
@@ -102,7 +102,7 @@ UTPRSTSV ; @TEST Parse TSV file and build graph of form fields
  ;
  do CHKEQ^%ut(result,expect)
  ;
- quit ; End of label PRSTSV
+ quit  ; End of label PRSTSV
  ;
  ;
 EOR ; End of routine SAMIUTFF

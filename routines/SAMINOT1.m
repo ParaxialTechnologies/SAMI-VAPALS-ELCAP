@@ -1,4 +1,4 @@
-SAMINOT1 ;ven/gpl - ielcap: forms ; 4/16/19 12:57pm
+SAMINOT1 ;ven/gpl - ielcap: forms ; 4/23/19 9:11am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -154,7 +154,7 @@ MKPRE(sid,form,vals) ;
  . d ELNOTE(vals,dest,cnt)
  i $g(@vals@("chart-eligibility-complete"))="true" d  ;
  . d OUT("Lung Screening Program Pre-enrollment Discussion Note")
- . d OUT("") 
+ . d OUT("")
  d PRENOTE(vals,dest,cnt)
  q
  ;
@@ -167,7 +167,7 @@ MKIN(sid,form,vals) ;
  i $g(@vals@("chart-eligibility-complete"))'="true" d  ;
  . d ELNOTE(vals,dest,cnt)
  i $g(@vals@("pre-note-complete"))'="true" d  ;
- . d PRENOTE(vals,dest,cnt) 
+ . d PRENOTE(vals,dest,cnt)
  d INNOTE(vals,dest,cnt)
  q
  ;

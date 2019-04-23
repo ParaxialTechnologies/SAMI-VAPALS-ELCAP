@@ -1,4 +1,4 @@
-SAMINOT1 ;ven/gpl - ielcap: forms ; 4/16/19 12:57pm
+SAMINOT1 ;ven/gpl - ielcap: forms ; 2019-04-23T23:23Z
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -78,7 +78,7 @@ WSNOTE(return,filter) ; web service which returns a text note
  f  s zi=$o(temp(zi)) q:zi=""  d  ;
  . ;
  . n line s line=temp(zi)
- . D SAMISUB2^SAMIFORM(.line,samikey,si,.filter)
+ . D LOAD^SAMIFORM(.line,samikey,si,.filter,.vals)
  . s temp(zi)=line
  . ;
  . s cnt=cnt+1

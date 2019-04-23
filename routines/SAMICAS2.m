@@ -126,11 +126,20 @@ WSCASE ; generate case review page
  set nuhref=nuhref_"<td><input type=hidden name=""samiroute"" value=""nuform"">"
  set nuhref=nuhref_"<input type=hidden name=""studyid"" value="_sid_">"
  set nuhref=nuhref_"<input value=""New Form"" class=""btn label label-warning"" role=""link"" type=""submit""></form></td>"
- new notehref set notehref="<form method=POST action=""/vapals"">"
- set notehref=notehref_"<input type=hidden name=""samiroute"" value=""note"">"
- set notehref=notehref_"<input type=hidden name=""studyid"" value="_sid_">"
- set notehref=notehref_"<input type=hidden name=""form"" value="_$p(sikey,":",2)_">"
- set notehref=notehref_"<input value=""Intake Note"" class=""btn btn-link"" role=""link"" type=""submit""></form>"
+ ; new intake notes table
+ n ntlist,zi,notehref,form
+ set form=$p(sikey,":",2)
+ set notehref="<table>"
+ d NTLIST^SAMINOT1("ntlist",sid,form)
+ s zi=0
+ f  s zi=$o(ntlist(zi)) q:+zi=0  d  ;
+ . set notehref=notehref_"<td><form method=POST action=""/vapals"">"
+ . set notehref=notehref_"<input type=hidden name=""nien"" value="""_$g(ntlist(zi,"nien"))_""">"
+ . set notehref=notehref_"<input type=hidden name=""samiroute"" value=""note"">"
+ . set notehref=notehref_"<input type=hidden name=""studyid"" value="_sid_">"
+ . set notehref=notehref_"<input type=hidden name=""form"" value="_form_">"
+ . set notehref=notehref_"<input value="""_$g(ntlist(zi,"name"))_""" class=""btn btn-link"" role=""link"" type=""submit""></form></td></tr>"
+ set notehref=notehref_"</table>"
  set cnt=cnt+1
  new last5 set last5=$$GETLAST5^SAMIFORM(sid)
  new pssn set pssn=$$GETSSN^SAMIFORM(sid)

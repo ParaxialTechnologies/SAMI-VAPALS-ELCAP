@@ -1,4 +1,4 @@
-SAMINOT1 ;ven/gpl - ielcap: forms ; 4/23/19 10:51am
+SAMINOT1 ;ven/gpl - ielcap: forms ; 4/16/19 12:57pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -52,6 +52,22 @@ WSNOTE(return,filter) ; web service which returns a text note
  n vals
  m vals=@root@("graph",si,samikey)
  ;
+ n note,nien,ntype
+ s ntype=""
+ s note=""
+ s nien=$g(filter("nien"))
+ i nien="" d
+ . s:$g(vals("samistatus"))="complete" ntype="intake"
+ . s:$g(vals("samistatus"))="chart-eligibility" ntype="eligibility"
+ . s:$g(vals("samistatus"))="pre-enrollment-discussion" ntype="pre-note"
+ . q:ntype=""
+ . ;d nien=$$NTTYPE add code to pull the latest note by type
+ q:nien=""
+ n notebase
+ s notebase=$$NTLOCN(si,samikey,nien) ; global location for the note
+ s note=$na(@notebase@("text"))
+ i '$d(@note) q
+ ;
  new temp,tout
  do GETTMPL^SAMICASE("temp","vapals:note")
  quit:'$data(temp)
@@ -62,7 +78,7 @@ WSNOTE(return,filter) ; web service which returns a text note
  f  s zi=$o(temp(zi)) q:zi=""  d  ;
  . ;
  . n line s line=temp(zi)
- . D LOAD^SAMIFORM(.line,samikey,si,.filter,.vals)
+ . D SAMISUB2^SAMIFORM(.line,samikey,si,.filter)
  . s temp(zi)=line
  . ;
  . s cnt=cnt+1
@@ -71,14 +87,6 @@ WSNOTE(return,filter) ; web service which returns a text note
  . i temp(zi)["report-text" d  ;
  . . i temp(zi)["#" q  ;
  . . n zj s zj=""
- . . n note
- . . n ntype s ntype=""
- . . s:$g(vals("samistatus"))="complete" ntype="intake-note"
- . . s:$g(vals("samistatus"))="chart-eligibility" ntype="eligibility-note"
- . . s:$g(vals("samistatus"))="pre-enrollment-discussion" ntype="pre-note"
- . . q:ntype=""
- . . s note=$na(@root@("graph",si,samikey,ntype))
- . . i '$d(@note) q
  . . f  s zj=$o(@note@(zj)) q:zj=""  d  ;
  . . . s cnt=cnt+1
  . . . ;s tout(cnt)=@note@(zj)_"<br>"
@@ -122,31 +130,33 @@ NOTE(filter) ; extrnisic which creates a note
  n didnote s didnote=0
  ;
  i $g(@vals@("samistatus"))="chart-eligibility" d  ;
- . d MKEL(si,samikey,vals) ;
+ . d MKEL(si,samikey,vals,.filter) ;
  . s didnote=1
  ;
  i $g(@vals@("samistatus"))="pre-enrollment-discussion" d  ;
- . d MKPRE(si,samikey,vals) ;
+ . d MKPRE(si,samikey,vals,.filter) ;
  . s didnote=1
  ;
  i $g(@vals@("samistatus"))="complete" d  ;
- . d MKIN(si,samikey,vals) ;
+ . d MKIN(si,samikey,vals,.filter) ;
  . s didnote=1
  ;
  q didnote
  ;
-MKEL(sid,form,vals) ;
+MKEL(sid,form,vals,filter) ;
  n cnt s cnt=0
- n dest s dest=$na(@vals@("eligibility-note"))
+ ;n dest s dest=$na(@vals@("eligibility-note"))
+ n dest s dest=$$MKNT(vals,"Eligibility Note","eligibility",.filter)
  k @dest
  d OUT("Lung Screening Program Chart Eligibility Note")
  d OUT("")
  d ELNOTE(vals,dest,cnt)
  q
  ;
-MKPRE(sid,form,vals) ;
+MKPRE(sid,form,vals,filter) ;
  n cnt s cnt=0
- n dest s dest=$na(@vals@("pre-note"))
+ ;n dest s dest=$na(@vals@("pre-note"))
+ n dest s dest=$$MKNT(vals,"Pre-enrollment Discussion Note","prenote",.filter)
  k @dest
  i $g(@vals@("chart-eligibility-complete"))'="true" d  ;
  . d OUT("Lung Screening Program Chart Eligibility and Pre-enrollment Discussion Note")
@@ -154,22 +164,73 @@ MKPRE(sid,form,vals) ;
  . d ELNOTE(vals,dest,cnt)
  i $g(@vals@("chart-eligibility-complete"))="true" d  ;
  . d OUT("Lung Screening Program Pre-enrollment Discussion Note")
- . d OUT("")
+ . d OUT("") 
  d PRENOTE(vals,dest,cnt)
  q
  ;
-MKIN(sid,form,vals) ;
+MKIN(sid,form,vals,filter) ;
  n cnt s cnt=0
- n dest s dest=$na(@vals@("intake-note"))
+ ;n dest s dest=$na(@vals@("intake-note"))
+ n dest s dest=$$MKNT(vals,"Intake Note","intake",.filter)
  k @dest
  d OUT("Lung Screening Program Intake Note")
  d OUT("")
  i $g(@vals@("chart-eligibility-complete"))'="true" d  ;
  . d ELNOTE(vals,dest,cnt)
  i $g(@vals@("pre-note-complete"))'="true" d  ;
- . d PRENOTE(vals,dest,cnt)
+ . d PRENOTE(vals,dest,cnt) 
  d INNOTE(vals,dest,cnt)
  q
+ ;
+MKNT(vals,title,ntype,filter) ; extrinsic makes a note date=now returns 
+ ; global addr. filter must be passed by reference
+ n ntdt s ntdt=$$NTDTTM($$NOW^XLFDT)
+ n ntptr
+ s ntptr=$$MKNTLOC(vals,title,ntdt,$g(ntype),.filter)
+ q ntptr
+ ;
+MKNTLOC(vals,title,ndate,ntype,filter) ; extrinsic returns the 
+ ;location for the note
+ n nien
+ s nien=$o(@vals@("notes",""),-1)+1
+ s filter("nien")=nien
+ n nloc s nloc=$na(@vals@("notes",nien))
+ s @nloc@("name")=title_" "_$g(ndate)
+ s @nloc@("date")=$g(ndate)
+ s @nloc@("type")=$g(ntype)
+ q $na(@nloc@("text"))
+ ;
+NTDTTM(ZFMDT) ; extrinsic returns the date and time in Note format
+ ; ZFMDT is the fileman date/time to translate
+ q $$FMTE^XLFDT(ZFMDT,"5")
+ ;
+NTLOCN(sid,form,nien) ; extrinsic returns the location of the Nth note
+ n root s root=$$setroot^%wd("vapals-patients")
+ q $na(@root@("graph",sid,form,"notes",nien))
+ ;
+NTLAST(sid,form,ntype) ; extrinsic returns the location of the latest note
+ ; of the type ntype
+ q
+ ;
+NTLIST(nlist,sid,form) ; returns the note list in nlist, passed by ref
+ ;
+ n zn,root,gn
+ s root=$$setroot^%wd("vapals-patients")
+ s zn=0
+ s gn=$na(@root@("graph",sid,form,"notes"))
+ q:'$d(@gn)
+ f  s zn=$o(@gn@(zn)) q:+zn=0  d  ;
+ . s @nlist@(zn,"name")=@gn@(zn,"name")
+ . s @nlist@(zn,"nien")=zn
+ ;
+ q
+ ;
+TLST ;
+ S SID="XXX00677"
+ S FORM="siform-2019-04-23"
+ D NTLIST("G",SID,FORM)
+ ZWR G
+ Q
  ;
 ELNOTE(vals,dest,cnt) ; eligibility NOTE TEXT
  D OUT("")
@@ -193,7 +254,7 @@ ELNOTE(vals,dest,cnt) ; eligibility NOTE TEXT
  s @vals@("chart-eligibility-complete")="true"
  q
  ;
-PRENOTE(vals,dest,cnt) ;
+PRENOTE(vals,dest,cnt) 
  ;
  i $g(@vals@("sipedisc"))'="y" q  ; no prelim discussion
  D OUT("")
@@ -224,7 +285,7 @@ SUBRSLT(XVAL) ; translation of discussion result
  q:XVAL="na" "Unable to reach participant at this time"
  q ""
  ;
-INNOTE(vals,dest,cnt) ;
+INNOTE(vals,dest,cnt) 
  ;
  ;Lung Screening Program Intake Note
  ;
@@ -235,7 +296,7 @@ INNOTE(vals,dest,cnt) ;
  ;Preferred address and contact number:
  ;     [Address 1]
  ;           [Address 2]
- ;                [Address 3]
+ ;	          [Address …]
  ;
  ;Ever smoked?:            [Ever Smoked Text]
  ;Smoking Status:          [Never Smoked/Past/Current/Willing to Quit]
@@ -343,7 +404,7 @@ INNOTE(vals,dest,cnt) ;
  ;
  ;The Veteran has decided to enroll in the Lung Screening Program: [Yes/No]
  ;
- ;[If Not enroll at this time but okay to contact in the future the following line]
+ ;[If “Not enroll at this time but okay to contact in the future” add the following line]
  ;The Veteran has indicated it is okay to contact in the future to discuss enrolling in the Lung Screening Program.
  ;
  ;[If Yes is answered for enrollment add the following two lines]

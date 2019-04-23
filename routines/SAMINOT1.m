@@ -1,4 +1,4 @@
-SAMINOT1 ;ven/gpl - ielcap: forms ; 4/23/19 9:11am
+SAMINOT1 ;ven/gpl - ielcap: forms ; 4/23/19 9:38am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -193,7 +193,7 @@ ELNOTE(vals,dest,cnt) ; eligibility NOTE TEXT
  s @vals@("chart-eligibility-complete")="true"
  q
  ;
-PRENOTE(vals,dest,cnt) 
+PRENOTE(vals,dest,cnt) ;
  ;
  i $g(@vals@("sipedisc"))'="y" q  ; no prelim discussion
  D OUT("")
@@ -224,7 +224,7 @@ SUBRSLT(XVAL) ; translation of discussion result
  q:XVAL="na" "Unable to reach participant at this time"
  q ""
  ;
-INNOTE(vals,dest,cnt) 
+INNOTE(vals,dest,cnt) ;
  ;
  ;Lung Screening Program Intake Note
  ;
@@ -235,7 +235,7 @@ INNOTE(vals,dest,cnt)
  ;Preferred address and contact number:
  ;     [Address 1]
  ;           [Address 2]
- ;	          [Address …]
+ ;                [Address 3]
  ;
  ;Ever smoked?:            [Ever Smoked Text]
  ;Smoking Status:          [Never Smoked/Past/Current/Willing to Quit]
@@ -343,7 +343,7 @@ INNOTE(vals,dest,cnt)
  ;
  ;The Veteran has decided to enroll in the Lung Screening Program: [Yes/No]
  ;
- ;[If “Not enroll at this time but okay to contact in the future” add the following line]
+ ;[If Not enroll at this time but okay to contact in the future the following line]
  ;The Veteran has indicated it is okay to contact in the future to discuss enrolling in the Lung Screening Program.
  ;
  ;[If Yes is answered for enrollment add the following two lines]

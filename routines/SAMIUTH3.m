@@ -1,4 +1,4 @@
-SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3,SAMIHOM4 ; 4/23/19 12:26pm
+SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3,SAMIHOM4 ; 4/24/19 9:46am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -332,7 +332,7 @@ UTWSVP3 ; @TEST - Test WSVAPALS API route="casereview"
  . if (@nodep["meta content") quit
  . if (@nodep["XXX") quit
  . if '($qsubscript(nodea,1)=$qsubscript(nodep,1)) set utsuccess=0
- . if '(@nodea=@nodep) set utsuccess=0
+ . if '(@nodea=@nodep) w !,nodea,"=",@nodea set utsuccess=0
  if 'nodea="" set utsuccess=0
  do CHKEQ^%ut(utsuccess,1,"Testing WSVAPALS route=casereview  FAILED!")
  quit
@@ -429,6 +429,8 @@ UTPOSTF ; @TEST - Test WSVAPALS API route="postform" build TIU
  set SAMIUARG("studyid")="XXX00001"
  do WSVAPALS^SAMIHOM3(.SAMIUARG,.SAMIUBODY,.SAMIURSLT)
  hang 2
+ K ^KBAP("SAMIUTH3","UTPOSTF","SAMIURSLT")
+ M ^KBAP("SAMIUTH3","UTPOSTF","SAMIURSLT")=SAMIURSLT
  new tiuien set tiuien=$get(^TMP("UNIT TEST","UTTASK^SAMIUTVA"))
  if '$get(tiuien) do  quit
  . do FAIL^%ut("Error, New TIU note not created")
@@ -443,8 +445,10 @@ UTPOSTF ; @TEST - Test WSVAPALS API route="postform" build TIU
  . if ($extract($translate(@nodep," "),1,10)?4N1P2N1P2N) quit
  . if (@nodep["meta content") quit
  . if (@nodep["Date of contact:") quit
+ . if (@nodep["Date of chart review:") quit
+ . if (@nodep["Date of intake discussion contact:") quit
  . if '($qsubscript(nodea,1)=$qsubscript(nodep,1)) set utsuccess=0
- . if '(@nodea=@nodep) set utsuccess=0
+ . if '(@nodea=@nodep) w !,nodea,"=",@nodea set utsuccess=0
  if 'nodea="" set utsuccess=0
  ; Delete the tiu note just created
  new chkdel set chkdel=$$DELTIU^SAMIVSTA(tiuien)

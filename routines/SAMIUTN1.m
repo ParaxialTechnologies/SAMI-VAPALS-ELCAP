@@ -1,4 +1,4 @@
-SAMIUTN1 ;ven/lgc - UNIT TEST for SAMINOT1 ; 4/19/19 9:34am
+SAMIUTN1 ;ven/lgc - UNIT TEST for SAMINOT1 ; 4/23/19 11:37pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -67,9 +67,12 @@ UTEXSTIN ; @TEST - if an Intake Note exists
  ;
 UTWSNOTE ; @TEST - web service which returns a text note
  ;WSNOTE(return,filter)
+ n root s root=$$setroot^%wd("vapals-patients")
+ s @root@("graph","XXX00001","ceform-2018-10-21","notes",1,"text")="unit test"
  n SAMIFLTR,SAMIUPOO,SAMIUARC
  s SAMIFLTR("studyid")="XXX00001"
  s SAMIFLTR("form")="ceform-2018-10-21"
+ s SAMIFLTR("nien")=1
  ; pull text note
  d WSNOTE^SAMINOT1(.SAMIUPOO,.SAMIFLTR)
  ; get array of what text note should look like
@@ -115,57 +118,66 @@ UTNOTE ; @TEST - extrnisic which creates a note
  q
  ;
 UTMKEL ; @TEST - Testing eligibility note
- n root,SAMISID,SAMIFORM,SAMIVALS
+ n root,SAMISID,SAMIFORM,SAMIVALS,SAMIFLTR
  s root=$$setroot^%wd("vapals-patients")
  S SAMISID="XXX00001"
  s SAMIFORM="siform-2018-11-13"
  s SAMIVALS=$na(@root@("graph",SAMISID,SAMIFORM,"note"))
- D MKEL^SAMINOT1(SAMISID,SAMIFORM,SAMIVALS)
+ s SAMIFLTR("nien")=1
+ D MKEL^SAMINOT1(SAMISID,SAMIFORM,SAMIVALS,.SAMIFLTR)
  N SAMIUARC,SAMIUPOO
- M SAMIUARC=@root@("graph",SAMISID,SAMIFORM,"note","eligibility-note")
+ M SAMIUARC=@root@("graph",SAMISID,SAMIFORM,"note")
  D PLUTARR^SAMIUTST(.SAMIUPOO,"UTMKEL^SAMIUTN1")
  ; now compare the two
  s utsuccess=1
  n nodep s nodep=$na(SAMIUPOO),nodea=$na(SAMIUARC)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:(nodep="")  d  q:'utsuccess
+ . i $qs(nodep,3)="date" quit
+ . i $qs(nodep,3)="name" quit
  . i '(@nodep=@nodea) s utsuccess=0
  d CHKEQ^%ut(utsuccess,1,"Testing create elegibility note FAILED!")
  q
  ;
 UTMKPRE ; @TEST - Testing pre note
- n root,SAMISID,SAMIFORM,SAMIVALS
+ n root,SAMISID,SAMIFORM,SAMIVALS,SAMIFLTR
  s root=$$setroot^%wd("vapals-patients")
  S SAMISID="XXX00001"
  s SAMIFORM="siform-2018-11-13"
  s SAMIVALS=$na(@root@("graph",SAMISID,SAMIFORM,"note"))
+ s SAMIFLTR("nien")=2
  S @SAMIVALS@("chart-eligibility-complete")=""
- D MKPRE^SAMINOT1(SAMISID,SAMIFORM,SAMIVALS)
+ D MKPRE^SAMINOT1(SAMISID,SAMIFORM,SAMIVALS,.SAMIFLTR)
  N SAMIUARC,SAMIUPOO
- M SAMIUARC=@root@("graph",SAMISID,SAMIFORM,"note","pre-note")
+ M SAMIUARC=@root@("graph",SAMISID,SAMIFORM,"note")
  D PLUTARR^SAMIUTST(.SAMIUPOO,"UTMKPRE^SAMIUTN1")
  ; now compare the two
  s utsuccess=1
  n nodep s nodep=$na(SAMIUPOO),nodea=$na(SAMIUARC)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:(nodep="")  d  q:'utsuccess
+ . i $qs(nodep,3)="date" quit
+ . i $qs(nodep,3)="name" quit
  . i '(@nodep=@nodea) s utsuccess=0
  d CHKEQ^%ut(utsuccess,1,"Testing create pre-note FAILED!")
  q
  ;
 UTMKIN ; @TEST - Testing intake note
- n root,SAMISID,SAMIFORM,SAMIVALS
+ n root,SAMISID,SAMIFORM,SAMIVALS,SAMIFLTR
  s root=$$setroot^%wd("vapals-patients")
  S SAMISID="XXX00001"
  s SAMIFORM="siform-2018-11-13"
  s SAMIVALS=$na(@root@("graph",SAMISID,SAMIFORM,"note"))
+ s SAMIFLTR("nien")=3
  S @SAMIVALS@("chart-eligibility-complete")=""
  D MKIN^SAMINOT1(SAMISID,SAMIFORM,SAMIVALS)
  N SAMIUARC,SAMIUPOO
- M SAMIUARC=@root@("graph",SAMISID,SAMIFORM,"note","intake-note")
+ M SAMIUARC=@root@("graph",SAMISID,SAMIFORM,"note")
  D PLUTARR^SAMIUTST(.SAMIUPOO,"UTMKIN^SAMIUTN1")
  ; now compare the two
  s utsuccess=1
  n nodep s nodep=$na(SAMIUPOO),nodea=$na(SAMIUARC)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:(nodep="")  d  q:'utsuccess
+ . i $qs(nodep,3)="date" quit
+ . i $qs(nodep,3)="name" quit
  . i '(@nodep=@nodea) s utsuccess=0
  d CHKEQ^%ut(utsuccess,1,"Testing create intake note FAILED!")
  q

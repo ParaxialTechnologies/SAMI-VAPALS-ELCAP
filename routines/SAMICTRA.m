@@ -92,6 +92,27 @@ RCMND(rtn,vals,dict) ;
  i $$XVAL("cerad",vals)'="" d  ;
  . d OUT("Interpreted by: "_$$XVAL("cerad",vals)_para)
  ;
+ d OUT("<TR><TD></TD></TR>")
+ ; # LungRADS
+ ;
+ d OUT("<TR><TD>")
+ n lrstyle
+ i $$XVAL("celrc",vals)'="" s lrstyle=1 ; dom's style
+ e  s lrstyle=0 ; artit's style
+ s lrstyle=0
+ ;
+ d  ;
+ . ;q  ; LUNGRADS moved to SAMICTR4
+ . n lradModifiers
+ . s lradModifiers=$$XVAL("celradc",vals)_$$XVAL("celrads",vals)
+ . ;
+ . i ($$XVAL("celrad",vals)'="-")&($$XVAL("celrad",vals)'="") d  ;
+ . . d OUT("The LungRADS category for this scan is: "_$$XVAL("celrad",vals)_" "_lradModifiers)
+ . . d OUT(para)
+ ;
+ d OUT("</TD></TR>")
+ ;
+ d OUT("<TR><TD><TABLE><TR><TD WIDTH=20></TD><TD>")
  q
  ;
  ;

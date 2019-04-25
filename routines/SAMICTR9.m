@@ -24,7 +24,7 @@ IMPRSN(rtn,vals,dict) ;
  ;
  ;# Report CAC Score and Extent of Emphysema
  s cacval=0
- if $$XVAL("ceccv",vals)'="e" d  ;
+ d  ;if $$XVAL("ceccv",vals)'="e" d  ;
  . set vcac=$$XVAL("cecccac",vals)
  . if vcac'="" d  ;
  . . s cacrec=""
@@ -34,10 +34,35 @@ IMPRSN(rtn,vals,dict) ;
  ;
  i cacval>0 d  ;
  . d OUT(cac_" "_cacrec_" "_para)
- . if $$XVAL("ceemv",vals)="e" d  ;
+ . d  ;if $$XVAL("ceemv",vals)="e" d  ;
  . . if $$XVAL("ceem",vals)'="no" d  ;
+ . . . if $$XVAL("ceem",vals)="nv" q  ;
  . . . d OUT("Emphysema:")
  . . . d OUT($$XSUB("ceem",vals,dict)_"."_para)
+ ;
+ i $$XVAL("ceclini",vals)="y" d  ;
+ . d OUT($$XVAL("ceclin",vals)_"."_para)
+ ;
+ i $$XVAL("ceoppai",vals)="y" d  ;
+ . d OUT($$XVAL("ceoppa",vals)_"."_para)
+ ;
+ i $$XVAL("ceoppabi",vals)="y" d  ;
+ . d OUT($$XVAL("ceoppab",vals)_"."_para)
+ ;
+ i $$XVAL("cecommcai",vals)="y" d  ;
+ . d OUT($$XVAL("cecommca",vals)_"."_para)
+ ;
+ i $$XVAL("ceotabnmi",vals)="y" d  ;
+ . d OUT($$XVAL("ceotabnm",vals)_"."_para)
+ ;
+ i $$XVAL("ceobrci",vals)="y" d  ;
+ . d OUT($$XVAL("ceobrc",vals)_"."_para)
+ ;
+ i $$XVAL("ceaoabbi",vals)="y" d  ;
+ . d OUT($$XVAL("ceaoabb",vals)_"."_para)
+ ;
+ i $$XVAL("ceaoabi",vals)="y" d  ;
+ . d OUT($$XVAL("ceaoab",vals)_"."_para)
  ;
  ;# Impression Remarks
  i $$XVAL("ceimre",vals)'="" d  ;

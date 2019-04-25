@@ -110,6 +110,7 @@ BREAST(rtn,vals,dict) ;
  . d OUT("Bone:")
  . d OUT($$XVAL("ceaoabb",vals)_para)
  d  ;
+ . q  ; LungRADS moved to SAMICTRA
  . n lradModifiers
  . s lradModifiers=$$XVAL("celradc",vals)_$$XVAL("celrads",vals)
  . ;

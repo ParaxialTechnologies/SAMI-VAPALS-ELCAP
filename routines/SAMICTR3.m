@@ -12,6 +12,8 @@ EMPHYS(rtn,vals,dict) ;
  ;
  ;if $$XVAL("ceemv",vals)'="e" d  ;
  if $$XVAL("ceem",vals)'="" d  ;
+ . if $$XVAL("ceem",vals)="nv" q  ;
+ . if $$XVAL("ceem",vals)="no" q  ;
  . D HOUT("Emphysema:")
  . D OUT($$XSUB("ceem",vals,dict)_para)
  ;
@@ -99,7 +101,7 @@ EMPHYS(rtn,vals,dict) ;
  if $$XVAL("cecccac",vals)'="" d  ;
  . s @vals@("ceccv")="e"
  ;
- if $$XVAL("ceccv",vals)'="e" d  ;
+ d  ;if $$XVAL("ceccv",vals)'="e" d  ;
  . set vcac=$$XVAL("cecccac",vals)
  . if vcac'="" d  ;
  . . s cacrec=""

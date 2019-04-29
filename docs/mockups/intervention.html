@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.04.19" name="version"/>
+  <meta content="2019.04.29" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    Intervention and Surgical Treatment Form
@@ -11428,8 +11428,35 @@
       </div>
      </div>
      <script language="JavaScript">
-      function initFollowup(fv) {
+      function moveLungRadsTop(fv) {
+        $("#lung-rads").detach().appendTo("#lung-rads-top").show();
+
+        if (fv) {
+            $("#lung-rads-category-label").addClass("required");
+            fv.enableValidator('celrad');
+        }
+    }
+
+    function moveLungRadsBottom(fv) {
+        $("#lung-rads").detach().appendTo("#lung-rads-bottom").show();
+        if (fv) {
+            $("#lung-rads-category-label").removeClass("required");
+            fv.disableValidator('celrad')
+        }
+    }
+
+    function initFollowup(fv) {
         uncheckableRadio("[name='cefuw']", "div");
+
+        //followup approach
+        $("[name=cefpa]").on('change', function () {
+            const value = $("[name=cefpa]:checked").val();
+            if (value === 'el') {
+                moveLungRadsBottom(fv);
+            } else if (value === "lr") {
+                moveLungRadsTop(fv);
+            }
+        });
 
         //followup date calculation
         $("[name=cefuw]").on('change', function () {
@@ -11478,7 +11505,10 @@
                     date: {min: VAPALS.todaysDate(), message: 'Follow up date must be at least today\'s date'}
                 }
             });
+            fv.addField('celrad', {validators: {notEmpty: {message: 'Lung-RADS category is required'}}})
         }
+
+        
     }
      </script>
     </div>
@@ -11541,7 +11571,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.04.19
+     2019.04.29
     </span>
    </div>
   </footer>

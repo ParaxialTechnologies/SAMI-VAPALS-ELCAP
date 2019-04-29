@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.04.19" name="version"/>
+  <meta content="2019.04.29" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    CT Evaluation Form
@@ -7564,10 +7564,31 @@
      </div>
      <h3>
       Follow Up
+     </h3>
+     <div class="row">
+      <div class="col-sm-12 form-group">
+       <label class="required" for="cefpa-lr">
+        Follow up approach:
+       </label>
+       <br/>
+       <label class="radio-inline" for="cefpa-lr">
+        <input checked="" id="cefpa-lr" name="cefpa" required="required" type="radio" value="lr"/>
+        Lung-RADS
+       </label>
+       <label class="radio-inline" for="cefpa-el">
+        <input id="cefpa-el" name="cefpa" required="required" type="radio" value="el"/>
+        I-ELCAP
+       </label>
+      </div>
+     </div>
+     <div id="lung-rads-top">
+     </div>
+     <h4>
+      Options
       <label class="small required">
        select one or more
       </label>
-     </h3>
+     </h4>
      <div class="row">
       <div class="col-sm-12 form-group">
        <label for="cefuw-nw">
@@ -7681,9 +7702,118 @@
        <input class="form-control" id="cefuoo" name="cefuoo" placeholder="specify" required="required" type="text"/>
       </div>
      </div>
+     <div id="lung-rads-bottom">
+     </div>
+     <div id="lung-rads">
+      <h4>
+       Lung-RADS
+      </h4>
+      <div class="row">
+       <div class="form-group col-sm-5 col-md-4">
+        <label for="celrad" id="lung-rads-category-label">
+         Category
+        </label>
+        <br/>
+        <div class="radio">
+         <label>
+          <input id="celrad-na" name="celrad" type="radio" value="-"/>
+          Not applicable
+         </label>
+        </div>
+        <div class="radio">
+         <label>
+          <input id="celrad-0" name="celrad" type="radio" value="0"/>
+          0 (incomplete)
+         </label>
+        </div>
+        <div class="radio">
+         <label>
+          <input id="celrad-1" name="celrad" type="radio" value="1"/>
+          1 (negative)
+         </label>
+        </div>
+        <div class="radio">
+         <label>
+          <input id="celrad-2" name="celrad" type="radio" value="2"/>
+          2 (benign appearance or behavior)
+         </label>
+        </div>
+        <div class="radio">
+         <label>
+          <input id="celrad-3" name="celrad" type="radio" value="3"/>
+          3 (probably benign)
+         </label>
+        </div>
+        <div class="radio">
+         <label>
+          <input id="celrad-4A" name="celrad" type="radio" value="4A"/>
+          4A (suspicious)
+         </label>
+        </div>
+        <div class="radio">
+         <label>
+          <input id="celrad-4B" name="celrad" type="radio" value="4B"/>
+          4B (suspicious)
+         </label>
+        </div>
+        <div class="radio">
+         <label>
+          <input id="celrad-4X" name="celrad" type="radio" value="4X"/>
+          4X (suspicious)
+         </label>
+        </div>
+       </div>
+       <div class="form-group col-sm-7 col-md-8">
+        <label>
+         Modifiers
+        </label>
+        <div class="checkbox">
+         <label>
+          <input name="celrads" type="hidden" value=""/>
+          <input id="celrads" name="celrads" type="checkbox" value="S"/>
+          S - clinically significant or potentially clinically significant findings (non lung cancer)
+         </label>
+        </div>
+        <div class="checkbox">
+         <label>
+          <input name="celradc" type="hidden" value=""/>
+          <input id="celradc" name="celradc" type="checkbox" value="C"/>
+          C - prior diagnosis of lung cancer who return to screening
+         </label>
+        </div>
+       </div>
+      </div>
+     </div>
      <script language="JavaScript">
-      function initFollowup(fv) {
+      function moveLungRadsTop(fv) {
+        $("#lung-rads").detach().appendTo("#lung-rads-top").show();
+
+        if (fv) {
+            $("#lung-rads-category-label").addClass("required");
+            fv.enableValidator('celrad');
+        }
+    }
+
+    function moveLungRadsBottom(fv) {
+        $("#lung-rads").detach().appendTo("#lung-rads-bottom").show();
+        if (fv) {
+            $("#lung-rads-category-label").removeClass("required");
+            fv.disableValidator('celrad')
+        }
+    }
+
+    function initFollowup(fv) {
         uncheckableRadio("[name='cefuw']", "div");
+
+        //followup approach
+        $("[name=cefpa]").on('change', function () {
+            const value = $("[name=cefpa]:checked").val();
+            if (value === 'el') {
+                moveLungRadsBottom(fv);
+            } else if (value === "lr") {
+                moveLungRadsTop(fv);
+            }
+        });
 
         //followup date calculation
         $("[name=cefuw]").on('change', function () {
@@ -7732,87 +7862,14 @@
                     date: {min: VAPALS.todaysDate(), message: 'Follow up date must be at least today\'s date'}
                 }
             });
+            fv.addField('celrad', {validators: {notEmpty: {message: 'Lung-RADS category is required'}}})
         }
+
+        
+            moveLungRadsTop(fv);
+        
     }
      </script>
-     <h3>
-      Lung-RADS
-     </h3>
-     <div class="row">
-      <div class="form-group col-sm-5 col-md-4">
-       <label class="required" for="celrad">
-        Category
-       </label>
-       <br/>
-       <div class="radio">
-        <label>
-         <input id="celrad-na" name="celrad" required="required" type="radio" value="-"/>
-         Not applicable
-        </label>
-       </div>
-       <div class="radio">
-        <label>
-         <input id="celrad-0" name="celrad" type="radio" value="0"/>
-         0 (incomplete)
-        </label>
-       </div>
-       <div class="radio">
-        <label>
-         <input id="celrad-1" name="celrad" type="radio" value="1"/>
-         1 (negative)
-        </label>
-       </div>
-       <div class="radio">
-        <label>
-         <input id="celrad-2" name="celrad" type="radio" value="2"/>
-         2 (benign appearance or behavior)
-        </label>
-       </div>
-       <div class="radio">
-        <label>
-         <input id="celrad-3" name="celrad" type="radio" value="3"/>
-         3 (probably benign)
-        </label>
-       </div>
-       <div class="radio">
-        <label>
-         <input id="celrad-4A" name="celrad" type="radio" value="4A"/>
-         4A (suspicious)
-        </label>
-       </div>
-       <div class="radio">
-        <label>
-         <input id="celrad-4B" name="celrad" type="radio" value="4B"/>
-         4B (suspicious)
-        </label>
-       </div>
-       <div class="radio">
-        <label>
-         <input id="celrad-4X" name="celrad" type="radio" value="4X"/>
-         4X (suspicious)
-        </label>
-       </div>
-      </div>
-      <div class="form-group col-sm-7 col-md-8">
-       <label>
-        Modifiers
-       </label>
-       <div class="checkbox">
-        <label>
-         <input name="celrads" type="hidden" value=""/>
-         <input id="celrads" name="celrads" type="checkbox" value="S"/>
-         S - clinically significant or potentially clinically significant findings (non lung cancer)
-        </label>
-       </div>
-       <div class="checkbox">
-        <label>
-         <input name="celradc" type="hidden" value=""/>
-         <input id="celradc" name="celradc" type="checkbox" value="C"/>
-         C - prior diagnosis of lung cancer who return to screening
-        </label>
-       </div>
-      </div>
-     </div>
     </div>
     <hr/>
     <div>
@@ -7872,7 +7929,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.04.19
+     2019.04.29
     </span>
    </div>
   </footer>
@@ -7977,59 +8034,59 @@
                         cetex: {validators: {notEmpty: {message: 'Type of exam is required'}}},
                         cectp: {validators: {notEmpty: {message: 'CT protocol is required'}}},
                         cectrst: {validators: {notEmpty: {message: 'Reconstructed slice thickness is required'}}},
-                         cectrsto: {
-                             validators: {
-                                 notEmpty: {message: 'Other reconstructed slice thickness is required'},
-                                 numeric: {message: 'Must be a number'},
-                                 greaterThan: {min: 0, message: 'Value must be greater than 0'}
-                             }
-                         },
+                        cectrsto: {
+                            validators: {
+                                notEmpty: {message: 'Other reconstructed slice thickness is required'},
+                                numeric: {message: 'Must be a number'},
+                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
+                            }
+                        },
 
-                         cectcdti: {
-                             validators: {
-                                 numeric: {message: 'Must be a number'},
-                                 greaterThan: {min: 0, message: 'Value must be greater than 0'}
-                             }
-                         },
-                         cectdlp: {
-                             validators: {
-                                 numeric: {message: 'Must be a number'},
-                                 greaterThan: {min: 0, message: 'Value must be greater than 0'}
-                             }
-                         },
-                         cectssde: {
-                             validators: {
-                                 numeric: {message: 'Must be a number'},
-                                 greaterThan: {min: 0, message: 'Value must be greater than 0'}
-                             }
-                         },
-                         sidoe: {
-                             validators: {
-                                 notEmpty: {message: 'Baseline CT date is required'},
-                                 date: {max: VAPALS.todaysDate(), message: 'Baseline CT date may not be in the future'}
-                             }
-                         },
-                         cedcs: {
-                             validators: {
-                                 notEmpty: {message: 'Most recent comparative study date is required'},
-                                 date: {
-                                     max: VAPALS.todaysDate(),
-                                     message: 'Most recent comparative study date may not be in the future'
-                                 }
-                             }
-                         },
-                         cedps: {validators: {notEmpty: {message: 'Prior scans is required'}}},
+                        cectcdti: {
+                            validators: {
+                                numeric: {message: 'Must be a number'},
+                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
+                            }
+                        },
+                        cectdlp: {
+                            validators: {
+                                numeric: {message: 'Must be a number'},
+                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
+                            }
+                        },
+                        cectssde: {
+                            validators: {
+                                numeric: {message: 'Must be a number'},
+                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
+                            }
+                        },
+                        sidoe: {
+                            validators: {
+                                notEmpty: {message: 'Baseline CT date is required'},
+                                date: {max: VAPALS.todaysDate(), message: 'Baseline CT date may not be in the future'}
+                            }
+                        },
+                        cedcs: {
+                            validators: {
+                                notEmpty: {message: 'Most recent comparative study date is required'},
+                                date: {
+                                    max: VAPALS.todaysDate(),
+                                    message: 'Most recent comparative study date may not be in the future'
+                                }
+                            }
+                        },
+                        cedps: {validators: {notEmpty: {message: 'Prior scans is required'}}},
 
-                         //Nodules, emphysema, abnormality FV additions are done in their respective templates
+                        //Nodules, emphysema, abnormality FV additions are done in their respective templates
 
-                         //Impression
-                         ceimn: {validators: {notEmpty: {message: 'Nodule impression is required'}}},
+                        //Impression
+                        ceimn: {validators: {notEmpty: {message: 'Nodule impression is required'}}},
 
-                         //Virtual fields don't work with fv.addField, so we have to add it here
-                         followup: {
-                             selector: '[name^=cefu][type=checkbox], [name^=cefu][type=radio]',
-                             validators: {choice: {min: 1, message: 'Select at least one CT or Other follow up option'}}
-                         },
+                        //Virtual fields don't work with fv.addField, so we have to add it here
+                        followup: {
+                            selector: '[name^=cefu][type=checkbox], [name^=cefu][type=radio]',
+                            validators: {choice: {min: 1, message: 'Select at least one CT or Other follow up option'}}
+                        },
 
                     },
                     plugins: {

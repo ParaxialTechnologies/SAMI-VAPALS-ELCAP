@@ -324,30 +324,11 @@
                     </div>
                 </div>
 
+                {% with formPage=formPage %}
+                    {% include '_followup.jinja2' %}
+                {% endwith %}
 
-                {% include '_followup.jinja2' %}
 
-                <h3>Lung-RADS</h3>
-                <div class="row">
-                    <div class="form-group col-sm-5 col-md-4">
-                        <label class="{{ "required" if formPage == "ctevaluation" }}"
-                               for="celrad">Category</label>
-                        <br/>
-                        {{ f.radio("celrad", "celrad-na","-","Not applicable", formPage == "ctevaluation") }}
-                        {{ f.radio("celrad", "celrad-0","0","0 (incomplete)") }}
-                        {{ f.radio("celrad", "celrad-1","1","1 (negative)") }}
-                        {{ f.radio("celrad", "celrad-2","2","2 (benign appearance or behavior)") }}
-                        {{ f.radio("celrad", "celrad-3","3","3 (probably benign)") }}
-                        {{ f.radio("celrad", "celrad-4A","4A","4A (suspicious)") }}
-                        {{ f.radio("celrad", "celrad-4B","4B","4B (suspicious)") }}
-                        {{ f.radio("celrad", "celrad-4X","4X","4X (suspicious)") }}
-                    </div>
-                    <div class="form-group col-sm-7 col-md-8">
-                        <label>Modifiers</label>
-                        {{ f.checkbox("celrads", "S", "S - clinically significant or potentially clinically significant findings (non lung cancer)") }}
-                        {{ f.checkbox("celradc", "C", "C - prior diagnosis of lung cancer who return to screening") }}
-                    </div>
-                </div>
             </div>
             {# END Impression tab#}
 
@@ -414,59 +395,59 @@
                         cetex: {validators: {notEmpty: {message: 'Type of exam is required'}}},
                         cectp: {validators: {notEmpty: {message: 'CT protocol is required'}}},
                         cectrst: {validators: {notEmpty: {message: 'Reconstructed slice thickness is required'}}},
-                         cectrsto: {
-                             validators: {
-                                 notEmpty: {message: 'Other reconstructed slice thickness is required'},
-                                 numeric: {message: 'Must be a number'},
-                                 greaterThan: {min: 0, message: 'Value must be greater than 0'}
-                             }
-                         },
+                        cectrsto: {
+                            validators: {
+                                notEmpty: {message: 'Other reconstructed slice thickness is required'},
+                                numeric: {message: 'Must be a number'},
+                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
+                            }
+                        },
 
-                         cectcdti: {
-                             validators: {
-                                 numeric: {message: 'Must be a number'},
-                                 greaterThan: {min: 0, message: 'Value must be greater than 0'}
-                             }
-                         },
-                         cectdlp: {
-                             validators: {
-                                 numeric: {message: 'Must be a number'},
-                                 greaterThan: {min: 0, message: 'Value must be greater than 0'}
-                             }
-                         },
-                         cectssde: {
-                             validators: {
-                                 numeric: {message: 'Must be a number'},
-                                 greaterThan: {min: 0, message: 'Value must be greater than 0'}
-                             }
-                         },
-                         sidoe: {
-                             validators: {
-                                 notEmpty: {message: 'Baseline CT date is required'},
-                                 date: {max: VAPALS.todaysDate(), message: 'Baseline CT date may not be in the future'}
-                             }
-                         },
-                         cedcs: {
-                             validators: {
-                                 notEmpty: {message: 'Most recent comparative study date is required'},
-                                 date: {
-                                     max: VAPALS.todaysDate(),
-                                     message: 'Most recent comparative study date may not be in the future'
-                                 }
-                             }
-                         },
-                         cedps: {validators: {notEmpty: {message: 'Prior scans is required'}}},
+                        cectcdti: {
+                            validators: {
+                                numeric: {message: 'Must be a number'},
+                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
+                            }
+                        },
+                        cectdlp: {
+                            validators: {
+                                numeric: {message: 'Must be a number'},
+                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
+                            }
+                        },
+                        cectssde: {
+                            validators: {
+                                numeric: {message: 'Must be a number'},
+                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
+                            }
+                        },
+                        sidoe: {
+                            validators: {
+                                notEmpty: {message: 'Baseline CT date is required'},
+                                date: {max: VAPALS.todaysDate(), message: 'Baseline CT date may not be in the future'}
+                            }
+                        },
+                        cedcs: {
+                            validators: {
+                                notEmpty: {message: 'Most recent comparative study date is required'},
+                                date: {
+                                    max: VAPALS.todaysDate(),
+                                    message: 'Most recent comparative study date may not be in the future'
+                                }
+                            }
+                        },
+                        cedps: {validators: {notEmpty: {message: 'Prior scans is required'}}},
 
-                         //Nodules, emphysema, abnormality FV additions are done in their respective templates
+                        //Nodules, emphysema, abnormality FV additions are done in their respective templates
 
-                         //Impression
-                         ceimn: {validators: {notEmpty: {message: 'Nodule impression is required'}}},
+                        //Impression
+                        ceimn: {validators: {notEmpty: {message: 'Nodule impression is required'}}},
 
-                         //Virtual fields don't work with fv.addField, so we have to add it here
-                         followup: {
-                             selector: '[name^=cefu][type=checkbox], [name^=cefu][type=radio]',
-                             validators: {choice: {min: 1, message: 'Select at least one CT or Other follow up option'}}
-                         },
+                        //Virtual fields don't work with fv.addField, so we have to add it here
+                        followup: {
+                            selector: '[name^=cefu][type=checkbox], [name^=cefu][type=radio]',
+                            validators: {choice: {min: 1, message: 'Select at least one CT or Other follow up option'}}
+                        },
 
                     },
                     plugins: {

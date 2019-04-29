@@ -1,6 +1,33 @@
+{% set isLungRads = formPage == 'ctevaluation' %}
+{% set isElcap = formPage == 'ctevaluation-elcap' %}
+{% set isCT = isLungRads or isElcap %}
+
 <h3>Follow Up
-    <label class="small required">select one or more</label>
+    {% if not isCT %}
+        <label class="small required">select one or more</label>
+    {% endif %}
 </h3>
+
+{% if isCT %}
+    <div class="row">
+        <div class="col-sm-12 form-group">
+            {# NB: cefu prefix is used for follow up options validator so not used here#}
+            <label for="cefpa-lr" class="required">Follow up approach:</label><br/>
+            {{ f.inlineRadio("cefpa", "cefpa-lr", "lr", "Lung-RADS", true, isLungRads) }}
+            {{ f.inlineRadio("cefpa", "cefpa-el", "el", "I-ELCAP", true, isElcap) }}
+        </div>
+    </div>
+
+    {# Place holder for Lung-RADS section #}
+    <div id="lung-rads-top"></div>
+
+    {#Options header is really only needed for CT Eval form because it has other sections#}
+    <h4>
+        Options
+        <label class="small required">select one or more</label>
+    </h4>
+{% endif %}
+
 
 <div class="row">
     <div class="col-sm-12 form-group">
@@ -39,13 +66,67 @@
         <input class="form-control" type="text" name="cefuoo" id="cefuoo"
                placeholder="specify" required="required">
     </div>
-
 </div>
+
+{% if isCT %}
+    {# Place holder for Lung-RADS section #}
+    <div id="lung-rads-bottom"></div>
+
+    <div id="lung-rads">
+        <h4>Lung-RADS</h4>
+        <div class="row">
+            <div class="form-group col-sm-5 col-md-4">
+                <label id="lung-rads-category-label" for="celrad">Category</label>
+                <br/>
+                {{ f.radio("celrad", "celrad-na","-","Not applicable") }}
+                {{ f.radio("celrad", "celrad-0","0","0 (incomplete)") }}
+                {{ f.radio("celrad", "celrad-1","1","1 (negative)") }}
+                {{ f.radio("celrad", "celrad-2","2","2 (benign appearance or behavior)") }}
+                {{ f.radio("celrad", "celrad-3","3","3 (probably benign)") }}
+                {{ f.radio("celrad", "celrad-4A","4A","4A (suspicious)") }}
+                {{ f.radio("celrad", "celrad-4B","4B","4B (suspicious)") }}
+                {{ f.radio("celrad", "celrad-4X","4X","4X (suspicious)") }}
+            </div>
+            <div class="form-group col-sm-7 col-md-8">
+                <label>Modifiers</label>
+                {{ f.checkbox("celrads", "S", "S - clinically significant or potentially clinically significant findings (non lung cancer)") }}
+                {{ f.checkbox("celradc", "C", "C - prior diagnosis of lung cancer who return to screening") }}
+            </div>
+        </div>
+    </div>
+{% endif %}
 
 <script language="JavaScript">
 
+    function moveLungRadsTop(fv) {
+        $("#lung-rads").detach().appendTo("#lung-rads-top").show();
+
+        if (fv) {
+            $("#lung-rads-category-label").addClass("required");
+            fv.enableValidator('celrad');
+        }
+    }
+
+    function moveLungRadsBottom(fv) {
+        $("#lung-rads").detach().appendTo("#lung-rads-bottom").show();
+        if (fv) {
+            $("#lung-rads-category-label").removeClass("required");
+            fv.disableValidator('celrad')
+        }
+    }
+
     function initFollowup(fv) {
         uncheckableRadio("[name='cefuw']", "div");
+
+        //followup approach
+        $("[name=cefpa]").on('change', function () {
+            const value = $("[name=cefpa]:checked").val();
+            if (value === 'el') {
+                moveLungRadsBottom(fv);
+            } else if (value === "lr") {
+                moveLungRadsTop(fv);
+            }
+        });
 
         //followup date calculation
         $("[name=cefuw]").on('change', function () {
@@ -94,6 +175,13 @@
                     date: {min: VAPALS.todaysDate(), message: 'Follow up date must be at least today\'s date'}
                 }
             });
+            fv.addField('celrad', {validators: {notEmpty: {message: 'Lung-RADS category is required'}}})
         }
+
+        {% if (isLungRads) %}
+            moveLungRadsTop(fv);
+        {% elif (isElcap) %}
+            moveLungRadsBottom(fv);
+        {% endif %}
     }
 </script>

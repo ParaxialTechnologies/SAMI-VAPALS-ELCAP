@@ -1,6 +1,8 @@
 {% set isLungRads = formPage == 'ctevaluation' %}
 {% set isElcap = formPage == 'ctevaluation-elcap' %}
 {% set isCT = isLungRads or isElcap %}
+{% set elcapApproachValue = 'el' %}
+{% set lungRadsApproachValue = 'lr' %}
 
 <h3>Follow Up
     {% if not isCT %}
@@ -13,8 +15,8 @@
         <div class="col-sm-12 form-group">
             {# NB: cefu prefix is used for follow up options validator so not used here#}
             <label for="cefpa-lr" class="required">Follow up approach:</label><br/>
-            {{ f.inlineRadio("cefpa", "cefpa-lr", "lr", "Lung-RADS", true, isLungRads) }}
-            {{ f.inlineRadio("cefpa", "cefpa-el", "el", "I-ELCAP", true, isElcap) }}
+            {{ f.inlineRadio("cefpa", "cefpa-lr", lungRadsApproachValue, "Lung-RADS", true) }}
+            {{ f.inlineRadio("cefpa", "cefpa-el", elcapApproachValue, "I-ELCAP") }}
         </div>
     </div>
 
@@ -127,6 +129,12 @@
                 moveLungRadsTop(fv);
             }
         });
+
+        const followUpApproach = $("[name=cefpa]:checked").val();
+        if (followUpApproach === undefined) {
+            const defaultApproach = '{{ elcapApproachValue if isElcap else lungRadsApproachValue}}';
+            $("[name=cefpa][value=" + defaultApproach + "]").prop("checked", true);
+        }
 
         //followup date calculation
         $("[name=cefuw]").on('change', function () {

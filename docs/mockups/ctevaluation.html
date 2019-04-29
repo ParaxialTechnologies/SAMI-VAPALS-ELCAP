@@ -7572,11 +7572,11 @@
        </label>
        <br/>
        <label class="radio-inline" for="cefpa-lr">
-        <input checked="" id="cefpa-lr" name="cefpa" required="required" type="radio" value="lr"/>
+        <input id="cefpa-lr" name="cefpa" required="required" type="radio" value="lr"/>
         Lung-RADS
        </label>
        <label class="radio-inline" for="cefpa-el">
-        <input id="cefpa-el" name="cefpa" required="required" type="radio" value="el"/>
+        <input id="cefpa-el" name="cefpa" type="radio" value="el"/>
         I-ELCAP
        </label>
       </div>
@@ -7814,6 +7814,12 @@
                 moveLungRadsTop(fv);
             }
         });
+
+        const followUpApproach = $("[name=cefpa]:checked").val();
+        if (followUpApproach === undefined) {
+            const defaultApproach = 'lr';
+            $("[name=cefpa][value=" + defaultApproach + "]").prop("checked", true);
+        }
 
         //followup date calculation
         $("[name=cefuw]").on('change', function () {

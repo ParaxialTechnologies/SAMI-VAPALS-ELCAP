@@ -11452,6 +11452,12 @@
             }
         });
 
+        const followUpApproach = $("[name=cefpa]:checked").val();
+        if (followUpApproach === undefined) {
+            const defaultApproach = 'lr';
+            $("[name=cefpa][value=" + defaultApproach + "]").prop("checked", true);
+        }
+
         //followup date calculation
         $("[name=cefuw]").on('change', function () {
             const when = $("[name='cefuw']:checked").val();

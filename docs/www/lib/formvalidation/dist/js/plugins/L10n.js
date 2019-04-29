@@ -1,112 +1,148 @@
 /**
- * FormValidation (https://formvalidation.io), v1.3.0
+ * FormValidation (https://formvalidation.io), v1.4.0 (678705b)
  * The best validation library for JavaScript
- * (c) 2013 - 2018 Nguyen Huu Phuoc <me@phuoc.ng>
+ * (c) 2013 - 2019 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global.FormValidation = global.FormValidation || {}, global.FormValidation.plugins = global.FormValidation.plugins || {}, global.FormValidation.plugins.L10n = factory());
-}(this, (function () { 'use strict';
+  (global = global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.plugins = global.FormValidation.plugins || {}, global.FormValidation.plugins.L10n = factory()));
+}(this, function () { 'use strict';
 
-  var Plugin = FormValidation.Plugin;
+  function _typeof(obj) {
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof = function (obj) {
+        return typeof obj;
+      };
+    } else {
+      _typeof = function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      };
+    }
 
-  var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-    return typeof obj;
-  } : function (obj) {
-    return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-  };
+    return _typeof(obj);
+  }
 
-  var classCallCheck = function (instance, Constructor) {
+  function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
     }
-  };
+  }
 
-  var createClass = function () {
-    function defineProperties(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
+  function _defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
     }
+  }
 
-    return function (Constructor, protoProps, staticProps) {
-      if (protoProps) defineProperties(Constructor.prototype, protoProps);
-      if (staticProps) defineProperties(Constructor, staticProps);
-      return Constructor;
-    };
-  }();
+  function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    return Constructor;
+  }
 
-  var inherits = function (subClass, superClass) {
+  function _inherits(subClass, superClass) {
     if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+      throw new TypeError("Super expression must either be null or a function");
     }
 
     subClass.prototype = Object.create(superClass && superClass.prototype, {
       constructor: {
         value: subClass,
-        enumerable: false,
         writable: true,
         configurable: true
       }
     });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  };
+    if (superClass) _setPrototypeOf(subClass, superClass);
+  }
 
-  var possibleConstructorReturn = function (self, call) {
-    if (!self) {
+  function _getPrototypeOf(o) {
+    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+      return o.__proto__ || Object.getPrototypeOf(o);
+    };
+    return _getPrototypeOf(o);
+  }
+
+  function _setPrototypeOf(o, p) {
+    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+      o.__proto__ = p;
+      return o;
+    };
+
+    return _setPrototypeOf(o, p);
+  }
+
+  function _assertThisInitialized(self) {
+    if (self === void 0) {
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
     }
 
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  };
+    return self;
+  }
 
-  var L10n = function (_Plugin) {
-      inherits(L10n, _Plugin);
+  function _possibleConstructorReturn(self, call) {
+    if (call && (typeof call === "object" || typeof call === "function")) {
+      return call;
+    }
 
-      function L10n(opts) {
-          classCallCheck(this, L10n);
+    return _assertThisInitialized(self);
+  }
 
-          var _this = possibleConstructorReturn(this, (L10n.__proto__ || Object.getPrototypeOf(L10n)).call(this, opts));
+  var Plugin = FormValidation.Plugin;
 
-          _this.messageFilter = _this.getMessage.bind(_this);
-          return _this;
+  var L10n =
+  /*#__PURE__*/
+  function (_Plugin) {
+    _inherits(L10n, _Plugin);
+
+    function L10n(opts) {
+      var _this;
+
+      _classCallCheck(this, L10n);
+
+      _this = _possibleConstructorReturn(this, _getPrototypeOf(L10n).call(this, opts));
+      _this.messageFilter = _this.getMessage.bind(_assertThisInitialized(_this));
+      return _this;
+    }
+
+    _createClass(L10n, [{
+      key: "install",
+      value: function install() {
+        this.core.registerFilter('validator-message', this.messageFilter);
       }
+    }, {
+      key: "uninstall",
+      value: function uninstall() {
+        this.core.deregisterFilter('validator-message', this.messageFilter);
+      }
+    }, {
+      key: "getMessage",
+      value: function getMessage(locale, field, validator) {
+        if (this.opts[field] && this.opts[field][validator]) {
+          var message = this.opts[field][validator];
 
-      createClass(L10n, [{
-          key: 'install',
-          value: function install() {
-              this.core.registerFilter('validator-message', this.messageFilter);
+          var messageType = _typeof(message);
+
+          if ('object' === messageType && message[locale]) {
+            return message[locale];
+          } else if ('function' === messageType) {
+            var result = message.apply(this, [field, validator]);
+            return result && result[locale] ? result[locale] : '';
           }
-      }, {
-          key: 'uninstall',
-          value: function uninstall() {
-              this.core.deregisterFilter('validator-message', this.messageFilter);
-          }
-      }, {
-          key: 'getMessage',
-          value: function getMessage(locale, field, validator) {
-              if (this.opts[field] && this.opts[field][validator]) {
-                  var message = this.opts[field][validator];
-                  var messageType = typeof message === 'undefined' ? 'undefined' : _typeof(message);
-                  if ('object' === messageType && message[locale]) {
-                      return message[locale];
-                  } else if ('function' === messageType) {
-                      var result = message.apply(this, [field, validator]);
-                      return result && result[locale] ? result[locale] : '';
-                  }
-              }
-              return '';
-          }
-      }]);
-      return L10n;
+        }
+
+        return '';
+      }
+    }]);
+
+    return L10n;
   }(Plugin);
 
   return L10n;
 
-})));
+}));

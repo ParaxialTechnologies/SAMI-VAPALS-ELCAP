@@ -1,8 +1,8 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
-    (global.FormValidation = global.FormValidation || {}, global.FormValidation.locales = global.FormValidation.locales || {}, global.FormValidation.locales.th_TH = factory());
-}(this, (function () { 'use strict';
+    (global = global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.locales = global.FormValidation.locales || {}, global.FormValidation.locales.th_TH = factory()));
+}(this, function () { 'use strict';
 
     /**
      * Thai language package
@@ -386,4 +386,4 @@
 
     return th_TH;
 
-})));
+}));

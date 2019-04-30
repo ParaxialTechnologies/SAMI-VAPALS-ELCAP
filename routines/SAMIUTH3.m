@@ -1,4 +1,4 @@
-SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3,SAMIHOM4 ; 4/30/19 10:24am
+SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3,SAMIHOM4 ; 4/30/19 11:21am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -34,6 +34,8 @@ UTWSHM ; @TEST - Testing web service for SAMI homepage test
  set SAMIUFLTR("test")=1
  do WSHOME^SAMIHOM3(.SAMIURTN,.SAMIUFLTR)
  merge SAMIUARC=SAMIURTN
+ K ^KBAP("SAMIUTH3","UTWSHM","SAMIUARC")
+ M ^KBAP("SAMIUTH3","UTWSHM","SAMIUARC")=SAMIUARC
  set utsuccess=1
  do PLUTARR^SAMIUTST(.SAMIUPOO,"UTWSHM^SAMIUTH3 test")
  set nodea=$name(SAMIUARC),nodep=$name(SAMIUPOO)
@@ -50,8 +52,10 @@ UTWSHM1 ; @TEST - Testing web service for SAMI homepage samiroute=""
  set SAMIUFLTR("samiroute")=""
  do WSHOME^SAMIHOM3(.SAMIURTN,.SAMIUFLTR)
  merge SAMIUARC=SAMIURTN
+ K ^KBAP("SAMIUTH3","UTWSHM1","SAMIUARC")
+ M ^KBAP("SAMIUTH3","UTWSHM1","SAMIUARC")=SAMIUARC
  set utsuccess=1
- do PLUTARR^SAMIUTST(.SAMIUPOO,"UTWSHM^SAMIUTH3 samiroute null")
+ do PLUTARR^SAMIUTST(.SAMIUPOO,"UTWSHM1^SAMIUTH3 samiroute null")
  set nodea=$name(SAMIUARC),nodep=$name(SAMIUPOO)
  for  set nodea=$query(@nodea),nodep=$query(@nodep) quit:(nodea="")  do  quit:'utsuccess
  . if $extract($translate(@nodea,""""" "),1,10)?4N1"."2N1"."2N quit
@@ -67,8 +71,10 @@ UTWSHM2 ; @TEST - Testing web service for SAMI homepage dfn=1
  set SAMIUFLTR("dfn")=1
  do WSHOME^SAMIHOM3(.SAMIURTN,.SAMIUFLTR)
  merge SAMIUARC=SAMIURTN
+ K ^KBAP("SAMIUTH3","UTWSHM2","SAMIUARC")
+ M ^KBAP("SAMIUTH3","UTWSHM2","SAMIUARC")=SAMIUARC
  set utsuccess=1
- do PLUTARR^SAMIUTST(.SAMIUPOO,"UTWSHM^SAMIUTH3 dfn=1")
+ do PLUTARR^SAMIUTST(.SAMIUPOO,"UTWSHM2^SAMIUTH3 dfn=1")
  set nodea=$name(SAMIUARC),nodep=$name(SAMIUPOO)
  for  set nodea=$query(@nodea),nodep=$query(@nodep) quit:(nodea="")  do  quit:'utsuccess
  . if $extract($translate(@nodea,""""" "),1,10)?4N1"."2N1"."2N quit
@@ -108,6 +114,8 @@ UTGETHM ; @TEST - Testing pulling HTML for home.
  new SAMIUPOO,SAMIUARC,nodea,nodep,SAMIUFLTR
  set utsuccess=1
  do GETHOME^SAMIHOM3(.SAMIUPOO,.SAMIUFLTR)
+ K ^KBAP("SAMIUTH3","UTGETHM","SAMIUPOO")
+ M ^KBAP("SAMIUTH3","UTGETHM","SAMIUPOO")=SAMIUPOO
  ; Get array saved in "vapals unit tests" for this unit test
  do PLUTARR^SAMIUTST(.SAMIUARC,"UTGETHM^SAMIHOM3")
  set utsuccess=1
@@ -256,6 +264,8 @@ UTWSNC ; @TEST - Testing WSNEWCAS adding a new case to vapals-patients Graphstor
  . new rooty set rooty=$name(^TMP("yottaForm",+$piece(SAMIURSLT,",",2)))
  . set rooty=$name(^TMP("yottaForm",+$piece(SAMIURSLT,",",2)))
  . merge SAMIUPOO=@rooty
+ . K ^KBAP("SAMIUTH3","UTWSNC","SAMIUPOO")
+ . M ^KBAP("SAMIUTH3","UTWSNC","SAMIUPOO")=SAMIUPOO
  . set nodea=$name(SAMIUARC),nodep=$name(SAMIUPOO)
  . for  set nodep=$query(@nodep),nodea=$query(@nodea) quit:nodep=""  do  quit:'utsuccess
  ..; skip certain lines that will contain dates
@@ -281,6 +291,8 @@ UTWSVP1 ; @TEST - Test WSVAPALS API route=""
  ; testing route="". RESULT should have HTML
  set route="" do WSVAPALS^SAMIHOM3(.SAMIUARG,.SAMIUBODY,.SAMIURSLT)
  merge SAMIUPOO=SAMIURSLT
+ K ^KBAP("SAMIUTH3","UTWSVP1","SAMIUPOO")
+ M ^KBAP("SAMIUTH3","UTWSVP1","SAMIUPOO")=SAMIUPOO
  ;
  set utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
@@ -303,6 +315,8 @@ UTWSVP2 ; @TEST - Test WSVAPALS API route="lookup"
  Set SAMIUARG("samiroute")="lookup"
  do WSVAPALS^SAMIHOM3(.SAMIUARG,.SAMIUBODY,.SAMIURSLT)
  merge SAMIUPOO=SAMIURSLT
+ K ^KBAP("SAMIUTH3","UTWSVP2","SAMIUPOO")
+ M ^KBAP("SAMIUTH3","UTWSVP2","SAMIUPOO")=SAMIUPOO
  set utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
  do PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP2^SAMIUTH3")
@@ -322,6 +336,8 @@ UTWSVP3 ; @TEST - Test WSVAPALS API route="casereview"
  set SAMIUARG("samiroute")="casereview"
  do WSVAPALS^SAMIHOM3(.SAMIUARG,.SAMIUBODY,.SAMIURSLT)
  merge SAMIUPOO=SAMIURSLT
+ K ^KBAP("SAMIUTH3","UTWSVP3","SAMIUPOO")
+ M ^KBAP("SAMIUTH3","UTWSVP3","SAMIUPOO")=SAMIUPOO
  ;
  set utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
@@ -343,6 +359,8 @@ UTWSVP4 ; @TEST - Test WSVAPALS API route="addform"
  set SAMIUARG("samiroute")="addform"
  do WSVAPALS^SAMIHOM3(.SAMIUARG,.SAMIUBODY,.SAMIURSLT)
  merge SAMIUPOO=SAMIURSLT
+ K ^KBAP("SAMIUTH3","UTWSVP4","SAMIUPOO")
+ M ^KBAP("SAMIUTH3","UTWSVP4","SAMIUPOO")=SAMIUPOO
  set utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
  do PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP4^SAMIUTH3")

@@ -1,4 +1,4 @@
-SAMIUTR3 ;ven/lgc - UNIT TEST for SAMICTR3 ; 3/15/19 11:11am
+SAMIUTR3 ;ven/lgc - UNIT TEST for SAMICTR3 ; 4/30/19 1:58pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -62,6 +62,8 @@ UTEMPHYS ; @TEST - emphysema
  ;now pull saved report
  d PLUTARR^SAMIUTST(.SAMIUARC,"UTEMPHYS^SAMIUTR3 report")
  ; now compare return with SAMIUARC
+ K ^KBAP("SAMIUTR3","OTHR LUNG")
+ M ^KBAP("SAMIUTR3","OTHR LUNG")=return
  n noder,nodea s noder=$na(return),nodea=$na(SAMIUARC)
  s utsuccess=1
  f  s noder=$Q(@noder),nodea=$Q(@nodea) q:noder=""  d  q:'utsuccess
@@ -79,6 +81,8 @@ UTEMPHYS ; @TEST - emphysema
  ;now pull saved report
  d PLUTARR^SAMIUTST(.SAMIUARC,"UTEMPHYS^SAMIUTR3 report XXX12-3")
  ; now compare return with SAMIUARC
+ K ^KBAP("SAMIUTR3","12-3")
+ M ^KBAP("SAMIUTR3","12-3")=return
  n noder,nodea s noder=$na(return),nodea=$na(SAMIUARC)
  s utsuccess=1
  f  s noder=$Q(@noder),nodea=$Q(@nodea) q:noder=""  d  q:'utsuccess

@@ -18,7 +18,7 @@ EXISTPRE(SID,FORM) ; extrinsic returns "true" or "false"
  n root s root=$$setroot^%wd("vapals-patients")
  n gvals s gvals=$na(@root@("graph",SID,FORM))
  ;i $g(@root@("graph",SID,FORM,"sipedisc"))="y" q "true"
- i $g(@gvals@("pre-note-complete"))="true" q "true"
+ i $g(@gvals@("pre-note-complete"))="true" i $g(@gvals@("siperslt"))="y" q "true"
  q "false"
  ;
 EXISTINT(SID,FORM) ; extrinsic returns "true" or "false"
@@ -368,12 +368,23 @@ INNOTE(vals,dest,cnt)
  d OUT("      "_$$XVAL("sisny",vals))
  d OUT("   "_"PPY: ")
  d OUT("      "_$$XVAL("sippy",vals))
- d OUT("   "_"Quit smoking on: "_$$XVAL("siq",vals))
- d OUT("   "_"Prior LDCT: ")
- n prior s prior=""
- s:$$XVAL("sicadx",vals)'="" prior=prior_$$XVAL("sicadx",vals)
- s:$$XVAL("sicadxl",vals)'="" prior=prior_" at "_$$XVAL("sicadxl",vals)
- d OUT("      "_prior)
+ d OUT("")
+ i $$XVAL("siq",vals)'="" d  ;
+ . d OUT("Quit smoking on: "_$$XVAL("siq",vals))
+ . d OUT("")
+ i $$XVAL("sicep",vals)'="" d  ;
+ . d OUT("Smoking cessation education provided:")
+ . d OUT("    "_$$XVAL("sicep",vals))
+ i $$XVAL("sicadx",vals)'="" d  
+ . d OUT("Prior lung cancer diagnosis date: "_$$XVAL("sicadx",vals))
+ . i $$XVAL("sicadxl",vals)'="" d  ;
+ . . d OUT("Location where prior lung cancer diagnosis was made:")
+ . . d OUT("    "_$$XVAL("sicadxl",vals))
+ i $$XVAL("siptct",vals)'="" d  
+ . d OUT("Prior thorax CT: "_$$XVAL("siptct",vals))
+ . i $$XVAL("siptctl",vals)'="" d  ;
+ . . d OUT("Location where prior thorax CT was made:")
+ . . d OUT("    "_$$XVAL("siptctl",vals))
  d OUT(" ")
  d OUT("Shared Decision Making: ")
  d OUT(" ")
@@ -392,15 +403,20 @@ INNOTE(vals,dest,cnt)
  d OUT("provided to the veteran.  Based on this information, the Veteran has opted")
  d OUT("for: ")
  d OUT(" ")
- d OUT("LDCT ordered: ")
  n ldct s ldct=""
- s:$$XVAL("sildct",vals)="n" ldct=ldct_" No"
- s:$$XVAL("sildct",vals)="l" ldct=ldct_" Not at this time, okay to contact in the future"
- s:$$XVAL("sildct",vals)="y" ldct=ldct_" Yes"
- d OUT("    "_ldct)
- i $$XVAL("sildct",vals)="y" d  ;
+ s:$$XVAL("sildct",vals)="n" ldct="No"
+ s:$$XVAL("sildct",vals)="l" ldct="No"
+ s:$$XVAL("sildct",vals)="y" ldct="Yes"
+ d OUT("The Veteran has decided to enroll in the Lung Screening Program: "_ldct)
+ i $$XVAL("sildct",vals)="l" d  ;
+ . d OUT("The Veteran has indicated it is okay to contact in the future to discuss enrolling in the Lung Screening Program.")
+ i ldct="Yes" d  ;
+ . d OUT("LDCT ordered: "_ldct)
  . d OUT("    "_"Veteran enrolled in the LSS program. Results and coordination of care ")
  . d OUT("    "_"will be made by the LSS team.  ")
+ . i $$XVAL("siclin",vals)'="" d  ;
+ . d OUT("Clinical Indications for Initial Screening CT:")
+ . d OUT("    "_$$XVAL("siclin",vals))
  ;
  ;The Veteran has decided to enroll in the Lung Screening Program: [Yes/No]
  ;

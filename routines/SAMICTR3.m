@@ -23,29 +23,30 @@ EMPHYS(rtn,vals,dict) ;
  ;
  ; # Pleural Effusion
  ; 
- if $$XVAL("ceper",vals)="-" d  ;
- . if $$XVAL("cepel",vals)="-" d  ;
- . . s @vals@("cepev")="e"
- ;
- if $$XVAL("cepev",vals)'="e" d  ;
- . if $$XVAL("ceper",vals)'="-" d  ;
- . . if $$XVAL("cepel",vals)'="-" d  ;
- . . . if $$XVAL("cepel",vals)=$$XVAL("ceper",vals) d  ;
- . . . . d OUT("Bilateral "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusions."_para)
+ i $$XVAL("cepev",vals)="y" d  ;
+ . if $$XVAL("ceper",vals)="-" d  ;
+ . . if $$XVAL("cepel",vals)="-" d  ;
+ . . . s @vals@("cepev")="e"
+ . ;
+ . if $$XVAL("cepev",vals)'="e" d  ;
+ . . if $$XVAL("ceper",vals)'="-" d  ;
+ . . . if $$XVAL("cepel",vals)'="-" d  ;
+ . . . . if $$XVAL("cepel",vals)=$$XVAL("ceper",vals) d  ;
+ . . . . . d OUT("Bilateral "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusions."_para)
+ . . . . else  d  ;
+ . . . . . d OUT("Bilateral pleural effusions ; "_$$XSUB("cepe",vals,dict,"cepel")_" on left,")
+ . . . . . d OUT(" and "_$$XSUB("cepe",vals,dict,"ceper")_" on right."_para)
+ . . . . . s pe=1
  . . . else  d  ;
- . . . . d OUT("Bilateral pleural effusions ; "_$$XSUB("cepe",vals,dict,"cepel")_" on left,")
- . . . . d OUT(" and "_$$XSUB("cepe",vals,dict,"ceper")_" on right."_para)
+ . . . . d OUT("On right "_$$XSUB("cepe",vals,dict,"cepr")_" pleural effusion")
+ . . . . d OUT(" and on left "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusion."_para)
  . . . . s pe=1
  . . else  d  ;
  . . . d OUT("On right "_$$XSUB("cepe",vals,dict,"cepr")_" pleural effusion")
  . . . d OUT(" and on left "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusion."_para)
  . . . s pe=1
- . else  d  ;
- . . d OUT("On right "_$$XSUB("cepe",vals,dict,"cepr")_" pleural effusion")
- . . d OUT(" and on left "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusion."_para)
- . . s pe=1
- ;
- if pe=0 d  ;
+ . ;
+ i $$XVAL("cepev",vals)'="y" d  ; 
  . d OUT("No pleural effusions."_para)
  ;  if { $pe == 0 } {
  ;    puts "[tr "No pleural effusions"].${para}"

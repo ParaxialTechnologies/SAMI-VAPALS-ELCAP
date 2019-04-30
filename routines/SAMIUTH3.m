@@ -1,4 +1,4 @@
-SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3,SAMIHOM4 ; 4/24/19 9:46am
+SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3,SAMIHOM4 ; 4/30/19 10:24am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -448,7 +448,7 @@ UTPOSTF ; @TEST - Test WSVAPALS API route="postform" build TIU
  . if (@nodep["Date of chart review:") quit
  . if (@nodep["Date of intake discussion contact:") quit
  . if '($qsubscript(nodea,1)=$qsubscript(nodep,1)) set utsuccess=0
- . if '(@nodea=@nodep) w !,nodea,"=",@nodea set utsuccess=0
+ . if '(@nodea=@nodep) set utsuccess=0
  if 'nodea="" set utsuccess=0
  ; Delete the tiu note just created
  new chkdel set chkdel=$$DELTIU^SAMIVSTA(tiuien)

@@ -14,10 +14,10 @@ EMPHYS(rtn,vals,dict) ;
  if $$XVAL("ceem",vals)'="" d  ;
  . if $$XVAL("ceem",vals)="nv" q  ;
  . if $$XVAL("ceem",vals)="no" q  ;
- . D HOUT("Emphysema:")
+ . D HOUT("Emphysema: ")
  . D OUT($$XSUB("ceem",vals,dict)_para)
  ;
- D HOUT("Pleura:")
+ D HOUT("Pleura: ")
  ; hputs "Pleura:"
  N pe s pe=0
  ;
@@ -94,7 +94,7 @@ EMPHYS(rtn,vals,dict) ;
  . . if yespp=1 d OUT(para)
  ;
  ;
- d HOUT("Coronary Artery Calcifications:")
+ d HOUT("Coronary Artery Calcifications: ")
  ;# Coronary Calcification
  n vcac,cac,cacrec
  s (cac,cacrec)=""
@@ -127,7 +127,7 @@ EMPHYS(rtn,vals,dict) ;
  . d HOUT("Aortic Calcifications: ")
  . d OUT($$XSUB("cecc",vals,dict,"cecca"))
  ;
- d HOUT("Cardiac Findings:")
+ d HOUT("Cardiac Findings: ")
  ;
  ;# Pericardial Effusion
  if $$XVAL("ceprevm",vals)'="-" d  ;
@@ -152,7 +152,7 @@ EMPHYS(rtn,vals,dict) ;
  . d OUT($$XVAL("cecommca",vals)_"."_para)
  ;
  ;
- d HOUT("Mediastinum:")
+ d HOUT("Mediastinum: ")
  n yesmm s yesmm=0
  n abn
  i ($$XVAL("ceoma",vals)="y")&($$XVAL("ceata",vals)="y") d  ;

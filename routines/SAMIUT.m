@@ -1,4 +1,4 @@
-SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 4/22/19 8:39am
+SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 5/1/19 10:50am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -43,6 +43,7 @@ XTROU ; Unit tests for SAMI*.m
  ;;SAMIUTF2
  ;;SAMIUTF
  ;;SAMIUTH3
+ ;;SAMIUTH4
  ;;SAMIUTLG
  ;;SAMIUTNI
  ;;SAMIUTN1
@@ -89,6 +90,7 @@ COVERAGE ; Coverage tests for SAMI*.m
  set I=I+1,RUNCODE(I)="^SAMIUTF"
  set I=I+1,RUNCODE(I)="^SAMIUTFF"
  set I=I+1,RUNCODE(I)="^SAMIUTH3"
+ set I=I+1,RUNCODE(I)="^SAMIUTH4"
  set I=I+1,RUNCODE(I)="^SAMIUTLG"
  set I=I+1,RUNCODE(I)="^SAMIUTNI"
  set I=I+1,RUNCODE(I)="^SAMIUTN1"
@@ -143,6 +145,7 @@ COVERAGE ; Coverage tests for SAMI*.m
  set I=I+1,XCLUDE(I)="SAMIUTD2"
  set I=I+1,XCLUDE(I)="SAMIUTFF"
  set I=I+1,XCLUDE(I)="SAMIUTH3"
+ set I=I+1,XCLUDE(I)="SAMIUTH4"
  set I=I+1,XCLUDE(I)="SAMIUTLG"
  set I=I+1,XCLUDE(I)="SAMIUTM2"
  set I=I+1,XCLUDE(I)="SAMIUTNI"

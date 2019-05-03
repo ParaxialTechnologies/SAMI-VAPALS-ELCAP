@@ -1,4 +1,4 @@
-SAMIUTVS ;ven/arc/lgc - UNIT TEST for SAMIVST4 ; 3/18/19 9:39am
+SAMIUTVS ;ven/arc/lgc - UNIT TEST for SAMIVST4 ; 2019-04-29T03:00Z
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -38,8 +38,10 @@ SAMIUTVS ;ven/arc/lgc - UNIT TEST for SAMIVST4 ; 3/18/19 9:39am
  ; @primary-dev-org: Vista Expertise Network (ven)
  ;  http://vistaexpertise.net
  ; @copyright: 2012/2018, ven, all rights reserved
- ; @license: Apache 2.0
- ;  https://www.apache.org/licenses/LICENSE-2.0.html
+ ; @license: see routine SAMIUL
+ ;
+ ; additional-dev: Linda M.R.Yaw (lmry)
+ ;  linda.yaw@vistaexpertise.net
  ;
  ; @application: SAMI
  ; @version: 18.0
@@ -68,57 +70,57 @@ SAMIUTVS ;ven/arc/lgc - UNIT TEST for SAMIVST4 ; 3/18/19 9:39am
  ;
  ; @section 1 code
  ;
-START I $t(^%ut)="" W !,"*** UNIT TEST NOT INSTALLEd ***" q
- d EN^%ut($t(+0),2)
- Q
+START if $text(^%ut)="" write !,"*** UNIT TEST NOT INSTALLEd ***" quit
+ do EN^%ut($text(+0),2)
+ quit
  ;
-STARTUP n utsuccess
- Q
+STARTUP new utsuccess
+ quit
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
- k utsuccess
- Q
+ kill utsuccess
+ quit
  ;
 UTMGPH ; @TEST - Test making 'patient-lookup' Graphstore
- i '$d(^KBAP("ALLPTS")) d  q
- .  d FAIL^%ut("^KBAP(""ALLPTS"") must exist for TESTING")
+ if '$data(^KBAP("ALLPTS")) do  quit
+ .  do FAIL^%ut("^KBAP(""ALLPTS"") must exist for TESTING")
  ;
- d MKGPH^SAMIVSTA ; Rebuild 'patient-lookup' Graphstore
+ do MKGPH^SAMIVSTA ; Rebuild 'patient-lookup' Graphstore
  ; Check that the Graphstore was built
- n ptlkup s ptlkup="^%wd(17.040801,""B"",""patient-lookup"")"
- n si s si=$o(@ptlkup@(0))
- i '$g(si) d  q
- . d FAIL^%ut("MKGPH entry did not build 'patient-lookup' Graphstore")
+ new ptlkup set ptlkup="^%wd(17.040801,""B"",""patient-lookup"")"
+ new si set si=$order(@ptlkup@(0))
+ if '$get(si) do  quit
+ . do FAIL^%ut("MKGPH entry did not build 'patient-lookup' Graphstore")
  ;
- n node,snode,root,gien,dfn,PTDATA
+ new node,snode,root,gien,dfn,PTDATA
  ;
- s root=$$setroot^%wd("patient-lookup")
+ set root=$$setroot^%wd("patient-lookup")
  ;
- S node=$na(^KBAP("ALLPTS")),snode=$p(node,")")
- s utsuccess=1
- F  S node=$Q(@node) q:node'[snode  d  q:'utsuccess
- . S PTDATA=@node
- . S dfn=$p(PTDATA,"^",12)
- . s gien=$o(@root@("dfn",dfn,0))
- . i '$g(gien) s utsuccess=0 q
+ set node=$name(^KBAP("ALLPTS")),snode=$piece(node,")")
+ set utsuccess=1
+ for  set node=$query(@node) quit:node'[snode  do  quit:'utsuccess
+ . set PTDATA=@node
+ . set dfn=$piece(PTDATA,"^",12)
+ . set gien=$order(@root@("dfn",dfn,0))
+ . if '$get(gien) set utsuccess=0 quit
  .;
  .; Now compare the entries in this Graphstore node with
  .;  the information in the respective ^KBAP("ALLPTS" node
- . i '$o(@root@("last5",$p(PTDATA,"^",9),0)) s utsuccess=0 q
- . i '$l($p(PTDATA,"^")) s utsuccess=0 q
- . i '$o(@root@("name",$p(PTDATA,"^"),0)) s utsuccess=0 q
- . i '$l($p(PTDATA,"^",4)) s utsuccess=0 q
- . i '$o(@root@("name",$p(PTDATA,"^",4),0)) s utsuccess=0 q
- . i '$o(@root@("saminame",$p(PTDATA,"^",4),0)) s utsuccess=0 q
+ . if '$order(@root@("last5",$p(PTDATA,"^",9),0)) set utsuccess=0 quit
+ . if '$length($piece(PTDATA,"^")) set utsuccess=0 quit
+ . if '$order(@root@("name",$piece(PTDATA,"^"),0)) set utsuccess=0 quit
+ . if '$length($piece(PTDATA,"^",4)) set utsuccess=0 quit
+ . if '$order(@root@("name",$piece(PTDATA,"^",4),0)) set utsuccess=0 quit
+ . if '$order(@root@("saminame",$p(PTDATA,"^",4),0)) set utsuccess=0 quit
  ;
- i 'utsuccess d  q
- . d FAIL^%ut("'patient-lookup' Graphstore incorrectly built")
- d CHKEQ^%ut(utsuccess,1,"Testing Complete Graphstore build  FAILED!")
- q
+ if 'utsuccess do  quit
+ . do FAIL^%ut("'patient-lookup' Graphstore incorrectly built")
+ do CHKEQ^%ut(utsuccess,1,"Testing Complete Graphstore build  FAILED!")
+ quit
  ;
 UTAPTS ; @TEST - Test pulling patient data through broker
- k ^KBAP("ALLPTS UNITTEST")
- d ALLPTS1^SAMIVSTA("ALLPTS UNITTEST")
+ kill ^KBAP("ALLPTS UNITTEST")
+ do ALLPTS1^SAMIVSTA("ALLPTS UNITTEST")
  ;                in file 2         in ALLPTS
  ;  NAME            piece 1          piece 1
  ;  sex             piece 2          piece 6
@@ -129,132 +131,133 @@ UTAPTS ; @TEST - Test pulling patient data through broker
  ; Pull entry in Graphstore using last5
  ;   Knowing gien get NAME,sex,birthdate
  ; Compare
- n NAME2,SEX2,DOB2,LAST52,DFN2
- n NODE2,NODEG,gien
- n root s root=$$setroot^%wd("patient-lookup")
- s utsuccess=1
- S DFN2=0
- f  s DFN2=$o(^DPT(DFN2)) q:'DFN2  d  q:'utsuccess
- . s NODE2=$g(^DPT(DFN2,0))
- . s NAME2=$p(NODE2,"^")
- . s SEX2=$$UP^XLFSTR($e($p(NODE2,"^",2)))
- . s DOB2=$$FMTHL7^XLFDT($p(NODE2,"^",3))
- . s DOB2=$e(DOB2,1,4)_"-"_$e(DOB2,5,6)_"-"_$e(DOB2,7,8)
- . s gien=$o(@root@("dfn",DFN2,0))
- . s LAST52=$$UP^XLFSTR($e(NAME2))_$e($p(NODE2,"^",9),6,9)
- . i '$g(gien) s utsuccess=0 q
- . i '$d(@root@("name",NAME2,gien)) s utsuccess=0 q
- . i '($p($g(@root@(gien,"gender")),"^")=SEX2) d  q
- .. s utsuccess=0
- . i '$d(@root@("last5",LAST52,gien)) s utsuccess=0 q
- . i '($g(@root@(gien,"sbdob"))=DOB2) s utsuccess=0 q
- k ^KBAP("ALLPTS UNITTEST")
- i 'utsuccess d  q
- . d FAIL^%ut("KBAP(""ALLPTS UNITTEST"") incorrectly built")
- d CHKEQ^%ut(utsuccess,1,"Testing pulling patients through broker FAILED!")
- q
+ new NAME2,SEX2,DOB2,LAST52,DFN2
+ new NODE2,NODEG,gien
+ new root set root=$$setroot^%wd("patient-lookup")
+ set utsuccess=1
+ set DFN2=0
+ for  set DFN2=$order(^DPT(DFN2)) quit:'DFN2  do  quit:'utsuccess
+ . set NODE2=$get(^DPT(DFN2,0))
+ . set NAME2=$piece(NODE2,"^")
+ . set SEX2=$$UP^XLFSTR($extract($piece(NODE2,"^",2)))
+ . set DOB2=$$FMTHL7^XLFDT($piece(NODE2,"^",3))
+ . set DOB2=$extract(DOB2,1,4)_"-"_$extract(DOB2,5,6)_"-"_$extract(DOB2,7,8)
+ . set gien=$order(@root@("dfn",DFN2,0))
+ . set LAST52=$$UP^XLFSTR($extract(NAME2))_$extract($piece(NODE2,"^",9),6,9)
+ . if '$get(gien) set utsuccess=0 quit
+ . if '$data(@root@("name",NAME2,gien)) set utsuccess=0 quit
+ . if '($piece($get(@root@(gien,"gender")),"^")=SEX2) do  quit
+ .. set utsuccess=0
+ . if '$data(@root@("last5",LAST52,gien)) set utsuccess=0 quit
+ . if '($get(@root@(gien,"sbdob"))=DOB2) set utsuccess=0 quit
+ kill ^KBAP("ALLPTS UNITTEST")
+ if 'utsuccess d  q
+ . do FAIL^%ut("KBAP(""ALLPTS UNITTEST"") incorrectly built")
+ do CHKEQ^%ut(utsuccess,1,"Testing pulling patients through broker FAILED!")
+ quit
  ;
 UTPRVDS ; @TEST - Pulling Providers through the broker
- k ^KBAP("UNIT TEST PROVIDERS")
- n root s root=$$setroot^%wd("providers")
- m ^KBAP("UNIT TEST PROVIDERS")=@root
- s utsuccess=1
- n SAMIPVDS
- s SAMIPVDS=$$PRVDRS^SAMIVSTA
- i '$g(SAMIPVDS) d  q
- . m @root=^KBAP("UNIT TEST PROVIDERS") k ^KBAP("UNIT TEST PROVIDERS")
- . d FAIL^%ut("No providers pulled through broker")
- n ien,DUZG,NAMEG
- f ien=1:1:$g(SAMIPVDS) d  q:'utsuccess
- . s DUZG=@root@(ien,"duz")
- . s NAMEG=@root@(ien,"name")
- . i '$d(^XUSEC("PROVIDER",DUZG)) s utsuccess=0 q
- .; i '$$ACTIVE^XUSER(DUZG) s utsuccess=0 q
- . i '($$UP^XLFSTR(NAMEG))=($$UP^XLFSTR($p($g(^VA(200,DUZG,0)),"^"))) d  q
- .. s utsuccess=0
- m @root=^KBAP("UNIT TEST PROVIDERS") k ^KBAP("UNIT TEST PROVIDERS")
- d CHKEQ^%ut(utsuccess,1,"Testing pulling Providers through broker FAILED!")
- q
+ kill ^KBAP("UNIT TEST PROVIDERS")
+ new root set root=$$setroot^%wd("providers")
+ merge ^KBAP("UNIT TEST PROVIDERS")=@root
+ set utsuccess=1
+ new SAMIPVDS
+ set SAMIPVDS=$$PRVDRS^SAMIVSTA
+ if '$get(SAMIPVDS) do  quit
+ . merge @root=^KBAP("UNIT TEST PROVIDERS") kill ^KBAP("UNIT TEST PROVIDERS")
+ . do FAIL^%ut("No providers pulled through broker")
+ new ien,DUZG,NAMEG
+ for ien=1:1:$get(SAMIPVDS) do  quit:'utsuccess
+ . set DUZG=@root@(ien,"duz")
+ . set NAMEG=@root@(ien,"name")
+ . if '$data(^XUSEC("PROVIDER",DUZG)) set utsuccess=0 quit
+ .; if '$$ACTIVE^XUSER(DUZG) set utsuccess=0 quit
+ . if '($$UP^XLFSTR(NAMEG))=($$UP^XLFSTR($piece($get(^VA(200,DUZG,0)),"^"))) do  quit
+ .. set utsuccess=0
+ merge @root=^KBAP("UNIT TEST PROVIDERS") kill ^KBAP("UNIT TEST PROVIDERS")
+ do CHKEQ^%ut(utsuccess,1,"Testing pulling Providers through broker FAILED!")
+ quit
  ;
 UTRMDRS ; @TEST - Pulling Reminders through the broker
- k ^KBAP("UNIT TEST REMINDERS")
- n root s root=$$setroot^%wd("reminders")
- m ^KBAP("UNIT TEST REMINDERS")=@root
- s utsuccess=1
- n SAMIREMINDERS
- S SAMIREMINDERS=$$RMDRS^SAMIVSTA
- i '$g(SAMIREMINDERS) d  q
- . m @root=^KBAP("UNIT TEST REMINDERS")
- . k ^KBAP("UNIT TEST REMINDERS")
- . d FAIL^%ut("No reminders pulled through broker")
- n IENV,IENG,NAMEG,PNAMEG,TYPEG
- f IENG=1:1:$g(SAMIREMINDERS) d  q:'utsuccess
- . s NAMEG=@root@(IENG,"name") ; Mixed case
- . s PNAMEG=@root@(IENG,"printname") ; All caps
- . s TYPEG=@root@(IENG,"type")
- . s IENV=@root@(IENG,"ien")
- . I TYPEG="R" d  q:'utsuccess
- .. i '$d(^PXD(811.9,"B",PNAMEG,IENV)) s utsuccess=0 q
- .. i '$d(^PXD(811.9,"D",NAMEG,IENV)) s utsuccess=0 q
- . I TYPEG="C" d  q:'utsuccess
- .. i '($g(^PXRMD(811.7,IENV,0))=NAMEG) s utsuccess=0 q
- m @root=^KBAP("UNIT TEST REMINDERS")
- k ^KBAP("UNIT TEST REMINDERS")
- d CHKEQ^%ut(utsuccess,1,"Testing pulling Reminders through broker FAILED!")
- q
+ kill ^KBAP("UNIT TEST REMINDERS")
+ new root set root=$$setroot^%wd("reminders")
+ merge ^KBAP("UNIT TEST REMINDERS")=@root
+ set utsuccess=1
+ new SAMIREMINDERS
+ set SAMIREMINDERS=$$RMDRS^SAMIVSTA
+ if '$get(SAMIREMINDERS) do  quit
+ . merge @root=^KBAP("UNIT TEST REMINDERS")
+ . kill ^KBAP("UNIT TEST REMINDERS")
+ . do FAIL^%ut("No reminders pulled through broker")
+ new IENV,IENG,NAMEG,PNAMEG,TYPEG
+ for IENG=1:1:$get(SAMIREMINDERS) do  quit:'utsuccess
+ . set NAMEG=@root@(IENG,"name") ; Mixed case
+ . set PNAMEG=@root@(IENG,"printname") ; All caps
+ . set TYPEG=@root@(IENG,"type")
+ . set IENV=@root@(IENG,"ien")
+ . if TYPEG="R" do  quit:'utsuccess
+ .. if '$data(^PXD(811.9,"B",PNAMEG,IENV)) set utsuccess=0 quit
+ .. if '$data(^PXD(811.9,"D",NAMEG,IENV)) set utsuccess=0 quit
+ . if TYPEG="C" do  quit:'utsuccess
+ .. if '($get(^PXRMD(811.7,IENV,0))=NAMEG) set utsuccess=0 quit
+ merge @root=^KBAP("UNIT TEST REMINDERS")
+ kill ^KBAP("UNIT TEST REMINDERS")
+ do CHKEQ^%ut(utsuccess,1,"Testing pulling Reminders through broker FAILED!")
+ quit
  ;
  ;
 UTCLNC ; @TEST - Pulling Clinics through the broker
- k ^KBAP("UNIT TEST CLINICS")
- n root s root=$$setroot^%wd("clinics")
- m ^KBAP("UNIT TEST CLINICS")=@root
- s utsuccess=1
- n SAMICLNC
- s SAMICLNC=$$CLINICS^SAMIVSTA
- i '$g(SAMICLNC) d  q
- . m @root=^KBAP("UNIT TEST CLINICS")
- . k ^KBAP("UNIT TEST CLINICS")
- . d FAIL^%ut("No clinics pulled through broker")
- n IENG,IENV,NAMEG
- f IENG=1:1:$g(SAMICLNC) d  q:'utsuccess
- . s NAMEG=@root@(IENG,"name")
- . s IENV=@root@(IENG,"ien")
- . i '$d(^SC("B",NAMEG,IENV)) s utsuccess=0 q
- m @root=^KBAP("UNIT TEST CLINICS")
- k ^KBAP("UNIT TEST CLINICS")
- d CHKEQ^%ut(utsuccess,1,"Testing pulling Clinics through broker FAILED!")
- q
+ kill ^KBAP("UNIT TEST CLINICS")
+ new root set root=$$setroot^%wd("clinics")
+ merge ^KBAP("UNIT TEST CLINICS")=@root
+ set utsuccess=1
+ new SAMICLNC
+ set SAMICLNC=$$CLINICS^SAMIVSTA
+ if '$get(SAMICLNC) do  quit
+ . merge @root=^KBAP("UNIT TEST CLINICS")
+ . kill ^KBAP("UNIT TEST CLINICS")
+ . do FAIL^%ut("No clinics pulled through broker")
+ new IENG,IENV,NAMEG
+ for IENG=1:1:$get(SAMICLNC) do  quit:'utsuccess
+ . set NAMEG=@root@(IENG,"name")
+ . set IENV=@root@(IENG,"ien")
+ . if '$data(^SC("B",NAMEG,IENV)) set utsuccess=0 quit
+ merge @root=^KBAP("UNIT TEST CLINICS")
+ kill ^KBAP("UNIT TEST CLINICS")
+ do CHKEQ^%ut(utsuccess,1,"Testing pulling Clinics through broker FAILED!")
+ quit
  ;
  ;
 UTHF ; @TEST - Pulling Health Factors through the broker
- k ^KBAP("UNIT TEST HEALTH FACTORS")
- n root s root=$$setroot^%wd("health-factors")
- m ^KBAP("UNIT TEST HEALTH FACTORS")=@root
- s utsuccess=1
- n SAMIHF
- S SAMIHF=$$HLTHFCT^SAMIVSTA
- i '$g(SAMIHF) d  q
- . m @root=^KBAP("UNIT TEST HEALTH FACTORS")
- . k ^KBAP("UNIT TEST HEALTH FACTORS")
- . d FAIL^%ut("No health factors pulled through broker")
- n IENV,IENG,NAMEG
- f IENG=1:1:$g(SAMIHF) d  q:'utsuccess
- . s NAMEG=@root@(IENG,"name")
- . s IENV=@root@(IENG,"ien")
- . i '($p($g(^AUTTHF(IENV,0)),"^")=NAMEG) s utsuccess=0 q
- m @root=^KBAP("UNIT TEST HEALTH FACTORS")
- k ^KBAP("UNIT TEST HEALTH FACTORS")
- d CHKEQ^%ut(utsuccess,1,"Testing pulling Health Factors through broker FAILED!")
- q
+ kill ^KBAP("UNIT TEST HEALTH FACTORS")
+ new root set root=$$setroot^%wd("health-factors")
+ merge ^KBAP("UNIT TEST HEALTH FACTORS")=@root
+ set utsuccess=1
+ new SAMIHF
+ set SAMIHF=$$HLTHFCT^SAMIVSTA
+ if '$get(SAMIHF) do  quit
+ . merge @root=^KBAP("UNIT TEST HEALTH FACTORS")
+ . kill ^KBAP("UNIT TEST HEALTH FACTORS")
+ . do FAIL^%ut("No health factors pulled through broker")
+ new IENV,IENG,NAMEG
+ for IENG=1:1:$get(SAMIHF) do  quit:'utsuccess
+ . set NAMEG=@root@(IENG,"name")
+ . set IENV=@root@(IENG,"ien")
+ . if '($piece($get(^AUTTHF(IENV,0)),"^")=NAMEG) set utsuccess=0 quit
+ merge @root=^KBAP("UNIT TEST HEALTH FACTORS")
+ kill ^KBAP("UNIT TEST HEALTH FACTORS")
+ do CHKEQ^%ut(utsuccess,1,"Testing pulling Health Factors through broker FAILED!")
+ quit
  ;
 UTCLRG ; @TEST - Clear a Graphstore of entries
- n root s root=$$setroot^%wd("providers")
- k ^KBAP("UNIT TEST CLRGRPH") M ^KBAP("UNIT TEST CLRGRPH")=@root
- n cnt s cnt=$o(@root@("A"),-1)
- i 'cnt d  q
- . d FAIL^%ut("No 'providers found' entry")
- s cnt=$$CLRGRPS^SAMIVSTA("providers"),cnt=$o(@root@("A"),-1)
- m @root=^KBAP("UNIT TEST CLRGRPH") k ^KBAP("UNIT TEST CLRGRPH")
- d CHKEQ^%ut(cnt,0,"Clear Graphstore FAILED!")
- q
+ new root set root=$$setroot^%wd("providers")
+ kill ^KBAP("UNIT TEST CLRGRPH") merge ^KBAP("UNIT TEST CLRGRPH")=@root
+ new cnt set cnt=$order(@root@("A"),-1)
+ if 'cnt do  quit
+ . do FAIL^%ut("No 'providers found' entry")
+ set cnt=$$CLRGRPS^SAMIVSTA("providers"),cnt=$order(@root@("A"),-1)
+ merge @root=^KBAP("UNIT TEST CLRGRPH") kill ^KBAP("UNIT TEST CLRGRPH")
+ do CHKEQ^%ut(cnt,0,"Clear Graphstore FAILED!")
+ quit
+ ;
 EOR ; End of Routine SAMIUTVS

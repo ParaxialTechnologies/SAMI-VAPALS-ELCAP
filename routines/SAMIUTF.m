@@ -1,4 +1,4 @@
-SAMIUTF ;ven/lgc - UNIT TEST for SAMIFORM,SAMIFLD,SAMIFWS,SAMIFDM ; 4/23/19 10:31am
+SAMIUTF ;ven/lgc - UNIT TEST for SAMIFORM,SAMIFLD,SAMIFWS,SAMIFDM ; 5/7/19 4:01pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -233,8 +233,8 @@ UTCEFRM ; @TEST - ctevaluation form access
  s nodep=$na(SAMIUPOO),nodea=$na(SAMIUARC)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
  . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
- . i @nodep["siform" q
- . i @nodep["meta content" q
+ . i @nodep["moveLungRads" q
+ . i @nodep["const defaultApproach" q
  . i '($qs(nodep,1)=$qs(nodea,1)) s utsuccess=0
  . i '(@nodep=@nodea) s utsuccess=0
  i 'nodea="" s utsuccess=0
@@ -276,7 +276,9 @@ UTGSSN ; @TEST - extrinsic returns the ssn for patient sid
  ;GETSSN^SAMIFORM(sid)
  n sid s sid="XXX00001"
  ;delete sisn value to force more line coverage
- s ^%wd(17.040801,23,1,"sissn")=""
+ n root s root=$$setroot^%wd("vapals-patients")
+ s @root@(1,"ssissn")=""
+ ;s ^%wd(17.040801,23,1,"sissn")=""
  s utsuccess=($$GETSSN^SAMIFORM(sid)="444-67-8924")
  d CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns ssn FAILED!")
  q
@@ -286,7 +288,9 @@ UTGETHDR ; @TEST - extrinsic returns header string for patient sid
  n sid s sid="XXX00001"
  ;
  ;delete sisn value to force more line coverage
- s ^%wd(17.040801,23,1,"sissn")=""
+ n root s root=$$setroot^%wd("vapals-patients")
+ s @root@(1,"ssissn")=""
+ ;s ^%wd(17.040801,23,1,"sissn")=""
  s utsuccess=($$GETHDR^SAMIFLD(sid)="444-67-8924 DOB: 7/8/1956 AGE: 62 GENDER: M")
  d CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns header FAILED!")
  q

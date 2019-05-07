@@ -1,4 +1,4 @@
-SAMINOT1 ;ven/gpl - ielcap: forms ; 2019-04-23T23:23Z
+SAMINOT1 ;ven/gpl - ielcap: forms ; 2019-05-07T19:25Z
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -164,7 +164,7 @@ MKPRE(sid,form,vals,filter) ;
  . d ELNOTE(vals,dest,cnt)
  i $g(@vals@("chart-eligibility-complete"))="true" d  ;
  . d OUT("Lung Screening Program Pre-enrollment Discussion Note")
- . d OUT("") 
+ . d OUT("")
  d PRENOTE(vals,dest,cnt)
  q
  ;
@@ -178,7 +178,7 @@ MKIN(sid,form,vals,filter) ;
  i $g(@vals@("chart-eligibility-complete"))'="true" d  ;
  . d ELNOTE(vals,dest,cnt)
  i $g(@vals@("pre-note-complete"))'="true" d  ;
- . d PRENOTE(vals,dest,cnt) 
+ . d PRENOTE(vals,dest,cnt)
  d INNOTE(vals,dest,cnt)
  q
  ;
@@ -254,7 +254,7 @@ ELNOTE(vals,dest,cnt) ; eligibility NOTE TEXT
  s @vals@("chart-eligibility-complete")="true"
  q
  ;
-PRENOTE(vals,dest,cnt) 
+PRENOTE(vals,dest,cnt) ;
  ;
  i $g(@vals@("sipedisc"))'="y" q  ; no prelim discussion
  D OUT("")
@@ -285,7 +285,7 @@ SUBRSLT(XVAL) ; translation of discussion result
  q:XVAL="na" "Unable to reach participant at this time"
  q ""
  ;
-INNOTE(vals,dest,cnt) 
+INNOTE(vals,dest,cnt) ;
  ;
  ;Lung Screening Program Intake Note
  ;
@@ -296,7 +296,7 @@ INNOTE(vals,dest,cnt)
  ;Preferred address and contact number:
  ;     [Address 1]
  ;           [Address 2]
- ;	          [Address …]
+ ;              [Address]
  ;
  ;Ever smoked?:            [Ever Smoked Text]
  ;Smoking Status:          [Never Smoked/Past/Current/Willing to Quit]
@@ -375,12 +375,12 @@ INNOTE(vals,dest,cnt)
  i $$XVAL("sicep",vals)'="" d  ;
  . d OUT("Smoking cessation education provided:")
  . d OUT("    "_$$XVAL("sicep",vals))
- i $$XVAL("sicadx",vals)'="" d  
+ i $$XVAL("sicadx",vals)'="" d
  . d OUT("Prior lung cancer diagnosis date: "_$$XVAL("sicadx",vals))
  . i $$XVAL("sicadxl",vals)'="" d  ;
  . . d OUT("Location where prior lung cancer diagnosis was made:")
  . . d OUT("    "_$$XVAL("sicadxl",vals))
- i $$XVAL("siptct",vals)'="" d  
+ i $$XVAL("siptct",vals)'="" d
  . d OUT("Prior thorax CT: "_$$XVAL("siptct",vals))
  . i $$XVAL("siptctl",vals)'="" d  ;
  . . d OUT("Location where prior thorax CT was made:")

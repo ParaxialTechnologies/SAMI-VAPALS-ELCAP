@@ -1,4 +1,4 @@
-SAMIUR2 ;ven/gpl - sami user reports ; 1/22/19 1:31pm
+SAMIUR2 ;ven/gpl - sami user reports ; 5/8/19 10:57am
  ;;18.0;SAM;;
  ;
  ;@license: see routine SAMIUL
@@ -267,4 +267,3 @@ RURAL(zdt,dfn,SAMIPATS) ; extrinsic which returns the rural/urban status
  s sirs=$s(sirs="r":"rural",sirs="u":"urban",sirs="n":"unknown",1:"unknown")
  q sirs
  ;
- 

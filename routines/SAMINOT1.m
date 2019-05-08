@@ -1,4 +1,4 @@
-SAMINOT1 ;ven/gpl - ielcap: forms ; 2019-05-07T19:25Z
+SAMINOT1 ;ven/gpl - ielcap: forms ; 5/7/19 4:48pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -229,7 +229,7 @@ TLST ;
  S SID="XXX00677"
  S FORM="siform-2019-04-23"
  D NTLIST("G",SID,FORM)
- ZWR G
+ ;ZWR G
  Q
  ;
 ELNOTE(vals,dest,cnt) ; eligibility NOTE TEXT
@@ -420,7 +420,7 @@ INNOTE(vals,dest,cnt) ;
  ;
  ;The Veteran has decided to enroll in the Lung Screening Program: [Yes/No]
  ;
- ;[If “Not enroll at this time but okay to contact in the future” add the following line]
+ ;[If Not enroll at this time but okay to contact in the future, add the following line]
  ;The Veteran has indicated it is okay to contact in the future to discuss enrolling in the Lung Screening Program.
  ;
  ;[If Yes is answered for enrollment add the following two lines]

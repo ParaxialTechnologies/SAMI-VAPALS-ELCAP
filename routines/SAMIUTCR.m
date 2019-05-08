@@ -1,4 +1,4 @@
-SAMIUTCR ;ven/lgc - UNIT TEST for SAMICTR ; 2019-03-25T19:12Z
+SAMIUTCR ;ven/lgc - UNIT TEST for SAMICTR ; 5/7/19 7:34pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -87,7 +87,7 @@ UTWSRPT ; @TEST - web service which returns an html cteval report
  kill SAMIFLTR
  set SAMIFLTR("studyid")="XXX00001"
  set SAMIFLTR("form")="ceform-2019-01-23"
- set ^%wd(17.040801,23,"graph","XXX00001","ceform-2019-01-23","cetex")="b"
+ set @root@("graph","XXX00001","ceform-2019-01-23","cetex")="b"
  set utsuccess=1
  do WSREPORT^SAMICTR(.SAMIUPOO,.SAMIFLTR)
  ; compare SAMIUPOO with SAMIUPOO from a Pull
@@ -139,7 +139,7 @@ UTWSRPT ; @TEST - web service which returns an html cteval report
  set SAMIFLTR("form")="ceform-2016-01-01"
  set utsuccess=1
  do WSREPORT^SAMICTR(.SAMIUARC,.SAMIFLTR)
- do PLUTARR^SAMIUTST(.SAMIUPOO,"UTLOADD^SAMIUTF2 XXX0005")
+ do PLUTARR^SAMIUTST(.SAMIUPOO,"UTWSRPT^SAMIUTCR XXX0005")
  ; now compare
  new pnode,anode set pnode=$name(SAMIUPOO),anode=$name(SAMIUARC)
  for  set pnode=$query(@pnode),anode=$query(@anode) quit:pnode=""  do

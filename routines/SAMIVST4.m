@@ -1,4 +1,4 @@
-SAMIVST4 ;;ven/arc/lgc - M2Broker calls for VA-PALS - ALL PTS  ; 3/20/19 9:24am
+SAMIVST4 ;;ven/arc/lgc - M2Broker calls for VA-PALS - ALL PTS  ; 5/7/19 5:00pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -328,9 +328,10 @@ HLTHFCT ; Clear the M Web Server files cache
  ;   ien (si) of the Graphstore in ^%wd(17.040801,
 CLRGRPS ;
  if '($length($get(name))) quit:$Q 0  quit
- new si set si=$order(^%wd(17.040801,"B",name,0))
- if $get(si) kill ^%wd(17.040801,si) set ^%wd(17.040801,si,0)=name
- else  do purgegraph^%wd(name) set si=$order(^%wd(17.040801,"B",name,0))
+ new root s root=$na(^%wd(17.040801))
+ new si set si=$order(@root@("B",name,0))
+ if $get(si) kill @root@(si) s @root(@si,0)=name
+ else  do purgegraph^%wd(name) set si=$order(@root@(,"B",name,0))
  quit:$Q $get(si)  quit
  ;
 EOR ; End of routine SAMIVST4

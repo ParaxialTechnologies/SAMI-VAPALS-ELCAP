@@ -1,4 +1,4 @@
-SAMIUTCG ;ven/lgc - UNIT TEST for SAMICLOG ; 4/22/19 11:01am
+SAMIUTCG ;ven/lgc - UNIT TEST for SAMICLOG ; 5/7/19 7:33pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -66,7 +66,7 @@ UTCLOG ; @TEST - Storing change log events in vapals-patients graphstore
  ; Check that changelog entries exist for our test patient
  ;
  n arc
- m arc=^%wd(17.040801,23,"graph","XXX00001","siform-2018-11-13","changelog")
+ m arc=@root@("graph","XXX00001","siform-2018-11-13","changelog")
  k poo D PLUTARR^SAMIUTST(.poo,"UTCLOG^SAMIUTCG")
  n nodep,nodea s nodep=$na(poo),nodea=$na(arc)
  s utsuccess=1

@@ -1,4 +1,4 @@
-SAMIFDM ;ven/gpl - elcap: form dmi code ; 4/23/19 9:03am
+SAMIFDM ;ven/gpl - elcap: form dmi code ; 5/8/19 1:47pm
  ;;18.0;SAMI;;
  ;
  ; Routine SAMIFDM contains subroutines for processing the ELCAP forms,
@@ -256,8 +256,11 @@ IMPORT ; import json-data directory into elcap-patient graph
  ;
  ; collect list of all files in directory into SAMILIST
  ;
- new cmd set cmd="""ls "_SAMIDIR_" > /home/osehra/tmp/sample-list.txt"""
- zsystem @cmd ; ***** SAC: call run^%s instead *****
+ ;new cmd set cmd="""ls "_SAMIDIR_" > /home/osehra/tmp/sample-list.txt"""
+ new cmd set cmd="ls "_SAMIDIR_" > /home/osehra/tmp/sample-list.txt"
+ ;zsystem @cmd ; ***** SAC: call run^%s instead *****
+ new output do run^%h(cmd,.output)
+ ;
  new SAMILIST
  do file2ary^%wd("SAMILIST","/home/osehra/tmp/","sample-list.txt")
  ;

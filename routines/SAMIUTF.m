@@ -1,4 +1,4 @@
-SAMIUTF ;ven/lgc - UNIT TEST for SAMIFORM,SAMIFLD,SAMIFWS,SAMIFDM ; 5/7/19 7:35pm
+SAMIUTF ;ven/lgc - UNIT TEST for SAMIFORM,SAMIFLD,SAMIFWS,SAMIFDM ; 5/8/19 1:52pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -118,11 +118,16 @@ UTLOADD ; @TEST - import directory full of json data into elcap-patient graph
  k @root@("graph","XXX0005")
  ;Check that the folder and three json test files are
  ;  on our client
- s cmd="""mkdir /home/osehra/lib/silver/va-pals/docs/unit-test-data"""
- zsystem @cmd
+ ;s cmd="""mkdir /home/osehra/lib/silver/va-pals/docs/unit-test-data"""
+ s cmd="mkdir /home/osehra/lib/silver/va-pals/docs/unit-test-data"
+ ;zsystem @cmd
+ new output do run^%h(cmd,.output)
  s dir="/home/osehra/lib/silver/va-pals/docs/unit-test-data/"
- k cmd s cmd="""ls "_dir_" > /home/osehra/tmp/sample-list.txt"""
- zsystem @cmd
+ ;k cmd s cmd="""ls "_dir_" > /home/osehra/tmp/sample-list.txt"""
+ ;zsystem @cmd
+ k cmd s cmd="ls "_dir_" > /home/osehra/tmp/sample-list.txt"
+ k output do run^%h(cmd,.output)
+ ;
  do file2ary^%wd("zlist","/home/osehra/tmp/","sample-list.txt")
  i '($g(zlist(1))="XXX0005-ceform-2016-01-01.json") d  q
  . d FAIL^%ut("Error, json files missing!")

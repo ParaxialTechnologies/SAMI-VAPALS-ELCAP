@@ -1,4 +1,4 @@
-SAMIVST4 ;;ven/arc/lgc - M2Broker calls for VA-PALS - ALL PTS  ; 5/7/19 5:00pm
+SAMIVST4 ;;ven/arc/lgc - M2Broker calls for VA-PALS - ALL PTS  ; 5/8/19 8:51am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -330,8 +330,8 @@ CLRGRPS ;
  if '($length($get(name))) quit:$Q 0  quit
  new root s root=$na(^%wd(17.040801))
  new si set si=$order(@root@("B",name,0))
- if $get(si) kill @root@(si) s @root(@si,0)=name
- else  do purgegraph^%wd(name) set si=$order(@root@(,"B",name,0))
+ if $get(si) kill @root@(si) s @root@(si,0)=name
+ else  do purgegraph^%wd(name) set si=$order(@root@("B",name,0))
  quit:$Q $get(si)  quit
  ;
 EOR ; End of routine SAMIVST4

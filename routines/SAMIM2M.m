@@ -1,4 +1,4 @@
-SAMIM2M ;ven/lgc/smh - M2M WITH SAM HABIEL'S KBANSCAU BROKER ; 2/13/19 3:10pm
+SAMIM2M ;ven/lgc/smh - M2M WITH SAM HABIEL'S KBANSCAU BROKER ; 5/8/19 9:20am
  ;;18.0;SAM;;
  ;
  ;@license: see routine SAMIUL
@@ -124,8 +124,9 @@ CLSCLN ; 10. Logout
  ; We do not call CLOSE^%ZISTCP b/c it calls HOME^%ZIS which issues
  ; a new line to slave devices. GTM makes 0 the principal device for
  ; background jobs by default./Sam Habiel
- N NIO S NIO=IO,IO=$S($G(IO(0))]"":IO(0),1:$P)
- I NIO]"" C NIO K IO(1,NIO) S IO("CLOSE")=NIO
+ ;N NIO S NIO=IO,IO=$S($G(IO(0))]"":IO(0),1:$P)
+ ;I NIO]"" C NIO K IO(1,NIO) S IO("CLOSE")=NIO
+ do CLOSEM2M^%ZISC(IO)
  ;
  D:CONSOLE CONSOLE^XWBCLRPC($$NOW^XLFDT)
  ;

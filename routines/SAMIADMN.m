@@ -1,4 +1,4 @@
-SAMIADMN ; ven/arc - IELCAP: Admin tools ; 5/9/19 7:48pm
+SAMIADMN ; ven/arc - IELCAP: Admin tools ; 5/10/19 9:44am
  ;;1.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -60,7 +60,7 @@ SETELCAP() ; set VA-PALS to use the ELCAP version of the Ct Evaluation form--deb
  do UPDATE^DIE("","FDA","","ZERR")
  if $data(ZERR) do  quit  ;
  .; ZWR ZERR
- . do ^ZTER
+ .; do ^ZTER
  quit
  ;
 SETLGRDS() ; set VA-PALS to use the LungRads version of the Ct Evaluation form--debugging
@@ -76,7 +76,7 @@ SETLGRDS() ; set VA-PALS to use the LungRads version of the Ct Evaluation form--
  do UPDATE^DIE("","FDA","","ZERR")
  if $data(ZERR) do  quit  ;
  .; ZWR ZERR
- . do ^ZTER
+ .; do ^ZTER
  quit
  ;
 WSSTELCP(rtn,filter) ; set VA-PALS to use the ELCAP version of the Ct Evaluation form
@@ -86,14 +86,14 @@ WSSTELCP(rtn,filter) ; set VA-PALS to use the ELCAP version of the Ct Evaluation
  set IEN=$order(@GLB@("B","vapals:ceform",""))
  if IEN="" do  quit  ;
  . ;write !,"Error, record vapals:ceform is not found in SAMI FORM MAPPING file!"
- . do ^ZTER
+ . ;do ^ZTER
  new FDA
  set FDA(FN,IEN_",",2)="ctevaluation-elcap.html"
  new ZERR
  do UPDATE^DIE("","FDA","","ZERR")
  if $data(ZERR) do  quit  ;
  . ;ZWR ZERR
- . do ^ZTER
+ . ;do ^ZTER
  set rtn="{""status"": ""ok""}"
  quit
  ;
@@ -104,14 +104,14 @@ WSSTLRAD(rtn,filter) ; set VA-PALS to use the LungRads version of the Ct Evaluat
  set IEN=$order(@GLB@("B","vapals:ceform",""))
  if IEN="" do  quit  ;
  . ;write !,"Error, record vapals:ceform is not found in SAMI FORM MAPPING file!"
- . do ^ZTER
+ . ;do ^ZTER
  new FDA
  set FDA(FN,IEN_",",2)="ctevaluation.html"
  new ZERR
  do UPDATE^DIE("","FDA","","ZERR")
  if $data(ZERR) do  quit  ;
  . ;ZWR ZERR
- . do ^ZTER
+ . ;do ^ZTER
  set rtn="{""status"": ""ok""}"
  quit
  ;
@@ -151,12 +151,14 @@ WDEL(method,urlpattern) ; Delete a Web service
  ;
 WINITA ; Build all production web services
  new method,urlpattern,routine,xstr,xcnt,xrslt
+ if $data(%ut) set ^TMP("SAMIADMN","WINITA")=0
  f  s xcnt=$g(xcnt)+1,xstr=$text(PRODSERV+xcnt) q:(xstr["***END***")  do
  . set method=$p($piece(xstr,";;",2),",")
  . set urlpattern=$p($piece(xstr,";;",2),",",2)
  . set routine=$p($piece(xstr,";;",2),",",3)
  . set xrslt=$$WINIT^SAMIADMN(method,urlpattern,routine)
  . if '($get(xrslt)) do
+ .. set ^TMP("SAMIADMN","WINITA")=1
  .. write !,!,xcnt," ",method," ",urlpattern," ",routine," FAILED",!
  quit
  ;

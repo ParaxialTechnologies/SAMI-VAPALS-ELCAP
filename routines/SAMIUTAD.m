@@ -1,4 +1,4 @@
-SAMIUTAD ;ven/lgc - Unit test for SAMIADMN ; 2019-03-12T21:04Z
+SAMIUTAD ;ven/lgc - Unit test for SAMIADMN ; 5/10/19 9:45am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -36,6 +36,11 @@ SHUTDOWN ; ZEXCEPT: utsuccess
  kill utsuccess
  quit
  ;
+ ;
+UTQUIT ; @TEST - Quit at top of routine
+ do ^SAMIADMN
+ do SUCCEED^%ut
+ quit
  ;
 UTCLRW ; @TEST - Test Clear the M WebServer
  ; will delete seeGraph and html-cache Graphstores
@@ -143,6 +148,35 @@ UTWSCTV ; @TEST - web service to return the current ctform version
  if poosfm="ctevaluation.html",arcsfm["lungrads" set utsuccess=1
  if poosfm="ctevaluation-elcap.html",arcsfm["elcap" set utsuccess=1
  do CHKEQ^%ut(utsuccess,1,"Testing web service return current ctform version FAILED!")
+ quit
+ ;
+UTWSUHF ; @TEST - updating the WEB SERVICE URL HANDLER file
+ new root s root=$na(^%web(17.6001))
+ new SAMIMETH,SAMIPAT,SAMIRTN
+ set SAMIMETH="GET",SAMIPAT="unit test"
+ set SAMIRTN="TESTING^SAMIUTST"
+ ;check existence of unit test entry
+ new webien s webien=$order(@root@("B",SAMIMETH,SAMIPAT,SAMIRTN,0))
+ if $g(webien) do WDEL^SAMIADMN(SAMIMETH,SAMIPAT)
+ set webien=$order(@root@("B",SAMIMETH,SAMIPAT,SAMIRTN,0))
+ if $g(webien) do
+ . do FAIL^%ut("Error. Unit test entry not deleted!")
+ do WINIT^SAMIADMN(SAMIMETH,SAMIPAT,SAMIRTN)
+ set webien=$order(@root@("B",SAMIMETH,SAMIPAT,SAMIRTN,0))
+ set utsuccess=($get(webien)>0)
+ do CHKEQ^%ut(utsuccess,1,"Testing adding web service FAILED!")
+ ;
+ if $g(webien) do
+ . do WDEL^SAMIADMN(SAMIMETH,SAMIPAT)
+ . set webien=$order(@root@("B",SAMIMETH,SAMIPAT,SAMIRTN,0))
+ . set utsuccess=(+$get(webien)=0)
+ do CHKEQ^%ut(utsuccess,1,"Testing deleting web service FAILED!")
+ quit
+ ;
+UTWINITA ; @TEST - building all production web services
+ do WINITA^SAMIADMN
+ set utsuccess=($get(^TMP("SAMIADMN","WINITA"))=0)
+ do CHKEQ^%ut(utsuccess,1,"Testing building all services FAILED!")
  quit
  ;
 EOR ;End of routine SAMIUTAD

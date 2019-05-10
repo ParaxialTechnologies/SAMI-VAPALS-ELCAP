@@ -1,4 +1,4 @@
-SAMILOG ;ven/lgc - APIs to toggle password identification ; 2019-03-15T17:56Z
+SAMILOG ;ven/lgc - APIs to toggle password identification ; 5/9/19 1:50pm
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -21,22 +21,12 @@ SAMILOG ;ven/lgc - APIs to toggle password identification ; 2019-03-15T17:56Z
  ;
  ; @section 1 code
  ;
- ; ^%W(17.6001,"B","GET","vapals","WSHOME^SAMIHOM3",20)
- ;   ^%W(17.6001,20,0) = GET                 (.01)
- ;   ^%W(17.6001,20,1) = vapals              (1) F
- ;   ^%W(17.6001,20,2) = WSHOME^SAMIHOM3     (2) F
- ;   ^%W(17.6001,20,"AUTH") = 1              (11)S
- ; ^%W(17.6001,"B","POST","vapals","WSVAPALS^SAMIHOM3",22)
- ;   ^%W(17.6001,22,0) = POST                (.01)
- ;   ^%W(17.6001,22,1) = vapals              (1) F
- ;   ^%W(17.6001,22,2) = WSVAPALS^SAMIHOM3   (2) F
- ;   ^%W(17.6001,22,"AUTH") = 1              (11)S
  ;
 STONOFF ;
- new ienget,ienpost,DIR,X,Y,%,DTOUT,DUOUT,ONOFF
- set ienget=$order(^%W(17.6001,"B","GET","vapals","WSHOME^SAMIHOM3",0))
- set ienpost=$order(^%W(17.6001,"B","POST","vapals","WSVAPALS^SAMIHOM3",0))
- if $get(^%W(17.6001,ienget,"AUTH")) do
+ new ienget,DIR,X,Y,%,DTOUT,DUOUT,ONOFF
+ new root s root=$na(^%web(17.6001))
+ set ienget=$order(@root@("B","GET","vapals","WSHOME^SAMIHOM3",0))
+ if $get(@root@(ienget,"AUTH")) do
  . write !,"VAPALS password ID is presently ON",!
  . write !," would you like to turn *** OFF *** VAPALS password ID."
  . set ONOFF="ON"
@@ -56,31 +46,25 @@ STONOFF1 if ONOFF="OFF" do TOGON write !,"VAPALS password ID is now turned ON",!
  quit
  ;
  ; Toggle password identification OFF
-TOGOFF new DIERR,FDA,ienget,ienpost,IENS
- set ienget=$order(^%W(17.6001,"B","GET","vapals","WSHOME^SAMIHOM3",0))
- set ienpost=$order(^%W(17.6001,"B","POST","vapals","WSVAPALS^SAMIHOM3",0))
- quit:'ienget  quit:'ienpost
+TOGOFF new DIERR,FDA,ienget,ienpost,IENS,root
+ n root s root=$na(^%web(17.6001))
+ set ienget=$order(@root@("B","GET","vapals","WSHOME^SAMIHOM3",0))
+ quit:'ienget
  set IENS=ienget_","
  set FDA(3,17.6001,IENS,11)=0
  do UPDATE^DIE("","FDA(3)")
  ;
- set IENS=ienpost_","
- set FDA(3,17.6001,IENS,11)=0
- do UPDATE^DIE("","FDA(3)")
  quit
  ;
  ; Toggle password identification ON
 TOGON new DIERR,FDA,ienget,ienpost,IENS
- set ienget=$order(^%W(17.6001,"B","GET","vapals","WSHOME^SAMIHOM3",0))
- set ienpost=$order(^%W(17.6001,"B","POST","vapals","WSVAPALS^SAMIHOM3",0))
- quit:'ienget  quit:'ienpost
+ n root s root=$na(^%web(17.6001))
+ set ienget=$order(@root@("B","GET","vapals","WSHOME^SAMIHOM3",0))
+ quit:'ienget
  set IENS=ienget_","
  set FDA(3,17.6001,IENS,11)=1
  do UPDATE^DIE("","FDA(3)")
  ;
- set IENS=ienpost_","
- set FDA(3,17.6001,IENS,11)=1
- do UPDATE^DIE("","FDA(3)")
  quit
  ;
 EOR ;End of routine SAMILOG

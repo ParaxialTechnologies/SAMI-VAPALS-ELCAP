@@ -1,4 +1,4 @@
-SAMIADMN ; ven/arc - IELCAP: Admin tools ; 2019-03-12T20:29Z
+SAMIADMN ; ven/arc - IELCAP: Admin tools ; 5/9/19 7:48pm
  ;;1.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -125,5 +125,67 @@ WSCTVERS(rtn,filter) ; web service to return the current ctform version
  else  set ver="lungrads"
  set rtn="{""ctversion"": """_ver_"""}"
  quit
+ ;
+WINIT(method,urlpattern,routine) ; Add Web service
+ ;Input
+ ;  method        = HTTP VERB
+ ;  urlpattern    = URI
+ ;  routine       = EXECUTION ENDPOINT
+ ;Exit
+ ;  ien of new service in 17.6001
+ quit:($get(method)="") 0
+ quit:($get(urlpattern)="") 0
+ quit:($get(routine)="") 0
+ quit $$addService^%webutils(method,urlpattern,routine)
+ ;
+WDEL(method,urlpattern) ; Delete a Web service
+ ;Input
+ ;  method        = HTTP VERB
+ ;  urlpattern    = URI
+ ;Exit
+ ;  none
+ quit:($get(method)="")
+ quit:($get(urlpattern)="")
+ do deleteService^%webutils(method,urlpattern)
+ quit
+ ;
+WINITA ; Build all production web services
+ new method,urlpattern,routine,xstr,xcnt,xrslt
+ f  s xcnt=$g(xcnt)+1,xstr=$text(PRODSERV+xcnt) q:(xstr["***END***")  do
+ . set method=$p($piece(xstr,";;",2),",")
+ . set urlpattern=$p($piece(xstr,";;",2),",",2)
+ . set routine=$p($piece(xstr,";;",2),",",3)
+ . set xrslt=$$WINIT^SAMIADMN(method,urlpattern,routine)
+ . if '($get(xrslt)) do
+ .. write !,!,xcnt," ",method," ",urlpattern," ",routine," FAILED",!
+ quit
+ ;
+PRODSERV ;;
+ ;;GET,ctversion,WSCTVERS^SAMIADMN,
+ ;;GET,ptlookup/{search},WSPTLKUP^SAMIPTLK,
+ ;;GET,ruralurbancount,WSGETRU^SAMIRU,
+ ;;GET,setelcap,WSSTELCP^SAMIADMN,
+ ;;GET,setlungrads,WSSTLRAD^SAMIADMN,
+ ;;GET,vapals,WSHOME^SAMIHOM3,
+ ;;GET,zipru/{zip},WSZIPRU^SAMIRU,
+ ;;POST,vapals,WSVAPALS^SAMIHOM3,
+ ;;GET,filesystem/*,FILESYS^%W0,
+ ;;GET,form/*,wsGetForm^%wf,
+ ;;GET,global/{root},wsGLOBAL^KBAIVPR,
+ ;;GET,graph/{graph},wsGetGraph^%wdgraph,
+ ;;GET,gtree/{root},wsGtree^SYNVPR,
+ ;;GET,r/{routine?.1"%25".32AN},R^%W0,
+ ;;GET,resources/*,FILESYS^%W0,
+ ;;GET,see/*,wssee^%yottagr,
+ ;;GET,testptinfo,wsPTNFO^KBAIPTIN,
+ ;;GET,vpr/{dfn},wsVPR^KBAIVPR,
+ ;;GET,xml,XML^VPRJRSP,
+ ;;POST,form/*,wsPostForm^%wf,
+ ;;POST,postform/*,wsPostForm^%wf,
+ ;;POST,sami/intake,wsPostForm^%yottaq,
+ ;;GET,background,WSSBFORM^SAMIFORM,
+ ;;GET,intake,WSSIFORM^SAMIFORM,
+ ;;GET,ctevaluation,WSCEFORM^SAMIFORM,
+ ;;***END***
  ;
 EOR ; End of routine SAMIADMN

@@ -1,4 +1,4 @@
-SAMIUTLG ;ven/lgc - Unit test for SAMILOG ; 5/10/19 8:59am
+SAMIUTLG ;ven/lgc - Unit test for SAMILOG ; 5/16/19 11:29am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -43,8 +43,8 @@ UTTOGL ; @TEST - Toggle VAPALS password identification
  set root=$name(^%web(17.6001))
  set ienget=$order(@root@("B","GET","vapals","WSHOME^SAMIHOM3",0))
  set ienpost=$order(@root@("B","POST","vapals","WSVAPALS^SAMIHOM3",0))
- set pooget=$get(@root@(ienget,"AUTH"))
- set poopost=$get(@root@(ienpost,"AUTH"))
+ set pooget=+$get(@root@(ienget,"AUTH"))
+ set poopost=+$get(@root@(ienpost,"AUTH"))
  ;if the two (get and post) are not set the same, then
  ;  there is an error in the WEB SERVICE URL HANDLER file
  i '(pooget=poopost) d  q

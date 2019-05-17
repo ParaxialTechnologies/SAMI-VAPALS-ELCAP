@@ -1,5 +1,5 @@
-SAMIADMN ; ven/arc - IELCAP: Admin tools ; 5/10/19 9:44am
- ;;1.0;SAMI;;
+SAMIADMN ; ven/arc - IELCAP: Admin tools ; 5/17/19 12:10pm
+ ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
  ;

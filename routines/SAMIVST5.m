@@ -1,5 +1,5 @@
-SAMIVST5 ; ven/lgc/arc - M2Broker calls for VA-PALS - RAD; 3/7/19 9:35am ; 3/19/19 9:15am
- ;;1.0;SAMI;;
+SAMIVST5 ; ven/lgc/arc - M2Broker calls for VA-PALS - RAD; 3/7/19 9:35am ; 5/17/19 12:09pm
+ ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
  ;

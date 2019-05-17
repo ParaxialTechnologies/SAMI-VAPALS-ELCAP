@@ -1,5 +1,5 @@
-SAMIPTLK ;ven/gpl - SAMI patient lookup routines ; 1/22/19 2:11pm
- ;;0.1;SAMI;nopatch;noreleasedate;Build 10
+SAMIPTLK ;ven/gpl - SAMI patient lookup routines ; 5/17/19 12:09pm
+ ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
  ;

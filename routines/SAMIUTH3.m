@@ -1,4 +1,4 @@
-SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3,SAMIHOM4 ; 5/1/19 11:05am
+SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3,SAMIHOM4 ; 5/17/19 1:12pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -264,8 +264,7 @@ UTWSNC ; @TEST - Testing WSNEWCAS adding a new case to vapals-patients Graphstor
  . new rooty set rooty=$name(^TMP("yottaForm",+$piece(SAMIURSLT,",",2)))
  . set rooty=$name(^TMP("yottaForm",+$piece(SAMIURSLT,",",2)))
  . merge SAMIUPOO=@rooty
- . K ^KBAP("SAMIUTH3","UTWSNC","SAMIUPOO")
- . M ^KBAP("SAMIUTH3","UTWSNC","SAMIUPOO")=SAMIUPOO
+ .;
  . set nodea=$name(SAMIUARC),nodep=$name(SAMIUPOO)
  . for  set nodep=$query(@nodep),nodea=$query(@nodea) quit:nodep=""  do  quit:'utsuccess
  ..; skip certain lines that will contain dates

@@ -33,7 +33,8 @@ forms = [
     {"template": "intervention", "title": "Intervention and Surgical Treatment Form", "output": "intervention"},
     {"template": "report", "title": "", "output": "report"},
     {"template": "toggler", "title": "", "output": "toggler"},
-    {"template": "table", "title": "", "output": "table"}
+    {"template": "table", "title": "", "output": "table"},
+    {"template": "upload", "title": "Upload New Patients", "output": "upload"}
 ]
 
 

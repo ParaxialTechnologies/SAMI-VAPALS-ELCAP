@@ -6,7 +6,7 @@
   <meta content="2019.05.21" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
-   Case Review
+   Upload New Patients
   </title>
   <link href="../www/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="../www/lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
@@ -139,105 +139,30 @@
    </div>
   </nav>
   <div class="container-fluid" style="max-width:1550px">
-   <div class="table-responsive">
-    <table class="table">
-     <thead>
-      <tr>
-       <th>
-        SSN
-       </th>
-       <th>
-        Name
-       </th>
-       <th>
-        Facility Code
-       </th>
-       <th>
-        Date
-       </th>
-       <th>
-        Type
-       </th>
-       <th>
-        Action
-       </th>
-      </tr>
-     </thead>
-     <tbody>
-      <!-- These are sample rows for what might be on the actual case-review page -->
-      <tr>
-       <td>
-        123-45-6789
-       </td>
-       <td>
-        Doe, Jane M
-       </td>
-       <td>
-        12345
-       </td>
-       <td>
-        03/02/2018
-       </td>
-       <td>
-        <a class="navigation" data-method="get" data-samiroute="form" href="intake.html">
-         Intake
-        </a>
-       </td>
-       <td>
-        <a class="navigation" data-method="get" data-samiroute="form" href="newform.html">
-         Intake
-        </a>
-       </td>
-      </tr>
-      <tr>
-       <td>
-        123-45-6789
-       </td>
-       <td>
-        -
-       </td>
-       <td>
-        -
-       </td>
-       <td>
-        03/02/2018
-       </td>
-       <td>
-        <a class="navigation" data-method="get" data-samiroute="form" href="background.html">
-         Background
-        </a>
-       </td>
-       <td>
-       </td>
-      </tr>
-      <tr>
-       <td>
-        123-45-6789
-       </td>
-       <td>
-        -
-       </td>
-       <td>
-        -
-       </td>
-       <td>
-        03/02/2018
-       </td>
-       <td>
-        <a class="navigation" data-form="" data-method="get" data-samiroute="form" href="ctevaluation.html">
-         CT Evaluation
-        </a>
-       </td>
-       <td>
-        <a class="navigation" data-form="" data-method="get" data-samiroute="form" href="report.html">
-         <span class="label label-primary">
-          Report
-         </span>
-        </a>
-       </td>
-      </tr>
-     </tbody>
-    </table>
+   <div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4">
+     <div class="panel panel-default">
+      <div class="panel-heading">
+       <h3 class="panel-title">
+        Upload New Patients
+       </h3>
+      </div>
+      <div class="panel-body">
+       <form action="upload.html" method="post">
+        <input name="samiroute" type="hidden" value="newpatients"/>
+        <div class="form-group">
+         <label>
+          Please select the file
+         </label>
+         <input accept="text/csv, application/csv, application/vnd.ms-excel, text/plain, text/x-csv" id="file" name="file" type="file"/>
+        </div>
+        <div class="pull-right">
+         <input class="btn btn-primary" id="submit-button" type="submit" value="Upload"/>
+        </div>
+       </form>
+      </div>
+     </div>
+    </div>
    </div>
   </div>
   <span id="studyid-html-element" style="display:none;" value="@@SID@@">

@@ -60,13 +60,13 @@ PRSTSV(path,filename,graphname) ; Parse TSV file and build graph
  . do  q:'(errmsg="")
  .. set errmsg=$S(POP:"file missing",'(line[$CHAR(9)):"file not TAB delimited",1:"")
  . if fieldnum>0 do  ; Skip TSV file column headers
- . . set question=$piece(line,$CHAR(9),1)
- . . set name=$piece(line,$CHAR(9),2)
- . . set type=$piece(line,$CHAR(9),3)
- . . set required=$piece(line,$CHAR(9),4)
- . . set placeholder=$piece(line,$CHAR(9),5)
- . . set values=$piece(line,$CHAR(9),6)
- . . set labels=$piece(line,$CHAR(9),7)
+ . . set question=$piece(line,$CHAR(9),2)
+ . . set name=$piece(line,$CHAR(9),3)
+ . . set type=$piece(line,$CHAR(9),4)
+ . . set required=$piece(line,$CHAR(9),5)
+ . . set placeholder=$piece(line,$CHAR(9),6)
+ . . set values=$piece(line,$CHAR(9),7)
+ . . set labels=$piece(line,$CHAR(9),8)
  . . ; Check that the number of values matches the number of labels
  . . if $length(values,";")=$length(labels,";") do
  . . . for inputnum=1:1 quit:inputnum>$length(values,";")  do

@@ -1,4 +1,4 @@
-SAMIUTF ;ven/lgc - UNIT TEST for SAMIFORM,SAMIFLD,SAMIFWS,SAMIFDM ; 5/8/19 1:52pm
+SAMIUTF ;ven/lgc - UNIT TEST for SAMIFORM,SAMIFLD,SAMIFWS,SAMIFDM ; 5/21/19 7:11pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -238,6 +238,7 @@ UTCEFRM ; @TEST - ctevaluation form access
  s nodep=$na(SAMIUPOO),nodea=$na(SAMIUARC)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess
  . i ($e($tr(@nodep," "),1,10)?4N1P2N1P2N) q
+ . i @nodep["meta content" q
  . i @nodep["moveLungRads" q
  . i @nodep["const defaultApproach" q
  . i '($qs(nodep,1)=$qs(nodea,1)) s utsuccess=0

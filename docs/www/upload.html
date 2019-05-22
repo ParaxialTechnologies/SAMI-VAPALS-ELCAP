@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.05.21" name="version"/>
+  <meta content="2019.05.22" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    Upload New Patients
@@ -148,13 +148,13 @@
        </h3>
       </div>
       <div class="panel-body">
-       <form action="/vapals" method="post">
+       <form action="/vapals" enctype="multipart/form-data" method="post">
         <input name="samiroute" type="hidden" value="newpatients"/>
         <div class="form-group">
          <label>
           Please select the file
          </label>
-         <input accept="text/csv, application/csv, application/vnd.ms-excel, text/plain, text/x-csv" id="file" name="file" type="file"/>
+         <input accept="text/csv, application/csv, application/vnd.ms-excel, text/plain, text/x-csv" id="file" name="file" required="required" type="file"/>
         </div>
         <div class="pull-right">
          <input class="btn btn-primary" id="submit-button" type="submit" value="Upload"/>
@@ -176,7 +176,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.05.21
+     2019.05.22
     </span>
    </div>
   </footer>

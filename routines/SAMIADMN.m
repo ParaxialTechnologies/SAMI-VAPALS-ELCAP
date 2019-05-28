@@ -1,4 +1,4 @@
-SAMIADMN ; ven/arc - IELCAP: Admin tools ; 5/17/19 12:10pm
+SAMIADMN ; ven/arc - IELCAP: Admin tools ; 5/28/19 8:22am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -171,13 +171,13 @@ PRODSERV ;;
  ;;GET,vapals,WSHOME^SAMIHOM3,
  ;;GET,zipru/{zip},WSZIPRU^SAMIRU,
  ;;POST,vapals,WSVAPALS^SAMIHOM3,
- ;;GET,filesystem/*,FILESYS^%W0,
+ ;;GET,filesystem/*,FILESYS^%webapi,
  ;;GET,form/*,wsGetForm^%wf,
  ;;GET,global/{root},wsGLOBAL^KBAIVPR,
  ;;GET,graph/{graph},wsGetGraph^%wdgraph,
  ;;GET,gtree/{root},wsGtree^SYNVPR,
- ;;GET,r/{routine?.1"%25".32AN},R^%W0,
- ;;GET,resources/*,FILESYS^%W0,
+ ;;GET,r/{routine?.1"%25".32AN},R^%webapi,
+ ;;GET,resources/*,FILESYS^%webapi,
  ;;GET,see/*,wssee^%yottagr,
  ;;GET,testptinfo,wsPTNFO^KBAIPTIN,
  ;;GET,vpr/{dfn},wsVPR^KBAIVPR,

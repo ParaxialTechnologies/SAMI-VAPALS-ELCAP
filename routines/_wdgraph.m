@@ -65,6 +65,7 @@
  ;
  ; 2018-03-07 ven/toad %*1.8t04 %wdgraph: in setroot add header.
  ;
+ ; 2019-05-28 ven/lgc replaced ^%WHOME with ^%webhome
  ;@to-do
  ; %wd: convert entry points to ppi/api style
  ; r/all local calls w/calls through ^%wd
@@ -284,9 +285,9 @@ beautify(inary,outary) ; pretty print a line of json
  ;
  new zg,zi set (zg,zi)=""
  for  set zi=$order(@inary@(zi)) quit:zi=""  set zg=zg_@inary@(zi)
- do ary2file("zg",^%WHOME,"json.json")
- zsystem "python -m json.tool "_^%WHOME_"json.json > "_^%WHOME_"pretty-json.json"
- do file2ary(outary,^%WHOME,"pretty-json.json")
+ do ary2file("zg",^%webhome,"json.json")
+ zsystem "python -m json.tool "_^%webhome_"json.json > "_^%webhome_"pretty-json.json"
+ do file2ary(outary,^%webhome,"pretty-json.json")
  ;
  quit  ; end of beautify^%wd
  ;

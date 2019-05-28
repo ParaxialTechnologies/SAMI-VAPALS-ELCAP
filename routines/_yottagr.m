@@ -69,6 +69,9 @@ yottagr ;ven/gpl-yottadb extension: graphstore ;2018-03-11T22:31Z
  ;
  ; 2018-03-10/11 ven/toad %*1.8t04 %yottagr: fix $namew typo.
  ;
+ ; 2019-05-28 ven/lgc replaced ^%WHOME with ^%webhome and
+ ;                             ^%W0 to ^%webapi
+ ;
  ;@to-do
  ; %yotta: create entry points in ppi/api style
  ; r/all local calls w/calls through ^%yotta
@@ -107,7 +110,7 @@ addgraph(graph) ; makes a place in the graph file for a new graph
  ;
 homedir() ; extrinsic which return the document home
  ;
- new kbaihd set kbaihd=$get(^%WHOME)
+ new kbaihd set kbaihd=$get(^%webhome)
  if kbaihd="" do  break  ;
  . write !,"error, home directory not set"
  . quit
@@ -135,7 +138,7 @@ build ; retrieve directory structure and build into xtmp
  ; . quit
  ;
  zsystem "ls -DRL --file-type ~/www > ~/www/dirconfig.txt"
- new zdir set zdir=^%WHOME
+ new zdir set zdir=^%webhome
  new kbails,kbails1,ok
  set kbails=$na(@kbairoot@("ls"))
  set kbails1=$name(@kbails@(1))
@@ -312,7 +315,7 @@ scan(rtn,zid,zien,zien2) ; scan the file contents for new tags
  new zcmd,tmpfile,tmpdir,cmdfile
  set tmpfile="scan.txt"
  set cmdfile="scan.sh"
- set tmpdir=^%WHOME
+ set tmpdir=^%webhome
  set zcmd=$name(^tmp("kbaicmd",$job))
  set zcmd1=$name(@zcmd@(1))
  set @zcmd@(1)="rm "_tmpdir_"/"_tmpfile
@@ -405,7 +408,7 @@ wssee(rtn,filter) ; web service for browsing files using the graph
  . . do ADDCRLF^VPRJRUT(.rtn)
  . . quit
  . set filter("*")=arg
- . do FILESYS^%W0(.rtn,.filter)
+ . do FILESYS^%webapi(.rtn,.filter)
  . quit
  ;
  ; request is not an id in the graph, so try and find the file if any
@@ -418,7 +421,7 @@ wssee(rtn,filter) ; web service for browsing files using the graph
  . . do ADDCRLF^VPRJRUT(.rtn)
  . . quit
  . set filter("*")=zuri
- . do FILESYS^%W0(.rtn,.filter)
+ . do FILESYS^%webapi(.rtn,.filter)
  . quit
  ;
  ; set zf=$$isfile(arg)
@@ -429,7 +432,7 @@ wssee(rtn,filter) ; web service for browsing files using the graph
  ; . quit
  ; if zuri'=1 do  quit  ;
  ; . set filter("*")=zuri
- ; . do FILESYS^%W0(.rtn,.filter)
+ ; . do FILESYS^%webapi(.rtn,.filter)
  ; . quit
  ;
  new matches
@@ -459,7 +462,7 @@ style(rtn,zuri) ;
  if 'ok do  quit  ;
  . ; break
  . set filter("*")=zuri
- . do FILESYS^%W0(.rtn,.filter)
+ . do FILESYS^%webapi(.rtn,.filter)
  . quit
  set HTTPRSP("mime")="text/xml"
  ;
@@ -507,7 +510,7 @@ dirpart(zuri) ; extrinsic which returns the directory part of the file uri
  set rslt=$piece(zuri,$$isfile(zuri),1)
  if rslt="" set rslt=-1
  ;
- quit ^%WHOME_rslt ; end of $$dirpart
+ quit ^%webhome_rslt ; end of $$dirpart
  ;
  ;
  ;
@@ -582,7 +585,7 @@ multout(rtn,zary,title) ; return and html page with multiple selections
  ; if $extract(arg,$length(arg))="/" do  quit  ; it's a directory
  ; . set rtn="it's a directory"
  ; . quit
- ; do FILESYS^%W0(.rtn,.filter)
+ ; do FILESYS^%webapi(.rtn,.filter)
  ;
  quit  ; end of multout
  ;

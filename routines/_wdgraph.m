@@ -66,6 +66,8 @@
  ; 2018-03-07 ven/toad %*1.8t04 %wdgraph: in setroot add header.
  ;
  ; 2019-05-28 ven/lgc replaced ^%WHOME with ^%webhome
+ ;                    replace ^%WC call to ^%webcurl
+ ;
  ;@to-do
  ; %wd: convert entry points to ppi/api style
  ; r/all local calls w/calls through ^%wd
@@ -333,7 +335,7 @@ getGraph(url,gname) ; get a graph from a web service
  . w !,"error, graph exists: "_gname
  n root s root=$$setroot^%wd(gname)
  n %,json,grf
- s %=$$%^%WC(.json,"GET",url)
+ s %=$$%^%webcurl(.json,"GET",url)
  w !,"result= ",%
  i '$d(json) d  q  ;
  . w !,"error, nothing returned"

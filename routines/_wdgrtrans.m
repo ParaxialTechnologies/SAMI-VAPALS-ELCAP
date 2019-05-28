@@ -1,6 +1,7 @@
 %wdgrtrans        ;ven/gpl - mash graph utilities ; 9/24/17 4:33pm
  ;;1.0;norelease;;feb 27, 2017;build 2
  ;
+ ; 2019-05-28 ven/lgc call to ^%WC changed to ^%webcurl
  ;
  q
  ;
@@ -108,7 +109,7 @@ grokGraph(shape,groot,recalc) ; detect the shape of the graph
 remoteGraph(url,graph) ; download a graph from url and create graph
  ;
  n %,json
- s %=$$%^%WC(.json,"GET",url)
+ s %=$$%^%webcurl(.json,"GET",url)
  ;
  i '$d(graph) s graph="remoteGraph"
  n root s root=$$setroot^%wd(graph)

@@ -1,4 +1,4 @@
-SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 5/1/19 10:50am
+SAMIUT ;ven/arc/lmry - Unit test overall coverage ; 6/10/19 11:39am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -40,8 +40,8 @@ XTROU ; Unit tests for SAMI*.m
  ;;SAMIUTCG
  ;;SAMIUTCR
  ;;SAMIUTD2
- ;;SAMIUTF2
  ;;SAMIUTF
+ ;;SAMIUTFF
  ;;SAMIUTH3
  ;;SAMIUTH4
  ;;SAMIUTLG

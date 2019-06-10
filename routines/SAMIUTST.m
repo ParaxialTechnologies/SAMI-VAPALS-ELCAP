@@ -1,10 +1,14 @@
-SAMIUTST ;ven/lgc - Unit Test Utilities ; 4/22/19 8:40am
+SAMIUTST ;ven/lgc - Unit Test Utilities ; 6/10/19 12:06pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
  ;
  ; Routine to push and pull information used during unit testing
  ;   of va-pals routines
+ ;
+ ; CHANGE 2019-06-3 ven/lgc comment out running BLDRTNS in UTCHKSM
+ ;      now that routine edits have settled down
+ ;   
  ;
 START i $t(^%ut)="" W !,"*** UNIT TEST NOT INSTALLEd ***" Q
  d EN^%ut($t(+0),2)
@@ -129,7 +133,6 @@ BLDRTNS ;
  ;
 UTCHKSM ; @TEST - Test VAPALS routines checksums
  n poo,arc,temp,nodea,nodet,utsuccess
- D BLDRTNS
  d PLUTARR(.temp,"vapals routines checksums")
  d PLUTARR(.poo,"vapals routines")
  s cnt=0,utsuccess=1
@@ -187,6 +190,7 @@ RTNS ;
  ;;SAMICAS2
  ;;SAMICAS3
  ;;SAMICASE
+ ;;SAMICLOG
  ;;SAMICTC1
  ;;SAMICTC2
  ;;SAMICTD2
@@ -205,11 +209,13 @@ RTNS ;
  ;;SAMIFLD
  ;;SAMIFWS
  ;;SAMIFDM
+ ;;SAMIFUL
  ;;SAMIHOM3
  ;;SAMIHOM4
  ;;SAMIFF
  ;;SAMILOG
  ;;SAMIM2M
+ ;;SAMINOT1
  ;;SAMINOTI
  ;;SAMIPTLK
  ;;SAMIRU
@@ -226,7 +232,37 @@ RTNS ;
  ;;SAMIVST5
  ;;SAMIVSTA
  ;;SAMIVUL
- ;;
+ ;;SAMIUTAD
+ ;;SAMIUTC1
+ ;;SAMIUTC2
+ ;;SAMIUTCG
+ ;;SAMIUTCR
+ ;;SAMIUTD2
+ ;;SAMIUTF
+ ;;SAMIUTFF
+ ;;SAMIUTH3
+ ;;SAMIUTH4
+ ;;SAMIUTLG
+ ;;SAMIUTNI
+ ;;SAMIUTN1
+ ;;SAMIUTPT
+ ;;SAMIUTR0
+ ;;SAMIUTR1
+ ;;SAMIUTR2
+ ;;SAMIUTR3
+ ;;SAMIUTR4
+ ;;SAMIUTR9
+ ;;SAMIUTRA
+ ;;SAMIUTRU
+ ;;SAMIUTRX
+ ;;SAMIUTS2
+ ;;SAMIUTST
+ ;;SAMIUTSV
+ ;;SAMIUTUR
+ ;;SAMIUTVA
+ ;;SAMIUTVB
+ ;;SAMIUTVR
+ ;;SAMIUTVS
  ;
  ;
 EOR ; end of routine SAMIUTST

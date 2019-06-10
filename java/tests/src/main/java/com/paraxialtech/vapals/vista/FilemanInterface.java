@@ -1,3 +1,17 @@
+/*
+ * Copyright (c) 2019 Early Diagnosis and Treatment Research Foundation, Vista Expertise Network (VEN), and Paraxial
+ *
+ * The original management system was created and donated by Early Diagnosis and Treatment Research Foundation within the
+ * International Early Lung Cancer Action Program (I-ELCAP), an international program of lung cancer screening.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+
 package com.paraxialtech.vapals.vista;
 
 import com.paraxialtech.vapals.vista.FilemanField.DataTypeEnum;
@@ -90,7 +104,7 @@ public final class FilemanInterface implements Closeable {
             final String prompt = result.group(1);
 
             if (prompt.startsWith(SELECT_)) {
-                FilemanField field = dataDictionary.findNextSubrecordField(prompt.substring(SELECT_.length()));
+                final FilemanField field = dataDictionary.findNextSubrecordField(prompt.substring(SELECT_.length()));
                 if (field.getDataType() == DataTypeEnum.CHECKBOX) {
                     createCheckboxValues(dataDictionary, values, field);
                 } else {
@@ -141,7 +155,7 @@ public final class FilemanInterface implements Closeable {
                                       final Map<FilemanField, FilemanValue> values,
                                       FilemanField field) throws IOException {
         while (field != null) {
-            FilemanValue value = values.get(field);
+            final FilemanValue value = values.get(field);
 
             if (value != null && value != FilemanValue.NO_VALUE) {
                 expect.sendLine(value.toFileman());
@@ -293,7 +307,7 @@ public final class FilemanInterface implements Closeable {
                     expect.expect(MATCHER_ITEM);
                 }
 
-                FilemanField field = dataDictionary.findNextSubrecordField(prompt.substring(SELECT_.length()));
+                final FilemanField field = dataDictionary.findNextSubrecordField(prompt.substring(SELECT_.length()));
                 if (field.getDataType() == DataTypeEnum.CHECKBOX) {
                     createCheckboxValues(dataDictionary, newValues, field);
                 } else {
@@ -442,7 +456,7 @@ public final class FilemanInterface implements Closeable {
             return findCheckboxValues(dataDictionary, rawValues, field);
         }
 
-        Iterator<String> rawValueIter = rawValues.iterator();
+        final Iterator<String> rawValueIter = rawValues.iterator();
         while (field != null) {
             if (rawValueIter.hasNext()) {
                 final String rawValue = rawValueIter.next();
@@ -570,7 +584,7 @@ public final class FilemanInterface implements Closeable {
         final Map<FilemanField, FilemanValue> values = new LinkedHashMap<>();
 
         while (field != null) {
-            FilemanValueEnumeration possibleValue = field.getPossibleValues().values().iterator().next();
+            final FilemanValueEnumeration possibleValue = field.getPossibleValues().values().iterator().next();
             values.put(field, rawValues.contains(possibleValue.getFilemanValue()) ? possibleValue : FilemanValue.NO_VALUE);
             field = dataDictionary.findNextSubrecordFieldSameClass(field.getFilemanName());
         }

@@ -119,10 +119,10 @@ UTLOADD ; @TEST - import directory full of json data into elcap-patient graph
  ;Check that the folder and three json test files are
  ;  on our client
  ;s cmd="""mkdir /home/osehra/lib/silver/va-pals/docs/unit-test-data"""
- s cmd="mkdir /home/osehra/lib/silver/va-pals/docs/unit-test-data"
+ s cmd="mkdir /home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/unit-test-data"
  ;zsystem @cmd
  new output do run^%h(cmd,.output)
- s dir="/home/osehra/lib/silver/va-pals/docs/unit-test-data/"
+ s dir="/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/unit-test-data/"
  ;k cmd s cmd="""ls "_dir_" > /home/osehra/tmp/sample-list.txt"""
  ;zsystem @cmd
  k cmd s cmd="ls "_dir_" > /home/osehra/tmp/sample-list.txt"

@@ -251,7 +251,7 @@ IMPORT ; import json-data directory into elcap-patient graph
  . ;
  . do GETDIR(.SAMIDIR) ; prompt user
  else
- set SAMIDIR="/home/osehra/lib/silver/va-pals/docs/unit-test-data/"
+ set SAMIDIR="/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/unit-test-data/"
  ;
  ;
  ; collect list of all files in directory into SAMILIST

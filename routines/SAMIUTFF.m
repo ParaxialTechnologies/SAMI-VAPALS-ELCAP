@@ -64,7 +64,7 @@ UTPRSTSV ; @TEST Parse TSV file and build graph of form fields
  ;  2) Check that each input contains nodes for each parameter
  ;  3) Check that cross-reference nodes exist
  ;
- D PRSTSV^SAMIFF("/home/osehra/lib/silver/va-pals/docs/form-fields/","intake.tsv","form fields - intake")
+ D PRSTSV^SAMIFF("/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/","intake.tsv","form fields - intake")
  ;
  ; Check that the graph actually contains data
  set root=$$setroot^%wd("form fields - intake")

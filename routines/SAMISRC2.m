@@ -88,13 +88,13 @@ WSLOOKUP(ARGS,BODY,RESULT) ; look up ELCAP patient
  ;
  ;@stanza 2 initialize
  ;
- merge ^SAMIGPL("lookup")=ARGS
- merge ^SAMIGPL("lookup","body")=BODY
+ merge ^SAMIUL("lookup")=ARGS
+ merge ^SAMIUL("lookup","body")=BODY
  ;
  new vars,bdy
  set bdy=$get(BODY(1))
  do parseBody^%wf("vars",.bdy)
- merge ^SAMIGPL("lookup","vars")=vars
+ merge ^SAMIUL("lookup","vars")=vars
  ;
  new root set root=$$setroot^%wd("vapals-patients")
  ;

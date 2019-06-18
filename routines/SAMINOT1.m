@@ -123,9 +123,9 @@ NOTE(filter) ; extrnisic which creates a note
  . ;w !,"error, patient values not found"
  ;zwr @vals@(*)
  ;
- k ^SAMIGPL("NOTE")
- m ^SAMIGPL("NOTE","vals")=@vals
- m ^SAMIGPL("NOTE","filter")=filter
+ k ^SAMIUL("NOTE")
+ m ^SAMIUL("NOTE","vals")=@vals
+ m ^SAMIUL("NOTE","filter")=filter
  ;
  n didnote s didnote=0
  ;

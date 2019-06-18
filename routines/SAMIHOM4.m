@@ -76,15 +76,15 @@ WSHOME ; web service for SAMI homepage
  ;
 WSVAPALS ; vapals post web service - all calls come through this gateway
  ; WSVAPALS^SAMIHOM3(SAMIARG,SAMIBODY,SAMIRESULT) goto WSVAPALS^SAMIHOM4
- m ^SAMIGPL("vapals")=SAMIARG
- m ^SAMIGPL("vapals","BODY")=SAMIBODY
+ m ^SAMIUL("vapals")=SAMIARG
+ m ^SAMIUL("vapals","BODY")=SAMIBODY
  ;
  new vars,SAMIBDY
  set SAMIBDY=$get(SAMIBODY(1))
  do parseBody^%wf("vars",.SAMIBDY)
  m vars=SAMIARG
- k ^SAMIGPL("vapals","vars")
- merge ^SAMIGPL("vapals","vars")=vars
+ k ^SAMIUL("vapals","vars")
+ merge ^SAMIUL("vapals","vars")=vars
  ;
  n route s route=$g(vars("samiroute"))
  i route=""  d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home
@@ -125,7 +125,7 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  . . . s tiuien=$$SV2VISTA^SAMIVSTA(.SAMIFILTER)
  . . . s SAMIFILTER("tiuien")=tiuien
  . . . ;d SV2VSTA^SAMIVSTA(.FILTER)
- . . . m ^SAMIGPL("newFILTER")=SAMIFILTER
+ . . . m ^SAMIUL("newFILTER")=SAMIFILTER
  . . . d WSNOTE^SAMINOT1(.SAMIRESULT,.SAMIARG)
  ;
  i route="deleteform" d  q  ;
@@ -297,13 +297,13 @@ WSNEWCAS ; receives post from home & creates new case
  ;
  ;@stanza 2 ?
  ;
- merge ^SAMIGPL("newCase","ARGS")=SAMIARGS
- merge ^SAMIGPL("newCase","BODY")=SAMIBODY
+ merge ^SAMIUL("newCase","ARGS")=SAMIARGS
+ merge ^SAMIUL("newCase","BODY")=SAMIBODY
  ;
  new vars,bdy
  set SAMIBDY=$get(SAMIBODY(1))
  do parseBody^%wf("vars",.SAMIBDY)
- merge ^SAMIGPL("newCase","vars")=vars
+ merge ^SAMIUL("newCase","vars")=vars
  ;
  new root set root=$$setroot^%wd("vapals-patients")
  ;
@@ -325,7 +325,7 @@ WSNEWCAS ; receives post from home & creates new case
  ;new gien set gien=$$NEXTNUM
  new gien set gien=dfn
  ;
- m ^SAMIGPL("newCase","G1")=root
+ m ^SAMIUL("newCase","G1")=root
  ; create dfn index
  set @root@("dfn",dfn,gien)=""
  ;
@@ -339,7 +339,7 @@ WSNEWCAS ; receives post from home & creates new case
  new datekey set datekey=$$KEYDATE^SAMIHOM3($$NOW^XLFDT)
  set @root@(gien,"samicreatedate")=datekey
  ;
- merge ^SAMIGPL("newCase",gien)=@root@(gien)
+ merge ^SAMIUL("newCase",gien)=@root@(gien)
  ;
  ;
  do PREFILL^SAMIHOM3(dfn) ; prefills from the "patient-lookup" graph

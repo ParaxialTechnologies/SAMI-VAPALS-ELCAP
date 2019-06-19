@@ -345,7 +345,7 @@ GETDIR(SAMIDIR) ; prompt user for directory
  new DIROUT,DIRUT,DTOUT,DUOUT,X,Y
  ;
  do:'$data(%ut) ^DIR ; prompt user if live
- set:$data(%ut) Y="/home/osehra/www/sample-data-UnitTest/" ; if test
+ set:$data(%ut) Y="/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/unit-test-data/" ; if test
  ;
  set:"^"'[Y SAMIDIR=Y ; directory entered (except ^-escape or timeout)
  ;

@@ -158,7 +158,7 @@ UTGETDIR ; @TEST - extrinsic which prompts for directory
  ;GETDIR^SAMIFDM(.SAMIDIR)
  N SAMIDIR
  D GETDIR^SAMIFDM(.SAMIDIR)
- s utsuccess=(SAMIDIR["/home/osehra/www/sample-data-UnitTest/")
+ s utsuccess=(SAMIDIR["/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/unit-test-data/")
  d CHKEQ^%ut(utsuccess,1,"Testing GETDIR FAILED!")
  q
  ;

@@ -62,8 +62,8 @@ UTEMPHYS ; @TEST - emphysema
  ;now pull saved report
  d PLUTARR^SAMIUTST(.SAMIUARC,"UTEMPHYS^SAMIUTR3 report")
  ; now compare return with SAMIUARC
- K ^KBAP("SAMIUTR3","OTHR LUNG")
- M ^KBAP("SAMIUTR3","OTHR LUNG")=return
+ K ^SAMIUT("SAMIUTR3","OTHR LUNG")
+ M ^SAMIUT("SAMIUTR3","OTHR LUNG")=return
  n noder,nodea s noder=$na(return),nodea=$na(SAMIUARC)
  s utsuccess=1
  f  s noder=$Q(@noder),nodea=$Q(@nodea) q:noder=""  d  q:'utsuccess
@@ -81,8 +81,8 @@ UTEMPHYS ; @TEST - emphysema
  ;now pull saved report
  d PLUTARR^SAMIUTST(.SAMIUARC,"UTEMPHYS^SAMIUTR3 report XXX12-3")
  ; now compare return with SAMIUARC
- K ^KBAP("SAMIUTR3","12-3")
- M ^KBAP("SAMIUTR3","12-3")=return
+ K ^SAMIUT("SAMIUTR3","12-3")
+ M ^SAMIUT("SAMIUTR3","12-3")=return
  n noder,nodea s noder=$na(return),nodea=$na(SAMIUARC)
  s utsuccess=1
  f  s noder=$Q(@noder),nodea=$Q(@nodea) q:noder=""  d  q:'utsuccess

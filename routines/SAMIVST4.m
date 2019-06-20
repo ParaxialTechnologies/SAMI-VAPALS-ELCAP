@@ -64,7 +64,7 @@ SAMIVST4 ;;ven/arc/lgc - M2Broker calls for VA-PALS - ALL PTS  ; 5/8/19 8:51am
 ALLPTS ; Get all patients from a VA server by sequentially calling
  ;  for last names beginning with each letter of the
  ;  alphabet, building a complete array of patient names
- ;  in the ^KBAP("ALLPTS") global.  Once all the patient
+ ;  in the ^SAMIUT("ALLPTS") global.  Once all the patient
  ;  names and demographics are pulled into this global,
  ;  the information is parsed into the 'patient-information'
  ;  graph in VA-PALS graph store database.
@@ -79,15 +79,15 @@ ALLPTS ; Get all patients from a VA server by sequentially calling
  ;
  ;
  ;@dmi
-ALLPTS1(SAMISS) ; Build ^KBAP(SAMISS global
+ALLPTS1(SAMISS) ; Build ^SAMIUT(SAMISS global
  ;
  ;Input
- ;  SAMISS = Subscript name within ^KBAP global
+ ;  SAMISS = Subscript name within ^SAMIUT global
  ;           to use for patient array
  ;           Specifically designed for UNIT TEST where
  ;           we don't wish to corrupt existing data set
  ;Exit
- ;  Builds ^KBAP(SAMISS global with all patient information
+ ;  Builds ^SAMIUT(SAMISS global with all patient information
  ;    pulled from the VA server
  ;
  new SAMIXD,fini,CNTXT,RMPRC,CONSOLE,CNTNOPEN,SAMIXARR
@@ -96,7 +96,7 @@ ALLPTS1(SAMISS) ; Build ^KBAP(SAMISS global
  set (CONSOLE,CNTNOPEN)=0
  set:'$length($get(SAMISS)) SAMISS="ALLPTS"
  ;
- kill ^KBAP(SAMISS)
+ kill ^SAMIUT(SAMISS)
  new I,J for I=65:1:90 do
  . set fini=$char(I)
  . kill SAMIXARR
@@ -105,15 +105,15 @@ ALLPTS1(SAMISS) ; Build ^KBAP(SAMISS global
  . do M2M^SAMIM2M(.SAMIXD,CNTXT,RMPRC,CONSOLE,CNTNOPEN,.SAMIXARR)
  . for J=1:1:$length(SAMIXD,$char(13,10)) do
  .. quit:'$length($piece(SAMIXD,$char(13,10),J))
- .. set ^KBAP(SAMISS,fini,J)=$piece(SAMIXD,$char(13,10),J)
+ .. set ^SAMIUT(SAMISS,fini,J)=$piece(SAMIXD,$char(13,10),J)
  ;
  quit
  ;
  ;
  ;@dmi
-MKGPH quit:'$data(^KBAP("ALLPTS"))
+MKGPH quit:'$data(^SAMIUT("ALLPTS"))
  ; Make Graph Store patient-lookup global from
- ;  ^KBAP("ALLPTS")
+ ;  ^SAMIUT("ALLPTS")
  ; e.g.
  ;   do MKGPH^KBAPUTL
  new si set si=$$CLRGRPS^SAMIVSTA("patient-lookup")
@@ -121,7 +121,7 @@ MKGPH quit:'$data(^KBAP("ALLPTS"))
  new gien,node,ptdata,root
  set root=$$setroot^%wd("patient-lookup")
  set gien=0
- new node set node=$name(^KBAP("ALLPTS"))
+ new node set node=$name(^SAMIUT("ALLPTS"))
  new snode set snode=$piece(node,")")
  for  set node=$Q(@node) quit:node'[snode  do
  . set ptdata=@node

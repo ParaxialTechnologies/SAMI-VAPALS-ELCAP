@@ -42,16 +42,16 @@ START if $text(^%ut)="" write !,"*** UNIT TEST NOT INSTALLED ***" quit
  ;
 UTRAPCD ; @TEST - Pulling Radiology Procedures through the broker
  ;  RADPROCD(StationNumber)
- kill ^KBAP("UNIT TEST RA PROCEDURES")
+ kill ^SAMIUT("UNIT TEST RA PROCEDURES")
  ;
  new root set root=$$setroot^%wd("radiology procedures")
  ;
- merge ^KBAP("UNIT TEST RA PROCEDURES")=@root
+ merge ^SAMIUT("UNIT TEST RA PROCEDURES")=@root
  new KBAPPRCD,utsuccess set utsuccess=0
  set KBAPPRCD=$$RADPROCD^SAMIVSTA(6100)
  if '$get(KBAPPRCD) do  quit
- . merge @root=^KBAP("UNIT TEST RA PROCEDURES")
- . kill ^KBAP("UNIT TEST RA PROCEDURES")
+ . merge @root=^SAMIUT("UNIT TEST RA PROCEDURES")
+ . kill ^SAMIUT("UNIT TEST RA PROCEDURES")
  . do FAIL^%ut("No radiology procedures pulled through broker")
  new ien,ien71G,cptG,nameG,entryV
  for ien=1:1:$get(KBAPPRCD) do  quit:$get(utsuccess)
@@ -63,8 +63,8 @@ UTRAPCD ; @TEST - Pulling Radiology Procedures through the broker
  . if '($piece(entryV,"^")=nameG) set utsuccess=1 quit
  . if '($piece(entryV,"^",9)=cptG) set utsuccess=1 quit
  do CLRGRPS^SAMIVSTA("radiology procedures")
- merge @root=^KBAP("UNIT TEST RA PROCEDURES")
- kill ^KBAP("UNIT TEST RA PROCEDURES")
+ merge @root=^SAMIUT("UNIT TEST RA PROCEDURES")
+ kill ^SAMIUT("UNIT TEST RA PROCEDURES")
  do CHKEQ^%ut(utsuccess,0,"Testing pulling rad procedures through broker FAILED!")
  quit
  ;
@@ -74,16 +74,16 @@ UTRAEXMS ; @TEST - Pulling Radiology Acive Exams through the broker
  ;
 UTRASTAF ; @TEST - Pulling all active radiology staff
  ;  RADSTAFF
- kill ^KBAP("UNIT TEST RAD STAFF")
+ kill ^SAMIUT("UNIT TEST RAD STAFF")
  ;
  new root set root=$$setroot^%wd("radiology staff")
  ;
- merge ^KBAP("UNIT TEST RAD STAFF")=@root
+ merge ^SAMIUT("UNIT TEST RAD STAFF")=@root
  new KBAPSTAF,utsuccess set utsuccess=0
  set KBAPSTAF=$$RADSTAFF^SAMIVSTA
  if '$get(KBAPSTAF) do  quit
- . merge @root=^KBAP("UNIT TEST RAD STAFF")
- . kill ^KBAP("UNIT TEST RAD STAFF")
+ . merge @root=^SAMIUT("UNIT TEST RAD STAFF")
+ . kill ^SAMIUT("UNIT TEST RAD STAFF")
  . do FAIL^%ut("No radiology staff found.")
  new ien,duzG,nameG
  for ien=1:1:$get(KBAPSTAF) do  quit:$get(utsuccess)
@@ -96,23 +96,23 @@ UTRASTAF ; @TEST - Pulling all active radiology staff
  . if '($$UP^XLFSTR(nameG))=($$UP^XLFSTR($piece($get(^VA(200,duzG,0)),"^"))) do  quit
  .. set utsuccess=1
  do CLRGRPS^SAMIVSTA("radiology staff")
- merge @root=^KBAP("UNIT TEST RAD STAFF")
- kill ^KBAP("UNIT TEST RAD STAFF")
+ merge @root=^SAMIUT("UNIT TEST RAD STAFF")
+ kill ^SAMIUT("UNIT TEST RAD STAFF")
  do CHKEQ^%ut(utsuccess,0,"Testing pulling Radiology Staff through broker FAILED!")
  quit
  ;
 UTRARES ; @TEST - Pulling all active radiology residents
  ;  RADRESDT
- kill ^KBAP("UNIT TEST RAD RESIDENTS")
+ kill ^SAMIUT("UNIT TEST RAD RESIDENTS")
  ;
  new root set root=$$setroot^%wd("radiology residents")
  ;
- merge ^KBAP("UNIT TEST RAD RESIDENTS")=@root
+ merge ^SAMIUT("UNIT TEST RAD RESIDENTS")=@root
  new KBAPRES,utsuccess set utsuccess=0
  set KBAPRES=$$RADRESDT^SAMIVSTA
  if '$get(KBAPRES) do  quit
- . merge @root=^KBAP("UNIT TEST RAD RESIDENTS")
- . kill ^KBAP("UNIT TEST RAD RESIDENTS")
+ . merge @root=^SAMIUT("UNIT TEST RAD RESIDENTS")
+ . kill ^SAMIUT("UNIT TEST RAD RESIDENTS")
  . do FAIL^%ut("No radiology residents found.")
  new ien,duzG,nameG
  for ien=1:1:$get(KBAPRES) do  quit:$get(utsuccess)
@@ -125,23 +125,23 @@ UTRARES ; @TEST - Pulling all active radiology residents
  . if '($$UP^XLFSTR(nameG))=($$UP^XLFSTR($piece($get(^VA(200,duzG,0)),"^"))) do  quit
  .. set utsuccess=1
  do CLRGRPS^SAMIVSTA("radiology residents")
- merge @root=^KBAP("UNIT TEST RAD RESIDENTS")
- kill ^KBAP("UNIT TEST RAD RESIDENTS")
+ merge @root=^SAMIUT("UNIT TEST RAD RESIDENTS")
+ kill ^SAMIUT("UNIT TEST RAD RESIDENTS")
  do CHKEQ^%ut(utsuccess,0,"Testing pulling Radiology residents through broker FAILED!")
  quit
  ;
 UTRATECH ; @TEST - Pulling all active radiology technologists
  ;  RADTECHS
- kill ^KBAP("UNIT TEST RAD TECHS")
+ kill ^SAMIUT("UNIT TEST RAD TECHS")
  ;
  new root s root=$$setroot^%wd("radiology technologists")
  ;
- merge ^KBAP("UNIT TEST RAD TECHS")=@root
+ merge ^SAMIUT("UNIT TEST RAD TECHS")=@root
  new KBAPTECH,utsuccess set utsuccess=0
  set KBAPTECH=$$RADTECHS^SAMIVSTA
  if '$get(KBAPTECH) do  quit
- . merge @root=^KBAP("UNIT TEST RAD TECHS")
- . kill ^KBAP("UNIT TEST RAD TECHS")
+ . merge @root=^SAMIUT("UNIT TEST RAD TECHS")
+ . kill ^SAMIUT("UNIT TEST RAD TECHS")
  . do FAIL^%ut("No radiology technologists found.")
  new ien,duzG,nameG
  for ien=1:1:$get(KBAPTECH) do  quit:$get(utsuccess)
@@ -154,23 +154,23 @@ UTRATECH ; @TEST - Pulling all active radiology technologists
  . if '($$UP^XLFSTR(nameG))=($$UP^XLFSTR($piece($get(^VA(200,duzG,0)),"^"))) do  quit
  .. set utsuccess=1
  do CLRGRPS^SAMIVSTA("radiology technologists")
- merge @root=^KBAP("UNIT TEST RAD TECHS")
- kill ^KBAP("UNIT TEST RAD TECHS")
+ merge @root=^SAMIUT("UNIT TEST RAD TECHS")
+ kill ^SAMIUT("UNIT TEST RAD TECHS")
  do CHKEQ^%ut(utsuccess,0,"Testing pulling Radiology technologists through broker FAILED!")
  quit
  ;
 UTRAMOD ; @TEST - Pulling all radiology diagnosis modifiers
  ;  RADMODS
- kill ^KBAP("UNIT TEST RAD MODS")
+ kill ^SAMIUT("UNIT TEST RAD MODS")
  ;
  new root set root=$$setroot^%wd("radiology modifiers")
  ;
- merge ^KBAP("UNIT TEST RAD MODS")=@root
+ merge ^SAMIUT("UNIT TEST RAD MODS")=@root
  new KBAPMODS,utsuccess set utsuccess=0
  set KBAPMODS=$$RADMODS^SAMIVSTA
  if '$get(KBAPMODS) do  quit
- . merge @root=^KBAP("UNIT TEST RAD MODS")
- . kill ^KBAP("UNIT TEST RAD MODS")
+ . merge @root=^SAMIUT("UNIT TEST RAD MODS")
+ . kill ^SAMIUT("UNIT TEST RAD MODS")
  . do FAIL^%ut("No radiology diagnosis modifiers found.")
  new ien,ien712G,ien792G,nameG,TypeOfImagingG,ienV,TypeOfImagingV
  for ien=1:1:$get(KBAPMODS) do  quit:$get(utsuccess)
@@ -186,22 +186,22 @@ UTRAMOD ; @TEST - Pulling all radiology diagnosis modifiers
  . if '($$UP^XLFSTR(nameG))=($$UP^XLFSTR($p($g(^RAMIS(71.2,ien712G,0)),"^"))) do  quit
  .. set utsuccess=1
  do CLRGRPS^SAMIVSTA("radiology modifiers")
- merge @root=^KBAP("UNIT TEST RAD MODS")
- kill ^KBAP("UNIT TEST RAD MODS")
+ merge @root=^SAMIUT("UNIT TEST RAD MODS")
+ kill ^SAMIUT("UNIT TEST RAD MODS")
  do CHKEQ^%ut(utsuccess,0,"Testing pulling Radiology Dx Modifiers through broker FAILED!")
  quit
  ;
 UTRADXCD ; @TEST - Pull all radiology diagnostic codes
  ;  RADDXCDS
- kill ^KBAP("UNIT TEST RA DX CODES")
+ kill ^SAMIUT("UNIT TEST RA DX CODES")
  ;
  new root set root=$$setroot^%wd("radiology diagnostic codes")
  ;
- merge ^KBAP("UNIT TEST RA DX CODES")=@root
+ merge ^SAMIUT("UNIT TEST RA DX CODES")=@root
  new KBAPCODS,utsuccess set utsuccess=0
  set KBAPCODS=$$RADDXCDS^SAMIVSTA
  if '$get(KBAPCODS) do  quit
- . merge @root=^KBAP("UNIT TEST RA DX CODES") kill ^KBAP("UNIT TEST RA DX CODES")
+ . merge @root=^SAMIUT("UNIT TEST RA DX CODES") kill ^SAMIUT("UNIT TEST RA DX CODES")
  . do FAIL^%ut("No radiology dx codes pulled through broker")
  new ien,ien783G,nameG,nameV
  for ien=1:1:$get(KBAPCODS) do  quit:$get(utsuccess)
@@ -211,8 +211,8 @@ UTRADXCD ; @TEST - Pull all radiology diagnostic codes
  . set nameV=$piece($get(^RA(78.3,ien783G,0)),"^")
  . if '(nameG=nameV) set utsuccess=1 quit
  do CLRGRPS^SAMIVSTA("radiology diagnostic codes")
- merge @root=^KBAP("UNIT TEST RA DX CODES")
- kill ^KBAP("UNIT TEST RA DX CODES")
+ merge @root=^SAMIUT("UNIT TEST RA DX CODES")
+ kill ^SAMIUT("UNIT TEST RA DX CODES")
  do CHKEQ^%ut(utsuccess,0,"Testing pulling rad dx codes through broker FAILED!")
  quit
  ;
@@ -220,12 +220,12 @@ UTCLRG ; @TEST - Clear a Graphstore of entries
  ;
  new root set root=$$setroot^%wd("radiology diagnostic codes")
  ;
- kill ^KBAP("UNIT TEST CLRGRPH") merge ^KBAP("UNIT TEST CLRGRPH")=@root
+ kill ^SAMIUT("UNIT TEST CLRGRPH") merge ^SAMIUT("UNIT TEST CLRGRPH")=@root
  new cnt set cnt=$order(@root@("A"),-1)
  if 'cnt do  quit
  . do FAIL^%ut("No 'radiology diagnostic codes' entry")
  set cnt=$$CLRGRPS^SAMIVSTA("radiology diagnostic codes"),cnt=$order(@root@("A"),-1)
- merge @root=^KBAP("UNIT TEST CLRGRPH") kill ^KBAP("UNIT TEST CLRGRPH")
+ merge @root=^SAMIUT("UNIT TEST CLRGRPH") kill ^SAMIUT("UNIT TEST CLRGRPH")
  do CHKEQ^%ut(cnt,0,"Clear Graphstore FAILED!")
  quit
  ;

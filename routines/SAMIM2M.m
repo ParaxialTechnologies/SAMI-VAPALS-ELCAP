@@ -1,4 +1,4 @@
-SAMIM2M ;ven/lgc/smh - M2M WITH SAM HABIEL'S KBANSCAU BROKER ; 5/8/19 9:20am
+SAMIM2M ;ven/lgc/smh - M2M WITH SAM HABIEL'S KBANSCAU BROKER ; 6/21/19 9:15am
  ;;18.0;SAM;;
  ;
  ;@license: see routine SAMIUL
@@ -55,6 +55,8 @@ M2M(XDATA,CNTXT,RMPRC,CONSOLE,CNTNOPEN,XARRAY) ;
  S AV=$$GET^XPAR("SYS","SAMI ACCVER",,"Q")
  I $G(AV)="" Q
  I '($L($G(AV),";")=2) Q
+ ;
+ N SIO M SIO=IO ; Save IO state
  ;
  ; Below pulled from XWBTEST^XWBCLRPC
  ; 1. Open Socket to remote system, check POP, use IO
@@ -128,7 +130,9 @@ CLSCLN ; 10. Logout
  ;I NIO]"" C NIO K IO(1,NIO) S IO("CLOSE")=NIO
  do CLOSEM2M^%ZISC(IO)
  ;
+ K IO S IO=$IO ; Clean up IO and set it up for the CONSOLE call
  D:CONSOLE CONSOLE^XWBCLRPC($$NOW^XLFDT)
+ K IO M IO=SIO ; Clean up IO and reset it to its initial state
  ;
  ; 12. Clean temporary variables
  D CLEAN^XWBCLRPC

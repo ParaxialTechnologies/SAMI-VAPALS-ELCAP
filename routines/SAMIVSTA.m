@@ -1,4 +1,4 @@
-SAMIVSTA ;;ven/lgc - M2Broker calls for VA-PALS ; 3/14/19 11:57am
+SAMIVSTA ;;ven/lgc - M2Broker calls for VA-PALS ; 6/21/19 9:02am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -40,7 +40,7 @@ TIUADND(tiuien,userduz) ; Add and addendum to a TIU
 VISTSTR(tiuien) ; Build the VSTR string for an existing TIU
  goto VISTSTR^SAMIVST2
  ;
-PTINFO(dfn) ; Get additional information on a patient
+PTINFO(dfn,debug) ; Get additional information on a patient
  goto PTINFO^SAMIVST2
  ;
 PTSSN(dfn) ; Get SSN on a patient

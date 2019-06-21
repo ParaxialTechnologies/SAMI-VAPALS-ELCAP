@@ -1,4 +1,4 @@
-SAMIVST2 ;;ven/lgc - M2Broker calls for VA-PALS - PT INFO ; 3/13/19 7:38pm
+SAMIVST2 ;;ven/lgc - M2Broker calls for VA-PALS - PT INFO ; 6/21/19 9:03pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -101,7 +101,7 @@ PTINFO ;
  set rslt=0
  set cntxt="SCMC PCMMR APP PROXY MENU"
  set rmprc="SCMC PATIENT INFO"
- set console=0
+ set console=$get(debug,0)
  set cntnopen=0
  new ssn set ssn=""
  if '$get(dfn) quit:$Q rslt  quit

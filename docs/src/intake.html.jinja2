@@ -293,13 +293,17 @@
             <h3>Smoking History</h3>
 
             <div class="row">
-                <div class="col-md-12 form-group">
-                    <label for="sies">Have you ever smoked</label>
+                <div class="col-lg-4 col-md-6 col-sm-6 form-group">
+                    <label>Have you ever smoked</label>
+                    <br/>
+                    {{ f.inlineRadio("siesm", "siesm-n", "n", "Never") }}
+                    {{ f.inlineRadio("siesm", "siesm-p", "p", "Past") }}
+                    {{ f.inlineRadio("siesm", "siesm-c", "c", "Current") }}
+                    {{ f.inlineCheckbox("siesq","1", "Willing to quit") }}
+                </div>
+                <div class="col-lg-8 col-md-6 col-sm-6 form-group">
+                    <label for="sies">Comments</label>
                     <input type="text" name="sies" id="sies" class="form-control"/>
-                    {{ f.checkbox("siesn","1", "Never smoked") }}
-                    {{ f.checkbox("siesp","1", "Past") }}
-                    {{ f.checkbox("siesc","1", "Current") }}
-                    {{ f.checkbox("siesq","1", "Willing to quit") }}
                 </div>
             </div>
             <div class="row form-group">

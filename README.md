@@ -11,7 +11,7 @@ International Early Lung Cancer Action Program (I-ELCAP), an international progr
 Repository Structure
 -
 
-* /docs - various documentation that helped the team build this project. Includes [data dictionaries](/docs/dd), some presentations and even [blog posts](/docs/blogposts).
+* /docs - various documentation that helped the team build this project. Includes [data dictionaries](/docs/form-fields), some presentations and even [blog posts](/docs/blogposts).
 * /docs/src - source files used to generate the front-end web site. Use the *.sh scripts to build the website using the *.jinja2 template files. The /doc direcotry contains generated documentation from those source files. 
 * /docs/www - compliled resources from the sibling `src` directory. Also includes javascript, libraries, and other supporting files. Run any html file in /www/test to execute front-end unit tests.
 * [/java/tests](java/tests/README.md) - includes integration tests that run against a designated server. Evaluates correct, expected behavior from both the front-end (Web pages) and back-end (VistA FileMan) aspects of this project.

@@ -4,7 +4,7 @@
 {% set elcapApproachValue = 'el' %}
 {% set lungRadsApproachValue = 'lr' %}
 
-<h3>Follow Up
+<h3>Follow-Up
     {% if not isCT %}
         <label class="small required">select one or more</label>
     {% endif %}
@@ -13,8 +13,8 @@
 {% if isCT %}
     <div class="row">
         <div class="col-sm-12 form-group">
-            {# NB: cefu prefix is used for follow up options validator so not used here#}
-            <label for="cefpa-lr" class="required">Follow up approach:</label><br/>
+            {# NB: cefu prefix is used for follow-up options validator so not used here#}
+            <label for="cefpa-lr" class="required">Follow-up approach:</label><br/>
             {{ f.inlineRadio("cefpa", "cefpa-lr", lungRadsApproachValue, "Lung-RADS", true) }}
             {{ f.inlineRadio("cefpa", "cefpa-el", elcapApproachValue, "I-ELCAP") }}
         </div>
@@ -33,7 +33,7 @@
 
 <div class="row">
     <div class="col-sm-12 form-group">
-        <label for="cefuw-nw">LDCT follow up:</label><br/>
+        <label for="cefuw-nw">LDCT follow-up:</label><br/>
         {{ f.inlineRadio("cefuw", "cefuw-1y", "1y", "Annual repeat") }}
         {{ f.inlineRadio("cefuw", "cefuw-nw", "nw", "Now") }}
         {{ f.inlineRadio("cefuw", "cefuw-1m", "1m", "1 month") }}
@@ -52,7 +52,7 @@
 </div>
 <div class="row">
     <div class="col-sm-12 form-group">
-        <label for="cefu">Other follow up:</label><br/>
+        <label for="cefu">Other follow-up:</label><br/>
         {{ f.inlineCheckbox("cefuaf","y", "Antibiotics") }}
         {{ f.inlineCheckbox("cefucc","y", "Contrast CT") }}
         {{ f.inlineCheckbox("cefupe","y", "PET") }}
@@ -180,7 +180,7 @@
             fv.addField('cecclm', {validators: {notEmpty: {message: 'Left main is required'}}});
             fv.addField('cefud', {
                 validators: {
-                    date: {min: VAPALS.todaysDate(), message: 'Follow up date must be at least today\'s date'}
+                    date: {min: VAPALS.todaysDate(), message: 'Follow-up date must be at least today\'s date'}
                 }
             });
             fv.addField('celrad', {validators: {notEmpty: {message: 'Lung-RADS category is required'}}})

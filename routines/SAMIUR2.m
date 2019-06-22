@@ -42,7 +42,7 @@ RPTTBL(RPT,TYPE) ; RPT is passed by reference and returns the
  . S RPT(4,"routine")="$$STUDYTYP^SAMIUR2"
  . S RPT(5,"header")="CT Protocol"
  . S RPT(5,"routine")="$$CTPROT^SAMIUR2"
- . S RPT(6,"header")="Follow up"
+ . S RPT(6,"header")="Follow-up"
  . S RPT(6,"routine")="$$RECOM^SAMIUR2"
  . S RPT(7,"header")="When"
  . S RPT(7,"routine")="$$WHEN^SAMIUR2"

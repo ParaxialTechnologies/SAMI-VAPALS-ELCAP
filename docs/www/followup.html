@@ -76,8 +76,8 @@
       </span>
      </button>
      <a class="text-nowrap" href="/vapals" style="text-decoration: none">
-      <img alt="VAPALS-ELCAP Logo" class="hidden-xs" height="50" src="img/logo_transparent.png" title="VAPALS-ELCAP"/>
-      <img alt="VAPALS-ELCAP Logo" height="50" src="img/logo_name.png" title="VAPALS-ELCAP"/>
+      <img alt="VAPALS-ELCAP Logo" class="hidden-xs" src="img/logo_transparent.png" style="height:50px;" title="VAPALS-ELCAP"/>
+      <img alt="VAPALS-ELCAP Logo" src="img/logo_name.png" style="height:50px;" title="VAPALS-ELCAP"/>
      </a>
     </div>
     <div class="navbar-collapse collapse navbar-right" id="navbar-main">
@@ -255,12 +255,18 @@
        </label>
       </div>
       <div class="col-md-4 form-group">
+       <label class="aria-hidden" for="siopfn">
+        First name
+       </label>
        <input class="form-control" id="siopfn" name="siopfn" type="text"/>
        <span class="help-block small">
         First Name
        </span>
       </div>
       <div class="col-md-4 form-group">
+       <label class="aria-hidden" for="siopln">
+        Last name
+       </label>
        <input class="form-control" id="siopln" name="siopln" title="Last name" type="text"/>
        <span class="help-block small">
         Last Name
@@ -277,6 +283,9 @@
        </label>
       </div>
       <div class="col-sm-2 form-group">
+       <label class="aria-hidden" for="siopnpi">
+        NPI
+       </label>
        <input class="form-control numeric" id="siopnpi" name="siopnpi" required="required" type="text"/>
       </div>
      </div>
@@ -310,10 +319,10 @@
      </div>
      <div class="row">
       <div class="col-md-4">
-       <label class="visible-xs visible-sm required" for="siopss-c">
+       <label class="visible-xs visible-sm required" for="">
         Reported smoking status at time of order
        </label>
-       <label class="text-right pull-right hidden-xs hidden-sm required" for="siopss-c">
+       <label class="text-right pull-right hidden-xs hidden-sm required" for="">
         Reported smoking status at time of order
        </label>
       </div>
@@ -330,10 +339,10 @@
      </div>
      <div class="row">
       <div class="col-md-4">
-       <label class="visible-xs visible-sm required" for="siopqy">
+       <label class="visible-xs visible-sm required" for="sioppy">
         Reported pack years at time of order
        </label>
-       <label class="text-right pull-right hidden-xs hidden-sm required" for="siopqy">
+       <label class="text-right pull-right hidden-xs hidden-sm required" for="sioppy">
         Reported pack years at time of order
        </label>
       </div>
@@ -497,6 +506,9 @@
         Other
        </label>
       </div>
+      <label class="aria-hidden" for="siwcos">
+       Other
+      </label>
       <input class="form-control input-sm" id="siwcos" name="siwcos" required="required" type="text"/>
      </div>
     </div>
@@ -961,6 +973,9 @@
         </span>
        </div>
        <div class="form-group" style="float:left;">
+        <label class="aria-hidden" for="sidlcm">
+         Last cigarette month
+        </label>
         <select class="form-control input-sm" id="sidlcm" name="sidlcm" title="Last cigarette month">
          <option selected="" value="-">
           —
@@ -1007,6 +1022,9 @@
         </span>
        </div>
        <div class="form-group" style="float:left;">
+        <label class="aria-hidden" for="sidlcy">
+         Year
+        </label>
         <input class="form-control input-sm numeric yearpicker" id="sidlcy" maxlength="4" name="sidlcy" placeholder="YYYY" size="5" title="" type="text"/>
         <small class="help-block">
          Year
@@ -1146,6 +1164,9 @@
         Other (specify)
        </label>
       </div>
+      <label class="aria-hidden" for="siscos">
+       Other
+      </label>
       <input class="form-control input-sm" id="siscos" name="siscos" required="required" type="text"/>
      </div>
     </div>
@@ -1260,7 +1281,7 @@
     </span>
    </div>
   </footer>
-  <script language="JavaScript">
+  <script lang="JavaScript">
    const studyIdVal = $("#studyid-html-element").attr('value');
     const studyId = $.trim(studyIdVal);
     if (studyId && studyId.indexOf("@@") === -1) {
@@ -1319,7 +1340,7 @@
 
     })
   </script>
-  <script language="JavaScript">
+  <script lang="JavaScript">
    function createFormValidator() {
 
             const $form = $('#main-form');

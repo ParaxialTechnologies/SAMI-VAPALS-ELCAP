@@ -85,7 +85,7 @@ Interpreted by: IJL+DY
 
         <div class="pull-right">
             <button class="btn btn-default" data-clipboard-target="#report-text">
-                <i class="glyphicon glyphicon-copy" alt="Copy to clipboard"></i> Copy to clipboard
+                <i class="glyphicon glyphicon-copy" title="Copy to clipboard"></i> Copy to clipboard
             </button>
         </div>
         <div class="clearfix"></div>
@@ -93,7 +93,7 @@ Interpreted by: IJL+DY
 {% endblock %}
 
 {% block script %}
-    <script language="JavaScript">
+    <script lang="JavaScript">
         new ClipboardJS('.btn').on("success", function(e){
             $(e.trigger).tooltip({title:"Copied!", delay: { "hide": 1000 }}).show();
             e.clearSelection();

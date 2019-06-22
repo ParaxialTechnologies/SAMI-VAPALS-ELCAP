@@ -22,7 +22,7 @@
 
             <div class="row">
                 <div class="col-sm-4 col-md-3 form-group">
-                    <label class="control-label required" for="bxdos">Study date</label>
+                    <label class="control-label required" for="ptdos">Study date</label>
                     {{ f.datepicker("ptdos", "past", true) }}
                 </div>
             </div>
@@ -103,7 +103,7 @@
                         <th>Nodule ID</th>
                         <th>Nodule 1</th>
                         <th>
-                            Additional Nodules
+                            <label for="cefctn">Additional Nodules</label>
                             <select name="cefctn" id="cefctn">
                                 <option value="2"> Nodule 2
                                 <option value="3"> Nodule 3
@@ -138,6 +138,7 @@
                             </select>
                         </td>
                         <td>
+                            <label class="aria-hidden" for="cect0ch">Is it new?</label>
                             <select name="cect0ch" id="cect0ch" class="form-control">
                                 <option value="-"> -
                                 <option value="n"> Newly seen
@@ -173,6 +174,7 @@
                             </select>
                         </td>
                         <td>
+                            <label class="aria-hidden" for="cect0ll">Most likely location</label>
                             <select name="cect0ll" id="cect0ll" class="form-control">
                                 <option value="-"> -
                                 <option value="end"> Endobr
@@ -189,10 +191,11 @@
                             <label for="cect1up">Maximum nodule uptake (SUV)</label>
                         </td>
                         <td>
-                            <input type=text name="cect1up" class="form-control numeric decimalformat">
+                            <input type=text name="cect1up" id="cect1up" class="form-control numeric decimalformat">
                         </td>
                         <td>
-                            <input type=text name="cect0up" class="form-control numeric decimalformat">
+                            <label class="aria-hidden" for="cect0up">Maximum nodule uptake (SUV)</label>
+                            <input type=text name="cect0up" id="cect0up" class="form-control numeric decimalformat">
                         </td>
                     </tr>
                     <tr>
@@ -221,6 +224,7 @@
                             </select>
                         </td>
                         <td>
+                            <label class="aria-hidden" for="cect0st">Nodule status</label>
                             <select name="cect0st" id="cect0st" class="form-control">
                                 <option value="-"> -
                                 <option value="un"> Unknown
@@ -264,6 +268,7 @@
                             </select>
                         </td>
                         <td>
+                            <label class="aria-hidden" for="cect0pd">Pathological diagnosis</label>
                             <select name="cect0pd" id="cect0pd" class="form-control">
                                 <option value="-"> -For Pathology Use Only-
                                 <option value="aa"> AAH
@@ -392,7 +397,7 @@
             <div class="row">
                 <div class="col-md-6 form-group">
                     <label class="required" for="cefu">Follow-up</label>
-                    <select name="cefu" class="form-control" required="required">
+                    <select name="cefu" id="cefu" class="form-control" required="required">
                         <option value="-"> -
                         <option value="rs"> Annual repeat CT
                         <option value="dx"> Follow-up CT
@@ -406,7 +411,7 @@
                     </select>
                 </div>
                 <div class="col-md-6 form-group">
-                    <label class="required" for="cefuw-nw">When</label>
+                    <label class="required" for="cefud">When</label>
                     {{ f.datepicker("cefud", "future", true) }}
                     <br/>
                     {{ f.inlineRadio("cefuw", "cefuw-nw", "nw", "Now") }}
@@ -492,7 +497,7 @@
 {% endblock %}
 
 {% block script %}
-    <script language="JavaScript">
+    <script lang="JavaScript">
 
 
         function createFormValidator() {

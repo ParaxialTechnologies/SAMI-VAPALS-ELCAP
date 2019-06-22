@@ -80,6 +80,7 @@
                         {{ f.checkbox('sicerfon', 'y', 'Oncology') }}
                         {{ f.checkbox('sicerfsc', 'y', 'Smoking Cessation') }}
                         {{ f.checkbox('sicerfot', 'y', 'Other') }}
+                        <label class="aria-hidden" for="sicerfoo">Specify</label>
                         <input class="form-control form-inline" type="text" name="sicerfoo" id="sicerfoo"
                                placeholder="specify" required="required">
                     </div>
@@ -114,6 +115,7 @@
                                 {{ f.inlineCheckbox("sicemhlc","y", "lung cancer", {'group':'ineligible-reason'}) }}
                                 {{ f.inlineCheckbox("sicemhhs","y", "health status", {'group':'ineligible-reason'}) }}
                                 {{ f.inlineCheckbox("sicemhot","y", "other", {'group':'ineligible-reason'}) }}
+                                <label class="aria-hidden" for="sicemhoo">Specify</label>
                                 <input class="form-control" type="text" name="sicemhoo" id="sicemhoo"
                                        placeholder="specify" required="required">
                                 <br/>
@@ -125,6 +127,7 @@
                                 {{ f.inlineCheckbox("siceceho","y", "followed in hematology-Oncology", {'group':'ineligible-reason'}) }}
                                 {{ f.inlineCheckbox("sicecepr","y", "private care", {'group':'ineligible-reason'}) }}
                                 {{ f.inlineCheckbox("siceceot","y", "other", {'group':'ineligible-reason'}) }}
+                                <label class="aria-hidden" for="siceceoo">Specify</label>
                                 <input class="form-control" type="text" name="siceceoo" id="siceceoo"
                                        placeholder="specify" required="required">
                                 <br/>
@@ -135,6 +138,7 @@
                                 {{ f.inlineCheckbox("siceshpy","y", "less than 30 pack years", {'group':'ineligible-reason'}) }}
                                 {{ f.inlineCheckbox("siceshnc","y", "non-cigarette use (e.g. pipe, smokeless, vape, cannabis)", {'group':'ineligible-reason'}) }}
                                 {{ f.inlineCheckbox("siceshot","y", "other", {'group':'ineligible-reason'}) }}
+                                <label class="aria-hidden" for="siceshoo">Specify</label>
                                 <input class="form-control" type="text" name="siceshoo" id="siceshoo"
                                        placeholder="specify" required="required">
                             </div>
@@ -174,8 +178,9 @@
                         {{ f.checkbox("sipecnpp", "1", "Message in patient portal", {'group':'discussion-contact'}) }}
                         {{ f.checkbox("sipecnvd", "1", "Video-on-Demand (VOD)", {'group':'discussion-contact'}) }}
                         {{ f.checkbox("sipecnot", "1", "Other", {'group':'discussion-contact'}) }}
-                        <input class="form-control input-sm" type="text" name="sipecnoo"
-                               id="sipecnoo" title="Other contact method" required="required">
+                        <label class="aria-hidden" for="sipecnoo">Other contact method</label>
+                        <input class="form-control input-sm" type="text" name="sipecnoo" id="sipecnoo"
+                               required="required">
                     </div>
                 </div>
                 <div class="row">
@@ -221,7 +226,7 @@
                     {{ f.checkbox("silnpp", "1", "Message in patient portal", {'group':'intake-contact'}) }}
                     {{ f.checkbox("silnvd", "1", "Video-on-Demand (VOD)", {'group':'intake-contact'}) }}
                     {{ f.checkbox("silnot", "1", "Other", {'group':'intake-contact'}) }}
-
+                    <label class="aria-hidden" for="silnoo">Other contact method</label>
                     <input class="form-control input-sm" type="text" name="silnoo"
                            id="silnoo" title="Other contact method" required="required">
                 </div>
@@ -367,7 +372,8 @@
                     {{ f.datepicker ("sicadx", "past") }}
                 </div>
                 <div class="col-md-4 form-group">
-                    <input class="form-control" type="text" name="sicadxl" id="sicadxl" title="Lung CA Dx location"/>
+                    <label class="aria-hidden" for="sicadxl">Lunc CA Dx location</label>
+                    <input class="form-control" type="text" name="sicadxl" id="sicadxl"/>
                     <span class="help-block">Location if not in VA</span>
                 </div>
             </div>
@@ -379,7 +385,8 @@
                     {{ f.datepicker ("siptct", "past") }}
                 </div>
                 <div class="col-md-4 form-group">
-                    <input class="form-control" type="text" name="siptctl" id="siptctl" title="Location thorax CT"/>
+                    <label class="aria-hidden" for="siptctl">Location throax CT</label>
+                    <input class="form-control" type="text" name="siptctl" id="siptctl" />
                     <span class="help-block">Location if not in VA</span>
                 </div>
             </div>
@@ -507,7 +514,7 @@
 {% endblock %}
 
 {% block script %}
-<script language="JavaScript">
+<script lang="JavaScript">
     //purposefully executed before DOM is rendered so section is never visible
     const newForm = "@@NEWFORM@@";
     const chartEligibilityNoteExists = "@@CHART_ELIGIBILITY_NOTE_EXISTS@@" === "true" || "@@PRE_ENROLLMENT_NOTE_EXISTS@@" === "true" || "@@INTAKE_NOTE_EXISTS@@" === "true";

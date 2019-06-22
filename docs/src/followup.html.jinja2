@@ -67,10 +67,12 @@
                         {{ f.floatingLabel('siopfn', 'Ordered by') }}
                     </div>
                     <div class="col-md-4 form-group">
+                        <label for="siopfn" class="aria-hidden">First name</label>
                         <input type=text name="siopfn" id="siopfn" class="form-control">
                         <span class="help-block small">First Name</span>
                     </div>
                     <div class="col-md-4 form-group">
+                        <label for="siopln" class="aria-hidden">Last name</label>
                         <input type=text name="siopln" id="siopln" class="form-control" title="Last name">
                         <span class="help-block small">Last Name</span>
 
@@ -82,6 +84,7 @@
                         {{ f.floatingLabel('siopnpi', 'National provider ID (NPI)', "required") }}
                     </div>
                     <div class="col-sm-2 form-group">
+                        <label for="siopnpi" class="aria-hidden">NPI</label>
                         <input type=text name="siopnpi" id="siopnpi" class="form-control numeric" required="required">
                     </div>
                 </div>
@@ -99,7 +102,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        {{ f.floatingLabel('siopss-c', 'Reported smoking status at time of order', "required") }}
+                        {{ f.floatingLabel('', 'Reported smoking status at time of order', "required") }}
                     </div>
                     <div class="col-sm-8 form-group">
                         {{ f.inlineRadio("siopss", "siopss-c", "c", "Current", true) }}
@@ -109,7 +112,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        {{ f.floatingLabel('siopqy', 'Reported pack years at time of order',"required") }}
+                        {{ f.floatingLabel('sioppy', 'Reported pack years at time of order',"required") }}
                     </div>
                     <div class="col-md-8 form-group">
                         <input type="text" name="sioppy" id="sioppy" class="form-control numeric decimalformat"
@@ -190,6 +193,7 @@
                     {{ f.checkbox("siwcl", "l", "Unexplained weight loss greater than 20 lbs") }}
                     {{ f.checkbox("siwch", "h", "Unexplained hoarseness") }}
                     {{ f.checkbox("siwco", "o", "Other") }}
+                    <label for="siwcos" class="aria-hidden">Other</label>
                     <input type="text" class="form-control input-sm" id="siwcos" name="siwcos" required="required"/>
                 </div>
             </div>
@@ -355,7 +359,7 @@
                         {{ f.floatingLabel('sidpw', 'On average, on how many days per week are you currently smoking cigarettes?') }}
                     </div>
                     <div class="col-md-1 form-group">
-                        <input type=text id="sidpw" name="sidpw" class="form-control numeric decimalformat">
+                        <input type="text" id="sidpw" name="sidpw" class="form-control numeric decimalformat">
                     </div>
                 </div>
                 <div class="row">
@@ -384,6 +388,7 @@
                             <span class="small text-muted">Day</span>
                         </div>
                         <div class="form-group" style="float:left;">
+                            <label class="aria-hidden" for="sidlcm">Last cigarette month</label>
                             <select class="form-control input-sm" id="sidlcm" name="sidlcm"
                                     title="Last cigarette month">
                                 <option value="-" selected>&mdash;</option>
@@ -404,8 +409,8 @@
                         </div>
 
                         <div class="form-group" style="float:left;">
+                            <label class="aria-hidden" for="sidlcy">Year</label>
                             {{ f.yearpicker("sidlcy", false, true, "Year") }}
-
                         </div>
                     </div>
                 </div>
@@ -450,6 +455,7 @@
                     {{ f.checkbox("siscj", "j","Hypnosis") }}
                     {{ f.checkbox("sisck", "k","Acupuncture / acupressure") }}
                     {{ f.checkbox("siscl", "l","Other (specify)") }}
+                    <label for="siscos" class="aria-hidden">Other</label>
                     <input type="text" class="form-control input-sm" id="siscos" name="siscos" required="required"/>
 
                 </div>
@@ -494,7 +500,7 @@
 {% endblock %}
 
 {% block script %}
-    <script language="JavaScript">
+    <script lang="JavaScript">
         function createFormValidator() {
 
             const $form = $('#main-form');

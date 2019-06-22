@@ -51,7 +51,7 @@ RCMND(rtn,vals,dict) ;
  . i ofu["cefucc" s tofu=tofu_$s(comma:", ",1:"")_"Diagnostic CT" s comma=1
  . i ofu["cefupe" s tofu=tofu_$s(comma:", ",1:"")_"PET" s comma=1
  . i ofu["cefufn" s tofu=tofu_$s(comma:", ",1:"")_"Percutaneous biopsy" s comma=1
- . i ofu["cefubr" s tofu=tofu_$s(comma:", ",1:"")_"Bronchoscpy" s comma=1
+ . i ofu["cefubr" s tofu=tofu_$s(comma:", ",1:"")_"Bronchoscopy" s comma=1
  . i ofu["cefupc" s tofu=tofu_$s(comma:", ",1:"")_"Pulmonary consultation" s comma=1
  . i ofu["cefutb" s tofu=tofu_$s(comma:", ",1:"")_"Refer to tumor board" s comma=1
  . i ofu["cefuo" s tofu=tofu_$s(comma:", ",1:"")_$$XVAL("cefuo",vals) s comma=1

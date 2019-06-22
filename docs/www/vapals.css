@@ -96,3 +96,17 @@ abbr[title] {
 /*top: 0px;*/
 /*z-index: 1;*/
 /*}*/
+
+/* W3C recommended way to hide an element that is technically necessary for accessibility, but not
+functionally/visually necessary. See: https://www.w3.org/WAI/tutorials/forms/labels/#note-on-hiding-elements*/
+.aria-hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    /* necessary? display: none; */
+}

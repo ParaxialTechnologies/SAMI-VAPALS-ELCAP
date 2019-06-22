@@ -76,8 +76,8 @@
       </span>
      </button>
      <a class="text-nowrap" href="home.html" style="text-decoration: none">
-      <img alt="VAPALS-ELCAP Logo" class="hidden-xs" height="50" src="../www/img/logo_transparent.png" title="VAPALS-ELCAP"/>
-      <img alt="VAPALS-ELCAP Logo" height="50" src="../www/img/logo_name.png" title="VAPALS-ELCAP"/>
+      <img alt="VAPALS-ELCAP Logo" class="hidden-xs" src="../www/img/logo_transparent.png" style="height:50px;" title="VAPALS-ELCAP"/>
+      <img alt="VAPALS-ELCAP Logo" src="../www/img/logo_name.png" style="height:50px;" title="VAPALS-ELCAP"/>
      </a>
     </div>
     <div class="navbar-collapse collapse navbar-right" id="navbar-main">
@@ -244,7 +244,10 @@
          Other
         </label>
        </div>
-       <input class="form-control input-sm" id="sbahas" name="sbahas" title="Other work" type="text"/>
+       <label class="aria-hidden" for="sbahas">
+        Other work
+       </label>
+       <input class="form-control input-sm" id="sbahas" name="sbahas" type="text"/>
       </div>
      </div>
     </div>
@@ -302,7 +305,10 @@
          Other
         </label>
        </div>
-       <input class="form-control input-sm" id="sbwcos" name="sbwcos" title="Other symptom" type="text"/>
+       <label class="aria-hidden" for="sbwcos">
+        Other symptom
+       </label>
+       <input class="form-control input-sm" id="sbwcos" name="sbwcos" type="text"/>
       </div>
      </div>
     </div>
@@ -508,7 +514,10 @@
             Other
            </label>
           </div>
-          <input class="form-control input-sm" id="sbscsmoo" name="sbscsmoo" title="Other medication" type="text"/>
+          <label class="aria-hidden" for="sbscsmoo">
+           Other medication
+          </label>
+          <input class="form-control input-sm" id="sbscsmoo" name="sbscsmoo" type="text"/>
          </div>
         </div>
        </div>
@@ -840,7 +849,7 @@
          <label class="control-label" for="sbaocsp">
           Specify
          </label>
-         <input class="form-control input-sm" name="sbaocsp" type="text"/>
+         <input class="form-control input-sm" id="sbaocsp" name="sbaocsp" type="text"/>
         </div>
         <div class="form-group col-sm-4 col-md-2">
          <label class="control-label" for="sbaocyr">
@@ -1564,7 +1573,7 @@
        </div>
        <div class="col-sm-12 col-md-6 col-lg-7" id="sbmpoth-container" style="display: none;">
         <div class="form-group">
-         <label class="control-label" for="sbmpoth-n">
+         <label class="control-label" for="sbmpod">
           Specify
          </label>
          <br/>
@@ -1647,7 +1656,7 @@
     </span>
    </div>
   </footer>
-  <script language="JavaScript">
+  <script lang="JavaScript">
    const studyIdVal = $("#studyid-html-element").attr('value');
     const studyId = $.trim(studyIdVal);
     if (studyId && studyId.indexOf("@@") === -1) {
@@ -1706,7 +1715,7 @@
 
     })
   </script>
-  <script language="JavaScript">
+  <script lang="JavaScript">
    function createFormValidator() {
 
             const $form = $('#main-form');

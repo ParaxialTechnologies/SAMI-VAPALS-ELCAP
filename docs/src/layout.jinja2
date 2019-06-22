@@ -33,6 +33,7 @@
 <script src="{{ path }}lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.js"></script>
 <script src="{{ path }}lib/clipboard.js"></script>
 
+{# Must be used online. See https://developers.google.com/chart/interactive/faq#offline#}
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="{{ path }}jquery-conditonally-enable.js"></script>
 <script src="{{ path }}jquery-conditonally-display.js"></script>
@@ -62,9 +63,9 @@
                 <span class="icon-bar"></span>
             </button>
             <a href="{{ "home.html" if mockup else "/vapals" }}" class="text-nowrap" style="text-decoration: none">
-                <img src="{{ path }}img/logo_transparent.png" title="VAPALS-ELCAP" height="50" alt="VAPALS-ELCAP Logo"
+                <img src="{{ path }}img/logo_transparent.png" title="VAPALS-ELCAP" style="height:50px;" alt="VAPALS-ELCAP Logo"
                      class="hidden-xs"/>
-                <img src="{{ path }}img/logo_name.png" title="VAPALS-ELCAP" height="50" alt="VAPALS-ELCAP Logo"/>
+                <img src="{{ path }}img/logo_name.png" title="VAPALS-ELCAP" style="height:50px;" alt="VAPALS-ELCAP Logo"/>
             </a>
         </div>
         <div class="navbar-collapse collapse navbar-right" id="navbar-main">
@@ -116,7 +117,7 @@
     </footer>
 {% endblock %}
 
-<script language="JavaScript">
+<script lang="JavaScript">
     const studyIdVal = $("#studyid-html-element").attr('value');
     const studyId = $.trim(studyIdVal);
     if (studyId && studyId.indexOf("@@") === -1) {

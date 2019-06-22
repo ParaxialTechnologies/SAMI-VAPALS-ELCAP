@@ -290,7 +290,7 @@
 
             <div class="row">
                 <div class="col-md-4 form-group">
-                    {{ f.floatingLabel("ceinod", "Indicate the index nodule driving follow up:") }}
+                    {{ f.floatingLabel("ceinod", "Indicate the index nodule driving follow-up:") }}
                 </div>
                 <div class="col-sm-3 form-group">
                     <select name="ceinod" id="ceinod" class="form-control">
@@ -388,7 +388,7 @@
             </div>
 
             <hr/>
-            <h3>Follow Up</h3>
+            <h3>Follow-Up</h3>
             <div class="row">
                 <div class="col-md-6 form-group">
                     <label class="required" for="cefu">Follow-up</label>
@@ -524,7 +524,7 @@
                         cefu: {validators: {callback: {callback: notDash, message: 'Select a value'}}},
                         cefud: {
                             validators: {
-                                notEmpty: {message: 'Follow up date is required'},
+                                notEmpty: {message: 'Follow-up date is required'},
                                 date: {min: VAPALS.todaysDate(), message: 'Date may not be in the past'}
                             }
                         },
@@ -571,7 +571,7 @@
 
             const fv = createFormValidator();
 
-            //follow up date calculator.
+            //follow-up date calculator.
             $("[name=cefuw]").on("change", function () {
                 const when = $("[name='cefuw']:checked").val();
                 switch (when) {

@@ -31,7 +31,7 @@
 
         {# Build a navigation bar that will affix itself to the top of the screen and highligh active sections#}
         {% set tab_list = [("Scan","scan"), ("Nodules", "nodules"), ("Emphysema/Coronary Calcifications","emphysema-coronary"),
-                            ("Other Abnormalities","abnormalities"), ("Impression & Follow Up","impression")] -%}
+                            ("Other Abnormalities","abnormalities"), ("Impression & Follow-Up","impression")] -%}
         <nav class="navbar navbar-default hidden-xs" id="wizard-bar" data-spy="affix" data-offset-top="220"
              data-offset-bottom="70">
             <div class="row">
@@ -446,7 +446,7 @@
                         //Virtual fields don't work with fv.addField, so we have to add it here
                         followup: {
                             selector: '[name^=cefu][type=checkbox], [name^=cefu][type=radio]',
-                            validators: {choice: {min: 1, message: 'Select at least one CT or Other follow up option'}}
+                            validators: {choice: {min: 1, message: 'Select at least one CT or Other follow-up option'}}
                         },
 
                     },

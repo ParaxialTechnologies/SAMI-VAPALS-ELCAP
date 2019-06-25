@@ -1,8 +1,7 @@
 {% extends 'layout.jinja2' %}
 {% import 'forms.jinja2' as f %}
 {% block title %}{{ title | escape }}{% endblock %}
-
-{% block body %}
+{% block head %}
     <style>
         .chart {
             width: 100%;
@@ -13,6 +12,10 @@
             margin: 0 !important;
         }
     </style>
+{% endblock %}
+
+{% block body %}
+
     <div class="container-fluid" style="max-width:1550px">
         <div class="row">
             <div class="col-sm-6 col-sm-offset-3">
@@ -76,7 +79,7 @@
 {% endblock %}
 
 {% block script %}
-    <script language="JavaScript">
+    <script>
         $(function () {
             // Set up the modal confirmation to include a new patient
             $('#pt-inclusion-btn').on("click", function (e) {
@@ -100,8 +103,7 @@
                 if (patient.vapals === 1) {
                     $('#pt-lookup-samiroute').val('casereview');
                     $('#pt-lookup-form').submit();
-                }
-                else {
+                } else {
                     $('#pt-lookup-samiroute').val('newcase');
                     $('#pt-inclusion').modal('show');
                 }
@@ -163,12 +165,11 @@
             if (ruralData) {
                 if (ruralData.error) {
                     $("#chart-rural-heading").hide();
-                    const $alert = $("<div class='alert alert-warning'/>");
+                    const $alert = $("<div class='alert alert-warning'></div>");
                     $alert.append("<span class=\"glyphicon glyphicon-exclamation-sign\" aria-hidden=\"true\"></span>");
                     $alert.append("&nbsp;Unable to view site statistics. <strong>" + ruralData.error + "</strong>");
                     $('#chart-rural').html("").append($alert);
-                }
-                else {
+                } else {
                     const siteData = google.visualization.arrayToDataTable([
                         ['Classification', 'Count'],
                         ['Rural', ruralData.rural],

@@ -38,7 +38,8 @@
                         {{ f.checkbox("sbahaog", "g", "Nuclear industry") }}
                         {{ f.checkbox("sbahaoc", "c", "Ship construction/repair") }}
                         {{ f.checkbox("sbahaoo", "o", "Other") }}
-                        <input class="form-control input-sm" type="text" name="sbahas" id="sbahas" title="Other work"/>
+                        <label for="sbahas" class="aria-hidden">Other work</label>
+                        <input class="form-control input-sm" type="text" name="sbahas" id="sbahas"/>
                     </div>
                 </div>
             </div>
@@ -61,8 +62,8 @@
                         {{ f.checkbox("sbwcl", "l", "Unexplained weight loss greater than 20 lbs.") }}
                         {{ f.checkbox("sbwch", "h", "Unexplained hoarseness") }}
                         {{ f.checkbox("sbwco", "o", "Other") }}
-                        <input class="form-control input-sm" type="text" name="sbwcos" id="sbwcos"
-                               title="Other symptom"/>
+                        <label for="sbwcos" class="aria-hidden">Other symptom</label>
+                        <input class="form-control input-sm" type="text" name="sbwcos" id="sbwcos"/>
                     </div>
                 </div>
             </div>
@@ -174,8 +175,8 @@
                                     {{ f.checkbox("sbscsml", "l", "Lozenges") }}
                                     {{ f.checkbox("sbscsmg", "g", "Gum") }}
                                     {{ f.checkbox("sbscsmo", "o", "Other") }}
-                                    <input class="form-control input-sm" type="text" name="sbscsmoo" id="sbscsmoo"
-                                           title="Other medication"/>
+                                    <label for="sbscsmoo" class="aria-hidden">Other medication</label>
+                                    <input class="form-control input-sm" type="text" name="sbscsmoo" id="sbscsmoo"/>
                                 </div>
                             </div>
                         </div>
@@ -340,7 +341,7 @@
                         <div id="sbaoc-container" style="display: none;">
                             <div class="form-group col-sm-4 col-md-2">
                                 <label class="control-label" for="sbaocsp">Specify</label>
-                                <input type="text" name="sbaocsp" class="form-control input-sm"/>
+                                <input type="text" name="sbaocsp" id="sbaocsp" class="form-control input-sm"/>
                             </div>
 
                             <div class="form-group col-sm-4 col-md-2">
@@ -720,7 +721,7 @@
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-7" id="sbmpoth-container" style="display: none;">
                             <div class="form-group">
-                                <label class="control-label" for="sbmpoth-n">Specify</label><br/>
+                                <label class="control-label" for="sbmpod">Specify</label><br/>
                                 <input class="form-control" type="text" name="sbmpod" id="sbmpod">
                             </div>
                         </div>
@@ -756,7 +757,7 @@
 {% endblock %}
 
 {% block script %}
-    <script language="JavaScript">
+    <script>
 
         function createFormValidator() {
 

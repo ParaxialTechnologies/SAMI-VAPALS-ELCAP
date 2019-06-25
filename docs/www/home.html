@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.06.21" name="version"/>
+  <meta content="2019.06.24" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    Home
@@ -17,6 +17,16 @@
   <link href="lib/jquery-ui-1.12.1/jquery-ui.structure.min.css" rel="stylesheet"/>
   <link href="lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
   <link href="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
+  <style>
+   .chart {
+            width: 100%;
+            min-height: 450px;
+        }
+
+        .row {
+            margin: 0 !important;
+        }
+  </style>
  </head>
  <body id="body" style="position: relative;">
   <script src="lib/es6-shim.js">
@@ -76,8 +86,8 @@
       </span>
      </button>
      <a class="text-nowrap" href="/vapals" style="text-decoration: none">
-      <img alt="VAPALS-ELCAP Logo" class="hidden-xs" height="50" src="img/logo_transparent.png" title="VAPALS-ELCAP"/>
-      <img alt="VAPALS-ELCAP Logo" height="50" src="img/logo_name.png" title="VAPALS-ELCAP"/>
+      <img alt="VAPALS-ELCAP Logo" class="hidden-xs" src="img/logo_transparent.png" title="VAPALS-ELCAP"/>
+      <img alt="VAPALS-ELCAP Logo" src="img/logo_name.png" title="VAPALS-ELCAP"/>
      </a>
     </div>
     <div class="navbar-collapse collapse navbar-right" id="navbar-main">
@@ -138,16 +148,6 @@
     </div>
    </div>
   </nav>
-  <style>
-   .chart {
-            width: 100%;
-            min-height: 450px;
-        }
-
-        .row {
-            margin: 0 !important;
-        }
-  </style>
   <div class="container-fluid" style="max-width:1550px">
    <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
@@ -232,11 +232,11 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.06.21
+     2019.06.24
     </span>
    </div>
   </footer>
-  <script language="JavaScript">
+  <script>
    const studyIdVal = $("#studyid-html-element").attr('value');
     const studyId = $.trim(studyIdVal);
     if (studyId && studyId.indexOf("@@") === -1) {
@@ -295,7 +295,7 @@
 
     })
   </script>
-  <script language="JavaScript">
+  <script>
    $(function () {
             // Set up the modal confirmation to include a new patient
             $('#pt-inclusion-btn').on("click", function (e) {
@@ -319,8 +319,7 @@
                 if (patient.vapals === 1) {
                     $('#pt-lookup-samiroute').val('casereview');
                     $('#pt-lookup-form').submit();
-                }
-                else {
+                } else {
                     $('#pt-lookup-samiroute').val('newcase');
                     $('#pt-inclusion').modal('show');
                 }
@@ -382,12 +381,11 @@
             if (ruralData) {
                 if (ruralData.error) {
                     $("#chart-rural-heading").hide();
-                    const $alert = $("<div class='alert alert-warning'/>");
+                    const $alert = $("<div class='alert alert-warning'></div>");
                     $alert.append("<span class=\"glyphicon glyphicon-exclamation-sign\" aria-hidden=\"true\"></span>");
                     $alert.append("&nbsp;Unable to view site statistics. <strong>" + ruralData.error + "</strong>");
                     $('#chart-rural').html("").append($alert);
-                }
-                else {
+                } else {
                     const siteData = google.visualization.arrayToDataTable([
                         ['Classification', 'Count'],
                         ['Rural', ruralData.rural],

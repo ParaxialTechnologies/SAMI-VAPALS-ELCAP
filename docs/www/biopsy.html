@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.06.21" name="version"/>
+  <meta content="2019.06.24" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    Biopsy Form
@@ -76,8 +76,8 @@
       </span>
      </button>
      <a class="text-nowrap" href="/vapals" style="text-decoration: none">
-      <img alt="VAPALS-ELCAP Logo" class="hidden-xs" height="50" src="img/logo_transparent.png" title="VAPALS-ELCAP"/>
-      <img alt="VAPALS-ELCAP Logo" height="50" src="img/logo_name.png" title="VAPALS-ELCAP"/>
+      <img alt="VAPALS-ELCAP Logo" class="hidden-xs" src="img/logo_transparent.png" title="VAPALS-ELCAP"/>
+      <img alt="VAPALS-ELCAP Logo" src="img/logo_name.png" title="VAPALS-ELCAP"/>
      </a>
     </div>
     <div class="navbar-collapse collapse navbar-right" id="navbar-main">
@@ -164,7 +164,7 @@
     </h3>
     <div class="row">
      <div class="col-md-3 form-group">
-      <label class="control-label required" for="bxp-n">
+      <label class="control-label required">
        Was a biopsy performed?
       </label>
       <div>
@@ -208,7 +208,7 @@
      <div class="row" style="padding-bottom: 10px;">
       <div class="col-sm-4">
        <div class="form-group">
-        <label class="control-label required" for="bxinds">
+        <label class="control-label required">
          Indication for biopsy
         </label>
         <div class="checkbox">
@@ -246,12 +246,15 @@
           Other (specify)
          </label>
         </div>
-        <input class="form-control input-sm" id="bxind" name="bxind" required="required" title="Other" type="text"/>
+        <label class="aria-hidden" for="bxind">
+         Specify
+        </label>
+        <input class="form-control input-sm" id="bxind" name="bxind" required="required" type="text"/>
        </div>
       </div>
       <div class="col-sm-4">
        <div class="form-group">
-        <label class="control-label required" for="bxloclul">
+        <label class="control-label required">
          Lesion site
         </label>
         <div class="checkbox">
@@ -338,12 +341,15 @@
           Other (specify)
          </label>
         </div>
+        <label class="aria-hidden" for="bxlocs">
+         Specify
+        </label>
         <input class="form-control input-sm" id="bxlocs" name="bxlocs" required="required" title="Other" type="text"/>
        </div>
       </div>
       <div class="col-sm-4">
        <div class="form-group">
-        <label for="bxtosc">
+        <label>
          Type of specimen
         </label>
         <div class="checkbox">
@@ -362,7 +368,7 @@
         </div>
        </div>
        <div class="form-group">
-        <label for="bxtopc">
+        <label>
          Type of procedure
         </label>
         <div class="checkbox">
@@ -400,13 +406,16 @@
           Other (specify)
          </label>
         </div>
-        <input class="form-control" id="bxtopos" name="bxtopos" required="required" title="Other" type="text"/>
+        <label class="aria-hidden" for="bxtopos">
+         Specify
+        </label>
+        <input class="form-control" id="bxtopos" name="bxtopos" required="required" type="text"/>
        </div>
       </div>
      </div>
      <div class="row">
       <div class="col-md-4 form-group">
-       <label class="control-label required" for="bxcp-n">
+       <label class="control-label required">
         Complications during biopsy?
        </label>
        <div>
@@ -423,7 +432,7 @@
       <div class="col-md-8">
        <div id="bxcp-container">
         <div class="form-group">
-         <label class="required" for="bxtopc">
+         <label class="required">
           Type of complication
          </label>
          <div class="checkbox">
@@ -454,7 +463,10 @@
            Other (specify)
           </label>
          </div>
-         <input class="form-control input-sm" id="bxcpos" name="bxcpos" required="required" title="Other" type="text"/>
+         <label class="aria-hidden" for="bxcpos">
+          Specify
+         </label>
+         <input class="form-control input-sm" id="bxcpos" name="bxcpos" required="required" type="text"/>
         </div>
        </div>
       </div>
@@ -473,7 +485,7 @@
     </h3>
     <div class="row">
      <div class="col-md-3 form-group">
-      <label class="control-label required" for="rbmep-n">
+      <label class="control-label required">
        Was a mediastinoscopy performed?
       </label>
       <div>
@@ -517,7 +529,7 @@
      </div>
      <div class="row" style="padding-bottom: 10px;">
       <div class="col-md-4">
-       <label class="control-label required" for="rbmllul">
+       <label class="control-label required">
         Lesion site
        </label>
        <div class="form-group">
@@ -605,13 +617,16 @@
           Other (specify)
          </label>
         </div>
-        <input class="form-control input-sm" id="rbmls" name="rbmls" required="required" title="Other" type="text"/>
+        <label class="aria-hidden" for="rbmls">
+         Specify
+        </label>
+        <input class="form-control input-sm" id="rbmls" name="rbmls" required="required" type="text"/>
        </div>
       </div>
      </div>
      <div class="row">
       <div class="col-md-4 form-group">
-       <label class="required" for="rbmec-n">
+       <label class="required">
         Complications during procedure?
        </label>
        <div>
@@ -638,7 +653,7 @@
     </h3>
     <div class="row">
      <div class="col-md-5 form-group">
-      <label class="control-label required" for="rbmt-n">
+      <label class="control-label required">
        Was molecular testing performed on the pathology
                         specimen?
       </label>
@@ -657,7 +672,7 @@
     <div class="row">
      <div class="col-sm-4 form-group" id="rbmt-container">
       <div class="form-group">
-       <label class="control-label required" for="rbmte-n">
+       <label class="control-label required">
         EGFR
        </label>
        <br/>
@@ -675,7 +690,7 @@
        </label>
       </div>
       <div class="form-group">
-       <label class="control-label required" for="rbmtk-n">
+       <label class="control-label required">
         K-Ras
        </label>
        <br/>
@@ -693,7 +708,7 @@
        </label>
       </div>
       <div class="form-group">
-       <label class="control-label required" for="rbmta-n">
+       <label class="control-label required">
         ALK
        </label>
        <br/>
@@ -791,11 +806,11 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.06.21
+     2019.06.24
     </span>
    </div>
   </footer>
-  <script language="JavaScript">
+  <script>
    const studyIdVal = $("#studyid-html-element").attr('value');
     const studyId = $.trim(studyIdVal);
     if (studyId && studyId.indexOf("@@") === -1) {
@@ -854,7 +869,7 @@
 
     })
   </script>
-  <script language="JavaScript">
+  <script>
    function createFormValidator() {
 
             const $form = $('#main-form');

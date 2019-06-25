@@ -1,9 +1,11 @@
 <!--suppress ALL -->
 {% macro floatingLabel(for, text, extraClasses) -%}
-    <label for="{{ for }}"
-           class="visible-xs visible-sm {{ extraClasses }}"
-    >{{ text }}</label>
-    <label for="{{ for }}" class="text-right pull-right hidden-xs hidden-sm {{ extraClasses }}">{{ text }}</label>
+    <label
+            {{ " for=\""+ for + "\"" if for else "" }}
+            class="visible-xs visible-sm{{ (" " + extraClasses) if extraClasses else "" }}">{{ text }}</label>
+    <label
+            {{ " for=\""+ for + "\"" if for else "" }}
+            class="text-right pull-right hidden-xs hidden-sm{{ (" " + extraClasses) if extraClasses else "" }}">{{ text }}</label>
 {%- endmacro %}
 
 {% macro inlineRadio(groupName, id, value, labelText, required, checked, onclick, tabindex, title) -%}

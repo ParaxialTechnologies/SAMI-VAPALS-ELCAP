@@ -1,0 +1,108 @@
+#!/usr/bin/env bash
+#---------------------------------------------------------------------------
+# Copyright 2011-2017 The Open Source Electronic Health Record Agent
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
+
+# init script for VistA
+
+# Debian LSB info
+### BEGIN INIT INFO
+# Provides:          osehravista
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start VistA services at boot time
+# Description:       Starts/Stops VistA instances in a sane way.
+#                    Includes starting TaskMan.
+### END INIT INFO
+
+# Modified for VistA Expertise Network 2019-03-18T21:42Z
+
+# Setup environment variables
+source /home/osehra/etc/env.conf
+
+# Start VistA background tasks
+start() {
+    # If a database is shutdown cleanly there shouldn't be anything in the
+    # journals to replay, so we can run this without worry
+    echo "Ensuring a consistant database (mupip recover -backward)"
+    su osehra -c "source /home/osehra/etc/env.conf && $gtm_dist/mupip journal -recover -backward /home/osehra/data/journals/osehra.mjl >> /home/osehra/var/log/journalRecovery.log 2>&1"
+    su osehra -c "source /home/osehra/etc/env.conf && $gtm_dist/mupip journal -recover -backward /home/osehra/data/journals/perf.mjl >> /home/osehra/var/log/journalRecovery.log 2>&1"
+    
+    # Rundown temp database since we don't care about it
+    su osehra -c "source /home/osehra/etc/env.conf && $gtm_dist/mupip rundown -region \"TEMP\" >> /home/osehra/var/log/tempRundown.log"
+    
+    # Enable journaling
+    su osehra -c "source /home/osehra/etc/env.conf && /home/osehra/bin/journal-enable.sh"
+
+    echo "Starting Mumps web server"
+    su osehra -c "source /home/osehra/etc/env.conf && cd /home/osehra/tmp && mumps -run go^%webreq"
+
+    echo "Starting TaskMan"
+    su osehra -c "source /home/osehra/etc/env.conf && cd /home/osehra/tmp && $gtm_dist/mumps -run START^ZTMB"
+}
+stop() {
+    echo "Stopping Mumps web server"
+    su osehra -c "source /home/osehra/etc/env.conf && cd /home/osehra/tmp && mumps -run stop^%webreq"
+    
+    echo "Stopping TaskMan"
+    su osehra -c "source /home/osehra/etc/env.conf && cd /home/osehra/tmp && mumps -run ^%XCMD 'S U=\"^\" D STOP^ZTMKU' << EOF
+Y
+Y
+Y
+EOF"
+    
+    # Wait for TaskMan to stop
+    echo "Waiting for TaskMan to stop (5 sec)"
+    sleep 5
+
+    # Look for M processes and terminate them nicely
+    processes=$(pgrep mumps)
+    if [ ! -z "${processes}" ] ; then
+        echo "Stopping any remaining M processes nicely"
+        for i in ${processes}
+        do
+            mupip stop ${i}
+        done
+
+        # Wait for process to react to mupip stop instead of force kill later
+        sleep 5
+    fi
+
+    # Look for M processes that are still running
+    processes=$(pgrep mumps)
+    if [ ! -z "${processes}" ] ; then
+        #TODO: logging required here
+        echo "M process are being shutdown forcefully!"
+        pkill -9 mumps
+    fi
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        ;;
+esac

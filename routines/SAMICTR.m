@@ -138,7 +138,7 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  i $$XVAL("cectp",vals)'="" d  ;
  . d OUT("Limited Diagnostic CT examination was performed.")
  e  d  ;
- . d OUT("CT examination of the entire thorax was performed at"_$$XSUB("cectp",vals,dict)_" settings.")
+ . d OUT("CT examination of the entire thorax was performed at "_$$XSUB("cectp",vals,dict)_" settings.")
  ;
  i $$XVAL("cectrst",vals)'="" d  ;
  . d OUT(" Images were obtained at "_$$XVAL("cectrst",vals)_" mm slice thickness.")

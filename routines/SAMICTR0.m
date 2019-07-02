@@ -158,7 +158,7 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  . n nvadbo s nvadbo=1
  . n ii
  . f ii="ceoaa","ceaga","ceasa","ceala","ceapa","ceaaa","ceaka" d  ;
- . . i $$XVAL(ii,vals)="e" set nvadbo=0
+ . . i $$XVAL(ii,vals)="y" set nvadbo=0
  . ;
  . i nvadbo=1 d  ;
  . . d OUT("Upper abdominal images were not acquired on the current scan due to its limited nature.")

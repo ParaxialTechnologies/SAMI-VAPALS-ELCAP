@@ -140,7 +140,7 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  . d OUT("Comparisons: "_$$XVAL("cedcs",vals))
  . s nopri=0
  if $$XVAL("cedps",vals)'="" d  ;
- . d OUT($$XVAL("cedps",vals))
+ . d OUT(" "_$$XVAL("cedps",vals))
  . s nopri=0
  d:nopri OUT("None")
  ;

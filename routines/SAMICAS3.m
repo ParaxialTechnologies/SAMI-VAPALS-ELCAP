@@ -67,8 +67,11 @@ WSNFPOST ; post new form selection (post service)
  ; check to see if form already exists
  ;
  new root set root=$$setroot^%wd("vapals-patients")
+ n collide s collide=0 ; duplicate form for today - backdate forms scenario
  if $data(@root@("graph",sid,nuform_"-"_datekey)) do  ; already exists
+ . s collide=1
  . if nuform="siform" quit
+ . if nuform="sbform" quit  ; do not create multiple background forms
  . new lastone
  . set lastone=$order(@root@("graph",sid,nuform_"-a  "),-1)
  . quit:lastone=""
@@ -76,6 +79,13 @@ WSNFPOST ; post new form selection (post service)
  . set datekey=$$KEYDATE^SAMIHOM3($$FMADD^XLFDT(newfm,1)) ; add one day to the last form
  ;
  if nuform="sbform" do  ;
+ . new oldkey s oldkey=$o(@root@("graph",sid,"sbform"))
+ . s ^gpl("sbform","sid")=sid
+ . s ^gpl("sbform","oldkey")=oldkey
+ . i $e(oldkey,1,6)="sbform" d  q  ;
+ . . set ARGS("key")=oldkey
+ . . set ARGS("studyid")=sid
+ . . set ARGS("form")="vapals:sbform"
  . new key set key="sbform-"_datekey
  . set ARGS("key")=key
  . set ARGS("studyid")=sid

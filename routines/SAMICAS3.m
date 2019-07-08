@@ -80,7 +80,7 @@ WSNFPOST ; post new form selection (post service)
  ;
  if nuform="sbform" do  ;
  . new oldkey s oldkey=$o(@root@("graph",sid,"sbform"))
- . i oldkey'="" d  q  ;
+ . i $e(oldkey,1,6)="sbform" d  q  ;
  . . set ARGS("key")=oldkey
  . . set ARGS("studyid")=sid
  . . set ARGS("form")="vapals:sbform"

@@ -80,8 +80,6 @@ WSNFPOST ; post new form selection (post service)
  ;
  if nuform="sbform" do  ;
  . new oldkey s oldkey=$o(@root@("graph",sid,"sbform"))
- . s ^gpl("sbform","sid")=sid
- . s ^gpl("sbform","oldkey")=oldkey
  . i $e(oldkey,1,6)="sbform" d  q  ;
  . . set ARGS("key")=oldkey
  . . set ARGS("studyid")=sid

@@ -138,7 +138,7 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  i $$XVAL("cectp",vals)'="" d  ;
  . d OUT("Limited Diagnostic CT examination was performed.")
  e  d  ;
- . d OUT("CT examination of the entire thorax was performed at"_$$XSUB("cectp",vals,dict)_" settings.")
+ . d OUT("CT examination of the entire thorax was performed at "_$$XSUB("cectp",vals,dict)_" settings.")
  ;
  i $$XVAL("cectrst",vals)'="" d  ;
  . d OUT(" Images were obtained at "_$$XVAL("cectrst",vals)_" mm slice thickness.")
@@ -148,7 +148,7 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  . n nvadbo s nvadbo=1
  . n ii
  . f ii="ceoaa","ceaga","ceasa","ceala","ceapa","ceaaa","ceaka" d  ;
- . . i $$XVAL(ii,vals)="e" set nvadbo=0
+ . . i $$XVAL(ii,vals)="y" set nvadbo=0
  . ;
  . i nvadbo=1 d  ;
  . . d OUT("Upper abdominal images were not acquired on the current scan due to its limited nature.")

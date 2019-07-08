@@ -1,4 +1,4 @@
-SAMIUTF ;ven/lgc - UNIT TEST for SAMIFORM,SAMIFLD,SAMIFWS,SAMIFDM ; 5/21/19 7:11pm
+SAMIUTF ;ven/lgc - UNIT TEST for SAMIFORM,SAMIFLD,SAMIFWS,SAMIFDM ; 7/8/19 3:30pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -175,6 +175,8 @@ UTLOAD ; @TEST -  used for Dom's new style forms
  n SAMISID,SAMILINE,uline,SAMIFORM,SAMIFLTR,SAMIJ,SAMIZHTML
  n uline
  D PLUTARR^SAMIUTST(.uline,"UTSSUB2^SAMIUTF")
+ ; Correct for birthdate
+ set uline=$$FIXAGE^SAMIUTST(uline)
  s utsuccess=0
  s SAMIFORM="siform-2018-11-13"
  s SAMISID="XXX00001"
@@ -295,7 +297,10 @@ UTGETHDR ; @TEST - extrinsic returns header string for patient sid
  ;delete sisn value to force more line coverage
  n root s root=$$setroot^%wd("vapals-patients")
  s @root@(1,"ssissn")=""
- s utsuccess=($$GETHDR^SAMIFLD(sid)="444-67-8924 DOB: 7/8/1956 AGE: 62 GENDER: M")
+ new SAMIUPOO
+ d PLUTARR^SAMIUTST(.SAMIUPOO,"UTGETHDR^SAMIUTF")
+ s SAMIUPOO=$$FIXAGE^SAMIUTST(SAMIUPOO)
+ s utsuccess=($$GETHDR^SAMIFLD(sid)=SAMIUPOO)
  d CHKEQ^%ut(utsuccess,1,"Testing extrinsic returns header FAILED!")
  q
  ;

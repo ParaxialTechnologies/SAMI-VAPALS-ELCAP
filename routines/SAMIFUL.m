@@ -1,4 +1,4 @@
-SAMIFUL ;ven/gpl - vapals-elcap: form log ; 4/16/19 1:00pm
+SAMIFUL ;ven/gpl - vapals-elcap: form log ; 6/28/19 5:30pm
  ;;18.0;SAMI;;
  ;
  ; Routine SAMIFUL contains routine & module info & the primary
@@ -173,6 +173,11 @@ SAMIFUL ;ven/gpl - vapals-elcap: form log ; 4/16/19 1:00pm
  ; 2019-03-29 ven/lgc SAMI*18*0t04 SAMIFLD
  ;   Modified LOAD to include George's new variables
  ;     for intake notes.
+ ;
+ ; 2019-06-28 ven/lgc SAMI*18*1
+ ;   Modified SAMIFLD to use MASH age^%th to calculate
+ ;     patient's age
+ ;
  ;SAMICAS2.m:44: ; FIXHREF^SAMIFRM2 ---FIXHREF^SAMIFORM
  ;SAMICAS2.m:45: ; FIXSRC^SAMIFRM2 ---FIXSRC^SAMIFORM
  ;SAMICAS2.m:48: ; $$GETLAST5^SAMIFRM2 ---GETLAST5^SAMIFORM

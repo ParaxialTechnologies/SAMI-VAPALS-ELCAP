@@ -1,4 +1,4 @@
-SAMIUTST ;ven/lgc - Unit Test Utilities ; 6/10/19 12:06pm
+SAMIUTST ;ven/lgc - Unit Test Utilities ; 7/2/19 8:15pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -72,6 +72,11 @@ PLUTARR(arr,title) ;
  n gien s gien=$$GETGIEN(root,title)
  ; pull data
  m arr=@root@(gien)
+ ; Now fix AGE using DOB
+ n cnt set cnt=0
+ for  set cnt=$order(arr(cnt)) quit:'cnt  do
+ . if arr(cnt)["DOB",arr(cnt)["AGE" do
+ . set arr(cnt)=$$FIXAGE^SAMIUTST(arr(cnt))
  q
  ;
  ;Enter
@@ -130,6 +135,39 @@ BLDRTNS ;
  d SVUTARR(.arc,"vapals routines checksums")
  q
  ;
+ ;@ppi
+FIXAGE(SAMISTR) ;
+ ;@input
+ ;  SAMISTR = line of text
+ ;@output
+ ;  corrected line of text
+ ;
+ ; When checking that generated HTML matches that expected
+ ;   it is necessary to correct the AGE of the patient 
+ ;   in our saved array in case they have passed a birthday
+ ;
+ set SAMISTR=$get(SAMISTR)
+ new X,Y,dob,dobfm,age,strg
+ quit:'(SAMISTR["DOB: ") SAMISTR
+ quit:'(SAMISTR["AGE: ") SAMISTR
+ set dob=$piece($piece(SAMISTR,"DOB: ",2)," ")
+ set X=dob do ^%DT set dobfm=Y
+ quit:(dobfm<1000000)!(dobfm>9991231) SAMISTR
+ set age=$$age^%th(Y)
+ quit:(Y=-1) SAMISTR
+ set strg=$p(SAMISTR,"AGE: ")_"AGE: "_age_" "
+ set strg=strg_$piece($piece(SAMISTR,"AGE:",2)," ",3,999)
+ quit strg
+ ;
+UTFIXAGE ; @TEST - Test that age is corrected according to dob
+ n poo,age
+ s poo="444-67-8924 DOB: 7/8/1956 AGE: 23 GENDER: M"
+ s poo=$$FIXAGE^SAMIUTST(poo)
+ s age=$$age^%th(2560708)
+ s utsuccess=poo[("AGE: "_age_" ")
+ d CHKEQ^%ut(utsuccess,1,"Testing correct age in string FAILED!")
+ quit
+ ;
  ;
 UTCHKSM ; @TEST - Test VAPALS routines checksums
  n poo,arc,temp,nodea,nodet,utsuccess
@@ -184,6 +222,24 @@ UTSVTSTP ; @TEST - Push a copy of test patient into vapals unit tests
  s utsuccess=(@rootut@(gienut,"dfn")=dfn)
  d CHKEQ^%ut(utsuccess,1,"Test placing test patient in unit test graphstore FAILED!")
  q
+ ;
+UTSVARR ; @TEST - Test push and pull of data to unit test graphstore works
+ new SAMIUPOO,SAMIUARC
+ set SAMIUPOO="TEST line 1"
+ set SAMIUPOO="TEST line 2"
+ set SAMIUPOO="TEST line 3"
+ set SAMIUPOO="TEST line 4"
+ do SVUTARR^SAMIUTST(.SAMIUPOO,"UTSVARR^SAMIUTST")
+ do PLUTARR^SAMIUTST(.SAMIUARC,"UTSVARR^SAMIUTST")
+ n nodep,nodea
+ s utsuccess=1
+ s nodea=$na(SAMIUARC),nodep=$na(SAMIUPOO)
+ f  s nodea=$q(nodea),nodep=$q(nodep) q:nodea=""  d  q:'utsuccess
+ . if '(nodea=nodep) s utsuccess=0
+ . if '(@nodea=@nodep) s utsuccess=0
+ do CHKEQ^%ut(utsuccess,1,"Testing push/pull to unit test graph FAILED!")
+ q
+ ;
  ;
 RTNS ;
  ;;SAMIADMN

@@ -1,4 +1,4 @@
-SAMIFLD ;ven/gpl - elcap: form load & case review support ; 4/15/19 2:22pm
+SAMIFLD ;ven/gpl - elcap: form load & case review support ; 6/28/19 6:27pm
  ;;18.0;SAMI;;
  ;
  ; Routine SAMIFLD contains subroutines for processing the ELCAP forms,
@@ -241,11 +241,16 @@ GETHDR(sid) ; header string for patient sid
  . set @root@(ien,"sissn")=pssn
  . quit
  ;
- new dob set dob=$get(@root@(ien,"sbdob")) ; dob in VAPALS format
+AGE new dob set dob=$get(@root@(ien,"sbdob")) ; dob in VAPALS format
  new X set X=dob
  new Y
  do ^%DT
- new age set age=$piece($$FMDIFF^XLFDT($$NOW^XLFDT,Y)/365,".")
+ ;
+ ; change ven/lgc 20190628 - calculate age with MASH 
+ ;
+ ;new age set age=$piece($$FMDIFF^XLFDT($$NOW^XLFDT,Y)/365,".")
+ new age s age=$$age^%th(Y)
+ ;
  set @root@(ien,"age")=age
  ;
  new sex set sex=$get(@root@(ien,"sex"))

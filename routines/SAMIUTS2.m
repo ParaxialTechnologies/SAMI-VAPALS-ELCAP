@@ -1,4 +1,4 @@
-SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICASE,SAMICAS2,SAMICAS3 ; 3/15/19 10:54am
+SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICASE,SAMICAS2,SAMICAS3 ; 7/8/19 4:04pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -179,10 +179,10 @@ UTMKFUF ; @TEST - create Follow-up form
  d CHKEQ^%ut(utsuccess,1,"Testing create followup  form FAILED!")
  q
  ;
-UTMKPTF ; @TEST - create ct evaluation form
+UTMKPTF ; @TEST - create pt form
  ;MKPTFORM(sid,key)
  d CHKFORM^SAMIUTS2("ptform","MKPTFORM",.utsuccess)
- d CHKEQ^%ut(utsuccess,1,"Testing create followup  form FAILED!")
+ d CHKEQ^%ut(utsuccess,1,"Testing create pt form FAILED!")
  q
  ;
 UTMKITF ; @TEST - create intervention form
@@ -191,7 +191,7 @@ UTMKITF ; @TEST - create intervention form
  d CHKEQ^%ut(utsuccess,1,"Testing create intervention form FAILED!")
  q
  ;
-UTMKBXF ; @TEST - create ct evaluation form
+UTMKBXF ; @TEST - create biopsy form
  ;MKBXFORM(sid,key)
  d CHKFORM^SAMIUTS2("bxform","MKBXFORM",.utsuccess)
  d CHKEQ^%ut(utsuccess,1,"Testing create bx ct eval form FAILED!")
@@ -379,9 +379,15 @@ CHKFORM(form,LABEL,utsuccess) ;
  ;
  n temp,SAMIUPOO
  d PLUTARR^SAMIUTST(.SAMIUPOO,LABEL)
+ ; correct age in saved array
+ n ss s ss=""
+ f  s ss=$O(SAMIUPOO(ss)) q:ss=""  d
+ . i ss="sidob" do
+ .. n X,Y s X=SAMIUPOO("sidob") do ^%DT s SAMIUPOO("age")=$$age^%th(Y)
+ ;
  m temp=@rootvp@("graph",sid,key)
  s utsuccess=1
- n ss s ss=""
+ s ss=""
  f  s ss=$O(SAMIUPOO(ss)) q:ss=""  d  q:'utsuccess
  . i '$d(temp(ss)) s utsuccess=0
  . i '($g(SAMIUPOO(ss))=$g(temp(ss))) s utsuccess=0

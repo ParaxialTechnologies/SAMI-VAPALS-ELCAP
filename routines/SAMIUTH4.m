@@ -1,4 +1,4 @@
-SAMIUTH4 ;ven/lgc - UNIT TEST for SAMIHOM3,SAMIHOM4 continued; 5/1/19 10:25am ; 5/1/19 10:44am
+SAMIUTH4 ;ven/lgc - UNIT TEST for SAMIHOM3,SAMIHOM4 continued; 5/1/19 10:25am ; 6/28/19 9:00pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -32,7 +32,7 @@ UTWSVP1 ; @TEST - Test WSVAPALS API route=""
  ;
  set utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
- do PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP1^SAMIUTH3")
+ do PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP1^SAMIUTH4")
  set nodea=$name(SAMIUARC),nodep=$name(SAMIUPOO)
  for  set nodep=$query(@nodep),nodea=$query(@nodea) quit:nodep=""  do
  . if ($extract($translate(@nodep," "),1,10)?4N1P2N1P2N) quit
@@ -55,7 +55,7 @@ UTWSVP2 ; @TEST - Test WSVAPALS API route="lookup"
  M ^SAMIUT("SAMIUTH3","UTWSVP2","SAMIUPOO")=SAMIUPOO
  set utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
- do PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP2^SAMIUTH3")
+ do PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP2^SAMIUTH4")
  set nodea=$name(SAMIUARC),nodep=$name(SAMIUPOO)
  for  set nodep=$query(@nodep),nodea=$query(@nodea) quit:nodep=""  do
  . if ($extract($translate(@nodep," "),1,10)?4N1P2N1P2N) quit
@@ -77,7 +77,7 @@ UTWSVP3 ; @TEST - Test WSVAPALS API route="casereview"
  ;
  set utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
- do PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP3^SAMIUTH3")
+ do PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP3^SAMIUTH4")
  set nodea=$name(SAMIUARC),nodep=$name(SAMIUPOO)
  for  set nodep=$query(@nodep),nodea=$query(@nodea) quit:nodep=""  do
  . if ($extract($translate(@nodep," "),1,10)?4N1P2N1P2N) quit
@@ -99,7 +99,7 @@ UTWSVP4 ; @TEST - Test WSVAPALS API route="addform"
  M ^SAMIUT("SAMIUTH3","UTWSVP4","SAMIUPOO")=SAMIUPOO
  set utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
- do PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP4^SAMIUTH3")
+ do PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP4^SAMIUTH4")
  set nodea=$name(SAMIUARC),nodep=$name(SAMIUPOO)
  for  set nodep=$query(@nodep),nodea=$query(@nodea) quit:nodep=""  do
  . if ($extract($translate(@nodep," "),1,10)?4N1P2N1P2N) quit
@@ -118,7 +118,7 @@ UTWSVP5 ; @TEST - Test WSVAPALS API route="form"
  merge SAMIUPOO=SAMIURSLT
  set utsuccess=1
  ; Get array saved in "vapals unit tests" for this unit test
- do PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP5^SAMIUTH3")
+ do PLUTARR^SAMIUTST(.SAMIUARC,"UTWSVP5^SAMIUTH4")
  set nodea=$name(SAMIUARC),nodep=$name(SAMIUPOO)
  for  set nodep=$query(@nodep),nodea=$query(@nodea) quit:nodep=""  do
  . if ($extract($translate(@nodep," "),1,10)?4N1P2N1P2N) quit

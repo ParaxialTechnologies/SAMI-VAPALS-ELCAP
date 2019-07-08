@@ -1,4 +1,4 @@
-SAMIUTN1 ;ven/lgc - UNIT TEST for SAMINOT1 ; 4/30/19 1:13pm
+SAMIUTN1 ;ven/lgc - UNIT TEST for SAMINOT1 ; 7/1/19 5:50pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -76,7 +76,7 @@ UTWSNOTE ; @TEST - web service which returns a text note
  ; pull text note
  d WSNOTE^SAMINOT1(.SAMIUPOO,.SAMIFLTR)
  ; get array of what text note should look like
- d PLUTARR^SAMIUTST(.SAMIUARC,"UTWSNOTE^SAMIUTNI")
+ d PLUTARR^SAMIUTST(.SAMIUARC,"UTWSNOTE^SAMIUTN1")
  ; compare the two
  n nodep,nodea s nodep=$na(SAMIUPOO),nodea=$na(SAMIUARC)
  s utsuccess=1
@@ -150,13 +150,14 @@ UTMKPRE ; @TEST - Testing pre note
  N SAMIUARC,SAMIUPOO
  M SAMIUARC=@root@("graph",SAMISID,SAMIFORM,"note")
  D PLUTARR^SAMIUTST(.SAMIUPOO,"UTMKPRE^SAMIUTN1")
+ H 1
  ; now compare the two
  s utsuccess=1
  n nodep s nodep=$na(SAMIUPOO),nodea=$na(SAMIUARC)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:(nodep="")  d  q:'utsuccess
  . i $qs(nodep,3)="date" quit
  . i $qs(nodep,3)="name" quit
- . i '(@nodep=@nodea) s utsuccess=0
+ . i '(@nodep=@nodea) W !,!,nodep,"=",@nodep s utsuccess=0
  d CHKEQ^%ut(utsuccess,1,"Testing create pre-note FAILED!")
  q
  ;

@@ -1,4 +1,4 @@
-SAMIUTR4 ;ven/lgc - UNIT TEST for SAMICTR4 ; 3/15/19 11:11am
+SAMIUTR4 ;ven/lgc - UNIT TEST for SAMICTR4 ; 7/1/19 9:13pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -59,7 +59,6 @@ UTBRST ; @TEST - Breast
  s cnt=0
  s para="SAMIUPOO"
  d BREAST^SAMICTR4("return",vals,dict)
- ;now pull saved report
  d PLUTARR^SAMIUTST(.SAMIUARC,"UTBRST^SAMIUTR4 report")
  ; now compare return with SAMIUARC
  n noder,nodea s noder=$na(return),nodea=$na(SAMIUARC)

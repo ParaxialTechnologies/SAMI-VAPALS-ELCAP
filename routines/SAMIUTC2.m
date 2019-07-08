@@ -1,4 +1,4 @@
-SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ; 2019-03-21T17:37Z
+SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ; 6/28/19 6:06pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -93,6 +93,7 @@ UTWSLKU2 kill SAMIUARGS,SAMIUBODY,SAMIURETURN,result,expect
  for  set resultn=$order(SAMIURETURN(resultn)),expectn=$order(expect(expectn)) quit:('resultn)!('expectn)  do
  . quit:SAMIURETURN(resultn)["meta content"
  . quit:($extract($translate(SAMIURETURN(resultn),""""" "),1,10)?4N1"."2N1"."2N)  ; Node with a date
+ . quit:SAMIURETURN(resultn)["<script>"
  . if '(resultn=expectn) set utsuccess=0
  . if '(SAMIURETURN(resultn)=expect(expectn)) set utsuccess=0
  if '(resultn="")&(expectn="") set utsuccess=0

@@ -1,4 +1,4 @@
-SAMIUTVR ; ven/lgc,arc - UNIT TESTS for SAMIVST5 ; 5/17/19 12:09pm
+SAMIUTVR ; ven/lgc,arc - UNIT TESTS for SAMIVST5 ; 7/9/19 3:24pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -52,7 +52,9 @@ UTRAPCD ; @TEST - Pulling Radiology Procedures through the broker
  if '$get(KBAPPRCD) do  quit
  . merge @root=^SAMIUT("UNIT TEST RA PROCEDURES")
  . kill ^SAMIUT("UNIT TEST RA PROCEDURES")
- . do FAIL^%ut("No radiology procedures pulled through broker")
+ . write !,"*** No radiology procedures on file  ***",!
+ . s utsuccess=0
+ ;
  new ien,ien71G,cptG,nameG,entryV
  for ien=1:1:$get(KBAPPRCD) do  quit:$get(utsuccess)
  . set ien71G=@root@(ien,"ien71")
@@ -81,10 +83,12 @@ UTRASTAF ; @TEST - Pulling all active radiology staff
  merge ^SAMIUT("UNIT TEST RAD STAFF")=@root
  new KBAPSTAF,utsuccess set utsuccess=0
  set KBAPSTAF=$$RADSTAFF^SAMIVSTA
- if '$get(KBAPSTAF) do  quit
+ if '$get(KBAPSTAF) do
  . merge @root=^SAMIUT("UNIT TEST RAD STAFF")
  . kill ^SAMIUT("UNIT TEST RAD STAFF")
- . do FAIL^%ut("No radiology staff found.")
+ . write !,"*** No radiology staff registered  ***",!
+ . s utsuccess=0
+ ;
  new ien,duzG,nameG
  for ien=1:1:$get(KBAPSTAF) do  quit:$get(utsuccess)
  . set duzG=@root@(ien,"duz")
@@ -110,10 +114,11 @@ UTRARES ; @TEST - Pulling all active radiology residents
  merge ^SAMIUT("UNIT TEST RAD RESIDENTS")=@root
  new KBAPRES,utsuccess set utsuccess=0
  set KBAPRES=$$RADRESDT^SAMIVSTA
- if '$get(KBAPRES) do  quit
+ if '$get(KBAPRES) do
  . merge @root=^SAMIUT("UNIT TEST RAD RESIDENTS")
  . kill ^SAMIUT("UNIT TEST RAD RESIDENTS")
- . do FAIL^%ut("No radiology residents found.")
+ . write !,"*** No radiology residents registered  ***",!
+ . s utsuccess=0
  new ien,duzG,nameG
  for ien=1:1:$get(KBAPRES) do  quit:$get(utsuccess)
  . set duzG=@root@(ien,"duz")
@@ -139,10 +144,11 @@ UTRATECH ; @TEST - Pulling all active radiology technologists
  merge ^SAMIUT("UNIT TEST RAD TECHS")=@root
  new KBAPTECH,utsuccess set utsuccess=0
  set KBAPTECH=$$RADTECHS^SAMIVSTA
- if '$get(KBAPTECH) do  quit
+ if '$get(KBAPTECH) do
  . merge @root=^SAMIUT("UNIT TEST RAD TECHS")
  . kill ^SAMIUT("UNIT TEST RAD TECHS")
- . do FAIL^%ut("No radiology technologists found.")
+ . write !,"*** No radiology technologists registered  ***",!
+ . s utsuccess=0
  new ien,duzG,nameG
  for ien=1:1:$get(KBAPTECH) do  quit:$get(utsuccess)
  . set duzG=@root@(ien,"duz")
@@ -168,10 +174,11 @@ UTRAMOD ; @TEST - Pulling all radiology diagnosis modifiers
  merge ^SAMIUT("UNIT TEST RAD MODS")=@root
  new KBAPMODS,utsuccess set utsuccess=0
  set KBAPMODS=$$RADMODS^SAMIVSTA
- if '$get(KBAPMODS) do  quit
+ if '$get(KBAPMODS) do
  . merge @root=^SAMIUT("UNIT TEST RAD MODS")
  . kill ^SAMIUT("UNIT TEST RAD MODS")
- . do FAIL^%ut("No radiology diagnosis modifiers found.")
+ . write !,"*** No diagnostic identifiers on file  ***",!
+ . s utsuccess=0
  new ien,ien712G,ien792G,nameG,TypeOfImagingG,ienV,TypeOfImagingV
  for ien=1:1:$get(KBAPMODS) do  quit:$get(utsuccess)
  . set ien712G=@root@(ien,"ien71.2")
@@ -200,9 +207,12 @@ UTRADXCD ; @TEST - Pull all radiology diagnostic codes
  merge ^SAMIUT("UNIT TEST RA DX CODES")=@root
  new KBAPCODS,utsuccess set utsuccess=0
  set KBAPCODS=$$RADDXCDS^SAMIVSTA
- if '$get(KBAPCODS) do  quit
- . merge @root=^SAMIUT("UNIT TEST RA DX CODES") kill ^SAMIUT("UNIT TEST RA DX CODES")
- . do FAIL^%ut("No radiology dx codes pulled through broker")
+ if '$get(KBAPCODS) do
+ . merge @root=^SAMIUT("UNIT TEST RA DX CODES")
+ . kill ^SAMIUT("UNIT TEST RA DX CODES")
+ . write !,"*** No diagnostic codes on file  ***",!
+ . s utsuccess=0
+ ;
  new ien,ien783G,nameG,nameV
  for ien=1:1:$get(KBAPCODS) do  quit:$get(utsuccess)
  . set ien783G=@root@(ien,"ien78.3")

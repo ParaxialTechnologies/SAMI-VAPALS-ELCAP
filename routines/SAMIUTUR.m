@@ -1,4 +1,4 @@
-SAMIUTUR ;ven/lgc - UNIT TEST for SAMIUR,SAMIUR1,SAMIUR2 ; 5/29/19 2:16pm
+SAMIUTUR ;ven/lgc - UNIT TEST for SAMIUR,SAMIUR1,SAMIUR2 ; 7/9/19 11:01am
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -141,7 +141,7 @@ UTSELCT ; @TEST - selects patient for the report
  ;
  k SAMIUPATS
  s SAMITYPE="activity",SAMIUDPHR=""
- s udtphrase=" as of "_$p($$FMTE^XLFDT($$HTFM^XLFDT($H),5),"@")
+ s udtphrase=" after "_unminus30
  d SELECT^SAMIUR(.SAMIUPATS,SAMITYPE,.SAMIUDPHR)
  s utsuccess=(SAMIUDPHR=udtphrase)
  i utsuccess,$d(SAMIUPATS) d

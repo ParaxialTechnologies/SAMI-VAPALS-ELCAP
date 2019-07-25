@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.07.22" name="version"/>
+  <meta content="2019.07.25" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    Lung Screening and Surveillance Intake Form
@@ -1019,7 +1019,7 @@
       Patient Communication Record
      </h3>
      <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12 form-group">
        <label class="aria-hidden">
         Patient communication record
        </label>
@@ -1029,12 +1029,20 @@
        </span>
       </div>
      </div>
+     <div class="row" id="communication-log-container">
+      <div class="col-sm-12">
+       <h4>
+        Communication Log
+       </h4>
+       <pre class="prettyprint source linenums" id="changelog"></pre>
+      </div>
+     </div>
      <hr/>
      <h3>
       Current Status
      </h3>
      <div class="row">
-      <div class="col-md-12 form-group">
+      <div class="col-md-3 col-lg-2 form-group">
        <label class="required" for="sistatus">
         Enrollment
        </label>
@@ -1047,6 +1055,25 @@
         <input id="sistatus-inactive" name="sistatus" type="radio" value="inactive"/>
         Not active
        </label>
+      </div>
+      <div class="col-md-3 col-lg-2" id="ctappt-container">
+       <div class="form-group">
+        <label class="required" for="sicectap">
+         CT Appointment
+        </label>
+        <div class="input-group datepicker">
+         <input aria-describedby="sicectap-addon" class="form-control" data-restriction="" id="sicectap" name="sicectap" required="required"/>
+         <div class="input-group-addon">
+          <div class="input-group-text" id="sicectap-addon">
+           <i aria-hidden="true" class="fa fa-calendar">
+           </i>
+          </div>
+         </div>
+        </div>
+        <small class="form-text text-muted">
+         MM/DD/YYYY
+        </small>
+       </div>
       </div>
      </div>
      <div id="reason-for-change-container" style="display: none;">
@@ -1190,7 +1217,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.07.22
+     2019.07.25
     </span>
    </div>
   </footer>
@@ -1594,6 +1621,8 @@
 
         }).first().trigger('change');
 
+        $("[name=sistatus]")
+            .conditionallyDisplay({sourceValues: 'active', enable: '#ctappt-container'});
 
         $("[name=sistatus]").on('submit', function () {
             //require reason fields when marking patient as "not active"

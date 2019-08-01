@@ -1,4 +1,4 @@
-SAMIFLD ;ven/gpl - elcap: form load & case review support ; 6/28/19 6:27pm
+SAMIFLD ;ven/gpl - elcap: form load & case review support ; 2019-08-01T15:42Z
  ;;18.0;SAMI;;
  ;
  ; Routine SAMIFLD contains subroutines for processing the ELCAP forms,
@@ -25,7 +25,7 @@ SAMIFLD ;ven/gpl - elcap: form load & case review support ; 6/28/19 6:27pm
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2019-01-08T20:59Z
+ ;@last-updated: 2019-08-01T15:42Z
  ;@application: Screening Applications Management (SAM)
  ;@module: Screening Applications Management - VAPALS-ELCAP (SAMI)
  ;@version: 18.0T04 (fourth development version)
@@ -36,6 +36,8 @@ SAMIFLD ;ven/gpl - elcap: form load & case review support ; 6/28/19 6:27pm
  ; toad@vistaexpertise.net
  ;@additional-dev: Larry G. Carlson (lgc)
  ; lgc@vistaexpertise.net
+ ;@additional-dev: Alexis Carlson (arc)
+ ; alexis.carlson@vistaexpertise.net
  ;
  ;@module-credits [see SAMIFUL]
  ;
@@ -431,6 +433,25 @@ GETSSN ; ssn for patient sid
  ;
  quit pssn ; end of $$GETSSN^SAMIFORM
  ;
+ ;
+GETPRFX ; Retrieve study ID prefix from parameter file
+ ;@signature
+ ; $$GETPRFX^SAMIFORM()
+ ;@branches-from
+ ; GETPRFX^SAMIFORM
+ ;@ppi-called-by
+ ; WSCASE^SAMICAS2
+ ;@calls
+ ; $$GET^XPAR
+ ;@output = patient's ssn
+ ;@tests
+ ; None yet
+ ;
+ new prefix
+ set prefix=$$GET^XPAR("SYS","SAMI SID PREFIX",,"Q")
+ if $get(prefix)="" set prefix="UNK"
+ ;
+ quit prefix ; End of $$GETPRFX^SAMIFORM
  ;
  ;
 EOR ; end of routine SAMIFLD

@@ -194,9 +194,13 @@ LOAD ; process html line, e.g., load json data into graph
  . do findReplace^%ts(.SAMILINE,"</pre>","")
  . new zi set zi=""
  . for  set zi=$order(@clog@(zi)) quit:zi=""  d  ;
- . . new zien set zien=+(%j_"."_zi)
+ . . n g1,g2,g3
+ . . s g1=8-$l(zi)
+ . . s $p(g2,"0",g1)=""
+ . . s g3=g2_zi
+ . . new zien set zien=SAMILNUM_"."_g3
  . . set zhtml(zien)=@clog@(zi)
- . set zhtml(%j_"."_$order(@clog@(""),-1)+1)="</pre>"
+ . set zhtml(SAMILNUM_"."_$order(@clog@(""),-1)+1)="</pre>"
  ;
  quit  ; end of ppi LOAD^SAMIFORM
  ;

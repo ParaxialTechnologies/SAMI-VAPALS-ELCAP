@@ -352,14 +352,14 @@ INNOTE(vals,dest,cnt) ;
  . s:$$XVAL("sipz",vals)'="" csz=csz_" "_$$XVAL("sipz",vals)
  . d OUT("      "_csz)
  d:$$XVAL("sippn",vals)'="" OUT("      "_$$XVAL("sippn",vals))
- d OUT("   "_"Ever smoked?: ")
- d OUT("      "_$$XVAL("sies",vals))
+ ;d OUT("   "_"Ever smoked?: ")
+ ;d OUT("      "_$$XVAL("siesm",vals))
  n sstatus s sstatus=""
- s:$$XVAL("siesn",vals) sstatus=sstatus_" Never smoked"
- s:$$XVAL("siesp",vals) sstatus=sstatus_" Past"
- s:$$XVAL("siesc",vals) sstatus=sstatus_" Current"
- s:$$XVAL("siesq",vals) sstatus=sstatus_" Willing to quit"
- d OUT("    Smoking Status: "_sstatus)
+ s:$$XVAL("siesm",vals)="n" sstatus=sstatus_" Never smoked"
+ s:$$XVAL("siesm",vals)="p" sstatus=sstatus_" Past"
+ s:$$XVAL("siesm",vals)="c" sstatus=sstatus_" Current"
+ s:$$XVAL("siesq",vals)=1 sstatus=sstatus_" Willing to quit"
+ d OUT("   Smoking Status: "_sstatus)
  d OUT("   "_"CIGs per day: ")
  d OUT("      "_$$XVAL("sicpd",vals))
  d OUT("   "_"PPD: ")

@@ -65,6 +65,8 @@ RPTTBL(RPT,TYPE) ; RPT is passed by reference and returns the
  . S RPT(7,"routine")="$$RURAL^SAMIUR2"
  . S RPT(8,"header")="Smoking Status"
  . S RPT(8,"routine")="$$SMKSTAT^SAMIUR2"
+ . S RPT(9,"header")="Pack Years at Intake"
+ . S RPT(9,"routine")="$$PACKYRS^SAMIUR2"
  if TYPE="incomplete" d  q  ;
  . S RPT(1,"header")="Enrollment date"
  . S RPT(1,"routine")="$$BLINEDT^SAMIUR2"
@@ -220,6 +222,15 @@ SMKSTAT(zdt,dfn,SAMIPATS) ; extrinsic returns smoking status
  if $g(@vals@("siesm"))="c" s smk="Current smoker"
  ;if $g(@vals@("siesq"))=1 s smk="Cu"
  q smk
+ ;
+PACKYRS(zdt,dfn,SAMIPATS) ; extrinsic returns smoking status
+ n root s root=$$setroot^%wd("vapals-patients")
+ n sid s sid=$g(@root@(dfn,"samistudyid"))
+ n siform s siform=$g(SAMIPATS(zdt,dfn,"siform"))
+ n vals s vals=$na(@root@("graph",sid,siform))
+ n pkyrs
+ s pkyrs=$g(@vals@("sippy"))
+ q pkyrs
  ;
 IFORM(zdt,dfn,SAMIPATS) ; extrinsic returns the name(s) of the incomplete forms
  n iform s iform=$g(SAMIPATS(zdt,dfn,"iform"))

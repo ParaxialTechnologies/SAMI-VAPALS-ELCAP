@@ -194,16 +194,19 @@ LOAD ; process html line, e.g., load json data into graph
  . do findReplace^%ts(.SAMILINE,"</pre>","")
  . new zi set zi=""
  . for  set zi=$order(@clog@(zi)) quit:zi=""  d  ;
- . . n g1,g2,g3
- . . s g1=8-$l(zi)
- . . s $p(g2,"0",g1)=""
- . . s g3=g2_zi
- . . new zien set zien=SAMILNUM_"."_g3
+ . . new zien set zien=SAMILNUM_"."_$$xpand(zi)
  . . set zhtml(zien)=@clog@(zi)
- . set zhtml(SAMILNUM_"."_$order(@clog@(""),-1)+1)="</pre>"
+ . set zhtml(SAMILNUM_"."_$$xpand($order(@clog@(""),-1)+1))="</pre>"
  ;
  quit  ; end of ppi LOAD^SAMIFORM
  ;
+xpand(zi) ; extrinsic that expands a number to 8 digits with preceeding 0
+ ; and add a 1 at the end so that 10,20 etc still collate
+ n g1,g2,g3
+ s g1=8-$l(zi)
+ s $p(g2,"0",g1)=""
+ s g3=g2_zi_"1"
+ q g3
  ;
  ;
 GETHDR(sid) ; header string for patient sid

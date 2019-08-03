@@ -215,10 +215,10 @@ SMKSTAT(zdt,dfn,SAMIPATS) ; extrinsic returns smoking status
  n vals s vals=$na(@root@("graph",sid,siform))
  n smk
  s smk="unknown"
- if $g(@vals@("siesn")) s smk="Never smoked"
- if $g(@vals@("siesp")) s smk="Past smoker"
- if $g(@vals@("siesc")) s smk="Current smoker"
- if $g(@vals@("siesq")) s smk="Current smoker"
+ if $g(@vals@("siesm"))="n" s smk="Never smoked"
+ if $g(@vals@("siesm"))="p" s smk="Past smoker"
+ if $g(@vals@("siesm"))="c" s smk="Current smoker"
+ ;if $g(@vals@("siesq"))=1 s smk="Cu"
  q smk
  ;
 IFORM(zdt,dfn,SAMIPATS) ; extrinsic returns the name(s) of the incomplete forms

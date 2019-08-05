@@ -36,6 +36,8 @@ SAMIFLD ;ven/gpl - elcap: form load & case review support ; 6/28/19 6:27pm
  ; toad@vistaexpertise.net
  ;@additional-dev: Larry G. Carlson (lgc)
  ; lgc@vistaexpertise.net
+ ;@additional-dev: Alexis Carlson (arc)
+ ; alexis.carlson@vistaexpertise.net ;
  ;
  ;@module-credits [see SAMIFUL]
  ;
@@ -438,6 +440,24 @@ GETSSN ; ssn for patient sid
  ;
  quit pssn ; end of $$GETSSN^SAMIFORM
  ;
+GETPRFX ; Retrieve study ID prefix from parameter file
+ ;@signature
+ ; $$GETPRFX^SAMIFORM()
+ ;@branches-from
+ ; GETPRFX^SAMIFORM
+ ;@ppi-called-by
+ ; WSCASE^SAMICAS2
+ ;@calls
+ ; $$GET^XPAR
+ ;@output = patient's ssn
+ ;@tests
+ ; None yet
+ ;
+ new prefix
+ set prefix=$$GET^XPAR("SYS","SAMI SID PREFIX",,"Q")
+ if $get(prefix)="" set prefix="UNK"
+ ;
+ quit prefix ; End of $$GETPRFX^SAMIFORM
  ;
  ;
 EOR ; end of routine SAMIFLD

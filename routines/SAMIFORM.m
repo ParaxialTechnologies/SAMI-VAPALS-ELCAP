@@ -1,4 +1,4 @@
-SAMIFORM ;ven/gpl - ielcap: form library ; 4/23/19 10:08am
+SAMIFORM ;ven/gpl - ielcap: form library ; 2019-08-01T15:42Z
  ;;18.0;SAMI;;
  ;
  ; Routine SAMIFORM contains the vapals-elcap form library.
@@ -23,7 +23,7 @@ SAMIFORM ;ven/gpl - ielcap: form library ; 4/23/19 10:08am
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2019-01-08T19:58Z
+ ;@last-updated: 2019-08-01T15:42Z
  ;@application: Screening Applications Management (SAM)
  ;@module: Screening Applications Management - VAPALS-ELCAP (SAMI)
  ;@version: 18.0T04 (fourth development version)
@@ -34,6 +34,8 @@ SAMIFORM ;ven/gpl - ielcap: form library ; 4/23/19 10:08am
  ; toad@vistaexpertise.net
  ;@additional-dev: Larry G. Carlson (lgc)
  ; lgc@vistaexpertise.net
+ ;@additional-dev: Alexis Carlson (arc)
+ ; alexis.carlson@vistaexpertise.net
  ;
  ;@module-credits [see SAMIFUL]
  ;
@@ -88,6 +90,11 @@ GETNAME(sid) goto GETNAME^SAMIFLD
  ;
  ;@ppi-code $$GETSSN^SAMIFORM, ssn for patient sid
 GETSSN(sid) goto GETSSN^SAMIFLD
+ ;
+ ;
+ ;
+ ;@ppi-code $$GETPRFX^SAMIFORM, prefix for study ID
+GETPRFX() goto GETPRFX^SAMIFLD
  ;
  ;
  ;

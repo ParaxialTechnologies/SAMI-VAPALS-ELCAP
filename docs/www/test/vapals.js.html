@@ -9,11 +9,11 @@
 </head>
 <body>
 <script src="../lib/jquery-3.3.1.min.js"></script>
-<script src="js/qunit-2.4.1.js"></script>
+<script src="js/qunit-2.9.2.js"></script>
 <script src="js/blanket.js"></script>
 <script src="../lib/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 
-<script src="../vapals.js" data-cover></script>
+<script data-cover src="../vapals.js"></script>
 
 <div id="qunit"></div>
 <div id="qunit-fixture"></div>
@@ -50,10 +50,37 @@
     });
 
     QUnit.test("pulmonaryFunction", function (assert) {
-        assert.ok(20 == moment(VAPALS.calculatePulmonaryFunction(1, 5)), "normal");
-        assert.ok(0 == moment(VAPALS.calculatePulmonaryFunction(0, 0)), "sero")
+        assert.equal(moment(VAPALS.calculatePulmonaryFunction(1, 5)), 20, "normal");
+        assert.equal(moment(VAPALS.calculatePulmonaryFunction(0, 0)), 0, "sero")
     });
 
+    QUnit.test("calculatePacksPerDay", function (assert) {
+        assert.equal(VAPALS.calculatePacksPerDay(20), 1, "20");
+        assert.equal(VAPALS.calculatePacksPerDay(1), 0.05, "1");
+        assert.equal(VAPALS.calculatePacksPerDay(0), 0, "0");
+        assert.equal(VAPALS.calculatePacksPerDay(undefined), 0, "undefined");
+    });
+
+
+    QUnit.test("calculatePacksYears", function (assert) {
+        assert.equal(VAPALS.calculatePackYears(1, 20), 20, "1 pack, 20 years");
+        assert.equal(VAPALS.calculatePackYears(0, 20), 0, "0 pack, 20 years");
+        assert.equal(VAPALS.calculatePackYears(1.5, 2.5), 3.8, "1.5 pack, 2.5 years");
+        assert.equal(VAPALS.calculatePackYears(20, 0), 0, "20 pack, 0 years");
+    });
+
+    QUnit.test("unique", function (assert) {
+        assert.deepEqual(["a", "a", "b"].filter(VAPALS.unique), ["a", "b"], "unique");
+    });
+
+    QUnit.test("dd", function (assert) {
+        assert.equal("QUESTION\tNAME\tTYPE\tREQUIRED\tPLACEHOLDER\tVALUES\tLABELS\n" +
+            "\t\ttext\t0\t\t\tAll modules\n" +
+            "\tfilter\ttext\t0\t\t\t\n", VAPALS.dd(), "dd");
+    });
+
+
 </script>
+
 </body>
 </html>

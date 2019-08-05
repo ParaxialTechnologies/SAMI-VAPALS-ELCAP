@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.07.22" name="version"/>
+     <meta content="2019.08.05" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    Lung Screening and Surveillance Intake Form
@@ -761,6 +761,30 @@
      <h3>
       Smoking History
      </h3>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table" id="pack-years-history">
+                    <thead>
+                    <tr>
+                        <th>
+                            Form
+                        </th>
+                        <th>
+                            Reported Date
+                        </th>
+                        <th>
+                            Pack Years
+                        </th>
+                        <th>
+                            Cumulative
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
      <div class="row">
       <div class="col-lg-4 col-md-6 col-sm-6 form-group">
        <label>
@@ -808,10 +832,18 @@
      <div class="row form-group">
       <div class="col-md-4">
        <label class="visible-xs visible-sm" for="sippd">
-        How many packs of cigarettes did you smoke per day (PPD)?
+           How many
+           <em>
+               packs
+           </em>
+           of cigarettes did you smoke per day (PPD)?
        </label>
        <label class="text-right pull-right hidden-xs hidden-sm" for="sippd">
-        How many packs of cigarettes did you smoke per day (PPD)?
+           How many
+           <em>
+               packs
+           </em>
+           of cigarettes did you smoke per day (PPD)?
        </label>
       </div>
       <div class="col-sm-2">
@@ -851,10 +883,10 @@
      <div class="row form-group">
       <div class="col-md-4">
        <label class="visible-xs visible-sm" for="siq">
-        Quit
+           Quit Date
        </label>
        <label class="text-right pull-right hidden-xs hidden-sm" for="siq">
-        Quit
+           Quit Date
        </label>
       </div>
       <div class="col-sm-4 col-md-3 col-lg-2">
@@ -1175,7 +1207,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.07.22
+     2019.08.05
     </span>
    </div>
   </footer>
@@ -1348,7 +1380,7 @@
                     sisny: {
                         validators: {
                             notEmpty: {message: 'Number of years is required'},
-                            integer: {message: 'must be a whole number'}
+                            integer: {message: 'Must be a whole number'}
                         }
                     },
                     sistatus: {validators: {notEmpty: {message: 'Enrollment status is required'}}},
@@ -1551,7 +1583,7 @@
             const $sippd = $("#sippd");
             const $sippdVal = $("#sippd-val");
             if (cigsPerDay >= 0) {
-                const cpd = (cigsPerDay / 20).toFixed(2);
+                const cpd = VAPALS.calculatePacksPerDay(cigsPerDay);
                 if (cpd > 0) {
                     $sippd.val(cpd);
                     $sippdVal.text(cpd);
@@ -1566,12 +1598,11 @@
         $("#sippd, #sisny").on('keyup change', function () {
             const packsPerDay = $("#sippd").val();
             const cigYears = $("#sisny").val();
-            if (packsPerDay > 0 && cigYears > 0) {
-                const packYears = (packsPerDay * cigYears).toFixed(1);
-                if (packYears > 0) {
-                    $("#sippy").val(packYears);
-                    $("#sippy-val").text(packYears);
-                }
+            const packYears = VAPALS.calculatePackYears(packsPerDay, cigYears);
+
+            if (packYears > 0) {
+                $("#sippy").val(packYears);
+                $("#sippy-val").text(packYears);
             } else {
                 $("#sippy").val("");
                 $("#sippy-val").text("-");
@@ -1579,6 +1610,10 @@
 
         }).first().trigger('change');
 
+        //removed smoking history table if there is none (i.e. initial intake form entry)
+        if ($("#pack-years-history tbody tr").length === 0) {
+            $("#pack-years-history").remove();
+        }
 
         $("[name=sistatus]").on('submit', function () {
             //require reason fields when marking patient as "not active"

@@ -265,7 +265,7 @@ PREFIX() ; letters to use to begin studyId
  ;
  ;@stanza 2 return & termination
  ;
- quit "XXX" ; return study id prefix; end of $$PREFIX
+ quit $$GETPRFX^SAMIFORM() ; return study id prefix; end of $$PREFIX
  ;
  ;
  ;

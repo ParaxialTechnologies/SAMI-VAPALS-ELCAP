@@ -242,30 +242,11 @@ GENSTDID(num) ; studyID for number
  ;
  new zl set zl=$length(num)
  new zz set zz="00000"
- new studyid set studyid=$$PREFIX_$extract(zz,1,5-zl)_num
+ new studyid set studyid=$$GETPRFX^SAMIFORM()_$extract(zz,1,5-zl)_num
  ;
  ;@stanza 3 return & termination
  ;
  quit studyid ; return study id; end of $$GENSTDID
- ;
- ;
- ;
-PREFIX() ; letters to use to begin studyId
- ;
- ;@stanza 1 invocation, binding, & branching
- ;
- ;ven/gpl;private;variable;
- ;@called-by
- ; $$GENSTDID
- ;@calls: none
- ;@input: none
- ;@output = study id prefix
- ;@examples [tbd]
- ;@tests [tbd]
- ;
- ;@stanza 2 return & termination
- ;
- quit $$GETPRFX^SAMIFORM() ; return study id prefix; end of $$PREFIX
  ;
  ;
  ;

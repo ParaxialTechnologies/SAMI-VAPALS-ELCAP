@@ -37,7 +37,7 @@ SAMIFLD ;ven/gpl - elcap: form load & case review support ; 6/28/19 6:27pm
  ;@additional-dev: Larry G. Carlson (lgc)
  ; lgc@vistaexpertise.net
  ;@additional-dev: Alexis Carlson (arc)
- ; alexis.carlson@vistaexpertise.net ;
+ ; alexis.carlson@vistaexpertise.net
  ;
  ;@module-credits [see SAMIFUL]
  ;

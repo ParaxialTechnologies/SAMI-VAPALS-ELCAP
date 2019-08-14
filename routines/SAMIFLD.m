@@ -196,12 +196,19 @@ LOAD ; process html line, e.g., load json data into graph
  . do findReplace^%ts(.SAMILINE,"</pre>","")
  . new zi set zi=""
  . for  set zi=$order(@clog@(zi)) quit:zi=""  d  ;
- . . new zien set zien=+(%j_"."_zi)
+ . . new zien set zien=SAMILNUM_"."_$$xpand(zi)
  . . set zhtml(zien)=@clog@(zi)
- . set zhtml(%j_"."_$order(@clog@(""),-1)+1)="</pre>"
+ . set zhtml(SAMILNUM_"."_$$xpand($order(@clog@(""),-1)+1))="</pre>"
  ;
  quit  ; end of ppi LOAD^SAMIFORM
  ;
+xpand(zi) ; extrinsic that expands a number to 8 digits with preceeding 0
+ ; and add a 1 at the end so that 10,20 etc still collate
+ n g1,g2,g3
+ s g1=8-$l(zi)
+ s $p(g2,"0",g1)=""
+ s g3=g2_zi_"1"
+ q g3
  ;
  ;
 GETHDR(sid) ; header string for patient sid
@@ -433,6 +440,24 @@ GETSSN ; ssn for patient sid
  ;
  quit pssn ; end of $$GETSSN^SAMIFORM
  ;
+GETPRFX ; Retrieve study ID prefix from parameter file
+ ;@signature
+ ; $$GETPRFX^SAMIFORM()
+ ;@branches-from
+ ; GETPRFX^SAMIFORM
+ ;@ppi-called-by
+ ; WSCASE^SAMICAS2
+ ;@calls
+ ; $$GET^XPAR
+ ;@output = patient's ssn
+ ;@tests
+ ; None yet
+ ;
+ new prefix
+ set prefix=$$GET^XPAR("SYS","SAMI SID PREFIX",,"Q")
+ if $get(prefix)="" set prefix="UNK"
+ ;
+ quit prefix ; End of $$GETPRFX^SAMIFORM
  ;
 GETPRFX ; Retrieve study ID prefix from parameter file
  ;@signature

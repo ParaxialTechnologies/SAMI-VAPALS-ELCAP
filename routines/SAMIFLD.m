@@ -200,6 +200,17 @@ LOAD ; process html line, e.g., load json data into graph
  . . set zhtml(zien)=@clog@(zi)
  . set zhtml(SAMILNUM_"."_$$xpand($order(@clog@(""),-1)+1))="</pre>"
  ;
+ if SAMILINE["commlog" d  ;
+ . new root set root=$$setroot^%wd("vapals-patients")
+ . new clog set clog=$na(@root@("graph",sid,form,"comlog"))
+ . if '$d(@clog) q  ;
+ . do findReplace^%ts(.SAMILINE,"</pre>","")
+ . new zi set zi=""
+ . for  set zi=$order(@clog@(zi)) quit:zi=""  d  ;
+ . . new zien set zien=SAMILNUM_"."_$$xpand(zi)
+ . . set zhtml(zien)=@clog@(zi)
+ . set zhtml(SAMILNUM_"."_$$xpand($order(@clog@(""),-1)+1))="</pre>"
+ ;
  quit  ; end of ppi LOAD^SAMIFORM
  ;
 xpand(zi) ; extrinsic that expands a number to 8 digits with preceeding 0

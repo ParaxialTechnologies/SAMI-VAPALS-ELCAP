@@ -1,4 +1,4 @@
-SAMIFLD ;ven/gpl - elcap: form load & case review support ; 6/28/19 6:27pm
+SAMIFLD ;ven/gpl - elcap: form load & case review support ; 2019-08-01T15:42Z
  ;;18.0;SAMI;;
  ;
  ; Routine SAMIFLD contains subroutines for processing the ELCAP forms,
@@ -25,7 +25,7 @@ SAMIFLD ;ven/gpl - elcap: form load & case review support ; 6/28/19 6:27pm
  ;@license: Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2019-01-08T20:59Z
+ ;@last-updated: 2019-08-01T15:42Z
  ;@application: Screening Applications Management (SAM)
  ;@module: Screening Applications Management - VAPALS-ELCAP (SAMI)
  ;@version: 18.0T04 (fourth development version)
@@ -36,6 +36,8 @@ SAMIFLD ;ven/gpl - elcap: form load & case review support ; 6/28/19 6:27pm
  ; toad@vistaexpertise.net
  ;@additional-dev: Larry G. Carlson (lgc)
  ; lgc@vistaexpertise.net
+ ;@additional-dev: Alexis Carlson (arc)
+ ; alexis.carlson@vistaexpertise.net
  ;
  ;@module-credits [see SAMIFUL]
  ;
@@ -194,12 +196,30 @@ LOAD ; process html line, e.g., load json data into graph
  . do findReplace^%ts(.SAMILINE,"</pre>","")
  . new zi set zi=""
  . for  set zi=$order(@clog@(zi)) quit:zi=""  d  ;
- . . new zien set zien=+(%j_"."_zi)
+ . . new zien set zien=SAMILNUM_"."_$$xpand(zi)
  . . set zhtml(zien)=@clog@(zi)
- . set zhtml(%j_"."_$order(@clog@(""),-1)+1)="</pre>"
+ . set zhtml(SAMILNUM_"."_$$xpand($order(@clog@(""),-1)+1))="</pre>"
+ ;
+ if SAMILINE["commlog" d  ;
+ . new root set root=$$setroot^%wd("vapals-patients")
+ . new clog set clog=$na(@root@("graph",sid,form,"comlog"))
+ . if '$d(@clog) q  ;
+ . do findReplace^%ts(.SAMILINE,"</pre>","")
+ . new zi set zi=""
+ . for  set zi=$order(@clog@(zi)) quit:zi=""  d  ;
+ . . new zien set zien=SAMILNUM_"."_$$xpand(zi)
+ . . set zhtml(zien)=@clog@(zi)
+ . set zhtml(SAMILNUM_"."_$$xpand($order(@clog@(""),-1)+1))="</pre>"
  ;
  quit  ; end of ppi LOAD^SAMIFORM
  ;
+xpand(zi) ; extrinsic that expands a number to 8 digits with preceeding 0
+ ; and add a 1 at the end so that 10,20 etc still collate
+ n g1,g2,g3
+ s g1=8-$l(zi)
+ s $p(g2,"0",g1)=""
+ s g3=g2_zi_"1"
+ q g3
  ;
  ;
 GETHDR(sid) ; header string for patient sid
@@ -431,6 +451,43 @@ GETSSN ; ssn for patient sid
  ;
  quit pssn ; end of $$GETSSN^SAMIFORM
  ;
+GETPRFX ; Retrieve study ID prefix from parameter file
+ ;@signature
+ ; $$GETPRFX^SAMIFORM()
+ ;@branches-from
+ ; GETPRFX^SAMIFORM
+ ;@ppi-called-by
+ ; WSCASE^SAMICAS2
+ ;@calls
+ ; $$GET^XPAR
+ ;@output = patient's ssn
+ ;@tests
+ ; None yet
+ ;
+ new prefix
+ set prefix=$$GET^XPAR("SYS","SAMI SID PREFIX",,"Q")
+ if $get(prefix)="" set prefix="UNK"
+ ;
+ quit prefix ; End of $$GETPRFX^SAMIFORM
+ ;
+GETPRFX ; Retrieve study ID prefix from parameter file
+ ;@signature
+ ; $$GETPRFX^SAMIFORM()
+ ;@branches-from
+ ; GETPRFX^SAMIFORM
+ ;@ppi-called-by
+ ; WSCASE^SAMICAS2
+ ;@calls
+ ; $$GET^XPAR
+ ;@output = patient's ssn
+ ;@tests
+ ; None yet
+ ;
+ new prefix
+ set prefix=$$GET^XPAR("SYS","SAMI SID PREFIX",,"Q")
+ if $get(prefix)="" set prefix="UNK"
+ ;
+ quit prefix ; End of $$GETPRFX^SAMIFORM
  ;
  ;
 EOR ; end of routine SAMIFLD

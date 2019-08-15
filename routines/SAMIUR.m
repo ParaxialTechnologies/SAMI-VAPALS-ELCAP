@@ -143,6 +143,7 @@ SELECT(SAMIPATS,type,datephrase,filter) ;selects patients for report
  . q:'$d(items)
  . n efmdate,edate,siform,ceform,cefud,fmcefud,cedos,fmcedos
  . s siform=$o(items("siform-"))
+ . i $g(@root@("graph",sid,siform,"sistatus"))="inactive" q  ;
  . s ceform=$o(items("ceform-a"),-1)
  . s (cefud,fmcefud,cedos,fmcedos)=""
  . i ceform'="" d  ;

@@ -386,7 +386,7 @@
                 </div>
                 <div class="col-md-4 form-group">
                     <label class="aria-hidden" for="siptctl">Location throax CT</label>
-                    <input class="form-control" type="text" name="siptctl" id="siptctl" />
+                    <input class="form-control" type="text" name="siptctl" id="siptctl"/>
                     <span class="help-block">Location if not in VA</span>
                 </div>
             </div>
@@ -442,12 +442,35 @@
             </div>
 
             <hr/>
-            <h3>Current Status</h3>
+            <h3>Patient Communication Record</h3>
             <div class="row">
                 <div class="col-md-12 form-group">
+                    <label class="aria-hidden">Patient communication record</label>
+                    <textarea class="form-control" name="sipcrn" id="sipcrn" rows="3"></textarea>
+                    <span class="help-block">Free-form notes to track communications with the patient</span>
+                </div>
+            </div>
+            <div class="row" id="communication-log-container">
+                <div class="col-sm-12">
+                    <h4>Communication Log</h4>
+                    <pre class="prettyprint source linenums"
+                         id="commlog">{{ "2018-10-31 12:00 PM - {USERNAME}: {TEXT HERE}" if mockup else "" }}</pre>
+                </div>
+            </div>
+
+            <hr/>
+            <h3>Current Status</h3>
+            <div class="row">
+                <div class="col-md-3 col-lg-2 form-group">
                     <label for="sistatus" class="required">Enrollment</label><br/>
                     {{ f.inlineRadio("sistatus", "sistatus-active", "active", "Active", true) }}
                     {{ f.inlineRadio("sistatus", "sistatus-inactive", "inactive", "Not active") }}
+                </div>
+                <div class="col-md-3 col-lg-2" id="ctappt-container">
+                    <div class="form-group">
+                        <label for="sicectap" class="required">CT Appointment</label>
+                        {{ f.datepicker('sicectap', '', true) }}
+                    </div>
                 </div>
             </div>
 
@@ -855,6 +878,8 @@
 
         }).first().trigger('change');
 
+        $("[name=sistatus]")
+            .conditionallyDisplay({sourceValues: 'active', enable: '#ctappt-container'});
 
         $("[name=sistatus]").on('submit', function () {
             //require reason fields when marking patient as "not active"

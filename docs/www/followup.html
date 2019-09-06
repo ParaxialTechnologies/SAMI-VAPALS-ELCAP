@@ -445,31 +445,6 @@
     <hr/>
     <div class="row">
      <div class="col-md-4">
-      <label class="visible-xs visible-sm required" for="sisse-1">
-       Which year did you last have a prolonged exposure to secondhand tobacco smoke?
-      </label>
-      <label class="text-right pull-right hidden-xs hidden-sm required" for="sisse-1">
-       Which year did you last have a prolonged exposure to secondhand tobacco smoke?
-      </label>
-     </div>
-     <div class="col-md-8 form-group">
-      <label class="radio-inline" for="sisse-1">
-       <input id="sisse-1" name="sisse" required="required" type="radio" value="1"/>
-       Less than 5 years ago
-      </label>
-      <label class="radio-inline" for="sisse-5">
-       <input id="sisse-5" name="sisse" type="radio" value="5"/>
-       More than 5 years ago
-      </label>
-      <label class="radio-inline" for="sisse-10">
-       <input id="sisse-10" name="sisse" type="radio" value="10"/>
-       More than 10 years ago
-      </label>
-     </div>
-    </div>
-    <hr/>
-    <div class="row">
-     <div class="col-md-4">
       <label class="visible-xs visible-sm" for="siwc-b">
        During the past year, have you experienced any of these symptoms?
       </label>
@@ -1351,7 +1326,7 @@
             // for certain validators that use multiple inputs like checkboxes and radio groups, change the location
             // of the error icon to be based on the form-group element, instead of being immediately adjacent to the
             // first control in that group
-            const multiInputValidators = ['simeq', 'siabx', 'siaex', 'sisse', 'siho', 'sicd', 'silcs', 'sier', 'sisa',
+            const multiInputValidators = ['simeq', 'siabx', 'siaex', 'siho', 'sicd', 'silcs', 'sier', 'sisa',
                 'sittq', 'sicpd'];
 
             $form.formValidation({
@@ -1387,7 +1362,6 @@
                         siopci: {validators: {notEmpty: {message: 'Clinical information is required'}}},
                         siabx: {validators: {notEmpty: {message: 'Antibiotics is required'}}},
                         siaex: {validators: {notEmpty: {message: 'Annual scan is required'}}},
-                        sisse: {validators: {notEmpty: {message: 'Prolonged exposure is required'}}},
                         siwcos: {validators: {notEmpty: {message: 'Other symptom is required'}}},
                         siwcw: {validators: {notEmpty: {message: 'Physician is required'}}},
                         siho: {validators: {notEmpty: {message: 'Hospitalized is required'}}},

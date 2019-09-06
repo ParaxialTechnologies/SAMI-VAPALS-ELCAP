@@ -173,19 +173,6 @@
 
             <div class="row">
                 <div class="col-md-4">
-                    {{ f.floatingLabel('sisse-1', 'Which year did you last have a prolonged exposure to secondhand tobacco smoke?', "required") }}
-                </div>
-                <div class="col-md-8 form-group">
-                    {{ f.inlineRadio("sisse", "sisse-1", "1", "Less than 5 years ago", true) }}
-                    {{ f.inlineRadio("sisse", "sisse-5", "5", "More than 5 years ago") }}
-                    {{ f.inlineRadio("sisse", "sisse-10", "10", "More than 10 years ago") }}
-                </div>
-            </div>
-
-            <hr/>
-
-            <div class="row">
-                <div class="col-md-4">
                     {{ f.floatingLabel('siwc-b', 'During the past year, have you experienced any of these symptoms?') }}
                 </div>
                 <div class="col-md-8 form-group">
@@ -511,7 +498,7 @@
             // for certain validators that use multiple inputs like checkboxes and radio groups, change the location
             // of the error icon to be based on the form-group element, instead of being immediately adjacent to the
             // first control in that group
-            const multiInputValidators = ['simeq', 'siabx', 'siaex', 'sisse', 'siho', 'sicd', 'silcs', 'sier', 'sisa',
+            const multiInputValidators = ['simeq', 'siabx', 'siaex', 'siho', 'sicd', 'silcs', 'sier', 'sisa',
                 'sittq', 'sicpd'];
 
             $form.formValidation({
@@ -547,7 +534,6 @@
                         siopci: {validators: {notEmpty: {message: 'Clinical information is required'}}},
                         siabx: {validators: {notEmpty: {message: 'Antibiotics is required'}}},
                         siaex: {validators: {notEmpty: {message: 'Annual scan is required'}}},
-                        sisse: {validators: {notEmpty: {message: 'Prolonged exposure is required'}}},
                         siwcos: {validators: {notEmpty: {message: 'Other symptom is required'}}},
                         siwcw: {validators: {notEmpty: {message: 'Physician is required'}}},
                         siho: {validators: {notEmpty: {message: 'Hospitalized is required'}}},

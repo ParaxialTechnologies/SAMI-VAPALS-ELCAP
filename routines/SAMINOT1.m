@@ -249,7 +249,7 @@ ELNOTE(vals,dest,cnt) ; eligibility NOTE TEXT
  . D OUT("Specialty of referring provider: "_spec)
  n elig
  s elig=$$XVAL("sicechrt",vals)
- D OUT("The patient is eligible based on chart review: "_$s(elig="y":"Yes",1:"no"))
+ D OUT("The participant is eligible based on chart review: "_$s(elig="y":"Yes",1:"no"))
  D OUT("")
  s @vals@("chart-eligibility-complete")="true"
  q

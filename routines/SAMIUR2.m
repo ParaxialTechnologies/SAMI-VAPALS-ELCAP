@@ -27,10 +27,8 @@ RPTTBL(RPT,TYPE) ; RPT is passed by reference and returns the
  . S RPT(6,"routine")="$$WHEN^SAMIUR2"
  . S RPT(7,"header")="Last Exam"
  . S RPT(7,"routine")="$$LASTEXM^SAMIUR2"
- . S RPT(8,"header")="Status"
- . S RPT(8,"routine")="$$STATUS^SAMIUR2"
- . S RPT(9,"header")="Street Addr."
- . S RPT(9,"routine")="$$STREETAD^SAMIUR2"
+ . S RPT(8,"header")="Contact Information"
+ . S RPT(8,"routine")="$$CONTACT^SAMIUR2"
  if TYPE="activity" d  q  ;
  . S RPT(1,"header")="Name"
  . S RPT(1,"routine")="$$NAME^SAMIUR2"
@@ -65,6 +63,8 @@ RPTTBL(RPT,TYPE) ; RPT is passed by reference and returns the
  . S RPT(7,"routine")="$$RURAL^SAMIUR2"
  . S RPT(8,"header")="Smoking Status"
  . S RPT(8,"routine")="$$SMKSTAT^SAMIUR2"
+ . S RPT(9,"header")="Pack Years at Intake"
+ . S RPT(9,"routine")="$$PACKYRS^SAMIUR2"
  if TYPE="incomplete" d  q  ;
  . S RPT(1,"header")="Enrollment date"
  . S RPT(1,"routine")="$$BLINEDT^SAMIUR2"
@@ -81,8 +81,18 @@ RPTTBL(RPT,TYPE) ; RPT is passed by reference and returns the
  . S RPT(2,"routine")="$$NAME^SAMIUR2"
  . S RPT(3,"header")="SSN"
  . S RPT(3,"routine")="$$SSN^SAMIUR2"
+ if TYPE="cumpy" d  q  ;
+ . S RPT(1,"header")="Name"
+ . S RPT(1,"routine")="$$NAME^SAMIUR2"
+ . S RPT(2,"header")="Study ID"
+ . S RPT(2,"routine")="$$SID^SAMIUR2"
+ . S RPT(3,"header")="Form Values"
+ . S RPT(3,"routine")="$$VALS^SAMIUR2"
  ;
  q
+ ;
+SID(zdt,dfn,SAMIPATS) ; extrinsic returns SID
+ q $$DFN2SID(dfn)
  ;
 DFN2SID(DFN) ;extrinsic returns the studyid for patient DFN
  n root s root=$$setroot^%wd("vapals-patients")
@@ -107,11 +117,6 @@ BLINEDT(zdt,dfn,SAMIPATS) ; extrinsic returns Baseline Date
  n bldt
  s bldt=$g(SAMIPATS(zdt,dfn,"edate"))
  q bldt
- ;
-RECOM(zdt,dfn,SAMIPATS) ; extrinsic returns Recommendation
- n recom
- s recom="Full Diagnostic CT"
- q recom
  ;
 WHEN(zdt,dfn,SAMIPATS) ; extrinsic returns followup text ie. "in one year"
  n root s root=$$setroot^%wd("vapals-patients")
@@ -144,14 +149,19 @@ STATUS(zdt,dfn,SAMIPATS) ; extrinsic returns patient status
  s stat=$g(@vals@("sistatus"))
  q stat
  ;
-STREETAD(zdt,dfn,SAMIPATS) ; extrinsic returns patient street address
- n staddr
+CONTACT(zdt,dfn,SAMIPATS) ; extrinsic returns patient street address
+ n contact s contact=""
  n root s root=$$setroot^%wd("vapals-patients")
  n sid s sid=$g(@root@(dfn,"samistudyid"))
  n siform s siform=$g(SAMIPATS(zdt,dfn,"siform"))
  n vals s vals=$na(@root@("graph",sid,siform))
- s staddr=$g(@vals@("sipsa"))
- q staddr
+ s contact=$g(@vals@("sinamef"))_" "_$g(@vals@("sinamel"))
+ s contact=contact_"<br>"_$g(@vals@("sipsa"))
+ i $g(@vals@("sipan"))'="" s contact=contact_" Apt "_$g(@vals@("sipan"))
+ i $g(@vals@("sipcn"))'="" s contact=contact_"<br>County "_@vals@("sipcn")
+ i $g(@vals@("sipc"))'="" s contact=contact_" <br>"_@vals@("sipc")_", "
+ s contact=contact_" "_$g(@vals@("sips"))_" "_$g(@vals@("sipz"))_"     "
+ q contact
  ;
 STUDYDT(zdt,dfn,SAMIPATS) ; extrinsic returns the lastest Study Date
  n stdt
@@ -179,6 +189,26 @@ CTPROT(zdt,dfn,SAMIPATS) ; extrinsic returns the CT Protocol
  n ctyp
  s ctyp=$s(cectp="l":"Low-Dose CT",cectp="d":"Standard CT",cectp="i":"Limited",1:"")
  q ctyp
+ ;
+RECOM(zdt,dfn,SAMIPATS) ; extrinsic returns Recommendation
+ n root s root=$$setroot^%wd("vapals-patients")
+ n ceform s ceform=$g(SAMIPATS(zdt,dfn,"ceform"))
+ n sid s sid=$g(@root@(dfn,"samistudyid"))
+ q:ceform="" ""
+ n vals s vals=$na(@root@("graph",sid,ceform))
+ n cefuw s cefuw=$g(@vals@("cefuw"))
+ n recom s recom=""
+ s recom=$s(cefuw="1y":"Annual Repeat",cefuw="nw":"Now",cefuw="1m":"1 month",cefuw="3m":"3 months",cefuw="6m":"6 months",cefuw="os":"Other",1:"")
+ i $g(@vals@("cefuaf"))="y" s recom=recom_", Antibiotics"
+ i $g(@vals@("cefucc"))="y" s recom=recom_", Contrast CT"
+ i $g(@vals@("cefupe"))="y" s recom=recom_", PET"
+ i $g(@vals@("cefufn"))="y" s recom=recom_", Percutaneous biopsy"
+ i $g(@vals@("cefubr"))="y" s recom=recom_", Bronchoscopy"
+ i $g(@vals@("cefupc"))="y" s recom=recom_", Pulmonary consultation"
+ i $g(@vals@("cefutb"))="y" s recom=recom_", Refer to tumor board"
+ i $g(@vals@("cefunf"))="y" s recom=recom_", No other further follow-up"
+ i $e(recom,1,2)=", " s recom=$e(recom,3,$l(recom))
+ q recom
  ;
 GENDER(zdt,dfn,SAMIPATS) ; extrinsic returns gender
  n root s root=$$setroot^%wd("vapals-patients")
@@ -215,11 +245,20 @@ SMKSTAT(zdt,dfn,SAMIPATS) ; extrinsic returns smoking status
  n vals s vals=$na(@root@("graph",sid,siform))
  n smk
  s smk="unknown"
- if $g(@vals@("siesn")) s smk="Never smoked"
- if $g(@vals@("siesp")) s smk="Past smoker"
- if $g(@vals@("siesc")) s smk="Current smoker"
- if $g(@vals@("siesq")) s smk="Current smoker"
+ if $g(@vals@("siesm"))="n" s smk="Never smoked"
+ if $g(@vals@("siesm"))="p" s smk="Past smoker"
+ if $g(@vals@("siesm"))="c" s smk="Current smoker"
+ ;if $g(@vals@("siesq"))=1 s smk="Cu"
  q smk
+ ;
+PACKYRS(zdt,dfn,SAMIPATS) ; extrinsic returns smoking status
+ n root s root=$$setroot^%wd("vapals-patients")
+ n sid s sid=$g(@root@(dfn,"samistudyid"))
+ n siform s siform=$g(SAMIPATS(zdt,dfn,"siform"))
+ n vals s vals=$na(@root@("graph",sid,siform))
+ n pkyrs
+ s pkyrs=$g(@vals@("sippy"))
+ q pkyrs
  ;
 IFORM(zdt,dfn,SAMIPATS) ; extrinsic returns the name(s) of the incomplete forms
  n iform s iform=$g(SAMIPATS(zdt,dfn,"iform"))
@@ -266,4 +305,27 @@ RURAL(zdt,dfn,SAMIPATS) ; extrinsic which returns the rural/urban status
  s sirs=$g(@vals@("sirs"))
  s sirs=$s(sirs="r":"rural",sirs="u":"urban",sirs="n":"unknown",1:"unknown")
  q sirs
+ ;
+VALS(zdt,dfn,SAMIPATS) ; extrinsic returns contents of form values cell
+ n vrtn s vrtn=""
+ n vsid s vsid=$$DFN2SID(dfn)
+ n vgr s vgr="/vals?sid="_vsid_"&form="
+ q:'$d(SAMIPATS)
+ n vzi s vzi=""
+ f  s vzi=$o(SAMIPATS(zdt,dfn,"items",vzi)) q:vzi="sort"  q:vzi=""  d  ;
+ . s vrtn=vrtn_"<a href="""_vgr_vzi_""">"_vzi_"</a><br>"
+ q vrtn
+ ;
+WSVALS(RTN,FILTER) ;web service to display form values from the graph
+ n root s root=$$setroot^%wd("vapals-patients")
+ n sid s sid=$g(FILTER("sid"))
+ i sid="" s sid=$g((FILTER("studyid"))
+ q:sid=""
+ n zform s zform=$g(FILTER("form"))
+ n groot
+ i zform="" s groot=$na(@root@("graph",sid))
+ e  s groot=$na(@root@("graph",sid,zform))
+ s FILTER("root")=$e(groot,2,$l(groot))
+ d wsGtree^SYNVPR(.RTN,.FILTER)
+ q
  ;

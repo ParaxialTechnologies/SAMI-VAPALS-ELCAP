@@ -219,8 +219,7 @@ LOAD ; process html line, e.g., load json data into graph
  . . . s SAMIHTML(zzi)=SAMIHTML(zzi)_$char(13,10)
  . . ;s SAMIHTML(zzi)="<tbody>"_$$SHDET^SAMIUR2(sid)
  . . s SAMILNUM=zzi+1
- . . ;s SAMILINE="<tbody>"_$$SHDET^SAMIUR2(sid)
- . . s SAMILINE=$$SHDET^SAMIUR2(sid)_"</tbody>"
+ . . s SAMILINE=$$SHDET^SAMIUR2(sid,form)_"</tbody>"
  ;
  quit  ; end of ppi LOAD^SAMIFORM
  ;

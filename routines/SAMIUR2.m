@@ -374,9 +374,12 @@ SMHIS(zdt,dfn,SAMIPATS) ; extrinsic returns contents of smoking history cell
  s zrtn=zrtn_"</tbody></table></div></div>"
  q zrtn
  ;
-SHDET(SID) ; Extrinsic returns table contents for smoking history
+SHDET(SID,KEY) ; Extrinsic returns table contents for smoking history
+ ; KEY is the form key of the caller for "current" marker insertion
  n pyary
- d CUMPY("pyary",SID)
+ i $g(KEY)="" s KEY=""
+ d CUMPY("pyary",SID,KEY)
+ n current s current=$g(pyary("current"))
  n rptcnt,rptmax
  s rptcnt=0
  s rptmax=$o(pyary("rpt",""),-1)
@@ -386,7 +389,8 @@ SHDET(SID) ; Extrinsic returns table contents for smoking history
  n zi s zi=""
  f zi=1:1:rptmax d  ;
  . s rptcnt=rptcnt+1
- . s return=return_"<tr>"
+ . i rptcnt=current s return=return_"<tr data-current-form=""true"">"
+ . e  s return=return_"<tr>"
  . s return=return_"<td>"_pyary("rpt",rptcnt,1)_"</td>"
  . s return=return_"<td class=""reported-date"">"_pyary("rpt",rptcnt,2)_"</td>"
  . s return=return_"<td class=""pack-years"">"_pyary("rpt",rptcnt,3)_"</td>"
@@ -395,8 +399,9 @@ SHDET(SID) ; Extrinsic returns table contents for smoking history
  k pyary
  q return
  ;
-CUMPY(PYARY,sid) ; forms array of cummulative pack year data
+CUMPY(PYARY,sid,KEY) ; forms array of cummulative pack year data
  ; PYARY passed by name
+ ; KEY is the current form key for matching to a row
  k @PYARY
  n root s root=$$setroot^%wd("vapals-patients")
  ;n sid s sid=$g(@root@(DFN,"samistudyid"))
@@ -430,6 +435,9 @@ CUMPY(PYARY,sid) ; forms array of cummulative pack year data
  . n newpd s newpd=$g(@vals@("sippd"))
  . n newpy s newpy=$$PKYDT(lastdt,keydate,newpd)
  . s @vals@("sippy")=newpy
+ . s ^gpl("current","KEY")=$g(KEY)
+ . s ^gpl("current","zi")=zi
+ . i zi=$g(KEY) s @PYARY@("current")=rptcnt ;this row is the current form
  . n newcum s newcum=""
  . i newpy'="" s newcum=lastcum+newpy
  . s @PYARY@("rpt",rptcnt,3)=newpy ; Pack Years

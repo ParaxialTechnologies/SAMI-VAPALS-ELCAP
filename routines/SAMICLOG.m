@@ -96,10 +96,11 @@ LOGIT(CLOGROOT,ENTRY) ; add an entry to the log
  ; CLOGROOT points to the log
  ;
  n logdt
- s logdt=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
+ ;s logdt=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
+ s logdt=$$FMTE^XLFDT($$NOW^XLFDT,5)
  n lien
  s lien=$o(@CLOGROOT@(""),-1)+1
- s @CLOGROOT@(lien)="["_logdt_"]"_$g(ENTRY)
+ s @CLOGROOT@(lien)="["_logdt_"] "_$g(ENTRY)
  q
  ;
  ;
@@ -115,10 +116,7 @@ INTKVARS ; Varibles on intake form
  ;;sipcr^Country
  ;;sippn^Phone number
  ;;sirs^Rural status
- ;;sies^Have you ever smoked
- ;;siesn^Never smoked
- ;;siesp^Past smoker
- ;;siesc^Current smoker
+ ;;siesm^Have you ever smoked
  ;;siesq^Willing to quit smoking
  ;;sicpd^Cigarettes per day
  ;;sisny^Number of years a smoker

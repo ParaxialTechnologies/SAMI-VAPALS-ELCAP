@@ -8,8 +8,10 @@ if [ ! $Docker_Env ] ; then
     exit
 fi
 
-echo "Updating Vista"
+echo "Downloading database backup from S3"
+aws s3 cp s3://avicenna.fiscientific.com/backup/latest.tgz $HOME/data/backups
 
+echo "Updating Vista"
 cd $HOME
 
 $HOME/bin/stop-env.sh
@@ -23,7 +25,6 @@ echo "Updating the database"
 rm data/globals/*
 rm data/journals/*
 cd data/backups
-aws s3 cp s3://avicenna.fiscientific.com/backup/latest.tgz .
 
 echo "Extracting the database"
 tar -xzvf latest.tgz

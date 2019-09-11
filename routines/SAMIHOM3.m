@@ -1,4 +1,4 @@
-SAMIHOM3 ;ven/gpl - ielcap: forms ; 2/14/19 10:37am
+SAMIHOM3 ;ven/gpl - ielcap: forms ; 2019-08-07T01:13Z
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -242,30 +242,11 @@ GENSTDID(num) ; studyID for number
  ;
  new zl set zl=$length(num)
  new zz set zz="00000"
- new studyid set studyid=$$PREFIX_$extract(zz,1,5-zl)_num
+ new studyid set studyid=$$GETPRFX^SAMIFORM()_$extract(zz,1,5-zl)_num
  ;
  ;@stanza 3 return & termination
  ;
  quit studyid ; return study id; end of $$GENSTDID
- ;
- ;
- ;
-PREFIX() ; letters to use to begin studyId
- ;
- ;@stanza 1 invocation, binding, & branching
- ;
- ;ven/gpl;private;variable;
- ;@called-by
- ; $$GENSTDID
- ;@calls: none
- ;@input: none
- ;@output = study id prefix
- ;@examples [tbd]
- ;@tests [tbd]
- ;
- ;@stanza 2 return & termination
- ;
- quit "XXX" ; return study id prefix; end of $$PREFIX
  ;
  ;
  ;

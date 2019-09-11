@@ -36,6 +36,7 @@ SAVFILTR(sid,form,vars) ; extrinsic which returns the form key to use
  . . s useform=moveto
  if type="siform" d  ; intake form
  . s vars("samifirsttime")="false"
+ . d COMLOG(.sid,.form,.vars) ; add to the communication log
  . n formdate s formdate=$g(vars("sidc")) ; date of the CT scan from the form
  . q:formdate=""
  . n fdate s fdate=$$KEY2FM^SAMICASE(formdate) ; convert to fileman date
@@ -53,4 +54,14 @@ SAVFILTR(sid,form,vars) ; extrinsic which returns the form key to use
  . . k @root@("graph",sid,form)
  . . s useform=moveto
  q useform
+ ;
+COMLOG(sid,form,vars) ; add to the communications log
+ n root s root=$$setroot^%wd("vapals-patients")
+ m vars("comlog")=@root@("graph",sid,form,"comlog")
+ n COMLOGRT
+ s COMLOGRT=$na(@root@("graph",sid,form,"comlog"))
+ i $g(vars("sipcrn"))'="" d  ; a new comm log entry is available
+ . d LOGIT^SAMICLOG(COMLOGRT,vars("sipcrn"))
+ . s vars("sipcrn")=""
+ q
  ;

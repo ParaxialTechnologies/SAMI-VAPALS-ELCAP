@@ -1,4 +1,4 @@
-SAMIVST2 ;;ven/lgc - M2Broker calls for VA-PALS - PT INFO ; 6/21/19 9:03pm
+SAMIVST2 ;;ven/lgc - M2Broker calls for VA-PALS - PT INFO ; 7/23/19 8:20pm
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -84,18 +84,33 @@ VISTSTR ;
  ;  $$FMTHL7^XLFDT
  ;  $$URBRUR^SAMIVSTA
  ;@input
- ;   DFN   = IEN of patient into file 2
+ ;   DFN     = IEN of patient into file 2
+ ;   nofile2 = 0 or null - pull info from file 2
+ ;                         with remote procedure
+ ;             1 - transfer info from patient-lookup
+ ;                 to vapals-patients
  ;@output
  ;   Sets additional nodes in patient's Graphstore
  ;   If called as extrinsic
  ;      0   = unable to identify patient
  ;      1^dfn = lookup of patient successful
  ;      2^dfn = and update of Graphstore successful
+ ;      3^dfn = no broker calls, just transferred
+ ;              'patient-lookup' data to 'vapals-patients'
  ;@tests
  ;  UTPTINF^SAMIUTVA
  ; Pull patient information from the server and
- ;   push into the 'patient-lookup' Graphstore
-PTINFO ;
+ ;   push into the 'patient-lookup' graph
+ ; or
+ ;   if special SAMI parameter is set for sites without
+ ;   access to updating file 2 through broker, pull
+ ;   information already in 'patient-lookup' into the
+ ;   'vapals-patients' graph
+PTINFO ; Gather additional patient information
+ n nofile2
+ set nofile2=$$GET^XPAR("SYS","SAMI IGNORE PATIENT FILE",,"Q")
+ if $get(nofile2)=1 goto NOFILE2
+ ;
  new cntxt,rmprc,console,cntnopen,SAMIARR,SAMIXD
  new X,rslt
  set rslt=0
@@ -164,6 +179,26 @@ PTINFO ;
  . set gien=$order(@root@("dfn",dfn,0))
  . set:gien @root@(gien,"race")=race
  quit:$Q rslt  quit
+ ;
+ ;@ppi
+NOFILE2() ; Transfer info from 'patient-lookup' to 'vapals patients'
+ if '$get(dfn) quit:$Q 0  quit
+ n rootpl set rootpl=$$setroot^%wd("patient-lookup")
+ n rootvp set rootvp=$$setroot^%wd("vapals-patients")
+ if '$data(@rootpl@("dfn",dfn)) quit:$Q 0  quit
+ ; get ien into patient-lookup for this dfn
+ new ien s ien=$order(@rootpl@("dfn",dfn,0))
+ i '$get(ien) quit:$Q 0  quit
+ ;
+ ; now transfer data from patient-lookup into vapals-patients
+ m @rootvp@(dfn)=@rootpl@(ien)
+ ; then may need to get Urban/Rural using zip
+ new zip,ur s zip=$get(@rootpl@(ien,"zip"))
+ if '(zip="") do
+ . set ur=$$URBRUR^SAMIVSTA(zip)
+ . set @rootvp@(dfn,"sirs")=ur
+ quit:$Q "3^"_dfn  quit
+ ;
  ;
  ;
  ;
@@ -337,3 +372,4 @@ RACE ; Return patient's race
  ;
  ;
 EOR ; End of routine SAMIVST2
+

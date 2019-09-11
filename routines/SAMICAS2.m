@@ -1,4 +1,4 @@
-SAMICAS2 ;ven/gpl - ielcap: case review page ; 3/29/19 10:17am
+SAMICAS2 ;ven/gpl - ielcap: case review page ; 2019-08-01T15:42Z
  ;;18.0;SAM;;
  ;
  ;@license: see routine SAMIUL
@@ -141,13 +141,13 @@ WSCASE ; generate case review page
  . set notehref=notehref_"<input value="""_$g(ntlist(zi,"name"))_""" class=""btn btn-link"" role=""link"" type=""submit""></form></td></tr>"
  set notehref=notehref_"</table>"
  set cnt=cnt+1
+ new facilitycode set facilitycode=$$GETPRFX^SAMIFORM()
  new last5 set last5=$$GETLAST5^SAMIFORM(sid)
  new pssn set pssn=$$GETSSN^SAMIFORM(sid)
  new pname set pname=$$GETNAME^SAMIFORM(sid)
  new useid set useid=pssn
  if useid="" set useid=last5
- ;set rtn(cnt)="<tr><td> "_sid_" </td><td> "_lname_" </td><td> "_fname_" </td><td> - </td><td>"_sidispdate_"</td><td>"_$char(13)
- set rtn(cnt)="<tr><td> "_useid_" </td><td> "_pname_" </td><td> XXX </td><td>"_sidispdate_"</td><td>"_$char(13)
+ set rtn(cnt)="<tr><td> "_useid_" </td><td> "_pname_" </td><td> "_facilitycode_" </td><td>"_sidispdate_"</td><td>"_$char(13)
  set cnt=cnt+1
  set rtn(cnt)="<form method=""post"" action=""/vapals"">"
  set cnt=cnt+1

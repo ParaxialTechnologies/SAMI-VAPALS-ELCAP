@@ -88,7 +88,7 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  ;
  ; generate header
  ;
- d OUT("<TR><TD WIDTH=""180""><B>Patient Name:</B></TD><TD WIDTH=""365"">")
+ d OUT("<TR><TD WIDTH=""180""><B>Participant Name:</B></TD><TD WIDTH=""365"">")
  d OUT($$XVAL("sinamel",vals)_", "_$$XVAL("sinamef",vals))
  d OUT("</TD>")
  ;

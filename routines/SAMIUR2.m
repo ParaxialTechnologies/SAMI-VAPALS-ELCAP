@@ -388,9 +388,9 @@ SHDET(SID) ; Extrinsic returns table contents for smoking history
  . s rptcnt=rptcnt+1
  . s return=return_"<tr>"
  . s return=return_"<td>"_pyary("rpt",rptcnt,1)_"</td>"
- . s return=return_"<td>"_pyary("rpt",rptcnt,2)_"</td>"
- . s return=return_"<td>"_pyary("rpt",rptcnt,3)_"</td>"
- . s return=return_"<td>"_pyary("rpt",rptcnt,4)_"</td>"
+ . s return=return_"<td class=""reported-date"">"_pyary("rpt",rptcnt,2)_"</td>"
+ . s return=return_"<td class=""pack-years"">"_pyary("rpt",rptcnt,3)_"</td>"
+ . s return=return_"<td class=""cumulative-pack-years"">"_pyary("rpt",rptcnt,4)_"</td>"
  . s return=return_"</tr>"
  k pyary
  q return

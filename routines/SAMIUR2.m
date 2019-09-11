@@ -356,6 +356,7 @@ PKY(YRS,PKS) ; Extrinsic returns pack-years from years (YRS) and
  . n zdec s zdec=$p(rtn,".",2)
  . s rtn=$p(rtn,".",1)_"."_$e(zdec,1,2)
  . i $e(zdec,3)>4 s rtn=rtn+.01
+ i rtn'["." s rtn=rtn_".0"
  q rtn
  ;
 FMDT(ZDT) ; Extrinsic returns the fileman date of ZDT

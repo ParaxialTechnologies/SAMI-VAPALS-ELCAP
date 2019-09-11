@@ -88,6 +88,8 @@ RPTTBL(RPT,TYPE) ; RPT is passed by reference and returns the
  . S RPT(2,"routine")="$$SID^SAMIUR2"
  . S RPT(3,"header")="Form Values"
  . S RPT(3,"routine")="$$VALS^SAMIUR2"
+ . S RPT(4,"header")="Smoking History"
+ . S RPT(4,"routine")="$$SMHIS^SAMIUR2"
  ;
  q
  ;
@@ -319,7 +321,7 @@ VALS(zdt,dfn,SAMIPATS) ; extrinsic returns contents of form values cell
 WSVALS(RTN,FILTER) ;web service to display form values from the graph
  n root s root=$$setroot^%wd("vapals-patients")
  n sid s sid=$g(FILTER("sid"))
- i sid="" s sid=$g((FILTER("studyid"))
+ i sid="" s sid=$g(FILTER("studyid"))
  q:sid=""
  n zform s zform=$g(FILTER("form"))
  n groot
@@ -327,5 +329,112 @@ WSVALS(RTN,FILTER) ;web service to display form values from the graph
  e  s groot=$na(@root@("graph",sid,zform))
  s FILTER("root")=$e(groot,2,$l(groot))
  d wsGtree^SYNVPR(.RTN,.FILTER)
+ q
+ ;
+PKYDT(STDT,ENDT,PKS,CIGS) ; Extrinsic returns pack-years
+ ; if PKS is not provided, 20/CIGS will be used for packs per day
+ n pkyr s pkyr=""
+ i $g(PKS)="" d  ;
+ . i $g(CIGS)="" s PKS=0 q  ;
+ . s PKS=20/CIGS
+ n zst,zend,zdif
+ s zst=$$FMDT(STDT)
+ i zst=-1 s zst=STDT
+ s zend=$$FMDT(ENDT)
+ i zend=-1 s zend=ENDT ; probably a fileman date already
+ s zdif=$$FMDIFF^XLFDT(zend,zst)/360
+ s pkyr=$$PKY(zdif,PKS)
+ ;
+ q pkyr
+ ;
+PKY(YRS,PKS) ; Extrinsic returns pack-years from years (YRS) and 
+ ; packs per day (PKS)
+ ;
+ n rtn s rtn=""
+ s rtn=YRS*PKS
+ i $l($p(rtn,".",2))>2 d  ;
+ . n zdec s zdec=$p(rtn,".",2)
+ . s rtn=$p(rtn,".",1)_"."_$e(zdec,1,2)
+ . i $e(zdec,3)>4 s rtn=rtn+.01
+ q rtn
+ ;
+FMDT(ZDT) ; Extrinsic returns the fileman date of ZDT
+ N X,Y
+ S X=ZDT
+ D ^%DT
+ Q Y
+ ;
+SMHIS(zdt,dfn,SAMIPATS) ; extrinsic returns contents of smoking history cell
+ ;
+ n zrtn s zrtn=""
+ s zrtn=zrtn_"<div class=""row""><div class=""col-md-12""><table class=""table"" id=""pack-years-history"">"
+ s zrtn=zrtn_"<thead><tr><th>Form </th><th> Reported Date </th>"
+ s zrtn=zrtn_"<th>Pack Years</th><th>Cumulative</th></tr></thead><tbody>"
+ s zrtn=zrtn_$$SHDET($$DFN2SID(dfn))
+ s zrtn=zrtn_"</tbody></table></div></div>"
+ q zrtn
+ ;
+SHDET(SID) ; Extrinsic returns table contents for smoking history
+ n pyary
+ d CUMPY("pyary",SID)
+ n rptcnt,rptmax
+ s rptcnt=0
+ s rptmax=$o(pyary("rpt",""),-1)
+ q:+rptmax=0
+ n return
+ s return=""
+ n zi s zi=""
+ f zi=1:1:rptmax d  ;
+ . s rptcnt=rptcnt+1
+ . s return=return_"<tr>"
+ . s return=return_"<td>"_pyary("rpt",rptcnt,1)_"</td>"
+ . s return=return_"<td>"_pyary("rpt",rptcnt,2)_"</td>"
+ . s return=return_"<td>"_pyary("rpt",rptcnt,3)_"</td>"
+ . s return=return_"<td>"_pyary("rpt",rptcnt,4)_"</td>"
+ . s return=return_"</tr>"
+ k pyary
+ q return
+ ;
+CUMPY(PYARY,sid) ; forms array of cummulative pack year data
+ ; PYARY passed by name
+ k @PYARY
+ n root s root=$$setroot^%wd("vapals-patients")
+ ;n sid s sid=$g(@root@(DFN,"samistudyid"))
+ ;q:sid=""
+ n items s items=""
+ d GETITEMS^SAMICASE("items",sid)
+ q:'$d(items)
+ m @PYARY@("items")=items
+ n siform
+ s siform=$o(items("siform"))
+ q:siform=""
+ n vals
+ s vals=$na(@root@("graph",sid,siform))
+ n kdate s kdate=$$GETDTKEY^SAMICAS2(siform)
+ n keydate s keydate=$$KEY2DSPD^SAMICAS2(kdate)
+ s @PYARY@("rpt",1,1)="Intake" ; Form
+ s @PYARY@("rpt",1,2)=keydate ; Reported Date
+ n lastcum s lastcum=$g(@vals@("sippy"))
+ s @PYARY@("rpt",1,3)=lastcum ; Pack Years
+ s @PYARY@("rpt",1,4)=lastcum ; Cumulative
+ n lastdt s lastdt=keydate
+ n rptcnt s rptcnt=1
+ n zi s zi=""
+ f  s zi=$o(items("type","vapals:fuform",zi)) q:zi=""  d  ;
+ . s rptcnt=rptcnt+1
+ . s @PYARY@("rpt",rptcnt,1)="Follow-up"
+ . n kdate s kdate=$$GETDTKEY^SAMICAS2(zi)
+ . n keydate s keydate=$$KEY2DSPD^SAMICAS2(kdate)
+ . s @PYARY@("rpt",rptcnt,2)=keydate ; Reported Date
+ . s vals=$na(@root@("graph",sid,zi))
+ . n newpd s newpd=$g(@vals@("sippd"))
+ . n newpy s newpy=$$PKYDT(lastdt,keydate,newpd)
+ . s @vals@("sippy")=newpy
+ . n newcum s newcum=""
+ . i newpy'="" s newcum=lastcum+newpy
+ . s @PYARY@("rpt",rptcnt,3)=newpy ; Pack Years
+ . s @PYARY@("rpt",rptcnt,4)=newcum ; Cumulative
+ . s lastdt=keydate
+ . s lastcum=newcum
  q
  ;

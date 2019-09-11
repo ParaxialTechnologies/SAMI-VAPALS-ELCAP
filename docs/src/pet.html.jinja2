@@ -427,12 +427,11 @@
             <h3>Impression</h3>
             <div class="row">
                 <div class="col-md-12 form-group">
-                    <label class="required" for="ceimn-rs">Nodules</label>
+                    <label class="required">Nodules</label>
                     <div class="radio">
                         <label>
                             <input type="radio" name="ceimn" id="ceimn-rs" value="rs" required="required"> No evidence
-                            of
-                            abnormal uptake. Follow-up as recommended above.
+                            of abnormal uptake. Follow-up as recommended above.
                         </label>
                     </div>
                     <div class="radio">
@@ -452,7 +451,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12 form-group">
-                    <label class="required" for="ceimo-no">Other findings</label>
+                    <label class="required">Other findings</label>
                     <div class="radio">
                         <label>
                             <input type="radio" name="ceimo" id="ceimo-rs" value="rs" required="required"> No other
@@ -493,7 +492,7 @@
         </form>
     </div>
 
-    {{ f.deleteFormModal("pet.html", mockup, formMethod)}}
+    {{ f.deleteFormModal("pet.html", mockup, formMethod) }}
 {% endblock %}
 
 {% block script %}
@@ -552,8 +551,7 @@
                                     let selector = "";
                                     if (e.element.id) {
                                         selector = "#" + e.element.id
-                                    }
-                                    else {
+                                    } else {
                                         selector = "[name=" + e.element.name + "]"
                                     }
 

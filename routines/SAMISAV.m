@@ -34,6 +34,25 @@ SAVFILTR(sid,form,vars) ; extrinsic which returns the form key to use
  . . m @root@("graph",sid,moveto)=@root@("graph",sid,form)
  . . k @root@("graph",sid,form)
  . . s useform=moveto
+ if type="fuform" d  ; followup form
+ . m ^SAMIUL("samisav","vals")=vars
+ . n formdate s formdate=$g(vars("sidof")) ; date of the CT scan from the form
+ . q:formdate=""
+ . n fdate s fdate=$$KEY2FM^SAMICASE(formdate) ; convert to fileman date
+ . q:fdate=""
+ . q:fdate<0
+ . n fmcurrent s fmcurrent=$$KEY2FM^SAMICASE(form) ; current key in fm formate
+ . if fdate'=fmcurrent d  ;
+ . . n moveto s moveto="fuform-"_$$KEYDATE^SAMIHOM3(fdate)
+ . . ;w !,"old: ",fmcurrent," new: ",fdate," ... date must be changed
+ . . k ^SAMIUL("samisav")
+ . . s ^SAMIUL("samisav","current")=form_"^"_fmcurrent
+ . . s ^SAMIUL("samisav","incoming")=formdate_"^"_fdate
+ . . s ^SAMIUL("samisav","conclusion")="graph must be moved to: "_moveto
+ . . m ^SAMIUL("samisav","vals")=vars
+ . . m @root@("graph",sid,moveto)=@root@("graph",sid,form)
+ . . k @root@("graph",sid,form)
+ . . s useform=moveto
  if type="siform" d  ; intake form
  . s vars("samifirsttime")="false"
  . d COMLOG(.sid,.form,.vars) ; add to the communication log

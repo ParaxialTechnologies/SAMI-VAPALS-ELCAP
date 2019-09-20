@@ -806,6 +806,28 @@
       </table>
      </div>
     </div>
+    <script>
+     $(function () {
+        /**
+         * helper function that modifies the pack years history datatable to visually indicate which row represents
+         * the current form (based on the presence of the data-current-form attribute
+         */
+        $("tr[data-current-form]").each(function () {
+            const $row = $(this);
+            const colCount = $row.find("td").length;
+            $row.addClass("active");
+            const $cell = $row.find("td:first");
+            const cellText = $cell.text();
+            $cell.text("* " + cellText);
+            const $table = $row.parents("table");
+            let $tfoot = $table.find("tfoot");
+            if ($tfoot.length === 0) {
+                $tfoot = $("<tfoot><tr><td colspan=\"" + colCount + "\"><em><small>* denotes current form</small></em></td></tr></tfoot>");
+                $table.append($tfoot);
+            }
+        });
+    })
+    </script>
     <div class="row">
      <div class="col-md-4">
       <label class="visible-xs visible-sm required" for="sisa-n">

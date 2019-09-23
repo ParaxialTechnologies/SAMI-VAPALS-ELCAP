@@ -651,8 +651,10 @@
                 }
             }).trigger('change');
 
-            //Determine the last cigarette date from the 3 independent fields. When fields are not set, defaults to
-            // the form date (sidof) or today's date when that is blank
+            /**
+             * Determines the last cigarette date from the 3 independent fields. When fields are not set, defaults to
+             * the form date (field name "sidof") or today's date when that is blank
+             */
             function getLastCigaretteDate() {
                 let lastCigarette = VAPALS.toMoment($("#sidof").val() || moment());
                 const lastDay = parseInt($("#sidlcd").val());
@@ -711,6 +713,11 @@
             }).first().trigger('change');
         });
 
+        /**
+         * Retrieves the previous form date relative to this form in the #pack-years-history table.
+         * Used to determine the FROM date when calculating pack years.
+         * @returns {moment}
+         */
         function getPriorFormDate() {
             const $lastHistoryRow = $("#pack-years-history tbody tr").last();
             const $currentFormRow = $("#pack-years-history tbody tr[data-current-form]").last();
@@ -719,7 +726,6 @@
             const priorFormDate = VAPALS.toMoment(priorFormDateStr);
             return priorFormDate;
         }
-
 
 
     </script>

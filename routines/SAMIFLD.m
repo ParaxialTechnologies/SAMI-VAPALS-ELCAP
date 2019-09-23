@@ -211,8 +211,9 @@ LOAD ; process html line, e.g., load json data into graph
  . . set zhtml(zien)=@clog@(zi)
  . set zhtml(SAMILNUM_"."_$$xpand($order(@clog@(""),-1)+1))="</pre>"
  ;
- if form["fuform" d  ;
- . i SAMILINE["pack-years-history" d  ;
+ ;if form["fuform" d  ;
+ i SAMILINE["pack-years-history" d  ;
+ . d  ;
  . . i SAMILINE'["id" q  ;
  . . n zzi s zzi=SAMILNUM
  . . f  s zzi=$o(SAMIHTML(zzi)) q:zzi>(SAMILNUM+20)  q:SAMIHTML(zzi)["tbody"  d

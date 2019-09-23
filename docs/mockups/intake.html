@@ -848,6 +848,25 @@
             }
         });
     })
+
+    function computeCumulativePackYears(packYears) {
+        console.log("computeCumulativePackYears(): entered. packYears=%f", packYears);
+
+        const $lastHistoryRow = $("#pack-years-history tbody tr").last();
+        const $currentFormRow = $("#pack-years-history tbody tr[data-current-form]").last();
+        const currentFormPackYearsStr = parseFloat($currentFormRow.find("td.pack-years").text() || 0).toFixed(1);
+        const currentFormPackYears = parseFloat(currentFormPackYearsStr);
+        const lastRowCumulative = $lastHistoryRow.length === 1 ?
+            parseFloat($lastHistoryRow.find(".cumulative-pack-years").text().trim()) : 0.0;
+
+        console.log("computeCumulativePackYears(): lastRowCumulative=%f, currentFormPackYears=%f",
+            lastRowCumulative, currentFormPackYears);
+
+        const cumulative = parseFloat((lastRowCumulative - currentFormPackYears + packYears).toFixed(1));
+
+        console.log("computeCumulativePackYears(): returning %f", cumulative);
+        return cumulative;
+    }
      </script>
      <div class="row">
       <div class="col-lg-4 col-md-6 col-sm-6 form-group">
@@ -938,9 +957,11 @@
         Reported pack years
        </label>
       </div>
-      <div class="col-sm-2">
+      <div class="col-sm-8">
        <span id="sippy-val">
        </span>
+       <div class="alert alert-info" id="cumulative-pack-years-message" style="display: none">
+       </div>
       </div>
       <input id="sippy" name="sippy" type="hidden"/>
      </div>
@@ -1708,12 +1729,21 @@
 
             if (packYears > 0) {
                 $("#sippy").val(packYears);
-                $("#sippy-val").text(packYears);
+                let packYearsText = packYears.toFixed(1);
+                const $currentFormRow = $("#pack-years-history tbody tr[data-current-form]").last();
+                if ($currentFormRow.length == 1) {
+                    packYearsText += " thru " + $currentFormRow.find(".reported-date").text().trim();
+                }
+                $("#sippy-val").text(packYearsText);
             } else {
                 $("#sippy").val("");
                 $("#sippy-val").text("-");
             }
 
+            const cumulative = computeCumulativePackYears(packYears);
+            $("#sippycu").val(cumulative);
+            const message = "Cumulative pack years will be updated to <strong>" + cumulative.toFixed(1) + "</strong>";
+            $("#cumulative-pack-years-message").html(message).show();
         }).first().trigger('change');
 
         //removed smoking history table if there is none (i.e. initial intake form entry)

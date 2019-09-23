@@ -682,7 +682,7 @@
 
                 const yearsSinceFollowup = parseFloat((monthsBetween / 12).toFixed(2));
                 const packsPerDay = parseFloat($("#sippd").val());
-                console.log("packYears() yearsSinceFollowup=%d, packsPerDay=%d", yearsSinceFollowup, packsPerDay);
+                console.log("packYears() yearsSinceFollowup=%f, packsPerDay=%f", yearsSinceFollowup, packsPerDay);
 
                 //if last cigarette was before last form, pack years is 0.
                 let packYears = 0;
@@ -690,7 +690,7 @@
                     packYears = VAPALS.calculatePackYears(packsPerDay, yearsSinceFollowup);
                 }
 
-                console.log("packYears() calculated packYears value is %d", packYears);
+                console.log("packYears() calculated packYears value is %f", packYears);
                 if (packYears > 0) {
                     $("#sippy").val(packYears);
                     $("#sippy-val").text(packYears + " from " + priorFormDate.format(VAPALS.DATE_FORMAT) + " to " +
@@ -703,7 +703,7 @@
                 const cumulative = computeCumulativePackYears(packYears);
                 if (cumulative > 0 && cumulative !== originalCumulativePackYears) {
                     $("#sippycu").val(cumulative);
-                    const message = "Cumulative pack years will be updated to <strong>" + cumulative + "</strong>";
+                    const message = "Cumulative pack years will be updated to <strong>" + cumulative.toFixed(1) + "</strong>";
                     $("#cumulative-pack-years-message").html(message).show();
                 } else {
                     $("#cumulative-pack-years-message").hide();
@@ -720,24 +720,7 @@
             return priorFormDate;
         }
 
-        function computeCumulativePackYears(packYears) {
-            console.log("computeCumulativePackYears(): entered. packYears=%d", packYears);
 
-            const $lastHistoryRow = $("#pack-years-history tbody tr").last();
-            const $currentFormRow = $("#pack-years-history tbody tr[data-current-form]").last();
-            const currentFormPackYearsStr = parseFloat($currentFormRow.find("td.pack-years").text() || 0).toFixed(1);
-            const currentFormPackYears = parseFloat(currentFormPackYearsStr);
-            const lastRowCumulative = $lastHistoryRow.length === 1 ?
-                parseFloat($lastHistoryRow.find(".cumulative-pack-years").text().trim()) : 0;
-
-            console.log("computeCumulativePackYears(): lastRowCumulative=%d, currentFormPackYears=%d, packYears=%d",
-                lastRowCumulative, currentFormPackYears, packYears);
-
-            const cumulative = parseFloat((lastRowCumulative - currentFormPackYears + packYears).toFixed(1));
-
-            console.log("computeCumulativePackYears(): returning %d", cumulative);
-            return cumulative;
-        }
 
     </script>
 

@@ -12,7 +12,7 @@ VAPALS = new function () {
     this.DATE_TIME_FORMAT = "MM/DD/YYYY hh:mm:ss";
 
     /**
-     * Computes the number of months between the provided date and now.
+     * Computes the number of whole months between the provided date and now.
      * @param {date|moment|string} from a from date
      * @param {date|moment|string} to a to date
      * @returns {number}
@@ -142,7 +142,7 @@ VAPALS = new function () {
     this.calculatePackYears = function (packsPerDay, years) {
 
         if (packsPerDay > 0 && years > 0) {
-            const packYears = (packsPerDay * years).toFixed(1);
+            const packYears = parseFloat((packsPerDay * years).toFixed(1));
             return packYears;
         }
 

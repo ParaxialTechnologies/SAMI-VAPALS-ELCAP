@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.09.20" name="version"/>
+  <meta content="2019.09.23" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    Followup Form
@@ -1391,7 +1391,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.09.20
+     2019.09.23
     </span>
    </div>
   </footer>
@@ -1596,9 +1596,10 @@
                 }
             }).trigger('change');
 
-            //Determine the last cigarette date from the 3 independent fields. When fields are not set, defaults to today's month/day/year
+            //Determine the last cigarette date from the 3 independent fields. When fields are not set, defaults to
+            // the form date (sidof) or today's date when that is blank
             function getLastCigaretteDate() {
-                let lastCigarette = moment();
+                let lastCigarette = VAPALS.toMoment($("#sidof").val() || moment());
                 const lastDay = parseInt($("#sidlcd").val());
                 const lastMonth = parseInt($("#sidlcm").val());
                 const lastYear = parseInt($("#sidlcy").val());
@@ -1614,54 +1615,74 @@
                 return lastCigarette;
             }
 
-            const originalCumulativePackYears = $("#sippycu").val();
+            const originalCumulativePackYears = parseFloat($("#sippycu").val());
 
             //Calculate pack years and cumulative pack years, displaying and setting field values where appropriate
             $("#sidlcd, #sidlcm, #sidlcy, #sippd").on('keyup change', function () {
-                const $lastHistoryRow = $("#pack-years-history tbody tr").last();
+                const priorFormDate = getPriorFormDate();
+                const lastCigaretteDate = getLastCigaretteDate();
+                const monthsBetween = VAPALS.computeMonthsBetween(priorFormDate, lastCigaretteDate);
+                console.log("packYears() priorFormDate=%s, lastCigarette=%s, monthsBetween=%d",
+                    priorFormDate.format(), lastCigaretteDate.format(), monthsBetween);
 
-                //can't calculate pack years on followup form without at least one prior record
-                if ($lastHistoryRow.length === 1) {
-                    const lastFormDateStr = $lastHistoryRow.find(".reported-date").text().trim();
-                    const lastFormDate = VAPALS.toMoment(lastFormDateStr);
-                    const lastCigaretteDate = getLastCigaretteDate();
-                    const months = VAPALS.computeMonthsBetween(lastFormDate, lastCigaretteDate);
-                    const yearsSinceFollowup = (months / 12).toFixed(2);
-                    const packsPerDay = parseFloat($("#sippd").val());
+                const yearsSinceFollowup = parseFloat((monthsBetween / 12).toFixed(2));
+                const packsPerDay = parseFloat($("#sippd").val());
+                console.log("packYears() yearsSinceFollowup=%d, packsPerDay=%d", yearsSinceFollowup, packsPerDay);
 
-                    //if last cigarette was before last form, pack years is 0.
-                    let packYears = 0;
-                    if (!isNaN(packsPerDay) && lastCigaretteDate.isAfter(lastFormDate)) {
-                        packYears = VAPALS.calculatePackYears(packsPerDay, yearsSinceFollowup);
-                    }
+                //if last cigarette was before last form, pack years is 0.
+                let packYears = 0;
+                if (!isNaN(packsPerDay) && lastCigaretteDate.isAfter(priorFormDate)) {
+                    packYears = VAPALS.calculatePackYears(packsPerDay, yearsSinceFollowup);
+                }
 
-                    if (packYears > 0) {
-                        $("#sippy").val(packYears);
-                        $("#sippy-val").text(packYears + " since " + lastFormDateStr);
-                    } else {
-                        $("#sippy").val("");
-                        $("#sippy-val").text("-");
-                    }
-
-                    const lastCumulativeValue = $lastHistoryRow.find(".cumulative-pack-years").text().trim();
-                    const cumulative = (parseFloat(lastCumulativeValue) + parseFloat(packYears)).toFixed(1); // Could be "NaN"
-                    console.log("cumulative: " + cumulative);
-                    const $cumulativeField = $("#sippycu");
-                    console.log("cumulativeField: " + $cumulativeField.val());
-                    if (cumulative > 0 && cumulative !== originalCumulativePackYears) {
-                        $cumulativeField.val(cumulative);
-                        const message = "Cumulative pack years will be updated to <strong>" + cumulative + "</strong>";
-                        $("#cumulative-pack-years-message").html(message).show();
-                    } else {
-                        $("#cumulative-pack-years-message").hide();
-                    }
-
+                console.log("packYears() calculated packYears value is %d", packYears);
+                if (packYears > 0) {
+                    $("#sippy").val(packYears);
+                    $("#sippy-val").text(packYears + " from " + priorFormDate.format(VAPALS.DATE_FORMAT) + " to " +
+                        lastCigaretteDate.format(VAPALS.DATE_FORMAT));
                 } else {
-                    const message = "Pack years cannot be calculated without prior intake for followup history";
+                    $("#sippy").val("");
+                    $("#sippy-val").text("-");
+                }
+
+                const cumulative = computeCumulativePackYears(packYears);
+                if (cumulative > 0 && cumulative !== originalCumulativePackYears) {
+                    $("#sippycu").val(cumulative);
+                    const message = "Cumulative pack years will be updated to <strong>" + cumulative + "</strong>";
                     $("#cumulative-pack-years-message").html(message).show();
+                } else {
+                    $("#cumulative-pack-years-message").hide();
                 }
             }).first().trigger('change');
         });
+
+        function getPriorFormDate() {
+            const $lastHistoryRow = $("#pack-years-history tbody tr").last();
+            const $currentFormRow = $("#pack-years-history tbody tr[data-current-form]").last();
+            const $priorFormRow = $currentFormRow.length === 1 ? $currentFormRow.prev() : $lastHistoryRow;
+            const priorFormDateStr = $priorFormRow.find(".reported-date").text().trim();
+            const priorFormDate = VAPALS.toMoment(priorFormDateStr);
+            return priorFormDate;
+        }
+
+        function computeCumulativePackYears(packYears) {
+            console.log("computeCumulativePackYears(): entered. packYears=%d", packYears);
+
+            const $lastHistoryRow = $("#pack-years-history tbody tr").last();
+            const $currentFormRow = $("#pack-years-history tbody tr[data-current-form]").last();
+            const currentFormPackYearsStr = parseFloat($currentFormRow.find("td.pack-years").text() || 0).toFixed(1);
+            const currentFormPackYears = parseFloat(currentFormPackYearsStr);
+            const lastRowCumulative = $lastHistoryRow.length === 1 ?
+                parseFloat($lastHistoryRow.find(".cumulative-pack-years").text().trim()) : 0;
+
+            console.log("computeCumulativePackYears(): lastRowCumulative=%d, currentFormPackYears=%d, packYears=%d",
+                lastRowCumulative, currentFormPackYears, packYears);
+
+            const cumulative = parseFloat((lastRowCumulative - currentFormPackYears + packYears).toFixed(1));
+
+            console.log("computeCumulativePackYears(): returning %d", cumulative);
+            return cumulative;
+        }
   </script>
  </body>
 </html>

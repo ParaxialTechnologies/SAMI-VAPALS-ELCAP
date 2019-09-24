@@ -678,11 +678,11 @@
             $("#sidlcd, #sidlcm, #sidlcy, #sippd").on('keyup change', function () {
                 const priorFormDate = getPriorFormDate();
                 const lastCigaretteDate = getLastCigaretteDate();
-                const monthsBetween = VAPALS.computeMonthsBetween(priorFormDate, lastCigaretteDate);
-                console.log("packYears() priorFormDate=%s, lastCigarette=%s, monthsBetween=%d",
-                    priorFormDate.format(), lastCigaretteDate.format(), monthsBetween);
+                const daysBetween = VAPALS.computeDaysBetween(priorFormDate, lastCigaretteDate);
+                console.log("packYears() priorFormDate=%s, lastCigarette=%s, daysBetween=%d",
+                    priorFormDate.format(), lastCigaretteDate.format(), daysBetween);
 
-                const yearsSinceFollowup = parseFloat((monthsBetween / 12).toFixed(2));
+                const yearsSinceFollowup = parseFloat((daysBetween / 365.24).toFixed(2));
                 const packsPerDay = parseFloat($("#sippd").val());
                 console.log("packYears() yearsSinceFollowup=%f, packsPerDay=%f", yearsSinceFollowup, packsPerDay);
 

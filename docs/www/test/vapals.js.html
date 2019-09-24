@@ -21,15 +21,28 @@
 <script>
 
     QUnit.test("computeMonthsBetween", function (assert) {
-        var monthAgo = moment().subtract(32, "days").toDate();
-        var now = moment();
-        assert.equal(VAPALS.computeMonthsBetween(monthAgo, now), 1, "month ago");
+        const monthAgo = moment().subtract(1, "month").toDate();
+        const now = moment();
+        assert.equal(VAPALS.computeMonthsBetween(monthAgo, now), 1, "1 month ago");
+        assert.equal(VAPALS.computeMonthsBetween(now, monthAgo), 1, "-1 month ago");
 
         assert.ok(VAPALS.computeMonthsBetween("01/Mar/2016", now) > 12, "string input");
         assert.equal(VAPALS.computeMonthsBetween(null, null), 0, "null");
         assert.equal(VAPALS.computeMonthsBetween("", ""), 0, "empty");
         assert.equal(VAPALS.computeMonthsBetween(" ", " "), 0, "blank");
         assert.equal(VAPALS.computeMonthsBetween("foo", "bar"), 0, "invalid");
+    });
+
+    QUnit.test("computeDaysBetween", function (assert) {
+        const monthAgo = moment().subtract(6, "days").toDate();
+        const now = moment();
+        assert.equal(VAPALS.computeDaysBetween(monthAgo, now), 6, "6 days ago");
+        assert.equal(VAPALS.computeDaysBetween(now, monthAgo), 6, "-6 days ago");
+
+        assert.equal(VAPALS.computeDaysBetween(null, null), 0, "null");
+        assert.equal(VAPALS.computeDaysBetween("", ""), 0, "empty");
+        assert.equal(VAPALS.computeDaysBetween(" ", " "), 0, "blank");
+        assert.equal(VAPALS.computeDaysBetween("foo", "bar"), 0, "invalid");
     });
 
     QUnit.test("toMoment", function (assert) {

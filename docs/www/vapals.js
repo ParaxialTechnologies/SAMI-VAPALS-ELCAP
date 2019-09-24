@@ -21,7 +21,23 @@ VAPALS = new function () {
         const fromMoment = this.toMoment(from);
         const toMoment = this.toMoment(to);
         if (fromMoment.isValid() && toMoment.isValid()) {
-            return Math.abs(parseInt(fromMoment.diff(toMoment, "months", true)))
+            let months = fromMoment.diff(toMoment, "months", true).toFixed(2);
+            return Math.abs(parseFloat(months))
+        }
+        return 0;
+    };
+
+    /**
+     * Computes the number of days between the provided date and now.
+     * @param {date|moment|string} from a from date
+     * @param {date|moment|string} to a to date
+     * @returns {number}
+     */
+    this.computeDaysBetween = function (from, to) {
+        const fromMoment = this.toMoment(from);
+        const toMoment = this.toMoment(to);
+        if (fromMoment.isValid() && toMoment.isValid()) {
+            return Math.abs(parseInt(fromMoment.diff(toMoment, "days", true)))
         }
         return 0;
     };

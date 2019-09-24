@@ -435,7 +435,13 @@ CUMPY(PYARY,sid,KEY) ; forms array of cummulative pack year data
  . s @PYARY@("rpt",rptcnt,2)=keydate ; Reported Date
  . s vals=$na(@root@("graph",sid,zi))
  . n newpd s newpd=$g(@vals@("sippd"))
- . n newpy s newpy=$$PKYDT(lastdt,keydate,newpd)
+ . n usedate,siq s usedate=keydate
+ . s siq=$g(@vals@("siq")) ; quit date on followup form
+ . i siq'="" d  ; quit date provided
+ . . if $$FMDT(siq)<$$FMDT(lastdt) q  ; quit date out of range
+ . . if $$FMDT(siq)>$$FMDT(keydate) q  ; quit date out of range
+ . . s usedate=siq ; use the quit date as end of range
+ . n newpy s newpy=$$PKYDT(lastdt,usedate,newpd)
  . s @vals@("sippy")=newpy
  . s ^gpl("current","KEY")=$g(KEY)
  . s ^gpl("current","zi")=zi

@@ -851,8 +851,8 @@
     <script>
      $(function () {
         /**
-         * helper function that modifies the pack years history datatable to visually indicate which row represents
-         * the current form (based on the presence of the data-current-form attribute
+         * A helper function that modifies the pack years history datatable to visually indicate which row represents
+         * the current form (based on the presence of the "data-current-form" attribute
          */
         $("tr[data-current-form]").each(function () {
             const $row = $(this);
@@ -870,6 +870,16 @@
         });
     });
 
+    /**
+     * Computes a TO-BE cumulative pack years value.
+     * This function parses the #pack-years-history data table to determine the TO-BE cumulative pack year value.
+     * The current cumulative pack years is found in the last row of the data table. When a row in the table is
+     * determined to be THIS form, the previously persisted pack years value is considered in the calculation by
+     * subtracting it from the using the current total pack years, then adding the value of @packYears; effectively
+     * updating the prior value.
+     * @param packYears the value of the current forms pack years
+     * @returns {number}
+     */
     function computeCumulativePackYears(packYears) {
         console.log("computeCumulativePackYears(): entered. packYears=%f", packYears);
 
@@ -1615,8 +1625,10 @@
                 }
             }).trigger('change');
 
-            //Determine the last cigarette date from the 3 independent fields. When fields are not set, defaults to
-            // the form date (sidof) or today's date when that is blank
+            /**
+             * Determines the last cigarette date from the 3 independent fields. When fields are not set, defaults to
+             * the form date (field name "sidof") or today's date when that is blank
+             */
             function getLastCigaretteDate() {
                 let lastCigarette = VAPALS.toMoment($("#sidof").val() || moment());
                 const lastDay = parseInt($("#sidlcd").val());
@@ -1675,6 +1687,11 @@
             }).first().trigger('change');
         });
 
+        /**
+         * Retrieves the previous form date relative to this form in the #pack-years-history table.
+         * Used to determine the FROM date when calculating pack years.
+         * @returns {moment}
+         */
         function getPriorFormDate() {
             const $lastHistoryRow = $("#pack-years-history tbody tr").last();
             const $currentFormRow = $("#pack-years-history tbody tr[data-current-form]").last();

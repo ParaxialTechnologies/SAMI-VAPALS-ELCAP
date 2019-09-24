@@ -788,8 +788,8 @@
      <script>
       $(function () {
         /**
-         * helper function that modifies the pack years history datatable to visually indicate which row represents
-         * the current form (based on the presence of the data-current-form attribute
+         * A helper function that modifies the pack years history datatable to visually indicate which row represents
+         * the current form (based on the presence of the "data-current-form" attribute
          */
         $("tr[data-current-form]").each(function () {
             const $row = $(this);
@@ -807,6 +807,16 @@
         });
     });
 
+    /**
+     * Computes a TO-BE cumulative pack years value.
+     * This function parses the #pack-years-history data table to determine the TO-BE cumulative pack year value.
+     * The current cumulative pack years is found in the last row of the data table. When a row in the table is
+     * determined to be THIS form, the previously persisted pack years value is considered in the calculation by
+     * subtracting it from the using the current total pack years, then adding the value of @packYears; effectively
+     * updating the prior value.
+     * @param packYears the value of the current forms pack years
+     * @returns {number}
+     */
     function computeCumulativePackYears(packYears) {
         console.log("computeCumulativePackYears(): entered. packYears=%f", packYears);
 

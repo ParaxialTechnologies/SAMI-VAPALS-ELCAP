@@ -781,7 +781,7 @@
          </tr>
         </thead>
         <tbody>
-         <tr>
+         <tr data-current-form="true">
           <td>
            Intake
           </td>
@@ -795,7 +795,7 @@
            32.5
           </td>
          </tr>
-         <tr data-current-form="true">
+         <tr>
           <td>
            Followup
           </td>
@@ -864,7 +864,7 @@
 
         const $lastHistoryRow = $("#pack-years-history tbody tr").last();
         const $currentFormRow = $("#pack-years-history tbody tr[data-current-form]").last();
-        const currentFormPackYearsStr = parseFloat($currentFormRow.find("td.pack-years").text() || 0).toFixed(1);
+        const currentFormPackYearsStr = parseFloat($currentFormRow.find("td.pack-years").text() || 0).toFixed(2);
         const currentFormPackYears = parseFloat(currentFormPackYearsStr);
         const lastRowCumulative = $lastHistoryRow.length === 1 ?
             parseFloat($lastHistoryRow.find(".cumulative-pack-years").text().trim()) : 0.0;
@@ -872,7 +872,7 @@
         console.log("computeCumulativePackYears(): lastRowCumulative=%f, currentFormPackYears=%f",
             lastRowCumulative, currentFormPackYears);
 
-        const cumulative = parseFloat((lastRowCumulative - currentFormPackYears + packYears).toFixed(1));
+        const cumulative = parseFloat((lastRowCumulative - currentFormPackYears + packYears).toFixed(2));
 
         console.log("computeCumulativePackYears(): returning %f", cumulative);
         return cumulative;
@@ -1739,7 +1739,7 @@
 
             if (packYears > 0) {
                 $("#sippy").val(packYears);
-                let packYearsText = packYears.toFixed(1);
+                let packYearsText = packYears.toFixed(2);
                 const $currentFormRow = $("#pack-years-history tbody tr[data-current-form]").last();
                 if ($currentFormRow.length == 1) {
                     packYearsText += " thru " + $currentFormRow.find(".reported-date").text().trim();
@@ -1752,7 +1752,7 @@
 
             const cumulative = computeCumulativePackYears(packYears);
             $("#sippycu").val(cumulative);
-            const message = "Cumulative pack years will be updated to <strong>" + cumulative.toFixed(1) + "</strong>";
+            const message = "Cumulative pack years will be updated to <strong>" + cumulative.toFixed(2) + "</strong>";
             $("#cumulative-pack-years-message").html(message).show();
         }).first().trigger('change');
 

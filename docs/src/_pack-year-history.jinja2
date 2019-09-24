@@ -11,13 +11,13 @@
             </thead>
             <tbody>
             {% if mockup %}
-                <tr>
+                <tr data-current-form="true">
                     <td>Intake</td>
                     <td class="reported-date">2/11/2017</td>
                     <td class="pack-years">32.5</td>
                     <td class="cumulative-pack-years">32.5</td>
                 </tr>
-                <tr data-current-form="true">
+                <tr>
                     <td>Followup</td>
                     <td class="reported-date">08/15/2018</td>
                     <td class="pack-years">0.3</td>
@@ -71,7 +71,7 @@
 
         const $lastHistoryRow = $("#pack-years-history tbody tr").last();
         const $currentFormRow = $("#pack-years-history tbody tr[data-current-form]").last();
-        const currentFormPackYearsStr = parseFloat($currentFormRow.find("td.pack-years").text() || 0).toFixed(1);
+        const currentFormPackYearsStr = parseFloat($currentFormRow.find("td.pack-years").text() || 0).toFixed(2);
         const currentFormPackYears = parseFloat(currentFormPackYearsStr);
         const lastRowCumulative = $lastHistoryRow.length === 1 ?
             parseFloat($lastHistoryRow.find(".cumulative-pack-years").text().trim()) : 0.0;
@@ -79,7 +79,7 @@
         console.log("computeCumulativePackYears(): lastRowCumulative=%f, currentFormPackYears=%f",
             lastRowCumulative, currentFormPackYears);
 
-        const cumulative = parseFloat((lastRowCumulative - currentFormPackYears + packYears).toFixed(1));
+        const cumulative = parseFloat((lastRowCumulative - currentFormPackYears + packYears).toFixed(2));
 
         console.log("computeCumulativePackYears(): returning %f", cumulative);
         return cumulative;

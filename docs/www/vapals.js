@@ -158,7 +158,7 @@ VAPALS = new function () {
     this.calculatePackYears = function (packsPerDay, years) {
 
         if (packsPerDay > 0 && years > 0) {
-            const packYears = parseFloat((packsPerDay * years).toFixed(1));
+            const packYears = parseFloat((packsPerDay * years).toFixed(2));
             return packYears;
         }
 

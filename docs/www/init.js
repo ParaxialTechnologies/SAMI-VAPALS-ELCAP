@@ -35,7 +35,9 @@ function validateDatePickerOnChange(e) {
     var fv = $datePicker.closest(".validated").data("formValidation");
     var $datePickerInput = $datePicker.find("input").addBack("input");
     if (fv && $datePickerInput.is(":enabled")) {
-        fv.revalidateField($datePickerInput.attr('id'));
+        const id = $datePickerInput.attr('id');
+        console.log("validateDatePickerOnChange() id=" + id);
+        fv.revalidateField(id);
     }
     return true;
 }

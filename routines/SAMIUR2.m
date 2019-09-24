@@ -414,6 +414,7 @@ CUMPY(PYARY,sid,KEY) ; forms array of cummulative pack year data
  n siform
  s siform=$o(items("siform"))
  q:siform=""
+ i siform=$g(KEY) s @PYARY@("current")=1 ;this row is the current form
  n vals
  s vals=$na(@root@("graph",sid,siform))
  n kdate s kdate=$$GETDTKEY^SAMICAS2(siform)

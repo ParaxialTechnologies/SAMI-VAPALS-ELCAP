@@ -138,10 +138,19 @@ NOTE(filter) ; extrnisic which creates a note
  . s didnote=1
  ;
  i $g(@vals@("samistatus"))="complete" d  ;
+ . q:$$HASINNT(vals)
  . d MKIN(si,samikey,vals,.filter) ;
  . s didnote=1
  ;
  q didnote
+ ;
+HASINNT(vals) ; extrinsic returns 1 if intake note is present
+ ; else returns 0
+ n zzi,zzrtn s (zzi,zzrtn)=0
+ q:'$d(@vals)
+ f  s zzi=$o(@vals@("notes",zzi)) q:+zzi=0  d  ;
+ . i $g(@vals@("notes",zzi,"name"))["Intake" s zzrtn=1
+ q zzrtn
  ;
 MKEL(sid,form,vals,filter) ;
  n cnt s cnt=0

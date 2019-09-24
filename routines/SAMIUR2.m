@@ -342,7 +342,7 @@ PKYDT(STDT,ENDT,PKS,CIGS) ; Extrinsic returns pack-years
  i zst=-1 s zst=STDT
  s zend=$$FMDT(ENDT)
  i zend=-1 s zend=ENDT ; probably a fileman date already
- s zdif=$$FMDIFF^XLFDT(zend,zst)/360
+ s zdif=$$FMDIFF^XLFDT(zend,zst)/365.24
  s pkyr=$$PKY(zdif,PKS)
  ;
  q pkyr

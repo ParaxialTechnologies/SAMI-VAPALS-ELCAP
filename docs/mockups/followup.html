@@ -887,8 +887,9 @@
         const $currentFormRow = $("#pack-years-history tbody tr[data-current-form]").last();
         const currentFormPackYearsStr = parseFloat($currentFormRow.find("td.pack-years").text() || 0).toFixed(2);
         const currentFormPackYears = parseFloat(currentFormPackYearsStr);
-        const lastRowCumulative = $lastHistoryRow.length === 1 ?
-            parseFloat($lastHistoryRow.find(".cumulative-pack-years").text().trim()) : 0.0;
+        const lastRowCumulative = ($lastHistoryRow.length === 1 ?
+            parseFloat($lastHistoryRow.find(".cumulative-pack-years").text().trim()) : 0.0) || 0.0;
+
 
         console.log("computeCumulativePackYears(): lastRowCumulative=%f, currentFormPackYears=%f",
             lastRowCumulative, currentFormPackYears);

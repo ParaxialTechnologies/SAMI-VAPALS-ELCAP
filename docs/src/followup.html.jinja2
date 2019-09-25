@@ -635,7 +635,7 @@
 
                 console.log("packYears() calculated packYears value is %f", packYears);
                 if (packYears > 0) {
-                    $("#sippy").val(packYears);
+                    $("#sippy").val(packYears.toFixed(2));
                     $("#sippy-val").text(packYears + " from " + priorFormDate.format(VAPALS.DATE_FORMAT) + " to " +
                         lastCigaretteDate.format(VAPALS.DATE_FORMAT));
                 } else {
@@ -645,7 +645,7 @@
 
                 const cumulative = computeCumulativePackYears(packYears);
                 if (cumulative > 0 && cumulative !== originalCumulativePackYears) {
-                    $("#sippycu").val(cumulative);
+                    $("#sippycu").val(cumulative.toFixed(2));
                     const message = "Cumulative pack years will be updated to <strong>" + cumulative.toFixed(2) + "</strong>";
                     $("#cumulative-pack-years-message").html(message).show();
                 } else {

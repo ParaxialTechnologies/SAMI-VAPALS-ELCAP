@@ -1690,17 +1690,21 @@
             }
         }).trigger('change');
 
-        $("#sippd, #sisny").on('keyup change', function () {
+        $("#sidc, #sippd, #sisny").on('keyup change', function () {
             const packsPerDay = $("#sippd").val();
             const cigYears = $("#sisny").val();
             const packYears = VAPALS.calculatePackYears(packsPerDay, cigYears);
 
             if (packYears > 0) {
-                $("#sippy").val(packYears);
+                $("#sippy").val(packYears.toFixed(2));
                 let packYearsText = packYears.toFixed(2);
                 const $currentFormRow = $("#pack-years-history tbody tr[data-current-form]").last();
                 if ($currentFormRow.length == 1) {
-                    packYearsText += " thru " + $currentFormRow.find(".reported-date").text().trim();
+                    let intakeDate = VAPALS.toMoment($("#sidc").val());
+                    if (!intakeDate.isValid()){
+                        intakeDate = moment();
+                    }
+                    packYearsText += " thru " + intakeDate.format(VAPALS.DATE_FORMAT);
                 }
                 $("#sippy-val").text(packYearsText);
             } else {
@@ -1709,7 +1713,7 @@
             }
 
             const cumulative = computeCumulativePackYears(packYears);
-            $("#sippycu").val(cumulative);
+            $("#sippycu").val(cumulative.toFixed(2));
             const message = "Cumulative pack years will be updated to <strong>" + cumulative.toFixed(2) + "</strong>";
             $("#cumulative-pack-years-message").html(message).show();
         }).first().trigger('change');

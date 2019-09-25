@@ -559,8 +559,58 @@
             return fv;
         }
 
+        const originalCumulativePackYears = parseFloat($("#sippycu").val());
+
+        function calculateCumulativePackYears() {
+            const priorFormDate = getPriorFormDate();
+            //NB: the last cigarette date will be the quit date IF it is after the prior form date and before the
+            // current form date. Otherwise it is the form date
+            const thisFormDate = VAPALS.toMoment($("#sidof").val()) || moment();
+            const quitDate = VAPALS.toMoment($("#siq").val());
+            const validQuitDate = quitDate.isValid() &&
+                quitDate.isSameOrAfter(priorFormDate) && quitDate.isSameOrBefore(thisFormDate);
+            const lastCigaretteDate = validQuitDate ? quitDate : thisFormDate;
+            const daysBetween = VAPALS.computeDaysBetween(priorFormDate, lastCigaretteDate);
+            console.log("packYears() thisFormDate=%s, priorFormDate=%s, validQuitDate=%s, lastCigarette=%s, daysBetween=%d",
+                thisFormDate.format(), priorFormDate.format(), validQuitDate, lastCigaretteDate.format(), daysBetween);
+
+            const yearsSinceFollowup = parseFloat((daysBetween / 365.24).toFixed(2));
+            const packsPerDay = parseFloat($("#sippd").val());
+            console.log("packYears() yearsSinceFollowup=%f, packsPerDay=%f", yearsSinceFollowup, packsPerDay);
+
+            //if last cigarette was before last form, pack years is 0.
+            let packYears = 0;
+            if (!isNaN(packsPerDay) && lastCigaretteDate.isAfter(priorFormDate)) {
+                packYears = VAPALS.calculatePackYears(packsPerDay, yearsSinceFollowup);
+            }
+
+            console.log("packYears() calculated packYears value is %f", packYears);
+            if (packYears > 0) {
+                $("#sippy").val(packYears.toFixed(2));
+                $("#sippy-val").text(packYears + " from " + priorFormDate.format(VAPALS.DATE_FORMAT) + " to " +
+                    lastCigaretteDate.format(VAPALS.DATE_FORMAT));
+            } else {
+                $("#sippy").val("");
+                $("#sippy-val").text("-");
+            }
+
+            const cumulative = computeCumulativePackYears(packYears);
+            if (cumulative > 0 && cumulative !== originalCumulativePackYears) {
+                $("#sippycu").val(cumulative.toFixed(2));
+                const message = "Cumulative pack years will be updated to <strong>" + cumulative.toFixed(2) + "</strong>";
+                $("#cumulative-pack-years-message").html(message).show();
+            } else {
+                $("#cumulative-pack-years-message").hide();
+            }
+        }
 
         $(function () {
+
+            {% if mockup %}
+                // Allow mockup to run with data necessary to calculate cumulative pack years
+                $("#sidof").val(moment().format(VAPALS.DATE_FORMAT));
+                $("#sicpd").val("20");
+            {% endif %}
 
             createFormValidator();
 
@@ -607,51 +657,10 @@
                 }
             }).trigger('change');
 
-            const originalCumulativePackYears = parseFloat($("#sippycu").val());
 
             //Calculate pack years and cumulative pack years, displaying and setting field values where appropriate
-            $("#sidof, #siq, #sippd").on('keyup change', function () {
-                const priorFormDate = getPriorFormDate();
-                //NB: the last cigarette date will be the quit date IF it is after the prior form date and before the
-                // current form date. Otherwise it is the form date
-                const thisFormDate = VAPALS.toMoment($("#sidof").val()) || moment();
-                const quitDate = VAPALS.toMoment($("#siq").val());
-                const validQuitDate = quitDate.isValid() &&
-                    quitDate.isSameOrAfter(priorFormDate) && quitDate.isSameOrBefore(thisFormDate);
-                const lastCigaretteDate = validQuitDate ? quitDate : thisFormDate;
-                const daysBetween = VAPALS.computeDaysBetween(priorFormDate, lastCigaretteDate);
-                console.log("packYears() thisFormDate=%s, priorFormDate=%s, validQuitDate=%s, lastCigarette=%s, daysBetween=%d",
-                    thisFormDate.format(), priorFormDate.format(), validQuitDate, lastCigaretteDate.format(), daysBetween);
-
-                const yearsSinceFollowup = parseFloat((daysBetween / 365.24).toFixed(2));
-                const packsPerDay = parseFloat($("#sippd").val());
-                console.log("packYears() yearsSinceFollowup=%f, packsPerDay=%f", yearsSinceFollowup, packsPerDay);
-
-                //if last cigarette was before last form, pack years is 0.
-                let packYears = 0;
-                if (!isNaN(packsPerDay) && lastCigaretteDate.isAfter(priorFormDate)) {
-                    packYears = VAPALS.calculatePackYears(packsPerDay, yearsSinceFollowup);
-                }
-
-                console.log("packYears() calculated packYears value is %f", packYears);
-                if (packYears > 0) {
-                    $("#sippy").val(packYears.toFixed(2));
-                    $("#sippy-val").text(packYears + " from " + priorFormDate.format(VAPALS.DATE_FORMAT) + " to " +
-                        lastCigaretteDate.format(VAPALS.DATE_FORMAT));
-                } else {
-                    $("#sippy").val("");
-                    $("#sippy-val").text("-");
-                }
-
-                const cumulative = computeCumulativePackYears(packYears);
-                if (cumulative > 0 && cumulative !== originalCumulativePackYears) {
-                    $("#sippycu").val(cumulative.toFixed(2));
-                    const message = "Cumulative pack years will be updated to <strong>" + cumulative.toFixed(2) + "</strong>";
-                    $("#cumulative-pack-years-message").html(message).show();
-                } else {
-                    $("#cumulative-pack-years-message").hide();
-                }
-            }).first().trigger('change');
+            $("#sidof, #siq, #sippd").on('keyup change', calculateCumulativePackYears);
+            calculateCumulativePackYears();
         });
 
         /**

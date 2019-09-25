@@ -1379,7 +1379,7 @@
             console.log("packYears() thisFormDate=%s, priorFormDate=%s, validQuitDate=%s, lastCigarette=%s, daysBetween=%d",
                 thisFormDate.format(), priorFormDate.format(), validQuitDate, lastCigaretteDate.format(), daysBetween);
 
-            const yearsSinceFollowup = parseFloat((daysBetween / 365.24).toFixed(2));
+            const yearsSinceFollowup = (daysBetween / 365.24); //NB: purposely not rounded
             const packsPerDay = parseFloat($("#sippd").val());
             console.log("packYears() yearsSinceFollowup=%f, packsPerDay=%f", yearsSinceFollowup, packsPerDay);
 

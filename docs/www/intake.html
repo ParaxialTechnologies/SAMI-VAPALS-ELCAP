@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.09.25" name="version"/>
+  <meta content="2019.09.11" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    Lung Screening and Surveillance Intake Form
@@ -762,82 +762,6 @@
       Smoking History
      </h3>
      <div class="row">
-      <div class="col-md-12">
-       <table class="table" id="pack-years-history">
-        <thead>
-         <tr>
-          <th>
-           Form
-          </th>
-          <th>
-           Reported Date
-          </th>
-          <th>
-           Pack Years
-          </th>
-          <th>
-           Cumulative
-          </th>
-         </tr>
-        </thead>
-        <tbody>
-        </tbody>
-       </table>
-      </div>
-     </div>
-     <script>
-      $(function () {
-        /**
-         * A helper function that modifies the pack years history datatable to visually indicate which row represents
-         * the current form (based on the presence of the "data-current-form" attribute
-         */
-        $("tr[data-current-form]").each(function () {
-            const $row = $(this);
-            const colCount = $row.find("td").length;
-            $row.addClass("active");
-            const $cell = $row.find("td:first");
-            const cellText = $cell.text();
-            $cell.text("* " + cellText);
-            const $table = $row.parents("table");
-            let $tfoot = $table.find("tfoot");
-            if ($tfoot.length === 0) {
-                $tfoot = $("<tfoot><tr><td colspan=\"" + colCount + "\"><em><small>* denotes current form</small></em></td></tr></tfoot>");
-                $table.append($tfoot);
-            }
-        });
-    });
-
-    /**
-     * Computes a TO-BE cumulative pack years value.
-     * This function parses the #pack-years-history data table to determine the TO-BE cumulative pack year value.
-     * The current cumulative pack years is found in the last row of the data table. When a row in the table is
-     * determined to be THIS form, the previously persisted pack years value is considered in the calculation by
-     * subtracting it from the using the current total pack years, then adding the value of @packYears; effectively
-     * updating the prior value.
-     * @param packYears the value of the current forms pack years
-     * @returns {number}
-     */
-    function computeCumulativePackYears(packYears) {
-        console.log("computeCumulativePackYears(): entered. packYears=%f", packYears);
-
-        const $lastHistoryRow = $("#pack-years-history tbody tr").last();
-        const $currentFormRow = $("#pack-years-history tbody tr[data-current-form]").last();
-        const currentFormPackYearsStr = parseFloat($currentFormRow.find("td.pack-years").text() || 0).toFixed(2);
-        const currentFormPackYears = parseFloat(currentFormPackYearsStr);
-        const lastRowCumulative = ($lastHistoryRow.length === 1 ?
-            parseFloat($lastHistoryRow.find(".cumulative-pack-years").text().trim()) : 0.0) || 0.0;
-
-
-        console.log("computeCumulativePackYears(): lastRowCumulative=%f, currentFormPackYears=%f",
-            lastRowCumulative, currentFormPackYears);
-
-        const cumulative = parseFloat((lastRowCumulative - currentFormPackYears + packYears).toFixed(2));
-
-        console.log("computeCumulativePackYears(): returning %f", cumulative);
-        return cumulative;
-    }
-     </script>
-     <div class="row">
       <div class="col-lg-4 col-md-6 col-sm-6 form-group">
        <label>
         Have you ever smoked
@@ -884,18 +808,10 @@
      <div class="row form-group">
       <div class="col-md-4">
        <label class="visible-xs visible-sm" for="sippd">
-        How many
-        <em>
-         packs
-        </em>
-        of cigarettes did you smoke per day (PPD)?
+        How many packs of cigarettes did you smoke per day (PPD)?
        </label>
        <label class="text-right pull-right hidden-xs hidden-sm" for="sippd">
-        How many
-        <em>
-         packs
-        </em>
-        of cigarettes did you smoke per day (PPD)?
+        How many packs of cigarettes did you smoke per day (PPD)?
        </label>
       </div>
       <div class="col-sm-2">
@@ -926,21 +842,19 @@
         Reported pack years
        </label>
       </div>
-      <div class="col-sm-8">
+      <div class="col-sm-2">
        <span id="sippy-val">
        </span>
-       <div class="alert alert-info" id="cumulative-pack-years-message" style="display: none">
-       </div>
       </div>
       <input id="sippy" name="sippy" type="hidden"/>
      </div>
      <div class="row form-group">
       <div class="col-md-4">
        <label class="visible-xs visible-sm" for="siq">
-        Quit Date
+        Quit
        </label>
        <label class="text-right pull-right hidden-xs hidden-sm" for="siq">
-        Quit Date
+        Quit
        </label>
       </div>
       <div class="col-sm-4 col-md-3 col-lg-2">
@@ -1303,7 +1217,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.09.25
+     2019.09.11
     </span>
    </div>
   </footer>
@@ -1476,7 +1390,7 @@
                     sisny: {
                         validators: {
                             notEmpty: {message: 'Number of years is required'},
-                            integer: {message: 'Must be a whole number'}
+                            integer: {message: 'must be a whole number'}
                         }
                     },
                     sistatus: {validators: {notEmpty: {message: 'Enrollment status is required'}}},
@@ -1679,7 +1593,7 @@
             const $sippd = $("#sippd");
             const $sippdVal = $("#sippd-val");
             if (cigsPerDay >= 0) {
-                const cpd = VAPALS.calculatePacksPerDay(cigsPerDay);
+                const cpd = (cigsPerDay / 20).toFixed(2);
                 if (cpd > 0) {
                     $sippd.val(cpd);
                     $sippdVal.text(cpd);
@@ -1689,41 +1603,26 @@
                 }
                 $sippd.change();
             }
-        }).trigger('keyup');
+        }).trigger('change');
 
-        $("#sidc, #sippd, #sisny").on('keyup change', function () {
+        $("#sippd, #sisny").on('keyup change', function () {
             const packsPerDay = $("#sippd").val();
             const cigYears = $("#sisny").val();
-            const packYears = VAPALS.calculatePackYears(packsPerDay, cigYears);
-
-            if (packYears > 0) {
-                $("#sippy").val(packYears.toFixed(2));
-                let packYearsText = packYears.toFixed(2);
-                const $currentFormRow = $("#pack-years-history tbody tr[data-current-form]").last();
-                if ($currentFormRow.length == 1) {
-                    let intakeDate = VAPALS.toMoment($("#sidc").val());
-                    if (!intakeDate.isValid()) {
-                        intakeDate = moment();
-                    }
-                    packYearsText += " thru " + intakeDate.format(VAPALS.DATE_FORMAT);
+            if (packsPerDay > 0 && cigYears > 0) {
+                const packYears = (packsPerDay * cigYears).toFixed(1);
+                if (packYears > 0) {
+                    $("#sippy").val(packYears);
+                    $("#sippy-val").text(packYears);
                 }
-                $("#sippy-val").text(packYearsText);
             } else {
                 $("#sippy").val("");
                 $("#sippy-val").text("-");
             }
 
-            const cumulative = computeCumulativePackYears(packYears);
-            $("#sippycu").val(cumulative.toFixed(2));
-            const message = "Cumulative pack years will be updated to <strong>" + cumulative.toFixed(2) + "</strong>";
-            $("#cumulative-pack-years-message").html(message).show();
-        });
-        $("#sidc").trigger('keyup');
+        }).first().trigger('change');
 
-        //removed smoking history table if there is none (i.e. initial intake form entry)
-        if ($("#pack-years-history tbody tr").length === 0) {
-            $("#pack-years-history").remove();
-        }
+        $("[name=sistatus]")
+            .conditionallyDisplay({sourceValues: 'active', enable: '#ctappt-container'});
 
         $("[name=sistatus]").on('submit', function () {
             //require reason fields when marking patient as "not active"

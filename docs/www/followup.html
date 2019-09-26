@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.09.25" name="version"/>
+  <meta content="2019.09.11" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    Followup Form
@@ -162,7 +162,7 @@
        Follow-up date
       </label>
       <div class="input-group datepicker">
-       <input aria-describedby="sidof-addon" class="form-control" data-restriction="past" id="sidof" name="sidof" required="required"/>
+       <input aria-describedby="sidof-addon" class="form-control" data-restriction="future" id="sidof" name="sidof" required="required"/>
        <div class="input-group-addon">
         <div class="input-group-text" id="sidof-addon">
          <i aria-hidden="true" class="fa fa-calendar">
@@ -778,93 +778,16 @@
       </div>
      </div>
     </div>
-    <hr/>
     <h3>
-     Smoking History
+     Smoking
     </h3>
-    <div class="row">
-     <div class="col-md-12">
-      <table class="table" id="pack-years-history">
-       <thead>
-        <tr>
-         <th>
-          Form
-         </th>
-         <th>
-          Reported Date
-         </th>
-         <th>
-          Pack Years
-         </th>
-         <th>
-          Cumulative
-         </th>
-        </tr>
-       </thead>
-       <tbody>
-       </tbody>
-      </table>
-     </div>
-    </div>
-    <script>
-     $(function () {
-        /**
-         * A helper function that modifies the pack years history datatable to visually indicate which row represents
-         * the current form (based on the presence of the "data-current-form" attribute
-         */
-        $("tr[data-current-form]").each(function () {
-            const $row = $(this);
-            const colCount = $row.find("td").length;
-            $row.addClass("active");
-            const $cell = $row.find("td:first");
-            const cellText = $cell.text();
-            $cell.text("* " + cellText);
-            const $table = $row.parents("table");
-            let $tfoot = $table.find("tfoot");
-            if ($tfoot.length === 0) {
-                $tfoot = $("<tfoot><tr><td colspan=\"" + colCount + "\"><em><small>* denotes current form</small></em></td></tr></tfoot>");
-                $table.append($tfoot);
-            }
-        });
-    });
-
-    /**
-     * Computes a TO-BE cumulative pack years value.
-     * This function parses the #pack-years-history data table to determine the TO-BE cumulative pack year value.
-     * The current cumulative pack years is found in the last row of the data table. When a row in the table is
-     * determined to be THIS form, the previously persisted pack years value is considered in the calculation by
-     * subtracting it from the using the current total pack years, then adding the value of @packYears; effectively
-     * updating the prior value.
-     * @param packYears the value of the current forms pack years
-     * @returns {number}
-     */
-    function computeCumulativePackYears(packYears) {
-        console.log("computeCumulativePackYears(): entered. packYears=%f", packYears);
-
-        const $lastHistoryRow = $("#pack-years-history tbody tr").last();
-        const $currentFormRow = $("#pack-years-history tbody tr[data-current-form]").last();
-        const currentFormPackYearsStr = parseFloat($currentFormRow.find("td.pack-years").text() || 0).toFixed(2);
-        const currentFormPackYears = parseFloat(currentFormPackYearsStr);
-        const lastRowCumulative = ($lastHistoryRow.length === 1 ?
-            parseFloat($lastHistoryRow.find(".cumulative-pack-years").text().trim()) : 0.0) || 0.0;
-
-
-        console.log("computeCumulativePackYears(): lastRowCumulative=%f, currentFormPackYears=%f",
-            lastRowCumulative, currentFormPackYears);
-
-        const cumulative = parseFloat((lastRowCumulative - currentFormPackYears + packYears).toFixed(2));
-
-        console.log("computeCumulativePackYears(): returning %f", cumulative);
-        return cumulative;
-    }
-    </script>
     <div class="row">
      <div class="col-md-4">
       <label class="visible-xs visible-sm required" for="sisa-n">
-       Since your last followup, have you smoked cigarettes at all, even a puff?
+       Over the past month, have you smoked cigarettes at all, even a puff?
       </label>
       <label class="text-right pull-right hidden-xs hidden-sm required" for="sisa-n">
-       Since your last followup, have you smoked cigarettes at all, even a puff?
+       Over the past month, have you smoked cigarettes at all, even a puff?
       </label>
      </div>
      <div class="col-md-8 form-group">
@@ -882,84 +805,207 @@
       </label>
      </div>
     </div>
-    <div id="sisa-container">
-     <div class="row form-group">
+    <div id="sisa-container-y">
+     <div class="row">
       <div class="col-md-4">
-       <label class="visible-xs visible-sm required" for="sicpd">
-        On average, how many cigarettes did you smoke per day?
+       <label class="visible-xs visible-sm" for="sidpw">
+        On average, on how many days per week are you currently smoking cigarettes?
        </label>
-       <label class="text-right pull-right hidden-xs hidden-sm required" for="sicpd">
-        On average, how many cigarettes did you smoke per day?
+       <label class="text-right pull-right hidden-xs hidden-sm" for="sidpw">
+        On average, on how many days per week are you currently smoking cigarettes?
        </label>
       </div>
-      <div class="col-sm-2">
-       <input class="form-control numeric" id="sicpd" maxlength="4" name="sicpd" required="required" type="text"/>
+      <div class="col-md-1 form-group">
+       <input class="form-control numeric decimalformat" id="sidpw" name="sidpw" type="text"/>
       </div>
      </div>
-     <div class="row form-group">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm" for="siq">
-        Quit Date
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="siq">
-        Quit Date
-       </label>
-      </div>
-      <div class="col-sm-4 col-md-3 col-lg-2">
-       <div class="input-group datepicker">
-        <input aria-describedby="siq-addon" class="form-control" data-restriction="past" id="siq" name="siq"/>
-        <div class="input-group-addon">
-         <div class="input-group-text" id="siq-addon">
-          <i aria-hidden="true" class="fa fa-calendar">
-          </i>
-         </div>
-        </div>
-       </div>
-       <small class="form-text text-muted">
-        MM/DD/YYYY
-       </small>
-      </div>
-     </div>
-     <div class="row form-group">
+     <div class="row">
       <div class="col-md-4">
        <label class="visible-xs visible-sm" for="sippd">
-        How many
-        <em>
-         packs
-        </em>
-        of cigarettes did you smoke per day (PPD)?
+        On average, on the days that you are smoking cigarettes, how many packs of cigarettes are you currently smoking per day (PPD)?
        </label>
        <label class="text-right pull-right hidden-xs hidden-sm" for="sippd">
-        How many
-        <em>
-         packs
-        </em>
-        of cigarettes did you smoke per day (PPD)?
+        On average, on the days that you are smoking cigarettes, how many packs of cigarettes are you currently smoking per day (PPD)?
        </label>
       </div>
-      <div class="col-sm-8">
-       <span id="sippd-val">
-       </span>
+      <div class="col-md-1 form-group">
+       <input class="form-control numeric decimalformat" id="sippd" name="sippd" type="text"/>
       </div>
-      <input id="sippd" name="sippd" type="hidden"/>
      </div>
-     <div class="row form-group">
+    </div>
+    <div id="sisa-container-n">
+     <div class="row">
       <div class="col-md-4">
-       <label class="visible-xs visible-sm" for="sippy">
-        Reported pack years
+       <label class="visible-xs visible-sm" for="sidlcd">
+        When was the date of your last cigarette?
        </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="sippy">
-        Reported pack years
+       <label class="text-right pull-right hidden-xs hidden-sm" for="sidlcd">
+        When was the date of your last cigarette?
        </label>
       </div>
-      <div class="col-sm-8">
-       <span id="sippy-val">
-       </span>
-       <div class="alert alert-info" id="cumulative-pack-years-message" style="display: none">
+      <div class="col-md-4">
+       <div class="form-group" style="float:left;">
+        <select class="form-control input-sm" id="sidlcd" name="sidlcd" title="Last cigarette day">
+         <option selected="" value="-">
+          —
+         </option>
+         <option value="1">
+          1
+         </option>
+         <option value="2">
+          2
+         </option>
+         <option value="3">
+          3
+         </option>
+         <option value="4">
+          4
+         </option>
+         <option value="5">
+          5
+         </option>
+         <option value="6">
+          6
+         </option>
+         <option value="7">
+          7
+         </option>
+         <option value="8">
+          8
+         </option>
+         <option value="9">
+          9
+         </option>
+         <option value="10">
+          10
+         </option>
+         <option value="11">
+          11
+         </option>
+         <option value="12">
+          12
+         </option>
+         <option value="13">
+          13
+         </option>
+         <option value="14">
+          14
+         </option>
+         <option value="15">
+          15
+         </option>
+         <option value="16">
+          16
+         </option>
+         <option value="17">
+          17
+         </option>
+         <option value="18">
+          18
+         </option>
+         <option value="19">
+          19
+         </option>
+         <option value="20">
+          20
+         </option>
+         <option value="21">
+          21
+         </option>
+         <option value="22">
+          22
+         </option>
+         <option value="23">
+          23
+         </option>
+         <option value="24">
+          24
+         </option>
+         <option value="25">
+          25
+         </option>
+         <option value="26">
+          26
+         </option>
+         <option value="27">
+          27
+         </option>
+         <option value="28">
+          28
+         </option>
+         <option value="29">
+          29
+         </option>
+         <option value="30">
+          30
+         </option>
+         <option value="31">
+          31
+         </option>
+        </select>
+        <span class="small text-muted">
+         Day
+        </span>
+       </div>
+       <div class="form-group" style="float:left;">
+        <label class="aria-hidden" for="sidlcm">
+         Last cigarette month
+        </label>
+        <select class="form-control input-sm" id="sidlcm" name="sidlcm" title="Last cigarette month">
+         <option selected="" value="-">
+          —
+         </option>
+         <option value="1">
+          Jan
+         </option>
+         <option value="2">
+          Feb
+         </option>
+         <option value="3">
+          Mar
+         </option>
+         <option value="4">
+          Apr
+         </option>
+         <option value="5">
+          May
+         </option>
+         <option value="6">
+          Jun
+         </option>
+         <option value="7">
+          Jul
+         </option>
+         <option value="8">
+          Aug
+         </option>
+         <option value="9">
+          Sep
+         </option>
+         <option value="10">
+          Oct
+         </option>
+         <option value="11">
+          Nov
+         </option>
+         <option value="12">
+          Dec
+         </option>
+        </select>
+        <span class="small text-muted">
+         Month
+        </span>
+       </div>
+       <div class="form-group" style="float:left;">
+        <label class="aria-hidden" for="sidlcy">
+         Year
+        </label>
+        <input class="form-control input-sm numeric yearpicker" id="sidlcy" maxlength="4" name="sidlcy" placeholder="YYYY" size="5" title="" type="text"/>
+        <small class="help-block">
+         Year
+        </small>
        </div>
       </div>
-      <input id="sippy" name="sippy" type="hidden"/>
-      <input id="sippycu" name="sippycu" title="Cumulative reported pack years" type="hidden"/>
      </div>
     </div>
     <div class="row">
@@ -1130,20 +1176,20 @@
     </div>
     <div class="row">
      <div class="col-md-4">
-      <label class="visible-xs visible-sm required" for="siscmd-n">
+      <label class="visible-xs visible-sm required" for="sicpd-n">
        Smoking cessation materials were distributed to subject?
       </label>
-      <label class="text-right pull-right hidden-xs hidden-sm required" for="siscmd-n">
+      <label class="text-right pull-right hidden-xs hidden-sm required" for="sicpd-n">
        Smoking cessation materials were distributed to subject?
       </label>
      </div>
      <div class="col-md-8 form-group">
-      <label class="radio-inline" for="siscmd-n">
-       <input id="siscmd-n" name="siscmd" required="required" type="radio" value="n"/>
+      <label class="radio-inline" for="sicpd-n">
+       <input id="sicpd-n" name="sicpd" required="required" type="radio" value="n"/>
        No
       </label>
-      <label class="radio-inline" for="siscmd-y">
-       <input id="siscmd-y" name="siscmd" type="radio" value="y"/>
+      <label class="radio-inline" for="sicpd-y">
+       <input id="sicpd-y" name="sicpd" type="radio" value="y"/>
        Yes
       </label>
      </div>
@@ -1206,7 +1252,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.09.25
+     2019.09.11
     </span>
    </div>
   </footer>
@@ -1273,6 +1319,9 @@
    function createFormValidator() {
 
             const $form = $('#main-form');
+            const thisYear = VAPALS.todaysYear();
+            const minYear = thisYear - 100;
+            const yearValidationMessage = 'Must be between ' + minYear + ' and ' + thisYear;
 
             // for certain validators that use multiple inputs like checkboxes and radio groups, change the location
             // of the error icon to be based on the form-group element, instead of being immediately adjacent to the
@@ -1286,7 +1335,7 @@
                         sidof: {
                             validators: {
                                 notEmpty: {message: 'Follow-up date is required'},
-                                date: {max: VAPALS.todaysDate(), message: 'Follow-up date must not be in the future'}
+                                date: {min: VAPALS.todaysDate(), message: 'Follow-up date must not be in the past'}
                             }
                         },
                         sidoe: {
@@ -1322,19 +1371,10 @@
 
                         //Smoking
                         sisa: {validators: {notEmpty: {message: 'Smoking history is required'}}},
+                        sidlcy: {validators: {between: {message: yearValidationMessage, min: minYear, max: thisYear}}},
                         sittq: {validators: {notEmpty: {message: 'Quit attempt is required'}}},
                         siscos: {validators: {notEmpty: {message: 'Other method is required'}}},
-                        sicpd: {
-                            validators: {
-                                notEmpty: {message: 'Packs per day is required'},
-                                integer: {message: 'must be a whole number'}
-                            }
-                        },
-                        siq: {
-                            validators: {
-                                date: {max: VAPALS.todaysDate(), message: 'Quit date must not be in the future'}
-                            }
-                        },
+                        sicpd: {validators: {notEmpty: {message: 'Cessation materials is required'}}},
                     },
                     plugins: {
                         trigger: new FormValidation.plugins.Trigger(),
@@ -1364,54 +1404,8 @@
             return fv;
         }
 
-        const originalCumulativePackYears = parseFloat($("#sippycu").val());
-
-        function calculateCumulativePackYears() {
-            const priorFormDate = getPriorFormDate();
-            //NB: the last cigarette date will be the quit date IF it is after the prior form date and before the
-            // current form date. Otherwise it is the form date
-            const thisFormDate = VAPALS.toMoment($("#sidof").val()) || moment();
-            const quitDate = VAPALS.toMoment($("#siq").val());
-            const validQuitDate = quitDate.isValid() &&
-                quitDate.isSameOrAfter(priorFormDate) && quitDate.isSameOrBefore(thisFormDate);
-            const lastCigaretteDate = validQuitDate ? quitDate : thisFormDate;
-            const daysBetween = VAPALS.computeDaysBetween(priorFormDate, lastCigaretteDate);
-            console.log("packYears() thisFormDate=%s, priorFormDate=%s, validQuitDate=%s, lastCigarette=%s, daysBetween=%d",
-                thisFormDate.format(), priorFormDate.format(), validQuitDate, lastCigaretteDate.format(), daysBetween);
-
-            const yearsSinceFollowup = (daysBetween / 365.24); //NB: purposely not rounded
-            const packsPerDay = parseFloat($("#sippd").val());
-            console.log("packYears() yearsSinceFollowup=%f, packsPerDay=%f", yearsSinceFollowup, packsPerDay);
-
-            //if last cigarette was before last form, pack years is 0.
-            let packYears = 0;
-            if (!isNaN(packsPerDay) && lastCigaretteDate.isAfter(priorFormDate)) {
-                packYears = VAPALS.calculatePackYears(packsPerDay, yearsSinceFollowup);
-            }
-
-            console.log("packYears() calculated packYears value is %f", packYears);
-            if (packYears > 0) {
-                $("#sippy").val(packYears.toFixed(2));
-                $("#sippy-val").text(packYears + " from " + priorFormDate.format(VAPALS.DATE_FORMAT) + " to " +
-                    lastCigaretteDate.format(VAPALS.DATE_FORMAT));
-            } else {
-                $("#sippy").val("");
-                $("#sippy-val").text("-");
-            }
-
-            const cumulative = computeCumulativePackYears(packYears);
-            if (cumulative > 0 && cumulative !== originalCumulativePackYears) {
-                $("#sippycu").val(cumulative.toFixed(2));
-                const message = "Cumulative pack years will be updated to <strong>" + cumulative.toFixed(2) + "</strong>";
-                $("#cumulative-pack-years-message").html(message).show();
-            } else {
-                $("#cumulative-pack-years-message").hide();
-            }
-        }
 
         $(function () {
-
-            
 
             createFormValidator();
 
@@ -1436,47 +1430,10 @@
             $("[name=sicd]").conditionallyDisplay({enable: "#sicd-container"});
             $("[name=silcs]").conditionallyDisplay({enable: "#silcs-container"});
             $("[name=sier]").conditionallyDisplay({enable: "#sier-container"});
-            $("[name=sisa]").conditionallyDisplay({enable: "#sisa-container"});
+            $("[name=sisa]").conditionallyDisplay({enable: "#sisa-container-y", disable: "sisa-container-n"});
             $("[name=sittq]").conditionallyDisplay({enable: "#sittq-container"});
             $("#siscl").conditionallyEnable({sourceValues: "l", enable: "#siscos"});
-
-            //Calculate packs per day
-            $("#sicpd").on('keyup change', function () {
-                const cigsPerDay = $("#sicpd").val();
-                const $sippd = $("#sippd");
-                const $sippdVal = $("#sippd-val");
-                if (cigsPerDay >= 0) {
-                    const cpd = VAPALS.calculatePacksPerDay(cigsPerDay);
-                    if (cpd > 0) {
-                        $sippd.val(cpd);
-                        $sippdVal.text(cpd);
-                    } else {
-                        $sippd.val("");
-                        $sippdVal.text("-");
-                    }
-                    $sippd.change();
-                }
-            }).trigger('change');
-
-
-            //Calculate pack years and cumulative pack years, displaying and setting field values where appropriate
-            $("#sidof, #siq, #sippd").on('keyup change', calculateCumulativePackYears);
-            calculateCumulativePackYears();
         });
-
-        /**
-         * Retrieves the previous form date relative to this form in the #pack-years-history table.
-         * Used to determine the FROM date when calculating pack years.
-         * @returns {moment}
-         */
-        function getPriorFormDate() {
-            const $lastHistoryRow = $("#pack-years-history tbody tr").last();
-            const $currentFormRow = $("#pack-years-history tbody tr[data-current-form]").last();
-            const $priorFormRow = $currentFormRow.length === 1 ? $currentFormRow.prev() : $lastHistoryRow;
-            const priorFormDateStr = $priorFormRow.find(".reported-date").text().trim();
-            const priorFormDate = VAPALS.toMoment(priorFormDateStr);
-            return priorFormDate;
-        }
   </script>
  </body>
 </html>

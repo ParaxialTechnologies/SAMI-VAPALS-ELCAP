@@ -114,9 +114,11 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  . s SAMIRTN(cnt)=ln
  q
  ;
-SELECT(SAMIPATS,type,datephrase,filter) ;selects patients for report
+SELECT(SAMIPATS,ztype,datephrase,filter) ;selects patients for report
  ;m ^gpl("select")=filter
+ n type s type=ztype
  i $g(type)="" s type="enrollment"
+ i type="cumpy" s type="enrollment"
  n strdt,enddt,fmstrdt,fmenddt
  s strdt=$g(filter("start-date"))
  s fmstrdt=$$KEY2FM^SAMICASE(strdt)

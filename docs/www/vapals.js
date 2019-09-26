@@ -6,10 +6,13 @@
  * @copyright 2018 [VAPALS-ELCAP]{@link http://va-pals.org/}
  * @class
  */
-const VAPALS = new function () {
+VAPALS = new function () {
+    this.DATE_FORMAT = "MM/DD/YYYY";
+
+    this.DATE_TIME_FORMAT = "MM/DD/YYYY hh:mm:ss";
 
     /**
-     * Computes the number of months between the provided date and now.
+     * Computes the number of whole months between the provided date and now.
      * @param {date|moment|string} from a from date
      * @param {date|moment|string} to a to date
      * @returns {number}
@@ -18,7 +21,23 @@ const VAPALS = new function () {
         const fromMoment = this.toMoment(from);
         const toMoment = this.toMoment(to);
         if (fromMoment.isValid() && toMoment.isValid()) {
-            return Math.abs(parseInt(fromMoment.diff(toMoment, "months", true)))
+            let months = fromMoment.diff(toMoment, "months", true).toFixed(2);
+            return Math.abs(parseFloat(months))
+        }
+        return 0;
+    };
+
+    /**
+     * Computes the number of days between the provided date and now.
+     * @param {date|moment|string} from a from date
+     * @param {date|moment|string} to a to date
+     * @returns {number}
+     */
+    this.computeDaysBetween = function (from, to) {
+        const fromMoment = this.toMoment(from);
+        const toMoment = this.toMoment(to);
+        if (fromMoment.isValid() && toMoment.isValid()) {
+            return Math.abs(parseInt(fromMoment.diff(toMoment, "days", true)))
         }
         return 0;
     };
@@ -55,10 +74,6 @@ const VAPALS = new function () {
     this.todaysYear = function () {
         return parseInt(moment().format('YYYY'));
     };
-
-    this.DATE_FORMAT = "MM/DD/YYYY";
-
-    this.DATE_TIME_FORMAT = "MM/DD/YYYY hh:mm:ss";
 
 
     this.displayNotification = function (title, message, msgType) {
@@ -118,6 +133,38 @@ const VAPALS = new function () {
             return 0;
         }
     };
+
+    /**
+     * Computes packs per year.
+     * @param {date|moment|string} from a from date
+     * @param {date|moment|string} to a to date
+     * @returns {number}
+     */
+    this.calculatePacksPerDay = function (cigarettesPerDay) {
+
+        if (cigarettesPerDay >= 0) {
+            return (cigarettesPerDay / 20).toFixed(2);
+        }
+
+        return 0;
+    };
+
+    /**
+     * Computes packs per year.
+     * @param {date|moment|string} from a from date
+     * @param {date|moment|string} to a to date
+     * @returns {number}
+     */
+    this.calculatePackYears = function (packsPerDay, years) {
+
+        if (packsPerDay > 0 && years > 0) {
+            const packYears = parseFloat((packsPerDay * years).toFixed(2));
+            return packYears;
+        }
+
+        return 0;
+    };
+
 
     /**
      * Sleeps the UI thread for the given number of milliseconds
@@ -225,10 +272,11 @@ const VAPALS = new function () {
                 values = values.join(';');
                 labels = labels.join(';');
 
-                line([question, name, type, required, placeholder, values, labels].join("\t"))
+                line([question, name, type, required, placeholder, values, labels].join("\t"));
                 // console.log(labels.join(","))
             }
         });
-        console.log(report)
+        console.log(report);
+        return report;
     }
 };

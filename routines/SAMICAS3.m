@@ -238,11 +238,31 @@ MKFUFORM(sid,key) ; create Follow-up form
  new cdate set cdate=$piece(key,"fuform-",2)
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate
+ set @root@("graph",sid,key,"sidof")=$$KEY2DSPD^SAMICAS2(cdate)
+ set @root@("graph",sid,key,"sidoe")=$$BASELNDT(sid)
  do SSAMISTA^SAMICASE(sid,key,"incomplete")
  ;
  ;@stanza 3 termination
  ;
  quit  ; end of MKFUFORM
+ ;
+BASELNDT(sid) ; Extrinsic returns the last previous baseline CT date
+ ;
+ n root s root=$$setroot^%wd("vapals-patients")
+ n groot s groot=$na(@root@("graph",sid))
+ n items s items=""
+ d GETITEMS^SAMICASE("items",sid)
+ q:'$d(items) ""
+ n bdate s bdate=""
+ n bkey s bkey=""
+ n done s done=0
+ f  s bkey=$o(items("type","vapals:ceform",bkey)) q:bkey=""  d  ;
+ . ;w !,bkey," ",$g(@groot@(bkey,"cetex"))
+ . if $g(@groot@(bkey,"cetex"))="b" d  ;
+ . . s done=1
+ . . s bdate=$p(bkey,"ceform-",2)
+ s bdate=$$KEY2DSPD^SAMICAS2(bdate)
+ q bdate
  ;
 MKPTFORM(sid,key) ; create pet evaluation form
  ;

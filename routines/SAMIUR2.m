@@ -81,8 +81,20 @@ RPTTBL(RPT,TYPE) ; RPT is passed by reference and returns the
  . S RPT(2,"routine")="$$NAME^SAMIUR2"
  . S RPT(3,"header")="SSN"
  . S RPT(3,"routine")="$$SSN^SAMIUR2"
+ if TYPE="cumpy" d  q  ;
+ . S RPT(1,"header")="Name"
+ . S RPT(1,"routine")="$$NAME^SAMIUR2"
+ . S RPT(2,"header")="Study ID"
+ . S RPT(2,"routine")="$$SID^SAMIUR2"
+ . S RPT(3,"header")="Form Values"
+ . S RPT(3,"routine")="$$VALS^SAMIUR2"
+ . S RPT(4,"header")="Smoking History"
+ . S RPT(4,"routine")="$$SMHIS^SAMIUR2"
  ;
  q
+ ;
+SID(zdt,dfn,SAMIPATS) ; extrinsic returns SID
+ q $$DFN2SID(dfn)
  ;
 DFN2SID(DFN) ;extrinsic returns the studyid for patient DFN
  n root s root=$$setroot^%wd("vapals-patients")
@@ -295,4 +307,150 @@ RURAL(zdt,dfn,SAMIPATS) ; extrinsic which returns the rural/urban status
  s sirs=$g(@vals@("sirs"))
  s sirs=$s(sirs="r":"rural",sirs="u":"urban",sirs="n":"unknown",1:"unknown")
  q sirs
+ ;
+VALS(zdt,dfn,SAMIPATS) ; extrinsic returns contents of form values cell
+ n vrtn s vrtn=""
+ n vsid s vsid=$$DFN2SID(dfn)
+ n vgr s vgr="/vals?sid="_vsid_"&form="
+ q:'$d(SAMIPATS)
+ n vzi s vzi=""
+ f  s vzi=$o(SAMIPATS(zdt,dfn,"items",vzi)) q:vzi="sort"  q:vzi=""  d  ;
+ . s vrtn=vrtn_"<a href="""_vgr_vzi_""">"_vzi_"</a><br>"
+ q vrtn
+ ;
+WSVALS(RTN,FILTER) ;web service to display form values from the graph
+ n root s root=$$setroot^%wd("vapals-patients")
+ n sid s sid=$g(FILTER("sid"))
+ i sid="" s sid=$g(FILTER("studyid"))
+ q:sid=""
+ n zform s zform=$g(FILTER("form"))
+ n groot
+ i zform="" s groot=$na(@root@("graph",sid))
+ e  s groot=$na(@root@("graph",sid,zform))
+ s FILTER("root")=$e(groot,2,$l(groot))
+ d wsGtree^SYNVPR(.RTN,.FILTER)
+ q
+ ;
+PKYDT(STDT,ENDT,PKS,CIGS) ; Extrinsic returns pack-years
+ ; if PKS is not provided, 20/CIGS will be used for packs per day
+ n pkyr s pkyr=""
+ i $g(PKS)="" d  ;
+ . i $g(CIGS)="" s PKS=0 q  ;
+ . s PKS=20/CIGS
+ n zst,zend,zdif
+ s zst=$$FMDT(STDT)
+ i zst=-1 s zst=STDT
+ s zend=$$FMDT(ENDT)
+ i zend=-1 s zend=ENDT ; probably a fileman date already
+ s zdif=$$FMDIFF^XLFDT(zend,zst)/365.24
+ s pkyr=$$PKY(zdif,PKS)
+ ;
+ q pkyr
+ ;
+PKY(YRS,PKS) ; Extrinsic returns pack-years from years (YRS) and 
+ ; packs per day (PKS)
+ ;
+ n rtn s rtn=""
+ s rtn=YRS*PKS
+ i $l($p(rtn,".",2))>2 d  ;
+ . n zdec s zdec=$p(rtn,".",2)
+ . s rtn=$p(rtn,".",1)_"."_$e(zdec,1,2)
+ . i $e(zdec,3)>4 s rtn=rtn+.01
+ i rtn'["." s rtn=rtn_".0"
+ q rtn
+ ;
+FMDT(ZDT) ; Extrinsic returns the fileman date of ZDT
+ N X,Y
+ S X=ZDT
+ D ^%DT
+ Q Y
+ ;
+SMHIS(zdt,dfn,SAMIPATS) ; extrinsic returns contents of smoking history cell
+ ;
+ n zrtn s zrtn=""
+ s zrtn=zrtn_"<div class=""row""><div class=""col-md-12""><table class=""table"" id=""pack-years-history"">"
+ s zrtn=zrtn_"<thead><tr><th>Form </th><th> Reported Date </th>"
+ s zrtn=zrtn_"<th>Pack Years</th><th>Cumulative</th></tr></thead><tbody>"
+ s zrtn=zrtn_$$SHDET($$DFN2SID(dfn))
+ s zrtn=zrtn_"</tbody></table></div></div>"
+ q zrtn
+ ;
+SHDET(SID,KEY) ; Extrinsic returns table contents for smoking history
+ ; KEY is the form key of the caller for "current" marker insertion
+ n pyary
+ i $g(KEY)="" s KEY=""
+ d CUMPY("pyary",SID,KEY)
+ n current s current=$g(pyary("current"))
+ n rptcnt,rptmax
+ s rptcnt=0
+ s rptmax=$o(pyary("rpt",""),-1)
+ q:+rptmax=0
+ n return
+ s return=""
+ n zi s zi=""
+ f zi=1:1:rptmax d  ;
+ . s rptcnt=rptcnt+1
+ . i rptcnt=current s return=return_"<tr data-current-form=""true"">"
+ . e  s return=return_"<tr>"
+ . s return=return_"<td>"_pyary("rpt",rptcnt,1)_"</td>"
+ . s return=return_"<td class=""reported-date"">"_pyary("rpt",rptcnt,2)_"</td>"
+ . s return=return_"<td class=""pack-years"">"_pyary("rpt",rptcnt,3)_"</td>"
+ . s return=return_"<td class=""cumulative-pack-years"">"_pyary("rpt",rptcnt,4)_"</td>"
+ . s return=return_"</tr>"
+ k pyary
+ q return
+ ;
+CUMPY(PYARY,sid,KEY) ; forms array of cummulative pack year data
+ ; PYARY passed by name
+ ; KEY is the current form key for matching to a row
+ k @PYARY
+ n root s root=$$setroot^%wd("vapals-patients")
+ ;n sid s sid=$g(@root@(DFN,"samistudyid"))
+ ;q:sid=""
+ n items s items=""
+ d GETITEMS^SAMICASE("items",sid)
+ q:'$d(items)
+ m @PYARY@("items")=items
+ n siform
+ s siform=$o(items("siform"))
+ q:siform=""
+ i siform=$g(KEY) s @PYARY@("current")=1 ;this row is the current form
+ n vals
+ s vals=$na(@root@("graph",sid,siform))
+ n kdate s kdate=$$GETDTKEY^SAMICAS2(siform)
+ n keydate s keydate=$$KEY2DSPD^SAMICAS2(kdate)
+ s @PYARY@("rpt",1,1)="Intake" ; Form
+ s @PYARY@("rpt",1,2)=keydate ; Reported Date
+ n lastcum s lastcum=$g(@vals@("sippy"))
+ s @PYARY@("rpt",1,3)=lastcum ; Pack Years
+ s @PYARY@("rpt",1,4)=lastcum ; Cumulative
+ n lastdt s lastdt=keydate
+ n rptcnt s rptcnt=1
+ n zi s zi=""
+ f  s zi=$o(items("type","vapals:fuform",zi)) q:zi=""  d  ;
+ . s rptcnt=rptcnt+1
+ . s @PYARY@("rpt",rptcnt,1)="Follow-up"
+ . n kdate s kdate=$$GETDTKEY^SAMICAS2(zi)
+ . n keydate s keydate=$$KEY2DSPD^SAMICAS2(kdate)
+ . s @PYARY@("rpt",rptcnt,2)=keydate ; Reported Date
+ . s vals=$na(@root@("graph",sid,zi))
+ . n newpd s newpd=$g(@vals@("sippd"))
+ . n usedate,siq s usedate=keydate
+ . s siq=$g(@vals@("siq")) ; quit date on followup form
+ . i siq'="" d  ; quit date provided
+ . . if $$FMDT(siq)<$$FMDT(lastdt) q  ; quit date out of range
+ . . if $$FMDT(siq)>$$FMDT(keydate) q  ; quit date out of range
+ . . s usedate=siq ; use the quit date as end of range
+ . n newpy s newpy=$$PKYDT(lastdt,usedate,newpd)
+ . s @vals@("sippy")=newpy
+ . s ^gpl("current","KEY")=$g(KEY)
+ . s ^gpl("current","zi")=zi
+ . i zi=$g(KEY) s @PYARY@("current")=rptcnt ;this row is the current form
+ . n newcum s newcum=""
+ . i newpy'="" s newcum=lastcum+newpy
+ . s @PYARY@("rpt",rptcnt,3)=newpy ; Pack Years
+ . s @PYARY@("rpt",rptcnt,4)=newcum ; Cumulative
+ . s lastdt=keydate
+ . s lastcum=newcum
+ q
  ;

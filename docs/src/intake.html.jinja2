@@ -297,6 +297,8 @@
 
             <h3>Smoking History</h3>
 
+            {% include '_pack-year-history.jinja2' %}
+
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-sm-6 form-group">
                     <label>Have you ever smoked</label>
@@ -322,7 +324,7 @@
             </div>
             <div class="row form-group">
                 <div class="col-md-4">
-                    {{ f.floatingLabel('sippd', 'How many packs of cigarettes did you smoke per day (PPD)?') }}
+                    {{ f.floatingLabel('sippd', 'How many <em>packs</em> of cigarettes did you smoke per day (PPD)?') }}
                 </div>
                 <div class="col-sm-2">
                     <span id="sippd-val" class="control-label"></span>
@@ -342,14 +344,15 @@
                 <div class="col-md-4">
                     {{ f.floatingLabel('sippy', 'Reported pack years') }}
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-8">
                     <span id="sippy-val"></span>
+                    <div class="alert alert-info" id="cumulative-pack-years-message" style="display: none"></div>
                 </div>
                 <input type="hidden" name="sippy" id="sippy"/>
             </div>
             <div class="row form-group">
                 <div class="col-md-4">
-                    {{ f.floatingLabel('siq', 'Quit') }}
+                    {{ f.floatingLabel('siq', 'Quit Date') }}
                 </div>
                 <div class="col-sm-4 col-md-3 col-lg-2">
                     {{ f.datepicker ("siq", "past") }}
@@ -647,7 +650,7 @@
                     sisny: {
                         validators: {
                             notEmpty: {message: 'Number of years is required'},
-                            integer: {message: 'must be a whole number'}
+                            integer: {message: 'Must be a whole number'}
                         }
                     },
                     sistatus: {validators: {notEmpty: {message: 'Enrollment status is required'}}},
@@ -850,7 +853,7 @@
             const $sippd = $("#sippd");
             const $sippdVal = $("#sippd-val");
             if (cigsPerDay >= 0) {
-                const cpd = (cigsPerDay / 20).toFixed(2);
+                const cpd = VAPALS.calculatePacksPerDay(cigsPerDay);
                 if (cpd > 0) {
                     $sippd.val(cpd);
                     $sippdVal.text(cpd);
@@ -860,26 +863,41 @@
                 }
                 $sippd.change();
             }
-        }).trigger('change');
+        }).trigger('keyup');
 
-        $("#sippd, #sisny").on('keyup change', function () {
+        $("#sidc, #sippd, #sisny").on('keyup change', function () {
             const packsPerDay = $("#sippd").val();
             const cigYears = $("#sisny").val();
-            if (packsPerDay > 0 && cigYears > 0) {
-                const packYears = (packsPerDay * cigYears).toFixed(1);
-                if (packYears > 0) {
-                    $("#sippy").val(packYears);
-                    $("#sippy-val").text(packYears);
+            const packYears = VAPALS.calculatePackYears(packsPerDay, cigYears);
+
+            if (packYears > 0) {
+                $("#sippy").val(packYears.toFixed(2));
+                let packYearsText = packYears.toFixed(2);
+                const $currentFormRow = $("#pack-years-history tbody tr[data-current-form]").last();
+                if ($currentFormRow.length == 1) {
+                    let intakeDate = VAPALS.toMoment($("#sidc").val());
+                    if (!intakeDate.isValid()) {
+                        intakeDate = moment();
+                    }
+                    packYearsText += " thru " + intakeDate.format(VAPALS.DATE_FORMAT);
                 }
+                $("#sippy-val").text(packYearsText);
             } else {
                 $("#sippy").val("");
                 $("#sippy-val").text("-");
             }
 
-        }).first().trigger('change');
+            const cumulative = computeCumulativePackYears(packYears);
+            $("#sippycu").val(cumulative.toFixed(2));
+            const message = "Cumulative pack years will be updated to <strong>" + cumulative.toFixed(2) + "</strong>";
+            $("#cumulative-pack-years-message").html(message).show();
+        });
+        $("#sidc").trigger('keyup');
 
-        $("[name=sistatus]")
-            .conditionallyDisplay({sourceValues: 'active', enable: '#ctappt-container'});
+        //removed smoking history table if there is none (i.e. initial intake form entry)
+        if ($("#pack-years-history tbody tr").length === 0) {
+            $("#pack-years-history").remove();
+        }
 
         $("[name=sistatus]").on('submit', function () {
             //require reason fields when marking patient as "not active"

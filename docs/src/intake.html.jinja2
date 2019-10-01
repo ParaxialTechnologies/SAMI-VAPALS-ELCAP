@@ -169,7 +169,7 @@
                     </div>
 
                     <div class="col-sm-8 col-md-9 form-group">
-                        <label>The lung screening program reached the participant or was contacted via
+                        <label class="required">The lung screening program reached the participant or was contacted via
                             (check all that apply)?</label>
                         {{ f.checkbox("sipecnip", "1", "In person", {'group':'discussion-contact'}) }}
                         {{ f.checkbox("sipecnte", "1", "Telephone", {'group':'discussion-contact'}) }}
@@ -186,7 +186,7 @@
                 <div class="row">
 
                     <div class="col-md-12">
-                        <p class="lead">A pre-enrollment discussion with the participant resulted in:</p>
+                        <p class="lead required">A pre-enrollment discussion with the participant resulted in:</p>
                         <div class="form-group">
                             {{ f.radio("siperslt","siperslt-y","y", "Participant is interested in discussing lung screening. The program will proceed with enrollment process.", true ) }}
                             {{ f.radio("siperslt","siperslt-u","u", "Participant is unsure of lung screening. Ok to contact in the future.", true ) }}
@@ -217,7 +217,7 @@
                 </div>
 
                 <div class="col-sm-8 col-md-9 form-group">
-                    <label class="doc-heading">The lung screening program reached the participant or was contacted via
+                    <label class="doc-heading required">The lung screening program reached the participant or was contacted via
                         (check all that apply):</label>
                     {{ f.checkbox("silnip", "1", "In person", {'group':'intake-contact'}) }}
                     {{ f.checkbox("silnph", "1", "Telephone", {'group':'intake-contact'}) }}

@@ -155,7 +155,7 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  ;
  ; lung nodules
  ;
- d HOUT("Lung nodules:")
+ d HOUT("Lung Nodules:")
  i $$XVAL("cennod",vals)="" d  ;
  . d OUT(para)
  . d OUT("No pulmonary nodules are seen."_para)

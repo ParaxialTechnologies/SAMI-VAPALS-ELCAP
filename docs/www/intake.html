@@ -1435,7 +1435,7 @@
         const $enrollCol = $('<div class="col-lg-5 col-md-6 col-sm-8"></div>');
         const $enrollAlert = $("<div class=\"alert alert-info\">Informed decision making was completed and patient " +
             "is enrolled in the Lung Screening program.</div>");
-        $enrollCol.append($('<input type="hidden" id="sildct" name="sildct" value="y"/>')); //veterans' option to enroll
+        $enrollCol.append($('<input type="hidden" id="sildct" name="sildct" value="y"/>')); //veteran's option to enroll
         $enrollCol.append($('<input type="hidden" id="siidmdc" name="siidmdc" value="1"/>')); //informed decision making
 
         $enrollCol.append($enrollAlert);
@@ -1561,7 +1561,7 @@
 
             // INTAKE AREA
             fv.addField('siidmdc', {validators: {notEmpty: {message: 'Informed decision making is required'}}});
-            fv.addField('sildct', {validators: {notEmpty: {message: 'Veterans\' option is required'}}});
+            fv.addField('sildct', {validators: {notEmpty: {message: 'Veteran\'s option is required'}}});
         }
 
         fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);

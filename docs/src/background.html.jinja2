@@ -418,39 +418,6 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Diabetes</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            {{ f.floatingLabel('sbmpd-n', 'Diabetes') }}
-                        </div>
-                        <div class="col-sm-6 col-md-3 col-lg-2">
-                            <div class="form-group">
-                                {{ f.inlineRadioNYQ("sbmpd") }}
-                            </div>
-                        </div>
-                        <div id="sbmpd-container" style="display: none;">
-                            <div class=" col-sm-4 col-md-2 form-group">
-                                <label class="control-label" for="sbmpdw">Starting at what age?</label>
-                                <input class="form-control input-sm numeric" type="text" name="sbmpdw" id="sbmpdw"
-                                       size="4" maxlength="4">
-                            </div>
-
-                            <div class=" col-sm-4 col-md-2 form-group">
-                                <label class="control-label">Treated?</label><br/>
-                                {{ f.inlineRadio("sbmpdt", "sbmpdt-n", "n", "No") }}
-                                {{ f.inlineRadio("sbmpdt", "sbmpdt-y", "y", "Yes") }}
-                            </div>
-
-                        </div>
-                    </div>
-                    <hr class="visible-xs-block visible-sm-block"/>
-                </div>
-            </div>
-
-            <div class="panel panel-default">
-                <div class="panel-heading">
                     <h3 class="panel-title">Cardiac Diseases</h3>
                 </div>
                 <div class="panel-body">
@@ -656,6 +623,31 @@
                     <h3 class="panel-title">Other Diseases</h3>
                 </div>
                 <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            {{ f.floatingLabel('sbmpd-n', 'Diabetes') }}
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-2">
+                            <div class="form-group">
+                                {{ f.inlineRadioNYQ("sbmpd") }}
+                            </div>
+                        </div>
+                        <div id="sbmpd-container" style="display: none;">
+                            <div class=" col-sm-4 col-md-2 form-group">
+                                <label class="control-label" for="sbmpdw">Starting at what age?</label>
+                                <input class="form-control input-sm numeric" type="text" name="sbmpdw" id="sbmpdw"
+                                       size="4" maxlength="4">
+                            </div>
+
+                            <div class=" col-sm-4 col-md-2 form-group">
+                                <label class="control-label">Treated?</label><br/>
+                                {{ f.inlineRadio("sbmpdt", "sbmpdt-n", "n", "No") }}
+                                {{ f.inlineRadio("sbmpdt", "sbmpdt-y", "y", "Yes") }}
+                            </div>
+
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-sm-6 col-md-3 col-lg-3">
                             {{ f.floatingLabel('sbmpct-n', 'Connective tissue diseases') }}

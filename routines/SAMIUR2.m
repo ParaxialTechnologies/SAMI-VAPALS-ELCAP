@@ -275,7 +275,7 @@ IFORM(zdt,dfn,SAMIPATS) ; extrinsic returns the name(s) of the incomplete forms
  . if zkey1["sbform" set fname="Background" set typ="sbform"
  . if zkey1["fuform" set fname="Follow-up" set typ="fuform"
  . if zkey1["bxform" set fname="Biopsy" set typ="bxform"
- . if zkey1["ptform" set fname="Pet Evaluation" set typ="ptform"
+ . if zkey1["ptform" set fname="PET Evaluation" set typ="ptform"
  . if zkey1["itform" set fname="Intervention" set typ="itform"
  . if zkey1["siform" set fname="Intake Form" set typ="siform"
  . if $get(fname)="" set fname="unknown" set typ=""

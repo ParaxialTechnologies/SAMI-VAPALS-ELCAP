@@ -325,8 +325,8 @@ INNOTE(vals,dest,cnt) ;
  ;[If a location not in the VA is specified show the next line]
  ;Location where prior lung cancer diagnosis was made: [Location Text]
  ;
- ;[If Any Prior Thorax CT Date is entered show the following 1 to 2 lines]
- ;Prior thorax CT:                   [Date]
+ ;[If Any Prior CT Date is entered show the following 1 to 2 lines]
+ ;Prior CT:                   [Date]
  ;[If a location not in the VA is specified show the next line]
  ;Location where prior lung cancer diagnosis was made: [Location Text]
  ;
@@ -390,9 +390,9 @@ INNOTE(vals,dest,cnt) ;
  . . d OUT("Location where prior lung cancer diagnosis was made:")
  . . d OUT("    "_$$XVAL("sicadxl",vals))
  i $$XVAL("siptct",vals)'="" d
- . d OUT("Prior thorax CT: "_$$XVAL("siptct",vals))
+ . d OUT("Prior CT: "_$$XVAL("siptct",vals))
  . i $$XVAL("siptctl",vals)'="" d  ;
- . . d OUT("Location where prior thorax CT was made:")
+ . . d OUT("Location where prior CT was made:")
  . . d OUT("    "_$$XVAL("siptctl",vals))
  d OUT(" ")
  d OUT("Shared Decision Making: ")

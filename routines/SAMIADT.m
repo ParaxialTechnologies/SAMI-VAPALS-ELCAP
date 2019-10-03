@@ -43,10 +43,12 @@ SAMIADT ;ven/arc/lgc - Handler for HL7 ADTs ; 2019-09-27T18:49Z
 TESTERR ; Test entry point
  do ^ZTER;
  ;
- quit  ; End of entry point TESTERR
+ quit ; End of entry point TESTERR
  ;
  ;
 EN ; Primary entry point
+ ;
+ kill ^TMP("SAMI","ADT")
  ;
  new segtype set segtype=""
  new segment set segment=""
@@ -54,7 +56,7 @@ EN ; Primary entry point
  for  xecute HLNEXT quit:$get(HLNODE)=""  do
  . set segtype=$extract(HLNODE,1,3)
  . set segment=$extract(HLNODE,5,$length(HLNODE))
- . if segtype="PID" do @segtype@(segment)
+ . if (segtype="MSH")!(segtype="PID") do @segtype@(segment)
  ;
  quit  ; End entry point EN
  ;
@@ -76,7 +78,7 @@ PARSESEG(segment,segmentfields,graphfields) ;
  set graphfields("city")=""
  set graphfields("county")=""
  set graphfields("dfn")=""
- set graphfields("gender")="" ; M^MALE - we only get M
+ set graphfields("gender")="" ; M^MALE - we only get M (in sex)
  set graphfields("icn")=""
  set graphfields("last5")="" ; We get name and SSN
  set graphfields("marital status")=""
@@ -100,33 +102,38 @@ PARSESEG(segment,segmentfields,graphfields) ;
  . . for  set subnode=$order(segmentfields(node,subnode)) quit:'subnode  do
  . . . if $get(segmentfields(node,subnode))'="" do
  . . . . set graphfields(segmentfields(node,subnode))=$piece($piece(segment,separators("field"),node),separators("component"),subnode)
+ . . . . if graphfields(segmentfields(node,subnode))="""""""""" set graphfields(segmentfields(node,subnode))=""
  . else  do
  . . if $get(segmentfields(node))'="" do
  . . . set graphfields(segmentfields(node))=$piece(segment,separators("field"),node)
+ . . . if graphfields(segmentfields(node))="""""""""" set graphfields(segmentfields(node))=""
+ ;
+ ; Fix empty non-null nodes
+ 
  ;
  ; Handle special cases
  new countyien,county,ERR
- ; set graphfields("age")=""
+ if graphfields("sbdob")'="" set graphfields("age")=$$age^%th($$HL7TFM^XLFDT(graphfields("sbdob")))
  if graphfields("county")'="" do
  . set countyien=$$FIND1^DIC(5.13,,"B",graphfields("county"),,,"ERR")
  . if '$data(ERR)&(countyien'=0) set county=$$GET1^DIQ(5.13,countyien,1,,,"ERR")
  . if '$data(ERR)&(county'="") set graphfields("county")=county
  set graphfields("dfn")=+graphfields("dfn")
  set graphfields("last5")=$extract(graphfields("sinamel"),1)_$extract(graphfields("ssn"),6,9)
- if graphfields("phone")="""""" set graphfields("phone")="" ; Is this correct?
  set graphfields("saminame")=graphfields("sinamel")_","_graphfields("sinamef")
  if graphfields("sex")="F" set graphfields("gender")="F^FEMALE"
  if graphfields("sex")="M" set graphfields("gender")="M^MALE"
  ;
  ;
- quit ; End entry point PARSESEG
+ quit  ; End entry point PARSESEG
  ;
  ;
 MSH(segment) ;
  ;
+ set ^TMP("SAMI","ADT","MSH")=segment
  ; Send ACK
  ;
- quit ; End entry point MSH
+ quit  ; End entry point MSH
  ;
  ;
 PID(segment) ;
@@ -153,8 +160,7 @@ PID(segment) ;
  new graphfields
  do PARSESEG(segment,.segmentfields,.graphfields)
  ;
- kill ^TMP("SAMI","ADT DATA")
- merge ^TMP("SAMI","ADT DATA")=graphfields
+ merge ^TMP("SAMI","ADT","PID")=graphfields
  ;
  ; do UPDTPTL^SAMIVHL(.fields)
  ;

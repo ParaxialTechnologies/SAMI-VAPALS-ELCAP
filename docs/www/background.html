@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.09.11" name="version"/>
+  <meta content="2019.10.01" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    Background Form
@@ -100,9 +100,8 @@
        </a>
        <ul class="dropdown-menu">
         <li>
-         <a class="navigation" data-method="post" data-samireporttype="followup" data-samiroute="report" href="#!">
-          Participant
-                            Follow-up
+         <a class="navigation" data-method="post" data-samireporttype="enrollment" data-samiroute="report" data-start-date="" href="#!">
+          Enrollment
          </a>
         </li>
         <li>
@@ -111,25 +110,23 @@
          </a>
         </li>
         <li>
+         <a class="navigation" data-method="post" data-samireporttype="followup" data-samiroute="report" href="#!">
+          Participant Follow-up
+         </a>
+        </li>
+        <li>
          <a class="navigation" data-method="post" data-samireporttype="missingct" data-samiroute="report" href="#!">
-          Missing
-                            Image &amp; CT Evaluation
+          Missing Image &amp; CT Evaluation
          </a>
         </li>
         <li>
          <a class="navigation" data-method="post" data-samireporttype="incomplete" data-samiroute="report" href="#!">
-          Incomplete
-                            Form
+          Incomplete Form
          </a>
         </li>
         <li>
-         <a class="navigation" data-method="post" data-samireporttype="outreach" data-samiroute="report" href="#!">
-          Outreach
-         </a>
-        </li>
-        <li>
-         <a class="navigation" data-method="post" data-samireporttype="enrollment" data-samiroute="report" data-start-date="" href="#!">
-          Enrollment
+         <a class="navigation" data-method="post" data-samireporttype="inactive" data-samiroute="report" href="#!">
+          Inactive
          </a>
         </li>
        </ul>
@@ -871,7 +868,7 @@
     <div class="panel panel-default">
      <div class="panel-heading">
       <h3 class="panel-title">
-       Pulmonary problems
+       Pulmonary Problems
       </h3>
      </div>
      <div class="panel-body">
@@ -985,64 +982,6 @@
     <div class="panel panel-default">
      <div class="panel-heading">
       <h3 class="panel-title">
-       Diabetes
-      </h3>
-     </div>
-     <div class="panel-body">
-      <div class="row">
-       <div class="col-sm-6 col-md-3 col-lg-3">
-        <label class="visible-xs visible-sm" for="sbmpd-n">
-         Diabetes
-        </label>
-        <label class="text-right pull-right hidden-xs hidden-sm" for="sbmpd-n">
-         Diabetes
-        </label>
-       </div>
-       <div class="col-sm-6 col-md-3 col-lg-2">
-        <div class="form-group">
-         <label class="radio-inline" for="sbmpd-n">
-          <input id="sbmpd-n" name="sbmpd" title="Patient responded with 'No' to this question" type="radio" value="n"/>
-          No
-         </label>
-         <label class="radio-inline" for="sbmpd-y">
-          <input id="sbmpd-y" name="sbmpd" title="Patient responded with 'Yes' to this question" type="radio" value="y"/>
-          Yes
-         </label>
-         <label class="radio-inline" for="sbmpd-q">
-          <input id="sbmpd-q" name="sbmpd" title="Patient did not know the answer to this question" type="radio" value="q"/>
-          ?
-         </label>
-        </div>
-       </div>
-       <div id="sbmpd-container" style="display: none;">
-        <div class=" col-sm-4 col-md-2 form-group">
-         <label class="control-label" for="sbmpdw">
-          Starting at what age?
-         </label>
-         <input class="form-control input-sm numeric" id="sbmpdw" maxlength="4" name="sbmpdw" size="4" type="text"/>
-        </div>
-        <div class=" col-sm-4 col-md-2 form-group">
-         <label class="control-label">
-          Treated?
-         </label>
-         <br/>
-         <label class="radio-inline" for="sbmpdt-n">
-          <input id="sbmpdt-n" name="sbmpdt" type="radio" value="n"/>
-          No
-         </label>
-         <label class="radio-inline" for="sbmpdt-y">
-          <input id="sbmpdt-y" name="sbmpdt" type="radio" value="y"/>
-          Yes
-         </label>
-        </div>
-       </div>
-      </div>
-      <hr class="visible-xs-block visible-sm-block"/>
-     </div>
-    </div>
-    <div class="panel panel-default">
-     <div class="panel-heading">
-      <h3 class="panel-title">
        Cardiac Diseases
       </h3>
      </div>
@@ -1081,7 +1020,7 @@
         </div>
         <div class="form-group col-sm-4 col-md-2">
          <label class="control-label" for="sbmpmiw">
-          Where Treated
+          Where treated
          </label>
          <input class="form-control input-sm" id="sbmpmiw" name="sbmpmiw" type="text"/>
         </div>
@@ -1122,7 +1061,7 @@
         </div>
         <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
          <label class="control-label" for="sbmpast">
-          Where Treated
+          Where treated
          </label>
          <input class="form-control input-sm" id="sbmpast" name="sbmpast" type="text"/>
         </div>
@@ -1171,7 +1110,7 @@
         </div>
         <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
          <label class="control-label" for="sbmpcawt">
-          Where Treated
+          Where treated
          </label>
          <input class="form-control input-sm" id="sbmpcawt" name="sbmpcawt" type="text"/>
         </div>
@@ -1212,7 +1151,7 @@
         </div>
         <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
          <label class="control-label" for="sbmpanwt">
-          Where Treated
+          Where treated
          </label>
          <input class="form-control input-sm" id="sbmpanwt" name="sbmpanwt" type="text"/>
         </div>
@@ -1222,10 +1161,10 @@
       <div class="row">
        <div class="col-sm-6 col-md-3 col-lg-3">
         <label class="visible-xs visible-sm" for="sbmphf-n">
-         Heart Failure
+         Heart failure
         </label>
         <label class="text-right pull-right hidden-xs hidden-sm" for="sbmphf-n">
-         Heart Failure
+         Heart failure
         </label>
        </div>
        <div class="col-sm-6 col-md-3 col-lg-2">
@@ -1253,7 +1192,7 @@
         </div>
         <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
          <label class="control-label" for="sbmphfwt">
-          Where Treated
+          Where treated
          </label>
          <input class="form-control input-sm" id="sbmphfwt" name="sbmphfwt" type="text"/>
         </div>
@@ -1414,7 +1353,7 @@
         </div>
         <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
          <label class="control-label numeric" for="sbmphthv">
-          Highest Value
+          Highest value
          </label>
          <input class="form-control input-sm numeric decimalformat" id="sbmphthv" name="sbmphthv" type="text"/>
         </div>
@@ -1430,6 +1369,54 @@
       </h3>
      </div>
      <div class="panel-body">
+      <div class="row">
+       <div class="col-sm-6 col-md-3 col-lg-3">
+        <label class="visible-xs visible-sm" for="sbmpd-n">
+         Diabetes
+        </label>
+        <label class="text-right pull-right hidden-xs hidden-sm" for="sbmpd-n">
+         Diabetes
+        </label>
+       </div>
+       <div class="col-sm-6 col-md-3 col-lg-2">
+        <div class="form-group">
+         <label class="radio-inline" for="sbmpd-n">
+          <input id="sbmpd-n" name="sbmpd" title="Patient responded with 'No' to this question" type="radio" value="n"/>
+          No
+         </label>
+         <label class="radio-inline" for="sbmpd-y">
+          <input id="sbmpd-y" name="sbmpd" title="Patient responded with 'Yes' to this question" type="radio" value="y"/>
+          Yes
+         </label>
+         <label class="radio-inline" for="sbmpd-q">
+          <input id="sbmpd-q" name="sbmpd" title="Patient did not know the answer to this question" type="radio" value="q"/>
+          ?
+         </label>
+        </div>
+       </div>
+       <div id="sbmpd-container" style="display: none;">
+        <div class=" col-sm-4 col-md-2 form-group">
+         <label class="control-label" for="sbmpdw">
+          Starting at what age?
+         </label>
+         <input class="form-control input-sm numeric" id="sbmpdw" maxlength="4" name="sbmpdw" size="4" type="text"/>
+        </div>
+        <div class=" col-sm-4 col-md-2 form-group">
+         <label class="control-label">
+          Treated?
+         </label>
+         <br/>
+         <label class="radio-inline" for="sbmpdt-n">
+          <input id="sbmpdt-n" name="sbmpdt" type="radio" value="n"/>
+          No
+         </label>
+         <label class="radio-inline" for="sbmpdt-y">
+          <input id="sbmpdt-y" name="sbmpdt" type="radio" value="y"/>
+          Yes
+         </label>
+        </div>
+       </div>
+      </div>
       <div class="row">
        <div class="col-sm-6 col-md-3 col-lg-3">
         <label class="visible-xs visible-sm" for="sbmpct-n">
@@ -1652,7 +1639,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.09.11
+     2019.10.01
     </span>
    </div>
   </footer>

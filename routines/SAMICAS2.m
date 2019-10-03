@@ -333,7 +333,7 @@ GETITEMS ; get items available for studyid
  . if zkey1="bxform" set fname="Biopsy"
  . if zkey1="bxform" set zform="vapals:bxform"
  . if zkey1="ptform" set zform="vapals:ptform"
- . if zkey1="ptform" set fname="Pet Evaluation"
+ . if zkey1="ptform" set fname="PET Evaluation"
  . if zkey1="itform" set zform="vapals:itform"
  . if zkey1="itform" set fname="Intervention"
  . if $get(fname)="" set fname="unknown"

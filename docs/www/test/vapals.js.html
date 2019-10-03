@@ -9,11 +9,11 @@
 </head>
 <body>
 <script src="../lib/jquery-3.3.1.min.js"></script>
-<script src="js/qunit-2.4.1.js"></script>
+<script src="js/qunit-2.9.2.js"></script>
 <script src="js/blanket.js"></script>
 <script src="../lib/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 
-<script src="../vapals.js" data-cover></script>
+<script data-cover src="../vapals.js"></script>
 
 <div id="qunit"></div>
 <div id="qunit-fixture"></div>
@@ -21,15 +21,28 @@
 <script>
 
     QUnit.test("computeMonthsBetween", function (assert) {
-        var monthAgo = moment().subtract(32, "days").toDate();
-        var now = moment();
-        assert.equal(VAPALS.computeMonthsBetween(monthAgo, now), 1, "month ago");
+        const monthAgo = moment().subtract(1, "month").toDate();
+        const now = moment();
+        assert.equal(VAPALS.computeMonthsBetween(monthAgo, now), 1, "1 month ago");
+        assert.equal(VAPALS.computeMonthsBetween(now, monthAgo), 1, "-1 month ago");
 
         assert.ok(VAPALS.computeMonthsBetween("01/Mar/2016", now) > 12, "string input");
         assert.equal(VAPALS.computeMonthsBetween(null, null), 0, "null");
         assert.equal(VAPALS.computeMonthsBetween("", ""), 0, "empty");
         assert.equal(VAPALS.computeMonthsBetween(" ", " "), 0, "blank");
         assert.equal(VAPALS.computeMonthsBetween("foo", "bar"), 0, "invalid");
+    });
+
+    QUnit.test("computeDaysBetween", function (assert) {
+        const monthAgo = moment().subtract(6, "days").toDate();
+        const now = moment();
+        assert.equal(VAPALS.computeDaysBetween(monthAgo, now), 6, "6 days ago");
+        assert.equal(VAPALS.computeDaysBetween(now, monthAgo), 6, "-6 days ago");
+
+        assert.equal(VAPALS.computeDaysBetween(null, null), 0, "null");
+        assert.equal(VAPALS.computeDaysBetween("", ""), 0, "empty");
+        assert.equal(VAPALS.computeDaysBetween(" ", " "), 0, "blank");
+        assert.equal(VAPALS.computeDaysBetween("foo", "bar"), 0, "invalid");
     });
 
     QUnit.test("toMoment", function (assert) {
@@ -50,10 +63,37 @@
     });
 
     QUnit.test("pulmonaryFunction", function (assert) {
-        assert.ok(20 == moment(VAPALS.calculatePulmonaryFunction(1, 5)), "normal");
-        assert.ok(0 == moment(VAPALS.calculatePulmonaryFunction(0, 0)), "sero")
+        assert.equal(moment(VAPALS.calculatePulmonaryFunction(1, 5)), 20, "normal");
+        assert.equal(moment(VAPALS.calculatePulmonaryFunction(0, 0)), 0, "sero")
     });
 
+    QUnit.test("calculatePacksPerDay", function (assert) {
+        assert.equal(VAPALS.calculatePacksPerDay(20), 1, "20");
+        assert.equal(VAPALS.calculatePacksPerDay(1), 0.05, "1");
+        assert.equal(VAPALS.calculatePacksPerDay(0), 0, "0");
+        assert.equal(VAPALS.calculatePacksPerDay(undefined), 0, "undefined");
+    });
+
+
+    QUnit.test("calculatePacksYears", function (assert) {
+        assert.equal(VAPALS.calculatePackYears(1, 20), 20, "1 pack, 20 years");
+        assert.equal(VAPALS.calculatePackYears(0, 20), 0, "0 pack, 20 years");
+        assert.equal(VAPALS.calculatePackYears(1.5, 2.5), 3.75, "1.5 pack, 2.5 years");
+        assert.equal(VAPALS.calculatePackYears(20, 0), 0, "20 pack, 0 years");
+    });
+
+    QUnit.test("unique", function (assert) {
+        assert.deepEqual(["a", "a", "b"].filter(VAPALS.unique), ["a", "b"], "unique");
+    });
+
+    QUnit.test("dd", function (assert) {
+        assert.equal("QUESTION\tNAME\tTYPE\tREQUIRED\tPLACEHOLDER\tVALUES\tLABELS\n" +
+            "\t\ttext\t0\t\t\tAll modules\n" +
+            "\tfilter\ttext\t0\t\t\t\n", VAPALS.dd(), "dd");
+    });
+
+
 </script>
+
 </body>
 </html>

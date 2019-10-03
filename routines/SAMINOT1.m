@@ -138,10 +138,19 @@ NOTE(filter) ; extrnisic which creates a note
  . s didnote=1
  ;
  i $g(@vals@("samistatus"))="complete" d  ;
+ . q:$$HASINNT(vals)
  . d MKIN(si,samikey,vals,.filter) ;
  . s didnote=1
  ;
  q didnote
+ ;
+HASINNT(vals) ; extrinsic returns 1 if intake note is present
+ ; else returns 0
+ n zzi,zzrtn s (zzi,zzrtn)=0
+ q:'$d(@vals)
+ f  s zzi=$o(@vals@("notes",zzi)) q:+zzi=0  d  ;
+ . i $g(@vals@("notes",zzi,"name"))["Intake" s zzrtn=1
+ q zzrtn
  ;
 MKEL(sid,form,vals,filter) ;
  n cnt s cnt=0
@@ -316,8 +325,8 @@ INNOTE(vals,dest,cnt) ;
  ;[If a location not in the VA is specified show the next line]
  ;Location where prior lung cancer diagnosis was made: [Location Text]
  ;
- ;[If Any Prior Thorax CT Date is entered show the following 1 to 2 lines]
- ;Prior thorax CT:                   [Date]
+ ;[If Any Prior CT Date is entered show the following 1 to 2 lines]
+ ;Prior CT:                   [Date]
  ;[If a location not in the VA is specified show the next line]
  ;Location where prior lung cancer diagnosis was made: [Location Text]
  ;
@@ -381,9 +390,9 @@ INNOTE(vals,dest,cnt) ;
  . . d OUT("Location where prior lung cancer diagnosis was made:")
  . . d OUT("    "_$$XVAL("sicadxl",vals))
  i $$XVAL("siptct",vals)'="" d
- . d OUT("Prior thorax CT: "_$$XVAL("siptct",vals))
+ . d OUT("Prior CT: "_$$XVAL("siptct",vals))
  . i $$XVAL("siptctl",vals)'="" d  ;
- . . d OUT("Location where prior thorax CT was made:")
+ . . d OUT("Location where prior CT was made:")
  . . d OUT("    "_$$XVAL("siptctl",vals))
  d OUT(" ")
  d OUT("Shared Decision Making: ")
@@ -394,7 +403,7 @@ INNOTE(vals,dest,cnt) ;
  d OUT("prolonging if an early lung cancer were to be found during screening, the possibility of ")
  d OUT("imaging abnormalities not being lung cancer, the possibility of complications from ")
  d OUT("additional diagnostic procedures, and the approximate amount of radiation exposure ")
- d OUT("associated with each screening procedure. In addition, the Veteran has been educated ")
+ d OUT("associated with each screening procedure. In addition, the veteran has been educated ")
  d OUT("today about the importance of avoiding exposure to cigarette smoke, available tobacco ")
  d OUT("cessation programs and available lung screening services at this VA facility. Education ")
  d OUT("material was provided to the veteran.")
@@ -406,21 +415,21 @@ INNOTE(vals,dest,cnt) ;
  ;d OUT("screening, the possibility of imaging abnormalities not being lung cancer, the")
  ;d OUT("possibility of complications from additional diagnostic procedures, and the")
  ;d OUT("approximate amount of radiation exposure associated with each screening")
- ;d OUT("procedure.  In addition, the Veteran has been educated today about the")
+ ;d OUT("procedure.  In addition, the veteran has been educated today about the")
  ;d OUT("importance of adhering to annual lung screening, the possible impact of other")
  ;d OUT("medical conditions on the overall health status, the importance of avoiding")
  ;d OUT("exposure to cigarette smoke, available tobacco cessation programs and")
  ;d OUT("available lung screening services at the Phoenix VA.  Education material was")
- ;d OUT("provided to the veteran.  Based on this information, the Veteran has opted")
+ ;d OUT("provided to the veteran.  Based on this information, the veteran has opted")
  ;d OUT("for: ")
  d OUT(" ")
  n ldct s ldct=""
  s:$$XVAL("sildct",vals)="n" ldct="No"
  s:$$XVAL("sildct",vals)="l" ldct="No"
  s:$$XVAL("sildct",vals)="y" ldct="Yes"
- d OUT("The Veteran has decided to enroll in the Lung Screening Program: "_ldct)
+ d OUT("The veteran has decided to enroll in the Lung Screening Program: "_ldct)
  i $$XVAL("sildct",vals)="l" d  ;
- . d OUT("The Veteran has indicated it is okay to contact in the future to discuss enrolling in the Lung Screening Program.")
+ . d OUT("The veteran has indicated it is okay to contact in the future to discuss enrolling in the Lung Screening Program.")
  i ldct="Yes" d  ;
  . d OUT("LDCT ordered: "_ldct)
  . d OUT("    "_"Veteran enrolled in the LSS program. Results and coordination of care ")
@@ -429,10 +438,10 @@ INNOTE(vals,dest,cnt) ;
  . d OUT("Clinical Indications for Initial Screening CT:")
  . d OUT("    "_$$XVAL("siclin",vals))
  ;
- ;The Veteran has decided to enroll in the Lung Screening Program: [Yes/No]
+ ;The veteran has decided to enroll in the Lung Screening Program: [Yes/No]
  ;
  ;[If Not enroll at this time but okay to contact in the future, add the following line]
- ;The Veteran has indicated it is okay to contact in the future to discuss enrolling in the Lung Screening Program.
+ ;The veteran has indicated it is okay to contact in the future to discuss enrolling in the Lung Screening Program.
  ;
  ;[If Yes is answered for enrollment add the following two lines]
  ;LDCT ordered:                Yes

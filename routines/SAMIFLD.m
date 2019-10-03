@@ -211,6 +211,17 @@ LOAD ; process html line, e.g., load json data into graph
  . . set zhtml(zien)=@clog@(zi)
  . set zhtml(SAMILNUM_"."_$$xpand($order(@clog@(""),-1)+1))="</pre>"
  ;
+ ;if form["fuform" d  ;
+ i SAMILINE["pack-years-history" d  ;
+ . d  ;
+ . . i SAMILINE'["id" q  ;
+ . . n zzi s zzi=SAMILNUM
+ . . f  s zzi=$o(SAMIHTML(zzi)) q:zzi>(SAMILNUM+20)  q:SAMIHTML(zzi)["tbody"  d
+ . . . s SAMIHTML(zzi)=SAMIHTML(zzi)_$char(13,10)
+ . . ;s SAMIHTML(zzi)="<tbody>"_$$SHDET^SAMIUR2(sid)
+ . . s SAMILNUM=zzi+1
+ . . s SAMILINE=$$SHDET^SAMIUR2(sid,form)_"</tbody>"
+ ;
  quit  ; end of ppi LOAD^SAMIFORM
  ;
 xpand(zi) ; extrinsic that expands a number to 8 digits with preceeding 0

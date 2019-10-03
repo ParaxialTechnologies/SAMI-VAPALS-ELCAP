@@ -25,13 +25,15 @@ commands you can run from the Mumps command line to generate the seven DD graphs
 our development environments such as a Docker container.
 
 ```text
->D PRSTSV^SAMIFF("/home/osehra/lib/silver/va-pals/docs/form-fields/","background.tsv","form fields - background")
->D PRSTSV^SAMIFF("/home/osehra/lib/silver/va-pals/docs/form-fields/","biopsy.tsv","form fields - biopsy")
->D PRSTSV^SAMIFF("/home/osehra/lib/silver/va-pals/docs/form-fields/","ct-evaluation.tsv","form fields - ct evaluation")
->D PRSTSV^SAMIFF("/home/osehra/lib/silver/va-pals/docs/form-fields/","follow-up.tsv","form fields - follow up")
->D PRSTSV^SAMIFF("/home/osehra/lib/silver/va-pals/docs/form-fields/","intake.tsv","form fields - intake")
->D PRSTSV^SAMIFF("/home/osehra/lib/silver/va-pals/docs/form-fields/","intervention.tsv","form fields - intervention")
->D PRSTSV^SAMIFF("/home/osehra/lib/silver/va-pals/docs/form-fields/","pet-evaluation.tsv","form fields - pet evaluation")
+>D PRSTSV^SAMIFF("/home/osehra/lib/silver/vapals/docs/form-fields/","background.tsv","form fields - background")
+>D PRSTSV^SAMIFF("/home/osehra/lib/silver/vapals/docs/form-fields/","biopsy.tsv","form fields - biopsy")
+>D PRSTSV^SAMIFF("/home/osehra/lib/silver/vapals/docs/form-fields/","ct-evaluation.tsv","form fields - ct evaluation")
+>D PRSTSV^SAMIFF("/home/osehra/lib/silver/vapals/docs/form-fields/","follow-up.tsv","form fields - follow up")
+>D PRSTSV^SAMIFF("/home/osehra/lib/silver/vapals/docs/form-fields/","intake.tsv","form fields - intake")
+>D PRSTSV^SAMIFF("/home/osehra/lib/silver/vapals/docs/form-fields/","intervention.tsv","form fields - intervention")
+>D PRSTSV^SAMIFF("/home/osehra/lib/silver/vapals/docs/form-fields/","pet-evaluation.tsv","form fields - pet evaluation")
+>D PRSTSV^SAMIFF("/home/osehra/lib/silver/vapals/docs/form-fields/","register.tsv","form fields - register")
+
 
 ```
 

@@ -108,9 +108,6 @@ PARSESEG(segment,segmentfields,graphfields) ;
  . . . set graphfields(segmentfields(node))=$piece(segment,separators("field"),node)
  . . . if graphfields(segmentfields(node))="""""""""" set graphfields(segmentfields(node))=""
  ;
- ; Fix empty non-null nodes
- 
- ;
  ; Handle special cases
  new countyien,county,ERR
  if graphfields("sbdob")'="" set graphfields("age")=$$age^%th($$HL7TFM^XLFDT(graphfields("sbdob")))
@@ -130,8 +127,8 @@ PARSESEG(segment,segmentfields,graphfields) ;
  ;
 MSH(segment) ;
  ;
- set ^TMP("SAMI","ADT","MSH")=segment
- ; Send ACK
+ ; set ^TMP("SAMI","ADT","MSH")=segment
+ do ACK^SAMIHL7
  ;
  quit  ; End entry point MSH
  ;
@@ -154,15 +151,13 @@ PID(segment) ;
  set segmentfields(11,5)="zip"
  set segmentfields(12)="county"
  set segmentfields(13)="phone"
- ; set segmentfields(15)="saminame" ; tilde instead of comma separator
  set segmentfields(19)="ssn"
  ;
  new graphfields
  do PARSESEG(segment,.segmentfields,.graphfields)
  ;
- merge ^TMP("SAMI","ADT","PID")=graphfields
- ;
- ; do UPDTPTL^SAMIVHL(.fields)
+ ; merge ^TMP("SAMI","ADT","PID")=graphfields
+ do UPDTPTL^SAMIHL7(.graphfields)
  ;
  quit  ; End of entry point PID
  ;

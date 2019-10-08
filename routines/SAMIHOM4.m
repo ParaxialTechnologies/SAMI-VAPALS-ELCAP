@@ -145,8 +145,25 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  . m SAMIARG=vars
  . d WSREPORT^SAMIUR(.SAMIRESULT,.SAMIARG)
  ;
+ i route="addperson" d  q  ;
+ . m SAMIARG=vars
+ . n form,err,zhtml
+ . s form="vapals:addperson"
+ . d SAMIHTM^%wf(.zhtml,form,.err)
+ . d MERGEHTM^%wf(.zhtml,.vars,.err)
+ . m SAMIRESULT=zhtml
+ . set HTTPRSP("mime")="text/html" ; set mime type
+ ;
+ i route="register" d  q  ;
+ . m SAMIARG=vars
+ . d REG^SAMIHOM4(.SAMIRESULT,.SAMIARG)
+ ; 
  quit  ; End of WSVAPALS
  ;
+ ;
+REG(SAMIRTN,SAMIARG) ; manual registration
+ ;
+ q
  ;
 DEVHOME ; temporary home page for development
  ; DEVHOME^SAMIHOM3(SAMIRTN,SAMIFILTER) goto DEVHOME^SAMIHOM4

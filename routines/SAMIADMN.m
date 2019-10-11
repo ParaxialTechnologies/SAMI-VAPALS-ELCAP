@@ -1,4 +1,4 @@
-SAMIADMN ; ven/arc - IELCAP: Admin tools ; 5/28/19 8:22am
+SAMIADMN ; ven/arc - IELCAP: Admin tools ; 2019-10-11T16:35Z
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -11,19 +11,21 @@ SAMIADMN ; ven/arc - IELCAP: Admin tools ; 5/28/19 8:22am
  ; @additional-dev: Linda M. R. Yaw (lmry)
  ; Primary development organization: Vista Expertise Network (VEN)
  ;
- ; 2018-05-03 ven/arc: Create entry point to clear M Web Server files cache
- ; 2018-07-01 ven/arc: added SETELCAP and SETLUNGRADS to switch between Ct Evaluation
- ;   forms
- ; 2018-08-14 ven/arc: web services for setlrads and setelcap, fix to setelcap and 
- ;   setlungrads web services
- ; 2018-08-16 ven/arc: adding quotes to json, return valid json and added /ctversion
- ; 2018-08-20 ven/gpl: fixed but in /ctversion
- ; 2018-12-06 ven/lmry: minor edits for SAC compliance
- ; 2018-12-11 ven/lgc: update routines for SAC compliance
- ; 2018-12-27 ven/lgc: update routines for SAC compliance
- ; 2019-01-22 ven/lgc: add license info and edit for lower case initials
- ; 2019-03-12 ven/lmry: Spell out commands, add table of contents, few format changes, 
- ;  also noted routines used for debugging, added history, added gpl, lgc, me to devs
+ ; @change-log
+ ;   2018-05-03 ven/arc: Create entry point to clear M Web Server files cache
+ ;   2018-07-01 ven/arc: added SETELCAP and SETLUNGRADS to switch between Ct Evaluation
+ ;     forms
+ ;   2018-08-14 ven/arc: web services for setlrads and setelcap, fix to setelcap and 
+ ;     setlungrads web services
+ ;   2018-08-16 ven/arc: adding quotes to json, return valid json and added /ctversion
+ ;   2018-08-20 ven/gpl: fixed but in /ctversion
+ ;   2018-12-06 ven/lmry: minor edits for SAC compliance
+ ;   2018-12-11 ven/lgc: update routines for SAC compliance
+ ;   2018-12-27 ven/lgc: update routines for SAC compliance
+ ;   2019-01-22 ven/lgc: add license info and edit for lower case initials
+ ;   2019-03-12 ven/lmry: Spell out commands, add table of contents, few format changes, 
+ ;     also noted routines used for debugging, added history, added gpl, lgc, me to devs
+ ;   2019-10-11 ven/arc : Add entry point DODD
  ;
  quit  ; No entry from top
  ;
@@ -36,6 +38,7 @@ SAMIADMN ; ven/arc - IELCAP: Admin tools ; 5/28/19 8:22am
  ; WSSTELCP(rtn,filter) ; set VA-PALS to use the ELCAP version of the Ct Evaluation form
  ; WSSTLRAD(rtn,filter) ; set VA-PALS to use the LungRads version of the Ct Evaluation form
  ; WSCTVERS(rtn,filter) ; web service to return the current ctform version
+ ; DODD ; Import TSV files to build form field DDs
  ;
 CLRWEB ; Clear the M Web Server files cache
  ;ven/arc;test;procedure;dirty;silent;non-sac
@@ -189,5 +192,19 @@ PRODSERV ;;
  ;;GET,intake,WSSIFORM^SAMIFORM,
  ;;GET,ctevaluation,WSCEFORM^SAMIFORM,
  ;;***END***
+ ;
+ ;
+DODD ; Import TSV files to build form field DDs
+ D PRSTSV^SAMIFF("/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/","background.tsv","form fields - background")
+ D PRSTSV^SAMIFF("/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/","biopsy.tsv","form fields - biopsy")
+ D PRSTSV^SAMIFF("/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/","ct-evaluation.tsv","form fields - ct evaluation")
+ D PRSTSV^SAMIFF("/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/","follow-up.tsv","form fields - follow up")
+ D PRSTSV^SAMIFF("/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/","intake.tsv","form fields - intake")
+ D PRSTSV^SAMIFF("/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/","intervention.tsv","form fields - intervention")
+ D PRSTSV^SAMIFF("/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/","pet-evaluation.tsv","form fields - pet evaluation")
+ D PRSTSV^SAMIFF("/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/","register.tsv","form fields - register")
+ ;
+ quit  ; End of entry point DODD
+ ;
  ;
 EOR ; End of routine SAMIADMN

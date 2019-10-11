@@ -18,20 +18,23 @@ human-readable format.
 If you must edit the files, this must be done in the TSV file manually with a text editor or with your favorite TSV 
 editor (i.e. Excel). When complete, it is recommended that the TSV files be re-imported into the xlsm file noted above.
 
-### Import TSV & Generate Data Dictionar Graph
+### Import TSV & Generate Data Dictionary Graph
 
 This application and repo include a Mumps routine for importing TSV files to generate DD graphs. Below are verbatim 
-commands you can run from the Mumps command line to generate the seven DD graphs, assuming you're working in one of 
-our development environments such as a Docker container.
+commands you can run from the Mumps command line to individually generate the eight DD graphs, assuming you're working in one of 
+our development environments such as a Docker container. To build all eight DD graphs at once, instead run the last command (DODD^SAMIADMN)
 
-```text
->D PRSTSV^SAMIFF("/home/osehra/lib/silver/va-pals/docs/form-fields/","background.tsv","form fields - background")
->D PRSTSV^SAMIFF("/home/osehra/lib/silver/va-pals/docs/form-fields/","biopsy.tsv","form fields - biopsy")
->D PRSTSV^SAMIFF("/home/osehra/lib/silver/va-pals/docs/form-fields/","ct-evaluation.tsv","form fields - ct evaluation")
->D PRSTSV^SAMIFF("/home/osehra/lib/silver/va-pals/docs/form-fields/","follow-up.tsv","form fields - follow up")
->D PRSTSV^SAMIFF("/home/osehra/lib/silver/va-pals/docs/form-fields/","intake.tsv","form fields - intake")
->D PRSTSV^SAMIFF("/home/osehra/lib/silver/va-pals/docs/form-fields/","intervention.tsv","form fields - intervention")
->D PRSTSV^SAMIFF("/home/osehra/lib/silver/va-pals/docs/form-fields/","pet-evaluation.tsv","form fields - pet evaluation")
+```
+>D PRSTSV^SAMIFF("/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/","background.tsv","form fields - background")
+>D PRSTSV^SAMIFF("/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/","biopsy.tsv","form fields - biopsy")
+>D PRSTSV^SAMIFF("/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/","ct-evaluation.tsv","form fields - ct evaluation")
+>D PRSTSV^SAMIFF("/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/","follow-up.tsv","form fields - follow up")
+>D PRSTSV^SAMIFF("/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/","intake.tsv","form fields - intake")
+>D PRSTSV^SAMIFF("/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/","intervention.tsv","form fields - intervention")
+>D PRSTSV^SAMIFF("/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/","pet-evaluation.tsv","form fields - pet evaluation")
+>D PRSTSV^SAMIFF("/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/","register.tsv","form fields - register")
+
+>D DODD^SAMIADMN
 
 ```
 

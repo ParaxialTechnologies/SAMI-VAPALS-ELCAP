@@ -1,4 +1,4 @@
-SAMITIU ;SAMI/lgc/arc - HL7 PATIENT LIST TIU processing for VAPALS ;Oct 04, 2019@17:54
+SAMITIU ;SAMI/lgc/arc - HL7 PATIENT LIST TIU processing for VAPALS ;Oct 09, 2019@18:13
  ;;18.0;SAMI;
  ;
  quit  ; no entry from top
@@ -79,6 +79,8 @@ PARSE(node,fieldstr,fields) ;
  . if ss="sex" do
  .. set fields(ss)=fields(ss)_"^"_$select(fields(ss)["M":"MALE",fields(ss)["F":"FEMALE",1:"")
  .. set fields("gender")=fields("sex")
+ zwr fields
+ write !
  quit
  ;
  ;

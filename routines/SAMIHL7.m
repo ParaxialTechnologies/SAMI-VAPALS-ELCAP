@@ -1,4 +1,4 @@
-SAMIHL7 ;SAMI/lgc/arc - HL7 UTILITIES ;Oct 04, 2019@20:17
+SAMIHL7 ;SAMI/lgc/arc - HL7 UTILITIES ;Oct 09, 2019@18:02
  ;;18.0;SAMI;
  ;
  quit  ; no entry from top
@@ -12,7 +12,7 @@ SAMIHL7 ;SAMI/lgc/arc - HL7 UTILITIES ;Oct 04, 2019@20:17
  ;fields("city")="Milton"
  ;fields("county")=""
  ;fields("dfn")=129
- ;fields("gender")="M^MALE"
+ ;fields("gender")="M"
  ;fields("icn")=50000104
  ;fields("last5")="H5813"
  ;fields("marital status")=""

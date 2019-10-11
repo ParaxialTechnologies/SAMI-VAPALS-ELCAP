@@ -1,4 +1,4 @@
-SAMIUTVS ;ven/arc/lgc - UNIT TEST for SAMIVST4 ; 2019-04-29T03:00Z
+SAMIUTVS ;ven/arc/lgc - UNIT TEST for SAMIVST4 ;Oct 09, 2019@17:28
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -14,7 +14,7 @@ SAMIUTVS ;ven/arc/lgc - UNIT TEST for SAMIVST4 ; 2019-04-29T03:00Z
  ;   required as the user on the server must have the
  ;   necessary Context menu(s) allowing use of the
  ;   Remote Procedure(s).
- ; Six parameters have been added to the client
+ ; Seven parameters have been added to the client
  ;   VistA to prevent the necessity of hard coding
  ;   certain values and to allow for default values for others.
  ;   SAMI PORT
@@ -24,7 +24,6 @@ SAMIUTVS ;ven/arc/lgc - UNIT TEST for SAMIVST4 ; 2019-04-29T03:00Z
  ;   SAMI DEFAULT STATIOn NUMBER
  ;   SAMI TIU NOTE PRINT NAME
  ;   SAMI DEFAULT CLINIC IEN
- ;   SAMI SYSTEM TEST PATIENT DFN
  ; Note that the user selected must have active
  ;   credentials on both the Client and Server systems
  ;   and the following Broker context menu.

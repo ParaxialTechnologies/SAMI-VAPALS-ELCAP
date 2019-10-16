@@ -163,7 +163,55 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  ;
 REG(SAMIRTN,SAMIARG) ; manual registration
  ;
+ m ^gpl("reg")=SAMIARG
+ n root s root=$$setroot^%wd("patient-lookup")
+ n ptlkien s ptlkien=$o(@root@("AAAAAA"),-1)+1
+ n name s name=$g(SAMIARG("name"))
+ s @root@(ptlkien,"saminame")=name
+ s @root@(ptlkien,"sinamef")=$p(name,",",1)
+ s @root@(ptlkien,"sinamel")=$p(name,",",2)
+ n fmdob s fmdob=$$FMDT^SAMIUR2(SAMIARG("dob"))
+ n ptlkdob s ptlkdob=$$FMTE^XLFDT(fmdob,7)
+ s ptlkdob=$TR(ptlkdob,"/","-")
+ s @root@(ptlkien,"dob")=ptlkdob
+ s @root@(ptlkien,"sbdob")=ptlkdob
+ n gender s gender=SAMIARG("gender")
+ s @root@(ptlkien,"gender")=$s(gender="M":"M^MALE",1:"F^FEMALE")
+ s @root@(ptlkien,"sex")=SAMIARG("gender")
+ s @root@(ptlkien,"icn")=SAMIARG("icn")
+ n ssn s ssn=SAMIARG("ssn")
+ s ssn=$tr(ssn,"-")
+ s @root@(ptlkien,"ssn")=ssn
+ n last5 s last5=$$UCASE($e(name,1))_$e(ssn,6,9)
+ s @root@(ptlkien,"last5")=last5
+ n dfn
+ s dfn=$o(@root@("dfn"," "),-1)+1
+ i dfn<9000001 s dfn=9000001
+ s @root@(ptlkien,"dfn")=dfn
+ d INDXPTLK(ptlkien)
+ s SAMIFILTER("samiroute")="addperson"
+ do WSVAPALS^SAMIHOM3(.SAMIFILTER,.SAMIARG,.SAMIRESULT)
  q
+ ;
+INDXPTLK(ien) ; generate index entries in patient-lookup graph
+ ; for entry ien
+ n root set root=$$setroot^%wd("patient-lookup")
+ q:'$d(@root@(ien))
+ s @root@("name",$g(@root@(ien,"saminame")),ien)=""
+ n ucname s ucname=$$UCASE(name)
+ s @root@("name",ucname,ien)=""
+ s @root@("dfn",$g(@root@(ien,"dfn")),ien)=""
+ s @root@("last5",$g(@root@(ien,"last5")),ien)=""
+ s @root@("sinamef",$g(@root@(ien,"sinamef")),ien)=""
+ s @root@("sinamel",$g(@root@(ien,"sinamel")),ien)=""
+ set @root@("Date Last Updated")=$$HTE^XLFDT($horolog)
+ q
+ ;
+UCASE(STR) ; extrinsic returns uppercase of STR
+ N X,Y
+ S X=STR
+ X ^%ZOSF("UPPERCASE")
+ q Y
  ;
 DEVHOME ; temporary home page for development
  ; DEVHOME^SAMIHOM3(SAMIRTN,SAMIFILTER) goto DEVHOME^SAMIHOM4

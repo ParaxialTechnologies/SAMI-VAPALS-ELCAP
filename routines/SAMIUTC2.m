@@ -1,4 +1,4 @@
-SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ; 6/28/19 6:06pm
+SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ;Oct 21, 2019@20:13
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -35,10 +35,8 @@ START ;
  ;
  ;
 STARTUP ; Ensure all of test patient's forms are setup in vapals-patients
- new root set root=$$setroot^%wd("vapals-patients")
- kill @root@("graph","XXX00001")
- new SAMIPOO do PLUTARR^SAMIUTST(.SAMIPOO,"all XXX00001 forms")
- merge @root@("graph","XXX00001")=SAMIPOO
+ D SVAPT1^SAMIUTST  ; Save VA's dfn 1 patient if it exists
+ D LOADTPT^SAMIUTST  ; Load our test patient
  quit
  ;
 SETUP ;
@@ -50,6 +48,9 @@ TEARDOWN ; ZEXCEPT: SAMIUARGS,SAMIUBODY,SAMIURETURN,filter,from,to,expect,result
  kill SAMIUARGS,SAMIUBODY,SAMIURETURN,filter,from,to,expect,result,expectn,resultn,utsuccess
  quit
  ;
+SHUTDOWN ; Return VA's dfn 1 patient data to graphs
+ D LVAPT1^SAMIUTST
+ quit
  ;
 UTQUIT ; @TEST - Quit at top of routine
  do ^SAMISRC2

@@ -1,4 +1,4 @@
-SAMIFLD ;ven/gpl - elcap: form load & case review support ; 2019-08-01T15:42Z
+SAMIFLD ;ven/gpl - elcap: form load & case review support ;Oct 22, 2019@15:36
  ;;18.0;SAMI;;
  ;
  ; Routine SAMIFLD contains subroutines for processing the ELCAP forms,
@@ -210,17 +210,6 @@ LOAD ; process html line, e.g., load json data into graph
  . . new zien set zien=SAMILNUM_"."_$$xpand(zi)
  . . set zhtml(zien)=@clog@(zi)
  . set zhtml(SAMILNUM_"."_$$xpand($order(@clog@(""),-1)+1))="</pre>"
- ;
- ;if form["fuform" d  ;
- i SAMILINE["pack-years-history" d  ;
- . d  ;
- . . i SAMILINE'["id" q  ;
- . . n zzi s zzi=SAMILNUM
- . . f  s zzi=$o(SAMIHTML(zzi)) q:zzi>(SAMILNUM+20)  q:SAMIHTML(zzi)["tbody"  d
- . . . s SAMIHTML(zzi)=SAMIHTML(zzi)_$char(13,10)
- . . ;s SAMIHTML(zzi)="<tbody>"_$$SHDET^SAMIUR2(sid)
- . . s SAMILNUM=zzi+1
- . . s SAMILINE=$$SHDET^SAMIUR2(sid,form)_"</tbody>"
  ;
  quit  ; end of ppi LOAD^SAMIFORM
  ;
@@ -461,25 +450,6 @@ GETSSN ; ssn for patient sid
  . quit
  ;
  quit pssn ; end of $$GETSSN^SAMIFORM
- ;
-GETPRFX ; Retrieve study ID prefix from parameter file
- ;@signature
- ; $$GETPRFX^SAMIFORM()
- ;@branches-from
- ; GETPRFX^SAMIFORM
- ;@ppi-called-by
- ; WSCASE^SAMICAS2
- ;@calls
- ; $$GET^XPAR
- ;@output = patient's ssn
- ;@tests
- ; None yet
- ;
- new prefix
- set prefix=$$GET^XPAR("SYS","SAMI SID PREFIX",,"Q")
- if $get(prefix)="" set prefix="UNK"
- ;
- quit prefix ; End of $$GETPRFX^SAMIFORM
  ;
 GETPRFX ; Retrieve study ID prefix from parameter file
  ;@signature

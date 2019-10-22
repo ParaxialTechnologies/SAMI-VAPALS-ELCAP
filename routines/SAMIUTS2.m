@@ -1,4 +1,4 @@
-SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICASE,SAMICAS2,SAMICAS3 ; 7/8/19 4:04pm
+SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICASE,SAMICAS2,SAMICAS3 ;Oct 22, 2019@16:05
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -28,16 +28,15 @@ START I $t(^%ut)="" W !,"*** UNIT TEST NOT INSTALLEd ***" Q
  ;
  ;
 STARTUP n utsuccess
- n root s root=$$setroot^%wd("vapals-patients")
- k @root@("graph","XXX00001")
- n SAMIPOO D PLUTARR^SAMIUTST(.SAMIPOO,"all XXX00001 forms")
- m @root@("graph","XXX00001")=SAMIPOO
+ D SVAPT1^SAMIUTST  ; Save VA's DFN 1 patient data
+ D LOADTPT^SAMIUTST  ; Load unit test patient data
  q
  ;
 SETUP q
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
  k utsuccess
+ D LVAPT1^SAMIUTST  ; Return VA's DPT 1 patient's data
  q
  ;
  ;

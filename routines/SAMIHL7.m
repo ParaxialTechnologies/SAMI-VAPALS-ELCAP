@@ -1,4 +1,4 @@
-SAMIHL7 ;SAMI/lgc/arc - HL7 UTILITIES ;Oct 09, 2019@18:02
+SAMIHL7 ;SAMI/lgc/arc - HL7 UTILITIES ;Oct 17, 2019@16:28
  ;;18.0;SAMI;
  ;
  quit  ; no entry from top
@@ -80,7 +80,12 @@ UPDTPTL(fields) ; Update patient-lookup with a patient fields array
  .;       existing patients to prevent duplicate pointers
  .;
  . if fields(field)="" quit
- . if field="dfn" set @root@("dfn",fields(field),ptien)=""
+ . if field="dfn" do
+ .. set @root@("dfn",fields(field),ptien)=""
+ ..; As we have the patient's DFN from the VA server
+ ..;  we can set the "remotedfn" field as well
+ .. set @root@(ptien,"remotedfn")=fields(field)
+ .. set @root@("remotedfn",fields(field),ptien)=""
  .;
  . if field="icn" do
  .. if '$get(newpat) do KILLREF(field,$get(oldarr(field)),ptien)
@@ -110,6 +115,8 @@ UPDTPTL(fields) ; Update patient-lookup with a patient fields array
  . if field="ssn" do
  .. if '$get(newpat) do KILLREF(field,$get(oldarr(field)),ptien)
  .. set @root@(field,fields(field),ptien)=""
+ ;
+ 
  quit
  ;
  ;

@@ -1,4 +1,4 @@
-SAMIUTVS ;ven/arc/lgc - UNIT TEST for SAMIVST4 ;Oct 09, 2019@17:28
+SAMIUTVS ;ven/arc/lgc - UNIT TEST for SAMIVST4 ;Oct 22, 2019@16:19
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -74,10 +74,13 @@ START if $text(^%ut)="" write !,"*** UNIT TEST NOT INSTALLEd ***" quit
  quit
  ;
 STARTUP new utsuccess
+ D SVAPT1^SAMIUTST  ; Save VA's DFN 1 patient data
+ D LOADTPT^SAMIUTST  ; Load unit test patient data
  quit
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
  kill utsuccess
+ D LVAPT1^SAMIUTST  ; Return VA's DPT 1 patient's data
  quit
  ;
 UTMGPH ; @TEST - Test making 'patient-lookup' Graphstore

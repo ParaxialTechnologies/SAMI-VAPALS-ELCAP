@@ -1,4 +1,4 @@
-SAMIUTUR ;ven/lgc - UNIT TEST for SAMIUR,SAMIUR1,SAMIUR2 ; 7/9/19 11:01am
+SAMIUTUR ;ven/lgc - UNIT TEST for SAMIUR,SAMIUR1,SAMIUR2 ;Oct 22, 2019@16:09
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -28,20 +28,15 @@ START i $t(^%ut)="" w !,"*** UNIT TEST NOT INSTALLED ***" q
  ;
  ;
 STARTUP n utsuccess
- n root s root=$$setroot^%wd("vapals-patients")
- k @root@("graph","XXX00001")
- n SAMIUPOO D PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
- m @root@("graph","XXX00001")=SAMIUPOO
+ D SVAPT1^SAMIUTST  ; Save VA's DFN 1 patient data
+ D LOADTPT^SAMIUTST  ; Load unit test patient data
  ; Temporarily update sidc field in siform-2018-11-13 
  s @root@("graph","XXX00001","siform-2018-11-13","sidc")=$P($$HTE^XLFDT($H,5),"@")
  q
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
  k utsuccess
- ; Replace sidc field in siform-2018-11-13
- n root s root=$$setroot^%wd("vapals-patients")
- s @root@("graph","XXX00001","siform-2018-11-13","sidc")="11/13/2018"
- k root
+ D LVAPT1^SAMIUTST  ; Return VA's DPT 1 patient's data
  q
  ;
  ;

@@ -1,4 +1,4 @@
-SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA,SAMIVST1,SAMIVST2 ;Oct 09, 2019@17:30
+SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA,SAMIVST1,SAMIVST2 ;Oct 22, 2019@16:12
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -64,16 +64,17 @@ STARTUP ; Set up dfn and tiuien to use throughout testing
  ;set utdfn="dfn"_$J
  set utdfn=1 ; Unit test dfn patient is always 1
  set (utsuccess,tiuien)=0
- ; Set up graphstore graph on test patient
- new root set root=$$setroot^%wd("vapals-patients")
- kill @root@("graph","XXX00001")
- new SAMIUPOO do PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
- merge @root@("graph","XXX00001")=SAMIUPOO
+ D SVAPT1^SAMIUTST  ; Save VA's DFN 1 patient data
+ D LOADTPT^SAMIUTST  ; Load unit test patient data
  quit
+ ;
 SHUTDOWN ; ZEXCEPT: dfn,tiuien
  kill utdfn,tiuien,utsuccess
+ D LVAPT1^SAMIUTST  ; Return VA's DPT 1 patient's data
  quit
+ ;
 SETUP quit
+ ;
 TEARDOWN quit
  ;
 UTBLDTIU ; @TEST - Build a new TIU and Visit stub for a patient

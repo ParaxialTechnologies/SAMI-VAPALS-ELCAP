@@ -1,4 +1,4 @@
-SAMIUTST ;ven/lgc - Unit Test Utilities ;Oct 16, 2019@20:35
+SAMIUTST ;ven/lgc - Unit Test Utilities ;Oct 28, 2019@18:47
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -179,7 +179,7 @@ SVAPT1 ;Save all VA dfn 1 patient-lookup and vapals-patients data
  set rootpl=$$setroot^%wd("patient-lookup")
  set plgien=$order(@rootpl@("dfn",1,0)) quit:'(plgien>0) 
  ;if dfn 1 is our test patient then bail out
- quit:$data(@rootpl@("icn","50001000",plgien))
+ quit:$data(@rootpl@("icn","50001000V910386",plgien))
  merge plpoo=@rootpl@(plgien)
  do SVUTARR^SAMIUTST(.plpoo,"SitesPLpatient1Data")
  ;
@@ -233,6 +233,11 @@ LVAPT1 ;Load all patient-lookup and vapals-patients data on VA dfn 1
  set sid=$get(vppoo(1,"sisid"))
  kill:'(sid="") @rootvp@("graph",sid)
  merge:'(sid="") @rootvp@("graph",sid)=vppoo(1,"graph")
+ ;
+ ; Kill all information in vapals-patients on dfn 1 patient
+ ;
+ kill @rootvp@(1)
+ ;
  ; Now delete any form information from our array
  ;   leaving only the dfn 1 patient information
  kill vppoo(1,"graph")
@@ -249,48 +254,6 @@ LVAPT1 ;Load all patient-lookup and vapals-patients data on VA dfn 1
  ;
  quit
  ;
- ;
- ;@ppi
-SDFN1XRF(plpoo,vppoo,plgien) ; Set DFN 1 patient cross-references
- ;input
- ;   plpoo   = array by reference with patient-lookup data
- ;   vppoo   = array by reference with vapals-patients data
- ;   plgien  = IEN into patient-lookup for dfn 1 patient
- ;output
- ;   sets various cross references in "patient-lookup" graph
- new rootpl,rootvp
- set rootpl=$$setroot^%wd("patient-lookup")
- set rootvp=$$setroot^%wd("vapals-patients")
- quit:'$data(plpoo) 
- quit:'$get(plgien)
- new xstr
- set xstr="icn/last5/saminame/sinamel/sinamef/ssn/"
- new ss set ss=""
- for  set ss=$order(plpoo(ss)) quit:(ss="")  do
- . quit:($get(plpoo(ss))="")
- . if xstr[ss do
- ..;
- .. if ss="icn" do  quit
- ... set @rootpl@(ss,$piece(plpoo(ss),"V"),plgien)=""
- ..;
- .. if ss="saminame" do  quit
- ... set @rootpl@(ss,plpoo(ss),plgien)=""
- ... set @rootpl@("name",plpoo(ss),plgien)=""
- ... set @rootpl@("name",$$UP^XLFSTR(plpoo(ss)),plgien)=""
- ..;
- .. set @rootpl@(ss,plpoo(ss),plgien)=""
- quit
- ;
- ;
- ;@ppi
-KDFN1XRF(rootpl,plgien) ; Kill dfn 1 cross references in patient-lookup
- quit:($get(rootpl)="")  quit:'$get(plgien)
- new node,snode,xref
- for xref="icn","last5","saminame","name","sinamef","sinamel","ssn" do
- . set node=$na(@rootpl@(xref)),snode=$p(node,")")
- . for  set node=$Q(@node) q:(node'[snode)  do
- .. if $QS(node,5)=plgien kill @node
- quit
  ;
  ;@ppi
 LOADTPT ;Load Unit Test patient into patient-lookup and vapals-patients 
@@ -339,6 +302,46 @@ LOADTPT ;Load Unit Test patient into patient-lookup and vapals-patients
  ; set necessary new cross-references
  set:'($get(vppoo("sisid"))="") @rootvp@("sid",vppoo(1,"sisid"),1)=""
  ;
+ quit
+ ;
+ ;
+ ;@ppi
+SDFN1XRF(plpoo,vppoo,plgien) ; Set DFN 1 patient cross-references
+ ;input
+ ;   plpoo   = array by reference with patient-lookup data
+ ;   vppoo   = array by reference with vapals-patients data
+ ;   plgien  = IEN into patient-lookup for dfn 1 patient
+ ;output
+ ;   sets various cross references in "patient-lookup" graph
+ new rootpl,rootvp
+ set rootpl=$$setroot^%wd("patient-lookup")
+ set rootvp=$$setroot^%wd("vapals-patients")
+ quit:'$data(plpoo) 
+ quit:'$get(plgien)
+ new xstr
+ set xstr="icn/last5/saminame/sinamel/sinamef/ssn/"
+ new ss set ss=""
+ for  set ss=$order(plpoo(ss)) quit:(ss="")  do
+ . quit:($get(plpoo(ss))="")
+ . if xstr[ss do
+ ..;
+ .. if ss="saminame" do  quit
+ ... set @rootpl@(ss,plpoo(ss),plgien)=""
+ ... set @rootpl@("name",plpoo(ss),plgien)=""
+ ... set @rootpl@("name",$$UP^XLFSTR(plpoo(ss)),plgien)=""
+ ..;
+ .. set @rootpl@(ss,plpoo(ss),plgien)=""
+ quit
+ ;
+ ;
+ ;@ppi
+KDFN1XRF(rootpl,plgien) ; Kill dfn 1 cross references in patient-lookup
+ quit:($get(rootpl)="")  quit:'$get(plgien)
+ new node,snode,xref
+ for xref="icn","last5","saminame","name","sinamef","sinamel","ssn" do
+ . set node=$na(@rootpl@(xref)),snode=$p(node,")")
+ . for  set node=$Q(@node) q:(node'[snode)  do
+ .. if $QS(node,5)=plgien kill @node
  quit
  ;
  ;

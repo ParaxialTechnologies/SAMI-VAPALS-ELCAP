@@ -1,4 +1,4 @@
-SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICASE,SAMICAS2,SAMICAS3 ;Oct 22, 2019@16:05
+SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICASE,SAMICAS2,SAMICAS3 ;Oct 28, 2019@20:43
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -53,6 +53,7 @@ UTGTMPL ; @TEST - get html template
  ;GETTMPL(return,form)
  n temp,SAMIUPOO
  d GETTMPL^SAMICASE("temp","vapals:casereview")
+ D SVUTARR^SAMIUTST(.temp,"UTGTMPL^SAMIUTS2")
  d PLUTARR^SAMIUTST(.SAMIUPOO,"UTGTMPL^SAMIUTS2")
  s utsuccess=1
  n nodep,nodet s nodep=$na(SAMIUPOO),nodet=$na(temp)

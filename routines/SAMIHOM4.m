@@ -295,18 +295,44 @@ RTNPAGE(rtn,form,vals) ; displays a page
  set HTTPRSP("mime")="text/html" ; set mime type
  q
  ;
+REINDXPL ; reindex patient lookup
+ n root s root=$$setroot^%wd("patient-lookup")
+ n zi s zi=0
+ k @root@("ssn")
+ k @root@("name")
+ k @root@("last5")
+ k @root@("sinamef")
+ k @root@("sinamel")
+ k @root@("icn")
+ f  s zi=$o(@root@(zi)) q:+zi=0  d  ;
+ . d INDXPTLK(zi)
+ q
+ ;
 INDXPTLK(ien) ; generate index entries in patient-lookup graph
  ; for entry ien
- n root set root=$$setroot^%wd("patient-lookup")
- q:'$d(@root@(ien))
- s @root@("name",$g(@root@(ien,"saminame")),ien)=""
+ n proot set proot=$$setroot^%wd("patient-lookup")
+ n name s name=$g(@proot@(ien,"saminame"))
+ s @proot@("name",name,ien)=""
  n ucname s ucname=$$UCASE(name)
- s @root@("name",ucname,ien)=""
- s @root@("dfn",$g(@root@(ien,"dfn")),ien)=""
- s @root@("last5",$g(@root@(ien,"last5")),ien)=""
- s @root@("sinamef",$g(@root@(ien,"sinamef")),ien)=""
- s @root@("sinamel",$g(@root@(ien,"sinamel")),ien)=""
- set @root@("Date Last Updated")=$$HTE^XLFDT($horolog)
+ s @proot@("name",ucname,ien)=""
+ n x
+ s x=$g(@proot@(ien,"dfn")) w !,x
+ s:x'="" @proot@("dfn",x,ien)=""
+ s x=$g(@proot@(ien,"last5")) w !,x
+ s:x'="" @proot@("last5",x,ien)=""
+ s x=$g(@proot@(ien,"icn")) w !,x
+ i x'["V" d  ;
+ . n chk s chk=$$CHECKDG^MPIFSPC(x)
+ . s @proot@(ien,"icn")=x_"V"_chk
+ . s x=x_"V"_chk
+ s:x'="" @proot@("icn",x,ien)=""
+ s x=$g(@proot@(ien,"ssn")) w !,x
+ s:x'="" @proot@("ssn",x,ien)=""
+ s x=$g(@proot@(ien,"sinamef")) w !,x
+ s:x'="" @proot@("sinamef",x,ien)=""
+ s x=$g(@proot@(ien,"sinamel")) w !,x
+ s:x'="" @proot@("sinamel",x,ien)=""
+ set @proot@("Date Last Updated")=$$HTE^XLFDT($horolog)
  q
  ;
 UCASE(STR) ; extrinsic returns uppercase of STR

@@ -222,6 +222,16 @@ LOAD ; process html line, e.g., load json data into graph
  . . s SAMILNUM=zzi+1
  . . s SAMILINE=$$SHDET^SAMIUR2(sid,form)_"</tbody>"
  ;
+ i SAMILINE["@@ERROR_MESSAGE@@" d  ;
+ . n errMsg s errMsg=$get(SAMIVALS("errorMessage"))
+ . if errMsg="" q  ; no error message
+ . do findReplace^%ts(.SAMILINE,"@@ERROR_MESSAGE@@",errMsg)
+ ;
+ i SAMILINE["@@ERROR_FIELDS@@" d  ;
+ . n errFld s errFld=$get(SAMIVALS("errorField"))
+ . if errFld="" q  ; no error field
+ . do findReplace^%ts(.SAMILINE,"@@ERROR_FIELDS@@",errFld)
+ ;
  quit  ; end of ppi LOAD^SAMIFORM
  ;
 xpand(zi) ; extrinsic that expands a number to 8 digits with preceeding 0

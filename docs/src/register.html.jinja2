@@ -6,7 +6,7 @@
         <h1> Registration </h1>
         <hr/>
 
-        <div class="alert alert-danger" id="errorMessages"></div>
+        {% include '_messages.jinja2' %}
 
         <form action="{{ formPage+".html" if mockup else "/vapals" }}" class="validated" method="{{ formMethod }}"
               id="main-form">
@@ -56,16 +56,6 @@
 
 {% block script %}
     <script>
-
-        const errorMessage = "@@ERROR_MESSAGE@@";
-        const errorFields = "@@ERROR_FIELDS@@";
-        const hasErrorMessage = errorMessage !== "@@ERROR_" + "MESSAGE@@" && errorMessage !== "";
-        if (hasErrorMessage) {
-            $("#errorMessages").html(errorMessage);
-        }
-        $("#errorMessages").toggle(hasErrorMessage);
-
-
         function createFormValidator() {
 
             const $form = $('#main-form');

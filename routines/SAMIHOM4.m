@@ -191,20 +191,21 @@ REG(SAMIRTN,SAMIARG) ; manual registration
  ; test for duplicate ssn
  ;
  i $$DUPSSN(ssn) d  ;
- . s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate SSN."
+ . ;s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate SSN."
+ . s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate SSN error. A person with that SSN is already entered in the system."
  . s SAMIARG("errorField")="ssn"
  ;
  ; test for duplicate icn
  ;
  n icn s icn=$g(SAMIARG("icn"))
  i $$DUPICN(icn) d  ;
- . s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate ICN."
+ . s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate ICN error. A person with that ICN is already entered in the system."
  . s SAMIARG("errorField")="icn"
  ;
  ; test for wellformed ICN
  ;
  i $$BADICN(icn) d  ;
- . s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Invalid ICN."
+ . s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Invalid ICN error. The check digits in the ICN do not match"
  . s SAMIARG("errorField")="icn"
  ;
  ; if there is an error, send back to edit with error message
@@ -246,6 +247,8 @@ REG(SAMIRTN,SAMIARG) ; manual registration
  s @root@(ptlkien,"dfn")=dfn
  d INDXPTLK(ptlkien)
  s SAMIFILTER("samiroute")="addperson"
+ d SETINFO(.SAMIFILTER,name_" was successfully entered")
+ ;d SETWARN(.SAMIFILTER,"We might want to give you a warning")
  do WSVAPALS^SAMIHOM3(.SAMIFILTER,.SAMIARG,.SAMIRESULT)
  q
  ;
@@ -268,6 +271,16 @@ BADICN(icn) ; extrinsic returns true if ICN checkdigits are wrong
  i zchk'=$$CHECKDG^MPIFSPC(zicn) q 1
  q 0
  ;
+SETINFO(vars,msg) ; set the information message text
+ ; vars are the screen variables passed by reference
+ s vars("infoMessage")=msg
+ q
+ ;
+SETWARN(vars,msg) ; set warning message text
+ ; vars are the screen variables passed by reference
+ s vars("warnMessage")=msg
+ q
+ ; 
 RTNERR(rtn,form,vals,msg,fld) ; redisplays a page with an error message
  ; rtn is the return array
  ; form is the form the page requires

@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.11.08" name="version"/>
+  <meta content="2019.11.11" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    Register
@@ -228,7 +228,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.11.08
+     2019.11.11
     </span>
    </div>
   </footer>
@@ -329,7 +329,7 @@
                             validators: {
                                 notEmpty: {message: 'SSN is required'},
                                 regexp: {
-                                    regexp: /^(?!(000|666|9))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$/,
+                                    regexp: /^(?!(000|666|9(?!99)))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$/,
                                     message: 'SSN is invalid'
                                 }
                             }
@@ -337,7 +337,10 @@
                         dob: {
                             validators: {
                                 notEmpty: {message: 'Date of birth is required'},
-                                date: {max: VAPALS.todaysDate(), message: 'Date of birth may not be in the future'}
+                                date: {
+                                    max: VAPALS.todaysDate(),
+                                    message: 'Invalid format or date is in the future'
+                                },
                             }
                         },
                         gender: {validators: {notEmpty: {message: 'Gender is required'}}},

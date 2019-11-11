@@ -175,7 +175,7 @@
                         {{ f.checkbox("sipecnte", "1", "Telephone", {'group':'discussion-contact'}) }}
                         {{ f.checkbox("sipecnth", "1", "TeleHealth", {'group':'discussion-contact'}) }}
                         {{ f.checkbox("sipecnml", "1", "Mailed letter", {'group':'discussion-contact'}) }}
-                        {{ f.checkbox("sipecnpp", "1", "Message in patient portal", {'group':'discussion-contact'}) }}
+                        {{ f.checkbox("sipecnpp", "1", "Message in Patient Portal", {'group':'discussion-contact'}) }}
                         {{ f.checkbox("sipecnvd", "1", "Video-on-Demand (VOD)", {'group':'discussion-contact'}) }}
                         {{ f.checkbox("sipecnot", "1", "Other", {'group':'discussion-contact'}) }}
                         <label class="aria-hidden" for="sipecnoo">Other contact method</label>
@@ -223,7 +223,7 @@
                     {{ f.checkbox("silnph", "1", "Telephone", {'group':'intake-contact'}) }}
                     {{ f.checkbox("silnth", "1", "TeleHealth", {'group':'intake-contact'}) }}
                     {{ f.checkbox("silnml", "1", "Mailed letter", {'group':'intake-contact'}) }}
-                    {{ f.checkbox("silnpp", "1", "Message in patient portal", {'group':'intake-contact'}) }}
+                    {{ f.checkbox("silnpp", "1", "Message in Patient Portal", {'group':'intake-contact'}) }}
                     {{ f.checkbox("silnvd", "1", "Video-on-Demand (VOD)", {'group':'intake-contact'}) }}
                     {{ f.checkbox("silnot", "1", "Other", {'group':'intake-contact'}) }}
                     <label class="aria-hidden" for="silnoo">Other contact method</label>
@@ -571,7 +571,7 @@
             const discussionHeldValue = $("[name=sipedisc]:checked").val();
             if (discussionHeldValue === 'y') {
                 notice += "<br/><br/>";
-                notice += "A pre-enrollment discussion was held with the patient";
+                notice += "A pre-enrollment discussion was held with the participant";
 
                 const discussionDateValue = $("#sipedc").val();
                 if (discussionDateValue) {
@@ -607,8 +607,8 @@
         const $enrollSection = $("#enrollment-container").html("");
         const $enrollRow = $('<div class="row"></div>');
         const $enrollCol = $('<div class="col-lg-5 col-md-6 col-sm-8"></div>');
-        const $enrollAlert = $("<div class=\"alert alert-info\">Informed decision making was completed and patient " +
-            "is enrolled in the Lung Screening program.</div>");
+        const $enrollAlert = $("<div class=\"alert alert-info\">Informed decision making was completed and " +
+            "participant is enrolled in the Lung Screening program.</div>");
         $enrollCol.append($('<input type="hidden" id="sildct" name="sildct" value="y"/>')); //veteran's option to enroll
         $enrollCol.append($('<input type="hidden" id="siidmdc" name="siidmdc" value="1"/>')); //informed decision making
 

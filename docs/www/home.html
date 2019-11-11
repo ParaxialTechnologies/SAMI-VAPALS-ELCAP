@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.11.11" name="version"/>
+  <meta content="2019.11.04" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    Home
@@ -166,11 +166,6 @@
          </label>
          <input class="form-control" id="pt-lookup-input" name="pt-lookup-input" placeholder="Name or LAST5" type="text"/>
         </div>
-        <div class="pull-left">
-         <a class="navigation" data-method="post" data-samiroute="addperson" href="#!">
-          manual registration...
-         </a>
-        </div>
         <div class="pull-right">
          <button class="btn btn-primary" disabled="" id="pt-lookup-btn" type="submit">
           Submit
@@ -234,7 +229,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.11.11
+     2019.11.04
     </span>
    </div>
   </footer>
@@ -253,32 +248,6 @@
         $("#delete-form").remove();
     }
 
-    const infoMessage = "@@INFO_MESSAGE@@";
-    const warnMessage = "@@WARN_MESSAGE@@";
-    const errorMessage = "@@ERROR_MESSAGE@@";
-    const errorFields = "@@ERROR_FIELDS@@";
-    const hasInfoMessage = infoMessage !== "@@INFO_" + "MESSAGE@@" && infoMessage !== "";
-    const hasWarnMessage = warnMessage !== "@@WARN_" + "MESSAGE@@" && warnMessage !== "";
-    const hasErrorMessage = errorMessage !== "@@ERROR_" + "MESSAGE@@" && errorMessage !== "";
-
-    function displayStaticMessage(message, alertClass, displayTimeMs) {
-        const $msg = $('#message-area-static')
-            .empty()
-            .html("<div class=\"alert " + alertClass + " alert-sm\" role=\"alert\">" + message + "</div>")
-            .show();
-        if (displayTimeMs > 0) {
-            $msg.delay(displayTimeMs)
-                .slideUp(200);
-        }
-    }
-
-    if (hasErrorMessage) {
-        displayStaticMessage(errorMessage, "alert-danger", 0)
-    } else if (hasWarnMessage) {
-        displayStaticMessage(warnMessage, "alert-warning", 0)
-    } else if (hasInfoMessage) {
-        displayStaticMessage(infoMessage, "alert-success", 3000)
-    }
 
     $(function () {
         /** These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly. **/

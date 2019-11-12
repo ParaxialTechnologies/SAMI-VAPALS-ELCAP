@@ -86,66 +86,11 @@
                 </div>
             </div>
 
-            <div id="nodules" style="padding-top:8px">
-                <h3>Nodules</h3>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="alert alert-warning">
-                            <strong>List any nodule(s) of concern* in the table below. If baseline >= 6 mm or if repeat,
-                                >= 3mm</strong><br/>
-                            Enter the Nodule Uptake values and update the Nodule Status to reflect the results of the
-                            PET study, and update the neccesary actions for each nodule, as indicated. Enter any
-                            details given in the PET report in the PET Details field. <br/>
-                            Update the Follow-up section.
-                        </div>
-                    </div>
-                </div>
+            {% with formPage=formPage %}
                 {% include '_nodule-grid.jinja2' %}
-            </div>
+            {% endwith %}
 
-            <div class="row">
-                <div class="col-md-4 form-group">
-                    {{ f.floatingLabel("ceinod", "Indicate the index nodule driving follow-up:") }}
-                </div>
-                <div class="col-sm-3 form-group">
-                    <select name="ceinod" id="ceinod" class="form-control">
-                        <option value="-"> -
-                        <option value="1"> 1
-                        <option value="2"> 2
-                        <option value="3"> 3
-                        <option value="4"> 4
-                        <option value="5"> 5
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4 form-group">
-                    {{ f.floatingLabel("celrad", "LungRADS category") }}
-                </div>
-                <div class="col-sm-3 form-group">
-                    <select name="celrad" id="celrad" class="form-control">
-                        <option value="-"> -
-                        <option value="0"> 0
-                        <option value="1"> 1
-                        <option value="2"> 2
-                        <option value="3"> 3
-                        <option value="4A"> 4A
-                        <option value="4B"> 4B
-                        <option value="4X"> 4X
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4 form-group">
-                    {{ f.floatingLabel("celrads", "LungRADS modifier") }}
-                </div>
-                <div class="col-sm-3 form-group">
-                    {{ f.checkbox("celrads", "S", "S") }}
-                    {{ f.checkbox("celradc", "C", "C") }}
-                </div>
-            </div>
+            {% include "_lung-rads-fields.jinja2" %}
 
             <div class="row">
                 <div class="form-group col-sm-12">

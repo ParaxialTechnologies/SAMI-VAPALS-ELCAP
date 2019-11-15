@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.11.11" name="version"/>
+  <meta content="2019.11.15" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    Register
@@ -201,12 +201,12 @@
       <input class="form-control" id="ssn" name="ssn" placeholder="000-00-0000" required="required" type="text"/>
      </div>
      <div class="col-sm-6 col-md-3 form-group">
-      <label class="required">
+      <label>
        <abbr title="Integration Control Number">
         ICN
        </abbr>
       </label>
-      <input class="form-control" id="icn" name="icn" required="required" type="text"/>
+      <input class="form-control" id="icn" name="icn" type="text"/>
      </div>
     </div>
     <hr/>
@@ -228,7 +228,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.11.11
+     2019.11.15
     </span>
    </div>
   </footer>
@@ -343,8 +343,7 @@
                                 },
                             }
                         },
-                        gender: {validators: {notEmpty: {message: 'Gender is required'}}},
-                        icn: {validators: {notEmpty: {message: 'ICN is required'}}},
+                        gender: {validators: {notEmpty: {message: 'Gender is required'}}}
                     },
                     plugins: {
                         trigger: new FormValidation.plugins.Trigger(),

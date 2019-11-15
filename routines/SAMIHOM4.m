@@ -198,13 +198,13 @@ REG(SAMIRTN,SAMIARG) ; manual registration
  ; test for duplicate icn
  ;
  n icn s icn=$g(SAMIARG("icn"))
- i $$DUPICN(icn) d  ;
+ i icn'="" i $$DUPICN(icn) d  ;
  . s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate ICN error. A person with that ICN is already entered in the system."
  . s SAMIARG("errorField")="icn"
  ;
  ; test for wellformed ICN
  ;
- i $$BADICN(icn) d  ;
+ i icn'="" i $$BADICN(icn) d  ;
  . s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Invalid ICN error. The check digits in the ICN do not match"
  . s SAMIARG("errorField")="icn"
  ;

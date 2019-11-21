@@ -1,4 +1,4 @@
-SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA,SAMIVST1,SAMIVST2 ; 4/19/19 1:57pm
+SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA,SAMIVST1,SAMIVST2 ;Oct 22, 2019@16:12
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -14,7 +14,7 @@ SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA,SAMIVST1,SAMIVST2 ; 4/19/19 1:57pm
  ;   required as the user on the server must have the
  ;   necessary Context menu(s) allowing use of the
  ;   Remote Procedure(s).
- ; Six parameters have been added to the client
+ ; Seven parameters have been added to the client
  ;   VistA to prevent the necessity of hard coding
  ;   certain values and to allow for default values for others.
  ;   SAMI PORT
@@ -24,7 +24,6 @@ SAMIUTVA ;;ven/lgc - UNIT TEST for SAMIVSTA,SAMIVST1,SAMIVST2 ; 4/19/19 1:57pm
  ;   SAMI DEFAULT STATION NUMBER
  ;   SAMI TIU NOTE PRINT NAME
  ;   SAMI DEFAULT CLINIC IEN
- ;   SAMI SYSTEM TEST PATIENT DFN
  ; Note that the user selected must have active
  ;   credentials on both the Client and Server systems
  ;   and the following Broker context menu.
@@ -63,18 +62,19 @@ START if $text(^%ut)="" write !,"*** UNIT TEST NOT INSTALLED ***" quit
  ;
 STARTUP ; Set up dfn and tiuien to use throughout testing
  ;set utdfn="dfn"_$J
- set utdfn=$$GET^XPAR("SYS","SAMI SYSTEM TEST PATIENT DFN",,"Q")
+ set utdfn=1 ; Unit test dfn patient is always 1
  set (utsuccess,tiuien)=0
- ; Set up graphstore graph on test patient
- new root set root=$$setroot^%wd("vapals-patients")
- kill @root@("graph","XXX00001")
- new SAMIUPOO do PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
- merge @root@("graph","XXX00001")=SAMIUPOO
+ D SVAPT1^SAMIUTST  ; Save VA's DFN 1 patient data
+ D LOADTPT^SAMIUTST  ; Load unit test patient data
  quit
+ ;
 SHUTDOWN ; ZEXCEPT: dfn,tiuien
  kill utdfn,tiuien,utsuccess
+ D LVAPT1^SAMIUTST  ; Return VA's DPT 1 patient's data
  quit
+ ;
 SETUP quit
+ ;
 TEARDOWN quit
  ;
 UTBLDTIU ; @TEST - Build a new TIU and Visit stub for a patient

@@ -1,4 +1,4 @@
-SAMIVUL ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 3/13/19 11:47am
+SAMIVUL ;;ven/lgc - M2M Broker to build TIU for VA-PALS ;Oct 09, 2019@17:27
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -14,7 +14,7 @@ SAMIVUL ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 3/13/19 11:47am
  ;   required as the user on the server must have the
  ;   necessary Context menu(s) allowing use of the
  ;   Remote Procedure(s).
- ; Six parameters have been added to the client
+ ; Seven parameters have been added to the client
  ;   VistA to prevent the necessity of hard coding
  ;   certain values and to allow for default values for others.
  ;   SAMI PORT
@@ -24,7 +24,6 @@ SAMIVUL ;;ven/lgc - M2M Broker to build TIU for VA-PALS ; 3/13/19 11:47am
  ;   SAMI DEFAULT STATION NUMBER
  ;   SAMI TIU NOTE PRINT NAME
  ;   SAMI DEFAULT CLINIC IEN
- ;   SAMI SYSTEM TEST PATIENT DFN
  ; Note that the user selected must have active
  ;   credentials on both the Client and Server systems
  ;   and the following Broker context menu.

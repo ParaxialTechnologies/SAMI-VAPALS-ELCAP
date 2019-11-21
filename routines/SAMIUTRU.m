@@ -1,4 +1,4 @@
-SAMIUTRU ;ven/lgc - UNIT TEST for SAMIRU ; 4/19/19 11:41am
+SAMIUTRU ;ven/lgc - UNIT TEST for SAMIRU ;Oct 28, 2019@20:38
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -27,10 +27,13 @@ START i $t(^%ut)="" w !,"*** UNIT TEST NOT INSTALLED ***" Q
  q
  ;
 STARTUP n utsuccess
+ D SVAPT1^SAMIUTST  ; Save VA's DFN 1 patient data
+ D LOADTPT^SAMIUTST  ; Load unit test patient data
  q
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
  k utsuccess
+ D LVAPT1^SAMIUTST  ; Return VA's DPT 1 patient's data
  q
  ;
  ;

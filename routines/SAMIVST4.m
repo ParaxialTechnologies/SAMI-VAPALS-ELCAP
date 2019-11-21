@@ -1,4 +1,4 @@
-SAMIVST4 ;;ven/arc/lgc - M2Broker calls for VA-PALS - ALL PTS  ;Oct 09, 2019@17:28
+SAMIVST4 ;;ven/arc/lgc - M2Broker calls for VA-PALS - ALL PTS  ;Nov 07, 2019@20:05
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -110,7 +110,7 @@ ALLPTS1(SAMISS) ; Build ^SAMIUT(SAMISS global
  ;
  ;
  ;@dmi
-MKGPH quit:'$data(^SAMIUT("ALLPTS"))
+MKGPH DOCKERquit:'$data(^SAMIUT("ALLPTS"))
  ; Make Graph Store patient-lookup global from
  ;  ^SAMIUT("ALLPTS")
  ; e.g.

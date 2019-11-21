@@ -1,4 +1,4 @@
-SAMIVST2 ;;ven/lgc - M2Broker calls for VA-PALS - PT INFO ; 7/23/19 8:20pm
+SAMIVST2 ;;ven/lgc - M2Broker calls for VA-PALS - PT INFO ;Nov 06, 2019@17:04
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -97,6 +97,10 @@ VISTSTR ;
  ;      2^dfn = and update of Graphstore successful
  ;      3^dfn = no broker calls, just transferred
  ;              'patient-lookup' data to 'vapals-patients'
+ ;    1      2         3   4   5   6     7             8           9
+ ;   DFN^PATIENT NAME^SSN^DOB^AGE^SEX^MARITAL STATUS^ACTIVE DUTY^ADDRESS1^
+ ;    10        11      12   13    14  15      16       17        18
+ ;   ADDRESS2^ADDRESS3^CITY^STATE^ZIP^COUNTY^TELEPHONE^SENSITIVE^ICN
  ;@tests
  ;  UTPTINF^SAMIUTVA
  ; Pull patient information from the server and
@@ -125,7 +129,7 @@ PTINFO ; Gather additional patient information
  do M2M^SAMIM2M(.SAMIXD,cntxt,rmprc,console,cntnopen,.SAMIARR)
  ; Update patient-lookup entry for this patient
  new root set root=$$setroot^%wd("patient-lookup")
- new name,node,gien
+DEBUG new name,node,gien
  if '(dfn=$p(SAMIXD,"^",1)) quit:$Q rslt  quit
  set rslt="1^"_dfn
  new node set node=$name(@root@("dfn",dfn))
@@ -372,4 +376,3 @@ RACE ; Return patient's race
  ;
  ;
 EOR ; End of routine SAMIVST2
-

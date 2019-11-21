@@ -1,4 +1,4 @@
-SAMIUTUR ;ven/lgc - UNIT TEST for SAMIUR,SAMIUR1,SAMIUR2 ;Oct 22, 2019@16:09
+SAMIUTUR ;ven/lgc - UNIT TEST for SAMIUR,SAMIUR1,SAMIUR2 ;Oct 29, 2019@15:36
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -30,7 +30,8 @@ START i $t(^%ut)="" w !,"*** UNIT TEST NOT INSTALLED ***" q
 STARTUP n utsuccess
  D SVAPT1^SAMIUTST  ; Save VA's DFN 1 patient data
  D LOADTPT^SAMIUTST  ; Load unit test patient data
- ; Temporarily update sidc field in siform-2018-11-13 
+ ; Temporarily update sidc field in siform-2018-11-13
+ new root s root=$$setroot^%wd("vapals-patients")
  s @root@("graph","XXX00001","siform-2018-11-13","sidc")=$P($$HTE^XLFDT($H,5),"@")
  q
  ;
@@ -95,8 +96,9 @@ UTWSRPT ; @TEST - generate a report based on parameters in filter
  ;
 UTSELCT ; @TEST - selects patient for the report
  ;select(pats,type)
- n SAMIUPATS,SAMITYPE,SAMIUDPHR,unplus30,unminus30,unowdate,udtphrase,SAMIUPOO
- n root s root=$$setroot^%wd("vapals-patients")
+ n SAMIUPATS,SAMITYPE,SAMIUDPHR,SAMIUPOO
+ n unplus30,unminus30,unowdate,udtphrase,root
+ s root=$$setroot^%wd("vapals-patients")
  ;
  s unplus30=$P($$FMTE^XLFDT($$FMADD^XLFDT($$HTFM^XLFDT($H),31),5),"@")
  s unminus30=$P($$FMTE^XLFDT($$FMADD^XLFDT($$HTFM^XLFDT($H),-31),5),"@")
@@ -136,7 +138,7 @@ UTSELCT ; @TEST - selects patient for the report
  ;
  k SAMIUPATS
  s SAMITYPE="activity",SAMIUDPHR=""
- s udtphrase=" after "_unminus30
+ s udtphrase=" as of "_unowdate
  d SELECT^SAMIUR(.SAMIUPATS,SAMITYPE,.SAMIUDPHR)
  s utsuccess=(SAMIUDPHR=udtphrase)
  i utsuccess,$d(SAMIUPATS) d

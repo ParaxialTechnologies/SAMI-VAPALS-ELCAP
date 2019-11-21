@@ -1,4 +1,4 @@
-SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICASE,SAMICAS2,SAMICAS3 ;Oct 28, 2019@20:43
+SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICASE,SAMICAS2,SAMICAS3 ;Oct 30, 2019@15:44
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -298,48 +298,54 @@ UTNFPST ; @TEST - post new form selection (post service)
  ;   "itform"
  ;
  s SAMIUARGS("form")="ceform"
+ s newform=$O(@root@("graph","XXX00001","ceforms"),-1)
  d WSNFPOST^SAMICASE(.SAMIUARGS,.SAMIUBODY,.SAMIURSLT)
- s newform=$O(@root@("graph","XXX00001","ceform-2018-10-21"))
+ s newform=$O(@root@("graph","XXX00001",newform))
  s utsuccess=(newform["ceform")
  ; now kill the extra form just built
  k @root@("graph","XXX00001",newform)
  d CHKEQ^%ut(utsuccess,1,"Testing post ceform FAILED!")
  ;
  s SAMIUARGS("form")="sbform"
+ s newform=$O(@root@("graph","XXX00001","sbforms"),-1)
  d WSNFPOST^SAMICASE(.SAMIUARGS,.SAMIUBODY,.SAMIURSLT)
- s newform=$O(@root@("graph","XXX00001","sbform-2018-10-21"))
+ s newform=$O(@root@("graph","XXX00001",newform))
  s utsuccess=(newform["sbform")
  ; now kill the extra form just built
  k @root@("graph","XXX00001",newform)
  d CHKEQ^%ut(utsuccess,1,"Testing post sbform FAILED!")
  ;
  s SAMIUARGS("form")="fuform"
+ s newform=$O(@root@("graph","XXX00001","fuforms"),-1)
  d WSNFPOST^SAMICASE(.SAMIUARGS,.SAMIUBODY,.SAMIURSLT)
- s newform=$O(@root@("graph","XXX00001","fuform-2018-10-21"))
+ s newform=$O(@root@("graph","XXX00001",newform))
  s utsuccess=(newform["fuform")
  ; now kill the extra form just built
  k @root@("graph","XXX00001",newform)
  d CHKEQ^%ut(utsuccess,1,"Testing post fuform FAILED!")
  ;
  s SAMIUARGS("form")="bxform"
+ s newform=$O(@root@("graph","XXX00001","bxforms"),-1)
  d WSNFPOST^SAMICASE(.SAMIUARGS,.SAMIUBODY,.SAMIURSLT)
- s newform=$O(@root@("graph","XXX00001","bxform-2018-10-21"))
+ s newform=$O(@root@("graph","XXX00001",newform))
  s utsuccess=(newform["bxform")
  ; now kill the extra form just built
  k @root@("graph","XXX00001",newform)
  d CHKEQ^%ut(utsuccess,1,"Testing post bxform FAILED!")
  ;
  s SAMIUARGS("form")="ptform"
+ s newform=$O(@root@("graph","XXX00001","ptforms"),-1)
  d WSNFPOST^SAMICASE(.SAMIUARGS,.SAMIUBODY,.SAMIURSLT)
- s newform=$O(@root@("graph","XXX00001","ptform-2018-10-21"))
+ s newform=$O(@root@("graph","XXX00001",newform))
  s utsuccess=(newform["ptform")
  ; now kill the extra form just built
  k @root@("graph","XXX00001",newform)
  d CHKEQ^%ut(utsuccess,1,"Testing post ptform FAILED!")
  ;
  s SAMIUARGS("form")="itform"
+ s newform=$O(@root@("graph","XXX00001","itforms"),-1)
  d WSNFPOST^SAMICASE(.SAMIUARGS,.SAMIUBODY,.SAMIURSLT)
- s newform=$O(@root@("graph","XXX00001","itform-2018-10-21"))
+ s newform=$O(@root@("graph","XXX00001",newform))
  s utsuccess=(newform["itform")
  ; now kill the extra form just built
  k @root@("graph","XXX00001",newform)

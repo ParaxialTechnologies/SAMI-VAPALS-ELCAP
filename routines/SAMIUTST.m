@@ -1,4 +1,4 @@
-SAMIUTST ;ven/lgc - Unit Test Utilities ;Oct 28, 2019@18:47
+SAMIUTST ;ven/lgc - Unit Test Utilities ;Oct 29, 2019@20:34
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -274,13 +274,13 @@ LOADTPT ;Load Unit Test patient into patient-lookup and vapals-patients
  set plgien=$order(@rootpl@("dfn",1,0)) quit:'(plgien>0) 
  ;
  ; Kill any existing dfn 1 cross references
- do KDFN1XRF(rootpl,plgien)
+ do KDFN1XRF^SAMIUTST(rootpl,plgien)
  ;
  ; Pull Test patient into "patient-lookup" graph
  merge @rootpl@(plgien)=plpoo
  ;
  ; Reset the cross references
- do SDFN1XRF(.plpoo,.vppoo,plgien) 
+ do SDFN1XRF^SAMIUTST(.plpoo,.vppoo,plgien) 
  ;
  ; kill existing dfn 1 data in "vapals-patients" graph
  s sid=$get(@rootvp@(1,"sisid"))
@@ -300,7 +300,7 @@ LOADTPT ;Load Unit Test patient into patient-lookup and vapals-patients
  kill vppoo(1,"graph")
  merge @rootvp@(1)=vppoo(1)
  ; set necessary new cross-references
- set:'($get(vppoo("sisid"))="") @rootvp@("sid",vppoo(1,"sisid"),1)=""
+ set:'($get(vppoo(1,"sisid"))="") @rootvp@("sid",vppoo(1,"sisid"),1)=""
  ;
  quit
  ;

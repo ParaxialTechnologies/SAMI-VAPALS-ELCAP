@@ -1,4 +1,4 @@
-SAMIUTH4 ;ven/lgc - UNIT TEST for SAMIHOM3,SAMIHOM4 continued; 5/1/19 10:25am ; 6/28/19 9:00pm
+SAMIUTH4 ;ven/lgc - UNIT TEST for SAMIHOM3,SAMIHOM4 continued; 5/1/19 10:25am ;Oct 22, 2019@15:39
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -11,14 +11,13 @@ START if $text(^%ut)="" write !,"*** UNIT TEST NOT INSTALLED ***" quit
  ; ===================== UNIT TESTS =====================
  ;
 STARTUP new utsuccess
- new root set root=$$setroot^%wd("vapals-patients")
- kill @root@("graph","XXX00001")
- new SAMIUPOO do PLUTARR^SAMIUTST(.SAMIUPOO,"all XXX00001 forms")
- merge @root@("graph","XXX00001")=SAMIUPOO
+ D LVAPT1^SAMIUTST  ; Return VA's DPT 1 patient's data
+ D LVAPT1^SAMIUTST  ; Return VA's DPT 1 patient's data
  quit
  ;
 SHUTDOWN ; ZEXCEPT: utsuccess
  kill utsuccess
+ D LVAPT1^SAMIUTST  ; Return VA's DPT 1 patient's data
  quit
  ;
  ;

@@ -1,4 +1,4 @@
-SAMITIU ;SAMI/lgc/arc - HL7 PATIENT LIST TIU processing for VAPALS ;Oct 09, 2019@18:13
+SAMITIU ;SAMI/lgc/arc - HL7 PATIENT LIST TIU processing for VAPALS ;Oct 17, 2019@16:19
  ;;18.0;SAMI;
  ;
  quit  ; no entry from top
@@ -26,7 +26,7 @@ EN ;
  I $G(HL("MTP"))=1 Q
  ;
  ; Send ACK message
-ACK D ACK^SAMIHL7
+ACK D:'($get(%ut)) ACK^SAMIHL7
  ;
  Q
  ;

@@ -1,4 +1,4 @@
-SAMIUTST ;ven/lgc - Unit Test Utilities ; 7/2/19 8:15pm
+SAMIUTST ;ven/lgc - Unit Test Utilities ;Oct 29, 2019@20:34
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -72,11 +72,11 @@ PLUTARR(arr,title) ;
  n gien s gien=$$GETGIEN(root,title)
  ; pull data
  m arr=@root@(gien)
- ; Now fix AGE using DOB
- n cnt set cnt=0
- for  set cnt=$order(arr(cnt)) quit:'cnt  do
- . if arr(cnt)["DOB",arr(cnt)["AGE" do
- . set arr(cnt)=$$FIXAGE^SAMIUTST(arr(cnt))
+ ; Now fix AGE using DOB when retrieving certain HTML segements
+ n node s node=$na(arr)
+ for  set node=$Q(@node) q:node=""  do
+ . if node["DOB",node["AGE" do
+ .. set @node=$$FIXAGE^SAMIUTST(@node)
  q
  ;
  ;Enter
@@ -159,6 +159,193 @@ FIXAGE(SAMISTR) ;
  set strg=strg_$piece($piece(SAMISTR,"AGE:",2)," ",3,999)
  quit strg
  ;
+ ;
+ ;@ppi
+SVAPT1 ;Save all VA dfn 1 patient-lookup and vapals-patients data
+ ;@input
+ ;  none
+ ;@output
+ ;  files - all dfn 1 patient data in patient-lookup and
+ ;          vapals-patients - IF this information is different
+ ;          than the stored test patient dfn 1 - into
+ ;          SitesPLpatient1Data and SitesVPpatient1Data
+ ;  NOTE: This simply saves the information on the VA's
+ ;        dfn 1 patient.  We do not change any data
+ ;        in the graphs, nor do we update any cross-references
+ ;
+ ;Find dfn 1 patient in patient-lookup
+ ;
+ new plgien,vpgien,rootpl,rootvp,plpoo,vppoo,sid
+ set rootpl=$$setroot^%wd("patient-lookup")
+ set plgien=$order(@rootpl@("dfn",1,0)) quit:'(plgien>0) 
+ ;if dfn 1 is our test patient then bail out
+ quit:$data(@rootpl@("icn","50001000V910386",plgien))
+ merge plpoo=@rootpl@(plgien)
+ do SVUTARR^SAMIUTST(.plpoo,"SitesPLpatient1Data")
+ ;
+ ;Now find dfn 1 patient in vapals-patients
+ ;
+ set rootvp=$$setroot^%wd("vapals-patients")
+ set sid=$get(@rootvp@(1,"sisid"))
+ set vppoo(1,"dfn")=0
+ ; If this isn't our Test patient SID save
+ ;   the dfn 1 entry in vapals-patients in array  
+ if '(sid="XXX00001") do
+ . merge vppoo(1)=@rootvp@(1)
+ .; Now if there is an 
+ . if '(sid=""),$data(@rootvp@("graph",sid)) do
+ .. merge vppoo(1,"graph")=@rootvp@("graph",sid)
+ do SVUTARR^SAMIUTST(.vppoo,"SitesVPpatient1Data") 
+ ;
+ quit
+ ;
+ ;          
+ ;@ppi
+LVAPT1 ;Load all patient-lookup and vapals-patients data on VA dfn 1 
+ ;@input
+ ;  none
+ ;@output
+ ;  loads all data from SitesPLpatient1Data and SitesVPpatient1Data
+ ;    back into patient-lookup and vapals-patients graphs
+ ;  AND kills and sets necessary cross-references
+ ;    rootpl (dfn,icn,last5,name,saminame,sinamef,sinamel,ssn)
+ ;    rootvp (dfn,graph,sid)
+ ;  NOTE: Any existing dfn 1 patient information, including
+ ;        cross-references are killed and replaced with
+ ;        the VA's dfn 1 patient information
+ ;
+ new plgien,vpgien,rootpl,rootvp,plpoo,vppoo,sid
+ ; Pull previously saved VA dfn 1 patient information
+ do PLUTARR^SAMIUTST(.plpoo,"SitesPLpatient1Data")
+ do PLUTARR^SAMIUTST(.vppoo,"SitesVPpatient1Data")
+ ;
+ set rootpl=$$setroot^%wd("patient-lookup")
+ set rootvp=$$setroot^%wd("vapals-patients")
+ set plgien=$order(@rootpl@("dfn",1,0)) quit:'(plgien>0) 
+ ;
+ ; kill existing dfn 1 information in patient-lookup
+ ;   then merge what had been saved in "SitesPLpatient1Data"
+ kill @rootpl@(plgien)
+ merge @rootpl@(plgien)=plpoo
+ ;
+ ; kill existing data in vapals-patients then merge
+ ;   what had been saved in "SitesVPpatient1Data"
+ set sid=$get(vppoo(1,"sisid"))
+ kill:'(sid="") @rootvp@("graph",sid)
+ merge:'(sid="") @rootvp@("graph",sid)=vppoo(1,"graph")
+ ;
+ ; Kill all information in vapals-patients on dfn 1 patient
+ ;
+ kill @rootvp@(1)
+ ;
+ ; Now delete any form information from our array
+ ;   leaving only the dfn 1 patient information
+ kill vppoo(1,"graph")
+ merge @rootvp@(1)=vppoo(1)
+ ; 
+ ; kill all pre-existing cross references in case
+ D KDFN1XRF(rootpl,plgien)
+ ;
+ ; Now set all cross references
+ D SDFN1XRF(.plpoo,.vppoo,plgien)
+ ;
+ if '($get(plpoo("sisid"))="") do
+ . set @rootvp@("sid",vppoo(1,"sisid"),plgien)=""
+ ;
+ quit
+ ;
+ ;
+ ;@ppi
+LOADTPT ;Load Unit Test patient into patient-lookup and vapals-patients 
+ ;@input
+ ;  none
+ ;@output
+ ;  loads all data from TestPLpatient1Data and TestVPpatient1Data
+ ;    into patient-lookup and vapals-patients graphs
+ ;  AND sets necessary cross-references
+ ;    rootpl (dfn,icn,last5,name,saminame,sinamef,sinamel,ssn)
+ ;    rootvp (dfn,graph,sid)
+ new plgien,vpgien,rootpl,rootvp,plpoo,vppoo,sid
+ do PLUTARR^SAMIUTST(.plpoo,"TestPLpatient1Data")
+ do PLUTARR^SAMIUTST(.vppoo,"TestVPpatient1Data")
+ ;
+ set rootpl=$$setroot^%wd("patient-lookup")
+ set rootvp=$$setroot^%wd("vapals-patients")
+ set plgien=$order(@rootpl@("dfn",1,0)) quit:'(plgien>0) 
+ ;
+ ; Kill any existing dfn 1 cross references
+ do KDFN1XRF^SAMIUTST(rootpl,plgien)
+ ;
+ ; Pull Test patient into "patient-lookup" graph
+ merge @rootpl@(plgien)=plpoo
+ ;
+ ; Reset the cross references
+ do SDFN1XRF^SAMIUTST(.plpoo,.vppoo,plgien) 
+ ;
+ ; kill existing dfn 1 data in "vapals-patients" graph
+ s sid=$get(@rootvp@(1,"sisid"))
+ if '(sid="") do
+ . kill @rootvp@("graph",sid)
+ . kill @rootvp@("sid",sid)
+ ; Now kill the dfn 1 entry in vapals-patients
+ kill @rootvp@(1)
+ ;
+ ; Kill any existing Test patient forms too as
+ ;  there may have been changes since the last upload
+ kill @rootvp@("graph","XXX00001")
+ ;
+ ; Build Test patient entry in "vapals-patients" graph
+ merge @rootvp@("graph","XXX00001")=vppoo(1,"graph")
+ ; kill the forms part of the Test patient array
+ kill vppoo(1,"graph")
+ merge @rootvp@(1)=vppoo(1)
+ ; set necessary new cross-references
+ set:'($get(vppoo(1,"sisid"))="") @rootvp@("sid",vppoo(1,"sisid"),1)=""
+ ;
+ quit
+ ;
+ ;
+ ;@ppi
+SDFN1XRF(plpoo,vppoo,plgien) ; Set DFN 1 patient cross-references
+ ;input
+ ;   plpoo   = array by reference with patient-lookup data
+ ;   vppoo   = array by reference with vapals-patients data
+ ;   plgien  = IEN into patient-lookup for dfn 1 patient
+ ;output
+ ;   sets various cross references in "patient-lookup" graph
+ new rootpl,rootvp
+ set rootpl=$$setroot^%wd("patient-lookup")
+ set rootvp=$$setroot^%wd("vapals-patients")
+ quit:'$data(plpoo) 
+ quit:'$get(plgien)
+ new xstr
+ set xstr="icn/last5/saminame/sinamel/sinamef/ssn/"
+ new ss set ss=""
+ for  set ss=$order(plpoo(ss)) quit:(ss="")  do
+ . quit:($get(plpoo(ss))="")
+ . if xstr[ss do
+ ..;
+ .. if ss="saminame" do  quit
+ ... set @rootpl@(ss,plpoo(ss),plgien)=""
+ ... set @rootpl@("name",plpoo(ss),plgien)=""
+ ... set @rootpl@("name",$$UP^XLFSTR(plpoo(ss)),plgien)=""
+ ..;
+ .. set @rootpl@(ss,plpoo(ss),plgien)=""
+ quit
+ ;
+ ;
+ ;@ppi
+KDFN1XRF(rootpl,plgien) ; Kill dfn 1 cross references in patient-lookup
+ quit:($get(rootpl)="")  quit:'$get(plgien)
+ new node,snode,xref
+ for xref="icn","last5","saminame","name","sinamef","sinamel","ssn" do
+ . set node=$na(@rootpl@(xref)),snode=$p(node,")")
+ . for  set node=$Q(@node) q:(node'[snode)  do
+ .. if $QS(node,5)=plgien kill @node
+ quit
+ ;
+ ;
+ ;
 UTFIXAGE ; @TEST - Test that age is corrected according to dob
  n poo,age
  s poo="444-67-8924 DOB: 7/8/1956 AGE: 23 GENDER: M"
@@ -211,7 +398,7 @@ UTSTGS ; @TEST - Save array to vapals unit tests graphstore
  q
  ;
 UTSVTSTP ; @TEST - Push a copy of test patient into vapals unit tests
- n dfn s dfn=$$GET^XPAR("SYS","SAMI SYSTEM TEST PATIENT DFN",,"Q")
+ n dfn s dfn=1 ; Unit test patient dfn
  n title s title="myunittest"
  ; kill entry if already existed
  n rootut s rootut=$$setroot^%wd("vapals unit tests")

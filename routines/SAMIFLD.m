@@ -1,4 +1,4 @@
-SAMIFLD ;ven/gpl - elcap: form load & case review support ; 2019-08-01T15:42Z
+SAMIFLD ;ven/gpl - elcap: form load & case review support ;Oct 22, 2019@15:36
  ;;18.0;SAMI;;
  ;
  ; Routine SAMIFLD contains subroutines for processing the ELCAP forms,
@@ -481,25 +481,6 @@ GETSSN ; ssn for patient sid
  . quit
  ;
  quit pssn ; end of $$GETSSN^SAMIFORM
- ;
-GETPRFX ; Retrieve study ID prefix from parameter file
- ;@signature
- ; $$GETPRFX^SAMIFORM()
- ;@branches-from
- ; GETPRFX^SAMIFORM
- ;@ppi-called-by
- ; WSCASE^SAMICAS2
- ;@calls
- ; $$GET^XPAR
- ;@output = patient's ssn
- ;@tests
- ; None yet
- ;
- new prefix
- set prefix=$$GET^XPAR("SYS","SAMI SID PREFIX",,"Q")
- if $get(prefix)="" set prefix="UNK"
- ;
- quit prefix ; End of $$GETPRFX^SAMIFORM
  ;
 GETPRFX ; Retrieve study ID prefix from parameter file
  ;@signature

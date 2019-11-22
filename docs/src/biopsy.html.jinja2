@@ -241,6 +241,8 @@
                 </div>
             </div>
 
+            {% include '_nodule-grid.jinja2' %}
+
             <hr/>
             <div class="pull-left">
                 <input type="hidden" name="samistatus" value=""/>
@@ -361,7 +363,7 @@
         }
 
         $(function () {
-            createFormValidator();
+            const fv = createFormValidator();
 
             //Biopsy
             $("[name='bxp']").conditionallyDisplay({enable: $("#bxp-container")}); //entire form
@@ -383,6 +385,8 @@
                     return actualValue !== "";
                 }, enable: "#rbmto-container"
             });
+
+            initNoduleGrid(fv);
         });
 
 

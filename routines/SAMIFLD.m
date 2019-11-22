@@ -211,6 +211,37 @@ LOAD ; process html line, e.g., load json data into graph
  . . set zhtml(zien)=@clog@(zi)
  . set zhtml(SAMILNUM_"."_$$xpand($order(@clog@(""),-1)+1))="</pre>"
  ;
+ ;if form["fuform" d  ;
+ i SAMILINE["pack-years-history" d  ;
+ . d  ;
+ . . i SAMILINE'["id" q  ;
+ . . n zzi s zzi=SAMILNUM
+ . . f  s zzi=$o(SAMIHTML(zzi)) q:zzi>(SAMILNUM+20)  q:SAMIHTML(zzi)["tbody"  d
+ . . . s SAMIHTML(zzi)=SAMIHTML(zzi)_$char(13,10)
+ . . ;s SAMIHTML(zzi)="<tbody>"_$$SHDET^SAMIUR2(sid)
+ . . s SAMILNUM=zzi+1
+ . . s SAMILINE=$$SHDET^SAMIUR2(sid,form)_"</tbody>"
+ ;
+ i SAMILINE["@@ERROR_MESSAGE@@" d  ;
+ . n errMsg s errMsg=$get(SAMIVALS("errorMessage"))
+ . if errMsg="" q  ; no error message
+ . do findReplace^%ts(.SAMILINE,"@@ERROR_MESSAGE@@",errMsg)
+ ;
+ i SAMILINE["@@ERROR_FIELDS@@" d  ;
+ . n errFld s errFld=$get(SAMIVALS("errorField"))
+ . if errFld="" q  ; no error field
+ . do findReplace^%ts(.SAMILINE,"@@ERROR_FIELDS@@",errFld)
+ ;
+ i SAMILINE["@@INFO_MESSAGE@@" d  ;
+ . n infoMsg s infoMsg=$get(SAMIVALS("infoMessage"))
+ . if infoMsg="" q  ; no message
+ . do findReplace^%ts(.SAMILINE,"@@INFO_MESSAGE@@",infoMsg)
+ ;
+ i SAMILINE["@@WARN_MESSAGE@@" d  ;
+ . n warnMsg s warnMsg=$get(SAMIVALS("warnMessage"))
+ . if warnMsg="" q  ; no message
+ . do findReplace^%ts(.SAMILINE,"@@WARN_MESSAGE@@",warnMsg)
+ ;
  quit  ; end of ppi LOAD^SAMIFORM
  ;
 xpand(zi) ; extrinsic that expands a number to 8 digits with preceeding 0

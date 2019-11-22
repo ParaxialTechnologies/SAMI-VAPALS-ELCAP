@@ -143,10 +143,216 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  ;
  i route="report" d  q  ; 
  . m SAMIARG=vars
- . d WSREPORT^SAMIUR(.SAMIRESULT,.SAMIARG)
+ . d WSREPORT^SAMIUR(.SAMIRESULT,.vars)
  ;
+ i route="addperson" d  q  ;
+ . m SAMIARG=vars
+ . n form
+ . s form="vapals:addperson"
+ . d RTNPAGE^SAMIHOM4(.SAMIRESULT,form,.SAMIARG) q  ;
+ ;
+ i route="editperson" d  q  ;
+ . m SAMIARG=vars
+ . n sid s sid=$g(vars("studyid")) ; must have a sid
+ . i sid="" d  q  ;
+ . . d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home 
+ . n sien s sien=$$SID2NUM^SAMIHOM3(sid)
+ . i sien="" d  q  ;
+ . . d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home 
+ . n root s root=$$setroot^%wd("vapals-patients")
+ . s vars("saminame")=$g(@root@(sien,"saminame"))
+ . s vars("dob")=$g(@root@(sien,"dob"))
+ . s vars("sbdob")=$g(@root@(sien,"dob"))
+ . s vars("gender")=$g(@root@(sien,"gender"))
+ . s vars("sex")=$g(@root@(sien,"sex"))
+ . s vars("icn")=$g(@root@(sien,"icn"))
+ . s vars("ssn")=$g(@root@(sien,"ssn"))
+ . s vars("last5")=$g(@root@(sien,"last5"))
+ . s vars("dfn")=$g(@root@(sien,"dfn"))
+ . m SAMIARG=vars
+ . n form,err,zhtml
+ . s form="vapals:addperson"
+ . d RTNPAGE^SAMIHOM4(.SAMIRESULT,form,.SAMIARG) q  ;
+ ;
+ i route="register" d  q  ;
+ . m SAMIARG=vars
+ . d REG^SAMIHOM4(.SAMIRESULT,.SAMIARG)
+ ; 
  quit  ; End of WSVAPALS
  ;
+ ;
+REG(SAMIRTN,SAMIARG) ; manual registration
+ ;
+ m ^gpl("reg")=SAMIARG
+ n ssn s ssn=SAMIARG("ssn")
+ s ssn=$tr(ssn,"-")
+ s SAMIARG("errorMessage")=""
+ s SAMIARG("errorField")=""
+ ; test for duplicate ssn
+ ;
+ i $$DUPSSN(ssn) d  ;
+ . ;s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate SSN."
+ . s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate SSN error. A person with that SSN is already entered in the system."
+ . s SAMIARG("errorField")="ssn"
+ ;
+ ; test for duplicate icn
+ ;
+ n icn s icn=$g(SAMIARG("icn"))
+ i icn'="" i $$DUPICN(icn) d  ;
+ . s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate ICN error. A person with that ICN is already entered in the system."
+ . s SAMIARG("errorField")="icn"
+ ;
+ ; test for wellformed ICN
+ ;
+ i icn'="" i $$BADICN(icn) d  ;
+ . s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Invalid ICN error. The check digits in the ICN do not match"
+ . s SAMIARG("errorField")="icn"
+ ;
+ ; if there is an error, send back to edit with error message
+ i $g(SAMIARG("errorMessage"))'="" d  q  ;
+ . n form
+ . s form="vapals:addperson"
+ . d RTNERR(.SAMIRESULT,form,.SAMIARG)
+ ;
+ n root s root=$$setroot^%wd("patient-lookup")
+ n proot s proot=$$setroot^%wd("vapals-patients")
+ n ptlkien s ptlkien=""
+ n sid s sid=$g(SAMIARG("studyid"))
+ n dfn s dfn=""
+ n sien s sien=""
+ i sid'="" d  ; this is an edit
+ . s sien=$$SID2NUM^SAMIHOM3(sid)
+ . s dfn=$g(@proot@(sien,"dfn"))
+ . s pklkien=$o(@root@("dfn",dfn,"")) ; patient lookup ien
+ i ptlkien="" s ptlkien=$o(@root@("AAAAAA"),-1)+1
+ n name s name=$g(SAMIARG("name"))
+ s @root@(ptlkien,"saminame")=name
+ s @root@(ptlkien,"sinamef")=$p(name,",",1)
+ s @root@(ptlkien,"sinamel")=$p(name,",",2)
+ n fmdob s fmdob=$$FMDT^SAMIUR2(SAMIARG("dob"))
+ n ptlkdob s ptlkdob=$$FMTE^XLFDT(fmdob,7)
+ s ptlkdob=$TR(ptlkdob,"/","-")
+ s @root@(ptlkien,"dob")=ptlkdob
+ s @root@(ptlkien,"sbdob")=ptlkdob
+ n gender s gender=SAMIARG("gender")
+ s @root@(ptlkien,"gender")=$s(gender="M":"M^MALE",1:"F^FEMALE")
+ s @root@(ptlkien,"sex")=SAMIARG("gender")
+ s @root@(ptlkien,"icn")=SAMIARG("icn")
+ s @root@(ptlkien,"ssn")=ssn
+ n last5 s last5=$$UCASE($e(name,1))_$e(ssn,6,9)
+ s @root@(ptlkien,"last5")=last5
+ ;n dfn
+ s dfn=$o(@root@("dfn"," "),-1)+1
+ i dfn<9000001 s dfn=9000001
+ s @root@(ptlkien,"dfn")=dfn
+ d INDXPTLK(ptlkien)
+ s SAMIFILTER("samiroute")="addperson"
+ d SETINFO(.SAMIFILTER,name_" was successfully entered")
+ ;d SETWARN(.SAMIFILTER,"We might want to give you a warning")
+ do WSVAPALS^SAMIHOM3(.SAMIFILTER,.SAMIARG,.SAMIRESULT)
+ q
+ ;
+DUPSSN(ssn) ; extrinsic returns true if duplicate ssn
+ n proot s proot=$$setroot^%wd("patient-lookup")
+ i $d(@proot@("ssn",ssn)) q 1
+ q 0
+ ;
+DUPICN(icn) ; extrinsic returns true if duplicate icn
+ n proot s proot=$$setroot^%wd("patient-lookup")
+ n tmpicn s tmpicn=$p(icn,"V",1)
+ i $d(@proot@("icn",icn)) q 1
+ i $d(@proot@("icn",tmpicn)) q 1
+ q 0
+ ;
+BADICN(icn) ; extrinsic returns true if ICN checkdigits are wrong
+ n zchk s zchk=$p(icn,"V",2)
+ n zicn s zicn=$p(icn,"V",1)
+ q:zchk="" 1
+ i zchk'=$$CHECKDG^MPIFSPC(zicn) q 1
+ q 0
+ ;
+SETINFO(vars,msg) ; set the information message text
+ ; vars are the screen variables passed by reference
+ s vars("infoMessage")=msg
+ q
+ ;
+SETWARN(vars,msg) ; set warning message text
+ ; vars are the screen variables passed by reference
+ s vars("warnMessage")=msg
+ q
+ ; 
+RTNERR(rtn,form,vals,msg,fld) ; redisplays a page with an error message
+ ; rtn is the return array
+ ; form is the form the page requires
+ ; vals are the values for the page. passed by reference
+ ; msg is the error message to be displayed
+ ; fld is the name of the field where the cursor should be put
+ ;
+ n zhtml ; work area for the tempate
+ d SAMIHTM^%wf(.zhtml,form,.err)
+ d MERGEHTM^%wf(.zhtml,.vals,.err)
+ m SAMIRESULT=zhtml
+ set HTTPRSP("mime")="text/html" ; set mime type
+ q
+ ;
+RTNPAGE(rtn,form,vals) ; displays a page
+ ; rtn is the return array
+ ; form is the form the page requires
+ ; vals are the values for the page. passed by reference
+ ;
+ n err
+ n zhtml ; work area for the tempate
+ d SAMIHTM^%wf(.zhtml,form,.err)
+ d MERGEHTM^%wf(.zhtml,.vals,.err)
+ m SAMIRESULT=zhtml
+ set HTTPRSP("mime")="text/html" ; set mime type
+ q
+ ;
+REINDXPL ; reindex patient lookup
+ n root s root=$$setroot^%wd("patient-lookup")
+ n zi s zi=0
+ k @root@("ssn")
+ k @root@("name")
+ k @root@("last5")
+ k @root@("sinamef")
+ k @root@("sinamel")
+ k @root@("icn")
+ f  s zi=$o(@root@(zi)) q:+zi=0  d  ;
+ . d INDXPTLK(zi)
+ q
+ ;
+INDXPTLK(ien) ; generate index entries in patient-lookup graph
+ ; for entry ien
+ n proot set proot=$$setroot^%wd("patient-lookup")
+ n name s name=$g(@proot@(ien,"saminame"))
+ s @proot@("name",name,ien)=""
+ n ucname s ucname=$$UCASE(name)
+ s @proot@("name",ucname,ien)=""
+ n x
+ s x=$g(@proot@(ien,"dfn")) w !,x
+ s:x'="" @proot@("dfn",x,ien)=""
+ s x=$g(@proot@(ien,"last5")) w !,x
+ s:x'="" @proot@("last5",x,ien)=""
+ s x=$g(@proot@(ien,"icn")) w !,x
+ i x'["V" d  ;
+ . n chk s chk=$$CHECKDG^MPIFSPC(x)
+ . s @proot@(ien,"icn")=x_"V"_chk
+ . s x=x_"V"_chk
+ s:x'="" @proot@("icn",x,ien)=""
+ s x=$g(@proot@(ien,"ssn")) w !,x
+ s:x'="" @proot@("ssn",x,ien)=""
+ s x=$g(@proot@(ien,"sinamef")) w !,x
+ s:x'="" @proot@("sinamef",x,ien)=""
+ s x=$g(@proot@(ien,"sinamel")) w !,x
+ s:x'="" @proot@("sinamel",x,ien)=""
+ set @proot@("Date Last Updated")=$$HTE^XLFDT($horolog)
+ q
+ ;
+UCASE(STR) ; extrinsic returns uppercase of STR
+ N X,Y
+ S X=STR
+ X ^%ZOSF("UPPERCASE")
+ q Y
  ;
 DEVHOME ; temporary home page for development
  ; DEVHOME^SAMIHOM3(SAMIRTN,SAMIFILTER) goto DEVHOME^SAMIHOM4

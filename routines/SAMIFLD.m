@@ -1,4 +1,4 @@
-SAMIFLD ;ven/gpl - elcap: form load & case review support ; 2019-08-01T15:42Z
+SAMIFLD ;ven/gpl - elcap: form load & case review support ;Oct 22, 2019@15:36
  ;;18.0;SAMI;;
  ;
  ; Routine SAMIFLD contains subroutines for processing the ELCAP forms,
@@ -221,6 +221,26 @@ LOAD ; process html line, e.g., load json data into graph
  . . ;s SAMIHTML(zzi)="<tbody>"_$$SHDET^SAMIUR2(sid)
  . . s SAMILNUM=zzi+1
  . . s SAMILINE=$$SHDET^SAMIUR2(sid,form)_"</tbody>"
+ ;
+ i SAMILINE["@@ERROR_MESSAGE@@" d  ;
+ . n errMsg s errMsg=$get(SAMIVALS("errorMessage"))
+ . if errMsg="" q  ; no error message
+ . do findReplace^%ts(.SAMILINE,"@@ERROR_MESSAGE@@",errMsg)
+ ;
+ i SAMILINE["@@ERROR_FIELDS@@" d  ;
+ . n errFld s errFld=$get(SAMIVALS("errorField"))
+ . if errFld="" q  ; no error field
+ . do findReplace^%ts(.SAMILINE,"@@ERROR_FIELDS@@",errFld)
+ ;
+ i SAMILINE["@@INFO_MESSAGE@@" d  ;
+ . n infoMsg s infoMsg=$get(SAMIVALS("infoMessage"))
+ . if infoMsg="" q  ; no message
+ . do findReplace^%ts(.SAMILINE,"@@INFO_MESSAGE@@",infoMsg)
+ ;
+ i SAMILINE["@@WARN_MESSAGE@@" d  ;
+ . n warnMsg s warnMsg=$get(SAMIVALS("warnMessage"))
+ . if warnMsg="" q  ; no message
+ . do findReplace^%ts(.SAMILINE,"@@WARN_MESSAGE@@",warnMsg)
  ;
  quit  ; end of ppi LOAD^SAMIFORM
  ;
@@ -461,25 +481,6 @@ GETSSN ; ssn for patient sid
  . quit
  ;
  quit pssn ; end of $$GETSSN^SAMIFORM
- ;
-GETPRFX ; Retrieve study ID prefix from parameter file
- ;@signature
- ; $$GETPRFX^SAMIFORM()
- ;@branches-from
- ; GETPRFX^SAMIFORM
- ;@ppi-called-by
- ; WSCASE^SAMICAS2
- ;@calls
- ; $$GET^XPAR
- ;@output = patient's ssn
- ;@tests
- ; None yet
- ;
- new prefix
- set prefix=$$GET^XPAR("SYS","SAMI SID PREFIX",,"Q")
- if $get(prefix)="" set prefix="UNK"
- ;
- quit prefix ; End of $$GETPRFX^SAMIFORM
  ;
 GETPRFX ; Retrieve study ID prefix from parameter file
  ;@signature

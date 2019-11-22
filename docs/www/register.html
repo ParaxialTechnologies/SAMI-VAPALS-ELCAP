@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+  <meta content="2019.11.15" name="version"/>
+  <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
+  <title>
+   Register
+  </title>
+  <link href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+  <link href="lib/formvalidation/dist/css/formValidation.min.css" rel="stylesheet"/>
+  <link href="lib/bootstrap-datetimepicker-4.17.47/css/bootstrap-datetimepicker.css" rel="stylesheet"/>
+  <link href="vapals.css" rel="stylesheet"/>
+  <link href="lib/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet"/>
+  <link href="lib/jquery-ui-1.12.1/jquery-ui.structure.min.css" rel="stylesheet"/>
+  <link href="lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
+  <link href="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
+ </head>
+ <body id="body" style="position: relative;">
+  <script src="lib/es6-shim.js">
+  </script>
+  <script src="lib/jquery-3.3.1.min.js">
+  </script>
+  <script src="lib/jquery-ui-1.12.1/jquery-ui.min.js">
+  </script>
+  <script src="lib/popper.min.js">
+  </script>
+  <script src="lib/bootstrap-3.3.7-dist/js/bootstrap.min.js">
+  </script>
+  <script src="lib/moment.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/FormValidation.full.min.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/plugins/Wizard.min.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/plugins/Bootstrap3.min.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/plugins/J.min.js">
+  </script>
+  <script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js">
+  </script>
+  <script src="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.js">
+  </script>
+  <script src="lib/clipboard.js">
+  </script>
+  <script src="https://www.gstatic.com/charts/loader.js" type="text/javascript">
+  </script>
+  <script src="jquery-conditonally-enable.js">
+  </script>
+  <script src="jquery-conditonally-display.js">
+  </script>
+  <script src="jqueryui-vista-filemanAutocomplete.js">
+  </script>
+  <script src="vapals.js">
+  </script>
+  <script src="init.js">
+  </script>
+  <script src="nodule-grid.js">
+  </script>
+  <!--System Navigation-->
+  <nav class="navbar navbar-default" role="navigation">
+   <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+     <button class="navbar-toggle collapsed" data-target="#navbar-main" data-toggle="collapse" type="button">
+      <span class="sr-only">
+       Toggle navigation
+      </span>
+      <span class="icon-bar">
+      </span>
+      <span class="icon-bar">
+      </span>
+      <span class="icon-bar">
+      </span>
+     </button>
+     <a class="text-nowrap" href="/vapals" style="text-decoration: none">
+      <img alt="VAPALS-ELCAP Logo" class="hidden-xs" src="img/logo_transparent_50x50.png" title="VAPALS-ELCAP"/>
+      <img alt="VAPALS-ELCAP Logo" src="img/logo_name_50x215.png" title="VAPALS-ELCAP"/>
+     </a>
+    </div>
+    <div class="navbar-collapse collapse navbar-right" id="navbar-main">
+     <ul class="nav navbar-nav">
+      <li>
+       <a href="/vapals">
+        Home
+       </a>
+      </li>
+      <li id="studyIdMenu" style="display:none;">
+       <a class="navigation" data-method="post" data-samiroute="casereview" href="#!">
+        Case Review
+       </a>
+      </li>
+      <li class="dropdown">
+       <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+        Reports
+        <span class="caret">
+        </span>
+       </a>
+       <ul class="dropdown-menu">
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="enrollment" data-samiroute="report" data-start-date="" href="#!">
+          Enrollment
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="activity" data-samiroute="report" href="#!">
+          Activity
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="followup" data-samiroute="report" href="#!">
+          Participant Follow-up
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="missingct" data-samiroute="report" href="#!">
+          Missing Image &amp; CT Evaluation
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="incomplete" data-samiroute="report" href="#!">
+          Incomplete Form
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="inactive" data-samiroute="report" href="#!">
+          Inactive
+         </a>
+        </li>
+       </ul>
+      </li>
+     </ul>
+    </div>
+   </div>
+  </nav>
+  <div class="container-fluid" style="max-width:1550px">
+   <h1>
+    Registration
+   </h1>
+   <hr/>
+   <div class="row">
+    <div class="col-md-12">
+     <div class="message-area-static" id="message-area-static">
+     </div>
+    </div>
+   </div>
+   <form action="/vapals" class="validated" id="main-form" method="post">
+    <input name="samiroute" type="hidden" value="register"/>
+    <input name="studyid" type="hidden" value="@@SID@@"/>
+    <div class="row">
+     <div class="col-sm-6 col-md-5 form-group">
+      <label class="required">
+       Name
+      </label>
+      <input class="form-control" id="name" name="name" placeholder="LAST, FIRST MI" required="required" type="text"/>
+     </div>
+     <div class="col-sm-3 col-md-3 form-group">
+      <label class="required">
+       <abbr title="Date of Birth">
+        DOB
+       </abbr>
+      </label>
+      <div class="input-group datepicker">
+       <input aria-describedby="dob-addon" class="form-control" data-restriction="past" id="dob" name="dob" required="required"/>
+       <div class="input-group-addon">
+        <div class="input-group-text" id="dob-addon">
+         <i aria-hidden="true" class="fa fa-calendar">
+         </i>
+        </div>
+       </div>
+      </div>
+      <small class="form-text text-muted">
+       MM/DD/YYYY
+      </small>
+     </div>
+     <div class="col-sm-3 col-md-2 form-group">
+      <label class="required">
+       Gender
+      </label>
+      <select class="form-control" id="gender" name="gender" required="required">
+       <option>
+       </option>
+       <option value="M">
+        Male
+       </option>
+       <option value="F">
+        Female
+       </option>
+      </select>
+     </div>
+    </div>
+    <div class="row">
+     <div class="col-sm-6 col-md-3 form-group">
+      <label class="required">
+       <abbr title="Social Security Number">
+        SSN
+       </abbr>
+      </label>
+      <input class="form-control" id="ssn" name="ssn" placeholder="000-00-0000" required="required" type="text"/>
+     </div>
+     <div class="col-sm-6 col-md-3 form-group">
+      <label>
+       <abbr title="Integration Control Number">
+        ICN
+       </abbr>
+      </label>
+      <input class="form-control" id="icn" name="icn" type="text"/>
+     </div>
+    </div>
+    <hr/>
+    <div class="pull-right">
+     <button class="btn btn-primary" id="submit-button" type="submit">
+      Submit
+     </button>
+    </div>
+   </form>
+  </div>
+  <span id="studyid-html-element" style="display:none;" value="@@SID@@">
+  </span>
+  <footer>
+   <div class="container-fluid" style="max-width:1550px">
+    <hr/>
+    <a href="https://issues.osehra.org/browse/VAP" tabindex="9000" target="_blank">
+     Submit feedback
+    </a>
+    <span id="sami-version" style="float:right; font-family: Courier,monospace">
+     <span id="formMode">
+     </span>
+     2019.11.15
+    </span>
+   </div>
+  </footer>
+  <script>
+   const studyIdVal = $("#studyid-html-element").attr('value');
+    const studyId = $.trim(studyIdVal);
+    if (studyId && studyId.indexOf("@@") === -1) {
+        //store studyid value for use in pages that don't go through the forms processor
+        localStorage.setItem("studyid", studyId);
+        $("#studyIdMenu").show();
+    }
+
+    //purposefully executed before DOM is rendered so delete button is never visible
+    const frozen = "@@FROZEN@@";
+    if (frozen == "true") {
+        $("#delete-form").remove();
+    }
+
+    const infoMessage = "@@INFO_MESSAGE@@";
+    const warnMessage = "@@WARN_MESSAGE@@";
+    const errorMessage = "@@ERROR_MESSAGE@@";
+    const errorFields = "@@ERROR_FIELDS@@";
+    const hasInfoMessage = infoMessage !== "@@INFO_" + "MESSAGE@@" && infoMessage !== "";
+    const hasWarnMessage = warnMessage !== "@@WARN_" + "MESSAGE@@" && warnMessage !== "";
+    const hasErrorMessage = errorMessage !== "@@ERROR_" + "MESSAGE@@" && errorMessage !== "";
+
+    function displayStaticMessage(message, alertClass, displayTimeMs) {
+        const $msg = $('#message-area-static')
+            .empty()
+            .html("<div class=\"alert " + alertClass + " alert-sm\" role=\"alert\">" + message + "</div>")
+            .show();
+        if (displayTimeMs > 0) {
+            $msg.delay(displayTimeMs)
+                .slideUp(200);
+        }
+    }
+
+    if (hasErrorMessage) {
+        displayStaticMessage(errorMessage, "alert-danger", 0)
+    } else if (hasWarnMessage) {
+        displayStaticMessage(warnMessage, "alert-warning", 0)
+    } else if (hasInfoMessage) {
+        displayStaticMessage(infoMessage, "alert-success", 3000)
+    }
+
+    $(function () {
+        /** These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly. **/
+        const $forms = $("form.validated");
+        $.each($forms.find("select, textarea, input:visible"), function () {
+            const $input = $(this);
+            if ($input.closest(".form-group").length === 0) {
+                console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
+            }
+        });
+
+        $.each($forms.find("input[type=hidden][required]"), function () {
+            console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
+        });
+
+        $.ajax("/ctversion", {
+            success: function (data) {
+                const v = data.ctversion;
+                $("#formMode").text(v.toUpperCase());
+            },
+            error: function () {
+                $("#formMode").text("UNKNOWN");
+            }
+        });
+
+        $("input[type=checkbox]").change(function () {
+            const checked = $(this).is(":checked");
+            const fieldName = $(this).attr('name');
+            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function () {
+                return checked;
+            });
+        });
+
+        $.each($("input[type=checkbox]:checked"), function (i, el) {
+            $(el).trigger("change");
+        });
+
+        const reportsStartDate = VAPALS.toMoment(VAPALS.todaysDate()).subtract(30, "days").format(VAPALS.DATE_FORMAT);
+        const reportsEndDate = VAPALS.toMoment(VAPALS.todaysDate()).format(VAPALS.DATE_FORMAT);
+
+        $("a[data-samiroute=report]").attr("data-start-date", reportsStartDate).attr("data-end-date", reportsEndDate);
+
+    })
+  </script>
+  <script>
+   function createFormValidator() {
+
+            const $form = $('#main-form');
+
+            $form.formValidation({
+                    fields: {
+                        name: {validators: {notEmpty: {message: 'Name is required'}}},
+                        ssn: {
+                            validators: {
+                                notEmpty: {message: 'SSN is required'},
+                                regexp: {
+                                    regexp: /^(?!(000|666|9(?!99)))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$/,
+                                    message: 'SSN is invalid'
+                                }
+                            }
+                        },
+                        dob: {
+                            validators: {
+                                notEmpty: {message: 'Date of birth is required'},
+                                date: {
+                                    max: VAPALS.todaysDate(),
+                                    message: 'Invalid format or date is in the future'
+                                },
+                            }
+                        },
+                        gender: {validators: {notEmpty: {message: 'Gender is required'}}}
+                    },
+                    plugins: {
+                        trigger: new FormValidation.plugins.Trigger(),
+                        bootstrap3: new FormValidation.plugins.Bootstrap3(),
+                        submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                        excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
+                        icon: new FormValidation.plugins.Icon({
+                            valid: '',
+                            invalid: 'glyphicon glyphicon-remove',
+                            validating: 'glyphicon glyphicon-refresh'
+                        })
+                    }
+                }
+            );
+
+            //NB: keep this else event handlers won't work.
+            const fv = $form.data("formValidation");
+
+            fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);
+            fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
+
+            return fv;
+        }
+
+
+        $(function () {
+            createFormValidator();
+            if (hasErrorMessage && errorFields !== "@@ERROR_" + "FIELDS@@" && errorFields !== "") {
+                const nameArr = errorFields.split(',');
+                let focused = false;
+                nameArr.forEach(function (fieldName) {
+                    const $field = $("[name=" + fieldName + "]");
+                    $field.parents(".form-group").addClass("has-error");
+                    if (focused === false) { //focus first field with an error
+                        $field.focus();
+                        focused = true;
+                    }
+                })
+            }
+        });
+  </script>
+ </body>
+</html>

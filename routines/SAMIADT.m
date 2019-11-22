@@ -1,4 +1,4 @@
-SAMIADT ;ven/arc/lgc - Handler for HL7 ADTs ; 2019-09-27T18:49Z
+SAMIADT ;ven/arc/lgc - Handler for HL7 ADTs ;Oct 17, 2019@16:19
  ;;18.0;SAMI;;
  ;
  quit  ; No entry from top
@@ -121,14 +121,13 @@ PARSESEG(segment,segmentfields,graphfields) ;
  if graphfields("sex")="F" set graphfields("gender")="F^FEMALE"
  if graphfields("sex")="M" set graphfields("gender")="M^MALE"
  ;
- ;
  quit  ; End entry point PARSESEG
  ;
  ;
 MSH(segment) ;
  ;
  ; set ^TMP("SAMI","ADT","MSH")=segment
- do ACK^SAMIHL7
+ do:'($get(%ut)) ACK^SAMIHL7
  ;
  quit  ; End entry point MSH
  ;

@@ -13,6 +13,7 @@
         </h2>
 
         <hr/>
+        {% include '_messages.jinja2' %}
         <form action="{{ formPage+".html" if mockup else "/vapals" }}" method="{{ formMethod }}"
               class="validated" id="main-form">
 
@@ -86,256 +87,11 @@
                 </div>
             </div>
 
-            <div class="alert alert-info">
-                <strong>List any nodule(s) of concern* in the table below. If baseline >= 6 mm or if repeat, >= 3
-                    mm</strong>
-                <BR>
-                Enter the Nodule Uptake values and update the Nodule Status to reflect the results of the PET
-                study, and update the neccesary actions for each nodule, as indicated. Enter any details given in
-                the PET report in the PET Details field.
-                <BR>Update the Follow-up section.
-            </div>
+            {% with formPage=formPage %}
+                {% include '_nodule-grid.jinja2' %}
+            {% endwith %}
 
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Nodule ID</th>
-                        <th>Nodule 1</th>
-                        <th>
-                            <label for="cefctn">Additional Nodules</label>
-                            <select name="cefctn" id="cefctn">
-                                <option value="2"> Nodule 2
-                                <option value="3"> Nodule 3
-                                <option value="4"> Nodule 4
-                                <option value="5"> Nodule 5
-                            </select>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><label for="cect1ch">Is it new?</label></td>
-                        <td>
-                            <select name="cect1ch" id="cect1ch" class="form-control">
-                                <option value="-"> -
-                                <option value="n"> Newly seen
-                                <option value="pn"> Prev seen, no change
-                                <option value="pd"> Prev seen, slight decr
-                                <option value="pe"> Prev seen, marked decr
-                                <option value="pi"> Prev seen, slight incr
-                                <option value="pj"> Prev seen, marked incr
-                                <option value="po"> Prev seen, obscured
-                                <option value="pw"> Prev seen, resolved
-                                <option value="px"> Prev seen, not a nodule
-                                <option value="pr"> Prev seen, resected
-                                <option value="rn"> Retrospect, no chg
-                                <option value="rd"> Retrospect, decrease
-                                <option value="ri"> Retrospect, slight incr
-                                <option value="rj"> Retrospect, marked incr
-                                <option value="pk"> Not in outside report
-                                <option value="pv"> Not included in scan
-                            </select>
-                        </td>
-                        <td>
-                            <label class="aria-hidden" for="cect0ch">Is it new?</label>
-                            <select name="cect0ch" id="cect0ch" class="form-control">
-                                <option value="-"> -
-                                <option value="n"> Newly seen
-                                <option value="pn"> Prev seen, no change
-                                <option value="pd"> Prev seen, slight decr
-                                <option value="pe"> Prev seen, marked decr
-                                <option value="pi"> Prev seen, slight incr
-                                <option value="pj"> Prev seen, marked incr
-                                <option value="po"> Prev seen, obscured
-                                <option value="pw"> Prev seen, resolved
-                                <option value="px"> Prev seen, not a nodule
-                                <option value="pr"> Prev seen, resected
-                                <option value="rn"> Retrospect, no chg
-                                <option value="rd"> Retrospect, decrease
-                                <option value="ri"> Retrospect, slight incr
-                                <option value="rj"> Retrospect, marked incr
-                                <option value="pk"> Not in outside report
-                                <option value="pv"> Not included in scan
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><label for="cect1ll">Most likely location</label></td>
-                        <td>
-                            <select name="cect1ll" id="cect1ll" class="form-control">
-                                <option value="-"> -
-                                <option value="end"> Endobr
-                                <option value="lul"> LUL
-                                <option value="lll"> LLL
-                                <option value="rul"> RUL
-                                <option value="rml"> RML
-                                <option value="rll"> RLL
-                            </select>
-                        </td>
-                        <td>
-                            <label class="aria-hidden" for="cect0ll">Most likely location</label>
-                            <select name="cect0ll" id="cect0ll" class="form-control">
-                                <option value="-"> -
-                                <option value="end"> Endobr
-                                <option value="lul"> LUL
-                                <option value="lll"> LLL
-                                <option value="rul"> RUL
-                                <option value="rml"> RML
-                                <option value="rll"> RLL
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="cect1up">Maximum nodule uptake (SUV)</label>
-                        </td>
-                        <td>
-                            <input type=text name="cect1up" id="cect1up" class="form-control numeric decimalformat">
-                        </td>
-                        <td>
-                            <label class="aria-hidden" for="cect0up">Maximum nodule uptake (SUV)</label>
-                            <input type=text name="cect0up" id="cect0up" class="form-control numeric decimalformat">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="cect1st">Nodule status</label>
-                        </td>
-                        <td>
-                            <select name="cect1st" id="cect1st" class="form-control">
-                                <option value="-"> -
-                                <option value="un"> Unknown
-                                <option value="bc"> Benign (Ca++)
-                                <option value="pc"> Prob benign, prob Ca++
-                                <option value="re"> Resolved
-                                <option value="rg"> Resolving
-                                <option value="tn"> No change - 2 yrs
-                                <option value="pp"> PET - positive
-                                <option value="pn"> PET - negative
-                                <option value="pi"> PET - indeterminate
-                                <option value="ub"> Biopsy - unknown
-                                <option value="bb"> Biopsy - benign
-                                <option value="mb"> Biopsy - malignant
-                                <option value="ab"> Biopsy - atyp bronch prolif
-                                <option value="om"> Biopsy - metastatic
-                                <option value="mr"> Resected - malignant
-                                <option value="br"> Resected - benign
-                            </select>
-                        </td>
-                        <td>
-                            <label class="aria-hidden" for="cect0st">Nodule status</label>
-                            <select name="cect0st" id="cect0st" class="form-control">
-                                <option value="-"> -
-                                <option value="un"> Unknown
-                                <option value="bc"> Benign (Ca++)
-                                <option value="pc"> Prob benign, prob Ca++
-                                <option value="re"> Resolved
-                                <option value="rg"> Resolving
-                                <option value="tn"> No change - 2 yrs
-                                <option value="pp"> PET - positive
-                                <option value="pn"> PET - negative
-                                <option value="pi"> PET - indeterminate
-                                <option value="ub"> Biopsy - unknown
-                                <option value="bb"> Biopsy - benign
-                                <option value="mb"> Biopsy - malignant
-                                <option value="ab"> Biopsy - atyp bronch prolif
-                                <option value="om"> Biopsy - metastatic
-                                <option value="mr"> Resected - malignant
-                                <option value="br"> Resected - benign
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><label for="cect1pd">Pathologic diagnosis</label></td>
-                        <td>
-                            <select name="cect1pd" id="cect1pd" class="form-control">
-                                <option value="-"> -For Pathology Use Only-
-                                <option value="aa"> AAH
-                                <option value="ap"> Atyp bronch prolif
-                                <option value="ba"> BAC
-                                <option value="ns"> Unspec. non-small cell
-                                <option value="ad"> Adenocarcinoma
-                                <option value="as"> Adenosquamous
-                                <option value="la"> Large cell
-                                <option value="sq"> Squamous cell
-                                <option value="sm"> Small cell
-                                <option value="ct"> Carcinoid - typical
-                                <option value="ca"> Carcinoid - atypical
-                                <option value="be"> Not malignant
-                                <option value="bs"> Benign specific
-                                <option value="os"> Other (specify)
-                            </select>
-                        </td>
-                        <td>
-                            <label class="aria-hidden" for="cect0pd">Pathological diagnosis</label>
-                            <select name="cect0pd" id="cect0pd" class="form-control">
-                                <option value="-"> -For Pathology Use Only-
-                                <option value="aa"> AAH
-                                <option value="ap"> Atyp bronch prolif
-                                <option value="ba"> BAC
-                                <option value="ns"> Unspec. non-small cell
-                                <option value="ad"> Adenocarcinoma
-                                <option value="as"> Adenosquamous
-                                <option value="la"> Large cell
-                                <option value="sq"> Squamous cell
-                                <option value="sm"> Small cell
-                                <option value="ct"> Carcinoid - typical
-                                <option value="ca"> Carcinoid - atypical
-                                <option value="be"> Not malignant
-                                <option value="bs"> Benign specific
-                                <option value="os"> Other (specify)
-                            </select>
-                        </td>
-                    </tr>
-                    </tbody>
-
-                </table>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4 form-group">
-                    {{ f.floatingLabel("ceinod", "Indicate the index nodule driving follow-up:") }}
-                </div>
-                <div class="col-sm-3 form-group">
-                    <select name="ceinod" id="ceinod" class="form-control">
-                        <option value="-"> -
-                        <option value="1"> 1
-                        <option value="2"> 2
-                        <option value="3"> 3
-                        <option value="4"> 4
-                        <option value="5"> 5
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4 form-group">
-                    {{ f.floatingLabel("celrad", "LungRADS category") }}
-                </div>
-                <div class="col-sm-3 form-group">
-                    <select name="celrad" id="celrad" class="form-control">
-                        <option value="-"> -
-                        <option value="0"> 0
-                        <option value="1"> 1
-                        <option value="2"> 2
-                        <option value="3"> 3
-                        <option value="4A"> 4A
-                        <option value="4B"> 4B
-                        <option value="4X"> 4X
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4 form-group">
-                    {{ f.floatingLabel("celrads", "LungRADS modifier") }}
-                </div>
-                <div class="col-sm-3 form-group">
-                    {{ f.checkbox("celrads", "S", "S") }}
-                    {{ f.checkbox("celradc", "C", "C") }}
-                </div>
-            </div>
+            {% include "_lung-rads-fields.jinja2" %}
 
             <div class="row">
                 <div class="form-group col-sm-12">
@@ -599,6 +355,8 @@
 
                 fv.revalidateField('cefud');
             });
+
+            initNoduleGrid(fv);
         });
     </script>
 

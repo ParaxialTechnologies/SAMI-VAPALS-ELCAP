@@ -28,7 +28,7 @@
         </h2>
 
         <hr/>
-
+        {% include '_messages.jinja2' %}
         {# Build a navigation bar that will affix itself to the top of the screen and highligh active sections#}
         {% set tab_list = [("Scan","scan"), ("Nodules", "nodules"), ("Emphysema/Coronary Calcifications","emphysema-coronary"),
                             ("Other Abnormalities","abnormalities"), ("Impression & Follow-Up","impression")] -%}
@@ -208,40 +208,7 @@
             {# END Scan tab#}
 
             {# BEGIN Nodules tab#}
-            <div id="nodules" style="padding-top:8px">
-                <h3>Nodules</h3> {# will get hidden with affixed menu#}
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="alert alert-warning">
-                            <h4>READ before completing the Nodule Grid</h4>
-                            <ul>
-                                <li>BASELINE: Include all nodules >= 6.0 mm in average diameter. Others are
-                                    OPTIONAL.
-                                </li>
-                                <li>ANNUAL REPEAT: include all NEW nodules >= 3.0 mm in average diameter.</li>
-                                <li>For BASELINE CT, all nodules are new unless there is a CT more than 3 years
-                                    earlier.
-                                </li>
-                                <li>For BASELINE CT, the nodules will automatically be sorted with the largest
-                                    non-calcified nodules with a solid component coming first.
-                                </li>
-                                <li>Note: hilar masses and focal consolidation should be included in the nodule
-                                    grid.
-                                </li>
-                                <li>The same nodule ID will be used on all subsequent CT and other forms. NEW
-                                    nodules, even if LARGER, must follow nodules already listed.
-                                </li>
-                                <li>For nodules recommended for biopsy or antibiotics, list the reason in the
-                                    comments field in the corresponding column.
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                {% include '_nodule-grid.jinja2' %}
-
-            </div>
+            {% include '_nodule-grid.jinja2' %}
             {# END Nodules tab#}
 
             {# BEGIN Emphysema tab#}

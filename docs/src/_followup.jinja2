@@ -74,28 +74,9 @@
     {# Place holder for Lung-RADS section #}
     <div id="lung-rads-bottom"></div>
 
-    <div id="lung-rads">
-        <h4>Lung-RADS</h4>
-        <div class="row">
-            <div class="form-group col-sm-5 col-md-4">
-                <label id="lung-rads-category-label" for="celrad">Category</label>
-                <br/>
-                {{ f.radio("celrad", "celrad-na","-","Not applicable") }}
-                {{ f.radio("celrad", "celrad-0","0","0 (incomplete)") }}
-                {{ f.radio("celrad", "celrad-1","1","1 (negative)") }}
-                {{ f.radio("celrad", "celrad-2","2","2 (benign appearance or behavior)") }}
-                {{ f.radio("celrad", "celrad-3","3","3 (probably benign)") }}
-                {{ f.radio("celrad", "celrad-4A","4A","4A (suspicious)") }}
-                {{ f.radio("celrad", "celrad-4B","4B","4B (suspicious)") }}
-                {{ f.radio("celrad", "celrad-4X","4X","4X (suspicious)") }}
-            </div>
-            <div class="form-group col-sm-7 col-md-8">
-                <label>Modifiers</label>
-                {{ f.checkbox("celrads", "S", "S - clinically significant or potentially clinically significant findings (non lung cancer)") }}
-                {{ f.checkbox("celradc", "C", "C - prior diagnosis of lung cancer who return to screening") }}
-            </div>
-        </div>
-    </div>
+
+        {% include "_lung-rads-fields.jinja2" %}
+
 {% endif %}
 
 <script>

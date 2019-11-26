@@ -6,6 +6,7 @@
   <meta content="2019.11.22" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
+   Register
   </title>
   <link href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
@@ -136,28 +137,85 @@
   </nav>
   <div class="container-fluid" style="max-width:1550px">
    <h1>
-    Sample, Sammy G
-    <small class="text-muted" title="Study ID">
-     ST0001
-    </small>
+    Registration
    </h1>
-   <h2>
-    <small class="text-muted" title="Medical Record Number">
-     1234567890
-    </small>
-   </h2>
    <hr/>
-   <pre id="report-text">
-</pre>
-   <div class="pull-right">
-    <button class="btn btn-default" data-clipboard-target="#report-text">
-     <i class="glyphicon glyphicon-copy" title="Copy to clipboard">
-     </i>
-     Copy to clipboard
-    </button>
+   <div class="row">
+    <div class="col-md-12">
+     <div class="message-area-static" id="message-area-static">
+     </div>
+    </div>
    </div>
-   <div class="clearfix">
-   </div>
+   <form action="/vapals" class="validated" id="main-form" method="post">
+    <input name="samiroute" type="hidden" value="register"/>
+    <input name="studyid" type="hidden" value="@@SID@@"/>
+    <div class="row">
+     <div class="col-sm-6 col-md-5 form-group">
+      <label class="required">
+       Name
+      </label>
+      <input class="form-control" id="name" name="name" placeholder="LAST, FIRST MI" required="required" type="text"/>
+     </div>
+     <div class="col-sm-3 col-md-3 form-group">
+      <label class="required">
+       <abbr title="Date of Birth">
+        DOB
+       </abbr>
+      </label>
+      <div class="input-group datepicker">
+       <input aria-describedby="dob-addon" class="form-control" data-restriction="past" id="dob" name="dob" required="required"/>
+       <div class="input-group-addon">
+        <div class="input-group-text" id="dob-addon">
+         <i aria-hidden="true" class="fa fa-calendar">
+         </i>
+        </div>
+       </div>
+      </div>
+      <small class="form-text text-muted">
+       MM/DD/YYYY
+      </small>
+     </div>
+     <div class="col-sm-3 col-md-2 form-group">
+      <label class="required">
+       Gender
+      </label>
+      <select class="form-control" id="gender" name="gender" required="required">
+       <option>
+       </option>
+       <option value="M">
+        Male
+       </option>
+       <option value="F">
+        Female
+       </option>
+      </select>
+     </div>
+    </div>
+    <div class="row">
+     <div class="col-sm-6 col-md-3 form-group">
+      <label class="required">
+       <abbr title="Social Security Number">
+        SSN
+       </abbr>
+      </label>
+      <input class="form-control" id="ssn" name="ssn" placeholder="000-00-0000" required="required" type="text"/>
+     </div>
+     <div class="col-sm-6 col-md-3 form-group">
+      <label>
+       <abbr title="Integration Control Number">
+        ICN
+       </abbr>
+      </label>
+      <input class="form-control" id="icn" name="icn" type="text"/>
+     </div>
+    </div>
+    <hr/>
+    <div class="pull-right">
+     <button class="btn btn-primary" id="submit-button" type="submit">
+      Submit
+     </button>
+    </div>
+   </form>
   </div>
   <span id="studyid-html-element" style="display:none;" value="@@SID@@">
   </span>
@@ -260,11 +318,72 @@
     })
   </script>
   <script>
-   new ClipboardJS('.btn').on("success", function(e){
-            $(e.trigger).tooltip({title:"Copied!", delay: { "hide": 1000 }}).show();
-            e.clearSelection();
-        }).on('error', function(e) {
-            $(e.trigger).tooltip({title:"Press ctrl-C"}).show();
+   function createFormValidator() {
+
+            const $form = $('#main-form');
+
+            $form.formValidation({
+                    fields: {
+                        name: {validators: {notEmpty: {message: 'Name is required'}}},
+                        ssn: {
+                            validators: {
+                                notEmpty: {message: 'SSN is required'},
+                                regexp: {
+                                    regexp: /^(?!(000|666|9(?!99)))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$/,
+                                    message: 'SSN is invalid'
+                                }
+                            }
+                        },
+                        dob: {
+                            validators: {
+                                notEmpty: {message: 'Date of birth is required'},
+                                date: {
+                                    max: VAPALS.todaysDate(),
+                                    message: 'Invalid format or date is in the future'
+                                },
+                            }
+                        },
+                        gender: {validators: {notEmpty: {message: 'Gender is required'}}}
+                    },
+                    plugins: {
+                        trigger: new FormValidation.plugins.Trigger(),
+                        bootstrap3: new FormValidation.plugins.Bootstrap3(),
+                        submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                        excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
+                        icon: new FormValidation.plugins.Icon({
+                            valid: '',
+                            invalid: 'glyphicon glyphicon-remove',
+                            validating: 'glyphicon glyphicon-refresh'
+                        })
+                    }
+                }
+            );
+
+            //NB: keep this else event handlers won't work.
+            const fv = $form.data("formValidation");
+
+            fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);
+            fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
+
+            return fv;
+        }
+
+
+        $(function () {
+            createFormValidator();
+            if (hasErrorMessage && errorFields !== "@@ERROR_" + "FIELDS@@" && errorFields !== "") {
+                const nameArr = errorFields.split(',');
+                let focused = false;
+                nameArr.forEach(function (fieldName) {
+                    const $field = $("[name=" + fieldName + "]");
+                    $field.parents(".form-group").addClass("has-error");
+                    if (focused === false) { //focus first field with an error
+                        $field.focus();
+                        focused = true;
+                    }
+                })
+            }
         });
   </script>
  </body>

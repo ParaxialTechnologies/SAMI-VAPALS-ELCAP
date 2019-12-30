@@ -21,6 +21,14 @@
             <input type="hidden" name="studyid" value="@@SID@@"/>
             <input type="hidden" name="form" value="@@FORMKEY@@"/>
             <div class="row">
+                <div class="form-group col-sm-12" id="interaction-type">
+                    <label class="required" for="sidof">This interaction is a</label>
+                    {{ f.radio('futype', 'futype-other', 'other', 'Other communication with veteran', true, true) }}
+                    {{ f.radio('futype', 'futype-ct', 'ct', 'CT visit and/or communication about CT results', true) }}
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="form-group col-sm-3 col-md-3 col-lg-2">
                     <label class="required" for="sidof">Follow-up date</label>
                     {{ f.datepicker("sidof", "past", true) }}
@@ -47,22 +55,9 @@
 
             <hr/>
 
-            <h3>Ordering Information</h3>
-            <div class="alert alert-warning">Ordering information is required <strong>ONLY</strong> for
-                Medicare/Medicaid participants.
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    {{ f.floatingLabel('simeq-n', 'Was a CT lung screening scan ordered for this participant?', "required") }}
-                </div>
-                <div class="form-group col-sm-8">
-                    <div>
-                        {{ f.inlineRadio("simeq", "simeq-n", "n", "No", true) }}
-                        {{ f.inlineRadio("simeq", "simeq-y", "y", "Yes") }}
-                    </div>
-                </div>
-            </div>
-            <div id="order-container">
+            <div class="followup-ct">
+                <h3>Ordering Information</h3>
+
                 <div class="row">
                     <div class="col-md-4">
                         {{ f.floatingLabel('siopfn', 'Ordered by') }}
@@ -85,8 +80,7 @@
                         {{ f.floatingLabel('siopnpi', 'National provider ID (NPI)', "required") }}
                     </div>
                     <div class="col-sm-2 form-group">
-                        <label for="siopnpi" class="aria-hidden">NPI</label>
-                        <input type=text name="siopnpi" id="siopnpi" class="form-control numeric" required="required">
+                        <input type="text" name="siopnpi" id="siopnpi" class="form-control numeric" required="required">
                     </div>
                 </div>
 
@@ -139,204 +133,204 @@
                     </div>
                 </div>
                 <hr/>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    {{ f.floatingLabel('siopci', 'Clinical Information', "required") }}
-                </div>
-                <div class="col-md-8 form-group">
-                    <textarea class="form-control" id="siopci" name="siopci" rows="3" required="required"></textarea>
-                    <small class="form-text text-muted">information will be copied to CT report</small>
-                </div>
-            </div>
-            <hr/>
-            <div class="row">
-                <div class="col-md-4">
-                    {{ f.floatingLabel('siabx-n', 'Have you taken antibiotics since your last CT scan?', "required") }}
-                </div>
-                <div class="col-md-8 form-group">
-                    {{ f.inlineRadio("siabx", "siabx-n", "n", "No", true) }}
-                    {{ f.inlineRadio("siabx", "siabx-y", "y", "Yes") }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    {{ f.floatingLabel('siaex-n', 'Is this an annual CT scan?', "required") }}
-                </div>
-                <div class="col-md-8 form-group">
-                    {{ f.inlineRadio("siaex", "siaex-n", "n", "No", true) }}
-                    {{ f.inlineRadio("siaex", "siaex-y", "y", "Yes") }}
-                </div>
-            </div>
 
-
-            <hr/>
-
-            <div class="row">
-                <div class="col-md-4">
-                    {{ f.floatingLabel('siwc-b', 'During the past year, have you experienced any of these symptoms?') }}
-                </div>
-                <div class="col-md-8 form-group">
-                    {{ f.checkbox("siwcb", "b", "Cough producing bloody material") }}
-                    {{ f.checkbox("siwcl", "l", "Unexplained weight loss greater than 20 lbs") }}
-                    {{ f.checkbox("siwch", "h", "Unexplained hoarseness") }}
-                    {{ f.checkbox("siwco", "o", "Other") }}
-                    <label for="siwcos" class="aria-hidden">Other</label>
-                    <input type="text" class="form-control input-sm" id="siwcos" name="siwcos" required="required"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    {{ f.floatingLabel('siwcp-n', 'If yes, have you seen a physician for this?') }}
-                </div>
-                <div class="col-md-2 form-group">
-                    {{ f.inlineRadio("siwcp", "siwcp-n", "n", "No") }}
-                    {{ f.inlineRadio("siwcp", "siwcp-y", "y", "Yes") }}
-                </div>
-                <div class="col-md-6 form-group" id="siwcw-container">
-                    <label class="control-label" for="siwcw">Whom?</label>
-                    <input type="text" id="siwcw" name="siwcw" class="form-control"/>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4">
-                    {{ f.floatingLabel('siwcp-n', 'If yes, are you now experiencing them?') }}
-                </div>
-                <div class="col-md-8 form-group">
-                    {{ f.inlineRadio("siwcn", "siwcn-n", "n", "No") }}
-                    {{ f.inlineRadio("siwcn", "siwcn-y", "y", "Yes") }}
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4">
-                    {{ f.floatingLabel('siact', 'When did you most recently have a chest CT?') }}
-                </div>
-                <div class="col-md-8 form-group">
-                    <select id="siact" name="siact" class="form-control">
-                        <option value="-"> -
-                        <option value="a"> Less than 6 months ago
-                        <option value="b"> 6 months to 18 months ago
-                        <option value="f"> 18 months to 3 years ago
-                        <option value="c"> 3 years to 5 years ago
-                        <option value="d"> Over 5 years ago
-                        <option value="e"> Never
-                    </select>
-                </div>
-            </div>
-
-            <hr/>
-            <div class="row">
-                <div class="col-md-4 col-lg-6">
-                    {{ f.floatingLabel('siho-n', 'Have you been hospitalized in the past year?', "required") }}
-                </div>
-                <div class="col-md-2 form-group">
-                    {{ f.inlineRadio("siho", "siho-n", "n", "No", true) }}
-                    {{ f.inlineRadio("siho", "siho-y", "y", "Yes") }}
-                </div>
-                <div class="col-md-6 col-lg-4" id="siho-container">
-                    <div class="form-group">
-                        <label for="sihow" class="control-label">For what?</label>
-                        <input type=text id="sihow" name="sihow" class="form-control">
+                <div class="row">
+                    <div class="col-md-4">
+                        {{ f.floatingLabel('fursnscn', 'Reason for CT scan', "required") }}
                     </div>
-                    <div class="form-group">
-                        <label for="sihod">When?</label>
-                        {{ f.yearpicker("sihod") }}
-                    </div>
-                    <div class="form-group">
-                        <label for="sihol">Where?</label>
-                        <input type=text id="sihol" name="sihol" class="form-control">
+                    <div class="col-md-8 form-group">
+                        <textarea class="form-control" id="fursnscn" name="fursnscn" rows="3"
+                                  required="required"></textarea>
                     </div>
                 </div>
-            </div>
+                <hr/>
+                <div class="row">
+                    <div class="col-md-4">
+                        {{ f.floatingLabel('siabx-n', 'Have you taken antibiotics since your last CT scan?', "required") }}
+                    </div>
+                    <div class="col-md-8 form-group">
+                        {{ f.inlineRadio("siabx", "siabx-n", "n", "No", true) }}
+                        {{ f.inlineRadio("siabx", "siabx-y", "y", "Yes") }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        {{ f.floatingLabel('siaex-n', 'Is this an annual CT scan?', "required") }}
+                    </div>
+                    <div class="col-md-8 form-group">
+                        {{ f.inlineRadio("siaex", "siaex-n", "n", "No", true) }}
+                        {{ f.inlineRadio("siaex", "siaex-y", "y", "Yes") }}
+                    </div>
+                </div>
+                <hr/>
 
-            <div class="row">
-                <div class="col-md-4 col-lg-6">
-                    {{ f.floatingLabel('sicd-n', 'Have you had a diagnosis of cancer in the past year?', "required") }}
+
+                <div class="row">
+                    <div class="col-md-4">
+                        {{ f.floatingLabel('siwc-b', 'During the past year, have you experienced any of these symptoms?') }}
+                    </div>
+                    <div class="col-md-8 form-group">
+                        {{ f.checkbox("siwcb", "b", "Cough producing bloody material") }}
+                        {{ f.checkbox("siwcl", "l", "Unexplained weight loss greater than 20 lbs") }}
+                        {{ f.checkbox("siwch", "h", "Unexplained hoarseness") }}
+                        {{ f.checkbox("siwco", "o", "Other") }}
+                        <label for="siwcos" class="aria-hidden">Other</label>
+                        <input type="text" class="form-control input-sm" id="siwcos" name="siwcos" required="required"/>
+                    </div>
                 </div>
-                <div class="col-md-2 form-group">
-                    {{ f.inlineRadio("sicd", "sicd-n", "n", "No", true) }}
-                    {{ f.inlineRadio("sicd", "sicd-y", "y", "Yes") }}
+                <div class="row">
+                    <div class="col-md-4">
+                        {{ f.floatingLabel('siwcp-n', 'If yes, have you seen a physician for this?') }}
+                    </div>
+                    <div class="col-md-2 form-group">
+                        {{ f.inlineRadio("siwcp", "siwcp-n", "n", "No") }}
+                        {{ f.inlineRadio("siwcp", "siwcp-y", "y", "Yes") }}
+                    </div>
+                    <div class="col-md-6 form-group" id="siwcw-container">
+                        <label class="control-label" for="siwcw">Whom?</label>
+                        <input type="text" id="siwcw" name="siwcw" class="form-control"/>
+                    </div>
                 </div>
-                <div class="col-md-6 col-lg-4" id="sicd-container">
-                    <div class="form-group">
-                        <label for="sicdl" class="control-label">What part of the body?</label>
-                        <select id="sicdl" name="sicdl" class="form-control">
-                            <option value="-"> -
-                            <option value="br"> Breast
-                            <option value="co"> Colon / rectum
-                            <option value="li"> Liver
-                            <option value="lu"> Lung / bronchus
-                            <option value="ov"> Ovary
-                            <option value="pa"> Pancreas
-                            <option value="pr"> Prostate
-                            <option value="sk"> Skin
-                            <option value="st"> Stomach
-                            <option value="ut"> Uterus
-                            <option value="os"> Other (specify)
+
+                <div class="row">
+                    <div class="col-md-4">
+                        {{ f.floatingLabel('siwcp-n', 'If yes, are you now experiencing them?') }}
+                    </div>
+                    <div class="col-md-8 form-group">
+                        {{ f.inlineRadio("siwcn", "siwcn-n", "n", "No") }}
+                        {{ f.inlineRadio("siwcn", "siwcn-y", "y", "Yes") }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        {{ f.floatingLabel('siact', 'When did you most recently have a chest CT?') }}
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <select id="siact" name="siact" class="form-control">
+                            <option value="-">-</option>
+                            <option value="a">Less than 6 months ago</option>
+                            <option value="b">6 months to 18 months ago</option>
+                            <option value="f">18 months to 3 years ago</option>
+                            <option value="c">3 years to 5 years ago</option>
+                            <option value="d">Over 5 years ago</option>
+                            <option value="e">Never</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="sicdls">Other?</label>
-                        <input type=text id="sicdls" name="sicdls" class="form-control input-sm">
-                    </div>
-                    <div class="form-group">
-                        <label for="sicdd">When were you diagnosed?</label>
-                        {{ f.datepicker("sicdd", "past") }}
-                    </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-4 col-lg-6">
-                    {{ f.floatingLabel('silcs-n', 'If lung cancer has been diagnosed, have you had surgery?', "required") }}
-                </div>
-                <div class="col-md-2 form-group">
-                    {{ f.inlineRadio("silcs", "silcs-n", "n", "No", true) }}
-                    {{ f.inlineRadio("silcs", "silcs-y", "y", "Yes") }}
-                    {{ f.inlineRadio("silcs", "silcs-o", "o", "N/A") }}
-                </div>
-                <div class="col-md-6 col-lg-4" id="silcs-container">
-                    <div class="form-group">
-                        <label for="silcsd">When?</label>
-                        {{ f.datepicker("silcsd", "past") }}
+                <hr/>
+                <div class="row">
+                    <div class="col-md-4 col-lg-6">
+                        {{ f.floatingLabel('siho-n', 'Have you been hospitalized in the past year?', "required") }}
                     </div>
-                    <div class="form-group">
-                        <label for="silcsl">Where?</label>
-                        <input type=text id="silcsl" name="silcsl" class="form-control">
+                    <div class="col-md-2 form-group">
+                        {{ f.inlineRadio("siho", "siho-n", "n", "No", true) }}
+                        {{ f.inlineRadio("siho", "siho-y", "y", "Yes") }}
+                    </div>
+                    <div class="col-md-6 col-lg-4" id="siho-container">
+                        <div class="form-group">
+                            <label for="sihow" class="control-label">For what?</label>
+                            <input type=text id="sihow" name="sihow" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="sihod">When?</label>
+                            {{ f.yearpicker("sihod") }}
+                        </div>
+                        <div class="form-group">
+                            <label for="sihol">Where?</label>
+                            <input type=text id="sihol" name="sihol" class="form-control">
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-4 col-lg-6">
-                    {{ f.floatingLabel('sier-n', 'If a lung cancer has been removed, is there evidence of recurrence?', "required") }}
-                </div>
-                <div class="col-md-2 form-group">
-                    {{ f.inlineRadio("sier", "sier-n", "n", "No", true) }}
-                    {{ f.inlineRadio("sier", "sier-y", "y", "Yes") }}
-                    {{ f.inlineRadio("sier", "sier-o", "o", "N/A") }}
-                </div>
-                <div class="col-md-6 col-lg-4" id="sier-container">
-                    <div class="form-group">
-                        <label for="sierd">Describe</label>
-                        <input type=text id="sierd" name="sierd" class="form-control">
+                <div class="row">
+                    <div class="col-md-4 col-lg-6">
+                        {{ f.floatingLabel('sicd-n', 'Have you had a diagnosis of cancer in the past year?', "required") }}
+                    </div>
+                    <div class="col-md-2 form-group">
+                        {{ f.inlineRadio("sicd", "sicd-n", "n", "No", true) }}
+                        {{ f.inlineRadio("sicd", "sicd-y", "y", "Yes") }}
+                    </div>
+                    <div class="col-md-6 col-lg-4" id="sicd-container">
+                        <div class="form-group">
+                            <label for="sicdl" class="control-label">What part of the body?</label>
+                            <select id="sicdl" name="sicdl" class="form-control">
+                                <option value="-">-</option>
+                                <option value="br">Breast</option>
+                                <option value="co">Colon / rectum</option>
+                                <option value="li">Liver</option>
+                                <option value="lu">Lung / bronchus</option>
+                                <option value="ov">Ovary</option>
+                                <option value="pa">Pancreas</option>
+                                <option value="pr">Prostate</option>
+                                <option value="sk">Skin</option>
+                                <option value="st">Stomach</option>
+                                <option value="ut">Uterus</option>
+                                <option value="os">Other (specify)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sicdls">Other?</label>
+                            <input type=text id="sicdls" name="sicdls" class="form-control input-sm">
+                        </div>
+                        <div class="form-group">
+                            <label for="sicdd">When were you diagnosed?</label>
+                            {{ f.datepicker("sicdd", "past") }}
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <hr/>
+                <div class="row">
+                    <div class="col-md-4 col-lg-6">
+                        {{ f.floatingLabel('silcs-n', 'If lung cancer has been diagnosed, have you had surgery?', "required") }}
+                    </div>
+                    <div class="col-md-2 form-group">
+                        {{ f.inlineRadio("silcs", "silcs-n", "n", "No", true) }}
+                        {{ f.inlineRadio("silcs", "silcs-y", "y", "Yes") }}
+                        {{ f.inlineRadio("silcs", "silcs-o", "o", "N/A") }}
+                    </div>
+                    <div class="col-md-6 col-lg-4" id="silcs-container">
+                        <div class="form-group">
+                            <label for="silcsd">When?</label>
+                            {{ f.datepicker("silcsd", "past") }}
+                        </div>
+                        <div class="form-group">
+                            <label for="silcsl">Where?</label>
+                            <input type=text id="silcsl" name="silcsl" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-lg-6">
+                        {{ f.floatingLabel('sier-n', 'If a lung cancer has been removed, is there evidence of recurrence?', "required") }}
+                    </div>
+                    <div class="col-md-2 form-group">
+                        {{ f.inlineRadio("sier", "sier-n", "n", "No", true) }}
+                        {{ f.inlineRadio("sier", "sier-y", "y", "Yes") }}
+                        {{ f.inlineRadio("sier", "sier-o", "o", "N/A") }}
+                    </div>
+                    <div class="col-md-6 col-lg-4" id="sier-container">
+                        <div class="form-group">
+                            <label for="sierd">Describe</label>
+                            <input type=text id="sierd" name="sierd" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <hr/>
+            </div>
             <h3>Smoking History</h3>
 
             {% include '_pack-year-history.jinja2' %}
 
             <div class="row">
                 <div class="col-md-4">
-                    {{ f.floatingLabel('sisa-n', 'Since your last followup, have you smoked cigarettes at all, even a puff?', "required") }}
+                    {{ f.floatingLabel('sisa-n', 'Since your last follow-up, have you smoked cigarettes at all, even a puff?') }}
                 </div>
                 <div class="col-md-8 form-group">
-                    {{ f.inlineRadio("sisa", "sisa-n", "n", "No", true) }}
+                    {{ f.inlineRadio("sisa", "sisa-n", "n", "No") }}
                     {{ f.inlineRadio("sisa", "sisa-y", "y", "Yes") }}
                     {{ f.inlineRadio("sisa", "sisa-o", "o", "Never smoked") }}
                 </div>
@@ -345,11 +339,10 @@
             <div id="sisa-container">
                 <div class="row form-group">
                     <div class="col-md-4">
-                        {{ f.floatingLabel('sicpd', 'On average, how many cigarettes did you smoke per day?', "required") }}
+                        {{ f.floatingLabel('sicpd', 'On average, how many cigarettes did you smoke per day?') }}
                     </div>
                     <div class="col-sm-2">
-                        <input class="form-control numeric" type="text" name="sicpd" id="sicpd" maxlength="4"
-                               required="required">
+                        <input class="form-control numeric" type="text" name="sicpd" id="sicpd" maxlength="4">
                     </div>
                 </div>
                 <div class="row form-group">
@@ -383,10 +376,10 @@
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    {{ f.floatingLabel('sittq-n', 'Since your prior CT scan, have you ever tried to quit smoking?', "required") }}
+                    {{ f.floatingLabel('sittq-n', 'Since we last asked, have you ever tried to quit smoking?') }}
                 </div>
                 <div class="col-md-8 form-group">
-                    {{ f.inlineRadio("sittq", "sittq-n", "n", "No", true) }}
+                    {{ f.inlineRadio("sittq", "sittq-n", "n", "No") }}
                     {{ f.inlineRadio("sittq", "sittq-y", "y", "Yes") }}
                     {{ f.inlineRadio("sittq", "sittq-o", "o", "N/A") }}
                 </div>
@@ -403,8 +396,7 @@
 
             <div class="row">
                 <div class="col-sm-4">
-                    {{ f.floatingLabel('', 'Since your prior CT scan, what, if any, smoking cessation methods have you used?') }}
-
+                    {{ f.floatingLabel('', 'Since we last asked what, if any, smoking cessation methods have you used?', 'radio-label') }}
                 </div>
 
                 <div class="col-sm-8 form-group">
@@ -441,15 +433,95 @@
                 </div>
             </div>
 
+
             <div class="row">
-                <div class="col-md-4">
-                    {{ f.floatingLabel('siscmd-n', 'Smoking cessation materials were distributed to subject?', "required") }}
+                <div class="col-md-4 ">
+                    {{ f.floatingLabel('siscmd-d', 'Tobacco cessation provided:', 'radio-label') }}
                 </div>
                 <div class="col-md-8 form-group">
-                    {{ f.inlineRadio("siscmd", "siscmd-n", "n", "No", true) }}
-                    {{ f.inlineRadio("siscmd", "siscmd-y", "y", "Yes") }}
+                    {{ f.radio("siscmd", "siscmd-d", "d", "Declined") }}
+                    {{ f.radio("siscmd", "siscmd-a", "a", "Advised to quit smoking; VA resources provided") }}
+                    {{ f.radio("siscmd", "siscmd-i", "i", "Interested in VA tobacco cessation medication. Encouraged Veteran to talk to provider or pharmacist about which medication option is best for you.") }}
                 </div>
             </div>
+
+            <div class="row followup-other">
+                <div class="col-md-4">
+                    {{ f.floatingLabel('fucmotip', 'Communications method:', 'checkbox-label required') }}
+                </div>
+
+                <div class="col-md-8 form-group">
+                    {{ f.checkbox("fucmotip", "1", "In person", {'group':'other-communications-method'}) }}
+                    {{ f.checkbox("fucmotte", "1", "Telephone", {'group':'other-communications-method'}) }}
+                    {{ f.checkbox("fucmotth", "1", "TeleHealth", {'group':'other-communications-method'}) }}
+                    {{ f.checkbox("fucmotml", "1", "Mailed letter", {'group':'other-communications-method'}) }}
+                    {{ f.checkbox("fucmotpp", "1", "Message in Patient Portal", {'group':'other-communications-method'}) }}
+                    {{ f.checkbox("fucmotvd", "1", "Video-on-Demand (VOD)", {'group':'other-communications-method'}) }}
+                    {{ f.checkbox("fucmotot", "1", "Other", {'group':'other-communications-method'}) }}
+                    <label class="aria-hidden" for="fucmotoo">Other contact method</label>
+                    <input class="form-control input-sm" type="text" name="fucmotoo" id="fucmotoo"
+                           required="required">
+                </div>
+                <div class="col-md-8 col-md-offset-4 form-group">
+                    <textarea class="form-control" id="fucmotde" name="fucmotde" rows="3"
+                              required="required"></textarea>
+                    <small class="help-block">Additional details</small>
+                </div>
+            </div>
+
+            <div class="followup-ct">
+                <h3>Communication about results</h3>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        {{ f.floatingLabel('fulctdt','Last CT date', 'required') }}
+                    </div>
+                    <div class="form-group col-sm-3 col-md-3 col-lg-2">
+                        {{ f.datepicker("fulctdt", "past", true) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        {{ f.floatingLabel('fucmctip', 'Communications method:', 'checkbox-label required') }}
+                    </div>
+
+                    <div class="col-md-8 form-group">
+                        {{ f.checkbox("fucmctip", "1", "In person", {'group':'ct-communications-method'}) }}
+                        {{ f.checkbox("fucmctte", "1", "Telephone", {'group':'ct-communications-method'}) }}
+                        {{ f.checkbox("fucmctth", "1", "TeleHealth", {'group':'ct-communications-method'}) }}
+                        {{ f.checkbox("fucmctml", "1", "Mailed letter", {'group':'ct-communications-method'}) }}
+                        {{ f.checkbox("fucmctpp", "1", "Message in Patient Portal", {'group':'ct-communications-method'}) }}
+                        {{ f.checkbox("fucmctvd", "1", "Video-on-Demand (VOD)", {'group':'ct-communications-method'}) }}
+                        {{ f.checkbox("fucmctot", "1", "Other", {'group':'ct-communications-method'}) }}
+                        <label class="aria-hidden" for="fucmctoo">Other contact method</label>
+                        <input class="form-control input-sm" type="text" name="fucmctoo" id="fucmctoo"
+                               required="required">
+                    </div>
+                    <div class="col-md-8 col-md-offset-4 form-group">
+                        <textarea class="form-control" id="fucmctde" name="fucmctde" rows="3"
+                                  required="required"></textarea>
+                        <small class="help-block">Additional details</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 ">
+                        {{ f.floatingLabel('funewct', 'Has a new CT/LDCT been ordered?', 'required') }}
+                    </div>
+                    <div class="col-md-8 form-group">
+                        {{ f.inlineRadioNY('funewct',true) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 ">
+                        {{ f.floatingLabel('fucompul', 'Communication to pulmonary?') }}
+                    </div>
+                    <div class="col-md-8 form-group">
+                        {{ f.inlineRadioNY('fucompul') }}
+                    </div>
+                </div>
+            </div>
+
             <div class="pull-left">
                 <input type="hidden" name="samistatus" value=""/>
                 <button type="submit" class="btn btn-default" id="save-for-later-button">Save for Later</button>
@@ -466,6 +538,15 @@
 
 {% block script %}
     <script>
+
+        const interactionType = $("[name=futype]:checked").val();
+        if (interactionType === "ct" || interactionType === "other") {
+            const humanMessage = "This interaction is for a <strong>" + (interactionType === "ct" ? "CT" : "non-CT") + "</strong> follow-up";
+            $message = $("<div class=\"alert alert-info\">" + humanMessage + "</div>");
+            $hiddenInput = $("<input type=\"hidden\" name=\"futype\" value=\"" + interactionType + "\"/>");
+            $("#interaction-type").html("").append($message).append($hiddenInput);
+        }
+
         function createFormValidator() {
 
             const $form = $('#main-form');
@@ -473,11 +554,11 @@
             // for certain validators that use multiple inputs like checkboxes and radio groups, change the location
             // of the error icon to be based on the form-group element, instead of being immediately adjacent to the
             // first control in that group
-            const multiInputValidators = ['simeq', 'siabx', 'siaex', 'siho', 'sicd', 'silcs', 'sier', 'sisa',
-                'sittq', 'sicpd'];
+            const multiInputValidators = ['siabx', 'siaex', 'siho', 'sicd', 'silcs', 'sier', 'sicpd', 'sidsd', 'siopss', 'sioas', 'funewct'];
 
             $form.formValidation({
                     fields: {
+                        futype: {validators: {notEmpty: {message: 'Interaction type is required'}}},
                         // SCAN
                         sidof: {
                             validators: {
@@ -494,7 +575,6 @@
                         sico: {validators: {notEmpty: {message: 'Coordinator is required'}}},
 
                         //Ordering Information
-                        simeq: {validators: {notEmpty: {message: 'Scan ordered is required'}}},
                         siopnpi: {validators: {notEmpty: {message: 'Provider ID is required'}}},
                         sidsd: {validators: {notEmpty: {message: 'Shared decision making is required'}}},
                         siopss: {validators: {notEmpty: {message: 'Smoking status is required'}}},
@@ -505,8 +585,8 @@
                                 greaterThan: {min: 0, message: 'Value must be greater than 0'}
                             }
                         },
-                        sioas: {validators: {notEmpty: {message: 'Asymptomatic is required'}}},
-                        siopci: {validators: {notEmpty: {message: 'Clinical information is required'}}},
+                        sioas: {validators: {notEmpty: {message: 'Asymptomatic response is required'}}},
+                        fursnscn: {validators: {notEmpty: {message: 'Reason for CT scan is required'}}},
                         siabx: {validators: {notEmpty: {message: 'Antibiotics is required'}}},
                         siaex: {validators: {notEmpty: {message: 'Annual scan is required'}}},
                         siwcos: {validators: {notEmpty: {message: 'Other symptom is required'}}},
@@ -517,12 +597,9 @@
                         sier: {validators: {notEmpty: {message: 'Recurrence is required'}}},
 
                         //Smoking
-                        sisa: {validators: {notEmpty: {message: 'Smoking history is required'}}},
-                        sittq: {validators: {notEmpty: {message: 'Quit attempt is required'}}},
                         siscos: {validators: {notEmpty: {message: 'Other method is required'}}},
                         sicpd: {
                             validators: {
-                                notEmpty: {message: 'Packs per day is required'},
                                 integer: {message: 'must be a whole number'}
                             }
                         },
@@ -531,6 +608,18 @@
                                 date: {max: VAPALS.todaysDate(), message: 'Quit date must not be in the future'}
                             }
                         },
+                        fucmotoo: {validators: {notEmpty: {message: 'Other communication method is required'}}},
+                        fucmotip: { //use a real element name for the field so conditional plugins can toggle the field
+                            selector: '[group=other-communications-method]',
+                            validators: {choice: {min: 1, message: 'Select one or more contact methods'}}
+                        },
+                        fulctdt: {validators: {notEmpty: {message: 'Last CT date is required'}}},
+                        fucmctoo: {validators: {notEmpty: {message: 'Other communication method is required'}}},
+                        fucmctip: { //use a real element name for the field so conditional plugins can toggle the field
+                            selector: '[group=ct-communications-method]',
+                            validators: {choice: {min: 1, message: 'Select one or more contact methods'}}
+                        },
+                        funewct: {validators: {notEmpty: {message: 'CT/LDCT order selection is required'}}}
                     },
                     plugins: {
                         trigger: new FormValidation.plugins.Trigger(),
@@ -544,7 +633,13 @@
                             validating: 'glyphicon glyphicon-refresh',
                             onPlaced: function (e) {
                                 if (multiInputValidators.indexOf(e.field) > -1) {
-                                    $("#" + e.element.id).closest(".form-group").append(e.iconElement);
+                                    $fg = $("#" + e.element.id).closest(".form-group");
+                                    $c = $fg.find(".fv-plugins-message-container");
+                                    if ($c.length == 1) {
+                                        $c.append(e.iconElement);
+                                    } else {
+                                        $fg.append(e.iconElement);
+                                    }
                                 }
                             },
                         })
@@ -553,7 +648,6 @@
             );
 
             const fv = $form.data('formValidation');
-
             fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);
             fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
 
@@ -628,7 +722,6 @@
                 return $(this).val();
             }).first().trigger("dp.change"); //trigger on page load for existing data;
 
-            $("[name=simeq]").conditionallyDisplay({enable: "#order-container"});
             $("#siwco").conditionallyEnable({sourceValues: "o", enable: "#siwcos"});
             $("[name=siwcp]").conditionallyEnable({enable: "#siwcw-container"});
             $("[name=siho]").conditionallyDisplay({enable: "#siho-container"});
@@ -639,7 +732,8 @@
             $("[name=sisa]").conditionallyDisplay({enable: "#sisa-container"});
             $("[name=sittq]").conditionallyDisplay({enable: "#sittq-container"});
             $("#siscl").conditionallyEnable({sourceValues: "l", enable: "#siscos"});
-
+            $("#fucmotot").conditionallyEnable({sourceValues: "1", enable: "#fucmotoo"}); // other contact method
+            $("#fucmctot").conditionallyEnable({sourceValues: "1", enable: "#fucmctoo"}); // other contact method
             //Calculate packs per day
             $("#sicpd").on('keyup change', function () {
                 const cigsPerDay = $("#sicpd").val();
@@ -658,6 +752,18 @@
                 }
             }).trigger('change');
 
+            $("[name=futype]").on('change', function () {
+                const interactionType = $("[name=futype]:checked").val() || $("[name=futype]").val();
+                let showCT = false;
+                let showOther = false;
+                if (interactionType == "ct") {
+                    showCT = true;
+                } else if (interactionType == "other") {
+                    showOther = true;
+                }
+                $(".followup-ct").toggle(showCT);
+                $(".followup-other").toggle(showOther);
+            }).trigger('change');
 
             //Calculate pack years and cumulative pack years, displaying and setting field values where appropriate
             $("#sidof, #siq, #sippd").on('keyup change', calculateCumulativePackYears);
@@ -677,7 +783,6 @@
             const priorFormDate = VAPALS.toMoment(priorFormDateStr);
             return priorFormDate;
         }
-
 
     </script>
 

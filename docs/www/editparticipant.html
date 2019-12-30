@@ -6,7 +6,7 @@
   <meta content="2019.12.30" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
-   Upload New Patients
+   Edit Participant
   </title>
   <link href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
@@ -135,38 +135,88 @@
     </div>
    </div>
   </nav>
-  <div class="row">
-   <div class="col-md-12">
-    <div class="message-area-static" id="message-area-static">
-    </div>
-   </div>
-  </div>
   <div class="container-fluid" style="max-width:1550px">
+   <h1>
+    Edit Participant
+   </h1>
+   <hr/>
    <div class="row">
-    <div class="col-sm-12 col-md-6 col-lg-4">
-     <div class="panel panel-default">
-      <div class="panel-heading">
-       <h3 class="panel-title">
-        Upload New Patients
-       </h3>
-      </div>
-      <div class="panel-body">
-       <form action="/vapals" enctype="multipart/form-data" method="post">
-        <input name="samiroute" type="hidden" value="newpatients"/>
-        <div class="form-group">
-         <label>
-          Please select the file
-         </label>
-         <input accept="text/csv, application/csv, application/vnd.ms-excel, text/plain, text/x-csv" id="file" name="file" required="required" type="file"/>
-        </div>
-        <div class="pull-right">
-         <input class="btn btn-primary" id="submit-button" type="submit" value="Upload"/>
-        </div>
-       </form>
-      </div>
+    <div class="col-md-12">
+     <div class="message-area-static" id="message-area-static">
      </div>
     </div>
    </div>
+   <form action="/vapals" class="validated" id="main-form" method="post">
+    <input name="samiroute" type="hidden" value="editsave"/>
+    <input name="studyid" type="hidden" value="@@SID@@"/>
+    <input name="dfn" type="hidden" value="@@DFN@@"/>
+    <div class="row">
+     <div class="col-sm-6 col-md-5 form-group">
+      <label class="required">
+       Name
+      </label>
+      <input class="form-control" id="name" name="name" placeholder="LAST, FIRST MI" required="required" type="text"/>
+     </div>
+     <div class="col-sm-3 col-md-3 form-group">
+      <label class="required">
+       <abbr title="Date of Birth">
+        DOB
+       </abbr>
+      </label>
+      <div class="input-group datepicker">
+       <input aria-describedby="dob-addon" class="form-control" data-restriction="past" id="dob" name="dob" required="required"/>
+       <div class="input-group-addon">
+        <div class="input-group-text" id="dob-addon">
+         <i aria-hidden="true" class="fa fa-calendar">
+         </i>
+        </div>
+       </div>
+      </div>
+      <small class="form-text text-muted">
+       MM/DD/YYYY
+      </small>
+     </div>
+     <div class="col-sm-3 col-md-2 form-group">
+      <label class="required">
+       Gender
+      </label>
+      <select class="form-control" id="gender" name="gender" required="required">
+       <option>
+       </option>
+       <option value="M">
+        Male
+       </option>
+       <option value="F">
+        Female
+       </option>
+      </select>
+     </div>
+    </div>
+    <div class="row">
+     <div class="col-sm-6 col-md-3 form-group">
+      <label class="required">
+       <abbr title="Social Security Number">
+        SSN
+       </abbr>
+      </label>
+      <input class="form-control" id="ssn" name="ssn" placeholder="000-00-0000" required="required" type="text"/>
+     </div>
+     <div class="col-sm-6 col-md-3 form-group">
+      <label>
+       <abbr title="Integration Control Number">
+        ICN
+       </abbr>
+      </label>
+      <input class="form-control" id="icn" name="icn" type="text"/>
+     </div>
+    </div>
+    <hr/>
+    <div class="pull-right">
+     <button class="btn btn-primary" id="submit-button" type="submit">
+      Submit
+     </button>
+    </div>
+   </form>
   </div>
   <span id="studyid-html-element" style="display:none;" value="@@SID@@">
   </span>
@@ -267,6 +317,75 @@
         $("a[data-samiroute=report]").attr("data-start-date", reportsStartDate).attr("data-end-date", reportsEndDate);
 
     })
+  </script>
+  <script>
+   function createFormValidator() {
+
+            const $form = $('#main-form');
+
+            $form.formValidation({
+                    fields: {
+                        name: {validators: {notEmpty: {message: 'Name is required'}}},
+                        ssn: {
+                            validators: {
+                                notEmpty: {message: 'SSN is required'},
+                                regexp: {
+                                    regexp: /^(?!(000|666|9(?!99)))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$/,
+                                    message: 'SSN is invalid'
+                                }
+                            }
+                        },
+                        dob: {
+                            validators: {
+                                notEmpty: {message: 'Date of birth is required'},
+                                date: {
+                                    max: VAPALS.todaysDate(),
+                                    message: 'Invalid format or date is in the future'
+                                },
+                            }
+                        },
+                        gender: {validators: {notEmpty: {message: 'Gender is required'}}}
+                    },
+                    plugins: {
+                        trigger: new FormValidation.plugins.Trigger(),
+                        bootstrap3: new FormValidation.plugins.Bootstrap3(),
+                        submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                        excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
+                        icon: new FormValidation.plugins.Icon({
+                            valid: '',
+                            invalid: 'glyphicon glyphicon-remove',
+                            validating: 'glyphicon glyphicon-refresh'
+                        })
+                    }
+                }
+            );
+
+            //NB: keep this else event handlers won't work.
+            const fv = $form.data("formValidation");
+
+            fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);
+            fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
+
+            return fv;
+        }
+
+
+        $(function () {
+            createFormValidator();
+            if (hasErrorMessage && errorFields !== "@@ERROR_" + "FIELDS@@" && errorFields !== "") {
+                const nameArr = errorFields.split(',');
+                let focused = false;
+                nameArr.forEach(function (fieldName) {
+                    const $field = $("[name=" + fieldName + "]");
+                    $field.parents(".form-group").addClass("has-error");
+                    if (focused === false) { //focus first field with an error
+                        $field.focus();
+                        focused = true;
+                    }
+                })
+            }
+        });
   </script>
  </body>
 </html>

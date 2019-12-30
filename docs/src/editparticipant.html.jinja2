@@ -1,0 +1,129 @@
+{% extends 'layout.jinja2' %}
+{% import 'forms.jinja2' as f %}
+{% block title %}{{ title | escape }}{% endblock %}
+{% block body %}
+    <div class="container-fluid" style="max-width:1550px">
+        <h1> Edit Participant </h1>
+        <hr/>
+
+        {% include '_messages.jinja2' %}
+
+        <form action="{{ formPage+".html" if mockup else "/vapals" }}" class="validated" method="{{ formMethod }}"
+              id="main-form">
+            <input type="hidden" name="samiroute" value="editsave"/>
+            <input type="hidden" name="studyid" value="@@SID@@"/>
+            <input type="hidden" name="dfn" value="@@DFN@@"/>
+            <div class="row">
+                <div class="col-sm-6 col-md-5 form-group">
+                    <label class="required">Name</label>
+                    <input class="form-control" type="text" id="name" name="name" placeholder="LAST, FIRST MI"
+                           required="required"/>
+                </div>
+                <div class="col-sm-3 col-md-3 form-group">
+                    <label class="required"><abbr title="Date of Birth">DOB</abbr></label>
+                    {{ f.datepicker("dob", "past", true) }}
+                </div>
+                <div class="col-sm-3 col-md-2 form-group">
+                    <label class="required">Gender</label>
+                    <select id="gender" name="gender" class="form-control" required="required">
+                        <option></option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-3 form-group">
+                    <label class="required"><abbr title="Social Security Number">SSN</abbr></label>
+                    <input class="form-control" type="text" id="ssn" name="ssn" required="required"
+                           placeholder="000-00-0000"/>
+                </div>
+
+                <div class="col-sm-6 col-md-3 form-group">
+                    <label><abbr title="Integration Control Number">ICN</abbr></label>
+                    <input class="form-control" type="text" id="icn" name="icn"/>
+                </div>
+            </div>
+            <hr/>
+            <div class="pull-right">
+                <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
+            </div>
+
+        </form>
+    </div>
+
+
+{% endblock %}
+
+{% block script %}
+    <script>
+        function createFormValidator() {
+
+            const $form = $('#main-form');
+
+            $form.formValidation({
+                    fields: {
+                        name: {validators: {notEmpty: {message: 'Name is required'}}},
+                        ssn: {
+                            validators: {
+                                notEmpty: {message: 'SSN is required'},
+                                regexp: {
+                                    regexp: /^(?!(000|666|9(?!99)))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$/,
+                                    message: 'SSN is invalid'
+                                }
+                            }
+                        },
+                        dob: {
+                            validators: {
+                                notEmpty: {message: 'Date of birth is required'},
+                                date: {
+                                    max: VAPALS.todaysDate(),
+                                    message: 'Invalid format or date is in the future'
+                                },
+                            }
+                        },
+                        gender: {validators: {notEmpty: {message: 'Gender is required'}}}
+                    },
+                    plugins: {
+                        trigger: new FormValidation.plugins.Trigger(),
+                        bootstrap3: new FormValidation.plugins.Bootstrap3(),
+                        submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                        defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                        excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
+                        icon: new FormValidation.plugins.Icon({
+                            valid: '',
+                            invalid: 'glyphicon glyphicon-remove',
+                            validating: 'glyphicon glyphicon-refresh'
+                        })
+                    }
+                }
+            );
+
+            //NB: keep this else event handlers won't work.
+            const fv = $form.data("formValidation");
+
+            fv.on('core.form.invalid', VAPALS.autoScrollToErrorField);
+            fv.on('core.element.validated', VAPALS.hideSuccessFormatting);
+
+            return fv;
+        }
+
+
+        $(function () {
+            createFormValidator();
+            if (hasErrorMessage && errorFields !== "@@ERROR_" + "FIELDS@@" && errorFields !== "") {
+                const nameArr = errorFields.split(',');
+                let focused = false;
+                nameArr.forEach(function (fieldName) {
+                    const $field = $("[name=" + fieldName + "]");
+                    $field.parents(".form-group").addClass("has-error");
+                    if (focused === false) { //focus first field with an error
+                        $field.focus();
+                        focused = true;
+                    }
+                })
+            }
+        });
+
+    </script>
+{% endblock %}

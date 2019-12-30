@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.11.22" name="version"/>
+  <meta content="2019.12.30" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    Lung Screening and Surveillance Intake Form
@@ -1306,7 +1306,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.11.22
+     2019.12.30
     </span>
    </div>
   </footer>
@@ -1525,15 +1525,13 @@
                         validating: 'glyphicon glyphicon-refresh',
                         onPlaced: function (e) {
                             if (multiInputValidators.indexOf(e.field) > -1) {
-
-                                let selector = "";
-                                if (e.element.id) {
-                                    selector = "#" + e.element.id
+                                $fg = $("#" + e.element.id).closest(".form-group");
+                                $c = $fg.find(".fv-plugins-message-container");
+                                if ($c.length == 1) {
+                                    $c.append(e.iconElement);
                                 } else {
-                                    selector = "[name=" + e.element.name + "]"
+                                    $fg.append(e.iconElement);
                                 }
-
-                                $(selector).closest(".form-group").append(e.iconElement);
                             }
                         },
                     })

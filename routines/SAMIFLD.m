@@ -114,6 +114,16 @@ LOAD ; process html line, e.g., load json data into graph
  ; for readability in browser
  ;
  new pssn set pssn=$$GETHDR(sid)
+ i pssn=""  d  ; for participants without a sid - ie not registered
+ . n dfn,lien
+ . s dfn=$g(SAMIFILTER("dfn")) ; if no sid, maybe a dfn
+ . q:dfn=""
+ . n lroot s lroot=$$setroot^%wd("patient-lookup") ; 
+ . s lien=$o(@lroot@("dfn",dfn,""))
+ . q:lien=""
+ . n ssn s ssn=$g(@lroot@(lien,"ssn"))
+ . q:ssn=""
+ . s pssn=$e(ssn,1,3)_"-"_$e(ssn,4,5)_"-"_$e(ssn,6,9)
  new last5 set last5=$$GETLAST5^SAMIFORM(sid)
  new useid set useid=pssn
  if useid="" set useid=last5
@@ -124,6 +134,12 @@ LOAD ; process html line, e.g., load json data into graph
  ;
  if SAMILINE["@@SID@@" do  ; insert patient study id
  . do findReplace^%ts(.SAMILINE,"@@SID@@",sid)
+ . quit
+ ;
+ if SAMILINE["@@DFN@@" do  ; insert patient study id
+ . n dfn s dfn=$g(SAMIVALS("dfn"))
+ . q:dfn=""
+ . do findReplace^%ts(.SAMILINE,"@@DFN@@",dfn)
  . quit
  ;
  if SAMILINE["src=" do  ; repoint src directory references

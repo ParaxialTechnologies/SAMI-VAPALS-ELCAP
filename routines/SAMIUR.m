@@ -117,6 +117,8 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
 SELECT(SAMIPATS,ztype,datephrase,filter) ;selects patients for report
  ;m ^gpl("select")=filter
  n type s type=ztype
+ i type="unmatched" d  q  ;
+ . d UNMAT(.SAMIPATS,ztype,.datephrase,.filter)
  i $g(type)="" s type="enrollment"
  i type="cumpy" s type="enrollment"
  n strdt,enddt,fmstrdt,fmenddt
@@ -237,6 +239,25 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ;selects patients for report
  . . s SAMIPATS(efmdate,zi,"siform")=siform
  . . m SAMIPATS(efmdate,zi,"items")=items
  . s datephrase=" as of "_$$VAPALSDT^SAMICASE($$NOW^XLFDT)
+ q
+ ;
+UNMAT(SAMIPATS,ztype,datephrase,filter)
+ ;
+ s datephrase="Unmatched Persons"
+ n lroot s lroot=$$setroot^%wd("patient-lookup")
+ n dfn s dfn=9000000
+ f  s dfn=$o(@lroot@("dfn",dfn)) q:+dfn=0  d  ;
+ . n ien s ien=$o(@lroot@("dfn",dfn,""))
+ . i $g(@lroot@(ien,"remotedfn"))'="" q  ;
+ . m SAMIPATS(ien,dfn)=@lroot@(ien)
+ . ;new name set name=$g(SAMIPATS(ien,dfn,"saminame"))
+ . new name set name=$g(SAMIPATS(ien,dfn,"sinamef"))
+ . set name=name_","_SAMIPATS(ien,dfn,"sinamel")
+ . new nuhref set nuhref="<form method=POST action=""/vapals"">"
+ . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""editperson"">"
+ . set nuhref=nuhref_"<input type=hidden name=""dfn"" value="_dfn_">"
+ . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
+ . s SAMIPATS(ien,dfn,"editref")=nuhref
  q
  ;
 PNAME(type,phrase) ; extrinsic returns the PAGE NAME for the report

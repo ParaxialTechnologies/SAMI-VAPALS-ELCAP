@@ -90,6 +90,13 @@ RPTTBL(RPT,TYPE) ; RPT is passed by reference and returns the
  . S RPT(3,"routine")="$$VALS^SAMIUR2"
  . S RPT(4,"header")="Smoking History"
  . S RPT(4,"routine")="$$SMHIS^SAMIUR2"
+ if type="unmatched" d  ;
+ . S RPT(1,"header")="Unmatched Entry"
+ . S RPT(1,"routine")="$$MANPAT^SAMIUR2"
+ . S RPT(2,"header")="Possible Match"
+ . S RPT(2,"routine")="$$POSSIBLE^SAMIUR2"
+ . S RPT(3,"header")="Match Control"
+ . S RPT(3,"routine")="$$MATCH^SAMIUR2"
  ;
  q
  ;
@@ -111,9 +118,11 @@ NAME(zdt,dfn,SAMIPATS) ; extrinsic returns the name including a hyperlink
  q $g(SAMIPATS(zdt,dfn,"nuhref"))
  ;
 SSN(zdt,dfn,SAMIPATS) ; extrinsic returns SSN
- n ssn
- s ssn="ssn"
- q $g(SAMIPATS(zdt,dfn,"ssn"))
+ n ssn,tssn
+ s tssn=$g(SAMIPATS(zdt,dfn,"ssn"))
+ s ssn=tssn
+ i ssn'["-" s ssn=$e(tssn,1,3)_"-"_$e(tssn,4,5)_"-"_$e(tssn,6,9)
+ q ssn
  ;
 BLINEDT(zdt,dfn,SAMIPATS) ; extrinsic returns Baseline Date
  n bldt
@@ -399,6 +408,44 @@ SHDET(SID,KEY) ; Extrinsic returns table contents for smoking history
  . s return=return_"</tr>"
  k pyary
  q return
+ ;
+MANPAT(ien,dfn,SAMIPATS) ; extrinsic returns the unmatched patient cell
+ n zcell
+ s zcell=""
+ ;s zcell=zcell_$g(SAMIPATS(ien,dfn,"saminame"))
+ s zcell=zcell_$g(SAMIPATS(ien,dfn,"editref"))
+ s zcell=zcell_"<br>Date of Birth: "_$g(SAMIPATS(ien,dfn,"dob"))
+ s zcell=zcell_" Gender: "_$g(SAMIPATS(ien,dfn,"sex"))
+ n ssn s ssn=$g(SAMIPATS(ien,dfn,"ssn"))
+ i ssn="" d  ;
+ . n lroot s lroot=$$setroot^%wd("patient-lookup")
+ . n tssn s tssn=$g(@lroot@(ien,"ssn"))
+ . s ssn=$e(tssn,1,3)_"-"_$e(tssn,4,5)_"-"_$e(tssn,6,9)
+ s zcell=zcell_"<br>SSN: "_ssn
+ s zcell=zcell_"<br>dfn: "_dfn
+ q zcell
+ ;
+POSSIBLE(ien,dfn,SAMIPATS) ; extrinsic returns possible match cell
+ n zcell
+ s zcell=""
+ n matien s matien=$g(SAMIPATS(ien,dfn,"MATCHLOG"))
+ i matien="" q zcell
+ n lroot s lroot=$$setroot^%wd("patient-lookup")
+ s zcell=zcell_$g(@lroot@(matien,"saminame"))
+ s zcell=zcell_"<br>Date of Birth: "_$g(@lroot@(matien,"sbdob"))
+ s zcell=zcell_" Gender: "_$g(@lroot@(matien,"sex"))
+ n tssn s tssn=$g(@lroot@(matien,"ssn"))
+ n ssn s ssn=tssn
+ i tssn'["-" s ssn=$e(tssn,1,3)_"-"_$e(tssn,4,5)_"-"_$e(tssn,6,9)
+ s zcell=zcell_"<br>SSN: "_ssn
+ s zcell=zcell_"<br>dfn: "_$g(@lroot@(matien,"dfn"))
+ ;
+ q zcell
+ ;
+MATCH(ien,dfn,SAMIPATS) ; extrinsic returns the match button cell
+ n zcell
+ s zcell=""
+ q zcell
  ;
 CUMPY(PYARY,sid,KEY) ; forms array of cummulative pack year data
  ; PYARY passed by name

@@ -153,31 +153,36 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  ;
  i route="editperson" d  q  ;
  . m SAMIARG=vars
- . n sid s sid=$g(vars("studyid")) ; must have a sid
- . i sid="" d  q  ;
+ . n dfn s dfn=$g(vars("dfn")) ; must have a dfn
+ . i dfn="" d  q  ;
  . . d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home 
- . n sien s sien=$$SID2NUM^SAMIHOM3(sid)
+ . n root s root=$$setroot^%wd("patient-lookup")
+ . n sien s sien=$o(@root@("dfn",dfn,""))
  . i sien="" d  q  ;
  . . d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home 
- . n root s root=$$setroot^%wd("vapals-patients")
- . s vars("saminame")=$g(@root@(sien,"saminame"))
- . s vars("dob")=$g(@root@(sien,"dob"))
+ . s vars("name")=$g(@root@(sien,"saminame"))
+ . s tdob=$g(@root@(sien,"dob"))
+ . s vars("dob")=$p(tdob,"-",2)_"/"_$p(tdob,"-",3)_"/"_$p(tdob,"-",1)
  . s vars("sbdob")=$g(@root@(sien,"dob"))
- . s vars("gender")=$g(@root@(sien,"gender"))
- . s vars("sex")=$g(@root@(sien,"sex"))
+ . s vars("gender")=$g(@root@(sien,"sex"))
  . s vars("icn")=$g(@root@(sien,"icn"))
- . s vars("ssn")=$g(@root@(sien,"ssn"))
+ . n tssn s tssn=$g(@root@(sien,"ssn"))
+ . s vars("ssn")=$e(tssn,1,3)_"-"_$e(tssn,4,5)_"-"_$e(tssn,6,9)
  . s vars("last5")=$g(@root@(sien,"last5"))
  . s vars("dfn")=$g(@root@(sien,"dfn"))
  . m SAMIARG=vars
  . n form,err,zhtml
- . s form="vapals:addperson"
+ . s form="vapals:editparticipant"
  . d RTNPAGE^SAMIHOM4(.SAMIRESULT,form,.SAMIARG) q  ;
  ;
  i route="register" d  q  ;
  . m SAMIARG=vars
  . d REG^SAMIHOM4(.SAMIRESULT,.SAMIARG)
  ; 
+ i route="editsave" d  q  ;
+ . m SAMIARG=vars
+ . d SAVE^SAMIHOM4(.SAMIRESULT,.SAMIARG)
+ ;
  quit  ; End of WSVAPALS
  ;
  ;
@@ -217,14 +222,24 @@ REG(SAMIRTN,SAMIARG) ; manual registration
  n root s root=$$setroot^%wd("patient-lookup")
  n proot s proot=$$setroot^%wd("vapals-patients")
  n ptlkien s ptlkien=""
- n sid s sid=$g(SAMIARG("studyid"))
  n dfn s dfn=""
  n sien s sien=""
- i sid'="" d  ; this is an edit
- . s sien=$$SID2NUM^SAMIHOM3(sid)
- . s dfn=$g(@proot@(sien,"dfn"))
- . s pklkien=$o(@root@("dfn",dfn,"")) ; patient lookup ien
  i ptlkien="" s ptlkien=$o(@root@("AAAAAA"),-1)+1
+ d MKPTLK(ptlkien,.SAMIARG) ; make the patient-lookup record
+ ;
+ s dfn=$o(@root@("dfn"," "),-1)+1
+ i dfn<9000001 s dfn=9000001
+ s @root@(ptlkien,"dfn")=dfn
+ d INDXPTLK(ptlkien)
+ s SAMIFILTER("samiroute")="addperson"
+ d SETINFO(.SAMIFILTER,name_" was successfully entered")
+ ;d SETWARN(.SAMIFILTER,"We might want to give you a warning")
+ do WSVAPALS^SAMIHOM3(.SAMIFILTER,.SAMIARG,.SAMIRESULT)
+ q
+ ;
+MKPTLK(ptlkien,SAMIARG) ; creates the patient-lookup record
+ n ssn s ssn=SAMIARG("ssn")
+ s ssn=$tr(ssn,"-")
  n name s name=$g(SAMIARG("name"))
  s @root@(ptlkien,"saminame")=name
  s @root@(ptlkien,"sinamef")=$p(name,",",1)
@@ -241,15 +256,25 @@ REG(SAMIRTN,SAMIARG) ; manual registration
  s @root@(ptlkien,"ssn")=ssn
  n last5 s last5=$$UCASE($e(name,1))_$e(ssn,6,9)
  s @root@(ptlkien,"last5")=last5
- ;n dfn
- s dfn=$o(@root@("dfn"," "),-1)+1
- i dfn<9000001 s dfn=9000001
- s @root@(ptlkien,"dfn")=dfn
- d INDXPTLK(ptlkien)
- s SAMIFILTER("samiroute")="addperson"
- d SETINFO(.SAMIFILTER,name_" was successfully entered")
- ;d SETWARN(.SAMIFILTER,"We might want to give you a warning")
- do WSVAPALS^SAMIHOM3(.SAMIFILTER,.SAMIARG,.SAMIRESULT)
+ q
+ ;
+UPDTFRMS(dfn) ; update demographics in all patient forms for patient dfn
+ ;
+ n lroot s lroot=$$setroot^%wd("patient-lookup")
+ n proot s proot=$$setroot^%wd("vapals-patients")
+ n lien s lien=$o(@lroot@("dfn",dfn,""))
+ q:lien=""
+ n pien s pien=$o(@proot@("dfn",dfn,""))
+ q:pien=""
+ ; this patient has forms
+ m @proot@(pien)=@lroot@(lien) ; refresh the demos in the patient record
+ n ssn s ssn=$g(@proot@(pien,"ssn"))
+ s @proot@(pien,"sissn")=$e(ssn,1,3)_"-"_$e(ssn,4,5)_"-"_$e(ssn,6,9)
+ n sid s sid=$g(@proot@("sisid")) ; studyid 
+ q:sid=""  ; no studyid
+ n zi s zi=""
+ f  s zi=$o(@proot@("graph",sid,zi)) q:zi=""  d  ; for each form
+ . m @proot@("graph",sid,zi)=@proot@(pien) ; stamp each form with new demos
  q
  ;
 DUPSSN(ssn) ; extrinsic returns true if duplicate ssn
@@ -270,6 +295,26 @@ BADICN(icn) ; extrinsic returns true if ICN checkdigits are wrong
  q:zchk="" 1
  i zchk'=$$CHECKDG^MPIFSPC(zicn) q 1
  q 0
+ ;
+SAVE(SAMIRESULT,SAMIARG) ; save patient-lookup record after edit
+ ;
+ n dfn s dfn=$g(vars("dfn")) ; must have a dfn
+ i dfn="" d  q  ;
+ . d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home 
+ n root s root=$$setroot^%wd("patient-lookup")
+ n sien s sien=$o(@root@("dfn",dfn,""))
+ i sien="" d  q  ;
+ . d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home 
+ d UNINDXPT(sien) ; remove old index entried
+ d MKPTLK(sien,.SAMIARG) ; add the updated fields
+ d INDXPTLK(sien) ; create new index entries
+ d UPDTFRMS(dfn) ; update demographic info in all forms
+ n filter,bdy
+ s bdy=""
+ s filter("samiroute")="report"
+ s filter("samireporttype")="unmatched"
+ d WSVAPALS^SAMIHOM3(.filter,.bdy,.SAMIRESULT) ; back to the unmatched report
+ q
  ;
 SETINFO(vars,msg) ; set the information message text
  ; vars are the screen variables passed by reference
@@ -329,22 +374,49 @@ INDXPTLK(ien) ; generate index entries in patient-lookup graph
  n ucname s ucname=$$UCASE(name)
  s @proot@("name",ucname,ien)=""
  n x
- s x=$g(@proot@(ien,"dfn")) w !,x
+ s x=$g(@proot@(ien,"dfn")) ;w !,x
  s:x'="" @proot@("dfn",x,ien)=""
- s x=$g(@proot@(ien,"last5")) w !,x
+ s x=$g(@proot@(ien,"last5")) ;w !,x
  s:x'="" @proot@("last5",x,ien)=""
- s x=$g(@proot@(ien,"icn")) w !,x
+ s x=$g(@proot@(ien,"icn")) ;w !,x
  i x'["V" d  ;
  . n chk s chk=$$CHECKDG^MPIFSPC(x)
  . s @proot@(ien,"icn")=x_"V"_chk
  . s x=x_"V"_chk
  s:x'="" @proot@("icn",x,ien)=""
- s x=$g(@proot@(ien,"ssn")) w !,x
+ s x=$g(@proot@(ien,"ssn")) ;w !,x
  s:x'="" @proot@("ssn",x,ien)=""
- s x=$g(@proot@(ien,"sinamef")) w !,x
+ s x=$g(@proot@(ien,"sinamef")) ;w !,x
  s:x'="" @proot@("sinamef",x,ien)=""
  s x=$g(@proot@(ien,"sinamel")) w !,x
  s:x'="" @proot@("sinamel",x,ien)=""
+ set @proot@("Date Last Updated")=$$HTE^XLFDT($horolog)
+ q
+ ;
+UNINDXPT(ien) ; remove index entries in patient-lookup graph
+ ; for entry ien
+ n proot set proot=$$setroot^%wd("patient-lookup")
+ n name s name=$g(@proot@(ien,"saminame"))
+ k @proot@("name",name,ien)
+ n ucname s ucname=$$UCASE(name)
+ k @proot@("name",ucname,ien)
+ n x
+ s x=$g(@proot@(ien,"dfn")) ;w !,x
+ k:x'="" @proot@("dfn",x,ien)
+ s x=$g(@proot@(ien,"last5")) ;w !,x
+ k:x'="" @proot@("last5",x,ien)
+ s x=$g(@proot@(ien,"icn")) ;w !,x
+ i x'["V" d  ;
+ . n chk s chk=$$CHECKDG^MPIFSPC(x)
+ . s @proot@(ien,"icn")=x_"V"_chk
+ . s x=x_"V"_chk
+ k:x'="" @proot@("icn",x,ien)
+ s x=$g(@proot@(ien,"ssn")) ;w !,x
+ k:x'="" @proot@("ssn",x,ien)
+ s x=$g(@proot@(ien,"sinamef")) ;w !,x
+ k:x'="" @proot@("sinamef",x,ien)
+ s x=$g(@proot@(ien,"sinamel")) w !,x
+ k:x'="" @proot@("sinamel",x,ien)
  set @proot@("Date Last Updated")=$$HTE^XLFDT($horolog)
  q
  ;

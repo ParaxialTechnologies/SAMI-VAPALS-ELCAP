@@ -256,6 +256,8 @@ MKPTLK(ptlkien,SAMIARG) ; creates the patient-lookup record
  s @root@(ptlkien,"ssn")=ssn
  n last5 s last5=$$UCASE($e(name,1))_$e(ssn,6,9)
  s @root@(ptlkien,"last5")=last5
+ n mymatch s mymatch=$g(SAMIARG("MATCHLOG"))
+ i mymatch'="" s @root@(ptlkien,"MATCHLOG")=mymatch
  q
  ;
 UPDTFRMS(dfn) ; update demographics in all patient forms for patient dfn
@@ -305,7 +307,12 @@ SAVE(SAMIRESULT,SAMIARG) ; save patient-lookup record after edit
  n sien s sien=$o(@root@("dfn",dfn,""))
  i sien="" d  q  ;
  . d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home 
- d UNINDXPT(sien) ; remove old index entried
+ d UNINDXPT(sien) ; remove old index entries
+ n zm
+ k SAMIARG("MATCHLOG")
+ s zm=$$REMATCH(sien,.SAMIARG)
+ i zm>0 d  ;
+ . s SAMIARG("MATCHLOG")=zm
  d MKPTLK(sien,.SAMIARG) ; add the updated fields
  d INDXPTLK(sien) ; create new index entries
  d UPDTFRMS(dfn) ; update demographic info in all forms
@@ -315,6 +322,30 @@ SAVE(SAMIRESULT,SAMIARG) ; save patient-lookup record after edit
  s filter("samireporttype")="unmatched"
  d WSVAPALS^SAMIHOM3(.filter,.bdy,.SAMIRESULT) ; back to the unmatched report
  q
+ ;
+REMATCH(sien,SAMIARG) ; extrinsic returns a possible match ien
+ ; else zero
+ n lroot s lroot=$$setroot^%wd("patient-lookup")
+ n ssn,name,icn,x
+ s ssn=$g(SAMIARG("ssn"))
+ i ssn["-" s ssn=$tr(ssn,"-")
+ s name=$g(SAMIARG("saminame"))
+ i name="" s name=$g(SAMIARG("name"))
+ s icn=$g(SAMIARG("icn"))
+ s x=0
+ i ssn'="" s x=$o(@lroot@("ssn",ssn,""))
+ i x=sien s x=$o(@lroot@("ssn",ssn,x))
+ i x>9000000 s x=0
+ i x>0 q x
+ i name'="" s x=$o(@lroot@("name",name,""))
+ i x=sien s x=$o(@lroot@("name",name,x))
+ i x>9000000 s x=0
+ i x>0 q x
+ i icn'="" s x=$o(@lroot@("icn",icn,""))
+ i x=sien s x=$o(@lroot@("icn",icn,x))
+ i x>9000000 s x=0
+ i x>0 q x
+ q 0
  ;
 SETINFO(vars,msg) ; set the information message text
  ; vars are the screen variables passed by reference

@@ -431,6 +431,7 @@ POSSIBLE(ien,dfn,SAMIPATS) ; extrinsic returns possible match cell
  n matien s matien=$g(SAMIPATS(ien,dfn,"MATCHLOG"))
  i matien="" q zcell
  n lroot s lroot=$$setroot^%wd("patient-lookup")
+ i '$d(@lroot@(matien)) q zcell
  s zcell=zcell_$g(@lroot@(matien,"saminame"))
  s zcell=zcell_"<br>Date of Birth: "_$g(@lroot@(matien,"sbdob"))
  s zcell=zcell_" Gender: "_$g(@lroot@(matien,"sex"))
@@ -443,9 +444,15 @@ POSSIBLE(ien,dfn,SAMIPATS) ; extrinsic returns possible match cell
  q zcell
  ;
 MATCH(ien,dfn,SAMIPATS) ; extrinsic returns the match button cell
- n zcell
- s zcell=""
- q zcell
+ ;
+ n matien s matien=$g(SAMIPATS(ien,dfn,"MATCHLOG"))
+ i matien="" q ""
+ ;
+ new nuhref set nuhref="<form method=POST action=""/vapals"">"
+ set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""merge"">"
+ set nuhref=nuhref_"<input type=hidden name=""toien"" value="_ien_">"
+ set nuhref=nuhref_"<input value=""Merge"" class=""btn btn-link"" role=""link"" type=""submit""></form>"
+ q nuhref
  ;
 CUMPY(PYARY,sid,KEY) ; forms array of cummulative pack year data
  ; PYARY passed by name

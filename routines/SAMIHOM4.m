@@ -183,6 +183,10 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  . m SAMIARG=vars
  . d SAVE^SAMIHOM4(.SAMIRESULT,.SAMIARG)
  ;
+ i route="merge" d  q  ;
+ . m SAMIARG=vars
+ . d MERGE^SAMIHOM4(.SAMIRESULT,.SAMIARG)
+ ;
  quit  ; End of WSVAPALS
  ;
  ;
@@ -279,6 +283,77 @@ UPDTFRMS(dfn) ; update demographics in all patient forms for patient dfn
  . m @proot@("graph",sid,zi)=@proot@(pien) ; stamp each form with new demos
  q
  ;
+MERGE(SAMIRESULT,SAMIARGS) ; merge participant records
+ ; called from pressing the merge button on the unmatched report
+ n toien s toien=$g(SAMIARGS("toien"))
+ i toien="" d  q  ;
+ . d WSUNMAT(.SAMIRESULT,.SAMIARGS)
+ n lroot s lroot=$$setroot^%wd("patient-lookup")
+ n fromien s fromien=$g(@lroot@(toien,"MATCHLOG"))
+ i fromien="" d  q  ;
+ . d WSUNMAT(.SAMIRESULT,.SAMIARGS)
+ ;
+ ; test for remotedfn in from record - not valid if absent
+ ;
+ i $g(@lroot@(fromien,"remotedfn"))="" d  q  ;
+ . d WSUNMAT(.SAMIRESULT,.SAMIARGS)
+ ;
+ ; remove index entries for from and to records
+ ;
+ d UNINDXPT(fromien) ; delete index entries
+ d UNINDXPT(toien)
+ ;
+ ; create changelog entry in to record - contains from record
+ ;
+ m @lroot@(toien,"changelog",$$FMTE^XLFDT($$NOW^XLFDT,5))=@lroot@(fromien)
+ ;
+ ; change the dfn in the from record to the to record dfn for merging
+ ;
+ s @lroot@(fromien,"dfn")=@lroot@(toien,"dfn")
+ n dfn s dfn=@lroot@(toien,"dfn") ; for use in updating forms
+ ;
+ ; merge the from record to the to record
+ ;
+ m @lroot@(toien)=@lroot@(fromien)
+ ;
+ ; delete the from record
+ ;
+ k @lroot@(fromien)
+ ;
+ ; reindex the to record
+ ;
+ d INDXPTLK(toien)
+ ;
+ ; propagate the updated from record to every form
+ ;
+ d UPDTFRMS(dfn) ; updates the patient in the vapals-patient graph
+ ;
+ ; leave and return to the unmatched report
+ ;   note that the form and to records will no longer be in the report
+ ;
+ d WSUNMAT(.SAMIRESULT,.SAMIARGS)
+ ;
+ q
+ ;
+ADDUNMAT ; adds the unmatched report web service to the system
+ ;
+ d addService^%webutils("GET","unmatched","WSUNMAT^SAMIHOM4")
+ q
+ ;
+DELUNMAT ; deletes the unmatched web service
+ ;
+ d deleteService^%webutils("GET","unmatched")
+ q
+ ;
+WSUNMAT(SAMIRESULT,SAMIARGS) ; navigates to unmatched report
+ ; 
+ n filter,bdy
+ s bdy=""
+ s filter("samiroute")="report"
+ s filter("samireporttype")="unmatched"
+ d WSVAPALS^SAMIHOM3(.filter,.bdy,.SAMIRESULT) ; back to the unmatched report
+ q
+ ;
 DUPSSN(ssn) ; extrinsic returns true if duplicate ssn
  n proot s proot=$$setroot^%wd("patient-lookup")
  i $d(@proot@("ssn",ssn)) q 1
@@ -326,7 +401,7 @@ SAVE(SAMIRESULT,SAMIARG) ; save patient-lookup record after edit
 REMATCH(sien,SAMIARG) ; extrinsic returns a possible match ien
  ; else zero
  n lroot s lroot=$$setroot^%wd("patient-lookup")
- n ssn,name,icn,x
+ n ssn,name,icn,x,y
  s ssn=$g(SAMIARG("ssn"))
  i ssn["-" s ssn=$tr(ssn,"-")
  s name=$g(SAMIARG("saminame"))
@@ -335,15 +410,21 @@ REMATCH(sien,SAMIARG) ; extrinsic returns a possible match ien
  s x=0
  i ssn'="" s x=$o(@lroot@("ssn",ssn,""))
  i x=sien s x=$o(@lroot@("ssn",ssn,x))
- i x>9000000 s x=0
+ i +x'=0 d  ;
+ . s y=$g(@lroot@(x,"dfn"))
+ . i y>9000000 s x=0
  i x>0 q x
  i name'="" s x=$o(@lroot@("name",name,""))
  i x=sien s x=$o(@lroot@("name",name,x))
- i x>9000000 s x=0
+ i +x'=0 d  ;
+ . s y=$g(@lroot@(x,"dfn"))
+ . i y>9000000 s x=0
  i x>0 q x
  i icn'="" s x=$o(@lroot@("icn",icn,""))
  i x=sien s x=$o(@lroot@("icn",icn,x))
- i x>9000000 s x=0
+ i +x'=0 d  ;
+ . s y=$g(@lroot@(x,"dfn"))
+ . i y>9000000 s x=0
  i x>0 q x
  q 0
  ;

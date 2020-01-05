@@ -248,6 +248,7 @@ UNMAT(SAMIPATS,ztype,datephrase,filter)
  n dfn s dfn=9000000
  f  s dfn=$o(@lroot@("dfn",dfn)) q:+dfn=0  d  ;
  . n ien s ien=$o(@lroot@("dfn",dfn,""))
+ . q:ien=""
  . i $g(@lroot@(ien,"remotedfn"))'="" q  ;
  . m SAMIPATS(ien,dfn)=@lroot@(ien)
  . ;new name set name=$g(SAMIPATS(ien,dfn,"saminame"))

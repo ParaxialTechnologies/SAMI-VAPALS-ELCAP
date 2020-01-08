@@ -192,6 +192,8 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  ;
 REG(SAMIRTN,SAMIARG) ; manual registration
  ;
+ n name s name=$g(SAMIARG("name"))
+ ;
  m ^gpl("reg")=SAMIARG
  n ssn s ssn=SAMIARG("ssn")
  s ssn=$tr(ssn,"-")
@@ -229,6 +231,11 @@ REG(SAMIRTN,SAMIARG) ; manual registration
  n dfn s dfn=""
  n sien s sien=""
  i ptlkien="" s ptlkien=$o(@root@("AAAAAA"),-1)+1
+ n zm
+ k SAMIARG("MATCHLOG")
+ s zm=$$REMATCH(sien,.SAMIARG)
+ i zm>0 d  ;
+ . s SAMIARG("MATCHLOG")=zm
  d MKPTLK(ptlkien,.SAMIARG) ; make the patient-lookup record
  ;
  s dfn=$o(@root@("dfn"," "),-1)+1
@@ -420,12 +427,12 @@ REMATCH(sien,SAMIARG) ; extrinsic returns a possible match ien
  . s y=$g(@lroot@(x,"dfn"))
  . i y>9000000 s x=0
  i x>0 q x
- i icn'="" s x=$o(@lroot@("icn",icn,""))
- i x=sien s x=$o(@lroot@("icn",icn,x))
- i +x'=0 d  ;
- . s y=$g(@lroot@(x,"dfn"))
- . i y>9000000 s x=0
- i x>0 q x
+ ;i icn'="" s x=$o(@lroot@("icn",icn,""))
+ ;i x=sien s x=$o(@lroot@("icn",icn,x))
+ ;i +x'=0 d  ;
+ ;. s y=$g(@lroot@(x,"dfn"))
+ ;. i y>9000000 s x=0
+ ;i x>0 q x
  q 0
  ;
 SETINFO(vars,msg) ; set the information message text

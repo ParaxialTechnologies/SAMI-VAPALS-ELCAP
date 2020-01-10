@@ -105,7 +105,7 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  . m SAMIARG=vars
  . d WSNUFORM^SAMICASE(.SAMIRESULT,.SAMIARG)
  ;
- i route="addform" d  q  ;
+ i route="addform" d  q 0
  . m SAMIARG=vars
  . d WSNFPOST^SAMICASE(.SAMIARG,.SAMIBODY,.SAMIRESULT)
  ;
@@ -179,7 +179,7 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  . m SAMIARG=vars
  . d REG^SAMIHOM4(.SAMIRESULT,.SAMIARG)
  ; 
- i route="editsave" d  q  ;
+ i route="editsave" d  q 0
  . m SAMIARG=vars
  . d SAVE^SAMIHOM4(.SAMIRESULT,.SAMIARG)
  ;

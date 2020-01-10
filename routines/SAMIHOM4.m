@@ -650,6 +650,14 @@ GETHOME ; homepage accessed using GET
  . i ln["id" i ln["studyIdMenu" d  ;
  . . s zi=zi+4
  . ;
+ . if ln["@@MANUALREGISTRATION@@" do  ; turn off manual registration
+ . . n setman,setparm
+ . . s setman="true"
+ . . s setparm=$$GET^XPAR("SYS","SAMI ALLOW MANUAL ENTRY",,"Q")
+ . . i setparm=0 s setman="false"
+ . . do findReplace^%ts(.ln,"@@MANUALREGISTRATION@@",setman)
+ . . s temp(zi)=ln
+ . . quit 
  . set cnt=cnt+1
  . set tout(cnt)=temp(zi)
  . quit

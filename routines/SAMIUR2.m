@@ -232,7 +232,7 @@ GENDER(zdt,dfn,SAMIPATS) ; extrinsic returns gender
 RACE(zdt,dfn,SAMIPATS) ; extrinsic returns race
  n root s root=$$setroot^%wd("vapals-patients")
  n race s race=$g(@root@(dfn,"race"))
- q:race=""
+ q:race="" ""
  q race
  ;
 ETHNCTY(zdt,dfn,SAMIPATS) ; extrinsic returns ethnicity

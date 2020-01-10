@@ -89,19 +89,19 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  n route s route=$g(vars("samiroute"))
  i route=""  d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home
  ;
- i route="lookup" d  q  ;
+ i route="lookup" d  q 0
  . m SAMIARG=vars
  . d WSLOOKUP^SAMISRC2(.SAMIARG,.SAMIBODY,.SAMIRESULT)
  ;
- i route="newcase" d  q  ;
+ i route="newcase" d  q 0
  . m SAMIARG=vars
  . d WSNEWCAS^SAMIHOM3(.SAMIARG,.SAMIBODY,.SAMIRESULT)
  ;
- i route="casereview" d  q  ;
+ i route="casereview" d  q 0
  . m SAMIARG=vars
  . d WSCASE^SAMICASE(.SAMIRESULT,.SAMIARG)
  ;
- i route="nuform" d  q  ;
+ i route="nuform" d  q 0
  . m SAMIARG=vars
  . d WSNUFORM^SAMICASE(.SAMIRESULT,.SAMIARG)
  ;
@@ -109,11 +109,11 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  . m SAMIARG=vars
  . d WSNFPOST^SAMICASE(.SAMIARG,.SAMIBODY,.SAMIRESULT)
  ;
- i route="form" d  q  ;
+ i route="form" d  q 0
  . m SAMIARG=vars
  . d wsGetForm^%wf(.SAMIRESULT,.SAMIARG)
  ;
- i route="postform" d  q  ;
+ i route="postform" d  q 0
  . m SAMIARG=vars
  . d wsPostForm^%wf(.SAMIARG,.SAMIBODY,.SAMIRESULT)
  . i $g(SAMIARG("form"))["siform" d  ;
@@ -128,30 +128,30 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  . . . m ^SAMIUL("newFILTER")=SAMIFILTER
  . . . d WSNOTE^SAMINOT1(.SAMIRESULT,.SAMIARG)
  ;
- i route="deleteform" d  q  ;
+ i route="deleteform" d  q 0
  . m SAMIARG=vars
  . d DELFORM^SAMICASE(.SAMIRESULT,.SAMIARG)
  ;
- i route="ctreport" d  q  ;
+ i route="ctreport" d  q 0
  . m SAMIARG=vars
  . d WSREPORT^SAMICTR0(.SAMIRESULT,.SAMIARG)
  . ;d wsReport^SAMICTRT(.SAMIRESULT,.SAMIARG)
  ;
- i route="note" d  q  ; 
+ i route="note" d  q 0
  . m SAMIARG=vars
  . d WSNOTE^SAMINOT1(.SAMIRESULT,.SAMIARG)
  ;
- i route="report" d  q  ; 
+ i route="report" d  q 0 
  . m SAMIARG=vars
  . d WSREPORT^SAMIUR(.SAMIRESULT,.vars)
  ;
- i route="addperson" d  q  ;
+ i route="addperson" d  q 0
  . m SAMIARG=vars
  . n form
  . s form="vapals:addperson"
  . d RTNPAGE^SAMIHOM4(.SAMIRESULT,form,.SAMIARG) q  ;
  ;
- i route="editperson" d  q  ;
+ i route="editperson" d  q 0
  . m SAMIARG=vars
  . n dfn s dfn=$g(vars("dfn")) ; must have a dfn
  . i dfn="" d  q  ;
@@ -175,7 +175,7 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  . s form="vapals:editparticipant"
  . d RTNPAGE^SAMIHOM4(.SAMIRESULT,form,.SAMIARG) q  ;
  ;
- i route="register" d  q  ;
+ i route="register" d  q 0
  . m SAMIARG=vars
  . d REG^SAMIHOM4(.SAMIRESULT,.SAMIARG)
  ; 
@@ -183,11 +183,11 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  . m SAMIARG=vars
  . d SAVE^SAMIHOM4(.SAMIRESULT,.SAMIARG)
  ;
- i route="merge" d  q  ;
+ i route="merge" d  q 0
  . m SAMIARG=vars
  . d MERGE^SAMIHOM4(.SAMIRESULT,.SAMIARG)
  ;
- quit  ; End of WSVAPALS
+ quit 0  ; End of WSVAPALS
  ;
  ;
 REG(SAMIRTN,SAMIARG) ; manual registration

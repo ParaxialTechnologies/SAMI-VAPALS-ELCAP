@@ -36,7 +36,7 @@
                                 <input type="text" class="form-control" id="pt-lookup-input" name="pt-lookup-input"
                                        placeholder="Name or LAST5">
                             </div>
-                            <div class="pull-left">
+                            <div class="pull-left" id="manual-registration" style="display:none;">
                                 <a href="{{ "register.html" if mockup else "#!" }}" class="navigation"
                                    data-method="{{ formMethod }}" data-samiroute="addperson">
                                     manual registration...</a>
@@ -86,6 +86,13 @@
 
 {% block script %}
     <script>
+        const manualRegistrationEnabled = '@@MANUALREGISTRATION@@';
+        if (manualRegistrationEnabled !== 'true') {
+            $("#manual-registration").remove();
+        } else {
+            $("#manual-registration").show();
+        }
+
         $(function () {
             // Set up the modal confirmation to include a new patient
             $('#pt-inclusion-btn').on("click", function (e) {
@@ -149,7 +156,6 @@
         });
 
         // Load google charts
-
         //first pull in the google API
         google.charts.load('current', {'packages': ['corechart', 'bar']});
         google.charts.setOnLoadCallback(googleReady);

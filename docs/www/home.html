@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2019.12.31" name="version"/>
+  <meta content="2020.01.10" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    Home
@@ -166,7 +166,7 @@
          </label>
          <input class="form-control" id="pt-lookup-input" name="pt-lookup-input" placeholder="Name or LAST5" type="text"/>
         </div>
-        <div class="pull-left">
+        <div class="pull-left" id="manual-registration" style="display:none;">
          <a class="navigation" data-method="post" data-samiroute="addperson" href="#!">
           manual registration...
          </a>
@@ -234,7 +234,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2019.12.31
+     2020.01.10
     </span>
    </div>
   </footer>
@@ -324,7 +324,14 @@
     })
   </script>
   <script>
-   $(function () {
+   const manualRegistrationEnabled = '@@MANUALREGISTRATION@@';
+        if (manualRegistrationEnabled !== 'true') {
+            $("#manual-registration").remove();
+        } else {
+            $("#manual-registration").show();
+        }
+
+        $(function () {
             // Set up the modal confirmation to include a new patient
             $('#pt-inclusion-btn').on("click", function (e) {
                 e.preventDefault();
@@ -387,7 +394,6 @@
         });
 
         // Load google charts
-
         //first pull in the google API
         google.charts.load('current', {'packages': ['corechart', 'bar']});
         google.charts.setOnLoadCallback(googleReady);

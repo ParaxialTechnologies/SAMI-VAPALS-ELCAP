@@ -1,17 +1,17 @@
 FIELD NUM	QUESTION	NAME	TYPE	REQUIRED	PLACEHOLDER	VALUES	LABELS
-1	Follow-up date	sidof	text	1			Follow-up date
-2	Date of baseline CT	sidoe	text	1			Date of baseline CT
-3	Follow-up Coordinator	sico	text	1			Coordinator
-4	Was a CT lung screening scan ordered for this participant	simeq	radio	1		n;y	No;Yes
-5	CT ordered by : first name	siopfn	text	0
+1	This interaction is a	futype	radio	1		"other,ct"	"Other communication with veteran,CT visit and/or communication about CT results"
+2	Follow-up date	sidof	text	1			Follow-up date
+3	Date of baseline CT	sidoe	text	1			Date of baseline CT
+4	Follow-up Coordinator	sico	text	1			Coordinator
+5	CT ordered by : first name	siopfn	text	0			
 6	CT ordered by: last name	siopln	text	0			Last name
-7	National provider ID (NPI)	siopnpi	text	1
+7	National provider ID (NPI)	siopnpi	text	1			
 8	Documentation of shared decision making	sidsd	radio	1		n;y	No;Yes
 9	Reported smoking status at time of order	siopss	radio	1		c;f	Current;Former
-10	Reported pack years at time of order	sioppy	text	1
-11	Reported years since quit at time of order	siopqy	text	0
+10	Reported pack years at time of order	sioppy	text	1			
+11	Reported years since quit at time of order	siopqy	text	0			
 12	Reported asymptomatic for lung cancer at time of order	sioas	radio	1		n;y	No;Yes
-13	Clinical Information	siopci	textarea	1
+13	Reason for scan	fursnscn	textarea	1			
 14	Have you taken antibiotics since your last CT scan	siabx	radio	1		n;y	No;Yes
 15	Is this an annual CT scan	siaex	radio	1		n;y	No;Yes
 16	"During the past year, have you experienced any of these symptoms - Cough producing bloody material"	siwcb	checkbox	0		b	Cough producing bloody material
@@ -36,26 +36,47 @@ FIELD NUM	QUESTION	NAME	TYPE	REQUIRED	PLACEHOLDER	VALUES	LABELS
 35	Where did you have surgery	silcsl	text	0			Where?
 36	"If a lung cancer has been removed, is there evidence of a recurrence"	sier	radio	1		n;y;o	No;Yes;N/A
 37	"If a lung cancer has been removed, is there evidence of recurrence?"	sierd	text	0			Describe
-38	"Since your last followup, have you smoked cigarettes at all, even a puff?"	sisa	radio	1		n;y;o	No;Yes;Never smoked
-39	"On average, how many cigarettes did you smoke per day?"	sicpd	text	1
-40	How many packs of cigarettes did you smoke per day (PPD)?	sippd	text	0
-41	Quit date	siq	text	0
-42	Reported pack years	sippy	text	1
-43	Cumulative reported pack years	sippycu	text	1
-44	"Since your prior CT scan, have you ever tried to quit smoking"	sittq	radio	1		n;y;o	No;Yes;N/A
-45	How many times have you quit smoking for at least 24 hours	sittqt	text	0
-46	"Since your prior CT scan, what, if any, smoking cessation methods have you used -Have not tried to quit - Have not tried to quit"	sisca	checkbox	0		a	Have not tried to quit
-47	"Since your prior CT scan, what, if any, smoking cessation methods have you used - Cold Turkey by completely stopping on your own with no other assistance"	siscb	checkbox	0		b	Cold Turkey by completely stopping on your own with no other assistance
-48	"Since your prior CT scan, what, if any, smoking cessation methods have you used - Tapering or reducing number of cigarettes smoked per day"	siscc	checkbox	0		c	Tapering or reducing number of cigarettes smoked per day
-49	"Since your prior CT scan, what, if any, smoking cessation methods have you used - Self-help material (e.g., brochure, cessation website)"	siscd	checkbox	0		d	"Self-help material (e.g., brochure, cessation website)"
-50	"Since your prior CT scan, what, if any, smoking cessation methods have you used - Individual consultation or cessation counseling"	sisce	checkbox	0		e	Individual consultation or cessation counseling
-51	"Since your prior CT scan, what, if any, smoking cessation methods have you used - Telephone cessation counseling hotline (e.g., 1-855-QUIT-VET, 1-800-QUIT-NOW)"	siscf	checkbox	0		f	"Telephone cessation counseling hotline (e.g., 1-855-QUIT-VET, 1-800-QUIT-NOW)"
-52	"Since your prior CT scan, what, if any, smoking cessation methods have you used - Peer support (e.g.; Nicotine Anonymous)"	siscg	checkbox	0		g	"Peer support (e.g., Nicotine Anonymous)"
-53	"Since your prior CT scan, what, if any, smoking cessation methods have you used - Nicotine replacement therapy (e.g., patch; gum, inhaler, nasal spray, lozenge)"	sisch	checkbox	0		h	"Nicotine replacement therapy (e.g., patch, gum, inhaler, nasal spray, lozenge)"
-54	"Since your prior CT scan, what, if any, smoking cessation methods have you used - Zyban"	sisci	checkbox	0		i	Zyban
-55	"Since your prior CT scan, what, if any, smoking cessation methods have you used - Hypnosis"	siscj	checkbox	0		j	Hypnosis
-56	"Since your prior CT scan, what, if any, smoking cessation methods have you used - Acupuncture / acupressure"	sisck	checkbox	0		k	Acupuncture / acupressure
-57	"Since your prior CT scan, what, if any, smoking cessation methods have you used - Other"	siscl	checkbox	0		l	Other
-58	"Since your prior CT scan, what, if any, smoking cessation methods have you used - Other (specify)"	siscos	text	1			Other (specify)
+38	"Since your last followup, have you smoked cigarettes at all, even a puff?"	sisa	radio	0		n;y;o	No;Yes;Never smoked
+39	"On average, how many cigarettes did you smoke per day?"	sicpd	text	0			
+40	How many packs of cigarettes did you smoke per day (PPD)?	sippd	text	0			
+41	Quit date	siq	text	0			
+42	Reported pack years	sippy	text	1			
+43	Cumulative reported pack years	sippycu	text	1			
+44	"Since we last asked, have you ever tried to quit smoking"	sittq	radio	0		n;y;o	No;Yes;N/A
+45	How many times have you quit smoking for at least 24 hours	sittqt	text	0			
+46	"Since we last asked what, if any, smoking cessation methods have you used? - Have not tried to quit - Have not tried to quit"	sisca	checkbox	0		a	Have not tried to quit
+47	"Since we last asked what, if any, smoking cessation methods have you used? - Cold Turkey by completely stopping on your own with no other assistance"	siscb	checkbox	0		b	Cold Turkey by completely stopping on your own with no other assistance
+48	"Since we last asked what, if any, smoking cessation methods have you used? - Tapering or reducing number of cigarettes smoked per day"	siscc	checkbox	0		c	Tapering or reducing number of cigarettes smoked per day
+49	"Since we last asked what, if any, smoking cessation methods have you used? - Self-help material (e.g., brochure, cessation website)"	siscd	checkbox	0		d	"Self-help material (e.g., brochure, cessation website)"
+50	"Since we last asked what, if any, smoking cessation methods have you used? - Individual consultation or cessation counseling"	sisce	checkbox	0		e	Individual consultation or cessation counseling
+51	"Since we last asked what, if any, smoking cessation methods have you used? - Telephone cessation counseling hotline (e.g., 1-855-QUIT-VET, 1-800-QUIT-NOW)"	siscf	checkbox	0		f	"Telephone cessation counseling hotline (e.g., 1-855-QUIT-VET, 1-800-QUIT-NOW)"
+52	"Since we last asked what, if any, smoking cessation methods have you used? - Peer support (e.g.; Nicotine Anonymous)"	siscg	checkbox	0		g	"Peer support (e.g., Nicotine Anonymous)"
+53	"Since we last asked what, if any, smoking cessation methods have you used? - Nicotine replacement therapy (e.g., patch; gum, inhaler, nasal spray, lozenge)"	sisch	checkbox	0		h	"Nicotine replacement therapy (e.g., patch, gum, inhaler, nasal spray, lozenge)"
+54	"Since we last asked what, if any, smoking cessation methods have you used? - Zyban"	sisci	checkbox	0		i	Zyban
+55	"Since we last asked what, if any, smoking cessation methods have you used? - Hypnosis"	siscj	checkbox	0		j	Hypnosis
+56	"Since we last asked what, if any, smoking cessation methods have you used? - Acupuncture / acupressure"	sisck	checkbox	0		k	Acupuncture / acupressure
+57	"Since we last asked what, if any, smoking cessation methods have you used? - Other"	siscl	checkbox	0		l	Other
+58	"Since we last asked what, if any, smoking cessation methods have you used? - Other (specify)"	siscos	text	1			Other (specify)
 59	Are you seriously thinking of quitting smoking	siqst	select-one	0		-;y;m;n;o	"-;Yes, within the next 30 days;Yes, within the next 6 months;No, not thinking of quitting;N/A"
-60	Smoking cessation materials were distributed to subject?	siscmd	radio	1		n;y	No;Yes
+60	Tobacco cessation provided:	siscmd	radio	1		d;a;i	Declined;Advised to quit smoking; VA resources provided; Interested in VA tobacco cessation medication. Encouraged Veteran to talk to provider or pharmacist about which medication option is best for you.
+61	Communications method: In Person	fucmotip	checkbox	0		1	
+62	Communications method: Telephone	fucmotte	checkbox	0		1	
+63	Communications method: TeleHealth	fucmotth	checkbox	0		1	
+64	Communications method: Mailed letter	fucmotml	checkbox	0		1	
+65	Communications method: Message in Patient Portal	fucmotpp	checkbox	0		1	
+66	Communications method: Video-on-Demand (VOD)	fucmotvd	checkbox	0		1	
+67	Communications method: Other	fucmotot	checkbox	0		1	
+68	Other contact method	fucmotoo	text	1			
+69	Additional details	fucmotde	textarea	0			
+70	Last CT date	fulctdt	date	1			
+71	Communications method: In Person	fucmctip	checkbox	0		1	
+72	Communications method: Telephone	fucmctte	checkbox	0		1	
+73	Communications method: TeleHealth	fucmctth	checkbox	0		1	
+74	Communications method: Mailed letter	fucmctml	checkbox	0		1	
+75	Communications method: Message in Patient Portal	fucmctpp	checkbox	0		1	
+76	Communications method: Video-on-Demand (VOD)	fucmctvd	checkbox	0		1	
+77	Communications method: Other	fucmctot	checkbox	0		1	
+78	Other contact method	fucmctoo	text	1			
+79	Additional details	fucmctde	textarea	0			
+80	Has a new CT/LDCT been ordered?	funewct	radio	1		n;y	No;Yes
+81	Communication to pulmonary?	fucompul	radio	0		n;y	No;Yes

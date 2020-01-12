@@ -225,6 +225,16 @@ WSCASE ; generate case review page
  . set line=temp(zi)
  . if line["XX0002" do  ;
  . . do findReplace^%ts(.line,"XX0002",sid)
+ . ;
+ . if line["@@ERROR_MESSAGE@@" do ;
+ . . n zerr
+ . . k ^gpl("error")
+ . . m ^gpl("error")=filter
+ . . s zerr=$g(filter("errorMessage"))
+ . . ;i err="" q  ;
+ . . s ^gpl("error","zerr")=zerr
+ . . do findReplace^%ts(.line,"@@ERROR_MESSAGE@@",zerr)
+ . . s ^gpl("error","newline")=line
  . set cnt=cnt+1
  . set rtn(cnt)=line
  . quit

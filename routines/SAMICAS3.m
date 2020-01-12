@@ -78,6 +78,13 @@ WSNFPOST ; post new form selection (post service)
  . set newfm=$$KEY2FM^SAMICASE(lastone)
  . set datekey=$$KEYDATE^SAMIHOM3($$FMADD^XLFDT(newfm,1)) ; add one day to the last form
  ;
+ ; code to not allow two same forms for a patient a day
+ ;
+ i collide=1 d  q  ;
+ . s ARGS("errorMessage")="Form already exists for today"
+ . s ARGS("studyid")=sid
+ . d WSCASE^SAMICASE(.RESULT,.ARGS)
+ ;
  if nuform="sbform" do  ;
  . new oldkey s oldkey=$o(@root@("graph",sid,"sbform"))
  . i $e(oldkey,1,6)="sbform" d  q  ;

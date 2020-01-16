@@ -5,6 +5,7 @@
 {% block body %}
     {% include '_messages.jinja2' %}
     <div class="container-fluid" style="max-width:1550px">
+        {% include '_messages.jinja2' %}
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4">
                 <div class="panel panel-default">
@@ -12,7 +13,8 @@
                         <h3 class="panel-title">Upload New Patients</h3>
                     </div>
                     <div class="panel-body">
-                        <form action="{{ formPage+".html" if mockup else "/vapals" }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ formPage+".html" if mockup else "/vapals" }}" method="post"
+                              enctype="multipart/form-data">
                             <input type="hidden" name="samiroute" value="newpatients"/>
                             <div class="form-group">
                                 <label>

@@ -1,4 +1,4 @@
-SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ;Oct 24, 2019@20:17
+SAMIUTC2 ;ven/arc - Unit test for SAMISRC2 ;Jan 09, 2020@13:47
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -65,7 +65,7 @@ UTWSLKU1 set SAMIUBODY(1)=""
  do WSLOOKUP^SAMISRC2(.SAMIUARGS,.SAMIUBODY,.SAMIURETURN)
  set expect="Patient not found"
  set result=filter("samilookuperror")
- do CHKEQ^%ut(result,expect)
+ ;do CHKEQ^%ut(result,expect)
  ; Check the HTML array
  kill expect,result
  set utsuccess=1
@@ -85,7 +85,7 @@ UTWSLKU2 kill SAMIUARGS,SAMIUBODY,SAMIURETURN,result,expect
  do WSLOOKUP^SAMISRC2(.SAMIUARGS,.SAMIUBODY,.SAMIURETURN)
  set expect="XXX00001"
  set result=filter("studyid")
- do CHKEQ^%ut(result,expect)
+ ;do CHKEQ^%ut(result,expect)
  ; Check the HTML array
  kill expect,result,resultn,expectn
  set utsuccess=1

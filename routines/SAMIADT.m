@@ -1,5 +1,5 @@
-SAMIADT ;ven/arc/lgc - Handler for HL7 ADTs ;Oct 17, 2019@16:19
- ;;18.0;SAMI;;
+SAMIADT ;ven/arc/lgc - Handler for HL7 ADTs ;Jan 16, 2020@08:45
+ ;;18.0;SAMI;;;Build 1
  ;
  quit  ; No entry from top
  ;
@@ -41,9 +41,9 @@ SAMIADT ;ven/arc/lgc - Handler for HL7 ADTs ;Oct 17, 2019@16:19
  ;
  ;
 TESTERR ; Test entry point
- do ^ZTER;
+ do ^ZTER
  ;
- quit ; End of entry point TESTERR
+ quit  ; End of entry point TESTERR
  ;
  ;
 EN ; Primary entry point

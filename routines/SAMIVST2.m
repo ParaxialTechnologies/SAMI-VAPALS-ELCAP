@@ -1,4 +1,4 @@
-SAMIVST2 ;;ven/lgc - M2Broker calls for VA-PALS - PT INFO ;Nov 06, 2019@17:04
+SAMIVST2 ;;ven/lgc - M2Broker calls for VA-PALS - PT INFO ;Dec 17, 2019@12:10
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -185,14 +185,16 @@ DEBUG new name,node,gien
  quit:$Q rslt  quit
  ;
  ;@ppi
-NOFILE2() ; Transfer info from 'patient-lookup' to 'vapals patients'
- if '$get(dfn) quit:$Q 0  quit
+NOFILE2 ; Transfer info from 'patient-lookup' to 'vapals patients'
+ ;if '$get(dfn) quit:$Q 0  quit
+ if '$get(dfn) quit 0
  n rootpl set rootpl=$$setroot^%wd("patient-lookup")
  n rootvp set rootvp=$$setroot^%wd("vapals-patients")
  if '$data(@rootpl@("dfn",dfn)) quit:$Q 0  quit
  ; get ien into patient-lookup for this dfn
  new ien s ien=$order(@rootpl@("dfn",dfn,0))
- i '$get(ien) quit:$Q 0  quit
+ ;i '$get(ien) quit:$Q 0  quit
+ i '$get(ien) quit 0
  ;
  ; now transfer data from patient-lookup into vapals-patients
  m @rootvp@(dfn)=@rootpl@(ien)
@@ -201,7 +203,8 @@ NOFILE2() ; Transfer info from 'patient-lookup' to 'vapals patients'
  if '(zip="") do
  . set ur=$$URBRUR^SAMIVSTA(zip)
  . set @rootvp@(dfn,"sirs")=ur
- quit:$Q "3^"_dfn  quit
+ quit "3^"_dfn
+ ;quit:$Q "3^"_dfn  quit
  ;
  ;
  ;

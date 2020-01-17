@@ -1,4 +1,4 @@
-SAMIVST1 ;;ven/lgc - M2Broker calls for VA-PALS - New TIU ; 3/14/19 11:56am
+SAMIVST1 ;;ven/lgc - M2Broker calls for VA-PALS - New TIU ;Jan 16, 2020@08:47
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -44,6 +44,7 @@ TASKIT new samikey,vals,root,dest,provduz,ptdfn,tiutitlepn
  new clinien,si
  set tiuien=0
  ;
+ ;
  set provduz=$get(filter("DUZ"))
  if 'provduz do
  . set provduz=$$GET^XPAR("SYS","SAMI DEFAULT PROVIDER DUZ",,"Q")
@@ -75,8 +76,8 @@ TASKIT new samikey,vals,root,dest,provduz,ptdfn,tiutitlepn
  set ptdfn=@vals@("dfn")
  if '$get(ptdfn) quit:$Q 0  quit
  ;
- set dest=$name(@vals@("note"))
- ; e.g. dest="^%wd(17.040801,23,""graph"",""XXX00333"",""siform-2018-11-13"",""note"")"
+ set dest=$name(@vals@("notes"))
+ ; e.g. dest="^%wd(17.040801,23,""graph"",""XXX00333"",""siform-2018-11-13"",""notes"")"
  ;
  ;
  ;@called-by
@@ -90,6 +91,8 @@ TASKIT new samikey,vals,root,dest,provduz,ptdfn,tiutitlepn
  ;@tests
  ; Build the new tiu stubb.
 NEWTIU d BLDTIU^SAMIVSTA(.tiuien,ptdfn,tiutitleien,provduz,clinien)
+ ;
+ merge ^KBAP("SAMIVST1","NEWTIU","tiuien")=tiuien
  if 'tiuien quit:$Q 0  quit
  ; For unit testing. Save new tiuien
  if $data(%ut) set ^TMP("UNIT TEST","UTTASK^SAMIUTVA")=tiuien
@@ -190,8 +193,10 @@ BLDTIU ;
  ;
  set SAMIARR(7)=vstr
  set SAMIARR(8)=suppress
+ ;
  do M2M^SAMIM2M(.SAMIXD,cntxt,rmprc,console,cntopen,.SAMIARR)
  set tiuien=+$get(SAMIXD)
+ merge ^KBAP("SAMIVST1","DEBUG3","SAMIXD")=SAMIXD
  quit
  ;
  ;
@@ -210,6 +215,10 @@ BLDTIU ;
  ;  UTSTEXT^SAMIUTVA
  ;Set text in existing tiu note stubb
 SETTEXT ;
+ kill ^KBAP("SAMIVST1","at SETTEXT")
+ merge ^KBAP("SAMIVST1","at SETTEXT","tiuien")=tiuien
+ merge ^KBAP("SAMIVST1","at SETTEX","dest")=dest
+ ;
  set tiuien=+$get(tiuien)
  quit:'$get(tiuien)
  quit:'$data(dest)

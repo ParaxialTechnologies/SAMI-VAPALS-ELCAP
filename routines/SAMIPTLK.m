@@ -1,4 +1,4 @@
-SAMIPTLK ;ven/gpl - SAMI patient lookup routines ; 5/17/19 12:09pm
+SAMIPTLK ;ven/gpl - SAMI patient lookup routines ;Dec 17, 2019@09:44
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -57,6 +57,7 @@ WSPTLKUP(rtn,filter) ; patient lookup from patient-lookup cache
  ;
 BUILDRTN(rtn,ary) ; build the return json
  ;
+ d ^ZTER
  n root s root=$$setroot^%wd("patient-lookup")
  n groot s groot=$$setroot^%wd("vapals-patients")
  n zi s zi=""
@@ -73,6 +74,11 @@ BUILDRTN(rtn,ary) ; build the return json
  . i $o(@groot@("dfn",dfn,""))'="" d  ;
  . . s r1("result",zi,"vapals")=1
  . . s r1("result",zi,"studyid")=$g(@groot@(dfn,"samistudyid"))
+ ;.;
+ ;.; ven/lgc 2019-12-17 missing forms
+ ;.;
+ ;. i '($data(@groot@("graph",@groot@(dfn,"samistudyid")))) d  ;
+ ;. . s r1("result",zi,"vapals")=0
  ;
  ;q:'$d(r1)
  d ENCODE^VPRJSON("r1","rtn")

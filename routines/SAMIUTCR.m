@@ -1,4 +1,4 @@
-SAMIUTCR ;ven/lgc - UNIT TEST for SAMICTR ;Oct 22, 2019@15:13
+SAMIUTCR ;ven/lgc - UNIT TEST for SAMICTR ;Dec 16, 2019@09:44
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -68,22 +68,8 @@ UTWSRPT ; @TEST - web service which returns an html cteval report
  for  set pnode=$query(@pnode),anode=$query(@anode) quit:pnode=""  do
  . if '(@pnode=@anode) set utsuccess=0
  set:'(anode="") utsuccess=0
- do CHKEQ^%ut(utsuccess,1,"Testing web service returns html cteval FAILED!")
+ do CHKEQ^%ut(utsuccess,1,"Testing web service returns html cteval 10-21 FAILED!")
  ;
- ;use ceform-2018-12-03
- kill SAMIFLTR
- set SAMIFLTR("studyid")="XXX00001"
- set SAMIFLTR("form")="ceform-2018-12-03"
- set utsuccess=1
- do WSREPORT^SAMICTR(.SAMIUPOO,.SAMIFLTR)
- ; compare SAMIUPOO with SAMIUPOO from a Pull
- do PLUTARR^SAMIUTST(.SAMIUARC,"UTWSRPT^SAMIUTCR XXX12-3")
- ; now compare
- new pnode,anode set pnode=$name(SAMIUPOO),anode=$name(SAMIUARC)
- for  set pnode=$query(@pnode),anode=$query(@anode) quit:pnode=""  do
- . if '(@pnode=@anode) set utsuccess=0
- set:'(anode="") utsuccess=0
- do CHKEQ^%ut(utsuccess,1,"Testing web service returns html cteval FAILED!")
  ;
  ;use ceform-2019-01-23
  kill SAMIFLTR
@@ -99,7 +85,7 @@ UTWSRPT ; @TEST - web service which returns an html cteval report
  for  set pnode=$query(@pnode),anode=$query(@anode) quit:pnode=""  do
  . if '(@pnode=@anode) set utsuccess=0
  set:'(anode="") utsuccess=0
- do CHKEQ^%ut(utsuccess,1,"Testing web service returns html cteval FAILED!")
+ do CHKEQ^%ut(utsuccess,1,"Testing web service returns html cteval 01-23 FAILED!")
  ;
  ;use ceform-2019-01-24
  kill SAMIFLTR
@@ -114,7 +100,7 @@ UTWSRPT ; @TEST - web service which returns an html cteval report
  for  set pnode=$query(@pnode),anode=$query(@anode) quit:pnode=""  do
  . if '(@pnode=@anode) set utsuccess=0
  set:'(anode="") utsuccess=0
- do CHKEQ^%ut(utsuccess,1,"Testing web service returns html cteval FAILED!")
+ do CHKEQ^%ut(utsuccess,1,"Testing web service returns html cteval 01-24 FAILED!")
  ;
  ;use ceform-2018-01-02
  kill SAMIFLTR
@@ -129,7 +115,7 @@ UTWSRPT ; @TEST - web service which returns an html cteval report
  for  set pnode=$query(@pnode),anode=$query(@anode) quit:pnode=""  do
  . if '(@pnode=@anode) set utsuccess=0
  set:'(anode="") utsuccess=0
- do CHKEQ^%ut(utsuccess,1,"Testing web service returns html cteval FAILED!")
+ do CHKEQ^%ut(utsuccess,1,"Testing web service returns html cteval 01-02 FAILED!")
  ;
  ; Now lets try a special case
  new SAMIUPOO,SAMIUARC,pnode,anode

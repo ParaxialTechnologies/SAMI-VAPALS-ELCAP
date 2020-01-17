@@ -1,5 +1,5 @@
-SAMIUT7T ;ven/lgc - UNIT TEST for SAMITIU ;Oct 04, 2019@18:27
- ;;18.0;SAMI;;
+SAMIUT7T ;ven/lgc - UNIT TEST for SAMITIU ;Nov 25, 2019@18:00
+ ;;18.0;SAMI;;;Build 1
  ;
  ;@license: see routine SAMIUL
  ;
@@ -51,7 +51,7 @@ UTEN ; @TEST - Saving and parsing an HL7 message
  . set HL("FS")=$E(^HLMA(HLMTIENS,"MSH",1,0),4,4)
  . set:'($piece(^HLMA(HLMTIENS,"MSH",1,0),HL("FS"),9)["ACK") ok=1
  ;
- set HLMTIEN=+^HLMA(HLMTIENS,0) 
+ set HLMTIEN=+^HLMA(HLMTIENS,0)
  set HL("ECH")=$piece(^HLMA(HLMTIENS,"MSH",1,0),HL("FS"),2)
  set HLNEXT="D HLNEXT^HLCSUTL"
  ;
@@ -63,7 +63,7 @@ UTEN ; @TEST - Saving and parsing an HL7 message
  new node s node=$na(^KBAP("SAMITIU",0)),utsuccess=1
  for  X HLNEXT Q:HLQUIT'>0  do  quit:HLNODE=""  quit:'utsuccess
  . set node=$Q(@node)
- . set utsuccess=(@node=HLNODE) 
+ . set utsuccess=(@node=HLNODE)
  do CHKEQ^%ut(utsuccess,1,"Move HL7 message to ^KBAP global failed")
  quit
  ;

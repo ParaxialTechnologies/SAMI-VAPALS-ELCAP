@@ -1,4 +1,4 @@
-SAMIUTST ;ven/lgc - Unit Test Utilities ;Oct 29, 2019@20:34
+SAMIUTST ;ven/lgc - Unit Test Utilities ;Jan 10, 2020@09:52
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -179,7 +179,7 @@ SVAPT1 ;Save all VA dfn 1 patient-lookup and vapals-patients data
  set rootpl=$$setroot^%wd("patient-lookup")
  set plgien=$order(@rootpl@("dfn",1,0)) quit:'(plgien>0) 
  ;if dfn 1 is our test patient then bail out
- quit:$data(@rootpl@("icn","50001000V910386",plgien))
+ if $data(@rootpl@("icn","50001000V910386",plgien))!($data(@rootpl@("icn","50001000",plgien))) quit
  merge plpoo=@rootpl@(plgien)
  do SVUTARR^SAMIUTST(.plpoo,"SitesPLpatient1Data")
  ;
@@ -271,7 +271,11 @@ LOADTPT ;Load Unit Test patient into patient-lookup and vapals-patients
  ;
  set rootpl=$$setroot^%wd("patient-lookup")
  set rootvp=$$setroot^%wd("vapals-patients")
- set plgien=$order(@rootpl@("dfn",1,0)) quit:'(plgien>0) 
+ set plgien=$order(@rootpl@("dfn",1,0)) 
+ ;
+ ; if there is no patient dfn 1 entry, build one now
+ if '$get(plgien) d
+ . set plgien=$order(@rootpl@(" "),-1)+1
  ;
  ; Kill any existing dfn 1 cross references
  do KDFN1XRF^SAMIUTST(rootpl,plgien)
@@ -319,7 +323,7 @@ SDFN1XRF(plpoo,vppoo,plgien) ; Set DFN 1 patient cross-references
  quit:'$data(plpoo) 
  quit:'$get(plgien)
  new xstr
- set xstr="icn/last5/saminame/sinamel/sinamef/ssn/"
+ set xstr="dfn/icn/last5/saminame/sinamel/sinamef/ssn/"
  new ss set ss=""
  for  set ss=$order(plpoo(ss)) quit:(ss="")  do
  . quit:($get(plpoo(ss))="")

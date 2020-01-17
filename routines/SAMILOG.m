@@ -1,4 +1,4 @@
-SAMILOG ;ven/lgc - APIs to toggle password identification ; 5/10/19 8:52am
+SAMILOG ;ven/lgc - APIs to toggle password identification ;Jan 10, 2020@12:15
  ;;18.0;SAMI;;
  ;
  ; @section 0 primary development
@@ -75,5 +75,18 @@ TOGON new DIERR,FDA,ienget,ienpost,IENS
  do UPDATE^DIE("","FDA(3)")
  ;
  quit
+ ;
+ ;
+MEOFF ;
+ D EN^XPAR("SYS","SAMI ALLOW MANUAL ENTRY",1,0)
+ new onoff set onoff=$$GET^XPAR("SYS","SAMI ALLOW MANUAL ENTRY",,"Q")
+ if 'onoff w !,"*** VAPALS MANUAL ENTRY NOW NOT ALLOWED ***",!
+ quit
+ ;
+MEON D EN^XPAR("SYS","SAMI ALLOW MANUAL ENTRY",1,1)
+ new onoff set onoff=$$GET^XPAR("SYS","SAMI ALLOW MANUAL ENTRY",,"Q")
+ if onoff w !,"*** VAPALS MANUAL ENTRY NOW ALLOWED ***",!
+ quit
+ ;
  ;
 EOR ;End of routine SAMILOG

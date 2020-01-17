@@ -1,5 +1,5 @@
-SAMITIU ;SAMI/lgc/arc - HL7 PATIENT LIST TIU processing for VAPALS ;Oct 17, 2019@16:19
- ;;18.0;SAMI;
+SAMITIU ;SAMI/lgc/arc - HL7 PATIENT LIST TIU processing for VAPALS ;Dec 20, 2019@13:49
+ ;;18.0;SAMI;;;Build 1
  ;
  quit  ; no entry from top
  ;
@@ -11,12 +11,12 @@ EN ;
  ;---------- PREPARE FOR SENDING ACK/NAK --------------------------
  ;
  ; Move message from HL7 global to ^KBAP(
- ; 
+ ;
  new nodecnt,fields
  kill ^KBAP("SAMITIU")
  ;
  ; Save every segment to the ^KBAP("SAMITIU" global
- for  X HLNEXT Q:HLQUIT'>0  do  quit:HLNODE=""  do SVNODE
+ for  X HLNEXT Q:HLQUIT'>0  quit:HLNODE=""  do SVNODE
  ;
  ;Now run processing routine to put patient data
  ;   into VAPALS patient-lookup graph
@@ -76,10 +76,10 @@ PARSE(node,fieldstr,fields) ;
  for fldcnt=1:1:$length(fieldstr,"^") do
  . set ss=$piece(fieldstr,"^",fldcnt)
  . set fields(ss)=$piece(node,"^",fldcnt)
+ .; we will have fields("sex")=M or F, fields("gender")=M^MALE or F^FEMALE
  . if ss="sex" do
- .. set fields(ss)=fields(ss)_"^"_$select(fields(ss)["M":"MALE",fields(ss)["F":"FEMALE",1:"")
- .. set fields("gender")=fields("sex")
- zwr fields
+ .. set fields("gender")=fields(ss)_"^"_$select(fields(ss)["M":"MALE",fields(ss)["F":"FEMALE",1:"")
+ ;zw fields
  write !
  quit
  ;

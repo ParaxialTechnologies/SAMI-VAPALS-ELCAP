@@ -1,4 +1,4 @@
-SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3,SAMIHOM4 ;Oct 22, 2019@15:27
+SAMIUTH3 ;ven/lgc - UNIT TEST for SAMIHOM3,SAMIHOM4 ;Jan 13, 2020@16:36
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -150,11 +150,6 @@ UTNXTN ; @TEST - Testing finding next entry number for "vapals-patients"
  do CHKEQ^%ut(utsuccess,1,"Testing finding next entry in vapals-patients FAILED!")
  quit
  ;
-UTPFX ; @TEST - Testing getting study prefix
- ;$$prefix
- do CHKEQ^%ut($$PREFIX^SAMIHOM3,"XXX","Testing getting study prefix FAILED!")
- quit
- ;
 UTSTDID ; @TEST - Testing generating study ID
  ;$$genStudyId(nmb)
  new studyID set studyID=$$GENSTDID^SAMIHOM3(123)
@@ -200,10 +195,9 @@ UTADDPT ; @TEST Testing ADDPATient adding a new patient to vapals-patients
  set rootvp=$$setroot^%wd("vapals-patients")
  set rootpl=$$setroot^%wd("patient-lookup")
  ;
- ; get test patient
- set rootut=$$setroot^%wd("vapals unit tests")
- set gienut=$order(@rootut@("B","patient-lookup test patient",0))
- set dfn=@rootut@(gienut,"dfn")
+ ; get test patient loaded when unit tests start
+ set dfn=1
+ set gienut=$order(@rootpl@("dfn",dfn,0))
  ;
  ; clear test patient from vapals-patients Graphstore
  set studyid="XXX00001"
@@ -228,14 +222,15 @@ UTADDPT ; @TEST Testing ADDPATient adding a new patient to vapals-patients
 UTWSNC ; @TEST - Testing WSNEWCAS adding a new case to vapals-patients Graphstore
  ;WSNEWCAS(ARGS,BODY,RESULT)
  ;
- new rootvp,rootpl,rootut,gienut,dfn,saminame,utna,uthtml
+ new rootvp,rootpl,gien,dfn,saminame,utna,uthtml
  new SAMIUBODY,SAMIUARGS,SAMIURSLT,SAMIUARC,SAMIUPOO
  set rootvp=$$setroot^%wd("vapals-patients")
  set rootpl=$$setroot^%wd("patient-lookup")
- set rootut=$$setroot^%wd("vapals unit tests")
- set gienut=$order(@rootut@("B","patient-lookup test patient",0))
- set dfn=@rootut@(gienut,"dfn")
- set saminame=@rootut@(gienut,"saminame")
+ ; get test patient loaded when unit tests start
+ set dfn=1
+ set gien=$order(@rootpl@("dfn",dfn,0))
+ ;
+ set saminame=@rootpl@(gien,"saminame")
  new SAMIUBODY set SAMIUBODY(1)="saminame="_saminame_"&dfn="_dfn
  ;
  ; clear test patient from vapals-patients Graphstore
@@ -326,7 +321,10 @@ UTSBFRM ; @TEST - Testing creating a background form
  quit
  ; 
  ;
-UTPOSTF ; @TEST - Test WSVAPALS API route="postform" build TIU
+ ; No unit test at this time.  Problems with clinic and that
+ ;   there may be a dfn 1 patient in file 2 so I need to manage a
+ ;   path that will not generate a tiu on a real patient
+UTPOSTF ; TEST - Test WSVAPALS API route="postform" build TIU
  new SAMIUARG,SAMIUBODY,SAMIURSLT,route,SAMIUPOO,SAMIUARC,SAMIUFLTR
  ; get name of existing siform for our test patient
  set root=$$setroot^%wd("vapals-patients")

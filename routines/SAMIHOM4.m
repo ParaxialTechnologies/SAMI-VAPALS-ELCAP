@@ -1,4 +1,4 @@
-SAMIHOM4 ;ven/gpl,arc - ielcap: forms;2018-11-30T17:45Z ; 4/16/19 12:17pm
+SAMIHOM4 ;ven/gpl,arc - ielcap: forms;2018-11-30T17:45Z ;Jan 14, 2020@16:04
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -122,10 +122,10 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  . . . s SAMIFILTER("studyid")=$G(SAMIARG("studyid"))
  . . . s SAMIFILTER("form")=$g(SAMIARG("form")) ;
  . . . n tiuien
- . . . s tiuien=$$SV2VISTA^SAMIVSTA(.SAMIFILTER)
- . . . s SAMIFILTER("tiuien")=tiuien
+ . . . ;s tiuien=$$SV2VISTA^SAMIVSTA(.SAMIFILTER)
+ . . . ;s SAMIFILTER("tiuien")=tiuien
  . . . ;d SV2VSTA^SAMIVSTA(.FILTER)
- . . . m ^SAMIUL("newFILTER")=SAMIFILTER
+ . . . ;m ^SAMIUL("newFILTER")=SAMIFILTER
  . . . d WSNOTE^SAMINOT1(.SAMIRESULT,.SAMIARG)
  ;
  i route="deleteform" d  q 0
@@ -252,9 +252,13 @@ MKPTLK(ptlkien,SAMIARG) ; creates the patient-lookup record
  n ssn s ssn=SAMIARG("ssn")
  s ssn=$tr(ssn,"-")
  n name s name=$g(SAMIARG("name"))
+ n sinamef,sinamel
+ s sinamel=$p(name,","),sinamel=$$TRIM^XLFSTR(sinamel,"LR")
+ s sinamef=$p(name,",",2),sinamef=$$TRIM^XLFSTR(sinamef,"LR")
+ s name=sinamel_","_sinamef
  s @root@(ptlkien,"saminame")=name
- s @root@(ptlkien,"sinamef")=$p(name,",",1)
- s @root@(ptlkien,"sinamel")=$p(name,",",2)
+ s @root@(ptlkien,"sinamef")=sinamef
+ s @root@(ptlkien,"sinamel")=sinamel
  n fmdob s fmdob=$$FMDT^SAMIUR2(SAMIARG("dob"))
  n ptlkdob s ptlkdob=$$FMTE^XLFDT(fmdob,7)
  s ptlkdob=$TR(ptlkdob,"/","-")
@@ -499,6 +503,7 @@ INDXPTLK(ien) ; generate index entries in patient-lookup graph
  s:x'="" @proot@("last5",x,ien)=""
  s x=$g(@proot@(ien,"icn")) ;w !,x
  i x'["V" d  ;
+ . i x="" q
  . n chk s chk=$$CHECKDG^MPIFSPC(x)
  . s @proot@(ien,"icn")=x_"V"_chk
  . s x=x_"V"_chk
@@ -526,6 +531,7 @@ UNINDXPT(ien) ; remove index entries in patient-lookup graph
  k:x'="" @proot@("last5",x,ien)
  s x=$g(@proot@(ien,"icn")) ;w !,x
  i x'["V" d  ;
+ . i x="" q
  . n chk s chk=$$CHECKDG^MPIFSPC(x)
  . s @proot@(ien,"icn")=x_"V"_chk
  . s x=x_"V"_chk

@@ -1,4 +1,4 @@
-SAMIPI ;ven/arc/lgc - Patient lookup graph import & export utils ;Jan 14, 2020@14:16
+SAMIPI ;ven/arc/lgc - Patient-lookup graph import & export utils ;Jan 14, 2020@14:16
  ;;18.0;SAMI;;
  ;
  quit  ; No entry from top
@@ -31,34 +31,14 @@ SAMIPI ;ven/arc/lgc - Patient lookup graph import & export utils ;Jan 14, 2020@1
  ; @section 1 code
  ;
  ;
-FIX ;
- kill ^%wd(17.040801,67,"name")
- kill ^%wd(17.040801,67,"saminame")
- kill ^%wd(17.040801,67,"sinamel")
- kill ^%wd(17.040801,67,"sinamef")
+UPDTLKUP ; Update the patient-lookup graph with data from the patient file
+ new dfn set dfn=0
+ for  set dfn=$order(^DPT(dfn)) quit:'dfn  do
+ . write !,dfn,!
+ . do PTINFO^SAMIVSTA(dfn)
+ . do PTSSN^SAMIVSTA(dfn)
  ;
- NEW PT SET PT=0
- FOR  SET PT=$ORDER(^%wd(17.040801,67,PT)) QUIT:'PT  DO
- . NEW SAMINAME,SINAMEF,SINAMEL
- . ;
- . SET SAMINAME=^%wd(17.040801,67,PT,"saminame")
- . ;
- . SET SINAMEL=$P(SAMINAME,",",1)
- . set SINAMEF=$P(SAMINAME,",",2)
- . SET SINAMEL=$$TRIM^XLFSTR(SINAMEL,"LR")
- . set SINAMEF=$$TRIM^XLFSTR(SINAMEF,"LR")
- . SET SAMINAME=SINAMEL_","_SINAMEF
- . ;
- . set ^%wd(17.040801,67,PT,"saminame")=SAMINAME
- . SET ^%wd(17.040801,67,PT,"sinamel")=SINAMEL
- . SET ^%wd(17.040801,67,PT,"sinamef")=SINAMEF
- . ;
- . SET ^%wd(17.040801,67,"name",SAMINAME,PT)=""
- . set ^%wd(17.040801,67,"name",$$UP^XLFSTR(SAMINAME),PT)=""
- . SET ^%wd(17.040801,67,"sinamel",SINAMEL,PT)=""
- . SET ^%wd(17.040801,67,"sinamef",SINAMEF,PT)=""
- ;
- QUIT
+ quit
  ;
  ;
 EXPRTPTS(path,file) ; Export the patient-lookup graph as a TSV file
@@ -113,7 +93,7 @@ EXPRTPTS(path,file) ; Export the patient-lookup graph as a TSV file
  ;
  do CLOSE^%ZISH
  ;
- quit  ; End of label EXPRTPTS
+ quit  ; End of entry point EXPRTPTS
  ;
  ;
 IMPRTPTS(path,file) ; Populate the patient-lookup graph based on a TSV file

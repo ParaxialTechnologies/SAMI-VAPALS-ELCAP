@@ -195,14 +195,17 @@ PRODSERV ;;
  ;
  ;
 DODD ; Import TSV files to build form field DDs
- D PRSTSV^SAMIFF("/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/","background.tsv","form fields - background")
- D PRSTSV^SAMIFF("/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/","biopsy.tsv","form fields - biopsy")
- D PRSTSV^SAMIFF("/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/","ct-evaluation.tsv","form fields - ct evaluation")
- D PRSTSV^SAMIFF("/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/","follow-up.tsv","form fields - follow up")
- D PRSTSV^SAMIFF("/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/","intake.tsv","form fields - intake")
- D PRSTSV^SAMIFF("/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/","intervention.tsv","form fields - intervention")
- D PRSTSV^SAMIFF("/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/","pet-evaluation.tsv","form fields - pet evaluation")
- D PRSTSV^SAMIFF("/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/","register.tsv","form fields - register")
+ new path set path=$$GET^XPAR("SYS","SAMI FORM FIELDS DEF PATH",,"Q")
+ quit:path=""
+ ;
+ do PRSTSV^SAMIFF(path,"background.tsv","form fields - background")
+ do PRSTSV^SAMIFF(path,"biopsy.tsv","form fields - biopsy")
+ do PRSTSV^SAMIFF(path,"ct-evaluation.tsv","form fields - ct evaluation")
+ do PRSTSV^SAMIFF(path,"follow-up.tsv","form fields - follow up")
+ do PRSTSV^SAMIFF(path,"intake.tsv","form fields - intake")
+ do PRSTSV^SAMIFF(path,"intervention.tsv","form fields - intervention")
+ do PRSTSV^SAMIFF(path,"pet-evaluation.tsv","form fields - pet evaluation")
+ do PRSTSV^SAMIFF(path,"register.tsv","form fields - register")
  ;
  quit  ; End of entry point DODD
  ;

@@ -351,7 +351,7 @@ VCNOTE(vals,dest,cnt) ; Veteran Communication Note
  ;
  n sstat s sstat=""
  i $$XVAL("sisa",vals)="y" d  ; 
- . s sstat="Curent"
+ . s sstat="Current"
  . d OUT("Smoking status: "_sstat)
  . d OUT(sp1_"Current cigarette smoker (patient advised that active tobacco use")
  . d OUT(sp1_"increases risk of future lung cancer, heart disease and stroke,")
@@ -375,18 +375,18 @@ VCNOTE(vals,dest,cnt) ; Veteran Communication Note
  k ^gpl("funote","cumary")
  m ^gpl("funote","cumary")=cumary
  n cur s cur=$g(cumary("current"))
- n newcum s newcum=$g(cumary("rpt",cur,4)) ; new cummulative pack years
+ n newcum s newcum=$g(cumary("rpt",cur,4)) ; new cumulative pack years
  ;
  i $$XVAL("sisa",vals)="y" d  ;  
  . d OUT("Smoking history (since last visit):")
  . d OUT(sp1_"Cigarettes/day: "_$$XVAL("sicpd",vals))
  . d OUT(sp1_"PPD: "_$$XVAL("sippd",vals))
- . d OUT(sp1_"Current cummulative pack years: "_newcum)
+ . d OUT(sp1_"Current cumulative pack years: "_newcum)
  n zi
  f zi=1:1:cur d  ;
  . d OUT(sp1_cumary("rpt",zi,1)_" "_cumary("rpt",zi,2))
  . d OUT(sp1_sp1_"Pack Years: "_cumary("rpt",zi,3))
- . d OUT(sp1_sp1_"Cummulative: "_cumary("rpt",zi,4))
+ . d OUT(sp1_sp1_"Cumulative: "_cumary("rpt",zi,4))
  ;
  n tried s tried=$$XVAL("sittq",vals)
  n ptried s ptried=$s(tried="y":"Yes",tried="n":"No",tried="o":"Not applicable",1:"")

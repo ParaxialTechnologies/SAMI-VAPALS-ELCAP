@@ -127,6 +127,17 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  . . . ;d SV2VSTA^SAMIVSTA(.FILTER)
  . . . ;m ^SAMIUL("newFILTER")=SAMIFILTER
  . . . d WSNOTE^SAMINOT1(.SAMIRESULT,.SAMIARG)
+ . i $g(SAMIARG("form"))["fuform" d  ;
+ . . if $$NOTE^SAMINOT2(.SAMIARG) d  ;
+ . . . n SAMIFILTER
+ . . . s SAMIFILTER("studyid")=$G(SAMIARG("studyid"))
+ . . . s SAMIFILTER("form")=$g(SAMIARG("form")) ;
+ . . . ;n tiuien
+ . . . ;s tiuien=$$SV2VISTA^SAMIVSTA(.SAMIFILTER)
+ . . . ;s SAMIFILTER("tiuien")=tiuien
+ . . . ;d SV2VSTA^SAMIVSTA(.FILTER)
+ . . . ;m ^SAMIUL("newFILTER")=SAMIFILTER
+ . . . d WSNOTE^SAMINOT2(.SAMIRESULT,.SAMIARG)
  ;
  i route="deleteform" d  q 0
  . m SAMIARG=vars

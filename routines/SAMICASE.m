@@ -82,6 +82,9 @@ GETITEMS(ary,sid) ; get items available for studyid
  ; SAMIUTS2
  goto GETITEMS^SAMICAS2
  ;
+ ;@ppi extrinsic returns html for the list of notes for the form
+NOTEHREF(sid,form) ; extrinsic returns html for the list of notes for the form
+ goto NOTEHREF^SAMICAS2
  ;
  ;@ppi - extrinsic which return the vapals format for dates
 VAPALSDT(fmdate) ; extrinsic which return the vapals format for dates

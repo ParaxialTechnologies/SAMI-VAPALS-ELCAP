@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2020.01.16" name="version"/>
+  <meta content="2020.01.18" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    Lung Screening and Surveillance Intake Form
@@ -330,7 +330,7 @@
       <div class="col-md-12">
        <div class="panel panel-default" id="reason-container" style="display:none;">
         <div class="alert alert-warning" style="margin-bottom: 0;border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
-         Indicate one or more reasons why the patient is not eligible for lung screening. No intake
+         Indicate one or more reasons why the participant is not eligible for lung screening. No intake
                             note will be generated.
         </div>
         <div class="panel-body">
@@ -1348,7 +1348,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2020.01.16
+     2020.01.18
     </span>
    </div>
   </footer>
@@ -1705,7 +1705,7 @@
             enable: "#reason-container",
             disable: "#pre-enrollment-discussion" //, #intake, #intake-tab
         }).on('change', function () {
-            //when patient is eligible, display informational message requiring remaining sections be completed.
+            //when participant is eligible, display informational message requiring remaining sections be completed.
             const eligible = $("[name=sicechrt]:checked").val();
             $("#sicechrt-y-alert").toggle(eligible === "y");
         });
@@ -1730,7 +1730,7 @@
             .conditionallyDisplay({sourceValues: 'y', enable: '#discussion-container'});
         //.conditionallyDisplay({sourceValues: 'n', enable: '#intake,#intake-tab'});
 
-        //enable intake when pre-enrollment result is that the patient want's in.
+        //enable intake when pre-enrollment result is that the participant want's in.
         //$("[name=siperslt]").conditionallyDisplay({enable: '#intake,#intake-tab'});
 
         $("#sipecnot").conditionallyEnable({sourceValues: "1", enable: "#sipecnoo"}); // other contact method
@@ -1795,7 +1795,7 @@
         }
 
         $("[name=sistatus]").on('submit', function () {
-            //require reason fields when marking patient as "not active"
+            //require reason fields when marking participant as "not active"
             $("#reason-for-change-container").toggle($("#sistatus-inactive").is(":checked"));
 
         });

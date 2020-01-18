@@ -33,9 +33,8 @@
                             <input type="hidden" id="pt-lookup-studyid" name="studyid" value="">
 
                             <div class="form-group">
-                                <label for="pt-lookup-input">Patient</label>
-                                <input type="text" class="form-control" id="pt-lookup-input" name="pt-lookup-input"
-                                       placeholder="Name or LAST5">
+                                <label for="pt-lookup-input">Name or LAST5</label>
+                                <input type="text" class="form-control" id="pt-lookup-input" name="pt-lookup-input">
                             </div>
                             <div class="pull-left" id="manual-registration" style="display:none;">
                                 <a href="{{ "register.html" if mockup else "#!" }}" class="navigation"
@@ -74,7 +73,7 @@
                     <h4 class="modal-title">Caution:</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Are you certain you want to register this patient for VAPALS-ELCAP?</p>
+                    <p>Are you certain you want to register this person for VAPALS-ELCAP?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
@@ -95,7 +94,7 @@
         }
 
         $(function () {
-            // Set up the modal confirmation to include a new patient
+            // Set up the modal confirmation to include a new participant
             $('#pt-inclusion-btn').on("click", function (e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -104,17 +103,17 @@
                 $('#pt-lookup-form').submit();
             });
 
-            // Set up the patient lookup submit button
+            // Set up the participant lookup submit button
             $('#pt-lookup-btn').on("click", function (e) {
                 e.preventDefault();
                 e.stopPropagation();
 
-                let patient = $.extend({}, $('#pt-lookup-input').data('vista').patient);
-                $('#pt-lookup-dfn').val(patient.dfn);
-                $('#pt-lookup-name').val(patient.name);
-                $('#pt-lookup-studyid').val(patient.studyid);
+                let particpant = $.extend({}, $('#pt-lookup-input').data('vista').patient);
+                $('#pt-lookup-dfn').val(particpant.dfn);
+                $('#pt-lookup-name').val(particpant.name);
+                $('#pt-lookup-studyid').val(particpant.studyid);
 
-                if (patient.vapals === 1) {
+                if (particpant.vapals === 1) {
                     $('#pt-lookup-samiroute').val('casereview');
                     $('#pt-lookup-form').submit();
                 } else {
@@ -123,27 +122,27 @@
                 }
             });
 
-            // Initialize the patient lookup input widget
-            const $patientLookupInput = $('#pt-lookup-input');
-            $patientLookupInput.filemanAutocomplete();
+            // Initialize the participant lookup input widget
+            const $participantLookupInput = $('#pt-lookup-input');
+            $participantLookupInput.filemanAutocomplete();
 
-            $patientLookupInput.on('keydown', function (e) {
+            $participantLookupInput.on('keydown', function (e) {
                 // Set up Return key
                 if (e.keyCode === 13 && ($('#pt-lookup-btn').is(':disabled'))) {
                     e.preventDefault();
                 }
             }).on("keyup", function () {
-                let ptNameVal = $patientLookupInput.val();
-                let data = $patientLookupInput.data('vista');
-                let patientName = "";
+                let ptNameVal = $participantLookupInput.val();
+                let data = $participantLookupInput.data('vista');
+                let participantName = "";
                 if (data) {
                     if (data.patient) {
-                        patientName = data.patient.name
+                        participantName = data.patient.name
                     }
                 }
-                if (ptNameVal === "" || (ptNameVal !== patientName)) {
+                if (ptNameVal === "" || (ptNameVal !== participantName)) {
                     $('#pt-lookup-btn').attr('disabled', 'disabled');
-                    $patientLookupInput.trigger("change");
+                    $participantLookupInput.trigger("change");
                 }
             }).on('filemanautocompleteselect', function () {
                 // Enable show buttons

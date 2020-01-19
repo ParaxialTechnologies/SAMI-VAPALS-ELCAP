@@ -336,9 +336,10 @@ LCSNOTE(vals,dest,cnt) ; Lung Screening Note
  d CTINFO("ctary",sid,form)
  s impress=$g(ctary("impression"))
  ; get impression from lastest CT Eval here
- i impress'="" d  ;
- . d OUT("Impression:")
- . d OUT(sp1_impress)
+ d IMPRESS("ctary",sid)
+ ;i impress'="" d  ;
+ ;. d OUT("Impression:")
+ ;. d OUT(sp1_impress)
  ; smoking status follows
  d SSTATUS(vals)
  ;d OUT("Veteran was contacted via:")
@@ -447,8 +448,16 @@ CTINFO(ARY,SID,FORM) ; returns extracts from latest CT Eval form
  ;
  q
  ; 
-IMPRESS(ARY,vals) ; impressions from CTEval report
- d OUT($$XSUB("ceimn",vals,dict)_para)
+IMPRESS(ARY,SID) ; impressions from CTEval report
+ n root s root=$$setroot^%wd("vapals-patients")
+ n ctkey s ctkey=$g(@ARY@("ctform"))
+ n vals s vals=$na(@root@("graph",SID,ctkey))
+ n dict s dict=$$setroot^%wd("cteval-dict")
+ n para s para=""
+ n sp1 s sp1="    "
+ ; 
+ d OUT("Impression:")
+ d OUT(sp1_$$XSUB("ceimn",vals,dict)_para)
  ;
  ;# Report CAC Score and Extent of Emphysema
  s cacval=0
@@ -461,38 +470,53 @@ IMPRESS(ARY,vals) ; impressions from CTEval report
  . . i cacval>3 s cacrec=$g(@dict@("CAC_recommendation"))_para
  ;
  i cacval>0 d  ;
- . d OUT(cac_" "_cacrec_" "_para)
+ . d OUT(sp1_cac_" "_cacrec_" "_para)
  . d  ;if $$XVAL("ceemv",vals)="e" d  ;
  . . if $$XVAL("ceem",vals)'="no" d  ;
  . . . if $$XVAL("ceem",vals)="nv" q  ;
- . . . d OUT("Emphysema:")
- . . . d OUT($$XSUB("ceem",vals,dict)_"."_para)
+ . . . d OUT(sp1_"Emphysema:")
+ . . . d OUT(sp1_$$XSUB("ceem",vals,dict)_"."_para)
  ;
  i $$XVAL("ceclini",vals)="y" d  ;
- . d OUT($$XVAL("ceclin",vals)_"."_para)
+ . d OUT(sp1_$$XVAL("ceclin",vals)_"."_para)
  ;
  i $$XVAL("ceoppai",vals)="y" d  ;
- . d OUT($$XVAL("ceoppa",vals)_"."_para)
+ . d OUT(sp1_$$XVAL("ceoppa",vals)_"."_para)
  ;
  i $$XVAL("ceoppabi",vals)="y" d  ;
- . d OUT($$XVAL("ceoppab",vals)_"."_para)
+ . d OUT(sp1_$$XVAL("ceoppab",vals)_"."_para)
  ;
  i $$XVAL("cecommcai",vals)="y" d  ;
- . d OUT($$XVAL("cecommca",vals)_"."_para)
+ . d OUT(sp1_$$XVAL("cecommca",vals)_"."_para)
  ;
  i $$XVAL("ceotabnmi",vals)="y" d  ;
- . d OUT($$XVAL("ceotabnm",vals)_"."_para)
+ . d OUT(sp1_$$XVAL("ceotabnm",vals)_"."_para)
  ;
  i $$XVAL("ceobrci",vals)="y" d  ;
- . d OUT($$XVAL("ceobrc",vals)_"."_para)
+ . d OUT(sp1_$$XVAL("ceobrc",vals)_"."_para)
  ;
  i $$XVAL("ceaoabbi",vals)="y" d  ;
- . d OUT($$XVAL("ceaoabb",vals)_"."_para)
+ . d OUT(sp1_$$XVAL("ceaoabb",vals)_"."_para)
  ;
  i $$XVAL("ceaoabi",vals)="y" d  ;
- . d OUT($$XVAL("ceaoab",vals)_"."_para)
+ . d OUT(sp1_$$XVAL("ceaoab",vals)_"."_para)
  ;
  ;# Impression Remarks
  i $$XVAL("ceimre",vals)'="" d  ;
- . d OUT($$XVAL("ceimre",vals)_"."_para)
+ . d OUT(sp1_$$XVAL("ceimre",vals)_"."_para)
  q
+ ;
+XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined by var
+ ; vals and dict are passed by name
+ ; valdx is used for nodules ala cect2co with the nodule number included
+ ;n dict s dict=$$setroot^%wd("cteval-dict")
+ n zr,zv,zdx
+ s zdx=$g(valdx)
+ i zdx="" s zdx=var
+ s zv=$g(@vals@(zdx))
+ ;i zv="" s zr="["_var_"]" q zr
+ i zv="" s zr="" q zr
+ s zr=$g(@dict@(var,zv))
+ ;i zr="" s zr="["_var_","_zv_"]"
+ q zr
+ ;

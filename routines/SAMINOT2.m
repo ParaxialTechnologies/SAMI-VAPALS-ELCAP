@@ -453,6 +453,7 @@ IMPRESS(ARY,SID) ; impressions from CTEval report
  n ctkey s ctkey=$g(@ARY@("ctform"))
  n vals s vals=$na(@root@("graph",SID,ctkey))
  n dict s dict=$$setroot^%wd("cteval-dict")
+ s dict=$na(@dict@("cteval-dict"))
  n para s para=""
  n sp1 s sp1="    "
  ; 
@@ -474,8 +475,7 @@ IMPRESS(ARY,SID) ; impressions from CTEval report
  . d  ;if $$XVAL("ceemv",vals)="e" d  ;
  . . if $$XVAL("ceem",vals)'="no" d  ;
  . . . if $$XVAL("ceem",vals)="nv" q  ;
- . . . d OUT(sp1_"Emphysema:")
- . . . d OUT(sp1_$$XSUB("ceem",vals,dict)_"."_para)
+ . . . d OUT(sp1_"Emphysema: "_$$XSUB("ceem",vals,dict)_"."_para)
  ;
  i $$XVAL("ceclini",vals)="y" d  ;
  . d OUT(sp1_$$XVAL("ceclin",vals)_"."_para)

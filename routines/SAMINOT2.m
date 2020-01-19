@@ -332,6 +332,9 @@ LCSNOTE(vals,dest,cnt) ; Lung Screening Note
  . d OUT("Additional comments:")
  . d OUT(sp1_addcmt)
  n impress s impress=""
+ n ctary
+ d CTINFO("ctary",sid,form)
+ s impress=$g(ctary("impression"))
  ; get impression from lastest CT Eval here
  i impress'="" d  ;
  . d OUT("Impression:")
@@ -354,9 +357,14 @@ LCSNOTE(vals,dest,cnt) ; Lung Screening Note
  ;. d OUT(sp1_$$XVAL("fucmctde",vals))
  n recom s recom=""
  ; get recommendations from CT eval form here
+ s recom=$g(ctary("followup"))
  i recom'="" d  ;
  . d OUT("Recommendations:")
  . d OUT(sp1_recom)
+ . i $g(ctary("followup2"))'="" d  ;
+ . . d OUT(sp1_ctary("followup2"))
+ . i $g(ctary("followup3"))'="" d  ;
+ . . d OUT(sp1_ctary("followup3"))
  n ordered s ordered=$$XVAL("funewct",vals)
  i ordered'="" d  ;
  . s ordered=$s(ordered="y":"Yes",ordered="n":"No",1:"")
@@ -387,4 +395,104 @@ XVAL(var,vals) ; extrinsic returns the patient value for var
  ;i zr="" s zr="["_var_"]"
  q zr
  ;
+PREVCT(SID,FORM) ; extrinic returns the form key to the CT Eval form
+ ; previous to FORM. If FORM is null, the latest CT Eval form key is returned
+ ; FORM sensitivity is tbd.. always returns latest CTEval
+ n gn s gn=$$setroot^%wd("vapals-patients")
+ n prev s prev=$o(@gn@("graph",SID,"ceform-30"),-1)
+ q prev
  ;
+CTINFO(ARY,SID,FORM) ; returns extracts from latest CT Eval form
+ ; ARY passed by name
+ ;
+ n ctkey s ctkey=$$PREVCT(SID,$G(FORM))
+ q:ctkey=""
+ n root s root=$$setroot^%wd("vapals-patients")
+ n ctroot s ctroot=$na(@root@("graph",SID,ctkey))
+ ;
+ s @ARY@("ctform")=ctkey
+ s @ARY@("impression")=$g(@ctroot@("ceimre"))
+ n futext
+ s futext=$g(@ctroot@("cefuw"))
+ n futbl
+ s futbl("1y")="Annual repeat"
+ s futbl("nw")="Now"
+ s futbl("1m")="1 month"
+ s futbl("3m")="3 months"
+ s futbl("6m")="6 months"
+ s futbl("os")="other"
+ s futext=$g(futbl(futext))
+ n fudate s fudate=$g(@ctroot@("cefud"))
+; #Other followup
+ n zfu,ofu,tofu,comma
+ n vals s vals=ctroot
+ s comma=0,tofu=""
+ s ofu=""
+ f zfu="cefuaf","cefucc","cefupe","cefufn","cefubr","cefupc","cefutb" d  ;
+ . i $$XVAL(zfu,vals)="y" s ofu=ofu_zfu
+ i $$XVAL("cefuo",vals)'="" s ofu=ofu_"cefuo"
+ i ofu'="" d  ;
+ . s tofu="Other followup: "
+ . i ofu["cefuaf" s tofu=tofu_"Antibiotics" s comma=1
+ . i ofu["cefucc" s tofu=tofu_$s(comma:", ",1:"")_"Diagnostic CT" s comma=1
+ . i ofu["cefupe" s tofu=tofu_$s(comma:", ",1:"")_"PET" s comma=1
+ . i ofu["cefufn" s tofu=tofu_$s(comma:", ",1:"")_"Percutaneous biopsy" s comma=1
+ . i ofu["cefubr" s tofu=tofu_$s(comma:", ",1:"")_"Bronchoscopy" s comma=1
+ . i ofu["cefupc" s tofu=tofu_$s(comma:", ",1:"")_"Pulmonary consultation" s comma=1
+ . i ofu["cefutb" s tofu=tofu_$s(comma:", ",1:"")_"Refer to tumor board" s comma=1
+ . i ofu["cefuo" s tofu=tofu_$s(comma:", ",1:"")_"Other:" s comma=1
+ s @ARY@("followup")=futext_" "_fudate
+ s @ARY@("followup2")=tofu
+ s @ARY@("followup3")=$$XVAL("cefuoo",vals)
+ ;
+ q
+ ; 
+IMPRESS(ARY,vals) ; impressions from CTEval report
+ d OUT($$XSUB("ceimn",vals,dict)_para)
+ ;
+ ;# Report CAC Score and Extent of Emphysema
+ s cacval=0
+ d  ;if $$XVAL("ceccv",vals)'="e" d  ;
+ . set vcac=$$XVAL("cecccac",vals)
+ . if vcac'="" d  ;
+ . . s cacrec=""
+ . . s cac="The Visual Coronary Artery Calcium (CAC) Score is "_vcac_". "
+ . . s cacval=vcac
+ . . i cacval>3 s cacrec=$g(@dict@("CAC_recommendation"))_para
+ ;
+ i cacval>0 d  ;
+ . d OUT(cac_" "_cacrec_" "_para)
+ . d  ;if $$XVAL("ceemv",vals)="e" d  ;
+ . . if $$XVAL("ceem",vals)'="no" d  ;
+ . . . if $$XVAL("ceem",vals)="nv" q  ;
+ . . . d OUT("Emphysema:")
+ . . . d OUT($$XSUB("ceem",vals,dict)_"."_para)
+ ;
+ i $$XVAL("ceclini",vals)="y" d  ;
+ . d OUT($$XVAL("ceclin",vals)_"."_para)
+ ;
+ i $$XVAL("ceoppai",vals)="y" d  ;
+ . d OUT($$XVAL("ceoppa",vals)_"."_para)
+ ;
+ i $$XVAL("ceoppabi",vals)="y" d  ;
+ . d OUT($$XVAL("ceoppab",vals)_"."_para)
+ ;
+ i $$XVAL("cecommcai",vals)="y" d  ;
+ . d OUT($$XVAL("cecommca",vals)_"."_para)
+ ;
+ i $$XVAL("ceotabnmi",vals)="y" d  ;
+ . d OUT($$XVAL("ceotabnm",vals)_"."_para)
+ ;
+ i $$XVAL("ceobrci",vals)="y" d  ;
+ . d OUT($$XVAL("ceobrc",vals)_"."_para)
+ ;
+ i $$XVAL("ceaoabbi",vals)="y" d  ;
+ . d OUT($$XVAL("ceaoabb",vals)_"."_para)
+ ;
+ i $$XVAL("ceaoabi",vals)="y" d  ;
+ . d OUT($$XVAL("ceaoab",vals)_"."_para)
+ ;
+ ;# Impression Remarks
+ i $$XVAL("ceimre",vals)'="" d  ;
+ . d OUT($$XVAL("ceimre",vals)_"."_para)
+ q

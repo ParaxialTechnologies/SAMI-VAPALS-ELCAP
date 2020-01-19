@@ -421,7 +421,7 @@ CTINFO(ARY,SID,FORM) ; returns extracts from latest CT Eval form
  s futbl("3m")="3 months"
  s futbl("6m")="6 months"
  s futbl("os")="other"
- s futext=$g(futbl(futext))
+ i futext'="" s futext=$g(futbl(futext))
  n fudate s fudate=$g(@ctroot@("cefud"))
 ; #Other followup
  n zfu,ofu,tofu,comma

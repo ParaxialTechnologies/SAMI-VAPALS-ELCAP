@@ -105,6 +105,9 @@ NOTE(filter) ; extrnisic which creates a note
  ;
  n didnote s didnote=0
  ;
+ i $d(@vals@("notes")) d  q didnote ;
+ . s filter("errorMessage")="Note already exists for this form."
+ ;
  i $g(@vals@("futype"))="other" d  ;
  . i $g(@vals@("samistatus"))'="complete" q  ;
  . ;q:$$HASVCNT(vals)

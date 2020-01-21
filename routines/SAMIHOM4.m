@@ -138,6 +138,7 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  . . . ;d SV2VSTA^SAMIVSTA(.FILTER)
  . . . ;m ^SAMIUL("newFILTER")=SAMIFILTER
  . . . d WSNOTE^SAMINOT2(.SAMIRESULT,.SAMIARG)
+ . . e  d WSCASE^SAMICASE(.SAMIRESULT,.SAMIARG)
  ;
  i route="deleteform" d  q 0
  . m SAMIARG=vars

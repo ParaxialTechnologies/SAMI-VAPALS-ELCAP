@@ -102,7 +102,7 @@ EMPHYS(rtn,vals,dict) ;
  if $$XVAL("cecccac",vals)'="" d  ;
  . s @vals@("ceccv")="e"
  ;
- d  ;if $$XVAL("ceccv",vals)'="e" d  ;
+ d  if $$XVAL("ceccv",vals)'="n" d  ;
  . set vcac=$$XVAL("cecccac",vals)
  . if vcac'="" d  ;
  . . s cacrec=""
@@ -114,13 +114,15 @@ EMPHYS(rtn,vals,dict) ;
  n samicac s samicac=0
  i $$XVAL("cecclm",vals)'="no" s samicac=1
  i $$XVAL("ceccld",vals)'="no" s samicac=1
- i $$XVAL("cecclf",vals)'="no" s samicac=1
+ ;i $$XVAL("cecclf",vals)'="no" s samicac=1
+ i $$XVAL("cecccf",vals)'="no" s samicac=1
  i $$XVAL("ceccrc",vals)'="no" s samicac=1
  ;
  i samicac=1 d  ;
- . d OUT($$XSUB("cecc",vals,dict,"cecclm")_" in left main,")
- . d OUT($$XSUB("cecc",vals,dict,"ceccld")_" in left anterior descending,")
- . d OUT($$XSUB("cecc",vals,dict,"cecclf")_" in circumflex, and")
+ . d OUT($$XSUB("cecc",vals,dict,"cecclm")_" in left main, ")
+ . d OUT($$XSUB("cecc",vals,dict,"ceccld")_" in left anterior descending, ")
+ . ;d OUT($$XSUB("cecc",vals,dict,"cecclf")_" in circumflex, and ")
+ . d OUT($$XSUB("cecc",vals,dict,"cecccf")_" in circumflex, and ")
  . d OUT($$XSUB("cecc",vals,dict,"ceccrc")_" in right coronary. "_cac_para)
  ; 
  if $$XVAL("cecca",vals)'="-" d  ;

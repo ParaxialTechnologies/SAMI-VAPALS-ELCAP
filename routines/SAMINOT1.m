@@ -397,16 +397,28 @@ INNOTE(vals,dest,cnt) ;
  d OUT(" ")
  d OUT("Shared Decision Making: ")
  d OUT(" ")
- d OUT("Veteran of age and exposure to cigarette smoke as described above, and without a ")
- d OUT("current diagnosis or obvious symptoms suggestive of lung cancer, has been educated ")
- d OUT("today about the estimated risk for lung cancer, the possibility of a cure or life ")
- d OUT("prolonging if an early lung cancer were to be found during screening, the possibility of ")
- d OUT("imaging abnormalities not being lung cancer, the possibility of complications from ")
- d OUT("additional diagnostic procedures, and the approximate amount of radiation exposure ")
- d OUT("associated with each screening procedure. In addition, the veteran has been educated ")
- d OUT("today about the importance of avoiding exposure to cigarette smoke, available tobacco ")
- d OUT("cessation programs and available lung screening services at this VA facility. Education ")
- d OUT("material was provided to the veteran.")
+ n sdm s sdm=""
+ s sdm=sdm_"Veteran of age and exposure to cigarette smoke as described above, and without a "
+ s sdm=sdm_"current diagnosis or obvious symptoms suggestive of lung cancer, has been educated "
+ s sdm=sdm_"today about the estimated risk for lung cancer, the possibility of a cure or life "
+ s sdm=sdm_"prolonging if an early lung cancer were to be found during screening, the possibility of "
+ s sdm=sdm_"imaging abnormalities not being lung cancer, the possibility of complications from "
+ s sdm=sdm_"additional diagnostic procedures, and the approximate amount of radiation exposure "
+ s sdm=sdm_"associated with each screening procedure. In addition, the veteran has been educated "
+ s sdm=sdm_"today about the importance of avoiding exposure to cigarette smoke, available tobacco "
+ s sdm=sdm_"cessation programs and available lung screening services at this VA facility. Education "
+ s sdm=sdm_"material was provided to the veteran."
+ s sdm=sdm_"Veteran of age and exposure to cigarette smoke as described above, and without a "
+ s sdm=sdm_"current diagnosis or obvious symptoms suggestive of lung cancer, has been educated "
+ s sdm=sdm_"today about the estimated risk for lung cancer, the possibility of a cure or life "
+ s sdm=sdm_"prolonging if an early lung cancer were to be found during screening, the possibility of "
+ s sdm=sdm_"imaging abnormalities not being lung cancer, the possibility of complications from "
+ s sdm=sdm_"additional diagnostic procedures, and the approximate amount of radiation exposure "
+ s sdm=sdm_"associated with each screening procedure. In addition, the veteran has been educated "
+ s sdm=sdm_"today about the importance of avoiding exposure to cigarette smoke, available tobacco "
+ s sdm=sdm_"cessation programs and available lung screening services at this VA facility. Education "
+ s sdm=sdm_"material was provided to the veteran."
+ d OUT(sdm)
  ;d OUT(" ")
  ;d OUT("Veteran of age and exposure to cigarette smoke as described above, and without")
  ;d OUT("a current diagnosis or obvious symptoms suggestive of lung cancer, has been")

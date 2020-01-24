@@ -41,7 +41,7 @@ BREAST(rtn,vals,dict) ;
  else  if sba=1 d OUT(para)
  ;
  ;
- d OUT("Abdomen:")
+ d OUT("Abdomen: ")
  n yesaa s yesaa=0
  ;  # Special Handling for the gallbladder
  ;
@@ -49,13 +49,13 @@ BREAST(rtn,vals,dict) ;
  . d OUT("Limited view of the upper abdomen reveals the following: <br>")
  . set yesaa=1
  . if $$XVAL("ceagh",vals)="h" d  ;
- . . d OUT("status post cholecystectomy.")
+ . . d OUT("status post cholecystectomy. <br>")
  . if $$XVAL("ceags",vals)="s" d  ;
- . . d OUT("Gallstones are noted.")
+ . . d OUT("Gallstones are noted. <br>")
  . if $$XVAL("ceagl",vals)="l" d  ;
- . . d OUT("Sludge is seen in the gall bladder.")
+ . . d OUT("Sludge is seen in the gall bladder. <br>")
  . if $$XVAL("ceago",vals)="y" d  ;
- . . d OUT("An abnormality was noted in the gall bladder: ")
+ . . d OUT("An abnormality was noted in the gall bladder: <br>")
  if $$XVAL("ceagos",vals)'="" d  ;
  . d OUT($$XVAL("ceagos",vals)_"<br>")
  ;

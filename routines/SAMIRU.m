@@ -36,7 +36,7 @@ WSGETRU(rtn,filter) ; web service to return counts for rural and urban
  s (rural,urban,unknown)=0
  n zi s zi=0
  f  s zi=$o(@root@(zi)) q:+zi=0  d  ;
- . n sid s sid=@root@(zi,"sisid")
+ . n sid s sid=$g(@root@(zi,"sisid"))
  . q:sid=""
  . n gr s gr=$na(@root@("graph",sid))
  . n siform

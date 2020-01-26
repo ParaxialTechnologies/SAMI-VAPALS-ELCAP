@@ -177,6 +177,38 @@ MKSBFORM(sid,key) ; create background form
  ;
  quit  ; end of MKSBFORM
  ;
+PREVNOD(sid) ; extrinsic which returns the key of the latest form
+ ; that includes a nodule grid. used for nodule copy
+ n retkey s retkey=""
+ n fary
+ d SORTFRMS(.fary,sid)
+ n tdt s tdt=""
+ f  s tdt=$o(fary(tdt),-1) q:tdt=""  q:retkey'=""  d  ; 
+ . n tmpkey
+ . s tmpkey=$o(fary(tdt,"")) 
+ . i tmpkey["ceform" s retkey=tmpkey
+ . i tmpkey["ptform" s retkey=tmpkey
+ . i tmpkey["bxform" s retkey=tmpkey
+ ;
+ q retkey
+ ;
+SORTFRMS(ARY,sid) ; sorts all forms for patient sid by date
+ ; and returns in ARY, passed by reference
+ ; format of return is ARY(fmdate,key)=""
+ n root s root=$$setroot^%wd("vapals-patients")
+ q:'$d(@root@("graph",sid))
+ n froot s froot=$na(@root@("graph",sid))
+ n zi s zi=""
+ f  s zi=$o(@froot@(zi)) q:zi=""  d  ;
+ . n ftype s ftype=$p(zi,"-",1)
+ . n fdate s fdate=$p(zi,ftype_"-",2)
+ . n X,Y
+ . s X=fdate
+ . D ^%DT
+ . i Y=-1 d ^ZTER Q  ;
+ . S ARY(Y,zi)=""
+ q
+ ;
 MKCEFORM(sid,key) ; create ct evaluation form
  ;
  ;@stanza 1 invocation, binding, & branching
@@ -201,16 +233,24 @@ MKCEFORM(sid,key) ; create ct evaluation form
  new sien set sien=$$SID2NUM^SAMIHOM3(sid)
  quit:+sien=0
  new cdate set cdate=$piece(key,"ceform-",2)
- new items,prevct
- do GETITEMS^SAMICASE("items",sid)
- set prevct=""
- if $data(items("type","vapals:ceform")) do  ;previous cteval exists
- . set prevct=$order(items("type","vapals:ceform",""),-1) ; latest ceform
- if prevct'="" do  ;
+ ; nodule copy
+ n srckey s srckey=$$PREVNOD(sid)
+ i srckey'="" d  ;
  . new target,source
- . set source=$name(@root@("graph",sid,prevct))
+ . set source=$name(@root@("graph",sid,srckey))
  . set target=$name(@root@("graph",sid,key))
- . do CTCOPY^SAMICTC1(source,target)
+ . d CTCOPY^SAMICTC1(source,target) 
+ ; end nodule copy
+ ;new items,prevct
+ ;do GETITEMS^SAMICASE("items",sid)
+ ;set prevct=""
+ ;if $data(items("type","vapals:ceform")) do  ;previous cteval exists
+ ;. set prevct=$order(items("type","vapals:ceform",""),-1) ; latest ceform
+ ;if prevct'="" do  ;
+ ;. new target,source
+ ;. set source=$name(@root@("graph",sid,prevct))
+ ;. set target=$name(@root@("graph",sid,key))
+ ;. do CTCOPY^SAMICTC1(source,target)
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate
  do SSAMISTA^SAMICASE(sid,key,"incomplete")
@@ -294,6 +334,14 @@ MKPTFORM(sid,key) ; create pet evaluation form
  new root set root=$$setroot^%wd("vapals-patients")
  new sien set sien=$$SID2NUM^SAMIHOM3(sid)
  quit:+sien=0
+ ; nodule copy
+ n srckey s srckey=$$PREVNOD(sid)
+ i srckey'="" d  ;
+ . new target,source
+ . set source=$name(@root@("graph",sid,srckey))
+ . set target=$name(@root@("graph",sid,key))
+ . d CTCOPY^SAMICTC1(source,target) 
+ ; end nodule copy
  new cdate set cdate=$piece(key,"ptform-",2)
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate
@@ -335,7 +383,7 @@ MKITFORM(sid,key) ; create intervention form
  ;
  quit  ; end of MKITFORM
  ;
-MKBXFORM(sid,key) ; create background form
+MKBXFORM(sid,key) ; create biopsy form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -359,6 +407,14 @@ MKBXFORM(sid,key) ; create background form
  new sien set sien=$$SID2NUM^SAMIHOM3(sid)
  quit:+sien=0
  new cdate set cdate=$piece(key,"bxform-",2)
+ ; nodule copy
+ n srckey s srckey=$$PREVNOD(sid)
+ i srckey'="" d  ;
+ . new target,source
+ . set source=$name(@root@("graph",sid,srckey))
+ . set target=$name(@root@("graph",sid,key))
+ . d CTCOPY^SAMICTC1(source,target) 
+ ; end nodule copy
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate
  do SSAMISTA^SAMICASE(sid,key,"incomplete")

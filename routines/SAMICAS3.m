@@ -184,11 +184,11 @@ PREVNOD(sid) ; extrinsic which returns the key of the latest form
  d SORTFRMS(.fary,sid)
  n tdt s tdt=""
  f  s tdt=$o(fary(tdt),-1) q:tdt=""  q:retkey'=""  d  ; 
- . n tmpkey
- . s tmpkey=$o(fary(tdt,"")) 
- . i tmpkey["ceform" s retkey=tmpkey
- . i tmpkey["ptform" s retkey=tmpkey
- . i tmpkey["bxform" s retkey=tmpkey
+ . n tmpkey s tmpkey=""
+ . f  s tmpkey=$o(fary(tdt,tmpkey)) q:tmpkey=""  q:retkey'=""  d  ; 
+ . . i tmpkey["ceform" s retkey=tmpkey
+ . . i tmpkey["ptform" s retkey=tmpkey
+ . . i tmpkey["bxform" s retkey=tmpkey
  ;
  q retkey
  ;

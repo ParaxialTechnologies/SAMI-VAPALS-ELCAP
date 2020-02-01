@@ -192,6 +192,7 @@ OUT(ln) ;
  s lnn=$o(@rtn@(" "),-1)+1
  i outmode="go" d  ;
  . s @rtn@(lnn)=line
+ . s line=""
  . s lnn=$o(@rtn@(" "),-1)+1
  s @rtn@(lnn)=ln
  i $g(debug)=1 d  ;

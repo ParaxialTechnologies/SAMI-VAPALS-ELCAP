@@ -187,7 +187,9 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  ;
  ; lung nodules
  ;
+ d OUT("")
  d HOUT("Lung Nodules:")
+ d OUT("")
  ;
  ; see if there are any nodules using the cectXch fields
  ;

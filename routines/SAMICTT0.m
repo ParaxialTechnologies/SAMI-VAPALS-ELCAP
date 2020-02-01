@@ -92,7 +92,9 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  ; generate header
  ;
  d  ;
- . n pname s pname=$$XVAL("sinamel",vals)_", "_$$XVAL("sinamef",vals)
+ . n pname
+ . ;s pname=$$XVAL("sinamel",vals)_", "_$$XVAL("sinamef",vals)
+ . s pname=$$XVAL("saminame",vals)
  . d OUT("Participant Name: "_pname)
  ;d OUT("<TR><TD WIDTH=""180""><B>Participant Name:</B></TD><TD WIDTH=""365"">")
  ;d OUT($$XVAL("sinamel",vals)_", "_$$XVAL("sinamef",vals))
@@ -203,7 +205,7 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  ;. d OUT(para)
  ;. d OUT("No pulmonary nodules are seen."_para)
  ;
- ;d NODULES^SAMICTT1(rtn,.vals,.dict)
+ d NODULES^SAMICTT1(rtn,.vals,.dict)
  ;
  ;d OTHRLUNG^SAMICTT2(rtn,.vals,.dict)
  ;

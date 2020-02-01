@@ -207,7 +207,7 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  ;
  d NODULES^SAMICTT1(rtn,.vals,.dict)
  ;
- ;d OTHRLUNG^SAMICTT2(rtn,.vals,.dict)
+ d OTHRLUNG^SAMICTT2(rtn,.vals,.dict)
  ;
  ;d EMPHYS^SAMICTT3(rtn,.vals,.dict)
  ;

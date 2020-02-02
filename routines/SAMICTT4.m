@@ -6,6 +6,7 @@ SAMICTT4 ;ven/gpl - ielcap: forms ; 3/19/19 1:27pm
  ;
 BREAST(rtn,vals,dict) ;
  ; repgen6
+ n sp1 s sp1="  "
  n outmode s outmode="go"
  n line s line=""
  n destr s destr="is seen"
@@ -51,16 +52,16 @@ BREAST(rtn,vals,dict) ;
  ;  # Special Handling for the gallbladder
  ;
  if $$XVAL("ceaga",vals)="y" d  ;
- . d OUT("Limited view of the upper abdomen reveals the following: ")
+ . d OUT(sp1_"Limited view of the upper abdomen reveals the following: ")
  . set yesaa=1
  . if $$XVAL("ceagh",vals)="h" d  ;
- . . d OUT("status post cholecystectomy. ")
+ . . d OUT(sp1_"status post cholecystectomy. ")
  . if $$XVAL("ceags",vals)="s" d  ;
- . . d OUT("Gallstones are noted. ")
+ . . d OUT(sp1_"Gallstones are noted. ")
  . if $$XVAL("ceagl",vals)="l" d  ;
- . . d OUT("Sludge is seen in the gall bladder. ")
+ . . d OUT(sp1_"Sludge is seen in the gall bladder. ")
  . if $$XVAL("ceago",vals)="y" d  ;
- . . d OUT("An abnormality was noted in the gall bladder: ")
+ . . d OUT(sp1_"An abnormality was noted in the gall bladder: ")
  if $$XVAL("ceagos",vals)'="" d  ;
  . d OUT($$XVAL("ceagos",vals))
  ;
@@ -92,14 +93,14 @@ BREAST(rtn,vals,dict) ;
  . . . ;d OUT(aalist(zan,zaa,2))
  . . . if aalist(zan,zaa,2)'="" d OUT(aalist(zan,zaa,2))
  . . if zout'="" d  ;
- . . . d OUT("A "_$$LOWC^SAMICTR3(zout)_" "_zaa_". "_aalist(zan,zaa,2))
+ . . . d OUT(sp1_"A "_$$LOWC^SAMICTR3(zout)_" "_zaa_". "_aalist(zan,zaa,2))
  ;
  ;# Other Abdominal Abnormalities
  ;
  if $$XVAL("ceaoab",vals)'="" d  ;
  . d OUT($$XVAL("ceaoab",vals)_".")
  if yesaa=0  d  ;
- . d OUT("Limited view of the upper abdomen reveals no abnormalities.")
+ . d OUT(sp1_"Limited view of the upper abdomen reveals no abnormalities.")
  ;
  d OUT("")
  ;
@@ -129,7 +130,7 @@ OUT(ln) ;
  i outmode="hold" s line=line_ln q  ;
  s cnt=cnt+1
  n lnn
- ;s debug=1
+ i $g(debug)'=1 s debug=0
  s lnn=$o(@rtn@(" "),-1)+1
  i outmode="go" d  ;
  . s @rtn@(lnn)=line

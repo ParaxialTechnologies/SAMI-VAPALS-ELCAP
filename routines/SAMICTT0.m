@@ -234,7 +234,7 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  d:$g(debug)  ;
  . n zi s zi=""
  . f  s zi=$o(@vals@(zi)) q:zi=""  d  ;
- . . d OUT("<br>"_zi_" "_$g(@vals@(zi)))
+ . . d OUT(zi_" "_$g(@vals@(zi)))
  ;d OUT("</BODY></HTML>")
  ;
  q

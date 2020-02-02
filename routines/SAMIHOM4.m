@@ -147,7 +147,7 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  i route="ctreport" d  q 0
  . m SAMIARG=vars
  . n format s format="html"
- . ;s format="text"
+ . s format="text"
  . i format="text" d WSNOTE^SAMINOT3(.SAMIRESULT,.SAMIARG) q  ;
  . i format="html" d WSREPORT^SAMICTR0(.SAMIRESULT,.SAMIARG) q  ;
  . ;d wsReport^SAMICTRT(.SAMIRESULT,.SAMIARG)

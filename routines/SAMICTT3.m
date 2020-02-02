@@ -16,10 +16,10 @@ EMPHYS(rtn,vals,dict) ;
  if $$XVAL("ceem",vals)'="" d  ;
  . if $$XVAL("ceem",vals)="nv" q  ;
  . if $$XVAL("ceem",vals)="no" q  ;
- . d OUT("")
+ . ;d OUT("")
  . D HOUT("Emphysema: ")
- . d OUT("")
- . D OUT($$XSUB("ceem",vals,dict))
+ . ;d OUT("")
+ . D OUT(sp1_$$XSUB("ceem",vals,dict))
  ;
  ;d OUT("")
  D HOUT("Pleura: ")
@@ -59,13 +59,13 @@ EMPHYS(rtn,vals,dict) ;
  ;
  if $$XVAL("cebatr",vals)="y" d  ;
  . ;d OUT("Rounded atelectasis in the ")
- . d OUT("Rounded atelectasis in the "_$$LOBESTR^SAMICTR2("cebatrl1^cebatrl2^cebatrl3^cebatrl4^cebatrl5",0)_".") d OUT("")
+ . d OUT(sp1_"Rounded atelectasis in the "_$$LOBESTR^SAMICTR2("cebatrl1^cebatrl2^cebatrl3^cebatrl4^cebatrl5",0)_".") ;d OUT("")
  . s yespp=1
  ;
  if $$XVAL("cept",vals)="y" d  ;
  . s yespp=1
  . s numl=0
- . set str="Pleural thickening/plaques in the "
+ . set str=sp1_"Pleural thickening/plaques in the "
  . if $$XVAL("ceptrt",vals)="r" d  ;
  . . s str=str_"right"
  . . s numl=numl+1
@@ -79,20 +79,20 @@ EMPHYS(rtn,vals,dict) ;
  . ;else  d  ;
  . ;. s str=str_" lung."
  . s str=str_"."
- . if numl=0 set str="Pleural thickening/plaques."
- . d OUT(str) d OUT("")
+ . if numl=0 set str=sp1_"Pleural thickening/plaques."
+ . d OUT(str) ;d OUT("")
  ;
  if $$XVAL("cepu",vals)="y" d  ;
  . s yespp=1
  . if $l($$XVAL("cepus",vals))'=0 d  ;
- . . d OUT("Pleural rumor: "_$$XVAL("cepus",vals)) 
- . e  d OUT("Pleural tumor.")
- . d OUT("")
+ . . d OUT(sp1_"Pleural rumor: "_$$XVAL("cepus",vals)) 
+ . e  d OUT(sp1_"Pleural tumor.")
+ . ;d OUT("")
  ;
  i yespp=0 d OUT("")
  ;
  d  ;
- . if $$XVAL("ceoppab",vals)'="" d OUT($$XVAL("ceoppab",vals)_".") d OUT("")
+ . if $$XVAL("ceoppab",vals)'="" d OUT(sp1_$$XVAL("ceoppab",vals)_".") ;d OUT("")
  . else  d
  . . if yespp=1 d OUT("")
  ;
@@ -170,15 +170,15 @@ EMPHYS(rtn,vals,dict) ;
  . s yeamm=1
  . s abn=$$CCMSTR("ceatc^ceaty^ceatm",vals)
  . ;d OUT("[abn="_abn_"]")
- . i abn="" d OUT("Noted in the thyroid.")
- . i abn'="" d OUT(abn_" thyroid.")
- . i $$XVAL("ceato",vals)="o" d OUT($$XVAL("ceatos",vals)_"<br>")
+ . i abn="" d OUT(sp1_"Noted in the thyroid.")
+ . i abn'="" d OUT(sp1_abn_" thyroid.")
+ . i $$XVAL("ceato",vals)="o" d OUT(sp1_$$XVAL("ceatos",vals)_"<br>")
  i $$XVAL("ceaya",vals)="y" d  ;
  . s yesmm=1
  . s abn=$$CCMSTR("ceayc^ceayy^ceaym",vals)
- . i abn="" d OUT("Noted in the thymus")
- . i abn'="" d OUT(abn_" thymus.")
- . i $$XVAL("ceayo",vals)="o" d OUT($$XVAL("ceayos",vals)_"<br>")
+ . i abn="" d OUT(sp1_"Noted in the thymus")
+ . i abn'="" d OUT(sp1_abn_" thymus.")
+ . i $$XVAL("ceayo",vals)="o" d OUT(sp1_$$XVAL("ceayos",vals))
  ;
  ;   # Non-calcified lymph nodes
  n lnlist,lnlistt
@@ -296,12 +296,12 @@ EMPHYS(rtn,vals,dict) ;
  . n tval
  . set tval=$$XVAL("ceommos",vals)
  . set abn=$$CCMSTR("ceamc^ceamy^ceamm",vals)
- . if abn="" d OUT("Abnormality noted in the mediastinum. ")
- . e  d OUT(abn_" mediastinum. ")
+ . if abn="" d OUT(sp1_"Abnormality noted in the mediastinum. ")
+ . e  d OUT(sp1_abn_" mediastinum. ")
  . d OUT(tval)
- i yesmm=0 d OUT("No abnormalities.")
+ i yesmm=0 d OUT(sp1_"No abnormalities.")
  i $$XVAL("ceotabnm",vals)'="" d  ;
- . d OUT($$XVAL("ceotabnm",vals)_".")
+ . d OUT(sp1_$$XVAL("ceotabnm",vals)_".")
  d OUT("")
  ;
  ;

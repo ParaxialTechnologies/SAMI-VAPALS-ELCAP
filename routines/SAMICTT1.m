@@ -203,7 +203,8 @@ OUT(ln) ;
  q
  ;
 HOUT(ln) ;
- d OUT("<p><span class='sectionhead'>"_ln_"</span>")
+ d OUT(ln)
+ ;d OUT("<p><span class='sectionhead'>"_ln_"</span>")
  q
  ;
 XVAL(var,vals) ; extrinsic returns the patient value for var

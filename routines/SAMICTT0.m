@@ -213,7 +213,7 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  ;
  d EMPHYS^SAMICTT3(rtn,.vals,.dict)
  ;
- ;d BREAST^SAMICTT4(rtn,.vals,.dict)
+ d BREAST^SAMICTT4(rtn,.vals,.dict)
  ;
  d IMPRSN^SAMICTT9(rtn,.vals,.dict)
  ;

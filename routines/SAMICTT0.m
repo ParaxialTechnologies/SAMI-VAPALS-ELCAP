@@ -7,6 +7,8 @@ SAMICTT0 ;ven/gpl - text based ctreport ; 2/14/19 10:29am
 WSREPORT(return,filter) ; web service which returns an html cteval report
  ;
  s debug=0
+ n outmode s outmode="go"
+ n line s line=""
  i $g(filter("debug"))=1 s debug=1
  ;
  ;s rtn=$na(^TMP("SAMICTT",$J))
@@ -151,10 +153,14 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  ;d OUT("</TD></TR><TR><TD><TABLE><TR><TD WIDTH=20></TD><TD>")
  d OUT("Report:")
  ;
+ s outmode="hold"
+ s line=""
  i $$XVAL("ceclin",vals)'="" d  ;
  . d HOUT("Clinical Information: ")
  . d OUT($$XVAL("ceclin",vals))
+ . s outmode="go" d OUT("")
  ;
+ s outmode="hold"
  n nopri s nopri=1
  d HOUT("Comparison CT Scans: ")
  if $$XVAL("cedcs",vals)'="" d  ;
@@ -165,7 +171,9 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  . d OUT(" "_$$XVAL("cedps",vals))
  . s nopri=0
  d:nopri OUT("None")
+ s outmode="go" d OUT("")
  ;
+ s outmode="hold"
  d HOUT(" Description: ")
  i $$XVAL("cectp",vals)="i" d  ;
  . d OUT("Limited Diagnostic CT examination was performed.")
@@ -184,12 +192,13 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  . ;
  . i nvadbo=1 d  ;
  . . d OUT("Upper abdominal images were not acquired on the current scan due to its limited nature.")
+ s outmode="go" d OUT("")
  ;
  ; lung nodules
  ;
- d OUT("")
+ ;d OUT("")
  d HOUT("Lung Nodules:")
- d OUT("")
+ ;d OUT("")
  ;
  ; see if there are any nodules using the cectXch fields
  ;
@@ -240,6 +249,24 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  q
  ;
 OUT(ln) ;
+ i outmode="hold" s line=line_ln q  ;
+ s cnt=cnt+1
+ n lnn
+ i $g(debug)'=1 s debug=0
+ s lnn=$o(@rtn@(" "),-1)+1
+ i outmode="go" d  ;
+ . s @rtn@(lnn)=line
+ . s line=""
+ . s lnn=$o(@rtn@(" "),-1)+1
+ s @rtn@(lnn)=ln
+ i $g(debug)=1 d  ;
+ . i ln["<" q  ; no markup
+ . n zs s zs=$STACK
+ . n zp s zp=$STACK(zs-2,"PLACE")
+ . s @rtn@(lnn)=zp_":"_ln
+ q
+ ;
+OUTOLD(ln) ;
  s cnt=cnt+1
  n lnn
  ;s debug=1

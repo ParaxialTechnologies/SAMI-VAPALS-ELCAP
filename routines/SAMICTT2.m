@@ -10,6 +10,8 @@ OTHRLUNG(rtn,vals,dict) ;
  ; starts at "Other lung findings:"
  ;
  ;#hputs "Other lung findings:"
+ s outmode="hold"
+ n line s line=""
  ;
  n sp1 s sp1="  "
  n hfind,lfind,yespp,newct
@@ -177,6 +179,7 @@ OTHRLUNG(rtn,vals,dict) ;
  . . . d OUT(sp1_$$XVAL("ceoppa",vals)_".") d OUT("")
  . . . ;d OUT(para)
  . . else  if yespp=1  ;d OUT(para)
+ s outmode="go" d OUT("")
  q
  ;
 LOBESTR(lst,opt) ; extrinsic returns lobes
@@ -206,6 +209,24 @@ HLFIND() ; references and sets lfind in calling routine
  q
  ;
 OUT(ln) ;
+ i outmode="hold" s line=line_ln q  ;
+ s cnt=cnt+1
+ n lnn
+ i $g(debug)'=1 s debug=0
+ s lnn=$o(@rtn@(" "),-1)+1
+ i outmode="go" d  ;
+ . s @rtn@(lnn)=line
+ . s line=""
+ . s lnn=$o(@rtn@(" "),-1)+1
+ s @rtn@(lnn)=ln
+ i $g(debug)=1 d  ;
+ . i ln["<" q  ; no markup
+ . n zs s zs=$STACK
+ . n zp s zp=$STACK(zs-2,"PLACE")
+ . s @rtn@(lnn)=zp_":"_ln
+ q
+ ;
+OUTold(ln) ;
  s cnt=cnt+1
  n lnn
  ;s debug=1

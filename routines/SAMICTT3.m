@@ -11,7 +11,7 @@ EMPHYS(rtn,vals,dict) ;
  ;# Emphysema
  ;
  n sp1 s sp1="  "
- s outmode="go" s line=""
+ s outmode="hold" s line=""
  ;if $$XVAL("ceemv",vals)'="e" d  ;
  if $$XVAL("ceem",vals)'="" d  ;
  . if $$XVAL("ceem",vals)="nv" q  ;
@@ -20,8 +20,10 @@ EMPHYS(rtn,vals,dict) ;
  . D HOUT("Emphysema: ")
  . ;d OUT("")
  . D OUT(sp1_$$XSUB("ceem",vals,dict))
+ . s outmode="go" d OUT("")
  ;
  ;d OUT("")
+ s outmode="hold"
  D HOUT("Pleura: ")
  ;d OUT("")
  ; hputs "Pleura:"
@@ -96,7 +98,9 @@ EMPHYS(rtn,vals,dict) ;
  . else  d
  . . if yespp=1 d OUT("")
  ;
+ s outmode="go" d OUT("")
  ;
+ s outmode="hold"
  d OUT("Coronary Artery Calcifications: ")
  ;# Coronary Calcification
  n vcac,cac,cacrec
@@ -121,7 +125,7 @@ EMPHYS(rtn,vals,dict) ;
  i $$XVAL("cecccf",vals)'="no" s samicac=1
  i $$XVAL("ceccrc",vals)'="no" s samicac=1
  ;
- s outmode="hold" s line=""
+ ;s outmode="hold" s line=""
  i samicac=1 d  ;
  . d OUT($$XSUB("cecc",vals,dict,"cecclm")_" in left main, ")
  . d OUT($$XSUB("cecc",vals,dict,"ceccld")_" in left anterior descending, ")
@@ -131,13 +135,16 @@ EMPHYS(rtn,vals,dict) ;
  . s outmode="go"
  . d OUT("")
  ; 
+ s outmode="hold"
  if $$XVAL("cecca",vals)'="-" d  ;
  . d HOUT("Aortic Calcifications: ")
  . d OUT($$XSUB("cecc",vals,dict,"cecca"))
- ;
- d HOUT("Cardiac Findings: ")
+ . s outmode="go" d OUT("")
  ;
  s outmode="hold"
+ d HOUT("Cardiac Findings: ")
+ ;
+ ;s outmode="hold"
  ;# Pericardial Effusion
  if $$XVAL("ceprevm",vals)'="-" d  ;
  . if $$XVAL("ceprevm",vals)'="no" d  ;
@@ -163,6 +170,7 @@ EMPHYS(rtn,vals,dict) ;
  d OUT("")
  ;
  ;
+ s outmode="hold"
  d HOUT("Mediastinum: ")
  n yesmm s yesmm=0
  n abn
@@ -211,7 +219,7 @@ EMPHYS(rtn,vals,dict) ;
  set lnlistt(13)="left hilar"
  ;
  ;
- s outmode="hold"
+ ;s outmode="hold"
  if $$XVAL("cemln",vals)="y" d  ;
  . s yesmm=1
  . n llist,item
@@ -233,17 +241,17 @@ EMPHYS(rtn,vals,dict) ;
  . . i slnum>1 d OUT(" locations.")
  . . i slnum=1 d OUT(" location.")
  ;
- s outmode="go"
- d OUT("")
+ ;s outmode="go"
+ ;d OUT("")
  ;
  if $$XVAL("cemlncab",vals)="y" d  ;
  . set yesmm=1
- . d OUT("Calcified lymph nodes present.<br>")
+ . d OUT("Calcified lymph nodes present.")
  ;
  if $$XVAL("ceagaln",vals)="y" d  ;
  . set yesmm=1
  . d OUT("Enlarged or growing axillary lymph nodes without central fat are seen.")
- . d OUT($$XVAL("ceagalns",vals)_"<br>")
+ . d OUT($$XVAL("ceagalns",vals))
  ;
  if $$XVAL("cemva",vals)="y" d  ;
  . set yesmm=1
@@ -253,7 +261,7 @@ EMPHYS(rtn,vals,dict) ;
  . . d OUT("Other vascular abnormalities are seen in the pulmonary series.")
  . d OUT($$XVAL("cemvaos",vals)_"<br>")
  ;
- s outmode="hold"
+ ;s outmode="hold"
  ;   # Esophageal
  if $$XVAL("cemeln",vals)="y" d  ;
  . set yesmm=1
@@ -281,8 +289,8 @@ EMPHYS(rtn,vals,dict) ;
  . . . . d OUT(", and "_$$LOWC($g(elist(3))))
  . . d OUT("seen in the esophagus.")
  . d OUT($$XVAL("cemelnos",vals))
- s outmode="go"
- d OUT("")
+ ;s outmode="go"
+ ;d OUT("")
  ;
  ;
  if $$XVAL("cehhn",vals)="y" d  ;
@@ -302,6 +310,7 @@ EMPHYS(rtn,vals,dict) ;
  i yesmm=0 d OUT(sp1_"No abnormalities.")
  i $$XVAL("ceotabnm",vals)'="" d  ;
  . d OUT(sp1_$$XVAL("ceotabnm",vals)_".")
+ s outmode="go"
  d OUT("")
  ;
  ;

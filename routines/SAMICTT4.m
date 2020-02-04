@@ -7,7 +7,7 @@ SAMICTT4 ;ven/gpl - ielcap: forms ; 3/19/19 1:27pm
 BREAST(rtn,vals,dict) ;
  ; repgen6
  n sp1 s sp1="  "
- n outmode s outmode="go"
+ n outmode s outmode="hold"
  n line s line=""
  n destr s destr="is seen"
  n sba set sba=0
@@ -47,6 +47,7 @@ BREAST(rtn,vals,dict) ;
  d OUT("")
  ;
  ;
+ s outmode="hold"
  d OUT("Abdomen: ")
  n yesaa s yesaa=0
  ;  # Special Handling for the gallbladder
@@ -102,7 +103,6 @@ BREAST(rtn,vals,dict) ;
  if yesaa=0  d  ;
  . d OUT(sp1_"Limited view of the upper abdomen reveals no abnormalities.")
  ;
- d OUT("")
  ;
  ;# Other Chest Abnormalities
  ;
@@ -110,8 +110,12 @@ BREAST(rtn,vals,dict) ;
  . d OUT("Other chest abnormalities:")
  . d OUT($$XVAL("ceotab",vals)_". ")
  ;
+ s outmode="go"
+ d OUT("")
+ ;
  ;# Bone Abnormalities
  ;
+ s outmode="hold"
  if $$XVAL("ceaoabb",vals)'="" d  ;
  . d OUT("Bone:")
  . d OUT($$XVAL("ceaoabb",vals)_para)
@@ -122,7 +126,9 @@ BREAST(rtn,vals,dict) ;
  . ;
  . i ($$XVAL("celrad",vals)'="-")&($$XVAL("celrad",vals)'="") d  ;
  . . d OUT("The LungRADS category for this scan is: "_$$XVAL("celrad",vals)_" "_lradModifiers)
- . . d OUT(para)
+ . . d OUT("")
+ s outmode="go"
+ d OUT("")
  q
  ;
  ;

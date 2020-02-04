@@ -1,4 +1,4 @@
-SAMIUTR9 ;ven/lgc - UNIT TEST for SAMICTR9 ;Oct 22, 2019@16:00
+SAMIUTR9 ;ven/lgc - UNIT TEST for SAMICTR9 ;Jan 17, 2020@10:03
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -57,6 +57,8 @@ UTIMPRS ; @TEST - impression
  s cacrec=" CaCrEc ",cac=99
  s utsuccess=1
  d IMPRSN^SAMICTR9("SAMIUPOO",SAMIVALS,SAMIDICT)
+ K ^KBAP("SAMIUTR9","UTIMPRS1021")
+ M ^KBAP("SAMIUTR9","UTIMPRS1021")=SAMIUPOO
  d PLUTARR^SAMIUTST(.SAMIUARC,"UTIMPRS^SAMICTR9")
  n nodea,nodep s nodea=$na(SAMIUARC),nodep=$na(SAMIUPOO)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess

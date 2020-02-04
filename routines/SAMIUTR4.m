@@ -1,4 +1,4 @@
-SAMIUTR4 ;ven/lgc - UNIT TEST for SAMICTR4 ;Oct 22, 2019@15:58
+SAMIUTR4 ;ven/lgc - UNIT TEST for SAMICTR4 ;Jan 17, 2020@10:01
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -58,6 +58,8 @@ UTBRST ; @TEST - Breast
  s cnt=0
  s para="SAMIUPOO"
  d BREAST^SAMICTR4("return",vals,dict)
+ K ^KBAP("SAMIUTR4","UTBRST1021")
+ M ^KBAP("SAMIUTR4","UTBRST1021")=return
  d PLUTARR^SAMIUTST(.SAMIUARC,"UTBRST^SAMIUTR4 report")
  ; now compare return with SAMIUARC
  n noder,nodea s noder=$na(return),nodea=$na(SAMIUARC)
@@ -74,6 +76,8 @@ UTBRST ; @TEST - Breast
  s cnt=0
  s para="POO"
  d BREAST^SAMICTR4("return",vals,dict)
+ K ^KBAP("SAMIUTR4","UTBRST1203")
+ M ^KBAP("SAMIUTR4","UTBRST1203")=return
  ;now pull saved report
  d PLUTARR^SAMIUTST(.SAMIUARC,"UTBRST^SAMIUTR4 report XXX12-3")
  ; now compare return with SAMIUARC
@@ -92,6 +96,8 @@ UTBRST ; @TEST - Breast
  s cnt=0
  s para="POO"
  d BREAST^SAMICTR4("return",vals,dict)
+ K ^KBAP("SAMIUTR4","UTBRST0123")
+ M ^KBAP("SAMIUTR4","UTBRST0123")=return
  ;now pull saved report
  d PLUTARR^SAMIUTST(.SAMIUARC,"UTBRST^SAMIUTR4 report XXX01-23")
  ; now compare return with SAMIUARC

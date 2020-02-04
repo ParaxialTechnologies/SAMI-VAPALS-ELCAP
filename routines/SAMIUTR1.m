@@ -1,4 +1,4 @@
-SAMIUTR1 ;ven/lgc - UNIT TEST for SAMICTR1 ;Oct 22, 2019@15:53
+SAMIUTR1 ;ven/lgc - UNIT TEST for SAMICTR1 ;Jan 17, 2020@09:17
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -57,6 +57,8 @@ UTNODUL ; @TEST - nodules
  s cnt=0
  d NODULES^SAMICTR1("return",SAMIVALS,SAMIDICT)
  ;now pull saved report
+ K ^KBAP("SAMIUTR1","UTNODUL1021")
+ M ^KBAP("SAMIUTR1","UTNODUL1021")=return
  d PLUTARR^SAMIUTST(.SAMIUARC,"UTNODUL^SAMIUTR1 report")
  ; now compare return with SAMIUARC
  n noder,nodea s noder=$na(return),nodea=$na(SAMIUARC)
@@ -75,6 +77,8 @@ UTNODUL ; @TEST - nodules
  s SAMIDICT=$na(@SAMIDICT@("cteval-dict"))
  s cnt=0
  d NODULES^SAMICTR1("return",SAMIVALS,SAMIDICT)
+ K ^KBAP("SAMIUTR1","UTNODUL1203")
+ M ^KBAP("SAMIUTR1","UTNODUL1203")=return
  ;now pull saved report
  d PLUTARR^SAMIUTST(.SAMIUARC,"UTNODUL^SAMIUTR1 report XXX12-3")
  ; now compare return with SAMIUARC
@@ -94,6 +98,8 @@ UTNODUL ; @TEST - nodules
  s SAMIDICT=$na(@SAMIDICT@("cteval-dict"))
  s cnt=0
  d NODULES^SAMICTR1("return",SAMIVALS,SAMIDICT)
+ K ^KBAP("SAMIUTR1","UTNODUL0123")
+ M ^KBAP("SAMIUTR1","UTNODUL0123")=return
  ;now pull saved report
  d PLUTARR^SAMIUTST(.SAMIUARC,"UTNODUL^SAMIUTR1 report XXX01-23")
  ; now compare return with SAMIUARC
@@ -113,6 +119,8 @@ UTNODUL ; @TEST - nodules
  s SAMIDICT=$na(@SAMIDICT@("cteval-dict"))
  s cnt=0
  d NODULES^SAMICTR1("return",SAMIVALS,SAMIDICT)
+ K ^KBAP("SAMIUTR1","UTNODUL0225")
+ M ^KBAP("SAMIUTR1","UTNODUL0225")=return
  ;now pull saved report
  d PLUTARR^SAMIUTST(.SAMIUARC,"UTNODUL^SAMIUTR1 report XXX02-25")
  ; now compare return with SAMIUARC

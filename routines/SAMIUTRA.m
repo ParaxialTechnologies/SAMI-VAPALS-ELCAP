@@ -1,4 +1,4 @@
-SAMIUTRA ;ven/lgc - UNIT TEST for SAMICTRA ;Oct 22, 2019@16:02
+SAMIUTRA ;ven/lgc - UNIT TEST for SAMICTRA ;Jan 17, 2020@10:06
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -57,6 +57,8 @@ UTRCMD ; @TEST - Recommendation
  n para s para="POO"
  s utsuccess=1
  d RCMND^SAMICTRA("SAMIUPOO",SAMIVALS,SAMIDICT)
+ K ^KBAP("SAMIUTRA","UTRCMD1021")
+ M ^KBAP("SAMIUTRA","UTRCMD1021")=SAMIUPOO
  d PLUTARR^SAMIUTST(.SAMIUARC,"UTRCMD^SAMIUTRA")
  n nodea,nodep s nodea=$na(SAMIUARC),nodep=$na(SAMIUPOO)
  f  s nodep=$q(@nodep),nodea=$q(@nodea) q:nodep=""  d  q:'utsuccess

@@ -1,4 +1,4 @@
-SAMIUTR3 ;ven/lgc - UNIT TEST for SAMICTR3 ;Oct 22, 2019@15:57
+SAMIUTR3 ;ven/lgc - UNIT TEST for SAMICTR3 ;Jan 17, 2020@09:56
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -58,6 +58,8 @@ UTEMPHYS ; @TEST - emphysema
  s cnt=0
  s para="SAMIUPOO"
  d EMPHYS^SAMICTR3("return",vals,dict)
+ k ^KBAP("SAMIUTR3","UTEMPHYS1021")
+ M ^KBAP("SAMIUTR3","UTEMPHYS1021")=return
  ;now pull saved report
  d PLUTARR^SAMIUTST(.SAMIUARC,"UTEMPHYS^SAMIUTR3 report")
  ; now compare return with SAMIUARC
@@ -77,6 +79,8 @@ UTEMPHYS ; @TEST - emphysema
  s cnt=0
  s para="POO"
  d EMPHYS^SAMICTR3("return",vals,dict)
+ k ^KBAP("SAMIUTR3","UTEMPHYS1203")
+ M ^KBAP("SAMIUTR3","UTEMPHYS1203")=return
  ;now pull saved report
  d PLUTARR^SAMIUTST(.SAMIUARC,"UTEMPHYS^SAMIUTR3 report XXX12-3")
  ; now compare return with SAMIUARC
@@ -97,6 +101,8 @@ UTEMPHYS ; @TEST - emphysema
  s cnt=0
  s para="POO"
  d EMPHYS^SAMICTR3("return",vals,dict)
+ k ^KBAP("SAMIUTR3","UTEMPHYS0123")
+ M ^KBAP("SAMIUTR3","UTEMPHYS0123")=return
  ;now pull saved report
  d PLUTARR^SAMIUTST(.SAMIUARC,"UTEMPHYS^SAMIUTR3 report XXX01-23")
  ; now compare return with SAMIUARC

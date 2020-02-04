@@ -1,4 +1,4 @@
-SAMIUTLG ;ven/lgc - Unit test for SAMILOG ; 5/16/19 11:29am
+SAMIUTLG ;ven/lgc - Unit test for SAMILOG ;Jan 16, 2020@11:11
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -76,6 +76,25 @@ UTTOGL ; @TEST - Toggle VAPALS password identification
  ; Be sure we leave setting as it was
  new node set node=$name(@root@(ienget,"AUTH"))
  set @node=pooget
+ quit
+ ;
+ ;
+UTME ; @TEST - Test turning on and off manual entry 
+ new me,meoff,meon
+ set me=$$GET^XPAR("SYS","SAMI ALLOW MANUAL ENTRY",,"Q")
+ if me do
+ . D EN^XPAR("SYS","SAMI ALLOW MANUAL ENTRY",1,0)
+ . set meoff=$$GET^XPAR("SYS","SAMI ALLOW MANUAL ENTRY",,"Q")
+ . D EN^XPAR("SYS","SAMI ALLOW MANUAL ENTRY",1,1)
+ . set meon=$$GET^XPAR("SYS","SAMI ALLOW MANUAL ENTRY",,"Q")
+ if 'me do
+ . D EN^XPAR("SYS","SAMI ALLOW MANUAL ENTRY",1,1)
+ . set meon=$$GET^XPAR("SYS","SAMI ALLOW MANUAL ENTRY",,"Q")
+ . D EN^XPAR("SYS","SAMI ALLOW MANUAL ENTRY",1,0)
+ . set meoff=$$GET^XPAR("SYS","SAMI ALLOW MANUAL ENTRY",,"Q")
+ set utsuccess=0
+ if meon=1,meoff=0 set utsuccess=1
+ do CHKEQ^%ut(utsuccess,1,"Toggle ALLOW MANUAL ENTRY FAILED!")
  quit
  ;
 EOR ;End of routine SAMIUTLG

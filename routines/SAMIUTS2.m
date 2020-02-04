@@ -1,4 +1,4 @@
-SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICASE,SAMICAS2,SAMICAS3 ;Oct 30, 2019@15:44
+SAMIUTS2 ;ven/lgc - UNIT TEST for SAMICASE,SAMICAS2,SAMICAS3 ;Jan 17, 2020@12:52
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -70,11 +70,9 @@ UTGTMPL ; @TEST - get html template
  ;
 UTHMNY ; @TEST - extrinsic returns how many forms the patient has used before deleting a patient
  ;CNTITEMS(sid)
- n rootut,rootvp,gienut,dfn,gienvp,studyid,uforms,forms
+ n rootvp,gienut,dfn,gienvp,studyid,uforms,forms
  ; get test patient
- s rootut=$$setroot^%wd("vapals unit tests")
- s gienut=$O(@rootut@("B","patient-lookup test patient",0))
- s dfn=@rootut@(gienut,"dfn")
+ s dfn=1
  ; get studyid on patient
  set rootvp=$$setroot^%wd("vapals-patients")
  s gienvp=$O(@rootvp@("dfn",dfn,0))
@@ -94,11 +92,9 @@ UTHMNY ; @TEST - extrinsic returns how many forms the patient has used before de
  ;
 UTCNTITM ; @TEST - get items available for studyid
  ;GETITEMS(ary,sid)
- n rootut,rootvp,gienut,dfn,gienvp,studyid,uforms,forms
+ n rootvp,gienut,dfn,gienvp,studyid,uforms,forms
  ; get test patient
- s rootut=$$setroot^%wd("vapals unit tests")
- s gienut=$O(@rootut@("B","patient-lookup test patient",0))
- s dfn=@rootut@(gienut,"dfn")
+ s dfn=1
  ; get studyid on patient
  set rootvp=$$setroot^%wd("vapals-patients")
  s gienvp=$O(@rootvp@("dfn",dfn,0))
@@ -306,14 +302,14 @@ UTNFPST ; @TEST - post new form selection (post service)
  k @root@("graph","XXX00001",newform)
  d CHKEQ^%ut(utsuccess,1,"Testing post ceform FAILED!")
  ;
- s SAMIUARGS("form")="sbform"
- s newform=$O(@root@("graph","XXX00001","sbforms"),-1)
- d WSNFPOST^SAMICASE(.SAMIUARGS,.SAMIUBODY,.SAMIURSLT)
- s newform=$O(@root@("graph","XXX00001",newform))
- s utsuccess=(newform["sbform")
+ ;s SAMIUARGS("form")="sbform"
+ ;s newform=$O(@root@("graph","XXX00001","sbforms"),-1)
+ ;d WSNFPOST^SAMICASE(.SAMIUARGS,.SAMIUBODY,.SAMIURSLT)
+ ;s newform=$O(@root@("graph","XXX00001",newform))
+ ;s utsuccess=(newform["sbform")
  ; now kill the extra form just built
- k @root@("graph","XXX00001",newform)
- d CHKEQ^%ut(utsuccess,1,"Testing post sbform FAILED!")
+ ;k @root@("graph","XXX00001",newform)
+ ;d CHKEQ^%ut(utsuccess,1,"Testing post sbform FAILED!")
  ;
  s SAMIUARGS("form")="fuform"
  s newform=$O(@root@("graph","XXX00001","fuforms"),-1)
@@ -374,7 +370,9 @@ CHKFORM(form,LABEL,utsuccess) ;
  s SAMIUARGS("studyid")=sid
  s SAMIUARGS("form")="vapals:"_form
  n rtn s rtn=LABEL_"^SAMICAS3(sid,key)" d @rtn
- ; ^%wd(17.040801,23,"graph","XXX00001",form_"-2018-10-21","active duty")="N and others
+ ; i.e. @rootvp@("graph","XXX00001",form_"-2018-10-21"
+ ;
+ new temp m temp=@rootvp@("graph",sid,key)
  ;
  ; fail if nodes not set in vapals-patients Graphstore
  i '$d(@rootvp@("graph",sid,key)) d  q
@@ -383,7 +381,6 @@ CHKFORM(form,LABEL,utsuccess) ;
  ;
  ; Check that the vapals-patients node created is correct
  ;
- n temp,SAMIUPOO
  d PLUTARR^SAMIUTST(.SAMIUPOO,LABEL)
  ; correct age in saved array
  n ss s ss=""
@@ -391,7 +388,6 @@ CHKFORM(form,LABEL,utsuccess) ;
  . i ss="sidob" do
  .. n X,Y s X=SAMIUPOO("sidob") do ^%DT s SAMIUPOO("age")=$$age^%th(Y)
  ;
- m temp=@rootvp@("graph",sid,key)
  s utsuccess=1
  s ss=""
  f  s ss=$O(SAMIUPOO(ss)) q:ss=""  d  q:'utsuccess

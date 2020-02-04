@@ -1,4 +1,4 @@
-SAMIUTPT ;ven/arc - Unit test for SAMIPTLK ; 1/22/19 1:36pm
+SAMIUTPT ;ven/arc - Unit test for SAMIPTLK ;Jan 17, 2020@09:06
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -75,12 +75,8 @@ UTWSPTLK ; @TEST WSPTLOOK^SAMIPTLK
  set SAMIUFLTR("search")="A"
  do WSPTLOOK^SAMIPTLK(.SAMIURTN,.SAMIUFLTR)
  ; Check first node of SAMIURTN
- set expect="{""1"":"
  set result=SAMIURTN(1)
- do CHKEQ^%ut(result,expect)
- ; Check last node of SAMIURTN
- set expect="""}"
- set result=SAMIURTN($order(SAMIURTN(""),-1))
+ D PLUTARR^SAMIUTST(.expect,"UTWSPTLK^SAMIUTPT")
  do CHKEQ^%ut(result,expect)
  ;
  ; 

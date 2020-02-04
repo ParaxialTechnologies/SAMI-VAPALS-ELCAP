@@ -1,4 +1,4 @@
-SAMIADMN ; ven/arc - IELCAP: Admin tools ; 2019-10-11T16:35Z
+SAMIADMN ; ven/arc - IELCAP: Admin tools ;Jan 17, 2020@13:46
  ;;18.0;SAMI;;
  ;
  ;@license: see routine SAMIUL
@@ -210,4 +210,32 @@ DODD ; Import TSV files to build form field DDs
  quit  ; End of entry point DODD
  ;
  ;
+DEVMSG(routine,type,message) ; Create a dev/test message in ^TMP
+ ; @input
+ ;   routine = routine, with or without entry point (optional)
+ ;   type = type of message (optional)
+ ;   message
+ ;
+ quit:$get(message)=""
+ set routine=$get(routine)
+ set type=$get(type)
+ ;
+ set msgSubscript="Dev Message"
+ new timestamp set timestamp=$horolog
+ new timeSubscript set timeSubscript=$piece(timestamp,",",2)
+ ;
+ set ^TMP(msgSubscript,$job,0,"TIME")=$piece($$HTE^XLFDT(timestamp,7),"@",2)
+ set ^TMP(msgSubscript,$job,0,"ROUTINE")=routine
+ set ^TMP(msgSubscript,$job,0,"TYPE")=type
+ set ^TMP(msgSubscript,$job,0,"MESSAGE")=message
+ ;
+ set ^TMP(msgSubscript,$job,timeSubscript,"TIME")=$piece($$HTE^XLFDT(timestamp,7),"@",2)
+ set ^TMP(msgSubscript,$job,timeSubscript,"ROUTINE")=routine
+ set ^TMP(msgSubscript,$job,timeSubscript,"TYPE")=type
+ set ^TMP(msgSubscript,$job,timeSubscript,"MESSAGE")=message
+ ;
+ quit  ; End of entry point DEVMSG
+ ;
+ ;
 EOR ; End of routine SAMIADMN
+

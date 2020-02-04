@@ -1,4 +1,4 @@
-SAMIPI ;ven/arc/lgc - Patient-lookup graph import & export utils ;Jan 14, 2020@14:16
+SAMIPI ;ven/arc/lgc - Patient-lookup graph import & export utils ;Jan 24, 2020@09:22
  ;;18.0;SAMI;;
  ;
  quit  ; No entry from top
@@ -148,5 +148,14 @@ IMPRTPTS(path,file) ; Populate the patient-lookup graph based on a TSV file
  ;
  quit  ; End of entry point IMPRTPTS
  ;
+ ;
+FIXZIP ;
+ new cnt
+ s cnt=0 f  s cnt=$o(^%wd(17.040801,67,cnt)) q:'cnt  do
+ . if $d(^%wd(17.040801,67,cnt,"zip") ),'($get(^%wd(17.040801,67,cnt,"zip"))="") do
+ .. new zip set zip=$get(^%wd(17.040801,67,cnt,"zip"))
+ .. set zip=$tr($j(zip,5)," ","0") 
+ .. set ^%wd(17.040801,67,cnt,"zip")=zip
+ quit
  ;
 EOR ; End of routine SAMIPI

@@ -1,4 +1,4 @@
-SAMIFF ;ven/arc/lgc - Import TSV file to define form fields ; 2019-07-31T16:56Z
+SAMIFF ;ven/arc/lgc - Import TSV file to define form fields ;Jan 17, 2020@12:29
  ;;18.0;SAMI;;
  ;
  quit  ; No entry from top
@@ -85,13 +85,14 @@ PRSTSV(path,filename,graphname) ; Parse TSV file and build graph of form fields
  . . . . i '($get(value)=""),'($get(label)="") set @root@("field","C",name,value,label)=""
  . . . set @root@("field","B",name,fieldnum)=""
  . . else  do
- . . . use $P write !,"Field: ",name
- . . . use $P write !,?4,"Values: ",$length(values,";")
- . . . use $P write !,?4,"Labels: ",$length(labels,";"),!
+ . . . use $P write !,"Form: ",$piece(graphname," - ",2)
+ . . . use $P write !,?4,"Field: ",name
+ . . . use $P write !,?8,"Values: ",$length(values,";")
+ . . . use $P write !,?8,"Labels: ",$length(labels,";"),!
  . set fieldnum=fieldnum+1
  do CLOSE^%ZISH
  write:$l(errmsg) !,!,"*** ",errmsg," ***",!,!
- ;
+ write $J
  quit  ; End of entry point PRSTSV
  ;
  ;

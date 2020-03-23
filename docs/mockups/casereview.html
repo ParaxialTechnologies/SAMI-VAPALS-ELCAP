@@ -3,10 +3,10 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2020.03.19" name="version"/>
+  <meta content="2020.03.23" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
-   Case Review
+   @@SITETITLE@@: Case Review
   </title>
   <link href="../www/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="../www/lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
@@ -245,6 +245,8 @@
   </div>
   <span id="studyid-html-element" style="display:none;" value="@@SID@@">
   </span>
+  <span id="siteid-html-element" style="display:none;" value="@@SITE@@">
+  </span>
   <footer>
    <div class="container-fluid" style="max-width:1550px">
     <hr/>
@@ -254,17 +256,24 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2020.03.19
+     2020.03.23
     </span>
    </div>
   </footer>
   <script>
    const studyIdVal = $("#studyid-html-element").attr('value');
     const studyId = $.trim(studyIdVal);
+
+    const siteIdVal = $("#siteid-html-element").attr('value');
+    const siteId = $.trim(siteIdVal);
+
     if (studyId && studyId.indexOf("@@") === -1) {
         //store studyid value for use in pages that don't go through the forms processor
         localStorage.setItem("studyid", studyId);
         $("#studyIdMenu").show();
+    }
+    if (siteId.indexOf("@@")===-1){
+        localStorage.setItem("siteid", siteId);
     }
 
     //purposefully executed before DOM is rendered so delete button is never visible

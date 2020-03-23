@@ -160,8 +160,7 @@ $(function () {
      * Attach an onclick handler to "a.navigation" elements such that when clicked, submits a form POST or GET using
      * parameters in the elements <code>data-*</code> attributes.
      *
-     * Note that the <code>studyid</code> parameter is always injected based on the global <code>studyId</code>
-     * variable.
+     * Note that the <code>studyid</code> and <code>site</code> parameters are always injected based on localStorage
      */
     $("a.navigation").on("click", function () {
         const data = $(this).data();
@@ -170,6 +169,7 @@ $(function () {
 
         //field names are case-sensitive when POSTing to the backend. Generally lowercase is preferred.
         data.studyid = localStorage.getItem("studyid");
+        data.site = localStorage.getItem("siteid");
 
         const form = document.createElement('form');
         form.style.visibility = 'hidden'; // no user interaction is necessary

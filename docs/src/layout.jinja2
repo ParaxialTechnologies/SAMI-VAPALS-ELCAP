@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name='version' content='{{ version }}'>
     <meta name='author' content='Domenic DiNatale, domenic.dinatale@paraxialtech.com'>
-    <title>{% block title %}{% endblock %}</title>
+    <title>@@SITETITLE@@: {% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{{ path }}lib/bootstrap-3.3.7-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ path }}lib/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ path }}lib/formvalidation/dist/css/formValidation.min.css">
@@ -115,6 +115,7 @@
 
 {% block body %}{% endblock %}
 <span id="studyid-html-element" style="display:none;" value="@@SID@@"></span>
+<span id="siteid-html-element" style="display:none;" value="@@SITE@@"></span>
 {% block footer %}
     <footer>
         <div class="container-fluid" style="max-width:1550px">
@@ -128,10 +129,17 @@
 <script>
     const studyIdVal = $("#studyid-html-element").attr('value');
     const studyId = $.trim(studyIdVal);
+
+    const siteIdVal = $("#siteid-html-element").attr('value');
+    const siteId = $.trim(siteIdVal);
+
     if (studyId && studyId.indexOf("@@") === -1) {
         //store studyid value for use in pages that don't go through the forms processor
         localStorage.setItem("studyid", studyId);
         $("#studyIdMenu").show();
+    }
+    if (siteId.indexOf("@@")===-1){
+        localStorage.setItem("siteid", siteId);
     }
 
     //purposefully executed before DOM is rendered so delete button is never visible

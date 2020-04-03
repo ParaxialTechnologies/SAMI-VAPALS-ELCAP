@@ -79,6 +79,13 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  m ^SAMIUL("vapals")=SAMIARG
  m ^SAMIUL("vapals","BODY")=SAMIBODY
  ;
+ ; Processing for multi-tenancy
+ ;
+ if $G(SAMIARG("siteid"))="" if '$$FINDSITE^SAMISITE(.SAMIRESULT,.SAMIARG) Q 0
+ new SAMISITE,SAMITITL
+ s SAMISITE=$G(SAMIARG("siteid"))
+ s SAMITITL=$G(SAMIARG("sitetitle"))
+ ;
  new vars,SAMIBDY
  set SAMIBDY=$get(SAMIBODY(1))
  do parseBody^%wf("vars",.SAMIBDY)
@@ -474,7 +481,7 @@ RTNERR(rtn,form,vals,msg,fld) ; redisplays a page with an error message
  n zhtml ; work area for the tempate
  d SAMIHTM^%wf(.zhtml,form,.err)
  d MERGEHTM^%wf(.zhtml,.vals,.err)
- m SAMIRESULT=zhtml
+ m rtn=zhtml
  set HTTPRSP("mime")="text/html" ; set mime type
  q
  ;
@@ -646,6 +653,13 @@ GETHOME ; homepage accessed using GET
  ;@tests [tbd]
  ;
  ;@stanza 2 get template for homepage
+ ;
+ ; Processing for multi-tenancy
+ ;
+ if $G(SAMIARG("siteid"))="" if '$$FINDSITE^SAMISITE(.SAMIRTN,.SAMIFILTER) Q 0
+ new SAMISITE,SAMITITL
+ s SAMISITE=$G(SAMIARG("siteid"))
+ s SAMITITL=$G(SAMIARG("sitetitle"))
  ;
  new temp,tout
  do GETTMPL^SAMICASE("temp","vapals:home")

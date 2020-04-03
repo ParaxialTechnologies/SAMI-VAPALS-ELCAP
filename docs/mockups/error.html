@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2020.03.23" name="version"/>
+  <meta content="2020.04.03" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: System Error
@@ -142,6 +142,8 @@
       <h4 class="alert-heading">
        System Error
       </h4>
+      <p id="system-error-detail">
+      </p>
       <p>
        Call your system administrator
       </p>
@@ -162,7 +164,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2020.03.23
+     2020.04.03
     </span>
    </div>
   </footer>
@@ -257,6 +259,13 @@
         $("a[data-samiroute=report]").attr("data-start-date", reportsStartDate).attr("data-end-date", reportsEndDate);
 
     })
+  </script>
+  <script>
+   const systemErrorMessage = "@@ERROR_MESSAGE@@";
+        const hasSystemErrorMessage = systemErrorMessage !== "@@ERROR_" + "MESSAGE@@" && systemErrorMessage !== "";
+        if (hasSystemErrorMessage) {
+            $("#system-error-detail").text(systemErrorMessage);
+        }
   </script>
  </body>
 </html>

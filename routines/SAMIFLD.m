@@ -136,6 +136,25 @@ LOAD ; process html line, e.g., load json data into graph
  . do findReplace^%ts(.SAMILINE,"@@SID@@",sid)
  . quit
  ;
+ if SAMILINE["@@SITE@@" do  ; insert site id
+ . n siteid s siteid=$g(SAMIVALS("siteid"))
+ . q:siteid=""
+ . do findReplace^%ts(.SAMILINE,"@@SITE@@",siteid)
+ . quit
+ ;
+ if SAMILINE["@@SITETITLE@@" do  ; insert site title
+ . n sitetit s sitetit=$g(SAMIVALS("sitetitle"))
+ . q:sitetit=""
+ . do findReplace^%ts(.SAMILINE,"@@SITETITLE@@",sitetit)
+ . quit
+ ;
+ if SAMILINE["@@MANUALREGISTRATION@@" do  ; turn off manual registration
+ . n setman,setparm
+ . s setman="true"
+ . s setparm=$$GET^XPAR("SYS","SAMI ALLOW MANUAL ENTRY",,"Q")
+ . i setparm=0 s setman="false"
+ . do findReplace^%ts(.SAMILINE,"@@MANUALREGISTRATION@@",setman)
+ ; 
  if SAMILINE["@@DFN@@" do  ; insert patient study id
  . n dfn s dfn=$g(SAMIVALS("dfn"))
  . q:dfn=""

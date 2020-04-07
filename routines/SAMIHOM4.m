@@ -79,19 +79,25 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  m ^SAMIUL("vapals")=SAMIARG
  m ^SAMIUL("vapals","BODY")=SAMIBODY
  ;
- ; Processing for multi-tenancy
- ;
- if $G(SAMIARG("siteid"))="" if '$$FINDSITE^SAMISITE(.SAMIRESULT,.SAMIARG) Q 0
- new SAMISITE,SAMITITL
- s SAMISITE=$G(SAMIARG("siteid"))
- s SAMITITL=$G(SAMIARG("sitetitle"))
- ;
  new vars,SAMIBDY
  set SAMIBDY=$get(SAMIBODY(1))
  do parseBody^%wf("vars",.SAMIBDY)
  m vars=SAMIARG
  k ^SAMIUL("vapals","vars")
  merge ^SAMIUL("vapals","vars")=vars
+ ;
+ ; Processing for multi-tenancy
+ ;
+ if $G(vars("site"))'="" d  ;
+ . n siteid s siteid=vars("site")
+ . s SAMIARG("siteid")=siteid
+ . s SAMIARG("sitetitle")=$$SITENM2^SAMISITE(siteid)_" - "_siteid
+ if $G(SAMIARG("siteid"))="" if '$$FINDSITE^SAMISITE(.SAMIRESULT,.SAMIARG) Q 0
+ new SAMISITE,SAMITITL
+ s SAMISITE=$G(SAMIARG("siteid"))
+ i $G(SAMIARG("sitetitle"))="" d  ;
+ . s SAMIARG("sitetitle")=$$SITENM2^SAMISITE(SAMISITE)_" - "_SAMISITE
+ s SAMITITL=$G(SAMIARG("sitetitle"))
  ;
  n route s route=$g(vars("samiroute"))
  i route=""  d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home
@@ -426,6 +432,7 @@ SAVE(SAMIRESULT,SAMIARG) ; save patient-lookup record after edit
  d UPDTFRMS(dfn) ; update demographic info in all forms
  n filter,bdy
  s bdy=""
+ m filter=SAMIARG
  s filter("samiroute")="report"
  s filter("samireporttype")="unmatched"
  d WSVAPALS^SAMIHOM3(.filter,.bdy,.SAMIRESULT) ; back to the unmatched report
@@ -656,17 +663,28 @@ GETHOME ; homepage accessed using GET
  ;
  ; Processing for multi-tenancy
  ;
- if $G(SAMIARG("siteid"))="" if '$$FINDSITE^SAMISITE(.SAMIRTN,.SAMIFILTER) Q 0
+ if $G(SAMIFILTER("siteid"))="" if '$$FINDSITE^SAMISITE(.SAMIRTN,.SAMIFILTER) Q 0
  new SAMISITE,SAMITITL
- s SAMISITE=$G(SAMIARG("siteid"))
- s SAMITITL=$G(SAMIARG("sitetitle"))
+ s SAMISITE=$G(SAMIFILTER("siteid"))
+ s SAMITITL=$G(SAMIFILTER("sitetitle"))
  ;
- new temp,tout
- do GETTMPL^SAMICASE("temp","vapals:home")
+ new temp,tout,form
+ s form="vapals:home"
+ do GETTMPL^SAMICASE("temp",form)
  quit:'$data(temp)
  ;
  ;@stanza 3 process homepage template
  ;
+ n err
+ do MERGEHTM^%wf(.temp,.SAMIFILTER,.err)
+ ;
+ ;
+ do ADDCRLF^VPRJRUT(.temp)
+ merge SAMIRTN=temp
+ ;
+ q
+ ;
+ ; below is redacted
  new cnt set cnt=0
  new zi set zi=0
  for  set zi=$order(temp(zi)) quit:+zi=0  do  ;

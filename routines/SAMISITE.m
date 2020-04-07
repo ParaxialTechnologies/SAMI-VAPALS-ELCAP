@@ -40,13 +40,14 @@ FINDSITE(SAMIRETURN,ARGS) ; extrinsic which returns the site
  . s ARGS("errorMessage")="Error, user not found"
  . d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
  ;
- d  q 0
- . s ARGS("errorMessage")="User is found: "_user
- . d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
+ ;d  q 0
+ ;. s ARGS("errorMessage")="User is found: "_user
+ ;. d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
  ;
  n site,siteid,siteactv,sitenm
  ;
  s site=$$SITE(user)
+ i site<1 s site=-1
  i site=-1 d  q 0
  . s ARGS("errorMessage")="Site not found for user "_user
  . d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
@@ -109,4 +110,12 @@ SITENM(SITE) ; Extrinsic which returns the Site name
  s rtn=$$GET1^DIQ(4,SITE_",",.01)
  i rtn="" s rtn=-1
  q rtn
+ ;
+SITENM2(SITEID) ; Extrinsic which returns the Site name from the Site Symbol
+ ;
+ q:SITEID="" -1
+ n siteien
+ s siteien=$o(^SAMI(311.12,"SYM",SITEID,""))
+ n site
+ q $$GET1^DIQ(311.12,siteien_",",.01,"E") 
  ;

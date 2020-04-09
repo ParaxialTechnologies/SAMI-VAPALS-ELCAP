@@ -76,6 +76,7 @@ WSHOME ; web service for SAMI homepage
  ;
 WSVAPALS ; vapals post web service - all calls come through this gateway
  ; WSVAPALS^SAMIHOM3(SAMIARG,SAMIBODY,SAMIRESULT) goto WSVAPALS^SAMIHOM4
+ k ^SAMIUL("vapals")
  m ^SAMIUL("vapals")=SAMIARG
  m ^SAMIUL("vapals","BODY")=SAMIBODY
  ;
@@ -83,8 +84,10 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  set SAMIBDY=$get(SAMIBODY(1))
  do parseBody^%wf("vars",.SAMIBDY)
  m vars=SAMIARG
+ m SAMIARG=SAMIBODY
  k ^SAMIUL("vapals","vars")
  merge ^SAMIUL("vapals","vars")=vars
+ merge ^SAMIUL("vapals","vars")=SAMIBODY
  ;
  ; Processing for multi-tenancy
  ;

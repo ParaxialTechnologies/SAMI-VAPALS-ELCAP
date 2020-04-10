@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2020.04.03" name="version"/>
+  <meta content="2020.04.10" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Home
@@ -229,9 +229,9 @@
     </div>
    </div>
   </div>
-  <span id="studyid-html-element" style="display:none;" value="@@SID@@">
-  </span>
   <span id="siteid-html-element" style="display:none;" value="@@SITE@@">
+  </span>
+  <span id="studyid-html-element" style="display:none;" value="@@SID@@">
   </span>
   <footer>
    <div class="container-fluid" style="max-width:1550px">
@@ -242,25 +242,20 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2020.04.03
+     2020.04.10
     </span>
    </div>
   </footer>
   <script>
-   const studyIdVal = $("#studyid-html-element").attr('value');
-    const studyId = $.trim(studyIdVal);
+   const siteIdVal = $("#siteid-html-element").attr('value');
+    const siteId = (siteIdVal && siteIdVal.indexOf("@@") === -1) ? $.trim(siteIdVal) : '';
+    localStorage.setItem("siteid", siteId);
 
-    const siteIdVal = $("#siteid-html-element").attr('value');
-    const siteId = $.trim(siteIdVal);
+    const studyIdVal = $("#studyid-html-element").attr('value');
+    const studyId = (studyIdVal && studyIdVal.indexOf("@@") === -1) ? $.trim(studyIdVal) : '';
+    localStorage.setItem("studyid", studyId);
+    $("#studyIdMenu").toggle(studyId !== '')
 
-    if (studyId && studyId.indexOf("@@") === -1) {
-        //store studyid value for use in pages that don't go through the forms processor
-        localStorage.setItem("studyid", studyId);
-        $("#studyIdMenu").show();
-    }
-    if (siteId.indexOf("@@")===-1){
-        localStorage.setItem("siteid", siteId);
-    }
 
     //purposefully executed before DOM is rendered so delete button is never visible
     const frozen = "@@FROZEN@@";
@@ -377,7 +372,12 @@
 
             // Initialize the participant lookup input widget
             const $participantLookupInput = $('#pt-lookup-input');
-            $participantLookupInput.filemanAutocomplete();
+            $participantLookupInput.filemanAutocomplete({
+                dataOptions: {
+                    site: siteId,
+                    limit: 25
+                }
+            });
 
             $participantLookupInput.on('keydown', function (e) {
                 // Set up Return key

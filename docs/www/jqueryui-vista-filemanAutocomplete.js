@@ -18,36 +18,39 @@ $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {
     }, // End ~ _create()
     _renderItem: function (ul, item) {
         let status = item['vapals'] || 0;
-        let dob    = item['dob'] || '';
-        if (dob) { dob = moment(dob, 'YYYY-MM-DD').format('MM/DD/YYYY'); }
+        let dob = item['dob'] || '';
+        if (dob) {
+            dob = moment(dob, 'YYYY-MM-DD').format('MM/DD/YYYY');
+        }
         let gender = item['gender'] || '';
-        if (gender) { gender = gender.split('^')[1]; }
-                    
-        let html   = '';
-        if (status == 1) {
-            html   = html + '<li class="enrolled">';
+        if (gender) {
+            gender = gender.split('^')[1];
         }
-        else {
-            html   = html + '<li>';
-        }
-        html       = html + "<div class='row'>";
-        html       = html + '<div class="col-sm-12">' + item['name'] + '</div>';
-        html       = html + '</div>';
-        html       = html + '<div class="row">';
-        html       = html + '<div class="col-sm-3">' + 'Last 5: ' + item['last5'] + '</div>';
-        html       = html + '<div class="col-sm-3">' + 'DOB: ' + dob + '</div>';
-        html       = html + '<div class="col-sm-3">' + 'Gender: ' +  gender + '</div>';
-        
+
+        let html = '';
         if (status == 1) {
-            html   = html + '<div class="col-sm-3 text-right" title="Patient in VAPALS-ELCAP">';
-            html   = html + '<img src="see/img/logo_transparent.png" class="enrolled-icon"/>&nbsp;<em>VAPALS-ELCAP</em>';
-            html   = html + '</div>';
+            html = html + '<li class="enrolled">';
+        } else {
+            html = html + '<li>';
+        }
+        html = html + "<div class='row'>";
+        html = html + '<div class="col-sm-12">' + item['name'] + '</div>';
+        html = html + '</div>';
+        html = html + '<div class="row">';
+        html = html + '<div class="col-sm-3">' + 'Last 5: ' + item['last5'] + '</div>';
+        html = html + '<div class="col-sm-3">' + 'DOB: ' + dob + '</div>';
+        html = html + '<div class="col-sm-3">' + 'Gender: ' + gender + '</div>';
+
+        if (status == 1) {
+            html = html + '<div class="col-sm-3 text-right" title="Patient in VAPALS-ELCAP">';
+            html = html + '<img src="see/img/logo_transparent.png" class="enrolled-icon" alt="Logo"/>&nbsp;<em>VAPALS-ELCAP</em>';
+            html = html + '</div>';
         } else {
             html = html + '<div class="col-sm-3"></div>'
         }
-        html       = html + "</div>";
-        html       = html + '</li>';
-        
+        html = html + "</div>";
+        html = html + '</li>';
+
         return $(html).appendTo(ul);
     }, // End ~ _renderItem()
     _destroy: function () {
@@ -59,26 +62,24 @@ $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {
     options: {
         minLength: 0,
         delay: 200,
+        dataOptions: {}, // options to include in the ajax request.
         classes: {
             'ui-autocomplete': 'fm-autocomplete-menu'
         },
         source: function (request, response) {
             let input = this.element;
-
             let query = $(input).val();
-            if (query == '') {
+            if (query === '') {
                 return false;
             }
 
             let ajaxRequest = null; //NB: keep on separate line so beforeSend function can access it.
             ajaxRequest = $.ajax({
                 url: "/ptlookup/" + query,
-                data: {
-                    limit: 25
-                },
+                data: this.options.dataOptions,
                 dataType: "json",
-                beforeSend : function() {
-                    if (ajaxRequest!=null) {
+                beforeSend: function () {
+                    if (ajaxRequest != null) {
                         ajaxRequest.abort();
                     }
                 },
@@ -110,7 +111,7 @@ $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {
             // Only take action if a record has been selected
             if (input.data('vista').patient) {
                 // Delete the saved record if the input is empty
-                if (input.val() == '') {
+                if (input.val() === '') {
                     delete input.data('vista').patient;
                     input.val('');
                 }
@@ -118,7 +119,7 @@ $.widget('vista.filemanAutocomplete', $.ui.autocomplete, {
                 else {
                     let selectedPtName = input.data('vista').patient.name;
 
-                    if (input.val() != selectedPtName) {
+                    if (input.val() !== selectedPtName) {
                         input.val(selectedPtName);
                     }
                 }

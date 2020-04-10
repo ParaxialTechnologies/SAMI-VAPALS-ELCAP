@@ -124,7 +124,12 @@
 
             // Initialize the participant lookup input widget
             const $participantLookupInput = $('#pt-lookup-input');
-            $participantLookupInput.filemanAutocomplete();
+            $participantLookupInput.filemanAutocomplete({
+                dataOptions: {
+                    site: siteId,
+                    limit: 25
+                }
+            });
 
             $participantLookupInput.on('keydown', function (e) {
                 // Set up Return key

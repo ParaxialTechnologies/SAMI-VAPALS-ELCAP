@@ -91,6 +91,13 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  ;
  ; Processing for multi-tenancy
  ;
+ if '$d(vars("siteid")) d  ;
+ . if $g(vars("studyid"))="" q
+ . n sym s sym=$e(vars("studyid"),1,3) ; first 3 chars in studyid
+ . i $$SITENM2^SAMISITE(sym)=-1 q
+ . s vars("siteid")=sym
+ . s vars("site")=sym
+ ;
  if $G(vars("site"))'="" d  ;
  . n siteid s siteid=vars("site")
  . s SAMIARG("siteid")=siteid

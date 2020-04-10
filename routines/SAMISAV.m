@@ -11,6 +11,17 @@ SAVFILTR(sid,form,vars) ; extrinsic which returns the form key to use
  ; for saving. It will relocate the graph for the form if required based
  ; on dates entered on the form.
  ; 
+ ; processing for multi-tenancy
+ ;   if siteid is not provided, but studyid is provided
+ ;   look up and set siteid
+ ;
+ if '$d(vars("siteid")) d  ;
+ . if $g(sid)="" q
+ . n sym s sym=$e(sid,1,3) ; first 3 chars in studyid
+ . i $$SITENM2^SAMISITE(sym)=-1 q
+ . s vars("siteid")=sym
+ . s vars("site")=sym
+ ;
  n useform s useform=form ; by default, the form is unchanged
  n root s root=$$setroot^%wd("vapals-patients")
  n type s type=$p(form,"-",1)

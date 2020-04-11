@@ -85,9 +85,6 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  do parseBody^%wf("vars",.SAMIBDY)
  m vars=SAMIARG
  m SAMIARG=SAMIBODY
- k ^SAMIUL("vapals","vars")
- merge ^SAMIUL("vapals","vars")=vars
- merge ^SAMIUL("vapals","vars")=SAMIBODY
  ;
  ; Processing for multi-tenancy
  ;
@@ -108,6 +105,11 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  i $G(SAMIARG("sitetitle"))="" d  ;
  . s SAMIARG("sitetitle")=$$SITENM2^SAMISITE(SAMISITE)_" - "_SAMISITE
  s SAMITITL=$G(SAMIARG("sitetitle"))
+ m vars=SAMIARG
+ ;
+ k ^SAMIUL("vapals","vars")
+ merge ^SAMIUL("vapals","vars")=vars
+ merge ^SAMIUL("vapals","vars")=SAMIBODY
  ;
  n route s route=$g(vars("samiroute"))
  i route=""  d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home
@@ -246,18 +248,18 @@ REG(SAMIRTN,SAMIARG) ; manual registration
  ;
  ; test for duplicate icn
  ;
- n icn s icn=$g(SAMIARG("icn"))
- i icn'="" i $$DUPICN(icn) d  ;
- . s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate ICN error. A person with that ICN is already entered in the system."
- . s SAMIARG("errorField")="icn"
- ;
- ; test for wellformed ICN
- ;
- i icn'="" i $$BADICN(icn) d  ;
- . s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Invalid ICN error. The check digits in the ICN do not match"
- . s SAMIARG("errorField")="icn"
- ;
- ; if there is an error, send back to edit with error message
+ ;n icn s icn=$g(SAMIARG("icn"))
+ ;i icn'="" i $$DUPICN(icn) d  ;
+ ;. s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate ICN error. A person with that ICN is already entered in the system."
+ ;. s SAMIARG("errorField")="icn"
+ ;;
+ ;; test for wellformed ICN
+ ;;
+ ;i icn'="" i $$BADICN(icn) d  ;
+ ;. s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Invalid ICN error. The check digits in the ICN do not match"
+ ;. s SAMIARG("errorField")="icn"
+ ;;
+ ;; if there is an error, send back to edit with error message
  i $g(SAMIARG("errorMessage"))'="" d  q  ;
  . n form
  . s form="vapals:addperson"
@@ -294,6 +296,10 @@ MKPTLK(ptlkien,SAMIARG) ; creates the patient-lookup record
  s sinamel=$p(name,","),sinamel=$$TRIM^XLFSTR(sinamel,"LR")
  s sinamef=$p(name,",",2),sinamef=$$TRIM^XLFSTR(sinamef,"LR")
  s name=sinamel_","_sinamef
+ n siteid s siteid=$g(SAMIARG("siteid"))
+ i siteid="" s siteid=$g(SAMIARG("site"))
+ ;
+ s @root@(ptlkien,"siteid")=siteid
  s @root@(ptlkien,"saminame")=name
  s @root@(ptlkien,"sinamef")=sinamef
  s @root@(ptlkien,"sinamel")=sinamel

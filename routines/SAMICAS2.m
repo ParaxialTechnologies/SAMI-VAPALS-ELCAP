@@ -92,6 +92,23 @@ WSCASE ; generate case review page
  . new ln set ln=temp(zi)
  . new touched set touched=0
  . ;
+ . if ln["@@SITE@@" do  ; insert site id
+ . . n siteid s siteid=$g(filter("siteid"))
+ . . i siteid="" s siteid=$g(filter("site"))
+ . . q:siteid=""
+ . . do findReplace^%ts(.ln,"@@SITE@@",siteid)
+ . . s temp(zi)=ln
+ . ;
+ . if ln["@@SITETITLE@@" do  ; insert site title
+ . . n sitetit s sitetit=$g(filter("sitetitle"))
+ . . if sitetit="" d  ;
+ . . . n tsite s tsite=$g(filter("site"))
+ . . . q:tsite=""
+ . . . s sitetit=$$SITENM2^SAMISITE(tsite)_" - "_tsite
+ . . q:sitetit=""
+ . . do findReplace^%ts(.ln,"@@SITETITLE@@",sitetit)
+ . . s temp(zi)=ln
+ . ;
  . if ln["id" if ln["studyIdMenu" do  ;
  . . set zi=zi+4
  . ;

@@ -62,7 +62,7 @@ WSPTLKUP(rtn,filter) ; patient lookup from patient-lookup cache
  ;
 BUILDRTN(rtn,ary) ; build the return json
  ;
- d ^ZTER
+ ;d ^ZTER
  n root s root=$$setroot^%wd("patient-lookup")
  n groot s groot=$$setroot^%wd("vapals-patients")
  n zi s zi=""

@@ -138,12 +138,14 @@ LOAD ; process html line, e.g., load json data into graph
  ;
  if SAMILINE["@@SITE@@" do  ; insert site id
  . n siteid s siteid=$g(SAMIVALS("siteid"))
+ . i siteid="" s siteid=$g(SAMIFILTER("siteid"))
  . q:siteid=""
  . do findReplace^%ts(.SAMILINE,"@@SITE@@",siteid)
  . quit
  ;
  if SAMILINE["@@SITETITLE@@" do  ; insert site title
  . n sitetit s sitetit=$g(SAMIVALS("sitetitle"))
+ . i sitetit="" s sitetit=$g(SAMIFILTER("sitetitle"))
  . q:sitetit=""
  . do findReplace^%ts(.SAMILINE,"@@SITETITLE@@",sitetit)
  . quit

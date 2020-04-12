@@ -148,7 +148,10 @@ WSCASE ; generate case review page
  set form=$p(sikey,":",2)
  set notehref=$$NOTEHREF^SAMICASE(sid,form) ; table of notes
  set cnt=cnt+1
- new facilitycode set facilitycode=$$GETPRFX^SAMIFORM()
+ ;new facilitycode set facilitycode=$$GETPRFX^SAMIFORM()
+ n siteid s siteid=$g(filter("siteid"))
+ i siteid="" s siteid=$g(filter("site"))
+ new facilitycode set facilitycode=siteid
  new last5 set last5=$$GETLAST5^SAMIFORM(sid)
  new pssn set pssn=$$GETSSN^SAMIFORM(sid)
  new pname set pname=$$GETNAME^SAMIFORM(sid)

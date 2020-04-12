@@ -108,7 +108,7 @@ WSLOOKUP(ARGS,BODY,RESULT) ; look up ELCAP patient
  . set sien=+sien ; lose the leading zeros
  . if +sien=0 quit  ; didn't work
  . if $data(@root@(sien)) do  ; there is a record at that location
- . . set filter("studyid")=$$GENSTDID^SAMIHOM3(sien)
+ . . set filter("studyid")=$$GENSTDID^SAMIHOM3(sien,.ARGS)
  . . do WSCASE^SAMICASE(.trtn,.filter)
  . . quit
  . quit

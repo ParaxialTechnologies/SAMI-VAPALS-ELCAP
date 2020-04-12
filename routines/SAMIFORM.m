@@ -94,7 +94,8 @@ GETSSN(sid) goto GETSSN^SAMIFLD
  ;
  ;
  ;@ppi-code $$GETPRFX^SAMIFORM, prefix for study ID
-GETPRFX() goto GETPRFX^SAMIFLD
+ ; this routine is depricated as of the multi-tenancy release
+GETPRFX(ARG) goto GETPRFX^SAMIFLD
  ;
  ;
  ;

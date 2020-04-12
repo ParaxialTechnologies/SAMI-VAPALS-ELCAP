@@ -806,7 +806,7 @@ WSNEWCAS ; receives post from home & creates new case
  set @root@(gien,"saminum")=gien
  set @root@(gien,"saminame")=saminame
  ;
- new studyid set studyid=$$GENSTDID^SAMIHOM3(gien)
+ new studyid set studyid=$$GENSTDID^SAMIHOM3(gien,.SAMIARGS)
  set @root@(gien,"samistudyid")=studyid
  set @root@("sid",studyid,gien)=""
  ;

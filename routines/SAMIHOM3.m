@@ -222,7 +222,7 @@ NEXTNUM() ; next number for studyid
  ;
  ;
  ;
-GENSTDID(num) ; studyID for number
+GENSTDID(num,ARG) ; studyID for number
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
@@ -242,7 +242,13 @@ GENSTDID(num) ; studyID for number
  ;
  new zl set zl=$length(num)
  new zz set zz="00000"
- new studyid set studyid=$$GETPRFX^SAMIFORM()_$extract(zz,1,5-zl)_num
+ ;new studyid set studyid=$$GETPRFX^SAMIFORM(.ARG)_$extract(zz,1,5-zl)_num
+ ; the prefix is determined by the site or siteid, which should be passed
+ ; in ARG
+ n tsite s tsite=$g(ARG("siteid"))
+ i tsite="" s tsite=$g(ARG("site"))
+ i tsite="" s tsite="UNK"
+ new studyid set studyid=tsite_$extract(zz,1,5-zl)_num
  ;
  ;@stanza 3 return & termination
  ;

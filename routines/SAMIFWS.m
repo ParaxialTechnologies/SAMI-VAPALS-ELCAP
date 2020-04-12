@@ -158,7 +158,7 @@ WSSIFORM ; intake form access
  ;
  new sid set sid=$get(SAMIFILTER("studyid"))
  set:sid="" sid=$get(SAMIFILTER("sid"))
- set:sid>0 sid=$$GENSTDID^SAMIHOM3(sid)
+ set:sid>0 sid=$$GENSTDID^SAMIHOM3(sid,.SAMIFILTER)
  ; if sid="" set sid="XXX0001"
  ;
  ;new items do GETITEMS^SAMICAS2("items",sid)

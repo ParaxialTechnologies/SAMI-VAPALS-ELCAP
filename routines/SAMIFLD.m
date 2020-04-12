@@ -520,6 +520,8 @@ GETSSN ; ssn for patient sid
  quit pssn ; end of $$GETSSN^SAMIFORM
  ;
 GETPRFX ; Retrieve study ID prefix from parameter file
+ ; This routine is depricated as of the multi-tenancy features
+ ;
  ;@signature
  ; $$GETPRFX^SAMIFORM()
  ;@branches-from
@@ -533,7 +535,9 @@ GETPRFX ; Retrieve study ID prefix from parameter file
  ; None yet
  ;
  new prefix
- set prefix=$$GET^XPAR("SYS","SAMI SID PREFIX",,"Q")
+ ;set prefix=$$GET^XPAR("SYS","SAMI SID PREFIX",,"Q")
+ s prefix=$g(ARG("siteid"))
+ i prefix="" s prefix=$g(ARG("site"))
  if $get(prefix)="" set prefix="UNK"
  ;
  quit prefix ; End of $$GETPRFX^SAMIFORM

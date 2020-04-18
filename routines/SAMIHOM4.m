@@ -259,7 +259,7 @@ REG(SAMIRTN,SAMIARG) ; manual registration
  ;. s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Invalid ICN error. The check digits in the ICN do not match"
  ;. s SAMIARG("errorField")="icn"
  ;;
- ;; if there is an error, send back to edit with error message
+ ; if there is an error, send back to edit with error message
  i $g(SAMIARG("errorMessage"))'="" d  q  ;
  . n form
  . s form="vapals:addperson"
@@ -283,6 +283,11 @@ REG(SAMIRTN,SAMIARG) ; manual registration
  s @root@(ptlkien,"dfn")=dfn
  d INDXPTLK(ptlkien)
  s SAMIFILTER("samiroute")="addperson"
+ s SAMIFILTER("siteid")=$G(SAMIARG("siteid"))
+ s SAMIFILTER("sitetitle")=$G(SAMIARG("sitetitle"))
+ k SAMIARG ; return to a blank manual registration form
+ s SAMIARG("siteid")=$G(SAMIFILTER("siteid"))
+ s SAMIARG("sitetitle")=$G(SAMIFILTER("sitetitle"))
  d SETINFO(.SAMIFILTER,name_" was successfully entered")
  ;d SETWARN(.SAMIFILTER,"We might want to give you a warning")
  do WSVAPALS^SAMIHOM3(.SAMIFILTER,.SAMIARG,.SAMIRESULT)

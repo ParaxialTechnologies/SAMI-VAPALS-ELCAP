@@ -98,6 +98,7 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  f  s ii=$o(temp(ii)) q:+ii=0  d  ;
  . s cnt=cnt+1
  . s ln=$g(temp(ii))
+ . d LOAD^SAMIFORM(.ln,samikey,si,.filter)
  . s SAMIRTN(cnt)=ln
  q
  ;

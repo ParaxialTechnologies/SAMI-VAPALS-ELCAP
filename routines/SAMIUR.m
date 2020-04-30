@@ -111,6 +111,9 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  f  s ii=$o(temp(ii)) q:+ii=0  d  ;
  . s cnt=cnt+1
  . s ln=$g(temp(ii))
+ . n samikey,si
+ . s (samikey,si)=""
+ . d LOAD^SAMIFORM(.ln,samikey,si,.filter)
  . s SAMIRTN(cnt)=ln
  q
  ;
@@ -121,6 +124,7 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ;selects patients for report
  . d UNMAT(.SAMIPATS,ztype,.datephrase,.filter)
  i $g(type)="" s type="enrollment"
  i type="cumpy" s type="enrollment"
+ n site s site=$g(filter("siteid"))
  n strdt,enddt,fmstrdt,fmenddt
  s strdt=$g(filter("start-date"))
  s fmstrdt=$$KEY2FM^SAMICASE(strdt)
@@ -142,6 +146,7 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ;selects patients for report
  f  s zi=$o(@root@(zi)) q:+zi=0  d  ;
  . n sid s sid=$g(@root@(zi,"samistudyid"))
  . q:sid=""
+ . q:$e(sid,1,3)'=site
  . n items s items=""
  . d GETITEMS^SAMICASE("items",sid)
  . q:'$d(items)

@@ -37,7 +37,8 @@ forms = [
     {"template": "upload", "title": "Upload New Patients", "output": "upload"},
     {"template": "register", "title": "Register", "output": "register"},
     {"template": "editparticipant", "title": "Edit Participant", "output": "editparticipant"},
-    {"template": "error", "title": "System Error", "output": "error"}
+    {"template": "error", "title": "System Error", "output": "error"},
+    {"template": "login", "title": "Login", "output": "login"}
 ]
 
 

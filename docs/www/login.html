@@ -6,7 +6,7 @@
   <meta content="2020.05.06" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
-   @@SITETITLE@@: Upload New Patients
+   @@SITETITLE@@: Login
   </title>
   <link href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
@@ -140,12 +140,6 @@
     </div>
    </div>
   </nav>
-  <div class="row">
-   <div class="col-md-12">
-    <div class="message-area-static" id="message-area-static">
-    </div>
-   </div>
-  </div>
   <div class="container-fluid" style="max-width:1550px">
    <div class="row">
     <div class="col-md-12">
@@ -154,24 +148,33 @@
     </div>
    </div>
    <div class="row">
-    <div class="col-sm-12 col-md-6 col-lg-4">
+    <div class="col-sm-6 col-sm-offset-3">
      <div class="panel panel-default">
       <div class="panel-heading">
        <h3 class="panel-title">
-        Upload New Patients
+        Login
        </h3>
       </div>
       <div class="panel-body">
-       <form action="/vapals" enctype="multipart/form-data" method="post">
-        <input name="samiroute" type="hidden" value="newpatients"/>
+       <form action="/vapals" class="validated" id="login-form" method="post">
+        <input name="site" type="hidden" value="@@SITE@@"/>
+        <input name="samiroute" type="hidden" value="login"/>
         <div class="form-group">
-         <label>
-          Please select the file
+         <label class="control-label" for="access">
+          Access
          </label>
-         <input accept="text/csv, application/csv, application/vnd.ms-excel, text/plain, text/x-csv" id="file" name="file" required="required" type="file"/>
+         <input class="form-control" id="access" name="access" type="password"/>
+        </div>
+        <div class="form-group">
+         <label for="verify">
+          Verify
+         </label>
+         <input class="form-control" id="verify" name="verify" type="password"/>
         </div>
         <div class="pull-right">
-         <input class="btn btn-primary" id="submit-button" type="submit" value="Upload"/>
+         <button class="btn btn-primary" id="submit-button" type="submit">
+          Login
+         </button>
         </div>
        </form>
       </div>
@@ -287,6 +290,29 @@
         $("a[data-samiroute=report]").attr("data-start-date", reportsStartDate).attr("data-end-date", reportsEndDate);
 
     })
+  </script>
+  <script>
+   $(function () {
+            const $form = $("#login-form");
+            $form.formValidation({
+                fields: {
+                    access: {validators: {notEmpty: {message: 'Access code is required'}}},
+                    verify: {validators: {notEmpty: {message: 'Verify code is required'}}},
+                },
+                plugins: {
+                    trigger: new FormValidation.plugins.Trigger(),
+                    bootstrap3: new FormValidation.plugins.Bootstrap3(),
+                    submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                    defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                    excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
+                    icon: new FormValidation.plugins.Icon({
+                        valid: '',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh',
+                    })
+                }
+            });
+        });
   </script>
  </body>
 </html>

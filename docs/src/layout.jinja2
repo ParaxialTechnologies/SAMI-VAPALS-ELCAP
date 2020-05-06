@@ -68,6 +68,7 @@
                 <img src="{{ path }}img/logo_name_50x215.png" title="VAPALS-ELCAP" alt="VAPALS-ELCAP Logo"/>
             </a>
         </div>
+        {% if withNav == "true" %}
         <div class="navbar-collapse collapse navbar-right" id="navbar-main">
             <ul class="nav navbar-nav">
                 <li><a href="{{ "home.html" if mockup else "/vapals" }}">Home</a></li>
@@ -108,12 +109,14 @@
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a class="navigation" data-method="{{ formMethod }}" data-samiroute="logout" id="logout-link"
-                       href="{{ "login.html" if mockup else "#!" }}">Logout</a>
-                </li>
+{#                TODO: enable once USERID variable is injected #}
+{#                <li>#}
+{#                    <a class="navigation" data-method="{{ formMethod }}" data-samiroute="logout" id="logout-link"#}
+{#                       href="{{ "login.html" if mockup else "#!" }}">Logout</a>#}
+{#                </li>#}
             </ul>
         </div>
+        {% endif %}
     </div>
 </nav>
 
@@ -150,7 +153,7 @@
     }
 
     //purposefully executed before DOM is rendered so elements are never visible
-    if (isLoggedIn && isSet(siteId)) {
+    if (isSet(siteId)) { //TODO: add if isLoggedIn once USER variable can be set from backend.
         $("#logout-link").text("Logout " + siteId);
         $("#studyIdMenu").toggle(studyId !== '');
         localStorage.setItem("siteid", siteId);

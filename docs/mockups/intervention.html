@@ -142,11 +142,6 @@
         </li>
        </ul>
       </li>
-      <li>
-       <a class="navigation" data-method="get" data-samiroute="logout" href="login.html" id="logout-link">
-        Logout
-       </a>
-      </li>
      </ul>
     </div>
    </div>
@@ -12958,7 +12953,7 @@
     }
 
     //purposefully executed before DOM is rendered so elements are never visible
-    if (isLoggedIn && isSet(siteId)) {
+    if (isSet(siteId)) { //TODO: add if isLoggedIn once USER variable can be set from backend.
         $("#logout-link").text("Logout " + siteId);
         $("#studyIdMenu").toggle(studyId !== '');
         localStorage.setItem("siteid", siteId);

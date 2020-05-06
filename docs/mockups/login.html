@@ -80,64 +80,6 @@
       <img alt="VAPALS-ELCAP Logo" src="../www/img/logo_name_50x215.png" title="VAPALS-ELCAP"/>
      </a>
     </div>
-    <div class="navbar-collapse collapse navbar-right" id="navbar-main">
-     <ul class="nav navbar-nav">
-      <li>
-       <a href="home.html">
-        Home
-       </a>
-      </li>
-      <li id="studyIdMenu" style="display:none;">
-       <a class="navigation" data-method="get" data-samiroute="casereview" href="casereview.html">
-        Case Review
-       </a>
-      </li>
-      <li class="dropdown">
-       <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
-        Reports
-        <span class="caret">
-        </span>
-       </a>
-       <ul class="dropdown-menu">
-        <li>
-         <a class="navigation" data-method="get" data-samireporttype="enrollment" data-samiroute="report" data-start-date="" href="table.html">
-          Enrollment
-         </a>
-        </li>
-        <li>
-         <a class="navigation" data-method="get" data-samireporttype="activity" data-samiroute="report" href="table.html">
-          Activity
-         </a>
-        </li>
-        <li>
-         <a class="navigation" data-method="get" data-samireporttype="followup" data-samiroute="report" href="table.html">
-          Participant Follow-up
-         </a>
-        </li>
-        <li>
-         <a class="navigation" data-method="get" data-samireporttype="missingct" data-samiroute="report" href="table.html">
-          Missing Image &amp; CT Evaluation
-         </a>
-        </li>
-        <li>
-         <a class="navigation" data-method="get" data-samireporttype="incomplete" data-samiroute="report" href="table.html">
-          Incomplete Form
-         </a>
-        </li>
-        <li>
-         <a class="navigation" data-method="get" data-samireporttype="inactive" data-samiroute="report" href="table.html">
-          Inactive
-         </a>
-        </li>
-       </ul>
-      </li>
-      <li>
-       <a class="navigation" data-method="get" data-samiroute="logout" href="login.html" id="logout-link">
-        Logout
-       </a>
-      </li>
-     </ul>
-    </div>
    </div>
   </nav>
   <div class="container-fluid" style="max-width:1550px">
@@ -216,7 +158,7 @@
     }
 
     //purposefully executed before DOM is rendered so elements are never visible
-    if (isLoggedIn && isSet(siteId)) {
+    if (isSet(siteId)) { //TODO: add if isLoggedIn once USER variable can be set from backend.
         $("#logout-link").text("Logout " + siteId);
         $("#studyIdMenu").toggle(studyId !== '');
         localStorage.setItem("siteid", siteId);

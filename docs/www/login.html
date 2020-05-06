@@ -80,64 +80,6 @@
       <img alt="VAPALS-ELCAP Logo" src="img/logo_name_50x215.png" title="VAPALS-ELCAP"/>
      </a>
     </div>
-    <div class="navbar-collapse collapse navbar-right" id="navbar-main">
-     <ul class="nav navbar-nav">
-      <li>
-       <a href="/vapals">
-        Home
-       </a>
-      </li>
-      <li id="studyIdMenu" style="display:none;">
-       <a class="navigation" data-method="post" data-samiroute="casereview" href="#!">
-        Case Review
-       </a>
-      </li>
-      <li class="dropdown">
-       <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
-        Reports
-        <span class="caret">
-        </span>
-       </a>
-       <ul class="dropdown-menu">
-        <li>
-         <a class="navigation" data-method="post" data-samireporttype="enrollment" data-samiroute="report" data-start-date="" href="#!">
-          Enrollment
-         </a>
-        </li>
-        <li>
-         <a class="navigation" data-method="post" data-samireporttype="activity" data-samiroute="report" href="#!">
-          Activity
-         </a>
-        </li>
-        <li>
-         <a class="navigation" data-method="post" data-samireporttype="followup" data-samiroute="report" href="#!">
-          Participant Follow-up
-         </a>
-        </li>
-        <li>
-         <a class="navigation" data-method="post" data-samireporttype="missingct" data-samiroute="report" href="#!">
-          Missing Image &amp; CT Evaluation
-         </a>
-        </li>
-        <li>
-         <a class="navigation" data-method="post" data-samireporttype="incomplete" data-samiroute="report" href="#!">
-          Incomplete Form
-         </a>
-        </li>
-        <li>
-         <a class="navigation" data-method="post" data-samireporttype="inactive" data-samiroute="report" href="#!">
-          Inactive
-         </a>
-        </li>
-       </ul>
-      </li>
-      <li>
-       <a class="navigation" data-method="post" data-samiroute="logout" href="#!" id="logout-link">
-        Logout
-       </a>
-      </li>
-     </ul>
-    </div>
    </div>
   </nav>
   <div class="container-fluid" style="max-width:1550px">
@@ -216,7 +158,7 @@
     }
 
     //purposefully executed before DOM is rendered so elements are never visible
-    if (isLoggedIn && isSet(siteId)) {
+    if (isSet(siteId)) { //TODO: add if isLoggedIn once USER variable can be set from backend.
         $("#logout-link").text("Logout " + siteId);
         $("#studyIdMenu").toggle(studyId !== '');
         localStorage.setItem("siteid", siteId);

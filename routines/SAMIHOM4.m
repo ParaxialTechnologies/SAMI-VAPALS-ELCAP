@@ -279,6 +279,9 @@ REG(SAMIRTN,SAMIARG) ; manual registration
  d MKPTLK(ptlkien,.SAMIARG) ; make the patient-lookup record
  ;
  s dfn=$o(@root@("dfn"," "),-1)+1
+ n pdfn
+ s pdfn=$o(@proot@("dfn"," "),-1)+1
+ i pdfn>dfn s dfn=pdfn ; need a dfn that has not been used
  i dfn<9000001 s dfn=9000001
  s @root@(ptlkien,"dfn")=dfn
  d INDXPTLK(ptlkien)

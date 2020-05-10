@@ -37,8 +37,12 @@ FINDSITE(SAMIRETURN,ARGS) ; extrinsic which returns the site
  n user
  s user=$$USER()
  i user=-1 d  q 0
- . s ARGS("errorMessage")="Error, user not found"
- . d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
+ . n vals
+ . s vals("SITE")="Unknown"
+ . s vals("errorMessage")=""
+ . d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:login",.vals)
+ . ;s ARGS("errorMessage")="Error, user not found"
+ . ;d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
  ;
  ;d  q 0
  ;. s ARGS("errorMessage")="User is found: "_user
@@ -74,7 +78,7 @@ FINDSITE(SAMIRETURN,ARGS) ; extrinsic which returns the site
 USER() ; extrinsic returns the DUZ of the user accessing the system
  ; -1 means user not known
  n rtn s rtn=-1
- s rtn=$G(DUZ)
+ s rtn=+$G(DUZ)
  i rtn=0 s rtn=-1
  q rtn
  ;
@@ -118,4 +122,68 @@ SITENM2(SITEID) ; Extrinsic which returns the Site name from the Site Symbol
  s siteien=$o(^SAMI(311.12,"SYM",SITEID,""))
  n site
  q $$GET1^DIQ(311.12,siteien_",",.01,"E") 
+ ;
+LOGIN(RTN,VALS) ; login processing
+ ;
+ n access,verify
+ s access=$g(VALS("access"))
+ s verify=$g(VALS("verify"))
+ i access="" d  ;
+ . s access="PHXNAV1"
+ . s verify="$#happy6"
+ n ACVC s ACVC=access_";"_verify
+ i $$SIGNON(ACVC) D  Q  ;
+ . s VALS("samiroute")=""
+ . s VALS("siteid")=""
+ . d WSHOME^SAMIHOM3(.RTN,.VALS)
+ else  D  Q  ;
+ . s VALS("errorMessage")="Invalid login"
+ . d RTNERR^SAMIHOM4(.RTN,"vapals:login",.VALS)
+ q
+ ;
+SIGNON(ACVC) ; extrinsic returns 1 if signon is successful, else 0
+ ; Sign-on
+ N IO S IO=$P
+ D SETUP^XUSRB() ; Only partition set-up; No single sign-on or CAPRI
+ N RTN D VALIDAV^XUSRB(.RTN,$$ENCRYP^XUSRB1(ACVC)) ; sign-on call
+ I RTN(0)>0,'RTN(2) Q 1 ; Sign on successful!
+ I RTN(0)=0,RTN(2) Q 0  ; Verify Code must be changed NOW!
+ I $L(RTN(3)) Q 0  ; Error Message
+ ;
+ q
+ ;
+UPGRADE() ; convert VAPALS system to Multi-tenancy by adding siteid
+ ; to all existing patients - runs one time as the Post Install 
+ ; to the installation
+ ;
+ n lroot,proot,lien,pien
+ s (lien,pien)=0
+ s lroot=$$setroot^%wd("patient-lookup")
+ s proot=$$setroot^%wd("vapals-patients")
+ n site
+ s site=$$GET^XPAR("SYS","SAMI SID PREFIX",,"Q")
+ i site="" d  q  ;
+ . D MES^XPDUTL("No default site returned by SAMI SID PREFIX parameter, exiting")
+ n cnt s cnt=0
+ f  s lien=$o(@lroot@(lien)) q:+lien=0  d  ;
+ . q:$g(@lroot@(lien,"siteid"))'=""
+ . n nomatch s nomatch=0
+ . n dfn s dfn=$g(@lroot@(lien,"dfn"))
+ . i dfn="" d  q  ;
+ . . D MES^XPDUTL("Error, no dfn found for lien "_lien)
+ . s pien=$o(@proot@("dfn",dfn,""))
+ . ; make sure the first 3 chars of the studyid matches the site
+ . i pien'="" d  q:nomatch
+ . . n psite,psid
+ . . s psid=$g(@proot@(pien,"sisid"))
+ . . i psid="" s nomatch=1 q  ;
+ . . i $e(psid,1,3)'=site s nomatch=1 d  q  ;
+ . . . d MES^XPDUTL("skipping record - studyid "_psid_" does not match site "_site)
+ . ;w !,"lien "_lien_" being set to "_site
+ . s cnt=cnt+1
+ . s @lroot@(lien,"siteid")=site
+ i cnt>0 d  ;
+ . d MES^XPDUTL("Multi-tenancy upgrade successful")
+ . d MES^XPDUTL(cnt_" patient records set to site "_site)
+ q
  ;

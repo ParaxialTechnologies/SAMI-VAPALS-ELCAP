@@ -118,6 +118,23 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  . m SAMIARG=vars
  . d WSLOOKUP^SAMISRC2(.SAMIARG,.SAMIBODY,.SAMIRESULT)
  ;
+ i route="login" d  q 0
+ . m SAMIARG=vars
+ . d LOGIN^SAMISITE(.SAMIRESULT,.SAMIARG)
+ ;
+ i route="home" d  q 0
+ . s SAMIARG("samiroute")=""
+ . d WSHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG)
+ ;
+ i route="logout" d  q 0
+ . ;s SAMIARG("samiroute")="home"
+ . ;do WSVAPALS^SAMIHOM3(.SAMIFILTER,.SAMIARG,.SAMIRESULT)
+ . ;Q
+ . n vals
+ . s vals("SITE")="Unknown"
+ . s vals("errorMessage")=""
+ . d RTNERR^SAMIHOM4(.SAMIRESULT,"vapals:login",.SAMIARG)
+ ;
  i route="newcase" d  q 0
  . m SAMIARG=vars
  . d WSNEWCAS^SAMIHOM3(.SAMIARG,.SAMIBODY,.SAMIRESULT)

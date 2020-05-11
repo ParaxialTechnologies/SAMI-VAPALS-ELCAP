@@ -62,59 +62,67 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="{{ "home.html" if mockup else "/vapals" }}" class="text-nowrap" style="text-decoration: none">
+            <a href="{{ "home.html" if mockup else "#!" }}" class="text-nowrap navigation" style="text-decoration: none"
+               data-method="{{ formMethod }}" data-samiroute="home">
                 <img src="{{ path }}img/logo_transparent_50x50.png" title="VAPALS-ELCAP" alt="VAPALS-ELCAP Logo"
                      class="hidden-xs"/>
                 <img src="{{ path }}img/logo_name_50x215.png" title="VAPALS-ELCAP" alt="VAPALS-ELCAP Logo"/>
             </a>
         </div>
         {% if withNav == "true" %}
-        <div class="navbar-collapse collapse navbar-right" id="navbar-main">
-            <ul class="nav navbar-nav">
-                <li><a href="{{ "home.html" if mockup else "/vapals" }}">Home</a></li>
-                <li id="studyIdMenu" style="display:none;">
-                    <a class="navigation" data-method="{{ formMethod }}" data-samiroute="casereview"
-                       href="{{ "casereview.html" if mockup else "#!" }}">Case Review</a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">Reports <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
-                               data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="enrollment"
-                               data-start-date="">Enrollment</a>
-                        </li>
-                        <li>
-                            <a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
-                               data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="activity">
-                                Activity</a>
-                        </li>
-                        <li>
-                            <a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
-                               data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="followup">
-                                Participant Follow-up</a></li>
-                        <li>
-                            <a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
-                               data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="missingct">
-                                Missing Image & CT Evaluation</a></li>
-                        <li>
-                            <a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
-                               data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="incomplete">
-                                Incomplete Form</a></li>
-                        <li>
-                            <a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
-                               data-method="{{ formMethod }}" data-samiroute="report" data-samireporttype="inactive">
-                                Inactive</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="navigation" data-method="{{ formMethod }}" data-samiroute="logout" id="logout-link"
-                       href="{{ "login.html" if mockup else "#!" }}">Logout</a>
-                </li>
-            </ul>
-        </div>
+            <div class="navbar-collapse collapse navbar-right" id="navbar-main">
+                <ul class="nav navbar-nav">
+                    <li><a href="{{ "home.html" if mockup else "#!" }}" class="text-nowrap navigation"
+                           data-method="{{ formMethod }}" data-samiroute="home">Home</a></li>
+                    <li id="studyIdMenu" style="display:none;">
+                        <a class="navigation" data-method="{{ formMethod }}" data-samiroute="casereview"
+                           href="{{ "casereview.html" if mockup else "#!" }}">Case Review</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Reports <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
+                                   data-method="{{ formMethod }}" data-samiroute="report"
+                                   data-samireporttype="enrollment"
+                                   data-start-date="">Enrollment</a>
+                            </li>
+                            <li>
+                                <a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
+                                   data-method="{{ formMethod }}" data-samiroute="report"
+                                   data-samireporttype="activity">
+                                    Activity</a>
+                            </li>
+                            <li>
+                                <a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
+                                   data-method="{{ formMethod }}" data-samiroute="report"
+                                   data-samireporttype="followup">
+                                    Participant Follow-up</a></li>
+                            <li>
+                                <a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
+                                   data-method="{{ formMethod }}" data-samiroute="report"
+                                   data-samireporttype="missingct">
+                                    Missing Image & CT Evaluation</a></li>
+                            <li>
+                                <a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
+                                   data-method="{{ formMethod }}" data-samiroute="report"
+                                   data-samireporttype="incomplete">
+                                    Incomplete Form</a></li>
+                            <li>
+                                <a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
+                                   data-method="{{ formMethod }}" data-samiroute="report"
+                                   data-samireporttype="inactive">
+                                    Inactive</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="navigation" data-method="{{ formMethod }}" data-samiroute="logout" id="logout-link"
+                           href="{{ "login.html" if mockup else "#!" }}">Logout</a>
+                    </li>
+                </ul>
+            </div>
         {% endif %}
     </div>
 </nav>

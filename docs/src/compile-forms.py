@@ -21,6 +21,7 @@ version = datetime.datetime.now().strftime('%Y.%m.%d')
 # map where key is the template file name and value is an object representing properties of the output
 forms = [
     {"template": "background", "title": "Background Form", "output": "background", "withNav": "true"},
+    {"template": "blank", "title": "", "output": "blank_no_nav", "withNav": "false"},
     {"template": "intake", "title": "Lung Screening and Surveillance Intake Form", "output": "intake", "withNav": "true"},
     {"template": "ctevaluation", "title": "CT Evaluation Form", "output": "ctevaluation", "withNav": "true"},
     {"template": "ctevaluation", "title": "CT Evaluation Form", "output": "ctevaluation-elcap", "withNav": "true"},
@@ -34,7 +35,6 @@ forms = [
     {"template": "report", "title": "", "output": "report", "withNav": "true"},
     {"template": "toggler", "title": "", "output": "toggler", "withNav": "true"},
     {"template": "table", "title": "", "output": "table", "withNav": "true"},
-    {"template": "table", "title": "", "output": "table_no_nav", "withNav": "false"},
     {"template": "upload", "title": "Upload New Patients", "output": "upload", "withNav": "true"},
     {"template": "register", "title": "Register", "output": "register", "withNav": "true"},
     {"template": "editparticipant", "title": "Edit Participant", "output": "editparticipant", "withNav": "true"},

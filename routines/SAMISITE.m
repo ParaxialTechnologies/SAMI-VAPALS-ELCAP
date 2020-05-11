@@ -38,7 +38,8 @@ FINDSITE(SAMIRETURN,ARGS) ; extrinsic which returns the site
  s user=$$USER()
  i user=-1 d  q 0
  . n vals
- . s vals("SITE")="Unknown"
+ . s vals("siteid")=""
+ . s vals("sitetitle")="Unknown Site"
  . s vals("errorMessage")=""
  . d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:login",.vals)
  . ;s ARGS("errorMessage")="Error, user not found"

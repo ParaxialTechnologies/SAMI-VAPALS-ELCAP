@@ -152,6 +152,31 @@ SIGNON(ACVC) ; extrinsic returns 1 if signon is successful, else 0
  ;
  q
  ;
+SUPER(RTN,FILTER) ; returns site selection page for super users
+ ;
+ n cnt s cnt=0
+ s cnt=cnt+1
+ s @RTN@(cnt)="<html><table title=""Site Selection"">"
+ n gn s gn=$na(^SAMI(311.12,"B"))
+ n zi s zi=0
+ f  s zi=$o(@gn@(zi)) q:+zi=0  d  ;
+ . n zien s zien=$o(@gn@(zi,""))
+ . n active
+ . s active=$$GET1^DIQ(311.12,zien_",",.03,"I")
+ . q:active=0
+ . n name
+ . s name=$$SITENM(zi)_" - "_$$SITEID(zi)
+ . n link
+ . s link="<form method=POST action=""/vapals"">"
+ . s link=link_"<input type=hidden name=""samiroute"" value=""home"">"
+ . s link=link_"<input type=hidden name=""siteid"" value="""_$$SITEID(zi)_""">"
+ . s link=link_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
+ . s cnt=cnt+1
+ . s @RTN@(cnt)="<tr><td>"_link_"</td></tr>"
+ s cnt=cnt+1
+ s @RTN@(cnt)="</table></html>"
+ q
+ ;
 UPGRADE() ; convert VAPALS system to Multi-tenancy by adding siteid
  ; to all existing patients - runs one time as the Post Install 
  ; to the installation

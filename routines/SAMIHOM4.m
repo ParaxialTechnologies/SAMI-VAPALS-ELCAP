@@ -123,6 +123,8 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  . d LOGIN^SAMISITE(.SAMIRESULT,.SAMIARG)
  ;
  i route="home" d  q 0
+ . k ^gpl("home")
+ . ;m ^gpl("home")=SAMIARG
  . s SAMIARG("samiroute")=""
  . d WSHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG)
  ;
@@ -130,9 +132,9 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  . ;s SAMIARG("samiroute")="home"
  . ;do WSVAPALS^SAMIHOM3(.SAMIFILTER,.SAMIARG,.SAMIRESULT)
  . ;Q
- . n vals
- . s vals("SITE")="Unknown"
- . s vals("errorMessage")=""
+ . s SAMIARG("sitetitle")="Unknown Site"
+ . s SAMIARG("siteid")=""
+ . s SAMIARG("errorMessage")=""
  . d RTNERR^SAMIHOM4(.SAMIRESULT,"vapals:login",.SAMIARG)
  ;
  i route="newcase" d  q 0

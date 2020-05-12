@@ -233,6 +233,22 @@ WSCASE ; generate case review page
  for  set zi=$order(temp(zi)) quit:+zi=0  do  ;
  . new line
  . set line=temp(zi)
+ . ;
+ . if line["@@SITE@@" do  ; insert site id
+ . . n siteid s siteid=$g(filter("siteid"))
+ . . i siteid="" s siteid=$g(filter("site"))
+ . . q:siteid=""
+ . . do findReplace^%ts(.line,"@@SITE@@",siteid)
+ . ;
+ . if line["@@SITETITLE@@" do  ; insert site title
+ . . n sitetit s sitetit=$g(filter("sitetitle"))
+ . . if sitetit="" d  ;
+ . . . n tsite s tsite=$g(filter("site"))
+ . . . q:tsite=""
+ . . . s sitetit=$$SITENM2^SAMISITE(tsite)_" - "_tsite
+ . . q:sitetit=""
+ . . do findReplace^%ts(.line,"@@SITETITLE@@",sitetit)
+ . ;
  . if line["XX0002" do  ;
  . . do findReplace^%ts(.line,"XX0002",sid)
  . ;

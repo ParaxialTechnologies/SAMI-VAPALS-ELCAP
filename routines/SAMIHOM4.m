@@ -84,6 +84,9 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  set SAMIBDY=$get(SAMIBODY(1))
  do parseBody^%wf("vars",.SAMIBDY)
  m vars=SAMIARG
+ i $g(vars("siteid"))'="" d  ;
+ . i $g(vars("site"))'=$g(vars("siteid")) s vars("site")=$g(vars("siteid"))
+ m SAMIARG=vars
  m SAMIARG=SAMIBODY
  ;
  ; Processing for multi-tenancy
@@ -99,6 +102,9 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  . n siteid s siteid=vars("site")
  . s SAMIARG("siteid")=siteid
  . s SAMIARG("sitetitle")=$$SITENM2^SAMISITE(siteid)_" - "_siteid
+ k ^gpl("siteselect")
+ m ^gpl("siteselect")=SAMIARG
+ m ^gpl("siteselect","vars")=vars
  if $G(SAMIARG("siteid"))="" if '$$FINDSITE^SAMISITE(.SAMIRESULT,.SAMIARG) Q 0
  new SAMISITE,SAMITITL
  s SAMISITE=$G(SAMIARG("siteid"))
@@ -124,7 +130,7 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  ;
  i route="home" d  q 0
  . k ^gpl("home")
- . ;m ^gpl("home")=SAMIARG
+ . m ^gpl("home")=SAMIARG
  . s SAMIARG("samiroute")=""
  . d WSHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG)
  ;

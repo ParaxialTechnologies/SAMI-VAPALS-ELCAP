@@ -51,6 +51,10 @@ FINDSITE(SAMIRETURN,ARGS) ; extrinsic which returns the site
  ;
  n site,siteid,siteactv,sitenm
  ;
+ i $o(^SAMI(311.13,"B",user,""))'="" d  q  ; superuser
+ . d SUPER("SAMIRETURN",.ARGS)
+ . s HTTPRSP("mime")="text/html"
+ ;
  s site=$$SITE(user)
  i site<1 s site=-1
  i site=-1 d  q 0
@@ -155,9 +159,19 @@ SIGNON(ACVC) ; extrinsic returns 1 if signon is successful, else 0
  ;
 SUPER(RTN,FILTER) ; returns site selection page for super users
  ;
+ n temp
+ d getThis^%wd("temp","blank_no_nav.html")
+ q:'$d(temp)
  n cnt s cnt=0
+ n zj s zj=0
+ f  s zj=$o(temp(zj)) q:temp(zj)["Insert"  q:+zj=0  d  ;
+ . n ln s ln=temp(zj)
+ . i ln["PAGE NAME" s ln="Site Selection"
+ . d LOAD^SAMIFORM(.ln,"","")
+ . s cnt=cnt+1
+ . s @RTN@(cnt)=ln
  s cnt=cnt+1
- s @RTN@(cnt)="<html><table title=""Site Selection"">"
+ s @RTN@(cnt)="<ul>"
  n gn s gn=$na(^SAMI(311.12,"B"))
  n zi s zi=0
  f  s zi=$o(@gn@(zi)) q:+zi=0  d  ;
@@ -168,14 +182,26 @@ SUPER(RTN,FILTER) ; returns site selection page for super users
  . n name
  . s name=$$SITENM(zi)_" - "_$$SITEID(zi)
  . n link
- . s link="<form method=POST action=""/vapals"">"
- . s link=link_"<input type=hidden name=""samiroute"" value=""home"">"
- . s link=link_"<input type=hidden name=""siteid"" value="""_$$SITEID(zi)_""">"
- . s link=link_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
+ . s link="<li>"
+ . s link=link_"<a class=""navigation"" data-method=""post"""
+ . s link=link_" data-samiroute=""home"" data-siteid="""_$$SITEID(zi)_""""
+ . ;s link=link_" data-site="""_$$SITEID(zi)_""""
+ . ;s link=link_" href=""#!"">"_$$SITENM(zi)_" - "_$$SITEID(zi)
+ . s link=link_" href=""/vapals"">"_name
+ . s link=link_"</a></li>"
+ . ;n link
+ . ;s link="<form method=POST action=""/vapals"">"
+ . ;s link=link_"<input type=hidden name=""samiroute"" value=""home"">"
+ . ;s link=link_"<input type=hidden name=""siteid"" value="""_$$SITEID(zi)_""">"
+ . ;s link=link_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
  . s cnt=cnt+1
- . s @RTN@(cnt)="<tr><td>"_link_"</td></tr>"
+ . s @RTN@(cnt)=link
  s cnt=cnt+1
- s @RTN@(cnt)="</table></html>"
+ s @RTN@(cnt)="</ul>"
+ n zk s zk=zj+1
+ f  s zk=$o(temp(zk)) q:+zk=0  d  ;
+ . s cnt=cnt+1
+ . s @RTN@(cnt)=temp(zk)
  q
  ;
 UPGRADE() ; convert VAPALS system to Multi-tenancy by adding siteid

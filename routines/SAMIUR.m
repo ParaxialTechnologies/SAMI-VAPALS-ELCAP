@@ -17,6 +17,7 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  ;  4. incomplete
  ;  5. outreach
  ;  6. enrollment
+ ;  7. worklist
  ; the report to generate is passed in parameter samireporttype
  ;
  n debug s debug=0
@@ -70,27 +71,16 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  . s SAMIRTN(cnt)="<th>"_$g(RPT(ir,"header"))_"</th>"
  s cnt=cnt+1 s SAMIRTN(cnt)="</tr></thead>"
  ;
- n ij
- n root s root=$$setroot^%wd("vapals-patients")
  s cnt=cnt+1 s SAMIRTN(cnt)="<tbody>"
+ ;
+ i type'="worklist" d  ; 
+ . d NUHREF(.SAMIPATS) ; create the nuhref link for all patients
+ ;
  s ij=0
  f  s ij=$o(SAMIPATS(ij)) q:+ij=0  d  ;
  . n ij2 s ij2=0
  . f  s ij2=$o(SAMIPATS(ij,ij2)) q:+ij2=0  d  ;
  . . n dfn s dfn=ij2
- . . s SAMIPATS(ij,dfn,"sid")=$g(@root@(dfn,"samistudyid"))
- . . n sid s sid=SAMIPATS(ij,dfn,"sid")
- . . s SAMIPATS(ij,dfn,"name")=$g(@root@(dfn,"saminame"))
- . . n name s name=SAMIPATS(ij,dfn,"name")
- . . s SAMIPATS(ij,dfn,"ssn")=$$GETSSN^SAMIFORM(sid)
- . . new nuhref set nuhref="<form method=POST action=""/vapals"">"
- . . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""casereview"">"
- . . set nuhref=nuhref_"<input type=hidden name=""studyid"" value="_sid_">"
- . . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
- . . s SAMIPATS(ij,dfn,"nuhref")=nuhref
- . . ;
- . . ;k ^gpl("SAMIPATS")
- . . ;m ^gpl("SAMIPATS")=SAMIPATS
  . . s cnt=cnt+1 s SAMIRTN(cnt)="<tr>"
  . . s ir=""
  . . f  s ir=$o(RPT(ir)) q:ir=""  d  ;
@@ -117,11 +107,33 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  . s SAMIRTN(cnt)=ln
  q
  ;
+NUHREF(SAMIPATS) ; create the nuhref link to casereview for all patients
+ n ij
+ n root s root=$$setroot^%wd("vapals-patients")
+ s ij=0
+ f  s ij=$o(SAMIPATS(ij)) q:+ij=0  d  ;
+ . n ij2 s ij2=0
+ . f  s ij2=$o(SAMIPATS(ij,ij2)) q:+ij2=0  d  ;
+ . . n dfn s dfn=ij2
+ . . s SAMIPATS(ij,dfn,"sid")=$g(@root@(dfn,"samistudyid"))
+ . . n sid s sid=SAMIPATS(ij,dfn,"sid")
+ . . s SAMIPATS(ij,dfn,"name")=$g(@root@(dfn,"saminame"))
+ . . n name s name=SAMIPATS(ij,dfn,"name")
+ . . s SAMIPATS(ij,dfn,"ssn")=$$GETSSN^SAMIFORM(sid)
+ . . new nuhref set nuhref="<form method=POST action=""/vapals"">"
+ . . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""casereview"">"
+ . . set nuhref=nuhref_"<input type=hidden name=""studyid"" value="_sid_">"
+ . . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
+ . . s SAMIPATS(ij,dfn,"nuhref")=nuhref
+ q
+ ;
 SELECT(SAMIPATS,ztype,datephrase,filter) ;selects patients for report
  ;m ^gpl("select")=filter
  n type s type=ztype
  i type="unmatched" d  q  ;
  . d UNMAT(.SAMIPATS,ztype,.datephrase,.filter)
+ i type="worklist" d  q  ;
+ . d WKLIST(.SAMIPATS,ztype,.datephrase,.filter)
  i $g(type)="" s type="enrollment"
  i type="cumpy" s type="enrollment"
  n site s site=$g(filter("siteid"))
@@ -264,6 +276,40 @@ UNMAT(SAMIPATS,ztype,datephrase,filter)
  . set nuhref=nuhref_"<input type=hidden name=""dfn"" value="_dfn_">"
  . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
  . s SAMIPATS(ien,dfn,"editref")=nuhref
+ q
+ ;
+WKLIST(SAMIPATS,ztype,datephrase,filter)
+ ;
+ ; add site
+ ; add compare to vapals-patients
+ ; add navigation to enrollment
+ ;
+ k ^gpl("worklist")
+ m ^gpl("worklist")=filter
+ n site
+ s site=$g(filter("siteid"))
+ q:site=""
+ s datephrase="Work List"
+ n lroot s lroot=$$setroot^%wd("patient-lookup")
+ n proot s proot=$$setroot^%wd("vapals-patients")
+ n dfn s dfn=0
+ f  s dfn=$o(@lroot@("dfn",dfn)) q:+dfn=0  d  ;
+ . q:$o(@proot@("dfn",dfn,""))'=""
+ . n ien s ien=$o(@lroot@("dfn",dfn,""))
+ . q:ien=""
+ . q:$g(@lroot@(ien,"siteid"))'=site
+ . m ^gpl("worklist","lroot",ien)=@lroot@(ien)
+ . m SAMIPATS(ien,dfn)=@lroot@(ien)
+ . new name set name=$g(SAMIPATS(ien,dfn,"saminame"))
+ . ;new name set name=$g(SAMIPATS(ien,dfn,"sinamef"))
+ . ;set name=name_","_SAMIPATS(ien,dfn,"sinamel")
+ . new nuhref set nuhref="<form method=POST action=""/vapals"">"
+ . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""newcase"">"
+ . set nuhref=nuhref_"<input type=hidden name=""dfn"" value="_dfn_">"
+ . set nuhref=nuhref_"<input type=hidden name=""siteid"" value="_site_">"
+ . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
+ . s SAMIPATS(ien,dfn,"workref")=nuhref
+ m ^gpl("worklist","pats")=SAMIPATS
  q
  ;
 PNAME(type,phrase) ; extrinsic returns the PAGE NAME for the report

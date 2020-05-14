@@ -58,14 +58,6 @@ cp -p $verbose $HOME/.profile $backupdir/
 cp -p $verbose $HOME/.bashrc $backupdir/
 echo
 
-echo "[$(date)]: Backing up repos..."
-cp -pr $HOME/lib $backupdir/
-echo
-
-echo "[$(date)]: Backing up web directory..."
-cp -pr $verbose $HOME/www $backupdir/
-echo
-
 echo "[$(date)]: Backing up global directory..."
 cp -p $verbose $gtmgbldir $backupdir/data/globals/
 $gtm_dist/mumps -run GDE << EOF &> $backupdir/data/globals/osehra.gde.out
@@ -82,17 +74,25 @@ echo "[$(date)]: Backing up journals..."
 cp -pr $verbose $HOME/data/journals $backupdir/data/
 echo
 
-echo "[$(date)]: Backing up environment config & scripts..."
-cp -pr $verbose $HOME/run/unix $backupdir/run/
+echo "[$(date)]: Backing up repos..."
+cp -pr $HOME/lib $backupdir/
 echo
 
 echo "[$(date)]: Backing up routines..."
 cp -pr $HOME/run/routines $backupdir/run/
 echo
 
+echo "[$(date)]: Backing up environment config & scripts..."
+cp -pr $verbose $HOME/run/unix $backupdir/run/
+echo
+
+echo "[$(date)]: Backing up web directory..."
+cp -pr $verbose $HOME/www $backupdir/
+echo
+
 echo "[$(date)]: Compressing backup..."
 echo $timestamp
-tar -czf $HOME/data/backups/$timestamp.tgz $HOME/data/backups/$timestamp
+tar -czf $HOME/data/backups/$timestamp.tgz $backupdir
 echo
 
 echo "[$(date)]: Copying backup to S3..."
@@ -100,8 +100,8 @@ aws s3 cp $backupdir.tgz s3://backup.fiscientific.org/$hostname/backup/
 echo
 
 echo "[$(date)]: Cleaning up..."
-rm -rf $backupdir
-rm $verbose $backupdir.tgz
+#rm -rf $backupdir
+#rm $verbose $backupdir.tgz
 echo
 
 echo "[$(date)]: Finish $(basename $0) $@"

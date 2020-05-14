@@ -235,8 +235,9 @@ GENDER(zdt,dfn,SAMIPATS) ; extrinsic returns gender
  n gend
  ;s gend=$g(@root@(dfn,"gender"))
  s gend=$g(SAMIPATS(zdt,dfn,"sex"))
+ i gend="" s gend=$g(SAMIPATS(zdt,dfn,"gender"))
  q:gend="" ""
- ;s gend=$p(gend,"^",2)
+ i gend["^" s gend=$p(gend,"^",2)
  q gend
  ;
 RACE(zdt,dfn,SAMIPATS) ; extrinsic returns race
@@ -420,7 +421,10 @@ SHDET(SID,KEY) ; Extrinsic returns table contents for smoking history
  q return
  ;
 DOB(ien,dfn,SAMIPATS) ; extrinsic returns the Date of Birth
- q $g(SAMIPATS(ien,dfn,"dob"))
+ n dob
+ s dob=$g(SAMIPATS(ien,dfn,"dob"))
+ i dob="" s dob=$g(SAMIPATS(ien,dfn,"sbdob"))
+ q dob
  ;
 WORKPAT(ien,dfn,SAMIPATS) ; extrinsic returns worklist patient name cell
  n zcell

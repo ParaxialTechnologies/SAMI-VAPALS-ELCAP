@@ -437,6 +437,7 @@ WSUNMAT(SAMIRESULT,SAMIARGS) ; navigates to unmatched report
  ; 
  n filter,bdy
  s bdy=""
+ ;s filter("siteid")="PHX"
  s filter("samiroute")="report"
  s filter("samireporttype")="unmatched"
  d WSVAPALS^SAMIHOM3(.filter,.bdy,.SAMIRESULT) ; back to the unmatched report

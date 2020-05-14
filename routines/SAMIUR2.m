@@ -90,13 +90,22 @@ RPTTBL(RPT,TYPE) ; RPT is passed by reference and returns the
  . S RPT(3,"routine")="$$VALS^SAMIUR2"
  . S RPT(4,"header")="Smoking History"
  . S RPT(4,"routine")="$$SMHIS^SAMIUR2"
- if type="unmatched" d  ;
+ if TYPE="unmatched" d  ;
  . S RPT(1,"header")="Unmatched Entry"
  . S RPT(1,"routine")="$$MANPAT^SAMIUR2"
  . S RPT(2,"header")="Possible Match"
  . S RPT(2,"routine")="$$POSSIBLE^SAMIUR2"
  . S RPT(3,"header")="Match Control"
  . S RPT(3,"routine")="$$MATCH^SAMIUR2"
+ if TYPE="worklist" d  q  ;
+ . S RPT(1,"header")="Name"
+ . S RPT(1,"routine")="$$WORKPAT^SAMIUR2"
+ . S RPT(2,"header")="SSN"
+ . S RPT(2,"routine")="$$SSN^SAMIUR2"
+ . S RPT(3,"header")="Date of birth"
+ . S RPT(3,"routine")="$$DOB^SAMIUR2"
+ . S RPT(4,"header")="Gender"
+ . S RPT(4,"routine")="$$GENDER^SAMIUR2"
  ;
  q
  ;
@@ -222,11 +231,13 @@ RECOM(zdt,dfn,SAMIPATS) ; extrinsic returns Recommendation
  q recom
  ;
 GENDER(zdt,dfn,SAMIPATS) ; extrinsic returns gender
- n root s root=$$setroot^%wd("vapals-patients")
+ ;n root s root=$$setroot^%wd("vapals-patients")
  n gend
- s gend=$g(@root@(dfn,"gender"))
+ ;s gend=$g(@root@(dfn,"gender"))
+ s gend=$g(SAMIPATS(zdt,dfn,"sex"))
+ i gend="" s gend=$g(SAMIPATS(zdt,dfn,"gender"))
  q:gend="" ""
- s gend=$p(gend,"^",2)
+ i gend["^" s gend=$p(gend,"^",2)
  q gend
  ;
 RACE(zdt,dfn,SAMIPATS) ; extrinsic returns race
@@ -409,6 +420,18 @@ SHDET(SID,KEY) ; Extrinsic returns table contents for smoking history
  k pyary
  q return
  ;
+DOB(ien,dfn,SAMIPATS) ; extrinsic returns the Date of Birth
+ n dob
+ s dob=$g(SAMIPATS(ien,dfn,"dob"))
+ i dob="" s dob=$g(SAMIPATS(ien,dfn,"sbdob"))
+ q dob
+ ;
+WORKPAT(ien,dfn,SAMIPATS) ; extrinsic returns worklist patient name cell
+ n zcell
+ s zcell=""
+ s zcell=zcell_$g(SAMIPATS(ien,dfn,"workref"))
+ q zcell
+ ;
 MANPAT(ien,dfn,SAMIPATS) ; extrinsic returns the unmatched patient cell
  n zcell
  s zcell=""
@@ -506,5 +529,9 @@ CUMPY(PYARY,sid,KEY) ; forms array of cummulative pack year data
  . s @PYARY@("rpt",rptcnt,4)=newcum ; Cumulative
  . s lastdt=keydate
  . s lastcum=newcum
+ q
+ ;
+EPAT(ien,dfn,SAMIPATS) ; extrinsic the patient name with navigation
+ ; to enrollment
  q
  ;

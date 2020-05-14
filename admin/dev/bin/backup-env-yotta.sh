@@ -100,8 +100,8 @@ aws s3 cp $backupdir.tgz s3://backup.fiscientific.org/$hostname/backup/
 echo
 
 echo "[$(date)]: Cleaning up..."
-#rm -rf $backupdir
-#rm $verbose $backupdir.tgz
+rm -rf $backupdir
+rm $verbose $backupdir.tgz
 echo
 
 echo "[$(date)]: Finish $(basename $0) $@"

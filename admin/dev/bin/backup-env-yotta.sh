@@ -96,7 +96,7 @@ tar -czf $HOME/data/backups/$timestamp.tgz $backupdir
 echo
 
 echo "[$(date)]: Copying backup to S3..."
-aws s3 cp $backupdir.tgz s3://backup.fiscientific.org/$hostname/backup/
+/usr/local/bin/aws s3 cp $backupdir.tgz s3://backup.fiscientific.org/$hostname/backup/
 echo
 
 echo "[$(date)]: Cleaning up..."

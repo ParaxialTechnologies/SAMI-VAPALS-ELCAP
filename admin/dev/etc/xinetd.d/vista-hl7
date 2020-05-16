@@ -1,0 +1,13 @@
+service vista-hl7
+{
+    port = 5030
+    socket_type = stream
+    protocol = tcp
+    type = UNLISTED
+    user = osehra
+    server = /home/osehra/bin/hl7-listener.sh
+    wait = no
+    disable = no
+    per_source = UNLIMITED
+    instances = UNLIMITED
+}

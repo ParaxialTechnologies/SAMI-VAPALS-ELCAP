@@ -97,6 +97,7 @@ echo
 
 echo "[$(date)]: Copying backup to S3..."
 /usr/local/bin/aws s3 cp $backupdir.tgz s3://backup.fiscientific.org/$hostname/backup/
+/usr/local/bin/aws s3 cp s3://backup.fiscientific.org/$hostname/backup/$timestamp.tgz s3://backup.fiscientific.org/$hostname/backup/latest.tgz
 echo
 
 echo "[$(date)]: Cleaning up..."

@@ -1,0 +1,17 @@
+service vista-hl7
+{
+    type = UNLISTED
+    disable = no
+    flags = REUSE
+    socket_type = stream
+    protocol = tcp
+    port = 5000
+    bind = 127.0.0.1
+    wait = no
+    user = osehra
+    env = port=5000
+    server = /usr/bin/csession
+    server_args = VAPALS -ci -U USER PORT^HLCSTCPA
+    instances = UNLIMITED
+    per_source = UNLIMITED
+}

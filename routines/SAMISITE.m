@@ -51,7 +51,7 @@ FINDSITE(SAMIRETURN,ARGS) ; extrinsic which returns the site
  ;
  n site,siteid,siteactv,sitenm
  ;
- i $o(^SAMI(311.13,"B",user,""))'="" d  q  ; superuser
+ i $o(^SAMI(311.13,"B",user,""))'="" d  q 0  ; superuser
  . d SUPER("SAMIRETURN",.ARGS)
  . s HTTPRSP("mime")="text/html"
  ;

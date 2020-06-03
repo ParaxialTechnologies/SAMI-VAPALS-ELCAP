@@ -1,4 +1,4 @@
-KIDS Distribution saved on Jun 02, 2020@17:44:51
+KIDS Distribution saved on Jun 02, 2020@18:56:46
 SAMI REC ORM HL7 V 18.0
 **KIDS**:SAMI REC ORM HL7 V 18.0^
 
@@ -17,7 +17,7 @@ patient-lookup graph
 "BLD",10814,4,0)
 ^9.64PA^^
 "BLD",10814,6.3)
-2
+3
 "BLD",10814,"KRN",0)
 ^9.67PA^1.5^24
 "BLD",10814,"KRN",.4,0)
@@ -51,12 +51,12 @@ patient-lookup graph
 "BLD",10814,"KRN",9.8,"NM",0)
 ^9.68A^2^2
 "BLD",10814,"KRN",9.8,"NM",1,0)
-SAMIHL7^^0^B62779095
+SAMIORM^^0^B47358865
 "BLD",10814,"KRN",9.8,"NM",2,0)
-SAMIORM^^0^B44511211
-"BLD",10814,"KRN",9.8,"NM","B","SAMIHL7",1)
+SAMIHL7^^0^B63028909
+"BLD",10814,"KRN",9.8,"NM","B","SAMIHL7",2)
 
-"BLD",10814,"KRN",9.8,"NM","B","SAMIORM",2)
+"BLD",10814,"KRN",9.8,"NM","B","SAMIORM",1)
 
 "BLD",10814,"KRN",19,0)
 19
@@ -205,11 +205,11 @@ D XPZ2^XPDIQ
 "RTN")
 2
 "RTN","SAMIHL7")
-0^1^B62779095
+0^2^B63028909
 "RTN","SAMIHL7",1,0)
-SAMIHL7 ;SAMI/lgc/arc - HL7 UTILITIES ;Jun 02, 2020@13:10
+SAMIHL7 ;SAMI/lgc/arc - HL7 UTILITIES ;Jun 02, 2020@18:44
 "RTN","SAMIHL7",2,0)
- ;;18.0;SAMI;;;Build 2
+ ;;18.0;SAMI;;;Build 3
 "RTN","SAMIHL7",3,0)
  ;
 "RTN","SAMIHL7",4,0)
@@ -393,11 +393,11 @@ MATCHLOG new newptien,var set newptien=""
 "RTN","SAMIHL7",93,0)
  .. for  s ssnien=$order(@rootpl@("ssn",$get(fields("ssn")),ssnien)) q:'ssnien  d
 "RTN","SAMIHL7",94,0)
- ... set @rootpl@(ssnien,"MATCHLOG")=newptien
+ ... set @rootpl@(ssnien,"HL7MATCHLOG")=newptien
 "RTN","SAMIHL7",95,0)
- ... set @rootpl@("MATCHLOG",ssnien,newptien)=""
+ ... set @rootpl@("HL7MATCHLOG",ssnien,newptien)=""
 "RTN","SAMIHL7",96,0)
- ... U $P write !,"MATCHLOG ssn","--- ssnien=",ssnien,"--- newptien=",newptien
+ ... U $P write !,"HL7MATCHLOG ssn","--- ssnien=",ssnien,"--- newptien=",newptien
 "RTN","SAMIHL7",97,0)
  .;
 "RTN","SAMIHL7",98,0)
@@ -411,11 +411,11 @@ MATCHLOG new newptien,var set newptien=""
 "RTN","SAMIHL7",102,0)
  .. for  s pnien=$order(@rootpl@("name",$get(fields("saminame")),pnien)) q:'pnien  d
 "RTN","SAMIHL7",103,0)
- ... set @rootpl@(pnien,"MATCHLOG")=newptien
+ ... set @rootpl@(pnien,"HL7MATCHLOG")=newptien
 "RTN","SAMIHL7",104,0)
- ... set @rootpl@("MATCHLOG",pnien,newptien)=""
+ ... set @rootpl@("HL7MATCHLOG",pnien,newptien)=""
 "RTN","SAMIHL7",105,0)
- ... U $P write !,"MATCHLOG name","---",pnien
+ ... U $P write !,"HL7MATCHLOG name","---",pnien
 "RTN","SAMIHL7",106,0)
  ;
 "RTN","SAMIHL7",107,0)
@@ -469,7 +469,7 @@ MATCHLOG new newptien,var set newptien=""
 "RTN","SAMIHL7",131,0)
  .. if '($get(@rootpl@(ptien,field))=fields(field)) do
 "RTN","SAMIHL7",132,0)
- ... set @rootpl@(ptien,"changelog",$$FMTE^XLFDT($$NOW^XLFDT,5),field)=fields(field)
+ ... set @rootpl@(ptien,"hl7changelog",$$FMTE^XLFDT($$NOW^XLFDT,5),field)=fields(field)
 "RTN","SAMIHL7",133,0)
  .. set @rootpl@(ptien,field)=fields(field)
 "RTN","SAMIHL7",134,0)
@@ -641,11 +641,11 @@ ACK ;Force a com ACK
 "RTN","SAMIHL7",217,0)
 EOR ;End of routine SAMIHL7
 "RTN","SAMIORM")
-0^2^B44511211
+0^1^B47358865
 "RTN","SAMIORM",1,0)
-SAMIORM ;ven/arc/lgc - parse ORM to update  patient-lookup graph ;Jun 02, 2020@12:22
+SAMIORM ;ven/arc/lgc - parse ORM to update  patient-lookup graph ;Jun 02, 2020@18:35
 "RTN","SAMIORM",2,0)
- ;;18.0;SAMI;;;Build 2
+ ;;18.0;SAMI;;;Build 3
 "RTN","SAMIORM",3,0)
  ;
 "RTN","SAMIORM",4,0)
@@ -899,98 +899,114 @@ PID(segment,fields) ;
 "RTN","SAMIORM",128,0)
  ;
 "RTN","SAMIORM",129,0)
- set fields("sbdob")=$piece(segment,INFS,8)
+ ; convert HL7 date to mm/dd/yyyy
 "RTN","SAMIORM",130,0)
- set fields("sex")=$piece(segment,INFS,9)
+ new hl7dob,mnth,day,yr
 "RTN","SAMIORM",131,0)
- set fields("address1")=$piece($piece(segment,INFS,12),INCC)
+ set hl7dob=$piece(segment,INFS,8)
 "RTN","SAMIORM",132,0)
- set fields("city")=$piece($piece(segment,INFS,12),INCC,3)
+ set mnth=+$e(hl7dob,5,6)
 "RTN","SAMIORM",133,0)
- set fields("state")=$piece($piece(segment,INFS,12),INCC,4)
+ set day=+$e(hl7dob,7,8)
 "RTN","SAMIORM",134,0)
- set fields("zip")=$piece($piece(segment,INFS,12),INCC,5)
+ set yr=$e(hl7dob,1,4)
 "RTN","SAMIORM",135,0)
- set fields("phone")=$piece(segment,INFS,14)
+ if $get(hl7dob) do
 "RTN","SAMIORM",136,0)
- ;set fields("ssn")=$piece(segment,INFS,20)
+ . set fields("sbdob")=mnth_"/"_day_"/"_yr
 "RTN","SAMIORM",137,0)
- quit
+ ;
 "RTN","SAMIORM",138,0)
- ;
+ set fields("sex")=$piece(segment,INFS,9)
 "RTN","SAMIORM",139,0)
-PV1(segment,fields) ;
+ set fields("address1")=$piece($piece(segment,INFS,12),INCC)
 "RTN","SAMIORM",140,0)
- set fields("ORMPV1patientclass")=$piece(segment,INFS,3)
+ set fields("city")=$piece($piece(segment,INFS,12),INCC,3)
 "RTN","SAMIORM",141,0)
- set fields("ORMPV1assignedlocation")=$piece(segment,INFS,4)
+ set fields("state")=$piece($piece(segment,INFS,12),INCC,4)
 "RTN","SAMIORM",142,0)
- set fields("ORMPV1providerien")=$piece($piece(segment,INFS,9),INCC)
+ set fields("zip")=$piece($piece(segment,INFS,12),INCC,5)
 "RTN","SAMIORM",143,0)
- set fields("ORMPV1providernm")=$tr($piece($piece(segment,INFS,9),INCC,2,4),"^",",")
+ set fields("phone")=$piece(segment,INFS,14)
 "RTN","SAMIORM",144,0)
- quit
+ ;set fields("ssn")=$piece(segment,INFS,20)
 "RTN","SAMIORM",145,0)
- ;
+ quit
 "RTN","SAMIORM",146,0)
-ORC(segment,fields) ;
+ ;
 "RTN","SAMIORM",147,0)
- set fields("ORMORCordercontrol")=$piece(segment,INFS,2)
+PV1(segment,fields) ;
 "RTN","SAMIORM",148,0)
- set fields("ORMORCordernumber")=$piece(segment,INFS,3)
+ set fields("ORMPV1patientclass")=$piece(segment,INFS,3)
 "RTN","SAMIORM",149,0)
- set fields("ORMORCorderstatus")=$piece(segment,INFS,6)
+ set fields("ORMPV1assignedlocation")=$piece(segment,INFS,4)
 "RTN","SAMIORM",150,0)
- set fields("ORMORCtransactiondt")=$piece(segment,INFS,10)
+ set fields("ORMPV1providerien")=$piece($piece(segment,INFS,9),INCC)
 "RTN","SAMIORM",151,0)
- set fields("ORMORCordereffectivedt")=$piece(segment,INFS,16)
+ set fields("ORMPV1providernm")=$tr($piece($piece(segment,INFS,9),INCC,2,4),"^",",")
 "RTN","SAMIORM",152,0)
  quit
 "RTN","SAMIORM",153,0)
  ;
 "RTN","SAMIORM",154,0)
-OBR(segment,fields) ;
+ORC(segment,fields) ;
 "RTN","SAMIORM",155,0)
- set fields("ORMOBRorder")=$piece($piece(segment,INFS,5),INCC)
+ set fields("ORMORCordercontrol")=$piece(segment,INFS,2)
 "RTN","SAMIORM",156,0)
- set fields("siteid")=$piece($piece($piece(segment,INFS,5),INCC),"_")
+ set fields("ORMORCordernumber")=$piece(segment,INFS,3)
 "RTN","SAMIORM",157,0)
- set fields("ORMOBRorder2")=$piece($piece(segment,INFS,5),INCC,2)
+ set fields("ORMORCorderstatus")=$piece(segment,INFS,6)
 "RTN","SAMIORM",158,0)
- quit
+ set fields("ORMORCtransactiondt")=$piece(segment,INFS,10)
 "RTN","SAMIORM",159,0)
- ;
+ set fields("ORMORCordereffectivedt")=$piece(segment,INFS,16)
 "RTN","SAMIORM",160,0)
- ;
-"RTN","SAMIORM",161,0)
-CAMELCAS(str) ;
-"RTN","SAMIORM",162,0)
- if $get(str)="" quit str
-"RTN","SAMIORM",163,0)
- set str=$$LOW^XLFSTR(str)
-"RTN","SAMIORM",164,0)
- set str=$$UP^XLFSTR($extract(str,1))_$extract(str,2,$length(str))
-"RTN","SAMIORM",165,0)
- quit str
-"RTN","SAMIORM",166,0)
- ;
-"RTN","SAMIORM",167,0)
-TEST K HLARR
-"RTN","SAMIORM",168,0)
- set HLARR(1)="MSH|^~\&|MCAR-INST|VISTA|INST-MCAR|VAPALS|202005250950-0700||ORM^O01|9990000512|P|2.3|||||USA"
-"RTN","SAMIORM",169,0)
- set HLARR(2)="PID|1||000000199||ZZTESTPATIENT^JAN^^^^^L||19990101000000|F|||123 NOWHERE LANE^^PHOENIX^AZ^85012||||||||000000199|"
-"RTN","SAMIORM",170,0)
- set HLARR(3)="PV1||O|PHX-PULM RN LSS PHONE|||||244088^GARCIA^DANIEL^P"
-"RTN","SAMIORM",171,0)
- set HLARR(4)="ORC|NW|3200522142122|||NW||||20200522142122||||||20200522143000"
-"RTN","SAMIORM",172,0)
- set HLARR(5)="OBR||||LUNG^LUNG|"
-"RTN","SAMIORM",173,0)
  quit
+"RTN","SAMIORM",161,0)
+ ;
+"RTN","SAMIORM",162,0)
+OBR(segment,fields) ;
+"RTN","SAMIORM",163,0)
+ set fields("ORMOBRorder")=$piece($piece(segment,INFS,5),INCC)
+"RTN","SAMIORM",164,0)
+ set fields("siteid")=$piece($piece($piece(segment,INFS,5),INCC),"_")
+"RTN","SAMIORM",165,0)
+ set fields("ORMOBRorder2")=$piece($piece(segment,INFS,5),INCC,2)
+"RTN","SAMIORM",166,0)
+ quit
+"RTN","SAMIORM",167,0)
+ ;
+"RTN","SAMIORM",168,0)
+ ;
+"RTN","SAMIORM",169,0)
+CAMELCAS(str) ;
+"RTN","SAMIORM",170,0)
+ if $get(str)="" quit str
+"RTN","SAMIORM",171,0)
+ set str=$$LOW^XLFSTR(str)
+"RTN","SAMIORM",172,0)
+ set str=$$UP^XLFSTR($extract(str,1))_$extract(str,2,$length(str))
+"RTN","SAMIORM",173,0)
+ quit str
 "RTN","SAMIORM",174,0)
  ;
 "RTN","SAMIORM",175,0)
+TEST K HLARR
+"RTN","SAMIORM",176,0)
+ set HLARR(1)="MSH|^~\&|MCAR-INST|VISTA|INST-MCAR|VAPALS|202005250950-0700||ORM^O01|9990000512|P|2.3|||||USA"
+"RTN","SAMIORM",177,0)
+ set HLARR(2)="PID|1||000000199||ZZTESTPATIENT^JAN^^^^^L||19990101000000|F|||123 NOWHERE LANE^^PHOENIX^AZ^85012||||||||000000199|"
+"RTN","SAMIORM",178,0)
+ set HLARR(3)="PV1||O|PHX-PULM RN LSS PHONE|||||244088^GARCIA^DANIEL^P"
+"RTN","SAMIORM",179,0)
+ set HLARR(4)="ORC|NW|3200522142122|||NW||||20200522142122||||||20200522143000"
+"RTN","SAMIORM",180,0)
+ set HLARR(5)="OBR||||LUNG^LUNG|"
+"RTN","SAMIORM",181,0)
+ quit
+"RTN","SAMIORM",182,0)
+ ;
+"RTN","SAMIORM",183,0)
 EOR ; End of routine SAMIORM
 "VER")
 8.0^22.2

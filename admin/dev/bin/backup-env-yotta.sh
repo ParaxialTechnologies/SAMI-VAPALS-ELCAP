@@ -14,7 +14,7 @@ set -e
 source $HOME/etc/env.conf
 logfile="$HOME/var/log/$(basename $0 .sh).log"
 timestamp=$(date +%Y%m%d-%H%M%S)
-backupdir="$HOME/data/backups/$timestamp"
+backupdir="$HOME/tmp/latest"
 hostname=$(hostname)
 
 function usage {
@@ -46,7 +46,8 @@ do
     esac
 done
 
-[[ -d $backupdir ]] || mkdir -p $backupdir/{data/globals,run}
+[[ -d $backupdir ]] && rm -rf $backupdir
+mkdir -p $backupdir/{data/globals,run}
 
 [[ $quiet == on ]] && exec &> $logfile || exec &> >(tee $logfile)
 
@@ -91,12 +92,14 @@ cp -pr $verbose $HOME/www $backupdir/
 echo
 
 echo "[$(date)]: Compressing backup..."
-echo $timestamp
-tar -czf $HOME/data/backups/$timestamp.tgz $backupdir
+cd $HOME/tmp
+tar -czf latest.tgz latest
+cd -
 echo
 
 echo "[$(date)]: Copying backup to S3..."
 /usr/local/bin/aws s3 cp $backupdir.tgz s3://backup.fiscientific.org/$hostname/backup/
+/usr/local/bin/aws s3 cp s3://backup.fiscientific.org/$hostname/backup/latest.tgz s3://backup.fiscientific.org/$hostname/backup/$timestamp.tgz
 echo
 
 echo "[$(date)]: Cleaning up..."

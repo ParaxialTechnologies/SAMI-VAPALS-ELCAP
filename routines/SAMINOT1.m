@@ -221,6 +221,11 @@ NTLAST(sid,form,ntype) ; extrinsic returns the location of the latest note
  ; of the type ntype
  q
  ;
+NTIEN(sid,form) ; extrinsic which returns the latest note for this form
+ n root s root=$$setroot^%wd("vapals-patients")
+ n rtn s rtn=$o(@root@("graph",sid,form,"notes"," "),-1)
+ q rtn
+ ;
 NTLIST(nlist,sid,form) ; returns the note list in nlist, passed by ref
  ;
  n zn,root,gn

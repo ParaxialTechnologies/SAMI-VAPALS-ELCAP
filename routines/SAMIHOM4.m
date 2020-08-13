@@ -167,28 +167,60 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  . m SAMIARG=vars
  . d wsPostForm^%wf(.SAMIARG,.SAMIBODY,.SAMIRESULT)
  . i $g(SAMIARG("form"))["siform" d  ;
- . . if $$NOTE^SAMINOT1(.SAMIARG) d  ;
+ . . n notr s notr=0 ; note return 0 if failure, 1 or greater if success
+ . . ; returns the ien of the note that was created and should be sent
+ . . s notr=$$NOTE^SAMINOT1(.SAMIARG)
+ . . if +notr>0 d  ;
  . . . n SAMIFILTER
- . . . s SAMIFILTER("studyid")=$G(SAMIARG("studyid"))
+ . . . s SAMIFILTER("sid")=$G(SAMIARG("studyid"))
  . . . s SAMIFILTER("form")=$g(SAMIARG("form")) ;
  . . . n tiuien
- . . . ;s tiuien=$$SV2VISTA^SAMIVSTA(.SAMIFILTER)
- . . . ;s SAMIFILTER("tiuien")=tiuien
- . . . ;d SV2VSTA^SAMIVSTA(.FILTER)
- . . . ;m ^SAMIUL("newFILTER")=SAMIFILTER
- . . . d WSNOTE^SAMINOT1(.SAMIRESULT,.SAMIARG)
+ . . . s tiuien=+notr
+ . . . s SAMIFILTER("notenmbr")=tiuien
+ . . . n sendrslt
+ . . . ;s sendrslt="1^MSG9239010"
+ . . . s sendrslt=$$EN^SAMIORU(.SAMIFILTER)) ; send the note to VistA
+ . . . i +sendrslt>0 d  ; success
+ . . . . n rtnid s rtnid=$p(sendrslt,"^",2) ; return id from HL7
+ . . . . ; post the id to the graph here
+ . . . . n sid s sid=$G(SAMIARG("studyid"))
+ . . . . n form s form=$G(SAMIARG("form"))
+ . . . . n nien s nien=$$NTIEN^SAMINOT1(sid,form) ; latest note ien
+ . . . . n root s root=$$setroot^%wd("vapals-patients")
+ . . . . s @root@("graph",sid,form,"notes",nien,"hl7id")=rtnid
+ . . . . s SAMIARG("errorMessage")="Note successfully sent to VistA ID: "_rtnid
+ . . . else  d  ;
+ . . . . n rtnmsg s rtnmsg=$p(sendrslt,"^",2)
+ . . . . s SAMIARG("errorMessage")=rtnmsg
+ . . . d WSCASE^SAMICASE(.SAMIRESULT,.SAMIARG)
  . i $g(SAMIARG("form"))["fuform" d  ;
- . . if $$NOTE^SAMINOT2(.SAMIARG) d  ;
+ . . n notr s notr=0 ; note return 0 if failure, 1 or greater if success
+ . . ; returns the ien of the note that was created and should be sent
+ . . s notr=$$NOTE^SAMINOT2(.SAMIARG)
+ . . if +notr>0 d  ;
  . . . n SAMIFILTER
- . . . s SAMIFILTER("studyid")=$G(SAMIARG("studyid"))
+ . . . s SAMIFILTER("sid")=$G(SAMIARG("studyid"))
  . . . s SAMIFILTER("form")=$g(SAMIARG("form")) ;
- . . . ;n tiuien
- . . . ;s tiuien=$$SV2VISTA^SAMIVSTA(.SAMIFILTER)
- . . . ;s SAMIFILTER("tiuien")=tiuien
- . . . ;d SV2VSTA^SAMIVSTA(.FILTER)
- . . . ;m ^SAMIUL("newFILTER")=SAMIFILTER
- . . . d WSNOTE^SAMINOT2(.SAMIRESULT,.SAMIARG)
- . . e  d WSCASE^SAMICASE(.SAMIRESULT,.SAMIARG)
+ . . . n tiuien
+ . . . s tiuien=+notr
+ . . . s SAMIFILTER("notenmbr")=tiuien
+ . . . n sendrslt
+ . . . ;s sendrslt="0^Missing ORM Message"
+ . . . s sendrslt=$$EN^SAMIORU(.SAMIFILTER)) ; send the note to VistA
+ . . . i +sendrslt>0 d  ; success
+ . . . . n rtnid s rtnid=$p(sendrslt,"^",2) ; return id from HL7
+ . . . . ; post the id to the graph here
+ . . . . n sid s sid=$G(SAMIARG("studyid"))
+ . . . . n form s form=$G(SAMIARG("form"))
+ . . . . n nien s nien=$$NTIEN^SAMINOT1(sid,form) ; latest note ien
+ . . . . n root s root=$$setroot^%wd("vapals-patients")
+ . . . . s @root@("graph",sid,form,"notes",nien,"hl7id")=rtnid
+ . . . . s SAMIARG("errorMessage")="Note successfully sent to VistA ID: "_rtnid
+ . . . else  d  ;
+ . . . . n rtnmsg s rtnmsg=$p(sendrslt,"^",2)
+ . . . . s SAMIARG("errorMessage")=rtnmsg
+ . . . d WSCASE^SAMICASE(.SAMIRESULT,.SAMIARG)
+ . e  d WSCASE^SAMICASE(.SAMIRESULT,.SAMIARG)
  ;
  i route="deleteform" d  q 0
  . m SAMIARG=vars

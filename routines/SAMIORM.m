@@ -1,4 +1,4 @@
-SAMIORM ;ven/arc/lgc - parse ORM to update  patient-lookup graph ;Feb 04, 2020@14:26
+SAMIORM ;ven/arc/lgc - parse ORM to update  patient-lookup graph ;Jul 24, 2020@11:08
  ;;18.0;SAMI;;;Build 1
  ;
  quit  ; No entry from top
@@ -31,29 +31,27 @@ SAMIORM ;ven/arc/lgc - parse ORM to update  patient-lookup graph ;Feb 04, 2020@1
  ;
  ; @section 1 code
  ;
+ ; SAMIORM parses out an incoming ORM message into the 
+ ;   fields array and then calls ORMHL7 to use the fields
+ ;   array to update patient-lookup graph
  ;
- quit  ; No entry from top
+EN ; ORM message parsed into patient-lookup graph 
  ;
+ kill ^KBAP("SAMIORM")
+ set ^KBAP("SAMIORM","EN")=$$HTFM^XLFDT($H)_" TEST"
  ;
-TESTERR ; Test entry point
- ;
- quit  ; End of entry point TESTERR
- ;
- ;
-EN ; Primary entry point
- ;
- kill ^TMP("SAMI","ORM")
- ;
- ; Immediately return COMM ACK
+ ; Immediately return COMM ACK  ***** TMP TURNED OFF
  do ACK^SAMIHL7
  ;
  ;
 BLDARR ; pull out message into array
  ;
- new HLARR,cnt
+ new HLARR,cnt,samihl7,invdt
+ set invdt=(9999999.9999-$$HTFM^XLFDT($H))
  for  xecute HLNEXT quit:$get(HLNODE)=""  do
  . set cnt=$get(cnt)+1
  . set HLARR(cnt)=HLNODE
+ . set samihl7(cnt)=HLNODE
  ;
  kill ^KBAP("SAMIORM","BLDARR")
  merge ^KBAP("SAMIORM","BLDARR","HLARR")=HLARR
@@ -61,67 +59,145 @@ BLDARR ; pull out message into array
 DEBUG ;do ^ZTER
  ;
  new fields
+ set fields("ORM",invdt,"msgid")=$get(HLREC("MID"))
+ ;
  new INFS set INFS=$G(HL("FS"))
  new INCC set INCC=$E($G(HL("ECH")))
- do PARSEMSG(.HLARR,.fields)
  ;
- ; update patient-lookup graph
- do UPDTPTL^SAMIHL7(.fields)
+PMSG do PARSEMSG(.HLARR,.fields)
+ ;
+ merge ^KBAP("SAMIORM","samihl7")=samihl7
+ merge ^KBaP("SAMIORM","fields")=fields
+ ;
+ ;  update patient-lookup graph
+UPDTPTL do UPDTPTL^SAMIHL7(.fields)
+ ;
+ merge ^KBAP("SAMIORM","fields")=fields
+ ;
+ ; At this point the fields have been filed in the patient
+ ;   with ptien into the patient lookup graph.
+ ; I have the ptien in fields("ptien") and I have the HL7
+ ;   message segments in samihl7
+ ; Time to file the message into patient lookup
+ new ptien set ptien=$get(fields("ptien"))
+ if ptien do
+ . new rootpl,hl7cnt,cnt,seg
+ . set rootpl=$$setroot^%wd("patient-lookup")
+ . set hl7cnt=$get(@rootpl@(ptien,"hl7 counter"))+1
+ . set @rootpl@(ptien,"hl7 counter")=hl7cnt
+ . set cnt=0
+ . for  set cnt=$order(samihl7(cnt)) quit:'cnt  do
+ .. set seg=$extract(samihl7(cnt),1,3)
+ .. set @rootpl@(ptien,"hl7",hl7cnt,seg)=samihl7(cnt)
  ;
  quit  ; End entry point EN
  ;
  ;
-PARSEMSG(HLARR,fields) ; Pull patient data from ORM message
+PARSEMSG(HLARR,fields) ;
+ set ^KBAP("SAMIORM","PARSEMSG","INFS")=$get(INFS)
+ set ^KBAP("SAMIORM","PARSEMSG","INCC")=$get(INCC)
+ ; Pull patient data from ORM message
  new cnt s cnt=0
  for  set cnt=$order(HLARR(cnt)) quit:'cnt  do
- . set SEG=$piece(HLARR(cnt),HL("FS"))
- . if SEG="PID" do PID(HLARR(cnt),.fields) quit
- . if SEG="OBR" do OBR(HLARR(cnt),.fields) quit
+ . set segment=HLARR(cnt)
+ . new SEG set SEG=$piece(HLARR(cnt),HL("FS"))
+ . if SEG="PID" do PID(segment,.fields)
+ . if SEG="PV1" do PV1(segment,.fields)
+ . if SEG="ORC" do ORC(segment,.fields)
+ . if SEG="OBR" do OBR(segment,.fields)
+ ;
+ merge ^KBAP("SAMIORM","fields")=fields
  quit
  ;
  ;
 PID(segment,fields) ;
- new name
- set fields("icn")=$piece(segment,INFS,3)
- set fields("dfn")=$piece($piece(segment,INFS,4),INCC)
+ ;
+ set ^KBAP("SAMIORM","fields","PID","segment")=segment
+ ;
+ new name,fname,lname,mname
+ set fields("icn")=""
+ set fields("ssn")=$piece($piece(segment,INFS,4),INCC)
  ;
  set name=$piece(segment,INFS,6)
- set name=$piece(name,INCC)_","_$piece(name,INCC,2)
+ set lname=$$CAMELCAS($piece(name,INCC,1))
+ set fname=$$CAMELCAS($piece(name,INCC,2))
+ set mname=""
  if $length($piece(segment,INFS,6),INCC)>2 do
- . set name=name_" "_$piece($piece(segment,INFS,6),INCC,3)
+ . set mname=$$CAMELCAS($piece($piece(segment,INFS,6),INCC,3))
+ ;
+ set name=lname_","_fname
+ if $length(mname) do
+ . set name=name_" "_mname
  set fields("saminame")=name
  set fields("sinamef")=$piece(name,",",2)
  set fields("sinamel")=$piece(name,",")
  ;
+ if $length(fields("ssn")),$length(fields("saminame")) do
+ . set fields("last5")=$$UP^XLFSTR($extract(fields("saminame")))_$extract(fields("ssn"),6,9)
+ . set ^KBAP("SAMIORM","MadeLast5")=$get(fields("last5"))
+ ;
  set fields("sbdob")=$piece(segment,INFS,8)
  set fields("sex")=$piece(segment,INFS,9)
+ ;
+ORMADDR set fields("ORM",invdt,"fulladdress")=$piece(segment,INFS,12)
+ ;
  set fields("address1")=$piece($piece(segment,INFS,12),INCC)
  set fields("city")=$piece($piece(segment,INFS,12),INCC,3)
  set fields("state")=$piece($piece(segment,INFS,12),INCC,4)
  set fields("zip")=$piece($piece(segment,INFS,12),INCC,5)
  set fields("phone")=$piece(segment,INFS,14)
- set fields("ssn")=$piece(segment,INFS,20)
+ ;set fields("ssn")=$piece(segment,INFS,20)
+ quit
+ ;
+PV1(segment,fields) ;
+ ;
+ set ^KBAP("SAMIORM","fields","PIV","segment")=segment
+ ;
+ set fields("ORM",invdt,"patientclass")=$piece(segment,INFS,3)
+ set fields("ORM",invdt,"assignedlocation")=$piece(segment,INFS,4)
+ set fields("ORM",invdt,"providerien")=$piece($piece(segment,INFS,9),INCC)
+ set fields("ORM",invdt,"providernm")=$tr($piece($piece(segment,INFS,9),INCC,2,4),"^",",")
+ quit
+ ;
+ORC(segment,fields) ;
+ ;
+ set ^KBAP("SAMIORM","fields","ORC","segment")=segment
+ ;
+ set fields("ORM",invdt,"ordercontrol")=$piece(segment,INFS,2)
+ set fields("ORM",invdt,"ordernumber")=$piece(segment,INFS,3)
+ set fields("ORM",invdt,"orderstatus")=$piece(segment,INFS,6)
+ set fields("ORM",invdt,"transactiondt")=$piece(segment,INFS,10)
+ set fields("ORM",invdt,"ordereffectivedt")=$piece(segment,INFS,16)
  quit
  ;
 OBR(segment,fields) ;
- set fields("order")=$piece($piece(segment,INFS,5),INCC)
- set fields("order2")=$piece($piece(segment,INFS,5),INCC,2)
- set fields("orddate")=$piece(segment,INFS,8)
- set fields("orddoc")=$piece(segment,INFS,17)
- set fields("ordserv")=$piece(segment,INFS,19)
- set fields("orddateB")=$piece(segment,INFS,23)
+ ;
+ set ^KBAP("SAMIORM","fields","OBR","segment")=segment
+ ;
+ set fields("ORM",invdt,"order")=$piece($piece(segment,INFS,5),INCC)
+ set fields("ORM",invdt,"siteid")=$piece($piece($piece(segment,INFS,5),INCC),"_")
+ set fields("ORM",invdt,"order2")=$piece($piece(segment,INFS,5),INCC,2)
  quit
  ;
  ;
+CAMELCAS(str) ;
+ ;
+ if $get(str)="" quit str
+ set str=$$LOW^XLFSTR(str)
+ set str=$$UP^XLFSTR($extract(str,1))_$extract(str,2,$length(str))
+ quit str
+ ;
 TEST K HLARR
- set HLARR(1)="MSH^~&|\^LSS-SVR^PHOENIX^VAPALS-ELCAP APP^VISTA HEALTH CARE^202002021234-0800^^ORM~O01^9339000006^P^2.4^^^AL^NE^"
- set HLARR(2)="PID^^50001000V910386^1~8~M10^^FOURTEEN~PATIENT~N^^19560708^M^^7^10834 DIXIN DR SOUTH~""""""""~SEATTLE~WA~98178^53033^(206)772-2059^^^""""""""^29^^444678924^^^^BostonMASSACHUSETTS"""
- set HLARR(3)="ORC^NW^^^^^^^^199104301000"
- set HLARR(4)="OBR^^^^7089898.8453-1~040391-66~L^^^199104301200^""""^""""^^^^^""""^^3232~HL7Doctor~One^^MEDICINE^^^^199104301000"
- set HLARR(5)="OBX^^CE^P~PROCEDURE~L^^100~CHEST PA & LAT~L"
- set HLARR(6)="OBX^^TX^M~MODIFIERS~L^^RIGHT, PORTABLE"
- set HLARR(7)="OBX^^TX^H~HISTORY~L^^None"
- set HLARR(8)="OBX^^TX^A~ALLERGIES~L^^BEE STINGS"
+ set HLARR(1)="MSH|^~\&|MCAR-INST|VISTA|INST-MCAR|VAPALS|20200616135751-0700||ORM^O01|6442288610689|P|2.3|||||USA"
+ set HLARR(2)="PID|1||000002341||ZZTEST^MACHO^^^^^L||19271106000000|M|||7726 W ORCHID ST^^PHOENIX^AZ^85017||||||||000002341|"
+ set HLARR(3)="PV1||O|PHX-PULM RN LSS PHONE|||||244088^GARCIA^DANIEL^P"
+ set HLARR(4)="ORC|NW|3200616135751|||NW||||20200616135751||||||20200616135751"
+ set HLARR(5)="OBR||||PHO_LUNG^LUNG|"
+ ;
+ D HLENV^SAMIORU("MCAR ORM SERVER")
+ set HLNEXT="D HLNEXT^HLCSUTL"
+ set HLQUIT=0
+ DO EN
  quit
  ;
 EOR ; End of routine SAMIORM

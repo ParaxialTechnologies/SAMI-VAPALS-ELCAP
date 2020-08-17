@@ -1,11 +1,11 @@
-KIDS Distribution saved on May 31, 2020@16:35:04
+KIDS Distribution saved on Jun 02, 2020@18:56:46
 SAMI REC ORM HL7 V 18.0
 **KIDS**:SAMI REC ORM HL7 V 18.0^
 
 **INSTALL NAME**
 SAMI REC ORM HL7 V 18.0
 "BLD",10814,0)
-SAMI REC ORM HL7 V 18.0^^0^3200531^n
+SAMI REC ORM HL7 V 18.0^^0^3200602^n
 "BLD",10814,1,0)
 ^^3^3^3200531^
 "BLD",10814,1,1,0)
@@ -17,7 +17,7 @@ patient-lookup graph
 "BLD",10814,4,0)
 ^9.64PA^^
 "BLD",10814,6.3)
-1
+3
 "BLD",10814,"KRN",0)
 ^9.67PA^1.5^24
 "BLD",10814,"KRN",.4,0)
@@ -51,9 +51,9 @@ patient-lookup graph
 "BLD",10814,"KRN",9.8,"NM",0)
 ^9.68A^2^2
 "BLD",10814,"KRN",9.8,"NM",1,0)
-SAMIORM^^0^B37293899
+SAMIORM^^0^B47358865
 "BLD",10814,"KRN",9.8,"NM",2,0)
-SAMIHL7^^0^B50341995
+SAMIHL7^^0^B63028909
 "BLD",10814,"KRN",9.8,"NM","B","SAMIHL7",2)
 
 "BLD",10814,"KRN",9.8,"NM","B","SAMIORM",1)
@@ -205,11 +205,11 @@ D XPZ2^XPDIQ
 "RTN")
 2
 "RTN","SAMIHL7")
-0^2^B50341995
+0^2^B63028909
 "RTN","SAMIHL7",1,0)
-SAMIHL7 ;SAMI/lgc/arc - HL7 UTILITIES ;May 29, 2020@21:01
+SAMIHL7 ;SAMI/lgc/arc - HL7 UTILITIES ;Jun 02, 2020@18:44
 "RTN","SAMIHL7",2,0)
- ;;18.0;SAMI;;;Build 1
+ ;;18.0;SAMI;;;Build 3
 "RTN","SAMIHL7",3,0)
  ;
 "RTN","SAMIHL7",4,0)
@@ -235,351 +235,417 @@ UPDTPTL(fields) ; Update patient-lookup with a patient fields array
 "RTN","SAMIHL7",14,0)
  ;
 "RTN","SAMIHL7",15,0)
- ; bail if we didn't get a fields array
+ kill ^KBAP("SAMIHL7")
 "RTN","SAMIHL7",16,0)
- quit:'$data(fields)
+ set ^KBAP("SAMIHL7","UPDTPTL")=""
 "RTN","SAMIHL7",17,0)
  ;
 "RTN","SAMIHL7",18,0)
-UPDTPTL1 kill ^KBAP("SAMIHL7")
+ ; bail if we didn't get a fields array
 "RTN","SAMIHL7",19,0)
- merge ^KBAP("SAMIHL7","fields")=fields
+ quit:'$data(fields)
 "RTN","SAMIHL7",20,0)
  ;
 "RTN","SAMIHL7",21,0)
- new rootpl s rootpl=$$setroot^%wd("patient-lookup")
+UPDTPTL1 ;
 "RTN","SAMIHL7",22,0)
- new ptienssn,ptiennm,ptiendob,ptienssntmp
+ set ^KBAP("SAMIHL7","UPDTPTL1")=""
 "RTN","SAMIHL7",23,0)
- set (ptienssn,ptiennm,ptiendob,ptienssntmp)=0
+ ;
 "RTN","SAMIHL7",24,0)
- new ptien,newpat set ptien=0,newpat=1
+ new rootpl s rootpl=$$setroot^%wd("patient-lookup")
 "RTN","SAMIHL7",25,0)
- ;
+ new ptienssn,ptiennm,ptiendob,ptienssntmp
 "RTN","SAMIHL7",26,0)
- ; Look for the existing patients with matching ssn.  
+ set (ptienssn,ptiennm,ptiendob,ptienssntmp)=0
 "RTN","SAMIHL7",27,0)
- ;  if one has a matching name we don't make a new patient
+ new ptien,newpat set ptien=0,newpat=1
 "RTN","SAMIHL7",28,0)
- ;  but rather update the existing with changelog
+ ;
 "RTN","SAMIHL7",29,0)
- ;
+ ; Look for the existing patients with matching ssn.  
 "RTN","SAMIHL7",30,0)
- if $length($get(fields("ssn"))),$data(@rootpl@("ssn",$get(fields("ssn")))) do
+ ;  if one has a matching name we don't make a new patient
 "RTN","SAMIHL7",31,0)
- . set ptienssntmp=$order(@rootpl@("ssn",$get(fields("ssn")),0))
+ ;  but rather update the existing with changelog
 "RTN","SAMIHL7",32,0)
- . for  set ptienssn=$order(@rootpl@("ssn",$get(fields("ssn")),ptienssn)) quit:'ptienssn  do  quit:ptiennm
+ ;
 "RTN","SAMIHL7",33,0)
- .. if $length($get(fields("saminame"))),(@rootpl@(ptienssn,"saminame")=fields("saminame")) do 
+ if $length($get(fields("ssn"))),$data(@rootpl@("ssn",$get(fields("ssn")))) do
 "RTN","SAMIHL7",34,0)
- ... set ptiennm=ptienssn
+ . set ptienssntmp=$order(@rootpl@("ssn",$get(fields("ssn")),0))
 "RTN","SAMIHL7",35,0)
- ;
+ . for  set ptienssn=$order(@rootpl@("ssn",$get(fields("ssn")),ptienssn)) quit:'ptienssn  do  quit:ptiennm
 "RTN","SAMIHL7",36,0)
- if ptienssn,ptiennm do
+ .. if $length($get(fields("saminame"))),(@rootpl@(ptienssn,"saminame")=fields("saminame")) do 
 "RTN","SAMIHL7",37,0)
- . new fixdob s fixdob=@rootpl@(ptienssn,"sbdob")
+ ... set ptiennm=ptienssn
 "RTN","SAMIHL7",38,0)
- . set fixdob=$piece(fixdob,"-")_"-"_$tr($j($piece(fixdob,"-",2),2)," ","0")_"-"_$tr($j($piece(fixdob,"-",3),2)," ","0")
+ ;
 "RTN","SAMIHL7",39,0)
- . if $length($get(fields("sbdob"))),(fixdob=fields("sbdob")) set ptiendob=ptienssn
+ set ^KBAP("SAMIHL7","UPDTPTL1","A")=""
 "RTN","SAMIHL7",40,0)
- . s newpat=0,ptien=ptienssn
+ ;
 "RTN","SAMIHL7",41,0)
- ;
+ if ptienssn,ptiennm do
 "RTN","SAMIHL7",42,0)
- ; if there was no name match, restore ptienssn to the first ssn cross ref match 
+ . new fixdob s fixdob=@rootpl@(ptienssn,"sbdob")
 "RTN","SAMIHL7",43,0)
- set:'ptienssn ptienssn=ptienssntmp
+ . set fixdob=$piece(fixdob,"-")_"-"_$tr($j($piece(fixdob,"-",2),2)," ","0")_"-"_$tr($j($piece(fixdob,"-",3),2)," ","0")
 "RTN","SAMIHL7",44,0)
- ;
+ . if $length($get(fields("sbdob"))),(fixdob=fields("sbdob")) set ptiendob=ptienssn
 "RTN","SAMIHL7",45,0)
- ;  if existing patient save existing data
+ . s newpat=0,ptien=ptienssn
 "RTN","SAMIHL7",46,0)
- new oldarr
+ ;
 "RTN","SAMIHL7",47,0)
- if ptien merge oldarr=@rootpl@(ptien)
+ ;
 "RTN","SAMIHL7",48,0)
- ;
+ set ^KBAP("SAMIHL7","UPDTPTL1","B")=""
 "RTN","SAMIHL7",49,0)
- ; If a new patient get the next ptien to use
+ ;
 "RTN","SAMIHL7",50,0)
- set:'$get(ptien) ptien=$order(@rootpl@(999999999),-1)+1,newpat=1
+ ; if there was no name match, restore ptienssn to the first ssn cross ref match 
 "RTN","SAMIHL7",51,0)
- ;
+ set:'ptienssn ptienssn=ptienssntmp
 "RTN","SAMIHL7",52,0)
- ; bail if for some reason we didn't get a next patient ien
-"RTN","SAMIHL7",53,0)
- quit:'ptien
-"RTN","SAMIHL7",54,0)
  ;
+"RTN","SAMIHL7",53,0)
+ ;  if existing patient save existing data
+"RTN","SAMIHL7",54,0)
+ new oldarr
 "RTN","SAMIHL7",55,0)
- ; Build MATCHLOG
+ if ptien merge oldarr=@rootpl@(ptien)
 "RTN","SAMIHL7",56,0)
- ;  If we are adding a new patient check whether we had a 
+ ;
 "RTN","SAMIHL7",57,0)
- ;   match for ssn or name on an existing patient (with
+ ;
 "RTN","SAMIHL7",58,0)
- ;   precedence to the ssn).  If so set MATCHLOG equal
+ set ^KBAP("SAMIHL7","UPDTPTL1","C")=""
 "RTN","SAMIHL7",59,0)
- ;   to the new patient ien and add the index to the
+ ;
 "RTN","SAMIHL7",60,0)
- ;   previously existing patient.
+ ; If a new patient get the next ptien to use and set dfn
 "RTN","SAMIHL7",61,0)
-MATCHLOG new newptien,var set newptien=""
+ if '$get(ptien) do
 "RTN","SAMIHL7",62,0)
- if newpat do
+ . set ptien=$order(@rootpl@(999999999),-1)+1
 "RTN","SAMIHL7",63,0)
- . set newptien=ptien ; ien of the new patient being added
+ . set fields("dfn")=ptien
 "RTN","SAMIHL7",64,0)
- .; if there were 1 or more existing entries with this ssn, set MATCHLOG
+ . set newpat=1
 "RTN","SAMIHL7",65,0)
- . if ptienssn do  quit
+ ;
 "RTN","SAMIHL7",66,0)
- .. new ssnien s ssnien=0
+ ;
 "RTN","SAMIHL7",67,0)
- .. for  s ssnien=$order(@rootpl@("ssn",$get(fields("ssn")),ssnien)) q:'ssnien  d
+ set ^KBAP("SAMIHL7","UPDTPTL1","D")=""
 "RTN","SAMIHL7",68,0)
- ... set @rootpl@(ssnien,"MATCHLOG")=newptien
+ ;
 "RTN","SAMIHL7",69,0)
- ... set @rootpl@("MATCHLOG",ssnien,newptien)=""
+ set ^KBAP("SAMIHL7","ptien","newpat")=$get(ptien)_"^"_$get(newpat)
 "RTN","SAMIHL7",70,0)
- ... U $P write !,"MATCHLOG ssn","--- ssnien=",ssnien,"--- newptien=",newptien
+ set ^KBAP("SAMIHL7","fields(dfn)")=$get(fields("dfn"))
 "RTN","SAMIHL7",71,0)
- .; if there were 1 or more existing entries with this patient name, set MATCHLOG
+ ;
 "RTN","SAMIHL7",72,0)
- . if ptiennm do
+ ; bail if for some reason we didn't get a next patient ien
 "RTN","SAMIHL7",73,0)
- .. new pnien s pnien=0
+ quit:'ptien
 "RTN","SAMIHL7",74,0)
- .. for  s pnien=$order(@rootpl@("name",$get(fields("saminame")),pnien)) q:'pnien  d
+ ;
 "RTN","SAMIHL7",75,0)
- ... set @rootpl@(pnien,"MATCHLOG")=newptien
+ merge ^KBAP("SAMIHL7","fields")=fields
 "RTN","SAMIHL7",76,0)
- ... set @rootpl@("MATCHLOG",pnien,newptien)=""
+ set ^KBAP("SAMIHL7","ptien")=$get(ptien)
 "RTN","SAMIHL7",77,0)
- ... U $P write !,"MATCHLOG name","---",pnien
+ ;
 "RTN","SAMIHL7",78,0)
  ;
 "RTN","SAMIHL7",79,0)
- ;
+ ; Build MATCHLOG
 "RTN","SAMIHL7",80,0)
- new field s field=""
+ ;  If we are adding a new patient check whether we had a 
 "RTN","SAMIHL7",81,0)
- ; run through every fields subscript and set the
+ ;   match for ssn or name on an existing patient (with
 "RTN","SAMIHL7",82,0)
- ;   appropriate subscript patient entry in patient-lookup
+ ;   precedence to the ssn).  If so set MATCHLOG equal
 "RTN","SAMIHL7",83,0)
- for  set field=$order(fields(field)) q:field=""  do
+ ;   to the new patient ien and add the index to the
 "RTN","SAMIHL7",84,0)
- .;
+ ;   previously existing patient.
 "RTN","SAMIHL7",85,0)
- .;new patient ====================================
+MATCHLOG new newptien,var set newptien=""
 "RTN","SAMIHL7",86,0)
- .; if new patient just set all patient-lookup field with
+ if newpat do
 "RTN","SAMIHL7",87,0)
- .; the data in field array
+ . set newptien=ptien ; ien of the new patient being added
 "RTN","SAMIHL7",88,0)
- . if newpat do
+ .;
 "RTN","SAMIHL7",89,0)
- .. set @rootpl@(ptien,field)=fields(field)
+ .; if there were 1 or more existing entries with this ssn, set MATCHLOG
 "RTN","SAMIHL7",90,0)
  .;
 "RTN","SAMIHL7",91,0)
- .;old patient ====================================
+ . if ptienssn do  quit
 "RTN","SAMIHL7",92,0)
- .; if not a new patient only store field results that are NOT null.
+ .. new ssnien s ssnien=0
 "RTN","SAMIHL7",93,0)
- .;   Never overwrite an existing patient's "dfn", rather store
+ .. for  s ssnien=$order(@rootpl@("ssn",$get(fields("ssn")),ssnien)) q:'ssnien  d
 "RTN","SAMIHL7",94,0)
- .;     the dfn just received in the remotedfn field
+ ... set @rootpl@(ssnien,"HL7MATCHLOG")=newptien
 "RTN","SAMIHL7",95,0)
- .;
+ ... set @rootpl@("HL7MATCHLOG",ssnien,newptien)=""
 "RTN","SAMIHL7",96,0)
- .;   With existing patients if the new data for a field doesn't match
+ ... U $P write !,"HL7MATCHLOG ssn","--- ssnien=",ssnien,"--- newptien=",newptien
 "RTN","SAMIHL7",97,0)
- .;     the pre-existing, save the pre-existing data in a changelog entry
+ .;
 "RTN","SAMIHL7",98,0)
- .;
+ .; if there were 1 or more existing entries with this patient name, set MATCHLOG
 "RTN","SAMIHL7",99,0)
- . if '$get(newpat),'(fields(field)="") do
+ .;
 "RTN","SAMIHL7",100,0)
- .. if field="dfn" quit
+ . if ptiennm do
 "RTN","SAMIHL7",101,0)
- ..;
+ .. new pnien s pnien=0
 "RTN","SAMIHL7",102,0)
- .. if '($get(@rootpl@(ptien,field))=fields(field)) do
+ .. for  s pnien=$order(@rootpl@("name",$get(fields("saminame")),pnien)) q:'pnien  d
 "RTN","SAMIHL7",103,0)
- ... set @rootpl@(ptien,"changelog",$$FMTE^XLFDT($$NOW^XLFDT,5),field)=fields(field)
+ ... set @rootpl@(pnien,"HL7MATCHLOG")=newptien
 "RTN","SAMIHL7",104,0)
- .. set @rootpl@(ptien,field)=fields(field)
+ ... set @rootpl@("HL7MATCHLOG",pnien,newptien)=""
 "RTN","SAMIHL7",105,0)
- .;
+ ... U $P write !,"HL7MATCHLOG name","---",pnien
 "RTN","SAMIHL7",106,0)
- .;indicies =========================================
+ ;
 "RTN","SAMIHL7",107,0)
- .;set all indicies for old and new patients for this field
+ ;
 "RTN","SAMIHL7",108,0)
- .; NOTE: we must kill any existing earlier idicies on previously
+ new field s field=""
 "RTN","SAMIHL7",109,0)
- .;       existing patients to prevent duplicate pointers
+ ; run through every fields subscript and set the
 "RTN","SAMIHL7",110,0)
- .;
+ ;   appropriate subscript patient entry in patient-lookup
 "RTN","SAMIHL7",111,0)
- . if fields(field)="" quit
+ for  set field=$order(fields(field)) q:field=""  do
 "RTN","SAMIHL7",112,0)
  .;
 "RTN","SAMIHL7",113,0)
- .; field=dfn =====================================
+ .;new patient ====================================
 "RTN","SAMIHL7",114,0)
- . if field="dfn" do
+ .; if new patient just set all patient-lookup field with
 "RTN","SAMIHL7",115,0)
- .. if newpat do
+ .; the data in field array
 "RTN","SAMIHL7",116,0)
- ... set @rootpl@("dfn",fields(field),ptien)=""
+ .;
 "RTN","SAMIHL7",117,0)
- ..;
+ . if newpat do
 "RTN","SAMIHL7",118,0)
- ..; As we have the patient's DFN from the VA server
+ .. set @rootpl@(ptien,field)=fields(field)
 "RTN","SAMIHL7",119,0)
- ..;  we can set the "remotedfn" field as well
+ .;
 "RTN","SAMIHL7",120,0)
- .. set @rootpl@(ptien,"remotedfn")=fields(field)
+ .;old patient ====================================
 "RTN","SAMIHL7",121,0)
- .. set @rootpl@("remotedfn",fields(field),ptien)=""
+ .; if not a new patient only store field results that are NOT null.
 "RTN","SAMIHL7",122,0)
- .;
+ .;   Never overwrite an existing patient's "dfn", rather store
 "RTN","SAMIHL7",123,0)
- .; field=icn =====================================
+ .;     the dfn just received in the remotedfn field
 "RTN","SAMIHL7",124,0)
- . if field="icn" do
+ .;
 "RTN","SAMIHL7",125,0)
- .. set @rootpl@("icn",fields(field),ptien)=""
+ .;   With existing patients if the new data for a field doesn't match
 "RTN","SAMIHL7",126,0)
- .;
+ .;     the pre-existing, save the pre-existing data in a changelog entry
 "RTN","SAMIHL7",127,0)
- .; field=last5 ===================================
+ .;
 "RTN","SAMIHL7",128,0)
- . if field="last5" do
+ . if '$get(newpat),'(fields(field)="") do
 "RTN","SAMIHL7",129,0)
- .. if '$get(newpat) do KILLREF(field,$get(oldarr(field)),ptien)
+ .. if field="dfn" quit
 "RTN","SAMIHL7",130,0)
- .. set @rootpl@("last5",fields(field),ptien)="" quit
+ ..;
 "RTN","SAMIHL7",131,0)
- .;
+ .. if '($get(@rootpl@(ptien,field))=fields(field)) do
 "RTN","SAMIHL7",132,0)
- .; field=saminame ================================
+ ... set @rootpl@(ptien,"hl7changelog",$$FMTE^XLFDT($$NOW^XLFDT,5),field)=fields(field)
 "RTN","SAMIHL7",133,0)
- . if field="saminame" do
+ .. set @rootpl@(ptien,field)=fields(field)
 "RTN","SAMIHL7",134,0)
- .. if '$get(newpat) do
+ .;
 "RTN","SAMIHL7",135,0)
- ... do KILLREF(field,$get(oldarr(field)),ptien)
+ .;indicies =========================================
 "RTN","SAMIHL7",136,0)
- ... do KILLREF("name",$get(oldarr("name")),ptien)
+ .;set all indicies for old and new patients for this field
 "RTN","SAMIHL7",137,0)
- ... do KILLREF("name",$$UP^XLFSTR($get(oldarr("name"))),ptien)
+ .; NOTE: we must kill any existing earlier idicies on previously
 "RTN","SAMIHL7",138,0)
- .. set @rootpl@("name",fields(field),ptien)=""
+ .;       existing patients to prevent duplicate pointers
 "RTN","SAMIHL7",139,0)
- .. set @rootpl@("name",$$UP^XLFSTR(fields(field)),ptien)=""
+ .;
 "RTN","SAMIHL7",140,0)
- .;
+ . if fields(field)="" quit
 "RTN","SAMIHL7",141,0)
- .; field=sinamef ==================================
-"RTN","SAMIHL7",142,0)
- . if field="sinamef" do
-"RTN","SAMIHL7",143,0)
- .. i '$get(newpat) do KILLREF(field,$get(oldarr(field)),ptien)
-"RTN","SAMIHL7",144,0)
- .. set @rootpl@(field,fields(field),ptien)=""
-"RTN","SAMIHL7",145,0)
  .;
+"RTN","SAMIHL7",142,0)
+ .; field=dfn =====================================
+"RTN","SAMIHL7",143,0)
+ . if field="dfn" do
+"RTN","SAMIHL7",144,0)
+ .. if newpat do
+"RTN","SAMIHL7",145,0)
+ ... set @rootpl@("dfn",fields(field),ptien)=""
 "RTN","SAMIHL7",146,0)
- .; field=sinamel ==================================
+ ..;
 "RTN","SAMIHL7",147,0)
- . if field="sinamel" do
+ .; As DID NOT get DFN from the VA server (only ssn)
 "RTN","SAMIHL7",148,0)
- .. if '$get(newpat) do KILLREF(field,$get(oldarr(field)),ptien)
+ .;  we cannot set the "remotedfn" field
 "RTN","SAMIHL7",149,0)
- .. set @rootpl@(field,fields(field),ptien)=""
+ . set @rootpl@(ptien,"remotedfn")=""
 "RTN","SAMIHL7",150,0)
  .;
 "RTN","SAMIHL7",151,0)
- .; field=ssn ======================================
+ .; field=icn =====================================
 "RTN","SAMIHL7",152,0)
- . if field="ssn" do
+ . if field="icn" do
 "RTN","SAMIHL7",153,0)
- .. if '$get(newpat) do KILLREF(field,$get(oldarr(field)),ptien)
+ .. set @rootpl@("icn",fields(field),ptien)=""
 "RTN","SAMIHL7",154,0)
- .. set @rootpl@(field,fields(field),ptien)=""
+ .;
 "RTN","SAMIHL7",155,0)
- ;
+ .; field=last5 ===================================
 "RTN","SAMIHL7",156,0)
- ;
+ . if field="last5" do
 "RTN","SAMIHL7",157,0)
- set @rootpl@("Date Last Updated")=$$HTE^XLFDT($horolog)
+ .. if '$get(newpat) do KILLREF(field,$get(oldarr(field)),ptien)
 "RTN","SAMIHL7",158,0)
- ;
+ .. set @rootpl@("last5",fields(field),ptien)="" quit
 "RTN","SAMIHL7",159,0)
- ; set so SAMIORM can use ptien to file HL7 messages
+ .;
 "RTN","SAMIHL7",160,0)
- set fields("ptien")=$get(ptien)
+ .; field=saminame ================================
 "RTN","SAMIHL7",161,0)
- merge ^KBAP("SAMIHL7","fields")=fields
+ . if field="saminame" do
 "RTN","SAMIHL7",162,0)
- ;
+ .. if '$get(newpat) do
 "RTN","SAMIHL7",163,0)
- quit
+ ... do KILLREF(field,$get(oldarr(field)),ptien)
 "RTN","SAMIHL7",164,0)
- ;
+ ... do KILLREF("name",$get(oldarr("name")),ptien)
 "RTN","SAMIHL7",165,0)
- ;
+ ... do KILLREF("name",$$UP^XLFSTR($get(oldarr("name"))),ptien)
 "RTN","SAMIHL7",166,0)
-KILLREF(field,oldrslt,ptien) ;
+ .. set @rootpl@("name",fields(field),ptien)=""
 "RTN","SAMIHL7",167,0)
- quit:($get(oldrslt)="")
+ .. set @rootpl@("name",$$UP^XLFSTR(fields(field)),ptien)=""
 "RTN","SAMIHL7",168,0)
- kill @rootpl@(field,oldrslt,ptien)
+ .;
 "RTN","SAMIHL7",169,0)
- quit
+ .; field=sinamef ==================================
 "RTN","SAMIHL7",170,0)
- ;
+ . if field="sinamef" do
 "RTN","SAMIHL7",171,0)
- ;
+ .. i '$get(newpat) do KILLREF(field,$get(oldarr(field)),ptien)
 "RTN","SAMIHL7",172,0)
- ;
+ .. set @rootpl@(field,fields(field),ptien)=""
 "RTN","SAMIHL7",173,0)
- ;@ppi
+ .;
 "RTN","SAMIHL7",174,0)
- ;@input
+ .; field=sinamel ==================================
 "RTN","SAMIHL7",175,0)
- ;  Expects all HL7 variables captured on message reception to
+ . if field="sinamel" do
 "RTN","SAMIHL7",176,0)
- ;   be in environment
+ .. if '$get(newpat) do KILLREF(field,$get(oldarr(field)),ptien)
 "RTN","SAMIHL7",177,0)
- ;@output
+ .. set @rootpl@(field,fields(field),ptien)=""
 "RTN","SAMIHL7",178,0)
- ;  Sends com ACK through appropriate link
+ .;
 "RTN","SAMIHL7",179,0)
-ACK ;Send a com ACK
+ .; field=ssn ======================================
 "RTN","SAMIHL7",180,0)
- I $D(HLA("HLA")) S HLP("NAMESPACE")="HL" D  quit
+ . if field="ssn" do
 "RTN","SAMIHL7",181,0)
- . D GENACK^HLMA1(HL("EID"),HLMTIENS,HL("EIDS"),"LM",1,.HLMTIENA,"",.HLP)
+ .. if '$get(newpat) do KILLREF(field,$get(oldarr(field)),ptien)
 "RTN","SAMIHL7",182,0)
- ;
+ .. set @rootpl@(field,fields(field),ptien)=""
 "RTN","SAMIHL7",183,0)
  ;
 "RTN","SAMIHL7",184,0)
+ ;
+"RTN","SAMIHL7",185,0)
+ set @rootpl@("Date Last Updated")=$$HTE^XLFDT($horolog)
+"RTN","SAMIHL7",186,0)
+ ;
+"RTN","SAMIHL7",187,0)
+ ; set so SAMIORM can use ptien to file HL7 messages
+"RTN","SAMIHL7",188,0)
+ set fields("ptien")=$get(ptien)
+"RTN","SAMIHL7",189,0)
+ merge ^KBAP("SAMIHL7","fields")=fields
+"RTN","SAMIHL7",190,0)
+ ;
+"RTN","SAMIHL7",191,0)
+ quit
+"RTN","SAMIHL7",192,0)
+ ;
+"RTN","SAMIHL7",193,0)
+ ;
+"RTN","SAMIHL7",194,0)
+KILLREF(field,oldrslt,ptien) ;
+"RTN","SAMIHL7",195,0)
+ quit:($get(oldrslt)="")
+"RTN","SAMIHL7",196,0)
+ kill @rootpl@(field,oldrslt,ptien)
+"RTN","SAMIHL7",197,0)
+ quit
+"RTN","SAMIHL7",198,0)
+ ;
+"RTN","SAMIHL7",199,0)
+ ;
+"RTN","SAMIHL7",200,0)
+ ;
+"RTN","SAMIHL7",201,0)
+ ;@ppi
+"RTN","SAMIHL7",202,0)
+ ;@input
+"RTN","SAMIHL7",203,0)
+ ;  Expects all HL7 variables captured on message reception to
+"RTN","SAMIHL7",204,0)
+ ;   be in environment
+"RTN","SAMIHL7",205,0)
+ ;@output
+"RTN","SAMIHL7",206,0)
+ ;  Sends com ACK through appropriate link
+"RTN","SAMIHL7",207,0)
+ACK ;Force a com ACK
+"RTN","SAMIHL7",208,0)
+ ;
+"RTN","SAMIHL7",209,0)
+ kill HLA("HLA")
+"RTN","SAMIHL7",210,0)
+ set HLA("HLA",1)="MSA"_HLREC("FS")_"CA"_HLREC("FS")_HLREC("MID")
+"RTN","SAMIHL7",211,0)
+ ;
+"RTN","SAMIHL7",212,0)
+ I $D(HLA("HLA")) S HLP("NAMESPACE")="HL" D  quit
+"RTN","SAMIHL7",213,0)
+ . merge ^KBAP("SAMIHL7","HLA")=HLA
+"RTN","SAMIHL7",214,0)
+ . D GENACK^HLMA1(HL("EID"),HLMTIENS,HL("EIDS"),"LM",1,.HLMTIENA,"",.HLP)
+"RTN","SAMIHL7",215,0)
+ ;
+"RTN","SAMIHL7",216,0)
+ ;
+"RTN","SAMIHL7",217,0)
 EOR ;End of routine SAMIHL7
 "RTN","SAMIORM")
-0^1^B37293899
+0^1^B47358865
 "RTN","SAMIORM",1,0)
-SAMIORM ;ven/arc/lgc - parse ORM to update  patient-lookup graph ;May 29, 2020@21:03
+SAMIORM ;ven/arc/lgc - parse ORM to update  patient-lookup graph ;Jun 02, 2020@18:35
 "RTN","SAMIORM",2,0)
- ;;18.0;SAMI;;;Build 1
+ ;;18.0;SAMI;;;Build 3
 "RTN","SAMIORM",3,0)
  ;
 "RTN","SAMIORM",4,0)
@@ -659,7 +725,7 @@ EN ; Primary entry point
 "RTN","SAMIORM",41,0)
  kill ^KBAP("SAMIORM")
 "RTN","SAMIORM",42,0)
- set ^KBAP("SAMIORM","EN")=$$HTFM^XLFDT($H)
+ set ^KBAP("SAMIORM","EN")=$$HTFM^XLFDT($H)_" TEST"
 "RTN","SAMIORM",43,0)
  ;
 "RTN","SAMIORM",44,0)
@@ -789,110 +855,158 @@ PARSEMSG(HLARR,fields) ; Pull patient data from ORM message
 "RTN","SAMIORM",106,0)
 PID(segment,fields) ;
 "RTN","SAMIORM",107,0)
- new name
+ new name,fname,lname,mname
 "RTN","SAMIORM",108,0)
- set fields("icn")=$piece(segment,INFS,3)
+ set fields("icn")=""
 "RTN","SAMIORM",109,0)
- set fields("dfn")=$piece($piece(segment,INFS,4),INCC)
+ set fields("ssn")=$piece($piece(segment,INFS,4),INCC)
 "RTN","SAMIORM",110,0)
  ;
 "RTN","SAMIORM",111,0)
  set name=$piece(segment,INFS,6)
 "RTN","SAMIORM",112,0)
- set name=$piece(name,INCC)_","_$piece(name,INCC,2)
+ set lname=$$CAMELCAS($piece(name,INCC,1))
 "RTN","SAMIORM",113,0)
- if $length($piece(segment,INFS,6),INCC)>2 do
+ set fname=$$CAMELCAS($piece(name,INCC,2))
 "RTN","SAMIORM",114,0)
- . set name=name_" "_$piece($piece(segment,INFS,6),INCC,3)
+ set mname=""
 "RTN","SAMIORM",115,0)
- set fields("saminame")=name
+ if $length($piece(segment,INFS,6),INCC)>2 do
 "RTN","SAMIORM",116,0)
- set fields("sinamef")=$piece(name,",",2)
+ . set mname=$$CAMELCAS($piece($piece(segment,INFS,6),INCC,3))
 "RTN","SAMIORM",117,0)
- set fields("sinamel")=$piece(name,",")
-"RTN","SAMIORM",118,0)
  ;
+"RTN","SAMIORM",118,0)
+ set name=lname_","_fname
 "RTN","SAMIORM",119,0)
- set fields("sbdob")=$piece(segment,INFS,8)
+ if $length(mname) do
 "RTN","SAMIORM",120,0)
- set fields("sex")=$piece(segment,INFS,9)
+ . set name=name_" "_mname
 "RTN","SAMIORM",121,0)
- set fields("address1")=$piece($piece(segment,INFS,12),INCC)
+ set fields("saminame")=name
 "RTN","SAMIORM",122,0)
- set fields("city")=$piece($piece(segment,INFS,12),INCC,3)
+ set fields("sinamef")=$piece(name,",",2)
 "RTN","SAMIORM",123,0)
- set fields("state")=$piece($piece(segment,INFS,12),INCC,4)
+ set fields("sinamel")=$piece(name,",")
 "RTN","SAMIORM",124,0)
- set fields("zip")=$piece($piece(segment,INFS,12),INCC,5)
+ ;
 "RTN","SAMIORM",125,0)
- set fields("phone")=$piece(segment,INFS,14)
+ if $length(fields("ssn")),$length(fields("saminame")) do
 "RTN","SAMIORM",126,0)
- set fields("ssn")=$piece(segment,INFS,20)
+ . set fields("last5")=$$UP^XLFSTR($extract(fields("saminame")))_$extract(fields("ssn"),6,9)
 "RTN","SAMIORM",127,0)
- quit
+ . set ^KBAP("SAMIORM","MadeLast5")=$get(fields("last5"))
 "RTN","SAMIORM",128,0)
  ;
 "RTN","SAMIORM",129,0)
-PV1(segment,fields) ;
+ ; convert HL7 date to mm/dd/yyyy
 "RTN","SAMIORM",130,0)
- set fields("ORMPV1patientclass")=$piece(segment,INFS,3)
+ new hl7dob,mnth,day,yr
 "RTN","SAMIORM",131,0)
- set fields("ORMPV1assignedlocation")=$piece(segment,INFS,4)
+ set hl7dob=$piece(segment,INFS,8)
 "RTN","SAMIORM",132,0)
- set fields("ORMPV1providerien")=$piece($piece(segment,INFS,9),INCC)
+ set mnth=+$e(hl7dob,5,6)
 "RTN","SAMIORM",133,0)
- set fields("ORMPV1providernm")=$tr($piece($piece(segment,INFS,9),INCC,2,4),"^",",")
+ set day=+$e(hl7dob,7,8)
 "RTN","SAMIORM",134,0)
- quit
+ set yr=$e(hl7dob,1,4)
 "RTN","SAMIORM",135,0)
- ;
+ if $get(hl7dob) do
 "RTN","SAMIORM",136,0)
-ORC(segment,fields) ;
+ . set fields("sbdob")=mnth_"/"_day_"/"_yr
 "RTN","SAMIORM",137,0)
- set fields("ORMORCordercontrol")=$piece(segment,INFS,2)
+ ;
 "RTN","SAMIORM",138,0)
- set fields("ORMORCordernumber")=$piece(segment,INFS,3)
+ set fields("sex")=$piece(segment,INFS,9)
 "RTN","SAMIORM",139,0)
- set fields("ORMORCorderstatus")=$piece(segment,INFS,6)
+ set fields("address1")=$piece($piece(segment,INFS,12),INCC)
 "RTN","SAMIORM",140,0)
- set fields("ORMORCtransactiondt")=$piece(segment,INFS,10)
+ set fields("city")=$piece($piece(segment,INFS,12),INCC,3)
 "RTN","SAMIORM",141,0)
- set fields("ORMORCordereffectivedt")=$piece(segment,INFS,16)
+ set fields("state")=$piece($piece(segment,INFS,12),INCC,4)
 "RTN","SAMIORM",142,0)
- quit
+ set fields("zip")=$piece($piece(segment,INFS,12),INCC,5)
 "RTN","SAMIORM",143,0)
- ;
+ set fields("phone")=$piece(segment,INFS,14)
 "RTN","SAMIORM",144,0)
-OBR(segment,fields) ;
+ ;set fields("ssn")=$piece(segment,INFS,20)
 "RTN","SAMIORM",145,0)
- set fields("ORMOBRorder")=$piece($piece(segment,INFS,5),INCC)
+ quit
 "RTN","SAMIORM",146,0)
- set fields("siteid")=$piece($piece($piece(segment,INFS,5),INCC),"_")
+ ;
 "RTN","SAMIORM",147,0)
- set fields("ORMOBRorder2")=$piece($piece(segment,INFS,5),INCC,2)
+PV1(segment,fields) ;
 "RTN","SAMIORM",148,0)
- quit
+ set fields("ORMPV1patientclass")=$piece(segment,INFS,3)
 "RTN","SAMIORM",149,0)
- ;
+ set fields("ORMPV1assignedlocation")=$piece(segment,INFS,4)
 "RTN","SAMIORM",150,0)
- ;
+ set fields("ORMPV1providerien")=$piece($piece(segment,INFS,9),INCC)
 "RTN","SAMIORM",151,0)
-TEST K HLARR
+ set fields("ORMPV1providernm")=$tr($piece($piece(segment,INFS,9),INCC,2,4),"^",",")
 "RTN","SAMIORM",152,0)
- set HLARR(1)="MSH|^~\&|MCAR-INST|VISTA|INST-MCAR|VAPALS|202005250950-0700||ORM^O01|9990000512|P|2.3|||||USA"
-"RTN","SAMIORM",153,0)
- set HLARR(2)="PID|1||000000199||ZZTESTPATIENT^JAN^^^^^L||19990101000000|F|||123 NOWHERE LANE^^PHOENIX^AZ^85012||||||||000000199|"
-"RTN","SAMIORM",154,0)
- set HLARR(3)="PV1||O|PHX-PULM RN LSS PHONE|||||244088^GARCIA^DANIEL^P"
-"RTN","SAMIORM",155,0)
- set HLARR(4)="ORC|NW|3200522142122|||NW||||20200522142122||||||20200522143000"
-"RTN","SAMIORM",156,0)
- set HLARR(5)="OBR||||LUNG^LUNG|"
-"RTN","SAMIORM",157,0)
  quit
-"RTN","SAMIORM",158,0)
+"RTN","SAMIORM",153,0)
  ;
+"RTN","SAMIORM",154,0)
+ORC(segment,fields) ;
+"RTN","SAMIORM",155,0)
+ set fields("ORMORCordercontrol")=$piece(segment,INFS,2)
+"RTN","SAMIORM",156,0)
+ set fields("ORMORCordernumber")=$piece(segment,INFS,3)
+"RTN","SAMIORM",157,0)
+ set fields("ORMORCorderstatus")=$piece(segment,INFS,6)
+"RTN","SAMIORM",158,0)
+ set fields("ORMORCtransactiondt")=$piece(segment,INFS,10)
 "RTN","SAMIORM",159,0)
+ set fields("ORMORCordereffectivedt")=$piece(segment,INFS,16)
+"RTN","SAMIORM",160,0)
+ quit
+"RTN","SAMIORM",161,0)
+ ;
+"RTN","SAMIORM",162,0)
+OBR(segment,fields) ;
+"RTN","SAMIORM",163,0)
+ set fields("ORMOBRorder")=$piece($piece(segment,INFS,5),INCC)
+"RTN","SAMIORM",164,0)
+ set fields("siteid")=$piece($piece($piece(segment,INFS,5),INCC),"_")
+"RTN","SAMIORM",165,0)
+ set fields("ORMOBRorder2")=$piece($piece(segment,INFS,5),INCC,2)
+"RTN","SAMIORM",166,0)
+ quit
+"RTN","SAMIORM",167,0)
+ ;
+"RTN","SAMIORM",168,0)
+ ;
+"RTN","SAMIORM",169,0)
+CAMELCAS(str) ;
+"RTN","SAMIORM",170,0)
+ if $get(str)="" quit str
+"RTN","SAMIORM",171,0)
+ set str=$$LOW^XLFSTR(str)
+"RTN","SAMIORM",172,0)
+ set str=$$UP^XLFSTR($extract(str,1))_$extract(str,2,$length(str))
+"RTN","SAMIORM",173,0)
+ quit str
+"RTN","SAMIORM",174,0)
+ ;
+"RTN","SAMIORM",175,0)
+TEST K HLARR
+"RTN","SAMIORM",176,0)
+ set HLARR(1)="MSH|^~\&|MCAR-INST|VISTA|INST-MCAR|VAPALS|202005250950-0700||ORM^O01|9990000512|P|2.3|||||USA"
+"RTN","SAMIORM",177,0)
+ set HLARR(2)="PID|1||000000199||ZZTESTPATIENT^JAN^^^^^L||19990101000000|F|||123 NOWHERE LANE^^PHOENIX^AZ^85012||||||||000000199|"
+"RTN","SAMIORM",178,0)
+ set HLARR(3)="PV1||O|PHX-PULM RN LSS PHONE|||||244088^GARCIA^DANIEL^P"
+"RTN","SAMIORM",179,0)
+ set HLARR(4)="ORC|NW|3200522142122|||NW||||20200522142122||||||20200522143000"
+"RTN","SAMIORM",180,0)
+ set HLARR(5)="OBR||||LUNG^LUNG|"
+"RTN","SAMIORM",181,0)
+ quit
+"RTN","SAMIORM",182,0)
+ ;
+"RTN","SAMIORM",183,0)
 EOR ; End of routine SAMIORM
 "VER")
 8.0^22.2

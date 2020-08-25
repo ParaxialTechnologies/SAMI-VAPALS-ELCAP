@@ -1,4 +1,4 @@
-KIDS Distribution saved on Aug 24, 2020@21:47:03
+KIDS Distribution saved on Aug 24, 2020@22:05:56
 utility to change patient site
 **KIDS**:SAMI*18.0*7^
 
@@ -13,7 +13,7 @@ EXTRACT FORM DATA TO CSV FILES
 "BLD",11502,4,0)
 ^9.64PA^^
 "BLD",11502,6.3)
-3
+4
 "BLD",11502,"KRN",0)
 ^9.67PA^779.2^20
 "BLD",11502,"KRN",.4,0)
@@ -37,14 +37,18 @@ EXTRACT FORM DATA TO CSV FILES
 "BLD",11502,"KRN",9.8,0)
 9.8
 "BLD",11502,"KRN",9.8,"NM",0)
-^9.68A^2^2
+^9.68A^3^3
 "BLD",11502,"KRN",9.8,"NM",1,0)
 SAMICSV^^0^B10631858
 "BLD",11502,"KRN",9.8,"NM",2,0)
 SAMIMOV^^0^B14271873
+"BLD",11502,"KRN",9.8,"NM",3,0)
+SAMIPTLK^^0^B11168340
 "BLD",11502,"KRN",9.8,"NM","B","SAMICSV",1)
 
 "BLD",11502,"KRN",9.8,"NM","B","SAMIMOV",2)
+
+"BLD",11502,"KRN",9.8,"NM","B","SAMIPTLK",3)
 
 "BLD",11502,"KRN",19,0)
 19
@@ -219,13 +223,13 @@ NO
 "QUES","XPZ2","M")
 D XPZ2^XPDIQ
 "RTN")
-2
+3
 "RTN","SAMICSV")
 0^1^B10631858
 "RTN","SAMICSV",1,0)
 SAMICSV ;ven/gpl - VAPALS CSV EXPORT ; 8/15/20 4:48pm
 "RTN","SAMICSV",2,0)
- ;;18.0;SAMI;;;Build 3
+ ;;18.0;SAMI;;;Build 4
 "RTN","SAMICSV",3,0)
  ;
 "RTN","SAMICSV",4,0)
@@ -435,7 +439,7 @@ DDICT(RTN,FORM) ; data dictionary for FORM, returned in RTN, passed by
 "RTN","SAMIMOV",1,0)
 SAMIMOV ;ven/gpl - VAPALS CHANGE PATIENT SITE ; 8/15/20 4:48pm
 "RTN","SAMIMOV",2,0)
- ;;18.0;SAMI;;;Build 3
+ ;;18.0;SAMI;;;Build 4
 "RTN","SAMIMOV",3,0)
  ;
 "RTN","SAMIMOV",4,0)
@@ -680,6 +684,194 @@ PICSITE()
  ;
 "RTN","SAMIMOV",124,0)
  
+"RTN","SAMIPTLK")
+0^3^B11168340
+"RTN","SAMIPTLK",1,0)
+SAMIPTLK ;ven/gpl - SAMI patient lookup routines ;Dec 17, 2019@09:44
+"RTN","SAMIPTLK",2,0)
+ ;;18.0;SAMI;;;Build 4
+"RTN","SAMIPTLK",3,0)
+ ;
+"RTN","SAMIPTLK",4,0)
+ ;@license: see routine SAMIUL
+"RTN","SAMIPTLK",5,0)
+ ;
+"RTN","SAMIPTLK",6,0)
+ ; Authored by George P. Lilly 2018
+"RTN","SAMIPTLK",7,0)
+ ;
+"RTN","SAMIPTLK",8,0)
+ Q
+"RTN","SAMIPTLK",9,0)
+WSPTLOOK(rtn,filter) ; patient lookup - calls HMPPTRPC
+"RTN","SAMIPTLK",10,0)
+ ;
+"RTN","SAMIPTLK",11,0)
+ n search s search=$g(filter("search"))
+"RTN","SAMIPTLK",12,0)
+ n rslt
+"RTN","SAMIPTLK",13,0)
+ d SELECT^HMPPTRPC(.rslt,"NAME",search)
+"RTN","SAMIPTLK",14,0)
+ i $d(rslt) d  ;
+"RTN","SAMIPTLK",15,0)
+ . D ENCODE^VPRJSON("rslt","rtn")
+"RTN","SAMIPTLK",16,0)
+ q
+"RTN","SAMIPTLK",17,0)
+ ;
+"RTN","SAMIPTLK",18,0)
+WSPTLKUP(rtn,filter) ; patient lookup from patient-lookup cache
+"RTN","SAMIPTLK",19,0)
+ ;
+"RTN","SAMIPTLK",20,0)
+ n root s root=$$setroot^%wd("patient-lookup")
+"RTN","SAMIPTLK",21,0)
+ n search s search=$g(filter("search"))
+"RTN","SAMIPTLK",22,0)
+ n limit s limit=$g(filter("limit"))
+"RTN","SAMIPTLK",23,0)
+ n site s site=$g(filter("site"))
+"RTN","SAMIPTLK",24,0)
+ ;m ^gpl("ptlkup")=filter ;
+"RTN","SAMIPTLK",25,0)
+ q:site=""
+"RTN","SAMIPTLK",26,0)
+ i limit="" s limit=1000
+"RTN","SAMIPTLK",27,0)
+ s search=$$UPCASE^XLFMSMT(search)
+"RTN","SAMIPTLK",28,0)
+ n rslt
+"RTN","SAMIPTLK",29,0)
+ n cnt s cnt=0
+"RTN","SAMIPTLK",30,0)
+ n gn s gn=$na(@root@("name"))
+"RTN","SAMIPTLK",31,0)
+ n p1,p2
+"RTN","SAMIPTLK",32,0)
+ s p1=$p(search,",",1)
+"RTN","SAMIPTLK",33,0)
+ s p2=$p(search,",",2)
+"RTN","SAMIPTLK",34,0)
+ i $l(search)=5 i +$e(search,2,5)>0 d  q  ; using last5
+"RTN","SAMIPTLK",35,0)
+ . n gn2 s gn2=$na(@root@("last5"))
+"RTN","SAMIPTLK",36,0)
+ . n ii s ii=""
+"RTN","SAMIPTLK",37,0)
+ . f  s ii=$o(@gn2@(search,ii)) q:ii=""  q:cnt=limit  d  ;
+"RTN","SAMIPTLK",38,0)
+ . . i $g(@root@(ii,"siteid"))'=site q
+"RTN","SAMIPTLK",39,0)
+ . . s cnt=cnt+1
+"RTN","SAMIPTLK",40,0)
+ . . s rslt(cnt,ii)=""
+"RTN","SAMIPTLK",41,0)
+ . i cnt>0 d  ;
+"RTN","SAMIPTLK",42,0)
+ . . d BUILDRTN(.rtn,.rslt,$g(filter("format")))
+"RTN","SAMIPTLK",43,0)
+ ; 
+"RTN","SAMIPTLK",44,0)
+ n have s have=""
+"RTN","SAMIPTLK",45,0)
+ n q1 s q1=$na(@gn@(p1))
+"RTN","SAMIPTLK",46,0)
+ n q1x s q1x=$e(q1,1,$l(q1)-2) ; removes the ")
+"RTN","SAMIPTLK",47,0)
+ n qx s qx=q1
+"RTN","SAMIPTLK",48,0)
+ f  s qx=$q(@qx) q:$p(qx,q1x,2)=""  q:cnt=limit  d  ;
+"RTN","SAMIPTLK",49,0)
+ . n exit s exit=0
+"RTN","SAMIPTLK",50,0)
+ . i p2'="" d  ;
+"RTN","SAMIPTLK",51,0)
+ . . i p2'=$e($p(qx,",",5),1,$l(p2)) s exit=1
+"RTN","SAMIPTLK",52,0)
+ . q:exit
+"RTN","SAMIPTLK",53,0)
+ . n qx2 s qx2=+$p(qx,",",6)
+"RTN","SAMIPTLK",54,0)
+ . i $g(@root@(qx2,"siteid"))'=site q  ;
+"RTN","SAMIPTLK",55,0)
+ . i $d(have(qx2)) q  ; already go this one
+"RTN","SAMIPTLK",56,0)
+ . s cnt=cnt+1
+"RTN","SAMIPTLK",57,0)
+ . s have(qx2)=""
+"RTN","SAMIPTLK",58,0)
+ . s rslt(cnt,qx2)="" ; the ien
+"RTN","SAMIPTLK",59,0)
+ . ;w !,qx," ien=",$o(rslt(cnt,""))
+"RTN","SAMIPTLK",60,0)
+ i cnt>0 d BUILDRTN(.rtn,.rslt,$g(filter("format")))
+"RTN","SAMIPTLK",61,0)
+ q
+"RTN","SAMIPTLK",62,0)
+ ;
+"RTN","SAMIPTLK",63,0)
+BUILDRTN(rtn,ary,format) ; build the return json unless format=array
+"RTN","SAMIPTLK",64,0)
+ ; then return a mumps array
+"RTN","SAMIPTLK",65,0)
+ ;
+"RTN","SAMIPTLK",66,0)
+ ;d ^ZTER
+"RTN","SAMIPTLK",67,0)
+ n root s root=$$setroot^%wd("patient-lookup")
+"RTN","SAMIPTLK",68,0)
+ n groot s groot=$$setroot^%wd("vapals-patients")
+"RTN","SAMIPTLK",69,0)
+ n zi s zi=""
+"RTN","SAMIPTLK",70,0)
+ n r1 s r1=""
+"RTN","SAMIPTLK",71,0)
+ f  s zi=$o(ary(zi)) q:zi=""  d  ;
+"RTN","SAMIPTLK",72,0)
+ . n rx s rx=$o(ary(zi,""))
+"RTN","SAMIPTLK",73,0)
+ . s r1("result",zi,"name")=$g(@root@(rx,"saminame"))
+"RTN","SAMIPTLK",74,0)
+ . s r1("result",zi,"dfn")=$g(@root@(rx,"dfn"))
+"RTN","SAMIPTLK",75,0)
+ . s r1("result",zi,"last5")=$g(@root@(rx,"last5"))
+"RTN","SAMIPTLK",76,0)
+ . s r1("result",zi,"gender")=$g(@root@(rx,"gender"))
+"RTN","SAMIPTLK",77,0)
+ . s r1("result",zi,"dob")=$g(@root@(rx,"sbdob"))
+"RTN","SAMIPTLK",78,0)
+ . s r1("result",zi,"vapals")=0
+"RTN","SAMIPTLK",79,0)
+ . n dfn s dfn=$g(@root@(rx,"dfn"))
+"RTN","SAMIPTLK",80,0)
+ . i $o(@groot@("dfn",dfn,""))'="" d  ;
+"RTN","SAMIPTLK",81,0)
+ . . s r1("result",zi,"vapals")=1
+"RTN","SAMIPTLK",82,0)
+ . . s r1("result",zi,"studyid")=$g(@groot@(dfn,"samistudyid"))
+"RTN","SAMIPTLK",83,0)
+ ;.;
+"RTN","SAMIPTLK",84,0)
+ ;.; ven/lgc 2019-12-17 missing forms
+"RTN","SAMIPTLK",85,0)
+ ;.;
+"RTN","SAMIPTLK",86,0)
+ ;. i '($data(@groot@("graph",@groot@(dfn,"samistudyid")))) d  ;
+"RTN","SAMIPTLK",87,0)
+ ;. . s r1("result",zi,"vapals")=0
+"RTN","SAMIPTLK",88,0)
+ ;
+"RTN","SAMIPTLK",89,0)
+ ;q:'$d(r1)
+"RTN","SAMIPTLK",90,0)
+ i format="array" m rtn=r1 q  ; return a mumps array
+"RTN","SAMIPTLK",91,0)
+ d ENCODE^VPRJSON("r1","rtn")
+"RTN","SAMIPTLK",92,0)
+ q
+"RTN","SAMIPTLK",93,0)
+ ;
 "VER")
 8.0^22.2
 **END**

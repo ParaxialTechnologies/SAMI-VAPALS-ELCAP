@@ -1,5 +1,5 @@
 SAMIPTLK ;ven/gpl - SAMI patient lookup routines ;Dec 17, 2019@09:44
- ;;18.0;SAMI;;
+ ;;18.0;SAMI;;;Build 11
  ;
  ;@license: see routine SAMIUL
  ;
@@ -39,7 +39,7 @@ WSPTLKUP(rtn,filter) ; patient lookup from patient-lookup cache
  . . s cnt=cnt+1
  . . s rslt(cnt,ii)=""
  . i cnt>0 d  ;
- . . d BUILDRTN(.rtn,.rslt)
+ . . d BUILDRTN(.rtn,.rslt,$g(filter("format")))
  ; 
  n have s have=""
  n q1 s q1=$na(@gn@(p1))
@@ -57,10 +57,11 @@ WSPTLKUP(rtn,filter) ; patient lookup from patient-lookup cache
  . s have(qx2)=""
  . s rslt(cnt,qx2)="" ; the ien
  . ;w !,qx," ien=",$o(rslt(cnt,""))
- i cnt>0 d BUILDRTN(.rtn,.rslt)
+ i cnt>0 d BUILDRTN(.rtn,.rslt,$g(filter("format")))
  q
  ;
-BUILDRTN(rtn,ary) ; build the return json
+BUILDRTN(rtn,ary,format) ; build the return json unless format=array
+ ; then return a mumps array
  ;
  ;d ^ZTER
  n root s root=$$setroot^%wd("patient-lookup")
@@ -86,6 +87,7 @@ BUILDRTN(rtn,ary) ; build the return json
  ;. . s r1("result",zi,"vapals")=0
  ;
  ;q:'$d(r1)
+ i format="array" m rtn=r1 q  ; return a mumps array
  d ENCODE^VPRJSON("r1","rtn")
  q
  ;

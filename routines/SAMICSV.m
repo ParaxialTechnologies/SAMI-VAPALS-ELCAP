@@ -1,5 +1,5 @@
 SAMICSV ;ven/gpl - VAPALS CSV EXPORT ; 8/15/20 4:48pm
- ;;18.0;SAMI;;
+ ;;18.0;SAMI;;;Build 2
  ;
  ;@license: see routine SAMIUL
  ;
@@ -46,8 +46,22 @@ ONEFORM(SITEID,SAMIFORM,SAMIDIR) ; process one form for a site
  ;
  N SAMIN S SAMIN=1
  N SAMIJJ s SAMIJJ=0
+ N OFFSET S OFFSET=0
+ I SAMIFORM="siform" d  ;
+ . S OFFSET=OFFSET+1
+ . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="saminame"
+ . S OFFSET=OFFSET+1
+ . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="ssn"
+ . S OFFSET=OFFSET+1
+ . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="last5"
+ . S OFFSET=OFFSET+1
+ . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="sex"
+ . S OFFSET=OFFSET+1
+ . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="sbdob"
+ . S OFFSET=OFFSET+1
+ . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="samiru"
  f  s SAMIJJ=$o(DICT(SAMIJJ)) q:+SAMIJJ=0  d  ;
- . s $p(@SAMIOUT@(SAMIN),"|",SAMIJJ)=DICT(SAMIJJ) ; csv header
+ . s $p(@SAMIOUT@(SAMIN),"|",SAMIJJ+OFFSET)=DICT(SAMIJJ) ; csv header
  s @SAMIOUT@(SAMIN)="siteid|samistudyid|form|"_@SAMIOUT@(SAMIN)
  ;S @SAMIOUT@(SAMIN)=@SAMIOUT@(SAMIN)_$C(13,10) ; carriage return line feed
  ; 
@@ -61,8 +75,24 @@ ONEFORM(SITEID,SAMIFORM,SAMIDIR) ; process one form for a site
  . . s forms=forms+1
  . . n jj s jj=0
  . . s SAMIN=SAMIN+1
+ . . S OFFSET=0
+ . . I SAMIFORM="siform" d  ;
+ . . . n kk s kk=$o(@root@("sid",SAMII,""))
+ . . . q:kk=""
+ . . . S OFFSET=OFFSET+1
+ . . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"saminame"))
+ . . . S OFFSET=OFFSET+1
+ . . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"ssn"))
+ . . . S OFFSET=OFFSET+1
+ . . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"last5"))
+ . . . S OFFSET=OFFSET+1
+ . . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"sex"))
+ . . . S OFFSET=OFFSET+1
+ . . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"sbdob"))
+ . . . S OFFSET=OFFSET+1
+ . . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"samiru"))
  . . f  s jj=$o(DICT(jj)) q:+jj=0  d  ;
- . . . s $P(@SAMIOUT@(SAMIN),"|",jj)=$g(@groot@(SAMII,SAMIJ,DICT(jj)))
+ . . . s $P(@SAMIOUT@(SAMIN),"|",OFFSET+jj)=$g(@groot@(SAMII,SAMIJ,DICT(jj)))
  . . S @SAMIOUT@(SAMIN)=SITEID_"|"_SAMII_"|"_SAMIJ_"|"_@SAMIOUT@(SAMIN)
  . . ;s @SAMIOUT@(SAMIN)=@SAMIOUT@(SAMIN)_$C(13,10)
  . ;b
@@ -98,7 +128,7 @@ DDICT(RTN,FORM) ; data dictionary for FORM, returned in RTN, passed by
  ;^%wd(17.040801,"B","form fields - intake",491)=""
  ;^%wd(17.040801,"B","form fields - intervention",442)=""
  ;^%wd(17.040801,"B","form fields - pet evaluation",443)=""
-
  
-
+ 
+ 
  

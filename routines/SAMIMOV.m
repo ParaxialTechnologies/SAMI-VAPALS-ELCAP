@@ -43,7 +43,10 @@ MOV(PAT,FROM,TO) ; change patient PAT from site FROM to site TO
  . w !,"Error, from site not valid for patient"
  ;
  n pien s pien=$o(@root@("dfn",dfn,""))
- q:pien=""
+ i pien="" d  q  ;
+ . w !,"Patient has no forms"
+ . s @lroot@(lien,"siteid")=TO
+ . w !,"Change successful"
  ;
  n oldsid s oldsid=$g(@root@(pien,"studyid"))
  i oldsid="" s oldsid=$g(@root@(pien,"samistudyid"))
@@ -66,6 +69,7 @@ MOV(PAT,FROM,TO) ; change patient PAT from site FROM to site TO
  m @root@("graph",newsid)=@root@("graph",oldsid)
  d SETSID(newsid) ;propogate the new sid to all forms
  k @root@("graph",oldsid)
+ w !,"Change successful"
  ;
  q
  ;
@@ -121,4 +125,45 @@ PICSITE()
  S SITEID=$$SITEID^SAMISITE(SITENUM)
  Q SITEID
  ;
-
+AUDIT() ;
+ ;
+ n proot s proot=$$setroot^%wd("vapals-patients")
+ n lroot s lroot=$$setroot^%wd("patient-lookup")
+ n rpt s rpt=$na(^TMP("SAMIAUDIT",$J))
+ k @rpt
+ d outaudit(rpt,"NAME  lien  dfn site  PNAME  pien  pdfn sid")
+ n ln,lname,lien,pname,pien,ldfn,pdfn,site,sid
+ s (ln,lname,lien,site,pname,pien,ldfn,pdfn,sid)=""
+ n zi s zi=0
+ f  s zi=$o(@lroot@(zi)) q:+zi=0  d  ;
+ . s lien=zi
+ . s site=$g(@lroot@(zi,"siteid"))
+ . s lname=$g(@lroot@(zi,"saminame"))
+ . s ldfn=$g(@lroot@(zi,"dfn"))
+ . i $o(@lroot@("dfn",ldfn,""))'=lien d  ;
+ . . w !,"error in dfn index dfn="_ldfn_" lien="_lien
+ . s pien=$o(@proot@("dfn",ldfn,""))
+ . i +pien'=0 d  ;
+ . . s pname=$g(@proot@(pien,"saminame"))
+ . . s pdfn=$g(@proot@(pien,"dfn"))
+ . . s sid=$g(@proot@(pien,"samistudyid"))
+ . s ln=ln_$e(lname,1,20)_"  "
+ . s ln=ln_$J(lien,5)
+ . s ln=ln_$j(ldfn,8)
+ . s ln=ln_" "_site_" "
+ . s ln=ln_"   "_$e(pname,1,20)
+ . s ln=ln_$j(pien,5)
+ . i pien="" s ln=ln_"Not Enrolled"
+ . s ln=ln_$j(pdfn,8)
+ . s ln=ln_" "_sid
+ . d outaudit(rpt,ln)
+ . s (ln,lname,lien,site,pname,pien,ldfn,pdfn,sid)=""
+ D BROWSE^DDBR(rpt,"N","audit")
+ ;
+ q
+ ;
+outaudit(rpt,ln) ;
+ s @rpt@($o(@rpt@(" "),-1)+1)=$g(ln)
+ ;w !,ln
+ q
+ ;

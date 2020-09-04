@@ -1,4 +1,4 @@
-SAMIORU ;ven/lgc/arc - SEND ORU ENROLLMENT RESPONSE ;Jul 28, 2020@18:52
+SAMIORU ;ven/lgc/arc - SEND ORU ENROLLMENT RESPONSE ;Aug 17, 2020@07:29
  ;;18.0;SAMI;;;Build 1
  ;
  ;NOTE: We will only be sending ORU messages out for patients
@@ -9,14 +9,27 @@ SAMIORU ;ven/lgc/arc - SEND ORU ENROLLMENT RESPONSE ;Jul 28, 2020@18:52
  ;
  quit  ;  no entry from top
  ;
+TESTALL kill filter
+ kill OUTHL
+ ;set filter("sendprotocol")="PHX ENROLL ORU EVN"
+ set filter("sid")="PHO00015"
+ set filter("key")="siform-2020-07-30"
+ ;set filter("sid")="SEA00014"
+ ;set filter("key")="siform-2020-06-03"
+ set filter("notenmbr")=2
+ ;set filter("climit")=66
+ do EN^SAMIORU(.filter)
+ ;set poopoo=$$EN^SAMIORU(.filter)
+ quit
+ ;
  ;
 EN(filter) ; Build and send ORU enrollment response
  ;@input
  ;   filter   =  array by reference
  ;               [filter("sendprotocol")] defaults to Phoenix
- ;               filter("sid")=sid (e.g.XXX00034)
- ;               filter("key")=sid (e.g. "siform-2019-03-05")
- ;               [filter("notenmbr")=note number]
+ ;               filter("sid")=sid (e.g.PHO00015)
+ ;               filter("key")=sid (e.g. "siform-2020-07-30")
+ ;               [filter("notenmbr")= e.g. 2 ]
  ;                     number of note in vapals-patients graph
  ;               [filter("climit")] defaults to 66
  ;                     limit to number of characters per line
@@ -36,26 +49,35 @@ EN(filter) ; Build and send ORU enrollment response
  set (rootpl,filter("rootpl"))=$$setroot^%wd("patient-lookup")
  set (rootvp,filter("rootvp"))=$$setroot^%wd("vapals-patients")
  ;
- set sid=$get(filter("sid")) if sid="" do  quit:$Q filter("rslt")  quit 
- . set filter("rlst")="no sid provided"
+ set sid=$get(filter("sid")) if sid="" do  quit:$Q filter("rslt")  quit
+ . set filter("rlst")="0^no sid provided"
  set key=$get(filter("key")) if key="" do  quit:$Q filter("rslt")  quit
- . set filter("rslt")="no key provided"
+ . set filter("rslt")="0^no key provided"
  set SNDPROT=$get(filter("sendprotocol")) if SNDPROT="" do
- . set filter("sendprotocol")="PHX ENROLL ORM EVN"
+ . set (SNDPROT,filter("sendprotocol"))="PHX ENROLL ORU EVN"
  set climit=$get(filter("climit")) if +$get(climit)=0 do
  . set climit=66
  set filter("Cache")=($zversion["Cache")
  set notenmbr=+$get(filter("notenmbr"))
- if $get(filter("Cache")),notenmbr=0 do  quit:$Q filter("rslt")  quit
- . set filter("rslt")="Cache requires note number"
+ if notenmbr=0 do  quit:$Q filter("rslt")  quit
+ . set filter("rslt")="0^no note number provided"
  ;
 DFN ; find vpien and plien
  new dfn,vpien,plien
- set (dfn,filter("vpien"),filter("dfn"))=@rootvp@("graph",sid,key,"dfn")
+ set (dfn,vpien,filter("vpien"),filter("dfn"))=@rootvp@("graph",sid,key,"dfn")
  set (plien,filter("plien"))=$order(@rootpl@("dfn",vpien,0))
  ;
+ ; Pull data from entry in patient-lookup graph
+ merge filter=@rootpl@(plien)
+ ; Return error if no ORM found
+ if '$data(filter("ORM")) do  quit:$Q filter("rslt")  quit
+ .  set filter("rslt")="0^Patient does not have previous ORM"
+ ;
+ kill filter("ORM")
+ do ORMVARS^SAMIORU(plien,.filter)
+ ;
  ;Pull HL7 vars and escape sequences for building a message
-HL7VARS new HL,HLA,HLECH,HLQ,OUTHL,HLFS,HLCC,HLECH
+HL7VARS new HL,HLA,HLECH,HLQ,OUTHL,HLFS,HLCC
  D HLENV(SNDPROT)
  ;
  ;   BUILD ; build segements in OUTHL
@@ -64,19 +86,23 @@ HL7VARS new HL,HLA,HLECH,HLQ,OUTHL,HLFS,HLCC,HLECH
  D OBX(HLFS,HLCC,.filter,.OUTHL)
  ;
  new msgid
- set (filter("rslt"),msgid)=$$SENDHL7(.OUTHL)
+ set (filter("rslt"),msgid)=$$SENDHL7(SNDPROT,.OUTHL)
  ;
- quit:$Q $get(filter("rslt"))=msgid  quit
+ ; if a message id is returned, preface it with 1^
+ set:+$get(filter("rslt")) filter("rslt")=1_"^"_filter("rslt")
+ ;
+ quit:$Q $get(filter("rslt"))  quit
  ;
  ;
  ;
 PID(HLFS,HLCC,filter,OUTHL) ;
+ ;
  new vpien,plien,rootvp,rootpl,pid,name,address1,address2,address3
  new ssn,sex,city,state,zip,str,fulladdress,dob
  set rootpl=$get(filter("rootpl"))
  set plien=$get(filter("plien"))
  set outcnt=$order(OUTHL("A"),-1)
-PID2 set $piece(pid,HLFS,2)=1
+PID1 set $piece(pid,HLFS,1)=1
  ;
 PID3 set ssn=$get(@rootpl@(plien,"ssn"))
  set $piece(pid,HLFS,3)=$get(ssn)
@@ -86,14 +112,14 @@ PID5 set name=$get(@rootpl@(plien,"saminame"))
  set $piece(name,HLCC,7)="L"
  set $piece(pid,HLFS,5)=$get(name)
  ;
-PID7 set dob=$get(@rootpl@(plien,"dob"))
+PID7 set dob=$get(filter("sbdob"))
  set $piece(pid,HLFS,7)=$get(dob)
  ;
-PID8 set sex=$get(@rootpl@(plien,"sex"))
+PID8 set sex=$get(filter("sex"))
  set $piece(pid,HLFS,8)=$get(sex)
  ;
 PID11 set fulladdress=$get(filter("fulladdress"))
- set $piece(pid,HLFS,8)=$get(fulladdress)
+ set $piece(pid,HLFS,11)=$get(fulladdress)
  ;
 PID18 set $piece(pid,HLFS,13)=""
  ;
@@ -133,13 +159,14 @@ OBR25 set $piece(obr,HLFS,25)="F" ; final
  ;
 OBX(HLFS,HLCC,filter,OUTHL) ; Build text of note from vapals-patients nodes
  new outcnt,rootvp,rootpl,segment,sid,key,notenumber,str
- new ssn,dfn,plien,name,sex,line1,line2
+ new ssn,dfn,plien,name,sex,line1,line2,climit
  set sid=$get(filter("sid"))
  set key=$get(filter("key"))
  set rootvp=$get(filter("rootvp"))
  set rootpl=$get(filter("rootpl"))
  set plien=$get(filter("plien"))
  set notenmbr=$get(filter("notenmbr"))
+ set climit=$get(filter("climit"))
  ; build string used in each ORU OBX node
  set str="TX"_HLFS_HLFS_"I1"_HLCC_"Intake Note"
  ;
@@ -156,16 +183,15 @@ OBX(HLFS,HLCC,filter,OUTHL) ; Build text of note from vapals-patients nodes
  new node,snode,vpcnt,cnt
  ;
  ; *** in vapalsyotta
- if '($get(filter("Cache"))) do 
- . set node=$na(@rootvp@("graph",sid,key,"note"))
+ ;if '($get(filter("Cache"))) do
+ ;. set node=$na(@rootvp@("graph",sid,key,"note"))
  ; *** in Cache
- if $get(filter("Cache")) do
- . set node=$na(@rootvp@("graph",sid,key,"notes",notenmbr,"text"))
+ ;if $get(filter("Cache")) do
+ set node=$na(@rootvp@("graph",sid,key,"notes",notenmbr,"text"))
  ;
  set snode=$piece(node,")")
  ;
  set cnt=2
- set node=$na(@rootvp@("graph",sid,key,"note")),snode=$piece(node,")")
  for  set node=$Q(@node) quit:node'[snode  do
  .; if the text in this node is less than our character limit
  .;   then build an OBX segment
@@ -174,10 +200,10 @@ OBX(HLFS,HLCC,filter,OUTHL) ; Build text of note from vapals-patients nodes
  .. set cnt=$get(cnt)+1
  .. set segment="OBX"_HLFS_cnt_HLFS_str_HLFS_@node_HLFS
  .. do ADD2MSG(segment)
- .; 
+ .;
  .; string @node is too long to display properly in CPRS
  .;   The length is set in climit above
- .; Now we will pull this string and all subsequent 
+ .; Now we will pull this string and all subsequent
  .;   strings into a single string UNTIL we hit an empty node
  .;
 BLDTXT . new poo,txtstr,exit
@@ -209,7 +235,9 @@ SENDHL7(SNDPROT,OUTHL) ;Send out an HL7 message
  new HLRESLT
  kill HLA("HLS")
  merge HLA("HLS")=OUTHL
+ ;ZW HLA("HLS")
  if $data(HLA("HLS")) do
+ .; W !,"GOT TO HERE"
  . new HLEID,HLARYTYP,HLFORMAT,HLMTIEN,HLP
  . set HL("MTN")="ORU"
  . set HLEID=$O(^ORD(101,"B",SNDPROT,0))
@@ -218,7 +246,8 @@ SENDHL7(SNDPROT,OUTHL) ;Send out an HL7 message
  . set HLMTIEN=""
  . set HLP("PRIORITY")=1
  . do GENERATE^HLMA(HLEID,HLARYTYP,HLFORMAT,.HLRESLT)
- set msgid=HLRESLT
+ .; W !,"HLRESLT=",$get(HLRESLT),!
+ set msgid=$get(HLRESLT)
  quit msgid
  ;
  ;
@@ -245,7 +274,7 @@ ADD2MSG(segment) ; Add segment to OUTHL array
  new outcnt set outcnt=$order(OUTHL("A"),-1),outcnt=$get(outcnt)+1
  set OUTHL(outcnt)=segment
  quit
- ; 
+ ;
  ;
  ;
  ; builds extra filter vars from the most recent ORM array found in
@@ -273,16 +302,19 @@ ORMVARS(plien,filter) ; get variables from most recent ORM on this patient
  for  set node=$Q(@node) quit:node'[snode  quit:node'[invdt  do
  . set var=$QS(node,6)
  . set filter(var)=@node
+ ; don't confuse ORM message id with ORU message id
+ if $data(filter("msgid")) do
+ . set filter("ormmsgid")=filter("msgid")
+ . kill filter("msgid")
  quit
  ;
  ;
  ;
-TESTPID ; Test generating PID
- new plien set plien=1028
+TESTPID(plien) ; Test generating PID
  new rootpl
  set (filter("rootpl"),rootpl)=$$setroot^%wd("patient-lookup")
  set filter("plien")=$get(plien)
- set SNDPROT="PHX ENROLL ORM EVN"
+ set SNDPROT="PHX ENROLL ORU EVN"
  do HLENV^SAMIORU(SNDPROT)
  merge filter=@rootpl@(plien)
  kill filter("ORM")
@@ -291,12 +323,11 @@ TESTPID ; Test generating PID
  quit
  ;
  ;      ;
-TESTOBR ; Test generating OBR
- new plien set plien=1028
+TESTOBR(plien) ; Test generating OBR
  new rootpl
  set (filter("rootpl"),rootpl)=$$setroot^%wd("patient-lookup")
  set filter("plien")=$get(plien)
- set SNDPROT="PHX ENROLL ORM EVN"
+ set SNDPROT="PHX ENROLL ORU EVN"
  do HLENV^SAMIORU(SNDPROT)
  merge filter=@rootpl@(plien)
  kill filter("ORM")
@@ -305,16 +336,16 @@ TESTOBR ; Test generating OBR
  quit
  ;
  ;
-TESTOBX ; Test generating OBX in vapalsyotta
+TESTOBXV ; Test generating OBX in vapalsyotta
  new rootpl,rootvp,filter
  set (filter("rootpl"),rootpl)=$$setroot^%wd("patient-lookup")
  set (filter("rootvp"),rootvp)=$$setroot^%wd("vapals-patients")
  new SNDPROT,notenbr,msgid
- set SNDPROT="PHX ENROLL ORM EVN"
+ set SNDPROT="PHX ENROLL ORU EVN"
  do HLENV^SAMIORU(SNDPROT)
  new sid,key
- set (sid,filter("sid"))="XXX00054"
- set (key,filter("key"))="siform-2019-03-22"
+ set (sid,filter("sid"))="PHO00015"
+ set (key,filter("key"))="siform-2020-07-30"
  set (filter("plien"),plien)=@rootvp@("graph",sid,key,"dfn")
  merge filter=@rootpl@(plien)
  kill filter("ORM")
@@ -324,6 +355,25 @@ TESTOBX ; Test generating OBX in vapalsyotta
  do OBX^SAMIORU(HLFS,HLCC,.filter,.OUTHL)
  quit
  ;
+TESTOBXC ; Test generating OBX in Cache
+ new rootpl,rootvp,filter
+ set (filter("rootpl"),rootpl)=$$setroot^%wd("patient-lookup")
+ set (filter("rootvp"),rootvp)=$$setroot^%wd("vapals-patients")
+ new SNDPROT,notenbr,msgid
+ set SNDPROT="PHX ENROLL ORU EVN"
+ do HLENV^SAMIORU(SNDPROT)
+ new sid,key
+ set (sid,filter("sid"))="PHO00015"
+ set (key,filter("key"))="siform-2020-07-30"
+ set (filter("plien"),plien)=@rootvp@("graph",sid,key,"dfn")
+ merge filter=@rootpl@(plien)
+ kill filter("ORM")
+ do ORMVARS^SAMIORU(plien,.filter)
+ set filter("climit")=66
+ set filter("notenmbr")=2
+ set filter("Cache")=($zversion["Cache")
+ do OBX^SAMIORU(HLFS,HLCC,.filter,.OUTHL)
+ quit
  ;
 EOR ;End of routine SAMIORU
  ;

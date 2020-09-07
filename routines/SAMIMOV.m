@@ -131,11 +131,11 @@ AUDIT() ;
  n lroot s lroot=$$setroot^%wd("patient-lookup")
  n rpt s rpt=$na(^TMP("SAMIAUDIT",$J))
  k @rpt
- d outaudit(rpt,"NAME  lien  dfn site  PNAME  pien  pdfn sid")
- n ln,lname,lien,pname,pien,ldfn,pdfn,site,sid
- s (ln,lname,lien,site,pname,pien,ldfn,pdfn,sid)=""
- n zi s zi=0
- f  s zi=$o(@lroot@(zi)) q:+zi=0  d  ;
+ d outaudit(rpt,"cdate NAME  lien  dfn site  PNAME  pien  pdfn sid")
+ n ln,lname,lien,cdate,pname,pien,ldfn,pdfn,site,sid
+ s (ln,lname,lien,site,cdate,pname,pien,ldfn,pdfn,sid)=""
+ n zi s zi=" "
+ f  s zi=$o(@lroot@(zi),-1) q:+zi=0  d  ;
  . s lien=zi
  . s site=$g(@lroot@(zi,"siteid"))
  . s lname=$g(@lroot@(zi,"saminame"))
@@ -144,20 +144,22 @@ AUDIT() ;
  . . w !,"error in dfn index dfn="_ldfn_" lien="_lien
  . s pien=$o(@proot@("dfn",ldfn,""))
  . i +pien'=0 d  ;
+ . . s cdate=$g(@proot@(pien,"samicreatedate"))
  . . s pname=$g(@proot@(pien,"saminame"))
  . . s pdfn=$g(@proot@(pien,"dfn"))
  . . s sid=$g(@proot@(pien,"samistudyid"))
+ . s ln=ln_$g(cdate)_" "
  . s ln=ln_$e(lname,1,20)_"  "
  . s ln=ln_$J(lien,5)
  . s ln=ln_$j(ldfn,8)
  . s ln=ln_" "_site_" "
- . s ln=ln_"   "_$e(pname,1,20)
+ . s ln=ln_" "_$e(pname,1,20)_" "
  . s ln=ln_$j(pien,5)
  . i pien="" s ln=ln_"Not Enrolled"
  . s ln=ln_$j(pdfn,8)
  . s ln=ln_" "_sid
  . d outaudit(rpt,ln)
- . s (ln,lname,lien,site,pname,pien,ldfn,pdfn,sid)=""
+ . s (ln,lname,lien,site,cdate,pname,pien,ldfn,pdfn,sid)=""
  D BROWSE^DDBR(rpt,"N","audit")
  ;
  q

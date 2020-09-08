@@ -113,7 +113,7 @@ DDICT(RTN,FORM) ; data dictionary for FORM, returned in RTN, passed by
  I FORM="siform" S USEGR="form fields - intake"
  I FORM="sbform" S USEGR="form fields - background"
  I FORM="ceform" S USEGR="form fields - ct evaluation"
- I FORM="fuform" S USEGR="form fields - followup"
+ I FORM="fuform" S USEGR="form fields - follow up"
  I FORM="bxform" S USEGR="form fields - biopsy"
  I FORM="itform" S USEGR="form fields - intervention"
  I FORM="ptform" S USEGR="form fields - pet evaluation"

@@ -17,9 +17,8 @@ EN ; entry point to generate csv files from forms for a site
  S SITEID=$$SITEID^SAMISITE(SITENUM)
  Q:SITEID=""
  ;
- ; todo: prompt for the form
- N SAMIFORM S SAMIFORM="siform"
- ;N SAMIFORM S SAMIFORM="ceform"
+ N SAMIFORM S SAMIFORM=$$SAYFORM()
+ Q:SAMIFORM=-1
  ;
  ; prompt for the directory
  N SAMIDIR
@@ -112,6 +111,12 @@ DDICT(RTN,FORM) ; data dictionary for FORM, returned in RTN, passed by
  ;
  N USEGR S USEGR=""
  I FORM="siform" S USEGR="form fields - intake"
+ I FORM="sbform" S USEGR="form fields - background"
+ I FORM="ceform" S USEGR="form fields - ct evaluation"
+ I FORM="fuform" S USEGR="form fields - followup"
+ I FORM="bxform" S USEGR="form fields - biopsy"
+ I FORM="itform" S USEGR="form fields - intervention"
+ I FORM="ptform" S USEGR="form fields - pet evaluation"
  ;
  Q:USEGR=""
  N root s root=$$setroot^%wd(USEGR)
@@ -128,7 +133,29 @@ DDICT(RTN,FORM) ; data dictionary for FORM, returned in RTN, passed by
  ;^%wd(17.040801,"B","form fields - intake",491)=""
  ;^%wd(17.040801,"B","form fields - intervention",442)=""
  ;^%wd(17.040801,"B","form fields - pet evaluation",443)=""
- 
- 
- 
+ ;
+SAYFORM() ; prompts for the form
+ N ZI,ZF,DIR
+ S ZF(1)="siform"
+ S ZF(2)="sbform"
+ S ZF(3)="ceform"
+ S ZF(4)="fuform"
+ S ZF(5)="bxform"
+ S ZF(6)="itform"
+ S ZF(7)="ptform"
+ K DIR
+ S DIR(0)="SO^"
+ F ZI=1:1:7 S DIR(0)=DIR(0)_ZI_":"_ZF(ZI)_";"
+ S DIR("L")="Select form to extract:"
+ S DIR("L",1)="1 Intake form (siform)"
+ S DIR("L",2)="2 Background form (sbform)"
+ S DIR("L",3)="3 CT Evaluation form (ceform)"
+ S DIR("L",4)="4 Followup form (fuform)"
+ S DIR("L",5)="5 Biopsy form (bxform)"
+ S DIR("L",6)="6 Intervention form (itform)"
+ S DIR("L",7)="7 Pet Evaluation form (ptform)"
+ D ^DIR
+ Q:X="" -1
+ Q ZF(X)
+ ;
  

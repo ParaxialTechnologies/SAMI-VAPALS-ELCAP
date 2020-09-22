@@ -1,5 +1,5 @@
 SAMIHOM4 ;ven/gpl,arc - ielcap: forms;2018-11-30T17:45Z ;Jan 14, 2020@16:04
- ;;18.0;SAMI;;
+ ;;18.0;SAMI;;;Build 1
  ;
  ;@license: see routine SAMIUL
  ;
@@ -173,13 +173,13 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  . . if +notr>0 d  ;
  . . . n SAMIFILTER
  . . . s SAMIFILTER("sid")=$G(SAMIARG("studyid"))
- . . . s SAMIFILTER("form")=$g(SAMIARG("form")) ;
+ . . . s SAMIFILTER("key")=$g(SAMIARG("form")) ;
  . . . n tiuien
  . . . s tiuien=+notr
  . . . s SAMIFILTER("notenmbr")=tiuien
  . . . n sendrslt
  . . . ;s sendrslt="1^MSG9239010"
- . . . s sendrslt=$$EN^SAMIORU(.SAMIFILTER)) ; send the note to VistA
+ . . . s sendrslt=$$EN^SAMIORU(.SAMIFILTER) ; send the note to VistA
  . . . i +sendrslt>0 d  ; success
  . . . . n rtnid s rtnid=$p(sendrslt,"^",2) ; return id from HL7
  . . . . ; post the id to the graph here
@@ -200,13 +200,13 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  . . if +notr>0 d  ;
  . . . n SAMIFILTER
  . . . s SAMIFILTER("sid")=$G(SAMIARG("studyid"))
- . . . s SAMIFILTER("form")=$g(SAMIARG("form")) ;
+ . . . s SAMIFILTER("key")=$g(SAMIARG("form")) ;
  . . . n tiuien
  . . . s tiuien=+notr
  . . . s SAMIFILTER("notenmbr")=tiuien
  . . . n sendrslt
  . . . ;s sendrslt="0^Missing ORM Message"
- . . . s sendrslt=$$EN^SAMIORU(.SAMIFILTER)) ; send the note to VistA
+ . . . s sendrslt=$$EN^SAMIORU(.SAMIFILTER) ; send the note to VistA
  . . . i +sendrslt>0 d  ; success
  . . . . n rtnid s rtnid=$p(sendrslt,"^",2) ; return id from HL7
  . . . . ; post the id to the graph here

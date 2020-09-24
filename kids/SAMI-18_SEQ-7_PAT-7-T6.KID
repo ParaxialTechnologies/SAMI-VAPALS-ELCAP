@@ -1,0 +1,1086 @@
+KIDS Distribution saved on Sep 24, 2020@10:36:38
+Fix for line feed in csv output
+**KIDS**:SAMI*18.0*7^
+
+**INSTALL NAME**
+SAMI*18.0*7
+"BLD",11502,0)
+SAMI*18.0*7^^0^3200924^y
+"BLD",11502,1,0)
+^^1^1^3200820^
+"BLD",11502,1,1,0)
+EXTRACT FORM DATA TO CSV FILES
+"BLD",11502,4,0)
+^9.64PA^^
+"BLD",11502,6.3)
+8
+"BLD",11502,"KRN",0)
+^9.67PA^779.2^20
+"BLD",11502,"KRN",.4,0)
+.4
+"BLD",11502,"KRN",.401,0)
+.401
+"BLD",11502,"KRN",.402,0)
+.402
+"BLD",11502,"KRN",.403,0)
+.403
+"BLD",11502,"KRN",.5,0)
+.5
+"BLD",11502,"KRN",.84,0)
+.84
+"BLD",11502,"KRN",3.6,0)
+3.6
+"BLD",11502,"KRN",3.8,0)
+3.8
+"BLD",11502,"KRN",9.2,0)
+9.2
+"BLD",11502,"KRN",9.8,0)
+9.8
+"BLD",11502,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",11502,"KRN",9.8,"NM",1,0)
+SAMICSV^^0^B30137211
+"BLD",11502,"KRN",9.8,"NM",2,0)
+SAMIMOV^^0^B15330427
+"BLD",11502,"KRN",9.8,"NM",3,0)
+SAMIPTLK^^0^B11168340
+"BLD",11502,"KRN",9.8,"NM","B","SAMICSV",1)
+
+"BLD",11502,"KRN",9.8,"NM","B","SAMIMOV",2)
+
+"BLD",11502,"KRN",9.8,"NM","B","SAMIPTLK",3)
+
+"BLD",11502,"KRN",19,0)
+19
+"BLD",11502,"KRN",19,"NM",0)
+^9.68A^3^2
+"BLD",11502,"KRN",19,"NM",2,0)
+SAMI EXTRACT CSV DATA^^0
+"BLD",11502,"KRN",19,"NM",3,0)
+SAMI CHANGE PATIENT SITE^^0
+"BLD",11502,"KRN",19,"NM","B","SAMI CHANGE PATIENT SITE",3)
+
+"BLD",11502,"KRN",19,"NM","B","SAMI EXTRACT CSV DATA",2)
+
+"BLD",11502,"KRN",19.1,0)
+19.1
+"BLD",11502,"KRN",101,0)
+101
+"BLD",11502,"KRN",409.61,0)
+409.61
+"BLD",11502,"KRN",771,0)
+771
+"BLD",11502,"KRN",779.2,0)
+779.2
+"BLD",11502,"KRN",870,0)
+870
+"BLD",11502,"KRN",8989.51,0)
+8989.51
+"BLD",11502,"KRN",8989.52,0)
+8989.52
+"BLD",11502,"KRN",8994,0)
+8994
+"BLD",11502,"KRN","B",.4,.4)
+
+"BLD",11502,"KRN","B",.401,.401)
+
+"BLD",11502,"KRN","B",.402,.402)
+
+"BLD",11502,"KRN","B",.403,.403)
+
+"BLD",11502,"KRN","B",.5,.5)
+
+"BLD",11502,"KRN","B",.84,.84)
+
+"BLD",11502,"KRN","B",3.6,3.6)
+
+"BLD",11502,"KRN","B",3.8,3.8)
+
+"BLD",11502,"KRN","B",9.2,9.2)
+
+"BLD",11502,"KRN","B",9.8,9.8)
+
+"BLD",11502,"KRN","B",19,19)
+
+"BLD",11502,"KRN","B",19.1,19.1)
+
+"BLD",11502,"KRN","B",101,101)
+
+"BLD",11502,"KRN","B",409.61,409.61)
+
+"BLD",11502,"KRN","B",771,771)
+
+"BLD",11502,"KRN","B",779.2,779.2)
+
+"BLD",11502,"KRN","B",870,870)
+
+"BLD",11502,"KRN","B",8989.51,8989.51)
+
+"BLD",11502,"KRN","B",8989.52,8989.52)
+
+"BLD",11502,"KRN","B",8994,8994)
+
+"KRN",19,12038,-1)
+0^2
+"KRN",19,12038,0)
+SAMI EXTRACT CSV DATA^EXTRACT CSV DATA^^R^^^^^^^^SAMI^^
+"KRN",19,12038,1,0)
+^^1^1^3200820^
+"KRN",19,12038,1,1,0)
+EXTRACT FORM DATA IN CSV FILES
+"KRN",19,12038,20)
+
+"KRN",19,12038,25)
+EN^SAMICSV
+"KRN",19,12038,"U")
+EXTRACT CSV DATA
+"KRN",19,12039,-1)
+0^3
+"KRN",19,12039,0)
+SAMI CHANGE PATIENT SITE^Change patient site^^R^^^^^^^^SAMI
+"KRN",19,12039,1,0)
+^^1^1^3200824^
+"KRN",19,12039,1,1,0)
+Option to move a patient from one site to another
+"KRN",19,12039,25)
+EN^SAMIMOV
+"KRN",19,12039,"U")
+CHANGE PATIENT SITE
+"MBREQ")
+0
+"ORD",18,19)
+19;18;;;OPT^XPDTA;OPTF1^XPDIA;OPTE1^XPDIA;OPTF2^XPDIA;;OPTDEL^XPDIA
+"ORD",18,19,0)
+OPTION
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","SAMICSV")
+0^1^B30137211
+"RTN","SAMICSV",1,0)
+SAMICSV ;ven/gpl - VAPALS CSV EXPORT ; 8/15/20 4:48pm
+"RTN","SAMICSV",2,0)
+ ;;18.0;SAMI;;;Build 8
+"RTN","SAMICSV",3,0)
+ ;
+"RTN","SAMICSV",4,0)
+ ;@license: see routine SAMIUL
+"RTN","SAMICSV",5,0)
+ ;
+"RTN","SAMICSV",6,0)
+ ; allow fallthrough
+"RTN","SAMICSV",7,0)
+ ;
+"RTN","SAMICSV",8,0)
+EN ; entry point to generate csv files from forms for a site
+"RTN","SAMICSV",9,0)
+ ;
+"RTN","SAMICSV",10,0)
+ ; first pick a site
+"RTN","SAMICSV",11,0)
+ N X,Y,DIC,SITEIEN,SITEID
+"RTN","SAMICSV",12,0)
+ S DIC=311.12
+"RTN","SAMICSV",13,0)
+ S DIC(0)="AEMQ"
+"RTN","SAMICSV",14,0)
+ D ^DIC
+"RTN","SAMICSV",15,0)
+ I Y<1 Q  ; EXIT
+"RTN","SAMICSV",16,0)
+ S SITENUM=$P(Y,"^",2)
+"RTN","SAMICSV",17,0)
+ S SITEID=$$SITEID^SAMISITE(SITENUM)
+"RTN","SAMICSV",18,0)
+ Q:SITEID=""
+"RTN","SAMICSV",19,0)
+ ;
+"RTN","SAMICSV",20,0)
+ N SAMIFORM S SAMIFORM=$$SAYFORM()
+"RTN","SAMICSV",21,0)
+ Q:SAMIFORM=-1
+"RTN","SAMICSV",22,0)
+ ;
+"RTN","SAMICSV",23,0)
+ ; prompt for the directory
+"RTN","SAMICSV",24,0)
+ N SAMIDIR
+"RTN","SAMICSV",25,0)
+ D GETDIR^SAMIFDM(.SAMIDIR)
+"RTN","SAMICSV",26,0)
+ Q:SAMIDIR=""
+"RTN","SAMICSV",27,0)
+ ;
+"RTN","SAMICSV",28,0)
+ d ONEFORM(SITEID,SAMIFORM,SAMIDIR) ; process one form for a site
+"RTN","SAMICSV",29,0)
+ ;
+"RTN","SAMICSV",30,0)
+ q
+"RTN","SAMICSV",31,0)
+ ;
+"RTN","SAMICSV",32,0)
+ONEFORM(SITEID,SAMIFORM,SAMIDIR) ; process one form for a site
+"RTN","SAMICSV",33,0)
+ n root s root=$$setroot^%wd("vapals-patients")
+"RTN","SAMICSV",34,0)
+ n groot s groot=$na(@root@("graph"))
+"RTN","SAMICSV",35,0)
+ n SAMII S SAMII=SITEID
+"RTN","SAMICSV",36,0)
+ n cnt s cnt=0
+"RTN","SAMICSV",37,0)
+ n forms s forms=0
+"RTN","SAMICSV",38,0)
+ ;
+"RTN","SAMICSV",39,0)
+ n SAMIOUT S SAMIOUT=$NA(^TMP("SAMICSV",$J))
+"RTN","SAMICSV",40,0)
+ k @SAMIOUT
+"RTN","SAMICSV",41,0)
+ ;
+"RTN","SAMICSV",42,0)
+ n DICT
+"RTN","SAMICSV",43,0)
+ d DDICT("DICT",SAMIFORM) ; get the data dictionary for this form
+"RTN","SAMICSV",44,0)
+ q:'$d(DICT)
+"RTN","SAMICSV",45,0)
+ ;
+"RTN","SAMICSV",46,0)
+ N SAMIN S SAMIN=1
+"RTN","SAMICSV",47,0)
+ N SAMIJJ s SAMIJJ=0
+"RTN","SAMICSV",48,0)
+ N OFFSET S OFFSET=0
+"RTN","SAMICSV",49,0)
+ I SAMIFORM="siform" d  ;
+"RTN","SAMICSV",50,0)
+ . S OFFSET=OFFSET+1
+"RTN","SAMICSV",51,0)
+ . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="saminame"
+"RTN","SAMICSV",52,0)
+ . S OFFSET=OFFSET+1
+"RTN","SAMICSV",53,0)
+ . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="ssn"
+"RTN","SAMICSV",54,0)
+ . S OFFSET=OFFSET+1
+"RTN","SAMICSV",55,0)
+ . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="last5"
+"RTN","SAMICSV",56,0)
+ . S OFFSET=OFFSET+1
+"RTN","SAMICSV",57,0)
+ . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="sex"
+"RTN","SAMICSV",58,0)
+ . S OFFSET=OFFSET+1
+"RTN","SAMICSV",59,0)
+ . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="sbdob"
+"RTN","SAMICSV",60,0)
+ . S OFFSET=OFFSET+1
+"RTN","SAMICSV",61,0)
+ . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="samiru"
+"RTN","SAMICSV",62,0)
+ f  s SAMIJJ=$o(DICT(SAMIJJ)) q:+SAMIJJ=0  d  ;
+"RTN","SAMICSV",63,0)
+ . s $p(@SAMIOUT@(SAMIN),"|",SAMIJJ+OFFSET)=DICT(SAMIJJ) ; csv header
+"RTN","SAMICSV",64,0)
+ s @SAMIOUT@(SAMIN)="siteid|samistudyid|form|"_@SAMIOUT@(SAMIN)
+"RTN","SAMICSV",65,0)
+ ;S @SAMIOUT@(SAMIN)=@SAMIOUT@(SAMIN)_$C(13,10) ; carriage return line feed
+"RTN","SAMICSV",66,0)
+ ; 
+"RTN","SAMICSV",67,0)
+ f  s SAMII=$o(@groot@(SAMII)) q:SAMII=""  q:$e(SAMII,1,3)'[SITEID  d  ;
+"RTN","SAMICSV",68,0)
+ . s cnt=cnt+1
+"RTN","SAMICSV",69,0)
+ . w !,SAMII
+"RTN","SAMICSV",70,0)
+ . N SAMIJ S SAMIJ=SAMIFORM
+"RTN","SAMICSV",71,0)
+ . n done s done=0
+"RTN","SAMICSV",72,0)
+ . f  s SAMIJ=$O(@groot@(SAMII,SAMIJ)) q:SAMIJ=""  q:done  d  ;
+"RTN","SAMICSV",73,0)
+ . . i $e(SAMIJ,1,$l(SAMIFORM))'=SAMIFORM s done=1 q  ;
+"RTN","SAMICSV",74,0)
+ . . s forms=forms+1
+"RTN","SAMICSV",75,0)
+ . . n jj s jj=0
+"RTN","SAMICSV",76,0)
+ . . s SAMIN=SAMIN+1
+"RTN","SAMICSV",77,0)
+ . . S OFFSET=0
+"RTN","SAMICSV",78,0)
+ . . I SAMIFORM="siform" d  ;
+"RTN","SAMICSV",79,0)
+ . . . n kk s kk=$o(@root@("sid",SAMII,""))
+"RTN","SAMICSV",80,0)
+ . . . q:kk=""
+"RTN","SAMICSV",81,0)
+ . . . S OFFSET=OFFSET+1
+"RTN","SAMICSV",82,0)
+ . . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"saminame"))
+"RTN","SAMICSV",83,0)
+ . . . S OFFSET=OFFSET+1
+"RTN","SAMICSV",84,0)
+ . . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"ssn"))
+"RTN","SAMICSV",85,0)
+ . . . S OFFSET=OFFSET+1
+"RTN","SAMICSV",86,0)
+ . . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"last5"))
+"RTN","SAMICSV",87,0)
+ . . . S OFFSET=OFFSET+1
+"RTN","SAMICSV",88,0)
+ . . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"sex"))
+"RTN","SAMICSV",89,0)
+ . . . S OFFSET=OFFSET+1
+"RTN","SAMICSV",90,0)
+ . . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"sbdob"))
+"RTN","SAMICSV",91,0)
+ . . . S OFFSET=OFFSET+1
+"RTN","SAMICSV",92,0)
+ . . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"samiru"))
+"RTN","SAMICSV",93,0)
+ . . f  s jj=$o(DICT(jj)) q:+jj=0  d  ;
+"RTN","SAMICSV",94,0)
+ . . . s $P(@SAMIOUT@(SAMIN),"|",OFFSET+jj)=""""_$g(@groot@(SAMII,SAMIJ,DICT(jj)))_""""
+"RTN","SAMICSV",95,0)
+ . . S @SAMIOUT@(SAMIN)=SITEID_"|"_SAMII_"|"_SAMIJ_"|"_@SAMIOUT@(SAMIN)
+"RTN","SAMICSV",96,0)
+ . . ;s @SAMIOUT@(SAMIN)=@SAMIOUT@(SAMIN)_$C(13,10)
+"RTN","SAMICSV",97,0)
+ . ;b
+"RTN","SAMICSV",98,0)
+ ;ZWR @SAMIOUT@(*)
+"RTN","SAMICSV",99,0)
+ w !,cnt_" patients, "_forms_" forms"
+"RTN","SAMICSV",100,0)
+ n filename s filename=$$FNAME(SITEID,SAMIFORM)
+"RTN","SAMICSV",101,0)
+ d GTF^%ZISH($na(@SAMIOUT@(1)),3,SAMIDIR,filename)
+"RTN","SAMICSV",102,0)
+ w !,"file "_filename_" written to directory "_SAMIDIR
+"RTN","SAMICSV",103,0)
+ q
+"RTN","SAMICSV",104,0)
+ ;
+"RTN","SAMICSV",105,0)
+FNAME(SITE,FORM) ; extrinsic returns the filename for the site/form
+"RTN","SAMICSV",106,0)
+ Q SITE_"-"_FORM_"-"_$$FMTHL7^XLFDT($$HTFM^XLFDT($H))_".csv"
+"RTN","SAMICSV",107,0)
+ ;
+"RTN","SAMICSV",108,0)
+DDICT(RTN,FORM) ; data dictionary for FORM, returned in RTN, passed by
+"RTN","SAMICSV",109,0)
+ ; name
+"RTN","SAMICSV",110,0)
+ K @RTN
+"RTN","SAMICSV",111,0)
+ ;
+"RTN","SAMICSV",112,0)
+ N USEGR S USEGR=""
+"RTN","SAMICSV",113,0)
+ I FORM="siform" S USEGR="form fields - intake"
+"RTN","SAMICSV",114,0)
+ I FORM="sbform" S USEGR="form fields - background"
+"RTN","SAMICSV",115,0)
+ I FORM="ceform" S USEGR="form fields - ct evaluation"
+"RTN","SAMICSV",116,0)
+ I FORM="fuform" S USEGR="form fields - follow up"
+"RTN","SAMICSV",117,0)
+ I FORM="bxform" S USEGR="form fields - biopsy"
+"RTN","SAMICSV",118,0)
+ I FORM="itform" S USEGR="form fields - intervention"
+"RTN","SAMICSV",119,0)
+ I FORM="ptform" S USEGR="form fields - pet evaluation"
+"RTN","SAMICSV",120,0)
+ ;
+"RTN","SAMICSV",121,0)
+ Q:USEGR=""
+"RTN","SAMICSV",122,0)
+ N root s root=$$setroot^%wd(USEGR)
+"RTN","SAMICSV",123,0)
+ Q:$g(root)=""
+"RTN","SAMICSV",124,0)
+ N II S II=0
+"RTN","SAMICSV",125,0)
+ f  s II=$o(@root@("field",II)) q:+II=0  d  ;
+"RTN","SAMICSV",126,0)
+ . s @RTN@(II)=$g(@root@("field",II,"input",1,"name"))
+"RTN","SAMICSV",127,0)
+ q
+"RTN","SAMICSV",128,0)
+ ;^%wd(17.040801,"B","form fields - background",437)=""
+"RTN","SAMICSV",129,0)
+ ;^%wd(17.040801,"B","form fields - biopsy",438)=""
+"RTN","SAMICSV",130,0)
+ ;^%wd(17.040801,"B","form fields - ct evaluation",439)=""
+"RTN","SAMICSV",131,0)
+ ;^%wd(17.040801,"B","form fields - follow up",440)=""
+"RTN","SAMICSV",132,0)
+ ;^%wd(17.040801,"B","form fields - follow-up",359)=""
+"RTN","SAMICSV",133,0)
+ ;^%wd(17.040801,"B","form fields - intake",491)=""
+"RTN","SAMICSV",134,0)
+ ;^%wd(17.040801,"B","form fields - intervention",442)=""
+"RTN","SAMICSV",135,0)
+ ;^%wd(17.040801,"B","form fields - pet evaluation",443)=""
+"RTN","SAMICSV",136,0)
+ ;
+"RTN","SAMICSV",137,0)
+SAYFORM() ; prompts for the form
+"RTN","SAMICSV",138,0)
+ N ZI,ZF,DIR
+"RTN","SAMICSV",139,0)
+ S ZF(1)="siform"
+"RTN","SAMICSV",140,0)
+ S ZF(2)="sbform"
+"RTN","SAMICSV",141,0)
+ S ZF(3)="ceform"
+"RTN","SAMICSV",142,0)
+ S ZF(4)="fuform"
+"RTN","SAMICSV",143,0)
+ S ZF(5)="bxform"
+"RTN","SAMICSV",144,0)
+ S ZF(6)="itform"
+"RTN","SAMICSV",145,0)
+ S ZF(7)="ptform"
+"RTN","SAMICSV",146,0)
+ K DIR
+"RTN","SAMICSV",147,0)
+ S DIR(0)="SO^"
+"RTN","SAMICSV",148,0)
+ F ZI=1:1:7 S DIR(0)=DIR(0)_ZI_":"_ZF(ZI)_";"
+"RTN","SAMICSV",149,0)
+ S DIR("L")="Select form to extract:"
+"RTN","SAMICSV",150,0)
+ S DIR("L",1)="1 Intake form (siform)"
+"RTN","SAMICSV",151,0)
+ S DIR("L",2)="2 Background form (sbform)"
+"RTN","SAMICSV",152,0)
+ S DIR("L",3)="3 CT Evaluation form (ceform)"
+"RTN","SAMICSV",153,0)
+ S DIR("L",4)="4 Followup form (fuform)"
+"RTN","SAMICSV",154,0)
+ S DIR("L",5)="5 Biopsy form (bxform)"
+"RTN","SAMICSV",155,0)
+ S DIR("L",6)="6 Intervention form (itform)"
+"RTN","SAMICSV",156,0)
+ S DIR("L",7)="7 Pet Evaluation form (ptform)"
+"RTN","SAMICSV",157,0)
+ D ^DIR
+"RTN","SAMICSV",158,0)
+ Q:X="" -1
+"RTN","SAMICSV",159,0)
+ Q ZF(X)
+"RTN","SAMICSV",160,0)
+ ;
+"RTN","SAMICSV",161,0)
+ 
+"RTN","SAMIMOV")
+0^2^B15330427
+"RTN","SAMIMOV",1,0)
+SAMIMOV ;ven/gpl - VAPALS CHANGE PATIENT SITE ; 8/15/20 4:48pm
+"RTN","SAMIMOV",2,0)
+ ;;18.0;SAMI;;;Build 8
+"RTN","SAMIMOV",3,0)
+ ;
+"RTN","SAMIMOV",4,0)
+ ;@license: see routine SAMIUL
+"RTN","SAMIMOV",5,0)
+ ;
+"RTN","SAMIMOV",6,0)
+ ; allow fallthrough
+"RTN","SAMIMOV",7,0)
+ ;
+"RTN","SAMIMOV",8,0)
+EN ; entry point to change a patient's site
+"RTN","SAMIMOV",9,0)
+ ;
+"RTN","SAMIMOV",10,0)
+ n FROM,TO,PAT
+"RTN","SAMIMOV",11,0)
+ W !,"Pick the FROM Site -"
+"RTN","SAMIMOV",12,0)
+ S FROM=$$PICSITE()
+"RTN","SAMIMOV",13,0)
+ IF FROM="^" Q  ;
+"RTN","SAMIMOV",14,0)
+ ;
+"RTN","SAMIMOV",15,0)
+ W !,"Pick the TO Site -"
+"RTN","SAMIMOV",16,0)
+ S TO=$$PICSITE()
+"RTN","SAMIMOV",17,0)
+ IF TO="^" Q  ;
+"RTN","SAMIMOV",18,0)
+ ;
+"RTN","SAMIMOV",19,0)
+ D PICPAT(.PAT,FROM)
+"RTN","SAMIMOV",20,0)
+ I $G(PAT("name"))="" D  Q  ;
+"RTN","SAMIMOV",21,0)
+ . W !,"No patient selected, canceling"
+"RTN","SAMIMOV",22,0)
+ K DIR
+"RTN","SAMIMOV",23,0)
+ S DIR("A")="Confirm change site of patient "_PAT("name")_" from "_FROM_" to "_TO
+"RTN","SAMIMOV",24,0)
+ S DIR(0)="Y"
+"RTN","SAMIMOV",25,0)
+ D ^DIR
+"RTN","SAMIMOV",26,0)
+ ;
+"RTN","SAMIMOV",27,0)
+ I Y'=1 D  Q  ;
+"RTN","SAMIMOV",28,0)
+ . W !,"Cancel, no change made"
+"RTN","SAMIMOV",29,0)
+ ;
+"RTN","SAMIMOV",30,0)
+ do MOV(.PAT,FROM,TO)
+"RTN","SAMIMOV",31,0)
+ q
+"RTN","SAMIMOV",32,0)
+ ;
+"RTN","SAMIMOV",33,0)
+MOV(PAT,FROM,TO) ; change patient PAT from site FROM to site TO
+"RTN","SAMIMOV",34,0)
+ ;
+"RTN","SAMIMOV",35,0)
+ n root s root=$$setroot^%wd("vapals-patients")
+"RTN","SAMIMOV",36,0)
+ n lroot s lroot=$$setroot^%wd("patient-lookup")
+"RTN","SAMIMOV",37,0)
+ n dfn s dfn=$g(PAT("dfn"))
+"RTN","SAMIMOV",38,0)
+ i dfn="" d  q  ;
+"RTN","SAMIMOV",39,0)
+ . w !,"Error, patient not valid"
+"RTN","SAMIMOV",40,0)
+ n lien
+"RTN","SAMIMOV",41,0)
+ s lien=$o(@lroot@("dfn",dfn,""))
+"RTN","SAMIMOV",42,0)
+ i $g(@lroot@(lien,"siteid"))'=FROM d  q  ;
+"RTN","SAMIMOV",43,0)
+ . w !,"Error, from site not valid for patient"
+"RTN","SAMIMOV",44,0)
+ ;
+"RTN","SAMIMOV",45,0)
+ n pien s pien=$o(@root@("dfn",dfn,""))
+"RTN","SAMIMOV",46,0)
+ i pien="" d  q  ;
+"RTN","SAMIMOV",47,0)
+ . w !,"Patient has no forms"
+"RTN","SAMIMOV",48,0)
+ . s @lroot@(lien,"siteid")=TO
+"RTN","SAMIMOV",49,0)
+ . w !,"Change successful"
+"RTN","SAMIMOV",50,0)
+ ;
+"RTN","SAMIMOV",51,0)
+ n oldsid s oldsid=$g(@root@(pien,"studyid"))
+"RTN","SAMIMOV",52,0)
+ i oldsid="" s oldsid=$g(@root@(pien,"samistudyid"))
+"RTN","SAMIMOV",53,0)
+ w !,"oldsid=",oldsid
+"RTN","SAMIMOV",54,0)
+ i oldsid="" d  q  ;
+"RTN","SAMIMOV",55,0)
+ . w !,"Error studyid not found"
+"RTN","SAMIMOV",56,0)
+ ;b
+"RTN","SAMIMOV",57,0)
+ s @lroot@(lien,"siteid")=TO
+"RTN","SAMIMOV",58,0)
+ s PAT("siteid")=TO
+"RTN","SAMIMOV",59,0)
+ k @root@("sid",oldsid,pien) ; remove sid index
+"RTN","SAMIMOV",60,0)
+ ;
+"RTN","SAMIMOV",61,0)
+ n newsid s newsid=$$GENSTDID^SAMIHOM3(dfn,.PAT)
+"RTN","SAMIMOV",62,0)
+ s @lroot@(lien,"studyid")=newsid
+"RTN","SAMIMOV",63,0)
+ s @root@(pien,"studyid")=newsid
+"RTN","SAMIMOV",64,0)
+ s @root@(pien,"sisid")=newsid
+"RTN","SAMIMOV",65,0)
+ s @root@(pien,"samistudyid")=newsid
+"RTN","SAMIMOV",66,0)
+ s @root@("sid",newsid,pien)=""
+"RTN","SAMIMOV",67,0)
+ ;
+"RTN","SAMIMOV",68,0)
+ w !,"New studyid = "_newsid
+"RTN","SAMIMOV",69,0)
+ m @root@("graph",newsid)=@root@("graph",oldsid)
+"RTN","SAMIMOV",70,0)
+ d SETSID(newsid) ;propogate the new sid to all forms
+"RTN","SAMIMOV",71,0)
+ k @root@("graph",oldsid)
+"RTN","SAMIMOV",72,0)
+ w !,"Change successful"
+"RTN","SAMIMOV",73,0)
+ ;
+"RTN","SAMIMOV",74,0)
+ q
+"RTN","SAMIMOV",75,0)
+ ;
+"RTN","SAMIMOV",76,0)
+SETSID(newsid) ; propogate the new sid to all forms
+"RTN","SAMIMOV",77,0)
+ n root s root=$$setroot^%wd("vapals-patients")
+"RTN","SAMIMOV",78,0)
+ n zi s zi=""
+"RTN","SAMIMOV",79,0)
+ f  s zi=$o(@root@("graph",newsid,zi)) q:zi=""  d  ;
+"RTN","SAMIMOV",80,0)
+ . s @root@("graph",newsid,zi,"samistudyid")=newsid
+"RTN","SAMIMOV",81,0)
+ . s @root@("graph",newsid,zi,"studyid")=newsid
+"RTN","SAMIMOV",82,0)
+ . s @root@("graph",newsid,zi,"sisid")=newsid
+"RTN","SAMIMOV",83,0)
+ q
+"RTN","SAMIMOV",84,0)
+ ;
+"RTN","SAMIMOV",85,0)
+PICPAT(PATRTN,SITE) ; pick a patient in site SITE
+"RTN","SAMIMOV",86,0)
+ ;
+"RTN","SAMIMOV",87,0)
+ N FILTER,LIST,X,Y
+"RTN","SAMIMOV",88,0)
+ S FILTER("site")=SITE
+"RTN","SAMIMOV",89,0)
+ S FILTER("format")="array"
+"RTN","SAMIMOV",90,0)
+ ;
+"RTN","SAMIMOV",91,0)
+ new DIR set DIR(0)="F^1:120" ; free text
+"RTN","SAMIMOV",92,0)
+ set DIR("A")="Patient name: " ; prompt
+"RTN","SAMIMOV",93,0)
+ set DIR("B")="""" ; default
+"RTN","SAMIMOV",94,0)
+ ;
+"RTN","SAMIMOV",95,0)
+ d ^DIR
+"RTN","SAMIMOV",96,0)
+ ;
+"RTN","SAMIMOV",97,0)
+ S FILTER("search")=Y
+"RTN","SAMIMOV",98,0)
+ D WSPTLKUP^SAMIPTLK(.LIST,.FILTER)
+"RTN","SAMIMOV",99,0)
+ ;ZWR LIST(:,:,"name")
+"RTN","SAMIMOV",100,0)
+ ;
+"RTN","SAMIMOV",101,0)
+ N LCNT S LCNT=$O(LIST("result",""),-1)
+"RTN","SAMIMOV",102,0)
+ Q:+LCNT=0
+"RTN","SAMIMOV",103,0)
+ S Y=1
+"RTN","SAMIMOV",104,0)
+ I LCNT>1 D  ; more than one in the list
+"RTN","SAMIMOV",105,0)
+ . K DIR
+"RTN","SAMIMOV",106,0)
+ . N ZI S ZI=0
+"RTN","SAMIMOV",107,0)
+ . S DIR("A")="Select the patient"
+"RTN","SAMIMOV",108,0)
+ . F  S ZI=$O(LIST("result",ZI)) Q:+ZI=0  D  ;
+"RTN","SAMIMOV",109,0)
+ . . S DIR("A",ZI)=ZI_" "_LIST("result",ZI,"name")_" "_LIST("result",ZI,"last5")
+"RTN","SAMIMOV",110,0)
+ . S DIR(0)="N^1:"_LCNT_":0"
+"RTN","SAMIMOV",111,0)
+ . D ^DIR
+"RTN","SAMIMOV",112,0)
+ . ;W !,"Y=",Y
+"RTN","SAMIMOV",113,0)
+ I +Y>0 M PATRTN=LIST("result",Y)
+"RTN","SAMIMOV",114,0)
+ q
+"RTN","SAMIMOV",115,0)
+ ;
+"RTN","SAMIMOV",116,0)
+PICSITE()
+"RTN","SAMIMOV",117,0)
+ ;
+"RTN","SAMIMOV",118,0)
+ ; pick a site
+"RTN","SAMIMOV",119,0)
+ N X,Y,DIC,SITEIEN,SITEID
+"RTN","SAMIMOV",120,0)
+ S DIC=311.12
+"RTN","SAMIMOV",121,0)
+ S DIC(0)="AEMQ"
+"RTN","SAMIMOV",122,0)
+ D ^DIC
+"RTN","SAMIMOV",123,0)
+ I Y<1 Q  ; EXIT
+"RTN","SAMIMOV",124,0)
+ S SITENUM=$P(Y,"^",2)
+"RTN","SAMIMOV",125,0)
+ S SITEID=$$SITEID^SAMISITE(SITENUM)
+"RTN","SAMIMOV",126,0)
+ Q SITEID
+"RTN","SAMIMOV",127,0)
+ ;
+"RTN","SAMIMOV",128,0)
+AUDIT() ;
+"RTN","SAMIMOV",129,0)
+ ;
+"RTN","SAMIMOV",130,0)
+ n proot s proot=$$setroot^%wd("vapals-patients")
+"RTN","SAMIMOV",131,0)
+ n lroot s lroot=$$setroot^%wd("patient-lookup")
+"RTN","SAMIMOV",132,0)
+ n rpt s rpt=$na(^TMP("SAMIAUDIT",$J))
+"RTN","SAMIMOV",133,0)
+ k @rpt
+"RTN","SAMIMOV",134,0)
+ d outaudit(rpt,"cdate NAME  lien  dfn site  PNAME  pien  pdfn sid")
+"RTN","SAMIMOV",135,0)
+ n ln,lname,lien,cdate,pname,pien,ldfn,pdfn,site,sid
+"RTN","SAMIMOV",136,0)
+ s (ln,lname,lien,site,cdate,pname,pien,ldfn,pdfn,sid)=""
+"RTN","SAMIMOV",137,0)
+ n zi s zi=" "
+"RTN","SAMIMOV",138,0)
+ f  s zi=$o(@lroot@(zi),-1) q:+zi=0  d  ;
+"RTN","SAMIMOV",139,0)
+ . s lien=zi
+"RTN","SAMIMOV",140,0)
+ . s site=$g(@lroot@(zi,"siteid"))
+"RTN","SAMIMOV",141,0)
+ . s lname=$g(@lroot@(zi,"saminame"))
+"RTN","SAMIMOV",142,0)
+ . s ldfn=$g(@lroot@(zi,"dfn"))
+"RTN","SAMIMOV",143,0)
+ . i $o(@lroot@("dfn",ldfn,""))'=lien d  ;
+"RTN","SAMIMOV",144,0)
+ . . w !,"error in dfn index dfn="_ldfn_" lien="_lien
+"RTN","SAMIMOV",145,0)
+ . s pien=$o(@proot@("dfn",ldfn,""))
+"RTN","SAMIMOV",146,0)
+ . i +pien'=0 d  ;
+"RTN","SAMIMOV",147,0)
+ . . s cdate=$g(@proot@(pien,"samicreatedate"))
+"RTN","SAMIMOV",148,0)
+ . . s pname=$g(@proot@(pien,"saminame"))
+"RTN","SAMIMOV",149,0)
+ . . s pdfn=$g(@proot@(pien,"dfn"))
+"RTN","SAMIMOV",150,0)
+ . . s sid=$g(@proot@(pien,"samistudyid"))
+"RTN","SAMIMOV",151,0)
+ . s ln=ln_$g(cdate)_" "
+"RTN","SAMIMOV",152,0)
+ . s ln=ln_$e(lname,1,20)_"  "
+"RTN","SAMIMOV",153,0)
+ . s ln=ln_$J(lien,5)
+"RTN","SAMIMOV",154,0)
+ . s ln=ln_$j(ldfn,8)
+"RTN","SAMIMOV",155,0)
+ . s ln=ln_" "_site_" "
+"RTN","SAMIMOV",156,0)
+ . s ln=ln_" "_$e(pname,1,20)_" "
+"RTN","SAMIMOV",157,0)
+ . s ln=ln_$j(pien,5)
+"RTN","SAMIMOV",158,0)
+ . i pien="" s ln=ln_"Not Enrolled"
+"RTN","SAMIMOV",159,0)
+ . s ln=ln_$j(pdfn,8)
+"RTN","SAMIMOV",160,0)
+ . s ln=ln_" "_sid
+"RTN","SAMIMOV",161,0)
+ . d outaudit(rpt,ln)
+"RTN","SAMIMOV",162,0)
+ . s (ln,lname,lien,site,cdate,pname,pien,ldfn,pdfn,sid)=""
+"RTN","SAMIMOV",163,0)
+ D BROWSE^DDBR(rpt,"N","audit")
+"RTN","SAMIMOV",164,0)
+ ;
+"RTN","SAMIMOV",165,0)
+ q
+"RTN","SAMIMOV",166,0)
+ ;
+"RTN","SAMIMOV",167,0)
+outaudit(rpt,ln) ;
+"RTN","SAMIMOV",168,0)
+ s @rpt@($o(@rpt@(" "),-1)+1)=$g(ln)
+"RTN","SAMIMOV",169,0)
+ ;w !,ln
+"RTN","SAMIMOV",170,0)
+ q
+"RTN","SAMIMOV",171,0)
+ ;
+"RTN","SAMIPTLK")
+0^3^B11168340
+"RTN","SAMIPTLK",1,0)
+SAMIPTLK ;ven/gpl - SAMI patient lookup routines ;Dec 17, 2019@09:44
+"RTN","SAMIPTLK",2,0)
+ ;;18.0;SAMI;;;Build 8
+"RTN","SAMIPTLK",3,0)
+ ;
+"RTN","SAMIPTLK",4,0)
+ ;@license: see routine SAMIUL
+"RTN","SAMIPTLK",5,0)
+ ;
+"RTN","SAMIPTLK",6,0)
+ ; Authored by George P. Lilly 2018
+"RTN","SAMIPTLK",7,0)
+ ;
+"RTN","SAMIPTLK",8,0)
+ Q
+"RTN","SAMIPTLK",9,0)
+WSPTLOOK(rtn,filter) ; patient lookup - calls HMPPTRPC
+"RTN","SAMIPTLK",10,0)
+ ;
+"RTN","SAMIPTLK",11,0)
+ n search s search=$g(filter("search"))
+"RTN","SAMIPTLK",12,0)
+ n rslt
+"RTN","SAMIPTLK",13,0)
+ d SELECT^HMPPTRPC(.rslt,"NAME",search)
+"RTN","SAMIPTLK",14,0)
+ i $d(rslt) d  ;
+"RTN","SAMIPTLK",15,0)
+ . D ENCODE^VPRJSON("rslt","rtn")
+"RTN","SAMIPTLK",16,0)
+ q
+"RTN","SAMIPTLK",17,0)
+ ;
+"RTN","SAMIPTLK",18,0)
+WSPTLKUP(rtn,filter) ; patient lookup from patient-lookup cache
+"RTN","SAMIPTLK",19,0)
+ ;
+"RTN","SAMIPTLK",20,0)
+ n root s root=$$setroot^%wd("patient-lookup")
+"RTN","SAMIPTLK",21,0)
+ n search s search=$g(filter("search"))
+"RTN","SAMIPTLK",22,0)
+ n limit s limit=$g(filter("limit"))
+"RTN","SAMIPTLK",23,0)
+ n site s site=$g(filter("site"))
+"RTN","SAMIPTLK",24,0)
+ ;m ^gpl("ptlkup")=filter ;
+"RTN","SAMIPTLK",25,0)
+ q:site=""
+"RTN","SAMIPTLK",26,0)
+ i limit="" s limit=1000
+"RTN","SAMIPTLK",27,0)
+ s search=$$UPCASE^XLFMSMT(search)
+"RTN","SAMIPTLK",28,0)
+ n rslt
+"RTN","SAMIPTLK",29,0)
+ n cnt s cnt=0
+"RTN","SAMIPTLK",30,0)
+ n gn s gn=$na(@root@("name"))
+"RTN","SAMIPTLK",31,0)
+ n p1,p2
+"RTN","SAMIPTLK",32,0)
+ s p1=$p(search,",",1)
+"RTN","SAMIPTLK",33,0)
+ s p2=$p(search,",",2)
+"RTN","SAMIPTLK",34,0)
+ i $l(search)=5 i +$e(search,2,5)>0 d  q  ; using last5
+"RTN","SAMIPTLK",35,0)
+ . n gn2 s gn2=$na(@root@("last5"))
+"RTN","SAMIPTLK",36,0)
+ . n ii s ii=""
+"RTN","SAMIPTLK",37,0)
+ . f  s ii=$o(@gn2@(search,ii)) q:ii=""  q:cnt=limit  d  ;
+"RTN","SAMIPTLK",38,0)
+ . . i $g(@root@(ii,"siteid"))'=site q
+"RTN","SAMIPTLK",39,0)
+ . . s cnt=cnt+1
+"RTN","SAMIPTLK",40,0)
+ . . s rslt(cnt,ii)=""
+"RTN","SAMIPTLK",41,0)
+ . i cnt>0 d  ;
+"RTN","SAMIPTLK",42,0)
+ . . d BUILDRTN(.rtn,.rslt,$g(filter("format")))
+"RTN","SAMIPTLK",43,0)
+ ; 
+"RTN","SAMIPTLK",44,0)
+ n have s have=""
+"RTN","SAMIPTLK",45,0)
+ n q1 s q1=$na(@gn@(p1))
+"RTN","SAMIPTLK",46,0)
+ n q1x s q1x=$e(q1,1,$l(q1)-2) ; removes the ")
+"RTN","SAMIPTLK",47,0)
+ n qx s qx=q1
+"RTN","SAMIPTLK",48,0)
+ f  s qx=$q(@qx) q:$p(qx,q1x,2)=""  q:cnt=limit  d  ;
+"RTN","SAMIPTLK",49,0)
+ . n exit s exit=0
+"RTN","SAMIPTLK",50,0)
+ . i p2'="" d  ;
+"RTN","SAMIPTLK",51,0)
+ . . i p2'=$e($p(qx,",",5),1,$l(p2)) s exit=1
+"RTN","SAMIPTLK",52,0)
+ . q:exit
+"RTN","SAMIPTLK",53,0)
+ . n qx2 s qx2=+$p(qx,",",6)
+"RTN","SAMIPTLK",54,0)
+ . i $g(@root@(qx2,"siteid"))'=site q  ;
+"RTN","SAMIPTLK",55,0)
+ . i $d(have(qx2)) q  ; already go this one
+"RTN","SAMIPTLK",56,0)
+ . s cnt=cnt+1
+"RTN","SAMIPTLK",57,0)
+ . s have(qx2)=""
+"RTN","SAMIPTLK",58,0)
+ . s rslt(cnt,qx2)="" ; the ien
+"RTN","SAMIPTLK",59,0)
+ . ;w !,qx," ien=",$o(rslt(cnt,""))
+"RTN","SAMIPTLK",60,0)
+ i cnt>0 d BUILDRTN(.rtn,.rslt,$g(filter("format")))
+"RTN","SAMIPTLK",61,0)
+ q
+"RTN","SAMIPTLK",62,0)
+ ;
+"RTN","SAMIPTLK",63,0)
+BUILDRTN(rtn,ary,format) ; build the return json unless format=array
+"RTN","SAMIPTLK",64,0)
+ ; then return a mumps array
+"RTN","SAMIPTLK",65,0)
+ ;
+"RTN","SAMIPTLK",66,0)
+ ;d ^ZTER
+"RTN","SAMIPTLK",67,0)
+ n root s root=$$setroot^%wd("patient-lookup")
+"RTN","SAMIPTLK",68,0)
+ n groot s groot=$$setroot^%wd("vapals-patients")
+"RTN","SAMIPTLK",69,0)
+ n zi s zi=""
+"RTN","SAMIPTLK",70,0)
+ n r1 s r1=""
+"RTN","SAMIPTLK",71,0)
+ f  s zi=$o(ary(zi)) q:zi=""  d  ;
+"RTN","SAMIPTLK",72,0)
+ . n rx s rx=$o(ary(zi,""))
+"RTN","SAMIPTLK",73,0)
+ . s r1("result",zi,"name")=$g(@root@(rx,"saminame"))
+"RTN","SAMIPTLK",74,0)
+ . s r1("result",zi,"dfn")=$g(@root@(rx,"dfn"))
+"RTN","SAMIPTLK",75,0)
+ . s r1("result",zi,"last5")=$g(@root@(rx,"last5"))
+"RTN","SAMIPTLK",76,0)
+ . s r1("result",zi,"gender")=$g(@root@(rx,"gender"))
+"RTN","SAMIPTLK",77,0)
+ . s r1("result",zi,"dob")=$g(@root@(rx,"sbdob"))
+"RTN","SAMIPTLK",78,0)
+ . s r1("result",zi,"vapals")=0
+"RTN","SAMIPTLK",79,0)
+ . n dfn s dfn=$g(@root@(rx,"dfn"))
+"RTN","SAMIPTLK",80,0)
+ . i $o(@groot@("dfn",dfn,""))'="" d  ;
+"RTN","SAMIPTLK",81,0)
+ . . s r1("result",zi,"vapals")=1
+"RTN","SAMIPTLK",82,0)
+ . . s r1("result",zi,"studyid")=$g(@groot@(dfn,"samistudyid"))
+"RTN","SAMIPTLK",83,0)
+ ;.;
+"RTN","SAMIPTLK",84,0)
+ ;.; ven/lgc 2019-12-17 missing forms
+"RTN","SAMIPTLK",85,0)
+ ;.;
+"RTN","SAMIPTLK",86,0)
+ ;. i '($data(@groot@("graph",@groot@(dfn,"samistudyid")))) d  ;
+"RTN","SAMIPTLK",87,0)
+ ;. . s r1("result",zi,"vapals")=0
+"RTN","SAMIPTLK",88,0)
+ ;
+"RTN","SAMIPTLK",89,0)
+ ;q:'$d(r1)
+"RTN","SAMIPTLK",90,0)
+ i format="array" m rtn=r1 q  ; return a mumps array
+"RTN","SAMIPTLK",91,0)
+ d ENCODE^VPRJSON("r1","rtn")
+"RTN","SAMIPTLK",92,0)
+ q
+"RTN","SAMIPTLK",93,0)
+ ;
+"VER")
+8.0^22.2
+**END**
+**END**

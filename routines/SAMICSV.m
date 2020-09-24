@@ -91,7 +91,7 @@ ONEFORM(SITEID,SAMIFORM,SAMIDIR) ; process one form for a site
  . . . S OFFSET=OFFSET+1
  . . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"samiru"))
  . . f  s jj=$o(DICT(jj)) q:+jj=0  d  ;
- . . . s $P(@SAMIOUT@(SAMIN),"|",OFFSET+jj)=$g(@groot@(SAMII,SAMIJ,DICT(jj)))
+ . . . s $P(@SAMIOUT@(SAMIN),"|",OFFSET+jj)=""""_$g(@groot@(SAMII,SAMIJ,DICT(jj)))_""""
  . . S @SAMIOUT@(SAMIN)=SITEID_"|"_SAMII_"|"_SAMIJ_"|"_@SAMIOUT@(SAMIN)
  . . ;s @SAMIOUT@(SAMIN)=@SAMIOUT@(SAMIN)_$C(13,10)
  . ;b

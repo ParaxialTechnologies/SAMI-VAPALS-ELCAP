@@ -186,10 +186,10 @@
                 options: {
                     plugins: {
                         datalabels: {
-                            formatter: (value, ctx) => {
+                            formatter: function (value, ctx) {
                                 let sum = 0;
                                 let dataArr = ctx.chart.data.datasets[0].data;
-                                dataArr.map(data => {
+                                dataArr.map(function (data) {
                                     sum += data;
                                 });
                                 return (value * 100 / sum).toFixed(2) + "%";

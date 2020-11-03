@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>background.tsv data dictionary</title>
+    <style><!--
+body {
+    font-family: "Verdana", "Helvetica", sans-serif;
+    font-size: 9pt;
+    line-height: 12pt;
+}
+table.dd {
+    border-collapse: collapse;
+    border: 1px solid grey;
+    max-width: 100%;
+}
+table.dd th, table.dd td {
+    text-align: left;
+    border: 1px solid grey;
+    white-space: nowrap;
+    padding: 2pt 5pt;
+    vertical-align: top;
+}
+table.dd tr.hl th, table.dd tr.hl td {
+    background-color: #e8e8e8;
+}
+table.dd td.fnum, table.dd th.fnum { text-align: right; }
+table.dd td.ques, table.dd td.lbls { white-space: normal; }
+    --></style>
+  </head>
+  <body>
+    <table class="dd">
+      <tr class="hl">
+        <th class="ques">Question</th>
+        <th class="fnum">#</th>
+        <th class="name">Name</th>
+        <th class="type">Type</th>
+        <th class="requ">Required</th>
+        <th class="plac">Placeholder</th>
+        <th class="vals">Values</th>
+        <th class="lbls">Labels</th>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="12">Have you ever worked in any of the following?</td>
+        <td class="fnum">1</td>
+        <td class="name">sbahaod</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">d</td>
+        <td class="lbls">Agent orange</td>
+      </tr>
+      <tr>
+        <td class="fnum">2</td>
+        <td class="name">sbahaoi</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">i</td>
+        <td class="lbls">Asbestos product manufacturing</td>
+      </tr>
+      <tr>
+        <td class="fnum">3</td>
+        <td class="name">sbahaoj</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">j</td>
+        <td class="lbls">Auto repair</td>
+      </tr>
+      <tr>
+        <td class="fnum">4</td>
+        <td class="name">sbahaoh</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">h</td>
+        <td class="lbls">Building maintenance</td>
+      </tr>
+      <tr>
+        <td class="fnum">5</td>
+        <td class="name">sbahaob</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">b</td>
+        <td class="lbls">Burn pits</td>
+      </tr>
+      <tr>
+        <td class="fnum">6</td>
+        <td class="name">sbahaof</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">f</td>
+        <td class="lbls">Chemical industry/foundry/refinery</td>
+      </tr>
+      <tr>
+        <td class="fnum">7</td>
+        <td class="name">sbahaoa</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">a</td>
+        <td class="lbls">Construction/demolition</td>
+      </tr>
+      <tr>
+        <td class="fnum">8</td>
+        <td class="name">sbahaoe</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">e</td>
+        <td class="lbls">Mining</td>
+      </tr>
+      <tr>
+        <td class="fnum">9</td>
+        <td class="name">sbahaog</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">g</td>
+        <td class="lbls">Nuclear industry</td>
+      </tr>
+      <tr>
+        <td class="fnum">10</td>
+        <td class="name">sbahaoc</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">c</td>
+        <td class="lbls">Ship construction/repair</td>
+      </tr>
+      <tr>
+        <td class="fnum">11</td>
+        <td class="name">sbahaoo</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">o</td>
+        <td class="lbls">Other</td>
+      </tr>
+      <tr>
+        <td class="fnum">12</td>
+        <td class="name">sbahas</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Other work</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="2">Have you experienced any symptoms indicative of lung cancer?</td>
+        <td class="fnum" rowspan="2">13</td>
+        <td class="name" rowspan="2">sblcs</td>
+        <td class="type" rowspan="2">radio</td>
+        <td class="requ" rowspan="2"></td>
+        <td class="plac" rowspan="2"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="5">Have you experienced any symptoms indicative of lung cancer? -- Check all that apply</td>
+        <td class="fnum">14</td>
+        <td class="name">sbwcb</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">b</td>
+        <td class="lbls">Cough producing bloody material</td>
+      </tr>
+      <tr>
+        <td class="fnum">15</td>
+        <td class="name">sbwcl</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">l</td>
+        <td class="lbls">Unexplained weight loss greater than 20 lbs.</td>
+      </tr>
+      <tr>
+        <td class="fnum">16</td>
+        <td class="name">sbwch</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">h</td>
+        <td class="lbls">Unexplained hoarseness</td>
+      </tr>
+      <tr>
+        <td class="fnum">17</td>
+        <td class="name">sbwco</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">o</td>
+        <td class="lbls">Other</td>
+      </tr>
+      <tr>
+        <td class="fnum">18</td>
+        <td class="name">sbwcos</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Other symptom</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="7">When did you most recently have a chest CT?</td>
+        <td class="fnum" rowspan="7">19</td>
+        <td class="name" rowspan="7">sbact</td>
+        <td class="type" rowspan="7">select-one</td>
+        <td class="requ" rowspan="7"></td>
+        <td class="plac" rowspan="7"></td>
+        <td class="vals">-</td>
+        <td class="lbls">—</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">a</td>
+        <td class="lbls">Less than 6 months ago</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">b</td>
+        <td class="lbls">6–18 months ago</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">f</td>
+        <td class="lbls">18 months to 3 years ago</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">c</td>
+        <td class="lbls">3 years to 5 years ago</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">d</td>
+        <td class="lbls">Over 5 years ago</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">e</td>
+        <td class="lbls">Never</td>
+      </tr>
+      <tr>
+        <td class="ques">Where was the (chest CT) test done?</td>
+        <td class="fnum">20</td>
+        <td class="name">sbahcl</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Where was the test done?</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="2">Have you had a pulmonary function test within the last five years?</td>
+        <td class="fnum" rowspan="2">21</td>
+        <td class="name" rowspan="2">sbahpft</td>
+        <td class="type" rowspan="2">radio</td>
+        <td class="requ" rowspan="2"></td>
+        <td class="plac" rowspan="2"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="3">Pulmonary function test</td>
+        <td class="fnum">22</td>
+        <td class="name">sbfev1</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">FEV1 (L/s)</td>
+      </tr>
+      <tr>
+        <td class="fnum">23</td>
+        <td class="name">sbfvc</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">FVC (L)</td>
+      </tr>
+      <tr>
+        <td class="fnum">24</td>
+        <td class="name">sbcop</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Diffusion capacity (mL/min/mm Hg)</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">If you currently smoke, how many times have you attempted to quit in the last 12 months?</td>
+        <td class="fnum">25</td>
+        <td class="name">sbqtatt</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls"></td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="2">Have you been provided with smoking cessation services?</td>
+        <td class="fnum" rowspan="2">26</td>
+        <td class="name" rowspan="2">sbscs</td>
+        <td class="type" rowspan="2">radio</td>
+        <td class="requ" rowspan="2"></td>
+        <td class="plac" rowspan="2"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr>
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">Smoking cessation services -- When?</td>
+        <td class="fnum">27</td>
+        <td class="name">sbscsw</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">When?</td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="7">Smoking cessation services -- Have you used any of the following medications?</td>
+        <td class="fnum">28</td>
+        <td class="name">sbscsmv</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">v</td>
+        <td class="lbls">Varenicline</td>
+      </tr>
+      <tr>
+        <td class="fnum">29</td>
+        <td class="name">sbscsmb</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">b</td>
+        <td class="lbls">Buproprion</td>
+      </tr>
+      <tr>
+        <td class="fnum">30</td>
+        <td class="name">sbscsmp</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">p</td>
+        <td class="lbls">Patch</td>
+      </tr>
+      <tr>
+        <td class="fnum">31</td>
+        <td class="name">sbscsml</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">l</td>
+        <td class="lbls">Lozenges</td>
+      </tr>
+      <tr>
+        <td class="fnum">32</td>
+        <td class="name">sbscsmg</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">g</td>
+        <td class="lbls">Gum</td>
+      </tr>
+      <tr>
+        <td class="fnum">33</td>
+        <td class="name">sbscsmo</td>
+        <td class="type">checkbox</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals">o</td>
+        <td class="lbls">Other</td>
+      </tr>
+      <tr>
+        <td class="fnum">34</td>
+        <td class="name">sbscsmoo</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Other medication</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="2">Smoking cessation services -- Have you been counseled on the 5 A’s (Ask, Assess, Advise, Assist, Arrange)?</td>
+        <td class="fnum" rowspan="2">35</td>
+        <td class="name" rowspan="2">sbscs5a</td>
+        <td class="type" rowspan="2">radio</td>
+        <td class="requ" rowspan="2"></td>
+        <td class="plac" rowspan="2"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="2">Smoking cessation services -- Have you been referred for smoking cessation services?</td>
+        <td class="fnum" rowspan="2">36</td>
+        <td class="name" rowspan="2">sbscsref</td>
+        <td class="type" rowspan="2">radio</td>
+        <td class="requ" rowspan="2"></td>
+        <td class="plac" rowspan="2"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr>
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="3">Family history of lung cancer</td>
+        <td class="fnum" rowspan="3">37</td>
+        <td class="name" rowspan="3">sbfc</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">q</td>
+        <td class="lbls">?</td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="2">Family history of lung cancer -- Father?</td>
+        <td class="fnum" rowspan="2">38</td>
+        <td class="name" rowspan="2">sbfcf</td>
+        <td class="type" rowspan="2">radio</td>
+        <td class="requ" rowspan="2"></td>
+        <td class="plac" rowspan="2"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr>
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="2">Family history of lung cancer -- Mother?</td>
+        <td class="fnum" rowspan="2">39</td>
+        <td class="name" rowspan="2">sbfcm</td>
+        <td class="type" rowspan="2">radio</td>
+        <td class="requ" rowspan="2"></td>
+        <td class="plac" rowspan="2"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="2">Family history of lung cancer -- Siblings?</td>
+        <td class="fnum" rowspan="2">40</td>
+        <td class="name" rowspan="2">sbfcs</td>
+        <td class="type" rowspan="2">radio</td>
+        <td class="requ" rowspan="2"></td>
+        <td class="plac" rowspan="2"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr>
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="3">Lung cancer</td>
+        <td class="fnum" rowspan="3">41</td>
+        <td class="name" rowspan="3">sbhlc</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">q</td>
+        <td class="lbls">?</td>
+      </tr>
+      <tr>
+        <td class="ques">Lung cancer -- Year</td>
+        <td class="fnum">42</td>
+        <td class="name">sbhlcdt</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac">YYYY</td>
+        <td class="vals"></td>
+        <td class="lbls">Year</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="3">Melanoma</td>
+        <td class="fnum" rowspan="3">43</td>
+        <td class="name" rowspan="3">sbhme</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">q</td>
+        <td class="lbls">?</td>
+      </tr>
+      <tr>
+        <td class="ques">Melanoma -- Year</td>
+        <td class="fnum">44</td>
+        <td class="name">sbhmedt</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac">YYYY</td>
+        <td class="vals"></td>
+        <td class="lbls">Year</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="3">Basal/squamous-cell skin cancer</td>
+        <td class="fnum" rowspan="3">45</td>
+        <td class="name" rowspan="3">sbhba</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">q</td>
+        <td class="lbls">?</td>
+      </tr>
+      <tr>
+        <td class="ques">Basal/squamous-cell skin cancer -- Year</td>
+        <td class="fnum">46</td>
+        <td class="name">sbhbadt</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac">YYYY</td>
+        <td class="vals"></td>
+        <td class="lbls">Year</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="3">Leukemia</td>
+        <td class="fnum" rowspan="3">47</td>
+        <td class="name" rowspan="3">sbhle</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">q</td>
+        <td class="lbls">?</td>
+      </tr>
+      <tr>
+        <td class="ques">Leukemia -- Year</td>
+        <td class="fnum">48</td>
+        <td class="name">sbhledt</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac">YYYY</td>
+        <td class="vals"></td>
+        <td class="lbls">Year</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="3">Lymphoma</td>
+        <td class="fnum" rowspan="3">49</td>
+        <td class="name" rowspan="3">sbhly</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">q</td>
+        <td class="lbls">?</td>
+      </tr>
+      <tr>
+        <td class="ques">Lymphoma -- Year</td>
+        <td class="fnum">50</td>
+        <td class="name">sbhlydt</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac">YYYY</td>
+        <td class="vals"></td>
+        <td class="lbls">Year</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="3">Any other cancer</td>
+        <td class="fnum" rowspan="3">51</td>
+        <td class="name" rowspan="3">sbaoc</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">q</td>
+        <td class="lbls">?</td>
+      </tr>
+      <tr>
+        <td class="ques">Any other cancer -- Specify</td>
+        <td class="fnum">52</td>
+        <td class="name">sbaocsp</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Specify</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">Any other cancer -- Year</td>
+        <td class="fnum">53</td>
+        <td class="name">sbaocyr</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac">YYYY</td>
+        <td class="vals"></td>
+        <td class="lbls">Year</td>
+      </tr>
+      <tr>
+        <td class="ques">Any other cancer -- Primary Site</td>
+        <td class="fnum">54</td>
+        <td class="name">sbaocps</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Primary site</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="3">Asthma</td>
+        <td class="fnum" rowspan="3">55</td>
+        <td class="name" rowspan="3">sbmpa</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">q</td>
+        <td class="lbls">?</td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="2">Asthma -- Under current treatment?</td>
+        <td class="fnum" rowspan="2">56</td>
+        <td class="name" rowspan="2">sbmpat</td>
+        <td class="type" rowspan="2">radio</td>
+        <td class="requ" rowspan="2"></td>
+        <td class="plac" rowspan="2"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr>
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="3">COPD/Emphysema/Chronic bronchitis</td>
+        <td class="fnum" rowspan="3">57</td>
+        <td class="name" rowspan="3">sbmpc</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">q</td>
+        <td class="lbls">?</td>
+      </tr>
+      <tr>
+        <td class="ques">COPD/Emphysema/Chronic bronchitis -- Year</td>
+        <td class="fnum">58</td>
+        <td class="name">sbmpcw</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac">YYYY</td>
+        <td class="vals"></td>
+        <td class="lbls">Year</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="3">Childhood pneumonia</td>
+        <td class="fnum" rowspan="3">59</td>
+        <td class="name" rowspan="3">sbmpn</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">q</td>
+        <td class="lbls">?</td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="3">Myocardial Infarction (MI)</td>
+        <td class="fnum" rowspan="3">60</td>
+        <td class="name" rowspan="3">sbmpmi</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr>
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr>
+        <td class="vals">q</td>
+        <td class="lbls">?</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">Myocardial Infarction (MI) -- Year</td>
+        <td class="fnum">61</td>
+        <td class="name">sbmpmid</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac">YYYY</td>
+        <td class="vals"></td>
+        <td class="lbls">Year</td>
+      </tr>
+      <tr>
+        <td class="ques">Myocardial Infarction (MI) -- Where Treated</td>
+        <td class="fnum">62</td>
+        <td class="name">sbmpmiw</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Where Treated</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="3">Myocardial Infarction (MI)</td>
+        <td class="fnum" rowspan="3">63</td>
+        <td class="name" rowspan="3">sbmpas</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">q</td>
+        <td class="lbls">?</td>
+      </tr>
+      <tr>
+        <td class="ques">Myocardial Infarction (MI) -- Year</td>
+        <td class="fnum">64</td>
+        <td class="name">sbmpasw</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac">YYYY</td>
+        <td class="vals"></td>
+        <td class="lbls">Year</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">Myocardial Infarction (MI) -- Where Treated</td>
+        <td class="fnum">65</td>
+        <td class="name">sbmpast</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Where Treated</td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="3">Myocardial Infarction (MI)</td>
+        <td class="fnum" rowspan="3">66</td>
+        <td class="name" rowspan="3">sbmpcabg</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr>
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr>
+        <td class="vals">q</td>
+        <td class="lbls">?</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">Myocardial Infarction (MI) -- Year</td>
+        <td class="fnum">67</td>
+        <td class="name">sbmpcaby</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac">YYYY</td>
+        <td class="vals"></td>
+        <td class="lbls">Year</td>
+      </tr>
+      <tr>
+        <td class="ques">Myocardial Infarction (MI) -- Where Treated</td>
+        <td class="fnum">68</td>
+        <td class="name">sbmpcawt</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Where Treated</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="3">Myocardial Infarction (MI)</td>
+        <td class="fnum" rowspan="3">69</td>
+        <td class="name" rowspan="3">sbmpangi</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">q</td>
+        <td class="lbls">?</td>
+      </tr>
+      <tr>
+        <td class="ques">Myocardial Infarction (MI) -- Year</td>
+        <td class="fnum">70</td>
+        <td class="name">sbmpangy</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac">YYYY</td>
+        <td class="vals"></td>
+        <td class="lbls">Year</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">Myocardial Infarction (MI) -- Where Treated</td>
+        <td class="fnum">71</td>
+        <td class="name">sbmpanwt</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Where Treated</td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="3">Myocardial Infarction (MI)</td>
+        <td class="fnum" rowspan="3">72</td>
+        <td class="name" rowspan="3">sbmphf</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr>
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr>
+        <td class="vals">q</td>
+        <td class="lbls">?</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">Myocardial Infarction (MI) -- Year</td>
+        <td class="fnum">73</td>
+        <td class="name">sbmphfy</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac">YYYY</td>
+        <td class="vals"></td>
+        <td class="lbls">Year</td>
+      </tr>
+      <tr>
+        <td class="ques">Myocardial Infarction (MI) -- Where Treated</td>
+        <td class="fnum">74</td>
+        <td class="name">sbmphfwt</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Where Treated</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="3">High cholesterol</td>
+        <td class="fnum" rowspan="3">75</td>
+        <td class="name" rowspan="3">sbmphc</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">q</td>
+        <td class="lbls">?</td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="3">Stroke</td>
+        <td class="fnum" rowspan="3">76</td>
+        <td class="name" rowspan="3">sbmps</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr>
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr>
+        <td class="vals">q</td>
+        <td class="lbls">?</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">Stroke -- Year</td>
+        <td class="fnum">77</td>
+        <td class="name">sbmpsd</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac">YYYY</td>
+        <td class="vals"></td>
+        <td class="lbls">Year</td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="3">Peripheral vascular disease</td>
+        <td class="fnum" rowspan="3">78</td>
+        <td class="name" rowspan="3">sbmppv</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr>
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr>
+        <td class="vals">q</td>
+        <td class="lbls">?</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">Peripheral vascular disease -- Year</td>
+        <td class="fnum">79</td>
+        <td class="name">sbmppvd</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac">YYYY</td>
+        <td class="vals"></td>
+        <td class="lbls">Year</td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="3">Hypertension</td>
+        <td class="fnum" rowspan="3">80</td>
+        <td class="name" rowspan="3">sbmpht</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr>
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr>
+        <td class="vals">q</td>
+        <td class="lbls">?</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="2">Hypertension -- Treated?</td>
+        <td class="fnum" rowspan="2">81</td>
+        <td class="name" rowspan="2">sbmphtt</td>
+        <td class="type" rowspan="2">radio</td>
+        <td class="requ" rowspan="2"></td>
+        <td class="plac" rowspan="2"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr>
+        <td class="ques">Hypertension -- Year</td>
+        <td class="fnum">82</td>
+        <td class="name">sbmphtsw</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac">YYYY</td>
+        <td class="vals"></td>
+        <td class="lbls">Year</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">Hypertension -- Highest Value</td>
+        <td class="fnum">83</td>
+        <td class="name">sbmphthv</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Highest Value</td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="3">Diabetes</td>
+        <td class="fnum" rowspan="3">84</td>
+        <td class="name" rowspan="3">sbmpd</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr>
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr>
+        <td class="vals">q</td>
+        <td class="lbls">?</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">Diabetes -- Starting at what age?</td>
+        <td class="fnum">85</td>
+        <td class="name">sbmpdw</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Starting at what age?</td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="2">Diabetes -- Treated?</td>
+        <td class="fnum" rowspan="2">86</td>
+        <td class="name" rowspan="2">sbmpdt</td>
+        <td class="type" rowspan="2">radio</td>
+        <td class="requ" rowspan="2"></td>
+        <td class="plac" rowspan="2"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr>
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="3">Connective tissue diseases</td>
+        <td class="fnum" rowspan="3">87</td>
+        <td class="name" rowspan="3">sbmpct</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">q</td>
+        <td class="lbls">?</td>
+      </tr>
+      <tr>
+        <td class="ques">Connective tissue diseases -- Specify</td>
+        <td class="fnum">88</td>
+        <td class="name">sbmpctsp</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Specify</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="3">Ulcer</td>
+        <td class="fnum" rowspan="3">89</td>
+        <td class="name" rowspan="3">sbmpulce</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">q</td>
+        <td class="lbls">?</td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="3">Liver disease</td>
+        <td class="fnum" rowspan="3">90</td>
+        <td class="name" rowspan="3">sbmpld</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr>
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr>
+        <td class="vals">q</td>
+        <td class="lbls">?</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques" rowspan="3">Renal disease</td>
+        <td class="fnum" rowspan="3">91</td>
+        <td class="name" rowspan="3">sbmprd</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr class="hl">
+        <td class="vals">q</td>
+        <td class="lbls">?</td>
+      </tr>
+      <tr>
+        <td class="ques" rowspan="3">Other</td>
+        <td class="fnum" rowspan="3">92</td>
+        <td class="name" rowspan="3">sbmpoth</td>
+        <td class="type" rowspan="3">radio</td>
+        <td class="requ" rowspan="3"></td>
+        <td class="plac" rowspan="3"></td>
+        <td class="vals">n</td>
+        <td class="lbls">No</td>
+      </tr>
+      <tr>
+        <td class="vals">y</td>
+        <td class="lbls">Yes</td>
+      </tr>
+      <tr>
+        <td class="vals">q</td>
+        <td class="lbls">?</td>
+      </tr>
+      <tr class="hl">
+        <td class="ques">Other -- Specify</td>
+        <td class="fnum">93</td>
+        <td class="name">sbmpod</td>
+        <td class="type">text</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Specify</td>
+      </tr>
+      <tr>
+        <td class="ques">Comments</td>
+        <td class="fnum">94</td>
+        <td class="name">sbcmnt</td>
+        <td class="type">textarea</td>
+        <td class="requ"></td>
+        <td class="plac"></td>
+        <td class="vals"></td>
+        <td class="lbls">Comments</td>
+      </tr>
+    </table>
+  </body>
+</html>

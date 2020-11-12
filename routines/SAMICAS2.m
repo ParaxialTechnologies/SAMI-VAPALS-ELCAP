@@ -1,5 +1,5 @@
 SAMICAS2 ;ven/gpl - ielcap: case review page ; 2019-08-01T15:42Z
- ;;18.0;SAM;;
+ ;;18.0;SAM;;;Build 11
  ;
  ;@license: see routine SAMIUL
  ;
@@ -543,14 +543,6 @@ WSNUFORM ; select new form for patient (get service)
  . new ln set ln=temp(zi)
  . new touched set touched=0
  . ;
- . ;if ln["id" if ln["studyIdMenu" do  ;
- . ;. set zi=zi+4
- . ;
- . ;if ln["home.html" do  ;
- . ;. do findReplace^%ts(.ln,"home.html","/vapals")
- . ;. set temp(zi)=ln
- . ;. set touched=1
- . ;
  . if ln["href" if 'touched do  ;
  . . do FIXHREF^SAMIFORM(.ln)
  . . set temp(zi)=ln
@@ -559,51 +551,30 @@ WSNUFORM ; select new form for patient (get service)
  . . do FIXSRC^SAMIFORM(.ln)
  . . set temp(zi)=ln
  . ;
- . ;if ln["form" if ln["todo" do  ;
- . ;. do findReplace^%ts(.ln,"todo","/vapals")
- . ;. set cnt=cnt+1
- . ;. set rtn(cnt)=ln
- . ;. set cnt=cnt+1
- . ;. set rtn(cnt)="<input type=hidden name=""samiroute"" value=""addform"">"
- . ;. set cnt=cnt+1
- . ;. set rtn(cnt)="<input type=hidden name=""sid"" value="_sid_">"
- . ;. set zi=zi+1
- . ;
- . ;if ln["background" set temp(zi)=""
- . ;if ln["background" do  ;
- . ;. do findReplace^%ts(.ln,"background","sbform")
- . ;. set temp(zi)=ln
- . ;if ln["followup" do  ;
- . ;. do findReplace^%ts(.ln,"followup","fuform")
- . ;. set temp(zi)=ln
- . ;if ln["pet" do  ;
- . ;. do findReplace^%ts(.ln,"pet","ptform")
- . ;. set temp(zi)=ln
- . ;if ln["ctevaluation" do ;
- . ;. do findReplace^%ts(.ln,"ctevaluation","ceform")
- . ;. set temp(zi)=ln
- . ;if ln["biopsy" do  ;
- . ;. do findReplace^%ts(.ln,"biopsy","bxform")
- . ;. set temp(zi)=ln
- . ;if ln["newform" do  ;
- . ;. set temp(zi)=""
- . ;. set temp(zi+1)=""
- . ;
  . if ln["@@SID@@" do  ;
  . . do findReplace^%ts(.ln,"@@SID@@",sid)
  . . set temp(zi)=ln
  . . quit
  . ;
- . ;if ln["<script" if temp(zi+1)["function" do  ;
- . ;. set zi=$$SCANFOR^SAMIHOM3(.temp,zi,"</script")
- . ;. set zi=zi+1
+ . if ln["@@SITE@@" do  ; insert site id
+ . . n siteid s siteid=$g(filter("siteid"))
+ . . i siteid="" s siteid=$g(filter("site"))
+ . . q:siteid=""
+ . . do findReplace^%ts(.ln,"@@SITE@@",siteid)
+ . . s temp(zi)=ln
+ . ;
+ . if ln["@@SITETITLE@@" do  ; insert site title
+ . . n sitetit s sitetit=$g(filter("sitetitle"))
+ . . if sitetit="" d  ;
+ . . . n tsite s tsite=$g(filter("site"))
+ . . . q:tsite=""
+ . . . s sitetit=$$SITENM2^SAMISITE(tsite)_" - "_tsite
+ . . q:sitetit=""
+ . . do findReplace^%ts(.ln,"@@SITETITLE@@",sitetit)
+ . . s temp(zi)=ln
  . ;
  . set cnt=cnt+1
  . set rtn(cnt)=temp(zi)
- ;
- ;merge tout=rtn
- ;do ADDCRLF^VPRJRUT(.tout)
- ;merge rtn=tout
  ;
  ;@stanza 3 termination
  ;

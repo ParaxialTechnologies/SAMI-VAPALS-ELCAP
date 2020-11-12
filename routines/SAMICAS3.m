@@ -1,5 +1,5 @@
 SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ; 2019-03-14T19:08Z
- ;;18.0;SAM;;
+ ;;18.0;SAM;;;Build 1
  ;
  ;@license: see routine SAMIUL
  ;
@@ -192,6 +192,24 @@ PREVNOD(sid) ; extrinsic which returns the key of the latest form
  ;
  q retkey
  ;
+LASTCMP(sid) ; Extrinsic returns the date of the last comparison scan
+ n retkey s retkey=""
+ n fary
+ d SORTFRMS(.fary,sid)
+ n tdt s tdt=$P($$NOW^XLFDT,".",1) ; start with before today
+ f  s tdt=$o(fary(tdt),-1) q:tdt=""  q:retkey'=""  d  ; 
+ . n tmpkey s tmpkey=""
+ . f  s tmpkey=$o(fary(tdt,tmpkey)) q:tmpkey=""  q:retkey'=""  d  ; 
+ . . i tmpkey["ceform" s retkey=tmpkey
+ ;
+ n retdt s retdt=-1
+ i retkey'="" d  ;
+ . n fmdt
+ . s fmdt=$$KEY2FM^SAMICASE(retkey)
+ . s retdt=$$VAPALSDT^SAMICASE(fmdt)
+ ;
+ q retdt
+ ;
 SORTFRMS(ARY,sid) ; sorts all forms for patient sid by date
  ; and returns in ARY, passed by reference
  ; format of return is ARY(fmdate,key)=""
@@ -254,6 +272,13 @@ MKCEFORM(sid,key) ; create ct evaluation form
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate
  do SSAMISTA^SAMICASE(sid,key,"incomplete")
+ ; set baseline CT date and last comparison scan date
+ do  ;
+ . n tmpdt
+ . s tmpdt=$$BASELNDT^SAMICAS3(sid)
+ . q:tmpdt=-1
+ . s @root@("graph",sid,key,"sidoe")=tmpdt
+ . s @root@("graph",sid,key,"cedcs")=$$LASTCMP^SAMICAS3(sid)
  ;
  ;@stanza 3 termination
  ;

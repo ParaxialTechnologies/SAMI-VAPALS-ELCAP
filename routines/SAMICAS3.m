@@ -210,6 +210,30 @@ LASTCMP(sid) ; Extrinsic returns the date of the last comparison scan
  ;
  q retdt
  ;
+PRIORCMP(sid) ; Extrinsic returns the dates of 
+ ; all scans previous to the last comparison scan
+ n retstr s retstr=""
+ n lastcmp s lastcmp=""
+ n fary
+ d SORTFRMS(.fary,sid)
+ n tdt s tdt=$P($$NOW^XLFDT,".",1) ; start with before today
+ f  s tdt=$o(fary(tdt),-1) q:tdt=""  d  ; 
+ . i lastcmp="" d  ; first find the last comparison scan
+ . . n tmpkey s tmpkey=""
+ . . f  s tmpkey=$o(fary(tdt,tmpkey)) q:tmpkey=""  q:lastcmp'=""  d  ; 
+ . . . i tmpkey["ceform" s lastcmp=tmpkey
+ . e  d  ;
+ . . ; next add all previous scans to retstr
+ . . n tmpkey2 s tmpkey2=""
+ . . f  s tmpkey2=$o(fary(tdt,tmpkey2)) q:tmpkey2=""  d  ; 
+ . . . i tmpkey2["ceform" d  ; convert to external date
+ . . . . n fmdt
+ . . . . s fmdt=$$KEY2FM^SAMICASE(tmpkey2)
+ . . . . s retstr=$$VAPALSDT^SAMICASE(fmdt)_","_retstr
+ i $e(retstr,$l(retstr))="," s retstr=$e(retstr,1,$l(retstr)-1)
+ ;
+ q retstr
+ ;
 SORTFRMS(ARY,sid) ; sorts all forms for patient sid by date
  ; and returns in ARY, passed by reference
  ; format of return is ARY(fmdate,key)=""
@@ -279,6 +303,7 @@ MKCEFORM(sid,key) ; create ct evaluation form
  . q:tmpdt=-1
  . s @root@("graph",sid,key,"sidoe")=tmpdt
  . s @root@("graph",sid,key,"cedcs")=$$LASTCMP^SAMICAS3(sid)
+ . s @root@("graph",sid,key,"cedps")=$$PRIORCMP^SAMICAS3(sid)
  ;
  ;@stanza 3 termination
  ;

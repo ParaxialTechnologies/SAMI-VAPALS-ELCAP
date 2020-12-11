@@ -85,7 +85,8 @@ SETSID(newsid) ; propogate the new sid to all forms
 PICPAT(PATRTN,SITE) ; pick a patient in site SITE
  ;
  N FILTER,LIST,X,Y
- S FILTER("site")=SITE
+ I $G(SITE)="" S SITE="*"
+ S FILTER("site")=$G(SITE)
  S FILTER("format")="array"
  ;
  new DIR set DIR(0)="F^1:120" ; free text

@@ -53,7 +53,10 @@ mkarch(dfn) ; create an archive record for patient dfn
  i lien="" d  q  ;
  . w !,"error, lookup ien not found for patient dfn=",dfn
  ;
- s aien=$$getaien(dfn)
+ s aien=$o(@aroot@("dfn",dfn,""))
+ i aien'="" d  ;
+ . k @aroot@(aien)
+ i aien="" s aien=$$getaien(dfn)
  w !,"aien=",aien
  ;
  m @aroot@(aien,"patient","lookup")=@lroot@(lien)
@@ -63,6 +66,7 @@ mkarch(dfn) ; create an archive record for patient dfn
  d:pien'=""
  . m @aroot@(aien,"patient","demos")=@proot@(pien)
  . s sid=$g(@proot@(pien,"studyid"))
+ . i sid="" s sid=$g(@proot@(pien,"sisid"))
  . q:sid=""
  . m @aroot@(aien,"patient","graph")=@proot@("graph",sid)
  ;
@@ -86,4 +90,29 @@ outarch(dfn) ; write out an archive record to an external file
  ;
  q
  ;
-  
+DETAIL() ; displays the archive record for a patient
+ ;
+ n site,dfn,pat
+ s site=$$PICSITE^SAMIMOV()
+ q:site="^"
+ d PICPAT^SAMIMOV(.pat,site)
+ w "   ",$g(pat("name"))
+ s dfn=$g(pat("dfn"))
+ w !,"dfn=",dfn
+ q:dfn=""
+ n aroot ; archive root
+ s aroot=$$setroot^%wd("vapals-archive")
+ d mkarch(dfn)
+ n aien
+ s aien=$o(@aroot@("dfn",dfn,""))
+ i aien="" d  q  ;
+ . w !,"patient not found in archive"
+ n groot
+ s groot=$na(@aroot@(aien))
+ n OUT s OUT=$na(^TMP("SAMIOUT",$J))
+ k @OUT
+ D GTREE^SYNVPR(groot,9,,,OUT)
+ D BROWSE^DDBR(OUT,"N","Patient")
+ k @OUT
+ q
+ ;    

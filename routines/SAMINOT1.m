@@ -249,7 +249,8 @@ TLST ;
 ELNOTE(vals,dest,cnt) ; eligibility NOTE TEXT
  D OUT("")
  D OUT("Date of chart review: "_$$XVAL("sidc",vals))
- D OUT("The participant was identified as a potential lung screening candidate by: "_$$XVAL("siceiden",vals))
+ D GLOUT("The participant was identified as a potential lung screening candidate by: ")
+ D GLOUT($$XVAL("siceiden",vals),4)
  if $$XVAL("siceiden",vals)="referral" d  ;
  . D OUT("Date of Referral: "_$$XVAL("sicerfdt",vals))
  . n spec s spec=""
@@ -260,7 +261,8 @@ ELNOTE(vals,dest,cnt) ; eligibility NOTE TEXT
  . s:$$XVAL("sicerfon",vals)="y" spec=spec_" Oncology"
  . s:$$XVAL("sicerfsc",vals)="y" spec=spec_" Smoking Cessation"
  . s:$$XVAL("sicerfot",vals)="y" spec=spec_" "_$$XVAL("sicerfoo",vals)
- . D OUT("Specialty of referring provider: "_spec)
+ . D GLOUT("Specialty of referring provider: ")
+ . D GLOUT(spec,4)
  n elig
  s elig=$$XVAL("sicechrt",vals)
  D OUT("The participant is eligible based on chart review: "_$s(elig="y":"Yes",1:"no"))
@@ -284,9 +286,14 @@ PRENOTE(vals,dest,cnt) ;
  s:$$XVAL("sipecnpp",vals)="1" via=via_" Message in patient portal"
  s:$$XVAL("sipecnvd",vals)="1" via=via_" Video-on-Demand (VOD)"
  s:$$XVAL("sipecnot",vals)="1" via=via_" "_$$XVAL("sipecnoo",vals)
- D OUT("The lung screening program reached the potential candidate or was contacted via:"_via)
- D OUT("The pre-enrollment discussion with the participant resulted in: "_$$SUBRSLT($$XVAL("siperslt",vals)))
- D OUT("Comments: "_$$XVAL("sipecmnt",vals))
+ ;D OUT("The lung screening program reached the potential candidate or was contacted via:"_via)
+ D GLOUT("The lung screening program reached the potential candidate or was contacted via:")
+ D GLOUT(via,4)
+ ;D OUT("The pre-enrollment discussion with the participant resulted in: "_$$SUBRSLT($$XVAL("siperslt",vals)))
+ D OUT("The pre-enrollment discussion with the participant resulted in: ")
+ D GLOUT($$SUBRSLT($$XVAL("siperslt",vals)),4)
+ D OUT("Comments: ")
+ D GLOUT($$XVAL("sipecmnt",vals),4)
  ;
  s @vals@("pre-note-complete")="true"
  q
@@ -347,7 +354,9 @@ INNOTE(vals,dest,cnt) ;
  s:$$XVAL("silnpp",vals) learn=learn_" Message in patient portal"
  s:$$XVAL("silnvd",vals) learn=learn_" Video-on-Demand (VOD)"
  s:$$XVAL("silnot",vals) learn=learn_" "_$$XVAL("silnoo",vals)
- d OUT("   "_"How did you learn about the Lung Screening Program?: "_learn)
+ ;d GLOUT("   "_"How did you learn about the Lung Screening Program?: "_learn,4)
+ d GLOUT("How did you learn about the Lung Screening Program?: ",4)
+ d GLOUT(learn,6)
  n verified s verified=""
  s:$$XVAL("sipav",vals)="y" verified="Yes"
  s:$$XVAL("sipav",vals)="n" verified="No"
@@ -367,7 +376,7 @@ INNOTE(vals,dest,cnt) ;
  . d OUT("      "_csz)
  d:$$XVAL("sippn",vals)'="" OUT("      "_$$XVAL("sippn",vals))
  d OUT("   "_"Ever smoked?: ")
- d OUT("      "_$$XVAL("sies",vals))
+ d GLOUT($$XVAL("sies",vals),6)
  n sstatus s sstatus=""
  s:$$XVAL("siesm",vals)="n" sstatus=sstatus_" Never smoked"
  s:$$XVAL("siesm",vals)="p" sstatus=sstatus_" Past"
@@ -388,72 +397,38 @@ INNOTE(vals,dest,cnt) ;
  . d OUT("")
  i $$XVAL("sicep",vals)'="" d  ;
  . d OUT("Smoking cessation education provided:")
- . d OUT("    "_$$XVAL("sicep",vals))
+ . d GLOUT("    "_$$XVAL("sicep",vals),4)
  i $$XVAL("sicadx",vals)'="" d
  . d OUT("Prior lung cancer diagnosis date: "_$$XVAL("sicadx",vals))
  . i $$XVAL("sicadxl",vals)'="" d  ;
  . . d OUT("Location where prior lung cancer diagnosis was made:")
- . . d OUT("    "_$$XVAL("sicadxl",vals))
+ . . d GLOUT("    "_$$XVAL("sicadxl",vals),4)
  i $$XVAL("siptct",vals)'="" d
  . d OUT("Prior CT: "_$$XVAL("siptct",vals))
  . i $$XVAL("siptctl",vals)'="" d  ;
  . . d OUT("Location where prior CT was made:")
- . . d OUT("    "_$$XVAL("siptctl",vals))
+ . . d GLOUT("    "_$$XVAL("siptctl",vals),4)
  d OUT(" ")
  d OUT("Shared Decision Making: ")
  d OUT(" ")
- n sdm s sdm=""
- s sdm=sdm_"Veteran of age and exposure to cigarette smoke as described above, and without a "
- s sdm=sdm_"current diagnosis or obvious symptoms suggestive of lung cancer, has been educated "
- s sdm=sdm_"today about the estimated risk for lung cancer, the possibility of a cure or life "
- s sdm=sdm_"prolonging if an early lung cancer were to be found during screening, the possibility of "
- s sdm=sdm_"imaging abnormalities not being lung cancer, the possibility of complications from "
- s sdm=sdm_"additional diagnostic procedures, and the approximate amount of radiation exposure "
- s sdm=sdm_"associated with each screening procedure. In addition, the veteran has been educated "
- s sdm=sdm_"today about the importance of avoiding exposure to cigarette smoke, available tobacco "
- s sdm=sdm_"cessation programs and available lung screening services at this VA facility. Education "
- s sdm=sdm_"material was provided to the veteran."
- s sdm=sdm_"Veteran of age and exposure to cigarette smoke as described above, and without a "
- s sdm=sdm_"current diagnosis or obvious symptoms suggestive of lung cancer, has been educated "
- s sdm=sdm_"today about the estimated risk for lung cancer, the possibility of a cure or life "
- s sdm=sdm_"prolonging if an early lung cancer were to be found during screening, the possibility of "
- s sdm=sdm_"imaging abnormalities not being lung cancer, the possibility of complications from "
- s sdm=sdm_"additional diagnostic procedures, and the approximate amount of radiation exposure "
- s sdm=sdm_"associated with each screening procedure. In addition, the veteran has been educated "
- s sdm=sdm_"today about the importance of avoiding exposure to cigarette smoke, available tobacco "
- s sdm=sdm_"cessation programs and available lung screening services at this VA facility. Education "
- s sdm=sdm_"material was provided to the veteran."
- d OUT(sdm)
- ;d OUT(" ")
- ;d OUT("Veteran of age and exposure to cigarette smoke as described above, and without")
- ;d OUT("a current diagnosis or obvious symptoms suggestive of lung cancer, has been")
- ;d OUT("educated today about the estimated risk for lung cancer, the possibility of")
- ;d OUT("cure or life prolonging if an early lung cancer were to be found during")
- ;d OUT("screening, the possibility of imaging abnormalities not being lung cancer, the")
- ;d OUT("possibility of complications from additional diagnostic procedures, and the")
- ;d OUT("approximate amount of radiation exposure associated with each screening")
- ;d OUT("procedure.  In addition, the veteran has been educated today about the")
- ;d OUT("importance of adhering to annual lung screening, the possible impact of other")
- ;d OUT("medical conditions on the overall health status, the importance of avoiding")
- ;d OUT("exposure to cigarette smoke, available tobacco cessation programs and")
- ;d OUT("available lung screening services at the Phoenix VA.  Education material was")
- ;d OUT("provided to the veteran.  Based on this information, the veteran has opted")
- ;d OUT("for: ")
+ d SDM(dest)
  d OUT(" ")
  n ldct s ldct=""
  s:$$XVAL("sildct",vals)="n" ldct="No"
  s:$$XVAL("sildct",vals)="l" ldct="No"
  s:$$XVAL("sildct",vals)="y" ldct="Yes"
- d OUT("The veteran has decided to enroll in the Lung Screening Program: "_ldct)
+ d GLOUT("The veteran has decided to enroll in the Lung Screening Program: "_ldct)
  i $$XVAL("sildct",vals)="l" d  ;
- . d OUT("The veteran has indicated it is okay to contact in the future to discuss enrolling in the Lung Screening Program.")
+ . d GLOUT("The veteran has indicated it is okay to contact in the future to discuss enrolling in the Lung Screening Program.",4)
  i ldct="Yes" d  ;
  . d OUT("LDCT ordered: "_ldct)
  . d OUT("    "_"Veteran enrolled in the LSS program. Results and coordination of care ")
  . d OUT("    "_"will be made by the LSS team.  ")
  . i $$XVAL("siclin",vals)'="" d  ;
+ n tmpclin s tmpclin=$$XVAL("siclin",vals)
+ i tmpclin'="" d  ;
  . d OUT("Clinical Indications for Initial Screening CT:")
- . d OUT("    "_$$XVAL("siclin",vals))
+ . d GLOUT("    "_tmpclin,4)
  ;
  ;The veteran has decided to enroll in the Lung Screening Program: [Yes/No]
  ;
@@ -468,6 +443,48 @@ INNOTE(vals,dest,cnt) ;
  ;Clinical Indications:          [Show Input Text]
  ;
  ;
+ q
+ ;
+SDM(ary) ; adds Shared Decision Making text to array ary, passed by name
+ n ii s ii=$o(@ary@(" "),-1)
+ s ii=ii+1
+ s @ary@(ii)="Veteran of age and exposure to cigarette smoke as described above, and "
+ s ii=ii+1
+ s @ary@(ii)="without a current diagnosis or obvious symptoms suggestive of lung cancer, "
+ s ii=ii+1
+ s @ary@(ii)="has been educated today about the estimated risk for lung cancer, the "
+ s ii=ii+1
+ s @ary@(ii)="possibility of cure or life prolonging if an early lung cancer were to be "
+ s ii=ii+1
+ s @ary@(ii)="found during screening, the possibility of imaging abnormalities not being "
+ s ii=ii+1
+ s @ary@(ii)="lung cancer, the possibility of complications from additional diagnostic "
+ s ii=ii+1
+ s @ary@(ii)="procedures, and the approximate amount of radiation exposure associated "
+ s ii=ii+1
+ s @ary@(ii)="with each screening procedure. In addition, the Veteran has been educated "
+ s ii=ii+1
+ s @ary@(ii)="today about the importance of adhering to annual lung screening, the "
+ s ii=ii+1
+ s @ary@(ii)="possible impact of other medical conditions on the overall health status, "
+ s ii=ii+1
+ s @ary@(ii)="the importance of avoiding exposure to cigarette smoke, available tobacco "
+ s ii=ii+1
+ s @ary@(ii)="cessation programs and available lung screening services at this site. "
+ s ii=ii+1
+ s @ary@(ii)="Education material was provided to the veteran. "
+ s ii=ii+1
+ ;s @ary@(ii)="Based on this information, the Veteran has opted for "
+ q
+ ;
+GLOUT(ln,indent) ; glob out first wrap ln then put it in dest
+ n arytmp
+ s arytmp(1)=ln
+ i $g(indent)="" s indent=1
+ d wrap^%tt("arytmp",indent_":80")
+ n ii s ii=""
+ f  s ii=$o(arytmp(ii)) q:ii=""  d  ;
+ . d OUT(arytmp(ii))
  q
  ;
 OUT(ln) ;

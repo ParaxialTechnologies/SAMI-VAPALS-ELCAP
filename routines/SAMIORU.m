@@ -56,7 +56,8 @@ EN(filter) ; Build and send ORU enrollment response
  set SNDPROT=$get(filter("sendprotocol")) if SNDPROT="" do
  . set (SNDPROT,filter("sendprotocol"))="PHX ENROLL ORU EVN"
  set climit=$get(filter("climit")) if +$get(climit)=0 do
- . set climit=66
+ . ;set climit=66
+ . set climit=81
  set filter("Cache")=($zversion["Cache")
  set notenmbr=+$get(filter("notenmbr"))
  if notenmbr=0 do  quit:$Q filter("rslt")  quit

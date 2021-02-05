@@ -39,7 +39,8 @@ forms = [
     {"template": "register", "title": "Register", "output": "register", "withNav": "true"},
     {"template": "editparticipant", "title": "Edit Participant", "output": "editparticipant", "withNav": "true"},
     {"template": "error", "title": "System Error", "output": "error", "withNav": "true"},
-    {"template": "login", "title": "Login", "output": "login", "withNav": "false"}
+    {"template": "login", "title": "Login", "output": "login", "withNav": "false"},
+    {"template": "login-demo", "title": "DEMO Login", "output": "login-demo", "withNav": "false"}
 ]
 
 for form in forms:

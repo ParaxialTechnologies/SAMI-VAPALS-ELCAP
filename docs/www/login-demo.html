@@ -6,7 +6,7 @@
   <meta content="2021.02.05" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
-   @@SITETITLE@@: System Error
+   @@SITETITLE@@: DEMO Login
   </title>
   <link href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
@@ -83,83 +83,41 @@
       <img alt="VAPALS-ELCAP Logo" src="img/logo_name_50x215.png" title="VAPALS-ELCAP"/>
      </a>
     </div>
-    <div class="navbar-collapse collapse navbar-right" id="navbar-main">
-     <ul class="nav navbar-nav">
-      <li>
-       <a class="text-nowrap navigation" data-method="post" data-samiroute="home" href="#!">
-        Home
-       </a>
-      </li>
-      <li id="studyIdMenu" style="display:none;">
-       <a class="navigation" data-method="post" data-samiroute="casereview" href="#!">
-        Case Review
-       </a>
-      </li>
-      <li class="dropdown">
-       <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
-        Reports
-        <span class="caret">
-        </span>
-       </a>
-       <ul class="dropdown-menu">
-        <li>
-         <a class="navigation" data-method="post" data-samireporttype="enrollment" data-samiroute="report" data-start-date="" href="#!">
-          Enrollment
-         </a>
-        </li>
-        <li>
-         <a class="navigation" data-method="post" data-samireporttype="activity" data-samiroute="report" href="#!">
-          Activity
-         </a>
-        </li>
-        <li>
-         <a class="navigation" data-method="post" data-samireporttype="followup" data-samiroute="report" href="#!">
-          Participant Follow-up
-         </a>
-        </li>
-        <li>
-         <a class="navigation" data-method="post" data-samireporttype="missingct" data-samiroute="report" href="#!">
-          Missing Image &amp; CT Evaluation
-         </a>
-        </li>
-        <li>
-         <a class="navigation" data-method="post" data-samireporttype="incomplete" data-samiroute="report" href="#!">
-          Incomplete Form
-         </a>
-        </li>
-        <li>
-         <a class="navigation" data-method="post" data-samireporttype="inactive" data-samiroute="report" href="#!">
-          Inactive
-         </a>
-        </li>
-        <li>
-         <a class="navigation" data-method="post" data-samireporttype="worklist" data-samiroute="report" href="#!">
-          Work List
-         </a>
-        </li>
-       </ul>
-      </li>
-      <li>
-       <a class="navigation" data-method="post" data-samiroute="logout" href="#!" id="logout-link">
-        Logout
-       </a>
-      </li>
-     </ul>
-    </div>
    </div>
   </nav>
   <div class="container-fluid" style="max-width:1550px">
    <div class="row">
-    <div class="col-md-offset-4 col-md-4">
-     <div class="alert alert-danger">
-      <h4 class="alert-heading">
-       System Error
-      </h4>
-      <p id="system-error-detail">
-      </p>
-      <p>
-       Call your system administrator
-      </p>
+    <div class="col-md-12">
+     <div class="message-area-static" id="message-area-static">
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+     <div class="panel panel-default">
+      <div class="panel-heading">
+       <h3 class="panel-title">
+        Login
+       </h3>
+      </div>
+      <div class="panel-body">
+       <form action="/vapals" class="validated" id="login-form" method="post">
+        <input name="site" type="hidden" value="ZZZ"/>
+        <input name="samiroute" type="hidden" value="login"/>
+        <input name="access" type="hidden" value="ZZZUSER1"/>
+        <input name="verify" type="hidden" value="@demo"/>
+        <div class="text-center">
+         <h3>
+          Press "Login" to access the DEMO site!
+         </h3>
+         <br/>
+         <br/>
+         <button class="btn btn-primary btn-lg" id="submit-button" type="submit">
+          Login
+         </button>
+        </div>
+       </form>
+      </div>
      </div>
     </div>
    </div>
@@ -274,13 +232,6 @@
         $("a[data-samiroute=report]").attr("data-start-date", reportsStartDate).attr("data-end-date", reportsEndDate);
 
     })
-  </script>
-  <script>
-   const systemErrorMessage = "@@ERROR_MESSAGE@@";
-        const hasSystemErrorMessage = systemErrorMessage !== "@@ERROR_" + "MESSAGE@@" && systemErrorMessage !== "";
-        if (hasSystemErrorMessage) {
-            $("#system-error-detail").text(systemErrorMessage);
-        }
   </script>
  </body>
 </html>

@@ -11,6 +11,7 @@
         {% include '_messages.jinja2' %}
         <form action="{{ formPage+".html" if mockup else "/vapals" }}" class="validated" method="{{ formMethod }}"
               id="main-form">
+            <input type="hidden" name="site" value="@@SITE@@">
             <input type="hidden" name="samiroute" value="report"/>
             <input type="hidden" name="samireporttype" value="@@REPORTTYPE@@"/>
             <div class="row">

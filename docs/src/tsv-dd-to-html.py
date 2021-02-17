@@ -9,6 +9,7 @@
 #==============================================================================
 
 import re
+import ntpath
 
 #------------------------------------------------------------------------------
 # First, we're going to set up some string variables for the HTML output. We'll
@@ -198,11 +199,15 @@ def compact_questions(filedata):
             oldquestion, count
         ))
 
+def path_leaf(path):
+    head, tail = ntpath.split(path)
+    return tail or ntpath.basename(head)
+
 #------------------------------------------------------------------------------
 # 
 #------------------------------------------------------------------------------
 def process_tsv(fn):
-    ofn = fn.replace(".tsv", ".html")
+    ofn = "../dds/" + path_leaf(fn).replace(".tsv", ".html")
     print("Opening {0}".format(ofn))
     filedata = {}
     with open(fn) as f:
@@ -312,13 +317,14 @@ def process_tsv(fn):
         f.close()
 
 files = [
-    "background.tsv",
-    "biopsy.tsv",
-    "ct-evaluation.tsv",
-    "follow-up.tsv",
-    "intake.tsv",
-    "intervention.tsv",
-    "pet-evaluation.tsv"
+    "../form-fields/background.tsv",
+    "../form-fields/biopsy.tsv",
+    "../form-fields/ct-evaluation.tsv",
+    "../form-fields/follow-up.tsv",
+    "../form-fields/intake.tsv",
+    "../form-fields/intervention.tsv",
+    "../form-fields/pet-evaluation.tsv",
+    "../form-fields/register.tsv"
 ]
 
 for f in files:

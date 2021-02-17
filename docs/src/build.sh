@@ -38,3 +38,5 @@ python "${DIR}/compile-forms.py"
 DOCS="${DIR}/doc"
 rm -rf "${DOCS}"
 jsdoc ${DIR}/../www/*.js --readme ${DIR}/../src/README.md -d "${DOCS}"
+
+python "${DIR}/tsv-dd-to-html.py"

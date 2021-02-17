@@ -46,7 +46,7 @@
     <div class="row">
         <div class="col-sm-4 col-md-4 form-group">
             <label for="cefud">Approximate follow-up date:</label><br/>
-            {{ f.datepicker("cefud", "future") }}
+            {{ f.datepicker("cefud") }}
         </div>
     </div>
 </div>
@@ -159,11 +159,6 @@
         //Add validations after all other anonymous functions have run and fv is bound.
         if (fv) {
             fv.addField('cecclm', {validators: {notEmpty: {message: 'Left main is required'}}});
-            fv.addField('cefud', {
-                validators: {
-                    date: {min: VAPALS.todaysDate(), message: 'Follow-up date must be at least today\'s date'}
-                }
-            });
             fv.addField('celrad', {validators: {notEmpty: {message: 'Lung-RADS category is required'}}})
         }
 

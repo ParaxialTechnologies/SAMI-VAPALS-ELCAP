@@ -253,142 +253,6 @@
      </h3>
      <div class="row">
       <div class="col-md-4">
-       <label class="visible-xs visible-sm" for="siopfn">
-        Ordered by
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="siopfn">
-        Ordered by
-       </label>
-      </div>
-      <div class="col-md-4 form-group">
-       <label class="aria-hidden" for="siopfn">
-        First name
-       </label>
-       <input class="form-control" id="siopfn" name="siopfn" type="text"/>
-       <span class="help-block small">
-        First Name
-       </span>
-      </div>
-      <div class="col-md-4 form-group">
-       <label class="aria-hidden" for="siopln">
-        Last name
-       </label>
-       <input class="form-control" id="siopln" name="siopln" title="Last name" type="text"/>
-       <span class="help-block small">
-        Last Name
-       </span>
-      </div>
-     </div>
-     <div class="row">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm required" for="siopnpi">
-        National provider ID (NPI)
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm required" for="siopnpi">
-        National provider ID (NPI)
-       </label>
-      </div>
-      <div class="col-sm-2 form-group">
-       <input class="form-control numeric" id="siopnpi" name="siopnpi" required="required" type="text"/>
-      </div>
-     </div>
-     <div class="row">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm required" for="sidsd-n">
-        Documentation of shared decision making
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm required" for="sidsd-n">
-        Documentation of shared decision making
-       </label>
-      </div>
-      <div class="col-sm-8 form-group">
-       <label class="radio-inline" for="sidsd-n">
-        <input id="sidsd-n" name="sidsd" required="required" type="radio" value="n"/>
-        No
-       </label>
-       <label class="radio-inline" for="sidsd-y">
-        <input id="sidsd-y" name="sidsd" type="radio" value="y"/>
-        Yes
-       </label>
-       <p class="help-block small">
-        (shared decision making is required for reimbursement for G0297
-                            exams on baseline
-        <strong>
-         only
-        </strong>
-        )
-       </p>
-      </div>
-     </div>
-     <div class="row">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm required">
-        Reported smoking status at time of order
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm required">
-        Reported smoking status at time of order
-       </label>
-      </div>
-      <div class="col-sm-8 form-group">
-       <label class="radio-inline" for="siopss-c">
-        <input id="siopss-c" name="siopss" required="required" type="radio" value="c"/>
-        Current
-       </label>
-       <label class="radio-inline" for="siopss-f">
-        <input id="siopss-f" name="siopss" type="radio" value="f"/>
-        Former
-       </label>
-      </div>
-     </div>
-     <div class="row">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm required" for="sioppy">
-        Reported pack years at time of order
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm required" for="sioppy">
-        Reported pack years at time of order
-       </label>
-      </div>
-      <div class="col-md-8 form-group">
-       <input class="form-control numeric decimalformat" id="sioppy" name="sioppy" required="required" type="text"/>
-      </div>
-     </div>
-     <div class="row">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm" for="siopqy">
-        Reported years since quit at time of order
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm" for="siopqy">
-        Reported years since quit at time of order
-       </label>
-      </div>
-      <div class="col-md-8 form-group">
-       <input class="form-control numeric decimalformat" id="siopqy" name="siopqy" type="text"/>
-      </div>
-     </div>
-     <div class="row">
-      <div class="col-md-4">
-       <label class="visible-xs visible-sm required" for="sioas">
-        Reported asymptomatic for lung cancer at time of order
-       </label>
-       <label class="text-right pull-right hidden-xs hidden-sm required" for="sioas">
-        Reported asymptomatic for lung cancer at time of order
-       </label>
-      </div>
-      <div class="col-md-8 form-group">
-       <label class="radio-inline" for="sioas-n">
-        <input id="sioas-n" name="sioas" required="required" type="radio" value="n"/>
-        No
-       </label>
-       <label class="radio-inline" for="sioas-y">
-        <input id="sioas-y" name="sioas" type="radio" value="y"/>
-        Yes
-       </label>
-      </div>
-     </div>
-     <hr/>
-     <div class="row">
-      <div class="col-md-4">
        <label class="visible-xs visible-sm required" for="fursnscn">
         Reason for CT scan
        </label>
@@ -1543,7 +1407,7 @@
             // for certain validators that use multiple inputs like checkboxes and radio groups, change the location
             // of the error icon to be based on the form-group element, instead of being immediately adjacent to the
             // first control in that group
-            const multiInputValidators = ['siabx', 'siaex', 'siho', 'sicd', 'silcs', 'sier', 'sicpd', 'sidsd', 'siopss', 'sioas', 'funewct'];
+            const multiInputValidators = ['siabx', 'siaex', 'siho', 'sicd', 'silcs', 'sier', 'sicpd', 'funewct'];
 
             $form.formValidation({
                     fields: {
@@ -1564,17 +1428,6 @@
                         sico: {validators: {notEmpty: {message: 'Coordinator is required'}}},
 
                         //Ordering Information
-                        siopnpi: {validators: {notEmpty: {message: 'Provider ID is required'}}},
-                        sidsd: {validators: {notEmpty: {message: 'Shared decision making is required'}}},
-                        siopss: {validators: {notEmpty: {message: 'Smoking status is required'}}},
-                        sioppy: {
-                            validators: {
-                                notEmpty: {message: 'Pack years is required'},
-                                numeric: {message: 'Must be a number'},
-                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
-                            }
-                        },
-                        sioas: {validators: {notEmpty: {message: 'Asymptomatic response is required'}}},
                         fursnscn: {validators: {notEmpty: {message: 'Reason for CT scan is required'}}},
                         siabx: {validators: {notEmpty: {message: 'Antibiotics is required'}}},
                         siaex: {validators: {notEmpty: {message: 'Annual scan is required'}}},

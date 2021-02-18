@@ -1,5 +1,5 @@
 SAMICTR3 ;ven/gpl - ielcap: forms ; 1/23/19 5:14pm
- ;;18.0;SAMI;;
+ ;;18.0;SAMI;;;Build 2
  ;
  ;@license: see routine SAMIUL
  ;
@@ -40,19 +40,19 @@ EMPHYS(rtn,vals,dict) ;
  . . if $$XVAL("ceper",vals)'="-" d  ;
  . . . if $$XVAL("cepel",vals)'="-" d  ;
  . . . . if $$XVAL("cepel",vals)=$$XVAL("ceper",vals) d  ;
- . . . . . d OUT(sp1_"Bilateral "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusions.") d OUT("")
+ . . . . . d OUT(sp1_"Bilateral "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusions. ") d OUT("")
  . . . . else  d  ;
- . . . . . d OUT(sp1_"Bilateral pleural effusions ; "_$$XSUB("cepe",vals,dict,"cepel")_" on left, and "_$$XSUB("cepe",vals,dict,"ceper")_" on right.")
+ . . . . . d OUT(sp1_"Bilateral pleural effusions ; "_$$XSUB("cepe",vals,dict,"cepel")_" on left, and "_$$XSUB("cepe",vals,dict,"ceper")_" on right. ")
  . . . . . s pe=1
  . . . else  d  ;
- . . . . d OUT(sp1_"On right "_$$XSUB("cepe",vals,dict,"cepr")_" pleural effusion and on left "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusion.") d OUT("")
+ . . . . d OUT(sp1_"On right "_$$XSUB("cepe",vals,dict,"cepr")_" pleural effusion and on left "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusion. ") d OUT("")
  . . . . s pe=1
  . . else  d  ;
- . . . d OUT(sp1_"On right "_$$XSUB("cepe",vals,dict,"cepr")_" pleural effusion and on left "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusion.") d OUT("")
+ . . . d OUT(sp1_"On right "_$$XSUB("cepe",vals,dict,"cepr")_" pleural effusion and on left "_$$XSUB("cepe",vals,dict,"cepel")_" pleural effusion. ") d OUT("")
  . . . s pe=1
  . ;
  i $$XVAL("cepev",vals)'="y" d  ; 
- . d OUT(sp1_"No pleural effusions.") d OUT("")
+ . d OUT(sp1_"No pleural effusions. ") d OUT("")
  ;  if { $pe == 0 } {
  ;    puts "[tr "No pleural effusions"].${para}"
  ;  }
@@ -61,7 +61,7 @@ EMPHYS(rtn,vals,dict) ;
  ;
  if $$XVAL("cebatr",vals)="y" d  ;
  . ;d OUT("Rounded atelectasis in the ")
- . d OUT(sp1_"Rounded atelectasis in the "_$$LOBESTR^SAMICTR2("cebatrl1^cebatrl2^cebatrl3^cebatrl4^cebatrl5",0)_".") ;d OUT("")
+ . d OUT(sp1_"Rounded atelectasis in the "_$$LOBESTR^SAMICTR2("cebatrl1^cebatrl2^cebatrl3^cebatrl4^cebatrl5",0)_". ") ;d OUT("")
  . s yespp=1
  ;
  if $$XVAL("cept",vals)="y" d  ;
@@ -77,24 +77,24 @@ EMPHYS(rtn,vals,dict) ;
  . . s str=str_" left"
  . . s numl=numl+1
  . ;if numl>1 d  ;
- . ;. s str=str_" lungs."
+ . ;. s str=str_" lungs. "
  . ;else  d  ;
- . ;. s str=str_" lung."
- . s str=str_"."
- . if numl=0 set str=sp1_"Pleural thickening/plaques."
+ . ;. s str=str_" lung. "
+ . s str=str_". "
+ . if numl=0 set str=sp1_"Pleural thickening/plaques. "
  . d OUT(str) ;d OUT("")
  ;
  if $$XVAL("cepu",vals)="y" d  ;
  . s yespp=1
  . if $l($$XVAL("cepus",vals))'=0 d  ;
  . . d OUT(sp1_"Pleural rumor: "_$$XVAL("cepus",vals)) 
- . e  d OUT(sp1_"Pleural tumor.")
+ . e  d OUT(sp1_"Pleural tumor. ")
  . ;d OUT("")
  ;
  i yespp=0 d OUT("")
  ;
  d  ;
- . if $$XVAL("ceoppab",vals)'="" d OUT(sp1_$$XVAL("ceoppab",vals)_".") ;d OUT("")
+ . if $$XVAL("ceoppab",vals)'="" d OUT(sp1_$$XVAL("ceoppab",vals)_". ") ;d OUT("")
  . else  d
  . . if yespp=1 d OUT("")
  ;
@@ -149,9 +149,9 @@ EMPHYS(rtn,vals,dict) ;
  if $$XVAL("ceprevm",vals)'="-" d  ;
  . if $$XVAL("ceprevm",vals)'="no" d  ;
  . . if $$XVAL("ceprevm",vals)'="" d
- . . . d OUT("A "_$$XSUB("ceprevm",vals,dict,"ceprevm")_" pericardial effusion"_".") d OUT("")
+ . . . d OUT("A "_$$XSUB("ceprevm",vals,dict,"ceprevm")_" pericardial effusion"_". ") d OUT("")
  . . . s pe=1
- . . else  d OUT("No pericardial effusion.") d OUT("")
+ . . else  d OUT("No pericardial effusion. ") d OUT("")
  ;
  ;
  ;;# Pulmonary and Aortic Diameter
@@ -165,7 +165,7 @@ EMPHYS(rtn,vals,dict) ;
  ;
  ; #"Additional Comments on Cardiac Abnormalities:"
  if $$XVAL("cecommca",vals)'="" d  ;
- . d OUT($$XVAL("cecommca",vals)_".")
+ . d OUT($$XVAL("cecommca",vals)_". ")
  s outmode="go"
  d OUT("")
  ;
@@ -178,14 +178,14 @@ EMPHYS(rtn,vals,dict) ;
  . s yeamm=1
  . s abn=$$CCMSTR("ceatc^ceaty^ceatm",vals)
  . ;d OUT("[abn="_abn_"]")
- . i abn="" d OUT(sp1_"Noted in the thyroid.")
- . i abn'="" d OUT(sp1_abn_" thyroid.")
+ . i abn="" d OUT(sp1_"Noted in the thyroid. ")
+ . i abn'="" d OUT(sp1_abn_" thyroid. ")
  . i $$XVAL("ceato",vals)="o" d OUT(sp1_$$XVAL("ceatos",vals)_"<br>")
  i $$XVAL("ceaya",vals)="y" d  ;
  . s yesmm=1
  . s abn=$$CCMSTR("ceayc^ceayy^ceaym",vals)
  . i abn="" d OUT(sp1_"Noted in the thymus")
- . i abn'="" d OUT(sp1_abn_" thymus.")
+ . i abn'="" d OUT(sp1_abn_" thymus. ")
  . i $$XVAL("ceayo",vals)="o" d OUT(sp1_$$XVAL("ceayos",vals))
  ;
  ;   # Non-calcified lymph nodes
@@ -228,7 +228,7 @@ EMPHYS(rtn,vals,dict) ;
  . . i $$XVAL(lnlist(item),vals)'="" s llist($o(llist(""),-1)+1)=lnlist(item)
  . n lnum,slnum
  . s lnum=$o(llist(""),-1)
- . i lnum=0 d OUT("Enlarged or growing lymph nodes are noted.")
+ . i lnum=0 d OUT("Enlarged or growing lymph nodes are noted. ")
  . i lnum>0 d  ;
  . . s slnum=lnum
  . . d OUT("Enlarged or growing lymph nodes in the ")
@@ -238,27 +238,27 @@ EMPHYS(rtn,vals,dict) ;
  . . . i lnum>2 d OUT(", ")
  . . . i lnum=2 d OUT(" and ")
  . . . s lnum=lnum-1
- . . i slnum>1 d OUT(" locations.")
- . . i slnum=1 d OUT(" location.")
+ . . i slnum>1 d OUT(" locations. ")
+ . . i slnum=1 d OUT(" location. ")
  ;
  ;s outmode="go"
  ;d OUT("")
  ;
  if $$XVAL("cemlncab",vals)="y" d  ;
  . set yesmm=1
- . d OUT("Calcified lymph nodes present.")
+ . d OUT("Calcified lymph nodes present. ")
  ;
  if $$XVAL("ceagaln",vals)="y" d  ;
  . set yesmm=1
- . d OUT("Enlarged or growing axillary lymph nodes without central fat are seen.")
+ . d OUT("Enlarged or growing axillary lymph nodes without central fat are seen. ")
  . d OUT($$XVAL("ceagalns",vals))
  ;
  if $$XVAL("cemva",vals)="y" d  ;
  . set yesmm=1
  . if $$XVAL("cemvaa",vals)="a" d  ;
- . . d OUT("Other vascular abnormalities are seen in the aorta.")
+ . . d OUT("Other vascular abnormalities are seen in the aorta. ")
  . if $$XVAL("cemvaa",vals)="w" d  ;
- . . d OUT("Other vascular abnormalities are seen in the pulmonary series.")
+ . . d OUT("Other vascular abnormalities are seen in the pulmonary series. ")
  . d OUT($$XVAL("cemvaos",vals)_"<br>")
  ;
  ;s outmode="hold"
@@ -276,7 +276,7 @@ EMPHYS(rtn,vals,dict) ;
  . if $$XVAL("cemelnm",vals)="m" d  ;
  . . s elist($o(elist(""),-1)+1)="A mass"
  . . s numl=numl+1
- . if numl=0 d OUT("Esophageal abnormality noted.")
+ . if numl=0 d OUT("Esophageal abnormality noted. ")
  . e  d  ;
  . . d OUT($g(elist(1)))
  . . if numl=1 d OUT(" is ")
@@ -287,7 +287,7 @@ EMPHYS(rtn,vals,dict) ;
  . . . d OUT($$LOWC($g(elist(2))))
  . . . if numl=3 d  ;
  . . . . d OUT(", and "_$$LOWC($g(elist(3))))
- . . d OUT("seen in the esophagus.")
+ . . d OUT("seen in the esophagus. ")
  . d OUT($$XVAL("cemelnos",vals))
  ;s outmode="go"
  ;d OUT("")
@@ -296,7 +296,7 @@ EMPHYS(rtn,vals,dict) ;
  if $$XVAL("cehhn",vals)="y" d  ;
  . set yesmm=1
  . if $$XVAL("cehhnos",vals)'="" d OUT("Hiatal hernia: "_$$XVAL("cehhnos",vals))
- . if $$XVAL("cehhnos",vals)="" d OUT("Hiatal hernia.")
+ . if $$XVAL("cehhnos",vals)="" d OUT("Hiatal hernia. ")
  . d OUT("")
  ;
  if $$XVAL("ceomm",vals)="y" d  ;
@@ -307,9 +307,9 @@ EMPHYS(rtn,vals,dict) ;
  . if abn="" d OUT(sp1_"Abnormality noted in the mediastinum. ")
  . e  d OUT(sp1_abn_" mediastinum. ")
  . d OUT(tval)
- i yesmm=0 d OUT(sp1_"No abnormalities.")
+ i yesmm=0 d OUT(sp1_"No abnormalities. ")
  i $$XVAL("ceotabnm",vals)'="" d  ;
- . d OUT(sp1_$$XVAL("ceotabnm",vals)_".")
+ . d OUT(sp1_$$XVAL("ceotabnm",vals)_". ")
  s outmode="go"
  d OUT("")
  ;

@@ -1,5 +1,5 @@
 SAMICTT2 ;ven/gpl - ielcap: forms ; 4/22/19 9:04am
- ;;18.0;SAMI;;
+ ;;18.0;SAMI;;;Build 2
  ;
  ;
  quit  ; no entry from top
@@ -27,30 +27,30 @@ OTHRLUNG(rtn,vals,dict) ;
  . . s yespp=1
  . . i $$XVAL("cecbc",vals)="y" d  ;
  . . . d HLFIND ;
- . . . d OUT(sp1_"Cyst seen in the "_$$LOBESTR("cecbcl1^cecbcl2^cecbcl3^cecbcl4^cecbcl5",0)_".") d OUT("")
- . . . ;d OUT($$LOBESTR("cecbcl1^cecbcl2^cecbcl3^cecbcl4^cecbcl5",0)_".")
+ . . . d OUT(sp1_"Cyst seen in the "_$$LOBESTR("cecbcl1^cecbcl2^cecbcl3^cecbcl4^cecbcl5",0)_". ") d OUT("")
+ . . . ;d OUT($$LOBESTR("cecbcl1^cecbcl2^cecbcl3^cecbcl4^cecbcl5",0)_". ")
  . . . s yespp=1
  . . if $$XVAL("cecbb",vals)="y" d  ;
  . . . d HLFIND ; 
  . . . ;d OUT("<br>"_"Bleb or bullae seen in the ")
- . . . d OUT(sp1_"Bleb or bullae seen in the "_$$LOBESTR("cecbbl1^cecbbl2^cecbbl3^cecbbl4^cecbbl5",0)_".") d OUT("")
+ . . . d OUT(sp1_"Bleb or bullae seen in the "_$$LOBESTR("cecbbl1^cecbbl2^cecbbl3^cecbbl4^cecbbl5",0)_". ") d OUT("")
  . . . set yespp=1
  . . if $$XVAL("cebrsb",vals)="y" d  ;
  . . . d HLFIND ; 
  . . . ;d OUT("<br>"_"Bronchiectasis in the ")
- . . . d OUT(sp1_"Bronchiectasis in the "_$$LOBESTR("cebrsbl1^cebrsbl2^cebrsbl3^cebrsbl4^cebrsbl5",0)_".") d OUT("")
+ . . . d OUT(sp1_"Bronchiectasis in the "_$$LOBESTR("cebrsbl1^cebrsbl2^cebrsbl3^cebrsbl4^cebrsbl5",0)_". ") d OUT("")
  . . . set yespp=1
  . . if $$XVAL("cebrs",vals)="y" d  ;
  . . . if $$XVAL("cebrsb",vals)'="y" d  ;
  . . . . if $$XVAL("cebrss",vals)'="y" d  ;
  . . . . . d HLFIND ;
  . . . . . ;d OUT("<br>"_"Small Airways Disease in the ")
- . . . . . d OUT(sp1_"Small Airways Disease in the "_$$LOBESTR("cebrsl1^cebrsl2^cebrsl3^cebrsl4^cebrsl5",0)_".") d OUT("")
+ . . . . . d OUT(sp1_"Small Airways Disease in the "_$$LOBESTR("cebrsl1^cebrsl2^cebrsl3^cebrsl4^cebrsl5",0)_". ") d OUT("")
  . . . . . set yespp=1
  . . if $$XVAL("cebrss",vals)="y" d  ;
  . . . d HLFIND ;
  . . . ;d OUT("<br>"_"Small Airways Disease/Bronchiolectasis in the ")
- . . . d OUT(sp1_"Small Airways Disease/Bronchiolectasis in the "_$$LOBESTR("cebrssl1^cebrssl2^cebrssl3^cebrssl4^cebrssl5",0)_".") d OUT("")
+ . . . d OUT(sp1_"Small Airways Disease/Bronchiolectasis in the "_$$LOBESTR("cebrssl1^cebrssl2^cebrssl3^cebrssl4^cebrssl5",0)_". ") d OUT("")
  . . . set yespp=1
  . . n numl,str
  . . s numl=0
@@ -67,26 +67,26 @@ OTHRLUNG(rtn,vals,dict) ;
  . . . . . s str=str_" and"
  . . . . s str=str_" left"
  . . . . s numl=numl+1
- . . . s str=str_"."
+ . . . s str=str_". "
  . . . if numl=0 d  ;
- . . . . set str="Normal bronchial resection margin noted."
+ . . . . set str="Normal bronchial resection margin noted. "
  . . . d HLFIND ;
  . . . d OUT(sp1_str)
  . . . ;d OUT("<br>")
  . . ;if $$XVAL("cebrsb",vals)="y" d  ;
  . . ;. d HLFIND
  . . ;. d OUT("<br>"_"Bronchiectasis in the ")
- . . ;. d OUT($$LOBESTR("cebrsbl1^cebrsbl2^cebrsbl3^cebrsbl4^cebrsbl5",0)_".")
+ . . ;. d OUT($$LOBESTR("cebrsbl1^cebrsbl2^cebrsbl3^cebrsbl4^cebrsbl5",0)_". ")
  . . ;. set yespp=1
  . . if $$XVAL("ceild",vals)="y" d  ;
  . . . d HLFIND
  . . . ;d OUT("<br>"_"Evidence of interstitial lung disease in the ")
- . . . d OUT(sp1_"Evidence of interstitial lung disease in the "_$$LOBESTR("ceildl1^ceildl2^ceildl3^ceildl4^ceildl5",0)_".") d OUT("")
+ . . . d OUT(sp1_"Evidence of interstitial lung disease in the "_$$LOBESTR("ceildl1^ceildl2^ceildl3^ceildl4^ceildl5",0)_". ") d OUT("")
  . . . set yespp=1
  . . if $$XVAL("cerdc",vals)="y" d  ;
  . . . d HLFIND
  . . . ;d OUT("<br>"_"Regional or diffuse consolidation in the ")
- . . . d OUT(sp1_"Regional or diffuse consolidation in the "_$$LOBESTR("cerdcl1^cerdcl2^cerdcl3^cerdcl4^cerdcl5",0)_".") d OUT("")
+ . . . d OUT(sp1_"Regional or diffuse consolidation in the "_$$LOBESTR("cerdcl1^cerdcl2^cerdcl3^cerdcl4^cerdcl5",0)_". ") d OUT("")
  . . . set yespp=1
  . . ;# scarring may be more complicated (apical, and bilateral)
  . . if $$XVAL("cescr",vals)="y" d  ;
@@ -95,39 +95,39 @@ OTHRLUNG(rtn,vals,dict) ;
  . . . ;# Otherwise use our previouse construct
  . . . n done s done=0 ; flag to use for other scarring 
  . . . if $$XVAL("cescrl6",vals)="au" d  ;
- . . . . d OUT(sp1_"Unilateral apical scarring.") d OUT("")
+ . . . . d OUT(sp1_"Unilateral apical scarring. ") d OUT("")
  . . . . s done=1
  . . . else  if $$XVAL("cescrl7",vals)="ab" d  ;
- . . . . d OUT(sp1_"Bilateral apical scarring.") d OUT("")
+ . . . . d OUT(sp1_"Bilateral apical scarring. ") d OUT("")
  . . . . s done=1
  . . . if done=0  d  ;
  . . . . ;d OUT("<br>"_"Scarring in the ")
- . . . . d OUT(sp1_"Scarring in the "_$$LOBESTR("cescrl1^cescrl2^cescrl3^cescrl4^cescrl5",1)_".") d OUT("")
+ . . . . d OUT(sp1_"Scarring in the "_$$LOBESTR("cescrl1^cescrl2^cescrl3^cescrl4^cescrl5",1)_". ") d OUT("")
  . . . . set yespp=1
  . . if $$XVAL("cebat",vals)="y" d  ;
  . . . d HLFIND
  . . . ;d OUT("<br>"_"Other atelectasis in the ")
- . . . d OUT(sp1_"Other atelectasis in the "_$$LOBESTR("cebatl1^cebatl2^cebatl3^cebatl4^cebatl5",0)_".") d OUT("")
+ . . . d OUT(sp1_"Other atelectasis in the "_$$LOBESTR("cebatl1^cebatl2^cebatl3^cebatl4^cebatl5",0)_". ") d OUT("")
  . . . set yespp=1
  . . if $$XVAL("cerb",vals)="y" d  ;
  . . . d HLFIND
  . . . ;d OUT("<br>"_"Traction bronchiectasis in the ")
- . . . d OUT(sp1_"Traction bronchiectasis in the "_$$LOBESTR("cerbl1^cerbl2^cerbl3^cerbl4^cerbl5",0)_".") d OUT("")
+ . . . d OUT(sp1_"Traction bronchiectasis in the "_$$LOBESTR("cerbl1^cerbl2^cerbl3^cerbl4^cerbl5",0)_". ") d OUT("")
  . . . set yespp=1
  . . if $$XVAL("cepgo",vals)="y" d  ;
  . . . d HLFIND
  . . . ;d OUT("<br>"_"Peripheral Ground-glass Opacities in the ")
- . . . d OUT(sp1_"Peripheral Ground-glass Opacities in the "_$$LOBESTR("cepgol1^cepgol2^cepgol3^cepgol4^cepgol5",0)_".") d OUT("")
+ . . . d OUT(sp1_"Peripheral Ground-glass Opacities in the "_$$LOBESTR("cepgol1^cepgol2^cepgol3^cepgol4^cepgol5",0)_". ") d OUT("")
  . . . set yespp=1
  . . if $$XVAL("ceret",vals)="y" d  ;
  . . . d HLFIND
  . . . ;d OUT("<br>"_"Reticulations in the ")
- . . . d OUT(sp1_"Reticulations in the "_$$LOBESTR("ceretl1^ceretl2^ceretl3^ceretl4^ceretl5",0)_".") d OUT("")
+ . . . d OUT(sp1_"Reticulations in the "_$$LOBESTR("ceretl1^ceretl2^ceretl3^ceretl4^ceretl5",0)_". ") d OUT("")
  . . . set yespp=1
  . . if $$XVAL("cephc",vals)="y" d  ;
  . . . d HLFIND
  . . . ;d OUT("<br>"_"Honeycombing in the ")
- . . . d OUT(sp1_"Honeycombing in the "_$$LOBESTR("cephcl1^cephcl2^cephcl3^cephcl4^cephcl5",0)_".") d OUT("")
+ . . . d OUT(sp1_"Honeycombing in the "_$$LOBESTR("cephcl1^cephcl2^cephcl3^cephcl4^cephcl5",0)_". ") d OUT("")
  . . . set yespp=1
  . . if $$XVAL("cepp",vals)="y" d  ;
  . . . set yespp=1
@@ -144,8 +144,8 @@ OTHRLUNG(rtn,vals,dict) ;
  . . . . if numl>1 s str=str_" lobes"
  . . . . else  s str=str_" lobe"
  . . . . if $$XVAL("ceppca",vals)="c" s str=str_" with calcifications"
- . . . . s str=str_"."_para
- . . . if numl=0 set str="Pleural or fissural plaques are noted."
+ . . . . s str=str_". "_para
+ . . . if numl=0 set str="Pleural or fissural plaques are noted. "
  . . . d HLFIND
  . . . d OUT(sp1_str)
  . . ;
@@ -167,8 +167,8 @@ OTHRLUNG(rtn,vals,dict) ;
  . . . . . if numl>0 s str=str_" and"
  . . . . . s str=str_" left"
  . . . . . s numl=numl+1
- . . . . s str=str_"."
- . . . if numl=0 set str="<br>"_"Abnormal bronchial resection margin noted."
+ . . . . s str=str_". "
+ . . . if numl=0 set str="<br>"_"Abnormal bronchial resection margin noted. "
  . . . d HLFIND
  . . . d OUT(sp1_str)
  . . . ;d OUT(para)
@@ -176,7 +176,7 @@ OTHRLUNG(rtn,vals,dict) ;
  . . if $L($$XVAL("ceoppa",vals))'=0 d  ;
  . . . ;# puts "Additional Comments on Parenchymal or Pleural Abnormalities:"
  . . . d HLFIND
- . . . d OUT(sp1_$$XVAL("ceoppa",vals)_".") d OUT("")
+ . . . d OUT(sp1_$$XVAL("ceoppa",vals)_". ") d OUT("")
  . . . ;d OUT(para)
  . . else  if yespp=1  ;d OUT(para)
  s outmode="go" d OUT("")

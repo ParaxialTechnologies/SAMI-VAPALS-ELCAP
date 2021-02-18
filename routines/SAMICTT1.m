@@ -1,5 +1,5 @@
 SAMICTT1 ;ven/gpl - ielcap: forms ; 12/28/18 10:54am
- ;;18.0;SAMI;;
+ ;;18.0;SAMI;;;Build 2
  ;
  ;
  quit  ; no entry from top
@@ -81,11 +81,11 @@ NODULES(rtn,vals,dict) ;
  . . . i en="tr" d  ;
  . . . . s endo="Endotracheal Nodule"
  . . . . i specialcase=1 d  ;
- . . . . . d OUT("Previously seen "_endo_" "_ii_" "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_".")
+ . . . . . d OUT("Previously seen "_endo_" "_ii_" "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_". ")
  . . . . e  d  ;
  . . . . . i ($$XVAL("cetex",vals)="b")&($$XVAL("cectch"_ii_"ch",vals)="n") d  ;
- . . . . . . d OUT(endo_" "_ii_" "_calcstr_" is seen.")
- . . . . . e  d OUT(endo_" "_ii_" "_calcstr_" "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_".")
+ . . . . . . d OUT(endo_" "_ii_" "_calcstr_" is seen. ")
+ . . . . . e  d OUT(endo_" "_ii_" "_calcstr_" "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_". ")
  . . . . s skip=1
  . . . i en="rm" d  ;
  . . . . s endo="Nodule"
@@ -93,13 +93,13 @@ NODULES(rtn,vals,dict) ;
  . . . . i specialcase=1 d  ;
  . . . . . ;d OUT("Previously seen "_nloc_" "_endo_" "_ii_" ")
  . . . . . d OUT("Previously seen "_endo_" "_ii_" in the "_nloc_" "_calcstr_" ")
- . . . . . d OUT($$XSUB("cectch",vals,dict,"cect"_ii_"ch")_".")
+ . . . . . d OUT($$XSUB("cectch",vals,dict,"cect"_ii_"ch")_". ")
  . . . . e  d  ;
  . . . . . i ($$XVAL("cetex",vals)="b")&($$XVAL("cect"_ii_"ch",vals)="n") d  ;
- . . . . . . ;d OUT(nloc_" "_endo_" "_ii_".")
- . . . . . . d OUT(endo_" "_ii_" is seen in the "_nloc_" "_calcstr_".")
- . . . . . ;e  d OUT(nloc_" "_endo_" "_ii_" "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_".")
- . . . . . e  d OUT(endo_" "_ii_" in the "_nloc_" "_calcstr_", "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_".")
+ . . . . . . ;d OUT(nloc_" "_endo_" "_ii_". ")
+ . . . . . . d OUT(endo_" "_ii_" is seen in the "_nloc_" "_calcstr_". ")
+ . . . . . ;e  d OUT(nloc_" "_endo_" "_ii_" "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_". ")
+ . . . . . e  d OUT(endo_" "_ii_" in the "_nloc_" "_calcstr_", "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_". ")
  . . . . s skip=1
  . . . i en="bi" d  ;
  . . . . s endo="Nodule"
@@ -107,12 +107,12 @@ NODULES(rtn,vals,dict) ;
  . . . . i specialcase=1 d  ;
  . . . . . ;d OUT("Previously seen "_endo_" "_ii_" in the "_loc)
  . . . . . d OUT("Previously seen "_endo_" "_ii_" in the "_nloc_" "_calcstr_" ")
- . . . . . d OUT($$XSUB("cectch",vals,dict,"cect"_ii_"ch")_".")
+ . . . . . d OUT($$XSUB("cectch",vals,dict,"cect"_ii_"ch")_". ")
  . . . . e  d  ;
  . . . . . i ($$XVAL("cetex",vals)="b")&($$XVAL("cect"_ii_"ch",vals)="n") d  ;
- . . . . . . ;d OUT(endo_" "_ii_" is seen in the "_loc_".")
- . . . . . . d OUT(endo_" "_ii_" is seen in the "_loc_" "_calcstr_".")
- . . . . . e  d OUT(nloc_" "_endo_" "_ii_" "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_".")
+ . . . . . . ;d OUT(endo_" "_ii_" is seen in the "_loc_". ")
+ . . . . . . d OUT(endo_" "_ii_" is seen in the "_loc_" "_calcstr_". ")
+ . . . . . e  d OUT(nloc_" "_endo_" "_ii_" "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_". ")
  . . . . s skip=1
  . . . i skip=0 d  ; "default"
  . . . . s endo="Nodule"
@@ -121,12 +121,12 @@ NODULES(rtn,vals,dict) ;
  . . . . X ^%ZOSF("UPPERCASE")
  . . . . s nloc=Y
  . . . . i specialcase=1 d  ;
- . . . . . d OUT(nloc_" "_endo_" "_ii_" "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_", likely endobronchial.")
+ . . . . . d OUT(nloc_" "_endo_" "_ii_" "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_", likely endobronchial. ")
  . . . . e  d  ;
  . . . . . ;i ($$XVAL("cetex",vals)="b")&($$XSUB("cectch",vals,dict,"cect"_ii_"ch")="n") d  ;
  . . . . . i (($$XVAL("cetex",vals)="b")&($$XVAL("cect"_ii_"ch",vals)="n")) d  ; gpl 1002
- . . . . . . d OUT(nloc_" "_endo_" "_ii_" "_calcstr_" likely endobronchial.")
- . . . . . e  d OUT(nloc_" "_endo_" "_ii_" "_calcstr_" "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_" likely endobronchial.")
+ . . . . . . d OUT(nloc_" "_endo_" "_ii_" "_calcstr_" likely endobronchial. ")
+ . . . . . e  d OUT(nloc_" "_endo_" "_ii_" "_calcstr_" "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_" likely endobronchial. ")
  . . . . s skip=1
  . . e  d  ;
  . . . s endo="Nodule"
@@ -137,17 +137,17 @@ NODULES(rtn,vals,dict) ;
  . . . s nloc=Y
  . . . i specialcase=1 d  ;
  . . . . d OUT(nloc_" "_endo_" "_ii_" previously seen with possible endobronchial component")
- . . . . d OUT($$XSUB("cectch",vals,dict,"cect"_ii_"ch")_".")
+ . . . . d OUT($$XSUB("cectch",vals,dict,"cect"_ii_"ch")_". ")
  . . . e  d  ;
  . . . . ;i ($$XVAL("cetex",vals)="b")&($$XSUB("cectch",vals,dict,"cect"_ii_"ch")="n") d  ;
  . . . . i (($$XVAL("cetex",vals)="b")&($$XVAL("cect"_ii_"ch",vals)="n")) d  ; gpl 1002
  . . . . . d OUT(nloc_" "_endo_" "_ii_" "_calcstr_" with possible endobronchial component")
- . . . . e  d OUT(nloc_" "_endo_" "_ii_" "_calcstr_" with possible endobronchial component "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_".")
+ . . . . e  d OUT(nloc_" "_endo_" "_ii_" "_calcstr_" with possible endobronchial component "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_". ")
  . . . s skip=1
  . i specialcase=1 d  ;
  . . i skip=0 d  ;
  . . . d OUT("Previously seen "_nloc_" "_endo_" "_ii_" ")
- . . . d OUT($$XSUB("cectch",vals,dict,"cect"_ii_"ch")_".")
+ . . . d OUT($$XSUB("cectch",vals,dict,"cect"_ii_"ch")_". ")
  . e  d  ;
  . . i skip=0 d  ;
  . . . ;# pleural distance only goes here
@@ -170,7 +170,7 @@ NODULES(rtn,vals,dict) ;
  . . n ac
  . . s ac=$$XVAL("cect"_ii_"ac",vals)
  . . i ac'="" i (ac'="-") i (ac'="s") d  ;
- . . . d OUT($$XSUB("cectac",vals,dict,"cect"_ii_"ac")_" recommended.")
+ . . . d OUT($$XSUB("cectac",vals,dict,"cect"_ii_"ac")_" recommended. ")
  . ;
  . ; end of nodule processing
  . ;

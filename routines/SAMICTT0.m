@@ -1,5 +1,5 @@
 SAMICTT0 ;ven/gpl - text based ctreport ; 2/14/19 10:29am
- ;;18.0;SAMI;;
+ ;;18.0;SAMI;;;Build 2
  ;
  ;
  quit  ; no entry from top
@@ -176,13 +176,13 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  s outmode="hold"
  d HOUT(" Description: ")
  i $$XVAL("cectp",vals)="i" d  ;
- . d OUT("Limited Diagnostic CT examination was performed.")
+ . d OUT("Limited Diagnostic CT examination was performed. ")
  e  d  ;
- . d OUT("CT examination of the entire thorax was performed at "_$$XSUB("cectp",vals,dict)_" settings.")
+ . d OUT("CT examination of the entire thorax was performed at "_$$XSUB("cectp",vals,dict)_" settings. ")
  ;
  i $$XVAL("cectrst",vals)'="" d  ;
- . d OUT(" Images were obtained at "_$$XVAL("cectrst",vals)_" mm slice thickness.")
- . d OUT(" Multiplanar reconstructions were performed.")
+ . d OUT(" Images were obtained at "_$$XVAL("cectrst",vals)_" mm slice thickness. ")
+ . d OUT(" Multiplanar reconstructions were performed. ")
  ;
  i newct d  ;
  . n nvadbo s nvadbo=1
@@ -191,7 +191,7 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  . . i $$XVAL(ii,vals)="y" set nvadbo=0
  . ;
  . i nvadbo=1 d  ;
- . . d OUT("Upper abdominal images were not acquired on the current scan due to its limited nature.")
+ . . d OUT("Upper abdominal images were not acquired on the current scan due to its limited nature. ")
  s outmode="go" d OUT("")
  ;
  ; lung nodules
@@ -207,14 +207,14 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  ;
  i hasnodules=0 d  ;
  . d OUT(para)
- . d OUT("No pulmonary nodules are seen."_para)
+ . d OUT("No pulmonary nodules are seen. "_para)
  ;
  ;i $$XVAL("cennod",vals)="" d  ;
  ;. d OUT(para)
- ;. d OUT("No pulmonary nodules are seen."_para)
+ ;. d OUT("No pulmonary nodules are seen. "_para)
  ;e  i $$XVAL("ceanod",vals)="n" d  ;
  ;. d OUT(para)
- ;. d OUT("No pulmonary nodules are seen."_para)
+ ;. d OUT("No pulmonary nodules are seen. "_para)
  ;
  d NODULES^SAMICTT1(rtn,.vals,.dict)
  ;
@@ -232,7 +232,7 @@ WSREPORT(return,filter) ; web service which returns an html cteval report
  ;
  d  ;
  . d OUT("References:")
- . d OUT("Recommendations for nodules and other findings are detailed in the I-ELCAP Protocol.")
+ . d OUT("Recommendations for nodules and other findings are detailed in the I-ELCAP Protocol. ")
  . d OUT("A summary and the full I-ELCAP protocol can be viewed at: http://ielcap.org/protocols")
  ;d OUT("</TABLE>")
  ;d OUT("<p><br></p><p><b>References:</b><br></p>")

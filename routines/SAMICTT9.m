@@ -1,5 +1,5 @@
 SAMICTR9 ;ven/gpl - ielcap: forms ; 12/28/18 10:26am
- ;;18.0;SAMI;;
+ ;;18.0;SAMI;;;Build 2
  ;
  ;
  quit  ; no entry from top
@@ -42,35 +42,35 @@ IMPRSN(rtn,vals,dict) ;
  . . if $$XVAL("ceem",vals)'="no" d  ;
  . . . if $$XVAL("ceem",vals)="nv" q  ;
  . . . d OUT("Emphysema:") d OUT("")
- . . . d OUT($$XSUB("ceem",vals,dict)_".") d OUT("")
+ . . . d OUT($$XSUB("ceem",vals,dict)_". ") d OUT("")
  ;
  i $$XVAL("ceclini",vals)="y" d  ;
- . d OUT($$XVAL("ceclin",vals)_".") d OUT("")
+ . d OUT($$XVAL("ceclin",vals)_". ") d OUT("")
  ;
  i $$XVAL("ceoppai",vals)="y" d  ;
- . d OUT($$XVAL("ceoppa",vals)_".") d OUT("")
+ . d OUT($$XVAL("ceoppa",vals)_". ") d OUT("")
  ;
  i $$XVAL("ceoppabi",vals)="y" d  ;
- . d OUT($$XVAL("ceoppab",vals)_".") d OUT("")
+ . d OUT($$XVAL("ceoppab",vals)_". ") d OUT("")
  ;
  i $$XVAL("cecommcai",vals)="y" d  ;
- . d OUT($$XVAL("cecommca",vals)_".") d OUT("")
+ . d OUT($$XVAL("cecommca",vals)_". ") d OUT("")
  ;
  i $$XVAL("ceotabnmi",vals)="y" d  ;
- . d OUT($$XVAL("ceotabnm",vals)_".") d OUT("")
+ . d OUT($$XVAL("ceotabnm",vals)_". ") d OUT("")
  ;
  i $$XVAL("ceobrci",vals)="y" d  ;
- . d OUT($$XVAL("ceobrc",vals)_".") d OUT("")
+ . d OUT($$XVAL("ceobrc",vals)_". ") d OUT("")
  ;
  i $$XVAL("ceaoabbi",vals)="y" d  ;
- . d OUT($$XVAL("ceaoabb",vals)_".") d OUT("")
+ . d OUT($$XVAL("ceaoabb",vals)_". ") d OUT("")
  ;
  i $$XVAL("ceaoabi",vals)="y" d  ;
- . d OUT($$XVAL("ceaoab",vals)_".") d OUT("")
+ . d OUT($$XVAL("ceaoab",vals)_". ") d OUT("")
  ;
  ;# Impression Remarks
  i $$XVAL("ceimre",vals)'="" d  ;
- . d OUT($$XVAL("ceimre",vals)_".") d OUT("")
+ . d OUT($$XVAL("ceimre",vals)_". ") d OUT("")
  q
  ;
  ;

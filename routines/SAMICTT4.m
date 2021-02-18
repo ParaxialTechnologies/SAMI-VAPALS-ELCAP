@@ -1,5 +1,5 @@
 SAMICTT4 ;ven/gpl - ielcap: forms ; 3/19/19 1:27pm
- ;;18.0;SAMI;;
+ ;;18.0;SAMI;;;Build 2
  ;
  ;
  quit  ; no entry from top
@@ -99,9 +99,9 @@ BREAST(rtn,vals,dict) ;
  ;# Other Abdominal Abnormalities
  ;
  if $$XVAL("ceaoab",vals)'="" d  ;
- . d OUT($$XVAL("ceaoab",vals)_".")
+ . d OUT($$XVAL("ceaoab",vals)_". ")
  if yesaa=0  d  ;
- . d OUT(sp1_"Limited view of the upper abdomen reveals no abnormalities.")
+ . d OUT(sp1_"Limited view of the upper abdomen reveals no abnormalities. ")
  ;
  ;
  ;# Other Chest Abnormalities

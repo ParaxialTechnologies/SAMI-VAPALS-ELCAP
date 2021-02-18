@@ -1,5 +1,5 @@
 SAMICTTA ;ven/gpl - ielcap: forms ; 12/28/18 9:43am
- ;;18.0;SAMI;;
+ ;;18.0;SAMI;;;Build 2
  ;
  ;
  quit  ; no entry from top
@@ -37,10 +37,10 @@ RCMND(rtn,vals,dict) ;
  ;. d OUT(para_"<B>"_$$XSUB("cefu",vals,dict)_" "_fuw_" on "_$$XVAL("cefud",vals)_".</B>"_para)
  i fuw="" d  ;
  . ;d OUT(para_"<B>A followup CT scan is recommended on "_$$XVAL("cefud",vals)_".</B>"_para)
- . d OUT("A followup CT scan is recommended on "_$$XVAL("cefud",vals)_".") d OUT("")
+ . d OUT("A followup CT scan is recommended on "_$$XVAL("cefud",vals)_". ") d OUT("")
  e  d  ;
  . ;d OUT(para_"<B>A followup CT scan is recommended "_fuw_" on "_$$XVAL("cefud",vals)_".</B>"_para)
- . d OUT("A followup CT scan is recommended "_fuw_" on "_$$XVAL("cefud",vals)_".") d OUT("")
+ . d OUT("A followup CT scan is recommended "_fuw_" on "_$$XVAL("cefud",vals)_". ") d OUT("")
  ;
  ; #Other followup
  n zfu,ofu,tofu,comma

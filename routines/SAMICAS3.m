@@ -276,7 +276,8 @@ MKCEFORM(sid,key) ; create ct evaluation form
  quit:+sien=0
  new cdate set cdate=$piece(key,"ceform-",2)
  ; nodule copy
- n srckey s srckey=$$PREVNOD(sid)
+ ;n srckey s srckey=$$PREVNOD(sid)
+ n srckey s srckey=$$LASTCMP(sid)
  i srckey'="" d  ;
  . new target,source
  . set source=$name(@root@("graph",sid,srckey))
@@ -385,7 +386,8 @@ MKPTFORM(sid,key) ; create pet evaluation form
  new sien set sien=$$SID2NUM^SAMIHOM3(sid)
  quit:+sien=0
  ; nodule copy
- n srckey s srckey=$$PREVNOD(sid)
+ ;n srckey s srckey=$$PREVNOD(sid)
+ n srckey s srckey=$$LASTCMP(sid)
  i srckey'="" d  ;
  . new target,source
  . set source=$name(@root@("graph",sid,srckey))
@@ -458,7 +460,8 @@ MKBXFORM(sid,key) ; create biopsy form
  quit:+sien=0
  new cdate set cdate=$piece(key,"bxform-",2)
  ; nodule copy
- n srckey s srckey=$$PREVNOD(sid)
+ ;n srckey s srckey=$$PREVNOD(sid)
+ n srckey s srckey=$$LASTCMP(sid)
  i srckey'="" d  ;
  . new target,source
  . set source=$name(@root@("graph",sid,srckey))

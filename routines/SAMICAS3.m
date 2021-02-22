@@ -192,8 +192,9 @@ PREVNOD(sid) ; extrinsic which returns the key of the latest form
  ;
  q retkey
  ;
-LASTCMP(sid) ; Extrinsic returns the date of the last comparison scan
- n retkey s retkey=""
+LASTCMP(sid,retkey) ; Extrinsic returns the date of the last comparison scan
+ ; and the key of the last comparison scan, passed by reference
+ s retkey=""
  n fary
  d SORTFRMS(.fary,sid)
  n tdt s tdt=$P($$NOW^XLFDT,".",1) ; start with before today
@@ -277,7 +278,7 @@ MKCEFORM(sid,key) ; create ct evaluation form
  new cdate set cdate=$piece(key,"ceform-",2)
  ; nodule copy
  ;n srckey s srckey=$$PREVNOD(sid)
- n srckey s srckey=$$LASTCMP(sid)
+ n srckey,srcdate s srcdate=$$LASTCMP(sid,.srckey)
  i srckey'="" d  ;
  . new target,source
  . set source=$name(@root@("graph",sid,srckey))
@@ -387,7 +388,7 @@ MKPTFORM(sid,key) ; create pet evaluation form
  quit:+sien=0
  ; nodule copy
  ;n srckey s srckey=$$PREVNOD(sid)
- n srckey s srckey=$$LASTCMP(sid)
+ n srckey,srcdate s srcdate=$$LASTCMP(sid,.srckey)
  i srckey'="" d  ;
  . new target,source
  . set source=$name(@root@("graph",sid,srckey))
@@ -461,7 +462,7 @@ MKBXFORM(sid,key) ; create biopsy form
  new cdate set cdate=$piece(key,"bxform-",2)
  ; nodule copy
  ;n srckey s srckey=$$PREVNOD(sid)
- n srckey s srckey=$$LASTCMP(sid)
+ n srckey,srcdate s srcdate=$$LASTCMP(sid,.srckey)
  i srckey'="" d  ;
  . new target,source
  . set source=$name(@root@("graph",sid,srckey))

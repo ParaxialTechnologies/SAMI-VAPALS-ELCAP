@@ -10,7 +10,7 @@ EXISTCE(SID,FORM) ; extrinsic returns "true" or "false"
  n root s root=$$setroot^%wd("vapals-patients")
  n gvals s gvals=$na(@root@("graph",SID,FORM))
  ;i $g(@root@("graph",SID,FORM,"sicechrt"))="y" q "true"
- i $g(@gvals@("pre-note-complete"))="true" q "true"
+ i $g(@gvals@("chart-eligibility-complete"))="true" q "true"
  q "false"
  ;
 EXISTPRE(SID,FORM) ; extrinsic returns "true" or "false"
@@ -130,10 +130,12 @@ NOTE(filter) ; extrnisic which creates a note
  n didnote s didnote=0
  ;
  i $g(@vals@("samistatus"))="chart-eligibility" d  ;
+ . q:$g(@vals@("chart-eligibility-complete"))="true"
  . d MKEL(si,samikey,vals,.filter) ;
  . s didnote=1
  ;
  i $g(@vals@("samistatus"))="pre-enrollment-discussion" d  ;
+ . q:$g(@vals@("pre-note-complete"))="true"
  . d MKPRE(si,samikey,vals,.filter) ;
  . s didnote=1
  ;
@@ -142,7 +144,10 @@ NOTE(filter) ; extrnisic which creates a note
  . d MKIN(si,samikey,vals,.filter) ;
  . s didnote=1
  ;
- q didnote
+ n nien s nien=0
+ i didnote=1 s nien=$$NTIEN(si,samikey)
+ ;
+ q nien
  ;
 HASINNT(vals) ; extrinsic returns 1 if intake note is present
  ; else returns 0

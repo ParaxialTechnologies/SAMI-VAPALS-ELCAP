@@ -125,6 +125,12 @@ WSCASE ; generate case review page
  . . do FIXSRC^SAMIFORM(.ln)
  . . set temp(zi)=ln
  . ;
+ . if ln["@@ERROR_MESSAGE@@" do  ; insert error message
+ . . n zerr s zerr=$g(filter("errorMessage"))
+ . . i zerr="" q  ;
+ . . do findReplace^%ts(.ln,"@@ERROR_MESSAGE@@",zerr)
+ . . s temp(zi)=ln
+ . ;
  . set cnt=cnt+1
  . set rtn(cnt)=temp(zi)
  . quit

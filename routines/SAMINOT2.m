@@ -117,6 +117,10 @@ NOTE(filter) ; extrnisic which creates a note
  i $g(@vals@("futype"))="ct" d  ;
  . i $g(@vals@("samistatus"))'="complete" q  ;
  . ;q:$$HASLCSNT(vals)
+ . n ctdt,ctkey
+ . s ctdt=$$LASTCMP^SAMICAS3(si,.ctkey)
+ . i ctdt=-1 d  q  ;
+ . . s filter("errorMessage")="No CT Eval form exists, followup note not created."
  . d MKLCS(si,samikey,vals,.filter) ;
  . s didnote=1
  ;

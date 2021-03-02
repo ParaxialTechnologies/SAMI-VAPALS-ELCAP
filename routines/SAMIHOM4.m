@@ -218,8 +218,10 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  . . . . s SAMIARG("errorMessage")="Note successfully sent to VistA ID: "_rtnid
  . . . else  d  ;
  . . . . n rtnmsg s rtnmsg=$p(sendrslt,"^",2)
- . . . . s SAMIARG("errorMessage")=rtnmsg
+ . . . . i $g(SAMIARG("errorMessage"))="" d  ;
+ . . . . . s SAMIARG("errorMessage")=rtnmsg
  . . . d WSCASE^SAMICASE(.SAMIRESULT,.SAMIARG)
+ . . e  d WSCASE^SAMICASE(.SAMIRESULT,.SAMIARG)
  . e  d WSCASE^SAMICASE(.SAMIRESULT,.SAMIARG)
  ;
  i route="deleteform" d  q 0

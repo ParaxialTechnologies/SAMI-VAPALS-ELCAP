@@ -134,6 +134,10 @@ EMPHYS(rtn,vals,dict) ;
  i $g(@vals@("ceccld"))="-" s @vals@("ceccld")="no"
  i $g(@vals@("cecclf"))="-" s @vals@("cecccf")="no"
  i $g(@vals@("ceccrc"))="-" s @vals@("ceccrc")="no"
+ i $g(@vals@("cecclm"))="" s @vals@("cecclm")="no"
+ i $g(@vals@("ceccld"))="" s @vals@("ceccld")="no"
+ i $g(@vals@("cecclf"))="" s @vals@("cecccf")="no"
+ i $g(@vals@("ceccrc"))="" s @vals@("ceccrc")="no"
  ;
  d  ;
  . d OUT($$XSUB("cecc",vals,dict,"cecclm")_" in left main, ")

@@ -22,6 +22,9 @@ EMPHYS(rtn,vals,dict) ;
  . D OUT(sp1_$$XSUB("ceem",vals,dict))
  . s outmode="go" d OUT("")
  ;
+ if $$XVAL("ceem",vals)="" d  ;
+ . D HOUT("Emphysema: None")
+ . s outmode="go" d OUT("")
  ;d OUT("")
  s outmode="hold"
  D HOUT("Pleura: ")
@@ -118,15 +121,21 @@ EMPHYS(rtn,vals,dict) ;
  . . i cacval>3 s cacrec=$g(@dict@("CAC_recommendation"))
  ;
  ;
- n samicac s samicac=0
- i $$XVAL("cecclm",vals)'="no" s samicac=1
- i $$XVAL("ceccld",vals)'="no" s samicac=1
- ;i $$XVAL("cecclf",vals)'="no" s samicac=1
- i $$XVAL("cecccf",vals)'="no" s samicac=1
- i $$XVAL("ceccrc",vals)'="no" s samicac=1
+ ;n samicac s samicac=0
+ ;i $$XVAL("cecclm",vals)'="no" s samicac=1
+ ;i $$XVAL("ceccld",vals)'="no" s samicac=1
+ ;;i $$XVAL("cecclf",vals)'="no" s samicac=1
+ ;i $$XVAL("cecccf",vals)'="no" s samicac=1
+ ;i $$XVAL("ceccrc",vals)'="no" s samicac=1
  ;
- ;s outmode="hold" s line=""
- i samicac=1 d  ;
+ ;;s outmode="hold" s line=""
+ ;i samicac=1 d  ;
+ i $g(@vals@("cecclm"))="-" s @vals@("cecclm")="no"
+ i $g(@vals@("ceccld"))="-" s @vals@("ceccld")="no"
+ i $g(@vals@("cecclf"))="-" s @vals@("cecccf")="no"
+ i $g(@vals@("ceccrc"))="-" s @vals@("ceccrc")="no"
+ ;
+ d  ;
  . d OUT($$XSUB("cecc",vals,dict,"cecclm")_" in left main, ")
  . d OUT($$XSUB("cecc",vals,dict,"ceccld")_" in left anterior descending, ")
  . ;d OUT($$XSUB("cecc",vals,dict,"cecclf")_" in circumflex, and ")
@@ -142,7 +151,9 @@ EMPHYS(rtn,vals,dict) ;
  . s outmode="go" d OUT("")
  ;
  s outmode="hold"
- d HOUT("Cardiac Findings: ")
+ n ocf s ocf=0
+ d HOUT("Other Cardiac Findings: ")
+ ;d HOUT("Other Cardiac Findings: ")
  ;
  ;s outmode="hold"
  ;# Pericardial Effusion
@@ -150,7 +161,7 @@ EMPHYS(rtn,vals,dict) ;
  . if $$XVAL("ceprevm",vals)'="no" d  ;
  . . if $$XVAL("ceprevm",vals)'="" d
  . . . d OUT("A "_$$XSUB("ceprevm",vals,dict,"ceprevm")_" pericardial effusion"_". ") d OUT("")
- . . . s pe=1
+ . . . s pe=1 s ocf=1
  . . else  d OUT("No pericardial effusion. ") d OUT("")
  ;
  ;
@@ -161,11 +172,13 @@ EMPHYS(rtn,vals,dict) ;
  . . d OUT("Widest ascending aortic diameter at the same level is "_$$XVAL("ceaow",vals)_" mm. ")
  . . if $$XVAL("cepar",vals)'="" d  ;
  . . . d OUT("The ratio is "_$$XVAL("cepar",vals)_". ")
- . d OUT("")
+ . d OUT("") s ocf=1
  ;
  ; #"Additional Comments on Cardiac Abnormalities:"
  if $$XVAL("cecommca",vals)'="" d  ;
  . d OUT($$XVAL("cecommca",vals)_". ")
+ . s ocf=1
+ i ocf=0 d OUT("None. ")
  s outmode="go"
  d OUT("")
  ;

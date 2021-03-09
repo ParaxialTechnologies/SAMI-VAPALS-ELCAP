@@ -120,22 +120,26 @@
         //followup date calculation
         $("[name=cefuw]").on('change', function () {
             const when = $("[name='cefuw']:checked").val();
+            let baseDate = moment($("#cedos").val());
+            if (!baseDate.isValid()){
+                baseDate = moment();
+            }
             const $field = $("#cefud");
             switch (when) {
                 case "1y":
-                    $field.val(moment().add(1, 'year').format(VAPALS.DATE_FORMAT));
+                    $field.val(baseDate.add(1, 'year').format(VAPALS.DATE_FORMAT));
                     break;
                 case "nw":
-                    $field.val(moment().format(VAPALS.DATE_FORMAT));
+                    $field.val(baseDate.format(VAPALS.DATE_FORMAT));
                     break;
                 case "1m":
-                    $field.val(moment().add(1, 'month').format(VAPALS.DATE_FORMAT));
+                    $field.val(baseDate.add(1, 'month').format(VAPALS.DATE_FORMAT));
                     break;
                 case "3m":
-                    $field.val(moment().add(3, 'month').format(VAPALS.DATE_FORMAT));
+                    $field.val(baseDate.add(3, 'month').format(VAPALS.DATE_FORMAT));
                     break;
                 case "6m":
-                    $field.val(moment().add(6, 'month').format(VAPALS.DATE_FORMAT));
+                    $field.val(baseDate.add(6, 'month').format(VAPALS.DATE_FORMAT));
                     break;
                 default:
                     $field.val("").focus();

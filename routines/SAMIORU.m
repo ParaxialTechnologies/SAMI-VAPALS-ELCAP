@@ -1,5 +1,5 @@
-SAMIORU ;ven/lgc/arc - SEND ORU ENROLLMENT RESPONSE ;Aug 17, 2020@07:29
- ;;18.0;SAMI;;;Build 1
+SAMIORU ;ven/lgc/arc - SEND ORU ENROLLMENT RESPONSE ;Mar 12, 2021@13:43
+ ;;18.0;SAMI;;;Build 2
  ;
  ;NOTE: We will only be sending ORU messages out for patients
  ;      for whom at least one ORM has been received.  Thus,
@@ -12,14 +12,10 @@ SAMIORU ;ven/lgc/arc - SEND ORU ENROLLMENT RESPONSE ;Aug 17, 2020@07:29
 TESTALL kill filter
  kill OUTHL
  ;set filter("sendprotocol")="PHX ENROLL ORU EVN"
- set filter("sid")="PHO00015"
- set filter("key")="siform-2020-07-30"
- ;set filter("sid")="SEA00014"
- ;set filter("key")="siform-2020-06-03"
- set filter("notenmbr")=2
- ;set filter("climit")=66
- do EN^SAMIORU(.filter)
- ;set poopoo=$$EN^SAMIORU(.filter)
+ set filter("sid")="PHO00008"
+ set filter("key")="siform-2021-03-12"
+ set filter("notenmbr")=1
+ new poopoo set poopoo=$$EN^SAMIORU(.filter)
  quit
  ;
  ;
@@ -43,6 +39,10 @@ EN(filter) ; Build and send ORU enrollment response
  ;   NOTE: if called as function contents of filter("rslt") is
  ;         returned directly
  ;
+ ;debug
+ ;kill ^KBAP("SAMIORU")
+ ;merge ^KBAP("SAMIORU","filter")=filter
+ ;
  set filter("rslt")=0
  ;
  new rootpl,rootvp,sid,key,SNDPROT,climit,notenmbr
@@ -55,13 +55,11 @@ EN(filter) ; Build and send ORU enrollment response
  . set filter("rslt")="0^no key provided"
  set SNDPROT=$get(filter("sendprotocol")) if SNDPROT="" do
  . set (SNDPROT,filter("sendprotocol"))="PHX ENROLL ORU EVN"
- set climit=$get(filter("climit")) if +$get(climit)=0 do
- . ;set climit=66
- . set climit=81
- set filter("Cache")=($zversion["Cache")
  set notenmbr=+$get(filter("notenmbr"))
  if notenmbr=0 do  quit:$Q filter("rslt")  quit
  . set filter("rslt")="0^no note number provided"
+ ;
+ ; merge ^KBAP("SAMIORU","filter2")=filter
  ;
 DFN ; find vpien and plien
  new dfn,vpien,plien
@@ -70,12 +68,14 @@ DFN ; find vpien and plien
  ;
  ; Pull data from entry in patient-lookup graph
  merge filter=@rootpl@(plien)
- ; Return error if no ORM found
+FINDORM ; Return error if no ORM found
  if '$data(filter("ORM")) do  quit:$Q filter("rslt")  quit
  .  set filter("rslt")="0^Patient does not have previous ORM"
  ;
  kill filter("ORM")
  do ORMVARS^SAMIORU(plien,.filter)
+ ;
+ ; merge ^KBAP("SAMIORU","filter","ORM")=filter
  ;
  ;Pull HL7 vars and escape sequences for building a message
 HL7VARS new HL,HLA,HLECH,HLQ,OUTHL,HLFS,HLCC
@@ -167,7 +167,7 @@ OBX(HLFS,HLCC,filter,OUTHL) ; Build text of note from vapals-patients nodes
  set rootpl=$get(filter("rootpl"))
  set plien=$get(filter("plien"))
  set notenmbr=$get(filter("notenmbr"))
- set climit=$get(filter("climit"))
+ ;
  ; build string used in each ORU OBX node
  set str="TX"_HLFS_HLFS_"I1"_HLCC_"Intake Note"
  ;
@@ -176,54 +176,20 @@ OBX(HLFS,HLCC,filter,OUTHL) ; Build text of note from vapals-patients nodes
  set ssn=$get(@rootpl@(plien,"ssn"))
  set line1="Patient name : "_name_" "_HLFS_" "_sex
  set line2="Record Number : "_ssn
+ ;
  set segment="OBX"_HLFS_1_HLFS_str_HLFS_line1_HLFS
  do ADD2MSG(segment)
  set segment="OBX"_HLFS_2_HLFS_str_HLFS_line2_HLFS
  do ADD2MSG(segment)
- ;
  new node,snode,vpcnt,cnt
- ;
- ; *** in vapalsyotta
- ;if '($get(filter("Cache"))) do
- ;. set node=$na(@rootvp@("graph",sid,key,"note"))
- ; *** in Cache
- ;if $get(filter("Cache")) do
  set node=$na(@rootvp@("graph",sid,key,"notes",notenmbr,"text"))
- ;
  set snode=$piece(node,")")
- ;
  set cnt=2
  for  set node=$Q(@node) quit:node'[snode  do
- .; if the text in this node is less than our character limit
- .;   then build an OBX segment
- . if $length(@node)<climit do  quit
- .. set vpcnt=$QS(node,7) quit:'vpcnt
- .. set cnt=$get(cnt)+1
- .. set segment="OBX"_HLFS_cnt_HLFS_str_HLFS_@node_HLFS
- .. do ADD2MSG(segment)
- .;
- .; string @node is too long to display properly in CPRS
- .;   The length is set in climit above
- .; Now we will pull this string and all subsequent
- .;   strings into a single string UNTIL we hit an empty node
- .;
-BLDTXT . new poo,txtstr,exit
- . set txtstr=@node
- . set exit=0
- . for  set node=$Q(@node) quit:$Q(@node)'[snode  do  quit:exit
- .. set txtstr=$get(txtstr)_@node_" "
- .. if ($translate(@($Q(@node))," ")="") set exit=1 quit
- .. if $length(@($Q(@node)))<climit set exit=1 quit
- . set poo(1)=txtstr
- . do wrap^%tt("poo",climit)
- .; now process text in poo(1) which has been limited
- .;  by wrap call to the number of characters in climit
- . new poocnt set poocnt=0
- . for  set poocnt=$order(poo(poocnt)) quit:'poocnt  do
- .. set cnt=$get(cnt)+1
- .. set segment="OBX"_HLFS_cnt_HLFS_str_HLFS_poo(poocnt)_HLFS
- .. do ADD2MSG(segment)
- .; now back to main loop looking through note in graphstore
+ . set vpcnt=$QS(node,7) quit:'vpcnt
+ . set cnt=$get(cnt)+1
+ . set segment="OBX"_HLFS_cnt_HLFS_str_HLFS_@node_HLFS
+ . do ADD2MSG(segment)
  quit
  ;
  ;

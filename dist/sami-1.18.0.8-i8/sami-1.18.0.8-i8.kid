@@ -1,11 +1,11 @@
-KIDS Distribution saved on Feb 25, 2021@09:55:16
-Fix for duplicate note transmissions to VistA
+KIDS Distribution saved on Mar 13, 2021@10:49:05
+Fixes to hl7 message building to preserve not formatting
 **KIDS**:SAMI*18.0*8^
 
 **INSTALL NAME**
 SAMI*18.0*8
 "BLD",11505,0)
-SAMI*18.0*8^SAMI^0^3210225^y
+SAMI*18.0*8^SAMI^0^3210313^y
 "BLD",11505,1,0)
 ^^1^1^3210203^
 "BLD",11505,1,1,0)
@@ -13,7 +13,7 @@ Corrections to the Intake notes generation
 "BLD",11505,4,0)
 ^9.64PA^^
 "BLD",11505,6.3)
-3
+4
 "BLD",11505,"KRN",0)
 ^9.67PA^1.5^25
 "BLD",11505,"KRN",.4,0)
@@ -51,7 +51,7 @@ SAMINOT1^^0^B305417363
 "BLD",11505,"KRN",9.8,"NM",2,0)
 SAMIJS1^^0^B2451
 "BLD",11505,"KRN",9.8,"NM",3,0)
-SAMIORU^^0^B147609519
+SAMIORU^^0^B117254881
 "BLD",11505,"KRN",9.8,"NM","B","SAMIJS1",2)
 
 "BLD",11505,"KRN",9.8,"NM","B","SAMINOT1",1)
@@ -141,9 +141,9 @@ SAMI^SAMI^SCREENING APPLICATIONS MANAGEMENT - IELCAP
 "PKG",230,22,1,0)
 18.0^3191203
 "PKG",230,22,1,"PAH",1,0)
-8^3210225
+8^3210313
 "PKG",230,22,1,"PAH",1,1,0)
-^^1^1^3210225
+^^1^1^3210313
 "PKG",230,22,1,"PAH",1,1,1,0)
 Corrections to the Intake notes generation
 "QUES","XPF1",0)
@@ -223,7 +223,7 @@ D XPZ2^XPDIQ
 "RTN","SAMIJS1",1,0)
 SAMIJS1 ;ven/gpl - json archive routine ; 1/22/19 1:24pm
 "RTN","SAMIJS1",2,0)
- ;;18.0;SAMI;;;Build 3
+ ;;18.0;SAMI;;;Build 4
 "RTN","SAMIJS1",3,0)
  ;
 "RTN","SAMIJS1",4,0)
@@ -461,7 +461,7 @@ DETAIL() ; displays the archive record for a patient
 "RTN","SAMINOT1",1,0)
 SAMINOT1 ;ven/gpl - ielcap: forms ; 5/7/19 4:48pm
 "RTN","SAMINOT1",2,0)
- ;;18.0;SAMI;;;Build 3
+ ;;18.0;SAMI;;;Build 4
 "RTN","SAMINOT1",3,0)
  ;
 "RTN","SAMINOT1",4,0)
@@ -1489,11 +1489,11 @@ XVAL(var,vals) ; extrinsic returns the patient value for var
 "RTN","SAMINOT1",515,0)
  ;
 "RTN","SAMIORU")
-0^3^B147609519
+0^3^B117254881
 "RTN","SAMIORU",1,0)
-SAMIORU ;ven/lgc/arc - SEND ORU ENROLLMENT RESPONSE ;Aug 17, 2020@07:29
+SAMIORU ;ven/lgc/arc - SEND ORU ENROLLMENT RESPONSE ;Mar 12, 2021@13:43
 "RTN","SAMIORU",2,0)
- ;;18.0;SAMI;;;Build 3
+ ;;18.0;SAMI;;;Build 4
 "RTN","SAMIORU",3,0)
  ;
 "RTN","SAMIORU",4,0)
@@ -1519,65 +1519,65 @@ TESTALL kill filter
 "RTN","SAMIORU",14,0)
  ;set filter("sendprotocol")="PHX ENROLL ORU EVN"
 "RTN","SAMIORU",15,0)
- set filter("sid")="PHO00015"
+ set filter("sid")="PHO00008"
 "RTN","SAMIORU",16,0)
- set filter("key")="siform-2020-07-30"
+ set filter("key")="siform-2021-03-12"
 "RTN","SAMIORU",17,0)
- ;set filter("sid")="SEA00014"
+ set filter("notenmbr")=1
 "RTN","SAMIORU",18,0)
- ;set filter("key")="siform-2020-06-03"
+ new poopoo set poopoo=$$EN^SAMIORU(.filter)
 "RTN","SAMIORU",19,0)
- set filter("notenmbr")=2
-"RTN","SAMIORU",20,0)
- ;set filter("climit")=66
-"RTN","SAMIORU",21,0)
- do EN^SAMIORU(.filter)
-"RTN","SAMIORU",22,0)
- ;set poopoo=$$EN^SAMIORU(.filter)
-"RTN","SAMIORU",23,0)
  quit
-"RTN","SAMIORU",24,0)
+"RTN","SAMIORU",20,0)
  ;
-"RTN","SAMIORU",25,0)
+"RTN","SAMIORU",21,0)
  ;
-"RTN","SAMIORU",26,0)
+"RTN","SAMIORU",22,0)
 EN(filter) ; Build and send ORU enrollment response
-"RTN","SAMIORU",27,0)
+"RTN","SAMIORU",23,0)
  ;@input
-"RTN","SAMIORU",28,0)
+"RTN","SAMIORU",24,0)
  ;   filter   =  array by reference
-"RTN","SAMIORU",29,0)
+"RTN","SAMIORU",25,0)
  ;               [filter("sendprotocol")] defaults to Phoenix
-"RTN","SAMIORU",30,0)
+"RTN","SAMIORU",26,0)
  ;               filter("sid")=sid (e.g.PHO00015)
-"RTN","SAMIORU",31,0)
+"RTN","SAMIORU",27,0)
  ;               filter("key")=sid (e.g. "siform-2020-07-30")
-"RTN","SAMIORU",32,0)
+"RTN","SAMIORU",28,0)
  ;               [filter("notenmbr")= e.g. 2 ]
-"RTN","SAMIORU",33,0)
+"RTN","SAMIORU",29,0)
  ;                     number of note in vapals-patients graph
-"RTN","SAMIORU",34,0)
+"RTN","SAMIORU",30,0)
  ;               [filter("climit")] defaults to 66
-"RTN","SAMIORU",35,0)
+"RTN","SAMIORU",31,0)
  ;                     limit to number of characters per line
-"RTN","SAMIORU",36,0)
+"RTN","SAMIORU",32,0)
  ;                     for text to display in CPRS
-"RTN","SAMIORU",37,0)
+"RTN","SAMIORU",33,0)
  ;
-"RTN","SAMIORU",38,0)
+"RTN","SAMIORU",34,0)
  ;@output
-"RTN","SAMIORU",39,0)
+"RTN","SAMIORU",35,0)
  ;   filter("rslt")  =  contains either
-"RTN","SAMIORU",40,0)
+"RTN","SAMIORU",36,0)
  ;                      msgid - message generated
-"RTN","SAMIORU",41,0)
+"RTN","SAMIORU",37,0)
  ;                      0 - error
-"RTN","SAMIORU",42,0)
+"RTN","SAMIORU",38,0)
  ;   HL7 ORU message built and sent
-"RTN","SAMIORU",43,0)
+"RTN","SAMIORU",39,0)
  ;   NOTE: if called as function contents of filter("rslt") is
-"RTN","SAMIORU",44,0)
+"RTN","SAMIORU",40,0)
  ;         returned directly
+"RTN","SAMIORU",41,0)
+ ;
+"RTN","SAMIORU",42,0)
+ ;debug
+"RTN","SAMIORU",43,0)
+ ;kill ^KBAP("SAMIORU")
+"RTN","SAMIORU",44,0)
+ ;merge ^KBAP("SAMIORU","filter")=filter
 "RTN","SAMIORU",45,0)
  ;
 "RTN","SAMIORU",46,0)
@@ -1605,47 +1605,47 @@ EN(filter) ; Build and send ORU enrollment response
 "RTN","SAMIORU",57,0)
  . set (SNDPROT,filter("sendprotocol"))="PHX ENROLL ORU EVN"
 "RTN","SAMIORU",58,0)
- set climit=$get(filter("climit")) if +$get(climit)=0 do
-"RTN","SAMIORU",59,0)
- . ;set climit=66
-"RTN","SAMIORU",60,0)
- . set climit=81
-"RTN","SAMIORU",61,0)
- set filter("Cache")=($zversion["Cache")
-"RTN","SAMIORU",62,0)
  set notenmbr=+$get(filter("notenmbr"))
-"RTN","SAMIORU",63,0)
+"RTN","SAMIORU",59,0)
  if notenmbr=0 do  quit:$Q filter("rslt")  quit
-"RTN","SAMIORU",64,0)
+"RTN","SAMIORU",60,0)
  . set filter("rslt")="0^no note number provided"
-"RTN","SAMIORU",65,0)
+"RTN","SAMIORU",61,0)
  ;
-"RTN","SAMIORU",66,0)
+"RTN","SAMIORU",62,0)
+ ; merge ^KBAP("SAMIORU","filter2")=filter
+"RTN","SAMIORU",63,0)
+ ;
+"RTN","SAMIORU",64,0)
 DFN ; find vpien and plien
-"RTN","SAMIORU",67,0)
+"RTN","SAMIORU",65,0)
  new dfn,vpien,plien
-"RTN","SAMIORU",68,0)
+"RTN","SAMIORU",66,0)
  set (dfn,vpien,filter("vpien"),filter("dfn"))=@rootvp@("graph",sid,key,"dfn")
-"RTN","SAMIORU",69,0)
+"RTN","SAMIORU",67,0)
  set (plien,filter("plien"))=$order(@rootpl@("dfn",vpien,0))
-"RTN","SAMIORU",70,0)
+"RTN","SAMIORU",68,0)
  ;
-"RTN","SAMIORU",71,0)
+"RTN","SAMIORU",69,0)
  ; Pull data from entry in patient-lookup graph
-"RTN","SAMIORU",72,0)
+"RTN","SAMIORU",70,0)
  merge filter=@rootpl@(plien)
-"RTN","SAMIORU",73,0)
- ; Return error if no ORM found
-"RTN","SAMIORU",74,0)
+"RTN","SAMIORU",71,0)
+FINDORM ; Return error if no ORM found
+"RTN","SAMIORU",72,0)
  if '$data(filter("ORM")) do  quit:$Q filter("rslt")  quit
-"RTN","SAMIORU",75,0)
+"RTN","SAMIORU",73,0)
  .  set filter("rslt")="0^Patient does not have previous ORM"
-"RTN","SAMIORU",76,0)
+"RTN","SAMIORU",74,0)
  ;
-"RTN","SAMIORU",77,0)
+"RTN","SAMIORU",75,0)
  kill filter("ORM")
-"RTN","SAMIORU",78,0)
+"RTN","SAMIORU",76,0)
  do ORMVARS^SAMIORU(plien,.filter)
+"RTN","SAMIORU",77,0)
+ ;
+"RTN","SAMIORU",78,0)
+ ; merge ^KBAP("SAMIORU","filter","ORM")=filter
 "RTN","SAMIORU",79,0)
  ;
 "RTN","SAMIORU",80,0)
@@ -1829,7 +1829,7 @@ OBX(HLFS,HLCC,filter,OUTHL) ; Build text of note from vapals-patients nodes
 "RTN","SAMIORU",169,0)
  set notenmbr=$get(filter("notenmbr"))
 "RTN","SAMIORU",170,0)
- set climit=$get(filter("climit"))
+ ;
 "RTN","SAMIORU",171,0)
  ; build string used in each ORU OBX node
 "RTN","SAMIORU",172,0)
@@ -1847,410 +1847,342 @@ OBX(HLFS,HLCC,filter,OUTHL) ; Build text of note from vapals-patients nodes
 "RTN","SAMIORU",178,0)
  set line2="Record Number : "_ssn
 "RTN","SAMIORU",179,0)
- set segment="OBX"_HLFS_1_HLFS_str_HLFS_line1_HLFS
-"RTN","SAMIORU",180,0)
- do ADD2MSG(segment)
-"RTN","SAMIORU",181,0)
- set segment="OBX"_HLFS_2_HLFS_str_HLFS_line2_HLFS
-"RTN","SAMIORU",182,0)
- do ADD2MSG(segment)
-"RTN","SAMIORU",183,0)
  ;
+"RTN","SAMIORU",180,0)
+ set segment="OBX"_HLFS_1_HLFS_str_HLFS_line1_HLFS
+"RTN","SAMIORU",181,0)
+ do ADD2MSG(segment)
+"RTN","SAMIORU",182,0)
+ set segment="OBX"_HLFS_2_HLFS_str_HLFS_line2_HLFS
+"RTN","SAMIORU",183,0)
+ do ADD2MSG(segment)
 "RTN","SAMIORU",184,0)
  new node,snode,vpcnt,cnt
 "RTN","SAMIORU",185,0)
- ;
-"RTN","SAMIORU",186,0)
- ; *** in vapalsyotta
-"RTN","SAMIORU",187,0)
- ;if '($get(filter("Cache"))) do
-"RTN","SAMIORU",188,0)
- ;. set node=$na(@rootvp@("graph",sid,key,"note"))
-"RTN","SAMIORU",189,0)
- ; *** in Cache
-"RTN","SAMIORU",190,0)
- ;if $get(filter("Cache")) do
-"RTN","SAMIORU",191,0)
  set node=$na(@rootvp@("graph",sid,key,"notes",notenmbr,"text"))
-"RTN","SAMIORU",192,0)
- ;
-"RTN","SAMIORU",193,0)
+"RTN","SAMIORU",186,0)
  set snode=$piece(node,")")
+"RTN","SAMIORU",187,0)
+ set cnt=2
+"RTN","SAMIORU",188,0)
+ for  set node=$Q(@node) quit:node'[snode  do
+"RTN","SAMIORU",189,0)
+ . set vpcnt=$QS(node,7) quit:'vpcnt
+"RTN","SAMIORU",190,0)
+ . set cnt=$get(cnt)+1
+"RTN","SAMIORU",191,0)
+ . set segment="OBX"_HLFS_cnt_HLFS_str_HLFS_@node_HLFS
+"RTN","SAMIORU",192,0)
+ . do ADD2MSG(segment)
+"RTN","SAMIORU",193,0)
+ quit
 "RTN","SAMIORU",194,0)
  ;
 "RTN","SAMIORU",195,0)
- set cnt=2
+ ;
 "RTN","SAMIORU",196,0)
- for  set node=$Q(@node) quit:node'[snode  do
+ ;
 "RTN","SAMIORU",197,0)
- .; if the text in this node is less than our character limit
-"RTN","SAMIORU",198,0)
- .;   then build an OBX segment
-"RTN","SAMIORU",199,0)
- . if $length(@node)<climit do  quit
-"RTN","SAMIORU",200,0)
- .. set vpcnt=$QS(node,7) quit:'vpcnt
-"RTN","SAMIORU",201,0)
- .. set cnt=$get(cnt)+1
-"RTN","SAMIORU",202,0)
- .. set segment="OBX"_HLFS_cnt_HLFS_str_HLFS_@node_HLFS
-"RTN","SAMIORU",203,0)
- .. do ADD2MSG(segment)
-"RTN","SAMIORU",204,0)
- .;
-"RTN","SAMIORU",205,0)
- .; string @node is too long to display properly in CPRS
-"RTN","SAMIORU",206,0)
- .;   The length is set in climit above
-"RTN","SAMIORU",207,0)
- .; Now we will pull this string and all subsequent
-"RTN","SAMIORU",208,0)
- .;   strings into a single string UNTIL we hit an empty node
-"RTN","SAMIORU",209,0)
- .;
-"RTN","SAMIORU",210,0)
-BLDTXT . new poo,txtstr,exit
-"RTN","SAMIORU",211,0)
- . set txtstr=@node
-"RTN","SAMIORU",212,0)
- . set exit=0
-"RTN","SAMIORU",213,0)
- . for  set node=$Q(@node) quit:$Q(@node)'[snode  do  quit:exit
-"RTN","SAMIORU",214,0)
- .. set txtstr=$get(txtstr)_@node_" "
-"RTN","SAMIORU",215,0)
- .. if ($translate(@($Q(@node))," ")="") set exit=1 quit
-"RTN","SAMIORU",216,0)
- .. if $length(@($Q(@node)))<climit set exit=1 quit
-"RTN","SAMIORU",217,0)
- . set poo(1)=txtstr
-"RTN","SAMIORU",218,0)
- . do wrap^%tt("poo",climit)
-"RTN","SAMIORU",219,0)
- .; now process text in poo(1) which has been limited
-"RTN","SAMIORU",220,0)
- .;  by wrap call to the number of characters in climit
-"RTN","SAMIORU",221,0)
- . new poocnt set poocnt=0
-"RTN","SAMIORU",222,0)
- . for  set poocnt=$order(poo(poocnt)) quit:'poocnt  do
-"RTN","SAMIORU",223,0)
- .. set cnt=$get(cnt)+1
-"RTN","SAMIORU",224,0)
- .. set segment="OBX"_HLFS_cnt_HLFS_str_HLFS_poo(poocnt)_HLFS
-"RTN","SAMIORU",225,0)
- .. do ADD2MSG(segment)
-"RTN","SAMIORU",226,0)
- .; now back to main loop looking through note in graphstore
-"RTN","SAMIORU",227,0)
- quit
-"RTN","SAMIORU",228,0)
- ;
-"RTN","SAMIORU",229,0)
- ;
-"RTN","SAMIORU",230,0)
- ;
-"RTN","SAMIORU",231,0)
 SENDHL7(SNDPROT,OUTHL) ;Send out an HL7 message
-"RTN","SAMIORU",232,0)
+"RTN","SAMIORU",198,0)
  ;@input
-"RTN","SAMIORU",233,0)
+"RTN","SAMIORU",199,0)
  ;  OUTHL  = array containing message to send
-"RTN","SAMIORU",234,0)
+"RTN","SAMIORU",200,0)
  ;@output
-"RTN","SAMIORU",235,0)
+"RTN","SAMIORU",201,0)
  ;  msgid  = message ID
-"RTN","SAMIORU",236,0)
+"RTN","SAMIORU",202,0)
  new HLRESLT
-"RTN","SAMIORU",237,0)
+"RTN","SAMIORU",203,0)
  kill HLA("HLS")
-"RTN","SAMIORU",238,0)
+"RTN","SAMIORU",204,0)
  merge HLA("HLS")=OUTHL
-"RTN","SAMIORU",239,0)
+"RTN","SAMIORU",205,0)
  ;ZW HLA("HLS")
-"RTN","SAMIORU",240,0)
+"RTN","SAMIORU",206,0)
  if $data(HLA("HLS")) do
-"RTN","SAMIORU",241,0)
+"RTN","SAMIORU",207,0)
  .; W !,"GOT TO HERE"
-"RTN","SAMIORU",242,0)
+"RTN","SAMIORU",208,0)
  . new HLEID,HLARYTYP,HLFORMAT,HLMTIEN,HLP
-"RTN","SAMIORU",243,0)
+"RTN","SAMIORU",209,0)
  . set HL("MTN")="ORU"
-"RTN","SAMIORU",244,0)
+"RTN","SAMIORU",210,0)
  . set HLEID=$O(^ORD(101,"B",SNDPROT,0))
-"RTN","SAMIORU",245,0)
+"RTN","SAMIORU",211,0)
  . set HLARYTYP="LM"
-"RTN","SAMIORU",246,0)
+"RTN","SAMIORU",212,0)
  . set HLFORMAT=1
-"RTN","SAMIORU",247,0)
+"RTN","SAMIORU",213,0)
  . set HLMTIEN=""
-"RTN","SAMIORU",248,0)
+"RTN","SAMIORU",214,0)
  . set HLP("PRIORITY")=1
-"RTN","SAMIORU",249,0)
+"RTN","SAMIORU",215,0)
  . do GENERATE^HLMA(HLEID,HLARYTYP,HLFORMAT,.HLRESLT)
-"RTN","SAMIORU",250,0)
+"RTN","SAMIORU",216,0)
  .; W !,"HLRESLT=",$get(HLRESLT),!
-"RTN","SAMIORU",251,0)
+"RTN","SAMIORU",217,0)
  set msgid=$get(HLRESLT)
-"RTN","SAMIORU",252,0)
+"RTN","SAMIORU",218,0)
  quit msgid
-"RTN","SAMIORU",253,0)
+"RTN","SAMIORU",219,0)
  ;
-"RTN","SAMIORU",254,0)
+"RTN","SAMIORU",220,0)
  ;
-"RTN","SAMIORU",255,0)
+"RTN","SAMIORU",221,0)
  ;
-"RTN","SAMIORU",256,0)
+"RTN","SAMIORU",222,0)
  ;
-"RTN","SAMIORU",257,0)
+"RTN","SAMIORU",223,0)
  ; e.g. SNDPROT="PHX ENROLL ORM EVN"
-"RTN","SAMIORU",258,0)
+"RTN","SAMIORU",224,0)
 HLENV(SNDPROT) ; Set HL7 variables
-"RTN","SAMIORU",259,0)
+"RTN","SAMIORU",225,0)
  ;@input
-"RTN","SAMIORU",260,0)
+"RTN","SAMIORU",226,0)
  ;   SNDPROT = name of sending protocol (file #101)
-"RTN","SAMIORU",261,0)
+"RTN","SAMIORU",227,0)
  ;@output
-"RTN","SAMIORU",262,0)
+"RTN","SAMIORU",228,0)
  ;   sets all necessary HL variables for building a message
-"RTN","SAMIORU",263,0)
+"RTN","SAMIORU",229,0)
  new PIEN,INT
-"RTN","SAMIORU",264,0)
+"RTN","SAMIORU",230,0)
  set PIEN=$O(^ORD(101,"B",SNDPROT,0))
-"RTN","SAMIORU",265,0)
+"RTN","SAMIORU",231,0)
  set HL="HLS(""HLS"")"
-"RTN","SAMIORU",266,0)
+"RTN","SAMIORU",232,0)
  set INT=1
-"RTN","SAMIORU",267,0)
+"RTN","SAMIORU",233,0)
  do INIT^HLFNC2(PIEN,.HL,INT)
-"RTN","SAMIORU",268,0)
+"RTN","SAMIORU",234,0)
  set HLFS=$get(HL("FS"))
-"RTN","SAMIORU",269,0)
+"RTN","SAMIORU",235,0)
  set HLECH=$get(HL("ECH"))
-"RTN","SAMIORU",270,0)
+"RTN","SAMIORU",236,0)
  set HLCC=$E(HLECH)
-"RTN","SAMIORU",271,0)
+"RTN","SAMIORU",237,0)
  quit
-"RTN","SAMIORU",272,0)
+"RTN","SAMIORU",238,0)
  ;
-"RTN","SAMIORU",273,0)
+"RTN","SAMIORU",239,0)
  ;
-"RTN","SAMIORU",274,0)
+"RTN","SAMIORU",240,0)
 ADD2MSG(segment) ; Add segment to OUTHL array
-"RTN","SAMIORU",275,0)
+"RTN","SAMIORU",241,0)
  new outcnt set outcnt=$order(OUTHL("A"),-1),outcnt=$get(outcnt)+1
-"RTN","SAMIORU",276,0)
+"RTN","SAMIORU",242,0)
  set OUTHL(outcnt)=segment
-"RTN","SAMIORU",277,0)
+"RTN","SAMIORU",243,0)
  quit
+"RTN","SAMIORU",244,0)
+ ;
+"RTN","SAMIORU",245,0)
+ ;
+"RTN","SAMIORU",246,0)
+ ;
+"RTN","SAMIORU",247,0)
+ ; builds extra filter vars from the most recent ORM array found in
+"RTN","SAMIORU",248,0)
+ ;   the patient's patient-lookup graph
+"RTN","SAMIORU",249,0)
+ ; filter("assignedlocation")="PHX-PULM RN LSS PHONE"
+"RTN","SAMIORU",250,0)
+ ; filter("fulladdress")="7726 W ORCHID ST^^PHOENIX^AZ^85017"
+"RTN","SAMIORU",251,0)
+ ; filter("msgid")="99000031ORM"
+"RTN","SAMIORU",252,0)
+ ; filter("order")="PHO_LUNG"
+"RTN","SAMIORU",253,0)
+ ; filter("order2")="LUNG"
+"RTN","SAMIORU",254,0)
+ ; filter("ordercontrol")="NW"
+"RTN","SAMIORU",255,0)
+ ; filter("ordereffectivedt")=20200616135751
+"RTN","SAMIORU",256,0)
+ ; filter("ordernumber")=3200616135751
+"RTN","SAMIORU",257,0)
+ ; filter("orderstatus")="NW"
+"RTN","SAMIORU",258,0)
+ ; filter("patientclass")="O"
+"RTN","SAMIORU",259,0)
+ ; filter("providerien")=244088
+"RTN","SAMIORU",260,0)
+ ; filter("providernm")="GARCIA,DANIEL,P"
+"RTN","SAMIORU",261,0)
+ ; filter("siteid")="PHO"
+"RTN","SAMIORU",262,0)
+ ; filter("transactiondt")=20200616135751
+"RTN","SAMIORU",263,0)
+ORMVARS(plien,filter) ; get variables from most recent ORM on this patient
+"RTN","SAMIORU",264,0)
+ ;
+"RTN","SAMIORU",265,0)
+ new node,snode,rootpl,var,invdt
+"RTN","SAMIORU",266,0)
+ set rootpl=$$setroot^%wd("patient-lookup")
+"RTN","SAMIORU",267,0)
+ set node=$na(@rootpl@(plien,"ORM")),snode=$p(node,")")
+"RTN","SAMIORU",268,0)
+ set invdt=$QS($Q(@node),5)
+"RTN","SAMIORU",269,0)
+ for  set node=$Q(@node) quit:node'[snode  quit:node'[invdt  do
+"RTN","SAMIORU",270,0)
+ . set var=$QS(node,6)
+"RTN","SAMIORU",271,0)
+ . set filter(var)=@node
+"RTN","SAMIORU",272,0)
+ ; don't confuse ORM message id with ORU message id
+"RTN","SAMIORU",273,0)
+ if $data(filter("msgid")) do
+"RTN","SAMIORU",274,0)
+ . set filter("ormmsgid")=filter("msgid")
+"RTN","SAMIORU",275,0)
+ . kill filter("msgid")
+"RTN","SAMIORU",276,0)
+ quit
+"RTN","SAMIORU",277,0)
+ ;
 "RTN","SAMIORU",278,0)
  ;
 "RTN","SAMIORU",279,0)
  ;
 "RTN","SAMIORU",280,0)
- ;
-"RTN","SAMIORU",281,0)
- ; builds extra filter vars from the most recent ORM array found in
-"RTN","SAMIORU",282,0)
- ;   the patient's patient-lookup graph
-"RTN","SAMIORU",283,0)
- ; filter("assignedlocation")="PHX-PULM RN LSS PHONE"
-"RTN","SAMIORU",284,0)
- ; filter("fulladdress")="7726 W ORCHID ST^^PHOENIX^AZ^85017"
-"RTN","SAMIORU",285,0)
- ; filter("msgid")="99000031ORM"
-"RTN","SAMIORU",286,0)
- ; filter("order")="PHO_LUNG"
-"RTN","SAMIORU",287,0)
- ; filter("order2")="LUNG"
-"RTN","SAMIORU",288,0)
- ; filter("ordercontrol")="NW"
-"RTN","SAMIORU",289,0)
- ; filter("ordereffectivedt")=20200616135751
-"RTN","SAMIORU",290,0)
- ; filter("ordernumber")=3200616135751
-"RTN","SAMIORU",291,0)
- ; filter("orderstatus")="NW"
-"RTN","SAMIORU",292,0)
- ; filter("patientclass")="O"
-"RTN","SAMIORU",293,0)
- ; filter("providerien")=244088
-"RTN","SAMIORU",294,0)
- ; filter("providernm")="GARCIA,DANIEL,P"
-"RTN","SAMIORU",295,0)
- ; filter("siteid")="PHO"
-"RTN","SAMIORU",296,0)
- ; filter("transactiondt")=20200616135751
-"RTN","SAMIORU",297,0)
-ORMVARS(plien,filter) ; get variables from most recent ORM on this patient
-"RTN","SAMIORU",298,0)
- ;
-"RTN","SAMIORU",299,0)
- new node,snode,rootpl,var,invdt
-"RTN","SAMIORU",300,0)
- set rootpl=$$setroot^%wd("patient-lookup")
-"RTN","SAMIORU",301,0)
- set node=$na(@rootpl@(plien,"ORM")),snode=$p(node,")")
-"RTN","SAMIORU",302,0)
- set invdt=$QS($Q(@node),5)
-"RTN","SAMIORU",303,0)
- for  set node=$Q(@node) quit:node'[snode  quit:node'[invdt  do
-"RTN","SAMIORU",304,0)
- . set var=$QS(node,6)
-"RTN","SAMIORU",305,0)
- . set filter(var)=@node
-"RTN","SAMIORU",306,0)
- ; don't confuse ORM message id with ORU message id
-"RTN","SAMIORU",307,0)
- if $data(filter("msgid")) do
-"RTN","SAMIORU",308,0)
- . set filter("ormmsgid")=filter("msgid")
-"RTN","SAMIORU",309,0)
- . kill filter("msgid")
-"RTN","SAMIORU",310,0)
- quit
-"RTN","SAMIORU",311,0)
- ;
-"RTN","SAMIORU",312,0)
- ;
-"RTN","SAMIORU",313,0)
- ;
-"RTN","SAMIORU",314,0)
 TESTPID(plien) ; Test generating PID
-"RTN","SAMIORU",315,0)
+"RTN","SAMIORU",281,0)
  new rootpl
-"RTN","SAMIORU",316,0)
+"RTN","SAMIORU",282,0)
  set (filter("rootpl"),rootpl)=$$setroot^%wd("patient-lookup")
-"RTN","SAMIORU",317,0)
+"RTN","SAMIORU",283,0)
  set filter("plien")=$get(plien)
-"RTN","SAMIORU",318,0)
+"RTN","SAMIORU",284,0)
  set SNDPROT="PHX ENROLL ORU EVN"
-"RTN","SAMIORU",319,0)
+"RTN","SAMIORU",285,0)
  do HLENV^SAMIORU(SNDPROT)
-"RTN","SAMIORU",320,0)
+"RTN","SAMIORU",286,0)
  merge filter=@rootpl@(plien)
-"RTN","SAMIORU",321,0)
+"RTN","SAMIORU",287,0)
  kill filter("ORM")
-"RTN","SAMIORU",322,0)
+"RTN","SAMIORU",288,0)
  do ORMVARS^SAMIORU(plien,.filter)
-"RTN","SAMIORU",323,0)
+"RTN","SAMIORU",289,0)
  do PID^SAMIORU(HLFS,HLCC,.filter,.OUTHL)
-"RTN","SAMIORU",324,0)
+"RTN","SAMIORU",290,0)
  quit
-"RTN","SAMIORU",325,0)
+"RTN","SAMIORU",291,0)
  ;
-"RTN","SAMIORU",326,0)
+"RTN","SAMIORU",292,0)
  ;      ;
-"RTN","SAMIORU",327,0)
+"RTN","SAMIORU",293,0)
 TESTOBR(plien) ; Test generating OBR
-"RTN","SAMIORU",328,0)
+"RTN","SAMIORU",294,0)
  new rootpl
-"RTN","SAMIORU",329,0)
+"RTN","SAMIORU",295,0)
  set (filter("rootpl"),rootpl)=$$setroot^%wd("patient-lookup")
-"RTN","SAMIORU",330,0)
+"RTN","SAMIORU",296,0)
  set filter("plien")=$get(plien)
-"RTN","SAMIORU",331,0)
+"RTN","SAMIORU",297,0)
  set SNDPROT="PHX ENROLL ORU EVN"
-"RTN","SAMIORU",332,0)
+"RTN","SAMIORU",298,0)
  do HLENV^SAMIORU(SNDPROT)
-"RTN","SAMIORU",333,0)
+"RTN","SAMIORU",299,0)
  merge filter=@rootpl@(plien)
-"RTN","SAMIORU",334,0)
+"RTN","SAMIORU",300,0)
  kill filter("ORM")
-"RTN","SAMIORU",335,0)
+"RTN","SAMIORU",301,0)
  do ORMVARS^SAMIORU(plien,.filter)
-"RTN","SAMIORU",336,0)
+"RTN","SAMIORU",302,0)
  do OBR^SAMIORU(HLFS,HLCC,.filter,.OUTHL)
-"RTN","SAMIORU",337,0)
+"RTN","SAMIORU",303,0)
  quit
-"RTN","SAMIORU",338,0)
+"RTN","SAMIORU",304,0)
  ;
-"RTN","SAMIORU",339,0)
+"RTN","SAMIORU",305,0)
  ;
-"RTN","SAMIORU",340,0)
+"RTN","SAMIORU",306,0)
 TESTOBXV ; Test generating OBX in vapalsyotta
-"RTN","SAMIORU",341,0)
+"RTN","SAMIORU",307,0)
  new rootpl,rootvp,filter
-"RTN","SAMIORU",342,0)
+"RTN","SAMIORU",308,0)
  set (filter("rootpl"),rootpl)=$$setroot^%wd("patient-lookup")
-"RTN","SAMIORU",343,0)
+"RTN","SAMIORU",309,0)
  set (filter("rootvp"),rootvp)=$$setroot^%wd("vapals-patients")
-"RTN","SAMIORU",344,0)
+"RTN","SAMIORU",310,0)
  new SNDPROT,notenbr,msgid
-"RTN","SAMIORU",345,0)
+"RTN","SAMIORU",311,0)
  set SNDPROT="PHX ENROLL ORU EVN"
-"RTN","SAMIORU",346,0)
+"RTN","SAMIORU",312,0)
  do HLENV^SAMIORU(SNDPROT)
-"RTN","SAMIORU",347,0)
+"RTN","SAMIORU",313,0)
  new sid,key
-"RTN","SAMIORU",348,0)
+"RTN","SAMIORU",314,0)
  set (sid,filter("sid"))="PHO00015"
-"RTN","SAMIORU",349,0)
+"RTN","SAMIORU",315,0)
  set (key,filter("key"))="siform-2020-07-30"
-"RTN","SAMIORU",350,0)
+"RTN","SAMIORU",316,0)
  set (filter("plien"),plien)=@rootvp@("graph",sid,key,"dfn")
-"RTN","SAMIORU",351,0)
+"RTN","SAMIORU",317,0)
  merge filter=@rootpl@(plien)
-"RTN","SAMIORU",352,0)
+"RTN","SAMIORU",318,0)
  kill filter("ORM")
-"RTN","SAMIORU",353,0)
+"RTN","SAMIORU",319,0)
  do ORMVARS^SAMIORU(plien,.filter)
-"RTN","SAMIORU",354,0)
+"RTN","SAMIORU",320,0)
  new climit set climit=66
-"RTN","SAMIORU",355,0)
+"RTN","SAMIORU",321,0)
  new notenbr set notenbr=1
-"RTN","SAMIORU",356,0)
+"RTN","SAMIORU",322,0)
  do OBX^SAMIORU(HLFS,HLCC,.filter,.OUTHL)
-"RTN","SAMIORU",357,0)
+"RTN","SAMIORU",323,0)
  quit
-"RTN","SAMIORU",358,0)
+"RTN","SAMIORU",324,0)
  ;
-"RTN","SAMIORU",359,0)
+"RTN","SAMIORU",325,0)
 TESTOBXC ; Test generating OBX in Cache
-"RTN","SAMIORU",360,0)
+"RTN","SAMIORU",326,0)
  new rootpl,rootvp,filter
-"RTN","SAMIORU",361,0)
+"RTN","SAMIORU",327,0)
  set (filter("rootpl"),rootpl)=$$setroot^%wd("patient-lookup")
-"RTN","SAMIORU",362,0)
+"RTN","SAMIORU",328,0)
  set (filter("rootvp"),rootvp)=$$setroot^%wd("vapals-patients")
-"RTN","SAMIORU",363,0)
+"RTN","SAMIORU",329,0)
  new SNDPROT,notenbr,msgid
-"RTN","SAMIORU",364,0)
+"RTN","SAMIORU",330,0)
  set SNDPROT="PHX ENROLL ORU EVN"
-"RTN","SAMIORU",365,0)
+"RTN","SAMIORU",331,0)
  do HLENV^SAMIORU(SNDPROT)
-"RTN","SAMIORU",366,0)
+"RTN","SAMIORU",332,0)
  new sid,key
-"RTN","SAMIORU",367,0)
+"RTN","SAMIORU",333,0)
  set (sid,filter("sid"))="PHO00015"
-"RTN","SAMIORU",368,0)
+"RTN","SAMIORU",334,0)
  set (key,filter("key"))="siform-2020-07-30"
-"RTN","SAMIORU",369,0)
+"RTN","SAMIORU",335,0)
  set (filter("plien"),plien)=@rootvp@("graph",sid,key,"dfn")
-"RTN","SAMIORU",370,0)
+"RTN","SAMIORU",336,0)
  merge filter=@rootpl@(plien)
-"RTN","SAMIORU",371,0)
+"RTN","SAMIORU",337,0)
  kill filter("ORM")
-"RTN","SAMIORU",372,0)
+"RTN","SAMIORU",338,0)
  do ORMVARS^SAMIORU(plien,.filter)
-"RTN","SAMIORU",373,0)
+"RTN","SAMIORU",339,0)
  set filter("climit")=66
-"RTN","SAMIORU",374,0)
+"RTN","SAMIORU",340,0)
  set filter("notenmbr")=2
-"RTN","SAMIORU",375,0)
+"RTN","SAMIORU",341,0)
  set filter("Cache")=($zversion["Cache")
-"RTN","SAMIORU",376,0)
+"RTN","SAMIORU",342,0)
  do OBX^SAMIORU(HLFS,HLCC,.filter,.OUTHL)
-"RTN","SAMIORU",377,0)
+"RTN","SAMIORU",343,0)
  quit
-"RTN","SAMIORU",378,0)
+"RTN","SAMIORU",344,0)
  ;
-"RTN","SAMIORU",379,0)
+"RTN","SAMIORU",345,0)
 EOR ;End of routine SAMIORU
-"RTN","SAMIORU",380,0)
+"RTN","SAMIORU",346,0)
  ;
-"RTN","SAMIORU",381,0)
+"RTN","SAMIORU",347,0)
  ;
 "VER")
 8.0^22.2

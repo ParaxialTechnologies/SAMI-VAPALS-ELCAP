@@ -1,17 +1,42 @@
-SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ; 2019-03-14T19:08Z
- ;;18.0;SAM;;;Build 1
+SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ;2021-03-11T04:51Z
+ ;;18.0;SAMI;**3,9**;;Build 11
+ ;;1.18.0.9-i9
  ;
- ;@license: see routine SAMIUL
- ;
- ; SAMICASE contains subroutines for producing the ELCAP Case Review Page.
- ; It is currently untested & in progress.
- ;
- ; see SAMICUL for documentation
+ ; SAMICAS3 contains ppis and other subroutines to support processing
+ ; of the VAPALS case review page.
  ;
  quit  ; no entry from top
  ;
  ;
- ;;@ppi - post new form selection (post service)
+ ;
+ ;@section 0 primary development: see routine %wful
+ ;
+ ;
+ ;
+ ;@license: see routine SAMIUL
+ ;@documentation : see SAMICUL
+ ;@contents
+ ; WSNFPOST: post new form selection (post service)
+ ; MKSBFORM: create background form
+ ; $$PREVNOD = key of latest form including nodule grid
+ ; $$LASTCMP = date & key of last comparison scan
+ ; $$PRIORCMP = dates of all scans before last comparison scan
+ ; SORTFRMS: sorts all forms for patient sid by date
+ ; MKCEFORM: create ct evaluation form
+ ; MKFUFORM: create follow-up form
+ ; $$BASELNDT = last previous baseline ct date
+ ; MKPTFORM: create pet evaluation form
+ ; MKITFORM: create intervention form
+ ; MKBXFORM: create biopsy form
+ ; CASETBL: generates case review table
+ ;
+ ;
+ ;
+ ;@section 1 WSNFPOST & related subroutines
+ ;
+ ;
+ ;
+ ;;@ppi WSNFPOST^SAMICAS3, post new form selection (post service)
 WSNFPOST ; post new form selection (post service)
  ;
  ;@stanza 1 invocation, binding, & branching
@@ -142,7 +167,8 @@ WSNFPOST ; post new form selection (post service)
  ;
  ;@stanza 3 termination
  ;
- quit  ; end of wsNuFormPost
+ quit  ; end of ppi WSNFPOST^SAMICAS3
+ ;
  ;
  ;
 MKSBFORM(sid,key) ; create background form
@@ -177,8 +203,12 @@ MKSBFORM(sid,key) ; create background form
  ;
  quit  ; end of MKSBFORM
  ;
-PREVNOD(sid) ; extrinsic which returns the key of the latest form
- ; that includes a nodule grid. used for nodule copy
+ ;
+ ;
+PREVNOD(sid) ; key of latest form including nodule grid
+ ;
+ ; used for nodule copy
+ ;
  n retkey s retkey=""
  n fary
  d SORTFRMS(.fary,sid)
@@ -190,10 +220,14 @@ PREVNOD(sid) ; extrinsic which returns the key of the latest form
  . . i tmpkey["ptform" s retkey=tmpkey
  . . i tmpkey["bxform" s retkey=tmpkey
  ;
- q retkey
+ q retkey ; end of $$PREVNOD
  ;
-LASTCMP(sid,retkey) ; Extrinsic returns the date of the last comparison scan
- ; and the key of the last comparison scan, passed by reference
+ ;
+ ;
+LASTCMP(sid,retkey) ; date & key of last comparison scan
+ ;
+ ; passed by reference
+ ;
  s retkey=""
  n fary
  d SORTFRMS(.fary,sid)
@@ -209,10 +243,12 @@ LASTCMP(sid,retkey) ; Extrinsic returns the date of the last comparison scan
  . s fmdt=$$KEY2FM^SAMICASE(retkey)
  . s retdt=$$VAPALSDT^SAMICASE(fmdt)
  ;
- q retdt
+ q retdt ; end of $$LASTCMP
  ;
-PRIORCMP(sid) ; Extrinsic returns the dates of 
- ; all scans previous to the last comparison scan
+ ;
+ ;
+PRIORCMP(sid) ; dates of all scans before last comparison scan
+ ;
  n retstr s retstr=""
  n lastcmp s lastcmp=""
  n fary
@@ -233,11 +269,15 @@ PRIORCMP(sid) ; Extrinsic returns the dates of
  . . . . s retstr=$$VAPALSDT^SAMICASE(fmdt)_","_retstr
  i $e(retstr,$l(retstr))="," s retstr=$e(retstr,1,$l(retstr)-1)
  ;
- q retstr
+ q retstr ; end of $$PRIORCMP
+ ;
+ ;
  ;
 SORTFRMS(ARY,sid) ; sorts all forms for patient sid by date
+ ;
  ; and returns in ARY, passed by reference
  ; format of return is ARY(fmdate,key)=""
+ ;
  n root s root=$$setroot^%wd("vapals-patients")
  q:'$d(@root@("graph",sid))
  n froot s froot=$na(@root@("graph",sid))
@@ -250,7 +290,10 @@ SORTFRMS(ARY,sid) ; sorts all forms for patient sid by date
  . D ^%DT
  . i Y=-1 d ^ZTER Q  ;
  . S ARY(Y,zi)=""
- q
+ ;
+ q  ; end of SORTFRMS
+ ;
+ ;
  ;
 MKCEFORM(sid,key) ; create ct evaluation form
  ;
@@ -311,6 +354,8 @@ MKCEFORM(sid,key) ; create ct evaluation form
  ;
  quit  ; end of MKCEFORM
  ;
+ ;
+ ;
 MKFUFORM(sid,key) ; create Follow-up form
  ;
  ;@stanza 1 invocation, binding, & branching
@@ -345,7 +390,9 @@ MKFUFORM(sid,key) ; create Follow-up form
  ;
  quit  ; end of MKFUFORM
  ;
-BASELNDT(sid) ; Extrinsic returns the last previous baseline CT date
+ ;
+ ;
+BASELNDT(sid) ; last previous baseline ct date
  ;
  n root s root=$$setroot^%wd("vapals-patients")
  n groot s groot=$na(@root@("graph",sid))
@@ -361,7 +408,10 @@ BASELNDT(sid) ; Extrinsic returns the last previous baseline CT date
  . . s done=1
  . . s bdate=$p(bkey,"ceform-",2)
  s bdate=$$KEY2DSPD^SAMICAS2(bdate)
- q bdate
+ ;
+ q bdate ; end of $$BASELNDT
+ ;
+ ;
  ;
 MKPTFORM(sid,key) ; create pet evaluation form
  ;
@@ -404,6 +454,8 @@ MKPTFORM(sid,key) ; create pet evaluation form
  ;
  quit  ; end of MKPTFORM
  ;
+ ;
+ ;
 MKITFORM(sid,key) ; create intervention form
  ;
  ;@stanza 1 invocation, binding, & branching
@@ -435,6 +487,8 @@ MKITFORM(sid,key) ; create intervention form
  ;@stanza 3 termination
  ;
  quit  ; end of MKITFORM
+ ;
+ ;
  ;
 MKBXFORM(sid,key) ; create biopsy form
  ;
@@ -476,6 +530,7 @@ MKBXFORM(sid,key) ; create biopsy form
  ;@stanza 3 termination
  ;
  quit  ; end of MKBXFORM
+ ;
  ;
  ;
 CASETBL(ary) ; generates case review table
@@ -548,7 +603,8 @@ CASETBL(ary) ; generates case review table
  ;
  ;@stanza 3 termination
  ;
- quit  ; end of casetbl
+ quit  ; end of CASETBL
+ ;
  ;
  ;
 EOR ; end of routine SAMICAS3

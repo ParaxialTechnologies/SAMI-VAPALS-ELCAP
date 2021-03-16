@@ -1,39 +1,66 @@
-SAMIHOM4 ;ven/gpl,arc - ielcap: forms;2018-11-30T17:45Z ;Jan 14, 2020@16:04
- ;;18.0;SAMI;;;Build 1
+SAMIHOM4 ;ven/gpl,arc - ielcap: home page ;2021-03-11T16:15Z
+ ;;18.0;SAMI;**1,4,5,6,9**;
+ ;;1.18.0.9-i9
+ ;
+ ; SAMIHOM4 contains web services & other subroutines for producing
+ ; the ELCAP Home Page.
+ ;
+ quit  ; no entry from top
+ ;
+ ;
+ ;
+ ;@section 0 primary development
+ ;
+ ;
  ;
  ;@license: see routine SAMIUL
+ ;@documentation : see SAMICUL
+ ;@contents
+ ; WSHOME: code for ws: vapals-elcap homepage
+ ; WSVAPALS: code for ws: vapals post
+ ; REG: manual registration
+ ; MKPTLK: creates patient-lookup record
+ ; UPDTFRMS: update demographics in all forms for patient
+ ; MERGE: merge participant records
+ ; ADDUNMAT: adds unmatched report web service to system
+ ; DELUNMAT: deletes unmatched web service
+ ; WSUNMAT: navigates to unmatched report
+ ; $$DUPSSN = true if duplicate ssn
+ ; $$DUPICN = true if duplicate icn
+ ; $$BADICN = true if ICN checkdigits are wrong
+ ; SAVE: save patient-lookup record after edit
+ ; $$REMATCH = possible match ien
+ ; SETINFO: set information message text
+ ; SETWARN: set warning message text
+ ; RTNERR: redisplay page w/error message
+ ; RTNPAGE: display page
+ ; REINDXPL: reindex patient lookup
+ ; INDXPTLK: generate index entries in patient-lookup graph
+ ; UNINDXPT: remove index entries from patient-lookup graph
+ ; $$UCASE = uppercase
+ ; DEVHOME: code for ws: temporary home page for development
+ ; GETHOME: code for ws: homepage accessed using GET
+ ; WSNEWCAS: code for ws: receives post from home & creates new case
  ;
- ; @section 0 primary development
- ;
- ; @routine-credits
- ; @primary-dev: George P. Lilly (gpl)
- ;  gpl@vistaexpertise.net
- ; @additional-dev: Alexis Carlson (arc)
- ;  alexis@vistaexpertise.net
- ; @primary-dev-org: Vista Expertise Network (ven)
- ;  http://vistaexpertise.net
- ; @copyright: 2012/2018, ven, all rights reserved
- ; @license: Apache 2.0
- ;  https://www.apache.org/licenses/LICENSE-2.0.html
- ;
- ; @application: SAMI
- ; @version: 18.0
- ; @patch-list: none yet
- ;
- ; @to-do
- ;   Add label comments
- ;
- ; @section 1 code
- ;
- quit  ; No entry from top
+ ;@to-do
+ ; Add label comments
  ;
  ;
-WSHOME ; web service for SAMI homepage
- ; WSHOME^SAMIHOM3(SAMIRTN,SAMIFILTER) goto WSHOME^SAMIHOM4
+ ;
+ ;@section 1 wsi WSHOME & related subroutines
+ ;
+ ;
+ ;
+ ;@wsi-code WSHOME^SAMIHOM3, vapals-elcap homepage
+WSHOME ; code for web service for SAMI homepage
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
  ;ven/gpl;web service;procedure;
+ ;@signature
+ ; do WSHOME^SAMIHOM3(SAMIRTN,SAMIFILTER)
+ ;@branches-from
+ ; WSHOME^SAMIHOM3
  ;@called-by
  ;@calls
  ; GETHOME
@@ -71,11 +98,21 @@ WSHOME ; web service for SAMI homepage
  ;
  ;@stanza 3 termination
  ;
- quit  ; end of WSHOME
+ quit  ; end of wsi WSHOME^SAMIHOM3
  ;
  ;
-WSVAPALS ; vapals post web service - all calls come through this gateway
- ; WSVAPALS^SAMIHOM3(SAMIARG,SAMIBODY,SAMIRESULT) goto WSVAPALS^SAMIHOM4
+ ;
+ ;@wsi-code WSVAPALS^SAMIHOM3, vapals-elcap post
+WSVAPALS ; code for web service for vapals post
+ ;
+ ;ven/gpl;web service;procedure;
+ ;@signature
+ ; do WSVAPALS^SAMIHOM3(SAMIARG,SAMIBODY,SAMIRESULT)
+ ;@branches-from
+ ; WSVAPALS^SAMIHOM3
+ ;
+ ; all calls come through this gateway
+ ;
  k ^SAMIUL("vapals")
  m ^SAMIUL("vapals")=SAMIARG
  m ^SAMIUL("vapals","BODY")=SAMIBODY
@@ -286,7 +323,8 @@ WSVAPALS ; vapals post web service - all calls come through this gateway
  . m SAMIARG=vars
  . d MERGE^SAMIHOM4(.SAMIRESULT,.SAMIARG)
  ;
- quit 0  ; End of WSVAPALS
+ quit 0  ; end of wsi WSVAPALS^SAMIHOM3
+ ;
  ;
  ;
 REG(SAMIRTN,SAMIARG) ; manual registration
@@ -353,9 +391,13 @@ REG(SAMIRTN,SAMIARG) ; manual registration
  d SETINFO(.SAMIFILTER,name_" was successfully entered")
  ;d SETWARN(.SAMIFILTER,"We might want to give you a warning")
  do WSVAPALS^SAMIHOM3(.SAMIFILTER,.SAMIARG,.SAMIRESULT)
- q
  ;
-MKPTLK(ptlkien,SAMIARG) ; creates the patient-lookup record
+ quit  ; end of REG
+ ;
+ ;
+ ;
+MKPTLK(ptlkien,SAMIARG) ; creates patient-lookup record
+ ;
  n ssn s ssn=SAMIARG("ssn")
  s ssn=$tr(ssn,"-")
  n name s name=$g(SAMIARG("name"))
@@ -384,9 +426,12 @@ MKPTLK(ptlkien,SAMIARG) ; creates the patient-lookup record
  s @root@(ptlkien,"last5")=last5
  n mymatch s mymatch=$g(SAMIARG("MATCHLOG"))
  i mymatch'="" s @root@(ptlkien,"MATCHLOG")=mymatch
- q
  ;
-UPDTFRMS(dfn) ; update demographics in all patient forms for patient dfn
+ quit  ; end of MKPTLK
+ ;
+ ;
+ ;
+UPDTFRMS(dfn) ; update demographics in all forms for patient
  ;
  n lroot s lroot=$$setroot^%wd("patient-lookup")
  n proot s proot=$$setroot^%wd("vapals-patients")
@@ -403,10 +448,15 @@ UPDTFRMS(dfn) ; update demographics in all patient forms for patient dfn
  n zi s zi=""
  f  s zi=$o(@proot@("graph",sid,zi)) q:zi=""  d  ; for each form
  . m @proot@("graph",sid,zi)=@proot@(pien) ; stamp each form with new demos
- q
+ ;
+ quit  ; end of UPDTFRMS
+ ;
+ ;
  ;
 MERGE(SAMIRESULT,SAMIARGS) ; merge participant records
+ ;
  ; called from pressing the merge button on the unmatched report
+ ;
  n toien s toien=$g(SAMIARGS("toien"))
  i toien="" d  q  ;
  . d WSUNMAT(.SAMIRESULT,.SAMIARGS)
@@ -455,17 +505,25 @@ MERGE(SAMIRESULT,SAMIARGS) ; merge participant records
  ;
  d WSUNMAT(.SAMIRESULT,.SAMIARGS)
  ;
- q
+ quit  ; end of MERGE
  ;
-ADDUNMAT ; adds the unmatched report web service to the system
+ ;
+ ;
+ADDUNMAT ; adds unmatched report web service to system
  ;
  d addService^%webutils("GET","unmatched","WSUNMAT^SAMIHOM4")
- q
  ;
-DELUNMAT ; deletes the unmatched web service
+ quit  ; end of ADDUNMAT
+ ;
+ ;
+ ;
+DELUNMAT ; deletes unmatched web service
  ;
  d deleteService^%webutils("GET","unmatched")
- q
+ ;
+ quit  ; end of DELUNMAT
+ ;
+ ;
  ;
 WSUNMAT(SAMIRESULT,SAMIARGS) ; navigates to unmatched report
  ; 
@@ -475,26 +533,41 @@ WSUNMAT(SAMIRESULT,SAMIARGS) ; navigates to unmatched report
  s filter("samiroute")="report"
  s filter("samireporttype")="unmatched"
  d WSVAPALS^SAMIHOM3(.filter,.bdy,.SAMIRESULT) ; back to the unmatched report
- q
+ ;
+ quit  ; end of WSUNMAT
+ ;
+ ;
  ;
 DUPSSN(ssn) ; extrinsic returns true if duplicate ssn
+ ;
  n proot s proot=$$setroot^%wd("patient-lookup")
  i $d(@proot@("ssn",ssn)) q 1
- q 0
+ ;
+ quit 0 ; end of $$DUPSSN
+ ;
+ ;
  ;
 DUPICN(icn) ; extrinsic returns true if duplicate icn
+ ;
  n proot s proot=$$setroot^%wd("patient-lookup")
  n tmpicn s tmpicn=$p(icn,"V",1)
  i $d(@proot@("icn",icn)) q 1
  i $d(@proot@("icn",tmpicn)) q 1
- q 0
+ ;
+ quit 0 ; end of $$DUPICN
+ ;
+ ;
  ;
 BADICN(icn) ; extrinsic returns true if ICN checkdigits are wrong
+ ;
  n zchk s zchk=$p(icn,"V",2)
  n zicn s zicn=$p(icn,"V",1)
  q:zchk="" 1
  i zchk'=$$CHECKDG^MPIFSPC(zicn) q 1
- q 0
+ ;
+ quit 0
+ ;
+ ;
  ;
 SAVE(SAMIRESULT,SAMIARG) ; save patient-lookup record after edit
  ;
@@ -520,10 +593,15 @@ SAVE(SAMIRESULT,SAMIARG) ; save patient-lookup record after edit
  s filter("samiroute")="report"
  s filter("samireporttype")="unmatched"
  d WSVAPALS^SAMIHOM3(.filter,.bdy,.SAMIRESULT) ; back to the unmatched report
- q
  ;
-REMATCH(sien,SAMIARG) ; extrinsic returns a possible match ien
+ quit  ; end of SAVE
+ ;
+ ;
+ ;
+REMATCH(sien,SAMIARG) ; extrinsic returns possible match ien
+ ;
  ; else zero
+ ;
  n lroot s lroot=$$setroot^%wd("patient-lookup")
  n ssn,name,icn,x,y
  s ssn=$g(SAMIARG("ssn"))
@@ -550,19 +628,33 @@ REMATCH(sien,SAMIARG) ; extrinsic returns a possible match ien
  ;. s y=$g(@lroot@(x,"dfn"))
  ;. i y>9000000 s x=0
  ;i x>0 q x
- q 0
  ;
-SETINFO(vars,msg) ; set the information message text
+ quit 0 ; end of $$REMATCH
+ ;
+ ;
+ ;
+SETINFO(vars,msg) ; set information message text
+ ;
  ; vars are the screen variables passed by reference
+ ;
  s vars("infoMessage")=msg
- q
+ ;
+ quit  ; end of SETINFO
+ ;
+ ;
  ;
 SETWARN(vars,msg) ; set warning message text
+ ;
  ; vars are the screen variables passed by reference
+ ;
  s vars("warnMessage")=msg
- q
+ ;
+ quit  ; end of SETWARN
+ ;
+ ;
  ; 
-RTNERR(rtn,form,vals,msg,fld) ; redisplays a page with an error message
+RTNERR(rtn,form,vals,msg,fld) ; redisplay page w/error message
+ ;
  ; rtn is the return array
  ; form is the form the page requires
  ; vals are the values for the page. passed by reference
@@ -574,9 +666,13 @@ RTNERR(rtn,form,vals,msg,fld) ; redisplays a page with an error message
  d MERGEHTM^%wf(.zhtml,.vals,.err)
  m rtn=zhtml
  set HTTPRSP("mime")="text/html" ; set mime type
- q
  ;
-RTNPAGE(rtn,form,vals) ; displays a page
+ quit  ; end of RTNERR
+ ;
+ ;
+ ;
+RTNPAGE(rtn,form,vals) ; display page
+ ;
  ; rtn is the return array
  ; form is the form the page requires
  ; vals are the values for the page. passed by reference
@@ -587,9 +683,13 @@ RTNPAGE(rtn,form,vals) ; displays a page
  d MERGEHTM^%wf(.zhtml,.vals,.err)
  m SAMIRESULT=zhtml
  set HTTPRSP("mime")="text/html" ; set mime type
- q
+ ;
+ quit  ; end of RTNPAGE
+ ;
+ ;
  ;
 REINDXPL ; reindex patient lookup
+ ;
  n root s root=$$setroot^%wd("patient-lookup")
  n zi s zi=0
  k @root@("ssn")
@@ -600,10 +700,15 @@ REINDXPL ; reindex patient lookup
  k @root@("icn")
  f  s zi=$o(@root@(zi)) q:+zi=0  d  ;
  . d INDXPTLK(zi)
- q
+ ;
+ quit  ; end of REINDXPL
+ ;
+ ;
  ;
 INDXPTLK(ien) ; generate index entries in patient-lookup graph
+ ;
  ; for entry ien
+ ;
  n proot set proot=$$setroot^%wd("patient-lookup")
  n name s name=$g(@proot@(ien,"saminame"))
  s @proot@("name",name,ien)=""
@@ -628,10 +733,15 @@ INDXPTLK(ien) ; generate index entries in patient-lookup graph
  s x=$g(@proot@(ien,"sinamel")) w !,x
  s:x'="" @proot@("sinamel",x,ien)=""
  set @proot@("Date Last Updated")=$$HTE^XLFDT($horolog)
- q
  ;
-UNINDXPT(ien) ; remove index entries in patient-lookup graph
+ quit  ; end of INDXPTLK
+ ;
+ ;
+ ;
+UNINDXPT(ien) ; remove index entries from patient-lookup graph
+ ;
  ; for entry ien
+ ;
  n proot set proot=$$setroot^%wd("patient-lookup")
  n name s name=$g(@proot@(ien,"saminame"))
  k @proot@("name",name,ien)
@@ -656,20 +766,31 @@ UNINDXPT(ien) ; remove index entries in patient-lookup graph
  s x=$g(@proot@(ien,"sinamel")) w !,x
  k:x'="" @proot@("sinamel",x,ien)
  set @proot@("Date Last Updated")=$$HTE^XLFDT($horolog)
- q
+ ;
+ quit  ; end of UNINDXPT
+ ;
+ ;
  ;
 UCASE(STR) ; extrinsic returns uppercase of STR
+ ;
  N X,Y
  S X=STR
  X ^%ZOSF("UPPERCASE")
- q Y
  ;
+ quit Y ; end of $$UCASE
+ ;
+ ;
+ ;
+ ;@wsi-code DEVHOME^SAMIHOM3
 DEVHOME ; temporary home page for development
- ; DEVHOME^SAMIHOM3(SAMIRTN,SAMIFILTER) goto DEVHOME^SAMIHOM4
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
  ;ven/gpl;private;procedure;
+ ;@signature
+ ; do DEVHOME^SAMIHOM3(SAMIRTN,SAMIFILTER)
+ ;@branches-from
+ ; DEVHOME^SAMIHOM3
  ;@called-by
  ; WSHOME
  ;@calls
@@ -717,15 +838,20 @@ DEVHOME ; temporary home page for development
  ;
  ;@stanza ? termination
  ;
- quit  ; end of DEVHOME
+ quit  ; end of wsi DEVHOME^SAMIHOM3
  ;
  ;
+ ;
+ ;@wsi-code GETHOME^SAMIHOM3
 GETHOME ; homepage accessed using GET
- ; GETHOME^SAMIHOM3(SAMIRTN,SAMIFILTER) goto GETHOME^SAMIHOM4
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
  ;ven/gpl;private;procedure;
+ ;@signature
+ ; do GETHOME^SAMIHOM3(SAMIRTN,SAMIFILTER)
+ ;@branches-from
+ ; GETHOME^SAMIHOM3
  ;@called-by
  ; WSHOME
  ; WSNEWCAS
@@ -766,9 +892,9 @@ GETHOME ; homepage accessed using GET
  do ADDCRLF^VPRJRUT(.temp)
  merge SAMIRTN=temp
  ;
- q
+ quit  ; below is redacted
  ;
- ; below is redacted
+ ; 
  new cnt set cnt=0
  new zi set zi=0
  for  set zi=$order(temp(zi)) quit:+zi=0  do  ;
@@ -806,15 +932,20 @@ GETHOME ; homepage accessed using GET
  ;
  ;@stanza 5 termination
  ;
- quit  ; end of GETHOME
+ quit  ; end of wsi GETHOME^SAMIHOM3
  ;
  ;
+ ;
+ ;@wsi-code WSNEWCAS^SAMIHOM3
 WSNEWCAS ; receives post from home & creates new case
- ; WSNEWCAS^SAMIHOM3(SAMIARGS,SAMIBODY,SAMIRESULT) goto WSNEWCAS^SAMIHOM4
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
  ;ven/gpl;private;procedure;
+ ;@signature
+ ; do WSNEWCAS^SAMIHOM3(SAMIARGS,SAMIBODY,SAMIRESULT)
+ ;@branches-from
+ ; WSNEWCAS^SAMIHOM3
  ;@called-by
  ;@calls
  ; parseBody^%wf
@@ -897,7 +1028,8 @@ WSNEWCAS ; receives post from home & creates new case
  ;
  ;@stanza ? termination
  ;
- quit  ; end of WSNEWCAS
+ quit  ; end of wsi WSNEWCAS^SAMIHOM3
+ ;
  ;
  ;
 EOR ; End of routine SAMIHOM4

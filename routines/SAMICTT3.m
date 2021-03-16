@@ -324,7 +324,8 @@ EMPHYS(rtn,vals,dict) ;
  . if abn="" d OUT(sp1_"Abnormality noted in the mediastinum. ")
  . e  d OUT(sp1_abn_" mediastinum. ")
  . d OUT(tval)
- i yesmm=0 d OUT(sp1_"No abnormalities. ")
+ ;i yesmm=0 d OUT(sp1_"No abnormalities. ")
+ i yesmm=0 d OUT(sp1_"Unremarkable. ")
  i $$XVAL("ceotabnm",vals)'="" d  ;
  . d OUT(sp1_$$XVAL("ceotabnm",vals)_". ")
  s outmode="go"

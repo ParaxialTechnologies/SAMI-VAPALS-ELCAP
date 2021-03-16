@@ -101,7 +101,8 @@ BREAST(rtn,vals,dict) ;
  if $$XVAL("ceaoab",vals)'="" d  ;
  . d OUT($$XVAL("ceaoab",vals)_". ")
  if yesaa=0  d  ;
- . d OUT(sp1_"Limited view of the upper abdomen reveals no abnormalities. ")
+ . ;d OUT(sp1_"Limited view of the upper abdomen reveals no abnormalities. ")
+ . d OUT(sp1_"Limited view of the upper abdomen reveals nothing remarkable. ")
  ;
  ;
  ;# Other Chest Abnormalities

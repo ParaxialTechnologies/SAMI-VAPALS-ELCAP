@@ -43,12 +43,24 @@ NODULES(rtn,vals,dict) ;
  . i calcification="" s calcstr="is "_spic_$$XSUB("cectnt",vals,dict,"cect"_ii_"nt")_", "
  . e  s calcstr="is "_calcification_", "_spic_$$XSUB("cectnt",vals,dict,"cect"_ii_"nt")_", "
  . ;
+ . n vssl,vssw,vsl,vsw,avgs,avgss
+ . s (vssl,vssw,vsl,vsw,avgs,avgss)=0
+ . s vssl=$$XVAL("cect"_ii_"ssl",vals)
+ . i vssl'=0 d  ;
+ . . s vssw=$$XVAL("cect"_ii_"ssw",vals)
+ . . s avgss=(vssl+vssw)/2
+ . . s avgss=$j(avgss,1,1)
+ . s vsl=$$XVAL("cect"_ii_"sl",vals)
+ . s vsw=$$XVAL("cect"_ii_"sw",vals)
+ . s avgs=(vsl+vsw)/2
+ . s avgs=$j(avgs,1,1)
  . n scomp
  . s scomp=""
  . i $$XVAL("cect"_ii_"ssl",vals)'="" d  ;
- . . s scomp=" (solid component "_$$XVAL("cect"_ii_"ssl",vals)_" mm x "_$$XVAL("cect"_ii_"ssw",vals)_" mm)"
+ . . ;s scomp=" (solid component "_$$XVAL("cect"_ii_"ssl",vals)_" mm x "_$$XVAL("cect"_ii_"ssw",vals)_" mm average diameter "_avgss_" mm)"
+ . . s scomp=", solid component "_$$XVAL("cect"_ii_"ssl",vals)_" mm x "_$$XVAL("cect"_ii_"ssw",vals)_" mm (average diameter of "_avgss_" mm)"
  . ;
- . s calcstr=calcstr_$$XVAL("cect"_ii_"sl",vals)_" mm x "_$$XVAL("cect"_ii_"sw",vals)_" mm"_scomp_", "
+ . s calcstr=calcstr_$$XVAL("cect"_ii_"sl",vals)_" mm x "_$$XVAL("cect"_ii_"sw",vals)_" mm (average diameter of "_avgs_" mm)"_scomp_", "
  . ;
  . n smooth
  . ;s smooth=$$XSUB("cectse",vals,dict,"cect"_ii_"se")

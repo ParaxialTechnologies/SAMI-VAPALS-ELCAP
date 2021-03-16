@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+  <meta content="2021.03.08" name="version"/>
+  <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
+  <title>
+   @@SITETITLE@@: Home
+  </title>
+  <link href="lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+  <link href="lib/formvalidation/dist/css/formValidation.min.css" rel="stylesheet"/>
+  <link href="lib/bootstrap-datetimepicker-4.17.47/css/bootstrap-datetimepicker.css" rel="stylesheet"/>
+  <link href="vapals.css" rel="stylesheet"/>
+  <link href="lib/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet"/>
+  <link href="lib/jquery-ui-1.12.1/jquery-ui.structure.min.css" rel="stylesheet"/>
+  <link href="lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
+  <link href="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
+  <link href="lib/chart-js-2.9.3/Chart.min.css" rel="stylesheet"/>
+  <style>
+   .chart {
+            width: 100%;
+            min-height: 250px;
+        }
+
+        .row {
+            margin: 0 !important;
+        }
+  </style>
+ </head>
+ <body id="body" style="position: relative;">
+  <script src="lib/es6-shim.js">
+  </script>
+  <script src="lib/jquery-3.3.1.min.js">
+  </script>
+  <script src="lib/jquery-ui-1.12.1/jquery-ui.min.js">
+  </script>
+  <script src="lib/popper.min.js">
+  </script>
+  <script src="lib/bootstrap-3.3.7-dist/js/bootstrap.min.js">
+  </script>
+  <script src="lib/moment.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/FormValidation.full.min.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/plugins/Wizard.min.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/plugins/Bootstrap3.min.js">
+  </script>
+  <script src="lib/formvalidation/dist/js/plugins/J.min.js">
+  </script>
+  <script src="lib/bootstrap-datetimepicker-4.17.47/js/bootstrap-datetimepicker.min.js">
+  </script>
+  <script src="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.js">
+  </script>
+  <script src="lib/clipboard.js">
+  </script>
+  <script src="lib/chart-js-2.9.3/Chart.min.js">
+  </script>
+  <script src="lib/chart-js-2.9.3/chartjs-plugin-datalabels.min.js">
+  </script>
+  <script src="jquery-conditonally-enable.js">
+  </script>
+  <script src="jquery-conditonally-display.js">
+  </script>
+  <script src="jqueryui-vista-filemanAutocomplete.js">
+  </script>
+  <script src="vapals.js">
+  </script>
+  <script src="init.js">
+  </script>
+  <script src="nodule-grid.js">
+  </script>
+  <!--System Navigation-->
+  <nav class="navbar navbar-default" role="navigation">
+   <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+     <button class="navbar-toggle collapsed" data-target="#navbar-main" data-toggle="collapse" type="button">
+      <span class="sr-only">
+       Toggle navigation
+      </span>
+      <span class="icon-bar">
+      </span>
+      <span class="icon-bar">
+      </span>
+      <span class="icon-bar">
+      </span>
+     </button>
+     <a class="text-nowrap navigation" data-method="post" data-samiroute="home" href="#!" style="text-decoration: none">
+      <img alt="VAPALS-ELCAP Logo" class="hidden-xs" src="img/logo_transparent_50x50.png" title="VAPALS-ELCAP"/>
+      <img alt="VAPALS-ELCAP Logo" src="img/logo_name_50x215.png" title="VAPALS-ELCAP"/>
+     </a>
+    </div>
+    <div class="navbar-collapse collapse navbar-right" id="navbar-main">
+     <ul class="nav navbar-nav">
+      <li>
+       <a class="text-nowrap navigation" data-method="post" data-samiroute="home" href="#!">
+        Home
+       </a>
+      </li>
+      <li id="studyIdMenu" style="display:none;">
+       <a class="navigation" data-method="post" data-samiroute="casereview" href="#!">
+        Case Review
+       </a>
+      </li>
+      <li class="dropdown">
+       <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+        Reports
+        <span class="caret">
+        </span>
+       </a>
+       <ul class="dropdown-menu">
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="enrollment" data-samiroute="report" data-start-date="" href="#!">
+          Enrollment
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="activity" data-samiroute="report" href="#!">
+          Activity
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="followup" data-samiroute="report" href="#!">
+          Participant Follow-up
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="missingct" data-samiroute="report" href="#!">
+          Missing Image &amp; CT Evaluation
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="incomplete" data-samiroute="report" href="#!">
+          Incomplete Form
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="inactive" data-samiroute="report" href="#!">
+          Inactive
+         </a>
+        </li>
+        <li>
+         <a class="navigation" data-method="post" data-samireporttype="worklist" data-samiroute="report" href="#!">
+          Work List
+         </a>
+        </li>
+       </ul>
+      </li>
+      <li>
+       <a class="navigation" data-method="post" data-samiroute="logout" href="#!" id="logout-link">
+        Logout
+       </a>
+      </li>
+     </ul>
+    </div>
+   </div>
+  </nav>
+  <div class="container-fluid" style="max-width:1550px">
+   <div class="row">
+    <div class="col-md-12">
+     <div class="message-area-static" id="message-area-static">
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+     <div class="panel panel-default">
+      <div class="panel-heading">
+       <h3 class="panel-title">
+        Participant Lookup
+       </h3>
+      </div>
+      <div class="panel-body">
+       <form action="/vapals" id="pt-lookup-form" method="post">
+        <input id="pt-lookup-samiroute" name="samiroute" type="hidden" value=""/>
+        <input id="pt-lookup-dfn" name="dfn" type="hidden" value=""/>
+        <input id="pt-lookup-name" name="name" type="hidden" value=""/>
+        <input id="pt-lookup-studyid" name="studyid" type="hidden" value=""/>
+        <input name="site" type="hidden" value="@@SITE@@"/>
+        <div class="form-group">
+         <label for="pt-lookup-input">
+          Name or LAST5
+         </label>
+         <input class="form-control" id="pt-lookup-input" name="pt-lookup-input" type="text"/>
+        </div>
+        <div class="pull-left" id="manual-registration" style="display:none;">
+         <a class="navigation" data-method="post" data-samiroute="addperson" href="#!">
+          manual registration...
+         </a>
+        </div>
+        <div class="pull-right">
+         <button class="btn btn-primary" disabled="" id="pt-lookup-btn" type="submit">
+          Submit
+         </button>
+        </div>
+       </form>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12 text-center">
+     <h2 id="chart-rural-heading">
+     </h2>
+    </div>
+    <div class="clearfix">
+    </div>
+    <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+     <canvas height="300" id="chart-rural" width="300">
+     </canvas>
+    </div>
+   </div>
+  </div>
+  <div class="modal fade" id="pt-inclusion" role="dialog" tabindex="-1">
+   <div class="modal-dialog" role="document">
+    <div class="modal-content">
+     <div class="modal-header">
+      <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+       <span aria-hidden="true">
+        ×
+       </span>
+      </button>
+      <h4 class="modal-title">
+       Caution:
+      </h4>
+     </div>
+     <div class="modal-body">
+      <p>
+       Are you certain you want to register this person for VAPALS-ELCAP?
+      </p>
+     </div>
+     <div class="modal-footer">
+      <button class="btn btn-danger" data-dismiss="modal" type="button">
+       No
+      </button>
+      <button class="btn btn-primary" id="pt-inclusion-btn" type="button">
+       Yes
+      </button>
+     </div>
+    </div>
+   </div>
+  </div>
+  <footer>
+   <div class="container-fluid" style="max-width:1550px">
+    <hr/>
+    <a href="https://paraxial.atlassian.net/projects/VAP/" tabindex="9000" target="_blank">
+     Submit feedback
+    </a>
+    <span id="sami-version" style="float:right; font-family: Courier,monospace">
+     <span id="formMode">
+     </span>
+     2021.03.08
+    </span>
+   </div>
+  </footer>
+  <script>
+   const userId = "@@USER@@";
+    const isLoggedIn = isSet(userId);
+    const siteIdVal = "@@SITE@@";
+    const siteId = isSet(siteIdVal) ? siteIdVal : '';
+    const studyIdVal = "@@SID@@";
+    const studyId = isSet(studyIdVal) ? studyIdVal : '';
+    const frozen = "@@FROZEN@@";
+    const infoMessage = "@@INFO_MESSAGE@@";
+    const warnMessage = "@@WARN_MESSAGE@@";
+    const errorMessage = "@@ERROR_MESSAGE@@";
+    const errorFields = "@@ERROR_FIELDS@@";
+    const hasInfoMessage = isSet(infoMessage);
+    const hasWarnMessage = isSet(warnMessage);
+    const hasErrorMessage = isSet(errorMessage);
+
+    function isSet(variable) {
+        return variable && variable.indexOf("@@") === -1 && $.trim(variable) !== '';
+    }
+
+    //purposefully executed before DOM is rendered so elements are never visible
+    if (isSet(siteId)) { //TODO: add if isLoggedIn once USER variable can be set from backend.
+        $("#logout-link").text("Logout " + siteId);
+        $("#studyIdMenu").toggle(studyId !== '');
+        localStorage.setItem("siteid", siteId);
+        localStorage.setItem("studyid", studyId);
+    } else {
+        localStorage.removeItem("siteid");
+        localStorage.removeItem("studyid");
+        $("#navbar-main").remove();
+    }
+
+    if (frozen === "true") {
+        $("#delete-form").remove();
+    }
+
+    function displayStaticMessage(message, alertClass, displayTimeMs) {
+        const $msg = $('#message-area-static')
+            .empty()
+            .html("<div class=\"alert " + alertClass + " alert-sm\" role=\"alert\">" + message + "</div>")
+            .show();
+        if (displayTimeMs > 0) {
+            $msg.delay(displayTimeMs)
+                .slideUp(200);
+        }
+    }
+
+    if (hasErrorMessage) {
+        displayStaticMessage(errorMessage, "alert-danger", 0)
+    } else if (hasWarnMessage) {
+        displayStaticMessage(warnMessage, "alert-warning", 0)
+    } else if (hasInfoMessage) {
+        displayStaticMessage(infoMessage, "alert-success", 3000)
+    }
+
+    $(function () {
+        /** These snippets ensure all fields are wrapped in a form-group, which is necessary for form-validation to work properly. **/
+        const $forms = $("form.validated");
+        $.each($forms.find("select, textarea, input:visible"), function () {
+            const $input = $(this);
+            if ($input.closest(".form-group").length === 0) {
+                console.error("VAPALS: " + $input.attr('name') + " is not wrapped in a form-group; can cause FV 'too much recursion");
+            }
+        });
+
+        $.each($forms.find("input[type=hidden][required]"), function () {
+            console.error("VAPALS: " + $(this).attr('name') + " should not have a required attribute; can cause FV 'too much recursion'");
+        });
+
+        $.ajax("/ctversion", {
+            success: function (data) {
+                const v = data.ctversion;
+                $("#formMode").text(v.toUpperCase());
+            },
+            error: function () {
+                $("#formMode").text("UNKNOWN");
+            }
+        });
+
+        $("input[type=checkbox]").change(function () {
+            const checked = $(this).is(":checked");
+            const fieldName = $(this).attr('name');
+            $("input[type=hidden][name='" + fieldName + "']").prop('disabled', function () {
+                return checked;
+            });
+        });
+
+        $.each($("input[type=checkbox]:checked"), function (i, el) {
+            $(el).trigger("change");
+        });
+
+        const reportsStartDate = VAPALS.toMoment(VAPALS.todaysDate()).subtract(30, "days").format(VAPALS.DATE_FORMAT);
+        const reportsEndDate = VAPALS.toMoment(VAPALS.todaysDate()).format(VAPALS.DATE_FORMAT);
+
+        $("a[data-samiroute=report]").attr("data-start-date", reportsStartDate).attr("data-end-date", reportsEndDate);
+
+    })
+  </script>
+  <script>
+   const manualRegistrationEnabled = '@@MANUALREGISTRATION@@';
+        if (manualRegistrationEnabled !== 'true') {
+            $("#manual-registration").remove();
+        } else {
+            $("#manual-registration").show();
+        }
+
+        $(function () {
+            // Set up the modal confirmation to include a new participant
+            $('#pt-inclusion-btn').on("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                $('#pt-inclusion').modal('hide');
+                $('#pt-lookup-form').submit();
+            });
+
+            // Set up the participant lookup submit button
+            $('#pt-lookup-btn').on("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                let particpant = $.extend({}, $('#pt-lookup-input').data('vista').patient);
+                $('#pt-lookup-dfn').val(particpant.dfn);
+                $('#pt-lookup-name').val(particpant.name);
+                $('#pt-lookup-studyid').val(particpant.studyid);
+
+                if (particpant.vapals === 1) {
+                    $('#pt-lookup-samiroute').val('casereview');
+                    $('#pt-lookup-form').submit();
+                } else {
+                    $('#pt-lookup-samiroute').val('newcase');
+                    $('#pt-inclusion').modal('show');
+                }
+            });
+
+            // Initialize the participant lookup input widget
+            const $participantLookupInput = $('#pt-lookup-input');
+            $participantLookupInput.filemanAutocomplete({
+                dataOptions: {
+                    site: siteId,
+                    limit: 25
+                }
+            });
+
+            $participantLookupInput.on('keydown', function (e) {
+                // Set up Return key
+                if (e.keyCode === 13 && ($('#pt-lookup-btn').is(':disabled'))) {
+                    e.preventDefault();
+                }
+            }).on("keyup", function () {
+                let ptNameVal = $participantLookupInput.val();
+                let data = $participantLookupInput.data('vista');
+                let participantName = "";
+                if (data) {
+                    if (data.patient) {
+                        participantName = data.patient.name
+                    }
+                }
+                if (ptNameVal === "" || (ptNameVal !== participantName)) {
+                    $('#pt-lookup-btn').attr('disabled', 'disabled');
+                    $participantLookupInput.trigger("change");
+                }
+            }).on('filemanautocompleteselect', function () {
+                // Enable show buttons
+                $('#pt-lookup-btn').removeAttr('disabled');
+            }).on('filemanautocompletechange', function () {
+                if (!$(this).val()) {
+                    // Disable show buttons
+                    $('#pt-lookup-btn').attr('disabled', 'disabled');
+                }
+            }).focus();
+        });
+
+        $.ajax("/ruralurbancount", {dataType: "json"}).done(function (json) {
+            const ruralData = json.result;
+            $("#chart-rural-heading").text("Rural engagement in " + ruralData.site)
+            const ctx = document.getElementById('chart-rural');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Rural', 'Urban', 'Unknown'],
+                    datasets: [{
+                        data: [ruralData.rural, ruralData.urban, ruralData.unknown],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    plugins: {
+                        datalabels: {
+                            formatter: function (value, ctx) {
+                                let sum = 0;
+                                let dataArr = ctx.chart.data.datasets[0].data;
+                                dataArr.map(function (data) {
+                                    sum += data;
+                                });
+                                return (value * 100 / sum).toFixed(2) + "%";
+                            },
+                            color: '#000',
+                        }
+                    }
+                }
+            });
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            $("#chart-rural-heading").hide();
+            const $alert = $("<div class='alert alert-warning'></div>");
+            $alert.append("<span class=\"glyphicon glyphicon-exclamation-sign\" aria-hidden=\"true\"></span>");
+            $alert.append("&nbsp;Unable to view site statistics. <strong>" + errorThrown + "</strong>");
+            $('#chart-rural').html("").append($alert);
+        });
+  </script>
+ </body>
+</html>

@@ -1,5 +1,5 @@
 SAMIFLD ;ven/gpl - elcap: form load & case review support ;Oct 22, 2019@15:36
- ;;18.0;SAMI;;
+ ;;18.0;SAMI;;;Build 11
  ;
  ; Routine SAMIFLD contains subroutines for processing the ELCAP forms,
  ; specifically loading JSON data into the graphstore for each line.
@@ -330,6 +330,8 @@ GETHDR(sid) ; header string for patient sid
  . quit
  ;
 AGE new dob set dob=$get(@root@(ien,"sbdob")) ; dob in VAPALS format
+ i dob["-" s dob=$e(dob,6,7)_"/"_$e(dob,9,10)_"/"_$e(dob,1,4)
+ i dob'["/" s dob=$e(dob,5,6)_"/"_$e(dob,7,8)_"/"_$e(dob,1,4)
  new X set X=dob
  new Y
  do ^%DT

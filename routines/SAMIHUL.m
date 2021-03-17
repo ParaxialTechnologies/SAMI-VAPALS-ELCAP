@@ -1,4 +1,4 @@
-SAMIHUL ;ven/gpl - ielcap: home page log ;2021-03-11T15:36Z
+SAMIHUL ;ven/gpl - ielcap: home page log ;2021-03-17T18:34Z
  ;;18.0;SAMI;**9**;
  ;;1.18.0.9-i9
  ;
@@ -22,7 +22,7 @@ SAMIHUL ;ven/gpl - ielcap: home page log ;2021-03-11T15:36Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-03-11T15:36Z
+ ;@last-updated 2021-03-17T18:34Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -120,9 +120,12 @@ SAMIHUL ;ven/gpl - ielcap: home page log ;2021-03-11T15:36Z
  ;  SAMIHOM4: return error message if no ct eval form exists when
  ; generating a fu note.
  ;
- ; 2021-03-11 ven/toad 1.18.0.9-i9
+ ; 2021-03-11 ven/toad 1.18.0.9-i9 a46a2cc1
  ;  SAMIHUL: create routine.
  ;  SAMIHOM4: bump date & patch list, add contents, lt refactor.
+ ;
+ ; 2021-03-17 ven/toad 1.18.0.9-i9
+ ; SAMIHOM4: remove blank from end of 1 line.
  ;
  ;
  ;

@@ -1,4 +1,4 @@
-SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ;2021-03-11T04:51Z
+SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ;2021-03-17T18:31Z
  ;;18.0;SAMI;**3,9**;;Build 11
  ;;1.18.0.9-i9
  ;
@@ -326,7 +326,7 @@ MKCEFORM(sid,key) ; create ct evaluation form
  . new target,source
  . set source=$name(@root@("graph",sid,srckey))
  . set target=$name(@root@("graph",sid,key))
- . d CTCOPY^SAMICTC1(source,target) 
+ . d CTCOPY^SAMICTC1(source,target)
  ; end nodule copy
  ;new items,prevct
  ;do GETITEMS^SAMICASE("items",sid)
@@ -443,7 +443,7 @@ MKPTFORM(sid,key) ; create pet evaluation form
  . new target,source
  . set source=$name(@root@("graph",sid,srckey))
  . set target=$name(@root@("graph",sid,key))
- . d CTCOPY^SAMICTC1(source,target) 
+ . d CTCOPY^SAMICTC1(source,target)
  ; end nodule copy
  new cdate set cdate=$piece(key,"ptform-",2)
  merge @root@("graph",sid,key)=@root@(sien)
@@ -521,7 +521,7 @@ MKBXFORM(sid,key) ; create biopsy form
  . new target,source
  . set source=$name(@root@("graph",sid,srckey))
  . set target=$name(@root@("graph",sid,key))
- . d CTCOPY^SAMICTC1(source,target) 
+ . d CTCOPY^SAMICTC1(source,target)
  ; end nodule copy
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate

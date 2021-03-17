@@ -1,4 +1,4 @@
-SAMICUL ;ven/gpl - ielcap: case review page log ;2021-03-11T14:49Z
+SAMICUL ;ven/gpl - ielcap: case review page log ;2021-03-17T15:09Z
  ;;18.0;SAMI;**9**;
  ;;1.18.0.9-i9
  ;
@@ -23,7 +23,7 @@ SAMICUL ;ven/gpl - ielcap: case review page log ;2021-03-11T14:49Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-03-11T14:49Z
+ ;@last-updated 2021-03-17T15:09Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -256,9 +256,15 @@ SAMICUL ;ven/gpl - ielcap: case review page log ;2021-03-11T14:49Z
  ;  SAMICAS2: return error msg if no CT Eval form exists when
  ; generating a FU note.
  ;
- ; 2021-03-10 ven/toad 1.18.0.9-i9
+ ; 2021-03-10 ven/toad 1.18.0.9-i9 a46a2cc1
  ;  SAMICUL: update log, convert to new vistaver schema.
- ;  SAMICAS2: bump date & patch list, update contents, lt refactor.
+ ;  SAMICAS2,SAMICAS3: bump date & patch list, update contents, lt
+ ; refactor.
+ ;
+ ; 2021-03-17 ven/toad 1.18.0.9-i9
+ ;  SAMICAS2: fix xindex errors: in WSCASE add missing space between
+ ; do & comment to prevent syntax error reported as block mismatch.
+ ;  SAMICAS3: remove extra spaces at ends of 3 lines.
  ;
  ;
  ;

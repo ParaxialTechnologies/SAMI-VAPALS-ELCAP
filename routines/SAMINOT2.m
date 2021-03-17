@@ -1,4 +1,4 @@
-SAMINOT2 ;ven/gpl - followup form notes ;2021-03-15T16:23Z
+SAMINOT2 ;ven/gpl - followup form notes ;2021-03-17T18:33Z
  ;;18.0;SAMI;**1,9**;
  ;;1.18.0.9-i9
  ;
@@ -420,7 +420,7 @@ SSTATUS(vals) ; smoking status
  . d OUT(sp1_"PPD: "_$$XVAL("sippd",vals))
  . d OUT(sp1_"Current cumulative pack years: "_newcum)
  i $$XVAL("sisa",vals)'="y" d  ;  
- . d OUT("Smoking History") 
+ . d OUT("Smoking History")
  n zi
  f zi=1:1:cur d  ;
  . d OUT(sp1_cumary("rpt",zi,1)_" "_cumary("rpt",zi,2))

@@ -1,4 +1,4 @@
-SAMINUL ;ven/gpl - ielcap: note log ;2021-03-15T15:12Z
+SAMINUL ;ven/gpl - ielcap: note log ;2021-03-17T18:38Z
  ;;18.0;SAMI;**9**;
  ;;1.18.0.9-i9
  ;
@@ -22,7 +22,7 @@ SAMINUL ;ven/gpl - ielcap: note log ;2021-03-15T15:12Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-03-15T15:12Z
+ ;@last-updated 2021-03-17T18:38Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -69,6 +69,9 @@ SAMINUL ;ven/gpl - ielcap: note log ;2021-03-15T15:12Z
  ; 2021-03-15 ven/toad 1.18.0.9-i9
  ;  SAMINUL: create routine.
  ;  SAMINOT2: bump date & patch list, add contents, lt refactor.
+ ;
+ ; 2021-03-17 ven/toad 1.18.0.9-i9
+ ; SAMINOT2: remove blank from end of 1 line.
  ;
  ;
  ;

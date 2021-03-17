@@ -1,4 +1,4 @@
-SAMICAS2 ;ven/gpl - ielcap: case review page ;2021-03-11T04:23Z
+SAMICAS2 ;ven/gpl - ielcap: case review page ;2021-03-17T15:09Z
  ;;18.0;SAMI;**1,5,9**;;Build 11
  ;;1.18.0.9-i9
  ;
@@ -274,7 +274,7 @@ WSCASE ; generate case review page
  . if line["XX0002" do  ;
  . . do findReplace^%ts(.line,"XX0002",sid)
  . ;
- . if line["@@ERROR_MESSAGE@@" do ;
+ . if line["@@ERROR_MESSAGE@@" do  ;
  . . n zerr
  . . k ^gpl("error")
  . . m ^gpl("error")=filter

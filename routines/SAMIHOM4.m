@@ -1,4 +1,4 @@
-SAMIHOM4 ;ven/gpl,arc - ielcap: home page ;2021-03-11T16:15Z
+SAMIHOM4 ;ven/gpl,arc - ielcap: home page ;2021-03-17T18:32Z
  ;;18.0;SAMI;**1,4,5,6,9**;
  ;;1.18.0.9-i9
  ;
@@ -277,7 +277,7 @@ WSVAPALS ; code for web service for vapals post
  . m SAMIARG=vars
  . d WSNOTE^SAMINOT1(.SAMIRESULT,.SAMIARG)
  ;
- i route="report" d  q 0 
+ i route="report" d  q 0
  . m SAMIARG=vars
  . d WSREPORT^SAMIUR(.SAMIRESULT,.vars)
  ;

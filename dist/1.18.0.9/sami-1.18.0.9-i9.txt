@@ -1,4 +1,4 @@
-$TXT by MARSHALL,RICK DS@vapalsyotta.fiscientific.org (KIDS) 2021-03-17T19:00Z
+$TXT by MARSHALL,RICK DS@vapalsyotta.fiscientific.org (KIDS) 2021-03-18T17:05Z
  
         Form Fixes: CT Evaluation, Intervention, Followup, et al
               VAPALS-ELCAP 1.18.0.9-i9 (SAMI*18.0*9 SEQ #9)
@@ -6,7 +6,7 @@ $TXT by MARSHALL,RICK DS@vapalsyotta.fiscientific.org (KIDS) 2021-03-17T19:00Z
                              George P. Lilly
                            & Domenic DiNatale
                        & Frederick D. S. Marshall
-                               2021-03-17
+                               2021-03-18
  
 i. Front matter
  
@@ -171,21 +171,19 @@ ii. Contents
  
  3.2. Prepare the archive file
    
-   Create install & backup directories
+   Create install and backup directories
  
     $ mkdir -p ~/run/in/sami/1.18.0.9/back/www/
  
  
    If using git to receive packages, update your VAPALS-ELCAP git
    repo, copy the VAPALS-ELCAP 1.18.0.9-i9 archive file to your
-   install directory, & change directories to that install directory:
+   install directory, and change directories to that install
+   directory:
  
     $ cd ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/
-    
     $ git pull
-    
-    [a successful git pull will result in a great deal of chatter]
-    
+    [...a successful git pull will result in a great deal of chatter...]
     $ cp dist/1.18.0.9/sami-1.18.0.9-i9.zip ~/run/in/sami/1.18.0.9/
     
     This git method of receiving packages also completes half of the
@@ -208,12 +206,10 @@ ii. Contents
     
     Then move the archive file to the osehra user install directory,
     change ownership of the archive file to osehra, assume the osehra
-    user identity, & change directories to that install directory:
+    user identity, and change directories to that install directory:
  
     $ sudo mv sami-1.18.0.9-i9.zip /home/osehra/run/in/sami/1.18.0.9/
-    
     $ sudo chown osehra:osehra /home/osehra/run/in/sami/1.18.0.9/sami-1.18.0.9-i9.zip
-    
     $ sudo su - osehra
  
  
@@ -223,14 +219,14 @@ ii. Contents
    file, using the unix unzip command:
     
     $ cd ~/run/in/sami/1.18.0.9/
-    
     $ unzip sami-1.18.0.9-i9.zip
     Archive:  sami-1.18.0.9-i9.zip
       inflating: sami-1.18.0.9-i9-recipe.txt
       inflating: sami-1.18.0.9-i9.kid
       inflating: sami-1.18.0.9-i9.txt
       inflating: www/… [9 MB of www files]
-    $
+    $ cd
+    $ 
  
  
  
@@ -277,7 +273,7 @@ ii. Contents
     This is a TEST account.
     
     Access Code: *******
-    Terminal Type set to: C-VT220
+    Terminal Type set to: C-VT100
     
     You have 47 new messages.
     Select OPTION NAME:
@@ -289,12 +285,12 @@ ii. Contents
     Back up existing VAPALS-ELCAP routines that will be overwritten
     by this install. Do this by calling direct-mode interface ^%RO
     (routine out), selecting the list of routines to save, selecting
-    sami-1.18.0.9-i9-back.ro to save to, & answering any other
+    sami-1.18.0.9-i9-back.ro to save to, and answering any other
     additional prompts.
     
     The prompts vary between M implementations, so be sure to follow
     the correct dialog for your imp. The routine names to save are
-    listed below under each imp; copy the list & paste it at the
+    listed below under each imp; copy the list and paste it at the
     Routine prompt. At the final Routine prompt, press return to
     indicate the list of routines is done.
  
@@ -310,9 +306,10 @@ SAMIUL
  
     4.3.2. On Cache
     
-    In addition to naming the routines & routine-out file, we also
-    provide a Description & press return at the Parameters & Printer
-    Format prompts to accept the defaults of WNS & No, respectively:
+    In addition to naming the routines and routine-out file, we also
+    provide a Description and press return at the Parameters and
+    Printer Format prompts to accept the defaults of WNS and No,
+    respectively:
     
     > do ^%RO
     
@@ -325,7 +322,7 @@ SAMIUL
     Routine(s): SAMIUL
     Routine(s): 
     
-    Description: VAPALS-ELCAP 1.18.0.9-i9 routine backup
+    Description: SAMI 1.18.0.9-i9 routine backup
     
     Output routines to
     Device: /home/osehra/run/in/sami/1.18.0.9/back/sami-1.18.0.9-i9-back.ro
@@ -339,9 +336,9 @@ SAMIUL
  
     4.3.3. On YottaDB/GT.M
     
-    In addition to naming the routines & routine-out file, we also
-    provide a Header Label & press return at the Strip comments prompt
-    to accept the default of no:
+    In addition to naming the routines and routine-out file, we also
+    provide a Header Label and press return at the Strip comments
+    prompt to accept the default of No:
     
     > do ^%RO
     
@@ -375,11 +372,13 @@ SAMIUL
     
     Output device: <terminal>: /home/osehra/run/in/sami/1.18.0.9/back/sami-1.18.0.9-i9-back.ro
     
-    Header Label: VAPALS-ELCAP 1.18.0.9-i9 routine backup
+    Header Label: SAMI 1.18.0.9-i9 routine backup
     Strip comments <No>?:
     SAMICAS2  SAMICAS3  SAMICUL   SAMIHOM4  SAMINOT2  SAMIUL
     
-    Total of 2551 lines in 6 routines.
+    Total of 3452 lines in 6 routines.
+    
+    
     >
  
  
@@ -390,8 +389,9 @@ SAMIUL
     install backup directory:
     
     > halt
-    
-    $ cp -r ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/www/* ~/run/in/sami/1.18.0.9/back/www/
+    $ cp -r ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/www/* \
+      ~/run/in/sami/1.18.0.9/back/www/
+    $ 
  
  
  
@@ -402,7 +402,7 @@ SAMIUL
  
 5. Main install instructions
  
- Step 5 consists of entering the Vista menu system, loading &
+ Step 5 consists of entering the Vista menu system, loading and
  installing the KIDS package, exiting M, and installing the new www
  files.
  
@@ -415,7 +415,7 @@ SAMIUL
     Repeat step 4.1 to enter M.
    
    
-   5.1.2. Sign in & select the KIDS Installation menu
+   5.1.2. Sign in and select the KIDS Installation menu
  
     At the M prompt, call Vista's direct-mode interface, enter your
     access code, at the OPTION NAME prompt select XPD MAIN to enter
@@ -428,22 +428,18 @@ SAMIUL
     This is a TEST account.
     
     Access Code: *******
-    Terminal Type set to: C-VT220
+    Terminal Type set to: C-VT100
     
-    You have 47 new messages.
     Select OPTION NAME: XPD MAIN       Kernel Installation & Distribution System
-
+ 
+ 
           Edits and Distribution ...
           Utilities ...
           Installation ...
           Patch Monitor Main Menu ...
 
-       You have PENDING ALERTS
-          Enter  "VA to jump to VIEW ALERTS option
-    
-       You've got PRIORITY mail!
-    
     Select Kernel Installation & Distribution System <TEST ACCOUNT> Option: Installation
+    
     
        1      Load a Distribution
        2      Verify Checksums in Transport Global
@@ -453,11 +449,6 @@ SAMIUL
        6      Install Package(s)
               Restart Install of Package(s)
               Unload a Distribution
-       
-       You have PENDING ALERTS
-          Enter  "VA to jump to VIEW ALERTS option
-       
-       You've got PRIORITY mail!
        
     Select Installation <TEST ACCOUNT> Option:
  
@@ -470,8 +461,8 @@ SAMIUL
     Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
     Enter a Host File: /home/osehra/run/in/sami/1.18.0.9/sami-1.18.0.9-i9.kid
     
-       KIDS Distribution saved on Mar 16, 2021@11:39:36
-       Comment: VAPALS-ELCAP 1.18.0.9-i9 (SAMI*18.0*9 SEQ #9) KIDS package
+       KIDS Distribution saved on Mar 18, 2021@07:44:50
+       Comment: Released SAMI*18.0*9 SEQ #9 (1.18.0.9-i9)
     
        This Distribution contains Transport Globals for the following Package(s):
           SAMI*18.0*9
@@ -483,6 +474,7 @@ SAMIUL
        SAMI*18.0*9
     Use INSTALL NAME: SAMI*18.0*9 to install this Distribution.
     
+    
        1      Load a Distribution
        2      Verify Checksums in Transport Global
        3      Print Transport Global
@@ -492,114 +484,101 @@ SAMIUL
               Restart Install of Package(s)
               Unload a Distribution
        
-       You have PENDING ALERTS
-          Enter  "VA to jump to VIEW ALERTS option
-    
-       You've got PRIORITY mail!
-    
     Select Installation <TEST ACCOUNT> Option:
  
  
  
  5.3. Install KIDS package
  
-    Select option 6, enter the space bar at the INSTALL NAME prompt, &
-    press return at the next three prompts.
+    Select option 6, enter the space bar at the INSTALL NAME prompt,
+    and press return at the next three prompts.
  
     Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
-    Select INSTALL NAME:    SAMI*18.0*9    3/16/2021@11:39:36
-         => VAPALS-ELCAP 1.18.0.9-i9 (SAMI*18.0*9 SEQ #9) KIDS package
+    Select INSTALL NAME:    SAMI*18.0*9     Loaded from Distribution    3/18/21@08:58:30
+       => Released SAMI*18.0*9 SEQ #9 (1.18.0.9-i9)  ;Created on Mar 18, 2021@07
        
-       This Distribution was loaded on Mar 16, 2021@11:39:36 with header of 
-          VAPALS-ELCAP 1.18.0.9-i9 (SAMI*18.0*9 SEQ #9) KIDS package
-          It consisted of the following Install(s):
-           SAMI*18.0*9
-       Checking Install for Package SAMI*18.0*9
+    This Distribution was loaded on Mar 18, 2021@08:58:30 with header of 
+       Released SAMI*18.0*9 SEQ #9 (1.18.0.9-i9)  ;Created on Mar 18, 2021@07:44:50
+       It consisted of the following Install(s):
+        SAMI*18.0*9
+    Checking Install for Package SAMI*18.0*9
        
-       Install Questions for SAMI*18.0*9
+    Install Questions for SAMI*18.0*9
        
-       Want KIDS to INHIBIT LOGONs during the install? NO// 
-       Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
        
-       Enter the Device you want to print the Install messages.
-       You can queue the install by enter a 'Q' at the device prompt.
-       Enter a '^' to abort the install.
        
-       DEVICE: HOME//   VMS
+    Want KIDS to INHIBIT LOGONs during the install? NO// 
+    Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
        
-        Install Started for SAMI*18.0*9:
-               Mar 16, 2021@11:46:03
-        
-       Build Distribution Date: Jan 21, 2020
-        
-        Installing Routines:
-               Mar 16, 2021@11:46:03
-        
-        Updating Routine file...
-        
-        Updating KIDS files...
-        
-        SAMI*18.0*9 Installed. 
-               Mar 16, 2021@11:46:03
-        
-        Not a VA primary domain
-        
-        NO Install Message sent
+    Enter the Device you want to print the Install messages.
+    You can queue the install by enter a 'Q' at the device prompt.
+    Enter a '^' to abort the install.
        
-       Install Completed
+    DEVICE: HOME//   VMS
+       
+     Install Started for SAMI*18.0*9:
+                   Mar 16, 2021@11:46:03
+        
+    Build Distribution Date: Jan 21, 2020
+        
+     Installing Routines:
+                   Mar 16, 2021@11:46:03
+        
+     Updating Routine file...
+        
+     Updating KIDS files...
+        
+     SAMI*18.0*9 Installed. 
+                   Mar 16, 2021@11:46:03
+        
+     NO Install Message sent
+       
+    Install Completed
 
 
-          1      Load a Distribution
-          2      Verify Checksums in Transport Global
-          3      Print Transport Global
-          4      Compare Transport Global to Current System
-          5      Backup a Transport Global
-          6      Install Package(s)
-                 Restart Install of Package(s)
-                 Unload a Distribution
+       1      Load a Distribution
+       2      Verify Checksums in Transport Global
+       3      Print Transport Global
+       4      Compare Transport Global to Current System
+       5      Backup a Transport Global
+       6      Install Package(s)
+              Restart Install of Package(s)
+              Unload a Distribution
        
-      You have PENDING ALERTS
-         Enter  "VA to jump to VIEW ALERTS option
-      
-      You've got PRIORITY mail!
-      
-      Select Installation <TEST ACCOUNT> Option: 
+    Select Installation <TEST ACCOUNT> Option: 
  
-
+ 
  
  5.4. Exit M
  
-   At the Select ... Option prompt select the halt option, & at the M
-   prompt enter the halt command.
+   At the Select ... Option prompt select the halt option.
  
-      Select Installation <TEST ACCOUNT> Option: halt
+    Select Installation <TEST ACCOUNT> Option: halt
       
-      Logged out at Mar 16, 2021 11:46:08 am
- 
-    > halt
- 
+    Logged out at Mar 18, 2021 9:00 am
+  
     $
  
-
+ 
  
  5.5. Install the www files
  
    If you use the git repo method of VAPALS-ELCAP package distribution
-   & during this install you have already run the git pull command to
-   update your sami repo clone, then the www files were installed when
-   you did that.
+   and during this install you have already run the git pull command
+   to update your sami repo clone, then the www files were installed
+   when you did that.
    
    If you use the git repo method but have not yet run git pull, then
    run the cd and git pull commands:
    
     $ cd ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/
-    
     $ git pull
    
    If you DO NOT use the git repo distribution method, then instead
    run this cp command:
  
-    $ cp -r ~/run/in/sami/1.18.0.9/back/www/* ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/www/
+    $ cp -r ~/run/in/sami/1.18.0.9/back/www/* \
+      ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/www/
  
  
  
@@ -627,13 +606,13 @@ SAMIUL
  The checksums below are Vista Type B checksums (do CHECK1^XTSUMBLD).
  
  Name       Checksum after   Patch list
- SAMICAS2   B381191061       **1,5,9**    
- SAMICAS3   B264741233       **3,9**
- SAMICUL    B127967          **9**
- SAMIHOM4   B748605507       **1,4,5,6,9**
- SAMIHUL    B94425           **9**
- SAMINOT2   B463881449       **1,9**
- SAMINUL    B82041           **9**
+ SAMICAS2   B381201104       **1,5,9**    
+ SAMICAS3   B264696209       **3,9**
+ SAMICUL    B129347          **9**
+ SAMIHOM4   B748595747       **1,4,5,6,9**
+ SAMIHUL    B95115           **9**
+ SAMINOT2   B463867017       **1,9**
+ SAMINUL    B82731           **9**
  SAMIUL     B17740           **9**
  
  
@@ -641,19 +620,16 @@ SAMIUL
 8. Authors
  
              Dates                   By         
- Developed   2020-11-12/2021-03-17   George P. Lilly (ven)
+ Developed   2020-11-12/2021-03-18   George P. Lilly (ven)
                                      Domenick DiNatale (par)
                                      Frederick D. S. Marshall (ven)
  
- Tested      2020-11-12/2021-03-19   George P. Lilly (ven)
+ Tested      2020-11-12/2021-03-18   George P. Lilly (ven)
                                      Domenick DiNatale (par)
                                      Frederick D. S. Marshall (ven)
                                      Linda M. R. Yaw (ven)
-                                     Artit Jirapatnakul (va-pho)
-                                     Providencia Morales (va-pho)
-                                     Lorenza A. Murphy (va-pho)
  
- Released    2021-03-02/2021-03-17   Frederick D. S. Marshall (ven)
+ Released    2021-03-02/2021-03-18   Frederick D. S. Marshall (ven)
                                      Kenneth W. McGlothlen (ven)
  
  

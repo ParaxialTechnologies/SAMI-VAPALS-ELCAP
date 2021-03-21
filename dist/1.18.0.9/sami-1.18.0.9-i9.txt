@@ -1,19 +1,19 @@
 $TXT by MARSHALL,RICK DS@vapalsyotta.fiscientific.org (KIDS) 2021-03-18T17:05Z
  
+                            SAMI 1.18.0.9-i9
         Form Fixes: CT Evaluation, Intervention, Followup, et al
-              VAPALS-ELCAP 1.18.0.9-i9 (SAMI*18.0*9 SEQ #9)
  
                              George P. Lilly
                            & Domenic DiNatale
                        & Frederick D. S. Marshall
-                               2021-03-18
+                               2021-03-21
  
 i. Front matter
  
- App         SAMI - VAPALS-ELCAP
+ App         SAMI: VAPALS-ELCAP
  Revision    SAMI*18.0*9 SEQ #9: Version 18.0, Patch ID #9, Seq #9
  Priority    regular
- Categories  Routine, File
+ Categories  routine, file
  Status      released
  Depends on  SAMI 1.18.0.1-i1 (SAMI*18.0*1 SEQ #1)
              SAMI 1.18.0.3-i3 (SAMI*18.0*3 SEQ #3)
@@ -48,6 +48,11 @@ ii. Contents
   o Install KIDS package
   o Exit M
   o Install www files
+  o Activate the www files and exit M
+     - Enter M
+     - Sign into Vista
+     - Rebuild M-Web's cached www files
+     - Exit M
  Optional backout instructions
  Routines
  Authors
@@ -577,8 +582,40 @@ SAMIUL
    If you DO NOT use the git repo distribution method, then instead
    run this cp command:
  
-    $ cp -r ~/run/in/sami/1.18.0.9/back/www/* \
+    $ cp -r ~/run/in/sami/1.18.0.9/www/* \
       ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/www/
+ 
+ 
+ 
+ 5.6. Activate the www files and exit M
+ 
+ 
+   5.6.1. Enter M
+   
+    Repeat step 4.1 to enter M.
+   
+   
+   5.6.2. Sign into Vista
+ 
+    Repeat step 4.2 to sign into Vista.
+ 
+ 
+   5.6.3. Rebuild M-Web's cached www files
+   
+    To improve performance, M-Web maintains cached copies of the html
+    templates used by its services, so every time we update those
+    html files in Unix, we must also direct M-Web to update its cached
+    copies.
+ 
+    > do CLRWEB^SAMIADMN
+    
+    >
+ 
+ 
+   5.6.4. Exit M
+ 
+    > halt
+    $
  
  
  
@@ -620,16 +657,17 @@ SAMIUL
 8. Authors
  
              Dates                   By         
- Developed   2020-11-12/2021-03-18   George P. Lilly (ven)
+ Developed   2020-11-12/2021-03-21   George P. Lilly (ven)
                                      Domenick DiNatale (par)
                                      Frederick D. S. Marshall (ven)
  
- Tested      2020-11-12/2021-03-18   George P. Lilly (ven)
+ Tested      2020-11-12/2021-03-19   George P. Lilly (ven)
                                      Domenick DiNatale (par)
                                      Frederick D. S. Marshall (ven)
                                      Linda M. R. Yaw (ven)
+                                     Artit Jirapatnakul (va-pho)
  
- Released    2021-03-02/2021-03-18   Frederick D. S. Marshall (ven)
+ Released    2021-03-02/2021-03-21   Frederick D. S. Marshall (ven)
                                      Kenneth W. McGlothlen (ven)
  
  

@@ -448,7 +448,7 @@
      </button>
      <hr/>
     </div>
-    <div id="pre-enrollment-discussion" style="display:none;">
+    <div id="pre-enrollment-discussion">
      <div class="row">
       <div class="col-sm-12">
        <p class="required lead">
@@ -1484,7 +1484,7 @@
         let notice = "";
         let noticeClass = "alert-info";
 
-        if (eligible === 'y' || eligible === 'n') {
+        if (eligible === 'y' || eligible === 'n') { //NB: question was answered
             $("#chart-eligibility").html("");
             if (eligible === 'y') {
                 notice += "Previously considered to be <em>eligible</em> based on a chart review.";
@@ -1741,10 +1741,9 @@
         $("#siceceot").conditionallyDisplay({enable: "#siceceoo"}); //received care elsewhere
         $("#siceshot").conditionallyDisplay({enable: "#siceshoo"}); //other smoking history
 
-        //start the page by hiding the discussion and intake sections if the current value for eligible based on chart
-        // review is not "Y"
-
-        if (!enrolled && (eligible === undefined || eligible === 'n') && !preEnrollmentNoteExists) {
+        // start the page by hiding the pre-enrollment discussion and intake sections if the current value for
+        // eligible based on chart review was not answered or was answered NO
+        if (!enrolled && (eligible === undefined || eligible === 'n')) {
             $("#pre-enrollment-discussion").hide(); //, #intake, #intake-tab
         }
 

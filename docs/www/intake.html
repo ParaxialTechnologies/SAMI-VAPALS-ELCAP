@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.03.21" name="version"/>
+  <meta content="2021.03.22" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Lung Screening and Surveillance Intake Form
@@ -344,7 +344,8 @@
       <div class="col-md-12">
        <div class="panel panel-default" id="reason-container" style="display:none;">
         <div class="alert alert-warning" style="margin-bottom: 0;border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
-         Indicate one or more reasons why the participant is not eligible for lung screening. No intake
+         Indicate one or more reasons why the participant is not eligible for lung screening. No
+                            intake
                             note will be generated.
         </div>
         <div class="panel-body">
@@ -626,7 +627,8 @@
       </div>
       <div class="col-sm-8 col-md-9 form-group">
        <label class="doc-heading required">
-        The lung screening program reached the participant or was contacted via
+        The lung screening program reached the participant or was
+                        contacted via
                         (check all that apply):
        </label>
        <div class="checkbox">
@@ -1318,7 +1320,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2021.03.21
+     2021.03.22
     </span>
    </div>
   </footer>
@@ -1421,10 +1423,14 @@
     })
   </script>
   <script>
-   //purposefully executed before DOM is rendered so section is never visible
+   //NB: intentionally executed before DOM is rendered so section is never visible
     const newForm = "@@NEWFORM@@";
     const chartEligibilityNoteExists = "@@CHART_ELIGIBILITY_NOTE_EXISTS@@" === "true" || "@@PRE_ENROLLMENT_NOTE_EXISTS@@" === "true" || "@@INTAKE_NOTE_EXISTS@@" === "true";
     const preEnrollmentNoteExists = "@@PRE_ENROLLMENT_NOTE_EXISTS@@" === "true" || "@@INTAKE_NOTE_EXISTS@@" === "true";
+
+    //NB: intentionally evaluated here, before DOM is manipulated
+    const eligible = $("[name=sicechrt]:checked").val();
+    const enrolled = $("[name=sildct]:checked").val() || $("#sildct").val(); //visible checkbox or hidden field value
 
     if (newForm === "true") {
         $("#reason-for-change-container").remove();
@@ -1436,12 +1442,11 @@
         let notice = "";
         let noticeClass = "alert-info";
 
-        const eligibleValue = $("[name=sicechrt]:checked").val();
-        if (eligibleValue === 'y' || eligibleValue === 'n') {
+        if (eligible === 'y' || eligible === 'n') {
             $("#chart-eligibility").html("");
-            if (eligibleValue === 'y') {
+            if (eligible === 'y') {
                 notice += "Previously considered to be <em>eligible</em> based on a chart review.";
-            } else if (eligibleValue === 'n') {
+            } else if (eligible === 'n') {
                 notice += "Previously considered <strong>ineligible<strong> during a chart review. Refer to eligibility note for details.";
                 noticeClass = "alert-warning";
             }
@@ -1481,8 +1486,6 @@
         }
     }
 
-
-    const enrolled = $("[name=sildct]:checked").val() || $("#sildct").val(); //visible checkbox or hidden field value
     if (enrolled) {
         const $enrollSection = $("#enrollment-container").html("");
         const $enrollRow = $('<div class="row"></div>');
@@ -1496,7 +1499,6 @@
         $enrollRow.append($enrollCol);
         $enrollSection.append($enrollRow);
     }
-
 
     function createFormValidator() {
 
@@ -1699,8 +1701,8 @@
 
         //start the page by hiding the discussion and intake sections if the current value for eligible based on chart
         // review is not "Y"
-        const eligible = $("[name=sicechrt]:checked").val();
-        if (!enrolled && (eligible === undefined || eligible === 'n')) {
+
+        if (!enrolled && (eligible === undefined || eligible === 'n') && !preEnrollmentNoteExists) {
             $("#pre-enrollment-discussion").hide(); //, #intake, #intake-tab
         }
 

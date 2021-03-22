@@ -18,7 +18,8 @@ EXISTPRE(SID,FORM) ; extrinsic returns "true" or "false"
  n root s root=$$setroot^%wd("vapals-patients")
  n gvals s gvals=$na(@root@("graph",SID,FORM))
  ;i $g(@root@("graph",SID,FORM,"sipedisc"))="y" q "true"
- i $g(@gvals@("pre-note-complete"))="true" i $g(@gvals@("siperslt"))="y" q "true"
+ ;i $g(@gvals@("pre-note-complete"))="true" i $g(@gvals@("siperslt"))="y" q "true"
+ i $g(@gvals@("pre-note-complete"))="true" q "true"
  q "false"
  ;
 EXISTINT(SID,FORM) ; extrinsic returns "true" or "false"

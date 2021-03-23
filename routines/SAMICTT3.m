@@ -1,4 +1,4 @@
-SAMICTT3 ;ven/gpl - ctreport text emphysema ;2021-03-23T17:10Z
+SAMICTT3 ;ven/gpl - ctreport text emphysema ;2021-03-23T19:41Z
  ;;18.0;SAMI;**4,10**;2020-01;Build 2
  ;;1.18.0.10-i10
  ;
@@ -133,7 +133,7 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  if $$XVAL("cepu",vals)="y" d  ;
  . s yespp=1
  . if $l($$XVAL("cepus",vals))'=0 d  ;
- . . d OUT(sp1_"Pleural rumor: "_$$XVAL("cepus",vals)) 
+ . . d OUT(sp1_"Pleural rumor: "_$$XVAL("cepus",vals))
  . e  d OUT(sp1_"Pleural tumor. ")
  . ;d OUT("")
  ;

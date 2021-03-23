@@ -1,4 +1,4 @@
-SAMIUR ;ven/gpl - user reports ;2021-03-23T17:26Z
+SAMIUR ;ven/gpl - user reports ;2021-03-23T19:43Z
  ;;18.0;SAMI;**5,10**;2020-01;Build 11
  ;;1.18.0.10-i10
  ;
@@ -21,7 +21,7 @@ SAMIUR ;ven/gpl - user reports ;2021-03-23T17:26Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-03-23T17:26Z
+ ;@last-updated 2021-03-23T19:43Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -82,7 +82,7 @@ SAMIUR ;ven/gpl - user reports ;2021-03-23T17:26Z
  ;  SAMIUR: sort all reports by name, added row totals to reports.
  ;
  ; 2021-03-23 ven/toad 1.18.0.10-i10
- ; SAMIUR: add version info & dev log, lt refactor.
+ ; SAMIUR: add version info & dev log, lt refactor, fix XINDEX errors.
  ;
  ;
  ;
@@ -386,7 +386,7 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ;selects patients for report
  ;
  ;
  ;
-UNMAT(SAMIPATS,ztype,datephrase,filter)
+UNMAT(SAMIPATS,ztype,datephrase,filter) ;
  ;
  s datephrase="Unmatched Persons"
  n lroot s lroot=$$setroot^%wd("patient-lookup")
@@ -409,7 +409,7 @@ UNMAT(SAMIPATS,ztype,datephrase,filter)
  ;
  ;
  ;
-WKLIST(SAMIPATS,ztype,datephrase,filter)
+WKLIST(SAMIPATS,ztype,datephrase,filter) ;
  ;
  ; add site
  ; add compare to vapals-patients

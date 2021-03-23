@@ -86,7 +86,8 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  ;. n ij2 s ij2=0
  ;. f  s ij2=$o(SAMIPATS(ij,ij2)) q:+ij2=0  d  ;
  ;. . n dfn s dfn=ij2
- n iz,ij,ij2,dfn
+ n iz,ij,ij2,dfn,rows
+ s rows=0
  s (iz,ij,ij2,dfn)=""
  f  s iz=$o(SRT(iz)) q:iz=""  d  ;
  . s ij=$o(SRT(iz,""))
@@ -105,6 +106,9 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  . . ;
  . . s cnt=cnt+1
  . . s SAMIRTN(cnt)="</tr>"
+ . . s rows=rows+1
+ s cnt=cnt+1
+ s SAMIRTN(cnt)="<tr><td>Total: "_rows_"</td></tr>"
  ;
  s cnt=cnt+1 s SAMIRTN(cnt)="</tbody>"
  f  s ii=$o(temp(ii)) q:temp(ii)["</tbody>"  d  ;

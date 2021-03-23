@@ -109,8 +109,8 @@ EMPHYS(rtn,vals,dict) ;
  n vcac,cac,cacrec
  s (cac,cacrec)=""
  ;
- if $$XVAL("cecccac",vals)'="" d  ;
- . s @vals@("ceccv")="e"
+ ;if $$XVAL("cecccac",vals)'="" d  ;
+ ;. s @vals@("ceccv")="e"
  ;
  d  if $$XVAL("ceccv",vals)'="n" d  ;
  . set vcac=$$XVAL("cecccac",vals)

@@ -1,5 +1,5 @@
 SAMIUR ;ven/gpl - sami user reports ; 4/23/19 10:43am
- ;;18.0;SAM;;
+ ;;18.0;SAM;;;Build 11
  ;
  ;@license: see routine SAMIUL
  ;
@@ -76,11 +76,22 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  i type'="worklist" d  ; 
  . d NUHREF(.SAMIPATS) ; create the nuhref link for all patients
  ;
- s ij=0
- f  s ij=$o(SAMIPATS(ij)) q:+ij=0  d  ;
- . n ij2 s ij2=0
- . f  s ij2=$o(SAMIPATS(ij,ij2)) q:+ij2=0  d  ;
- . . n dfn s dfn=ij2
+ n SRT
+ i $g(filter("sort"))="" s filter("sort")="name"
+ d SORT(.SRT,.SAMIPATS,.filter)
+ ;zwr SRT
+ ;
+ ;s ij=0
+ ;f  s ij=$o(SAMIPATS(ij)) q:+ij=0  d  ;
+ ;. n ij2 s ij2=0
+ ;. f  s ij2=$o(SAMIPATS(ij,ij2)) q:+ij2=0  d  ;
+ ;. . n dfn s dfn=ij2
+ n iz,ij,ij2,dfn
+ s (iz,ij,ij2,dfn)=""
+ f  s iz=$o(SRT(iz)) q:iz=""  d  ;
+ . s ij=$o(SRT(iz,""))
+ . s dfn=$o(SRT(iz,ij,""))
+ . d  ;
  . . s cnt=cnt+1 s SAMIRTN(cnt)="<tr>"
  . . s ir=""
  . . f  s ir=$o(RPT(ir)) q:ir=""  d  ;
@@ -105,6 +116,28 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  . s (samikey,si)=""
  . d LOAD^SAMIFORM(.ln,samikey,si,.filter)
  . s SAMIRTN(cnt)=ln
+ q
+ ;
+SORT(SRTN,SAMIPATS,FILTER) ;
+ n typ s typ=$g(FILTER("sort"))
+ i typ="" s typ="name"
+ n iz,dt,dfn,nm
+ s (dt,dfn,nm)=""
+ s iz=0
+ n indx
+ f  s dt=$o(SAMIPATS(dt)) q:+dt=0  d  ;
+ . f  s dfn=$o(SAMIPATS(dt,dfn)) q:+dfn=0  d  ;
+ . . i typ="name" d  ;
+ . . . s nm=$g(SAMIPATS(dt,dfn,"name"))
+ . . . i nm="" s nm=" "
+ . . . s indx(nm,dt,dfn)=""
+ n iiz s iiz=""
+ s (dt,dfn)=""
+ f  s iiz=$o(indx(iiz)) q:iiz=""  d  ;
+ . f  s dt=$o(indx(iiz,dt)) q:dt=""  d  ;
+ . . f  s dfn=$o(indx(iiz,dt,dfn)) q:dfn=""  d  ;
+ . . . s iz=iz+1
+ . . . s SRTN(iz,dt,dfn)=iiz
  q
  ;
 NUHREF(SAMIPATS) ; create the nuhref link to casereview for all patients

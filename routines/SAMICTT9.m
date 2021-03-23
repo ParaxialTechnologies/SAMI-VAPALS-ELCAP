@@ -1,12 +1,49 @@
-SAMICTR9 ;ven/gpl - ielcap: forms ; 12/28/18 10:26am
- ;;18.0;SAMI;;;Build 2
+SAMICTT9 ;ven/gpl - ctreport text impressions ;2021-03-22T15:17Z
+ ;;18.0;SAMI;**4,10**;2020-01;Build 2
+ ;;1.18.0.10-i10
  ;
+ ; SAMICTT9 creates the Impressions section of the ELCAP CT Report in
+ ; text format.
  ;
  quit  ; no entry from top
  ;
-IMPRSN(rtn,vals,dict) ;
+ ;
+ ;
+ ;@section 0 primary development
+ ;
+ ;
+ ;
+ ;@license see routine SAMIUL
+ ;@documentation see SAMICTUL
+ ;@contents
+ ; IMPRSN: impressions section of ctreport text format
+ ; OUT: output a line of ct report
+ ; OUTOLD: old version of out
+ ; HOUT: output a ct report header line
+ ; $$XVAL = patient value for var
+ ; $$XSUB = dictionary value defined by var
+ ;
+ ;
+ ;
+ ;@section 1 IMPRSN & related subroutines
+ ;
+ ;
+ ;
+IMPRSN(rtn,vals,dict) ; impressions section of ctreport text format
+ ;
  ; repgen13
  ;
+ ;@called-by
+ ; WSREPORT^SAMICTT0
+ ;@calls
+ ; OUT
+ ; $$XSUB
+ ; $$XVAL
+ ;@input
+ ; rtn
+ ; vals
+ ; dict
+ ;@output: create impressions section of ct report in text format
  ;
  ; # Impression
  ;d OUT("</TD></TR></TABLE><TR><TD>")
@@ -71,36 +108,80 @@ IMPRSN(rtn,vals,dict) ;
  ;# Impression Remarks
  i $$XVAL("ceimre",vals)'="" d  ;
  . d OUT($$XVAL("ceimre",vals)_". ") d OUT("")
- q
+ ;
+ quit  ; end of IMPRSN
  ;
  ;
-OUT(ln) ;
+ ;
+OUT(ln) ; output a line of ct report
+ ;
+ ;@called-by
+ ; IMPRSN
+ ;@calls none
+ ;@input
+ ; ln = output to add
+ ;@output: line added to ct report
+ ;
  s cnt=cnt+1
  n lnn
  ;s debug=1
  s lnn=$o(@rtn@(" "),-1)+1
  s @rtn@(lnn)=ln
+ ;
  i $g(debug)=1 d  ;
  . i ln["<" q  ; no markup
  . n zs s zs=$STACK
  . n zp s zp=$STACK(zs-2,"PLACE")
  . s @rtn@(lnn)=zp_":"_ln
- q
  ;
-HOUT(ln) ;
+ quit  ; end of OUT
+ ;
+ ;
+ ;
+HOUT(ln) ; output a ct report header line
+ ;
+ ;@called-by none
+ ;@calls
+ ; OUT
+ ;@input
+ ; ln = output to add
+ ;@output: header line added to ct report
+ ;
  d OUT("<p><span class='sectionhead'>"_ln_"</span>")
- q
+ ;
+ quit  ; end of HOUT
+ ;
+ ;
  ;
 XVAL(var,vals) ; extrinsic returns the patient value for var
+ ;
+ ;@called-by
+ ; IMPRSN
+ ;@calls none
+ ;@input
+ ; var
  ; vals is passed by name
+ ;@output = patient value for var
+ ;
  n zr
  s zr=$g(@vals@(var))
  ;i zr="" s zr="["_var_"]"
- q zr
+ ;
+ quit zr ; end of $$XVAL
+ ;
+ ;
  ;
 XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined by var
- ; vals and dict are passed by name
- ; valdx is used for nodules ala cect2co with the nodule number included
+ ;
+ ;@called-by
+ ; IMPRSN
+ ;@calls none
+ ;@input
+ ; var
+ ; vals & dict are passed by name
+ ; valdx is used for nodules ala cect2co with nodule # included
+ ;@output = dictionary value for var
+ ;
  ;n dict s dict=$$setroot^%wd("cteval-dict")
  n zr,zv,zdx
  s zdx=$g(valdx)
@@ -110,5 +191,9 @@ XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined
  i zv="" s zr="" q zr
  s zr=$g(@dict@(var,zv))
  ;i zr="" s zr="["_var_","_zv_"]"
- q zr
  ;
+ quit zr ; end of $$XSUB
+ ;
+ ;
+ ;
+EOR ; end of routine SAMICTT9

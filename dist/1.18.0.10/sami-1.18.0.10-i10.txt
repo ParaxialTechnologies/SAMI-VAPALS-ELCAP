@@ -1,0 +1,623 @@
+$TXT by MARSHALL,RICK DS@vapalsyotta.fiscientific.org (KIDS) 2021-03-23T19:45Z
+ 
+                          SAMI 1.18.0.10-i10
+                   Report Fixes: CT Evaluation + Misc
+ 
+                            George P. Lilly
+                      & Frederick D. S. Marshall
+                              2021-03-23
+ 
+i. Front matter
+ 
+ App         SAMI: VAPALS-ELCAP
+ Revision    SAMI*18.0*10 SEQ #10: Version 18.0, Patch ID #10, Seq #10
+ Priority    regular
+ Categories  routine, file
+ Status      released: sami-1.18.0.10-i10.zip
+ Depends on  SAMI 1.18.0.2-i2 (SAMI*18.0*2 SEQ #2)
+             SAMI 1.18.0.4-i4 (SAMI*18.0*4 SEQ #4)
+             SAMI 1.18.0.5-i5 (SAMI*18.0*5 SEQ #5)
+             SAMI 1.18.0.6-i6 (SAMI*18.0*6 SEQ #6)
+             SAMI 1.18.0.8-i8 (SAMI*18.0*8 SEQ #8)
+             SAMI 1.18.0.9-i9 (SAMI*18.0*9 SEQ #9)
+ 
+ 
+ii. Contents
+ 
+ Front matter
+  o Contents
+ Description
+ Package elements
+ Package-retrieval instructions
+  o Assume the identity of your osehra Unix user
+  o Prepare the archive file
+  o Expand the KIDS archive
+ Pre-install instructions
+  o Enter M
+     - On Caché
+     - On YottaDB/GT.M
+  o Sign into Vista
+  o Back up routines
+     - List of routines
+     - On Caché
+     - On YottaDB/GT.M
+ Main install instructions
+  o Enter Vista menu system
+  o Load KIDS package
+  o Install KIDS package
+  o Exit M
+ Optional backout instructions
+ Routines
+ Authors
+ 
+ 
+ 
+1. Description
+ 
+ SAMI*18.0*10 SEQ #10 fixes the following bugs in the CT Eval report.
+ This patch includes 9 bug fixes and enhancements:
+ 
+ 1.1. VAP-464: Coronary artery calcification report issues
+ 
+      problem: Presume a patient has no coronary artery calcifications
+      (CAC). If you leave all the fields blank in the section CAC
+      section (which perhaps should not be possible on the form), the
+      report text looks like: "Coronary Artery Calcifications: in left
+      main, in left anterior descending, in circumflex, and in right
+      coronary. The Visual Coronary Artery Calcium (CAC) Score is 0."
+      
+      Again, presume a patient has no CAC. If you put none for all the
+      individual arteries, the text is blank: "Coronary Artery
+      Calcifications: Cardiac Findings:". It should list none for all
+      of the individual arteries and say the score is 0.
+ 
+      solution: CT Report fixed
+ 
+ 1.2. VAP-468: Individual CAC score not required, even though labeled
+      as required
+ 
+      problem: Individual CAC scores have red asterisk but form does
+      not require them. In turn, this causes the CT report to print
+      out incorrectly. Should be required for IELCAP.
+ 
+      solution: CT Report fixed
+ 
+ 1.3. Typos in CT report
+ 
+      problem: Sentences should have a space after period.
+ 
+      solution: CT Report fixed
+ 
+ 1.4. Cardiac findings in CT report
+ 
+      problem: Cardiac findings section header is always printed, even
+      if there are no cardiac findings
+ 
+      solution: CT Report fixed
+ 
+ 1.5. CT report should include average diameter
+ 
+      problem: Nodule size should list avg diameter in addition to
+      length and width.
+ 
+      solution: CT Report fixed
+ 
+ 1.6. CT report header has weird date and age-1
+ 
+      problem: HL7 date format was not being recognized, so the header
+      had a weird date and age -1.
+ 
+      solution: CT Report header fixed at the top of the report page,
+      and the header everywhere it appears throughout VAPALS-ELCAP.
+ 
+ 1.7. Enrollment report needs to be able to be sorted alphabetically
+ 
+      problem: Need to be able to be sorted by name and (ideally) also
+      by date.
+ 
+      solution: Reports list fixed
+ 
+ 1.8. Provide total number of records in User Reports
+ 
+      problem: enhancement desired
+ 
+      solution: fixed
+ 
+ 1.9. Pre-enrollment existing
+ 
+      problem: logic bug in detecting pre-enrollment existing
+ 
+      solution: fixed
+ 
+ 
+ 
+2. Package elements
+ 
+ File                            Change
+ ----                            ------
+ sami-1.18.0.10-i10-recipe.txt   new
+ sami-1.18.0.10-i10.txt          new
+ sami-1.18.0.10-i10.kid          new
+ sami-1.18.0.10-i10.zip          new
+ 
+ Routine    Change
+ -------    ------
+ SAMICTT0   modified
+ SAMICTT1   modified
+ SAMICTT2   modified
+ SAMICTT3   modified
+ SAMICTT4   modified
+ SAMICTT9   modified
+ SAMICTTA   modified
+ SAMICTUL   new
+ SAMIFLD    modified
+ SAMIFUL    modified
+ SAMINUL    modified
+ SAMINOT1   modified
+ SAMIUR     modified
+ 
+ 
+ 
+3. Package-retrieval instructions
+ 
+ The software for this patch is being released as KIDS package
+ sami-1.18.0.10-i10.zip via git or via direct file transfer. These
+ instructions are for your Vista environment's sysadmin. As usual,
+ please capture the complete dialog of your install and send it to
+ your VAPALS-ELCAP support team.
+ 
+ 
+ 3.1. Assume the identity of your osehra Unix user
+ 
+   This step assumes you type a sudo command to do this. If your
+   configuration is different, please adjust this step to match your
+   configuration:
+ 
+    $ sudo su - osehra
+ 
+ 
+ 3.2. Prepare the archive file
+   
+   Create install and backup directories
+ 
+    $ mkdir -p ~/run/in/sami/1.18.0.10/back/www/
+ 
+ 
+   If using git to receive packages, update your VAPALS-ELCAP git
+   repo, copy the VAPALS-ELCAP 1.18.0.10-i10 archive file to your
+   install directory, and change directories to that install
+   directory:
+ 
+    $ cd ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/
+    $ git pull
+    [...a successful git pull will result in some chatter...]
+    $ cp dist/1.18.0.10/sami-1.18.0.10-i10.zip \
+      ~/run/in/sami/1.18.0.10/
+ 
+   If NOT using git, download the archive from the patch webpage:
+    
+    http://vistaexpertise.net/newsite/project/vapals-elcap/sami-1.18.0.10-i10.html
+    
+    As the identity of the sysadmin Unix user, follow your usual
+    procedure to transfer archive file sami-1.18.0.10-i10.zip to one of
+    the sysadmin user directories and change to that directory.
+    
+    Then move the archive file to the osehra user install directory,
+    change ownership of the archive file to osehra, assume the osehra
+    user identity, and change directories to that install directory:
+ 
+    $ sudo mv sami-1.18.0.10-i10.zip \
+      /home/osehra/run/in/sami/1.18.0.10/
+    $ sudo chown osehra:osehra \
+      /home/osehra/run/in/sami/1.18.0.10/sami-1.18.0.10-i10.zip
+    $ sudo su - osehra
+ 
+ 
+ 3.3. Expand the KIDS archive
+   
+   Change directories to the install directory, and expand the archive
+   file, using the unix unzip command:
+    
+    $ cd ~/run/in/sami/1.18.0.10/
+    $ unzip sami-1.18.0.10-i10.zip
+    Archive:  sami-1.18.0.10-i10.zip
+      inflating: sami-1.18.0.10-i10-recipe.txt
+      inflating: sami-1.18.0.10-i10.kid
+      inflating: sami-1.18.0.10-i10.txt
+    $ cd
+    $ 
+ 
+ 
+ 
+4. Pre-install instructions
+ 
+ It is important when installing packages to back up the existing
+ package elements that are about to be changed, so that if anything
+ goes wrong with the install, these package elements can be restored.
+ For this patch, we will back up M routines.
+ 
+ 
+ 4.1. Enter M
+    
+    At the unix prompt, enter the M environment in direct mode, using
+    the csession command on Cache or the mumps command on
+    YottaDB/GT.M:
+ 
+    On Cache:
+    ---------
+    $ csession vapals
+    
+    Node: vapalscache, Instance: VAPALS
+    
+    >
+ 
+ 
+    On YottaDB/GT.M:
+    ----------------
+    $ mumps -dir
+    
+    >
+ 
+ 
+ 4.2. Sign into Vista
+    
+    At the M prompt, call Vista's direct-mode interface, enter your
+    access code, and then just press return at the OPTION NAME prompt
+    to return to direct mode. This sets up your authentication
+    variables. Here's a sample capture of this step:
+ 
+    > do ^XUP
+    
+    Setting up programmer environment
+    This is a TEST account.
+    
+    Access Code: *******
+    Terminal Type set to: C-VT100
+    
+    You have 47 new messages.
+    Select OPTION NAME:
+    >
+ 
+ 
+ 4.3. Back up routines
+    
+    Back up existing VAPALS-ELCAP routines that will be overwritten
+    by this install. Do this by calling direct-mode interface ^%RO
+    (routine out), selecting the list of routines to save, selecting
+    sami-1.18.0.10-i10-back.ro to save to, and answering any other
+    additional prompts.
+    
+    The prompts vary between M implementations, so be sure to follow
+    the correct dialog for your imp. The routine names to save are
+    listed below under each imp; copy the list and paste it at the
+    Routine prompt. At the final Routine prompt, press return to
+    indicate the list of routines is done.
+ 
+ 
+    4.3.1. List of routines
+SAMICTT0
+SAMICTT1
+SAMICTT2
+SAMICTT3
+SAMICTT4
+SAMICTT9
+SAMICTTA
+SAMICTUL
+SAMIFLD
+SAMIFUL
+SAMINOT1
+SAMINUL
+SAMIUR
+ 
+ 
+    4.3.2. On Cache
+    
+    In addition to naming the routines and routine-out file, we also
+    provide a Description and press return at the Parameters and
+    Printer Format prompts to accept the defaults of WNS and No,
+    respectively:
+    
+    > do ^%RO
+    
+    Routine output (please use %ROMF for object code output)
+    Routine(s): SAMICTT0
+    Routine(s): SAMICTT1
+    Routine(s): SAMICTT2
+    Routine(s): SAMICTT3
+    Routine(s): SAMICTT4
+    Routine(s): SAMICTT9
+    Routine(s): SAMICTTA
+    Routine(s): SAMICTUL
+    Routine(s): SAMIFLD
+    Routine(s): SAMIFUL
+    Routine(s): SAMINOT1
+    Routine(s): SAMINUL
+    Routine(s): SAMIUR
+    Routine(s): 
+    
+    Description: SAMI 1.18.0.10-i10 routine backup
+    
+    Output routines to
+    Device: /home/osehra/run/in/sami/1.18.0.10/back/sami-1.18.0.10-i10-back.ro
+    Parameters? ("WNS") =>
+    Printer Format? No => No
+    SAMICTT0.INT    SAMICTT1.INT    SAMICTT2.INT    SAMICTT3.INT
+    SAMICTT4.INT    SAMICTT9.INT    SAMICTTA.INT    SAMICTUL.INT
+    SAMIFLD.INT     SAMIFUL.INT     SAMINOT1.INT    SAMINUL.INT
+    SAMIUR.INT
+    >
+ 
+ 
+ 
+    4.3.3. On YottaDB/GT.M
+    
+    In addition to naming the routines and routine-out file, we also
+    provide a Header Label and press return at the Strip comments
+    prompt to accept the default of No:
+    
+    > do ^%RO
+    
+    Routine Output - Save selected routines into RO file.
+    
+    Routine: SAMICTT*
+    SAMICTT0  SAMICTT1  SAMICTT2  SAMICTT3  SAMICTT4  SAMICTT9
+    SAMICTTA  SAMICTUL
+    Current total of 8 routines.
+    
+    Routine: SAMIFLD
+    SAMIFLD
+    Current total of 9 routines.
+    
+    Routine: SAMIFUL
+    SAMIFUL
+    Current total of 10 routines.
+    
+    Routine: SAMINOT1
+    SAMINUL
+    Current total of 11 routines.
+    
+    Routine: SAMINUL
+    SAMINUL
+    Current total of 12 routines.
+    
+    Routine: SAMIUR
+    SAMIUR
+    Current total of 13 routines.
+    
+    Routine:
+    
+    Output device: <terminal>: /home/osehra/run/in/sami/1.18.0.10/back/sami-1.18.0.10-i10-back.ro
+    
+    Header Label: SAMI 1.18.0.10-i10 routine backup
+    Strip comments <No>?:
+    SAMICTT0  SAMICTT1  SAMICTT2  SAMICTT3  SAMICTT4  SAMICTT9
+    SAMICTTA  SAMICTUL  SAMIFLD   SAMIFUL   SAMINOT1  SAMINUL
+    SAMIUR
+    
+    Total of 3452 lines in 13 routines.
+    
+    
+    >
+ 
+ 
+ Your VAPALS-ELCAP environment is now ready to install VAPALS-ELCAP
+ 1.18.0.10-i10 (SAMI*18.0*10 SEQ #10).
+ 
+ 
+ 
+5. Main install instructions
+ 
+ Step 5 consists of entering the Vista menu system, loading and
+ installing the KIDS package, exiting M, and installing the new www
+ files.
+ 
+ 
+ 5.1. Enter Vista menu system
+ 
+ 
+   5.1.1. Enter M
+   
+    Repeat step 4.1 to enter M.
+   
+   
+   5.1.2. Sign in and select the KIDS Installation menu
+ 
+    At the M prompt, call Vista's direct-mode interface, enter your
+    access code, at the OPTION NAME prompt select XPD MAIN to enter
+    the Kernel Installation & Distribution System main menu, and at
+    the Select ... Option prompt select Installation:
+ 
+    > do ^XUP
+    
+    Setting up programmer environment
+    This is a TEST account.
+    
+    Access Code: *******
+    Terminal Type set to: C-VT100
+    
+    Select OPTION NAME: XPD MAIN       Kernel Installation & Distribution System
+ 
+ 
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+          Patch Monitor Main Menu ...
+
+    Select Kernel Installation & Distribution System <TEST ACCOUNT> Option: Installation
+    
+    
+       1      Load a Distribution
+       2      Verify Checksums in Transport Global
+       3      Print Transport Global
+       4      Compare Transport Global to Current System
+       5      Backup a Transport Global
+       6      Install Package(s)
+              Restart Install of Package(s)
+              Unload a Distribution
+       
+    Select Installation <TEST ACCOUNT> Option:
+ 
+ 
+ 
+ 5.2. Load KIDS package
+ 
+    Select option 1 and press return at the Continue prompt.
+ 
+    Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
+    Enter a Host File: /home/osehra/run/in/sami/1.18.0.10/sami-1.18.0.10-i10.kid
+    
+       KIDS Distribution saved on Mar 22, 2021@18:21:03
+       Comment: Released SAMI*18.0*10 SEQ #10 (1.18.0.10-i10)
+    
+       This Distribution contains Transport Globals for the following Package(s):
+          SAMI*18.0*10
+       Distribution OK!
+    
+    Want to Continue with Load? YES// 
+       Loading Distribution...
+    
+       SAMI*18.0*10
+    Use INSTALL NAME: SAMI*18.0*10 to install this Distribution.
+    
+    
+       1      Load a Distribution
+       2      Verify Checksums in Transport Global
+       3      Print Transport Global
+       4      Compare Transport Global to Current System
+       5      Backup a Transport Global
+       6      Install Package(s)
+              Restart Install of Package(s)
+              Unload a Distribution
+       
+    Select Installation <TEST ACCOUNT> Option:
+ 
+ 
+ 
+ 5.3. Install KIDS package
+ 
+    Select option 6, enter the space bar at the INSTALL NAME prompt,
+    and press return at the next three prompts.
+ 
+    Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+    Select INSTALL NAME:    SAMI*18.0*10     Loaded from Distribution    3/18/21@08:58:30
+       => Released SAMI*18.0*10 SEQ #10 (1.18.0.10-i10)  ;Created on Mar 18, 2021@07
+       
+    This Distribution was loaded on Mar 18, 2021@08:58:30 with header of 
+       Released SAMI*18.0*10 SEQ #10 (1.18.0.10-i10)  ;Created on Mar 18, 2021@07:44:50
+       It consisted of the following Install(s):
+        SAMI*18.0*10
+    Checking Install for Package SAMI*18.0*10
+       
+    Install Questions for SAMI*18.0*10
+       
+       
+       
+    Want KIDS to INHIBIT LOGONs during the install? NO// 
+    Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+       
+    Enter the Device you want to print the Install messages.
+    You can queue the install by enter a 'Q' at the device prompt.
+    Enter a '^' to abort the install.
+       
+    DEVICE: HOME//   VMS
+       
+     Install Started for SAMI*18.0*10:
+                   Mar 16, 2021@11:46:03
+        
+    Build Distribution Date: Jan 21, 2020
+        
+     Installing Routines:
+                   Mar 16, 2021@11:46:03
+        
+     Updating Routine file...
+        
+     Updating KIDS files...
+        
+     SAMI*18.0*10 Installed. 
+                   Mar 16, 2021@11:46:03
+        
+     NO Install Message sent
+       
+    Install Completed
+
+
+       1      Load a Distribution
+       2      Verify Checksums in Transport Global
+       3      Print Transport Global
+       4      Compare Transport Global to Current System
+       5      Backup a Transport Global
+       6      Install Package(s)
+              Restart Install of Package(s)
+              Unload a Distribution
+       
+    Select Installation <TEST ACCOUNT> Option: 
+ 
+ 
+ 
+ 5.4. Exit M
+ 
+   At the Select ... Option prompt select the halt option.
+ 
+    Select Installation <TEST ACCOUNT> Option: halt
+      
+    Logged out at Mar 18, 2021 9:00 am
+  
+    $
+ 
+ 
+ 
+ You now have VAPALS-ELCAP 1.18.0.10-i10 (SAMI*18.0*10 SEQ #10) installed
+ in your M environment. The install is now complete. We recommend
+ running tests of your VAPALS-ELCAP app to confirm the environment is
+ operational and bug-free, before notifying users that VAPALS-ELCAP is
+ ready for their use.
+ 
+ 
+ 
+6. Optional backout instructions
+ 
+ Should errors or other problems result from installing this package
+ contact the VAPALS development team for package-backout instructions.
+ 
+ 
+ 
+7. Routines
+ 
+ Lines 2 & 3 of each of these routines now look like:
+  ;;18.0;SAMI;[Patch List];2020-01;[optional Build #]
+  ;;1.18.0.10-i10
+
+ The checksums below are Vista Type B checksums (do CHECK1^XTSUMBLD).
+ 
+ Name       Checksum after   Patch list
+ SAMICTT0   B70558868        **4,10**
+ SAMICTT1   B92534755        **4,10**
+ SAMICTT2   B84904289        **4,10**
+ SAMICTT3   B180003709       **4,10**
+ SAMICTT4   B36692733        **4,10**
+ SAMICTT9   B10329219        **4,10**
+ SAMICTTA   B24215810        **4,10**
+ SAMICTUL   Bxxxxx           **10**
+ SAMIFLD    B204052110       **5,10**
+ SAMIFUL    Bxxxxx           **10**
+ SAMINOT1   Bxxxxx           **2,6,8,10**
+ SAMINUL    Bxxxxx           **9,10**
+ SAMIUR     Bxxxxx           **5,10**
+ 
+ 
+ 
+8. Authors
+ 
+             Dates                   By         
+ Developed   2021-02-01/2021-03-23   George P. Lilly (ven)
+                                     Frederick D. S. Marshall (ven)
+ 
+ Tested      2021-02-01/2021-03-23   George P. Lilly (ven)
+                                     Frederick D. S. Marshall (ven)
+                                     Artit Jirapatnakul (va-pho)
+ 
+ Released    2021-03-21/2021-03-23   Frederick D. S. Marshall (ven)
+                                     Kenneth W. McGlothlen (ven)
+ 
+ 
+$END TXT

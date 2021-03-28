@@ -480,6 +480,12 @@
                 }
             }).conditionallyDisplay({sourceValues: "b", disable: "#non-baseline-container"});
 
+            // If no value is selected for CT Protocol, preselect "low-dose" as the default.
+            const ctProtocol = $("[name=cectp]:checked").val();
+            if (ctProtocol === undefined) {
+                $("#cectp-l").prop("checked", true);
+            }
+
             //reconstructed slice thickness
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});
 

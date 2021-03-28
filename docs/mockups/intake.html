@@ -344,8 +344,8 @@
       <div class="col-md-12">
        <div class="panel panel-default" id="reason-container" style="display:none;">
         <div class="alert alert-warning" style="margin-bottom: 0;border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
-         Indicate one or more reasons why the participant is not eligible for lung screening. No intake
-                            note will be generated.
+         Indicate one or more reasons why the participant is not eligible for lung screening. No
+                            intake note will be generated.
         </div>
         <div class="panel-body">
          <div class="form-group form-group-sm form-inline">
@@ -626,8 +626,8 @@
       </div>
       <div class="col-sm-8 col-md-9 form-group">
        <label class="doc-heading required">
-        The lung screening program reached the participant or was contacted via
-                        (check all that apply):
+        The lung screening program reached the participant or was
+                        contacted via (check all that apply):
        </label>
        <div class="checkbox">
         <label>
@@ -1103,28 +1103,38 @@
      <div id="enrollment-container">
       <div class="row">
        <div class="col-md-12 form-group">
-        <div class="checkbox">
-         <label class="required">
-          <input name="siidmdc" type="hidden" value=""/>
-          <input id="siidmdc" name="siidmdc" required="required" type="checkbox" value="1"/>
-          Informed decision making discussion complete
+        <label>
+         Informed decision making
+        </label>
+        <br/>
+        <div class="radio">
+         <label>
+          <input id="siidmdc-n" name="siidmdc" required="required" type="radio" value="0"/>
+          Not applicable
          </label>
+        </div>
+        <div class="radio">
+         <label>
+          <input id="siidmdc-y" name="siidmdc" required="required" type="radio" value="1"/>
+          Discussion complete
+         </label>
+         <p class="alert alert-warning" id="siidmdc-affirmation">
+          Veteran of age and exposure to cigarette smoke as described above, and without a current
+                                diagnosis or obvious symptoms suggestive of lung cancer, has been educated today about
+                                the estimated risk for lung cancer, the possibility of a cure or life prolonging if an
+                                early lung cancer were to be found during screening, the possibility of imaging
+                                abnormalities not being lung cancer, the possibility of complications from additional
+                                diagnostic procedures, and the approximate amount of radiation exposure associated with
+                                each screening procedure. In addition, the Veteran has been educated today about the
+                                importance of adhering to annual lung screening, the possible impact of other medical
+                                conditions on the overall health status, the importance of avoiding exposure to
+                                cigarette smoke, available tobacco cessation programs and available lung screening
+                                services at this VA facility. Education material was provided to the Veteran.
+          <br/>
+         </p>
         </div>
        </div>
       </div>
-      <p class="alert alert-warning">
-       Veteran of age and exposure to cigarette smoke as described above, and without a current
-                    diagnosis or obvious symptoms suggestive of lung cancer, has been educated today about the
-                    estimated risk for lung cancer, the possibility of a cure or life prolonging if an early lung
-                    cancer were to be found during screening, the possibility of imaging abnormalities not being
-                    lung cancer, the possibility of complications from additional diagnostic procedures, and the
-                    approximate amount of radiation exposure associated with each screening procedure. In addition,
-                    the Veteran has been educated today about the importance of adhering to annual lung screening, the
-                    possible impact of other medical conditions on the overall health status, the importance of
-                    avoiding exposure to cigarette smoke, available tobacco cessation programs and available lung
-                    screening services at this VA facility. Education material was provided to the Veteran.
-       <br/>
-      </p>
       <div class="row">
        <div class="col-md-12 form-group">
         <label class="required">
@@ -1818,6 +1828,8 @@
         if ($("#pack-years-history tbody tr").length === 0) {
             $("#pack-years-history").remove();
         }
+
+        $("[name=siidmdc]").conditionallyDisplay({sourceValues: "1", enable: "#siidmdc-affirmation"});
 
         $("[name=sistatus]").on('submit', function () {
             //require reason fields when marking participant as "not active"

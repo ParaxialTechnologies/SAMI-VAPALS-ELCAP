@@ -107,8 +107,8 @@
                     <div class="panel panel-default" id="reason-container" style="display:none;">
                         <div class="alert alert-warning"
                              style="margin-bottom: 0;border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
-                            Indicate one or more reasons why the participant is not eligible for lung screening. No intake
-                            note will be generated.
+                            Indicate one or more reasons why the participant is not eligible for lung screening. No
+                            intake note will be generated.
                         </div>
                         <div class="panel-body">
                             <div class="form-group form-group-sm form-inline">
@@ -218,8 +218,8 @@
                 </div>
 
                 <div class="col-sm-8 col-md-9 form-group">
-                    <label class="doc-heading required">The lung screening program reached the participant or was contacted via
-                        (check all that apply):</label>
+                    <label class="doc-heading required">The lung screening program reached the participant or was
+                        contacted via (check all that apply):</label>
                     {{ f.checkbox("silnip", "1", "In person", {'group':'intake-contact'}) }}
                     {{ f.checkbox("silnph", "1", "Telephone", {'group':'intake-contact'}) }}
                     {{ f.checkbox("silnth", "1", "TeleHealth", {'group':'intake-contact'}) }}
@@ -398,21 +398,38 @@
             <div id="enrollment-container">
                 <div class="row">
                     <div class="col-md-12 form-group">
-                        {{ f.checkbox("siidmdc","1", "Informed decision making discussion complete", {}, true) }}
+                        <label>Informed decision making</label>
+                        <br/>
+
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="siidmdc" id="siidmdc-n" value="0" required="required">
+                                Not applicable
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="siidmdc" id="siidmdc-y" value="1" required="required">
+                                Discussion complete
+                            </label>
+                            <p class="alert alert-warning" id="siidmdc-affirmation">
+                                Veteran of age and exposure to cigarette smoke as described above, and without a current
+                                diagnosis or obvious symptoms suggestive of lung cancer, has been educated today about
+                                the estimated risk for lung cancer, the possibility of a cure or life prolonging if an
+                                early lung cancer were to be found during screening, the possibility of imaging
+                                abnormalities not being lung cancer, the possibility of complications from additional
+                                diagnostic procedures, and the approximate amount of radiation exposure associated with
+                                each screening procedure. In addition, the Veteran has been educated today about the
+                                importance of adhering to annual lung screening, the possible impact of other medical
+                                conditions on the overall health status, the importance of avoiding exposure to
+                                cigarette smoke, available tobacco cessation programs and available lung screening
+                                services at this VA facility. Education material was provided to the Veteran.
+                                <br/>
+                            </p>
+                        </div>
                     </div>
                 </div>
-                <p class="alert alert-warning">
-                    Veteran of age and exposure to cigarette smoke as described above, and without a current
-                    diagnosis or obvious symptoms suggestive of lung cancer, has been educated today about the
-                    estimated risk for lung cancer, the possibility of a cure or life prolonging if an early lung
-                    cancer were to be found during screening, the possibility of imaging abnormalities not being
-                    lung cancer, the possibility of complications from additional diagnostic procedures, and the
-                    approximate amount of radiation exposure associated with each screening procedure. In addition,
-                    the Veteran has been educated today about the importance of adhering to annual lung screening, the
-                    possible impact of other medical conditions on the overall health status, the importance of
-                    avoiding exposure to cigarette smoke, available tobacco cessation programs and available lung
-                    screening services at this VA facility. Education material was provided to the Veteran. <br/>
-                </p>
+
                 <div class="row">
                     <div class="col-md-12 form-group">
                         <label class="required">Based on this information, the Veteran has opted to</label>
@@ -897,6 +914,8 @@
         if ($("#pack-years-history tbody tr").length === 0) {
             $("#pack-years-history").remove();
         }
+
+        $("[name=siidmdc]").conditionallyDisplay({sourceValues: "1", enable: "#siidmdc-affirmation"});
 
         $("[name=sistatus]").on('submit', function () {
             //require reason fields when marking participant as "not active"

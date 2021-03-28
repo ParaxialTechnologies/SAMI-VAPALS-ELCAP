@@ -576,12 +576,12 @@
                 <button type="button" class="btn btn-default btn-sm add-nodule" tabindex="1101">
                     <span class="fa fa-plus" aria-hidden="true"></span> Add nodule
                 </button>
-                <div class="form-group">
-                    {{ f.checkbox("cectancn","1", "Additional non-calcified nodules", {"tabindex":"1102"}) }}
-                    {{ f.checkbox("cectacn","1", "Additional calcified nodules", {"tabindex":"1103"}) }}
-                </div>
             </div>
         </div>
+    </div>
+    <div class="form-group">
+        {{ f.checkbox("cectancn","1", "Non-calcified nodules", {"tabindex":"1102"}) }}
+        {{ f.checkbox("cectacn","1", "Calcified nodules", {"tabindex":"1103"}) }}
     </div>
     <input type="hidden" name="cennod" value="0" context="server"/>
     <input type="hidden" name="ceanod" value="n" context="server"/>

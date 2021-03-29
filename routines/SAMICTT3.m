@@ -1,12 +1,55 @@
-SAMICTR3 ;ven/gpl - ielcap: forms ; 1/23/19 5:14pm
- ;;18.0;SAMI;;;Build 2
+SAMICTT3 ;ven/gpl - ctreport text emphysema ;2021-03-23T19:41Z
+ ;;18.0;SAMI;**4,10**;2020-01;Build 2
+ ;;1.18.0.10-i10
  ;
- ;@license: see routine SAMIUL
+ ; SAMICTT3 creates the Emphysema section of the ELCAP CT Report in
+ ; text format.
  ;
  quit  ; no entry from top
  ;
-EMPHYS(rtn,vals,dict) ;
+ ;
+ ;
+ ;@section 0 primary development
+ ;
+ ;
+ ;
+ ;@license see routine SAMIUL
+ ;@documentation see SAMICTUL
+ ;@contents
+ ; EMPHYS: emphysema section of ctreport text format
+ ; $$CCMSTR = form phrases
+ ; $$LOWC = convert X to lowercase
+ ; OUT: output a line of ct report
+ ; OUTOLD: old version of out
+ ; HOUT: output a ct report header line
+ ; $$XVAL = patient value for var
+ ; $$XSUB = dictionary value defined by var
+ ;
+ ;
+ ;
+ ;@section 1 EMPHYS & related subroutines
+ ;
+ ;
+ ;
+EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
+ ;
  ; repgen4,repgen5
+ ;
+ ;@called-by
+ ; WSREPORT^SAMICTT0
+ ;@calls
+ ; $$XVAL
+ ; HOUT
+ ; OUT
+ ; $$XSUB
+ ; $$LOBESTR^SAMICTR2
+ ; $$CCMSTR
+ ; $$LOWC
+ ;@input
+ ; rtn
+ ; vals
+ ; dict
+ ;@output: create emphysema section of ct eval report
  ;  
  ;# Emphysema
  ;
@@ -90,7 +133,7 @@ EMPHYS(rtn,vals,dict) ;
  if $$XVAL("cepu",vals)="y" d  ;
  . s yespp=1
  . if $l($$XVAL("cepus",vals))'=0 d  ;
- . . d OUT(sp1_"Pleural rumor: "_$$XVAL("cepus",vals)) 
+ . . d OUT(sp1_"Pleural rumor: "_$$XVAL("cepus",vals))
  . e  d OUT(sp1_"Pleural tumor. ")
  . ;d OUT("")
  ;
@@ -109,8 +152,8 @@ EMPHYS(rtn,vals,dict) ;
  n vcac,cac,cacrec
  s (cac,cacrec)=""
  ;
- if $$XVAL("cecccac",vals)'="" d  ;
- . s @vals@("ceccv")="e"
+ ; if $$XVAL("cecccac",vals)'="" d  ;
+ ; . s @vals@("ceccv")="e"
  ;
  d  if $$XVAL("ceccv",vals)'="n" d  ;
  . set vcac=$$XVAL("cecccac",vals)
@@ -332,10 +375,22 @@ EMPHYS(rtn,vals,dict) ;
  d OUT("")
  ;
  ;
- q
+ quit  ; end of EMPHYS
+ ;
  ;
  ;
 CCMSTR(lst,vals) ; extrinsic that forms phrases
+ ;
+ ;@called-by
+ ; EMPHYS
+ ;@calls
+ ; $$XVAL
+ ; $$LOWC
+ ;@input
+ ; lst
+ ; vals
+ ;@output = phrase for comments
+ ;
  n retstr s retstr=""
  n lblist s lblist=""
  n lb,ib s ib=""
@@ -352,12 +407,34 @@ CCMSTR(lst,vals) ; extrinsic that forms phrases
  i $o(lblist(""),-1)=1 s retstr=retstr_lblist(1)_" is seen in the"
  e  i $o(lblist(""),-1)=2 s retstr=retstr_lblist(1)_" and "_$$LOWC(lblist(2))_" are seen in the"
  e  i $o(lblist(""),-1)=3 s retstr=retstr_"Calicification, cyst, and mass are seen in the"
- q retstr
  ;
-LOWC(X) ;  CONVERT X TO LOWERCASE
- Q $TR(X,"ABCDEFGHIJKLMNOPQRSTUVWXYZ","abcdefghijklmnopqrstuvwxyz")
+ quit retstr ; end of $$CCMSTR
  ;
-OUT(ln) ;
+ ;
+ ;
+LOWC(X) ; convert X to lowercase
+ ;
+ ;@called-by
+ ; EMPHYS
+ ; $$CCMSTR
+ ;@calls none
+ ;@input
+ ; X
+ ;@output = lowercase string
+ ;
+ quit $translate(X,"ABCDEFGHIJKLMNOPQRSTUVWXYZ","abcdefghijklmnopqrstuvwxyz")
+ ;
+ ;
+ ;
+OUT(ln) ; output a line of ct report
+ ;
+ ;@called-by
+ ; EMPHYS
+ ;@calls none
+ ;@input
+ ; ln = output to add
+ ;@output: line added to report
+ ;
  i outmode="hold" s line=line_ln q  ;
  s cnt=cnt+1
  n lnn
@@ -368,41 +445,90 @@ OUT(ln) ;
  . s line=""
  . s lnn=$o(@rtn@(" "),-1)+1
  s @rtn@(lnn)=ln
+ ;
  i $g(debug)=1 d  ;
  . i ln["<" q  ; no markup
  . n zs s zs=$STACK
  . n zp s zp=$STACK(zs-2,"PLACE")
  . s @rtn@(lnn)=zp_":"_ln
- q
  ;
-OUTOLD(ln) ;
+ quit  ; end of OUT
+ ;
+ ;
+ ;
+OUTOLD(ln) ; old version of out
+ ;
+ ;@called-by none
+ ;@calls none
+ ;@input
+ ; ln = output to add
+ ;@output: line added to report
+ ;
  s cnt=cnt+1
  n lnn
  ;s debug=1
  s lnn=$o(@rtn@(" "),-1)+1
  s @rtn@(lnn)=ln
+ ;
  i $g(debug)=1 d  ;
  . i ln["<" q  ; no markup
  . n zs s zs=$STACK
  . n zp s zp=$STACK(zs-2,"PLACE")
  . s @rtn@(lnn)=zp_":"_ln
- q
  ;
-HOUT(ln) ;
+ quit  ; end of OUTOLD
+ ;
+ ;
+ ;
+HOUT(ln) ; output a ct report header line
+ ;
+ ;@called-by
+ ; EMPHYS
+ ;@calls
+ ; OUT
+ ;@input
+ ; ln = header output to add
+ ;@output: header line added to report
+ ;
  D OUT(ln)
  ;d OUT("<p><span class='sectionhead'>"_ln_"</span>")
- q
+ ;
+ quit  ; end of HOUT
+ ;
+ ;
  ;
 XVAL(var,vals) ; extrinsic returns the patient value for var
- ; vals is passed by name
+ ;
+ ;@called-by
+ ; EMPHYS
+ ; $$CCMSTR
+ ;@calls none
+ ;@input
+ ; var
+ ; vals is passed by nam
+ ;@output = patient value for var
+ ;
+ ;e
  n zr
  s zr=$g(@vals@(var))
  ;i zr="" s zr="["_var_"]"
- q zr
+ ;
+ quit zr ; end of $$XVAL
+ ;
+ ;
  ;
 XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined by var
+ ;
+ ;@called-by
+ ; EMPHYS
+ ;@calls none
+ ;@input
+ ; var
  ; vals and dict are passed by name
  ; valdx is used for nodules ala cect2co with the nodule number included
+ ;@output = dictionary value for var
+ ;
+ ;
  ;n dict s dict=$$setroot^%wd("cteval-dict")
  n zr,zv,zdx
  s zdx=$g(valdx)
@@ -412,5 +538,9 @@ XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined
  i zv="" s zr="" q zr
  s zr=$g(@dict@(var,zv))
  ;i zr="" s zr="["_var_","_zv_"]"
- q zr
  ;
+ quit zr ; end of $$XSUB
+ ;
+ ;
+ ;
+EOR ; end of routine SAMICTT3

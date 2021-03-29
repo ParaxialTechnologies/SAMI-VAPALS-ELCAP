@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.03.22" name="version"/>
+  <meta content="2021.03.28" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Lung Screening and Surveillance Intake Form
@@ -345,8 +345,7 @@
        <div class="panel panel-default" id="reason-container" style="display:none;">
         <div class="alert alert-warning" style="margin-bottom: 0;border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
          Indicate one or more reasons why the participant is not eligible for lung screening. No
-                            intake
-                            note will be generated.
+                            intake note will be generated.
         </div>
         <div class="panel-body">
          <div class="form-group form-group-sm form-inline">
@@ -448,7 +447,7 @@
      </button>
      <hr/>
     </div>
-    <div id="pre-enrollment-discussion">
+    <div id="pre-enrollment-discussion" style="display:none;">
      <div class="row">
       <div class="col-sm-12">
        <p class="required lead">
@@ -628,8 +627,7 @@
       <div class="col-sm-8 col-md-9 form-group">
        <label class="doc-heading required">
         The lung screening program reached the participant or was
-                        contacted via
-                        (check all that apply):
+                        contacted via (check all that apply):
        </label>
        <div class="checkbox">
         <label>
@@ -1063,31 +1061,42 @@
      <div id="enrollment-container">
       <div class="row">
        <div class="col-md-12 form-group">
-        <div class="checkbox">
-         <label class="required">
-          <input name="siidmdc" type="hidden" value=""/>
-          <input id="siidmdc" name="siidmdc" required="required" type="checkbox" value="1"/>
-          Informed decision making discussion complete
+        <label>
+         Informed decision making
+        </label>
+        <br/>
+        <div class="radio">
+         <label>
+          <input id="siidmdc-n" name="siidmdc" required="required" type="radio" value="0"/>
+          Not applicable
          </label>
+        </div>
+        <div class="radio">
+         <label>
+          <input id="siidmdc-y" name="siidmdc" required="required" type="radio" value="1"/>
+          Discussion complete
+         </label>
+         <p class="alert alert-warning" id="siidmdc-affirmation">
+          Veteran of age and exposure to cigarette smoke as described above, and without a current
+                                diagnosis or obvious symptoms suggestive of lung cancer, has been educated today about
+                                the estimated risk for lung cancer, the possibility of a cure or life prolonging if an
+                                early lung cancer were to be found during screening, the possibility of imaging
+                                abnormalities not being lung cancer, the possibility of complications from additional
+                                diagnostic procedures, and the approximate amount of radiation exposure associated with
+                                each screening procedure. In addition, the Veteran has been educated today about the
+                                importance of adhering to annual lung screening, the possible impact of other medical
+                                conditions on the overall health status, the importance of avoiding exposure to
+                                cigarette smoke, available tobacco cessation programs and available lung screening
+                                services at this VA facility. Education material was provided to the Veteran.
+          <br/>
+         </p>
         </div>
        </div>
       </div>
-      <p class="alert alert-warning">
-       Veteran of age and exposure to cigarette smoke as described above, and without a current
-                    diagnosis or obvious symptoms suggestive of lung cancer, has been educated today about the
-                    estimated risk for lung cancer, the possibility of a cure or life prolonging if an early lung
-                    cancer were to be found during screening, the possibility of imaging abnormalities not being
-                    lung cancer, the possibility of complications from additional diagnostic procedures, and the
-                    approximate amount of radiation exposure associated with each screening procedure. In addition,
-                    the veteran has been educated today about the importance of avoiding exposure to cigarette
-                    smoke, available tobacco cessation programs and available lung screening services at this VA
-                    facility. Education material was provided to the veteran.
-       <br/>
-      </p>
       <div class="row">
        <div class="col-md-12 form-group">
         <label class="required">
-         Based on this information, the veteran has opted to
+         Based on this information, the Veteran has opted to
         </label>
         <div class="radio">
          <label>
@@ -1320,7 +1329,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2021.03.22
+     2021.03.28
     </span>
    </div>
   </footer>
@@ -1423,14 +1432,10 @@
     })
   </script>
   <script>
-   //NB: intentionally executed before DOM is rendered so section is never visible
+   //purposefully executed before DOM is rendered so section is never visible
     const newForm = "@@NEWFORM@@";
     const chartEligibilityNoteExists = "@@CHART_ELIGIBILITY_NOTE_EXISTS@@" === "true" || "@@PRE_ENROLLMENT_NOTE_EXISTS@@" === "true" || "@@INTAKE_NOTE_EXISTS@@" === "true";
     const preEnrollmentNoteExists = "@@PRE_ENROLLMENT_NOTE_EXISTS@@" === "true" || "@@INTAKE_NOTE_EXISTS@@" === "true";
-
-    //NB: intentionally evaluated here, before DOM is manipulated
-    const eligible = $("[name=sicechrt]:checked").val();
-    const enrolled = $("[name=sildct]:checked").val() || $("#sildct").val(); //visible checkbox or hidden field value
 
     if (newForm === "true") {
         $("#reason-for-change-container").remove();
@@ -1442,11 +1447,12 @@
         let notice = "";
         let noticeClass = "alert-info";
 
-        if (eligible === 'y' || eligible === 'n') { //NB: question was answered
+        const eligibleValue = $("[name=sicechrt]:checked").val();
+        if (eligibleValue === 'y' || eligibleValue === 'n') {
             $("#chart-eligibility").html("");
-            if (eligible === 'y') {
+            if (eligibleValue === 'y') {
                 notice += "Previously considered to be <em>eligible</em> based on a chart review.";
-            } else if (eligible === 'n') {
+            } else if (eligibleValue === 'n') {
                 notice += "Previously considered <strong>ineligible<strong> during a chart review. Refer to eligibility note for details.";
                 noticeClass = "alert-warning";
             }
@@ -1468,9 +1474,9 @@
                 if (discussionResultDesc) {
                     notice += " The result of that discussion was \"" + discussionResultDesc + "\"";
                 }
-
-                $("#pre-enrollment-discussion").html(""); //clear out the HTML regardless of value
             }
+
+            $("#pre-enrollment-discussion").html(""); //clear out the HTML regardless of value
         }
 
         //now add the note to the DOM:
@@ -1486,6 +1492,8 @@
         }
     }
 
+
+    const enrolled = $("[name=sildct]:checked").val() || $("#sildct").val(); //visible checkbox or hidden field value
     if (enrolled) {
         const $enrollSection = $("#enrollment-container").html("");
         const $enrollRow = $('<div class="row"></div>');
@@ -1499,6 +1507,7 @@
         $enrollRow.append($enrollCol);
         $enrollSection.append($enrollRow);
     }
+
 
     function createFormValidator() {
 
@@ -1699,8 +1708,9 @@
         $("#siceceot").conditionallyDisplay({enable: "#siceceoo"}); //received care elsewhere
         $("#siceshot").conditionallyDisplay({enable: "#siceshoo"}); //other smoking history
 
-        // start the page by hiding the pre-enrollment discussion and intake sections if the current value for
-        // eligible based on chart review was not answered or was answered NO
+        //start the page by hiding the discussion and intake sections if the current value for eligible based on chart
+        // review is not "Y"
+        const eligible = $("[name=sicechrt]:checked").val();
         if (!enrolled && (eligible === undefined || eligible === 'n')) {
             $("#pre-enrollment-discussion").hide(); //, #intake, #intake-tab
         }
@@ -1776,6 +1786,8 @@
         if ($("#pack-years-history tbody tr").length === 0) {
             $("#pack-years-history").remove();
         }
+
+        $("[name=siidmdc]").conditionallyDisplay({sourceValues: "1", enable: "#siidmdc-affirmation"});
 
         $("[name=sistatus]").on('submit', function () {
             //require reason fields when marking participant as "not active"

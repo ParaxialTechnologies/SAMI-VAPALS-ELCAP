@@ -147,6 +147,7 @@
                                 <option value="0.75">0.75</option>
                                 <option value="0.8">0.8</option>
                                 <option value="1.0">1.0</option>
+                                <option value="1.25">1.25</option>
                                 <option value="o">Other</option>
                             </select>
                         </div>
@@ -478,6 +479,12 @@
                     }
                 }
             }).conditionallyDisplay({sourceValues: "b", disable: "#non-baseline-container"});
+
+            // If no value is selected for CT Protocol, preselect "low-dose" as the default.
+            const ctProtocol = $("[name=cectp]:checked").val();
+            if (ctProtocol === undefined) {
+                $("#cectp-l").prop("checked", true);
+            }
 
             //reconstructed slice thickness
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});

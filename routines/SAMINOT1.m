@@ -1,31 +1,106 @@
-SAMINOT1 ;ven/gpl - ielcap: forms ; 5/7/19 4:48pm
- ;;18.0;SAMI;;;Build 1
+SAMINOT1 ;ven/gpl - text notes ;2021-03-23T18:53Z
+ ;;18.0;SAMI;**2,6,8,10**;2020-01;Build 11
+ ;;1.18.0.10-i10
  ;
- ;@license: see routine SAMIUL
+ ; SAMINOT1 contains a web service & associated subroutines to produce
+ ; VAPALS-ELCAP text notes.
  ;
  quit  ; no entry from top
  ;
+ ;
+ ;
+ ;@section 0 primary development
+ ;
+ ;
+ ;
+ ;@routine-credits
+ ;@primary-dev George P. Lilly (gpl)
+ ; gpl@vistaexpertise.net
+ ;@primary-dev-org Vista Expertise Network (ven)
+ ; http://vistaexpertise.net
+ ;@copyright 2017/2021, gpl, all rights reserved
+ ;@license see routine SAMIUL
+ ;
+ ;@last-updated 2021-03-23T18:53Z
+ ;@application Screening Applications Management (SAM)
+ ;@module Screening Applications Management - IELCAP (SAMI)
+ ;@suite-of-files SAMI Forms (311.101-311.199)
+ ;@version 1.18.0.10-i10
+ ;@release-date 2020-01
+ ;@patch-list **2,6,8,10**
+ ;
+ ;@additional-dev Frederick D. S. Marshall (toad)
+ ; toad@vistaexpertise.net
+ ;@additional-dev Larry G. Carlson (lgc)
+ ; larry.g.carlson@gmail.com
+ ;@additional-dev Linda M. R. Yaw (lmry)
+ ; linda.yaw@vistaexpertise.net
+ ;@additional-dev Alexis R. Carlson (arc)
+ ; whatisthehumanspirit@gmail.com
+ ;@additional-dev Domenic DiNatale (dom)
+ ; domenic.dinatale@paraxialtech.com
+ ;
+ ;@module-credits
+ ;@project VA Partnership to Increase Access to Lung Screening
+ ; (VA-PALS)
+ ; http://va-pals.org/
+ ;@funding 2017/2021, Bristol-Myers Squibb Foundation (bmsf)
+ ; https://www.bms.com/about-us/responsibility/bristol-myers-squibb-foundation.html
+ ;@partner-org Veterans Affairs Office of Rural health
+ ; https://www.ruralhealth.va.gov/
+ ;@partner-org International Early Lung Cancer Action Program (I-ELCAP)
+ ; http://ielcap.com/
+ ;@partner-org Paraxial Technologies (par)
+ ; http://paraxialtech.com/
+ ;@partner-org Open Source Electronic Health Record Alliance (OSEHRA)
+ ; https://www.osehra.org/groups/va-pals-open-source-project-group
+ ;
+ ;@module-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
+ ; see routine SAMINUL
+ ;
+ ;
+ ;
+ ;@section 1 wsi WSNOTE^SAMINOT1 & related subroutines
+ ;
+ ;
+ ;
 EXISTCE(SID,FORM) ; extrinsic returns "true" or "false"
+ ;
  ; if a Chart Eligibility Note exists
+ ;
  n root s root=$$setroot^%wd("vapals-patients")
  n gvals s gvals=$na(@root@("graph",SID,FORM))
  ;i $g(@root@("graph",SID,FORM,"sicechrt"))="y" q "true"
  i $g(@gvals@("chart-eligibility-complete"))="true" q "true"
- q "false"
+ ;
+ quit "false" ; end of $$EXISTCE
+ ;
+ ;
  ;
 EXISTPRE(SID,FORM) ; extrinsic returns "true" or "false"
+ ;
  ; if a Pre-enrollment Note exists
+ ;
  n root s root=$$setroot^%wd("vapals-patients")
  n gvals s gvals=$na(@root@("graph",SID,FORM))
  ;i $g(@root@("graph",SID,FORM,"sipedisc"))="y" q "true"
- i $g(@gvals@("pre-note-complete"))="true" i $g(@gvals@("siperslt"))="y" q "true"
- q "false"
+ ;i $g(@gvals@("pre-note-complete"))="true" i $g(@gvals@("siperslt"))="y" q "true"
+ i $g(@gvals@("pre-note-complete"))="true" q "true"
+ ;
+ quit "false" ; end of $$EXISTPRE
+ ;
+ ;
  ;
 EXISTINT(SID,FORM) ; extrinsic returns "true" or "false"
+ ;
  ; if an Intake Note exists
+ ;
  n root s root=$$setroot^%wd("vapals-patients")
  i $g(@root@("graph",SID,FORM,"sistatus"))="y" q "true"
- q "false"
+ ;
+ quit "false" ; end of $$EXISTINT
+ ;
+ ;
  ;
 WSNOTE(return,filter) ; web service which returns a text note
  ;
@@ -92,12 +167,14 @@ WSNOTE(return,filter) ; web service which returns a text note
  . . . ;s tout(cnt)=@note@(zj)_"<br>"
  . . . s tout(cnt)=@note@(zj)_$char(13,10)
  m return=tout
- q
+ ;
+ quit  ; end of WSNOTE
+ ;
+ ;
  ;
 NOTE(filter) ; extrnisic which creates a note
+ ;
  ; returns 1 if successful, 0 if not
- ;
- ;
  ;
  ; set up patient values
  ;
@@ -147,17 +224,25 @@ NOTE(filter) ; extrnisic which creates a note
  n nien s nien=0
  i didnote=1 s nien=$$NTIEN(si,samikey)
  ;
- q nien
+ quit nien ; end of $$NOTE
+ ;
+ ;
  ;
 HASINNT(vals) ; extrinsic returns 1 if intake note is present
+ ;
  ; else returns 0
+ ;
  n zzi,zzrtn s (zzi,zzrtn)=0
  q:'$d(@vals)
  f  s zzi=$o(@vals@("notes",zzi)) q:+zzi=0  d  ;
  . i $g(@vals@("notes",zzi,"name"))["Intake" s zzrtn=1
- q zzrtn
+ ;
+ quit zzrtn ; end of $$HASINNT
+ ;
+ ;
  ;
 MKEL(sid,form,vals,filter) ;
+ ;
  n cnt s cnt=0
  ;n dest s dest=$na(@vals@("eligibility-note"))
  n dest s dest=$$MKNT(vals,"Eligibility Note","eligibility",.filter)
@@ -165,9 +250,13 @@ MKEL(sid,form,vals,filter) ;
  d OUT("Lung Screening Program Chart Eligibility Note")
  d OUT("")
  d ELNOTE(vals,dest,cnt)
- q
+ ;
+ quit  ; end of MKEL
+ ;
+ ;
  ;
 MKPRE(sid,form,vals,filter) ;
+ ;
  n cnt s cnt=0
  ;n dest s dest=$na(@vals@("pre-note"))
  n dest s dest=$$MKNT(vals,"Pre-enrollment Discussion Note","prenote",.filter)
@@ -180,9 +269,13 @@ MKPRE(sid,form,vals,filter) ;
  . d OUT("Lung Screening Program Pre-enrollment Discussion Note")
  . d OUT("")
  d PRENOTE(vals,dest,cnt)
- q
+ ;
+ quit  ; end of MKPRE
+ ;
+ ;
  ;
 MKIN(sid,form,vals,filter) ;
+ ;
  n cnt s cnt=0
  ;n dest s dest=$na(@vals@("intake-note"))
  n dest s dest=$$MKNT(vals,"Intake Note","intake",.filter)
@@ -194,17 +287,27 @@ MKIN(sid,form,vals,filter) ;
  i $g(@vals@("pre-note-complete"))'="true" d  ;
  . d PRENOTE(vals,dest,cnt)
  d INNOTE(vals,dest,cnt)
- q
+ ;
+ quit  ; end of MKIN
+ ;
+ ;
  ;
 MKNT(vals,title,ntype,filter) ; extrinsic makes a note date=now returns 
+ ;
  ; global addr. filter must be passed by reference
+ ;
  n ntdt s ntdt=$$NTDTTM($$NOW^XLFDT)
  n ntptr
  s ntptr=$$MKNTLOC(vals,title,ntdt,$g(ntype),.filter)
- q ntptr
+ ;
+ quit ntptr ; end of $$MKNT
+ ;
+ ;
  ;
 MKNTLOC(vals,title,ndate,ntype,filter) ; extrinsic returns the 
+ ;
  ;location for the note
+ ;
  n nien
  s nien=$o(@vals@("notes",""),-1)+1
  s filter("nien")=nien
@@ -212,24 +315,43 @@ MKNTLOC(vals,title,ndate,ntype,filter) ; extrinsic returns the
  s @nloc@("name")=title_" "_$g(ndate)
  s @nloc@("date")=$g(ndate)
  s @nloc@("type")=$g(ntype)
- q $na(@nloc@("text"))
+ ;
+ quit $name(@nloc@("text")) ; end of $$MKNTLOC
+ ;
+ ;
  ;
 NTDTTM(ZFMDT) ; extrinsic returns the date and time in Note format
+ ;
  ; ZFMDT is the fileman date/time to translate
- q $$FMTE^XLFDT(ZFMDT,"5")
+ ;
+ quit $$FMTE^XLFDT(ZFMDT,"5") ; end of $$NTDTTM
+ ;
+ ;
  ;
 NTLOCN(sid,form,nien) ; extrinsic returns the location of the Nth note
+ ;
  n root s root=$$setroot^%wd("vapals-patients")
- q $na(@root@("graph",sid,form,"notes",nien))
+ ;
+ quit $name(@root@("graph",sid,form,"notes",nien)) ; end of $$NTLOCN
+ ;
+ ;
  ;
 NTLAST(sid,form,ntype) ; extrinsic returns the location of the latest note
+ ;
  ; of the type ntype
- q
+ ;
+ quit  ; end of NTLAST
+ ;
+ ;
  ;
 NTIEN(sid,form) ; extrinsic which returns the latest note for this form
+ ;
  n root s root=$$setroot^%wd("vapals-patients")
  n rtn s rtn=$o(@root@("graph",sid,form,"notes"," "),-1)
- q rtn
+ ;
+ quit rtn ; end of $$NTIEN
+ ;
+ ;
  ;
 NTLIST(nlist,sid,form) ; returns the note list in nlist, passed by ref
  ;
@@ -242,16 +364,23 @@ NTLIST(nlist,sid,form) ; returns the note list in nlist, passed by ref
  . s @nlist@(zn,"name")=@gn@(zn,"name")
  . s @nlist@(zn,"nien")=zn
  ;
- q
+ quit  ; end of NTLIST
+ ;
+ ;
  ;
 TLST ;
- S SID="XXX00677"
- S FORM="siform-2019-04-23"
- D NTLIST("G",SID,FORM)
+ ;
+ set SID="XXX00677"
+ set FORM="siform-2019-04-23"
+ do NTLIST("G",SID,FORM)
  ;ZWR G
- Q
+ ;
+ quit  ; end of TLST
+ ;
+ ;
  ;
 ELNOTE(vals,dest,cnt) ; eligibility NOTE TEXT
+ ;
  D OUT("")
  D OUT("Date of chart review: "_$$XVAL("sidc",vals))
  D GLOUT("The participant was identified as a potential lung screening candidate by: ")
@@ -273,7 +402,10 @@ ELNOTE(vals,dest,cnt) ; eligibility NOTE TEXT
  D OUT("The participant is eligible based on chart review: "_$s(elig="y":"Yes",1:"no"))
  D OUT("")
  s @vals@("chart-eligibility-complete")="true"
- q
+ ;
+ quit  ; end of ELNOTE
+ ;
+ ;
  ;
 PRENOTE(vals,dest,cnt) ;
  ;
@@ -301,15 +433,22 @@ PRENOTE(vals,dest,cnt) ;
  D GLOUT($$XVAL("sipecmnt",vals),4)
  ;
  s @vals@("pre-note-complete")="true"
- q
+ ;
+ quit  ; end of PRENOTE
+ ;
+ ;
  ;
 SUBRSLT(XVAL) ; translation of discussion result
+ ;
  q:XVAL="y" "Participant is interested in discussing lung screening. The program will proceed with enrollment process."
  q:XVAL="u" "Participant is unsure of lung screening. Ok to contact in the future."
  q:XVAL="nn" "Participant is not interested in discussing lung screening at this time. Ok to contact in the future."
  q:XVAL="nf" "Participant is not interested in discussing lung screening in the future."
  q:XVAL="na" "Unable to reach participant at this time"
- q ""
+ ;
+ quit "" ; end of $$SUBRSLT
+ ;
+ ;
  ;
 INNOTE(vals,dest,cnt) ;
  ;
@@ -448,9 +587,12 @@ INNOTE(vals,dest,cnt) ;
  ;Clinical Indications:          [Show Input Text]
  ;
  ;
- q
+ quit  ; end of INNOTE
+ ;
+ ;
  ;
 SDM(ary) ; adds Shared Decision Making text to array ary, passed by name
+ ;
  n ii s ii=$o(@ary@(" "),-1)
  s ii=ii+1
  s @ary@(ii)="Veteran of age and exposure to cigarette smoke as described above, and "
@@ -480,9 +622,13 @@ SDM(ary) ; adds Shared Decision Making text to array ary, passed by name
  s @ary@(ii)="Education material was provided to the veteran. "
  s ii=ii+1
  ;s @ary@(ii)="Based on this information, the Veteran has opted for "
- q
+ ;
+ quit  ; end of SDM
+ ;
+ ;
  ;
 GLOUT(ln,indent) ; glob out first wrap ln then put it in dest
+ ;
  n arytmp
  s arytmp(1)=ln
  i $g(indent)="" s indent=1
@@ -490,26 +636,39 @@ GLOUT(ln,indent) ; glob out first wrap ln then put it in dest
  n ii s ii=""
  f  s ii=$o(arytmp(ii)) q:ii=""  d  ;
  . d OUT(arytmp(ii))
- q
+ ;
+ quit  ; end of GLOUT
+ ;
+ ;
  ;
 OUT(ln) ;
+ ;
  s cnt=cnt+1
  n lnn
  ;s debug=1
  s lnn=$o(@dest@(" "),-1)+1
  s @dest@(lnn)=ln
+ ;
  ;i $g(debug)=1 d  ;
  ;. i ln["<" q  ; no markup
  ;. n zs s zs=$STACK
  ;. n zp s zp=$STACK(zs-2,"PLACE")
  ;. s @dest@(lnn)=zp_":"_ln
- q
+ ;
+ quit  ; end of OUT
+ ;
+ ;
  ;
 XVAL(var,vals) ; extrinsic returns the patient value for var
+ ;
  ; vals is passed by name
+ ;
  n zr
  s zr=$g(@vals@(var))
  ;i zr="" s zr="["_var_"]"
- q zr
+ ;
+ quit zr ; end of $$XVAL
  ;
  ;
+ ;
+EOR ; end of routine SAMINOT1

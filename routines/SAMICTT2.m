@@ -1,11 +1,52 @@
-SAMICTT2 ;ven/gpl - ielcap: forms ; 4/22/19 9:04am
- ;;18.0;SAMI;;;Build 2
+SAMICTT2 ;ven/gpl - ctreport text other lung ;2021-03-22T15:19Z
+ ;;18.0;SAMI;**4,10**;2020-01;Build 2
+ ;;1.18.0.10-i10
  ;
+ ; SAMICTT2 creates the Other Lung Findings section of the ELCAP CT
+ ; Report in text format.
  ;
  quit  ; no entry from top
  ;
-OTHRLUNG(rtn,vals,dict) ;
+ ;
+ ;
+ ;@section 0 primary development
+ ;
+ ;
+ ;
+ ;@license see routine SAMIUL
+ ;@documentation see SAMICTUL
+ ;@contents
+ ; OTHRLUNG: other lung findings section of ctreport in text format
+ ; $$LOBESTR = extrinsic returns lobes
+ ; HLFIND: references & sets lfind in calling routine
+ ; OUT: output a line of ct report
+ ; OUTold: old version of out
+ ; HOUT: output a ct report header line
+ ; $$XVAL = patient value for var
+ ; $$XSUB = dictionary value defined by var
+ ;
+ ;
+ ;
+ ;@section 1 OTHRLUNG & related subroutines
+ ;
+ ;
+ ;
+OTHRLUNG(rtn,vals,dict) ; other lung findings sect of ct report text
+ ;
  ; repgen2,repgen3
+ ;
+ ;@called-by
+ ; WSREPORT^SAMICTT0
+ ;@calls
+ ; $$XVAL
+ ; HLFIND
+ ; OUT
+ ; $$LOBESTR
+ ;@input
+ ; rtn
+ ; vals
+ ; dict
+ ;@output: create other lung findings section of ct eval report
  ;
  ; starts at "Other lung findings:"
  ;
@@ -180,10 +221,23 @@ OTHRLUNG(rtn,vals,dict) ;
  . . . ;d OUT(para)
  . . else  if yespp=1  ;d OUT(para)
  s outmode="go" d OUT("")
- q
+ ;
+ quit  ; end of OTHRLUNG
+ ;
+ ;
  ;
 LOBESTR(lst,opt) ; extrinsic returns lobes
- ; lst is of the for a^b^c where a,b and c are variable names
+ ;
+ ;@called-by
+ ; OTHRLUNG
+ ;@calls
+ ; $$XVAL
+ ; @^%ZOSF("UPPERCASE")
+ ;@input
+ ; lst = a^b^c where a,b and c are variable names
+ ; opt
+ ;@output = lobes
+ ;
  n rtstr,lln,tary
  s tary=""
  s rtstr=""
@@ -199,16 +253,41 @@ LOBESTR(lst,opt) ; extrinsic returns lobes
  i tcnt=1 q tary(1)
  i tcnt=2 q tary(1)_" and "_tary(2)
  f lzi=1:1:tcnt s rtstr=rtstr_tary(lzi)_$s(lzi<tcnt:", ",1:"")
- q rtstr
  ;
-HLFIND() ; references and sets lfind in calling routine
+ quit rtstr ; end of $$LOBESTR
+ ;
+ ;
+ ;
+HLFIND() ; references & sets lfind in calling routine
+ ;
+ ;@called-by
+ ; OTHRLUNG
+ ;@calls
+ ; HOUT
+ ; OUT
+ ;@thruput
+ ; ]lfind
+ ;@output: adds other lung findings header to report
+ ;
  i $g(lfind)=0 d  ;
  . d HOUT("Other lung findings:")
  . d OUT("")
  . s lfind=1
- q
  ;
-OUT(ln) ;
+ quit  ; end of HLFIND
+ ;
+ ;
+ ;
+OUT(ln) ; output a line of ct report
+ ;
+ ;@called-by
+ ; OTHRLUNG
+ ; HLFIND
+ ;@calls none
+ ;@input
+ ; ln = output to add
+ ;@output: line added to report
+ ;
  i outmode="hold" s line=line_ln q  ;
  s cnt=cnt+1
  n lnn
@@ -219,14 +298,25 @@ OUT(ln) ;
  . s line=""
  . s lnn=$o(@rtn@(" "),-1)+1
  s @rtn@(lnn)=ln
+ ;
  i $g(debug)=1 d  ;
  . i ln["<" q  ; no markup
  . n zs s zs=$STACK
  . n zp s zp=$STACK(zs-2,"PLACE")
  . s @rtn@(lnn)=zp_":"_ln
- q
  ;
-OUTold(ln) ;
+ quit  ; end of OUT
+ ;
+ ;
+ ;
+OUTold(ln) ; old version of out
+ ;
+ ;@called-by none
+ ;@calls none
+ ;@input
+ ; ln = output to add
+ ;@output: line added to report
+ ;
  s cnt=cnt+1
  n lnn
  ;s debug=1
@@ -237,22 +327,57 @@ OUTold(ln) ;
  . n zs s zs=$STACK
  . n zp s zp=$STACK(zs-2,"PLACE")
  . s @rtn@(lnn)=zp_":"_ln
- q
  ;
-HOUT(ln) ;
+ quit  ; end of OUTold
+ ;
+ ;
+ ;
+HOUT(ln) ; output a ct report header line
+ ;
+ ;@called-by
+ ; HLFIND
+ ;@calls
+ ; OUT
+ ;@input
+ ; ln = header output to add
+ ;@output: header line added to report
+ ;
  d OUT("<p><span class='sectionhead'>"_ln_"</span>")
- q
+ ;
+ quit  ; end of HOUT
+ ;
+ ;
  ;
 XVAL(var,vals) ; extrinsic returns the patient value for var
+ ;
+ ;@called-by
+ ; OTHRLUNG
+ ; $$LOBESTR
+ ;@calls none
+ ;@input
+ ; var
  ; vals is passed by name
+ ;@output = patient value for var
+ ;
+ ;
  n zr
  s zr=$g(@vals@(var))
  ;i zr="" s zr="["_var_"]"
- q zr
+ ;
+ quit zr ; end of $$XVAL
+ ;
+ ;
  ;
 XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined by var
+ ;
+ ;@called-by none
+ ;@calls none
+ ;@input
+ ; var
  ; vals and dict are passed by name
  ; valdx is used for nodules ala cect2co with the nodule number included
+ ;@output = dictionary value for var
+ ;
  ;n dict s dict=$$setroot^%wd("cteval-dict")
  n zr,zv,zdx
  s zdx=$g(valdx)
@@ -262,5 +387,9 @@ XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined
  i zv="" s zr="" q zr
  s zr=$g(@dict@(var,zv))
  ;i zr="" s zr="["_var_","_zv_"]"
- q zr
  ;
+ quit zr ; end of $$XSUB
+ ;
+ ;
+ ;
+EOR ; end of routine SAMICTT2

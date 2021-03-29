@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.03.22" name="version"/>
+  <meta content="2021.03.28" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: CT Evaluation Form
@@ -355,6 +355,9 @@
          </option>
          <option value="1.0">
           1.0
+         </option>
+         <option value="1.25">
+          1.25
          </option>
          <option value="o">
           Other
@@ -5389,23 +5392,23 @@
          </span>
          Add nodule
         </button>
-        <div class="form-group">
-         <div class="checkbox">
-          <label>
-           <input name="cectancn" type="hidden" value=""/>
-           <input id="cectancn" name="cectancn" tabindex="1102" type="checkbox" value="1"/>
-           Additional non-calcified nodules
-          </label>
-         </div>
-         <div class="checkbox">
-          <label>
-           <input name="cectacn" type="hidden" value=""/>
-           <input id="cectacn" name="cectacn" tabindex="1103" type="checkbox" value="1"/>
-           Additional calcified nodules
-          </label>
-         </div>
-        </div>
        </div>
+      </div>
+     </div>
+     <div class="form-group">
+      <div class="checkbox">
+       <label>
+        <input name="cectancn" type="hidden" value=""/>
+        <input id="cectancn" name="cectancn" tabindex="1102" type="checkbox" value="1"/>
+        Non-calcified nodules
+       </label>
+      </div>
+      <div class="checkbox">
+       <label>
+        <input name="cectacn" type="hidden" value=""/>
+        <input id="cectacn" name="cectacn" tabindex="1103" type="checkbox" value="1"/>
+        Calcified nodules
+       </label>
       </div>
      </div>
      <input context="server" name="cennod" type="hidden" value="0"/>
@@ -6011,28 +6014,6 @@
         Severe
        </label>
       </div>
-     </div>
-     <div class="form-group">
-      <label class="control-label">
-       Coronary calcifications
-      </label>
-      <br/>
-      <label class="radio-inline" for="ceccv-n">
-       <input id="ceccv-n" name="ceccv" type="radio" value="n"/>
-       None
-      </label>
-      <label class="radio-inline" for="ceccv-m">
-       <input id="ceccv-m" name="ceccv" type="radio" value="m"/>
-       Mild
-      </label>
-      <label class="radio-inline" for="ceccv-d">
-       <input id="ceccv-d" name="ceccv" type="radio" value="d"/>
-       Moderate
-      </label>
-      <label class="radio-inline" for="ceccv-s">
-       <input id="ceccv-s" name="ceccv" type="radio" value="s"/>
-       Severe
-      </label>
      </div>
      <div class="row">
       <div class="col-md-12">
@@ -9033,7 +9014,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2021.03.22
+     2021.03.28
     </span>
    </div>
   </footer>
@@ -9292,6 +9273,12 @@
                     }
                 }
             }).conditionallyDisplay({sourceValues: "b", disable: "#non-baseline-container"});
+
+            // If no value is selected for CT Protocol, preselect "low-dose" as the default.
+            const ctProtocol = $("[name=cectp]:checked").val();
+            if (ctProtocol === undefined) {
+                $("#cectp-l").prop("checked", true);
+            }
 
             //reconstructed slice thickness
             $("#cectrst").conditionallyDisplay({sourceValues: "o", enable: "#cectrsto-container"});

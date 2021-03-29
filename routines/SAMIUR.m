@@ -154,10 +154,10 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  i type'="worklist" d  ; 
  . d NUHREF(.SAMIPATS) ; create the nuhref link for all patients
  ;
- n SRT
+ n SRT s SRT=""
  i $g(filter("sort"))="" s filter("sort")="name"
  d SORT(.SRT,.SAMIPATS,.filter)
- ;zwr SRT
+ zwr SRT
  ;
  ;s ij=0
  ;f  s ij=$o(SAMIPATS(ij)) q:+ij=0  d  ;
@@ -428,6 +428,8 @@ WKLIST(SAMIPATS,ztype,datephrase,filter) ;
  . q:$o(@proot@("dfn",dfn,""))'=""
  . n ien s ien=$o(@lroot@("dfn",dfn,""))
  . q:ien=""
+ . ;w !,"dfn= ",dfn
+ . ;zwr @lroot@(ien,*)
  . q:$g(@lroot@(ien,"siteid"))'=site
  . m ^gpl("worklist","lroot",ien)=@lroot@(ien)
  . m SAMIPATS(ien,dfn)=@lroot@(ien)

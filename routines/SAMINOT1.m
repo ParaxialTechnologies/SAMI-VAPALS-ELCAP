@@ -555,7 +555,10 @@ INNOTE(vals,dest,cnt) ;
  d OUT(" ")
  d OUT("Shared Decision Making: ")
  d OUT(" ")
- d SDM(dest)
+ n shareddm
+ s shareddm=+$$XVAL("siidmdc",vals)
+ i shareddm=1 d SDM(dest)
+ e  d OUT("Shared decision making was not applicable")
  d OUT(" ")
  n ldct s ldct=""
  s:$$XVAL("sildct",vals)="n" ldct="No"

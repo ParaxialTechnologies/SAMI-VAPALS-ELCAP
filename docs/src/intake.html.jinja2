@@ -150,7 +150,7 @@
             <button type="submit" class="btn btn-primary" id="save-chart-eligibility">Submit Chart Eligibility</button>
             <hr/>
         </div>
-        <div id="pre-enrollment-discussion" style="display:none;">
+        <div id="pre-enrollment-discussion">
             <div class="row">
                 <div class="col-sm-12">
                     <p class="required lead">Was a pre-enrollment discussion held?</p>
@@ -560,10 +560,14 @@
 
 {% block script %}
 <script>
-    //purposefully executed before DOM is rendered so section is never visible
+    //NB: intentionally executed before DOM is rendered so section is never visible
     const newForm = "@@NEWFORM@@";
     const chartEligibilityNoteExists = "@@CHART_ELIGIBILITY_NOTE_EXISTS@@" === "true" || "@@PRE_ENROLLMENT_NOTE_EXISTS@@" === "true" || "@@INTAKE_NOTE_EXISTS@@" === "true";
     const preEnrollmentNoteExists = "@@PRE_ENROLLMENT_NOTE_EXISTS@@" === "true" || "@@INTAKE_NOTE_EXISTS@@" === "true";
+
+    //NB: intentionally evaluated here, before DOM is manipulated
+    const eligible = $("[name=sicechrt]:checked").val();
+    const enrolled = $("[name=sildct]:checked").val() || $("#sildct").val(); //visible checkbox or hidden field value
 
     if (newForm === "true") {
         $("#reason-for-change-container").remove();
@@ -575,12 +579,11 @@
         let notice = "";
         let noticeClass = "alert-info";
 
-        const eligibleValue = $("[name=sicechrt]:checked").val();
-        if (eligibleValue === 'y' || eligibleValue === 'n') {
+        if (eligible === 'y' || eligible === 'n') { //NB: question was answered
             $("#chart-eligibility").html("");
-            if (eligibleValue === 'y') {
+            if (eligible === 'y') {
                 notice += "Previously considered to be <em>eligible</em> based on a chart review.";
-            } else if (eligibleValue === 'n') {
+            } else if (eligible === 'n') {
                 notice += "Previously considered <strong>ineligible<strong> during a chart review. Refer to eligibility note for details.";
                 noticeClass = "alert-warning";
             }
@@ -602,9 +605,9 @@
                 if (discussionResultDesc) {
                     notice += " The result of that discussion was \"" + discussionResultDesc + "\"";
                 }
-            }
 
-            $("#pre-enrollment-discussion").html(""); //clear out the HTML regardless of value
+                $("#pre-enrollment-discussion").html(""); //clear out the HTML regardless of value
+            }
         }
 
         //now add the note to the DOM:
@@ -620,8 +623,6 @@
         }
     }
 
-
-    const enrolled = $("[name=sildct]:checked").val() || $("#sildct").val(); //visible checkbox or hidden field value
     if (enrolled) {
         const $enrollSection = $("#enrollment-container").html("");
         const $enrollRow = $('<div class="row"></div>');
@@ -635,7 +636,6 @@
         $enrollRow.append($enrollCol);
         $enrollSection.append($enrollRow);
     }
-
 
     function createFormValidator() {
 
@@ -836,9 +836,8 @@
         $("#siceceot").conditionallyDisplay({enable: "#siceceoo"}); //received care elsewhere
         $("#siceshot").conditionallyDisplay({enable: "#siceshoo"}); //other smoking history
 
-        //start the page by hiding the discussion and intake sections if the current value for eligible based on chart
-        // review is not "Y"
-        const eligible = $("[name=sicechrt]:checked").val();
+        // start the page by hiding the pre-enrollment discussion and intake sections if the current value for
+        // eligible based on chart review was not answered or was answered NO
         if (!enrolled && (eligible === undefined || eligible === 'n')) {
             $("#pre-enrollment-discussion").hide(); //, #intake, #intake-tab
         }

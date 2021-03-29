@@ -1439,7 +1439,8 @@
 
     //NB: intentionally evaluated here, before DOM is manipulated
     const eligible = $("[name=sicechrt]:checked").val();
-    const enrolled = $("[name=sildct]:checked").val() || $("#sildct").val(); //visible checkbox or hidden field value
+    const enrolledVal = $("[name=sildct]:checked").val() || $("#sildct").val(); //visible checkbox or hidden field value
+    const enrolled = enrolledVal === "y";
 
     if (newForm === "true") {
         $("#reason-for-change-container").remove();

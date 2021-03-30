@@ -1,6 +1,6 @@
-SAMINUL ;ven/gpl - ielcap: note log ;2021-03-23T19:36Z
- ;;18.0;SAMI;**9,10**;
- ;;1.18.0.10-i10
+SAMINUL ;ven/gpl - ielcap: note log ;2021-03-30T17:02Z
+ ;;18.0;SAMI;**9,10,11**;2020-01;build 2
+ ;;1.18.0.11-i11
  ;
  ; SAMINOTE contains subroutines for producing the ELCAP Note Pages.
  ; SAMINUL contains the development log for the SAMINOT* routines.
@@ -22,13 +22,13 @@ SAMINUL ;ven/gpl - ielcap: note log ;2021-03-23T19:36Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-03-23T19:36Z
+ ;@last-updated 2021-03-30T17:02Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.10-i10
+ ;@version 1.18.0.10-i11
  ;@release-date 2020-01
- ;@patch-list **9,10**
+ ;@patch-list **9,10,11**
  ;
  ;@additional-dev Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -137,8 +137,16 @@ SAMINUL ;ven/gpl - ielcap: note log ;2021-03-23T19:36Z
  ; 2021-03-22 ven/gpl 1.18.0.10-i10 6319a1eb
  ;  SAMINOT1: fix logic bug in detecting pre-enrollment existing.
  ;
- ; 2021-03-23 ven/toad 1.18.0.10-i10
+ ; 2021-03-23 ven/toad 1.18.0.10-i10 96f461d0
  ;  SAMINOT1: bump date & patch list, lt refactor.
+ ;
+ ; 2021-03-29 ven/gpl 1.18.0.11-i11 6cd83445 VAP-483
+ ;  SAMINOT1: allow N/A for shared decision making on intake form:
+ ; in INNOTE new & set shareddm & use to call SDM or report n/a, based
+ ; on siidmdc.
+ ;
+ ; 2021-03-30 ven/toad 1.18.0.11-i11
+ ; SAMINOT1: bump version, date, log.
  ;
  ;
  ;

@@ -1,9 +1,77 @@
-SAMICSV ;ven/gpl - VAPALS CSV EXPORT ; 8/15/20 4:48pm
- ;;18.0;SAMI;;;Build 2
+SAMICSV ;ven/gpl - csv export ;2021-03-30T17:18Z
+ ;;18.0;SAMI;**7,11**;2020-01;build 2
+ ;;1.18.0.11-i11
  ;
- ;@license: see routine SAMIUL
+ ; SAMICSV contains a direct-mode interface to produce the VAPALS-
+ ; ELCAP CSV export.
  ;
- ; allow fallthrough
+ ; allow entry from top, fallthrough to EN
+ ;
+ ;
+ ;
+ ;@section 0 primary development
+ ;
+ ;
+ ;
+ ;@routine-credits
+ ;@primary-dev George P. Lilly (gpl)
+ ; gpl@vistaexpertise.net
+ ;@primary-dev-org Vista Expertise Network (ven)
+ ; http://vistaexpertise.net
+ ;@copyright 2017/2021, gpl, all rights reserved
+ ;@license see routine SAMIUL
+ ;
+ ;@last-updated 2021-03-30T17:18Z
+ ;@application Screening Applications Management (SAM)
+ ;@module Screening Applications Management - IELCAP (SAMI)
+ ;@suite-of-files SAMI Forms (311.101-311.199)
+ ;@version 1.18.0.11-i11
+ ;@release-date 2020-01
+ ;@patch-list **7,11**
+ ;
+ ;@additional-dev Frederick D. S. Marshall (toad)
+ ; toad@vistaexpertise.net
+ ;
+ ;@module-credits
+ ;@project VA Partnership to Increase Access to Lung Screening
+ ; (VA-PALS)
+ ; http://va-pals.org/
+ ;@funding 2017/2021, Bristol-Myers Squibb Foundation (bmsf)
+ ; https://www.bms.com/about-us/responsibility/bristol-myers-squibb-foundation.html
+ ;@partner-org Veterans Affairs Office of Rural health
+ ; https://www.ruralhealth.va.gov/
+ ;@partner-org International Early Lung Cancer Action Program (I-ELCAP)
+ ; http://ielcap.com/
+ ;@partner-org Paraxial Technologies (par)
+ ; http://paraxialtech.com/
+ ;@partner-org Open Source Electronic Health Record Alliance (OSEHRA)
+ ; https://www.osehra.org/groups/va-pals-open-source-project-group
+ ;
+ ;@module-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
+ ;
+ ; 2020-08-20/09-24 ven/gpl 1.18.0.7-i7 9486abb2,5ae08772,ba0bcb82,
+ ; 1a2a1bf6,16511893
+ ;  SAMICSV: new routine, test build for extracting form data to csv
+ ; files, upgrade change site to handle patients without forms, audit
+ ; report, select from 7 forms for extract, fix dictionary spelling
+ ; for followup form, fix bug of line feeds in csv output interrupting
+ ; excel load.
+ ;
+ ; 2021-03-25 ven/gpl 1.18.0.11 e28a34d3
+ ;  SAMICSV: remove line feeds from variables.
+ ;
+ ; 2021-03-30 ven/toad 1.18.0.11-i11
+ ; SAMICSV: bump version, date, patch list, create hdr comments, lt
+ ; refactor.
+ ;
+ ;@contents
+ ; EN: entry point to generate csv files from forms for a site
+ ; ONEFORM: process one form for a site
+ ; $$FNAME = filename for site/form
+ ; DDICT: data dictionary for form
+ ; $$SAYFORM: prompts for form
+ ;
+ ;
  ;
 EN ; entry point to generate csv files from forms for a site
  ;
@@ -27,9 +95,12 @@ EN ; entry point to generate csv files from forms for a site
  ;
  d ONEFORM(SITEID,SAMIFORM,SAMIDIR) ; process one form for a site
  ;
- q
+ quit  ; end of EN
+ ;
+ ;
  ;
 ONEFORM(SITEID,SAMIFORM,SAMIDIR) ; process one form for a site
+ ;
  n root s root=$$setroot^%wd("vapals-patients")
  n groot s groot=$na(@root@("graph"))
  n SAMII S SAMII=SITEID
@@ -104,13 +175,20 @@ ONEFORM(SITEID,SAMIFORM,SAMIDIR) ; process one form for a site
  n filename s filename=$$FNAME(SITEID,SAMIFORM)
  d GTF^%ZISH($na(@SAMIOUT@(1)),3,SAMIDIR,filename)
  w !,"file "_filename_" written to directory "_SAMIDIR
- q
+ ;
+ quit  ; end of ONEFORM
+ ;
+ ;
  ;
 FNAME(SITE,FORM) ; extrinsic returns the filename for the site/form
- Q SITE_"-"_FORM_"-"_$$FMTHL7^XLFDT($$HTFM^XLFDT($H))_".csv"
+ ;
+ quit SITE_"-"_FORM_"-"_$$FMTHL7^XLFDT($$HTFM^XLFDT($H))_".csv" ; end of $$FNAME
+ ;
+ ;
  ;
 DDICT(RTN,FORM) ; data dictionary for FORM, returned in RTN, passed by
  ; name
+ ;
  K @RTN
  ;
  N USEGR S USEGR=""
@@ -128,7 +206,11 @@ DDICT(RTN,FORM) ; data dictionary for FORM, returned in RTN, passed by
  N II S II=0
  f  s II=$o(@root@("field",II)) q:+II=0  d  ;
  . s @RTN@(II)=$g(@root@("field",II,"input",1,"name"))
- q
+ ;
+ quit  ; end of DDICT
+ ;
+ ;
+ ;
  ;^%wd(17.040801,"B","form fields - background",437)=""
  ;^%wd(17.040801,"B","form fields - biopsy",438)=""
  ;^%wd(17.040801,"B","form fields - ct evaluation",439)=""
@@ -138,7 +220,10 @@ DDICT(RTN,FORM) ; data dictionary for FORM, returned in RTN, passed by
  ;^%wd(17.040801,"B","form fields - intervention",442)=""
  ;^%wd(17.040801,"B","form fields - pet evaluation",443)=""
  ;
+ ;
+ ;
 SAYFORM() ; prompts for the form
+ ;
  N ZI,ZF,DIR
  S ZF(1)="siform"
  S ZF(2)="sbform"
@@ -159,7 +244,10 @@ SAYFORM() ; prompts for the form
  S DIR("L",6)="6 Intervention form (itform)"
  S DIR("L",7)="7 Pet Evaluation form (ptform)"
  D ^DIR
- Q:X="" -1
- Q ZF(X)
  ;
- 
+ Q:X="" -1
+ quit ZF(X) ; end of $$SAYFORM
+ ;
+ ;
+ ;
+EOR ; end of routine SAMICSV

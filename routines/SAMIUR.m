@@ -1,6 +1,6 @@
-SAMIUR ;ven/gpl - user reports ;2021-03-23T19:43Z
- ;;18.0;SAMI;**5,10**;2020-01;Build 11
- ;;1.18.0.10-i10
+SAMIUR ;ven/gpl - user reports ;2021-03-30T15:50Z
+ ;;18.0;SAMI;**5,10,11**;2020-01;build 2
+ ;;1.18.0.11-i11
  ;
  ; SAMIUR contains a web service & associated subroutines to produce
  ; the VAPALS-ELCAP user reports.
@@ -21,13 +21,13 @@ SAMIUR ;ven/gpl - user reports ;2021-03-23T19:43Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-03-23T19:43Z
+ ;@last-updated 2021-03-30T15:50Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.10-i10
+ ;@version 1.18.0.11-i11
  ;@release-date 2020-01
- ;@patch-list **5,10**
+ ;@patch-list **5,10,11**
  ;
  ;@additional-dev Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -81,8 +81,16 @@ SAMIUR ;ven/gpl - user reports ;2021-03-23T19:43Z
  ; 2021-03-22/23 ven/gpl 1.18.0.10-i10 256efe63,ba81b86a2
  ;  SAMIUR: sort all reports by name, added row totals to reports.
  ;
- ; 2021-03-23 ven/toad 1.18.0.10-i10
+ ; 2021-03-23 ven/toad 1.18.0.10-i10 96f461d0,af86e0eb
  ; SAMIUR: add version info & dev log, lt refactor, fix XINDEX errors.
+ ;
+ ; 2021-03-29 ven/gpl 1.18.0.11-i11 e809f2a2
+ ;  SAMIUR: prevent crash when reports have no matches: in WSREPORT
+ ; set SRT="" and uncomment zwrite SRT; in WKLIST add 2 commented-out
+ ; debugging lines.
+ ;
+ ; 2021-03-30 ven/toad 1.18.0.11-i11
+ ; SAMIUR: bump version, date, log; in WSREPORT comment zwrite SRT.
  ;
  ;
  ;
@@ -157,7 +165,7 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  n SRT s SRT=""
  i $g(filter("sort"))="" s filter("sort")="name"
  d SORT(.SRT,.SAMIPATS,.filter)
- zwr SRT
+ ;zwr SRT
  ;
  ;s ij=0
  ;f  s ij=$o(SAMIPATS(ij)) q:+ij=0  d  ;

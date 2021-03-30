@@ -1,4 +1,4 @@
-KIDS Distribution saved on Mar 30, 2021@10:48:30
+KIDS Distribution saved on Mar 30, 2021@12:52:49
 Released SAMI*18.0*11 SEQ #11 T1 (1.18.0.11-i11-t1)
 **KIDS**:SAMI*18.0*11^
 
@@ -12,8 +12,10 @@ SAMI*18.0*11^SAMI^0^3210330^n
 Critical bugs fixed in Intake, CT eval, and reports
 "BLD",11508,4,0)
 ^9.64PA^^
+"BLD",11508,6)
+^11
 "BLD",11508,6.3)
-2
+4
 "BLD",11508,"KRN",0)
 ^9.67PA^1.5^25
 "BLD",11508,"KRN",.4,0)
@@ -139,15 +141,13 @@ SAMICSV^^0^B54323386
 "BLD",11508,"QUES",0)
 ^9.62^^
 "BLD",11508,"REQB",0)
-^9.611^7^7
+^9.611^7^6
 "BLD",11508,"REQB",1,0)
 SAMI*18.0*2^1
 "BLD",11508,"REQB",2,0)
 SAMI 18.0T05^1
 "BLD",11508,"REQB",3,0)
 SAMI*18.0*6^1
-"BLD",11508,"REQB",4,0)
-SAMI*18.0*7^1
 "BLD",11508,"REQB",5,0)
 SAMI*18.0*8^1
 "BLD",11508,"REQB",6,0)
@@ -161,8 +161,6 @@ SAMI*18.0*10^1
 "BLD",11508,"REQB","B","SAMI*18.0*2",1)
 
 "BLD",11508,"REQB","B","SAMI*18.0*6",3)
-
-"BLD",11508,"REQB","B","SAMI*18.0*7",4)
 
 "BLD",11508,"REQB","B","SAMI*18.0*8",5)
 
@@ -261,7 +259,7 @@ D XPZ2^XPDIQ
 "RTN","SAMICSV",1,0)
 SAMICSV ;ven/gpl - csv export ;2021-03-30T17:18Z
 "RTN","SAMICSV",2,0)
- ;;18.0;SAMI;**7,11**;2020-01;Build 2
+ ;;18.0;SAMI;**7,11**;2020-01;Build 4
 "RTN","SAMICSV",3,0)
  ;;1.18.0.11-i11
 "RTN","SAMICSV",4,0)
@@ -769,7 +767,7 @@ EOR ; end of routine SAMICSV
 "RTN","SAMINOT1",1,0)
 SAMINOT1 ;ven/gpl - text notes ;2021-03-30T17:02Z
 "RTN","SAMINOT1",2,0)
- ;;18.0;SAMI;**2,6,8,10,11**;2020-01;Build 2
+ ;;18.0;SAMI;**2,6,8,10,11**;2020-01;Build 4
 "RTN","SAMINOT1",3,0)
  ;;1.18.0.11-i11
 "RTN","SAMINOT1",4,0)
@@ -2125,7 +2123,7 @@ EOR ; end of routine SAMINOT1
 "RTN","SAMINUL",1,0)
 SAMINUL ;ven/gpl - ielcap: note log ;2021-03-30T17:02Z
 "RTN","SAMINUL",2,0)
- ;;18.0;SAMI;**9,10,11**;2020-01;Build 2
+ ;;18.0;SAMI;**9,10,11**;2020-01;Build 4
 "RTN","SAMINUL",3,0)
  ;;1.18.0.11-i11
 "RTN","SAMINUL",4,0)
@@ -2433,7 +2431,7 @@ EOR ; end of routine SAMINUL
 "RTN","SAMIUR",1,0)
 SAMIUR ;ven/gpl - user reports ;2021-03-30T15:50Z
 "RTN","SAMIUR",2,0)
- ;;18.0;SAMI;**5,10,11**;2020-01;Build 2
+ ;;18.0;SAMI;**5,10,11**;2020-01;Build 4
 "RTN","SAMIUR",3,0)
  ;;1.18.0.11-i11
 "RTN","SAMIUR",4,0)

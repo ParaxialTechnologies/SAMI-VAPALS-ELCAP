@@ -1,11 +1,11 @@
-KIDS Distribution saved on Mar 29, 2021@14:35:34
-Updates to reports, intake form, ct eval form
+KIDS Distribution saved on Mar 30, 2021@10:48:30
+Released SAMI*18.0*11 SEQ #11 T1 (1.18.0.11-i11-t1)
 **KIDS**:SAMI*18.0*11^
 
 **INSTALL NAME**
 SAMI*18.0*11
 "BLD",11508,0)
-SAMI*18.0*11^SAMI^0^3210329^y
+SAMI*18.0*11^SAMI^0^3210330^n
 "BLD",11508,1,0)
 ^^1^1^3210329^
 "BLD",11508,1,1,0)
@@ -13,7 +13,7 @@ Critical bugs fixed in Intake, CT eval, and reports
 "BLD",11508,4,0)
 ^9.64PA^^
 "BLD",11508,6.3)
-1
+2
 "BLD",11508,"KRN",0)
 ^9.67PA^1.5^25
 "BLD",11508,"KRN",.4,0)
@@ -45,12 +45,20 @@ Critical bugs fixed in Intake, CT eval, and reports
 "BLD",11508,"KRN",9.8,0)
 9.8
 "BLD",11508,"KRN",9.8,"NM",0)
-^9.68A^2^2
+^9.68A^4^4
 "BLD",11508,"KRN",9.8,"NM",1,0)
-SAMINOT1^^0^B443163500
+SAMINOT1^^0^B443163534
 "BLD",11508,"KRN",9.8,"NM",2,0)
-SAMIUR^^0^B284871852
+SAMIUR^^0^B291906917
+"BLD",11508,"KRN",9.8,"NM",3,0)
+SAMINUL^^0^B101598
+"BLD",11508,"KRN",9.8,"NM",4,0)
+SAMICSV^^0^B54323386
+"BLD",11508,"KRN",9.8,"NM","B","SAMICSV",4)
+
 "BLD",11508,"KRN",9.8,"NM","B","SAMINOT1",1)
+
+"BLD",11508,"KRN",9.8,"NM","B","SAMINUL",3)
 
 "BLD",11508,"KRN",9.8,"NM","B","SAMIUR",2)
 
@@ -126,6 +134,40 @@ SAMIUR^^0^B284871852
 
 "BLD",11508,"KRN","B",8994,8994)
 
+"BLD",11508,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",11508,"QUES",0)
+^9.62^^
+"BLD",11508,"REQB",0)
+^9.611^7^7
+"BLD",11508,"REQB",1,0)
+SAMI*18.0*2^1
+"BLD",11508,"REQB",2,0)
+SAMI 18.0T05^1
+"BLD",11508,"REQB",3,0)
+SAMI*18.0*6^1
+"BLD",11508,"REQB",4,0)
+SAMI*18.0*7^1
+"BLD",11508,"REQB",5,0)
+SAMI*18.0*8^1
+"BLD",11508,"REQB",6,0)
+SAMI*18.0*9^1
+"BLD",11508,"REQB",7,0)
+SAMI*18.0*10^1
+"BLD",11508,"REQB","B","SAMI 18.0T05",2)
+
+"BLD",11508,"REQB","B","SAMI*18.0*10",7)
+
+"BLD",11508,"REQB","B","SAMI*18.0*2",1)
+
+"BLD",11508,"REQB","B","SAMI*18.0*6",3)
+
+"BLD",11508,"REQB","B","SAMI*18.0*7",4)
+
+"BLD",11508,"REQB","B","SAMI*18.0*8",5)
+
+"BLD",11508,"REQB","B","SAMI*18.0*9",6)
+
 "MBREQ")
 0
 "PKG",230,-1)
@@ -137,9 +179,9 @@ SAMI^SAMI^SCREENING APPLICATIONS MANAGEMENT - IELCAP
 "PKG",230,22,1,0)
 18.0^3191203
 "PKG",230,22,1,"PAH",1,0)
-11^3210329
+11^3210330
 "PKG",230,22,1,"PAH",1,1,0)
-^^1^1^3210329
+^^1^1^3210330
 "PKG",230,22,1,"PAH",1,1,1,0)
 Critical bugs fixed in Intake, CT eval, and reports
 "QUES","XPF1",0)
@@ -213,15 +255,523 @@ NO
 "QUES","XPZ2","M")
 D XPZ2^XPDIQ
 "RTN")
-2
+4
+"RTN","SAMICSV")
+0^4^B54323386
+"RTN","SAMICSV",1,0)
+SAMICSV ;ven/gpl - csv export ;2021-03-30T17:18Z
+"RTN","SAMICSV",2,0)
+ ;;18.0;SAMI;**7,11**;2020-01;Build 2
+"RTN","SAMICSV",3,0)
+ ;;1.18.0.11-i11
+"RTN","SAMICSV",4,0)
+ ;
+"RTN","SAMICSV",5,0)
+ ; SAMICSV contains a direct-mode interface to produce the VAPALS-
+"RTN","SAMICSV",6,0)
+ ; ELCAP CSV export.
+"RTN","SAMICSV",7,0)
+ ;
+"RTN","SAMICSV",8,0)
+ ; allow entry from top, fallthrough to EN
+"RTN","SAMICSV",9,0)
+ ;
+"RTN","SAMICSV",10,0)
+ ;
+"RTN","SAMICSV",11,0)
+ ;
+"RTN","SAMICSV",12,0)
+ ;@section 0 primary development
+"RTN","SAMICSV",13,0)
+ ;
+"RTN","SAMICSV",14,0)
+ ;
+"RTN","SAMICSV",15,0)
+ ;
+"RTN","SAMICSV",16,0)
+ ;@routine-credits
+"RTN","SAMICSV",17,0)
+ ;@primary-dev George P. Lilly (gpl)
+"RTN","SAMICSV",18,0)
+ ; gpl@vistaexpertise.net
+"RTN","SAMICSV",19,0)
+ ;@primary-dev-org Vista Expertise Network (ven)
+"RTN","SAMICSV",20,0)
+ ; http://vistaexpertise.net
+"RTN","SAMICSV",21,0)
+ ;@copyright 2017/2021, gpl, all rights reserved
+"RTN","SAMICSV",22,0)
+ ;@license see routine SAMIUL
+"RTN","SAMICSV",23,0)
+ ;
+"RTN","SAMICSV",24,0)
+ ;@last-updated 2021-03-30T17:18Z
+"RTN","SAMICSV",25,0)
+ ;@application Screening Applications Management (SAM)
+"RTN","SAMICSV",26,0)
+ ;@module Screening Applications Management - IELCAP (SAMI)
+"RTN","SAMICSV",27,0)
+ ;@suite-of-files SAMI Forms (311.101-311.199)
+"RTN","SAMICSV",28,0)
+ ;@version 1.18.0.11-i11
+"RTN","SAMICSV",29,0)
+ ;@release-date 2020-01
+"RTN","SAMICSV",30,0)
+ ;@patch-list **7,11**
+"RTN","SAMICSV",31,0)
+ ;
+"RTN","SAMICSV",32,0)
+ ;@additional-dev Frederick D. S. Marshall (toad)
+"RTN","SAMICSV",33,0)
+ ; toad@vistaexpertise.net
+"RTN","SAMICSV",34,0)
+ ;
+"RTN","SAMICSV",35,0)
+ ;@module-credits
+"RTN","SAMICSV",36,0)
+ ;@project VA Partnership to Increase Access to Lung Screening
+"RTN","SAMICSV",37,0)
+ ; (VA-PALS)
+"RTN","SAMICSV",38,0)
+ ; http://va-pals.org/
+"RTN","SAMICSV",39,0)
+ ;@funding 2017/2021, Bristol-Myers Squibb Foundation (bmsf)
+"RTN","SAMICSV",40,0)
+ ; https://www.bms.com/about-us/responsibility/bristol-myers-squibb-foundation.html
+"RTN","SAMICSV",41,0)
+ ;@partner-org Veterans Affairs Office of Rural health
+"RTN","SAMICSV",42,0)
+ ; https://www.ruralhealth.va.gov/
+"RTN","SAMICSV",43,0)
+ ;@partner-org International Early Lung Cancer Action Program (I-ELCAP)
+"RTN","SAMICSV",44,0)
+ ; http://ielcap.com/
+"RTN","SAMICSV",45,0)
+ ;@partner-org Paraxial Technologies (par)
+"RTN","SAMICSV",46,0)
+ ; http://paraxialtech.com/
+"RTN","SAMICSV",47,0)
+ ;@partner-org Open Source Electronic Health Record Alliance (OSEHRA)
+"RTN","SAMICSV",48,0)
+ ; https://www.osehra.org/groups/va-pals-open-source-project-group
+"RTN","SAMICSV",49,0)
+ ;
+"RTN","SAMICSV",50,0)
+ ;@module-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
+"RTN","SAMICSV",51,0)
+ ;
+"RTN","SAMICSV",52,0)
+ ; 2020-08-20/09-24 ven/gpl 1.18.0.7-i7 9486abb2,5ae08772,ba0bcb82,
+"RTN","SAMICSV",53,0)
+ ; 1a2a1bf6,16511893
+"RTN","SAMICSV",54,0)
+ ;  SAMICSV: new routine, test build for extracting form data to csv
+"RTN","SAMICSV",55,0)
+ ; files, upgrade change site to handle patients without forms, audit
+"RTN","SAMICSV",56,0)
+ ; report, select from 7 forms for extract, fix dictionary spelling
+"RTN","SAMICSV",57,0)
+ ; for followup form, fix bug of line feeds in csv output interrupting
+"RTN","SAMICSV",58,0)
+ ; excel load.
+"RTN","SAMICSV",59,0)
+ ;
+"RTN","SAMICSV",60,0)
+ ; 2021-03-25 ven/gpl 1.18.0.11 e28a34d3
+"RTN","SAMICSV",61,0)
+ ;  SAMICSV: remove line feeds from variables.
+"RTN","SAMICSV",62,0)
+ ;
+"RTN","SAMICSV",63,0)
+ ; 2021-03-30 ven/toad 1.18.0.11-i11
+"RTN","SAMICSV",64,0)
+ ; SAMICSV: bump version, date, patch list, create hdr comments, lt
+"RTN","SAMICSV",65,0)
+ ; refactor.
+"RTN","SAMICSV",66,0)
+ ;
+"RTN","SAMICSV",67,0)
+ ;@contents
+"RTN","SAMICSV",68,0)
+ ; EN: entry point to generate csv files from forms for a site
+"RTN","SAMICSV",69,0)
+ ; ONEFORM: process one form for a site
+"RTN","SAMICSV",70,0)
+ ; $$FNAME = filename for site/form
+"RTN","SAMICSV",71,0)
+ ; DDICT: data dictionary for form
+"RTN","SAMICSV",72,0)
+ ; $$SAYFORM: prompts for form
+"RTN","SAMICSV",73,0)
+ ;
+"RTN","SAMICSV",74,0)
+ ;
+"RTN","SAMICSV",75,0)
+ ;
+"RTN","SAMICSV",76,0)
+EN ; entry point to generate csv files from forms for a site
+"RTN","SAMICSV",77,0)
+ ;
+"RTN","SAMICSV",78,0)
+ ; first pick a site
+"RTN","SAMICSV",79,0)
+ N X,Y,DIC,SITEIEN,SITEID
+"RTN","SAMICSV",80,0)
+ S DIC=311.12
+"RTN","SAMICSV",81,0)
+ S DIC(0)="AEMQ"
+"RTN","SAMICSV",82,0)
+ D ^DIC
+"RTN","SAMICSV",83,0)
+ I Y<1 Q  ; EXIT
+"RTN","SAMICSV",84,0)
+ S SITENUM=$P(Y,"^",2)
+"RTN","SAMICSV",85,0)
+ S SITEID=$$SITEID^SAMISITE(SITENUM)
+"RTN","SAMICSV",86,0)
+ Q:SITEID=""
+"RTN","SAMICSV",87,0)
+ ;
+"RTN","SAMICSV",88,0)
+ N SAMIFORM S SAMIFORM=$$SAYFORM()
+"RTN","SAMICSV",89,0)
+ Q:SAMIFORM=-1
+"RTN","SAMICSV",90,0)
+ ;
+"RTN","SAMICSV",91,0)
+ ; prompt for the directory
+"RTN","SAMICSV",92,0)
+ N SAMIDIR
+"RTN","SAMICSV",93,0)
+ D GETDIR^SAMIFDM(.SAMIDIR)
+"RTN","SAMICSV",94,0)
+ Q:SAMIDIR=""
+"RTN","SAMICSV",95,0)
+ ;
+"RTN","SAMICSV",96,0)
+ d ONEFORM(SITEID,SAMIFORM,SAMIDIR) ; process one form for a site
+"RTN","SAMICSV",97,0)
+ ;
+"RTN","SAMICSV",98,0)
+ quit  ; end of EN
+"RTN","SAMICSV",99,0)
+ ;
+"RTN","SAMICSV",100,0)
+ ;
+"RTN","SAMICSV",101,0)
+ ;
+"RTN","SAMICSV",102,0)
+ONEFORM(SITEID,SAMIFORM,SAMIDIR) ; process one form for a site
+"RTN","SAMICSV",103,0)
+ ;
+"RTN","SAMICSV",104,0)
+ n root s root=$$setroot^%wd("vapals-patients")
+"RTN","SAMICSV",105,0)
+ n groot s groot=$na(@root@("graph"))
+"RTN","SAMICSV",106,0)
+ n SAMII S SAMII=SITEID
+"RTN","SAMICSV",107,0)
+ n cnt s cnt=0
+"RTN","SAMICSV",108,0)
+ n forms s forms=0
+"RTN","SAMICSV",109,0)
+ ;
+"RTN","SAMICSV",110,0)
+ n SAMIOUT S SAMIOUT=$NA(^TMP("SAMICSV",$J))
+"RTN","SAMICSV",111,0)
+ k @SAMIOUT
+"RTN","SAMICSV",112,0)
+ ;
+"RTN","SAMICSV",113,0)
+ n DICT
+"RTN","SAMICSV",114,0)
+ d DDICT("DICT",SAMIFORM) ; get the data dictionary for this form
+"RTN","SAMICSV",115,0)
+ q:'$d(DICT)
+"RTN","SAMICSV",116,0)
+ ;
+"RTN","SAMICSV",117,0)
+ N SAMIN S SAMIN=1
+"RTN","SAMICSV",118,0)
+ N SAMIJJ s SAMIJJ=0
+"RTN","SAMICSV",119,0)
+ N OFFSET S OFFSET=0
+"RTN","SAMICSV",120,0)
+ I SAMIFORM="siform" d  ;
+"RTN","SAMICSV",121,0)
+ . S OFFSET=OFFSET+1
+"RTN","SAMICSV",122,0)
+ . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="saminame"
+"RTN","SAMICSV",123,0)
+ . S OFFSET=OFFSET+1
+"RTN","SAMICSV",124,0)
+ . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="ssn"
+"RTN","SAMICSV",125,0)
+ . S OFFSET=OFFSET+1
+"RTN","SAMICSV",126,0)
+ . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="last5"
+"RTN","SAMICSV",127,0)
+ . S OFFSET=OFFSET+1
+"RTN","SAMICSV",128,0)
+ . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="sex"
+"RTN","SAMICSV",129,0)
+ . S OFFSET=OFFSET+1
+"RTN","SAMICSV",130,0)
+ . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="sbdob"
+"RTN","SAMICSV",131,0)
+ . S OFFSET=OFFSET+1
+"RTN","SAMICSV",132,0)
+ . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)="samiru"
+"RTN","SAMICSV",133,0)
+ f  s SAMIJJ=$o(DICT(SAMIJJ)) q:+SAMIJJ=0  d  ;
+"RTN","SAMICSV",134,0)
+ . s $p(@SAMIOUT@(SAMIN),"|",SAMIJJ+OFFSET)=DICT(SAMIJJ) ; csv header
+"RTN","SAMICSV",135,0)
+ s @SAMIOUT@(SAMIN)="siteid|samistudyid|form|"_@SAMIOUT@(SAMIN)
+"RTN","SAMICSV",136,0)
+ ;S @SAMIOUT@(SAMIN)=@SAMIOUT@(SAMIN)_$C(13,10) ; carriage return line feed
+"RTN","SAMICSV",137,0)
+ ; 
+"RTN","SAMICSV",138,0)
+ f  s SAMII=$o(@groot@(SAMII)) q:SAMII=""  q:$e(SAMII,1,3)'[SITEID  d  ;
+"RTN","SAMICSV",139,0)
+ . s cnt=cnt+1
+"RTN","SAMICSV",140,0)
+ . w !,SAMII
+"RTN","SAMICSV",141,0)
+ . N SAMIJ S SAMIJ=SAMIFORM
+"RTN","SAMICSV",142,0)
+ . n done s done=0
+"RTN","SAMICSV",143,0)
+ . f  s SAMIJ=$O(@groot@(SAMII,SAMIJ)) q:SAMIJ=""  q:done  d  ;
+"RTN","SAMICSV",144,0)
+ . . i $e(SAMIJ,1,$l(SAMIFORM))'=SAMIFORM s done=1 q  ;
+"RTN","SAMICSV",145,0)
+ . . s forms=forms+1
+"RTN","SAMICSV",146,0)
+ . . n jj s jj=0
+"RTN","SAMICSV",147,0)
+ . . s SAMIN=SAMIN+1
+"RTN","SAMICSV",148,0)
+ . . S OFFSET=0
+"RTN","SAMICSV",149,0)
+ . . I SAMIFORM="siform" d  ;
+"RTN","SAMICSV",150,0)
+ . . . n kk s kk=$o(@root@("sid",SAMII,""))
+"RTN","SAMICSV",151,0)
+ . . . q:kk=""
+"RTN","SAMICSV",152,0)
+ . . . S OFFSET=OFFSET+1
+"RTN","SAMICSV",153,0)
+ . . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"saminame"))
+"RTN","SAMICSV",154,0)
+ . . . S OFFSET=OFFSET+1
+"RTN","SAMICSV",155,0)
+ . . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"ssn"))
+"RTN","SAMICSV",156,0)
+ . . . S OFFSET=OFFSET+1
+"RTN","SAMICSV",157,0)
+ . . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"last5"))
+"RTN","SAMICSV",158,0)
+ . . . S OFFSET=OFFSET+1
+"RTN","SAMICSV",159,0)
+ . . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"sex"))
+"RTN","SAMICSV",160,0)
+ . . . S OFFSET=OFFSET+1
+"RTN","SAMICSV",161,0)
+ . . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"sbdob"))
+"RTN","SAMICSV",162,0)
+ . . . S OFFSET=OFFSET+1
+"RTN","SAMICSV",163,0)
+ . . . s $p(@SAMIOUT@(SAMIN),"|",OFFSET)=$g(@root@(kk,"samiru"))
+"RTN","SAMICSV",164,0)
+ . . f  s jj=$o(DICT(jj)) q:+jj=0  d  ;
+"RTN","SAMICSV",165,0)
+ . . . ;s $P(@SAMIOUT@(SAMIN),"|",OFFSET+jj)=""""_$g(@groot@(SAMII,SAMIJ,DICT(jj)))_""""
+"RTN","SAMICSV",166,0)
+ . . . n val
+"RTN","SAMICSV",167,0)
+ . . . s val=$g(@groot@(SAMII,SAMIJ,DICT(jj)))_""""
+"RTN","SAMICSV",168,0)
+ . . . s val=$tr(val,$char(11))
+"RTN","SAMICSV",169,0)
+ . . . s $P(@SAMIOUT@(SAMIN),"|",OFFSET+jj)=""""_val
+"RTN","SAMICSV",170,0)
+ . . S @SAMIOUT@(SAMIN)=SITEID_"|"_SAMII_"|"_SAMIJ_"|"_@SAMIOUT@(SAMIN)
+"RTN","SAMICSV",171,0)
+ . . ;s @SAMIOUT@(SAMIN)=@SAMIOUT@(SAMIN)_$C(13,10)
+"RTN","SAMICSV",172,0)
+ . ;b
+"RTN","SAMICSV",173,0)
+ ;ZWR @SAMIOUT@(*)
+"RTN","SAMICSV",174,0)
+ w !,cnt_" patients, "_forms_" forms"
+"RTN","SAMICSV",175,0)
+ n filename s filename=$$FNAME(SITEID,SAMIFORM)
+"RTN","SAMICSV",176,0)
+ d GTF^%ZISH($na(@SAMIOUT@(1)),3,SAMIDIR,filename)
+"RTN","SAMICSV",177,0)
+ w !,"file "_filename_" written to directory "_SAMIDIR
+"RTN","SAMICSV",178,0)
+ ;
+"RTN","SAMICSV",179,0)
+ quit  ; end of ONEFORM
+"RTN","SAMICSV",180,0)
+ ;
+"RTN","SAMICSV",181,0)
+ ;
+"RTN","SAMICSV",182,0)
+ ;
+"RTN","SAMICSV",183,0)
+FNAME(SITE,FORM) ; extrinsic returns the filename for the site/form
+"RTN","SAMICSV",184,0)
+ ;
+"RTN","SAMICSV",185,0)
+ quit SITE_"-"_FORM_"-"_$$FMTHL7^XLFDT($$HTFM^XLFDT($H))_".csv" ; end of $$FNAME
+"RTN","SAMICSV",186,0)
+ ;
+"RTN","SAMICSV",187,0)
+ ;
+"RTN","SAMICSV",188,0)
+ ;
+"RTN","SAMICSV",189,0)
+DDICT(RTN,FORM) ; data dictionary for FORM, returned in RTN, passed by
+"RTN","SAMICSV",190,0)
+ ; name
+"RTN","SAMICSV",191,0)
+ ;
+"RTN","SAMICSV",192,0)
+ K @RTN
+"RTN","SAMICSV",193,0)
+ ;
+"RTN","SAMICSV",194,0)
+ N USEGR S USEGR=""
+"RTN","SAMICSV",195,0)
+ I FORM="siform" S USEGR="form fields - intake"
+"RTN","SAMICSV",196,0)
+ I FORM="sbform" S USEGR="form fields - background"
+"RTN","SAMICSV",197,0)
+ I FORM="ceform" S USEGR="form fields - ct evaluation"
+"RTN","SAMICSV",198,0)
+ I FORM="fuform" S USEGR="form fields - follow up"
+"RTN","SAMICSV",199,0)
+ I FORM="bxform" S USEGR="form fields - biopsy"
+"RTN","SAMICSV",200,0)
+ I FORM="itform" S USEGR="form fields - intervention"
+"RTN","SAMICSV",201,0)
+ I FORM="ptform" S USEGR="form fields - pet evaluation"
+"RTN","SAMICSV",202,0)
+ ;
+"RTN","SAMICSV",203,0)
+ Q:USEGR=""
+"RTN","SAMICSV",204,0)
+ N root s root=$$setroot^%wd(USEGR)
+"RTN","SAMICSV",205,0)
+ Q:$g(root)=""
+"RTN","SAMICSV",206,0)
+ N II S II=0
+"RTN","SAMICSV",207,0)
+ f  s II=$o(@root@("field",II)) q:+II=0  d  ;
+"RTN","SAMICSV",208,0)
+ . s @RTN@(II)=$g(@root@("field",II,"input",1,"name"))
+"RTN","SAMICSV",209,0)
+ ;
+"RTN","SAMICSV",210,0)
+ quit  ; end of DDICT
+"RTN","SAMICSV",211,0)
+ ;
+"RTN","SAMICSV",212,0)
+ ;
+"RTN","SAMICSV",213,0)
+ ;
+"RTN","SAMICSV",214,0)
+ ;^%wd(17.040801,"B","form fields - background",437)=""
+"RTN","SAMICSV",215,0)
+ ;^%wd(17.040801,"B","form fields - biopsy",438)=""
+"RTN","SAMICSV",216,0)
+ ;^%wd(17.040801,"B","form fields - ct evaluation",439)=""
+"RTN","SAMICSV",217,0)
+ ;^%wd(17.040801,"B","form fields - follow up",440)=""
+"RTN","SAMICSV",218,0)
+ ;^%wd(17.040801,"B","form fields - follow-up",359)=""
+"RTN","SAMICSV",219,0)
+ ;^%wd(17.040801,"B","form fields - intake",491)=""
+"RTN","SAMICSV",220,0)
+ ;^%wd(17.040801,"B","form fields - intervention",442)=""
+"RTN","SAMICSV",221,0)
+ ;^%wd(17.040801,"B","form fields - pet evaluation",443)=""
+"RTN","SAMICSV",222,0)
+ ;
+"RTN","SAMICSV",223,0)
+ ;
+"RTN","SAMICSV",224,0)
+ ;
+"RTN","SAMICSV",225,0)
+SAYFORM() ; prompts for the form
+"RTN","SAMICSV",226,0)
+ ;
+"RTN","SAMICSV",227,0)
+ N ZI,ZF,DIR
+"RTN","SAMICSV",228,0)
+ S ZF(1)="siform"
+"RTN","SAMICSV",229,0)
+ S ZF(2)="sbform"
+"RTN","SAMICSV",230,0)
+ S ZF(3)="ceform"
+"RTN","SAMICSV",231,0)
+ S ZF(4)="fuform"
+"RTN","SAMICSV",232,0)
+ S ZF(5)="bxform"
+"RTN","SAMICSV",233,0)
+ S ZF(6)="itform"
+"RTN","SAMICSV",234,0)
+ S ZF(7)="ptform"
+"RTN","SAMICSV",235,0)
+ K DIR
+"RTN","SAMICSV",236,0)
+ S DIR(0)="SO^"
+"RTN","SAMICSV",237,0)
+ F ZI=1:1:7 S DIR(0)=DIR(0)_ZI_":"_ZF(ZI)_";"
+"RTN","SAMICSV",238,0)
+ S DIR("L")="Select form to extract:"
+"RTN","SAMICSV",239,0)
+ S DIR("L",1)="1 Intake form (siform)"
+"RTN","SAMICSV",240,0)
+ S DIR("L",2)="2 Background form (sbform)"
+"RTN","SAMICSV",241,0)
+ S DIR("L",3)="3 CT Evaluation form (ceform)"
+"RTN","SAMICSV",242,0)
+ S DIR("L",4)="4 Followup form (fuform)"
+"RTN","SAMICSV",243,0)
+ S DIR("L",5)="5 Biopsy form (bxform)"
+"RTN","SAMICSV",244,0)
+ S DIR("L",6)="6 Intervention form (itform)"
+"RTN","SAMICSV",245,0)
+ S DIR("L",7)="7 Pet Evaluation form (ptform)"
+"RTN","SAMICSV",246,0)
+ D ^DIR
+"RTN","SAMICSV",247,0)
+ ;
+"RTN","SAMICSV",248,0)
+ Q:X="" -1
+"RTN","SAMICSV",249,0)
+ quit ZF(X) ; end of $$SAYFORM
+"RTN","SAMICSV",250,0)
+ ;
+"RTN","SAMICSV",251,0)
+ ;
+"RTN","SAMICSV",252,0)
+ ;
+"RTN","SAMICSV",253,0)
+EOR ; end of routine SAMICSV
 "RTN","SAMINOT1")
-0^1^B443163500
+0^1^B443163534
 "RTN","SAMINOT1",1,0)
-SAMINOT1 ;ven/gpl - text notes ;2021-03-23T18:53Z
+SAMINOT1 ;ven/gpl - text notes ;2021-03-30T17:02Z
 "RTN","SAMINOT1",2,0)
- ;;18.0;SAMI;**2,6,8,10**;2020-01;Build 1
+ ;;18.0;SAMI;**2,6,8,10,11**;2020-01;Build 2
 "RTN","SAMINOT1",3,0)
- ;;1.18.0.10-i10
+ ;;1.18.0.11-i11
 "RTN","SAMINOT1",4,0)
  ;
 "RTN","SAMINOT1",5,0)
@@ -263,7 +813,7 @@ SAMINOT1 ;ven/gpl - text notes ;2021-03-23T18:53Z
 "RTN","SAMINOT1",23,0)
  ;
 "RTN","SAMINOT1",24,0)
- ;@last-updated 2021-03-23T18:53Z
+ ;@last-updated 2021-03-30T17:02Z
 "RTN","SAMINOT1",25,0)
  ;@application Screening Applications Management (SAM)
 "RTN","SAMINOT1",26,0)
@@ -271,11 +821,11 @@ SAMINOT1 ;ven/gpl - text notes ;2021-03-23T18:53Z
 "RTN","SAMINOT1",27,0)
  ;@suite-of-files SAMI Forms (311.101-311.199)
 "RTN","SAMINOT1",28,0)
- ;@version 1.18.0.10-i10
+ ;@version 1.18.0.10-i11
 "RTN","SAMINOT1",29,0)
  ;@release-date 2020-01
 "RTN","SAMINOT1",30,0)
- ;@patch-list **2,6,8,10**
+ ;@patch-list **2,6,8,10,11**
 "RTN","SAMINOT1",31,0)
  ;
 "RTN","SAMINOT1",32,0)
@@ -1570,14 +2120,322 @@ XVAL(var,vals) ; extrinsic returns the patient value for var
  ;
 "RTN","SAMINOT1",677,0)
 EOR ; end of routine SAMINOT1
+"RTN","SAMINUL")
+0^3^B101598
+"RTN","SAMINUL",1,0)
+SAMINUL ;ven/gpl - ielcap: note log ;2021-03-30T17:02Z
+"RTN","SAMINUL",2,0)
+ ;;18.0;SAMI;**9,10,11**;2020-01;Build 2
+"RTN","SAMINUL",3,0)
+ ;;1.18.0.11-i11
+"RTN","SAMINUL",4,0)
+ ;
+"RTN","SAMINUL",5,0)
+ ; SAMINOTE contains subroutines for producing the ELCAP Note Pages.
+"RTN","SAMINUL",6,0)
+ ; SAMINUL contains the development log for the SAMINOT* routines.
+"RTN","SAMINUL",7,0)
+ ; It contains no executable code.
+"RTN","SAMINUL",8,0)
+ ;
+"RTN","SAMINUL",9,0)
+ quit  ; no entry from top
+"RTN","SAMINUL",10,0)
+ ;
+"RTN","SAMINUL",11,0)
+ ;
+"RTN","SAMINUL",12,0)
+ ;
+"RTN","SAMINUL",13,0)
+ ;@section 0 primary development
+"RTN","SAMINUL",14,0)
+ ;
+"RTN","SAMINUL",15,0)
+ ;
+"RTN","SAMINUL",16,0)
+ ;
+"RTN","SAMINUL",17,0)
+ ;@routine-credits
+"RTN","SAMINUL",18,0)
+ ;@primary-dev George P. Lilly (gpl)
+"RTN","SAMINUL",19,0)
+ ; gpl@vistaexpertise.net
+"RTN","SAMINUL",20,0)
+ ;@primary-dev-org Vista Expertise Network (ven)
+"RTN","SAMINUL",21,0)
+ ; http://vistaexpertise.net
+"RTN","SAMINUL",22,0)
+ ;@copyright 2017/2021, gpl, all rights reserved
+"RTN","SAMINUL",23,0)
+ ;@license see routine SAMIUL
+"RTN","SAMINUL",24,0)
+ ;
+"RTN","SAMINUL",25,0)
+ ;@last-updated 2021-03-30T17:02Z
+"RTN","SAMINUL",26,0)
+ ;@application Screening Applications Management (SAM)
+"RTN","SAMINUL",27,0)
+ ;@module Screening Applications Management - IELCAP (SAMI)
+"RTN","SAMINUL",28,0)
+ ;@suite-of-files SAMI Forms (311.101-311.199)
+"RTN","SAMINUL",29,0)
+ ;@version 1.18.0.10-i11
+"RTN","SAMINUL",30,0)
+ ;@release-date 2020-01
+"RTN","SAMINUL",31,0)
+ ;@patch-list **9,10,11**
+"RTN","SAMINUL",32,0)
+ ;
+"RTN","SAMINUL",33,0)
+ ;@additional-dev Frederick D. S. Marshall (toad)
+"RTN","SAMINUL",34,0)
+ ; toad@vistaexpertise.net
+"RTN","SAMINUL",35,0)
+ ;@additional-dev Larry G. Carlson (lgc)
+"RTN","SAMINUL",36,0)
+ ; larry.g.carlson@gmail.com
+"RTN","SAMINUL",37,0)
+ ;@additional-dev Linda M. R. Yaw (lmry)
+"RTN","SAMINUL",38,0)
+ ; linda.yaw@vistaexpertise.net
+"RTN","SAMINUL",39,0)
+ ;@additional-dev Alexis R. Carlson (arc)
+"RTN","SAMINUL",40,0)
+ ; whatisthehumanspirit@gmail.com
+"RTN","SAMINUL",41,0)
+ ;@additional-dev Domenic DiNatale (dom)
+"RTN","SAMINUL",42,0)
+ ; domenic.dinatale@paraxialtech.com
+"RTN","SAMINUL",43,0)
+ ;
+"RTN","SAMINUL",44,0)
+ ;@module-credits
+"RTN","SAMINUL",45,0)
+ ;@project VA Partnership to Increase Access to Lung Screening
+"RTN","SAMINUL",46,0)
+ ; (VA-PALS)
+"RTN","SAMINUL",47,0)
+ ; http://va-pals.org/
+"RTN","SAMINUL",48,0)
+ ;@funding 2017/2021, Bristol-Myers Squibb Foundation (bmsf)
+"RTN","SAMINUL",49,0)
+ ; https://www.bms.com/about-us/responsibility/bristol-myers-squibb-foundation.html
+"RTN","SAMINUL",50,0)
+ ;@partner-org Veterans Affairs Office of Rural health
+"RTN","SAMINUL",51,0)
+ ; https://www.ruralhealth.va.gov/
+"RTN","SAMINUL",52,0)
+ ;@partner-org International Early Lung Cancer Action Program (I-ELCAP)
+"RTN","SAMINUL",53,0)
+ ; http://ielcap.com/
+"RTN","SAMINUL",54,0)
+ ;@partner-org Paraxial Technologies (par)
+"RTN","SAMINUL",55,0)
+ ; http://paraxialtech.com/
+"RTN","SAMINUL",56,0)
+ ;@partner-org Open Source Electronic Health Record Alliance (OSEHRA)
+"RTN","SAMINUL",57,0)
+ ; https://www.osehra.org/groups/va-pals-open-source-project-group
+"RTN","SAMINUL",58,0)
+ ;
+"RTN","SAMINUL",59,0)
+ ;@module-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
+"RTN","SAMINUL",60,0)
+ ;
+"RTN","SAMINUL",61,0)
+ ; 2019-04-04/18 ven/gpl 1.18.0-t04 c0bb7dbf,f7b48936,9d1f2cdc,
+"RTN","SAMINUL",62,0)
+ ;  ba5f366d,5b2e32dc,ce322911
+"RTN","SAMINUL",63,0)
+ ;  SAMINOT1: flags for intake form, fix crash on intake form, initial
+"RTN","SAMINUL",64,0)
+ ; version of new intake notes, revise text for pre-enrollment
+"RTN","SAMINUL",65,0)
+ ; discusstion note, complete new intake notes, add intake notes to
+"RTN","SAMINUL",66,0)
+ ; case review page.
+"RTN","SAMINUL",67,0)
+ ;
+"RTN","SAMINUL",68,0)
+ ; 2019-04-16/23 ven/lgc 1.18.0-t04 e54b76d1,21388d8a,f0505e51,
+"RTN","SAMINUL",69,0)
+ ;  89bffd3b
+"RTN","SAMINUL",70,0)
+ ;  SAMINOT1: SAMIFRM2 > SAMIFORM, remove spaces at end of lines,
+"RTN","SAMINUL",71,0)
+ ; control characters, SAMISUB2 > LOAD.
+"RTN","SAMINUL",72,0)
+ ;
+"RTN","SAMINUL",73,0)
+ ; 2019-04-23 ven/toad 1.18.0-t04 423a3946
+"RTN","SAMINUL",74,0)
+ ;  SAMINOT1: resolve gpl/lgc collision, restore SAMISUB2 > LOAD.
+"RTN","SAMINUL",75,0)
+ ;
+"RTN","SAMINUL",76,0)
+ ; 2019-04-30 ven/gpl 1.18.0-t04 cf73510c
+"RTN","SAMINUL",77,0)
+ ;  SAMINOT1: additions to intake note for prior scans & format.
+"RTN","SAMINUL",78,0)
+ ;
+"RTN","SAMINUL",79,0)
+ ; 2019-05-07 ven/lmry 1.18.0-t04 4a8ead45
+"RTN","SAMINUL",80,0)
+ ;  SAMINOT1: edit SAMINOT1 for XINDEX.
+"RTN","SAMINUL",81,0)
+ ;
+"RTN","SAMINUL",82,0)
+ ; 2019-05-07 ven/lgc 1.18.0-t04 f63ef57c
+"RTN","SAMINUL",83,0)
+ ;  SAMINOT1: cleanup for XINDEX.
+"RTN","SAMINUL",84,0)
+ ;
+"RTN","SAMINUL",85,0)
+ ; 2019-06-18 ven/arc 1.18.0-t04 91022482
+"RTN","SAMINUL",86,0)
+ ;  SAMINOT1: ^SAMIGPL > ^SAMIUL.
+"RTN","SAMINUL",87,0)
+ ;
+"RTN","SAMINUL",88,0)
+ ; 2019-07-01 ven/gpl 1.18.0-t04 72868e60
+"RTN","SAMINUL",89,0)
+ ;  SAMINOT1: update shared decision making text in intake note.
+"RTN","SAMINUL",90,0)
+ ;
+"RTN","SAMINUL",91,0)
+ ; 2019-08-03/14 ven/gpl 1.18.0-t04 bea65f7b,578f61d4
+"RTN","SAMINUL",92,0)
+ ;  SAMINOT1: fix bugs in Have you ever smoked processing in changelog
+"RTN","SAMINUL",93,0)
+ ; & intake note, restored ever smoked comment field to intake note.
+"RTN","SAMINUL",94,0)
+ ;
+"RTN","SAMINUL",95,0)
+ ; 2019-09-06 par/dom 1.18.0-t04 2ff47189 VAP-452
+"RTN","SAMINUL",96,0)
+ ;  SAMINOT1: patient > participant.
+"RTN","SAMINUL",97,0)
+ ;
+"RTN","SAMINUL",98,0)
+ ; 2019-09-26 ven/gpl 1.18.0-t04 92b12324 VAP-420
+"RTN","SAMINUL",99,0)
+ ;  SAMINOT1: smoking history.
+"RTN","SAMINUL",100,0)
+ ;
+"RTN","SAMINUL",101,0)
+ ; 2019-10-01 par/dom 1.18.0-t04 37c418a1,4caf1a98 VAP-457,344
+"RTN","SAMINUL",102,0)
+ ;  SAMINOT1: remove thorax, capitalization consistency.
+"RTN","SAMINUL",103,0)
+ ;
+"RTN","SAMINUL",104,0)
+ ; 2020-01-17/20 ven/lgc 1.18.0.1-i1 8557207f,d7d24834,0301ad95.
+"RTN","SAMINUL",105,0)
+ ;  659f2526,0ff2b83f,49615242,5bf7c398,dc5f618c
+"RTN","SAMINUL",106,0)
+ ;  SAMINOT2: followup note, fixed typos in VC note, followup LCS note
+"RTN","SAMINUL",107,0)
+ ; minus CT Eval pulls, LCS note with CT Eval extracts, fixed bug in
+"RTN","SAMINUL",108,0)
+ ; LSC CT eval extract, include entire impression section of CT Eval
+"RTN","SAMINUL",109,0)
+ ; report in LCS Note, improved import of impressions, limit to one
+"RTN","SAMINUL",110,0)
+ ; note per followup form.
+"RTN","SAMINUL",111,0)
+ ;
+"RTN","SAMINUL",112,0)
+ ; 2020-01-23 ven/arc 1.18.0.2-i2 9a24242a
+"RTN","SAMINUL",113,0)
+ ;  SAMINOT1: fix word wrap on intake note & typos in ct
+"RTN","SAMINUL",114,0)
+ ; eval report.
+"RTN","SAMINUL",115,0)
+ ;
+"RTN","SAMINUL",116,0)
+ ; 2020-08-12 ven/gpl 1.18.0.6-i6 781744c3
+"RTN","SAMINUL",117,0)
+ ;  SAMINOT1: chg to support hl7 transmission of notes.
+"RTN","SAMINUL",118,0)
+ ;
+"RTN","SAMINUL",119,0)
+ ; 2020-09-22 ven/gpl 1.18.0.6-i6 06459eda
+"RTN","SAMINUL",120,0)
+ ;  SAMINOT1: fix to match kids file.
+"RTN","SAMINUL",121,0)
+ ;
+"RTN","SAMINUL",122,0)
+ ; 2021-02-01/24 ven/gpl 1.18.0.8-i8 8e4ec441,cde71a55
+"RTN","SAMINUL",123,0)
+ ;  SAMINOT1: fix intake note format, fix error that sent note twice
+"RTN","SAMINUL",124,0)
+ ; to VistA.
+"RTN","SAMINUL",125,0)
+ ;
+"RTN","SAMINUL",126,0)
+ ; 2021-03-02 ven/gpl 1.18.0.9-i9 479dc041
+"RTN","SAMINUL",127,0)
+ ;  SAMINOT2: return error message if no ct eval form exists when
+"RTN","SAMINUL",128,0)
+ ; generating a fu note.
+"RTN","SAMINUL",129,0)
+ ;
+"RTN","SAMINUL",130,0)
+ ; 2021-03-15/16 ven/toad 1.18.0.9-i9 a46a2cc1
+"RTN","SAMINUL",131,0)
+ ;  SAMINUL: create routine.
+"RTN","SAMINUL",132,0)
+ ;  SAMINOT2: bump date & patch list, add contents, lt refactor.
+"RTN","SAMINUL",133,0)
+ ;
+"RTN","SAMINUL",134,0)
+ ; 2021-03-17 ven/toad 1.18.0.9-i9 62da30b4
+"RTN","SAMINUL",135,0)
+ ; SAMINOT2: remove blank from end of 1 line.
+"RTN","SAMINUL",136,0)
+ ;
+"RTN","SAMINUL",137,0)
+ ; 2021-03-22 ven/gpl 1.18.0.10-i10 6319a1eb
+"RTN","SAMINUL",138,0)
+ ;  SAMINOT1: fix logic bug in detecting pre-enrollment existing.
+"RTN","SAMINUL",139,0)
+ ;
+"RTN","SAMINUL",140,0)
+ ; 2021-03-23 ven/toad 1.18.0.10-i10 96f461d0
+"RTN","SAMINUL",141,0)
+ ;  SAMINOT1: bump date & patch list, lt refactor.
+"RTN","SAMINUL",142,0)
+ ;
+"RTN","SAMINUL",143,0)
+ ; 2021-03-29 ven/gpl 1.18.0.11-i11 6cd83445 VAP-483
+"RTN","SAMINUL",144,0)
+ ;  SAMINOT1: allow N/A for shared decision making on intake form:
+"RTN","SAMINUL",145,0)
+ ; in INNOTE new & set shareddm & use to call SDM or report n/a, based
+"RTN","SAMINUL",146,0)
+ ; on siidmdc.
+"RTN","SAMINUL",147,0)
+ ;
+"RTN","SAMINUL",148,0)
+ ; 2021-03-30 ven/toad 1.18.0.11-i11
+"RTN","SAMINUL",149,0)
+ ; SAMINOT1: bump version, date, log.
+"RTN","SAMINUL",150,0)
+ ;
+"RTN","SAMINUL",151,0)
+ ;
+"RTN","SAMINUL",152,0)
+ ;
+"RTN","SAMINUL",153,0)
+EOR ; end of routine SAMINUL
 "RTN","SAMIUR")
-0^2^B284871852
+0^2^B291906917
 "RTN","SAMIUR",1,0)
-SAMIUR ;ven/gpl - user reports ;2021-03-23T19:43Z
+SAMIUR ;ven/gpl - user reports ;2021-03-30T15:50Z
 "RTN","SAMIUR",2,0)
- ;;18.0;SAMI;**5,10**;2020-01;Build 1
+ ;;18.0;SAMI;**5,10,11**;2020-01;Build 2
 "RTN","SAMIUR",3,0)
- ;;1.18.0.10-i10
+ ;;1.18.0.11-i11
 "RTN","SAMIUR",4,0)
  ;
 "RTN","SAMIUR",5,0)
@@ -1619,7 +2477,7 @@ SAMIUR ;ven/gpl - user reports ;2021-03-23T19:43Z
 "RTN","SAMIUR",23,0)
  ;
 "RTN","SAMIUR",24,0)
- ;@last-updated 2021-03-23T19:43Z
+ ;@last-updated 2021-03-30T15:50Z
 "RTN","SAMIUR",25,0)
  ;@application Screening Applications Management (SAM)
 "RTN","SAMIUR",26,0)
@@ -1627,11 +2485,11 @@ SAMIUR ;ven/gpl - user reports ;2021-03-23T19:43Z
 "RTN","SAMIUR",27,0)
  ;@suite-of-files SAMI Forms (311.101-311.199)
 "RTN","SAMIUR",28,0)
- ;@version 1.18.0.10-i10
+ ;@version 1.18.0.11-i11
 "RTN","SAMIUR",29,0)
  ;@release-date 2020-01
 "RTN","SAMIUR",30,0)
- ;@patch-list **5,10**
+ ;@patch-list **5,10,11**
 "RTN","SAMIUR",31,0)
  ;
 "RTN","SAMIUR",32,0)
@@ -1739,770 +2597,786 @@ SAMIUR ;ven/gpl - user reports ;2021-03-23T19:43Z
 "RTN","SAMIUR",83,0)
  ;
 "RTN","SAMIUR",84,0)
- ; 2021-03-23 ven/toad 1.18.0.10-i10
+ ; 2021-03-23 ven/toad 1.18.0.10-i10 96f461d0,af86e0eb
 "RTN","SAMIUR",85,0)
  ; SAMIUR: add version info & dev log, lt refactor, fix XINDEX errors.
 "RTN","SAMIUR",86,0)
  ;
 "RTN","SAMIUR",87,0)
- ;
+ ; 2021-03-29 ven/gpl 1.18.0.11-i11 e809f2a2
 "RTN","SAMIUR",88,0)
- ;
+ ;  SAMIUR: prevent crash when reports have no matches: in WSREPORT
 "RTN","SAMIUR",89,0)
-WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
+ ; set SRT="" and uncomment zwrite SRT; in WKLIST add 2 commented-out
 "RTN","SAMIUR",90,0)
- ;
+ ; debugging lines.
 "RTN","SAMIUR",91,0)
- ; here are the user reports that are defined:
+ ;
 "RTN","SAMIUR",92,0)
- ;  1. followup
+ ; 2021-03-30 ven/toad 1.18.0.11-i11
 "RTN","SAMIUR",93,0)
- ;  2. activity
+ ; SAMIUR: bump version, date, log; in WSREPORT comment zwrite SRT.
 "RTN","SAMIUR",94,0)
- ;  3. missingct
+ ;
 "RTN","SAMIUR",95,0)
- ;  4. incomplete
+ ;
 "RTN","SAMIUR",96,0)
- ;  5. outreach
+ ;
 "RTN","SAMIUR",97,0)
- ;  6. enrollment
+WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
 "RTN","SAMIUR",98,0)
- ;  7. worklist
+ ;
 "RTN","SAMIUR",99,0)
- ; the report to generate is passed in parameter samireporttype
+ ; here are the user reports that are defined:
 "RTN","SAMIUR",100,0)
- ;
+ ;  1. followup
 "RTN","SAMIUR",101,0)
- n debug s debug=0
+ ;  2. activity
 "RTN","SAMIUR",102,0)
- i $g(filter("debug"))=1 s debug=1
+ ;  3. missingct
 "RTN","SAMIUR",103,0)
- i $g(filter("debug"))=1 s debug=1
+ ;  4. incomplete
 "RTN","SAMIUR",104,0)
- k SAMIRTN
+ ;  5. outreach
 "RTN","SAMIUR",105,0)
- s HTTPRSP("mime")="text/html"
+ ;  6. enrollment
 "RTN","SAMIUR",106,0)
- ;
+ ;  7. worklist
 "RTN","SAMIUR",107,0)
- n type,temp
+ ; the report to generate is passed in parameter samireporttype
 "RTN","SAMIUR",108,0)
- s type=$g(filter("samireporttype"))
-"RTN","SAMIUR",109,0)
- i type="" d  q  ; report type missing
-"RTN","SAMIUR",110,0)
- . d GETHOME^SAMIHOM3(.SAMIRTN,.filter) ; send them to home
-"RTN","SAMIUR",111,0)
  ;
+"RTN","SAMIUR",109,0)
+ n debug s debug=0
+"RTN","SAMIUR",110,0)
+ i $g(filter("debug"))=1 s debug=1
+"RTN","SAMIUR",111,0)
+ i $g(filter("debug"))=1 s debug=1
 "RTN","SAMIUR",112,0)
- d getThis^%wd("temp","table.html") ; page template
+ k SAMIRTN
 "RTN","SAMIUR",113,0)
- q:'$d(temp)
+ s HTTPRSP("mime")="text/html"
 "RTN","SAMIUR",114,0)
  ;
 "RTN","SAMIUR",115,0)
- n SAMIPATS
+ n type,temp
 "RTN","SAMIUR",116,0)
- ;s pats=""
+ s type=$g(filter("samireporttype"))
 "RTN","SAMIUR",117,0)
- n datephrase
+ i type="" d  q  ; report type missing
 "RTN","SAMIUR",118,0)
- d SELECT(.SAMIPATS,type,.datephrase,.filter) ; select patients for the report
-"RTN","SAMIUR",119,0)
- ;q:'$d(SAMIPATS)
-"RTN","SAMIUR",120,0)
- ;
-"RTN","SAMIUR",121,0)
- n ln,cnt,ii
-"RTN","SAMIUR",122,0)
- s (ii,ln,cnt)=0
-"RTN","SAMIUR",123,0)
- f  s ii=$o(temp(ii)) q:+ii=0  q:$g(temp(ii))["<thead"  d  ;
-"RTN","SAMIUR",124,0)
- . s cnt=cnt+1
-"RTN","SAMIUR",125,0)
- . s ln=$g(temp(ii))
-"RTN","SAMIUR",126,0)
- . n samikey,si
-"RTN","SAMIUR",127,0)
- . s (samikey,si)=""
-"RTN","SAMIUR",128,0)
- . d LOAD^SAMIFORM(.ln,samikey,si,.filter)
-"RTN","SAMIUR",129,0)
- . ;i ln["PAGE NAME" d findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type,datephrase))
-"RTN","SAMIUR",130,0)
- . i ln["PAGE NAME" d findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type,""))
-"RTN","SAMIUR",131,0)
- . i ln["CRITERIA" d findReplace^%ts(.ln,"CRITERIA",datephrase)
-"RTN","SAMIUR",132,0)
- . i ln["@@REPORTTYPE@@" d findReplace^%ts(.ln,"@@REPORTTYPE@@",type)
-"RTN","SAMIUR",133,0)
- . ;
-"RTN","SAMIUR",134,0)
- . i ln["name=""start-date""" d findReplace^%ts(.ln,"start-date""","start-date"" value="""_$g(filter("start-date"))_"""")
-"RTN","SAMIUR",135,0)
- . i ln["name=""end-date""" d findReplace^%ts(.ln,"end-date""","end-date"" value="""_$g(filter("end-date"))_"""")
-"RTN","SAMIUR",136,0)
- . s SAMIRTN(cnt)=ln
-"RTN","SAMIUR",137,0)
- . ;
-"RTN","SAMIUR",138,0)
- n RPT,ik
-"RTN","SAMIUR",139,0)
- d RPTTBL^SAMIUR2(.RPT,type) ; get the report specs
-"RTN","SAMIUR",140,0)
- i '$d(RPT) d  q  ; don't know about this report
-"RTN","SAMIUR",141,0)
  . d GETHOME^SAMIHOM3(.SAMIRTN,.filter) ; send them to home
-"RTN","SAMIUR",142,0)
+"RTN","SAMIUR",119,0)
  ;
-"RTN","SAMIUR",143,0)
- ; output the header
-"RTN","SAMIUR",144,0)
+"RTN","SAMIUR",120,0)
+ d getThis^%wd("temp","table.html") ; page template
+"RTN","SAMIUR",121,0)
+ q:'$d(temp)
+"RTN","SAMIUR",122,0)
  ;
-"RTN","SAMIUR",145,0)
- s cnt=cnt+1 s SAMIRTN(cnt)="<thead><tr>"
-"RTN","SAMIUR",146,0)
- s ir=""
-"RTN","SAMIUR",147,0)
- f  s ir=$o(RPT(ir)) q:ir=""  d  ;
-"RTN","SAMIUR",148,0)
+"RTN","SAMIUR",123,0)
+ n SAMIPATS
+"RTN","SAMIUR",124,0)
+ ;s pats=""
+"RTN","SAMIUR",125,0)
+ n datephrase
+"RTN","SAMIUR",126,0)
+ d SELECT(.SAMIPATS,type,.datephrase,.filter) ; select patients for the report
+"RTN","SAMIUR",127,0)
+ ;q:'$d(SAMIPATS)
+"RTN","SAMIUR",128,0)
+ ;
+"RTN","SAMIUR",129,0)
+ n ln,cnt,ii
+"RTN","SAMIUR",130,0)
+ s (ii,ln,cnt)=0
+"RTN","SAMIUR",131,0)
+ f  s ii=$o(temp(ii)) q:+ii=0  q:$g(temp(ii))["<thead"  d  ;
+"RTN","SAMIUR",132,0)
  . s cnt=cnt+1
+"RTN","SAMIUR",133,0)
+ . s ln=$g(temp(ii))
+"RTN","SAMIUR",134,0)
+ . n samikey,si
+"RTN","SAMIUR",135,0)
+ . s (samikey,si)=""
+"RTN","SAMIUR",136,0)
+ . d LOAD^SAMIFORM(.ln,samikey,si,.filter)
+"RTN","SAMIUR",137,0)
+ . ;i ln["PAGE NAME" d findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type,datephrase))
+"RTN","SAMIUR",138,0)
+ . i ln["PAGE NAME" d findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type,""))
+"RTN","SAMIUR",139,0)
+ . i ln["CRITERIA" d findReplace^%ts(.ln,"CRITERIA",datephrase)
+"RTN","SAMIUR",140,0)
+ . i ln["@@REPORTTYPE@@" d findReplace^%ts(.ln,"@@REPORTTYPE@@",type)
+"RTN","SAMIUR",141,0)
+ . ;
+"RTN","SAMIUR",142,0)
+ . i ln["name=""start-date""" d findReplace^%ts(.ln,"start-date""","start-date"" value="""_$g(filter("start-date"))_"""")
+"RTN","SAMIUR",143,0)
+ . i ln["name=""end-date""" d findReplace^%ts(.ln,"end-date""","end-date"" value="""_$g(filter("end-date"))_"""")
+"RTN","SAMIUR",144,0)
+ . s SAMIRTN(cnt)=ln
+"RTN","SAMIUR",145,0)
+ . ;
+"RTN","SAMIUR",146,0)
+ n RPT,ik
+"RTN","SAMIUR",147,0)
+ d RPTTBL^SAMIUR2(.RPT,type) ; get the report specs
+"RTN","SAMIUR",148,0)
+ i '$d(RPT) d  q  ; don't know about this report
 "RTN","SAMIUR",149,0)
- . s SAMIRTN(cnt)="<th>"_$g(RPT(ir,"header"))_"</th>"
+ . d GETHOME^SAMIHOM3(.SAMIRTN,.filter) ; send them to home
 "RTN","SAMIUR",150,0)
- s cnt=cnt+1 s SAMIRTN(cnt)="</tr></thead>"
+ ;
 "RTN","SAMIUR",151,0)
- ;
+ ; output the header
 "RTN","SAMIUR",152,0)
- s cnt=cnt+1 s SAMIRTN(cnt)="<tbody>"
+ ;
 "RTN","SAMIUR",153,0)
- ;
+ s cnt=cnt+1 s SAMIRTN(cnt)="<thead><tr>"
 "RTN","SAMIUR",154,0)
- i type'="worklist" d  ; 
+ s ir=""
 "RTN","SAMIUR",155,0)
- . d NUHREF(.SAMIPATS) ; create the nuhref link for all patients
+ f  s ir=$o(RPT(ir)) q:ir=""  d  ;
 "RTN","SAMIUR",156,0)
- ;
+ . s cnt=cnt+1
 "RTN","SAMIUR",157,0)
- n SRT s SRT=""
+ . s SAMIRTN(cnt)="<th>"_$g(RPT(ir,"header"))_"</th>"
 "RTN","SAMIUR",158,0)
- i $g(filter("sort"))="" s filter("sort")="name"
+ s cnt=cnt+1 s SAMIRTN(cnt)="</tr></thead>"
 "RTN","SAMIUR",159,0)
- d SORT(.SRT,.SAMIPATS,.filter)
+ ;
 "RTN","SAMIUR",160,0)
- zwr SRT
+ s cnt=cnt+1 s SAMIRTN(cnt)="<tbody>"
 "RTN","SAMIUR",161,0)
  ;
 "RTN","SAMIUR",162,0)
- ;s ij=0
+ i type'="worklist" d  ; 
 "RTN","SAMIUR",163,0)
- ;f  s ij=$o(SAMIPATS(ij)) q:+ij=0  d  ;
+ . d NUHREF(.SAMIPATS) ; create the nuhref link for all patients
 "RTN","SAMIUR",164,0)
- ;. n ij2 s ij2=0
+ ;
 "RTN","SAMIUR",165,0)
- ;. f  s ij2=$o(SAMIPATS(ij,ij2)) q:+ij2=0  d  ;
+ n SRT s SRT=""
 "RTN","SAMIUR",166,0)
- ;. . n dfn s dfn=ij2
+ i $g(filter("sort"))="" s filter("sort")="name"
 "RTN","SAMIUR",167,0)
- n iz,ij,ij2,dfn,rows
+ d SORT(.SRT,.SAMIPATS,.filter)
 "RTN","SAMIUR",168,0)
- s rows=0
+ ;zwr SRT
 "RTN","SAMIUR",169,0)
- s (iz,ij,ij2,dfn)=""
+ ;
 "RTN","SAMIUR",170,0)
- f  s iz=$o(SRT(iz)) q:iz=""  d  ;
+ ;s ij=0
 "RTN","SAMIUR",171,0)
- . s ij=$o(SRT(iz,""))
+ ;f  s ij=$o(SAMIPATS(ij)) q:+ij=0  d  ;
 "RTN","SAMIUR",172,0)
- . s dfn=$o(SRT(iz,ij,""))
+ ;. n ij2 s ij2=0
 "RTN","SAMIUR",173,0)
- . d  ;
+ ;. f  s ij2=$o(SAMIPATS(ij,ij2)) q:+ij2=0  d  ;
 "RTN","SAMIUR",174,0)
- . . s cnt=cnt+1 s SAMIRTN(cnt)="<tr>"
+ ;. . n dfn s dfn=ij2
 "RTN","SAMIUR",175,0)
- . . s ir=""
+ n iz,ij,ij2,dfn,rows
 "RTN","SAMIUR",176,0)
- . . f  s ir=$o(RPT(ir)) q:ir=""  d  ;
+ s rows=0
 "RTN","SAMIUR",177,0)
- . . . s cnt=cnt+1
+ s (iz,ij,ij2,dfn)=""
 "RTN","SAMIUR",178,0)
- . . . n XR,XRV
+ f  s iz=$o(SRT(iz)) q:iz=""  d  ;
 "RTN","SAMIUR",179,0)
- . . . ;s XR=$g(RPT(ir,"routine"))_"("_ij_",.SAMIPATS)"
+ . s ij=$o(SRT(iz,""))
 "RTN","SAMIUR",180,0)
- . . . s XR="S XRV="_$g(RPT(ir,"routine"))_"("_ij_","_dfn_",.SAMIPATS)"
+ . s dfn=$o(SRT(iz,ij,""))
 "RTN","SAMIUR",181,0)
- . . . ;s XRV=@XR
+ . d  ;
 "RTN","SAMIUR",182,0)
- . . . X XR
+ . . s cnt=cnt+1 s SAMIRTN(cnt)="<tr>"
 "RTN","SAMIUR",183,0)
- . . . s SAMIRTN(cnt)="<td>"_$g(XRV)_"</td>"
+ . . s ir=""
 "RTN","SAMIUR",184,0)
- . . ;
+ . . f  s ir=$o(RPT(ir)) q:ir=""  d  ;
 "RTN","SAMIUR",185,0)
- . . s cnt=cnt+1
+ . . . s cnt=cnt+1
 "RTN","SAMIUR",186,0)
- . . s SAMIRTN(cnt)="</tr>"
+ . . . n XR,XRV
 "RTN","SAMIUR",187,0)
- . . s rows=rows+1
+ . . . ;s XR=$g(RPT(ir,"routine"))_"("_ij_",.SAMIPATS)"
 "RTN","SAMIUR",188,0)
- s cnt=cnt+1
+ . . . s XR="S XRV="_$g(RPT(ir,"routine"))_"("_ij_","_dfn_",.SAMIPATS)"
 "RTN","SAMIUR",189,0)
- s SAMIRTN(cnt)="<tr><td>Total: "_rows_"</td></tr>"
+ . . . ;s XRV=@XR
 "RTN","SAMIUR",190,0)
- ;
+ . . . X XR
 "RTN","SAMIUR",191,0)
- s cnt=cnt+1 s SAMIRTN(cnt)="</tbody>"
+ . . . s SAMIRTN(cnt)="<td>"_$g(XRV)_"</td>"
 "RTN","SAMIUR",192,0)
- f  s ii=$o(temp(ii)) q:temp(ii)["</tbody>"  d  ;
+ . . ;
 "RTN","SAMIUR",193,0)
- . ; skip past template headers and blank body
+ . . s cnt=cnt+1
 "RTN","SAMIUR",194,0)
- f  s ii=$o(temp(ii)) q:+ii=0  d  ;
+ . . s SAMIRTN(cnt)="</tr>"
 "RTN","SAMIUR",195,0)
- . s cnt=cnt+1
+ . . s rows=rows+1
 "RTN","SAMIUR",196,0)
- . s ln=$g(temp(ii))
+ s cnt=cnt+1
 "RTN","SAMIUR",197,0)
- . n samikey,si
+ s SAMIRTN(cnt)="<tr><td>Total: "_rows_"</td></tr>"
 "RTN","SAMIUR",198,0)
- . s (samikey,si)=""
+ ;
 "RTN","SAMIUR",199,0)
- . d LOAD^SAMIFORM(.ln,samikey,si,.filter)
+ s cnt=cnt+1 s SAMIRTN(cnt)="</tbody>"
 "RTN","SAMIUR",200,0)
- . s SAMIRTN(cnt)=ln
+ f  s ii=$o(temp(ii)) q:temp(ii)["</tbody>"  d  ;
 "RTN","SAMIUR",201,0)
- ;
+ . ; skip past template headers and blank body
 "RTN","SAMIUR",202,0)
- quit  ; end of WSREPORT
+ f  s ii=$o(temp(ii)) q:+ii=0  d  ;
 "RTN","SAMIUR",203,0)
- ;
+ . s cnt=cnt+1
 "RTN","SAMIUR",204,0)
- ;
+ . s ln=$g(temp(ii))
 "RTN","SAMIUR",205,0)
- ;
+ . n samikey,si
 "RTN","SAMIUR",206,0)
-SORT(SRTN,SAMIPATS,FILTER) ;
+ . s (samikey,si)=""
 "RTN","SAMIUR",207,0)
- n typ s typ=$g(FILTER("sort"))
+ . d LOAD^SAMIFORM(.ln,samikey,si,.filter)
 "RTN","SAMIUR",208,0)
- i typ="" s typ="name"
+ . s SAMIRTN(cnt)=ln
 "RTN","SAMIUR",209,0)
- n iz,dt,dfn,nm
+ ;
 "RTN","SAMIUR",210,0)
- s (dt,dfn,nm)=""
+ quit  ; end of WSREPORT
 "RTN","SAMIUR",211,0)
- s iz=0
+ ;
 "RTN","SAMIUR",212,0)
- n indx
+ ;
 "RTN","SAMIUR",213,0)
- f  s dt=$o(SAMIPATS(dt)) q:+dt=0  d  ;
+ ;
 "RTN","SAMIUR",214,0)
- . f  s dfn=$o(SAMIPATS(dt,dfn)) q:+dfn=0  d  ;
+SORT(SRTN,SAMIPATS,FILTER) ;
 "RTN","SAMIUR",215,0)
- . . i typ="name" d  ;
+ n typ s typ=$g(FILTER("sort"))
 "RTN","SAMIUR",216,0)
- . . . s nm=$g(SAMIPATS(dt,dfn,"name"))
+ i typ="" s typ="name"
 "RTN","SAMIUR",217,0)
- . . . i nm="" s nm=" "
+ n iz,dt,dfn,nm
 "RTN","SAMIUR",218,0)
- . . . s indx(nm,dt,dfn)=""
+ s (dt,dfn,nm)=""
 "RTN","SAMIUR",219,0)
- n iiz s iiz=""
+ s iz=0
 "RTN","SAMIUR",220,0)
- s (dt,dfn)=""
+ n indx
 "RTN","SAMIUR",221,0)
- f  s iiz=$o(indx(iiz)) q:iiz=""  d  ;
+ f  s dt=$o(SAMIPATS(dt)) q:+dt=0  d  ;
 "RTN","SAMIUR",222,0)
- . f  s dt=$o(indx(iiz,dt)) q:dt=""  d  ;
+ . f  s dfn=$o(SAMIPATS(dt,dfn)) q:+dfn=0  d  ;
 "RTN","SAMIUR",223,0)
- . . f  s dfn=$o(indx(iiz,dt,dfn)) q:dfn=""  d  ;
+ . . i typ="name" d  ;
 "RTN","SAMIUR",224,0)
- . . . s iz=iz+1
+ . . . s nm=$g(SAMIPATS(dt,dfn,"name"))
 "RTN","SAMIUR",225,0)
- . . . s SRTN(iz,dt,dfn)=iiz
+ . . . i nm="" s nm=" "
 "RTN","SAMIUR",226,0)
- ;
+ . . . s indx(nm,dt,dfn)=""
 "RTN","SAMIUR",227,0)
- quit  ; end of SORT
+ n iiz s iiz=""
 "RTN","SAMIUR",228,0)
- ;
+ s (dt,dfn)=""
 "RTN","SAMIUR",229,0)
- ;
+ f  s iiz=$o(indx(iiz)) q:iiz=""  d  ;
 "RTN","SAMIUR",230,0)
- ;
+ . f  s dt=$o(indx(iiz,dt)) q:dt=""  d  ;
 "RTN","SAMIUR",231,0)
-NUHREF(SAMIPATS) ; create the nuhref link to casereview for all patients
+ . . f  s dfn=$o(indx(iiz,dt,dfn)) q:dfn=""  d  ;
 "RTN","SAMIUR",232,0)
- n ij
+ . . . s iz=iz+1
 "RTN","SAMIUR",233,0)
- n root s root=$$setroot^%wd("vapals-patients")
+ . . . s SRTN(iz,dt,dfn)=iiz
 "RTN","SAMIUR",234,0)
- s ij=0
+ ;
 "RTN","SAMIUR",235,0)
- f  s ij=$o(SAMIPATS(ij)) q:+ij=0  d  ;
+ quit  ; end of SORT
 "RTN","SAMIUR",236,0)
- . n ij2 s ij2=0
+ ;
 "RTN","SAMIUR",237,0)
- . f  s ij2=$o(SAMIPATS(ij,ij2)) q:+ij2=0  d  ;
+ ;
 "RTN","SAMIUR",238,0)
- . . n dfn s dfn=ij2
+ ;
 "RTN","SAMIUR",239,0)
- . . s SAMIPATS(ij,dfn,"sid")=$g(@root@(dfn,"samistudyid"))
+NUHREF(SAMIPATS) ; create the nuhref link to casereview for all patients
 "RTN","SAMIUR",240,0)
- . . n sid s sid=SAMIPATS(ij,dfn,"sid")
+ n ij
 "RTN","SAMIUR",241,0)
- . . s SAMIPATS(ij,dfn,"name")=$g(@root@(dfn,"saminame"))
-"RTN","SAMIUR",242,0)
- . . n name s name=SAMIPATS(ij,dfn,"name")
-"RTN","SAMIUR",243,0)
- . . s SAMIPATS(ij,dfn,"ssn")=$$GETSSN^SAMIFORM(sid)
-"RTN","SAMIUR",244,0)
- . . new nuhref set nuhref="<form method=POST action=""/vapals"">"
-"RTN","SAMIUR",245,0)
- . . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""casereview"">"
-"RTN","SAMIUR",246,0)
- . . set nuhref=nuhref_"<input type=hidden name=""studyid"" value="_sid_">"
-"RTN","SAMIUR",247,0)
- . . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
-"RTN","SAMIUR",248,0)
- . . s SAMIPATS(ij,dfn,"nuhref")=nuhref
-"RTN","SAMIUR",249,0)
- ;
-"RTN","SAMIUR",250,0)
- quit  ; end of NUHREF
-"RTN","SAMIUR",251,0)
- ;
-"RTN","SAMIUR",252,0)
- ;
-"RTN","SAMIUR",253,0)
- ;
-"RTN","SAMIUR",254,0)
-SELECT(SAMIPATS,ztype,datephrase,filter) ;selects patients for report
-"RTN","SAMIUR",255,0)
- ;
-"RTN","SAMIUR",256,0)
- ;m ^gpl("select")=filter
-"RTN","SAMIUR",257,0)
- n type s type=ztype
-"RTN","SAMIUR",258,0)
- i type="unmatched" d  q  ;
-"RTN","SAMIUR",259,0)
- . d UNMAT(.SAMIPATS,ztype,.datephrase,.filter)
-"RTN","SAMIUR",260,0)
- i type="worklist" d  q  ;
-"RTN","SAMIUR",261,0)
- . d WKLIST(.SAMIPATS,ztype,.datephrase,.filter)
-"RTN","SAMIUR",262,0)
- i $g(type)="" s type="enrollment"
-"RTN","SAMIUR",263,0)
- i type="cumpy" s type="enrollment"
-"RTN","SAMIUR",264,0)
- n site s site=$g(filter("siteid"))
-"RTN","SAMIUR",265,0)
- n strdt,enddt,fmstrdt,fmenddt
-"RTN","SAMIUR",266,0)
- s strdt=$g(filter("start-date"))
-"RTN","SAMIUR",267,0)
- s fmstrdt=$$KEY2FM^SAMICASE(strdt)
-"RTN","SAMIUR",268,0)
- i fmstrdt=-1 d  ;
-"RTN","SAMIUR",269,0)
- . s fmstrdt=2000101
-"RTN","SAMIUR",270,0)
- . i type="followup" s fmstrdt=$$NOW^XLFDT
-"RTN","SAMIUR",271,0)
- . i type="activity" s fmstrdt=$$FMADD^XLFDT($$NOW^XLFDT,-31)
-"RTN","SAMIUR",272,0)
- i strdt="" s filter("start-date")=$$VAPALSDT^SAMICASE(fmstrdt)
-"RTN","SAMIUR",273,0)
- s enddt=$g(filter("end-date"))
-"RTN","SAMIUR",274,0)
- s fmenddt=$$KEY2FM^SAMICASE(enddt)
-"RTN","SAMIUR",275,0)
- i fmenddt=-1 d  ;
-"RTN","SAMIUR",276,0)
- . s fmenddt=$$NOW^XLFDT
-"RTN","SAMIUR",277,0)
- . i type="followup" s fmenddt=$$FMADD^XLFDT($$NOW^XLFDT,31)
-"RTN","SAMIUR",278,0)
- i enddt="" s filter("end-date")=$$VAPALSDT^SAMICASE(fmenddt)
-"RTN","SAMIUR",279,0)
- s datephrase=""
-"RTN","SAMIUR",280,0)
- n zi s zi=0
-"RTN","SAMIUR",281,0)
  n root s root=$$setroot^%wd("vapals-patients")
+"RTN","SAMIUR",242,0)
+ s ij=0
+"RTN","SAMIUR",243,0)
+ f  s ij=$o(SAMIPATS(ij)) q:+ij=0  d  ;
+"RTN","SAMIUR",244,0)
+ . n ij2 s ij2=0
+"RTN","SAMIUR",245,0)
+ . f  s ij2=$o(SAMIPATS(ij,ij2)) q:+ij2=0  d  ;
+"RTN","SAMIUR",246,0)
+ . . n dfn s dfn=ij2
+"RTN","SAMIUR",247,0)
+ . . s SAMIPATS(ij,dfn,"sid")=$g(@root@(dfn,"samistudyid"))
+"RTN","SAMIUR",248,0)
+ . . n sid s sid=SAMIPATS(ij,dfn,"sid")
+"RTN","SAMIUR",249,0)
+ . . s SAMIPATS(ij,dfn,"name")=$g(@root@(dfn,"saminame"))
+"RTN","SAMIUR",250,0)
+ . . n name s name=SAMIPATS(ij,dfn,"name")
+"RTN","SAMIUR",251,0)
+ . . s SAMIPATS(ij,dfn,"ssn")=$$GETSSN^SAMIFORM(sid)
+"RTN","SAMIUR",252,0)
+ . . new nuhref set nuhref="<form method=POST action=""/vapals"">"
+"RTN","SAMIUR",253,0)
+ . . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""casereview"">"
+"RTN","SAMIUR",254,0)
+ . . set nuhref=nuhref_"<input type=hidden name=""studyid"" value="_sid_">"
+"RTN","SAMIUR",255,0)
+ . . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
+"RTN","SAMIUR",256,0)
+ . . s SAMIPATS(ij,dfn,"nuhref")=nuhref
+"RTN","SAMIUR",257,0)
+ ;
+"RTN","SAMIUR",258,0)
+ quit  ; end of NUHREF
+"RTN","SAMIUR",259,0)
+ ;
+"RTN","SAMIUR",260,0)
+ ;
+"RTN","SAMIUR",261,0)
+ ;
+"RTN","SAMIUR",262,0)
+SELECT(SAMIPATS,ztype,datephrase,filter) ;selects patients for report
+"RTN","SAMIUR",263,0)
+ ;
+"RTN","SAMIUR",264,0)
+ ;m ^gpl("select")=filter
+"RTN","SAMIUR",265,0)
+ n type s type=ztype
+"RTN","SAMIUR",266,0)
+ i type="unmatched" d  q  ;
+"RTN","SAMIUR",267,0)
+ . d UNMAT(.SAMIPATS,ztype,.datephrase,.filter)
+"RTN","SAMIUR",268,0)
+ i type="worklist" d  q  ;
+"RTN","SAMIUR",269,0)
+ . d WKLIST(.SAMIPATS,ztype,.datephrase,.filter)
+"RTN","SAMIUR",270,0)
+ i $g(type)="" s type="enrollment"
+"RTN","SAMIUR",271,0)
+ i type="cumpy" s type="enrollment"
+"RTN","SAMIUR",272,0)
+ n site s site=$g(filter("siteid"))
+"RTN","SAMIUR",273,0)
+ n strdt,enddt,fmstrdt,fmenddt
+"RTN","SAMIUR",274,0)
+ s strdt=$g(filter("start-date"))
+"RTN","SAMIUR",275,0)
+ s fmstrdt=$$KEY2FM^SAMICASE(strdt)
+"RTN","SAMIUR",276,0)
+ i fmstrdt=-1 d  ;
+"RTN","SAMIUR",277,0)
+ . s fmstrdt=2000101
+"RTN","SAMIUR",278,0)
+ . i type="followup" s fmstrdt=$$NOW^XLFDT
+"RTN","SAMIUR",279,0)
+ . i type="activity" s fmstrdt=$$FMADD^XLFDT($$NOW^XLFDT,-31)
+"RTN","SAMIUR",280,0)
+ i strdt="" s filter("start-date")=$$VAPALSDT^SAMICASE(fmstrdt)
+"RTN","SAMIUR",281,0)
+ s enddt=$g(filter("end-date"))
 "RTN","SAMIUR",282,0)
- ;
+ s fmenddt=$$KEY2FM^SAMICASE(enddt)
 "RTN","SAMIUR",283,0)
- f  s zi=$o(@root@(zi)) q:+zi=0  d  ;
+ i fmenddt=-1 d  ;
 "RTN","SAMIUR",284,0)
- . n sid s sid=$g(@root@(zi,"samistudyid"))
+ . s fmenddt=$$NOW^XLFDT
 "RTN","SAMIUR",285,0)
- . q:sid=""
+ . i type="followup" s fmenddt=$$FMADD^XLFDT($$NOW^XLFDT,31)
 "RTN","SAMIUR",286,0)
- . q:$e(sid,1,3)'=site
+ i enddt="" s filter("end-date")=$$VAPALSDT^SAMICASE(fmenddt)
 "RTN","SAMIUR",287,0)
- . n items s items=""
+ s datephrase=""
 "RTN","SAMIUR",288,0)
- . d GETITEMS^SAMICASE("items",sid)
+ n zi s zi=0
 "RTN","SAMIUR",289,0)
- . q:'$d(items)
+ n root s root=$$setroot^%wd("vapals-patients")
 "RTN","SAMIUR",290,0)
- . n efmdate,edate,siform,ceform,cefud,fmcefud,cedos,fmcedos
+ ;
 "RTN","SAMIUR",291,0)
- . s siform=$o(items("siform-"))
+ f  s zi=$o(@root@(zi)) q:+zi=0  d  ;
 "RTN","SAMIUR",292,0)
- . i $g(@root@("graph",sid,siform,"sistatus"))="inactive" q  ;
+ . n sid s sid=$g(@root@(zi,"samistudyid"))
 "RTN","SAMIUR",293,0)
- . s ceform=$o(items("ceform-a"),-1)
+ . q:sid=""
 "RTN","SAMIUR",294,0)
- . s (cefud,fmcefud,cedos,fmcedos)=""
+ . q:$e(sid,1,3)'=site
 "RTN","SAMIUR",295,0)
- . i ceform'="" d  ;
+ . n items s items=""
 "RTN","SAMIUR",296,0)
- . . s cefud=$g(@root@("graph",sid,ceform,"cefud"))
+ . d GETITEMS^SAMICASE("items",sid)
 "RTN","SAMIUR",297,0)
- . . i cefud'="" s fmcefud=$$KEY2FM^SAMICASE(cefud)
+ . q:'$d(items)
 "RTN","SAMIUR",298,0)
- . . s cedos=$g(@root@("graph",sid,ceform,"cedos"))
+ . n efmdate,edate,siform,ceform,cefud,fmcefud,cedos,fmcedos
 "RTN","SAMIUR",299,0)
- . . i cedos'="" s fmcedos=$$KEY2FM^SAMICASE(cedos)
+ . s siform=$o(items("siform-"))
 "RTN","SAMIUR",300,0)
- . s edate=$g(@root@("graph",sid,siform,"sidc"))
+ . i $g(@root@("graph",sid,siform,"sistatus"))="inactive" q  ;
 "RTN","SAMIUR",301,0)
- . i edate="" s edate=$g(@root@("graph",sid,siform,"samicreatedate"))
+ . s ceform=$o(items("ceform-a"),-1)
 "RTN","SAMIUR",302,0)
- . s efmdate=$$KEY2FM^SAMICASE(edate)
+ . s (cefud,fmcefud,cedos,fmcedos)=""
 "RTN","SAMIUR",303,0)
- . s edate=$$VAPALSDT^SAMICASE(efmdate)
+ . i ceform'="" d  ;
 "RTN","SAMIUR",304,0)
- . ;
+ . . s cefud=$g(@root@("graph",sid,ceform,"cefud"))
 "RTN","SAMIUR",305,0)
- . i type="followup" d  ;
+ . . i cefud'="" s fmcefud=$$KEY2FM^SAMICASE(cefud)
 "RTN","SAMIUR",306,0)
- . . ;n nplus30 s nplus30=$$FMADD^XLFDT($$NOW^XLFDT,31)
+ . . s cedos=$g(@root@("graph",sid,ceform,"cedos"))
 "RTN","SAMIUR",307,0)
- . . i +fmcefud<fmstrdt q  ; before start date
+ . . i cedos'="" s fmcedos=$$KEY2FM^SAMICASE(cedos)
 "RTN","SAMIUR",308,0)
- . . i (+fmcefud<(fmenddt+1)) d  ; before end date
+ . s edate=$g(@root@("graph",sid,siform,"sidc"))
 "RTN","SAMIUR",309,0)
- . . . i ceform="" q  ; no ct eval so no followup date
+ . i edate="" s edate=$g(@root@("graph",sid,siform,"samicreatedate"))
 "RTN","SAMIUR",310,0)
- . . . s SAMIPATS(fmcefud,zi,"edate")=edate
+ . s efmdate=$$KEY2FM^SAMICASE(edate)
 "RTN","SAMIUR",311,0)
- . . . s SAMIPATS(fmcefud,zi)=""
+ . s edate=$$VAPALSDT^SAMICASE(efmdate)
 "RTN","SAMIUR",312,0)
- . . . i ceform="" s cefud="baseline"
+ . ;
 "RTN","SAMIUR",313,0)
- . . . s SAMIPATS(fmcefud,zi,"cefud")=cefud
+ . i type="followup" d  ;
 "RTN","SAMIUR",314,0)
- . . . s SAMIPATS(fmcefud,zi,"cedos")=cedos
+ . . ;n nplus30 s nplus30=$$FMADD^XLFDT($$NOW^XLFDT,31)
 "RTN","SAMIUR",315,0)
- . . . s SAMIPATS(fmcefud,zi,"ceform")=ceform
+ . . i +fmcefud<fmstrdt q  ; before start date
 "RTN","SAMIUR",316,0)
- . . . s SAMIPATS(fmcefud,zi,"ceform-vals")=$na(@root@("graph",sid,ceform))
+ . . i (+fmcefud<(fmenddt+1)) d  ; before end date
 "RTN","SAMIUR",317,0)
- . . . s SAMIPATS(fmcefud,zi,"siform")=siform
+ . . . i ceform="" q  ; no ct eval so no followup date
 "RTN","SAMIUR",318,0)
- . . . s SAMIPATS(fmcefud,zi,"siform-vals")=$na(@root@("graph",sid,siform))
+ . . . s SAMIPATS(fmcefud,zi,"edate")=edate
 "RTN","SAMIUR",319,0)
- . . . m SAMIPATS(fmcefud,zi,"items")=items
+ . . . s SAMIPATS(fmcefud,zi)=""
 "RTN","SAMIUR",320,0)
- . . s datephrase=" before "_$$VAPALSDT^SAMICASE(fmenddt)
+ . . . i ceform="" s cefud="baseline"
 "RTN","SAMIUR",321,0)
- . . q
+ . . . s SAMIPATS(fmcefud,zi,"cefud")=cefud
 "RTN","SAMIUR",322,0)
- . i type="activity" d  ;
+ . . . s SAMIPATS(fmcefud,zi,"cedos")=cedos
 "RTN","SAMIUR",323,0)
- . . ;n nminus30 s nminus30=$$FMADD^XLFDT($$NOW^XLFDT,-31)
+ . . . s SAMIPATS(fmcefud,zi,"ceform")=ceform
 "RTN","SAMIUR",324,0)
- . . n anyform s anyform=$o(items("sort",""),-1)
+ . . . s SAMIPATS(fmcefud,zi,"ceform-vals")=$na(@root@("graph",sid,ceform))
 "RTN","SAMIUR",325,0)
- . . n fmanyform s fmanyform=$$KEY2FM^SAMICASE(anyform)
+ . . . s SAMIPATS(fmcefud,zi,"siform")=siform
 "RTN","SAMIUR",326,0)
- . . i +fmanyform<fmstrdt q  ; before the start date
+ . . . s SAMIPATS(fmcefud,zi,"siform-vals")=$na(@root@("graph",sid,siform))
 "RTN","SAMIUR",327,0)
- . . ;i (+fmanyform<(fmenddt+1))!(+efmdate>fmenddt) d  ; need any new form
+ . . . m SAMIPATS(fmcefud,zi,"items")=items
 "RTN","SAMIUR",328,0)
- . . i (+fmanyform<(fmenddt+1))  d  ;
+ . . s datephrase=" before "_$$VAPALSDT^SAMICASE(fmenddt)
 "RTN","SAMIUR",329,0)
- . . . s SAMIPATS(efmdate,zi,"edate")=edate
+ . . q
 "RTN","SAMIUR",330,0)
- . . . s SAMIPATS(efmdate,zi)=""
+ . i type="activity" d  ;
 "RTN","SAMIUR",331,0)
- . . . i ceform="" s cefud="baseline"
+ . . ;n nminus30 s nminus30=$$FMADD^XLFDT($$NOW^XLFDT,-31)
 "RTN","SAMIUR",332,0)
- . . . s SAMIPATS(efmdate,zi,"cefud")=cefud
+ . . n anyform s anyform=$o(items("sort",""),-1)
 "RTN","SAMIUR",333,0)
- . . . s SAMIPATS(efmdate,zi,"cedos")=cedos
+ . . n fmanyform s fmanyform=$$KEY2FM^SAMICASE(anyform)
 "RTN","SAMIUR",334,0)
- . . . s SAMIPATS(efmdate,zi,"ceform")=ceform
+ . . i +fmanyform<fmstrdt q  ; before the start date
 "RTN","SAMIUR",335,0)
- . . . s SAMIPATS(efmdate,zi,"siform")=siform
+ . . ;i (+fmanyform<(fmenddt+1))!(+efmdate>fmenddt) d  ; need any new form
 "RTN","SAMIUR",336,0)
- . . . m SAMIPATS(efmdate,zi,"items")=items
+ . . i (+fmanyform<(fmenddt+1))  d  ;
 "RTN","SAMIUR",337,0)
- . . s datephrase=" after "_$$VAPALSDT^SAMICASE(fmstrdt)
+ . . . s SAMIPATS(efmdate,zi,"edate")=edate
 "RTN","SAMIUR",338,0)
- . ;
+ . . . s SAMIPATS(efmdate,zi)=""
 "RTN","SAMIUR",339,0)
- . ; date filter for all the rest of the reports
+ . . . i ceform="" s cefud="baseline"
 "RTN","SAMIUR",340,0)
- . ;
+ . . . s SAMIPATS(efmdate,zi,"cefud")=cefud
 "RTN","SAMIUR",341,0)
- . i efmdate<fmstrdt q  ; before the start date
+ . . . s SAMIPATS(efmdate,zi,"cedos")=cedos
 "RTN","SAMIUR",342,0)
- . i efmdate>(fmenddt+1) q  ; after the end date
+ . . . s SAMIPATS(efmdate,zi,"ceform")=ceform
 "RTN","SAMIUR",343,0)
- . ;
+ . . . s SAMIPATS(efmdate,zi,"siform")=siform
 "RTN","SAMIUR",344,0)
- . i type="incomplete" d  ;
+ . . . m SAMIPATS(efmdate,zi,"items")=items
 "RTN","SAMIUR",345,0)
- . . n complete s complete=1
+ . . s datephrase=" after "_$$VAPALSDT^SAMICASE(fmstrdt)
 "RTN","SAMIUR",346,0)
- . . n zj s zj=""
+ . ;
 "RTN","SAMIUR",347,0)
- . . n gr s gr=$na(@root@("graph",sid))
+ . ; date filter for all the rest of the reports
 "RTN","SAMIUR",348,0)
- . . f  s zj=$o(@gr@(zj)) q:zj=""  d  ;
+ . ;
 "RTN","SAMIUR",349,0)
- . . . i $g(@gr@(zj,"samistatus"))="incomplete" d  ;
+ . i efmdate<fmstrdt q  ; before the start date
 "RTN","SAMIUR",350,0)
- . . . . s complete=0
+ . i efmdate>(fmenddt+1) q  ; after the end date
 "RTN","SAMIUR",351,0)
- . . . . s SAMIPATS(efmdate,zi,"iform")=$g(SAMIPATS(efmdate,zi,"iform"))_" "_zj
+ . ;
 "RTN","SAMIUR",352,0)
- . . i complete=0 d  ; has incomplete form(s) 
+ . i type="incomplete" d  ;
 "RTN","SAMIUR",353,0)
- . . . s SAMIPATS(efmdate,zi,"edate")=edate
+ . . n complete s complete=1
 "RTN","SAMIUR",354,0)
- . . . s SAMIPATS(efmdate,zi)=""
+ . . n zj s zj=""
 "RTN","SAMIUR",355,0)
- . . . i ceform="" s cefud="baseline"
+ . . n gr s gr=$na(@root@("graph",sid))
 "RTN","SAMIUR",356,0)
- . . . s SAMIPATS(efmdate,zi,"cefud")=cefud
+ . . f  s zj=$o(@gr@(zj)) q:zj=""  d  ;
 "RTN","SAMIUR",357,0)
- . . . s SAMIPATS(efmdate,zi,"ceform")=ceform
+ . . . i $g(@gr@(zj,"samistatus"))="incomplete" d  ;
 "RTN","SAMIUR",358,0)
- . . . s SAMIPATS(efmdate,zi,"siform")=siform
+ . . . . s complete=0
 "RTN","SAMIUR",359,0)
- . . . m SAMIPATS(efmdate,zi,"items")=items
+ . . . . s SAMIPATS(efmdate,zi,"iform")=$g(SAMIPATS(efmdate,zi,"iform"))_" "_zj
 "RTN","SAMIUR",360,0)
- . . s datephrase=""
+ . . i complete=0 d  ; has incomplete form(s) 
 "RTN","SAMIUR",361,0)
- . . q
-"RTN","SAMIUR",362,0)
- . i type="missingct" d  ;
-"RTN","SAMIUR",363,0)
- . . i ceform="" d  ; has incomplete form(s) 
-"RTN","SAMIUR",364,0)
  . . . s SAMIPATS(efmdate,zi,"edate")=edate
-"RTN","SAMIUR",365,0)
+"RTN","SAMIUR",362,0)
  . . . s SAMIPATS(efmdate,zi)=""
-"RTN","SAMIUR",366,0)
+"RTN","SAMIUR",363,0)
  . . . i ceform="" s cefud="baseline"
-"RTN","SAMIUR",367,0)
+"RTN","SAMIUR",364,0)
  . . . s SAMIPATS(efmdate,zi,"cefud")=cefud
-"RTN","SAMIUR",368,0)
+"RTN","SAMIUR",365,0)
  . . . s SAMIPATS(efmdate,zi,"ceform")=ceform
-"RTN","SAMIUR",369,0)
+"RTN","SAMIUR",366,0)
  . . . s SAMIPATS(efmdate,zi,"siform")=siform
-"RTN","SAMIUR",370,0)
+"RTN","SAMIUR",367,0)
  . . . m SAMIPATS(efmdate,zi,"items")=items
-"RTN","SAMIUR",371,0)
+"RTN","SAMIUR",368,0)
  . . s datephrase=""
+"RTN","SAMIUR",369,0)
+ . . q
+"RTN","SAMIUR",370,0)
+ . i type="missingct" d  ;
+"RTN","SAMIUR",371,0)
+ . . i ceform="" d  ; has incomplete form(s) 
 "RTN","SAMIUR",372,0)
- . . q
+ . . . s SAMIPATS(efmdate,zi,"edate")=edate
 "RTN","SAMIUR",373,0)
- . i type="outreach" d  ;
+ . . . s SAMIPATS(efmdate,zi)=""
 "RTN","SAMIUR",374,0)
- . . q
+ . . . i ceform="" s cefud="baseline"
 "RTN","SAMIUR",375,0)
- . i type="enrollment" d  ;
+ . . . s SAMIPATS(efmdate,zi,"cefud")=cefud
 "RTN","SAMIUR",376,0)
- . . s SAMIPATS(efmdate,zi,"edate")=edate
+ . . . s SAMIPATS(efmdate,zi,"ceform")=ceform
 "RTN","SAMIUR",377,0)
- . . s SAMIPATS(efmdate,zi)=""
+ . . . s SAMIPATS(efmdate,zi,"siform")=siform
 "RTN","SAMIUR",378,0)
- . . s SAMIPATS(efmdate,zi,"cefud")=cefud
+ . . . m SAMIPATS(efmdate,zi,"items")=items
 "RTN","SAMIUR",379,0)
- . . s SAMIPATS(efmdate,zi,"ceform")=ceform
+ . . s datephrase=""
 "RTN","SAMIUR",380,0)
- . . s SAMIPATS(efmdate,zi,"cedos")=cedos
+ . . q
 "RTN","SAMIUR",381,0)
- . . s SAMIPATS(efmdate,zi,"siform")=siform
+ . i type="outreach" d  ;
 "RTN","SAMIUR",382,0)
- . . m SAMIPATS(efmdate,zi,"items")=items
+ . . q
 "RTN","SAMIUR",383,0)
- . s datephrase=" as of "_$$VAPALSDT^SAMICASE($$NOW^XLFDT)
+ . i type="enrollment" d  ;
 "RTN","SAMIUR",384,0)
- ;
+ . . s SAMIPATS(efmdate,zi,"edate")=edate
 "RTN","SAMIUR",385,0)
- quit  ; end of SELECT
+ . . s SAMIPATS(efmdate,zi)=""
 "RTN","SAMIUR",386,0)
- ;
+ . . s SAMIPATS(efmdate,zi,"cefud")=cefud
 "RTN","SAMIUR",387,0)
- ;
+ . . s SAMIPATS(efmdate,zi,"ceform")=ceform
 "RTN","SAMIUR",388,0)
- ;
+ . . s SAMIPATS(efmdate,zi,"cedos")=cedos
 "RTN","SAMIUR",389,0)
-UNMAT(SAMIPATS,ztype,datephrase,filter) ;
+ . . s SAMIPATS(efmdate,zi,"siform")=siform
 "RTN","SAMIUR",390,0)
- ;
+ . . m SAMIPATS(efmdate,zi,"items")=items
 "RTN","SAMIUR",391,0)
- s datephrase="Unmatched Persons"
+ . s datephrase=" as of "_$$VAPALSDT^SAMICASE($$NOW^XLFDT)
 "RTN","SAMIUR",392,0)
- n lroot s lroot=$$setroot^%wd("patient-lookup")
+ ;
 "RTN","SAMIUR",393,0)
- n dfn s dfn=9000000
+ quit  ; end of SELECT
 "RTN","SAMIUR",394,0)
- f  s dfn=$o(@lroot@("dfn",dfn)) q:+dfn=0  d  ;
+ ;
 "RTN","SAMIUR",395,0)
- . n ien s ien=$o(@lroot@("dfn",dfn,""))
+ ;
 "RTN","SAMIUR",396,0)
- . q:ien=""
+ ;
 "RTN","SAMIUR",397,0)
- . i $g(@lroot@(ien,"remotedfn"))'="" q  ;
+UNMAT(SAMIPATS,ztype,datephrase,filter) ;
 "RTN","SAMIUR",398,0)
- . m SAMIPATS(ien,dfn)=@lroot@(ien)
+ ;
 "RTN","SAMIUR",399,0)
- . ;new name set name=$g(SAMIPATS(ien,dfn,"saminame"))
+ s datephrase="Unmatched Persons"
 "RTN","SAMIUR",400,0)
- . new name set name=$g(SAMIPATS(ien,dfn,"sinamef"))
+ n lroot s lroot=$$setroot^%wd("patient-lookup")
 "RTN","SAMIUR",401,0)
- . set name=name_","_SAMIPATS(ien,dfn,"sinamel")
+ n dfn s dfn=9000000
 "RTN","SAMIUR",402,0)
- . new nuhref set nuhref="<form method=POST action=""/vapals"">"
+ f  s dfn=$o(@lroot@("dfn",dfn)) q:+dfn=0  d  ;
 "RTN","SAMIUR",403,0)
- . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""editperson"">"
+ . n ien s ien=$o(@lroot@("dfn",dfn,""))
 "RTN","SAMIUR",404,0)
- . set nuhref=nuhref_"<input type=hidden name=""dfn"" value="_dfn_">"
+ . q:ien=""
 "RTN","SAMIUR",405,0)
- . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
+ . i $g(@lroot@(ien,"remotedfn"))'="" q  ;
 "RTN","SAMIUR",406,0)
- . s SAMIPATS(ien,dfn,"editref")=nuhref
+ . m SAMIPATS(ien,dfn)=@lroot@(ien)
 "RTN","SAMIUR",407,0)
- ;
+ . ;new name set name=$g(SAMIPATS(ien,dfn,"saminame"))
 "RTN","SAMIUR",408,0)
- quit  ; end of UNMAT
+ . new name set name=$g(SAMIPATS(ien,dfn,"sinamef"))
 "RTN","SAMIUR",409,0)
- ;
+ . set name=name_","_SAMIPATS(ien,dfn,"sinamel")
 "RTN","SAMIUR",410,0)
- ;
+ . new nuhref set nuhref="<form method=POST action=""/vapals"">"
 "RTN","SAMIUR",411,0)
- ;
+ . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""editperson"">"
 "RTN","SAMIUR",412,0)
-WKLIST(SAMIPATS,ztype,datephrase,filter) ;
+ . set nuhref=nuhref_"<input type=hidden name=""dfn"" value="_dfn_">"
 "RTN","SAMIUR",413,0)
- ;
+ . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
 "RTN","SAMIUR",414,0)
- ; add site
+ . s SAMIPATS(ien,dfn,"editref")=nuhref
 "RTN","SAMIUR",415,0)
- ; add compare to vapals-patients
+ ;
 "RTN","SAMIUR",416,0)
- ; add navigation to enrollment
+ quit  ; end of UNMAT
 "RTN","SAMIUR",417,0)
  ;
 "RTN","SAMIUR",418,0)
- k ^gpl("worklist")
+ ;
 "RTN","SAMIUR",419,0)
- m ^gpl("worklist")=filter
+ ;
 "RTN","SAMIUR",420,0)
- n site
+WKLIST(SAMIPATS,ztype,datephrase,filter) ;
 "RTN","SAMIUR",421,0)
- s site=$g(filter("siteid"))
+ ;
 "RTN","SAMIUR",422,0)
- q:site=""
+ ; add site
 "RTN","SAMIUR",423,0)
- s datephrase="Work List"
+ ; add compare to vapals-patients
 "RTN","SAMIUR",424,0)
- n lroot s lroot=$$setroot^%wd("patient-lookup")
+ ; add navigation to enrollment
 "RTN","SAMIUR",425,0)
- n proot s proot=$$setroot^%wd("vapals-patients")
+ ;
 "RTN","SAMIUR",426,0)
- n dfn s dfn=0
+ k ^gpl("worklist")
 "RTN","SAMIUR",427,0)
- f  s dfn=$o(@lroot@("dfn",dfn)) q:+dfn=0  d  ;
+ m ^gpl("worklist")=filter
 "RTN","SAMIUR",428,0)
- . q:$o(@proot@("dfn",dfn,""))'=""
+ n site
 "RTN","SAMIUR",429,0)
- . n ien s ien=$o(@lroot@("dfn",dfn,""))
+ s site=$g(filter("siteid"))
 "RTN","SAMIUR",430,0)
- . q:ien=""
+ q:site=""
 "RTN","SAMIUR",431,0)
- . ;w !,"dfn= ",dfn
+ s datephrase="Work List"
 "RTN","SAMIUR",432,0)
- . ;zwr @lroot@(ien,*)
+ n lroot s lroot=$$setroot^%wd("patient-lookup")
 "RTN","SAMIUR",433,0)
- . q:$g(@lroot@(ien,"siteid"))'=site
+ n proot s proot=$$setroot^%wd("vapals-patients")
 "RTN","SAMIUR",434,0)
- . m ^gpl("worklist","lroot",ien)=@lroot@(ien)
+ n dfn s dfn=0
 "RTN","SAMIUR",435,0)
- . m SAMIPATS(ien,dfn)=@lroot@(ien)
+ f  s dfn=$o(@lroot@("dfn",dfn)) q:+dfn=0  d  ;
 "RTN","SAMIUR",436,0)
- . new name set name=$g(SAMIPATS(ien,dfn,"saminame"))
+ . q:$o(@proot@("dfn",dfn,""))'=""
 "RTN","SAMIUR",437,0)
- . ;new name set name=$g(SAMIPATS(ien,dfn,"sinamef"))
+ . n ien s ien=$o(@lroot@("dfn",dfn,""))
 "RTN","SAMIUR",438,0)
- . ;set name=name_","_SAMIPATS(ien,dfn,"sinamel")
+ . q:ien=""
 "RTN","SAMIUR",439,0)
- . new nuhref set nuhref="<form method=POST action=""/vapals"">"
+ . ;w !,"dfn= ",dfn
 "RTN","SAMIUR",440,0)
- . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""newcase"">"
+ . ;zwr @lroot@(ien,*)
 "RTN","SAMIUR",441,0)
- . set nuhref=nuhref_"<input type=hidden name=""dfn"" value="_dfn_">"
+ . q:$g(@lroot@(ien,"siteid"))'=site
 "RTN","SAMIUR",442,0)
- . set nuhref=nuhref_"<input type=hidden name=""siteid"" value="_site_">"
+ . m ^gpl("worklist","lroot",ien)=@lroot@(ien)
 "RTN","SAMIUR",443,0)
- . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
+ . m SAMIPATS(ien,dfn)=@lroot@(ien)
 "RTN","SAMIUR",444,0)
- . s SAMIPATS(ien,dfn,"workref")=nuhref
+ . new name set name=$g(SAMIPATS(ien,dfn,"saminame"))
 "RTN","SAMIUR",445,0)
- m ^gpl("worklist","pats")=SAMIPATS
+ . ;new name set name=$g(SAMIPATS(ien,dfn,"sinamef"))
 "RTN","SAMIUR",446,0)
- ;
+ . ;set name=name_","_SAMIPATS(ien,dfn,"sinamel")
 "RTN","SAMIUR",447,0)
- quit  ; end of WKLIST
+ . new nuhref set nuhref="<form method=POST action=""/vapals"">"
 "RTN","SAMIUR",448,0)
- ;
+ . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""newcase"">"
 "RTN","SAMIUR",449,0)
- ;
+ . set nuhref=nuhref_"<input type=hidden name=""dfn"" value="_dfn_">"
 "RTN","SAMIUR",450,0)
- ;
+ . set nuhref=nuhref_"<input type=hidden name=""siteid"" value="_site_">"
 "RTN","SAMIUR",451,0)
-PNAME(type,phrase) ; extrinsic returns the PAGE NAME for the report
+ . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
 "RTN","SAMIUR",452,0)
- ;
+ . s SAMIPATS(ien,dfn,"workref")=nuhref
 "RTN","SAMIUR",453,0)
- ;i type="followup" q "Followup next 30 days -"_$g(phrase)
+ m ^gpl("worklist","pats")=SAMIPATS
 "RTN","SAMIUR",454,0)
- i type="followup" q "Followup "_$g(phrase)
+ ;
 "RTN","SAMIUR",455,0)
- ;i type="activity" q "Activity last 30 days -"_$g(phrase)
+ quit  ; end of WKLIST
 "RTN","SAMIUR",456,0)
- i type="activity" q "Activity "_$g(phrase)
+ ;
 "RTN","SAMIUR",457,0)
- i type="missingct" q "Intake but no CT Evaluation"_$g(phrase)
+ ;
 "RTN","SAMIUR",458,0)
- i type="incomplete" q "Incomplete Forms"_$g(phrase)
+ ;
 "RTN","SAMIUR",459,0)
- i type="outreach" q "Outreach"_$g(phrase)
+PNAME(type,phrase) ; extrinsic returns the PAGE NAME for the report
 "RTN","SAMIUR",460,0)
- i type="enrollment" q "Enrollment"_$g(phrase)
+ ;
 "RTN","SAMIUR",461,0)
- ;
+ ;i type="followup" q "Followup next 30 days -"_$g(phrase)
 "RTN","SAMIUR",462,0)
- quit "" ; end of $$PNAME
+ i type="followup" q "Followup "_$g(phrase)
 "RTN","SAMIUR",463,0)
- ;
+ ;i type="activity" q "Activity last 30 days -"_$g(phrase)
 "RTN","SAMIUR",464,0)
- ;
+ i type="activity" q "Activity "_$g(phrase)
 "RTN","SAMIUR",465,0)
- ;
+ i type="missingct" q "Intake but no CT Evaluation"_$g(phrase)
 "RTN","SAMIUR",466,0)
+ i type="incomplete" q "Incomplete Forms"_$g(phrase)
+"RTN","SAMIUR",467,0)
+ i type="outreach" q "Outreach"_$g(phrase)
+"RTN","SAMIUR",468,0)
+ i type="enrollment" q "Enrollment"_$g(phrase)
+"RTN","SAMIUR",469,0)
+ ;
+"RTN","SAMIUR",470,0)
+ quit "" ; end of $$PNAME
+"RTN","SAMIUR",471,0)
+ ;
+"RTN","SAMIUR",472,0)
+ ;
+"RTN","SAMIUR",473,0)
+ ;
+"RTN","SAMIUR",474,0)
 EOR ; end of SAMIUR
 "VER")
 8.0^22.2

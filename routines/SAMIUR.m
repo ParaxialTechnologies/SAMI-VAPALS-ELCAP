@@ -1,5 +1,5 @@
 SAMIUR ;ven/gpl - user reports ;2021-03-30T15:50Z
- ;;18.0;SAMI;**5,10,11**;2020-01;build 2
+ ;;18.0;SAMI;**5,10,11**;2020-01;Build 4
  ;;1.18.0.11-i11
  ;
  ; SAMIUR contains a web service & associated subroutines to produce
@@ -222,6 +222,7 @@ SORT(SRTN,SAMIPATS,FILTER) ;
  . f  s dfn=$o(SAMIPATS(dt,dfn)) q:+dfn=0  d  ;
  . . i typ="name" d  ;
  . . . s nm=$g(SAMIPATS(dt,dfn,"name"))
+ . . . s nm=$$UPCASE^XLFMSMT(nm)
  . . . i nm="" s nm=" "
  . . . s indx(nm,dt,dfn)=""
  n iiz s iiz=""

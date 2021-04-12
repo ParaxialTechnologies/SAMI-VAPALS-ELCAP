@@ -294,7 +294,7 @@ LOAD ; process html line, e.g., load json data into graph
  . ; and so on
  . n parmsjson
  . d ENCODE^%webjson("parms","parmsjson")
- . do findReplace^%ts(.SAMILINE,"@@PARMS@@",$g(parmsjson(1))
+ . do findReplace^%ts(.SAMILINE,"@@PARMS@@",$g(parmsjson(1)))
  . new zi set zi=1
  . for  set zi=$order(parmsjson(zi)) quit:zi=""  d  ;
  . . new zien set zien=SAMILNUM_"."_$$xpand(zi)

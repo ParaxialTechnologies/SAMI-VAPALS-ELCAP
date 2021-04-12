@@ -287,6 +287,19 @@ LOAD ; process html line, e.g., load json data into graph
  . if warnMsg="" q  ; no message
  . do findReplace^%ts(.SAMILINE,"@@WARN_MESSAGE@@",warnMsg)
  ;
+ i SAMILINE["@@PARMS@@" d  ; insert paramater json
+ . n parms
+ . s parms("ssn")="PID"
+ . s parms("socialSecurityNumber")="Patient ID"
+ . ; and so on
+ . n parmsjson
+ . d ENCODE^%webjson("parms","parmsjson")
+ . s SAMILINE=""
+ . new zi set zi=""
+ . for  set zi=$order(parmsjson(zi)) quit:zi=""  d  ;
+ . . new zien set zien=SAMILNUM_"."_$$xpand(zi)
+ . . set zhtml(zien)=parmsjson(zi)
+ ; 
  quit  ; end of ppi LOAD^SAMIFORM
  ;
  ;

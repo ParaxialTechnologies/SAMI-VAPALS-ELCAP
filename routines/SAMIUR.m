@@ -151,6 +151,8 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  ; output the header
  ;
  s cnt=cnt+1 s SAMIRTN(cnt)="<thead><tr>"
+ s cnt=cnt+1
+ n totcnt s totcnt=cnt
  s ir=""
  f  s ir=$o(RPT(ir)) q:ir=""  d  ;
  . s cnt=cnt+1
@@ -195,6 +197,7 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  . . s rows=rows+1
  s cnt=cnt+1
  s SAMIRTN(cnt)="<tr><td>Total: "_rows_"</td></tr>"
+ s SAMIRTN(totcnt)="<td>Total: "_rows_"</td></tr><tr>"
  ;
  s cnt=cnt+1 s SAMIRTN(cnt)="</tbody>"
  f  s ii=$o(temp(ii)) q:temp(ii)["</tbody>"  d  ;
@@ -298,7 +301,9 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ;selects patients for report
  . q:'$d(items)
  . n efmdate,edate,siform,ceform,cefud,fmcefud,cedos,fmcedos
  . s siform=$o(items("siform-"))
- . i $g(@root@("graph",sid,siform,"sistatus"))="inactive" q  ;
+ . n inactive s inactive=$g(@root@("graph",sid,siform,"sistatus"))
+ . i type="inactive" i inactive'="inactive" q  ; for inactive report
+ . i type'="inactive" i inactive="inactive" q  ; for other reports
  . s ceform=$o(items("ceform-a"),-1)
  . s (cefud,fmcefud,cedos,fmcedos)=""
  . i ceform'="" d  ;
@@ -389,6 +394,14 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ;selects patients for report
  . . s SAMIPATS(efmdate,zi,"cedos")=cedos
  . . s SAMIPATS(efmdate,zi,"siform")=siform
  . . m SAMIPATS(efmdate,zi,"items")=items
+ . i type="inactive" d  ;
+ . . s SAMIPATS(efmdate,zi,"edate")=edate
+ . . s SAMIPATS(efmdate,zi)=""
+ . . s SAMIPATS(efmdate,zi,"cefud")=cefud
+ . . s SAMIPATS(efmdate,zi,"ceform")=ceform
+ . . s SAMIPATS(efmdate,zi,"cedos")=cedos
+ . . s SAMIPATS(efmdate,zi,"siform")=siform
+ . . m SAMIPATS(efmdate,zi,"items")=items
  . s datephrase=" as of "_$$VAPALSDT^SAMICASE($$NOW^XLFDT)
  ;
  quit  ; end of SELECT
@@ -467,6 +480,7 @@ PNAME(type,phrase) ; extrinsic returns the PAGE NAME for the report
  i type="incomplete" q "Incomplete Forms"_$g(phrase)
  i type="outreach" q "Outreach"_$g(phrase)
  i type="enrollment" q "Enrollment"_$g(phrase)
+ i type="inactive" q "Inactive"_$g(phrase)
  ;
  quit "" ; end of $$PNAME
  ;

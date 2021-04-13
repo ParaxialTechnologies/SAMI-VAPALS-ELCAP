@@ -250,13 +250,20 @@ RECOM(zdt,dfn,SAMIPATS) ; extrinsic returns Recommendation
  q recom
  ;
 GENDER(zdt,dfn,SAMIPATS) ; extrinsic returns gender
- ;n root s root=$$setroot^%wd("vapals-patients")
+ n root s root=$$setroot^%wd("vapals-patients")
+ n lroot s lroot=$$setroot^%wd("patient-lookup")
  n gend
- ;s gend=$g(@root@(dfn,"gender"))
- s gend=$g(SAMIPATS(zdt,dfn,"sex"))
- i gend="" s gend=$g(SAMIPATS(zdt,dfn,"gender"))
+ s gend=$g(SAMIPATS(zdt,dfn,"gender"))
+ i gend="" d
+ . n pien s pien=$o(@root@("dfn",dfn,""))
+ . i pien'="" d  ;
+ . . s gend=$g(@root@(pien,"sex"))
+ . . i gend="" s gend=$g(@root@(pien,"gender"))
+ . i gend="" d  ;
+ . . n lien s lien=$o(@lroot@("dfn",dfn,""))
+ . . s gend=$g(@lroot@(lien,"gender"))
+ i gend["^" s gend=$p(gend,"^",1)
  q:gend="" ""
- i gend["^" s gend=$p(gend,"^",2)
  q gend
  ;
 RACE(zdt,dfn,SAMIPATS) ; extrinsic returns race

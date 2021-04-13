@@ -1,5 +1,5 @@
-KIDS Distribution saved on Apr 13, 2021@11:30:05
-Inactive report and other report changes. CSV cleanup
+KIDS Distribution saved on Apr 13, 2021@14:38:24
+inactive report, fixed blank gender column
 **KIDS**:SAMI*18.0*11^
 
 **INSTALL NAME**
@@ -15,7 +15,7 @@ Critical bugs fixed in Intake, CT eval, and reports
 "BLD",11508,6)
 ^11
 "BLD",11508,6.3)
-5
+6
 "BLD",11508,"KRN",0)
 ^9.67PA^1.5^25
 "BLD",11508,"KRN",.4,0)
@@ -57,7 +57,7 @@ SAMINUL^^0^B101598
 "BLD",11508,"KRN",9.8,"NM",4,0)
 SAMICSV^^0^B54323386
 "BLD",11508,"KRN",9.8,"NM",5,0)
-SAMIUR2^^0^B395194376
+SAMIUR2^^0^B406603480
 "BLD",11508,"KRN",9.8,"NM","B","SAMICSV",4)
 
 "BLD",11508,"KRN",9.8,"NM","B","SAMINOT1",1)
@@ -263,7 +263,7 @@ D XPZ2^XPDIQ
 "RTN","SAMICSV",1,0)
 SAMICSV ;ven/gpl - csv export ;2021-03-30T17:18Z
 "RTN","SAMICSV",2,0)
- ;;18.0;SAMI;**7,11**;2020-01;Build 5
+ ;;18.0;SAMI;**7,11**;2020-01;Build 6
 "RTN","SAMICSV",3,0)
  ;;1.18.0.11-i11
 "RTN","SAMICSV",4,0)
@@ -771,7 +771,7 @@ EOR ; end of routine SAMICSV
 "RTN","SAMINOT1",1,0)
 SAMINOT1 ;ven/gpl - text notes ;2021-03-30T17:02Z
 "RTN","SAMINOT1",2,0)
- ;;18.0;SAMI;**2,6,8,10,11**;2020-01;Build 5
+ ;;18.0;SAMI;**2,6,8,10,11**;2020-01;Build 6
 "RTN","SAMINOT1",3,0)
  ;;1.18.0.11-i11
 "RTN","SAMINOT1",4,0)
@@ -2127,7 +2127,7 @@ EOR ; end of routine SAMINOT1
 "RTN","SAMINUL",1,0)
 SAMINUL ;ven/gpl - ielcap: note log ;2021-03-30T17:02Z
 "RTN","SAMINUL",2,0)
- ;;18.0;SAMI;**9,10,11**;2020-01;Build 5
+ ;;18.0;SAMI;**9,10,11**;2020-01;Build 6
 "RTN","SAMINUL",3,0)
  ;;1.18.0.11-i11
 "RTN","SAMINUL",4,0)
@@ -2435,7 +2435,7 @@ EOR ; end of routine SAMINUL
 "RTN","SAMIUR",1,0)
 SAMIUR ;ven/gpl - user reports ;2021-03-30T15:50Z
 "RTN","SAMIUR",2,0)
- ;;18.0;SAMI;**5,10,11**;2020-01;Build 5
+ ;;18.0;SAMI;**5,10,11**;2020-01;Build 6
 "RTN","SAMIUR",3,0)
  ;;1.18.0.11-i11
 "RTN","SAMIUR",4,0)
@@ -3411,11 +3411,11 @@ PNAME(type,phrase) ; extrinsic returns the PAGE NAME for the report
 "RTN","SAMIUR",489,0)
 EOR ; end of SAMIUR
 "RTN","SAMIUR2")
-0^5^B395194376
+0^5^B406603480
 "RTN","SAMIUR2",1,0)
 SAMIUR2 ;ven/gpl - sami user reports ; 5/8/19 10:57am
 "RTN","SAMIUR2",2,0)
- ;;18.0;SAM;;;Build 5
+ ;;18.0;SAM;;;Build 6
 "RTN","SAMIUR2",3,0)
  ;
 "RTN","SAMIUR2",4,0)
@@ -3917,612 +3917,626 @@ RECOM(zdt,dfn,SAMIPATS) ; extrinsic returns Recommendation
 "RTN","SAMIUR2",252,0)
 GENDER(zdt,dfn,SAMIPATS) ; extrinsic returns gender
 "RTN","SAMIUR2",253,0)
- ;n root s root=$$setroot^%wd("vapals-patients")
+ n root s root=$$setroot^%wd("vapals-patients")
 "RTN","SAMIUR2",254,0)
- n gend
-"RTN","SAMIUR2",255,0)
- ;s gend=$g(@root@(dfn,"gender"))
-"RTN","SAMIUR2",256,0)
- s gend=$g(SAMIPATS(zdt,dfn,"sex"))
-"RTN","SAMIUR2",257,0)
- i gend="" s gend=$g(SAMIPATS(zdt,dfn,"gender"))
-"RTN","SAMIUR2",258,0)
- q:gend="" ""
-"RTN","SAMIUR2",259,0)
- i gend["^" s gend=$p(gend,"^",2)
-"RTN","SAMIUR2",260,0)
- q gend
-"RTN","SAMIUR2",261,0)
- ;
-"RTN","SAMIUR2",262,0)
-RACE(zdt,dfn,SAMIPATS) ; extrinsic returns race
-"RTN","SAMIUR2",263,0)
- n root s root=$$setroot^%wd("vapals-patients")
-"RTN","SAMIUR2",264,0)
- n race s race=$g(@root@(dfn,"race"))
-"RTN","SAMIUR2",265,0)
- q:race="" ""
-"RTN","SAMIUR2",266,0)
- q race
-"RTN","SAMIUR2",267,0)
- ;
-"RTN","SAMIUR2",268,0)
-ETHNCTY(zdt,dfn,SAMIPATS) ; extrinsic returns ethnicity
-"RTN","SAMIUR2",269,0)
- q "ethnicity"
-"RTN","SAMIUR2",270,0)
- ;
-"RTN","SAMIUR2",271,0)
-AGE(zdt,dfn,SAMIPATS) ; extrinsic returns age
-"RTN","SAMIUR2",272,0)
- n root s root=$$setroot^%wd("vapals-patients")
-"RTN","SAMIUR2",273,0)
- n dob,age
-"RTN","SAMIUR2",274,0)
- set dob=$get(@root@(dfn,"sbdob")) ; dob in VAPALS format
-"RTN","SAMIUR2",275,0)
- ;
-"RTN","SAMIUR2",276,0)
- new X,Y
-"RTN","SAMIUR2",277,0)
- set X=dob
-"RTN","SAMIUR2",278,0)
- do ^%DT
-"RTN","SAMIUR2",279,0)
- set age=$piece($$FMDIFF^XLFDT($$NOW^XLFDT,Y)/365,".")
-"RTN","SAMIUR2",280,0)
- q age
-"RTN","SAMIUR2",281,0)
- ;
-"RTN","SAMIUR2",282,0)
-SMKSTAT(zdt,dfn,SAMIPATS) ; extrinsic returns smoking status
-"RTN","SAMIUR2",283,0)
- n root s root=$$setroot^%wd("vapals-patients")
-"RTN","SAMIUR2",284,0)
- n sid s sid=$g(@root@(dfn,"samistudyid"))
-"RTN","SAMIUR2",285,0)
- n siform s siform=$g(SAMIPATS(zdt,dfn,"siform"))
-"RTN","SAMIUR2",286,0)
- n vals s vals=$na(@root@("graph",sid,siform))
-"RTN","SAMIUR2",287,0)
- n smk
-"RTN","SAMIUR2",288,0)
- s smk="unknown"
-"RTN","SAMIUR2",289,0)
- if $g(@vals@("siesm"))="n" s smk="Never smoked"
-"RTN","SAMIUR2",290,0)
- if $g(@vals@("siesm"))="p" s smk="Past smoker"
-"RTN","SAMIUR2",291,0)
- if $g(@vals@("siesm"))="c" s smk="Current smoker"
-"RTN","SAMIUR2",292,0)
- ;if $g(@vals@("siesq"))=1 s smk="Cu"
-"RTN","SAMIUR2",293,0)
- q smk
-"RTN","SAMIUR2",294,0)
- ;
-"RTN","SAMIUR2",295,0)
-PACKYRS(zdt,dfn,SAMIPATS) ; extrinsic returns smoking status
-"RTN","SAMIUR2",296,0)
- n root s root=$$setroot^%wd("vapals-patients")
-"RTN","SAMIUR2",297,0)
- n sid s sid=$g(@root@(dfn,"samistudyid"))
-"RTN","SAMIUR2",298,0)
- n siform s siform=$g(SAMIPATS(zdt,dfn,"siform"))
-"RTN","SAMIUR2",299,0)
- n vals s vals=$na(@root@("graph",sid,siform))
-"RTN","SAMIUR2",300,0)
- n pkyrs
-"RTN","SAMIUR2",301,0)
- s pkyrs=$g(@vals@("sippy"))
-"RTN","SAMIUR2",302,0)
- q pkyrs
-"RTN","SAMIUR2",303,0)
- ;
-"RTN","SAMIUR2",304,0)
-IFORM(zdt,dfn,SAMIPATS) ; extrinsic returns the name(s) of the incomplete forms
-"RTN","SAMIUR2",305,0)
- n iform s iform=$g(SAMIPATS(zdt,dfn,"iform"))
-"RTN","SAMIUR2",306,0)
- q:iform="" ""  ;
-"RTN","SAMIUR2",307,0)
- n return,zkey1,zn,typ
-"RTN","SAMIUR2",308,0)
- s return="<table>"
-"RTN","SAMIUR2",309,0)
- f zn=2:1  q:$p(iform," ",zn)=""  d  ;
-"RTN","SAMIUR2",310,0)
- . s return=return_"<tr><td>"
-"RTN","SAMIUR2",311,0)
- . s zkey1=$p(iform," ",zn)
-"RTN","SAMIUR2",312,0)
- . n fname
-"RTN","SAMIUR2",313,0)
- . if zkey1["ceform" set fname="CT Evaluation" set typ="ceform"
-"RTN","SAMIUR2",314,0)
- . if zkey1["sbform" set fname="Background" set typ="sbform"
-"RTN","SAMIUR2",315,0)
- . if zkey1["fuform" set fname="Follow-up" set typ="fuform"
-"RTN","SAMIUR2",316,0)
- . if zkey1["bxform" set fname="Biopsy" set typ="bxform"
-"RTN","SAMIUR2",317,0)
- . if zkey1["ptform" set fname="PET Evaluation" set typ="ptform"
-"RTN","SAMIUR2",318,0)
- . if zkey1["itform" set fname="Intervention" set typ="itform"
-"RTN","SAMIUR2",319,0)
- . if zkey1["siform" set fname="Intake Form" set typ="siform"
-"RTN","SAMIUR2",320,0)
- . if $get(fname)="" set fname="unknown" set typ=""
-"RTN","SAMIUR2",321,0)
- . ;
-"RTN","SAMIUR2",322,0)
- . n sid s sid=$$DFN2SID^SAMIUR2(dfn)
-"RTN","SAMIUR2",323,0)
- . n zdate s zdate=$$VAPALSDT^SAMICASE($$KEY2FM^SAMICASE(zkey1))
-"RTN","SAMIUR2",324,0)
- . s return=return_$$MKNAV(sid,zkey1,fname_" - "_zdate,typ)
-"RTN","SAMIUR2",325,0)
- . s return=return_"</td></tr>"
-"RTN","SAMIUR2",326,0)
- s return=return_"</table>"
-"RTN","SAMIUR2",327,0)
- q return
-"RTN","SAMIUR2",328,0)
- ;
-"RTN","SAMIUR2",329,0)
-MKNAV(sid,zform,fname,form) ; extrinsic return html for navigation to a form
-"RTN","SAMIUR2",330,0)
- ;
-"RTN","SAMIUR2",331,0)
- n rtn
-"RTN","SAMIUR2",332,0)
- set rtn="<form method=""post"" action=""/vapals"">"
-"RTN","SAMIUR2",333,0)
- set rtn=rtn_"<input name=""samiroute"" value=""form"" type=""hidden"">"
-"RTN","SAMIUR2",334,0)
- set rtn=rtn_" <input name=""studyid"" value="""_sid_""" type=""hidden"">"
-"RTN","SAMIUR2",335,0)
- set rtn=rtn_" <input name=""form"" value=""vapals:"_zform_""" type=""hidden"">"
-"RTN","SAMIUR2",336,0)
- set rtn=rtn_" <input value="""_fname_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"_$char(13)
-"RTN","SAMIUR2",337,0)
- q rtn
-"RTN","SAMIUR2",338,0)
- ;
-"RTN","SAMIUR2",339,0)
-RURAL(zdt,dfn,SAMIPATS) ; extrinsic which returns the rural/urban status
-"RTN","SAMIUR2",340,0)
- ; of the patient
-"RTN","SAMIUR2",341,0)
- n root s root=$$setroot^%wd("vapals-patients")
-"RTN","SAMIUR2",342,0)
- n sid s sid=$g(@root@(dfn,"samistudyid"))
-"RTN","SAMIUR2",343,0)
- n siform s siform=$g(SAMIPATS(zdt,dfn,"siform"))
-"RTN","SAMIUR2",344,0)
- n vals s vals=$na(@root@("graph",sid,siform))
-"RTN","SAMIUR2",345,0)
- n sirs
-"RTN","SAMIUR2",346,0)
- s sirs=$g(@vals@("sirs"))
-"RTN","SAMIUR2",347,0)
- s sirs=$s(sirs="r":"rural",sirs="u":"urban",sirs="n":"unknown",1:"unknown")
-"RTN","SAMIUR2",348,0)
- q sirs
-"RTN","SAMIUR2",349,0)
- ;
-"RTN","SAMIUR2",350,0)
-VALS(zdt,dfn,SAMIPATS) ; extrinsic returns contents of form values cell
-"RTN","SAMIUR2",351,0)
- n vrtn s vrtn=""
-"RTN","SAMIUR2",352,0)
- n vsid s vsid=$$DFN2SID(dfn)
-"RTN","SAMIUR2",353,0)
- n vgr s vgr="/vals?sid="_vsid_"&form="
-"RTN","SAMIUR2",354,0)
- q:'$d(SAMIPATS)
-"RTN","SAMIUR2",355,0)
- n vzi s vzi=""
-"RTN","SAMIUR2",356,0)
- f  s vzi=$o(SAMIPATS(zdt,dfn,"items",vzi)) q:vzi="sort"  q:vzi=""  d  ;
-"RTN","SAMIUR2",357,0)
- . s vrtn=vrtn_"<a href="""_vgr_vzi_""">"_vzi_"</a><br>"
-"RTN","SAMIUR2",358,0)
- q vrtn
-"RTN","SAMIUR2",359,0)
- ;
-"RTN","SAMIUR2",360,0)
-WSVALS(RTN,FILTER) ;web service to display form values from the graph
-"RTN","SAMIUR2",361,0)
- n root s root=$$setroot^%wd("vapals-patients")
-"RTN","SAMIUR2",362,0)
- n sid s sid=$g(FILTER("sid"))
-"RTN","SAMIUR2",363,0)
- i sid="" s sid=$g(FILTER("studyid"))
-"RTN","SAMIUR2",364,0)
- q:sid=""
-"RTN","SAMIUR2",365,0)
- n zform s zform=$g(FILTER("form"))
-"RTN","SAMIUR2",366,0)
- n groot
-"RTN","SAMIUR2",367,0)
- i zform="" s groot=$na(@root@("graph",sid))
-"RTN","SAMIUR2",368,0)
- e  s groot=$na(@root@("graph",sid,zform))
-"RTN","SAMIUR2",369,0)
- s FILTER("root")=$e(groot,2,$l(groot))
-"RTN","SAMIUR2",370,0)
- d wsGtree^SYNVPR(.RTN,.FILTER)
-"RTN","SAMIUR2",371,0)
- q
-"RTN","SAMIUR2",372,0)
- ;
-"RTN","SAMIUR2",373,0)
-PKYDT(STDT,ENDT,PKS,CIGS) ; Extrinsic returns pack-years
-"RTN","SAMIUR2",374,0)
- ; if PKS is not provided, 20/CIGS will be used for packs per day
-"RTN","SAMIUR2",375,0)
- n pkyr s pkyr=""
-"RTN","SAMIUR2",376,0)
- i $g(PKS)="" d  ;
-"RTN","SAMIUR2",377,0)
- . i $g(CIGS)="" s PKS=0 q  ;
-"RTN","SAMIUR2",378,0)
- . s PKS=20/CIGS
-"RTN","SAMIUR2",379,0)
- n zst,zend,zdif
-"RTN","SAMIUR2",380,0)
- s zst=$$FMDT(STDT)
-"RTN","SAMIUR2",381,0)
- i zst=-1 s zst=STDT
-"RTN","SAMIUR2",382,0)
- s zend=$$FMDT(ENDT)
-"RTN","SAMIUR2",383,0)
- i zend=-1 s zend=ENDT ; probably a fileman date already
-"RTN","SAMIUR2",384,0)
- s zdif=$$FMDIFF^XLFDT(zend,zst)/365.24
-"RTN","SAMIUR2",385,0)
- s pkyr=$$PKY(zdif,PKS)
-"RTN","SAMIUR2",386,0)
- ;
-"RTN","SAMIUR2",387,0)
- q pkyr
-"RTN","SAMIUR2",388,0)
- ;
-"RTN","SAMIUR2",389,0)
-PKY(YRS,PKS) ; Extrinsic returns pack-years from years (YRS) and 
-"RTN","SAMIUR2",390,0)
- ; packs per day (PKS)
-"RTN","SAMIUR2",391,0)
- ;
-"RTN","SAMIUR2",392,0)
- n rtn s rtn=""
-"RTN","SAMIUR2",393,0)
- s rtn=YRS*PKS
-"RTN","SAMIUR2",394,0)
- i $l($p(rtn,".",2))>2 d  ;
-"RTN","SAMIUR2",395,0)
- . n zdec s zdec=$p(rtn,".",2)
-"RTN","SAMIUR2",396,0)
- . s rtn=$p(rtn,".",1)_"."_$e(zdec,1,2)
-"RTN","SAMIUR2",397,0)
- . i $e(zdec,3)>4 s rtn=rtn+.01
-"RTN","SAMIUR2",398,0)
- i rtn'["." s rtn=rtn_".0"
-"RTN","SAMIUR2",399,0)
- q rtn
-"RTN","SAMIUR2",400,0)
- ;
-"RTN","SAMIUR2",401,0)
-FMDT(ZDT) ; Extrinsic returns the fileman date of ZDT
-"RTN","SAMIUR2",402,0)
- N X,Y
-"RTN","SAMIUR2",403,0)
- S X=ZDT
-"RTN","SAMIUR2",404,0)
- D ^%DT
-"RTN","SAMIUR2",405,0)
- Q Y
-"RTN","SAMIUR2",406,0)
- ;
-"RTN","SAMIUR2",407,0)
-SMHIS(zdt,dfn,SAMIPATS) ; extrinsic returns contents of smoking history cell
-"RTN","SAMIUR2",408,0)
- ;
-"RTN","SAMIUR2",409,0)
- n zrtn s zrtn=""
-"RTN","SAMIUR2",410,0)
- s zrtn=zrtn_"<div class=""row""><div class=""col-md-12""><table class=""table"" id=""pack-years-history"">"
-"RTN","SAMIUR2",411,0)
- s zrtn=zrtn_"<thead><tr><th>Form </th><th> Reported Date </th>"
-"RTN","SAMIUR2",412,0)
- s zrtn=zrtn_"<th>Pack Years</th><th>Cumulative</th></tr></thead><tbody>"
-"RTN","SAMIUR2",413,0)
- s zrtn=zrtn_$$SHDET($$DFN2SID(dfn))
-"RTN","SAMIUR2",414,0)
- s zrtn=zrtn_"</tbody></table></div></div>"
-"RTN","SAMIUR2",415,0)
- q zrtn
-"RTN","SAMIUR2",416,0)
- ;
-"RTN","SAMIUR2",417,0)
-SHDET(SID,KEY) ; Extrinsic returns table contents for smoking history
-"RTN","SAMIUR2",418,0)
- ; KEY is the form key of the caller for "current" marker insertion
-"RTN","SAMIUR2",419,0)
- n pyary
-"RTN","SAMIUR2",420,0)
- i $g(KEY)="" s KEY=""
-"RTN","SAMIUR2",421,0)
- d CUMPY("pyary",SID,KEY)
-"RTN","SAMIUR2",422,0)
- n current s current=$g(pyary("current"))
-"RTN","SAMIUR2",423,0)
- n rptcnt,rptmax
-"RTN","SAMIUR2",424,0)
- s rptcnt=0
-"RTN","SAMIUR2",425,0)
- s rptmax=$o(pyary("rpt",""),-1)
-"RTN","SAMIUR2",426,0)
- q:+rptmax=0
-"RTN","SAMIUR2",427,0)
- n return
-"RTN","SAMIUR2",428,0)
- s return=""
-"RTN","SAMIUR2",429,0)
- n zi s zi=""
-"RTN","SAMIUR2",430,0)
- f zi=1:1:rptmax d  ;
-"RTN","SAMIUR2",431,0)
- . s rptcnt=rptcnt+1
-"RTN","SAMIUR2",432,0)
- . i rptcnt=current s return=return_"<tr data-current-form=""true"">"
-"RTN","SAMIUR2",433,0)
- . e  s return=return_"<tr>"
-"RTN","SAMIUR2",434,0)
- . s return=return_"<td>"_pyary("rpt",rptcnt,1)_"</td>"
-"RTN","SAMIUR2",435,0)
- . s return=return_"<td class=""reported-date"">"_pyary("rpt",rptcnt,2)_"</td>"
-"RTN","SAMIUR2",436,0)
- . s return=return_"<td class=""pack-years"">"_pyary("rpt",rptcnt,3)_"</td>"
-"RTN","SAMIUR2",437,0)
- . s return=return_"<td class=""cumulative-pack-years"">"_pyary("rpt",rptcnt,4)_"</td>"
-"RTN","SAMIUR2",438,0)
- . s return=return_"</tr>"
-"RTN","SAMIUR2",439,0)
- k pyary
-"RTN","SAMIUR2",440,0)
- q return
-"RTN","SAMIUR2",441,0)
- ;
-"RTN","SAMIUR2",442,0)
-DOB(ien,dfn,SAMIPATS) ; extrinsic returns the Date of Birth
-"RTN","SAMIUR2",443,0)
- n dob
-"RTN","SAMIUR2",444,0)
- s dob=$g(SAMIPATS(ien,dfn,"dob"))
-"RTN","SAMIUR2",445,0)
- i dob="" s dob=$g(SAMIPATS(ien,dfn,"sbdob"))
-"RTN","SAMIUR2",446,0)
- q dob
-"RTN","SAMIUR2",447,0)
- ;
-"RTN","SAMIUR2",448,0)
-WORKPAT(ien,dfn,SAMIPATS) ; extrinsic returns worklist patient name cell
-"RTN","SAMIUR2",449,0)
- n zcell
-"RTN","SAMIUR2",450,0)
- s zcell=""
-"RTN","SAMIUR2",451,0)
- s zcell=zcell_$g(SAMIPATS(ien,dfn,"workref"))
-"RTN","SAMIUR2",452,0)
- q zcell
-"RTN","SAMIUR2",453,0)
- ;
-"RTN","SAMIUR2",454,0)
-MANPAT(ien,dfn,SAMIPATS) ; extrinsic returns the unmatched patient cell
-"RTN","SAMIUR2",455,0)
- n zcell
-"RTN","SAMIUR2",456,0)
- s zcell=""
-"RTN","SAMIUR2",457,0)
- ;s zcell=zcell_$g(SAMIPATS(ien,dfn,"saminame"))
-"RTN","SAMIUR2",458,0)
- s zcell=zcell_$g(SAMIPATS(ien,dfn,"editref"))
-"RTN","SAMIUR2",459,0)
- s zcell=zcell_"<br>Date of Birth: "_$g(SAMIPATS(ien,dfn,"dob"))
-"RTN","SAMIUR2",460,0)
- s zcell=zcell_" Gender: "_$g(SAMIPATS(ien,dfn,"sex"))
-"RTN","SAMIUR2",461,0)
- n ssn s ssn=$g(SAMIPATS(ien,dfn,"ssn"))
-"RTN","SAMIUR2",462,0)
- i ssn="" d  ;
-"RTN","SAMIUR2",463,0)
- . n lroot s lroot=$$setroot^%wd("patient-lookup")
-"RTN","SAMIUR2",464,0)
- . n tssn s tssn=$g(@lroot@(ien,"ssn"))
-"RTN","SAMIUR2",465,0)
- . s ssn=$e(tssn,1,3)_"-"_$e(tssn,4,5)_"-"_$e(tssn,6,9)
-"RTN","SAMIUR2",466,0)
- s zcell=zcell_"<br>SSN: "_ssn
-"RTN","SAMIUR2",467,0)
- s zcell=zcell_"<br>dfn: "_dfn
-"RTN","SAMIUR2",468,0)
- q zcell
-"RTN","SAMIUR2",469,0)
- ;
-"RTN","SAMIUR2",470,0)
-POSSIBLE(ien,dfn,SAMIPATS) ; extrinsic returns possible match cell
-"RTN","SAMIUR2",471,0)
- n zcell
-"RTN","SAMIUR2",472,0)
- s zcell=""
-"RTN","SAMIUR2",473,0)
- n matien s matien=$g(SAMIPATS(ien,dfn,"MATCHLOG"))
-"RTN","SAMIUR2",474,0)
- i matien="" q zcell
-"RTN","SAMIUR2",475,0)
  n lroot s lroot=$$setroot^%wd("patient-lookup")
-"RTN","SAMIUR2",476,0)
- i '$d(@lroot@(matien)) q zcell
-"RTN","SAMIUR2",477,0)
- s zcell=zcell_$g(@lroot@(matien,"saminame"))
-"RTN","SAMIUR2",478,0)
- s zcell=zcell_"<br>Date of Birth: "_$g(@lroot@(matien,"sbdob"))
-"RTN","SAMIUR2",479,0)
- s zcell=zcell_" Gender: "_$g(@lroot@(matien,"sex"))
-"RTN","SAMIUR2",480,0)
- n tssn s tssn=$g(@lroot@(matien,"ssn"))
-"RTN","SAMIUR2",481,0)
- n ssn s ssn=tssn
-"RTN","SAMIUR2",482,0)
- i tssn'["-" s ssn=$e(tssn,1,3)_"-"_$e(tssn,4,5)_"-"_$e(tssn,6,9)
-"RTN","SAMIUR2",483,0)
- s zcell=zcell_"<br>SSN: "_ssn
-"RTN","SAMIUR2",484,0)
- s zcell=zcell_"<br>dfn: "_$g(@lroot@(matien,"dfn"))
-"RTN","SAMIUR2",485,0)
+"RTN","SAMIUR2",255,0)
+ n gend
+"RTN","SAMIUR2",256,0)
+ s gend=$g(SAMIPATS(zdt,dfn,"gender"))
+"RTN","SAMIUR2",257,0)
+ i gend="" d
+"RTN","SAMIUR2",258,0)
+ . n pien s pien=$o(@root@("dfn",dfn,""))
+"RTN","SAMIUR2",259,0)
+ . i pien'="" d  ;
+"RTN","SAMIUR2",260,0)
+ . . s gend=$g(@root@(pien,"sex"))
+"RTN","SAMIUR2",261,0)
+ . . i gend="" s gend=$g(@root@(pien,"gender"))
+"RTN","SAMIUR2",262,0)
+ . i gend="" d  ;
+"RTN","SAMIUR2",263,0)
+ . . n lien s lien=$o(@lroot@("dfn",dfn,""))
+"RTN","SAMIUR2",264,0)
+ . . s gend=$g(@lroot@(lien,"gender"))
+"RTN","SAMIUR2",265,0)
+ i gend["^" s gend=$p(gend,"^",1)
+"RTN","SAMIUR2",266,0)
+ q:gend="" ""
+"RTN","SAMIUR2",267,0)
+ q gend
+"RTN","SAMIUR2",268,0)
  ;
-"RTN","SAMIUR2",486,0)
+"RTN","SAMIUR2",269,0)
+RACE(zdt,dfn,SAMIPATS) ; extrinsic returns race
+"RTN","SAMIUR2",270,0)
+ n root s root=$$setroot^%wd("vapals-patients")
+"RTN","SAMIUR2",271,0)
+ n race s race=$g(@root@(dfn,"race"))
+"RTN","SAMIUR2",272,0)
+ q:race="" ""
+"RTN","SAMIUR2",273,0)
+ q race
+"RTN","SAMIUR2",274,0)
+ ;
+"RTN","SAMIUR2",275,0)
+ETHNCTY(zdt,dfn,SAMIPATS) ; extrinsic returns ethnicity
+"RTN","SAMIUR2",276,0)
+ q "ethnicity"
+"RTN","SAMIUR2",277,0)
+ ;
+"RTN","SAMIUR2",278,0)
+AGE(zdt,dfn,SAMIPATS) ; extrinsic returns age
+"RTN","SAMIUR2",279,0)
+ n root s root=$$setroot^%wd("vapals-patients")
+"RTN","SAMIUR2",280,0)
+ n dob,age
+"RTN","SAMIUR2",281,0)
+ set dob=$get(@root@(dfn,"sbdob")) ; dob in VAPALS format
+"RTN","SAMIUR2",282,0)
+ ;
+"RTN","SAMIUR2",283,0)
+ new X,Y
+"RTN","SAMIUR2",284,0)
+ set X=dob
+"RTN","SAMIUR2",285,0)
+ do ^%DT
+"RTN","SAMIUR2",286,0)
+ set age=$piece($$FMDIFF^XLFDT($$NOW^XLFDT,Y)/365,".")
+"RTN","SAMIUR2",287,0)
+ q age
+"RTN","SAMIUR2",288,0)
+ ;
+"RTN","SAMIUR2",289,0)
+SMKSTAT(zdt,dfn,SAMIPATS) ; extrinsic returns smoking status
+"RTN","SAMIUR2",290,0)
+ n root s root=$$setroot^%wd("vapals-patients")
+"RTN","SAMIUR2",291,0)
+ n sid s sid=$g(@root@(dfn,"samistudyid"))
+"RTN","SAMIUR2",292,0)
+ n siform s siform=$g(SAMIPATS(zdt,dfn,"siform"))
+"RTN","SAMIUR2",293,0)
+ n vals s vals=$na(@root@("graph",sid,siform))
+"RTN","SAMIUR2",294,0)
+ n smk
+"RTN","SAMIUR2",295,0)
+ s smk="unknown"
+"RTN","SAMIUR2",296,0)
+ if $g(@vals@("siesm"))="n" s smk="Never smoked"
+"RTN","SAMIUR2",297,0)
+ if $g(@vals@("siesm"))="p" s smk="Past smoker"
+"RTN","SAMIUR2",298,0)
+ if $g(@vals@("siesm"))="c" s smk="Current smoker"
+"RTN","SAMIUR2",299,0)
+ ;if $g(@vals@("siesq"))=1 s smk="Cu"
+"RTN","SAMIUR2",300,0)
+ q smk
+"RTN","SAMIUR2",301,0)
+ ;
+"RTN","SAMIUR2",302,0)
+PACKYRS(zdt,dfn,SAMIPATS) ; extrinsic returns smoking status
+"RTN","SAMIUR2",303,0)
+ n root s root=$$setroot^%wd("vapals-patients")
+"RTN","SAMIUR2",304,0)
+ n sid s sid=$g(@root@(dfn,"samistudyid"))
+"RTN","SAMIUR2",305,0)
+ n siform s siform=$g(SAMIPATS(zdt,dfn,"siform"))
+"RTN","SAMIUR2",306,0)
+ n vals s vals=$na(@root@("graph",sid,siform))
+"RTN","SAMIUR2",307,0)
+ n pkyrs
+"RTN","SAMIUR2",308,0)
+ s pkyrs=$g(@vals@("sippy"))
+"RTN","SAMIUR2",309,0)
+ q pkyrs
+"RTN","SAMIUR2",310,0)
+ ;
+"RTN","SAMIUR2",311,0)
+IFORM(zdt,dfn,SAMIPATS) ; extrinsic returns the name(s) of the incomplete forms
+"RTN","SAMIUR2",312,0)
+ n iform s iform=$g(SAMIPATS(zdt,dfn,"iform"))
+"RTN","SAMIUR2",313,0)
+ q:iform="" ""  ;
+"RTN","SAMIUR2",314,0)
+ n return,zkey1,zn,typ
+"RTN","SAMIUR2",315,0)
+ s return="<table>"
+"RTN","SAMIUR2",316,0)
+ f zn=2:1  q:$p(iform," ",zn)=""  d  ;
+"RTN","SAMIUR2",317,0)
+ . s return=return_"<tr><td>"
+"RTN","SAMIUR2",318,0)
+ . s zkey1=$p(iform," ",zn)
+"RTN","SAMIUR2",319,0)
+ . n fname
+"RTN","SAMIUR2",320,0)
+ . if zkey1["ceform" set fname="CT Evaluation" set typ="ceform"
+"RTN","SAMIUR2",321,0)
+ . if zkey1["sbform" set fname="Background" set typ="sbform"
+"RTN","SAMIUR2",322,0)
+ . if zkey1["fuform" set fname="Follow-up" set typ="fuform"
+"RTN","SAMIUR2",323,0)
+ . if zkey1["bxform" set fname="Biopsy" set typ="bxform"
+"RTN","SAMIUR2",324,0)
+ . if zkey1["ptform" set fname="PET Evaluation" set typ="ptform"
+"RTN","SAMIUR2",325,0)
+ . if zkey1["itform" set fname="Intervention" set typ="itform"
+"RTN","SAMIUR2",326,0)
+ . if zkey1["siform" set fname="Intake Form" set typ="siform"
+"RTN","SAMIUR2",327,0)
+ . if $get(fname)="" set fname="unknown" set typ=""
+"RTN","SAMIUR2",328,0)
+ . ;
+"RTN","SAMIUR2",329,0)
+ . n sid s sid=$$DFN2SID^SAMIUR2(dfn)
+"RTN","SAMIUR2",330,0)
+ . n zdate s zdate=$$VAPALSDT^SAMICASE($$KEY2FM^SAMICASE(zkey1))
+"RTN","SAMIUR2",331,0)
+ . s return=return_$$MKNAV(sid,zkey1,fname_" - "_zdate,typ)
+"RTN","SAMIUR2",332,0)
+ . s return=return_"</td></tr>"
+"RTN","SAMIUR2",333,0)
+ s return=return_"</table>"
+"RTN","SAMIUR2",334,0)
+ q return
+"RTN","SAMIUR2",335,0)
+ ;
+"RTN","SAMIUR2",336,0)
+MKNAV(sid,zform,fname,form) ; extrinsic return html for navigation to a form
+"RTN","SAMIUR2",337,0)
+ ;
+"RTN","SAMIUR2",338,0)
+ n rtn
+"RTN","SAMIUR2",339,0)
+ set rtn="<form method=""post"" action=""/vapals"">"
+"RTN","SAMIUR2",340,0)
+ set rtn=rtn_"<input name=""samiroute"" value=""form"" type=""hidden"">"
+"RTN","SAMIUR2",341,0)
+ set rtn=rtn_" <input name=""studyid"" value="""_sid_""" type=""hidden"">"
+"RTN","SAMIUR2",342,0)
+ set rtn=rtn_" <input name=""form"" value=""vapals:"_zform_""" type=""hidden"">"
+"RTN","SAMIUR2",343,0)
+ set rtn=rtn_" <input value="""_fname_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"_$char(13)
+"RTN","SAMIUR2",344,0)
+ q rtn
+"RTN","SAMIUR2",345,0)
+ ;
+"RTN","SAMIUR2",346,0)
+RURAL(zdt,dfn,SAMIPATS) ; extrinsic which returns the rural/urban status
+"RTN","SAMIUR2",347,0)
+ ; of the patient
+"RTN","SAMIUR2",348,0)
+ n root s root=$$setroot^%wd("vapals-patients")
+"RTN","SAMIUR2",349,0)
+ n sid s sid=$g(@root@(dfn,"samistudyid"))
+"RTN","SAMIUR2",350,0)
+ n siform s siform=$g(SAMIPATS(zdt,dfn,"siform"))
+"RTN","SAMIUR2",351,0)
+ n vals s vals=$na(@root@("graph",sid,siform))
+"RTN","SAMIUR2",352,0)
+ n sirs
+"RTN","SAMIUR2",353,0)
+ s sirs=$g(@vals@("sirs"))
+"RTN","SAMIUR2",354,0)
+ s sirs=$s(sirs="r":"rural",sirs="u":"urban",sirs="n":"unknown",1:"unknown")
+"RTN","SAMIUR2",355,0)
+ q sirs
+"RTN","SAMIUR2",356,0)
+ ;
+"RTN","SAMIUR2",357,0)
+VALS(zdt,dfn,SAMIPATS) ; extrinsic returns contents of form values cell
+"RTN","SAMIUR2",358,0)
+ n vrtn s vrtn=""
+"RTN","SAMIUR2",359,0)
+ n vsid s vsid=$$DFN2SID(dfn)
+"RTN","SAMIUR2",360,0)
+ n vgr s vgr="/vals?sid="_vsid_"&form="
+"RTN","SAMIUR2",361,0)
+ q:'$d(SAMIPATS)
+"RTN","SAMIUR2",362,0)
+ n vzi s vzi=""
+"RTN","SAMIUR2",363,0)
+ f  s vzi=$o(SAMIPATS(zdt,dfn,"items",vzi)) q:vzi="sort"  q:vzi=""  d  ;
+"RTN","SAMIUR2",364,0)
+ . s vrtn=vrtn_"<a href="""_vgr_vzi_""">"_vzi_"</a><br>"
+"RTN","SAMIUR2",365,0)
+ q vrtn
+"RTN","SAMIUR2",366,0)
+ ;
+"RTN","SAMIUR2",367,0)
+WSVALS(RTN,FILTER) ;web service to display form values from the graph
+"RTN","SAMIUR2",368,0)
+ n root s root=$$setroot^%wd("vapals-patients")
+"RTN","SAMIUR2",369,0)
+ n sid s sid=$g(FILTER("sid"))
+"RTN","SAMIUR2",370,0)
+ i sid="" s sid=$g(FILTER("studyid"))
+"RTN","SAMIUR2",371,0)
+ q:sid=""
+"RTN","SAMIUR2",372,0)
+ n zform s zform=$g(FILTER("form"))
+"RTN","SAMIUR2",373,0)
+ n groot
+"RTN","SAMIUR2",374,0)
+ i zform="" s groot=$na(@root@("graph",sid))
+"RTN","SAMIUR2",375,0)
+ e  s groot=$na(@root@("graph",sid,zform))
+"RTN","SAMIUR2",376,0)
+ s FILTER("root")=$e(groot,2,$l(groot))
+"RTN","SAMIUR2",377,0)
+ d wsGtree^SYNVPR(.RTN,.FILTER)
+"RTN","SAMIUR2",378,0)
+ q
+"RTN","SAMIUR2",379,0)
+ ;
+"RTN","SAMIUR2",380,0)
+PKYDT(STDT,ENDT,PKS,CIGS) ; Extrinsic returns pack-years
+"RTN","SAMIUR2",381,0)
+ ; if PKS is not provided, 20/CIGS will be used for packs per day
+"RTN","SAMIUR2",382,0)
+ n pkyr s pkyr=""
+"RTN","SAMIUR2",383,0)
+ i $g(PKS)="" d  ;
+"RTN","SAMIUR2",384,0)
+ . i $g(CIGS)="" s PKS=0 q  ;
+"RTN","SAMIUR2",385,0)
+ . s PKS=20/CIGS
+"RTN","SAMIUR2",386,0)
+ n zst,zend,zdif
+"RTN","SAMIUR2",387,0)
+ s zst=$$FMDT(STDT)
+"RTN","SAMIUR2",388,0)
+ i zst=-1 s zst=STDT
+"RTN","SAMIUR2",389,0)
+ s zend=$$FMDT(ENDT)
+"RTN","SAMIUR2",390,0)
+ i zend=-1 s zend=ENDT ; probably a fileman date already
+"RTN","SAMIUR2",391,0)
+ s zdif=$$FMDIFF^XLFDT(zend,zst)/365.24
+"RTN","SAMIUR2",392,0)
+ s pkyr=$$PKY(zdif,PKS)
+"RTN","SAMIUR2",393,0)
+ ;
+"RTN","SAMIUR2",394,0)
+ q pkyr
+"RTN","SAMIUR2",395,0)
+ ;
+"RTN","SAMIUR2",396,0)
+PKY(YRS,PKS) ; Extrinsic returns pack-years from years (YRS) and 
+"RTN","SAMIUR2",397,0)
+ ; packs per day (PKS)
+"RTN","SAMIUR2",398,0)
+ ;
+"RTN","SAMIUR2",399,0)
+ n rtn s rtn=""
+"RTN","SAMIUR2",400,0)
+ s rtn=YRS*PKS
+"RTN","SAMIUR2",401,0)
+ i $l($p(rtn,".",2))>2 d  ;
+"RTN","SAMIUR2",402,0)
+ . n zdec s zdec=$p(rtn,".",2)
+"RTN","SAMIUR2",403,0)
+ . s rtn=$p(rtn,".",1)_"."_$e(zdec,1,2)
+"RTN","SAMIUR2",404,0)
+ . i $e(zdec,3)>4 s rtn=rtn+.01
+"RTN","SAMIUR2",405,0)
+ i rtn'["." s rtn=rtn_".0"
+"RTN","SAMIUR2",406,0)
+ q rtn
+"RTN","SAMIUR2",407,0)
+ ;
+"RTN","SAMIUR2",408,0)
+FMDT(ZDT) ; Extrinsic returns the fileman date of ZDT
+"RTN","SAMIUR2",409,0)
+ N X,Y
+"RTN","SAMIUR2",410,0)
+ S X=ZDT
+"RTN","SAMIUR2",411,0)
+ D ^%DT
+"RTN","SAMIUR2",412,0)
+ Q Y
+"RTN","SAMIUR2",413,0)
+ ;
+"RTN","SAMIUR2",414,0)
+SMHIS(zdt,dfn,SAMIPATS) ; extrinsic returns contents of smoking history cell
+"RTN","SAMIUR2",415,0)
+ ;
+"RTN","SAMIUR2",416,0)
+ n zrtn s zrtn=""
+"RTN","SAMIUR2",417,0)
+ s zrtn=zrtn_"<div class=""row""><div class=""col-md-12""><table class=""table"" id=""pack-years-history"">"
+"RTN","SAMIUR2",418,0)
+ s zrtn=zrtn_"<thead><tr><th>Form </th><th> Reported Date </th>"
+"RTN","SAMIUR2",419,0)
+ s zrtn=zrtn_"<th>Pack Years</th><th>Cumulative</th></tr></thead><tbody>"
+"RTN","SAMIUR2",420,0)
+ s zrtn=zrtn_$$SHDET($$DFN2SID(dfn))
+"RTN","SAMIUR2",421,0)
+ s zrtn=zrtn_"</tbody></table></div></div>"
+"RTN","SAMIUR2",422,0)
+ q zrtn
+"RTN","SAMIUR2",423,0)
+ ;
+"RTN","SAMIUR2",424,0)
+SHDET(SID,KEY) ; Extrinsic returns table contents for smoking history
+"RTN","SAMIUR2",425,0)
+ ; KEY is the form key of the caller for "current" marker insertion
+"RTN","SAMIUR2",426,0)
+ n pyary
+"RTN","SAMIUR2",427,0)
+ i $g(KEY)="" s KEY=""
+"RTN","SAMIUR2",428,0)
+ d CUMPY("pyary",SID,KEY)
+"RTN","SAMIUR2",429,0)
+ n current s current=$g(pyary("current"))
+"RTN","SAMIUR2",430,0)
+ n rptcnt,rptmax
+"RTN","SAMIUR2",431,0)
+ s rptcnt=0
+"RTN","SAMIUR2",432,0)
+ s rptmax=$o(pyary("rpt",""),-1)
+"RTN","SAMIUR2",433,0)
+ q:+rptmax=0
+"RTN","SAMIUR2",434,0)
+ n return
+"RTN","SAMIUR2",435,0)
+ s return=""
+"RTN","SAMIUR2",436,0)
+ n zi s zi=""
+"RTN","SAMIUR2",437,0)
+ f zi=1:1:rptmax d  ;
+"RTN","SAMIUR2",438,0)
+ . s rptcnt=rptcnt+1
+"RTN","SAMIUR2",439,0)
+ . i rptcnt=current s return=return_"<tr data-current-form=""true"">"
+"RTN","SAMIUR2",440,0)
+ . e  s return=return_"<tr>"
+"RTN","SAMIUR2",441,0)
+ . s return=return_"<td>"_pyary("rpt",rptcnt,1)_"</td>"
+"RTN","SAMIUR2",442,0)
+ . s return=return_"<td class=""reported-date"">"_pyary("rpt",rptcnt,2)_"</td>"
+"RTN","SAMIUR2",443,0)
+ . s return=return_"<td class=""pack-years"">"_pyary("rpt",rptcnt,3)_"</td>"
+"RTN","SAMIUR2",444,0)
+ . s return=return_"<td class=""cumulative-pack-years"">"_pyary("rpt",rptcnt,4)_"</td>"
+"RTN","SAMIUR2",445,0)
+ . s return=return_"</tr>"
+"RTN","SAMIUR2",446,0)
+ k pyary
+"RTN","SAMIUR2",447,0)
+ q return
+"RTN","SAMIUR2",448,0)
+ ;
+"RTN","SAMIUR2",449,0)
+DOB(ien,dfn,SAMIPATS) ; extrinsic returns the Date of Birth
+"RTN","SAMIUR2",450,0)
+ n dob
+"RTN","SAMIUR2",451,0)
+ s dob=$g(SAMIPATS(ien,dfn,"dob"))
+"RTN","SAMIUR2",452,0)
+ i dob="" s dob=$g(SAMIPATS(ien,dfn,"sbdob"))
+"RTN","SAMIUR2",453,0)
+ q dob
+"RTN","SAMIUR2",454,0)
+ ;
+"RTN","SAMIUR2",455,0)
+WORKPAT(ien,dfn,SAMIPATS) ; extrinsic returns worklist patient name cell
+"RTN","SAMIUR2",456,0)
+ n zcell
+"RTN","SAMIUR2",457,0)
+ s zcell=""
+"RTN","SAMIUR2",458,0)
+ s zcell=zcell_$g(SAMIPATS(ien,dfn,"workref"))
+"RTN","SAMIUR2",459,0)
  q zcell
-"RTN","SAMIUR2",487,0)
+"RTN","SAMIUR2",460,0)
  ;
-"RTN","SAMIUR2",488,0)
-MATCH(ien,dfn,SAMIPATS) ; extrinsic returns the match button cell
-"RTN","SAMIUR2",489,0)
+"RTN","SAMIUR2",461,0)
+MANPAT(ien,dfn,SAMIPATS) ; extrinsic returns the unmatched patient cell
+"RTN","SAMIUR2",462,0)
+ n zcell
+"RTN","SAMIUR2",463,0)
+ s zcell=""
+"RTN","SAMIUR2",464,0)
+ ;s zcell=zcell_$g(SAMIPATS(ien,dfn,"saminame"))
+"RTN","SAMIUR2",465,0)
+ s zcell=zcell_$g(SAMIPATS(ien,dfn,"editref"))
+"RTN","SAMIUR2",466,0)
+ s zcell=zcell_"<br>Date of Birth: "_$g(SAMIPATS(ien,dfn,"dob"))
+"RTN","SAMIUR2",467,0)
+ s zcell=zcell_" Gender: "_$g(SAMIPATS(ien,dfn,"sex"))
+"RTN","SAMIUR2",468,0)
+ n ssn s ssn=$g(SAMIPATS(ien,dfn,"ssn"))
+"RTN","SAMIUR2",469,0)
+ i ssn="" d  ;
+"RTN","SAMIUR2",470,0)
+ . n lroot s lroot=$$setroot^%wd("patient-lookup")
+"RTN","SAMIUR2",471,0)
+ . n tssn s tssn=$g(@lroot@(ien,"ssn"))
+"RTN","SAMIUR2",472,0)
+ . s ssn=$e(tssn,1,3)_"-"_$e(tssn,4,5)_"-"_$e(tssn,6,9)
+"RTN","SAMIUR2",473,0)
+ s zcell=zcell_"<br>SSN: "_ssn
+"RTN","SAMIUR2",474,0)
+ s zcell=zcell_"<br>dfn: "_dfn
+"RTN","SAMIUR2",475,0)
+ q zcell
+"RTN","SAMIUR2",476,0)
  ;
-"RTN","SAMIUR2",490,0)
+"RTN","SAMIUR2",477,0)
+POSSIBLE(ien,dfn,SAMIPATS) ; extrinsic returns possible match cell
+"RTN","SAMIUR2",478,0)
+ n zcell
+"RTN","SAMIUR2",479,0)
+ s zcell=""
+"RTN","SAMIUR2",480,0)
  n matien s matien=$g(SAMIPATS(ien,dfn,"MATCHLOG"))
+"RTN","SAMIUR2",481,0)
+ i matien="" q zcell
+"RTN","SAMIUR2",482,0)
+ n lroot s lroot=$$setroot^%wd("patient-lookup")
+"RTN","SAMIUR2",483,0)
+ i '$d(@lroot@(matien)) q zcell
+"RTN","SAMIUR2",484,0)
+ s zcell=zcell_$g(@lroot@(matien,"saminame"))
+"RTN","SAMIUR2",485,0)
+ s zcell=zcell_"<br>Date of Birth: "_$g(@lroot@(matien,"sbdob"))
+"RTN","SAMIUR2",486,0)
+ s zcell=zcell_" Gender: "_$g(@lroot@(matien,"sex"))
+"RTN","SAMIUR2",487,0)
+ n tssn s tssn=$g(@lroot@(matien,"ssn"))
+"RTN","SAMIUR2",488,0)
+ n ssn s ssn=tssn
+"RTN","SAMIUR2",489,0)
+ i tssn'["-" s ssn=$e(tssn,1,3)_"-"_$e(tssn,4,5)_"-"_$e(tssn,6,9)
+"RTN","SAMIUR2",490,0)
+ s zcell=zcell_"<br>SSN: "_ssn
 "RTN","SAMIUR2",491,0)
- i matien="" q ""
+ s zcell=zcell_"<br>dfn: "_$g(@lroot@(matien,"dfn"))
 "RTN","SAMIUR2",492,0)
  ;
 "RTN","SAMIUR2",493,0)
- new nuhref set nuhref="<form method=POST action=""/vapals"">"
+ q zcell
 "RTN","SAMIUR2",494,0)
- set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""merge"">"
+ ;
 "RTN","SAMIUR2",495,0)
- set nuhref=nuhref_"<input type=hidden name=""toien"" value="_ien_">"
+MATCH(ien,dfn,SAMIPATS) ; extrinsic returns the match button cell
 "RTN","SAMIUR2",496,0)
- set nuhref=nuhref_"<input value=""Merge"" class=""btn btn-link"" role=""link"" type=""submit""></form>"
+ ;
 "RTN","SAMIUR2",497,0)
- q nuhref
+ n matien s matien=$g(SAMIPATS(ien,dfn,"MATCHLOG"))
 "RTN","SAMIUR2",498,0)
- ;
+ i matien="" q ""
 "RTN","SAMIUR2",499,0)
-CUMPY(PYARY,sid,KEY) ; forms array of cummulative pack year data
-"RTN","SAMIUR2",500,0)
- ; PYARY passed by name
-"RTN","SAMIUR2",501,0)
- ; KEY is the current form key for matching to a row
-"RTN","SAMIUR2",502,0)
- k @PYARY
-"RTN","SAMIUR2",503,0)
- n root s root=$$setroot^%wd("vapals-patients")
-"RTN","SAMIUR2",504,0)
- ;n sid s sid=$g(@root@(DFN,"samistudyid"))
-"RTN","SAMIUR2",505,0)
- ;q:sid=""
-"RTN","SAMIUR2",506,0)
- n items s items=""
-"RTN","SAMIUR2",507,0)
- d GETITEMS^SAMICASE("items",sid)
-"RTN","SAMIUR2",508,0)
- q:'$d(items)
-"RTN","SAMIUR2",509,0)
- m @PYARY@("items")=items
-"RTN","SAMIUR2",510,0)
- n siform
-"RTN","SAMIUR2",511,0)
- s siform=$o(items("siform"))
-"RTN","SAMIUR2",512,0)
- q:siform=""
-"RTN","SAMIUR2",513,0)
- i siform=$g(KEY) s @PYARY@("current")=1 ;this row is the current form
-"RTN","SAMIUR2",514,0)
- n vals
-"RTN","SAMIUR2",515,0)
- s vals=$na(@root@("graph",sid,siform))
-"RTN","SAMIUR2",516,0)
- n kdate s kdate=$$GETDTKEY^SAMICAS2(siform)
-"RTN","SAMIUR2",517,0)
- n keydate s keydate=$$KEY2DSPD^SAMICAS2(kdate)
-"RTN","SAMIUR2",518,0)
- s @PYARY@("rpt",1,1)="Intake" ; Form
-"RTN","SAMIUR2",519,0)
- s @PYARY@("rpt",1,2)=keydate ; Reported Date
-"RTN","SAMIUR2",520,0)
- n lastcum s lastcum=$g(@vals@("sippy"))
-"RTN","SAMIUR2",521,0)
- s @PYARY@("rpt",1,3)=lastcum ; Pack Years
-"RTN","SAMIUR2",522,0)
- s @PYARY@("rpt",1,4)=lastcum ; Cumulative
-"RTN","SAMIUR2",523,0)
- n lastdt s lastdt=keydate
-"RTN","SAMIUR2",524,0)
- n rptcnt s rptcnt=1
-"RTN","SAMIUR2",525,0)
- n zi s zi=""
-"RTN","SAMIUR2",526,0)
- f  s zi=$o(items("type","vapals:fuform",zi)) q:zi=""  d  ;
-"RTN","SAMIUR2",527,0)
- . s rptcnt=rptcnt+1
-"RTN","SAMIUR2",528,0)
- . s @PYARY@("rpt",rptcnt,1)="Follow-up"
-"RTN","SAMIUR2",529,0)
- . n kdate s kdate=$$GETDTKEY^SAMICAS2(zi)
-"RTN","SAMIUR2",530,0)
- . n keydate s keydate=$$KEY2DSPD^SAMICAS2(kdate)
-"RTN","SAMIUR2",531,0)
- . s @PYARY@("rpt",rptcnt,2)=keydate ; Reported Date
-"RTN","SAMIUR2",532,0)
- . s vals=$na(@root@("graph",sid,zi))
-"RTN","SAMIUR2",533,0)
- . n newpd s newpd=$g(@vals@("sippd"))
-"RTN","SAMIUR2",534,0)
- . n usedate,siq s usedate=keydate
-"RTN","SAMIUR2",535,0)
- . s siq=$g(@vals@("siq")) ; quit date on followup form
-"RTN","SAMIUR2",536,0)
- . i siq'="" d  ; quit date provided
-"RTN","SAMIUR2",537,0)
- . . if $$FMDT(siq)<$$FMDT(lastdt) q  ; quit date out of range
-"RTN","SAMIUR2",538,0)
- . . if $$FMDT(siq)>$$FMDT(keydate) q  ; quit date out of range
-"RTN","SAMIUR2",539,0)
- . . s usedate=siq ; use the quit date as end of range
-"RTN","SAMIUR2",540,0)
- . n newpy s newpy=$$PKYDT(lastdt,usedate,newpd)
-"RTN","SAMIUR2",541,0)
- . s @vals@("sippy")=newpy
-"RTN","SAMIUR2",542,0)
- . s ^gpl("current","KEY")=$g(KEY)
-"RTN","SAMIUR2",543,0)
- . s ^gpl("current","zi")=zi
-"RTN","SAMIUR2",544,0)
- . i zi=$g(KEY) s @PYARY@("current")=rptcnt ;this row is the current form
-"RTN","SAMIUR2",545,0)
- . n newcum s newcum=""
-"RTN","SAMIUR2",546,0)
- . i newpy'="" s newcum=lastcum+newpy
-"RTN","SAMIUR2",547,0)
- . s @PYARY@("rpt",rptcnt,3)=newpy ; Pack Years
-"RTN","SAMIUR2",548,0)
- . s @PYARY@("rpt",rptcnt,4)=newcum ; Cumulative
-"RTN","SAMIUR2",549,0)
- . s lastdt=keydate
-"RTN","SAMIUR2",550,0)
- . s lastcum=newcum
-"RTN","SAMIUR2",551,0)
- q
-"RTN","SAMIUR2",552,0)
  ;
+"RTN","SAMIUR2",500,0)
+ new nuhref set nuhref="<form method=POST action=""/vapals"">"
+"RTN","SAMIUR2",501,0)
+ set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""merge"">"
+"RTN","SAMIUR2",502,0)
+ set nuhref=nuhref_"<input type=hidden name=""toien"" value="_ien_">"
+"RTN","SAMIUR2",503,0)
+ set nuhref=nuhref_"<input value=""Merge"" class=""btn btn-link"" role=""link"" type=""submit""></form>"
+"RTN","SAMIUR2",504,0)
+ q nuhref
+"RTN","SAMIUR2",505,0)
+ ;
+"RTN","SAMIUR2",506,0)
+CUMPY(PYARY,sid,KEY) ; forms array of cummulative pack year data
+"RTN","SAMIUR2",507,0)
+ ; PYARY passed by name
+"RTN","SAMIUR2",508,0)
+ ; KEY is the current form key for matching to a row
+"RTN","SAMIUR2",509,0)
+ k @PYARY
+"RTN","SAMIUR2",510,0)
+ n root s root=$$setroot^%wd("vapals-patients")
+"RTN","SAMIUR2",511,0)
+ ;n sid s sid=$g(@root@(DFN,"samistudyid"))
+"RTN","SAMIUR2",512,0)
+ ;q:sid=""
+"RTN","SAMIUR2",513,0)
+ n items s items=""
+"RTN","SAMIUR2",514,0)
+ d GETITEMS^SAMICASE("items",sid)
+"RTN","SAMIUR2",515,0)
+ q:'$d(items)
+"RTN","SAMIUR2",516,0)
+ m @PYARY@("items")=items
+"RTN","SAMIUR2",517,0)
+ n siform
+"RTN","SAMIUR2",518,0)
+ s siform=$o(items("siform"))
+"RTN","SAMIUR2",519,0)
+ q:siform=""
+"RTN","SAMIUR2",520,0)
+ i siform=$g(KEY) s @PYARY@("current")=1 ;this row is the current form
+"RTN","SAMIUR2",521,0)
+ n vals
+"RTN","SAMIUR2",522,0)
+ s vals=$na(@root@("graph",sid,siform))
+"RTN","SAMIUR2",523,0)
+ n kdate s kdate=$$GETDTKEY^SAMICAS2(siform)
+"RTN","SAMIUR2",524,0)
+ n keydate s keydate=$$KEY2DSPD^SAMICAS2(kdate)
+"RTN","SAMIUR2",525,0)
+ s @PYARY@("rpt",1,1)="Intake" ; Form
+"RTN","SAMIUR2",526,0)
+ s @PYARY@("rpt",1,2)=keydate ; Reported Date
+"RTN","SAMIUR2",527,0)
+ n lastcum s lastcum=$g(@vals@("sippy"))
+"RTN","SAMIUR2",528,0)
+ s @PYARY@("rpt",1,3)=lastcum ; Pack Years
+"RTN","SAMIUR2",529,0)
+ s @PYARY@("rpt",1,4)=lastcum ; Cumulative
+"RTN","SAMIUR2",530,0)
+ n lastdt s lastdt=keydate
+"RTN","SAMIUR2",531,0)
+ n rptcnt s rptcnt=1
+"RTN","SAMIUR2",532,0)
+ n zi s zi=""
+"RTN","SAMIUR2",533,0)
+ f  s zi=$o(items("type","vapals:fuform",zi)) q:zi=""  d  ;
+"RTN","SAMIUR2",534,0)
+ . s rptcnt=rptcnt+1
+"RTN","SAMIUR2",535,0)
+ . s @PYARY@("rpt",rptcnt,1)="Follow-up"
+"RTN","SAMIUR2",536,0)
+ . n kdate s kdate=$$GETDTKEY^SAMICAS2(zi)
+"RTN","SAMIUR2",537,0)
+ . n keydate s keydate=$$KEY2DSPD^SAMICAS2(kdate)
+"RTN","SAMIUR2",538,0)
+ . s @PYARY@("rpt",rptcnt,2)=keydate ; Reported Date
+"RTN","SAMIUR2",539,0)
+ . s vals=$na(@root@("graph",sid,zi))
+"RTN","SAMIUR2",540,0)
+ . n newpd s newpd=$g(@vals@("sippd"))
+"RTN","SAMIUR2",541,0)
+ . n usedate,siq s usedate=keydate
+"RTN","SAMIUR2",542,0)
+ . s siq=$g(@vals@("siq")) ; quit date on followup form
+"RTN","SAMIUR2",543,0)
+ . i siq'="" d  ; quit date provided
+"RTN","SAMIUR2",544,0)
+ . . if $$FMDT(siq)<$$FMDT(lastdt) q  ; quit date out of range
+"RTN","SAMIUR2",545,0)
+ . . if $$FMDT(siq)>$$FMDT(keydate) q  ; quit date out of range
+"RTN","SAMIUR2",546,0)
+ . . s usedate=siq ; use the quit date as end of range
+"RTN","SAMIUR2",547,0)
+ . n newpy s newpy=$$PKYDT(lastdt,usedate,newpd)
+"RTN","SAMIUR2",548,0)
+ . s @vals@("sippy")=newpy
+"RTN","SAMIUR2",549,0)
+ . s ^gpl("current","KEY")=$g(KEY)
+"RTN","SAMIUR2",550,0)
+ . s ^gpl("current","zi")=zi
+"RTN","SAMIUR2",551,0)
+ . i zi=$g(KEY) s @PYARY@("current")=rptcnt ;this row is the current form
+"RTN","SAMIUR2",552,0)
+ . n newcum s newcum=""
 "RTN","SAMIUR2",553,0)
-EPAT(ien,dfn,SAMIPATS) ; extrinsic the patient name with navigation
+ . i newpy'="" s newcum=lastcum+newpy
 "RTN","SAMIUR2",554,0)
- ; to enrollment
+ . s @PYARY@("rpt",rptcnt,3)=newpy ; Pack Years
 "RTN","SAMIUR2",555,0)
- q
+ . s @PYARY@("rpt",rptcnt,4)=newcum ; Cumulative
 "RTN","SAMIUR2",556,0)
+ . s lastdt=keydate
+"RTN","SAMIUR2",557,0)
+ . s lastcum=newcum
+"RTN","SAMIUR2",558,0)
+ q
+"RTN","SAMIUR2",559,0)
+ ;
+"RTN","SAMIUR2",560,0)
+EPAT(ien,dfn,SAMIPATS) ; extrinsic the patient name with navigation
+"RTN","SAMIUR2",561,0)
+ ; to enrollment
+"RTN","SAMIUR2",562,0)
+ q
+"RTN","SAMIUR2",563,0)
  ;
 "VER")
 8.0^22.2

@@ -1,7 +1,7 @@
-SAMIHL7 ;SAMI/lgc/arc - HL7 UTILITIES ;Jul 24, 2020@11:42
- ;;18.0;SAMI;;;Build 1
+SAMIHL7 ;SAMI/lgc/arc - HL7 UTILITIES ;Apr 14, 2021@15:59
+ ;;18.0;SAMI;;;Build 8
  ;
- quit ; not from top
+ quit  ; not from top
  ;
  ; example incoming fields array
  ;
@@ -72,7 +72,7 @@ UPDTPTL1 ;
  if $length($get(fields("ssn"))),$data(@rootpl@("ssn",$get(fields("ssn")))) do
  . set ptienssntmp=$order(@rootpl@("ssn",$get(fields("ssn")),0))
  . for  set ptienssn=$order(@rootpl@("ssn",$get(fields("ssn")),ptienssn)) quit:'ptienssn  do  quit:ptiennm
- .. if $length($get(fields("saminame"))),(@rootpl@(ptienssn,"saminame")=fields("saminame")) do
+ .. if $length($get(fields("saminame"))),($$UP^XLFSTR(@rootpl@(ptienssn,"saminame"))=$$UP^XLFSTR(fields("saminame"))) do
  ... set ptiennm=ptienssn
  ;
  set ^KBAP("SAMIHL7","UPDTPTL1","A")=""

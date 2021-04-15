@@ -164,11 +164,14 @@ ONEFORM(SITEID,SAMIFORM,SAMIDIR) ; process one form for a site
  . . f  s jj=$o(DICT(jj)) q:+jj=0  d  ;
  . . . ;s $P(@SAMIOUT@(SAMIN),"|",OFFSET+jj)=""""_$g(@groot@(SAMII,SAMIJ,DICT(jj)))_""""
  . . . n val
- . . . s val=$g(@groot@(SAMII,SAMIJ,DICT(jj)))_""""
- . . . s val=$tr(val,$char(11))
- . . . s val=$tr(val,$char(13))
- . . . d findReplaceAll^%ts(.val,"""","""""")
- . . . s $P(@SAMIOUT@(SAMIN),"|",OFFSET+jj)=""""_val
+ . . . ;s val=$g(@groot@(SAMII,SAMIJ,DICT(jj)))_""""
+ . . . s val=$g(@groot@(SAMII,SAMIJ,DICT(jj)))
+ . . . i val'="" d  ;
+ . . . . s val=$tr(val,$char(11))
+ . . . . s val=$tr(val,$char(13))
+ . . . . d findReplaceAll^%ts(.val,"""","""""")
+ . . . . s val=""""_val_""""
+ . . . s $P(@SAMIOUT@(SAMIN),"|",OFFSET+jj)=val
  . . S @SAMIOUT@(SAMIN)=SITEID_"|"_SAMII_"|"_SAMIJ_"|"_@SAMIOUT@(SAMIN)
  . . ;s @SAMIOUT@(SAMIN)=@SAMIOUT@(SAMIN)_$C(13,10)
  . ;b

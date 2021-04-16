@@ -1,5 +1,5 @@
-KIDS Distribution saved on Apr 16, 2021@12:26:18
-cteval form prefil to prior scans field correction
+KIDS Distribution saved on Apr 16, 2021@12:49:20
+cteval form prefill prior scans field correction
 **KIDS**:SAMI*18.0*11^
 
 **INSTALL NAME**
@@ -15,7 +15,7 @@ Critical bugs fixed in Intake, CT eval, and reports
 "BLD",11508,6)
 ^11
 "BLD",11508,6.3)
-10
+11
 "BLD",11508,"KRN",0)
 ^9.67PA^1.5^25
 "BLD",11508,"KRN",.4,0)
@@ -47,7 +47,7 @@ Critical bugs fixed in Intake, CT eval, and reports
 "BLD",11508,"KRN",9.8,0)
 9.8
 "BLD",11508,"KRN",9.8,"NM",0)
-^9.68A^6^6
+^9.68A^7^7
 "BLD",11508,"KRN",9.8,"NM",1,0)
 SAMINOT1^^0^B443163534
 "BLD",11508,"KRN",9.8,"NM",2,0)
@@ -60,6 +60,10 @@ SAMICSV^^0^B57080938
 SAMIUR2^^0^B406603480
 "BLD",11508,"KRN",9.8,"NM",6,0)
 SAMIHL7^^0^B89755453
+"BLD",11508,"KRN",9.8,"NM",7,0)
+SAMICAS3^^0^B268053249
+"BLD",11508,"KRN",9.8,"NM","B","SAMICAS3",7)
+
 "BLD",11508,"KRN",9.8,"NM","B","SAMICSV",4)
 
 "BLD",11508,"KRN",9.8,"NM","B","SAMIHL7",6)
@@ -261,13 +265,1243 @@ NO
 "QUES","XPZ2","M")
 D XPZ2^XPDIQ
 "RTN")
-6
+7
+"RTN","SAMICAS3")
+0^7^B268053249
+"RTN","SAMICAS3",1,0)
+SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ;2021-03-17T18:31Z
+"RTN","SAMICAS3",2,0)
+ ;;18.0;SAMI;**3,9**;;Build 11
+"RTN","SAMICAS3",3,0)
+ ;;1.18.0.9-i9
+"RTN","SAMICAS3",4,0)
+ ;
+"RTN","SAMICAS3",5,0)
+ ; SAMICAS3 contains ppis and other subroutines to support processing
+"RTN","SAMICAS3",6,0)
+ ; of the VAPALS case review page.
+"RTN","SAMICAS3",7,0)
+ ;
+"RTN","SAMICAS3",8,0)
+ quit  ; no entry from top
+"RTN","SAMICAS3",9,0)
+ ;
+"RTN","SAMICAS3",10,0)
+ ;
+"RTN","SAMICAS3",11,0)
+ ;
+"RTN","SAMICAS3",12,0)
+ ;@section 0 primary development: see routine %wful
+"RTN","SAMICAS3",13,0)
+ ;
+"RTN","SAMICAS3",14,0)
+ ;
+"RTN","SAMICAS3",15,0)
+ ;
+"RTN","SAMICAS3",16,0)
+ ;@license: see routine SAMIUL
+"RTN","SAMICAS3",17,0)
+ ;@documentation : see SAMICUL
+"RTN","SAMICAS3",18,0)
+ ;@contents
+"RTN","SAMICAS3",19,0)
+ ; WSNFPOST: post new form selection (post service)
+"RTN","SAMICAS3",20,0)
+ ; MKSBFORM: create background form
+"RTN","SAMICAS3",21,0)
+ ; $$PREVNOD = key of latest form including nodule grid
+"RTN","SAMICAS3",22,0)
+ ; $$LASTCMP = date & key of last comparison scan
+"RTN","SAMICAS3",23,0)
+ ; $$PRIORCMP = dates of all scans before last comparison scan
+"RTN","SAMICAS3",24,0)
+ ; SORTFRMS: sorts all forms for patient sid by date
+"RTN","SAMICAS3",25,0)
+ ; MKCEFORM: create ct evaluation form
+"RTN","SAMICAS3",26,0)
+ ; MKFUFORM: create follow-up form
+"RTN","SAMICAS3",27,0)
+ ; $$BASELNDT = last previous baseline ct date
+"RTN","SAMICAS3",28,0)
+ ; MKPTFORM: create pet evaluation form
+"RTN","SAMICAS3",29,0)
+ ; MKITFORM: create intervention form
+"RTN","SAMICAS3",30,0)
+ ; MKBXFORM: create biopsy form
+"RTN","SAMICAS3",31,0)
+ ; CASETBL: generates case review table
+"RTN","SAMICAS3",32,0)
+ ;
+"RTN","SAMICAS3",33,0)
+ ;
+"RTN","SAMICAS3",34,0)
+ ;
+"RTN","SAMICAS3",35,0)
+ ;@section 1 WSNFPOST & related subroutines
+"RTN","SAMICAS3",36,0)
+ ;
+"RTN","SAMICAS3",37,0)
+ ;
+"RTN","SAMICAS3",38,0)
+ ;
+"RTN","SAMICAS3",39,0)
+ ;;@ppi WSNFPOST^SAMICAS3, post new form selection (post service)
+"RTN","SAMICAS3",40,0)
+WSNFPOST ; post new form selection (post service)
+"RTN","SAMICAS3",41,0)
+ ;
+"RTN","SAMICAS3",42,0)
+ ;@stanza 1 invocation, binding, & branching
+"RTN","SAMICAS3",43,0)
+ ;
+"RTN","SAMICAS3",44,0)
+ ;ven/gpl;web service;procedure;
+"RTN","SAMICAS3",45,0)
+ ;@web service
+"RTN","SAMICAS3",46,0)
+ ; web service SAMICASE-wsNuFormPost
+"RTN","SAMICAS3",47,0)
+ ;@called by
+"RTN","SAMICAS3",48,0)
+ ; WSNFPOST^SAMICASE
+"RTN","SAMICAS3",49,0)
+ ;@calls
+"RTN","SAMICAS3",50,0)
+ ; parseBody^%wf
+"RTN","SAMICAS3",51,0)
+ ; GETHOME^SAMIHOM3
+"RTN","SAMICAS3",52,0)
+ ; $$KEYDATE^SAMIHOM3
+"RTN","SAMICAS3",53,0)
+ ; $$setroot^%wd
+"RTN","SAMICAS3",54,0)
+ ; $$KEY2FM^SAMICAS2
+"RTN","SAMICAS3",55,0)
+ ; MKSBFORM^SAMICAS3
+"RTN","SAMICAS3",56,0)
+ ; MKCEFORM^SAMICAS3
+"RTN","SAMICAS3",57,0)
+ ; MKFUFORM^SAMICAS3
+"RTN","SAMICAS3",58,0)
+ ; MKBXFORM^SAMICAS3
+"RTN","SAMICAS3",59,0)
+ ; MKPTFORM^SAMICAS3
+"RTN","SAMICAS3",60,0)
+ ; MKITFORM^SAMICAS3
+"RTN","SAMICAS3",61,0)
+ ;@input
+"RTN","SAMICAS3",62,0)
+ ; .ARGS
+"RTN","SAMICAS3",63,0)
+ ; .ARGS("form")
+"RTN","SAMICAS3",64,0)
+ ; .ARGS("studyid")
+"RTN","SAMICAS3",65,0)
+ ; .ARGS("sid")
+"RTN","SAMICAS3",66,0)
+ ; .BODY
+"RTN","SAMICAS3",67,0)
+ ; .BODY(1) (e.g. "samiroute=casereview&dfn="_dfn_"&studyid="_studyid)
+"RTN","SAMICAS3",68,0)
+ ;@output
+"RTN","SAMICAS3",69,0)
+ ; @RESULT
+"RTN","SAMICAS3",70,0)
+ ;@tests
+"RTN","SAMICAS3",71,0)
+ ; SAMIUTS2
+"RTN","SAMICAS3",72,0)
+ ;
+"RTN","SAMICAS3",73,0)
+ ;@stanza 2 get new form
+"RTN","SAMICAS3",74,0)
+ ;
+"RTN","SAMICAS3",75,0)
+ new vars,bdy
+"RTN","SAMICAS3",76,0)
+ set bdy=$get(BODY(1))
+"RTN","SAMICAS3",77,0)
+ do parseBody^%wf("vars",.bdy)
+"RTN","SAMICAS3",78,0)
+ merge vars=ARGS
+"RTN","SAMICAS3",79,0)
+ merge ^SAMIUL("nuform","vars")=vars
+"RTN","SAMICAS3",80,0)
+ ;
+"RTN","SAMICAS3",81,0)
+ new sid set sid=$get(vars("studyid"))
+"RTN","SAMICAS3",82,0)
+ if sid="" set sid=$get(ARGS("sid"))
+"RTN","SAMICAS3",83,0)
+ if sid="" do  quit  ;
+"RTN","SAMICAS3",84,0)
+ . do GETHOME^SAMIHOM3(.RESULT,.ARGS) ; on error return to home page
+"RTN","SAMICAS3",85,0)
+ . quit
+"RTN","SAMICAS3",86,0)
+ ;
+"RTN","SAMICAS3",87,0)
+ set nuform=$get(vars("form"))
+"RTN","SAMICAS3",88,0)
+ if nuform="" set nuform="ceform"
+"RTN","SAMICAS3",89,0)
+ ;
+"RTN","SAMICAS3",90,0)
+ new datekey set datekey=$$KEYDATE^SAMIHOM3($$NOW^XLFDT)
+"RTN","SAMICAS3",91,0)
+ ;
+"RTN","SAMICAS3",92,0)
+ ; check to see if form already exists
+"RTN","SAMICAS3",93,0)
+ ;
+"RTN","SAMICAS3",94,0)
+ new root set root=$$setroot^%wd("vapals-patients")
+"RTN","SAMICAS3",95,0)
+ n collide s collide=0 ; duplicate form for today - backdate forms scenario
+"RTN","SAMICAS3",96,0)
+ if $data(@root@("graph",sid,nuform_"-"_datekey)) do  ; already exists
+"RTN","SAMICAS3",97,0)
+ . s collide=1
+"RTN","SAMICAS3",98,0)
+ . if nuform="siform" quit
+"RTN","SAMICAS3",99,0)
+ . if nuform="sbform" quit  ; do not create multiple background forms
+"RTN","SAMICAS3",100,0)
+ . new lastone
+"RTN","SAMICAS3",101,0)
+ . set lastone=$order(@root@("graph",sid,nuform_"-a  "),-1)
+"RTN","SAMICAS3",102,0)
+ . quit:lastone=""
+"RTN","SAMICAS3",103,0)
+ . set newfm=$$KEY2FM^SAMICASE(lastone)
+"RTN","SAMICAS3",104,0)
+ . set datekey=$$KEYDATE^SAMIHOM3($$FMADD^XLFDT(newfm,1)) ; add one day to the last form
+"RTN","SAMICAS3",105,0)
+ ;
+"RTN","SAMICAS3",106,0)
+ ; code to not allow two same forms for a patient a day
+"RTN","SAMICAS3",107,0)
+ ;
+"RTN","SAMICAS3",108,0)
+ i collide=1 d  q  ;
+"RTN","SAMICAS3",109,0)
+ . s ARGS("errorMessage")="Form already exists for today"
+"RTN","SAMICAS3",110,0)
+ . s ARGS("studyid")=sid
+"RTN","SAMICAS3",111,0)
+ . d WSCASE^SAMICASE(.RESULT,.ARGS)
+"RTN","SAMICAS3",112,0)
+ ;
+"RTN","SAMICAS3",113,0)
+ if nuform="sbform" do  ;
+"RTN","SAMICAS3",114,0)
+ . new oldkey s oldkey=$o(@root@("graph",sid,"sbform"))
+"RTN","SAMICAS3",115,0)
+ . i $e(oldkey,1,6)="sbform" d  q  ;
+"RTN","SAMICAS3",116,0)
+ . . set ARGS("key")=oldkey
+"RTN","SAMICAS3",117,0)
+ . . set ARGS("studyid")=sid
+"RTN","SAMICAS3",118,0)
+ . . set ARGS("form")="vapals:sbform"
+"RTN","SAMICAS3",119,0)
+ . new key set key="sbform-"_datekey
+"RTN","SAMICAS3",120,0)
+ . set ARGS("key")=key
+"RTN","SAMICAS3",121,0)
+ . set ARGS("studyid")=sid
+"RTN","SAMICAS3",122,0)
+ . set ARGS("form")="vapals:sbform"
+"RTN","SAMICAS3",123,0)
+ . do MKSBFORM(sid,key)
+"RTN","SAMICAS3",124,0)
+ . quit
+"RTN","SAMICAS3",125,0)
+ ;
+"RTN","SAMICAS3",126,0)
+ if nuform="ceform" do  ;
+"RTN","SAMICAS3",127,0)
+ . new key set key="ceform-"_datekey
+"RTN","SAMICAS3",128,0)
+ . set ARGS("key")=key
+"RTN","SAMICAS3",129,0)
+ . set ARGS("studyid")=sid
+"RTN","SAMICAS3",130,0)
+ . set ARGS("form")="vapals:ceform"
+"RTN","SAMICAS3",131,0)
+ . do MKCEFORM(sid,key)
+"RTN","SAMICAS3",132,0)
+ . quit
+"RTN","SAMICAS3",133,0)
+ ;
+"RTN","SAMICAS3",134,0)
+ if nuform="fuform" do  ;
+"RTN","SAMICAS3",135,0)
+ . new key set key="fuform-"_datekey
+"RTN","SAMICAS3",136,0)
+ . set ARGS("key")=key
+"RTN","SAMICAS3",137,0)
+ . set ARGS("studyid")=sid
+"RTN","SAMICAS3",138,0)
+ . set ARGS("form")="vapals:fuform"
+"RTN","SAMICAS3",139,0)
+ . do MKFUFORM(sid,key)
+"RTN","SAMICAS3",140,0)
+ . quit
+"RTN","SAMICAS3",141,0)
+ ;
+"RTN","SAMICAS3",142,0)
+ if nuform="bxform" do  ;
+"RTN","SAMICAS3",143,0)
+ . new key set key="bxform-"_datekey
+"RTN","SAMICAS3",144,0)
+ . set ARGS("key")=key
+"RTN","SAMICAS3",145,0)
+ . set ARGS("studyid")=sid
+"RTN","SAMICAS3",146,0)
+ . set ARGS("form")="vapals:bxform"
+"RTN","SAMICAS3",147,0)
+ . do MKBXFORM(sid,key)
+"RTN","SAMICAS3",148,0)
+ . quit
+"RTN","SAMICAS3",149,0)
+ ;
+"RTN","SAMICAS3",150,0)
+ if nuform="ptform" do  ;
+"RTN","SAMICAS3",151,0)
+ . new key set key="ptform-"_datekey
+"RTN","SAMICAS3",152,0)
+ . set ARGS("key")=key
+"RTN","SAMICAS3",153,0)
+ . set ARGS("studyid")=sid
+"RTN","SAMICAS3",154,0)
+ . set ARGS("form")="vapals:ptform"
+"RTN","SAMICAS3",155,0)
+ . do MKPTFORM(sid,key)
+"RTN","SAMICAS3",156,0)
+ . quit
+"RTN","SAMICAS3",157,0)
+ ;
+"RTN","SAMICAS3",158,0)
+ if nuform="itform" do  ;
+"RTN","SAMICAS3",159,0)
+ . new key set key="itform-"_datekey
+"RTN","SAMICAS3",160,0)
+ . set ARGS("key")=key
+"RTN","SAMICAS3",161,0)
+ . set ARGS("studyid")=sid
+"RTN","SAMICAS3",162,0)
+ . set ARGS("form")="vapals:itform"
+"RTN","SAMICAS3",163,0)
+ . do MKITFORM(sid,key)
+"RTN","SAMICAS3",164,0)
+ . quit
+"RTN","SAMICAS3",165,0)
+ ;
+"RTN","SAMICAS3",166,0)
+ do wsGetForm^%wf(.RESULT,.ARGS)
+"RTN","SAMICAS3",167,0)
+ ;
+"RTN","SAMICAS3",168,0)
+ ;@stanza 3 termination
+"RTN","SAMICAS3",169,0)
+ ;
+"RTN","SAMICAS3",170,0)
+ quit  ; end of ppi WSNFPOST^SAMICAS3
+"RTN","SAMICAS3",171,0)
+ ;
+"RTN","SAMICAS3",172,0)
+ ;
+"RTN","SAMICAS3",173,0)
+ ;
+"RTN","SAMICAS3",174,0)
+MKSBFORM(sid,key) ; create background form
+"RTN","SAMICAS3",175,0)
+ ;
+"RTN","SAMICAS3",176,0)
+ ;@stanza 1 invocation, binding, & branching
+"RTN","SAMICAS3",177,0)
+ ;
+"RTN","SAMICAS3",178,0)
+ ;ven/gpl;private;procedure;
+"RTN","SAMICAS3",179,0)
+ ;@called-by
+"RTN","SAMICAS3",180,0)
+ ; WSNFPOST^SAMICAS3
+"RTN","SAMICAS3",181,0)
+ ;@calls
+"RTN","SAMICAS3",182,0)
+ ; $$setroot^%wd
+"RTN","SAMICAS3",183,0)
+ ; $$SID2NUM^SAMIHOM3
+"RTN","SAMICAS3",184,0)
+ ;@input
+"RTN","SAMICAS3",185,0)
+ ; sid = study id
+"RTN","SAMICAS3",186,0)
+ ; key =
+"RTN","SAMICAS3",187,0)
+ ;@output
+"RTN","SAMICAS3",188,0)
+ ; @root@("graph",sid,key)
+"RTN","SAMICAS3",189,0)
+ ;@examples [tbd]
+"RTN","SAMICAS3",190,0)
+ ;@tests [tbd]
+"RTN","SAMICAS3",191,0)
+ ;
+"RTN","SAMICAS3",192,0)
+ ;@stanza 2 create background form
+"RTN","SAMICAS3",193,0)
+ ;
+"RTN","SAMICAS3",194,0)
+ new root set root=$$setroot^%wd("vapals-patients")
+"RTN","SAMICAS3",195,0)
+ new sien set sien=$$SID2NUM^SAMIHOM3(sid)
+"RTN","SAMICAS3",196,0)
+ quit:+sien=0
+"RTN","SAMICAS3",197,0)
+ new cdate set cdate=$piece(key,"sbform-",2)
+"RTN","SAMICAS3",198,0)
+ merge @root@("graph",sid,key)=@root@(sien)
+"RTN","SAMICAS3",199,0)
+ set @root@("graph",sid,key,"samicreatedate")=cdate
+"RTN","SAMICAS3",200,0)
+ do SSAMISTA^SAMICASE(sid,key,"incomplete")
+"RTN","SAMICAS3",201,0)
+ ;
+"RTN","SAMICAS3",202,0)
+ ;@stanza 3 termination
+"RTN","SAMICAS3",203,0)
+ ;
+"RTN","SAMICAS3",204,0)
+ quit  ; end of MKSBFORM
+"RTN","SAMICAS3",205,0)
+ ;
+"RTN","SAMICAS3",206,0)
+ ;
+"RTN","SAMICAS3",207,0)
+ ;
+"RTN","SAMICAS3",208,0)
+PREVNOD(sid) ; key of latest form including nodule grid
+"RTN","SAMICAS3",209,0)
+ ;
+"RTN","SAMICAS3",210,0)
+ ; used for nodule copy
+"RTN","SAMICAS3",211,0)
+ ;
+"RTN","SAMICAS3",212,0)
+ n retkey s retkey=""
+"RTN","SAMICAS3",213,0)
+ n fary
+"RTN","SAMICAS3",214,0)
+ d SORTFRMS(.fary,sid)
+"RTN","SAMICAS3",215,0)
+ n tdt s tdt=""
+"RTN","SAMICAS3",216,0)
+ f  s tdt=$o(fary(tdt),-1) q:tdt=""  q:retkey'=""  d  ; 
+"RTN","SAMICAS3",217,0)
+ . n tmpkey s tmpkey=""
+"RTN","SAMICAS3",218,0)
+ . f  s tmpkey=$o(fary(tdt,tmpkey)) q:tmpkey=""  q:retkey'=""  d  ; 
+"RTN","SAMICAS3",219,0)
+ . . i tmpkey["ceform" s retkey=tmpkey
+"RTN","SAMICAS3",220,0)
+ . . i tmpkey["ptform" s retkey=tmpkey
+"RTN","SAMICAS3",221,0)
+ . . i tmpkey["bxform" s retkey=tmpkey
+"RTN","SAMICAS3",222,0)
+ ;
+"RTN","SAMICAS3",223,0)
+ q retkey ; end of $$PREVNOD
+"RTN","SAMICAS3",224,0)
+ ;
+"RTN","SAMICAS3",225,0)
+ ;
+"RTN","SAMICAS3",226,0)
+ ;
+"RTN","SAMICAS3",227,0)
+LASTCMP(sid,retkey) ; date & key of last comparison scan
+"RTN","SAMICAS3",228,0)
+ ;
+"RTN","SAMICAS3",229,0)
+ ; passed by reference
+"RTN","SAMICAS3",230,0)
+ ;
+"RTN","SAMICAS3",231,0)
+ s retkey=""
+"RTN","SAMICAS3",232,0)
+ n fary
+"RTN","SAMICAS3",233,0)
+ d SORTFRMS(.fary,sid)
+"RTN","SAMICAS3",234,0)
+ n tdt s tdt=$P($$NOW^XLFDT,".",1) ; start with before today
+"RTN","SAMICAS3",235,0)
+ f  s tdt=$o(fary(tdt),-1) q:tdt=""  q:retkey'=""  d  ; 
+"RTN","SAMICAS3",236,0)
+ . n tmpkey s tmpkey=""
+"RTN","SAMICAS3",237,0)
+ . f  s tmpkey=$o(fary(tdt,tmpkey)) q:tmpkey=""  q:retkey'=""  d  ; 
+"RTN","SAMICAS3",238,0)
+ . . i tmpkey["ceform" s retkey=tmpkey
+"RTN","SAMICAS3",239,0)
+ ;
+"RTN","SAMICAS3",240,0)
+ n retdt s retdt=-1
+"RTN","SAMICAS3",241,0)
+ i retkey'="" d  ;
+"RTN","SAMICAS3",242,0)
+ . n fmdt
+"RTN","SAMICAS3",243,0)
+ . s fmdt=$$KEY2FM^SAMICASE(retkey)
+"RTN","SAMICAS3",244,0)
+ . s retdt=$$VAPALSDT^SAMICASE(fmdt)
+"RTN","SAMICAS3",245,0)
+ ;
+"RTN","SAMICAS3",246,0)
+ q retdt ; end of $$LASTCMP
+"RTN","SAMICAS3",247,0)
+ ;
+"RTN","SAMICAS3",248,0)
+ ;
+"RTN","SAMICAS3",249,0)
+ ;
+"RTN","SAMICAS3",250,0)
+PRIORCMP(sid) ; dates of all scans before last comparison scan
+"RTN","SAMICAS3",251,0)
+ ;
+"RTN","SAMICAS3",252,0)
+ n retstr s retstr=""
+"RTN","SAMICAS3",253,0)
+ n lastcmp s lastcmp=""
+"RTN","SAMICAS3",254,0)
+ n fary
+"RTN","SAMICAS3",255,0)
+ d SORTFRMS(.fary,sid)
+"RTN","SAMICAS3",256,0)
+ n tdt s tdt=$P($$NOW^XLFDT,".",1) ; start with before today
+"RTN","SAMICAS3",257,0)
+ f  s tdt=$o(fary(tdt),-1) q:tdt=""  d  ; 
+"RTN","SAMICAS3",258,0)
+ . i lastcmp="" d  ; first find the last comparison scan
+"RTN","SAMICAS3",259,0)
+ . . n tmpkey s tmpkey=""
+"RTN","SAMICAS3",260,0)
+ . . f  s tmpkey=$o(fary(tdt,tmpkey)) q:tmpkey=""  q:lastcmp'=""  d  ; 
+"RTN","SAMICAS3",261,0)
+ . . . i tmpkey["ceform" s lastcmp=tmpkey
+"RTN","SAMICAS3",262,0)
+ . d  ;
+"RTN","SAMICAS3",263,0)
+ . . ; next add all previous scans to retstr
+"RTN","SAMICAS3",264,0)
+ . . n tmpkey2 s tmpkey2=""
+"RTN","SAMICAS3",265,0)
+ . . f  s tmpkey2=$o(fary(tdt,tmpkey2)) q:tmpkey2=""  d  ; 
+"RTN","SAMICAS3",266,0)
+ . . . i tmpkey2["ceform" d  ; convert to external date
+"RTN","SAMICAS3",267,0)
+ . . . . s retstr=$$KEY2DT(tmpkey2)_retstr
+"RTN","SAMICAS3",268,0)
+ i $e(retstr,$l(retstr))="," s retstr=$e(retstr,1,$l(retstr)-1)
+"RTN","SAMICAS3",269,0)
+ ;
+"RTN","SAMICAS3",270,0)
+ q retstr ; end of $$PRIORCMP
+"RTN","SAMICAS3",271,0)
+ ;
+"RTN","SAMICAS3",272,0)
+KEY2DT(key) ; extrinsic returns a date to put in the prior scans field
+"RTN","SAMICAS3",273,0)
+ n retstr2 s retstr2=""
+"RTN","SAMICAS3",274,0)
+ n fmdt
+"RTN","SAMICAS3",275,0)
+ s fmdt=$$KEY2FM^SAMICASE(tmpkey2)
+"RTN","SAMICAS3",276,0)
+ s retstr2=$$VAPALSDT^SAMICASE(fmdt)_","_retstr2
+"RTN","SAMICAS3",277,0)
+ q retstr2
+"RTN","SAMICAS3",278,0)
+ ;
+"RTN","SAMICAS3",279,0)
+ ;
+"RTN","SAMICAS3",280,0)
+SORTFRMS(ARY,sid) ; sorts all forms for patient sid by date
+"RTN","SAMICAS3",281,0)
+ ;
+"RTN","SAMICAS3",282,0)
+ ; and returns in ARY, passed by reference
+"RTN","SAMICAS3",283,0)
+ ; format of return is ARY(fmdate,key)=""
+"RTN","SAMICAS3",284,0)
+ ;
+"RTN","SAMICAS3",285,0)
+ n root s root=$$setroot^%wd("vapals-patients")
+"RTN","SAMICAS3",286,0)
+ q:'$d(@root@("graph",sid))
+"RTN","SAMICAS3",287,0)
+ n froot s froot=$na(@root@("graph",sid))
+"RTN","SAMICAS3",288,0)
+ n zi s zi=""
+"RTN","SAMICAS3",289,0)
+ f  s zi=$o(@froot@(zi)) q:zi=""  d  ;
+"RTN","SAMICAS3",290,0)
+ . n ftype s ftype=$p(zi,"-",1)
+"RTN","SAMICAS3",291,0)
+ . n fdate s fdate=$p(zi,ftype_"-",2)
+"RTN","SAMICAS3",292,0)
+ . n X,Y
+"RTN","SAMICAS3",293,0)
+ . s X=fdate
+"RTN","SAMICAS3",294,0)
+ . D ^%DT
+"RTN","SAMICAS3",295,0)
+ . i Y=-1 d ^ZTER Q  ;
+"RTN","SAMICAS3",296,0)
+ . S ARY(Y,zi)=""
+"RTN","SAMICAS3",297,0)
+ ;
+"RTN","SAMICAS3",298,0)
+ q  ; end of SORTFRMS
+"RTN","SAMICAS3",299,0)
+ ;
+"RTN","SAMICAS3",300,0)
+ ;
+"RTN","SAMICAS3",301,0)
+ ;
+"RTN","SAMICAS3",302,0)
+MKCEFORM(sid,key) ; create ct evaluation form
+"RTN","SAMICAS3",303,0)
+ ;
+"RTN","SAMICAS3",304,0)
+ ;@stanza 1 invocation, binding, & branching
+"RTN","SAMICAS3",305,0)
+ ;
+"RTN","SAMICAS3",306,0)
+ ;ven/gpl;private;procedure;
+"RTN","SAMICAS3",307,0)
+ ;@called-by
+"RTN","SAMICAS3",308,0)
+ ; WSNFPOST^SAMICAS3
+"RTN","SAMICAS3",309,0)
+ ;@calls
+"RTN","SAMICAS3",310,0)
+ ; $$setroot^%wd
+"RTN","SAMICAS3",311,0)
+ ; $$SID2NUM^SAMIHOM3
+"RTN","SAMICAS3",312,0)
+ ;@input
+"RTN","SAMICAS3",313,0)
+ ; sid = study id
+"RTN","SAMICAS3",314,0)
+ ; key =
+"RTN","SAMICAS3",315,0)
+ ;@output
+"RTN","SAMICAS3",316,0)
+ ; @root@("graph",sid,key)
+"RTN","SAMICAS3",317,0)
+ ;@examples [tbd]
+"RTN","SAMICAS3",318,0)
+ ;@tests [tbd]
+"RTN","SAMICAS3",319,0)
+ ;
+"RTN","SAMICAS3",320,0)
+ ;@stanza 2 create ct eval form
+"RTN","SAMICAS3",321,0)
+ ;
+"RTN","SAMICAS3",322,0)
+ new root set root=$$setroot^%wd("vapals-patients")
+"RTN","SAMICAS3",323,0)
+ new sien set sien=$$SID2NUM^SAMIHOM3(sid)
+"RTN","SAMICAS3",324,0)
+ quit:+sien=0
+"RTN","SAMICAS3",325,0)
+ new cdate set cdate=$piece(key,"ceform-",2)
+"RTN","SAMICAS3",326,0)
+ ; nodule copy
+"RTN","SAMICAS3",327,0)
+ ;n srckey s srckey=$$PREVNOD(sid)
+"RTN","SAMICAS3",328,0)
+ n srckey,srcdate s srcdate=$$LASTCMP(sid,.srckey)
+"RTN","SAMICAS3",329,0)
+ i srckey'="" d  ;
+"RTN","SAMICAS3",330,0)
+ . new target,source
+"RTN","SAMICAS3",331,0)
+ . set source=$name(@root@("graph",sid,srckey))
+"RTN","SAMICAS3",332,0)
+ . set target=$name(@root@("graph",sid,key))
+"RTN","SAMICAS3",333,0)
+ . d CTCOPY^SAMICTC1(source,target)
+"RTN","SAMICAS3",334,0)
+ ; end nodule copy
+"RTN","SAMICAS3",335,0)
+ ;new items,prevct
+"RTN","SAMICAS3",336,0)
+ ;do GETITEMS^SAMICASE("items",sid)
+"RTN","SAMICAS3",337,0)
+ ;set prevct=""
+"RTN","SAMICAS3",338,0)
+ ;if $data(items("type","vapals:ceform")) do  ;previous cteval exists
+"RTN","SAMICAS3",339,0)
+ ;. set prevct=$order(items("type","vapals:ceform",""),-1) ; latest ceform
+"RTN","SAMICAS3",340,0)
+ ;if prevct'="" do  ;
+"RTN","SAMICAS3",341,0)
+ ;. new target,source
+"RTN","SAMICAS3",342,0)
+ ;. set source=$name(@root@("graph",sid,prevct))
+"RTN","SAMICAS3",343,0)
+ ;. set target=$name(@root@("graph",sid,key))
+"RTN","SAMICAS3",344,0)
+ ;. do CTCOPY^SAMICTC1(source,target)
+"RTN","SAMICAS3",345,0)
+ merge @root@("graph",sid,key)=@root@(sien)
+"RTN","SAMICAS3",346,0)
+ set @root@("graph",sid,key,"samicreatedate")=cdate
+"RTN","SAMICAS3",347,0)
+ do SSAMISTA^SAMICASE(sid,key,"incomplete")
+"RTN","SAMICAS3",348,0)
+ ; set baseline CT date and last comparison scan date
+"RTN","SAMICAS3",349,0)
+ do  ;
+"RTN","SAMICAS3",350,0)
+ . n tmpdt
+"RTN","SAMICAS3",351,0)
+ . s tmpdt=$$BASELNDT^SAMICAS3(sid)
+"RTN","SAMICAS3",352,0)
+ . q:tmpdt=-1
+"RTN","SAMICAS3",353,0)
+ . s @root@("graph",sid,key,"sidoe")=tmpdt
+"RTN","SAMICAS3",354,0)
+ . s @root@("graph",sid,key,"cedcs")=$$LASTCMP^SAMICAS3(sid)
+"RTN","SAMICAS3",355,0)
+ . s @root@("graph",sid,key,"cedps")=$$PRIORCMP^SAMICAS3(sid)
+"RTN","SAMICAS3",356,0)
+ ;
+"RTN","SAMICAS3",357,0)
+ ;@stanza 3 termination
+"RTN","SAMICAS3",358,0)
+ ;
+"RTN","SAMICAS3",359,0)
+ quit  ; end of MKCEFORM
+"RTN","SAMICAS3",360,0)
+ ;
+"RTN","SAMICAS3",361,0)
+ ;
+"RTN","SAMICAS3",362,0)
+ ;
+"RTN","SAMICAS3",363,0)
+MKFUFORM(sid,key) ; create Follow-up form
+"RTN","SAMICAS3",364,0)
+ ;
+"RTN","SAMICAS3",365,0)
+ ;@stanza 1 invocation, binding, & branching
+"RTN","SAMICAS3",366,0)
+ ;
+"RTN","SAMICAS3",367,0)
+ ;ven/gpl;private;procedure;
+"RTN","SAMICAS3",368,0)
+ ;@called-by
+"RTN","SAMICAS3",369,0)
+ ; WSNFPOST^SAMICAS3
+"RTN","SAMICAS3",370,0)
+ ;@calls
+"RTN","SAMICAS3",371,0)
+ ; $$setroot^%wd
+"RTN","SAMICAS3",372,0)
+ ; $$SID2NUM^SAMIHOM3
+"RTN","SAMICAS3",373,0)
+ ;@input
+"RTN","SAMICAS3",374,0)
+ ; sid = study id
+"RTN","SAMICAS3",375,0)
+ ; key =
+"RTN","SAMICAS3",376,0)
+ ;@output
+"RTN","SAMICAS3",377,0)
+ ; @root@("graph",sid,key)
+"RTN","SAMICAS3",378,0)
+ ;@examples [tbd]
+"RTN","SAMICAS3",379,0)
+ ;@tests [tbd]
+"RTN","SAMICAS3",380,0)
+ ;
+"RTN","SAMICAS3",381,0)
+ ;@stanza 2 create Follow-up form
+"RTN","SAMICAS3",382,0)
+ ;
+"RTN","SAMICAS3",383,0)
+ new root set root=$$setroot^%wd("vapals-patients")
+"RTN","SAMICAS3",384,0)
+ new sien set sien=$$SID2NUM^SAMIHOM3(sid)
+"RTN","SAMICAS3",385,0)
+ quit:+sien=0
+"RTN","SAMICAS3",386,0)
+ new cdate set cdate=$piece(key,"fuform-",2)
+"RTN","SAMICAS3",387,0)
+ merge @root@("graph",sid,key)=@root@(sien)
+"RTN","SAMICAS3",388,0)
+ set @root@("graph",sid,key,"samicreatedate")=cdate
+"RTN","SAMICAS3",389,0)
+ set @root@("graph",sid,key,"sidof")=$$KEY2DSPD^SAMICAS2(cdate)
+"RTN","SAMICAS3",390,0)
+ set @root@("graph",sid,key,"sidoe")=$$BASELNDT(sid)
+"RTN","SAMICAS3",391,0)
+ do SSAMISTA^SAMICASE(sid,key,"incomplete")
+"RTN","SAMICAS3",392,0)
+ ;
+"RTN","SAMICAS3",393,0)
+ ;@stanza 3 termination
+"RTN","SAMICAS3",394,0)
+ ;
+"RTN","SAMICAS3",395,0)
+ quit  ; end of MKFUFORM
+"RTN","SAMICAS3",396,0)
+ ;
+"RTN","SAMICAS3",397,0)
+ ;
+"RTN","SAMICAS3",398,0)
+ ;
+"RTN","SAMICAS3",399,0)
+BASELNDT(sid) ; last previous baseline ct date
+"RTN","SAMICAS3",400,0)
+ ;
+"RTN","SAMICAS3",401,0)
+ n root s root=$$setroot^%wd("vapals-patients")
+"RTN","SAMICAS3",402,0)
+ n groot s groot=$na(@root@("graph",sid))
+"RTN","SAMICAS3",403,0)
+ n items s items=""
+"RTN","SAMICAS3",404,0)
+ d GETITEMS^SAMICASE("items",sid)
+"RTN","SAMICAS3",405,0)
+ q:'$d(items) ""
+"RTN","SAMICAS3",406,0)
+ n bdate s bdate=""
+"RTN","SAMICAS3",407,0)
+ n bkey s bkey=""
+"RTN","SAMICAS3",408,0)
+ n done s done=0
+"RTN","SAMICAS3",409,0)
+ f  s bkey=$o(items("type","vapals:ceform",bkey)) q:bkey=""  d  ;
+"RTN","SAMICAS3",410,0)
+ . ;w !,bkey," ",$g(@groot@(bkey,"cetex"))
+"RTN","SAMICAS3",411,0)
+ . if $g(@groot@(bkey,"cetex"))="b" d  ;
+"RTN","SAMICAS3",412,0)
+ . . s done=1
+"RTN","SAMICAS3",413,0)
+ . . s bdate=$p(bkey,"ceform-",2)
+"RTN","SAMICAS3",414,0)
+ s bdate=$$KEY2DSPD^SAMICAS2(bdate)
+"RTN","SAMICAS3",415,0)
+ ;
+"RTN","SAMICAS3",416,0)
+ q bdate ; end of $$BASELNDT
+"RTN","SAMICAS3",417,0)
+ ;
+"RTN","SAMICAS3",418,0)
+ ;
+"RTN","SAMICAS3",419,0)
+ ;
+"RTN","SAMICAS3",420,0)
+MKPTFORM(sid,key) ; create pet evaluation form
+"RTN","SAMICAS3",421,0)
+ ;
+"RTN","SAMICAS3",422,0)
+ ;@stanza 1 invocation, binding, & branching
+"RTN","SAMICAS3",423,0)
+ ;
+"RTN","SAMICAS3",424,0)
+ ;ven/gpl;private;procedure;
+"RTN","SAMICAS3",425,0)
+ ;@called-by
+"RTN","SAMICAS3",426,0)
+ ; WSNFPOST^SAMICAS3
+"RTN","SAMICAS3",427,0)
+ ;@calls
+"RTN","SAMICAS3",428,0)
+ ; $$setroot^%wd
+"RTN","SAMICAS3",429,0)
+ ; $$SID2NUM^SAMIHOM3
+"RTN","SAMICAS3",430,0)
+ ;@input
+"RTN","SAMICAS3",431,0)
+ ; sid = study id
+"RTN","SAMICAS3",432,0)
+ ; key =
+"RTN","SAMICAS3",433,0)
+ ;@output
+"RTN","SAMICAS3",434,0)
+ ; @root@("graph",sid,key)
+"RTN","SAMICAS3",435,0)
+ ;@examples [tbd]
+"RTN","SAMICAS3",436,0)
+ ;@tests [tbd]
+"RTN","SAMICAS3",437,0)
+ ;
+"RTN","SAMICAS3",438,0)
+ ;@stanza 2 create pet eval form
+"RTN","SAMICAS3",439,0)
+ ;
+"RTN","SAMICAS3",440,0)
+ new root set root=$$setroot^%wd("vapals-patients")
+"RTN","SAMICAS3",441,0)
+ new sien set sien=$$SID2NUM^SAMIHOM3(sid)
+"RTN","SAMICAS3",442,0)
+ quit:+sien=0
+"RTN","SAMICAS3",443,0)
+ ; nodule copy
+"RTN","SAMICAS3",444,0)
+ ;n srckey s srckey=$$PREVNOD(sid)
+"RTN","SAMICAS3",445,0)
+ n srckey,srcdate s srcdate=$$LASTCMP(sid,.srckey)
+"RTN","SAMICAS3",446,0)
+ i srckey'="" d  ;
+"RTN","SAMICAS3",447,0)
+ . new target,source
+"RTN","SAMICAS3",448,0)
+ . set source=$name(@root@("graph",sid,srckey))
+"RTN","SAMICAS3",449,0)
+ . set target=$name(@root@("graph",sid,key))
+"RTN","SAMICAS3",450,0)
+ . d CTCOPY^SAMICTC1(source,target)
+"RTN","SAMICAS3",451,0)
+ ; end nodule copy
+"RTN","SAMICAS3",452,0)
+ new cdate set cdate=$piece(key,"ptform-",2)
+"RTN","SAMICAS3",453,0)
+ merge @root@("graph",sid,key)=@root@(sien)
+"RTN","SAMICAS3",454,0)
+ set @root@("graph",sid,key,"samicreatedate")=cdate
+"RTN","SAMICAS3",455,0)
+ do SSAMISTA^SAMICASE(sid,key,"incomplete")
+"RTN","SAMICAS3",456,0)
+ ;
+"RTN","SAMICAS3",457,0)
+ ;@stanza 3 termination
+"RTN","SAMICAS3",458,0)
+ ;
+"RTN","SAMICAS3",459,0)
+ quit  ; end of MKPTFORM
+"RTN","SAMICAS3",460,0)
+ ;
+"RTN","SAMICAS3",461,0)
+ ;
+"RTN","SAMICAS3",462,0)
+ ;
+"RTN","SAMICAS3",463,0)
+MKITFORM(sid,key) ; create intervention form
+"RTN","SAMICAS3",464,0)
+ ;
+"RTN","SAMICAS3",465,0)
+ ;@stanza 1 invocation, binding, & branching
+"RTN","SAMICAS3",466,0)
+ ;
+"RTN","SAMICAS3",467,0)
+ ;ven/gpl;private;procedure;
+"RTN","SAMICAS3",468,0)
+ ;@called-by
+"RTN","SAMICAS3",469,0)
+ ; WSNFPOST^SAMICAS3
+"RTN","SAMICAS3",470,0)
+ ;@calls
+"RTN","SAMICAS3",471,0)
+ ; $$setroot^%wd
+"RTN","SAMICAS3",472,0)
+ ; $$SID2NUM^SAMIHOM3
+"RTN","SAMICAS3",473,0)
+ ;@input
+"RTN","SAMICAS3",474,0)
+ ; sid = study id
+"RTN","SAMICAS3",475,0)
+ ; key =
+"RTN","SAMICAS3",476,0)
+ ;@output
+"RTN","SAMICAS3",477,0)
+ ; @root@("graph",sid,key)
+"RTN","SAMICAS3",478,0)
+ ;@examples [tbd]
+"RTN","SAMICAS3",479,0)
+ ;@tests [tbd]
+"RTN","SAMICAS3",480,0)
+ ;
+"RTN","SAMICAS3",481,0)
+ ;@stanza 2 create intervention form
+"RTN","SAMICAS3",482,0)
+ ;
+"RTN","SAMICAS3",483,0)
+ new root set root=$$setroot^%wd("vapals-patients")
+"RTN","SAMICAS3",484,0)
+ new sien set sien=$$SID2NUM^SAMIHOM3(sid)
+"RTN","SAMICAS3",485,0)
+ quit:+sien=0
+"RTN","SAMICAS3",486,0)
+ new cdate set cdate=$piece(key,"itform-",2)
+"RTN","SAMICAS3",487,0)
+ merge @root@("graph",sid,key)=@root@(sien)
+"RTN","SAMICAS3",488,0)
+ set @root@("graph",sid,key,"samicreatedate")=cdate
+"RTN","SAMICAS3",489,0)
+ do SSAMISTA^SAMICASE(sid,key,"incomplete")
+"RTN","SAMICAS3",490,0)
+ ;
+"RTN","SAMICAS3",491,0)
+ ;@stanza 3 termination
+"RTN","SAMICAS3",492,0)
+ ;
+"RTN","SAMICAS3",493,0)
+ quit  ; end of MKITFORM
+"RTN","SAMICAS3",494,0)
+ ;
+"RTN","SAMICAS3",495,0)
+ ;
+"RTN","SAMICAS3",496,0)
+ ;
+"RTN","SAMICAS3",497,0)
+MKBXFORM(sid,key) ; create biopsy form
+"RTN","SAMICAS3",498,0)
+ ;
+"RTN","SAMICAS3",499,0)
+ ;@stanza 1 invocation, binding, & branching
+"RTN","SAMICAS3",500,0)
+ ;
+"RTN","SAMICAS3",501,0)
+ ;ven/gpl;private;procedure;
+"RTN","SAMICAS3",502,0)
+ ;@called-by
+"RTN","SAMICAS3",503,0)
+ ; WSNFPOST^SAMICAS3
+"RTN","SAMICAS3",504,0)
+ ;@calls
+"RTN","SAMICAS3",505,0)
+ ; $$setroot^%wd
+"RTN","SAMICAS3",506,0)
+ ; $$SID2NUM^SAMIHOM3
+"RTN","SAMICAS3",507,0)
+ ;@input
+"RTN","SAMICAS3",508,0)
+ ; sid = study id
+"RTN","SAMICAS3",509,0)
+ ; key =
+"RTN","SAMICAS3",510,0)
+ ;@output
+"RTN","SAMICAS3",511,0)
+ ; @root@("graph",sid,key)
+"RTN","SAMICAS3",512,0)
+ ;@examples [tbd]
+"RTN","SAMICAS3",513,0)
+ ;@tests [tbd]
+"RTN","SAMICAS3",514,0)
+ ;
+"RTN","SAMICAS3",515,0)
+ ;@stanza 2 create background form
+"RTN","SAMICAS3",516,0)
+ ;
+"RTN","SAMICAS3",517,0)
+ new root set root=$$setroot^%wd("vapals-patients")
+"RTN","SAMICAS3",518,0)
+ new sien set sien=$$SID2NUM^SAMIHOM3(sid)
+"RTN","SAMICAS3",519,0)
+ quit:+sien=0
+"RTN","SAMICAS3",520,0)
+ new cdate set cdate=$piece(key,"bxform-",2)
+"RTN","SAMICAS3",521,0)
+ ; nodule copy
+"RTN","SAMICAS3",522,0)
+ ;n srckey s srckey=$$PREVNOD(sid)
+"RTN","SAMICAS3",523,0)
+ n srckey,srcdate s srcdate=$$LASTCMP(sid,.srckey)
+"RTN","SAMICAS3",524,0)
+ i srckey'="" d  ;
+"RTN","SAMICAS3",525,0)
+ . new target,source
+"RTN","SAMICAS3",526,0)
+ . set source=$name(@root@("graph",sid,srckey))
+"RTN","SAMICAS3",527,0)
+ . set target=$name(@root@("graph",sid,key))
+"RTN","SAMICAS3",528,0)
+ . d CTCOPY^SAMICTC1(source,target)
+"RTN","SAMICAS3",529,0)
+ ; end nodule copy
+"RTN","SAMICAS3",530,0)
+ merge @root@("graph",sid,key)=@root@(sien)
+"RTN","SAMICAS3",531,0)
+ set @root@("graph",sid,key,"samicreatedate")=cdate
+"RTN","SAMICAS3",532,0)
+ do SSAMISTA^SAMICASE(sid,key,"incomplete")
+"RTN","SAMICAS3",533,0)
+ ;
+"RTN","SAMICAS3",534,0)
+ ;@stanza 3 termination
+"RTN","SAMICAS3",535,0)
+ ;
+"RTN","SAMICAS3",536,0)
+ quit  ; end of MKBXFORM
+"RTN","SAMICAS3",537,0)
+ ;
+"RTN","SAMICAS3",538,0)
+ ;
+"RTN","SAMICAS3",539,0)
+ ;
+"RTN","SAMICAS3",540,0)
+CASETBL(ary) ; generates case review table
+"RTN","SAMICAS3",541,0)
+ ;
+"RTN","SAMICAS3",542,0)
+ ;@stanza 1 invocation, binding, & branching
+"RTN","SAMICAS3",543,0)
+ ;
+"RTN","SAMICAS3",544,0)
+ ;ven/gpl;private;procedure;
+"RTN","SAMICAS3",545,0)
+ ;@called by : none
+"RTN","SAMICAS3",546,0)
+ ;@calls
+"RTN","SAMICAS3",547,0)
+ ;@input
+"RTN","SAMICAS3",548,0)
+ ; ary = name of array (passed by name, will be cleared)
+"RTN","SAMICAS3",549,0)
+ ;@output
+"RTN","SAMICAS3",550,0)
+ ; @ary
+"RTN","SAMICAS3",551,0)
+ ;@tests
+"RTN","SAMICAS3",552,0)
+ ; SAMIUTS2
+"RTN","SAMICAS3",553,0)
+ ;
+"RTN","SAMICAS3",554,0)
+ ;@stanza 2 build table
+"RTN","SAMICAS3",555,0)
+ ;
+"RTN","SAMICAS3",556,0)
+ kill @ary
+"RTN","SAMICAS3",557,0)
+ ;
+"RTN","SAMICAS3",558,0)
+ set @ary@("siform","form")="siform"
+"RTN","SAMICAS3",559,0)
+ set @ary@("siform","js")="subPr"
+"RTN","SAMICAS3",560,0)
+ set @ary@("siform","name")="Intake"
+"RTN","SAMICAS3",561,0)
+ set @ary@("siform","image")="preview.gif"
+"RTN","SAMICAS3",562,0)
+ ;
+"RTN","SAMICAS3",563,0)
+ set @ary@("nuform","form")="nuform"
+"RTN","SAMICAS3",564,0)
+ set @ary@("nuform","js")="subFr"
+"RTN","SAMICAS3",565,0)
+ set @ary@("nuform","name")="New Form"
+"RTN","SAMICAS3",566,0)
+ set @ary@("nuform","image")="nform.gif"
+"RTN","SAMICAS3",567,0)
+ ;
+"RTN","SAMICAS3",568,0)
+ set @ary@("sched","form")="sched"
+"RTN","SAMICAS3",569,0)
+ set @ary@("sched","js")="subSc"
+"RTN","SAMICAS3",570,0)
+ set @ary@("sched","name")="Schedule"
+"RTN","SAMICAS3",571,0)
+ set @ary@("sched","image")="schedule.gif"
+"RTN","SAMICAS3",572,0)
+ ;
+"RTN","SAMICAS3",573,0)
+ set @ary@("sbform","form")="sbform"
+"RTN","SAMICAS3",574,0)
+ set @ary@("sbform","js")="subPr"
+"RTN","SAMICAS3",575,0)
+ set @ary@("sbform","name")="Background"
+"RTN","SAMICAS3",576,0)
+ set @ary@("sbform","image")="preview.gif"
+"RTN","SAMICAS3",577,0)
+ ;
+"RTN","SAMICAS3",578,0)
+ set @ary@("ceform","form")="ceform"
+"RTN","SAMICAS3",579,0)
+ set @ary@("ceform","js")="subPr"
+"RTN","SAMICAS3",580,0)
+ set @ary@("ceform","name")="CT Evaluation"
+"RTN","SAMICAS3",581,0)
+ set @ary@("ceform","image")="preview.gif"
+"RTN","SAMICAS3",582,0)
+ ;
+"RTN","SAMICAS3",583,0)
+ set @ary@("report","form")="report"
+"RTN","SAMICAS3",584,0)
+ set @ary@("report","js")="subRp"
+"RTN","SAMICAS3",585,0)
+ set @ary@("report","name")="Report"
+"RTN","SAMICAS3",586,0)
+ set @ary@("report","image")="report.gif"
+"RTN","SAMICAS3",587,0)
+ ;
+"RTN","SAMICAS3",588,0)
+ set @ary@("ptform","form")="ptform"
+"RTN","SAMICAS3",589,0)
+ set @ary@("ptform","js")="subPr"
+"RTN","SAMICAS3",590,0)
+ set @ary@("ptform","name")="PET Evaluation"
+"RTN","SAMICAS3",591,0)
+ set @ary@("ptform","image")="preview.gif"
+"RTN","SAMICAS3",592,0)
+ ;
+"RTN","SAMICAS3",593,0)
+ set @ary@("bxform","form")="bxform"
+"RTN","SAMICAS3",594,0)
+ set @ary@("bxform","js")="subPr"
+"RTN","SAMICAS3",595,0)
+ set @ary@("bxform","name")="Biopsy"
+"RTN","SAMICAS3",596,0)
+ set @ary@("bxform","image")="preview.gif"
+"RTN","SAMICAS3",597,0)
+ ;
+"RTN","SAMICAS3",598,0)
+ set @ary@("rbform","form")="rbform"
+"RTN","SAMICAS3",599,0)
+ set @ary@("rbform","js")="subPr"
+"RTN","SAMICAS3",600,0)
+ set @ary@("rbform","name")="Intervention"
+"RTN","SAMICAS3",601,0)
+ set @ary@("rbform","image")="preview.gif"
+"RTN","SAMICAS3",602,0)
+ ;
+"RTN","SAMICAS3",603,0)
+ set @ary@("ceform","form")="ceform"
+"RTN","SAMICAS3",604,0)
+ set @ary@("ceform","js")="subPr"
+"RTN","SAMICAS3",605,0)
+ set @ary@("ceform","name")="CT Evaluation"
+"RTN","SAMICAS3",606,0)
+ set @ary@("ceform","image")="preview.gif"
+"RTN","SAMICAS3",607,0)
+ ;
+"RTN","SAMICAS3",608,0)
+ ;@stanza 3 termination
+"RTN","SAMICAS3",609,0)
+ ;
+"RTN","SAMICAS3",610,0)
+ quit  ; end of CASETBL
+"RTN","SAMICAS3",611,0)
+ ;
+"RTN","SAMICAS3",612,0)
+ ;
+"RTN","SAMICAS3",613,0)
+ ;
+"RTN","SAMICAS3",614,0)
+EOR ; end of routine SAMICAS3
 "RTN","SAMICSV")
 0^4^B57080938
 "RTN","SAMICSV",1,0)
 SAMICSV ;ven/gpl - csv export ;2021-03-30T17:18Z
 "RTN","SAMICSV",2,0)
- ;;18.0;SAMI;**7,11**;2020-01;Build 10
+ ;;18.0;SAMI;**7,11**;2020-01;Build 11
 "RTN","SAMICSV",3,0)
  ;;1.18.0.11-i11
 "RTN","SAMICSV",4,0)
@@ -785,7 +2019,7 @@ EOR ; end of routine SAMICSV
 "RTN","SAMIHL7",1,0)
 SAMIHL7 ;SAMI/lgc/arc - HL7 UTILITIES ;Apr 14, 2021@15:59
 "RTN","SAMIHL7",2,0)
- ;;18.0;SAMI;;;Build 10
+ ;;18.0;SAMI;;;Build 11
 "RTN","SAMIHL7",3,0)
  ;
 "RTN","SAMIHL7",4,0)
@@ -1335,7 +2569,7 @@ EOR ;End of routine SAMIHL7
 "RTN","SAMINOT1",1,0)
 SAMINOT1 ;ven/gpl - text notes ;2021-03-30T17:02Z
 "RTN","SAMINOT1",2,0)
- ;;18.0;SAMI;**2,6,8,10,11**;2020-01;Build 10
+ ;;18.0;SAMI;**2,6,8,10,11**;2020-01;Build 11
 "RTN","SAMINOT1",3,0)
  ;;1.18.0.11-i11
 "RTN","SAMINOT1",4,0)
@@ -2691,7 +3925,7 @@ EOR ; end of routine SAMINOT1
 "RTN","SAMINUL",1,0)
 SAMINUL ;ven/gpl - ielcap: note log ;2021-03-30T17:02Z
 "RTN","SAMINUL",2,0)
- ;;18.0;SAMI;**9,10,11**;2020-01;Build 10
+ ;;18.0;SAMI;**9,10,11**;2020-01;Build 11
 "RTN","SAMINUL",3,0)
  ;;1.18.0.11-i11
 "RTN","SAMINUL",4,0)
@@ -2999,7 +4233,7 @@ EOR ; end of routine SAMINUL
 "RTN","SAMIUR",1,0)
 SAMIUR ;ven/gpl - user reports ;2021-03-30T15:50Z
 "RTN","SAMIUR",2,0)
- ;;18.0;SAMI;**5,10,11**;2020-01;Build 10
+ ;;18.0;SAMI;**5,10,11**;2020-01;Build 11
 "RTN","SAMIUR",3,0)
  ;;1.18.0.11-i11
 "RTN","SAMIUR",4,0)
@@ -3979,7 +5213,7 @@ EOR ; end of SAMIUR
 "RTN","SAMIUR2",1,0)
 SAMIUR2 ;ven/gpl - sami user reports ; 5/8/19 10:57am
 "RTN","SAMIUR2",2,0)
- ;;18.0;SAM;;;Build 10
+ ;;18.0;SAM;;;Build 11
 "RTN","SAMIUR2",3,0)
  ;
 "RTN","SAMIUR2",4,0)

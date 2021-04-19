@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.04.12" name="version"/>
+  <meta content="2021.04.19" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Home
@@ -252,7 +252,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2021.04.12
+     2021.04.19
     </span>
    </div>
   </footer>
@@ -271,10 +271,48 @@
     const hasInfoMessage = isSet(infoMessage);
     const hasWarnMessage = isSet(warnMessage);
     const hasErrorMessage = isSet(errorMessage);
-    const params = @@PARMS@@;
 
     function isSet(variable) {
         return variable && variable.indexOf("@@") === -1 && $.trim(variable) !== '';
+    }
+
+    function paramSubstitution(siteId) {
+        let key = "params." + siteId;
+        let params = JSON.parse(sessionStorage.getItem(key));
+        if ($.isEmptyObject(params)) {
+            retrieveParams(siteId)
+        } else {
+            substituteParams(params);
+        }
+
+        function retrieveParams(siteId) {
+            //TODO replace full URL with /params
+            $.ajax('http://vendev6.vistaplex.org:9080/params', {data: {siteId: siteId}})
+                .done(function (data) {
+                    sessionStorage.setItem(key, JSON.stringify(data));
+                    substituteParams(data);
+                });
+        }
+
+        function substituteParams(dataMap) {
+            $("[data-params-key]").each(function () {
+                const $this = $(this);
+                const dataKey = $this.attr("data-params-key");
+                const dataValue = dataMap[dataKey];
+
+                if (dataValue) {
+                    const tagName = $this[0].tagName;
+                    if (tagName === "SPAN") {
+                        $this.text(dataValue)
+                    } else {
+                        const attrName = $this.attr("data-params-attr");
+                        $this.attr(attrName, dataValue);
+                    }
+                } else {
+                    console.warn("Unknown parameter, key='%s'", dataKey)
+                }
+            });
+        }
     }
 
     //purposefully executed before DOM is rendered so elements are never visible
@@ -283,6 +321,7 @@
         $("#studyIdMenu").toggle(studyId !== '');
         localStorage.setItem("siteid", siteId);
         localStorage.setItem("studyid", studyId);
+        paramSubstitution(siteId);
     } else {
         localStorage.removeItem("siteid");
         localStorage.removeItem("studyid");

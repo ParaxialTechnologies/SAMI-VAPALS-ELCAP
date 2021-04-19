@@ -7,8 +7,10 @@ WSPARAMS(parmsjson,filter) ; web service that returns the paramters to use
  ; for the site, passed in as fliter("site"), as json
  d  ;
  . n parms
- . s parms("ssn")="PID"
- . s parms("socialSecurityNumber")="Patient ID"
+ . s parms("ssn")="Patient ID"
+ . s parms("ssn.short")="PID"
+ . s parms("ssn.mask")=""
+ . s parms("ssn.regex")=""
  . ; and so on
  . ;n parmsjson
  . d ENCODE^%webjson("parms","parmsjson")

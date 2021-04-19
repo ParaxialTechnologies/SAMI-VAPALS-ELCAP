@@ -1,14 +1,14 @@
 /**
- * FormValidation (https://formvalidation.io), v1.4.0 (678705b)
+ * FormValidation (https://formvalidation.io), v1.7.0 (71bbaaa)
  * The best validation library for JavaScript
- * (c) 2013 - 2019 Nguyen Huu Phuoc <me@phuoc.ng>
+ * (c) 2013 - 2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.plugins = global.FormValidation.plugins || {}, global.FormValidation.plugins.Bootstrap = factory()));
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -63,6 +63,19 @@
     return _setPrototypeOf(o, p);
   }
 
+  function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function _assertThisInitialized(self) {
     if (self === void 0) {
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -79,64 +92,84 @@
     return _assertThisInitialized(self);
   }
 
-  var classSet = FormValidation.utils.classSet;
+  function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
 
-  var hasClass = FormValidation.utils.hasClass;
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf(Derived),
+          result;
 
-  var Framework = FormValidation.plugins.Framework;
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf(this).constructor;
 
-  var Bootstrap =
-  /*#__PURE__*/
-  function (_Framework) {
-    _inherits(Bootstrap, _Framework);
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
 
-    function Bootstrap(opts) {
-      _classCallCheck(this, Bootstrap);
+      return _possibleConstructorReturn(this, result);
+    };
+  }
 
-      return _possibleConstructorReturn(this, _getPrototypeOf(Bootstrap).call(this, Object.assign({}, {
-        eleInvalidClass: 'is-invalid',
-        eleValidClass: 'is-valid',
-        formClass: 'fv-plugins-bootstrap',
-        messageClass: 'fv-help-block',
-        rowInvalidClass: 'has-danger',
+  var e = FormValidation.utils.classSet;
+
+  var t = FormValidation.utils.hasClass;
+
+  var n = FormValidation.plugins.Framework;
+
+  var s = /*#__PURE__*/function (_n) {
+    _inherits(s, _n);
+
+    var _super = _createSuper(s);
+
+    function s(e) {
+      _classCallCheck(this, s);
+
+      return _super.call(this, Object.assign({}, {
+        eleInvalidClass: "is-invalid",
+        eleValidClass: "is-valid",
+        formClass: "fv-plugins-bootstrap",
+        messageClass: "fv-help-block",
+        rowInvalidClass: "has-danger",
         rowPattern: /^(.*)(col|offset)(-(sm|md|lg|xl))*-[0-9]+(.*)$/,
-        rowSelector: '.form-group',
-        rowValidClass: 'has-success'
-      }, opts)));
+        rowSelector: ".form-group",
+        rowValidClass: "has-success"
+      }, e));
     }
 
-    _createClass(Bootstrap, [{
+    _createClass(s, [{
       key: "onIconPlaced",
-      value: function onIconPlaced(e) {
-        var parent = e.element.parentElement;
+      value: function onIconPlaced(n) {
+        var s = n.element.parentElement;
 
-        if (hasClass(parent, 'input-group')) {
-          parent.parentElement.insertBefore(e.iconElement, parent.nextSibling);
+        if (t(s, "input-group")) {
+          s.parentElement.insertBefore(n.iconElement, s.nextSibling);
         }
 
-        var type = e.element.getAttribute('type');
+        var l = n.element.getAttribute("type");
 
-        if ('checkbox' === type || 'radio' === type) {
-          var grandParent = parent.parentElement;
+        if ("checkbox" === l || "radio" === l) {
+          var _l = s.parentElement;
 
-          if (hasClass(parent, 'form-check')) {
-            classSet(e.iconElement, {
-              'fv-plugins-icon-check': true
+          if (t(s, "form-check")) {
+            e(n.iconElement, {
+              "fv-plugins-icon-check": true
             });
-            parent.parentElement.insertBefore(e.iconElement, parent.nextSibling);
-          } else if (hasClass(parent.parentElement, 'form-check')) {
-            classSet(e.iconElement, {
-              'fv-plugins-icon-check': true
+            s.parentElement.insertBefore(n.iconElement, s.nextSibling);
+          } else if (t(s.parentElement, "form-check")) {
+            e(n.iconElement, {
+              "fv-plugins-icon-check": true
             });
-            grandParent.parentElement.insertBefore(e.iconElement, grandParent.nextSibling);
+
+            _l.parentElement.insertBefore(n.iconElement, _l.nextSibling);
           }
         }
       }
     }]);
 
-    return Bootstrap;
-  }(Framework);
+    return s;
+  }(n);
 
-  return Bootstrap;
+  return s;
 
-}));
+})));

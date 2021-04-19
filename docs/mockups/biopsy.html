@@ -6382,8 +6382,7 @@
         }
 
         function retrieveParams(siteId) {
-            //TODO replace full URL with /params
-            $.ajax('http://vendev6.vistaplex.org:9080/params', {data: {siteId: siteId}})
+            $.ajax('/params', {data: {siteId: siteId}})
                 .done(function (data) {
                     sessionStorage.setItem(key, JSON.stringify(data));
                     substituteParams(data);
@@ -6391,33 +6390,42 @@
         }
 
         function substituteParams(dataMap) {
-            $("[data-params-key]").each(function () {
+            $("[data-params-text]").each(function () {
                 const $this = $(this);
-                const dataKey = $this.attr("data-params-key");
+                const dataKey = $this.attr("data-params-text");
                 const dataValue = dataMap[dataKey];
 
-                if (dataValue) {
-                    const tagName = $this[0].tagName;
-                    if (tagName === "SPAN") {
-                        $this.text(dataValue)
-                    } else {
-                        const attrName = $this.attr("data-params-attr");
-                        $this.attr(attrName, dataValue);
-                    }
+                if (typeof dataValue === "undefined") {
+                    console.warn("substituteParams().text: Unknown property, key='%s'", dataKey);
                 } else {
-                    console.warn("Unknown parameter, key='%s'", dataKey)
+                    $this.text(dataValue);
                 }
+            });
+
+            $("[data-params-attr]").each(function () {
+                const $this = $(this);
+                const jsonText = $this.attr("data-params-attr")
+                const attrObject = JSON.parse(jsonText);
+                Object.keys(attrObject).forEach(function (attrName) {
+                    const key = attrObject[attrName];
+                    const value = dataMap[key];
+                    if (typeof value === "undefined") {
+                        console.warn("substituteParams().attr: Unknown property, key='%s'", key);
+                    } else {
+                        $this.attr(attrName, value);
+                    }
+                });
             });
         }
     }
 
     //purposefully executed before DOM is rendered so elements are never visible
     if (isSet(siteId)) { //TODO: add if isLoggedIn once USER variable can be set from backend.
+        paramSubstitution(siteId);
         $("#logout-link").text("Logout " + siteId);
         $("#studyIdMenu").toggle(studyId !== '');
         localStorage.setItem("siteid", siteId);
         localStorage.setItem("studyid", studyId);
-        paramSubstitution(siteId);
     } else {
         localStorage.removeItem("siteid");
         localStorage.removeItem("studyid");
@@ -6566,9 +6574,14 @@
 
                     },
                     plugins: {
+                        declarative: new FormValidation.plugins.Declarative(),
                         trigger: new FormValidation.plugins.Trigger(),
                         bootstrap3: new FormValidation.plugins.Bootstrap3(),
-                        submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                        submitButton: new FormValidation.plugins.SubmitButton({
+                            buttons: function (form) {
+                                return [].slice.call(document.getElementById('submit-button'));
+                            },
+                        }),
                         defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
                         excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
                         icon: new FormValidation.plugins.Icon({

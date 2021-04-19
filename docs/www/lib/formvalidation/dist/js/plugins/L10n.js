@@ -1,16 +1,18 @@
 /**
- * FormValidation (https://formvalidation.io), v1.4.0 (678705b)
+ * FormValidation (https://formvalidation.io), v1.7.0 (71bbaaa)
  * The best validation library for JavaScript
- * (c) 2013 - 2019 Nguyen Huu Phuoc <me@phuoc.ng>
+ * (c) 2013 - 2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.plugins = global.FormValidation.plugins || {}, global.FormValidation.plugins.L10n = factory()));
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
   function _typeof(obj) {
+    "@babel/helpers - typeof";
+
     if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
       _typeof = function (obj) {
         return typeof obj;
@@ -77,6 +79,19 @@
     return _setPrototypeOf(o, p);
   }
 
+  function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function _assertThisInitialized(self) {
     if (self === void 0) {
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -93,56 +108,76 @@
     return _assertThisInitialized(self);
   }
 
-  var Plugin = FormValidation.Plugin;
+  function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
 
-  var L10n =
-  /*#__PURE__*/
-  function (_Plugin) {
-    _inherits(L10n, _Plugin);
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf(Derived),
+          result;
 
-    function L10n(opts) {
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf(this).constructor;
+
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+
+      return _possibleConstructorReturn(this, result);
+    };
+  }
+
+  var t = FormValidation.Plugin;
+
+  var e = /*#__PURE__*/function (_t) {
+    _inherits(e, _t);
+
+    var _super = _createSuper(e);
+
+    function e(t) {
       var _this;
 
-      _classCallCheck(this, L10n);
+      _classCallCheck(this, e);
 
-      _this = _possibleConstructorReturn(this, _getPrototypeOf(L10n).call(this, opts));
+      _this = _super.call(this, t);
       _this.messageFilter = _this.getMessage.bind(_assertThisInitialized(_this));
       return _this;
     }
 
-    _createClass(L10n, [{
+    _createClass(e, [{
       key: "install",
       value: function install() {
-        this.core.registerFilter('validator-message', this.messageFilter);
+        this.core.registerFilter("validator-message", this.messageFilter);
       }
     }, {
       key: "uninstall",
       value: function uninstall() {
-        this.core.deregisterFilter('validator-message', this.messageFilter);
+        this.core.deregisterFilter("validator-message", this.messageFilter);
       }
     }, {
       key: "getMessage",
-      value: function getMessage(locale, field, validator) {
-        if (this.opts[field] && this.opts[field][validator]) {
-          var message = this.opts[field][validator];
+      value: function getMessage(t, e, s) {
+        if (this.opts[e] && this.opts[e][s]) {
+          var i = this.opts[e][s];
 
-          var messageType = _typeof(message);
+          var r = _typeof(i);
 
-          if ('object' === messageType && message[locale]) {
-            return message[locale];
-          } else if ('function' === messageType) {
-            var result = message.apply(this, [field, validator]);
-            return result && result[locale] ? result[locale] : '';
+          if ("object" === r && i[t]) {
+            return i[t];
+          } else if ("function" === r) {
+            var _r = i.apply(this, [e, s]);
+
+            return _r && _r[t] ? _r[t] : "";
           }
         }
 
-        return '';
+        return "";
       }
     }]);
 
-    return L10n;
-  }(Plugin);
+    return e;
+  }(t);
 
-  return L10n;
+  return e;
 
-}));
+})));

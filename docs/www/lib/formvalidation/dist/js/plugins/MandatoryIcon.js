@@ -1,14 +1,14 @@
 /**
- * FormValidation (https://formvalidation.io), v1.4.0 (678705b)
+ * FormValidation (https://formvalidation.io), v1.7.0 (71bbaaa)
  * The best validation library for JavaScript
- * (c) 2013 - 2019 Nguyen Huu Phuoc <me@phuoc.ng>
+ * (c) 2013 - 2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.plugins = global.FormValidation.plugins || {}, global.FormValidation.plugins.MandatoryIcon = factory()));
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -78,6 +78,19 @@
     return _setPrototypeOf(o, p);
   }
 
+  function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function _assertThisInitialized(self) {
     if (self === void 0) {
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -94,36 +107,120 @@
     return _assertThisInitialized(self);
   }
 
-  var Plugin = FormValidation.Plugin;
+  function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
 
-  var Status;
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf(Derived),
+          result;
 
-  (function (Status) {
-    Status["Ignored"] = "Ignored";
-    Status["Invalid"] = "Invalid";
-    Status["NotValidated"] = "NotValidated";
-    Status["Valid"] = "Valid";
-    Status["Validating"] = "Validating";
-  })(Status || (Status = {}));
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf(this).constructor;
 
-  var Status$1 = Status;
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
 
-  var classSet = FormValidation.utils.classSet;
+      return _possibleConstructorReturn(this, result);
+    };
+  }
 
-  var MandatoryIcon =
-  /*#__PURE__*/
-  function (_Plugin) {
-    _inherits(MandatoryIcon, _Plugin);
+  function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+  }
 
-    function MandatoryIcon(opts) {
-      var _this$removedIcons;
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
 
+    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+
+  function _createForOfIteratorHelper(o, allowArrayLike) {
+    var it;
+
+    if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
+      if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+        if (it) o = it;
+        var i = 0;
+
+        var F = function () {};
+
+        return {
+          s: F,
+          n: function () {
+            if (i >= o.length) return {
+              done: true
+            };
+            return {
+              done: false,
+              value: o[i++]
+            };
+          },
+          e: function (e) {
+            throw e;
+          },
+          f: F
+        };
+      }
+
+      throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+    }
+
+    var normalCompletion = true,
+        didErr = false,
+        err;
+    return {
+      s: function () {
+        it = o[Symbol.iterator]();
+      },
+      n: function () {
+        var step = it.next();
+        normalCompletion = step.done;
+        return step;
+      },
+      e: function (e) {
+        didErr = true;
+        err = e;
+      },
+      f: function () {
+        try {
+          if (!normalCompletion && it.return != null) it.return();
+        } finally {
+          if (didErr) throw err;
+        }
+      }
+    };
+  }
+
+  var e = FormValidation.Plugin;
+
+  var t = FormValidation.utils.classSet;
+
+  var i = /*#__PURE__*/function (_e) {
+    _inherits(i, _e);
+
+    var _super = _createSuper(i);
+
+    function i(e) {
       var _this;
 
-      _classCallCheck(this, MandatoryIcon);
+      _classCallCheck(this, i);
 
-      _this = _possibleConstructorReturn(this, _getPrototypeOf(MandatoryIcon).call(this, opts));
-      _this.removedIcons = (_this$removedIcons = {}, _defineProperty(_this$removedIcons, Status$1.Valid, ''), _defineProperty(_this$removedIcons, Status$1.Invalid, ''), _defineProperty(_this$removedIcons, Status$1.Validating, ''), _defineProperty(_this$removedIcons, Status$1.NotValidated, ''), _this$removedIcons);
+      _this = _super.call(this, e);
+      _this.removedIcons = {
+        Invalid: "",
+        NotValidated: "",
+        Valid: "",
+        Validating: ""
+      };
       _this.icons = new Map();
       _this.elementValidatingHandler = _this.onElementValidating.bind(_assertThisInitialized(_this));
       _this.elementValidatedHandler = _this.onElementValidated.bind(_assertThisInitialized(_this));
@@ -133,133 +230,122 @@
       return _this;
     }
 
-    _createClass(MandatoryIcon, [{
+    _createClass(i, [{
       key: "install",
       value: function install() {
-        this.core.on('core.element.validating', this.elementValidatingHandler).on('core.element.validated', this.elementValidatedHandler).on('core.element.notvalidated', this.elementNotValidatedHandler).on('plugins.icon.placed', this.iconPlacedHandler).on('plugins.icon.set', this.iconSetHandler);
+        this.core.on("core.element.validating", this.elementValidatingHandler).on("core.element.validated", this.elementValidatedHandler).on("core.element.notvalidated", this.elementNotValidatedHandler).on("plugins.icon.placed", this.iconPlacedHandler).on("plugins.icon.set", this.iconSetHandler);
       }
     }, {
       key: "uninstall",
       value: function uninstall() {
         this.icons.clear();
-        this.core.off('core.element.validating', this.elementValidatingHandler).off('core.element.validated', this.elementValidatedHandler).off('core.element.notvalidated', this.elementNotValidatedHandler).off('plugins.icon.placed', this.iconPlacedHandler).off('plugins.icon.set', this.iconSetHandler);
+        this.core.off("core.element.validating", this.elementValidatingHandler).off("core.element.validated", this.elementValidatedHandler).off("core.element.notvalidated", this.elementNotValidatedHandler).off("plugins.icon.placed", this.iconPlacedHandler).off("plugins.icon.set", this.iconSetHandler);
       }
     }, {
       key: "onIconPlaced",
       value: function onIconPlaced(e) {
-        var _feedbackIcons,
-            _this2 = this;
+        var _this2 = this;
 
-        var validators = this.core.getFields()[e.field].validators;
-        var elements = this.core.getElements(e.field);
+        var i = this.core.getFields()[e.field].validators;
+        var s = this.core.getElements(e.field);
 
-        if (validators && validators['notEmpty'] && validators['notEmpty'].enabled !== false && elements.length) {
+        if (i && i["notEmpty"] && i["notEmpty"].enabled !== false && s.length) {
           this.icons.set(e.element, e.iconElement);
-          var type = elements[0].getAttribute('type').toLowerCase();
-          var elementArray = 'checkbox' === type || 'radio' === type ? [elements[0]] : elements;
-          var _iteratorNormalCompletion = true;
-          var _didIteratorError = false;
-          var _iteratorError = undefined;
+
+          var _i = s[0].getAttribute("type");
+
+          var _n = !_i ? "" : _i.toLowerCase();
+
+          var _l = "checkbox" === _n || "radio" === _n ? [s[0]] : s;
+
+          var _iterator = _createForOfIteratorHelper(_l),
+              _step;
 
           try {
-            for (var _iterator = elementArray[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-              var ele = _step.value;
+            for (_iterator.s(); !(_step = _iterator.n()).done;) {
+              var _i2 = _step.value;
 
-              if (this.core.getElementValue(e.field, ele) === '') {
-                classSet(e.iconElement, _defineProperty({}, this.opts.icon, true));
+              if (this.core.getElementValue(e.field, _i2) === "") {
+                t(e.iconElement, _defineProperty({}, this.opts.icon, true));
               }
             }
           } catch (err) {
-            _didIteratorError = true;
-            _iteratorError = err;
+            _iterator.e(err);
           } finally {
-            try {
-              if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-                _iterator["return"]();
-              }
-            } finally {
-              if (_didIteratorError) {
-                throw _iteratorError;
-              }
-            }
+            _iterator.f();
           }
         }
 
         this.iconClasses = e.classes;
-        var icons = this.opts.icon.split(' ');
-        var feedbackIcons = (_feedbackIcons = {}, _defineProperty(_feedbackIcons, Status$1.Valid, this.iconClasses.valid ? this.iconClasses.valid.split(' ') : []), _defineProperty(_feedbackIcons, Status$1.Invalid, this.iconClasses.invalid ? this.iconClasses.invalid.split(' ') : []), _defineProperty(_feedbackIcons, Status$1.Validating, this.iconClasses.validating ? this.iconClasses.validating.split(' ') : []), _feedbackIcons);
-        Object.keys(feedbackIcons).forEach(function (status) {
-          var classes = [];
-          var _iteratorNormalCompletion2 = true;
-          var _didIteratorError2 = false;
-          var _iteratorError2 = undefined;
+        var n = this.opts.icon.split(" ");
+        var l = {
+          Invalid: this.iconClasses.invalid ? this.iconClasses.invalid.split(" ") : [],
+          Valid: this.iconClasses.valid ? this.iconClasses.valid.split(" ") : [],
+          Validating: this.iconClasses.validating ? this.iconClasses.validating.split(" ") : []
+        };
+        Object.keys(l).forEach(function (e) {
+          var t = [];
+
+          var _iterator2 = _createForOfIteratorHelper(n),
+              _step2;
 
           try {
-            for (var _iterator2 = icons[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-              var clazz = _step2.value;
+            for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+              var _i3 = _step2.value;
 
-              if (feedbackIcons[status].indexOf(clazz) === -1) {
-                classes.push(clazz);
+              if (l[e].indexOf(_i3) === -1) {
+                t.push(_i3);
               }
             }
           } catch (err) {
-            _didIteratorError2 = true;
-            _iteratorError2 = err;
+            _iterator2.e(err);
           } finally {
-            try {
-              if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-                _iterator2["return"]();
-              }
-            } finally {
-              if (_didIteratorError2) {
-                throw _iteratorError2;
-              }
-            }
+            _iterator2.f();
           }
 
-          _this2.removedIcons[status] = classes.join(' ');
+          _this2.removedIcons[e] = t.join(" ");
         });
       }
     }, {
       key: "onElementValidating",
       value: function onElementValidating(e) {
-        this.updateIconClasses(e.element, Status$1.Validating);
+        this.updateIconClasses(e.element, "Validating");
       }
     }, {
       key: "onElementValidated",
       value: function onElementValidated(e) {
-        this.updateIconClasses(e.element, e.valid ? Status$1.Valid : Status$1.Invalid);
+        this.updateIconClasses(e.element, e.valid ? "Valid" : "Invalid");
       }
     }, {
       key: "onElementNotValidated",
       value: function onElementNotValidated(e) {
-        this.updateIconClasses(e.element, Status$1.NotValidated);
+        this.updateIconClasses(e.element, "NotValidated");
       }
     }, {
       key: "updateIconClasses",
-      value: function updateIconClasses(ele, status) {
-        var icon = this.icons.get(ele);
+      value: function updateIconClasses(e, i) {
+        var s = this.icons.get(e);
 
-        if (icon && this.iconClasses && (this.iconClasses.valid || this.iconClasses.invalid || this.iconClasses.validating)) {
-          var _classSet2;
+        if (s && this.iconClasses && (this.iconClasses.valid || this.iconClasses.invalid || this.iconClasses.validating)) {
+          var _t2;
 
-          classSet(icon, (_classSet2 = {}, _defineProperty(_classSet2, this.removedIcons[status], false), _defineProperty(_classSet2, this.opts.icon, false), _classSet2));
+          t(s, (_t2 = {}, _defineProperty(_t2, this.removedIcons[i], false), _defineProperty(_t2, this.opts.icon, false), _t2));
         }
       }
     }, {
       key: "onIconSet",
       value: function onIconSet(e) {
-        var icon = this.icons.get(e.element);
+        var i = this.icons.get(e.element);
 
-        if (icon && e.status === Status$1.NotValidated && this.core.getElementValue(e.field, e.element) === '') {
-          classSet(icon, _defineProperty({}, this.opts.icon, true));
+        if (i && e.status === "NotValidated" && this.core.getElementValue(e.field, e.element) === "") {
+          t(i, _defineProperty({}, this.opts.icon, true));
         }
       }
     }]);
 
-    return MandatoryIcon;
-  }(Plugin);
+    return i;
+  }(e);
 
-  return MandatoryIcon;
+  return i;
 
-}));
+})));

@@ -1,5 +1,5 @@
-SAMIHL7 ;SAMI/lgc/arc - HL7 UTILITIES ;Apr 14, 2021@15:59
- ;;18.0;SAMI;;;Build 8
+SAMIHL7 ;SAMI/lgc/arc - HL7 UTILITIES ;Apr 19, 2021@15:57
+ ;;18.0;SAMI;;;Build 2
  ;
  quit  ; not from top
  ;
@@ -144,7 +144,6 @@ MATCHLOG ;
  ... set @rootpl@("HL7MATCHLOG",pnien,newptien)=""
  ... U $P write !,"HL7MATCHLOG name","---",pnien
  ;
- ;
  new field s field=""
  ; run through every fields subscript and set the
  ;   appropriate subscript patient entry in patient-lookup
@@ -167,7 +166,7 @@ MATCHLOG ;
  .;   With existing patients if the new data for a field doesn't match
  .;     the pre-existing, save the pre-existing data in a changelog entry
  .;
- . if '$get(newpat),'(fields(field)="") do
+ . if '$get(newpat),'($get(fields(field))="") do
  .. if field="ORM" quit
  .. if field="dfn" quit
  ..;

@@ -19,7 +19,7 @@ version = datetime.datetime.now().strftime('%Y.%m.%d')
 forms = [
     {"template": "background", "title": "Background Form", "output": "background", "withNav": "true"},
     {"template": "blank", "title": "", "output": "blank_no_nav", "withNav": "false"},
-    {"template": "intake", "title": "Lung Screening and Surveillance Intake Form", "output": "intake",
+    {"template": "intake", "title": "Lung Screening Intake Form", "output": "intake",
      "withNav": "true"},
     {"template": "ctevaluation", "title": "CT Evaluation Form", "output": "ctevaluation", "withNav": "true"},
     {"template": "ctevaluation", "title": "CT Evaluation Form", "output": "ctevaluation-elcap", "withNav": "true"},

@@ -1,7 +1,7 @@
-SAMIHL7 ;SAMI/lgc/arc - HL7 UTILITIES ;Jul 24, 2020@11:42
- ;;18.0;SAMI;;;Build 1
+SAMIHL7 ;SAMI/lgc/arc - HL7 UTILITIES ;Apr 19, 2021@15:57
+ ;;18.0;SAMI;;;Build 2
  ;
- quit ; not from top
+ quit  ; not from top
  ;
  ; example incoming fields array
  ;
@@ -72,7 +72,7 @@ UPDTPTL1 ;
  if $length($get(fields("ssn"))),$data(@rootpl@("ssn",$get(fields("ssn")))) do
  . set ptienssntmp=$order(@rootpl@("ssn",$get(fields("ssn")),0))
  . for  set ptienssn=$order(@rootpl@("ssn",$get(fields("ssn")),ptienssn)) quit:'ptienssn  do  quit:ptiennm
- .. if $length($get(fields("saminame"))),(@rootpl@(ptienssn,"saminame")=fields("saminame")) do
+ .. if $length($get(fields("saminame"))),($$UP^XLFSTR(@rootpl@(ptienssn,"saminame"))=$$UP^XLFSTR(fields("saminame"))) do
  ... set ptiennm=ptienssn
  ;
  set ^KBAP("SAMIHL7","UPDTPTL1","A")=""
@@ -144,7 +144,6 @@ MATCHLOG ;
  ... set @rootpl@("HL7MATCHLOG",pnien,newptien)=""
  ... U $P write !,"HL7MATCHLOG name","---",pnien
  ;
- ;
  new field s field=""
  ; run through every fields subscript and set the
  ;   appropriate subscript patient entry in patient-lookup
@@ -167,7 +166,7 @@ MATCHLOG ;
  .;   With existing patients if the new data for a field doesn't match
  .;     the pre-existing, save the pre-existing data in a changelog entry
  .;
- . if '$get(newpat),'(fields(field)="") do
+ . if '$get(newpat),'($get(fields(field))="") do
  .. if field="ORM" quit
  .. if field="dfn" quit
  ..;

@@ -1,14 +1,14 @@
 /**
- * FormValidation (https://formvalidation.io), v1.4.0 (678705b)
+ * FormValidation (https://formvalidation.io), v1.7.0 (71bbaaa)
  * The best validation library for JavaScript
- * (c) 2013 - 2019 Nguyen Huu Phuoc <me@phuoc.ng>
+ * (c) 2013 - 2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.plugins = global.FormValidation.plugins || {}, global.FormValidation.plugins.StartEndDate = factory()));
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -63,6 +63,19 @@
     return _setPrototypeOf(o, p);
   }
 
+  function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function _assertThisInitialized(self) {
     if (self === void 0) {
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -79,40 +92,59 @@
     return _assertThisInitialized(self);
   }
 
-  var Plugin = FormValidation.Plugin;
+  function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
 
-  var StartEndDate =
-  /*#__PURE__*/
-  function (_Plugin) {
-    _inherits(StartEndDate, _Plugin);
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf(Derived),
+          result;
 
-    function StartEndDate(opts) {
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf(this).constructor;
+
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+
+      return _possibleConstructorReturn(this, result);
+    };
+  }
+
+  var t = FormValidation.Plugin;
+
+  var e = /*#__PURE__*/function (_t) {
+    _inherits(e, _t);
+
+    var _super = _createSuper(e);
+
+    function e(t) {
       var _this;
 
-      _classCallCheck(this, StartEndDate);
+      _classCallCheck(this, e);
 
-      _this = _possibleConstructorReturn(this, _getPrototypeOf(StartEndDate).call(this, opts));
+      _this = _super.call(this, t);
       _this.fieldValidHandler = _this.onFieldValid.bind(_assertThisInitialized(_this));
       _this.fieldInvalidHandler = _this.onFieldInvalid.bind(_assertThisInitialized(_this));
       return _this;
     }
 
-    _createClass(StartEndDate, [{
+    _createClass(e, [{
       key: "install",
       value: function install() {
         var _this2 = this;
 
-        var fieldOptions = this.core.getFields();
-        this.startDateFieldOptions = fieldOptions[this.opts.startDate.field];
-        this.endDateFieldOptions = fieldOptions[this.opts.endDate.field];
-        var form = this.core.getFormElement();
-        this.core.on('core.field.valid', this.fieldValidHandler).on('core.field.invalid', this.fieldInvalidHandler).addField(this.opts.startDate.field, {
+        var t = this.core.getFields();
+        this.startDateFieldOptions = t[this.opts.startDate.field];
+        this.endDateFieldOptions = t[this.opts.endDate.field];
+        var e = this.core.getFormElement();
+        this.core.on("core.field.valid", this.fieldValidHandler).on("core.field.invalid", this.fieldInvalidHandler).addField(this.opts.startDate.field, {
           validators: {
             date: {
               format: this.opts.format,
               max: function max() {
-                var endDateField = form.querySelector("[name=\"".concat(_this2.opts.endDate.field, "\"]"));
-                return endDateField.value;
+                var t = e.querySelector("[name=\"".concat(_this2.opts.endDate.field, "\"]"));
+                return t.value;
               },
               message: this.opts.startDate.message
             }
@@ -123,8 +155,8 @@
               format: this.opts.format,
               message: this.opts.endDate.message,
               min: function min() {
-                var startDateField = form.querySelector("[name=\"".concat(_this2.opts.startDate.field, "\"]"));
-                return startDateField.value;
+                var t = e.querySelector("[name=\"".concat(_this2.opts.startDate.field, "\"]"));
+                return t.value;
               }
             }
           }
@@ -145,12 +177,12 @@
           this.core.addField(this.opts.endDate.field, this.endDateFieldOptions);
         }
 
-        this.core.off('core.field.valid', this.fieldValidHandler).off('core.field.invalid', this.fieldInvalidHandler);
+        this.core.off("core.field.valid", this.fieldValidHandler).off("core.field.invalid", this.fieldInvalidHandler);
       }
     }, {
       key: "onFieldInvalid",
-      value: function onFieldInvalid(field) {
-        switch (field) {
+      value: function onFieldInvalid(t) {
+        switch (t) {
           case this.opts.startDate.field:
             this.startDateValid = false;
             break;
@@ -158,15 +190,12 @@
           case this.opts.endDate.field:
             this.endDateValid = false;
             break;
-
-          default:
-            break;
         }
       }
     }, {
       key: "onFieldValid",
-      value: function onFieldValid(field) {
-        switch (field) {
+      value: function onFieldValid(t) {
+        switch (t) {
           case this.opts.startDate.field:
             this.startDateValid = true;
 
@@ -184,16 +213,13 @@
             }
 
             break;
-
-          default:
-            break;
         }
       }
     }]);
 
-    return StartEndDate;
-  }(Plugin);
+    return e;
+  }(t);
 
-  return StartEndDate;
+  return e;
 
-}));
+})));

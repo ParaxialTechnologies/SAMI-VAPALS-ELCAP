@@ -420,9 +420,14 @@
 
                     },
                     plugins: {
+                        declarative: new FormValidation.plugins.Declarative(),
                         trigger: new FormValidation.plugins.Trigger(),
                         bootstrap3: new FormValidation.plugins.Bootstrap3(),
-                        submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                        submitButton: new FormValidation.plugins.SubmitButton({
+                            buttons: function (form) {
+                                return [].slice.call(document.getElementById('submit-button'));
+                            },
+                        }),
                         // Instead of using the defaultSubmit plugin here, we listen for the core.form.valid event
                         // below to sort nodule grid (if necessary), then submit
                         //defaultSubmit: new FormValidation.plugins.DefaultSubmit(),

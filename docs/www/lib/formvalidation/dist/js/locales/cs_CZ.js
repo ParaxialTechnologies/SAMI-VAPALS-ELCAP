@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
     (global = global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.locales = global.FormValidation.locales || {}, global.FormValidation.locales.cs_CZ = factory()));
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
     /**
      * Czech language package
@@ -297,7 +297,7 @@
             between: 'Prosím zadejte hodnotu mezi %s a %s znaky',
             default: 'Toto pole nesmí být prázdné',
             less: 'Prosím zadejte hodnotu menší než %s znaků',
-            more: 'Prosím zadejte hodnotu %s znaků a delší',
+            more: 'Prosím zadajte hodnotu dlhšiu ako %s znakov',
         },
         uri: {
             default: 'Prosím zadejte správnou URI',
@@ -386,4 +386,4 @@
 
     return cs_CZ;
 
-}));
+})));

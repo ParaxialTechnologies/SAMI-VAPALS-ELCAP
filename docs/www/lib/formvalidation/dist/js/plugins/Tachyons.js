@@ -1,14 +1,14 @@
 /**
- * FormValidation (https://formvalidation.io), v1.4.0 (678705b)
+ * FormValidation (https://formvalidation.io), v1.7.0 (71bbaaa)
  * The best validation library for JavaScript
- * (c) 2013 - 2019 Nguyen Huu Phuoc <me@phuoc.ng>
+ * (c) 2013 - 2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.plugins = global.FormValidation.plugins || {}, global.FormValidation.plugins.Tachyons = factory()));
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -63,6 +63,19 @@
     return _setPrototypeOf(o, p);
   }
 
+  function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function _assertThisInitialized(self) {
     if (self === void 0) {
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -79,46 +92,65 @@
     return _assertThisInitialized(self);
   }
 
-  var classSet = FormValidation.utils.classSet;
+  function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
 
-  var Framework = FormValidation.plugins.Framework;
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf(Derived),
+          result;
 
-  var Tachyons =
-  /*#__PURE__*/
-  function (_Framework) {
-    _inherits(Tachyons, _Framework);
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf(this).constructor;
 
-    function Tachyons(opts) {
-      _classCallCheck(this, Tachyons);
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
 
-      return _possibleConstructorReturn(this, _getPrototypeOf(Tachyons).call(this, Object.assign({}, {
-        formClass: 'fv-plugins-tachyons',
-        messageClass: 'small',
-        rowInvalidClass: 'red',
+      return _possibleConstructorReturn(this, result);
+    };
+  }
+
+  var e = FormValidation.utils.classSet;
+
+  var t = FormValidation.plugins.Framework;
+
+  var n = /*#__PURE__*/function (_t) {
+    _inherits(n, _t);
+
+    var _super = _createSuper(n);
+
+    function n(e) {
+      _classCallCheck(this, n);
+
+      return _super.call(this, Object.assign({}, {
+        formClass: "fv-plugins-tachyons",
+        messageClass: "small",
+        rowInvalidClass: "red",
         rowPattern: /^(.*)fl(.*)$/,
-        rowSelector: '.fl',
-        rowValidClass: 'green'
-      }, opts)));
+        rowSelector: ".fl",
+        rowValidClass: "green"
+      }, e));
     }
 
-    _createClass(Tachyons, [{
+    _createClass(n, [{
       key: "onIconPlaced",
-      value: function onIconPlaced(e) {
-        var type = e.element.getAttribute('type');
-        var parent = e.element.parentElement;
+      value: function onIconPlaced(t) {
+        var n = t.element.getAttribute("type");
+        var s = t.element.parentElement;
 
-        if ('checkbox' === type || 'radio' === type) {
-          parent.parentElement.insertBefore(e.iconElement, parent.nextSibling);
-          classSet(e.iconElement, {
-            'fv-plugins-icon-check': true
+        if ("checkbox" === n || "radio" === n) {
+          s.parentElement.insertBefore(t.iconElement, s.nextSibling);
+          e(t.iconElement, {
+            "fv-plugins-icon-check": true
           });
         }
       }
     }]);
 
-    return Tachyons;
-  }(Framework);
+    return n;
+  }(t);
 
-  return Tachyons;
+  return n;
 
-}));
+})));

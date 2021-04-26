@@ -1,14 +1,14 @@
 /**
- * FormValidation (https://formvalidation.io), v1.4.0 (678705b)
+ * FormValidation (https://formvalidation.io), v1.7.0 (71bbaaa)
  * The best validation library for JavaScript
- * (c) 2013 - 2019 Nguyen Huu Phuoc <me@phuoc.ng>
+ * (c) 2013 - 2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.plugins = global.FormValidation.plugins || {}, global.FormValidation.plugins.Bulma = factory()));
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -63,6 +63,19 @@
     return _setPrototypeOf(o, p);
   }
 
+  function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function _assertThisInitialized(self) {
     if (self === void 0) {
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -79,60 +92,79 @@
     return _assertThisInitialized(self);
   }
 
-  var classSet = FormValidation.utils.classSet;
+  function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
 
-  var Framework = FormValidation.plugins.Framework;
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf(Derived),
+          result;
 
-  var Bulma =
-  /*#__PURE__*/
-  function (_Framework) {
-    _inherits(Bulma, _Framework);
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf(this).constructor;
 
-    function Bulma(opts) {
-      _classCallCheck(this, Bulma);
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
 
-      return _possibleConstructorReturn(this, _getPrototypeOf(Bulma).call(this, Object.assign({}, {
-        formClass: 'fv-plugins-bulma',
-        messageClass: 'help is-danger',
-        rowInvalidClass: 'fv-has-error',
+      return _possibleConstructorReturn(this, result);
+    };
+  }
+
+  var e = FormValidation.utils.classSet;
+
+  var t = FormValidation.plugins.Framework;
+
+  var s = /*#__PURE__*/function (_t) {
+    _inherits(s, _t);
+
+    var _super = _createSuper(s);
+
+    function s(e) {
+      _classCallCheck(this, s);
+
+      return _super.call(this, Object.assign({}, {
+        formClass: "fv-plugins-bulma",
+        messageClass: "help is-danger",
+        rowInvalidClass: "fv-has-error",
         rowPattern: /^.*field.*$/,
-        rowSelector: '.field',
-        rowValidClass: 'fv-has-success'
-      }, opts)));
+        rowSelector: ".field",
+        rowValidClass: "fv-has-success"
+      }, e));
     }
 
-    _createClass(Bulma, [{
+    _createClass(s, [{
       key: "onIconPlaced",
-      value: function onIconPlaced(e) {
-        classSet(e.iconElement, {
-          'fv-plugins-icon': false
+      value: function onIconPlaced(t) {
+        e(t.iconElement, {
+          "fv-plugins-icon": false
         });
-        var span = document.createElement('span');
-        span.setAttribute('class', 'icon is-small is-right');
-        e.iconElement.parentNode.insertBefore(span, e.iconElement);
-        span.appendChild(e.iconElement);
-        var type = e.element.getAttribute('type');
-        var parent = e.element.parentElement;
+        var s = document.createElement("span");
+        s.setAttribute("class", "icon is-small is-right");
+        t.iconElement.parentNode.insertBefore(s, t.iconElement);
+        s.appendChild(t.iconElement);
+        var n = t.element.getAttribute("type");
+        var r = t.element.parentElement;
 
-        if ('checkbox' === type || 'radio' === type) {
-          classSet(parent.parentElement, {
-            'has-icons-right': true
+        if ("checkbox" === n || "radio" === n) {
+          e(r.parentElement, {
+            "has-icons-right": true
           });
-          classSet(span, {
-            'fv-plugins-icon-check': true
+          e(s, {
+            "fv-plugins-icon-check": true
           });
-          parent.parentElement.insertBefore(span, parent.nextSibling);
+          r.parentElement.insertBefore(s, r.nextSibling);
         } else {
-          classSet(parent, {
-            'has-icons-right': true
+          e(r, {
+            "has-icons-right": true
           });
         }
       }
     }]);
 
-    return Bulma;
-  }(Framework);
+    return s;
+  }(t);
 
-  return Bulma;
+  return s;
 
-}));
+})));

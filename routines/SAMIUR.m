@@ -112,7 +112,12 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  k SAMIRTN
  s HTTPRSP("mime")="text/html"
  ;
- n type,temp
+ n type,temp,site
+ s site=$g(filter("siteid"))
+ i site="" s site=$g(filter("site"))
+ i site="" d  q  ; report site missing
+ . d GETHOME^SAMIHOM3(.SAMIRTN,.filter) ; send them to home
+ ;
  s type=$g(filter("samireporttype"))
  i type="" d  q  ; report type missing
  . d GETHOME^SAMIHOM3(.SAMIRTN,.filter) ; send them to home
@@ -144,7 +149,7 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  . s SAMIRTN(cnt)=ln
  . ;
  n RPT,ik
- d RPTTBL^SAMIUR2(.RPT,type) ; get the report specs
+ d RPTTBL^SAMIUR2(.RPT,type,site) ; get the report specs
  i '$d(RPT) d  q  ; don't know about this report
  . d GETHOME^SAMIHOM3(.SAMIRTN,.filter) ; send them to home
  ;

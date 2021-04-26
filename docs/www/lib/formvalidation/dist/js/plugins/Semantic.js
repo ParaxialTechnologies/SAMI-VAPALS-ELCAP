@@ -1,14 +1,14 @@
 /**
- * FormValidation (https://formvalidation.io), v1.4.0 (678705b)
+ * FormValidation (https://formvalidation.io), v1.7.0 (71bbaaa)
  * The best validation library for JavaScript
- * (c) 2013 - 2019 Nguyen Huu Phuoc <me@phuoc.ng>
+ * (c) 2013 - 2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.plugins = global.FormValidation.plugins || {}, global.FormValidation.plugins.Semantic = factory()));
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -63,6 +63,19 @@
     return _setPrototypeOf(o, p);
   }
 
+  function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function _assertThisInitialized(self) {
     if (self === void 0) {
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -77,6 +90,25 @@
     }
 
     return _assertThisInitialized(self);
+  }
+
+  function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
+
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf(Derived),
+          result;
+
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf(this).constructor;
+
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+
+      return _possibleConstructorReturn(this, result);
+    };
   }
 
   function _superPropBase(object, property) {
@@ -109,81 +141,82 @@
     return _get(target, property, receiver || target);
   }
 
-  var classSet = FormValidation.utils.classSet;
+  var e = FormValidation.utils.classSet;
 
-  var hasClass = FormValidation.utils.hasClass;
+  var s = FormValidation.utils.hasClass;
 
-  var Framework = FormValidation.plugins.Framework;
+  var t = FormValidation.plugins.Framework;
 
-  var Semantic =
-  /*#__PURE__*/
-  function (_Framework) {
-    _inherits(Semantic, _Framework);
+  var n = /*#__PURE__*/function (_t) {
+    _inherits(n, _t);
 
-    function Semantic(opts) {
+    var _super = _createSuper(n);
+
+    function n(e) {
       var _this;
 
-      _classCallCheck(this, Semantic);
+      _classCallCheck(this, n);
 
-      _this = _possibleConstructorReturn(this, _getPrototypeOf(Semantic).call(this, Object.assign({}, {
-        formClass: 'fv-plugins-semantic',
-        messageClass: 'ui pointing red label',
-        rowInvalidClass: 'error',
+      _this = _super.call(this, Object.assign({}, {
+        formClass: "fv-plugins-semantic",
+        messageClass: "ui pointing red label",
+        rowInvalidClass: "error",
         rowPattern: /^.*(field|column).*$/,
-        rowSelector: '.fields',
-        rowValidClass: 'fv-has-success'
-      }, opts)));
+        rowSelector: ".fields",
+        rowValidClass: "fv-has-success"
+      }, e));
       _this.messagePlacedHandler = _this.onMessagePlaced.bind(_assertThisInitialized(_this));
       return _this;
     }
 
-    _createClass(Semantic, [{
+    _createClass(n, [{
       key: "install",
       value: function install() {
-        _get(_getPrototypeOf(Semantic.prototype), "install", this).call(this);
+        _get(_getPrototypeOf(n.prototype), "install", this).call(this);
 
-        this.core.on('plugins.message.placed', this.messagePlacedHandler);
+        this.core.on("plugins.message.placed", this.messagePlacedHandler);
       }
     }, {
       key: "uninstall",
       value: function uninstall() {
-        _get(_getPrototypeOf(Semantic.prototype), "uninstall", this).call(this);
+        _get(_getPrototypeOf(n.prototype), "uninstall", this).call(this);
 
-        this.core.off('plugins.message.placed', this.messagePlacedHandler);
+        this.core.off("plugins.message.placed", this.messagePlacedHandler);
       }
     }, {
       key: "onIconPlaced",
-      value: function onIconPlaced(e) {
-        var type = e.element.getAttribute('type');
+      value: function onIconPlaced(s) {
+        var t = s.element.getAttribute("type");
 
-        if ('checkbox' === type || 'radio' === type) {
-          var parent = e.element.parentElement;
-          classSet(e.iconElement, {
-            'fv-plugins-icon-check': true
+        if ("checkbox" === t || "radio" === t) {
+          var _t2 = s.element.parentElement;
+          e(s.iconElement, {
+            "fv-plugins-icon-check": true
           });
-          parent.parentElement.insertBefore(e.iconElement, parent.nextSibling);
+
+          _t2.parentElement.insertBefore(s.iconElement, _t2.nextSibling);
         }
       }
     }, {
       key: "onMessagePlaced",
       value: function onMessagePlaced(e) {
-        var type = e.element.getAttribute('type');
-        var numElements = e.elements.length;
+        var t = e.element.getAttribute("type");
+        var n = e.elements.length;
 
-        if (('checkbox' === type || 'radio' === type) && numElements > 1) {
-          var last = e.elements[numElements - 1];
-          var parent = last.parentElement;
+        if (("checkbox" === t || "radio" === t) && n > 1) {
+          var l = e.elements[n - 1];
+          var a = l.parentElement;
 
-          if (hasClass(parent, type) && hasClass(parent, 'ui')) {
-            parent.parentElement.insertBefore(e.messageElement, parent.nextSibling);
+          if (s(a, t) && s(a, "ui")) {
+            a.parentElement.insertBefore(e.messageElement, a.nextSibling);
           }
         }
       }
     }]);
 
-    return Semantic;
-  }(Framework);
+    return n;
+  }(t);
 
-  return Semantic;
+  return n;
 
-}));
+})));

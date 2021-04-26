@@ -8,7 +8,7 @@ SAMIUR2 ;ven/gpl - sami user reports ; 5/8/19 10:57am
  ;
  quit  ; no entry from top
  ;
-RPTTBL(RPT,TYPE) ; RPT is passed by reference and returns the 
+RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the
  ; report definition table. TYPE is the report type to be returned
  ; This routine could use a file or a graph in the next version
  ;
@@ -17,7 +17,7 @@ RPTTBL(RPT,TYPE) ; RPT is passed by reference and returns the
  . S RPT(1,"routine")="$$FUDATE^SAMIUR2"
  . S RPT(2,"header")="Name"
  . S RPT(2,"routine")="$$NAME^SAMIUR2"
- . S RPT(3,"header")="SSN"
+ . S RPT(3,"header")=$$SSNLABEL(SITE)
  . S RPT(3,"routine")="$$SSN^SAMIUR2"
  . S RPT(4,"header")="Baseline Date"
  . S RPT(4,"routine")="$$BLINEDT^SAMIUR2"
@@ -32,7 +32,7 @@ RPTTBL(RPT,TYPE) ; RPT is passed by reference and returns the
  if TYPE="activity" d  q  ;
  . S RPT(1,"header")="Name"
  . S RPT(1,"routine")="$$NAME^SAMIUR2"
- . S RPT(2,"header")="SSN"
+ . S RPT(2,"header")=$$SSNLABEL(SITE)
  . S RPT(2,"routine")="$$SSN^SAMIUR2"
  . S RPT(3,"header")="CT Date"
  . S RPT(3,"routine")="$$STUDYDT^SAMIUR2"
@@ -49,7 +49,26 @@ RPTTBL(RPT,TYPE) ; RPT is passed by reference and returns the
  if TYPE="enrollment" d  q  ;
  . S RPT(1,"header")="Name"
  . S RPT(1,"routine")="$$NAME^SAMIUR2"
- . S RPT(2,"header")="SSN"
+ . S RPT(2,"header")=$$SSNLABEL(SITE)
+ . S RPT(2,"routine")="$$SSN^SAMIUR2"
+ . S RPT(3,"header")="CT Date"
+ . S RPT(3,"routine")="$$STUDYDT^SAMIUR2"
+ . S RPT(4,"header")="Gender"
+ . S RPT(4,"routine")="$$GENDER^SAMIUR2"
+ . ;S RPT(5,"header")="Race"
+ . ;S RPT(5,"routine")="$$RACE^SAMIUR2"
+ . S RPT(6,"header")="Age"
+ . S RPT(6,"routine")="$$AGE^SAMIUR2"
+ . S RPT(7,"header")="Urban/Rural"
+ . S RPT(7,"routine")="$$RURAL^SAMIUR2"
+ . S RPT(8,"header")="Smoking Status"
+ . S RPT(8,"routine")="$$SMKSTAT^SAMIUR2"
+ . S RPT(9,"header")="Pack Years at Intake"
+ . S RPT(9,"routine")="$$PACKYRS^SAMIUR2"
+ if TYPE="inactive" d  q  ;
+ . S RPT(1,"header")="Name"
+ . S RPT(1,"routine")="$$NAME^SAMIUR2"
+ . S RPT(2,"header")=$$SSNLABEL(SITE)
  . S RPT(2,"routine")="$$SSN^SAMIUR2"
  . S RPT(3,"header")="CT Date"
  . S RPT(3,"routine")="$$STUDYDT^SAMIUR2"
@@ -89,7 +108,7 @@ RPTTBL(RPT,TYPE) ; RPT is passed by reference and returns the
  . S RPT(1,"routine")="$$BLINEDT^SAMIUR2"
  . S RPT(2,"header")="Name"
  . S RPT(2,"routine")="$$NAME^SAMIUR2"
- . S RPT(3,"header")="SSN"
+ . S RPT(3,"header")=$$SSNLABEL(SITE)
  . S RPT(3,"routine")="$$SSN^SAMIUR2"
  . S RPT(4,"header")="Incomplete form"
  . S RPT(4,"routine")="$$IFORM^SAMIUR2"
@@ -98,7 +117,7 @@ RPTTBL(RPT,TYPE) ; RPT is passed by reference and returns the
  . S RPT(1,"routine")="$$BLINEDT^SAMIUR2"
  . S RPT(2,"header")="Name"
  . S RPT(2,"routine")="$$NAME^SAMIUR2"
- . S RPT(3,"header")="SSN"
+ . S RPT(3,"header")=$$SSNLABEL(SITE)
  . S RPT(3,"routine")="$$SSN^SAMIUR2"
  if TYPE="cumpy" d  q  ;
  . S RPT(1,"header")="Name"
@@ -119,7 +138,7 @@ RPTTBL(RPT,TYPE) ; RPT is passed by reference and returns the
  if TYPE="worklist" d  q  ;
  . S RPT(1,"header")="Name"
  . S RPT(1,"routine")="$$WORKPAT^SAMIUR2"
- . S RPT(2,"header")="SSN"
+ . S RPT(2,"header")=$$SSNLABEL(SITE)
  . S RPT(2,"routine")="$$SSN^SAMIUR2"
  . S RPT(3,"header")="Date of birth"
  . S RPT(3,"routine")="$$DOB^SAMIUR2"
@@ -144,6 +163,12 @@ NAME(zdt,dfn,SAMIPATS) ; extrinsic returns the name including a hyperlink
  n nam
  s nam="Name"
  q $g(SAMIPATS(zdt,dfn,"nuhref"))
+ ;
+SSNLABEL(SITE) ; extrinsic returns label for SSN (ie PID)
+ N RTN
+ S RTN=$$GET1PARM^SAMIPARM("socialSecurityNumber",SITE)
+ I RTN="" S RTN="SSN"
+ Q RTN
  ;
 SSN(zdt,dfn,SAMIPATS) ; extrinsic returns SSN
  n ssn,tssn
@@ -393,7 +418,7 @@ PKYDT(STDT,ENDT,PKS,CIGS) ; Extrinsic returns pack-years
  ;
  q pkyr
  ;
-PKY(YRS,PKS) ; Extrinsic returns pack-years from years (YRS) and 
+PKY(YRS,PKS) ; Extrinsic returns pack-years from years (YRS) and
  ; packs per day (PKS)
  ;
  n rtn s rtn=""

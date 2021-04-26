@@ -1,14 +1,14 @@
 /**
- * FormValidation (https://formvalidation.io), v1.4.0 (678705b)
+ * FormValidation (https://formvalidation.io), v1.7.0 (71bbaaa)
  * The best validation library for JavaScript
- * (c) 2013 - 2019 Nguyen Huu Phuoc <me@phuoc.ng>
+ * (c) 2013 - 2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.plugins = global.FormValidation.plugins || {}, global.FormValidation.plugins.Recaptcha = factory()));
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -78,6 +78,19 @@
     return _setPrototypeOf(o, p);
   }
 
+  function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function _assertThisInitialized(self) {
     if (self === void 0) {
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -94,114 +107,119 @@
     return _assertThisInitialized(self);
   }
 
-  var Plugin = FormValidation.Plugin;
+  function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
 
-  var Status;
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf(Derived),
+          result;
 
-  (function (Status) {
-    Status["Ignored"] = "Ignored";
-    Status["Invalid"] = "Invalid";
-    Status["NotValidated"] = "NotValidated";
-    Status["Valid"] = "Valid";
-    Status["Validating"] = "Validating";
-  })(Status || (Status = {}));
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf(this).constructor;
 
-  var Status$1 = Status;
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
 
-  var fetch = FormValidation.utils.fetch;
+      return _possibleConstructorReturn(this, result);
+    };
+  }
 
-  var Recaptcha =
-  /*#__PURE__*/
-  function (_Plugin) {
-    _inherits(Recaptcha, _Plugin);
+  var e = FormValidation.Plugin;
 
-    function Recaptcha(opts) {
+  var t = FormValidation.utils.fetch;
+
+  var i = /*#__PURE__*/function (_e) {
+    _inherits(i, _e);
+
+    var _super = _createSuper(i);
+
+    function i(e) {
       var _this;
 
-      _classCallCheck(this, Recaptcha);
+      _classCallCheck(this, i);
 
-      _this = _possibleConstructorReturn(this, _getPrototypeOf(Recaptcha).call(this, opts));
+      _this = _super.call(this, e);
       _this.widgetIds = new Map();
-      _this.captchaStatus = Status$1.NotValidated;
-      _this.opts = Object.assign({}, Recaptcha.DEFAULT_OPTIONS, opts);
+      _this.captchaStatus = "NotValidated";
+      _this.opts = Object.assign({}, i.DEFAULT_OPTIONS, e);
       _this.fieldResetHandler = _this.onResetField.bind(_assertThisInitialized(_this));
       _this.preValidateFilter = _this.preValidate.bind(_assertThisInitialized(_this));
       _this.iconPlacedHandler = _this.onIconPlaced.bind(_assertThisInitialized(_this));
       return _this;
     }
 
-    _createClass(Recaptcha, [{
+    _createClass(i, [{
       key: "install",
       value: function install() {
         var _this2 = this;
 
-        this.core.on('core.field.reset', this.fieldResetHandler).on('plugins.icon.placed', this.iconPlacedHandler).registerFilter('validate-pre', this.preValidateFilter);
-        var loadPrevCaptcha = typeof window[Recaptcha.LOADED_CALLBACK] === 'undefined' ? function () {} : window[Recaptcha.LOADED_CALLBACK];
+        this.core.on("core.field.reset", this.fieldResetHandler).on("plugins.icon.placed", this.iconPlacedHandler).registerFilter("validate-pre", this.preValidateFilter);
+        var e = typeof window[i.LOADED_CALLBACK] === "undefined" ? function () {} : window[i.LOADED_CALLBACK];
 
-        window[Recaptcha.LOADED_CALLBACK] = function () {
-          loadPrevCaptcha();
-          var captchaOptions = {
-            'badge': _this2.opts.badge,
-            'callback': function callback() {
-              if (_this2.opts.backendVerificationUrl === '') {
-                _this2.captchaStatus = Status$1.Valid;
+        window[i.LOADED_CALLBACK] = function () {
+          e();
+          var s = {
+            badge: _this2.opts.badge,
+            callback: function callback() {
+              if (_this2.opts.backendVerificationUrl === "") {
+                _this2.captchaStatus = "Valid";
 
-                _this2.core.updateFieldStatus(Recaptcha.CAPTCHA_FIELD, Status$1.Valid);
-              } else {
-                _this2.core.revalidateField(Recaptcha.CAPTCHA_FIELD);
+                _this2.core.updateFieldStatus(i.CAPTCHA_FIELD, "Valid");
               }
             },
-            'error-callback': function errorCallback() {
-              _this2.captchaStatus = Status$1.Invalid;
+            "error-callback": function errorCallback() {
+              _this2.captchaStatus = "Invalid";
 
-              _this2.core.updateFieldStatus(Recaptcha.CAPTCHA_FIELD, Status$1.Invalid);
+              _this2.core.updateFieldStatus(i.CAPTCHA_FIELD, "Invalid");
             },
-            'expired-callback': function expiredCallback() {
-              _this2.captchaStatus = Status$1.NotValidated;
+            "expired-callback": function expiredCallback() {
+              _this2.captchaStatus = "NotValidated";
 
-              _this2.core.updateFieldStatus(Recaptcha.CAPTCHA_FIELD, Status$1.NotValidated);
+              _this2.core.updateFieldStatus(i.CAPTCHA_FIELD, "NotValidated");
             },
-            'sitekey': _this2.opts.siteKey,
-            'size': _this2.opts.size
+            sitekey: _this2.opts.siteKey,
+            size: _this2.opts.size
           };
-          var widgetId = window['grecaptcha'].render(_this2.opts.element, captchaOptions);
+          var a = window["grecaptcha"].render(_this2.opts.element, s);
 
-          _this2.widgetIds.set(_this2.opts.element, widgetId);
+          _this2.widgetIds.set(_this2.opts.element, a);
 
-          _this2.core.addField(Recaptcha.CAPTCHA_FIELD, {
+          _this2.core.addField(i.CAPTCHA_FIELD, {
             validators: {
               promise: {
                 message: _this2.opts.message,
-                promise: function promise(input) {
-                  var value = _this2.widgetIds.has(_this2.opts.element) ? window['grecaptcha'].getResponse(_this2.widgetIds.get(_this2.opts.element)) : input.value;
+                promise: function promise(e) {
+                  var s = _this2.widgetIds.has(_this2.opts.element) ? window["grecaptcha"].getResponse(_this2.widgetIds.get(_this2.opts.element)) : e.value;
 
-                  if (value === '') {
-                    _this2.captchaStatus = Status$1.Invalid;
+                  if (s === "") {
+                    _this2.captchaStatus = "Invalid";
                     return Promise.resolve({
                       valid: false
                     });
-                  } else if (_this2.opts.backendVerificationUrl === '') {
-                    _this2.captchaStatus = Status$1.Valid;
+                  } else if (_this2.opts.backendVerificationUrl === "") {
+                    _this2.captchaStatus = "Valid";
                     return Promise.resolve({
                       valid: true
                     });
-                  } else if (_this2.captchaStatus === Status$1.Valid) {
+                  } else if (_this2.captchaStatus === "Valid") {
                     return Promise.resolve({
                       valid: true
                     });
                   } else {
-                    return fetch(_this2.opts.backendVerificationUrl, {
-                      method: 'POST',
-                      params: _defineProperty({}, Recaptcha.CAPTCHA_FIELD, value)
-                    }).then(function (response) {
-                      var isValid = "".concat(response['success']) === 'true';
-                      _this2.captchaStatus = isValid ? Status$1.Valid : Status$1.Invalid;
+                    return t(_this2.opts.backendVerificationUrl, {
+                      method: "POST",
+                      params: _defineProperty({}, i.CAPTCHA_FIELD, s)
+                    }).then(function (e) {
+                      var t = "".concat(e["success"]) === "true";
+                      _this2.captchaStatus = t ? "Valid" : "Invalid";
                       return Promise.resolve({
-                        meta: response,
-                        valid: isValid
+                        meta: e,
+                        valid: t
                       });
-                    })["catch"](function (reason) {
-                      _this2.captchaStatus = Status$1.NotValidated;
+                    })["catch"](function (e) {
+                      _this2.captchaStatus = "NotValidated";
                       return Promise.reject({
                         valid: false
                       });
@@ -213,15 +231,16 @@
           });
         };
 
-        var src = this.getScript();
+        var s = this.getScript();
 
-        if (!document.body.querySelector("script[src=\"".concat(src, "\"]"))) {
-          var script = document.createElement('script');
-          script.type = 'text/javascript';
-          script.async = true;
-          script.defer = true;
-          script.src = src;
-          document.body.appendChild(script);
+        if (!document.body.querySelector("script[src=\"".concat(s, "\"]"))) {
+          var _e2 = document.createElement("script");
+
+          _e2.type = "text/javascript";
+          _e2.async = true;
+          _e2.defer = true;
+          _e2.src = s;
+          document.body.appendChild(_e2);
         }
       }
     }, {
@@ -231,35 +250,36 @@
           clearTimeout(this.timer);
         }
 
-        this.core.off('core.field.reset', this.fieldResetHandler).off('plugins.icon.placed', this.iconPlacedHandler).deregisterFilter('validate-pre', this.preValidateFilter);
+        this.core.off("core.field.reset", this.fieldResetHandler).off("plugins.icon.placed", this.iconPlacedHandler).deregisterFilter("validate-pre", this.preValidateFilter);
         this.widgetIds.clear();
-        var src = this.getScript();
-        var scripts = [].slice.call(document.body.querySelectorAll("script[src=\"".concat(src, "\"]")));
-        scripts.forEach(function (s) {
-          return s.parentNode.removeChild(s);
+        var e = this.getScript();
+        var t = [].slice.call(document.body.querySelectorAll("script[src=\"".concat(e, "\"]")));
+        t.forEach(function (e) {
+          return e.parentNode.removeChild(e);
         });
-        this.core.removeField(Recaptcha.CAPTCHA_FIELD);
+        this.core.removeField(i.CAPTCHA_FIELD);
       }
     }, {
       key: "getScript",
       value: function getScript() {
-        var lang = this.opts.language ? "&hl=".concat(this.opts.language) : '';
-        return "https://www.google.com/recaptcha/api.js?onload=".concat(Recaptcha.LOADED_CALLBACK, "&render=explicit").concat(lang);
+        var e = this.opts.language ? "&hl=".concat(this.opts.language) : "";
+        return "https://www.google.com/recaptcha/api.js?onload=".concat(i.LOADED_CALLBACK, "&render=explicit").concat(e);
       }
     }, {
       key: "preValidate",
       value: function preValidate() {
         var _this3 = this;
 
-        if (this.opts.size === 'invisible' && this.widgetIds.has(this.opts.element)) {
-          var widgetId = this.widgetIds.get(this.opts.element);
-          return this.captchaStatus === Status$1.Valid ? Promise.resolve() : new Promise(function (resolve, reject) {
-            window['grecaptcha'].execute(widgetId).then(function () {
+        if (this.opts.size === "invisible" && this.widgetIds.has(this.opts.element)) {
+          var _e3 = this.widgetIds.get(this.opts.element);
+
+          return this.captchaStatus === "Valid" ? Promise.resolve() : new Promise(function (t, i) {
+            window["grecaptcha"].execute(_e3).then(function () {
               if (_this3.timer) {
                 clearTimeout(_this3.timer);
               }
 
-              _this3.timer = window.setTimeout(resolve, 1 * 1000);
+              _this3.timer = window.setTimeout(t, 1 * 1e3);
             });
           });
         } else {
@@ -269,35 +289,40 @@
     }, {
       key: "onResetField",
       value: function onResetField(e) {
-        if (e.field === Recaptcha.CAPTCHA_FIELD && this.widgetIds.has(this.opts.element)) {
-          var widgetId = this.widgetIds.get(this.opts.element);
-          window['grecaptcha'].reset(widgetId);
+        if (e.field === i.CAPTCHA_FIELD && this.widgetIds.has(this.opts.element)) {
+          var _e4 = this.widgetIds.get(this.opts.element);
+
+          window["grecaptcha"].reset(_e4);
         }
       }
     }, {
       key: "onIconPlaced",
       value: function onIconPlaced(e) {
-        if (e.field === Recaptcha.CAPTCHA_FIELD) {
-          var captchaContainer = document.getElementById(this.opts.element);
+        if (e.field === i.CAPTCHA_FIELD) {
+          if (this.opts.size === "invisible") {
+            e.iconElement.style.display = "none";
+          } else {
+            var _t = document.getElementById(this.opts.element);
 
-          if (captchaContainer) {
-            captchaContainer.parentNode.insertBefore(e.iconElement, captchaContainer.nextSibling);
+            if (_t) {
+              _t.parentNode.insertBefore(e.iconElement, _t.nextSibling);
+            }
           }
         }
       }
     }]);
 
-    return Recaptcha;
-  }(Plugin);
-  Recaptcha.CAPTCHA_FIELD = 'g-recaptcha-response';
-  Recaptcha.DEFAULT_OPTIONS = {
-    backendVerificationUrl: '',
-    badge: 'bottomright',
-    size: 'normal',
-    theme: 'light'
+    return i;
+  }(e);
+  i.CAPTCHA_FIELD = "g-recaptcha-response";
+  i.DEFAULT_OPTIONS = {
+    backendVerificationUrl: "",
+    badge: "bottomright",
+    size: "normal",
+    theme: "light"
   };
-  Recaptcha.LOADED_CALLBACK = '___reCaptchaLoaded___';
+  i.LOADED_CALLBACK = "___reCaptchaLoaded___";
 
-  return Recaptcha;
+  return i;
 
-}));
+})));

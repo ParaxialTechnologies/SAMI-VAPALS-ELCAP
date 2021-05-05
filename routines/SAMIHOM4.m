@@ -420,7 +420,7 @@ MKPTLK(ptlkien,SAMIARG) ; creates patient-lookup record
  n gender s gender=SAMIARG("gender")
  s @root@(ptlkien,"gender")=$s(gender="M":"M^MALE",1:"F^FEMALE")
  s @root@(ptlkien,"sex")=SAMIARG("gender")
- s @root@(ptlkien,"icn")=SAMIARG("icn")
+ ;s @root@(ptlkien,"icn")=SAMIARG("icn")
  s @root@(ptlkien,"ssn")=ssn
  n last5 s last5=$$UCASE($e(name,1))_$e(ssn,6,9)
  s @root@(ptlkien,"last5")=last5
@@ -608,7 +608,7 @@ REMATCH(sien,SAMIARG) ; extrinsic returns possible match ien
  i ssn["-" s ssn=$tr(ssn,"-")
  s name=$g(SAMIARG("saminame"))
  i name="" s name=$g(SAMIARG("name"))
- s icn=$g(SAMIARG("icn"))
+ ;s icn=$g(SAMIARG("icn"))
  s x=0
  i ssn'="" s x=$o(@lroot@("ssn",ssn,""))
  i x=sien s x=$o(@lroot@("ssn",ssn,x))
@@ -719,13 +719,13 @@ INDXPTLK(ien) ; generate index entries in patient-lookup graph
  s:x'="" @proot@("dfn",x,ien)=""
  s x=$g(@proot@(ien,"last5")) ;w !,x
  s:x'="" @proot@("last5",x,ien)=""
- s x=$g(@proot@(ien,"icn")) ;w !,x
- i x'["V" d  ;
- . i x="" q
- . n chk s chk=$$CHECKDG^MPIFSPC(x)
- . s @proot@(ien,"icn")=x_"V"_chk
- . s x=x_"V"_chk
- s:x'="" @proot@("icn",x,ien)=""
+ ;s x=$g(@proot@(ien,"icn")) ;w !,x
+ ;i x'["V" d  ;
+ ;. i x="" q
+ ;. n chk s chk=$$CHECKDG^MPIFSPC(x)
+ ;. s @proot@(ien,"icn")=x_"V"_chk
+ ;. s x=x_"V"_chk
+ ;s:x'="" @proot@("icn",x,ien)=""
  s x=$g(@proot@(ien,"ssn")) ;w !,x
  s:x'="" @proot@("ssn",x,ien)=""
  s x=$g(@proot@(ien,"sinamef")) ;w !,x

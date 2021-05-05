@@ -271,6 +271,10 @@ NUHREF(SAMIPATS) ; create the nuhref link to casereview for all patients
 SELECT(SAMIPATS,ztype,datephrase,filter) ;selects patients for report
  ;
  ;m ^gpl("select")=filter
+ n site s site=$g(filter("siteid"))
+ i site="" s site=$g(filter("site"))
+ q:site=""
+ s SAMIPATS("siteid")=site
  n type s type=ztype
  i type="unmatched" d  q  ;
  . d UNMAT(.SAMIPATS,ztype,.datephrase,.filter)
@@ -278,7 +282,6 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ;selects patients for report
  . d WKLIST(.SAMIPATS,ztype,.datephrase,.filter)
  i $g(type)="" s type="enrollment"
  i type="cumpy" s type="enrollment"
- n site s site=$g(filter("siteid"))
  n strdt,enddt,fmstrdt,fmenddt
  s strdt=$g(filter("start-date"))
  s fmstrdt=$$KEY2FM^SAMICASE(strdt)
@@ -415,6 +418,12 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ;selects patients for report
  ;
 UNMAT(SAMIPATS,ztype,datephrase,filter) ;
  ;
+ n site
+ s site=$g(filter("siteid"))
+ i site="" s site=$g(filter("site"))
+ i site="" s site=$g(SAMIPATS("siteid"))
+ q:site=""
+ n ssnlbl s ssnlbl=$$GET1PARM^SAMIPARM("socialSecurityNumber",site)
  s datephrase="Unmatched Persons"
  n lroot s lroot=$$setroot^%wd("patient-lookup")
  n dfn s dfn=9000000
@@ -423,13 +432,14 @@ UNMAT(SAMIPATS,ztype,datephrase,filter) ;
  . q:ien=""
  . i $g(@lroot@(ien,"remotedfn"))'="" q  ;
  . m SAMIPATS(ien,dfn)=@lroot@(ien)
- . ;new name set name=$g(SAMIPATS(ien,dfn,"saminame"))
- . new name set name=$g(SAMIPATS(ien,dfn,"sinamef"))
- . set name=name_","_SAMIPATS(ien,dfn,"sinamel")
+ . new name set name=$g(SAMIPATS(ien,dfn,"saminame"))
+ . ;new name set name=$g(SAMIPATS(ien,dfn,"sinamef"))
+ . ;set name=name_","_SAMIPATS(ien,dfn,"sinamel")
  . new nuhref set nuhref="<form method=POST action=""/vapals"">"
  . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""editperson"">"
+ . set nuhref=nuhref_"<input type=hidden name=""siteid"" value="_site_">"
  . set nuhref=nuhref_"<input type=hidden name=""dfn"" value="_dfn_">"
- . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
+ . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"_$CHAR(10,13)
  . s SAMIPATS(ien,dfn,"editref")=nuhref
  ;
  quit  ; end of UNMAT

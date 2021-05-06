@@ -198,7 +198,7 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  . . . s SAMIRTN(cnt)="<td>"_$g(XRV)_"</td>"
  . . ;
  . . s cnt=cnt+1
- . . s SAMIRTN(cnt)="</tr>"
+ . . s SAMIRTN(cnt)="</tr>"_$CHAR(10,13)
  . . s rows=rows+1
  s cnt=cnt+1
  s SAMIRTN(cnt)="<tr><td>Total: "_rows_"</td></tr>"
@@ -423,7 +423,7 @@ UNMAT(SAMIPATS,ztype,datephrase,filter) ;
  i site="" s site=$g(filter("site"))
  i site="" s site=$g(SAMIPATS("siteid"))
  q:site=""
- n ssnlbl s ssnlbl=$$GET1PARM^SAMIPARM("socialSecurityNumber",site)
+ ;n ssnlbl s ssnlbl=$$GET1PARM^SAMIPARM("socialSecurityNumber",site)
  s datephrase="Unmatched Persons"
  n lroot s lroot=$$setroot^%wd("patient-lookup")
  n dfn s dfn=9000000

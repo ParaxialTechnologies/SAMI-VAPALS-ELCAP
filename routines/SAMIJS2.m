@@ -65,9 +65,10 @@ FILE(directory) ; [Public] Load files from the file system; OPT: SAMI LOAD FILES
  . n errmsg s errmsg=$get(samireturn("loadMessage"))
  . if errmsg["Error" d  q  ;
  . . write errmsg,!
+ . write " ",errmsg,!
  . ;
- . write "Loaded with following data: ",!
- . write "DFN: ",$g(samireturn("dfn")),?15,"STUDYID: ",$g(samireturn("sid")),?25,"Graph Store IEN: ",$g(samireturn("ien")),?50,"Name: ",$g(samireturn("name")),!
+ . write " Loaded with following data: ",!
+ . write "DFN: ",$g(samireturn("dfn")),?15,"STUDYID: ",$g(samireturn("sid")),?25," LIEN: ",$g(samireturn("ien")),?50,"Name: ",$g(samireturn("name")),!
  . write "--------------------------------------------------------------------------",!
  . ;b
  q
@@ -84,25 +85,29 @@ wsPostSAMI(args,body,return,ien) ; accept incoming SAMI record in VAPALS
  i '$d(@iroot@(ien,"json","patient","lookup")) d  q  ;
  . s rtn("loadMessage")="Error, patient lookup missing"
  . d encode^%webjson("rtn","return","zerr")
- s dfn=@iroot@(ien,"json","patient","lookup","dfn")
- i dfn="" d  q  ;
- . s rtn("loadMessage")="Error, dfn missing"
- . d encode^%webjson("rtn","return","zerr")
- n newdfn s newdfn=0
- i $d(@lroot@("dfn",dfn)) d  ; oops need a new dfn for this system
- . s dfn=$o(@lroot@("dfn"," "),-1)+1
- . s newdfn=1 ; remember to propogate the new dfn
+ ; so, what is the dfn.. it is the number for this patient on this system
+ ;s dfn=$g(@iroot@(ien,"json","patient","lookup","dfn"))
+ ;i dfn="" d  q  ;
+ ;. s rtn("loadMessage")="Error, dfn missing"
+ ;. d encode^%webjson("rtn","return","zerr")
+ ;n newdfn s newdfn=0
+ ;i $d(@lroot@("dfn",dfn)) d  ; oops need a new dfn for this system
+ ;. s dfn=$o(@lroot@("dfn"," "),-1)+1
+ ;. s newdfn=1 ; remember to propogate the new dfn
+ s dfn=$o(@lroot@("dfn"," "),-1)+1
+ i $o(@proot@("dfn"," "),-1)+1>dfn s dfn=$o(@proot@("dfn"," "),-1)+1
  s rtn("dfn")=dfn
  i '$d(@lroot@(dfn)) s lien=dfn
  e  s lien=$o(@lroot@(" "),-1)+1
  s rtn("ien")=lien
- i newdfn=1 s @lroot@(lien,"dfn")=dfn
+ ;i newdfn=1 s @lroot@(lien,"dfn")=dfn
  n name s name=$g(@iroot@(ien,"json","patient","lookup","saminame"))
  i name="" d  q  ;
  . s rtn("loadMessage")="Error, name missing"
  . d encode^%webjson("rtn","return","zerr")
  s rtn("name")=name
  m @lroot@(lien)=@iroot@(ien,"json","patient","lookup")
+ s @lroot@(lien,"dfn")=dfn
  d INDXPTLK^SAMIHOM4(lien)
  ;
  ; detect if enrolled
@@ -113,11 +118,13 @@ wsPostSAMI(args,body,return,ien) ; accept incoming SAMI record in VAPALS
  ; 
  ; determine pien in vapals-patients
  ;
- i '$d(@proot@(dfn)) s pien=dfn
- e  s pien=$$NEXTNUM^SAMIHOM3()
+ ;i '$d(@proot@(dfn)) s pien=dfn
+ ;e  s pien=$$NEXTNUM^SAMIHOM3()
+ s pien=$$NEXTNUM^SAMIHOM3()
  m @proot@(pien)=@iroot@(ien,"json","patient","demos")
  s @proot@("dfn",dfn,pien)=""
- i newdfn s @proot@(pien,"dfn")=dfn
+ ;i newdfn s @proot@(pien,"dfn")=dfn
+ s @proot@(pien,"dfn")=dfn
  ;
  ; determine studyid (sid)
  ;

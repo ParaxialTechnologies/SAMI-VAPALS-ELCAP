@@ -110,9 +110,9 @@ RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the
  . S RPT(4,"header")="Smoking History"
  . S RPT(4,"routine")="$$SMHIS^SAMIUR2"
  if TYPE="unmatched" d  ;
- . S RPT(1,"header")="Unmatched Entry"
+ . S RPT(1,"header")="Unmatched Manual Entry"
  . S RPT(1,"routine")="$$MANPAT^SAMIUR2"
- . S RPT(2,"header")="Possible Match"
+ . S RPT(2,"header")="Possible HL7 Match"
  . S RPT(2,"routine")="$$POSSIBLE^SAMIUR2"
  . S RPT(3,"header")="Match Control"
  . S RPT(3,"routine")="$$MATCH^SAMIUR2"
@@ -270,6 +270,7 @@ GENDER(zdt,dfn,SAMIPATS) ; extrinsic returns gender
  . . i gend="" s gend=$g(@root@(pien,"gender"))
  . i gend="" d  ;
  . . n lien s lien=$o(@lroot@("dfn",dfn,""))
+ . . q:lien=""
  . . s gend=$g(@lroot@(lien,"gender"))
  i gend["^" s gend=$p(gend,"^",1)
  q:gend="" ""

@@ -9270,11 +9270,7 @@
                         declarative: new FormValidation.plugins.Declarative(),
                         trigger: new FormValidation.plugins.Trigger(),
                         bootstrap3: new FormValidation.plugins.Bootstrap3(),
-                        submitButton: new FormValidation.plugins.SubmitButton({
-                            buttons: function (form) {
-                                return [].slice.call(document.getElementById('submit-button'));
-                            },
-                        }),
+                        submitButton: new FormValidation.plugins.SubmitButton(),
                         // Instead of using the defaultSubmit plugin here, we listen for the core.form.valid event
                         // below to sort nodule grid (if necessary), then submit
                         //defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
@@ -9310,6 +9306,10 @@
         $(function () {
 
             const fv = createFormValidator();
+            $("#save-for-later-button").on('click', function () {
+                fv.resetForm(false);
+                fv.destroy();
+            });
 
             // SCAN
             // bind to change events on study date and baseline date to calculate "time since baseline"

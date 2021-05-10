@@ -1279,7 +1279,7 @@
      <hr/>
      <div class="pull-left">
       <input name="samistatus" type="hidden" value=""/>
-      <button class="btn btn-default" id="save-for-later-button" type="submit">
+      <button class="btn btn-default" formnovalidate="formnovalidate" id="save-for-later-button" type="submit">
        Save for Later
       </button>
       <button class="btn btn-primary" id="submit-button" type="submit">
@@ -1607,11 +1607,7 @@
                     declarative: new FormValidation.plugins.Declarative(),
                     trigger: new FormValidation.plugins.Trigger(),
                     bootstrap3: new FormValidation.plugins.Bootstrap3(),
-                    submitButton: new FormValidation.plugins.SubmitButton({
-                        buttons: function (form) {
-                            return [].slice.call(document.getElementById('submit-button'));
-                        },
-                    }),
+                    submitButton: new FormValidation.plugins.SubmitButton(),
                     defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
                     excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
                     icon: new FormValidation.plugins.Icon({
@@ -1693,7 +1689,12 @@
 
     $(function () {
 
-        createFormValidator();
+        const fv = createFormValidator();
+        $("#save-for-later-button").on('click', function () {
+            fv.resetForm(false);
+            fv.destroy();
+        });
+
         const initialRuralUrbanValue = $("[name=sirs]").filter(":checked").val();
         const $zipField = $("#sipz");
         const RURAL = 'r';

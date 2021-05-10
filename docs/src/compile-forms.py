@@ -31,7 +31,6 @@ forms = [
     {"template": "intervention", "title": "Intervention and Surgical Treatment Form", "output": "intervention",
      "withNav": "true"},
     {"template": "report", "title": "", "output": "report", "withNav": "true"},
-    {"template": "toggler", "title": "", "output": "toggler", "withNav": "true"},
     {"template": "table", "title": "", "output": "table", "withNav": "true"},
     {"template": "upload", "title": "Upload New Patients", "output": "upload", "withNav": "true"},
     {"template": "register", "title": "Register", "output": "register", "withNav": "true"},

@@ -1,11 +1,11 @@
-KIDS Distribution saved on May 13, 2021@20:57:03
-fixes for date changes on pet, intervention, and biopsy forms
+KIDS Distribution saved on May 14, 2021@09:56:41
+Form date changing and CT report recommendations adjustment
 **KIDS**:SAMI*18.0*11^
 
 **INSTALL NAME**
 SAMI*18.0*11
 "BLD",11508,0)
-SAMI*18.0*11^SAMI^0^3210513^n
+SAMI*18.0*11^SAMI^0^3210514^n
 "BLD",11508,1,0)
 ^^1^1^3210329^
 "BLD",11508,1,1,0)
@@ -15,7 +15,7 @@ Critical bugs fixed in Intake, CT eval, and reports
 "BLD",11508,6)
 ^11
 "BLD",11508,6.3)
-13
+14
 "BLD",11508,"KRN",0)
 ^9.67PA^1.5^25
 "BLD",11508,"KRN",.4,0)
@@ -47,7 +47,7 @@ Critical bugs fixed in Intake, CT eval, and reports
 "BLD",11508,"KRN",9.8,0)
 9.8
 "BLD",11508,"KRN",9.8,"NM",0)
-^9.68A^8^8
+^9.68A^9^9
 "BLD",11508,"KRN",9.8,"NM",1,0)
 SAMINOT1^^0^B443163534
 "BLD",11508,"KRN",9.8,"NM",2,0)
@@ -64,9 +64,13 @@ SAMIHL7^^0^B89568077
 SAMICAS3^^0^B268053249
 "BLD",11508,"KRN",9.8,"NM",8,0)
 SAMISAV^^0^B53697776
+"BLD",11508,"KRN",9.8,"NM",9,0)
+SAMICTTA^^0^B35394677
 "BLD",11508,"KRN",9.8,"NM","B","SAMICAS3",7)
 
 "BLD",11508,"KRN",9.8,"NM","B","SAMICSV",4)
+
+"BLD",11508,"KRN",9.8,"NM","B","SAMICTTA",9)
 
 "BLD",11508,"KRN",9.8,"NM","B","SAMIHL7",6)
 
@@ -193,9 +197,9 @@ SAMI^SAMI^SCREENING APPLICATIONS MANAGEMENT - IELCAP
 "PKG",230,22,1,0)
 18.0^3191203
 "PKG",230,22,1,"PAH",1,0)
-11^3210513^1
+11^3210514^1
 "PKG",230,22,1,"PAH",1,1,0)
-^^1^1^3210513
+^^1^1^3210514
 "PKG",230,22,1,"PAH",1,1,1,0)
 Critical bugs fixed in Intake, CT eval, and reports
 "QUES","XPF1",0)
@@ -269,13 +273,13 @@ NO
 "QUES","XPZ2","M")
 D XPZ2^XPDIQ
 "RTN")
-8
+9
 "RTN","SAMICAS3")
 0^7^B268053249
 "RTN","SAMICAS3",1,0)
 SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ;2021-03-17T18:31Z
 "RTN","SAMICAS3",2,0)
- ;;18.0;SAMI;**3,9**;;Build 13
+ ;;18.0;SAMI;**3,9**;;Build 14
 "RTN","SAMICAS3",3,0)
  ;;1.18.0.9-i9
 "RTN","SAMICAS3",4,0)
@@ -1505,7 +1509,7 @@ EOR ; end of routine SAMICAS3
 "RTN","SAMICSV",1,0)
 SAMICSV ;ven/gpl - csv export ;2021-03-30T17:18Z
 "RTN","SAMICSV",2,0)
- ;;18.0;SAMI;**7,11**;2020-01;Build 13
+ ;;18.0;SAMI;**7,11**;2020-01;Build 14
 "RTN","SAMICSV",3,0)
  ;;1.18.0.11-i11
 "RTN","SAMICSV",4,0)
@@ -2018,12 +2022,508 @@ SAYFORM() ; prompts for the form
  ;
 "RTN","SAMICSV",258,0)
 EOR ; end of routine SAMICSV
+"RTN","SAMICTTA")
+0^9^B35394677
+"RTN","SAMICTTA",1,0)
+SAMICTTA ;ven/gpl - ctreport text recommendations ;2021-03-22T15:51Z
+"RTN","SAMICTTA",2,0)
+ ;;18.0;SAMI;**4,10**;2020-01;Build 14
+"RTN","SAMICTTA",3,0)
+ ;;1.18.0.10-i10
+"RTN","SAMICTTA",4,0)
+ ;
+"RTN","SAMICTTA",5,0)
+ ; SAMICTTA creates the Recommendations section of the ELCAP CT Report
+"RTN","SAMICTTA",6,0)
+ ; in text format.
+"RTN","SAMICTTA",7,0)
+ ;
+"RTN","SAMICTTA",8,0)
+ quit  ; no entry from top
+"RTN","SAMICTTA",9,0)
+ ;
+"RTN","SAMICTTA",10,0)
+ ;
+"RTN","SAMICTTA",11,0)
+ ;
+"RTN","SAMICTTA",12,0)
+ ;@section 0 primary development
+"RTN","SAMICTTA",13,0)
+ ;
+"RTN","SAMICTTA",14,0)
+ ;
+"RTN","SAMICTTA",15,0)
+ ;
+"RTN","SAMICTTA",16,0)
+ ;@license see routine SAMIUL
+"RTN","SAMICTTA",17,0)
+ ;@documentation see SAMICTUL
+"RTN","SAMICTTA",18,0)
+ ;@contents
+"RTN","SAMICTTA",19,0)
+ ; RCMND: recommendations section of ctreport in text format
+"RTN","SAMICTTA",20,0)
+ ; OUT: output a line of ct report
+"RTN","SAMICTTA",21,0)
+ ; HOUT: output a ct report header line
+"RTN","SAMICTTA",22,0)
+ ; $$XVAL = patient value for var
+"RTN","SAMICTTA",23,0)
+ ; $$XSUB = dictionary value defined by var
+"RTN","SAMICTTA",24,0)
+ ;
+"RTN","SAMICTTA",25,0)
+ ;
+"RTN","SAMICTTA",26,0)
+ ;
+"RTN","SAMICTTA",27,0)
+ ;@section 1 RCMND & related subroutines
+"RTN","SAMICTTA",28,0)
+ ;
+"RTN","SAMICTTA",29,0)
+ ;
+"RTN","SAMICTTA",30,0)
+ ;
+"RTN","SAMICTTA",31,0)
+RCMND(rtn,vals,dict) ; recommendations section of ctreport text format
+"RTN","SAMICTTA",32,0)
+ ;
+"RTN","SAMICTTA",33,0)
+ ; repgen14
+"RTN","SAMICTTA",34,0)
+ ;
+"RTN","SAMICTTA",35,0)
+ ;@called-by
+"RTN","SAMICTTA",36,0)
+ ; WSREPORT^SAMICTT0
+"RTN","SAMICTTA",37,0)
+ ;@calls
+"RTN","SAMICTTA",38,0)
+ ; $$XVAL
+"RTN","SAMICTTA",39,0)
+ ; OUT
+"RTN","SAMICTTA",40,0)
+ ; $$XSUB
+"RTN","SAMICTTA",41,0)
+ ;@input
+"RTN","SAMICTTA",42,0)
+ ; rtn
+"RTN","SAMICTTA",43,0)
+ ; vals
+"RTN","SAMICTTA",44,0)
+ ; dict
+"RTN","SAMICTTA",45,0)
+ ;@output: create impressions section of ct report in text format
+"RTN","SAMICTTA",46,0)
+ ;
+"RTN","SAMICTTA",47,0)
+ ;# Recommendation
+"RTN","SAMICTTA",48,0)
+ ;d OUT("</TD></TR>")
+"RTN","SAMICTTA",49,0)
+ ;d OUT("</TABLE>")
+"RTN","SAMICTTA",50,0)
+ ;d OUT("<TR><TD></TD></TR>")
+"RTN","SAMICTTA",51,0)
+ ;d OUT("<!-- Recommendation -->")
+"RTN","SAMICTTA",52,0)
+ ;
+"RTN","SAMICTTA",53,0)
+ i $$XVAL("cefu",vals)'="nf" d  ; 2445-2450 gpl1
+"RTN","SAMICTTA",54,0)
+ . ;d OUT("<TR><TD><FONT SIZE=""+2""><B>")
+"RTN","SAMICTTA",55,0)
+ . ;d OUT("<FONT SIZE=""+2""><B>")
+"RTN","SAMICTTA",56,0)
+ . d OUT("")
+"RTN","SAMICTTA",57,0)
+ . d OUT("Recommendations:")
+"RTN","SAMICTTA",58,0)
+ . d OUT("")
+"RTN","SAMICTTA",59,0)
+ . ;d OUT("</B></FONT>")
+"RTN","SAMICTTA",60,0)
+ . ;d OUT("</TD></TR><TR><TD><TABLE><TR><TD WIDTH=20></TD><TD>")
+"RTN","SAMICTTA",61,0)
+ ;
+"RTN","SAMICTTA",62,0)
+ n fuw
+"RTN","SAMICTTA",63,0)
+ s fuw=$$XSUB("cefuw",vals,dict)
+"RTN","SAMICTTA",64,0)
+ ;d OUT("fuw= "_fuw)
+"RTN","SAMICTTA",65,0)
+ ;d OUT("vals= "_vals)
+"RTN","SAMICTTA",66,0)
+ ;d OUT(" dict= "_dict)
+"RTN","SAMICTTA",67,0)
+ ;d OUT($o(@vals@("cefuw","")))
+"RTN","SAMICTTA",68,0)
+ ;zwr @vals@(*)
+"RTN","SAMICTTA",69,0)
+ ;zwr @dict@(*)
+"RTN","SAMICTTA",70,0)
+ ;i fuw="" d  ;
+"RTN","SAMICTTA",71,0)
+ ;. d OUT(para_"<B>"_$$XSUB("cefu",vals,dict)_" on "_$$XVAL("cefud",vals)_".</B>"_para)
+"RTN","SAMICTTA",72,0)
+ ;e  d  ;
+"RTN","SAMICTTA",73,0)
+ ;. d OUT(para_"<B>"_$$XSUB("cefu",vals,dict)_" "_fuw_" on "_$$XVAL("cefud",vals)_".</B>"_para)
+"RTN","SAMICTTA",74,0)
+ i fuw="" d  ;
+"RTN","SAMICTTA",75,0)
+ . ;d OUT(para_"<B>A followup CT scan is recommended on "_$$XVAL("cefud",vals)_".</B>"_para)
+"RTN","SAMICTTA",76,0)
+ . i $$XVAL("cefud",vals)="" q  ; no date given
+"RTN","SAMICTTA",77,0)
+ . d OUT("A followup CT scan is recommended on "_$$XVAL("cefud",vals)_". ") d OUT("")
+"RTN","SAMICTTA",78,0)
+ e  d  ;
+"RTN","SAMICTTA",79,0)
+ . ;d OUT(para_"<B>A followup CT scan is recommended "_fuw_" on "_$$XVAL("cefud",vals)_".</B>"_para)
+"RTN","SAMICTTA",80,0)
+ . d OUT("A followup CT scan is recommended "_fuw_" on "_$$XVAL("cefud",vals)_". ") d OUT("")
+"RTN","SAMICTTA",81,0)
+ ;
+"RTN","SAMICTTA",82,0)
+ ; #Other followup
+"RTN","SAMICTTA",83,0)
+ n zfu,ofu,tofu,comma
+"RTN","SAMICTTA",84,0)
+ s comma=0,tofu=""
+"RTN","SAMICTTA",85,0)
+ s ofu=""
+"RTN","SAMICTTA",86,0)
+ f zfu="cefuaf","cefucc","cefupe","cefufn","cefubr","cefupc","cefutb" d  ;
+"RTN","SAMICTTA",87,0)
+ . i $$XVAL(zfu,vals)="y" s ofu=ofu_zfu
+"RTN","SAMICTTA",88,0)
+ i $$XVAL("cefuo",vals)'="" s ofu=ofu_"cefuo"
+"RTN","SAMICTTA",89,0)
+ i ofu'="" d  ;
+"RTN","SAMICTTA",90,0)
+ . s tofu="Followup: "
+"RTN","SAMICTTA",91,0)
+ . i ofu["cefuaf" s tofu=tofu_"Antibiotics" s comma=1
+"RTN","SAMICTTA",92,0)
+ . i ofu["cefucc" s tofu=tofu_$s(comma:", ",1:"")_"Diagnostic CT" s comma=1
+"RTN","SAMICTTA",93,0)
+ . i ofu["cefupe" s tofu=tofu_$s(comma:", ",1:"")_"PET" s comma=1
+"RTN","SAMICTTA",94,0)
+ . i ofu["cefufn" s tofu=tofu_$s(comma:", ",1:"")_"Percutaneous biopsy" s comma=1
+"RTN","SAMICTTA",95,0)
+ . i ofu["cefubr" s tofu=tofu_$s(comma:", ",1:"")_"Bronchoscopy" s comma=1
+"RTN","SAMICTTA",96,0)
+ . i ofu["cefupc" s tofu=tofu_$s(comma:", ",1:"")_"Pulmonary consultation" s comma=1
+"RTN","SAMICTTA",97,0)
+ . i ofu["cefutb" s tofu=tofu_$s(comma:", ",1:"")_"Refer to tumor board" s comma=1
+"RTN","SAMICTTA",98,0)
+ . i ofu["cefuo" s tofu=tofu_$s(comma:", ",1:"")_$$XVAL("cefuoo",vals) s comma=1
+"RTN","SAMICTTA",99,0)
+ i ofu'="" d OUT(para_tofu_para) d OUT("")
+"RTN","SAMICTTA",100,0)
+ ;d OUT("<TR><TD></TD></TR>")
+"RTN","SAMICTTA",101,0)
+ ; # LungRADS
+"RTN","SAMICTTA",102,0)
+ ;
+"RTN","SAMICTTA",103,0)
+ ;d OUT("<TR><TD>")
+"RTN","SAMICTTA",104,0)
+ ;n lrstyle
+"RTN","SAMICTTA",105,0)
+ ;i $$XVAL("celrc",vals)'="" s lrstyle=1 ; dom's style
+"RTN","SAMICTTA",106,0)
+ ;e  s lrstyle=0 ; artit's style
+"RTN","SAMICTTA",107,0)
+ ;s lrstyle=0
+"RTN","SAMICTTA",108,0)
+ ;
+"RTN","SAMICTTA",109,0)
+ d  ;
+"RTN","SAMICTTA",110,0)
+ . q  ; LUNGRADS moved to SAMICTR4
+"RTN","SAMICTTA",111,0)
+ . n lradModifiers
+"RTN","SAMICTTA",112,0)
+ . s lradModifiers=$$XVAL("celradc",vals)_$$XVAL("celrads",vals)
+"RTN","SAMICTTA",113,0)
+ . ;
+"RTN","SAMICTTA",114,0)
+ . i ($$XVAL("celrad",vals)'="-")&($$XVAL("celrad",vals)'="") d  ;
+"RTN","SAMICTTA",115,0)
+ . . d OUT("The LungRADS category for this scan is: "_$$XVAL("celrad",vals)_" "_lradModifiers)
+"RTN","SAMICTTA",116,0)
+ . . d OUT(para)
+"RTN","SAMICTTA",117,0)
+ ;
+"RTN","SAMICTTA",118,0)
+ ;d OUT("</TD></TR>")
+"RTN","SAMICTTA",119,0)
+ ;
+"RTN","SAMICTTA",120,0)
+ ;d OUT("<TR><TD><TABLE><TR><TD WIDTH=20></TD><TD>")
+"RTN","SAMICTTA",121,0)
+ ;
+"RTN","SAMICTTA",122,0)
+ ;# Check if Study is Completed
+"RTN","SAMICTTA",123,0)
+ ;# Find Current Study ID
+"RTN","SAMICTTA",124,0)
+ ;# locate most recent followup
+"RTN","SAMICTTA",125,0)
+ ;# get status (sies)
+"RTN","SAMICTTA",126,0)
+ ;# if sc=Study Complete and cefu=rs
+"RTN","SAMICTTA",127,0)
+ ;
+"RTN","SAMICTTA",128,0)
+ n patstatus
+"RTN","SAMICTTA",129,0)
+ s patstatus=$$XVAL("cedos",vals)
+"RTN","SAMICTTA",130,0)
+ ;i patstatus="sc" d OUT(para_$g(@dict@("study_complete")))
+"RTN","SAMICTTA",131,0)
+ i patstatus="sc" d OUT($g(@dict@("study_complete"))) d OUT("")
+"RTN","SAMICTTA",132,0)
+ ;
+"RTN","SAMICTTA",133,0)
+ ;# Radiologist
+"RTN","SAMICTTA",134,0)
+ i $$XVAL("cerad",vals)'="" d  ;
+"RTN","SAMICTTA",135,0)
+ . d OUT("Interpreted by: "_$$XVAL("cerad",vals)) d OUT("")
+"RTN","SAMICTTA",136,0)
+ ;
+"RTN","SAMICTTA",137,0)
+ ;d OUT("<TR><TD></TD></TR>")
+"RTN","SAMICTTA",138,0)
+ ; # LungRADS
+"RTN","SAMICTTA",139,0)
+ ;
+"RTN","SAMICTTA",140,0)
+ ;d OUT("<TR><TD>")
+"RTN","SAMICTTA",141,0)
+ n lrstyle
+"RTN","SAMICTTA",142,0)
+ i $$XVAL("celrc",vals)'="" s lrstyle=1 ; dom's style
+"RTN","SAMICTTA",143,0)
+ e  s lrstyle=0 ; artit's style
+"RTN","SAMICTTA",144,0)
+ s lrstyle=0
+"RTN","SAMICTTA",145,0)
+ ;
+"RTN","SAMICTTA",146,0)
+ d  ;
+"RTN","SAMICTTA",147,0)
+ . ;q  ; LUNGRADS moved to SAMICTR4
+"RTN","SAMICTTA",148,0)
+ . n lradModifiers
+"RTN","SAMICTTA",149,0)
+ . s lradModifiers=$$XVAL("celradc",vals)_$$XVAL("celrads",vals)
+"RTN","SAMICTTA",150,0)
+ . ;
+"RTN","SAMICTTA",151,0)
+ . i ($$XVAL("celrad",vals)'="-")&($$XVAL("celrad",vals)'="") d  ;
+"RTN","SAMICTTA",152,0)
+ . . d OUT("The LungRADS category for this scan is: "_$$XVAL("celrad",vals)_" "_lradModifiers)
+"RTN","SAMICTTA",153,0)
+ . . d OUT("")
+"RTN","SAMICTTA",154,0)
+ ;
+"RTN","SAMICTTA",155,0)
+ ;d OUT("</TD></TR>")
+"RTN","SAMICTTA",156,0)
+ ;
+"RTN","SAMICTTA",157,0)
+ ;d OUT("<TR><TD><TABLE><TR><TD WIDTH=20></TD><TD>")
+"RTN","SAMICTTA",158,0)
+ ;
+"RTN","SAMICTTA",159,0)
+ quit  ; end of RCMND
+"RTN","SAMICTTA",160,0)
+ ;
+"RTN","SAMICTTA",161,0)
+ ;
+"RTN","SAMICTTA",162,0)
+ ;
+"RTN","SAMICTTA",163,0)
+OUT(ln) ; output a line of ct report
+"RTN","SAMICTTA",164,0)
+ ;
+"RTN","SAMICTTA",165,0)
+ ;@called-by
+"RTN","SAMICTTA",166,0)
+ ; RCMND
+"RTN","SAMICTTA",167,0)
+ ;@calls none
+"RTN","SAMICTTA",168,0)
+ ;@input
+"RTN","SAMICTTA",169,0)
+ ; ln = output to add
+"RTN","SAMICTTA",170,0)
+ ;@output: line added to ct report
+"RTN","SAMICTTA",171,0)
+ ;
+"RTN","SAMICTTA",172,0)
+ s cnt=cnt+1
+"RTN","SAMICTTA",173,0)
+ n lnn
+"RTN","SAMICTTA",174,0)
+ ;s debug=1
+"RTN","SAMICTTA",175,0)
+ s lnn=$o(@rtn@(" "),-1)+1
+"RTN","SAMICTTA",176,0)
+ s @rtn@(lnn)=ln
+"RTN","SAMICTTA",177,0)
+ ;
+"RTN","SAMICTTA",178,0)
+ i $g(debug)=1 d  ;
+"RTN","SAMICTTA",179,0)
+ . i ln["<T" q  ; no markup
+"RTN","SAMICTTA",180,0)
+ . i ln["</" q  ; no markup
+"RTN","SAMICTTA",181,0)
+ . n zs s zs=$STACK
+"RTN","SAMICTTA",182,0)
+ . n zp s zp=$STACK(zs-2,"PLACE")
+"RTN","SAMICTTA",183,0)
+ . s @rtn@(lnn)=zp_":"_ln
+"RTN","SAMICTTA",184,0)
+ ;
+"RTN","SAMICTTA",185,0)
+ quit  ; end of OUT
+"RTN","SAMICTTA",186,0)
+ ;
+"RTN","SAMICTTA",187,0)
+ ;
+"RTN","SAMICTTA",188,0)
+ ;
+"RTN","SAMICTTA",189,0)
+HOUT(ln) ; output a ct report header line
+"RTN","SAMICTTA",190,0)
+ ;
+"RTN","SAMICTTA",191,0)
+ ;@called-by none
+"RTN","SAMICTTA",192,0)
+ ;@calls
+"RTN","SAMICTTA",193,0)
+ ; OUT
+"RTN","SAMICTTA",194,0)
+ ;@input
+"RTN","SAMICTTA",195,0)
+ ; ln = header output to add
+"RTN","SAMICTTA",196,0)
+ ;@output: header line added to ct report
+"RTN","SAMICTTA",197,0)
+ ;
+"RTN","SAMICTTA",198,0)
+ d OUT("<p><span class='sectionhead'>"_ln_"</span>")
+"RTN","SAMICTTA",199,0)
+ ;
+"RTN","SAMICTTA",200,0)
+ quit  ; end of HOUT
+"RTN","SAMICTTA",201,0)
+ ;
+"RTN","SAMICTTA",202,0)
+ ;
+"RTN","SAMICTTA",203,0)
+ ;
+"RTN","SAMICTTA",204,0)
+XVAL(var,vals) ; extrinsic returns the patient value for var
+"RTN","SAMICTTA",205,0)
+ ;
+"RTN","SAMICTTA",206,0)
+ ;@called-by
+"RTN","SAMICTTA",207,0)
+ ; RCMND
+"RTN","SAMICTTA",208,0)
+ ;@calls none
+"RTN","SAMICTTA",209,0)
+ ;@input
+"RTN","SAMICTTA",210,0)
+ ; var
+"RTN","SAMICTTA",211,0)
+ ; vals is passed by name
+"RTN","SAMICTTA",212,0)
+ ;@output = patient value for var
+"RTN","SAMICTTA",213,0)
+ ;
+"RTN","SAMICTTA",214,0)
+ n zr
+"RTN","SAMICTTA",215,0)
+ s zr=$g(@vals@(var))
+"RTN","SAMICTTA",216,0)
+ ;i zr="" s zr="["_var_"]"
+"RTN","SAMICTTA",217,0)
+ ;
+"RTN","SAMICTTA",218,0)
+ quit zr ; end of $$XVAL
+"RTN","SAMICTTA",219,0)
+ ;
+"RTN","SAMICTTA",220,0)
+ ;
+"RTN","SAMICTTA",221,0)
+ ;
+"RTN","SAMICTTA",222,0)
+XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined by var
+"RTN","SAMICTTA",223,0)
+ ;
+"RTN","SAMICTTA",224,0)
+ ;@called-by
+"RTN","SAMICTTA",225,0)
+ ; RCMND
+"RTN","SAMICTTA",226,0)
+ ;@calls none
+"RTN","SAMICTTA",227,0)
+ ;@input
+"RTN","SAMICTTA",228,0)
+ ; var
+"RTN","SAMICTTA",229,0)
+ ; vals and dict are passed by name
+"RTN","SAMICTTA",230,0)
+ ; valdx is used for nodules ala cect2co with the nodule number included
+"RTN","SAMICTTA",231,0)
+ ;@output = dictionary value for var
+"RTN","SAMICTTA",232,0)
+ ;
+"RTN","SAMICTTA",233,0)
+ ;n dict s dict=$$setroot^%wd("cteval-dict")
+"RTN","SAMICTTA",234,0)
+ n zr,zv,zdx
+"RTN","SAMICTTA",235,0)
+ s zdx=$g(valdx)
+"RTN","SAMICTTA",236,0)
+ i zdx="" s zdx=var
+"RTN","SAMICTTA",237,0)
+ s zv=$g(@vals@(zdx))
+"RTN","SAMICTTA",238,0)
+ ;i zv="" s zr="["_var_"]" q zr
+"RTN","SAMICTTA",239,0)
+ i zv="" s zr="" q zr
+"RTN","SAMICTTA",240,0)
+ s zr=$g(@dict@(var,zv))
+"RTN","SAMICTTA",241,0)
+ ;i zr="" s zr="["_var_","_zv_"]"
+"RTN","SAMICTTA",242,0)
+ ;
+"RTN","SAMICTTA",243,0)
+ quit zr ; end of $$XSUB
+"RTN","SAMICTTA",244,0)
+ ;
+"RTN","SAMICTTA",245,0)
+ ;
+"RTN","SAMICTTA",246,0)
+ ;
+"RTN","SAMICTTA",247,0)
+EOR ; end of routine SAMICTTA
 "RTN","SAMIHL7")
 0^6^B89568077
 "RTN","SAMIHL7",1,0)
 SAMIHL7 ;SAMI/lgc/arc - HL7 UTILITIES ;Apr 19, 2021@15:57
 "RTN","SAMIHL7",2,0)
- ;;18.0;SAMI;;;Build 13
+ ;;18.0;SAMI;;;Build 14
 "RTN","SAMIHL7",3,0)
  ;
 "RTN","SAMIHL7",4,0)
@@ -2571,7 +3071,7 @@ EOR ;End of routine SAMIHL7
 "RTN","SAMINOT1",1,0)
 SAMINOT1 ;ven/gpl - text notes ;2021-03-30T17:02Z
 "RTN","SAMINOT1",2,0)
- ;;18.0;SAMI;**2,6,8,10,11**;2020-01;Build 13
+ ;;18.0;SAMI;**2,6,8,10,11**;2020-01;Build 14
 "RTN","SAMINOT1",3,0)
  ;;1.18.0.11-i11
 "RTN","SAMINOT1",4,0)
@@ -3927,7 +4427,7 @@ EOR ; end of routine SAMINOT1
 "RTN","SAMINUL",1,0)
 SAMINUL ;ven/gpl - ielcap: note log ;2021-03-30T17:02Z
 "RTN","SAMINUL",2,0)
- ;;18.0;SAMI;**9,10,11**;2020-01;Build 13
+ ;;18.0;SAMI;**9,10,11**;2020-01;Build 14
 "RTN","SAMINUL",3,0)
  ;;1.18.0.11-i11
 "RTN","SAMINUL",4,0)
@@ -4235,7 +4735,7 @@ EOR ; end of routine SAMINUL
 "RTN","SAMISAV",1,0)
 SAMISAV ;ven/gpl - SAMI save routines ; 2/14/19 12:10pm
 "RTN","SAMISAV",2,0)
- ;;18.0;SAM;;;Build 13
+ ;;18.0;SAM;;;Build 14
 "RTN","SAMISAV",3,0)
  ;
 "RTN","SAMISAV",4,0)
@@ -4539,7 +5039,7 @@ COMLOG(sid,form,vars) ; add to the communications log
 "RTN","SAMIUR",1,0)
 SAMIUR ;ven/gpl - user reports ;2021-03-30T15:50Z
 "RTN","SAMIUR",2,0)
- ;;18.0;SAMI;**5,10,11**;2020-01;Build 13
+ ;;18.0;SAMI;**5,10,11**;2020-01;Build 14
 "RTN","SAMIUR",3,0)
  ;;1.18.0.11-i11
 "RTN","SAMIUR",4,0)
@@ -5519,7 +6019,7 @@ EOR ; end of SAMIUR
 "RTN","SAMIUR2",1,0)
 SAMIUR2 ;ven/gpl - sami user reports ; 5/8/19 10:57am
 "RTN","SAMIUR2",2,0)
- ;;18.0;SAM;;;Build 13
+ ;;18.0;SAM;;;Build 14
 "RTN","SAMIUR2",3,0)
  ;
 "RTN","SAMIUR2",4,0)

@@ -1,4 +1,4 @@
-SAMIORM ;ven/arc/lgc - parse ORM to update  patient-lookup graph ;Jul 24, 2020@11:08
+SAMIORM ;ven/arc/lgc - parse ORM to update  patient-lookup graph ;May 11, 2021@13:31
  ;;18.0;SAMI;;;Build 1
  ;
  quit  ; No entry from top
@@ -31,11 +31,11 @@ SAMIORM ;ven/arc/lgc - parse ORM to update  patient-lookup graph ;Jul 24, 2020@1
  ;
  ; @section 1 code
  ;
- ; SAMIORM parses out an incoming ORM message into the 
+ ; SAMIORM parses out an incoming ORM message into the
  ;   fields array and then calls ORMHL7 to use the fields
  ;   array to update patient-lookup graph
  ;
-EN ; ORM message parsed into patient-lookup graph 
+EN ; ORM message parsed into patient-lookup graph
  ;
  kill ^KBAP("SAMIORM")
  set ^KBAP("SAMIORM","EN")=$$HTFM^XLFDT($H)_" TEST"
@@ -83,8 +83,8 @@ UPDTPTL do UPDTPTL^SAMIHL7(.fields)
  if ptien do
  . new rootpl,hl7cnt,cnt,seg
  . set rootpl=$$setroot^%wd("patient-lookup")
- . set hl7cnt=$get(@rootpl@(ptien,"hl7 counter"))+1
- . set @rootpl@(ptien,"hl7 counter")=hl7cnt
+ .; hl7cnt was updated above at UPDTPTL
+ . set hl7cnt=$get(@rootpl@(ptien,"hl7 counter"))
  . set cnt=0
  . for  set cnt=$order(samihl7(cnt)) quit:'cnt  do
  .. set seg=$extract(samihl7(cnt),1,3)
@@ -175,7 +175,10 @@ OBR(segment,fields) ;
  set ^KBAP("SAMIORM","fields","OBR","segment")=segment
  ;
  set fields("ORM",invdt,"order")=$piece($piece(segment,INFS,5),INCC)
+ ;
  set fields("ORM",invdt,"siteid")=$piece($piece($piece(segment,INFS,5),INCC),"_")
+ set fields("siteid")=$piece($piece($piece(segment,INFS,5),INCC),"_")
+ ;
  set fields("ORM",invdt,"order2")=$piece($piece(segment,INFS,5),INCC,2)
  quit
  ;

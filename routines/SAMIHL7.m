@@ -1,5 +1,5 @@
-SAMIHL7 ;SAMI/lgc/arc - HL7 UTILITIES ;Apr 19, 2021@15:57
- ;;18.0;SAMI;;;Build 2
+SAMIHL7 ;SAMI/lgc/arc - HL7 UTILITIES ;May 11, 2021@14:03
+ ;;18.0;SAMI;;;Build 1
  ;
  quit  ; not from top
  ;
@@ -239,11 +239,12 @@ MATCHLOG ;
  ;
  ;
 CAPTORM(fields,rootpl,ptien) ; Save all ORM fields in patient-lookup
- new node,snode,invdt
+ new node,snode,hl7cnt
+ ; update hl7 counter. used here and in SAMIORM
+ set (@rootpl@(ptien,"hl7 counter"),hl7cnt)=$get(@rootpl@(ptien,"hl7 counter"))+1
  set node=$na(fields("ORM")),snode=$p(node,")")
  for  set node=$Q(@node) q:node'[snode  do
- . set invdt=$QS(node,2)
- . set @rootpl@(ptien,"ORM",invdt,$QS(node,3))=@node
+ . set @rootpl@(ptien,"ORM",hl7cnt,$QS(node,3))=@node
  quit
  ;
 KILLREF(field,oldrslt,ptien) ;

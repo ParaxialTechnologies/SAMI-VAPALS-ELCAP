@@ -1,5 +1,5 @@
 SAMISAV ;ven/gpl - SAMI save routines ; 2/14/19 12:10pm
- ;;18.0;SAM;;
+ ;;18.0;SAM;;;Build 11
  ;
  ;@license: see routine SAMIUL
  ; 
@@ -75,6 +75,60 @@ SAVFILTR(sid,form,vars) ; extrinsic which returns the form key to use
  . n fmcurrent s fmcurrent=$$KEY2FM^SAMICASE(form) ; current key in fm formate
  . if fdate'=fmcurrent d  ;
  . . n moveto s moveto="siform-"_$$KEYDATE^SAMIHOM3(fdate)
+ . . ;w !,"old: ",fmcurrent," new: ",fdate," ... date must be changed
+ . . k ^SAMIUL("samisav")
+ . . s ^SAMIUL("samisav","current")=form_"^"_fmcurrent
+ . . s ^SAMIUL("samisav","incoming")=formdate_"^"_fdate
+ . . s ^SAMIUL("samisav","conclusion")="graph must be moved to: "_moveto
+ . . m @root@("graph",sid,moveto)=@root@("graph",sid,form)
+ . . k @root@("graph",sid,form)
+ . . s useform=moveto
+ if type="bxform" d  ; intake form
+ . n formdate s formdate=$g(vars("bxdos")) ; date of the biopsy from the form
+ . i formdate="" s formdate=$g(vars("rbmed")) ; date of mediastinoscopy
+ . q:formdate=""
+ . n fdate s fdate=$$KEY2FM^SAMICASE(formdate) ; convert to fileman date
+ . q:fdate=""
+ . q:fdate<0
+ . n fmcurrent s fmcurrent=$$KEY2FM^SAMICASE(form) ; current key in fm formate
+ . if fdate'=fmcurrent d  ;
+ . . n moveto s moveto="bxform-"_$$KEYDATE^SAMIHOM3(fdate)
+ . . ;w !,"old: ",fmcurrent," new: ",fdate," ... date must be changed
+ . . k ^SAMIUL("samisav")
+ . . s ^SAMIUL("samisav","current")=form_"^"_fmcurrent
+ . . s ^SAMIUL("samisav","incoming")=formdate_"^"_fdate
+ . . s ^SAMIUL("samisav","conclusion")="graph must be moved to: "_moveto
+ . . m @root@("graph",sid,moveto)=@root@("graph",sid,form)
+ . . k @root@("graph",sid,form)
+ . . s useform=moveto
+ if type="itform" d  ; intervention form
+ . n formdate s formdate=$g(vars("rbsud")) ; treatment date
+ . i formdate="" s formdate=$g(vars("rbdos")) ; date of first intervention
+ . i formdate="" s formdate=$g(vars("rbdmr")) ; date of latest intervention
+ . q:formdate=""
+ . n fdate s fdate=$$KEY2FM^SAMICASE(formdate) ; convert to fileman date
+ . q:fdate=""
+ . q:fdate<0
+ . n fmcurrent s fmcurrent=$$KEY2FM^SAMICASE(form) ; current key in fm formate
+ . if fdate'=fmcurrent d  ;
+ . . n moveto s moveto="itform-"_$$KEYDATE^SAMIHOM3(fdate)
+ . . ;w !,"old: ",fmcurrent," new: ",fdate," ... date must be changed
+ . . k ^SAMIUL("samisav")
+ . . s ^SAMIUL("samisav","current")=form_"^"_fmcurrent
+ . . s ^SAMIUL("samisav","incoming")=formdate_"^"_fdate
+ . . s ^SAMIUL("samisav","conclusion")="graph must be moved to: "_moveto
+ . . m @root@("graph",sid,moveto)=@root@("graph",sid,form)
+ . . k @root@("graph",sid,form)
+ . . s useform=moveto
+ if type="ptform" d  ; intervention form
+ . n formdate s formdate=$g(vars("ptdos")) ; treatment date
+ . q:formdate=""
+ . n fdate s fdate=$$KEY2FM^SAMICASE(formdate) ; convert to fileman date
+ . q:fdate=""
+ . q:fdate<0
+ . n fmcurrent s fmcurrent=$$KEY2FM^SAMICASE(form) ; current key in fm formate
+ . if fdate'=fmcurrent d  ;
+ . . n moveto s moveto="ptform-"_$$KEYDATE^SAMIHOM3(fdate)
  . . ;w !,"old: ",fmcurrent," new: ",fdate," ... date must be changed
  . . k ^SAMIUL("samisav")
  . . s ^SAMIUL("samisav","current")=form_"^"_fmcurrent

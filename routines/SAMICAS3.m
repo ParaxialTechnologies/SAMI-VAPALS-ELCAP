@@ -349,10 +349,16 @@ MKCEFORM(sid,key) ; create ct evaluation form
  do  ;
  . n tmpdt
  . s tmpdt=$$BASELNDT^SAMICAS3(sid)
- . q:tmpdt=-1
- . s @root@("graph",sid,key,"sidoe")=tmpdt
- . s @root@("graph",sid,key,"cedcs")=$$LASTCMP^SAMICAS3(sid)
- . s @root@("graph",sid,key,"cedps")=$$PRIORCMP^SAMICAS3(sid)
+ . ;q:tmpdt=-1
+ . i tmpdt=-1 d  ;
+ . . s tmpdt=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
+ . . s @root@("graph",sid,key,"sidoe")=tmpdt
+ . . s @root@("graph",sid,key,"cedcs")=tmpdt
+ . . s @root@("graph",sid,key,"cedps")=tmpdt
+ . e  d  ;
+ . . s @root@("graph",sid,key,"sidoe")=tmpdt
+ . . s @root@("graph",sid,key,"cedcs")=$$LASTCMP^SAMICAS3(sid)
+ . . s @root@("graph",sid,key,"cedps")=$$PRIORCMP^SAMICAS3(sid)
  ;
  ;@stanza 3 termination
  ;

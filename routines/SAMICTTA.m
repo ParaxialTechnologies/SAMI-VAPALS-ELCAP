@@ -73,6 +73,7 @@ RCMND(rtn,vals,dict) ; recommendations section of ctreport text format
  ;. d OUT(para_"<B>"_$$XSUB("cefu",vals,dict)_" "_fuw_" on "_$$XVAL("cefud",vals)_".</B>"_para)
  i fuw="" d  ;
  . ;d OUT(para_"<B>A followup CT scan is recommended on "_$$XVAL("cefud",vals)_".</B>"_para)
+ . i $$XVAL("cefud",vals)="" q  ; no date given
  . d OUT("A followup CT scan is recommended on "_$$XVAL("cefud",vals)_". ") d OUT("")
  e  d  ;
  . ;d OUT(para_"<B>A followup CT scan is recommended "_fuw_" on "_$$XVAL("cefud",vals)_".</B>"_para)
@@ -86,7 +87,7 @@ RCMND(rtn,vals,dict) ; recommendations section of ctreport text format
  . i $$XVAL(zfu,vals)="y" s ofu=ofu_zfu
  i $$XVAL("cefuo",vals)'="" s ofu=ofu_"cefuo"
  i ofu'="" d  ;
- . s tofu="Other followup: "
+ . s tofu="Followup: "
  . i ofu["cefuaf" s tofu=tofu_"Antibiotics" s comma=1
  . i ofu["cefucc" s tofu=tofu_$s(comma:", ",1:"")_"Diagnostic CT" s comma=1
  . i ofu["cefupe" s tofu=tofu_$s(comma:", ",1:"")_"PET" s comma=1

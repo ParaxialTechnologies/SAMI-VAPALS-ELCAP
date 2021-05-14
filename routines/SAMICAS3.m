@@ -259,18 +259,22 @@ PRIORCMP(sid) ; dates of all scans before last comparison scan
  . . n tmpkey s tmpkey=""
  . . f  s tmpkey=$o(fary(tdt,tmpkey)) q:tmpkey=""  q:lastcmp'=""  d  ; 
  . . . i tmpkey["ceform" s lastcmp=tmpkey
- . e  d  ;
+ . d  ;
  . . ; next add all previous scans to retstr
  . . n tmpkey2 s tmpkey2=""
  . . f  s tmpkey2=$o(fary(tdt,tmpkey2)) q:tmpkey2=""  d  ; 
  . . . i tmpkey2["ceform" d  ; convert to external date
- . . . . n fmdt
- . . . . s fmdt=$$KEY2FM^SAMICASE(tmpkey2)
- . . . . s retstr=$$VAPALSDT^SAMICASE(fmdt)_","_retstr
+ . . . . s retstr=$$KEY2DT(tmpkey2)_retstr
  i $e(retstr,$l(retstr))="," s retstr=$e(retstr,1,$l(retstr)-1)
  ;
  q retstr ; end of $$PRIORCMP
  ;
+KEY2DT(key) ; extrinsic returns a date to put in the prior scans field
+ n retstr2 s retstr2=""
+ n fmdt
+ s fmdt=$$KEY2FM^SAMICASE(tmpkey2)
+ s retstr2=$$VAPALSDT^SAMICASE(fmdt)_","_retstr2
+ q retstr2
  ;
  ;
 SORTFRMS(ARY,sid) ; sorts all forms for patient sid by date
@@ -345,10 +349,16 @@ MKCEFORM(sid,key) ; create ct evaluation form
  do  ;
  . n tmpdt
  . s tmpdt=$$BASELNDT^SAMICAS3(sid)
- . q:tmpdt=-1
- . s @root@("graph",sid,key,"sidoe")=tmpdt
- . s @root@("graph",sid,key,"cedcs")=$$LASTCMP^SAMICAS3(sid)
- . s @root@("graph",sid,key,"cedps")=$$PRIORCMP^SAMICAS3(sid)
+ . ;q:tmpdt=-1
+ . i tmpdt=-1 d  ;
+ . . s tmpdt=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
+ . . s @root@("graph",sid,key,"sidoe")=tmpdt
+ . . s @root@("graph",sid,key,"cedcs")=tmpdt
+ . . s @root@("graph",sid,key,"cedps")=tmpdt
+ . e  d  ;
+ . . s @root@("graph",sid,key,"sidoe")=tmpdt
+ . . s @root@("graph",sid,key,"cedcs")=$$LASTCMP^SAMICAS3(sid)
+ . . s @root@("graph",sid,key,"cedps")=$$PRIORCMP^SAMICAS3(sid)
  ;
  ;@stanza 3 termination
  ;

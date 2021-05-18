@@ -5,7 +5,18 @@ SAMICTC1 ;ven/gpl - ceform copy routine ; 1/22/19 1:24pm
  ;
  quit  ; no entry from top
  ;
-CTCOPY(FROM,TO) ; copies a Ct Eval form selectively
+CTCOPY(FROM,TO,key) ; copies a Ct Eval form selectively
+ i $g(key)="" s key="ce"
+ i key'["ce" d  ; all forms except ct eval form
+ . S @TO@("cect1ch")=$G(@FROM@("cect1ch"))
+ . S @TO@("cect2ch")=$G(@FROM@("cect2ch"))
+ . S @TO@("cect3ch")=$G(@FROM@("cect3ch"))
+ . S @TO@("cect4ch")=$G(@FROM@("cect4ch"))
+ . S @TO@("cect5ch")=$G(@FROM@("cect5ch"))
+ . S @TO@("cect6ch")=$G(@FROM@("cect6ch"))
+ . S @TO@("cect7ch")=$G(@FROM@("cect7ch"))
+ . S @TO@("cect8ch")=$G(@FROM@("cect8ch"))
+ . S @TO@("cect9ch")=$G(@FROM@("cect9ch"))
  ; the following is generated from a graph - see genCTCOPY below
  S @TO@("ceanod")=$G(@FROM@("ceanod")) ; 
  S @TO@("cennod")=$G(@FROM@("cennod")) ; 

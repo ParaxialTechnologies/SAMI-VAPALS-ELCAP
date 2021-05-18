@@ -122,6 +122,9 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  i type="" d  q  ; report type missing
  . d GETHOME^SAMIHOM3(.SAMIRTN,.filter) ; send them to home
  ;
+ i type="unmatched" i $$GET1PARM^SAMIPARM("redactMatchingReport",site) d  q  ;
+ . d GETHOME^SAMIHOM3(.SAMIRTN,.filter) ; send them to home
+ ;
  d getThis^%wd("temp","table.html") ; page template
  q:'$d(temp)
  ;
@@ -426,11 +429,16 @@ UNMAT(SAMIPATS,ztype,datephrase,filter) ;
  ;n ssnlbl s ssnlbl=$$GET1PARM^SAMIPARM("socialSecurityNumber",site)
  s datephrase="Unmatched Persons"
  n lroot s lroot=$$setroot^%wd("patient-lookup")
- n dfn s dfn=9000000
+ ;n dfn s dfn=9000000
+ n dfn s dfn=0
  f  s dfn=$o(@lroot@("dfn",dfn)) q:+dfn=0  d  ;
  . n ien s ien=$o(@lroot@("dfn",dfn,""))
  . q:ien=""
- . i $g(@lroot@(ien,"remotedfn"))'="" q  ;
+ . n ordern
+ . s ordern=$g(@lroot@(ien,"ORMORCordernumber"))
+ . i ordern="" s ordern=$g(@lroot@(ien,"ORM",1,"ordernumber"))
+ . i ordern'="" q  ;
+ . i $g(@lroot@(ien,"siteid"))'[site q  ;
  . m SAMIPATS(ien,dfn)=@lroot@(ien)
  . new name set name=$g(SAMIPATS(ien,dfn,"saminame"))
  . ;new name set name=$g(SAMIPATS(ien,dfn,"sinamef"))

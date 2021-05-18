@@ -122,7 +122,7 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
  i type="" d  q  ; report type missing
  . d GETHOME^SAMIHOM3(.SAMIRTN,.filter) ; send them to home
  ;
- i type="unmatched" i $$GET1PARM^SAMIPARM("redactMatchingReport",site) d  q  ;
+ i type="unmatched" i $$GET1PARM^SAMIPARM("matchingReportEnabled",site)'="true" d  q  ;
  . d GETHOME^SAMIHOM3(.SAMIRTN,.filter) ; send them to home
  ;
  d getThis^%wd("temp","table.html") ; page template

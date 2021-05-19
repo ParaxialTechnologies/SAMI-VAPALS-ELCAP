@@ -231,7 +231,7 @@ LASTCMP(sid,retkey) ; date & key of last comparison scan
  s retkey=""
  n fary
  d SORTFRMS(.fary,sid)
- n tdt s tdt=$P($$NOW^XLFDT,".",1) ; start with before today
+ n tdt s tdt=$P($$NOW^XLFDT,".",1)+1 ; start with today
  f  s tdt=$o(fary(tdt),-1) q:tdt=""  q:retkey'=""  d  ; 
  . n tmpkey s tmpkey=""
  . f  s tmpkey=$o(fary(tdt,tmpkey)) q:tmpkey=""  q:retkey'=""  d  ; 
@@ -253,7 +253,7 @@ PRIORCMP(sid) ; dates of all scans before last comparison scan
  n lastcmp s lastcmp=""
  n fary
  d SORTFRMS(.fary,sid)
- n tdt s tdt=$P($$NOW^XLFDT,".",1) ; start with before today
+ n tdt s tdt=$P($$NOW^XLFDT,".",1)+1 ; start with today
  f  s tdt=$o(fary(tdt),-1) q:tdt=""  d  ; 
  . i lastcmp="" d  ; first find the last comparison scan
  . . n tmpkey s tmpkey=""

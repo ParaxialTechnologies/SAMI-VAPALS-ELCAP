@@ -230,6 +230,12 @@ NODULES(rtn,vals,dict) ; nodules section of ctreport in text format
  . ;d OUT("<!-- end nodule info -->")
  ;d OUT("</p>")
  ;
+ ; added 5/19/21 gpl
+ s outmode="go"
+ i $$XVAL("cectancn",vals)=1 d OUT("Small non-calcified nodules are present ")
+ i $$XVAL("cectacn",vals)=1 d OUT("Small calcified nodules are present ")
+ d OUT(" ")
+ ;
  quit  ; end of NODULES
  ;
  ;

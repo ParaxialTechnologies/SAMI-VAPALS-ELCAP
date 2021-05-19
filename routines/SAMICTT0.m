@@ -255,6 +255,10 @@ WSREPORT(return,filter) ; web route: ctreport in text format
  n ij,hasnodules s hasnodules=0
  f ij=1:1:10 i ($$XVAL("cect"_ij_"ch",vals)'="")&($$XVAL("cect"_ij_"ch",vals)'="-") s hasnodules=1
  ;
+ ; check for small nodule checkboxes
+ i $$XVAL("cectancn",vals)=1 s hasnodules=1
+ i $$XVAL("cectacn",vals)=1 s hasnodules=1
+ ;
  i hasnodules=0 d  ;
  . d OUT(para)
  . d OUT("No pulmonary nodules are seen. "_para)

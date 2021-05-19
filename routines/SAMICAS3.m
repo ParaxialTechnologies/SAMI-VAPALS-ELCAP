@@ -347,18 +347,16 @@ MKCEFORM(sid,key) ; create ct evaluation form
  do SSAMISTA^SAMICASE(sid,key,"incomplete")
  ; set baseline CT date and last comparison scan date
  do  ;
- . n tmpdt
- . s tmpdt=$$BASELNDT^SAMICAS3(sid)
- . ;q:tmpdt=-1
- . i tmpdt=-1 d  ;
- . . s tmpdt=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
- . . s @root@("graph",sid,key,"sidoe")=tmpdt
- . . s @root@("graph",sid,key,"cedcs")=tmpdt
- . . s @root@("graph",sid,key,"cedps")=tmpdt
- . e  d  ;
- . . s @root@("graph",sid,key,"sidoe")=tmpdt
- . . s @root@("graph",sid,key,"cedcs")=$$LASTCMP^SAMICAS3(sid)
- . . s @root@("graph",sid,key,"cedps")=$$PRIORCMP^SAMICAS3(sid)
+ . n basedt
+ . s basedt=$$BASELNDT^SAMICAS3(sid)
+ . i basedt=-1 s basedt=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
+ . n lastdt s lastdt=$$LASTCMP^SAMICAS3(sid)
+ . i lastdt=-1 s lastdt=basedt
+ . n priordt s priordt=$$PRIORCMP^SAMICAS3(sid)
+ . i priordt=-1 s priordt=lastdt
+ . s @root@("graph",sid,key,"sidoe")=basedt
+ . s @root@("graph",sid,key,"cedcs")=lastdt
+ . s @root@("graph",sid,key,"cedps")=priordt
  ;
  ;@stanza 3 termination
  ;
@@ -460,6 +458,19 @@ MKPTFORM(sid,key) ; create pet evaluation form
  set @root@("graph",sid,key,"samicreatedate")=cdate
  do SSAMISTA^SAMICASE(sid,key,"incomplete")
  ;
+ do  ;
+ . n basedt
+ . s basedt=$$BASELNDT^SAMICAS3(sid)
+ . i basedt=-1 s basedt=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
+ . n lastdt s lastdt=$$LASTCMP^SAMICAS3(sid)
+ . i lastdt=-1 s lastdt=basedt
+ . n priordt s priordt=$$PRIORCMP^SAMICAS3(sid)
+ . i priordt=-1 s priordt=lastdt
+ . s @root@("graph",sid,key,"sidoe")=basedt
+ . ;s @root@("graph",sid,key,"cedcs")=lastdt
+ . s @root@("graph",sid,key,"cedos")=lastdt ; it's different than on the ce
+ . ;s @root@("graph",sid,key,"cedps")=priordt
+ ;
  ;@stanza 3 termination
  ;
  quit  ; end of MKPTFORM
@@ -493,6 +504,19 @@ MKITFORM(sid,key) ; create intervention form
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate
  do SSAMISTA^SAMICASE(sid,key,"incomplete")
+ ;
+ do  ;
+ . n basedt
+ . s basedt=$$BASELNDT^SAMICAS3(sid)
+ . i basedt=-1 s basedt=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
+ . n lastdt s lastdt=$$LASTCMP^SAMICAS3(sid)
+ . i lastdt=-1 s lastdt=basedt
+ . n priordt s priordt=$$PRIORCMP^SAMICAS3(sid)
+ . i priordt=-1 s priordt=lastdt
+ . s @root@("graph",sid,key,"sidoe")=basedt
+ . ;s @root@("graph",sid,key,"cedcs")=lastdt
+ . s @root@("graph",sid,key,"cedos")=lastdt ; it's different than on the ce
+ . ;s @root@("graph",sid,key,"cedps")=priordt
  ;
  ;@stanza 3 termination
  ;

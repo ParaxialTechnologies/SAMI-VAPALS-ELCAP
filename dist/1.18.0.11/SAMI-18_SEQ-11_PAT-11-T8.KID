@@ -1,5 +1,5 @@
-KIDS Distribution saved on May 19, 2021@10:59:10
-Corrections to Urgent changes on CT form and report
+KIDS Distribution saved on May 19, 2021@12:02:03
+Further corrections to Urgent fixes
 **KIDS**:SAMI*18.0*11^
 
 **INSTALL NAME**
@@ -15,7 +15,7 @@ Critical bugs fixed in Intake, CT eval, and reports
 "BLD",11508,6)
 ^11
 "BLD",11508,6.3)
-17
+18
 "BLD",11508,"KRN",0)
 ^9.67PA^1.5^25
 "BLD",11508,"KRN",.4,0)
@@ -61,7 +61,7 @@ SAMIUR2^^0^B406603480
 "BLD",11508,"KRN",9.8,"NM",6,0)
 SAMIHL7^^0^B89568077
 "BLD",11508,"KRN",9.8,"NM",7,0)
-SAMICAS3^^0^B320317492
+SAMICAS3^^0^B319977342
 "BLD",11508,"KRN",9.8,"NM",8,0)
 SAMISAV^^0^B53697776
 "BLD",11508,"KRN",9.8,"NM",9,0)
@@ -283,11 +283,11 @@ D XPZ2^XPDIQ
 "RTN")
 11
 "RTN","SAMICAS3")
-0^7^B320317492
+0^7^B319977342
 "RTN","SAMICAS3",1,0)
 SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ;2021-03-17T18:31Z
 "RTN","SAMICAS3",2,0)
- ;;18.0;SAMI;**3,9**;;Build 17
+ ;;18.0;SAMI;**3,9**;;Build 18
 "RTN","SAMICAS3",3,0)
  ;;1.18.0.9-i9
 "RTN","SAMICAS3",4,0)
@@ -751,7 +751,7 @@ LASTCMP(sid,retkey) ; date & key of last comparison scan
 "RTN","SAMICAS3",233,0)
  d SORTFRMS(.fary,sid)
 "RTN","SAMICAS3",234,0)
- n tdt s tdt=$P($$NOW^XLFDT,".",1) ; start with before today
+ n tdt s tdt=$P($$NOW^XLFDT,".",1)+1 ; start with today
 "RTN","SAMICAS3",235,0)
  f  s tdt=$o(fary(tdt),-1) q:tdt=""  q:retkey'=""  d  ; 
 "RTN","SAMICAS3",236,0)
@@ -795,7 +795,7 @@ PRIORCMP(sid) ; dates of all scans before last comparison scan
 "RTN","SAMICAS3",255,0)
  d SORTFRMS(.fary,sid)
 "RTN","SAMICAS3",256,0)
- n tdt s tdt=$P($$NOW^XLFDT,".",1) ; start with before today
+ n tdt s tdt=$P($$NOW^XLFDT,".",1)+1 ; start with today
 "RTN","SAMICAS3",257,0)
  f  s tdt=$o(fary(tdt),-1) q:tdt=""  d  ; 
 "RTN","SAMICAS3",258,0)
@@ -1579,7 +1579,7 @@ EOR ; end of routine SAMICAS3
 "RTN","SAMICSV",1,0)
 SAMICSV ;ven/gpl - csv export ;2021-03-30T17:18Z
 "RTN","SAMICSV",2,0)
- ;;18.0;SAMI;**7,11**;2020-01;Build 17
+ ;;18.0;SAMI;**7,11**;2020-01;Build 18
 "RTN","SAMICSV",3,0)
  ;;1.18.0.11-i11
 "RTN","SAMICSV",4,0)
@@ -2097,7 +2097,7 @@ EOR ; end of routine SAMICSV
 "RTN","SAMICTT0",1,0)
 SAMICTT0 ;ven/gpl - ctreport text main ;2021-03-22T15:32Z
 "RTN","SAMICTT0",2,0)
- ;;18.0;SAMI;**4,10**;2020-01;Build 17
+ ;;18.0;SAMI;**4,10**;2020-01;Build 18
 "RTN","SAMICTT0",3,0)
  ;;1.18.0.10-i10
 "RTN","SAMICTT0",4,0)
@@ -2929,7 +2929,7 @@ EOR ; end of routine SAMICTT0
 "RTN","SAMICTT1",1,0)
 SAMICTT1 ;ven/gpl - ctreport text nodules ;2021-03-22T15:20Z
 "RTN","SAMICTT1",2,0)
- ;;18.0;SAMI;**4,10**;2020-01;Build 17
+ ;;18.0;SAMI;**4,10**;2020-01;Build 18
 "RTN","SAMICTT1",3,0)
  ;;1.18.0.10-i10
 "RTN","SAMICTT1",4,0)
@@ -3597,7 +3597,7 @@ EOR ; end of routine SAMICTT1
 "RTN","SAMICTTA",1,0)
 SAMICTTA ;ven/gpl - ctreport text recommendations ;2021-03-22T15:51Z
 "RTN","SAMICTTA",2,0)
- ;;18.0;SAMI;**4,10**;2020-01;Build 17
+ ;;18.0;SAMI;**4,10**;2020-01;Build 18
 "RTN","SAMICTTA",3,0)
  ;;1.18.0.10-i10
 "RTN","SAMICTTA",4,0)
@@ -4093,7 +4093,7 @@ EOR ; end of routine SAMICTTA
 "RTN","SAMIHL7",1,0)
 SAMIHL7 ;SAMI/lgc/arc - HL7 UTILITIES ;Apr 19, 2021@15:57
 "RTN","SAMIHL7",2,0)
- ;;18.0;SAMI;;;Build 17
+ ;;18.0;SAMI;;;Build 18
 "RTN","SAMIHL7",3,0)
  ;
 "RTN","SAMIHL7",4,0)
@@ -4641,7 +4641,7 @@ EOR ;End of routine SAMIHL7
 "RTN","SAMINOT1",1,0)
 SAMINOT1 ;ven/gpl - text notes ;2021-03-30T17:02Z
 "RTN","SAMINOT1",2,0)
- ;;18.0;SAMI;**2,6,8,10,11**;2020-01;Build 17
+ ;;18.0;SAMI;**2,6,8,10,11**;2020-01;Build 18
 "RTN","SAMINOT1",3,0)
  ;;1.18.0.11-i11
 "RTN","SAMINOT1",4,0)
@@ -5997,7 +5997,7 @@ EOR ; end of routine SAMINOT1
 "RTN","SAMINUL",1,0)
 SAMINUL ;ven/gpl - ielcap: note log ;2021-03-30T17:02Z
 "RTN","SAMINUL",2,0)
- ;;18.0;SAMI;**9,10,11**;2020-01;Build 17
+ ;;18.0;SAMI;**9,10,11**;2020-01;Build 18
 "RTN","SAMINUL",3,0)
  ;;1.18.0.11-i11
 "RTN","SAMINUL",4,0)
@@ -6305,7 +6305,7 @@ EOR ; end of routine SAMINUL
 "RTN","SAMISAV",1,0)
 SAMISAV ;ven/gpl - SAMI save routines ; 2/14/19 12:10pm
 "RTN","SAMISAV",2,0)
- ;;18.0;SAM;;;Build 17
+ ;;18.0;SAM;;;Build 18
 "RTN","SAMISAV",3,0)
  ;
 "RTN","SAMISAV",4,0)
@@ -6609,7 +6609,7 @@ COMLOG(sid,form,vars) ; add to the communications log
 "RTN","SAMIUR",1,0)
 SAMIUR ;ven/gpl - user reports ;2021-03-30T15:50Z
 "RTN","SAMIUR",2,0)
- ;;18.0;SAMI;**5,10,11**;2020-01;Build 17
+ ;;18.0;SAMI;**5,10,11**;2020-01;Build 18
 "RTN","SAMIUR",3,0)
  ;;1.18.0.11-i11
 "RTN","SAMIUR",4,0)
@@ -7589,7 +7589,7 @@ EOR ; end of SAMIUR
 "RTN","SAMIUR2",1,0)
 SAMIUR2 ;ven/gpl - sami user reports ; 5/8/19 10:57am
 "RTN","SAMIUR2",2,0)
- ;;18.0;SAM;;;Build 17
+ ;;18.0;SAM;;;Build 18
 "RTN","SAMIUR2",3,0)
  ;
 "RTN","SAMIUR2",4,0)

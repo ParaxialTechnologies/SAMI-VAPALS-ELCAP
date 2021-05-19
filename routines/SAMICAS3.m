@@ -354,6 +354,7 @@ MKCEFORM(sid,key) ; create ct evaluation form
  . i lastdt=-1 s lastdt=basedt
  . n priordt s priordt=$$PRIORCMP^SAMICAS3(sid)
  . i priordt=-1 s priordt=lastdt
+ . i priordt="" s priordt=lastdt
  . s @root@("graph",sid,key,"sidoe")=basedt
  . s @root@("graph",sid,key,"cedcs")=lastdt
  . s @root@("graph",sid,key,"cedps")=priordt

@@ -1,11 +1,11 @@
-KIDS Distribution saved on May 18, 2021@10:36:10
-Initial build of Patch 12
+KIDS Distribution saved on May 19, 2021@14:55:29
+Second build of patch 12
 **KIDS**:SAMI*18.0*12^
 
 **INSTALL NAME**
 SAMI*18.0*12
 "BLD",11509,0)
-SAMI*18.0*12^SAMI^0^3210518^y
+SAMI*18.0*12^SAMI^0^3210519^y
 "BLD",11509,4,0)
 ^9.64PA^311.14^2
 "BLD",11509,4,311.12,0)
@@ -21,7 +21,7 @@ y^y^f^^n^^y^o^n
 "BLD",11509,4,"B",311.14,311.14)
 
 "BLD",11509,6.3)
-1
+2
 "BLD",11509,"KRN",0)
 ^9.67PA^1.5^25
 "BLD",11509,"KRN",.4,0)
@@ -53,17 +53,17 @@ y^y^f^^n^^y^o^n
 "BLD",11509,"KRN",9.8,0)
 9.8
 "BLD",11509,"KRN",9.8,"NM",0)
-^9.68A^11^11
+^9.68A^14^14
 "BLD",11509,"KRN",9.8,"NM",1,0)
-SAMICAS3^^0^B276105396
+SAMICAS3^^0^B332632586
 "BLD",11509,"KRN",9.8,"NM",2,0)
 SAMIHOM3^^0^B136076586
 "BLD",11509,"KRN",9.8,"NM",3,0)
-SAMIHOM4^^0^B738294395
+SAMIHOM4^^0^B730090402
 "BLD",11509,"KRN",9.8,"NM",4,0)
 SAMISITE^^0^B65946276
 "BLD",11509,"KRN",9.8,"NM",5,0)
-SAMIUR^^0^B341133165
+SAMIUR^^0^B345904199
 "BLD",11509,"KRN",9.8,"NM",6,0)
 SAMIUR2^^0^B430583619
 "BLD",11509,"KRN",9.8,"NM",7,0)
@@ -76,7 +76,19 @@ SAMIHL7^^0^B91116676
 SAMIORM^^0^B58015713
 "BLD",11509,"KRN",9.8,"NM",11,0)
 SAMICTTA^^0^B35394677
+"BLD",11509,"KRN",9.8,"NM",12,0)
+SAMICTC1^^0^B145209715
+"BLD",11509,"KRN",9.8,"NM",13,0)
+SAMICTT0^^0^B97674762
+"BLD",11509,"KRN",9.8,"NM",14,0)
+SAMICTT1^^0^B122165608
 "BLD",11509,"KRN",9.8,"NM","B","SAMICAS3",1)
+
+"BLD",11509,"KRN",9.8,"NM","B","SAMICTC1",12)
+
+"BLD",11509,"KRN",9.8,"NM","B","SAMICTT0",13)
+
+"BLD",11509,"KRN",9.8,"NM","B","SAMICTT1",14)
 
 "BLD",11509,"KRN",9.8,"NM","B","SAMICTTA",11)
 
@@ -173,7 +185,7 @@ SAMICTTA^^0^B35394677
 "DATA",311.14,1,0)
 Non VA
 "DATA",311.14,1,1,0)
-^311.141^4^4
+^311.141^5^5
 "DATA",311.14,1,1,1,0)
 socialSecurityNumber^Patient ID
 "DATA",311.14,1,1,2,0)
@@ -182,10 +194,12 @@ socialSecurityNumber.short^PID
 socialSecurityNumber.mask^
 "DATA",311.14,1,1,4,0)
 socialSecurityNumber.regex^
+"DATA",311.14,1,1,5,0)
+matchingReportEnabled^false
 "DATA",311.14,2,0)
 VHA
 "DATA",311.14,2,1,0)
-^311.141^4^4
+^311.141^5^5
 "DATA",311.14,2,1,1,0)
 socialSecurityNumber^Social Security Number
 "DATA",311.14,2,1,2,0)
@@ -194,6 +208,8 @@ socialSecurityNumber.short^SSN
 socialSecurityNumber.mask^000-00-0000
 "DATA",311.14,2,1,4,0)
 socialSecurityNumber.regex^`(?!(000|666|9(?!99)))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$
+"DATA",311.14,2,1,5,0)
+matchingReportEnabled^false
 "FIA",311.12)
 SAMI SITE
 "FIA",311.12,0)
@@ -299,7 +315,7 @@ SAMI^SAMI^SCREENING APPLICATIONS MANAGEMENT - IELCAP
 "PKG",230,22,1,0)
 18.0^3191203
 "PKG",230,22,1,"PAH",1,0)
-12^3210518
+12^3210519
 "QUES","XPF1",0)
 Y
 "QUES","XPF1","??")
@@ -371,13 +387,13 @@ NO
 "QUES","XPZ2","M")
 D XPZ2^XPDIQ
 "RTN")
-11
+14
 "RTN","SAMICAS3")
-0^1^B276105396
+0^1^B332632586
 "RTN","SAMICAS3",1,0)
 SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ;2021-03-17T18:31Z
 "RTN","SAMICAS3",2,0)
- ;;18.0;SAMI;**3,9**;;Build 1
+ ;;18.0;SAMI;**3,9**;;Build 2
 "RTN","SAMICAS3",3,0)
  ;;1.18.0.9-i9
 "RTN","SAMICAS3",4,0)
@@ -1039,7 +1055,7 @@ MKCEFORM(sid,key) ; create ct evaluation form
 "RTN","SAMICAS3",332,0)
  . set target=$name(@root@("graph",sid,key))
 "RTN","SAMICAS3",333,0)
- . d CTCOPY^SAMICTC1(source,target)
+ . d CTCOPY^SAMICTC1(source,target,key)
 "RTN","SAMICAS3",334,0)
  ; end nodule copy
 "RTN","SAMICAS3",335,0)
@@ -1073,553 +1089,2637 @@ MKCEFORM(sid,key) ; create ct evaluation form
 "RTN","SAMICAS3",349,0)
  do  ;
 "RTN","SAMICAS3",350,0)
- . n tmpdt
+ . n basedt
 "RTN","SAMICAS3",351,0)
- . s tmpdt=$$BASELNDT^SAMICAS3(sid)
+ . s basedt=$$BASELNDT^SAMICAS3(sid)
 "RTN","SAMICAS3",352,0)
- . ;q:tmpdt=-1
+ . i basedt=-1 s basedt=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
 "RTN","SAMICAS3",353,0)
- . i tmpdt=-1 d  ;
+ . n lastdt s lastdt=$$LASTCMP^SAMICAS3(sid)
 "RTN","SAMICAS3",354,0)
- . . s tmpdt=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
+ . i lastdt=-1 s lastdt=basedt
 "RTN","SAMICAS3",355,0)
- . . s @root@("graph",sid,key,"sidoe")=tmpdt
+ . n priordt s priordt=$$PRIORCMP^SAMICAS3(sid)
 "RTN","SAMICAS3",356,0)
- . . s @root@("graph",sid,key,"cedcs")=tmpdt
+ . i priordt=-1 s priordt=lastdt
 "RTN","SAMICAS3",357,0)
- . . s @root@("graph",sid,key,"cedps")=tmpdt
+ . i priordt="" s priordt=lastdt
 "RTN","SAMICAS3",358,0)
- . e  d  ;
+ . s @root@("graph",sid,key,"sidoe")=basedt
 "RTN","SAMICAS3",359,0)
- . . s @root@("graph",sid,key,"sidoe")=tmpdt
+ . s @root@("graph",sid,key,"cedcs")=lastdt
 "RTN","SAMICAS3",360,0)
- . . s @root@("graph",sid,key,"cedcs")=$$LASTCMP^SAMICAS3(sid)
+ . s @root@("graph",sid,key,"cedps")=priordt
 "RTN","SAMICAS3",361,0)
- . . s @root@("graph",sid,key,"cedps")=$$PRIORCMP^SAMICAS3(sid)
+ ;
 "RTN","SAMICAS3",362,0)
- ;
-"RTN","SAMICAS3",363,0)
  ;@stanza 3 termination
-"RTN","SAMICAS3",364,0)
+"RTN","SAMICAS3",363,0)
  ;
-"RTN","SAMICAS3",365,0)
+"RTN","SAMICAS3",364,0)
  quit  ; end of MKCEFORM
+"RTN","SAMICAS3",365,0)
+ ;
 "RTN","SAMICAS3",366,0)
  ;
 "RTN","SAMICAS3",367,0)
  ;
 "RTN","SAMICAS3",368,0)
- ;
-"RTN","SAMICAS3",369,0)
 MKFUFORM(sid,key) ; create Follow-up form
+"RTN","SAMICAS3",369,0)
+ ;
 "RTN","SAMICAS3",370,0)
- ;
-"RTN","SAMICAS3",371,0)
  ;@stanza 1 invocation, binding, & branching
+"RTN","SAMICAS3",371,0)
+ ;
 "RTN","SAMICAS3",372,0)
- ;
-"RTN","SAMICAS3",373,0)
  ;ven/gpl;private;procedure;
-"RTN","SAMICAS3",374,0)
+"RTN","SAMICAS3",373,0)
  ;@called-by
-"RTN","SAMICAS3",375,0)
+"RTN","SAMICAS3",374,0)
  ; WSNFPOST^SAMICAS3
-"RTN","SAMICAS3",376,0)
+"RTN","SAMICAS3",375,0)
  ;@calls
-"RTN","SAMICAS3",377,0)
+"RTN","SAMICAS3",376,0)
  ; $$setroot^%wd
-"RTN","SAMICAS3",378,0)
+"RTN","SAMICAS3",377,0)
  ; $$SID2NUM^SAMIHOM3
-"RTN","SAMICAS3",379,0)
+"RTN","SAMICAS3",378,0)
  ;@input
-"RTN","SAMICAS3",380,0)
+"RTN","SAMICAS3",379,0)
  ; sid = study id
-"RTN","SAMICAS3",381,0)
+"RTN","SAMICAS3",380,0)
  ; key =
-"RTN","SAMICAS3",382,0)
+"RTN","SAMICAS3",381,0)
  ;@output
-"RTN","SAMICAS3",383,0)
+"RTN","SAMICAS3",382,0)
  ; @root@("graph",sid,key)
-"RTN","SAMICAS3",384,0)
+"RTN","SAMICAS3",383,0)
  ;@examples [tbd]
-"RTN","SAMICAS3",385,0)
+"RTN","SAMICAS3",384,0)
  ;@tests [tbd]
+"RTN","SAMICAS3",385,0)
+ ;
 "RTN","SAMICAS3",386,0)
- ;
-"RTN","SAMICAS3",387,0)
  ;@stanza 2 create Follow-up form
+"RTN","SAMICAS3",387,0)
+ ;
 "RTN","SAMICAS3",388,0)
- ;
-"RTN","SAMICAS3",389,0)
  new root set root=$$setroot^%wd("vapals-patients")
-"RTN","SAMICAS3",390,0)
+"RTN","SAMICAS3",389,0)
  new sien set sien=$$SID2NUM^SAMIHOM3(sid)
-"RTN","SAMICAS3",391,0)
+"RTN","SAMICAS3",390,0)
  quit:+sien=0
-"RTN","SAMICAS3",392,0)
+"RTN","SAMICAS3",391,0)
  new cdate set cdate=$piece(key,"fuform-",2)
-"RTN","SAMICAS3",393,0)
+"RTN","SAMICAS3",392,0)
  merge @root@("graph",sid,key)=@root@(sien)
-"RTN","SAMICAS3",394,0)
+"RTN","SAMICAS3",393,0)
  set @root@("graph",sid,key,"samicreatedate")=cdate
-"RTN","SAMICAS3",395,0)
+"RTN","SAMICAS3",394,0)
  set @root@("graph",sid,key,"sidof")=$$KEY2DSPD^SAMICAS2(cdate)
-"RTN","SAMICAS3",396,0)
+"RTN","SAMICAS3",395,0)
  set @root@("graph",sid,key,"sidoe")=$$BASELNDT(sid)
-"RTN","SAMICAS3",397,0)
+"RTN","SAMICAS3",396,0)
  do SSAMISTA^SAMICASE(sid,key,"incomplete")
+"RTN","SAMICAS3",397,0)
+ ;
 "RTN","SAMICAS3",398,0)
- ;
-"RTN","SAMICAS3",399,0)
  ;@stanza 3 termination
-"RTN","SAMICAS3",400,0)
+"RTN","SAMICAS3",399,0)
  ;
-"RTN","SAMICAS3",401,0)
+"RTN","SAMICAS3",400,0)
  quit  ; end of MKFUFORM
+"RTN","SAMICAS3",401,0)
+ ;
 "RTN","SAMICAS3",402,0)
  ;
 "RTN","SAMICAS3",403,0)
  ;
 "RTN","SAMICAS3",404,0)
- ;
-"RTN","SAMICAS3",405,0)
 BASELNDT(sid) ; last previous baseline ct date
+"RTN","SAMICAS3",405,0)
+ ;
 "RTN","SAMICAS3",406,0)
- ;
-"RTN","SAMICAS3",407,0)
  n root s root=$$setroot^%wd("vapals-patients")
-"RTN","SAMICAS3",408,0)
+"RTN","SAMICAS3",407,0)
  n groot s groot=$na(@root@("graph",sid))
-"RTN","SAMICAS3",409,0)
+"RTN","SAMICAS3",408,0)
  n items s items=""
-"RTN","SAMICAS3",410,0)
+"RTN","SAMICAS3",409,0)
  d GETITEMS^SAMICASE("items",sid)
-"RTN","SAMICAS3",411,0)
+"RTN","SAMICAS3",410,0)
  q:'$d(items) ""
-"RTN","SAMICAS3",412,0)
+"RTN","SAMICAS3",411,0)
  n bdate s bdate=""
-"RTN","SAMICAS3",413,0)
+"RTN","SAMICAS3",412,0)
  n bkey s bkey=""
-"RTN","SAMICAS3",414,0)
+"RTN","SAMICAS3",413,0)
  n done s done=0
-"RTN","SAMICAS3",415,0)
+"RTN","SAMICAS3",414,0)
  f  s bkey=$o(items("type","vapals:ceform",bkey)) q:bkey=""  d  ;
-"RTN","SAMICAS3",416,0)
+"RTN","SAMICAS3",415,0)
  . ;w !,bkey," ",$g(@groot@(bkey,"cetex"))
-"RTN","SAMICAS3",417,0)
+"RTN","SAMICAS3",416,0)
  . if $g(@groot@(bkey,"cetex"))="b" d  ;
-"RTN","SAMICAS3",418,0)
+"RTN","SAMICAS3",417,0)
  . . s done=1
-"RTN","SAMICAS3",419,0)
+"RTN","SAMICAS3",418,0)
  . . s bdate=$p(bkey,"ceform-",2)
-"RTN","SAMICAS3",420,0)
+"RTN","SAMICAS3",419,0)
  s bdate=$$KEY2DSPD^SAMICAS2(bdate)
-"RTN","SAMICAS3",421,0)
+"RTN","SAMICAS3",420,0)
  ;
-"RTN","SAMICAS3",422,0)
+"RTN","SAMICAS3",421,0)
  q bdate ; end of $$BASELNDT
+"RTN","SAMICAS3",422,0)
+ ;
 "RTN","SAMICAS3",423,0)
  ;
 "RTN","SAMICAS3",424,0)
  ;
 "RTN","SAMICAS3",425,0)
- ;
-"RTN","SAMICAS3",426,0)
 MKPTFORM(sid,key) ; create pet evaluation form
+"RTN","SAMICAS3",426,0)
+ ;
 "RTN","SAMICAS3",427,0)
- ;
+ ;@stanza 1 invocation, binding, & branching
 "RTN","SAMICAS3",428,0)
- ;@stanza 1 invocation, binding, & branching
+ ;
 "RTN","SAMICAS3",429,0)
- ;
+ ;ven/gpl;private;procedure;
 "RTN","SAMICAS3",430,0)
- ;ven/gpl;private;procedure;
+ ;@called-by
 "RTN","SAMICAS3",431,0)
- ;@called-by
+ ; WSNFPOST^SAMICAS3
 "RTN","SAMICAS3",432,0)
- ; WSNFPOST^SAMICAS3
+ ;@calls
 "RTN","SAMICAS3",433,0)
- ;@calls
+ ; $$setroot^%wd
 "RTN","SAMICAS3",434,0)
- ; $$setroot^%wd
+ ; $$SID2NUM^SAMIHOM3
 "RTN","SAMICAS3",435,0)
- ; $$SID2NUM^SAMIHOM3
+ ;@input
 "RTN","SAMICAS3",436,0)
- ;@input
+ ; sid = study id
 "RTN","SAMICAS3",437,0)
- ; sid = study id
+ ; key =
 "RTN","SAMICAS3",438,0)
- ; key =
+ ;@output
 "RTN","SAMICAS3",439,0)
- ;@output
+ ; @root@("graph",sid,key)
 "RTN","SAMICAS3",440,0)
- ; @root@("graph",sid,key)
+ ;@examples [tbd]
 "RTN","SAMICAS3",441,0)
- ;@examples [tbd]
+ ;@tests [tbd]
 "RTN","SAMICAS3",442,0)
- ;@tests [tbd]
+ ;
 "RTN","SAMICAS3",443,0)
- ;
-"RTN","SAMICAS3",444,0)
  ;@stanza 2 create pet eval form
+"RTN","SAMICAS3",444,0)
+ ;
 "RTN","SAMICAS3",445,0)
- ;
+ new root set root=$$setroot^%wd("vapals-patients")
 "RTN","SAMICAS3",446,0)
- new root set root=$$setroot^%wd("vapals-patients")
+ new sien set sien=$$SID2NUM^SAMIHOM3(sid)
 "RTN","SAMICAS3",447,0)
- new sien set sien=$$SID2NUM^SAMIHOM3(sid)
+ quit:+sien=0
 "RTN","SAMICAS3",448,0)
- quit:+sien=0
-"RTN","SAMICAS3",449,0)
  ; nodule copy
-"RTN","SAMICAS3",450,0)
+"RTN","SAMICAS3",449,0)
  ;n srckey s srckey=$$PREVNOD(sid)
-"RTN","SAMICAS3",451,0)
+"RTN","SAMICAS3",450,0)
  n srckey,srcdate s srcdate=$$LASTCMP(sid,.srckey)
-"RTN","SAMICAS3",452,0)
+"RTN","SAMICAS3",451,0)
  i srckey'="" d  ;
-"RTN","SAMICAS3",453,0)
+"RTN","SAMICAS3",452,0)
  . new target,source
-"RTN","SAMICAS3",454,0)
+"RTN","SAMICAS3",453,0)
  . set source=$name(@root@("graph",sid,srckey))
-"RTN","SAMICAS3",455,0)
+"RTN","SAMICAS3",454,0)
  . set target=$name(@root@("graph",sid,key))
+"RTN","SAMICAS3",455,0)
+ . d CTCOPY^SAMICTC1(source,target,key)
 "RTN","SAMICAS3",456,0)
- . d CTCOPY^SAMICTC1(source,target)
-"RTN","SAMICAS3",457,0)
  ; end nodule copy
-"RTN","SAMICAS3",458,0)
+"RTN","SAMICAS3",457,0)
  new cdate set cdate=$piece(key,"ptform-",2)
+"RTN","SAMICAS3",458,0)
+ merge @root@("graph",sid,key)=@root@(sien)
 "RTN","SAMICAS3",459,0)
- merge @root@("graph",sid,key)=@root@(sien)
+ set @root@("graph",sid,key,"samicreatedate")=cdate
 "RTN","SAMICAS3",460,0)
- set @root@("graph",sid,key,"samicreatedate")=cdate
+ do SSAMISTA^SAMICASE(sid,key,"incomplete")
 "RTN","SAMICAS3",461,0)
- do SSAMISTA^SAMICASE(sid,key,"incomplete")
+ ;
 "RTN","SAMICAS3",462,0)
- ;
+ do  ;
 "RTN","SAMICAS3",463,0)
- ;@stanza 3 termination
+ . n basedt
 "RTN","SAMICAS3",464,0)
- ;
+ . s basedt=$$BASELNDT^SAMICAS3(sid)
 "RTN","SAMICAS3",465,0)
- quit  ; end of MKPTFORM
+ . i basedt=-1 s basedt=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
 "RTN","SAMICAS3",466,0)
- ;
+ . n lastdt s lastdt=$$LASTCMP^SAMICAS3(sid)
 "RTN","SAMICAS3",467,0)
- ;
+ . i lastdt=-1 s lastdt=basedt
 "RTN","SAMICAS3",468,0)
- ;
+ . n priordt s priordt=$$PRIORCMP^SAMICAS3(sid)
 "RTN","SAMICAS3",469,0)
-MKITFORM(sid,key) ; create intervention form
+ . i priordt=-1 s priordt=lastdt
 "RTN","SAMICAS3",470,0)
- ;
+ . s @root@("graph",sid,key,"sidoe")=basedt
 "RTN","SAMICAS3",471,0)
- ;@stanza 1 invocation, binding, & branching
+ . ;s @root@("graph",sid,key,"cedcs")=lastdt
 "RTN","SAMICAS3",472,0)
- ;
+ . s @root@("graph",sid,key,"cedos")=lastdt ; it's different than on the ce
 "RTN","SAMICAS3",473,0)
- ;ven/gpl;private;procedure;
+ . ;s @root@("graph",sid,key,"cedps")=priordt
 "RTN","SAMICAS3",474,0)
- ;@called-by
+ ;
 "RTN","SAMICAS3",475,0)
- ; WSNFPOST^SAMICAS3
-"RTN","SAMICAS3",476,0)
- ;@calls
-"RTN","SAMICAS3",477,0)
- ; $$setroot^%wd
-"RTN","SAMICAS3",478,0)
- ; $$SID2NUM^SAMIHOM3
-"RTN","SAMICAS3",479,0)
- ;@input
-"RTN","SAMICAS3",480,0)
- ; sid = study id
-"RTN","SAMICAS3",481,0)
- ; key =
-"RTN","SAMICAS3",482,0)
- ;@output
-"RTN","SAMICAS3",483,0)
- ; @root@("graph",sid,key)
-"RTN","SAMICAS3",484,0)
- ;@examples [tbd]
-"RTN","SAMICAS3",485,0)
- ;@tests [tbd]
-"RTN","SAMICAS3",486,0)
- ;
-"RTN","SAMICAS3",487,0)
- ;@stanza 2 create intervention form
-"RTN","SAMICAS3",488,0)
- ;
-"RTN","SAMICAS3",489,0)
- new root set root=$$setroot^%wd("vapals-patients")
-"RTN","SAMICAS3",490,0)
- new sien set sien=$$SID2NUM^SAMIHOM3(sid)
-"RTN","SAMICAS3",491,0)
- quit:+sien=0
-"RTN","SAMICAS3",492,0)
- new cdate set cdate=$piece(key,"itform-",2)
-"RTN","SAMICAS3",493,0)
- merge @root@("graph",sid,key)=@root@(sien)
-"RTN","SAMICAS3",494,0)
- set @root@("graph",sid,key,"samicreatedate")=cdate
-"RTN","SAMICAS3",495,0)
- do SSAMISTA^SAMICASE(sid,key,"incomplete")
-"RTN","SAMICAS3",496,0)
- ;
-"RTN","SAMICAS3",497,0)
  ;@stanza 3 termination
+"RTN","SAMICAS3",476,0)
+ ;
+"RTN","SAMICAS3",477,0)
+ quit  ; end of MKPTFORM
+"RTN","SAMICAS3",478,0)
+ ;
+"RTN","SAMICAS3",479,0)
+ ;
+"RTN","SAMICAS3",480,0)
+ ;
+"RTN","SAMICAS3",481,0)
+MKITFORM(sid,key) ; create intervention form
+"RTN","SAMICAS3",482,0)
+ ;
+"RTN","SAMICAS3",483,0)
+ ;@stanza 1 invocation, binding, & branching
+"RTN","SAMICAS3",484,0)
+ ;
+"RTN","SAMICAS3",485,0)
+ ;ven/gpl;private;procedure;
+"RTN","SAMICAS3",486,0)
+ ;@called-by
+"RTN","SAMICAS3",487,0)
+ ; WSNFPOST^SAMICAS3
+"RTN","SAMICAS3",488,0)
+ ;@calls
+"RTN","SAMICAS3",489,0)
+ ; $$setroot^%wd
+"RTN","SAMICAS3",490,0)
+ ; $$SID2NUM^SAMIHOM3
+"RTN","SAMICAS3",491,0)
+ ;@input
+"RTN","SAMICAS3",492,0)
+ ; sid = study id
+"RTN","SAMICAS3",493,0)
+ ; key =
+"RTN","SAMICAS3",494,0)
+ ;@output
+"RTN","SAMICAS3",495,0)
+ ; @root@("graph",sid,key)
+"RTN","SAMICAS3",496,0)
+ ;@examples [tbd]
+"RTN","SAMICAS3",497,0)
+ ;@tests [tbd]
 "RTN","SAMICAS3",498,0)
  ;
 "RTN","SAMICAS3",499,0)
- quit  ; end of MKITFORM
+ ;@stanza 2 create intervention form
 "RTN","SAMICAS3",500,0)
  ;
 "RTN","SAMICAS3",501,0)
- ;
-"RTN","SAMICAS3",502,0)
- ;
-"RTN","SAMICAS3",503,0)
-MKBXFORM(sid,key) ; create biopsy form
-"RTN","SAMICAS3",504,0)
- ;
-"RTN","SAMICAS3",505,0)
- ;@stanza 1 invocation, binding, & branching
-"RTN","SAMICAS3",506,0)
- ;
-"RTN","SAMICAS3",507,0)
- ;ven/gpl;private;procedure;
-"RTN","SAMICAS3",508,0)
- ;@called-by
-"RTN","SAMICAS3",509,0)
- ; WSNFPOST^SAMICAS3
-"RTN","SAMICAS3",510,0)
- ;@calls
-"RTN","SAMICAS3",511,0)
- ; $$setroot^%wd
-"RTN","SAMICAS3",512,0)
- ; $$SID2NUM^SAMIHOM3
-"RTN","SAMICAS3",513,0)
- ;@input
-"RTN","SAMICAS3",514,0)
- ; sid = study id
-"RTN","SAMICAS3",515,0)
- ; key =
-"RTN","SAMICAS3",516,0)
- ;@output
-"RTN","SAMICAS3",517,0)
- ; @root@("graph",sid,key)
-"RTN","SAMICAS3",518,0)
- ;@examples [tbd]
-"RTN","SAMICAS3",519,0)
- ;@tests [tbd]
-"RTN","SAMICAS3",520,0)
- ;
-"RTN","SAMICAS3",521,0)
- ;@stanza 2 create background form
-"RTN","SAMICAS3",522,0)
- ;
-"RTN","SAMICAS3",523,0)
  new root set root=$$setroot^%wd("vapals-patients")
-"RTN","SAMICAS3",524,0)
+"RTN","SAMICAS3",502,0)
  new sien set sien=$$SID2NUM^SAMIHOM3(sid)
-"RTN","SAMICAS3",525,0)
+"RTN","SAMICAS3",503,0)
  quit:+sien=0
-"RTN","SAMICAS3",526,0)
- new cdate set cdate=$piece(key,"bxform-",2)
-"RTN","SAMICAS3",527,0)
+"RTN","SAMICAS3",504,0)
+ new cdate set cdate=$piece(key,"itform-",2)
+"RTN","SAMICAS3",505,0)
  ; nodule copy
-"RTN","SAMICAS3",528,0)
+"RTN","SAMICAS3",506,0)
  ;n srckey s srckey=$$PREVNOD(sid)
-"RTN","SAMICAS3",529,0)
+"RTN","SAMICAS3",507,0)
  n srckey,srcdate s srcdate=$$LASTCMP(sid,.srckey)
-"RTN","SAMICAS3",530,0)
+"RTN","SAMICAS3",508,0)
  i srckey'="" d  ;
-"RTN","SAMICAS3",531,0)
+"RTN","SAMICAS3",509,0)
  . new target,source
-"RTN","SAMICAS3",532,0)
+"RTN","SAMICAS3",510,0)
  . set source=$name(@root@("graph",sid,srckey))
-"RTN","SAMICAS3",533,0)
+"RTN","SAMICAS3",511,0)
  . set target=$name(@root@("graph",sid,key))
-"RTN","SAMICAS3",534,0)
- . d CTCOPY^SAMICTC1(source,target)
-"RTN","SAMICAS3",535,0)
+"RTN","SAMICAS3",512,0)
+ . d CTCOPY^SAMICTC1(source,target,key)
+"RTN","SAMICAS3",513,0)
  ; end nodule copy
-"RTN","SAMICAS3",536,0)
+"RTN","SAMICAS3",514,0)
  merge @root@("graph",sid,key)=@root@(sien)
-"RTN","SAMICAS3",537,0)
+"RTN","SAMICAS3",515,0)
  set @root@("graph",sid,key,"samicreatedate")=cdate
-"RTN","SAMICAS3",538,0)
+"RTN","SAMICAS3",516,0)
  do SSAMISTA^SAMICASE(sid,key,"incomplete")
-"RTN","SAMICAS3",539,0)
+"RTN","SAMICAS3",517,0)
  ;
-"RTN","SAMICAS3",540,0)
+"RTN","SAMICAS3",518,0)
+ do  ;
+"RTN","SAMICAS3",519,0)
+ . n basedt
+"RTN","SAMICAS3",520,0)
+ . s basedt=$$BASELNDT^SAMICAS3(sid)
+"RTN","SAMICAS3",521,0)
+ . i basedt=-1 s basedt=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
+"RTN","SAMICAS3",522,0)
+ . n lastdt s lastdt=$$LASTCMP^SAMICAS3(sid)
+"RTN","SAMICAS3",523,0)
+ . i lastdt=-1 s lastdt=basedt
+"RTN","SAMICAS3",524,0)
+ . n priordt s priordt=$$PRIORCMP^SAMICAS3(sid)
+"RTN","SAMICAS3",525,0)
+ . i priordt=-1 s priordt=lastdt
+"RTN","SAMICAS3",526,0)
+ . s @root@("graph",sid,key,"sidoe")=basedt
+"RTN","SAMICAS3",527,0)
+ . ;s @root@("graph",sid,key,"cedcs")=lastdt
+"RTN","SAMICAS3",528,0)
+ . s @root@("graph",sid,key,"cedos")=lastdt ; it's different than on the ce
+"RTN","SAMICAS3",529,0)
+ . ;s @root@("graph",sid,key,"cedps")=priordt
+"RTN","SAMICAS3",530,0)
+ ;
+"RTN","SAMICAS3",531,0)
  ;@stanza 3 termination
-"RTN","SAMICAS3",541,0)
+"RTN","SAMICAS3",532,0)
  ;
-"RTN","SAMICAS3",542,0)
- quit  ; end of MKBXFORM
-"RTN","SAMICAS3",543,0)
+"RTN","SAMICAS3",533,0)
+ quit  ; end of MKITFORM
+"RTN","SAMICAS3",534,0)
  ;
-"RTN","SAMICAS3",544,0)
+"RTN","SAMICAS3",535,0)
  ;
-"RTN","SAMICAS3",545,0)
+"RTN","SAMICAS3",536,0)
  ;
-"RTN","SAMICAS3",546,0)
-CASETBL(ary) ; generates case review table
-"RTN","SAMICAS3",547,0)
+"RTN","SAMICAS3",537,0)
+MKBXFORM(sid,key) ; create biopsy form
+"RTN","SAMICAS3",538,0)
  ;
-"RTN","SAMICAS3",548,0)
+"RTN","SAMICAS3",539,0)
  ;@stanza 1 invocation, binding, & branching
-"RTN","SAMICAS3",549,0)
+"RTN","SAMICAS3",540,0)
  ;
-"RTN","SAMICAS3",550,0)
+"RTN","SAMICAS3",541,0)
  ;ven/gpl;private;procedure;
-"RTN","SAMICAS3",551,0)
- ;@called by : none
-"RTN","SAMICAS3",552,0)
+"RTN","SAMICAS3",542,0)
+ ;@called-by
+"RTN","SAMICAS3",543,0)
+ ; WSNFPOST^SAMICAS3
+"RTN","SAMICAS3",544,0)
  ;@calls
-"RTN","SAMICAS3",553,0)
+"RTN","SAMICAS3",545,0)
+ ; $$setroot^%wd
+"RTN","SAMICAS3",546,0)
+ ; $$SID2NUM^SAMIHOM3
+"RTN","SAMICAS3",547,0)
  ;@input
-"RTN","SAMICAS3",554,0)
- ; ary = name of array (passed by name, will be cleared)
-"RTN","SAMICAS3",555,0)
+"RTN","SAMICAS3",548,0)
+ ; sid = study id
+"RTN","SAMICAS3",549,0)
+ ; key =
+"RTN","SAMICAS3",550,0)
  ;@output
+"RTN","SAMICAS3",551,0)
+ ; @root@("graph",sid,key)
+"RTN","SAMICAS3",552,0)
+ ;@examples [tbd]
+"RTN","SAMICAS3",553,0)
+ ;@tests [tbd]
+"RTN","SAMICAS3",554,0)
+ ;
+"RTN","SAMICAS3",555,0)
+ ;@stanza 2 create background form
 "RTN","SAMICAS3",556,0)
- ; @ary
+ ;
 "RTN","SAMICAS3",557,0)
- ;@tests
+ new root set root=$$setroot^%wd("vapals-patients")
 "RTN","SAMICAS3",558,0)
- ; SAMIUTS2
+ new sien set sien=$$SID2NUM^SAMIHOM3(sid)
 "RTN","SAMICAS3",559,0)
- ;
+ quit:+sien=0
 "RTN","SAMICAS3",560,0)
- ;@stanza 2 build table
+ new cdate set cdate=$piece(key,"bxform-",2)
 "RTN","SAMICAS3",561,0)
- ;
+ ; nodule copy
 "RTN","SAMICAS3",562,0)
- kill @ary
+ ;n srckey s srckey=$$PREVNOD(sid)
 "RTN","SAMICAS3",563,0)
- ;
+ n srckey,srcdate s srcdate=$$LASTCMP(sid,.srckey)
 "RTN","SAMICAS3",564,0)
- set @ary@("siform","form")="siform"
+ i srckey'="" d  ;
 "RTN","SAMICAS3",565,0)
- set @ary@("siform","js")="subPr"
+ . new target,source
 "RTN","SAMICAS3",566,0)
- set @ary@("siform","name")="Intake"
+ . set source=$name(@root@("graph",sid,srckey))
 "RTN","SAMICAS3",567,0)
- set @ary@("siform","image")="preview.gif"
+ . set target=$name(@root@("graph",sid,key))
 "RTN","SAMICAS3",568,0)
- ;
+ . d CTCOPY^SAMICTC1(source,target,key)
 "RTN","SAMICAS3",569,0)
- set @ary@("nuform","form")="nuform"
+ ; end nodule copy
 "RTN","SAMICAS3",570,0)
- set @ary@("nuform","js")="subFr"
+ merge @root@("graph",sid,key)=@root@(sien)
 "RTN","SAMICAS3",571,0)
- set @ary@("nuform","name")="New Form"
+ set @root@("graph",sid,key,"samicreatedate")=cdate
 "RTN","SAMICAS3",572,0)
- set @ary@("nuform","image")="nform.gif"
+ do SSAMISTA^SAMICASE(sid,key,"incomplete")
 "RTN","SAMICAS3",573,0)
  ;
 "RTN","SAMICAS3",574,0)
- set @ary@("sched","form")="sched"
+ ;@stanza 3 termination
 "RTN","SAMICAS3",575,0)
- set @ary@("sched","js")="subSc"
+ ;
 "RTN","SAMICAS3",576,0)
- set @ary@("sched","name")="Schedule"
+ quit  ; end of MKBXFORM
 "RTN","SAMICAS3",577,0)
- set @ary@("sched","image")="schedule.gif"
+ ;
 "RTN","SAMICAS3",578,0)
  ;
 "RTN","SAMICAS3",579,0)
- set @ary@("sbform","form")="sbform"
+ ;
 "RTN","SAMICAS3",580,0)
- set @ary@("sbform","js")="subPr"
+CASETBL(ary) ; generates case review table
 "RTN","SAMICAS3",581,0)
- set @ary@("sbform","name")="Background"
+ ;
 "RTN","SAMICAS3",582,0)
- set @ary@("sbform","image")="preview.gif"
+ ;@stanza 1 invocation, binding, & branching
 "RTN","SAMICAS3",583,0)
  ;
 "RTN","SAMICAS3",584,0)
- set @ary@("ceform","form")="ceform"
+ ;ven/gpl;private;procedure;
 "RTN","SAMICAS3",585,0)
- set @ary@("ceform","js")="subPr"
+ ;@called by : none
 "RTN","SAMICAS3",586,0)
- set @ary@("ceform","name")="CT Evaluation"
+ ;@calls
 "RTN","SAMICAS3",587,0)
- set @ary@("ceform","image")="preview.gif"
+ ;@input
 "RTN","SAMICAS3",588,0)
- ;
+ ; ary = name of array (passed by name, will be cleared)
 "RTN","SAMICAS3",589,0)
- set @ary@("report","form")="report"
+ ;@output
 "RTN","SAMICAS3",590,0)
- set @ary@("report","js")="subRp"
+ ; @ary
 "RTN","SAMICAS3",591,0)
- set @ary@("report","name")="Report"
+ ;@tests
 "RTN","SAMICAS3",592,0)
- set @ary@("report","image")="report.gif"
+ ; SAMIUTS2
 "RTN","SAMICAS3",593,0)
  ;
 "RTN","SAMICAS3",594,0)
- set @ary@("ptform","form")="ptform"
+ ;@stanza 2 build table
 "RTN","SAMICAS3",595,0)
- set @ary@("ptform","js")="subPr"
+ ;
 "RTN","SAMICAS3",596,0)
- set @ary@("ptform","name")="PET Evaluation"
+ kill @ary
 "RTN","SAMICAS3",597,0)
- set @ary@("ptform","image")="preview.gif"
+ ;
 "RTN","SAMICAS3",598,0)
- ;
+ set @ary@("siform","form")="siform"
 "RTN","SAMICAS3",599,0)
- set @ary@("bxform","form")="bxform"
+ set @ary@("siform","js")="subPr"
 "RTN","SAMICAS3",600,0)
- set @ary@("bxform","js")="subPr"
+ set @ary@("siform","name")="Intake"
 "RTN","SAMICAS3",601,0)
- set @ary@("bxform","name")="Biopsy"
+ set @ary@("siform","image")="preview.gif"
 "RTN","SAMICAS3",602,0)
- set @ary@("bxform","image")="preview.gif"
+ ;
 "RTN","SAMICAS3",603,0)
- ;
+ set @ary@("nuform","form")="nuform"
 "RTN","SAMICAS3",604,0)
- set @ary@("rbform","form")="rbform"
+ set @ary@("nuform","js")="subFr"
 "RTN","SAMICAS3",605,0)
- set @ary@("rbform","js")="subPr"
+ set @ary@("nuform","name")="New Form"
 "RTN","SAMICAS3",606,0)
- set @ary@("rbform","name")="Intervention"
+ set @ary@("nuform","image")="nform.gif"
 "RTN","SAMICAS3",607,0)
- set @ary@("rbform","image")="preview.gif"
+ ;
 "RTN","SAMICAS3",608,0)
- ;
+ set @ary@("sched","form")="sched"
 "RTN","SAMICAS3",609,0)
- set @ary@("ceform","form")="ceform"
+ set @ary@("sched","js")="subSc"
 "RTN","SAMICAS3",610,0)
- set @ary@("ceform","js")="subPr"
+ set @ary@("sched","name")="Schedule"
 "RTN","SAMICAS3",611,0)
- set @ary@("ceform","name")="CT Evaluation"
+ set @ary@("sched","image")="schedule.gif"
 "RTN","SAMICAS3",612,0)
- set @ary@("ceform","image")="preview.gif"
+ ;
 "RTN","SAMICAS3",613,0)
- ;
+ set @ary@("sbform","form")="sbform"
 "RTN","SAMICAS3",614,0)
- ;@stanza 3 termination
+ set @ary@("sbform","js")="subPr"
 "RTN","SAMICAS3",615,0)
- ;
+ set @ary@("sbform","name")="Background"
 "RTN","SAMICAS3",616,0)
- quit  ; end of CASETBL
+ set @ary@("sbform","image")="preview.gif"
 "RTN","SAMICAS3",617,0)
  ;
 "RTN","SAMICAS3",618,0)
- ;
+ set @ary@("ceform","form")="ceform"
 "RTN","SAMICAS3",619,0)
- ;
+ set @ary@("ceform","js")="subPr"
 "RTN","SAMICAS3",620,0)
+ set @ary@("ceform","name")="CT Evaluation"
+"RTN","SAMICAS3",621,0)
+ set @ary@("ceform","image")="preview.gif"
+"RTN","SAMICAS3",622,0)
+ ;
+"RTN","SAMICAS3",623,0)
+ set @ary@("report","form")="report"
+"RTN","SAMICAS3",624,0)
+ set @ary@("report","js")="subRp"
+"RTN","SAMICAS3",625,0)
+ set @ary@("report","name")="Report"
+"RTN","SAMICAS3",626,0)
+ set @ary@("report","image")="report.gif"
+"RTN","SAMICAS3",627,0)
+ ;
+"RTN","SAMICAS3",628,0)
+ set @ary@("ptform","form")="ptform"
+"RTN","SAMICAS3",629,0)
+ set @ary@("ptform","js")="subPr"
+"RTN","SAMICAS3",630,0)
+ set @ary@("ptform","name")="PET Evaluation"
+"RTN","SAMICAS3",631,0)
+ set @ary@("ptform","image")="preview.gif"
+"RTN","SAMICAS3",632,0)
+ ;
+"RTN","SAMICAS3",633,0)
+ set @ary@("bxform","form")="bxform"
+"RTN","SAMICAS3",634,0)
+ set @ary@("bxform","js")="subPr"
+"RTN","SAMICAS3",635,0)
+ set @ary@("bxform","name")="Biopsy"
+"RTN","SAMICAS3",636,0)
+ set @ary@("bxform","image")="preview.gif"
+"RTN","SAMICAS3",637,0)
+ ;
+"RTN","SAMICAS3",638,0)
+ set @ary@("rbform","form")="rbform"
+"RTN","SAMICAS3",639,0)
+ set @ary@("rbform","js")="subPr"
+"RTN","SAMICAS3",640,0)
+ set @ary@("rbform","name")="Intervention"
+"RTN","SAMICAS3",641,0)
+ set @ary@("rbform","image")="preview.gif"
+"RTN","SAMICAS3",642,0)
+ ;
+"RTN","SAMICAS3",643,0)
+ set @ary@("ceform","form")="ceform"
+"RTN","SAMICAS3",644,0)
+ set @ary@("ceform","js")="subPr"
+"RTN","SAMICAS3",645,0)
+ set @ary@("ceform","name")="CT Evaluation"
+"RTN","SAMICAS3",646,0)
+ set @ary@("ceform","image")="preview.gif"
+"RTN","SAMICAS3",647,0)
+ ;
+"RTN","SAMICAS3",648,0)
+ ;@stanza 3 termination
+"RTN","SAMICAS3",649,0)
+ ;
+"RTN","SAMICAS3",650,0)
+ quit  ; end of CASETBL
+"RTN","SAMICAS3",651,0)
+ ;
+"RTN","SAMICAS3",652,0)
+ ;
+"RTN","SAMICAS3",653,0)
+ ;
+"RTN","SAMICAS3",654,0)
 EOR ; end of routine SAMICAS3
+"RTN","SAMICTC1")
+0^12^B145209715
+"RTN","SAMICTC1",1,0)
+SAMICTC1 ;ven/gpl - ceform copy routine ; 1/22/19 1:24pm
+"RTN","SAMICTC1",2,0)
+ ;;18.0;SAMI;;;Build 2
+"RTN","SAMICTC1",3,0)
+ ;
+"RTN","SAMICTC1",4,0)
+ ;@license: see routine SAMIUL
+"RTN","SAMICTC1",5,0)
+ ;
+"RTN","SAMICTC1",6,0)
+ quit  ; no entry from top
+"RTN","SAMICTC1",7,0)
+ ;
+"RTN","SAMICTC1",8,0)
+CTCOPY(FROM,TO,key) ; copies a Ct Eval form selectively
+"RTN","SAMICTC1",9,0)
+ i $g(key)="" s key="ce"
+"RTN","SAMICTC1",10,0)
+ i key'["ce" d  ; all forms except ct eval form
+"RTN","SAMICTC1",11,0)
+ . S @TO@("cect1ch")=$G(@FROM@("cect1ch"))
+"RTN","SAMICTC1",12,0)
+ . S @TO@("cect2ch")=$G(@FROM@("cect2ch"))
+"RTN","SAMICTC1",13,0)
+ . S @TO@("cect3ch")=$G(@FROM@("cect3ch"))
+"RTN","SAMICTC1",14,0)
+ . S @TO@("cect4ch")=$G(@FROM@("cect4ch"))
+"RTN","SAMICTC1",15,0)
+ . S @TO@("cect5ch")=$G(@FROM@("cect5ch"))
+"RTN","SAMICTC1",16,0)
+ . S @TO@("cect6ch")=$G(@FROM@("cect6ch"))
+"RTN","SAMICTC1",17,0)
+ . S @TO@("cect7ch")=$G(@FROM@("cect7ch"))
+"RTN","SAMICTC1",18,0)
+ . S @TO@("cect8ch")=$G(@FROM@("cect8ch"))
+"RTN","SAMICTC1",19,0)
+ . S @TO@("cect9ch")=$G(@FROM@("cect9ch"))
+"RTN","SAMICTC1",20,0)
+ ; the following is generated from a graph - see genCTCOPY below
+"RTN","SAMICTC1",21,0)
+ S @TO@("ceanod")=$G(@FROM@("ceanod")) ; 
+"RTN","SAMICTC1",22,0)
+ S @TO@("cennod")=$G(@FROM@("cennod")) ; 
+"RTN","SAMICTC1",23,0)
+ S @TO@("cect1en")=$G(@FROM@("cect1en")) ; Endobronchial
+"RTN","SAMICTC1",24,0)
+ S @TO@("cect2en")=$G(@FROM@("cect2en")) ; Endobronchial
+"RTN","SAMICTC1",25,0)
+ S @TO@("cect3en")=$G(@FROM@("cect3en")) ; Endobronchial
+"RTN","SAMICTC1",26,0)
+ S @TO@("cect4en")=$G(@FROM@("cect4en")) ; Endobronchial
+"RTN","SAMICTC1",27,0)
+ S @TO@("cect5en")=$G(@FROM@("cect5en")) ; Endobronchial
+"RTN","SAMICTC1",28,0)
+ S @TO@("cect6en")=$G(@FROM@("cect6en")) ; Endobronchial
+"RTN","SAMICTC1",29,0)
+ S @TO@("cect7en")=$G(@FROM@("cect7en")) ; Endobronchial
+"RTN","SAMICTC1",30,0)
+ S @TO@("cect8en")=$G(@FROM@("cect8en")) ; Endobronchial
+"RTN","SAMICTC1",31,0)
+ S @TO@("cect9en")=$G(@FROM@("cect9en")) ; Endobronchial
+"RTN","SAMICTC1",32,0)
+ S @TO@("cect10en")=$G(@FROM@("cect10en")) ; Endobronchial
+"RTN","SAMICTC1",33,0)
+ S @TO@("cect1ll")=$G(@FROM@("cect1ll")) ; Most likely location
+"RTN","SAMICTC1",34,0)
+ S @TO@("cect2ll")=$G(@FROM@("cect2ll")) ; Most likely location
+"RTN","SAMICTC1",35,0)
+ S @TO@("cect3ll")=$G(@FROM@("cect3ll")) ; Most likely location
+"RTN","SAMICTC1",36,0)
+ S @TO@("cect4ll")=$G(@FROM@("cect4ll")) ; Most likely location
+"RTN","SAMICTC1",37,0)
+ S @TO@("cect5ll")=$G(@FROM@("cect5ll")) ; Most likely location
+"RTN","SAMICTC1",38,0)
+ S @TO@("cect6ll")=$G(@FROM@("cect6ll")) ; Most likely location
+"RTN","SAMICTC1",39,0)
+ S @TO@("cect7ll")=$G(@FROM@("cect7ll")) ; Most likely location
+"RTN","SAMICTC1",40,0)
+ S @TO@("cect8ll")=$G(@FROM@("cect8ll")) ; Most likely location
+"RTN","SAMICTC1",41,0)
+ S @TO@("cect9ll")=$G(@FROM@("cect9ll")) ; Most likely location
+"RTN","SAMICTC1",42,0)
+ S @TO@("cect10ll")=$G(@FROM@("cect10ll")) ; Most likely location
+"RTN","SAMICTC1",43,0)
+ S @TO@("cect1sn")=$G(@FROM@("cect1sn")) ; CT Series Number
+"RTN","SAMICTC1",44,0)
+ S @TO@("cect2sn")=$G(@FROM@("cect2sn")) ; CT Series Number
+"RTN","SAMICTC1",45,0)
+ S @TO@("cect3sn")=$G(@FROM@("cect3sn")) ; CT Series Number
+"RTN","SAMICTC1",46,0)
+ S @TO@("cect4sn")=$G(@FROM@("cect4sn")) ; CT Series Number
+"RTN","SAMICTC1",47,0)
+ S @TO@("cect5sn")=$G(@FROM@("cect5sn")) ; CT Series Number
+"RTN","SAMICTC1",48,0)
+ S @TO@("cect6sn")=$G(@FROM@("cect6sn")) ; CT Series Number
+"RTN","SAMICTC1",49,0)
+ S @TO@("cect7sn")=$G(@FROM@("cect7sn")) ; CT Series Number
+"RTN","SAMICTC1",50,0)
+ S @TO@("cect8sn")=$G(@FROM@("cect8sn")) ; CT Series Number
+"RTN","SAMICTC1",51,0)
+ S @TO@("cect9sn")=$G(@FROM@("cect9sn")) ; CT Series Number
+"RTN","SAMICTC1",52,0)
+ S @TO@("cect10sn")=$G(@FROM@("cect10sn")) ; CT Series Number
+"RTN","SAMICTC1",53,0)
+ S @TO@("cect1inl")=$G(@FROM@("cect1inl")) ; CT Image Number (Low
+"RTN","SAMICTC1",54,0)
+ S @TO@("cect1inh")=$G(@FROM@("cect1inh")) ; CT Image Number (Hig
+"RTN","SAMICTC1",55,0)
+ S @TO@("cect2inl")=$G(@FROM@("cect2inl")) ; CT Image Number (Low
+"RTN","SAMICTC1",56,0)
+ S @TO@("cect2inh")=$G(@FROM@("cect2inh")) ; CT Image Number (Hig
+"RTN","SAMICTC1",57,0)
+ S @TO@("cect3inl")=$G(@FROM@("cect3inl")) ; CT Image Number (Low
+"RTN","SAMICTC1",58,0)
+ S @TO@("cect3inh")=$G(@FROM@("cect3inh")) ; CT Image Number (Hig
+"RTN","SAMICTC1",59,0)
+ S @TO@("cect4inl")=$G(@FROM@("cect4inl")) ; CT Image Number (Low
+"RTN","SAMICTC1",60,0)
+ S @TO@("cect4inh")=$G(@FROM@("cect4inh")) ; CT Image Number (Hig
+"RTN","SAMICTC1",61,0)
+ S @TO@("cect5inl")=$G(@FROM@("cect5inl")) ; CT Image Number (Low
+"RTN","SAMICTC1",62,0)
+ S @TO@("cect5inh")=$G(@FROM@("cect5inh")) ; CT Image Number (Hig
+"RTN","SAMICTC1",63,0)
+ S @TO@("cect6inl")=$G(@FROM@("cect6inl")) ; CT Image Number (Low
+"RTN","SAMICTC1",64,0)
+ S @TO@("cect6inh")=$G(@FROM@("cect6inh")) ; CT Image Number (Hig
+"RTN","SAMICTC1",65,0)
+ S @TO@("cect7inl")=$G(@FROM@("cect7inl")) ; CT Image Number (Low
+"RTN","SAMICTC1",66,0)
+ S @TO@("cect7inh")=$G(@FROM@("cect7inh")) ; CT Image Number (Hig
+"RTN","SAMICTC1",67,0)
+ S @TO@("cect8inl")=$G(@FROM@("cect8inl")) ; CT Image Number (Low
+"RTN","SAMICTC1",68,0)
+ S @TO@("cect8inh")=$G(@FROM@("cect8inh")) ; CT Image Number (Hig
+"RTN","SAMICTC1",69,0)
+ S @TO@("cect9inl")=$G(@FROM@("cect9inl")) ; CT Image Number (Low
+"RTN","SAMICTC1",70,0)
+ S @TO@("cect9inh")=$G(@FROM@("cect9inh")) ; CT Image Number (Hig
+"RTN","SAMICTC1",71,0)
+ S @TO@("cect10inl")=$G(@FROM@("cect10inl")) ; CT Image Number (Low
+"RTN","SAMICTC1",72,0)
+ S @TO@("cect10inh")=$G(@FROM@("cect10inh")) ; CT Image Number (Hig
+"RTN","SAMICTC1",73,0)
+ S @TO@("cect1st")=$G(@FROM@("cect1st")) ; Nodule status
+"RTN","SAMICTC1",74,0)
+ S @TO@("cect2st")=$G(@FROM@("cect2st")) ; Nodule status
+"RTN","SAMICTC1",75,0)
+ S @TO@("cect3st")=$G(@FROM@("cect3st")) ; Nodule status
+"RTN","SAMICTC1",76,0)
+ S @TO@("cect4st")=$G(@FROM@("cect4st")) ; Nodule status
+"RTN","SAMICTC1",77,0)
+ S @TO@("cect5st")=$G(@FROM@("cect5st")) ; Nodule status
+"RTN","SAMICTC1",78,0)
+ S @TO@("cect6st")=$G(@FROM@("cect6st")) ; Nodule status
+"RTN","SAMICTC1",79,0)
+ S @TO@("cect7st")=$G(@FROM@("cect7st")) ; Nodule status
+"RTN","SAMICTC1",80,0)
+ S @TO@("cect8st")=$G(@FROM@("cect8st")) ; Nodule status
+"RTN","SAMICTC1",81,0)
+ S @TO@("cect9st")=$G(@FROM@("cect9st")) ; Nodule status
+"RTN","SAMICTC1",82,0)
+ S @TO@("cect10st")=$G(@FROM@("cect10st")) ; Nodule status
+"RTN","SAMICTC1",83,0)
+ S @TO@("cect1nt")=$G(@FROM@("cect1nt")) ; Nodule Consistency
+"RTN","SAMICTC1",84,0)
+ S @TO@("cect2nt")=$G(@FROM@("cect2nt")) ; Nodule Consistency
+"RTN","SAMICTC1",85,0)
+ S @TO@("cect3nt")=$G(@FROM@("cect3nt")) ; Nodule Consistency
+"RTN","SAMICTC1",86,0)
+ S @TO@("cect4nt")=$G(@FROM@("cect4nt")) ; Nodule Consistency
+"RTN","SAMICTC1",87,0)
+ S @TO@("cect5nt")=$G(@FROM@("cect5nt")) ; Nodule Consistency
+"RTN","SAMICTC1",88,0)
+ S @TO@("cect6nt")=$G(@FROM@("cect6nt")) ; Nodule Consistency
+"RTN","SAMICTC1",89,0)
+ S @TO@("cect7nt")=$G(@FROM@("cect7nt")) ; Nodule Consistency
+"RTN","SAMICTC1",90,0)
+ S @TO@("cect8nt")=$G(@FROM@("cect8nt")) ; Nodule Consistency
+"RTN","SAMICTC1",91,0)
+ S @TO@("cect9nt")=$G(@FROM@("cect9nt")) ; Nodule Consistency
+"RTN","SAMICTC1",92,0)
+ S @TO@("cect10nt")=$G(@FROM@("cect10nt")) ; Nodule Consistency
+"RTN","SAMICTC1",93,0)
+ S @TO@("cect1sl")=$G(@FROM@("cect1sl")) ; Length (mm)
+"RTN","SAMICTC1",94,0)
+ S @TO@("cect2sl")=$G(@FROM@("cect2sl")) ; Length (mm)
+"RTN","SAMICTC1",95,0)
+ S @TO@("cect3sl")=$G(@FROM@("cect3sl")) ; Length (mm)
+"RTN","SAMICTC1",96,0)
+ S @TO@("cect4sl")=$G(@FROM@("cect4sl")) ; Length (mm)
+"RTN","SAMICTC1",97,0)
+ S @TO@("cect5sl")=$G(@FROM@("cect5sl")) ; Length (mm)
+"RTN","SAMICTC1",98,0)
+ S @TO@("cect6sl")=$G(@FROM@("cect6sl")) ; Length (mm)
+"RTN","SAMICTC1",99,0)
+ S @TO@("cect7sl")=$G(@FROM@("cect7sl")) ; Length (mm)
+"RTN","SAMICTC1",100,0)
+ S @TO@("cect8sl")=$G(@FROM@("cect8sl")) ; Length (mm)
+"RTN","SAMICTC1",101,0)
+ S @TO@("cect9sl")=$G(@FROM@("cect9sl")) ; Length (mm)
+"RTN","SAMICTC1",102,0)
+ S @TO@("cect10sl")=$G(@FROM@("cect10sl")) ; Length (mm)
+"RTN","SAMICTC1",103,0)
+ S @TO@("cect1sw")=$G(@FROM@("cect1sw")) ; Maximum Width
+"RTN","SAMICTC1",104,0)
+ S @TO@("cect2sw")=$G(@FROM@("cect2sw")) ; Maximum Width
+"RTN","SAMICTC1",105,0)
+ S @TO@("cect3sw")=$G(@FROM@("cect3sw")) ; Maximum Width
+"RTN","SAMICTC1",106,0)
+ S @TO@("cect4sw")=$G(@FROM@("cect4sw")) ; Maximum Width
+"RTN","SAMICTC1",107,0)
+ S @TO@("cect5sw")=$G(@FROM@("cect5sw")) ; Maximum Width
+"RTN","SAMICTC1",108,0)
+ S @TO@("cect6sw")=$G(@FROM@("cect6sw")) ; Maximum Width
+"RTN","SAMICTC1",109,0)
+ S @TO@("cect7sw")=$G(@FROM@("cect7sw")) ; Maximum Width
+"RTN","SAMICTC1",110,0)
+ S @TO@("cect8sw")=$G(@FROM@("cect8sw")) ; Maximum Width
+"RTN","SAMICTC1",111,0)
+ S @TO@("cect9sw")=$G(@FROM@("cect9sw")) ; Maximum Width
+"RTN","SAMICTC1",112,0)
+ S @TO@("cect10sw")=$G(@FROM@("cect10sw")) ; Maximum Width
+"RTN","SAMICTC1",113,0)
+ S @TO@("cect1sh")=$G(@FROM@("cect1sh")) ; Height
+"RTN","SAMICTC1",114,0)
+ S @TO@("cect2sh")=$G(@FROM@("cect2sh")) ; Height
+"RTN","SAMICTC1",115,0)
+ S @TO@("cect3sh")=$G(@FROM@("cect3sh")) ; Height
+"RTN","SAMICTC1",116,0)
+ S @TO@("cect4sh")=$G(@FROM@("cect4sh")) ; Height
+"RTN","SAMICTC1",117,0)
+ S @TO@("cect5sh")=$G(@FROM@("cect5sh")) ; Height
+"RTN","SAMICTC1",118,0)
+ S @TO@("cect6sh")=$G(@FROM@("cect6sh")) ; Height
+"RTN","SAMICTC1",119,0)
+ S @TO@("cect7sh")=$G(@FROM@("cect7sh")) ; Height
+"RTN","SAMICTC1",120,0)
+ S @TO@("cect8sh")=$G(@FROM@("cect8sh")) ; Height
+"RTN","SAMICTC1",121,0)
+ S @TO@("cect9sh")=$G(@FROM@("cect9sh")) ; Height
+"RTN","SAMICTC1",122,0)
+ S @TO@("cect10sh")=$G(@FROM@("cect10sh")) ; Height
+"RTN","SAMICTC1",123,0)
+ S @TO@("cect1sv")=$G(@FROM@("cect1sv")) ; Volume
+"RTN","SAMICTC1",124,0)
+ S @TO@("cect2sv")=$G(@FROM@("cect2sv")) ; Volume
+"RTN","SAMICTC1",125,0)
+ S @TO@("cect3sv")=$G(@FROM@("cect3sv")) ; Volume
+"RTN","SAMICTC1",126,0)
+ S @TO@("cect4sv")=$G(@FROM@("cect4sv")) ; Volume
+"RTN","SAMICTC1",127,0)
+ S @TO@("cect5sv")=$G(@FROM@("cect5sv")) ; Volume
+"RTN","SAMICTC1",128,0)
+ S @TO@("cect6sv")=$G(@FROM@("cect6sv")) ; Volume
+"RTN","SAMICTC1",129,0)
+ S @TO@("cect7sv")=$G(@FROM@("cect7sv")) ; Volume
+"RTN","SAMICTC1",130,0)
+ S @TO@("cect8sv")=$G(@FROM@("cect8sv")) ; Volume
+"RTN","SAMICTC1",131,0)
+ S @TO@("cect9sv")=$G(@FROM@("cect9sv")) ; Volume
+"RTN","SAMICTC1",132,0)
+ S @TO@("cect10sv")=$G(@FROM@("cect10sv")) ; Volume
+"RTN","SAMICTC1",133,0)
+ S @TO@("cect1ssl")=$G(@FROM@("cect1ssl")) ; Solid Comp. Length
+"RTN","SAMICTC1",134,0)
+ S @TO@("cect1ssw")=$G(@FROM@("cect1ssw")) ; Solid Comp. Width
+"RTN","SAMICTC1",135,0)
+ S @TO@("cect2ssl")=$G(@FROM@("cect2ssl")) ; Solid Comp. Length
+"RTN","SAMICTC1",136,0)
+ S @TO@("cect2ssw")=$G(@FROM@("cect2ssw")) ; Solid Comp. Width
+"RTN","SAMICTC1",137,0)
+ S @TO@("cect3ssl")=$G(@FROM@("cect3ssl")) ; Solid Comp. Length
+"RTN","SAMICTC1",138,0)
+ S @TO@("cect3ssw")=$G(@FROM@("cect3ssw")) ; Solid Comp. Width
+"RTN","SAMICTC1",139,0)
+ S @TO@("cect4ssl")=$G(@FROM@("cect4ssl")) ; Solid Comp. Length
+"RTN","SAMICTC1",140,0)
+ S @TO@("cect4ssw")=$G(@FROM@("cect4ssw")) ; Solid Comp. Width
+"RTN","SAMICTC1",141,0)
+ S @TO@("cect5ssl")=$G(@FROM@("cect5ssl")) ; Solid Comp. Length
+"RTN","SAMICTC1",142,0)
+ S @TO@("cect5ssw")=$G(@FROM@("cect5ssw")) ; Solid Comp. Width
+"RTN","SAMICTC1",143,0)
+ S @TO@("cect6ssl")=$G(@FROM@("cect6ssl")) ; Solid Comp. Length
+"RTN","SAMICTC1",144,0)
+ S @TO@("cect6ssw")=$G(@FROM@("cect6ssw")) ; Solid Comp. Width
+"RTN","SAMICTC1",145,0)
+ S @TO@("cect7ssl")=$G(@FROM@("cect7ssl")) ; Solid Comp. Length
+"RTN","SAMICTC1",146,0)
+ S @TO@("cect7ssw")=$G(@FROM@("cect7ssw")) ; Solid Comp. Width
+"RTN","SAMICTC1",147,0)
+ S @TO@("cect8ssl")=$G(@FROM@("cect8ssl")) ; Solid Comp. Length
+"RTN","SAMICTC1",148,0)
+ S @TO@("cect8ssw")=$G(@FROM@("cect8ssw")) ; Solid Comp. Width
+"RTN","SAMICTC1",149,0)
+ S @TO@("cect9ssl")=$G(@FROM@("cect9ssl")) ; Solid Comp. Length
+"RTN","SAMICTC1",150,0)
+ S @TO@("cect9ssw")=$G(@FROM@("cect9ssw")) ; Solid Comp. Width
+"RTN","SAMICTC1",151,0)
+ S @TO@("cect10ssl")=$G(@FROM@("cect10ssl")) ; Solid Comp. Length
+"RTN","SAMICTC1",152,0)
+ S @TO@("cect10ssw")=$G(@FROM@("cect10ssw")) ; Solid Comp. Width
+"RTN","SAMICTC1",153,0)
+ S @TO@("cect1se")=$G(@FROM@("cect1se")) ; n
+"RTN","SAMICTC1",154,0)
+ S @TO@("cect1se")=$G(@FROM@("cect1se")) ;                 No
+"RTN","SAMICTC1",155,0)
+ S @TO@("cect2se")=$G(@FROM@("cect2se")) ; n
+"RTN","SAMICTC1",156,0)
+ S @TO@("cect2se")=$G(@FROM@("cect2se")) ;                 No
+"RTN","SAMICTC1",157,0)
+ S @TO@("cect3se")=$G(@FROM@("cect3se")) ; n
+"RTN","SAMICTC1",158,0)
+ S @TO@("cect3se")=$G(@FROM@("cect3se")) ;                 No
+"RTN","SAMICTC1",159,0)
+ S @TO@("cect4se")=$G(@FROM@("cect4se")) ; n
+"RTN","SAMICTC1",160,0)
+ S @TO@("cect4se")=$G(@FROM@("cect4se")) ;                 No
+"RTN","SAMICTC1",161,0)
+ S @TO@("cect5se")=$G(@FROM@("cect5se")) ; n
+"RTN","SAMICTC1",162,0)
+ S @TO@("cect5se")=$G(@FROM@("cect5se")) ;                 No
+"RTN","SAMICTC1",163,0)
+ S @TO@("cect6se")=$G(@FROM@("cect6se")) ; n
+"RTN","SAMICTC1",164,0)
+ S @TO@("cect6se")=$G(@FROM@("cect6se")) ;                 No
+"RTN","SAMICTC1",165,0)
+ S @TO@("cect7se")=$G(@FROM@("cect7se")) ; n
+"RTN","SAMICTC1",166,0)
+ S @TO@("cect7se")=$G(@FROM@("cect7se")) ;                 No
+"RTN","SAMICTC1",167,0)
+ S @TO@("cect8se")=$G(@FROM@("cect8se")) ; n
+"RTN","SAMICTC1",168,0)
+ S @TO@("cect8se")=$G(@FROM@("cect8se")) ;                 No
+"RTN","SAMICTC1",169,0)
+ S @TO@("cect9se")=$G(@FROM@("cect9se")) ; n
+"RTN","SAMICTC1",170,0)
+ S @TO@("cect9se")=$G(@FROM@("cect9se")) ;                 No
+"RTN","SAMICTC1",171,0)
+ S @TO@("cect10se")=$G(@FROM@("cect10se")) ; n
+"RTN","SAMICTC1",172,0)
+ S @TO@("cect10se")=$G(@FROM@("cect10se")) ;                 No
+"RTN","SAMICTC1",173,0)
+ S @TO@("cectin")=$G(@FROM@("cectin")) ; 1
+"RTN","SAMICTC1",174,0)
+ S @TO@("cectin")=$G(@FROM@("cectin")) ; 2
+"RTN","SAMICTC1",175,0)
+ S @TO@("cect1sp")=$G(@FROM@("cect1sp")) ; n
+"RTN","SAMICTC1",176,0)
+ S @TO@("cect1sp")=$G(@FROM@("cect1sp")) ;                 No
+"RTN","SAMICTC1",177,0)
+ S @TO@("cect2sp")=$G(@FROM@("cect2sp")) ; n
+"RTN","SAMICTC1",178,0)
+ S @TO@("cect2sp")=$G(@FROM@("cect2sp")) ;                 No
+"RTN","SAMICTC1",179,0)
+ S @TO@("cect3sp")=$G(@FROM@("cect3sp")) ; n
+"RTN","SAMICTC1",180,0)
+ S @TO@("cect3sp")=$G(@FROM@("cect3sp")) ;                 No
+"RTN","SAMICTC1",181,0)
+ S @TO@("cect4sp")=$G(@FROM@("cect4sp")) ; n
+"RTN","SAMICTC1",182,0)
+ S @TO@("cect4sp")=$G(@FROM@("cect4sp")) ;                 No
+"RTN","SAMICTC1",183,0)
+ S @TO@("cect5sp")=$G(@FROM@("cect5sp")) ; n
+"RTN","SAMICTC1",184,0)
+ S @TO@("cect5sp")=$G(@FROM@("cect5sp")) ;                 No
+"RTN","SAMICTC1",185,0)
+ S @TO@("cect6sp")=$G(@FROM@("cect6sp")) ; n
+"RTN","SAMICTC1",186,0)
+ S @TO@("cect6sp")=$G(@FROM@("cect6sp")) ;                 No
+"RTN","SAMICTC1",187,0)
+ S @TO@("cect7sp")=$G(@FROM@("cect7sp")) ; n
+"RTN","SAMICTC1",188,0)
+ S @TO@("cect7sp")=$G(@FROM@("cect7sp")) ;                 No
+"RTN","SAMICTC1",189,0)
+ S @TO@("cect8sp")=$G(@FROM@("cect8sp")) ; n
+"RTN","SAMICTC1",190,0)
+ S @TO@("cect8sp")=$G(@FROM@("cect8sp")) ;                 No
+"RTN","SAMICTC1",191,0)
+ S @TO@("cect9sp")=$G(@FROM@("cect9sp")) ; n
+"RTN","SAMICTC1",192,0)
+ S @TO@("cect9sp")=$G(@FROM@("cect9sp")) ;                 No
+"RTN","SAMICTC1",193,0)
+ S @TO@("cect10sp")=$G(@FROM@("cect10sp")) ; n
+"RTN","SAMICTC1",194,0)
+ S @TO@("cect10sp")=$G(@FROM@("cect10sp")) ;                 No
+"RTN","SAMICTC1",195,0)
+ S @TO@("cect1pld")=$G(@FROM@("cect1pld")) ; Distance
+"RTN","SAMICTC1",196,0)
+ S @TO@("cect2pld")=$G(@FROM@("cect2pld")) ; Distance
+"RTN","SAMICTC1",197,0)
+ S @TO@("cect3pld")=$G(@FROM@("cect3pld")) ; Distance
+"RTN","SAMICTC1",198,0)
+ S @TO@("cect4pld")=$G(@FROM@("cect4pld")) ; Distance
+"RTN","SAMICTC1",199,0)
+ S @TO@("cect5pld")=$G(@FROM@("cect5pld")) ; Distance
+"RTN","SAMICTC1",200,0)
+ S @TO@("cect6pld")=$G(@FROM@("cect6pld")) ; Distance
+"RTN","SAMICTC1",201,0)
+ S @TO@("cect7pld")=$G(@FROM@("cect7pld")) ; Distance
+"RTN","SAMICTC1",202,0)
+ S @TO@("cect8pld")=$G(@FROM@("cect8pld")) ; Distance
+"RTN","SAMICTC1",203,0)
+ S @TO@("cect9pld")=$G(@FROM@("cect9pld")) ; Distance
+"RTN","SAMICTC1",204,0)
+ S @TO@("cect10pld")=$G(@FROM@("cect10pld")) ; Distance
+"RTN","SAMICTC1",205,0)
+ S @TO@("cect1co")=$G(@FROM@("cect1co")) ; Comment
+"RTN","SAMICTC1",206,0)
+ S @TO@("cect2co")=$G(@FROM@("cect2co")) ; Comment
+"RTN","SAMICTC1",207,0)
+ S @TO@("cect3co")=$G(@FROM@("cect3co")) ; Comment
+"RTN","SAMICTC1",208,0)
+ S @TO@("cect4co")=$G(@FROM@("cect4co")) ; Comment
+"RTN","SAMICTC1",209,0)
+ S @TO@("cect5co")=$G(@FROM@("cect5co")) ; Comment
+"RTN","SAMICTC1",210,0)
+ S @TO@("cect6co")=$G(@FROM@("cect6co")) ; Comment
+"RTN","SAMICTC1",211,0)
+ S @TO@("cect7co")=$G(@FROM@("cect7co")) ; Comment
+"RTN","SAMICTC1",212,0)
+ S @TO@("cect8co")=$G(@FROM@("cect8co")) ; Comment
+"RTN","SAMICTC1",213,0)
+ S @TO@("cect9co")=$G(@FROM@("cect9co")) ; Comment
+"RTN","SAMICTC1",214,0)
+ S @TO@("cect10co")=$G(@FROM@("cect10co")) ; Comment
+"RTN","SAMICTC1",215,0)
+ S @TO@("cect1pd")=$G(@FROM@("cect1pd")) ; Pathologic diagnosis
+"RTN","SAMICTC1",216,0)
+ S @TO@("cect2pd")=$G(@FROM@("cect2pd")) ; Pathologic diagnosis
+"RTN","SAMICTC1",217,0)
+ S @TO@("cect3pd")=$G(@FROM@("cect3pd")) ; Pathologic diagnosis
+"RTN","SAMICTC1",218,0)
+ S @TO@("cect4pd")=$G(@FROM@("cect4pd")) ; Pathologic diagnosis
+"RTN","SAMICTC1",219,0)
+ S @TO@("cect5pd")=$G(@FROM@("cect5pd")) ; Pathologic diagnosis
+"RTN","SAMICTC1",220,0)
+ S @TO@("cect6pd")=$G(@FROM@("cect6pd")) ; Pathologic diagnosis
+"RTN","SAMICTC1",221,0)
+ S @TO@("cect7pd")=$G(@FROM@("cect7pd")) ; Pathologic diagnosis
+"RTN","SAMICTC1",222,0)
+ S @TO@("cect8pd")=$G(@FROM@("cect8pd")) ; Pathologic diagnosis
+"RTN","SAMICTC1",223,0)
+ S @TO@("cect9pd")=$G(@FROM@("cect9pd")) ; Pathologic diagnosis
+"RTN","SAMICTC1",224,0)
+ S @TO@("cect10pd")=$G(@FROM@("cect10pd")) ; Pathologic diagnosis
+"RTN","SAMICTC1",225,0)
+ S @TO@("cectancn")=$G(@FROM@("cectancn")) ; 1
+"RTN","SAMICTC1",226,0)
+ S @TO@("cectacn")=$G(@FROM@("cectacn")) ; 1
+"RTN","SAMICTC1",227,0)
+ S @TO@("ceem")=$G(@FROM@("ceem")) ; nv
+"RTN","SAMICTC1",228,0)
+ S @TO@("ceem")=$G(@FROM@("ceem")) ; no
+"RTN","SAMICTC1",229,0)
+ S @TO@("ceoca")=$G(@FROM@("ceoca")) ; n
+"RTN","SAMICTC1",230,0)
+ S @TO@("ceoca")=$G(@FROM@("ceoca")) ; y
+"RTN","SAMICTC1",231,0)
+ S @TO@("ceccv")=$G(@FROM@("ceccv")) ; e
+"RTN","SAMICTC1",232,0)
+ S @TO@("cecclm")=$G(@FROM@("cecclm")) ;               Left m
+"RTN","SAMICTC1",233,0)
+ S @TO@("ceccld")=$G(@FROM@("ceccld")) ;               LAD
+"RTN","SAMICTC1",234,0)
+ S @TO@("cecccf")=$G(@FROM@("cecccf")) ;               Circum
+"RTN","SAMICTC1",235,0)
+ S @TO@("ceccrc")=$G(@FROM@("ceccrc")) ;               RCA
+"RTN","SAMICTC1",236,0)
+ S @TO@("pa")=$G(@FROM@("pa")) ; n
+"RTN","SAMICTC1",237,0)
+ S @TO@("pa")=$G(@FROM@("pa")) ;            No
+"RTN","SAMICTC1",238,0)
+ ; Continue copy in second routine
+"RTN","SAMICTC1",239,0)
+ D CTCOPY2^SAMICTC2(FROM,TO)
+"RTN","SAMICTC1",240,0)
+ q
+"RTN","SAMICTC1",241,0)
+ ;
+"RTN","SAMICTC1",242,0)
+GENCTCPY ; generates the copy routine from a graph
+"RTN","SAMICTC1",243,0)
+ ;
+"RTN","SAMICTC1",244,0)
+ n root s root=$$setroot^%wd("ceform-fields")
+"RTN","SAMICTC1",245,0)
+ n fldf s fldf=$na(@root@("field"))
+"RTN","SAMICTC1",246,0)
+ w !,"generating copy from ",fldf
+"RTN","SAMICTC1",247,0)
+ n zi s zi=0
+"RTN","SAMICTC1",248,0)
+ f  s zi=$o(@fldf@(zi)) q:+zi=0  d  ;
+"RTN","SAMICTC1",249,0)
+ . i $g(@fldf@(zi,"copy"))'=1 q  ; only want copy fields
+"RTN","SAMICTC1",250,0)
+ . n name,label
+"RTN","SAMICTC1",251,0)
+ . s name=$g(@fldf@(zi,"name"))
+"RTN","SAMICTC1",252,0)
+ . s label=$g(@fldf@(zi,"label"))
+"RTN","SAMICTC1",253,0)
+ . s label=$e(label,1,20)
+"RTN","SAMICTC1",254,0)
+ . q:name=""
+"RTN","SAMICTC1",255,0)
+ . w !," S @TO@("""_name_""")=$G(@FROM@("""_name_""")) ; "_label
+"RTN","SAMICTC1",256,0)
+ q
+"RTN","SAMICTC1",257,0)
+ ;
+"RTN","SAMICTT0")
+0^13^B97674762
+"RTN","SAMICTT0",1,0)
+SAMICTT0 ;ven/gpl - ctreport text main ;2021-03-22T15:32Z
+"RTN","SAMICTT0",2,0)
+ ;;18.0;SAMI;**4,10**;2020-01;Build 2
+"RTN","SAMICTT0",3,0)
+ ;;1.18.0.10-i10
+"RTN","SAMICTT0",4,0)
+ ;
+"RTN","SAMICTT0",5,0)
+ ; SAMICTT0 contains a web route & associated subroutines to produce
+"RTN","SAMICTT0",6,0)
+ ; the ELCAP CT Report in text format (route ctreport, format text).
+"RTN","SAMICTT0",7,0)
+ ; SAMICTT* routines serve web service interfaces WSVAPALS^SAMIHOM3
+"RTN","SAMICTT0",8,0)
+ ; (the main VAPALS-ELCAP post web service) & WSHOME^SAMIHOM3 (the
+"RTN","SAMICTT0",9,0)
+ ; VAPALS-ELCAP home-page service).
+"RTN","SAMICTT0",10,0)
+ ;
+"RTN","SAMICTT0",11,0)
+ quit  ; no entry from top
+"RTN","SAMICTT0",12,0)
+ ;
+"RTN","SAMICTT0",13,0)
+ ;
+"RTN","SAMICTT0",14,0)
+ ;
+"RTN","SAMICTT0",15,0)
+ ;@section 0 primary development
+"RTN","SAMICTT0",16,0)
+ ;
+"RTN","SAMICTT0",17,0)
+ ;
+"RTN","SAMICTT0",18,0)
+ ;
+"RTN","SAMICTT0",19,0)
+ ;@license see routine SAMIUL
+"RTN","SAMICTT0",20,0)
+ ;@documentation see SAMICTUL
+"RTN","SAMICTT0",21,0)
+ ;@contents
+"RTN","SAMICTT0",22,0)
+ ; WSREPORT: web route: ctreport in text format
+"RTN","SAMICTT0",23,0)
+ ; OUT: output a line of ct report
+"RTN","SAMICTT0",24,0)
+ ; OUTOLD: old version of out
+"RTN","SAMICTT0",25,0)
+ ; HOUT: output a ct report header line
+"RTN","SAMICTT0",26,0)
+ ; $$XVAL = patient value for var
+"RTN","SAMICTT0",27,0)
+ ; $$XSUB = dictionary value defined by var
+"RTN","SAMICTT0",28,0)
+ ; GETFILTR: fill in the filter for Ct Eval for sid
+"RTN","SAMICTT0",29,0)
+ ; T1: test
+"RTN","SAMICTT0",30,0)
+ ;
+"RTN","SAMICTT0",31,0)
+ ;
+"RTN","SAMICTT0",32,0)
+ ;
+"RTN","SAMICTT0",33,0)
+ ;@section 1 wsi WSREPORT & related subroutines
+"RTN","SAMICTT0",34,0)
+ ;
+"RTN","SAMICTT0",35,0)
+ ;
+"RTN","SAMICTT0",36,0)
+ ;
+"RTN","SAMICTT0",37,0)
+ ;@wsr WSREPORT^SAMICTT0
+"RTN","SAMICTT0",38,0)
+WSREPORT(return,filter) ; web route: ctreport in text format
+"RTN","SAMICTT0",39,0)
+ ;
+"RTN","SAMICTT0",40,0)
+ ;@called-by
+"RTN","SAMICTT0",41,0)
+ ; WSNOTE^SAMINOT3
+"RTN","SAMICTT0",42,0)
+ ;  (called-by wsi WSVAPALS^SAMIHOM3)
+"RTN","SAMICTT0",43,0)
+ ;    (called by wsi WSHOME^SAMIHOM3)
+"RTN","SAMICTT0",44,0)
+ ;  (sibling to wri WSREPORT^SAMICTR0, keep in sync)
+"RTN","SAMICTT0",45,0)
+ ;@calls
+"RTN","SAMICTT0",46,0)
+ ; INIT2GPH^SAMICTD2
+"RTN","SAMICTT0",47,0)
+ ; $$setroot^%wd
+"RTN","SAMICTT0",48,0)
+ ; $$XVAL
+"RTN","SAMICTT0",49,0)
+ ; OUT
+"RTN","SAMICTT0",50,0)
+ ; $$XSUB
+"RTN","SAMICTT0",51,0)
+ ; HOUT
+"RTN","SAMICTT0",52,0)
+ ; NODULES^SAMICTT1
+"RTN","SAMICTT0",53,0)
+ ; OTHRLUNG^SAMICTT2
+"RTN","SAMICTT0",54,0)
+ ; EMPHYS^SAMICTT3
+"RTN","SAMICTT0",55,0)
+ ; BREAST^SAMICTT4
+"RTN","SAMICTT0",56,0)
+ ; IMPRSN^SAMICTT9
+"RTN","SAMICTT0",57,0)
+ ; RCMND^SAMICTTA
+"RTN","SAMICTT0",58,0)
+ ;
+"RTN","SAMICTT0",59,0)
+ s debug=0
+"RTN","SAMICTT0",60,0)
+ n outmode s outmode="go"
+"RTN","SAMICTT0",61,0)
+ n line s line=""
+"RTN","SAMICTT0",62,0)
+ i $g(filter("debug"))=1 s debug=1
+"RTN","SAMICTT0",63,0)
+ ;
+"RTN","SAMICTT0",64,0)
+ ;s rtn=$na(^TMP("SAMICTT",$J))
+"RTN","SAMICTT0",65,0)
+ s rtn="return"
+"RTN","SAMICTT0",66,0)
+ k @rtn
+"RTN","SAMICTT0",67,0)
+ s HTTPRSP("mime")="text/html"
+"RTN","SAMICTT0",68,0)
+ ;
+"RTN","SAMICTT0",69,0)
+ n cnt s cnt=0 ; line number
+"RTN","SAMICTT0",70,0)
+ ;
+"RTN","SAMICTT0",71,0)
+ ; set up dictionary and patient values
+"RTN","SAMICTT0",72,0)
+ ;
+"RTN","SAMICTT0",73,0)
+ n dict,vals
+"RTN","SAMICTT0",74,0)
+ ;d INIT^SAMICTD2("dict")
+"RTN","SAMICTT0",75,0)
+ s dict=$$setroot^%wd("cteval-dict")
+"RTN","SAMICTT0",76,0)
+ s dict=$na(@dict@("cteval-dict"))
+"RTN","SAMICTT0",77,0)
+ i $g(@dict@("pet"))="" d INIT2GPH^SAMICTD2 ; init dictionary 1st time
+"RTN","SAMICTT0",78,0)
+ n si
+"RTN","SAMICTT0",79,0)
+ s si=$g(filter("studyid"))
+"RTN","SAMICTT0",80,0)
+ i si="" d  ;
+"RTN","SAMICTT0",81,0)
+ . s si="XXX00102"
+"RTN","SAMICTT0",82,0)
+ q:si=""
+"RTN","SAMICTT0",83,0)
+ n samikey
+"RTN","SAMICTT0",84,0)
+ s samikey=$g(filter("form"))
+"RTN","SAMICTT0",85,0)
+ i samikey="" d  ;
+"RTN","SAMICTT0",86,0)
+ . s samikey="ceform-2018-10-09"
+"RTN","SAMICTT0",87,0)
+ n root s root=$$setroot^%wd("vapals-patients")
+"RTN","SAMICTT0",88,0)
+ i $g(filter("studyid"))="" s root=$$setroot^%wd("vapals-patients")
+"RTN","SAMICTT0",89,0)
+ s vals=$na(@root@("graph",si,samikey))
+"RTN","SAMICTT0",90,0)
+ ;W !,vals
+"RTN","SAMICTT0",91,0)
+ ;zwr @vals@(*)
+"RTN","SAMICTT0",92,0)
+ i '$d(@vals) d  q  ;
+"RTN","SAMICTT0",93,0)
+ . w !,"error, patient values not found"
+"RTN","SAMICTT0",94,0)
+ ;
+"RTN","SAMICTT0",95,0)
+ ; report parameters
+"RTN","SAMICTT0",96,0)
+ ;
+"RTN","SAMICTT0",97,0)
+ n nt,sectionheader,dummy,cac,tex,para,legout
+"RTN","SAMICTT0",98,0)
+ ;; n lang,lanread
+"RTN","SAMICTT0",99,0)
+ ;
+"RTN","SAMICTT0",100,0)
+ s nt=1
+"RTN","SAMICTT0",101,0)
+ s sectionheader=1
+"RTN","SAMICTT0",102,0)
+ ;;s dummy="******"
+"RTN","SAMICTT0",103,0)
+ s cac=""
+"RTN","SAMICTT0",104,0)
+ n cacrec s cacrec=""
+"RTN","SAMICTT0",105,0)
+ ;;s tex=0
+"RTN","SAMICTT0",106,0)
+ ;s para="<p>"
+"RTN","SAMICTT0",107,0)
+ ;s para=$char(13,10)
+"RTN","SAMICTT0",108,0)
+ s para=""
+"RTN","SAMICTT0",109,0)
+ ;;s legout=0
+"RTN","SAMICTT0",110,0)
+ n qheader s qheader=0
+"RTN","SAMICTT0",111,0)
+ ;
+"RTN","SAMICTT0",112,0)
+ n lang s lang=""
+"RTN","SAMICTT0",113,0)
+ n langread s langread=0
+"RTN","SAMICTT0",114,0)
+ ;
+"RTN","SAMICTT0",115,0)
+ n auth s auth("perm")="a"
+"RTN","SAMICTT0",116,0)
+ s auth("inst")=$g(filter("auth"))
+"RTN","SAMICTT0",117,0)
+ ;
+"RTN","SAMICTT0",118,0)
+ n newct s newct=0
+"RTN","SAMICTT0",119,0)
+ i $$XVAL("ceoppa",vals)'="" s newct=1
+"RTN","SAMICTT0",120,0)
+ ;
+"RTN","SAMICTT0",121,0)
+ n registryForm s registryForm=0
+"RTN","SAMICTT0",122,0)
+ i $$XVAL("ceaf",vals)'="" s registryForm=1
+"RTN","SAMICTT0",123,0)
+ ;
+"RTN","SAMICTT0",124,0)
+ ;d OUT("<HTML>")
+"RTN","SAMICTT0",125,0)
+ ;d OUT("<HEAD>")
+"RTN","SAMICTT0",126,0)
+ ;d OUT("<!-- Calling TR: CT Evaluation Report -->")
+"RTN","SAMICTT0",127,0)
+ ;d OUT("<TITLE>CT Evaluation Report</TITLE>")
+"RTN","SAMICTT0",128,0)
+ ;d OUT("<link rel='stylesheet' href='/css/report.css'>")
+"RTN","SAMICTT0",129,0)
+ ;d OUT("</HEAD>")
+"RTN","SAMICTT0",130,0)
+ ;d OUT("<BODY BGCOLOR=""#ffffff"" TEXT=""#000000"">")
+"RTN","SAMICTT0",131,0)
+ ;;d OUT("<TABLE border=""0"" cellspacing=""0"" cellpadding=""3"" WIDTH=""640""><TR><TD>")
+"RTN","SAMICTT0",132,0)
+ ;d OUT("<FONT SIZE=""+2""><CENTER>")
+"RTN","SAMICTT0",133,0)
+ ;d OUT("<!-- Calling TR: CT Evaluation Report -->")
+"RTN","SAMICTT0",134,0)
+ ;d OUT("<B>CT Evaluation Report</B>")
+"RTN","SAMICTT0",135,0)
+ d OUT("CT Evaluation Report")
+"RTN","SAMICTT0",136,0)
+ ;d OUT("</CENTER></FONT>")
+"RTN","SAMICTT0",137,0)
+ ;d OUT("</TD></TR><TR><TD>")
+"RTN","SAMICTT0",138,0)
+ ;d OUT("<HR SIZE=""2"" WIDTH=""100%"" ALIGN=""center"" NOSHADE>")
+"RTN","SAMICTT0",139,0)
+ ;d OUT("</TD></TR>")
+"RTN","SAMICTT0",140,0)
+ ;
+"RTN","SAMICTT0",141,0)
+ ;d OUT("<!-- patient information -->")
+"RTN","SAMICTT0",142,0)
+ ;d OUT("<TR><TD><TABLE border=""0"" cellspacing=""0"" cellpadding=""3"" WIDTH=""640"">")
+"RTN","SAMICTT0",143,0)
+ ;
+"RTN","SAMICTT0",144,0)
+ ; generate header
+"RTN","SAMICTT0",145,0)
+ ;
+"RTN","SAMICTT0",146,0)
+ d  ;
+"RTN","SAMICTT0",147,0)
+ . n pname
+"RTN","SAMICTT0",148,0)
+ . ;s pname=$$XVAL("sinamel",vals)_", "_$$XVAL("sinamef",vals)
+"RTN","SAMICTT0",149,0)
+ . s pname=$$XVAL("saminame",vals)
+"RTN","SAMICTT0",150,0)
+ . d OUT("Participant Name: "_pname)
+"RTN","SAMICTT0",151,0)
+ ;d OUT("<TR><TD WIDTH=""180""><B>Participant Name:</B></TD><TD WIDTH=""365"">")
+"RTN","SAMICTT0",152,0)
+ ;d OUT($$XVAL("sinamel",vals)_", "_$$XVAL("sinamef",vals))
+"RTN","SAMICTT0",153,0)
+ ;d OUT("</TD>")
+"RTN","SAMICTT0",154,0)
+ ;
+"RTN","SAMICTT0",155,0)
+ d  ;
+"RTN","SAMICTT0",156,0)
+ . n sid s sid=$$XVAL("sisid",vals)
+"RTN","SAMICTT0",157,0)
+ . d OUT("Study ID: "_sid)
+"RTN","SAMICTT0",158,0)
+ ;d OUT("<TD WIDTH=""120""><B>Study ID:</B></TD><TD WIDTH=""75"">")
+"RTN","SAMICTT0",159,0)
+ ;d OUT($$XVAL("sisid",vals))
+"RTN","SAMICTT0",160,0)
+ ;d OUT("</TD>")
+"RTN","SAMICTT0",161,0)
+ ;
+"RTN","SAMICTT0",162,0)
+ d  ;
+"RTN","SAMICTT0",163,0)
+ . n etype s etype=$$XSUB("cetex",vals,dict)_" "_$$XSUB("cectp",vals,dict)
+"RTN","SAMICTT0",164,0)
+ . d OUT("Type of Examination: "_etype)
+"RTN","SAMICTT0",165,0)
+ ;d OUT("<TR><TD><B>Type of Examination:</B></TD><TD>")
+"RTN","SAMICTT0",166,0)
+ ;d OUT($$XSUB("cetex",vals,dict)_" "_$$XSUB("cectp",vals,dict))
+"RTN","SAMICTT0",167,0)
+ ;d OUT("</TD>")
+"RTN","SAMICTT0",168,0)
+ ;d OUT("<TD> &nbsp; </TD><TD> &nbsp; </TD></TR>")
+"RTN","SAMICTT0",169,0)
+ ;
+"RTN","SAMICTT0",170,0)
+ d  ;
+"RTN","SAMICTT0",171,0)
+ . n edate s edate=$$XVAL("cedos",vals)
+"RTN","SAMICTT0",172,0)
+ . d OUT("Examination Date: "_edate)
+"RTN","SAMICTT0",173,0)
+ ;d OUT("<TR><TD><B>Examination Date:</B></TD><TD>")
+"RTN","SAMICTT0",174,0)
+ ;d OUT($$XVAL("cedos",vals))
+"RTN","SAMICTT0",175,0)
+ ;
+"RTN","SAMICTT0",176,0)
+ ;i $$XVAL("sidob",vals)'=-1 d  ;
+"RTN","SAMICTT0",177,0)
+ ;. d OUT("<TD><B>Date of Birth:</B></TD><TD>")
+"RTN","SAMICTT0",178,0)
+ ;. d OUT($$XVAL("sidob",vals))
+"RTN","SAMICTT0",179,0)
+ ;e  d OUT("<TD> &nbsp; </TD><TD> &nbsp; </TD></TR>")
+"RTN","SAMICTT0",180,0)
+ ;
+"RTN","SAMICTT0",181,0)
+ d  ;
+"RTN","SAMICTT0",182,0)
+ . n dob s dob=$$XVAL("sidob",vals)
+"RTN","SAMICTT0",183,0)
+ . i dob>0 d OUT("Date of Birth: "_dob)
+"RTN","SAMICTT0",184,0)
+ . d OUT("")
+"RTN","SAMICTT0",185,0)
+ ;i $$XVAL("sidob",vals)>0 d  ;
+"RTN","SAMICTT0",186,0)
+ ;. d OUT("<TD><B>Date of Birth:</B></TD><TD>")
+"RTN","SAMICTT0",187,0)
+ ;. d OUT($$XVAL("sidob",vals))
+"RTN","SAMICTT0",188,0)
+ ;. d OUT("</TD></TR>")
+"RTN","SAMICTT0",189,0)
+ ;e  d  ;
+"RTN","SAMICTT0",190,0)
+ ;. d OUT("<TD> &nbsp; </TD><TD> &nbsp; </TD></TR>")
+"RTN","SAMICTT0",191,0)
+ ;
+"RTN","SAMICTT0",192,0)
+ ;# End of Header
+"RTN","SAMICTT0",193,0)
+ ;
+"RTN","SAMICTT0",194,0)
+ ;d OUT("</TABLE>")
+"RTN","SAMICTT0",195,0)
+ ;;d OUT("</TD></TR><TR><TD>")
+"RTN","SAMICTT0",196,0)
+ ;d OUT("<HR SIZE=""2"" WIDTH=""100%"" ALIGN=""center"" NOSHADE>")
+"RTN","SAMICTT0",197,0)
+ ;d OUT("</TD></TR>")
+"RTN","SAMICTT0",198,0)
+ ;d OUT("<!-- report -->")
+"RTN","SAMICTT0",199,0)
+ ;d OUT("<TR><TD>")
+"RTN","SAMICTT0",200,0)
+ ;d OUT("<FONT SIZE=""+2""><B>")
+"RTN","SAMICTT0",201,0)
+ ;d OUT("Report:")
+"RTN","SAMICTT0",202,0)
+ ;d OUT("</B></FONT>")
+"RTN","SAMICTT0",203,0)
+ ;d OUT("</TD></TR><TR><TD><TABLE><TR><TD WIDTH=20></TD><TD>")
+"RTN","SAMICTT0",204,0)
+ d OUT("Report:")
+"RTN","SAMICTT0",205,0)
+ ;
+"RTN","SAMICTT0",206,0)
+ s outmode="hold"
+"RTN","SAMICTT0",207,0)
+ s line=""
+"RTN","SAMICTT0",208,0)
+ i $$XVAL("ceclin",vals)'="" d  ;
+"RTN","SAMICTT0",209,0)
+ . d HOUT("Clinical Information: ")
+"RTN","SAMICTT0",210,0)
+ . d OUT($$XVAL("ceclin",vals))
+"RTN","SAMICTT0",211,0)
+ . s outmode="go" d OUT("")
+"RTN","SAMICTT0",212,0)
+ ;
+"RTN","SAMICTT0",213,0)
+ s outmode="hold"
+"RTN","SAMICTT0",214,0)
+ n nopri s nopri=1
+"RTN","SAMICTT0",215,0)
+ d HOUT("Comparison CT Scans: ")
+"RTN","SAMICTT0",216,0)
+ if $$XVAL("cedcs",vals)'="" d  ;
+"RTN","SAMICTT0",217,0)
+ . d OUT($$XSUB("cetex",vals,dict)_". ")
+"RTN","SAMICTT0",218,0)
+ . d OUT("Comparisons: "_$$XVAL("cedcs",vals))
+"RTN","SAMICTT0",219,0)
+ . s nopri=0
+"RTN","SAMICTT0",220,0)
+ if $$XVAL("cedps",vals)'="" d  ;
+"RTN","SAMICTT0",221,0)
+ . d OUT(" "_$$XVAL("cedps",vals))
+"RTN","SAMICTT0",222,0)
+ . s nopri=0
+"RTN","SAMICTT0",223,0)
+ d:nopri OUT("None")
+"RTN","SAMICTT0",224,0)
+ s outmode="go" d OUT("")
+"RTN","SAMICTT0",225,0)
+ ;
+"RTN","SAMICTT0",226,0)
+ s outmode="hold"
+"RTN","SAMICTT0",227,0)
+ d HOUT(" Description: ")
+"RTN","SAMICTT0",228,0)
+ i $$XVAL("cectp",vals)="i" d  ;
+"RTN","SAMICTT0",229,0)
+ . d OUT("Limited Diagnostic CT examination was performed. ")
+"RTN","SAMICTT0",230,0)
+ e  d  ;
+"RTN","SAMICTT0",231,0)
+ . d OUT("CT examination of the entire thorax was performed at "_$$XSUB("cectp",vals,dict)_" settings. ")
+"RTN","SAMICTT0",232,0)
+ ;
+"RTN","SAMICTT0",233,0)
+ i $$XVAL("cectrst",vals)'="" d  ;
+"RTN","SAMICTT0",234,0)
+ . d OUT(" Images were obtained at "_$$XVAL("cectrst",vals)_" mm slice thickness. ")
+"RTN","SAMICTT0",235,0)
+ . d OUT(" Multiplanar reconstructions were performed. ")
+"RTN","SAMICTT0",236,0)
+ ;
+"RTN","SAMICTT0",237,0)
+ i newct d  ;
+"RTN","SAMICTT0",238,0)
+ . n nvadbo s nvadbo=1
+"RTN","SAMICTT0",239,0)
+ . n ii
+"RTN","SAMICTT0",240,0)
+ . f ii="ceoaa","ceaga","ceasa","ceala","ceapa","ceaaa","ceaka" d  ;
+"RTN","SAMICTT0",241,0)
+ . . i $$XVAL(ii,vals)="y" set nvadbo=0
+"RTN","SAMICTT0",242,0)
+ . ;
+"RTN","SAMICTT0",243,0)
+ . i nvadbo=1 d  ;
+"RTN","SAMICTT0",244,0)
+ . . d OUT("Upper abdominal images were not acquired on the current scan due to its limited nature. ")
+"RTN","SAMICTT0",245,0)
+ s outmode="go" d OUT("")
+"RTN","SAMICTT0",246,0)
+ ;
+"RTN","SAMICTT0",247,0)
+ ; lung nodules
+"RTN","SAMICTT0",248,0)
+ ;
+"RTN","SAMICTT0",249,0)
+ ;d OUT("")
+"RTN","SAMICTT0",250,0)
+ d HOUT("Lung Nodules:")
+"RTN","SAMICTT0",251,0)
+ ;d OUT("")
+"RTN","SAMICTT0",252,0)
+ ;
+"RTN","SAMICTT0",253,0)
+ ; see if there are any nodules using the cectXch fields
+"RTN","SAMICTT0",254,0)
+ ;
+"RTN","SAMICTT0",255,0)
+ n ij,hasnodules s hasnodules=0
+"RTN","SAMICTT0",256,0)
+ f ij=1:1:10 i ($$XVAL("cect"_ij_"ch",vals)'="")&($$XVAL("cect"_ij_"ch",vals)'="-") s hasnodules=1
+"RTN","SAMICTT0",257,0)
+ ;
+"RTN","SAMICTT0",258,0)
+ ; check for small nodule checkboxes
+"RTN","SAMICTT0",259,0)
+ i $$XVAL("cectancn",vals)=1 s hasnodules=1
+"RTN","SAMICTT0",260,0)
+ i $$XVAL("cectacn",vals)=1 s hasnodules=1
+"RTN","SAMICTT0",261,0)
+ ;
+"RTN","SAMICTT0",262,0)
+ i hasnodules=0 d  ;
+"RTN","SAMICTT0",263,0)
+ . d OUT(para)
+"RTN","SAMICTT0",264,0)
+ . d OUT("No pulmonary nodules are seen. "_para)
+"RTN","SAMICTT0",265,0)
+ ;
+"RTN","SAMICTT0",266,0)
+ ;i $$XVAL("cennod",vals)="" d  ;
+"RTN","SAMICTT0",267,0)
+ ;. d OUT(para)
+"RTN","SAMICTT0",268,0)
+ ;. d OUT("No pulmonary nodules are seen. "_para)
+"RTN","SAMICTT0",269,0)
+ ;e  i $$XVAL("ceanod",vals)="n" d  ;
+"RTN","SAMICTT0",270,0)
+ ;. d OUT(para)
+"RTN","SAMICTT0",271,0)
+ ;. d OUT("No pulmonary nodules are seen. "_para)
+"RTN","SAMICTT0",272,0)
+ ;
+"RTN","SAMICTT0",273,0)
+ d NODULES^SAMICTT1(rtn,.vals,.dict)
+"RTN","SAMICTT0",274,0)
+ ;
+"RTN","SAMICTT0",275,0)
+ d OTHRLUNG^SAMICTT2(rtn,.vals,.dict)
+"RTN","SAMICTT0",276,0)
+ ;
+"RTN","SAMICTT0",277,0)
+ d EMPHYS^SAMICTT3(rtn,.vals,.dict)
+"RTN","SAMICTT0",278,0)
+ ;
+"RTN","SAMICTT0",279,0)
+ d BREAST^SAMICTT4(rtn,.vals,.dict)
+"RTN","SAMICTT0",280,0)
+ ;
+"RTN","SAMICTT0",281,0)
+ d IMPRSN^SAMICTT9(rtn,.vals,.dict)
+"RTN","SAMICTT0",282,0)
+ ;
+"RTN","SAMICTT0",283,0)
+ d RCMND^SAMICTTA(rtn,.vals,.dict)
+"RTN","SAMICTT0",284,0)
+ ;
+"RTN","SAMICTT0",285,0)
+ ; etc etc
+"RTN","SAMICTT0",286,0)
+ ;
+"RTN","SAMICTT0",287,0)
+ d  ;
+"RTN","SAMICTT0",288,0)
+ . d OUT("References:")
+"RTN","SAMICTT0",289,0)
+ . d OUT("Recommendations for nodules and other findings are detailed in the I-ELCAP Protocol. ")
+"RTN","SAMICTT0",290,0)
+ . d OUT("A summary and the full I-ELCAP protocol can be viewed at: http://ielcap.org/protocols")
+"RTN","SAMICTT0",291,0)
+ ;d OUT("</TABLE>")
+"RTN","SAMICTT0",292,0)
+ ;d OUT("<p><br></p><p><b>References:</b><br></p>")
+"RTN","SAMICTT0",293,0)
+ ;d OUT("<p>Recommendations for nodules and other findings are detailed in the I-ELCAP Protocol.<BR>")
+"RTN","SAMICTT0",294,0)
+ ;d OUT("A summary and the full I-ELCAP protocol can be viewed at: <a href=""http://ielcap.org/protocols"">http://ielcap.org/protocols</a></p>")
+"RTN","SAMICTT0",295,0)
+ ;d OUT("</TD></TR></TABLE></TD></TR></TABLE>")
+"RTN","SAMICTT0",296,0)
+ ;s debug=1
+"RTN","SAMICTT0",297,0)
+ d:$g(debug)  ;
+"RTN","SAMICTT0",298,0)
+ . n zi s zi=""
+"RTN","SAMICTT0",299,0)
+ . f  s zi=$o(@vals@(zi)) q:zi=""  d  ;
+"RTN","SAMICTT0",300,0)
+ . . d OUT(zi_" "_$g(@vals@(zi)))
+"RTN","SAMICTT0",301,0)
+ ;d OUT("</BODY></HTML>")
+"RTN","SAMICTT0",302,0)
+ ;
+"RTN","SAMICTT0",303,0)
+ quit  ; end of wsr WSREPORT^SAMICTT0
+"RTN","SAMICTT0",304,0)
+ ;
+"RTN","SAMICTT0",305,0)
+ ;
+"RTN","SAMICTT0",306,0)
+ ;
+"RTN","SAMICTT0",307,0)
+OUT(ln) ; output a line of ct report
+"RTN","SAMICTT0",308,0)
+ ;
+"RTN","SAMICTT0",309,0)
+ i outmode="hold" s line=line_ln q  ;
+"RTN","SAMICTT0",310,0)
+ s cnt=cnt+1
+"RTN","SAMICTT0",311,0)
+ n lnn
+"RTN","SAMICTT0",312,0)
+ i $g(debug)'=1 s debug=0
+"RTN","SAMICTT0",313,0)
+ s lnn=$o(@rtn@(" "),-1)+1
+"RTN","SAMICTT0",314,0)
+ i outmode="go" d  ;
+"RTN","SAMICTT0",315,0)
+ . s @rtn@(lnn)=line
+"RTN","SAMICTT0",316,0)
+ . s line=""
+"RTN","SAMICTT0",317,0)
+ . s lnn=$o(@rtn@(" "),-1)+1
+"RTN","SAMICTT0",318,0)
+ s @rtn@(lnn)=ln
+"RTN","SAMICTT0",319,0)
+ i $g(debug)=1 d  ;
+"RTN","SAMICTT0",320,0)
+ . i ln["<" q  ; no markup
+"RTN","SAMICTT0",321,0)
+ . n zs s zs=$STACK
+"RTN","SAMICTT0",322,0)
+ . n zp s zp=$STACK(zs-2,"PLACE")
+"RTN","SAMICTT0",323,0)
+ . s @rtn@(lnn)=zp_":"_ln
+"RTN","SAMICTT0",324,0)
+ ;
+"RTN","SAMICTT0",325,0)
+ quit  ; end of OUT
+"RTN","SAMICTT0",326,0)
+ ;
+"RTN","SAMICTT0",327,0)
+ ;
+"RTN","SAMICTT0",328,0)
+ ;
+"RTN","SAMICTT0",329,0)
+OUTOLD(ln) ; old version of out
+"RTN","SAMICTT0",330,0)
+ ;
+"RTN","SAMICTT0",331,0)
+ s cnt=cnt+1
+"RTN","SAMICTT0",332,0)
+ n lnn
+"RTN","SAMICTT0",333,0)
+ ;s debug=1
+"RTN","SAMICTT0",334,0)
+ s lnn=$o(@rtn@(" "),-1)+1
+"RTN","SAMICTT0",335,0)
+ s @rtn@(lnn)=ln
+"RTN","SAMICTT0",336,0)
+ i $g(debug)=1 d  ;
+"RTN","SAMICTT0",337,0)
+ . i ln["<" q  ; no markup
+"RTN","SAMICTT0",338,0)
+ . n zs s zs=$STACK
+"RTN","SAMICTT0",339,0)
+ . n zp s zp=$STACK(zs-2,"PLACE")
+"RTN","SAMICTT0",340,0)
+ . s @rtn@(lnn)=zp_":"_ln
+"RTN","SAMICTT0",341,0)
+ ;
+"RTN","SAMICTT0",342,0)
+ quit  ; end of OUTOLD
+"RTN","SAMICTT0",343,0)
+ ;
+"RTN","SAMICTT0",344,0)
+ ;
+"RTN","SAMICTT0",345,0)
+ ;
+"RTN","SAMICTT0",346,0)
+HOUT(ln) ; output a ct report header line
+"RTN","SAMICTT0",347,0)
+ ;
+"RTN","SAMICTT0",348,0)
+ d OUT(ln)
+"RTN","SAMICTT0",349,0)
+ ;d OUT("<p><span class='sectionhead'>"_ln_"</span>")
+"RTN","SAMICTT0",350,0)
+ ;
+"RTN","SAMICTT0",351,0)
+ quit  ; end of HOUT
+"RTN","SAMICTT0",352,0)
+ ;
+"RTN","SAMICTT0",353,0)
+ ;
+"RTN","SAMICTT0",354,0)
+ ;
+"RTN","SAMICTT0",355,0)
+XVAL(var,vals) ; extrinsic returns the patient value for var
+"RTN","SAMICTT0",356,0)
+ ;
+"RTN","SAMICTT0",357,0)
+ ;@input
+"RTN","SAMICTT0",358,0)
+ ; @vals is passed by name
+"RTN","SAMICTT0",359,0)
+ ;
+"RTN","SAMICTT0",360,0)
+ n zr
+"RTN","SAMICTT0",361,0)
+ s zr=$g(@vals@(var))
+"RTN","SAMICTT0",362,0)
+ ;i zr="" s zr="["_var_"]"
+"RTN","SAMICTT0",363,0)
+ ;
+"RTN","SAMICTT0",364,0)
+ quit zr ; end of $$XVAL
+"RTN","SAMICTT0",365,0)
+ ;
+"RTN","SAMICTT0",366,0)
+ ;
+"RTN","SAMICTT0",367,0)
+ ;
+"RTN","SAMICTT0",368,0)
+XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined by var
+"RTN","SAMICTT0",369,0)
+ ;
+"RTN","SAMICTT0",370,0)
+ ; vals and dict are passed by name
+"RTN","SAMICTT0",371,0)
+ ; valdx is used for nodules ala cect2co with the nodule number included
+"RTN","SAMICTT0",372,0)
+ ;
+"RTN","SAMICTT0",373,0)
+ ;n dict s dict=$$setroot^%wd("cteval-dict")
+"RTN","SAMICTT0",374,0)
+ n zr,zv,zdx
+"RTN","SAMICTT0",375,0)
+ s zdx=$g(valdx)
+"RTN","SAMICTT0",376,0)
+ i zdx="" s zdx=var
+"RTN","SAMICTT0",377,0)
+ s zv=$g(@vals@(zdx))
+"RTN","SAMICTT0",378,0)
+ ;i zv="" s zr="["_var_"]" q zr
+"RTN","SAMICTT0",379,0)
+ i zv="" s zr="" q zr
+"RTN","SAMICTT0",380,0)
+ s zr=$g(@dict@(var,zv))
+"RTN","SAMICTT0",381,0)
+ ;i zr="" s zr="["_var_","_zv_"]"
+"RTN","SAMICTT0",382,0)
+ ;
+"RTN","SAMICTT0",383,0)
+ quit zr ; end of $$XSUB
+"RTN","SAMICTT0",384,0)
+ ;
+"RTN","SAMICTT0",385,0)
+ ;
+"RTN","SAMICTT0",386,0)
+ ;
+"RTN","SAMICTT0",387,0)
+GETFILTR(filter,sid) ; fill in the filter for Ct Eval for sid
+"RTN","SAMICTT0",388,0)
+ ;
+"RTN","SAMICTT0",389,0)
+ s filter("studyid")=sid
+"RTN","SAMICTT0",390,0)
+ n items,zform
+"RTN","SAMICTT0",391,0)
+ d GETITEMS^SAMICASE("items",sid)
+"RTN","SAMICTT0",392,0)
+ s zform=$o(items("ceform"))
+"RTN","SAMICTT0",393,0)
+ s filter("form")=zform
+"RTN","SAMICTT0",394,0)
+ ;zwr filter
+"RTN","SAMICTT0",395,0)
+ ;
+"RTN","SAMICTT0",396,0)
+ quit  ; end of GETFILTR
+"RTN","SAMICTT0",397,0)
+ ;
+"RTN","SAMICTT0",398,0)
+ ;
+"RTN","SAMICTT0",399,0)
+ ;
+"RTN","SAMICTT0",400,0)
+T1(grtn,debug) ; test
+"RTN","SAMICTT0",401,0)
+ ;
+"RTN","SAMICTT0",402,0)
+ n filter
+"RTN","SAMICTT0",403,0)
+ ;n sid s sid="XXX00333"
+"RTN","SAMICTT0",404,0)
+ ;n sid s sid="XXX00484"
+"RTN","SAMICTT0",405,0)
+ n sid s sid="XXX9000001"
+"RTN","SAMICTT0",406,0)
+ d GETFILTR(.filter,sid)
+"RTN","SAMICTT0",407,0)
+ i $g(debug)=1 s filter("debug")=1
+"RTN","SAMICTT0",408,0)
+ d WSNOTE^SAMINOT3(.grtn,.filter)
+"RTN","SAMICTT0",409,0)
+ ;d WSREPORT^SAMICTT0(.grtn,.filter)
+"RTN","SAMICTT0",410,0)
+ ;
+"RTN","SAMICTT0",411,0)
+ quit  ; end of T1
+"RTN","SAMICTT0",412,0)
+ ;
+"RTN","SAMICTT0",413,0)
+ ;
+"RTN","SAMICTT0",414,0)
+ ;
+"RTN","SAMICTT0",415,0)
+EOR ; end of routine SAMICTT0
+"RTN","SAMICTT1")
+0^14^B122165608
+"RTN","SAMICTT1",1,0)
+SAMICTT1 ;ven/gpl - ctreport text nodules ;2021-03-22T15:20Z
+"RTN","SAMICTT1",2,0)
+ ;;18.0;SAMI;**4,10**;2020-01;Build 2
+"RTN","SAMICTT1",3,0)
+ ;;1.18.0.10-i10
+"RTN","SAMICTT1",4,0)
+ ;
+"RTN","SAMICTT1",5,0)
+ ; SAMICTT1 creates the Nodules section of the ELCAP CT Report in text
+"RTN","SAMICTT1",6,0)
+ ; format.
+"RTN","SAMICTT1",7,0)
+ ;
+"RTN","SAMICTT1",8,0)
+ quit  ; no entry from top
+"RTN","SAMICTT1",9,0)
+ ;
+"RTN","SAMICTT1",10,0)
+ ;
+"RTN","SAMICTT1",11,0)
+ ;
+"RTN","SAMICTT1",12,0)
+ ;@section 0 primary development
+"RTN","SAMICTT1",13,0)
+ ;
+"RTN","SAMICTT1",14,0)
+ ;
+"RTN","SAMICTT1",15,0)
+ ;
+"RTN","SAMICTT1",16,0)
+ ;@license see routine SAMIUL
+"RTN","SAMICTT1",17,0)
+ ;@documentation see SAMICTUL
+"RTN","SAMICTT1",18,0)
+ ;@contents
+"RTN","SAMICTT1",19,0)
+ ; NODULES: nodules section of ctreport in text format
+"RTN","SAMICTT1",20,0)
+ ; OUT: output a line of ct report
+"RTN","SAMICTT1",21,0)
+ ; HOUT: output a ct report header line
+"RTN","SAMICTT1",22,0)
+ ; $$XVAL = patient value for var
+"RTN","SAMICTT1",23,0)
+ ; $$XSUB = dictionary value defined by var
+"RTN","SAMICTT1",24,0)
+ ;
+"RTN","SAMICTT1",25,0)
+ ;
+"RTN","SAMICTT1",26,0)
+ ;
+"RTN","SAMICTT1",27,0)
+ ;@section 1 NODULES & related subroutines
+"RTN","SAMICTT1",28,0)
+ ;
+"RTN","SAMICTT1",29,0)
+ ;
+"RTN","SAMICTT1",30,0)
+ ;
+"RTN","SAMICTT1",31,0)
+NODULES(rtn,vals,dict) ; nodules section of ctreport in text format
+"RTN","SAMICTT1",32,0)
+ ;
+"RTN","SAMICTT1",33,0)
+ ;@called-by
+"RTN","SAMICTT1",34,0)
+ ; WSREPORT^SAMICTT0
+"RTN","SAMICTT1",35,0)
+ ;@calls
+"RTN","SAMICTT1",36,0)
+ ; $$XVAL
+"RTN","SAMICTT1",37,0)
+ ; OUT
+"RTN","SAMICTT1",38,0)
+ ; $$XSUB
+"RTN","SAMICTT1",39,0)
+ ; HOUT
+"RTN","SAMICTT1",40,0)
+ ;@input
+"RTN","SAMICTT1",41,0)
+ ; rtn
+"RTN","SAMICTT1",42,0)
+ ; vals
+"RTN","SAMICTT1",43,0)
+ ; dict
+"RTN","SAMICTT1",44,0)
+ ;@output: nodules section added to cteval report
+"RTN","SAMICTT1",45,0)
+ ;
+"RTN","SAMICTT1",46,0)
+ ;# Report on Nodules
+"RTN","SAMICTT1",47,0)
+ n firstitem
+"RTN","SAMICTT1",48,0)
+ set firstitem=0
+"RTN","SAMICTT1",49,0)
+ n outmode s outmode="hold"
+"RTN","SAMICTT1",50,0)
+ n line s line=""
+"RTN","SAMICTT1",51,0)
+ n ii set ii=1
+"RTN","SAMICTT1",52,0)
+ ;# Information for each nodule
+"RTN","SAMICTT1",53,0)
+ f ii=1:1:10 d  ;
+"RTN","SAMICTT1",54,0)
+ . i $$XSUB("cectch",vals,dict,"cect"_ii_"ch")="px" q  ;
+"RTN","SAMICTT1",55,0)
+ . i $$XSUB("cectch",vals,dict,"cect"_ii_"ch")="" q  ;
+"RTN","SAMICTT1",56,0)
+ . i firstitem=0 d  ;
+"RTN","SAMICTT1",57,0)
+ . . ;d OUT("<!-- begin nodule info -->")
+"RTN","SAMICTT1",58,0)
+ . . ;d OUT("<UL TYPE=disc>")
+"RTN","SAMICTT1",59,0)
+ . . set firstitem=1
+"RTN","SAMICTT1",60,0)
+ . ;
+"RTN","SAMICTT1",61,0)
+ . ;d OUT("<LI>")
+"RTN","SAMICTT1",62,0)
+ . n specialcase s specialcase=0
+"RTN","SAMICTT1",63,0)
+ . n ij,ik
+"RTN","SAMICTT1",64,0)
+ . s ik=$$XVAL("cect"_ii_"ch",vals)
+"RTN","SAMICTT1",65,0)
+ . ;f ij="pw","px","pr","pv" i ij=ik s specialcase=1
+"RTN","SAMICTT1",66,0)
+ . i "pwpxprpv"[ik s specialcase=1
+"RTN","SAMICTT1",67,0)
+ . ;
+"RTN","SAMICTT1",68,0)
+ . ;# Example Sentence
+"RTN","SAMICTT1",69,0)
+ . ;# LUL Nodule 1 is non-calcified, non-solid, 6 mm x 6 mm (with 3 x 3) solid component), smooth edge, previously seen and unchanged. (Series 2, Image 65)
+"RTN","SAMICTT1",70,0)
+ . ;# [LOCATION] Nodule [N] is [CALCIFICATION], [SOLID], [L] mm x mm, [SMOOTH], [NEW].  (Series [Series], Image [ImageNum]).
+"RTN","SAMICTT1",71,0)
+ . ;
+"RTN","SAMICTT1",72,0)
+ . n spic s spic=""
+"RTN","SAMICTT1",73,0)
+ . i $$XVAL("cect"_ii_"sp",vals)="y" s spic="spiculated, "
+"RTN","SAMICTT1",74,0)
+ . ;
+"RTN","SAMICTT1",75,0)
+ . n calcification,calcstr,status
+"RTN","SAMICTT1",76,0)
+ . s status=$$XVAL("cect"_ii_"st",vals)
+"RTN","SAMICTT1",77,0)
+ . s @vals@("cect"_ii_"ca")=$s(status="bc":"y",status="pc":"q",1:"n")
+"RTN","SAMICTT1",78,0)
+ . s calcification=$$XSUB("cectca",vals,dict,"cect"_ii_"ca")
+"RTN","SAMICTT1",79,0)
+ . i calcification="" s calcstr="is "_spic_$$XSUB("cectnt",vals,dict,"cect"_ii_"nt")_", "
+"RTN","SAMICTT1",80,0)
+ . e  s calcstr="is "_calcification_", "_spic_$$XSUB("cectnt",vals,dict,"cect"_ii_"nt")_", "
+"RTN","SAMICTT1",81,0)
+ . ;
+"RTN","SAMICTT1",82,0)
+ . n vssl,vssw,vsl,vsw,avgs,avgss
+"RTN","SAMICTT1",83,0)
+ . s (vssl,vssw,vsl,vsw,avgs,avgss)=0
+"RTN","SAMICTT1",84,0)
+ . s vssl=$$XVAL("cect"_ii_"ssl",vals)
+"RTN","SAMICTT1",85,0)
+ . i vssl'=0 d  ;
+"RTN","SAMICTT1",86,0)
+ . . s vssw=$$XVAL("cect"_ii_"ssw",vals)
+"RTN","SAMICTT1",87,0)
+ . . s avgss=(vssl+vssw)/2
+"RTN","SAMICTT1",88,0)
+ . . s avgss=$j(avgss,1,1)
+"RTN","SAMICTT1",89,0)
+ . s vsl=$$XVAL("cect"_ii_"sl",vals)
+"RTN","SAMICTT1",90,0)
+ . s vsw=$$XVAL("cect"_ii_"sw",vals)
+"RTN","SAMICTT1",91,0)
+ . s avgs=(vsl+vsw)/2
+"RTN","SAMICTT1",92,0)
+ . s avgs=$j(avgs,1,1)
+"RTN","SAMICTT1",93,0)
+ . n scomp
+"RTN","SAMICTT1",94,0)
+ . s scomp=""
+"RTN","SAMICTT1",95,0)
+ . i $$XVAL("cect"_ii_"ssl",vals)'="" d  ;
+"RTN","SAMICTT1",96,0)
+ . . ;s scomp=" (solid component "_$$XVAL("cect"_ii_"ssl",vals)_" mm x "_$$XVAL("cect"_ii_"ssw",vals)_" mm average diameter "_avgss_" mm)"
+"RTN","SAMICTT1",97,0)
+ . . s scomp=", solid component "_$$XVAL("cect"_ii_"ssl",vals)_" mm x "_$$XVAL("cect"_ii_"ssw",vals)_" mm (average diameter of "_avgss_" mm)"
+"RTN","SAMICTT1",98,0)
+ . ;
+"RTN","SAMICTT1",99,0)
+ . s calcstr=calcstr_$$XVAL("cect"_ii_"sl",vals)_" mm x "_$$XVAL("cect"_ii_"sw",vals)_" mm (average diameter of "_avgs_" mm)"_scomp_", "
+"RTN","SAMICTT1",100,0)
+ . ;
+"RTN","SAMICTT1",101,0)
+ . n smooth
+"RTN","SAMICTT1",102,0)
+ . ;s smooth=$$XSUB("cectse",vals,dict,"cect"_ii_"se")
+"RTN","SAMICTT1",103,0)
+ . s smooth=$$XVAL("cect"_ii_"se",vals)
+"RTN","SAMICTT1",104,0)
+ . i smooth="y" s calcstr=calcstr_"smooth edges, "
+"RTN","SAMICTT1",105,0)
+ . ;e  s calcstr=calcstr_smooth_" edges, " ;nothing if not smooth
+"RTN","SAMICTT1",106,0)
+ . ;
+"RTN","SAMICTT1",107,0)
+ . ; adding distance from costal pleura
+"RTN","SAMICTT1",108,0)
+ . n pldstr
+"RTN","SAMICTT1",109,0)
+ . s pldstr="within "_$$XVAL("cect"_ii_"pld",vals)_" mm of the costal pleura"
+"RTN","SAMICTT1",110,0)
+ . ;
+"RTN","SAMICTT1",111,0)
+ . n skip s skip=0
+"RTN","SAMICTT1",112,0)
+ . ;# 3 cases: parenchymal, endobronchial, and both
+"RTN","SAMICTT1",113,0)
+ . ;
+"RTN","SAMICTT1",114,0)
+ . n en,loc,nloc,endo,ll
+"RTN","SAMICTT1",115,0)
+ . s loc=""
+"RTN","SAMICTT1",116,0)
+ . s nloc=""
+"RTN","SAMICTT1",117,0)
+ . s en=$$XVAL("cect"_ii_"en",vals)
+"RTN","SAMICTT1",118,0)
+ . s ll=$$XVAL("cect"_ii_"ll",vals)
+"RTN","SAMICTT1",119,0)
+ . i ($l(en)<2)!(en="no")!(en="") d  ;
+"RTN","SAMICTT1",120,0)
+ . . ;# 1) parenchymal only
+"RTN","SAMICTT1",121,0)
+ . . n X,Y s X=ll
+"RTN","SAMICTT1",122,0)
+ . . X ^%ZOSF("UPPERCASE")
+"RTN","SAMICTT1",123,0)
+ . . s loc=Y
+"RTN","SAMICTT1",124,0)
+ . . s nloc=Y
+"RTN","SAMICTT1",125,0)
+ . . s endo="Nodule"
+"RTN","SAMICTT1",126,0)
+ . e  d  ;
+"RTN","SAMICTT1",127,0)
+ . . i ll="end" d  ;
+"RTN","SAMICTT1",128,0)
+ . . . ;# 2) Endobronchial only
+"RTN","SAMICTT1",129,0)
+ . . . i en="tr" d  ;
+"RTN","SAMICTT1",130,0)
+ . . . . s endo="Endotracheal Nodule"
+"RTN","SAMICTT1",131,0)
+ . . . . i specialcase=1 d  ;
+"RTN","SAMICTT1",132,0)
+ . . . . . d OUT("Previously seen "_endo_" "_ii_" "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_". ")
+"RTN","SAMICTT1",133,0)
+ . . . . e  d  ;
+"RTN","SAMICTT1",134,0)
+ . . . . . i ($$XVAL("cetex",vals)="b")&($$XVAL("cectch"_ii_"ch",vals)="n") d  ;
+"RTN","SAMICTT1",135,0)
+ . . . . . . d OUT(endo_" "_ii_" "_calcstr_" is seen. ")
+"RTN","SAMICTT1",136,0)
+ . . . . . e  d OUT(endo_" "_ii_" "_calcstr_" "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_". ")
+"RTN","SAMICTT1",137,0)
+ . . . . s skip=1
+"RTN","SAMICTT1",138,0)
+ . . . i en="rm" d  ;
+"RTN","SAMICTT1",139,0)
+ . . . . s endo="Nodule"
+"RTN","SAMICTT1",140,0)
+ . . . . s nloc=$$XSUB("cecten",vals,dict,"cect"_ii_"en")
+"RTN","SAMICTT1",141,0)
+ . . . . i specialcase=1 d  ;
+"RTN","SAMICTT1",142,0)
+ . . . . . ;d OUT("Previously seen "_nloc_" "_endo_" "_ii_" ")
+"RTN","SAMICTT1",143,0)
+ . . . . . d OUT("Previously seen "_endo_" "_ii_" in the "_nloc_" "_calcstr_" ")
+"RTN","SAMICTT1",144,0)
+ . . . . . d OUT($$XSUB("cectch",vals,dict,"cect"_ii_"ch")_". ")
+"RTN","SAMICTT1",145,0)
+ . . . . e  d  ;
+"RTN","SAMICTT1",146,0)
+ . . . . . i ($$XVAL("cetex",vals)="b")&($$XVAL("cect"_ii_"ch",vals)="n") d  ;
+"RTN","SAMICTT1",147,0)
+ . . . . . . ;d OUT(nloc_" "_endo_" "_ii_". ")
+"RTN","SAMICTT1",148,0)
+ . . . . . . d OUT(endo_" "_ii_" is seen in the "_nloc_" "_calcstr_". ")
+"RTN","SAMICTT1",149,0)
+ . . . . . ;e  d OUT(nloc_" "_endo_" "_ii_" "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_". ")
+"RTN","SAMICTT1",150,0)
+ . . . . . e  d OUT(endo_" "_ii_" in the "_nloc_" "_calcstr_", "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_". ")
+"RTN","SAMICTT1",151,0)
+ . . . . s skip=1
+"RTN","SAMICTT1",152,0)
+ . . . i en="bi" d  ;
+"RTN","SAMICTT1",153,0)
+ . . . . s endo="Nodule"
+"RTN","SAMICTT1",154,0)
+ . . . . s loc=$$XSUB("cecten",vals,dict,"cect"_ii_"en")
+"RTN","SAMICTT1",155,0)
+ . . . . i specialcase=1 d  ;
+"RTN","SAMICTT1",156,0)
+ . . . . . ;d OUT("Previously seen "_endo_" "_ii_" in the "_loc)
+"RTN","SAMICTT1",157,0)
+ . . . . . d OUT("Previously seen "_endo_" "_ii_" in the "_nloc_" "_calcstr_" ")
+"RTN","SAMICTT1",158,0)
+ . . . . . d OUT($$XSUB("cectch",vals,dict,"cect"_ii_"ch")_". ")
+"RTN","SAMICTT1",159,0)
+ . . . . e  d  ;
+"RTN","SAMICTT1",160,0)
+ . . . . . i ($$XVAL("cetex",vals)="b")&($$XVAL("cect"_ii_"ch",vals)="n") d  ;
+"RTN","SAMICTT1",161,0)
+ . . . . . . ;d OUT(endo_" "_ii_" is seen in the "_loc_". ")
+"RTN","SAMICTT1",162,0)
+ . . . . . . d OUT(endo_" "_ii_" is seen in the "_loc_" "_calcstr_". ")
+"RTN","SAMICTT1",163,0)
+ . . . . . e  d OUT(nloc_" "_endo_" "_ii_" "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_". ")
+"RTN","SAMICTT1",164,0)
+ . . . . s skip=1
+"RTN","SAMICTT1",165,0)
+ . . . i skip=0 d  ; "default"
+"RTN","SAMICTT1",166,0)
+ . . . . s endo="Nodule"
+"RTN","SAMICTT1",167,0)
+ . . . . n X,Y
+"RTN","SAMICTT1",168,0)
+ . . . . s X=$$XVAL("cect"_ii_"en",vals)
+"RTN","SAMICTT1",169,0)
+ . . . . X ^%ZOSF("UPPERCASE")
+"RTN","SAMICTT1",170,0)
+ . . . . s nloc=Y
+"RTN","SAMICTT1",171,0)
+ . . . . i specialcase=1 d  ;
+"RTN","SAMICTT1",172,0)
+ . . . . . d OUT(nloc_" "_endo_" "_ii_" "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_", likely endobronchial. ")
+"RTN","SAMICTT1",173,0)
+ . . . . e  d  ;
+"RTN","SAMICTT1",174,0)
+ . . . . . ;i ($$XVAL("cetex",vals)="b")&($$XSUB("cectch",vals,dict,"cect"_ii_"ch")="n") d  ;
+"RTN","SAMICTT1",175,0)
+ . . . . . i (($$XVAL("cetex",vals)="b")&($$XVAL("cect"_ii_"ch",vals)="n")) d  ; gpl 1002
+"RTN","SAMICTT1",176,0)
+ . . . . . . d OUT(nloc_" "_endo_" "_ii_" "_calcstr_" likely endobronchial. ")
+"RTN","SAMICTT1",177,0)
+ . . . . . e  d OUT(nloc_" "_endo_" "_ii_" "_calcstr_" "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_" likely endobronchial. ")
+"RTN","SAMICTT1",178,0)
+ . . . . s skip=1
+"RTN","SAMICTT1",179,0)
+ . . e  d  ;
+"RTN","SAMICTT1",180,0)
+ . . . s endo="Nodule"
+"RTN","SAMICTT1",181,0)
+ . . . s loc=$$XSUB("cectll",vals,dict,"cect"_ii_"ll")
+"RTN","SAMICTT1",182,0)
+ . . . n X,Y
+"RTN","SAMICTT1",183,0)
+ . . . s X=$$XVAL("cect"_ii_"en",vals)
+"RTN","SAMICTT1",184,0)
+ . . . X ^%ZOSF("UPPERCASE")
+"RTN","SAMICTT1",185,0)
+ . . . s nloc=Y
+"RTN","SAMICTT1",186,0)
+ . . . i specialcase=1 d  ;
+"RTN","SAMICTT1",187,0)
+ . . . . d OUT(nloc_" "_endo_" "_ii_" previously seen with possible endobronchial component")
+"RTN","SAMICTT1",188,0)
+ . . . . d OUT($$XSUB("cectch",vals,dict,"cect"_ii_"ch")_". ")
+"RTN","SAMICTT1",189,0)
+ . . . e  d  ;
+"RTN","SAMICTT1",190,0)
+ . . . . ;i ($$XVAL("cetex",vals)="b")&($$XSUB("cectch",vals,dict,"cect"_ii_"ch")="n") d  ;
+"RTN","SAMICTT1",191,0)
+ . . . . i (($$XVAL("cetex",vals)="b")&($$XVAL("cect"_ii_"ch",vals)="n")) d  ; gpl 1002
+"RTN","SAMICTT1",192,0)
+ . . . . . d OUT(nloc_" "_endo_" "_ii_" "_calcstr_" with possible endobronchial component")
+"RTN","SAMICTT1",193,0)
+ . . . . e  d OUT(nloc_" "_endo_" "_ii_" "_calcstr_" with possible endobronchial component "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_". ")
+"RTN","SAMICTT1",194,0)
+ . . . s skip=1
+"RTN","SAMICTT1",195,0)
+ . i specialcase=1 d  ;
+"RTN","SAMICTT1",196,0)
+ . . i skip=0 d  ;
+"RTN","SAMICTT1",197,0)
+ . . . d OUT("Previously seen "_nloc_" "_endo_" "_ii_" ")
+"RTN","SAMICTT1",198,0)
+ . . . d OUT($$XSUB("cectch",vals,dict,"cect"_ii_"ch")_". ")
+"RTN","SAMICTT1",199,0)
+ . e  d  ;
+"RTN","SAMICTT1",200,0)
+ . . i skip=0 d  ;
+"RTN","SAMICTT1",201,0)
+ . . . ;# pleural distance only goes here
+"RTN","SAMICTT1",202,0)
+ . . . i $$XVAL("cect"_ii_"pld",vals)'="" s calcstr=calcstr_" "_pldstr_","
+"RTN","SAMICTT1",203,0)
+ . . . ;# Special Handling for "newly seen" on baseline
+"RTN","SAMICTT1",204,0)
+ . . . ;i ($$XVAL("cetex",vals)="b")&($$XSUB("cectch",vals,dict,"cect"_ii_"ch")="n") d  ;
+"RTN","SAMICTT1",205,0)
+ . . . i (($$XVAL("cetex",vals)="b")&($$XVAL("cect"_ii_"ch",vals)="n")) d  ; gpl 1002
+"RTN","SAMICTT1",206,0)
+ . . . . d OUT(nloc_" "_endo_" "_ii_" "_calcstr)
+"RTN","SAMICTT1",207,0)
+ . . . e  d OUT(nloc_" "_endo_" "_ii_" "_calcstr_" "_$$XSUB("cectch",vals,dict,"cect"_ii_"ch")_" ")
+"RTN","SAMICTT1",208,0)
+ . . d OUT(" (Series "_$$XVAL("cect"_ii_"sn",vals)_",") ; added from 1114 gpl1
+"RTN","SAMICTT1",209,0)
+ . . ;i $$XVAL("cect"_ii_"inl",vals)=$$XVAL("cect"_ii_"inh",vals) d  ;
+"RTN","SAMICTT1",210,0)
+ . . ;. d OUT(" image "_$$XVAL("cect"_ii_"inh",vals)_"). ")
+"RTN","SAMICTT1",211,0)
+ . . ;e  d  ;
+"RTN","SAMICTT1",212,0)
+ . . ;. d OUT(" image "_$$XVAL("cect"_ii_"inl",vals)_$$XVAL("cect"_ii_"inh",vals)_"). ")
+"RTN","SAMICTT1",213,0)
+ . . i $$XVAL("cect"_ii_"inh",vals)="" d  ;
+"RTN","SAMICTT1",214,0)
+ . . . d OUT(" image "_$$XVAL("cect"_ii_"inl",vals)_"). ")
+"RTN","SAMICTT1",215,0)
+ . . e  d  ;
+"RTN","SAMICTT1",216,0)
+ . . . d OUT(" image "_$$XVAL("cect"_ii_"inl",vals)_"-"_$$XVAL("cect"_ii_"inh",vals)_"). ")
+"RTN","SAMICTT1",217,0)
+ . . i $$XVAL("cect"_ii_"co",vals)'="" d OUT($$XVAL("cect"_ii_"co",vals)_". ") ;1122 gpl1
+"RTN","SAMICTT1",218,0)
+ . . n ac
+"RTN","SAMICTT1",219,0)
+ . . s ac=$$XVAL("cect"_ii_"ac",vals)
+"RTN","SAMICTT1",220,0)
+ . . i ac'="" i (ac'="-") i (ac'="s") d  ;
+"RTN","SAMICTT1",221,0)
+ . . . d OUT($$XSUB("cectac",vals,dict,"cect"_ii_"ac")_" recommended. ")
+"RTN","SAMICTT1",222,0)
+ . ;
+"RTN","SAMICTT1",223,0)
+ . ; end of nodule processing
+"RTN","SAMICTT1",224,0)
+ . ;
+"RTN","SAMICTT1",225,0)
+ . s outmode="go"
+"RTN","SAMICTT1",226,0)
+ . d OUT("")
+"RTN","SAMICTT1",227,0)
+ . s outmode="hold"
+"RTN","SAMICTT1",228,0)
+ i firstitem'=0 d  ;
+"RTN","SAMICTT1",229,0)
+ . ;d OUT("</UL>")
+"RTN","SAMICTT1",230,0)
+ . ;d OUT("<!-- end nodule info -->")
+"RTN","SAMICTT1",231,0)
+ ;d OUT("</p>")
+"RTN","SAMICTT1",232,0)
+ ;
+"RTN","SAMICTT1",233,0)
+ ; added 5/19/21 gpl
+"RTN","SAMICTT1",234,0)
+ s outmode="go"
+"RTN","SAMICTT1",235,0)
+ i $$XVAL("cectancn",vals)=1 d OUT("Small non-calcified nodules are present ")
+"RTN","SAMICTT1",236,0)
+ i $$XVAL("cectacn",vals)=1 d OUT("Small calcified nodules are present ")
+"RTN","SAMICTT1",237,0)
+ d OUT(" ")
+"RTN","SAMICTT1",238,0)
+ ;
+"RTN","SAMICTT1",239,0)
+ quit  ; end of NODULES
+"RTN","SAMICTT1",240,0)
+ ;
+"RTN","SAMICTT1",241,0)
+ ;
+"RTN","SAMICTT1",242,0)
+ ;
+"RTN","SAMICTT1",243,0)
+OUT(ln) ; output a line of ct report
+"RTN","SAMICTT1",244,0)
+ ;
+"RTN","SAMICTT1",245,0)
+ ;@called-by
+"RTN","SAMICTT1",246,0)
+ ; NODULES
+"RTN","SAMICTT1",247,0)
+ ;@calls none
+"RTN","SAMICTT1",248,0)
+ ;@input
+"RTN","SAMICTT1",249,0)
+ ; ln = output to add
+"RTN","SAMICTT1",250,0)
+ ;@output: line added to report
+"RTN","SAMICTT1",251,0)
+ ;
+"RTN","SAMICTT1",252,0)
+ i outmode="hold" s line=line_ln q  ;
+"RTN","SAMICTT1",253,0)
+ s cnt=cnt+1
+"RTN","SAMICTT1",254,0)
+ n lnn
+"RTN","SAMICTT1",255,0)
+ ;s debug=1
+"RTN","SAMICTT1",256,0)
+ s lnn=$o(@rtn@(" "),-1)+1
+"RTN","SAMICTT1",257,0)
+ i outmode="go" d  ;
+"RTN","SAMICTT1",258,0)
+ . s @rtn@(lnn)=line
+"RTN","SAMICTT1",259,0)
+ . s line=""
+"RTN","SAMICTT1",260,0)
+ . s lnn=$o(@rtn@(" "),-1)+1
+"RTN","SAMICTT1",261,0)
+ s @rtn@(lnn)=ln
+"RTN","SAMICTT1",262,0)
+ ;
+"RTN","SAMICTT1",263,0)
+ i $g(debug)=1 d  ;
+"RTN","SAMICTT1",264,0)
+ . i ln["<" q  ; no markup
+"RTN","SAMICTT1",265,0)
+ . n zs s zs=$STACK
+"RTN","SAMICTT1",266,0)
+ . n zp s zp=$STACK(zs-2,"PLACE")
+"RTN","SAMICTT1",267,0)
+ . s @rtn@(lnn)=zp_":"_ln
+"RTN","SAMICTT1",268,0)
+ ;
+"RTN","SAMICTT1",269,0)
+ quit  ; end of OUT
+"RTN","SAMICTT1",270,0)
+ ;
+"RTN","SAMICTT1",271,0)
+ ;
+"RTN","SAMICTT1",272,0)
+ ;
+"RTN","SAMICTT1",273,0)
+HOUT(ln) ; output a ct report header line
+"RTN","SAMICTT1",274,0)
+ ;
+"RTN","SAMICTT1",275,0)
+ ;@called-by
+"RTN","SAMICTT1",276,0)
+ ; NODULES
+"RTN","SAMICTT1",277,0)
+ ;@calls
+"RTN","SAMICTT1",278,0)
+ ; OUT
+"RTN","SAMICTT1",279,0)
+ ;@input
+"RTN","SAMICTT1",280,0)
+ ; ln = header output to add
+"RTN","SAMICTT1",281,0)
+ ;@output: header line added to report
+"RTN","SAMICTT1",282,0)
+ ;
+"RTN","SAMICTT1",283,0)
+ d OUT(ln)
+"RTN","SAMICTT1",284,0)
+ ;d OUT("<p><span class='sectionhead'>"_ln_"</span>")
+"RTN","SAMICTT1",285,0)
+ ;
+"RTN","SAMICTT1",286,0)
+ quit  ; end of HOUT
+"RTN","SAMICTT1",287,0)
+ ;
+"RTN","SAMICTT1",288,0)
+ ;
+"RTN","SAMICTT1",289,0)
+ ;
+"RTN","SAMICTT1",290,0)
+XVAL(var,vals) ; extrinsic returns the patient value for var
+"RTN","SAMICTT1",291,0)
+ ;
+"RTN","SAMICTT1",292,0)
+ ;@called-by
+"RTN","SAMICTT1",293,0)
+ ; NODULES
+"RTN","SAMICTT1",294,0)
+ ;@calls none
+"RTN","SAMICTT1",295,0)
+ ;@input
+"RTN","SAMICTT1",296,0)
+ ; val
+"RTN","SAMICTT1",297,0)
+ ; vals is passed by name
+"RTN","SAMICTT1",298,0)
+ ;@output = patient value for var
+"RTN","SAMICTT1",299,0)
+ ;
+"RTN","SAMICTT1",300,0)
+ n zr
+"RTN","SAMICTT1",301,0)
+ s zr=$g(@vals@(var))
+"RTN","SAMICTT1",302,0)
+ ;i zr="" s zr="["_var_"]"
+"RTN","SAMICTT1",303,0)
+ ;
+"RTN","SAMICTT1",304,0)
+ quit zr ; end of $$XVAL
+"RTN","SAMICTT1",305,0)
+ ;
+"RTN","SAMICTT1",306,0)
+ ;
+"RTN","SAMICTT1",307,0)
+ ;
+"RTN","SAMICTT1",308,0)
+XSUB(var,vals,dict,valdx) ; extrinsic which returns the dictionary value defined by var
+"RTN","SAMICTT1",309,0)
+ ;
+"RTN","SAMICTT1",310,0)
+ ;@called-by
+"RTN","SAMICTT1",311,0)
+ ; NODULES
+"RTN","SAMICTT1",312,0)
+ ;@calls none
+"RTN","SAMICTT1",313,0)
+ ;@input
+"RTN","SAMICTT1",314,0)
+ ; val
+"RTN","SAMICTT1",315,0)
+ ; vals and dict are passed by name
+"RTN","SAMICTT1",316,0)
+ ; valdx is used for nodules ala cect2co with the nodule number included
+"RTN","SAMICTT1",317,0)
+ ;@output = dictionary value for var
+"RTN","SAMICTT1",318,0)
+ ;
+"RTN","SAMICTT1",319,0)
+ ;n dict s dict=$$setroot^%wd("cteval-dict")
+"RTN","SAMICTT1",320,0)
+ n zr,zv,zdx
+"RTN","SAMICTT1",321,0)
+ s zdx=$g(valdx)
+"RTN","SAMICTT1",322,0)
+ i zdx="" s zdx=var
+"RTN","SAMICTT1",323,0)
+ s zv=$g(@vals@(zdx))
+"RTN","SAMICTT1",324,0)
+ ;i zv="" s zr="["_var_"]" q zr
+"RTN","SAMICTT1",325,0)
+ i zv="" s zr="" q zr
+"RTN","SAMICTT1",326,0)
+ s zr=$g(@dict@(var,zv))
+"RTN","SAMICTT1",327,0)
+ ;i zr="" s zr="["_var_","_zv_"]"
+"RTN","SAMICTT1",328,0)
+ ;
+"RTN","SAMICTT1",329,0)
+ quit zr ; end of $$XSUB
+"RTN","SAMICTT1",330,0)
+ ;
+"RTN","SAMICTT1",331,0)
+ ;
+"RTN","SAMICTT1",332,0)
+ ;
+"RTN","SAMICTT1",333,0)
+EOR ; end of routine SAMICTT1
 "RTN","SAMICTTA")
 0^11^B35394677
 "RTN","SAMICTTA",1,0)
 SAMICTTA ;ven/gpl - ctreport text recommendations ;2021-03-22T15:51Z
 "RTN","SAMICTTA",2,0)
- ;;18.0;SAMI;**4,10**;2020-01;Build 1
+ ;;18.0;SAMI;**4,10**;2020-01;Build 2
 "RTN","SAMICTTA",3,0)
  ;;1.18.0.10-i10
 "RTN","SAMICTTA",4,0)
@@ -2115,7 +4215,7 @@ EOR ; end of routine SAMICTTA
 "RTN","SAMIHL7",1,0)
 SAMIHL7 ;SAMI/lgc/arc - HL7 UTILITIES ;May 11, 2021@14:03
 "RTN","SAMIHL7",2,0)
- ;;18.0;SAMI;;;Build 1
+ ;;18.0;SAMI;;;Build 2
 "RTN","SAMIHL7",3,0)
  ;
 "RTN","SAMIHL7",4,0)
@@ -2665,7 +4765,7 @@ EOR ;End of routine SAMIHL7
 "RTN","SAMIHOM3",1,0)
 SAMIHOM3 ;ven/gpl - ielcap: forms ; 2019-08-07T01:13Z
 "RTN","SAMIHOM3",2,0)
- ;;18.0;SAMI;;;Build 1
+ ;;18.0;SAMI;;;Build 2
 "RTN","SAMIHOM3",3,0)
  ;
 "RTN","SAMIHOM3",4,0)
@@ -3719,11 +5819,11 @@ INDEX ; reindex the vapals-patients graph
 "RTN","SAMIHOM3",528,0)
 EOR ; end of routine SAMIHOM3
 "RTN","SAMIHOM4")
-0^3^B738294395
+0^3^B730090402
 "RTN","SAMIHOM4",1,0)
 SAMIHOM4 ;ven/gpl,arc - ielcap: home page ;2021-03-17T18:32Z
 "RTN","SAMIHOM4",2,0)
- ;;18.0;SAMI;**1,4,5,6,9**;;Build 1
+ ;;18.0;SAMI;**1,4,5,6,9**;;Build 2
 "RTN","SAMIHOM4",3,0)
  ;;1.18.0.9-i9
 "RTN","SAMIHOM4",4,0)
@@ -4401,13 +6501,13 @@ REG(SAMIRTN,SAMIARG) ; manual registration
 "RTN","SAMIHOM4",340,0)
  ;
 "RTN","SAMIHOM4",341,0)
- i $$DUPSSN(ssn) d  ;
+ ;i $$DUPSSN(ssn) d  ;
 "RTN","SAMIHOM4",342,0)
- . ;s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate SSN."
+ ;. ;s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate SSN."
 "RTN","SAMIHOM4",343,0)
- . s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate SSN error. A person with that SSN is already entered in the system."
+ ;. s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate SSN error. A person with that SSN is already entered in the system."
 "RTN","SAMIHOM4",344,0)
- . s SAMIARG("errorField")="ssn"
+ ;. s SAMIARG("errorField")="ssn"
 "RTN","SAMIHOM4",345,0)
  ;
 "RTN","SAMIHOM4",346,0)
@@ -5797,7 +7897,7 @@ EOR ; End of routine SAMIHOM4
 "RTN","SAMIJS1",1,0)
 SAMIJS1 ;ven/gpl - json archive routine ;May 05, 2021@17:12
 "RTN","SAMIJS1",2,0)
- ;;18.0;SAMI;;;Build 1
+ ;;18.0;SAMI;;;Build 2
 "RTN","SAMIJS1",3,0)
  ;
 "RTN","SAMIJS1",4,0)
@@ -6073,7 +8173,7 @@ DETAIL() ; displays the archive record for a patient
 "RTN","SAMIJS2",1,0)
 SAMIJS2 ;ven/gpl - json archive routine ; 1/22/19 1:24pm
 "RTN","SAMIJS2",2,0)
- ;;18.0;SAMI;;;Build 1
+ ;;18.0;SAMI;;;Build 2
 "RTN","SAMIJS2",3,0)
  ;
 "RTN","SAMIJS2",4,0)
@@ -6389,7 +8489,7 @@ loaded(filenm,graph) ;extrinsic returns 1 if the filename is already loaded
 "RTN","SAMIORM",1,0)
 SAMIORM ;ven/arc/lgc - parse ORM to update  patient-lookup graph ;May 11, 2021@13:31
 "RTN","SAMIORM",2,0)
- ;;18.0;SAMI;;;Build 1
+ ;;18.0;SAMI;;;Build 2
 "RTN","SAMIORM",3,0)
  ;
 "RTN","SAMIORM",4,0)
@@ -6803,7 +8903,7 @@ EOR ; End of routine SAMIORM
 "RTN","SAMISITE",1,0)
 SAMISITE ;ven/gpl,arc - ielcap: forms;2020-03-27T17:45Z ;Mar 27, 2020@16:04
 "RTN","SAMISITE",2,0)
- ;;18.0;SAMI;;;Build 1
+ ;;18.0;SAMI;;;Build 2
 "RTN","SAMISITE",3,0)
  ;
 "RTN","SAMISITE",4,0)
@@ -7289,11 +9389,11 @@ UPGRADE() ; convert VAPALS system to Multi-tenancy by adding siteid
 "RTN","SAMISITE",244,0)
  ;
 "RTN","SAMIUR")
-0^5^B341133165
+0^5^B345904199
 "RTN","SAMIUR",1,0)
 SAMIUR ;ven/gpl - user reports ;2021-03-30T15:50Z
 "RTN","SAMIUR",2,0)
- ;;18.0;SAMI;**5,10,11**;2020-01;Build 1
+ ;;18.0;SAMI;**5,10,11**;2020-01;Build 2
 "RTN","SAMIUR",3,0)
  ;;1.18.0.11-i11
 "RTN","SAMIUR",4,0)
@@ -7539,781 +9639,787 @@ WSREPORT(SAMIRTN,filter) ; generate a report based on parameters in the filter
 "RTN","SAMIUR",124,0)
  ;
 "RTN","SAMIUR",125,0)
- d getThis^%wd("temp","table.html") ; page template
+ i type="unmatched" i $$GET1PARM^SAMIPARM("matchingReportEnabled",site)'="true" d  q  ;
 "RTN","SAMIUR",126,0)
- q:'$d(temp)
+ . d GETHOME^SAMIHOM3(.SAMIRTN,.filter) ; send them to home
 "RTN","SAMIUR",127,0)
  ;
 "RTN","SAMIUR",128,0)
- n SAMIPATS
+ d getThis^%wd("temp","table.html") ; page template
 "RTN","SAMIUR",129,0)
- ;s pats=""
+ q:'$d(temp)
 "RTN","SAMIUR",130,0)
- n datephrase
+ ;
 "RTN","SAMIUR",131,0)
- d SELECT(.SAMIPATS,type,.datephrase,.filter) ; select patients for the report
+ n SAMIPATS
 "RTN","SAMIUR",132,0)
- ;q:'$d(SAMIPATS)
+ ;s pats=""
 "RTN","SAMIUR",133,0)
- ;
+ n datephrase
 "RTN","SAMIUR",134,0)
- n ln,cnt,ii
+ d SELECT(.SAMIPATS,type,.datephrase,.filter) ; select patients for the report
 "RTN","SAMIUR",135,0)
- s (ii,ln,cnt)=0
+ ;q:'$d(SAMIPATS)
 "RTN","SAMIUR",136,0)
- f  s ii=$o(temp(ii)) q:+ii=0  q:$g(temp(ii))["<thead"  d  ;
+ ;
 "RTN","SAMIUR",137,0)
- . s cnt=cnt+1
+ n ln,cnt,ii
 "RTN","SAMIUR",138,0)
- . s ln=$g(temp(ii))
+ s (ii,ln,cnt)=0
 "RTN","SAMIUR",139,0)
- . n samikey,si
+ f  s ii=$o(temp(ii)) q:+ii=0  q:$g(temp(ii))["<thead"  d  ;
 "RTN","SAMIUR",140,0)
- . s (samikey,si)=""
-"RTN","SAMIUR",141,0)
- . d LOAD^SAMIFORM(.ln,samikey,si,.filter)
-"RTN","SAMIUR",142,0)
- . ;i ln["PAGE NAME" d findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type,datephrase))
-"RTN","SAMIUR",143,0)
- . i ln["PAGE NAME" d findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type,""))
-"RTN","SAMIUR",144,0)
- . i ln["CRITERIA" d findReplace^%ts(.ln,"CRITERIA",datephrase)
-"RTN","SAMIUR",145,0)
- . i ln["@@REPORTTYPE@@" d findReplace^%ts(.ln,"@@REPORTTYPE@@",type)
-"RTN","SAMIUR",146,0)
- . ;
-"RTN","SAMIUR",147,0)
- . i ln["name=""start-date""" d findReplace^%ts(.ln,"start-date""","start-date"" value="""_$g(filter("start-date"))_"""")
-"RTN","SAMIUR",148,0)
- . i ln["name=""end-date""" d findReplace^%ts(.ln,"end-date""","end-date"" value="""_$g(filter("end-date"))_"""")
-"RTN","SAMIUR",149,0)
- . s SAMIRTN(cnt)=ln
-"RTN","SAMIUR",150,0)
- . ;
-"RTN","SAMIUR",151,0)
- n RPT,ik
-"RTN","SAMIUR",152,0)
- d RPTTBL^SAMIUR2(.RPT,type,site) ; get the report specs
-"RTN","SAMIUR",153,0)
- i '$d(RPT) d  q  ; don't know about this report
-"RTN","SAMIUR",154,0)
- . d GETHOME^SAMIHOM3(.SAMIRTN,.filter) ; send them to home
-"RTN","SAMIUR",155,0)
- ;
-"RTN","SAMIUR",156,0)
- ; output the header
-"RTN","SAMIUR",157,0)
- ;
-"RTN","SAMIUR",158,0)
- s cnt=cnt+1 s SAMIRTN(cnt)="<thead><tr>"
-"RTN","SAMIUR",159,0)
- s cnt=cnt+1
-"RTN","SAMIUR",160,0)
- n totcnt s totcnt=cnt
-"RTN","SAMIUR",161,0)
- s ir=""
-"RTN","SAMIUR",162,0)
- f  s ir=$o(RPT(ir)) q:ir=""  d  ;
-"RTN","SAMIUR",163,0)
  . s cnt=cnt+1
+"RTN","SAMIUR",141,0)
+ . s ln=$g(temp(ii))
+"RTN","SAMIUR",142,0)
+ . n samikey,si
+"RTN","SAMIUR",143,0)
+ . s (samikey,si)=""
+"RTN","SAMIUR",144,0)
+ . d LOAD^SAMIFORM(.ln,samikey,si,.filter)
+"RTN","SAMIUR",145,0)
+ . ;i ln["PAGE NAME" d findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type,datephrase))
+"RTN","SAMIUR",146,0)
+ . i ln["PAGE NAME" d findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type,""))
+"RTN","SAMIUR",147,0)
+ . i ln["CRITERIA" d findReplace^%ts(.ln,"CRITERIA",datephrase)
+"RTN","SAMIUR",148,0)
+ . i ln["@@REPORTTYPE@@" d findReplace^%ts(.ln,"@@REPORTTYPE@@",type)
+"RTN","SAMIUR",149,0)
+ . ;
+"RTN","SAMIUR",150,0)
+ . i ln["name=""start-date""" d findReplace^%ts(.ln,"start-date""","start-date"" value="""_$g(filter("start-date"))_"""")
+"RTN","SAMIUR",151,0)
+ . i ln["name=""end-date""" d findReplace^%ts(.ln,"end-date""","end-date"" value="""_$g(filter("end-date"))_"""")
+"RTN","SAMIUR",152,0)
+ . s SAMIRTN(cnt)=ln
+"RTN","SAMIUR",153,0)
+ . ;
+"RTN","SAMIUR",154,0)
+ n RPT,ik
+"RTN","SAMIUR",155,0)
+ d RPTTBL^SAMIUR2(.RPT,type,site) ; get the report specs
+"RTN","SAMIUR",156,0)
+ i '$d(RPT) d  q  ; don't know about this report
+"RTN","SAMIUR",157,0)
+ . d GETHOME^SAMIHOM3(.SAMIRTN,.filter) ; send them to home
+"RTN","SAMIUR",158,0)
+ ;
+"RTN","SAMIUR",159,0)
+ ; output the header
+"RTN","SAMIUR",160,0)
+ ;
+"RTN","SAMIUR",161,0)
+ s cnt=cnt+1 s SAMIRTN(cnt)="<thead><tr>"
+"RTN","SAMIUR",162,0)
+ s cnt=cnt+1
+"RTN","SAMIUR",163,0)
+ n totcnt s totcnt=cnt
 "RTN","SAMIUR",164,0)
- . s SAMIRTN(cnt)="<th>"_$g(RPT(ir,"header"))_"</th>"
+ s ir=""
 "RTN","SAMIUR",165,0)
- s cnt=cnt+1 s SAMIRTN(cnt)="</tr></thead>"
+ f  s ir=$o(RPT(ir)) q:ir=""  d  ;
 "RTN","SAMIUR",166,0)
- ;
+ . s cnt=cnt+1
 "RTN","SAMIUR",167,0)
- s cnt=cnt+1 s SAMIRTN(cnt)="<tbody>"
+ . s SAMIRTN(cnt)="<th>"_$g(RPT(ir,"header"))_"</th>"
 "RTN","SAMIUR",168,0)
- ;
+ s cnt=cnt+1 s SAMIRTN(cnt)="</tr></thead>"
 "RTN","SAMIUR",169,0)
- i type'="worklist" d  ; 
+ ;
 "RTN","SAMIUR",170,0)
- . d NUHREF(.SAMIPATS) ; create the nuhref link for all patients
+ s cnt=cnt+1 s SAMIRTN(cnt)="<tbody>"
 "RTN","SAMIUR",171,0)
  ;
 "RTN","SAMIUR",172,0)
- n SRT s SRT=""
+ i type'="worklist" d  ; 
 "RTN","SAMIUR",173,0)
- i $g(filter("sort"))="" s filter("sort")="name"
+ . d NUHREF(.SAMIPATS) ; create the nuhref link for all patients
 "RTN","SAMIUR",174,0)
- d SORT(.SRT,.SAMIPATS,.filter)
+ ;
 "RTN","SAMIUR",175,0)
- ;zwr SRT
+ n SRT s SRT=""
 "RTN","SAMIUR",176,0)
- ;
+ i $g(filter("sort"))="" s filter("sort")="name"
 "RTN","SAMIUR",177,0)
- ;s ij=0
+ d SORT(.SRT,.SAMIPATS,.filter)
 "RTN","SAMIUR",178,0)
- ;f  s ij=$o(SAMIPATS(ij)) q:+ij=0  d  ;
+ ;zwr SRT
 "RTN","SAMIUR",179,0)
- ;. n ij2 s ij2=0
+ ;
 "RTN","SAMIUR",180,0)
- ;. f  s ij2=$o(SAMIPATS(ij,ij2)) q:+ij2=0  d  ;
+ ;s ij=0
 "RTN","SAMIUR",181,0)
- ;. . n dfn s dfn=ij2
+ ;f  s ij=$o(SAMIPATS(ij)) q:+ij=0  d  ;
 "RTN","SAMIUR",182,0)
- n iz,ij,ij2,dfn,rows
+ ;. n ij2 s ij2=0
 "RTN","SAMIUR",183,0)
- s rows=0
+ ;. f  s ij2=$o(SAMIPATS(ij,ij2)) q:+ij2=0  d  ;
 "RTN","SAMIUR",184,0)
- s (iz,ij,ij2,dfn)=""
+ ;. . n dfn s dfn=ij2
 "RTN","SAMIUR",185,0)
- f  s iz=$o(SRT(iz)) q:iz=""  d  ;
+ n iz,ij,ij2,dfn,rows
 "RTN","SAMIUR",186,0)
- . s ij=$o(SRT(iz,""))
+ s rows=0
 "RTN","SAMIUR",187,0)
- . s dfn=$o(SRT(iz,ij,""))
+ s (iz,ij,ij2,dfn)=""
 "RTN","SAMIUR",188,0)
- . d  ;
+ f  s iz=$o(SRT(iz)) q:iz=""  d  ;
 "RTN","SAMIUR",189,0)
- . . s cnt=cnt+1 s SAMIRTN(cnt)="<tr>"
+ . s ij=$o(SRT(iz,""))
 "RTN","SAMIUR",190,0)
- . . s ir=""
+ . s dfn=$o(SRT(iz,ij,""))
 "RTN","SAMIUR",191,0)
- . . f  s ir=$o(RPT(ir)) q:ir=""  d  ;
+ . d  ;
 "RTN","SAMIUR",192,0)
- . . . s cnt=cnt+1
+ . . s cnt=cnt+1 s SAMIRTN(cnt)="<tr>"
 "RTN","SAMIUR",193,0)
- . . . n XR,XRV
+ . . s ir=""
 "RTN","SAMIUR",194,0)
- . . . ;s XR=$g(RPT(ir,"routine"))_"("_ij_",.SAMIPATS)"
+ . . f  s ir=$o(RPT(ir)) q:ir=""  d  ;
 "RTN","SAMIUR",195,0)
- . . . s XR="S XRV="_$g(RPT(ir,"routine"))_"("_ij_","_dfn_",.SAMIPATS)"
+ . . . s cnt=cnt+1
 "RTN","SAMIUR",196,0)
- . . . ;s XRV=@XR
+ . . . n XR,XRV
 "RTN","SAMIUR",197,0)
- . . . X XR
+ . . . ;s XR=$g(RPT(ir,"routine"))_"("_ij_",.SAMIPATS)"
 "RTN","SAMIUR",198,0)
- . . . s SAMIRTN(cnt)="<td>"_$g(XRV)_"</td>"
+ . . . s XR="S XRV="_$g(RPT(ir,"routine"))_"("_ij_","_dfn_",.SAMIPATS)"
 "RTN","SAMIUR",199,0)
- . . ;
+ . . . ;s XRV=@XR
 "RTN","SAMIUR",200,0)
- . . s cnt=cnt+1
+ . . . X XR
 "RTN","SAMIUR",201,0)
- . . s SAMIRTN(cnt)="</tr>"_$CHAR(10,13)
+ . . . s SAMIRTN(cnt)="<td>"_$g(XRV)_"</td>"
 "RTN","SAMIUR",202,0)
- . . s rows=rows+1
+ . . ;
 "RTN","SAMIUR",203,0)
- s cnt=cnt+1
+ . . s cnt=cnt+1
 "RTN","SAMIUR",204,0)
- s SAMIRTN(cnt)="<tr><td>Total: "_rows_"</td></tr>"
+ . . s SAMIRTN(cnt)="</tr>"_$CHAR(10,13)
 "RTN","SAMIUR",205,0)
- s SAMIRTN(totcnt)="<td>Total: "_rows_"</td></tr><tr>"
+ . . s rows=rows+1
 "RTN","SAMIUR",206,0)
- ;
+ s cnt=cnt+1
 "RTN","SAMIUR",207,0)
- s cnt=cnt+1 s SAMIRTN(cnt)="</tbody>"
+ s SAMIRTN(cnt)="<tr><td>Total: "_rows_"</td></tr>"
 "RTN","SAMIUR",208,0)
- f  s ii=$o(temp(ii)) q:temp(ii)["</tbody>"  d  ;
+ s SAMIRTN(totcnt)="<td>Total: "_rows_"</td></tr><tr>"
 "RTN","SAMIUR",209,0)
- . ; skip past template headers and blank body
+ ;
 "RTN","SAMIUR",210,0)
- f  s ii=$o(temp(ii)) q:+ii=0  d  ;
+ s cnt=cnt+1 s SAMIRTN(cnt)="</tbody>"
 "RTN","SAMIUR",211,0)
- . s cnt=cnt+1
+ f  s ii=$o(temp(ii)) q:temp(ii)["</tbody>"  d  ;
 "RTN","SAMIUR",212,0)
- . s ln=$g(temp(ii))
+ . ; skip past template headers and blank body
 "RTN","SAMIUR",213,0)
- . n samikey,si
+ f  s ii=$o(temp(ii)) q:+ii=0  d  ;
 "RTN","SAMIUR",214,0)
- . s (samikey,si)=""
+ . s cnt=cnt+1
 "RTN","SAMIUR",215,0)
- . d LOAD^SAMIFORM(.ln,samikey,si,.filter)
+ . s ln=$g(temp(ii))
 "RTN","SAMIUR",216,0)
- . s SAMIRTN(cnt)=ln
+ . n samikey,si
 "RTN","SAMIUR",217,0)
- ;
+ . s (samikey,si)=""
 "RTN","SAMIUR",218,0)
- quit  ; end of WSREPORT
+ . d LOAD^SAMIFORM(.ln,samikey,si,.filter)
 "RTN","SAMIUR",219,0)
- ;
+ . s SAMIRTN(cnt)=ln
 "RTN","SAMIUR",220,0)
  ;
 "RTN","SAMIUR",221,0)
- ;
+ quit  ; end of WSREPORT
 "RTN","SAMIUR",222,0)
-SORT(SRTN,SAMIPATS,FILTER) ;
+ ;
 "RTN","SAMIUR",223,0)
- n typ s typ=$g(FILTER("sort"))
+ ;
 "RTN","SAMIUR",224,0)
- i typ="" s typ="name"
+ ;
 "RTN","SAMIUR",225,0)
- n iz,dt,dfn,nm
+SORT(SRTN,SAMIPATS,FILTER) ;
 "RTN","SAMIUR",226,0)
- s (dt,dfn,nm)=""
+ n typ s typ=$g(FILTER("sort"))
 "RTN","SAMIUR",227,0)
- s iz=0
+ i typ="" s typ="name"
 "RTN","SAMIUR",228,0)
- n indx
+ n iz,dt,dfn,nm
 "RTN","SAMIUR",229,0)
- f  s dt=$o(SAMIPATS(dt)) q:+dt=0  d  ;
+ s (dt,dfn,nm)=""
 "RTN","SAMIUR",230,0)
- . f  s dfn=$o(SAMIPATS(dt,dfn)) q:+dfn=0  d  ;
+ s iz=0
 "RTN","SAMIUR",231,0)
- . . i typ="name" d  ;
+ n indx
 "RTN","SAMIUR",232,0)
- . . . s nm=$g(SAMIPATS(dt,dfn,"name"))
+ f  s dt=$o(SAMIPATS(dt)) q:+dt=0  d  ;
 "RTN","SAMIUR",233,0)
- . . . s nm=$$UPCASE^XLFMSMT(nm)
+ . f  s dfn=$o(SAMIPATS(dt,dfn)) q:+dfn=0  d  ;
 "RTN","SAMIUR",234,0)
- . . . i nm="" s nm=" "
+ . . i typ="name" d  ;
 "RTN","SAMIUR",235,0)
- . . . s indx(nm,dt,dfn)=""
+ . . . s nm=$g(SAMIPATS(dt,dfn,"name"))
 "RTN","SAMIUR",236,0)
- n iiz s iiz=""
+ . . . s nm=$$UPCASE^XLFMSMT(nm)
 "RTN","SAMIUR",237,0)
- s (dt,dfn)=""
+ . . . i nm="" s nm=" "
 "RTN","SAMIUR",238,0)
- f  s iiz=$o(indx(iiz)) q:iiz=""  d  ;
+ . . . s indx(nm,dt,dfn)=""
 "RTN","SAMIUR",239,0)
- . f  s dt=$o(indx(iiz,dt)) q:dt=""  d  ;
+ n iiz s iiz=""
 "RTN","SAMIUR",240,0)
- . . f  s dfn=$o(indx(iiz,dt,dfn)) q:dfn=""  d  ;
+ s (dt,dfn)=""
 "RTN","SAMIUR",241,0)
- . . . s iz=iz+1
+ f  s iiz=$o(indx(iiz)) q:iiz=""  d  ;
 "RTN","SAMIUR",242,0)
- . . . s SRTN(iz,dt,dfn)=iiz
+ . f  s dt=$o(indx(iiz,dt)) q:dt=""  d  ;
 "RTN","SAMIUR",243,0)
- ;
+ . . f  s dfn=$o(indx(iiz,dt,dfn)) q:dfn=""  d  ;
 "RTN","SAMIUR",244,0)
- quit  ; end of SORT
+ . . . s iz=iz+1
 "RTN","SAMIUR",245,0)
- ;
+ . . . s SRTN(iz,dt,dfn)=iiz
 "RTN","SAMIUR",246,0)
  ;
 "RTN","SAMIUR",247,0)
- ;
+ quit  ; end of SORT
 "RTN","SAMIUR",248,0)
-NUHREF(SAMIPATS) ; create the nuhref link to casereview for all patients
+ ;
 "RTN","SAMIUR",249,0)
- n ij
+ ;
 "RTN","SAMIUR",250,0)
- n root s root=$$setroot^%wd("vapals-patients")
+ ;
 "RTN","SAMIUR",251,0)
- s ij=0
+NUHREF(SAMIPATS) ; create the nuhref link to casereview for all patients
 "RTN","SAMIUR",252,0)
- f  s ij=$o(SAMIPATS(ij)) q:+ij=0  d  ;
+ n ij
 "RTN","SAMIUR",253,0)
- . n ij2 s ij2=0
+ n root s root=$$setroot^%wd("vapals-patients")
 "RTN","SAMIUR",254,0)
- . f  s ij2=$o(SAMIPATS(ij,ij2)) q:+ij2=0  d  ;
+ s ij=0
 "RTN","SAMIUR",255,0)
- . . n dfn s dfn=ij2
+ f  s ij=$o(SAMIPATS(ij)) q:+ij=0  d  ;
 "RTN","SAMIUR",256,0)
- . . s SAMIPATS(ij,dfn,"sid")=$g(@root@(dfn,"samistudyid"))
+ . n ij2 s ij2=0
 "RTN","SAMIUR",257,0)
- . . n sid s sid=SAMIPATS(ij,dfn,"sid")
+ . f  s ij2=$o(SAMIPATS(ij,ij2)) q:+ij2=0  d  ;
 "RTN","SAMIUR",258,0)
- . . s SAMIPATS(ij,dfn,"name")=$g(@root@(dfn,"saminame"))
+ . . n dfn s dfn=ij2
 "RTN","SAMIUR",259,0)
- . . n name s name=SAMIPATS(ij,dfn,"name")
+ . . s SAMIPATS(ij,dfn,"sid")=$g(@root@(dfn,"samistudyid"))
 "RTN","SAMIUR",260,0)
- . . s SAMIPATS(ij,dfn,"ssn")=$$GETSSN^SAMIFORM(sid)
+ . . n sid s sid=SAMIPATS(ij,dfn,"sid")
 "RTN","SAMIUR",261,0)
- . . new nuhref set nuhref="<form method=POST action=""/vapals"">"
+ . . s SAMIPATS(ij,dfn,"name")=$g(@root@(dfn,"saminame"))
 "RTN","SAMIUR",262,0)
- . . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""casereview"">"
+ . . n name s name=SAMIPATS(ij,dfn,"name")
 "RTN","SAMIUR",263,0)
- . . set nuhref=nuhref_"<input type=hidden name=""studyid"" value="_sid_">"
+ . . s SAMIPATS(ij,dfn,"ssn")=$$GETSSN^SAMIFORM(sid)
 "RTN","SAMIUR",264,0)
- . . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
+ . . new nuhref set nuhref="<form method=POST action=""/vapals"">"
 "RTN","SAMIUR",265,0)
- . . s SAMIPATS(ij,dfn,"nuhref")=nuhref
+ . . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""casereview"">"
 "RTN","SAMIUR",266,0)
- ;
+ . . set nuhref=nuhref_"<input type=hidden name=""studyid"" value="_sid_">"
 "RTN","SAMIUR",267,0)
- quit  ; end of NUHREF
+ . . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
 "RTN","SAMIUR",268,0)
- ;
+ . . s SAMIPATS(ij,dfn,"nuhref")=nuhref
 "RTN","SAMIUR",269,0)
  ;
 "RTN","SAMIUR",270,0)
- ;
+ quit  ; end of NUHREF
 "RTN","SAMIUR",271,0)
-SELECT(SAMIPATS,ztype,datephrase,filter) ;selects patients for report
+ ;
 "RTN","SAMIUR",272,0)
  ;
 "RTN","SAMIUR",273,0)
- ;m ^gpl("select")=filter
-"RTN","SAMIUR",274,0)
- n site s site=$g(filter("siteid"))
-"RTN","SAMIUR",275,0)
- i site="" s site=$g(filter("site"))
-"RTN","SAMIUR",276,0)
- q:site=""
-"RTN","SAMIUR",277,0)
- s SAMIPATS("siteid")=site
-"RTN","SAMIUR",278,0)
- n type s type=ztype
-"RTN","SAMIUR",279,0)
- i type="unmatched" d  q  ;
-"RTN","SAMIUR",280,0)
- . d UNMAT(.SAMIPATS,ztype,.datephrase,.filter)
-"RTN","SAMIUR",281,0)
- i type="worklist" d  q  ;
-"RTN","SAMIUR",282,0)
- . d WKLIST(.SAMIPATS,ztype,.datephrase,.filter)
-"RTN","SAMIUR",283,0)
- i $g(type)="" s type="enrollment"
-"RTN","SAMIUR",284,0)
- i type="cumpy" s type="enrollment"
-"RTN","SAMIUR",285,0)
- n strdt,enddt,fmstrdt,fmenddt
-"RTN","SAMIUR",286,0)
- s strdt=$g(filter("start-date"))
-"RTN","SAMIUR",287,0)
- s fmstrdt=$$KEY2FM^SAMICASE(strdt)
-"RTN","SAMIUR",288,0)
- i fmstrdt=-1 d  ;
-"RTN","SAMIUR",289,0)
- . s fmstrdt=2000101
-"RTN","SAMIUR",290,0)
- . i type="followup" s fmstrdt=$$NOW^XLFDT
-"RTN","SAMIUR",291,0)
- . i type="activity" s fmstrdt=$$FMADD^XLFDT($$NOW^XLFDT,-31)
-"RTN","SAMIUR",292,0)
- i strdt="" s filter("start-date")=$$VAPALSDT^SAMICASE(fmstrdt)
-"RTN","SAMIUR",293,0)
- s enddt=$g(filter("end-date"))
-"RTN","SAMIUR",294,0)
- s fmenddt=$$KEY2FM^SAMICASE(enddt)
-"RTN","SAMIUR",295,0)
- i fmenddt=-1 d  ;
-"RTN","SAMIUR",296,0)
- . s fmenddt=$$NOW^XLFDT
-"RTN","SAMIUR",297,0)
- . i type="followup" s fmenddt=$$FMADD^XLFDT($$NOW^XLFDT,31)
-"RTN","SAMIUR",298,0)
- i enddt="" s filter("end-date")=$$VAPALSDT^SAMICASE(fmenddt)
-"RTN","SAMIUR",299,0)
- s datephrase=""
-"RTN","SAMIUR",300,0)
- n zi s zi=0
-"RTN","SAMIUR",301,0)
- n root s root=$$setroot^%wd("vapals-patients")
-"RTN","SAMIUR",302,0)
  ;
+"RTN","SAMIUR",274,0)
+SELECT(SAMIPATS,ztype,datephrase,filter) ;selects patients for report
+"RTN","SAMIUR",275,0)
+ ;
+"RTN","SAMIUR",276,0)
+ ;m ^gpl("select")=filter
+"RTN","SAMIUR",277,0)
+ n site s site=$g(filter("siteid"))
+"RTN","SAMIUR",278,0)
+ i site="" s site=$g(filter("site"))
+"RTN","SAMIUR",279,0)
+ q:site=""
+"RTN","SAMIUR",280,0)
+ s SAMIPATS("siteid")=site
+"RTN","SAMIUR",281,0)
+ n type s type=ztype
+"RTN","SAMIUR",282,0)
+ i type="unmatched" d  q  ;
+"RTN","SAMIUR",283,0)
+ . d UNMAT(.SAMIPATS,ztype,.datephrase,.filter)
+"RTN","SAMIUR",284,0)
+ i type="worklist" d  q  ;
+"RTN","SAMIUR",285,0)
+ . d WKLIST(.SAMIPATS,ztype,.datephrase,.filter)
+"RTN","SAMIUR",286,0)
+ i $g(type)="" s type="enrollment"
+"RTN","SAMIUR",287,0)
+ i type="cumpy" s type="enrollment"
+"RTN","SAMIUR",288,0)
+ n strdt,enddt,fmstrdt,fmenddt
+"RTN","SAMIUR",289,0)
+ s strdt=$g(filter("start-date"))
+"RTN","SAMIUR",290,0)
+ s fmstrdt=$$KEY2FM^SAMICASE(strdt)
+"RTN","SAMIUR",291,0)
+ i fmstrdt=-1 d  ;
+"RTN","SAMIUR",292,0)
+ . s fmstrdt=2000101
+"RTN","SAMIUR",293,0)
+ . i type="followup" s fmstrdt=$$NOW^XLFDT
+"RTN","SAMIUR",294,0)
+ . i type="activity" s fmstrdt=$$FMADD^XLFDT($$NOW^XLFDT,-31)
+"RTN","SAMIUR",295,0)
+ i strdt="" s filter("start-date")=$$VAPALSDT^SAMICASE(fmstrdt)
+"RTN","SAMIUR",296,0)
+ s enddt=$g(filter("end-date"))
+"RTN","SAMIUR",297,0)
+ s fmenddt=$$KEY2FM^SAMICASE(enddt)
+"RTN","SAMIUR",298,0)
+ i fmenddt=-1 d  ;
+"RTN","SAMIUR",299,0)
+ . s fmenddt=$$NOW^XLFDT
+"RTN","SAMIUR",300,0)
+ . i type="followup" s fmenddt=$$FMADD^XLFDT($$NOW^XLFDT,31)
+"RTN","SAMIUR",301,0)
+ i enddt="" s filter("end-date")=$$VAPALSDT^SAMICASE(fmenddt)
+"RTN","SAMIUR",302,0)
+ s datephrase=""
 "RTN","SAMIUR",303,0)
- f  s zi=$o(@root@(zi)) q:+zi=0  d  ;
+ n zi s zi=0
 "RTN","SAMIUR",304,0)
- . n sid s sid=$g(@root@(zi,"samistudyid"))
+ n root s root=$$setroot^%wd("vapals-patients")
 "RTN","SAMIUR",305,0)
- . q:sid=""
+ ;
 "RTN","SAMIUR",306,0)
- . q:$e(sid,1,3)'=site
+ f  s zi=$o(@root@(zi)) q:+zi=0  d  ;
 "RTN","SAMIUR",307,0)
- . n items s items=""
+ . n sid s sid=$g(@root@(zi,"samistudyid"))
 "RTN","SAMIUR",308,0)
- . d GETITEMS^SAMICASE("items",sid)
+ . q:sid=""
 "RTN","SAMIUR",309,0)
- . q:'$d(items)
+ . q:$e(sid,1,3)'=site
 "RTN","SAMIUR",310,0)
- . n efmdate,edate,siform,ceform,cefud,fmcefud,cedos,fmcedos
+ . n items s items=""
 "RTN","SAMIUR",311,0)
- . s siform=$o(items("siform-"))
+ . d GETITEMS^SAMICASE("items",sid)
 "RTN","SAMIUR",312,0)
- . n inactive s inactive=$g(@root@("graph",sid,siform,"sistatus"))
+ . q:'$d(items)
 "RTN","SAMIUR",313,0)
- . i type="inactive" i inactive'="inactive" q  ; for inactive report
+ . n efmdate,edate,siform,ceform,cefud,fmcefud,cedos,fmcedos
 "RTN","SAMIUR",314,0)
- . i type'="inactive" i inactive="inactive" q  ; for other reports
+ . s siform=$o(items("siform-"))
 "RTN","SAMIUR",315,0)
- . s ceform=$o(items("ceform-a"),-1)
+ . n inactive s inactive=$g(@root@("graph",sid,siform,"sistatus"))
 "RTN","SAMIUR",316,0)
- . s (cefud,fmcefud,cedos,fmcedos)=""
+ . i type="inactive" i inactive'="inactive" q  ; for inactive report
 "RTN","SAMIUR",317,0)
- . i ceform'="" d  ;
+ . i type'="inactive" i inactive="inactive" q  ; for other reports
 "RTN","SAMIUR",318,0)
- . . s cefud=$g(@root@("graph",sid,ceform,"cefud"))
+ . s ceform=$o(items("ceform-a"),-1)
 "RTN","SAMIUR",319,0)
- . . i cefud'="" s fmcefud=$$KEY2FM^SAMICASE(cefud)
+ . s (cefud,fmcefud,cedos,fmcedos)=""
 "RTN","SAMIUR",320,0)
- . . s cedos=$g(@root@("graph",sid,ceform,"cedos"))
+ . i ceform'="" d  ;
 "RTN","SAMIUR",321,0)
- . . i cedos'="" s fmcedos=$$KEY2FM^SAMICASE(cedos)
+ . . s cefud=$g(@root@("graph",sid,ceform,"cefud"))
 "RTN","SAMIUR",322,0)
- . s edate=$g(@root@("graph",sid,siform,"sidc"))
+ . . i cefud'="" s fmcefud=$$KEY2FM^SAMICASE(cefud)
 "RTN","SAMIUR",323,0)
- . i edate="" s edate=$g(@root@("graph",sid,siform,"samicreatedate"))
+ . . s cedos=$g(@root@("graph",sid,ceform,"cedos"))
 "RTN","SAMIUR",324,0)
- . s efmdate=$$KEY2FM^SAMICASE(edate)
+ . . i cedos'="" s fmcedos=$$KEY2FM^SAMICASE(cedos)
 "RTN","SAMIUR",325,0)
- . s edate=$$VAPALSDT^SAMICASE(efmdate)
+ . s edate=$g(@root@("graph",sid,siform,"sidc"))
 "RTN","SAMIUR",326,0)
- . ;
+ . i edate="" s edate=$g(@root@("graph",sid,siform,"samicreatedate"))
 "RTN","SAMIUR",327,0)
- . i type="followup" d  ;
+ . s efmdate=$$KEY2FM^SAMICASE(edate)
 "RTN","SAMIUR",328,0)
- . . ;n nplus30 s nplus30=$$FMADD^XLFDT($$NOW^XLFDT,31)
+ . s edate=$$VAPALSDT^SAMICASE(efmdate)
 "RTN","SAMIUR",329,0)
- . . i +fmcefud<fmstrdt q  ; before start date
+ . ;
 "RTN","SAMIUR",330,0)
- . . i (+fmcefud<(fmenddt+1)) d  ; before end date
+ . i type="followup" d  ;
 "RTN","SAMIUR",331,0)
- . . . i ceform="" q  ; no ct eval so no followup date
+ . . ;n nplus30 s nplus30=$$FMADD^XLFDT($$NOW^XLFDT,31)
 "RTN","SAMIUR",332,0)
- . . . s SAMIPATS(fmcefud,zi,"edate")=edate
+ . . i +fmcefud<fmstrdt q  ; before start date
 "RTN","SAMIUR",333,0)
- . . . s SAMIPATS(fmcefud,zi)=""
+ . . i (+fmcefud<(fmenddt+1)) d  ; before end date
 "RTN","SAMIUR",334,0)
- . . . i ceform="" s cefud="baseline"
+ . . . i ceform="" q  ; no ct eval so no followup date
 "RTN","SAMIUR",335,0)
- . . . s SAMIPATS(fmcefud,zi,"cefud")=cefud
+ . . . s SAMIPATS(fmcefud,zi,"edate")=edate
 "RTN","SAMIUR",336,0)
- . . . s SAMIPATS(fmcefud,zi,"cedos")=cedos
+ . . . s SAMIPATS(fmcefud,zi)=""
 "RTN","SAMIUR",337,0)
- . . . s SAMIPATS(fmcefud,zi,"ceform")=ceform
-"RTN","SAMIUR",338,0)
- . . . s SAMIPATS(fmcefud,zi,"ceform-vals")=$na(@root@("graph",sid,ceform))
-"RTN","SAMIUR",339,0)
- . . . s SAMIPATS(fmcefud,zi,"siform")=siform
-"RTN","SAMIUR",340,0)
- . . . s SAMIPATS(fmcefud,zi,"siform-vals")=$na(@root@("graph",sid,siform))
-"RTN","SAMIUR",341,0)
- . . . m SAMIPATS(fmcefud,zi,"items")=items
-"RTN","SAMIUR",342,0)
- . . s datephrase=" before "_$$VAPALSDT^SAMICASE(fmenddt)
-"RTN","SAMIUR",343,0)
- . . q
-"RTN","SAMIUR",344,0)
- . i type="activity" d  ;
-"RTN","SAMIUR",345,0)
- . . ;n nminus30 s nminus30=$$FMADD^XLFDT($$NOW^XLFDT,-31)
-"RTN","SAMIUR",346,0)
- . . n anyform s anyform=$o(items("sort",""),-1)
-"RTN","SAMIUR",347,0)
- . . n fmanyform s fmanyform=$$KEY2FM^SAMICASE(anyform)
-"RTN","SAMIUR",348,0)
- . . i +fmanyform<fmstrdt q  ; before the start date
-"RTN","SAMIUR",349,0)
- . . ;i (+fmanyform<(fmenddt+1))!(+efmdate>fmenddt) d  ; need any new form
-"RTN","SAMIUR",350,0)
- . . i (+fmanyform<(fmenddt+1))  d  ;
-"RTN","SAMIUR",351,0)
- . . . s SAMIPATS(efmdate,zi,"edate")=edate
-"RTN","SAMIUR",352,0)
- . . . s SAMIPATS(efmdate,zi)=""
-"RTN","SAMIUR",353,0)
  . . . i ceform="" s cefud="baseline"
+"RTN","SAMIUR",338,0)
+ . . . s SAMIPATS(fmcefud,zi,"cefud")=cefud
+"RTN","SAMIUR",339,0)
+ . . . s SAMIPATS(fmcefud,zi,"cedos")=cedos
+"RTN","SAMIUR",340,0)
+ . . . s SAMIPATS(fmcefud,zi,"ceform")=ceform
+"RTN","SAMIUR",341,0)
+ . . . s SAMIPATS(fmcefud,zi,"ceform-vals")=$na(@root@("graph",sid,ceform))
+"RTN","SAMIUR",342,0)
+ . . . s SAMIPATS(fmcefud,zi,"siform")=siform
+"RTN","SAMIUR",343,0)
+ . . . s SAMIPATS(fmcefud,zi,"siform-vals")=$na(@root@("graph",sid,siform))
+"RTN","SAMIUR",344,0)
+ . . . m SAMIPATS(fmcefud,zi,"items")=items
+"RTN","SAMIUR",345,0)
+ . . s datephrase=" before "_$$VAPALSDT^SAMICASE(fmenddt)
+"RTN","SAMIUR",346,0)
+ . . q
+"RTN","SAMIUR",347,0)
+ . i type="activity" d  ;
+"RTN","SAMIUR",348,0)
+ . . ;n nminus30 s nminus30=$$FMADD^XLFDT($$NOW^XLFDT,-31)
+"RTN","SAMIUR",349,0)
+ . . n anyform s anyform=$o(items("sort",""),-1)
+"RTN","SAMIUR",350,0)
+ . . n fmanyform s fmanyform=$$KEY2FM^SAMICASE(anyform)
+"RTN","SAMIUR",351,0)
+ . . i +fmanyform<fmstrdt q  ; before the start date
+"RTN","SAMIUR",352,0)
+ . . ;i (+fmanyform<(fmenddt+1))!(+efmdate>fmenddt) d  ; need any new form
+"RTN","SAMIUR",353,0)
+ . . i (+fmanyform<(fmenddt+1))  d  ;
 "RTN","SAMIUR",354,0)
- . . . s SAMIPATS(efmdate,zi,"cefud")=cefud
+ . . . s SAMIPATS(efmdate,zi,"edate")=edate
 "RTN","SAMIUR",355,0)
- . . . s SAMIPATS(efmdate,zi,"cedos")=cedos
+ . . . s SAMIPATS(efmdate,zi)=""
 "RTN","SAMIUR",356,0)
- . . . s SAMIPATS(efmdate,zi,"ceform")=ceform
+ . . . i ceform="" s cefud="baseline"
 "RTN","SAMIUR",357,0)
- . . . s SAMIPATS(efmdate,zi,"siform")=siform
+ . . . s SAMIPATS(efmdate,zi,"cefud")=cefud
 "RTN","SAMIUR",358,0)
- . . . m SAMIPATS(efmdate,zi,"items")=items
+ . . . s SAMIPATS(efmdate,zi,"cedos")=cedos
 "RTN","SAMIUR",359,0)
- . . s datephrase=" after "_$$VAPALSDT^SAMICASE(fmstrdt)
+ . . . s SAMIPATS(efmdate,zi,"ceform")=ceform
 "RTN","SAMIUR",360,0)
- . ;
+ . . . s SAMIPATS(efmdate,zi,"siform")=siform
 "RTN","SAMIUR",361,0)
- . ; date filter for all the rest of the reports
+ . . . m SAMIPATS(efmdate,zi,"items")=items
 "RTN","SAMIUR",362,0)
- . ;
+ . . s datephrase=" after "_$$VAPALSDT^SAMICASE(fmstrdt)
 "RTN","SAMIUR",363,0)
- . i efmdate<fmstrdt q  ; before the start date
+ . ;
 "RTN","SAMIUR",364,0)
- . i efmdate>(fmenddt+1) q  ; after the end date
+ . ; date filter for all the rest of the reports
 "RTN","SAMIUR",365,0)
  . ;
 "RTN","SAMIUR",366,0)
- . i type="incomplete" d  ;
+ . i efmdate<fmstrdt q  ; before the start date
 "RTN","SAMIUR",367,0)
- . . n complete s complete=1
+ . i efmdate>(fmenddt+1) q  ; after the end date
 "RTN","SAMIUR",368,0)
- . . n zj s zj=""
+ . ;
 "RTN","SAMIUR",369,0)
- . . n gr s gr=$na(@root@("graph",sid))
+ . i type="incomplete" d  ;
 "RTN","SAMIUR",370,0)
- . . f  s zj=$o(@gr@(zj)) q:zj=""  d  ;
+ . . n complete s complete=1
 "RTN","SAMIUR",371,0)
- . . . i $g(@gr@(zj,"samistatus"))="incomplete" d  ;
+ . . n zj s zj=""
 "RTN","SAMIUR",372,0)
- . . . . s complete=0
+ . . n gr s gr=$na(@root@("graph",sid))
 "RTN","SAMIUR",373,0)
- . . . . s SAMIPATS(efmdate,zi,"iform")=$g(SAMIPATS(efmdate,zi,"iform"))_" "_zj
+ . . f  s zj=$o(@gr@(zj)) q:zj=""  d  ;
 "RTN","SAMIUR",374,0)
- . . i complete=0 d  ; has incomplete form(s) 
+ . . . i $g(@gr@(zj,"samistatus"))="incomplete" d  ;
 "RTN","SAMIUR",375,0)
- . . . s SAMIPATS(efmdate,zi,"edate")=edate
+ . . . . s complete=0
 "RTN","SAMIUR",376,0)
- . . . s SAMIPATS(efmdate,zi)=""
+ . . . . s SAMIPATS(efmdate,zi,"iform")=$g(SAMIPATS(efmdate,zi,"iform"))_" "_zj
 "RTN","SAMIUR",377,0)
- . . . i ceform="" s cefud="baseline"
+ . . i complete=0 d  ; has incomplete form(s) 
 "RTN","SAMIUR",378,0)
- . . . s SAMIPATS(efmdate,zi,"cefud")=cefud
-"RTN","SAMIUR",379,0)
- . . . s SAMIPATS(efmdate,zi,"ceform")=ceform
-"RTN","SAMIUR",380,0)
- . . . s SAMIPATS(efmdate,zi,"siform")=siform
-"RTN","SAMIUR",381,0)
- . . . m SAMIPATS(efmdate,zi,"items")=items
-"RTN","SAMIUR",382,0)
- . . s datephrase=""
-"RTN","SAMIUR",383,0)
- . . q
-"RTN","SAMIUR",384,0)
- . i type="missingct" d  ;
-"RTN","SAMIUR",385,0)
- . . i ceform="" d  ; has incomplete form(s) 
-"RTN","SAMIUR",386,0)
  . . . s SAMIPATS(efmdate,zi,"edate")=edate
-"RTN","SAMIUR",387,0)
+"RTN","SAMIUR",379,0)
  . . . s SAMIPATS(efmdate,zi)=""
-"RTN","SAMIUR",388,0)
+"RTN","SAMIUR",380,0)
  . . . i ceform="" s cefud="baseline"
-"RTN","SAMIUR",389,0)
+"RTN","SAMIUR",381,0)
  . . . s SAMIPATS(efmdate,zi,"cefud")=cefud
-"RTN","SAMIUR",390,0)
+"RTN","SAMIUR",382,0)
  . . . s SAMIPATS(efmdate,zi,"ceform")=ceform
-"RTN","SAMIUR",391,0)
+"RTN","SAMIUR",383,0)
  . . . s SAMIPATS(efmdate,zi,"siform")=siform
-"RTN","SAMIUR",392,0)
+"RTN","SAMIUR",384,0)
  . . . m SAMIPATS(efmdate,zi,"items")=items
-"RTN","SAMIUR",393,0)
+"RTN","SAMIUR",385,0)
  . . s datephrase=""
+"RTN","SAMIUR",386,0)
+ . . q
+"RTN","SAMIUR",387,0)
+ . i type="missingct" d  ;
+"RTN","SAMIUR",388,0)
+ . . i ceform="" d  ; has incomplete form(s) 
+"RTN","SAMIUR",389,0)
+ . . . s SAMIPATS(efmdate,zi,"edate")=edate
+"RTN","SAMIUR",390,0)
+ . . . s SAMIPATS(efmdate,zi)=""
+"RTN","SAMIUR",391,0)
+ . . . i ceform="" s cefud="baseline"
+"RTN","SAMIUR",392,0)
+ . . . s SAMIPATS(efmdate,zi,"cefud")=cefud
+"RTN","SAMIUR",393,0)
+ . . . s SAMIPATS(efmdate,zi,"ceform")=ceform
 "RTN","SAMIUR",394,0)
- . . q
+ . . . s SAMIPATS(efmdate,zi,"siform")=siform
 "RTN","SAMIUR",395,0)
- . i type="outreach" d  ;
+ . . . m SAMIPATS(efmdate,zi,"items")=items
 "RTN","SAMIUR",396,0)
- . . q
+ . . s datephrase=""
 "RTN","SAMIUR",397,0)
- . i type="enrollment" d  ;
+ . . q
 "RTN","SAMIUR",398,0)
- . . s SAMIPATS(efmdate,zi,"edate")=edate
+ . i type="outreach" d  ;
 "RTN","SAMIUR",399,0)
- . . s SAMIPATS(efmdate,zi)=""
+ . . q
 "RTN","SAMIUR",400,0)
- . . s SAMIPATS(efmdate,zi,"cefud")=cefud
+ . i type="enrollment" d  ;
 "RTN","SAMIUR",401,0)
- . . s SAMIPATS(efmdate,zi,"ceform")=ceform
-"RTN","SAMIUR",402,0)
- . . s SAMIPATS(efmdate,zi,"cedos")=cedos
-"RTN","SAMIUR",403,0)
- . . s SAMIPATS(efmdate,zi,"siform")=siform
-"RTN","SAMIUR",404,0)
- . . m SAMIPATS(efmdate,zi,"items")=items
-"RTN","SAMIUR",405,0)
- . i type="inactive" d  ;
-"RTN","SAMIUR",406,0)
  . . s SAMIPATS(efmdate,zi,"edate")=edate
-"RTN","SAMIUR",407,0)
+"RTN","SAMIUR",402,0)
  . . s SAMIPATS(efmdate,zi)=""
-"RTN","SAMIUR",408,0)
+"RTN","SAMIUR",403,0)
  . . s SAMIPATS(efmdate,zi,"cefud")=cefud
-"RTN","SAMIUR",409,0)
+"RTN","SAMIUR",404,0)
  . . s SAMIPATS(efmdate,zi,"ceform")=ceform
-"RTN","SAMIUR",410,0)
+"RTN","SAMIUR",405,0)
  . . s SAMIPATS(efmdate,zi,"cedos")=cedos
-"RTN","SAMIUR",411,0)
+"RTN","SAMIUR",406,0)
  . . s SAMIPATS(efmdate,zi,"siform")=siform
-"RTN","SAMIUR",412,0)
+"RTN","SAMIUR",407,0)
  . . m SAMIPATS(efmdate,zi,"items")=items
+"RTN","SAMIUR",408,0)
+ . i type="inactive" d  ;
+"RTN","SAMIUR",409,0)
+ . . s SAMIPATS(efmdate,zi,"edate")=edate
+"RTN","SAMIUR",410,0)
+ . . s SAMIPATS(efmdate,zi)=""
+"RTN","SAMIUR",411,0)
+ . . s SAMIPATS(efmdate,zi,"cefud")=cefud
+"RTN","SAMIUR",412,0)
+ . . s SAMIPATS(efmdate,zi,"ceform")=ceform
 "RTN","SAMIUR",413,0)
- . s datephrase=" as of "_$$VAPALSDT^SAMICASE($$NOW^XLFDT)
+ . . s SAMIPATS(efmdate,zi,"cedos")=cedos
 "RTN","SAMIUR",414,0)
- ;
+ . . s SAMIPATS(efmdate,zi,"siform")=siform
 "RTN","SAMIUR",415,0)
- quit  ; end of SELECT
+ . . m SAMIPATS(efmdate,zi,"items")=items
 "RTN","SAMIUR",416,0)
- ;
+ . s datephrase=" as of "_$$VAPALSDT^SAMICASE($$NOW^XLFDT)
 "RTN","SAMIUR",417,0)
  ;
 "RTN","SAMIUR",418,0)
- ;
+ quit  ; end of SELECT
 "RTN","SAMIUR",419,0)
-UNMAT(SAMIPATS,ztype,datephrase,filter) ;
+ ;
 "RTN","SAMIUR",420,0)
  ;
 "RTN","SAMIUR",421,0)
- n site
+ ;
 "RTN","SAMIUR",422,0)
- s site=$g(filter("siteid"))
+UNMAT(SAMIPATS,ztype,datephrase,filter) ;
 "RTN","SAMIUR",423,0)
- i site="" s site=$g(filter("site"))
+ ;
 "RTN","SAMIUR",424,0)
- i site="" s site=$g(SAMIPATS("siteid"))
+ n site
 "RTN","SAMIUR",425,0)
- q:site=""
+ s site=$g(filter("siteid"))
 "RTN","SAMIUR",426,0)
- ;n ssnlbl s ssnlbl=$$GET1PARM^SAMIPARM("socialSecurityNumber",site)
+ i site="" s site=$g(filter("site"))
 "RTN","SAMIUR",427,0)
- s datephrase="Unmatched Persons"
+ i site="" s site=$g(SAMIPATS("siteid"))
 "RTN","SAMIUR",428,0)
- n lroot s lroot=$$setroot^%wd("patient-lookup")
+ q:site=""
 "RTN","SAMIUR",429,0)
- ;n dfn s dfn=9000000
+ ;n ssnlbl s ssnlbl=$$GET1PARM^SAMIPARM("socialSecurityNumber",site)
 "RTN","SAMIUR",430,0)
- n dfn s dfn=0
+ s datephrase="Unmatched Persons"
 "RTN","SAMIUR",431,0)
- f  s dfn=$o(@lroot@("dfn",dfn)) q:+dfn=0  d  ;
+ n lroot s lroot=$$setroot^%wd("patient-lookup")
 "RTN","SAMIUR",432,0)
- . n ien s ien=$o(@lroot@("dfn",dfn,""))
+ ;n dfn s dfn=9000000
 "RTN","SAMIUR",433,0)
- . q:ien=""
+ n dfn s dfn=0
 "RTN","SAMIUR",434,0)
- . n ordern
+ f  s dfn=$o(@lroot@("dfn",dfn)) q:+dfn=0  d  ;
 "RTN","SAMIUR",435,0)
- . s ordern=$g(@lroot@(ien,"ORMORCordernumber"))
+ . n ien s ien=$o(@lroot@("dfn",dfn,""))
 "RTN","SAMIUR",436,0)
- . i ordern="" s ordern=$g(@lroot@(ien,"ORM",1,"ordernumber"))
+ . q:ien=""
 "RTN","SAMIUR",437,0)
- . i ordern'="" q  ;
+ . n ordern
 "RTN","SAMIUR",438,0)
- . i $g(@lroot@(ien,"siteid"))'[site q  ;
+ . s ordern=$g(@lroot@(ien,"ORMORCordernumber"))
 "RTN","SAMIUR",439,0)
- . m SAMIPATS(ien,dfn)=@lroot@(ien)
+ . i ordern="" s ordern=$g(@lroot@(ien,"ORM",1,"ordernumber"))
 "RTN","SAMIUR",440,0)
- . new name set name=$g(SAMIPATS(ien,dfn,"saminame"))
+ . i ordern'="" q  ;
 "RTN","SAMIUR",441,0)
- . ;new name set name=$g(SAMIPATS(ien,dfn,"sinamef"))
+ . i $g(@lroot@(ien,"siteid"))'[site q  ;
 "RTN","SAMIUR",442,0)
- . ;set name=name_","_SAMIPATS(ien,dfn,"sinamel")
+ . m SAMIPATS(ien,dfn)=@lroot@(ien)
 "RTN","SAMIUR",443,0)
- . new nuhref set nuhref="<form method=POST action=""/vapals"">"
+ . new name set name=$g(SAMIPATS(ien,dfn,"saminame"))
 "RTN","SAMIUR",444,0)
- . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""editperson"">"
+ . ;new name set name=$g(SAMIPATS(ien,dfn,"sinamef"))
 "RTN","SAMIUR",445,0)
- . set nuhref=nuhref_"<input type=hidden name=""siteid"" value="_site_">"
+ . ;set name=name_","_SAMIPATS(ien,dfn,"sinamel")
 "RTN","SAMIUR",446,0)
- . set nuhref=nuhref_"<input type=hidden name=""dfn"" value="_dfn_">"
+ . new nuhref set nuhref="<form method=POST action=""/vapals"">"
 "RTN","SAMIUR",447,0)
- . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"_$CHAR(10,13)
+ . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""editperson"">"
 "RTN","SAMIUR",448,0)
- . s SAMIPATS(ien,dfn,"editref")=nuhref
+ . set nuhref=nuhref_"<input type=hidden name=""siteid"" value="_site_">"
 "RTN","SAMIUR",449,0)
- ;
+ . set nuhref=nuhref_"<input type=hidden name=""dfn"" value="_dfn_">"
 "RTN","SAMIUR",450,0)
- quit  ; end of UNMAT
+ . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"_$CHAR(10,13)
 "RTN","SAMIUR",451,0)
- ;
+ . s SAMIPATS(ien,dfn,"editref")=nuhref
 "RTN","SAMIUR",452,0)
  ;
 "RTN","SAMIUR",453,0)
- ;
+ quit  ; end of UNMAT
 "RTN","SAMIUR",454,0)
-WKLIST(SAMIPATS,ztype,datephrase,filter) ;
+ ;
 "RTN","SAMIUR",455,0)
  ;
 "RTN","SAMIUR",456,0)
- ; add site
+ ;
 "RTN","SAMIUR",457,0)
- ; add compare to vapals-patients
+WKLIST(SAMIPATS,ztype,datephrase,filter) ;
 "RTN","SAMIUR",458,0)
- ; add navigation to enrollment
+ ;
 "RTN","SAMIUR",459,0)
- ;
+ ; add site
 "RTN","SAMIUR",460,0)
- k ^gpl("worklist")
+ ; add compare to vapals-patients
 "RTN","SAMIUR",461,0)
- m ^gpl("worklist")=filter
+ ; add navigation to enrollment
 "RTN","SAMIUR",462,0)
- n site
+ ;
 "RTN","SAMIUR",463,0)
- s site=$g(filter("siteid"))
+ k ^gpl("worklist")
 "RTN","SAMIUR",464,0)
- q:site=""
+ m ^gpl("worklist")=filter
 "RTN","SAMIUR",465,0)
- s datephrase="Work List"
+ n site
 "RTN","SAMIUR",466,0)
- n lroot s lroot=$$setroot^%wd("patient-lookup")
+ s site=$g(filter("siteid"))
 "RTN","SAMIUR",467,0)
- n proot s proot=$$setroot^%wd("vapals-patients")
+ q:site=""
 "RTN","SAMIUR",468,0)
- n dfn s dfn=0
+ s datephrase="Work List"
 "RTN","SAMIUR",469,0)
- f  s dfn=$o(@lroot@("dfn",dfn)) q:+dfn=0  d  ;
+ n lroot s lroot=$$setroot^%wd("patient-lookup")
 "RTN","SAMIUR",470,0)
- . q:$o(@proot@("dfn",dfn,""))'=""
+ n proot s proot=$$setroot^%wd("vapals-patients")
 "RTN","SAMIUR",471,0)
- . n ien s ien=$o(@lroot@("dfn",dfn,""))
+ n dfn s dfn=0
 "RTN","SAMIUR",472,0)
- . q:ien=""
+ f  s dfn=$o(@lroot@("dfn",dfn)) q:+dfn=0  d  ;
 "RTN","SAMIUR",473,0)
- . ;w !,"dfn= ",dfn
+ . q:$o(@proot@("dfn",dfn,""))'=""
 "RTN","SAMIUR",474,0)
- . ;zwr @lroot@(ien,*)
+ . n ien s ien=$o(@lroot@("dfn",dfn,""))
 "RTN","SAMIUR",475,0)
- . q:$g(@lroot@(ien,"siteid"))'=site
+ . q:ien=""
 "RTN","SAMIUR",476,0)
- . m ^gpl("worklist","lroot",ien)=@lroot@(ien)
+ . ;w !,"dfn= ",dfn
 "RTN","SAMIUR",477,0)
- . m SAMIPATS(ien,dfn)=@lroot@(ien)
+ . ;zwr @lroot@(ien,*)
 "RTN","SAMIUR",478,0)
- . new name set name=$g(SAMIPATS(ien,dfn,"saminame"))
+ . q:$g(@lroot@(ien,"siteid"))'=site
 "RTN","SAMIUR",479,0)
- . ;new name set name=$g(SAMIPATS(ien,dfn,"sinamef"))
+ . m ^gpl("worklist","lroot",ien)=@lroot@(ien)
 "RTN","SAMIUR",480,0)
- . ;set name=name_","_SAMIPATS(ien,dfn,"sinamel")
+ . m SAMIPATS(ien,dfn)=@lroot@(ien)
 "RTN","SAMIUR",481,0)
- . new nuhref set nuhref="<form method=POST action=""/vapals"">"
+ . new name set name=$g(SAMIPATS(ien,dfn,"saminame"))
 "RTN","SAMIUR",482,0)
- . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""newcase"">"
+ . ;new name set name=$g(SAMIPATS(ien,dfn,"sinamef"))
 "RTN","SAMIUR",483,0)
- . set nuhref=nuhref_"<input type=hidden name=""dfn"" value="_dfn_">"
+ . ;set name=name_","_SAMIPATS(ien,dfn,"sinamel")
 "RTN","SAMIUR",484,0)
- . set nuhref=nuhref_"<input type=hidden name=""siteid"" value="_site_">"
+ . new nuhref set nuhref="<form method=POST action=""/vapals"">"
 "RTN","SAMIUR",485,0)
- . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
+ . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""newcase"">"
 "RTN","SAMIUR",486,0)
- . s SAMIPATS(ien,dfn,"workref")=nuhref
+ . set nuhref=nuhref_"<input type=hidden name=""dfn"" value="_dfn_">"
 "RTN","SAMIUR",487,0)
- m ^gpl("worklist","pats")=SAMIPATS
+ . set nuhref=nuhref_"<input type=hidden name=""siteid"" value="_site_">"
 "RTN","SAMIUR",488,0)
- ;
+ . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
 "RTN","SAMIUR",489,0)
- quit  ; end of WKLIST
+ . s SAMIPATS(ien,dfn,"workref")=nuhref
 "RTN","SAMIUR",490,0)
- ;
+ m ^gpl("worklist","pats")=SAMIPATS
 "RTN","SAMIUR",491,0)
  ;
 "RTN","SAMIUR",492,0)
- ;
+ quit  ; end of WKLIST
 "RTN","SAMIUR",493,0)
-PNAME(type,phrase) ; extrinsic returns the PAGE NAME for the report
+ ;
 "RTN","SAMIUR",494,0)
  ;
 "RTN","SAMIUR",495,0)
- ;i type="followup" q "Followup next 30 days -"_$g(phrase)
+ ;
 "RTN","SAMIUR",496,0)
- i type="followup" q "Followup "_$g(phrase)
+PNAME(type,phrase) ; extrinsic returns the PAGE NAME for the report
 "RTN","SAMIUR",497,0)
- ;i type="activity" q "Activity last 30 days -"_$g(phrase)
+ ;
 "RTN","SAMIUR",498,0)
- i type="activity" q "Activity "_$g(phrase)
+ ;i type="followup" q "Followup next 30 days -"_$g(phrase)
 "RTN","SAMIUR",499,0)
- i type="missingct" q "Intake but no CT Evaluation"_$g(phrase)
+ i type="followup" q "Followup "_$g(phrase)
 "RTN","SAMIUR",500,0)
- i type="incomplete" q "Incomplete Forms"_$g(phrase)
+ ;i type="activity" q "Activity last 30 days -"_$g(phrase)
 "RTN","SAMIUR",501,0)
- i type="outreach" q "Outreach"_$g(phrase)
+ i type="activity" q "Activity "_$g(phrase)
 "RTN","SAMIUR",502,0)
- i type="enrollment" q "Enrollment"_$g(phrase)
+ i type="missingct" q "Intake but no CT Evaluation"_$g(phrase)
 "RTN","SAMIUR",503,0)
- i type="inactive" q "Inactive"_$g(phrase)
+ i type="incomplete" q "Incomplete Forms"_$g(phrase)
 "RTN","SAMIUR",504,0)
- ;
+ i type="outreach" q "Outreach"_$g(phrase)
 "RTN","SAMIUR",505,0)
- quit "" ; end of $$PNAME
+ i type="enrollment" q "Enrollment"_$g(phrase)
 "RTN","SAMIUR",506,0)
- ;
+ i type="inactive" q "Inactive"_$g(phrase)
 "RTN","SAMIUR",507,0)
  ;
 "RTN","SAMIUR",508,0)
- ;
+ quit "" ; end of $$PNAME
 "RTN","SAMIUR",509,0)
+ ;
+"RTN","SAMIUR",510,0)
+ ;
+"RTN","SAMIUR",511,0)
+ ;
+"RTN","SAMIUR",512,0)
 EOR ; end of SAMIUR
 "RTN","SAMIUR2")
 0^6^B430583619
 "RTN","SAMIUR2",1,0)
 SAMIUR2 ;ven/gpl - sami user reports ; 5/8/19 10:57am
 "RTN","SAMIUR2",2,0)
- ;;18.0;SAM;;;Build 1
+ ;;18.0;SAM;;;Build 2
 "RTN","SAMIUR2",3,0)
  ;
 "RTN","SAMIUR2",4,0)

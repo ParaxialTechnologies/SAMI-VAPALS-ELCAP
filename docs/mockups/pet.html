@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.05.19" name="version"/>
+  <meta content="2021.05.20" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: PET Evaluation Form
@@ -6146,7 +6146,7 @@
     </h3>
     <div class="row">
      <div class="col-md-6 form-group">
-      <label class="required" for="cefu">
+      <label for="cefu">
        Follow-up
       </label>
       <select class="form-control" id="cefu" name="cefu" required="required">
@@ -6183,7 +6183,7 @@
       </select>
      </div>
      <div class="col-md-6 form-group">
-      <label class="required" for="cefud">
+      <label for="cefud">
        When
       </label>
       <div class="input-group datepicker">
@@ -6350,7 +6350,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2021.05.19
+     2021.05.20
     </span>
    </div>
   </footer>
@@ -6479,10 +6479,8 @@
                                 date: {max: VAPALS.todaysDate(), message: 'Date may not be in the future'}
                             }
                         },
-                        cefu: {validators: {callback: {callback: notDash, message: 'Select a value'}}},
                         cefud: {
                             validators: {
-                                notEmpty: {message: 'Follow-up date is required'},
                                 date: {min: VAPALS.todaysDate(), message: 'Date may not be in the past'}
                             }
                         },

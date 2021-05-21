@@ -1,6 +1,6 @@
-SAMICTTA ;ven/gpl - ctreport text recommendations ;2021-03-22T15:51Z
- ;;18.0;SAMI;**4,10**;2020-01;Build 2
- ;;1.18.0.10-i10
+SAMICTTA ;ven/gpl - ctreport text recommendations ;2021-05-20T17:33Z
+ ;;18.0;SAMI;**4,10,11**;2020-01;Build 2
+ ;;1.18.0.11-i11
  ;
  ; SAMICTTA creates the Recommendations section of the ELCAP CT Report
  ; in text format.

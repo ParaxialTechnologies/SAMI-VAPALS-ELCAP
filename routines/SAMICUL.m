@@ -1,6 +1,6 @@
-SAMICUL ;ven/gpl - ielcap: case review page log ;2021-03-17T15:09Z
- ;;18.0;SAMI;**9**;
- ;;1.18.0.9-i9
+SAMICUL ;ven/gpl - ielcap: case review page log ;2021-05-20T16:21Z
+ ;;18.0;SAMI;**9,11**;
+ ;;1.18.0.11-i11
  ;
  ; SAMICASE contains subroutines for producing the ELCAP Case
  ; Review Page.
@@ -23,13 +23,13 @@ SAMICUL ;ven/gpl - ielcap: case review page log ;2021-03-17T15:09Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-03-17T15:09Z
+ ;@last-updated 2021-05-20T16:21Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.9-i9
+ ;@version 1.18.0.11-i11
  ;@release-date 2020-01
- ;@patch-list **9**
+ ;@patch-list **9,11**
  ;
  ;@additional-dev Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -39,6 +39,8 @@ SAMICUL ;ven/gpl - ielcap: case review page log ;2021-03-17T15:09Z
  ; larry.g.carlson@gmail.com
  ;@additional-dev Domenick DiNatale (ddn)
  ; domenic@intellitechinnovations.com
+ ;@additional-dev Kenneth McGlothlen (mcglk)
+ ; mcglk@vistaexpertise.net
  ;
  ;@module-credits
  ;@project VA Partnership to Increase Access to Lung Screening
@@ -261,10 +263,20 @@ SAMICUL ;ven/gpl - ielcap: case review page log ;2021-03-17T15:09Z
  ;  SAMICAS2,SAMICAS3: bump date & patch list, update contents, lt
  ; refactor.
  ;
- ; 2021-03-17 ven/toad 1.18.0.9-i9
+ ; 2021-03-17 ven/toad 1.18.0.9-i9 62da30b
  ;  SAMICAS2: fix xindex errors: in WSCASE add missing space between
  ; do & comment to prevent syntax error reported as block mismatch.
  ;  SAMICAS3: remove extra spaces at ends of 3 lines.
+ ;
+ ; 2021-04-16 ven/gpl 1.18.0.11-i11 ac82eec
+ ;  SAMICAS3: include baseline scan in prior scans field on prefill.
+ ;
+ ; 2021-05-14/19 ven/gpl 1.18.0.11-i11 0cbee7b,a21b056,139c6a5,0a0cccc
+ ;  SAMICAS3: improved CT eval prefill of past scan dates, urgent
+ ; fixes to CT Report & intervention & pet form prefill.
+ ;
+ ; 2021-05-20 ven/mcglk&toad 1.18.0.11-i11
+ ;  SAMICAS3: bump version & dates.
  ;
  ;
  ;

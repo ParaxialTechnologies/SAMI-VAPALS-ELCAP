@@ -1,6 +1,6 @@
-SAMICTUL ;ven/gpl - ctreport log ;2021-03-23T17:10Z
- ;;18.0;SAMI;**10**;2020-01;
- ;;1.18.0.10-i10
+SAMICTUL ;ven/gpl - ctreport log ;2021-05-20T17:12Z
+ ;;18.0;SAMI;**10,11**;2020-01;
+ ;;1.18.0.11-i11
  ;
  ; SAMICTUL contains routine & module info & the primary development
  ; log for VAPALS-ELCAP's CT Report ctreport web service route, which
@@ -25,17 +25,19 @@ SAMICTUL ;ven/gpl - ctreport log ;2021-03-23T17:10Z
  ;@license Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated 2021-03-23T17:10Z
+ ;@last-updated 2021-05-20T17:12Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
- ;@version 1.18.0.10-i10
+ ;@version 1.18.0.11-i11
  ;@release-date 2020-01
- ;@patch-list **10**
+ ;@patch-list **10,11**
  ;
  ;@additional-dev Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
  ;@additional-dev Alexis Carlson (arc)
  ; alexis.carlson@vistaexpertise.net
+ ;@additional-dev Kenneth McGlothlen (mcglk)
+ ; mcglk@vistaexpertise.net
  ;
  ;@module-credits
  ;@project VA Partnership to Increase Access to Lung Screening
@@ -73,9 +75,21 @@ SAMICTUL ;ven/gpl - ctreport log ;2021-03-23T17:10Z
  ; 2021-03-23 ven/gpl 1.18.0.10-i10 a68f7f31
  ;  SAMICTT3: fix CAC problem.
  ;
- ; 2021-03-21/23 ven/toad 1.18.0.10-i10
+ ; 2021-03-21/23 ven/toad 1.18.0.10-i10 96f461d
  ;  SAMICTUL: create development log routine.
  ;  SAMICTT0,1,2,3,4,9,A: bump date & version, lt refactor.
+ ;
+ ; 2021-05-14 ven/gpl 1.18.0.11-i11 0a01cf2
+ ;  SAMICTTA: in RCMND change to ctreport for no followup ct w/other
+ ; followup recommendations, "Followup" instead of "Other Followup."
+ ;
+ ; 2021-05-19 ven/gpl 1.18.0.11-i11 a21b056,139c6a5
+ ;  SAMICTT0: in WSREPORT check for small nodule checkboxes.
+ ;  SAMICTT1: in NODULES urgent fix to add to ct report "Small [non-]
+ ; calcified nodules are present."
+ ;
+ ; 2021-05-20 ven/mcglk&toad 1.18.0.11-i11
+ ;  SAMICTT0,1: bump version & dates.
  ;
  ;
  ;

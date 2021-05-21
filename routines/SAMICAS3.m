@@ -1,6 +1,6 @@
-SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ;2021-03-17T18:31Z
- ;;18.0;SAMI;**3,9**;;Build 11
- ;;1.18.0.9-i9
+SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ;2021-05-20T16:30Z
+ ;;18.0;SAMI;**3,9,11**;;Build 11
+ ;;1.18.0.11-i11
  ;
  ; SAMICAS3 contains ppis and other subroutines to support processing
  ; of the VAPALS case review page.
@@ -21,6 +21,7 @@ SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ;2021-03-17T18:31Z
  ; $$PREVNOD = key of latest form including nodule grid
  ; $$LASTCMP = date & key of last comparison scan
  ; $$PRIORCMP = dates of all scans before last comparison scan
+ ; $$KEY2DT = date to put in prior scans field
  ; SORTFRMS: sorts all forms for patient sid by date
  ; MKCEFORM: create ct evaluation form
  ; MKFUFORM: create follow-up form

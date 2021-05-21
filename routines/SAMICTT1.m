@@ -1,6 +1,6 @@
-SAMICTT1 ;ven/gpl - ctreport text nodules ;2021-03-22T15:20Z
- ;;18.0;SAMI;**4,10**;2020-01;Build 2
- ;;1.18.0.10-i10
+SAMICTT1 ;ven/gpl - ctreport text nodules ;2021-05-20T17:26Z
+ ;;18.0;SAMI;**4,10,11**;2020-01;Build 2
+ ;;1.18.0.11-i111
  ;
  ; SAMICTT1 creates the Nodules section of the ELCAP CT Report in text
  ; format.

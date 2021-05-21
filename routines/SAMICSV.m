@@ -1,4 +1,4 @@
-SAMICSV ;ven/gpl - csv export ;2021-03-30T17:18Z
+SAMICSV ;ven/gpl - csv export ;2021-05-20T17:02Z
  ;;18.0;SAMI;**7,11**;2020-01;Build 4
  ;;1.18.0.11-i11
  ;
@@ -21,7 +21,7 @@ SAMICSV ;ven/gpl - csv export ;2021-03-30T17:18Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-03-30T17:18Z
+ ;@last-updated 2021-05-20T17:02Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -31,6 +31,8 @@ SAMICSV ;ven/gpl - csv export ;2021-03-30T17:18Z
  ;
  ;@additional-dev Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
+ ;@additional-dev Kenneth McGlothlen (mcglk)
+ ; mcglk@vistaexpertise.net
  ;
  ;@module-credits
  ;@project VA Partnership to Increase Access to Lung Screening
@@ -60,9 +62,15 @@ SAMICSV ;ven/gpl - csv export ;2021-03-30T17:18Z
  ; 2021-03-25 ven/gpl 1.18.0.11 e28a34d3
  ;  SAMICSV: remove line feeds from variables.
  ;
- ; 2021-03-30 ven/toad 1.18.0.11-i11
- ; SAMICSV: bump version, date, patch list, create hdr comments, lt
+ ; 2021-03-30 ven/toad 1.18.0.11-i11 7b14bb2
+ ;  SAMICSV: bump version, date, patch list, create hdr comments, lt
  ; refactor.
+ ;
+ ; 2021-04-15 ven/gpl 1.18.0.11-i11 f9795a5,5aa13f1
+ ;  SAMICSV: fix double quotes in csv output, correct csv format no
+ ; quotes for null cells.
+ ;
+ ;
  ;
  ;@contents
  ; EN: entry point to generate csv files from forms for a site

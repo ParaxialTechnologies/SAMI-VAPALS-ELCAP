@@ -1,5 +1,5 @@
-SAMICUL ;ven/gpl - ielcap: case review page log ;2021-05-20T16:21Z
- ;;18.0;SAMI;**9,11**;
+SAMICUL ;ven/gpl - ielcap: case review page log ;2021-05-21T19:54Z
+ ;;18.0;SAMI;**9,11**;2020-01;
  ;;1.18.0.11-i11
  ;
  ; SAMICASE contains subroutines for producing the ELCAP Case
@@ -23,7 +23,7 @@ SAMICUL ;ven/gpl - ielcap: case review page log ;2021-05-20T16:21Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-05-20T16:21Z
+ ;@last-updated 2021-05-21T19:54Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)

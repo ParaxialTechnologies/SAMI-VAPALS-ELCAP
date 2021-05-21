@@ -1,4 +1,4 @@
-SAMINUL ;ven/gpl - ielcap: note log ;2021-05-20T21:25Z
+SAMINUL ;ven/gpl - ielcap: note log ;2021-05-21T16:14Z
  ;;18.0;SAMI;**9,10,11**;2020-01;build 2
  ;;1.18.0.11-i11
  ;
@@ -22,7 +22,7 @@ SAMINUL ;ven/gpl - ielcap: note log ;2021-05-20T21:25Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-05-20T21:25Z
+ ;@last-updated 2021-05-21T16:14Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -147,8 +147,9 @@ SAMINUL ;ven/gpl - ielcap: note log ;2021-05-20T21:25Z
  ; in INNOTE new & set shareddm & use to call SDM or report n/a, based
  ; on siidmdc.
  ;
- ; 2021-03-30 ven/toad 1.18.0.11-i11 7b14bb2
- ;  SAMINOT1: bump version, date, log.
+ ; 2021-03-30/05-21 ven/mcglk&toad 1.18.0.11-i11 7b14bb2
+ ;  SAMINOT1: bump version, date, log, add quit to stop block mismatch
+ ; complaint from XINDEX.
  ;
  ;
  ;

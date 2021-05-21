@@ -1,4 +1,4 @@
-SAMIUR ;ven/gpl - user reports ;2021-05-20T23:51Z
+SAMIUR ;ven/gpl - user reports ;2021-05-21T16:19Z
  ;;18.0;SAMI;**5,10,11**;2020-01;Build 4
  ;;1.18.0.11-i11
  ;
@@ -21,7 +21,7 @@ SAMIUR ;ven/gpl - user reports ;2021-05-20T23:51Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-05-20T23:51Z
+ ;@last-updated 2021-05-21T16:19Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -175,9 +175,9 @@ WSREPORT(SAMIRTN,filter) ; generate report based on params in filter
  ;
  new ln,cnt,ii
  set (ii,ln,cnt)=0
- for  do  quit:+ii=0  quit:$get(temp(ii))["<thead"  
+ for  do  quit:'ii  quit:$get(temp(ii))["<thead"
  . set ii=$order(temp(ii))
- . quit:+ii=0
+ . quit:'ii
  . quit:$get(temp(ii))["<thead"
  . ;
  . set cnt=cnt+1
@@ -186,8 +186,8 @@ WSREPORT(SAMIRTN,filter) ; generate report based on params in filter
  . set (samikey,si)=""
  . do LOAD^SAMIFORM(.ln,samikey,si,.filter)
  . ; if ln["PAGE NAME" do
- . . ; do findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type,datephrase))
- . . ; quit
+ . ; . do findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type,datephrase))
+ . ; . quit
  . if ln["PAGE NAME" do
  . . do findReplace^%ts(.ln,"PAGE NAME",$$PNAME(type,""))
  . . quit

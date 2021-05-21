@@ -1,4 +1,4 @@
-SAMINOT1 ;ven/gpl - text notes ;2021-03-30T17:02Z
+SAMINOT1 ;ven/gpl - text notes ;2021-05-21T16:13Z
  ;;18.0;SAMI;**2,6,8,10,11**;2020-01;build 2
  ;;1.18.0.11-i11
  ;
@@ -572,6 +572,8 @@ INNOTE(vals,dest,cnt) ;
  . d OUT("    "_"Veteran enrolled in the LSS program. Results and coordination of care ")
  . d OUT("    "_"will be made by the LSS team.  ")
  . i $$XVAL("siclin",vals)'="" d  ;
+ . . quit
+ . quit
  n tmpclin s tmpclin=$$XVAL("siclin",vals)
  i tmpclin'="" d  ;
  . d OUT("Clinical Indications for Initial Screening CT:")

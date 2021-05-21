@@ -1,4 +1,4 @@
-SAMIHL7 ;ven/lgc&arc - HL7 utilities ;2021-05-20T21:13Z
+SAMIHL7 ;ven/lgc&arc - HL7 utilities ;2021-05-21T16:11Z
  ;;18.0;SAMI;**11**;2020-01;Build 8
  ;;1.18.0.11-i11
  ;
@@ -21,7 +21,7 @@ SAMIHL7 ;ven/lgc&arc - HL7 utilities ;2021-05-20T21:13Z
  ;@copyright 2017/2021, lgc, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-05-20T21:13Z
+ ;@last-updated 2021-05-21T16:11Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -182,8 +182,8 @@ UPDTPTL1 ;
  ; we don't make new patient; we update existing w/changelog.
  ;
  do
- . quit:'$length($get(fields("ssn"))) ; existing ssn
- . quit:'$data(@rootpl@("ssn",$get(fields("ssn")))) ; matches lkup?
+ . quit:'$length($get(fields("ssn")))  ; existing ssn
+ . quit:'$data(@rootpl@("ssn",$get(fields("ssn"))))  ; matches lkup?
  . set ptienssntmp=$order(@rootpl@("ssn",$get(fields("ssn")),0)) ;save
  . for  do  quit:'ptienssn  quit:ptiennm
  . . set ptienssn=$order(@rootpl@("ssn",$get(fields("ssn")),ptienssn))

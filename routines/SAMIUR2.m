@@ -1,4 +1,4 @@
-SAMIUR2 ;ven/gpl - sami user reports ;2021-05-21T14:57Z
+SAMIUR2 ;ven/gpl - sami user reports ;2021-05-21T16:25Z
  ;;18.0;SAMI;**5,11**;2020-01;Build 11
  ;;1.18.0.11-i11
  ;
@@ -21,7 +21,7 @@ SAMIUR2 ;ven/gpl - sami user reports ;2021-05-21T14:57Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-05-21T14:57Z
+ ;@last-updated 2021-05-21T16:25Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -499,7 +499,7 @@ PKYDT(STDT,ENDT,PKS,CIGS) ; pack-years from start & end & cigs/day
  new zst set zst=$$FMDT(STDT)
  set:zst=-1 zst=STDT
  ;
- new set zend=$$FMDT(ENDT)
+ new zend set zend=$$FMDT(ENDT)
  set:zend=-1 zend=ENDT ; probably a fileman date already
  ;
  new zdif set zdif=$$FMDIFF^XLFDT(zend,zst)/365.24

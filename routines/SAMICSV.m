@@ -1,6 +1,6 @@
-SAMICSV ;ven/gpl - csv export ;2021-05-20T17:02Z
+SAMICSV ;ven/gpl - csv export ;2021-05-21T20:47Z
  ;;18.0;SAMI;**7,11**;2020-01;Build 4
- ;;1.18.0.11-i11
+ ;;1.18.0.11+i11
  ;
  ; SAMICSV contains a direct-mode interface to produce the VAPALS-
  ; ELCAP CSV export.
@@ -21,11 +21,11 @@ SAMICSV ;ven/gpl - csv export ;2021-05-20T17:02Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-05-20T17:02Z
+ ;@last-updated 2021-05-21T20:47Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.11-i11
+ ;@version 1.18.0.11+i11
  ;@release-date 2020-01
  ;@patch-list **7,11**
  ;
@@ -51,7 +51,7 @@ SAMICSV ;ven/gpl - csv export ;2021-05-20T17:02Z
  ;
  ;@module-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
  ;
- ; 2020-08-20/09-24 ven/gpl 1.18.0.7-i7 9486abb2,5ae08772,ba0bcb82,
+ ; 2020-08-20/09-24 ven/gpl 1.18.0.7+i7 9486abb2,5ae08772,ba0bcb82,
  ; 1a2a1bf6,16511893
  ;  SAMICSV: new routine, test build for extracting form data to csv
  ; files, upgrade change site to handle patients without forms, audit
@@ -59,25 +59,28 @@ SAMICSV ;ven/gpl - csv export ;2021-05-20T17:02Z
  ; for followup form, fix bug of line feeds in csv output interrupting
  ; excel load.
  ;
- ; 2021-03-25 ven/gpl 1.18.0.11 e28a34d3
+ ; 2021-03-25 ven/gpl 1.18.0.11+i11 e28a34d3
  ;  SAMICSV: remove line feeds from variables.
  ;
- ; 2021-03-30 ven/toad 1.18.0.11-i11 7b14bb2
+ ; 2021-03-30 ven/toad 1.18.0.11+i11 7b14bb2
  ;  SAMICSV: bump version, date, patch list, create hdr comments, lt
  ; refactor.
  ;
- ; 2021-04-15 ven/gpl 1.18.0.11-i11 f9795a5,5aa13f1
+ ; 2021-04-15 ven/gpl 1.18.0.11+i11 f9795a5,5aa13f1
  ;  SAMICSV: fix double quotes in csv output, correct csv format no
  ; quotes for null cells.
+ ;
+ ; 2021-05-21 ven/mcglk&toad 1.18.0.11+i11
+ ;  SAMICSV: bump version, date.
  ;
  ;
  ;
  ;@contents
- ; EN: entry point to generate csv files from forms for a site
- ; ONEFORM: process one form for a site
- ; $$FNAME = filename for site/form
- ; DDICT: data dictionary for form
- ; $$SAYFORM: prompts for form
+ ; EN entry point to generate csv files from forms for a site
+ ; ONEFORM process one form for a site
+ ; $$FNAME filename for site/form
+ ; DDICT data dictionary for form
+ ; $$SAYFORM prompts for form
  ;
  ;
  ;

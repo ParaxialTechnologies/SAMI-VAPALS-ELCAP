@@ -1,6 +1,6 @@
-SAMIUR ;ven/gpl - user reports ;2021-05-21T16:19Z
+SAMIUR ;ven/gpl - user reports ;2021-05-21T20:47Z
  ;;18.0;SAMI;**5,10,11**;2020-01;Build 4
- ;;1.18.0.11-i11
+ ;;1.18.0.11+i11
  ;
  ; SAMIUR contains a web service & associated subroutines to produce
  ; VAPALS-ELCAP user reports.
@@ -21,11 +21,11 @@ SAMIUR ;ven/gpl - user reports ;2021-05-21T16:19Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-05-21T16:19Z
+ ;@last-updated 2021-05-21T20:47Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.11-i11
+ ;@version 1.18.0.11+i11
  ;@release-date 2020-01
  ;@patch-list **5,10,11**
  ;
@@ -77,31 +77,31 @@ SAMIUR ;ven/gpl - user reports ;2021-05-21T16:19Z
  ; 2020-01-01/05 ven/arc 1.18.0 399f8547,62e3200f
  ;  SAMIUR: unmatched participant processing.
  ;
- ; 2020-04-29/05-13 ven/gpl 1.18.0.5-i5 e8b8ea2d,61c7d208
+ ; 2020-04-29/05-13 ven/gpl 1.18.0.5+i5 e8b8ea2d,61c7d208
  ;  SAMIUR: fixes for reports, worklist functionality.
  ;
- ; 2021-03-22/23 ven/gpl 1.18.0.10-i10 256efe63,ba81b86a2
+ ; 2021-03-22/23 ven/gpl 1.18.0.10+i10 256efe63,ba81b86a2
  ;  SAMIUR: sort all reports by name, added row totals to reports.
  ;
- ; 2021-03-23 ven/toad 1.18.0.10-i10 96f461d0,af86e0eb
+ ; 2021-03-23 ven/toad 1.18.0.10+i10 96f461d0,af86e0eb
  ;  SAMIUR: add version info & dev log, lt refactor, fix XINDEX
  ; errors.
  ;
- ; 2021-03-29 ven/gpl 1.18.0.11-i11 e809f2a2
+ ; 2021-03-29 ven/gpl 1.18.0.11+i11 e809f2a2
  ;  SAMIUR: prevent crash when reports have no matches: in WSREPORT
  ; set SRT="" and uncomment zwrite SRT; in WKLIST add 2 commented-out
  ; debugging lines.
  ;
- ; 2021-03-30 ven/toad 1.18.0.11-i11 7b14bb2
+ ; 2021-03-30 ven/toad 1.18.0.11+i11 7b14bb2
  ;  SAMIUR: bump version, date, log; in WSREPORT comment zwrite SRT.
  ;
- ; 2021-03-31 ven/gpl 1.18.0.11-i11 66d89cd
+ ; 2021-03-31 ven/gpl 1.18.0.11+i11 66d89cd
  ;  SAMIUR: sort on all uppercase names for reports
  ;
- ; 2021-04-13 ven/gpl 1.18.0.11-i11 a12765b
+ ; 2021-04-13 ven/gpl 1.18.0.11+i11 a12765b
  ;  SAMIUR: inactive report created.
  ;
- ; 2021-05-20 ven/mcglk&toad 1.18.0.11-i11
+ ; 2021-05-20/21 ven/mcglk&toad 1.18.0.11+i11
  ;  SAMIUR: annotate, lt refactor, bump version.
  ;
  ;@contents

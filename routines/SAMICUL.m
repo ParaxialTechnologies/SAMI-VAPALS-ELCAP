@@ -1,6 +1,6 @@
-SAMICUL ;ven/gpl - ielcap: case review page log ;2021-05-21T19:54Z
+SAMICUL ;ven/gpl - ielcap: case review page log ;2021-05-21T20:47Z
  ;;18.0;SAMI;**9,11**;2020-01;
- ;;1.18.0.11-i11
+ ;;1.18.0.11+i11
  ;
  ; SAMICASE contains subroutines for producing the ELCAP Case
  ; Review Page.
@@ -23,11 +23,11 @@ SAMICUL ;ven/gpl - ielcap: case review page log ;2021-05-21T19:54Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-05-21T19:54Z
+ ;@last-updated 2021-05-21T20:47Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.11-i11
+ ;@version 1.18.0.11+i11
  ;@release-date 2020-01
  ;@patch-list **9,11**
  ;
@@ -226,56 +226,56 @@ SAMICUL ;ven/gpl - ielcap: case review page log ;2021-05-21T19:54Z
  ; 2019-10-01 par/ddn 1.18.0-t04 4caf1a98 vap-344
  ;  SAMICAS2: use proper capitalization of the word "veteran".
  ;
- ; 2020-01-11 ven/lgc 1.18.0.1-i1 5651698a
+ ; 2020-01-11 ven/lgc 1.18.0.1+i1 5651698a
  ;  SAMICAS2,SAMICAS3: fix duplicate form overwriting.
  ;
- ; 2020-01-17 ven/lgc 1.18.0.1-i1 8557207f
+ ; 2020-01-17 ven/lgc 1.18.0.1+i1 8557207f
  ;  SAMICAS2: followup note.
  ;
- ; 2020-01-25 ven/lgc 1.18.0.3-i3 6a07a860,6a947567
+ ; 2020-01-25 ven/lgc 1.18.0.3+i3 6a07a860,6a947567
  ;  SAMICAS3: nodule copy & fix to ru, fix subtle bug in nodule copy.
  ;
- ; 2020-04-11 ven/gpl 1.18.0.5-i5 666f5b91,2f2c29c1
+ ; 2020-04-11 ven/gpl 1.18.0.5+i5 666f5b91,2f2c29c1
  ;  SAMICAS2: multi-tenancy.
  ;
- ; 2020-05-12 ven/gpl 1.18.0.5-i5 ad11e0ea
+ ; 2020-05-12 ven/gpl 1.18.0.5+i5 ad11e0ea
  ;  SAMICAS2: fix SITE on case review page.
  ;
- ; 2020-11-12 ven/gpl 1.18.0.9-i9 cec1ccd6
+ ; 2020-11-12 ven/gpl 1.18.0.9+i9 cec1ccd6
  ;  SAMICAS2,SAMICAS3: ceform date refill upgrade.
  ;
- ; 2020-11-13 ven/gpl 1.18.0.9-i9 dce3c568
+ ; 2020-11-13 ven/gpl 1.18.0.9+i9 dce3c568
  ;  SAMICAS3: prefill ceform prior scans text field.
  ;
- ; 2021-02-18 ven/gpl 1.18.0.9-i9 af2a0b8a
+ ; 2021-02-18 ven/gpl 1.18.0.9+i9 af2a0b8a
  ;  SAMICAS3: copy last previous CT nodules instead of last nodules in
  ; any form.
  ;
- ; 2021-02-21 ven/gpl 1.18.0.9-i9 3fd704fb
+ ; 2021-02-21 ven/gpl 1.18.0.9+i9 3fd704fb
  ;  SAMICAS3: fix bug in prefill logic.
  ;
- ; 2021-03-02 ven/gpl 1.18.0.9-i9 479dc041
+ ; 2021-03-02 ven/gpl 1.18.0.9+i9 479dc041
  ;  SAMICAS2: return error msg if no CT Eval form exists when
  ; generating a FU note.
  ;
- ; 2021-03-10 ven/toad 1.18.0.9-i9 a46a2cc1
+ ; 2021-03-10 ven/toad 1.18.0.9+i9 a46a2cc1
  ;  SAMICUL: update log, convert to new vistaver schema.
  ;  SAMICAS2,SAMICAS3: bump date & patch list, update contents, lt
  ; refactor.
  ;
- ; 2021-03-17 ven/toad 1.18.0.9-i9 62da30b
+ ; 2021-03-17 ven/toad 1.18.0.9+i9 62da30b
  ;  SAMICAS2: fix xindex errors: in WSCASE add missing space between
  ; do & comment to prevent syntax error reported as block mismatch.
  ;  SAMICAS3: remove extra spaces at ends of 3 lines.
  ;
- ; 2021-04-16 ven/gpl 1.18.0.11-i11 ac82eec
+ ; 2021-04-16 ven/gpl 1.18.0.11+i11 ac82eec
  ;  SAMICAS3: include baseline scan in prior scans field on prefill.
  ;
- ; 2021-05-14/19 ven/gpl 1.18.0.11-i11 0cbee7b,a21b056,139c6a5,0a0cccc
+ ; 2021-05-14/19 ven/gpl 1.18.0.11+i11 0cbee7b,a21b056,139c6a5,0a0cccc
  ;  SAMICAS3: improved CT eval prefill of past scan dates, urgent
  ; fixes to CT Report & intervention & pet form prefill.
  ;
- ; 2021-05-20 ven/mcglk&toad 1.18.0.11-i11
+ ; 2021-05-20/21 ven/mcglk&toad 1.18.0.11+i11
  ;  SAMICAS3: bump version & dates.
  ;
  ;

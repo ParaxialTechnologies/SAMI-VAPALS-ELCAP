@@ -1,6 +1,6 @@
-SAMIHL7 ;ven/lgc&arc - HL7 utilities ;2021-05-21T16:11Z
+SAMIHL7 ;ven/lgc&arc - HL7 utilities ;2021-05-21T20:47Z
  ;;18.0;SAMI;**11**;2020-01;Build 8
- ;;1.18.0.11-i11
+ ;;1.18.0.11+i11
  ;
  ; SAMIHL7 contains subroutines for manipulating VAPALS-ELCAP HL7
  ; messages.
@@ -21,11 +21,11 @@ SAMIHL7 ;ven/lgc&arc - HL7 utilities ;2021-05-21T16:11Z
  ;@copyright 2017/2021, lgc, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-05-21T16:11Z
+ ;@last-updated 2021-05-21T20:47Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.11-i11
+ ;@version 1.18.0.11+i11
  ;@release-date 2020-01
  ;@patch-list **11**
  ;
@@ -70,7 +70,7 @@ SAMIHL7 ;ven/lgc&arc - HL7 utilities ;2021-05-21T16:11Z
  ;  SAMIHL7: fix for duplicate patients fr/HL7, fix for updating 
  ; patient-lookup graph on receipt of 2nd order.
  ;
- ; 2021-05-20 ven/mcglk&toad 1.18.0.11-i11
+ ; 2021-05-20/21 ven/mcglk&toad 1.18.0.11+i11
  ;  SAMIHL7: build hdr comments & dev log, lt refactor, bump version.
  ;
  ;@contents

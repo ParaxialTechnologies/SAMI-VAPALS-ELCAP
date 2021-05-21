@@ -1,6 +1,6 @@
-SAMINUL ;ven/gpl - ielcap: note log ;2021-05-21T16:14Z
+SAMINUL ;ven/gpl - ielcap: note log ;2021-05-21T20:47Z
  ;;18.0;SAMI;**9,10,11**;2020-01;build 2
- ;;1.18.0.11-i11
+ ;;1.18.0.11+i11
  ;
  ; SAMINOTE contains subroutines for producing the ELCAP Note Pages.
  ; SAMINUL contains the development log for the SAMINOT* routines.
@@ -22,11 +22,11 @@ SAMINUL ;ven/gpl - ielcap: note log ;2021-05-21T16:14Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-05-21T16:14Z
+ ;@last-updated 2021-05-21T20:47Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.10-i11
+ ;@version 1.18.0.10+i11
  ;@release-date 2020-01
  ;@patch-list **9,10,11**
  ;
@@ -103,7 +103,7 @@ SAMINUL ;ven/gpl - ielcap: note log ;2021-05-21T16:14Z
  ; 2019-10-01 par/dom 1.18.0-t04 37c418a1,4caf1a98 VAP-457,344
  ;  SAMINOT1: remove thorax, capitalization consistency.
  ;
- ; 2020-01-17/20 ven/lgc 1.18.0.1-i1 8557207f,d7d24834,0301ad95.
+ ; 2020-01-17/20 ven/lgc 1.18.0.1+i1 8557207f,d7d24834,0301ad95.
  ;  659f2526,0ff2b83f,49615242,5bf7c398,dc5f618c
  ;  SAMINOT2: followup note, fixed typos in VC note, followup LCS note
  ; minus CT Eval pulls, LCS note with CT Eval extracts, fixed bug in
@@ -111,43 +111,43 @@ SAMINUL ;ven/gpl - ielcap: note log ;2021-05-21T16:14Z
  ; report in LCS Note, improved import of impressions, limit to one
  ; note per followup form.
  ;
- ; 2020-01-23 ven/arc 1.18.0.2-i2 9a24242a
+ ; 2020-01-23 ven/arc 1.18.0.2+i2 9a24242a
  ;  SAMINOT1: fix word wrap on intake note & typos in ct
  ; eval report.
  ;
- ; 2020-08-12 ven/gpl 1.18.0.6-i6 781744c3
+ ; 2020-08-12 ven/gpl 1.18.0.6+i6 781744c3
  ;  SAMINOT1: chg to support hl7 transmission of notes.
  ;
- ; 2020-09-22 ven/gpl 1.18.0.6-i6 06459eda
+ ; 2020-09-22 ven/gpl 1.18.0.6+i6 06459eda
  ;  SAMINOT1: fix to match kids file.
  ;
- ; 2021-02-01/24 ven/gpl 1.18.0.8-i8 8e4ec441,cde71a55
+ ; 2021-02-01/24 ven/gpl 1.18.0.8+i8 8e4ec441,cde71a55
  ;  SAMINOT1: fix intake note format, fix error that sent note twice
  ; to VistA.
  ;
- ; 2021-03-02 ven/gpl 1.18.0.9-i9 479dc041
+ ; 2021-03-02 ven/gpl 1.18.0.9+i9 479dc041
  ;  SAMINOT2: return error message if no ct eval form exists when
  ; generating a fu note.
  ;
- ; 2021-03-15/16 ven/toad 1.18.0.9-i9 a46a2cc1
+ ; 2021-03-15/16 ven/toad 1.18.0.9+i9 a46a2cc1
  ;  SAMINUL: create routine.
  ;  SAMINOT2: bump date & patch list, add contents, lt refactor.
  ;
- ; 2021-03-17 ven/toad 1.18.0.9-i9 62da30b4
+ ; 2021-03-17 ven/toad 1.18.0.9+i9 62da30b4
  ; SAMINOT2: remove blank from end of 1 line.
  ;
- ; 2021-03-22 ven/gpl 1.18.0.10-i10 6319a1eb
+ ; 2021-03-22 ven/gpl 1.18.0.10+i10 6319a1eb
  ;  SAMINOT1: fix logic bug in detecting pre-enrollment existing.
  ;
- ; 2021-03-23 ven/toad 1.18.0.10-i10 96f461d0
+ ; 2021-03-23 ven/toad 1.18.0.10+i10 96f461d0
  ;  SAMINOT1: bump date & patch list, lt refactor.
  ;
- ; 2021-03-29 ven/gpl 1.18.0.11-i11 6cd83445 VAP-483
+ ; 2021-03-29 ven/gpl 1.18.0.11+i11 6cd83445 VAP-483
  ;  SAMINOT1: allow N/A for shared decision making on intake form:
  ; in INNOTE new & set shareddm & use to call SDM or report n/a, based
  ; on siidmdc.
  ;
- ; 2021-03-30/05-21 ven/mcglk&toad 1.18.0.11-i11 7b14bb2
+ ; 2021-03-30/05-21 ven/mcglk&toad 1.18.0.11+i11 7b14bb2,
  ;  SAMINOT1: bump version, date, log, add quit to stop block mismatch
  ; complaint from XINDEX.
  ;

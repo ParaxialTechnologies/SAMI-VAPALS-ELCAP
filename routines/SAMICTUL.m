@@ -1,6 +1,6 @@
-SAMICTUL ;ven/gpl - ctreport log ;2021-05-20T17:12Z
+SAMICTUL ;ven/gpl - ctreport log ;2021-05-21T20:47Z
  ;;18.0;SAMI;**10,11**;2020-01;
- ;;1.18.0.11-i11
+ ;;1.18.0.11+i11
  ;
  ; SAMICTUL contains routine & module info & the primary development
  ; log for VAPALS-ELCAP's CT Report ctreport web service route, which
@@ -25,10 +25,10 @@ SAMICTUL ;ven/gpl - ctreport log ;2021-05-20T17:12Z
  ;@license Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated 2021-05-20T17:12Z
+ ;@last-updated 2021-05-21T20:47Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
- ;@version 1.18.0.11-i11
+ ;@version 1.18.0.11+i11
  ;@release-date 2020-01
  ;@patch-list **10,11**
  ;
@@ -56,7 +56,7 @@ SAMICTUL ;ven/gpl - ctreport log ;2021-05-20T17:12Z
  ;
  ;@module-log
  ;
- ; 2020-02-01/03 ven/arc 1.18.0.4-i4 d47135a5,bc32c1cb,5b2e4525,
+ ; 2020-02-01/03 ven/arc 1.18.0.4+i4 d47135a5,bc32c1cb,5b2e4525,
  ;  7bcd14a2,1c96fe0e,cb0075e8,5e553dd2,9cde6840,dcea0048e,98b7b273,
  ; a4f98f19
  ;  SAMICTT0,1,2,3,4,9,A: routines (starting as copies of SAMICTR*) to
@@ -65,46 +65,46 @@ SAMICTUL ;ven/gpl - ctreport log ;2021-05-20T17:12Z
  ; recommendations sect, add'l sects on other abnormalities, breast
  ; abnorm sect, other abnorm sect, tweak format, make it more compact.
  ;
- ; 2021-02-18 ven/gpl 1.18.0.10-i10 38fb2d70
+ ; 2021-02-18 ven/gpl 1.18.0.10+i10 38fb2d70
  ;  SAMICTT0,1,2,3,4,9,A: ct report - insert space after every period.
  ;
- ; 2021-03-04/16 ven/gpl 1.18.0.10-i10 e09d5f16,3ea26de9,91793ba3
+ ; 2021-03-04/16 ven/gpl 1.18.0.10+i10 e09d5f16,3ea26de9,91793ba3
  ;  SAMICTT1,3,4: ct report: fix normal cardiac default output, CAC
  ; logic, other enhancements.
  ;
- ; 2021-03-23 ven/gpl 1.18.0.10-i10 a68f7f31
+ ; 2021-03-23 ven/gpl 1.18.0.10+i10 a68f7f31
  ;  SAMICTT3: fix CAC problem.
  ;
- ; 2021-03-21/23 ven/toad 1.18.0.10-i10 96f461d
+ ; 2021-03-21/23 ven/toad 1.18.0.10+i10 96f461d
  ;  SAMICTUL: create development log routine.
  ;  SAMICTT0,1,2,3,4,9,A: bump date & version, lt refactor.
  ;
- ; 2021-05-14 ven/gpl 1.18.0.11-i11 0a01cf2
+ ; 2021-05-14 ven/gpl 1.18.0.11+i11 0a01cf2
  ;  SAMICTTA: in RCMND change to ctreport for no followup ct w/other
  ; followup recommendations, "Followup" instead of "Other Followup."
  ;
- ; 2021-05-19 ven/gpl 1.18.0.11-i11 a21b056,139c6a5
+ ; 2021-05-19 ven/gpl 1.18.0.11+i11 a21b056,139c6a5
  ;  SAMICTT0: in WSREPORT check for small nodule checkboxes.
  ;  SAMICTT1: in NODULES urgent fix to add to ct report "Small [non-]
  ; calcified nodules are present."
  ;
- ; 2021-05-20 ven/mcglk&toad 1.18.0.11-i11
+ ; 2021-05-20/21 ven/mcglk&toad 1.18.0.11+i11
  ;  SAMICTT0,1: bump version & dates.
  ;
  ;
  ;
  ;@contents
- ; SAMICTT0: ctreport text main
- ; SAMICTT1: ctreport text nodules
- ; SAMICTT2: ctreport text other lung
- ; SAMICTT3: ctreport text emphysema
- ; SAMICTT4: ctreport text breast abnorm
- ; SAMICTT9: ctreport text impressions
- ; SAMICTTA: ctreport text recommendations
- ; SAMICTUL: ctreport log
+ ; SAMICTT0 ctreport text main
+ ; SAMICTT1 ctreport text nodules
+ ; SAMICTT2 ctreport text other lung
+ ; SAMICTT3 ctreport text emphysema
+ ; SAMICTT4 ctreport text breast abnorm
+ ; SAMICTT9 ctreport text impressions
+ ; SAMICTTA ctreport text recommendations
+ ; SAMICTUL ctreport log
  ;
- ; SAMICTR*: ctreport html format
- ; SAMIUTR*: test the SAMICTR routines
+ ; SAMICTR* ctreport html format
+ ; SAMIUTR* test the SAMICTR routines
  ;
  ;
  ;

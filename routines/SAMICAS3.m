@@ -1,6 +1,6 @@
-SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ;2021-05-21T19:54Z
+SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ;2021-05-21T20:47Z
  ;;18.0;SAMI;**3,9,11**;2020-01;Build 11
- ;;1.18.0.11-i11
+ ;;1.18.0.11+i11
  ;
  ; SAMICAS3 contains ppis and other subroutines to support processing
  ; of the VAPALS case review page.
@@ -13,23 +13,23 @@ SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ;2021-05-21T19:54Z
  ;
  ;
  ;
- ;@license: see routine SAMIUL
- ;@documentation : see SAMICUL
+ ;@license see routine SAMIUL
+ ;@documentation see SAMICUL
  ;@contents
- ; WSNFPOST: post new form selection (post service)
- ; MKSBFORM: create background form
- ; $$PREVNOD = key of latest form including nodule grid
- ; $$LASTCMP = date & key of last comparison scan
- ; $$PRIORCMP = dates of all scans before last comparison scan
- ; $$KEY2DT = date to put in prior scans field
- ; SORTFRMS: sorts all forms for patient sid by date
- ; MKCEFORM: create ct evaluation form
- ; MKFUFORM: create follow-up form
- ; $$BASELNDT = last previous baseline ct date
- ; MKPTFORM: create pet evaluation form
- ; MKITFORM: create intervention form
- ; MKBXFORM: create biopsy form
- ; CASETBL: generates case review table
+ ; WSNFPOST post new form selection (post service)
+ ; MKSBFORM create background form
+ ; $$PREVNOD key of latest form including nodule grid
+ ; $$LASTCMP date & key of last comparison scan
+ ; $$PRIORCMP dates of all scans before last comparison scan
+ ; $$KEY2DT date to put in prior scans field
+ ; SORTFRMS sorts all forms for patient sid by date
+ ; MKCEFORM create ct evaluation form
+ ; MKFUFORM create follow-up form
+ ; $$BASELNDT last previous baseline ct date
+ ; MKPTFORM create pet evaluation form
+ ; MKITFORM create intervention form
+ ; MKBXFORM create biopsy form
+ ; CASETBL generates case review table
  ;
  ;
  ;
@@ -574,7 +574,7 @@ CASETBL(ary) ; generates case review table
  ;@stanza 1 invocation, binding, & branching
  ;
  ;ven/gpl;private;procedure;
- ;@called by : none
+ ;@called by none
  ;@calls
  ;@input
  ; ary = name of array (passed by name, will be cleared)

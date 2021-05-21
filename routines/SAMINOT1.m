@@ -1,6 +1,6 @@
-SAMINOT1 ;ven/gpl - text notes ;2021-05-21T16:13Z
+SAMINOT1 ;ven/gpl - text notes ;2021-05-21T20:47Z
  ;;18.0;SAMI;**2,6,8,10,11**;2020-01;build 2
- ;;1.18.0.11-i11
+ ;;1.18.0.11+i11
  ;
  ; SAMINOT1 contains a web service & associated subroutines to produce
  ; VAPALS-ELCAP text notes.
@@ -21,11 +21,11 @@ SAMINOT1 ;ven/gpl - text notes ;2021-05-21T16:13Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-03-30T17:02Z
+ ;@last-updated 2021-05-21T20:47Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.10-i11
+ ;@version 1.18.0.10+i11
  ;@release-date 2020-01
  ;@patch-list **2,6,8,10,11**
  ;

@@ -1,6 +1,6 @@
-SAMICTT0 ;ven/gpl - ctreport text main ;2021-05-20T17:16Z
+SAMICTT0 ;ven/gpl - ctreport text main ;2021-05-21T20:47Z
  ;;18.0;SAMI;**4,10,11**;2020-01;Build 2
- ;;1.18.0.11-i11
+ ;;1.18.0.11+i11
  ;
  ; SAMICTT0 contains a web route & associated subroutines to produce
  ; the ELCAP CT Report in text format (route ctreport, format text).
@@ -19,14 +19,14 @@ SAMICTT0 ;ven/gpl - ctreport text main ;2021-05-20T17:16Z
  ;@license see routine SAMIUL
  ;@documentation see SAMICTUL
  ;@contents
- ; WSREPORT: web route: ctreport in text format
- ; OUT: output a line of ct report
- ; OUTOLD: old version of out
- ; HOUT: output a ct report header line
- ; $$XVAL = patient value for var
- ; $$XSUB = dictionary value defined by var
- ; GETFILTR: fill in the filter for Ct Eval for sid
- ; T1: test
+ ; WSREPORT web route: ctreport in text format
+ ; OUT output a line of ct report
+ ; OUTOLD old version of out
+ ; HOUT output a ct report header line
+ ; $$XVAL patient value for var
+ ; $$XSUB dictionary value defined by var
+ ; GETFILTR fill in the filter for Ct Eval for sid
+ ; T1 test
  ;
  ;
  ;

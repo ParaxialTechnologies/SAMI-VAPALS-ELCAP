@@ -1,6 +1,6 @@
-SAMIUR2 ;ven/gpl - sami user reports ;2021-05-21T16:25Z
+SAMIUR2 ;ven/gpl - sami user reports ;2021-05-21T20:47Z
  ;;18.0;SAMI;**5,11**;2020-01;Build 11
- ;;1.18.0.11-i11
+ ;;1.18.0.11+i11
  ;
  ; SAMIUR2 contains subroutines for creating & implementing the
  ; report-definition table.
@@ -21,11 +21,11 @@ SAMIUR2 ;ven/gpl - sami user reports ;2021-05-21T16:25Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-05-21T16:25Z
+ ;@last-updated 2021-05-21T20:47Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.11-i11
+ ;@version 1.18.0.11+i11
  ;@release-date 2020-01
  ;@patch-list **5,11**
  ;
@@ -86,15 +86,15 @@ SAMIUR2 ;ven/gpl - sami user reports ;2021-05-21T16:25Z
  ; 2020-01-10 ven/gpl 1.18.0 1590577
  ;  SAMIUR2: fix return on RACE^SAMIUR2 for cache.
  ;
- ; 2020-05-13/14 ven/gpl 1.18.0.5-i5 61c7d20,b05df41
+ ; 2020-05-13/14 ven/gpl 1.18.0.5+i5 61c7d20,b05df41
  ;  SAMIUR2: add worklist functionality, fix gender & dob detection on
  ; reports.
  ;
- ; 2021-04-13 ven/gpl 1.18.0.11-i11 a12765b,f09ffef,fb399ab
+ ; 2021-04-13 ven/gpl 1.18.0.11+i11 a12765b,f09ffef,fb399ab
  ;  SAMIUR2: in RPTTBL,GENDER create inactive report, move last exam
  ; column on followup report, fix gender being blank in reports.
  ;
- ; 2021-05-20/21 ven/mcglk&toad 1.18.0.11-i11
+ ; 2021-05-20/21 ven/mcglk&toad 1.18.0.11+i11
  ;  SAMIUR2: passim hdr comments, chg log, annotate, refactor, bump
  ; version.
  ;

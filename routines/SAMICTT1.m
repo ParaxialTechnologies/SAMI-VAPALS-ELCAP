@@ -1,6 +1,6 @@
-SAMICTT1 ;ven/gpl - ctreport text nodules ;2021-05-20T17:26Z
+SAMICTT1 ;ven/gpl - ctreport text nodules ;2021-05-21T20:47Z
  ;;18.0;SAMI;**4,10,11**;2020-01;Build 2
- ;;1.18.0.11-i111
+ ;;1.18.0.11+i11
  ;
  ; SAMICTT1 creates the Nodules section of the ELCAP CT Report in text
  ; format.
@@ -16,11 +16,11 @@ SAMICTT1 ;ven/gpl - ctreport text nodules ;2021-05-20T17:26Z
  ;@license see routine SAMIUL
  ;@documentation see SAMICTUL
  ;@contents
- ; NODULES: nodules section of ctreport in text format
- ; OUT: output a line of ct report
- ; HOUT: output a ct report header line
- ; $$XVAL = patient value for var
- ; $$XSUB = dictionary value defined by var
+ ; NODULES nodules section of ctreport in text format
+ ; OUT output a line of ct report
+ ; HOUT output a ct report header line
+ ; $$XVAL patient value for var
+ ; $$XSUB dictionary value defined by var
  ;
  ;
  ;
@@ -41,7 +41,8 @@ NODULES(rtn,vals,dict) ; nodules section of ctreport in text format
  ; rtn
  ; vals
  ; dict
- ;@output: nodules section added to cteval report
+ ;@output
+ ; nodules section added to cteval report
  ;
  ;# Report on Nodules
  n firstitem
@@ -247,7 +248,8 @@ OUT(ln) ; output a line of ct report
  ;@calls none
  ;@input
  ; ln = output to add
- ;@output: line added to report
+ ;@output
+ ; line added to report
  ;
  i outmode="hold" s line=line_ln q  ;
  s cnt=cnt+1
@@ -278,7 +280,8 @@ HOUT(ln) ; output a ct report header line
  ; OUT
  ;@input
  ; ln = header output to add
- ;@output: header line added to report
+ ;@output
+ ; header line added to report
  ;
  d OUT(ln)
  ;d OUT("<p><span class='sectionhead'>"_ln_"</span>")

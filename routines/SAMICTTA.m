@@ -1,6 +1,6 @@
-SAMICTTA ;ven/gpl - ctreport text recommendations ;2021-05-20T17:33Z
+SAMICTTA ;ven/gpl - ctreport text recommendations ;2021-05-21T20:47Z
  ;;18.0;SAMI;**4,10,11**;2020-01;Build 2
- ;;1.18.0.11-i11
+ ;;1.18.0.11+i11
  ;
  ; SAMICTTA creates the Recommendations section of the ELCAP CT Report
  ; in text format.
@@ -16,11 +16,11 @@ SAMICTTA ;ven/gpl - ctreport text recommendations ;2021-05-20T17:33Z
  ;@license see routine SAMIUL
  ;@documentation see SAMICTUL
  ;@contents
- ; RCMND: recommendations section of ctreport in text format
- ; OUT: output a line of ct report
- ; HOUT: output a ct report header line
- ; $$XVAL = patient value for var
- ; $$XSUB = dictionary value defined by var
+ ; RCMND recommendations section of ctreport in text format
+ ; OUT output a line of ct report
+ ; HOUT output a ct report header line
+ ; $$XVAL patient value for var
+ ; $$XSUB dictionary value defined by var
  ;
  ;
  ;
@@ -42,7 +42,8 @@ RCMND(rtn,vals,dict) ; recommendations section of ctreport text format
  ; rtn
  ; vals
  ; dict
- ;@output: create impressions section of ct report in text format
+ ;@output
+ ; create impressions section of ct report in text format
  ;
  ;# Recommendation
  ;d OUT("</TD></TR>")
@@ -167,7 +168,8 @@ OUT(ln) ; output a line of ct report
  ;@calls none
  ;@input
  ; ln = output to add
- ;@output: line added to ct report
+ ;@output
+ ; line added to ct report
  ;
  s cnt=cnt+1
  n lnn
@@ -193,7 +195,8 @@ HOUT(ln) ; output a ct report header line
  ; OUT
  ;@input
  ; ln = header output to add
- ;@output: header line added to ct report
+ ;@output
+ ; header line added to ct report
  ;
  d OUT("<p><span class='sectionhead'>"_ln_"</span>")
  ;

@@ -331,7 +331,7 @@ MKCEFORM(sid,key) ; create ct evaluation form
  . new target,source
  . set source=$name(@root@("graph",sid,srckey))
  . set target=$name(@root@("graph",sid,key))
- . d CTCOPY^SAMICTC1(source,target)
+ . d CTCOPY^SAMICTC1(source,target,key)
  ; end nodule copy
  ;new items,prevct
  ;do GETITEMS^SAMICASE("items",sid)
@@ -342,7 +342,7 @@ MKCEFORM(sid,key) ; create ct evaluation form
  ;. new target,source
  ;. set source=$name(@root@("graph",sid,prevct))
  ;. set target=$name(@root@("graph",sid,key))
- ;. do CTCOPY^SAMICTC1(source,target)
+ ;. do CTCOPY^SAMICTC1(source,target,key)
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate
  do SSAMISTA^SAMICASE(sid,key,"incomplete")
@@ -453,7 +453,7 @@ MKPTFORM(sid,key) ; create pet evaluation form
  . new target,source
  . set source=$name(@root@("graph",sid,srckey))
  . set target=$name(@root@("graph",sid,key))
- . d CTCOPY^SAMICTC1(source,target)
+ . d CTCOPY^SAMICTC1(source,target,key)
  ; end nodule copy
  new cdate set cdate=$piece(key,"ptform-",2)
  merge @root@("graph",sid,key)=@root@(sien)
@@ -557,7 +557,7 @@ MKBXFORM(sid,key) ; create biopsy form
  . new target,source
  . set source=$name(@root@("graph",sid,srckey))
  . set target=$name(@root@("graph",sid,key))
- . d CTCOPY^SAMICTC1(source,target)
+ . d CTCOPY^SAMICTC1(source,target,key)
  ; end nodule copy
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate

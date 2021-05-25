@@ -1,4 +1,4 @@
-SAMIUR ;ven/gpl - user reports ;2021-05-21T20:47Z
+SAMIUR ;ven/gpl - user reports ;2021-05-25T19:11Z
  ;;18.0;SAMI;**5,10,11**;2020-01;Build 4
  ;;1.18.0.11+i11
  ;
@@ -21,7 +21,7 @@ SAMIUR ;ven/gpl - user reports ;2021-05-21T20:47Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-05-21T20:47Z
+ ;@last-updated 2021-05-25T19:11Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -101,7 +101,7 @@ SAMIUR ;ven/gpl - user reports ;2021-05-21T20:47Z
  ; 2021-04-13 ven/gpl 1.18.0.11+i11 a12765b
  ;  SAMIUR: inactive report created.
  ;
- ; 2021-05-20/21 ven/mcglk&toad 1.18.0.11+i11
+ ; 2021-05-20/25 ven/mcglk&toad 1.18.0.11+i11
  ;  SAMIUR: annotate, lt refactor, bump version.
  ;
  ;@contents
@@ -372,7 +372,7 @@ NUHREF(SAMIPATS) ; create nuhref link to casereview for all patients
  set ij=0
  for  do  quit:'ij  ;
  . set ij=$order(SAMIPATS(ij))
- . quit:'j
+ . quit:'ij
  . new ij2 set ij2=0
  . for  do  quit:'ij2  ;
  . . set ij2=$order(SAMIPATS(ij,ij2))

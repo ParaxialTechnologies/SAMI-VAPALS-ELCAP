@@ -1,4 +1,4 @@
-SAMICUL ;ven/gpl - ielcap: case review page log ;2021-05-21T20:47Z
+SAMICUL ;ven/gpl - ielcap: case review page log ;2021-05-25T15:28Z
  ;;18.0;SAMI;**9,11**;2020-01;
  ;;1.18.0.11+i11
  ;
@@ -23,7 +23,7 @@ SAMICUL ;ven/gpl - ielcap: case review page log ;2021-05-21T20:47Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-05-21T20:47Z
+ ;@last-updated 2021-05-25T15:28Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -275,8 +275,16 @@ SAMICUL ;ven/gpl - ielcap: case review page log ;2021-05-21T20:47Z
  ;  SAMICAS3: improved CT eval prefill of past scan dates, urgent
  ; fixes to CT Report & intervention & pet form prefill.
  ;
- ; 2021-05-20/21 ven/mcglk&toad 1.18.0.11+i11
+ ; 2021-05-20/21 ven/mcglk&toad 1.18.0.11+i11 43a4557,424ea11,129e96b
  ;  SAMICAS3: bump version & dates.
+ ;
+ ; 2021-05-24 ven/gpl 1.18.0.11+i11 4aba1a9
+ ;  SAMICAS3: in MKCEFORM,MKPTFORM,MKBXFORM pass key to
+ ; CTCOPY^SAMICTC1 to modulate node-copy operation; critical fix to
+ ; copy forward for is it new field for new ct eval forms.
+ ;
+ ; 2021-05-25 ven/toad 1.18.0.11_i11
+ ;  SAMICAS3: bump date; passim lt refactor.
  ;
  ;
  ;

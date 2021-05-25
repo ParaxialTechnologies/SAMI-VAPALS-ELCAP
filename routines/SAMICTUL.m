@@ -1,11 +1,12 @@
-SAMICTUL ;ven/gpl - ctreport log ;2021-05-21T20:47Z
+SAMICTUL ;ven/gpl - ct report & copy log ;2021-05-25T15:44Z
  ;;18.0;SAMI;**10,11**;2020-01;
  ;;1.18.0.11+i11
  ;
  ; SAMICTUL contains routine & module info & the primary development
  ; log for VAPALS-ELCAP's CT Report ctreport web service route, which
  ; is implemented by the SAMICTR* (html) and SAMICTT* (text)
- ; routines.
+ ; routines. It also contains the log for the SAMICTC* routines that
+ ; implement the ct form copy operation.
  ; SAMICTUL contains no public interfaces or executable code.
  ;
  quit  ; no entry from top
@@ -25,7 +26,7 @@ SAMICTUL ;ven/gpl - ctreport log ;2021-05-21T20:47Z
  ;@license Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated 2021-05-21T20:47Z
+ ;@last-updated 2021-05-25T15:44Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@version 1.18.0.11+i11
@@ -54,7 +55,13 @@ SAMICTUL ;ven/gpl - ctreport log ;2021-05-21T20:47Z
  ;@partner-org Open Source Electronic Health Record Alliance (OSEHRA)
  ; https://www.osehra.org/groups/va-pals-open-source-project-group
  ;
- ;@module-log
+ ;@module-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
+ ;
+ ; 2018-10-14 ven/arc 1.18.0 f6e1229
+ ;  SAMICTC1: turn on copy forward for cteval new forms
+ ;
+ ; 2018-12-11/2019-01-22 ven/lgc 1.18.0 3ceb74b,3bb70c8,5368121
+ ;  SAMICTC1,2: update for sac compliance, add license info.
  ;
  ; 2020-02-01/03 ven/arc 1.18.0.4+i4 d47135a5,bc32c1cb,5b2e4525,
  ;  7bcd14a2,1c96fe0e,cb0075e8,5e553dd2,9cde6840,dcea0048e,98b7b273,
@@ -88,12 +95,22 @@ SAMICTUL ;ven/gpl - ctreport log ;2021-05-21T20:47Z
  ;  SAMICTT1: in NODULES urgent fix to add to ct report "Small [non-]
  ; calcified nodules are present."
  ;
- ; 2021-05-20/21 ven/mcglk&toad 1.18.0.11+i11
+ ; 2021-05-20/21 ven/mcglk&toad 1.18.0.11+i11 43a4557,129e96b
  ;  SAMICTT0,1: bump version & dates.
  ;
+ ; 2021-05-24 ven/gpl 1.18.0.11+i11 4aba1a9
+ ;  SAMICTC1: in CTCOPY add new param key to control two new opening
+ ; blocks, critical fix to copy forward for Is It New field for new ct
+ ; eval forms.
  ;
+ ; 2021-05-25 ven/toad 1.18.0.11+i11
+ ;  SAMICTC1: bump version & dates; passim annotate & lt refactor.
+ ;  SAMICTUL: add SAMICTC* routines to log.
  ;
  ;@contents
+ ; SAMICTC1 ceform copy
+ ; SAMICTC2 ceform copy continued
+ ;
  ; SAMICTT0 ctreport text main
  ; SAMICTT1 ctreport text nodules
  ; SAMICTT2 ctreport text other lung

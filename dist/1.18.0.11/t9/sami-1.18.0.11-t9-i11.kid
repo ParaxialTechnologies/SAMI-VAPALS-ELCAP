@@ -1,5 +1,5 @@
-KIDS Distribution saved on May 25, 2021@10:13:38
-Released SAMI*18.0*11 SEQ #11 T9 (1.18.0.11-t9+i11)
+KIDS Distribution saved on May 25, 2021@11:23:39
+SAMI*18.0*11 SEQ #11 T9 (1.18.0.11-t9+i11)
 **KIDS**:SAMI*18.0*11^
 
 **INSTALL NAME**
@@ -15,7 +15,7 @@ Critical bugs fixed in Intake, CT eval, and reports
 "BLD",11508,6)
 ^11
 "BLD",11508,6.3)
-19
+20
 "BLD",11508,"KRN",0)
 ^9.67PA^1.5^25
 "BLD",11508,"KRN",.4,0)
@@ -181,7 +181,7 @@ SAMICTC1^^0^B246702028
 "BLD",11508,"QUES",0)
 ^9.62^^
 "BLD",11508,"REQB",0)
-^9.611^10^9
+^9.611^10^8
 "BLD",11508,"REQB",1,0)
 SAMI*18.0*2^2
 "BLD",11508,"REQB",2,0)
@@ -194,8 +194,6 @@ SAMI*18.0*8^2
 SAMI*18.0*9^2
 "BLD",11508,"REQB",7,0)
 SAMI*18.0*10^2
-"BLD",11508,"REQB",8,0)
-SAMI*18.0*7^2
 "BLD",11508,"REQB",9,0)
 SAMI*18.0*3^2
 "BLD",11508,"REQB",10,0)
@@ -211,8 +209,6 @@ SAMI*18.0*4^2
 "BLD",11508,"REQB","B","SAMI*18.0*4",10)
 
 "BLD",11508,"REQB","B","SAMI*18.0*6",3)
-
-"BLD",11508,"REQB","B","SAMI*18.0*7",8)
 
 "BLD",11508,"REQB","B","SAMI*18.0*8",5)
 
@@ -311,7 +307,7 @@ D XPZ2^XPDIQ
 "RTN","SAMICAS3",1,0)
 SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ;2021-05-25T14:52Z
 "RTN","SAMICAS3",2,0)
- ;;18.0;SAMI;**3,9,11**;2020-01;Build 19
+ ;;18.0;SAMI;**3,9,11**;2020-01;Build 20
 "RTN","SAMICAS3",3,0)
  ;;1.18.0.11+i11
 "RTN","SAMICAS3",4,0)
@@ -2053,7 +2049,7 @@ EOR ; end of routine SAMICAS3
 "RTN","SAMICSV",1,0)
 SAMICSV ;ven/gpl - csv export ;2021-05-21T20:47Z
 "RTN","SAMICSV",2,0)
- ;;18.0;SAMI;**7,11**;2020-01;Build 19
+ ;;18.0;SAMI;**7,11**;2020-01;Build 20
 "RTN","SAMICSV",3,0)
  ;;1.18.0.11+i11
 "RTN","SAMICSV",4,0)
@@ -2593,7 +2589,7 @@ EOR ; end of routine SAMICSV
 "RTN","SAMICTC1",1,0)
 SAMICTC1 ;ven/gpl - ceform copy ;2021-05-25T15:44Z
 "RTN","SAMICTC1",2,0)
- ;;18.0;SAMI;**11**;2020-01;Build 19
+ ;;18.0;SAMI;**11**;2020-01;Build 20
 "RTN","SAMICTC1",3,0)
  ;;1.18.0.11+i11
 "RTN","SAMICTC1",4,0)
@@ -3353,7 +3349,7 @@ EOR ; end of routine SAMICTC1
 "RTN","SAMICTT0",1,0)
 SAMICTT0 ;ven/gpl - ctreport text main ;2021-05-21T20:47Z
 "RTN","SAMICTT0",2,0)
- ;;18.0;SAMI;**4,10,11**;2020-01;Build 19
+ ;;18.0;SAMI;**4,10,11**;2020-01;Build 20
 "RTN","SAMICTT0",3,0)
  ;;1.18.0.11+i11
 "RTN","SAMICTT0",4,0)
@@ -4185,7 +4181,7 @@ EOR ; end of routine SAMICTT0
 "RTN","SAMICTT1",1,0)
 SAMICTT1 ;ven/gpl - ctreport text nodules ;2021-05-21T20:47Z
 "RTN","SAMICTT1",2,0)
- ;;18.0;SAMI;**4,10,11**;2020-01;Build 19
+ ;;18.0;SAMI;**4,10,11**;2020-01;Build 20
 "RTN","SAMICTT1",3,0)
  ;;1.18.0.11+i11
 "RTN","SAMICTT1",4,0)
@@ -4859,7 +4855,7 @@ EOR ; end of routine SAMICTT1
 "RTN","SAMICTTA",1,0)
 SAMICTTA ;ven/gpl - ctreport text recommendations ;2021-05-21T20:47Z
 "RTN","SAMICTTA",2,0)
- ;;18.0;SAMI;**4,10,11**;2020-01;Build 19
+ ;;18.0;SAMI;**4,10,11**;2020-01;Build 20
 "RTN","SAMICTTA",3,0)
  ;;1.18.0.11+i11
 "RTN","SAMICTTA",4,0)
@@ -5361,7 +5357,7 @@ EOR ; end of routine SAMICTTA
 "RTN","SAMICTUL",1,0)
 SAMICTUL ;ven/gpl - ct report & copy log ;2021-05-25T15:44Z
 "RTN","SAMICTUL",2,0)
- ;;18.0;SAMI;**10,11**;2020-01;Build 19
+ ;;18.0;SAMI;**10,11**;2020-01;Build 20
 "RTN","SAMICTUL",3,0)
  ;;1.18.0.11+i11
 "RTN","SAMICTUL",4,0)
@@ -5619,7 +5615,7 @@ EOR ; end of routine SAMICTUL
 "RTN","SAMICUL",1,0)
 SAMICUL ;ven/gpl - ielcap: case review page log ;2021-05-25T15:28Z
 "RTN","SAMICUL",2,0)
- ;;18.0;SAMI;**9,11**;2020-01;Build 19
+ ;;18.0;SAMI;**9,11**;2020-01;Build 20
 "RTN","SAMICUL",3,0)
  ;;1.18.0.11+i11
 "RTN","SAMICUL",4,0)
@@ -6203,7 +6199,7 @@ EOR ; end of routine SAMICUL
 "RTN","SAMIHL7",1,0)
 SAMIHL7 ;ven/lgc&arc - HL7 utilities ;2021-05-21T20:47Z
 "RTN","SAMIHL7",2,0)
- ;;18.0;SAMI;**11**;2020-01;Build 19
+ ;;18.0;SAMI;**11**;2020-01;Build 20
 "RTN","SAMIHL7",3,0)
  ;;1.18.0.11+i11
 "RTN","SAMIHL7",4,0)
@@ -7273,7 +7269,7 @@ EOR ; end of routine SAMIHL7
 "RTN","SAMINOT1",1,0)
 SAMINOT1 ;ven/gpl - text notes ;2021-05-21T20:47Z
 "RTN","SAMINOT1",2,0)
- ;;18.0;SAMI;**2,6,8,10,11**;2020-01;Build 19
+ ;;18.0;SAMI;**2,6,8,10,11**;2020-01;Build 20
 "RTN","SAMINOT1",3,0)
  ;;1.18.0.11+i11
 "RTN","SAMINOT1",4,0)
@@ -8633,7 +8629,7 @@ EOR ; end of routine SAMINOT1
 "RTN","SAMINUL",1,0)
 SAMINUL ;ven/gpl - ielcap: note log ;2021-05-21T20:47Z
 "RTN","SAMINUL",2,0)
- ;;18.0;SAMI;**9,10,11**;2020-01;Build 19
+ ;;18.0;SAMI;**9,10,11**;2020-01;Build 20
 "RTN","SAMINUL",3,0)
  ;;1.18.0.11+i11
 "RTN","SAMINUL",4,0)
@@ -8947,7 +8943,7 @@ EOR ; end of routine SAMINUL
 "RTN","SAMISAV",1,0)
 SAMISAV ;ven/gpl - SAMI save routines ;2021-05-21T20:47Z
 "RTN","SAMISAV",2,0)
- ;;18.0;SAMI;**5,11**;2020-01;Build 19
+ ;;18.0;SAMI;**5,11**;2020-01;Build 20
 "RTN","SAMISAV",3,0)
  ;;1.18.0.11+i11
 "RTN","SAMISAV",4,0)
@@ -9605,7 +9601,7 @@ EOR ; end of routine SAMISAV
 "RTN","SAMIUR",1,0)
 SAMIUR ;ven/gpl - user reports ;2021-05-21T20:47Z
 "RTN","SAMIUR",2,0)
- ;;18.0;SAMI;**5,10,11**;2020-01;Build 19
+ ;;18.0;SAMI;**5,10,11**;2020-01;Build 20
 "RTN","SAMIUR",3,0)
  ;;1.18.0.11+i11
 "RTN","SAMIUR",4,0)
@@ -11011,7 +11007,7 @@ EOR ; end of SAMIUR
 "RTN","SAMIUR2",1,0)
 SAMIUR2 ;ven/gpl - sami user reports ;2021-05-21T20:47Z
 "RTN","SAMIUR2",2,0)
- ;;18.0;SAMI;**5,11**;2020-01;Build 19
+ ;;18.0;SAMI;**5,11**;2020-01;Build 20
 "RTN","SAMIUR2",3,0)
  ;;1.18.0.11+i11
 "RTN","SAMIUR2",4,0)

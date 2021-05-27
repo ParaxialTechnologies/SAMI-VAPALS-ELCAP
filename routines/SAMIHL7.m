@@ -1,5 +1,5 @@
-SAMIHL7 ;ven/lgc&arc - HL7 utilities ;2021-05-21T20:47Z
- ;;18.0;SAMI;**11**;2020-01;Build 8
+SAMIHL7 ;ven/lgc&arc - HL7 utilities ;May 27, 2021@14:08
+ ;;18.0;SAMI;**11**;2020-01;Build 21
  ;;1.18.0.11+i11
  ;
  ; SAMIHL7 contains subroutines for manipulating VAPALS-ELCAP HL7
@@ -67,7 +67,7 @@ SAMIHL7 ;ven/lgc&arc - HL7 utilities ;2021-05-21T20:47Z
  ;  SAMIHL7: update for ORU messaging.
  ;
  ; 2021-04-14/20 ven/gpl 1.18.0.11+i11 3a5756a,d7182d7
- ;  SAMIHL7: fix for duplicate patients fr/HL7, fix for updating 
+ ;  SAMIHL7: fix for duplicate patients fr/HL7, fix for updating
  ; patient-lookup graph on receipt of 2nd order.
  ;
  ; 2021-05-20/21 ven/mcglk&toad 1.18.0.11+i11
@@ -85,25 +85,25 @@ SAMIHL7 ;ven/lgc&arc - HL7 utilities ;2021-05-21T20:47Z
  ;
  ;
  ;
- ;fields("PID","segment")="PID|1||000002341||ZZTEST^MACHO^^^^^L||19271106000000|M|||7726 W ORCHID ST^^PHOENIX^AZ^85017||||||||000002341|"
- ;fields("PIV","segment")="PV1||O|PHX-PULM RN LSS PHONE|||||244088^GARCIA^DANIEL^P"
- ;fields("OBR","segment")="OBR||||PHO_LUNG^LUNG|"
- ;fields("ORC","segment")="ORC|NW|3200616135751|||NW||||20200616135751||||||20200616135751"
+ ; fields("PID","segment")="PID|1||000002341||ZZTEST^MACHO^^^^^L||19271106000000|M|||7726 W ORCHID ST^^PHOENIX^AZ^85017||||||||000002341|"
+ ; fields("PIV","segment")="PV1||O|PHX-PULM RN LSS PHONE|||||244088^GARCIA^DANIEL^P"
+ ; fields("OBR","segment")="OBR||||PHO_LUNG^LUNG|"
+ ; fields("ORC","segment")="ORC|NW|3200616135751|||NW||||20200616135751||||||20200616135751"
  ;
- ;fields("ORM",6799278.886493,"assignedlocation")="PHX-PULM RN LSS PHONE"
- ;fields("ORM",6799278.886493,"fulladdress")="7726 W ORCHID ST^^PHOENIX^AZ^85017"
- ;fields("ORM",6799278.886493,"msgid")="99000023ORM"
- ;fields("ORM",6799278.886493,"order")="PHO_LUNG"
- ;fields("ORM",6799278.886493,"order2")="LUNG"
- ;fields("ORM",6799278.886493,"ordercontrol")="NW"
- ;fields("ORM",6799278.886493,"ordereffectivedt")=20200616135751
- ;fields("ORM",6799278.886493,"ordernumber")=3200616135751
- ;fields("ORM",6799278.886493,"orderstatus")="NW"
- ;fields("ORM",6799278.886493,"patientclass")="O"
- ;fields("ORM",6799278.886493,"providerien")=244088
- ;fields("ORM",6799278.886493,"providernm")="GARCIA,DANIEL,P"
- ;fields("ORM",6799278.886493,"siteid")="PHO"
- ;fields("ORM",6799278.886493,"transactiondt")=20200616135751
+ ; fields("ORM",6789473.805153,"assignedlocation")="PHX-PULM RN LSS PHONE"
+ ; fields("ORM",6789473.805153,"fulladdress")="7726 W ORCHID ST^^PHOENIX^AZ^85017"
+ ; fields("ORM",6789473.805153,"msgid")="99000023ORM"
+ ; fields("ORM",6789473.805153,"order")="PHO_LUNG"
+ ; fields("ORM",6789473.805153,"order2")="LUNG"
+ ; fields("ORM",6789473.805153,"ordercontrol")="NW"
+ ; fields("ORM",6789473.805153,"ordereffectivedt")=20200616135751
+ ; fields("ORM",6789473.805153,"ordernumber")=3200616135751
+ ; fields("ORM",6789473.805153,"orderstatus")="NW"
+ ; fields("ORM",6789473.805153,"patientclass")="O"
+ ; fields("ORM",6789473.805153,"providerien")=244088
+ ; fields("ORM",6789473.805153,"providernm")="GARCIA,DANIEL,P"
+ ; fields("ORM",6789473.805153,"siteid")="PHO"
+ ; fields("ORM",6789473.805153,"transactiondt")=20200616135751
  ;
  ; fields("address1")="7726 W ORCHID ST"
  ; fields("city")="PHOENIX"
@@ -325,7 +325,7 @@ MATCHLOG ; build MATCHLOG
  . ; With existing patients, if new data for field doesn't match
  . ; pre-existing, save pre-existing data in changelog entry
  . ;
- . if '$get(newpat),fields(field)'="" do
+ . if '$get(newpat),'(field="") do
  . . quit:field="ORM"
  . . quit:field="dfn"
  . . ;
@@ -418,6 +418,12 @@ MATCHLOG ; build MATCHLOG
  quit  ; end of UPDTPTL-UPDTPTL1-MATCHLOG
  ;
  ;
+ ; Push all the patient data that was gleaned from the ORM message and
+ ;   saved in the fields array into the patient-lookup file
+ ;   as @rootpl@(ptien,hl7cnt,data name)=data value
+ ; examples of fields array
+ ;  fields("ORM",hl7cnt,"msgid")=123456
+ ;  fields("address1")="7726 W ORCHID ST"
  ;
 CAPTORM(fields,rootpl,ptien) ; save all ORM fields in patient-lookup
  ;
@@ -437,14 +443,16 @@ CAPTORM(fields,rootpl,ptien) ; save all ORM fields in patient-lookup
  ;
  ;@stanza 2 remove old field result from patient-lookup root
  ;
+ ; capture only the ORM fields
+ ; e.g. example fields("ORM",6789473.805153,"msgid")=1234
  new node set node=$name(fields("ORM"))
  new snode set snode=$piece(node,")")
- new invdt
+ new hl7cnt
+ set (hl7cnt,@rootpl@(ptien,"hl7 counter"))=$get(@rootpl@(ptien,"hl7 counter"))+1
  for  do   quit:node'[snode
  . set node=$query(@node)
  . quit:node'[snode
- . set invdt=$qsubscript(node,2)
- . set @rootpl@(ptien,"ORM",invdt,$qsubscript(node,3))=@node
+ . set @rootpl@(ptien,"ORM",hl7cnt,$qsubscript(node,3))=@node
  . quit
  ;
  ;

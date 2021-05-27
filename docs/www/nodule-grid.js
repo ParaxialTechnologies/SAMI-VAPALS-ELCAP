@@ -32,7 +32,6 @@
                 },
             }, options);
 
-
             function setupNoduleEnabledState(noduleIdx) {
                 $("#cect" + noduleIdx + "nt").conditionallyEnable({
                     sourceValues: "m",
@@ -41,17 +40,34 @@
 
                 $("#cect" + noduleIdx + "ch").on('change.cteval', function () {
 
-                    // All fields related to this nodule.
+                    // $fields is an array of fields related to this nodule with the exception of "is it new"
                     // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
                     // nodule 10 would match cect1*
                     const regex = new RegExp("cect" + noduleIdx + "[a-z]");
-                    const $fields = $('input,select').filter(function () {
+                    let $fields = $('input,select').filter(function () {
                         const name = $(this).attr('name');
                         const id = $(this).attr('id');
                         return id !== "cect" + noduleIdx + "ch" && (regex.test(name) || regex.test(id));
                     });
+                    let isItNewValue = $(this).val();
 
-                    if ($(this).val() === "-") {
+                    // if the "is it new" selection is a value that means the nodule is no longer present or otherwise
+                    // resolved, clear MOST fields. These values include: resolved (pw), not a nodule (px),
+                    // resected (pr), Not in outside report (pk), not included in scan (pv)
+                    let noduleResolved = ['pw', 'px', 'pr', 'pk', 'pv'].includes(isItNewValue);
+                    if (noduleResolved) {
+                        //reduce the list to exclude the fields: status (st) and likely location (ll)
+                        $fields = $fields.filter(function () {
+                            const id = $(this).attr('id');
+                            const idsToMatch = [
+                                'cect' + noduleIdx + 'st',
+                                'cect' + noduleIdx + 'll'
+                            ];
+                            return !idsToMatch.includes(id);
+                        })
+                    }
+
+                    if (isItNewValue === "-" || noduleResolved) {
                         //empty out values
                         $fields.filter("select").val("-");
                         $fields.filter(":radio, :checkbox").prop('checked', false);
@@ -82,7 +98,8 @@
                         // changed from "-" to anything else; which occurs on subsequent scans.
                         $("#cect" + noduleIdx + "nt").trigger('change');
                     }
-                });
+                }).trigger('change.cteval'); //triggered in the event that the nodule grid is loaded with one of the
+                // above resolved nodule states
             }
 
             function mean(v1, v2) {
@@ -265,7 +282,7 @@
 
                 const changeQueue = [];
                 // for (let i = 0; i < selectorMap.length; ++i) {
-                for (let key in selectorMap){
+                for (let key in selectorMap) {
                     const selector1 = key;
                     const selector2 = selectorMap[key];
                     swapValues(selector1, selector2);

@@ -108,6 +108,7 @@
                     // .trigger('change.cteval') //temp disable
                 ; //triggered in the event that the nodule grid is loaded with one of the
                 // above resolved nodule states
+                //TODO: don't trigger. Instead call a new function that toggles fields on load, only if it's not the - value.
             }
 
             function mean(v1, v2) {

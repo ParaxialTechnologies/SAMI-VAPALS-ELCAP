@@ -135,9 +135,27 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-sm-4 form-group">
+        <label class="control-label" for="cepaw">Pulmonary artery width (mm)</label>
+        <input type="text" id="cepaw" name="cepaw" size="4"
+               class="form-control numeric decimalformat" title="Pulmonary Artery Width">
+    </div>
+
+    <div class="col-sm-4 form-group">
+        <label class="control-label" for="ceaow">Ascending aorta width (mm)</label>
+        <input type="text" id="ceaow" name="ceaow" size="4" class="form-control numeric decimalformat">
+    </div>
+
+    <div class="col-sm-4 form-group">
+        <label class="control-label" for="cepar">Pulmonary artery/aorta ratio</label><small>(calculated)</small>
+        <br/>
+        <span id="cepar-text"></span>
+        <input type="hidden" id="cepar" name="cepar">
+    </div>
+</div>
+
 <script>
-
-
     function initEmphysema(fv) {
         function calculateVisualCacScore() {
             let cal1 = $("#cecclm")[0].selectedIndex;
@@ -155,6 +173,22 @@
 
         $("#cecclm, #ceccld, #cecccf, #ceccrc").on('change', calculateVisualCacScore);
         calculateVisualCacScore();
+
+        function calculatePulmonaryArteryAortaRatio() {
+            let res = 0;
+            const cepaw = $("#cepaw").val(), ceaow = $("#ceaow").val();
+            if (ceaow > 0) {
+                res = (cepaw / ceaow).toFixed(1);
+                $("#cepar-text").text(res);
+                $("#cepar").val(res);
+            } else {
+                $("#cepar-text").text("");
+                $("#cepar").val("");
+            }
+        }
+
+        $("#cepaw, #ceaow").on('keyup change', calculatePulmonaryArteryAortaRatio);
+        calculatePulmonaryArteryAortaRatio();
 
         //Add validations after all other anonymous functions have run and fv is bound.
         if (fv) {

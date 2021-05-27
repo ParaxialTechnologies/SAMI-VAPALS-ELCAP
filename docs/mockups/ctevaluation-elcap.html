@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.05.24" name="version"/>
+  <meta content="2021.05.26" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: CT Evaluation Form
@@ -6145,6 +6145,32 @@
        </div>
       </div>
      </div>
+     <div class="row">
+      <div class="col-sm-4 form-group">
+       <label class="control-label" for="cepaw">
+        Pulmonary artery width (mm)
+       </label>
+       <input class="form-control numeric decimalformat" id="cepaw" name="cepaw" size="4" title="Pulmonary Artery Width" type="text"/>
+      </div>
+      <div class="col-sm-4 form-group">
+       <label class="control-label" for="ceaow">
+        Ascending aorta width (mm)
+       </label>
+       <input class="form-control numeric decimalformat" id="ceaow" name="ceaow" size="4" type="text"/>
+      </div>
+      <div class="col-sm-4 form-group">
+       <label class="control-label" for="cepar">
+        Pulmonary artery/aorta ratio
+       </label>
+       <small>
+        (calculated)
+       </small>
+       <br/>
+       <span id="cepar-text">
+       </span>
+       <input id="cepar" name="cepar" type="hidden"/>
+      </div>
+     </div>
      <script>
       function initEmphysema(fv) {
         function calculateVisualCacScore() {
@@ -6163,6 +6189,22 @@
 
         $("#cecclm, #ceccld, #cecccf, #ceccrc").on('change', calculateVisualCacScore);
         calculateVisualCacScore();
+
+        function calculatePulmonaryArteryAortaRatio() {
+            let res = 0;
+            const cepaw = $("#cepaw").val(), ceaow = $("#ceaow").val();
+            if (ceaow > 0) {
+                res = (cepaw / ceaow).toFixed(1);
+                $("#cepar-text").text(res);
+                $("#cepar").val(res);
+            } else {
+                $("#cepar-text").text("");
+                $("#cepar").val("");
+            }
+        }
+
+        $("#cepaw, #ceaow").on('keyup change', calculatePulmonaryArteryAortaRatio);
+        calculatePulmonaryArteryAortaRatio();
 
         //Add validations after all other anonymous functions have run and fv is bound.
         if (fv) {
@@ -7273,135 +7315,66 @@
        <div class="panel-collapse collapse" id="cardiac-container" role="tabpanel">
         <div class="panel-body">
          <input name="ceca" type="hidden"/>
-         <div class="table-responsive">
-          <table class="table">
-           <tbody>
-            <tr>
-             <td>
-              <label class="control-label" for="cecca">
-               Aortic calcifications
-              </label>
-             </td>
-             <td colspan="5">
-              <div class="form-group">
-               <label class="aria-hidden" for="cecca">
-                Aortic Calcifications
-               </label>
-               <select class="form-control" id="cecca" name="cecca">
-                <option value="-">
-                 -
-                </option>
-                <option value="no">
-                 None
-                </option>
-                <option value="mi">
-                 Minimal &lt; ⅓
-                </option>
-                <option value="mo">
-                 Moderate
-                </option>
-                <option value="ex">
-                 Extensive &gt; ⅔
-                </option>
-               </select>
-              </div>
-             </td>
-            </tr>
-            <tr>
-             <td>
-              <label class="control-label" for="ceprevm">
-               Pericardial effusion severity
-              </label>
-             </td>
-             <td colspan="5">
-              <div class="form-group">
-               <select class="form-control" id="ceprevm" name="ceprevm" title="Pericardial Effusion Severity">
-                <option value="-">
-                 -
-                </option>
-                <option value="no">
-                 None
-                </option>
-                <option value="mi">
-                 Minimal
-                </option>
-                <option value="mo">
-                 Moderate
-                </option>
-                <option value="ex">
-                 Extensive
-                </option>
-               </select>
-              </div>
-             </td>
-            </tr>
-            <tr>
-             <td colspan="2">
-              <label class="control-label" for="cepaw">
-               Pulmonary artery width (mm)
-              </label>
-             </td>
-             <td>
-              <div class="form-group">
-               <input class="form-control numeric decimalformat" id="cepaw" name="cepaw" size="4" title="Pulmonary Artery Width" type="text"/>
-              </div>
-             </td>
-             <td colspan="4">
-             </td>
-            </tr>
-            <tr>
-             <td colspan="2">
-              <label class="control-label" for="ceaow">
-               Ascending aorta width (mm)
-              </label>
-             </td>
-             <td>
-              <div class="form-group">
-               <label class="aria-hidden" for="ceaow">
-                Ascending Aorta Width
-               </label>
-               <input class="form-control numeric decimalformat" id="ceaow" name="ceaow" size="4" type="text"/>
-              </div>
-             </td>
-             <td colspan="4">
-             </td>
-            </tr>
-            <tr>
-             <td colspan="2">
-              <label class="control-label" for="cepar">
-               Pulmonary artery/aorta
-                                ratio
-              </label>
-              <br/>
-              <small>
-               (calculated)
-              </small>
-             </td>
-             <td colspan="5">
-              <div class="form-group">
-               <span id="cepar-text">
-               </span>
-               <input id="cepar" name="cepar" type="hidden"/>
-              </div>
-             </td>
-            </tr>
-            <tr>
-             <td colspan="7">
-              <div class="form-group">
-               <label for="cecommca">
-                Additional comments on cardiac abnormalities
-               </label>
-               <textarea class="form-control" id="cecommca" name="cecommca"></textarea>
-               <label class="checkbox-inline">
-                <input name="cecommcai" type="hidden" value=""/>
-                <input id="cecommcai" name="cecommcai" type="checkbox" value="y"/>
-                Include in impression
-               </label>
-              </div>
-             </td>
-            </tr>
-           </tbody>
-          </table>
+         <div class="row">
+          <div class="col-sm-6 col-md-4 col-lg-3 form-group">
+           <label class="control-label" for="cecca">
+            Aortic calcifications
+           </label>
+           <select class="form-control" id="cecca" name="cecca">
+            <option value="-">
+             -
+            </option>
+            <option value="no">
+             None
+            </option>
+            <option value="mi">
+             Minimal &lt; ⅓
+            </option>
+            <option value="mo">
+             Moderate
+            </option>
+            <option value="ex">
+             Extensive &gt; ⅔
+            </option>
+           </select>
+          </div>
+         </div>
+         <div class="row">
+          <div class="col-sm-6 col-md-4 col-lg-3 form-group">
+           <label class="control-label" for="ceprevm">
+            Pericardial effusion severity
+           </label>
+           <select class="form-control" id="ceprevm" name="ceprevm" title="Pericardial Effusion Severity">
+            <option value="-">
+             -
+            </option>
+            <option value="no">
+             None
+            </option>
+            <option value="mi">
+             Minimal
+            </option>
+            <option value="mo">
+             Moderate
+            </option>
+            <option value="ex">
+             Extensive
+            </option>
+           </select>
+          </div>
+         </div>
+         <div class="row">
+          <div class="col-sm-12 form-group">
+           <label for="cecommca">
+            Additional comments on cardiac abnormalities
+           </label>
+           <textarea class="form-control" id="cecommca" name="cecommca"></textarea>
+           <label class="checkbox-inline">
+            <input name="cecommcai" type="hidden" value=""/>
+            <input id="cecommcai" name="cecommcai" type="checkbox" value="y"/>
+            Include in impression
+           </label>
+          </div>
          </div>
         </div>
        </div>
@@ -8516,23 +8489,7 @@
       </div>
      </div>
      <script>
-      function calculatePulmonaryArteryAortaRatio() {
-        let res = 0;
-        const cepaw = $("#cepaw").val(), ceaow = $("#ceaow").val();
-        if (ceaow > 0) {
-            res = (cepaw / ceaow).toFixed(1);
-            $("#cepar-text").text(res);
-            $("#cepar").val(res);
-        } else {
-            $("#cepar-text").text("");
-            $("#cepar").val("");
-        }
-    }
-
-    function initAbnormalities(fv) {
-        $("#cepaw, #ceaow").on('keyup change', calculatePulmonaryArteryAortaRatio);
-        calculatePulmonaryArteryAortaRatio();
-
+      function initAbnormalities(fv) {
         //Neck and mediastinal
         $("#ceato").conditionallyDisplay({sourceValues: "o", enable: $("#ceatos")});
         $("#ceayo").conditionallyDisplay({sourceValues: "o", enable: $("#ceayos")});
@@ -9003,7 +8960,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2021.05.24
+     2021.05.26
     </span>
    </div>
   </footer>

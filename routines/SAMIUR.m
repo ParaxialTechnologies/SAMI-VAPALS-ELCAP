@@ -158,11 +158,19 @@ WSREPORT(SAMIRTN,filter) ; generate report based on params in filter
  kill SAMIRTN
  set HTTPRSP("mime")="text/html"
  ;
- new type,temp
+ new type,temp,site
+ s site=$g(filter("siteid"))
+ i site="" s site=$g(filter("site"))
+ i site="" d  q  ; report site missing
+ . d GETHOME^SAMIHOM3(.SAMIRTN,.filter) ; send them to home
+ ;
  set type=$get(filter("samireporttype"))
  if type="" do  quit  ; report type missing
  . do GETHOME^SAMIHOM3(.SAMIRTN,.filter) ; send them to home
  . quit
+ ;
+ if type="unmatched" i $$GET1PARM^SAMIPARM("matchingReportEnabled",site)'="true" do  quit  ;
+ . d GETHOME^SAMIHOM3(.SAMIRTN,.filter) ; send them to home
  ;
  do getThis^%wd("temp","table.html") ; page template
  quit:'$data(temp)
@@ -209,7 +217,7 @@ WSREPORT(SAMIRTN,filter) ; generate report based on params in filter
  . quit
  ;
  new RPT,ik
- do RPTTBL^SAMIUR2(.RPT,type) ; load report definition table
+ do RPTTBL^SAMIUR2(.RPT,type,site) ; load report definition table
  if '$data(RPT) do  quit  ; don't know about this report
  . do GETHOME^SAMIHOM3(.SAMIRTN,.filter) ; send them to home
  . quit
@@ -631,13 +639,18 @@ UNMAT(SAMIPATS,ztype,datephrase,filter) ; build unmatched persons list
  . ;
  . new ien set ien=$order(@lroot@("dfn",dfn,""))
  . quit:ien=""
- . quit:$get(@lroot@(ien,"remotedfn"))'=""  ;
+ . n ordern
+ . s ordern=$g(@lroot@(ien,"ORMORCordernumber"))
+ . i ordern="" s ordern=$g(@lroot@(ien,"ORM",1,"ordernumber"))
+ . i ordern'="" q  ;
+ . i $g(@lroot@(ien,"siteid"))'[site q  ;
+ . ;quit:$get(@lroot@(ien,"remotedfn"))'=""  ;
  . ;
  . merge SAMIPATS(ien,dfn)=@lroot@(ien)
  . ;
- . ; new name set name=$get(SAMIPATS(ien,dfn,"saminame"))
- . new name set name=$get(SAMIPATS(ien,dfn,"sinamef"))
- . set name=name_","_SAMIPATS(ien,dfn,"sinamel")
+ . new name set name=$get(SAMIPATS(ien,dfn,"saminame"))
+ . ; new name set name=$get(SAMIPATS(ien,dfn,"sinamef"))
+ . ; set name=name_","_SAMIPATS(ien,dfn,"sinamel")
  . new nuhref set nuhref="<form method=POST action=""/vapals"">"
  . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""editperson"">"
  . set nuhref=nuhref_"<input type=hidden name=""dfn"" value="_dfn_">"

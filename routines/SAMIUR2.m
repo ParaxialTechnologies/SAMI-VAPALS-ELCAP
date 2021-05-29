@@ -148,7 +148,9 @@ SAMIUR2 ;ven/gpl - sami user reports ;2021-05-21T20:47Z
  ;
  ;
  ;
-RPTTBL(RPT,TYPE) ; build report-definition table
+RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the 
+ ; report definition table. TYPE is the report type to be returned
+ ; This routine could use a file or a graph in the next version
  ;
  ;;private;procedure;clean;silent;sac
  ;@called-by
@@ -167,7 +169,8 @@ RPTTBL(RPT,TYPE) ; build report-definition table
  . set RPT(1,"routine")="$$FUDATE^SAMIUR2"
  . set RPT(2,"header")="Name"
  . set RPT(2,"routine")="$$NAME^SAMIUR2"
- . set RPT(3,"header")="SSN"
+ . ;set RPT(3,"header")="SSN"
+ . set RPT(3,"header")=$$SSNLABEL(SITE)
  . set RPT(3,"routine")="$$SSN^SAMIUR2"
  . set RPT(4,"header")="Baseline Date"
  . set RPT(4,"routine")="$$BLINEDT^SAMIUR2"
@@ -184,7 +187,7 @@ RPTTBL(RPT,TYPE) ; build report-definition table
  if TYPE="activity" do  quit  ;
  . set RPT(1,"header")="Name"
  . set RPT(1,"routine")="$$NAME^SAMIUR2"
- . set RPT(2,"header")="SSN"
+ . set RPT(2,"header")=$$SSNLABEL(SITE)
  . set RPT(2,"routine")="$$SSN^SAMIUR2"
  . set RPT(3,"header")="CT Date"
  . set RPT(3,"routine")="$$STUDYDT^SAMIUR2"
@@ -203,7 +206,7 @@ RPTTBL(RPT,TYPE) ; build report-definition table
  if TYPE="enrollment" do  quit  ;
  . set RPT(1,"header")="Name"
  . set RPT(1,"routine")="$$NAME^SAMIUR2"
- . set RPT(2,"header")="SSN"
+ . set RPT(2,"header")=$$SSNLABEL(SITE)
  . set RPT(2,"routine")="$$SSN^SAMIUR2"
  . set RPT(3,"header")="CT Date"
  . set RPT(3,"routine")="$$STUDYDT^SAMIUR2"
@@ -224,7 +227,7 @@ RPTTBL(RPT,TYPE) ; build report-definition table
  if TYPE="inactive" do  quit  ;
  . set RPT(1,"header")="Name"
  . set RPT(1,"routine")="$$NAME^SAMIUR2"
- . set RPT(2,"header")="SSN"
+ . set RPT(2,"header")=$$SSNLABEL(SITE)
  . set RPT(2,"routine")="$$SSN^SAMIUR2"
  . set RPT(3,"header")="CT Date"
  . set RPT(3,"routine")="$$STUDYDT^SAMIUR2"
@@ -247,7 +250,7 @@ RPTTBL(RPT,TYPE) ; build report-definition table
  . set RPT(1,"routine")="$$BLINEDT^SAMIUR2"
  . set RPT(2,"header")="Name"
  . set RPT(2,"routine")="$$NAME^SAMIUR2"
- . set RPT(3,"header")="SSN"
+ . set RPT(3,"header")=$$SSNLABEL(SITE)
  . set RPT(3,"routine")="$$SSN^SAMIUR2"
  . set RPT(4,"header")="Incomplete form"
  . set RPT(4,"routine")="$$IFORM^SAMIUR2"
@@ -258,7 +261,7 @@ RPTTBL(RPT,TYPE) ; build report-definition table
  . set RPT(1,"routine")="$$BLINEDT^SAMIUR2"
  . set RPT(2,"header")="Name"
  . set RPT(2,"routine")="$$NAME^SAMIUR2"
- . set RPT(3,"header")="SSN"
+ . set RPT(3,"header")=$$SSNLABEL(SITE)
  . set RPT(3,"routine")="$$SSN^SAMIUR2"
  . quit
  ;
@@ -285,7 +288,7 @@ RPTTBL(RPT,TYPE) ; build report-definition table
  if TYPE="worklist" do  quit  ;
  . set RPT(1,"header")="Name"
  . set RPT(1,"routine")="$$WORKPAT^SAMIUR2"
- . set RPT(2,"header")="SSN"
+ . set RPT(2,"header")=$$SSNLABEL(SITE)
  . set RPT(2,"routine")="$$SSN^SAMIUR2"
  . set RPT(3,"header")="Date of birth"
  . set RPT(3,"routine")="$$DOB^SAMIUR2"
@@ -965,6 +968,12 @@ SSN(zdt,dfn,SAMIPATS) ; social security number
  quit ssn ; end of ppi $$SSN^SAMIUR2
  ;
  ;
+SSNLABEL(SITE) ; extrinsic returns label for SSN (ie PID)
+ new RTN
+ set RTN=$$GET1PARM^SAMIPARM("socialSecurityNumber",SITE)
+ if RTN="" set RTN="SSN"
+ quit RTN
+ ; 
  ;
 STUDYDT(zdt,dfn,SAMIPATS) ; latest study date
  ;

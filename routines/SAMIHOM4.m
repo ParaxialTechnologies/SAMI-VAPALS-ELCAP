@@ -338,10 +338,10 @@ REG(SAMIRTN,SAMIARG) ; manual registration
  s SAMIARG("errorField")=""
  ; test for duplicate ssn
  ;
- i $$DUPSSN(ssn) d  ;
- . ;s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate SSN."
- . s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate SSN error. A person with that SSN is already entered in the system."
- . s SAMIARG("errorField")="ssn"
+ ;i $$DUPSSN(ssn) d  ;
+ ;. ;s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate SSN."
+ ;. s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate SSN error. A person with that SSN is already entered in the system."
+ ;. s SAMIARG("errorField")="ssn"
  ;
  ; test for duplicate icn
  ;

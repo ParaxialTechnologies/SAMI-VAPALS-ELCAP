@@ -277,9 +277,9 @@ RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the
  . quit
  ;
  if TYPE="unmatched" do  ;
- . set RPT(1,"header")="Unmatched Entry"
+ . set RPT(1,"header")="Unmatched Manual Entry"
  . set RPT(1,"routine")="$$MANPAT^SAMIUR2"
- . set RPT(2,"header")="Possible Match"
+ . set RPT(2,"header")="Possible HL7 Match"
  . set RPT(2,"routine")="$$POSSIBLE^SAMIUR2"
  . set RPT(3,"header")="Match Control"
  . set RPT(3,"routine")="$$MATCH^SAMIUR2"

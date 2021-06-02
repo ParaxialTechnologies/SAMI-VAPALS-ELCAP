@@ -297,7 +297,7 @@
 
                 const changeQueue = [];
                 // for (let i = 0; i < selectorMap.length; ++i) {
-                for (let key in selectorMap) {
+                for (let key in selectorMap){
                     const selector1 = key;
                     const selector2 = selectorMap[key];
                     swapValues(selector1, selector2);

@@ -1,4 +1,4 @@
-SAMIORM ;ven/arc/lgc - parse ORM to update  patient-lookup graph ;Jul 24, 2020@11:08
+SAMIORM ;ven/arc/lgc - parse ORM to update  patient-lookup graph ;May 27, 2021@13:54
  ;;18.0;SAMI;;;Build 1
  ;
  quit  ; No entry from top
@@ -31,11 +31,11 @@ SAMIORM ;ven/arc/lgc - parse ORM to update  patient-lookup graph ;Jul 24, 2020@1
  ;
  ; @section 1 code
  ;
- ; SAMIORM parses out an incoming ORM message into the 
+ ; SAMIORM parses out an incoming ORM message into the
  ;   fields array and then calls ORMHL7 to use the fields
  ;   array to update patient-lookup graph
  ;
-EN ; ORM message parsed into patient-lookup graph 
+EN ; ORM message parsed into patient-lookup graph
  ;
  kill ^KBAP("SAMIORM")
  set ^KBAP("SAMIORM","EN")=$$HTFM^XLFDT($H)_" TEST"
@@ -44,10 +44,11 @@ EN ; ORM message parsed into patient-lookup graph
  do ACK^SAMIHL7
  ;
  ;
-BLDARR ; pull out message into array
+BLDARR ; pull out message into samihl7 array
  ;
- new HLARR,cnt,samihl7,invdt
+ new HLARR,cnt,samihl7,invdt,hl7cnt
  set invdt=(9999999.9999-$$HTFM^XLFDT($H))
+ ;
  for  xecute HLNEXT quit:$get(HLNODE)=""  do
  . set cnt=$get(cnt)+1
  . set HLARR(cnt)=HLNODE
@@ -56,20 +57,19 @@ BLDARR ; pull out message into array
  kill ^KBAP("SAMIORM","BLDARR")
  merge ^KBAP("SAMIORM","BLDARR","HLARR")=HLARR
  ;
-DEBUG ;do ^ZTER
+ new INFS set INFS=$G(HL("FS"))
+ new INCC set INCC=$E($G(HL("ECH")))
  ;
  new fields
  set fields("ORM",invdt,"msgid")=$get(HLREC("MID"))
  ;
- new INFS set INFS=$G(HL("FS"))
- new INCC set INCC=$E($G(HL("ECH")))
- ;
-PMSG do PARSEMSG(.HLARR,.fields)
+ ;pull patient data from ORM message into fields array
+PMSG do PARSEMSG(.HLARR,.fields) ; Pull patient data from ORM message
  ;
  merge ^KBAP("SAMIORM","samihl7")=samihl7
- merge ^KBaP("SAMIORM","fields")=fields
+ merge ^KBAP("SAMIORM","fields")=fields
  ;
- ;  update patient-lookup graph
+ ;  update patient-lookup graph using fields array
 UPDTPTL do UPDTPTL^SAMIHL7(.fields)
  ;
  merge ^KBAP("SAMIORM","fields")=fields
@@ -78,17 +78,20 @@ UPDTPTL do UPDTPTL^SAMIHL7(.fields)
  ;   with ptien into the patient lookup graph.
  ; I have the ptien in fields("ptien") and I have the HL7
  ;   message segments in samihl7
- ; Time to file the message into patient lookup
+ ; Time to file the actual hl7 message into patient lookup
+ ; NOTE: @rootpl@(ptien,"hl7 counter") was updated in UPDTPTL^SAMIHL7
+ ;
  new ptien set ptien=$get(fields("ptien"))
- if ptien do
- . new rootpl,hl7cnt,cnt,seg
- . set rootpl=$$setroot^%wd("patient-lookup")
- . set hl7cnt=$get(@rootpl@(ptien,"hl7 counter"))+1
- . set @rootpl@(ptien,"hl7 counter")=hl7cnt
- . set cnt=0
- . for  set cnt=$order(samihl7(cnt)) quit:'cnt  do
- .. set seg=$extract(samihl7(cnt),1,3)
- .. set @rootpl@(ptien,"hl7",hl7cnt,seg)=samihl7(cnt)
+ if 'ptien quit
+ ;
+ new rootpl,hl7cnt,cnt,seg
+ set rootpl=$$setroot^%wd("patient-lookup")
+ set hl7cnt=$get(@rootpl@(ptien,"hl7 counter"))
+ set fields("ORM",hl7cnt,"msgid")=$get(HLREC("MID"))
+ set cnt=0
+ for  set cnt=$order(samihl7(cnt)) quit:'cnt  do
+ . set seg=$extract(samihl7(cnt),1,3)
+ . set @rootpl@(ptien,"hl7",hl7cnt,seg)=samihl7(cnt)
  ;
  quit  ; End entry point EN
  ;
@@ -114,23 +117,25 @@ PID(segment,fields) ;
  ;
  set ^KBAP("SAMIORM","fields","PID","segment")=segment
  ;
- new name,fname,lname,mname
+ new name,fname,lname,mname,suffix
  set fields("icn")=""
  set fields("ssn")=$piece($piece(segment,INFS,4),INCC)
  ;
  set name=$piece(segment,INFS,6)
  set lname=$$CAMELCAS($piece(name,INCC,1))
  set fname=$$CAMELCAS($piece(name,INCC,2))
- set mname=""
+ set (mname,suffix)=""
  if $length($piece(segment,INFS,6),INCC)>2 do
  . set mname=$$CAMELCAS($piece($piece(segment,INFS,6),INCC,3))
+ if $length($piece(segment,INFS,6),INCC)>3 do
+ . set suffix=$$UP^XLFSTR($piece($piece(segment,INFS,6),INCC,4))
  ;
+ if $length(mname) set fname=fname_" "_mname
+ if $length(suffix) set lname=lname_" "_suffix
  set name=lname_","_fname
- if $length(mname) do
- . set name=name_" "_mname
  set fields("saminame")=name
- set fields("sinamef")=$piece(name,",",2)
- set fields("sinamel")=$piece(name,",")
+ set fields("sinamef")=fname
+ set fields("sinamel")=lname
  ;
  if $length(fields("ssn")),$length(fields("saminame")) do
  . set fields("last5")=$$UP^XLFSTR($extract(fields("saminame")))_$extract(fields("ssn"),6,9)
@@ -175,7 +180,10 @@ OBR(segment,fields) ;
  set ^KBAP("SAMIORM","fields","OBR","segment")=segment
  ;
  set fields("ORM",invdt,"order")=$piece($piece(segment,INFS,5),INCC)
+ ;
  set fields("ORM",invdt,"siteid")=$piece($piece($piece(segment,INFS,5),INCC),"_")
+ set fields("siteid")=$piece($piece($piece(segment,INFS,5),INCC),"_")
+ ;
  set fields("ORM",invdt,"order2")=$piece($piece(segment,INFS,5),INCC,2)
  quit
  ;

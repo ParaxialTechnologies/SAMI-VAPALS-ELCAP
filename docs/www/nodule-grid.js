@@ -43,15 +43,15 @@
                 });
 
                 const currentIsItNewValue = $("#cect" + noduleId + "ch").val();
-                console.log("setupNoduleEnabledState(noduleIndex=" + noduleId + "): currentIsItNewValue=" + currentIsItNewValue);
+                // console.log("setupNoduleEnabledState(noduleIndex=" + noduleId + "): currentIsItNewValue=" + currentIsItNewValue);
                 if (currentIsItNewValue !== '-') {
                     toggleFields(noduleId);
                 }
             }
 
             function toggleFields(noduleId) {
-                const logPrefix = 'toggleFields(noduleIndex=' + noduleId + '): ';
-                console.log(logPrefix + 'entered');
+                // const logPrefix = 'toggleFields(noduleIndex=' + noduleId + '): ';
+                // console.log(logPrefix + 'entered');
 
                 // $fields is an array of fields related to this nodule with the exception of "is it new"
                 // NB: Note that we use regex instead of startsWith and endsWith jQuery selectors because
@@ -63,12 +63,12 @@
                     return id !== "cect" + noduleId + "ch" && (regex.test(name) || regex.test(id));
                 });
                 let isItNewValue = $("#cect" + noduleId + "ch").val();
-                console.log(logPrefix + 'isItNewValue=' + isItNewValue);
+                // console.log(logPrefix + 'isItNewValue=' + isItNewValue);
                 // if the "is it new" selection is a value that means the nodule is no longer present or otherwise
                 // resolved, clear MOST fields. These values include: resolved (pw), not a nodule (px),
                 // resected (pr), Not in outside report (pk), not included in scan (pv)
                 let noduleResolved = ['pw', 'px', 'pr', 'pk', 'pv'].includes(isItNewValue);
-                console.log(logPrefix + 'noduleResolved=' + noduleResolved);
+                // console.log(logPrefix + 'noduleResolved=' + noduleResolved);
                 if (noduleResolved) {
                     //reduce the list to exclude the fields: status (st) and likely location (ll)
                     $fields = $fields.filter(function () {
@@ -82,7 +82,7 @@
                 }
 
                 if (isItNewValue === "-" || noduleResolved) {
-                    console.log(logPrefix + 'disabling fields');
+                    // console.log(logPrefix + 'disabling fields');
                     //empty out values
                     $fields.filter("select").val("-");
                     $fields.filter(":radio, :checkbox").prop('checked', false);
@@ -105,7 +105,7 @@
                     //finally disable the fields
                     $fields.prop('disabled', true);
                 } else { //re-enable fields
-                    console.log(logPrefix + 'enabling fields');
+                    // console.log(logPrefix + 'enabling fields');
                     $fields
                         .prop('disabled', false)
                         .trigger('change.conditionally-enable'); //set state according to other rules (i.e. part-solid fields)
@@ -114,7 +114,7 @@
                     // changed from "-" to anything else; which occurs on subsequent scans.
                     $("#cect" + noduleId + "nt").trigger('change');
                 }
-                console.log(logPrefix + 'exiting');
+                // console.log(logPrefix + 'exiting');
             }
 
             function mean(v1, v2) {
@@ -273,7 +273,7 @@
             }
 
             function swapFields(noduleIndex, otherIndex) {
-                console.log("swapFields() entered. noduleIndex=" + noduleIndex + ", other=" + otherIndex);
+                // console.log("swapFields() entered. noduleIndex=" + noduleIndex + ", other=" + otherIndex);
                 const nodeId1 = noduleIndex + 1;
                 const nodeId2 = otherIndex + 1;
                 const prefix1 = '#cect' + nodeId1;

@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.05.26" name="version"/>
+  <meta content="2021.06.01" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: PET Evaluation Form
@@ -50,17 +50,17 @@
   </script>
   <script src="../www/lib/chart-js-2.9.3/chartjs-plugin-datalabels.min.js">
   </script>
-  <script src="../www/jquery-conditonally-enable.js">
+  <script src="../www/jquery-conditonally-enable.js?v=2021.06.01">
   </script>
-  <script src="../www/jquery-conditonally-display.js">
+  <script src="../www/jquery-conditonally-display.js?v=2021.06.01">
   </script>
-  <script src="../www/jqueryui-vista-filemanAutocomplete.js">
+  <script src="../www/jqueryui-vista-filemanAutocomplete.js?v=2021.06.01">
   </script>
-  <script src="../www/vapals.js">
+  <script src="../www/vapals.js?v=2021.06.01">
   </script>
-  <script src="../www/init.js">
+  <script src="../www/init.js?v=2021.06.01">
   </script>
-  <script src="../www/nodule-grid.js">
+  <script src="../www/nodule-grid.js?v=2021.06.01">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -449,7 +449,7 @@
               Is it new?
              </label>
              <select class="form-control" id="cect1ch" name="cect1ch" tabindex="101">
-              <option value="-">
+              <option selected="" value="-">
                -
               </option>
               <option value="n">
@@ -1063,7 +1063,7 @@
               <option value="-">
                -
               </option>
-              <option value="no">
+              <option selected="" value="no">
                No
               </option>
               <option value="tr">
@@ -1495,7 +1495,7 @@
               <option value="-">
                -
               </option>
-              <option value="end">
+              <option selected="" value="end">
                Endobr
               </option>
               <option value="lul">
@@ -1909,7 +1909,7 @@
              <label class="aria-hidden" for="cect1sn">
               Nodule seen in series
              </label>
-             <input class="form-control" id="cect1sn" name="cect1sn" required="required" size="3" tabindex="105" type="text"/>
+             <input class="form-control" id="cect1sn" name="cect1sn" required="required" size="3" tabindex="105" type="text" value="1"/>
             </div>
            </td>
            <td class="form-inline" data-nodule-id="2" style="display:none;">
@@ -1998,7 +1998,7 @@
              <label class="aria-hidden" for="cect1inl">
               Nodule seen in image (Low)
              </label>
-             <input class="form-control numeric" id="cect1inl" name="cect1inl" required="required" size="3" tabindex="106" type="text"/>
+             <input class="form-control numeric" id="cect1inl" name="cect1inl" required="required" size="3" tabindex="106" type="text" value="1"/>
              -
              <label class="aria-hidden" for="cect1inh">
               Nodule seen in image (High)
@@ -2149,7 +2149,7 @@
               <option value="-">
                -
               </option>
-              <option value="un">
+              <option selected="" value="un">
                Unknown
               </option>
               <option value="bc">
@@ -2761,7 +2761,7 @@
               <option value="-">
                -
               </option>
-              <option value="s">
+              <option selected="" value="s">
                Solid
               </option>
               <option value="m">
@@ -3007,7 +3007,7 @@
              <label class="aria-hidden" for="cect1sl">
               length (mm)
              </label>
-             <input class="form-control numeric decimalformat" id="cect1sl" name="cect1sl" required="required" size="4" tabindex="110" type="text"/>
+             <input class="form-control numeric decimalformat" id="cect1sl" name="cect1sl" required="required" size="4" tabindex="110" type="text" value="1.5"/>
             </div>
            </td>
            <td class="form-inline" data-nodule-id="2" style="display:none;">
@@ -3097,7 +3097,7 @@
              <label class="aria-hidden" for="cect1sw">
               Maximum width
              </label>
-             <input class="form-control numeric decimalformat" id="cect1sw" name="cect1sw" required="required" size="4" tabindex="111" type="text"/>
+             <input class="form-control numeric decimalformat" id="cect1sw" name="cect1sw" required="required" size="4" tabindex="111" type="text" value="2.5"/>
             </div>
            </td>
            <td class="form-inline" data-nodule-id="2" style="display:none;">
@@ -3263,7 +3263,7 @@
              <label class="aria-hidden" for="cect1sh">
               Height
              </label>
-             <input class="form-control numeric decimalformat" id="cect1sh" name="cect1sh" size="4" tabindex="112" type="text"/>
+             <input class="form-control numeric decimalformat" id="cect1sh" name="cect1sh" size="4" tabindex="112" type="text" value="1.75"/>
             </div>
            </td>
            <td class="form-inline" data-nodule-id="2" style="display:none;">
@@ -4331,7 +4331,7 @@
               <option value="-">
                -
               </option>
-              <option value="s">
+              <option selected="" value="s">
                Annual repeat CT
               </option>
               <option value="f">
@@ -5382,8 +5382,8 @@
        </label>
       </div>
      </div>
-     <input context="server" name="cennod" type="hidden" value="0"/>
-     <input context="server" name="ceanod" type="hidden" value="n"/>
+     <input context="server" name="cennod" type="hidden" value="1"/>
+     <input context="server" name="ceanod" type="hidden" value="y"/>
      <script>
       function initNoduleGrid(fv) {
             const noduleArrayLength = parseInt("10");
@@ -6340,7 +6340,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2021.05.26
+     2021.06.01
     </span>
    </div>
   </footer>

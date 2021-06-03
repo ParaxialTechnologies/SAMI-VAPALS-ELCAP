@@ -73,23 +73,23 @@
                                     <label for="cect{{ i }}ch" class="aria-hidden">Is it new?</label>
                                     <select name="cect{{ i }}ch" id="cect{{ i }}ch" class="form-control"
                                             tabindex="{{ i }}01">
-                                        <option value="-"> -
-                                        <option value="n"> Newly seen</option>
-                                        <option value="pn"> Prev seen, no change</option>
-                                        <option value="pd"> Prev seen, slight decr</option>
-                                        <option value="pe"> Prev seen, marked decr</option>
-                                        <option value="pi"> Prev seen, slight incr</option>
-                                        <option value="pj"> Prev seen, marked incr</option>
-                                        <option value="po"> Prev seen, obscured</option>
-                                        <option value="pw"> Prev seen, resolved</option>
-                                        <option value="px"> Prev seen, not a nodule</option>
-                                        <option value="pr"> Prev seen, resected</option>
-                                        <option value="rn"> Retrospect, no chg</option>
-                                        <option value="rd"> Retrospect, decrease</option>
-                                        <option value="ri"> Retrospect, slight incr</option>
-                                        <option value="rj"> Retrospect, marked incr</option>
-                                        <option value="pk"> Not in outside report</option>
-                                        <option value="pv"> Not included in scan</option>
+                                        <option value="-"{{ " selected" if (mockup and i==1) else "" }}> -
+                                        <option value="n">Newly seen</option>
+                                        <option value="pn">Prev seen, no change</option>
+                                        <option value="pd">Prev seen, slight decr</option>
+                                        <option value="pe">Prev seen, marked decr</option>
+                                        <option value="pi">Prev seen, slight incr</option>
+                                        <option value="pj">Prev seen, marked incr</option>
+                                        <option value="po">Prev seen, obscured</option>
+                                        <option value="pw">Prev seen, resolved</option>
+                                        <option value="px">Prev seen, not a nodule</option>
+                                        <option value="pr">Prev seen, resected</option>
+                                        <option value="rn">Retrospect, no chg</option>
+                                        <option value="rd">Retrospect, decrease</option>
+                                        <option value="ri">Retrospect, slight incr</option>
+                                        <option value="rj">Retrospect, marked incr</option>
+                                        <option value="pk">Not in outside report</option>
+                                        <option value="pv">Not included in scan</option>
                                     </select>
                                 </div>
                             </td>
@@ -113,16 +113,16 @@
                                     <select name="cect{{ i }}en" id="cect{{ i }}en" class="form-control"
                                             tabindex="{{ i }}02">
                                         <option value="-"> -</option>
-                                        <option value="no"> No</option>
-                                        <option value="tr"> Trachea</option>
-                                        <option value="rm"> Rt. Main</option>
-                                        <option value="lm"> Lt. Main</option>
-                                        <option value="bi"> BI</option>
-                                        <option value="rul"> RUL</option>
-                                        <option value="rml"> RML</option>
-                                        <option value="rll"> RLL</option>
-                                        <option value="lul"> LUL</option>
-                                        <option value="lll"> LLL</option>
+                                        <option value="no"{{ " selected" if (mockup and i==1) else "" }}>No</option>
+                                        <option value="tr">Trachea</option>
+                                        <option value="rm">Rt. Main</option>
+                                        <option value="lm">Lt. Main</option>
+                                        <option value="bi">BI</option>
+                                        <option value="rul">RUL</option>
+                                        <option value="rml">RML</option>
+                                        <option value="rll">RLL</option>
+                                        <option value="lul">LUL</option>
+                                        <option value="lll">LLL</option>
                                     </select>
                                 </div>
                             </td>
@@ -146,12 +146,13 @@
                                     <select name="cect{{ i }}ll" id="cect{{ i }}ll" class="form-control"
                                             tabindex="{{ i }}03">
                                         <option value="-"> -</option>
-                                        <option value="end"> Endobr</option>
-                                        <option value="lul"> LUL</option>
-                                        <option value="lll"> LLL</option>
-                                        <option value="rul"> RUL</option>
-                                        <option value="rml"> RML</option>
-                                        <option value="rll"> RLL</option>
+                                        <option value="end"{{ " selected" if (mockup and i==1) else "" }}>Endobr
+                                        </option>
+                                        <option value="lul">LUL</option>
+                                        <option value="lll">LLL</option>
+                                        <option value="rul">RUL</option>
+                                        <option value="rml">RML</option>
+                                        <option value="rll">RLL</option>
                                     </select>
                                 </div>
                             </td>
@@ -188,7 +189,7 @@
                                 <div class="form-group form-group-sm">
                                     <label for="cect{{ i }}sn" class="aria-hidden">Nodule seen in series</label>
                                     <input type="text" name="cect{{ i }}sn" id="cect{{ i }}sn" size="3"
-                                           class="form-control"
+                                           class="form-control" {{ " value=\"1\"" if (mockup and i==1) else "" }}
                                            required="required" tabindex="{{ i }}05">
                                 </div>
                             </td>
@@ -205,7 +206,8 @@
                                 <div class="form-group form-group-sm">
                                     <label for="cect{{ i }}inl" class="aria-hidden"> Nodule seen in image (Low)</label>
                                     <input type="text" name="cect{{ i }}inl" id="cect{{ i }}inl" size="3"
-                                           class="form-control numeric" required="required" tabindex="{{ i }}06">-
+                                           class="form-control numeric" required="required" tabindex="{{ i }}06"
+                                            {{ " value=\"1\"" if (mockup and i==1) else "" }}>-
                                     <label for="cect{{ i }}inh" class="aria-hidden"> Nodule seen in image (High)</label>
                                     <input type="text" name="cect{{ i }}inh" id="cect{{ i }}inh" size="3"
                                            class="form-control" required="required" tabindex="{{ i }}07">
@@ -234,22 +236,23 @@
                                     <select name="cect{{ i }}st" id="cect{{ i }}st" class="form-control"
                                             tabindex="{{ i }}08">
                                         <option value="-"> -</option>
-                                        <option value="un"> Unknown</option>
-                                        <option value="bc"> Benign (Ca++)</option>
-                                        <option value="pc"> Prob benign, prob Ca++</option>
-                                        <option value="re"> Resolved</option>
-                                        <option value="rg"> Resolving</option>
-                                        <option value="tn"> No change - 2 yrs</option>
-                                        <option value="pp"> PET - positive</option>
-                                        <option value="pn"> PET - negative</option>
-                                        <option value="pi"> PET - indeterminate</option>
-                                        <option value="ub"> Biopsy - unknown</option>
-                                        <option value="bb"> Biopsy - benign</option>
-                                        <option value="mb"> Biopsy - malignant</option>
-                                        <option value="ab"> Biopsy - atyp bronch prolif</option>
-                                        <option value="om"> Biopsy - metastatic</option>
-                                        <option value="mr"> Resected - malignant</option>
-                                        <option value="br"> Resected - benign</option>
+                                        <option value="un"{{ " selected" if (mockup and i==1) else "" }}>Unknown
+                                        </option>
+                                        <option value="bc">Benign (Ca++)</option>
+                                        <option value="pc">Prob benign, prob Ca++</option>
+                                        <option value="re">Resolved</option>
+                                        <option value="rg">Resolving</option>
+                                        <option value="tn">No change - 2 yrs</option>
+                                        <option value="pp">PET - positive</option>
+                                        <option value="pn">PET - negative</option>
+                                        <option value="pi">PET - indeterminate</option>
+                                        <option value="ub">Biopsy - unknown</option>
+                                        <option value="bb">Biopsy - benign</option>
+                                        <option value="mb">Biopsy - malignant</option>
+                                        <option value="ab">Biopsy - atyp bronch prolif</option>
+                                        <option value="om">Biopsy - metastatic</option>
+                                        <option value="mr">Resected - malignant</option>
+                                        <option value="br">Resected - benign</option>
                                     </select>
                                 </div>
                             </td>
@@ -271,10 +274,10 @@
                                     <select name="cect{{ i }}nt" id="cect{{ i }}nt" class="form-control"
                                             tabindex="{{ i }}09">
                                         <option value="-"> -</option>
-                                        <option value="s"> Solid</option>
-                                        <option value="m"> Part-solid</option>
-                                        <option value="g"> Nonsolid</option>
-                                        <option value="o"> Other (see comment)</option>
+                                        <option value="s"{{ " selected" if (mockup and i==1) else "" }}>Solid</option>
+                                        <option value="m">Part-solid</option>
+                                        <option value="g">Nonsolid</option>
+                                        <option value="o">Other (see comment)</option>
                                     </select>
                                 </div>
                             </td>
@@ -294,7 +297,7 @@
                                     <input type="text" name="cect{{ i }}sl" id="cect{{ i }}sl" size="4"
                                            required="required"
                                            class="form-control numeric decimalformat"
-                                           tabindex="{{ i }}10">
+                                           tabindex="{{ i }}10" {{ "value=1.5" if (mockup and i==1) }}>
                                 </div>
                             </td>
                         {% endfor %}
@@ -312,7 +315,7 @@
                                     <label for="cect{{ i }}sw" class="aria-hidden">Maximum width</label>
                                     <input type="text" name="cect{{ i }}sw" id="cect{{ i }}sw" size="4"
                                            required="required" class="form-control numeric decimalformat"
-                                           tabindex="{{ i }}11">
+                                           tabindex="{{ i }}11" {{ "value=2.5" if (mockup and i==1) }}>
                                 </div>
                             </td>
                         {% endfor %}
@@ -340,7 +343,8 @@
                                 <div class="form-group form-group-sm">
                                     <label for="cect{{ i }}sh" class="aria-hidden">Height</label>
                                     <input type="text" name="cect{{ i }}sh" id="cect{{ i }}sh" size="4"
-                                           class="form-control numeric decimalformat" tabindex="{{ i }}12">
+                                           class="form-control numeric decimalformat" tabindex="{{ i }}12"
+                                            {{ "value=1.75" if (mockup and i==1) }}>
                                 </div>
                             </td>
                         {% endfor %}
@@ -504,14 +508,15 @@
                                     <select name="cect{{ i }}ac" id="cect{{ i }}ac" title="Action" class="form-control"
                                             tabindex="{{ i }}22">
                                         <option value="-"> -</option>
-                                        <option value="s"> Annual repeat CT</option>
-                                        <option value="f"> Follow-up CT</option>
-                                        <option value="a"> Abx + follow-up CT</option>
-                                        <option value="e"> PET</option>
-                                        <option value="c"> CT w contrast</option>
-                                        <option value="b"> CT-guided biopsy</option>
-                                        <option value="p"> Bronchoscopy</option>
-                                        <option value="r"> Resection</option>
+                                        <option value="s"{{ " selected" if (mockup and i==1) }}>Annual repeat CT
+                                        </option>
+                                        <option value="f">Follow-up CT</option>
+                                        <option value="a">Abx + follow-up CT</option>
+                                        <option value="e">PET</option>
+                                        <option value="c">CT w contrast</option>
+                                        <option value="b">CT-guided biopsy</option>
+                                        <option value="p">Bronchoscopy</option>
+                                        <option value="r">Resection</option>
                                     </select>
                                 </div>
                             </td>
@@ -583,8 +588,8 @@
         {{ f.checkbox("cectancn","1", "Small non-calcified nodules are present", {"tabindex":"1102"}) }}
         {{ f.checkbox("cectacn","1", "Small calcified nodules are present", {"tabindex":"1103"}) }}
     </div>
-    <input type="hidden" name="cennod" value="0" context="server"/>
-    <input type="hidden" name="ceanod" value="n" context="server"/>
+    <input type="hidden" name="cennod" value="{{ "1" if mockup else "0" }}" context="server"/>
+    <input type="hidden" name="ceanod" value="{{ "y" if mockup else "n" }}" context="server"/>
 
     <script>
         function initNoduleGrid(fv) {

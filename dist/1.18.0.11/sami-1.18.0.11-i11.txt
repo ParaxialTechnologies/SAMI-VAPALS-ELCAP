@@ -606,8 +606,16 @@ SAMIUR2
     SAMINUL
     Current total of 11 routines.
     
-    Routine: SAMIOR*
-    SAMIORM   SAMIORR   SAMIORU
+    Routine: SAMIORM
+    SAMIORM
+    Current total of 12 routines.
+    
+    Routine: SAMIORR
+    SAMIORR
+    Current total of 13 routines.
+    
+    Routine: SAMIORU
+    SAMIORU
     Current total of 14 routines.
     
     Routine: SAMISAV
@@ -756,7 +764,7 @@ SAMIUR2
     Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
     Enter a Host File: /home/osehra/run/in/sami/1.18.0.11/sami-1.18.0.11-i11.kid
     
-       KIDS Distribution saved on JUN 4, 2021@18:00:00
+       KIDS Distribution saved on Jun 4, 2021@18:00:00
        Comment: Released SAMI*18.0*11 SEQ #11 (1.18.0.11+i11)
     
        This Distribution contains Transport Globals for the following Package(s):
@@ -790,10 +798,10 @@ SAMIUR2
  
     Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
     Select INSTALL NAME:    SAMI*18.0*11     Loaded from Distribution    6/4/21@13:00:00
-       => Released SAMI*18.0*11 SEQ #11 (1.18.0.11+i11)  ;Created on Jun 6, 2021@18:00
+       => Released SAMI*18.0*11 SEQ #11 (1.18.0.11+i11)  ;Created on Jun 4, 2021@18:00
        
     This Distribution was loaded on Jun 4, 2021@20:00:00 with header of 
-       Released SAMI*18.0*11 SEQ #11 (1.18.0.11+i11)  ;Created on Jun 6, 2021@18:00
+       Released SAMI*18.0*11 SEQ #11 (1.18.0.11+i11)  ;Created on Jun 4, 2021@18:00
        It consisted of the following Install(s):
         SAMI*18.0*11
     Checking Install for Package SAMI*18.0*11
@@ -859,9 +867,8 @@ SAMIUR2
  5.5. Install the www files
  
  At this point in the install process, the VAPALS-ELCAP routines have
- been updated, but the corresponding www files have not, so they are
- out of sync with each other. Steps 5.5 and 5.6 update the www files
- to bring them into sync.
+ been updated, but the corresponding www files have not. Those www
+ files must first be installed.
  
  VA VAPALS-ELCAP sysadmins should follow step 5.5.1. Non-VA sysadmins
  should follow step 5.5.2.
@@ -870,9 +877,9 @@ SAMIUR2
    5.5.1. For VA VAPALS-ELCAP systems
    
    The VA firewall blocks access to the official VAPALS-ELCAP Github
-   repository, so VA VAPALS-ELCAP systems do not maintain repo clones.
-   Instead, they manually copy the www files into place by running
-   these commands:
+   repository, so VA VAPALS-ELCAP systems do not maintain clones of
+   that repo. Instead, they manually copy the www files into place by
+   running these commands:
  
     $ rm -rf ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/www/*
     $ cp -r ~/run/in/sami/1.18.0.11/www/* \
@@ -894,10 +901,9 @@ SAMIUR2
  
  5.6. Activate the www files and exit M
  
- At this point in the install process, the VAPALS-ELCAP routines and
- www files have both been updated, but the routines are using cached
- copies of the www files. Step 5.6 refreshes that cache to activate
- the www files.
+ Both the VAPALS-ELCAP routines and www files have been updated at
+ this point, but the routines are using cached copies of the www
+ files. This step refreshes that cache to activate the www files.
  
  
    5.6.1. Enter M
@@ -912,9 +918,9 @@ SAMIUR2
  
    5.6.3. Rebuild M-Web's cached www files
    
-    To improve performance, M-Web maintains cached copies of the html
+    To improve performance, M-Web maintains cached copies of the HTML
     templates used by its services, so every time we update those
-    html files in Unix, we must also direct M-Web to update its cached
+    HTML files in Unix, we must also direct M-Web to update its cached
     copies.
  
     > do CLRWEB^SAMIADMN

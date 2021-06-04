@@ -1,5 +1,5 @@
-SAMICTC1 ;ven/gpl - ceform copy ;2021-06-04T14:15Z
- ;;18.0;SAMI;**11**;2020-01;
+SAMICTC1 ;ven/gpl - ceform copy ;2021-06-04T14:28Z
+ ;;18.0;SAMI;**11**;2020-01;Build 21
  ;;1.18.0.11+i11
  ;
  ; SAMICTC1 & 2 selectively copy fields from a patient's most recent

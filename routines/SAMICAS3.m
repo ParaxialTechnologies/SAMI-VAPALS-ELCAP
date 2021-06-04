@@ -1,5 +1,5 @@
-SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ;2021-05-25T14:52Z
- ;;18.0;SAMI;**3,9,11**;2020-01;Build 21
+SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ;2021-06-01T14:20Z
+ ;;18.0;SAMI;**3,9,11**;2020-01;Build 11
  ;;1.18.0.11+i11
  ;
  ; SAMICAS3 contains ppis and other subroutines to support processing
@@ -39,7 +39,7 @@ SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ;2021-05-25T14:52Z
  ;
  ;
  ;
- ;;@ppi WSNFPOST^SAMICAS3, post new form selection (post service)
+ ;@ppi WSNFPOST^SAMICAS3, post new form selection (post service)
 WSNFPOST ; post new form selection (post service)
  ;
  ;@stanza 1 invocation, binding, & branching
@@ -49,6 +49,7 @@ WSNFPOST ; post new form selection (post service)
  ; web service SAMICASE-wsNuFormPost
  ;@called by
  ; WSNFPOST^SAMICASE
+ ; MKITFORM [commented out]
  ;@calls
  ; parseBody^%wf
  ; GETHOME^SAMIHOM3
@@ -285,7 +286,7 @@ LASTCMP(sid,retkey) ; date & key of last comparison scan
  new fary
  do SORTFRMS(.fary,sid)
  ;
- ;new tdt set tdt=$piece($$NOW^XLFDT,".",1)+1 ; start with today
+ ; new tdt set tdt=$piece($$NOW^XLFDT,".",1)+1 ; start with today
  new tdt set tdt=$piece($$NOW^XLFDT,".",1) ; start with before today
  for  set tdt=$order(fary(tdt),-1) quit:tdt=""  quit:retkey'=""  do  ; 
  . new tmpkey set tmpkey=""
@@ -334,7 +335,7 @@ PRIORCMP(sid) ; dates of all scans before last comparison scan
  new fary
  do SORTFRMS(.fary,sid)
  ;
- ;new tdt set tdt=$piece($$NOW^XLFDT,".",1)+1 ; start with today
+ ; new tdt set tdt=$piece($$NOW^XLFDT,".",1)+1 ; start with today
  new tdt set tdt=$piece($$NOW^XLFDT,".",1) ; start with before today
  for  set tdt=$order(fary(tdt),-1) quit:tdt=""  do  ; 
  . ;
@@ -480,9 +481,8 @@ MKCEFORM(sid,key) ; create ct evaluation form
  ; new srckey set srckey=$$PREVNOD(sid)
  new srckey,srcdate set srcdate=$$LASTCMP(sid,.srckey)
  if srckey'="" do  ;
- . new target,source
- . set source=$name(@root@("graph",sid,srckey))
- . set target=$name(@root@("graph",sid,key))
+ . new source set source=$name(@root@("graph",sid,srckey))
+ . new target set target=$name(@root@("graph",sid,key))
  . do CTCOPY^SAMICTC1(source,target,key)
  . quit
  ; end nodule copy
@@ -653,9 +653,8 @@ MKPTFORM(sid,key) ; create pet evaluation form
  ; new srckey set srckey=$$PREVNOD(sid)
  new srckey,srcdate set srcdate=$$LASTCMP(sid,.srckey)
  if srckey'="" do  ;
- . new target,source
- . set source=$name(@root@("graph",sid,srckey))
- . set target=$name(@root@("graph",sid,key))
+ . new source set source=$name(@root@("graph",sid,srckey))
+ . new target set target=$name(@root@("graph",sid,key))
  . do CTCOPY^SAMICTC1(source,target,key)
  . quit
  ; end nodule copy
@@ -696,6 +695,9 @@ MKITFORM(sid,key) ; create intervention form
  ;@calls
  ; $$setroot^%wd
  ; $$SID2NUM^SAMIHOM3
+ ; $$PREVNODE [commented out]
+ ; $$LASTCMP
+ ; CTCOPY^SAMICTC1
  ; SSAMISTA^SAMICASE
  ; $$BASELNDT^SAMICAS3
  ; $$VAPALSDT^SAMICASE
@@ -717,15 +719,17 @@ MKITFORM(sid,key) ; create intervention form
  quit:+sien=0
  ;
  new cdate set cdate=$piece(key,"itform-",2)
+ ;
  ; nodule copy
- ;n srckey s srckey=$$PREVNOD(sid)
- n srckey,srcdate s srcdate=$$LASTCMP(sid,.srckey)
- i srckey'="" d  ;
- . new target,source
- . set source=$name(@root@("graph",sid,srckey))
- . set target=$name(@root@("graph",sid,key))
- . d CTCOPY^SAMICTC1(source,target,key)
+ ; new srckey set srckey=$$PREVNOD(sid)
+ new srckey,srcdate set srcdate=$$LASTCMP(sid,.srckey)
+ if srckey'="" do  ;
+ . new source set source=$name(@root@("graph",sid,srckey))
+ . new target set target=$name(@root@("graph",sid,key))
+ . do CTCOPY^SAMICTC1(source,target,key)
+ . quit
  ; end nodule copy
+ ;
  merge @root@("graph",sid,key)=@root@(sien)
  set @root@("graph",sid,key,"samicreatedate")=cdate
  do SSAMISTA^SAMICASE(sid,key,"incomplete")
@@ -784,9 +788,8 @@ MKBXFORM(sid,key) ; create biopsy form
  ; new srckey set srckey=$$PREVNOD(sid)
  new srckey,srcdate set srcdate=$$LASTCMP(sid,.srckey)
  if srckey'="" do  ;
- . new target,source
- . set source=$name(@root@("graph",sid,srckey))
- . set target=$name(@root@("graph",sid,key))
+ . new source set source=$name(@root@("graph",sid,srckey))
+ . new target set target=$name(@root@("graph",sid,key))
  . do CTCOPY^SAMICTC1(source,target,key)
  . quit
  ; end nodule copy

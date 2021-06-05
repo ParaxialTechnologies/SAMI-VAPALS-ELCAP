@@ -1,10 +1,10 @@
-SAMIJS1 ;ven/gpl - json archive routine ; 1/22/19 1:24pm
- ;;18.0;SAMI;;
+SAMIJS1 ;ven/gpl - json archive routine ;May 05, 2021@17:12
+ ;;18.0;SAMI;;;Build 4
  ;
  ;@license: see routine SAMIUL
  ;
  ;
-EN
+EN 
  n site,dfn,pat
  s site=$$PICSITE^SAMIMOV()
  q:site="^"
@@ -14,6 +14,22 @@ EN
  w !,"dfn=",dfn
  d mkarch(dfn)
  d outarch(dfn)
+ q
+ ;
+EXSITE 
+ n site,dfn,pat
+ s site=$$PICSITE^SAMIMOV()
+ q:site="^"
+ n lroot,proot,aroot
+ s lroot=$$setroot^%wd("patient-lookup")
+ s proot=$$setroot^%wd("vapals-patients")
+ s aroot=$$setroot^%wd("vapals-archive")
+ n dfn,lien s dfn=""
+ f  s dfn=$o(@lroot@("dfn",dfn)) q:+dfn=0  d  ;
+ . s lien=$o(@lroot@("dfn",dfn,""))
+ . i $g(@lroot@(lien,"siteid"))'=site q  ;
+ . d mkarch(dfn)
+ . d outarch(dfn)
  q
  ;
 dfn2lien(dfn) ; extrinsic return the lookup ien of patient dfn
@@ -65,7 +81,7 @@ mkarch(dfn) ; create an archive record for patient dfn
  n sid s sid=""
  d:pien'=""
  . m @aroot@(aien,"patient","demos")=@proot@(pien)
- . s sid=$g(@proot@(pien,"studyid"))
+ . s sid=$g(@proot@(pien,"samistudyid"))
  . i sid="" s sid=$g(@proot@(pien,"sisid"))
  . q:sid=""
  . m @aroot@(aien,"patient","graph")=@proot@("graph",sid)
@@ -77,6 +93,7 @@ outarch(dfn) ; write out an archive record to an external file
  n aien s aien=$o(@aroot@("dfn",dfn,""),-1)
  q:aien=""
  ;
+ n sid s sid=$g(@aroot@(aien,"patient","demos","samistudyid"))
  n tmpout s tmpout=$na(^TMP("VAPALS-ARCH",$J))
  k @tmpout
  n arec s arec=$na(@aroot@(aien))
@@ -84,7 +101,7 @@ outarch(dfn) ; write out an archive record to an external file
  ;
  n adir,fname
  s adir="/home/osehra/www/archive"
- s fname="vapals-"_dfn_"-"_DT_".json"
+ s fname="vapals-"_sid_"-"_dfn_"-"_DT_".json"
  i $$GTF^%ZISH($NA(@tmpout@(1)),3,adir,fname) d  ;
  . w !,"file "_fname_" written to "_adir
  ;

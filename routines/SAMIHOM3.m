@@ -492,7 +492,11 @@ SID2NUM(sid) ; number part of studyid (XXX0001 -> 1)
  ;
  ;@stanza 2 calculate number
  ;
- new number set number=+$extract(sid,4,$length(sid))
+ ;new number set number=+$extract(sid,4,$length(sid))
+ ; we have to look up the number (pien) instead of computing it
+ new number,proot
+ set proot=$$setroot^%wd("vapals-patients")
+ set number=$o(@proot@("sid",sid,"")) 
  ;
  ;@stanza 3 return & termination
  ;

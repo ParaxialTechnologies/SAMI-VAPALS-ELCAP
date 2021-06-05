@@ -338,10 +338,10 @@ REG(SAMIRTN,SAMIARG) ; manual registration
  s SAMIARG("errorField")=""
  ; test for duplicate ssn
  ;
- i $$DUPSSN(ssn) d  ;
- . ;s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate SSN."
- . s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate SSN error. A person with that SSN is already entered in the system."
- . s SAMIARG("errorField")="ssn"
+ ;i $$DUPSSN(ssn) d  ;
+ ;. ;s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate SSN."
+ ;. s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate SSN error. A person with that SSN is already entered in the system."
+ ;. s SAMIARG("errorField")="ssn"
  ;
  ; test for duplicate icn
  ;
@@ -608,19 +608,20 @@ REMATCH(sien,SAMIARG) ; extrinsic returns possible match ien
  i ssn["-" s ssn=$tr(ssn,"-")
  s name=$g(SAMIARG("saminame"))
  i name="" s name=$g(SAMIARG("name"))
+ s name=$$UCASE(name)
  s icn=$g(SAMIARG("icn"))
  s x=0
  i ssn'="" s x=$o(@lroot@("ssn",ssn,""))
  i x=sien s x=$o(@lroot@("ssn",ssn,x))
  i +x'=0 d  ;
  . s y=$g(@lroot@(x,"dfn"))
- . i y>9000000 s x=0
+ . ;i y>9000000 s x=0
  i x>0 q x
  i name'="" s x=$o(@lroot@("name",name,""))
  i x=sien s x=$o(@lroot@("name",name,x))
  i +x'=0 d  ;
  . s y=$g(@lroot@(x,"dfn"))
- . i y>9000000 s x=0
+ . ;i y>9000000 s x=0
  i x>0 q x
  ;i icn'="" s x=$o(@lroot@("icn",icn,""))
  ;i x=sien s x=$o(@lroot@("icn",icn,x))

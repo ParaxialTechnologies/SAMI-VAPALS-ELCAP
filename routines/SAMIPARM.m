@@ -24,6 +24,7 @@ WSPARAMS(parmsjson,filter) ; web service that returns the paramters to use
  ;
 GET1PARM(PARM,SITE) ; extrinsic returns the vale of PARM for site SITE
  ; both passed by value
+ i '$d(SITE) S SITE=""
  n ary
  d GETARY(.ary,SITE)
  ;ZWR ary
@@ -32,14 +33,15 @@ GET1PARM(PARM,SITE) ; extrinsic returns the vale of PARM for site SITE
  ;
 GETARY(ARY,SITE) ; return the parameter array ART, passed by reference
  ;
- N SITEIEN
- S SITEIEN=$O(^SAMI(311.12,"SYM",SITE,""))
- Q:SITEIEN=""
+ N SITEIEN S SITEIEN=""
+ I SITE'="" S SITEIEN=$O(^SAMI(311.12,"SYM",SITE,""))
  N DEFREC ; default record in SAMI PARAMETER DEFAULT 311.14
- S DEFREC=$$GET1^DIQ(311.12,SITEIEN_",",.04,"E")
- Q:DEFREC=""
+ I SITEIEN'="" S DEFREC=$$GET1^DIQ(311.12,SITEIEN_",",.04,"E")
+ I $G(DEFREC)="" S DEFREC="VHA"
  M ARY=^SAMI(311.14,"D",DEFREC)
- M ARY=^SAMI(311.12,"D",SITE)
+ I SITE'="" M ARY=^SAMI(311.12,"D",SITE)
+ Q:'$D(^SAMI(311.14,"D","SYS"))
+ M ARY=^SAMI(311.14,"D","SYS")
  Q
  ;
 ADDSVC() ; add the params webservice to the system

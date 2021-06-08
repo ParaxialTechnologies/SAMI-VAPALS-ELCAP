@@ -1,11 +1,13 @@
-SAMIORM ;ven/lgc&arc - HL7: ORM > patient-lookup ;2021-06-04T13:12Z
- ;;18.0;SAMI;**11**;2020-01;
- ;;1.18.0.11+i11
+SAMIORM ;ven/lgc&arc - HL7: ORM > patient-lookup ;2021-06-08T19:50Z
+ ;;18.0;SAMI;**12**;2020-01;
+ ;;1.18.0.12-t1+i12
  ;
- ; SAMIORM parses out an incoming Order (ORM) message into the fields
- ; array & then calls SAMIHL7 to use the fields array to update
- ; patient-lookup graph.
- ; SAMIHL7 contains the development log for the SAMIOR* routines.
+ ; SAMIORM parses an incoming Order (ORM) message into the fields
+ ; array, then calls SAMIHL7 to use the array to update the patient-
+ ; lookup graph.
+ ;
+ ; SAMIOUL contains the development log for the SAMIHL7 & SAMIOR*
+ ; routines.
  ;
  quit  ; no entry from top
  ;
@@ -23,14 +25,14 @@ SAMIORM ;ven/lgc&arc - HL7: ORM > patient-lookup ;2021-06-04T13:12Z
  ;@copyright 2020/2021, lgc, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-06-04T13:12Z
+ ;@last-updated 2021-06-08T19:50Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@submodule HL7 interface - SAMIHL* & SAMIOR*
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.11+i11
+ ;@version 1.18.0.12-t1+i12
  ;@release-date 2020-01
- ;@patch-list **11**
+ ;@patch-list **11,12**
  ;
  ;@additional-dev Alexis R. Carlson (arc)
  ; arc@vistaexpertise.net
@@ -51,7 +53,6 @@ SAMIORM ;ven/lgc&arc - HL7: ORM > patient-lookup ;2021-06-04T13:12Z
  ; PV1 get patient data from PV1 segment
  ; ORC get patient data from ORC segment
  ; OBR get patient data from OBR segment
- ; $$CAMELCAS convert string to camel case
  ;
  ; TEST test hli EN^SAMIORM
  ;
@@ -168,10 +169,11 @@ BLDARR ;@stanza 3 pull out message into samihl7 array
  ;
  new HLARR ; hl7 msg array fetched by xecuting HLNEXT
  new samihl7 ; ditto
+ new cnt set cnt=0 ; line count
  for  do  quit:$get(HLNODE)=""
  . xecute HLNEXT ; get next line of hl7 msg
  . quit:$get(HLNODE)=""  ; done when out of lines
- . new cnt set cnt=$get(cnt)+1 ; count line
+ . set cnt=cnt+1 ; count line
  . set HLARR(cnt)=HLNODE ; save line
  . set samihl7(cnt)=HLNODE ; ditto
  . quit
@@ -306,13 +308,12 @@ PID(segment,fields) ; get patient data from PID segment
  ;@called-by
  ; PARSEMSG
  ;@calls
- ; $$CAMELCAS
  ; $$UP^XLFSTR
- ;@input [tbd]
+ ;@input
  ; .segment = PID segment of hl7 message
  ; ]INFS = field separator
  ; ]INCC = subfield separator
- ;@output [tbd]
+ ;@output
  ; .fields = fields array
  ; ^KBAP = debug array
  ;
@@ -327,17 +328,15 @@ PID(segment,fields) ; get patient data from PID segment
  ;
  ;@stanza 3 get patient name
  ;
- new name set name=$piece(segment,INFS,6) ; full
- new lname set lname=$$CAMELCAS($piece(name,INCC,1)) ; last
- new fname set fname=$$CAMELCAS($piece(name,INCC,2)) ; first
+ new name set name=$$UP^XLFSTR($piece(segment,INFS,6)) ; full upper
+ new lname set lname=$piece(name,INCC) ; last
+ new fname set fname=$piece(name,INCC,2) ; first
+ ;
  new mname set mname="" ; middle
- if $length($piece(segment,INFS,6),INCC)>2 do
- . set mname=$$CAMELCAS($piece($piece(segment,INFS,6),INCC,3))
- . quit
- new suffix set suffix="" ; suffix, e.g., jr, 3rd, etc.
- if $length($piece(segment,INFS,6),INCC)>3 do
- . set suffix=$$UP^XLFSTR($piece($piece(segment,INFS,6),INCC,4))
- . quit
+ if $length(name,INCC)>2 set mname=$piece(name,INCC,3)
+ ;
+ new suffix set suffix="" ; suffix, e.g., JR, 3RD, etc.
+ if $length(name,INCC)>3 set suffix=$piece(name,INCC,4)
  ;
  if $length(mname) set fname=fname_" "_mname
  if $length(suffix) set lname=lname_" "_suffix
@@ -351,7 +350,7 @@ PID(segment,fields) ; get patient data from PID segment
  ;@stanza 4 get other patient demographics
  ;
  if $length(fields("ssn")),$length(fields("saminame")) do
- . set fields("last5")=$$UP^XLFSTR($extract(fields("saminame")))_$extract(fields("ssn"),6,9)
+ . set fields("last5")=$extract(fields("saminame"))_$extract(fields("ssn"),6,9)
  . set ^KBAP("SAMIORM","MadeLast5")=$get(fields("last5"))
  . quit
  ;

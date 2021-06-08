@@ -1,5 +1,5 @@
-SAMIORM ;ven/lgc&arc - HL7: ORM > patient-lookup ;2021-06-08T19:50Z
- ;;18.0;SAMI;**12**;2020-01;
+SAMIORM ;ven/lgc&arc - HL7: ORM > patient-lookup ;2021-06-08T20:07Z
+ ;;18.0;SAMI;**11,12**;2020-01;
  ;;1.18.0.12-t1+i12
  ;
  ; SAMIORM parses an incoming Order (ORM) message into the fields
@@ -25,7 +25,7 @@ SAMIORM ;ven/lgc&arc - HL7: ORM > patient-lookup ;2021-06-08T19:50Z
  ;@copyright 2020/2021, lgc, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-06-08T19:50Z
+ ;@last-updated 2021-06-08T20:07Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@submodule HL7 interface - SAMIHL* & SAMIOR*

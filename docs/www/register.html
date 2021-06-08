@@ -132,7 +132,7 @@
           Inactive
          </a>
         </li>
-        <li>
+        <li id="matchingReport">
          <a class="navigation" data-method="post" data-samireporttype="unmatched" data-samiroute="report" href="#!">
           Matching Report
          </a>
@@ -263,6 +263,15 @@
         return variable && variable.indexOf("@@") === -1 && $.trim(variable) !== '';
     }
 
+    function getParameter(key) {
+        const params = JSON.parse(sessionStorage.getItem("params." + siteId));
+        if (params == null || $.isEmptyObject(params)) {
+            return null;
+        } else {
+            return params[key];
+        }
+    }
+
     function paramSubstitution(siteId) {
         let key = "params." + siteId;
         let params = JSON.parse(sessionStorage.getItem(key));
@@ -315,6 +324,7 @@
         paramSubstitution(siteId);
         $("#logout-link").text("Logout " + siteId);
         $("#studyIdMenu").toggle(studyId !== '');
+        $("#matchingReport").toggle(getParameter("matchingReportEnabled") !== false);
         localStorage.setItem("siteid", siteId);
         localStorage.setItem("studyid", studyId);
     } else {

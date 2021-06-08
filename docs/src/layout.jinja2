@@ -114,7 +114,7 @@
                                    data-method="{{ formMethod }}" data-samiroute="report"
                                    data-samireporttype="inactive"> Inactive</a>
                             </li>
-                            <li>
+                            <li id="matchingReport">
                                 <a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
                                    data-method="{{ formMethod }}" data-samiroute="report"
                                    data-samireporttype="unmatched"> Matching Report</a>
@@ -166,6 +166,15 @@
 
     function isSet(variable) {
         return variable && variable.indexOf("@@") === -1 && $.trim(variable) !== '';
+    }
+
+    function getParameter(key) {
+        const params = JSON.parse(sessionStorage.getItem("params." + siteId));
+        if (params == null || $.isEmptyObject(params)) {
+            return null;
+        } else {
+            return params[key];
+        }
     }
 
     function paramSubstitution(siteId) {
@@ -220,6 +229,7 @@
         paramSubstitution(siteId);
         $("#logout-link").text("Logout " + siteId);
         $("#studyIdMenu").toggle(studyId !== '');
+        $("#matchingReport").toggle(getParameter("matchingReportEnabled") !== false);
         localStorage.setItem("siteid", siteId);
         localStorage.setItem("studyid", studyId);
     } else {

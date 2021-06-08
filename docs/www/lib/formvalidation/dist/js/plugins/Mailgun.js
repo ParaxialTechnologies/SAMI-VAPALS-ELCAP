@@ -1,14 +1,14 @@
 /**
- * FormValidation (https://formvalidation.io), v1.4.0 (678705b)
+ * FormValidation (https://formvalidation.io), v1.7.0 (71bbaaa)
  * The best validation library for JavaScript
- * (c) 2013 - 2019 Nguyen Huu Phuoc <me@phuoc.ng>
+ * (c) 2013 - 2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.plugins = global.FormValidation.plugins || {}, global.FormValidation.plugins.Mailgun = factory()));
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -63,6 +63,19 @@
     return _setPrototypeOf(o, p);
   }
 
+  function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function _assertThisInitialized(self) {
     if (self === void 0) {
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -79,39 +92,58 @@
     return _assertThisInitialized(self);
   }
 
-  var Plugin = FormValidation.Plugin;
+  function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
 
-  var Alias = FormValidation.plugins.Alias;
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf(Derived),
+          result;
 
-  var Mailgun =
-  /*#__PURE__*/
-  function (_Plugin) {
-    _inherits(Mailgun, _Plugin);
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf(this).constructor;
 
-    function Mailgun(opts) {
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+
+      return _possibleConstructorReturn(this, result);
+    };
+  }
+
+  var s = FormValidation.Plugin;
+
+  var e = FormValidation.plugins.Alias;
+
+  var i = /*#__PURE__*/function (_s) {
+    _inherits(i, _s);
+
+    var _super = _createSuper(i);
+
+    function i(s) {
       var _this;
 
-      _classCallCheck(this, Mailgun);
+      _classCallCheck(this, i);
 
-      _this = _possibleConstructorReturn(this, _getPrototypeOf(Mailgun).call(this, opts));
+      _this = _super.call(this, s);
       _this.opts = Object.assign({}, {
         suggestion: false
-      }, opts);
+      }, s);
       _this.messageDisplayedHandler = _this.onMessageDisplayed.bind(_assertThisInitialized(_this));
       return _this;
     }
 
-    _createClass(Mailgun, [{
+    _createClass(i, [{
       key: "install",
       value: function install() {
         if (this.opts.suggestion) {
-          this.core.on('plugins.message.displayed', this.messageDisplayedHandler);
+          this.core.on("plugins.message.displayed", this.messageDisplayedHandler);
         }
 
-        var aliasOpts = {
-          mailgun: 'remote'
+        var s = {
+          mailgun: "remote"
         };
-        this.core.registerPlugin('___mailgunAlias', new Alias(aliasOpts)).addField(this.opts.field, {
+        this.core.registerPlugin("___mailgunAlias", new e(s)).addField(this.opts.field, {
           validators: {
             mailgun: {
               crossDomain: true,
@@ -119,12 +151,12 @@
                 api_key: this.opts.apiKey
               },
               headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json"
               },
               message: this.opts.message,
-              name: 'address',
-              url: 'https://api.mailgun.net/v3/address/validate',
-              validKey: 'is_valid'
+              name: "address",
+              url: "https://api.mailgun.net/v3/address/validate",
+              validKey: "is_valid"
             }
           }
         });
@@ -133,23 +165,23 @@
       key: "uninstall",
       value: function uninstall() {
         if (this.opts.suggestion) {
-          this.core.off('plugins.message.displayed', this.messageDisplayedHandler);
+          this.core.off("plugins.message.displayed", this.messageDisplayedHandler);
         }
 
         this.core.removeField(this.opts.field);
       }
     }, {
       key: "onMessageDisplayed",
-      value: function onMessageDisplayed(e) {
-        if (e.field === this.opts.field && 'mailgun' === e.validator && e.meta && e.meta.did_you_mean) {
-          e.messageElement.innerHTML = "Did you mean ".concat(e.meta.did_you_mean, "?");
+      value: function onMessageDisplayed(s) {
+        if (s.field === this.opts.field && "mailgun" === s.validator && s.meta && s.meta.did_you_mean) {
+          s.messageElement.innerHTML = "Did you mean ".concat(s.meta.did_you_mean, "?");
         }
       }
     }]);
 
-    return Mailgun;
-  }(Plugin);
+    return i;
+  }(s);
 
-  return Mailgun;
+  return i;
 
-}));
+})));

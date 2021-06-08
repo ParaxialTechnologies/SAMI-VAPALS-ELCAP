@@ -240,7 +240,9 @@
             <hr/>
             <div class="pull-left">
                 <input type="hidden" name="samistatus" value=""/>
-                <button type="submit" class="btn btn-default" id="save-for-later-button">Save for Later</button>
+                <button type="submit" class="btn btn-default" id="save-for-later-button"
+                        formnovalidate="formnovalidate">Save for Later
+                </button>
                 <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
             </div>
             <div class="pull-right">
@@ -291,9 +293,10 @@
                         ceimo: {validators: {notEmpty: {message: 'Other findings is required'}}},
                     },
                     plugins: {
+                        declarative: new FormValidation.plugins.Declarative(),
                         trigger: new FormValidation.plugins.Trigger(),
                         bootstrap3: new FormValidation.plugins.Bootstrap3(),
-                        submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                        submitButton: new FormValidation.plugins.SubmitButton(),
                         defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
                         excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
                         icon: new FormValidation.plugins.Icon({
@@ -326,6 +329,9 @@
         $(function () {
 
             const fv = createFormValidator();
+            $("#save-for-later-button").on('click', function () {
+                fv.destroy();
+            });
 
             //follow-up date calculator.
             $("[name=cefuw]").on("change", function () {

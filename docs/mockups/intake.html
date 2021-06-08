@@ -6,7 +6,7 @@
   <meta content="2021.06.01" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
-   @@SITETITLE@@: Lung Screening and Surveillance Intake Form
+   @@SITETITLE@@: Lung Screening Intake Form
   </title>
   <link href="../www/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="../www/lib/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
@@ -144,6 +144,11 @@
          </a>
         </li>
         <li>
+         <a class="navigation" data-method="get" data-samireporttype="unmatched" data-samiroute="report" href="table.html">
+          Matching Report
+         </a>
+        </li>
+        <li>
          <a class="navigation" data-method="get" data-samireporttype="worklist" data-samiroute="report" href="table.html">
           Work List
          </a>
@@ -167,7 +172,7 @@
     </small>
    </h1>
    <h2>
-    Lung Screening and Surveillance Intake Form
+    Lung Screening Intake Form
     <small class="text-muted" title="Medical Record Number">
      1234567890
     </small>
@@ -1316,7 +1321,7 @@
      <hr/>
      <div class="pull-left">
       <input name="samistatus" type="hidden" value=""/>
-      <button class="btn btn-default" id="save-for-later-button" type="submit">
+      <button class="btn btn-default" formnovalidate="formnovalidate" id="save-for-later-button" type="submit">
        Save for Later
       </button>
       <button class="btn btn-primary" id="submit-button" type="submit">
@@ -1395,8 +1400,56 @@
         return variable && variable.indexOf("@@") === -1 && $.trim(variable) !== '';
     }
 
+    function paramSubstitution(siteId) {
+        let key = "params." + siteId;
+        let params = JSON.parse(sessionStorage.getItem(key));
+        if ($.isEmptyObject(params)) {
+            retrieveParams(siteId)
+        } else {
+            substituteParams(params);
+        }
+
+        function retrieveParams(siteId) {
+            $.ajax('/params', {data: {siteId: siteId}})
+                .done(function (data) {
+                    sessionStorage.setItem(key, JSON.stringify(data));
+                    substituteParams(data);
+                });
+        }
+
+        function substituteParams(dataMap) {
+            $("[data-params-text]").each(function () {
+                const $this = $(this);
+                const dataKey = $this.attr("data-params-text");
+                const dataValue = dataMap[dataKey];
+
+                if (typeof dataValue === "undefined") {
+                    console.warn("substituteParams().text: Unknown property, key='%s'", dataKey);
+                } else {
+                    $this.text(dataValue);
+                }
+            });
+
+            $("[data-params-attr]").each(function () {
+                const $this = $(this);
+                const jsonText = $this.attr("data-params-attr")
+                const attrObject = JSON.parse(jsonText);
+                Object.keys(attrObject).forEach(function (attrName) {
+                    const key = attrObject[attrName];
+                    const value = dataMap[key];
+                    if (typeof value === "undefined") {
+                        console.warn("substituteParams().attr: Unknown property, key='%s'", key);
+                    } else {
+                        $this.attr(attrName, value);
+                    }
+                });
+            });
+        }
+    }
+
     //purposefully executed before DOM is rendered so elements are never visible
     if (isSet(siteId)) { //TODO: add if isLoggedIn once USER variable can be set from backend.
+        paramSubstitution(siteId);
         $("#logout-link").text("Logout " + siteId);
         $("#studyIdMenu").toggle(studyId !== '');
         localStorage.setItem("siteid", siteId);
@@ -1593,9 +1646,10 @@
 
                 },
                 plugins: {
+                    declarative: new FormValidation.plugins.Declarative(),
                     trigger: new FormValidation.plugins.Trigger(),
                     bootstrap3: new FormValidation.plugins.Bootstrap3(),
-                    submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                    submitButton: new FormValidation.plugins.SubmitButton(),
                     defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
                     excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
                     icon: new FormValidation.plugins.Icon({
@@ -1677,7 +1731,11 @@
 
     $(function () {
 
-        createFormValidator();
+        const fv = createFormValidator();
+        $("#save-for-later-button").on('click', function () {
+                        fv.destroy();
+        });
+
         const initialRuralUrbanValue = $("[name=sirs]").filter(":checked").val();
         const $zipField = $("#sipz");
         const RURAL = 'r';

@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
     (global = global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.locales = global.FormValidation.locales || {}, global.FormValidation.locales.el_GR = factory()));
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
     /**
      * Greek language package
@@ -386,4 +386,4 @@
 
     return el_GR;
 
-}));
+})));

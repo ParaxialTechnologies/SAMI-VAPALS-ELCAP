@@ -1,14 +1,14 @@
 /**
- * FormValidation (https://formvalidation.io), v1.4.0 (678705b)
+ * FormValidation (https://formvalidation.io), v1.7.0 (71bbaaa)
  * The best validation library for JavaScript
- * (c) 2013 - 2019 Nguyen Huu Phuoc <me@phuoc.ng>
+ * (c) 2013 - 2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.plugins = global.FormValidation.plugins || {}, global.FormValidation.plugins.Wizard = factory()));
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -78,6 +78,19 @@
     return _setPrototypeOf(o, p);
   }
 
+  function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function _assertThisInitialized(self) {
     if (self === void 0) {
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -94,179 +107,181 @@
     return _assertThisInitialized(self);
   }
 
-  function _toConsumableArray(arr) {
-    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+  function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
+
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf(Derived),
+          result;
+
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf(this).constructor;
+
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+
+      return _possibleConstructorReturn(this, result);
+    };
   }
 
-  function _arrayWithoutHoles(arr) {
-    if (Array.isArray(arr)) {
-      for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+  var t = FormValidation.Plugin;
 
-      return arr2;
-    }
-  }
+  var e = FormValidation.utils.classSet;
 
-  function _iterableToArray(iter) {
-    if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
-  }
+  var s = FormValidation.plugins.Excluded;
 
-  function _nonIterableSpread() {
-    throw new TypeError("Invalid attempt to spread non-iterable instance");
-  }
+  var i = /*#__PURE__*/function (_t) {
+    _inherits(i, _t);
 
-  var Plugin = FormValidation.Plugin;
+    var _super = _createSuper(i);
 
-  var Status;
-
-  (function (Status) {
-    Status["Ignored"] = "Ignored";
-    Status["Invalid"] = "Invalid";
-    Status["NotValidated"] = "NotValidated";
-    Status["Valid"] = "Valid";
-    Status["Validating"] = "Validating";
-  })(Status || (Status = {}));
-
-  var Status$1 = Status;
-
-  var classSet = FormValidation.utils.classSet;
-
-  var Excluded = FormValidation.plugins.Excluded;
-
-  var Wizard =
-  /*#__PURE__*/
-  function (_Plugin) {
-    _inherits(Wizard, _Plugin);
-
-    function Wizard(opts) {
+    function i(t) {
       var _this;
 
-      _classCallCheck(this, Wizard);
+      _classCallCheck(this, i);
 
-      _this = _possibleConstructorReturn(this, _getPrototypeOf(Wizard).call(this, opts));
+      _this = _super.call(this, t);
       _this.currentStep = 0;
       _this.numSteps = 0;
       _this.opts = Object.assign({}, {
-        activeStepClass: 'fv-plugins-wizard--active',
+        activeStepClass: "fv-plugins-wizard--active",
         onStepActive: function onStepActive() {},
         onStepInvalid: function onStepInvalid() {},
         onStepValid: function onStepValid() {},
         onValid: function onValid() {},
-        stepClass: 'fv-plugins-wizard--step'
-      }, opts);
+        stepClass: "fv-plugins-wizard--step"
+      }, t);
       _this.prevStepHandler = _this.onClickPrev.bind(_assertThisInitialized(_this));
       _this.nextStepHandler = _this.onClickNext.bind(_assertThisInitialized(_this));
       return _this;
     }
 
-    _createClass(Wizard, [{
+    _createClass(i, [{
       key: "install",
       value: function install() {
         var _this2 = this;
 
-        this.core.registerPlugin(Wizard.EXCLUDED_PLUGIN, new Excluded());
-        var form = this.core.getFormElement();
-        this.steps = _toConsumableArray(form.querySelectorAll(this.opts.stepSelector));
+        this.core.registerPlugin(i.EXCLUDED_PLUGIN, new s());
+        var t = this.core.getFormElement();
+        this.steps = [].slice.call(t.querySelectorAll(this.opts.stepSelector));
         this.numSteps = this.steps.length;
-        this.steps.forEach(function (s) {
-          classSet(s, _defineProperty({}, _this2.opts.stepClass, true));
+        this.steps.forEach(function (t) {
+          e(t, _defineProperty({}, _this2.opts.stepClass, true));
         });
-        classSet(this.steps[0], _defineProperty({}, this.opts.activeStepClass, true));
-        this.prevButton = form.querySelector(this.opts.prevButton);
-        this.nextButton = form.querySelector(this.opts.nextButton);
-        this.prevButton.addEventListener('click', this.prevStepHandler);
-        this.nextButton.addEventListener('click', this.nextStepHandler);
+        e(this.steps[0], _defineProperty({}, this.opts.activeStepClass, true));
+        this.prevButton = t.querySelector(this.opts.prevButton);
+        this.nextButton = t.querySelector(this.opts.nextButton);
+        this.prevButton.addEventListener("click", this.prevStepHandler);
+        this.nextButton.addEventListener("click", this.nextStepHandler);
       }
     }, {
       key: "uninstall",
       value: function uninstall() {
-        this.core.deregisterPlugin(Wizard.EXCLUDED_PLUGIN);
-        this.prevButton.removeEventListener('click', this.prevStepHandler);
-        this.nextButton.removeEventListener('click', this.nextStepHandler);
+        this.core.deregisterPlugin(i.EXCLUDED_PLUGIN);
+        this.prevButton.removeEventListener("click", this.prevStepHandler);
+        this.nextButton.removeEventListener("click", this.nextStepHandler);
       }
     }, {
-      key: "onClickPrev",
-      value: function onClickPrev() {
+      key: "getCurrentStep",
+      value: function getCurrentStep() {
+        return this.currentStep;
+      }
+    }, {
+      key: "goToPrevStep",
+      value: function goToPrevStep() {
         if (this.currentStep >= 1) {
-          classSet(this.steps[this.currentStep], _defineProperty({}, this.opts.activeStepClass, false));
+          e(this.steps[this.currentStep], _defineProperty({}, this.opts.activeStepClass, false));
           this.currentStep--;
-          classSet(this.steps[this.currentStep], _defineProperty({}, this.opts.activeStepClass, true));
+          e(this.steps[this.currentStep], _defineProperty({}, this.opts.activeStepClass, true));
           this.onStepActive();
         }
       }
     }, {
-      key: "onClickNext",
-      value: function onClickNext() {
+      key: "goToNextStep",
+      value: function goToNextStep() {
         var _this3 = this;
 
-        this.core.validate().then(function (status) {
-          if (status === Status$1.Valid) {
-            var nextStep = _this3.currentStep + 1;
+        this.core.validate().then(function (t) {
+          if (t === "Valid") {
+            var _t2 = _this3.currentStep + 1;
 
-            if (nextStep >= _this3.numSteps) {
+            if (_t2 >= _this3.numSteps) {
               _this3.currentStep = _this3.numSteps - 1;
             } else {
-              classSet(_this3.steps[_this3.currentStep], _defineProperty({}, _this3.opts.activeStepClass, false));
-              _this3.currentStep = nextStep;
-              classSet(_this3.steps[_this3.currentStep], _defineProperty({}, _this3.opts.activeStepClass, true));
+              e(_this3.steps[_this3.currentStep], _defineProperty({}, _this3.opts.activeStepClass, false));
+              _this3.currentStep = _t2;
+              e(_this3.steps[_this3.currentStep], _defineProperty({}, _this3.opts.activeStepClass, true));
             }
 
             _this3.onStepActive();
 
             _this3.onStepValid();
 
-            if (nextStep === _this3.numSteps) {
+            if (_t2 === _this3.numSteps) {
               _this3.onValid();
             }
-          } else if (status === Status$1.Invalid) {
+          } else if (t === "Invalid") {
             _this3.onStepInvalid();
           }
         });
       }
     }, {
+      key: "onClickPrev",
+      value: function onClickPrev() {
+        this.goToPrevStep();
+      }
+    }, {
+      key: "onClickNext",
+      value: function onClickNext() {
+        this.goToNextStep();
+      }
+    }, {
       key: "onStepActive",
       value: function onStepActive() {
-        var e = {
+        var t = {
           numSteps: this.numSteps,
           step: this.currentStep
         };
-        this.core.emit('plugins.wizard.step.active', e);
-        this.opts.onStepActive(e);
+        this.core.emit("plugins.wizard.step.active", t);
+        this.opts.onStepActive(t);
       }
     }, {
       key: "onStepValid",
       value: function onStepValid() {
-        var e = {
+        var t = {
           numSteps: this.numSteps,
           step: this.currentStep
         };
-        this.core.emit('plugins.wizard.step.valid', e);
-        this.opts.onStepValid(e);
+        this.core.emit("plugins.wizard.step.valid", t);
+        this.opts.onStepValid(t);
       }
     }, {
       key: "onStepInvalid",
       value: function onStepInvalid() {
-        var e = {
+        var t = {
           numSteps: this.numSteps,
           step: this.currentStep
         };
-        this.core.emit('plugins.wizard.step.invalid', e);
-        this.opts.onStepInvalid(e);
+        this.core.emit("plugins.wizard.step.invalid", t);
+        this.opts.onStepInvalid(t);
       }
     }, {
       key: "onValid",
       value: function onValid() {
-        var e = {
+        var t = {
           numSteps: this.numSteps
         };
-        this.core.emit('plugins.wizard.valid', e);
-        this.opts.onValid(e);
+        this.core.emit("plugins.wizard.valid", t);
+        this.opts.onValid(t);
       }
     }]);
 
-    return Wizard;
-  }(Plugin);
-  Wizard.EXCLUDED_PLUGIN = '___wizardExcluded';
+    return i;
+  }(t);
+  i.EXCLUDED_PLUGIN = "___wizardExcluded";
 
-  return Wizard;
+  return i;
 
-}));
+})));

@@ -144,6 +144,11 @@
          </a>
         </li>
         <li>
+         <a class="navigation" data-method="post" data-samireporttype="unmatched" data-samiroute="report" href="#!">
+          Matching Report
+         </a>
+        </li>
+        <li>
          <a class="navigation" data-method="post" data-samireporttype="worklist" data-samiroute="report" href="#!">
           Work List
          </a>
@@ -8984,8 +8989,56 @@
         return variable && variable.indexOf("@@") === -1 && $.trim(variable) !== '';
     }
 
+    function paramSubstitution(siteId) {
+        let key = "params." + siteId;
+        let params = JSON.parse(sessionStorage.getItem(key));
+        if ($.isEmptyObject(params)) {
+            retrieveParams(siteId)
+        } else {
+            substituteParams(params);
+        }
+
+        function retrieveParams(siteId) {
+            $.ajax('/params', {data: {siteId: siteId}})
+                .done(function (data) {
+                    sessionStorage.setItem(key, JSON.stringify(data));
+                    substituteParams(data);
+                });
+        }
+
+        function substituteParams(dataMap) {
+            $("[data-params-text]").each(function () {
+                const $this = $(this);
+                const dataKey = $this.attr("data-params-text");
+                const dataValue = dataMap[dataKey];
+
+                if (typeof dataValue === "undefined") {
+                    console.warn("substituteParams().text: Unknown property, key='%s'", dataKey);
+                } else {
+                    $this.text(dataValue);
+                }
+            });
+
+            $("[data-params-attr]").each(function () {
+                const $this = $(this);
+                const jsonText = $this.attr("data-params-attr")
+                const attrObject = JSON.parse(jsonText);
+                Object.keys(attrObject).forEach(function (attrName) {
+                    const key = attrObject[attrName];
+                    const value = dataMap[key];
+                    if (typeof value === "undefined") {
+                        console.warn("substituteParams().attr: Unknown property, key='%s'", key);
+                    } else {
+                        $this.attr(attrName, value);
+                    }
+                });
+            });
+        }
+    }
+
     //purposefully executed before DOM is rendered so elements are never visible
     if (isSet(siteId)) { //TODO: add if isLoggedIn once USER variable can be set from backend.
+        paramSubstitution(siteId);
         $("#logout-link").text("Logout " + siteId);
         $("#studyIdMenu").toggle(studyId !== '');
         localStorage.setItem("siteid", siteId);
@@ -9160,9 +9213,10 @@
 
                     },
                     plugins: {
+                        declarative: new FormValidation.plugins.Declarative(),
                         trigger: new FormValidation.plugins.Trigger(),
                         bootstrap3: new FormValidation.plugins.Bootstrap3(),
-                        submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                        submitButton: new FormValidation.plugins.SubmitButton(),
                         // Instead of using the defaultSubmit plugin here, we listen for the core.form.valid event
                         // below to sort nodule grid (if necessary), then submit
                         //defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
@@ -9198,6 +9252,9 @@
         $(function () {
 
             const fv = createFormValidator();
+            $("#save-for-later-button").on('click', function () {
+                fv.destroy();
+            });
 
             // SCAN
             // bind to change events on study date and baseline date to calculate "time since baseline"

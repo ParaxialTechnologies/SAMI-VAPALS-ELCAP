@@ -19,8 +19,7 @@ version = datetime.datetime.now().strftime('%Y.%m.%d')
 forms = [
     {"template": "background", "title": "Background Form", "output": "background", "withNav": "true"},
     {"template": "blank", "title": "", "output": "blank_no_nav", "withNav": "false"},
-    {"template": "intake", "title": "Lung Screening and Surveillance Intake Form", "output": "intake",
-     "withNav": "true"},
+    {"template": "intake", "title": "Lung Screening Intake Form", "output": "intake", "withNav": "true"},
     {"template": "ctevaluation", "title": "CT Evaluation Form", "output": "ctevaluation", "withNav": "true"},
     {"template": "ctevaluation", "title": "CT Evaluation Form", "output": "ctevaluation-elcap", "withNav": "true"},
     {"template": "home", "title": "Home", "output": "home", "withNav": "true"},
@@ -32,7 +31,6 @@ forms = [
     {"template": "intervention", "title": "Intervention and Surgical Treatment Form", "output": "intervention",
      "withNav": "true"},
     {"template": "report", "title": "", "output": "report", "withNav": "true"},
-    {"template": "toggler", "title": "", "output": "toggler", "withNav": "true"},
     {"template": "table", "title": "", "output": "table", "withNav": "true"},
     {"template": "upload", "title": "Upload New Patients", "output": "upload", "withNav": "true"},
     {"template": "register", "title": "Register", "output": "register", "withNav": "true"},

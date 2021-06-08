@@ -1,15 +1,17 @@
 /**
- * FormValidation (https://formvalidation.io), v1.4.0 (678705b)
+ * FormValidation (https://formvalidation.io), v1.7.0 (71bbaaa)
  * The best validation library for JavaScript
- * (c) 2013 - 2019 Nguyen Huu Phuoc <me@phuoc.ng>
+ * (c) 2013 - 2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
-(function ($) {
+(function (o) {
   'use strict';
 
-  $ = $ && $.hasOwnProperty('default') ? $['default'] : $;
+  o = o && Object.prototype.hasOwnProperty.call(o, 'default') ? o['default'] : o;
 
   function _typeof(obj) {
+    "@babel/helpers - typeof";
+
     if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
       _typeof = function (obj) {
         return typeof obj;
@@ -23,28 +25,28 @@
     return _typeof(obj);
   }
 
-  var formValidation = FormValidation.formValidation;
+  var t = FormValidation.formValidation;
 
-  var version = $.fn.jquery.split(' ')[0].split('.');
+  var r = o.fn.jquery.split(" ")[0].split(".");
 
-  if (+version[0] < 2 && +version[1] < 9 || +version[0] === 1 && +version[1] === 9 && +version[2] < 1) {
-    throw new Error('The J plugin requires jQuery version 1.9.1 or higher');
+  if (+r[0] < 2 && +r[1] < 9 || +r[0] === 1 && +r[1] === 9 && +r[2] < 1) {
+    throw new Error("The J plugin requires jQuery version 1.9.1 or higher");
   }
 
-  $.fn['formValidation'] = function (options) {
-    var params = arguments;
+  o.fn["formValidation"] = function (r) {
+    var i = arguments;
     return this.each(function () {
-      var $this = $(this);
-      var data = $this.data('formValidation');
-      var opts = 'object' === _typeof(options) && options;
+      var e = o(this);
+      var n = e.data("formValidation");
+      var a = "object" === _typeof(r) && r;
 
-      if (!data) {
-        data = formValidation(this, opts);
-        $this.data('formValidation', data).data('FormValidation', data);
+      if (!n) {
+        n = t(this, a);
+        e.data("formValidation", n).data("FormValidation", n);
       }
 
-      if ('string' === typeof options) {
-        data[options].apply(data, Array.prototype.slice.call(params, 1));
+      if ("string" === typeof r) {
+        n[r].apply(n, Array.prototype.slice.call(i, 1));
       }
     });
   };

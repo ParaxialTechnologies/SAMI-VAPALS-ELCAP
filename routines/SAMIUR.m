@@ -285,7 +285,7 @@ WSREPORT(SAMIRTN,filter) ; generate report based on params in filter
  . . . quit
  . . ;
  . . set cnt=cnt+1
- . . set SAMIRTN(cnt)="</tr>"
+ . . set SAMIRTN(cnt)="</tr>"_$CHAR(10,13)
  . . set rows=rows+1
  . . quit
  . quit
@@ -654,6 +654,7 @@ UNMAT(SAMIPATS,ztype,datephrase,filter) ; build unmatched persons list
  . new nuhref set nuhref="<form method=POST action=""/vapals"">"
  . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""editperson"">"
  . set nuhref=nuhref_"<input type=hidden name=""dfn"" value="_dfn_">"
+ . set nuhref=nuhref_"<input type=hidden name=""siteid"" value="_site_">"
  . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
  . set SAMIPATS(ien,dfn,"editref")=nuhref
  . quit

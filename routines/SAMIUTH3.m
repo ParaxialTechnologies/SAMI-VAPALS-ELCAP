@@ -1,4 +1,4 @@
-SAMIUTH3 ;ven/lgc - tests for SAMIHOM3,SAMIHOM4 ;2021-06-16T16:31Z
+SAMIUTH3 ;ven/lgc - tests for SAMIHOM3,SAMIHOM4 ;2021-06-16T17:23Z
  ;;18.0;SAMI;;**12**;2020-01;
  ;;1.18.0.12-t2+i12
  ;
@@ -45,6 +45,48 @@ SHUTDOWN ;
  D LVAPT1^SAMIUTST  ; return VA's DPT 1 patient's data
  ;
  quit
+ ;
+ ;
+ ;
+COVER ; run tests & calculate code coverage
+ ;
+ ;ven/toad;dmi;procedure;clean;report;sac
+ ;
+ new namespace
+ set namespace="SAMIHOM*" ; set namespace for routines being tested
+ ;
+ ; add routines here in preferred order; this enables us to easily
+ ; rearrange these in whatever order we like
+ ;--------------------------------------------------------------------
+ new SAMIINCL set SAMIINCL(1)="^SAMIUTH3,^SAMIUTH4"
+ ;--------------------------------------------------------------------
+ ; note that routine references may be specified as:
+ ;   * routine        : calls EN^%ut with name as argument
+ ;   * ^routine       : calls top of routine
+ ;   * label^routine  : calls label in routine
+ ; we generally prefer middle form
+ ;
+ ; to exclude specific routines, do that here:
+ ;--------------------------------------------------------------------
+ new SAMIEXCL
+ set SAMIEXCL(1)=""
+ ; set SAMIEXCL(#)="EXCLUDEME^TESTROUTINE"
+ ;--------------------------------------------------------------------
+ ;
+ ; add SAMIEXCL values to ^TMP, which tracks this coverage test
+ merge ^TMP("%tsu",$job,"XCLUDE")=SAMIEXCL
+ ;
+ ; cover SAMIHOM* namespace; '3' specifies verbosity: this will show
+ ; values showing total coverage, plus values for each routine in
+ ; namespace, plus totals for everything analyzed, along with coverage
+ ; values for each tag within routines, as well as lines under each
+ ; tag that were *not* covered in analysis. This may be quite a bit of
+ ; info, & we may have to modify namespace and/or verbosity to pare
+ ; this down until we have a lot more automated tests written.
+ ;
+ do COVERAGE^%ut(namespace,.SAMIINCL,.SAMIEXCL,3)
+ ;
+ quit  ; end of COVER
  ;
  ;
  ;
@@ -203,12 +245,15 @@ UTSCAN4 ; @TEST SCANFOR scan array for given entry
  ; do GETHOME(SAMIURTN,SAMIUFLTR)
  ; set X=$$SCANFOR(ary,start,what)
  ;
- new SAMIUSTR,rndm,SAMIUPOO,SAMIUFLTR set rndm=$random(150)
+ new SAMIUPOO,SAMIUFLTR
  do GETHOME^SAMIHOM3(.SAMIUPOO,.SAMIUFLTR)
- set SAMIUSTR=$get(SAMIUPOO(rndm))
- new SAMIUSTART set SAMIUSTART=1
+ ;
+ new rndm set rndm=$random(150)+1
+ new SAMIUSTR set SAMIUSTR=$get(SAMIUPOO(rndm))
+ new SAMIUSTART set SAMIUSTART=0
  for  set SAMIUSTART=$$SCANFOR^SAMIHOM3(.SAMIUPOO,SAMIUSTART,SAMIUSTR) quit:SAMIUSTART=0  quit:SAMIUSTART=rndm
- set utsuccess=SAMIUSTART=rndm
+ ;
+ new utsuccess set utsuccess=SAMIUSTART=rndm
  do CHKEQ^%ut(utsuccess,1,"Testing scanning array for a given string FAILED!")
  ;
  quit

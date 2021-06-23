@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.06.15" name="version"/>
+  <meta content="2021.06.23" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Background Form
@@ -50,17 +50,17 @@
   </script>
   <script src="../www/lib/chart-js-2.9.3/chartjs-plugin-datalabels.min.js">
   </script>
-  <script src="../www/jquery-conditonally-enable.js?v=2021.06.15">
+  <script src="../www/jquery-conditonally-enable.js?v=2021.06.23">
   </script>
-  <script src="../www/jquery-conditonally-display.js?v=2021.06.15">
+  <script src="../www/jquery-conditonally-display.js?v=2021.06.23">
   </script>
-  <script src="../www/jqueryui-vista-filemanAutocomplete.js?v=2021.06.15">
+  <script src="../www/jqueryui-vista-filemanAutocomplete.js?v=2021.06.23">
   </script>
-  <script src="../www/vapals.js?v=2021.06.15">
+  <script src="../www/vapals.js?v=2021.06.23">
   </script>
-  <script src="../www/init.js?v=2021.06.15">
+  <script src="../www/init.js?v=2021.06.23">
   </script>
-  <script src="../www/nodule-grid.js?v=2021.06.15">
+  <script src="../www/nodule-grid.js?v=2021.06.23">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -1380,7 +1380,7 @@
          <label class="control-label numeric" for="sbmphthv">
           Highest value
          </label>
-         <input class="form-control input-sm numeric decimalformat" id="sbmphthv" name="sbmphthv" type="text"/>
+         <input class="form-control input-sm" id="sbmphthv" name="sbmphthv" type="text"/>
         </div>
        </div>
       </div>
@@ -1662,7 +1662,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2021.06.15
+     2021.06.23
     </span>
    </div>
   </footer>
@@ -1857,13 +1857,7 @@
                         //Vascular
                         sbmpsd: {validators: pastYearValidator}, // stroke
                         sbmppvd: {validators: pastYearValidator}, // peripheral vascular disease
-                        sbmphtsw: {validators: pastYearValidator}, // hypertension
-                        sbmphthv: {
-                            validators: {
-                                numeric: {message: 'Must be a number'},
-                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
-                            }
-                        },
+                        sbmphtsw: {validators: pastYearValidator}  // hypertension
                     },
                     plugins: {
                         declarative: new FormValidation.plugins.Declarative(),

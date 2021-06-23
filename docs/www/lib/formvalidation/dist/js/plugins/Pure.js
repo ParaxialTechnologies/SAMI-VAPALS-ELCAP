@@ -1,14 +1,14 @@
 /**
- * FormValidation (https://formvalidation.io), v1.4.0 (678705b)
+ * FormValidation (https://formvalidation.io), v1.7.0 (71bbaaa)
  * The best validation library for JavaScript
- * (c) 2013 - 2019 Nguyen Huu Phuoc <me@phuoc.ng>
+ * (c) 2013 - 2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.plugins = global.FormValidation.plugins || {}, global.FormValidation.plugins.Pure = factory()));
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -63,6 +63,19 @@
     return _setPrototypeOf(o, p);
   }
 
+  function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function _assertThisInitialized(self) {
     if (self === void 0) {
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -79,49 +92,68 @@
     return _assertThisInitialized(self);
   }
 
-  var classSet = FormValidation.utils.classSet;
+  function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
 
-  var Framework = FormValidation.plugins.Framework;
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf(Derived),
+          result;
 
-  var Pure =
-  /*#__PURE__*/
-  function (_Framework) {
-    _inherits(Pure, _Framework);
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf(this).constructor;
 
-    function Pure(opts) {
-      _classCallCheck(this, Pure);
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
 
-      return _possibleConstructorReturn(this, _getPrototypeOf(Pure).call(this, Object.assign({}, {
-        formClass: 'fv-plugins-pure',
-        messageClass: 'fv-help-block',
-        rowInvalidClass: 'fv-has-error',
+      return _possibleConstructorReturn(this, result);
+    };
+  }
+
+  var e = FormValidation.utils.classSet;
+
+  var r = FormValidation.plugins.Framework;
+
+  var t = /*#__PURE__*/function (_r) {
+    _inherits(t, _r);
+
+    var _super = _createSuper(t);
+
+    function t(e) {
+      _classCallCheck(this, t);
+
+      return _super.call(this, Object.assign({}, {
+        formClass: "fv-plugins-pure",
+        messageClass: "fv-help-block",
+        rowInvalidClass: "fv-has-error",
         rowPattern: /^.*pure-control-group.*$/,
-        rowSelector: '.pure-control-group',
-        rowValidClass: 'fv-has-success'
-      }, opts)));
+        rowSelector: ".pure-control-group",
+        rowValidClass: "fv-has-success"
+      }, e));
     }
 
-    _createClass(Pure, [{
+    _createClass(t, [{
       key: "onIconPlaced",
-      value: function onIconPlaced(e) {
-        var type = e.element.getAttribute('type');
+      value: function onIconPlaced(r) {
+        var t = r.element.getAttribute("type");
 
-        if ('checkbox' === type || 'radio' === type) {
-          var parent = e.element.parentElement;
-          classSet(e.iconElement, {
-            'fv-plugins-icon-check': true
+        if ("checkbox" === t || "radio" === t) {
+          var _t = r.element.parentElement;
+          e(r.iconElement, {
+            "fv-plugins-icon-check": true
           });
 
-          if ('LABEL' === parent.tagName) {
-            parent.parentElement.insertBefore(e.iconElement, parent.nextSibling);
+          if ("LABEL" === _t.tagName) {
+            _t.parentElement.insertBefore(r.iconElement, _t.nextSibling);
           }
         }
       }
     }]);
 
-    return Pure;
-  }(Framework);
+    return t;
+  }(r);
 
-  return Pure;
+  return t;
 
-}));
+})));

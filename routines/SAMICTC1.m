@@ -1,5 +1,5 @@
-SAMICTC1 ;ven/gpl - ceform copy ;2021-05-25T15:44Z
- ;;18.0;SAMI;**11**;2020-01;
+SAMICTC1 ;ven/gpl - ceform copy ;2021-06-04T14:28Z
+ ;;18.0;SAMI;**11**;2020-01;Build 21
  ;;1.18.0.11+i11
  ;
  ; SAMICTC1 & 2 selectively copy fields from a patient's most recent
@@ -35,6 +35,7 @@ CTCOPY(FROM,TO,key) ; copy ct eval form selectively
  ;@called-by
  ; MKCEFORM^SAMICAS3
  ; MKPTFORM^SAMICAS3
+ ; MKITFORM^SAMICAS3
  ; MKBXFORM^SAMICAS3
  ;@calls
  ; CTCOPY2^SAMICTC2
@@ -71,6 +72,7 @@ CTCOPY(FROM,TO,key) ; copy ct eval form selectively
  . set savals("pv")="" ; Not included in scan
  . for cei=1:1:9 do  ;
  . . set isnew=$get(@FROM@("cect"_cei_"ch"))
+ . . quit:isnew=""
  . . if $data(savals(isnew)) set @TO@("cect"_cei_"ch")=isnew
  . . quit
  . quit

@@ -1,4 +1,4 @@
-SAMICUL ;ven/gpl - ielcap: case review page log ;2021-05-25T15:28Z
+SAMICUL ;ven/gpl - ielcap: case review page log ;2021-06-01T14:13Z
  ;;18.0;SAMI;**9,11**;2020-01;
  ;;1.18.0.11+i11
  ;
@@ -23,7 +23,7 @@ SAMICUL ;ven/gpl - ielcap: case review page log ;2021-05-25T15:28Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-05-25T15:28Z
+ ;@last-updated 2021-06-01T14:13Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -283,8 +283,19 @@ SAMICUL ;ven/gpl - ielcap: case review page log ;2021-05-25T15:28Z
  ; CTCOPY^SAMICTC1 to modulate node-copy operation; critical fix to
  ; copy forward for is it new field for new ct eval forms.
  ;
- ; 2021-05-25 ven/toad 1.18.0.11_i11
+ ; 2021-05-25 ven/toad 1.18.0.11+i11 801d7c7
  ;  SAMICAS3: bump date; passim lt refactor.
+ ;
+ ; 2021-05-26/27 ven/gpl 1.18.0.11+i11 6edc061,7372882
+ ;  SAMICAS3: in MKITFORM add new nodule-copy block to copy forward
+ ; for intervention form; in LASTCMP,PRIORCMP init tdt to today to
+ ; start before today, to fix last comp & prior scan field prefill in
+ ; ct eval form.
+ ;
+ ; 2021-06-01 ven/toad 1.18.0.11+i11
+ ;  SAMICAS3 fold in gpl chgs fr 2021-05-26/27, annotate, adjust news
+ ; in nodule copy blocks, bump date.
+ ;  SAMICTC1 annotate, bump date.
  ;
  ;
  ;

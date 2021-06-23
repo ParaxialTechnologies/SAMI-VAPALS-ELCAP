@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.05.27" name="version"/>
+  <meta content="2021.06.15" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Followup Form
@@ -50,17 +50,17 @@
   </script>
   <script src="../www/lib/chart-js-2.9.3/chartjs-plugin-datalabels.min.js">
   </script>
-  <script src="../www/jquery-conditonally-enable.js">
+  <script src="../www/jquery-conditonally-enable.js?v=2021.06.15">
   </script>
-  <script src="../www/jquery-conditonally-display.js">
+  <script src="../www/jquery-conditonally-display.js?v=2021.06.15">
   </script>
-  <script src="../www/jqueryui-vista-filemanAutocomplete.js">
+  <script src="../www/jqueryui-vista-filemanAutocomplete.js?v=2021.06.15">
   </script>
-  <script src="../www/vapals.js">
+  <script src="../www/vapals.js?v=2021.06.15">
   </script>
-  <script src="../www/init.js">
+  <script src="../www/init.js?v=2021.06.15">
   </script>
-  <script src="../www/nodule-grid.js">
+  <script src="../www/nodule-grid.js?v=2021.06.15">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -130,6 +130,11 @@
         <li>
          <a class="navigation" data-method="get" data-samireporttype="inactive" data-samiroute="report" href="table.html">
           Inactive
+         </a>
+        </li>
+        <li id="matchingReport">
+         <a class="navigation" data-method="get" data-samireporttype="unmatched" data-samiroute="report" href="table.html">
+          Matching Report
          </a>
         </li>
         <li>
@@ -1277,7 +1282,7 @@
     </div>
     <div class="pull-left">
      <input name="samistatus" type="hidden" value=""/>
-     <button class="btn btn-default" id="save-for-later-button" type="submit">
+     <button class="btn btn-default" formnovalidate="formnovalidate" id="save-for-later-button" type="submit">
       Save for Later
      </button>
      <button class="btn btn-primary" id="submit-button" type="submit">
@@ -1331,7 +1336,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2021.05.27
+     2021.06.15
     </span>
    </div>
   </footer>
@@ -1355,10 +1360,68 @@
         return variable && variable.indexOf("@@") === -1 && $.trim(variable) !== '';
     }
 
+    function getParameter(key) {
+        const params = JSON.parse(sessionStorage.getItem("params." + siteId));
+        if (params == null || $.isEmptyObject(params)) {
+            return null;
+        } else {
+            return params[key];
+        }
+    }
+
+    function paramSubstitution(siteId) {
+        let key = "params." + siteId;
+        let params = JSON.parse(sessionStorage.getItem(key));
+        if ($.isEmptyObject(params)) {
+            retrieveParams(siteId)
+        } else {
+            substituteParams(params);
+        }
+
+        function retrieveParams(siteId) {
+            $.ajax('/params', {data: {siteId: siteId}})
+                .done(function (data) {
+                    sessionStorage.setItem(key, JSON.stringify(data));
+                    substituteParams(data);
+                });
+        }
+
+        function substituteParams(dataMap) {
+            $("[data-params-text]").each(function () {
+                const $this = $(this);
+                const dataKey = $this.attr("data-params-text");
+                const dataValue = dataMap[dataKey];
+
+                if (typeof dataValue === "undefined") {
+                    console.warn("substituteParams().text: Unknown property, key='%s'", dataKey);
+                } else {
+                    $this.text(dataValue);
+                }
+            });
+
+            $("[data-params-attr]").each(function () {
+                const $this = $(this);
+                const jsonText = $this.attr("data-params-attr")
+                const attrObject = JSON.parse(jsonText);
+                Object.keys(attrObject).forEach(function (attrName) {
+                    const key = attrObject[attrName];
+                    const value = dataMap[key];
+                    if (typeof value === "undefined") {
+                        console.warn("substituteParams().attr: Unknown property, key='%s'", key);
+                    } else {
+                        $this.attr(attrName, value);
+                    }
+                });
+            });
+        }
+    }
+
     //purposefully executed before DOM is rendered so elements are never visible
     if (isSet(siteId)) { //TODO: add if isLoggedIn once USER variable can be set from backend.
+        paramSubstitution(siteId);
         $("#logout-link").text("Logout " + siteId);
         $("#studyIdMenu").toggle(studyId !== '');
+        $("#matchingReport").toggle(getParameter("matchingReportEnabled") !== false);
         localStorage.setItem("siteid", siteId);
         localStorage.setItem("studyid", studyId);
     } else {
@@ -1506,9 +1569,10 @@
                         funewct: {validators: {notEmpty: {message: 'CT/LDCT order selection is required'}}}
                     },
                     plugins: {
+                        declarative: new FormValidation.plugins.Declarative(),
                         trigger: new FormValidation.plugins.Trigger(),
                         bootstrap3: new FormValidation.plugins.Bootstrap3(),
-                        submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                        submitButton: new FormValidation.plugins.SubmitButton(),
                         defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
                         excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
                         icon: new FormValidation.plugins.Icon({
@@ -1591,7 +1655,10 @@
                 $("#sicpd").val("20");
             
 
-            createFormValidator();
+            const fv = createFormValidator();
+            $("#save-for-later-button").on('click', function () {
+                fv.destroy();
+            });
 
             const $tsbFields = $("#sidof, #sidoe");
             $tsbFields.closest(".datepicker").on("dp.change", function () {

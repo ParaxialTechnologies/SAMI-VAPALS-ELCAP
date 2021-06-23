@@ -80,10 +80,12 @@ DOLOGIT(vars,old,var,entry) ;
  n rootdd s rootdd=$$setroot^%wd("form fields - intake")
  n newval,oldval,nvtrans,ovtrans
  s newval=$g(@vars@(var)) i '(newval="") d
+ . q:'$d(@rootdd@("field","C",var))
  . s nvtrans=$o(@rootdd@("field","C",var,newval,""))
  . s:'(nvtrans="") newval=nvtrans
  s:(newval="") newval="null"
  s oldval=$g(@old@(var)) i '(oldval="") d
+ . q:'$d(@rootdd@("field","C",var))
  . s ovtrans=$o(@rootdd@("field","C",var,oldval,""))
  . s:'(ovtrans="") oldval=ovtrans
  s:(oldval="") oldval="null"

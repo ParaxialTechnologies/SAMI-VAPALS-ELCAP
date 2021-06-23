@@ -301,7 +301,7 @@ WSVAPALS ; code for web service for vapals post
  . s vars("dob")=$p(tdob,"-",2)_"/"_$p(tdob,"-",3)_"/"_$p(tdob,"-",1)
  . s vars("sbdob")=$g(@root@(sien,"dob"))
  . s vars("gender")=$g(@root@(sien,"sex"))
- . s vars("icn")=$g(@root@(sien,"icn"))
+ . ;s vars("icn")=$g(@root@(sien,"icn"))
  . n tssn s tssn=$g(@root@(sien,"ssn"))
  . s vars("ssn")=$e(tssn,1,3)_"-"_$e(tssn,4,5)_"-"_$e(tssn,6,9)
  . s vars("last5")=$g(@root@(sien,"last5"))
@@ -338,10 +338,10 @@ REG(SAMIRTN,SAMIARG) ; manual registration
  s SAMIARG("errorField")=""
  ; test for duplicate ssn
  ;
- i $$DUPSSN(ssn) d  ;
- . ;s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate SSN."
- . s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate SSN error. A person with that SSN is already entered in the system."
- . s SAMIARG("errorField")="ssn"
+ ;i $$DUPSSN(ssn) d  ;
+ ;. ;s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate SSN."
+ ;. s SAMIARG("errorMessage")=SAMIARG("errorMessage")_" Duplicate SSN error. A person with that SSN is already entered in the system."
+ ;. s SAMIARG("errorField")="ssn"
  ;
  ; test for duplicate icn
  ;
@@ -420,7 +420,7 @@ MKPTLK(ptlkien,SAMIARG) ; creates patient-lookup record
  n gender s gender=SAMIARG("gender")
  s @root@(ptlkien,"gender")=$s(gender="M":"M^MALE",1:"F^FEMALE")
  s @root@(ptlkien,"sex")=SAMIARG("gender")
- s @root@(ptlkien,"icn")=SAMIARG("icn")
+ ;s @root@(ptlkien,"icn")=SAMIARG("icn")
  s @root@(ptlkien,"ssn")=ssn
  n last5 s last5=$$UCASE($e(name,1))_$e(ssn,6,9)
  s @root@(ptlkien,"last5")=last5
@@ -608,19 +608,20 @@ REMATCH(sien,SAMIARG) ; extrinsic returns possible match ien
  i ssn["-" s ssn=$tr(ssn,"-")
  s name=$g(SAMIARG("saminame"))
  i name="" s name=$g(SAMIARG("name"))
- s icn=$g(SAMIARG("icn"))
+ s name=$$UCASE(name)
+ ;s icn=$g(SAMIARG("icn"))
  s x=0
  i ssn'="" s x=$o(@lroot@("ssn",ssn,""))
  i x=sien s x=$o(@lroot@("ssn",ssn,x))
  i +x'=0 d  ;
  . s y=$g(@lroot@(x,"dfn"))
- . i y>9000000 s x=0
+ . ;i y>9000000 s x=0
  i x>0 q x
  i name'="" s x=$o(@lroot@("name",name,""))
  i x=sien s x=$o(@lroot@("name",name,x))
  i +x'=0 d  ;
  . s y=$g(@lroot@(x,"dfn"))
- . i y>9000000 s x=0
+ . ;i y>9000000 s x=0
  i x>0 q x
  ;i icn'="" s x=$o(@lroot@("icn",icn,""))
  ;i x=sien s x=$o(@lroot@("icn",icn,x))
@@ -697,7 +698,7 @@ REINDXPL ; reindex patient lookup
  k @root@("last5")
  k @root@("sinamef")
  k @root@("sinamel")
- k @root@("icn")
+ ;k @root@("icn")
  f  s zi=$o(@root@(zi)) q:+zi=0  d  ;
  . d INDXPTLK(zi)
  ;
@@ -719,13 +720,13 @@ INDXPTLK(ien) ; generate index entries in patient-lookup graph
  s:x'="" @proot@("dfn",x,ien)=""
  s x=$g(@proot@(ien,"last5")) ;w !,x
  s:x'="" @proot@("last5",x,ien)=""
- s x=$g(@proot@(ien,"icn")) ;w !,x
- i x'["V" d  ;
- . i x="" q
- . n chk s chk=$$CHECKDG^MPIFSPC(x)
- . s @proot@(ien,"icn")=x_"V"_chk
- . s x=x_"V"_chk
- s:x'="" @proot@("icn",x,ien)=""
+ ;s x=$g(@proot@(ien,"icn")) ;w !,x
+ ;i x'["V" d  ;
+ ;. i x="" q
+ ;. n chk s chk=$$CHECKDG^MPIFSPC(x)
+ ;. s @proot@(ien,"icn")=x_"V"_chk
+ ;. s x=x_"V"_chk
+ ;s:x'="" @proot@("icn",x,ien)=""
  s x=$g(@proot@(ien,"ssn")) ;w !,x
  s:x'="" @proot@("ssn",x,ien)=""
  s x=$g(@proot@(ien,"sinamef")) ;w !,x
@@ -752,13 +753,13 @@ UNINDXPT(ien) ; remove index entries from patient-lookup graph
  k:x'="" @proot@("dfn",x,ien)
  s x=$g(@proot@(ien,"last5")) ;w !,x
  k:x'="" @proot@("last5",x,ien)
- s x=$g(@proot@(ien,"icn")) ;w !,x
- i x'["V" d  ;
- . i x="" q
- . n chk s chk=$$CHECKDG^MPIFSPC(x)
- . s @proot@(ien,"icn")=x_"V"_chk
- . s x=x_"V"_chk
- k:x'="" @proot@("icn",x,ien)
+ ;s x=$g(@proot@(ien,"icn")) ;w !,x
+ ;i x'["V" d  ;
+ ;. i x="" q
+ ;. n chk s chk=$$CHECKDG^MPIFSPC(x)
+ ;. s @proot@(ien,"icn")=x_"V"_chk
+ ;. s x=x_"V"_chk
+ ;k:x'="" @proot@("icn",x,ien)
  s x=$g(@proot@(ien,"ssn")) ;w !,x
  k:x'="" @proot@("ssn",x,ien)
  s x=$g(@proot@(ien,"sinamef")) ;w !,x

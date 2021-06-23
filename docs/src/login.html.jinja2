@@ -47,9 +47,10 @@
                     verify: {validators: {notEmpty: {message: 'Verify code is required'}}},
                 },
                 plugins: {
+                    declarative: new FormValidation.plugins.Declarative(),
                     trigger: new FormValidation.plugins.Trigger(),
                     bootstrap3: new FormValidation.plugins.Bootstrap3(),
-                    submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                    submitButton: new FormValidation.plugins.SubmitButton(),
                     defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
                     excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
                     icon: new FormValidation.plugins.Icon({

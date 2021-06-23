@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-sm-6 col-md-5 form-group">
                     <label class="required">Name</label>
-                    <input class="form-control" type="text" id="name" name="name" placeholder="LAST, FIRST MI"
+                    <input class="form-control" type="text" id="name" name="name" placeholder="LAST, FIRST MI SUFFIX"
                            required="required"/>
                 </div>
                 <div class="col-sm-3 col-md-3 form-group">
@@ -34,14 +34,18 @@
             </div>
             <div class="row">
                 <div class="col-sm-6 col-md-3 form-group">
-                    <label class="required"><abbr title="Social Security Number">SSN</abbr></label>
+                    <label class="required">
+                        <abbr title="Social Security Number" data-params-attr='{"title":"socialSecurityNumber"}'>
+                            <span data-params-text="socialSecurityNumber.short">SSN</span>
+                        </abbr>
+                    </label>
                     <input class="form-control" type="text" id="ssn" name="ssn" required="required"
-                           placeholder="000-00-0000"/>
-                </div>
-
-                <div class="col-sm-6 col-md-3 form-group">
-                    <label><abbr title="Integration Control Number">ICN</abbr></label>
-                    <input class="form-control" type="text" id="icn" name="icn"/>
+                           data-fv-not-empty="true"
+                           data-fv-not-empty___message="Value is required"
+                           data-params-attr='{"placeholder":"socialSecurityNumber.mask", "pattern": "socialSecurityNumber.pattern"}'
+                           placeholder="000-00-0000"
+                           pattern="^(?!(000|666|9(?!99)))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$"
+                           data-fv-regexp___message="Value is invalid"/>
                 </div>
             </div>
             <hr/>
@@ -64,15 +68,6 @@
             $form.formValidation({
                     fields: {
                         name: {validators: {notEmpty: {message: 'Name is required'}}},
-                        ssn: {
-                            validators: {
-                                notEmpty: {message: 'SSN is required'},
-                                regexp: {
-                                    regexp: /^(?!(000|666|9(?!99)))\d{3}-(?!00)\d{2}-(?!0000)\d{4}$/,
-                                    message: 'SSN is invalid'
-                                }
-                            }
-                        },
                         dob: {
                             validators: {
                                 notEmpty: {message: 'Date of birth is required'},
@@ -85,9 +80,10 @@
                         gender: {validators: {notEmpty: {message: 'Gender is required'}}}
                     },
                     plugins: {
+                        declarative: new FormValidation.plugins.Declarative(),
                         trigger: new FormValidation.plugins.Trigger(),
                         bootstrap3: new FormValidation.plugins.Bootstrap3(),
-                        submitButton: new FormValidation.plugins.SubmitButton({selector: "#submit-button"}),
+                        submitButton: new FormValidation.plugins.SubmitButton(),
                         defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
                         excluded: new FormValidation.plugins.Excluded(), //disable validators on hidden, disabled fields
                         icon: new FormValidation.plugins.Icon({

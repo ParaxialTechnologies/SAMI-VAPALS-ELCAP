@@ -1,4 +1,4 @@
-SAMICTUL ;ven/gpl - ct report & copy log ;2021-05-25T15:44Z
+SAMICTUL ;ven/gpl - ct report & copy log ;2021-06-04T14:09Z
  ;;18.0;SAMI;**10,11**;2020-01;
  ;;1.18.0.11+i11
  ;
@@ -26,7 +26,7 @@ SAMICTUL ;ven/gpl - ct report & copy log ;2021-05-25T15:44Z
  ;@license Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated 2021-05-25T15:44Z
+ ;@last-updated 2021-06-04T14:09Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@version 1.18.0.11+i11
@@ -103,9 +103,16 @@ SAMICTUL ;ven/gpl - ct report & copy log ;2021-05-25T15:44Z
  ; blocks, critical fix to copy forward for Is It New field for new ct
  ; eval forms.
  ;
- ; 2021-05-25 ven/toad 1.18.0.11+i11
+ ; 2021-05-25 ven/toad 1.18.0.11+i11 801d7c7
  ;  SAMICTC1: bump version & dates; passim annotate & lt refactor.
  ;  SAMICTUL: add SAMICTC* routines to log.
+ ;
+ ; 2021-06-01 ven/gpl 1.18.0.11+i11 e86756e
+ ;  SAMICTC1: corrected bug on CT eval copy forward: in CTCOPY stanza
+ ; 2 q:isnew="".
+ ;
+ ; 2021-06-04 ven/toad 1.18.0.11+i11
+ ;  SAMICTC1: fold in gpl chg, log, bump dates.
  ;
  ;@contents
  ; SAMICTC1 ceform copy

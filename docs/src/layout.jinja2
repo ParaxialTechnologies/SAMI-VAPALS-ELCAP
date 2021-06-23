@@ -36,12 +36,12 @@
 <script src="{{ path }}lib/chart-js-2.9.3/Chart.min.js"></script>
 <script src="{{ path }}lib/chart-js-2.9.3/chartjs-plugin-datalabels.min.js"></script>
 
-<script src="{{ path }}jquery-conditonally-enable.js"></script>
-<script src="{{ path }}jquery-conditonally-display.js"></script>
-<script src="{{ path }}jqueryui-vista-filemanAutocomplete.js"></script>
-<script src="{{ path }}vapals.js"></script>
-<script src="{{ path }}init.js"></script>
-<script src="{{ path }}nodule-grid.js"></script>
+<script src="{{ path }}jquery-conditonally-enable.js?v={{ version }}"></script>
+<script src="{{ path }}jquery-conditonally-display.js?v={{ version }}"></script>
+<script src="{{ path }}jqueryui-vista-filemanAutocomplete.js?v={{ version }}"></script>
+<script src="{{ path }}vapals.js?v={{ version }}"></script>
+<script src="{{ path }}init.js?v={{ version }}"></script>
+<script src="{{ path }}nodule-grid.js?v={{ version }}"></script>
 
 
 {#Debug information for viewport#}
@@ -114,6 +114,11 @@
                                    data-method="{{ formMethod }}" data-samiroute="report"
                                    data-samireporttype="inactive"> Inactive</a>
                             </li>
+                            <li id="matchingReport">
+                                <a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
+                                   data-method="{{ formMethod }}" data-samiroute="report"
+                                   data-samireporttype="unmatched"> Matching Report</a>
+                            </li>
                             <li>
                                 <a href="{{ "table.html" if mockup else "#!" }}" class="navigation"
                                    data-method="{{ formMethod }}" data-samiroute="report"
@@ -163,10 +168,68 @@
         return variable && variable.indexOf("@@") === -1 && $.trim(variable) !== '';
     }
 
+    function getParameter(key) {
+        const params = JSON.parse(sessionStorage.getItem("params." + siteId));
+        if (params == null || $.isEmptyObject(params)) {
+            return null;
+        } else {
+            return params[key];
+        }
+    }
+
+    function paramSubstitution(siteId) {
+        let key = "params." + siteId;
+        let params = JSON.parse(sessionStorage.getItem(key));
+        if ($.isEmptyObject(params)) {
+            retrieveParams(siteId)
+        } else {
+            substituteParams(params);
+        }
+
+        function retrieveParams(siteId) {
+            $.ajax('/params', {data: {siteId: siteId}})
+                .done(function (data) {
+                    sessionStorage.setItem(key, JSON.stringify(data));
+                    substituteParams(data);
+                });
+        }
+
+        function substituteParams(dataMap) {
+            $("[data-params-text]").each(function () {
+                const $this = $(this);
+                const dataKey = $this.attr("data-params-text");
+                const dataValue = dataMap[dataKey];
+
+                if (typeof dataValue === "undefined") {
+                    console.warn("substituteParams().text: Unknown property, key='%s'", dataKey);
+                } else {
+                    $this.text(dataValue);
+                }
+            });
+
+            $("[data-params-attr]").each(function () {
+                const $this = $(this);
+                const jsonText = $this.attr("data-params-attr")
+                const attrObject = JSON.parse(jsonText);
+                Object.keys(attrObject).forEach(function (attrName) {
+                    const key = attrObject[attrName];
+                    const value = dataMap[key];
+                    if (typeof value === "undefined") {
+                        console.warn("substituteParams().attr: Unknown property, key='%s'", key);
+                    } else {
+                        $this.attr(attrName, value);
+                    }
+                });
+            });
+        }
+    }
+
     //purposefully executed before DOM is rendered so elements are never visible
     if (isSet(siteId)) { //TODO: add if isLoggedIn once USER variable can be set from backend.
+        paramSubstitution(siteId);
         $("#logout-link").text("Logout " + siteId);
         $("#studyIdMenu").toggle(studyId !== '');
+        $("#matchingReport").toggle(getParameter("matchingReportEnabled") !== false);
         localStorage.setItem("siteid", siteId);
         localStorage.setItem("studyid", studyId);
     } else {

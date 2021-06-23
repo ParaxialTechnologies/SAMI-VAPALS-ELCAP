@@ -1,14 +1,14 @@
 /**
- * FormValidation (https://formvalidation.io), v1.4.0 (678705b)
+ * FormValidation (https://formvalidation.io), v1.7.0 (71bbaaa)
  * The best validation library for JavaScript
- * (c) 2013 - 2019 Nguyen Huu Phuoc <me@phuoc.ng>
+ * (c) 2013 - 2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.plugins = global.FormValidation.plugins || {}, global.FormValidation.plugins.Bootstrap3 = factory()));
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -63,6 +63,19 @@
     return _setPrototypeOf(o, p);
   }
 
+  function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function _assertThisInitialized(self) {
     if (self === void 0) {
       throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -79,60 +92,79 @@
     return _assertThisInitialized(self);
   }
 
-  var classSet = FormValidation.utils.classSet;
+  function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
 
-  var hasClass = FormValidation.utils.hasClass;
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf(Derived),
+          result;
 
-  var Framework = FormValidation.plugins.Framework;
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf(this).constructor;
 
-  var Bootstrap3 =
-  /*#__PURE__*/
-  function (_Framework) {
-    _inherits(Bootstrap3, _Framework);
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
 
-    function Bootstrap3(opts) {
-      _classCallCheck(this, Bootstrap3);
+      return _possibleConstructorReturn(this, result);
+    };
+  }
 
-      return _possibleConstructorReturn(this, _getPrototypeOf(Bootstrap3).call(this, Object.assign({}, {
-        formClass: 'fv-plugins-bootstrap3',
-        messageClass: 'help-block',
-        rowClasses: 'has-feedback',
-        rowInvalidClass: 'has-error',
+  var e = FormValidation.utils.classSet;
+
+  var t = FormValidation.utils.hasClass;
+
+  var s = FormValidation.plugins.Framework;
+
+  var n = /*#__PURE__*/function (_s) {
+    _inherits(n, _s);
+
+    var _super = _createSuper(n);
+
+    function n(e) {
+      _classCallCheck(this, n);
+
+      return _super.call(this, Object.assign({}, {
+        formClass: "fv-plugins-bootstrap3",
+        messageClass: "help-block",
+        rowClasses: "has-feedback",
+        rowInvalidClass: "has-error",
         rowPattern: /^(.*)(col|offset)-(xs|sm|md|lg)-[0-9]+(.*)$/,
-        rowSelector: '.form-group',
-        rowValidClass: 'has-success'
-      }, opts)));
+        rowSelector: ".form-group",
+        rowValidClass: "has-success"
+      }, e));
     }
 
-    _createClass(Bootstrap3, [{
+    _createClass(n, [{
       key: "onIconPlaced",
-      value: function onIconPlaced(e) {
-        classSet(e.iconElement, {
-          'form-control-feedback': true
+      value: function onIconPlaced(s) {
+        e(s.iconElement, {
+          "form-control-feedback": true
         });
-        var parent = e.element.parentElement;
+        var n = s.element.parentElement;
 
-        if (hasClass(parent, 'input-group')) {
-          parent.parentElement.insertBefore(e.iconElement, parent.nextSibling);
+        if (t(n, "input-group")) {
+          n.parentElement.insertBefore(s.iconElement, n.nextSibling);
         }
 
-        var type = e.element.getAttribute('type');
+        var r = s.element.getAttribute("type");
 
-        if ('checkbox' === type || 'radio' === type) {
-          var grandParent = parent.parentElement;
+        if ("checkbox" === r || "radio" === r) {
+          var _e = n.parentElement;
 
-          if (hasClass(parent, type)) {
-            parent.parentElement.insertBefore(e.iconElement, parent.nextSibling);
-          } else if (hasClass(parent.parentElement, type)) {
-            grandParent.parentElement.insertBefore(e.iconElement, grandParent.nextSibling);
+          if (t(n, r)) {
+            n.parentElement.insertBefore(s.iconElement, n.nextSibling);
+          } else if (t(n.parentElement, r)) {
+            _e.parentElement.insertBefore(s.iconElement, _e.nextSibling);
           }
         }
       }
     }]);
 
-    return Bootstrap3;
-  }(Framework);
+    return n;
+  }(s);
 
-  return Bootstrap3;
+  return n;
 
-}));
+})));

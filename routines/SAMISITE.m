@@ -1,5 +1,5 @@
 SAMISITE ;ven/gpl,arc - ielcap: forms;2020-03-27T17:45Z ;Mar 27, 2020@16:04
- ;;18.0;SAMI;;
+ ;;18.0;SAMI;;;Build 11
  ;
  ;@license: see routine SAMIUL
  ;
@@ -51,7 +51,7 @@ FINDSITE(SAMIRETURN,ARGS) ; extrinsic which returns the site
  ;
  n site,siteid,siteactv,sitenm
  ;
- i $o(^SAMI(311.13,"B",user,""))'="" d  q 0  ; superuser
+ i $o(^SAMI(311.13,"B",user,""))'="" d  q  ; superuser
  . d SUPER("SAMIRETURN",.ARGS)
  . s HTTPRSP("mime")="text/html"
  ;
@@ -133,9 +133,19 @@ LOGIN(RTN,VALS) ; login processing
  n access,verify
  s access=$g(VALS("access"))
  s verify=$g(VALS("verify"))
- i access="" d  ;
- . s access="PHXNAV1"
- . s verify="$#happy6"
+ ;i verify="@demo123" s verify="@demo321"
+ ;i verify="@demo123" s verify="$#happy10"
+ ;i access="ZZZUSER1" s access="SUPER6"
+ ;i access="" d  ;
+ ;. s access="PHXNAV1"
+ ;. s verify="$#happy6"
+ I $$GET1PARM^SAMIPARM("systemDemoOnly")="true" D  Q  ;
+ . S DUZ=$$GET1PARM^SAMIPARM("systemDemoUseDUZ")
+ . I +DUZ=0 D  ;
+ . . S DUZ=$O(^SAMI(311.13,"B",""))
+ . s VALS("samiroute")=""
+ . s VALS("siteid")=""
+ . d WSHOME^SAMIHOM3(.RTN,.VALS)
  n ACVC s ACVC=access_";"_verify
  i $$SIGNON(ACVC) D  Q  ;
  . s VALS("samiroute")=""

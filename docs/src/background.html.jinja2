@@ -610,7 +610,7 @@
                             </div>
                             <div class="form-group col-sm-4 col-md-2" style="vertical-align: top;">
                                 <label class="control-label numeric" for="sbmphthv">Highest value</label>
-                                <input class="form-control input-sm numeric decimalformat" type="text" name="sbmphthv"
+                                <input class="form-control input-sm" type="text" name="sbmphthv"
                                        id="sbmphthv"/>
                             </div>
 
@@ -790,13 +790,7 @@
                         //Vascular
                         sbmpsd: {validators: pastYearValidator}, // stroke
                         sbmppvd: {validators: pastYearValidator}, // peripheral vascular disease
-                        sbmphtsw: {validators: pastYearValidator}, // hypertension
-                        sbmphthv: {
-                            validators: {
-                                numeric: {message: 'Must be a number'},
-                                greaterThan: {min: 0, message: 'Value must be greater than 0'}
-                            }
-                        },
+                        sbmphtsw: {validators: pastYearValidator}  // hypertension
                     },
                     plugins: {
                         declarative: new FormValidation.plugins.Declarative(),

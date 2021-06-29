@@ -559,7 +559,11 @@ MKFUFORM(sid,key) ; create Follow-up form
  ;
  set @root@("graph",sid,key,"samicreatedate")=cdate
  set @root@("graph",sid,key,"sidof")=$$KEY2DSPD^SAMICAS2(cdate)
- set @root@("graph",sid,key,"sidoe")=$$BASELNDT(sid)
+ new basedt
+ set basedt=$$BASELNDT^SAMICAS3(sid)
+ if basedt=-1 set basedt=$$LASTCMP^SAMICAS3(sid)
+ if basedt=-1 set basedt=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
+ set @root@("graph",sid,key,"sidoe")=basedt
  do SSAMISTA^SAMICASE(sid,key,"incomplete")
  ;
  ;

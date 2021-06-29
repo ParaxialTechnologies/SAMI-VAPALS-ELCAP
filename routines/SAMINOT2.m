@@ -153,8 +153,8 @@ NOTE(filter) ; extrnisic to create note
  ;
  n didnote s didnote=0
  ;
- i $d(@vals@("notes")) d  q didnote ;
- . s filter("errorMessage")="Note already exists for this form."
+ ;i $d(@vals@("notes")) d  q didnote ;
+ ;. s filter("errorMessage")="Note already exists for this form."
  ;
  i $g(@vals@("futype"))="other" d  ;
  . i $g(@vals@("samistatus"))'="complete" q  ;
@@ -532,10 +532,19 @@ LCSNOTE(vals,dest,cnt) ; lung cancer screening note
  quit  ; end of LCSNOTE
  ;
  ;
+TOUT(sid) ;
+ s root=$$setroot^%wd("vapals-patients")
+ s groot=$na(@root@("graph",sid))
+ s g=""
+ f  s g=$o(@groot@(g)) q:g=""  d  ;
+ . w !,g
+ quit
  ;
 OUT(ln) ; output new line to note
  ;
  ;ven/gpl;private;procedure;
+ ;
+ i $$CRWRAP^SAMITTW(ln,dest,.cnt,80) q  ;
  ;
  s cnt=cnt+1
  n lnn

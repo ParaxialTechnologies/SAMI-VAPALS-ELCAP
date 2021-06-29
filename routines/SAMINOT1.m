@@ -634,6 +634,7 @@ SDM(ary) ; adds Shared Decision Making text to array ary, passed by name
  ;
 GLOUT(ln,indent) ; glob out first wrap ln then put it in dest
  ;
+ i $$CRWRAP^SAMITTW(ln,dest,.cnt,80) q  ;
  n arytmp
  s arytmp(1)=ln
  i $g(indent)="" s indent=1
@@ -647,6 +648,8 @@ GLOUT(ln,indent) ; glob out first wrap ln then put it in dest
  ;
  ;
 OUT(ln) ;
+ ;
+ i $$CRWRAP^SAMITTW(ln,dest,.cnt,80) q  ;
  ;
  s cnt=cnt+1
  n lnn

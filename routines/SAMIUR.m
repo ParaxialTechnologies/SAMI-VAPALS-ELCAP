@@ -1,6 +1,6 @@
-SAMIUR ;ven/gpl - user reports ;2021-05-25T19:11Z
- ;;18.0;SAMI;**5,10,11**;2020-01;Build 4
- ;;1.18.0.11+i11
+SAMIUR ;ven/gpl - user reports ;2021-07-01T21:01Z
+ ;;18.0;SAMI;**5,10,11,12**;2020-01;Build 4
+ ;;1.18.0.12-t2+i12
  ;
  ; SAMIUR contains a web service & associated subroutines to produce
  ; VAPALS-ELCAP user reports.
@@ -21,13 +21,13 @@ SAMIUR ;ven/gpl - user reports ;2021-05-25T19:11Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-05-25T19:11Z
+ ;@last-updated 2021-07-01T21:01Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.11+i11
+ ;@version 1.18.0.12-t2+i12
  ;@release-date 2020-01
- ;@patch-list **5,10,11**
+ ;@patch-list **5,10,11,12**
  ;
  ;@additional-dev Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -38,71 +38,10 @@ SAMIUR ;ven/gpl - user reports ;2021-05-25T19:11Z
  ;@additional-dev Kenneth McGlothlen (mcglk)
  ; mcglk@vistaexpertise.net
  ;
- ;@module-credits
- ;@project VA Partnership to Increase Access to Lung Screening
- ; (VA-PALS)
- ; http://va-pals.org/
- ;@funding 2017/2021, Bristol-Myers Squibb Foundation (bmsf)
- ; https://www.bms.com/about-us/responsibility/bristol-myers-squibb-foundation.html
- ;@partner-org Veterans Affairs Office of Rural health
- ; https://www.ruralhealth.va.gov/
- ;@partner-org International Early Lung Cancer Action Program (I-ELCAP)
- ; http://ielcap.com/
- ;@partner-org Paraxial Technologies (par)
- ; http://paraxialtech.com/
- ;@partner-org Open Source Electronic Health Record Alliance (OSEHRA)
- ; https://www.osehra.org/groups/va-pals-open-source-project-group
+ ;@module-credits see SAMIHUL
  ;
  ;@module-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
- ;
- ; 2020-02-10/12 ven/gpl 1.18.0-t04 d543f7bb,f9869dfb,0e4d8b9a
- ;  SAMIUR: 1st version of revised user reports, progress on user
- ; reports, fixed a bug in enrollment report.
- ;
- ; 2020-02-18 ven/lgc 1.18.0-t04 76874314
- ;  SAMIUR: update recently edited routines.
- ;
- ; 2020-03-10/12 ven/gpl 1.18.0-t04 8de06b06,4ad52d64
- ;  SAMIUR: user report date filtering, fix end date logic in UR.
- ;
- ; 2020-04-16/23 ven/lgc 1.18.0-t04 e54b76d1b,89bffd3b
- ;  SAMIUR: SAMIFRM2 > SAMIFORM, SAMISUB2 > LOAD.
- ;
- ; 2020-08-04 ven/gpl 1.18.0-t04 cd865e2b VPA-438
- ;  SAMIUR: requested changes to followup report.
- ;
- ; 2020-09-26 ven/gpl 1.18.0-t04 92b12324 VAP-420
- ;  SAMIUR: add smoking history.
- ;
- ; 2020-01-01/05 ven/arc 1.18.0 399f8547,62e3200f
- ;  SAMIUR: unmatched participant processing.
- ;
- ; 2020-04-29/05-13 ven/gpl 1.18.0.5+i5 e8b8ea2d,61c7d208
- ;  SAMIUR: fixes for reports, worklist functionality.
- ;
- ; 2021-03-22/23 ven/gpl 1.18.0.10+i10 256efe63,ba81b86a2
- ;  SAMIUR: sort all reports by name, added row totals to reports.
- ;
- ; 2021-03-23 ven/toad 1.18.0.10+i10 96f461d0,af86e0eb
- ;  SAMIUR: add version info & dev log, lt refactor, fix XINDEX
- ; errors.
- ;
- ; 2021-03-29 ven/gpl 1.18.0.11+i11 e809f2a2
- ;  SAMIUR: prevent crash when reports have no matches: in WSREPORT
- ; set SRT="" and uncomment zwrite SRT; in WKLIST add 2 commented-out
- ; debugging lines.
- ;
- ; 2021-03-30 ven/toad 1.18.0.11+i11 7b14bb2
- ;  SAMIUR: bump version, date, log; in WSREPORT comment zwrite SRT.
- ;
- ; 2021-03-31 ven/gpl 1.18.0.11+i11 66d89cd
- ;  SAMIUR: sort on all uppercase names for reports
- ;
- ; 2021-04-13 ven/gpl 1.18.0.11+i11 a12765b
- ;  SAMIUR: inactive report created.
- ;
- ; 2021-05-20/25 ven/mcglk&toad 1.18.0.11+i11
- ;  SAMIUR: annotate, lt refactor, bump version.
+ ; see SAMIURUL
  ;
  ;@contents
  ; WSREPORT generate report based on params in filter
@@ -495,9 +434,8 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . new efmdate,edate,siform,ceform,cefud,fmcefud,cedos,fmcedos
  . set siform=$order(items("siform-"))
  . new inactive set inactive=$get(@root@("graph",sid,siform,"sistatus"))
- . ; for inactive report, include all records which are not marked active
- . if type="inactive",inactive="active" quit  ; for inactive report
- . if type'="inactive",inactive'="active" quit  ; for other reports
+ . if type="inactive",inactive'="inactive" quit  ; for inactive report
+ . if type'="inactive",inactive="inactive" quit  ; for other reports
  . ;
  . set ceform=$order(items("ceform-a"),-1)
  . set (cefud,fmcefud,cedos,fmcedos)=""

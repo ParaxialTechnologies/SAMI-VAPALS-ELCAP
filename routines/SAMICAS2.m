@@ -1,6 +1,6 @@
-SAMICAS2 ;ven/gpl - ielcap: case review page ;2021-03-17T15:09Z
- ;;18.0;SAMI;**1,5,9**;;Build 11
- ;;1.18.0.9-i9
+SAMICAS2 ;ven/gpl - case review cont ;2021-07-01T15:42Z
+ ;;18.0;SAMI;**1,5,9,12**;2020-01;
+ ;;1.18.0.12-t2+i12
  ;
  ; SAMICAS2 contains ppis and other subroutines to support processing
  ; of the VAPALS case review page.
@@ -9,29 +9,35 @@ SAMICAS2 ;ven/gpl - ielcap: case review page ;2021-03-17T15:09Z
  ;
  ;
  ;
- ;@section 0 primary development: see routine %wful
+ ;@section 0 primary development
  ;
  ;
  ;
- ;@license: see routine SAMIUL
- ;@documentation : see SAMICUL
+ ;@routine-credits
+ ;@license see routine SAMIUL
+ ;@documentation see SAMICUL
  ;@contents
- ; WSCASE: generate case review page
- ; $$NOTEHREF = html for list of notes for form
- ; GETTMPL: return html template
+ ; WSCASE wri-code WSCASE^SAMICASE, post vapals casereview:
+ ;  generate case review page
+ ; $$NOTEHREF ppi-code $$NOTEHREF^SAMICASE, 
+ ;  html list of notes for form
+ ; GETTMPL ppi-code GETTMPL^SAMICASE, get html template
  ; $$CNTITEMS = # forms patient has used before deleting patient
- ; GETITEMS: get items available for studyid
- ; $$GETDTKEY = date part of form key
- ; $$KEY2DSPD = date in elcap format from key date
- ; $$VAPALSDT = vapals format for dates
+ ; GETITEMS ppi-code GETITEMS^SAMICASE
+ ;  get items available for studyid
+ ; $$GETDTKEY date part of form key
+ ; $$KEY2DSPD date in elcap format from key date
+ ; $$VAPALSDT ppi-code $$VAPALSDT^SAMICASE, vapals format for dates
  ;
- ; WSNUFORM: select a new form for patient (get service)
- ; KEY2FM: convert a key to a fileman date
+ ; WSNUFORM wri-code WSNUFORM^SAMICASE, post vapals nuform:
+ ;  new form for patient
+ ; $$KEY2FM ppi-code $$KEY2FM^SAMICASE, convert key to fileman date
  ;
- ; $$GSAMISTA = value of 'samistatus' from form
- ; SSAMISTA: sets 'samistatus' to val in form
- ; DELFORM: deletes form if incomplete
- ; INITSTAT: set all forms to 'incomplete'
+ ; $$GSAMISTA value of 'samistatus' from form
+ ; SSAMISTA ppi-code SSAMISTA^SAMICASE, set samistatus to val in form
+ ; DELFORM wri-code DELFORM^SAMICASE, post vapals deleteform:
+ ;  delete incomplete form
+ ; INITSTAT set all forms to 'incomplete'
  ;
  ;
  ;
@@ -39,40 +45,47 @@ SAMICAS2 ;ven/gpl - ielcap: case review page ;2021-03-17T15:09Z
  ;
  ;
  ;
- ;@ppi WSCASE^SAMICAS2, generate case review page
-WSCASE ; generate case review page
+ ;@wri-code WSCASE^SAMICASE
+WSCASE ; post vapals casereview: generate case review page
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
- ;ven/gpl;web service;procedure;
- ;@web service
- ; SAMICASE-wsCASE
- ;@called by :
+ ;ven/gpl;wri;procedure;silent;clean;sac;??% tests
+ ;@signature
+ ; do WSCASE^SAMICASE(rtn,filter)
+ ;@branches-from
  ; WSCASE^SAMICASE
- ; _wfhform
- ; %wfhform
- ;@calls :
+ ;@wri-called-by
+ ; wsPostForm^%wfhform
+ ; DELFORM^SAMICASE
+ ; WSNFPOST^SAMICASE
+ ; WSVAPALS^SAMIHOM3 [wsi for ws post vapals]
+ ; WSLOOKUP^SAMISRC2
+ ; wsPostForm^SAMIZ2
+ ;@called-by none
+ ;@calls
  ; $$setroot^%wd
- ; GETTMPL^SAMICAS2
+ ; GETTMPL^SAMICASE
  ; GETITEMS^SAMICASE
  ; $$SID2NUM^SAMIHOM3
  ; findReplace^%ts
  ; FIXHREF^SAMIFORM
  ; FIXSRC^SAMIFORM
- ; $$GETDTKEY^SAMICAS2
- ; $$KEY2DSPD^SAMICAS2
+ ; $$GETDTKEY
+ ; $$KEY2DSPD
  ; $$GETLAST5^SAMIFORM
  ; $$GETSSN^SAMIFORM
  ; $$GETNAME^SAMIFORM
- ; $$GSAMISTA^SAMICAS2
+ ; $$GSAMISTA
  ; D ADDCRLF^VPRJRUT
- ;@input :
+ ;@input
  ; .filter =
  ; .filter("studyid")=studyid of the patient
- ;@output :
+ ;@output
  ; .rtn
- ;@tests :
- ; SAMIUTS2
+ ;@tests
+ ; UTWSCAS^SAMIUTS2
+ ;
  ;
  ;@stanza 2 initialize
  ;
@@ -98,6 +111,7 @@ WSCASE ; generate case review page
  quit:name=""
  new fname set fname=$piece(name,",",2)
  new lname set lname=$piece(name,",")
+ ;
  ;
  ;@stanza 3 change resource paths to /see/
  ;
@@ -153,6 +167,7 @@ WSCASE ; generate case review page
  ;
  ; ready to insert rows for selection
  ;
+ ;
  ;@stanza 4 intake form
  ;
  new sikey set sikey=$order(items("sifor"))
@@ -194,6 +209,7 @@ WSCASE ; generate case review page
  set rtn(cnt)="</form>"_samistatus_notehref_"</td>"_$char(13)
  set cnt=cnt+1
  set rtn(cnt)=nuhref_"</tr>"
+ ;
  ;
  ;@stanza 6 rest of the forms
  ;
@@ -250,6 +266,7 @@ WSCASE ; generate case review page
  . quit
  set zi=zi-1
  ;
+ ;
  ;@stanza 8 rest of lines
  ;
  for  set zi=$order(temp(zi)) quit:+zi=0  do  ;
@@ -290,54 +307,96 @@ WSCASE ; generate case review page
  do ADDCRLF^VPRJRUT(.rtn)
  set HTTPRSP("mime")="text/html" ; set mime type
  ;
+ ;
  ;@stanza 9 termination
  ;
  quit  ; end of ppi WSCASE^SAMICAS2
  ;
  ;
  ;
- ;@ppi $$NOTEHREF^SAMICAS2
-NOTEHREF ; extrinsic returns html for the list of notes for the form
+ ;@ppi-code $$NOTEHREF^SAMICASE
+NOTEHREF ; html list of notes for form
  ;
- n notehref,ntlist
- s notehref=""
- i form["sifor" d NTLIST^SAMINOT1("ntlist",sid,form)
- i form["fufor" d NTLIST^SAMINOT2("ntlist",sid,form)
- i $o(ntlist(""))="" q notehref
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;ppi;function;clean;silent;sac;??? tests
+ ;@signature
+ ; $$NOTEHREF^SAMICASE(sid,form)
+ ;@branches-from
+ ; NOTEHREF^SAMICASE
+ ;@ppi-called-by
+ ; WSNFPOST^SAMICAS3
+ ;@called-by none
+ ;@calls
+ ; NTLIST^SAMINOT1
+ ;@input
+ ; sid = study id
+ ; form
+ ;@output = html list of notes
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ;
+ ;@stanza 2 get list of notes
+ ;
+ new notehref set notehref=""
+ new ntlist
+ if form["sifor" do NTLIST^SAMINOT1("ntlist",sid,form)
+ if form["fufor" do NTLIST^SAMINOT2("ntlist",sid,form)
+ if $order(ntlist(""))="" quit notehref
+ ;
  set notehref="<table>"
- n zi
- s zi=0
- f  s zi=$o(ntlist(zi)) q:+zi=0  d  ;
+ new zi set zi=0
+ for  do  quit:'zi
+ . set zi=$order(ntlist(zi))
+ . quit:'zi
+ . ;
  . set notehref=notehref_"<td><form method=POST action=""/vapals"">"
- . set notehref=notehref_"<input type=hidden name=""nien"" value="""_$g(ntlist(zi,"nien"))_""">"
+ . set notehref=notehref_"<input type=hidden name=""nien"" value="""_$get(ntlist(zi,"nien"))_""">"
  . set notehref=notehref_"<input type=hidden name=""samiroute"" value=""note"">"
  . set notehref=notehref_"<input type=hidden name=""studyid"" value="_sid_">"
  . set notehref=notehref_"<input type=hidden name=""form"" value="_form_">"
- . set notehref=notehref_"<input value="""_$g(ntlist(zi,"name"))_""" class=""btn btn-link"" role=""link"" type=""submit""></form></td></tr>"
+ . set notehref=notehref_"<input value="""_$get(ntlist(zi,"name"))_""" class=""btn btn-link"" role=""link"" type=""submit""></form></td></tr>"
+ . quit
  set notehref=notehref_"</table>"
  ;
- q notehref ; end of ppi $$NOTEHREF^SAMICAS2
+ ;
+ ;@stanza 3 termination
+ ;
+ quit notehref ; end of ppi $$NOTEHREF^SAMICASE
  ;
  ;
  ;
- ;@ppi GETTMPL^SAMICAS2, get html template
+ ;@ppi-code GETTMPL^SAMICASE
 GETTMPL ; get html template
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
- ;ven/gpl;private;procedure;
- ;@called-by
+ ;ven/gpl;ppi;procedure;clean;silent;sac;??% tests
+ ;@signature
+ ; do GETTMPL^SAMICASE(return,form)
+ ;@branches-from
  ; GETTMPL^SAMICASE
+ ;@ppi-called-by
+ ; WSCASE^SAMICAS2
+ ; GETHOME^SAMIHOM4
+ ; WSNOTE^SAMINOT1
+ ; WSNOTE^SAMINOT2
+ ; WSNOTE^SAMINOT3
+ ; WSNOTE^SAMINOTI
+ ;@called-by none
  ;@calls
  ; $$getTemplate^%wf
  ; getThis^%wd
  ;@input
- ; return = name of array to return template in
+ ; return = name of array to return template
  ; form = name of form
  ;@output
  ; @return = template
  ;@examples [tbd]
- ;@tests [tbd]
+ ;@tests
+ ; UTGTMPL^SAMIUTS2
+ ;
  ;
  ;@stanza 2 get html template
  ;
@@ -348,9 +407,10 @@ GETTMPL ; get html template
  ;
  set HTTPRSP("mime")="text/html"
  ;
+ ;
  ;@stanza 3 termination
  ;
- quit  ; end of ppi GETTMPL^SAMICAS2
+ quit  ; end of ppi GETTMPL^SAMICASE
  ;
  ;
  ;
@@ -377,22 +437,37 @@ CNTITEMS(sid) ; extrinsic returns how many forms the patient has
  ;
  ;
  ;
- ;@ppi GETITEMS^SAMICAS2, get items available for studyid
+ ;@ppi-code GETITEMS^SAMICASE
 GETITEMS ; get items available for studyid
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
- ;ven/gpl;private;procedure;
- ;@called by
+ ;ven/gpl;ppi;procedure;clean;silent;sac;??% tests
+ ;@signature
+ ; do GETITEMS^SAMICASE(ary,sid)
+ ;@branches-from
  ; GETITEMS^SAMICASE
+ ;@ppi-called-by
+ ; WSCASE^SAMICAS2
+ ; $$BASELNDT^SAMICAS3
+ ; MKCEFORM^SAMICAS3
+ ; GETFILTR^SAMICTR0
+ ; GETFILTR^SAMICTT0
+ ; SELECT^SAMIUR
+ ; SELECT^SAMIUR1
+ ; CUMPY^SAMIUR2
+ ;@called-by none
  ;@calls
  ; $$setroot^%wd
  ;@input
- ; @ary = returned items available
+ ; ary = name of return array
  ; sid = patient's study ID (e.g. "XXX00001")
  ;@output
+ ; @ary = returned items available
+ ;@examples [tbd]
  ;@tests
- ; SAMIUTS2
+ ; UTCNTITM^SAMIUTS2
+ ;
  ;
  ;@stanza 2 get items
  ;
@@ -405,12 +480,13 @@ GETITEMS ; get items available for studyid
  . set @ary@(zi)=""
  . quit
  ;
+ ;
  ;@stanza 3 get rest of forms (many-to-one, get dates)
  ;
  new tary
  for  set zi=$order(@ary@(zi)) quit:zi=""  do  ;
  . new zkey1,zform set zkey1=$piece(zi,"-",1)
- . ;if zkey1="sbform" quit  ;
+ . ; if zkey1="sbform" quit  ;
  . if zkey1="siform" quit  ;
  . new fname
  . if zkey1="ceform" set fname="CT Evaluation"
@@ -427,19 +503,22 @@ GETITEMS ; get items available for studyid
  . if zkey1="itform" set zform="vapals:itform"
  . if zkey1="itform" set fname="Intervention"
  . if $get(fname)="" set fname="unknown"
+ . ;
  . new zdate set zdate=$extract(zi,$length(zkey1)+2,$length(zi))
  . quit:$get(zdate)=""
  . quit:$get(zform)=""
  . quit:$get(zi)=""
  . quit:$get(fname)=""
+ . ;
  . set tary("sort",zdate,zform,zi,fname)=""
  . set tary("type",zform,zi,fname)=""
  . quit
  merge @ary=tary
  ;
+ ;
  ;@stanza 4 termination
  ;
- quit  ; end of ppi GETITEMS^SAMICAS2
+ quit  ; end of ppi GETITEMS^SAMICASE
  ;
  ;
  ;
@@ -507,27 +586,51 @@ KEY2DSPD(zkey) ; date in elcap format from key date
  ;
  ;
  ;
- ;@ppi $$VAPALSDT^SAMICAS2, vapals format for dates
-VAPALSDT ; extrinsic which return the vapals format for dates
- ; fmdate is the date in fileman format
+ ;@ppi-code $$VAPALSDT^SAMICASE
+VAPALSDT ; vapals format for dates
  ;
- ;@called by
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;ppi;function;clean;silent;sac;100% tests
+ ;@signature
+ ; $$VAPALSDT^SAMICASE(fmdate)
+ ;@branches-from
  ; VAPALSDT^SAMICASE
+ ;@ppi-called-by
+ ; KEY2DSPD^SAMICAS2
+ ; LASTCMP^SAMICAS3
+ ; KEY2DT^SAMICAS3
+ ; MKCEFORM^SAMICAS3
+ ; MKFUFORM^SAMICAS3
+ ; MKITFORM^SAMICAS3
+ ; MKPTFORM^SAMICAS3
+ ; LOGIT^SAMICLOG
+ ; MKSIFORM^SAMIHOM3
+ ; PREFILL^SAMIHOM3
+ ; SELECT^SAMIUR
+ ; SELECT^SAMIUR1
+ ; IFORM^SAMIUR2
+ ;@called-by none
  ;@calls
  ; $$FMTE^XLFDT
  ;@input
  ; fmdate = date in fileman format
- ;@output
- ; vapals date format
+ ;@output = vapals date format
  ;@tests
- ; SAMIUTS2
+ ; UTVPLSD^SAMIUTS2
  ;
- ;new Z set Z=$$FMTE^XLFDT(fmdate,"9D")
- ;set Z=$translate(Z," ","/")
  ;
- new Z set Z=$$FMTE^XLFDT(fmdate,"5D")
+ ;@stanza 2 convert date
  ;
- quit Z ; end of ppi $$VAPALSDT^SAMICAS2
+ ; new vdate set vdate=$$FMTE^XLFDT(fmdate,"9D")
+ ; set vdate=$translate(vdate," ","/")
+ ;
+ new vdate set vdate=$$FMTE^XLFDT(fmdate,"5D")
+ ;
+ ;
+ ;@stanza 3 termination
+ ;
+ quit vdate ; end of ppi $$VAPALSDT^SAMICASE
  ;
  ;
  ;
@@ -535,15 +638,19 @@ VAPALSDT ; extrinsic which return the vapals format for dates
  ;
  ;
  ;
-WSNUFORM ; select new form for patient (get service)
+ ;@wri-code WSNUFORM^SAMICASE
+WSNUFORM ; post vapals nuform: new form for patient
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
- ;ven/gpl;web service;procedure;
- ;@called by
+ ;ven/gpl;wri;procedure;clean;silent;sac;?? tests
+ ;@signature
+ ; do WSNUFORM^SAMICASE(rtn,filter)
+ ;@branches-from
  ; WSNUFORM^SAMICASE
- ;@web service
- ;  SAMICASE-wsNuForm
+ ;@wri-called-by
+ ; WSVAPALS^SAMIHOM3 [wr nuform of ws post vapals]
+ ;@called-by none
  ;@calls
  ; $$SID2NUM^SAMIHOM3
  ; $$setroot^%wd
@@ -558,7 +665,8 @@ WSNUFORM ; select new form for patient (get service)
  ;@output
  ; @rtn
  ;@tests
- ; SAMIUTS
+ ; UTWSNF^SAMIUTS2
+ ;
  ;
  ;@stanza 2 get select-new-form form
  ;
@@ -616,18 +724,32 @@ WSNUFORM ; select new form for patient (get service)
  . set cnt=cnt+1
  . set rtn(cnt)=temp(zi)
  ;
+ ;
  ;@stanza 3 termination
  ;
- quit  ; end of WSNUFORM
+ quit  ; end of wri WSNUFORM^SAMICASE
  ;
  ;
  ;
- ;@ppi KEY2FM^SAMICAS2, convert a key to a fileman date
-KEY2FM ; convert a key to a fileman date
+ ;@ppi-code $$KEY2FM^SAMICASE
+KEY2FM ; convert key to fileman date
  ;
- ;@called by
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;wri;procedure;silent;clean;sac;??% tests
+ ;@signature
+ ; $$KEY2FM^SAMICASE(key)
+ ;@branches-from
+ ; KEY2FM^SAMICASE
+ ;@ppi-called-by
+ ; WSNFPOST^SAMICAS3
+ ; $$LASTCMP^SAMICAS3
+ ; $$KEY2DT^SAMICAS3
  ; SAVFILTR^SAMISAV
+ ; SELECT^SAMIUR
  ; SELECT^SAMIUR1
+ ; IFORM^SAMIUM2
+ ;@called-by none
  ;@calls
  ; ^%DT
  ;@input
@@ -636,17 +758,25 @@ KEY2FM ; convert a key to a fileman date
  ;@examples
  ;  $$KEY2FM("sbform-2018-02-26") = 3180226
  ;@tests
- ; SAMIUTS2
+ ; UTK2FM^SAMIUTS2
  ;
- new datepart,X,Y,frm
- set datepart=key
- if $length(key,"-")=4 do  ; allow key to be the whole key ie ceform-2018-10-3
- . set frm=$piece(key,"-",1)
+ ;
+ ;@stanza 2 convert key to fm date
+ ;
+ new datepart set datepart=key
+ ; allow key to be the whole key ie ceform-2018-10-3
+ if $length(key,"-")=4 do
+ . new frm set frm=$piece(key,"-")
  . set datepart=$piece(key,frm_"-",2)
- set X=datepart
- do ^%DT
+ . quit
+ new X set X=datepart
+ new Y
+ do ^%DT ; call fileman to convert date
  ;
- quit Y ; end of ppi KEY2FM^SAMICAS2
+ ;
+ ;@stanza 3 termination
+ ;
+ quit Y ; end of ppi $$KEY2FM^SAMICASE
  ;
  ;
  ;
@@ -679,11 +809,27 @@ GSAMISTA(sid,form) ; extrinsic returns value of 'samistatus' from form
  ;
  ;
  ;
- ;@ppi SSAMISTA^SAMICAS2, sets 'samistatus' to val in form
-SSAMISTA ; sets 'samistatus' to val in form
+ ;@ppi-code SSAMISTA^SAMICASE
+SSAMISTA ; set samistatus to val in form
  ;
- ;@called by
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;ppi;procedure;silent;clean;sac;??% tests
+ ;@signature
+ ; do SSAMISTA^SAMICASE(sid,form,val)
+ ;@branches-from
  ; SSAMISTA^SAMICASE
+ ;@ppi-called-by
+ ; INITSTAT^SAMICAS2
+ ; MKSBFORM^SAMICAS3
+ ; MKCEFORM^SAMICAS3
+ ; MKFUFORM^SAMICAS3
+ ; MKPTFORM^SAMICAS3
+ ; MKITFORM^SAMICAS3
+ ; MKBXFORM^SAMICAS3
+ ; MKSBFORM^SAMIHOM3
+ ; MKSIFORM^SAMIHOM3
+ ;@called-by none
  ;@calls
  ; $$setroot^%wd
  ;@input
@@ -692,29 +838,43 @@ SSAMISTA ; sets 'samistatus' to val in form
  ; value = status (complete, incomplete)
  ;@output
  ; sets 'samistatus' to val in form
+ ;@examples [tbd]
  ;@tests
+ ; UTSSAMIS^SAMIUTS2
  ;
- new root,useform
- set root=$$setroot^%wd("vapals-patients")
- set useform=form
+ ;
+ ;@stanza 2 set status
+ ;
+ new root set root=$$setroot^%wd("vapals-patients")
+ new useform set useform=form
  if form["vapals:" set useform=$piece(form,"vapals:",2)
- if '$d(@root@("graph",sid,useform)) quit  ; no form there
+ if '$data(@root@("graph",sid,useform)) quit  ; no form
  set @root@("graph",sid,useform,"samistatus")=val
  ;
- quit  ; end of ppi SSAMISTA^SAMICAS2
+ ;
+ ;@stanza 3 termination
+ ;
+ quit  ; end of ppi SSAMISTA^SAMICASE
  ;
  ;
  ;
- ;@ppi DELFORM^SAMICAS2 - deletes incomplete form
-DELFORM ; deletes form if incomplete
- ; will not delete intake or background forms
+ ;@wri-code DELFORM^SAMICASE
+DELFORM ; post vapals deleteform: delete incomplete form
  ;
- ;@called by
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;wri;procedure;silent;clean;sac;??% tests
+ ;@signature
+ ; do DELFORM^SAMICASE(RESULT,ARGS)
+ ;@branches-from
  ; DELFORM^SAMICASE
+ ;@wri-called-by
+ ; WSVAPALS^SAMIHOM3 [wr deleteform of ws post vapals]
+ ;@called-by none
  ;@calls
  ; $$setroot^%wd
- ; $$GSAMISTA^SAMICAS2
- ; WSCASE^SAMICAS2
+ ; $$GSAMISTA
+ ; WSCASE^SAMICASE
  ;@input
  ; .ARGS=
  ; .ARGS("studyid")
@@ -722,22 +882,35 @@ DELFORM ; deletes form if incomplete
  ;@output
  ; @RESULT
  ;@tests
- ; SAMIUTS2
+ ; UTDELFM^SAMIUTS2
+ ;
+ ; will not delete intake or background form
+ ;
+ ;
+ ;@stanza 2 delete form
  ;
  new root set root=$$setroot^%wd("vapals-patients")
- new sid,form
- set sid=$get(ARGS("studyid"))
+ new sid set sid=$get(ARGS("studyid"))
  quit:sid=""
- set form=$get(ARGS("form"))
- quit:form=""
- if form["siform" quit  ;
- ;if '$data(@root@("graph",sid,form)) quit  ; form does not exist
- if $$GSAMISTA(sid,form)="incomplete" do  ;
- . kill @root@("graph",sid,form)
- kill ARGS("samiroute")
- do WSCASE^SAMICASE(.RESULT,.ARGS)
  ;
- quit  ; end of ppi DELFORM^SAMICAS2
+ new form set form=$get(ARGS("form"))
+ quit:form=""
+ ;
+ quit:form["siform"
+ ;
+ ; quit:'$data(@root@("graph",sid,form))  ; form does not exist
+ if $$GSAMISTA(sid,form)="incomplete" do
+ . kill @root@("graph",sid,form)
+ . quit
+ ;
+ kill ARGS("samiroute")
+ do WSCASE^SAMICASE(.RESULT,.ARGS) ; post vapals casereview:
+ ; generate case review page
+ ;
+ ;
+ ;@stanza 3 termination
+ ;
+ quit  ; end of wri DELFORM^SAMICASE
  ;
  ;
  ;

@@ -1,10 +1,53 @@
-SAMIJS2 ;ven/gpl - json archive routine ; 1/22/19 1:24pm
- ;;18.0;SAMI;;
+SAMIJS2 ;ven/gpl - json archive import ;2021-07-01T17:08Z
+ ;;18.0;SAMI;**12**;2020-01;
+ ;;1.18.0.12-t2+i12
  ;
- ;@license: see routine SAMIUL
+ ; Routine SAMIJS2 contains more subroutines for importing VAPALS-
+ ; ELCAP JSON archives, which are used for import, export, & migration
+ ; of SAMI data.
+ ;
+ quit  ; no entry from top
  ;
  ;
- q
+ ;
+ ;@section 0 primary development
+ ;
+ ;
+ ;
+ ;@routine-credits
+ ;@primary-dev George P. Lilly (gpl)
+ ; gpl@vistaexpertise.net
+ ;@primary-dev-org Vista Expertise Network (ven)
+ ; http://vistaexpertise.net
+ ;@copyright 2017/2021, gpl, all rights reserved
+ ;@license see routine SAMIUL
+ ;
+ ;@last-updated 2021-07-01T17:08Z
+ ;@application Screening Applications Management (SAM)
+ ;@module Screening Applications Management - IELCAP (SAMI)
+ ;@suite-of-files SAMI Forms (311.101-311.199)
+ ;@version 1.18.0.12-t2+i12
+ ;@release-date 2020-01
+ ;@patch-list **12**
+ ;
+ ;@additional-dev Frederick D. S. Marshall (toad)
+ ; toad@vistaexpertise.net
+ ;@additional-dev Kenneth W. McGlothlen (mcglk)
+ ; mcglk@vistaexpertise.net
+ ;
+ ;@routine-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
+ ; see routine SAMIJS1 for dev log.
+ ;
+ ;@contents
+ ; FILE load files from file system
+ ; wsPostSAMI accept incoming SAMI record in VAPALS
+ ; $$loaded is filename already loaded?
+ ; 
+ ;
+ ;
+ ;@section 1 subroutines
+ ;
+ ;
  ;
 FILE(directory) ; [Public] Load files from the file system; OPT: SAMI LOAD FILES
  ;
@@ -72,6 +115,8 @@ FILE(directory) ; [Public] Load files from the file system; OPT: SAMI LOAD FILES
  . write "--------------------------------------------------------------------------",!
  . ;b
  q
+ ;
+ ;
  ;
 wsPostSAMI(args,body,return,ien) ; accept incoming SAMI record in VAPALS
  ;
@@ -148,6 +193,8 @@ wsPostSAMI(args,body,return,ien) ; accept incoming SAMI record in VAPALS
  d encode^%webjson("rtn","return","zerr")
  q
  ;
+ ;
+ ;
 loaded(filenm,graph) ;extrinsic returns 1 if the filename is already loaded
  ; in the graph default for graph is vapals-intake
  if $g(graph)="" s graph="vapals-intake"
@@ -155,3 +202,6 @@ loaded(filenm,graph) ;extrinsic returns 1 if the filename is already loaded
  i $d(@tmproot@("file",filenm)) q 1
  q 0
  ;
+ ;
+ ;
+EOR ; end of routine SAMIJS2

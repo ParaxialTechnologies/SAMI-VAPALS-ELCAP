@@ -1,9 +1,9 @@
-SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ;2021-06-01T14:20Z
- ;;18.0;SAMI;**3,9,11**;2020-01;Build 11
- ;;1.18.0.11+i11
+SAMICAS3 ;ven/gpl - case review cont ;2021-07-01T15:42Z
+ ;;18.0;SAMI;**3,9,11,12**;2020-01;Build 11
+ ;;1.18.0.12+i12
  ;
  ; SAMICAS3 contains ppis and other subroutines to support processing
- ; of the VAPALS case review page.
+ ; of the VAPALS-IELCAP case review page.
  ;
  quit  ; no entry from top
  ;
@@ -16,7 +16,7 @@ SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ;2021-06-01T14:20Z
  ;@license see routine SAMIUL
  ;@documentation see SAMICUL
  ;@contents
- ; WSNFPOST post new form selection (post service)
+ ; WSNFPOST wri-code WSNFPOST^SAMICAS3, post vapals addform: new form
  ; MKSBFORM create background form
  ;
  ; $$PREVNOD key of latest form including nodule grid
@@ -39,17 +39,19 @@ SAMICAS3 ;ven/gpl - ielcap: case review page (cont) ;2021-06-01T14:20Z
  ;
  ;
  ;
- ;@ppi WSNFPOST^SAMICAS3, post new form selection (post service)
-WSNFPOST ; post new form selection (post service)
+ ;@wri-code WSNFPOST^SAMICAS3
+WSNFPOST ; post vapals addform: new form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
- ;ven/gpl;web service;procedure;
- ;@web service
- ; web service SAMICASE-wsNuFormPost
- ;@called by
+ ;ven/gpl;wri;procedure;clean;silent;sac;??% tests
+ ;@signature
+ ; do WSNFPOST^SAMICASE(ARGS,BODY,RESULT)
+ ;@branches-from
  ; WSNFPOST^SAMICASE
- ; MKITFORM [commented out]
+ ;@ppi-called-by
+ ; WSVAPALS^SAMIHOME [wr addform of ws post vapals]
+ ;@called-by none
  ;@calls
  ; parseBody^%wf
  ; GETHOME^SAMIHOM3
@@ -75,7 +77,8 @@ WSNFPOST ; post new form selection (post service)
  ;@output
  ; @RESULT
  ;@tests
- ; SAMIUTS2
+ ; UTNFPST^SAMIUTS2
+ ;
  ;
  ;@stanza 2 get new form
  ;
@@ -175,9 +178,10 @@ WSNFPOST ; post new form selection (post service)
  ;
  do wsGetForm^%wf(.RESULT,.ARGS)
  ;
+ ;
  ;@stanza 3 termination
  ;
- quit  ; end of ppi WSNFPOST^SAMICAS3
+ quit  ; end of wri WSNFPOST^SAMICASE
  ;
  ;
  ;
@@ -263,10 +267,11 @@ LASTCMP(sid,retkey) ; date & key of last comparison scan
  ;
  ;ven/gpl;private;function;clean;silent;sac;
  ;@called-by
- ; MKCEFORM
- ; MKPTFORM
- ; MKITFORM
  ; MKBXFORM
+ ; MKCEFORM
+ ; MKFUFORM
+ ; MKITFORM
+ ; MKPTFORM
  ;@calls
  ; SORTFRMS
  ; $$NOW^XLFDT
@@ -538,6 +543,9 @@ MKFUFORM(sid,key) ; create Follow-up form
  ; $$SID2NUM^SAMIHOM3
  ; $$KEY2DSPD^SAMICAS2
  ; $$BASELNDT
+ ; $$LASTCMP
+ ; $$NOW^XLFDT
+ ; $$VAPALSDT^SAMICASE
  ; SSAMISTA^SAMICASE
  ;@input
  ; sid = study id

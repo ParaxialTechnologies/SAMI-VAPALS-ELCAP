@@ -1,6 +1,6 @@
-SAMINUL ;ven/gpl - ielcap: note log ;2021-05-21T20:47Z
- ;;18.0;SAMI;**9,10,11**;2020-01;build 2
- ;;1.18.0.11+i11
+SAMINUL ;ven/gpl - ielcap: note log ;2021-07-01T17:41Z
+ ;;18.0;SAMI;**9,10,11,12**;2020-01;build 2
+ ;;1.18.0.11-t2+i11
  ;
  ; SAMINOTE contains subroutines for producing the ELCAP Note Pages.
  ; SAMINUL contains the development log for the SAMINOT* routines.
@@ -22,13 +22,13 @@ SAMINUL ;ven/gpl - ielcap: note log ;2021-05-21T20:47Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-05-21T20:47Z
+ ;@last-updated 2021-07-01T17:41Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.10+i11
+ ;@version 1.18.0.12-t2+i12
  ;@release-date 2020-01
- ;@patch-list **9,10,11**
+ ;@patch-list **9,10,11,12**
  ;
  ;@additional-dev Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -150,6 +150,13 @@ SAMINUL ;ven/gpl - ielcap: note log ;2021-05-21T20:47Z
  ; 2021-03-30/05-21 ven/mcglk&toad 1.18.0.11+i11 7b14bb2,
  ;  SAMINOT1: bump version, date, log, add quit to stop block mismatch
  ; complaint from XINDEX.
+ ;
+ ; 2021-06-29 ven/gpl 1.18.0.12-t2+i12 a5bbd37a,d865b0dc
+ ;  SAMINOT1,2 text box formatting for intake & followup notes, new
+ ; text processing utils; restrict follow forms to one generated note.
+ ;
+ ; 2021-07-01 ven/mcglk&toad 1.18.0.12-t2+i12
+ ;  SAMINOT1,2 bump dates & versions, update dev log, update contents.
  ;
  ;
  ;

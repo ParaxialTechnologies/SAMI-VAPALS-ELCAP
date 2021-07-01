@@ -1,7 +1,59 @@
-SAMIPARM ;ven/gpl - vapals/elcap parameter service ;2021-03-21T23:51Z
- ;;18.0;SAMI;**10**;2020-01;Build 11
+SAMIPARM ;ven/gpl - get params web service ;2021-07-01T17:45Z
+ ;;18.0;SAMI;**12**;2020-01;
+ ;;1.18.0.12-t2+i12
  ;
- Q
+ ; Routine SAMIPARM contains subroutines for implementing the VAPALS-
+ ; ELCAP get params web service.
+ ;
+ quit  ; no entry from top
+ ;
+ ;
+ ;
+ ;@section 0 primary development
+ ;
+ ;
+ ;
+ ;@routine-credits
+ ;@primary-dev George P. Lilly (gpl)
+ ; gpl@vistaexpertise.net
+ ;@primary-dev-org Vista Expertise Network (ven)
+ ; http://vistaexpertise.net
+ ;@copyright 2021, gpl, all rights reserved
+ ;@license see routine SAMIUL
+ ;
+ ;@last-updated 2021-07-01T17:45Z
+ ;@application Screening Applications Management (SAM)
+ ;@module Screening Applications Management - IELCAP (SAMI)
+ ;@suite-of-files SAMI Forms (311.101-311.199)
+ ;@version 1.18.0.12-t2+i12
+ ;@release-date 2020-01
+ ;@patch-list **12**
+ ;
+ ;@additional-dev Frederick D. S. Marshall (toad)
+ ; toad@vistaexpertise.net
+ ;@additional-dev Kenneth W. McGlothlen (mcglk)
+ ; mcglk@vistaexpertise.net
+ ;
+ ;@routine-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
+ ; 2021-05-29/06-05 ven/gpl 1.18.0.12-t2+i12 46bab765,223b5900
+ ;  SAMIPARM new routine to implement new web service get params,
+ ; update for ssn in report, also, matching report; upgrade PARM with
+ ; SYS overrides, add systemDemoOnly & systemDemoUseDUZ.
+ ;
+ ; 2021-07-01 ven/mcglk&toad 1.18.0.12-t2+i12
+ ;  SAMIPARM bump version & dates, add hdr comments & dev log.
+ ;
+ ;@contents
+ ; WSPARAMS web service WSPARAMS^SAMIPARM, site paramters
+ ; $$GET1PARM value of one parameter for site
+ ; GETARY return parameter array
+ ; ADDSVC init to install get params web service
+ ;
+ ;
+ ;
+ ;@section 1 subroutines
+ ;
+ ;
  ;
 WSPARAMS(parmsjson,filter) ; web service that returns the paramters to use
  ; for the site, passed in as fliter("site"), as json
@@ -22,6 +74,8 @@ WSPARAMS(parmsjson,filter) ; web service that returns the paramters to use
  . set HTTPRSP("mime")="application/json"
  q
  ;
+ ;
+ ;
 GET1PARM(PARM,SITE) ; extrinsic returns the vale of PARM for site SITE
  ; both passed by value
  i '$d(SITE) S SITE=""
@@ -30,6 +84,8 @@ GET1PARM(PARM,SITE) ; extrinsic returns the vale of PARM for site SITE
  ;ZWR ary
  Q:'$D(ary) ""
  q $g(ary(PARM))
+ ;
+ ;
  ;
 GETARY(ARY,SITE) ; return the parameter array ART, passed by reference
  ;
@@ -44,7 +100,12 @@ GETARY(ARY,SITE) ; return the parameter array ART, passed by reference
  M ARY=^SAMI(311.14,"D","SYS")
  Q
  ;
+ ;
+ ;
 ADDSVC() ; add the params webservice to the system
  d addService^%webutils("GET","params","WSPARAMS^SAMIPARM")
  Q
  ;
+ ;
+ ;
+EOR ; end of routine SAMIPARM

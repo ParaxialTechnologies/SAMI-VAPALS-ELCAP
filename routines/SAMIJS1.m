@@ -1,10 +1,68 @@
-SAMIJS1 ;ven/gpl - json archive routine ;May 05, 2021@17:12
- ;;18.0;SAMI;;;Build 4
+SAMIJS1 ;ven/gpl - json archive export ;2021-07-01T16:58Z
+ ;;18.0;SAMI;**8,12**;2020-01;Build 4
+ ;;1.18.0.12-t2+i12
  ;
- ;@license: see routine SAMIUL
+ ; Routine SAMIJS1 contains subroutines for exporting VAPALS-ELCAP
+ ; JSON archives, which are used for import, export, & migration of
+ ; SAMI data.
+ ;
+ quit  ; no entry from top
  ;
  ;
-EN 
+ ;
+ ;@section 0 primary development
+ ;
+ ;
+ ;
+ ;@routine-credits
+ ;@primary-dev George P. Lilly (gpl)
+ ; gpl@vistaexpertise.net
+ ;@primary-dev-org Vista Expertise Network (ven)
+ ; http://vistaexpertise.net
+ ;@copyright 2017/2021, gpl, all rights reserved
+ ;@license see routine SAMIUL
+ ;
+ ;@last-updated 2021-07-01T16:58Z
+ ;@application Screening Applications Management (SAM)
+ ;@module Screening Applications Management - IELCAP (SAMI)
+ ;@suite-of-files SAMI Forms (311.101-311.199)
+ ;@version 1.18.0.12-t2+i12
+ ;@release-date 2020-01
+ ;@patch-list **8,12**
+ ;
+ ;@additional-dev Frederick D. S. Marshall (toad)
+ ; toad@vistaexpertise.net
+ ;@additional-dev Kenneth W. McGlothlen (mcglk)
+ ; mcglk@vistaexpertise.net
+ ;
+ ;@routine-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
+ ; 2020-12-11 ven/gpl 1.18.0.8+i8 0c73272b,92138cdb
+ ;  SAMIJS1 initial data migration export, add DETAIL^SAMIJS1 for
+ ; debugging.
+ ;
+ ; 2021-05-29 ven/gpl 1.18.0.12-t2+i12 0a3b184f
+ ;  SAMIJS1,SAMIJS2 update data migration routines; new SAMIJS2.
+ ;
+ ; 2021-07-01 ven/mcglk&toad 1.18.0.12-t2+i12
+ ;  SAMIJS1,SAMIJS2 bump version & dates, add hdr comments & dev log.
+ ;
+ ;@contents
+ ; EN ???
+ ; EXSITE ???
+ ; $$dfn2lien lookup ien of patient dfn
+ ; $$dfn2pien patient graph ien of patient dfn
+ ; $$getaien ien for patient dfn in vapals-archive
+ ; mkarch create archive record for patient dfn
+ ; outarch write archive record to external file
+ ; DETAIL display archive record for patient
+ ; 
+ ;
+ ;
+ ;@section 1 subroutines
+ ;
+ ;
+ ;
+EN ;
  n site,dfn,pat
  s site=$$PICSITE^SAMIMOV()
  q:site="^"
@@ -16,7 +74,9 @@ EN
  d outarch(dfn)
  q
  ;
-EXSITE 
+ ;
+ ;
+EXSITE ;
  n site,dfn,pat
  s site=$$PICSITE^SAMIMOV()
  q:site="^"
@@ -32,11 +92,15 @@ EXSITE
  . d outarch(dfn)
  q
  ;
+ ;
+ ;
 dfn2lien(dfn) ; extrinsic return the lookup ien of patient dfn
  n lroot,lien
  s lroot=$$setroot^%wd("patient-lookup")
  s lien=$o(@lroot@("dfn",dfn,""))
  q lien
+ ;
+ ;
  ;
 dfn2pien(dfn) ; extrinsic return the patient graph ien of patient dfn
  n proot,pien
@@ -44,12 +108,16 @@ dfn2pien(dfn) ; extrinsic return the patient graph ien of patient dfn
  s pien=$o(@proot@("dfn",dfn,""))
  q pien
  ;
+ ;
+ ;
 getaien(dfn) ; returns the ien for patient dfn in vapals-archive
  ; is laygo
  n aroot s aroot=$$setroot^%wd("vapals-archive")
  n aien
  s aien=$o(@aroot@(" "),-1)+1
  q aien
+ ;
+ ;
  ;
 mkarch(dfn) ; create an archive record for patient dfn
  n lroot,proot,aroot
@@ -88,6 +156,8 @@ mkarch(dfn) ; create an archive record for patient dfn
  ;
  q
  ;
+ ;
+ ;
 outarch(dfn) ; write out an archive record to an external file
  n aroot s aroot=$$setroot^%wd("vapals-archive")
  n aien s aien=$o(@aroot@("dfn",dfn,""),-1)
@@ -106,6 +176,8 @@ outarch(dfn) ; write out an archive record to an external file
  . w !,"file "_fname_" written to "_adir
  ;
  q
+ ;
+ ;
  ;
 DETAIL() ; displays the archive record for a patient
  ;
@@ -132,4 +204,7 @@ DETAIL() ; displays the archive record for a patient
  D BROWSE^DDBR(OUT,"N","Patient")
  k @OUT
  q
- ;    
+ ;
+ ;
+ ;
+EOR ; end of routine SAMIJS1

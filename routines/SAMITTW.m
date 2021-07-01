@@ -1,4 +1,4 @@
-SAMITTW ;ven/gpl - text-processing utilities ;2021-07-01T20:39Z
+SAMITTW ;ven/gpl - text-processing utilities ;2021-07-01T21:37Z
  ;;18.0;SAMI;**12**;2020-01;
  ;;1.18.0.12-t2+i12
  ;
@@ -21,7 +21,7 @@ SAMITTW ;ven/gpl - text-processing utilities ;2021-07-01T20:39Z
  ;@copyright: 2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-07-01T20:39Z
+ ;@last-updated 2021-07-01T21:37Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -76,7 +76,7 @@ CRWRAP(ln,dest,cnt,margin) ; extrinsic which will wrap a text line into
  s ln=$$PRNTABLE^SAMITTW(ln)
  ;s ^gpl("ln",$o(^gpl("ln"," "),-1)+1)=ln
  i '$d(margin) s margin=80
- i ln[$CHAR(13) d  q 1 
+ i ln[$CHAR(13) d  q 1
  . n cr s cr=$char(13)
  . n crn s crn=$l(ln,$char(13))
  . i $l(ln,$char(13,10))=crn s cr=$char(13,10)

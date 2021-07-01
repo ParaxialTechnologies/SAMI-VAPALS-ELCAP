@@ -1,4 +1,4 @@
-SAMIHOM3 ;ven/gpl - homepage web service ;2021-06-16T18:10Z
+SAMIHOM3 ;ven/gpl - homepage web service ;2021-07-01T21:35Z
  ;;18.0;SAMI;**5,12**;2020-01;
  ;;1.18.0.12-t2+i12
  ;
@@ -26,7 +26,7 @@ SAMIHOM3 ;ven/gpl - homepage web service ;2021-06-16T18:10Z
  ;@license Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated 2021-06-16T18:10Z
+ ;@last-updated 2021-07-01T21:35Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -146,7 +146,7 @@ SID2NUM(sid) ; number part of studyid (XXX0001 -> 1)
  ;new number set number=+$extract(sid,4,$length(sid))
  ; we have to look up the number (pien) instead of computing it
  new proot set proot=$$setroot^%wd("vapals-patients")
- new number set number=$order(@proot@("sid",sid,"")) 
+ new number set number=$order(@proot@("sid",sid,""))
  ;
  ;@stanza 3 return & termination
  ;
@@ -623,7 +623,7 @@ INDEX ;@stanza 3 reindex vapals-patients graph
  ;
  ;@stanza 3 termination
  ;
- quit ; end of ADDPAT-INDEX
+ quit  ; end of ADDPAT-INDEX
  ;
  ;
  ;

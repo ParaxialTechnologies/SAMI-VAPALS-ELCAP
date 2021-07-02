@@ -74,7 +74,7 @@ KEY2FM(key) goto KEY2FM^SAMICAS2
  ;
  ;
  ;@ppi SSAMISTA^SAMICASE, set samistatus to val in form
-SSAMISTA(sid,form,val) goto SSAMISTA^SAMICASE
+SSAMISTA(sid,form,val) goto SSAMISTA^SAMICAS2
  ;
  ;
  ;

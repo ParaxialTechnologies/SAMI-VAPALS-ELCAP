@@ -433,9 +433,9 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . ;
  . new efmdate,edate,siform,ceform,cefud,fmcefud,cedos,fmcedos
  . set siform=$order(items("siform-"))
- . new inactive set inactive=$get(@root@("graph",sid,siform,"sistatus"))
- . if type="inactive",inactive'="inactive" quit  ; for inactive report
- . if type'="inactive",inactive="inactive" quit  ; for other reports
+ . new status set status=$get(@root@("graph",sid,siform,"sistatus"))
+ . if type="inactive",status="active" quit  ; for inactive report
+ . if type'="inactive",status'="active" quit  ; for other reports
  . ;
  . set ceform=$order(items("ceform-a"),-1)
  . set (cefud,fmcefud,cedos,fmcedos)=""

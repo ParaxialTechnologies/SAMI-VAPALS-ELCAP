@@ -1,4 +1,4 @@
-SAMIUR ;ven/gpl - user reports ;2021-07-01T21:01Z
+SAMIUR ;ven/gpl - user reports ;2021-07-06T15:53Z
  ;;18.0;SAMI;**5,10,11,12**;2020-01;Build 4
  ;;1.18.0.12-t2+i12
  ;
@@ -21,7 +21,7 @@ SAMIUR ;ven/gpl - user reports ;2021-07-01T21:01Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-07-01T21:01Z
+ ;@last-updated 2021-07-06T15:53Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)

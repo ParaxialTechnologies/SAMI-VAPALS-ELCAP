@@ -1,6 +1,6 @@
-SAMICASE ;ven/gpl - case review library ;2021-07-01T16:27Z
+SAMICASE ;ven/gpl - case review library ;2021-07-06T15:44Z
  ;;18.0;SAMI;**1,12**;2020-01;
- ;;1.18.0.12+i12
+ ;;1.18.0.12-t2+i12
  ;
  ; SAMICASE contains ppis and other services to support processing
  ; of the VAPALS-IELCAP case review page.
@@ -34,7 +34,7 @@ WSNUFORM(rtn,filter) goto WSNUFORM^SAMICAS2
  ;
  ;
  ;
- ;@wri DELFORM^SAMICAS2, post vapals deleteform: delete incomplete form
+ ;@wri DELFORM^SAMICASE, post vapals deleteform: delete incomplete form
 DELFORM(RESULT,ARGS) goto DELFORM^SAMICAS2
  ;
  ;
@@ -48,7 +48,7 @@ WSNFPOST(ARGS,BODY,RESULT) goto WSNFPOST^SAMICAS3
  ;
  ;
  ;
- ;@ppi GETTMPL^SAMICAS2, get html template
+ ;@ppi GETTMPL^SAMICASE, get html template
 GETTMPL(return,form) goto GETTMPL^SAMICAS2
  ;
  ;
@@ -68,7 +68,7 @@ VAPALSDT(fmdate) goto VAPALSDT^SAMICAS2
  ;
  ;
  ;
- ;@ppi $$KEY2FM^SAMICAS2, convert key to fileman date
+ ;@ppi $$KEY2FM^SAMICASE, convert key to fileman date
 KEY2FM(key) goto KEY2FM^SAMICAS2
  ;
  ;

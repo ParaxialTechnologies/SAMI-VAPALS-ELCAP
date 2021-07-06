@@ -1,4 +1,4 @@
-SAMICUL ;ven/gpl - case review log ;2021-07-01T15:42Z
+SAMICUL ;ven/gpl - case review log ;2021-07-06T15:44Z
  ;;18.0;SAMI;**9,11,12**;2020-01;
  ;;1.18.0.12-t2+i12
  ;
@@ -22,7 +22,7 @@ SAMICUL ;ven/gpl - case review log ;2021-07-01T15:42Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-07-01T15:42Z
+ ;@last-updated 2021-07-06T15:44Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -302,10 +302,11 @@ SAMICUL ;ven/gpl - case review log ;2021-07-01T15:42Z
  ; for intake & followup notes, new text-processing utils; in MKFUFORM
  ; set basedt to $$BASELNDT or $$LASTCMP or now.
  ;
- ; 2021-06-30/07-01 ven/mcglk&toad 1.18.0.12-t2+i12
+ ; 2021-06-30/07-06 ven/mcglk&toad&gpl 1.18.0.12-t2+i12 cbf7e46b,
+ ; d8296fda
  ;  SAMICASE,2,3 bump version & dates.
  ;  SAMICAS3 in MKFUFORM,LASTCMP update calls & called-by.
- ;  SAMICASE,2,3 finish converting to ppi format, annotate.
+ ;  SAMICASE,2,3 finish converting to ppi format, annotate; fix typos.
  ;
  ;@contents
  ; SAMICASE case review

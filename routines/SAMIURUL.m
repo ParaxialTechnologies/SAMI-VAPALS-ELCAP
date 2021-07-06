@@ -1,4 +1,4 @@
-SAMIURUL ;ven/gpl - user reports log ;2021-07-01T21:09Z
+SAMIURUL ;ven/gpl - user reports log ;2021-07-06T15:55Z
  ;;18.0;SAMI;**12**;2020-01;
  ;;1.18.0.12-t2+i12
  ;
@@ -21,7 +21,7 @@ SAMIURUL ;ven/gpl - user reports log ;2021-07-01T21:09Z
  ;@copyright 2021, mcglk & toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-07-01T21:09Z
+ ;@last-updated 2021-07-06T15:55Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -141,10 +141,12 @@ SAMIURUL ;ven/gpl - user reports log ;2021-07-01T21:09Z
  ;  SAMIUR change definition of inactive to not marked active, change
  ; definition of active to marked active.
  ;
- ; 2021-07-01 ven/mcglk&toad 1.18.0.12-t2+i12
+ ; 2021-07-06 ven/mcglk&toad&gpl 1.18.0.12-t2+i12 cbf7e46b,2d642aa4
  ;  SAMIURUL new routine for dev log.
  ;  SAMIUR,SAMIUR2,SAMIURUL move dev log & module docs to SAMIURUL,
  ; bump version & dates.
+ ;  SAMIUR in SELECT r/inactive w/status, test for active instead of
+ ; inactive.
  ;
  ;
  ;

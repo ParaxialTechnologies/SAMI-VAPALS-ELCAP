@@ -752,20 +752,6 @@
         Other
        </label>
        <input class="form-control" id="rbmtos" name="rbmtos" placeholder="specify" type="text"/>
-       <div id="rbmto-container">
-        <label class="radio-inline" for="rbmto-n">
-         <input id="rbmto-n" name="rbmto" required="required" type="radio" value="n"/>
-         No
-        </label>
-        <label class="radio-inline" for="rbmto-neg">
-         <input id="rbmto-neg" name="rbmto" type="radio" value="neg"/>
-         Negative
-        </label>
-        <label class="radio-inline" for="rbmto-pos">
-         <input id="rbmto-pos" name="rbmto" type="radio" value="pos"/>
-         Positive
-        </label>
-       </div>
       </div>
      </div>
     </div>
@@ -6633,11 +6619,6 @@
 
             //Molecular Testing
             $("[name='rbmt']").conditionallyDisplay({enable: "#rbmt-container"}); //entire section
-            $("[name='rbmtos']").conditionallyEnable({
-                sourceValues: function (actualValue) {
-                    return actualValue !== "";
-                }, enable: "#rbmto-container"
-            });
 
             initNoduleGrid(fv);
         });

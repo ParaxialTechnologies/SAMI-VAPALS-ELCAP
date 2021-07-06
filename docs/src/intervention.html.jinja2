@@ -279,14 +279,19 @@
                                        size="4">
                             </div>
                             <div class="form-group">
+                                <label for="sbfvc">FEV1/FVC</label>
+                                <div class="input-group">
+                                    <input class="form-control input-sm whole-number" type="text" name="sbffr" id="sbffr"
+                                           size="3">
+                                    <span class="input-group-addon">%</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="sbcop">Diffusion capacity (mL/min/mm Hg)</label>
                                 <input class="form-control input-sm numeric" type="text" name="sbcop" id="sbcop"
                                        size="4">
                             </div>
-                            <div class="alert alert-info" id="ffr-message" style="display: none; margin-top:5px;">
-                                FEV1/FVC (%) is <strong><span id="ffr-value"></span></strong>
-                            </div>
-                            <input type="hidden" name="sbffr" id="sbffr"/>
+
                         </div>
                     </div>
 
@@ -2040,21 +2045,6 @@
             $("#save-for-later-button").on('click', function () {
                 fv.destroy();
             });
-
-            //hook for calculating Pulmonary function test percentage (FFR)
-            $("#sbfev1, #sbfvc").on('change', function () {
-                const fev1 = $("#sbfev1").val();
-                const fvc = $("#sbfvc").val();
-                const ffr = VAPALS.calculatePulmonaryFunction(fev1, fvc);
-                if (ffr > 0) {
-                    $("#sbffr").val(ffr);
-                    $("#ffr-value").text(ffr);
-                    $("#ffr-message").show();
-                } else {
-                    $("#sbffr").val("");
-                    $("#ffr-message").hide();
-                }
-            }).first().trigger('change');
 
             $("#rbcsx8").conditionallyEnable({enable: "#rbcsx8-container"});
             $("[name=rbcsb]").conditionallyEnable({sourceValues: "o", enable: "#rbcsb-container"});

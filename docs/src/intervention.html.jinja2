@@ -263,7 +263,7 @@
                         </div>
 
                         <div class="form-group col-md-3">
-                            <label for="rbsud">Treatment date</label>
+                            <label for="rbsud">Treatment <span id="treatment-start-label">start </span>date</label>
                             {{ f.datepicker("rbsud", "past") }}
                         </div>
 
@@ -2089,6 +2089,7 @@
                 $("#surgery").toggle(val === 's');
                 $("#radiation").toggle(val === 'r');
                 $("#chemotherapy").toggle(val === 'c')
+                $("#treatment-start-label").toggle(val === 'r' || val === 'c')
             }).trigger('change');
 
             {# NB: Emphysema, Nodule Grid, Abnormalities, Followup JS functionality is in their own template files#}

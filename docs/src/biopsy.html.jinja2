@@ -33,6 +33,7 @@
                     <div>
                         {{ f.inlineRadio("bxp", "bxp-n", "n", "No", true) }}
                         {{ f.inlineRadio("bxp", "bxp-y", "y", "Yes") }}
+                        {{ f.inlineRadio("bxp", "bxp-c", "c", "Cancel") }}
                     </div>
                 </div>
             </div>
@@ -202,50 +203,53 @@
 
 {% block script %}
     <script>
+        function biopsyPerformed() {
+            return $("[name=bxp]:checked").val() === 'y';
+        }
+
         function createFormValidator() {
 
             const $form = $('#main-form');
             const multiInputValidators = ['bxp', 'bxcp', 'rbmec', 'rbmt', 'rbmte', 'rbmtk', 'rbmta', 'rbmto'];
-
             $form.formValidation({
                     fields: {
                         //BIOPSY
                         bxp: {validators: {notEmpty: {message: 'Biopsy location is required'}}},
                         bxdos: {
                             validators: {
-                                notEmpty: {message: 'Procedure date is required'},
+                                notEmpty: {message: 'Procedure date is required', enabled: false},
                                 date: {
                                     max: VAPALS.todaysDate(),
-                                    message: 'Procedure date must be before today'
+                                    message: 'Procedure date must be before today', enabled: false
                                 }
                             }
                         },
-                        bxw: {validators: {notEmpty: {message: 'Biopsy performed is required'}}},
+                        bxw: {validators: {notEmpty: {message: 'Biopsy performed is required', enabled: false}}},
                         bxinds: { //use a real element name for the field so conditional plugins can toggle the field
                             selector: '[name^=bxind]',
-                            validators: {choice: {min: 1, message: 'Select one or more indications'}}
+                            validators: {choice: {min: 1, message: 'Select one or more indications', enabled: false}}
                         },
-                        bxind: {validators: {notEmpty: {message: 'Other indication is required'}}},
+                        bxind: {validators: {notEmpty: {message: 'Other indication is required', enabled: false}}},
                         bxloclul: { //use a real element name for the field so conditional plugins can toggle the field
                             selector: '[name^=bxloc]',
-                            validators: {choice: {min: 1, message: 'Select one or more sites'}}
+                            validators: {choice: {min: 1, message: 'Select one or more sites', enabled: false}}
                         },
-                        bxlocs: {validators: {notEmpty: {message: 'Other lesion site is required'}}},
+                        bxlocs: {validators: {notEmpty: {message: 'Other lesion site is required', enabled: false}}},
                         bxtosc: { //use a real element name for the field so conditional plugins can toggle the field
                             selector: '[name^=bxtos]',
-                            validators: {choice: {min: 1, message: 'Select one or more specimen types'}}
+                            validators: {choice: {min: 1, message: 'Select one or more specimen types', enabled: false}}
                         },
                         bxtopc: { //use a real element name for the field so conditional plugins can toggle the field
                             selector: '[name^=bxtop]',
-                            validators: {choice: {min: 1, message: 'Select one or more procedure types'}}
+                            validators: {choice: {min: 1, message: 'Select one or more procedure types', enabled: false}}
                         },
-                        bxtopos: {validators: {notEmpty: {message: 'Other type of procedure is required'}}},
-                        bxcp: {validators: {notEmpty: {message: 'Complications is required'}}},
+                        bxtopos: {validators: {notEmpty: {message: 'Other type of procedure is required', enabled: false}}},
+                        bxcp: {validators: {notEmpty: {message: 'Complications is required', enabled: false}}},
                         bxcpct: { //use a real element name for the field so conditional plugins can toggle the field
                             selector: '[name=bxcpct],[name=bxcppt],[name=bxcppn],[name=bxcpo]',
-                            validators: {choice: {min: 1, message: 'Select one or more complication'}}
+                            validators: {choice: {min: 1, message: 'Select one or more complication', enabled: false}}
                         },
-                        bxcpos: {validators: {notEmpty: {message: 'Other complication is required'}}},
+                        bxcpos: {validators: {notEmpty: {message: 'Other complication is required', enabled: false}}},
 
                         //Molecular Testing
                         rbmt: {validators: {notEmpty: {message: 'Molecular testing is required'}}},
@@ -271,7 +275,7 @@
                                 if (multiInputValidators.indexOf(e.field) > -1) {
                                     $fg = $("#" + e.element.id).closest(".form-group");
                                     $c = $fg.find(".fv-plugins-message-container");
-                                    if ($c.length == 1) {
+                                    if ($c.length === 1) {
                                         $c.append(e.iconElement);
                                     } else {
                                         $fg.append(e.iconElement);
@@ -297,7 +301,6 @@
             });
 
             //Biopsy
-            $("[name='bxp']").conditionallyDisplay({enable: $("#bxp-container")}); //entire form
             $("#bxindo").conditionallyEnable({sourceValues: "o", enable: "#bxind"}); // other indication
             $("#bxloco").conditionallyEnable({sourceValues: "o", enable: "#bxlocs"}); //other lesion
             $("#bxtopo").conditionallyEnable({sourceValues: "o", enable: "#bxtopos"}); // other type of procedure
@@ -313,6 +316,25 @@
             });
 
             initNoduleGrid(fv);
+
+            const bxpValidators = [
+                'bxdos', 'bxw', 'bxinds', 'bxind', 'bxloclul', 'bxlocs', 'bxtosc', 'bxtopc', 'bxtopos', 'bxcp',
+                'bxcpct', 'bxcpos']
+
+            // When biopsy question is changed, toggle required asterisks and validators based on user selection
+            $("[name=bxp]").on("change", function () {
+                if (biopsyPerformed()) {
+                    $("#bxp-container").find(".not-required").removeClass("not-required").addClass("required");
+                    $.each(bxpValidators, function (i, fieldName) {
+                        fv.enableValidator(fieldName);
+                    })
+                } else {
+                    $("#bxp-container").find(".required").removeClass("required").addClass("not-required");
+                    $.each(bxpValidators, function (i, fieldName) {
+                        fv.disableValidator(fieldName);
+                    });
+                }
+            }).trigger("change");
         });
     </script>
 

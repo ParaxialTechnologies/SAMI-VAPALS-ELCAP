@@ -1,6 +1,6 @@
-SAMINOT2 ;ven/gpl - followup form notes ;2021-03-17T18:33Z
- ;;18.0;SAMI;**1,9**;
- ;;1.18.0.9-i9
+SAMINOT2 ;ven/gpl - followup form notes ;2021-07-01T17:21Z
+ ;;18.0;SAMI;**1,9,12**;2020-01;
+ ;;1.18.0.12-t2+i12
  ;
  ; SAMINOT2 contains web services & other subroutines for producing
  ; the ELCAP Followup Form Notes.
@@ -14,31 +14,31 @@ SAMINOT2 ;ven/gpl - followup form notes ;2021-03-17T18:33Z
  ;
  ;
  ;@license see routine SAMIUL
- ;@documentation see SAMICUL
+ ;@documentation see SAMINUL
  ;@contents
- ; WSNOTE: web service to return text note
- ; $$NOTE = create note
- ; $$HASINNT = is intake note present?
- ; $$HASVCNT = is communication note present?
- ; $$HASLCSNT = is lung cancer screening note present?
- ; MKVC: make communication note
- ; MKLCS: make lung cancer screening note
- ; $$MKNT: make note w/date=now
- ; $$MKNTLOC: make note
- ; $$NTDTTM = convert date/time fr/fm to/note format
- ; $$NTLOCN = location of nth note
- ; $$NTLAST = location of latest note of a type
- ; NTLIST: return note list
- ; TLST: test NTLIST
- ; VCNOTE: veteran communication note
- ; SSTATUS: smoking status
- ; LCSNOTE: lung cancer screening note
- ; OUT: output new line to note
- ; $$XVAL = value of form variable
- ; $$PREVCT = key to previous ct eval form
- ; CTINFO: extracts from latest ct eval form
- ; IMPRESS: impressions from ct eval report
- ; $$XSUB = dictionary value for variable
+ ; WSNOTE web service to return text note
+ ; $$NOTE create note
+ ; $$HASINNT is intake note present?
+ ; $$HASVCNT is communication note present?
+ ; $$HASLCSNT is lung cancer screening note present?
+ ; MKVC make communication note
+ ; MKLCS make lung cancer screening note
+ ; $$MKNT make note w/date=now
+ ; $$MKNTLOC make note
+ ; $$NTDTTM convert date/time fr/fm to/note format
+ ; $$NTLOCN location of nth note
+ ; $$NTLAST location of latest note of a type
+ ; NTLIST return note list
+ ; TLST test NTLIST
+ ; VCNOTE veteran communication note
+ ; SSTATUS smoking status
+ ; LCSNOTE lung cancer screening note
+ ; OUT output new line to note
+ ; $$XVAL value of form variable
+ ; $$PREVCT key to previous ct eval form
+ ; CTINFO extracts from latest ct eval form
+ ; IMPRESS impressions from ct eval report
+ ; $$XSUB dictionary value for variable
  ;
  ;
  ;
@@ -532,10 +532,19 @@ LCSNOTE(vals,dest,cnt) ; lung cancer screening note
  quit  ; end of LCSNOTE
  ;
  ;
+TOUT(sid) ;
+ s root=$$setroot^%wd("vapals-patients")
+ s groot=$na(@root@("graph",sid))
+ s g=""
+ f  s g=$o(@groot@(g)) q:g=""  d  ;
+ . w !,g
+ quit
  ;
 OUT(ln) ; output new line to note
  ;
  ;ven/gpl;private;procedure;
+ ;
+ i $$CRWRAP^SAMITTW(ln,dest,.cnt,80) q  ;
  ;
  s cnt=cnt+1
  n lnn

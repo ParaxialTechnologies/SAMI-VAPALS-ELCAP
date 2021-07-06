@@ -1,6 +1,6 @@
-SAMINOT1 ;ven/gpl - text notes ;2021-05-21T20:47Z
- ;;18.0;SAMI;**2,6,8,10,11**;2020-01;build 2
- ;;1.18.0.11+i11
+SAMINOT1 ;ven/gpl - text notes ;2021-07-01T17:21Z
+ ;;18.0;SAMI;**2,6,8,10,11,12**;2020-01;build 2
+ ;;1.18.0.12-t2+i12
  ;
  ; SAMINOT1 contains a web service & associated subroutines to produce
  ; VAPALS-ELCAP text notes.
@@ -21,7 +21,7 @@ SAMINOT1 ;ven/gpl - text notes ;2021-05-21T20:47Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-05-21T20:47Z
+ ;@last-updated 2021-07-01T17:21Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -57,6 +57,33 @@ SAMINOT1 ;ven/gpl - text notes ;2021-05-21T20:47Z
  ;
  ;@module-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
  ; see routine SAMINUL
+ ;
+ ;@contents
+ ; $$EXISTCE does chart eligibility note exist?
+ ; $$EXISTPRE does pre-enrollment note exist?
+ ; $$EXISTINT does intake note exist?
+ ; WSNOTE web service: text note
+ ; NOTE create note
+ ; $$HASINNT is intake note present?
+ ; MKEL make eligibility note
+ ; MKPRE make pre-enrollment note
+ ; MKIN make intake note
+ ; $$MKNT make note
+ ; $$MKNTLOC location for note
+ ; $$NTDTTM date & time in note format
+ ; $$NTLOCN location of nth note
+ ; $$NTLAST location of latest note
+ ; $$NTIEN latest note for this form
+ ; $$NTLIST note list
+ ; TLST ???
+ ; ELNOTE eligibility note text
+ ; PRENOTE pre-enrollment note
+ ; SUBRSLT translation of discussion result
+ ; INNOTE intake note
+ ; SDM add shared decision making text to array
+ ; GLOUT glob out, 1st wrap ln, then put in dest
+ ; OUT ???
+ ; $$XVAL patient value for variable
  ;
  ;
  ;
@@ -634,6 +661,7 @@ SDM(ary) ; adds Shared Decision Making text to array ary, passed by name
  ;
 GLOUT(ln,indent) ; glob out first wrap ln then put it in dest
  ;
+ i $$CRWRAP^SAMITTW(ln,dest,.cnt,80) q  ;
  n arytmp
  s arytmp(1)=ln
  i $g(indent)="" s indent=1
@@ -647,6 +675,8 @@ GLOUT(ln,indent) ; glob out first wrap ln then put it in dest
  ;
  ;
 OUT(ln) ;
+ ;
+ i $$CRWRAP^SAMITTW(ln,dest,.cnt,80) q  ;
  ;
  s cnt=cnt+1
  n lnn

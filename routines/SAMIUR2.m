@@ -1,6 +1,6 @@
-SAMIUR2 ;ven/gpl - sami user reports ;2021-05-21T20:47Z
- ;;18.0;SAMI;**5,11**;2020-01;Build 11
- ;;1.18.0.11+i11
+SAMIUR2 ;ven/gpl - user reports cont ;2021-07-01T21:01Z
+ ;;18.0;SAMI;**5,11,12**;2020-01;Build 11
+ ;;1.18.0.12-t2+i12
  ;
  ; SAMIUR2 contains subroutines for creating & implementing the
  ; report-definition table.
@@ -21,13 +21,13 @@ SAMIUR2 ;ven/gpl - sami user reports ;2021-05-21T20:47Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-05-21T20:47Z
+ ;@last-updated 2021-07-01T21:01Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.11+i11
+ ;@version 1.18.0.12-t2+i12
  ;@release-date 2020-01
- ;@patch-list **5,11**
+ ;@patch-list **5,11,12**
  ;
  ;@additional-dev Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
@@ -38,65 +38,10 @@ SAMIUR2 ;ven/gpl - sami user reports ;2021-05-21T20:47Z
  ;@additional-dev Kenneth McGlothlen (mcglk)
  ; mcglk@vistaexpertise.net
  ;
- ;@module-credits
- ;@project VA Partnership to Increase Access to Lung Screening
- ; (VA-PALS)
- ; http://va-pals.org/
- ;@funding 2017/2021, Bristol-Myers Squibb Foundation (bmsf)
- ; https://www.bms.com/about-us/responsibility/bristol-myers-squibb-foundation.html
- ;@partner-org Veterans Affairs Office of Rural health
- ; https://www.ruralhealth.va.gov/
- ;@partner-org International Early Lung Cancer Action Program (I-ELCAP)
- ; http://ielcap.com/
- ;@partner-org Paraxial Technologies (par)
- ; http://paraxialtech.com/
- ;@partner-org Open Source Electronic Health Record Alliance (OSEHRA)
- ; https://www.osehra.org/groups/va-pals-open-source-project-group
+ ;@module-credits see SAMIHUL
  ;
  ;@module-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
- ;
- ; 2019-02-10/14 ven/gpl 1.18.0 d543f7b,f9869df,5e67489
- ;  SAMIUR2: 1st version of revised user reports, progress, add rural/
- ; urban & compute.
- ;
- ; 2019-03-24/28 ven/gpl 1.18.0 1fd4a4c,0cebb36
- ;  SAMIUR2: revise incomplete form report, remove ethnicity from
- ; enrollment report (we can't get it).
- ;
- ; 2019-05-08 ven/lgc 1.18.0 2172e51
- ;  SAMIUR2: remove blank last line.
- ;
- ; 2019-06-21 par/dom 1.18.0 c6a4a57 VAP-352
- ;  SAMIUR2: proper spelling of "follow up."
- ;
- ; 2019-08-03/04 ven/gpl 1.18.0 ffc94f6,d03557d,cd865e2 VPA-438
- ;  SAMIUR2: fix smoking status on enrollment report, fix change log
- ; display, add pack years at intake to enrollment report, add
- ; requested changes to followup report.
- ;
- ; 2019-09-26 ven/gpl 1.18.0 92b1232 VAP-420
- ;  SAMIUR2: smoking history, new cummulative packyear processing.
- ;
- ; 2019-10-01 par/dom 1.18.0 4caf1a9 VAP-344
- ;  SAMIUR2: make capitalization consistent.
- ;
- ; 2020-01-01/05 ven/arc 1.18.0 399f854,62e3200
- ;  SAMIUR2: add unmatched patient processing.
- ;
- ; 2020-01-10 ven/gpl 1.18.0 1590577
- ;  SAMIUR2: fix return on RACE^SAMIUR2 for cache.
- ;
- ; 2020-05-13/14 ven/gpl 1.18.0.5+i5 61c7d20,b05df41
- ;  SAMIUR2: add worklist functionality, fix gender & dob detection on
- ; reports.
- ;
- ; 2021-04-13 ven/gpl 1.18.0.11+i11 a12765b,f09ffef,fb399ab
- ;  SAMIUR2: in RPTTBL,GENDER create inactive report, move last exam
- ; column on followup report, fix gender being blank in reports.
- ;
- ; 2021-05-20/21 ven/mcglk&toad 1.18.0.11+i11
- ;  SAMIUR2: passim hdr comments, chg log, annotate, refactor, bump
- ; version.
+ ; see SAMIURUL
  ;
  ;@contents
  ; RPTTBL build report-definition table

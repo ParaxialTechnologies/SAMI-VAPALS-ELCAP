@@ -1,6 +1,6 @@
-SAMIHOM4 ;ven/gpl,arc - ielcap: home page ;2021-03-17T18:32Z
- ;;18.0;SAMI;**1,4,5,6,9**;
- ;;1.18.0.9-i9
+SAMIHOM4 ;ven/gpl,arc - homepage web services ;2021-06-16T18:09Z
+ ;;18.0;SAMI;**1,4,5,6,9,12**;
+ ;;1.18.0.12-t2+i12
  ;
  ; SAMIHOM4 contains web services & other subroutines for producing
  ; the ELCAP Home Page.
@@ -13,11 +13,26 @@ SAMIHOM4 ;ven/gpl,arc - ielcap: home page ;2021-03-17T18:32Z
  ;
  ;
  ;
- ;@license: see routine SAMIUL
- ;@documentation : see SAMICUL
+ ;@license see routine SAMIUL
+ ;@documentation see SAMIHUL
  ;@contents
- ; WSHOME: code for ws: vapals-elcap homepage
- ; WSVAPALS: code for ws: vapals post
+ ;
+ ;  web service get vapals & related subroutines
+ ;
+ ; WSHOME code for wsi WSHOME^SAMIHOM3
+ ;    get vapals (vapals-elcap homepage)
+ ; DEVHOME code for wpi DEVHOME^SAMIHOM3
+ ;    development home page
+ ; GETHOME code for wpi GETHOME^SAMIHOM3
+ ;    get homepage (not subsequent visit)
+ ;
+ ;  web service post vapals & related subroutines
+ ;
+ ; WSVAPALS code for wsi WSVAPALS^SAMIHOM3
+ ;    post vapals (main gateway)
+ ;
+ ;  other
+ ;
  ; REG: manual registration
  ; MKPTLK: creates patient-lookup record
  ; UPDTFRMS: update demographics in all forms for patient
@@ -38,63 +53,78 @@ SAMIHOM4 ;ven/gpl,arc - ielcap: home page ;2021-03-17T18:32Z
  ; INDXPTLK: generate index entries in patient-lookup graph
  ; UNINDXPT: remove index entries from patient-lookup graph
  ; $$UCASE = uppercase
- ; DEVHOME: code for ws: temporary home page for development
- ; GETHOME: code for ws: homepage accessed using GET
- ; WSNEWCAS: code for ws: receives post from home & creates new case
+ ; WSNEWCAS code for wr newcase (creates new case)
  ;
  ;@to-do
  ; Add label comments
  ;
  ;
  ;
- ;@section 1 wsi WSHOME & related subroutines
+ ;@section 1 web service get vapals & related subroutines
  ;
  ;
  ;
- ;@wsi-code WSHOME^SAMIHOM3, vapals-elcap homepage
-WSHOME ; code for web service for SAMI homepage
+ ;@wsi-code WSHOME^SAMIHOM3
+WSHOME ; get vapals (vapals-elcap homepage)
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
- ;ven/gpl;web service;procedure;
+ ;ven/gpl;wsi;procedure;clean;silent;sac;tests
  ;@signature
  ; do WSHOME^SAMIHOM3(SAMIRTN,SAMIFILTER)
  ;@branches-from
  ; WSHOME^SAMIHOM3
- ;@called-by
+ ;@wsi-called-by
+ ; web service get vapals
+ ; WSVAPALS^SAMIHOM4
+ ; LOGIN^SAMISITE
+ ;@called-by none
  ;@calls
- ; GETHOME
+ ; DEVHOME^SAMIHOM3
+ ; WSVAPALS^SAMIHOM3
+ ; GETHOME^SAMIHOM3
  ;@input
- ; SAMIFILTER
+ ; SAMIFILTER (no parameters required)
  ;@output
- ;.SAMIRTN
+ ; .SAMIRTN
  ;@examples [tbd]
- ;@tests [tbd]
+ ;@tests
+ ; UTWSHM^SAMIUTH3
+ ; UTWSHM1^SAMIUTH3
+ ; UTWSHM2^SAMIUTH3
  ;
- ; no parameters required
  ;
- ;@stanza 2 present development or temporary homepage
+ ;@stanza 2 route to appropriate homepage or bypass to other webpage
  ;
+ ; present development homepage for testing
  if $get(SAMIFILTER("test"))=1 do  quit
  . do DEVHOME^SAMIHOM3(.SAMIRTN,.SAMIFILTER)
  . quit
  ;
- if $g(SAMIFILTER("samiroute"))'="" do  quit  ; workaround for "get" access to pages
+ ; bypass for get access to pages
+ if $g(SAMIFILTER("samiroute"))'="" do  quit
  . new SAMIBODY set SAMIBODY(1)=""
  . do WSVAPALS^SAMIHOM3(.SAMIFILTER,.SAMIBODY,.SAMIRTN)
+ . quit
  ;
- if $get(SAMIFILTER("dfn"))'="" do  quit  ; V4W/DLW - workaround for "get" access from CPRS
+ ; V4W/DLW - bypass for get access from CPRS
+ if $get(SAMIFILTER("dfn"))'="" do  quit
  . new dfn set dfn=$get(SAMIFILTER("dfn"))
  . new root set root=$$setroot^%wd("vapals-patients")
  . new studyid set studyid=$get(@root@(dfn,"samistudyid"))
  . new SAMIBODY
  . if studyid'="" do
  . . set SAMIBODY(1)="samiroute=casereview&dfn="_dfn_"&studyid="_studyid
+ . . quit
  . else  do
  . . set SAMIBODY(1)="samiroute=lookup&dfn="_dfn_"&studyid="_studyid
+ . . quit
  . do WSVAPALS^SAMIHOM3(.SAMIFILTER,.SAMIBODY,.SAMIRTN)
+ . quit
  ;
- do GETHOME^SAMIHOM3(.SAMIRTN,.SAMIFILTER) ; VAPALS homepage
+ ; default to VAPALS homepage
+ do GETHOME^SAMIHOM3(.SAMIRTN,.SAMIFILTER)
+ ;
  ;
  ;@stanza 3 termination
  ;
@@ -102,14 +132,211 @@ WSHOME ; code for web service for SAMI homepage
  ;
  ;
  ;
- ;@wsi-code WSVAPALS^SAMIHOM3, vapals-elcap post
-WSVAPALS ; code for web service for vapals post
+ ;@wpi-code DEVHOME^SAMIHOM3
+DEVHOME ; development home page
  ;
- ;ven/gpl;web service;procedure;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;wpi;procedure;clean;silent;sac;tests
+ ;@signature
+ ; do DEVHOME^SAMIHOM3(SAMIRTN,SAMIFILTER)
+ ;@branches-from
+ ; DEVHOME^SAMIHOM3
+ ;@wpi-called-by
+ ; wsi WSHOME^SAMIHOM3 [web service get vapals]
+ ;@called-by none
+ ;@calls
+ ; htmltb2^%yottaweb
+ ; PATLIST^SAMIHOM3
+ ; genhtml^%yottautl
+ ; addary^%yottautl
+ ;@input
+ ; SAMIFILTER =
+ ;@output
+ ;.SAMIRTN =
+ ;@examples [tbd]
+ ;@tests [tbd]
+ ;
+ ;
+ ;@stanza 2 present development homepage
+ ;
+ new gtop,gbot
+ do htmltb2^%yottaweb(.gtop,.gbot,"SAMI Test Patients")
+ ;
+ new html,ary,hpat
+ do PATLIST^SAMIHOM3("hpat")
+ quit:'$data(hpat)
+ ;
+ set ary("title")="SAMI Test Patients on this system"
+ set ary("header",1)="StudyId"
+ set ary("header",2)="Name"
+ ;
+ new cnt set cnt=0
+ new zi set zi=""
+ for  do  quit:zi=""
+ . set zi=$order(hpat(zi))
+ . quit:zi=""
+ . ;
+ . set cnt=cnt+1
+ . new url set url="<a href=""/cform.cgi?studyId="_zi_""">"_zi_"</a>"
+ . set ary(cnt,1)=url
+ . set ary(cnt,2)=""
+ . quit
+ ;
+ do genhtml^%yottautl("html","ary")
+ ;
+ do addary^%yottautl("SAMIRTN","gtop")
+ do addary^%yottautl("SAMIRTN","html")
+ set SAMIRTN($order(SAMIRTN(""),-1)+1)=gbot
+ kill SAMIRTN(0)
+ ;
+ set HTTPRSP("mime")="text/html"
+ ;
+ ;
+ ;@stanza 3 termination
+ ;
+ quit  ; end of wpi DEVHOME^SAMIHOM3
+ ;
+ ;
+ ;
+ ;@wpi-code GETHOME^SAMIHOM3
+GETHOME ; get homepage (not subsequent visit)
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;wpi;procedure;clean;silent;sac;tests
+ ;@signature
+ ; do GETHOME^SAMIHOM3(SAMIRTN,SAMIFILTER)
+ ;@branches-from
+ ; GETHOME^SAMIHOM3
+ ;@wpi-called-by
+ ; WSHOME
+ ; WSVAPALS
+ ; SAVE
+ ;  WSNEWCAS [commented out]
+ ; WSNFPOST^SAMICAS3
+ ; WSLOOKUP^SAMISRC2
+ ; WSREPORT^SAMIUR
+ ; WSREPORT^SAMIUR1
+ ;@called-by none
+ ;@calls
+ ; $$FINDSITE^SAMISITE
+ ; GETTMPL^SAMICASE
+ ; MERGEHTM^%wf
+ ; ADDCRLF^VPRJRUT
+ ;@input
+ ; SAMIFILTER
+ ;@output
+ ; .SAMIRTN
+ ;@examples [tbd]
+ ;@tests
+ ; UTGETHM^SAMIUTH3
+ ; UTSCAN4^SAMIUTH3
+ ;
+ ;
+ ;@stanza 2 get template for homepage
+ ;
+ ; Processing for multi-tenancy
+ ;
+ if $get(SAMIFILTER("siteid"))="" if '$$FINDSITE^SAMISITE(.SAMIRTN,.SAMIFILTER) quit 0
+ new SAMISITE,SAMITITL
+ set SAMISITE=$get(SAMIFILTER("siteid"))
+ set SAMITITL=$get(SAMIFILTER("sitetitle"))
+ ;
+ new temp,tout,form
+ set form="vapals:home"
+ do GETTMPL^SAMICASE("temp",form)
+ quit:'$data(temp)
+ ;
+ ;
+ ;@stanza 3 process homepage template
+ ;
+ new err
+ do MERGEHTM^%wf(.temp,.SAMIFILTER,.err)
+ ;
+ do ADDCRLF^VPRJRUT(.temp)
+ merge SAMIRTN=temp
+ ;
+ ;
+ ;@stanza 4 termination
+ ;
+ quit  ; end of wpi GETHOME^SAMIHOM3
+ ;
+ ;
+ ;
+ ; below is redacted from GETHOME^SAMIHOM3
+ ;
+ ;@old-calls
+ ; FIXHREF^SAMIFORM
+ ; FIXSRC^SAMIFORM
+ ; $$GET^XPAR
+ ; findReplace^%ts
+ ; ADDCRLF^VPRJRUT
+ ;
+ new cnt set cnt=0
+ new zi set zi=0
+ for  set zi=$order(temp(zi)) quit:+zi=0  do  ;
+ . ;
+ . n ln s ln=temp(zi)
+ . n touched s touched=0
+ . ;
+ . i ln["href" i 'touched d  ;
+ . . d FIXHREF^SAMIFORM(.ln)
+ . . s temp(zi)=ln
+ . ;
+ . i ln["src" d  ;
+ . . d FIXSRC^SAMIFORM(.ln)
+ . . s temp(zi)=ln
+ . ;
+ . i ln["id" i ln["studyIdMenu" d  ;
+ . . s zi=zi+4
+ . ;
+ . if ln["@@MANUALREGISTRATION@@" do  ; turn off manual registration
+ . . n setman,setparm
+ . . s setman="true"
+ . . s setparm=$$GET^XPAR("SYS","SAMI ALLOW MANUAL ENTRY",,"Q")
+ . . i setparm=0 s setman="false"
+ . . do findReplace^%ts(.ln,"@@MANUALREGISTRATION@@",setman)
+ . . s temp(zi)=ln
+ . . quit 
+ . set cnt=cnt+1
+ . set tout(cnt)=temp(zi)
+ . quit
+ ;
+ ;
+ ;@old-stanza 4 add cr/lf & save to return array
+ ;
+ do ADDCRLF^VPRJRUT(.tout)
+ merge SAMIRTN=tout
+ ;
+ ;
+ ;@old-stanza 5 termination
+ ;
+ quit  ; old end of wpi GETHOME^SAMIHOM3
+ ;
+ ;
+ ;
+ ;@section 2 web service post vapals & related subroutines
+ ;
+ ;
+ ;
+ ;@wsi-code WSVAPALS^SAMIHOM3
+WSVAPALS ; post vapals (main gateway)
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;wsi;procedure;clean;silent;sac;tests
  ;@signature
  ; do WSVAPALS^SAMIHOM3(SAMIARG,SAMIBODY,SAMIRESULT)
  ;@branches-from
  ; WSVAPALS^SAMIHOM3
+ ;@wsi-called-by
+ ;@called-by
+ ;@calls
+ ;@input [tbd]
+ ;@output [tbd]
+ ;@examples [tbd]
+ ;@tests [tbd]
  ;
  ; all calls come through this gateway
  ;
@@ -291,17 +518,17 @@ WSVAPALS ; code for web service for vapals post
  . m SAMIARG=vars
  . n dfn s dfn=$g(vars("dfn")) ; must have a dfn
  . i dfn="" d  q  ;
- . . d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home 
+ . . d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home
  . n root s root=$$setroot^%wd("patient-lookup")
  . n sien s sien=$o(@root@("dfn",dfn,""))
  . i sien="" d  q  ;
- . . d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home 
+ . . d GETHOME^SAMIHOM3(.SAMIRESULT,.SAMIARG) ; on error go home
  . s vars("name")=$g(@root@(sien,"saminame"))
  . s tdob=$g(@root@(sien,"dob"))
  . s vars("dob")=$p(tdob,"-",2)_"/"_$p(tdob,"-",3)_"/"_$p(tdob,"-",1)
  . s vars("sbdob")=$g(@root@(sien,"dob"))
  . s vars("gender")=$g(@root@(sien,"sex"))
- . ;s vars("icn")=$g(@root@(sien,"icn"))
+ . ; s vars("icn")=$g(@root@(sien,"icn"))
  . n tssn s tssn=$g(@root@(sien,"ssn"))
  . s vars("ssn")=$e(tssn,1,3)_"-"_$e(tssn,4,5)_"-"_$e(tssn,6,9)
  . s vars("last5")=$g(@root@(sien,"last5"))
@@ -324,6 +551,10 @@ WSVAPALS ; code for web service for vapals post
  . d MERGE^SAMIHOM4(.SAMIRESULT,.SAMIARG)
  ;
  quit 0  ; end of wsi WSVAPALS^SAMIHOM3
+ ;
+ ;
+ ;
+ ;@section 3 other
  ;
  ;
  ;
@@ -420,7 +651,7 @@ MKPTLK(ptlkien,SAMIARG) ; creates patient-lookup record
  n gender s gender=SAMIARG("gender")
  s @root@(ptlkien,"gender")=$s(gender="M":"M^MALE",1:"F^FEMALE")
  s @root@(ptlkien,"sex")=SAMIARG("gender")
- ;s @root@(ptlkien,"icn")=SAMIARG("icn")
+ ; s @root@(ptlkien,"icn")=SAMIARG("icn")
  s @root@(ptlkien,"ssn")=ssn
  n last5 s last5=$$UCASE($e(name,1))_$e(ssn,6,9)
  s @root@(ptlkien,"last5")=last5
@@ -609,7 +840,7 @@ REMATCH(sien,SAMIARG) ; extrinsic returns possible match ien
  s name=$g(SAMIARG("saminame"))
  i name="" s name=$g(SAMIARG("name"))
  s name=$$UCASE(name)
- ;s icn=$g(SAMIARG("icn"))
+ ; s icn=$g(SAMIARG("icn"))
  s x=0
  i ssn'="" s x=$o(@lroot@("ssn",ssn,""))
  i x=sien s x=$o(@lroot@("ssn",ssn,x))
@@ -698,7 +929,7 @@ REINDXPL ; reindex patient lookup
  k @root@("last5")
  k @root@("sinamef")
  k @root@("sinamel")
- ;k @root@("icn")
+ ; k @root@("icn")
  f  s zi=$o(@root@(zi)) q:+zi=0  d  ;
  . d INDXPTLK(zi)
  ;
@@ -720,13 +951,15 @@ INDXPTLK(ien) ; generate index entries in patient-lookup graph
  s:x'="" @proot@("dfn",x,ien)=""
  s x=$g(@proot@(ien,"last5")) ;w !,x
  s:x'="" @proot@("last5",x,ien)=""
- ;s x=$g(@proot@(ien,"icn")) ;w !,x
- ;i x'["V" d  ;
- ;. i x="" q
- ;. n chk s chk=$$CHECKDG^MPIFSPC(x)
- ;. s @proot@(ien,"icn")=x_"V"_chk
- ;. s x=x_"V"_chk
- ;s:x'="" @proot@("icn",x,ien)=""
+ ;
+ ; s x=$g(@proot@(ien,"icn")) ;w !,x
+ ; i x'["V" d  ;
+ ; . i x="" q
+ ; . n chk s chk=$$CHECKDG^MPIFSPC(x)
+ ; . s @proot@(ien,"icn")=x_"V"_chk
+ ; . s x=x_"V"_chk
+ ; s:x'="" @proot@("icn",x,ien)=""
+ ;
  s x=$g(@proot@(ien,"ssn")) ;w !,x
  s:x'="" @proot@("ssn",x,ien)=""
  s x=$g(@proot@(ien,"sinamef")) ;w !,x
@@ -753,13 +986,15 @@ UNINDXPT(ien) ; remove index entries from patient-lookup graph
  k:x'="" @proot@("dfn",x,ien)
  s x=$g(@proot@(ien,"last5")) ;w !,x
  k:x'="" @proot@("last5",x,ien)
- ;s x=$g(@proot@(ien,"icn")) ;w !,x
- ;i x'["V" d  ;
- ;. i x="" q
- ;. n chk s chk=$$CHECKDG^MPIFSPC(x)
- ;. s @proot@(ien,"icn")=x_"V"_chk
- ;. s x=x_"V"_chk
- ;k:x'="" @proot@("icn",x,ien)
+ ;
+ ; s x=$g(@proot@(ien,"icn")) ;w !,x
+ ; i x'["V" d  ;
+ ; . i x="" q
+ ; . n chk s chk=$$CHECKDG^MPIFSPC(x)
+ ; . s @proot@(ien,"icn")=x_"V"_chk
+ ; . s x=x_"V"_chk
+ ; k:x'="" @proot@("icn",x,ien)
+ ;
  s x=$g(@proot@(ien,"ssn")) ;w !,x
  k:x'="" @proot@("ssn",x,ien)
  s x=$g(@proot@(ien,"sinamef")) ;w !,x
@@ -782,185 +1017,33 @@ UCASE(STR) ; extrinsic returns uppercase of STR
  ;
  ;
  ;
- ;@wsi-code DEVHOME^SAMIHOM3
-DEVHOME ; temporary home page for development
+ ;@wri-code WSNEWCAS^SAMIHOM3
+WSNEWCAS ; web route newcase (creates new case)
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
- ;ven/gpl;private;procedure;
- ;@signature
- ; do DEVHOME^SAMIHOM3(SAMIRTN,SAMIFILTER)
- ;@branches-from
- ; DEVHOME^SAMIHOM3
- ;@called-by
- ; WSHOME
- ;@calls
- ; htmltb2^%yottaweb
- ; PATLIST
- ; genhtml^%yottautl
- ; addary^%yottautl
- ;@input
- ; SAMIFILTER =
- ;@output
- ;.SAMIRTN =
- ;@examples [tbd]
- ;@tests [tbd]
- ;
- ;@stanza 2 ?
- ;
- new gtop,gbot
- do htmltb2^%yottaweb(.gtop,.gbot,"SAMI Test Patients")
- ;
- new html,ary,hpat
- do PATLIST^SAMIHOM3("hpat")
- quit:'$data(hpat)
- ;
- set ary("title")="SAMI Test Patients on this system"
- set ary("header",1)="StudyId"
- set ary("header",2)="Name"
- ;
- new cnt set cnt=0
- new zi set zi=""
- for  set zi=$order(hpat(zi)) quit:zi=""  do  ;
- . set cnt=cnt+1
- . new url set url="<a href=""/cform.cgi?studyId="_zi_""">"_zi_"</a>"
- . set ary(cnt,1)=url
- . set ary(cnt,2)=""
- . quit
- ;
- do genhtml^%yottautl("html","ary")
- ;
- do addary^%yottautl("SAMIRTN","gtop")
- do addary^%yottautl("SAMIRTN","html")
- set SAMIRTN($order(SAMIRTN(""),-1)+1)=gbot
- kill SAMIRTN(0)
- ;
- set HTTPRSP("mime")="text/html"
- ;
- ;@stanza ? termination
- ;
- quit  ; end of wsi DEVHOME^SAMIHOM3
- ;
- ;
- ;
- ;@wsi-code GETHOME^SAMIHOM3
-GETHOME ; homepage accessed using GET
- ;
- ;@stanza 1 invocation, binding, & branching
- ;
- ;ven/gpl;private;procedure;
- ;@signature
- ; do GETHOME^SAMIHOM3(SAMIRTN,SAMIFILTER)
- ;@branches-from
- ; GETHOME^SAMIHOM3
- ;@called-by
- ; WSHOME
- ; WSNEWCAS
- ; WSNFPOST^SAMICASE
- ; wsLookup^SAMISRCH
- ;@calls
- ; GETTMPL^SAMICASE
- ; findReplace^%ts
- ; $$SCANFOR
- ; ADDCRLF^VPRJRUT
- ;@input
- ; SAMIFILTER =
- ;@output
- ;.SAMIRTN =
- ;@examples [tbd]
- ;@tests [tbd]
- ;
- ;@stanza 2 get template for homepage
- ;
- ; Processing for multi-tenancy
- ;
- if $G(SAMIFILTER("siteid"))="" if '$$FINDSITE^SAMISITE(.SAMIRTN,.SAMIFILTER) Q 0
- new SAMISITE,SAMITITL
- s SAMISITE=$G(SAMIFILTER("siteid"))
- s SAMITITL=$G(SAMIFILTER("sitetitle"))
- ;
- new temp,tout,form
- s form="vapals:home"
- do GETTMPL^SAMICASE("temp",form)
- quit:'$data(temp)
- ;
- ;@stanza 3 process homepage template
- ;
- n err
- do MERGEHTM^%wf(.temp,.SAMIFILTER,.err)
- ;
- ;
- do ADDCRLF^VPRJRUT(.temp)
- merge SAMIRTN=temp
- ;
- quit  ; below is redacted
- ;
- ; 
- new cnt set cnt=0
- new zi set zi=0
- for  set zi=$order(temp(zi)) quit:+zi=0  do  ;
- . ;
- . n ln s ln=temp(zi)
- . n touched s touched=0
- . ;
- . i ln["href" i 'touched d  ;
- . . d FIXHREF^SAMIFORM(.ln)
- . . s temp(zi)=ln
- . ;
- . i ln["src" d  ;
- . . d FIXSRC^SAMIFORM(.ln)
- . . s temp(zi)=ln
- . ;
- . i ln["id" i ln["studyIdMenu" d  ;
- . . s zi=zi+4
- . ;
- . if ln["@@MANUALREGISTRATION@@" do  ; turn off manual registration
- . . n setman,setparm
- . . s setman="true"
- . . s setparm=$$GET^XPAR("SYS","SAMI ALLOW MANUAL ENTRY",,"Q")
- . . i setparm=0 s setman="false"
- . . do findReplace^%ts(.ln,"@@MANUALREGISTRATION@@",setman)
- . . s temp(zi)=ln
- . . quit 
- . set cnt=cnt+1
- . set tout(cnt)=temp(zi)
- . quit
- ;
- ;@stanza 4 add cr/lf & save to return array
- ;
- do ADDCRLF^VPRJRUT(.tout)
- merge SAMIRTN=tout
- ;
- ;@stanza 5 termination
- ;
- quit  ; end of wsi GETHOME^SAMIHOM3
- ;
- ;
- ;
- ;@wsi-code WSNEWCAS^SAMIHOM3
-WSNEWCAS ; receives post from home & creates new case
- ;
- ;@stanza 1 invocation, binding, & branching
- ;
- ;ven/gpl;private;procedure;
+ ;ven/gpl;wri;procedure;
  ;@signature
  ; do WSNEWCAS^SAMIHOM3(SAMIARGS,SAMIBODY,SAMIRESULT)
  ;@branches-from
- ; WSNEWCAS^SAMIHOM3
- ;@called-by
+ ; wri WSNEWCAS^SAMIHOM3 [wr newcase]
+ ;@wri-called-by
+ ; wsi WSVAPALS^SAMIHOM3 [ws post vapals]
+ ;@called-by none
  ;@calls
  ; parseBody^%wf
  ; $$setroot^%wd
- ; $$NEXTNUM
+ ;  $$VALDTNM [commented out]
+ ;  GETHOME [commented out]
+ ;  $$NEXTNUM [commented out]
  ; $$GENSTDID^SAMIHOM3
  ; $$NOW^XLFDT
  ; $$KEYDATE^SAMIHOM3
- ; $$VALDTNM
- ; GETHOME
- ; PREFILL
- ; MKSBFORM
- ; MKSIFORM^SAMIHOM3
- ; WSCASE^SAMICASE
+ ; PREFILL^SAMIHOM3
+ ;  makeSbform [commented out]
+ ; $$MKSIFORM^SAMIHOM3
+ ; wsGetForm^%wf
+ ;  WSCASE^SAMICASE [commented out]
  ;@input
  ;.ARGS =
  ; BODY =
@@ -969,7 +1052,8 @@ WSNEWCAS ; receives post from home & creates new case
  ;@examples [tbd]
  ;@tests [tbd]
  ;
- ;@stanza 2 ?
+ ;
+ ;@stanza 2 create new case
  ;
  merge ^SAMIUL("newCase","ARGS")=SAMIARGS
  merge ^SAMIUL("newCase","BODY")=SAMIBODY
@@ -996,10 +1080,10 @@ WSNEWCAS ; receives post from home & creates new case
  ;. merge RESULT=r1
  ;. quit
  ;
- ;new gien set gien=$$NEXTNUM
+ ; new gien set gien=$$NEXTNUM
  new gien set gien=dfn
  ;
- m ^SAMIUL("newCase","G1")=root
+ merge ^SAMIUL("newCase","G1")=root
  ; create dfn index
  set @root@("dfn",dfn,gien)=""
  ;
@@ -1018,19 +1102,20 @@ WSNEWCAS ; receives post from home & creates new case
  ;
  do PREFILL^SAMIHOM3(dfn) ; prefills from the "patient-lookup" graph
  ;
- n siformkey
- ;do makeSbform(gien) ; create a background form for new patient
- set siformkey=$$MKSIFORM^SAMIHOM3(gien) ; create an intake for for new patient
+ new siformkey
+ ; do makeSbform(gien) ; create background form for new patient
+ set siformkey=$$MKSIFORM^SAMIHOM3(gien) ; create intake for new patient
  ;
  set SAMIARGS("studyid")=studyid
  set SAMIARGS("form")="vapals:"_siformkey
  do wsGetForm^%wf(.SAMIRESULT,.SAMIARGS)
- ;do WSCASE^SAMICASE(.SAMIRESULT,.SAMIARGS) ; navigate to the case review page
- ;
- ;@stanza ? termination
- ;
- quit  ; end of wsi WSNEWCAS^SAMIHOM3
+ ; do WSCASE^SAMICASE(.SAMIRESULT,.SAMIARGS) ; navigate to case review page
  ;
  ;
+ ;@stanza 3 termination
  ;
-EOR ; End of routine SAMIHOM4
+ quit  ; end of wri WSNEWCAS^SAMIHOM3
+ ;
+ ;
+ ;
+EOR ; end of routine SAMIHOM4

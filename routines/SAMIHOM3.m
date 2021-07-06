@@ -1,11 +1,9 @@
-SAMIHOM3 ;ven/gpl - ielcap: forms ; 2019-08-07T01:13Z
- ;;18.0;SAMI;;
+SAMIHOM3 ;ven/gpl - homepage web service ;2021-07-01T21:35Z
+ ;;18.0;SAMI;**5,12**;2020-01;
+ ;;1.18.0.12-t2+i12
  ;
- ;@license: see routine SAMIUL
- ;
- ; Routine SAMIHOM3 contains subroutines for implementing the ELCAP Home
- ; Page. SAMIHOM3 is further enhanced to provide binding to VistA
- ; CURRENTLY UNTESTED & IN PROGRESS
+ ; Routine SAMIHOM3 contains subroutines for implementing the IELCAP
+ ; Home Page and to provide binding to VistA.
  ;
  quit  ; no entry from top
  ;
@@ -16,209 +14,143 @@ SAMIHOM3 ;ven/gpl - ielcap: forms ; 2019-08-07T01:13Z
  ;
  ;
  ;@routine-credits
- ;@primary-dev: George P. Lilly (gpl)
+ ;@license see routine SAMIUL
+ ;@documentation see SAMIHUL
+ ;
+ ;@routine-credits
+ ;@primary-dev George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
- ;@primary-dev-org: Vista Expertise Network (ven)
+ ;@primary-dev-org Vista Expertise Network (ven)
  ; http://vistaexpertise.net
- ;@copyright: 2017, gpl, all rights reserved
- ;@license: Apache 2.0
+ ;@copyright 2017/2021, gpl, all rights reserved
+ ;@license Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated: 2018-03-07T18:48Z
- ;@application: Screening Applications Management (SAM)
- ;@module: Screening Applications Management - IELCAP (SAMI)
- ;@suite-of-files: SAMI Forms (311.101-311.199)
- ;@version: 18.0T04
- ;@release-date: not yet released
- ;@patch-list: none yet
+ ;@last-updated 2021-07-01T21:35Z
+ ;@application Screening Applications Management (SAM)
+ ;@module Screening Applications Management - IELCAP (SAMI)
+ ;@suite-of-files SAMI Forms (311.101-311.199)
+ ;@version 1.18.0.12-t2+i12
+ ;@release-date 2020-01
+ ;@patch-list **5,12**
  ;
- ;@additional-dev: Frederick D. S. Marshall (toad)
+ ;@additional-dev Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
+ ;@additional-dev Kenneth W. McGlothlen (mcglk)
+ ; mcglk@vistaexpertise.net
  ;
- ;@module-credits
- ;@project: VA Partnership to Increase Access to Lung Screening
- ; (VA-PALS)
- ; http://va-pals.org/
- ;@funding: 2017/2018, Bristol-Myers Squibb Foundation (bmsf)
- ; https://www.bms.com/about-us/responsibility/bristol-myers-squibb-foundation.html
- ;@partner-org: Veterans Affairs Office of Rural health
- ; https://www.ruralhealth.va.gov/
- ;@partner-org: International Early Lung Cancer Action Program (I-ELCAP)
- ; http://ielcap.com/
- ;@partner-org: Paraxial Technologies
- ; http://paraxialtech.com/
- ;@partner-org: Open Source Electronic Health Record Alliance (OSEHRA)
- ; https://www.osehra.org/groups/va-pals-open-source-project-group
- ;
- ;@module-log
- ; 2018-01-13 ven/gpl v18.0t04 SAMIHOM3: create routine from SAMIFRM to
- ; implement ELCAP Home Page.
- ;
- ; 2018-02-05 ven/toad v18.0t04 SAMIHOM3: update license & attribution &
- ; hdr comments, add white space & do-dot quits, spell out language
- ; elements.
- ;
- ; 2018-02-27 ven/gpl v18.0t04 SAMIHOM3: new subroutines $$PREFIX,GETHOME,
- ; $$SCANFOR,WSNEWCAS,PREFILL,MKSBFORM,MKSIFORM,$$VALDTNM,
- ; $$SID2NUM,$$KEYDATE,$$GENSTDID,$$NEXTNUM to support creation of new
- ; cases.
- ;
- ; 2018-03-01 ven/toad v18.0t04 SAMIHOM3: refactor & reorganize new code,
- ; add header comments, r/findReplaceAll^%wf w/findReplace^%ts.
- ;
- ; 2018-03-06 ven/gpl v18.0t04 SAMIHOM3: ?
- ;
- ; 2018-03-07 ven/toad v18.0t04 SAMIHOM3: in $$SID2NUM add
- ; WSNUFORM^SAMICASE to called-by list; in keyDate,GETHOME update
- ; called-by.
- ;
+ ;@routine-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
+ ; see routine SAMIHUL
  ;@contents
  ;
- ;  code for SAMI homepage web service
+ ;  web services get vapals & post vapals
  ;
- ; WSHOME: web service for SAMI homepage
- ; DEVHOME: temporary home page for development
- ; PATLIST: returns a list of patients in ary, passed by name
- ; GETHOME: homepage accessed using GET (not subsequent visit)
- ; $$SCANFOR = scan array looking for value, return index
+ ; WSHOME wsi WSHOME^SAMIHOM3, get vapals (SAMI homepage)
+ ; WSVAPALS wsi WSVAPALS^SAMIHOM3, post vapals (main gateway)
  ;
- ;  code for SAMI new case web service
+ ;  web pages & web routes
  ;
- ; WSNEWCAS: web service receives post from home & creates new case
- ; $$NEXTNUM = next number for studyid
- ; $$GENSTDID = studyID for number
- ; $$PREFIX = letters to use to begin studyId
- ; $$KEYDATE = date in StudyId format (yyyy-mm-dd)
- ; $$VALDTNM = validate a new name
- ; PREFILL: prefill fields for forms
- ; MKSIFORM: create intake form
- ; MKSBFORM: create background form
+ ; DEVHOME wpi DEVHOME^SAMIHOM3, development home page
+ ; GETHOME wpi GETHOME^SAMIHOM3, get homepage (not subsequent visit)
+ ; WSNEWCAS wri WSNEWCAS^SAMIHOM3, newcase (creates new case)
  ;
- ;  api $$SID2NUM^SAMIHOM3
+ ;  private program interfaces
  ;
- ; $$SID2NUM = number part of studyid (XXX0001 -> 1)
+ ; $$SID2NUM number part of studyid (XXX0001 -> 1)
+ ; $$GENSTDID studyID for number
+ ; $$PREFIX letters to use to begin studyId
+ ; $$KEYDATE date in StudyId format (yyyy-mm-dd)
+ ; PREFILL prefill fields for forms
+ ;
+ ;  private subroutines
+ ;
+ ; PATLIST returns a list of patients in ary, passed by name
+ ; MKSIFORM create intake form
+ ;
+ ;  unused &/or deprecated subroutines
+ ;
+ ; $$SCANFOR scan array looking for value, return index
+ ; $$NEXTNUM next number for studyid
+ ; $$VALDTNM validate a new name
+ ; MKSBFORM create background form
+ ; ADDPAT-INDEX calls newCase to add patient dfn to vapals
  ;
  ;
  ;
- ;@section 1 code for SAMI homepage web service
+ ;@section 1 web services get vapals & post vapals
  ;
  ;
  ;
- ; web service for SAMI homepage
+ ;@wsi WSHOME^SAMIHOM3, web service get vapals (SAMI homepage)
 WSHOME(SAMIRTN,SAMIFILTER) goto WSHOME^SAMIHOM4
  ;
  ;
- ; vapals post web service - all calls come through this gateway
+ ;
+ ;@wsi WSVAPALS^SAMIHOM3, web service post vapals (main gateway)
 WSVAPALS(SAMIARG,SAMIBODY,SAMIRESULT) goto WSVAPALS^SAMIHOM4
- ;
- ;
-DEVHOME(SAMIRTN,SAMIFILTER) goto DEVHOME^SAMIHOM4
- ;
- ;
-PATLIST(ARY) ; returns a list of patients in ary, passed by name
- ;
- ;@stanza 1 invocation, binding, & branching
- ;
- ;ven/gpl;private;procedure;
- ;@called-by
- ; DEVHOME
- ;@calls
- ; $$setroot^%wd
- ;@input
- ; ary = name of array to return patient list in
- ;@output
- ; @ary = array containing list of patients
- ;@examples [tbd]
- ;@tests [tbd]
- ;
- ;@stanza 2 build list of patients
- ;
- new GROOT set GROOT=$$setroot^%wd("vapals-patients")
- ;
- kill @ARY
- new zi set zi=""
- for  set zi=$order(@GROOT@("graph",zi)) quit:zi=""  do  ;
- . set @ARY@(zi)=""
- . quit
- ;
- ;@stanza 3 termination
- ;
- quit  ; end of PATLIST
+ ; (all calls come through this gateway)
  ;
  ;
  ;
- ; homepage accessed using GET
-GETHOME(SAMIRTN,SAMIFILTER) goto GETHOME^SAMIHOM4
- ;
- ;
-SCANFOR(ary,start,what) ; scan array looking for value
- ;
- ;@stanza 1 invocation, binding, & branching
- ;
- ;ven/gpl;private;function;
- ;@called-by
- ; GETHOME
- ;@calls: none
- ;@input
- ;.ary = array to scan
- ; start = index to begin scanning at
- ; what = value to scan array for
- ;@output = array index where value was found
- ;@examples [tbd]
- ;@tests [tbd]
- ;
- ;@stanza 2 scan array
- ;
- ;  returns the index in the array where what occurs
- ;  ary is passed by reference
- ;
- new limit s limit=0
- new %1 set %1=start
- for  set %1=$order(ary(%1)) quit:+%1=0  quit:limit>1000  quit:ary(%1)[what  do  ;
- . set limit=limit+1
- . ;W !,ary(%1)
- . quit
- ;
- ;@stanza 3 return & termination
- n zrtn
- s zrtn=%1
- i %1<start s zrtn=start
- i %1>1000 s zrtn=start
- ;
- quit zrtn ; return array index; end of $$$SCANFOR
+ ;@section 2 web pages & web routes
  ;
  ;
  ;
- ;@section 2 code for SAMI new case web service
- ;
- ;
- ;
- ; receives post from home & creates new case
+ ;@wri WSNEWCAS^SAMIHOM3, newcase (creates new case)
 WSNEWCAS(SAMIARGS,SAMIBODY,SAMIRESULT) goto WSNEWCAS^SAMIHOM4
  ;
  ;
-NEXTNUM() ; next number for studyid
+ ;
+ ;@wpi DEVHOME^SAMIHOM3, development home page
+DEVHOME(SAMIRTN,SAMIFILTER) goto DEVHOME^SAMIHOM4
+ ;
+ ;
+ ;
+ ;@wpi GETHOME^SAMIHOM3, get homepage (not subsequent visit)
+GETHOME(SAMIRTN,SAMIFILTER) goto GETHOME^SAMIHOM4
+ ;
+ ;
+ ;
+ ;@section 3 private program interfaces
+ ;
+ ;
+ ;
+ ;@API $$SID2NUM^SAMIHOM3, number part of study id
+SID2NUM(sid) ; number part of studyid (XXX0001 -> 1)
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
- ;ven/gpl;private;variable;
+ ;ven/gpl;public;function;clean;silent;sac;tests
  ;@called-by
- ; WSNEWCAS
+ ; getVals^%wfhform
+ ; WSCASE^SAMICASE
+ ; WSNUFORM^SAMICASE
+ ; MKBXFORM^SAMICAS3
+ ; MKCEFORM^SAMICAS3
+ ; MKFUFORM^SAMICAS3
+ ; MKITFORM^SAMICAS3
+ ; MKPTFORM^SAMICAS3
+ ; MKSBFORM^SAMICAS3
+ ; filename^SAMICTRT
+ ; getVals^SAMIZ1
  ;@calls
  ; $$setroot^%wd
- ;@input: none
- ;@output = next number for study id
+ ;@input
+ ; sid = study id
+ ;@output = number from study id
  ;@examples [tbd]
  ;@tests [tbd]
  ;
- ;@stanza 2 calculate next number
+ ;@stanza 2 calculate number
  ;
- new root set root=$$setroot^%wd("vapals-patients")
- new number set number=$order(@root@("  "),-1)+1
+ ;new number set number=+$extract(sid,4,$length(sid))
+ ; we have to look up the number (pien) instead of computing it
+ new proot set proot=$$setroot^%wd("vapals-patients")
+ new number set number=$order(@proot@("sid",sid,""))
  ;
  ;@stanza 3 return & termination
  ;
- quit number ; return #; end of $$NEXTNUM
+ quit number ; return number; end of $$sid2num
  ;
  ;
  ;
@@ -226,29 +158,38 @@ GENSTDID(num,ARG) ; studyID for number
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
- ;ven/gpl;private;function;
+ ;ven/gpl;private;function;clean;silent;sac;tests
  ;@called-by
  ; WSNEWCAS
- ; wsLookup^SAMISRCH
- ;@calls
- ; $$PREFIX
+ ; WSSBFORM^SAMIFWS
+ ; WSSIFORM^SAMIFWS
+ ; WSCEFORM^SAMIFWS
+ ; MOV^SAMIMOV
+ ; WSLOOKUP^SAMISRCH
+ ;@calls none
+ ; $$GETPRFX^SAMIFORM [commented out]
  ;@input
  ; num = number of study id
  ;@output = study id corresponding to number
  ;@examples [tbd]
- ;@tests [tbd]
+ ;@tests
+ ; UTSTDID^SAMIUTH3
+ ;
  ;
  ;@stanza 2 calculate study id
  ;
  new zl set zl=$length(num)
  new zz set zz="00000"
- ;new studyid set studyid=$$GETPRFX^SAMIFORM(.ARG)_$extract(zz,1,5-zl)_num
+ ;
+ ; new studyid set studyid=$$GETPRFX^SAMIFORM(.ARG)_$extract(zz,1,5-zl)_num
+ ;
  ; the prefix is determined by the site or siteid, which should be passed
  ; in ARG
- n tsite s tsite=$g(ARG("siteid"))
- i tsite="" s tsite=$g(ARG("site"))
- i tsite="" s tsite="UNK"
+ new tsite set tsite=$get(ARG("siteid"))
+ if tsite="" set tsite=$get(ARG("site"))
+ if tsite="" set tsite="UNK"
  new studyid set studyid=tsite_$extract(zz,1,5-zl)_num
+ ;
  ;
  ;@stanza 3 return & termination
  ;
@@ -260,30 +201,34 @@ KEYDATE(fmdt) ; date in StudyId format (yyyy-mm-dd)
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
- ;ven/gpl;private;function;
+ ;ven/gpl;private;function;clean;silent;sac;tests
  ;@called-by
  ; WSNEWCAS
  ; WSNFPOST^SAMICASE
+ ; SAVFILTR^SAMISAV
  ;@calls
  ; $$FMTE^XLFDT
  ;@input
  ; fmdt = date in fileman format
  ;@output = date in study id format
  ;@examples [tbd]
- ;@tests [tbd]
+ ;@tests
+ ; UTKEYDT^SAMIUTH3
+ ;
  ;
  ;@stanza 2 calculate studyid format
  ;
  new zdt set zdt=$$FMTE^XLFDT(fmdt,"7D")
  ;
- new zy,zm,zd
- set zy=$piece(zdt,"/",1)
- set zm=$piece(zdt,"/",2)
+ new zy set zy=$piece(zdt,"/",1) ; year
+ new zm set zm=$piece(zdt,"/",2) ; month
  if $length(zm)=1 set zm="0"_zm
- set zd=$piece(zdt,"/",3)
+ ;
+ new zd set zd=$piece(zdt,"/",3) ; day
  if $length(zd)=1 set zd="0"_zd
  ;
  new studydate set studydate=zy_"-"_zm_"-"_zd
+ ;
  ;
  ;@stanza 3 return & termination
  ;
@@ -291,85 +236,70 @@ KEYDATE(fmdt) ; date in StudyId format (yyyy-mm-dd)
  ;
  ;
  ;
-VALDTNM(nm,args) ; validate new name
- ;
- ;@stanza 1 invocation, binding, & branching
- ;
- ;ven/gpl;private;function;
- ;@called-by
- ; WSNEWCAS
- ;@calls: none
- ;@input
- ; nm = name to validate
- ;.args = array to return error messages
- ;@output = 1 if valid, -1 if not
- ;@examples [tbd]
- ;@tests [tbd]
- ;
- ;@stanza 2 screen for invalid name
- ;
- if nm'["," do  quit -1 ;
- . set args("saminuerror")="invalid name"
- . quit
- ;
- ;@stanza 3 return & termination
- ;
- quit 1 ; return success; end of $$VALDTNM
- ;
- ;
- ;
 PREFILL(dfn) ; prefill fields for form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
- ;ven/gpl;private;procedure;
+ ;ven/gpl;private;procedure;clean;silent;sac;tests
  ;@called-by
  ; WSNEWCAS
+ ; GETHDR^SAMIFLD
  ;@calls
+ ; PTINFO^SAMIVSTA
  ; $$setroot^%wd
+ ; ^%DT
  ;@input
- ; gien =
+ ; dfn = patient ien
  ;@output
  ; @root(gien) = ...
  ;  where root = graph root for elcap patients
  ;@examples [tbd]
  ;@tests [tbd]
  ;
+ ;
  ;@stanza 2 prefill fields
  ;
  ; pull data from VistA
  ;
- ;n ok
- ;s ok=$$PTINFO^SAMIVSTA(dfn)
- ;i +ok<1 D ^ZTER
- d PTINFO^SAMIVSTA(dfn)
+ ; new ok set ok=$$PTINFO^SAMIVSTA(dfn)
+ ; if +ok<1 do ^%ZTER
+ ;
+ do PTINFO^SAMIVSTA(dfn) ; get additional info on patient
  ;
  ; prefills fields from patient-lookup graph
  ;
  new root set root=$$setroot^%wd("vapals-patients")
- new lroot s lroot=$$setroot^%wd("patient-lookup")
- new lien s lien=$o(@lroot@("dfn",dfn,""))
- q:lien=""
- n gien s gien=$o(@root@("dfn",dfn,"")) ; 
- q:gien=""
+ new lroot set lroot=$$setroot^%wd("patient-lookup")
+ ;
+ new lien set lien=$order(@lroot@("dfn",dfn,""))
+ quit:lien=""
+ ;
+ new gien set gien=$order(@root@("dfn",dfn,"")) ; 
+ quit:gien=""
+ ;
  ; merge prefill fields
- m @root@(gien)=@lroot@(lien)
+ merge @root@(gien)=@lroot@(lien)
+ ;
  ; fix format problems
  new saminame set saminame=$get(@root@(gien,"saminame"))
+ ;
  ; dob format
- n dob s dob=$g(@lroot@(lien,"sbdob"))
- n X,Y
- S X=dob
- d ^%DT
- Q:Y=-1
- s dob=Y
+ new dob set dob=$get(@lroot@(lien,"sbdob"))
+ new X set X=dob
+ new Y
+ do ^%DT ; convert date to fileman format
+ quit:Y=-1
+ set dob=Y
  if dob'="" set @root@(gien,"sbdob")=$$VAPALSDT^SAMICASE(dob)
  if dob'="" set @root@(gien,"sidob")=$$VAPALSDT^SAMICASE(dob)
+ ;
  ; ssn format
- n ssn s ssn=$g(@lroot@(lien,"ssn"))
- if $l(ssn)=9 set @root@(gien,"sissn")=$e(ssn,1,3)_"-"_$e(ssn,4,5)_"-"_$e(ssn,6,9)
+ new ssn set ssn=$get(@lroot@(lien,"ssn"))
+ if $length(ssn)=9 set @root@(gien,"sissn")=$extract(ssn,1,3)_"-"_$extract(ssn,4,5)_"-"_$extract(ssn,6,9)
+ ;
  ; studyid
  set @root@(gien,"sisid")=@root@(gien,"samistudyid")
+ ;
  ;
  ;@stanza 3 termination
  ;
@@ -377,37 +307,44 @@ PREFILL(dfn) ; prefill fields for form
  ;
  ;
  ;
-MKSBFORM(num) ; create background form -- depricated gpl 20180615
+ ;@section 4 private subroutines
+ ;
+ ;
+ ;
+PATLIST(ARY) ; returns a list of patients in ary, passed by name
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
- ;ven/gpl;private;procedure;
+ ;ven/gpl;private;procedure;clean;silent;sac;tests
  ;@called-by
- ; WSNEWCAS
+ ; DEVHOME
  ;@calls
  ; $$setroot^%wd
  ;@input
- ; num = index where new form should be built
+ ; ARY = name of array to return patient list in
  ;@output
- ; @root(num) = ...
- ;  where root = graph root for elcap patients
- ; @root@("graph")
+ ; @ary = array containing list of patients
  ;@examples [tbd]
- ;@tests [tbd]
+ ;@tests
+ ; UTPTLST^SAMIUTH3
  ;
- ;@stanza 2 build background form & place graph
  ;
- new root set root=$$setroot^%wd("vapals-patients")
- new sid set sid=$get(@root@(num,"samistudyid"))
- quit:sid=""
- new cdate set cdate=$get(@root@(num,"samicreatedate"))
- quit:cdate=""
- merge @root@("graph",sid,"sbform-"_cdate)=@root@(num)
- d SSAMISTA^SAMICASE(sid,"sbform-"_cdate,"incomplete")
+ ;@stanza 2 build list of patients
+ ;
+ new GROOT set GROOT=$$setroot^%wd("vapals-patients")
+ ;
+ kill @ARY
+ new zi set zi=""
+ for  do  quit:zi=""
+ . set zi=$order(@GROOT@("graph",zi))
+ . quit:zi=""
+ . set @ARY@(zi)=""
+ . quit
+ ;
  ;
  ;@stanza 3 termination
  ;
- quit  ; end of MKSBFORM
+ quit  ; end of PATLIST
  ;
  ;
  ;
@@ -415,11 +352,15 @@ MKSIFORM(num) ; create intake form
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
- ;ven/gpl;private;procedure;
+ ;ven/gpl;private;procedure;clean;silent;sac;tests
  ;@called-by
  ; WSNEWCAS
  ;@calls
  ; $$setroot^%wd
+ ; SSAMISTA^SAMICASE
+ ; $$URBRUR^SAMIVSTA
+ ; $$NOW^XLFDT
+ ; $$VAPALSDT^SAMICASE
  ;@input
  ; num = index where new form should be built
  ;@output
@@ -427,40 +368,55 @@ MKSIFORM(num) ; create intake form
  ;  where root = graph root for elcap patients
  ; @root@("graph")
  ;@examples [tbd]
- ;@tests [tbd]
+ ;@tests
+ ; UTSIFRM^SAMIUTH3
  ;
- ;@stanza 2 build intake form & place graph
+ ;
+ ;@stanza 2 create & place graph for new intake form
  ;
  new root set root=$$setroot^%wd("vapals-patients")
  new sid set sid=$get(@root@(num,"samistudyid"))
  quit:sid=""
+ ;
  new cdate set cdate=$get(@root@(num,"samicreatedate"))
  quit:cdate=""
+ ;
  merge @root@("graph",sid,"siform-"_cdate)=@root@(num)
- d SSAMISTA^SAMICASE(sid,"siform-"_cdate,"complete")
- ; initialize form from VistA data
- n zf s zf=$na(@root@("graph",sid,"siform-"_cdate))
- s @zf@("sipsa")=$g(@root@(num,"address1")) ; primary address
- s @zf@("sipan")=$g(@root@(num,"address2")) ; apartment number
- s @zf@("sipc")=$g(@root@(num,"city")) ; city
- s @zf@("sips")=$g(@root@(num,"state")) ; state
- s @zf@("sipcn")=$g(@root@(num,"county")) ; county
- s @zf@("sipcr")="USA" ; country
- s @zf@("sipz")=$g(@root@(num,"zip")) ; zip
- i @zf@("sipz")'="" d  ;
- . n zip s zip=@zf@("sipz")
- . q:zip=""
- . n ru s ru=$$URBRUR^SAMIVSTA(zip)
- . i ru=0 s ru="n"
- . i (ru="r")!(ru="u")!(ru="n") s @zf@("sirs")=ru
- . s @root@(num,"sirs")=$g(@zf@("sirs"))
- n phn s phn=$g(@root@(num,"phone")) ; phone number
- i phn["x" s phn=$p(phn," x",1)
- s @zf@("sippn")=phn
- s @zf@("sidc")=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
- s @zf@("sipedc")=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
+ ;
+ ; update form samistatus to complete
+ do SSAMISTA^SAMICASE(sid,"siform-"_cdate,"complete")
+ ;
+ ;
+ ;@stanza 3 init new intake form from vista data
+ ;
+ new zf set zf=$name(@root@("graph",sid,"siform-"_cdate))
+ set @zf@("sipsa")=$get(@root@(num,"address1")) ; primary address
+ set @zf@("sipan")=$get(@root@(num,"address2")) ; apartment #
+ set @zf@("sipc")=$get(@root@(num,"city")) ; city
+ set @zf@("sips")=$get(@root@(num,"state")) ; state
+ set @zf@("sipcn")=$get(@root@(num,"county")) ; county
+ set @zf@("sipcr")="USA" ; country
+ ;
+ set @zf@("sipz")=$get(@root@(num,"zip")) ; zip
+ if @zf@("sipz")'="" do
+ . new zip set zip=@zf@("sipz")
+ . quit:zip=""
+ . ;
+ . new ru set ru=$$URBRUR^SAMIVSTA(zip) ; urban/rural from zip
+ . if ru=0 set ru="n"
+ . if ru="r"!(ru="u")!(ru="n") set @zf@("sirs")=ru
+ . set @root@(num,"sirs")=$get(@zf@("sirs"))
+ . quit
+ ;
+ new phn set phn=$get(@root@(num,"phone")) ; phone #
+ if phn["x" set phn=$piece(phn," x",1)
+ set @zf@("sippn")=phn
+ ;
+ set @zf@("sidc")=$$VAPALSDT^SAMICASE($$NOW^XLFDT) ; intake discussion
+ set @zf@("sipedc")=$$VAPALSDT^SAMICASE($$NOW^XLFDT) ; pre-enroll disc
  ; set samifirsttime variable for intake form
- s @zf@("samifirsttime")="true"
+ set @zf@("samifirsttime")="true"
+ ;
  ;
  ;@stanza 3 termination
  ;
@@ -468,61 +424,207 @@ MKSIFORM(num) ; create intake form
  ;
  ;
  ;
- ;@section 4 api $$SID2NUM^SAMIHOM3
+ ;@section 5 unused &/or deprecated subroutines
  ;
  ;
  ;
- ;@API $$SID2NUM^SAMIHOM3, number part of study id
-SID2NUM(sid) ; number part of studyid (XXX0001 -> 1)
+SCANFOR(ary,start,what) ; scan array looking for value
  ;
  ;@stanza 1 invocation, binding, & branching
  ;
- ;ven/gpl;public;function;
- ;@called-by
- ; getVals^%wfhform
- ; WSCASE^SAMICASE
- ; WSNUFORM^SAMICASE
- ; MKCEFORM^SAMICASE
+ ;ven/gpl;private;function;clean;silent;sac;tests
+ ;@called-by none
  ;@calls: none
  ;@input
- ; sid = study id
- ;@output = number from study id
+ ; .ary = array to scan
+ ; start = index to begin scanning at
+ ; what = value to scan array for
+ ;@output = array index where value was found
  ;@examples [tbd]
- ;@tests [tbd]
+ ;@tests
+ ; UTSCAN4^SAMIUTH3
  ;
- ;@stanza 2 calculate number
  ;
- ;new number set number=+$extract(sid,4,$length(sid))
- ; we have to look up the number (pien) instead of computing it
- new number,proot
- set proot=$$setroot^%wd("vapals-patients")
- set number=$o(@proot@("sid",sid,"")) 
+ ;@stanza 2 scan array
+ ;
+ new %1 set %1=start
+ new limit
+ for limit=0:1:1001  do  quit:'%1  quit:ary(%1)[what
+ . set %1=$order(ary(%1))
+ . quit:'%1
+ . quit:ary(%1)[what
+ . ; write !,ary(%1)
+ . quit
+ ;
+ new zrtn set zrtn=%1
+ if %1<start set zrtn=start
+ if %1>1000 set zrtn=start
+ ;
  ;
  ;@stanza 3 return & termination
  ;
- quit number ; return number; end of $$sid2num
+ quit zrtn ; return array index; end of $$$SCANFOR
+ ;
+ ;
+ ;
+NEXTNUM() ; next number for studyid
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;variable;clean;silent;sac;tests
+ ;@called-by none
+ ; WSNEWCAS [commented out]
+ ;@calls
+ ; $$setroot^%wd
+ ;@input: none
+ ;@output = next number for study id
+ ;@examples [tbd]
+ ;@tests
+ ; UTNXTN^SAMIUTH3
+ ;
+ ;
+ ;@stanza 2 calculate next number
+ ;
+ new root set root=$$setroot^%wd("vapals-patients")
+ new number set number=$order(@root@("  "),-1)+1
+ ;
+ ;
+ ;@stanza 3 return & termination
+ ;
+ quit number ; return #; end of $$NEXTNUM
+ ;
+ ;
+ ;
+VALDTNM(nm,args) ; validate new name
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;function;clean;silent;sac;tests
+ ;@called-by none
+ ; WSNEWCAS [commented out]
+ ;@calls none
+ ;@input
+ ; nm = name to validate
+ ; .args = array to return error messages
+ ;@output = 1 if valid, -1 if not
+ ;@examples [tbd]
+ ;@tests
+ ; UTVALNM^SAMIUTH3
+ ;
+ ;
+ ;@stanza 2 screen for invalid name
+ ;
+ if nm'["," do  quit -1
+ . set args("saminuerror")="invalid name"
+ . quit
+ ;
+ ;
+ ;@stanza 3 return & termination
+ ;
+ quit 1 ; return success; end of $$VALDTNM
+ ;
+ ;
+ ;
+MKSBFORM(num) ; create background form [deprecated]
+ ;
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;ven/gpl;private;procedure;clean;silent;sac;tests
+ ;@called-by none
+ ; WSNEWCAS [commented out by gpl 2018-06-15]
+ ;@calls
+ ; $$setroot^%wd
+ ; SSAMISTA^SAMICASE
+ ;@input
+ ; num = index where new form should be built
+ ;@output
+ ; @root(num) = ...
+ ;  where root = graph root for elcap patients
+ ; @root@("graph")
+ ;@examples [tbd]
+ ;@tests
+ ; UTSBFRM^SAMIUTH3
+ ;
+ ;
+ ;@stanza 2 build background form & place graph
+ ;
+ new root set root=$$setroot^%wd("vapals-patients")
+ new sid set sid=$get(@root@(num,"samistudyid"))
+ quit:sid=""
+ ;
+ new cdate set cdate=$get(@root@(num,"samicreatedate"))
+ quit:cdate=""
+ ;
+ merge @root@("graph",sid,"sbform-"_cdate)=@root@(num)
+ ;
+ ; update form samistatus to complete
+ do SSAMISTA^SAMICASE(sid,"sbform-"_cdate,"incomplete")
+ ;
+ ;
+ ;@stanza 3 termination
+ ;
+ quit  ; end of MKSBFORM
+ ;
  ;
  ;
 ADDPAT(dfn) ; calls newCase to add patient dfn to vapals
- n lroot s lroot=$$setroot^%wd("patient-lookup")
- n lien s lien=$o(@lroot@("dfn",dfn,""))
- q:lien=""
- n name s name=$g(@lroot@(lien,"saminame"))
- q:name=""
- n bdy s bdy(1)="saminame="_name_"&dfn="_dfn
- n ARGS,result
- d WSNEWCAS(.ARGS,.bdy,.result)
- ; zwr result
  ;
-INDEX ; reindex the vapals-patients graph
- n root s root=$$setroot^%wd("vapals-patients")
- n zi s zi=0
- f  s zi=$o(@root@(zi)) q:+zi=0  d  ;
- . n dfn,sid
- . s dfn=@root@(zi,"dfn")
- . s sid=@root@(zi,"samistudyid")
- . s @root@("dfn",dfn,zi)=""
- . s @root@("sid",sid,zi)=""
- q
+ ;@stanza 1 invocation, binding, & branching
+ ;
+ ;;private;procedure;clean;silent;sac;tests
+ ;@called-by none
+ ;@calls
+ ; $$setroot^%wd
+ ; WSNEWCAS
+ ;@falls-thru-to
+ ; INDEX
+ ;@input
+ ; dfn = patient ien
+ ;@output
+ ; new patient is added to vapals graphstore
+ ;@tests
+ ; UTADDPT^SAMIUTH3
+ ;
+ ;
+ ;@stanza 2 add patient to graphstore
+ ;
+ new lroot set lroot=$$setroot^%wd("patient-lookup")
+ new lien set lien=$order(@lroot@("dfn",dfn,""))
+ quit:lien=""
+ ;
+ new name set name=$get(@lroot@(lien,"saminame"))
+ quit:name=""
+ ;
+ new bdy set bdy(1)="saminame="_name_"&dfn="_dfn
+ new ARGS,result
+ ;
+ do WSNEWCAS(.ARGS,.bdy,.result) ; add to graphstore
+ ; zwrite result
+ ;
+ ;
+INDEX ;@stanza 3 reindex vapals-patients graph
+ ;
+ ;@falls-thru-from
+ ; ADDPAT
+ ;
+ new root set root=$$setroot^%wd("vapals-patients")
+ ;
+ new zi set zi=0
+ for  do  quit:+zi=0
+ . set zi=$order(@root@(zi))
+ . quit:+zi=0
+ . ;
+ . new dfn set dfn=@root@(zi,"dfn") ; patient ien
+ . new sid set sid=@root@(zi,"samistudyid") ; study id
+ . set @root@("dfn",dfn,zi)="" ; patient ien index
+ . set @root@("sid",sid,zi)="" ; study id index
+ . quit
+ ;
+ ;
+ ;@stanza 3 termination
+ ;
+ quit  ; end of ADDPAT-INDEX
+ ;
+ ;
  ;
 EOR ; end of routine SAMIHOM3

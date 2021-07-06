@@ -1,11 +1,72 @@
-SAMICLOG ;ven/gpl - SAMI intake form change log routines ; 3/26/19 12:49pm
- ;;18.0;SAM;;
+SAMICLOG ;ven/gpl - intake form change log ;2021-07-01T16:28Z
+ ;;18.0;SAMI;**12**;2020-01;
+ ;;1.18.0.12-t2+i12
  ;
- ;@license: see routine SAMIUL
- ; 
- ; It is currently untested & in progress.
+ ; Routine SAMICLOG contains subroutines for implementing the VAPALS-
+ ; ELCAP Intake Form's Change Log field.
  ;
  quit  ; no entry from top
+ ;
+ ;
+ ;
+ ;@section 0 primary development
+ ;
+ ;
+ ;
+ ;@routine-credits
+ ;@primary-dev George P. Lilly (gpl)
+ ; gpl@vistaexpertise.net
+ ;@primary-dev-org Vista Expertise Network (ven)
+ ; http://vistaexpertise.net
+ ;@copyright 2017/2021, gpl, all rights reserved
+ ;@license see routine SAMIUL
+ ;
+ ;@last-updated 2021-07-01T16:28Z
+ ;@application Screening Applications Management (SAM)
+ ;@module Screening Applications Management - IELCAP (SAMI)
+ ;@suite-of-files SAMI Forms (311.101-311.199)
+ ;@version 1.18.0.12-t2+i12
+ ;@release-date 2020-01
+ ;@patch-list **12**
+ ;
+ ;@additional-dev Larry G. Carlson (lgc)
+ ; lgc@vistaexpertise.net
+ ;@additional-dev Frederick D. S. Marshall (toad)
+ ; toad@vistaexpertise.net
+ ;@additional-dev Kenneth W. McGlothlen (mcglk)
+ ; mcglk@vistaexpertise.net
+ ;
+ ;@routine-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
+ ; 2019-03-20 ven/gpl 1.18.0-t4 e1e7c136
+ ;  SAMICLOG progress on intake form change log.
+ ;
+ ; 2019-03-25/26 ven/lgc 1.18.0-t4 12ab8234,b9a71a56,e0106403,fb73dfe5
+ ;  SAMICLOG update change log & tests, repair var name, inhibit
+ ; change log during 1st entry.
+ ;
+ ; 2019-08-03 ven/gpl 1.18.0-t4 bea65f7b
+ ;  SAMICLOG fix bugs in Have you ever smoked processing in change log
+ ; & intake note.
+ ;
+ ; 2021-06-18 ven/gpl 1.18.0.12-t2+i12 68ebd6fa
+ ;  SAMICLOG fix crash in processing text field for change log: in
+ ; DOLOGIT add screens if "field","C",var node undefined.
+ ;
+ ; 2021-07-01 ven/mcglk&toad 1.18.0.12-t2+i12
+ ;  SAMICLOG bump version & dates, add hdr comments & dev log.
+ ;
+ ;@contents
+ ; CLOG adds to the intake form change log
+ ; RUNVARS ???
+ ; DOLOGIT ???
+ ; LOGIT add an entry to the log
+ ; INTKVARS variables on intake form
+ ;
+ ;
+ ;
+ ;@section 1 subroutines
+ ;
+ ;
  ;
 CLOG(sid,form,vars) ; adds to the intake form change log 
  ; if changes have been made
@@ -60,12 +121,14 @@ CLOG(sid,form,vars) ; adds to the intake form change log
  . d LOGIT(CLOGROOT,"Contacted via changed from "_ovia_" to "_nvia)
  ;
  ;
+ ;
 RUNVARS n cnt s cnt=0
  f  s cnt=cnt+1 s var=$p($t(INTKVARS+cnt),";;",2) q:(var="")  d
  . s var=$p($p($t(INTKVARS+cnt),";;",2),"^")
  . s entry=$p($p($t(INTKVARS+cnt),";;",2),"^",2)_" changed from "
  . d DOLOGIT(.vars,.old,var,entry)
  q
+ ;
  ;
  ;
 DOLOGIT(vars,old,var,entry) ;
@@ -94,6 +157,8 @@ DOLOGIT(vars,old,var,entry) ;
  d LOGIT(CLOGROOT,entry)
  q
  ;
+ ;
+ ;
 LOGIT(CLOGROOT,ENTRY) ; add an entry to the log
  ; CLOGROOT points to the log
  ;
@@ -104,6 +169,7 @@ LOGIT(CLOGROOT,ENTRY) ; add an entry to the log
  s lien=$o(@CLOGROOT@(""),-1)+1
  s @CLOGROOT@(lien)="["_logdt_"] "_$g(ENTRY)
  q
+ ;
  ;
  ;
 INTKVARS ; Varibles on intake form
@@ -134,3 +200,6 @@ INTKVARS ; Varibles on intake form
  ;;sistatus^Enrollment status
  ;;
  ;
+ ;
+ ;
+EOR ; end of routine SAMICLOG

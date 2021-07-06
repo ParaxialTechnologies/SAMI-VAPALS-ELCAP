@@ -145,6 +145,27 @@
                 </div>
 
                 <div class="row">
+                    <div class="form-group col-md-2">
+                        <label for="sbfev1">FEV1 (L/s)</label>
+                        <input class="form-control input-sm numeric" type="text" name="sbfev1" id="sbfev1"
+                               size="4">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="sbfvc">FVC (L)</label>
+                        <input class="form-control input-sm numeric" type="text" name="sbfvc" id="sbfvc"
+                               size="4">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="sbfvc">FEV1/FVC</label>
+                        <div class="input-group">
+                            <input class="form-control input-sm whole-number" type="text" name="sbffr" id="sbffr"
+                                   size="3" maxlength="3">
+                            <span class="input-group-addon">%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
                     <div class="form-group col-sm-12 col-md-12 col-lg-6">
                         <label for="rbmd">Referring physician</label>
                         <input type="text" name="rbmd" id="rbmd" class="form-control">
@@ -259,7 +280,7 @@
                 <div id="surgery" style="display: none;">
                     <h2>Surgical Treatment Information</h2>
                     <div class="row">
-                        <div class="col-sm-6 col-md-4">
+                        <div class="col-sm-6 col-md-3">
                             <div class="form-group">
                                 <label>Have you had a pulmonary function test?</label>
                                 <br/>
@@ -267,31 +288,12 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-12 col-md-8 form-inline" id="sbahpft-container">
-                            <div class="form-group">
-                                <label for="sbfev1">FEV1 (L/s)</label>
-                                <input class="form-control input-sm numeric" type="text" name="sbfev1" id="sbfev1"
-                                       size="4">
-                            </div>
-                            <div class="form-group">
-                                <label for="sbfvc">FVC (L)</label>
-                                <input class="form-control input-sm numeric" type="text" name="sbfvc" id="sbfvc"
-                                       size="4">
-                            </div>
-                            <div class="form-group">
-                                <label for="sbfvc">FEV1/FVC</label>
-                                <div class="input-group">
-                                    <input class="form-control input-sm whole-number" type="text" name="sbffr" id="sbffr"
-                                           size="3">
-                                    <span class="input-group-addon">%</span>
-                                </div>
-                            </div>
+                        <div class="col-sm-6 col-md-3" id="sbahpft-container">
                             <div class="form-group">
                                 <label for="sbcop">Diffusion capacity (mL/min/mm Hg)</label>
                                 <input class="form-control input-sm numeric" type="text" name="sbcop" id="sbcop"
                                        size="4">
                             </div>
-
                         </div>
                     </div>
 
@@ -1967,6 +1969,7 @@
                         rbcsx8s: {validators: {notEmpty: {message: 'Other clinical TNM status is required'}}},
                         rbcsxs8m: {validators: {notEmpty: {message: 'Other clinical TNM status is required'}}},
                         rbcsbos: {validators: {notEmpty: {message: 'Clinical staging basis is required.'}}},
+                        sbffr: {validators: {lessThan: {max: 100, message: 'Value must be less than or equal to 100'}}},
                         rbmdp: {validators: {phone: {message: 'Referring physician\'s phone is invalid', country: 'US'}}},
                         rbmdf: {validators: {phone: {message: 'Referring physician\'s fax is invalid', country: 'US'}}},
                         rbsumdp: {validators: {phone: {message: 'Treating physician\'s phone is invalid', country: 'US'}}},

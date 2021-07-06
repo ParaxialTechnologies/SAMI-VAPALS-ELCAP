@@ -30,7 +30,7 @@
         {% include '_messages.jinja2' %}
         {# Build a navigation bar that will affix itself to the top of the screen and highligh active sections#}
         {% set tab_list = [("Treatment","treatment"), ("Nodules", "nodules"), ("Emphysema/Coronary Calcifications","emphysema-coronary"),
-                            ("Other Abnormalities","abnormalities"), ("Intervention & Follow-Up","intervention")] -%}
+                            ("Other Abnormalities","abnormalities"), ("Follow-Up","follow-up")] -%}
         <nav class="navbar navbar-default hidden-xs" id="wizard-bar" data-spy="affix" data-offset-top="220"
              data-offset-bottom="70">
             <div class="row">
@@ -1924,25 +1924,11 @@
             <hr/>
             {#  END Abnormalities tab#}
 
-            {# BEGIN Intervention tab#}
-            <div id="intervention">
-                <h3>Summary of interventions for this malignancy</h3>
-
-                <div class="row">
-                    <div class="col-sm-3 form-group">
-                        <label for="rbdos">First intervention</label>
-                        {{ f.datepicker("rbdos", "past") }}
-                    </div>
-                    <div class="col-sm-3 form-group">
-                        <label for="rbdmr">Most recent intervention</label>
-                        {{ f.datepicker("rbdmr", "past") }}
-                    </div>
-                </div>
-
+            {# BEGIN Follow-up tab#}
+            <div id="follow-up" style="padding-top:8px;">
                 {% with formPage=formPage %}
                     {% include '_followup.jinja2' %}
                 {% endwith %}
-
             </div>
             <hr/>
             {# END Intervention tab#}

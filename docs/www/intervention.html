@@ -658,65 +658,67 @@
         </div>
        </div>
       </div>
-      <div class="row">
-       <div class="col-md-6">
-        <div class="row">
-         <div class="form-group col-md-6">
-          <label for="rbmed">
-           Procedure date
-          </label>
-          <div class="input-group datepicker">
-           <input aria-describedby="rbmed-addon" class="form-control" data-restriction="past" id="rbmed" name="rbmed"/>
-           <div class="input-group-addon">
-            <div class="input-group-text" id="rbmed-addon">
-             <i aria-hidden="true" class="fa fa-calendar">
-             </i>
+      <div id="rbmep-container">
+       <div class="row">
+        <div class="col-md-6">
+         <div class="row">
+          <div class="form-group col-md-6">
+           <label for="rbmed">
+            Procedure date
+           </label>
+           <div class="input-group datepicker">
+            <input aria-describedby="rbmed-addon" class="form-control" data-restriction="past" id="rbmed" name="rbmed"/>
+            <div class="input-group-addon">
+             <div class="input-group-text" id="rbmed-addon">
+              <i aria-hidden="true" class="fa fa-calendar">
+              </i>
+             </div>
             </div>
            </div>
+           <small class="form-text text-muted">
+            MM/DD/YYYY
+           </small>
           </div>
-          <small class="form-text text-muted">
-           MM/DD/YYYY
-          </small>
+          <div class="form-group col-md-6">
+           <label for="rbmspid">
+            Specimen ID
+           </label>
+           <input class="form-control" id="rbmspid" name="rbmspid" size="24"/>
+          </div>
          </div>
-         <div class="form-group col-md-6">
-          <label for="rbmspid">
-           Specimen ID
+        </div>
+        <div class="col-md-6">
+         <div class="form-group">
+          <label for="rbmel">
+           Location of procedure
           </label>
-          <input class="form-control" id="rbmspid" name="rbmspid" size="24"/>
+          <input class="form-control" id="rbmel" name="rbmel"/>
          </div>
         </div>
        </div>
-       <div class="col-md-6">
-        <div class="form-group">
-         <label for="rbmel">
-          Location of procedure
-         </label>
-         <input class="form-control" id="rbmel" name="rbmel"/>
-        </div>
-       </div>
-      </div>
-      <div class="row">
-       <div class="col-md-6">
-        <div class="form-group">
-         <label for="rbmemd">
-          Physician
-         </label>
-         <input class="form-control" id="rbmemd" name="rbmemd"/>
-        </div>
-       </div>
-       <div class="col-md-6">
-        <div class="row">
-         <div class="form-group col-md-6">
-          <label for="rbmemdp">
-           Physician's phone
+       <div class="row">
+        <div class="col-md-6">
+         <div class="form-group">
+          <label for="rbmemd">
+           Physician
           </label>
-          <input class="form-control" id="rbmemdp" name="rbmemdp"/>
+          <input class="form-control" id="rbmemd" name="rbmemd"/>
          </div>
-         <div class="form-group col-md-6">
-          <label for="rbmemdf">
-           Physician's fax
-          </label>
-          <input class="form-control" id="rbmemdf" name="rbmemdf"/>
+        </div>
+        <div class="col-md-6">
+         <div class="row">
+          <div class="form-group col-md-6">
+           <label for="rbmemdp">
+            Physician's phone
+           </label>
+           <input class="form-control" id="rbmemdp" name="rbmemdp"/>
+          </div>
+          <div class="form-group col-md-6">
+           <label for="rbmemdf">
+            Physician's fax
+           </label>
+           <input class="form-control" id="rbmemdf" name="rbmemdf"/>
+          </div>
          </div>
         </div>
        </div>
@@ -12871,7 +12873,7 @@
 
             //Surgical section
             $("[name=sbahpft]").conditionallyEnable({enable: "#sbahpft-container"});
-            $("[name=rbmep]").conditionallyDisplay({enable: "#mediastinoscopy-alert"});
+            $("[name=rbmep]").conditionallyDisplay({enable: "#mediastinoscopy-alert, #rbmep-container"});
             $("[name=rbrep]").conditionallyEnable({sourceValues: "n,r", enable: "#rbrep-container"});
             $("#rbtoso").conditionallyEnable({sourceValues: "o", enable: "#rbtoso-container"});
             $("[name=rbvto]").conditionallyEnable({enable: "#rbvto-container"});

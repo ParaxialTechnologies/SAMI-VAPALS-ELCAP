@@ -313,46 +313,46 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label for="rbmed">Procedure date</label>
-                                    {{ f.datepicker("rbmed", "past") }}
+                    <div id="rbmep-container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="rbmed">Procedure date</label>
+                                        {{ f.datepicker("rbmed", "past") }}
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="rbmspid">Specimen ID</label>
+                                        <input name="rbmspid" id="rbmspid" class="form-control" size="24">
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label for="rbmspid">Specimen ID</label>
-                                    <input name="rbmspid" id="rbmspid" class="form-control" size="24">
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="rbmel">Location of procedure</label>
+                                    <input name="rbmel" id="rbmel" class="form-control">
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="rbmel">Location of procedure</label>
-                                <input name="rbmel" id="rbmel" class="form-control">
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="rbmemd">Physician</label>
-                                <input name="rbmemd" id="rbmemd" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label for="rbmemdp">Physician's phone</label>
-                                    <input name="rbmemdp" id="rbmemdp" class="form-control">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="rbmemd">Physician</label>
+                                    <input name="rbmemd" id="rbmemd" class="form-control">
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label for="rbmemdf">Physician's fax</label>
-                                    <input name="rbmemdf" id="rbmemdf" class="form-control">
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="rbmemdp">Physician's phone</label>
+                                        <input name="rbmemdp" id="rbmemdp" class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="rbmemdf">Physician's fax</label>
+                                        <input name="rbmemdf" id="rbmemdf" class="form-control">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -2057,7 +2057,7 @@
 
             //Surgical section
             $("[name=sbahpft]").conditionallyEnable({enable: "#sbahpft-container"});
-            $("[name=rbmep]").conditionallyDisplay({enable: "#mediastinoscopy-alert"});
+            $("[name=rbmep]").conditionallyDisplay({enable: "#mediastinoscopy-alert, #rbmep-container"});
             $("[name=rbrep]").conditionallyEnable({sourceValues: "n,r", enable: "#rbrep-container"});
             $("#rbtoso").conditionallyEnable({sourceValues: "o", enable: "#rbtoso-container"});
             $("[name=rbvto]").conditionallyEnable({enable: "#rbvto-container"});

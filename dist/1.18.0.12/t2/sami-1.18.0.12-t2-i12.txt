@@ -6,7 +6,7 @@ $TXT by MARSHALL,RICK DS@vapalsyotta.fiscientific.org (KIDS) 2021-07-06T17:45:14
                            
            George P. Lilly, Dom DiNatale, Larry G. Carlson,
                       & Frederick D. S. Marshall
-                              2021-06-08
+                              2021-07-07
  
 i. Front matter
  
@@ -46,9 +46,9 @@ ii. Contents
     - List of routines
     - On Caché
     - On YottaDB/GT.M
-  o Exit M & the osehra user environment
+  o Exit M
  Package-retrieval instructions
-  o Download & prepare the archive file
+  o Download and prepare the archive file
   o Expand the archive
  Main install instructions
   o Enter Vista menu system
@@ -91,10 +91,10 @@ ii. Contents
  
  1. HL7: Make HL7 patient name match case insensitive
  
-      problem: For patch 11, Mr. Marshall refactored the SAMIHL7 and
+      issue: For patch 11, Mr. Marshall refactored the SAMIHL7 and
       SAMIOR routines to increase maintainability. But as sometimes
       happens during refactoring, he introduced a bug. In this case,
-      in BLDARR^SAMIROM he moved a new command that should have been
+      in BLDARR^SAMIORM he moved a new command that should have been
       outside a loop inside the loop instead. This meant that instead
       of building an array of lines for each incoming ORM message, it
       instead kept overwriting line 1, so the resulting message
@@ -114,7 +114,7 @@ ii. Contents
  
  2. CT: nodules error in Internet Explorer
  
-      problem: The radiologists are still using IE, and the CT form
+      issue: The radiologists are still using IE, and the CT form
       causes an error in IE. The radiologist started to enter a form
       with nodules and saved for later, but when he went back, the
       nodule grid was not expanded and could not be. When the form
@@ -324,8 +324,8 @@ ii. Contents
  sami-1.18.0.12-t2-i12-recipe.txt  new
  sami-1.18.0.12-t2-i12.txt         new
  sami-1.18.0.12-t2-i12.kid         new
- sami-1.18.0.12-t2-i12.zip         new
  www/*                             modified
+ sami-1.18.0.12-t2-i12.zip         new
  
  Routine    Change
  -------    ------
@@ -358,7 +358,7 @@ ii. Contents
                                     new fields .04, 1
                                     new subfile PARMS (311.121)
  
- SAMI PARAMETER DEFAULTS (311.14)   new (DD & data)
+ SAMI PARAMETER DEFAULTS (311.14)   new (DD and data)
  
  
  
@@ -372,11 +372,12 @@ ii. Contents
  
  3.1. Assume the identity of your osehra Unix user
  
-   This step assumes you type a sudo command to do this. If your
+   This step assumes you type a dzdo or sudo to do this; here the
+   symbol $DEMAND will stand for whichever command you use. If your
    configuration is different, please adjust this step to match your
    configuration:
  
-    $ sudo su - osehra
+    $ $DEMAND su - osehra
  
  
  3.2. Prepare install directory
@@ -389,8 +390,8 @@ ii. Contents
  3.3. Back up www files
     
     Back up existing www files that will be overwritten by this
-    install. Do this by exiting M and copying the www directory to the
-    install backup directory:
+    install. Do this by copying the www directory to the install
+    backup directory:
     
     $ cp -r ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/www/* \
       ~/run/in/sami/1.18.0.12/t2/back/www/
@@ -480,6 +481,9 @@ SAMIURUL
  
     3.6.2. On Cache
     
+    Note that routines that don't currently exist will result in a
+    warning message; these messages can be disregarded.
+    
     In addition to naming the routines and routine-out file, we also
     provide a Description and press return at the Parameters and
     Printer Format prompts to accept the defaults of WNS and No,
@@ -497,28 +501,32 @@ SAMIURUL
     Routine(s): SAMIHOM4
     Routine(s): SAMIHUL
     Routine(s): SAMIJS1
-    Routine(s): SAMIJS2
+    Routine(s): SAMIJS2  [???]
+      [does not exist]
     Routine(s): SAMINOT1
     Routine(s): SAMINOT2
     Routine(s): SAMINUL
     Routine(s): SAMIORM
     Routine(s): SAMIOUL
-    Routine(s): SAMIPARM
-    Routine(s): SAMIPAT
+    Routine(s): SAMIPARM  [???]
+      [does not exist]
+    Routine(s): SAMIPAT  [???]
+      [does not exist]
     Routine(s): SAMISITE
-    Routine(s): SAMITTW
+    Routine(s): SAMITTW  [???]
+      [does not exist]
     Routine(s): SAMIUR
     Routine(s): SAMIUR2
-    Routine(s): SAMIURUL
-    Routine(s): 
-    
+    Routine(s): SAMIURUL  [???]
+      [does not exist]
+    Routine(s):
+        
     Description: SAMI 1.18.0.12-t2+i12 routine backup
     
     Output routines to
     Device: /home/osehra/run/in/sami/1.18.0.12/t2/back/sami-1.18.0.12-t2-i12-back.ro
     Parameters? ("WNS") =>
     Printer Format? No => No
-    SAMIORM.INT     SAMIOUL.INT
     SAMICAS2.INT    SAMICAS3.INT    SAMICASE.INT    SAMICLOG.INT
     SAMICUL.INT     SAMIHOM3.INT    SAMIHOM4.INT    SAMIHUL.INT
     SAMIJS1.INT     SAMIJS2.INT     SAMINOT1.INT    SAMINOT2.INT
@@ -645,11 +653,9 @@ SAMIURUL
 
 
  
- 3.7. Exit M & the osehra user environment
+ 3.7. Exit M
     
-    At the M prompt, halt to exit M. Then at the Unix prompt, exit to
-    leave the osehra user identity and resume your sysadmin user
-    identity:
+    At the M prompt, halt to exit M:
  
     > halt
  
@@ -664,12 +670,12 @@ SAMIURUL
  
  4.1. Download and prepare the archive file
    
-   You may safely download the archive file from the patch webpage in
-   advance of the actual install. To do this, use the wget command to
-   download it:
+   You may safely download the archive file ('http://vistaexpertise.net/newsite/project/vapals-elcap/sami-1.18.0.12-t2-i12.zip')
+   in advance of the actual install. To do this, use the wget command
+   to download it:
    
    $ cd ~/run/in/sami/1.18.0.12/t2/
-   $ wget [***** See patch 12T2 message for the URL *****]
+   $ wget 'http://vistaexpertise.net/newsite/project/vapals-elcap/sami-1.18.0.12-t2-i12.zip'
  
  
  4.2. Expand the archive
@@ -751,9 +757,13 @@ SAMIURUL
        KIDS Distribution saved on Jul 06, 2021@10:35:12
        Comment: Released SAMI*18.0*12 SEQ #12 T2 (sami 1.18.0.12-t2+i12)
     
-       This Distribution contains Transport Globals for the following Package(s):
-          SAMI*18.0*12
-       Distribution OK!
+    This Distribution contains Transport Globals for the following Package(s):
+    Build SAMI*18.0*12 has been loaded before, here is when:
+          SAMI*18.0*12   Install Completed
+                         was loaded on Jun 09, 2021@07:10:48
+    OK to continue with Load? NO// y  YES
+    
+    Distribution OK!
     
     Want to Continue with Load? YES// 
        Loading Distribution...
@@ -785,7 +795,7 @@ SAMIURUL
        => Released SAMI*18.0*12 SEQ #12 T2 (sami 1.18.0.12-t2+i12)  ;Created on Jul 06, 2021@10:35:12
        
     This Distribution was loaded on Jul 6, 2021@18:00:00 with header of 
-       Test Patch SAMI*18.0*12 SEQ #12 T2 (1.18.0.12-t2+i12)  ;Created on Jul 06, 2021@10:35:12
+       Released SAMI*18.0*12 SEQ #12 T2 (1.18.0.12-t2+i12)  ;Created on Jul 06, 2021@10:35:12
        It consisted of the following Install(s):
         SAMI*18.0*12
     Checking Install for Package SAMI*18.0*12
@@ -798,6 +808,8 @@ SAMIURUL
        311.12    SAMI SITE
     Note:  You already have the 'SAMI SITE' File.
     
+    
+       311.14    SAMI PARAMETER DEFAULTS  (including data)
     
     
     Want KIDS to INHIBIT LOGONs during the install? NO// 
@@ -829,7 +841,7 @@ SAMIURUL
      
      Updating KIDS files...
      
-     SAMI*18.0*11 Installed.
+     SAMI*18.0*12 Installed.
                    Jul 6, 2021@18:02:07
         
      NO Install Message sent
@@ -957,35 +969,35 @@ SAMIURUL
 
  The checksums below are Vista Type B checksums (do CHECK1^XTSUMBLD).
  
- Name       Checksum after   Patch list
- SAMICAS2   B443014164       **1,5,9,12**
- SAMICAS3   B495983816       **3,9,11,12**
- SAMICASE   B2476655         **1,12**
- SAMICLOG   B37383880        **12**
- SAMICUL    B144047          **9,11,12**
- SAMIHOM3   B168256857       **5,12**
- SAMIHOM4   B899962233       **1,4,5,6,9,12**
- SAMIHUL    B121767          **9,12**
- SAMIJS1    B33800867        **8,12**
- SAMIJS2    B50763630        **12**
- SAMINOT1   B476873142       **2,6,8,10,11,12**
- SAMINOT2   B473986621       **1,9,12**
- SAMINUL    B108196          **9,10,11,12**
- SAMIORM    B175905048       **11,12**
- SAMIOUL    B103859          **12**
- SAMIPARM   B7351374         **12**
- SAMIPAT    B576643          **12**
- SAMISITE   B90286006        **5,12**
- SAMITTW    B5460809         **12**
- SAMIUR     B493383959       **5,10,11,12**
- SAMIUR2    B1029983791      **5,11,12**
- SAMIURUL   B106488          **12** 
+ Name       Checksum before  Checksum after   Patch list
+ SAMICAS2   B381201104       B443014164       **1,5,9,12**
+ SAMICAS3   B482086967       B495983816       **3,9,11,12**
+ SAMICASE   B4139384         B2476655         **1,12**
+ SAMICLOG   B21900956        B37383880        **12**
+ SAMICUL    B138062          B144047          **9,11,12**
+ SAMIHOM3   B133868845       B168256857       **5,12**
+ SAMIHOM4   B748595747       B899962233       **1,4,5,6,9,12**
+ SAMIHUL    B95115           B121767          **9,12**
+ SAMIJS1    B2451            B33800867        **8,12**
+ SAMIJS2    0                B50763630        **12**
+ SAMINOT1   B444173065       B476873142       **2,6,8,10,11,12**
+ SAMINOT2   B463867017       B473986621       **1,9,12**
+ SAMINUL    B102256          B108196          **9,10,11,12**
+ SAMIORM    B179292122       B175905048       **11,12**
+ SAMIOUL    0                B103859          **12**
+ SAMIPARM   0                B7351374         **12**
+ SAMIPAT    0                B576643          **12**
+ SAMISITE   B64280616        B90679449        **5,12**
+ SAMITTW    0                B5460809         **12**
+ SAMIUR     B536135066       B493383959       **5,10,11,12**
+ SAMIUR2    B1106323315      B1029983791      **5,11,12**
+ SAMIURUL   0                B106488          **12** 
  
  
 8. Authors
  
              Dates              By         
- Developed   2020-06-08/07-06   George P. Lilly (ven)
+ Developed   2021-06-08/07-06   George P. Lilly (ven)
                                 Domenic DiNatale (par)
                                 Larry G. Carlson (ven)
                                 Frederick D. S. Marshall (ven)
@@ -1001,7 +1013,7 @@ SAMIURUL
                                 Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
  
- Released    2021-07-06         Frederick D. S. Marshall (ven)
+ Released    2021-07-07         Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
  
  

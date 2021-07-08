@@ -1,0 +1,1020 @@
+$TXT by MARSHALL,RICK DS@vapalsyotta.fiscientific.org (KIDS) 2021-07-06T17:45:14Z
+ 
+                          Bug Stomp Jamboree
+                 SAMI (VAPALS-ELCAP) 1.18.0.12-t2+i12
+                       (SAMI*18.0*12 SEQ #12 T2)
+                           
+           George P. Lilly, Dom DiNatale, Larry G. Carlson,
+                      & Frederick D. S. Marshall
+                              2021-07-07
+ 
+i. Front matter
+ 
+ App         SAMI (VAPALS-ELCAP)
+ Revision    SAMI*18.0*12 SEQ #12 T2
+             Version 18.0, Patch ID #12, Seq #12 T2
+ Priority    regular
+ Categories  routine, file
+ Status      development test 2: sami-1.18.0.12-t2-i12.zip
+ Depends on  SAMI 1.18.0.11+i1 (SAMI*18.0*1 SEQ #1)
+             SAMI 1.18.0.11+i2 (SAMI*18.0*2 SEQ #2)
+             SAMI 1.18.0.11+i3 (SAMI*18.0*3 SEQ #3)
+             SAMI 1.18.0.11+i4 (SAMI*18.0*4 SEQ #4)
+             SAMI 1.18.0.11+i5 (SAMI*18.0*5 SEQ #5)
+             SAMI 1.18.0.11+i6 (SAMI*18.0*6 SEQ #6)
+             SAMI 1.18.0.11+i8 (SAMI*18.0*8 SEQ #8)
+             SAMI 1.18.0.11+i9 (SAMI*18.0*9 SEQ #9)
+             SAMI 1.18.0.11+i10 (SAMI*18.0*10 SEQ #10)
+             SAMI 1.18.0.11+i11 (SAMI*18.0*11 SEQ #11)
+ 
+ 
+ii. Contents
+ 
+ Front matter
+  o Contents
+ Description
+ Package elements
+ Backup instructions
+  o Assume the identity of your osehra Unix user
+  o Prepare install directory
+  o Back up www files
+  o Enter M
+    - On Caché
+    - On YottaDB/GT.M
+  o Sign into Vista
+  o Back up routines
+    - List of routines
+    - On Caché
+    - On YottaDB/GT.M
+  o Exit M
+ Package-retrieval instructions
+  o Download and prepare the archive file
+  o Expand the archive
+ Main install instructions
+  o Enter Vista menu system
+    - Enter M
+    - Sign in and select the KIDS Installation menu
+  o Load KIDS package
+  o Install KIDS package
+  o Exit M
+  o Install the www files
+    - For VA VAPALS-ELCAP systems
+    - For Non-VA VAPALS-ELCAP systems
+  o Activate the www files and exit M
+    - Enter M
+    - Sign into Vista
+    - Rebuild M-Web's cached www files
+    - Exit M
+ Optional backout instructions
+ Routines
+ Authors
+ 
+ 
+ 
+1. Description
+ 
+ SAMI*18.0*12 SEQ #12 T2 adds 14 updates with various priorities, in a
+ variety of places in VAPALS-ELCAP, include some bug fixes and some
+ enhancements, as described below.
+ 
+ The definitive source for the VAPALS-ELCAP application - codebase,
+ package distributions (including this patch), and documentation - is
+ at the following public Github repository:
+ 
+ https://github.com/VA-PALS-ELCAP/SAMI-VAPALS-ELCAP/
+ 
+ These instructions are for your Vista environment’s sysadmin. As
+ usual, please capture the complete dialog of your install and send it
+ to your VAPALS-ELCAP support team.
+ 
+ The 2 critical bugs fixed in T2 are:
+ 
+ 1. HL7: Make HL7 patient name match case insensitive
+ 
+      issue: For patch 11, Mr. Marshall refactored the SAMIHL7 and
+      SAMIOR routines to increase maintainability. But as sometimes
+      happens during refactoring, he introduced a bug. In this case,
+      in BLDARR^SAMIORM he moved a new command that should have been
+      outside a loop inside the loop instead. This meant that instead
+      of building an array of lines for each incoming ORM message, it
+      instead kept overwriting line 1, so the resulting message
+      received only included the last line of the message. This
+      resulted in the creation of cryptic stub entries in patients'
+      ORM subgraphs, which in turn resulted in blank lines in the
+      Worklist.
+ 
+      solution: The new command was moved outside the loop where it
+      belongs, so all new incoming ORM messages will be processed
+      and appear on the Worklist correctly. In the interests of fixing
+      SAMIORM ASAP, cleanup of the existing stub entries will be left
+      for patch 12T2 or T3, to leave time to find and develop the best
+      solution.
+      
+      reported: 2021-06-07 by Murphy & Jirapatnakul.
+ 
+ 2. CT: nodules error in Internet Explorer
+ 
+      issue: The radiologists are still using IE, and the CT form
+      causes an error in IE. The radiologist started to enter a form
+      with nodules and saved for later, but when he went back, the
+      nodule grid was not expanded and could not be. When the form
+      loads we get the following javascript error:
+      
+      jQuery.Deferred exception: Object doesn't support property or
+      method 'includes' TypeError: Object doesn't support property or
+      method 'includes'
+   at toggleFields (vapals-elcap.phoenix.va.gov/see/sami/nodule-grid.js?v=2021.06.01:70:17)
+   at setupNoduleEnabledState (vapals-elcap.phoenix.va.gov/see/sami/nodule-grid.js?v=2021.06.01:48:21)
+   at _init (vapals-elcap.phoenix.va.gov/see/sami/nodule-grid.js?v=2021.06.01:407:21)
+   at noduleGrid (vapals-elcap.phoenix.va.gov/see/sami/nodule-grid.js?v=2021.06.01:419:13)
+   at initNoduleGrid (vapals-elcap.phoenix.va.gov/vapals:5419:13)
+   at Anonymous function (vapals-elcap.phoenix.va.gov/vapals:9233:13)
+   at l (vapals-elcap.phoenix.va.gov/see/sami/lib/jquery-3.3.1.min.js:2:29367)
+   at Anonymous function (vapals-elcap.phoenix.va.gov/see/sami/lib/jquery-3.3.1.min.js:2:29677) undefined"
+      
+      solution: fixed.
+      
+      reported: 2021-06-15 by Jirapatnakul.
+ 
+ 
+ The 2 bugs fixed in the Manual Registration form are:
+ 
+ 3. HL7: Store patient names in ORM subgraphs in uppercase
+ 
+      issue: Patch 11 introduced a change dating back to 2020-07 that
+      capitalizes each name (first letter uppercase, rest lowercase)
+      for storage in the VAPALS-ELCAP graph. Since patient names are
+      converted to uppercase for lookups, conversions, and other
+      calculations, this did not really affect users of the app, but
+      it meant names can be stored inconsistently, which can be
+      distracting for programmers and troubleshooters.
+      
+      solution: To simplify the graph, since patient names in CPRS and
+      Vista are recorded in uppercase, patch 12 changes PID^SAMIORM to
+      store them the same way. We're deferring the question of whether
+      to convert all existing patient names in the graph until after
+      discussion with the VA Phoenix team, so if such a conversion is
+      written it will be part of 12T2 or T3.
+      
+      reported: 2021-03-04 by Morales.
+ 
+ 4. Man Reg: Integration Control Number block
+      
+      issue: VA staff do not use the ICN to identify patients.
+      
+      solution: ICN bloc removed.
+      
+      reported: 2021-01-22 by Morales. Jira VAP-486.
+ 
+ 
+ The 3 enhancements related to parameterization include:
+ 
+ 5. Params: New parameter framework, set up defaults & site overrides
+ 
+      issue: As VAPALS-ELCAP matures, it is becoming increasingly that
+      the app needs the ability to vary field labels and behavior
+      depending on the site, and maybe by user, institution, or other
+      such variables. The app needs a parameterization framework to
+      switch appearance and behavior based on parameters.
+      
+      solution: A new file SAMI PARAMETER DEFAULTS (311.14) was
+      introduced to name parameters and set their defaults. New fields
+      were added to file SAMI SITE (311.12) to override those defaults
+      for any given site, a suite of initial parameters was created,
+      and the SAMI routines were updated to respond to those params; a
+      new web service - get params - was created so the forms can
+      query the current parameter values.
+      
+      reported: 2021-03-02 by SAMI development team.
+ 
+ 6. Params: Field label parameterizations
+      
+      issue: Various fields on the SAMI forms are good candidates for
+      having parameterized labels, such as references to social
+      security # (instead of medical record #) or to veterans (instead
+      of patients/participants).
+      
+      solution: These labels were modified throughout SAMI to respond
+      to parameter settings.
+      
+      reported: 2021-05-10 by Lilly.
+ 
+ 7. Params: Matching Report parameterization
+ 
+      issue: Whether the Matching Report is an item on the Reports
+      Menu should be controlled by parameter.
+      
+      solution: Parameter added and implemented to hide the Matching
+      Report if site doesn't need or use it.
+      
+      reported: 2021-06-01 by Yaw.
+ 
+ 
+ 
+ The 1 upgrade related to the SAMI graphstore structure is:
+ 
+ 8. Graphstore: Patients with same SSN in different sites
+ 
+      issue: The initial database architecture for SAMI assumed each
+      VAPALS-ELCAP instance would support only a single site, so
+      social security numbers were assumed to be unique. When VAPALS-
+      ELCAP was upgraded in SAMI 1.18.0.5+i5 to allow multiple sites
+      to share an instance (aka multi-tenancy), as a side effect this
+      SSN restriction inadvertently became a restriction that no two
+      sites could have patients with the same SSN. This is a problem,
+      because many veterans are served by multiple VA sites.
+      
+      solution: The restriction was changed to allow patients with the
+      same SSN at multiple sites within the same VAPALS-ELCAP instance
+      as a followup/completion of the multi-tenancy work.
+      
+      reported: 2021-04-27 by Rukavena.
+ 
+ 
+ The 4 bug fixes related to the the Intake Form are:
+ 
+ 9. Intake: M execution error with long text on Intake Form
+ 
+      issue: Long text (say 300 words or so) put into the change log
+      field causes an M error.
+      
+      solution: Upgraded to handle about 6,000 characters or so in
+      text box. (tested with opening of Tolstoy's War and Peace)
+      
+      reported: 2021-04-16 by Jirapatnakul.
+ 
+ 10. Intake: Reason for Change block hidden when inactive selected
+ 
+      issue: The Reason for Change block of fields were only appearing
+      when the patient was set to active. When changed to inactive,
+      the block disappeared, even though the same fields apply then.
+      This led to a 2021-05-17 request by Hanschke & Jirapatnakul to
+      add four fields related to the reason for the change. When
+      DiNatale figured out that the request overlapped with the
+      existing but hidden fields, the group agreed for now to just fix
+      the bug with the disappearing fields.
+      
+      solution: The form was changed to show the block of fields even
+      when the patient is set to inactive.
+      
+      reported: 2021-05-17 by Jirapatnakul. 2021-06-15 by DiNatale.
+ 
+ 11. Intake: Make participants inactive by default
+ 
+      issue: The Active/Inactive field is required, but initially it
+      was not, which led to the creation of some patients added to the
+      current database with this field set neither way. How should
+      such patients by treated? This affected the contents of the
+      Inactive Report added in sami 1.18.0.11+i11. The previous
+      default behavior was that such ambiguous patients were not shown
+      on the Inactive Report, even though based on the intent of that
+      report they really should have been.
+      
+      solution: SAMI has been changed to treat ambiguous patients as
+      inactive, to ensure they show up on the Inactive Report, so
+      nurse navigators and VAPALS coordinators can clearly see they
+      need followup action to resolve their status.
+      
+      reported: 2021-06-24 by Jirapatnakul.
+ 
+ 12. Intake: CT Appointment field label falsely flagged as required
+ 
+      issue: The CT Appointment field label includes the asterisk that
+      indicates it is a required field, but it is not and should not
+      be.
+      
+      solution: Asterisk removed to avoid misleading users.
+      
+      reported: 2021-06-15 by DiNatale.
+ 
+ 
+ The 1 bug fix related to the Background Form is:
+ 
+ 13. Background: Systolic/Diastolic field definition
+ 
+      issue: In the Hypertension block, the Systolic/Diastolic field
+      was defined as numeric, with decimal requirements, which is not
+      the correct format for this type of data.
+      
+      solution: The input transform for the field was changed from
+      numeric to free text.
+      
+      reported: 2021-05-27 by Hanschke.
+ 
+ 
+ The 1 bug fix related to the PET Form is:
+ 
+ 
+ 14. PET: Past Followup dates
+ 
+      issue: The Follow-up Dates field would not allow entry of past
+      dates. This is a big problem for back-entering data about
+      participants' past activities.
+      
+      solution: The restriction was removed.
+      
+      reported: 2021-06-10 by Henschke & Jirapatnakul.
+ 
+ 
+ 
+2. Package elements
+ 
+ File	                         Change
+ ----                              ------
+ sami-1.18.0.12-t2-i12-recipe.txt  new
+ sami-1.18.0.12-t2-i12.txt         new
+ sami-1.18.0.12-t2-i12.kid         new
+ www/*                             modified
+ sami-1.18.0.12-t2-i12.zip         new
+ 
+ Routine    Change
+ -------    ------
+ SAMICAS2   modified
+ SAMICAS3   modified
+ SAMICASE   modified
+ SAMICLOG   modified
+ SAMICUL    modified
+ SAMIHOM3   modified
+ SAMIHOM4   modified
+ SAMIHUL    modified
+ SAMIJS1    modified
+ SAMIJS2    new
+ SAMINOT1   modified
+ SAMINOT2   modified
+ SAMINUL    modified
+ SAMIORM    modified
+ SAMIOUL    new
+ SAMIPARM   new
+ SAMIPAT    new
+ SAMISITE   modified
+ SAMITTW    new
+ SAMIUR     modified
+ SAMIUR2    modified
+ SAMIURUL   new
+ 
+ Fileman File                       Change
+ ------------                       ------
+ SAMI SITE (311.12)                 modified (DD, no data)
+                                    new fields .04, 1
+                                    new subfile PARMS (311.121)
+ 
+ SAMI PARAMETER DEFAULTS (311.14)   new (DD and data)
+ 
+ 
+ 
+3. Backup instructions
+ 
+ It is important when installing packages to back up the existing
+ package elements that are about to be changed, so that if anything
+ goes wrong with the install, these package elements can be restored.
+ For this patch, it's M routines and www files we will back up.
+ 
+ 
+ 3.1. Assume the identity of your osehra Unix user
+ 
+   This step assumes you type a dzdo or sudo to do this; here the
+   symbol $DEMAND will stand for whichever command you use. If your
+   configuration is different, please adjust this step to match your
+   configuration:
+ 
+    $ $DEMAND su - osehra
+ 
+ 
+ 3.2. Prepare install directory
+   
+   Create install and backup directories
+ 
+    $ mkdir -p ~/run/in/sami/1.18.0.12/t2/back/www/
+ 
+ 
+ 3.3. Back up www files
+    
+    Back up existing www files that will be overwritten by this
+    install. Do this by copying the www directory to the install
+    backup directory:
+    
+    $ cp -r ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/www/* \
+      ~/run/in/sami/1.18.0.12/t2/back/www/
+    $ 
+ 
+ 
+ 3.4. Enter M
+    
+    At the unix prompt, enter the M environment in direct mode, using
+    the csession command on Cache or the mumps command on
+    YottaDB/GT.M:
+ 
+    On Cache:
+    ---------
+    $ csession vapals
+    
+    Node: vapalscache, Instance: VAPALS
+    
+    >
+ 
+ 
+    On YottaDB/GT.M:
+    ----------------
+    $ mumps -dir
+    
+    >
+ 
+ 
+ 3.5. Sign into Vista
+    
+    At the M prompt, call Vista's direct-mode interface, enter your
+    access code, and then just press return at the OPTION NAME prompt
+    to return to direct mode. This sets up your authentication
+    variables. Here's a sample capture of this step:
+ 
+    > do ^XUP
+    
+    Setting up programmer environment
+    This is a TEST account.
+    
+    Access Code: *******
+    Terminal Type set to: C-VT100
+    
+    Select OPTION NAME:
+    >
+ 
+ 
+ 3.6. Back up routines
+    
+    Back up existing VAPALS-ELCAP routines that will be overwritten
+    by this install. Do this by calling direct-mode interface ^%RO
+    (routine out), selecting the list of routines to save, selecting
+    sami-1.18.0.12-t2-back.ro to save to, and answering any other
+    additional prompts.
+    
+    The prompts vary between M implementations, so be sure to follow
+    the correct dialog for your imp. The routine names to save are
+    listed below under each imp; copy the list and paste it at the
+    Routine prompt. At the final Routine prompt, press return to
+    indicate the list of routines is done.
+ 
+ 
+    3.6.1. List of routines
+SAMICAS2
+SAMICAS3
+SAMICASE
+SAMICLOG
+SAMICUL
+SAMIHOM3
+SAMIHOM4
+SAMIHUL
+SAMIJS1
+SAMIJS2
+SAMINOT1
+SAMINOT2
+SAMINUL
+SAMIORM
+SAMIOUL
+SAMIPARM
+SAMIPAT
+SAMISITE
+SAMITTW
+SAMIUR
+SAMIUR2
+SAMIURUL
+ 
+ 
+    3.6.2. On Cache
+    
+    Note that routines that don't currently exist will result in a
+    warning message; these messages can be disregarded.
+    
+    In addition to naming the routines and routine-out file, we also
+    provide a Description and press return at the Parameters and
+    Printer Format prompts to accept the defaults of WNS and No,
+    respectively:
+    
+    > do ^%RO
+    
+    Routine output (please use %ROMF for object code output)
+    Routine(s): SAMICAS2
+    Routine(s): SAMICAS3
+    Routine(s): SAMICASE
+    Routine(s): SAMICLOG
+    Routine(s): SAMICUL
+    Routine(s): SAMIHOM3
+    Routine(s): SAMIHOM4
+    Routine(s): SAMIHUL
+    Routine(s): SAMIJS1
+    Routine(s): SAMIJS2  [???]
+      [does not exist]
+    Routine(s): SAMINOT1
+    Routine(s): SAMINOT2
+    Routine(s): SAMINUL
+    Routine(s): SAMIORM
+    Routine(s): SAMIOUL
+    Routine(s): SAMIPARM  [???]
+      [does not exist]
+    Routine(s): SAMIPAT  [???]
+      [does not exist]
+    Routine(s): SAMISITE
+    Routine(s): SAMITTW  [???]
+      [does not exist]
+    Routine(s): SAMIUR
+    Routine(s): SAMIUR2
+    Routine(s): SAMIURUL  [???]
+      [does not exist]
+    Routine(s):
+        
+    Description: SAMI 1.18.0.12-t2+i12 routine backup
+    
+    Output routines to
+    Device: /home/osehra/run/in/sami/1.18.0.12/t2/back/sami-1.18.0.12-t2-i12-back.ro
+    Parameters? ("WNS") =>
+    Printer Format? No => No
+    SAMICAS2.INT    SAMICAS3.INT    SAMICASE.INT    SAMICLOG.INT
+    SAMICUL.INT     SAMIHOM3.INT    SAMIHOM4.INT    SAMIHUL.INT
+    SAMIJS1.INT     SAMIJS2.INT     SAMINOT1.INT    SAMINOT2.INT
+    SAMINUL.INT     SAMIORM.INT     SAMIOUL.INT     SAMIPARM.INT
+    SAMIPAT.INT     SAMISITE.INT    SAMITTW.INT     SAMIUR.INT
+    SAMIUR2.INT     SAMIURUL.INT
+    >
+ 
+ 
+ 
+    3.6.3. On YottaDB/GT.M
+    
+    In addition to naming the routines and routine-out file, we also
+    provide a Header Label and press return at the Strip comments
+    prompt to accept the default of No:
+    
+    > do ^%RO
+    
+    Routine Output - Save selected routines into RO file.
+    
+    Routine: SAMICAS2
+    SAMICAS2
+    Current total of 1 routines.
+    
+    Routine: SAMICAS3
+    SAMICAS3
+    Current total of 2 routines.
+    
+    Routine: SAMICASE
+    SAMICASE
+    Current total of 3 routines.
+    
+    Routine: SAMICLOG
+    SAMICLOG
+    Current total of 4 routines.
+    
+    Routine: SAMICUL
+    SAMICUL
+    Current total of 5 routines.
+    
+    Routine: SAMIHOM3
+    SAMIHOM3
+    Current total of 6 routines.
+    
+    Routine: SAMIHOM4
+    SAMIHOM4
+    Current total of 7 routines.
+    
+    Routine: SAMIHUL
+    SAMIHUL
+    Current total of 8 routines.
+    
+    Routine: SAMIJS1
+    SAMIJS1
+    Current total of 9 routines.
+    
+    Routine: SAMIJS2
+    
+    Current total of 9 routines.
+    
+    Routine: SAMINOT1
+    SAMINOT1
+    Current total of 10 routines.
+    
+    Routine: SAMINOT2
+    SAMINOT2
+    Current total of 11 routines.
+    
+    Routine: SAMINUL
+    SAMINUL
+    Current total of 12 routines.
+    
+    Routine: SAMIORM
+    SAMIORM
+    Current total of 13 routines.
+    
+    Routine: SAMIOUL
+    SAMIOUL
+    Current total of 14 routines.
+    
+    Routine: SAMIPARM
+    
+    Current total of 14 routines.
+    
+    Routine: SAMIPAT
+    
+    Current total of 14 routines.
+    
+    Routine: SAMISITE
+    SAMISITE
+    Current total of 15 routines.
+    
+    Routine: SAMITTW
+    
+    Current total of 15 routines.
+    
+    Routine: SAMIUR
+    SAMIUR
+    Current total of 16 routines.
+    
+    Routine: SAMIUR2
+    SAMIUR2
+    Current total of 17 routines.
+    
+    Routine: SAMIURUL
+    
+    Current total of 17 routines.
+
+
+    Routine:
+    
+    Output device: <terminal>: /home/osehra/run/in/sami/1.18.0.12/t2/back/sami-1.18.0.12-t2-i12-back.ro
+    
+    Header Label: SAMI 1.18.0.12-t2+i12 routine backup
+    Strip comments <No>?:
+    SAMICAS2  SAMICAS3  SAMICASE  SAMICLOG  SAMICUL   SAMIHOM3
+    SAMIHOM4  SAMIHUL   SAMIJS1   SAMINOT1  SAMINOT2  SAMINUL
+    SAMIORM   SAMIOUL   SAMISITE  SAMIUR    SAMIUR2
+    
+    Total of 9031 lines in 17 routines.
+    
+    
+    >
+
+
+ 
+ 3.7. Exit M
+    
+    At the M prompt, halt to exit M:
+ 
+    > halt
+ 
+ 
+ 
+4. Package-retrieval instructions
+ 
+ Your VAPALS-ELCAP environment is now ready to install VAPALS-ELCAP
+ 1.18.0.12-t2+i12 (SAMI*18.0*12 SEQ #12 T2), so next retrieve the
+ package.
+ 
+ 
+ 4.1. Download and prepare the archive file
+   
+   You may safely download the archive file ('http://vistaexpertise.net/newsite/project/vapals-elcap/sami-1.18.0.12-t2-i12.zip')
+   in advance of the actual install. To do this, use the wget command
+   to download it:
+   
+   $ cd ~/run/in/sami/1.18.0.12/t2/
+   $ wget 'http://vistaexpertise.net/newsite/project/vapals-elcap/sami-1.18.0.12-t2-i12.zip'
+ 
+ 
+ 4.2. Expand the archive
+   
+   Expand the archive file, using the unix unzip command:
+    
+    $ unzip sami-1.18.0.12-t2-i12.zip
+    Archive:  sami-1.18.0.12-t2-i12.zip
+      inflating: sami-1.18.0.12-t2-i12-recipe.txt
+      inflating: sami-1.18.0.12-t2-i12.kid
+      inflating: sami-1.18.0.12-t2-i12.txt
+      inflating: www/... [9 MB of www files]
+    $ cd
+    $ 
+ 
+ 
+ 
+5. Main install instructions
+ 
+ Step 5 consists of entering the Vista menu system, loading and
+ installing the KIDS package, exiting M, and installing and activating
+ the new www files.
+ 
+ 
+ 5.1. Enter Vista menu system
+ 
+ 
+   5.1.1. Enter M
+   
+    Repeat step 3.4 to enter M.
+   
+   
+   5.1.2. Sign in and select the KIDS Installation menu
+ 
+    At the M prompt, call Vista's direct-mode interface, enter your
+    access code, at the OPTION NAME prompt select XPD MAIN to enter
+    the Kernel Installation & Distribution System main menu, and at
+    the Select ... Option prompt select Installation:
+ 
+    > do ^XUP
+    
+    Setting up programmer environment
+    This is a TEST account.
+    
+    Access Code: *******
+    Terminal Type set to: C-VT100
+    
+    Select OPTION NAME: XPD MAIN       Kernel Installation & Distribution System
+ 
+ 
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+          Patch Monitor Main Menu ...
+
+    Select Kernel Installation & Distribution System <TEST ACCOUNT> Option: Installation
+    
+    
+       1      Load a Distribution
+       2      Verify Checksums in Transport Global
+       3      Print Transport Global
+       4      Compare Transport Global to Current System
+       5      Backup a Transport Global
+       6      Install Package(s)
+              Restart Install of Package(s)
+              Unload a Distribution
+       
+    Select Installation <TEST ACCOUNT> Option:
+ 
+ 
+ 
+ 5.2. Load KIDS package
+ 
+    Select option 1 and press return at the Continue prompt.
+ 
+    Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
+    Enter a Host File: /home/osehra/run/in/sami/1.18.0.12/t2/sami-1.18.0.12-t2-i12.kid
+    
+       KIDS Distribution saved on Jul 06, 2021@10:35:12
+       Comment: Released SAMI*18.0*12 SEQ #12 T2 (sami 1.18.0.12-t2+i12)
+    
+    This Distribution contains Transport Globals for the following Package(s):
+    Build SAMI*18.0*12 has been loaded before, here is when:
+          SAMI*18.0*12   Install Completed
+                         was loaded on Jun 09, 2021@07:10:48
+    OK to continue with Load? NO// y  YES
+    
+    Distribution OK!
+    
+    Want to Continue with Load? YES// 
+       Loading Distribution...
+    
+       SAMI*18.0*12
+    Use INSTALL NAME: SAMI*18.0*12 to install this Distribution.
+    
+    
+       1      Load a Distribution
+       2      Verify Checksums in Transport Global
+       3      Print Transport Global
+       4      Compare Transport Global to Current System
+       5      Backup a Transport Global
+       6      Install Package(s)
+              Restart Install of Package(s)
+              Unload a Distribution
+       
+    Select Installation <TEST ACCOUNT> Option:
+ 
+ 
+ 
+ 5.3. Install KIDS package
+ 
+    Select option 6, enter the space bar at the INSTALL NAME prompt,
+    and press return at the next three prompts.
+ 
+    Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+    Select INSTALL NAME:    SAMI*18.0*12     Loaded from Distribution    7/6/21@18:00:00
+       => Released SAMI*18.0*12 SEQ #12 T2 (sami 1.18.0.12-t2+i12)  ;Created on Jul 06, 2021@10:35:12
+       
+    This Distribution was loaded on Jul 6, 2021@18:00:00 with header of 
+       Released SAMI*18.0*12 SEQ #12 T2 (1.18.0.12-t2+i12)  ;Created on Jul 06, 2021@10:35:12
+       It consisted of the following Install(s):
+        SAMI*18.0*12
+    Checking Install for Package SAMI*18.0*12
+       
+    Install Questions for SAMI*18.0*12
+    
+    Incoming Files:
+    
+    
+       311.12    SAMI SITE
+    Note:  You already have the 'SAMI SITE' File.
+    
+    
+       311.14    SAMI PARAMETER DEFAULTS  (including data)
+    
+    
+    Want KIDS to INHIBIT LOGONs during the install? NO// 
+    Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+    
+    Enter the Device you want to print the Install messages.
+    You can queue the install by enter a 'Q' at the device prompt.
+    Enter a '^' to abort the install.
+    
+    DEVICE: HOME//   VMS
+     
+     Install Started for SAMI*18.0*12:
+                   Jul 6, 2021@18:02:07
+     
+    Build Distribution Date: Jul 6, 2021
+     
+     Installing Routines:
+                   Jul 6, 2021@18:02:07
+     
+     Installing Data Dictionaries: ...
+                   Jul 06, 2021@18:02:07
+     
+     Installing Data:
+                   Jul 06, 2021@18:02:07
+     
+     Running Post-Install Routine: POS1812^SAMIPAT.
+     
+     Updating Routine file...
+     
+     Updating KIDS files...
+     
+     SAMI*18.0*12 Installed.
+                   Jul 6, 2021@18:02:07
+        
+     NO Install Message sent
+       
+    Install Completed
+
+
+       1      Load a Distribution
+       2      Verify Checksums in Transport Global
+       3      Print Transport Global
+       4      Compare Transport Global to Current System
+       5      Backup a Transport Global
+       6      Install Package(s)
+              Restart Install of Package(s)
+              Unload a Distribution
+       
+    Select Installation <TEST ACCOUNT> Option: 
+ 
+ 
+ 
+ 5.4. Exit M
+ 
+   At the Select ... Option prompt select the halt option.
+ 
+    Select Installation <TEST ACCOUNT> Option: halt
+      
+    Logged out at Jul 6, 2021 6:10 pm
+  
+    $
+ 
+ 
+ 
+ 5.5. Install the www files
+ 
+ At this point in the install process, the VAPALS-ELCAP routines have
+ been updated, but the corresponding www files have not. Those www
+ files must first be installed.
+ 
+ VA VAPALS-ELCAP sysadmins should follow step 5.5.1. Non-VA sysadmins
+ should follow step 5.5.2.
+ 
+ 
+   5.5.1. For VA VAPALS-ELCAP systems
+   
+   The VA firewall blocks access to the official VAPALS-ELCAP Github
+   repository, so VA VAPALS-ELCAP systems do not maintain clones of
+   that repo. Instead, they manually copy the www files into place by
+   running these commands:
+ 
+    $ rm -rf ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/www/*
+    $ cp -r ~/run/in/sami/1.18.0.12/t2/www/* \
+      ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/www/
+   
+   
+   5.5.2. For Non-VA VAPALS-ELCAP systems
+   
+   Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date
+   clones of the official Github repository. Performing a git pull
+   from that repo will automatically update the system's live www
+   files, which are accessed via a symlink to the clone's files. Run
+   these commands:
+   
+    $ cd ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/
+    $ git pull
+ 
+ 
+ 
+ 5.6. Activate the www files and exit M
+ 
+ Both the VAPALS-ELCAP routines and www files have been updated at
+ this point, but the routines are using cached copies of the www
+ files. This step refreshes that cache to activate the www files.
+ 
+ 
+   5.6.1. Enter M
+   
+    Repeat step 3.4 to enter M.
+   
+   
+   5.6.2. Sign into Vista
+ 
+    Repeat step 3.5 to sign into Vista.
+ 
+ 
+   5.6.3. Rebuild M-Web's cached www files
+   
+    To improve performance, M-Web maintains cached copies of the HTML
+    templates used by its services, so every time we update those
+    HTML files in Unix, we must also direct M-Web to update its cached
+    copies.
+ 
+    > do CLRWEB^SAMIADMN
+    
+    >
+ 
+ 
+   5.6.4. Exit M
+ 
+    > halt
+    $
+ 
+ 
+ 
+ You now have VAPALS-ELCAP 1.18.0.12-t2+i12 (SAMI*18.0*12 SEQ #12 T2)
+ installed in your M environment. The install is now complete. We
+ recommend running tests of your VAPALS-ELCAP app to confirm the
+ environment is operational and bug-free, before notifying users that
+ VAPALS-ELCAP is ready for their use.
+ 
+ 
+ 
+6. Optional backout instructions
+ 
+ Should errors or other problems result from installing this package
+ contact the VAPALS-ELCAP development team for package-backout
+ instructions.
+ 
+ 
+ 
+7. Routines
+ 
+ Lines 2 & 3 of each of these routines now look like:
+  ;;18.0;SAMI;[Patch List];2020-01;[optional build #]
+  ;;1.18.0.12-t2+i12
+
+ The checksums below are Vista Type B checksums (do CHECK1^XTSUMBLD).
+ 
+ Name       Checksum before  Checksum after   Patch list
+ SAMICAS2   B381201104       B443014164       **1,5,9,12**
+ SAMICAS3   B482086967       B495983816       **3,9,11,12**
+ SAMICASE   B4139384         B2476655         **1,12**
+ SAMICLOG   B21900956        B37383880        **12**
+ SAMICUL    B138062          B144047          **9,11,12**
+ SAMIHOM3   B133868845       B168256857       **5,12**
+ SAMIHOM4   B748595747       B899962233       **1,4,5,6,9,12**
+ SAMIHUL    B95115           B121767          **9,12**
+ SAMIJS1    B2451            B33800867        **8,12**
+ SAMIJS2    0                B50763630        **12**
+ SAMINOT1   B444173065       B476873142       **2,6,8,10,11,12**
+ SAMINOT2   B463867017       B473986621       **1,9,12**
+ SAMINUL    B102256          B108196          **9,10,11,12**
+ SAMIORM    B179292122       B175905048       **11,12**
+ SAMIOUL    0                B103859          **12**
+ SAMIPARM   0                B7351374         **12**
+ SAMIPAT    0                B576643          **12**
+ SAMISITE   B64280616        B90679449        **5,12**
+ SAMITTW    0                B5460809         **12**
+ SAMIUR     B536135066       B493383959       **5,10,11,12**
+ SAMIUR2    B1106323315      B1029983791      **5,11,12**
+ SAMIURUL   0                B106488          **12** 
+ 
+ 
+8. Authors
+ 
+             Dates              By         
+ Developed   2021-06-08/07-06   George P. Lilly (ven)
+                                Domenic DiNatale (par)
+                                Larry G. Carlson (ven)
+                                Frederick D. S. Marshall (ven)
+ 
+ Tested      2021-06-08/07-06   George P. Lilly (ven)
+                                Domenic DiNatale (par)
+                                Larry G. Carlson (ven)
+                                Claudia Henschke (va-pho)
+                                Artit Jirapatnakul (va-pho)
+                                Providencia Morales (va-pho)
+                                Lorenza A. Murphy (va-pho)
+                                Martha A. Rukavena (va-pho)
+                                Frederick D. S. Marshall (ven)
+                                Kennneth W. McGlothlen (ven)
+ 
+ Released    2021-07-07         Frederick D. S. Marshall (ven)
+                                Kennneth W. McGlothlen (ven)
+ 
+ 
+$END TXT

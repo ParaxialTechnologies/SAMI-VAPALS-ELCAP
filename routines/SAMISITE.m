@@ -1,4 +1,4 @@
-SAMISITE ;ven/gpl&arc - signon & site access ;2021-07-01T20:04Z
+SAMISITE ;ven/gpl&arc - signon & site access ;2021-07-07T16:52Z
  ;;18.0;SAMI;**5,12**;2020-01;Build 11
  ;;1.18.0.12-t2+i12
  ;
@@ -21,7 +21,7 @@ SAMISITE ;ven/gpl&arc - signon & site access ;2021-07-01T20:04Z
  ;@copyright: 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-07-01T20:04Z
+ ;@last-updated 2021-07-07T16:52Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -46,8 +46,9 @@ SAMISITE ;ven/gpl&arc - signon & site access ;2021-07-01T20:04Z
  ;  SAMISITE upgrade parameter with system overrides, add
  ; systemDemoOnly & systemDemoUseDUZ parameters.
  ;
- ; 2021-07-01 ven/toad 1.18.0.12-t2+i12
- ;  SAMISITE bump version & dates, add hdr comments & dev log.
+ ; 2021-07-01/07 ven/mcglk&toad&gpl 1.18.0.12-t2+i12 cbf7e46b,bfeea24b
+ ;  SAMISITE bump version & dates, add hdr comments & dev log; in
+ ; FINDSITE add missing 0 to quit.
  ;
  ;@to-do
  ; Add label comments
@@ -95,7 +96,7 @@ FINDSITE(SAMIRETURN,ARGS) ; extrinsic which returns the site
  ;
  n site,siteid,siteactv,sitenm
  ;
- i $o(^SAMI(311.13,"B",user,""))'="" d  q  ; superuser
+ i $o(^SAMI(311.13,"B",user,""))'="" d  q 0 ; superuser
  . d SUPER("SAMIRETURN",.ARGS)
  . s HTTPRSP("mime")="text/html"
  ;

@@ -1,11 +1,11 @@
-KIDS Distribution saved on Jul 06, 2021@10:35:12
-Released SAMI*18.0*12 SEQ #12 T2 (sami 1.18.0.12-t2+i12)
+KIDS Distribution saved on Jul 07, 2021@10:11:11
+Release SAMI*18.0*12 SEQ #12 T2 (SAMI 1.18.0.12-t2+i12)
 **KIDS**:SAMI*18.0*12^
 
 **INSTALL NAME**
 SAMI*18.0*12
 "BLD",11510,0)
-SAMI*18.0*12^SAMI^0^3210706^n
+SAMI*18.0*12^SAMI^0^3210707^n
 "BLD",11510,4,0)
 ^9.64PA^311.14^2
 "BLD",11510,4,311.12,0)
@@ -23,7 +23,7 @@ y^y^f^^n^^y^o^n
 "BLD",11510,6)
 2^12
 "BLD",11510,6.3)
-3
+5
 "BLD",11510,"INID")
 ^n
 "BLD",11510,"INIT")
@@ -95,7 +95,7 @@ SAMIPARM^^0^B7351374
 "BLD",11510,"KRN",9.8,"NM",17,0)
 SAMIPAT^^0^B576643
 "BLD",11510,"KRN",9.8,"NM",18,0)
-SAMISITE^^0^B90286006
+SAMISITE^^0^B90679449
 "BLD",11510,"KRN",9.8,"NM",19,0)
 SAMITTW^^0^B5460809
 "BLD",11510,"KRN",9.8,"NM",20,0)
@@ -401,7 +401,7 @@ SAMI^SAMI^SCREENING APPLICATIONS MANAGEMENT - IELCAP
 "PKG",230,22,1,0)
 18.0^3191203
 "PKG",230,22,1,"PAH",1,0)
-12^3210706^66
+12^3210707^66
 "QUES","XPF1",0)
 Y
 "QUES","XPF1","??")
@@ -479,7 +479,7 @@ D XPZ2^XPDIQ
 "RTN","SAMICAS2",1,0)
 SAMICAS2 ;ven/gpl - case review cont ;2021-07-01T15:42Z
 "RTN","SAMICAS2",2,0)
- ;;18.0;SAMI;**1,5,9,12**;2020-01;Build 3
+ ;;18.0;SAMI;**1,5,9,12**;2020-01;Build 5
 "RTN","SAMICAS2",3,0)
  ;;1.18.0.12-t2+i12
 "RTN","SAMICAS2",4,0)
@@ -2357,7 +2357,7 @@ EOR ; end of routine SAMICAS2
 "RTN","SAMICAS3",1,0)
 SAMICAS3 ;ven/gpl - case review cont ;2021-07-01T15:42Z
 "RTN","SAMICAS3",2,0)
- ;;18.0;SAMI;**3,9,11,12**;2020-01;Build 3
+ ;;18.0;SAMI;**3,9,11,12**;2020-01;Build 5
 "RTN","SAMICAS3",3,0)
  ;;1.18.0.12+i12
 "RTN","SAMICAS3",4,0)
@@ -4151,7 +4151,7 @@ EOR ; end of routine SAMICAS3
 "RTN","SAMICASE",1,0)
 SAMICASE ;ven/gpl - case review library ;2021-07-06T15:44Z
 "RTN","SAMICASE",2,0)
- ;;18.0;SAMI;**1,12**;2020-01;Build 3
+ ;;18.0;SAMI;**1,12**;2020-01;Build 5
 "RTN","SAMICASE",3,0)
  ;;1.18.0.12-t2+i12
 "RTN","SAMICASE",4,0)
@@ -4315,7 +4315,7 @@ EOR ; end of routine SAMICASE
 "RTN","SAMICLOG",1,0)
 SAMICLOG ;ven/gpl - intake form change log ;2021-07-01T16:28Z
 "RTN","SAMICLOG",2,0)
- ;;18.0;SAMI;**12**;2020-01;Build 3
+ ;;18.0;SAMI;**12**;2020-01;Build 5
 "RTN","SAMICLOG",3,0)
  ;;1.18.0.12-t2+i12
 "RTN","SAMICLOG",4,0)
@@ -4727,7 +4727,7 @@ EOR ; end of routine SAMICLOG
 "RTN","SAMICUL",1,0)
 SAMICUL ;ven/gpl - case review log ;2021-07-06T15:44Z
 "RTN","SAMICUL",2,0)
- ;;18.0;SAMI;**9,11,12**;2020-01;Build 3
+ ;;18.0;SAMI;**9,11,12**;2020-01;Build 5
 "RTN","SAMICUL",3,0)
  ;;1.18.0.12-t2+i12
 "RTN","SAMICUL",4,0)
@@ -5367,7 +5367,7 @@ EOR ; end of routine SAMICUL
 "RTN","SAMIHOM3",1,0)
 SAMIHOM3 ;ven/gpl - homepage web service ;2021-07-01T21:35Z
 "RTN","SAMIHOM3",2,0)
- ;;18.0;SAMI;**5,12**;2020-01;Build 3
+ ;;18.0;SAMI;**5,12**;2020-01;Build 5
 "RTN","SAMIHOM3",3,0)
  ;;1.18.0.12-t2+i12
 "RTN","SAMIHOM3",4,0)
@@ -6629,7 +6629,7 @@ EOR ; end of routine SAMIHOM3
 "RTN","SAMIHOM4",1,0)
 SAMIHOM4 ;ven/gpl,arc - homepage web services ;2021-06-16T18:09Z
 "RTN","SAMIHOM4",2,0)
- ;;18.0;SAMI;**1,4,5,6,9,12**;;Build 3
+ ;;18.0;SAMI;**1,4,5,6,9,12**;;Build 5
 "RTN","SAMIHOM4",3,0)
  ;;1.18.0.12-t2+i12
 "RTN","SAMIHOM4",4,0)
@@ -8873,7 +8873,7 @@ EOR ; end of routine SAMIHOM4
 "RTN","SAMIHUL",1,0)
 SAMIHUL ;ven/gpl - ielcap: home page log ;2021-07-01T16:19Z
 "RTN","SAMIHUL",2,0)
- ;;18.0;SAMI;**9,12**;;Build 3
+ ;;18.0;SAMI;**9,12**;;Build 5
 "RTN","SAMIHUL",3,0)
  ;;1.18.0.12-t2+i12
 "RTN","SAMIHUL",4,0)
@@ -9319,7 +9319,7 @@ EOR ; end of routine SAMIHUL
 "RTN","SAMIJS1",1,0)
 SAMIJS1 ;ven/gpl - json archive export ;2021-07-01T16:58Z
 "RTN","SAMIJS1",2,0)
- ;;18.0;SAMI;**8,12**;2020-01;Build 3
+ ;;18.0;SAMI;**8,12**;2020-01;Build 5
 "RTN","SAMIJS1",3,0)
  ;;1.18.0.12-t2+i12
 "RTN","SAMIJS1",4,0)
@@ -9741,7 +9741,7 @@ EOR ; end of routine SAMIJS1
 "RTN","SAMIJS2",1,0)
 SAMIJS2 ;ven/gpl - json archive import ;2021-07-01T17:08Z
 "RTN","SAMIJS2",2,0)
- ;;18.0;SAMI;**12**;2020-01;Build 3
+ ;;18.0;SAMI;**12**;2020-01;Build 5
 "RTN","SAMIJS2",3,0)
  ;;1.18.0.12-t2+i12
 "RTN","SAMIJS2",4,0)
@@ -10157,7 +10157,7 @@ EOR ; end of routine SAMIJS2
 "RTN","SAMINOT1",1,0)
 SAMINOT1 ;ven/gpl - text notes ;2021-07-01T17:21Z
 "RTN","SAMINOT1",2,0)
- ;;18.0;SAMI;**2,6,8,10,11,12**;2020-01;Build 3
+ ;;18.0;SAMI;**2,6,8,10,11,12**;2020-01;Build 5
 "RTN","SAMINOT1",3,0)
  ;;1.18.0.12-t2+i12
 "RTN","SAMINOT1",4,0)
@@ -11577,7 +11577,7 @@ EOR ; end of routine SAMINOT1
 "RTN","SAMINOT2",1,0)
 SAMINOT2 ;ven/gpl - followup form notes ;2021-07-01T17:21Z
 "RTN","SAMINOT2",2,0)
- ;;18.0;SAMI;**1,9,12**;2020-01;Build 3
+ ;;18.0;SAMI;**1,9,12**;2020-01;Build 5
 "RTN","SAMINOT2",3,0)
  ;;1.18.0.12-t2+i12
 "RTN","SAMINOT2",4,0)
@@ -13079,7 +13079,7 @@ EOR ; end of routine SAMINOT2
 "RTN","SAMINUL",1,0)
 SAMINUL ;ven/gpl - ielcap: note log ;2021-07-01T17:41Z
 "RTN","SAMINUL",2,0)
- ;;18.0;SAMI;**9,10,11,12**;2020-01;Build 3
+ ;;18.0;SAMI;**9,10,11,12**;2020-01;Build 5
 "RTN","SAMINUL",3,0)
  ;;1.18.0.11-t2+i11
 "RTN","SAMINUL",4,0)
@@ -13407,7 +13407,7 @@ EOR ; end of routine SAMINUL
 "RTN","SAMIORM",1,0)
 SAMIORM ;ven/lgc&arc - HL7: ORM > patient-lookup ;2021-06-08T20:07Z
 "RTN","SAMIORM",2,0)
- ;;18.0;SAMI;**11,12**;2020-01;Build 3
+ ;;18.0;SAMI;**11,12**;2020-01;Build 5
 "RTN","SAMIORM",3,0)
  ;;1.18.0.12-t1+i12
 "RTN","SAMIORM",4,0)
@@ -14519,7 +14519,7 @@ EOR ; end of routine SAMIORM
 "RTN","SAMIOUL",1,0)
 SAMIOUL ;ven/toad - HL7 development log ;2021-06-08T19:27Z
 "RTN","SAMIOUL",2,0)
- ;;18.0;SAMI;**12**;2020-01;Build 3
+ ;;18.0;SAMI;**12**;2020-01;Build 5
 "RTN","SAMIOUL",3,0)
  ;;1.18.0.12-t1+i12
 "RTN","SAMIOUL",4,0)
@@ -14829,7 +14829,7 @@ EOR ; end of routine SAMIOUL
 "RTN","SAMIPARM",1,0)
 SAMIPARM ;ven/gpl - get params web service ;2021-07-01T17:45Z
 "RTN","SAMIPARM",2,0)
- ;;18.0;SAMI;**12**;2020-01;Build 3
+ ;;18.0;SAMI;**12**;2020-01;Build 5
 "RTN","SAMIPARM",3,0)
  ;;1.18.0.12-t2+i12
 "RTN","SAMIPARM",4,0)
@@ -15053,7 +15053,7 @@ EOR ; end of routine SAMIPARM
 "RTN","SAMIPAT",1,0)
 SAMIPAT ;ven/gpl - init subroutines ;2021-07-01T21:13Z
 "RTN","SAMIPAT",2,0)
- ;;18.0;SAMI;**12**;2020-01;Build 3
+ ;;18.0;SAMI;**12**;2020-01;Build 5
 "RTN","SAMIPAT",3,0)
  ;;1.18.0.12-t2+i12
 "RTN","SAMIPAT",4,0)
@@ -15171,11 +15171,11 @@ POS1812 ; kids post-install for sami 1.18.0.12-t2+i12
 "RTN","SAMIPAT",60,0)
 EOR ; end of routine SAMIPAT
 "RTN","SAMISITE")
-0^18^B90286006
+0^18^B90679449
 "RTN","SAMISITE",1,0)
-SAMISITE ;ven/gpl&arc - signon & site access ;2021-07-01T20:04Z
+SAMISITE ;ven/gpl&arc - signon & site access ;2021-07-07T16:52Z
 "RTN","SAMISITE",2,0)
- ;;18.0;SAMI;**5,12**;2020-01;Build 3
+ ;;18.0;SAMI;**5,12**;2020-01;Build 5
 "RTN","SAMISITE",3,0)
  ;;1.18.0.12-t2+i12
 "RTN","SAMISITE",4,0)
@@ -15219,7 +15219,7 @@ SAMISITE ;ven/gpl&arc - signon & site access ;2021-07-01T20:04Z
 "RTN","SAMISITE",23,0)
  ;
 "RTN","SAMISITE",24,0)
- ;@last-updated 2021-07-01T20:04Z
+ ;@last-updated 2021-07-07T16:52Z
 "RTN","SAMISITE",25,0)
  ;@application Screening Applications Management (SAM)
 "RTN","SAMISITE",26,0)
@@ -15269,551 +15269,553 @@ SAMISITE ;ven/gpl&arc - signon & site access ;2021-07-01T20:04Z
 "RTN","SAMISITE",48,0)
  ;
 "RTN","SAMISITE",49,0)
- ; 2021-07-01 ven/toad 1.18.0.12-t2+i12
+ ; 2021-07-01/07 ven/mcglk&toad&gpl 1.18.0.12-t2+i12 cbf7e46b,bfeea24b
 "RTN","SAMISITE",50,0)
- ;  SAMISITE bump version & dates, add hdr comments & dev log.
+ ;  SAMISITE bump version & dates, add hdr comments & dev log; in
 "RTN","SAMISITE",51,0)
- ;
+ ; FINDSITE add missing 0 to quit.
 "RTN","SAMISITE",52,0)
- ;@to-do
+ ;
 "RTN","SAMISITE",53,0)
- ; Add label comments
+ ;@to-do
 "RTN","SAMISITE",54,0)
- ;
+ ; Add label comments
 "RTN","SAMISITE",55,0)
- ;@contents
-"RTN","SAMISITE",56,0)
- ; $$FINDSITE current site for user
-"RTN","SAMISITE",57,0)
- ; $$USER ien of user accessing system
-"RTN","SAMISITE",58,0)
- ; $$SITE ien of institution file entry for user's site
-"RTN","SAMISITE",59,0)
- ; $$SITEID symbol for site
-"RTN","SAMISITE",60,0)
- ; $$SITEACTV is site active?
-"RTN","SAMISITE",61,0)
- ; $$SITENM site name from ien
-"RTN","SAMISITE",62,0)
- ; $$SITENM2 site name from symbol
-"RTN","SAMISITE",63,0)
- ; LOGIN login processing
-"RTN","SAMISITE",64,0)
- ; $$SIGNON signon with access & verify code
-"RTN","SAMISITE",65,0)
- ; SUPER site selection page for super users
-"RTN","SAMISITE",66,0)
- ; UPGRADE init: convert to multi-tenancy
-"RTN","SAMISITE",67,0)
  ;
+"RTN","SAMISITE",56,0)
+ ;@contents
+"RTN","SAMISITE",57,0)
+ ; $$FINDSITE current site for user
+"RTN","SAMISITE",58,0)
+ ; $$USER ien of user accessing system
+"RTN","SAMISITE",59,0)
+ ; $$SITE ien of institution file entry for user's site
+"RTN","SAMISITE",60,0)
+ ; $$SITEID symbol for site
+"RTN","SAMISITE",61,0)
+ ; $$SITEACTV is site active?
+"RTN","SAMISITE",62,0)
+ ; $$SITENM site name from ien
+"RTN","SAMISITE",63,0)
+ ; $$SITENM2 site name from symbol
+"RTN","SAMISITE",64,0)
+ ; LOGIN login processing
+"RTN","SAMISITE",65,0)
+ ; $$SIGNON signon with access & verify code
+"RTN","SAMISITE",66,0)
+ ; SUPER site selection page for super users
+"RTN","SAMISITE",67,0)
+ ; UPGRADE init: convert to multi-tenancy
 "RTN","SAMISITE",68,0)
  ;
 "RTN","SAMISITE",69,0)
  ;
 "RTN","SAMISITE",70,0)
- ;@section 1 subroutines
-"RTN","SAMISITE",71,0)
  ;
+"RTN","SAMISITE",71,0)
+ ;@section 1 subroutines
 "RTN","SAMISITE",72,0)
  ;
 "RTN","SAMISITE",73,0)
  ;
 "RTN","SAMISITE",74,0)
-FINDSITE(SAMIRETURN,ARGS) ; extrinsic which returns the site
+ ;
 "RTN","SAMISITE",75,0)
- ; to be used by this user: ARGS("siteid")=siteid and
+FINDSITE(SAMIRETURN,ARGS) ; extrinsic which returns the site
 "RTN","SAMISITE",76,0)
- ; ARGS("sitetitle")=sitename - siteid
+ ; to be used by this user: ARGS("siteid")=siteid and
 "RTN","SAMISITE",77,0)
- ; 1 for success 
+ ; ARGS("sitetitle")=sitename - siteid
 "RTN","SAMISITE",78,0)
- ; 0 for fail - exit; page to be displayed is in SAMIRETURN
+ ; 1 for success 
 "RTN","SAMISITE",79,0)
- ;
+ ; 0 for fail - exit; page to be displayed is in SAMIRETURN
 "RTN","SAMISITE",80,0)
- ;d ^ZTER
+ ;
 "RTN","SAMISITE",81,0)
- n user
+ ;d ^ZTER
 "RTN","SAMISITE",82,0)
- s user=$$USER()
+ n user
 "RTN","SAMISITE",83,0)
- i user=-1 d  q 0
+ s user=$$USER()
 "RTN","SAMISITE",84,0)
- . n vals
+ i user=-1 d  q 0
 "RTN","SAMISITE",85,0)
- . s vals("siteid")=""
+ . n vals
 "RTN","SAMISITE",86,0)
- . s vals("sitetitle")="Unknown Site"
+ . s vals("siteid")=""
 "RTN","SAMISITE",87,0)
- . s vals("errorMessage")=""
+ . s vals("sitetitle")="Unknown Site"
 "RTN","SAMISITE",88,0)
- . d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:login",.vals)
+ . s vals("errorMessage")=""
 "RTN","SAMISITE",89,0)
- . ;s ARGS("errorMessage")="Error, user not found"
+ . d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:login",.vals)
 "RTN","SAMISITE",90,0)
- . ;d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
+ . ;s ARGS("errorMessage")="Error, user not found"
 "RTN","SAMISITE",91,0)
- ;
+ . ;d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
 "RTN","SAMISITE",92,0)
- ;d  q 0
+ ;
 "RTN","SAMISITE",93,0)
- ;. s ARGS("errorMessage")="User is found: "_user
+ ;d  q 0
 "RTN","SAMISITE",94,0)
- ;. d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
+ ;. s ARGS("errorMessage")="User is found: "_user
 "RTN","SAMISITE",95,0)
- ;
+ ;. d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
 "RTN","SAMISITE",96,0)
- n site,siteid,siteactv,sitenm
+ ;
 "RTN","SAMISITE",97,0)
- ;
+ n site,siteid,siteactv,sitenm
 "RTN","SAMISITE",98,0)
- i $o(^SAMI(311.13,"B",user,""))'="" d  q  ; superuser
+ ;
 "RTN","SAMISITE",99,0)
- . d SUPER("SAMIRETURN",.ARGS)
+ i $o(^SAMI(311.13,"B",user,""))'="" d  q 0 ; superuser
 "RTN","SAMISITE",100,0)
- . s HTTPRSP("mime")="text/html"
+ . d SUPER("SAMIRETURN",.ARGS)
 "RTN","SAMISITE",101,0)
- ;
+ . s HTTPRSP("mime")="text/html"
 "RTN","SAMISITE",102,0)
- s site=$$SITE(user)
+ ;
 "RTN","SAMISITE",103,0)
- i site<1 s site=-1
+ s site=$$SITE(user)
 "RTN","SAMISITE",104,0)
- i site=-1 d  q 0
+ i site<1 s site=-1
 "RTN","SAMISITE",105,0)
- . s ARGS("errorMessage")="Site not found for user "_user
+ i site=-1 d  q 0
 "RTN","SAMISITE",106,0)
- . d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
+ . s ARGS("errorMessage")="Site not found for user "_user
 "RTN","SAMISITE",107,0)
- ;
+ . d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
 "RTN","SAMISITE",108,0)
- s siteid=$$SITEID(site)
+ ;
 "RTN","SAMISITE",109,0)
- i siteid=-1 d  q 0
+ s siteid=$$SITEID(site)
 "RTN","SAMISITE",110,0)
- . s ARGS("errorMessage")="Site ID not found for site "_site
+ i siteid=-1 d  q 0
 "RTN","SAMISITE",111,0)
- . d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
+ . s ARGS("errorMessage")="Site ID not found for site "_site
 "RTN","SAMISITE",112,0)
- ;
+ . d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
 "RTN","SAMISITE",113,0)
- s siteactv=$$SITEACTV(site)
+ ;
 "RTN","SAMISITE",114,0)
- i siteactv<1 d  q 0
+ s siteactv=$$SITEACTV(site)
 "RTN","SAMISITE",115,0)
- . s ARGS("errorMessage")="Site not active: "_siteid
+ i siteactv<1 d  q 0
 "RTN","SAMISITE",116,0)
- . d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
+ . s ARGS("errorMessage")="Site not active: "_siteid
 "RTN","SAMISITE",117,0)
- ;
-"RTN","SAMISITE",118,0)
- s sitenm=$$SITENM(site)
-"RTN","SAMISITE",119,0)
- i sitenm=-1 d  q 0
-"RTN","SAMISITE",120,0)
- . s ARGS("errorMessage")="Site name not found: "_siteid
-"RTN","SAMISITE",121,0)
  . d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
+"RTN","SAMISITE",118,0)
+ ;
+"RTN","SAMISITE",119,0)
+ s sitenm=$$SITENM(site)
+"RTN","SAMISITE",120,0)
+ i sitenm=-1 d  q 0
+"RTN","SAMISITE",121,0)
+ . s ARGS("errorMessage")="Site name not found: "_siteid
 "RTN","SAMISITE",122,0)
- ;
+ . d RTNERR^SAMIHOM4(.SAMIRETURN,"vapals:syserror",.ARGS)
 "RTN","SAMISITE",123,0)
- s ARGS("siteid")=siteid
-"RTN","SAMISITE",124,0)
- s ARGS("sitetitle")=$$SITENM(site)_" - "_siteid
-"RTN","SAMISITE",125,0)
- q 1
-"RTN","SAMISITE",126,0)
  ;
+"RTN","SAMISITE",124,0)
+ s ARGS("siteid")=siteid
+"RTN","SAMISITE",125,0)
+ s ARGS("sitetitle")=$$SITENM(site)_" - "_siteid
+"RTN","SAMISITE",126,0)
+ q 1
 "RTN","SAMISITE",127,0)
  ;
 "RTN","SAMISITE",128,0)
  ;
 "RTN","SAMISITE",129,0)
-USER() ; extrinsic returns the DUZ of the user accessing the system
-"RTN","SAMISITE",130,0)
- ; -1 means user not known
-"RTN","SAMISITE",131,0)
- n rtn s rtn=-1
-"RTN","SAMISITE",132,0)
- s rtn=+$G(DUZ)
-"RTN","SAMISITE",133,0)
- i rtn=0 s rtn=-1
-"RTN","SAMISITE",134,0)
- q rtn
-"RTN","SAMISITE",135,0)
  ;
+"RTN","SAMISITE",130,0)
+USER() ; extrinsic returns the DUZ of the user accessing the system
+"RTN","SAMISITE",131,0)
+ ; -1 means user not known
+"RTN","SAMISITE",132,0)
+ n rtn s rtn=-1
+"RTN","SAMISITE",133,0)
+ s rtn=+$G(DUZ)
+"RTN","SAMISITE",134,0)
+ i rtn=0 s rtn=-1
+"RTN","SAMISITE",135,0)
+ q rtn
 "RTN","SAMISITE",136,0)
  ;
 "RTN","SAMISITE",137,0)
  ;
 "RTN","SAMISITE",138,0)
-SITE(USER) ; extrinsic returns the pointer to the Institution file
-"RTN","SAMISITE",139,0)
- ; which is the site of the user
-"RTN","SAMISITE",140,0)
- ; -1 means site not found
-"RTN","SAMISITE",141,0)
- ; zero means site not active
-"RTN","SAMISITE",142,0)
- n rtn
-"RTN","SAMISITE",143,0)
- s rtn=$o(^VA(200,USER,2,0))
-"RTN","SAMISITE",144,0)
- i +rtn="" s rtn=-1
-"RTN","SAMISITE",145,0)
- q rtn
-"RTN","SAMISITE",146,0)
  ;
+"RTN","SAMISITE",139,0)
+SITE(USER) ; extrinsic returns the pointer to the Institution file
+"RTN","SAMISITE",140,0)
+ ; which is the site of the user
+"RTN","SAMISITE",141,0)
+ ; -1 means site not found
+"RTN","SAMISITE",142,0)
+ ; zero means site not active
+"RTN","SAMISITE",143,0)
+ n rtn
+"RTN","SAMISITE",144,0)
+ s rtn=$o(^VA(200,USER,2,0))
+"RTN","SAMISITE",145,0)
+ i +rtn="" s rtn=-1
+"RTN","SAMISITE",146,0)
+ q rtn
 "RTN","SAMISITE",147,0)
  ;
 "RTN","SAMISITE",148,0)
  ;
 "RTN","SAMISITE",149,0)
-SITEID(SITE) ; extrinsic returns the Site Symbol for SITE
-"RTN","SAMISITE",150,0)
- ; this is found in the SAMI SITE file
-"RTN","SAMISITE",151,0)
- ; null means SITEID not found
-"RTN","SAMISITE",152,0)
- n rtn s rtn=-1
-"RTN","SAMISITE",153,0)
- n ien s ien=$o(^SAMI(311.12,"B",SITE,""))
-"RTN","SAMISITE",154,0)
- q:ien="" -1
-"RTN","SAMISITE",155,0)
- s rtn=$$GET1^DIQ(311.12,ien_",",.02)
-"RTN","SAMISITE",156,0)
- q rtn
-"RTN","SAMISITE",157,0)
  ;
+"RTN","SAMISITE",150,0)
+SITEID(SITE) ; extrinsic returns the Site Symbol for SITE
+"RTN","SAMISITE",151,0)
+ ; this is found in the SAMI SITE file
+"RTN","SAMISITE",152,0)
+ ; null means SITEID not found
+"RTN","SAMISITE",153,0)
+ n rtn s rtn=-1
+"RTN","SAMISITE",154,0)
+ n ien s ien=$o(^SAMI(311.12,"B",SITE,""))
+"RTN","SAMISITE",155,0)
+ q:ien="" -1
+"RTN","SAMISITE",156,0)
+ s rtn=$$GET1^DIQ(311.12,ien_",",.02)
+"RTN","SAMISITE",157,0)
+ q rtn
 "RTN","SAMISITE",158,0)
  ;
 "RTN","SAMISITE",159,0)
- ; 
-"RTN","SAMISITE",160,0)
-SITEACTV(SITE) ; Extrinsic which returns 1 if the site is active
-"RTN","SAMISITE",161,0)
- ; otherwise 0
-"RTN","SAMISITE",162,0)
- n rtn s rtn=-1
-"RTN","SAMISITE",163,0)
- n ien s ien=$o(^SAMI(311.12,"B",SITE,""))
-"RTN","SAMISITE",164,0)
- q:ien="" -1
-"RTN","SAMISITE",165,0)
- s rtn=$$GET1^DIQ(311.12,ien_",",.03,"I")
-"RTN","SAMISITE",166,0)
- q rtn
-"RTN","SAMISITE",167,0)
  ;
+"RTN","SAMISITE",160,0)
+ ; 
+"RTN","SAMISITE",161,0)
+SITEACTV(SITE) ; Extrinsic which returns 1 if the site is active
+"RTN","SAMISITE",162,0)
+ ; otherwise 0
+"RTN","SAMISITE",163,0)
+ n rtn s rtn=-1
+"RTN","SAMISITE",164,0)
+ n ien s ien=$o(^SAMI(311.12,"B",SITE,""))
+"RTN","SAMISITE",165,0)
+ q:ien="" -1
+"RTN","SAMISITE",166,0)
+ s rtn=$$GET1^DIQ(311.12,ien_",",.03,"I")
+"RTN","SAMISITE",167,0)
+ q rtn
 "RTN","SAMISITE",168,0)
  ;
 "RTN","SAMISITE",169,0)
  ;
 "RTN","SAMISITE",170,0)
-SITENM(SITE) ; Extrinsic which returns the Site name
+ ;
 "RTN","SAMISITE",171,0)
- ;
+SITENM(SITE) ; Extrinsic which returns the Site name
 "RTN","SAMISITE",172,0)
- n rtn s rtn=-1
-"RTN","SAMISITE",173,0)
- s rtn=$$GET1^DIQ(4,SITE_",",.01)
-"RTN","SAMISITE",174,0)
- i rtn="" s rtn=-1
-"RTN","SAMISITE",175,0)
- q rtn
-"RTN","SAMISITE",176,0)
  ;
+"RTN","SAMISITE",173,0)
+ n rtn s rtn=-1
+"RTN","SAMISITE",174,0)
+ s rtn=$$GET1^DIQ(4,SITE_",",.01)
+"RTN","SAMISITE",175,0)
+ i rtn="" s rtn=-1
+"RTN","SAMISITE",176,0)
+ q rtn
 "RTN","SAMISITE",177,0)
  ;
 "RTN","SAMISITE",178,0)
  ;
 "RTN","SAMISITE",179,0)
-SITENM2(SITEID) ; Extrinsic which returns the Site name from the Site Symbol
+ ;
 "RTN","SAMISITE",180,0)
- ;
+SITENM2(SITEID) ; Extrinsic which returns the Site name from the Site Symbol
 "RTN","SAMISITE",181,0)
- q:SITEID="" -1
-"RTN","SAMISITE",182,0)
- n siteien
-"RTN","SAMISITE",183,0)
- s siteien=$o(^SAMI(311.12,"SYM",SITEID,""))
-"RTN","SAMISITE",184,0)
- n site
-"RTN","SAMISITE",185,0)
- q $$GET1^DIQ(311.12,siteien_",",.01,"E")
-"RTN","SAMISITE",186,0)
  ;
+"RTN","SAMISITE",182,0)
+ q:SITEID="" -1
+"RTN","SAMISITE",183,0)
+ n siteien
+"RTN","SAMISITE",184,0)
+ s siteien=$o(^SAMI(311.12,"SYM",SITEID,""))
+"RTN","SAMISITE",185,0)
+ n site
+"RTN","SAMISITE",186,0)
+ q $$GET1^DIQ(311.12,siteien_",",.01,"E")
 "RTN","SAMISITE",187,0)
  ;
 "RTN","SAMISITE",188,0)
  ;
 "RTN","SAMISITE",189,0)
-LOGIN(RTN,VALS) ; login processing
+ ;
 "RTN","SAMISITE",190,0)
- ;
+LOGIN(RTN,VALS) ; login processing
 "RTN","SAMISITE",191,0)
- n access,verify
-"RTN","SAMISITE",192,0)
- s access=$g(VALS("access"))
-"RTN","SAMISITE",193,0)
- s verify=$g(VALS("verify"))
-"RTN","SAMISITE",194,0)
- ;i verify="@demo123" s verify="@demo321"
-"RTN","SAMISITE",195,0)
- ;i verify="@demo123" s verify="$#happy10"
-"RTN","SAMISITE",196,0)
- ;i access="ZZZUSER1" s access="SUPER6"
-"RTN","SAMISITE",197,0)
- ;i access="" d  ;
-"RTN","SAMISITE",198,0)
- ;. s access="PHXNAV1"
-"RTN","SAMISITE",199,0)
- ;. s verify="$#happy6"
-"RTN","SAMISITE",200,0)
- I $$GET1PARM^SAMIPARM("systemDemoOnly")="true" D  Q  ;
-"RTN","SAMISITE",201,0)
- . S DUZ=$$GET1PARM^SAMIPARM("systemDemoUseDUZ")
-"RTN","SAMISITE",202,0)
- . I +DUZ=0 D  ;
-"RTN","SAMISITE",203,0)
- . . S DUZ=$O(^SAMI(311.13,"B",""))
-"RTN","SAMISITE",204,0)
- . s VALS("samiroute")=""
-"RTN","SAMISITE",205,0)
- . s VALS("siteid")=""
-"RTN","SAMISITE",206,0)
- . d WSHOME^SAMIHOM3(.RTN,.VALS)
-"RTN","SAMISITE",207,0)
- n ACVC s ACVC=access_";"_verify
-"RTN","SAMISITE",208,0)
- i $$SIGNON(ACVC) D  Q  ;
-"RTN","SAMISITE",209,0)
- . s VALS("samiroute")=""
-"RTN","SAMISITE",210,0)
- . s VALS("siteid")=""
-"RTN","SAMISITE",211,0)
- . d WSHOME^SAMIHOM3(.RTN,.VALS)
-"RTN","SAMISITE",212,0)
- else  D  Q  ;
-"RTN","SAMISITE",213,0)
- . s VALS("errorMessage")="Invalid login"
-"RTN","SAMISITE",214,0)
- . d RTNERR^SAMIHOM4(.RTN,"vapals:login",.VALS)
-"RTN","SAMISITE",215,0)
- q
-"RTN","SAMISITE",216,0)
  ;
+"RTN","SAMISITE",192,0)
+ n access,verify
+"RTN","SAMISITE",193,0)
+ s access=$g(VALS("access"))
+"RTN","SAMISITE",194,0)
+ s verify=$g(VALS("verify"))
+"RTN","SAMISITE",195,0)
+ ;i verify="@demo123" s verify="@demo321"
+"RTN","SAMISITE",196,0)
+ ;i verify="@demo123" s verify="$#happy10"
+"RTN","SAMISITE",197,0)
+ ;i access="ZZZUSER1" s access="SUPER6"
+"RTN","SAMISITE",198,0)
+ ;i access="" d  ;
+"RTN","SAMISITE",199,0)
+ ;. s access="PHXNAV1"
+"RTN","SAMISITE",200,0)
+ ;. s verify="$#happy6"
+"RTN","SAMISITE",201,0)
+ I $$GET1PARM^SAMIPARM("systemDemoOnly")="true" D  Q  ;
+"RTN","SAMISITE",202,0)
+ . S DUZ=$$GET1PARM^SAMIPARM("systemDemoUseDUZ")
+"RTN","SAMISITE",203,0)
+ . I +DUZ=0 D  ;
+"RTN","SAMISITE",204,0)
+ . . S DUZ=$O(^SAMI(311.13,"B",""))
+"RTN","SAMISITE",205,0)
+ . s VALS("samiroute")=""
+"RTN","SAMISITE",206,0)
+ . s VALS("siteid")=""
+"RTN","SAMISITE",207,0)
+ . d WSHOME^SAMIHOM3(.RTN,.VALS)
+"RTN","SAMISITE",208,0)
+ n ACVC s ACVC=access_";"_verify
+"RTN","SAMISITE",209,0)
+ i $$SIGNON(ACVC) D  Q  ;
+"RTN","SAMISITE",210,0)
+ . s VALS("samiroute")=""
+"RTN","SAMISITE",211,0)
+ . s VALS("siteid")=""
+"RTN","SAMISITE",212,0)
+ . d WSHOME^SAMIHOM3(.RTN,.VALS)
+"RTN","SAMISITE",213,0)
+ else  D  Q  ;
+"RTN","SAMISITE",214,0)
+ . s VALS("errorMessage")="Invalid login"
+"RTN","SAMISITE",215,0)
+ . d RTNERR^SAMIHOM4(.RTN,"vapals:login",.VALS)
+"RTN","SAMISITE",216,0)
+ q
 "RTN","SAMISITE",217,0)
  ;
 "RTN","SAMISITE",218,0)
  ;
 "RTN","SAMISITE",219,0)
-SIGNON(ACVC) ; extrinsic returns 1 if signon is successful, else 0
+ ;
 "RTN","SAMISITE",220,0)
- ; Sign-on
+SIGNON(ACVC) ; extrinsic returns 1 if signon is successful, else 0
 "RTN","SAMISITE",221,0)
- N IO S IO=$P
+ ; Sign-on
 "RTN","SAMISITE",222,0)
- D SETUP^XUSRB() ; Only partition set-up; No single sign-on or CAPRI
+ N IO S IO=$P
 "RTN","SAMISITE",223,0)
- N RTN D VALIDAV^XUSRB(.RTN,$$ENCRYP^XUSRB1(ACVC)) ; sign-on call
+ D SETUP^XUSRB() ; Only partition set-up; No single sign-on or CAPRI
 "RTN","SAMISITE",224,0)
- I RTN(0)>0,'RTN(2) Q 1 ; Sign on successful!
+ N RTN D VALIDAV^XUSRB(.RTN,$$ENCRYP^XUSRB1(ACVC)) ; sign-on call
 "RTN","SAMISITE",225,0)
- I RTN(0)=0,RTN(2) Q 0  ; Verify Code must be changed NOW!
+ I RTN(0)>0,'RTN(2) Q 1 ; Sign on successful!
 "RTN","SAMISITE",226,0)
- I $L(RTN(3)) Q 0  ; Error Message
+ I RTN(0)=0,RTN(2) Q 0  ; Verify Code must be changed NOW!
 "RTN","SAMISITE",227,0)
- ;
+ I $L(RTN(3)) Q 0  ; Error Message
 "RTN","SAMISITE",228,0)
- q
-"RTN","SAMISITE",229,0)
  ;
+"RTN","SAMISITE",229,0)
+ q
 "RTN","SAMISITE",230,0)
  ;
 "RTN","SAMISITE",231,0)
  ;
 "RTN","SAMISITE",232,0)
-SUPER(RTN,FILTER) ; returns site selection page for super users
+ ;
 "RTN","SAMISITE",233,0)
- ;
+SUPER(RTN,FILTER) ; returns site selection page for super users
 "RTN","SAMISITE",234,0)
- n temp
-"RTN","SAMISITE",235,0)
- d getThis^%wd("temp","blank_no_nav.html")
-"RTN","SAMISITE",236,0)
- q:'$d(temp)
-"RTN","SAMISITE",237,0)
- n cnt s cnt=0
-"RTN","SAMISITE",238,0)
- n zj s zj=0
-"RTN","SAMISITE",239,0)
- f  s zj=$o(temp(zj)) q:temp(zj)["Insert"  q:+zj=0  d  ;
-"RTN","SAMISITE",240,0)
- . n ln s ln=temp(zj)
-"RTN","SAMISITE",241,0)
- . i ln["PAGE NAME" s ln="Site Selection"
-"RTN","SAMISITE",242,0)
- . d LOAD^SAMIFORM(.ln,"","")
-"RTN","SAMISITE",243,0)
- . s cnt=cnt+1
-"RTN","SAMISITE",244,0)
- . s @RTN@(cnt)=ln
-"RTN","SAMISITE",245,0)
- s cnt=cnt+1
-"RTN","SAMISITE",246,0)
- s @RTN@(cnt)="<ul>"
-"RTN","SAMISITE",247,0)
- n gn s gn=$na(^SAMI(311.12,"B"))
-"RTN","SAMISITE",248,0)
- n zi s zi=0
-"RTN","SAMISITE",249,0)
- f  s zi=$o(@gn@(zi)) q:+zi=0  d  ;
-"RTN","SAMISITE",250,0)
- . n zien s zien=$o(@gn@(zi,""))
-"RTN","SAMISITE",251,0)
- . n active
-"RTN","SAMISITE",252,0)
- . s active=$$GET1^DIQ(311.12,zien_",",.03,"I")
-"RTN","SAMISITE",253,0)
- . q:active=0
-"RTN","SAMISITE",254,0)
- . n name
-"RTN","SAMISITE",255,0)
- . s name=$$SITENM(zi)_" - "_$$SITEID(zi)
-"RTN","SAMISITE",256,0)
- . n link
-"RTN","SAMISITE",257,0)
- . s link="<li>"
-"RTN","SAMISITE",258,0)
- . s link=link_"<a class=""navigation"" data-method=""post"""
-"RTN","SAMISITE",259,0)
- . s link=link_" data-samiroute=""home"" data-siteid="""_$$SITEID(zi)_""""
-"RTN","SAMISITE",260,0)
- . ;s link=link_" data-site="""_$$SITEID(zi)_""""
-"RTN","SAMISITE",261,0)
- . ;s link=link_" href=""#!"">"_$$SITENM(zi)_" - "_$$SITEID(zi)
-"RTN","SAMISITE",262,0)
- . s link=link_" href=""/vapals"">"_name
-"RTN","SAMISITE",263,0)
- . s link=link_"</a></li>"
-"RTN","SAMISITE",264,0)
- . ;n link
-"RTN","SAMISITE",265,0)
- . ;s link="<form method=POST action=""/vapals"">"
-"RTN","SAMISITE",266,0)
- . ;s link=link_"<input type=hidden name=""samiroute"" value=""home"">"
-"RTN","SAMISITE",267,0)
- . ;s link=link_"<input type=hidden name=""siteid"" value="""_$$SITEID(zi)_""">"
-"RTN","SAMISITE",268,0)
- . ;s link=link_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
-"RTN","SAMISITE",269,0)
- . s cnt=cnt+1
-"RTN","SAMISITE",270,0)
- . s @RTN@(cnt)=link
-"RTN","SAMISITE",271,0)
- s cnt=cnt+1
-"RTN","SAMISITE",272,0)
- s @RTN@(cnt)="</ul>"
-"RTN","SAMISITE",273,0)
- n zk s zk=zj+1
-"RTN","SAMISITE",274,0)
- f  s zk=$o(temp(zk)) q:+zk=0  d  ;
-"RTN","SAMISITE",275,0)
- . s cnt=cnt+1
-"RTN","SAMISITE",276,0)
- . s @RTN@(cnt)=temp(zk)
-"RTN","SAMISITE",277,0)
- q
-"RTN","SAMISITE",278,0)
  ;
+"RTN","SAMISITE",235,0)
+ n temp
+"RTN","SAMISITE",236,0)
+ d getThis^%wd("temp","blank_no_nav.html")
+"RTN","SAMISITE",237,0)
+ q:'$d(temp)
+"RTN","SAMISITE",238,0)
+ n cnt s cnt=0
+"RTN","SAMISITE",239,0)
+ n zj s zj=0
+"RTN","SAMISITE",240,0)
+ f  s zj=$o(temp(zj)) q:temp(zj)["Insert"  q:+zj=0  d  ;
+"RTN","SAMISITE",241,0)
+ . n ln s ln=temp(zj)
+"RTN","SAMISITE",242,0)
+ . i ln["PAGE NAME" s ln="Site Selection"
+"RTN","SAMISITE",243,0)
+ . d LOAD^SAMIFORM(.ln,"","")
+"RTN","SAMISITE",244,0)
+ . s cnt=cnt+1
+"RTN","SAMISITE",245,0)
+ . s @RTN@(cnt)=ln
+"RTN","SAMISITE",246,0)
+ s cnt=cnt+1
+"RTN","SAMISITE",247,0)
+ s @RTN@(cnt)="<ul>"
+"RTN","SAMISITE",248,0)
+ n gn s gn=$na(^SAMI(311.12,"B"))
+"RTN","SAMISITE",249,0)
+ n zi s zi=0
+"RTN","SAMISITE",250,0)
+ f  s zi=$o(@gn@(zi)) q:+zi=0  d  ;
+"RTN","SAMISITE",251,0)
+ . n zien s zien=$o(@gn@(zi,""))
+"RTN","SAMISITE",252,0)
+ . n active
+"RTN","SAMISITE",253,0)
+ . s active=$$GET1^DIQ(311.12,zien_",",.03,"I")
+"RTN","SAMISITE",254,0)
+ . q:active=0
+"RTN","SAMISITE",255,0)
+ . n name
+"RTN","SAMISITE",256,0)
+ . s name=$$SITENM(zi)_" - "_$$SITEID(zi)
+"RTN","SAMISITE",257,0)
+ . n link
+"RTN","SAMISITE",258,0)
+ . s link="<li>"
+"RTN","SAMISITE",259,0)
+ . s link=link_"<a class=""navigation"" data-method=""post"""
+"RTN","SAMISITE",260,0)
+ . s link=link_" data-samiroute=""home"" data-siteid="""_$$SITEID(zi)_""""
+"RTN","SAMISITE",261,0)
+ . ;s link=link_" data-site="""_$$SITEID(zi)_""""
+"RTN","SAMISITE",262,0)
+ . ;s link=link_" href=""#!"">"_$$SITENM(zi)_" - "_$$SITEID(zi)
+"RTN","SAMISITE",263,0)
+ . s link=link_" href=""/vapals"">"_name
+"RTN","SAMISITE",264,0)
+ . s link=link_"</a></li>"
+"RTN","SAMISITE",265,0)
+ . ;n link
+"RTN","SAMISITE",266,0)
+ . ;s link="<form method=POST action=""/vapals"">"
+"RTN","SAMISITE",267,0)
+ . ;s link=link_"<input type=hidden name=""samiroute"" value=""home"">"
+"RTN","SAMISITE",268,0)
+ . ;s link=link_"<input type=hidden name=""siteid"" value="""_$$SITEID(zi)_""">"
+"RTN","SAMISITE",269,0)
+ . ;s link=link_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
+"RTN","SAMISITE",270,0)
+ . s cnt=cnt+1
+"RTN","SAMISITE",271,0)
+ . s @RTN@(cnt)=link
+"RTN","SAMISITE",272,0)
+ s cnt=cnt+1
+"RTN","SAMISITE",273,0)
+ s @RTN@(cnt)="</ul>"
+"RTN","SAMISITE",274,0)
+ n zk s zk=zj+1
+"RTN","SAMISITE",275,0)
+ f  s zk=$o(temp(zk)) q:+zk=0  d  ;
+"RTN","SAMISITE",276,0)
+ . s cnt=cnt+1
+"RTN","SAMISITE",277,0)
+ . s @RTN@(cnt)=temp(zk)
+"RTN","SAMISITE",278,0)
+ q
 "RTN","SAMISITE",279,0)
  ;
 "RTN","SAMISITE",280,0)
  ;
 "RTN","SAMISITE",281,0)
-UPGRADE() ; convert VAPALS system to Multi-tenancy by adding siteid
+ ;
 "RTN","SAMISITE",282,0)
- ; to all existing patients - runs one time as the Post Install 
+UPGRADE() ; convert VAPALS system to Multi-tenancy by adding siteid
 "RTN","SAMISITE",283,0)
- ; to the installation
+ ; to all existing patients - runs one time as the Post Install 
 "RTN","SAMISITE",284,0)
- ;
+ ; to the installation
 "RTN","SAMISITE",285,0)
- n lroot,proot,lien,pien
-"RTN","SAMISITE",286,0)
- s (lien,pien)=0
-"RTN","SAMISITE",287,0)
- s lroot=$$setroot^%wd("patient-lookup")
-"RTN","SAMISITE",288,0)
- s proot=$$setroot^%wd("vapals-patients")
-"RTN","SAMISITE",289,0)
- n site
-"RTN","SAMISITE",290,0)
- s site=$$GET^XPAR("SYS","SAMI SID PREFIX",,"Q")
-"RTN","SAMISITE",291,0)
- i site="" d  q  ;
-"RTN","SAMISITE",292,0)
- . D MES^XPDUTL("No default site returned by SAMI SID PREFIX parameter, exiting")
-"RTN","SAMISITE",293,0)
- n cnt s cnt=0
-"RTN","SAMISITE",294,0)
- f  s lien=$o(@lroot@(lien)) q:+lien=0  d  ;
-"RTN","SAMISITE",295,0)
- . q:$g(@lroot@(lien,"siteid"))'=""
-"RTN","SAMISITE",296,0)
- . n nomatch s nomatch=0
-"RTN","SAMISITE",297,0)
- . n dfn s dfn=$g(@lroot@(lien,"dfn"))
-"RTN","SAMISITE",298,0)
- . i dfn="" d  q  ;
-"RTN","SAMISITE",299,0)
- . . D MES^XPDUTL("Error, no dfn found for lien "_lien)
-"RTN","SAMISITE",300,0)
- . s pien=$o(@proot@("dfn",dfn,""))
-"RTN","SAMISITE",301,0)
- . ; make sure the first 3 chars of the studyid matches the site
-"RTN","SAMISITE",302,0)
- . i pien'="" d  q:nomatch
-"RTN","SAMISITE",303,0)
- . . n psite,psid
-"RTN","SAMISITE",304,0)
- . . s psid=$g(@proot@(pien,"sisid"))
-"RTN","SAMISITE",305,0)
- . . i psid="" s nomatch=1 q  ;
-"RTN","SAMISITE",306,0)
- . . i $e(psid,1,3)'=site s nomatch=1 d  q  ;
-"RTN","SAMISITE",307,0)
- . . . d MES^XPDUTL("skipping record - studyid "_psid_" does not match site "_site)
-"RTN","SAMISITE",308,0)
- . ;w !,"lien "_lien_" being set to "_site
-"RTN","SAMISITE",309,0)
- . s cnt=cnt+1
-"RTN","SAMISITE",310,0)
- . s @lroot@(lien,"siteid")=site
-"RTN","SAMISITE",311,0)
- i cnt>0 d  ;
-"RTN","SAMISITE",312,0)
- . d MES^XPDUTL("Multi-tenancy upgrade successful")
-"RTN","SAMISITE",313,0)
- . d MES^XPDUTL(cnt_" patient records set to site "_site)
-"RTN","SAMISITE",314,0)
- q
-"RTN","SAMISITE",315,0)
  ;
+"RTN","SAMISITE",286,0)
+ n lroot,proot,lien,pien
+"RTN","SAMISITE",287,0)
+ s (lien,pien)=0
+"RTN","SAMISITE",288,0)
+ s lroot=$$setroot^%wd("patient-lookup")
+"RTN","SAMISITE",289,0)
+ s proot=$$setroot^%wd("vapals-patients")
+"RTN","SAMISITE",290,0)
+ n site
+"RTN","SAMISITE",291,0)
+ s site=$$GET^XPAR("SYS","SAMI SID PREFIX",,"Q")
+"RTN","SAMISITE",292,0)
+ i site="" d  q  ;
+"RTN","SAMISITE",293,0)
+ . D MES^XPDUTL("No default site returned by SAMI SID PREFIX parameter, exiting")
+"RTN","SAMISITE",294,0)
+ n cnt s cnt=0
+"RTN","SAMISITE",295,0)
+ f  s lien=$o(@lroot@(lien)) q:+lien=0  d  ;
+"RTN","SAMISITE",296,0)
+ . q:$g(@lroot@(lien,"siteid"))'=""
+"RTN","SAMISITE",297,0)
+ . n nomatch s nomatch=0
+"RTN","SAMISITE",298,0)
+ . n dfn s dfn=$g(@lroot@(lien,"dfn"))
+"RTN","SAMISITE",299,0)
+ . i dfn="" d  q  ;
+"RTN","SAMISITE",300,0)
+ . . D MES^XPDUTL("Error, no dfn found for lien "_lien)
+"RTN","SAMISITE",301,0)
+ . s pien=$o(@proot@("dfn",dfn,""))
+"RTN","SAMISITE",302,0)
+ . ; make sure the first 3 chars of the studyid matches the site
+"RTN","SAMISITE",303,0)
+ . i pien'="" d  q:nomatch
+"RTN","SAMISITE",304,0)
+ . . n psite,psid
+"RTN","SAMISITE",305,0)
+ . . s psid=$g(@proot@(pien,"sisid"))
+"RTN","SAMISITE",306,0)
+ . . i psid="" s nomatch=1 q  ;
+"RTN","SAMISITE",307,0)
+ . . i $e(psid,1,3)'=site s nomatch=1 d  q  ;
+"RTN","SAMISITE",308,0)
+ . . . d MES^XPDUTL("skipping record - studyid "_psid_" does not match site "_site)
+"RTN","SAMISITE",309,0)
+ . ;w !,"lien "_lien_" being set to "_site
+"RTN","SAMISITE",310,0)
+ . s cnt=cnt+1
+"RTN","SAMISITE",311,0)
+ . s @lroot@(lien,"siteid")=site
+"RTN","SAMISITE",312,0)
+ i cnt>0 d  ;
+"RTN","SAMISITE",313,0)
+ . d MES^XPDUTL("Multi-tenancy upgrade successful")
+"RTN","SAMISITE",314,0)
+ . d MES^XPDUTL(cnt_" patient records set to site "_site)
+"RTN","SAMISITE",315,0)
+ q
 "RTN","SAMISITE",316,0)
  ;
 "RTN","SAMISITE",317,0)
  ;
 "RTN","SAMISITE",318,0)
+ ;
+"RTN","SAMISITE",319,0)
 EOR ; end of routine SAMISITE
 "RTN","SAMITTW")
 0^19^B5460809
 "RTN","SAMITTW",1,0)
 SAMITTW ;ven/gpl - text-processing utilities ;2021-07-01T21:37Z
 "RTN","SAMITTW",2,0)
- ;;18.0;SAMI;**12**;2020-01;Build 3
+ ;;18.0;SAMI;**12**;2020-01;Build 5
 "RTN","SAMITTW",3,0)
  ;;1.18.0.12-t2+i12
 "RTN","SAMITTW",4,0)
@@ -16019,7 +16021,7 @@ EOR ; end of routine SAMITTW
 "RTN","SAMIUR",1,0)
 SAMIUR ;ven/gpl - user reports ;2021-07-06T15:53Z
 "RTN","SAMIUR",2,0)
- ;;18.0;SAMI;**5,10,11,12**;2020-01;Build 3
+ ;;18.0;SAMI;**5,10,11,12**;2020-01;Build 5
 "RTN","SAMIUR",3,0)
  ;;1.18.0.12-t2+i12
 "RTN","SAMIUR",4,0)
@@ -17331,7 +17333,7 @@ EOR ; end of SAMIUR
 "RTN","SAMIUR2",1,0)
 SAMIUR2 ;ven/gpl - user reports cont ;2021-07-01T21:01Z
 "RTN","SAMIUR2",2,0)
- ;;18.0;SAMI;**5,11,12**;2020-01;Build 3
+ ;;18.0;SAMI;**5,11,12**;2020-01;Build 5
 "RTN","SAMIUR2",3,0)
  ;;1.18.0.12-t2+i12
 "RTN","SAMIUR2",4,0)
@@ -19543,7 +19545,7 @@ EOR ; end of routine SAMIUR2
 "RTN","SAMIURUL",1,0)
 SAMIURUL ;ven/gpl - user reports log ;2021-07-06T15:55Z
 "RTN","SAMIURUL",2,0)
- ;;18.0;SAMI;**12**;2020-01;Build 3
+ ;;18.0;SAMI;**12**;2020-01;Build 5
 "RTN","SAMIURUL",3,0)
  ;;1.18.0.12-t2+i12
 "RTN","SAMIURUL",4,0)

@@ -174,20 +174,28 @@ RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the
  . set RPT(1,"routine")="$$NAME^SAMIUR2"
  . set RPT(2,"header")=$$SSNLABEL(SITE)
  . set RPT(2,"routine")="$$SSN^SAMIUR2"
- . set RPT(3,"header")="CT Date"
- . set RPT(3,"routine")="$$STUDYDT^SAMIUR2"
- . set RPT(4,"header")="Gender"
- . set RPT(4,"routine")="$$GENDER^SAMIUR2"
+ . set RPT(3,"header")="Enrollment date"
+ . set RPT(3,"routine")="$$BLINEDT^SAMIUR2"
+ . ;set RPT(3,"header")="CT Date"
+ . ;set RPT(3,"routine")="$$STUDYDT^SAMIUR2"
+ . ;set RPT(4,"header")="Gender"
+ . ;set RPT(4,"routine")="$$GENDER^SAMIUR2"
  . ; set RPT(5,"header")="Race"
  . ; set RPT(5,"routine")="$$RACE^SAMIUR2"
- . set RPT(6,"header")="Age"
- . set RPT(6,"routine")="$$AGE^SAMIUR2"
- . set RPT(7,"header")="Urban/Rural"
- . set RPT(7,"routine")="$$RURAL^SAMIUR2"
- . set RPT(8,"header")="Smoking Status"
- . set RPT(8,"routine")="$$SMKSTAT^SAMIUR2"
- . set RPT(9,"header")="Pack Years at Intake"
- . set RPT(9,"routine")="$$PACKYRS^SAMIUR2"
+ . ;set RPT(6,"header")="Age"
+ . ;set RPT(6,"routine")="$$AGE^SAMIUR2"
+ . set RPT(4,"header")="Date of Death"
+ . set RPT(4,"routine")="$$INACTDT^SAMIUR2"
+ . set RPT(5,"header")="Inactive Reason"
+ . set RPT(5,"routine")="$$INACTRE^SAMIUR2"
+ . set RPT(6,"header")="Inactive Comment"
+ . set RPT(6,"routine")="$$INACTCM^SAMIUR2"
+ . ;set RPT(7,"header")="Urban/Rural"
+ . ;set RPT(7,"routine")="$$RURAL^SAMIUR2"
+ . ;set RPT(8,"header")="Smoking Status"
+ . ;set RPT(8,"routine")="$$SMKSTAT^SAMIUR2"
+ . ;set RPT(9,"header")="Pack Years at Intake"
+ . ;set RPT(9,"routine")="$$PACKYRS^SAMIUR2"
  . quit
  ;
  if TYPE="incomplete" do  quit  ;
@@ -202,12 +210,16 @@ RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the
  . quit
  ;
  if TYPE="missingct" do  quit  ;
- . set RPT(1,"header")="Enrollment date"
- . set RPT(1,"routine")="$$BLINEDT^SAMIUR2"
- . set RPT(2,"header")="Name"
- . set RPT(2,"routine")="$$NAME^SAMIUR2"
- . set RPT(3,"header")=$$SSNLABEL(SITE)
- . set RPT(3,"routine")="$$SSN^SAMIUR2"
+ . set RPT(1,"header")="Last contact date"
+ . set RPT(1,"routine")="$$LDOC^SAMIUR2"
+ . set RPT(2,"header")="Last contact entry"
+ . set RPT(2,"routine")="$$LENTRY^SAMIUR2"
+ . set RPT(3,"header")="Name"
+ . set RPT(3,"routine")="$$NAME^SAMIUR2"
+ . set RPT(4,"header")=$$SSNLABEL(SITE)
+ . set RPT(4,"routine")="$$SSN^SAMIUR2"
+ . set RPT(5,"header")="Enrollment date"
+ . set RPT(5,"routine")="$$BLINEDT^SAMIUR2"
  . quit
  ;
  if TYPE="cumpy" do  quit  ;
@@ -681,6 +693,81 @@ LASTEXM(zdt,dfn,SAMIPATS) ; patient last exam
  ;
  quit lexm ; end of ppi $$LASTEXM^SAMIUR2
  ;
+ ;
+INACTDT(zdt,dfn,SAMIPATS) ; inactive date
+ ;
+ ;;ppi;function;clean;silent;sac
+ ;@called-by
+ ; WSREPORT^SAMIUR
+ ;@calls
+ ; $$setroot^%wd
+ ;
+ new root set root=$$setroot^%wd("vapals-patients")
+ new sid set sid=$get(@root@(dfn,"samistudyid"))
+ new siform set siform=$get(SAMIPATS(zdt,dfn,"siform"))
+ new vals set vals=$name(@root@("graph",sid,siform))
+ ;
+ q $g(@vals@("sidod"))
+ ;
+INACTRE(zdt,dfn,SAMIPATS) ; inactive date
+ ;
+ ;;ppi;function;clean;silent;sac
+ ;@called-by
+ ; WSREPORT^SAMIUR
+ ;@calls
+ ; $$setroot^%wd
+ ;
+ new root set root=$$setroot^%wd("vapals-patients")
+ new sid set sid=$get(@root@(dfn,"samistudyid"))
+ new siform set siform=$get(SAMIPATS(zdt,dfn,"siform"))
+ new vals set vals=$name(@root@("graph",sid,siform))
+ ;
+ q $g(@vals@("sistachg"))
+ ;
+INACTCM(zdt,dfn,SAMIPATS) ; inactive date
+ ;
+ ;;ppi;function;clean;silent;sac
+ ;@called-by
+ ; WSREPORT^SAMIUR
+ ;@calls
+ ; $$setroot^%wd
+ ;
+ new root set root=$$setroot^%wd("vapals-patients")
+ new sid set sid=$get(@root@(dfn,"samistudyid"))
+ new siform set siform=$get(SAMIPATS(zdt,dfn,"siform"))
+ new vals set vals=$name(@root@("graph",sid,siform))
+ ;
+ q $g(@vals@("sistreas"))
+ ;
+LDE(zdt,dfn,SAMIPATS) ; last date and entry in com log
+ ;
+ ;;ppi;function;clean;silent;sac
+ ;@called-by
+ ; WSREPORT^SAMIUR
+ ;@calls
+ ; $$setroot^%wd
+ ;
+ new root set root=$$setroot^%wd("vapals-patients")
+ new sid set sid=$get(@root@(dfn,"samistudyid"))
+ new siform set siform=$get(SAMIPATS(zdt,dfn,"siform"))
+ new vals set vals=$name(@root@("graph",sid,siform))
+ ;
+ n comien,comdt,comntry
+ s (comdt,comntry)=""
+ s comien=$o(@vals@("comlog"," "),-1)
+ i comien="" d  q comdt
+ . s comdt=$g(@vals@("sidc"))
+ s comntry=$g(@vals@("comlog",comien))
+ s comdt=$p($p(comntry,"[",2),"@",1)
+ q comdt_"^"_comntry
+ ;
+LDOC(zdt,dfn,SAMIPATS) ; last date of contact
+ ;
+ q $P($$LDE(zdt,dfn,.SAMIPATS),"^",1)
+ ;
+LENTRY(zdt,dfn,SAMIPATS) ; last contact entry
+ ;
+ q $P($$LDE(zdt,dfn,.SAMIPATS),"^",2)
  ;
  ;
 MANPAT(ien,dfn,SAMIPATS) ; unmatched patient cell

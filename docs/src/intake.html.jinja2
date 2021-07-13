@@ -950,8 +950,7 @@
             $("[name=sistatus]").on('change', function () {
                 //require reason fields when marking participant as "not active"
                 $("#reason-for-change-container").toggle($("#sistatus-inactive").is(":checked"));
-
-            });
+            }).trigger('change');
 
             $('#body').scrollspy({target: '#wizard-bar'})
         });

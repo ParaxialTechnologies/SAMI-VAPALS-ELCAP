@@ -184,7 +184,7 @@ RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the
  . ; set RPT(5,"routine")="$$RACE^SAMIUR2"
  . ;set RPT(6,"header")="Age"
  . ;set RPT(6,"routine")="$$AGE^SAMIUR2"
- . set RPT(4,"header")="Inactive Date"
+ . set RPT(4,"header")="Date of Death"
  . set RPT(4,"routine")="$$INACTDT^SAMIUR2"
  . set RPT(5,"header")="Inactive Reason"
  . set RPT(5,"routine")="$$INACTRE^SAMIUR2"

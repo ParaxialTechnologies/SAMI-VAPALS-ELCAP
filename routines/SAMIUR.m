@@ -184,7 +184,9 @@ WSREPORT(SAMIRTN,filter) ; generate report based on params in filter
  . quit
  ;
  new SRT set SRT=""
- if $get(filter("sort"))="" set filter("sort")="name"
+ if $get(filter("sort"))="" d  ; what kind of sort
+ . set filter("sort")="name"
+ . i type="missingct" s filter("sort")="cdate" ;sort by latest contact
  do SORT(.SRT,.SAMIPATS,.filter)
  ; zwrite SRT
  ;
@@ -254,7 +256,6 @@ WSREPORT(SAMIRTN,filter) ; generate report based on params in filter
  quit  ; end of WSREPORT
  ;
  ;
- ;
 SORT(SRTN,SAMIPATS,FILTER) ; sort patients by name
  ;
  ;@called-by
@@ -263,8 +264,9 @@ SORT(SRTN,SAMIPATS,FILTER) ; sort patients by name
  ; $$UPCASE^XLFMSMT
  ;
  new typ set typ=$get(FILTER("sort"))
+ ;
  if typ="" set typ="name"
- new iz,dt,dfn,nm
+ new iz,dt,dfn,nm,cdate
  set (dt,dfn,nm)="" ; note: should dfn be initialized inside loop?
  set iz=0
  ;
@@ -282,6 +284,10 @@ SORT(SRTN,SAMIPATS,FILTER) ; sort patients by name
  . . . if nm="" set nm=" "
  . . . set indx(nm,dt,dfn)=""
  . . . quit
+ . . if typ="cdate" do  ;
+ . . . set cdate=$$LDOC^SAMIUR2(dt,dfn,.SAMIPATS)
+ . . . set cdate=$$FMDT^SAMIUR2(cdate)
+ . . . set indx(cdate,dt,dfn)=""
  . . quit
  . quit
  ;
@@ -450,6 +456,7 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . if edate="" set edate=$get(@root@("graph",sid,siform,"samicreatedate"))
  . set efmdate=$$KEY2FM^SAMICASE(edate)
  . set edate=$$VAPALSDT^SAMICASE(efmdate)
+ . ;
  . ;
  . if type="followup" do  ;
  . . ; new nplus30 set nplus30=$$FMADD^XLFDT($$NOW^XLFDT,31)

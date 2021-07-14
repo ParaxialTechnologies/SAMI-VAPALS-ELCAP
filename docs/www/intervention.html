@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.07.13" name="version"/>
+  <meta content="2021.07.14" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Intervention and Surgical Treatment Form
@@ -61,17 +61,17 @@
   </script>
   <script src="lib/chart-js-2.9.3/chartjs-plugin-datalabels.min.js">
   </script>
-  <script src="jquery-conditonally-enable.js?v=2021.07.13">
+  <script src="jquery-conditonally-enable.js?v=2021.07.14">
   </script>
-  <script src="jquery-conditonally-display.js?v=2021.07.13">
+  <script src="jquery-conditonally-display.js?v=2021.07.14">
   </script>
-  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.07.13">
+  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.07.14">
   </script>
-  <script src="vapals.js?v=2021.07.13">
+  <script src="vapals.js?v=2021.07.14">
   </script>
-  <script src="init.js?v=2021.07.13">
+  <script src="init.js?v=2021.07.14">
   </script>
-  <script src="nodule-grid.js?v=2021.07.13">
+  <script src="nodule-grid.js?v=2021.07.14">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -1090,6 +1090,76 @@
        </div>
       </div>
       <div class="row">
+       <div class="col-md-3">
+        <label>
+         Discharge
+        </label>
+        <div class="form-group">
+         <label for="rbrasdt">
+          Date
+         </label>
+         <div class="input-group datepicker">
+          <input aria-describedby="rbrdd-addon" class="form-control" data-restriction="past" id="rbrdd" name="rbrdd"/>
+          <div class="input-group-addon">
+           <div class="input-group-text" id="rbrdd-addon">
+            <i aria-hidden="true" class="fa fa-calendar">
+            </i>
+           </div>
+          </div>
+         </div>
+         <small class="form-text text-muted">
+          MM/DD/YYYY
+         </small>
+        </div>
+       </div>
+       <div class="col-md-3">
+        <label>
+         Readmit within 30 days of discharge?
+        </label>
+        <div class="form-group">
+         <label class="radio-inline" for="rbrthd-n">
+          <input id="rbrthd-n" name="rbrthd" required="required" type="radio" value="n"/>
+          No
+         </label>
+         <label class="radio-inline" for="rbrthd-y">
+          <input id="rbrthd-y" name="rbrthd" required="required" type="radio" value="y"/>
+          Yes
+         </label>
+        </div>
+       </div>
+       <div class="col-md-6">
+        <label>
+         Discharge location?
+        </label>
+        <div class="form-group">
+         <label class="radio-inline" for="rbrdl-h">
+          <input id="rbrdl-h" name="rbrdl" required="required" type="radio" value="h"/>
+          Home
+         </label>
+         <label class="radio-inline" for="rbrdl-s">
+          <input id="rbrdl-s" name="rbrdl" required="required" type="radio" value="s"/>
+          Other Hospital
+         </label>
+         <label class="radio-inline" for="rbrdl-t">
+          <input id="rbrdl-t" name="rbrdl" required="required" type="radio" value="t"/>
+          Extended Care/Transitional Care Unit/Rehab
+         </label>
+         <label class="radio-inline" for="rbrdl-n">
+          <input id="rbrdl-n" name="rbrdl" required="required" type="radio" value="n"/>
+          Nursing Home
+         </label>
+         <label class="radio-inline" for="rbrdl-p">
+          <input id="rbrdl-p" name="rbrdl" required="required" type="radio" value="p"/>
+          Hospice
+         </label>
+         <label class="radio-inline" for="rbrdl-o">
+          <input id="rbrdl-o" name="rbrdl" required="required" type="radio" value="o"/>
+          Other
+         </label>
+        </div>
+       </div>
+      </div>
+      <div class="row">
        <div class="col-md-6">
         <label>
          Complications during surgery?
@@ -1140,7 +1210,37 @@
        </div>
       </div>
       <div class="row">
-       <div class="col-md-6">
+       <div class="col-md-2">
+        <label>
+         Discharged with home O₂?
+        </label>
+        <div class="form-group">
+         <label class="radio-inline" for="rbrdox-n">
+          <input id="rbrdox-n" name="rbrdox" required="required" type="radio" value="n"/>
+          No
+         </label>
+         <label class="radio-inline" for="rbrdox-y">
+          <input id="rbrdox-y" name="rbrdox" required="required" type="radio" value="y"/>
+          Yes
+         </label>
+        </div>
+       </div>
+       <div class="col-md-2">
+        <label>
+         Discharged with chest tube?
+        </label>
+        <div class="form-group">
+         <label class="radio-inline" for="rbdct-n">
+          <input id="rbdct-n" name="rbdct" required="required" type="radio" value="n"/>
+          No
+         </label>
+         <label class="radio-inline" for="rbdct-y">
+          <input id="rbdct-y" name="rbdct" required="required" type="radio" value="y"/>
+          Yes
+         </label>
+        </div>
+       </div>
+       <div class="col-md-2">
         <div class="form-group">
          <label for="rbctrd">
           Date of chest tube removal
@@ -1165,6 +1265,31 @@
           60-day vital status
          </label>
          <textarea class="form-control" cols="64" id="rb60dvs" name="rb60dvs" rows="3"></textarea>
+        </div>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-md-6">
+        <label>
+         Reviewed for QA?
+        </label>
+        <div class="form-group">
+         <label class="radio-inline" for="rbrqa-n">
+          <input id="rbrqa-n" name="rbrqa" required="required" type="radio" value="n"/>
+          No
+         </label>
+         <label class="radio-inline" for="rbrqa-y">
+          <input id="rbrqa-y" name="rbrqa" required="required" type="radio" value="y"/>
+          Yes
+         </label>
+        </div>
+       </div>
+       <div class="col-md-6">
+        <div class="form-group">
+         <label for="rbrchc">
+          Specify
+         </label>
+         <textarea class="form-control" cols="64" id="rbrqas" name="rbrqas" rows="3"></textarea>
         </div>
        </div>
       </div>
@@ -1262,11 +1387,29 @@
         </div>
        </div>
       </div>
-      <h4>
-       T Staging
-      </h4>
       <div class="row">
-       <div class="col-md-4">
+       <div class="col-md-1">
+       </div>
+       <div class="col-md-3">
+        <label>
+         T Staging
+        </label>
+       </div>
+       <div class="col-md-2">
+        <div class="form-group">
+         <label for="rbinvp">
+          T2 Visc Pl:
+         </label>
+         <div class="checkbox">
+          <label>
+           <input name="rbinvp" type="hidden" value=""/>
+           <input id="rbinvp" name="rbinvp" type="checkbox" value="p"/>
+           Visceral pleura
+          </label>
+         </div>
+        </div>
+       </div>
+       <div class="col-md-2">
         <div class="form-group">
          <label for="rbinvt2b">
           T2 Cen:
@@ -1287,7 +1430,7 @@
          </div>
         </div>
        </div>
-       <div class="col-md-4">
+       <div class="col-md-2">
         <div class="form-group">
          <label for="rbinvc">
           T3 Inv:
@@ -1315,7 +1458,7 @@
          </div>
         </div>
        </div>
-       <div class="col-md-4">
+       <div class="col-md-2">
         <div class="form-group">
          <label for="rbinvm">
           T4 Inv:
@@ -1383,6 +1526,319 @@
            Spine
           </label>
          </div>
+        </div>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-md-5">
+        <label for="rbadhs">
+         Adenocarcinoma Histology (Predominant)
+        </label>
+        <div class="form-group form-inline">
+         <select class="form-control" id="rbexs" name="rbexs">
+          <option value="-">
+           —
+          </option>
+          <option value="nos">
+           Adenocarcinoma NOS
+          </option>
+          <option value="snm">
+           Adenocarcinoma in situ, nonmucinous
+          </option>
+          <option value="sm">
+           Adenocarcinoma in situ, mucinous
+          </option>
+          <option value="sinm">
+           Adenocarcinoma in situ, indeterminate mucinous/nonmucinous
+          </option>
+          <option value="mnm">
+           Minimally invasive adenocarcinoma, nonmucinous
+          </option>
+          <option value="mm">
+           Minimally invasive adenocarcinoma, mucinous
+          </option>
+          <option value="mmnm">
+           Minimally invasive adenocarcinoma, Mixed nonmucinous and mucinous
+          </option>
+          <option value="mim">
+           Minimally invasive adenocarcinoma, indeterminate mucinous/nonmucinous
+          </option>
+          <option value="ilp">
+           Invasive adenocarcinoma, Lepidic predominant adenocarcinoma
+          </option>
+          <option value="iap">
+           Invasive adenocarcinoma, Acinar predominant adenocarcinoma
+          </option>
+          <option value="ipp">
+           Invasive adenocarcinoma, Papillary predominant adenocarcinoma
+          </option>
+          <option value="imp">
+           Invasive adenocarcinoma, Micropapillary predominant adenocarcinoma
+          </option>
+          <option value="isp">
+           Invasive adenocarcinoma, Solid predominant adenocarcinoma
+          </option>
+          <option value="imdp">
+           Invasive adenocarcinoma, multiple predominant patterns
+          </option>
+          <option value="ipcd">
+           Invasive adenocarcinoma, Predominant subtype cannot be determined
+          </option>
+          <option value="im">
+           Invasive mucinous adenocarcinoma
+          </option>
+          <option value="m">
+           Mixed invasive mucinous and nonmucinous adenocarcinoma
+          </option>
+          <option value="fa">
+           Fetal adenocarcinoma
+          </option>
+          <option value="ea">
+           Enteric adenocarcinoma
+          </option>
+          <option value="ca">
+           Colloid adenocarcinoma
+          </option>
+          <option value="srf">
+           Signet ring features
+          </option>
+          <option value="ccf">
+           Clear cell features
+          </option>
+          <option value="nf">
+           NSLC, favor adenocarcinoma
+          </option>
+         </select>
+        </div>
+       </div>
+       <div class="col-md-7">
+        <div class="table-responsive">
+         <table class="table table-striped table-bordered">
+          <tbody>
+           <tr>
+            <td>
+             <label>
+              Predominant features
+             </label>
+            </td>
+            <td>
+             <div class="form-group">
+              <div class="checkbox">
+               <label>
+                <input name="pamds" type="hidden" value=""/>
+                <input id="pamds" name="pamds" type="checkbox" value="s"/>
+                solid
+               </label>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="form-group">
+              <div class="checkbox">
+               <label>
+                <input name="pamda" type="hidden" value=""/>
+                <input id="pamda" name="pamda" type="checkbox" value="a"/>
+                acinar
+               </label>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="form-group">
+              <div class="checkbox">
+               <label>
+                <input name="pamdp" type="hidden" value=""/>
+                <input id="pamdp" name="pamdp" type="checkbox" value="p"/>
+                papillary
+               </label>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="form-group">
+              <div class="checkbox">
+               <label>
+                <input name="pamdmp" type="hidden" value=""/>
+                <input id="pamdmp" name="pamdmp" type="checkbox" value="m"/>
+                micropapillary
+               </label>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="form-group">
+              <div class="checkbox">
+               <label>
+                <input name="pamdb" type="hidden" value=""/>
+                <input id="pamdb" name="pamdb" type="checkbox" value="b"/>
+                Lepidic/ bronchioloalveolar
+               </label>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="form-group">
+              <div class="checkbox">
+               <label>
+                <input name="pamdo" type="hidden" value=""/>
+                <input id="pamdo" name="pamdo" type="checkbox" value="o"/>
+                other (specify)
+               </label>
+              </div>
+              <input class="form-control" id="pamdos" name="pamdos" size="8"/>
+             </div>
+            </td>
+           </tr>
+           <tr>
+            <td>
+             <label>
+              Percentages
+             </label>
+            </td>
+            <td>
+             <div class="form-group">
+              <input class="form-control numeric" id="pamdsp" name="pamdsp" size="4"/>
+             </div>
+            </td>
+            <td>
+             <div class="form-group">
+              <input class="form-control numeric" id="pamdap" name="pamdap" size="4"/>
+             </div>
+            </td>
+            <td>
+             <div class="form-group">
+              <input class="form-control numeric" id="pamdpp" name="pamdpp" size="4"/>
+             </div>
+            </td>
+            <td>
+             <div class="form-group">
+              <input class="form-control numeric" id="pamdmpp" name="pamdmpp" size="4"/>
+             </div>
+            </td>
+            <td>
+             <div class="form-group">
+              <input class="form-control numeric" id="pamdbp" name="pamdbp" size="4"/>
+             </div>
+            </td>
+            <td>
+             <div class="form-group">
+              <input class="form-control numeric" id="pamdop" name="pamdop" size="4"/>
+             </div>
+            </td>
+           </tr>
+           <tr>
+            <td>
+             <label>
+              Secondary/Other features
+             </label>
+            </td>
+            <td>
+             <div class="form-group">
+              <div class="checkbox">
+               <label>
+                <input name="pamas" type="hidden" value=""/>
+                <input id="pamas" name="pamas" type="checkbox" value="s"/>
+                solid
+               </label>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="form-group">
+              <div class="checkbox">
+               <label>
+                <input name="pamaa" type="hidden" value=""/>
+                <input id="pamaa" name="pamaa" type="checkbox" value="a"/>
+                acinar
+               </label>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="form-group">
+              <div class="checkbox">
+               <label>
+                <input name="pamap" type="hidden" value=""/>
+                <input id="pamap" name="pamap" type="checkbox" value="p"/>
+                papillary
+               </label>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="form-group">
+              <div class="checkbox">
+               <label>
+                <input name="pamamp" type="hidden" value=""/>
+                <input id="pamamp" name="pamamp" type="checkbox" value="m"/>
+                micropapillary
+               </label>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="form-group">
+              <div class="checkbox">
+               <label>
+                <input name="pamab" type="hidden" value=""/>
+                <input id="pamab" name="pamab" type="checkbox" value="b"/>
+                Lepidic/ bronchioloalveolar
+               </label>
+              </div>
+             </div>
+            </td>
+            <td>
+             <div class="form-group">
+              <div class="checkbox">
+               <label>
+                <input name="pamao" type="hidden" value=""/>
+                <input id="pamao" name="pamao" type="checkbox" value="o"/>
+                other (specify)
+               </label>
+              </div>
+              <input class="form-control" id="pamaos" name="pamaos" size="8"/>
+             </div>
+            </td>
+           </tr>
+           <tr>
+            <td>
+             <label>
+              Percentages
+             </label>
+            </td>
+            <td>
+             <div class="form-group">
+              <input class="form-control numeric" id="pamasp" name="pamasp" size="4"/>
+             </div>
+            </td>
+            <td>
+             <div class="form-group">
+              <input class="form-control numeric" id="pamaap" name="pamaap" size="4"/>
+             </div>
+            </td>
+            <td>
+             <div class="form-group">
+              <input class="form-control numeric" id="pamapp" name="pamapp" size="4"/>
+             </div>
+            </td>
+            <td>
+             <div class="form-group">
+              <input class="form-control numeric" id="pamampp" name="pamampp" size="4"/>
+             </div>
+            </td>
+            <td>
+             <div class="form-group">
+              <input class="form-control numeric" id="pamabp" name="pamabp" size="4"/>
+             </div>
+            </td>
+            <td>
+             <div class="form-group">
+              <input class="form-control numeric" id="pamaop" name="pamaop" size="4"/>
+             </div>
+            </td>
+           </tr>
+          </tbody>
+         </table>
         </div>
        </div>
       </div>
@@ -2975,7 +3431,9 @@
          Yes
         </label>
        </div>
-       <div class="form-group col-md-2">
+      </div>
+      <div class="row">
+       <div class="form-group col-md-4">
         <label for="rbem">
          Evidence of metastasis
         </label>
@@ -2989,7 +3447,7 @@
          Yes
         </label>
        </div>
-       <div class="form-group col-md-3" id="rbem-container">
+       <div class="form-group col-md-8" id="rbem-container">
         <label for="rbems">
          Specify
         </label>
@@ -12594,7 +13052,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2021.07.13
+     2021.07.14
     </span>
    </div>
   </footer>

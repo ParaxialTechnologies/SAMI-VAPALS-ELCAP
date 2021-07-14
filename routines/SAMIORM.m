@@ -1,6 +1,6 @@
-SAMIORM ;ven/lgc&arc - HL7: ORM > patient-lookup ;2021-06-08T20:07Z
+SAMIORM ;ven/lgc&arc - HL7: ORM > patient-lookup ;2021-06-08t20:07z
  ;;18.0;SAMI;**11,12**;2020-01;
- ;;1.18.0.12-t1+i12
+ ;;1.18.0.12-t3+i12
  ;
  ; SAMIORM parses an incoming Order (ORM) message into the fields
  ; array, then calls SAMIHL7 to use the array to update the patient-
@@ -25,12 +25,12 @@ SAMIORM ;ven/lgc&arc - HL7: ORM > patient-lookup ;2021-06-08T20:07Z
  ;@copyright 2020/2021, lgc, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-06-08T20:07Z
+ ;@last-updated 2021-06-08t20:07z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@submodule HL7 interface - SAMIHL* & SAMIOR*
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.12-t1+i12
+ ;@version 1.18.0.12-t3+i12
  ;@release-date 2020-01
  ;@patch-list **11,12**
  ;
@@ -44,7 +44,7 @@ SAMIORM ;ven/lgc&arc - HL7: ORM > patient-lookup ;2021-06-08T20:07Z
  ; mcglk@vistaexpertise.net
  ;
  ;@routine-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
- ; see routine SAMIHL7
+ ; see routine SAMIOUL
  ;@contents
  ; EN-BLDARR-PMSG-UPDTPTL parse ORM msg > patient-lookup graph
  ;

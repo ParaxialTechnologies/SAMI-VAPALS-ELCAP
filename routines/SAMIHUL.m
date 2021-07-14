@@ -1,6 +1,6 @@
-SAMIHUL ;ven/gpl - ielcap: home page log ;2021-07-01T16:19Z
+SAMIHUL ;ven/gpl - ielcap: home page log ;2021-07-01t16:19z
  ;;18.0;SAMI;**9,12**;
- ;;1.18.0.12-t2+i12
+ ;;1.18.0.12-t3+i12
  ;
  ; SAMIHOME contains subroutines for producing the ELCAP Home Page.
  ; SAMIHUL contains the development log for the SAMIHOM* routines.
@@ -22,11 +22,11 @@ SAMIHUL ;ven/gpl - ielcap: home page log ;2021-07-01T16:19Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-07-01T16:19Z
+ ;@last-updated 2021-07-01t16:19z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.12-t2+i12
+ ;@version 1.18.0.12-t3+i12
  ;@release-date 2020-01
  ;@patch-list **9,12**
  ;
@@ -199,7 +199,7 @@ SAMIHUL ;ven/gpl - ielcap: home page log ;2021-07-01T16:19Z
  ; 2021-06-15 ven/gpl 1.18.0.12-t2+i12 e247ea59
  ;  SAMIHOM4: eliminate icn.
  ;
- ; 2021-06-15/16 ven/mcglk&toad 1.18.0.12-t2+i12
+ ; 2021-06-15/16 ven/mcglk&toad 1.18.0.12-t2+i12 cbf7e46b,fa794d60
  ;  SAMIHOM3 move log to SAMIHUL, bump dates & versions, annotate,
  ; reorg, lt refactor.
  ;  SAMIHOM4 bump dates & versions; begin annotate, reorg, lt refactor

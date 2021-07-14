@@ -1,6 +1,6 @@
-SAMIURUL ;ven/gpl - user reports log ;2021-07-06T15:55Z
+SAMIURUL ;ven/gpl - user reports log ;2021-07-14T18:25Z
  ;;18.0;SAMI;**12**;2020-01;
- ;;1.18.0.12-t2+i12
+ ;;1.18.0.12-t3+i12
  ;
  ; SAMIURUL contains the development log & module documentation for
  ; the VAPALS-ELCAP user-reports routines SAMIUR & SAMIUR2.
@@ -21,11 +21,11 @@ SAMIURUL ;ven/gpl - user reports log ;2021-07-06T15:55Z
  ;@copyright 2021, mcglk & toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-07-06T15:55Z
+ ;@last-updated 2021-07-14T18:25Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.12-t2+i12
+ ;@version 1.18.0.12-t3+i12
  ;@release-date 2020-01
  ;@patch-list **12**
  ;
@@ -141,13 +141,20 @@ SAMIURUL ;ven/gpl - user reports log ;2021-07-06T15:55Z
  ;  SAMIUR change definition of inactive to not marked active, change
  ; definition of active to marked active.
  ;
- ; 2021-07-06 ven/mcglk&toad&gpl 1.18.0.12-t2+i12 cbf7e46b,2d642aa4
+ ; 2021-07-06 ven/mcglk&toad&gpl 1.18.0.12-t2+i12 cbf7e46b,2d642aa4,
+ ; b248664b
  ;  SAMIURUL new routine for dev log.
  ;  SAMIUR,SAMIUR2,SAMIURUL move dev log & module docs to SAMIURUL,
  ; bump version & dates.
  ;  SAMIUR in SELECT r/inactive w/status, test for active instead of
  ; inactive.
  ;
+ ; 2021-07-12 ven/gpl 1.18.0.12-t3+i12 60f4bb05,27c40485,d35bcb46
+ ;  SAMIUR: in WSREPORT,SORT add contact date & entry to missingct
+ ; report.
+ ;  SAMIUR2: add contact date & entry to missingct report; add
+ ; inactive date reason & comment to inactive report; chg inactive
+ ; date to date of death.
  ;
  ;
  ;@contents

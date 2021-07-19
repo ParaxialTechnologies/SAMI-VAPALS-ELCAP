@@ -132,7 +132,8 @@ INIT(g) ;
  ;
  ;# Emphysema (ceem)
  set @g@("ceem","no")="None"
- set @g@("ceem","mi")="Minimal"
+ ;set @g@("ceem","mi")="Minimal"
+ set @g@("ceem","mi")="Mild"
  set @g@("ceem","mo")="Moderate"
  set @g@("ceem","se")="Severe"
  ;

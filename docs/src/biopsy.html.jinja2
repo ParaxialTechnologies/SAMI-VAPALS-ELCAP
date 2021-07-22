@@ -36,6 +36,10 @@
                         {{ f.inlineRadio("bxp", "bxp-c", "c", "Cancel") }}
                     </div>
                 </div>
+                <div class="col-md-6 form-group" id="bxcr-container">
+                    <label class="control-label not-required" for="bxcr">Reason for cancellation?</label>
+                    <input type=text id="bxw" name="bxcr" class="form-control" required="required">
+                </div>
             </div>
             <div id="bxp-container">
                 <div class="row">
@@ -201,6 +205,9 @@
         function biopsyPerformed() {
             return $("[name=bxp]:checked").val() === 'y';
         }
+        function biopsyCancelled() {
+            return $("[name=bxp]:checked").val() === 'c';
+        }
 
         function createFormValidator() {
 
@@ -210,6 +217,7 @@
                     fields: {
                         //BIOPSY
                         bxp: {validators: {notEmpty: {message: 'Biopsy location is required'}}},
+                        bxcr: {validators: {notEmpty: {message: 'Reason for cancellation is required', enabled: false}}},
                         bxdos: {
                             validators: {
                                 notEmpty: {message: 'Procedure date is required', enabled: false},
@@ -296,6 +304,7 @@
             });
 
             //Biopsy
+            $("[name='bxp']").conditionallyEnable({sourceValues: "c", enable: $("#bxcr-container")}); //cancellation reason
             $("#bxindo").conditionallyEnable({sourceValues: "o", enable: "#bxind"}); // other indication
             $("#bxloco").conditionallyEnable({sourceValues: "o", enable: "#bxlocs"}); //other lesion
             $("#bxtopo").conditionallyEnable({sourceValues: "o", enable: "#bxtopos"}); // other type of procedure
@@ -315,14 +324,23 @@
             $("[name=bxp]").on("change", function () {
                 if (biopsyPerformed()) {
                     $("#bxp-container").find(".not-required").removeClass("not-required").addClass("required");
+                    $("#bxcr-container").find(".required").removeClass("required").addClass("not-required");
                     $.each(bxpValidators, function (i, fieldName) {
                         fv.enableValidator(fieldName);
                     })
+                    fv.disableValidator("bxcr");
                 } else {
                     $("#bxp-container").find(".required").removeClass("required").addClass("not-required");
                     $.each(bxpValidators, function (i, fieldName) {
                         fv.disableValidator(fieldName);
                     });
+                    if (biopsyCancelled()) {
+                        $("#bxcr-container").find(".not-required").removeClass("not-required").addClass("required");
+                        fv.enableValidator("bxcr");
+                    } else {
+                        $("#bxcr-container").find(".required").removeClass("required").addClass("not-required");
+                        fv.disableValidator("bxcr");
+                    }
                 }
             }).trigger("change");
         });

@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.07.13" name="version"/>
+  <meta content="2021.07.22" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Biopsy Form
@@ -50,17 +50,17 @@
   </script>
   <script src="lib/chart-js-2.9.3/chartjs-plugin-datalabels.min.js">
   </script>
-  <script src="jquery-conditonally-enable.js?v=2021.07.13">
+  <script src="jquery-conditonally-enable.js?v=2021.07.22">
   </script>
-  <script src="jquery-conditonally-display.js?v=2021.07.13">
+  <script src="jquery-conditonally-display.js?v=2021.07.22">
   </script>
-  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.07.13">
+  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.07.22">
   </script>
-  <script src="vapals.js?v=2021.07.13">
+  <script src="vapals.js?v=2021.07.22">
   </script>
-  <script src="init.js?v=2021.07.13">
+  <script src="init.js?v=2021.07.22">
   </script>
-  <script src="nodule-grid.js?v=2021.07.13">
+  <script src="nodule-grid.js?v=2021.07.22">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -203,6 +203,12 @@
         Cancel
        </label>
       </div>
+     </div>
+     <div class="col-md-6 form-group" id="bxcr-container">
+      <label class="control-label not-required" for="bxcr">
+       Reason for cancellation?
+      </label>
+      <input class="form-control" id="bxw" name="bxcr" required="required" type="text"/>
      </div>
     </div>
     <div id="bxp-container">
@@ -6179,7 +6185,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2021.07.13
+     2021.07.22
     </span>
    </div>
   </footer>
@@ -6343,6 +6349,9 @@
    function biopsyPerformed() {
             return $("[name=bxp]:checked").val() === 'y';
         }
+        function biopsyCancelled() {
+            return $("[name=bxp]:checked").val() === 'c';
+        }
 
         function createFormValidator() {
 
@@ -6352,6 +6361,7 @@
                     fields: {
                         //BIOPSY
                         bxp: {validators: {notEmpty: {message: 'Biopsy location is required'}}},
+                        bxcr: {validators: {notEmpty: {message: 'Reason for cancellation is required', enabled: false}}},
                         bxdos: {
                             validators: {
                                 notEmpty: {message: 'Procedure date is required', enabled: false},
@@ -6438,6 +6448,7 @@
             });
 
             //Biopsy
+            $("[name='bxp']").conditionallyEnable({sourceValues: "c", enable: $("#bxcr-container")}); //cancellation reason
             $("#bxindo").conditionallyEnable({sourceValues: "o", enable: "#bxind"}); // other indication
             $("#bxloco").conditionallyEnable({sourceValues: "o", enable: "#bxlocs"}); //other lesion
             $("#bxtopo").conditionallyEnable({sourceValues: "o", enable: "#bxtopos"}); // other type of procedure
@@ -6457,14 +6468,23 @@
             $("[name=bxp]").on("change", function () {
                 if (biopsyPerformed()) {
                     $("#bxp-container").find(".not-required").removeClass("not-required").addClass("required");
+                    $("#bxcr-container").find(".required").removeClass("required").addClass("not-required");
                     $.each(bxpValidators, function (i, fieldName) {
                         fv.enableValidator(fieldName);
                     })
+                    fv.disableValidator("bxcr");
                 } else {
                     $("#bxp-container").find(".required").removeClass("required").addClass("not-required");
                     $.each(bxpValidators, function (i, fieldName) {
                         fv.disableValidator(fieldName);
                     });
+                    if (biopsyCancelled()) {
+                        $("#bxcr-container").find(".not-required").removeClass("not-required").addClass("required");
+                        fv.enableValidator("bxcr");
+                    } else {
+                        $("#bxcr-container").find(".required").removeClass("required").addClass("not-required");
+                        fv.disableValidator("bxcr");
+                    }
                 }
             }).trigger("change");
         });

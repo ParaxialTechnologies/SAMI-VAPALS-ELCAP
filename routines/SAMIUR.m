@@ -1,6 +1,6 @@
-SAMIUR ;ven/gpl - user reports ;2021-07-06T15:53Z
+SAMIUR ;ven/gpl - user reports ;2021-07-12t23:19z
  ;;18.0;SAMI;**5,10,11,12**;2020-01;Build 4
- ;;1.18.0.12-t2+i12
+ ;;1.18.0.12-t3+i12
  ;
  ; SAMIUR contains a web service & associated subroutines to produce
  ; VAPALS-ELCAP user reports.
@@ -21,11 +21,11 @@ SAMIUR ;ven/gpl - user reports ;2021-07-06T15:53Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-07-06T15:53Z
+ ;@last-updated 2021-07-12t23:19z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.12-t2+i12
+ ;@version 1.18.0.12-t3+i12
  ;@release-date 2020-01
  ;@patch-list **5,10,11,12**
  ;

@@ -1,6 +1,6 @@
-SAMIHOM3 ;ven/gpl - homepage web service ;2021-07-01T21:35Z
+SAMIHOM3 ;ven/gpl - homepage web service ;2021-07-01t21:35z
  ;;18.0;SAMI;**5,12**;2020-01;
- ;;1.18.0.12-t2+i12
+ ;;1.18.0.12-t3+i12
  ;
  ; Routine SAMIHOM3 contains subroutines for implementing the IELCAP
  ; Home Page and to provide binding to VistA.
@@ -26,11 +26,11 @@ SAMIHOM3 ;ven/gpl - homepage web service ;2021-07-01T21:35Z
  ;@license Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated 2021-07-01T21:35Z
+ ;@last-updated 2021-07-01t21:35z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.12-t2+i12
+ ;@version 1.18.0.12-t3+i12
  ;@release-date 2020-01
  ;@patch-list **5,12**
  ;

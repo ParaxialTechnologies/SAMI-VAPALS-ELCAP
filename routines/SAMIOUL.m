@@ -1,6 +1,6 @@
-SAMIOUL ;ven/toad - HL7 development log ;2021-06-08T19:27Z
+SAMIOUL ;ven/toad - HL7 development log ;2021-06-08t19:27z
  ;;18.0;SAMI;**12**;2020-01;
- ;;1.18.0.12-t1+i12
+ ;;1.18.0.12-t3+i12
  ;
  ; SAMIOUL is the development log for the SAMIHL7 & SAMIOR* routines,
  ; which support VAPALS-ELCAP HL7 processing.
@@ -21,11 +21,11 @@ SAMIOUL ;ven/toad - HL7 development log ;2021-06-08T19:27Z
  ;@copyright 2017/2021, lgc, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-06-08T19:27Z
+ ;@last-updated 2021-06-08t19:27z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.12-t1+i12
+ ;@version 1.18.0.12-t3+i12
  ;@release-date 2020-01
  ;@patch-list **12**
  ;
@@ -130,12 +130,12 @@ SAMIOUL ;ven/toad - HL7 development log ;2021-06-08T19:27Z
  ; INCC up to where DEBUG tag was; in PMSG fix KBaP typo, annotate,
  ; refactor block, get msgid; in PID get suffix.
  ;
- ; 2021-06-01/04 ven/mcglk&toad 1.18.0.11+i11 7dd9410
+ ; 2021-06-01/04 ven/mcglk&toad 1.18.0.11+i11 7dd9410c
  ;  SAMIHL7: update log, add SAMIORM,ORR,ORU to log.
  ;  SAMIORM,ORR,ORU: annotate, document hl7 call structure, refactor,
  ; bump version & dates.
  ;
- ; 2021-06-08 ven/toad 1.18.0.12-t1+i12
+ ; 2021-06-08 ven/toad 1.18.0.12-t1+i12 91baf32e,ba8c9192
  ;  SAMIORM: in BLDARR fix new cnt, bug introduced in 06-04 refactor,
  ; bump version; in PID uppercase patient name; cut CAMELCAS.
  ;  SAMIOUL < SAMIHL7: create routine from existing dev log.

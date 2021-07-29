@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.07.14" name="version"/>
+  <meta content="2021.07.29" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Intervention and Surgical Treatment Form
@@ -61,17 +61,17 @@
   </script>
   <script src="lib/chart-js-2.9.3/chartjs-plugin-datalabels.min.js">
   </script>
-  <script src="jquery-conditonally-enable.js?v=2021.07.14">
+  <script src="jquery-conditonally-enable.js?v=2021.07.29">
   </script>
-  <script src="jquery-conditonally-display.js?v=2021.07.14">
+  <script src="jquery-conditonally-display.js?v=2021.07.29">
   </script>
-  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.07.14">
+  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.07.29">
   </script>
-  <script src="vapals.js?v=2021.07.14">
+  <script src="vapals.js?v=2021.07.29">
   </script>
-  <script src="init.js?v=2021.07.14">
+  <script src="init.js?v=2021.07.29">
   </script>
-  <script src="nodule-grid.js?v=2021.07.14">
+  <script src="nodule-grid.js?v=2021.07.29">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -897,11 +897,11 @@
         </label>
         <div class="form-group form-inline">
          <label class="radio-inline" for="rbvto-n">
-          <input id="rbvto-n" name="rbvto" required="required" type="radio" value="n"/>
+          <input id="rbvto-n" name="rbvto" type="radio" value="n"/>
           No
          </label>
          <label class="radio-inline" for="rbvto-y">
-          <input id="rbvto-y" name="rbvto" required="required" type="radio" value="y"/>
+          <input id="rbvto-y" name="rbvto" type="radio" value="y"/>
           Yes
          </label>
         </div>
@@ -1052,11 +1052,11 @@
         </label>
         <div class="form-group">
          <label class="radio-inline" for="rbras-n">
-          <input id="rbras-n" name="rbras" required="required" type="radio" value="n"/>
+          <input id="rbras-n" name="rbras" type="radio" value="n"/>
           No
          </label>
          <label class="radio-inline" for="rbras-y">
-          <input id="rbras-y" name="rbras" required="required" type="radio" value="y"/>
+          <input id="rbras-y" name="rbras" type="radio" value="y"/>
           Yes
          </label>
         </div>
@@ -1091,12 +1091,9 @@
       </div>
       <div class="row">
        <div class="col-md-3">
-        <label>
-         Discharge
-        </label>
         <div class="form-group">
          <label for="rbrasdt">
-          Date
+          Discharge date
          </label>
          <div class="input-group datepicker">
           <input aria-describedby="rbrdd-addon" class="form-control" data-restriction="past" id="rbrdd" name="rbrdd"/>
@@ -1118,16 +1115,16 @@
         </label>
         <div class="form-group">
          <label class="radio-inline" for="rbrthd-n">
-          <input id="rbrthd-n" name="rbrthd" required="required" type="radio" value="n"/>
+          <input id="rbrthd-n" name="rbrthd" type="radio" value="n"/>
           No
          </label>
          <label class="radio-inline" for="rbrthd-y">
-          <input id="rbrthd-y" name="rbrthd" required="required" type="radio" value="y"/>
+          <input id="rbrthd-y" name="rbrthd" type="radio" value="y"/>
           Yes
          </label>
         </div>
        </div>
-       <div class="col-md-6">
+       <div class="col-md-3">
         <label>
          Discharge location?
         </label>
@@ -1158,6 +1155,14 @@
          </label>
         </div>
        </div>
+       <div class="col-md-3" id="rbrdls-container">
+        <div class="form-group">
+         <label for="rbrdls">
+          Specify
+         </label>
+         <input class="form-control" id="rbrdls" name="rbrdls" size="24"/>
+        </div>
+       </div>
       </div>
       <div class="row">
        <div class="col-md-6">
@@ -1166,11 +1171,11 @@
         </label>
         <div class="form-group">
          <label class="radio-inline" for="rbrcs-n">
-          <input id="rbrcs-n" name="rbrcs" required="required" type="radio" value="n"/>
+          <input id="rbrcs-n" name="rbrcs" type="radio" value="n"/>
           No
          </label>
          <label class="radio-inline" for="rbrcs-y">
-          <input id="rbrcs-y" name="rbrcs" required="required" type="radio" value="y"/>
+          <input id="rbrcs-y" name="rbrcs" type="radio" value="y"/>
           Yes
          </label>
         </div>
@@ -1191,11 +1196,11 @@
         </label>
         <div class="form-group">
          <label class="radio-inline" for="rbrch-n">
-          <input id="rbrch-n" name="rbrch" required="required" type="radio" value="n"/>
+          <input id="rbrch-n" name="rbrch" type="radio" value="n"/>
           No
          </label>
          <label class="radio-inline" for="rbrch-y">
-          <input id="rbrch-y" name="rbrch" required="required" type="radio" value="y"/>
+          <input id="rbrch-y" name="rbrch" type="radio" value="y"/>
           Yes
          </label>
         </div>
@@ -1212,15 +1217,19 @@
       <div class="row">
        <div class="col-md-2">
         <label>
-         Discharged with home O₂?
+         Discharged with home O
+         <sub>
+          2
+         </sub>
+         ?
         </label>
         <div class="form-group">
          <label class="radio-inline" for="rbrdox-n">
-          <input id="rbrdox-n" name="rbrdox" required="required" type="radio" value="n"/>
+          <input id="rbrdox-n" name="rbrdox" type="radio" value="n"/>
           No
          </label>
          <label class="radio-inline" for="rbrdox-y">
-          <input id="rbrdox-y" name="rbrdox" required="required" type="radio" value="y"/>
+          <input id="rbrdox-y" name="rbrdox" type="radio" value="y"/>
           Yes
          </label>
         </div>
@@ -1231,11 +1240,11 @@
         </label>
         <div class="form-group">
          <label class="radio-inline" for="rbdct-n">
-          <input id="rbdct-n" name="rbdct" required="required" type="radio" value="n"/>
+          <input id="rbdct-n" name="rbdct" type="radio" value="n"/>
           No
          </label>
          <label class="radio-inline" for="rbdct-y">
-          <input id="rbdct-y" name="rbdct" required="required" type="radio" value="y"/>
+          <input id="rbdct-y" name="rbdct" type="radio" value="y"/>
           Yes
          </label>
         </div>
@@ -1275,11 +1284,11 @@
         </label>
         <div class="form-group">
          <label class="radio-inline" for="rbrqa-n">
-          <input id="rbrqa-n" name="rbrqa" required="required" type="radio" value="n"/>
+          <input id="rbrqa-n" name="rbrqa" type="radio" value="n"/>
           No
          </label>
          <label class="radio-inline" for="rbrqa-y">
-          <input id="rbrqa-y" name="rbrqa" required="required" type="radio" value="y"/>
+          <input id="rbrqa-y" name="rbrqa" type="radio" value="y"/>
           Yes
          </label>
         </div>
@@ -1334,11 +1343,11 @@
         </label>
         <div class="form-group form-inline">
          <label class="radio-inline" for="rbinv-n">
-          <input id="rbinv-n" name="rbinv" required="required" type="radio" value="n"/>
+          <input id="rbinv-n" name="rbinv" type="radio" value="n"/>
           No
          </label>
          <label class="radio-inline" for="rbinv-y">
-          <input id="rbinv-y" name="rbinv" required="required" type="radio" value="y"/>
+          <input id="rbinv-y" name="rbinv" type="radio" value="y"/>
           Yes
          </label>
         </div>
@@ -1531,7 +1540,7 @@
       </div>
       <div class="row">
        <div class="col-md-5">
-        <label for="rbadhs">
+        <label for="rbexs">
          Adenocarcinoma Histology (Predominant)
         </label>
         <div class="form-group form-inline">
@@ -13052,7 +13061,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2021.07.14
+     2021.07.29
     </span>
    </div>
   </footer>

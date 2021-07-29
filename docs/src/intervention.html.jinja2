@@ -230,11 +230,11 @@
                         <div class="form-group">
                             <label for="rbtri">Indication for treatment</label>
                             <select name="rbtri" id="rbtri" class="form-control">
-                                <option value="-"> -</option>
-                                <option value="f"> First Lung Cancer</option>
-                                <option value="r"> Recurrence</option>
-                                <option value="n"> New Primary Lung Cancer</option>
-                                <option value="o"> Other (specify)</option>
+                                <option value="-">-</option>
+                                <option value="f">First Lung Cancer</option>
+                                <option value="r">Recurrence</option>
+                                <option value="n">New Primary Lung Cancer</option>
+                                <option value="o">Other (specify)</option>
                             </select>
                         </div>
 
@@ -253,12 +253,12 @@
                         <div class="form-group col-md-3">
                             <label for="rbto">Treatment option</label>
                             <select id="rbto" name="rbto" class="form-control">
-                                <option value="-"> -</option>
-                                <option value="s"> Surgery</option>
-                                <option value="r"> Radiation Therapy</option>
-                                <option value="c"> Chemotherapy</option>
-                                <option value="w"> Watchful Waiting</option>
-                                <option value="o"> Other</option>
+                                <option value="-">-</option>
+                                <option value="s">Surgery</option>
+                                <option value="r">Radiation Therapy</option>
+                                <option value="c">Chemotherapy</option>
+                                <option value="w">Watchful Waiting</option>
+                                <option value="o">Other</option>
                             </select>
                         </div>
 
@@ -423,12 +423,12 @@
                                     <label for="rbexs">Extent of surgery</label>
                                     <select name="rbexs" id="rbexs" class="form-control">
                                         <option value="-"> -</option>
-                                        <option value="w"> Wedge resection</option>
-                                        <option value="s"> Segmentectomy</option>
-                                        <option value="l"> Lobectomy</option>
-                                        <option value="b"> Bilobectomy</option>
-                                        <option value="p"> Pneumonectomy</option>
-                                        <option value="o"> Other (specify)</option>
+                                        <option value="w">Wedge resection</option>
+                                        <option value="s">Segmentectomy</option>
+                                        <option value="l">Lobectomy</option>
+                                        <option value="b">Bilobectomy</option>
+                                        <option value="p">Pneumonectomy</option>
+                                        <option value="o">Other (specify)</option>
                                     </select>
                                 </div>
                             </div>
@@ -444,8 +444,7 @@
                         <div class="col-md-6">
                             <label>Was there a conversion of VATS to open?</label>
                             <div class="form-group form-inline">
-                                {{ f.inlineRadio("rbvto", "rbvto-n", "n", "No", true) }}
-                                {{ f.inlineRadio("rbvto", "rbvto-y", "y", "Yes", true) }}
+                                {{ f.inlineRadioNY("rbvto") }}
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -539,8 +538,7 @@
                         <div class="col-md-3">
                             <label>Additional surgery for same lesion?</label>
                             <div class="form-group">
-                                {{ f.inlineRadio("rbras", "rbras-n", "n", "No", true) }}
-                                {{ f.inlineRadio("rbras", "rbras-y", "y", "Yes", true) }}
+                                {{ f.inlineRadioNY("rbras") }}
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -559,20 +557,18 @@
 
                     <div class="row">
                         <div class="col-md-3">
-                            <label>Discharge</label>
                             <div class="form-group">
-                                <label for="rbrasdt">Date</label>
+                                <label for="rbrasdt">Discharge date</label>
                                 {{ f.datepicker("rbrdd", "past") }}
                             </div>
                         </div>
                         <div class="col-md-3">
                             <label>Readmit within 30 days of discharge?</label>
                             <div class="form-group">
-                                {{ f.inlineRadio("rbrthd", "rbrthd-n", "n", "No", true) }}
-                                {{ f.inlineRadio("rbrthd", "rbrthd-y", "y", "Yes", true) }}
+                                {{ f.inlineRadioNY("rbrthd") }}
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <label>Discharge location?</label>
                             <div class="form-group">
                                 {{ f.inlineRadio("rbrdl", "rbrdl-h", "h", "Home", true) }}
@@ -583,14 +579,19 @@
                                 {{ f.inlineRadio("rbrdl", "rbrdl-o", "o", "Other", true) }}
                             </div>
                         </div>
+                        <div class="col-md-3" id="rbrdls-container">
+                            <div class="form-group">
+                                <label for="rbrdls">Specify</label>
+                                <input name="rbrdls" id="rbrdls" class="form-control" size="24">
+                            </div>
+                        </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
                             <label>Complications during surgery?</label>
                             <div class="form-group">
-                                {{ f.inlineRadio("rbrcs", "rbrcs-n", "n", "No", true) }}
-                                {{ f.inlineRadio("rbrcs", "rbrcs-y", "y", "Yes", true) }}
+                                {{ f.inlineRadioNY("rbrcs") }}
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -605,8 +606,7 @@
                         <div class="col-md-6">
                             <label>Complications during hospital stay?</label>
                             <div class="form-group">
-                                {{ f.inlineRadio("rbrch", "rbrch-n", "n", "No", true) }}
-                                {{ f.inlineRadio("rbrch", "rbrch-y", "y", "Yes", true) }}
+                                {{ f.inlineRadioNY("rbrch") }}
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -619,17 +619,15 @@
 
                     <div class="row">
                         <div class="col-md-2">
-                            <label>Discharged with home O₂?</label>
+                            <label>Discharged with home O<sub>2</sub>?</label>
                             <div class="form-group">
-                                {{ f.inlineRadio("rbrdox", "rbrdox-n", "n", "No", true) }}
-                                {{ f.inlineRadio("rbrdox", "rbrdox-y", "y", "Yes", true) }}
+                                {{ f.inlineRadioNY("rbrdox") }}
                             </div>
                         </div>
                         <div class="col-md-2">
                             <label>Discharged with chest tube?</label>
                             <div class="form-group">
-                                {{ f.inlineRadio("rbdct", "rbdct-n", "n", "No", true) }}
-                                {{ f.inlineRadio("rbdct", "rbdct-y", "y", "Yes", true) }}
+                                {{ f.inlineRadioNY("rbdct") }}
                             </div>
                         </div>
                         <div class="col-md-2">
@@ -651,8 +649,7 @@
                         <div class="col-md-6">
                             <label>Reviewed for QA?</label>
                             <div class="form-group">
-                                {{ f.inlineRadio("rbrqa", "rbrqa-n", "n", "No", true) }}
-                                {{ f.inlineRadio("rbrqa", "rbrqa-y", "y", "Yes", true) }}
+                                {{ f.inlineRadioNY("rbrqa") }}
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -688,8 +685,7 @@
                         <div class="col-md-4">
                             <label>Invasion of other structures</label>
                             <div class="form-group form-inline">
-                                {{ f.inlineRadio("rbinv", "rbinv-n", "n", "No", true) }}
-                                {{ f.inlineRadio("rbinv", "rbinv-y", "y", "Yes", true) }}
+                                {{ f.inlineRadioNY("rbinv") }}
                             </div>
                         </div>
                         <div class="col-md-2">
@@ -753,7 +749,7 @@
 
                     <div class="row">
                         <div class="col-md-5">
-                            <label for="rbadhs">Adenocarcinoma Histology (Predominant)</label>
+                            <label for="rbexs">Adenocarcinoma Histology (Predominant)</label>
                             <div class="form-group form-inline">
                                 <select name="rbexs" id="rbexs" class="form-control">
                                     <option value="-">—</option>

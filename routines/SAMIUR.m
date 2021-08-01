@@ -1,6 +1,6 @@
-SAMIUR ;ven/gpl - user reports ;2021-07-12t23:19z
+SAMIUR ;ven/gpl - user reports ;2021-07-06T15:53Z
  ;;18.0;SAMI;**5,10,11,12**;2020-01;Build 4
- ;;1.18.0.12-t3+i12
+ ;;1.18.0.12-t2+i12
  ;
  ; SAMIUR contains a web service & associated subroutines to produce
  ; VAPALS-ELCAP user reports.
@@ -21,11 +21,11 @@ SAMIUR ;ven/gpl - user reports ;2021-07-12t23:19z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-07-12t23:19z
+ ;@last-updated 2021-07-06T15:53Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.12-t3+i12
+ ;@version 1.18.0.12-t2+i12
  ;@release-date 2020-01
  ;@patch-list **5,10,11,12**
  ;
@@ -508,7 +508,10 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . . for  do  quit:zj=""  ;
  . . . set zj=$order(@gr@(zj))
  . . . quit:zj=""
- . . . if $get(@gr@(zj,"samistatus"))="incomplete" do  ;
+ . . . new stat
+ . . . set stat=$get(@gr@(zj,"samistatus"))
+ . . . if stat="" set stat="incomplete"
+ . . . if stat="incomplete" do  ;
  . . . . set complete=0
  . . . . set SAMIPATS(efmdate,zi,"iform")=$get(SAMIPATS(efmdate,zi,"iform"))_" "_zj
  . . . . quit

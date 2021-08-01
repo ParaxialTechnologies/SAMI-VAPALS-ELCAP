@@ -1,6 +1,6 @@
-SAMIHOM3 ;ven/gpl - homepage web service ;2021-07-01t21:35z
+SAMIHOM3 ;ven/gpl - homepage web service ;2021-07-01T21:35Z
  ;;18.0;SAMI;**5,12**;2020-01;
- ;;1.18.0.12-t3+i12
+ ;;1.18.0.12-t2+i12
  ;
  ; Routine SAMIHOM3 contains subroutines for implementing the IELCAP
  ; Home Page and to provide binding to VistA.
@@ -26,11 +26,11 @@ SAMIHOM3 ;ven/gpl - homepage web service ;2021-07-01t21:35z
  ;@license Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated 2021-07-01t21:35z
+ ;@last-updated 2021-07-01T21:35Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.12-t3+i12
+ ;@version 1.18.0.12-t2+i12
  ;@release-date 2020-01
  ;@patch-list **5,12**
  ;
@@ -384,7 +384,7 @@ MKSIFORM(num) ; create intake form
  merge @root@("graph",sid,"siform-"_cdate)=@root@(num)
  ;
  ; update form samistatus to complete
- do SSAMISTA^SAMICASE(sid,"siform-"_cdate,"complete")
+ do SSAMISTA^SAMICASE(sid,"siform-"_cdate,"incomplete")
  ;
  ;
  ;@stanza 3 init new intake form from vista data

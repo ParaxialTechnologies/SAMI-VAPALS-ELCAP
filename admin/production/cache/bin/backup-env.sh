@@ -23,6 +23,7 @@ script=$(basename $0)
 logdir="${VAPALSDIR:-/ldisk2}/data/log"
 logfile="$logdir/$(basename $0 .sh).log"
 backupdir="${VAPALSDIR:-/ldisk2}/data/backups/$(date +%Y%m%d%H%M)"
+instance="${VAPALSINST:-vapals}"
 cachedist="/usr/local/lib/cache/2018.1.2.309.5"
 quiet="off" verbose="" echo=""
 
@@ -49,11 +50,14 @@ done
 [[ ! -d $logdir ]] && $echo mkdir -p $logdir
 [[ ! -d $backupdir ]] && $echo mkdir -p $backupdir/{global,journal}
 
+[[ $echo == "" && $verbose == "" ]] && exec 3>&1 4>&2
+
 if [[ $echo == "" ]]
 then
     [[ $quiet == on ]] && exec &>> $logfile || exec &> >(tee -a $logfile)
 fi
 
+echo
 echo "[$(date)]: Start $script $@"
 echo
 
@@ -61,39 +65,35 @@ echo
 
 echo "[$(date)]: Backing up the database..."
 
+[[ $echo == "" && $verbose == "" ]] && exec &> /dev/null
+
 if [[ $echo == echo ]]
 then
-    cat << EOL
-csession vapals -U %SYS ^BACKUP << EOF
-1
-1
-$backupdir/global/CACHE.DAT
-Full backup - $(date "+%Y-%m-%d %H:%M:%S")
-y
-halt
-EOF
-EOL
-elif [[ $verbose == -v ]]
-then
-    csession vapals -U %SYS ^BACKUP << EOF
-1
-1
-$backupdir/global/CACHE.DAT
-Full backup - $(date "+%Y-%m-%d %H:%M:%S")
-y
-halt
-EOF
-
+cat <<- EOS
+	csession $instance -U %SYS ^BACKUP <<- EOL
+	1
+	1
+	$backupdir/global/CACHE.DAT
+	Full backup - $(date "+%Y-%m-%d %H:%M:%S")
+	y
+	halt
+	EOL
+EOS
 else
-    csession vapals -U %SYS ^BACKUP > /dev/null << EOF
-1
-1
-$backupdir/global/CACHE.DAT
-Full backup - $(date "+%Y-%m-%d %H:%M:%S")
-y
-halt
-EOF
+    csession $instance -U %SYS ^BACKUP <<- EOL
+	1
+	1
+	$backupdir/global/CACHE.DAT
+	Full backup - $(date "+%Y-%m-%d %H:%M:%S")
+	y
+	halt
+	EOL
+fi
 
+if [[ $echo == "" && $verbose == "" ]]
+then
+    exec 1>&3 2>&4
+    [[ $quiet == on ]] && exec &>> $logfile || exec &> >(tee -a $logfile)
 fi
 
 echo
@@ -114,6 +114,5 @@ echo
 echo "[$(date)]: Finish $script $@"
 echo
 echo "================================================================================"
-echo
 
 exit 0

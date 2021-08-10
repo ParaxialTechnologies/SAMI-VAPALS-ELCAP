@@ -420,6 +420,12 @@ CUMPY(PYARY,sid,KEY) ; forms array of cummulative pack year data
  quit  ; end of ppi CUMPY^SAMIUR2
  ; 
  ;
+TDDT(ZDT) ; extrinsic which embeds a date in a table cell
+ N X,Y
+ S X=ZDT
+ D ^%DT
+ I Y=-1 S Y=""
+ Q "<td data-order="""_Y_""" data-search="""_ZDT_""">"_ZDT_"</td>"
  ;
 FMDT(ZDT) ; convert date to fileman format
  ;
@@ -530,7 +536,7 @@ BLINEDT(zdt,dfn,SAMIPATS) ; baseline date
  ;
  new bldt set bldt=$get(SAMIPATS(zdt,dfn,"edate"))
  ;
- quit bldt ; end of ppi $$BLINEDT^SAMIUR2
+ quit $$TDDT(bldt) ; end of ppi $$BLINEDT^SAMIUR2
  ;
  ;
  ;
@@ -595,7 +601,7 @@ DOB(ien,dfn,SAMIPATS) ; date of birth
  new dob set dob=$get(SAMIPATS(ien,dfn,"dob"))
  if dob="" set dob=$get(SAMIPATS(ien,dfn,"sbdob"))
  ;
- quit dob ; end of ppi $$DOB^SAMIUR2
+ quit $$TDDT(dob) ; end of ppi $$DOB^SAMIUR2
  ;
  ;
  ;
@@ -608,7 +614,7 @@ FUDATE(zdt,dfn,SAMIPATS) ; followup date
  ;
  new fud set fud="fudate"
  ;
- quit $get(SAMIPATS(zdt,dfn,"cefud")) ; end of ppi $$FUDATE^SAMIUR2
+ quit $$TDDT($get(SAMIPATS(zdt,dfn,"cefud"))) ; end of ppi $$FUDATE^SAMIUR2
  ;
  ;
  ;
@@ -691,7 +697,7 @@ LASTEXM(zdt,dfn,SAMIPATS) ; patient last exam
  ;
  new lexm set lexm=$get(SAMIPATS(zdt,dfn,"cedos"))
  ;
- quit lexm ; end of ppi $$LASTEXM^SAMIUR2
+ quit $$TDDT(lexm) ; end of ppi $$LASTEXM^SAMIUR2
  ;
  ;
 INACTDT(zdt,dfn,SAMIPATS) ; inactive date
@@ -707,7 +713,7 @@ INACTDT(zdt,dfn,SAMIPATS) ; inactive date
  new siform set siform=$get(SAMIPATS(zdt,dfn,"siform"))
  new vals set vals=$name(@root@("graph",sid,siform))
  ;
- q $g(@vals@("sidod"))
+ q $$TDDT($g(@vals@("sidod")))
  ;
 INACTRE(zdt,dfn,SAMIPATS) ; inactive date
  ;
@@ -763,7 +769,7 @@ LDE(zdt,dfn,SAMIPATS) ; last date and entry in com log
  ;
 LDOC(zdt,dfn,SAMIPATS) ; last date of contact
  ;
- q $P($$LDE(zdt,dfn,.SAMIPATS),"^",1)
+ q $$TDDT($P($$LDE(zdt,dfn,.SAMIPATS),"^",1))
  ;
 LENTRY(zdt,dfn,SAMIPATS) ; last contact entry
  ;
@@ -1016,7 +1022,7 @@ STUDYDT(zdt,dfn,SAMIPATS) ; latest study date
  ;
  new stdt set stdt=$get(SAMIPATS(zdt,dfn,"cedos"))
  ;
- quit stdt ; end of ppi $$STUDYDT^SAMIUR2
+ quit $$TDDT(stdt) ; end of ppi $$STUDYDT^SAMIUR2
  ;
  ;
  ;

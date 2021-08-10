@@ -384,7 +384,7 @@ MKSIFORM(num) ; create intake form
  merge @root@("graph",sid,"siform-"_cdate)=@root@(num)
  ;
  ; update form samistatus to complete
- do SSAMISTA^SAMICASE(sid,"siform-"_cdate,"complete")
+ do SSAMISTA^SAMICASE(sid,"siform-"_cdate,"incomplete")
  ;
  ;
  ;@stanza 3 init new intake form from vista data

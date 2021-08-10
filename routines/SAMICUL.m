@@ -1,6 +1,6 @@
-SAMICUL ;ven/gpl - case review log ;2021-07-06T15:44Z
+SAMICUL ;ven/gpl - case review log ;2021-07-06t15:44z
  ;;18.0;SAMI;**9,11,12**;2020-01;
- ;;1.18.0.12-t2+i12
+ ;;1.18.0.12-t3+i12
  ;
  ; SAMICUL contains the development log for the VAPALS-IELCAP Case
  ; Review Page (SAMICA* routines).
@@ -22,11 +22,11 @@ SAMICUL ;ven/gpl - case review log ;2021-07-06T15:44Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-07-06T15:44Z
+ ;@last-updated 2021-07-06t15:44z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.12-t2+i12
+ ;@version 1.18.0.12-t3+i12
  ;@release-date 2020-01
  ;@patch-list **9,11,12**
  ;
@@ -303,7 +303,7 @@ SAMICUL ;ven/gpl - case review log ;2021-07-06T15:44Z
  ; set basedt to $$BASELNDT or $$LASTCMP or now.
  ;
  ; 2021-06-30/07-06 ven/mcglk&toad&gpl 1.18.0.12-t2+i12 cbf7e46b,
- ; d8296fda
+ ; d8296fda,b248664b
  ;  SAMICASE,2,3 bump version & dates.
  ;  SAMICAS3 in MKFUFORM,LASTCMP update calls & called-by.
  ;  SAMICASE,2,3 finish converting to ppi format, annotate; fix typos.

@@ -1,6 +1,6 @@
-SAMINOT2 ;ven/gpl - followup form notes ;2021-07-01T17:21Z
+SAMINOT2 ;ven/gpl - followup form notes ;2021-07-01t17:21z
  ;;18.0;SAMI;**1,9,12**;2020-01;
- ;;1.18.0.12-t2+i12
+ ;;1.18.0.12-t3+i12
  ;
  ; SAMINOT2 contains web services & other subroutines for producing
  ; the ELCAP Followup Form Notes.

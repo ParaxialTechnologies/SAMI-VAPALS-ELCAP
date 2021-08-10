@@ -804,6 +804,7 @@ GSAMISTA(sid,form) ; extrinsic returns value of 'samistatus' from form
  set useform=form
  if form["vapals:" set useform=$p(form,"vapals:",2)
  set stat=$get(@root@("graph",sid,useform,"samistatus"))
+ if stat="" s stat="incomplete"
  ;
  quit stat ; end of ppi $$GSAMISTA^SAMICAS2
  ;

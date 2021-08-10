@@ -1,6 +1,6 @@
-SAMIJS2 ;ven/gpl - json archive import ;2021-07-01T17:08Z
+SAMIJS2 ;ven/gpl - json archive import ;2021-07-01t17:08z
  ;;18.0;SAMI;**12**;2020-01;
- ;;1.18.0.12-t2+i12
+ ;;1.18.0.12-t3+i12
  ;
  ; Routine SAMIJS2 contains more subroutines for importing VAPALS-
  ; ELCAP JSON archives, which are used for import, export, & migration
@@ -22,11 +22,11 @@ SAMIJS2 ;ven/gpl - json archive import ;2021-07-01T17:08Z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-07-01T17:08Z
+ ;@last-updated 2021-07-01t17:08z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.12-t2+i12
+ ;@version 1.18.0.12-t3+i12
  ;@release-date 2020-01
  ;@patch-list **12**
  ;

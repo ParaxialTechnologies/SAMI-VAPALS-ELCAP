@@ -508,7 +508,10 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . . for  do  quit:zj=""  ;
  . . . set zj=$order(@gr@(zj))
  . . . quit:zj=""
- . . . if $get(@gr@(zj,"samistatus"))="incomplete" do  ;
+ . . . new stat
+ . . . set stat=$get(@gr@(zj,"samistatus"))
+ . . . if stat="" set stat="incomplete"
+ . . . if stat="incomplete" do  ;
  . . . . set complete=0
  . . . . set SAMIPATS(efmdate,zi,"iform")=$get(SAMIPATS(efmdate,zi,"iform"))_" "_zj
  . . . . quit

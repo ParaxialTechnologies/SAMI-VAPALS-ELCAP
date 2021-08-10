@@ -652,11 +652,14 @@ WKLIST(SAMIPATS,ztype,datephrase,filter) ; build work list
  . new name set name=$get(SAMIPATS(ien,dfn,"saminame"))
  . ; new name set name=$get(SAMIPATS(ien,dfn,"sinamef"))
  . ; set name=name_","_SAMIPATS(ien,dfn,"sinamel")
- . new nuhref set nuhref="<form method=POST action=""/vapals"">"
+ . new nuhref 
+ . set nuhref="<td data-search="""_name_""" data-order="""_name_""">"
+ . set nuhref=nuhref_"<form method=POST action=""/vapals"">"
  . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""newcase"">"
  . set nuhref=nuhref_"<input type=hidden name=""dfn"" value="_dfn_">"
  . set nuhref=nuhref_"<input type=hidden name=""siteid"" value="_site_">"
  . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
+ . set nuhref=nuhref_"</td>"
  . set SAMIPATS(ien,dfn,"workref")=nuhref
  . quit
  ;

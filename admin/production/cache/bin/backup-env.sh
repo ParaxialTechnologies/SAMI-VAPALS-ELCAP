@@ -32,18 +32,23 @@ trap "rm -rf $backupdir; echo -e \"\n[$(date)]: Interrupt $script $@\"; exit 127
 while getopts :hqtv OPTION
 do
     case $OPTION in
-        q)  quiet="on"
-            ;;
-        v)  verbose="-v"
-            ;;
-        h)  usage
-            exit 0
-            ;;
-        t)  echo="echo"
-            ;;
-        *)  usage
-            exit 1
-            ;;
+    q) # quiet mode
+        quiet="on"
+        ;;
+    v) # logging level
+        verbose="-v"
+        ;;
+    h) # help menu
+        usage
+        exit 0
+        ;;
+    t) # trial or dry run
+        echo="echo"
+        ;;
+    *) # unknown option
+        usage
+        exit 1
+        ;;
     esac
 done
 
@@ -69,16 +74,16 @@ echo "[$(date)]: Backing up the database..."
 
 if [[ $echo == echo ]]
 then
-cat <<- EOS
+    cat <<- EOS
 	csession $instance -U %SYS ^BACKUP <<- EOL
-	1
-	1
-	$backupdir/global/CACHE.DAT
-	Full backup - $(date "+%Y-%m-%d %H:%M:%S")
-	y
-	halt
-	EOL
-EOS
+		1
+		1
+		$backupdir/global/CACHE.DAT
+		Full backup - $(date "+%Y-%m-%d %H:%M:%S")
+		y
+		halt
+		EOL
+	EOS
 else
     csession $instance -U %SYS ^BACKUP <<- EOL
 	1

@@ -341,7 +341,7 @@ NUHREF(SAMIPATS) ; create nuhref link to casereview for all patients
  . . new name set name=SAMIPATS(ij,dfn,"name")
  . . ;
  . . new nuhref
- . . set nuhref="<td data-order="""_name_""" data-search="""_name_">"
+ . . set nuhref="<td data-order="""_name_""" data-search="""_name_""">"
  . . set nuhref=nuhref_"<form method=POST action=""/vapals"">"
  . . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""casereview"">"
  . . set nuhref=nuhref_"<input type=hidden name=""studyid"" value="_sid_">"

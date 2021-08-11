@@ -1,6 +1,6 @@
-SAMIUR ;ven/gpl - user reports ;2021-07-06T15:53Z
+SAMIUR ;ven/gpl - user reports ;2021-08-11t21:18z
  ;;18.0;SAMI;**5,10,11,12**;2020-01;Build 4
- ;;1.18.0.12-t2+i12
+ ;;18.12
  ;
  ; SAMIUR contains a web service & associated subroutines to produce
  ; VAPALS-ELCAP user reports.
@@ -14,28 +14,28 @@ SAMIUR ;ven/gpl - user reports ;2021-07-06T15:53Z
  ;
  ;
  ;@routine-credits
- ;@primary-dev George P. Lilly (gpl)
+ ;@dev-main George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
- ;@primary-dev-org Vista Expertise Network (ven)
+ ;@dev-org-main Vista Expertise Network (ven)
  ; http://vistaexpertise.net
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-07-06T15:53Z
+ ;@last-update 2021-08-11t21:18z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.12-t2+i12
+ ;@version 18.12
  ;@release-date 2020-01
  ;@patch-list **5,10,11,12**
  ;
- ;@additional-dev Frederick D. S. Marshall (toad)
+ ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
- ;@additional-dev Larry G. Carlson (lgc)
+ ;@dev-add Larry G. Carlson (lgc)
  ; larry.g.carlson@gmail.com
- ;@additional-dev Alexis R. Carlson (arc)
+ ;@dev-add Alexis R. Carlson (arc)
  ; whatisthehumanspirit@gmail.com
- ;@additional-dev Kenneth McGlothlen (mcglk)
+ ;@dev-add Kenneth W. McGlothlen (mcglk)
  ; mcglk@vistaexpertise.net
  ;
  ;@module-credits see SAMIHUL
@@ -222,8 +222,8 @@ WSREPORT(SAMIRTN,filter) ; generate report based on params in filter
  . . . set XR="set XRV="_$get(RPT(ir,"routine"))_"("_ij_","_dfn_",.SAMIPATS)"
  . . . ; set XRV=@XR
  . . . xecute XR ; call report-field handlers in ^SAMIUR2
- . . . if $e(XRV,1,3)["<td" set SAMIRTN(cnt)=XRV
- . . . else  set SAMIRTN(cnt)="<td>"_$get(XRV)_"</td>"
+ . . . if $extract(XRV,1,3)["<td" set SAMIRTN(cnt)=XRV
+ . . . else set SAMIRTN(cnt)="<td>"_$get(XRV)_"</td>"
  . . . quit
  . . ;
  . . set cnt=cnt+1
@@ -512,8 +512,8 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . . for  do  quit:zj=""  ;
  . . . set zj=$order(@gr@(zj))
  . . . quit:zj=""
- . . . new stat
- . . . set stat=$get(@gr@(zj,"samistatus"))
+ . . . ;
+ . . . new stat set stat=$get(@gr@(zj,"samistatus"))="incomplete"
  . . . if stat="" set stat="incomplete"
  . . . if stat="incomplete" do  ;
  . . . . set complete=0

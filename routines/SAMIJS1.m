@@ -1,6 +1,6 @@
 SAMIJS1 ;ven/gpl - json archive export ;2021-07-01t16:58z
  ;;18.0;SAMI;**8,12**;2020-01;Build 4
- ;;1.18.0.12-t3+i12
+ ;;18.12
  ;
  ; Routine SAMIJS1 contains subroutines for exporting VAPALS-ELCAP
  ; JSON archives, which are used for import, export, & migration of
@@ -15,35 +15,35 @@ SAMIJS1 ;ven/gpl - json archive export ;2021-07-01t16:58z
  ;
  ;
  ;@routine-credits
- ;@primary-dev George P. Lilly (gpl)
+ ;@dev-main George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
- ;@primary-dev-org Vista Expertise Network (ven)
+ ;@dev-org-main Vista Expertise Network (ven)
  ; http://vistaexpertise.net
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-07-01t16:58z
+ ;@last-update 2021-07-01t16:58z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.12-t3+i12
+ ;@version 18.12
  ;@release-date 2020-01
  ;@patch-list **8,12**
  ;
- ;@additional-dev Frederick D. S. Marshall (toad)
+ ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
- ;@additional-dev Kenneth W. McGlothlen (mcglk)
+ ;@dev-add Kenneth W. McGlothlen (mcglk)
  ; mcglk@vistaexpertise.net
  ;
  ;@routine-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
- ; 2020-12-11 ven/gpl 1.18.0.8+i8 0c73272b,92138cdb
+ ; 2020-12-11 ven/gpl 18.8 0c73272b,92138cdb
  ;  SAMIJS1 initial data migration export, add DETAIL^SAMIJS1 for
  ; debugging.
  ;
- ; 2021-05-29 ven/gpl 1.18.0.12-t2+i12 0a3b184f
+ ; 2021-05-29 ven/gpl 18.12-t2 0a3b184f
  ;  SAMIJS1,SAMIJS2 update data migration routines; new SAMIJS2.
  ;
- ; 2021-07-01 ven/mcglk&toad 1.18.0.12-t2+i12 cbf7e46b
+ ; 2021-07-01 ven/mcglk&toad 18.12-t2 cbf7e46b
  ;  SAMIJS1,SAMIJS2 bump version & dates, add hdr comments & dev log.
  ;
  ;@contents

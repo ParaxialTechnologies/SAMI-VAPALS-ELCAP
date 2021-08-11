@@ -1,6 +1,6 @@
 SAMIJS2 ;ven/gpl - json archive import ;2021-07-01t17:08z
  ;;18.0;SAMI;**12**;2020-01;
- ;;1.18.0.12-t3+i12
+ ;;18.12
  ;
  ; Routine SAMIJS2 contains more subroutines for importing VAPALS-
  ; ELCAP JSON archives, which are used for import, export, & migration
@@ -15,24 +15,24 @@ SAMIJS2 ;ven/gpl - json archive import ;2021-07-01t17:08z
  ;
  ;
  ;@routine-credits
- ;@primary-dev George P. Lilly (gpl)
+ ;@dev-main George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
- ;@primary-dev-org Vista Expertise Network (ven)
+ ;@dev-org-main Vista Expertise Network (ven)
  ; http://vistaexpertise.net
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-07-01t17:08z
+ ;@last-update 2021-07-01t17:08z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.12-t3+i12
+ ;@version 18.12
  ;@release-date 2020-01
  ;@patch-list **12**
  ;
- ;@additional-dev Frederick D. S. Marshall (toad)
+ ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
- ;@additional-dev Kenneth W. McGlothlen (mcglk)
+ ;@dev-add Kenneth W. McGlothlen (mcglk)
  ; mcglk@vistaexpertise.net
  ;
  ;@routine-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git

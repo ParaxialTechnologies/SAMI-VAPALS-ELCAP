@@ -1,6 +1,6 @@
-SAMIUR2 ;ven/gpl - user reports cont ;2021-07-13t00:02z
+SAMIUR2 ;ven/gpl - user reports cont ;2021-08-11t21:27z
  ;;18.0;SAMI;**5,11,12**;2020-01;Build 11
- ;;1.18.0.12-t3+i12
+ ;;18.12
  ;
  ; SAMIUR2 contains subroutines for creating & implementing the
  ; report-definition table.
@@ -14,28 +14,28 @@ SAMIUR2 ;ven/gpl - user reports cont ;2021-07-13t00:02z
  ;
  ;
  ;@routine-credits
- ;@primary-dev George P. Lilly (gpl)
+ ;@dev-main George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
- ;@primary-dev-org Vista Expertise Network (ven)
+ ;@dev-org-main Vista Expertise Network (ven)
  ; http://vistaexpertise.net
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-07-13t00:02z
+ ;@last-update 2021-08-11t21:27z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.12-t3+i12
+ ;@version 18.12
  ;@release-date 2020-01
  ;@patch-list **5,11,12**
  ;
- ;@additional-dev Frederick D. S. Marshall (toad)
+ ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
- ;@additional-dev Larry G. Carlson (lgc)
+ ;@dev-add Larry G. Carlson (lgc)
  ; larry.g.carlson@gmail.com
- ;@additional-dev Alexis R. Carlson (arc)
+ ;@dev-add Alexis R. Carlson (arc)
  ; whatisthehumanspirit@gmail.com
- ;@additional-dev Kenneth McGlothlen (mcglk)
+ ;@dev-add Kenneth McGlothlen (mcglk)
  ; mcglk@vistaexpertise.net
  ;
  ;@module-credits see SAMIHUL
@@ -51,6 +51,7 @@ SAMIUR2 ;ven/gpl - user reports cont ;2021-07-13t00:02z
  ;
  ; $$SHDET table contents for smoking history
  ; CUMPY forms array of cummulative pack year data
+ ; $$TDDT embed date in table cell
  ; $$FMDT convert date to fileman format
  ; $$PKYDT pack-years from start & end & cigs/day
  ; $$PKY pack-years from years & packs/day
@@ -418,14 +419,33 @@ CUMPY(PYARY,sid,KEY) ; forms array of cummulative pack year data
  . quit
  ;
  quit  ; end of ppi CUMPY^SAMIUR2
+ ;
+ ;
+ ;
+TDDT(ZDT) ; embed date in table cell
+ ;
+ ;;ppi;function;clean;silent;sac
+ ;@called-by
+ ; BLINEDT
+ ; DOB
+ ; FUDATE
+ ; LASTEXM
+ ; INACTDT
+ ; LDOC
+ ; STUDYDT
+ ;@calls
+ ; ^%DT
+ ;
+ new X,Y
+ set X=ZDT
+ do ^%DT
+ if Y=-1 set Y=""
+ new cell
+ set cell="<td data-order="""_Y_""" data-search="""_ZDT_""">"_ZDT_"</td>"
+ ;
+ quit cell ; end of $$TDDT
  ; 
  ;
-TDDT(ZDT) ; extrinsic which embeds a date in a table cell
- N X,Y
- S X=ZDT
- D ^%DT
- I Y=-1 S Y=""
- Q "<td data-order="""_Y_""" data-search="""_ZDT_""">"_ZDT_"</td>"
  ;
 FMDT(ZDT) ; convert date to fileman format
  ;
@@ -532,7 +552,8 @@ BLINEDT(zdt,dfn,SAMIPATS) ; baseline date
  ;;ppi;function;clean;silent;sac
  ;@called-by
  ; WSREPORT^SAMIUR
- ;@calls none
+ ;@calls
+ ; $$TDDT
  ;
  new bldt set bldt=$get(SAMIPATS(zdt,dfn,"edate"))
  ;
@@ -596,7 +617,8 @@ DOB(ien,dfn,SAMIPATS) ; date of birth
  ;;ppi;function;clean;silent;sac
  ;@called-by
  ; WSREPORT^SAMIUR
- ;@calls none
+ ;@calls
+ ; $$TDDT
  ;
  new dob set dob=$get(SAMIPATS(ien,dfn,"dob"))
  if dob="" set dob=$get(SAMIPATS(ien,dfn,"sbdob"))
@@ -610,11 +632,13 @@ FUDATE(zdt,dfn,SAMIPATS) ; followup date
  ;;ppi;function;clean;silent;sac
  ;@called-by
  ; WSREPORT^SAMIUR
- ;@calls none
+ ;@calls
+ ; $TDDT
  ;
  new fud set fud="fudate"
+ new date set date=$get(SAMIPATS(zdt,dfn,"cefud"))
  ;
- quit $$TDDT($get(SAMIPATS(zdt,dfn,"cefud"))) ; end of ppi $$FUDATE^SAMIUR2
+ quit $$TDDT(date) ; end of ppi $$FUDATE^SAMIUR2
  ;
  ;
  ;
@@ -693,11 +717,13 @@ LASTEXM(zdt,dfn,SAMIPATS) ; patient last exam
  ;;ppi;function;clean;silent;sac
  ;@called-by
  ; WSREPORT^SAMIUR
- ;@calls none
+ ;@calls
+ ; $$TDDT
  ;
  new lexm set lexm=$get(SAMIPATS(zdt,dfn,"cedos"))
  ;
  quit $$TDDT(lexm) ; end of ppi $$LASTEXM^SAMIUR2
+ ;
  ;
  ;
 INACTDT(zdt,dfn,SAMIPATS) ; inactive date
@@ -707,13 +733,16 @@ INACTDT(zdt,dfn,SAMIPATS) ; inactive date
  ; WSREPORT^SAMIUR
  ;@calls
  ; $$setroot^%wd
+ ; $$TDDT
  ;
  new root set root=$$setroot^%wd("vapals-patients")
  new sid set sid=$get(@root@(dfn,"samistudyid"))
  new siform set siform=$get(SAMIPATS(zdt,dfn,"siform"))
  new vals set vals=$name(@root@("graph",sid,siform))
  ;
- q $$TDDT($g(@vals@("sidod")))
+ quit $TDDT($get(@vals@("sidod")))
+ ;
+ ;
  ;
 INACTRE(zdt,dfn,SAMIPATS) ; inactive date
  ;
@@ -728,7 +757,9 @@ INACTRE(zdt,dfn,SAMIPATS) ; inactive date
  new siform set siform=$get(SAMIPATS(zdt,dfn,"siform"))
  new vals set vals=$name(@root@("graph",sid,siform))
  ;
- q $g(@vals@("sistachg"))
+ quit $get(@vals@("sistachg"))
+ ;
+ ;
  ;
 INACTCM(zdt,dfn,SAMIPATS) ; inactive date
  ;
@@ -743,7 +774,9 @@ INACTCM(zdt,dfn,SAMIPATS) ; inactive date
  new siform set siform=$get(SAMIPATS(zdt,dfn,"siform"))
  new vals set vals=$name(@root@("graph",sid,siform))
  ;
- q $g(@vals@("sistreas"))
+ quit $get(@vals@("sistreas"))
+ ;
+ ;
  ;
 LDE(zdt,dfn,SAMIPATS) ; last date and entry in com log
  ;
@@ -765,15 +798,21 @@ LDE(zdt,dfn,SAMIPATS) ; last date and entry in com log
  . s comdt=$g(@vals@("sidc"))
  s comntry=$g(@vals@("comlog",comien))
  s comdt=$p($p(comntry,"[",2),"@",1)
- q comdt_"^"_comntry
+ ;
+ quit comdt_"^"_comntry
+ ;
+ ;
  ;
 LDOC(zdt,dfn,SAMIPATS) ; last date of contact
  ;
- q $$TDDT($P($$LDE(zdt,dfn,.SAMIPATS),"^",1))
+ quit $$TDDT($piece($$LDE(zdt,dfn,.SAMIPATS),"^",1))
+ ;
+ ;
  ;
 LENTRY(zdt,dfn,SAMIPATS) ; last contact entry
  ;
- q $P($$LDE(zdt,dfn,.SAMIPATS),"^",2)
+ quit $piece($$LDE(zdt,dfn,.SAMIPATS),"^",2)
+ ;
  ;
  ;
 MANPAT(ien,dfn,SAMIPATS) ; unmatched patient cell
@@ -1006,19 +1045,22 @@ SSN(zdt,dfn,SAMIPATS) ; social security number
  quit ssn ; end of ppi $$SSN^SAMIUR2
  ;
  ;
+ ;
 SSNLABEL(SITE) ; extrinsic returns label for SSN (ie PID)
  new RTN
  set RTN=$$GET1PARM^SAMIPARM("socialSecurityNumber",SITE)
  if RTN="" set RTN="SSN"
  quit RTN
- ; 
+ ;
+ ;
  ;
 STUDYDT(zdt,dfn,SAMIPATS) ; latest study date
  ;
  ;;ppi;function;clean;silent;sac
  ;@called-by
  ; WSREPORT^SAMIUR
- ;@calls none
+ ;@calls
+ ; $$TDDT
  ;
  new stdt set stdt=$get(SAMIPATS(zdt,dfn,"cedos"))
  ;

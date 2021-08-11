@@ -1,6 +1,6 @@
 SAMICLOG ;ven/gpl - intake form change log ;2021-07-01t16:28z
  ;;18.0;SAMI;**12**;2020-01;
- ;;1.18.0.12-t3+i12
+ ;;18.12
  ;
  ; Routine SAMICLOG contains subroutines for implementing the VAPALS-
  ; ELCAP Intake Form's Change Log field.
@@ -14,45 +14,45 @@ SAMICLOG ;ven/gpl - intake form change log ;2021-07-01t16:28z
  ;
  ;
  ;@routine-credits
- ;@primary-dev George P. Lilly (gpl)
+ ;@dev-main George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
- ;@primary-dev-org Vista Expertise Network (ven)
+ ;@dev-org-main Vista Expertise Network (ven)
  ; http://vistaexpertise.net
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-07-01t16:28z
+ ;@last-update 2021-07-01t16:28z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.12-t3+i12
+ ;@version 18.12
  ;@release-date 2020-01
  ;@patch-list **12**
  ;
- ;@additional-dev Larry G. Carlson (lgc)
+ ;@dev-add Larry G. Carlson (lgc)
  ; lgc@vistaexpertise.net
- ;@additional-dev Frederick D. S. Marshall (toad)
+ ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
- ;@additional-dev Kenneth W. McGlothlen (mcglk)
+ ;@dev-add Kenneth W. McGlothlen (mcglk)
  ; mcglk@vistaexpertise.net
  ;
  ;@routine-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
- ; 2019-03-20 ven/gpl 1.18.0-t4 e1e7c136
+ ; 2019-03-20 ven/gpl 18-t4 e1e7c136
  ;  SAMICLOG progress on intake form change log.
  ;
- ; 2019-03-25/26 ven/lgc 1.18.0-t4 12ab8234,b9a71a56,e0106403,fb73dfe5
+ ; 2019-03-25/26 ven/lgc 18-t4 12ab8234,b9a71a56,e0106403,fb73dfe5
  ;  SAMICLOG update change log & tests, repair var name, inhibit
  ; change log during 1st entry.
  ;
- ; 2019-08-03 ven/gpl 1.18.0-t4 bea65f7b
+ ; 2019-08-03 ven/gpl 18-t4 bea65f7b
  ;  SAMICLOG fix bugs in Have you ever smoked processing in change log
  ; & intake note.
  ;
- ; 2021-06-18 ven/gpl 1.18.0.12-t2+i12 68ebd6fa
+ ; 2021-06-18 ven/gpl 18.12-t2 68ebd6fa
  ;  SAMICLOG fix crash in processing text field for change log: in
  ; DOLOGIT add screens if "field","C",var node undefined.
  ;
- ; 2021-07-01 ven/mcglk&toad 1.18.0.12-t2+i12 cbf7e46b
+ ; 2021-07-01 ven/mcglk&toad 18.12-t2 cbf7e46b
  ;  SAMICLOG bump version & dates, add hdr comments & dev log.
  ;
  ;@contents

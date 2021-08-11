@@ -222,7 +222,8 @@ WSREPORT(SAMIRTN,filter) ; generate report based on params in filter
  . . . set XR="set XRV="_$get(RPT(ir,"routine"))_"("_ij_","_dfn_",.SAMIPATS)"
  . . . ; set XRV=@XR
  . . . xecute XR ; call report-field handlers in ^SAMIUR2
- . . . set SAMIRTN(cnt)="<td>"_$get(XRV)_"</td>"
+ . . . if $e(XRV,1,3)["<td" set SAMIRTN(cnt)=XRV
+ . . . else  set SAMIRTN(cnt)="<td>"_$get(XRV)_"</td>"
  . . . quit
  . . ;
  . . set cnt=cnt+1
@@ -232,8 +233,8 @@ WSREPORT(SAMIRTN,filter) ; generate report based on params in filter
  . quit
  ;
  set cnt=cnt+1
- set SAMIRTN(cnt)="<tr><td>Total: "_rows_"</td></tr>"
- set SAMIRTN(totcnt)="<td>Total: "_rows_"</td></tr><tr>"
+ ;set SAMIRTN(cnt)="<tr><td>Total: "_rows_"</td></tr>"
+ ;set SAMIRTN(totcnt)="<td>Total: "_rows_"</td></tr><tr>"
  ;
  set cnt=cnt+1 set SAMIRTN(cnt)="</tbody>"
  for  do  quit:temp(ii)["</tbody>"  ;
@@ -339,10 +340,13 @@ NUHREF(SAMIPATS) ; create nuhref link to casereview for all patients
  . . set SAMIPATS(ij,dfn,"ssn")=$$GETSSN^SAMIFORM(sid)
  . . new name set name=SAMIPATS(ij,dfn,"name")
  . . ;
- . . new nuhref set nuhref="<form method=POST action=""/vapals"">"
+ . . new nuhref
+ . . set nuhref="<td data-order="""_name_""" data-search="""_name_""">"
+ . . set nuhref=nuhref_"<form method=POST action=""/vapals"">"
  . . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""casereview"">"
  . . set nuhref=nuhref_"<input type=hidden name=""studyid"" value="_sid_">"
  . . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
+ . . set nuhref=nuhref_"</td>"
  . . set SAMIPATS(ij,dfn,"nuhref")=nuhref
  . . quit
  . quit
@@ -648,11 +652,14 @@ WKLIST(SAMIPATS,ztype,datephrase,filter) ; build work list
  . new name set name=$get(SAMIPATS(ien,dfn,"saminame"))
  . ; new name set name=$get(SAMIPATS(ien,dfn,"sinamef"))
  . ; set name=name_","_SAMIPATS(ien,dfn,"sinamel")
- . new nuhref set nuhref="<form method=POST action=""/vapals"">"
+ . new nuhref 
+ . set nuhref="<td data-search="""_name_""" data-order="""_name_""">"
+ . set nuhref=nuhref_"<form method=POST action=""/vapals"">"
  . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""newcase"">"
  . set nuhref=nuhref_"<input type=hidden name=""dfn"" value="_dfn_">"
  . set nuhref=nuhref_"<input type=hidden name=""siteid"" value="_site_">"
  . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
+ . set nuhref=nuhref_"</td>"
  . set SAMIPATS(ien,dfn,"workref")=nuhref
  . quit
  ;

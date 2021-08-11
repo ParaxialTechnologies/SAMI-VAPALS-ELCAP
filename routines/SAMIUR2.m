@@ -1,4 +1,4 @@
-SAMIUR2 ;ven/gpl - user reports cont ;2021-08-11t21:27z
+SAMIUR2 ;ven/gpl - user reports cont ;2021-08-11t21:53z
  ;;18.0;SAMI;**5,11,12**;2020-01;Build 11
  ;;18.12
  ;
@@ -21,7 +21,7 @@ SAMIUR2 ;ven/gpl - user reports cont ;2021-08-11t21:27z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-08-11t21:27z
+ ;@last-update 2021-08-11t21:53z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -740,7 +740,7 @@ INACTDT(zdt,dfn,SAMIPATS) ; inactive date
  new siform set siform=$get(SAMIPATS(zdt,dfn,"siform"))
  new vals set vals=$name(@root@("graph",sid,siform))
  ;
- quit $TDDT($get(@vals@("sidod")))
+ quit $$TDDT($get(@vals@("sidod")))
  ;
  ;
  ;

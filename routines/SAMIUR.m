@@ -1,4 +1,4 @@
-SAMIUR ;ven/gpl - user reports ;2021-08-11t21:18z
+SAMIUR ;ven/gpl - user reports ;2021-08-11t21:53z
  ;;18.0;SAMI;**5,10,11,12**;2020-01;Build 4
  ;;18.12
  ;
@@ -21,7 +21,7 @@ SAMIUR ;ven/gpl - user reports ;2021-08-11t21:18z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-08-11t21:18z
+ ;@last-update 2021-08-11t21:53z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -223,7 +223,7 @@ WSREPORT(SAMIRTN,filter) ; generate report based on params in filter
  . . . ; set XRV=@XR
  . . . xecute XR ; call report-field handlers in ^SAMIUR2
  . . . if $extract(XRV,1,3)["<td" set SAMIRTN(cnt)=XRV
- . . . else set SAMIRTN(cnt)="<td>"_$get(XRV)_"</td>"
+ . . . else  set SAMIRTN(cnt)="<td>"_$get(XRV)_"</td>"
  . . . quit
  . . ;
  . . set cnt=cnt+1
@@ -652,7 +652,7 @@ WKLIST(SAMIPATS,ztype,datephrase,filter) ; build work list
  . new name set name=$get(SAMIPATS(ien,dfn,"saminame"))
  . ; new name set name=$get(SAMIPATS(ien,dfn,"sinamef"))
  . ; set name=name_","_SAMIPATS(ien,dfn,"sinamel")
- . new nuhref 
+ . new nuhref
  . set nuhref="<td data-search="""_name_""" data-order="""_name_""">"
  . set nuhref=nuhref_"<form method=POST action=""/vapals"">"
  . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""newcase"">"

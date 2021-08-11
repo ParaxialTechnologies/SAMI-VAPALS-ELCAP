@@ -1,5 +1,5 @@
 KIDS Distribution saved on Aug 11, 2021@15:34:06
-Released SAMI*18.0*12 (18.12)
+Released SAMI*18.0*12 SEQ #12 (18.12)
 **KIDS**:SAMI*18.0*12^
 
 **INSTALL NAME**

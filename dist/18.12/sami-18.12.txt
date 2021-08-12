@@ -1,0 +1,1355 @@
+$TXT by MARSHALL,RICK DS@vapalsyotta.fiscientific.org (KIDS) 2021-08-11T17:32Z
+ 
+                          Bug Stomp Jamboree
+                      SAMI (VAPALS-ELCAP) 18.12
+                        (SAMI*18.0*12 SEQ #12)
+                           
+           George P. Lilly, Dom DiNatale, Larry G. Carlson,
+                      & Frederick D. S. Marshall
+                              2021-08-11
+ 
+i. Front matter
+ 
+ App         SAMI (VAPALS-ELCAP)
+ Version     18.12
+ Vista ID    SAMI*18.0*12 SEQ #12
+             Version 18.0, Patch ID #12, Seq #12
+ Priority    regular
+ Categories  routine, file
+ Status      released: sami-18.12.zip
+ Depends on  SAMI 18.1 (SAMI*18.0*1 SEQ #1)
+             SAMI 18.2 (SAMI*18.0*2 SEQ #2)
+             SAMI 18.3 (SAMI*18.0*3 SEQ #3)
+             SAMI 18.4 (SAMI*18.0*4 SEQ #4)
+             SAMI 18.5 (SAMI*18.0*5 SEQ #5)
+             SAMI 18.6 (SAMI*18.0*6 SEQ #6)
+             SAMI 18.8 (SAMI*18.0*8 SEQ #8)
+             SAMI 18.9 (SAMI*18.0*9 SEQ #9)
+             SAMI 18.10 (SAMI*18.0*10 SEQ #10)
+             SAMI 18.11 (SAMI*18.0*11 SEQ #11)
+ 
+ 
+ii. Contents
+ 
+ Front matter
+  o Contents
+ Description
+ Package elements
+ Backup instructions
+  o Assume the identity of your osehra Unix user
+  o Prepare install directory
+  o Back up form-fields and www files
+  o Enter M
+    - On Caché
+    - On YottaDB/GT.M
+  o Sign into Vista
+  o Back up routines
+    - List of routines
+    - On Caché
+    - On YottaDB/GT.M
+  o Exit M
+ Package-retrieval instructions
+  o Download and prepare the archive file
+  o Expand the archive
+ Main install instructions
+  o Enter Vista menu system
+    - Enter M
+    - Sign in and select the KIDS Installation menu
+  o Load KIDS package
+  o Install KIDS package
+  o Exit M
+  o Install the form-fields and www files
+    - For VA VAPALS-ELCAP systems
+    - For Non-VA VAPALS-ELCAP systems
+  o Activate the form-fields and www files and exit M
+    - Enter M
+    - Sign into Vista
+    - Rebuild M-Web's cached form-fields and www files
+    - Exit M
+ Optional backout instructions
+ Routines
+ Authors
+ 
+ 
+ 
+1. Description
+ 
+ SAMI 18.12 adds 36 updates with various priorities, in a variety of
+ places in VAPALS-ELCAP, include some bug fixes and some enhancements,
+ as described below.
+ 
+ The definitive source for the VAPALS-ELCAP application - codebase,
+ package distributions (including this one), and documentation - is
+ at the following public Github repository:
+ 
+ https://github.com/VA-PALS-ELCAP/SAMI-VAPALS-ELCAP/
+ 
+ These instructions are for your Vista environment’s sysadmin. As
+ usual, please capture the complete dialog of your install and send it
+ to your VAPALS-ELCAP support team.
+ 
+ The 3 critical bugs fixed are:
+ 
+ 1. HL7: Make HL7 patient name match case insensitive
+ 
+      issue 21-103: For 18.11, Mr. Marshall refactored the SAMIHL7 and
+      SAMIOR routines to increase maintainability. But as sometimes
+      happens during refactoring, he introduced a bug. In this case,
+      in BLDARR^SAMIORM he moved a new command that should have been
+      outside a loop inside the loop instead. This meant that instead
+      of building an array of lines for each incoming ORM message, it
+      instead kept overwriting line 1, so the resulting message
+      received only included the last line of the message. This
+      resulted in the creation of cryptic stub entries in patients'
+      ORM subgraphs, which in turn resulted in blank lines in the
+      Worklist.
+ 
+      solution: The new command was moved outside the loop where it
+      belongs, so all new incoming ORM messages will be processed
+      and appear on the Worklist correctly. In the interests of fixing
+      SAMIORM ASAP, cleanup of the existing stub entries will be left
+      for a future version, to leave time to find and develop the best
+      solution.
+      
+      reported: 2021-06-07 by Murphy & Jirapatnakul.
+ 
+ 2. CT: nodules error in Internet Explorer
+ 
+      issue 21-109: The radiologists are still using IE, and the CT
+      form causes an error in IE. The radiologist started to enter a
+      form with nodules and saved for later, but when he went back,
+      the nodule grid was not expanded and could not be. When the form
+      loads we get the following javascript error:
+      
+      jQuery.Deferred exception: Object doesn't support property or
+      method 'includes' TypeError: Object doesn't support property or
+      method 'includes'
+   at toggleFields (vapals-elcap.phoenix.va.gov/see/sami/nodule-grid.js?v=2021.06.01:70:17)
+   at setupNoduleEnabledState (vapals-elcap.phoenix.va.gov/see/sami/nodule-grid.js?v=2021.06.01:48:21)
+   at _init (vapals-elcap.phoenix.va.gov/see/sami/nodule-grid.js?v=2021.06.01:407:21)
+   at noduleGrid (vapals-elcap.phoenix.va.gov/see/sami/nodule-grid.js?v=2021.06.01:419:13)
+   at initNoduleGrid (vapals-elcap.phoenix.va.gov/vapals:5419:13)
+   at Anonymous function (vapals-elcap.phoenix.va.gov/vapals:9233:13)
+   at l (vapals-elcap.phoenix.va.gov/see/sami/lib/jquery-3.3.1.min.js:2:29367)
+   at Anonymous function (vapals-elcap.phoenix.va.gov/see/sami/lib/jquery-3.3.1.min.js:2:29677) undefined"
+      
+      solution: fixed.
+      
+      reported: 2021-06-15 by Jirapatnakul.
+ 
+ 3. Missing CT Report: overhaul
+      
+      issue 21-122: The VAPALS-ELCAP research team and the Phoenix
+      VAPALS team need to be able to use this report to work out which
+      participants have not been contacted for the longest time, so
+      they can contact them next. This will replace what is currently
+      a manual tracking process involving spreadsheets.
+      
+      solution: Add the date from the last entry from the contact log
+      on the Intake Form to this report & sort by it in reverse order,
+      oldest to newest; add the log entry as a column; then move
+      Enrollment Date to end of columns.
+      
+      reported: 2021-07-12 by Henschke.
+ 
+ 
+ The 2 other bug fixes for the CT Evaluation form & CT report are:
+ 
+ 4. CT Report: For emphysema, report says minimal but form says mild
+      
+      issue 21-105: Selecting Mild for Emphyseme on the CT form causes
+      the CT report to list minimal for emphysema, which does not
+      match. The report should also say mild, so they agree.
+      
+      solution: Fixed.
+      
+      reported: 2021-06-10 by Jirapatnakul & Slaughter.
+ 
+ 5. CT: Most Recent Comparative Study field set to current date
+      
+      issue 21-124: The Most Recent Comparative Study field currently
+      puts the date of the current CT form. The field should be the
+      most recent previous CT date, not the current date.
+      
+      solution: Fixed.
+      
+      reported: 2021-07-12 by Jirapatnakul & Slaughter.
+ 
+ 
+ This 1 enhancement is related to all user reports:
+ 
+ 6. User reports: Make all user reports sortable by any field
+      
+      issue 21-140: VAPALS-ELCAP users need to be able to sort each
+      user report by any field. They also need to be able to specify
+      how many entries they would like per page: 10, 25, 50, or 100.
+      Users also need the ability to search everything within any
+      report, so you can search for dates or SSNs/MRNs, for example.
+      Users also need the ability to sort within another sort.
+      
+      solution: Done. This change removes the total number of entries
+      from the top of the page, but it is easy to see if number of
+      entries per page is set to 10.
+      
+      reported: 2021-08-10 by Henschke.
+ 
+ 
+ The 2 bugs fixed in the Manual Registration form are:
+ 
+ 7. HL7: Store patient names in ORM subgraphs in uppercase
+ 
+      issue 21-020: 18.11 introduced a change dating back to 2020-07
+      that capitalizes each name (first letter uppercase, rest
+      lowercase) for storage in the VAPALS-ELCAP graph. Since patient
+      names are converted to uppercase for lookups, conversions, and
+      other calculations, this did not really affect users of the app,
+      but it meant names can be stored inconsistently, which can be
+      distracting for programmers and troubleshooters.
+      
+      solution: To simplify the graph, since patient names in CPRS and
+      Vista are recorded in uppercase, 18.12 changes PID^SAMIORM to
+      store them the same way. We're deferring the question of whether
+      to convert all existing patient names in the graph until after
+      discussion with the VA Phoenix team, so if such a conversion is
+      written it will be part of a future version.
+      
+      reported: 2021-03-04 by Morales.
+ 
+ 8. Man Reg: Integration Control Number block
+      
+      issues 20-10,21-050: VA staff do not use the ICN to identify
+      patients.
+      
+      solution: ICN bloc removed.
+      
+      reported: 2020-01-22 by Morales. Jira VAP-486.
+ 
+ 
+ The 3 enhancements related to parameterization include:
+ 
+ 9. Params: New parameter framework, set up defaults & site overrides
+ 
+      issue 21-017: As VAPALS-ELCAP matures, it is becoming
+      increasingly that the app needs the ability to vary field labels
+      and behavior depending on the site, and maybe by user,
+      institution, or other such variables. The app needs a
+      parameterization framework to switch appearance and behavior
+      based on parameters.
+      
+      solution: A new file SAMI PARAMETER DEFAULTS (311.14) was
+      introduced to name parameters and set their defaults. New fields
+      were added to file SAMI SITE (311.12) to override those defaults
+      for any given site, a suite of initial parameters was created,
+      and the SAMI routines were updated to respond to those params; a
+      new web service - get params - was created so the forms can
+      query the current parameter values.
+      
+      reported: 2021-03-02 by SAMI development team.
+ 
+ 10. Params: Field label parameterizations
+      
+      issue 21-057: Various fields on the SAMI forms are good
+      candidates for having parameterized labels, such as references
+      to social security # (instead of medical record #) or to
+      veterans (instead of patients/participants).
+      
+      solution: These labels were modified throughout SAMI to respond
+      to parameter settings.
+      
+      reported: 2021-05-10 by Lilly.
+ 
+ 11. Params: Matching Report parameterization
+ 
+      issue 21-088: Whether the Matching Report is an item on the
+      Reports Menu should be controlled by parameter.
+      
+      solution: Parameter added and implemented to hide the Matching
+      Report if site doesn't need or use it.
+      
+      reported: 2021-06-01 by Yaw.
+ 
+ 
+ The 2 upgrades related to the SAMI graphstore structure are:
+ 
+ 12. Graphstore: Patients with same SSN in different sites
+ 
+      issue 21-051: The initial database architecture for SAMI assumed
+      each VAPALS-ELCAP instance would support only a single site, so
+      social security numbers were assumed to be unique. When VAPALS-
+      ELCAP was upgraded in 18.5 to allow multiple sites to share an
+      instance (aka multi-tenancy), as a side effect this SSN
+      restriction inadvertently became a restriction that no two sites
+      could have patients with the same SSN. This is a problem,
+      because many veterans are served by multiple VA sites.
+      
+      solution: The restriction was changed to allow patients with the
+      same SSN at multiple sites within the same VAPALS-ELCAP instance
+      as a followup/completion of the multi-tenancy work.
+      
+      reported: 2021-04-27 by Rukavena.
+ 
+ 13. Graphstore: Data export is missing fields
+      
+      issue 21-127: The VAPALS-ELCAP data dictionaries (DDs) are used
+      to drive the data export process, so when field definitions are
+      revised or new fields are added but the DDs are not updated, it
+      can leave the export out of sync with the actual data.
+      
+      solution: VAPALS-ELCAP includes manual processes to update the
+      DDs, but these have not been used since the original release,
+      even though numerous fields have been added and others modified.
+      A future version of the app can use our packaging tools to
+      automatically run these updates for every SAMI package that
+      affects the definition of the form fields, to keep them up to
+      date going forward. But for 18.12, they must be run manually, as
+      described in the install instructions.
+      
+      reported: 2021-07-13 by Jirapatnakul & Yip.
+ 
+ 
+ The 7 bug fixes related to the Intake Form are:
+ 
+ 14. Intake: M execution error with long text on Intake Form
+ 
+      issue 21-046: Long text (say 300 words or so) put into the
+      change log field causes an M error.
+      
+      solution: Upgraded to handle about 6,000 characters or so in
+      text box. (tested with opening of Tolstoy's War and Peace)
+      
+      reported: 2021-04-16 by Jirapatnakul.
+ 
+ 15. Intake: Reason for Change block hidden when inactive selected
+ 
+      issues 21-074,21-107: The Reason for Change block of fields were
+      only appearing when the patient was set to active. When changed
+      to inactive, the block disappeared, even though the same fields
+      apply then. This led to a 2021-05-17 request by Hanschke &
+      Jirapatnakul to add four fields related to the reason for the
+      change. When DiNatale figured out that the request overlapped
+      with the existing but hidden fields, the group agreed for now to
+      just fix the bug with the disappearing fields.
+      
+      solution: The form was changed to show the block of fields even
+      when the patient is set to inactive.
+      
+      reported: 2021-05-17 by Jirapatnakul. 2021-06-15 by DiNatale.
+ 
+ 16. Intake: Make participants inactive by default
+ 
+      issue 21-112: The Active/Inactive field is required, but
+      initially it was not, which led to the creation of some patients
+      added to the current database with this field set neither way.
+      How should such patients by treated? This affected the contents
+      of the Inactive Report added in 18.11. The previous default
+      behavior was that such ambiguous patients were not shown on the
+      Inactive Report, even though based on the intent of that report
+      they really should have been.
+      
+      solution: SAMI has been changed to treat ambiguous patients as
+      inactive, to ensure they show up on the Inactive Report, so
+      nurse navigators and VAPALS coordinators can clearly see they
+      need followup action to resolve their status.
+      
+      reported: 2021-06-24 by Jirapatnakul.
+ 
+ 17. Intake: New fields in inactive block: deceased, date of death
+      
+      issue 21-114: Upon review of the solution to issue 21-112, the
+      VAPALS-ELCAP research team agreed we still need to add two new
+      fields to fully document the possible reasons for a participant
+      becoming inactive specifically if they died and if so when.
+      
+      solution: New fields added.
+      
+      reported: 2021-07-07 by Yip.
+ 
+ 18. Intake: CT Appointment field label falsely flagged as required
+ 
+      issue 21-108: The CT Appointment field label includes the
+      asterisk that indicates it is a required field, but it is not
+      and should not be.
+      
+      solution: Asterisk removed to avoid misleading users.
+      
+      reported: 2021-06-15 by DiNatale.
+ 
+ 19. Intake: Inactive reason left out of data export
+      
+      issue 21-117: Inactive reason needs to be included in export of
+      Intake form data.
+      
+      solution: The fix above to issue 21-127 fixes this problem.
+      
+      reported: 2021-07-09 by Jirapatnakul.
+ 
+ 20. Intake: Blank Intake forms should be marked incomplete
+      
+      issue 21-113: Intake forms that are not filled out (if the user
+      goes to register a patient but doesn't fill out anything) are
+      not marked as incomplete. Intake forms should be incomplete by
+      default.
+      
+      solution: Done.
+      
+      reported: 2021-06-24 by Jirapatnakul.
+ 
+ 
+ The ***7*** bug fixes related to the Intervention form are:
+ 
+ 21. Intervention: Remove Clinical TNM Status (8th ed. modified) rows
+      
+      issues 21-099,21-100: Remove lines in form that refer to the 8th
+      edition modified Clinical TNM Status. The clinical team made
+      this request. There were two references in the intervention form
+      one under treatment, one under Surgical Treatment.
+      
+      solution: Removed.
+      
+      reported: 2021-06-01 by Henschke.
+ 
+ 22. Intervention: Changes to pulmonary function items
+      
+      issues 21-097,21-098,21-132: Several changes to the pulmonary
+      function test items. That question, along with the results
+      fields were moved towards the top of the Intervention form under
+      "Clinical staging based on." After the change, the "Have you had
+      a pulmonary function test?" and no/yes boxes are on one line
+      with the FEV1 (L/s), FVC (L), and FEV1/FVC fields on their own
+      line followed by Diffusion capacity on its own line. The
+      FEV1/FVC field was added as an uncalculated percentage.
+      
+      solution: Lines moved; new field added. The pulmonary-function
+      test line has been moved to under Clinical Staging, then the
+      FEV1/FVC boxes on the following row, and then the diffusion
+      capacity on the next row. However, in this version of the form
+      the diffusion-capacity field disappears if the browser window
+      gets too narrow, and we do not yet know why. This will have to
+      be addressed in a future version.
+      
+      reported: 2021-06-01 by Henschke.
+ 
+ 23. Intervention: Mediastinoscopy lines only appear when answer yes
+     
+     issue 21-096: Under Surgical Treatment Information "Was
+     mediastinoscopy performed", the next two lines should be shown
+     only if "yes" is selected. These lines are about the procedure.
+     
+     solution: Lines made conditional.
+     
+     reported: 2021-06-01 by Henschke.
+ 
+ 24. Intervention: Changes to VATS section under surgical treatment
+      
+      issue 21-095: Under Surgical Treatment, Resection, move line
+      with, "Was there a conversion of VATS to open?" to be on a line
+      by itself below the line with "Extent of surgery." Add a free
+      text box after this question titled "Reason" that is available
+      no matter which answer is chosen.
+      
+      solution: Text box added; question moved.
+      
+      reported: 2021-06-01 by Henschke.
+ 
+ 25. Intervention: Remove section titled Summary of Interventions
+      
+      issue 21-094: Under abnormalities, remove section titled Summary
+      of Interventions. It is redundant.
+      
+      solution: Section removed.
+      
+      reported: 2021-06-01 by Henschke.
+ 
+ 26. Intervention: Add note to Lesion Site dropdown
+      
+      issue 21-093: At top under Treatment, in Lesion Site dropdown,
+      add a note that says, "If multiple sites, select other and
+      specify".
+      
+      solution: Note added.
+      
+      reported: 2021-06-01 by Henschke.
+ 
+ 27. Intervention: When Radiation or Chemotherapy is Treatment, change
+     date label
+      
+      issue 21-092: Under Treatment, when Radiation Therapy or
+      Chemotherapy are selected in the Treatment Option drop down,
+      change label of next box over to Treatment Start Date.
+      
+      solution: Done.
+      
+      reported: 2021-06-01 by Henschke.
+ 
+ 28. Intervention: Add field for length under Pathology tumor size
+      
+      issue 21-106: Pathology tumor size: include additional field for
+      length.
+      
+      solution: Field added.
+      
+      reported: 2021-06-10 by Jirapatnakul & Yip.
+ 
+ 29. Intervention: Several changes in Surgical Treatment section
+      
+      Issue 21-102: Add discharge data fields to Surgical Treatment
+      section, add a field and reformat T Staging section, add
+      Adenocarcinoma Histology section, reformatting of Evidence of
+      Metastasis section.
+      
+      solution: Done.
+      
+      reported: 2021-06-10 by Jirapatnakul and Henschke.
+ 
+ 30. Intervention: Change tab name to Follow-Up
+       
+      issue 21-091: Due to other changes in the Intervention form, the
+      tab labeled Intervention and Follow-Up no longer had any
+      intervention information in it.
+      
+      solution: Tab name changed.
+      
+      reported: ca. 2021-06-15 by DiNatale.
+ 
+ 
+ The 3 enhancements related to the Biopsy form are:
+ 
+ 31. Biopsy: Refine Molecular Testing block
+      
+      issue 21-085: The Molecular Testing block of fields needs to be
+      revised to better reflect the needed data.
+      
+      solution: Rename Other field to Other Tests; remove radio
+      buttons No, Negative, and Positive.
+      
+      reported: 2021-05-24 by Henschke & Jirapatnakul.
+ 
+ 32. Biopsy: Mediastinoscopy section redundant & EBUS missing
+ 
+      issue 21-090: The fields in the Mediastinoscopy section are the
+      same as the fields in the Biopsy section, which makes the form
+      longer and more confusing than it needs to be. Mediastinoscopy
+      should just be another type of procedure. Also, EBUS is missing
+      from the list of procedures. Under Type of Procedure, when
+      Biopsy Performed is checked yes, add options for mediastinoscopy
+      and EBUS after Bronchoscopy. Remove "Was a mediastinoscopy
+      performed" and related section.
+      
+      solution: Done.
+      
+      reported: 2021-06-01 by Henschke.
+ 
+ 33. Biopsy: Needs a Cancelled option with text box for reason
+     
+     issue 21-078: Form needs a new field Was a biopsy performed with
+     possible answers Y/N/Cancel. Form also needs a Cancellation
+     Reason text box. If biopsy cancelled, make all fields optional.
+     If not, still show all the fields, and still make them optional.
+     
+     solution: Done.
+     
+     reported: 2021-05-18 by Jirapatnakul.
+ 
+ 
+ 3 bug fixes related to the other forms are:
+ 
+ 34. Background: Systolic/Diastolic field definition
+ 
+      issue 21-087: In the Hypertension block, the Systolic/Diastolic
+      field was defined as numeric, with decimal requirements, which
+      is not the correct format for this type of data.
+      
+      solution: The input transform for the field was changed from
+      numeric to free text.
+      
+      reported: 2021-05-27 by Henschke.
+ 
+ 35. PET: Past Followup dates
+ 
+      issue 21-104: The Follow-up Dates field would not allow entry of
+      past dates. This is a big problem for back-entering data about
+      participants' past activities.
+      
+      solution: The restriction was removed.
+      
+      reported: 2021-06-10 by Henschke & Jirapatnakul.
+ 
+ 36. Followup: Not all of the Followup note is being sent to Vista
+      
+      issue 21-047: Only the first item of communication detail is
+      being sent.
+      
+      solution: Handling of text boxes improved to send complete text.
+      
+      reported: 2021-04-22 by Murphy.
+ 
+ 
+ 
+2. Package elements
+ 
+ File	              Change
+ ----                   ------
+ sami-18.12-recipe.txt  new
+ sami-18.12.txt         new
+ sami-18.12.kid         new
+ form-fields/*          modified
+ www/*                  modified
+ sami-18.12.zip         new
+ 
+ Routine    Change
+ -------    ------
+ SAMICAS2   modified
+ SAMICAS3   modified
+ SAMICASE   modified
+ SAMICLOG   modified
+ SAMICTD2   modified
+ SAMICTUL   modified
+ SAMICUL    modified
+ SAMIHOM3   modified
+ SAMIHOM4   modified
+ SAMIHUL    modified
+ SAMIJS1    modified
+ SAMIJS2    new
+ SAMINOT1   modified
+ SAMINOT2   modified
+ SAMINUL    modified
+ SAMIORM    modified
+ SAMIOUL    new
+ SAMIPARM   new
+ SAMIPAT    new
+ SAMISITE   modified
+ SAMITTW    new
+ SAMIUR     modified
+ SAMIUR2    modified
+ SAMIURUL   new
+ 
+ Fileman File                       Change
+ ------------                       ------
+ SAMI SITE (311.12)                 modified (DD, no data)
+                                    new fields .04, 1
+                                    new subfile PARMS (311.121)
+ 
+ SAMI PARAMETER DEFAULTS (311.14)   new (DD and data)
+ 
+ 
+ 
+3. Backup instructions
+ 
+ It is important when installing packages to back up the existing
+ package elements that are about to be changed, so that if anything
+ goes wrong with the install, these package elements can be restored.
+ For this package, we will back up M routines, form-fields files, and
+ www files.
+ 
+ 
+ 3.1. Assume the identity of your osehra Unix user
+ 
+   This step assumes you type a dzdo or sudo to do this; here the
+   symbol $DEMAND will stand for whichever command you use. If your
+   configuration is different, please adjust this step to match your
+   configuration:
+ 
+    $ $DEMAND su - osehra
+    $
+ 
+ 
+ 3.2. Prepare install directory
+   
+   Create install and backup directories
+ 
+    $ mv ~/run/in/sami/1.18.0.12 ~/run/in/sami/18.12
+    $ (cd ~/run/in/sami/18.12; mkdir -p back/form-fields back/www)
+    $
+ 
+ 
+ 3.3. Back up form-fields and www files
+    
+    Back up existing form-fields and www files that will be
+    overwritten by this install. Do this by copying the form-fields
+    and www directories to the install backup directories:
+    
+    $ cd ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs
+    $ cp -r form-fields/* ~/run/in/sami/18.12/back/form-fields/
+    $ cp -r www/* ~/run/in/sami/18.12/back/www/
+    $ cd
+    $
+ 
+ 
+ 3.4. Enter M
+    
+    At the unix prompt, enter the M environment in direct mode, using
+    the csession command on Cache or the mumps command on
+    YottaDB/GT.M:
+ 
+    On Cache:
+    ---------
+    $ csession vapals
+    
+    Node: vapalscache, Instance: VAPALS
+    
+    >
+ 
+ 
+    On YottaDB/GT.M:
+    ----------------
+    $ mumps -dir
+    
+    >
+ 
+ 
+ 3.5. Sign into Vista
+    
+    At the M prompt, call Vista's direct-mode interface, enter your
+    access code, and then just press return at the OPTION NAME prompt
+    to return to direct mode. This sets up your authentication
+    variables. Here's a sample capture of this step:
+ 
+    > do ^XUP
+    
+    Setting up programmer environment
+    This is a TEST account.
+    
+    Access Code: *******
+    Terminal Type set to: C-VT100
+    
+    Select OPTION NAME:
+    >
+ 
+ 
+ 3.6. Back up routines
+    
+    Back up existing VAPALS-ELCAP routines that will be overwritten
+    by this install. Do this by calling direct-mode interface ^%RO
+    (routine out), selecting the list of routines to save, selecting
+    sami-18.12.ro to save to, and answering any other additional
+    prompts.
+    
+    The prompts vary between M implementations, so be sure to follow
+    the correct dialog for your imp. The routine names to save are
+    listed below under each imp; copy the list and paste it at the
+    Routine prompt. At the final Routine prompt, press return to
+    indicate the list of routines is done.
+ 
+ 
+    3.6.1. List of routines
+SAMICAS2
+SAMICAS3
+SAMICASE
+SAMICLOG
+SAMICTD2
+SAMICTUL
+SAMICUL
+SAMIHOM3
+SAMIHOM4
+SAMIHUL
+SAMIJS1
+SAMIJS2
+SAMINOT1
+SAMINOT2
+SAMINUL
+SAMIORM
+SAMIOUL
+SAMIPARM
+SAMIPAT
+SAMISITE
+SAMITTW
+SAMIUR
+SAMIUR2
+SAMIURUL
+ 
+ 
+    3.6.2. On Cache
+    
+    Note that routines that don't currently exist will result in a
+    warning message (specifically, the routine name will have `[???]`
+    after it, and the line [does not exist] after it). These messages
+    can be safely disregarded.
+    
+    In addition to naming the routines and routine-out file, we also
+    provide a Description and press return at the Parameters and
+    Printer Format prompts to accept the defaults of WNS and No,
+    respectively:
+    
+    > do ^%RO
+    
+    Routine output (please use %ROMF for object code output)
+    Routine(s): SAMICAS2
+    Routine(s): SAMICAS3
+    Routine(s): SAMICASE
+    Routine(s): SAMICLOG
+    Routine(s): SAMICTD2
+    Routine(s): SAMICTUL
+    Routine(s): SAMICUL
+    Routine(s): SAMIHOM3
+    Routine(s): SAMIHOM4
+    Routine(s): SAMIHUL
+    Routine(s): SAMIJS1
+    Routine(s): SAMIJS2
+    Routine(s): SAMINOT1
+    Routine(s): SAMINOT2
+    Routine(s): SAMINUL
+    Routine(s): SAMIORM
+    Routine(s): SAMIOUL
+    Routine(s): SAMIPARM
+    Routine(s): SAMIPAT
+    Routine(s): SAMISITE
+    Routine(s): SAMITTW
+    Routine(s): SAMIUR
+    Routine(s): SAMIUR2
+    Routine(s): SAMIURUL
+    Routine(s):
+        
+    Description: SAMI 18.12 routine backup
+    
+    Output routines to
+    Device: /home/osehra/run/in/sami/18.12/back/sami-18.12-back.ro
+    Parameters? ("WNS") =>
+    Printer Format? No => No
+    SAMICAS2.INT    SAMICAS3.INT    SAMICASE.INT    SAMICLOG.INT
+    SAMICTD2.INT    SAMICTUL.INT    SAMICUL.INT     SAMIHOM3.INT
+    SAMIHOM4.INT    SAMIHUL.INT     SAMIJS1.INT     SAMIJS2.INT
+    SAMINOT1.INT    SAMINOT2.INT    SAMINUL.INT     SAMIORM.INT
+    SAMIOUL.INT     SAMIPARM.INT    SAMIPAT.INT     SAMISITE.INT
+    SAMITTW.INT     SAMIUR.INT      SAMIUR2.INT     SAMIURUL.INT
+    >
+ 
+ 
+ 
+    3.6.3. On YottaDB/GT.M
+    
+    Note that routines that don't currently exist will result in the
+    routine name not appearing under the input line, and won't count
+    towards the number of routines. These can be safely disregarded.
+    
+    In addition to naming the routines and routine-out file, we also
+    provide a Header Label and press return at the Strip comments
+    prompt to accept the default of No:
+    
+    > do ^%RO
+    
+    Routine Output - Save selected routines into RO file.
+    
+    Routine: SAMICAS2
+    SAMICAS2
+    Current total of 1 routines.
+    
+    Routine: SAMICAS3
+    SAMICAS3
+    Current total of 2 routines.
+    
+    Routine: SAMICASE
+    SAMICASE
+    Current total of 3 routines.
+    
+    Routine: SAMICLOG
+    SAMICLOG
+    Current total of 4 routines.
+    
+    Routine: SAMICTD2
+    SAMICTD2
+    Current total of 5 routines.
+    
+    Routine: SAMICTUL
+    SAMICTUL
+    Current total of 6 routines.
+    
+    Routine: SAMICUL
+    SAMICUL
+    Current total of 7 routines.
+    
+    Routine: SAMIHOM3
+    SAMIHOM3
+    Current total of 8 routines.
+    
+    Routine: SAMIHOM4
+    SAMIHOM4
+    Current total of 9 routines.
+    
+    Routine: SAMIHUL
+    SAMIHUL
+    Current total of 10 routines.
+    
+    Routine: SAMIJS1
+    SAMIJS1
+    Current total of 11 routines.
+    
+    Routine: SAMIJS2
+    SAMIJS2
+    Current total of 12 routines.
+    
+    Routine: SAMINOT1
+    SAMINOT1
+    Current total of 13 routines.
+    
+    Routine: SAMINOT2
+    SAMINOT2
+    Current total of 14 routines.
+    
+    Routine: SAMINUL
+    SAMINUL
+    Current total of 15 routines.
+    
+    Routine: SAMIORM
+    SAMIORM
+    Current total of 16 routines.
+    
+    Routine: SAMIOUL
+    SAMIOUL
+    Current total of 17 routines.
+    
+    Routine: SAMIPARM
+    SAMIPARM
+    Current total of 18 routines.
+    
+    Routine: SAMIPAT
+    SAMIPAT
+    Current total of 19 routines.
+    
+    Routine: SAMISITE
+    SAMISITE
+    Current total of 20 routines.
+    
+    Routine: SAMITTW
+    SAMITTW
+    Current total of 21 routines.
+    
+    Routine: SAMIUR
+    SAMIUR
+    Current total of 22 routines.
+    
+    Routine: SAMIUR2
+    SAMIUR2
+    Current total of 23 routines.
+    
+    Routine: SAMIURUL
+    SAMIURUL
+    Current total of 24 routines.
+
+    Routine:
+    
+    Output device: <terminal>: /home/osehra/run/in/sami/18.12/back/sami-18.12-back.ro
+    
+    Header Label: SAMI 18.12 routine backup
+    Strip comments <No>?:
+    SAMICAS2  SAMICAS3  SAMICASE  SAMICLOG  SAMICTD2  SAMICTUL
+    SAMICUL   SAMIHOM3  SAMIHOM4  SAMIHUL   SAMIJS1   SAMIJS2
+    SAMINOT1  SAMINOT2  SAMINUL   SAMIORM   SAMIOUL   SAMIPARM
+    SAMIPAT   SAMISITE  SAMITTW   SAMIUR    SAMIUR2   SAMIURUL
+    
+    Total of 10384 lines in 24 routines.
+    
+    
+    >
+
+
+ 
+ 3.7. Exit M
+    
+    At the M prompt, halt to exit M:
+ 
+    > halt
+ 
+ 
+ 
+4. Package-retrieval instructions
+ 
+ Your VAPALS-ELCAP environment is now ready to install VAPALS-ELCAP
+ 18.12 (SAMI*18.0*12 SEQ #12), so next retrieve the package.
+ 
+ 
+ 4.1. Download and prepare the archive file
+   
+   You may safely download the archive file ('http://vistaexpertise.net/newsite/project/vapals-elcap/sami-18.12.zip')
+   in advance of the actual install. To do this, use the wget command
+   to download it:
+   
+   $ cd ~/run/in/sami/18.12/
+   $ wget 'http://vistaexpertise.net/newsite/project/vapals-elcap/sami-18.12.zip'
+   $
+ 
+ 
+ 4.2. Expand the archive
+   
+   Expand the archive file, using the unix unzip command:
+    
+    $ unzip sami-18.12.zip
+    Archive:  sami-18.12.zip
+      inflating: sami-18.12-recipe.txt
+      inflating: sami-18.12.kid
+      inflating: sami-18.12.txt
+      inflating: form-fields/... [330 KB of form-fields files]
+      inflating: www/... [9 MB of www files]
+    $ cd
+    $
+ 
+ 
+ 
+5. Main install instructions
+ 
+ Step 5 consists of entering the Vista menu system, loading and
+ installing the KIDS package, exiting M, and installing and activating
+ the new form-fields and www files.
+ 
+ 
+ 5.1. Enter Vista menu system
+ 
+ 
+   5.1.1. Enter M
+   
+    Repeat step 3.4 to enter M.
+   
+   
+   5.1.2. Sign in and select the KIDS Installation menu
+ 
+    At the M prompt, call Vista's direct-mode interface, enter your
+    access code, at the OPTION NAME prompt select XPD MAIN to enter
+    the Kernel Installation & Distribution System main menu, and at
+    the Select ... Option prompt select Installation:
+ 
+    > do ^XUP
+    
+    Setting up programmer environment
+    This is a TEST account.
+    
+    Access Code: *******
+    Terminal Type set to: C-VT100
+    
+    Select OPTION NAME: XPD MAIN       Kernel Installation & Distribution System
+ 
+ 
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+          Patch Monitor Main Menu ...
+
+    Select Kernel Installation & Distribution System <TEST ACCOUNT> Option: Installation
+    
+    
+       1      Load a Distribution
+       2      Verify Checksums in Transport Global
+       3      Print Transport Global
+       4      Compare Transport Global to Current System
+       5      Backup a Transport Global
+       6      Install Package(s)
+              Restart Install of Package(s)
+              Unload a Distribution
+       
+    Select Installation <TEST ACCOUNT> Option:
+ 
+ 
+ 
+ 5.2. Load KIDS package
+ 
+    Select option 1 and press return at the Continue prompt.
+ 
+    Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
+    Enter a Host File: /home/osehra/run/in/sami/18.12/sami-18.12.kid
+    
+       KIDS Distribution saved on Aug 11, 2021@15:34:06
+       Comment: Released SAMI*18.0*12 SEQ #12 (18.12)
+    
+    This Distribution contains Transport Globals for the following Package(s):
+       SAMI*18.0*12
+    Distribution OK!
+    
+    Want to Continue with Load? YES// 
+       Loading Distribution...
+    
+       SAMI*18.0*12
+    Use INSTALL NAME: SAMI*18.0*12 to install this Distribution.
+    
+    
+       1      Load a Distribution
+       2      Verify Checksums in Transport Global
+       3      Print Transport Global
+       4      Compare Transport Global to Current System
+       5      Backup a Transport Global
+       6      Install Package(s)
+              Restart Install of Package(s)
+              Unload a Distribution
+       
+    Select Installation <TEST ACCOUNT> Option:
+ 
+ 
+ 
+ 5.3. Install KIDS package
+ 
+    Select option 6, enter the space bar at the INSTALL NAME prompt,
+    and press return at the next three prompts. Note that `[now]`
+    denotes the current time when you're doing the install.
+ 
+    Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+    Select INSTALL NAME:    SAMI*18.0*12     Loaded from Distribution    [now]
+       => Released SAMI*18.0*12 SEQ #12 (18.12)  ;Created on Aug 11, 2021@15:34:06
+       
+    This Distribution was loaded on [now] with header of 
+       Released SAMI*18.0*12 SEQ #12 (18.12)  ;Created on Aug 11, 2021@15:34:06
+       It consisted of the following Install(s):
+        SAMI*18.0*12
+    Checking Install for Package SAMI*18.0*12
+       
+    Install Questions for SAMI*18.0*12
+    
+    Incoming Files:
+    
+    
+       311.12    SAMI SITE
+    Note:  You already have the 'SAMI SITE' File.
+    
+    
+       311.14    SAMI PARAMETER DEFAULTS  (including data)
+    
+    
+    Want KIDS to INHIBIT LOGONs during the install? NO// 
+    Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+    
+    Enter the Device you want to print the Install messages.
+    You can queue the install by enter a 'Q' at the device prompt.
+    Enter a '^' to abort the install.
+    
+    DEVICE: HOME//   VMS
+     
+     Install Started for SAMI*18.0*12:
+                   [now]
+     
+    Build Distribution Date: Aug 11, 2021
+     
+     Installing Routines:
+                   [now]
+     
+     Installing Data Dictionaries: ...
+                   [now]
+     
+     Installing Data:
+                   [now]
+     
+     Running Post-Install Routine: POS1812^SAMIPAT.
+     
+     Updating Routine file...
+     
+     Updating KIDS files...
+     
+     SAMI*18.0*12 Installed.
+                   [now]
+        
+     NO Install Message sent
+       
+    Install Completed
+
+
+       1      Load a Distribution
+       2      Verify Checksums in Transport Global
+       3      Print Transport Global
+       4      Compare Transport Global to Current System
+       5      Backup a Transport Global
+       6      Install Package(s)
+              Restart Install of Package(s)
+              Unload a Distribution
+       
+    Select Installation <TEST ACCOUNT> Option: 
+ 
+ 
+ 
+ 5.4. Exit M
+ 
+   At the Select ... Option prompt select the halt option.
+ 
+    Select Installation <TEST ACCOUNT> Option: halt
+      
+    Logged out at [now]
+  
+    $
+ 
+ 
+ 
+ 5.5. Install the form-fields and www files
+ 
+ At this point in the install process, the VAPALS-ELCAP routines have
+ been updated, but the corresponding form-fields and www files have
+ not; these must first be installed.
+ 
+ VA VAPALS-ELCAP sysadmins should follow step 5.5.1. Non-VA sysadmins
+ should follow step 5.5.2.
+ 
+ 
+   5.5.1. For VA VAPALS-ELCAP systems
+   
+   The VA firewall blocks access to the official VAPALS-ELCAP Github
+   repository, so VA VAPALS-ELCAP systems do not maintain clones of
+   that repo. Instead, they manually copy the form-fields and www
+   files into place by running these commands:
+ 
+    $ cd ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/
+    $ rm -rf form-fields/*
+    $ rm -rf www/*
+    $ cp -r ~/run/in/sami/18.12/form-fields/* form-fields/
+    $ cp -r ~/run/in/sami/18.12/www/* www/
+    $ cd
+    $
+   
+   
+   5.5.2. For Non-VA VAPALS-ELCAP systems
+   
+   Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date
+   clones of the official Github repository. Performing a git pull
+   from that repo will automatically update the system's live
+   form-fields and www files (the www files are accessed via a symlink
+   to the clone's files). Run these commands:
+   
+    $ cd ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/
+    $ git pull
+    $ cd
+    $
+ 
+ 
+ 
+ 5.6. Activate the form-fields and www files and exit M
+ 
+ The VAPALS-ELCAP routines, form-fields files, and www files have been
+ updated at this point, but the routines are using cached copies of
+ the files; this step refreshes those copies.
+ 
+ 
+   5.6.1. Enter M
+   
+    Repeat step 3.4 to enter M.
+   
+   
+   5.6.2. Sign into Vista
+ 
+    Repeat step 3.5 to sign into Vista.
+ 
+ 
+   5.6.3. Rebuild M-Web's cached form-fields and www files
+   
+    To improve performance, M-Web maintains cached copies of the
+    form-fields files, which are the data dictionaries for the fields
+    on all the VAPALS-ELCAP forms. It also maintains cached copies of
+    the HTML templates used by its services. Every time we update
+    those data-dictionary or HTML files in Unix, we must also direct
+    M-Web to update its cached copies of the data dictionaries and
+    clear its cached copies of the HTML files.
+    
+    Just copy and paste the following list of commands into the
+    direct-mode prompt:
+    
+set SAMIDIR="/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/"
+do PRSTSV^SAMIFF(SAMIDIR,"background.tsv","form fields - background")
+do PRSTSV^SAMIFF(SAMIDIR,"biopsy.tsv","form fields - biopsy")
+do PRSTSV^SAMIFF(SAMIDIR,"ct-evaluation.tsv","form fields - ct evaluation")
+do PRSTSV^SAMIFF(SAMIDIR,"follow-up.tsv","form fields - follow up")
+do PRSTSV^SAMIFF(SAMIDIR,"intake.tsv","form fields - intake")
+do PRSTSV^SAMIFF(SAMIDIR,"intervention.tsv","form fields - intervention")
+do PRSTSV^SAMIFF(SAMIDIR,"pet-evaluation.tsv","form fields - pet evaluation")
+do PRSTSV^SAMIFF(SAMIDIR,"register.tsv","form fields - register")
+do CLRWEB^SAMIADMN
+    
+    The output is shown below:
+    
+    > set SAMIDIR="/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/"
+
+    > do PRSTSV^SAMIFF(SAMIDIR,"background.tsv","form fields - background")
+
+    > do PRSTSV^SAMIFF(SAMIDIR,"biopsy.tsv","form fields - biopsy")
+
+    > do PRSTSV^SAMIFF(SAMIDIR,"ct-evaluation.tsv","form fields - ct evaluation")
+
+    > do PRSTSV^SAMIFF(SAMIDIR,"follow-up.tsv","form fields - follow up")
+
+    > do PRSTSV^SAMIFF(SAMIDIR,"intake.tsv","form fields - intake")
+
+    > do PRSTSV^SAMIFF(SAMIDIR,"intervention.tsv","form fields - intervention")
+
+    > do PRSTSV^SAMIFF(SAMIDIR,"pet-evaluation.tsv","form fields - pet evaluation")
+
+    > do PRSTSV^SAMIFF(SAMIDIR,"register.tsv","form fields - register")
+
+    > do CLRWEB^SAMIADMN
+    
+    >
+    
+ 
+ 
+   5.6.4. Exit M
+ 
+    > halt
+    $
+ 
+ 
+ 
+ You now have VAPALS-ELCAP 18.12 (SAMI*18.0*12 SEQ #12) installed in
+ your M environment. The install is now complete. We recommend running
+ tests of your VAPALS-ELCAP app to confirm the environment is
+ operational and bug-free, before notifying users that VAPALS-ELCAP is
+ ready for their use.
+ 
+ 
+ 
+6. Optional backout instructions
+ 
+ Should errors or other problems result from installing this package
+ contact the VAPALS-ELCAP development team for package-backout
+ instructions.
+ 
+ 
+ 
+7. Routines
+ 
+ Lines 2 & 3 of each of these routines now look like:
+  ;;18.0;SAMI;[Patch List];2020-01;[optional build #]
+  ;;18.12
+
+ The checksums below are Vista Type B checksums (do CHECK1^XTSUMBLD).
+ 
+ Name       Checksum before  Checksum after   Patch list
+ SAMICAS2   B381201104       B445469337       **1,5,9,12**
+ SAMICAS3   B482086967       B499773480       **3,9,11,12**
+ SAMICASE   B4139384         B2465434         **1,12**
+ SAMICLOG   B21900956        B37372659        **12**
+ SAMICTD2   B132395058       B193976177       **12**
+ SAMICTUL   B104985          B100661          **10,11,12**
+ SAMICUL    B138062          B134436          **9,11,12**
+ SAMIHOM3   B133868845       B168340275       **5,12**
+ SAMIHOM4   B748595747       B899951012       **1,4,5,6,9,12**
+ SAMIHUL    B95115           B111466          **9,12**
+ SAMIJS1    B2451            B33789646        **8,12**
+ SAMIJS2    0                B50752409        **12**
+ SAMINOT1   B444173065       B476861921       **2,6,8,10,11,12**
+ SAMINOT2   B463867017       B473975400       **1,9,12**
+ SAMINUL    B102256          B97012           **9,10,11,12**
+ SAMIORM    B179292122       B175893845       **11,12**
+ SAMIOUL    0                B92656           **12**
+ SAMIPARM   0                B7340153         **12**
+ SAMIPAT    0                B761477          **12**
+ SAMISITE   B64280616        B91053774        **5,12**
+ SAMITTW    0                B5449588         **12**
+ SAMIUR     B536135066       B520612339       **5,10,11,12**
+ SAMIUR2    B1106323315      B1265246653      **5,11,12**
+ SAMIURUL   0                B98717           **12** 
+ 
+ 
+8. Authors
+ 
+             Dates              By         
+ Developed   2021-06-08/08-10   George P. Lilly (ven)
+                                Domenic DiNatale (par)
+                                Larry G. Carlson (ven)
+                                Frederick D. S. Marshall (ven)
+                                Kennneth W. McGlothlen (ven)
+ 
+ Tested      2021-06-08/08-11   George P. Lilly (ven)
+                                Domenic DiNatale (par)
+                                Larry G. Carlson (ven)
+                                Claudia Henschke (va-pho)
+                                Artit Jirapatnakul (va-pho)
+                                Providencia Morales (va-pho)
+                                Lorenza A. Murphy (va-pho)
+                                Martha A. Rukavena (va-pho)
+                                Frederick D. S. Marshall (ven)
+                                Kennneth W. McGlothlen (ven)
+ 
+ Released    2021-08-11         Frederick D. S. Marshall (ven)
+                                Kennneth W. McGlothlen (ven)
+ 
+ 
+$END TXT

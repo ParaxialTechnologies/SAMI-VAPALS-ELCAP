@@ -1,6 +1,6 @@
 SAMISITE ;ven/gpl&arc - signon & site access ;2021-07-07t16:52z
  ;;18.0;SAMI;**5,12**;2020-01;Build 11
- ;;1.18.0.12-t3+i12
+ ;;18.12
  ;
  ; Routine SAMISITE contains subroutines for implementing the VAPALS-
  ; ELCAP 
@@ -14,26 +14,26 @@ SAMISITE ;ven/gpl&arc - signon & site access ;2021-07-07t16:52z
  ;
  ;
  ;@routine-credits
- ;@primary-dev: George P. Lilly (gpl)
+ ;@dev-main: George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
- ;@primary-dev-org: Vista Expertise Network (ven)
+ ;@dev-org-main: Vista Expertise Network (ven)
  ; http://vistaexpertise.net
  ;@copyright: 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-07-07t16:52z
+ ;@last-update 2021-07-07t16:52z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.12-t3+i12
+ ;@version 18.12
  ;@release-date 2020-01
  ;@patch-list **5,12**
  ;
- ;@additional-dev: Alexis Carlson (arc)
+ ;@dev-add: Alexis Carlson (arc)
  ; alexis@vistaexpertise.net
- ;@additional-dev Frederick D. S. Marshall (toad)
+ ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
- ;@additional-dev Kenneth W. McGlothlen (mcglk)
+ ;@dev-add Kenneth W. McGlothlen (mcglk)
  ; mcglk@vistaexpertise.net
  ;
  ;@routine-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
@@ -42,12 +42,12 @@ SAMISITE ;ven/gpl&arc - signon & site access ;2021-07-07t16:52z
  ;  SAMISITE add multitenancy, fix bug in logout, fix sitetitle on 1st
  ; time in, add superuser site selection feature, fix bug in cache.
  ;
- ; 2021-06-05 ven/gpl 1.18.0.12-t2+i12 223b5900
+ ; 2021-06-05 ven/gpl 18.12-t2 223b5900
  ;  SAMISITE upgrade parameter with system overrides, add
  ; systemDemoOnly & systemDemoUseDUZ parameters.
  ;
- ; 2021-07-01/07 ven/mcglk&toad&gpl 1.18.0.12-t2+i12 cbf7e46b,
- ; bfeea24b,1dd91fea
+ ; 2021-07-01/07 ven/mcglk&toad&gpl 18.12-t2 cbf7e46b,bfeea24b,
+ ; 1dd91fea
  ;  SAMISITE bump version & dates, add hdr comments & dev log; in
  ; FINDSITE add missing 0 to quit.
  ;

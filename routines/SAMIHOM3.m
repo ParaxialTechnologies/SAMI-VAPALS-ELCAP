@@ -1,6 +1,6 @@
-SAMIHOM3 ;ven/gpl - homepage web service ;2021-07-01T21:35Z
+SAMIHOM3 ;ven/gpl - homepage web service ;2021-08-09t17:16z
  ;;18.0;SAMI;**5,12**;2020-01;
- ;;1.18.0.12-t2+i12
+ ;;18.12
  ;
  ; Routine SAMIHOM3 contains subroutines for implementing the IELCAP
  ; Home Page and to provide binding to VistA.
@@ -18,25 +18,25 @@ SAMIHOM3 ;ven/gpl - homepage web service ;2021-07-01T21:35Z
  ;@documentation see SAMIHUL
  ;
  ;@routine-credits
- ;@primary-dev George P. Lilly (gpl)
+ ;@dev-main George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
- ;@primary-dev-org Vista Expertise Network (ven)
+ ;@dev-org-main Vista Expertise Network (ven)
  ; http://vistaexpertise.net
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-updated 2021-07-01T21:35Z
+ ;@last-update 2021-08-09t17:16z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.12-t2+i12
+ ;@version 18.12
  ;@release-date 2020-01
  ;@patch-list **5,12**
  ;
- ;@additional-dev Frederick D. S. Marshall (toad)
+ ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
- ;@additional-dev Kenneth W. McGlothlen (mcglk)
+ ;@dev-add Kenneth W. McGlothlen (mcglk)
  ; mcglk@vistaexpertise.net
  ;
  ;@routine-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git

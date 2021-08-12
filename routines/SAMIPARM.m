@@ -1,6 +1,6 @@
 SAMIPARM ;ven/gpl - get params web service ;2021-07-01t17:45z
  ;;18.0;SAMI;**12**;2020-01;
- ;;1.18.0.12-t3+i12
+ ;;18.12
  ;
  ; Routine SAMIPARM contains subroutines for implementing the VAPALS-
  ; ELCAP get params web service.
@@ -14,33 +14,33 @@ SAMIPARM ;ven/gpl - get params web service ;2021-07-01t17:45z
  ;
  ;
  ;@routine-credits
- ;@primary-dev George P. Lilly (gpl)
+ ;@dev-main George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
- ;@primary-dev-org Vista Expertise Network (ven)
+ ;@dev-org-main Vista Expertise Network (ven)
  ; http://vistaexpertise.net
  ;@copyright 2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-07-01t17:45z
+ ;@last-update 2021-07-01t17:45z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.12-t3+i12
+ ;@version 18.12
  ;@release-date 2020-01
  ;@patch-list **12**
  ;
- ;@additional-dev Frederick D. S. Marshall (toad)
+ ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
- ;@additional-dev Kenneth W. McGlothlen (mcglk)
+ ;@dev-add Kenneth W. McGlothlen (mcglk)
  ; mcglk@vistaexpertise.net
  ;
  ;@routine-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git
- ; 2021-05-29/06-05 ven/gpl 1.18.0.12-t2+i12 46bab765,223b5900
+ ; 2021-05-29/06-05 ven/gpl 18.12-t2 46bab765,223b5900
  ;  SAMIPARM new routine to implement new web service get params,
  ; update for ssn in report, also, matching report; upgrade PARM with
  ; SYS overrides, add systemDemoOnly & systemDemoUseDUZ.
  ;
- ; 2021-07-01 ven/mcglk&toad 1.18.0.12-t2+i12 cbf7e46b
+ ; 2021-07-01 ven/mcglk&toad 18.12-t2 cbf7e46b
  ;  SAMIPARM bump version & dates, add hdr comments & dev log.
  ;
  ;@contents

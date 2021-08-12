@@ -1,6 +1,6 @@
-SAMICAS3 ;ven/gpl - case review cont ;2021-07-01T15:42Z
+SAMICAS3 ;ven/gpl - case review cont ;2021-08-10t18:39z
  ;;18.0;SAMI;**3,9,11,12**;2020-01;Build 11
- ;;1.18.0.12+i12
+ ;;18.12
  ;
  ; SAMICAS3 contains ppis and other subroutines to support processing
  ; of the VAPALS-IELCAP case review page.
@@ -326,6 +326,7 @@ PRIORCMP(sid) ; dates of all scans before last comparison scan
  ; SORTFRMS
  ; $$NOW^XLFDT
  ; $$KEY2DT
+ ; $$VAPALSDT^SAMICASE
  ;@input
  ; sid = study id
  ;@output = dates of all scans before last comparison scan
@@ -367,6 +368,7 @@ PRIORCMP(sid) ; dates of all scans before last comparison scan
  . quit
  ;
  if retstr="" set retstr=$$VAPALSDT^SAMICASE($$NOW^XLFDT)
+ ;
  ;
  ;@stanza 3 termination
  ;

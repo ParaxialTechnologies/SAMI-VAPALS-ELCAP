@@ -654,16 +654,27 @@
                         </div>
                     </div>
 
-                    <h4>T Staging</h4>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <h4>T Staging</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="rbinvp">T2 Visc Pl:</label>
+                                {{ f.checkbox("rbinvp", "p","Visceral Pleura") }}
+                            </div>
+                        </div>
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label for="rbinvt2b">T2 Cen:</label>
                                 {{ f.checkbox("rbinvt2b", "b","Main bronchus (not carina)") }}
                                 {{ f.checkbox("rbinvt2a", "a","Atelectasis to hilum") }}
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label for="rbinvc">T3 Inv:</label>
                                 {{ f.checkbox("rbinvc", "c","Chest wall") }}
@@ -671,7 +682,7 @@
                                 {{ f.checkbox("rbinvt3n", "p"," Phrenic nerve") }}
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label for="rbinvm">T4 Inv:</label>
                                 {{ f.checkbox("rbinvm", "m","Mediastinum") }}
@@ -683,6 +694,182 @@
                                 {{ f.checkbox("rbinvt4t", "t","Trachea") }}
                                 {{ f.checkbox("rbinvt4e", "e","Esophagus") }}
                                 {{ f.checkbox("rbinvt4s", "s","Spine") }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="rbadhs">Adenocarcinoma Histology (Predominant)</label>
+                                <select name="rbadhs" id="rbadhs" class="form-control">
+                                    <option value="-">&mdash;</option>
+                                    <option value="nos">Adenocarcinoma NOS</option>
+                                    <option value="snm">Adenocarcinoma in situ, nonmucinous</option>
+                                    <option value="sm">Adenocarcinoma in situ, mucinous</option>
+                                    <option value="sinm">Adenocarcinoma in situ, indeterminate mucinous/nonmucinous</option>
+                                    <option value="mnm">Minimally invasive adenocarcinoma, nonmucinous</option>
+                                    <option value="mm">Minimally invasive adenocarcinoma, mucinous</option>
+                                    <option value="mmnm">Minimally invasive adenocarcinoma, Mixed nonmucinous and mucinous</option>
+                                    <option value="mim">Minimally invasive adenocarcinoma, indeterminate mucinous/nonmucinous</option>
+                                    <option value="ilp">Invasive adenocarcinoma, Lepidic predominant adenocarcinoma</option>
+                                    <option value="iap">Invasive adenocarcinoma, Acinar predominant adenocarcinoma</option>
+                                    <option value="ipp">Invasive adenocarcinoma, Papillary predominant adenocarcinoma</option>
+                                    <option value="imp">Invasive adenocarcinoma, Micropapillary predominant adenocarcinoma</option>
+                                    <option value="isp">Invasive adenocarcinoma, Solid predominant adenocarcinoma</option>
+                                    <option value="imdp">Invasive adenocarcinoma, multiple predominant patterns</option>
+                                    <option value="ipcd">Invasive adenocarcinoma, Predominant subtype cannot be determined</option>
+                                    <option value="im">Invasive mucinous adenocarcinoma</option>
+                                    <option value="m">Mixed invasive mucinous and nonmucinous adenocarcinoma</option>
+                                    <option value="fa">Fetal adenocarcinoma</option>
+                                    <option value="ea">Enteric adenocarcinoma</option>
+                                    <option value="ca">Colloid adenocarcinoma</option>
+                                    <option value="srf">Signet ring features</option>
+                                    <option value="ccf">Clear cell features</option>
+                                    <option value="nf">NSLC, favor adenocarcinoma</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered">
+                                        <tr>
+                                            <td><label>Predominant features</label></td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.checkbox("pamds", "s", "solid") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.checkbox("pamda", "a", "acinar") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.checkbox("pamdp", "p", "papillary") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.checkbox("pamdmp", "m", "micropapillary") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.checkbox("pamdb", "b", "Lepidic /bronchioloalveolar") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.checkbox("pamdo", "o", "other (specify)") }}
+                                                    <input name="pamdos" id="pamdos" class="form-control"/>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Percentages</label></td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="pamdsp" id="pamdsp" class="form-control numeric"/>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="pamdap" id="pamdap" class="form-control numeric"/>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="pamdpp" id="pamdpp" class="form-control numeric"/>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="pamdmpp" id="pamdmpp" class="form-control numeric"/>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="pamdbp" id="pamdbp" class="form-control numeric"/>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="pamdop" id="pamdop" class="form-control numeric"/>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Secondary / Other features</label></td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.checkbox("pamas", "s", "solid") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.checkbox("pamaa", "a", "acinar") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.checkbox("pamap", "p", "papillary") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.checkbox("pamamp", "m", "micropapillary") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.checkbox("pamab", "b", "Lepidic /bronchioloalveolar") }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    {{ f.checkbox("pamao", "o", "other (specify)") }}
+                                                    <input name="pamaos" id="pamaos" class="form-control"/>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Percentages</label></td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="pamasp" id="pamasp" class="form-control numeric"/>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="pamaap" id="pamaap" class="form-control numeric"/>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="pamapp" id="pamapp" class="form-control numeric"/>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="pamampp" id="pamampp" class="form-control numeric"/>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="pamabp" id="pamabp" class="form-control numeric"/>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input name="pamaop" id="pamaop" class="form-control numeric"/>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

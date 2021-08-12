@@ -145,6 +145,16 @@
                 </div>
 
                 <div class="row">
+                    <div class="col-sm-6 col-md-3">
+                        <div class="form-group">
+                            <label>Have you had a pulmonary function test?</label>
+                            <br/>
+                            {{ f.inlineRadioNY("sbahpft") }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
                     <div class="form-group col-md-2">
                         <label for="sbfev1">FEV1 (L/s)</label>
                         <input class="form-control input-sm numeric" type="text" name="sbfev1" id="sbfev1"
@@ -161,6 +171,16 @@
                             <input class="form-control input-sm whole-number" type="text" name="sbffr" id="sbffr"
                                    size="3" maxlength="3">
                             <span class="input-group-addon">%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-3" id="sbahpft-container">
+                        <div class="form-group">
+                            <label for="sbcop">Diffusion capacity (mL/min/mm Hg)</label>
+                            <input class="form-control input-sm numeric" type="text" name="sbcop" id="sbcop"
+                                   size="4">
                         </div>
                     </div>
                 </div>
@@ -280,24 +300,6 @@
                 {#Surgical Treatment#}
                 <div id="surgery" style="display: none;">
                     <h2>Surgical Treatment Information</h2>
-                    <div class="row">
-                        <div class="col-sm-6 col-md-3">
-                            <div class="form-group">
-                                <label>Have you had a pulmonary function test?</label>
-                                <br/>
-                                {{ f.inlineRadioNY("sbahpft") }}
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 col-md-3" id="sbahpft-container">
-                            <div class="form-group">
-                                <label for="sbcop">Diffusion capacity (mL/min/mm Hg)</label>
-                                <input class="form-control input-sm numeric" type="text" name="sbcop" id="sbcop"
-                                       size="4">
-                            </div>
-                        </div>
-                    </div>
-
 
                     <div class="row">
                         <div class="col-sm-6 col-md-4">

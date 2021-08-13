@@ -1,4 +1,4 @@
-$TXT by MARSHALL,RICK DS@vapalsyotta.fiscientific.org (KIDS) 2021-08-11T17:32Z
+$TXT by MARSHALL,RICK DS@vapalsyotta.fiscientific.org (KIDS) 2021-08-12T23:16Z
  
                           Bug Stomp Jamboree
                       SAMI (VAPALS-ELCAP) 18.12
@@ -6,7 +6,7 @@ $TXT by MARSHALL,RICK DS@vapalsyotta.fiscientific.org (KIDS) 2021-08-11T17:32Z
                            
            George P. Lilly, Dom DiNatale, Larry G. Carlson,
                       & Frederick D. S. Marshall
-                              2021-08-11
+                              2021-08-12
  
 i. Front matter
  
@@ -75,7 +75,7 @@ ii. Contents
 1. Description
  
  SAMI 18.12 adds 36 updates with various priorities, in a variety of
- places in VAPALS-ELCAP, include some bug fixes and some enhancements,
+ places in VAPALS-ELCAP, including some bug fixes and some enhancements,
  as described below.
  
  The definitive source for the VAPALS-ELCAP application - codebase,
@@ -157,9 +157,9 @@ ii. Contents
  
  4. CT Report: For emphysema, report says minimal but form says mild
       
-      issue 21-105: Selecting Mild for Emphyseme on the CT form causes
-      the CT report to list minimal for emphysema, which does not
-      match. The report should also say mild, so they agree.
+      issue 21-105: Selecting Mild for Emphysema on the CT form causes
+      the CT report to list minimal instead, which does not match. The
+      report should also say mild, so they agree.
       
       solution: Fixed.
       
@@ -220,7 +220,7 @@ ii. Contents
       issues 20-10,21-050: VA staff do not use the ICN to identify
       patients.
       
-      solution: ICN bloc removed.
+      solution: ICN block removed.
       
       reported: 2020-01-22 by Morales. Jira VAP-486.
  
@@ -230,8 +230,8 @@ ii. Contents
  9. Params: New parameter framework, set up defaults & site overrides
  
       issue 21-017: As VAPALS-ELCAP matures, it is becoming
-      increasingly that the app needs the ability to vary field labels
-      and behavior depending on the site, and maybe by user,
+      increasingly clear that the app needs the ability to vary field
+      labels and behavior depending on the site, and maybe by user,
       institution, or other such variables. The app needs a
       parameterization framework to switch appearance and behavior
       based on parameters.
@@ -324,7 +324,7 @@ ii. Contents
       issues 21-074,21-107: The Reason for Change block of fields were
       only appearing when the patient was set to active. When changed
       to inactive, the block disappeared, even though the same fields
-      apply then. This led to a 2021-05-17 request by Hanschke &
+      apply then. This led to a 2021-05-17 request by Henschke &
       Jirapatnakul to add four fields related to the reason for the
       change. When DiNatale figured out that the request overlapped
       with the existing but hidden fields, the group agreed for now to
@@ -401,7 +401,7 @@ ii. Contents
       
       issues 21-099,21-100: Remove lines in form that refer to the 8th
       edition modified Clinical TNM Status. The clinical team made
-      this request. There were two references in the intervention form
+      this request. There were two references in the intervention form:
       one under treatment, one under Surgical Treatment.
       
       solution: Removed.
@@ -432,7 +432,7 @@ ii. Contents
  23. Intervention: Mediastinoscopy lines only appear when answer yes
      
      issue 21-096: Under Surgical Treatment Information "Was
-     mediastinoscopy performed", the next two lines should be shown
+     mediastinoscopy performed?", the next two lines should be shown
      only if "yes" is selected. These lines are about the procedure.
      
      solution: Lines made conditional.
@@ -533,16 +533,16 @@ ii. Contents
       from the list of procedures. Under Type of Procedure, when
       Biopsy Performed is checked yes, add options for mediastinoscopy
       and EBUS after Bronchoscopy. Remove "Was a mediastinoscopy
-      performed" and related section.
+      performed?" and related section.
       
       solution: Done.
       
       reported: 2021-06-01 by Henschke.
  
  33. Biopsy: Needs a Cancelled option with text box for reason
-     
-     issue 21-078: Form needs a new field Was a biopsy performed with
-     possible answers Y/N/Cancel. Form also needs a Cancellation
+
+     issue 21-078: Form needs a new field "Was a biopsy performed?"
+     with possible answers Y/N/Cancel. Form also needs a Cancellation
      Reason text box. If biopsy cancelled, make all fields optional.
      If not, still show all the fields, and still make them optional.
      

@@ -560,6 +560,32 @@
                     </div>
 
                     <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="rbrdd">Discharge date</label>
+                                {{ f.datepicker("rbrdd", "past") }}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Readmit within 30 days of discharge?</label>
+                            <div class="form-group">
+                                {{ f.inlineRadioNY("rbrthd") }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Discharge location?</label>
+                            <div class="form-group">
+                                {{ f.inlineRadio("rbrdl", "rbrdl-h", "h", "Home", true) }}
+                                {{ f.inlineRadio("rbrdl", "rbrdl-s", "s", "Other hospital", true) }}
+                                {{ f.inlineRadio("rbrdl", "rbrdl-t", "t", "Extended Care / Transitional Care Unit / Rehab", true) }}
+                                {{ f.inlineRadio("rbrdl", "rbrdl-n", "n", "Nursing home", true) }}
+                                {{ f.inlineRadio("rbrdl", "rbrdl-p", "p", "Hospice", true) }}
+                                {{ f.inlineRadio("rbrdl", "rbrdl-o", "o", "Other", true) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-md-6">
                             <label>Complications during surgery?</label>
                             <div class="form-group">

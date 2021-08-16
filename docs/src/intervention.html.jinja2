@@ -560,11 +560,36 @@
                     </div>
 
                     <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="rbrdd">Discharge date</label>
+                                {{ f.datepicker("rbrdd", "past") }}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Readmit within 30 days of discharge?</label>
+                            <div class="form-group">
+                                {{ f.inlineRadioNY("rbrthd") }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Discharge location?</label>
+                            <div class="form-group">
+                                {{ f.inlineRadio("rbrdl", "rbrdl-h", "h", "Home", true) }}
+                                {{ f.inlineRadio("rbrdl", "rbrdl-s", "s", "Other hospital", true) }}
+                                {{ f.inlineRadio("rbrdl", "rbrdl-t", "t", "Extended Care / Transitional Care Unit / Rehab", true) }}
+                                {{ f.inlineRadio("rbrdl", "rbrdl-n", "n", "Nursing home", true) }}
+                                {{ f.inlineRadio("rbrdl", "rbrdl-p", "p", "Hospice", true) }}
+                                {{ f.inlineRadio("rbrdl", "rbrdl-o", "o", "Other", true) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-md-6">
                             <label>Complications during surgery?</label>
                             <div class="form-group">
-                                {{ f.inlineRadio("rbrcs", "rbrcs-n", "n", "No", true) }}
-                                {{ f.inlineRadio("rbrcs", "rbrcs-y", "y", "Yes", true) }}
+                                {{ f.inlineRadioNY("rbrcs") }}
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -579,8 +604,7 @@
                         <div class="col-md-6">
                             <label>Complications during hospital stay?</label>
                             <div class="form-group">
-                                {{ f.inlineRadio("rbrch", "rbrch-n", "n", "No", true) }}
-                                {{ f.inlineRadio("rbrch", "rbrch-y", "y", "Yes", true) }}
+                                {{ f.inlineRadioNY("rbrch") }}
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -592,18 +616,48 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-3">
+                            <label>Discharged with home O&#8322;?</label>
+                            <div class="form-group">
+                                {{ f.inlineRadioNY("rbrdox") }}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Discharged with chest tube?</label>
+                            <div class="form-group">
+                                {{ f.inlineRadioNY("rbdct") }}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="rbctrd">Date of chest tube removal</label>
                                 {{ f.datepicker("rbctrd", "past") }}
                             </div>
                         </div>
+                    </div>
 
+                    <div class="row">
+                        <div class="col-md-6"></div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="rb60dvs">60-day vital status</label>
-                                <textarea name="rb60dvs" id="rb60dvs" class="form-control" rows="3"
-                                          cols="64"></textarea>
+                                <textarea name="rb60dvs" id="rb60dvs" class="form-control" rows="3" cols="64"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <label>Reviewed for QA?</label>
+                            <div class="form-group">
+                                {{ f.inlineRadioNY("rbrqa") }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="rbrqas">Specify</label>
+                                <textarea name="rbrqas" id="rbrqas" class="form-control" rows="3" cols="64"></textarea>
                             </div>
                         </div>
                     </div>
@@ -633,8 +687,7 @@
                         <div class="col-md-4">
                             <label>Invasion of other structures</label>
                             <div class="form-group form-inline">
-                                {{ f.inlineRadio("rbinv", "rbinv-n", "n", "No", true) }}
-                                {{ f.inlineRadio("rbinv", "rbinv-y", "y", "Yes", true) }}
+                                {{ f.inlineRadioNY("rbinv") }}
                             </div>
                         </div>
                         <div class="col-md-2">
@@ -1411,6 +1464,9 @@
                             <label for="rbalt4">T4 Ipsi Nod</label><br/>
                             {{ f.yesCheckbox("rbalt4") }}
                         </div>
+                    </div>
+
+                    <div class="row">
                         <div class="form-group col-md-2">
                             <label for="rbem">Evidence of metastasis</label><br/>
                             {{ f.inlineRadioNY("rbem") }}

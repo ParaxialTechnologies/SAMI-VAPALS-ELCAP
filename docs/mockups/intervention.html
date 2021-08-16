@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.08.12" name="version"/>
+  <meta content="2021.08.16" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Intervention and Surgical Treatment Form
@@ -64,17 +64,17 @@
   </script>
   <script src="../www/lib/datatables/datatables.min.js">
   </script>
-  <script src="../www/jquery-conditonally-enable.js?v=2021.08.12">
+  <script src="../www/jquery-conditonally-enable.js?v=2021.08.16">
   </script>
-  <script src="../www/jquery-conditonally-display.js?v=2021.08.12">
+  <script src="../www/jquery-conditonally-display.js?v=2021.08.16">
   </script>
-  <script src="../www/jqueryui-vista-filemanAutocomplete.js?v=2021.08.12">
+  <script src="../www/jqueryui-vista-filemanAutocomplete.js?v=2021.08.16">
   </script>
-  <script src="../www/vapals.js?v=2021.08.12">
+  <script src="../www/vapals.js?v=2021.08.16">
   </script>
-  <script src="../www/init.js?v=2021.08.12">
+  <script src="../www/init.js?v=2021.08.16">
   </script>
-  <script src="../www/nodule-grid.js?v=2021.08.12">
+  <script src="../www/nodule-grid.js?v=2021.08.16">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -1095,17 +1095,84 @@
        </div>
       </div>
       <div class="row">
+       <div class="col-md-3">
+        <div class="form-group">
+         <label for="rbrdd">
+          Discharge date
+         </label>
+         <div class="input-group datepicker">
+          <input aria-describedby="rbrdd-addon" class="form-control" data-restriction="past" id="rbrdd" name="rbrdd"/>
+          <div class="input-group-addon">
+           <div class="input-group-text" id="rbrdd-addon">
+            <i aria-hidden="true" class="fa fa-calendar">
+            </i>
+           </div>
+          </div>
+         </div>
+         <small class="form-text text-muted">
+          MM/DD/YYYY
+         </small>
+        </div>
+       </div>
+       <div class="col-md-3">
+        <label>
+         Readmit within 30 days of discharge?
+        </label>
+        <div class="form-group">
+         <label class="radio-inline" for="rbrthd-n">
+          <input id="rbrthd-n" name="rbrthd" type="radio" value="n"/>
+          No
+         </label>
+         <label class="radio-inline" for="rbrthd-y">
+          <input id="rbrthd-y" name="rbrthd" type="radio" value="y"/>
+          Yes
+         </label>
+        </div>
+       </div>
+       <div class="col-md-6">
+        <label>
+         Discharge location?
+        </label>
+        <div class="form-group">
+         <label class="radio-inline" for="rbrdl-h">
+          <input id="rbrdl-h" name="rbrdl" required="required" type="radio" value="h"/>
+          Home
+         </label>
+         <label class="radio-inline" for="rbrdl-s">
+          <input id="rbrdl-s" name="rbrdl" required="required" type="radio" value="s"/>
+          Other hospital
+         </label>
+         <label class="radio-inline" for="rbrdl-t">
+          <input id="rbrdl-t" name="rbrdl" required="required" type="radio" value="t"/>
+          Extended Care / Transitional Care Unit / Rehab
+         </label>
+         <label class="radio-inline" for="rbrdl-n">
+          <input id="rbrdl-n" name="rbrdl" required="required" type="radio" value="n"/>
+          Nursing home
+         </label>
+         <label class="radio-inline" for="rbrdl-p">
+          <input id="rbrdl-p" name="rbrdl" required="required" type="radio" value="p"/>
+          Hospice
+         </label>
+         <label class="radio-inline" for="rbrdl-o">
+          <input id="rbrdl-o" name="rbrdl" required="required" type="radio" value="o"/>
+          Other
+         </label>
+        </div>
+       </div>
+      </div>
+      <div class="row">
        <div class="col-md-6">
         <label>
          Complications during surgery?
         </label>
         <div class="form-group">
          <label class="radio-inline" for="rbrcs-n">
-          <input id="rbrcs-n" name="rbrcs" required="required" type="radio" value="n"/>
+          <input id="rbrcs-n" name="rbrcs" type="radio" value="n"/>
           No
          </label>
          <label class="radio-inline" for="rbrcs-y">
-          <input id="rbrcs-y" name="rbrcs" required="required" type="radio" value="y"/>
+          <input id="rbrcs-y" name="rbrcs" type="radio" value="y"/>
           Yes
          </label>
         </div>
@@ -1126,11 +1193,11 @@
         </label>
         <div class="form-group">
          <label class="radio-inline" for="rbrch-n">
-          <input id="rbrch-n" name="rbrch" required="required" type="radio" value="n"/>
+          <input id="rbrch-n" name="rbrch" type="radio" value="n"/>
           No
          </label>
          <label class="radio-inline" for="rbrch-y">
-          <input id="rbrch-y" name="rbrch" required="required" type="radio" value="y"/>
+          <input id="rbrch-y" name="rbrch" type="radio" value="y"/>
           Yes
          </label>
         </div>
@@ -1145,7 +1212,37 @@
        </div>
       </div>
       <div class="row">
-       <div class="col-md-6">
+       <div class="col-md-3">
+        <label>
+         Discharged with home O₂?
+        </label>
+        <div class="form-group">
+         <label class="radio-inline" for="rbrdox-n">
+          <input id="rbrdox-n" name="rbrdox" type="radio" value="n"/>
+          No
+         </label>
+         <label class="radio-inline" for="rbrdox-y">
+          <input id="rbrdox-y" name="rbrdox" type="radio" value="y"/>
+          Yes
+         </label>
+        </div>
+       </div>
+       <div class="col-md-3">
+        <label>
+         Discharged with chest tube?
+        </label>
+        <div class="form-group">
+         <label class="radio-inline" for="rbdct-n">
+          <input id="rbdct-n" name="rbdct" type="radio" value="n"/>
+          No
+         </label>
+         <label class="radio-inline" for="rbdct-y">
+          <input id="rbdct-y" name="rbdct" type="radio" value="y"/>
+          Yes
+         </label>
+        </div>
+       </div>
+       <div class="col-md-3">
         <div class="form-group">
          <label for="rbctrd">
           Date of chest tube removal
@@ -1164,12 +1261,43 @@
          </small>
         </div>
        </div>
+      </div>
+      <div class="row">
+       <div class="col-md-6">
+       </div>
        <div class="col-md-6">
         <div class="form-group">
          <label for="rb60dvs">
           60-day vital status
          </label>
          <textarea class="form-control" cols="64" id="rb60dvs" name="rb60dvs" rows="3"></textarea>
+        </div>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-md-3">
+       </div>
+       <div class="col-md-3">
+        <label>
+         Reviewed for QA?
+        </label>
+        <div class="form-group">
+         <label class="radio-inline" for="rbrqa-n">
+          <input id="rbrqa-n" name="rbrqa" type="radio" value="n"/>
+          No
+         </label>
+         <label class="radio-inline" for="rbrqa-y">
+          <input id="rbrqa-y" name="rbrqa" type="radio" value="y"/>
+          Yes
+         </label>
+        </div>
+       </div>
+       <div class="col-md-6">
+        <div class="form-group">
+         <label for="rbrqas">
+          Specify
+         </label>
+         <textarea class="form-control" cols="64" id="rbrqas" name="rbrqas" rows="3"></textarea>
         </div>
        </div>
       </div>
@@ -1214,11 +1342,11 @@
         </label>
         <div class="form-group form-inline">
          <label class="radio-inline" for="rbinv-n">
-          <input id="rbinv-n" name="rbinv" required="required" type="radio" value="n"/>
+          <input id="rbinv-n" name="rbinv" type="radio" value="n"/>
           No
          </label>
          <label class="radio-inline" for="rbinv-y">
-          <input id="rbinv-y" name="rbinv" required="required" type="radio" value="y"/>
+          <input id="rbinv-y" name="rbinv" type="radio" value="y"/>
           Yes
          </label>
         </div>
@@ -3315,6 +3443,8 @@
          Yes
         </label>
        </div>
+      </div>
+      <div class="row">
        <div class="form-group col-md-2">
         <label for="rbem">
          Evidence of metastasis
@@ -12934,7 +13064,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2021.08.12
+     2021.08.16
     </span>
    </div>
   </footer>

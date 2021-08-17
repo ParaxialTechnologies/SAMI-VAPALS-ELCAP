@@ -175,11 +175,11 @@ EMPHYS(rtn,vals,dict) ; emphysema section of ct report text format
  ;i samicac=1 d  ;
  i $g(@vals@("cecclm"))="-" s @vals@("cecclm")="no"
  i $g(@vals@("ceccld"))="-" s @vals@("ceccld")="no"
- i $g(@vals@("cecclf"))="-" s @vals@("cecccf")="no"
+ i $g(@vals@("cecccf"))="-" s @vals@("cecccf")="no"
  i $g(@vals@("ceccrc"))="-" s @vals@("ceccrc")="no"
  i $g(@vals@("cecclm"))="" s @vals@("cecclm")="no"
  i $g(@vals@("ceccld"))="" s @vals@("ceccld")="no"
- i $g(@vals@("cecclf"))="" s @vals@("cecccf")="no"
+ i $g(@vals@("cecccf"))="" s @vals@("cecccf")="no"
  i $g(@vals@("ceccrc"))="" s @vals@("ceccrc")="no"
  ;
  d  ;

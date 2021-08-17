@@ -1,6 +1,6 @@
 SAMIHOM4 ;ven/gpl,arc - homepage web services ;2021-06-16t18:09z
  ;;18.0;SAMI;**1,4,5,6,9,12**;
- ;;1.18.0.12-t3+i12
+ ;;18.12
  ;
  ; SAMIHOM4 contains web services & other subroutines for producing
  ; the ELCAP Home Page.
@@ -33,26 +33,26 @@ SAMIHOM4 ;ven/gpl,arc - homepage web services ;2021-06-16t18:09z
  ;
  ;  other
  ;
- ; REG: manual registration
- ; MKPTLK: creates patient-lookup record
- ; UPDTFRMS: update demographics in all forms for patient
- ; MERGE: merge participant records
- ; ADDUNMAT: adds unmatched report web service to system
- ; DELUNMAT: deletes unmatched web service
- ; WSUNMAT: navigates to unmatched report
- ; $$DUPSSN = true if duplicate ssn
- ; $$DUPICN = true if duplicate icn
- ; $$BADICN = true if ICN checkdigits are wrong
- ; SAVE: save patient-lookup record after edit
- ; $$REMATCH = possible match ien
- ; SETINFO: set information message text
- ; SETWARN: set warning message text
- ; RTNERR: redisplay page w/error message
- ; RTNPAGE: display page
- ; REINDXPL: reindex patient lookup
- ; INDXPTLK: generate index entries in patient-lookup graph
- ; UNINDXPT: remove index entries from patient-lookup graph
- ; $$UCASE = uppercase
+ ; REG manual registration
+ ; MKPTLK creates patient-lookup record
+ ; UPDTFRMS update demographics in all forms for patient
+ ; MERGE merge participant records
+ ; ADDUNMAT adds unmatched report web service to system
+ ; DELUNMAT deletes unmatched web service
+ ; WSUNMAT navigates to unmatched report
+ ; $$DUPSSN true if duplicate ssn
+ ; $$DUPICN true if duplicate icn
+ ; $$BADICN true if ICN checkdigits are wrong
+ ; SAVE save patient-lookup record after edit
+ ; $$REMATCH possible match ien
+ ; SETINFO set information message text
+ ; SETWARN set warning message text
+ ; RTNERR redisplay page w/error message
+ ; RTNPAGE display page
+ ; REINDXPL reindex patient lookup
+ ; INDXPTLK generate index entries in patient-lookup graph
+ ; UNINDXPT remove index entries from patient-lookup graph
+ ; $$UCASE uppercase
  ; WSNEWCAS code for wr newcase (creates new case)
  ;
  ;@to-do

@@ -1,6 +1,6 @@
 SAMIORM ;ven/lgc&arc - HL7: ORM > patient-lookup ;2021-06-08t20:07z
  ;;18.0;SAMI;**11,12**;2020-01;
- ;;1.18.0.12-t3+i12
+ ;;18.12
  ;
  ; SAMIORM parses an incoming Order (ORM) message into the fields
  ; array, then calls SAMIHL7 to use the array to update the patient-
@@ -18,9 +18,9 @@ SAMIORM ;ven/lgc&arc - HL7: ORM > patient-lookup ;2021-06-08t20:07z
  ;
  ;
  ;@routine-credits
- ;@primary-dev Larry G. Carlson (lgc)
+ ;@dev-main Larry G. Carlson (lgc)
  ; larry@fiscientific.com
- ;@primary-dev-org Vista Expertise Network (ven)
+ ;@dev-org-main Vista Expertise Network (ven)
  ; http://vistaexpertise.net
  ;@copyright 2020/2021, lgc, all rights reserved
  ;@license see routine SAMIUL
@@ -30,17 +30,17 @@ SAMIORM ;ven/lgc&arc - HL7: ORM > patient-lookup ;2021-06-08t20:07z
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@submodule HL7 interface - SAMIHL* & SAMIOR*
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.12-t3+i12
+ ;@version 18.12
  ;@release-date 2020-01
  ;@patch-list **11,12**
  ;
- ;@additional-dev Alexis R. Carlson (arc)
+ ;@dev-add Alexis R. Carlson (arc)
  ; arc@vistaexpertise.net
- ;@additional-dev George P. Lilly (gpl)
+ ;@dev-add George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
- ;@additional-dev Frederick D. S. Marshall (toad)
+ ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
- ;@additional-dev Kenneth McGlothlen (mcglk)
+ ;@dev-add Kenneth McGlothlen (mcglk)
  ; mcglk@vistaexpertise.net
  ;
  ;@routine-log repo github.com:VA-PALS-ELCAP/SAMI-VAPALS-ELCAP.git

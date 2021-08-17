@@ -1,6 +1,6 @@
-SAMICAS2 ;ven/gpl - case review cont ;2021-07-01T15:42Z
+SAMICAS2 ;ven/gpl - case review cont ;2021-08-09t17:03z
  ;;18.0;SAMI;**1,5,9,12**;2020-01;
- ;;1.18.0.12-t2+i12
+ ;;18.12
  ;
  ; SAMICAS2 contains ppis and other subroutines to support processing
  ; of the VAPALS case review page.
@@ -804,7 +804,7 @@ GSAMISTA(sid,form) ; extrinsic returns value of 'samistatus' from form
  set useform=form
  if form["vapals:" set useform=$p(form,"vapals:",2)
  set stat=$get(@root@("graph",sid,useform,"samistatus"))
- if stat="" s stat="incomplete"
+ if stat="" set stat="incomplete"
  ;
  quit stat ; end of ppi $$GSAMISTA^SAMICAS2
  ;

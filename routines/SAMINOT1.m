@@ -1,6 +1,6 @@
 SAMINOT1 ;ven/gpl - text notes ;2021-07-01t17:21z
  ;;18.0;SAMI;**2,6,8,10,11,12**;2020-01;build 2
- ;;1.18.0.12-t3+i12
+ ;;18.12
  ;
  ; SAMINOT1 contains a web service & associated subroutines to produce
  ; VAPALS-ELCAP text notes.
@@ -14,30 +14,30 @@ SAMINOT1 ;ven/gpl - text notes ;2021-07-01t17:21z
  ;
  ;
  ;@routine-credits
- ;@primary-dev George P. Lilly (gpl)
+ ;@dev-main George P. Lilly (gpl)
  ; gpl@vistaexpertise.net
- ;@primary-dev-org Vista Expertise Network (ven)
+ ;@dev-org-main Vista Expertise Network (ven)
  ; http://vistaexpertise.net
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-updated 2021-07-01t17:21z
+ ;@last-update 2021-07-01t17:21z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
- ;@version 1.18.0.12-t3+i12
+ ;@version 18.12
  ;@release-date 2020-01
  ;@patch-list **2,6,8,10,11,12**
  ;
- ;@additional-dev Frederick D. S. Marshall (toad)
+ ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net
- ;@additional-dev Larry G. Carlson (lgc)
+ ;@dev-add Larry G. Carlson (lgc)
  ; larry.g.carlson@gmail.com
- ;@additional-dev Linda M. R. Yaw (lmry)
+ ;@dev-add Linda M. R. Yaw (lmry)
  ; linda.yaw@vistaexpertise.net
- ;@additional-dev Alexis R. Carlson (arc)
+ ;@dev-add Alexis R. Carlson (arc)
  ; whatisthehumanspirit@gmail.com
- ;@additional-dev Domenic DiNatale (dom)
+ ;@dev-add Domenic DiNatale (dom)
  ; domenic.dinatale@paraxialtech.com
  ;
  ;@module-credits

@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.07.13" name="version"/>
+  <meta content="2021.08.16" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Home
@@ -18,6 +18,7 @@
   <link href="lib/jquery-ui-1.12.1/jquery-ui.theme.min.css" rel="stylesheet"/>
   <link href="lib/bootstrap-dialog-1.35.4/bootstrap-dialog.min.css" rel="stylesheet"/>
   <link href="lib/chart-js-2.9.3/Chart.min.css" rel="stylesheet"/>
+  <link href="lib/datatables/datatables.min.css" rel="stylesheet"/>
   <style>
    .chart {
             width: 100%;
@@ -60,17 +61,19 @@
   </script>
   <script src="lib/chart-js-2.9.3/chartjs-plugin-datalabels.min.js">
   </script>
-  <script src="jquery-conditonally-enable.js?v=2021.07.13">
+  <script src="lib/datatables/datatables.min.js">
   </script>
-  <script src="jquery-conditonally-display.js?v=2021.07.13">
+  <script src="jquery-conditonally-enable.js?v=2021.08.16">
   </script>
-  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.07.13">
+  <script src="jquery-conditonally-display.js?v=2021.08.16">
   </script>
-  <script src="vapals.js?v=2021.07.13">
+  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.08.16">
   </script>
-  <script src="init.js?v=2021.07.13">
+  <script src="vapals.js?v=2021.08.16">
   </script>
-  <script src="nodule-grid.js?v=2021.07.13">
+  <script src="init.js?v=2021.08.16">
+  </script>
+  <script src="nodule-grid.js?v=2021.08.16">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -257,7 +260,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2021.07.13
+     2021.08.16
     </span>
    </div>
   </footer>
@@ -414,6 +417,10 @@
         const reportsEndDate = VAPALS.toMoment(VAPALS.todaysDate()).format(VAPALS.DATE_FORMAT);
 
         $("a[data-samiroute=report]").attr("data-start-date", reportsStartDate).attr("data-end-date", reportsEndDate);
+
+        $(document).ready(function() {
+            $('table.datatables').DataTable();
+        } );
 
     })
   </script>

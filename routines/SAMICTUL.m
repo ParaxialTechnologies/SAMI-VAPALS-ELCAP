@@ -1,6 +1,6 @@
-SAMICTUL ;ven/gpl - ct report & copy log ;2021-07-21t20:19z
+SAMICTUL ;ven/gpl - ct report & copy log ;2021-08-17t21:42z
  ;;18.0;SAMI;**10,11,12**;2020-01;
- ;;18.12
+ ;;18.13
  ;
  ; SAMICTUL contains routine & module info & the primary development
  ; log for VAPALS-ELCAP's CT Report ctreport web service route, which
@@ -26,10 +26,10 @@ SAMICTUL ;ven/gpl - ct report & copy log ;2021-07-21t20:19z
  ;@license Apache 2.0
  ; https://www.apache.org/licenses/LICENSE-2.0.html
  ;
- ;@last-update 2021-07-21t20:19z
+ ;@last-update 2021-08-17t21:42z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
- ;@version 18.12
+ ;@version 18.13
  ;@release-date 2020-01
  ;@patch-list **10,11,12**
  ;
@@ -121,6 +121,8 @@ SAMICTUL ;ven/gpl - ct report & copy log ;2021-07-21t20:19z
  ; 2021-07-19 ven/gpl 18.12 e9359411
  ;  SAMICTD2 chg minimal to mild for emphesema in ct report.
  ;
+ ; 2021-08-17 ven/gpl 18.13 
+ ;  SAMIICTT3 correct typo in field name for circumflex in CAC section
  ;
  ;
  ;@contents

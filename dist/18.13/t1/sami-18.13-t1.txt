@@ -15,10 +15,10 @@ i. Front matter
  App         SAMI (VAPALS-ELCAP)
  Version     18.13
  Vista ID    SAMI*18.0*13 SEQ #13 T1
-             Version 18.0, Patch ID #13, Seq #13
- Priority    regular
+             Version 18.0, Patch ID #13, Seq #13 T1
+ Priority    critical
  Categories  routine, file
- Status      released: sami-18.13.zip
+ Status      released: sami-18.13-t1.zip
  Depends on  SAMI 18.1 (SAMI*18.0*1 SEQ #1)
              SAMI 18.2 (SAMI*18.0*2 SEQ #2)
              SAMI 18.3 (SAMI*18.0*3 SEQ #3)
@@ -110,16 +110,16 @@ ii. Contents
  
 2. Package elements
  
- File	                Change
- ----                   ------
- sami-18.13-recipe.txt  new
- sami-18.13.txt         new
- sami-18.13.kid         new
- www/*                  modified
- step1-backup			new
- step1a-vasites			new
- step2-install			new
- sami-18.13.zip         new
+ File	                	Change
+ ----                   	------
+ sami-18.13-t1-recipe.txt  new
+ sami-18.13-t1.txt         	new
+ sami-18.13-t1.kid         	new
+ www/*                  	modified
+ step1-backup				new
+ step1a-vasites				new
+ step2-install				new
+ sami-18.13-t1.zip         	new
  
  Routine    Change
  -------    ------
@@ -152,26 +152,108 @@ ii. Contents
     $
  
  
- 3.2. Prepare install directory
+ 3.2. Prepare install and backup directories
    
    Create install and backup directories
  
-    $ mv ~/run/in/sami/1.18.0.12 ~/run/in/sami/18.12
-    $ (cd ~/run/in/sami/18.12; mkdir -p back/form-fields back/www)
-    $
+  Execute the following commands (`$` simply means your command-line
+  prompt). They create a shell variable, and then creates the directory or, 
+  if it already exists, removes previous installation files before proceeding.
+
+  $ INDIR=~/run/in/sami/18.13/t1
+  $ mkdir $INDIR || rm -rf $INDIR/sami-*.{kid,txt} $INDIR/{form-fields,www}
+  $ cd $INDIR
+
+   Download and prepare the archive file
+
+ You may safely download the archive file sami-18.13-t1.zip 
+ in advance of the actual install. In the following text, [now] represents a 
+ time stamp representing your current time, [bits/sec] is a data rate and
+ [time]is how long the file took to transfer (both of which vary based on the 
+ user's network conditions).
  
+ $ wget 'http://vistaexpertise.net/newsite/project/vapals-elcap/sami-18.13-t1.zip'
+ --[now]--  http://vistaexpertise.net/newsite/project/vapals-elcap/sami-18.13-t1.zip
+ Resolving vistaexpertise.net (vistaexpertise.net)... 208.113.153.6
+ Connecting to vistaexpertise.net (vistaexpertise.net)|208.113.153.6|:80... connected.
+ HTTP request sent, awaiting response... 200 OK
+ Length: 0 (0.0M) [application/zip]
+ Saving to: ‘sami-18.13.zip’
+
+ 100%[=========================================>]   0.0M  [bits/sec]  in [time]
+
+ [now] ([bits/sec]) - ‘sami-18.13-t1.zip’ saved [0/0]
+
+ $ unzip sami-18.13-t1.zip
+ Archive:  sami-18.13-t1.zip
+   [... 544 files in archive, about 10.0 Mb ...]
+$ _
  
- 3.3. Back up form-fields and www files
-    
-    Back up existing form-fields and www files that will be
-    overwritten by this install. Do this by copying the form-fields
-    and www directories to the install backup directories:
-    
-    $ cd ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs
-    $ cp -r form-fields/* ~/run/in/sami/18.12/back/form-fields/
-    $ cp -r www/* ~/run/in/sami/18.12/back/www/
-    $ cd
-    $
+ Several files will be overwritten by this install. This step backs those up as
+ a safety measure to your working directory.
+
+ $ ./step1-backup
+ Backing up files ... done.
+ $ _
+
+
+  IMPORTANT NOTE for VA VAPALS-ELCAP sites
+
+ Installations within the VA firewall may not access the VAPALS-ELCAP Git
+ repository; they maintain a static copy which is occasionally updated. However,
+ this patch and future patches need a way to distinguish between active Git
+ repositories and static copies. The easiest way to do this is to remove the
+ `.git` directory from the base of the copy; for static copies, it just takes up
+ room. However, if you really want to keep it around, the directory can be
+ renamed.
+
+ If you are on such a site, please run the following script now, and answer the
+ questions appropriately for your installation.
+
+ $ ./step1a-vasites
+ This will isolate your static copy of the VAPALS-ELCAP Git repository.
+ Are you sure [yes/no/rename] ? y
+ Removing .git directory from static copy ... done.
+ $ _
+
+If you decide to rename the directory instead, this is what that would look
+like:
+
+-------------------------------------------------------------------------------
+$ ./step1a-vasites
+This will isolate your static copy of the VAPALS-ELCAP Git repository.
+Are you sure [yes/no/rename] ? r
+Renaming .git directory to .gitstatic ... done.
+$ _
+-------------------------------------------------------------------------------
+
+Note that if this isn't done, the next step may not work properly.
+
+  Install web-application files
+
+At this point in the install process, the VAPALS-ELCAP routines have been
+updated, but the corresponding web-application files have not; these must first
+be installed. On VA VAPALS-ELCAP systems, the output will look like this:
+
+-------------------------------------------------------------------------------
+$ ./step2-install
+Updating files ... done.
+$ _
+-------------------------------------------------------------------------------
+
+Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date clones of the
+official GitHub repository, and this script will have different output.
+
+-------------------------------------------------------------------------------
+$ ./step2-install
+Found a Git repository; pulling updates.
+remote: Enumerating objects: [...], done.
+remote: Counting objects: 100% ([.../...]), done.
+remote: Compressing objects: 100% ([.../...]), done.
+[... varies ...]
+Done.
+$ _
+
  
  
  3.4. Enter M
@@ -312,40 +394,7 @@ SAMICTUL
  
  
  
-4. Package-retrieval instructions
- 
- Your VAPALS-ELCAP environment is now ready to install VAPALS-ELCAP
- 18.13 (SAMI*18.0*13 SEQ #13), so next retrieve the package.
- 
- 
- 4.1. Download and prepare the archive file
-   
-   You may safely download the archive file ('http://vistaexpertise.net/newsite/project/vapals-elcap/sami-18.12.zip')
-   in advance of the actual install. To do this, use the wget command
-   to download it:
-   
-   $ cd ~/run/in/sami/18.12/
-   $ wget 'http://vistaexpertise.net/newsite/project/vapals-elcap/sami-18.12.zip'
-   $
- 
- 
- 4.2. Expand the archive
-   
-   Expand the archive file, using the unix unzip command:
-    
-    $ unzip sami-18.12.zip
-    Archive:  sami-18.12.zip
-      inflating: sami-18.12-recipe.txt
-      inflating: sami-18.12.kid
-      inflating: sami-18.12.txt
-      inflating: form-fields/... [330 KB of form-fields files]
-      inflating: www/... [9 MB of www files]
-    $ cd
-    $
- 
- 
- 
-5. Main install instructions
+4. Main install instructions
  
  Step 5 consists of entering the Vista menu system, loading and
  installing the KIDS package, exiting M, and installing and activating
@@ -404,20 +453,20 @@ SAMICTUL
     Select option 1 and press return at the Continue prompt.
  
     Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
-    Enter a Host File: /home/osehra/run/in/sami/18.12/sami-18.12.kid
+    Enter a Host File: /home/osehra/run/in/sami/18.13/t1/sami-18.13-t1.kid
     
-       KIDS Distribution saved on Aug 11, 2021@15:34:06
-       Comment: Released SAMI*18.0*12 SEQ #12 (18.12)
+       KIDS Distribution saved on Aug 18, 2021@15:34:06
+       Comment: Released SAMI*18.0*13 SEQ #13 T1 (18.13)
     
     This Distribution contains Transport Globals for the following Package(s):
-       SAMI*18.0*12
+       SAMI*18.0*13
     Distribution OK!
     
     Want to Continue with Load? YES// 
        Loading Distribution...
     
-       SAMI*18.0*12
-    Use INSTALL NAME: SAMI*18.0*12 to install this Distribution.
+       SAMI*18.0*13
+    Use INSTALL NAME: SAMI*18.0*13 to install this Distribution.
     
     
        1      Load a Distribution
@@ -440,16 +489,16 @@ SAMICTUL
     denotes the current time when you're doing the install.
  
     Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
-    Select INSTALL NAME:    SAMI*18.0*12     Loaded from Distribution    [now]
-       => Released SAMI*18.0*12 SEQ #12 (18.12)  ;Created on Aug 11, 2021@15:34:06
+    Select INSTALL NAME:    SAMI*18.0*13     Loaded from Distribution    [now]
+       => Released SAMI*18.0*13 SEQ #13 (18.13)  ;Created on Aug 18, 2021@15:34:06
        
     This Distribution was loaded on [now] with header of 
-       Released SAMI*18.0*12 SEQ #12 (18.12)  ;Created on Aug 11, 2021@15:34:06
+       Released SAMI*18.0*12 SEQ #12 (18.12)  ;Created on Aug 18, 2021@15:34:06
        It consisted of the following Install(s):
-        SAMI*18.0*12
-    Checking Install for Package SAMI*18.0*12
+        SAMI*18.0*13
+    Checking Install for Package SAMI*18.0*13
        
-    Install Questions for SAMI*18.0*12
+    Install Questions for SAMI*18.0*13
     
     Incoming Files:
     
@@ -470,10 +519,10 @@ SAMICTUL
     
     DEVICE: HOME//   VMS
      
-     Install Started for SAMI*18.0*12:
+     Install Started for SAMI*18.0*13:
                    [now]
      
-    Build Distribution Date: Aug 11, 2021
+    Build Distribution Date: Aug 18, 2021
      
      Installing Routines:
                    [now]
@@ -490,7 +539,7 @@ SAMICTUL
      
      Updating KIDS files...
      
-     SAMI*18.0*12 Installed.
+     SAMI*18.0*13 Installed.
                    [now]
         
      NO Install Message sent
@@ -641,7 +690,7 @@ do INIT2GPH^SAMICTD2
  
  
  
- You now have VAPALS-ELCAP 18.12 (SAMI*18.0*12 SEQ #12) installed in
+ You now have VAPALS-ELCAP 18.13 (SAMI*18.0*13 SEQ #13) installed in
  your M environment. The install is now complete. We recommend running
  tests of your VAPALS-ELCAP app to confirm the environment is
  operational and bug-free, before notifying users that VAPALS-ELCAP is

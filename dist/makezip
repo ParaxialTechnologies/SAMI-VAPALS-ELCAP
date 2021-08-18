@@ -1,0 +1,34 @@
+#!/bin/sh -vx
+
+ENV="/usr/bin/env"
+
+CP="$ENV cp"
+MKDIR="$ENV mkdir"
+RM="$ENV rm"
+ZIP="$ENV zip"
+
+REPO="$HOME/lib/silver/a-sami-vapals-elcap--vo-osehra-github"
+NAMESPACE="sami"
+INDIR="$HOME/run/out/$NAMESPACE"
+
+SUBDIR=$1
+shift 1
+
+$MKDIR -p $INDIR/$SUBDIR
+
+cp -v \
+   $REPO/dist/$SUBDIR/${NAMESPACE}*.kid \
+   $REPO/dist/$SUBDIR/${NAMESPACE}*.txt \
+   $REPO/dist/$SUBDIR/step* \
+   $INDIR/$SUBDIR/
+
+for I in "$@"; do
+    $CP -rv $REPO/docs/$I $INDIR/$SUBDIR/
+done
+
+cd $INDIR/$SUBDIR
+
+ZIPFILE=`basename ${NAMESPACE}*.kid .kid`.zip
+$RM -r $ZIPFILE
+$ZIP -r $ZIPFILE ${NAMESPACE}*.kid ${NAMESPACE}*.txt step* "$@"
+

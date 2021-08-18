@@ -2,23 +2,17 @@
 
 ENV="/usr/bin/env"
 
-MV="$ENV mv"
-RM="$ENV rm"
+TOUCH="$ENV touch"
 
 REPO="$HOME/lib/silver/a-sami-vapals-elcap--vo-osehra-github"
 
-echo "This will isolate your static copy of the VAPALS-ELCAP Git repository."
-read -p "Are you sure [yes/no/rename] ? " ANSWER
+echo "This will mark your static copy of the VAPALS-ELCAP Git as 'isolated'."
+read -p "Are you sure [yes/no] ? " ANSWER
 
 case "$ANSWER" in
     y* | Y* )
-        printf "Removing .git directory from static copy ... "
-        $RM -rf $REPO/.git
-        echo "done."
-        ;;
-    r* | R* )
-        printf "Renaming .git directory to .gitstatic ... "
-        $MV $REPO/.git $REPO/.gitstatic
+        printf "Marking as 'isolated' ... "
+        $TOUCH $REPO/ISOLATED-GIT-REPO
         echo "done."
         ;;
 esac

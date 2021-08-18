@@ -1,5 +1,5 @@
-SAMICTUL ;ven/gpl - ct report & copy log ;2021-08-17t21:42z
- ;;18.0;SAMI;**10,11,12**;2020-01;
+SAMICTUL ;ven/gpl - ct report & copy log ;2021-08-18t17:06z
+ ;;18.0;SAMI;**10,11,12,13**;2020-01;
  ;;18.13
  ;
  ; SAMICTUL contains routine & module info & the primary development

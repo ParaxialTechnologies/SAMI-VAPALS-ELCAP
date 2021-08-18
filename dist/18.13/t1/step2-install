@@ -1,6 +1,6 @@
 #!/bin/sh
 
-ENV="/bin/env"
+ENV="/usr/bin/env"
 
 CP="$ENV cp"
 GIT="$ENV git"
@@ -8,7 +8,7 @@ MKDIR="$ENV mkdir"
 RM="$ENV rm"
 
 REPO="$HOME/lib/silver/a-sami-vapals-elcap--vo-osehra-github"
-INDIR="$HOME/run/in/sami/18.13/t1
+INDIR="$HOME/run/in/sami/18.13/t1"
 
 if [ -d "$REPO/.git" ]; then
    echo "Found a Git repository; pulling updates."
@@ -17,8 +17,9 @@ if [ -d "$REPO/.git" ]; then
    echo "Done."
 else
    printf "Updating files ..."
-   $RM -rf $REPO/docs/form-fields $REPO/docs/www
-   $CP -r $INDIR/{form-fields,www} $REPO/docs
+   for I in www; do
+       $RM -rf $REPO/docs/$I
+       $CP -r $INDIR/$I $REPO/docs
    echo "done."
 fi
 

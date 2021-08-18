@@ -1,6 +1,6 @@
 
 
-$TXT by MARSHALL,RICK DS@vapalsyotta.fiscientific.org (KIDS) 2021-08-17T21:46Z
+$TXT by MARSHALL,RICK DS@vapalsyotta.fiscientific.org (KIDS) 2021-08-18T22:00Z
  
                              CT Report Fix
                       SAMI (VAPALS-ELCAP) 18.13-t1
@@ -93,7 +93,7 @@ ii. Contents
  
  The 1 critical bug fixed is:
  
- 1. Module: CT Report
+ 1.1. Module: CT Report
  
       issues: 21-142, 21-143 The CAC score is sometimes different 
       between the CT Eval form and the report. Circumflex value is 
@@ -161,7 +161,7 @@ ii. Contents
   if it already exists, removes previous installation files before proceeding.
 
   $ INDIR=~/run/in/sami/18.13/t1
-  $ mkdir $INDIR || rm -rf $INDIR/sami-*.{kid,txt} $INDIR/{form-fields,www}
+  $ mkdir -p $INDIR || rm -rf $INDIR/sami-*.{kid,txt} $INDIR/{form-fields,www}
   $ cd $INDIR
 
    Download and prepare the archive file
@@ -172,26 +172,28 @@ ii. Contents
  [time]is how long the file took to transfer (both of which vary based on the 
  user's network conditions).
  
- $ wget 'http://vistaexpertise.net/newsite/project/vapals-elcap/sami-18.13-t1.zip'
- --[now]--  http://vistaexpertise.net/newsite/project/vapals-elcap/sami-18.13-t1.zip
- Resolving vistaexpertise.net (vistaexpertise.net)... 208.113.153.6
- Connecting to vistaexpertise.net (vistaexpertise.net)|208.113.153.6|:80... connected.
- HTTP request sent, awaiting response... 200 OK
- Length: 0 (0.0M) [application/zip]
- Saving to: ‘sami-18.13.zip’
+    $ wget 'http://vistaexpertise.net/newsite/project/vapals-elcap/sami-18.13-t1.zip'
+    --[now]--  http://vistaexpertise.net/newsite/project/vapals-elcap/sami-18.13-t1.zip
+    Resolving vistaexpertise.net (vistaexpertise.net)... 208.113.153.6
+    Connecting to vistaexpertise.net (vistaexpertise.net)|208.113.153.6|:80... connected.
+    HTTP request sent, awaiting response... 200 OK
+    Length: [about 2588741] (2.5M) [application/zip]
+    Saving to: ‘sami-18.13-t1.zip’
 
- 100%[=========================================>]   0.0M  [bits/sec]  in [time]
+    100%[================================>]   2.47M  [bits/sec]  in [time]
 
- [now] ([bits/sec]) - ‘sami-18.13-t1.zip’ saved [0/0]
-
- $ unzip sami-18.13-t1.zip
- Archive:  sami-18.13-t1.zip
-   [... 544 files in archive, about 10.0 Mb ...]
-$ _
+    [now] ([bits/sec]) - ‘sami-18.13-t1.zip’ saved [2588741/2588741]
+    
+    $ unzip sami-18.13-t1.zip
+    Archive:  sami-18.13-t1.zip
+      [... 539 files in archive, about 9.0 Mb ...]
+    $ _
  
  Several files will be overwritten by this install. This step backs those up as
  a safety measure to your working directory.
 
+    Backup files
+    
  $ ./step1-backup
  Backing up files ... done.
  $ _
@@ -216,47 +218,42 @@ $ _
  Removing .git directory from static copy ... done.
  $ _
 
-If you decide to rename the directory instead, this is what that would look
-like:
+ If you decide to rename the directory instead, this is what that would look
+ like:
 
--------------------------------------------------------------------------------
-$ ./step1a-vasites
-This will isolate your static copy of the VAPALS-ELCAP Git repository.
-Are you sure [yes/no/rename] ? r
-Renaming .git directory to .gitstatic ... done.
-$ _
--------------------------------------------------------------------------------
+ $ ./step1a-vasites
+ This will isolate your static copy of the VAPALS-ELCAP Git repository.
+ Are you sure [yes/no/rename] ? r
+ Renaming .git directory to .gitstatic ... done.
+ $ _
 
-Note that if this isn't done, the next step may not work properly.
+ Note that if this isn't done, the next step may not work properly.
 
-  Install web-application files
+   Install web-application files
 
-At this point in the install process, the VAPALS-ELCAP routines have been
-updated, but the corresponding web-application files have not; these must first
-be installed. On VA VAPALS-ELCAP systems, the output will look like this:
+ At this point in the install process, the VAPALS-ELCAP routines have been
+ updated, but the corresponding web-application files have not; these must first
+ be installed. On VA VAPALS-ELCAP systems, the output will look like this:
 
--------------------------------------------------------------------------------
-$ ./step2-install
-Updating files ... done.
-$ _
--------------------------------------------------------------------------------
+ $ ./step2-install
+ Updating files ... done.
+ $ _
 
-Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date clones of the
-official GitHub repository, and this script will have different output.
+ Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date clones of the
+ official GitHub repository, and this script will have different output.
 
--------------------------------------------------------------------------------
-$ ./step2-install
-Found a Git repository; pulling updates.
-remote: Enumerating objects: [...], done.
-remote: Counting objects: 100% ([.../...]), done.
-remote: Compressing objects: 100% ([.../...]), done.
-[... varies ...]
-Done.
-$ _
+ $ ./step2-install
+ Found a Git repository; pulling updates.
+ remote: Enumerating objects: [...], done.
+ remote: Counting objects: 100% ([.../...]), done.
+ remote: Compressing objects: 100% ([.../...]), done.
+ [... varies ...]
+ Done.
+ $ _
 
  
  
- 3.4. Enter M
+ 3.3. Enter M
     
     At the unix prompt, enter the M environment in direct mode, using
     the csession command on Cache or the mumps command on
@@ -278,7 +275,7 @@ $ _
     >
  
  
- 3.5. Sign into Vista
+ 3.4. Sign into Vista
     
     At the M prompt, call Vista's direct-mode interface, enter your
     access code, and then just press return at the OPTION NAME prompt
@@ -297,7 +294,7 @@ $ _
     >
  
  
- 3.6. Back up routines
+ 3.5. Back up routines
     
     Back up existing VAPALS-ELCAP routines that will be overwritten
     by this install. Do this by calling direct-mode interface ^%RO
@@ -312,13 +309,13 @@ $ _
     indicate the list of routines is done.
  
  
-    3.6.1. List of routines
+    3.5.1. List of routines
 SAMICTT3
 SAMICTUL
 
  
  
-    3.6.2. On Cache
+    3.5.2. On Cache
     
     Note that routines that don't currently exist will result in a
     warning message (specifically, the routine name will have `[???]`
@@ -348,7 +345,7 @@ SAMICTUL
  
  
  
-    3.6.3. On YottaDB/GT.M
+    3.5.3. On YottaDB/GT.M
     
     Note that routines that don't currently exist will result in the
     routine name not appearing under the input line, and won't count
@@ -386,7 +383,7 @@ SAMICTUL
 
 
  
- 3.7. Exit M
+ 3.6. Exit M
     
     At the M prompt, halt to exit M:
  
@@ -401,15 +398,15 @@ SAMICTUL
  the new form-fields and www files.
  
  
- 5.1. Enter Vista menu system
+ 4.1. Enter Vista menu system
  
  
-   5.1.1. Enter M
+   4.1.1. Enter M
    
     Repeat step 3.4 to enter M.
    
    
-   5.1.2. Sign in and select the KIDS Installation menu
+   4.1.2. Sign in and select the KIDS Installation menu
  
     At the M prompt, call Vista's direct-mode interface, enter your
     access code, at the OPTION NAME prompt select XPD MAIN to enter
@@ -448,14 +445,14 @@ SAMICTUL
  
  
  
- 5.2. Load KIDS package
+ 4.2. Load KIDS package
  
     Select option 1 and press return at the Continue prompt.
  
     Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
     Enter a Host File: /home/osehra/run/in/sami/18.13/t1/sami-18.13-t1.kid
     
-       KIDS Distribution saved on Aug 18, 2021@15:34:06
+       KIDS Distribution saved on Aug 18, 2021@110:54:06
        Comment: Released SAMI*18.0*13 SEQ #13 T1 (18.13)
     
     This Distribution contains Transport Globals for the following Package(s):
@@ -482,7 +479,7 @@ SAMICTUL
  
  
  
- 5.3. Install KIDS package
+ 4.3. Install KIDS package
  
     Select option 6, enter the space bar at the INSTALL NAME prompt,
     and press return at the next three prompts. Note that `[now]`
@@ -493,7 +490,7 @@ SAMICTUL
        => Released SAMI*18.0*13 SEQ #13 (18.13)  ;Created on Aug 18, 2021@15:34:06
        
     This Distribution was loaded on [now] with header of 
-       Released SAMI*18.0*12 SEQ #12 (18.12)  ;Created on Aug 18, 2021@15:34:06
+       Released SAMI*18.0*13 SEQ #13 (18.13)  ;Created on Aug 18, 2021@15:34:06
        It consisted of the following Install(s):
         SAMI*18.0*13
     Checking Install for Package SAMI*18.0*13
@@ -517,7 +514,7 @@ SAMICTUL
     You can queue the install by enter a 'Q' at the device prompt.
     Enter a '^' to abort the install.
     
-    DEVICE: HOME//   VMS
+    DEVICE: HOME//   
      
      Install Started for SAMI*18.0*13:
                    [now]
@@ -560,7 +557,7 @@ SAMICTUL
  
  
  
- 5.4. Exit M
+ 4.4. Exit M
  
    At the Select ... Option prompt select the halt option.
  
@@ -571,34 +568,9 @@ SAMICTUL
     $
  
  
- 
- 5.5. Install the form-fields and www files
- 
- At this point in the install process, the VAPALS-ELCAP routines have
- been updated, but the corresponding form-fields and www files have
- not; these must first be installed.
- 
- VA VAPALS-ELCAP sysadmins should follow step 5.5.1. Non-VA sysadmins
- should follow step 5.5.2.
- 
- 
-   5.5.1. For VA VAPALS-ELCAP systems
-   
-   The VA firewall blocks access to the official VAPALS-ELCAP Github
-   repository, so VA VAPALS-ELCAP systems do not maintain clones of
-   that repo. Instead, they manually copy the form-fields and www
-   files into place by running these commands:
- 
-    $ cd ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/
-    $ rm -rf form-fields/*
-    $ rm -rf www/*
-    $ cp -r ~/run/in/sami/18.12/form-fields/* form-fields/
-    $ cp -r ~/run/in/sami/18.12/www/* www/
-    $ cd
-    $
    
    
-   5.5.2. For Non-VA VAPALS-ELCAP systems
+   4.4.1. For Non-VA VAPALS-ELCAP systems
    
    Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date
    clones of the official Github repository. Performing a git pull
@@ -613,24 +585,24 @@ SAMICTUL
  
  
  
- 5.6. Activate the form-fields and www files and exit M
+ 4.5. Activate the form-fields and www files and exit M
  
  The VAPALS-ELCAP routines, form-fields files, and www files have been
  updated at this point, but the routines are using cached copies of
  the files; this step refreshes those copies.
  
  
-   5.6.1. Enter M
+   4.5.1. Enter M
    
     Repeat step 3.4 to enter M.
    
    
-   5.6.2. Sign into Vista
+   4.5.2. Sign into Vista
  
     Repeat step 3.5 to sign into Vista.
  
  
-   5.6.3. Rebuild M-Web's cached form-fields and www files
+   4.5.3. Rebuild M-Web's cached form-fields and www files
    
     To improve performance, M-Web maintains cached copies of the
     form-fields files, which are the data dictionaries for the fields
@@ -683,14 +655,14 @@ do INIT2GPH^SAMICTD2
     
  
  
-   5.6.4. Exit M
+   4.5.4. Exit M
  
     > halt
     $
  
  
  
- You now have VAPALS-ELCAP 18.13 (SAMI*18.0*13 SEQ #13) installed in
+ You now have VAPALS-ELCAP 18.13-t1 (SAMI*18.0*13 SEQ #13 T1) installed in
  your M environment. The install is now complete. We recommend running
  tests of your VAPALS-ELCAP app to confirm the environment is
  operational and bug-free, before notifying users that VAPALS-ELCAP is
@@ -710,7 +682,7 @@ do INIT2GPH^SAMICTD2
  
  Lines 2 & 3 of each of these routines now look like:
   ;;18.0;SAMI;[Patch List];2020-01;[optional build #]
-  ;;18.12
+  ;;18.13
 
  The checksums below are Vista Type B checksums (do CHECK1^XTSUMBLD).
  
@@ -724,13 +696,13 @@ do INIT2GPH^SAMICTD2
 8. Authors
  
              Dates              By         
- Developed   2021-06-08/08-10   George P. Lilly (ven)
+ Developed   2021-08-16  		George P. Lilly (ven)
                                 Domenic DiNatale (par)
                                 Larry G. Carlson (ven)
                                 Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
  
- Tested      2021-06-08/08-11   George P. Lilly (ven)
+ Tested      2021-06-016/08-18  George P. Lilly (ven)
                                 Domenic DiNatale (par)
                                 Larry G. Carlson (ven)
                                 Claudia Henschke (va-pho)
@@ -740,9 +712,11 @@ do INIT2GPH^SAMICTD2
                                 Martha A. Rukavena (va-pho)
                                 Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
+                                Linda M. R. Yaw (ven)
  
- Released    2021-08-11         Frederick D. S. Marshall (ven)
+ Released    2021-08-18         Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
+                                Linda M. R. Yaw (ven)
  
  
 $END TXT

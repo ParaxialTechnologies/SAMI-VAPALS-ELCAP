@@ -2,13 +2,13 @@
 
 $TXT by MARSHALL,RICK DS@vapalsyotta.fiscientific.org (KIDS) 2021-08-17T21:46Z
  
-                      Lurking Around the Corner
+                             CT Report Fix
                       SAMI (VAPALS-ELCAP) 18.13-t1
-                        (SAMI*18.0*13 SEQ #13)
+                        (SAMI*18.0*13 SEQ #13 T1)
                            
            George P. Lilly, Dom DiNatale, Larry G. Carlson,
                       & Frederick D. S. Marshall
-                              2021-08-17
+                              2021-08-18
  
 i. Front matter
  
@@ -248,20 +248,21 @@ SAMICTUL
     Printer Format prompts to accept the defaults of WNS and No,
     respectively:
     
-    > do ^%RO
-    
+       >do ^%RO
+
     Routine output (please use %ROMF for object code output)
-    Routine(s): SAMICTT3
-    Routine(s):
-        
-    Description: SAMI 18.12 routine backup
-    
+    Routines(s): SAMICTT3
+    Routines(s): SAMICTUL
+    Routines(s): 
+
+    Description: SAMI 18.13 T1 routine backup
+
     Output routines to
-    Device: /home/osehra/run/in/sami/18.12/back/sami-18.12-back.ro
+    Device: /home/osehra/run/in/sami/18.13/t1/back/sami-18.13-t1-back.ro
     Parameters? ("WNS") =>
     Printer Format? No => No
-    SAMICTT3.INT    SAMICTUL
-    >
+    SAMICTT3.INT    SAMICTUL.INT
+    >_
  
  
  
@@ -275,121 +276,31 @@ SAMICTUL
     provide a Header Label and press return at the Strip comments
     prompt to accept the default of No:
     
-    > do ^%RO
-    
+    YottaDB:
+
+    >do ^%RO
+
     Routine Output - Save selected routines into RO file.
-    
-    Routine: SAMICAS2
-    SAMICAS2
+
+    Routines: SAMICTT3
+    SAMICTT3
     Current total of 1 routines.
     
-    Routine: SAMICAS3
-    SAMICAS3
+    Routines: SAMICTUL
+    SAMICTUL
     Current total of 2 routines.
     
-    Routine: SAMICASE
-    SAMICASE
-    Current total of 3 routines.
-    
-    Routine: SAMICLOG
-    SAMICLOG
-    Current total of 4 routines.
-    
-    Routine: SAMICTD2
-    SAMICTD2
-    Current total of 5 routines.
-    
-    Routine: SAMICTUL
-    SAMICTUL
-    Current total of 6 routines.
-    
-    Routine: SAMICUL
-    SAMICUL
-    Current total of 7 routines.
-    
-    Routine: SAMIHOM3
-    SAMIHOM3
-    Current total of 8 routines.
-    
-    Routine: SAMIHOM4
-    SAMIHOM4
-    Current total of 9 routines.
-    
-    Routine: SAMIHUL
-    SAMIHUL
-    Current total of 10 routines.
-    
-    Routine: SAMIJS1
-    SAMIJS1
-    Current total of 11 routines.
-    
-    Routine: SAMIJS2
-    SAMIJS2
-    Current total of 12 routines.
-    
-    Routine: SAMINOT1
-    SAMINOT1
-    Current total of 13 routines.
-    
-    Routine: SAMINOT2
-    SAMINOT2
-    Current total of 14 routines.
-    
-    Routine: SAMINUL
-    SAMINUL
-    Current total of 15 routines.
-    
-    Routine: SAMIORM
-    SAMIORM
-    Current total of 16 routines.
-    
-    Routine: SAMIOUL
-    SAMIOUL
-    Current total of 17 routines.
-    
-    Routine: SAMIPARM
-    SAMIPARM
-    Current total of 18 routines.
-    
-    Routine: SAMIPAT
-    SAMIPAT
-    Current total of 19 routines.
-    
-    Routine: SAMISITE
-    SAMISITE
-    Current total of 20 routines.
-    
-    Routine: SAMITTW
-    SAMITTW
-    Current total of 21 routines.
-    
-    Routine: SAMIUR
-    SAMIUR
-    Current total of 22 routines.
-    
-    Routine: SAMIUR2
-    SAMIUR2
-    Current total of 23 routines.
-    
-    Routine: SAMIURUL
-    SAMIURUL
-    Current total of 24 routines.
+    Routine: 
 
-    Routine:
-    
-    Output device: <terminal>: /home/osehra/run/in/sami/18.12/back/sami-18.12-back.ro
-    
-    Header Label: SAMI 18.12 routine backup
+    Output device <terminal>: /home/osehra/run/in/sami/18.13/t1/back/sami-18.13-t1-back.ro
+
+    Header Label: SAMI 18.13 T1 routine backup
     Strip comments <No>?:
-    SAMICAS2  SAMICAS3  SAMICASE  SAMICLOG  SAMICTD2  SAMICTUL
-    SAMICUL   SAMIHOM3  SAMIHOM4  SAMIHUL   SAMIJS1   SAMIJS2
-    SAMINOT1  SAMINOT2  SAMINUL   SAMIORM   SAMIOUL   SAMIPARM
-    SAMIPAT   SAMISITE  SAMITTW   SAMIUR    SAMIUR2   SAMIURUL
+    SAMICTT3  SAMICTUL
     
-    Total of 10384 lines in 24 routines.
-    
-    
-    >
+    Total of 694 lines in 2 routines.
+
+    >_
 
 
  
@@ -404,7 +315,7 @@ SAMICTUL
 4. Package-retrieval instructions
  
  Your VAPALS-ELCAP environment is now ready to install VAPALS-ELCAP
- 18.12 (SAMI*18.0*12 SEQ #12), so next retrieve the package.
+ 18.13 (SAMI*18.0*13 SEQ #13), so next retrieve the package.
  
  
  4.1. Download and prepare the archive file
@@ -754,31 +665,11 @@ do INIT2GPH^SAMICTD2
 
  The checksums below are Vista Type B checksums (do CHECK1^XTSUMBLD).
  
- Name       Checksum before  Checksum after   Patch list
- SAMICAS2   B381201104       B445469337       **1,5,9,12**
- SAMICAS3   B482086967       B499773480       **3,9,11,12**
- SAMICASE   B4139384         B2465434         **1,12**
- SAMICLOG   B21900956        B37372659        **12**
- SAMICTD2   B132395058       B193976177       **12**
- SAMICTUL   B104985          B100661          **10,11,12**
- SAMICUL    B138062          B134436          **9,11,12**
- SAMIHOM3   B133868845       B168340275       **5,12**
- SAMIHOM4   B748595747       B899951012       **1,4,5,6,9,12**
- SAMIHUL    B95115           B111466          **9,12**
- SAMIJS1    B2451            B33789646        **8,12**
- SAMIJS2    0                B50752409        **12**
- SAMINOT1   B444173065       B476861921       **2,6,8,10,11,12**
- SAMINOT2   B463867017       B473975400       **1,9,12**
- SAMINUL    B102256          B97012           **9,10,11,12**
- SAMIORM    B179292122       B175893845       **11,12**
- SAMIOUL    0                B92656           **12**
- SAMIPARM   0                B7340153         **12**
- SAMIPAT    0                B761477          **12**
- SAMISITE   B64280616        B91053774        **5,12**
- SAMITTW    0                B5449588         **12**
- SAMIUR     B536135066       B520612339       **5,10,11,12**
- SAMIUR2    B1106323315      B1265246653      **5,11,12**
- SAMIURUL   0                B98717           **12** 
+ Name      Checksum before  Checksum after  Patch list   
+ --------  ---------------  --------------  -------------
+ SAMICTT3  B222224982       B222214559      *4,10,13*    
+ SAMICTUL  B100661          B101132         *10,11,12,13*
+ 
  
  
 8. Authors

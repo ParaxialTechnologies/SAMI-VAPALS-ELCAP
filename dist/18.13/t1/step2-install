@@ -1,0 +1,24 @@
+#!/bin/sh
+
+ENV="/bin/env"
+
+CP="$ENV cp"
+GIT="$ENV git"
+MKDIR="$ENV mkdir"
+RM="$ENV rm"
+
+REPO="$HOME/lib/silver/a-sami-vapals-elcap--vo-osehra-github"
+INDIR="$HOME/run/in/sami/18.13/t1
+
+if [ -d "$REPO/.git" ]; then
+   echo "Found a Git repository; pulling updates."
+   cd $REPO
+   $GIT pull
+   echo "Done."
+else
+   printf "Updating files ..."
+   $RM -rf $REPO/docs/form-fields $REPO/docs/www
+   $CP -r $INDIR/{form-fields,www} $REPO/docs
+   echo "done."
+fi
+

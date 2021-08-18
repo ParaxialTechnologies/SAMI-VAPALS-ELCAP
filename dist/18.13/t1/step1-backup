@@ -1,0 +1,17 @@
+#!/bin/sh
+
+ENV="/bin/env"
+
+CP="$ENV cp"
+MKDIR="$ENV mkdir"
+RM="$ENV rm"
+
+REPO="$HOME/lib/silver/a-sami-vapals-elcap--vo-osehra-github"
+INDIR="$HOME/run/in/sami/18.13/t1
+
+cd $INDIR
+$MKDIR ./back
+printf "Backing up files ... "
+$CP -r $REPO/docs/{form-fields,www} ./back/
+echo "done."
+

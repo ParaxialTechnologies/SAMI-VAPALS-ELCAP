@@ -1,17 +1,15 @@
-
-
 $TXT by MARSHALL,RICK DS@vapalsyotta.fiscientific.org (KIDS) 2021-08-18T21:21Z
- 
+
                              CT Report Fix
                       SAMI (VAPALS-ELCAP) 18.13-t1
                         (SAMI*18.0*13 SEQ #13 T1)
-                           
+
            George P. Lilly, Dom DiNatale, Larry G. Carlson,
                       & Frederick D. S. Marshall
                               2021-08-18
- 
+
 i. Front matter
- 
+
  App         SAMI (VAPALS-ELCAP)
  Version     18.13
  Vista ID    SAMI*18.0*13 SEQ #13 T1
@@ -30,147 +28,132 @@ i. Front matter
              SAMI 18.10 (SAMI*18.0*10 SEQ #10)
              SAMI 18.11 (SAMI*18.0*11 SEQ #11)
              SAMI 18.12 (SAMI*18.0*12 SEQ #12)
- 
- 
+
+
 ii. Contents
- 
+
  Front matter
   o Contents
  Description
  Package elements
- Backup instructions
+ Prepare for installation
   o Assume the identity of your osehra Unix user
-  o Prepare install and backup directories
-    - Create install and backup directories
-    - Download the archive file
-    - Unzip the file
-    - Backup files
-  o IMPORTANT NOTE for VA VAPALS-ELCAP sites
+  o Prepare install directory
+  o Download and prepare the archive file
+  o Back up files
+    - IMPORTANT NOTE for VA VAPALS-ELCAP sites
   o Install web-application files
-  o Enter M
-    - On Caché
-    - On YottaDB/GT.M
-  o Sign into Vista
-  o Back up routines
-    - List of routines
-    - On Caché
-    - On YottaDB/GT.M
- Main install instructions
-  o Enter Vista menu system
-  o Select the KIDS Installation menu
-  o Load KIDS package
-  o Install KIDS package
-  o Exit M
-  o Install the form-fields and www files
-    - For Non-VA VAPALS-ELCAP systems
-  o Activate the form-fields and www files and exit M
-    - Enter M & Vista
+  o Back up M routines
+    - Enter M
     - Sign into Vista
-    - Rebuild M-Web's cached form-fields and www files
+    - List of routines
+    - Run the backup
+ Main install instructions
+  o Installing the KIDS package
+    - Enter the KIDS installation menu
+    - Load KIDS package
+    - Install KIDS package
+  o Activating web-application files
+    - Refresh web-application cache
     - Exit M
  Optional backout instructions
  Routines
  Authors
- 
- 
- 
+
+
+
 1. Description
- 
+
  SAMI 18.13-t1 adds 1 update, correcting an error in translating
  CAC scores from the CT Evaluation form to the CT Evaluation
  report.
- 
+
  The definitive source for the VAPALS-ELCAP application - codebase,
  package distributions (including this one), and documentation - is
  at the following public Github repository:
- 
+
  https://github.com/VA-PALS-ELCAP/SAMI-VAPALS-ELCAP/
- 
+
  These instructions are for your Vista environment’s sysadmin. As
  usual, please capture the complete dialog of your install and send it
  to your VAPALS-ELCAP support team.
- 
+
  The 1 critical bug fixed is:
- 
- 1.1. Module: CT Report
- 
-      issues: 21-142, 21-143 The CAC score is sometimes different 
-      between the CT Eval form and the report. Circumflex value is 
-      always none in report, but CAC score is correct on first view. 
-      First view seems to reset the circumflex to none, causing 
+
+ 1.1. CT Report: Correcting CAC score field
+
+      issues 21-142, 21-143: The CAC score is sometimes different
+      between the CT Eval form and the report. Circumflex value is
+      always none in report, but CAC score is correct on first view.
+      First view seems to reset the circumflex to none, causing
       subsequent views to be incorrect.
- 
+
       solution: Found typo of field name in routine and corrected.
-      
+
       reported: 2021-8-11 by Murphy.
- 
- 
- 
- 
+
+
+
+
 2. Package elements
- 
- File	                	Change
- ----                   	------
- sami-18.13-t1-recipe.txt  new
- sami-18.13-t1.txt         	new
- sami-18.13-t1.kid         	new
- www/*                  	modified
- step1-backup				new
- step1a-vasites				new
- step2-install				new
- sami-18.13-t1.zip         	new
- 
+
+ File                           Change
+ ----                           ------
+ sami-18.13-t1-recipe.txt       new
+ sami-18.13-t1.txt              new
+ sami-18.13-t1.kid              new
+ www/*                          modified
+ step1-backup                   new
+ step1a-vasites                 new
+ step2-install                  new
+ sami-18.13-t1.zip              new
+
  Routine    Change
  -------    ------
  SAMICTT3   modified
- SAMICTUL	modified
- 
- 
- Fileman File                       Change
- ------------                       ------
- 
- 
- 
-3. Backup instructions
- 
- It is important when installing packages to back up the existing
- package elements that are about to be changed, so that if anything
- goes wrong with the install, these package elements can be restored.
- For this package, we will back up M routines, form-fields files, and
- www files.
- 
- 
+ SAMICTUL   modified
+
+
+3. Prepare for installation
+
+ This involves creating a directory to work in, running a script to
+ back up certain datafiles and web-application files, and then going
+ through steps to back up M routines that will be replaced by the
+ patch.
+
+
  3.1. Assume the identity of your osehra Unix user
- 
+
    This step assumes you type a dzdo or sudo to do this; here the
    symbol $DEMAND will stand for whichever command you use. If your
    configuration is different, please adjust this step to match your
    configuration:
- 
+
     $ $DEMAND su - osehra
     $
- 
- 
- 3.2. Prepare install and backup directories
-   
-   3.2.1. Create install and backup directories
- 
-  Execute the following commands (`$` simply means your command-line
-  prompt). They create a shell variable, and then creates the directory or, 
-  if it already exists, removes previous installation files before proceeding.
 
-  $ INDIR=~/run/in/sami/18.13/t1
-  $ mkdir -p $INDIR || rm -rf $INDIR/sami-*.{kid,txt} $INDIR/{form-fields,www}
-  $ cd $INDIR
 
-   3.2.2. Download the archive file
+ 3.2. Prepare install directory
 
-  You may safely download the archive file sami-18.13-t1.zip 
-  in advance of the actual install. In the following text, [now] represents a 
-  time stamp representing your current time, [bits/sec] is a data rate and
-  [time]is how long the file took to transfer (both of which vary based on the 
-  user's network conditions).
- 
+   Execute the following commands (`$` simply means your command-line
+   prompt). They create a shell variable, and then creates the
+   directory or, if it already exists, removes previous installation
+   files before proceeding.
+
+    $ INDIR=~/run/in/sami/18.13/t1
+    $ mkdir -p $INDIR \
+       || rm -rf $INDIR/sami-*.{kid,txt} $INDIR/{form-fields,www}
+    $ cd $INDIR
+
+ 3.3. Download and prepare the archive file
+
+   You may safely download the archive file sami-18.13-t1.zip in
+   advance of the actual install. In the following text, "[now]"
+   represents a time stamp representing your current time, and
+   "[bits/sec]" is a data rate and "[time]" is how long the file took
+   to transfer (both of which vary based on the user's network
+   conditions).
+
     $ wget 'http://vistaexpertise.net/newsite/project/vapals-elcap/sami-18.13-t1.zip'
     --[now]--  http://vistaexpertise.net/newsite/project/vapals-elcap/sami-18.13-t1.zip
     Resolving vistaexpertise.net (vistaexpertise.net)... 208.113.153.6
@@ -182,390 +165,369 @@ ii. Contents
     100%[================================>]   2.47M  [bits/sec]  in [time]
 
     [now] ([bits/sec]) - ‘sami-18.13-t1.zip’ saved [2588741/2588741]
-    
-    3.2.3 Unzip the archive file
-    
+
+   Then unzip the archive file with the following command.
+
     $ unzip sami-18.13-t1.zip
     Archive:  sami-18.13-t1.zip
       [... 539 files in archive, about 9.0 Mb ...]
     $ _
-    
-    3.2.4 Backup files
- 
-    Several files will be overwritten by this install. This step backs those up as
-    a safety measure to your working directory.
-    
+
+ 3.4. Back up files
+
+   Several files will be overwritten by this install. This step backs
+   those up as a safety measure to your working directory.
+
     $ ./step1-backup
     Backing up files ... done.
     $ _
 
 
-  3.3 IMPORTANT NOTE for VA VAPALS-ELCAP sites
+  3.4.1. IMPORTANT NOTE for VA VAPALS-ELCAP sites
 
- Installations within the VA firewall may not access the VAPALS-ELCAP Git
- repository; they maintain a static copy which is occasionally updated. However,
- this patch and future patches need a way to distinguish between active Git
- repositories and static copies. The easiest way to do this is to remove the
- `.git` directory from the base of the copy; for static copies, it just takes up
- room. However, if you really want to keep it around, the directory can be
- renamed.
+    Installations within the VA firewall may not access the
+    VAPALS-ELCAP Git repository; they maintain a static copy which is
+    occasionally updated. VAPALS-ELCAP scripts, however, have no
+    reliable way of telling the difference, but need to in order to
+    update files properly.
 
- If you are on such a site, please run the following script now, and answer the
- questions appropriately for your installation.
+    If you are certain you are on such a site, please run the
+    following script now. It marks your Git repository as 'isolated'
+    by putting an additional file within it; scripts will use this to
+    operate properly for your installation.
 
- $ ./step1a-vasites
- This will isolate your static copy of the VAPALS-ELCAP Git repository.
- Are you sure [yes/no/rename] ? y
- Removing .git directory from static copy ... done.
- $ _
+     $ ./step1a-vasites
+     If you are within the VA firewall, you cannot update your Git
+     repository automatically. The software update scripts provided
+     with VAPALS-ELCAP patches have no reliable way to determine this,
+     but this script will place an additional file in the repository
+     marking it as 'isolated' so that the installation script below
+     will perform the correct actions.
+     Are you sure you want to do this [yes/no] ? y
+     Marking as 'isolated' ... done.
+     $ _
 
- If you decide to rename the directory instead, this is what that would look
- like:
+    Note that if this isn't done, the following step (and future
+    patches) will not work properly.
 
- $ ./step1a-vasites
- This will isolate your static copy of the VAPALS-ELCAP Git repository.
- Are you sure [yes/no/rename] ? r
- Renaming .git directory to .gitstatic ... done.
- $ _
 
- Note that if this isn't done, the next step may not work properly.
- 
- 
 
- 3.4 Install web-application files
+ 3.5 Install web-application files
 
- At this point in the install process, the VAPALS-ELCAP routines have been
- updated, but the corresponding web-application files have not; these must first
- be installed. On VA VAPALS-ELCAP systems, the output will look like this:
+    At this point in the install process, the VAPALS-ELCAP routines
+    have been updated, but the corresponding web-application files
+    have not; these must first be installed. On VA VAPALS-ELCAP
+    systems, the output will look like this:
 
- $ ./step2-install
- Updating files ... done.
- $ _
+     $ ./step2-install
+     Updating files ... done.
+     $ _
 
- Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date clones of the
- official GitHub repository, and this script will have different output.
+    Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date
+    clones of the official GitHub repository, and this script will
+    have different output.
 
- $ ./step2-install
- Found a Git repository; pulling updates.
- remote: Enumerating objects: [...], done.
- remote: Counting objects: 100% ([.../...]), done.
- remote: Compressing objects: 100% ([.../...]), done.
- [... varies ...]
- Done.
- $ _
+     $ ./step2-install
+     Found a Git repository; pulling updates.
+     [... output varies ...]
+     Done.
+     $ _
 
- 
- 
- 3.5. Enter M
-    
+
+
+ 3.6. Back up M routines
+
+   Before the installation, we also need to back up existing
+   VAPALS-ELCAP routines that will be overwritten by this install. To
+   do this, you will have to start a Caché or YottaDB session
+   (depending on your particular installation), sign in to Vista, and
+   then call the direct-mode interface ^%RO (“routine out”).
+
+   We have made efforts to display accurate instructions, but there
+   are likely to be minor differences between implementations. Be sure
+   to follow the correct dialog for your implementation.
+
+  3.6.1. Enter M
+
     At the unix prompt, enter the M environment in direct mode, using
-    the csession command on Cache or the mumps command on
+    the 'csession' command on Cache or the 'mumps' command on
     YottaDB/GT.M:
- 
+
     On Cache:
     ---------
     $ csession vapals
-    
+
     Node: vapalscache, Instance: VAPALS
-    
+
     >
- 
- 
+
+
     On YottaDB/GT.M:
     ----------------
     $ mumps -dir
-    
+
     >
- 
- 
- 3.6. Sign into Vista
-    
+
+
+  3.6.2. Sign into Vista
+
     At the M prompt, call Vista's direct-mode interface, enter your
     access code, and then just press return at the OPTION NAME prompt
     to return to direct mode. This sets up your authentication
     variables. Here's a sample capture of this step:
- 
+
     > do ^XUP
-    
+
     Setting up programmer environment
     This is a TEST account.
-    
+
     Access Code: *******
     Terminal Type set to: C-VT100
-    
+
     Select OPTION NAME:
     >
- 
- 
- 3.7. Back up routines
-    
-    Back up existing VAPALS-ELCAP routines that will be overwritten
-    by this install. Do this by calling direct-mode interface ^%RO
-    (routine out), selecting the list of routines to save, selecting
-    sami-18.12.ro to save to, and answering any other additional
-    prompts.
-    
-    The prompts vary between M implementations, so be sure to follow
-    the correct dialog for your imp. The routine names to save are
-    listed below under each imp; copy the list and paste it at the
-    Routine prompt. At the final Routine prompt, press return to
-    indicate the list of routines is done.
- 
- 
-    3.7.1. List of routines
+
+
+  3.6.3. List of routines
+
+    The routine names to save are listed below; you may copy the list
+    and paste it at the appropriate Routine prompt. At the final
+    Routine prompt, press return to indicate the list of routines is
+    done.
+
 SAMICTT3
 SAMICTUL
 
- 
- 
-    3.7.2. On Cache
-    
+  3.6.4. Run the backup
+
+    Creating the routine backup file differs by implementation.
+
+    On Caché
+    --------
     Note that routines that don't currently exist will result in a
-    warning message (specifically, the routine name will have `[???]`
+    warning message (specifically, the routine name will have '[???]'
     after it, and the line [does not exist] after it). These messages
     can be safely disregarded.
-    
+
     In addition to naming the routines and routine-out file, we also
     provide a Description and press return at the Parameters and
     Printer Format prompts to accept the defaults of WNS and No,
     respectively:
-    
-    >do ^%RO
 
-    Routine output (please use %ROMF for object code output)
-    Routines(s): SAMICTT3
-    Routines(s): SAMICTUL
-    Routines(s): 
+     >do ^%RO
 
-    Description: SAMI 18.13 T1 routine backup
+     Routine output (please use %ROMF for object code output)
+     Routines(s): SAMICTT3
+     Routines(s): SAMICTUL
+     Routines(s):
 
-    Output routines to
-    Device: /home/osehra/run/in/sami/18.13/t1/back/sami-18.13-t1-back.ro
-    Parameters? ("WNS") =>
-    Printer Format? No => No
-    SAMICTT3.INT    SAMICTUL.INT
-    >_
- 
- 
- 
-    3.7.3. On YottaDB/GT.M
-    
+     Description: SAMI 18.13 T1 routine backup
+
+     Output routines to
+     Device: /home/osehra/run/in/sami/18.13/t1/back/sami-18.13-t1-back.ro
+     Parameters? ("WNS") =>
+     Printer Format? No => No
+     SAMICTT3.INT    SAMICTUL.INT
+     >_
+
+    On YottaDB/GT.M
+    ---------------
     Note that routines that don't currently exist will result in the
     routine name not appearing under the input line, and won't count
     towards the number of routines. These can be safely disregarded.
-    
+
     In addition to naming the routines and routine-out file, we also
     provide a Header Label and press return at the Strip comments
     prompt to accept the default of No:
-    
-    YottaDB:
 
-    >do ^%RO
+     >do ^%RO
 
-    Routine Output - Save selected routines into RO file.
+     Routine Output - Save selected routines into RO file.
 
-    Routines: SAMICTT3
-    SAMICTT3
-    Current total of 1 routines.
-    
-    Routines: SAMICTUL
-    SAMICTUL
-    Current total of 2 routines.
-    
-    Routine: 
+     Routines: SAMICTT3
+     SAMICTT3
+     Current total of 1 routines.
 
-    Output device <terminal>: /home/osehra/run/in/sami/18.13/t1/back/sami-18.13-t1-back.ro
+     Routines: SAMICTUL
+     SAMICTUL
+     Current total of 2 routines.
 
-    Header Label: SAMI 18.13 T1 routine backup
-    Strip comments <No>?:
-    SAMICTT3  SAMICTUL
-    
-    Total of 694 lines in 2 routines.
+     Routine:
 
-    >_
- 
- 
- 
+     Output device <terminal>: /home/osehra/run/in/sami/18.13/t1/back/sami-18.13-t1-back.ro
+
+     Header Label: SAMI 18.13 T1 routine backup
+     Strip comments <No>?:
+     SAMICTT3  SAMICTUL
+
+     Total of 694 lines in 2 routines.
+
+     >_
+
+    You'll remain in the M environment for the next section.
+
+
 4. Main install instructions
- 
- Step 5 consists of entering the Vista menu system, loading and
- installing the KIDS package, exiting M, and installing and activating
- the new form-fields and www files.
- 
- 
- 4.1. Enter Vista menu system
-   
- At the M prompt, call Vista's direct-mode interface and enter your access code.
- This sets up your authentication variables. Here's a sample capture of this step:
 
- >do ^XUP
-
- Setting up programmer environment
- This is a TEST account.
-
- Access Code: *******
- Terminal Type set to: C-VT100
-
- Select OPTION NAME:
+ This consists of loading and installing the KIDS package, and
+ activating the new web-application files.
 
 
- 4.2 Enter KIDS Installation Menu
-    
-  Select OPTION NAME: XPD MAIN       Kernel Installation & Distribution System
- 
- 
+ 4.1. Installing the KIDS package
+
+   This installs the various M assets required by the application.
+
+  4.1.1. Enter the KIDS Installation menu
+
+    At the OPTION NAME prompt select XPD MAIN to enter the Kernel
+    Installation & Distribution System main menu, and at the Select
+    ... Option prompt select Installation:
+
+     >do ^XUP
+
+     Select OPTION NAME: XPD MAIN      Kernel Installation & Distribution System
+
+
           Edits and Distribution ...
           Utilities ...
           Installation ...
           Patch Monitor Main Menu ...
 
-  Select Kernel Installation & Distribution System <TEST ACCOUNT> Option: Installation
-    
-    
-       1      Load a Distribution
-       2      Verify Checksums in Transport Global
-       3      Print Transport Global
-       4      Compare Transport Global to Current System
-       5      Backup a Transport Global
-       6      Install Package(s)
-              Restart Install of Package(s)
-              Unload a Distribution
-       
-  Select Installation <TEST ACCOUNT> Option:
- 
- 
- 
- 4.3. Load KIDS package
- 
+     Select Kernel Installation & Distribution System <TEST ACCOUNT> Option: Installation
+
+
+        1      Load a Distribution
+        2      Verify Checksums in Transport Global
+        3      Print Transport Global
+        4      Compare Transport Global to Current System
+        5      Backup a Transport Global
+        6      Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution
+
+     Select Installation <TEST ACCOUNT> Option:
+
+  4.1.2. Load KIDS package
+
     Select option 1 and press return at the Continue prompt.
- 
-    Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
-    Enter a Host File: /home/osehra/run/in/sami/18.13/t1/sami-18.13-t1.kid
-    
-       KIDS Distribution saved on Aug 18, 2021@110:54:06
-       Comment: Released SAMI*18.0*13 SEQ #13 T1 (18.13)
-    
-    This Distribution contains Transport Globals for the following Package(s):
-       SAMI*18.0*13
-    Distribution OK!
-    
-    Want to Continue with Load? YES// 
-       Loading Distribution...
-    
-       SAMI*18.0*13
-    Use INSTALL NAME: SAMI*18.0*13 to install this Distribution.
-    
-    
-       1      Load a Distribution
-       2      Verify Checksums in Transport Global
-       3      Print Transport Global
-       4      Compare Transport Global to Current System
-       5      Backup a Transport Global
-       6      Install Package(s)
-              Restart Install of Package(s)
-              Unload a Distribution
-       
-    Select Installation <TEST ACCOUNT> Option:
- 
- 
- 
- 4.4. Install KIDS package
- 
-    Select option 6, enter the space bar at the INSTALL NAME prompt,
-    and press return at the next three prompts. Note that `[now]`
-    denotes the current time when you're doing the install.
- 
-    Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
-    Select INSTALL NAME:    SAMI*18.0*13     Loaded from Distribution    [now]
-       => Released SAMI*18.0*13 SEQ #13 (18.13)  ;Created on Aug 18, 2021@15:34:06
-       
-    This Distribution was loaded on [now] with header of 
-       Released SAMI*18.0*13 SEQ #13 (18.13)  ;Created on Aug 18, 2021@15:34:06
-       It consisted of the following Install(s):
+
+     Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
+     Enter a Host File: /home/osehra/run/in/sami/18.13/t1/sami-18.13-t1.kid
+
+        KIDS Distribution saved on Aug 18, 2021@110:54:06
+        Comment: Released SAMI*18.0*13 SEQ #13 T1 (18.13)
+
+     This Distribution contains Transport Globals for the following Package(s):
         SAMI*18.0*13
-    Checking Install for Package SAMI*18.0*13
-       
-    Install Questions for SAMI*18.0*13
-    
-    Incoming Files:
-    
-    
-       311.12    SAMI SITE
-    Note:  You already have the 'SAMI SITE' File.
-    
-    
-       311.14    SAMI PARAMETER DEFAULTS  (including data)
-    
-    
-    Want KIDS to INHIBIT LOGONs during the install? NO// 
-    Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
-    
-    Enter the Device you want to print the Install messages.
-    You can queue the install by enter a 'Q' at the device prompt.
-    Enter a '^' to abort the install.
-    
-    DEVICE: HOME//   
-     
-     Install Started for SAMI*18.0*13:
-                   [now]
-     
-    Build Distribution Date: Aug 18, 2021
-     
-     Installing Routines:
-                   [now]
-     
-     Installing Data Dictionaries: ...
-                   [now]
-     
-     Installing Data:
-                   [now]
-     
-     Running Post-Install Routine: POS1812^SAMIPAT.
-     
-     Updating Routine file...
-     
-     Updating KIDS files...
-     
-     SAMI*18.0*13 Installed.
-                   [now]
-        
-     NO Install Message sent
-       
-    Install Completed
+     Distribution OK!
+
+     Want to Continue with Load? YES//
+        Loading Distribution...
+
+        SAMI*18.0*13
+     Use INSTALL NAME: SAMI*18.0*13 to install this Distribution.
 
 
-       1      Load a Distribution
-       2      Verify Checksums in Transport Global
-       3      Print Transport Global
-       4      Compare Transport Global to Current System
-       5      Backup a Transport Global
-       6      Install Package(s)
-              Restart Install of Package(s)
-              Unload a Distribution
-       
-    Select Installation <TEST ACCOUNT> Option: 
- 
- 
- 
- 
- 
- 4.6. Activate the form-fields and www files and exit M
- 
- The VAPALS-ELCAP routines, form-fields files, and www files have been
- updated at this point, but the routines are using cached copies of
- the files; this step refreshes those copies.
-   
-    To improve performance, M-Web maintains cached copies of the
-    form-fields files, which are the data dictionaries for the fields
-    on all the VAPALS-ELCAP forms. It also maintains cached copies of
+        1      Load a Distribution
+        2      Verify Checksums in Transport Global
+        3      Print Transport Global
+        4      Compare Transport Global to Current System
+        5      Backup a Transport Global
+        6      Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution
+
+     Select Installation <TEST ACCOUNT> Option:
+
+
+  4.1.3. Install KIDS package
+
+    Select option 6, enter the space bar at the INSTALL NAME prompt,
+    and press return at the next three prompts. Note that '[now]'
+    denotes the current time when you're doing the install.
+
+     Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+     Select INSTALL NAME:    SAMI*18.0*13     Loaded from Distribution    [now]
+        => Released SAMI*18.0*13 SEQ #13 (18.13)  ;Created on Aug 18, 2021@15:34:06
+
+     This Distribution was loaded on [now] with header of
+        Released SAMI*18.0*13 SEQ #13 (18.13)  ;Created on Aug 18, 2021@15:34:06
+        It consisted of the following Install(s):
+         SAMI*18.0*13
+     Checking Install for Package SAMI*18.0*13
+
+     Install Questions for SAMI*18.0*13
+
+     Incoming Files:
+
+
+     Want KIDS to INHIBIT LOGONs during the install? NO//
+     Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+
+     Enter the Device you want to print the Install messages.
+     You can queue the install by enter a 'Q' at the device prompt.
+     Enter a '^' to abort the install.
+
+     DEVICE: HOME//
+
+      Install Started for SAMI*18.0*13:
+                    [now]
+
+     Build Distribution Date: Aug 18, 2021
+
+      Installing Routines:
+                    [now]
+
+      Installing Data Dictionaries: ...
+                    [now]
+
+      Installing Data:
+                    [now]
+
+      Running Post-Install Routine: POS1812^SAMIPAT.
+
+      Updating Routine file...
+
+      Updating KIDS files...
+
+      SAMI*18.0*13 Installed.
+                    [now]
+
+      NO Install Message sent
+
+     Install Completed
+
+
+        1      Load a Distribution
+        2      Verify Checksums in Transport Global
+        3      Print Transport Global
+        4      Compare Transport Global to Current System
+        5      Backup a Transport Global
+        6      Install Package(s)
+               Restart Install of Package(s)
+               Unload a Distribution
+
+     Select Installation <TEST ACCOUNT> Option:
+
+
+ 4.2. Activating web-application files
+
+   Both the VAPALS-ELCAP routines and web-application files have been
+   updated at this point, but the routines are using cached copies of
+   the web-application files; this step refreshes those copies.
+
+  4.2.1. Refresh web-application cache
+
+    To improve performance, M-Web maintains cached copies of the data
+    dictionaries for the fields on all the VAPALS-ELCAP forms, and of
     the HTML templates used by its services. Every time we update
-    those data-dictionary or HTML files in Unix, we must also direct
-    M-Web to update its cached copies of the data dictionaries and
-    clear its cached copies of the HTML files.
-    
-    Just copy and paste the following list of commands into the
-    direct-mode prompt:
-    
+    those files in Unix, we must also direct M-Web to update its
+    cache.
+
+    To do so, exit the Installation menu by hitting carriage return
+    (possibly more than once) to get to a direct-mode prompt, and then
+    copy and paste the following list of commands into that prompt:
+
 set SAMIDIR="/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/"
 do PRSTSV^SAMIFF(SAMIDIR,"background.tsv","form fields - background")
 do PRSTSV^SAMIFF(SAMIDIR,"biopsy.tsv","form fields - biopsy")
@@ -577,77 +539,85 @@ do PRSTSV^SAMIFF(SAMIDIR,"pet-evaluation.tsv","form fields - pet evaluation")
 do PRSTSV^SAMIFF(SAMIDIR,"register.tsv","form fields - register")
 do CLRWEB^SAMIADMN
 do INIT2GPH^SAMICTD2
-    
-    The output is shown below:
-    
-    > set SAMIDIR="/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/"
 
-    > do PRSTSV^SAMIFF(SAMIDIR,"background.tsv","form fields - background")
+    The output is shown below (where "[job]" is a job number displayed
+    by the PRSTSV routine):
 
-    > do PRSTSV^SAMIFF(SAMIDIR,"biopsy.tsv","form fields - biopsy")
+     Select Installation <TEST ACCOUNT> Option:
 
-    > do PRSTSV^SAMIFF(SAMIDIR,"ct-evaluation.tsv","form fields - ct evaluation")
+     > set SAMIDIR="/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/"
 
-    > do PRSTSV^SAMIFF(SAMIDIR,"follow-up.tsv","form fields - follow up")
+     > do PRSTSV^SAMIFF(SAMIDIR,"background.tsv","form fields - background")
+     [job]
+     > do PRSTSV^SAMIFF(SAMIDIR,"biopsy.tsv","form fields - biopsy")
+     [job]
+     > do PRSTSV^SAMIFF(SAMIDIR,"ct-evaluation.tsv","form fields - ct evaluation")
+     [job]
+     > do PRSTSV^SAMIFF(SAMIDIR,"follow-up.tsv","form fields - follow up")
+     [job]
+     > do PRSTSV^SAMIFF(SAMIDIR,"intake.tsv","form fields - intake")
+     [job]
+     > do PRSTSV^SAMIFF(SAMIDIR,"intervention.tsv","form fields - intervention")
+     [job]
+     > do PRSTSV^SAMIFF(SAMIDIR,"pet-evaluation.tsv","form fields - pet evaluation")
+     [job]
+     > do PRSTSV^SAMIFF(SAMIDIR,"register.tsv","form fields - register")
+     [job]
+     > do CLRWEB^SAMIADMN
 
-    > do PRSTSV^SAMIFF(SAMIDIR,"intake.tsv","form fields - intake")
+     > do INIT2GPH^SAMICTD2
 
-    > do PRSTSV^SAMIFF(SAMIDIR,"intervention.tsv","form fields - intervention")
+     >_
 
-    > do PRSTSV^SAMIFF(SAMIDIR,"pet-evaluation.tsv","form fields - pet evaluation")
 
-    > do PRSTSV^SAMIFF(SAMIDIR,"register.tsv","form fields - register")
+  4.2.2. Exit M
 
-    > do CLRWEB^SAMIADMN
-    
-    > do INIT2GPH^SAMICTD2
+    Run the following command to exit the M environment:
 
-    >
-    
- 
- 
- You now have VAPALS-ELCAP 18.13-t1 (SAMI*18.0*13 SEQ #13 T1) installed in
- your M environment. The install is now complete. We recommend running
- tests of your VAPALS-ELCAP app to confirm the environment is
- operational and bug-free, before notifying users that VAPALS-ELCAP is
- ready for their use.
- 
- 
- 
-6. Optional backout instructions
- 
+     > halt
+     $ _
+
+   You now have VAPALS-ELCAP 18.13-t1 (SAMI*18.0*13 SEQ #13 T1)
+   installed in your M environment. The install is now complete. We
+   recommend running tests of your VAPALS-ELCAP app to confirm the
+   environment is operational and bug-free, before notifying users
+   that VAPALS-ELCAP is ready for their use.
+
+
+5. Optional backout instructions
+
  Should errors or other problems result from installing this package
  contact the VAPALS-ELCAP development team for package-backout
  instructions.
- 
- 
- 
-7. Routines
- 
+
+
+
+6. Routines
+
  Lines 2 & 3 of each of these routines now look like:
   ;;18.0;SAMI;[Patch List];2020-01;[optional build #]
   ;;18.13
 
  The checksums below are Vista Type B checksums (do CHECK1^XTSUMBLD).
- 
- Name      Checksum before  Checksum after  Patch list   
+
+ Name      Checksum before  Checksum after  Patch list
  --------  ---------------  --------------  -------------
- SAMICTT3  B222224982       B222214559      *4,10,13*    
+ SAMICTT3  B222224982       B222214559      *4,10,13*
  SAMICTUL  B100661          B101132         *10,11,12,13*
- 
- 
- 
-8. Authors
- 
-             Dates              By         
- Developed   2021-08-16  		George P. Lilly (ven)
+
+
+
+7. Authors
+
+             Dates              By
+ Developed   2021-08-16  	George P. Lilly (ven)
                                 Domenic DiNatale (par)
                                 Larry G. Carlson (ven)
                                 Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
- 
- Tested      2021-08-16/18 		George P. Lilly (ven)
+
+ Tested      2021-08-16/18 	George P. Lilly (ven)
                                 Domenic DiNatale (par)
                                 Larry G. Carlson (ven)
                                 Claudia Henschke (va-pho)
@@ -658,10 +628,10 @@ do INIT2GPH^SAMICTD2
                                 Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
- 
+
  Released    2021-08-18         Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
- 
- 
+
+
 $END TXT

@@ -75,8 +75,9 @@
                     $fields = $fields.filter(function () {
                         const id = $(this).attr('id');
                         const idsToMatch = [
-                            'cect' + noduleId + 'st',
-                            'cect' + noduleId + 'll'
+                            'cect' + noduleId + 'll', // likely location
+                            'cect' + noduleId + 'st', // nodule status
+                            'cect' + noduleId + 'pd', // pathological diagnosis
                         ];
                         // NB: For IE support, we must use indexOf() instead of !idsToMatch.includes(...);
                         return idsToMatch.indexOf(id) === -1;

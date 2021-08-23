@@ -1,4 +1,4 @@
-SAMIUR ;ven/gpl - user reports ;2021-08-11t21:53z
+SAMIUR ;ven/gpl - user reports ;2021-08-23t17:53z
  ;;18.0;SAMI;**5,10,11,12**;2020-01;Build 4
  ;;18.12
  ;
@@ -513,7 +513,8 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . . . set zj=$order(@gr@(zj))
  . . . quit:zj=""
  . . . ;
- . . . new stat set stat=$get(@gr@(zj,"samistatus"))="incomplete"
+ . . . new stat 
+ . . . set stat=$get(@gr@(zj,"samistatus"))
  . . . if stat="" set stat="incomplete"
  . . . if stat="incomplete" do  ;
  . . . . set complete=0

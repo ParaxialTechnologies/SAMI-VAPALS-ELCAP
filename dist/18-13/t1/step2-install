@@ -1,0 +1,28 @@
+#!/bin/sh
+
+VERS="18.13/t1"
+
+ENV="/usr/bin/env"
+
+CP="$ENV cp"
+GIT="$ENV git"
+MKDIR="$ENV mkdir"
+RM="$ENV rm"
+
+REPO="$HOME/lib/silver/a-sami-vapals-elcap--vo-osehra-github"
+INDIR="$HOME/run/in/sami/$VERS"
+
+if [ -f "$REPO/ISOLATED-GIT-REPO" ]; then
+   printf "Updating files ..."
+   for I in www; do
+       $RM -rf $REPO/docs/$I
+       $CP -r $INDIR/$I $REPO/docs
+   done
+   echo "done."
+else
+   echo "Found a Git repository; pulling updates."
+   cd $REPO
+   $GIT pull
+   echo "Done."
+fi
+

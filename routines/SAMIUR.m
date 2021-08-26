@@ -465,19 +465,27 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . set efmdate=$$KEY2FM^SAMICASE(edate)
  . set edate=$$VAPALSDT^SAMICASE(efmdate)
  . ;
- . new anyform set anyform=$order(items("sort",""),-1)
- . new aform,aformdt
- . set aform=$order(items("sort",anyform,""))
- . if aform["vapals:" set aform=$p(aform,"vapals:",2)
- . set aformdt=anyform
+ . new aform,aformdt set (aform,aformdt)=""
+ . new anyform set anyform=""
+ . new proot set proot=$na(@root@("graph",sid))
+ . for  set anyform=$order(items("sort",anyform),-1) q:aform'=""  q:anyform=""  d  ;
+ . . new tempf
+ . . set tempf=$order(items("sort",anyform,""))
+ . . if tempf["fuform" q  ; don't want any followup forms
+ . . new tempk set tempk=$order(items("sort",anyform,tempf,""))
+ . . if $g(@proot@(tempk,"cefud"))="" q  ; no followup date
+ . . set cefud=$g(@proot@(tempk,"cefud"))
+ . . set fmcefud=$$KEY2FM^SAMICASE(cefud)
+ . . set aform=$p(tempf,"vapals:",2)
+ . . set aformdt=anyform
  . ;
  . if type="followup" do  ;
  . . ; new nplus30 set nplus30=$$FMADD^XLFDT($$NOW^XLFDT,31)
  . . if +fmcefud<fmstrdt quit  ; before start date
  . . if +fmcefud<(fmenddt+1) do  ; before end date
  . . . quit:ceform=""  ; no ct eval so no followup date
- . . . set SAMIPATS(efmdate,zi,"aform")=aform
- . . . set SAMIPATS(efmdate,zi,"aformdt")=aformdt
+ . . . set SAMIPATS(fmcefud,zi,"aform")=aform
+ . . . set SAMIPATS(fmcefud,zi,"aformdt")=aformdt
  . . . set SAMIPATS(fmcefud,zi,"edate")=edate
  . . . set SAMIPATS(fmcefud,zi)=""
  . . . if ceform="" set cefud="baseline"

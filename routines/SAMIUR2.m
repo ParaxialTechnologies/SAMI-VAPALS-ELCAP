@@ -120,12 +120,16 @@ RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the
  . set RPT(3,"routine")="$$SSN^SAMIUR2"
  . set RPT(4,"header")="Baseline Date"
  . set RPT(4,"routine")="$$BLINEDT^SAMIUR2"
+ . set RPT(4.5,"header")="Last Form"
+ . set RPT(4.5,"routine")="$$AFORM^SAMIUR2"
+ . set RPT(4.6,"header")="Form Date"
+ . set RPT(4.6,"routine")="$$AFORMDT^SAMIUR2"
  . set RPT(6,"header")="Recommend"
  . set RPT(6,"routine")="$$RECOM^SAMIUR2"
- . set RPT(7,"header")="When"
- . set RPT(7,"routine")="$$WHEN^SAMIUR2"
- . set RPT(5,"header")="Last Exam"
- . set RPT(5,"routine")="$$LASTEXM^SAMIUR2"
+ . ;set RPT(7,"header")="When"
+ . ;set RPT(7,"routine")="$$WHEN^SAMIUR2"
+ . ;set RPT(5,"header")="Last Exam"
+ . ;set RPT(5,"routine")="$$LASTEXM^SAMIUR2"
  . set RPT(8,"header")="Contact Information"
  . set RPT(8,"routine")="$$CONTACT^SAMIUR2"
  . quit
@@ -135,16 +139,19 @@ RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the
  . set RPT(1,"routine")="$$NAME^SAMIUR2"
  . set RPT(2,"header")=$$SSNLABEL(SITE)
  . set RPT(2,"routine")="$$SSN^SAMIUR2"
- . set RPT(3,"header")="CT Date"
- . set RPT(3,"routine")="$$STUDYDT^SAMIUR2"
- . set RPT(4,"header")="Type"
- . set RPT(4,"routine")="$$STUDYTYP^SAMIUR2"
- . set RPT(5,"header")="CT Protocol"
- . set RPT(5,"routine")="$$CTPROT^SAMIUR2"
+ . set RPT(2.5,"header")="Form"
+ . set RPT(2.5,"routine")="$$AFORM^SAMIUR2"
+ . set RPT(3,"header")="Form Date"
+ . ;set RPT(3,"routine")="$$STUDYDT^SAMIUR2"
+ . set RPT(3,"routine")="$$AFORMDT^SAMIUR2"
+ . ;set RPT(4,"header")="Type"
+ . ;set RPT(4,"routine")="$$STUDYTYP^SAMIUR2"
+ . ;set RPT(5,"header")="CT Protocol"
+ . ;set RPT(5,"routine")="$$CTPROT^SAMIUR2"
  . set RPT(6,"header")="Follow-up"
  . set RPT(6,"routine")="$$RECOM^SAMIUR2"
- . set RPT(7,"header")="When"
- . set RPT(7,"routine")="$$WHEN^SAMIUR2"
+ . ;set RPT(7,"header")="When"
+ . ;set RPT(7,"routine")="$$WHEN^SAMIUR2"
  . set RPT(8,"header")="on Date"
  . set RPT(8,"routine")="$$FUDATE^SAMIUR2"
  . quit
@@ -152,6 +159,8 @@ RPTTBL(RPT,TYPE,SITE) ; RPT is passed by reference and returns the
  if TYPE="enrollment" do  quit  ;
  . set RPT(1,"header")="Name"
  . set RPT(1,"routine")="$$NAME^SAMIUR2"
+ . set RPT(1.5,"header")="Active/Inactive"
+ . set RPT(1.5,"routine")="$$ACTIVE^SAMIUR2"
  . set RPT(2,"header")=$$SSNLABEL(SITE)
  . set RPT(2,"routine")="$$SSN^SAMIUR2"
  . set RPT(3,"header")="CT Date"
@@ -523,6 +532,23 @@ PKY(YRS,PKS) ; pack-years from years & packs/day
  ;
  ;
  ;
+ACTIVE(zdt,dfn,SAMIPATS) ; Active/Inactive column
+ ;
+ new root set root=$$setroot^%wd("vapals-patients")
+ new sid set sid=$get(@root@(dfn,"samistudyid"))
+ new siform set siform=$get(SAMIPATS(zdt,dfn,"siform"))
+ new vals set vals=$name(@root@("graph",sid,siform))
+ new active set active="inactive"
+ if $get(@vals@("sistatus"))="active" set active="active"
+ ;
+ quit active
+ ; 
+AFORM(zdt,dfn,SAMIPATS) ; Name of most recent form
+ Q $GET(SAMIPATS(zdt,dfn,"aform"))
+ ;
+AFORMDT(zdt,dfn,SAMIPATS) ; Date of most recent form
+ Q $GET(SAMIPATS(zdt,dfn,"aformdt"))
+ ;
 AGE(zdt,dfn,SAMIPATS) ; age
  ;
  ;;ppi;function;clean;silent;sac
@@ -573,6 +599,7 @@ CONTACT(zdt,dfn,SAMIPATS) ; patient street address
  new root set root=$$setroot^%wd("vapals-patients")
  new sid set sid=$get(@root@(dfn,"samistudyid"))
  new siform set siform=$get(SAMIPATS(zdt,dfn,"siform"))
+ q:siform=""
  new vals set vals=$name(@root@("graph",sid,siform))
  set contact=$get(@vals@("sinamef"))_" "_$get(@vals@("sinamel"))
  set contact=contact_"<br>"_$get(@vals@("sipsa"))
@@ -586,6 +613,9 @@ CONTACT(zdt,dfn,SAMIPATS) ; patient street address
  . set contact=contact_" <br>"_@vals@("sipc")_", "
  . quit
  set contact=contact_" "_$get(@vals@("sips"))_" "_$get(@vals@("sipz"))_"     "
+ ;
+ new phone set phone=$get(@vals@("sippn"))
+ if phone'="" set contact=contact_" <br>Phone: "_phone
  ;
  quit contact ; end of ppi $$CONTACT^SAMIUR2
  ;
@@ -693,7 +723,7 @@ IFORM(zdt,dfn,SAMIPATS) ; name(s) of incomplete forms
  . new fname
  . if zkey1["ceform" set fname="CT Evaluation" set typ="ceform"
  . if zkey1["sbform" set fname="Background" set typ="sbform"
- . if zkey1["fuform" set fname="Follow-up" set typ="fuform"
+ . if zkey1["fuform" set fname="Participant Follow-up" set typ="fuform"
  . if zkey1["bxform" set fname="Biopsy" set typ="bxform"
  . if zkey1["ptform" set fname="PET Evaluation" set typ="ptform"
  . if zkey1["itform" set fname="Intervention" set typ="itform"

@@ -363,8 +363,8 @@ PNAME(type,phrase) ; page name for report
  ;
  ; extrinsic returns the PAGE NAME for the report
  ;
- ; if type="followup" quit "Followup next 30 days -"_$get(phrase)
- if type="followup" quit "Followup "_$get(phrase)
+ ; if type="followup" quit "Participant Followup next 30 days -"_$get(phrase)
+ if type="followup" quit "Participant Followup "_$get(phrase)
  ; if type="activity" quit "Activity last 30 days -"_$get(phrase)
  if type="activity" quit "Activity "_$get(phrase)
  if type="missingct" quit "Intake but no CT Evaluation"_$get(phrase)
@@ -445,7 +445,11 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . set siform=$order(items("siform-"))
  . new status set status=$get(@root@("graph",sid,siform,"sistatus"))
  . if type="inactive",status="active" quit  ; for inactive report
- . if type'="inactive",status'="active" quit  ; for other reports
+ . ;if type'="inactive",status'="active" quit  ; for other reports
+ . new eligible set eligible=$get(@root@("graph",sid,siform,"sicechrt"))
+ . if type="enrollment",eligible'="y" quit  ; must be eligible
+ . new enrolled set enrolled=$g(@root@("graph",sid,siform,"siledt"))
+ . if type="enrollement",enrolled'="y" quit  ; must be enrolled
  . ;
  . set ceform=$order(items("ceform-a"),-1)
  . set (cefud,fmcefud,cedos,fmcedos)=""
@@ -461,12 +465,19 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . set efmdate=$$KEY2FM^SAMICASE(edate)
  . set edate=$$VAPALSDT^SAMICASE(efmdate)
  . ;
+ . new anyform set anyform=$order(items("sort",""),-1)
+ . new aform,aformdt
+ . set aform=$order(items("sort",anyform,""))
+ . if aform["vapals:" set aform=$p(aform,"vapals:",2)
+ . set aformdt=anyform
  . ;
  . if type="followup" do  ;
  . . ; new nplus30 set nplus30=$$FMADD^XLFDT($$NOW^XLFDT,31)
  . . if +fmcefud<fmstrdt quit  ; before start date
  . . if +fmcefud<(fmenddt+1) do  ; before end date
  . . . quit:ceform=""  ; no ct eval so no followup date
+ . . . set SAMIPATS(efmdate,zi,"aform")=aform
+ . . . set SAMIPATS(efmdate,zi,"aformdt")=aformdt
  . . . set SAMIPATS(fmcefud,zi,"edate")=edate
  . . . set SAMIPATS(fmcefud,zi)=""
  . . . if ceform="" set cefud="baseline"
@@ -483,11 +494,12 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . ;
  . if type="activity" do  ;
  . . ; new nminus30 set nminus30=$$FMADD^XLFDT($$NOW^XLFDT,-31)
- . . new anyform set anyform=$order(items("sort",""),-1)
  . . new fmanyform set fmanyform=$$KEY2FM^SAMICASE(anyform)
  . . if fmanyform<fmstrdt quit  ; before the start date
  . . ; if fmanyform<(fmenddt+1)!(efmdate>fmenddt) do  ; need any new form
  . . if fmanyform<(fmenddt+1)  do  ;
+ . . . set SAMIPATS(efmdate,zi,"aform")=aform
+ . . . set SAMIPATS(efmdate,zi,"aformdt")=aformdt
  . . . set SAMIPATS(efmdate,zi,"edate")=edate
  . . . set SAMIPATS(efmdate,zi)=""
  . . . if ceform="" set cefud="baseline"

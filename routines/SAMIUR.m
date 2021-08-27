@@ -1,4 +1,4 @@
-SAMIUR ;ven/gpl - user reports ;2021-08-23t17:53z
+SAMIUR ;ven/gpl - user reports ;2021-08-26t22:53z
  ;;18.0;SAMI;**5,10,11,12**;2020-01;Build 4
  ;;18.12
  ;
@@ -474,9 +474,10 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . . if tempf["fuform" q  ; don't want any followup forms
  . . new tempk set tempk=$order(items("sort",anyform,tempf,""))
  . . if $g(@proot@(tempk,"cefud"))="" q  ; no followup date
+ . . new tempt set tempt=$order(items("sort",anyform,tempf,tempk,""))
  . . set cefud=$g(@proot@(tempk,"cefud"))
  . . set fmcefud=$$KEY2FM^SAMICASE(cefud)
- . . set aform=$p(tempf,"vapals:",2)
+ . . set aform=tempt
  . . set aformdt=anyform
  . ;
  . if type="followup" do  ;

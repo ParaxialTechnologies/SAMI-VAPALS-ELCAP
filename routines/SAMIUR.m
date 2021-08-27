@@ -1,6 +1,6 @@
 SAMIUR ;ven/gpl - user reports ;2021-08-26t22:53z
- ;;18.0;SAMI;**5,10,11,12**;2020-01;Build 4
- ;;18.12
+ ;;18.0;SAMI;**5,10,11,12,13**;2020-01;Build 4
+ ;;18.13
  ;
  ; SAMIUR contains a web service & associated subroutines to produce
  ; VAPALS-ELCAP user reports.
@@ -534,7 +534,7 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . . . set zj=$order(@gr@(zj))
  . . . quit:zj=""
  . . . ;
- . . . new stat 
+ . . . new stat
  . . . set stat=$get(@gr@(zj,"samistatus"))
  . . . if stat="" set stat="incomplete"
  . . . if stat="incomplete" do  ;

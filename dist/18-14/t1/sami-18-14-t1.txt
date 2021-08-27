@@ -6,7 +6,7 @@ $TXT by MARSHALL,RICK DS@vapalsyotta.fiscientific.org (KIDS) 2021-08-27T18-09Z
 
            George P. Lilly, Dom DiNatale, Larry G. Carlson,
                       & Frederick D. S. Marshall
-                              2021-08-25
+                              2021-08-27
 
 i. Front matter
 
@@ -64,7 +64,7 @@ ii. Contents
 
 1. Description
 
- SAMI 18.14 t1 adds 4 updates, most of them changes to the user reports.
+ SAMI 18.14 t1 adds 5 updates, most of them changes to the user reports.
  The definitive source for the VAPALS-ELCAP application - codebase,
  package distributions (including this one), and documentation - is
  at the following public Github repository:
@@ -75,7 +75,7 @@ ii. Contents
  usual, please capture the complete dialog of your install and send it
  to your VAPALS-ELCAP support team.
 
- The 4 high priority changes made or bugs fixed are:
+ The 5 high priority changes made or bugs fixed are:
 
  1.1. Enrollment Report: Add inactive/active column
 
@@ -117,20 +117,28 @@ ii. Contents
       solution: Added field to Data Dictionaries
       
       reported: 2021-08-21 by Yip and Jarapatnakul
+      
+ 1.5. Report Menu: Change dropdown menu item to "Intake But No CT Evaluation"
+ 
+      issue: 21-159 Change dropdown menu item from "Missing Image & CT 
+      Evaluation" to "Intake But No CT Evaluation"
 
+      solution: Changed item.
+      
+      reported: 2021-08-23 by Henschke.
 
 2. Package elements
 
  File                           Change
  ----                           ------
- sami-18-14-t1-recipe.txt          new
- sami-18-14-t1.txt                 new
- sami-18-14-t1.kid                 new
+ sami-18-14-t1-recipe.txt       new
+ sami-18-14-t1.txt              new
+ sami-18-14-t1.kid              new
  form-fields/*      		    modified
  www/*                          modified
  step1-backup                   new
  step2-install                  new
- sami-18-14-t1.zip                 new
+ sami-18-14-t1.zip              new
 
  Routine    Change
  -------    ------
@@ -165,35 +173,35 @@ ii. Contents
    directory or, if it already exists, removes previous installation
    files before proceeding.
 
-    $ INDIR=~/run/in/sami/18.13
+    $ INDIR=~/run/in/sami/18-14/t1
     $ mkdir -p $INDIR \
        || rm -rf $INDIR/sami-*.{kid,txt} $INDIR/{form-fields,www}
     $ cd $INDIR
 
  3.3. Download and prepare the archive file
 
-   You may safely download the archive file sami-18.13.zip in advance
+   You may safely download the archive file sami-18-14-t1.zip in advance
    of the actual install. In the following text, "[now]" represents a
    time stamp representing your current time, and "[bits/sec]" is a
    data rate and "[time]" is how long the file took to transfer (both
    of which vary based on the user's network conditions).
 
-    $ wget 'http://vistaexpertise.net/newsite/project/vapals-elcap/sami-18.13.zip'
-    --[now]--  http://vistaexpertise.net/newsite/project/vapals-elcap/sami-18.13.zip
+    $ wget 'http://vistaexpertise.net/newsite/project/vapals-elcap/sami-18-14-t1.zip'
+    --[now]--  http://vistaexpertise.net/newsite/project/vapals-elcap/sami-18-14-t1.zip
     Resolving vistaexpertise.net (vistaexpertise.net)... 208.113.153.6
     Connecting to vistaexpertise.net (vistaexpertise.net)|208.113.153.6|:80... connected.
     HTTP request sent, awaiting response... 200 OK
     Length: [about 2588741] (2.5M) [application/zip]
-    Saving to: ‘sami-18.13.zip’
+    Saving to: ‘sami-18-14-t1.zip’
 
     100%[================================>]   2.47M  [bits/sec]  in [time]
 
-    [now] ([bits/sec]) - ‘sami-18.13.zip’ saved [2588741/2588741]
+    [now] ([bits/sec]) - ‘sami-18-14-t1.zip’ saved [2588741/2588741]
 
    Then unzip the archive file with the following command.
 
-    $ unzip sami-18.13.zip
-    Archive:  sami-18.13.zip
+    $ unzip sami-18-14-t1.zip
+    Archive:  sami-18-14-t1.zip
       [... 539 files in archive, about 9.0 Mb ...]
     $ _
 
@@ -205,34 +213,6 @@ ii. Contents
     $ ./step1-backup
     Backing up files ... done.
     $ _
-
-
-  3.4.1. IMPORTANT NOTE for VA VAPALS-ELCAP sites
-
-    Installations within the VA firewall may not access the
-    VAPALS-ELCAP Git repository; they maintain a static copy which is
-    occasionally updated. VAPALS-ELCAP scripts, however, have no
-    reliable way of telling the difference, but need to in order to
-    update files properly.
-
-    If you are certain you are on such a site, please run the
-    following script now. It marks your Git repository as 'isolated'
-    by putting an additional file within it; scripts will use this to
-    operate properly for your installation.
-
-     $ ./step1a-vasites
-     If you are within the VA firewall, you cannot update your Git
-     repository automatically. The software update scripts provided
-     with VAPALS-ELCAP patches have no reliable way to determine this,
-     but this script will place an additional file in the repository
-     marking it as 'isolated' so that the installation script below
-     will perform the correct actions.
-     Are you sure you want to do this [yes/no] ? y
-     Marking as 'isolated' ... done.
-     $ _
-
-    Note that if this isn't done, the following step (and future
-    patches) will not work properly.
 
 
 
@@ -319,8 +299,9 @@ ii. Contents
     Routine prompt, press return to indicate the list of routines is
     done.
 
-SAMICTT3
-SAMICTUL
+SAMIUR
+SAMIUR2
+SAMIURUL
 
   3.6.4. Run the backup
 
@@ -341,17 +322,18 @@ SAMICTUL
      >do ^%RO
 
      Routine output (please use %ROMF for object code output)
-     Routines(s): SAMICTT3
-     Routines(s): SAMICTUL
+     Routines(s): SAMIUR
+     Routines(s): SAMIUR2
+     Routines(s): SAMIURUL
      Routines(s):
 
-     Description: SAMI 18.13 routine backup
+     Description: SAMI 18*14 SEQ #14 T1 routine backup
 
      Output routines to
-     Device: /home/osehra/run/in/sami/18.13/back/sami-18.13-back.ro
+     Device: /home/osehra/run/in/sami/18-14/t1/back/sami-18-14-t1-back.ro
      Parameters? ("WNS") =>
      Printer Format? No => No
-     SAMICTT3.INT    SAMICTUL.INT
+     SAMIUR.INT    SAMIUR2.INT   SAMIURUL.INT
      >_
 
     On YottaDB/GT.M
@@ -368,23 +350,28 @@ SAMICTUL
 
      Routine Output - Save selected routines into RO file.
 
-     Routines: SAMICTT3
-     SAMICTT3
+     Routines: SAMIUR
+     SAMIUR
      Current total of 1 routines.
 
-     Routines: SAMICTUL
-     SAMICTUL
+     Routines: SAMIUR2
+     SAMIUR2
      Current total of 2 routines.
+     
+     Routines: SAMIURUL
+     SAMIURUL
+     Current total of 3 routines.
+     
 
      Routine:
 
-     Output device <terminal>: /home/osehra/run/in/sami/18.13/back/sami-18.13-back.ro
+     Output device <terminal>: /home/osehra/run/in/sami/18-14/t1/back/sami-18-14-t1-back.ro
 
-     Header Label: SAMI 18.13 routine backup
+     Header Label: SAMI 18*14 SEQ#14 T1 routine backup
      Strip comments <No>?:
-     SAMICTT3  SAMICTUL
+     SAMIUR  SAMIUR2   SAMIURUL
 
-     Total of 694 lines in 2 routines.
+     Total of 2137 lines in 3 routines.
 
      >_
 
@@ -436,20 +423,20 @@ SAMICTUL
     Select option 1 and press return at the Continue prompt.
 
      Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
-     Enter a Host File: /home/osehra/run/in/sami/18.13/sami-18.13.kid
+     Enter a Host File: /home/osehra/run/in/sami/18-14/t1/sami-18-14.kid
 
-        KIDS Distribution saved on Aug 18, 2021@110:54:06
-        Comment: Released SAMI*18.0*13 SEQ #13 (18.13)
+        KIDS Distribution saved on Aug 27, 2021@110:54:06
+        Comment: Released SAMI*18.0*14 SEQ #14 T1 (18-14-t1)
 
      This Distribution contains Transport Globals for the following Package(s):
-        SAMI*18.0*13
+        SAMI*18.0*14
      Distribution OK!
 
      Want to Continue with Load? YES//
         Loading Distribution...
 
-        SAMI*18.0*13
-     Use INSTALL NAME: SAMI*18.0*13 to install this Distribution.
+        SAMI*18.0*14
+     Use INSTALL NAME: SAMI*18.0*14 to install this Distribution.
 
 
         1      Load a Distribution

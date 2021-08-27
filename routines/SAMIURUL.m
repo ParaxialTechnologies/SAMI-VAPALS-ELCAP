@@ -1,6 +1,6 @@
-SAMIURUL ;ven/gpl - user reports log ;2021-08-11T21:15Z
- ;;18.0;SAMI;**12**;2020-01;
- ;;18.12
+SAMIURUL ;ven/gpl - user reports log ;2021-08-26T18:33Z
+ ;;18.0;SAMI;**12,13**;2020-01;
+ ;;18.13
  ;
  ; SAMIURUL contains the development log & module documentation for
  ; the VAPALS-ELCAP user-reports routines SAMIUR & SAMIUR2.
@@ -21,7 +21,7 @@ SAMIURUL ;ven/gpl - user reports log ;2021-08-11T21:15Z
  ;@copyright 2021, mcglk & toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-08-11T21:15Z
+ ;@last-update 2021-08-26T18:33Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -31,6 +31,8 @@ SAMIURUL ;ven/gpl - user reports log ;2021-08-11T21:15Z
  ;
  ;@dev-add Kenneth McGlothlen (mcglk)
  ; mcglk@vistaexpertise.net
+ ;@dev-add Linda M. R. Yaw (lmry)
+ ; lmry@vistaexpertise.net
  ;
  ;@module-credits
  ;@project VA Partnership to Increase Access to Lung Screening
@@ -163,6 +165,10 @@ SAMIURUL ;ven/gpl - user reports log ;2021-08-11T21:15Z
  ;  SAMIUR,SAMIUR2 add sorting to tables used for reports
  ;  SAMIUR in WSREPORT,NUHREF,WKLIST.
  ;  SAMIUR2 in TDDT,BLINEDT,DOB,FUDATE,LASTEXM,INACTDT,LDOC,STUDYDT
+ ;
+ ; 2021-08-26 ven/gpl 18.14
+ ; SAMIUR, SAMIUR2 make changes to user reports as requested.
+ ; Reports changed were enrollment, activity, and follow-up.
  ;
  ;
  ;@contents

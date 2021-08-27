@@ -534,7 +534,7 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . . . set zj=$order(@gr@(zj))
  . . . quit:zj=""
  . . . ;
- . . . new stat 
+ . . . new stat
  . . . set stat=$get(@gr@(zj,"samistatus"))
  . . . if stat="" set stat="incomplete"
  . . . if stat="incomplete" do  ;

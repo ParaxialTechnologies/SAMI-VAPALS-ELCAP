@@ -1,4 +1,4 @@
-KIDS Distribution saved on Aug 27, 2021@14:43:37
+KIDS Distribution saved on Aug 27, 2021@15:48:59
 Test release SAMI*18.0*14 SEQ #14 T1 (18-14-t1)
 **KIDS**:SAMI*18.0*14^
 
@@ -13,7 +13,7 @@ Test Release SAMI*18.0*14 SEQ #14 T1 (18-14-t1)
 "BLD",11514,4,0)
 ^9.64PA^^
 "BLD",11514,6.3)
-1
+2
 "BLD",11514,"KRN",0)
 ^9.67PA^1.5^25
 "BLD",11514,"KRN",.4,0)
@@ -261,7 +261,7 @@ D XPZ2^XPDIQ
 "RTN","SAMIUR",1,0)
 SAMIUR ;ven/gpl - user reports ;2021-08-26t22:53z
 "RTN","SAMIUR",2,0)
- ;;18.0;SAMI;**5,10,11,12,13**;2020-01;Build 1
+ ;;18.0;SAMI;**5,10,11,12,13**;2020-01;Build 2
 "RTN","SAMIUR",3,0)
  ;;18.13
 "RTN","SAMIUR",4,0)
@@ -1651,7 +1651,7 @@ EOR ; end of SAMIUR
 "RTN","SAMIUR2",1,0)
 SAMIUR2 ;ven/gpl - user reports cont ;2021-08-26t22:53z
 "RTN","SAMIUR2",2,0)
- ;;18.0;SAMI;**5,11,12,13**;2020-01;Build 1
+ ;;18.0;SAMI;**5,11,12,13**;2020-01;Build 2
 "RTN","SAMIUR2",3,0)
  ;;18.13
 "RTN","SAMIUR2",4,0)
@@ -4185,7 +4185,7 @@ EOR ; end of routine SAMIUR2
 "RTN","SAMIURUL",1,0)
 SAMIURUL ;ven/gpl - user reports log ;2021-08-26T18:33Z
 "RTN","SAMIURUL",2,0)
- ;;18.0;SAMI;**12,13**;2020-01;Build 1
+ ;;18.0;SAMI;**12,13**;2020-01;Build 2
 "RTN","SAMIURUL",3,0)
  ;;18.13
 "RTN","SAMIURUL",4,0)
@@ -4289,7 +4289,7 @@ SAMIURUL ;ven/gpl - user reports log ;2021-08-26T18:33Z
 "RTN","SAMIURUL",53,0)
  ;
 "RTN","SAMIURUL",54,0)
- ; 2020-02-10/12 ven/gpl 18.0-t4 d543f7bb,f9869dfb,0e4d8b9a,5e67489
+ ; 2020-02-10/12 ven/gpl 18.0-t4 d543f7bb,f9869dfb,0e4d8b9a,5e67489f
 "RTN","SAMIURUL",55,0)
  ;  SAMIUR,SAMIUR2 1st version of revised user reports, progress on
 "RTN","SAMIURUL",56,0)
@@ -4311,7 +4311,7 @@ SAMIURUL ;ven/gpl - user reports log ;2021-08-26T18:33Z
 "RTN","SAMIURUL",64,0)
  ;
 "RTN","SAMIURUL",65,0)
- ; 2019-03-24/28 ven/gpl 18.0-t4 1fd4a4c,0cebb36
+ ; 2019-03-24/28 ven/gpl 18.0-t4 1fd4a4c8,0cebb36b
 "RTN","SAMIURUL",66,0)
  ;  SAMIUR2 revise incomplete form report, remove ethnicity from
 "RTN","SAMIURUL",67,0)
@@ -4325,19 +4325,19 @@ SAMIURUL ;ven/gpl - user reports log ;2021-08-26T18:33Z
 "RTN","SAMIURUL",71,0)
  ;
 "RTN","SAMIURUL",72,0)
- ; 2019-05-08 ven/lgc 18.0 2172e51
+ ; 2019-05-08 ven/lgc 18.0 2172e512
 "RTN","SAMIURUL",73,0)
  ;  SAMIUR2 remove blank last line.
 "RTN","SAMIURUL",74,0)
  ;
 "RTN","SAMIURUL",75,0)
- ; 2019-06-21 par/dom 18.0 c6a4a57 VAP-352
+ ; 2019-06-21 par/dom 18.0 c6a4a57f VAP-352
 "RTN","SAMIURUL",76,0)
  ;  SAMIUR2 proper spelling of "follow up."
 "RTN","SAMIURUL",77,0)
  ;
 "RTN","SAMIURUL",78,0)
- ; 2019-08-03/04 ven/gpl 18.0 ffc94f6,d03557d,cd865e2b VPA-438
+ ; 2019-08-03/04 ven/gpl 18.0 ffc94f65,d03557d4,cd865e2b VPA-438
 "RTN","SAMIURUL",79,0)
  ;  SAMIUR requested changes to followup report.
 "RTN","SAMIURUL",80,0)
@@ -4357,7 +4357,7 @@ SAMIURUL ;ven/gpl - user reports log ;2021-08-26T18:33Z
 "RTN","SAMIURUL",87,0)
  ;
 "RTN","SAMIURUL",88,0)
- ; 2019-10-01 par/dom 18.0 4caf1a9 VAP-344
+ ; 2019-10-01 par/dom 18.0 4caf1a98 VAP-344
 "RTN","SAMIURUL",89,0)
  ;  SAMIUR2 make capitalization consistent.
 "RTN","SAMIURUL",90,0)
@@ -4371,7 +4371,7 @@ SAMIURUL ;ven/gpl - user reports log ;2021-08-26T18:33Z
 "RTN","SAMIURUL",94,0)
  ;
 "RTN","SAMIURUL",95,0)
- ; 2020-01-10 ven/gpl 18.0 1590577
+ ; 2020-01-10 ven/gpl 18.0 1590577c
 "RTN","SAMIURUL",96,0)
  ;  SAMIUR2 fix return on RACE^SAMIUR2 for cache.
 "RTN","SAMIURUL",97,0)
@@ -4383,7 +4383,7 @@ SAMIURUL ;ven/gpl - user reports log ;2021-08-26T18:33Z
 "RTN","SAMIURUL",100,0)
  ;
 "RTN","SAMIURUL",101,0)
- ; 2020-05-13/14 ven/gpl 18.5 61c7d20,b05df41
+ ; 2020-05-13/14 ven/gpl 18.5 61c7d208,b05df417
 "RTN","SAMIURUL",102,0)
  ;  SAMIUR2 add worklist functionality, fix gender & dob detection on
 "RTN","SAMIURUL",103,0)
@@ -4391,7 +4391,7 @@ SAMIURUL ;ven/gpl - user reports log ;2021-08-26T18:33Z
 "RTN","SAMIURUL",104,0)
  ;
 "RTN","SAMIURUL",105,0)
- ; 2021-03-22/23 ven/gpl 18.10 256efe63,ba81b86a2
+ ; 2021-03-22/23 ven/gpl 18.10 256efe63,ba81b86a
 "RTN","SAMIURUL",106,0)
  ;  SAMIUR sort all reports by name, added row totals to reports.
 "RTN","SAMIURUL",107,0)
@@ -4415,19 +4415,19 @@ SAMIURUL ;ven/gpl - user reports log ;2021-08-26T18:33Z
 "RTN","SAMIURUL",116,0)
  ;
 "RTN","SAMIURUL",117,0)
- ; 2021-03-30 ven/toad 18.11 7b14bb2
+ ; 2021-03-30 ven/toad 18.11 7b14bb29
 "RTN","SAMIURUL",118,0)
  ;  SAMIUR bump version, date, log; in WSREPORT comment zwrite SRT.
 "RTN","SAMIURUL",119,0)
  ;
 "RTN","SAMIURUL",120,0)
- ; 2021-03-31 ven/gpl 18.11 66d89cd
+ ; 2021-03-31 ven/gpl 18.11 66d89cde
 "RTN","SAMIURUL",121,0)
  ;  SAMIUR sort on all uppercase names for reports
 "RTN","SAMIURUL",122,0)
  ;
 "RTN","SAMIURUL",123,0)
- ; 2021-04-13 ven/gpl 18.11 a12765b,f09ffef,fb399ab
+ ; 2021-04-13 ven/gpl 18.11 a12765bf,f09ffef9,fb399aba
 "RTN","SAMIURUL",124,0)
  ;  SAMIUR inactive report created.
 "RTN","SAMIURUL",125,0)
@@ -4519,7 +4519,7 @@ SAMIURUL ;ven/gpl - user reports log ;2021-08-26T18:33Z
 "RTN","SAMIURUL",168,0)
  ;
 "RTN","SAMIURUL",169,0)
- ; 2021-08-26 ven/gpl 18.14
+ ; 2021-08-26 ven/gpl 18.14 de044cf9
 "RTN","SAMIURUL",170,0)
  ; SAMIUR, SAMIUR2 make changes to user reports as requested.
 "RTN","SAMIURUL",171,0)

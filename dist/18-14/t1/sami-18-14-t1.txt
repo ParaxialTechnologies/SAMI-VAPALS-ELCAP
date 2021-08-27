@@ -1,4 +1,4 @@
-$TXT by MARSHALL,RICK DS@vapalsyotta.fiscientific.org (KIDS) 2021-08-18T21:21Z
+$TXT by MARSHALL,RICK DS@vapalsyotta.fiscientific.org (KIDS) 2021-08-27T18-09Z
 
                          Nashville Demo Patch
                      SAMI (VAPALS-ELCAP) 18-14-t1
@@ -64,9 +64,7 @@ ii. Contents
 
 1. Description
 
- SAMI 18.13 adds 1 update, correcting an error in translating CAC
- scores from the CT Evaluation form to the CT Evaluation report.
-
+ SAMI 18.14 t1 adds 4 updates, most of them changes to the user reports.
  The definitive source for the VAPALS-ELCAP application - codebase,
  package distributions (including this one), and documentation - is
  at the following public Github repository:
@@ -77,40 +75,68 @@ ii. Contents
  usual, please capture the complete dialog of your install and send it
  to your VAPALS-ELCAP support team.
 
- The 1 critical bug fixed is:
+ The 4 high priority changes made or bugs fixed are:
 
- 1.1. CT Report: Correcting CAC score field
+ 1.1. Enrollment Report: Add inactive/active column
 
-      issues 21-142, 21-143: The CAC score is sometimes different
-      between the CT Eval form and the report. Circumflex value is
-      always none in report, but CAC score is correct on first view.
-      First view seems to reset the circumflex to none, causing
-      subsequent views to be incorrect.
+      issue 21-155: Add inactive/active column after name on the Enrollment
+      report. "Enrolled" is defined as eligible on intake form and marked as 
+      enrolled.
 
-      solution: Found typo of field name in routine and corrected.
+      solution: Added column using definition.
 
-      reported: 2021-08-11 by Murphy.
+      reported: 2021-08-23 by Henschke.
+      
+ 1.2. Activity Report: Rearrange columns.
+ 
+      issues 21-156 (21-126): Order of columns is: Name, SSN or PID, Form, Form
+      Date, Followup, on Date. Remove When column.
+      
+      solution: Changed columns as requested.
 
+      reported: 2021-08-23 2021-07-12 by Henschke
+      
+ 1.3. Follow up Report: Rearrange columns, change title, add phone number
+  
+      issues: 21-158, 21-157, 21-120 Change followup report columns to F/U
+      Date, Name, SSN or PID, Baseline Date, Last Form, Form Date, 
+      Recommendation, Contact Info. (remove When) Change title of Followup 
+      report to Participant Follow-up, add phone number to contact info, add
+      other types of Follow up.
+      
+      solution: Made changes as requested.
+      
+      reported: 2021-08-23, 2021-07-09 by Henschke and Jarapatnakul
+      
+ 1.4. Data Dictionary: Add calculated CAC score to DD for CT Eval and 
+      Intervention forms
+      
+      issue: 21-161 Include CAC score field from CT Eval form in Data 
+      Dictionary                                                                                                                          
 
+      solution: Added field to Data Dictionaries
+      
+      reported: 2021-08-21 by Yip and Jarapatnakul
 
 
 2. Package elements
 
  File                           Change
  ----                           ------
- sami-18.13-recipe.txt          new
- sami-18.13.txt                 new
- sami-18.13.kid                 new
+ sami-18-14-t1-recipe.txt          new
+ sami-18-14-t1.txt                 new
+ sami-18-14-t1.kid                 new
+ form-fields/*      		    modified
  www/*                          modified
  step1-backup                   new
- step1a-vasites                 new
  step2-install                  new
- sami-18.13.zip                 new
+ sami-18-14-t1.zip                 new
 
  Routine    Change
  -------    ------
- SAMICTT3   modified
- SAMICTUL   modified
+ SAMIUR     modified
+ SAMIUR2    modified
+ SAMIURUL   modified
 
 
 3. Prepare for installation

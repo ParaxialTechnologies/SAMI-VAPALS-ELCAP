@@ -432,6 +432,18 @@
                             </td>
                         {% endfor %}
                     </tr>
+                    <tr>    
+                        <td style="white-space: nowrap;">
+                            <label class="control-label">Spiculated</label>
+                        </td>
+                        {% for i in noduleArray %}
+                            <td data-nodule-id="{{ i }}" style="display:none;">
+                                <div class="form-group form-group-sm">
+                                    {{ f.yesCheckbox("cect" + i|string + "sp", {"tabindex":i|string+"20"}) }}
+                                </div>
+                            </td>
+                        {% endfor %}
+                    </tr>
                     <tr>
                         <td style="white-space: nowrap;">
                             <label class="control-label">Calcifications</label>
@@ -458,18 +470,6 @@
                                     <label for="cect{{ i }}in" class="aria-hidden">Index nodule</label>
                                     <input type="checkbox" class="radiocheckbox" name="cectin" id="cect{{ i }}in"
                                            value="{{ i }}" tabindex="{{ i }}19">
-                                </div>
-                            </td>
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td style="white-space: nowrap;">
-                            <label class="control-label">Spiculated</label>
-                        </td>
-                        {% for i in noduleArray %}
-                            <td data-nodule-id="{{ i }}" style="display:none;">
-                                <div class="form-group form-group-sm">
-                                    {{ f.yesCheckbox("cect" + i|string + "sp", {"tabindex":i|string+"20"}) }}
                                 </div>
                             </td>
                         {% endfor %}

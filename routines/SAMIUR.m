@@ -448,8 +448,8 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . ;if type'="inactive",status'="active" quit  ; for other reports
  . new eligible set eligible=$get(@root@("graph",sid,siform,"sicechrt"))
  . if type="enrollment",eligible'="y" quit  ; must be eligible
- . new enrolled set enrolled=$g(@root@("graph",sid,siform,"siledt"))
- . if type="enrollement",enrolled'="y" quit  ; must be enrolled
+ . new enrolled set enrolled=$g(@root@("graph",sid,siform,"sildct"))
+ . if type="enrollment",enrolled'="y" quit  ; must be enrolled
  . ;
  . set ceform=$order(items("ceform-a"),-1)
  . set (cefud,fmcefud,cedos,fmcedos)=""

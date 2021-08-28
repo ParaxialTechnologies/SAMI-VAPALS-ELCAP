@@ -1,11 +1,11 @@
-KIDS Distribution saved on Aug 27, 2021@15:48:59
+KIDS Distribution saved on Aug 28, 2021@10:47:13
 Test release SAMI*18.0*14 SEQ #14 T1 (18-14-t1)
 **KIDS**:SAMI*18.0*14^
 
 **INSTALL NAME**
 SAMI*18.0*14
 "BLD",11514,0)
-SAMI*18.0*14^^0^3210827^n
+SAMI*18.0*14^^0^3210828^n
 "BLD",11514,1,0)
 ^^1^1^3210827^
 "BLD",11514,1,1,0)
@@ -13,7 +13,7 @@ Test Release SAMI*18.0*14 SEQ #14 T1 (18-14-t1)
 "BLD",11514,4,0)
 ^9.64PA^^
 "BLD",11514,6.3)
-2
+3
 "BLD",11514,"KRN",0)
 ^9.67PA^1.5^25
 "BLD",11514,"KRN",.4,0)
@@ -47,11 +47,11 @@ Test Release SAMI*18.0*14 SEQ #14 T1 (18-14-t1)
 "BLD",11514,"KRN",9.8,"NM",0)
 ^9.68A^3^3
 "BLD",11514,"KRN",9.8,"NM",1,0)
-SAMIUR^^0^B575343238
+SAMIUR^^0^B597589193
 "BLD",11514,"KRN",9.8,"NM",2,0)
-SAMIUR2^^0^B1328996811
+SAMIUR2^^0^B1328996822
 "BLD",11514,"KRN",9.8,"NM",3,0)
-SAMIURUL^^0^B100108
+SAMIURUL^^0^B101039
 "BLD",11514,"KRN",9.8,"NM","B","SAMIUR",1)
 
 "BLD",11514,"KRN",9.8,"NM","B","SAMIUR2",2)
@@ -257,13 +257,13 @@ D XPZ2^XPDIQ
 "RTN")
 3
 "RTN","SAMIUR")
-0^1^B575343238
+0^1^B597589193
 "RTN","SAMIUR",1,0)
-SAMIUR ;ven/gpl - user reports ;2021-08-26t22:53z
+SAMIUR ;ven/gpl - user reports ;2021-08-28t16:10z
 "RTN","SAMIUR",2,0)
- ;;18.0;SAMI;**5,10,11,12,13**;2020-01;Build 2
+ ;;18.0;SAMI;**5,10,11,12,14**;2020-01;Build 3
 "RTN","SAMIUR",3,0)
- ;;18.13
+ ;;18.14
 "RTN","SAMIUR",4,0)
  ;
 "RTN","SAMIUR",5,0)
@@ -305,7 +305,7 @@ SAMIUR ;ven/gpl - user reports ;2021-08-26t22:53z
 "RTN","SAMIUR",23,0)
  ;
 "RTN","SAMIUR",24,0)
- ;@last-update 2021-08-11t21:53z
+ ;@last-update 2021-08-28t16:10z
 "RTN","SAMIUR",25,0)
  ;@application Screening Applications Management (SAM)
 "RTN","SAMIUR",26,0)
@@ -1081,579 +1081,593 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
 "RTN","SAMIUR",411,0)
  set strdt=$get(filter("start-date"))
 "RTN","SAMIUR",412,0)
- set fmstrdt=$$KEY2FM^SAMICASE(strdt)
+ ;set fmstrdt=$$KEY2FM^SAMICASE(strdt)
 "RTN","SAMIUR",413,0)
- if fmstrdt=-1 do  ;
+ set fmstrdt=$$FMDT^SAMIUR2(strdt)
 "RTN","SAMIUR",414,0)
- . set fmstrdt=2000101
+ if fmstrdt=-1 do  ;
 "RTN","SAMIUR",415,0)
- . if type="followup" set fmstrdt=$$NOW^XLFDT
+ . set fmstrdt=2000101
 "RTN","SAMIUR",416,0)
- . if type="activity" set fmstrdt=$$FMADD^XLFDT($$NOW^XLFDT,-31)
+ . if type="followup" set fmstrdt=$$NOW^XLFDT
 "RTN","SAMIUR",417,0)
- . quit
+ . if type="activity" set fmstrdt=$$FMADD^XLFDT($$NOW^XLFDT,-31)
 "RTN","SAMIUR",418,0)
- if strdt="" set filter("start-date")=$$VAPALSDT^SAMICASE(fmstrdt)
+ . quit
 "RTN","SAMIUR",419,0)
- ;
+ if strdt="" set filter("start-date")=$$VAPALSDT^SAMICASE(fmstrdt)
 "RTN","SAMIUR",420,0)
- set enddt=$get(filter("end-date"))
+ ;
 "RTN","SAMIUR",421,0)
- set fmenddt=$$KEY2FM^SAMICASE(enddt)
+ set enddt=$get(filter("end-date"))
 "RTN","SAMIUR",422,0)
- if fmenddt=-1 do  ;
+ ;set fmenddt=$$KEY2FM^SAMICASE(enddt)
 "RTN","SAMIUR",423,0)
- . set fmenddt=$$NOW^XLFDT
+ set fmenddt=$$FMDT^SAMIUR2(enddt)
 "RTN","SAMIUR",424,0)
- . if type="followup" set fmenddt=$$FMADD^XLFDT($$NOW^XLFDT,31)
+ if fmenddt=-1 do  ;
 "RTN","SAMIUR",425,0)
- . quit
+ . set fmenddt=$$NOW^XLFDT
 "RTN","SAMIUR",426,0)
- if enddt="" set filter("end-date")=$$VAPALSDT^SAMICASE(fmenddt)
+ . if type="followup" set fmenddt=$$FMADD^XLFDT($$NOW^XLFDT,31)
 "RTN","SAMIUR",427,0)
- ;
-"RTN","SAMIUR",428,0)
- set datephrase=""
-"RTN","SAMIUR",429,0)
- new zi set zi=0
-"RTN","SAMIUR",430,0)
- new root set root=$$setroot^%wd("vapals-patients")
-"RTN","SAMIUR",431,0)
- ;
-"RTN","SAMIUR",432,0)
- for  do  quit:'zi  ;
-"RTN","SAMIUR",433,0)
- . set zi=$order(@root@(zi))
-"RTN","SAMIUR",434,0)
- . quit:'zi
-"RTN","SAMIUR",435,0)
- . ;
-"RTN","SAMIUR",436,0)
- . new sid set sid=$get(@root@(zi,"samistudyid"))
-"RTN","SAMIUR",437,0)
- . quit:sid=""
-"RTN","SAMIUR",438,0)
- . quit:$extract(sid,1,3)'=site
-"RTN","SAMIUR",439,0)
- . ;
-"RTN","SAMIUR",440,0)
- . new items set items=""
-"RTN","SAMIUR",441,0)
- . do GETITEMS^SAMICASE("items",sid)
-"RTN","SAMIUR",442,0)
- . quit:'$data(items)
-"RTN","SAMIUR",443,0)
- . ;
-"RTN","SAMIUR",444,0)
- . new efmdate,edate,siform,ceform,cefud,fmcefud,cedos,fmcedos
-"RTN","SAMIUR",445,0)
- . set siform=$order(items("siform-"))
-"RTN","SAMIUR",446,0)
- . new status set status=$get(@root@("graph",sid,siform,"sistatus"))
-"RTN","SAMIUR",447,0)
- . if type="inactive",status="active" quit  ; for inactive report
-"RTN","SAMIUR",448,0)
- . ;if type'="inactive",status'="active" quit  ; for other reports
-"RTN","SAMIUR",449,0)
- . new eligible set eligible=$get(@root@("graph",sid,siform,"sicechrt"))
-"RTN","SAMIUR",450,0)
- . if type="enrollment",eligible'="y" quit  ; must be eligible
-"RTN","SAMIUR",451,0)
- . new enrolled set enrolled=$g(@root@("graph",sid,siform,"sildct"))
-"RTN","SAMIUR",452,0)
- . if type="enrollment",enrolled'="y" quit  ; must be enrolled
-"RTN","SAMIUR",453,0)
- . ;
-"RTN","SAMIUR",454,0)
- . set ceform=$order(items("ceform-a"),-1)
-"RTN","SAMIUR",455,0)
- . set (cefud,fmcefud,cedos,fmcedos)=""
-"RTN","SAMIUR",456,0)
- . if ceform'="" do  ;
-"RTN","SAMIUR",457,0)
- . . set cefud=$get(@root@("graph",sid,ceform,"cefud"))
-"RTN","SAMIUR",458,0)
- . . if cefud'="" set fmcefud=$$KEY2FM^SAMICASE(cefud)
-"RTN","SAMIUR",459,0)
- . . set cedos=$get(@root@("graph",sid,ceform,"cedos"))
-"RTN","SAMIUR",460,0)
- . . if cedos'="" set fmcedos=$$KEY2FM^SAMICASE(cedos)
-"RTN","SAMIUR",461,0)
- . . quit
-"RTN","SAMIUR",462,0)
- . ;
-"RTN","SAMIUR",463,0)
- . set edate=$get(@root@("graph",sid,siform,"sidc"))
-"RTN","SAMIUR",464,0)
- . if edate="" set edate=$get(@root@("graph",sid,siform,"samicreatedate"))
-"RTN","SAMIUR",465,0)
- . set efmdate=$$KEY2FM^SAMICASE(edate)
-"RTN","SAMIUR",466,0)
- . set edate=$$VAPALSDT^SAMICASE(efmdate)
-"RTN","SAMIUR",467,0)
- . ;
-"RTN","SAMIUR",468,0)
- . new aform,aformdt set (aform,aformdt)=""
-"RTN","SAMIUR",469,0)
- . new anyform set anyform=""
-"RTN","SAMIUR",470,0)
- . new proot set proot=$na(@root@("graph",sid))
-"RTN","SAMIUR",471,0)
- . for  set anyform=$order(items("sort",anyform),-1) q:aform'=""  q:anyform=""  d  ;
-"RTN","SAMIUR",472,0)
- . . new tempf
-"RTN","SAMIUR",473,0)
- . . set tempf=$order(items("sort",anyform,""))
-"RTN","SAMIUR",474,0)
- . . if tempf["fuform" q  ; don't want any followup forms
-"RTN","SAMIUR",475,0)
- . . new tempk set tempk=$order(items("sort",anyform,tempf,""))
-"RTN","SAMIUR",476,0)
- . . if $g(@proot@(tempk,"cefud"))="" q  ; no followup date
-"RTN","SAMIUR",477,0)
- . . new tempt set tempt=$order(items("sort",anyform,tempf,tempk,""))
-"RTN","SAMIUR",478,0)
- . . set cefud=$g(@proot@(tempk,"cefud"))
-"RTN","SAMIUR",479,0)
- . . set fmcefud=$$KEY2FM^SAMICASE(cefud)
-"RTN","SAMIUR",480,0)
- . . set aform=tempt
-"RTN","SAMIUR",481,0)
- . . set aformdt=anyform
-"RTN","SAMIUR",482,0)
- . ;
-"RTN","SAMIUR",483,0)
- . if type="followup" do  ;
-"RTN","SAMIUR",484,0)
- . . ; new nplus30 set nplus30=$$FMADD^XLFDT($$NOW^XLFDT,31)
-"RTN","SAMIUR",485,0)
- . . if +fmcefud<fmstrdt quit  ; before start date
-"RTN","SAMIUR",486,0)
- . . if +fmcefud<(fmenddt+1) do  ; before end date
-"RTN","SAMIUR",487,0)
- . . . quit:ceform=""  ; no ct eval so no followup date
-"RTN","SAMIUR",488,0)
- . . . set SAMIPATS(fmcefud,zi,"aform")=aform
-"RTN","SAMIUR",489,0)
- . . . set SAMIPATS(fmcefud,zi,"aformdt")=aformdt
-"RTN","SAMIUR",490,0)
- . . . set SAMIPATS(fmcefud,zi,"edate")=edate
-"RTN","SAMIUR",491,0)
- . . . set SAMIPATS(fmcefud,zi)=""
-"RTN","SAMIUR",492,0)
- . . . if ceform="" set cefud="baseline"
-"RTN","SAMIUR",493,0)
- . . . set SAMIPATS(fmcefud,zi,"cefud")=cefud
-"RTN","SAMIUR",494,0)
- . . . set SAMIPATS(fmcefud,zi,"cedos")=cedos
-"RTN","SAMIUR",495,0)
- . . . set SAMIPATS(fmcefud,zi,"ceform")=ceform
-"RTN","SAMIUR",496,0)
- . . . set SAMIPATS(fmcefud,zi,"ceform-vals")=$name(@root@("graph",sid,ceform))
-"RTN","SAMIUR",497,0)
- . . . set SAMIPATS(fmcefud,zi,"siform")=siform
-"RTN","SAMIUR",498,0)
- . . . set SAMIPATS(fmcefud,zi,"siform-vals")=$name(@root@("graph",sid,siform))
-"RTN","SAMIUR",499,0)
- . . . merge SAMIPATS(fmcefud,zi,"items")=items
-"RTN","SAMIUR",500,0)
- . . . quit
-"RTN","SAMIUR",501,0)
- . . set datephrase=" before "_$$VAPALSDT^SAMICASE(fmenddt)
-"RTN","SAMIUR",502,0)
- . . quit
-"RTN","SAMIUR",503,0)
- . ;
-"RTN","SAMIUR",504,0)
- . if type="activity" do  ;
-"RTN","SAMIUR",505,0)
- . . ; new nminus30 set nminus30=$$FMADD^XLFDT($$NOW^XLFDT,-31)
-"RTN","SAMIUR",506,0)
- . . new fmanyform set fmanyform=$$KEY2FM^SAMICASE(anyform)
-"RTN","SAMIUR",507,0)
- . . if fmanyform<fmstrdt quit  ; before the start date
-"RTN","SAMIUR",508,0)
- . . ; if fmanyform<(fmenddt+1)!(efmdate>fmenddt) do  ; need any new form
-"RTN","SAMIUR",509,0)
- . . if fmanyform<(fmenddt+1)  do  ;
-"RTN","SAMIUR",510,0)
- . . . set SAMIPATS(efmdate,zi,"aform")=aform
-"RTN","SAMIUR",511,0)
- . . . set SAMIPATS(efmdate,zi,"aformdt")=aformdt
-"RTN","SAMIUR",512,0)
- . . . set SAMIPATS(efmdate,zi,"edate")=edate
-"RTN","SAMIUR",513,0)
- . . . set SAMIPATS(efmdate,zi)=""
-"RTN","SAMIUR",514,0)
- . . . if ceform="" set cefud="baseline"
-"RTN","SAMIUR",515,0)
- . . . set SAMIPATS(efmdate,zi,"cefud")=cefud
-"RTN","SAMIUR",516,0)
- . . . set SAMIPATS(efmdate,zi,"cedos")=cedos
-"RTN","SAMIUR",517,0)
- . . . set SAMIPATS(efmdate,zi,"ceform")=ceform
-"RTN","SAMIUR",518,0)
- . . . set SAMIPATS(efmdate,zi,"siform")=siform
-"RTN","SAMIUR",519,0)
- . . . merge SAMIPATS(efmdate,zi,"items")=items
-"RTN","SAMIUR",520,0)
- . . . quit
-"RTN","SAMIUR",521,0)
- . . set datephrase=" after "_$$VAPALSDT^SAMICASE(fmstrdt)
-"RTN","SAMIUR",522,0)
- . . quit
-"RTN","SAMIUR",523,0)
- . ;
-"RTN","SAMIUR",524,0)
- . ; date filter for all the rest of the reports
-"RTN","SAMIUR",525,0)
- . ;
-"RTN","SAMIUR",526,0)
- . quit:efmdate<fmstrdt  ; before the start date
-"RTN","SAMIUR",527,0)
- . quit:efmdate>(fmenddt+1)  ; after the end date
-"RTN","SAMIUR",528,0)
- . ;
-"RTN","SAMIUR",529,0)
- . if type="incomplete" do  ;
-"RTN","SAMIUR",530,0)
- . . new complete set complete=1
-"RTN","SAMIUR",531,0)
- . . new zj set zj=""
-"RTN","SAMIUR",532,0)
- . . new gr set gr=$name(@root@("graph",sid))
-"RTN","SAMIUR",533,0)
- . . for  do  quit:zj=""  ;
-"RTN","SAMIUR",534,0)
- . . . set zj=$order(@gr@(zj))
-"RTN","SAMIUR",535,0)
- . . . quit:zj=""
-"RTN","SAMIUR",536,0)
- . . . ;
-"RTN","SAMIUR",537,0)
- . . . new stat
-"RTN","SAMIUR",538,0)
- . . . set stat=$get(@gr@(zj,"samistatus"))
-"RTN","SAMIUR",539,0)
- . . . if stat="" set stat="incomplete"
-"RTN","SAMIUR",540,0)
- . . . if stat="incomplete" do  ;
-"RTN","SAMIUR",541,0)
- . . . . set complete=0
-"RTN","SAMIUR",542,0)
- . . . . set SAMIPATS(efmdate,zi,"iform")=$get(SAMIPATS(efmdate,zi,"iform"))_" "_zj
-"RTN","SAMIUR",543,0)
- . . . . quit
-"RTN","SAMIUR",544,0)
- . . . quit
-"RTN","SAMIUR",545,0)
- . . ;
-"RTN","SAMIUR",546,0)
- . . if complete=0 do  ; has incomplete form(s) 
-"RTN","SAMIUR",547,0)
- . . . set SAMIPATS(efmdate,zi,"edate")=edate
-"RTN","SAMIUR",548,0)
- . . . set SAMIPATS(efmdate,zi)=""
-"RTN","SAMIUR",549,0)
- . . . if ceform="" set cefud="baseline"
-"RTN","SAMIUR",550,0)
- . . . set SAMIPATS(efmdate,zi,"cefud")=cefud
-"RTN","SAMIUR",551,0)
- . . . set SAMIPATS(efmdate,zi,"ceform")=ceform
-"RTN","SAMIUR",552,0)
- . . . set SAMIPATS(efmdate,zi,"siform")=siform
-"RTN","SAMIUR",553,0)
- . . . merge SAMIPATS(efmdate,zi,"items")=items
-"RTN","SAMIUR",554,0)
- . . . quit
-"RTN","SAMIUR",555,0)
- . . set datephrase=""
-"RTN","SAMIUR",556,0)
- . . quit
-"RTN","SAMIUR",557,0)
- . ;
-"RTN","SAMIUR",558,0)
- . if type="missingct" do  ;
-"RTN","SAMIUR",559,0)
- . . if ceform="" do  ; has incomplete form(s) 
-"RTN","SAMIUR",560,0)
- . . . set SAMIPATS(efmdate,zi,"edate")=edate
-"RTN","SAMIUR",561,0)
- . . . set SAMIPATS(efmdate,zi)=""
-"RTN","SAMIUR",562,0)
- . . . if ceform="" set cefud="baseline"
-"RTN","SAMIUR",563,0)
- . . . set SAMIPATS(efmdate,zi,"cefud")=cefud
-"RTN","SAMIUR",564,0)
- . . . set SAMIPATS(efmdate,zi,"ceform")=ceform
-"RTN","SAMIUR",565,0)
- . . . set SAMIPATS(efmdate,zi,"siform")=siform
-"RTN","SAMIUR",566,0)
- . . . merge SAMIPATS(efmdate,zi,"items")=items
-"RTN","SAMIUR",567,0)
- . . . quit
-"RTN","SAMIUR",568,0)
- . . set datephrase=""
-"RTN","SAMIUR",569,0)
- . . quit
-"RTN","SAMIUR",570,0)
- . ;
-"RTN","SAMIUR",571,0)
- . if type="outreach" do  ; no-op; hook for future development?
-"RTN","SAMIUR",572,0)
- . . quit
-"RTN","SAMIUR",573,0)
- . ;
-"RTN","SAMIUR",574,0)
- . if type="enrollment" do  ;
-"RTN","SAMIUR",575,0)
- . . set SAMIPATS(efmdate,zi,"edate")=edate
-"RTN","SAMIUR",576,0)
- . . set SAMIPATS(efmdate,zi)=""
-"RTN","SAMIUR",577,0)
- . . set SAMIPATS(efmdate,zi,"cefud")=cefud
-"RTN","SAMIUR",578,0)
- . . set SAMIPATS(efmdate,zi,"ceform")=ceform
-"RTN","SAMIUR",579,0)
- . . set SAMIPATS(efmdate,zi,"cedos")=cedos
-"RTN","SAMIUR",580,0)
- . . set SAMIPATS(efmdate,zi,"siform")=siform
-"RTN","SAMIUR",581,0)
- . . merge SAMIPATS(efmdate,zi,"items")=items
-"RTN","SAMIUR",582,0)
- . . quit
-"RTN","SAMIUR",583,0)
- . ;
-"RTN","SAMIUR",584,0)
- . if type="inactive" do  ;
-"RTN","SAMIUR",585,0)
- . . set SAMIPATS(efmdate,zi,"edate")=edate
-"RTN","SAMIUR",586,0)
- . . set SAMIPATS(efmdate,zi)=""
-"RTN","SAMIUR",587,0)
- . . set SAMIPATS(efmdate,zi,"cefud")=cefud
-"RTN","SAMIUR",588,0)
- . . set SAMIPATS(efmdate,zi,"ceform")=ceform
-"RTN","SAMIUR",589,0)
- . . set SAMIPATS(efmdate,zi,"cedos")=cedos
-"RTN","SAMIUR",590,0)
- . . set SAMIPATS(efmdate,zi,"siform")=siform
-"RTN","SAMIUR",591,0)
- . . merge SAMIPATS(efmdate,zi,"items")=items
-"RTN","SAMIUR",592,0)
- . . quit
-"RTN","SAMIUR",593,0)
- . ;
-"RTN","SAMIUR",594,0)
- . set datephrase=" as of "_$$VAPALSDT^SAMICASE($$NOW^XLFDT)
-"RTN","SAMIUR",595,0)
  . quit
+"RTN","SAMIUR",428,0)
+ if enddt="" set filter("end-date")=$$VAPALSDT^SAMICASE(fmenddt)
+"RTN","SAMIUR",429,0)
+ ;
+"RTN","SAMIUR",430,0)
+ set datephrase=""
+"RTN","SAMIUR",431,0)
+ new zi set zi=0
+"RTN","SAMIUR",432,0)
+ new root set root=$$setroot^%wd("vapals-patients")
+"RTN","SAMIUR",433,0)
+ ;
+"RTN","SAMIUR",434,0)
+ for  do  quit:'zi  ;
+"RTN","SAMIUR",435,0)
+ . set zi=$order(@root@(zi))
+"RTN","SAMIUR",436,0)
+ . quit:'zi
+"RTN","SAMIUR",437,0)
+ . ;
+"RTN","SAMIUR",438,0)
+ . new sid set sid=$get(@root@(zi,"samistudyid"))
+"RTN","SAMIUR",439,0)
+ . quit:sid=""
+"RTN","SAMIUR",440,0)
+ . quit:$extract(sid,1,3)'=site
+"RTN","SAMIUR",441,0)
+ . ;
+"RTN","SAMIUR",442,0)
+ . new items set items=""
+"RTN","SAMIUR",443,0)
+ . do GETITEMS^SAMICASE("items",sid)
+"RTN","SAMIUR",444,0)
+ . quit:'$data(items)
+"RTN","SAMIUR",445,0)
+ . ;
+"RTN","SAMIUR",446,0)
+ . new efmdate,edate,siform,ceform,cefud,fmcefud,cedos,fmcedos
+"RTN","SAMIUR",447,0)
+ . set siform=$order(items("siform-"))
+"RTN","SAMIUR",448,0)
+ . new status set status=$get(@root@("graph",sid,siform,"sistatus"))
+"RTN","SAMIUR",449,0)
+ . if type="inactive",status="active" quit  ; for inactive report
+"RTN","SAMIUR",450,0)
+ . ;if type'="inactive",status'="active" quit  ; for other reports
+"RTN","SAMIUR",451,0)
+ . new eligible set eligible=$get(@root@("graph",sid,siform,"sicechrt"))
+"RTN","SAMIUR",452,0)
+ . if type="enrollment",eligible'="y" quit  ; must be eligible
+"RTN","SAMIUR",453,0)
+ . new enrolled set enrolled=$g(@root@("graph",sid,siform,"sildct"))
+"RTN","SAMIUR",454,0)
+ . if type="enrollment",enrolled'="y" quit  ; must be enrolled
+"RTN","SAMIUR",455,0)
+ . ;
+"RTN","SAMIUR",456,0)
+ . set (ceform,cefud,fmcefud,cedos,fmcedos)=""
+"RTN","SAMIUR",457,0)
+ . f  set ceform=$order(items(ceform),-1) q:ceform=""  q:cefud'=""  d  ;
+"RTN","SAMIUR",458,0)
+ . . q:ceform'["ceform"
+"RTN","SAMIUR",459,0)
+ . . set cefud=$get(@root@("graph",sid,ceform,"cefud"))
+"RTN","SAMIUR",460,0)
+ . . if cefud'="" set fmcefud=$$FMDT^SAMIUR2(cefud)
+"RTN","SAMIUR",461,0)
+ . . set cedos=$get(@root@("graph",sid,ceform,"cedos"))
+"RTN","SAMIUR",462,0)
+ . . if cedos'="" set fmcedos=$$FMDT^SAMIUR2(cedos)
+"RTN","SAMIUR",463,0)
+ . . quit
+"RTN","SAMIUR",464,0)
+ . ;
+"RTN","SAMIUR",465,0)
+ . set edate=$get(@root@("graph",sid,siform,"sidc"))
+"RTN","SAMIUR",466,0)
+ . if edate="" set edate=$get(@root@("graph",sid,siform,"samicreatedate"))
+"RTN","SAMIUR",467,0)
+ . set efmdate=$$FMDT^SAMIUR2(edate)
+"RTN","SAMIUR",468,0)
+ . set edate=$$VAPALSDT^SAMICASE(efmdate)
+"RTN","SAMIUR",469,0)
+ . ;
+"RTN","SAMIUR",470,0)
+ . new latef,latefdt set (latef,latefdt)="" ; latest form for activity report
+"RTN","SAMIUR",471,0)
+ . new aform,aformdt set (aform,aformdt)=""
+"RTN","SAMIUR",472,0)
+ . new anyform set anyform=""
+"RTN","SAMIUR",473,0)
+ . new proot set proot=$na(@root@("graph",sid))
+"RTN","SAMIUR",474,0)
+ . for  set anyform=$order(items("sort",anyform),-1) q:aform'=""  q:anyform=""  d  ;
+"RTN","SAMIUR",475,0)
+ . . new tempf set tempf=""
+"RTN","SAMIUR",476,0)
+ . . f  set tempf=$order(items("sort",anyform,tempf)) q:tempf=""  q:aform'=""  d  ;
+"RTN","SAMIUR",477,0)
+ . . . if latef="" d  ; record the latest form for activity report
+"RTN","SAMIUR",478,0)
+ . . . . set latefdt=anyform ; date of latest form
+"RTN","SAMIUR",479,0)
+ . . . . new latekey set latekey=$order(items("sort",anyform,tempf,""))
+"RTN","SAMIUR",480,0)
+ . . . . set latef=$order(items("sort",anyform,tempf,latekey,""))
+"RTN","SAMIUR",481,0)
+ . . . if tempf["fuform" q  ; don't want any followup forms
+"RTN","SAMIUR",482,0)
+ . . . if tempf["bxform" q  ; don't want any biopsy forms
+"RTN","SAMIUR",483,0)
+ . . . new tempk set tempk=$order(items("sort",anyform,tempf,""))
+"RTN","SAMIUR",484,0)
+ . . . if $g(@proot@(tempk,"cefud"))="" q  ; no followup date
+"RTN","SAMIUR",485,0)
+ . . . new tempt set tempt=$order(items("sort",anyform,tempf,tempk,""))
+"RTN","SAMIUR",486,0)
+ . . . set cefud=$g(@proot@(tempk,"cefud"))
+"RTN","SAMIUR",487,0)
+ . . . set fmcefud=$$FMDT^SAMIUR2(cefud)
+"RTN","SAMIUR",488,0)
+ . . . set aform=tempt
+"RTN","SAMIUR",489,0)
+ . . . set aformdt=anyform
+"RTN","SAMIUR",490,0)
+ . ;
+"RTN","SAMIUR",491,0)
+ . if type="followup" do  ;
+"RTN","SAMIUR",492,0)
+ . . ; new nplus30 set nplus30=$$FMADD^XLFDT($$NOW^XLFDT,31)
+"RTN","SAMIUR",493,0)
+ . . if +fmcefud<fmstrdt quit  ; before start date
+"RTN","SAMIUR",494,0)
+ . . if +fmcefud<(fmenddt+1) do  ; before end date
+"RTN","SAMIUR",495,0)
+ . . . quit:cefud=""  ; no followup date
+"RTN","SAMIUR",496,0)
+ . . . set SAMIPATS(fmcefud,zi,"aform")=aform
+"RTN","SAMIUR",497,0)
+ . . . set SAMIPATS(fmcefud,zi,"aformdt")=aformdt
+"RTN","SAMIUR",498,0)
+ . . . set SAMIPATS(fmcefud,zi,"edate")=edate
+"RTN","SAMIUR",499,0)
+ . . . set SAMIPATS(fmcefud,zi)=""
+"RTN","SAMIUR",500,0)
+ . . . if ceform="" set cefud="baseline"
+"RTN","SAMIUR",501,0)
+ . . . set SAMIPATS(fmcefud,zi,"cefud")=cefud
+"RTN","SAMIUR",502,0)
+ . . . set SAMIPATS(fmcefud,zi,"cedos")=cedos
+"RTN","SAMIUR",503,0)
+ . . . set SAMIPATS(fmcefud,zi,"ceform")=ceform
+"RTN","SAMIUR",504,0)
+ . . . set SAMIPATS(fmcefud,zi,"ceform-vals")=$name(@root@("graph",sid,ceform))
+"RTN","SAMIUR",505,0)
+ . . . set SAMIPATS(fmcefud,zi,"siform")=siform
+"RTN","SAMIUR",506,0)
+ . . . set SAMIPATS(fmcefud,zi,"siform-vals")=$name(@root@("graph",sid,siform))
+"RTN","SAMIUR",507,0)
+ . . . merge SAMIPATS(fmcefud,zi,"items")=items
+"RTN","SAMIUR",508,0)
+ . . . quit
+"RTN","SAMIUR",509,0)
+ . . set datephrase=" before "_$$VAPALSDT^SAMICASE(fmenddt)
+"RTN","SAMIUR",510,0)
+ . . quit
+"RTN","SAMIUR",511,0)
+ . ;
+"RTN","SAMIUR",512,0)
+ . if type="activity" do  ;
+"RTN","SAMIUR",513,0)
+ . . new fmanyform set fmanyform=$$FMDT^SAMIUR2(latefdt)
+"RTN","SAMIUR",514,0)
+ . . if fmanyform<fmstrdt quit  ; before the start date
+"RTN","SAMIUR",515,0)
+ . . ; if fmanyform<(fmenddt+1)!(efmdate>fmenddt) do  ; need any new form
+"RTN","SAMIUR",516,0)
+ . . if fmanyform<(fmenddt+1)  do  ;
+"RTN","SAMIUR",517,0)
+ . . . set SAMIPATS(efmdate,zi,"aform")=latef
+"RTN","SAMIUR",518,0)
+ . . . set SAMIPATS(efmdate,zi,"aformdt")=$$VAPALSDT^SAMICASE(fmanyform)
+"RTN","SAMIUR",519,0)
+ . . . set SAMIPATS(efmdate,zi,"edate")=edate
+"RTN","SAMIUR",520,0)
+ . . . set SAMIPATS(efmdate,zi)=""
+"RTN","SAMIUR",521,0)
+ . . . if ceform="" set cefud="baseline"
+"RTN","SAMIUR",522,0)
+ . . . set SAMIPATS(efmdate,zi,"cefud")=cefud
+"RTN","SAMIUR",523,0)
+ . . . set SAMIPATS(efmdate,zi,"cedos")=cedos
+"RTN","SAMIUR",524,0)
+ . . . set SAMIPATS(efmdate,zi,"ceform")=ceform
+"RTN","SAMIUR",525,0)
+ . . . set SAMIPATS(efmdate,zi,"siform")=siform
+"RTN","SAMIUR",526,0)
+ . . . merge SAMIPATS(efmdate,zi,"items")=items
+"RTN","SAMIUR",527,0)
+ . . . quit
+"RTN","SAMIUR",528,0)
+ . . set datephrase=" after "_$$VAPALSDT^SAMICASE(fmstrdt)
+"RTN","SAMIUR",529,0)
+ . . quit
+"RTN","SAMIUR",530,0)
+ . ;
+"RTN","SAMIUR",531,0)
+ . ; date filter for all the rest of the reports
+"RTN","SAMIUR",532,0)
+ . ;
+"RTN","SAMIUR",533,0)
+ . quit:efmdate<fmstrdt  ; before the start date
+"RTN","SAMIUR",534,0)
+ . quit:efmdate>(fmenddt+1)  ; after the end date
+"RTN","SAMIUR",535,0)
+ . ;
+"RTN","SAMIUR",536,0)
+ . if type="incomplete" do  ;
+"RTN","SAMIUR",537,0)
+ . . new complete set complete=1
+"RTN","SAMIUR",538,0)
+ . . new zj set zj=""
+"RTN","SAMIUR",539,0)
+ . . new gr set gr=$name(@root@("graph",sid))
+"RTN","SAMIUR",540,0)
+ . . for  do  quit:zj=""  ;
+"RTN","SAMIUR",541,0)
+ . . . set zj=$order(@gr@(zj))
+"RTN","SAMIUR",542,0)
+ . . . quit:zj=""
+"RTN","SAMIUR",543,0)
+ . . . ;
+"RTN","SAMIUR",544,0)
+ . . . new stat
+"RTN","SAMIUR",545,0)
+ . . . set stat=$get(@gr@(zj,"samistatus"))
+"RTN","SAMIUR",546,0)
+ . . . if stat="" set stat="incomplete"
+"RTN","SAMIUR",547,0)
+ . . . if stat="incomplete" do  ;
+"RTN","SAMIUR",548,0)
+ . . . . set complete=0
+"RTN","SAMIUR",549,0)
+ . . . . set SAMIPATS(efmdate,zi,"iform")=$get(SAMIPATS(efmdate,zi,"iform"))_" "_zj
+"RTN","SAMIUR",550,0)
+ . . . . quit
+"RTN","SAMIUR",551,0)
+ . . . quit
+"RTN","SAMIUR",552,0)
+ . . ;
+"RTN","SAMIUR",553,0)
+ . . if complete=0 do  ; has incomplete form(s) 
+"RTN","SAMIUR",554,0)
+ . . . set SAMIPATS(efmdate,zi,"edate")=edate
+"RTN","SAMIUR",555,0)
+ . . . set SAMIPATS(efmdate,zi)=""
+"RTN","SAMIUR",556,0)
+ . . . if ceform="" set cefud="baseline"
+"RTN","SAMIUR",557,0)
+ . . . set SAMIPATS(efmdate,zi,"cefud")=cefud
+"RTN","SAMIUR",558,0)
+ . . . set SAMIPATS(efmdate,zi,"ceform")=ceform
+"RTN","SAMIUR",559,0)
+ . . . set SAMIPATS(efmdate,zi,"siform")=siform
+"RTN","SAMIUR",560,0)
+ . . . merge SAMIPATS(efmdate,zi,"items")=items
+"RTN","SAMIUR",561,0)
+ . . . quit
+"RTN","SAMIUR",562,0)
+ . . set datephrase=""
+"RTN","SAMIUR",563,0)
+ . . quit
+"RTN","SAMIUR",564,0)
+ . ;
+"RTN","SAMIUR",565,0)
+ . if type="missingct" do  ;
+"RTN","SAMIUR",566,0)
+ . . if ceform="" do  ; has incomplete form(s) 
+"RTN","SAMIUR",567,0)
+ . . . set SAMIPATS(efmdate,zi,"edate")=edate
+"RTN","SAMIUR",568,0)
+ . . . set SAMIPATS(efmdate,zi)=""
+"RTN","SAMIUR",569,0)
+ . . . if ceform="" set cefud="baseline"
+"RTN","SAMIUR",570,0)
+ . . . set SAMIPATS(efmdate,zi,"cefud")=cefud
+"RTN","SAMIUR",571,0)
+ . . . set SAMIPATS(efmdate,zi,"ceform")=ceform
+"RTN","SAMIUR",572,0)
+ . . . set SAMIPATS(efmdate,zi,"siform")=siform
+"RTN","SAMIUR",573,0)
+ . . . merge SAMIPATS(efmdate,zi,"items")=items
+"RTN","SAMIUR",574,0)
+ . . . quit
+"RTN","SAMIUR",575,0)
+ . . set datephrase=""
+"RTN","SAMIUR",576,0)
+ . . quit
+"RTN","SAMIUR",577,0)
+ . ;
+"RTN","SAMIUR",578,0)
+ . if type="outreach" do  ; no-op; hook for future development?
+"RTN","SAMIUR",579,0)
+ . . quit
+"RTN","SAMIUR",580,0)
+ . ;
+"RTN","SAMIUR",581,0)
+ . if type="enrollment" do  ;
+"RTN","SAMIUR",582,0)
+ . . set SAMIPATS(efmdate,zi,"edate")=edate
+"RTN","SAMIUR",583,0)
+ . . set SAMIPATS(efmdate,zi)=""
+"RTN","SAMIUR",584,0)
+ . . set SAMIPATS(efmdate,zi,"cefud")=cefud
+"RTN","SAMIUR",585,0)
+ . . set SAMIPATS(efmdate,zi,"ceform")=ceform
+"RTN","SAMIUR",586,0)
+ . . set SAMIPATS(efmdate,zi,"cedos")=cedos
+"RTN","SAMIUR",587,0)
+ . . set SAMIPATS(efmdate,zi,"siform")=siform
+"RTN","SAMIUR",588,0)
+ . . merge SAMIPATS(efmdate,zi,"items")=items
+"RTN","SAMIUR",589,0)
+ . . quit
+"RTN","SAMIUR",590,0)
+ . ;
+"RTN","SAMIUR",591,0)
+ . if type="inactive" do  ;
+"RTN","SAMIUR",592,0)
+ . . set SAMIPATS(efmdate,zi,"edate")=edate
+"RTN","SAMIUR",593,0)
+ . . set SAMIPATS(efmdate,zi)=""
+"RTN","SAMIUR",594,0)
+ . . set SAMIPATS(efmdate,zi,"cefud")=cefud
+"RTN","SAMIUR",595,0)
+ . . set SAMIPATS(efmdate,zi,"ceform")=ceform
 "RTN","SAMIUR",596,0)
- ;
+ . . set SAMIPATS(efmdate,zi,"cedos")=cedos
 "RTN","SAMIUR",597,0)
- quit  ; end of SELECT
+ . . set SAMIPATS(efmdate,zi,"siform")=siform
 "RTN","SAMIUR",598,0)
- ;
+ . . merge SAMIPATS(efmdate,zi,"items")=items
 "RTN","SAMIUR",599,0)
- ;
+ . . quit
 "RTN","SAMIUR",600,0)
- ;
+ . ;
 "RTN","SAMIUR",601,0)
-UNMAT(SAMIPATS,ztype,datephrase,filter) ; build unmatched persons list
+ . set datephrase=" as of "_$$VAPALSDT^SAMICASE($$NOW^XLFDT)
 "RTN","SAMIUR",602,0)
- ;
+ . quit
 "RTN","SAMIUR",603,0)
- ;@called-by
+ ;
 "RTN","SAMIUR",604,0)
- ; SELECT
+ quit  ; end of SELECT
 "RTN","SAMIUR",605,0)
- ;@calls
+ ;
 "RTN","SAMIUR",606,0)
- ; $$setroot^%wd
+ ;
 "RTN","SAMIUR",607,0)
  ;
 "RTN","SAMIUR",608,0)
- set datephrase="Unmatched Persons"
+UNMAT(SAMIPATS,ztype,datephrase,filter) ; build unmatched persons list
 "RTN","SAMIUR",609,0)
- new lroot set lroot=$$setroot^%wd("patient-lookup")
+ ;
 "RTN","SAMIUR",610,0)
- new dfn set dfn=9000000
-"RTN","SAMIUR",611,0)
- for  do  quit:'dfn  ;
-"RTN","SAMIUR",612,0)
- . set dfn=$order(@lroot@("dfn",dfn))
-"RTN","SAMIUR",613,0)
- . quit:'dfn
-"RTN","SAMIUR",614,0)
- . ;
-"RTN","SAMIUR",615,0)
- . new ien set ien=$order(@lroot@("dfn",dfn,""))
-"RTN","SAMIUR",616,0)
- . quit:ien=""
-"RTN","SAMIUR",617,0)
- . n ordern
-"RTN","SAMIUR",618,0)
- . s ordern=$g(@lroot@(ien,"ORMORCordernumber"))
-"RTN","SAMIUR",619,0)
- . i ordern="" s ordern=$g(@lroot@(ien,"ORM",1,"ordernumber"))
-"RTN","SAMIUR",620,0)
- . i ordern'="" q  ;
-"RTN","SAMIUR",621,0)
- . i $g(@lroot@(ien,"siteid"))'[site q  ;
-"RTN","SAMIUR",622,0)
- . ;quit:$get(@lroot@(ien,"remotedfn"))'=""  ;
-"RTN","SAMIUR",623,0)
- . ;
-"RTN","SAMIUR",624,0)
- . merge SAMIPATS(ien,dfn)=@lroot@(ien)
-"RTN","SAMIUR",625,0)
- . ;
-"RTN","SAMIUR",626,0)
- . new name set name=$get(SAMIPATS(ien,dfn,"saminame"))
-"RTN","SAMIUR",627,0)
- . ; new name set name=$get(SAMIPATS(ien,dfn,"sinamef"))
-"RTN","SAMIUR",628,0)
- . ; set name=name_","_SAMIPATS(ien,dfn,"sinamel")
-"RTN","SAMIUR",629,0)
- . new nuhref set nuhref="<form method=POST action=""/vapals"">"
-"RTN","SAMIUR",630,0)
- . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""editperson"">"
-"RTN","SAMIUR",631,0)
- . set nuhref=nuhref_"<input type=hidden name=""dfn"" value="_dfn_">"
-"RTN","SAMIUR",632,0)
- . set nuhref=nuhref_"<input type=hidden name=""siteid"" value="_site_">"
-"RTN","SAMIUR",633,0)
- . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
-"RTN","SAMIUR",634,0)
- . set SAMIPATS(ien,dfn,"editref")=nuhref
-"RTN","SAMIUR",635,0)
- . quit
-"RTN","SAMIUR",636,0)
- ;
-"RTN","SAMIUR",637,0)
- quit  ; end of UNMAT
-"RTN","SAMIUR",638,0)
- ;
-"RTN","SAMIUR",639,0)
- ;
-"RTN","SAMIUR",640,0)
- ;
-"RTN","SAMIUR",641,0)
-WKLIST(SAMIPATS,ztype,datephrase,filter) ; build work list
-"RTN","SAMIUR",642,0)
- ;
-"RTN","SAMIUR",643,0)
  ;@called-by
-"RTN","SAMIUR",644,0)
+"RTN","SAMIUR",611,0)
  ; SELECT
-"RTN","SAMIUR",645,0)
+"RTN","SAMIUR",612,0)
  ;@calls
-"RTN","SAMIUR",646,0)
+"RTN","SAMIUR",613,0)
  ; $$setroot^%wd
+"RTN","SAMIUR",614,0)
+ ;
+"RTN","SAMIUR",615,0)
+ set datephrase="Unmatched Persons"
+"RTN","SAMIUR",616,0)
+ new lroot set lroot=$$setroot^%wd("patient-lookup")
+"RTN","SAMIUR",617,0)
+ new dfn set dfn=9000000
+"RTN","SAMIUR",618,0)
+ for  do  quit:'dfn  ;
+"RTN","SAMIUR",619,0)
+ . set dfn=$order(@lroot@("dfn",dfn))
+"RTN","SAMIUR",620,0)
+ . quit:'dfn
+"RTN","SAMIUR",621,0)
+ . ;
+"RTN","SAMIUR",622,0)
+ . new ien set ien=$order(@lroot@("dfn",dfn,""))
+"RTN","SAMIUR",623,0)
+ . quit:ien=""
+"RTN","SAMIUR",624,0)
+ . n ordern
+"RTN","SAMIUR",625,0)
+ . s ordern=$g(@lroot@(ien,"ORMORCordernumber"))
+"RTN","SAMIUR",626,0)
+ . i ordern="" s ordern=$g(@lroot@(ien,"ORM",1,"ordernumber"))
+"RTN","SAMIUR",627,0)
+ . i ordern'="" q  ;
+"RTN","SAMIUR",628,0)
+ . i $g(@lroot@(ien,"siteid"))'[site q  ;
+"RTN","SAMIUR",629,0)
+ . ;quit:$get(@lroot@(ien,"remotedfn"))'=""  ;
+"RTN","SAMIUR",630,0)
+ . ;
+"RTN","SAMIUR",631,0)
+ . merge SAMIPATS(ien,dfn)=@lroot@(ien)
+"RTN","SAMIUR",632,0)
+ . ;
+"RTN","SAMIUR",633,0)
+ . new name set name=$get(SAMIPATS(ien,dfn,"saminame"))
+"RTN","SAMIUR",634,0)
+ . ; new name set name=$get(SAMIPATS(ien,dfn,"sinamef"))
+"RTN","SAMIUR",635,0)
+ . ; set name=name_","_SAMIPATS(ien,dfn,"sinamel")
+"RTN","SAMIUR",636,0)
+ . new nuhref set nuhref="<form method=POST action=""/vapals"">"
+"RTN","SAMIUR",637,0)
+ . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""editperson"">"
+"RTN","SAMIUR",638,0)
+ . set nuhref=nuhref_"<input type=hidden name=""dfn"" value="_dfn_">"
+"RTN","SAMIUR",639,0)
+ . set nuhref=nuhref_"<input type=hidden name=""siteid"" value="_site_">"
+"RTN","SAMIUR",640,0)
+ . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
+"RTN","SAMIUR",641,0)
+ . set SAMIPATS(ien,dfn,"editref")=nuhref
+"RTN","SAMIUR",642,0)
+ . quit
+"RTN","SAMIUR",643,0)
+ ;
+"RTN","SAMIUR",644,0)
+ quit  ; end of UNMAT
+"RTN","SAMIUR",645,0)
+ ;
+"RTN","SAMIUR",646,0)
+ ;
 "RTN","SAMIUR",647,0)
  ;
 "RTN","SAMIUR",648,0)
- ; add site
+WKLIST(SAMIPATS,ztype,datephrase,filter) ; build work list
 "RTN","SAMIUR",649,0)
- ; add compare to vapals-patients
+ ;
 "RTN","SAMIUR",650,0)
- ; add navigation to enrollment
+ ;@called-by
 "RTN","SAMIUR",651,0)
- ;
+ ; SELECT
 "RTN","SAMIUR",652,0)
- kill ^gpl("worklist")
+ ;@calls
 "RTN","SAMIUR",653,0)
- merge ^gpl("worklist")=filter
+ ; $$setroot^%wd
 "RTN","SAMIUR",654,0)
- new site
+ ;
 "RTN","SAMIUR",655,0)
- set site=$get(filter("siteid"))
+ ; add site
 "RTN","SAMIUR",656,0)
- quit:site=""
+ ; add compare to vapals-patients
 "RTN","SAMIUR",657,0)
- set datephrase="Work List"
+ ; add navigation to enrollment
 "RTN","SAMIUR",658,0)
- new lroot set lroot=$$setroot^%wd("patient-lookup")
+ ;
 "RTN","SAMIUR",659,0)
- new proot set proot=$$setroot^%wd("vapals-patients")
+ kill ^gpl("worklist")
 "RTN","SAMIUR",660,0)
- ;
+ merge ^gpl("worklist")=filter
 "RTN","SAMIUR",661,0)
- new dfn set dfn=0
+ new site
 "RTN","SAMIUR",662,0)
- for  set dfn=$order(@lroot@("dfn",dfn)) quit:+dfn=0  do  ;
+ set site=$get(filter("siteid"))
 "RTN","SAMIUR",663,0)
- . quit:$order(@proot@("dfn",dfn,""))'=""
+ quit:site=""
 "RTN","SAMIUR",664,0)
- . new ien set ien=$order(@lroot@("dfn",dfn,""))
+ set datephrase="Work List"
 "RTN","SAMIUR",665,0)
- . quit:ien=""
+ new lroot set lroot=$$setroot^%wd("patient-lookup")
 "RTN","SAMIUR",666,0)
- . ;
+ new proot set proot=$$setroot^%wd("vapals-patients")
 "RTN","SAMIUR",667,0)
- . ; write !,"dfn= ",dfn
+ ;
 "RTN","SAMIUR",668,0)
- . ; zwrite @lroot@(ien,*)
+ new dfn set dfn=0
 "RTN","SAMIUR",669,0)
- . ;
+ for  set dfn=$order(@lroot@("dfn",dfn)) quit:+dfn=0  do  ;
 "RTN","SAMIUR",670,0)
- . quit:$get(@lroot@(ien,"siteid"))'=site
+ . quit:$order(@proot@("dfn",dfn,""))'=""
 "RTN","SAMIUR",671,0)
- . ;
+ . new ien set ien=$order(@lroot@("dfn",dfn,""))
 "RTN","SAMIUR",672,0)
- . merge ^gpl("worklist","lroot",ien)=@lroot@(ien)
+ . quit:ien=""
 "RTN","SAMIUR",673,0)
- . merge SAMIPATS(ien,dfn)=@lroot@(ien)
+ . ;
 "RTN","SAMIUR",674,0)
- . new name set name=$get(SAMIPATS(ien,dfn,"saminame"))
+ . ; write !,"dfn= ",dfn
 "RTN","SAMIUR",675,0)
- . ; new name set name=$get(SAMIPATS(ien,dfn,"sinamef"))
+ . ; zwrite @lroot@(ien,*)
 "RTN","SAMIUR",676,0)
- . ; set name=name_","_SAMIPATS(ien,dfn,"sinamel")
+ . ;
 "RTN","SAMIUR",677,0)
- . new nuhref
+ . quit:$get(@lroot@(ien,"siteid"))'=site
 "RTN","SAMIUR",678,0)
- . set nuhref="<td data-search="""_name_""" data-order="""_name_""">"
+ . ;
 "RTN","SAMIUR",679,0)
- . set nuhref=nuhref_"<form method=POST action=""/vapals"">"
+ . merge ^gpl("worklist","lroot",ien)=@lroot@(ien)
 "RTN","SAMIUR",680,0)
- . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""newcase"">"
+ . merge SAMIPATS(ien,dfn)=@lroot@(ien)
 "RTN","SAMIUR",681,0)
- . set nuhref=nuhref_"<input type=hidden name=""dfn"" value="_dfn_">"
+ . new name set name=$get(SAMIPATS(ien,dfn,"saminame"))
 "RTN","SAMIUR",682,0)
- . set nuhref=nuhref_"<input type=hidden name=""siteid"" value="_site_">"
+ . ; new name set name=$get(SAMIPATS(ien,dfn,"sinamef"))
 "RTN","SAMIUR",683,0)
- . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
+ . ; set name=name_","_SAMIPATS(ien,dfn,"sinamel")
 "RTN","SAMIUR",684,0)
- . set nuhref=nuhref_"</td>"
+ . new nuhref
 "RTN","SAMIUR",685,0)
- . set SAMIPATS(ien,dfn,"workref")=nuhref
+ . set nuhref="<td data-search="""_name_""" data-order="""_name_""">"
 "RTN","SAMIUR",686,0)
- . quit
+ . set nuhref=nuhref_"<form method=POST action=""/vapals"">"
 "RTN","SAMIUR",687,0)
- ;
+ . set nuhref=nuhref_"<input type=hidden name=""samiroute"" value=""newcase"">"
 "RTN","SAMIUR",688,0)
- merge ^gpl("worklist","pats")=SAMIPATS
+ . set nuhref=nuhref_"<input type=hidden name=""dfn"" value="_dfn_">"
 "RTN","SAMIUR",689,0)
- ;
+ . set nuhref=nuhref_"<input type=hidden name=""siteid"" value="_site_">"
 "RTN","SAMIUR",690,0)
- quit  ; end of WKLIST
+ . set nuhref=nuhref_"<input value="""_name_""" class=""btn btn-link"" role=""link"" type=""submit""></form>"
 "RTN","SAMIUR",691,0)
- ;
+ . set nuhref=nuhref_"</td>"
 "RTN","SAMIUR",692,0)
- ;
+ . set SAMIPATS(ien,dfn,"workref")=nuhref
 "RTN","SAMIUR",693,0)
- ;
+ . quit
 "RTN","SAMIUR",694,0)
+ ;
+"RTN","SAMIUR",695,0)
+ merge ^gpl("worklist","pats")=SAMIPATS
+"RTN","SAMIUR",696,0)
+ ;
+"RTN","SAMIUR",697,0)
+ quit  ; end of WKLIST
+"RTN","SAMIUR",698,0)
+ ;
+"RTN","SAMIUR",699,0)
+ ;
+"RTN","SAMIUR",700,0)
+ ;
+"RTN","SAMIUR",701,0)
 EOR ; end of SAMIUR
 "RTN","SAMIUR2")
-0^2^B1328996811
+0^2^B1328996822
 "RTN","SAMIUR2",1,0)
-SAMIUR2 ;ven/gpl - user reports cont ;2021-08-26t22:53z
+SAMIUR2 ;ven/gpl - user reports cont ;2021-08-28t16:10z
 "RTN","SAMIUR2",2,0)
- ;;18.0;SAMI;**5,11,12,13**;2020-01;Build 2
+ ;;18.0;SAMI;**5,11,12,14**;2020-01;Build 3
 "RTN","SAMIUR2",3,0)
- ;;18.13
+ ;;18.14
 "RTN","SAMIUR2",4,0)
  ;
 "RTN","SAMIUR2",5,0)
@@ -1695,7 +1709,7 @@ SAMIUR2 ;ven/gpl - user reports cont ;2021-08-26t22:53z
 "RTN","SAMIUR2",23,0)
  ;
 "RTN","SAMIUR2",24,0)
- ;@last-update 2021-08-11t21:53z
+ ;@last-update 2021-08-28t16:10z
 "RTN","SAMIUR2",25,0)
  ;@application Screening Applications Management (SAM)
 "RTN","SAMIUR2",26,0)
@@ -4181,13 +4195,13 @@ WSVALS(RTN,FILTER) ; display form values from graph
 "RTN","SAMIUR2",1266,0)
 EOR ; end of routine SAMIUR2
 "RTN","SAMIURUL")
-0^3^B100108
+0^3^B101039
 "RTN","SAMIURUL",1,0)
-SAMIURUL ;ven/gpl - user reports log ;2021-08-26T18:33Z
+SAMIURUL ;ven/gpl - user reports log ;2021-08-28T16:10Z
 "RTN","SAMIURUL",2,0)
- ;;18.0;SAMI;**12,13**;2020-01;Build 2
+ ;;18.0;SAMI;**12,14**;2020-01;Build 3
 "RTN","SAMIURUL",3,0)
- ;;18.13
+ ;;18.14
 "RTN","SAMIURUL",4,0)
  ;
 "RTN","SAMIURUL",5,0)
@@ -4229,7 +4243,7 @@ SAMIURUL ;ven/gpl - user reports log ;2021-08-26T18:33Z
 "RTN","SAMIURUL",23,0)
  ;
 "RTN","SAMIURUL",24,0)
- ;@last-update 2021-08-26T18:33Z
+ ;@last-update 2021-08-28T16:10Z
 "RTN","SAMIURUL",25,0)
  ;@application Screening Applications Management (SAM)
 "RTN","SAMIURUL",26,0)
@@ -4523,30 +4537,38 @@ SAMIURUL ;ven/gpl - user reports log ;2021-08-26T18:33Z
 "RTN","SAMIURUL",170,0)
  ; SAMIUR, SAMIUR2 make changes to user reports as requested.
 "RTN","SAMIURUL",171,0)
- ; Reports changed were enrollment, activity, and follow-up.
+ ; Reports changed were Enrollment, Activity, and Follow-up.
 "RTN","SAMIURUL",172,0)
  ;
 "RTN","SAMIURUL",173,0)
- ;
+ ; 2021-08-28 ven/gpl 18.14
 "RTN","SAMIURUL",174,0)
- ;@contents
+ ; SAMIUR, SAMIUR2 fix bugs causing Activity report to work incorrectly.
 "RTN","SAMIURUL",175,0)
- ; SAMIUR user reports
+ ; Also fixed problem with Work List.
 "RTN","SAMIURUL",176,0)
- ; SAMIUR2 user reports cont
+ ;
 "RTN","SAMIURUL",177,0)
- ; SAMIURUL user reports log
+ ;
 "RTN","SAMIURUL",178,0)
- ;
+ ;@contents
 "RTN","SAMIURUL",179,0)
- ; SAMIUR1 [to be added]
+ ; SAMIUR user reports
 "RTN","SAMIURUL",180,0)
- ;
+ ; SAMIUR2 user reports cont
 "RTN","SAMIURUL",181,0)
- ;
+ ; SAMIURUL user reports log
 "RTN","SAMIURUL",182,0)
  ;
 "RTN","SAMIURUL",183,0)
+ ; SAMIUR1 [to be added]
+"RTN","SAMIURUL",184,0)
+ ;
+"RTN","SAMIURUL",185,0)
+ ;
+"RTN","SAMIURUL",186,0)
+ ;
+"RTN","SAMIURUL",187,0)
 EOR ; end of SAMIURUL
 "VER")
 8.0^22.2

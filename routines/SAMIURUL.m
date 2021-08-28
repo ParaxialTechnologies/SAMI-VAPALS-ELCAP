@@ -168,7 +168,11 @@ SAMIURUL ;ven/gpl - user reports log ;2021-08-26T18:33Z
  ;
  ; 2021-08-26 ven/gpl 18.14 de044cf9
  ; SAMIUR, SAMIUR2 make changes to user reports as requested.
- ; Reports changed were enrollment, activity, and follow-up.
+ ; Reports changed were Enrollment, Activity, and Follow-up.
+ ;
+ ; 2021-08-28 ven/gpl 18.14
+ ; SAMIUR, SAMIUR2 fix bugs causing Activity report to work incorrectly.
+ ; Also fixed problem with Work List.
  ;
  ;
  ;@contents

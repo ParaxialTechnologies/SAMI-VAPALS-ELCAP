@@ -1,6 +1,6 @@
 SAMIURUL ;ven/gpl - user reports log ;2021-08-26T18:33Z
- ;;18.0;SAMI;**12,13**;2020-01;
- ;;18.13
+ ;;18.0;SAMI;**12,14**;2020-01;
+ ;;18.14
  ;
  ; SAMIURUL contains the development log & module documentation for
  ; the VAPALS-ELCAP user-reports routines SAMIUR & SAMIUR2.
@@ -21,7 +21,7 @@ SAMIURUL ;ven/gpl - user reports log ;2021-08-26T18:33Z
  ;@copyright 2021, mcglk & toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-08-26T18:33Z
+ ;@last-update 2021-08-28T16:10Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)

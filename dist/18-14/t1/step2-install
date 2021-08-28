@@ -1,0 +1,27 @@
+#!/bin/sh
+
+ENV="/usr/bin/env"
+
+CP="$ENV cp"
+GIT="$ENV git"
+MKDIR="$ENV mkdir"
+RM="$ENV rm"
+
+REPO="$HOME/lib/silver/a-sami-vapals-elcap--vo-osehra-github"
+INDIR=`pwd`
+
+if [ -f "$REPO/ISOLATED-GIT-REPO" ]; then
+   echo "Updating web-application files from $INDIR:"
+   for I in form-fields www; do
+       printf "* Installing \$REPO/docs/$I ... "
+       $RM -rf $REPO/docs/$I
+       $CP -r $INDIR/$I $REPO/docs
+       echo "done."
+   done
+else
+   echo "Found a valid Git repository; pulling updates ..."
+   cd $REPO
+   $GIT pull
+fi
+
+echo "Update complete."

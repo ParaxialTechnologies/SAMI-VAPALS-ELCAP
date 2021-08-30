@@ -117,6 +117,13 @@
                     // changed from "-" to anything else; which occurs on subsequent scans.
                     $("#cect" + noduleId + "nt").trigger('change');
                 }
+                if (isItNewValue === "pw") {
+                    $("#cect" + noduleId + "st").val("re");
+                } else {
+                    if ($("#cect" + noduleId + "st").val() === "re" ) {
+                        $("#cect" + noduleId + "st").val("-");
+                    }
+                }
                 // console.log(logPrefix + 'exiting');
             }
 

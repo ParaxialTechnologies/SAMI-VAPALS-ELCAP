@@ -1,6 +1,6 @@
-SAMIUR ;ven/gpl - user reports ;2021-08-11t21:53z
- ;;18.0;SAMI;**5,10,11,12**;2020-01;Build 4
- ;;18.12
+SAMIUR ;ven/gpl - user reports ;2021-08-28t16:10z
+ ;;18.0;SAMI;**5,10,11,12,14**;2020-01;Build 4
+ ;;18.14
  ;
  ; SAMIUR contains a web service & associated subroutines to produce
  ; VAPALS-ELCAP user reports.
@@ -21,7 +21,7 @@ SAMIUR ;ven/gpl - user reports ;2021-08-11t21:53z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-08-11t21:53z
+ ;@last-update 2021-08-28t16:10z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -363,8 +363,8 @@ PNAME(type,phrase) ; page name for report
  ;
  ; extrinsic returns the PAGE NAME for the report
  ;
- ; if type="followup" quit "Followup next 30 days -"_$get(phrase)
- if type="followup" quit "Followup "_$get(phrase)
+ ; if type="followup" quit "Participant Followup next 30 days -"_$get(phrase)
+ if type="followup" quit "Participant Followup "_$get(phrase)
  ; if type="activity" quit "Activity last 30 days -"_$get(phrase)
  if type="activity" quit "Activity "_$get(phrase)
  if type="missingct" quit "Intake but no CT Evaluation"_$get(phrase)
@@ -409,7 +409,8 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  ;
  new strdt,enddt,fmstrdt,fmenddt
  set strdt=$get(filter("start-date"))
- set fmstrdt=$$KEY2FM^SAMICASE(strdt)
+ ;set fmstrdt=$$KEY2FM^SAMICASE(strdt)
+ set fmstrdt=$$FMDT^SAMIUR2(strdt)
  if fmstrdt=-1 do  ;
  . set fmstrdt=2000101
  . if type="followup" set fmstrdt=$$NOW^XLFDT
@@ -418,7 +419,8 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  if strdt="" set filter("start-date")=$$VAPALSDT^SAMICASE(fmstrdt)
  ;
  set enddt=$get(filter("end-date"))
- set fmenddt=$$KEY2FM^SAMICASE(enddt)
+ ;set fmenddt=$$KEY2FM^SAMICASE(enddt)
+ set fmenddt=$$FMDT^SAMIUR2(enddt)
  if fmenddt=-1 do  ;
  . set fmenddt=$$NOW^XLFDT
  . if type="followup" set fmenddt=$$FMADD^XLFDT($$NOW^XLFDT,31)
@@ -445,28 +447,54 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . set siform=$order(items("siform-"))
  . new status set status=$get(@root@("graph",sid,siform,"sistatus"))
  . if type="inactive",status="active" quit  ; for inactive report
- . if type'="inactive",status'="active" quit  ; for other reports
+ . ;if type'="inactive",status'="active" quit  ; for other reports
+ . new eligible set eligible=$get(@root@("graph",sid,siform,"sicechrt"))
+ . if type="enrollment",eligible'="y" quit  ; must be eligible
+ . new enrolled set enrolled=$g(@root@("graph",sid,siform,"sildct"))
+ . if type="enrollment",enrolled'="y" quit  ; must be enrolled
  . ;
- . set ceform=$order(items("ceform-a"),-1)
- . set (cefud,fmcefud,cedos,fmcedos)=""
- . if ceform'="" do  ;
+ . set (ceform,cefud,fmcefud,cedos,fmcedos)=""
+ . f  set ceform=$order(items(ceform),-1) q:ceform=""  q:cefud'=""  d  ;
+ . . q:ceform'["ceform"
  . . set cefud=$get(@root@("graph",sid,ceform,"cefud"))
- . . if cefud'="" set fmcefud=$$KEY2FM^SAMICASE(cefud)
+ . . if cefud'="" set fmcefud=$$FMDT^SAMIUR2(cefud)
  . . set cedos=$get(@root@("graph",sid,ceform,"cedos"))
- . . if cedos'="" set fmcedos=$$KEY2FM^SAMICASE(cedos)
+ . . if cedos'="" set fmcedos=$$FMDT^SAMIUR2(cedos)
  . . quit
  . ;
  . set edate=$get(@root@("graph",sid,siform,"sidc"))
  . if edate="" set edate=$get(@root@("graph",sid,siform,"samicreatedate"))
- . set efmdate=$$KEY2FM^SAMICASE(edate)
+ . set efmdate=$$FMDT^SAMIUR2(edate)
  . set edate=$$VAPALSDT^SAMICASE(efmdate)
  . ;
+ . new latef,latefdt set (latef,latefdt)="" ; latest form for activity report
+ . new aform,aformdt set (aform,aformdt)=""
+ . new anyform set anyform=""
+ . new proot set proot=$na(@root@("graph",sid))
+ . for  set anyform=$order(items("sort",anyform),-1) q:aform'=""  q:anyform=""  d  ;
+ . . new tempf set tempf=""
+ . . f  set tempf=$order(items("sort",anyform,tempf)) q:tempf=""  q:aform'=""  d  ;
+ . . . if latef="" d  ; record the latest form for activity report
+ . . . . set latefdt=anyform ; date of latest form
+ . . . . new latekey set latekey=$order(items("sort",anyform,tempf,""))
+ . . . . set latef=$order(items("sort",anyform,tempf,latekey,""))
+ . . . if tempf["fuform" q  ; don't want any followup forms
+ . . . if tempf["bxform" q  ; don't want any biopsy forms
+ . . . new tempk set tempk=$order(items("sort",anyform,tempf,""))
+ . . . if $g(@proot@(tempk,"cefud"))="" q  ; no followup date
+ . . . new tempt set tempt=$order(items("sort",anyform,tempf,tempk,""))
+ . . . set cefud=$g(@proot@(tempk,"cefud"))
+ . . . set fmcefud=$$FMDT^SAMIUR2(cefud)
+ . . . set aform=tempt
+ . . . set aformdt=anyform
  . ;
  . if type="followup" do  ;
  . . ; new nplus30 set nplus30=$$FMADD^XLFDT($$NOW^XLFDT,31)
  . . if +fmcefud<fmstrdt quit  ; before start date
  . . if +fmcefud<(fmenddt+1) do  ; before end date
- . . . quit:ceform=""  ; no ct eval so no followup date
+ . . . quit:cefud=""  ; no followup date
+ . . . set SAMIPATS(fmcefud,zi,"aform")=aform
+ . . . set SAMIPATS(fmcefud,zi,"aformdt")=aformdt
  . . . set SAMIPATS(fmcefud,zi,"edate")=edate
  . . . set SAMIPATS(fmcefud,zi)=""
  . . . if ceform="" set cefud="baseline"
@@ -482,12 +510,12 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . . quit
  . ;
  . if type="activity" do  ;
- . . ; new nminus30 set nminus30=$$FMADD^XLFDT($$NOW^XLFDT,-31)
- . . new anyform set anyform=$order(items("sort",""),-1)
- . . new fmanyform set fmanyform=$$KEY2FM^SAMICASE(anyform)
+ . . new fmanyform set fmanyform=$$FMDT^SAMIUR2(latefdt)
  . . if fmanyform<fmstrdt quit  ; before the start date
  . . ; if fmanyform<(fmenddt+1)!(efmdate>fmenddt) do  ; need any new form
  . . if fmanyform<(fmenddt+1)  do  ;
+ . . . set SAMIPATS(efmdate,zi,"aform")=latef
+ . . . set SAMIPATS(efmdate,zi,"aformdt")=$$VAPALSDT^SAMICASE(fmanyform)
  . . . set SAMIPATS(efmdate,zi,"edate")=edate
  . . . set SAMIPATS(efmdate,zi)=""
  . . . if ceform="" set cefud="baseline"
@@ -513,7 +541,8 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . . . set zj=$order(@gr@(zj))
  . . . quit:zj=""
  . . . ;
- . . . new stat set stat=$get(@gr@(zj,"samistatus"))="incomplete"
+ . . . new stat
+ . . . set stat=$get(@gr@(zj,"samistatus"))
  . . . if stat="" set stat="incomplete"
  . . . if stat="incomplete" do  ;
  . . . . set complete=0

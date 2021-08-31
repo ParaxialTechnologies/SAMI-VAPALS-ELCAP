@@ -66,9 +66,9 @@
                 // console.log(logPrefix + 'isItNewValue=' + isItNewValue);
                 // if the "is it new" selection is a value that means the nodule is no longer present or otherwise
                 // resolved, clear MOST fields. These values include: resolved (pw), not a nodule (px),
-                // resected (pr), Not in outside report (pk), not included in scan (pv)
+                // resected (pr)
                 // NB: For IE support, we must use indexOf() instead of .includes(...);
-                let noduleResolved = ['pw', 'px', 'pr', 'pk', 'pv'].indexOf(isItNewValue) > -1;
+                let noduleResolved = ['pw', 'px', 'pr'].indexOf(isItNewValue) > -1;
                 // console.log(logPrefix + 'noduleResolved=' + noduleResolved);
                 if (noduleResolved) {
                     //reduce the list to exclude the fields: status (st) and likely location (ll)
@@ -116,6 +116,13 @@
                     // fixes a bug where L & W fields were required when nodule was solid and "is it new" was
                     // changed from "-" to anything else; which occurs on subsequent scans.
                     $("#cect" + noduleId + "nt").trigger('change');
+                }
+                if (isItNewValue === "pw") {
+                    $("#cect" + noduleId + "st").val("re");
+                } else {
+                    if ($("#cect" + noduleId + "st").val() === "re" ) {
+                        $("#cect" + noduleId + "st").val("-");
+                    }
                 }
                 // console.log(logPrefix + 'exiting');
             }

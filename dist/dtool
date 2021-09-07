@@ -1,0 +1,635 @@
+#!/usr/bin/env python3
+#------------------------------------------------------------------------------
+# Packages up a release based on the recipe file in the current directory.
+#
+# * Reads the -recipe.txt file.
+# * Makes sure all the files are present and correct.
+# * If so, creates a ZIP file with all the components.
+#------------------------------------------------------------------------------
+
+import argparse
+# import copy
+import filecmp
+import getpass
+import json
+import logging
+import os
+# import pdb
+import platform
+import pprint
+import re
+import shutil
+import sys
+import subprocess
+# import textwrap
+
+# pdb.set_trace()
+
+__AUTHOR__  = 'Ken McGlothlen <ken.mcglothlen@vistaexpertise.net>'
+__VERSION__ = '0.1'
+__YEAR__    = 2021
+
+__COPYRIGHT__ = (
+    f"""{os.path.basename(sys.argv[0])} (makepkg) v{__VERSION__}\n"""
+    f"""VEN recipe version 2.2-a2"""
+    f"""Copyright (c) {__YEAR__} {__AUTHOR__}"""
+)
+
+def eprint(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
+
+class AppErr(Exception):
+    """Application-specific exception."""
+    pass
+
+class App():
+    """
+    Packages up a release based on the recipe file in the current directory.
+
+    * Reads the -recipe.txt file.
+    * Makes sure all the files are present and correct.
+    * If so, creates a ZIP file with all the components.
+    """
+
+    def make_argparser(self):
+        """--------------------------------------------------------------------
+        Creates an ArgumentParser object, loads it with arguments, and returns
+        it. Note that argparse automatically provides --help (-h), which is
+        nice.
+        --------------------------------------------------------------------"""
+        a = argparse.ArgumentParser(
+            description="""
+            Useful documentation script for SAMI releases. Relies heavily on a
+            properly updated recipe file (using recipe format version 2.2-a2).
+            """,
+            formatter_class=argparse.ArgumentDefaultsHelpFormatter
+        )
+        #----- Options.
+        a.add_argument(
+            "--version", "-V",
+            action="store_true",
+            help="shows the version information, then exits"
+        )
+        a.add_argument(
+            "--verbose", "-v",
+            action="count",
+            default=0,
+            help="emits additional information to stderr, up to -vvv"
+        )
+        #----- Actual arguments.
+        a.add_argument(
+            "command",
+            nargs='+',
+            help="""
+            This is currently limited to 'makezip', which verifies that
+            everything is set up properly in the current dist directory
+            according to the recipe file, and 
+            """
+        )
+        return a
+
+    def __init__(self, argv=None):
+        self.hbar = "▧" * 79
+        # Arguments may be supplied in the function call, but by default, they
+        # should be on the command line.
+        if not argv:
+            argv = sys.argv
+        self.scriptdir = os.path.dirname(os.path.realpath(sys.argv[0]))
+        self.scriptname = os.path.basename(sys.argv[0])
+        self.configfile = f"{self.scriptdir}/.{self.scriptname}.json"
+        self.rundir = os.getcwd()
+        # Process all the arguments.
+        argparser = self.make_argparser()
+        self.args = argparser.parse_args()
+        # If --version, print that and die.
+        if self.args.version:
+            print(__COPYRIGHT__)
+            sys.exit(0)
+        # Set up logging
+        if self.args.verbose == None or self.args.verbose == 0:
+            logging.basicConfig(level=logging.WARNING)
+        elif self.args.verbose == 1:
+            logging.basicConfig(level=logging.INFO)
+        else:
+            logging.basicConfig(level=logging.DEBUG)
+        self.log = logging.getLogger(__name__)
+        # Set up pretty-printing.
+        self.pp = pprint.PrettyPrinter(indent=2)
+
+    def plural(self, value, one="", more="s"):
+        """
+        Returns a suffix. For example:
+            s = self.plural(value)
+            print(f"You have {value} ftang{s}")
+        prints "You have 1 ftang" or "You have 2 ftangs" (for example).
+
+        You can also use supplied suffixes, so
+            es = self.plural(value, more="es")
+            print(f"You have {value} suffix{es}")
+        or
+            are = self.plural(value, one="is", more="are")
+            ies = self.plural(value, one="y", more="ies")
+            print(f"There {are} {value} bab{ies}")
+        """
+        return one if value == 1 else more
+
+    def repo_dir(self):
+        """
+        Returns the repository directory defined in the config file.
+        """
+        user = getpass.getuser()
+        host = platform.node().split('.').pop(0)
+        for i in [f"{user}@{host}", f"{user}@", f"@{host}", "@"]:
+            if i in self.config["repo"]:
+                self.log.debug(
+                    f"""Repo found for '{i}': {self.config["repo"][i]}"""
+                )
+                return os.path.expanduser(self.config["repo"][i])
+        raise AppErr(
+            f"'Neither user '{user}' or host '{host}'"
+            f" are found in '{self.configfile}'"
+        )
+
+    def read_config_file(self, fn):
+        """
+        Sucks in a JSON file and returns it as a dictionary.
+        """
+        # Suck in the file as a series of lines.
+        fn = os.path.expanduser(fn)
+        if self.args.verbose < 1:
+            print(f"Reading config file '{fn}' ... ", end="")
+        try:
+            with open(fn) as f:
+                self.log.info(f"Opened '{fn}'")
+                lines = f.readlines()
+        except FileNotFoundError as e:
+            raise AppErr(
+                "Exception: FileNotFoundError\n"
+                f" Couldn't find configuration file '{fn}';\n"
+                " no configuration read; stopped."
+            )
+        except Exception:
+            pass
+        # Strict JSON doesn't allow comments, which I think is unconscionable.
+        # So this program does. The only allowable form is the "//" form, and
+        # those must be the first non-whitespace characters on the line (no
+        # end-of-line comments allowed). We'll strip those before parsing.
+        totlines = len(lines)
+        self.log.debug(
+            f"""Read {totlines:,} line{self.plural(totlines)}"""
+        )
+        lines = [
+            line for line in lines
+            if not re.search(r"^\s*//",line)
+        ]
+        numlines = len(lines)
+        self.log.debug(
+            f"Removed {totlines - numlines:,} comment lines."
+        )
+        s = "".join(lines)
+        try:
+            config = json.loads(s)
+        except json.decoder.JSONDecodeError as e:
+            self.log.error(f"Error in JSON file '{fn}':")
+            self.log.error(f"{e}: lines follow:")
+            m = re.search(r": line (\d+) column (\d+)", str(e))
+            if m:
+                linenum = int(m.group(1)) - 1
+                start = linenum - 3 if linenum > 2 else 0
+                numlines = len(lines)
+                end = linenum + 3 if linenum < numlines - 2 else numlines
+                for i in range(start, end):
+                    self.log.error(
+                        f"""{i + 1:>3d}{">" if i == linenum else " "}"""
+                        f"""{lines[i].rstrip()}"""
+                    )
+            raise e
+        self.log.info(
+            f"Successfully parsed {numlines:,}"
+            f" line{self.plural(numlines)} of JSON."
+        )
+        if self.args.verbose < 1:
+            print("done.")
+        return config
+
+    def debug_string_conf_entry(self, flag, k):
+        return (
+            f"{flag:>5} k = '{k}', v = '{self.config[k]}'"
+            f", type = {type(self.config[k]).__name__}"
+        )
+
+    def conf_entry_add(self, k, v):
+        if k in self.config:
+            if type(self.config[k]) is list:
+                self.config[k].append(v)
+                self.log.debug(self.debug_string_conf_entry("add", k))
+            else:
+                self.config[k] = [self.config[k], v]
+                self.log.debug(self.debug_string_conf_entry("conv", k))
+        else:
+            self.config[k] = v
+            self.log.debug(self.debug_string_conf_entry("new", k))
+
+    def conf_entry_appendlast(self, k, v):
+        self.log.debug(f"type = {type(self.config[k])}")
+        if type(self.config[k]) is list:
+            self.config[k][-1] += f"{v}"
+            self.log.debug(self.debug_string_conf_entry("appe", k))
+            return
+        self.config[k] += v
+        self.log.debug(self.debug_string_conf_entry("appn", k))
+
+    def debug_mark_conf_entry(self, flag, state, fk, k):
+        t = "routine-mark-set"
+        return (
+            f"{flag:>5} state = '{t}-{state}', fk = '{fk}'"
+            f" k = '{k}', v = '{self.config[t][state][fk][k]}'"
+            f", type = {type(self.config[t][state][fk][k]).__name__}"
+        )
+
+    def conf_mark_add(self, state, fk, k, v):
+        state = state.split("-")[-1]
+        target = self.config["routine-mark-set"][state][fk]
+        if k in target:
+            if type(target[k]) is list:
+                target[k].append(v)
+                self.log.debug(
+                    self.debug_mark_conf_entry("appe", state, fk, k)
+                )
+            else:
+                target[k] = [target[k], v]
+                self.log.debug(
+                    self.debug_mark_conf_entry("conv", state, fk, k)
+                )
+        else:
+            target[k] = v
+            self.log.debug(self.debug_mark_conf_entry("new", state, fk, k))
+
+    def read_recipe_file(self):
+        """
+        Works with @%aarv 2.2-a2.
+        """
+        with os.scandir(self.rundir) as d:
+            recipes = [f for f in d if f.name.endswith("-recipe.txt")]
+        nrecipes = len(recipes)
+        if nrecipes < 1:
+            raise AppErr("No recipe file in the current directory; stopped")
+        if nrecipes > 1:
+            raise AppErr(
+                f"Found {nrecipes} recipe file{self.plural(nrecipes)} in"
+                f" the current directory: {[f.name for f in recipes]}"
+                "; stopped"
+            )
+        recipe_file = recipes.pop(0)
+        self.config["routine-mark-set"] = {
+            "before": {},
+            "after":  {}
+        }
+        print(f"Reading recipe file '{recipe_file.name}' ... ", end="")
+        with open(recipe_file.name, "r") as f:
+            state = "nothing"
+            regex = {
+                "attrline":
+                  re.compile(r"^#\s+;(@%?[-\w]+)\s+([^;]+)(?:\s*;.*)?")
+                , "addnline":
+                  re.compile(r"^#\s+;\s+(.*)")
+                , "directiveline":
+                  re.compile(r"^#(rns|dns|fns|rms)\b")
+            }
+            attribute_types = {
+                "@%aa":      "application",
+                "@%aan":     "app-name",
+                "@%aav":     "app-version",
+                "@%aart":    "recipe-last-revised",
+                "@%aarv":    "recipe-format",
+                "@%npa":     "namespace-pretaxis-authority",
+                "@%aavapid": "va-version",
+                "@%aavad":   "va-date"
+            }                
+            softattr_types = {
+                "@dev":       "developer-primary",
+                "@dev-add":   "developer",
+                "@dev-org":   "developer-organization",
+                "@copyright": "copyright",
+                "@license":   "license",
+                "@rmsk":      "routine-mark-set"
+            }
+            directive_types = {
+                "rns": "routine-name-set",
+                "dns": "dataset-name-set",
+                "fns": "file-name-set",
+                "rms": "routine-mark-set"
+            }
+            mark_types = {
+                "@%uv":         "file-version",
+                "@%uvrdate":    "revised-date",
+                "@%uvsuma":     "checksum-a",
+                "@%uvsumb":     "checksum-b",
+                "@%uvsumc":     "checksum-c",
+                "@%uvsumd":     "checksum-d",
+                "@%uvsume":     "checksum-e",
+                "@%uvsizc":     "total-chars",
+                "@%uvsizl":     "total-lines",
+                "@%uvsizt":     "total-tags",
+                "@%uval":       "vista-locality",
+                "@%uvab":       "build",
+                "@%uvap":       "last-patch",
+                "@%uvapl":      "patch-list",
+                "@%uva":        "application-version",
+                "@%uvad":       "va-date",
+                "@%uvaa":       "application"
+            }
+            for line in f:
+                line = line.strip()
+                self.log.debug(f">>>{state}: {line}")
+                if line.startswith("#eof"):
+                    self.log.debug("  >: END OF FILE")
+                    break
+                if line == "":
+                    # Blank lines are skipped.
+                    self.log.debug("  >: Skipped blank line")
+                    continue
+                if line == "#":
+                    # Blank comments are skipped.
+                    self.log.debug("  >: Skipped blank comment")
+                    continue
+                if line.startswith("# ;@%"):
+                    # That's an attribute line. In most cases, it's a
+                    # standalone one-line thing, but some are multiline
+                    # elements. These only occur in the header.
+                    self.log.debug("  >: Attribute line")
+                    m = re.search(regex["attrline"], line)
+                    if m:
+                        k = attribute_types[m.group(1)]
+                        v = m.group(2).strip()
+                        self.conf_entry_add(k, v)
+                        state = "nothing"
+                        continue
+                    raise AppErr(f"Bad match in attribute line '{line}'")
+                if line.startswith("# ;@"):
+                    # That's a soft-attribute line. The @dev* ones in
+                    # particular are potentially multiline elements.
+                    self.log.debug("  >: Soft-attribute line")
+                    if line.endswith("@recipe-credits"):
+                        self.log.debug("  >: Skipped")
+                        continue
+                    m = re.search(regex["attrline"], line)
+                    if m:
+                        k = softattr_types[m.group(1)]
+                        v = m.group(2).strip()
+                        if k == "routine-mark-set":
+                            state = f"routine-mark-set-{v}"
+                            self.log.debug(f"state change = '{state}'")
+                            continue
+                        self.conf_entry_add(k, v)
+                        state = k if k.startswith("developer") else "nothing"
+                        continue
+                    raise AppErr(f"Bad match in soft-attribute line '{line}'")
+                if line.startswith("#rns "):
+                    # Routine name set.
+                    state = "routine-name-set"
+                    self.log.debug(f"state change = '{state}'")
+                    continue
+                if line.startswith("#dns "):
+                    # Dataset name set.
+                    state = "dataset-name-set"
+                    self.log.debug(f"state change = '{state}'")
+                    continue
+                if line.startswith("#fns "):
+                    # File name set.
+                    state = "file-name-set"
+                    self.log.debug(f"state change = '{state}'")
+                    continue
+                if line.startswith("#rms "):
+                    # Routine mark set.
+                    state = "routine-mark-set"
+                    self.log.debug(f"state change = '{state}'")
+                    continue
+                if state.startswith("developer"):
+                    s = line.split(";")[-1].strip()
+                    self.conf_entry_appendlast(state, f" <{s}>")
+                    continue
+                if state == "routine-name-set":
+                    self.conf_entry_add(state, line)
+                    for t in ["before", "after"]:
+                        self.config["routine-mark-set"][t][line] = {}
+                    continue
+                if state == "file-name-set":
+                    self.conf_entry_add(state, line)
+                    continue
+                if state == "routine-mark-set":
+                    self.log.debug(f"*** UNRECOGNIZED LINE in '{state}'")
+                    continue
+                if state.startswith("routine-mark-set-"):
+                    if not line.startswith("@%"):
+                        fk = line
+                        self.log.debug(f"Starting '{state}' with file '{fk}'")
+                        continue
+                    bits = line.split(" ", 1)
+                    k = mark_types[bits[0]]
+                    # Sometimes, fields are left blank. Boo!
+                    if len(bits) > 1:
+                        v = bits[1].strip()
+                    else:
+                        v = ""
+                    if k == "patch-list":
+                        v = v.strip("*").split(",")
+                    elif k == "vista-locality":
+                        if v.upper() == "N":
+                            v = "national"
+                        elif v == "*":
+                            v = "local"
+                        elif v.upper() == "Y":
+                            v = "national + localmods"
+                        else:
+                            v = f"unknown ('{v}')"
+                    self.conf_mark_add(state, fk, k, v)
+                    continue
+                if line.startswith("#"):
+                    # Other comment lines are skipped.
+                    self.log.debug("  >: Skipped comment line")
+                    continue
+                self.log.debug(f"  >: Unhandled line")
+                state = "nothing"
+        print("done.")
+        return recipe_file.name
+
+    def dist_dir(self):
+        bits = self.config["app-version"].split("-t")
+        if len(bits) > 1:
+            bits[1] = f"t{bits[1]}"
+        return os.path.join(self.repo, "dist", *bits)
+
+    def verify_key_files(self):
+        print(
+            "Comparing files between this directory and"
+            " the repo's dist directory ... ",
+            end=""
+        )
+        files_to_compare = [
+            fn for fn in self.config["file-name-set"]
+            if fn.endswith(".txt") or fn.endswith(".kid")
+        ]
+        for fn in files_to_compare:
+            fn1 = os.path.join(self.dist, fn)
+            fn2 = os.path.join(self.rundir, fn)
+            if not os.path.exists(fn1):
+                raise AppErr(
+                    f"'{fn}' doesn't exist in '{self.dist}';\n"
+                    f"  Please make sure you've updated the Git repo."
+                )
+            if not os.path.exists(fn2):
+                raise AppErr(
+                    f"'{fn}' doesn't exist in '{self.rundir}'"
+                    f" Please copy the file from the Git repo."
+                )
+            if not filecmp.cmp(fn1, fn2):
+                raise AppErr(
+                    f"The '{fn}' file is different between the one in\n"
+                    f" '{self.dist}'\n"
+                    " and\n"
+                    f" '{self.rundir}'\n"
+                    "Please resolve this properly before trying again."
+                )
+        print("done.")
+
+    def copy_webapp_files_to_install(self):
+        if len(self.webapp_dirs) < 1:
+            print("No webapp files to copy.")
+            return
+        print("Copying webapp files to install directory ... ", end="")
+        srcdir = self.repo
+        dstdir = self.webapp_install_dir
+        try:
+            os.makedirs(dstdir)
+        except FileExistsError as e:
+            pass
+        for fspec in self.webapp_dirs:
+            fspec = fspec.rstrip("/*")
+            src = os.path.join(srcdir, fspec)
+            dst = os.path.join(dstdir, fspec)
+            shutil.copytree(src, dst)
+        print("done.")
+
+    def write_prep_script(self, fn):
+        print(f"Writing prep script '{fn}' ... ", end="")
+        dirs_to_backup = [fspec.strip("/*") for fspec in self.webapp_dirs]
+        dirs_to_backup = " ".join(dirs_to_backup)
+        script = f"""
+#!/bin/sh
+
+ENV="/usr/bin/env"
+
+CP="$ENV cp"
+MKDIR="$ENV mkdir"
+RM="$ENV rm"
+TAR="$ENV tar"
+
+REPO="$HOME/lib/silver/a-sami-vapals-elcap--vo-osehra-github"
+INDIR=`pwd`
+BACKUP="./webapp-backup"
+INSTALL="./{self.webapp_dir}"
+
+cd $INDIR
+$RM -rf $BACKUP
+$MKDIR -p $BACKUP
+echo "Backing up files to $BACKUP:"
+for I in {dirs_to_backup}; do
+    printf "* Backing up \$REPO/$I ... "
+    NFILES=`(cd $REPO; $TAR cfz - $I) | (cd $BACKUP; $TAR xvfz -) 2>&1 | wc -l`
+    echo $NFILES "files."
+done
+SIZE=`du -sk $BACKUP | awk '{{print $1;}}'`
+SIZE=`dc -e "1 k $SIZE 1024.0 / p"`
+echo "Done ($SIZE MiB)."
+echo ""
+if [ -f "$REPO/ISOLATED-GIT-REPO" ]; then
+    printf "Updating web-application files from $INSTALL ... "
+    (cd $INSTALL; $TAR cfz - .) | (cd $REPO; $TAR xvfz -)
+    echo "done."
+else
+   echo "Found a valid Git repository; pulling updates ..."
+   cd $REPO
+   $GIT pull
+fi
+
+echo ""
+echo "You may now proceed with the KIDS installation."
+        """.strip() + "\n\n"
+        with open(fn, "w") as f:
+            f.write(script)
+        os.chmod(fn, 0o755)
+        print("done.")
+
+    def zip_file_name(self):
+        files = [
+            fn for fn in self.config["file-name-set"] if fn.endswith(".kid")
+        ]
+        kidfile = files.pop(0)
+        zipfile = re.sub(r"\.kid$", ".zip", kidfile)
+        return zipfile
+
+    def make_zip_file(self):
+        zipfile = self.zip_file_name()
+        if self.args.verbose < 1:
+            print(f"Making zip archive '{zipfile}' ... ", end="")
+        command = ["zip", "-r", zipfile]
+        repofiles = False
+        for fn in self.config["file-name-set"]:
+            if fn.endswith(".zip"):
+                continue
+            if "/" in fn:
+                repofiles = True
+                continue
+            command.append(fn)
+        if repofiles:
+            command.append(self.webapp_dir)
+        self.log.debug(command)
+        child = subprocess.run(command, capture_output=True)
+        if child.returncode != 0:
+            msg = (
+                f"Error making ZIP archive ({child.returncode}):\n" +
+                "----- STDOUT -----------------------------------------------\n"
+                + "{}".format(child.stdout.decode("utf-8")) +
+                "----- STDERR -----------------------------------------------\n"
+                + "{}".format(child.stdout.decode("utf-8")) +
+                "----- END --------------------------------------------------\n"
+            )
+            raise AppErr(msg)
+        if self.args.verbose < 1:
+            print("done.")
+
+    def clean_up_webapp_files(self):
+        print("Removing webapp install files ... ", end="")
+        shutil.rmtree(self.webapp_install_dir)
+        print("done.")
+            
+    def run(self):
+        self.config = self.read_config_file(self.configfile)
+        self.repo = self.repo_dir()
+        self.recipe = self.read_recipe_file()
+        # print(self.pp.pformat(self.config))
+        self.dist = self.dist_dir()
+        self.webapp_dir = "webapp-upgrade-files"
+        self.webapp_install_dir = os.path.join(self.rundir, self.webapp_dir)
+        self.webapp_dirs = [
+            fn for fn in self.config["file-name-set"] if "/" in fn
+        ]
+        self.verify_key_files()
+        # if self.dist != self.rundir:
+        #     self.verify_key_files()
+        for command in self.args.command:
+            if command == "makezip":
+                self.copy_webapp_files_to_install()
+                self.write_prep_script("upgrade-webapp")
+                self.make_zip_file()
+                self.clean_up_webapp_files()
+
+if __name__ == "__main__":
+    app = App()
+    app.run()
+        
+# ZIPFILE=`basename ${NAMESPACE}*.kid .kid`.zip
+# $RM -r $ZIPFILE
+# $ZIP -r $ZIPFILE ${NAMESPACE}*.kid ${NAMESPACE}*.txt step* "$@"
+

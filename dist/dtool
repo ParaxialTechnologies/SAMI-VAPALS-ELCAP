@@ -81,9 +81,10 @@ class App():
             "command",
             nargs='+',
             help="""
-            This is currently limited to 'makezip', which verifies that
-            everything is set up properly in the current dist directory
-            according to the recipe file, and 
+            Your choices are 'makezip', which verifies that everything is set
+            up properly in the current dist directory according to the recipe
+            file, and 'makescript', which just writes out the backup/install
+            script.
             """
         )
         return a
@@ -115,6 +116,17 @@ class App():
         self.log = logging.getLogger(__name__)
         # Set up pretty-printing.
         self.pp = pprint.PrettyPrinter(indent=2)
+        # Now the rest of setup.
+        self.config = self.read_config_file(self.configfile)
+        self.repo = self.repo_dir()
+        self.recipe = self.read_recipe_file()
+        # print(self.pp.pformat(self.config))
+        self.dist = self.dist_dir()
+        self.webapp_dir = "webapp-upgrade-files"
+        self.webapp_install_dir = os.path.join(self.rundir, self.webapp_dir)
+        self.webapp_dirs = [
+            fn for fn in self.config["file-name-set"] if "/" in fn
+        ]
 
     def plural(self, value, one="", more="s"):
         """
@@ -520,15 +532,22 @@ class App():
 
 ENV="/usr/bin/env"
 
-CP="$ENV cp"
+AWK="$ENV awk"
+DC="$ENV dc"
+LS="$ENV ls"
 MKDIR="$ENV mkdir"
 RM="$ENV rm"
 TAR="$ENV tar"
+TOUCH="$ENV touch"
+ZIP="$ENV zip"
 
 REPO="$HOME/lib/silver/a-sami-vapals-elcap--vo-osehra-github"
 INDIR=`pwd`
-BACKUP="./webapp-backup"
+BACKUP="./.webapp-backup"
 INSTALL="./{self.webapp_dir}"
+BACKUPLOG="./.webapp-backup.log"
+
+HBAR="-------------------------------------------------------------------------------"
 
 cd $INDIR
 $RM -rf $BACKUP
@@ -539,18 +558,26 @@ for I in {dirs_to_backup}; do
     NFILES=`(cd $REPO; $TAR cfz - $I) | (cd $BACKUP; $TAR xvfz -) 2>&1 | wc -l`
     echo $NFILES "files."
 done
-SIZE=`du -sk $BACKUP | awk '{{print $1;}}'`
-SIZE=`dc -e "1 k $SIZE 1024.0 / p"`
-echo "Done ($SIZE MiB)."
+$TOUCH $BACKUPLOG
+NOW=`date +'%Y%m%d-%H%M%S'`
+BACKZIP=".webapp-backup-$NOW.zip"
+echo $HBAR >> $BACKUPLOG
+echo $NOW >> $BACKUPLOG
+$ZIP -r $BACKZIP $BACKUP 2>&1 >> $BACKUP_LOG
+$RM -rf $BACKUP
+SIZE=`$LS -l $BACKZIP | $AWK '{{print $5;}}'
+SIZE=`$DC -e "1 k $SIZE 1024.0 / p"`
+echo "Done (${{SIZE}}B)."
 echo ""
 if [ -f "$REPO/ISOLATED-GIT-REPO" ]; then
-    printf "Updating web-application files from $INSTALL ... "
-    (cd $INSTALL; $TAR cfz - .) | (cd $REPO; $TAR xvfz -)
-    echo "done."
+    printf "Updating from $INSTALL ... "
+    NFILES=`(cd $INSTALL; $TAR cfz - .) | (cd $REPO; $TAR xvfz -) 2>&1 | wc -l`
+    echo "done (" $NFILE "files)."
 else
    echo "Found a valid Git repository; pulling updates ..."
    cd $REPO
    $GIT pull
+   echo "Done."
 fi
 
 echo ""
@@ -605,20 +632,13 @@ echo "You may now proceed with the KIDS installation."
         print("done.")
             
     def run(self):
-        self.config = self.read_config_file(self.configfile)
-        self.repo = self.repo_dir()
-        self.recipe = self.read_recipe_file()
-        # print(self.pp.pformat(self.config))
-        self.dist = self.dist_dir()
-        self.webapp_dir = "webapp-upgrade-files"
-        self.webapp_install_dir = os.path.join(self.rundir, self.webapp_dir)
-        self.webapp_dirs = [
-            fn for fn in self.config["file-name-set"] if "/" in fn
-        ]
         self.verify_key_files()
         # if self.dist != self.rundir:
         #     self.verify_key_files()
         for command in self.args.command:
+            if command == "makescript":
+                self.write_prep_script("upgrade-webapp")
+                continue
             if command == "makezip":
                 self.copy_webapp_files_to_install()
                 self.write_prep_script("upgrade-webapp")

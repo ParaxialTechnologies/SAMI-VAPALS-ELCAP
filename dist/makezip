@@ -2,33 +2,101 @@
 
 ENV="/usr/bin/env"
 
+CAT="$ENV cat"
+CMP="$ENV cmp"
 CP="$ENV cp"
+DC="$ENV dc"
+GREP="$ENV grep"
 MKDIR="$ENV mkdir"
+PRINTF="$ENV printf"
 RM="$ENV rm"
+SED="$ENV sed"
 ZIP="$ENV zip"
 
-REPO="$HOME/lib/silver/a-sami-vapals-elcap--vo-osehra-github"
-NAMESPACE="sami"
-INDIR="$HOME/run/out/$NAMESPACE"
+case "$LOGNAME" in
+    osehra )
+        REPO="$HOME/lib/silver/a-sami-vapals-elcap--vo-osehra-github"
+        ;;
+    mcglk )
+        REPO="$HOME/ven/repos/vapals-elcap-github"
+        ;;
+    * )
+        echo "Unrecognized user '$LOGNAME'; cannot proceed."
+        exit 1
+        ;;
+esac
 
-SUBDIR=$1
-shift 1
+DIST=$REPO/dist/`pwd | sed -e 's/^.*\/\([0-9][0-9]*-[0-9][0-9]*.*\)$/\1/'`
 
-$MKDIR -p $INDIR/$SUBDIR
+RECIPES=0
 
-cp -v \
-   $REPO/dist/$SUBDIR/${NAMESPACE}*.kid \
-   $REPO/dist/$SUBDIR/${NAMESPACE}*.txt \
-   $REPO/dist/$SUBDIR/step* \
-   $INDIR/$SUBDIR/
-
-for I in "$@"; do
-    $CP -rv $REPO/docs/$I $INDIR/$SUBDIR/
+for RECIPE in ./*-recipe.txt; do
+    RECIPES=`echo $RECIPES 1 + p | $DC`
+    if [ $RECIPES -gt 1 ]; then
+        echo "Fatal error: Too many recipe files; cannot proceed."
+        exit 2
+    fi
+    echo "Reading '$RECIPE':"
+    for FILE in `$CAT $RECIPE \
+                    | $SED -ne '/^#fns/,/^#$/p' \
+                    | $GREP -v '^[ \008]*#' | $GREP '.'`; do
+        $PRINTF "* Processing '$FILE' ... "
+        case "$FILE" in
+            *.txt )
+                if [ ! -f "./$FILE" ]; then
+                    printf "not here, copying from repo ..."
+                    
+                    printf "exists ... "
+                    $CMP -s ./$FILE $DIST/$FILE
+                    if [ $? -gt 0 ]; then
+                        echo "but doesn't match the one in the repo."
+                    else
+                        echo "and matches."
+                    fi
+                else
+                    printf "copying from repo ...\n"
+                fi
+                ;;
+            *.kid )
+                if [ -f "./$FILE" ]; then
+                    echo "exists ... "
+                    $CMP -s ./$FILE $DIST/$FILE
+                    if [ $? -gt 0 ]; then
+                        echo "but doesn't match the one in the repo."
+                    else
+                        echo "and matches."
+                    fi
+                else
+                    echo "not in this directory."
+                fi
+                ;;
+            * )
+                echo "Unrecognized file."
+                exit 3
+                ;;
+        esac
+    done
 done
 
-cd $INDIR/$SUBDIR
+# NAMESPACE="sami"
+# INDIR="$HOME/run/out/$NAMESPACE"
 
-ZIPFILE=`basename ${NAMESPACE}*.kid .kid`.zip
-$RM -r $ZIPFILE
-$ZIP -r $ZIPFILE ${NAMESPACE}*.kid ${NAMESPACE}*.txt step* "$@"
+# SUBDIR=$1
+# shift 1
+
+# cp -v \
+#    $REPO/dist/$SUBDIR/${NAMESPACE}*.kid \
+#    $REPO/dist/$SUBDIR/${NAMESPACE}*.txt \
+#    $REPO/dist/$SUBDIR/step* \
+#    $INDIR/$SUBDIR/
+
+# for I in "$@"; do
+#     $CP -rv $REPO/docs/$I $INDIR/$SUBDIR/
+# done
+
+# cd $INDIR/$SUBDIR
+
+# ZIPFILE=`basename ${NAMESPACE}*.kid .kid`.zip
+# $RM -r $ZIPFILE
+# $ZIP -r $ZIPFILE ${NAMESPACE}*.kid ${NAMESPACE}*.txt step* "$@"
 

@@ -1,4 +1,4 @@
-SAMIPAT ;ven/toad - init subroutines ;2021-09-08t23:11z
+SAMIPAT ;ven/toad - init subroutines ;2021-09-08t23:19z
  ;;18.0;SAMI;**14**;2020-01;
  ;;18.14
  ;
@@ -21,7 +21,7 @@ SAMIPAT ;ven/toad - init subroutines ;2021-09-08t23:11z
  ;@copyright 2021, toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-09-08t23:11z
+ ;@last-update 2021-09-08t23:19z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -46,7 +46,7 @@ SAMIPAT ;ven/toad - init subroutines ;2021-09-08t23:11z
  ; 2021-08-11 ven/mcglk&toad 18.12  b16cd38f
  ;  SAMIPAT rip out PRE1812.
  ;
- ; 2021-09-08 ven/lmry 18.14
+ ; 2021-09-08 ven/lmry 18.14  2af1f2e7
  ;  SAMIPAT add post-install for patch SAMI*1.18*14
  ;
  ;@contents

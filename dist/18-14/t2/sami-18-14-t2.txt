@@ -1,4 +1,4 @@
-$TXT by linda.yaw@vistaexpertise.net (KIDS) 2021-09-06T18-18Z
+$TXT by linda.yaw@vistaexpertise.net (KIDS) 2021-09-08T01-08Z
 
                          Nashville Demo Patch
                      SAMI (VAPALS-ELCAP) 18-14-t2
@@ -233,39 +233,33 @@ ii. Contents
 
  3.4. Back up files
 
-   Several files will be overwritten by this install. This step backs
-   those up as a safety measure to your working directory.
+    At this point, the web-application files must be installed. This is done 
+    with a script that backs up the affected directories before installing 
+    anything, then upgrades the web-application files.
 
-    $ ./step1-backup
-    Backing up files ... done.
-    $ _
+     $ ./upgrade-webapp
+     Backing up files to ./.webapp-backup:
+     [... output varies ...]
+     Done ([x] MiB).
 
-
-
- 3.5 Install web-application files
-
-    At this point in the install process, the VAPALS-ELCAP routines
-    have been updated, but the corresponding web-application files
-    have not; these must first be installed. On VA VAPALS-ELCAP
-    systems, the output will look like this:
-
-     $ ./step2-install
-     Updating files ... done.
+     Updating from ./webapp-upgrade-files ... done ([x] files).
      $ _
 
-    Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date
-    clones of the official GitHub repository, and this script will
-    have different output.
 
-     $ ./step2-install
-     Found a Git repository; pulling updates.
+    Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date clones of
+    the official GitHub repository, and this script will have different output.
+
+     $ ./upgrade-webapp
+     Backing up files to ./.webapp-backup:
+     [... output varies ...]
+     Done ([x] MiB).
+
+     Found a valid Git repository; pulling updates ...
      [... output varies ...]
      Done.
      $ _
 
-
-
- 3.6. Back up M routines
+ 3.5. Back up M routines
 
    Before the installation, we also need to back up existing
    VAPALS-ELCAP routines that will be overwritten by this install. To
@@ -277,7 +271,7 @@ ii. Contents
    are likely to be minor differences between implementations. Be sure
    to follow the correct dialog for your implementation.
 
-  3.6.1. Enter M
+  3.5.1. Enter M
 
     At the unix prompt, enter the M environment in direct mode, using
     the 'csession' command on Cache or the 'mumps' command on
@@ -299,7 +293,7 @@ ii. Contents
     >
 
 
-  3.6.2. Sign into Vista
+  3.5.2. Sign into Vista
 
     At the M prompt, call Vista's direct-mode interface, enter your
     access code, and then just press return at the OPTION NAME prompt
@@ -318,7 +312,7 @@ ii. Contents
     >
 
 
-  3.6.3. List of routines
+  3.5.3. List of routines
 
     The routine names to save are listed below; you may copy the list
     and paste it at the appropriate Routine prompt. At the final
@@ -329,7 +323,7 @@ SAMIUR
 SAMIUR2
 SAMIURUL
 
-  3.6.4. Run the backup
+  3.5.4. Run the backup
 
     Creating the routine backup file differs by implementation.
 

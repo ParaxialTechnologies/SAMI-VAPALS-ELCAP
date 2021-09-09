@@ -455,13 +455,18 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . if type="enrollment",enrolled'="y" quit  ; must be enrolled
  . ;
  . set (ceform,cefud,fmcefud,cedos,fmcedos)=""
+ . new lastce,sifm,cefm
+ . set (lastce,sifm,cefm)=""
+ . set sifm=$$FMDT^SAMIUR2(siform)
  . f  set ceform=$order(items(ceform),-1) q:ceform=""  q:cefud'=""  d  ;
  . . q:ceform'["ceform"
+ . . if lastce="" set lastce=ceform
  . . set cefud=$get(@root@("graph",sid,ceform,"cefud"))
  . . if cefud'="" set fmcefud=$$FMDT^SAMIUR2(cefud)
  . . set cedos=$get(@root@("graph",sid,ceform,"cedos"))
  . . if cedos'="" set fmcedos=$$FMDT^SAMIUR2(cedos)
  . . quit
+ . if $$FMDT^SAMIUR2(lastce)<sifm set lastce=""
  . ;
  . set edate=$get(@root@("graph",sid,siform,"sidc"))
  . if edate="" set edate=$get(@root@("graph",sid,siform,"samicreatedate"))
@@ -479,7 +484,6 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . . . . set latefdt=anyform ; date of latest form
  . . . . new latekey set latekey=$order(items("sort",anyform,tempf,""))
  . . . . set latef=$order(items("sort",anyform,tempf,latekey,""))
- . . . if tempf["fuform" q  ; don't want any followup forms
  . . . if tempf["bxform" q  ; don't want any biopsy forms
  . . . new tempk set tempk=$order(items("sort",anyform,tempf,""))
  . . . if $g(@proot@(tempk,"cefud"))="" q  ; no followup date
@@ -498,7 +502,7 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . . . set SAMIPATS(fmcefud,zi,"aformdt")=aformdt
  . . . set SAMIPATS(fmcefud,zi,"edate")=edate
  . . . set SAMIPATS(fmcefud,zi)=""
- . . . if ceform="" set cefud="baseline"
+ . . . ;if ceform="" set cefud="baseline"
  . . . set SAMIPATS(fmcefud,zi,"cefud")=cefud
  . . . set SAMIPATS(fmcefud,zi,"cedos")=cedos
  . . . set SAMIPATS(fmcefud,zi,"ceform")=ceform
@@ -564,10 +568,10 @@ SELECT(SAMIPATS,ztype,datephrase,filter) ; select patients for report
  . . quit
  . ;
  . if type="missingct" do  ;
- . . if ceform="" do  ; has incomplete form(s) 
+ . . if lastce="" do  ; has no ct since enrollment 
  . . . set SAMIPATS(efmdate,zi,"edate")=edate
  . . . set SAMIPATS(efmdate,zi)=""
- . . . if ceform="" set cefud="baseline"
+ . . . ;if ceform="" set cefud="baseline"
  . . . set SAMIPATS(efmdate,zi,"cefud")=cefud
  . . . set SAMIPATS(efmdate,zi,"ceform")=ceform
  . . . set SAMIPATS(efmdate,zi,"siform")=siform

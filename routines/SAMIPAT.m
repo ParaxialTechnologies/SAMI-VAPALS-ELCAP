@@ -75,7 +75,16 @@ POS1812 ; kids post-install for sami 18.12
  ;@kids-post POST1814^SAMIPAT
 POS1814 ; kids post-install for sami 18.14
  ;
- do DDDD^SAMIADMN ; to import tsv files to generate DD graphs
+ set SAMIDIR="/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/"
+ do PRSTSV^SAMIFF(SAMIDIR,"background.tsv","form fields - background")
+ do PRSTSV^SAMIFF(SAMIDIR,"biopsy.tsv","form fields - biopsy")
+ do PRSTSV^SAMIFF(SAMIDIR,"ct-evaluation.tsv","form fields - ct evaluation")
+ do PRSTSV^SAMIFF(SAMIDIR,"follow-up.tsv","form fields - follow up")
+ do PRSTSV^SAMIFF(SAMIDIR,"intake.tsv","form fields - intake")
+ do PRSTSV^SAMIFF(SAMIDIR,"intervention.tsv","form fields - intervention")
+ do PRSTSV^SAMIFF(SAMIDIR,"pet-evaluation.tsv","form fields - pet evaluation")
+ do PRSTSV^SAMIFF(SAMIDIR,"register.tsv","form fields - register")
+ ; do DODD^SAMIADMN ; to import tsv files to generate DD graphs
  do CLRWEB^SAMIADMN ; Clear the M Web Server files cache
  do INIT2GPH^SAMICTD2 ; initialize CTEVAL dictionary into graph cteval-dict
  ;

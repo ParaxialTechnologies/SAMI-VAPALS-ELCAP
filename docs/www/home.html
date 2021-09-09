@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="2021.08.31" name="version"/>
+  <meta content="2021.09.08" name="version"/>
   <meta content="Domenic DiNatale, domenic.dinatale@paraxialtech.com" name="author"/>
   <title>
    @@SITETITLE@@: Home
@@ -63,17 +63,17 @@
   </script>
   <script src="lib/datatables/datatables.min.js">
   </script>
-  <script src="jquery-conditonally-enable.js?v=2021.08.31">
+  <script src="jquery-conditonally-enable.js?v=2021.09.08">
   </script>
-  <script src="jquery-conditonally-display.js?v=2021.08.31">
+  <script src="jquery-conditonally-display.js?v=2021.09.08">
   </script>
-  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.08.31">
+  <script src="jqueryui-vista-filemanAutocomplete.js?v=2021.09.08">
   </script>
-  <script src="vapals.js?v=2021.08.31">
+  <script src="vapals.js?v=2021.09.08">
   </script>
-  <script src="init.js?v=2021.08.31">
+  <script src="init.js?v=2021.09.08">
   </script>
-  <script src="nodule-grid.js?v=2021.08.31">
+  <script src="nodule-grid.js?v=2021.09.08">
   </script>
   <!--System Navigation-->
   <nav class="navbar navbar-default" role="navigation">
@@ -209,7 +209,7 @@
      </div>
     </div>
    </div>
-   <div class="row">
+   <div class="row" id="chart-container">
     <div class="col-md-12 text-center">
      <h2 id="chart-rural-heading">
      </h2>
@@ -260,7 +260,7 @@
     <span id="sami-version" style="float:right; font-family: Courier,monospace">
      <span id="formMode">
      </span>
-     2021.08.31
+     2021.09.08
     </span>
    </div>
   </footer>
@@ -499,52 +499,56 @@
             }).focus();
         });
 
-        $.ajax("/ruralurbancount", {dataType: "json"}).done(function (json) {
-            const ruralData = json.result;
-            $("#chart-rural-heading").text("Rural engagement in " + ruralData.site)
-            const ctx = document.getElementById('chart-rural');
-            new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: ['Rural', 'Urban', 'Unknown'],
-                    datasets: [{
-                        data: [ruralData.rural, ruralData.urban, ruralData.unknown],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    plugins: {
-                        datalabels: {
-                            formatter: function (value, ctx) {
-                                let sum = 0;
-                                let dataArr = ctx.chart.data.datasets[0].data;
-                                dataArr.map(function (data) {
-                                    sum += data;
-                                });
-                                return (value * 100 / sum).toFixed(2) + "%";
-                            },
-                            color: '#000',
+        if (getParameter("ruralUrbanChartEnabled") !== false) {
+            $.ajax("/ruralurbancount", {dataType: "json"}).done(function (json) {
+                const ruralData = json.result;
+                $("#chart-rural-heading").text("Rural engagement in " + ruralData.site)
+                const ctx = document.getElementById('chart-rural');
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Rural', 'Urban', 'Unknown'],
+                        datasets: [{
+                            data: [ruralData.rural, ruralData.urban, ruralData.unknown],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            datalabels: {
+                                formatter: function (value, ctx) {
+                                    let sum = 0;
+                                    let dataArr = ctx.chart.data.datasets[0].data;
+                                    dataArr.map(function (data) {
+                                        sum += data;
+                                    });
+                                    return (value * 100 / sum).toFixed(2) + "%";
+                                },
+                                color: '#000',
+                            }
                         }
                     }
-                }
+                });
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                $("#chart-rural-heading").hide();
+                const $alert = $("<div class='alert alert-warning'></div>");
+                $alert.append("<span class=\"glyphicon glyphicon-exclamation-sign\" aria-hidden=\"true\"></span>");
+                $alert.append("&nbsp;Unable to view site statistics. <strong>" + errorThrown + "</strong>");
+                $('#chart-rural').html("").append($alert);
             });
-        }).fail(function (jqXHR, textStatus, errorThrown) {
-            $("#chart-rural-heading").hide();
-            const $alert = $("<div class='alert alert-warning'></div>");
-            $alert.append("<span class=\"glyphicon glyphicon-exclamation-sign\" aria-hidden=\"true\"></span>");
-            $alert.append("&nbsp;Unable to view site statistics. <strong>" + errorThrown + "</strong>");
-            $('#chart-rural').html("").append($alert);
-        });
+        } else {
+            $("#chart-container").remove();
+        }
   </script>
  </body>
 </html>

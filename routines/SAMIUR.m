@@ -1,4 +1,4 @@
-SAMIUR ;ven/gpl - user reports ;2021-08-28t16:10z
+SAMIUR ;ven/gpl - user reports ;2021-09-10t01:37z
  ;;18.0;SAMI;**5,10,11,12,14**;2020-01;Build 4
  ;;18.14
  ;
@@ -21,13 +21,13 @@ SAMIUR ;ven/gpl - user reports ;2021-08-28t16:10z
  ;@copyright 2017/2021, gpl, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-08-28t16:10z
+ ;@last-update 2021-09-10t01:39z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
  ;@version 18.12
  ;@release-date 2020-01
- ;@patch-list **5,10,11,12**
+ ;@patch-list **5,10,11,12,14**
  ;
  ;@dev-add Frederick D. S. Marshall (toad)
  ; toad@vistaexpertise.net

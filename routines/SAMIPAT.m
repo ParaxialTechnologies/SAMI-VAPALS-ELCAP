@@ -1,5 +1,5 @@
-SAMIPAT ;ven/toad - init subroutines ;2021-09-08t23:19z
- ;;18.0;SAMI;**14**;2020-01;
+SAMIPAT ;ven/toad - init subroutines ;2021-09-10t01:30z
+ ;;18.0;SAMI;**12,14**;2020-01;
  ;;18.14
  ;
  ; Routine SAMIPAT contains VAPALS-ELCAP initialization subroutines
@@ -21,13 +21,13 @@ SAMIPAT ;ven/toad - init subroutines ;2021-09-08t23:19z
  ;@copyright 2021, toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-09-08t23:19z
+ ;@last-update 2021-09-10t01:39z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
  ;@version 18.14
  ;@release-date 2020-01
- ;@patch-list **14**
+ ;@patch-list **12,14**
  ;
  ;@dev-add Kenneth W. McGlothlen (mcglk)
  ; mcglk@vistaexpertise.net

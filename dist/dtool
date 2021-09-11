@@ -538,6 +538,7 @@ LS="$ENV ls"
 MKDIR="$ENV mkdir"
 RM="$ENV rm"
 TAR="$ENV tar"
+TEE="$ENV tee"
 TOUCH="$ENV touch"
 ZIP="$ENV zip"
 
@@ -554,32 +555,30 @@ $RM -rf $BACKUP
 $MKDIR -p $BACKUP
 echo "Backing up files to $BACKUP:"
 for I in {dirs_to_backup}; do
-    printf "* Backing up \$REPO/$I ... "
-    NFILES=`(cd $REPO; $TAR cfz - $I) | (cd $BACKUP; $TAR xvfz -) 2>&1 | wc -l`
-    echo $NFILES "files."
+    echo "* Backing up \$REPO/$I ..."
+    (cd $REPO; $TAR cfz - $I) | (cd $BACKUP; $TAR xvfz -)
 done
 $TOUCH $BACKUPLOG
 NOW=`date +'%Y%m%d-%H%M%S'`
 BACKZIP=".webapp-backup-$NOW.zip"
 echo $HBAR >> $BACKUPLOG
 echo $NOW >> $BACKUPLOG
-$ZIP -r $BACKZIP $BACKUP 2>&1 >> $BACKUP_LOG
+echo "Compressing the backup:"
+$ZIP -r $BACKZIP $BACKUP 2>&1 | $TEE $BACKUP_LOG
+echo "Cleaning up."
 $RM -rf $BACKUP
-SIZE=`$LS -l $BACKZIP | $AWK '{{print $5;}}'
-SIZE=`$DC -e "1 k $SIZE 1024.0 / p"`
-echo "Done (${{SIZE}}B)."
+echo "Done."
 echo ""
 if [ -f "$REPO/ISOLATED-GIT-REPO" ]; then
     printf "Updating from $INSTALL ... "
-    NFILES=`(cd $INSTALL; $TAR cfz - .) | (cd $REPO; $TAR xvfz -) 2>&1 | wc -l`
-    echo "done (" $NFILE "files)."
+    (cd $INSTALL; $TAR cfz - .) | (cd $REPO; $TAR xvfz -)
 else
-   echo "Found a valid Git repository; pulling updates ..."
-   cd $REPO
-   $GIT pull
-   echo "Done."
+    echo "Found a valid Git repository; pulling updates ..."
+    cd $REPO
+    $GIT pull
 fi
 
+echo "Done."
 echo ""
 echo "You may now proceed with the KIDS installation."
         """.strip() + "\n\n"

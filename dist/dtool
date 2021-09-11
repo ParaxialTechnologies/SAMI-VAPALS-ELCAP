@@ -611,15 +611,17 @@ echo "You may now proceed with the KIDS installation."
         if repofiles:
             command.append(self.webapp_dir)
         self.log.debug(command)
-        child = subprocess.run(command, capture_output=True)
+        child = subprocess.run(
+            command, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+        )
         if child.returncode != 0:
             msg = (
                 f"Error making ZIP archive ({child.returncode}):\n" +
-                "----- STDOUT -----------------------------------------------\n"
+                "----- STDOUT ----------------------------------------------\n"
                 + "{}".format(child.stdout.decode("utf-8")) +
-                "----- STDERR -----------------------------------------------\n"
-                + "{}".format(child.stdout.decode("utf-8")) +
-                "----- END --------------------------------------------------\n"
+                "----- STDERR ----------------------------------------------\n"
+                + "{}".format(child.stderr.decode("utf-8")) +
+                "----- END -------------------------------------------------\n"
             )
             raise AppErr(msg)
         if self.args.verbose < 1:

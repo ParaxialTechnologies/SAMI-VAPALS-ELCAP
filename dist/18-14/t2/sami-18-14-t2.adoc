@@ -1,0 +1,646 @@
+:doctitle: VAPALS-ELCAP: SAMI 18-14-t2
+:numbered:
+
+// (local-set-key (kbd "C-c C-c") (lambda () (interactive) (save-buffer) (async-shell-command "cd /Users/mcglk/ven/repos/ven-website/ && ./webmake publish newsite/project/vapals-elcap")))
+
+// date -u +"%Y-%m-%dT%H:%MZ"
+-------------------------------------------------------------------------------
+$TXT by YAW,LINDA lmry@vistaexpertise.net (KIDS) 2021-09-10T01:30Z
+-------------------------------------------------------------------------------
+
+[role="center h3"]
+Nashville Demo Patch
+
+[role="center h1"]
+SAMI (VAPALS-ELCAP) 18-14-t2
+[role="center h3"]
+(SAMI*18.0*14 SEQ #14 T2)
+
+[role="center"]
+George P. Lilly,
+Domenic DiNatale,
+Larry G. Carlson
+_&_ Frederick D. S. Marshall +
+2021-09-10
+
+[[front]]
+[role="h2"]
+{zwj}i. Front matter
+
+[cols=">.<0v,<.<1v",grid="none",frame="none",width="1%"]
+|==============================================================================
+| App         | SAMI (VAPALS-ELCAP)
+| Version     | 18-14-t2
+| Vista ID    | ††SAMI*18.0*14 SEQ #14 T2††: Version 18.0, Patch ID #14, Seq #14, Test 2
+| Priority    | High
+| Categories  | Routine, File
+| Status      | Test Patch: ++sami-18-14-t2.zip++
+| Depends on  | SAMI 18-1 (††SAMI*18.0*1 SEQ #1††) +
+                SAMI 18-2 (††SAMI*18.0*2 SEQ #2††) +
+                SAMI 18-3 (††SAMI*18.0*3 SEQ #3††) +
+                SAMI 18-4 (††SAMI*18.0*4 SEQ #4††) +
+                SAMI 18-5 (††SAMI*18.0*5 SEQ #5††) +
+                SAMI 18-6 (††SAMI*18.0*6 SEQ #6††) +
+                SAMI 18-8 (††SAMI*18.0*8 SEQ #8††) +
+                SAMI 18-9 (††SAMI*18.0*9 SEQ #9††) +
+                SAMI 18-10 (††SAMI*18.0*10 SEQ #10††) +
+                SAMI 18-11 (††SAMI*18.0*11 SEQ #11††) +
+                SAMI 18-12 (††SAMI*18.0*12 SEQ #12††) +
+                link:sami-18-13.html[SAMI 18-13] (††SAMI*18.0*13 SEQ #13††)
+|==============================================================================
+
+[[toc]]
+[role="h2"]
+{zwj}ii. Contents
+
+[cols="<.<1a,<.<1a",grid="none",frame="none",width="99%"]
+|==============================================================================
+|[options="compact"]
+* <<front,Front matter>>
+** <<toc,Contents>>
+* <<desc,Description>>
+* <<pkg-elements,Package elements>>
+* <<prepare,Prepare for installation>>
+** <<be-osehra,Assume the identity of your `osehra` Unix user>>
+** <<prep-installdir,Prepare install directory>>
+** <<prep-archive,Download and prepare the archive file>>
+** <<install-www,Install web-application files>>
+** <<backup-m,Back up M routines>>
+*** <<enter-m,Enter M>>
+**** <<enter-m-cache,On Caché>>
+**** <<enter-m-yotta,On YottaDB/GT.M>>
+*** <<signin,Sign into Vista>>
+*** <<routine-list,List of routines>>
+*** <<run-ro,Run the backup>>
+**** <<backup-cache,On Caché>>
+**** <<backup-yotta,On YottaDB/GT.M>>
+|[options="compact"]
+* <<install,Main install instructions>>
+** <<install-kids,Install the KIDS package>>
+*** <<signin-kids,Enter the KIDS Installation menu>>
+*** <<load-pkg,Load KIDS package>>
+*** <<install-pkg,Install KIDS package>>
+** <<activate-www,Activate web-application files>>
+*** <<rebuild,Refresh web-application cache>>
+*** <<exit-m,Exit M>>
+* <<backout,Optional backout instructions>>
+* <<routines,Routines>>
+* <<authors,Authors>>
+|==============================================================================
+
+[[desc]]
+== Description
+
+SAMI 18-14-t2 adds 8 updates, most of them changes to the user reports.
+
+The definitive source for the VAPALS-ELCAP application---codebase, package
+distributions (including this patch), and documentation---is a
+https://github.com/VA-PALS-ELCAP/SAMI-VAPALS-ELCAP/[public GitHub repository].
+
+These instructions are for your Vista environment's sysadmin. As usual, please
+capture the complete dialog of your install and send it to your VAPALS-ELCAP
+support team.
+
+The following list shows changes for:
+
+[options="compact"]
+* High-priority changes and bugfixes (<<fix-1,1>>, <<fix-2,2>>, <<fix-3,3>>,
+  <<fix-4,4>>, <<fix-5,5>>, <<fix-6,6>>, <<fix-7,7>> and{nbsp}<<fix-8,8>>)
+
+[[fix-1]]
+=== Enrollment Report: Add inactive/active column
+
+**Issue 21-155:** Add inactive/active column after name on the Enrollment
+report. _Enrolled_ is defined as “eligible on intake form and marked as
+enrolled.”
+
+**Solution:** Added column using definition.
+
+**Reported:** 2021-08-23 by Henschke.
+
+[[fix-2]]
+=== Activity Report: Rearrange columns.
+ 
+**Issues 21-156 and 21-126:** Order of columns is: ††__Name__††, ††__SSN__†† or
+††__PID__††, ††__Form__††, ††__Form Date__††, ††__Followup__††,
+††__on{nbsp}Date__††. Remove ††__When__†† column.
+
+**Solution:** Changed columns as requested.
+
+**Reported:** 2021-08-23 and 2021-07-12 by Henschke.
+
+[[fix-3]]
+=== Follow up Report: Rearrange columns, change title, add phone number
+  
+**Issues 21-158, 21-157 and 21-120:** Change followup report columns to ††__F/U
+Date__††, ††__Name__††, ††__SSN__†† or ††__PID__††, ††__Baseline Date__††,
+††__Last Form__††, ††__Form Date__††, ††__Recommendation__††, ††__Contact
+Info__††. (Remove ††__When__††.) Change title of Followup report to
+“Participant Follow-up,” add phone number to contact info, add other types of
+Follow-up.
+
+**Solution:** Made changes as requested.
+
+**Reported:** 2021-08-23 and 2021-07-09 by Henschke and Jirapatnakul
+
+[[fix-4]]
+=== Follow-up Report: Correct problem where _baseline_ appears instead of follow-up date
+
+**Issue 21-168:** The word ††__baseline__†† appears instead of the follow-up
+date sometimes.
+
+**Solution:** Fix bug.
+
+**Reported:** 2021-08-29 by Jirapatnakul.
+
+[[fix-5]]
+=== User Reports: Inactive patients in wrong reports
+
+**Issue 21-164:** Inactive patients are showing up in reports that they should
+not be in. They should only be in enrollment and inactive reports.
+
+**Solution:** Fixed to keep inactive patients out of inappropriate reports.
+
+**Reported:** 2021-08-31 by the Phoenix team.
+
+[[fix-6]]
+=== Intake-but-no-CT-Evaluation Report: Wrong patients on report
+
+**Issue 21-165:** Missing CT report is reporting patients who do have CT
+evaluations.
+
+**Solution:** Fixed bug.
+
+**Reported:** 2021-08-31 by Murphy
+
+[[fix-7]]
+=== Report Menu: Change dropdown menu item to “Intake But No CT Evaluation”
+
+**Issues 21-159:** Change dropdown menu item from ††__Missing Image & CT
+Evaluation__†† to ††__Intake But No CT Evaluation__††.
+
+**Solution:** Changed item.
+
+**Reported:** 2021-08-23 by Henschke.
+
+[[fix-8]]
+=== Data Dictionary: Add calculated CAC score to DD for CT Eval and Intervention forms
+
+**Issues 21-161:** Include ††__CAC score__†† field from CT Eval form in Data
+Dictionary.
+
+**Solution:** Added field to Data Dictionaries.
+
+**Reported:** 2021-08-21 by Yip and Jirapatnakul.
+
+[[pkg-elements]]
+== Package elements
+
+[cols="<.<1,<.<0",options="header",role="center",width="50%"]
+|==============================================================================
+| File                       | Change
+| `sami-18-14-t2-recipe.txt` | new
+| `sami-18-14-t2.txt`        | new
+| `sami-18-14-t2.kid`        | new
+| `docs/form-fields/*`       | modified
+| `docs/www/*`               | modified
+| `upgrade-webapp`           | new
+| `sami-18-14-t2.zip`        | new
+|==============================================================================
+
+[cols="<.<1,<.<0",options="header",role="center",width="1%"]
+|==============================================================================
+| Routine                | Change
+| `SAMIUR`               | modified
+| `SAMIUR2`              | modified
+| `SAMIURUL`             | modified
+| `SAMIPAT`              | modified
+|==============================================================================
+
+// [cols="<.<1v,<.<0v",options="header",role="center",width="1%"]
+// |==============================================================================
+// | Fileman File                              | Change
+// | ††SAMI ZZZZ†† (++311.π++)                 | irradiated
+// |==============================================================================
+
+[[prepare]]
+== Prepare for installation
+
+This involves creating a directory to work in, running a script to back up
+certain datafiles and web-application files, and then going through steps to
+back up M routines that will be replaced by the patch.
+
+[[be-osehra]]
+=== Assume the identity of your +osehra+ Unix user
+
+This step assumes you use a `dzdo` or `sudo` command to do this; here, the
+symbol `$DEMAND` will stand for whichever command you use. If your
+configuration is different, please adjust this step to match your
+configuration:
+
+-------------------------------------------------------------------------------
+$ $DEMAND su - osehra
+-------------------------------------------------------------------------------
+
+[[prep-installdir]]
+=== Prepare install directory
+
+If this is your first time installling this, execute the following commands
+(`$` simply means your command-line prompt). They create a shell variable, and
+then creates the work directory and sets it as your current directory.
+
+-------------------------------------------------------------------------------
+$ INDIR=~/run/in/sami/18-14/t2
+$ mkdir -p $INDIR
+$ cd $INDIR
+-------------------------------------------------------------------------------
+
+If you've already tried installing this once, you can use the following
+commands instead:
+
+-------------------------------------------------------------------------------
+$ INDIR=~/run/in/sami/18-14/t2
+$ cd $INDIR
+$ rm -rf ./sami*.{txt,kid} ./*webapp*
+-------------------------------------------------------------------------------
+
+[[prep-archive]]
+=== Download and prepare the archive file
+
+You may safely download the archive file
+(link:sami-18-14-t2.zip[`sami-18-14-t2.zip`]) in advance of the actual install.
+In the following text, `[now]` represents a time stamp representing your
+current time, and `[bits/sec]` is a data rate and `[time]` is how long the file
+took to transfer (both of which vary based on the user's network conditions).
+
+// ./recipeproc.py --wget --unzip --adoc sami 18-14-t2
+-------------------------------------------------------------------------------
+$ wget 'http://vistaexpertise.net/newsite/project/vapals-elcap/sami-18-14-t2.zip'
+[[[ to be generated ]]]
+$ unzip sami-18-14-t2.zip
+[[[ to be generated ]]]
+$ _
+-------------------------------------------------------------------------------
+
+[[install-www]]
+=== Install web-application files
+
+At this point, the web-application files must be installed. This is done with a
+script that backs up the affected directories before installing anything, then
+upgrades the web-application files. The output looks like this (where `[x]`
+represents a number).
+
+-------------------------------------------------------------------------------
+$ ./upgrade-webapp
+Backing up files to ./.webapp-backup:
+[... output varies ...]
+Done ([x] MiB).
+
+Updating from ./webapp-upgrade-files ... done ([x] files).
+$ _
+-------------------------------------------------------------------------------
+
+Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date clones of the
+official GitHub repository, and this script will have different output.
+
+-------------------------------------------------------------------------------
+$ ./upgrade-webapp
+Backing up files to ./.webapp-backup:
+[... output varies ...]
+Done ([x] MiB).
+
+Found a valid Git repository; pulling updates ...
+[... output varies ...]
+Done.
+$ _
+-------------------------------------------------------------------------------
+
+// eval::[Section.setlevel(2)]
+
+[[backup-m]]
+=== Back up M routines
+
+Before the installation, we also need to back up existing VAPALS-ELCAP routines
+that will be overwritten by this install. To do this, you will have to start a
+Caché or YottaDB session (depending on your particular installation), sign in
+to Vista, and then call the direct-mode interface `^%RO` (“routine out”).
+
+We have made efforts to display accurate instructions, but there are likely to
+be minor differences between implementations. Be sure to follow the correct
+dialog for your implementation.
+
+[[enter-m]]
+==== Enter M
+
+At the Unix prompt, enter the M environment in direct mode, using the
+`csession` command on Caché or the `mumps` command on YottaDB/GT.M:
+
+[[enter-m-cache]]
+††**On Caché**††
+
+-------------------------------------------------------------------------------
+$ csession vapals
+
+Node: vapalscache, Instance: VAPALS
+
+>_
+-------------------------------------------------------------------------------
+
+[[enter-m-yotta]]
+††**On YottaDB/GT.M**††
+
+-------------------------------------------------------------------------------
+$ mumps -dir
+
+>_
+-------------------------------------------------------------------------------
+
+[[signin]]
+==== Sign into Vista
+
+At the M prompt, call Vista's direct-mode interface, enter your access code,
+and then just press return at the [ttsp nowrap]##OPTION NAME## prompt to return
+to direct mode. This sets up your authentication variables. Here's a sample
+capture of this step:
+
+-------------------------------------------------------------------------------
+>do ^XUP
+
+Setting up programmer environment
+This is a TEST account.
+
+Access Code: *******
+Terminal Type set to: C-VT100
+
+Select OPTION NAME:
+>_
+-------------------------------------------------------------------------------
+
+[[routine-list]]
+==== List of routines
+
+The routine names to save are listed below; you may copy the list and paste it
+at the appropriate `Routine` prompt. At the final `Routine` prompt, press
+return to indicate the list of routines is done.
+
+-------------------------------------------------------------------------------
+SAMIUR
+SAMIUR2
+SAMIURUL
+SAMIPAT
+-------------------------------------------------------------------------------
+
+[[run-ro]]
+==== Run the backup
+
+Creating the routine backup file differs by implementation.
+
+[[backup-cache]]
+††**On Caché**††
+
+Note that routines that don't currently exist will result in a warning message
+(specifically, the routine name will have `[???]` after it, and the line
+[ttsp]##[does not exist]## after that). These messages can be safely
+disregarded.
+
+In addition to naming the routines and routine-out file, we also provide a
++Description+ and press return at the +Parameters+ and [ttsp]##Printer Format##
+prompts to accept the defaults of +WNS+ and +No+, respectively:
+
+// Do relative filenames work in Caché?
+// ./recipeproc.py --rbackcache --adoc sami 18-14-t2
+-------------------------------------------------------------------------------
+[[[ to be generated ]]]
+-------------------------------------------------------------------------------
+
+[[backup-yotta]]
+††**On YottaDB/GT.M**††
+
+Note that routines that don't currently exist will result in the routine name
+not appearing under the input line, and won't count towards the number of
+routines. These can be safely disregarded.
+
+In addition to naming the routines and routine-out file, we also provide a
+[ttsp]##Header Label## and press return at the [ttsp]##Strip comments## prompt
+to accept the default of +no+:
+
+// Do relative filenames work in YottaDB?
+// ./recipeproc.py --rbackyotta --adoc sami 18-14-t2
+-------------------------------------------------------------------------------
+[[[ to be generated ]]]
+-------------------------------------------------------------------------------
+
+eval::[Section.setlevel(2)]
+
+You'll remain in the M environment for the next section.
+
+[[install]]
+== Main install instructions
+
+This consists of loading and installing the KIDS package, and activating the
+new web-application files.
+
+[[install-kids]]
+=== Installing the KIDS package
+
+This installs the various M assets required by the application.
+
+[[signin-kids]]
+==== Enter the KIDS Installation menu
+
+At the [ttsp]##OPTION NAME## prompt select [ttsp]##XPD MAIN## to enter the
+[ttsp]##Kernel Installation & Distribution System## main menu, and at the
+[ttsp]##Select \... Option## prompt select +Installation+:
+
+-------------------------------------------------------------------------------
+>do ^XUP
+
+Select OPTION NAME: XPD MAIN       Kernel Installation & Distribution System
+
+
+      Edits and Distribution ...
+      Utilities ...
+      Installation ...
+      Patch Monitor Main Menu ...
+
+Select Kernel Installation & Distribution System <TEST ACCOUNT> Option: installation
+
+
+   1      Load a Distribution
+   2      Verify Checksums in Transport Global
+   3      Print Transport Global
+   4      Compare Transport Global to Current System
+   5      Backup a Transport Global
+   6      Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+
+Select Installation <TEST ACCOUNT> Option:_
+-------------------------------------------------------------------------------
+
+[[load-pkg]]
+==== Load KIDS package
+
+Select option 1 and press return at the +Continue+ prompt.
+
+// Does this routine use relative file specifications?
+// ./recipeproc.py --loadkids --adoc sami 18-14-t2
+-------------------------------------------------------------------------------
+[[[ to be generated ]]]
+-------------------------------------------------------------------------------
+
+[[install-pkg]]
+==== Install KIDS package
+
+Select option 6, enter the space bar at the [ttsp]##INSTALL NAME## prompt, and
+press return at the next three prompts. Note that `[now]` denotes the current
+time when you're doing the install.
+
+// ./recipeproc.py --install --adoc sami 18-14-t2
+-------------------------------------------------------------------------------
+[[[ to be generated ]]]
+-------------------------------------------------------------------------------
+
+// eval::[Section.setlevel(2)]
+
+[[activate-www]]
+=== Activating web-application files
+
+Both the VAPALS-ELCAP routines and web-application files have been updated at
+this point, but the routines are using cached copies of the web-application
+files; this step refreshes those copies.
+
+[[rebuild]]
+==== Refresh web-application cache
+
+To improve performance, M-Web maintains cached copies of the data dictionaries
+for the fields on all the VAPALS-ELCAP forms, and of the HTML templates used by
+its services. Every time we update those files in Unix, we must also direct
+M-Web to update its cache.
+
+To do so, exit the Installation menu by hitting carriage return (possibly more
+than once) to get to a direct-mode prompt, and then copy and paste the
+following list of commands into that prompt:
+
+-------------------------------------------------------------------------------
+set SAMIDIR="/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/"
+do PRSTSV^SAMIFF(SAMIDIR,"background.tsv","form fields - background")
+do PRSTSV^SAMIFF(SAMIDIR,"biopsy.tsv","form fields - biopsy")
+do PRSTSV^SAMIFF(SAMIDIR,"ct-evaluation.tsv","form fields - ct evaluation")
+do PRSTSV^SAMIFF(SAMIDIR,"follow-up.tsv","form fields - follow up")
+do PRSTSV^SAMIFF(SAMIDIR,"intake.tsv","form fields - intake")
+do PRSTSV^SAMIFF(SAMIDIR,"intervention.tsv","form fields - intervention")
+do PRSTSV^SAMIFF(SAMIDIR,"pet-evaluation.tsv","form fields - pet evaluation")
+do PRSTSV^SAMIFF(SAMIDIR,"register.tsv","form fields - register")
+do CLRWEB^SAMIADMN
+do INIT2GPH^SAMICTD2
+-------------------------------------------------------------------------------
+
+The output is shown below (where `[job]` is a job number displayed by the
+`PRSTSV` routine):
+
+-------------------------------------------------------------------------------
+Select Installation <TEST ACCOUNT> Option:
+
+> set SAMIDIR="/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/"
+
+> do PRSTSV^SAMIFF(SAMIDIR,"background.tsv","form fields - background")
+[job]
+> do PRSTSV^SAMIFF(SAMIDIR,"biopsy.tsv","form fields - biopsy")
+[job]
+> do PRSTSV^SAMIFF(SAMIDIR,"ct-evaluation.tsv","form fields - ct evaluation")
+[job]
+> do PRSTSV^SAMIFF(SAMIDIR,"follow-up.tsv","form fields - follow up")
+[job]
+> do PRSTSV^SAMIFF(SAMIDIR,"intake.tsv","form fields - intake")
+[job]
+> do PRSTSV^SAMIFF(SAMIDIR,"intervention.tsv","form fields - intervention")
+[job]
+> do PRSTSV^SAMIFF(SAMIDIR,"pet-evaluation.tsv","form fields - pet evaluation")
+[job]
+> do PRSTSV^SAMIFF(SAMIDIR,"register.tsv","form fields - register")
+[job]
+> do CLRWEB^SAMIADMN
+
+> do INIT2GPH^SAMICTD2
+
+>_
+-------------------------------------------------------------------------------
+
+[[exit-m]]
+==== Exit M
+
+-------------------------------------------------------------------------------
+>halt
+$ _
+-------------------------------------------------------------------------------
+
+eval::[Section.setlevel(2)]
+
+You now have VAPALS-ELCAP 18-14-t2 (††SAMI*18.0*14 SEQ #14 T2††) installed in
+your M environment. The install is now complete. We recommend running tests of
+your VAPALS-ELCAP application to confirm the environment is operational and
+bug-free, before notifying users that VAPALS-ELCAP is ready for their use.
+
+[[backout]]
+== Optional backout instructions
+
+Should errors or other problems result from installing this package, contact
+the VAPALS-ELCAP development team for package-backout instructions.
+
+[[routines]]
+== Routines
+
+Lines 2 and 3 of each of these routines now look like:
+
+-------------------------------------------------------------------------------
+ ;;18.0;SAMI;[Patch List];2020-01;[optional build #]
+ ;;18.13
+-------------------------------------------------------------------------------
+
+The checksums below are Vista Type B checksums ([ttsp]##do CHECK1^XTSUMBLD##).
+[red]##__Needs updating__##.
+
+[cols="<.<1m,<.<1m,<.<1m,<.<1m",options="header",width="50%"]
+|==============================================================================
+| Name       | Checksum before   | Checksum after   | Patch list         
+| `SAMIUR`   | `B520612339`      | `B597589182`     | `**5,10,11,12,13**`
+| `SAMIUR2`  | `B1265246653`     | `B1328996811`    | `**5,11,12,13**`   
+| `SAMIURUL` | `B98717`          | `B101028`        | `**12,13**`        
+|==============================================================================
+
+[[authors]]
+== Authors
+
+[red]##__Needs updating__##.
+
+[cols=">.<0v,<.<0v,<.<1v",width="1%",options="header"]
+|==============================================================================
+|           | Dates                 | By
+| Developed | 2021-08-16            | George P. Lilly (VEN) +
+                                      Dominic DiNatale (PAR) +
+                                      Larry G. Carlson (VEN) +
+                                      Frederick D. S. Marshall (VEN) +
+                                      Kenneth W. McGlothlen (VEN) +
+                                      Linda M. R. Yaw (VEN)
+| Tested    | 2021-08-16/18         | George P. Lilly (VEN) +
+                                      Dominic DiNatale (PAR) +
+                                      Larry G. Carlson (VEN) +
+                                      Claudia Henschke (VA-PHO) +
+                                      Artit Jirapatnakul (VA-PHO) +
+                                      Providencia Morales (VA-PHO) +
+                                      Lorenza A. Murphy (VA-PHO) +
+                                      Martha A. Rukavena (VA-PHO) +
+                                      Frederick D. S. Marshall (VEN) +
+                                      Kenneth W. McGlothlen (VEN) +
+                                      Linda M. R. Yaw (VEN)
+| Released  | 2021-09-06            | Frederick D. S. Marshall (VEN) +
+                                      Kenneth W. McGlothlen (VEN) +
+                                      Linda M. R. Yaw (VEN)
+|==============================================================================
+
+eval::[Section.setlevel(1)]
+
+-------------------------------------------------------------------------------
+$END TXT
+-------------------------------------------------------------------------------

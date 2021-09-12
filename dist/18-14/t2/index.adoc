@@ -272,10 +272,20 @@ In the following text, `[now]` represents a time stamp representing your
 current time, and `[bits/sec]` is a data rate and `[time]` is how long the file
 took to transfer (both of which vary based on the user's network conditions).
 
-// ../../../recipeproc.py --wget --unzip --adoc sami 18-14-t2
+// (cd ../../../..; ls; ./recipeproc.py --wget --unzip --adoc sami 18-14-t2)
 -------------------------------------------------------------------------------
 $ wget 'http://vistaexpertise.net/newsite/project/vapals-elcap/sami-18-14-t2.zip'
-[[[ to be generated ]]]
+--[now]--  http://vistaexpertise.net/newsite/project/vapals-elcap/sami-18-14-t2.zip
+Resolving vistaexpertise.net (vistaexpertise.net)... 208.113.153.6
+Connecting to vistaexpertise.net (vistaexpertise.net)|208.113.153.6|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2826226 (2.7M) [application/zip]
+Saving to: ‘sami-18-14-t2.zip’
+
+100%[================================>]   2.7M  [bits/sec]  in [time]
+
+[now] ([bits/sec]) - ‘sami-18-14-t2.zip’ saved [2826226/2826226]
+
 $ _
 -------------------------------------------------------------------------------
 
@@ -284,7 +294,8 @@ Then unzip the archive file with the following command.
 // ../../../recipeproc.py --wget --unzip --adoc sami 18-14-t2
 -------------------------------------------------------------------------------
 $ unzip sami-18-14-t2.zip
-[[[ to be generated ]]]
+Archive:  sami-18-14-t2.zip
+  [... 552 files in archive, about 9.0 Mb ...]
 $ _
 -------------------------------------------------------------------------------
 

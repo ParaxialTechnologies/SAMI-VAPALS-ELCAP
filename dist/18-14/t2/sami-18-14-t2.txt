@@ -1,4 +1,4 @@
-$TXT by linda.yaw@vistaexpertise.net (KIDS) 2021-09-11T02:12Z
+$TXT by linda.yaw@vistaexpertise.net (KIDS) 2021-09-11T23:49Z
 
                          Nashville Demo Patch
                      SAMI (VAPALS-ELCAP) 18-14-t2
@@ -6,7 +6,7 @@ $TXT by linda.yaw@vistaexpertise.net (KIDS) 2021-09-11T02:12Z
 
            George P. Lilly, Dom DiNatale, Larry G. Carlson,
                       & Frederick D. S. Marshall
-                              2021-09-10
+                              2021-09-11
 
 i. Front matter
 
@@ -40,7 +40,6 @@ ii. Contents
   o Assume the identity of your osehra Unix user
   o Prepare install directory
   o Download and prepare the archive file
-  o Back up files
   o Install web-application files
   o Back up M routines
     - Enter M
@@ -52,9 +51,6 @@ ii. Contents
     - Enter the KIDS installation menu
     - Load KIDS package
     - Install KIDS package
-  o Activating web-application files
-    - Refresh web-application cache
-    - Exit M
  Optional backout instructions
  Routines
  Authors
@@ -79,81 +75,81 @@ ii. Contents
  1.1. Enrollment Report: Add inactive/active column
 
       issue 21-155: Add inactive/active column after name on the Enrollment
-      report. "Enrolled" is defined as eligible on intake form and marked as 
+      report. "Enrolled" is defined as eligible on intake form and marked as
       enrolled.
 
       solution: Added column using definition.
 
       reported: 2021-08-23 by Henschke.
-      
+
  1.2. Activity Report: Rearrange columns.
- 
+
       issues 21-156 (21-126): Order of columns is: Name, SSN or PID, Form, Form
       Date, Followup, on Date. Remove When column.
-      
+
       solution: Changed columns as requested.
 
       reported: 2021-08-23 2021-07-12 by Henschke
-      
+
  1.3. Follow up Report: Rearrange columns, change title, add phone number
-  
+
       issues: 21-158, 21-157, 21-120 Change followup report columns to F/U
-      Date, Name, SSN or PID, Baseline Date, Last Form, Form Date, 
-      Recommendation, Contact Info. (remove When) Change title of Followup 
+      Date, Name, SSN or PID, Baseline Date, Last Form, Form Date,
+      Recommendation, Contact Info. (remove When) Change title of Followup
       report to Participant Follow-up, add phone number to contact info, add
       other types of Follow up.
-      
+
       solution: Made changes as requested.
-      
+
       reported: 2021-08-23, 2021-07-09 by Henschke and Jirapatnakul
-      
+
  1.4. Follow-up Report: Correct problem were "baseline" appears instead of
       follow up date.
-     
-      issue 21-168: The word "baseline" appears instead of follow up date 
+
+      issue 21-168: The word "baseline" appears instead of follow up date
       sometimes.
-      
+
       solution: Fix bug
-      
+
       reported: 2021-08-29 by Jirapatnakul
-      
+
  1.5. User reports: Inactive patients in wrong reports
- 
-      issue: 21-164 Inactive patients are showing up in reports that they 
+
+      issue: 21-164 Inactive patients are showing up in reports that they
       should not be in. They should only be in enrollment and inactive reports.
-      
+
       solution: Fixed to keep inactive patients out of inappropriate reports.
-      
+
       reported: 2021-08-31 by the Phoenix Team
-      
+
  1.6. Intake But No CT Eval Report: Wrong patients on report
-      
-      issue 21-165: Missing CT report is reporting patients who do have CT 
-      Evals.                                                                                                                  
+
+      issue 21-165: Missing CT report is reporting patients who do have CT
+      Evals.
 
       solution: Fixed bug
-      
+
       reported: 2021-08-31 by Murphy
-      
+
  1.7. Report Menu: Change dropdown menu item to "Intake But No CT Evaluation"
- 
-      issue: 21-159 Change dropdown menu item from "Missing Image & CT 
+
+      issue: 21-159 Change dropdown menu item from "Missing Image & CT
       Evaluation" to "Intake But No CT Evaluation"
 
       solution: Changed item.
-      
+
       reported: 2021-08-23 by Henschke.
-    
-      
- 1.8. Data Dictionary: Add calculated CAC score to DD for CT Eval and 
+
+
+ 1.8. Data Dictionary: Add calculated CAC score to DD for CT Eval and
       Intervention forms
-      
-      issue: 21-161 Include CAC score field from CT Eval form in Data 
-      Dictionary                                                                                                                          
+
+      issue: 21-161 Include CAC score field from CT Eval form in Data
+      Dictionary
 
       solution: Added field to Data Dictionaries
-      
-      reported: 2021-08-21 by Yip and Jirapatnakul    
+
+      reported: 2021-08-21 by Yip and Jirapatnakul
 
 2. Package elements
 
@@ -169,10 +165,10 @@ ii. Contents
 
  Routine    Change
  -------    ------
+ SAMIPAT    modified
  SAMIUR     modified
  SAMIUR2    modified
  SAMIURUL   modified
- SAMIPAT    modified
 
 
 3. Prepare for installation
@@ -186,9 +182,10 @@ ii. Contents
  3.1. Assume the identity of your osehra Unix user
 
    This step assumes you type a dzdo or sudo to do this; here the
-   symbol $DEMAND will stand for whichever command you use. If your
-   configuration is different, please adjust this step to match your
-   configuration:
+   symbol $DEMAND will stand for whichever command you use. (Also, in
+   all the command-line examples below, '$' simply means your
+   command-line prompt.) If your configuration is different, please
+   adjust this step to match your configuration:
 
     $ $DEMAND su - osehra
     $
@@ -196,14 +193,20 @@ ii. Contents
 
  3.2. Prepare install directory
 
-   Execute the following commands (`$` simply means your command-line
-   prompt). They create a shell variable, and then creates the
-   directory or, if it already exists, removes previous installation
-   files before proceeding.
+   If this is your first time installling this, execute the following
+   commands.  They create a shell variable, and then creates the work
+   directory and sets it as your current directory.
 
     $ INDIR=~/run/in/sami/18-14/t2
-    $ mkdir -p $INDIR \
+    $ mkdir -p $INDIR
     $ cd $INDIR
+
+   If you've already tried installing this once, you can use the
+   following commands instead:
+
+    $ INDIR=~/run/in/sami/18-14/t2
+    $ cd $INDIR
+    $ rm -rf ./sami*.{txt,kid} ./*webapp*
 
  3.3. Download and prepare the archive file
 
@@ -214,46 +217,45 @@ ii. Contents
    of which vary based on the user's network conditions).
 
     $ wget 'http://vistaexpertise.net/newsite/project/vapals-elcap/sami-18-14-t2.zip'
-    --[now]--  http://vistaexpertise.net/newsite/project/vapals-elcap/sami-18-14-t2.zip
-    Resolving vistaexpertise.net (vistaexpertise.net)... 208.113.153.6
-    Connecting to vistaexpertise.net (vistaexpertise.net)|208.113.153.6|:80... connected.
-    HTTP request sent, awaiting response... 200 OK
-    Length: [about 2588741] (2.5M) [application/zip]
-    Saving to: ‘sami-18-14-t2.zip’
-
-    100%[================================>]   2.47M  [bits/sec]  in [time]
-
-    [now] ([bits/sec]) - ‘sami-18-14-t2.zip’ saved [2588741/2588741]
+    [[[ to be generated ]]]
 
    Then unzip the archive file with the following command.
 
     $ unzip sami-18-14-t2.zip
-    Archive:  sami-18-14-t2.zip
-      [... 539 files in archive, about 9.0 Mb ...]
+    [[[ to be generated ]]]
     $ _
 
- 3.4. Back up files
+ 3.4. Install web-application files
 
-    At this point, the web-application files must be installed. This is done 
-    with a script that backs up the affected directories before installing 
+    At this point, the web-application files must be installed. This is done
+    with a script that backs up the affected directories before installing
     anything, then upgrades the web-application files.
 
      $ ./upgrade-webapp
      Backing up files to ./.webapp-backup:
-     [... output varies ...]
-     Done ([x] MiB).
+     [... lists of files backed up ...]
+     Compressing the backup:
+     [... lists of files being compressed ...]
+     Cleaning up.
+     Done.
 
-     Updating from ./webapp-upgrade-files ... done ([x] files).
+     Updating from ./webapp-upgrade-files ...
+     [... lists of files being updated ...]
+     Done.
+
+     You may now proceed with the KIDS installation.
      $ _
-
 
     Outside the VA firewall, VAPALS-ELCAP systems maintain up-to-date clones of
     the official GitHub repository, and this script will have different output.
 
      $ ./upgrade-webapp
      Backing up files to ./.webapp-backup:
-     [... output varies ...]
-     Done ([x] MiB).
+     [... lists of files backed up ...]
+     Compressing the backup:
+     [... lists of files being compressed ...]
+     Cleaning up.
+     Done.
 
      Found a valid Git repository; pulling updates ...
      [... output varies ...]
@@ -264,9 +266,9 @@ ii. Contents
 
    Before the installation, we also need to back up existing
    VAPALS-ELCAP routines that will be overwritten by this install. To
-   do this, you will have to start a Caché or YottaDB session
+   do this, you will have to start a Cache or YottaDB session
    (depending on your particular installation), sign in to Vista, and
-   then call the direct-mode interface ^%RO (“routine out”).
+   then call the direct-mode interface ^%RO ("routine out").
 
    We have made efforts to display accurate instructions, but there
    are likely to be minor differences between implementations. Be sure
@@ -312,7 +314,6 @@ ii. Contents
     Select OPTION NAME:
     >
 
-
   3.5.3. List of routines
 
     The routine names to save are listed below; you may copy the list
@@ -320,10 +321,10 @@ ii. Contents
     Routine prompt, press return to indicate the list of routines is
     done.
 
+SAMIPAT
 SAMIUR
 SAMIUR2
 SAMIURUL
-SAMIPAT
 
   3.5.4. Run the backup
 
@@ -344,19 +345,19 @@ SAMIPAT
      >do ^%RO
 
      Routine output (please use %ROMF for object code output)
+     Routines(s): SAMIPAT
      Routines(s): SAMIUR
      Routines(s): SAMIUR2
      Routines(s): SAMIURUL
-     Routines(s): SAMIPAT
-     Routines(s): 
+     Routines(s):
 
-     Description: SAMI*18*14 SEQ #14 T2 routine backup
+     Description: sami*18*14 SEQ #14 T2 routine backup
 
      Output routines to
      Device: /home/osehra/run/in/sami/18-14/t2/sami-18-14-t2-back.ro
      Parameters? ("WNS") =>
      Printer Format? No => No
-     SAMIUR.INT      SAMIUR2.INT     SAMIURUL.INT    SAMIPAT.INT
+     SAMIPAT.INT     SAMIUR.INT      SAMIUR2.INT     SAMIURUL.INT
      >_
 
     On YottaDB/GT.M
@@ -373,29 +374,29 @@ SAMIPAT
 
      Routine Output - Save selected routines into RO file.
 
+     Routines: SAMIPAT
+     SAMIPAT
+     Current total of 1 routines.
+
      Routines: SAMIUR
      SAMIUR
-     Current total of 1 routines.
+     Current total of 2 routines.
 
      Routines: SAMIUR2
      SAMIUR2
-     Current total of 2 routines.
+     Current total of 3 routines.
 
      Routines: SAMIURUL
      SAMIURUL
-     Current total of 3 routines.
-
-     Routines: SAMIPAT
-     SAMIPAT
      Current total of 4 routines.
 
-     Routine: 
+     Routine:
 
      Output device <terminal>: /home/osehra/run/in/sami/18-14/t2/sami-18-14-t2-back.ro
 
-     Header Label: SAMI*18*14 SEQ #14 T2 routine backup
+     Header Label: sami*18*14 SEQ #14 T2 routine backup
      Strip comments <No>?:
-     SAMIUR    SAMIUR2   SAMIURUL  SAMIPAT
+     SAMIPAT   SAMIUR    SAMIUR2   SAMIURUL
 
      Total of 2263 lines in 4 routines.
 
@@ -403,12 +404,10 @@ SAMIPAT
 
     You'll remain in the M environment for the next section.
 
-
 4. Main install instructions
 
  This consists of loading and installing the KIDS package, and
  activating the new web-application files.
-
 
  4.1. Installing the KIDS package
 
@@ -476,7 +475,6 @@ SAMIPAT
 
      Select Installation <TEST ACCOUNT> Option:_
 
-
   4.1.3. Install KIDS package
 
     Select option 6, enter the space bar at the INSTALL NAME prompt,
@@ -490,12 +488,11 @@ SAMIPAT
      This Distribution was loaded on [now] with header of
         Test Release SAMI*18.0*14 SEQ #14 T2 (sami-18-14-t2)  ;Created on Sep 10, 2021@18:52:20
         It consisted of the following Install(s):
-         SAMI*18.0*14
+        SAMI*18.0*14
      Checking Install for Package SAMI*18.0*14
 
      Install Questions for SAMI*18.0*14
 
-     Incoming Files:
 
 
      Want KIDS to INHIBIT LOGONs during the install? NO//
@@ -505,7 +502,7 @@ SAMIPAT
      You can queue the install by enter a 'Q' at the device prompt.
      Enter a '^' to abort the install.
 
-     DEVICE: HOME//   VMS
+     DEVICE: HOME// ;C-SCROLL  TELNET
 
 
       Install Started for SAMI*18.0*14 :
@@ -513,23 +510,19 @@ SAMIPAT
 
      Build Distribution Date: Sep 10, 2021
 
-      Installing Routines:...
-                    [now]
-
-      Installing Data Dictionaries: .
-                    [now]
-
-      Installing Data:
+      Installing Routines:.....
                     [now]
 
       Running Post-Install Routine: POS1814^SAMIPAT.
 
-      Updating Routine file.
+      Updating Routine file......
 
-      Updating KIDS files.......
+      Updating KIDS files.....
 
       SAMI*18.0*14 Installed.
                     [now]
+
+      No link to PACKAGE file
 
       NO Install Message sent
 
@@ -547,88 +540,20 @@ SAMIPAT
 
      Select Installation <TEST ACCOUNT> Option:_
 
-
- 4.2. Activating web-application files
-
-   Both the VAPALS-ELCAP routines and web-application files have been
-   updated at this point, but the routines are using cached copies of
-   the web-application files; this step refreshes those copies.
-
-  4.2.1. Refresh web-application cache
-
-    To improve performance, M-Web maintains cached copies of the data
-    dictionaries for the fields on all the VAPALS-ELCAP forms, and of
-    the HTML templates used by its services. Every time we update
-    those files in Unix, we must also direct M-Web to update its
-    cache.
-
-    To do so, exit the Installation menu by hitting carriage return
-    (possibly more than once) to get to a direct-mode prompt, and then
-    copy and paste the following list of commands into that prompt:
-
-set SAMIDIR="/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/"
-do PRSTSV^SAMIFF(SAMIDIR,"background.tsv","form fields - background")
-do PRSTSV^SAMIFF(SAMIDIR,"biopsy.tsv","form fields - biopsy")
-do PRSTSV^SAMIFF(SAMIDIR,"ct-evaluation.tsv","form fields - ct evaluation")
-do PRSTSV^SAMIFF(SAMIDIR,"follow-up.tsv","form fields - follow up")
-do PRSTSV^SAMIFF(SAMIDIR,"intake.tsv","form fields - intake")
-do PRSTSV^SAMIFF(SAMIDIR,"intervention.tsv","form fields - intervention")
-do PRSTSV^SAMIFF(SAMIDIR,"pet-evaluation.tsv","form fields - pet evaluation")
-do PRSTSV^SAMIFF(SAMIDIR,"register.tsv","form fields - register")
-do CLRWEB^SAMIADMN
-do INIT2GPH^SAMICTD2
-
-    The output is shown below (where "[job]" is a job number displayed
-    by the PRSTSV routine):
-
-     Select Installation <TEST ACCOUNT> Option:
-
-     > set SAMIDIR="/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/"
-
-     > do PRSTSV^SAMIFF(SAMIDIR,"background.tsv","form fields - background")
-     [job]
-     > do PRSTSV^SAMIFF(SAMIDIR,"biopsy.tsv","form fields - biopsy")
-     [job]
-     > do PRSTSV^SAMIFF(SAMIDIR,"ct-evaluation.tsv","form fields - ct evaluation")
-     [job]
-     > do PRSTSV^SAMIFF(SAMIDIR,"follow-up.tsv","form fields - follow up")
-     [job]
-     > do PRSTSV^SAMIFF(SAMIDIR,"intake.tsv","form fields - intake")
-     [job]
-     > do PRSTSV^SAMIFF(SAMIDIR,"intervention.tsv","form fields - intervention")
-     [job]
-     > do PRSTSV^SAMIFF(SAMIDIR,"pet-evaluation.tsv","form fields - pet evaluation")
-     [job]
-     > do PRSTSV^SAMIFF(SAMIDIR,"register.tsv","form fields - register")
-     [job]
-     > do CLRWEB^SAMIADMN
-     [job]
-     > do INIT2GPH^SAMICTD2
-
-     >_
-
-
-  4.2.2. Exit M
-
-    Run the following command to exit the M environment:
-
      > halt
      $ _
 
-   You now have VAPALS-ELCAP 18.14 (SAMI*18.0*14 SEQ #14) installed in
-   your M environment. The install is now complete. We recommend
-   running tests of your VAPALS-ELCAP app to confirm the environment
-   is operational and bug-free, before notifying users that
-   VAPALS-ELCAP is ready for their use.
-
+   You now have VAPALS-ELCAP 18-14-t2 (SAMI*18.0*14 SEQ #14 T2)
+   installed in your M environment. The install is now complete. We
+   recommend running tests of your VAPALS-ELCAP app to confirm the
+   environment is operational and bug-free, before notifying users
+   that VAPALS-ELCAP is ready for their use.
 
 5. Optional backout instructions
 
  Should errors or other problems result from installing this package
  contact the VAPALS-ELCAP development team for package-backout
  instructions.
-
-
 
 6. Routines
 
@@ -638,14 +563,12 @@ do INIT2GPH^SAMICTD2
 
  The checksums below are Vista Type B checksums (do CHECK1^XTSUMBLD).
 
- Name      Checksum before  Checksum after  Patch list       
+ Name      Checksum before  Checksum after  Patch list
  --------  ---------------  --------------  -----------------
+ SAMIPAT   B761477          B9183353        **12,14**
  SAMIUR    B520612339       B608610712      **5,10,11,12,14**
- SAMIUR2   B1265246653      B1328996822     **5,11,12,14**   
- SAMIURUL  B98717           B102189         **12,14**        
- SAMIPAT   B761477          B9183353        **12,14**        
-
-
+ SAMIUR2   B1265246653      B1328996822     **5,11,12,14**
+ SAMIURUL  B98717           B102189         **12,14**
 
 7. Authors
 
@@ -669,7 +592,7 @@ do INIT2GPH^SAMICTD2
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 
- Released    2021-09-10         Frederick D. S. Marshall (ven)
+ Released    2021-09-11         Frederick D. S. Marshall (ven)
                                 Kennneth W. McGlothlen (ven)
                                 Linda M. R. Yaw (ven)
 

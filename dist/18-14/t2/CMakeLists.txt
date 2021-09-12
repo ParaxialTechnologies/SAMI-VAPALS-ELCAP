@@ -3,7 +3,6 @@ adoc_to_html(
   )
 
 copy_binaries(
-  *.html
   sami*[0-9].zip
   )
 

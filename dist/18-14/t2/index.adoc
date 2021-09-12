@@ -5,7 +5,7 @@
 
 // date -u +"%Y-%m-%dT%H:%MZ"
 -------------------------------------------------------------------------------
-$TXT by YAW,LINDA lmry@vistaexpertise.net (KIDS) 2021-09-10T01:30Z
+$TXT by YAW,LINDA lmry@vistaexpertise.net (KIDS) 2021-09-11T23:49Z
 -------------------------------------------------------------------------------
 
 [role="center h3"]
@@ -21,7 +21,7 @@ George P. Lilly,
 Domenic DiNatale,
 Larry G. Carlson
 _&_ Frederick D. S. Marshall +
-2021-09-10
+2021-09-11
 
 [[front]]
 [role="h2"]
@@ -80,9 +80,6 @@ _&_ Frederick D. S. Marshall +
 *** <<signin-kids,Enter the KIDS Installation menu>>
 *** <<load-pkg,Load KIDS package>>
 *** <<install-pkg,Install KIDS package>>
-** <<activate-www,Activate web-application files>>
-*** <<rebuild,Refresh web-application cache>>
-*** <<exit-m,Exit M>>
 * <<backout,Optional backout instructions>>
 * <<routines,Routines>>
 * <<authors,Authors>>
@@ -120,7 +117,7 @@ enrolled.”
 
 [[fix-2]]
 === Activity Report: Rearrange columns.
- 
+
 **Issues 21-156 and 21-126:** Order of columns is: ††__Name__††, ††__SSN__†† or
 ††__PID__††, ††__Form__††, ††__Form Date__††, ††__Followup__††,
 ††__on{nbsp}Date__††. Remove ††__When__†† column.
@@ -131,7 +128,7 @@ enrolled.”
 
 [[fix-3]]
 === Follow up Report: Rearrange columns, change title, add phone number
-  
+
 **Issues 21-158, 21-157 and 21-120:** Change followup report columns to ††__F/U
 Date__††, ††__Name__††, ††__SSN__†† or ††__PID__††, ††__Baseline Date__††,
 ††__Last Form__††, ††__Form Date__††, ††__Recommendation__††, ††__Contact
@@ -211,10 +208,10 @@ Dictionary.
 [cols="<.<1,<.<0",options="header",role="center",width="1%"]
 |==============================================================================
 | Routine                | Change
-| `SAMIUR`               | modified
+| `SAMIPAT`              | modified
 | `SAMIUR2`              | modified
 | `SAMIURUL`             | modified
-| `SAMIPAT`              | modified
+| `SAMIUR`               | modified
 |==============================================================================
 
 // [cols="<.<1v,<.<0v",options="header",role="center",width="1%"]
@@ -234,20 +231,22 @@ back up M routines that will be replaced by the patch.
 === Assume the identity of your +osehra+ Unix user
 
 This step assumes you use a `dzdo` or `sudo` command to do this; here, the
-symbol `$DEMAND` will stand for whichever command you use. If your
-configuration is different, please adjust this step to match your
+symbol `$DEMAND` will stand for whichever command you use. (Also, in all the
+command-line examples below, `$` simply means your command-line prompt.) If
+your configuration is different, please adjust this step to match your
 configuration:
 
 -------------------------------------------------------------------------------
 $ $DEMAND su - osehra
+$ _
 -------------------------------------------------------------------------------
 
 [[prep-installdir]]
 === Prepare install directory
 
-If this is your first time installling this, execute the following commands
-(`$` simply means your command-line prompt). They create a shell variable, and
-then creates the work directory and sets it as your current directory.
+If this is your first time installling this, execute the following commands.
+They create a shell variable, and then creates the work directory and sets it
+as your current directory.
 
 -------------------------------------------------------------------------------
 $ INDIR=~/run/in/sami/18-14/t2
@@ -273,10 +272,17 @@ In the following text, `[now]` represents a time stamp representing your
 current time, and `[bits/sec]` is a data rate and `[time]` is how long the file
 took to transfer (both of which vary based on the user's network conditions).
 
-// ./recipeproc.py --wget --unzip --adoc sami 18-14-t2
+// ../../../recipeproc.py --wget --unzip --adoc sami 18-14-t2
 -------------------------------------------------------------------------------
 $ wget 'http://vistaexpertise.net/newsite/project/vapals-elcap/sami-18-14-t2.zip'
 [[[ to be generated ]]]
+$ _
+-------------------------------------------------------------------------------
+
+Then unzip the archive file with the following command.
+
+// ../../../recipeproc.py --wget --unzip --adoc sami 18-14-t2
+-------------------------------------------------------------------------------
 $ unzip sami-18-14-t2.zip
 [[[ to be generated ]]]
 $ _
@@ -293,10 +299,17 @@ represents a number).
 -------------------------------------------------------------------------------
 $ ./upgrade-webapp
 Backing up files to ./.webapp-backup:
-[... output varies ...]
-Done ([x] MiB).
+[... lists of files backed up ...]
+Compressing the backup:
+[... lists of files being compressed ...]
+Cleaning up.
+Done.
 
-Updating from ./webapp-upgrade-files ... done ([x] files).
+Updating from ./webapp-upgrade-files ...
+[... lists of files being updated ...]
+Done.
+
+You may now proceed with the KIDS installation.
 $ _
 -------------------------------------------------------------------------------
 
@@ -306,8 +319,11 @@ official GitHub repository, and this script will have different output.
 -------------------------------------------------------------------------------
 $ ./upgrade-webapp
 Backing up files to ./.webapp-backup:
-[... output varies ...]
-Done ([x] MiB).
+[... lists of files backed up ...]
+Compressing the backup:
+[... lists of files being compressed ...]
+Cleaning up.
+Done.
 
 Found a valid Git repository; pulling updates ...
 [... output varies ...]
@@ -384,10 +400,10 @@ at the appropriate `Routine` prompt. At the final `Routine` prompt, press
 return to indicate the list of routines is done.
 
 -------------------------------------------------------------------------------
+SAMIPAT
 SAMIUR
 SAMIUR2
 SAMIURUL
-SAMIPAT
 -------------------------------------------------------------------------------
 
 [[run-ro]]
@@ -408,9 +424,25 @@ In addition to naming the routines and routine-out file, we also provide a
 prompts to accept the defaults of +WNS+ and +No+, respectively:
 
 // Do relative filenames work in Caché?
-// ./recipeproc.py --rbackcache --adoc sami 18-14-t2
+// ../../../recipeproc.py --rbackcache --adoc sami 18-14-t2
 -------------------------------------------------------------------------------
-[[[ to be generated ]]]
+>do ^%RO
+
+Routine output (please use %ROMF for object code output)
+Routines(s): SAMIPAT
+Routines(s): SAMIUR
+Routines(s): SAMIUR2
+Routines(s): SAMIURUL
+Routines(s):
+
+Description: sami*18*14 SEQ #14 T2 routine backup
+
+Output routines to
+Device: /home/osehra/run/in/sami/18-14/t2/sami-18-14-t2-back.ro
+Parameters? ("WNS") =>
+Printer Format? No => No
+SAMIPAT.INT     SAMIUR.INT      SAMIUR2.INT     SAMIURUL.INT
+>_
 -------------------------------------------------------------------------------
 
 [[backup-yotta]]
@@ -427,7 +459,37 @@ to accept the default of +no+:
 // Do relative filenames work in YottaDB?
 // ./recipeproc.py --rbackyotta --adoc sami 18-14-t2
 -------------------------------------------------------------------------------
-[[[ to be generated ]]]
+>do ^%RO
+
+Routine Output - Save selected routines into RO file.
+
+Routines: SAMIPAT
+SAMIPAT
+Current total of 1 routines.
+
+Routines: SAMIUR
+SAMIUR
+Current total of 2 routines.
+
+Routines: SAMIUR2
+SAMIUR2
+Current total of 3 routines.
+
+Routines: SAMIURUL
+SAMIURUL
+Current total of 4 routines.
+
+Routine:
+
+Output device <terminal>: /home/osehra/run/in/sami/18-14/t2/sami-18-14-t2-back.ro
+
+Header Label: sami*18*14 SEQ #14 T2 routine backup
+Strip comments <No>?:
+SAMIPAT   SAMIUR    SAMIUR2   SAMIURUL
+
+Total of 2263 lines in 4 routines.
+
+>_
 -------------------------------------------------------------------------------
 
 eval::[Section.setlevel(2)]
@@ -486,7 +548,33 @@ Select option 1 and press return at the +Continue+ prompt.
 // Does this routine use relative file specifications?
 // ./recipeproc.py --loadkids --adoc sami 18-14-t2
 -------------------------------------------------------------------------------
-[[[ to be generated ]]]
+Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
+Enter a Host File: /home/osehra/run/in/sami/18-14/t2/sami-18-14-t2.kid
+
+   KIDS Distribution saved on Sep 10, 2021@18:52:20
+   Comment: Test Release SAMI*18.0*14 SEQ #14 T2 (sami-18-14-t2)
+
+This Distribution contains Transport Globals for the following Package(s):
+   SAMI*18.0*14
+Distribution OK!
+
+Want to Continue with Load? YES//
+   Loading Distribution...
+
+   SAMI*18.0*14
+Use INSTALL NAME: SAMI*18.0*14 to install this Distribution.
+
+
+   1      Load a Distribution
+   2      Verify Checksums in Transport Global
+   3      Print Transport Global
+   4      Compare Transport Global to Current System
+   5      Backup a Transport Global
+   6      Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+
+Select Installation <TEST ACCOUNT> Option:_
 -------------------------------------------------------------------------------
 
 [[install-pkg]]
@@ -498,82 +586,70 @@ time when you're doing the install.
 
 // ./recipeproc.py --install --adoc sami 18-14-t2
 -------------------------------------------------------------------------------
-[[[ to be generated ]]]
+Select Installation <TEST ACCOUNT> Option: 6  Install Packages(s)
+Select INSTALL NAME:    SAMI*18.0*14     Loaded from Distribution    [now]
+   => Test Release SAMI*18.0*14 SEQ #14 T2 (sami-18-14-t2)  ;Created on Sep 10, 2021@18:52:20
+
+This Distribution was loaded on [now] with header of
+   Test Release SAMI*18.0*14 SEQ #14 T2 (sami-18-14-t2)  ;Created on Sep 10, 2021@18:52:20
+   It consisted of the following Install(s):
+   SAMI*18.0*14
+Checking Install for Package SAMI*18.0*14
+
+Install Questions for SAMI*18.0*14
+
+
+
+Want KIDS to INHIBIT LOGONs during the install? NO//
+Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+
+Enter the Device you want to print the Install messages.
+You can queue the install by enter a 'Q' at the device prompt.
+Enter a '^' to abort the install.
+
+DEVICE: HOME// ;C-SCROLL  TELNET
+
+
+ Install Started for SAMI*18.0*14 :
+               [now]
+
+Build Distribution Date: Sep 10, 2021
+
+ Installing Routines:.....
+               [now]
+
+ Running Post-Install Routine: POS1814^SAMIPAT.
+
+ Updating Routine file......
+
+ Updating KIDS files.....
+
+ SAMI*18.0*14 Installed.
+               [now]
+
+ No link to PACKAGE file
+
+ NO Install Message sent
+
+Install Completed
+
+
+   1      Load a Distribution
+   2      Verify Checksums in Transport Global
+   3      Print Transport Global
+   4      Compare Transport Global to Current System
+   5      Backup a Transport Global
+   6      Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+
+Select Installation <TEST ACCOUNT> Option:_
+
+> halt
+$ _
 -------------------------------------------------------------------------------
 
 // eval::[Section.setlevel(2)]
-
-[[activate-www]]
-=== Activating web-application files
-
-Both the VAPALS-ELCAP routines and web-application files have been updated at
-this point, but the routines are using cached copies of the web-application
-files; this step refreshes those copies.
-
-[[rebuild]]
-==== Refresh web-application cache
-
-To improve performance, M-Web maintains cached copies of the data dictionaries
-for the fields on all the VAPALS-ELCAP forms, and of the HTML templates used by
-its services. Every time we update those files in Unix, we must also direct
-M-Web to update its cache.
-
-To do so, exit the Installation menu by hitting carriage return (possibly more
-than once) to get to a direct-mode prompt, and then copy and paste the
-following list of commands into that prompt:
-
--------------------------------------------------------------------------------
-set SAMIDIR="/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/"
-do PRSTSV^SAMIFF(SAMIDIR,"background.tsv","form fields - background")
-do PRSTSV^SAMIFF(SAMIDIR,"biopsy.tsv","form fields - biopsy")
-do PRSTSV^SAMIFF(SAMIDIR,"ct-evaluation.tsv","form fields - ct evaluation")
-do PRSTSV^SAMIFF(SAMIDIR,"follow-up.tsv","form fields - follow up")
-do PRSTSV^SAMIFF(SAMIDIR,"intake.tsv","form fields - intake")
-do PRSTSV^SAMIFF(SAMIDIR,"intervention.tsv","form fields - intervention")
-do PRSTSV^SAMIFF(SAMIDIR,"pet-evaluation.tsv","form fields - pet evaluation")
-do PRSTSV^SAMIFF(SAMIDIR,"register.tsv","form fields - register")
-do CLRWEB^SAMIADMN
-do INIT2GPH^SAMICTD2
--------------------------------------------------------------------------------
-
-The output is shown below (where `[job]` is a job number displayed by the
-`PRSTSV` routine):
-
--------------------------------------------------------------------------------
-Select Installation <TEST ACCOUNT> Option:
-
-> set SAMIDIR="/home/osehra/lib/silver/a-sami-vapals-elcap--vo-osehra-github/docs/form-fields/"
-
-> do PRSTSV^SAMIFF(SAMIDIR,"background.tsv","form fields - background")
-[job]
-> do PRSTSV^SAMIFF(SAMIDIR,"biopsy.tsv","form fields - biopsy")
-[job]
-> do PRSTSV^SAMIFF(SAMIDIR,"ct-evaluation.tsv","form fields - ct evaluation")
-[job]
-> do PRSTSV^SAMIFF(SAMIDIR,"follow-up.tsv","form fields - follow up")
-[job]
-> do PRSTSV^SAMIFF(SAMIDIR,"intake.tsv","form fields - intake")
-[job]
-> do PRSTSV^SAMIFF(SAMIDIR,"intervention.tsv","form fields - intervention")
-[job]
-> do PRSTSV^SAMIFF(SAMIDIR,"pet-evaluation.tsv","form fields - pet evaluation")
-[job]
-> do PRSTSV^SAMIFF(SAMIDIR,"register.tsv","form fields - register")
-[job]
-> do CLRWEB^SAMIADMN
-
-> do INIT2GPH^SAMICTD2
-
->_
--------------------------------------------------------------------------------
-
-[[exit-m]]
-==== Exit M
-
--------------------------------------------------------------------------------
->halt
-$ _
--------------------------------------------------------------------------------
 
 eval::[Section.setlevel(2)]
 
@@ -603,10 +679,11 @@ The checksums below are Vista Type B checksums ([ttsp]##do CHECK1^XTSUMBLD##).
 
 [cols="<.<1m,<.<1m,<.<1m,<.<1m",options="header",width="50%"]
 |==============================================================================
-| Name       | Checksum before   | Checksum after   | Patch list         
-| `SAMIUR`   | `B520612339`      | `B597589182`     | `**5,10,11,12,13**`
-| `SAMIUR2`  | `B1265246653`     | `B1328996811`    | `**5,11,12,13**`   
-| `SAMIURUL` | `B98717`          | `B101028`        | `**12,13**`        
+| Name       | Checksum before   | Checksum after   | Patch list
+| `SAMIPAT`  | `B761477`         | `B9183353`       | `**12,14**`
+| `SAMIUR`   | `B520612339`      | `B608610712`     | `**5,10,11,12,14**`
+| `SAMIUR2`  | `B1265246653`     | `B1328996822`    | `**5,11,12,14**`
+| `SAMIURUL` | `B98717`          | `B102189`        | `**12,14**`
 |==============================================================================
 
 [[authors]]
@@ -634,7 +711,7 @@ The checksums below are Vista Type B checksums ([ttsp]##do CHECK1^XTSUMBLD##).
                                       Frederick D. S. Marshall (VEN) +
                                       Kenneth W. McGlothlen (VEN) +
                                       Linda M. R. Yaw (VEN)
-| Released  | 2021-09-06            | Frederick D. S. Marshall (VEN) +
+| Released  | 2021-09-11            | Frederick D. S. Marshall (VEN) +
                                       Kenneth W. McGlothlen (VEN) +
                                       Linda M. R. Yaw (VEN)
 |==============================================================================

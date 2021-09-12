@@ -1,4 +1,4 @@
-SAMIURUL ;ven/gpl - user reports log ;2021-09-09T01:12Z
+SAMIURUL ;ven/gpl - user reports log ;2021-09-11T01:18Z
  ;;18.0;SAMI;**12,14**;2020-01;
  ;;18.14
  ;
@@ -21,7 +21,7 @@ SAMIURUL ;ven/gpl - user reports log ;2021-09-09T01:12Z
  ;@copyright 2021, mcglk & toad, all rights reserved
  ;@license see routine SAMIUL
  ;
- ;@last-update 2021-09-09T01:12Z
+ ;@last-update 2021-09-11T01:18Z
  ;@application Screening Applications Management (SAM)
  ;@module Screening Applications Management - IELCAP (SAMI)
  ;@suite-of-files SAMI Forms (311.101-311.199)
@@ -170,11 +170,11 @@ SAMIURUL ;ven/gpl - user reports log ;2021-09-09T01:12Z
  ; SAMIUR, SAMIUR2 make changes to user reports as requested.
  ; Reports changed were Enrollment, Activity, and Follow-up.
  ;
- ; 2021-08-28 ven/gpl 18.14
+ ; 2021-08-28 ven/gpl 18.14  cd69ff8b, fbd9196d
  ; SAMIUR, SAMIUR2 fix bugs causing Activity report to work incorrectly.
  ; Also fixed problem with Work List.
  ;
- ; 2021-09-09 ven/gpl 18.14
+ ; 2021-09-09 ven/gpl 18.14  afa4bfc2, 7f668e64, 8d45ebac
  ; SAMIUR fix bugs in reports showing inactive patients on wrong reports,
  ; "baseline" showing up in F/U date on Follow-up report, wrong patients
  ; on Intake but Missing CT Eval report.

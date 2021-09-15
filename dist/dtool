@@ -572,43 +572,45 @@ TEE="$ENV tee"
 TOUCH="$ENV touch"
 ZIP="$ENV zip"
 
+NOW=`date +'%Y%m%d-%H%M%S'`
+
 REPO="$HOME/lib/silver/a-sami-vapals-elcap--vo-osehra-github"
 INDIR=`pwd`
 BACKUP="./.webapp-backup"
 INSTALL="./{self.webapp_dir}"
 BACKUPLOG="./.webapp-backup.log"
+BACKZIP=".webapp-backup-$NOW.zip"
+ROUTINE_BACKUP="$INDIR/.routine-backup-$NOW.ro"
 
 HBAR="-------------------------------------------------------------------------------"
 
 cd $INDIR
 $RM -rf $BACKUP
 $MKDIR -p $BACKUP
-echo "Backing up files to $BACKUP:"
+echo "Backing up webapp files to $BACKUP:"
 for I in {dirs_to_backup}; do
     echo "* Backing up \$REPO/$I ..."
     (cd $REPO; $TAR cfz - $I) | (cd $BACKUP; $TAR xvfz -)
 done
 $TOUCH $BACKUPLOG
-NOW=`date +'%Y%m%d-%H%M%S'`
-BACKZIP=".webapp-backup-$NOW.zip"
 echo $HBAR >> $BACKUPLOG
 echo $NOW >> $BACKUPLOG
 echo "Compressing the backup:"
 $ZIP -r $BACKZIP $BACKUP 2>&1 | $TEE $BACKUP_LOG
 echo "Cleaning up."
 $RM -rf $BACKUP
-echo "Done."
-echo "Backing up routines."
+echo "Done with backup of webapp files."
+echo "Backing up routines:"
 mumps -dir <<EOF | $TEE $BACKUP_LOG 2>&1
 do ^%RO
 {routines_to_backup}
 
-{self.rundir}/{fn_base}-backup-$NOW.ro
+$ROUTINE_BACKUP
 {va_version} routine backup
 halt
 EOF
 
-echo "Done."
+echo "Done with routine backup."
 
 echo ""
 if [ -f "$REPO/ISOLATED-GIT-REPO" ]; then
@@ -620,7 +622,7 @@ else
     $GIT pull
 fi
 
-echo "Done."
+echo "Done with install."
 echo ""
 echo "You may now proceed with the KIDS installation."
         """.strip() + "\n\n"

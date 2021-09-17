@@ -192,7 +192,9 @@ LOGIN(RTN,VALS) ; login processing
  ;
  n access,verify
  s access=$g(VALS("access"))
+ if access="" s access=$g(VALS("username"))
  s verify=$g(VALS("verify"))
+ if verify="" s verify=$g(VALS("password"))
  ;i verify="@demo123" s verify="@demo321"
  ;i verify="@demo123" s verify="$#happy10"
  ;i access="ZZZUSER1" s access="SUPER6"

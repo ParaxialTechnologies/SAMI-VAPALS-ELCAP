@@ -1,0 +1,97 @@
+:doctitle: SAMI Patching Checklist for 18-14-t3
+
+[role="h1 center"]
+SAMI Patching Checklist for 18-14-t3
+
+-------------------------------------------------------------------------------
+0. Project discussion
+ X 0.1. Which changes will be included
+	    Issues included
+	    21-164, 21-165, 21-168
+
+ X 0.2. Timeline: Goal is 9/10/21 release, released on 9/11/21
+
+ 1. Project set up
+ X 1.1. git pull
+ X 1.2. prepare checklist
+ X 1.3. prepare recipe doc
+ X 1.4. prepare text doc
+ X 1.5. prepare webpage template
+ X 1.6. git pull/push
+ X 1.7. add updated routines to BBEdit project
+      Routine list
+       SAMIUR
+       SAMIUR2
+       SAMIPAT
+
+ X 1.8. add log routine to BBEdit project
+       SAMIURUL
+
+ X 1.9. write change descriptions
+ X 1.10. update text doc
+ X 1.11. update webpage
+ X 1.12. update dashboard (Google Drive) (sami vers)
+ X 1.13. Regrettable Bodge
+
+ 2. Update routines
+ X 2.1. Update SAMIPAT for pre/post-install
+ X 2.2. bump version & dates
+ X 2.3. update change log routine (SAMIURUL)
+ X 2.4. update dashboard (sami pax)
+ X 2.5. update webpage
+ X 2.6. push to repo
+
+ 3. Run XINDEX and ARJT
+ X 3.1. load in vapalsyotta ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github
+ X 3.2. copy routines to ~/run/routine directory
+ X 3.3. run XINDEX
+ N 3.4. fix any bugs,
+ X 3.5. use ARJT tools (see Introduction to ARJT tools)
+ X 3.6. update dashboard
+ X 3.7. update recipe
+ X 3.8. git pull/push
+
+ 4. Descriptions
+ X 4.1. convert to new short version ids, update dates & times in each routine
+   or routine log
+      view log with files
+      git log --source --name-status
+      or example: git log routines/SAMIUR.m
+      or example: $ git log --format='%h %ad %an | %s' --date="format:%Y-%m-%d" routines/SAMIURUL.m
+  nope 4.2. add ids to issues listed in description
+  4.3. add to description issues newly resolved in final version
+  4.4. update checksums in description
+  4.5. update install instructions
+
+
+ 5. KIDS Build
+ X 5.1. load in vapalsyotta ~/lib/silver/a-sami-vapals-elcap--vo-osehra-github
+ X 5.2. copy routines to ~/run/routine directory
+ X 5.3. Create KIDS build (XPD MAIN Menu)
+ X 5.2. export to out dock, (Transport distribution)
+ X 5.3. push to repo,
+ X 5.5. push recipe to repo,
+  5.6. pull to out dock
+
+
+ 6. Create Zip package
+ X 6.1. use zip to create archive package (dtool makezip)
+ X 6.2. push archive package to repo
+ X 6.3. update version website's link
+
+
+ 7. Test Install
+ X 7.1. install on vapalsyotta (& revise if necessary),
+ X 7.2. test changes on vapalsyotta
+ X 7.3. update dashboard
+ N 7.4. install on vapalscache (& revise if necessary), (not avail due to cache expire)
+ N 7.5. test changes on vapalscache
+ N 7.6. update dashboard
+ X 7.7. Skype team and ask them to test
+
+8. Release Patch
+ X 8.1. Email interested parties
+  8.2. Update VAPALS Bugs and Requested Features spreadsheet
+  8.3. File any returned captures
+  8.4. Update dashboard
+-------------------------------------------------------------------------------

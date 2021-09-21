@@ -9,6 +9,7 @@
 
 import argparse
 # import copy
+import datetime
 import filecmp
 import getpass
 import itertools
@@ -726,6 +727,13 @@ echo "You may now proceed with the KIDS installation."
         tlist = [f"{tindent}{line}" for line in tlist]
         return "\n".join(tlist)
 
+    def routine_list(self):
+        ttext = "\n".join(self.recipe["routine-name-set"]) + "\n"
+        tadoc = (
+            "-" * 79 + "\n" + ttext + "-" * 79 + "\n"
+        )
+        return (ttext, tadoc)
+
     def file_elements(self):
         data = [x for x in [
             (fn, "modified" if "*" in fn else "new")
@@ -770,9 +778,9 @@ echo "You may now proceed with the KIDS installation."
         if data:
             tadoc = self.adoc_columnize(
                 columns=2,
-                data=[("File", "Change"), *data],
+                data=[("Routine", "Change"), *data],
                 headerdecl="""
-                [cols="<.<1,<.<0",options="header",role="center",width="50%"]
+                [cols="<.<1,<.<0",options="header",role="center",width="25%"]
                 """
             )
         else:
@@ -781,6 +789,17 @@ echo "You may now proceed with the KIDS installation."
                 + " No routines were added or modified in this update.__"
             )
         return (ttext, tadoc)
+
+    def write_routine_list(self):
+        try:
+            os.mkdir(".dtool")
+        except FileExistsError as e:
+            pass
+        ttext,tadoc = self.routine_list()
+        with open(".dtool/routine-list.txt", "w") as f:
+            f.write(ttext)
+        with open(".dtool/routine-list.adoi", "w") as f:
+            f.write(tadoc)
 
     def write_package_elements_sections(self):
         try:
@@ -792,7 +811,7 @@ echo "You may now proceed with the KIDS installation."
         with open(".dtool/packelements.txt", "w") as f:
             f.write(tfels + "\n")
             f.write(trels + "\n")
-        with open(".dtool/packelements.adoc", "w") as f:
+        with open(".dtool/packelements.adoi", "w") as f:
             f.write(afels + "\n")
             f.write(arels + "\n")
             
@@ -802,23 +821,98 @@ echo "You may now proceed with the KIDS installation."
                 lines = f.readlines()
                 self.log.debug("Read template.txt")
         except FileExistsError as e:
-            raise WebErr("The 'template.txt' file doesn't yet exist.")
+            raise AppErr("The 'template.txt' file doesn't yet exist.")
         regex = {
-            "var": re.compile(r"^#:([\w-]+):\s*(.*)")
+            "var": re.compile(r"^#:([\w-]+):\s*(.*)"),
+            "varref": re.compile(r"#\{([\w-]+)\}"),
+            "header": re.compile(r"^(\s*)#(\.+)(.*)"),
+            "center": re.compile(r"^#>center:\s*(.*)"),
+            "include": re.compile(r"^#>include:\s*(.*)")
         }
-        for line in f.readlines():
-            self.log.debug(f">{line}")
+        lineno = 0
+        section = [0]
+        now = datetime.datetime.now(datetime.timezone.utc)
+        var = {
+            "now-txt-z": now.strftime("%Y-%m-%dt%H:%Mz"),
+            "now-iso-ymd": now.strftime("%Y-%m-%d"),
+            "width": 70
+        }
+        result = []
+        for line in lines:
+            line = line.rstrip()
+            lineno += 1
+            self.log.debug(f"{lineno:>5}<{line}")
             if line.startswith("#:"):
-                self.log.debug(" Variable")
                 m = re.search(regex["var"], line)
-            #:patchtitle: Nashville Demo Patch
-
-
+                if m:
+                    var[m.group(1)] = m.group(2)
+                    self.log.debug(f" Variable\n{self.pp.pformat(var)}")
+                else:
+                    self.log.warning(
+                        f"Unrecognized variable '{m.group(1)}'"
+                        f" in line {lineno}"
+                    )
+                continue
+            m = re.search(regex["header"], line)
+            if m:
+                indent,depth,line = m.groups()
+                depth = len(depth)
+                sdepth = len(section)
+                if depth == sdepth:
+                    section[-1] += 1
+                if depth > sdepth:
+                    section.append(1)
+                    sdepth += 1
+                if depth > sdepth:
+                    raise AppErr(
+                        f"Too many additional levels on line {lineno}"
+                    )
+                if depth < sdepth:
+                    del section[depth:]
+                    section[-1] += 1
+                sectnum = ".".join([f"{x}" for x in section])
+                line = f"{indent}{sectnum}.{line}"
+            m = re.search(regex["varref"], line)
+            while m:
+                line = re.sub(
+                    r"#\{" + m.group(1) + r"\}",
+                    var[m.group(1)],
+                    line
+                )
+                # self.log.debug(f"new>{line}")
+                m = re.search(regex["varref"], line)
+            m = re.search(regex["center"], line)
+            if m:
+                line = m.group(1).center(var["width"]).rstrip()
+            m = re.search(regex["include"], line)
+            if m:
+                fn = m.group(1)
+                try:
+                    with open(fn) as f:
+                        inclines = f.readlines()
+                        self.log.debug(f"Read {fn}")
+                except FileExistsError as e:
+                    raise AppErr(f"The '{fn}' file doesn't yet exist.")
+                for inc in inclines:
+                    self.log.debug(f"     >{inc.rstrip()}")
+                    result.append(inc)
+                continue
+            self.log.debug(f"     >{line}")
+            result.append(line + "\n")
+        fn_base = (
+            self.recipe["application"].lower()
+            + "-"
+            + self.recipe["app-version"]
+        )
+        with open(f"{fn_base}.txt", "w") as f:
+            lines = f.writelines(result)
+        print(f"Wrote '{fn_base}.txt'.")
 
     def run(self):
         for command in self.args.command:
             if command == "snippets":
                 self.write_package_elements_sections()
+                self.write_routine_list()
                 continue
             if command == "makescript":
                 self.write_prep_script("upgrade-webapp")
@@ -829,6 +923,9 @@ echo "You may now proceed with the KIDS installation."
                 self.write_prep_script("upgrade-webapp")
                 self.make_zip_file()
                 self.clean_up_webapp_files()
+                continue
+            if command == "textfile":
+                self.templatizer()
 
 if __name__ == "__main__":
     app = App()
